@@ -276,6 +276,7 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.rename, "rename");
   load(json, misc.export_, "export");
   load(json, misc.empty, "empty");
+  load(json, misc.none, "none");
 
   load(json, misc.rows, "rows");
   load(json, misc.columns, "columns");

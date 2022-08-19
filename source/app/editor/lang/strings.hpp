@@ -241,6 +241,7 @@ struct MiscStrings final
   std::string rename;
   std::string export_;
   std::string empty;
+  std::string none;
 
   std::string rows;
   std::string columns;

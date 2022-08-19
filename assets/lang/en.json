@@ -180,6 +180,7 @@
     "rename": "Rename",
     "export": "Export",
     "empty": "Empty",
+    "none": "None",
     "rows": "Rows",
     "columns": "Columns",
     "name": "Name",
