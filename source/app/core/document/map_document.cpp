@@ -72,7 +72,7 @@ void MapDocument::remove_column()
 
 void MapDocument::resize(const usize rows, const usize cols)
 {
-  get_history().exec<ResizeMapCmd>(mMap, rows, cols);
+  get_history().exec<cmd::ResizeMap>(mMap, rows, cols);
 }
 
 void MapDocument::fix_tiles()

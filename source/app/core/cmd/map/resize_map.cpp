@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "resize_map_cmd.hpp"
+#include "resize_map.hpp"
 
 #include <utility>  // move
 
@@ -25,9 +25,9 @@
 #include "editor/lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-ResizeMapCmd::ResizeMapCmd(Shared<Map> map, const usize nRows, const usize nCols)
+ResizeMap::ResizeMap(Shared<Map> map, const usize nRows, const usize nCols)
     : mMap {std::move(map)}
     , mRows {nRows}
     , mCols {nCols}
@@ -37,7 +37,7 @@ ResizeMapCmd::ResizeMapCmd(Shared<Map> map, const usize nRows, const usize nCols
   }
 }
 
-void ResizeMapCmd::undo()
+void ResizeMap::undo()
 {
   mMap->resize(mPrevRows.value(), mPrevCols.value());
 
@@ -46,7 +46,7 @@ void ResizeMapCmd::undo()
   }
 }
 
-void ResizeMapCmd::redo()
+void ResizeMap::redo()
 {
   mPrevRows = mMap->row_count();
   mPrevCols = mMap->column_count();
@@ -67,15 +67,15 @@ void ResizeMapCmd::redo()
   mMap->resize(mRows, mCols);
 }
 
-auto ResizeMapCmd::get_name() const -> std::string
+auto ResizeMap::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return lang.cmd.resize_map;
 }
 
-auto ResizeMapCmd::is_lossy_resize() const -> bool
+auto ResizeMap::is_lossy_resize() const -> bool
 {
   return mPrevRows > mRows || mPrevCols > mCols;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

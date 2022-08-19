@@ -17,35 +17,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/cmd/map/resize_map_cmd.hpp"
+#pragma once
 
-#include <gtest/gtest.h>
+#include "core/cmd/command.hpp"
+#include "core/cmd/map/map_command_cache.hpp"
+#include "core/common/ints.hpp"
+#include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
+#include "core/map.hpp"
 
-#include "misc/panic.hpp"
-#include "unit-tests/core/helpers/map_builder.hpp"
+namespace tactile::cmd {
 
-namespace tactile::test {
-
-TEST(ResizeMapCmd, Constructor)
+class ResizeMap final : public ICommand
 {
-  ASSERT_THROW(ResizeMapCmd(nullptr, 1, 1), TactileError);
-}
+ public:
+  ResizeMap(Shared<Map> map, usize nRows, usize nCols);
 
-TEST(ResizeMapCmd, RedoUndo)
-{
-  auto document = test::MapBuilder::build().with_size(5, 7).result();
-  auto map = document->get_map_ptr();
+  void undo() override;
 
-  ResizeMapCmd cmd {map, 3, 9};
-  cmd.redo();
+  void redo() override;
 
-  ASSERT_EQ(3, map->row_count());
-  ASSERT_EQ(9, map->column_count());
+  [[nodiscard]] auto get_name() const -> std::string override;
 
-  cmd.undo();
+ private:
+  Shared<Map>     mMap;
+  usize           mRows {};
+  usize           mCols {};
+  MapCommandCache mCache;
+  Maybe<usize>    mPrevRows {};
+  Maybe<usize>    mPrevCols {};
 
-  ASSERT_EQ(5, map->row_count());
-  ASSERT_EQ(7, map->column_count());
-}
+  [[nodiscard]] auto is_lossy_resize() const -> bool;
+};
 
-}  // namespace tactile::test
+}  // namespace tactile::cmd
