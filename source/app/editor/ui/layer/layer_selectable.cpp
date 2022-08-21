@@ -26,10 +26,10 @@
 #include "core/event/layer_events.hpp"
 #include "core/event/property_events.hpp"
 #include "core/util/fmt.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::ui {

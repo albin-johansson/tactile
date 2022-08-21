@@ -24,9 +24,9 @@
 #include <spdlog/spdlog.h>
 
 #include "core/common/associative.hpp"
-#include "lang/strings.hpp"
 #include "io/lang/language_parser.hpp"
 #include "io/persist/preferences.hpp"
+#include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {

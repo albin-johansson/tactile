@@ -24,9 +24,9 @@
 
 #include "core/event/tileset_events.hpp"
 #include "core/model.hpp"
+#include "editor/ui/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "editor/ui/scoped.hpp"
 
 namespace tactile::ui {
 

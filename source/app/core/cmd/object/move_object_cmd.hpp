@@ -30,7 +30,7 @@ namespace tactile {
 class MoveObjectCmd final : public ICommand
 {
  public:
-  MoveObjectCmd(Shared<Object> object, const Vector2f& previous, const Vector2f& updated);
+  MoveObjectCmd(Shared<Object> object, const float2& previous, const float2& updated);
 
   void undo() override;
 
@@ -40,8 +40,8 @@ class MoveObjectCmd final : public ICommand
 
  private:
   Shared<Object> mObject;
-  Vector2f       mPreviousPos {};
-  Vector2f       mUpdatedPos {};
+  float2         mPreviousPos {};
+  float2         mUpdatedPos {};
 };
 
 }  // namespace tactile

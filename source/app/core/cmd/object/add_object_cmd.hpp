@@ -32,11 +32,11 @@ class MapDocument;
 class AddObjectCmd final : public ICommand
 {
  public:
-  AddObjectCmd(MapDocument*    document,
-               const UUID&     layerId,
-               ObjectType      type,
-               const Vector2f& pos,
-               const Vector2f& size = {});
+  AddObjectCmd(MapDocument*  document,
+               const UUID&   layerId,
+               ObjectType    type,
+               const float2& pos,
+               const float2& size = {});
 
   void undo() override;
 
@@ -48,8 +48,8 @@ class AddObjectCmd final : public ICommand
   MapDocument* mDocument {};
   UUID         mLayerId {};
   ObjectType   mObjectType {};
-  Vector2f     mPos {};
-  Vector2f     mSize {};
+  float2       mPos {};
+  float2       mSize {};
   Maybe<UUID>  mObjectId;
 };
 

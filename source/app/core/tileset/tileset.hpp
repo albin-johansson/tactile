@@ -82,17 +82,17 @@ class Tileset final : public IContext
     return mTexturePath;
   }
 
-  [[nodiscard]] auto texture_size() const noexcept -> const Vector2i&
+  [[nodiscard]] auto texture_size() const noexcept -> const int2&
   {
     return mTextureSize;
   }
 
-  [[nodiscard]] auto tile_size() const noexcept -> const Vector2i&
+  [[nodiscard]] auto tile_size() const noexcept -> const int2&
   {
     return mTileSize;
   }
 
-  [[nodiscard]] auto uv_size() const noexcept -> const Vector2f&
+  [[nodiscard]] auto uv_size() const noexcept -> const float2&
   {
     return mUvSize;
   }
@@ -125,11 +125,11 @@ class Tileset final : public IContext
  private:
   ContextDelegate             mContext;
   uint                        mTextureId {};
-  Vector2i                    mTextureSize {};
-  Vector2i                    mTileSize {};
+  int2                        mTextureSize {};
+  int2                        mTileSize {};
   int32                       mRowCount {};
   int32                       mColumnCount {};
-  Vector2f                    mUvSize {};
+  float2                      mUvSize {};
   HashMap<TileIndex, UUID>    mIdentifiers;
   HashMap<UUID, Shared<Tile>> mMetaTiles;
   fs::path                    mTexturePath;

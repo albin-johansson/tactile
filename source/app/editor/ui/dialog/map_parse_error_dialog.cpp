@@ -22,9 +22,9 @@
 #include <fmt/format.h>
 #include <imgui.h>
 
+#include "editor/ui/icons.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "editor/ui/icons.hpp"
 
 namespace tactile::ui {
 

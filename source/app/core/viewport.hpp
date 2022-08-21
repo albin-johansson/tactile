@@ -26,8 +26,8 @@ namespace tactile {
 
 struct ViewportLimits final
 {
-  Vector2f min_offset {};
-  Vector2f max_offset {};
+  float2 min_offset {};
+  float2 max_offset {};
 };
 
 class Viewport final
@@ -35,7 +35,7 @@ class Viewport final
  public:
   void reset_limits();
 
-  void offset(const Vector2f& delta);
+  void offset(const float2& delta);
 
   void pan_left();
 
@@ -45,24 +45,24 @@ class Viewport final
 
   void pan_down();
 
-  void zoom_in(const Vector2f& anchor);
+  void zoom_in(const float2& anchor);
 
-  void zoom_out(const Vector2f& anchor);
+  void zoom_out(const float2& anchor);
 
-  void set_tile_size(const Vector2f& size);
+  void set_tile_size(const float2& size);
 
   void set_limits(const ViewportLimits& limits);
 
   [[nodiscard]] auto can_zoom_out() const -> bool;
 
-  [[nodiscard]] auto get_scaling_ratio(const Vector2f& tileSize) const -> Vector2f;
+  [[nodiscard]] auto get_scaling_ratio(const float2& tileSize) const -> float2;
 
-  [[nodiscard]] auto get_offset() const noexcept -> const Vector2f&
+  [[nodiscard]] auto get_offset() const noexcept -> const float2&
   {
     return mOffset;
   }
 
-  [[nodiscard]] auto get_tile_size() const noexcept -> const Vector2f&
+  [[nodiscard]] auto get_tile_size() const noexcept -> const float2&
   {
     return mTileSize;
   }
@@ -73,8 +73,8 @@ class Viewport final
   }
 
  private:
-  Vector2f              mOffset {};
-  Vector2f              mTileSize {32, 32};
+  float2                mOffset {};
+  float2                mTileSize {32, 32};
   Maybe<ViewportLimits> mLimits;
 };
 

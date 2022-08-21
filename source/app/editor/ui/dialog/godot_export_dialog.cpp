@@ -25,12 +25,12 @@
 #include <imgui.h>
 
 #include "core/event/map_events.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/input_widgets.hpp"
 #include "editor/ui/common/tooltips.hpp"
 #include "editor/ui/scoped.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::ui {
 

@@ -30,8 +30,6 @@
 #include "core/event/viewport_events.hpp"
 #include "core/model.hpp"
 #include "core/viewport.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/buttons.hpp"
@@ -40,6 +38,8 @@
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/textures.hpp"
 #include "editor/ui/viewport/document_tab_widget.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::ui {
 namespace {
@@ -120,7 +120,7 @@ void viewport_widget_mouse_wheel_event_handler(const Viewport&               vie
     }
   }
   else {
-    const Vector2f precise {event.precise_x(), event.precise_y()};
+    const float2 precise {event.precise_x(), event.precise_y()};
 
     auto delta = precise * (viewport.get_tile_size() / scaling);
     delta.x = -delta.x;

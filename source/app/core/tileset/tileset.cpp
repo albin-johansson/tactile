@@ -34,7 +34,7 @@ Tileset::Tileset(const UUID& id, const TilesetInfo& info)
     , mTileSize {info.tile_size}
     , mRowCount {mTextureSize.y / mTileSize.y}
     , mColumnCount {mTextureSize.x / mTileSize.x}
-    , mUvSize {Vector2f {mTileSize} / Vector2f {mTextureSize}}
+    , mUvSize {float2 {mTileSize} / float2 {mTextureSize}}
     , mTexturePath {std::move(info.texture_path)}
 {
   load_tiles();
@@ -53,7 +53,7 @@ void Tileset::load_tiles()
     auto       tile = std::make_shared<Tile>(index);
     const auto tileId = tile->get_uuid();
 
-    const Vector2i pos {col * mTileSize.x, row * mTileSize.y};
+    const int2 pos {col * mTileSize.x, row * mTileSize.y};
     tile->set_source({pos, mTileSize});
 
     mMetaTiles.try_emplace(tileId, std::move(tile));

@@ -31,7 +31,7 @@
 
 namespace tactile {
 
-MapDocument::MapDocument(const Vector2i& tileSize, const usize rows, const usize columns)
+MapDocument::MapDocument(const int2& tileSize, const usize rows, const usize columns)
     : mMap {std::make_shared<Map>()}
     , mDelegate {mMap->get_uuid()}
 {
@@ -143,28 +143,26 @@ void MapDocument::flood(const UUID&    layerId,
   get_history().exec<BucketToolCmd>(mMap, layerId, origin, replacement);
 }
 
-void MapDocument::add_rectangle(const UUID&     layerId,
-                                const Vector2f& pos,
-                                const Vector2f& size)
+void MapDocument::add_rectangle(const UUID&   layerId,
+                                const float2& pos,
+                                const float2& size)
 {
   get_history().exec<AddObjectCmd>(this, layerId, ObjectType::Rect, pos, size);
 }
 
-void MapDocument::add_ellipse(const UUID&     layerId,
-                              const Vector2f& pos,
-                              const Vector2f& size)
+void MapDocument::add_ellipse(const UUID& layerId, const float2& pos, const float2& size)
 {
   get_history().exec<AddObjectCmd>(this, layerId, ObjectType::Ellipse, pos, size);
 }
 
-void MapDocument::add_point(const UUID& layerId, const Vector2f& pos)
+void MapDocument::add_point(const UUID& layerId, const float2& pos)
 {
   get_history().exec<AddObjectCmd>(this, layerId, ObjectType::Point, pos);
 }
 
-void MapDocument::move_object(const UUID&     objectId,
-                              const Vector2f& previous,
-                              const Vector2f& updated)
+void MapDocument::move_object(const UUID&   objectId,
+                              const float2& previous,
+                              const float2& updated)
 {
   auto object = get_object(objectId);
   get_history().exec<MoveObjectCmd>(std::move(object), previous, updated);

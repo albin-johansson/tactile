@@ -30,8 +30,8 @@ struct TilesetInfo final
 {
   fs::path texture_path;     /// Path to associated texture.
   uint     texture_id {};    /// The associated OpenGL texture identifier.
-  Vector2i texture_size {};  /// The size of the texture.
-  Vector2i tile_size {};     /// Logical tile size.
+  int2     texture_size {};  /// The size of the texture.
+  int2     tile_size {};     /// Logical tile size.
 };
 
 }  // namespace tactile

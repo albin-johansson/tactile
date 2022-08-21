@@ -32,9 +32,9 @@ namespace tactile {
 /// Emitted after an object has been moved.
 struct MoveObjectEvent final
 {
-  UUID     object_id {};  /// ID of the object to move.
-  Vector2f previous;      /// Previous position of the object.
-  Vector2f updated;       /// Updated position of the object.
+  UUID   object_id {};  /// ID of the object to move.
+  float2 previous;      /// Previous position of the object.
+  float2 updated;       /// Updated position of the object.
 };
 
 /// Emitted when the visibility of an object should be changed.

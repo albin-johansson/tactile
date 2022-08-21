@@ -57,7 +57,7 @@ class DocumentModel final
   void each(const VisitorFunc& func) const;
 
   /// Creates an empty map document with the specified attributes.
-  auto add_map(const Vector2i& tileSize, usize rows, usize columns) -> UUID;
+  auto add_map(const int2& tileSize, usize rows, usize columns) -> UUID;
 
   /// Creates a tileset document and adds it to the active map document.
   auto add_tileset(const TilesetInfo& info) -> UUID;

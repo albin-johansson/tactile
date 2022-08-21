@@ -28,14 +28,14 @@
 #include "core/event/viewport_events.hpp"
 #include "core/model.hpp"
 #include "core/viewport.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/labels.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/tileset/tileset_tabs.hpp"
 #include "io/persist/preferences.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::ui {
 namespace {
@@ -87,10 +87,10 @@ void tileset_dock_mouse_wheel_event_handler(const TilesetRef&             tilese
                                             const cen::mouse_wheel_event& event,
                                             entt::dispatcher&             dispatcher)
 {
-  constexpr Vector2f scaling {4, 4};
+  constexpr float2 scaling {4, 4};
 
-  const auto&    viewport = tileset_ref.get_viewport();
-  const Vector2f precise {event.precise_x(), event.precise_y()};
+  const auto&  viewport = tileset_ref.get_viewport();
+  const float2 precise {event.precise_x(), event.precise_y()};
 
   auto delta = precise * (viewport.get_tile_size() / scaling);
   delta.x = -delta.x;

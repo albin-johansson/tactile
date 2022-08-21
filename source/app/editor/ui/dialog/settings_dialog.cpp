@@ -25,8 +25,6 @@
 
 #include "core/event/command_events.hpp"
 #include "core/event/misc_events.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/checkboxes.hpp"
@@ -37,6 +35,8 @@
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/themes.hpp"
 #include "io/persist/preferences.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::ui {
 namespace {

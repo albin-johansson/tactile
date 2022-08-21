@@ -29,9 +29,9 @@
 
 #include "cfg/platform_specific.hpp"
 #include "core/util/fmt.hpp"
-#include "lang/language.hpp"
 #include "io/directories.hpp"
 #include "io/persist/preferences.hpp"
+#include "lang/language.hpp"
 #include "meta/build.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"

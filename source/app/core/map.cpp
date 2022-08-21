@@ -368,7 +368,7 @@ auto Map::get_tilesets() const -> const TilesetBundle&
   return mTilesets;
 }
 
-void Map::set_tile_size(const Vector2i& size)
+void Map::set_tile_size(const int2& size)
 {
   mTileSize = size;
 }
@@ -401,7 +401,7 @@ auto Map::column_count() const -> usize
   return mColCount;
 }
 
-auto Map::tile_size() const -> const Vector2i&
+auto Map::tile_size() const -> const int2&
 {
   return mTileSize;
 }

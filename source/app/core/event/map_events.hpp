@@ -47,9 +47,9 @@ struct RemoveColumnEvent final
 
 struct CreateMapEvent final
 {
-  Vector2i tile_size {};
-  usize    row_count {};
-  usize    column_count {};
+  int2  tile_size {};
+  usize row_count {};
+  usize column_count {};
 };
 
 struct OpenMapEvent final

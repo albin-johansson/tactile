@@ -38,7 +38,7 @@ struct InspectTilesetEvent final
 struct LoadTilesetEvent final
 {
   fs::path path;
-  Vector2i tile_size {};
+  int2     tile_size {};
 };
 
 struct RemoveTilesetEvent final

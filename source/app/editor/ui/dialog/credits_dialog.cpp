@@ -21,9 +21,9 @@
 
 #include <imgui.h>
 
+#include "editor/ui/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "editor/ui/scoped.hpp"
 
 namespace tactile::ui {
 namespace {

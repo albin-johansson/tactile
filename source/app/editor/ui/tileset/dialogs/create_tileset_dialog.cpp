@@ -24,11 +24,11 @@
 
 #include "core/event/tileset_events.hpp"
 #include "core/util/buffers.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "io/file_dialog.hpp"
 #include "io/persist/preferences.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::ui {
 

@@ -28,11 +28,11 @@
 #include "core/event/property_events.hpp"
 #include "core/event/tileset_events.hpp"
 #include "core/model.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/tileset/tileset_view.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::ui {

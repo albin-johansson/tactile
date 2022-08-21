@@ -43,13 +43,13 @@ class GraphicsCtx final
 
   void clear();
 
-  void draw_rect(const Vector2f&   pos,
-                 const Vector2f&   size,
+  void draw_rect(const float2&     pos,
+                 const float2&     size,
                  const cen::color& color,
                  float             thickness);
 
-  void draw_ellipse(const Vector2f&   center,
-                    const Vector2f&   radius,
+  void draw_ellipse(const float2&     center,
+                    const float2&     radius,
                     const cen::color& color,
                     float             thickness);
 
@@ -73,12 +73,12 @@ class GraphicsCtx final
 
   void draw_translated_ellipse_with_shadow(const ImVec2& center, const ImVec2& radius);
 
-  void render_image(uint            texture,
-                    const Vector2f& pos,
-                    const Vector2f& size,
-                    const Vector2f& uvMin,
-                    const Vector2f& uvMax,
-                    uint8           opacity);
+  void render_image(uint          texture,
+                    const float2& pos,
+                    const float2& size,
+                    const float2& uvMin,
+                    const float2& uvMax,
+                    uint8         opacity);
 
   void render_image(uint texture, const ImVec2& position, const ImVec2& size);
 
@@ -128,12 +128,12 @@ class GraphicsCtx final
     return mOrigin;
   }
 
-  [[nodiscard]] auto get_origin() const -> Vector2f
+  [[nodiscard]] auto get_origin() const -> float2
   {
     return {mOrigin.x, mOrigin.y};
   }
 
-  [[nodiscard]] auto get_grid_size() const -> Vector2f
+  [[nodiscard]] auto get_grid_size() const -> float2
   {
     return {mViewportTileSize.x, mViewportTileSize.y};
   }

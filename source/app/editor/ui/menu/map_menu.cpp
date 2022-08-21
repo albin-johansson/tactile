@@ -24,8 +24,6 @@
 
 #include "core/event/map_events.hpp"
 #include "core/model.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/ui/common/tooltips.hpp"
 #include "editor/ui/dialog/godot_export_dialog.hpp"
@@ -34,6 +32,8 @@
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
 #include "editor/ui/tileset/dialogs/create_tileset_dialog.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::ui {
 

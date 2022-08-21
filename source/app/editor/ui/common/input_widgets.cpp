@@ -29,13 +29,13 @@
 #include "core/util/buffers.hpp"
 #include "core/util/filesystem.hpp"
 #include "editor/constants.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/tooltips.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "io/file_dialog.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::ui {
 namespace {

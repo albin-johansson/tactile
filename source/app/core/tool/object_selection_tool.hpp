@@ -27,8 +27,8 @@ namespace tactile {
 
 struct ObjectDragInfo final
 {
-  Vector2f origin_object_pos {};  ///< Object position at drag start.
-  Vector2f last_mouse_pos {};     ///< Mouse viewport position at last update.
+  float2 origin_object_pos {};  ///< Object position at drag start.
+  float2 last_mouse_pos {};     ///< Mouse viewport position at last update.
 };
 
 class ObjectSelectionTool final : public ATool

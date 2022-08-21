@@ -28,9 +28,9 @@
 
 #include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
+#include "editor/ui/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "editor/ui/scoped.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::ui {

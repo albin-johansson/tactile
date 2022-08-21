@@ -53,8 +53,8 @@ struct ObjectData final
 {
   ObjectID    id {};
   ObjectType  type {};
-  Vector2f    pos {};
-  Vector2f    size {};
+  float2      pos {};
+  float2      size {};
   std::string name;
   std::string tag;
   ContextData context;
@@ -124,11 +124,11 @@ struct TilesetData final
 
   std::string name;
   TileID      first_tile {};
-  Vector2i    tile_size {};
+  int2        tile_size {};
   int32       tile_count {};
   int32       column_count {};
   fs::path    image_path;
-  Vector2i    image_size {};
+  int2        image_size {};
   MetaTiles   fancy_tiles;
   ContextData context;
 };
@@ -145,7 +145,7 @@ struct MapData final
 {
   usize                    row_count {};
   usize                    col_count {};
-  Vector2i                 tile_size {};
+  int2                     tile_size {};
   int32                    next_layer_id {};
   int32                    next_object_id {};
   TileFormatData           tile_format;

@@ -122,7 +122,7 @@ class Map final : public IContext
   [[nodiscard]] auto get_tilesets() -> TilesetBundle&;
   [[nodiscard]] auto get_tilesets() const -> const TilesetBundle&;
 
-  void set_tile_size(const Vector2i& size);
+  void set_tile_size(const int2& size);
 
   void accept(IContextVisitor& visitor) const override;
 
@@ -134,7 +134,7 @@ class Map final : public IContext
 
   [[nodiscard]] auto column_count() const -> usize;
 
-  [[nodiscard]] auto tile_size() const -> const Vector2i&;
+  [[nodiscard]] auto tile_size() const -> const int2&;
 
   [[nodiscard]] auto is_stamp_randomizer_possible() const -> bool;
 
@@ -165,7 +165,7 @@ class Map final : public IContext
   UUID            mId {make_uuid()};
   usize           mRowCount {5};
   usize           mColCount {5};
-  Vector2i        mTileSize {32, 32};
+  int2            mTileSize {32, 32};
   GroupLayer      mRootLayer;
   Maybe<UUID>     mActiveLayer;
   TilesetBundle   mTilesets;

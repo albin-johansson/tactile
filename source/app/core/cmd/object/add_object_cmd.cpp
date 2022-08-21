@@ -29,11 +29,11 @@
 
 namespace tactile {
 
-AddObjectCmd::AddObjectCmd(MapDocument*    document,
-                           const UUID&     layerId,
-                           ObjectType      type,
-                           const Vector2f& pos,
-                           const Vector2f& size)
+AddObjectCmd::AddObjectCmd(MapDocument*  document,
+                           const UUID&   layerId,
+                           ObjectType    type,
+                           const float2& pos,
+                           const float2& size)
     : mDocument {document}
     , mLayerId {layerId}
     , mObjectType {type}

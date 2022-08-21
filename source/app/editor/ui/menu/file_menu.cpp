@@ -27,14 +27,14 @@
 #include "core/event/map_events.hpp"
 #include "core/event/misc_events.hpp"
 #include "core/model.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
 #include "io/file_dialog.hpp"
 #include "io/persist/history.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::ui {
 namespace {

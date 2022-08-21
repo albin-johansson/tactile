@@ -22,10 +22,10 @@
 #include <imgui_internal.h>
 
 #include "core/common/maybe.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "io/directories.hpp"
 #include "io/persist/preferences.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::ui {
 namespace {

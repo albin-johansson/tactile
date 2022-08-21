@@ -46,7 +46,7 @@ namespace tactile {
 class MapDocument final : public ADocument
 {
  public:
-  MapDocument(const Vector2i& tileSize, usize rows, usize columns);
+  MapDocument(const int2& tileSize, usize rows, usize columns);
 
   void update() override;
 
@@ -86,9 +86,9 @@ class MapDocument final : public ADocument
 
   void flood(const UUID& layerId, const TilePos& origin, TileID replacement);
 
-  void add_rectangle(const UUID& layerId, const Vector2f& pos, const Vector2f& size);
+  void add_rectangle(const UUID& layerId, const float2& pos, const float2& size);
 
-  void add_ellipse(const UUID& layerId, const Vector2f& pos, const Vector2f& size);
+  void add_ellipse(const UUID& layerId, const float2& pos, const Vector2f& size);
 
   void add_point(const UUID& layerId, const Vector2f& pos);
 

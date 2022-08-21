@@ -45,12 +45,12 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
                             const ImVec2&     viewport_size,
                             entt::dispatcher& dispatcher)
 {
-  const auto&    tileset = tileset_ref.view_tileset();
-  const Vector2f texture_size = tileset.texture_size();
+  const auto&  tileset = tileset_ref.view_tileset();
+  const float2 texture_size = tileset.texture_size();
 
-  const Vector2f min_offset {viewport_size.x - texture_size.x,
-                             viewport_size.y - texture_size.y};
-  const Vector2f max_offset {};
+  const float2 min_offset {viewport_size.x - texture_size.x,
+                           viewport_size.y - texture_size.y};
+  const float2 max_offset {};
 
   const auto& limits = tileset_ref.get_viewport().get_limits();
   if (!limits.has_value() || min_offset != limits->min_offset) {
@@ -67,8 +67,8 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
 
   /* This has no effect when users use touchpads, but that is handled separately */
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
-    const auto&    io = ImGui::GetIO();
-    const Vector2f delta {io.MouseDelta.x, io.MouseDelta.y};
+    const auto&  io = ImGui::GetIO();
+    const float2 delta {io.MouseDelta.x, io.MouseDelta.y};
     dispatcher.enqueue<OffsetTilesetViewportEvent>(tileset.get_uuid(), delta);
   }
 }

@@ -23,12 +23,12 @@
 
 namespace tactile {
 
-void Object::set_pos(const Vector2f& pos)
+void Object::set_pos(const float2& pos)
 {
   mPos = pos;
 }
 
-void Object::set_size(const Vector2f& size)
+void Object::set_size(const float2& size)
 {
   mSize = size;
 }

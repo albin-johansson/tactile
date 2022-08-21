@@ -22,13 +22,13 @@
 #include <centurion/system.hpp>
 #include <imgui.h>
 
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::ui {
 namespace {

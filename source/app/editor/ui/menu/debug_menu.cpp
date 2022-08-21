@@ -21,12 +21,12 @@
 
 #include <imgui.h>
 
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "io/directories.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 #include "meta/build.hpp"
 
 namespace tactile::ui {

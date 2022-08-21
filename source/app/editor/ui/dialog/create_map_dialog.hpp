@@ -41,9 +41,9 @@ class CreateMapDialog final : public ADialog
       -> bool override;
 
  private:
-  Vector2i mTileSize {};
-  int      mRows {};
-  int      mColumns {};
+  int2 mTileSize {};
+  int  mRows {};
+  int  mColumns {};
 };
 
 }  // namespace tactile::ui

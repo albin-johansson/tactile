@@ -33,9 +33,9 @@ namespace tactile {
 class Object final : public IContext
 {
  public:
-  void set_pos(const Vector2f& pos);
+  void set_pos(const float2& pos);
 
-  void set_size(const Vector2f& size);
+  void set_size(const float2& size);
 
   void set_type(ObjectType type);
 
@@ -64,12 +64,12 @@ class Object final : public IContext
     return mType;
   }
 
-  [[nodiscard]] auto get_pos() const noexcept -> const Vector2f&
+  [[nodiscard]] auto get_pos() const noexcept -> const float2&
   {
     return mPos;
   }
 
-  [[nodiscard]] auto get_size() const noexcept -> const Vector2f&
+  [[nodiscard]] auto get_size() const noexcept -> const float2&
   {
     return mSize;
   }
@@ -91,8 +91,8 @@ class Object final : public IContext
 
  private:
   ContextDelegate mDelegate;
-  Vector2f        mPos {};                   /// Object position.
-  Vector2f        mSize {};                  /// Object size (might be zero).
+  float2          mPos {};                   /// Object position.
+  float2          mSize {};                  /// Object size (might be zero).
   ObjectType      mType {ObjectType::Rect};  /// Specific object type.
   std::string     mTag;                      /// Optional user-provided tag.
   Maybe<int32>    mMetaId;

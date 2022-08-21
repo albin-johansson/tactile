@@ -28,12 +28,12 @@
 #include "core/model.hpp"
 #include "core/tool/tool_type.hpp"
 #include "core/util/fmt.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::ui {
 

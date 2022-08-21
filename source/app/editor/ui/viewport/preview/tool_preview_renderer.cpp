@@ -103,7 +103,7 @@ void ToolPreviewRenderer::visit(const RectangleTool& tool)
     const auto pos = graphics.get_origin() + stroke->start;
     const auto size = stroke->current - stroke->start;
 
-    graphics.draw_rect(pos + Vector2f {1, 1}, size, cen::colors::black, 1.0f);
+    graphics.draw_rect(pos + float2 {1, 1}, size, cen::colors::black, 1.0f);
     graphics.draw_rect(pos, size, cen::colors::yellow, 1.0f);
   }
 }
