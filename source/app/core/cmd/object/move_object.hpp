@@ -21,22 +21,16 @@
 
 #include "core/cmd/command.hpp"
 #include "core/common/math.hpp"
-#include "core/common/maybe.hpp"
-#include "core/common/uuid.hpp"
-#include "core/layer/object_type.hpp"
+#include "core/common/memory.hpp"
+#include "core/layer/object.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-class MapDocument;
-
-class AddObjectCmd final : public ICommand
+/// Command for moving an object in a map.
+class MoveObject final : public ICommand
 {
  public:
-  AddObjectCmd(MapDocument*  document,
-               const UUID&   layerId,
-               ObjectType    type,
-               const float2& pos,
-               const float2& size = {});
+  MoveObject(Shared<Object> object, const float2& previous, const float2& updated);
 
   void undo() override;
 
@@ -45,12 +39,9 @@ class AddObjectCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  MapDocument* mDocument {};
-  UUID         mLayerId {};
-  ObjectType   mObjectType {};
-  float2       mPos {};
-  float2       mSize {};
-  Maybe<UUID>  mObjectId;
+  Shared<Object> mObject;
+  float2         mPreviousPos {};
+  float2         mUpdatedPos {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd

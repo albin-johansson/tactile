@@ -19,8 +19,30 @@
 
 #pragma once
 
-#include "core/cmd/object/add_object.hpp"
-#include "core/cmd/object/move_object.hpp"
-#include "core/cmd/object/rename_object.hpp"
-#include "core/cmd/object/set_object_tag.hpp"
-#include "core/cmd/object/set_object_visible.hpp"
+#include "core/cmd/command.hpp"
+#include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
+#include "core/layer/object.hpp"
+
+namespace tactile::cmd {
+
+class SetObjectTag final : public ICommand
+{
+ public:
+  SetObjectTag(Shared<Object> object, std::string tag);
+
+  void undo() override;
+
+  void redo() override;
+
+  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
+
+  [[nodiscard]] auto get_name() const -> std::string override;
+
+ private:
+  Shared<Object>     mObject;
+  std::string        mNewTag;
+  Maybe<std::string> mOldTag;
+};
+
+}  // namespace tactile::cmd

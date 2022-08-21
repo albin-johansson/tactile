@@ -17,41 +17,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "set_object_visible_cmd.hpp"
+#include "core/cmd/object/move_object.hpp"
 
-#include <utility>  // move
+#include <gtest/gtest.h>
 
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "misc/panic.hpp"
+#include "unit-tests/core/helpers/map_builder.hpp"
 
-namespace tactile {
+namespace tactile::test {
 
-SetObjectVisibleCmd::SetObjectVisibleCmd(Shared<Object> object, const bool visible)
-    : mObject {std::move(object)}
-    , mNewVisibility {visible}
+TEST(MoveObject, Constructor)
 {
-  if (!mObject) {
-    throw TactileError {"Invalid null object!"};
-  }
+  ASSERT_THROW(cmd::MoveObject(nullptr, {}, {}), TactileError);
 }
 
-void SetObjectVisibleCmd::undo()
+TEST(MoveObject, RedoUndo)
 {
-  mObject->set_visible(mOldVisibility.value());
-  mOldVisibility.reset();
+  Shared<Object> object;
+
+  auto document = test::MapBuilder::build()  //
+                      .with_object(ObjectType::Rect, &object)
+                      .result();
+
+  const float2 initial_pos {843, 317};
+  object->set_pos(initial_pos);
+
+  const float2    new_pos {-835, 94};
+  cmd::MoveObject cmd {object, initial_pos, new_pos};
+
+  cmd.redo();
+  ASSERT_EQ(new_pos, object->get_pos());
+
+  cmd.undo();
+  ASSERT_EQ(initial_pos, object->get_pos());
 }
 
-void SetObjectVisibleCmd::redo()
-{
-  mOldVisibility = mObject->is_visible();
-  mObject->set_visible(mNewVisibility);
-}
-
-auto SetObjectVisibleCmd::get_name() const -> std::string
-{
-  const auto& lang = get_current_language();
-  return mNewVisibility ? lang.cmd.show_object : lang.cmd.hide_object;
-}
-
-}  // namespace tactile
+}  // namespace tactile::test

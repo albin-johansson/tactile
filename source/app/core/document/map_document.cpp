@@ -147,17 +147,17 @@ void MapDocument::add_rectangle(const UUID&   layer_id,
                                 const float2& pos,
                                 const float2& size)
 {
-  get_history().exec<AddObjectCmd>(this, layer_id, ObjectType::Rect, pos, size);
+  get_history().exec<cmd::AddObject>(this, layer_id, ObjectType::Rect, pos, size);
 }
 
 void MapDocument::add_ellipse(const UUID& layer_id, const float2& pos, const float2& size)
 {
-  get_history().exec<AddObjectCmd>(this, layer_id, ObjectType::Ellipse, pos, size);
+  get_history().exec<cmd::AddObject>(this, layer_id, ObjectType::Ellipse, pos, size);
 }
 
 void MapDocument::add_point(const UUID& layer_id, const float2& pos)
 {
-  get_history().exec<AddObjectCmd>(this, layer_id, ObjectType::Point, pos);
+  get_history().exec<cmd::AddObject>(this, layer_id, ObjectType::Point, pos);
 }
 
 void MapDocument::move_object(const UUID&   object_id,
@@ -165,25 +165,25 @@ void MapDocument::move_object(const UUID&   object_id,
                               const float2& updated)
 {
   auto object = get_object(object_id);
-  get_history().exec<MoveObjectCmd>(std::move(object), previous, updated);
+  get_history().exec<cmd::MoveObject>(std::move(object), previous, updated);
 }
 
 void MapDocument::set_object_visible(const UUID& object_id, const bool visible)
 {
   auto object = get_object(object_id);
-  get_history().exec<SetObjectVisibleCmd>(std::move(object), visible);
+  get_history().exec<cmd::SetObjectVisible>(std::move(object), visible);
 }
 
 void MapDocument::set_object_name(const UUID& object_id, std::string name)
 {
   auto object = get_object(object_id);
-  get_history().exec<RenameObjectCmd>(std::move(object), std::move(name));
+  get_history().exec<cmd::RenameObject>(std::move(object), std::move(name));
 }
 
 void MapDocument::set_object_tag(const UUID& object_id, std::string tag)
 {
   auto object = get_object(object_id);
-  get_history().exec<SetObjectTagCmd>(std::move(object), std::move(tag));
+  get_history().exec<cmd::SetObjectTag>(std::move(object), std::move(tag));
 }
 
 auto MapDocument::get_object(const UUID& object_id) -> Shared<Object>

@@ -17,30 +17,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "move_object.hpp"
 
-#include "core/cmd/command.hpp"
-#include "core/common/maybe.hpp"
-#include "core/common/memory.hpp"
-#include "core/layer/object.hpp"
+#include <utility>  // move
 
-namespace tactile {
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
+#include "misc/panic.hpp"
 
-class SetObjectVisibleCmd final : public ICommand
+namespace tactile::cmd {
+
+MoveObject::MoveObject(Shared<Object> object,
+                       const float2&  previous,
+                       const float2&  updated)
+    : mObject {std::move(object)}
+    , mPreviousPos {previous}
+    , mUpdatedPos {updated}
 {
- public:
-  SetObjectVisibleCmd(Shared<Object> object, bool visible);
+  if (!mObject) {
+    throw TactileError {"Invalid null object!"};
+  }
+}
 
-  void undo() override;
+void MoveObject::undo()
+{
+  mObject->set_pos(mPreviousPos);
+}
 
-  void redo() override;
+void MoveObject::redo()
+{
+  mObject->set_pos(mUpdatedPos);
+}
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+auto MoveObject::get_name() const -> std::string
+{
+  const auto& lang = get_current_language();
+  return lang.cmd.move_object;
+}
 
- private:
-  Shared<Object> mObject;
-  bool           mNewVisibility;
-  Maybe<bool>    mOldVisibility;
-};
-
-}  // namespace tactile
+}  // namespace tactile::cmd

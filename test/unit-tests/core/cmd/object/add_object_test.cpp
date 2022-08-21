@@ -17,39 +17,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/cmd/object/move_object_cmd.hpp"
+#include "core/cmd/object/add_object.hpp"
 
 #include <gtest/gtest.h>
 
+#include "core/layer/object_layer.hpp"
 #include "misc/panic.hpp"
 #include "unit-tests/core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(MoveObjectCmd, Constructor)
+TEST(AddObject, Constructor)
 {
-  ASSERT_THROW(MoveObjectCmd(nullptr, {}, {}), TactileError);
+  ASSERT_THROW(cmd::AddObject(nullptr, make_uuid(), ObjectType::Rect, {}), TactileError);
 }
 
-TEST(MoveObjectCmd, RedoUndo)
+TEST(AddObject, RedoUndo)
 {
-  Shared<Object> object;
+  UUID  layer_id;
+  auto  document = test::MapBuilder::build().with_object_layer(&layer_id).result();
+  auto& layer = document->get_map().view_object_layer(layer_id);
 
-  auto document = test::MapBuilder::build()  //
-                      .with_object(ObjectType::Rect, &object)
-                      .result();
-
-  const float2 initialPos {843, 317};
-  object->set_pos(initialPos);
-
-  const float2  newPos {-835, 94};
-  MoveObjectCmd cmd {object, initialPos, newPos};
+  cmd::AddObject cmd {document.get(), layer_id, ObjectType::Point, {0, 0}};
 
   cmd.redo();
-  ASSERT_EQ(newPos, object->get_pos());
+  ASSERT_EQ(1, layer.object_count());
+
+  auto       object = layer.begin()->second;
+  const auto object_id = object->get_uuid();
+  ASSERT_TRUE(document->get_contexts().contains(object_id));
 
   cmd.undo();
-  ASSERT_EQ(initialPos, object->get_pos());
+  ASSERT_EQ(0, layer.object_count());
+  ASSERT_FALSE(document->get_contexts().contains(object_id));
 }
 
 }  // namespace tactile::test

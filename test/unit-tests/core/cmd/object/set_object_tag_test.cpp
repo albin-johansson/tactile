@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/cmd/object/set_object_visible_cmd.hpp"
+#include "core/cmd/object/set_object_tag.hpp"
 
 #include <gtest/gtest.h>
 
@@ -26,12 +26,31 @@
 
 namespace tactile::test {
 
-TEST(SetObjectVisibleCmd, Constructor)
+TEST(SetObjectTag, Constructor)
 {
-  ASSERT_THROW(SetObjectVisibleCmd(nullptr, false), TactileError);
+  ASSERT_THROW(cmd::SetObjectTag(nullptr, ""), TactileError);
 }
 
-TEST(SetObjectVisibleCmd, RedoUndo)
+TEST(SetObjectTag, RedoUndo)
+{
+  Shared<Object> object;
+
+  auto map = test::MapBuilder::build()  //
+                 .with_object(ObjectType::Rect, &object)
+                 .result();
+
+  object->set_tag("old-tag");
+
+  cmd::SetObjectTag cmd {object, "new-tag"};
+
+  cmd.redo();
+  ASSERT_EQ("new-tag", object->get_tag());
+
+  cmd.undo();
+  ASSERT_EQ("old-tag", object->get_tag());
+}
+
+TEST(SetObjectTag, MergeSupport)
 {
   Shared<Object> object;
 
@@ -39,13 +58,18 @@ TEST(SetObjectVisibleCmd, RedoUndo)
                       .with_object(ObjectType::Rect, &object)
                       .result();
 
-  SetObjectVisibleCmd cmd {object, false};
+  object->set_tag("x");
 
-  cmd.redo();
-  ASSERT_FALSE(object->is_visible());
+  cmd::SetObjectTag       a {object, "a"};
+  const cmd::SetObjectTag b {object, "b"};
 
-  cmd.undo();
-  ASSERT_TRUE(object->is_visible());
+  ASSERT_TRUE(a.merge_with(&b));
+
+  a.redo();
+  ASSERT_EQ("b", object->get_tag());
+
+  a.undo();
+  ASSERT_EQ("x", object->get_tag());
 }
 
 }  // namespace tactile::test

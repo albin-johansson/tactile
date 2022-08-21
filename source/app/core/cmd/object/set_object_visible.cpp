@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "set_object_tag_cmd.hpp"
+#include "set_object_visible.hpp"
 
 #include <utility>  // move
 
@@ -25,45 +25,33 @@
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-SetObjectTagCmd::SetObjectTagCmd(Shared<Object> object, std::string tag)
+SetObjectVisible::SetObjectVisible(Shared<Object> object, const bool visible)
     : mObject {std::move(object)}
-    , mNewTag {std::move(tag)}
+    , mNewVisibility {visible}
 {
   if (!mObject) {
     throw TactileError {"Invalid null object!"};
   }
 }
 
-void SetObjectTagCmd::undo()
+void SetObjectVisible::undo()
 {
-  mObject->set_tag(mOldTag.value());
-  mOldTag.reset();
+  mObject->set_visible(mOldVisibility.value());
+  mOldVisibility.reset();
 }
 
-void SetObjectTagCmd::redo()
+void SetObjectVisible::redo()
 {
-  mOldTag = mObject->get_tag();
-  mObject->set_tag(mNewTag);
+  mOldVisibility = mObject->is_visible();
+  mObject->set_visible(mNewVisibility);
 }
 
-auto SetObjectTagCmd::merge_with(const ICommand* cmd) -> bool
-{
-  if (const auto* other = dynamic_cast<const SetObjectTagCmd*>(cmd)) {
-    if (mObject->get_uuid() == other->mObject->get_uuid()) {
-      mNewTag = other->mNewTag;
-      return true;
-    }
-  }
-
-  return false;
-}
-
-auto SetObjectTagCmd::get_name() const -> std::string
+auto SetObjectVisible::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
-  return lang.cmd.update_object_tag;
+  return mNewVisibility ? lang.cmd.show_object : lang.cmd.hide_object;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

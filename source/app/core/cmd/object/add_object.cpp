@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "add_object_cmd.hpp"
+#include "add_object.hpp"
 
 #include <utility>  // move
 
@@ -27,15 +27,15 @@
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-AddObjectCmd::AddObjectCmd(MapDocument*  document,
-                           const UUID&   layerId,
-                           ObjectType    type,
-                           const float2& pos,
-                           const float2& size)
+AddObject::AddObject(MapDocument*  document,
+                     const UUID&   layer_id,
+                     ObjectType    type,
+                     const float2& pos,
+                     const float2& size)
     : mDocument {document}
-    , mLayerId {layerId}
+    , mLayerId {layer_id}
     , mObjectType {type}
     , mPos {pos}
     , mSize {size}
@@ -45,18 +45,18 @@ AddObjectCmd::AddObjectCmd(MapDocument*  document,
   }
 }
 
-void AddObjectCmd::undo()
+void AddObject::undo()
 {
   auto& map = mDocument->get_map();
   auto& layer = map.view_object_layer(mLayerId);
 
-  const auto objectId = mObjectId.value();
-  layer.remove_object(objectId);
+  const auto object_id = mObjectId.value();
+  layer.remove_object(object_id);
 
-  mDocument->get_contexts().erase(objectId);
+  mDocument->get_contexts().erase(object_id);
 }
 
-void AddObjectCmd::redo()
+void AddObject::redo()
 {
   auto& map = mDocument->get_map();
   auto& layer = map.view_object_layer(mLayerId);
@@ -73,7 +73,7 @@ void AddObjectCmd::redo()
   mDocument->get_contexts().add_context(std::move(object));
 }
 
-auto AddObjectCmd::get_name() const -> std::string
+auto AddObject::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   switch (mObjectType) {
@@ -91,4 +91,4 @@ auto AddObjectCmd::get_name() const -> std::string
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

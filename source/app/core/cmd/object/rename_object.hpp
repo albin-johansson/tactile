@@ -24,12 +24,12 @@
 #include "core/common/memory.hpp"
 #include "core/layer/object.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-class RenameObjectCmd final : public ICommand
+class RenameObject final : public ICommand
 {
  public:
-  RenameObjectCmd(Shared<Object> object, std::string name);
+  RenameObject(Shared<Object> object, std::string name);
 
   void undo() override;
 
@@ -45,4 +45,4 @@ class RenameObjectCmd final : public ICommand
   Maybe<std::string> mOldName;
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd

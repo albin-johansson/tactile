@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/cmd/object/rename_object_cmd.hpp"
+#include "core/cmd/object/rename_object.hpp"
 
 #include <gtest/gtest.h>
 
@@ -26,12 +26,12 @@
 
 namespace tactile::test {
 
-TEST(RenameObjectCmd, Constructor)
+TEST(RenameObject, Constructor)
 {
-  ASSERT_THROW(RenameObjectCmd(nullptr, ""), TactileError);
+  ASSERT_THROW(cmd::RenameObject(nullptr, ""), TactileError);
 }
 
-TEST(RenameObjectCmd, RedoUndo)
+TEST(RenameObject, RedoUndo)
 {
   Shared<Object> object;
 
@@ -41,7 +41,7 @@ TEST(RenameObjectCmd, RedoUndo)
 
   object->set_name("foo");
 
-  RenameObjectCmd cmd {object, "bar"};
+  cmd::RenameObject cmd {object, "bar"};
 
   cmd.redo();
   ASSERT_EQ("bar", object->get_name());
@@ -50,7 +50,7 @@ TEST(RenameObjectCmd, RedoUndo)
   ASSERT_EQ("foo", object->get_name());
 }
 
-TEST(RenameObjectCmd, MergeSupport)
+TEST(RenameObject, MergeSupport)
 {
   Shared<Object> object;
 
@@ -60,9 +60,9 @@ TEST(RenameObjectCmd, MergeSupport)
 
   object->set_name("start");
 
-  RenameObjectCmd       a {object, "a"};
-  const RenameObjectCmd b {object, "b"};
-  const RenameObjectCmd c {object, "c"};
+  cmd::RenameObject       a {object, "a"};
+  const cmd::RenameObject b {object, "b"};
+  const cmd::RenameObject c {object, "c"};
 
   ASSERT_TRUE(a.merge_with(&b));
   ASSERT_TRUE(a.merge_with(&c));

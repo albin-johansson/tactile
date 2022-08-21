@@ -24,25 +24,23 @@
 #include "core/common/memory.hpp"
 #include "core/layer/object.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-class SetObjectTagCmd final : public ICommand
+class SetObjectVisible final : public ICommand
 {
  public:
-  SetObjectTagCmd(Shared<Object> object, std::string tag);
+  SetObjectVisible(Shared<Object> object, bool visible);
 
   void undo() override;
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
-
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<Object>     mObject;
-  std::string        mNewTag;
-  Maybe<std::string> mOldTag;
+  Shared<Object> mObject;
+  bool           mNewVisibility;
+  Maybe<bool>    mOldVisibility;
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd

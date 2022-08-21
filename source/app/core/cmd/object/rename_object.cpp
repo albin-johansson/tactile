@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "rename_object_cmd.hpp"
+#include "rename_object.hpp"
 
 #include <utility>  // move
 
@@ -25,9 +25,9 @@
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-RenameObjectCmd::RenameObjectCmd(Shared<Object> object, std::string name)
+RenameObject::RenameObject(Shared<Object> object, std::string name)
     : mObject {std::move(object)}
     , mNewName {std::move(name)}
 {
@@ -36,21 +36,21 @@ RenameObjectCmd::RenameObjectCmd(Shared<Object> object, std::string name)
   }
 }
 
-void RenameObjectCmd::undo()
+void RenameObject::undo()
 {
   mObject->set_name(mOldName.value());
   mOldName.reset();
 }
 
-void RenameObjectCmd::redo()
+void RenameObject::redo()
 {
   mOldName = mObject->get_name();
   mObject->set_name(mNewName);
 }
 
-auto RenameObjectCmd::merge_with(const ICommand* cmd) -> bool
+auto RenameObject::merge_with(const ICommand* cmd) -> bool
 {
-  if (const auto* other = dynamic_cast<const RenameObjectCmd*>(cmd)) {
+  if (const auto* other = dynamic_cast<const RenameObject*>(cmd)) {
     if (mObject->get_uuid() == other->mObject->get_uuid()) {
       mNewName = other->mNewName;
       return true;
@@ -60,10 +60,10 @@ auto RenameObjectCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto RenameObjectCmd::get_name() const -> std::string
+auto RenameObject::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return lang.cmd.rename_object;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd
