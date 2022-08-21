@@ -14,7 +14,6 @@ command types that override `merge_with()`. See the in-source documentation for 
 
 The process of adding a new command to the application always involves a set of steps which are listed in this section.
 
-1. Add an enumerator for the new command to the `CommandId` enum.
-2. Most commands are executed as a result of an event, often handled by the `App` class.
-3. Make sure the dispatcher connects the event to the appropriate `App` function.
-4. Implement the creation of the command in one of the document classes.
+1. Most commands are executed as a result of an event, often handled by the `App` class.
+2. Make sure the dispatcher connects the event to the appropriate `App` function.
+3. Implement the creation of the command in one of the document classes.
