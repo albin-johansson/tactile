@@ -99,7 +99,7 @@ namespace {
 }
 
 [[nodiscard]] auto parse_component_definition_attribute(const YAML::Node& node,
-                                                        ir::ComponentMap& def)
+                                                        ir::AttributeMap& def)
     -> ParseError
 {
   std::string name;

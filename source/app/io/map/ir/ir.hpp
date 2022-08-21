@@ -32,6 +32,7 @@
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
+#include "core/common/tiles.hpp"
 #include "core/common/uuid.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/object_type.hpp"
@@ -39,36 +40,33 @@
 
 namespace tactile::ir {
 
-using ComponentMap = TreeMap<std::string, Attribute>;
+using AttributeMap = TreeMap<std::string, Attribute>;
+using ComponentMap = TreeMap<std::string, AttributeMap>;
 
 struct ContextData final
 {
-  TreeMap<std::string, Attribute>    properties;
-  TreeMap<std::string, ComponentMap> components;
+  AttributeMap properties;
+  ComponentMap components;
 };
 
 struct ObjectData final
 {
-  ObjectID   id {};
-  ObjectType type {};
-
-  Vector2f pos {};
-  Vector2f size {};
-
+  ObjectID    id {};
+  ObjectType  type {};
+  Vector2f    pos {};
+  Vector2f    size {};
   std::string name;
   std::string tag;
-
   ContextData context;
-
-  bool visible {};
+  bool        visible {};
 };
 
 struct TileLayerData final
 {
-  /* The sizes are provided for convenience, they should mirror the MapData values */
-  usize                            row_count {};
-  usize                            col_count {};
-  std::vector<std::vector<TileID>> tiles;
+  // The sizes are provided for convenience, they should mirror the map dimensions.
+  usize      row_count {};
+  usize      col_count {};
+  TileMatrix tiles;
 };
 
 struct ObjectLayerData final
@@ -93,18 +91,14 @@ struct LayerData final
 {
   using data_type = std::variant<TileLayerData, ObjectLayerData, GroupLayerData>;
 
-  LayerID   id {};
-  LayerType type {};
-
-  usize index {};  /// Local index.
-
+  LayerID     id {};
+  LayerType   type {};
+  usize       index {};  /// Local index.
   std::string name;
   data_type   data;
-
   ContextData context;
-
-  float opacity {};
-  bool  visible {};
+  float       opacity {};
+  bool        visible {};
 };
 
 struct MetaAnimationFrameData final
@@ -124,21 +118,18 @@ struct MetaTileData final
 
 struct TilesetData final
 {
+  using MetaTiles = HashMap<TileIndex, MetaTileData>;
+
   UUID uuid {make_uuid()};  // This is not persistent! Only here for convenience.
 
   std::string name;
   TileID      first_tile {};
-
-  Vector2i tile_size {};
-
-  int32 tile_count {};
-  int32 column_count {};
-
-  fs::path image_path;
-  Vector2i image_size {};
-
-  HashMap<TileIndex, MetaTileData> fancy_tiles;
-
+  Vector2i    tile_size {};
+  int32       tile_count {};
+  int32       column_count {};
+  fs::path    image_path;
+  Vector2i    image_size {};
+  MetaTiles   fancy_tiles;
   ContextData context;
 };
 
@@ -150,24 +141,18 @@ struct TileFormatData final
   Maybe<int32>    zstd_compression_level {};
 };
 
-struct MapData
+struct MapData final
 {
-  usize row_count {};
-  usize col_count {};
-
-  Vector2i tile_size {};
-
-  int32 next_layer_id {};
-  int32 next_object_id {};
-
-  TileFormatData tile_format;
-
-  TreeMap<std::string, ComponentMap> component_definitions;
-
+  usize                    row_count {};
+  usize                    col_count {};
+  Vector2i                 tile_size {};
+  int32                    next_layer_id {};
+  int32                    next_object_id {};
+  TileFormatData           tile_format;
+  ComponentMap             component_definitions;
   std::vector<TilesetData> tilesets;
   std::vector<LayerData>   layers;
-
-  ContextData context;
+  ContextData              context;
 };
 
 }  // namespace tactile::ir
