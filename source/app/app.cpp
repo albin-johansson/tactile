@@ -220,6 +220,8 @@ void App::subscribe_to_events()
 
   d.sink<SetTileFormatEncodingEvent>().connect<&App::on_set_tile_format_encoding>(this);
   d.sink<SetTileFormatCompressionEvent>().connect<&App::on_set_tile_format_compression>(this);
+  d.sink<SetZlibCompressionLevelEvent>().connect<&App::on_set_zlib_compression_level>(this);
+  d.sink<SetZstdCompressionLevelEvent>().connect<&App::on_set_zstd_compression_level>(this);
 
   d.sink<AddLayerEvent>().connect<&App::on_add_layer>(this);
   d.sink<RemoveLayerEvent>().connect<&App::on_remove_layer>(this);
@@ -766,6 +768,20 @@ void App::on_set_tile_format_compression(const SetTileFormatCompressionEvent& ev
 {
   if (auto* document = active_map_document()) {
     document->set_tile_format_compression(event.compression);
+  }
+}
+
+void App::on_set_zlib_compression_level(const SetZlibCompressionLevelEvent& event)
+{
+  if (auto* document = active_map_document()) {
+    document->set_zlib_compression_level(event.level);
+  }
+}
+
+void App::on_set_zstd_compression_level(const SetZstdCompressionLevelEvent& event)
+{
+  if (auto* document = active_map_document()) {
+    document->set_zstd_compression_level(event.level);
   }
 }
 

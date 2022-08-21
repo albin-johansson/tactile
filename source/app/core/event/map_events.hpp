@@ -92,4 +92,14 @@ struct SetTileFormatEncodingEvent final
   TileEncoding encoding {};
 };
 
+struct SetZlibCompressionLevelEvent final
+{
+  int level {};
+};
+
+struct SetZstdCompressionLevelEvent final
+{
+  int level {};
+};
+
 }  // namespace tactile

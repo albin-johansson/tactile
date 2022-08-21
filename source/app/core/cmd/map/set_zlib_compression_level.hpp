@@ -19,13 +19,33 @@
 
 #pragma once
 
-#include "core/cmd/map/add_column.hpp"
-#include "core/cmd/map/add_row.hpp"
-#include "core/cmd/map/fix_map_tiles.hpp"
-#include "core/cmd/map/remove_column.hpp"
-#include "core/cmd/map/remove_row.hpp"
-#include "core/cmd/map/resize_map.hpp"
-#include "core/cmd/map/set_tile_format_compression.hpp"
-#include "core/cmd/map/set_tile_format_encoding.hpp"
-#include "core/cmd/map/set_zlib_compression_level.hpp"
-#include "core/cmd/map/set_zstd_compression_level.hpp"
+#include "core/cmd/command.hpp"
+#include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
+
+namespace tactile {
+class Map;
+}  // namespace tactile
+
+namespace tactile::cmd {
+
+class SetZlibCompressionLevel final : public ICommand
+{
+ public:
+  SetZlibCompressionLevel(Shared<Map> map, int level);
+
+  void undo() override;
+
+  void redo() override;
+
+  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
+
+  [[nodiscard]] auto get_name() const -> std::string override;
+
+ private:
+  Shared<Map> mMap;
+  int         mNewLevel {};
+  Maybe<int>  mOldLevel {};
+};
+
+}  // namespace tactile::cmd

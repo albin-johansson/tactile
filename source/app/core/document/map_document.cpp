@@ -209,6 +209,16 @@ void MapDocument::set_tile_format_compression(const TileCompression compression)
   get_history().exec<SetTileFormatCompression>(mMap, compression);
 }
 
+void MapDocument::set_zlib_compression_level(const int level)
+{
+  get_history().exec<cmd::SetZlibCompressionLevel>(mMap, level);
+}
+
+void MapDocument::set_zstd_compression_level(const int level)
+{
+  get_history().exec<cmd::SetZstdCompressionLevel>(mMap, level);
+}
+
 void MapDocument::set_component_index(Shared<ComponentIndex> index)
 {
   mDelegate.set_component_index(std::move(index));

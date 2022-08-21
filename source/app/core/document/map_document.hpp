@@ -107,6 +107,9 @@ class MapDocument final : public ADocument
   void set_tile_format_encoding(TileEncoding encoding);
   void set_tile_format_compression(TileCompression compression);
 
+  void set_zlib_compression_level(int level);
+  void set_zstd_compression_level(int level);
+
   void set_component_index(Shared<ComponentIndex> index) override;
 
   void set_name(std::string name) override;

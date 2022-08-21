@@ -165,6 +165,8 @@ class App final : AEventLoop
 
   void on_set_tile_format_encoding(const SetTileFormatEncodingEvent& event);
   void on_set_tile_format_compression(const SetTileFormatCompressionEvent& event);
+  void on_set_zlib_compression_level(const SetZlibCompressionLevelEvent& event);
+  void on_set_zstd_compression_level(const SetZstdCompressionLevelEvent& event);
 
   void on_add_layer(const AddLayerEvent& event);
   void on_remove_layer(const RemoveLayerEvent& event);
