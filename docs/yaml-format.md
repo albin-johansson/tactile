@@ -1,8 +1,8 @@
 # Tactile YAML Format
 
-Other than the Tiled JSON and XML formats, Tactile supports its own custom YAML map format. If you're familiar with the
-Tiled JSON format, you'll notice many similarities. However, one of the key differences is that the Tactile YAML format
-doesn't support embedded tilesets. All predefined names are in `kebab-case`.
+In addition to the Tiled JSON and XML formats, Tactile supports its own custom YAML map format. If you're familiar with
+the Tiled JSON format, you'll notice many similarities. However, one of the key differences is that the Tactile YAML
+format doesn't support embedded tilesets. All predefined names are in `kebab-case`.
 
 All attributes that aren't specified as required may be omitted from save files.
 
@@ -10,21 +10,24 @@ All attributes that aren't specified as required may be omitted from save files.
 
 The root node in the Tactile YAML format provides general information about the tilemap.
 
-|               Attribute |     Type     | Required | Description                           |
-|------------------------:|:------------:|:--------:|:--------------------------------------|
-|               `version` |    `int`     |   Yes    | The version of the YAML map format.   |
-|             `row-count` |    `int`     |   Yes    | The number of rows in the tilemap.    |
-|          `column-count` |    `int`     |   Yes    | The number of columns in the tilemap. |
-|            `tile-width` |    `int`     |   Yes    | The width of tiles in the tilemap.    |
-|           `tile-height` |    `int`     |   Yes    | The height of tiles in the tilemap.   |
-|         `next-layer-id` |    `int`     |   Yes    | The next available layer ID.          |
-|        `next-object-id` |    `int`     |   Yes    | The next available object ID.         |
-|           `tile-format` | `TileFormat` |    No    |                                       |
-|                `layers` |   Sequence   |    No    | A sequence of `Layer` nodes.          |
-|              `tilesets` |   Sequence   |    No    | A sequence of `TilesetRef` nodes.     |
-|            `properties` |   Sequence   |    No    | A sequence of `Property` nodes.       |
-| `component-definitions` |   Sequence   |    No    | A sequence of `ComponentDef` nodes.   |
-|            `components` |   Sequence   |    No    | A sequence of `Component` nodes.      |
+Required attributes: `version`, `row-count`, `column-count`, `tile-width`, `tile-height`, `next-layer-id`
+, `next-object-id`.
+
+|               Attribute |       Type       | Description                           |
+|------------------------:|:----------------:|:--------------------------------------|
+|               `version` |      `int`       | The version of the YAML map format.   |
+|             `row-count` |      `int`       | The number of rows in the tilemap.    |
+|          `column-count` |      `int`       | The number of columns in the tilemap. |
+|            `tile-width` |      `int`       | The width of tiles in the tilemap.    |
+|           `tile-height` |      `int`       | The height of tiles in the tilemap.   |
+|         `next-layer-id` |      `int`       | The next available layer ID.          |
+|        `next-object-id` |      `int`       | The next available object ID.         |
+|           `tile-format` |   `TileFormat`   |                                       |
+| `component-definitions` | `ComponentDef[]` |                                       |
+|                `layers` |    `Layer[]`     |                                       |
+|              `tilesets` |  `TilesetRef[]`  |                                       |
+|            `properties` |   `Property[]`   |                                       |
+|            `components` |  `Component[]`   |                                       |
 
 ---
 
@@ -46,12 +49,14 @@ The `zlib-compression-level` attribute directly corresponds to Zlib constants su
 is `-1`), `Z_BEST_SPEED` (which is `1`), and `Z_BEST_COMPRESSION` (which is `9`). You can use other values in the
 interval `[1, 9]` to request an intermediate compression mode, depending on the tradeoff you want to make.
 
-|                Attribute |                 Type                 | Required |        Default        | Description                                   |
-|-------------------------:|:------------------------------------:|:--------:|:---------------------:|:----------------------------------------------|
-|               `encoding` |       One of `plain`, `base64`       |    No    |        `plain`        | Tile layer data encoding.                     |
-|            `compression` |    One of `none`, `zlib`, `zstd`     |    No    |        `none`         | The compression algorithm used.               |
-| `zlib-compression-level` | Either `-1` or in the range `[1, 9]` |    No    |         `-1`          |                                               |
-| `zstd-compression-level` |                `int`                 |    No    |          `3`          |                                               |
+Required attributes: N/A.
+
+|                Attribute | Type     |           Possible values            | Default | Description                      |
+|-------------------------:|:---------|:------------------------------------:|:-------:|:---------------------------------|
+|               `encoding` | `string` |         `plain`, or `base64`         | `plain` | Tile layer data encoding.        |
+|            `compression` | `string` |      `none`, `zlib`, or `zstd`       | `none`  | The compression algorithm used.  |
+| `zlib-compression-level` | `int`    | Either `-1` or in the range `[1, 9]` |  `-1`   | Optional Zlib compression level. |
+| `zstd-compression-level` | `int`    |        In the range `[1, 19]`        |   `3`   | Optional Zstd compression level. |
 
 Example:
 
@@ -67,14 +72,16 @@ zlib-compression-level: 9
 
 TODO v2: consider removing `id`
 
-|    Attribute |                         Type                         | Required | Default | Description                                      |
-|-------------:|:----------------------------------------------------:|:--------:|:-------:|:-------------------------------------------------|
-|       `name` |                       `string`                       |   Yes    |   N/A   | The name associated with the layer.              |
-|         `id` |                        `int`                         |   Yes    |   N/A   | The unique identifier associated with the layer. |
-|       `type` | One of `tile-layer`, `object-layer` or `group-layer` |   Yes    |   N/A   |                                                  |
-|    `opacity` |                       `float`                        |    No    |  `1.0`  | The opacity of the layer, in the range [0, 1].   |
-|    `visible` |                        `bool`                        |    No    | `true`  | Whether or not the layer is rendered.            |
-| `properties` |                       Sequence                       |    No    |   N/A   | A sequence of `Property` nodes.                  |
+Required attributes: `name`, `id`, `type`.
+
+|    Attribute | Type         | Description                                      |
+|-------------:|:-------------|:-------------------------------------------------|
+|       `name` | `string`     | The name associated with the layer.              |
+|         `id` | `int`        | The unique identifier associated with the layer. |
+|       `type` | `string`     | `tile-layer`, `object-layer`, or `group-layer`   |
+|    `opacity` | `float`      | The opacity of the layer, in the range [0, 1].   |
+|    `visible` | `bool`       | Whether or not the layer is rendered.            |
+| `properties` | `Property[]` |                                                  |
 
 Examples:
 
@@ -99,38 +106,46 @@ attributes.
 
 ### `TileLayer`
 
-| Attribute |   Type   | Required | Description                                                   |
-|----------:|:--------:|:--------:|:--------------------------------------------------------------|
-|    `data` | `string` |   Yes    | A string of (potentially compressed) global tile identifiers. |
+Required attributes: `data`.
+
+| Attribute |   Type   | Description                                                   |
+|----------:|:--------:|:--------------------------------------------------------------|
+|    `data` | `string` | A string of (potentially compressed) global tile identifiers. |
 
 ### `ObjectLayer`
 
-| Attribute |   Type   | Required | Description                   |
-|----------:|:--------:|:--------:|:------------------------------|
-| `objects` | Sequence |   Yes    | A sequence of `Object` nodes. |
+Required attributes: `objects`.
+
+| Attribute |    Type    |
+|----------:|:----------:|
+| `objects` | `Object[]` |
 
 ### `GroupLayer`
 
-| Attribute |   Type   | Required | Description                  |
-|----------:|:--------:|:--------:|:-----------------------------|
-|  `layers` | Sequence |   Yes    | A sequence of `Layer` nodes. |
+Required attributes: `layers`.
+
+| Attribute |   Type    |
+|----------:|:---------:|
+|  `layers` | `Layer[]` |
 
 ---
 
 ## `Object`
 
-|    Attribute |                Type                 | Required | Default | Description                     |
-|-------------:|:-----------------------------------:|:--------:|:-------:|:--------------------------------|
-|         `id` |                `int`                |   Yes    |   N/A   |                                 |
-|       `type` | One of `point`, `rect` or `ellipse` |   Yes    |   N/A   |                                 |
-|       `name` |              `string`               |    No    |  `""`   |                                 |
-|        `tag` |              `string`               |    No    |  `""`   | A user-defined type tag.        |
-|    `visible` |               `bool`                |    No    | `true`  |                                 |
-|          `x` |               `float`               |    No    |   `0`   |                                 |
-|          `y` |               `float`               |    No    |   `0`   |                                 |
-|      `width` |               `float`               |    No    |   `0`   |                                 |
-|     `height` |               `float`               |    No    |   `0`   |                                 |
-| `properties` |              Sequence               |    No    |   N/A   | A sequence of `Property` nodes. |
+Required attributes: `id`, `type`.
+
+|    Attribute |     Type     | Default | Description                   |
+|-------------:|:------------:|:-------:|:------------------------------|
+|         `id` |    `int`     |   N/A   |                               |
+|       `type` |   `string`   |   N/A   | `point`, `rect`, or `ellipse` |
+|       `name` |   `string`   |  `""`   |                               |
+|        `tag` |   `string`   |  `""`   | A user-defined type tag.      |
+|    `visible` |    `bool`    | `true`  |                               |
+|          `x` |   `float`    |   `0`   |                               |
+|          `y` |   `float`    |   `0`   |                               |
+|      `width` |   `float`    |   `0`   |                               |
+|     `height` |   `float`    |   `0`   |                               |
+| `properties` | `Property[]` |   N/A   |                               |
 
 Example:
 
@@ -152,10 +167,12 @@ tilemap file.
 
 TODO v2: change `first-global-id` to `first-tile`.
 
-|         Attribute |   Type   | Required | Description                                           |
-|------------------:|:--------:|:--------:|:------------------------------------------------------|
-| `first-global-id` |  `int`   |   Yes    | The first global tile ID associated with the tileset. |
-|            `path` | `string` |   Yes    | Relative path to the tileset definition file.         |
+Required attributes: `first-global-id`, `path`.
+
+|         Attribute |   Type   | Description                                           |
+|------------------:|:--------:|:------------------------------------------------------|
+| `first-global-id` |  `int`   | The first global tile ID associated with the tileset. |
+|            `path` | `string` | Relative path to the tileset definition file.         |
 
 Example:
 
@@ -172,19 +189,22 @@ The `Tileset` node is always defined in an external YAML file, since embedded ti
 YAML format. By default, a tileset that is added to a map in the Tactile editor will be stored next to the main map
 file. Note, the `tiles` node only contains tiles that feature additional data, such as properties and animations.
 
-|      Attribute |   Type   | Required | Description                                |
-|---------------:|:--------:|:--------:|:-------------------------------------------|
-|      `version` |  `int`   |   Yes    |                                            |
-|         `name` | `string` |   Yes    | The name of the tileset.                   |
-|   `tile-count` |  `int`   |   Yes    | The total amount of tiles in the tileset.  |
-|   `tile-width` |  `int`   |   Yes    | The width of each tile in the tileset.     |
-|  `tile-height` |  `int`   |   Yes    | The height of each tile in the tileset.    |
-| `column-count` |  `int`   |   Yes    | The amount of tile columns in the tileset. |
-|   `image-path` | `string` |   Yes    | Relative path to the tileset image.        |
-|  `image-width` |  `int`   |   Yes    | The width of the tileset image.            |
-| `image-height` |  `int`   |   Yes    | The height of the tileset image.           |
-|        `tiles` | Sequence |    No    | A sequence of `Tile` nodes.                |
-|   `properties` | Sequence |    No    | A sequence of `Property` nodes.            |
+Required attributes: `version`, `name`, `tile-count`, `tile-width`, `tile-height`, `column-count`, `image-path`
+, `image-width`, `image-height`.
+
+|      Attribute |     Type     | Description                                |
+|---------------:|:------------:|:-------------------------------------------|
+|      `version` |    `int`     |                                            |
+|         `name` |   `string`   | The name of the tileset.                   |
+|   `tile-count` |    `int`     | The total amount of tiles in the tileset.  |
+|   `tile-width` |    `int`     | The width of each tile in the tileset.     |
+|  `tile-height` |    `int`     | The height of each tile in the tileset.    |
+| `column-count` |    `int`     | The amount of tile columns in the tileset. |
+|   `image-path` |   `string`   | Relative path to the tileset image.        |
+|  `image-width` |    `int`     | The width of the tileset image.            |
+| `image-height` |    `int`     | The height of the tileset image.           |
+|        `tiles` |   `Tile[]`   |                                            |
+|   `properties` | `Property[]` |                                            |
 
 Example:
 
@@ -206,12 +226,14 @@ The `Tile` node provides additional information about tiles in a tileset.
 
 TODO v2: change `id` to `index`.
 
-|    Attribute |   Type   | Required | Description                      |
-|-------------:|:--------:|:--------:|:---------------------------------|
-|         `id` |  `int`   |   Yes    | Local ID of the associated tile. |
-|  `animation` | Sequence |    No    | A sequence of `Frame` nodes.     |
-|    `objects` | Sequence |    No    | A sequence of `Object` nodes.    |
-| `properties` | Sequence |    No    | A sequence of `Property` nodes.  |
+Required attributes: `id`.
+
+|    Attribute |    Value     | Description                                  |
+|-------------:|:------------:|:---------------------------------------------|
+|         `id` |    `int`     | Index of the tile in the associated tileset. |
+|  `animation` |  `Frame[]`   |                                              |
+|    `objects` |  `Object[]`  |                                              |
+| `properties` | `Property[]` |                                              |
 
 Example:
 
@@ -230,27 +252,33 @@ The `Frame` node represents a frame in an animation.
 
 TODO v2: change `tile` to `tile-index`.
 
-|  Attribute | Type  | Required | Description                                                    |
-|-----------:|:-----:|:--------:|:---------------------------------------------------------------|
-|     `tile` | `int` |   Yes    | Local ID of the tile that should be rendered during the frame. |
-| `duration` | `int` |   Yes    | Duration of the frame, in milliseconds.                        |
+Required attributes: `tile`, `duration`.
+
+|  Attribute | Type  | Description                                                    |
+|-----------:|:-----:|:---------------------------------------------------------------|
+|     `tile` | `int` | Local ID of the tile that should be rendered during the frame. |
+| `duration` | `int` | Duration of the frame, in milliseconds.                        |
 
 ---
 
 ## `ComponentDef`
 
-|    Attribute |   Type   | Required | Description                                 |
-|-------------:|:--------:|:--------:|:--------------------------------------------|
-|       `name` | `string` |   Yes    | The name of the component.                  |
-| `attributes` | Sequence |    No    | A sequence of `ComponentDefAttribute` nodes |
+Required attributes: `name`.
+
+|    Attribute |           Type            | Description                |
+|-------------:|:-------------------------:|:---------------------------|
+|       `name` |         `string`          | The name of the component. |
+| `attributes` | `ComponentDefAttribute[]` |                            |
 
 ## `ComponentDefAttribute`
 
-| Attribute |                                 Type                                 | Required | Description                  |
-|----------:|:--------------------------------------------------------------------:|:--------:|:-----------------------------|
-|    `name` |                               `string`                               |   Yes    | The name of the attribute.   |
-|    `type` | One of `string`, `int`, `float`, `bool`, `color`, `file` or `object` |   Yes    |                              |
-| `default` |                              `variant`                               |    No    | The default attribute value. |
+Required attributes: `name`, `type`.
+
+| Attribute |   Type    | Description                                                     |
+|----------:|:---------:|:----------------------------------------------------------------|
+|    `name` | `string`  | The name of the attribute.                                      |
+|    `type` | `string`  | `string`, `int`, `float`, `bool`, `color`,  `file`, or `object` |
+| `default` | `variant` | The default attribute value.                                    |
 
 Example:
 
@@ -271,17 +299,21 @@ attributes:
 
 ## `Component`
 
-| Attribute |   Type   | Required | Description                                |
-|----------:|:--------:|:--------:|:-------------------------------------------|
-|    `type` | `string` |   Yes    | The name of the component definition type. |
-|  `values` | Sequence |    No    | A sequence of `ComponentAttribute` nodes.  |
+Required attributes: `type`.
+
+| Attribute |          Type          | Description                                |
+|----------:|:----------------------:|:-------------------------------------------|
+|    `type` |        `string`        | The name of the component definition type. |
+|  `values` | `ComponentAttribute[]` |                                            |                                           |
 
 ## `ComponentAttribute`
 
-| Attribute |   Type    | Required | Description                |
-|----------:|:---------:|:--------:|:---------------------------|
-|    `name` | `string`  |   Yes    | The name of the attribute. |
-|   `value` | `variant` |   Yes    |                            |
+Required attributes: `name`, `value`.
+
+| Attribute |   Type    | Description                    |
+|----------:|:---------:|:-------------------------------|
+|    `name` | `string`  | The name of the attribute.     |
+|   `value` | `variant` | Must be a valid property type. |
 
 Example:
 
@@ -298,13 +330,15 @@ values:
 
 ## `Property`
 
-| Attribute |                                 Type                                 | Required | Description                                             |
-|----------:|:--------------------------------------------------------------------:|:--------:|:--------------------------------------------------------|
-|    `name` |                               `string`                               |   Yes    | Name that is unique in the scope of sibling properties. |
-|    `type` | One of `string`, `int`, `float`, `bool`, `color`, `file` or `object` |   Yes    |                                                         |
-|   `value` |                              `variant`                               |   Yes    | The value of the property.                              |
+Required attributes: `name`, `type`, `value`.
 
 Note, color properties are always stored using RGBA encoding, with a `#` prefix, e.g. `"#11223344"`.
+
+| Attribute |   Type    | Description                                                    |
+|----------:|:---------:|:---------------------------------------------------------------|
+|    `name` | `string`  | Name that is unique in the scope of sibling properties.        |
+|    `type` | `string`  | `string`, `int`, `float`, `bool`, `color`, `file`, or `object` | 
+|   `value` | `variant` |                                                                |
 
 Examples:
 
