@@ -17,9 +17,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "core/cmd/property/update_property.hpp"
+
 #include <gtest/gtest.h>
 
-#include "core/cmd/property/update_property.hpp"
 #include "misc/panic.hpp"
 #include "unit-tests/core/helpers/map_builder.hpp"
 
