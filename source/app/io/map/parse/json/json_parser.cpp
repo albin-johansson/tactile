@@ -93,6 +93,8 @@ namespace {
     return ParseError::NoMapNextObjectId;
   }
 
+  // TODO compression level?
+
   const auto dir = path.parent_path();
 
   if (const auto err = parse_tilesets(*json, map_data, dir); err != ParseError::None) {
