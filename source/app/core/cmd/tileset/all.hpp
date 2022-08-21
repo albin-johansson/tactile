@@ -19,6 +19,6 @@
 
 #pragma once
 
-#include "core/cmd/tileset/add_tileset_cmd.hpp"
-#include "core/cmd/tileset/remove_tileset_cmd.hpp"
-#include "core/cmd/tileset/rename_tileset_cmd.hpp"
+#include "core/cmd/tileset/create_tileset.hpp"
+#include "core/cmd/tileset/remove_tileset.hpp"
+#include "core/cmd/tileset/rename_tileset.hpp"

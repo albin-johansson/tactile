@@ -41,11 +41,16 @@ struct TilesetInfo;
 class MapDocument;
 class TilesetDocument;
 
+namespace cmd {
+class CreateTileset;
+class RemoveTileset;
+}  // namespace cmd
+
 /// The primary facade between the editor and the underlying core documents.
 class DocumentModel final
 {
-  friend class AddTilesetCmd;
-  friend class RemoveTilesetCmd;
+  friend class cmd::CreateTileset;
+  friend class cmd::RemoveTileset;
 
  public:
   using VisitorFunc = std::function<void(const UUID&)>;

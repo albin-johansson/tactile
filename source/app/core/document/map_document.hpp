@@ -46,7 +46,7 @@ namespace tactile {
 class MapDocument final : public ADocument
 {
  public:
-  MapDocument(const int2& tileSize, usize rows, usize columns);
+  MapDocument(const int2& tile_size, usize rows, usize columns);
 
   void update() override;
 
@@ -66,41 +66,41 @@ class MapDocument final : public ADocument
 
   void remove_layer(const UUID& layer_id);
 
-  void duplicate_layer(const UUID& layerId);
+  void duplicate_layer(const UUID& layer_id);
 
-  void rename_layer(const UUID& layerId, std::string name);
+  void rename_layer(const UUID& layer_id, std::string name);
 
-  void move_layer_up(const UUID& layerId);
+  void move_layer_up(const UUID& layer_id);
 
-  void move_layer_down(const UUID& layerId);
+  void move_layer_down(const UUID& layer_id);
 
-  void set_layer_opacity(const UUID& layerId, float opacity);
+  void set_layer_opacity(const UUID& layer_id, float opacity);
 
-  void set_layer_visible(const UUID& layerId, bool visible);
+  void set_layer_visible(const UUID& layer_id, bool visible);
 
-  void register_stamp_sequence(const UUID& layerId,
+  void register_stamp_sequence(const UUID& layer_id,
                                TileCache   previous,
                                TileCache   sequence);
 
-  void register_eraser_sequence(const UUID& layerId, TileCache previous);
+  void register_eraser_sequence(const UUID& layer_id, TileCache previous);
 
-  void flood(const UUID& layerId, const TilePos& origin, TileID replacement);
+  void flood(const UUID& layer_id, const TilePos& origin, TileID replacement);
 
-  void add_rectangle(const UUID& layerId, const float2& pos, const float2& size);
+  void add_rectangle(const UUID& layer_id, const float2& pos, const float2& size);
 
-  void add_ellipse(const UUID& layerId, const float2& pos, const float2& size);
+  void add_ellipse(const UUID& layer_id, const float2& pos, const float2& size);
 
-  void add_point(const UUID& layerId, const float2& pos);
+  void add_point(const UUID& layer_id, const float2& pos);
 
-  void move_object(const UUID& objectId, const float2& previous, const float2& updated);
+  void move_object(const UUID& object_id, const float2& previous, const float2& updated);
 
-  void set_object_visible(const UUID& objectId, bool visible);
+  void set_object_visible(const UUID& object_id, bool visible);
 
-  void set_object_name(const UUID& objectId, std::string name);
+  void set_object_name(const UUID& object_id, std::string name);
 
-  void set_object_tag(const UUID& objectId, std::string tag);
+  void set_object_tag(const UUID& object_id, std::string tag);
 
-  [[nodiscard]] auto get_object(const UUID& objectId) -> Shared<Object>;
+  [[nodiscard]] auto get_object(const UUID& object_id) -> Shared<Object>;
 
   void set_tile_format_encoding(TileEncoding encoding);
   void set_tile_format_compression(TileCompression compression);

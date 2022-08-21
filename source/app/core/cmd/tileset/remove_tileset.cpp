@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "remove_tileset_cmd.hpp"
+#include "remove_tileset.hpp"
 
 #include <utility>  // move
 
@@ -29,11 +29,11 @@
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-RemoveTilesetCmd::RemoveTilesetCmd(DocumentModel* model, const UUID& tilesetId)
+RemoveTileset::RemoveTileset(DocumentModel* model, const UUID& tileset_id)
     : mModel {model}
-    , mTilesetId {tilesetId}
+    , mTilesetId {tileset_id}
 {
   if (!mModel) {
     throw TactileError {"Invalid null model!"};
@@ -43,7 +43,7 @@ RemoveTilesetCmd::RemoveTilesetCmd(DocumentModel* model, const UUID& tilesetId)
   mMapId = mModel->active_document_id().value();
 }
 
-void RemoveTilesetCmd::undo()
+void RemoveTileset::undo()
 {
   TACTILE_ASSERT(mTilesetDocument != nullptr);
   TACTILE_ASSERT(mModel->active_document_id() == mMapId);
@@ -60,7 +60,7 @@ void RemoveTilesetCmd::undo()
   mapDocument->get_contexts().add_context(std::move(tileset));
 }
 
-void RemoveTilesetCmd::redo()
+void RemoveTileset::redo()
 {
   TACTILE_ASSERT(mModel->active_document_id() == mMapId);
   mTilesetDocument = mModel->get_tileset(mTilesetId);
@@ -80,10 +80,10 @@ void RemoveTilesetCmd::redo()
   mapDocument->get_contexts().erase(mTilesetId);
 }
 
-auto RemoveTilesetCmd::get_name() const -> std::string
+auto RemoveTileset::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return lang.cmd.remove_tileset;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

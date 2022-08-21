@@ -20,34 +20,32 @@
 #pragma once
 
 #include "core/cmd/command.hpp"
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
-#include "core/common/uuid.hpp"
 
 namespace tactile {
+class Tileset;
+}  // namespace tactile
 
-class DocumentModel;
-class TilesetDocument;
+namespace tactile::cmd {
 
-/// Command for removing a tileset from the active map document.
-class RemoveTilesetCmd final : public ICommand
+class RenameTileset final : public ICommand
 {
  public:
-  RemoveTilesetCmd(DocumentModel* model, const UUID& tilesetId);
+  RenameTileset(Shared<Tileset> tileset, std::string name);
 
   void undo() override;
 
   void redo() override;
 
+  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
+
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  DocumentModel*          mModel {};
-  UUID                    mTilesetId {};
-  UUID                    mMapId {};
-  Shared<TilesetDocument> mTilesetDocument;
-  Maybe<TileID>           mFirstTile;
+  Shared<Tileset>    mTileset;
+  std::string        mNewName;
+  Maybe<std::string> mOldName;
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd

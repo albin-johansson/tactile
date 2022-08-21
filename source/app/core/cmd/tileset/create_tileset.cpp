@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "add_tileset_cmd.hpp"
+#include "create_tileset.hpp"
 
 #include <memory>   // make_shared
 #include <utility>  // move
@@ -30,9 +30,9 @@
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-AddTilesetCmd::AddTilesetCmd(DocumentModel* model,
+CreateTileset::CreateTileset(DocumentModel* model,
                              const UUID&    map_id,
                              const UUID&    tileset_id,
                              TilesetInfo    info)
@@ -46,7 +46,7 @@ AddTilesetCmd::AddTilesetCmd(DocumentModel* model,
   }
 }
 
-void AddTilesetCmd::undo()
+void CreateTileset::undo()
 {
   if (mModel->is_open(mTilesetId)) {
     mModel->close_document(mTilesetId);
@@ -62,9 +62,9 @@ void AddTilesetCmd::undo()
   document->get_contexts().erase(mTilesetId);
 }
 
-void AddTilesetCmd::redo()
+void CreateTileset::redo()
 {
-  /* We only need to create and register the document once */
+  // We only need to create and register the document once
   if (!mTileset) {
     mTileset = std::make_shared<TilesetDocument>(mTilesetId, mTilesetInfo);
     mModel->register_tileset(mTileset);
@@ -82,10 +82,10 @@ void AddTilesetCmd::redo()
   document->get_contexts().add_context(tileset);
 }
 
-auto AddTilesetCmd::get_name() const -> std::string
+auto CreateTileset::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return lang.cmd.add_tileset;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

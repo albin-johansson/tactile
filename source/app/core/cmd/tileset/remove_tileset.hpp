@@ -20,24 +20,23 @@
 #pragma once
 
 #include "core/cmd/command.hpp"
-#include "core/common/math.hpp"
+#include "core/common/identifiers.hpp"
+#include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/tileset/tileset_info.hpp"
 
 namespace tactile {
-
 class DocumentModel;
 class TilesetDocument;
+}  // namespace tactile
 
-/// Command for creating a tileset and attaching it to a map document.
-class AddTilesetCmd final : public ICommand
+namespace tactile::cmd {
+
+/// Command for removing a tileset from the active map document.
+class RemoveTileset final : public ICommand
 {
  public:
-  AddTilesetCmd(DocumentModel* model,
-                const UUID&    map_id,
-                const UUID&    tileset_id,
-                TilesetInfo    info);
+  RemoveTileset(DocumentModel* model, const UUID& tileset_id);
 
   void undo() override;
 
@@ -47,10 +46,10 @@ class AddTilesetCmd final : public ICommand
 
  private:
   DocumentModel*          mModel {};
-  UUID                    mMapId {};
   UUID                    mTilesetId {};
-  TilesetInfo             mTilesetInfo;
-  Shared<TilesetDocument> mTileset;  /// The created tileset
+  UUID                    mMapId {};
+  Shared<TilesetDocument> mTilesetDocument;
+  Maybe<TileID>           mFirstTile;
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd

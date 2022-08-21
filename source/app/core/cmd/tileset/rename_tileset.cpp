@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "rename_tileset_cmd.hpp"
+#include "rename_tileset.hpp"
 
 #include <utility>  // move
 
@@ -26,9 +26,9 @@
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-RenameTilesetCmd::RenameTilesetCmd(Shared<Tileset> tileset, std::string name)
+RenameTileset::RenameTileset(Shared<Tileset> tileset, std::string name)
     : mTileset {std::move(tileset)}
     , mNewName {std::move(name)}
 {
@@ -37,21 +37,21 @@ RenameTilesetCmd::RenameTilesetCmd(Shared<Tileset> tileset, std::string name)
   }
 }
 
-void RenameTilesetCmd::undo()
+void RenameTileset::undo()
 {
   mTileset->set_name(mOldName.value());
   mOldName.reset();
 }
 
-void RenameTilesetCmd::redo()
+void RenameTileset::redo()
 {
   mOldName = mTileset->get_name();
   mTileset->set_name(mNewName);
 }
 
-auto RenameTilesetCmd::merge_with(const ICommand* cmd) -> bool
+auto RenameTileset::merge_with(const ICommand* cmd) -> bool
 {
-  if (const auto* other = dynamic_cast<const RenameTilesetCmd*>(cmd)) {
+  if (const auto* other = dynamic_cast<const RenameTileset*>(cmd)) {
     if (mTileset->get_uuid() == other->mTileset->get_uuid()) {
       mNewName = other->mNewName;
       return true;
@@ -61,10 +61,10 @@ auto RenameTilesetCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto RenameTilesetCmd::get_name() const -> std::string
+auto RenameTileset::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return lang.cmd.rename_tileset;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

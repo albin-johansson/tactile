@@ -49,7 +49,7 @@ void TilesetDocument::update()
 
 void TilesetDocument::rename_tileset(std::string name)
 {
-  get_history().exec<RenameTilesetCmd>(mTileset, std::move(name));
+  get_history().exec<cmd::RenameTileset>(mTileset, std::move(name));
 }
 
 void TilesetDocument::set_component_index(Shared<ComponentIndex> index)

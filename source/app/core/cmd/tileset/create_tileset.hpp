@@ -20,30 +20,39 @@
 #pragma once
 
 #include "core/cmd/command.hpp"
-#include "core/common/maybe.hpp"
+#include "core/common/math.hpp"
 #include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+#include "core/tileset/tileset_info.hpp"
 
 namespace tactile {
+class DocumentModel;
+class TilesetDocument;
+}  // namespace tactile
 
-class Tileset;
+namespace tactile::cmd {
 
-class RenameTilesetCmd final : public ICommand
+/// Command for creating a tileset and attaching it to a map document.
+class CreateTileset final : public ICommand
 {
  public:
-  RenameTilesetCmd(Shared<Tileset> tileset, std::string name);
+  CreateTileset(DocumentModel* model,
+                const UUID&    map_id,
+                const UUID&    tileset_id,
+                TilesetInfo    info);
 
   void undo() override;
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
-
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<Tileset>    mTileset;
-  std::string        mNewName;
-  Maybe<std::string> mOldName;
+  DocumentModel*          mModel {};
+  UUID                    mMapId {};
+  UUID                    mTilesetId {};
+  TilesetInfo             mTilesetInfo;
+  Shared<TilesetDocument> mTileset;  /// The created tileset
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd

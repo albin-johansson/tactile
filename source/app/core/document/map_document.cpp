@@ -31,12 +31,12 @@
 
 namespace tactile {
 
-MapDocument::MapDocument(const int2& tileSize, const usize rows, const usize columns)
+MapDocument::MapDocument(const int2& tile_size, const usize rows, const usize columns)
     : mMap {std::make_shared<Map>()}
     , mDelegate {mMap->get_uuid()}
 {
   mMap->resize(rows, columns);
-  mMap->set_tile_size(tileSize);
+  mMap->set_tile_size(tile_size);
 
   auto& contexts = get_contexts();
   contexts.add_context(mMap);
