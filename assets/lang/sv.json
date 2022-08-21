@@ -247,7 +247,11 @@
     "godot-map-folder-label": "Kartmapp",
     "godot-image-folder-label": "Bildmapp",
     "godot-tileset-folder-label": "Tilesamlingsmapp",
-    "godot-polygon-points-label": "Antal punkter i polygonapproximeringar"
+    "godot-polygon-points-label": "Antal punkter i polygonapproximeringar",
+    "tile-encoding": "Tilekodning",
+    "plain-encoding": "Ren text",
+    "tile-compression": "Tilekompression",
+    "compression-level": "Kompressionsnivå"
   },
   "commands": {
     "add-row": "Lägg Till Rad",

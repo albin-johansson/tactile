@@ -30,6 +30,7 @@
 #include "core/document/tileset_document.hpp"
 #include "core/event/document_events.hpp"
 #include "core/event/layer_events.hpp"
+#include "core/event/map_events.hpp"
 #include "core/event/object_events.hpp"
 #include "core/event/property_events.hpp"
 #include "core/event/tileset_events.hpp"
@@ -39,14 +40,14 @@
 #include "core/map.hpp"
 #include "core/model.hpp"
 #include "core/tileset/tileset.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "editor/ui/common/filename_filter.hpp"
 #include "editor/ui/common/input_widgets.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
 #include "io/persist/preferences.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::ui {
 namespace {
@@ -148,7 +149,7 @@ void native_read_only_row(const char* label, const usize value)
   ImGui::Text("%llu", static_cast<ulonglong>(value)); /* Cast to avoid format warnings */
 }
 
-void show_native_map_properties(const Map& map)
+void show_native_map_properties(const Map& map, entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
@@ -160,6 +161,78 @@ void show_native_map_properties(const Map& map)
 
   native_read_only_row(lang.misc.row_count.c_str(), map.row_count());
   native_read_only_row(lang.misc.column_count.c_str(), map.column_count());
+
+  prepare_table_row(lang.misc.tile_encoding.c_str());
+  ImGui::TableNextColumn();
+
+  const auto& format = map.tile_format();
+
+  const auto* encoding = format.encoding() == TileEncoding::Plain
+                             ? lang.misc.plain_encoding.c_str()
+                             : "Base64";
+  if (Combo combo {"##TileEncoding", encoding}; combo.is_open()) {
+    if (ImGui::Selectable(lang.misc.plain_encoding.c_str())) {
+      dispatcher.enqueue<SetTileFormatEncodingEvent>(TileEncoding::Plain);
+    }
+
+    if (ImGui::Selectable("Base64")) {
+      dispatcher.enqueue<SetTileFormatEncodingEvent>(TileEncoding::Base64);
+    }
+  }
+
+  prepare_table_row(lang.misc.tile_compression.c_str());
+  ImGui::TableNextColumn();
+
+  {
+    Disable disable_if_cannot_compress {!format.supports_any_compression()};
+
+    auto compression = lang.misc.none;
+    if (format.compression() == TileCompression::Zlib) {
+      compression = "Zlib";
+    }
+    else if (format.compression() == TileCompression::Zstd) {
+      compression = "Zstd";
+    }
+
+    if (Combo combo {"##TileCompression", compression.c_str()}; combo.is_open()) {
+      if (ImGui::Selectable(lang.misc.none.c_str())) {
+        dispatcher.enqueue<SetTileFormatCompressionEvent>(TileCompression::None);
+      }
+
+      if (ImGui::Selectable("Zlib")) {
+        dispatcher.enqueue<SetTileFormatCompressionEvent>(TileCompression::Zlib);
+      }
+
+      if (ImGui::Selectable("Zstd")) {
+        dispatcher.enqueue<SetTileFormatCompressionEvent>(TileCompression::Zstd);
+      }
+    }
+
+    if (format.compression() == TileCompression::Zlib) {
+      prepare_table_row(lang.misc.compression_level.c_str());
+      ImGui::TableNextColumn();
+
+      auto level = format.zlib_compression_level();
+      if (ImGui::SliderInt("##CompressionLevel",
+                           &level,
+                           TileFormat::min_zlib_compression_level(),
+                           TileFormat::max_zlib_compression_level())) {
+        dispatcher.enqueue<SetZlibCompressionLevelEvent>(level);
+      }
+    }
+    else if (format.compression() == TileCompression::Zstd) {
+      prepare_table_row(lang.misc.compression_level.c_str());
+      ImGui::TableNextColumn();
+
+      auto level = format.zstd_compression_level();
+      if (ImGui::SliderInt("##CompressionLevel",
+                           &level,
+                           TileFormat::min_zstd_compression_level(),
+                           TileFormat::max_zstd_compression_level())) {
+        dispatcher.enqueue<SetZstdCompressionLevelEvent>(level);
+      }
+    }
+  }
 }
 
 void show_native_tileset_properties(const Tileset& tileset, entt::dispatcher& dispatcher)
@@ -349,7 +422,7 @@ struct ContextPropertyVisitor final : IContextVisitor
 
   void visit(const Map& map) override
   {
-    show_native_map_properties(map);
+    show_native_map_properties(map, *dispatcher);
   }
 
   void visit(const TileLayer& layer) override

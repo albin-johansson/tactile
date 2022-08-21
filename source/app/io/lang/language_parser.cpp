@@ -364,6 +364,11 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.godot_image_folder_label, "godot-image-folder-label");
   load(json, misc.godot_tileset_folder_label, "godot-tileset-folder-label");
   load(json, misc.godot_polygon_points_label, "godot-polygon-points-label");
+
+  load(json, misc.tile_encoding, "tile-encoding");
+  load(json, misc.plain_encoding, "plain-encoding");
+  load(json, misc.tile_compression, "tile-compression");
+  load(json, misc.compression_level, "compression-level");
 }
 
 void load_command_strings(const JSON& json, CommandStrings& cmd)

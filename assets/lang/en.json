@@ -248,7 +248,11 @@
     "godot-map-folder-label": "Map folder",
     "godot-image-folder-label": "Image folder",
     "godot-tileset-folder-label": "Tileset folder",
-    "godot-polygon-points-label": "Polygon point approximation count"
+    "godot-polygon-points-label": "Polygon point approximation count",
+    "tile-encoding": "Tile encoding",
+    "plain-encoding": "Plain",
+    "tile-compression": "Tile compression",
+    "compression-level": "Compression level"
   },
   "commands": {
     "add-row": "Add Row",

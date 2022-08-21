@@ -329,6 +329,11 @@ struct MiscStrings final
   std::string godot_image_folder_label;
   std::string godot_tileset_folder_label;
   std::string godot_polygon_points_label;
+
+  std::string tile_encoding;
+  std::string plain_encoding;
+  std::string tile_compression;
+  std::string compression_level;
 };
 
 struct CommandStrings final
