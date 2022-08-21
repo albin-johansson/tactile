@@ -19,15 +19,18 @@
 
 #pragma once
 
-#include <type_traits>  // underlying_type_t
+#include <type_traits>  // is_enum_v, underlying_type_t
 
 namespace tactile {
 
-template <typename Enum>
-[[nodiscard]] constexpr auto to_underlying(const Enum e) noexcept
-    -> std::underlying_type_t<Enum>
+template <typename T>
+concept Enum = std::is_enum_v<T>;
+
+template <Enum T>
+[[nodiscard]] constexpr auto to_underlying(const T e) noexcept
+    -> std::underlying_type_t<T>
 {
-  return static_cast<std::underlying_type_t<Enum>>(e);
+  return static_cast<std::underlying_type_t<T>>(e);
 }
 
 }  // namespace tactile
