@@ -36,7 +36,7 @@ struct LayerData;
 struct TileLayerData;
 struct ObjectLayerData;
 struct GroupLayerData;
-struct MetaAnimationFrameData;
+struct AnimationFrameData;
 struct MetaTileData;
 struct TilesetData;
 struct MapData;

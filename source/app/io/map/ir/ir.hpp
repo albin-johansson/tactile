@@ -101,7 +101,7 @@ struct LayerData final
   bool        visible {};
 };
 
-struct MetaAnimationFrameData final
+struct AnimationFrameData final
 {
   TileID local_id {};
   uint64 duration_ms {};
@@ -111,9 +111,9 @@ struct MetaTileData final
 {
   UUID uuid {make_uuid()};  // This is not persistent! Only here for convenience.
 
-  std::vector<ObjectData>             objects;
-  std::vector<MetaAnimationFrameData> frames;
-  ContextData                         context;
+  std::vector<ObjectData>         objects;
+  std::vector<AnimationFrameData> frames;
+  ContextData                     context;
 };
 
 struct TilesetData final
