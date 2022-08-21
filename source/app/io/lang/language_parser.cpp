@@ -433,6 +433,9 @@ void load_command_strings(const JSON& json, CommandStrings& cmd)
   load(json, cmd.stamp_tool, "stamp-tool");
   load(json, cmd.eraser_tool, "eraser-tool");
   load(json, cmd.bucket_tool, "bucket-tool");
+
+  load(json, cmd.set_zlib_compression_level, "set-zlib-compression-level");
+  load(json, cmd.set_zstd_compression_level, "set-zstd-compression-level");
 }
 
 void load_parse_error_strings(const JSON& json, ParseErrorStrings& err)

@@ -22,6 +22,8 @@
 #include <utility>  // move
 
 #include "core/map.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::cmd {
@@ -63,7 +65,8 @@ auto SetZlibCompressionLevel::merge_with(const ICommand* cmd) -> bool
 
 auto SetZlibCompressionLevel::get_name() const -> std::string
 {
-  return "";
+  const auto& lang = get_current_language();
+  return lang.cmd.set_zlib_compression_level;
 }
 
 }  // namespace tactile::cmd

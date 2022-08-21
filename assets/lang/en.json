@@ -307,7 +307,9 @@
     "rename-tileset": "Rename Tileset",
     "stamp-tool": "Stamp Sequence",
     "eraser-tool": "Eraser Sequence",
-    "bucket-tool": "Bucket Fill"
+    "bucket-tool": "Bucket Fill",
+    "set-zlib-compression-level": "Set Zlib Compression Level",
+    "set-zstd-compression-level": "Set Zstd Compression Level"
   },
   "parse-errors": {
     "none": "Nothing went wrong, please consider submitting a bug report",

@@ -306,7 +306,9 @@
     "rename-tileset": "Ändra Tilesamlingsnamn",
     "stamp-tool": "Stämpelsekvens",
     "eraser-tool": "Suddsekvens",
-    "bucket-tool": "Hinkapplicering"
+    "bucket-tool": "Hinkapplicering",
+    "set-zlib-compression-level": "Ändra Zlib-kompressionsnivå",
+    "set-zstd-compression-level": "Ändra Zstd-kompressionsnivå"
   },
   "parse-errors": {
     "none": "Inget gick fel, rapportera gärna detta som en bugg",

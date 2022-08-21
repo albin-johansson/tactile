@@ -398,6 +398,9 @@ struct CommandStrings final
   std::string stamp_tool;
   std::string eraser_tool;
   std::string bucket_tool;
+
+  std::string set_zlib_compression_level;
+  std::string set_zstd_compression_level;
 };
 
 struct ParseErrorStrings final
