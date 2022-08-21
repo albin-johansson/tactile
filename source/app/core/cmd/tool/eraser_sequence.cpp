@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "bucket_tool_cmd.hpp"
+#include "eraser_sequence.hpp"
 
 #include <utility>  // move
 
@@ -26,47 +26,37 @@
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-BucketToolCmd::BucketToolCmd(Shared<Map>    map,
-                             const UUID&    layerId,
-                             const TilePos& origin,
-                             const TileID   replacement)
+EraserSequence::EraserSequence(Shared<Map> map, const UUID& layer_id, TileCache old_state)
     : mMap {std::move(map)}
-    , mLayerId {layerId}
-    , mOrigin {origin}
-    , mReplacement {replacement}
+    , mLayerId {layer_id}
+    , mOldState {std::move(old_state)}
 {
   if (!mMap) {
     throw TactileError {"Invalid null map!"};
   }
 }
 
-void BucketToolCmd::undo()
+void EraserSequence::undo()
+{
+  auto& layer = mMap->view_tile_layer(mLayerId);
+  layer.set_tiles(mOldState);
+}
+
+void EraserSequence::redo()
 {
   auto& layer = mMap->view_tile_layer(mLayerId);
 
-  const auto target = mTarget.value();
-  for (const auto& position : mPositions) {
-    layer.set_tile(position, target);
+  for (const auto& [position, _] : mOldState) {
+    layer.set_tile(position, empty_tile);
   }
-
-  mPositions.clear();
-  mTarget.reset();
 }
 
-void BucketToolCmd::redo()
-{
-  auto& layer = mMap->view_tile_layer(mLayerId);
-
-  mTarget = layer.tile_at(mOrigin);
-  layer.flood(mOrigin, mReplacement, &mPositions);
-}
-
-auto BucketToolCmd::get_name() const -> std::string
+auto EraserSequence::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
-  return lang.cmd.bucket_tool;
+  return lang.cmd.eraser_tool;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

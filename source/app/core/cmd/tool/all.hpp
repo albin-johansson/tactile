@@ -19,6 +19,6 @@
 
 #pragma once
 
-#include "core/cmd/tool/bucket_tool_cmd.hpp"
-#include "core/cmd/tool/eraser_tool_cmd.hpp"
-#include "core/cmd/tool/stamp_tool_cmd.hpp"
+#include "core/cmd/tool/bucket_fill.hpp"
+#include "core/cmd/tool/eraser_sequence.hpp"
+#include "core/cmd/tool/stamp_sequence.hpp"

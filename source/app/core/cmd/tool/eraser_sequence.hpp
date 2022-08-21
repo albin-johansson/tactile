@@ -25,12 +25,12 @@
 #include "core/common/uuid.hpp"
 #include "core/map.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-class EraserToolCmd final : public ICommand
+class EraserSequence final : public ICommand
 {
  public:
-  EraserToolCmd(Shared<Map> map, const UUID& layerId, TileCache oldState);
+  EraserSequence(Shared<Map> map, const UUID& layer_id, TileCache old_state);
 
   void undo() override;
 
@@ -44,4 +44,4 @@ class EraserToolCmd final : public ICommand
   TileCache   mOldState;
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd

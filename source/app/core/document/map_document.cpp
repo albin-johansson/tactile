@@ -125,22 +125,22 @@ void MapDocument::register_stamp_sequence(const UUID& layer_id,
                                           TileCache   previous,
                                           TileCache   sequence)
 {
-  get_history().store<StampToolCmd>(mMap,
-                                    layer_id,
-                                    std::move(previous),
-                                    std::move(sequence));
+  get_history().store<cmd::StampSequence>(mMap,
+                                          layer_id,
+                                          std::move(previous),
+                                          std::move(sequence));
 }
 
 void MapDocument::register_eraser_sequence(const UUID& layer_id, TileCache previous)
 {
-  get_history().store<EraserToolCmd>(mMap, layer_id, std::move(previous));
+  get_history().store<cmd::EraserSequence>(mMap, layer_id, std::move(previous));
 }
 
 void MapDocument::flood(const UUID&    layer_id,
                         const TilePos& origin,
                         const TileID   replacement)
 {
-  get_history().exec<BucketToolCmd>(mMap, layer_id, origin, replacement);
+  get_history().exec<cmd::BucketFill>(mMap, layer_id, origin, replacement);
 }
 
 void MapDocument::add_rectangle(const UUID&   layer_id,

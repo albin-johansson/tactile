@@ -19,25 +19,22 @@
 
 #pragma once
 
-#include <vector>  // vector
-
 #include "core/cmd/command.hpp"
 #include "core/common/identifiers.hpp"
-#include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
+#include "core/common/tile_cache.hpp"
 #include "core/common/uuid.hpp"
 #include "core/map.hpp"
-#include "core/tile_pos.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-class BucketToolCmd final : public ICommand
+class StampSequence final : public ICommand
 {
  public:
-  BucketToolCmd(Shared<Map>    map,
-                const UUID&    layerId,
-                const TilePos& origin,
-                TileID         replacement);
+  StampSequence(Shared<Map> map,
+                const UUID& layer_id,
+                TileCache   old_state,
+                TileCache   new_state);
 
   void undo() override;
 
@@ -46,12 +43,12 @@ class BucketToolCmd final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<Map>          mMap;
-  UUID                 mLayerId {};
-  TilePos              mOrigin;
-  TileID               mReplacement {};
-  Maybe<TileID>        mTarget;
-  std::vector<TilePos> mPositions;
+  Shared<Map> mMap;
+  UUID        mLayerId {};
+  TileCache   mOldState;
+  TileCache   mNewState;
+
+  void apply_sequence(const TileCache& cache);
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd

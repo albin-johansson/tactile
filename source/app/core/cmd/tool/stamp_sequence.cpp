@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "stamp_tool_cmd.hpp"
+#include "stamp_sequence.hpp"
 
 #include <utility>  // move
 
@@ -26,42 +26,42 @@
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-StampToolCmd::StampToolCmd(Shared<Map> map,
-                           const UUID& layerId,
-                           TileCache   oldState,
-                           TileCache   newState)
+StampSequence::StampSequence(Shared<Map> map,
+                             const UUID& layer_id,
+                             TileCache   old_state,
+                             TileCache   new_state)
     : mMap {std::move(map)}
-    , mLayerId {layerId}
-    , mOldState {std::move(oldState)}
-    , mNewState {std::move(newState)}
+    , mLayerId {layer_id}
+    , mOldState {std::move(old_state)}
+    , mNewState {std::move(new_state)}
 {
   if (!mMap) {
     throw TactileError {"Invalid null map!"};
   }
 }
 
-void StampToolCmd::undo()
+void StampSequence::undo()
 {
   apply_sequence(mOldState);
 }
 
-void StampToolCmd::redo()
+void StampSequence::redo()
 {
   apply_sequence(mNewState);
 }
 
-auto StampToolCmd::get_name() const -> std::string
+auto StampSequence::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return lang.cmd.stamp_tool;
 }
 
-void StampToolCmd::apply_sequence(const TileCache& cache)
+void StampSequence::apply_sequence(const TileCache& cache)
 {
   auto& layer = mMap->view_tile_layer(mLayerId);
   layer.set_tiles(cache);
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd
