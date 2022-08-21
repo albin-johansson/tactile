@@ -17,38 +17,50 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/cmd/property/change_property_type.hpp"
+#include "core/cmd/comp/rename_component.hpp"
 
 #include <gtest/gtest.h>
 
 #include "misc/panic.hpp"
+#include "unit-tests/core/helpers/component_builder.hpp"
 #include "unit-tests/core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(ChangePropertyType, Constructor)
+TEST(RenameComponent, Constructor)
 {
-  ASSERT_THROW(cmd::ChangePropertyType(nullptr, "", AttributeType::Int), TactileError);
+  ASSERT_THROW(cmd::RenameComponent(nullptr, make_uuid(), ""), TactileError);
 }
 
-TEST(ChangePropertyType, RedoUndo)
+TEST(RenameComponent, RedoUndo)
 {
   auto document = MapBuilder::build().result();
-  auto map = document->get_map_ptr();
+  auto index = document->get_component_index();
 
-  auto& props = map->get_props();
-  props.add("property", 123);
+  const auto comp_id = ComponentBuilder {index, "Foo"}.result();
 
-  cmd::ChangePropertyType cmd {map, "property", AttributeType::Bool};
+  auto& map = document->get_map();
+  auto& bundle = map.get_comps();
+  bundle.add(index->at(comp_id).instantiate());
+
+  cmd::RenameComponent cmd {index, comp_id, "Bar"};
   cmd.redo();
 
-  ASSERT_TRUE(props.contains("property"));
-  ASSERT_FALSE(props.at("property").as_bool());
+  ASSERT_TRUE(index->contains(comp_id));
+  ASSERT_FALSE(index->contains("Foo"));
+  ASSERT_TRUE(index->contains("Bar"));
+
+  ASSERT_EQ(1, bundle.size());
+  ASSERT_TRUE(bundle.contains(comp_id));
 
   cmd.undo();
 
-  ASSERT_TRUE(props.contains("property"));
-  ASSERT_EQ(123, props.at("property").as_int());
+  ASSERT_TRUE(index->contains(comp_id));
+  ASSERT_TRUE(index->contains("Foo"));
+  ASSERT_FALSE(index->contains("Bar"));
+
+  ASSERT_EQ(1, bundle.size());
+  ASSERT_TRUE(bundle.contains(comp_id));
 }
 
 }  // namespace tactile::test

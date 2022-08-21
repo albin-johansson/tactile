@@ -19,16 +19,33 @@
 
 #pragma once
 
-#include "core/cmd/comp/add_component_attr.hpp"
-#include "core/cmd/comp/attach_component.hpp"
-#include "core/cmd/comp/define_component.hpp"
-#include "core/cmd/comp/detach_component.hpp"
-#include "core/cmd/comp/duplicate_component_attr.hpp"
-#include "core/cmd/comp/remove_component_attr.hpp"
-#include "core/cmd/comp/rename_component.hpp"
-#include "core/cmd/comp/rename_component_attr.hpp"
-#include "core/cmd/comp/reset_attached_component.hpp"
-#include "core/cmd/comp/set_component_attr_type.hpp"
-#include "core/cmd/comp/undef_component.hpp"
-#include "core/cmd/comp/update_attached_component.hpp"
-#include "core/cmd/comp/update_component.hpp"
+#include "core/cmd/command.hpp"
+#include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
+#include "core/comp/component_definition.hpp"
+
+namespace tactile {
+class ComponentIndex;
+}  // namespace tactile
+
+namespace tactile::cmd {
+
+/// A command for defining new components.
+class DefineComponent final : public ICommand
+{
+ public:
+  DefineComponent(Shared<ComponentIndex> index, std::string name);
+
+  void undo() override;
+
+  void redo() override;
+
+  [[nodiscard]] auto get_name() const -> std::string override;
+
+ private:
+  Shared<ComponentIndex>     mIndex;
+  std::string                mName;
+  Maybe<ComponentDefinition> mDef;
+};
+
+}  // namespace tactile::cmd

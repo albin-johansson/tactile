@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/cmd/property/add_property.hpp"
-#include "core/cmd/property/change_property_type_cmd.hpp"
+#include "core/cmd/property/change_property_type.hpp"
 #include "core/cmd/property/remove_property.hpp"
 #include "core/cmd/property/rename_property.hpp"
 #include "core/cmd/property/update_property.hpp"

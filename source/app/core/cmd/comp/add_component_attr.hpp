@@ -19,16 +19,32 @@
 
 #pragma once
 
-#include "core/cmd/comp/add_component_attr.hpp"
-#include "core/cmd/comp/attach_component.hpp"
-#include "core/cmd/comp/define_component.hpp"
-#include "core/cmd/comp/detach_component.hpp"
-#include "core/cmd/comp/duplicate_component_attr.hpp"
-#include "core/cmd/comp/remove_component_attr.hpp"
-#include "core/cmd/comp/rename_component.hpp"
-#include "core/cmd/comp/rename_component_attr.hpp"
-#include "core/cmd/comp/reset_attached_component.hpp"
-#include "core/cmd/comp/set_component_attr_type.hpp"
-#include "core/cmd/comp/undef_component.hpp"
-#include "core/cmd/comp/update_attached_component.hpp"
-#include "core/cmd/comp/update_component.hpp"
+#include "core/cmd/command.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+
+namespace tactile {
+class ADocument;
+}  // namespace tactile
+
+namespace tactile::cmd {
+
+/// A command for adding an attribute to a component definition.
+class AddComponentAttr final : public ICommand
+{
+ public:
+  AddComponentAttr(ADocument* document, const UUID& component_id, std::string name);
+
+  void undo() override;
+
+  void redo() override;
+
+  [[nodiscard]] auto get_name() const -> std::string override;
+
+ private:
+  ADocument*  mDocument {};
+  UUID        mComponentId {};
+  std::string mName;
+};
+
+}  // namespace tactile::cmd
