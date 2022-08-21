@@ -41,7 +41,7 @@ void ResizeMap::undo()
 {
   mMap->resize(mPrevRows.value(), mPrevCols.value());
 
-  if (is_lossy_resize()) {
+  if (lossy_resize()) {
     mCache.restore_tiles(*mMap);
   }
 }
@@ -51,7 +51,7 @@ void ResizeMap::redo()
   mPrevRows = mMap->row_count();
   mPrevCols = mMap->column_count();
 
-  if (is_lossy_resize()) {
+  if (lossy_resize()) {
     const auto rows = mMap->row_count();
     const auto cols = mMap->column_count();
 
@@ -73,7 +73,7 @@ auto ResizeMap::get_name() const -> std::string
   return lang.cmd.resize_map;
 }
 
-auto ResizeMap::is_lossy_resize() const -> bool
+auto ResizeMap::lossy_resize() const -> bool
 {
   return mPrevRows > mRows || mPrevCols > mCols;
 }

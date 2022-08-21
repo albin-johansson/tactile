@@ -47,7 +47,7 @@ class ResizeMap final : public ICommand
   Maybe<usize>    mPrevRows {};
   Maybe<usize>    mPrevCols {};
 
-  [[nodiscard]] auto is_lossy_resize() const -> bool;
+  [[nodiscard]] auto lossy_resize() const -> bool;
 };
 
 }  // namespace tactile::cmd
