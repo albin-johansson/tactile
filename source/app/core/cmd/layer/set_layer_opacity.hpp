@@ -22,27 +22,27 @@
 #include "core/cmd/command.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
-#include "core/common/uuid.hpp"
-#include "core/map.hpp"
+#include "core/layer/layer.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-class SetLayerVisibilityCmd final : public ICommand
+class SetLayerOpacity final : public ICommand
 {
  public:
-  SetLayerVisibilityCmd(Shared<Map> map, const UUID& layerId, bool visible);
+  SetLayerOpacity(Shared<ILayer> layer, float opacity);
 
   void undo() override;
 
   void redo() override;
 
+  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
+
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<Map> mMap;
-  UUID        mLayerId {};
-  bool        mNewVisibility {};
-  Maybe<bool> mOldVisibility;
+  Shared<ILayer> mLayer;
+  float          mNewOpacity {};
+  Maybe<float>   mOldOpacity;
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd

@@ -20,29 +20,26 @@
 #pragma once
 
 #include "core/cmd/command.hpp"
-#include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
-#include "core/layer/layer.hpp"
+#include "core/common/uuid.hpp"
+#include "core/map.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-class SetLayerOpacityCmd final : public ICommand
+class MoveLayerUp final : public ICommand
 {
  public:
-  SetLayerOpacityCmd(Shared<ILayer> layer, float opacity);
+  MoveLayerUp(Shared<Map> map, const UUID& layer_id);
 
   void undo() override;
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
-
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<ILayer> mLayer;
-  float          mNewOpacity {};
-  Maybe<float>   mOldOpacity;
+  Shared<Map> mMap;
+  UUID        mLayerId {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd

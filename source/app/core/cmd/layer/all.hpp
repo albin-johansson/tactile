@@ -21,9 +21,9 @@
 
 #include "core/cmd/layer/add_layer.hpp"
 #include "core/cmd/layer/duplicate_layer.hpp"
-#include "core/cmd/layer/move_layer_down_cmd.hpp"
-#include "core/cmd/layer/move_layer_up_cmd.hpp"
+#include "core/cmd/layer/move_layer_down.hpp"
+#include "core/cmd/layer/move_layer_up.hpp"
 #include "core/cmd/layer/remove_layer.hpp"
 #include "core/cmd/layer/rename_layer.hpp"
-#include "core/cmd/layer/set_layer_opacity_cmd.hpp"
-#include "core/cmd/layer/set_layer_visibility_cmd.hpp"
+#include "core/cmd/layer/set_layer_opacity.hpp"
+#include "core/cmd/layer/set_layer_visible.hpp"

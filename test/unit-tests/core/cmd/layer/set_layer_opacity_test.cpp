@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/cmd/layer/set_layer_opacity_cmd.hpp"
+#include "core/cmd/layer/set_layer_opacity.hpp"
 
 #include <gtest/gtest.h>
 
@@ -26,17 +26,17 @@
 
 namespace tactile::test {
 
-TEST(SetLayerOpacityCmd, Constructor)
+TEST(SetLayerOpacity, Constructor)
 {
-  ASSERT_THROW(SetLayerOpacityCmd(nullptr, 1.0f), TactileError);
+  ASSERT_THROW(cmd::SetLayerOpacity(nullptr, 1.0f), TactileError);
 }
 
-TEST(SetLayerOpacityCmd, RedoUndo)
+TEST(SetLayerOpacity, RedoUndo)
 {
   auto layer = std::make_shared<TileLayer>();
   ASSERT_EQ(1.0f, layer->get_opacity());
 
-  SetLayerOpacityCmd cmd {layer, 0.8f};
+  cmd::SetLayerOpacity cmd {layer, 0.8f};
 
   cmd.redo();
   ASSERT_EQ(0.8f, layer->get_opacity());
@@ -45,13 +45,13 @@ TEST(SetLayerOpacityCmd, RedoUndo)
   ASSERT_EQ(1.0f, layer->get_opacity());
 }
 
-TEST(SetLayerOpacityCmd, MergeSupport)
+TEST(SetLayerOpacity, MergeSupport)
 {
   auto layer = std::make_shared<TileLayer>();
 
-  SetLayerOpacityCmd       a {layer, 0.8f};
-  const SetLayerOpacityCmd b {layer, 0.6f};
-  const SetLayerOpacityCmd c {layer, 0.4f};
+  cmd::SetLayerOpacity       a {layer, 0.8f};
+  const cmd::SetLayerOpacity b {layer, 0.6f};
+  const cmd::SetLayerOpacity c {layer, 0.4f};
 
   ASSERT_TRUE(a.merge_with(&b));
   ASSERT_TRUE(a.merge_with(&c));

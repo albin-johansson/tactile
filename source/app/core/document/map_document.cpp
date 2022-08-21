@@ -100,96 +100,96 @@ void MapDocument::rename_layer(const UUID& layer_id, std::string name)
   get_history().exec<cmd::RenameLayer>(mMap, layer_id, std::move(name));
 }
 
-void MapDocument::move_layer_up(const UUID& layerId)
+void MapDocument::move_layer_up(const UUID& layer_id)
 {
-  get_history().exec<MoveLayerUpCmd>(mMap, layerId);
+  get_history().exec<cmd::MoveLayerUp>(mMap, layer_id);
 }
 
-void MapDocument::move_layer_down(const UUID& layerId)
+void MapDocument::move_layer_down(const UUID& layer_id)
 {
-  get_history().exec<MoveLayerDownCmd>(mMap, layerId);
+  get_history().exec<cmd::MoveLayerDown>(mMap, layer_id);
 }
 
-void MapDocument::set_layer_opacity(const UUID& layerId, const float opacity)
+void MapDocument::set_layer_opacity(const UUID& layer_id, const float opacity)
 {
-  auto layer = mMap->get_layer(layerId);
-  get_history().exec<SetLayerOpacityCmd>(std::move(layer), opacity);
+  auto layer = mMap->get_layer(layer_id);
+  get_history().exec<cmd::SetLayerOpacity>(std::move(layer), opacity);
 }
 
-void MapDocument::set_layer_visible(const UUID& layerId, const bool visible)
+void MapDocument::set_layer_visible(const UUID& layer_id, const bool visible)
 {
-  get_history().exec<SetLayerVisibilityCmd>(mMap, layerId, visible);
+  get_history().exec<cmd::SetLayerVisible>(mMap, layer_id, visible);
 }
 
-void MapDocument::register_stamp_sequence(const UUID& layerId,
+void MapDocument::register_stamp_sequence(const UUID& layer_id,
                                           TileCache   previous,
                                           TileCache   sequence)
 {
   get_history().store<StampToolCmd>(mMap,
-                                    layerId,
+                                    layer_id,
                                     std::move(previous),
                                     std::move(sequence));
 }
 
-void MapDocument::register_eraser_sequence(const UUID& layerId, TileCache previous)
+void MapDocument::register_eraser_sequence(const UUID& layer_id, TileCache previous)
 {
-  get_history().store<EraserToolCmd>(mMap, layerId, std::move(previous));
+  get_history().store<EraserToolCmd>(mMap, layer_id, std::move(previous));
 }
 
-void MapDocument::flood(const UUID&    layerId,
+void MapDocument::flood(const UUID&    layer_id,
                         const TilePos& origin,
                         const TileID   replacement)
 {
-  get_history().exec<BucketToolCmd>(mMap, layerId, origin, replacement);
+  get_history().exec<BucketToolCmd>(mMap, layer_id, origin, replacement);
 }
 
-void MapDocument::add_rectangle(const UUID&   layerId,
+void MapDocument::add_rectangle(const UUID&   layer_id,
                                 const float2& pos,
                                 const float2& size)
 {
-  get_history().exec<AddObjectCmd>(this, layerId, ObjectType::Rect, pos, size);
+  get_history().exec<AddObjectCmd>(this, layer_id, ObjectType::Rect, pos, size);
 }
 
-void MapDocument::add_ellipse(const UUID& layerId, const float2& pos, const float2& size)
+void MapDocument::add_ellipse(const UUID& layer_id, const float2& pos, const float2& size)
 {
-  get_history().exec<AddObjectCmd>(this, layerId, ObjectType::Ellipse, pos, size);
+  get_history().exec<AddObjectCmd>(this, layer_id, ObjectType::Ellipse, pos, size);
 }
 
-void MapDocument::add_point(const UUID& layerId, const float2& pos)
+void MapDocument::add_point(const UUID& layer_id, const float2& pos)
 {
-  get_history().exec<AddObjectCmd>(this, layerId, ObjectType::Point, pos);
+  get_history().exec<AddObjectCmd>(this, layer_id, ObjectType::Point, pos);
 }
 
-void MapDocument::move_object(const UUID&   objectId,
+void MapDocument::move_object(const UUID&   object_id,
                               const float2& previous,
                               const float2& updated)
 {
-  auto object = get_object(objectId);
+  auto object = get_object(object_id);
   get_history().exec<MoveObjectCmd>(std::move(object), previous, updated);
 }
 
-void MapDocument::set_object_visible(const UUID& objectId, const bool visible)
+void MapDocument::set_object_visible(const UUID& object_id, const bool visible)
 {
-  auto object = get_object(objectId);
+  auto object = get_object(object_id);
   get_history().exec<SetObjectVisibleCmd>(std::move(object), visible);
 }
 
-void MapDocument::set_object_name(const UUID& objectId, std::string name)
+void MapDocument::set_object_name(const UUID& object_id, std::string name)
 {
-  auto object = get_object(objectId);
+  auto object = get_object(object_id);
   get_history().exec<RenameObjectCmd>(std::move(object), std::move(name));
 }
 
-void MapDocument::set_object_tag(const UUID& objectId, std::string tag)
+void MapDocument::set_object_tag(const UUID& object_id, std::string tag)
 {
-  auto object = get_object(objectId);
+  auto object = get_object(object_id);
   get_history().exec<SetObjectTagCmd>(std::move(object), std::move(tag));
 }
 
-auto MapDocument::get_object(const UUID& objectId) -> Shared<Object>
+auto MapDocument::get_object(const UUID& object_id) -> Shared<Object>
 {
   auto& contexts = get_contexts();
-  if (auto ptr = std::dynamic_pointer_cast<Object>(contexts.get_context(objectId))) {
+  if (auto ptr = std::dynamic_pointer_cast<Object>(contexts.get_context(object_id))) {
     return ptr;
   }
   else {

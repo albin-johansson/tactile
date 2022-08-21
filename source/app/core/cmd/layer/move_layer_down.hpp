@@ -24,12 +24,12 @@
 #include "core/common/uuid.hpp"
 #include "core/map.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-class MoveLayerDownCmd final : public ICommand
+class MoveLayerDown final : public ICommand
 {
  public:
-  MoveLayerDownCmd(Shared<Map> map, const UUID& layerId);
+  MoveLayerDown(Shared<Map> map, const UUID& layer_id);
 
   void undo() override;
 
@@ -42,4 +42,4 @@ class MoveLayerDownCmd final : public ICommand
   UUID        mLayerId {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd

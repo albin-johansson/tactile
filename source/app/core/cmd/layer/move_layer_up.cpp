@@ -17,29 +17,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "move_layer_up.hpp"
 
-#include "core/cmd/command.hpp"
-#include "core/common/memory.hpp"
-#include "core/common/uuid.hpp"
-#include "core/map.hpp"
+#include <utility>  // move
 
-namespace tactile {
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
+#include "misc/panic.hpp"
 
-class MoveLayerUpCmd final : public ICommand
+namespace tactile::cmd {
+
+MoveLayerUp::MoveLayerUp(Shared<Map> map, const UUID& layer_id)
+    : mMap {std::move(map)}
+    , mLayerId {layer_id}
 {
- public:
-  MoveLayerUpCmd(Shared<Map> map, const UUID& layerId);
+  if (!mMap) {
+    throw TactileError {"Invalid null map!"};
+  }
+}
 
-  void undo() override;
+void MoveLayerUp::undo()
+{
+  mMap->move_layer_down(mLayerId);
+}
 
-  void redo() override;
+void MoveLayerUp::redo()
+{
+  mMap->move_layer_up(mLayerId);
+}
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+auto MoveLayerUp::get_name() const -> std::string
+{
+  const auto& lang = get_current_language();
+  return lang.cmd.move_layer_up;
+}
 
- private:
-  Shared<Map> mMap;
-  UUID        mLayerId {};
-};
-
-}  // namespace tactile
+}  // namespace tactile::cmd

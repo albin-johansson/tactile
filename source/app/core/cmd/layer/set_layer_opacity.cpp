@@ -17,15 +17,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "set_layer_opacity_cmd.hpp"
+#include "set_layer_opacity.hpp"
 
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-SetLayerOpacityCmd::SetLayerOpacityCmd(Shared<ILayer> layer, const float opacity)
+SetLayerOpacity::SetLayerOpacity(Shared<ILayer> layer, const float opacity)
     : mLayer {std::move(layer)}
     , mNewOpacity {opacity}
 {
@@ -34,21 +34,21 @@ SetLayerOpacityCmd::SetLayerOpacityCmd(Shared<ILayer> layer, const float opacity
   }
 }
 
-void SetLayerOpacityCmd::undo()
+void SetLayerOpacity::undo()
 {
   mLayer->set_opacity(mOldOpacity.value());
   mOldOpacity.reset();
 }
 
-void SetLayerOpacityCmd::redo()
+void SetLayerOpacity::redo()
 {
   mOldOpacity = mLayer->get_opacity();
   mLayer->set_opacity(mNewOpacity);
 }
 
-auto SetLayerOpacityCmd::merge_with(const ICommand* cmd) -> bool
+auto SetLayerOpacity::merge_with(const ICommand* cmd) -> bool
 {
-  if (const auto* other = dynamic_cast<const SetLayerOpacityCmd*>(cmd)) {
+  if (const auto* other = dynamic_cast<const SetLayerOpacity*>(cmd)) {
     if (mLayer->get_uuid() == other->mLayer->get_uuid()) {
       mNewOpacity = other->mNewOpacity;
       return true;
@@ -58,10 +58,10 @@ auto SetLayerOpacityCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto SetLayerOpacityCmd::get_name() const -> std::string
+auto SetLayerOpacity::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return lang.cmd.set_layer_opacity;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

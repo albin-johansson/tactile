@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "move_layer_up_cmd.hpp"
+#include "move_layer_down.hpp"
 
 #include <utility>  // move
 
@@ -25,31 +25,31 @@
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-MoveLayerUpCmd::MoveLayerUpCmd(Shared<Map> map, const UUID& layerId)
+MoveLayerDown::MoveLayerDown(Shared<Map> map, const UUID& layer_id)
     : mMap {std::move(map)}
-    , mLayerId {layerId}
+    , mLayerId {layer_id}
 {
   if (!mMap) {
     throw TactileError {"Invalid null map!"};
   }
 }
 
-void MoveLayerUpCmd::undo()
-{
-  mMap->move_layer_down(mLayerId);
-}
-
-void MoveLayerUpCmd::redo()
+void MoveLayerDown::undo()
 {
   mMap->move_layer_up(mLayerId);
 }
 
-auto MoveLayerUpCmd::get_name() const -> std::string
+void MoveLayerDown::redo()
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.move_layer_up;
+  mMap->move_layer_down(mLayerId);
 }
 
-}  // namespace tactile
+auto MoveLayerDown::get_name() const -> std::string
+{
+  const auto& lang = get_current_language();
+  return lang.cmd.move_layer_down;
+}
+
+}  // namespace tactile::cmd

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "set_layer_visibility_cmd.hpp"
+#include "set_layer_visible.hpp"
 
 #include <utility>  // move
 
@@ -25,13 +25,13 @@
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-SetLayerVisibilityCmd::SetLayerVisibilityCmd(Shared<Map> map,
-                                             const UUID& layerId,
-                                             const bool  visible)
+SetLayerVisible::SetLayerVisible(Shared<Map> map,
+                                 const UUID& layer_id,
+                                 const bool  visible)
     : mMap {std::move(map)}
-    , mLayerId {layerId}
+    , mLayerId {layer_id}
     , mNewVisibility {visible}
 {
   if (!mMap) {
@@ -39,7 +39,7 @@ SetLayerVisibilityCmd::SetLayerVisibilityCmd(Shared<Map> map,
   }
 }
 
-void SetLayerVisibilityCmd::undo()
+void SetLayerVisible::undo()
 {
   auto& layer = mMap->view_layer(mLayerId);
 
@@ -47,7 +47,7 @@ void SetLayerVisibilityCmd::undo()
   mOldVisibility.reset();
 }
 
-void SetLayerVisibilityCmd::redo()
+void SetLayerVisible::redo()
 {
   auto& layer = mMap->view_layer(mLayerId);
 
@@ -55,10 +55,10 @@ void SetLayerVisibilityCmd::redo()
   layer.set_visible(mNewVisibility);
 }
 
-auto SetLayerVisibilityCmd::get_name() const -> std::string
+auto SetLayerVisible::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return mNewVisibility ? lang.cmd.show_layer : lang.cmd.hide_layer;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

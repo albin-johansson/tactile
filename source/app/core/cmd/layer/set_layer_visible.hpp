@@ -17,39 +17,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "move_layer_down_cmd.hpp"
+#pragma once
 
-#include <utility>  // move
+#include "core/cmd/command.hpp"
+#include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+#include "core/map.hpp"
 
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
-#include "misc/panic.hpp"
+namespace tactile::cmd {
 
-namespace tactile {
-
-MoveLayerDownCmd::MoveLayerDownCmd(Shared<Map> map, const UUID& layerId)
-    : mMap {std::move(map)}
-    , mLayerId {layerId}
+class SetLayerVisible final : public ICommand
 {
-  if (!mMap) {
-    throw TactileError {"Invalid null map!"};
-  }
-}
+ public:
+  SetLayerVisible(Shared<Map> map, const UUID& layer_id, bool visible);
 
-void MoveLayerDownCmd::undo()
-{
-  mMap->move_layer_up(mLayerId);
-}
+  void undo() override;
 
-void MoveLayerDownCmd::redo()
-{
-  mMap->move_layer_down(mLayerId);
-}
+  void redo() override;
 
-auto MoveLayerDownCmd::get_name() const -> std::string
-{
-  const auto& lang = get_current_language();
-  return lang.cmd.move_layer_down;
-}
+  [[nodiscard]] auto get_name() const -> std::string override;
 
-}  // namespace tactile
+ private:
+  Shared<Map> mMap;
+  UUID        mLayerId {};
+  bool        mNewVisibility {};
+  Maybe<bool> mOldVisibility;
+};
+
+}  // namespace tactile::cmd
