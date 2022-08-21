@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/cmd/property/change_property_type_cmd.hpp"
+#include "core/cmd/property/add_property.hpp"
 
 #include <gtest/gtest.h>
 
@@ -26,29 +26,29 @@
 
 namespace tactile::test {
 
-TEST(ChangePropertyTypeCmd, Constructor)
+TEST(AddProperty, Constructor)
 {
-  ASSERT_THROW(ChangePropertyTypeCmd(nullptr, "", AttributeType::Int), TactileError);
+  ASSERT_THROW(cmd::AddProperty(nullptr, "", AttributeType::String), TactileError);
 }
 
-TEST(ChangePropertyTypeCmd, RedoUndo)
+TEST(AddProperty, RedoUndo)
 {
-  auto document = MapBuilder::build().result();
-  auto map = document->get_map_ptr();
-
+  auto  document = MapBuilder::build().result();
+  auto  map = document->get_map_ptr();
   auto& props = map->get_props();
-  props.add("property", 123);
 
-  ChangePropertyTypeCmd cmd {map, "property", AttributeType::Bool};
+  ASSERT_TRUE(props.empty());
+
+  cmd::AddProperty cmd {map, "Foo", AttributeType::Int};
   cmd.redo();
 
-  ASSERT_TRUE(props.contains("property"));
-  ASSERT_FALSE(props.at("property").as_bool());
+  ASSERT_TRUE(props.contains("Foo"));
+  ASSERT_EQ(0, props.at("Foo").as_int());
 
   cmd.undo();
 
-  ASSERT_TRUE(props.contains("property"));
-  ASSERT_EQ(123, props.at("property").as_int());
+  ASSERT_FALSE(props.contains("Foo"));
+  ASSERT_TRUE(props.empty());
 }
 
 }  // namespace tactile::test

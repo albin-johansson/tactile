@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "update_property_cmd.hpp"
+#include "update_property.hpp"
 
 #include <utility>  // move
 
@@ -27,11 +27,11 @@
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-UpdatePropertyCmd::UpdatePropertyCmd(Shared<IContext> context,
-                                     std::string      name,
-                                     Attribute        value)
+UpdateProperty::UpdateProperty(Shared<IContext> context,
+                               std::string      name,
+                               Attribute        value)
     : mContext {std::move(context)}
     , mName {std::move(name)}
     , mNewValue {std::move(value)}
@@ -41,23 +41,23 @@ UpdatePropertyCmd::UpdatePropertyCmd(Shared<IContext> context,
   }
 }
 
-void UpdatePropertyCmd::undo()
+void UpdateProperty::undo()
 {
   auto& props = mContext->get_props();
   props.update(mName, mOldValue.value());
   mOldValue.reset();
 }
 
-void UpdatePropertyCmd::redo()
+void UpdateProperty::redo()
 {
   auto& props = mContext->get_props();
   mOldValue = props.at(mName);
   props.update(mName, mNewValue);
 }
 
-auto UpdatePropertyCmd::merge_with(const ICommand* cmd) -> bool
+auto UpdateProperty::merge_with(const ICommand* cmd) -> bool
 {
-  if (const auto* other = dynamic_cast<const UpdatePropertyCmd*>(cmd)) {
+  if (const auto* other = dynamic_cast<const UpdateProperty*>(cmd)) {
     if (mContext->get_uuid() == other->mContext->get_uuid() && mName == other->mName) {
       mNewValue = other->mNewValue;
       return true;
@@ -67,10 +67,10 @@ auto UpdatePropertyCmd::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-auto UpdatePropertyCmd::get_name() const -> std::string
+auto UpdateProperty::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return lang.cmd.update_property;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

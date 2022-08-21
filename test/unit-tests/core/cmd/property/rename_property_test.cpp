@@ -17,10 +17,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include "core/cmd/property/add_property.hpp"
-#include "core/cmd/property/change_property_type_cmd.hpp"
-#include "core/cmd/property/remove_property.hpp"
 #include "core/cmd/property/rename_property.hpp"
-#include "core/cmd/property/update_property.hpp"
+
+#include <gtest/gtest.h>
+
+#include "misc/panic.hpp"
+#include "unit-tests/core/helpers/map_builder.hpp"
+
+namespace tactile::test {
+
+TEST(RenameProperty, Constructor)
+{
+  ASSERT_THROW(cmd::RenameProperty(nullptr, "", ""), TactileError);
+}
+
+TEST(RenameProperty, RedoUndo)
+{
+  auto document = MapBuilder::build().result();
+  auto map = document->get_map_ptr();
+
+  auto& props = map->get_props();
+  props.add("foo", cen::colors::red);
+
+  cmd::RenameProperty cmd {map, "foo", "bar"};
+  cmd.redo();
+
+  ASSERT_FALSE(props.contains("foo"));
+  ASSERT_TRUE(props.contains("bar"));
+  ASSERT_EQ(cen::colors::red, props.at("bar"));
+
+  cmd.undo();
+
+  ASSERT_TRUE(props.contains("foo"));
+  ASSERT_FALSE(props.contains("bar"));
+  ASSERT_EQ(cen::colors::red, props.at("foo"));
+}
+
+}  // namespace tactile::test

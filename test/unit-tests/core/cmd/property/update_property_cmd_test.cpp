@@ -17,21 +17,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/cmd/property/update_property_cmd.hpp"
-
 #include <gtest/gtest.h>
 
+#include "core/cmd/property/update_property.hpp"
 #include "misc/panic.hpp"
 #include "unit-tests/core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(UpdatePropertyCmd, Constructor)
+TEST(UpdateProperty, Constructor)
 {
-  ASSERT_THROW(UpdatePropertyCmd(nullptr, "", 0), TactileError);
+  ASSERT_THROW(cmd::UpdateProperty(nullptr, "", 0), TactileError);
 }
 
-TEST(UpdatePropertyCmd, RedoUndo)
+TEST(UpdateProperty, RedoUndo)
 {
   auto document = MapBuilder::build().result();
   auto map = document->get_map_ptr();
@@ -39,7 +38,7 @@ TEST(UpdatePropertyCmd, RedoUndo)
   auto& props = map->get_props();
   props.add("int", 10);
 
-  UpdatePropertyCmd cmd {map, "int", 20};
+  cmd::UpdateProperty cmd {map, "int", 20};
 
   cmd.redo();
   ASSERT_EQ(20, props.at("int"));
@@ -48,7 +47,7 @@ TEST(UpdatePropertyCmd, RedoUndo)
   ASSERT_EQ(10, props.at("int"));
 }
 
-TEST(UpdatePropertyCmd, MergeSupport)
+TEST(UpdateProperty, MergeSupport)
 {
   auto document = MapBuilder::build().result();
   auto map = document->get_map_ptr();
@@ -56,9 +55,9 @@ TEST(UpdatePropertyCmd, MergeSupport)
   auto& props = map->get_props();
   props.add("color", cen::colors::cyan);
 
-  UpdatePropertyCmd       a {map, "color", cen::colors::azure};
-  const UpdatePropertyCmd b {map, "color", cen::colors::gold};
-  const UpdatePropertyCmd c {map, "color", cen::colors::violet};
+  cmd::UpdateProperty       a {map, "color", cen::colors::azure};
+  const cmd::UpdateProperty b {map, "color", cen::colors::gold};
+  const cmd::UpdateProperty c {map, "color", cen::colors::violet};
 
   ASSERT_TRUE(a.merge_with(&b));
   ASSERT_TRUE(a.merge_with(&c));

@@ -27,11 +27,11 @@
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-ChangePropertyTypeCmd::ChangePropertyTypeCmd(Shared<IContext>    context,
-                                             std::string         name,
-                                             const AttributeType type)
+ChangePropertyType::ChangePropertyType(Shared<IContext>    context,
+                                       std::string         name,
+                                       const AttributeType type)
     : mContext {std::move(context)}
     , mName {std::move(name)}
     , mPropertyType {type}
@@ -41,7 +41,7 @@ ChangePropertyTypeCmd::ChangePropertyTypeCmd(Shared<IContext>    context,
   }
 }
 
-void ChangePropertyTypeCmd::undo()
+void ChangePropertyType::undo()
 {
   auto& props = mContext->get_props();
 
@@ -54,17 +54,18 @@ void ChangePropertyTypeCmd::undo()
   mPreviousValue.reset();
 }
 
-void ChangePropertyTypeCmd::redo()
+void ChangePropertyType::redo()
 {
   auto& props = mContext->get_props();
+
   mPreviousValue = props.at(mName);
   props.change_type(mName, mPropertyType);
 }
 
-auto ChangePropertyTypeCmd::get_name() const -> std::string
+auto ChangePropertyType::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
   return lang.cmd.change_property_type;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

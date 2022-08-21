@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/cmd/property/rename_property_cmd.hpp"
+#include "core/cmd/property/remove_property.hpp"
 
 #include <gtest/gtest.h>
 
@@ -26,31 +26,28 @@
 
 namespace tactile::test {
 
-TEST(RenamePropertyCmd, Constructor)
+TEST(RemoveProperty, Constructor)
 {
-  ASSERT_THROW(RenamePropertyCmd(nullptr, "", ""), TactileError);
+  ASSERT_THROW(cmd::RemoveProperty(nullptr, ""), TactileError);
 }
 
-TEST(RenamePropertyCmd, RedoUndo)
+TEST(RemoveProperty, RedoUndo)
 {
   auto document = MapBuilder::build().result();
   auto map = document->get_map_ptr();
 
   auto& props = map->get_props();
-  props.add("foo", cen::colors::red);
+  props.add("id", 42);
 
-  RenamePropertyCmd cmd {map, "foo", "bar"};
+  cmd::RemoveProperty cmd {map, "id"};
   cmd.redo();
 
-  ASSERT_FALSE(props.contains("foo"));
-  ASSERT_TRUE(props.contains("bar"));
-  ASSERT_EQ(cen::colors::red, props.at("bar"));
+  ASSERT_FALSE(props.contains("id"));
 
   cmd.undo();
 
-  ASSERT_TRUE(props.contains("foo"));
-  ASSERT_FALSE(props.contains("bar"));
-  ASSERT_EQ(cen::colors::red, props.at("foo"));
+  ASSERT_TRUE(props.contains("id"));
+  ASSERT_EQ(42, props.at("id").as_int());
 }
 
 }  // namespace tactile::test

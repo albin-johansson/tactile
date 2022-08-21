@@ -43,46 +43,46 @@ class ADocument
 
   void define_component(std::string name);
 
-  void undef_component(const UUID& componentId);
+  void undef_component(const UUID& component_id);
 
-  void rename_component(const UUID& componentId, std::string name);
+  void rename_component(const UUID& component_id, std::string name);
 
-  void add_component_attribute(const UUID& componentId, std::string name);
+  void add_component_attribute(const UUID& component_id, std::string name);
 
-  void remove_component_attribute(const UUID& componentId, std::string name);
+  void remove_component_attribute(const UUID& component_id, std::string name);
 
-  void rename_component_attribute(const UUID& componentId,
+  void rename_component_attribute(const UUID& component_id,
                                   std::string current,
                                   std::string updated);
 
-  void duplicate_component_attribute(const UUID& componentId, std::string name);
+  void duplicate_component_attribute(const UUID& component_id, std::string name);
 
-  void set_component_attribute_type(const UUID&   componentId,
+  void set_component_attribute_type(const UUID&   component_id,
                                     std::string   name,
                                     AttributeType type);
 
-  void update_component(const UUID& componentId, std::string name, Attribute value);
+  void update_component(const UUID& component_id, std::string name, Attribute value);
 
-  void attach_component(const UUID& contextId, const UUID& componentId);
+  void attach_component(const UUID& context_id, const UUID& component_id);
 
-  void detach_component(const UUID& contextId, const UUID& componentId);
+  void detach_component(const UUID& context_id, const UUID& component_id);
 
-  void update_attached_component(const UUID& contextId,
-                                 const UUID& componentId,
+  void update_attached_component(const UUID& context_id,
+                                 const UUID& component_id,
                                  std::string name,
                                  Attribute   value);
 
-  void reset_attached_component(const UUID& contextId, const UUID& componentId);
+  void reset_attached_component(const UUID& context_id, const UUID& component_id);
 
-  void add_property(const UUID& contextId, std::string name, AttributeType type);
+  void add_property(const UUID& context_id, std::string name, AttributeType type);
 
-  void remove_property(const UUID& contextId, std::string name);
+  void remove_property(const UUID& context_id, std::string name);
 
-  void rename_property(const UUID& contextId, std::string current, std::string updated);
+  void rename_property(const UUID& context_id, std::string current, std::string updated);
 
-  void update_property(const UUID& contextId, std::string name, Attribute value);
+  void update_property(const UUID& context_id, std::string name, Attribute value);
 
-  void change_property_type(const UUID& contextId, std::string name, AttributeType type);
+  void change_property_type(const UUID& context_id, std::string name, AttributeType type);
 
   /// Indicates whether the document represents a map.
   [[nodiscard]] auto is_map() const -> bool;

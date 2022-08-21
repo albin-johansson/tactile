@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "add_property_cmd.hpp"
+#include "rename_property.hpp"
 
 #include <utility>  // move
 
@@ -27,36 +27,36 @@
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-AddPropertyCmd::AddPropertyCmd(Shared<IContext>    context,
-                               std::string         name,
-                               const AttributeType type)
+RenameProperty::RenameProperty(Shared<IContext> context,
+                               std::string      old_name,
+                               std::string      new_name)
     : mContext {std::move(context)}
-    , mName {std::move(name)}
-    , mType {type}
+    , mOldName {std::move(old_name)}
+    , mNewName {std::move(new_name)}
 {
   if (!mContext) {
     throw TactileError {"Invalid null context!"};
   }
 }
 
-void AddPropertyCmd::undo()
+void RenameProperty::undo()
 {
   auto& props = mContext->get_props();
-  props.remove(mName);
+  props.rename(mNewName, mOldName);
 }
 
-void AddPropertyCmd::redo()
+void RenameProperty::redo()
 {
   auto& props = mContext->get_props();
-  props.add(mName, mType);
+  props.rename(mOldName, mNewName);
 }
 
-auto AddPropertyCmd::get_name() const -> std::string
+auto RenameProperty::get_name() const -> std::string
 {
   const auto& lang = get_current_language();
-  return lang.cmd.add_property;
+  return lang.cmd.rename_property;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

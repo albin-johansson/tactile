@@ -17,10 +17,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include <gtest/gtest.h>
 
-#include "core/cmd/property/add_property.hpp"
 #include "core/cmd/property/change_property_type_cmd.hpp"
-#include "core/cmd/property/remove_property.hpp"
-#include "core/cmd/property/rename_property.hpp"
-#include "core/cmd/property/update_property.hpp"
+#include "misc/panic.hpp"
+#include "unit-tests/core/helpers/map_builder.hpp"
+
+namespace tactile::test {
+
+TEST(ChangePropertyType, Constructor)
+{
+  ASSERT_THROW(cmd::ChangePropertyType(nullptr, "", AttributeType::Int), TactileError);
+}
+
+TEST(ChangePropertyType, RedoUndo)
+{
+  auto document = MapBuilder::build().result();
+  auto map = document->get_map_ptr();
+
+  auto& props = map->get_props();
+  props.add("property", 123);
+
+  cmd::ChangePropertyType cmd {map, "property", AttributeType::Bool};
+  cmd.redo();
+
+  ASSERT_TRUE(props.contains("property"));
+  ASSERT_FALSE(props.at("property").as_bool());
+
+  cmd.undo();
+
+  ASSERT_TRUE(props.contains("property"));
+  ASSERT_EQ(123, props.at("property").as_int());
+}
+
+}  // namespace tactile::test

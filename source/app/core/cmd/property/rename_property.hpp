@@ -17,38 +17,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/cmd/property/add_property_cmd.hpp"
+#pragma once
 
-#include <gtest/gtest.h>
+#include "core/cmd/command.hpp"
+#include "core/common/memory.hpp"
 
-#include "misc/panic.hpp"
-#include "unit-tests/core/helpers/map_builder.hpp"
+namespace tactile {
+class IContext;
+}  // namespace tactile
 
-namespace tactile::test {
+namespace tactile::cmd {
 
-TEST(AddPropertyCmd, Constructor)
+class RenameProperty final : public ICommand
 {
-  ASSERT_THROW(AddPropertyCmd(nullptr, "", AttributeType::String), TactileError);
-}
+ public:
+  RenameProperty(Shared<IContext> context, std::string old_name, std::string new_name);
 
-TEST(AddPropertyCmd, RedoUndo)
-{
-  auto  document = MapBuilder::build().result();
-  auto  map = document->get_map_ptr();
-  auto& props = map->get_props();
+  void undo() override;
 
-  ASSERT_TRUE(props.empty());
+  void redo() override;
 
-  AddPropertyCmd cmd {map, "Foo", AttributeType::Int};
-  cmd.redo();
+  [[nodiscard]] auto get_name() const -> std::string override;
 
-  ASSERT_TRUE(props.contains("Foo"));
-  ASSERT_EQ(0, props.at("Foo").as_int());
+ private:
+  Shared<IContext> mContext;
+  std::string      mOldName;
+  std::string      mNewName;
+};
 
-  cmd.undo();
-
-  ASSERT_FALSE(props.contains("Foo"));
-  ASSERT_TRUE(props.empty());
-}
-
-}  // namespace tactile::test
+}  // namespace tactile::cmd

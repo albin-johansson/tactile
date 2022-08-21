@@ -17,37 +17,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/cmd/property/remove_property_cmd.hpp"
+#pragma once
 
-#include <gtest/gtest.h>
+#include "core/attribute.hpp"
+#include "core/cmd/command.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
 
-#include "misc/panic.hpp"
-#include "unit-tests/core/helpers/map_builder.hpp"
+namespace tactile {
+class IContext;
+}  // namespace tactile
 
-namespace tactile::test {
+namespace tactile::cmd {
 
-TEST(RemovePropertyCmd, Constructor)
+class AddProperty final : public ICommand
 {
-  ASSERT_THROW(RemovePropertyCmd(nullptr, ""), TactileError);
-}
+ public:
+  AddProperty(Shared<IContext> context, std::string name, AttributeType type);
 
-TEST(RemovePropertyCmd, RedoUndo)
-{
-  auto document = MapBuilder::build().result();
-  auto map = document->get_map_ptr();
+  void undo() override;
 
-  auto& props = map->get_props();
-  props.add("id", 42);
+  void redo() override;
 
-  RemovePropertyCmd cmd {map, "id"};
-  cmd.redo();
+  [[nodiscard]] auto get_name() const -> std::string override;
 
-  ASSERT_FALSE(props.contains("id"));
+ private:
+  Shared<IContext> mContext;
+  std::string      mName;
+  AttributeType    mType;
+};
 
-  cmd.undo();
-
-  ASSERT_TRUE(props.contains("id"));
-  ASSERT_EQ(42, props.at("id").as_int());
-}
-
-}  // namespace tactile::test
+}  // namespace tactile::cmd

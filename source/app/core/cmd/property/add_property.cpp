@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "remove_property_cmd.hpp"
+#include "add_property.hpp"
 
 #include <utility>  // move
 
@@ -27,35 +27,36 @@
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
-RemovePropertyCmd::RemovePropertyCmd(Shared<IContext> context, std::string name)
+AddProperty::AddProperty(Shared<IContext>    context,
+                         std::string         name,
+                         const AttributeType type)
     : mContext {std::move(context)}
     , mName {std::move(name)}
+    , mType {type}
 {
   if (!mContext) {
     throw TactileError {"Invalid null context!"};
   }
 }
 
-void RemovePropertyCmd::undo()
+void AddProperty::undo()
 {
   auto& props = mContext->get_props();
-  props.add(mName, mPreviousValue.value());
-  mPreviousValue.reset();
-}
-
-void RemovePropertyCmd::redo()
-{
-  auto& props = mContext->get_props();
-  mPreviousValue = props.at(mName);
   props.remove(mName);
 }
 
-auto RemovePropertyCmd::get_name() const -> std::string
+void AddProperty::redo()
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.remove_property;
+  auto& props = mContext->get_props();
+  props.add(mName, mType);
 }
 
-}  // namespace tactile
+auto AddProperty::get_name() const -> std::string
+{
+  const auto& lang = get_current_language();
+  return lang.cmd.add_property;
+}
+
+}  // namespace tactile::cmd

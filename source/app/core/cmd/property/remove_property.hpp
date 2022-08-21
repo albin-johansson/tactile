@@ -21,31 +21,31 @@
 
 #include "core/attribute.hpp"
 #include "core/cmd/command.hpp"
+#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 
 namespace tactile {
-
 class IContext;
+}  // namespace tactile
 
-class UpdatePropertyCmd final : public ICommand
+namespace tactile::cmd {
+
+class RemoveProperty final : public ICommand
 {
  public:
-  UpdatePropertyCmd(Shared<IContext> context, std::string name, Attribute value);
+  RemoveProperty(Shared<IContext> context, std::string name);
 
   void undo() override;
 
   void redo() override;
-
-  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
 
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
   Shared<IContext> mContext;
   std::string      mName;
-  Attribute        mNewValue;
-  Maybe<Attribute> mOldValue;
+  Maybe<Attribute> mPreviousValue;
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd
