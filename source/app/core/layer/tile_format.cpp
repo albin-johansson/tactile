@@ -20,7 +20,6 @@
 #include "tile_format.hpp"
 
 #include <zlib.h>
-#include <zstd.h>
 
 #include "misc/panic.hpp"
 
