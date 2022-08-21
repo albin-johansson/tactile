@@ -35,7 +35,10 @@ class ComponentBuilder
 
   auto with_attr(std::string name, Attribute value = std::string {}) -> ComponentBuilder&;
 
-  [[nodiscard]] auto result() -> UUID { return mComponentId; }
+  [[nodiscard]] auto result() -> UUID
+  {
+    return mComponentId;
+  }
 
  private:
   Shared<ComponentIndex> mIndex;

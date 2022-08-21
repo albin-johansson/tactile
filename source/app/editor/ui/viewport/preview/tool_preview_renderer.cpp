@@ -117,7 +117,7 @@ void ToolPreviewRenderer::visit(const EllipseTool& tool)
     const auto radius = stroke->current - stroke->start;
     const auto center = stroke->start + radius;
 
-    graphics.draw_ellipse(center + Vector2f {1, 1}, radius, cen::colors::black, 1.0f);
+    graphics.draw_ellipse(center + float2 {1, 1}, radius, cen::colors::black, 1.0f);
     graphics.draw_ellipse(center, radius, cen::colors::yellow, 1.0f);
   }
 }

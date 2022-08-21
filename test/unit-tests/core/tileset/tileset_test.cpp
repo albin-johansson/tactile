@@ -29,8 +29,8 @@ namespace {
 
 constexpr const char* _default_texture_path = "foo/bar.png";
 constexpr uint        _default_texture_id = 7;
-constexpr Vector2i    _default_texture_size = {1024, 768};
-constexpr Vector2i    _default_tile_size = {28, 42};
+constexpr int2        _default_texture_size = {1024, 768};
+constexpr int2        _default_tile_size = {28, 42};
 
 [[nodiscard]] auto _make_tileset() -> Tileset
 {

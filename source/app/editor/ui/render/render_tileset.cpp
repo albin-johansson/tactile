@@ -34,8 +34,8 @@ void render_tileset(GraphicsCtx& graphics, const TilesetDocument& document)
   const auto& uvTileSize = tileset.uv_size();
   const auto  textureId = tileset.texture_id();
 
-  const Vector2f tileSize = tileset.tile_size();
-  const ImVec2   uv {uvTileSize.x, uvTileSize.y};
+  const float2 tileSize = tileset.tile_size();
+  const ImVec2 uv {uvTileSize.x, uvTileSize.y};
 
   invoke_mn(tileset.row_count(), tileset.column_count(), [&](int32 row, int32 col) {
     const ImVec4 source {static_cast<float>(col * tileset.tile_size().x),

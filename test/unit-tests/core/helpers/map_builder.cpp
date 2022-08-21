@@ -31,7 +31,7 @@
 namespace tactile::test {
 
 MapBuilder::MapBuilder()
-    : mDocument {std::make_unique<MapDocument>(Vector2f {32, 32}, 5, 5)}
+    : mDocument {std::make_unique<MapDocument>(float2 {32, 32}, 5, 5)}
 {
   mDocument->set_component_index(std::make_shared<ComponentIndex>());
 }
@@ -41,7 +41,7 @@ auto MapBuilder::build() -> MapBuilder
   return MapBuilder {};
 }
 
-auto MapBuilder::with_tile_size(const Vector2i& size) -> MapBuilder&
+auto MapBuilder::with_tile_size(const int2& size) -> MapBuilder&
 {
   mDocument->get_map().set_tile_size(size);
   return *this;

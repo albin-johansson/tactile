@@ -80,7 +80,7 @@ struct Identifiers final
 struct GodotRectangleShape final
 {
   SubResource id {};
-  Vector2f    extents {};
+  float2      extents {};
 };
 
 struct TilesetExportInfo final
@@ -490,11 +490,11 @@ void emit_rectangle_object(std::ostream&         stream,
 
 [[nodiscard]] auto approximate_ellipse_as_polygon(const ir::ObjectData&   object,
                                                   const GodotEmitOptions& options)
-    -> std::vector<Vector2f>
+    -> std::vector<float2>
 {
   TACTILE_ASSERT(object.type == ObjectType::Ellipse);
 
-  std::vector<Vector2f> points;
+  std::vector<float2> points;
   points.reserve(options.ellipse_polygon_point_count);
 
   const auto n = static_cast<double>(options.ellipse_polygon_point_count);

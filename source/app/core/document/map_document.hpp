@@ -88,13 +88,11 @@ class MapDocument final : public ADocument
 
   void add_rectangle(const UUID& layerId, const float2& pos, const float2& size);
 
-  void add_ellipse(const UUID& layerId, const float2& pos, const Vector2f& size);
+  void add_ellipse(const UUID& layerId, const float2& pos, const float2& size);
 
-  void add_point(const UUID& layerId, const Vector2f& pos);
+  void add_point(const UUID& layerId, const float2& pos);
 
-  void move_object(const UUID&     objectId,
-                   const Vector2f& previous,
-                   const Vector2f& updated);
+  void move_object(const UUID& objectId, const float2& previous, const float2& updated);
 
   void set_object_visible(const UUID& objectId, bool visible);
 
