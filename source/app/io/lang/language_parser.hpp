@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "editor/lang/strings.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::io {
 

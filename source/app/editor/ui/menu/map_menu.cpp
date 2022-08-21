@@ -24,8 +24,8 @@
 
 #include "core/event/map_events.hpp"
 #include "core/model.hpp"
-#include "editor/lang/language.hpp"
-#include "editor/lang/strings.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/ui/common/tooltips.hpp"
 #include "editor/ui/dialog/godot_export_dialog.hpp"

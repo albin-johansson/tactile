@@ -25,8 +25,8 @@
 #include "core/document/map_document.hpp"
 #include "core/document/tileset_document.hpp"
 #include "core/model.hpp"
-#include "editor/lang/language.hpp"
-#include "editor/lang/strings.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 

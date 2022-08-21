@@ -28,8 +28,8 @@
 #include "core/ctx/property_bundle.hpp"
 #include "core/event/property_events.hpp"
 #include "core/model.hpp"
-#include "editor/lang/language.hpp"
-#include "editor/lang/strings.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::ui {
 

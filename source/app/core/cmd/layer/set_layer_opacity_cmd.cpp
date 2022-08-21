@@ -19,8 +19,8 @@
 
 #include "set_layer_opacity_cmd.hpp"
 
-#include "editor/lang/language.hpp"
-#include "editor/lang/strings.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {

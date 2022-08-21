@@ -25,8 +25,8 @@
 
 #include "core/event/command_events.hpp"
 #include "core/event/misc_events.hpp"
-#include "editor/lang/language.hpp"
-#include "editor/lang/strings.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/checkboxes.hpp"

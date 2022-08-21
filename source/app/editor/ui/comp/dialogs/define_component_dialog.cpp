@@ -24,8 +24,8 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/event/component_events.hpp"
-#include "editor/lang/language.hpp"
-#include "editor/lang/strings.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::ui {
 

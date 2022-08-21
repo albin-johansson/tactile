@@ -25,7 +25,7 @@
 
 #include "core/common/ints.hpp"
 #include "core/common/math.hpp"
-#include "editor/lang/language.hpp"
+#include "lang/language.hpp"
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/themes.hpp"
 

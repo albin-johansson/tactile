@@ -20,8 +20,8 @@
 #include "add_layer.hpp"
 
 #include "core/document/map_document.hpp"
-#include "editor/lang/language.hpp"
-#include "editor/lang/strings.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::cmd {

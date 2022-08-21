@@ -25,8 +25,8 @@
 
 #include "core/comp/component.hpp"
 #include "core/event/component_events.hpp"
-#include "editor/lang/language.hpp"
-#include "editor/lang/strings.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/input_widgets.hpp"
 #include "editor/ui/icons.hpp"

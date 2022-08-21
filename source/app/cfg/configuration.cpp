@@ -29,7 +29,7 @@
 
 #include "cfg/platform_specific.hpp"
 #include "core/util/fmt.hpp"
-#include "editor/lang/language.hpp"
+#include "lang/language.hpp"
 #include "io/directories.hpp"
 #include "io/persist/preferences.hpp"
 #include "meta/build.hpp"
