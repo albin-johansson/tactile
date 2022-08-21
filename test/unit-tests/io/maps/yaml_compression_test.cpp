@@ -82,7 +82,7 @@ using TestData = std::pair<std::string_view, TileFormatFactory>;
   return {
       .encoding = TileEncoding::Base64,
       .compression = TileCompression::Zstd,
-      .zstd_compression_level = 22,
+      .zstd_compression_level = 19,
   };
 }
 

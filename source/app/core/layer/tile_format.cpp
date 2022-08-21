@@ -26,6 +26,8 @@
 
 namespace tactile {
 
+// See https://github.com/facebook/zstd/issues/3133 for Zstd compression levels
+
 void TileFormat::set_encoding(const TileEncoding encoding)
 {
   mEncoding = encoding;
@@ -99,12 +101,32 @@ auto TileFormat::can_use_compression_strategy(const TileCompression compression)
 auto TileFormat::is_valid_zlib_compression_level(const int level) -> bool
 {
   return level == Z_DEFAULT_COMPRESSION ||
-         (level >= Z_BEST_SPEED && level <= Z_BEST_COMPRESSION);
+         (level >= min_zlib_compression_level() && level <= max_zlib_compression_level());
 }
 
 auto TileFormat::is_valid_zstd_compression_level(const int level) -> bool
 {
-  return level >= ZSTD_minCLevel() && level <= ZSTD_maxCLevel();
+  return level >= min_zstd_compression_level() && level <= max_zstd_compression_level();
+}
+
+auto TileFormat::min_zlib_compression_level() -> int
+{
+  return Z_BEST_SPEED;
+}
+
+auto TileFormat::max_zlib_compression_level() -> int
+{
+  return Z_BEST_COMPRESSION;
+}
+
+auto TileFormat::min_zstd_compression_level() -> int
+{
+  return 1;
+}
+
+auto TileFormat::max_zstd_compression_level() -> int
+{
+  return 19;
 }
 
 }  // namespace tactile

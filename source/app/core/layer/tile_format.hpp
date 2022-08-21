@@ -70,6 +70,12 @@ class TileFormat final
 
   [[nodiscard]] static auto is_valid_zstd_compression_level(int level) -> bool;
 
+  [[nodiscard]] static auto min_zlib_compression_level() -> int;
+  [[nodiscard]] static auto max_zlib_compression_level() -> int;
+
+  [[nodiscard]] static auto min_zstd_compression_level() -> int;
+  [[nodiscard]] static auto max_zstd_compression_level() -> int;
+
  private:
   TileEncoding    mEncoding {TileEncoding::Plain};
   TileCompression mCompression {TileCompression::None};

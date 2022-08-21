@@ -97,12 +97,16 @@ TEST(TileFormat, IsValidZlibCompressionLevel)
 
 TEST(TileFormat, IsValidZstdCompressionLevel)
 {
-  ASSERT_FALSE(TileFormat::is_valid_zstd_compression_level(ZSTD_minCLevel() - 1));
-  ASSERT_FALSE(TileFormat::is_valid_zstd_compression_level(ZSTD_maxCLevel() + 1));
+  ASSERT_FALSE(TileFormat::is_valid_zstd_compression_level(0));
+  ASSERT_FALSE(TileFormat::is_valid_zstd_compression_level(20));
 
   ASSERT_TRUE(TileFormat::is_valid_zstd_compression_level(ZSTD_defaultCLevel()));
-  ASSERT_TRUE(TileFormat::is_valid_zstd_compression_level(ZSTD_minCLevel()));
-  ASSERT_TRUE(TileFormat::is_valid_zstd_compression_level(ZSTD_maxCLevel()));
+  ASSERT_TRUE(TileFormat::is_valid_zstd_compression_level(1));
+  ASSERT_TRUE(TileFormat::is_valid_zstd_compression_level(19));
+
+  for (int level = 1; level <= 19; ++level) {
+    ASSERT_TRUE(TileFormat::is_valid_zstd_compression_level(level));
+  }
 }
 
 }  // namespace tactile::test
