@@ -2,7 +2,7 @@ version: 1
 row-count: 8
 column-count: 10
 tile-width: 32
-tile-height: 24
+tile-height: 32
 next-layer-id: 11
 next-object-id: 4
 tile-format:
