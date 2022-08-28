@@ -19,8 +19,11 @@
 
 #pragma once
 
+#include <concepts>     // same_as
 #include <random>       // mt19937, uniform_real_distribution, uniform_int_distribution
 #include <type_traits>  // is_floating_point_v
+
+#include "core/common/ints.hpp"
 
 namespace tactile {
 
@@ -44,6 +47,10 @@ using RandomEngine = std::mt19937;
 template <typename T>
 [[nodiscard]] auto next_random(const T min, const T max) -> T
 {
+  static_assert(!std::same_as<T, bool>);
+  static_assert(!std::same_as<T, char>);
+  static_assert(!std::same_as<T, uchar>);
+
   thread_local static auto engine = make_random_engine();
 
   if constexpr (std::is_floating_point_v<T>) {
