@@ -118,7 +118,12 @@
     "create-tileset": "Skapa Tilesamling",
     "open-tileset": "Öppna Tilesamling",
     "remove-tileset": "Radera Tilesamling",
-    "export-as-godot-scene": "Godotscen..."
+    "export-as-godot-scene": "Godotscen...",
+    "top-left": "Uppe Till Vänster",
+    "top-right": "Uppe Till Höger",
+    "bottom-left": "Nere Till Vänster",
+    "bottom-right": "Nere Till Höger",
+    "show-frame-rate": "Visa Uppdateringshastighet"
   },
   "settings": {
     "behavior-tab": "Beteende",
@@ -189,7 +194,9 @@
     "none": "Ingen",
     "undo": "Ångra",
     "redo": "Gör om",
+    "row": "Rad",
     "rows": "Rader",
+    "column": "Kolumn",
     "columns": "Kolumner",
     "name": "Namn",
     "type": "Typ",
@@ -266,7 +273,9 @@
     "tile-encoding": "Tilekodning",
     "plain-encoding": "Ren text",
     "tile-compression": "Tilekompression",
-    "compression-level": "Kompressionsnivå"
+    "compression-level": "Kompressionsnivå",
+    "local-id": "Lokalt ID",
+    "global-id": "Globalt ID"
   },
   "commands": {
     "add-row": "Lägg Till Rad",

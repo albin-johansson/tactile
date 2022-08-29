@@ -118,7 +118,12 @@
     "create-tileset": "Create Tileset",
     "open-tileset": "Open Tileset",
     "remove-tileset": "Remove Tileset",
-    "export-as-godot-scene": "Godot Scene..."
+    "export-as-godot-scene": "Godot Scene...",
+    "top-left": "Top-left",
+    "top-right": "Top-right",
+    "bottom-left": "Bottom-left",
+    "bottom-right": "Bottom-right",
+    "show-frame-rate": "Show Frame Rate"
   },
   "settings": {
     "behavior-tab": "Behavior",
@@ -189,7 +194,9 @@
     "none": "None",
     "undo": "Undo",
     "redo": "Redo",
+    "row": "Row",
     "rows": "Rows",
+    "column": "Column",
     "columns": "Columns",
     "name": "Name",
     "type": "Type",
@@ -267,7 +274,9 @@
     "tile-encoding": "Tile encoding",
     "plain-encoding": "Plain",
     "tile-compression": "Tile compression",
-    "compression-level": "Compression level"
+    "compression-level": "Compression level",
+    "local-id": "Local ID",
+    "global-id": "Global ID"
   },
   "commands": {
     "add-row": "Add Row",

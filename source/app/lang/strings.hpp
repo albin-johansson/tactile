@@ -171,6 +171,12 @@ struct ActionStrings final
   std::string remove_tileset;
 
   std::string export_as_godot_scene;
+
+  std::string top_left;
+  std::string top_right;
+  std::string bottom_left;
+  std::string bottom_right;
+  std::string show_frame_rate;
 };
 
 struct SettingStrings final
@@ -255,7 +261,9 @@ struct MiscStrings final
   std::string undo;
   std::string redo;
 
+  std::string row;
   std::string rows;
+  std::string column;
   std::string columns;
 
   std::string name;
@@ -354,6 +362,9 @@ struct MiscStrings final
   std::string plain_encoding;
   std::string tile_compression;
   std::string compression_level;
+
+  std::string local_id;
+  std::string global_id;
 };
 
 struct CommandStrings final

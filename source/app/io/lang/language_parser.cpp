@@ -207,6 +207,12 @@ void load_action_strings(const JSON& json, ActionStrings& action)
   load(json, action.remove_tileset, "remove-tileset", TAC_ICON_REMOVE);
 
   load(json, action.export_as_godot_scene, "export-as-godot-scene");
+
+  load(json, action.top_left, "top-left");
+  load(json, action.top_right, "top-right");
+  load(json, action.bottom_left, "bottom-left");
+  load(json, action.bottom_right, "bottom-right");
+  load(json, action.show_frame_rate, "show-frame-rate", TAC_ICON_METRICS);
 }
 
 void load_setting_strings(const JSON& json, SettingStrings& setting)
@@ -292,7 +298,9 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.undo, "undo");
   load(json, misc.redo, "redo");
 
+  load(json, misc.row, "row");
   load(json, misc.rows, "rows");
+  load(json, misc.column, "column");
   load(json, misc.columns, "columns");
 
   load(json, misc.name, "name");
@@ -391,6 +399,9 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.plain_encoding, "plain-encoding");
   load(json, misc.tile_compression, "tile-compression");
   load(json, misc.compression_level, "compression-level");
+
+  load(json, misc.local_id, "local-id");
+  load(json, misc.global_id, "global-id");
 }
 
 void load_command_strings(const JSON& json, CommandStrings& cmd)
