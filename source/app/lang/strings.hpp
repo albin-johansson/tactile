@@ -108,6 +108,8 @@ struct ActionStrings final
 
   std::string inspect_map;
   std::string inspect_tileset;
+  std::string inspect_layer;
+  std::string inspect_object;
 
   std::string add_tileset;
   std::string add_row;
@@ -149,13 +151,16 @@ struct ActionStrings final
   std::string tile_layer;
   std::string object_layer;
   std::string group_layer;
-  std::string inspect_layer;
   std::string rename_layer;
   std::string duplicate_layer;
   std::string remove_layer;
   std::string toggle_layer_visible;
   std::string move_layer_up;
   std::string move_layer_down;
+
+  std::string toggle_object_visibility;
+  std::string duplicate_object;
+  std::string remove_object;
 
   std::string reset_attached_component;
   std::string detach_component;

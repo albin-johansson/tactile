@@ -144,6 +144,8 @@ void load_action_strings(const JSON& json, ActionStrings& action)
 
   load(json, action.inspect_map, "inspect-map", TAC_ICON_INSPECT);
   load(json, action.inspect_tileset, "inspect-tileset", TAC_ICON_INSPECT);
+  load(json, action.inspect_layer, "inspect-layer", TAC_ICON_INSPECT);
+  load(json, action.inspect_object, "inspect-object", TAC_ICON_INSPECT);
 
   load(json, action.add_tileset, "add-tileset", TAC_ICON_TILESET);
   load(json, action.add_row, "add-row");
@@ -183,13 +185,18 @@ void load_action_strings(const JSON& json, ActionStrings& action)
   load(json, action.tile_layer, "tile-layer", TAC_ICON_TILE_LAYER);
   load(json, action.object_layer, "object-layer", TAC_ICON_OBJECT_LAYER);
   load(json, action.group_layer, "group-layer", TAC_ICON_GROUP_LAYER);
-  load(json, action.inspect_layer, "inspect-layer", TAC_ICON_INSPECT);
   load(json, action.rename_layer, "rename-layer", TAC_ICON_EDIT);
   load(json, action.duplicate_layer, "duplicate-layer", TAC_ICON_DUPLICATE);
   load(json, action.remove_layer, "remove-layer", TAC_ICON_REMOVE);
   load(json, action.toggle_layer_visible, "toggle-layer-visible", TAC_ICON_VISIBILITY);
   load(json, action.move_layer_up, "move-layer-up", TAC_ICON_MOVE_UP);
   load(json, action.move_layer_down, "move-layer-down", TAC_ICON_MOVE_DOWN);
+
+  // clang-format off
+  load(json, action.toggle_object_visibility, "toggle-object-visibility", TAC_ICON_VISIBILITY);
+  load(json, action.duplicate_object, "duplicate-object", TAC_ICON_DUPLICATE);
+  load(json, action.remove_object, "remove-object", TAC_ICON_REMOVE);
+  // clang-format on
 
   load(json, action.reset_attached_component, "reset-attached-component", TAC_ICON_RESET);
   load(json, action.detach_component, "detach-component", TAC_ICON_REMOVE);

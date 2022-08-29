@@ -26,16 +26,13 @@
 #include <imgui_internal.h>
 
 #include "core/document/map_document.hpp"
-#include "core/event/map_events.hpp"
 #include "core/event/object_events.hpp"
 #include "core/event/property_events.hpp"
 #include "core/event/tool_events.hpp"
 #include "core/event/viewport_events.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/model.hpp"
-#include "core/tool/tool_manager.hpp"
 #include "document_viewport_offset_handler.hpp"
-#include "editor/ui/icons.hpp"
 #include "editor/ui/render/graphics.hpp"
 #include "editor/ui/render/render_info.hpp"
 #include "editor/ui/render/render_map.hpp"
@@ -45,16 +42,18 @@
 #include "editor/ui/viewport/preview/tool_preview_renderer.hpp"
 #include "editor/ui/viewport/viewport_cursor_info.hpp"
 #include "io/persist/preferences.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::ui {
 namespace {
 
-constexpr auto _object_context_menu_id = "##MapViewObjectContextMenu";
-constinit bool _will_center_viewport = false;
-constinit bool _open_object_context_menu = false;
+constexpr auto viewport_object_context_menu_id = "##MapViewObjectContextMenu";
+constinit bool viewport_will_be_centered = false;
+constinit bool viewport_will_open_object_context_menu = false;
 
-/* Creates a mouse info struct, but does not set the button member */
-[[nodiscard]] auto _make_mouse_info(const ViewportCursorInfo& cursor) -> MouseInfo
+/// Creates a mouse info struct, but does not set the button member.
+[[nodiscard]] auto make_mouse_info(const ViewportCursorInfo& cursor) -> MouseInfo
 {
   MouseInfo info;
 
@@ -67,13 +66,13 @@ constinit bool _open_object_context_menu = false;
 }
 
 template <typename Event, typename T>
-void _check_for(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T&& query)
+void check_for(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T&& query)
 {
   const auto left = query(ImGuiMouseButton_Left);
   const auto mid = query(ImGuiMouseButton_Middle);
   const auto right = query(ImGuiMouseButton_Right);
   if (left || mid || right) {
-    auto info = _make_mouse_info(cursor);
+    auto info = make_mouse_info(cursor);
 
     if (left) {
       info.button = cen::mouse_button::left;
@@ -89,30 +88,30 @@ void _check_for(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, 
   }
 }
 
-void _center_viewport(const Viewport&   viewport,
-                      const ImVec2&     canvasSize,
-                      const float       nRows,
-                      const float       nCols,
-                      entt::dispatcher& dispatcher)
+void center_viewport(const Viewport&   viewport,
+                     const ImVec2&     canvas_size,
+                     const float       row_count,
+                     const float       col_count,
+                     entt::dispatcher& dispatcher)
 {
   const auto& cell = viewport.get_tile_size();
   const auto& offset = viewport.get_offset();
 
-  const auto width = nCols * cell.x;
-  const auto height = nRows * cell.y;
+  const auto width = col_count * cell.x;
+  const auto height = row_count * cell.y;
 
-  const auto   dx = std::round(((canvasSize.x - width) / 2.0f) - offset.x);
-  const auto   dy = std::round(((canvasSize.y - height) / 2.0f) - offset.y);
+  const auto   dx = std::round(((canvas_size.x - width) / 2.0f) - offset.x);
+  const auto   dy = std::round(((canvas_size.y - height) / 2.0f) - offset.y);
   const float2 delta {dx, dy};
 
   dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
 }
 
-void _draw_cursor_gizmos(GraphicsCtx&              graphics,
-                         const DocumentModel&      model,
-                         const MapDocument&        document,
-                         const ViewportCursorInfo& cursor,
-                         const RenderInfo&         info)
+void draw_cursor_gizmos(GraphicsCtx&              graphics,
+                        const DocumentModel&      model,
+                        const MapDocument&        document,
+                        const ViewportCursorInfo& cursor,
+                        const RenderInfo&         info)
 {
   const auto& map = document.get_map();
 
@@ -122,15 +121,15 @@ void _draw_cursor_gizmos(GraphicsCtx&              graphics,
     graphics.draw_rect_with_shadow(cursor.clamped_position, info.grid_size);
   }
 
-  ToolPreviewRenderer previewRenderer {model, graphics, _make_mouse_info(cursor)};
+  ToolPreviewRenderer previewRenderer {model, graphics, make_mouse_info(cursor)};
 
   const auto& tools = document.get_tools();
   tools.accept(previewRenderer);
 }
 
-void _poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
+void poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
 {
-  if (ImGui::IsPopupOpen(_object_context_menu_id, ImGuiPopupFlags_AnyPopup)) {
+  if (ImGui::IsPopupOpen(viewport_object_context_menu_id, ImGuiPopupFlags_AnyPopup)) {
     return;
   }
 
@@ -139,48 +138,51 @@ void _poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
   }
 
   if (Window::contains_mouse()) {
-    _check_for<ToolPressedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
+    check_for<ToolPressedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseClicked(button);
     });
 
-    _check_for<ToolDraggedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
+    check_for<ToolDraggedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseDragging(button);
     });
 
-    _check_for<ToolReleasedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
+    check_for<ToolReleasedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseReleased(button);
     });
   }
 }
 
-void _update_context_menu(const Map& map, entt::dispatcher& dispatcher)
+void update_viewport_context_menu(const Map& map, entt::dispatcher& dispatcher)
 {
   constexpr auto flags =
       ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverExistingPopup;
 
   if (const auto popup = Popup::for_item("##MapViewContextMenu", flags);
       popup.is_open()) {
-    if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Map")) {
+    const auto& lang = get_current_language();
+
+    if (ImGui::MenuItem(lang.action.inspect_map.c_str())) {
       dispatcher.enqueue<InspectContextEvent>(map.get_uuid());
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_CENTER " Center Viewport")) {
+    if (ImGui::MenuItem(lang.action.center_viewport.c_str())) {
       dispatcher.enqueue<CenterViewportEvent>();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_RESET_ZOOM " Reset Viewport Zoom")) {
+    if (ImGui::MenuItem(lang.action.reset_zoom.c_str())) {
       dispatcher.enqueue<ResetZoomEvent>();
     }
   }
 }
 
-void _update_map_view_object_context_menu(const Map& map, entt::dispatcher& dispatcher)
+void update_object_context_menu(const Map& map, entt::dispatcher& dispatcher)
 {
-  if (Popup popup {_object_context_menu_id}; popup.is_open()) {
+  if (Popup popup {viewport_object_context_menu_id}; popup.is_open()) {
+    const auto& lang = get_current_language();
     const auto& layer = map.view_object_layer(map.active_layer_id().value());
 
     const auto  object_id = layer.active_object_id().value();
@@ -188,39 +190,36 @@ void _update_map_view_object_context_menu(const Map& map, entt::dispatcher& disp
 
     // TODO translate
 
-    if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Object")) {
+    if (ImGui::MenuItem(lang.action.inspect_object.c_str())) {
       dispatcher.enqueue<InspectContextEvent>(object_id);
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle Object Visibility",
+    if (ImGui::MenuItem(lang.action.toggle_object_visibility.c_str(),
                         nullptr,
                         object.is_visible())) {
-      // dispatcher.enqueue<SetObjectVisibilityEvent>(objectId, !object.is_visible());
+      dispatcher.enqueue<SetObjectVisibleEvent>(object_id, !object.is_visible());
     }
 
     // TODO implement the object actions
-    {
-      Disable disable;
 
-      ImGui::Separator();
+    ImGui::Separator();
 
-      if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Object")) {
-        // dispatcher.enqueue<DuplicateObjectEvent>(objectId);
-      }
+    if (Disable disable; ImGui::MenuItem(lang.action.duplicate_object.c_str())) {
+      // dispatcher.enqueue<DuplicateObjectEvent>(objectId);
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Object")) {
+    if (ImGui::MenuItem(lang.action.remove_object.c_str())) {
       dispatcher.enqueue<RemoveObjectEvent>(object_id);
     }
   }
 
-  if (_open_object_context_menu) {
-    ImGui::OpenPopup(_object_context_menu_id,
+  if (viewport_will_open_object_context_menu) {
+    ImGui::OpenPopup(viewport_object_context_menu_id,
                      ImGuiPopupFlags_AnyPopup | ImGuiPopupFlags_MouseButtonRight);
-    _open_object_context_menu = false;
+    viewport_will_open_object_context_menu = false;
   }
 }
 
@@ -244,22 +243,22 @@ void show_map_viewport(const DocumentModel& model,
   graphics.push_clip();
 
   // TODO viewport should be centered by default
-  if (_will_center_viewport) {
-    _center_viewport(viewport,
-                     info.canvas_br - info.canvas_tl,
-                     info.row_count,
-                     info.col_count,
-                     dispatcher);
-    _will_center_viewport = false;
+  if (viewport_will_be_centered) {
+    center_viewport(viewport,
+                    info.canvas_br - info.canvas_tl,
+                    info.row_count,
+                    info.col_count,
+                    dispatcher);
+    viewport_will_be_centered = false;
   }
 
   render_map(graphics, document);
 
   const auto cursor = get_viewport_cursor_info(info);
-  _poll_mouse(dispatcher, cursor);
+  poll_mouse(dispatcher, cursor);
 
   if (Window::contains_mouse()) {
-    _draw_cursor_gizmos(graphics, model, document, cursor, info);
+    draw_cursor_gizmos(graphics, model, document, cursor, info);
   }
 
   graphics.pop_clip();
@@ -267,18 +266,18 @@ void show_map_viewport(const DocumentModel& model,
   update_map_viewport_toolbar(model, dispatcher);
   update_map_viewport_overlay(map, cursor);
 
-  _update_context_menu(map, dispatcher);
-  _update_map_view_object_context_menu(map, dispatcher);
+  update_viewport_context_menu(map, dispatcher);
+  update_object_context_menu(map, dispatcher);
 }
 
 void center_map_viewport()
 {
-  _will_center_viewport = true;
+  viewport_will_be_centered = true;
 }
 
 void open_object_context_menu()
 {
-  _open_object_context_menu = true;
+  viewport_will_open_object_context_menu = true;
 }
 
 }  // namespace tactile::ui
