@@ -219,6 +219,10 @@ struct TooltipStrings final
   std::string move_layer_up;
   std::string move_layer_down;
 
+  std::string stamp_random_tile;
+
+  std::string create_tileset;
+
   std::string log_verbose_msg;
   std::string log_debug_msg;
   std::string log_info_msg;
@@ -247,6 +251,9 @@ struct MiscStrings final
   std::string export_;
   std::string empty;
   std::string none;
+
+  std::string undo;
+  std::string redo;
 
   std::string rows;
   std::string columns;
@@ -286,6 +293,14 @@ struct MiscStrings final
   std::string rectangle;
   std::string ellipse;
   std::string point;
+
+  std::string stamp_tool;
+  std::string eraser_tool;
+  std::string bucket_tool;
+  std::string object_selection_tool;
+  std::string rectangle_tool;
+  std::string ellipse_tool;
+  std::string point_tool;
 
   std::string width;
   std::string height;

@@ -33,6 +33,8 @@
 #include "editor/ui/common/windows.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
+#include "lang/language.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile::ui {
 namespace {
@@ -108,6 +110,7 @@ void update_map_viewport_toolbar(const DocumentModel& model, entt::dispatcher& d
 
   StyleVar padding {ImGuiStyleVar_WindowPadding, {6, 6}};
 
+  const auto& lang = get_current_language();
   const auto& document = model.view_map(model.active_document_id().value());
   const auto& tools = document.get_tools();
 
@@ -119,54 +122,70 @@ void update_map_viewport_toolbar(const DocumentModel& model, entt::dispatcher& d
 
     const auto& commands = document.get_history();
 
-    if (icon_button(TAC_ICON_UNDO, "Undo", commands.can_undo())) {
+    if (icon_button(TAC_ICON_UNDO, lang.misc.undo.c_str(), commands.can_undo())) {
       dispatcher.enqueue<UndoEvent>();
     }
 
-    if (icon_button(TAC_ICON_REDO, "Redo", commands.can_redo())) {
+    if (icon_button(TAC_ICON_REDO, lang.misc.redo.c_str(), commands.can_redo())) {
       dispatcher.enqueue<RedoEvent>();
     }
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    if (icon_button(TAC_ICON_TILESET, "Create tileset")) {
+    if (icon_button(TAC_ICON_TILESET, lang.tooltip.create_tileset.c_str())) {
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    _tool_button(model, tools, dispatcher, TAC_ICON_STAMP, "Stamp tool", ToolType::Stamp);
+    _tool_button(model,
+                 tools,
+                 dispatcher,
+                 TAC_ICON_STAMP,
+                 lang.misc.stamp_tool.c_str(),
+                 ToolType::Stamp);
+
     _tool_button(model,
                  tools,
                  dispatcher,
                  TAC_ICON_ERASER,
-                 "Eraser tool",
+                 lang.misc.eraser_tool.c_str(),
                  ToolType::Eraser);
+
     _tool_button(model,
                  tools,
                  dispatcher,
                  TAC_ICON_BUCKET,
-                 "Bucket tool",
+                 lang.misc.bucket_tool.c_str(),
                  ToolType::Bucket);
+
     _tool_button(model,
                  tools,
                  dispatcher,
                  TAC_ICON_OBJECT_SELECTION,
-                 "Object selection tool",
+                 lang.misc.object_selection_tool.c_str(),
                  ToolType::ObjectSelection);
+
     _tool_button(model,
                  tools,
                  dispatcher,
                  TAC_ICON_RECTANGLE,
-                 "Rectangle tool",
+                 lang.misc.rectangle_tool.c_str(),
                  ToolType::Rectangle);
+
     _tool_button(model,
                  tools,
                  dispatcher,
                  TAC_ICON_ELLIPSE,
-                 "Ellipse tool",
+                 lang.misc.ellipse_tool.c_str(),
                  ToolType::Ellipse);
-    _tool_button(model, tools, dispatcher, TAC_ICON_POINT, "Point tool", ToolType::Point);
+
+    _tool_button(model,
+                 tools,
+                 dispatcher,
+                 TAC_ICON_POINT,
+                 lang.misc.point_tool.c_str(),
+                 ToolType::Point);
   }
   else {
     _toolbar_visible = false;
@@ -185,7 +204,7 @@ void update_map_viewport_toolbar(const DocumentModel& model, entt::dispatcher& d
 
       const auto& map = document.get_map();
       if (icon_button(TAC_ICON_STAMP_RANDOMIZER,
-                      "Stamp random tile",
+                      lang.tooltip.stamp_random_tile.c_str(),
                       map.is_stamp_randomizer_possible())) {
         dispatcher.enqueue<SetStampRandomizerEvent>(!selected);
       }

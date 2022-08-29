@@ -256,6 +256,10 @@ void load_tooltip_strings(const JSON& json, TooltipStrings& tooltip)
   load(json, tooltip.move_layer_up, "move-layer-up");
   load(json, tooltip.move_layer_down, "move-layer-down");
 
+  load(json, tooltip.stamp_random_tile, "stamp-random-tile");
+
+  load(json, tooltip.create_tileset, "create-tileset");
+
   load(json, tooltip.log_verbose_msg, "log-verbose-msg");
   load(json, tooltip.log_debug_msg, "log-debug-msg");
   load(json, tooltip.log_info_msg, "log-info-msg");
@@ -284,6 +288,9 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.export_, "export");
   load(json, misc.empty, "empty");
   load(json, misc.none, "none");
+
+  load(json, misc.undo, "undo");
+  load(json, misc.redo, "redo");
 
   load(json, misc.rows, "rows");
   load(json, misc.columns, "columns");
@@ -323,6 +330,14 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.rectangle, "rectangle");
   load(json, misc.ellipse, "ellipse");
   load(json, misc.point, "point");
+
+  load(json, misc.stamp_tool, "stamp-tool");
+  load(json, misc.eraser_tool, "eraser-tool");
+  load(json, misc.bucket_tool, "bucket-tool");
+  load(json, misc.object_selection_tool, "object-selection-tool");
+  load(json, misc.rectangle_tool, "rectangle-tool");
+  load(json, misc.ellipse_tool, "ellipse-tool");
+  load(json, misc.point_tool, "point-tool");
 
   load(json, misc.width, "width");
   load(json, misc.height, "height");
