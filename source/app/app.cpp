@@ -234,6 +234,7 @@ void App::subscribe_to_events()
   d.sink<OpenRenameLayerDialogEvent>().connect<&App::on_open_rename_layer_dialog>(this);
   d.sink<RenameLayerEvent>().connect<&App::on_rename_layer>(this);
 
+  d.sink<RemoveObjectEvent>().connect<&App::on_remove_object>(this);
   d.sink<SetObjectNameEvent>().connect<&App::on_set_object_name>(this);
   d.sink<MoveObjectEvent>().connect<&App::on_move_object>(this);
   d.sink<SetObjectVisibleEvent>().connect<&App::on_set_object_visible>(this);
@@ -851,6 +852,13 @@ void App::on_rename_layer(const RenameLayerEvent& event)
 {
   if (auto* map = active_map_document()) {
     map->rename_layer(event.layer_id, event.name);
+  }
+}
+
+void App::on_remove_object(const RemoveObjectEvent& event)
+{
+  if (auto* document = active_map_document()) {
+    document->remove_object(event.object_id);
   }
 }
 

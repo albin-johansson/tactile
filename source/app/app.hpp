@@ -180,6 +180,7 @@ class App final : AEventLoop
 
   void on_open_rename_layer_dialog(const OpenRenameLayerDialogEvent& event);
 
+  void on_remove_object(const RemoveObjectEvent& event);
   void on_set_object_name(const SetObjectNameEvent& event);
   void on_move_object(const MoveObjectEvent& event);
   void on_set_object_visible(const SetObjectVisibleEvent& event);

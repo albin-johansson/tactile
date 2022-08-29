@@ -38,9 +38,9 @@ void load(const JSON& json, std::string& string, const char* key)
   }
 
   if (string.empty()) {
-#if TACTILE_DEBUG
-    spdlog::critical("Found no translation for '{}'", key);
-#endif  // TACTILE_DEBUG
+    if constexpr (is_debug_build) {
+      spdlog::critical("Found no translation for '{}'", key);
+    }
     throw TactileError {"Invalid empty translated string!"};
   }
 }
@@ -405,6 +405,9 @@ void load_command_strings(const JSON& json, CommandStrings& cmd)
   load(json, cmd.update_object_tag, "update-object-tag");
   load(json, cmd.show_object, "show-object");
   load(json, cmd.hide_object, "hide-object");
+  load(json, cmd.remove_point_object, "remove-point-object");
+  load(json, cmd.remove_rectangle_object, "remove-rectangle-object");
+  load(json, cmd.remove_ellipse_object, "remove-ellipse-object");
 
   load(json, cmd.define_comp, "define-comp");
   load(json, cmd.undef_comp, "undef-comp");

@@ -60,6 +60,8 @@ class ObjectLayer final : public ILayer
 
   void select_object(const Maybe<UUID>& id);
 
+  [[nodiscard]] auto has_object(const UUID& id) const -> bool;
+
   [[nodiscard]] auto object_count() const -> usize;
 
   [[nodiscard]] auto active_object_id() const -> Maybe<UUID>;

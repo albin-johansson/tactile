@@ -112,6 +112,11 @@ void ObjectLayer::select_object(const Maybe<UUID>& id)
   }
 }
 
+auto ObjectLayer::has_object(const UUID& id) const -> bool
+{
+  return mObjects.contains(id);
+}
+
 auto ObjectLayer::object_count() const -> usize
 {
   return mObjects.size();

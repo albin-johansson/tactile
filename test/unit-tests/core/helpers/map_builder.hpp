@@ -43,12 +43,14 @@ class MapBuilder final
 
   auto with_size(usize rows, usize columns) -> MapBuilder&;
 
-  auto with_tile_layer(UUID* id = nullptr, Maybe<TileID> initialValue = nothing)
+  auto with_tile_layer(UUID* id = nullptr, Maybe<TileID> initial_value = nothing)
       -> MapBuilder&;
 
   auto with_object_layer(UUID* id = nullptr) -> MapBuilder&;
 
-  auto with_object(ObjectType type, Shared<Object>* outObject = nullptr) -> MapBuilder&;
+  auto with_object(ObjectType      type,
+                   Shared<Object>* out_object = nullptr,
+                   UUID*           out_layer = nullptr) -> MapBuilder&;
 
   auto with_tileset(UUID* id = nullptr) -> MapBuilder&;
 

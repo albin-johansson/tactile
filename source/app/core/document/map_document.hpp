@@ -92,6 +92,8 @@ class MapDocument final : public ADocument
 
   void add_point(const UUID& layer_id, const float2& pos);
 
+  void remove_object(const UUID& object_id);
+
   void move_object(const UUID& object_id, const float2& previous, const float2& updated);
 
   void set_object_visible(const UUID& object_id, bool visible);

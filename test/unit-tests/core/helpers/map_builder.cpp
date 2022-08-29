@@ -53,21 +53,21 @@ auto MapBuilder::with_size(const usize rows, const usize columns) -> MapBuilder&
   return *this;
 }
 
-auto MapBuilder::with_tile_layer(UUID* id, Maybe<TileID> initialValue) -> MapBuilder&
+auto MapBuilder::with_tile_layer(UUID* id, Maybe<TileID> initial_value) -> MapBuilder&
 {
   auto& map = mDocument->get_map();
 
-  const auto layerId = map.add_tile_layer();
-  mDocument->get_contexts().add_context(map.get_layer(layerId));
+  const auto layer_id = map.add_tile_layer();
+  mDocument->get_contexts().add_context(map.get_layer(layer_id));
 
   if (id) {
-    *id = layerId;
+    *id = layer_id;
   }
 
-  if (initialValue) {
-    auto& layer = map.view_tile_layer(layerId);
-    invoke_mn(map.row_count(), map.column_count(), [&](usize r, usize c) {
-      layer.set_tile(TilePos::from(r, c), *initialValue);
+  if (initial_value) {
+    auto& layer = map.view_tile_layer(layer_id);
+    invoke_mn(map.row_count(), map.column_count(), [&](const usize r, const usize c) {
+      layer.set_tile(TilePos::from(r, c), *initial_value);
     });
   }
 
@@ -78,18 +78,19 @@ auto MapBuilder::with_object_layer(UUID* id) -> MapBuilder&
 {
   auto& map = mDocument->get_map();
 
-  const auto layerId = map.add_object_layer();
-  mDocument->get_contexts().add_context(map.get_layer(layerId));
+  const auto layer_id = map.add_object_layer();
+  mDocument->get_contexts().add_context(map.get_layer(layer_id));
 
   if (id) {
-    *id = layerId;
+    *id = layer_id;
   }
 
   return *this;
 }
 
-auto MapBuilder::with_object(const ObjectType type, Shared<Object>* outObject)
-    -> MapBuilder&
+auto MapBuilder::with_object(const ObjectType type,
+                             Shared<Object>*  out_object,
+                             UUID*            out_layer) -> MapBuilder&
 {
   auto& map = mDocument->get_map();
 
@@ -101,8 +102,12 @@ auto MapBuilder::with_object(const ObjectType type, Shared<Object>* outObject)
   auto object = std::make_shared<Object>();
   object->set_type(type);
 
-  if (outObject) {
-    *outObject = object;
+  if (out_object) {
+    *out_object = object;
+  }
+
+  if (out_layer) {
+    *out_layer = *mDedicatedObjectLayer;
   }
 
   mDocument->get_contexts().add_context(object);

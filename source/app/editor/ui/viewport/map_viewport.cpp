@@ -183,11 +183,13 @@ void _update_map_view_object_context_menu(const Map& map, entt::dispatcher& disp
   if (Popup popup {_object_context_menu_id}; popup.is_open()) {
     const auto& layer = map.view_object_layer(map.active_layer_id().value());
 
-    const auto  objectId = layer.active_object_id().value();
-    const auto& object = layer.get_object(objectId);
+    const auto  object_id = layer.active_object_id().value();
+    const auto& object = layer.get_object(object_id);
+
+    // TODO translate
 
     if (ImGui::MenuItem(TAC_ICON_INSPECT " Inspect Object")) {
-      dispatcher.enqueue<InspectContextEvent>(objectId);
+      dispatcher.enqueue<InspectContextEvent>(object_id);
     }
 
     ImGui::Separator();
@@ -198,18 +200,20 @@ void _update_map_view_object_context_menu(const Map& map, entt::dispatcher& disp
     }
 
     // TODO implement the object actions
-    Disable disable;
+    {
+      Disable disable;
 
-    ImGui::Separator();
+      ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Object")) {
-      // dispatcher.enqueue<DuplicateObjectEvent>(objectId);
+      if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Object")) {
+        // dispatcher.enqueue<DuplicateObjectEvent>(objectId);
+      }
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Object")) {
-      // dispatcher.enqueue<RemoveObjectEvent>(objectId);
+      dispatcher.enqueue<RemoveObjectEvent>(object_id);
     }
   }
 

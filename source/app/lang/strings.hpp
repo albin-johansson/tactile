@@ -370,6 +370,9 @@ struct CommandStrings final
   std::string update_object_tag;
   std::string show_object;
   std::string hide_object;
+  std::string remove_point_object;
+  std::string remove_rectangle_object;
+  std::string remove_ellipse_object;
 
   std::string define_comp;
   std::string undef_comp;

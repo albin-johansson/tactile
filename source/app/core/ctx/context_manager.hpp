@@ -50,7 +50,7 @@ class ContextManager final
 
   void select(const UUID& contextId);
 
-  [[nodiscard, deprecated]] auto get_context(const UUID& id) -> const Shared<IContext>&;
+  [[nodiscard]] auto get_context(const UUID& id) -> const Shared<IContext>&;
 
   [[nodiscard]] auto at(const UUID& contextId) -> IContext&;
   [[nodiscard]] auto at(const UUID& contextId) const -> const IContext&;

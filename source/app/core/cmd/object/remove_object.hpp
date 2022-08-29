@@ -19,9 +19,32 @@
 
 #pragma once
 
-#include "core/cmd/object/add_object.hpp"
-#include "core/cmd/object/move_object.hpp"
-#include "core/cmd/object/remove_object.hpp"
-#include "core/cmd/object/rename_object.hpp"
-#include "core/cmd/object/set_object_tag.hpp"
-#include "core/cmd/object/set_object_visible.hpp"
+#include "core/cmd/command.hpp"
+#include "core/common/memory.hpp"
+#include "core/common/uuid.hpp"
+
+namespace tactile {
+class MapDocument;
+class Object;
+}  // namespace tactile
+
+namespace tactile::cmd {
+
+class RemoveObject final : public ICommand
+{
+ public:
+  RemoveObject(MapDocument* document, const UUID& layer_id, const UUID& object_id);
+
+  void undo() override;
+
+  void redo() override;
+
+  [[nodiscard]] auto get_name() const -> std::string override;
+
+ private:
+  MapDocument*   mDocument {};
+  UUID           mLayerId {};
+  Shared<Object> mObject;
+};
+
+}  // namespace tactile::cmd

@@ -160,6 +160,12 @@ void MapDocument::add_point(const UUID& layer_id, const float2& pos)
   get_history().exec<cmd::AddObject>(this, layer_id, ObjectType::Point, pos);
 }
 
+void MapDocument::remove_object(const UUID& object_id)
+{
+  const auto layer_id = mMap->active_layer_id().value();
+  get_history().exec<cmd::RemoveObject>(this, layer_id, object_id);
+}
+
 void MapDocument::move_object(const UUID&   object_id,
                               const float2& previous,
                               const float2& updated)
