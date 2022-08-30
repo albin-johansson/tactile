@@ -1,0 +1,63 @@
+version: 1
+row-count: 5
+column-count: 5
+tile-width: 32
+tile-height: 32
+next-layer-id: 1
+next-object-id: 1
+component-definitions:
+  - name: Bundle
+    attributes:
+      - name: threshold
+        type: int
+      - name: scale
+        type: float
+      - name: hidden
+        type: bool
+      - name: tag
+        type: string
+      - name: image
+        type: file
+      - name: ref
+        type: object
+      - name: tint
+        type: color
+components:
+  - type: Bundle
+    values:
+      - name: threshold
+        value: 123
+      - name: scale
+        value: 1.0
+      - name: hidden
+        value: false
+      - name: tag
+        value: ":)"
+      - name: image
+        value: ../exterior.png
+      - name: ref
+        value: 2
+      - name: tint
+        value: "#3F1ACECD"
+properties:
+  - name: foo-int
+    type: int
+    value: 42
+  - name: foo-float
+    type: float
+    value: 1.5
+  - name: foo-bool
+    type: bool
+    value: true
+  - name: foo-string
+    type: string
+    value: foobar
+  - name: foo-path
+    type: file
+    value: ../terrain.png
+  - name: foo-object
+    type: object
+    value: 7
+  - name: foo-color
+    type: color
+    value: "#12AB34CD"
