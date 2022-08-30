@@ -362,9 +362,125 @@ void emit_shapes(std::ostream& stream, const GodotScene& scene)
   }
 }
 
-void emit_tile_layer_animation_nodes(std::ostream&            stream,
-                                     const GodotScene&        scene,
-                                     const ir::MapData&       map,
+void emit_attribute(std::ostream& stream, std::string_view name, const Attribute& value)
+{
+  switch (value.type()) {
+    case AttributeType::String:
+      stream << fmt::format(R"(  "{}": "{}")", name, value.as_string());
+      break;
+
+    case AttributeType::Int:
+      stream << fmt::format(R"(  "{}": {})", name, value.as_int());
+      break;
+
+    case AttributeType::Float:
+      stream << fmt::format(R"(  "{}": {})", name, value.as_float());
+      break;
+
+    case AttributeType::Bool:
+      stream << fmt::format(R"(  "{}": {})", name, value.as_bool() ? "true" : "false");
+      break;
+
+    case AttributeType::Path:
+      stream << fmt::format(R"(  "{}": "{}")",
+                            name,
+                            convert_to_forward_slashes(value.as_path()));
+      break;
+
+    case AttributeType::Color: {
+      const auto& color = value.as_color();
+      stream << fmt::format(R"(  "{}": Color( {}, {}, {}, {} ))",
+                            name,
+                            color.norm_red(),
+                            color.norm_green(),
+                            color.norm_blue(),
+                            color.norm_alpha());
+      break;
+    }
+    case AttributeType::Object:
+      stream << fmt::format(R"(  "{}": {})", name, static_cast<int32>(value.as_object()));
+      break;
+  }
+}
+
+void emit_metadata(std::ostream& stream, const ir::ContextData& context)
+{
+  if (context.properties.empty() && context.components.empty()) {
+    return;
+  }
+
+  stream << "__meta__ = {\n";
+
+  if (!context.properties.empty()) {
+    stream << R"(  "properties": {)" << '\n';
+
+    const auto property_count = context.properties.size();
+    for (usize index = 0; const auto& [name, value] : context.properties) {
+      stream << "  ";
+      emit_attribute(stream, name, value);
+
+      if (index < property_count - 1) {
+        stream << ',';
+      }
+
+      stream << '\n';
+
+      ++index;
+    }
+
+    stream << "  }";
+
+    if (!context.components.empty()) {
+      stream << ',';
+    }
+
+    stream << '\n';
+  }
+
+  if (!context.components.empty()) {
+    stream << R"(  "components": {)" << '\n';
+
+    const auto comp_count = context.components.size();
+    for (usize comp_index = 0;
+         const auto& [component_name, attributes] : context.components) {
+      if (!attributes.empty()) {
+        stream << fmt::format(R"(    "{}": {{)", component_name) << '\n';
+
+        const auto attr_count = attributes.size();
+        for (usize attr_index = 0; const auto& [attr_name, attr_value] : attributes) {
+          stream << "    ";
+          emit_attribute(stream, attr_name, attr_value);
+
+          if (attr_index < attr_count - 1) {
+            stream << ',';
+          }
+
+          stream << '\n';
+
+          ++attr_index;
+        }
+
+        stream << "    }";
+
+        if (comp_index < comp_count - 1) {
+          stream << ',';
+        }
+
+        stream << '\n';
+      }
+
+      ++comp_index;
+    }
+
+    stream << "  }\n";
+  }
+
+  stream << "}\n";
+}
+
+void emit_tile_layer_animation_nodes(std::ostream& stream,
+                                     const GodotScene& scene,
+                                     const ir::MapData& map,
                                      const ir::TileLayerData& tile_layer,
                                      std::string_view layer_name)
 {
@@ -460,6 +576,8 @@ void emit_tile_layer(std::ostream& stream,
   stream << fmt::format("cell_size = Vector2( {}, {} )\n",
                         map.tile_size.x,
                         map.tile_size.y);
+
+  emit_metadata(stream, layer.context);
 
   emit_tile_layer_animation_nodes(stream, scene, map, tile_layer, layer.name);
 }
@@ -571,6 +689,8 @@ void emit_object(std::ostream& stream,
                           parent)
            << '\n';
   }
+
+  emit_metadata(stream, object.context);
 }
 
 void emit_object_layer(std::ostream& stream,
@@ -583,6 +703,8 @@ void emit_object_layer(std::ostream& stream,
                         layer.name,
                         parent)
          << '\n';
+
+  emit_metadata(stream, layer.context);
 
   const auto& object_layer = std::get<ir::ObjectLayerData>(layer.data);
   for (const auto& object : object_layer.objects) {
@@ -611,6 +733,8 @@ void emit_layer(std::ostream& stream,
                             layer.name,
                             parent)
              << '\n';
+
+      emit_metadata(stream, layer.context);
 
       const auto& group_layer = std::get<ir::GroupLayerData>(layer.data);
       const auto parent_path =
@@ -656,6 +780,8 @@ void emit_godot_map(const EmitInfo& info, const GodotEmitOptions& options)
          << fmt::format(R"([node name="{}" type="Node2D"])",
                         info.destination_file().stem().string())
          << '\n';
+
+  emit_metadata(stream, map.context);
 
   for (const auto& layer : map.layers) {
     emit_layer(stream, scene, map, layer, ".");
