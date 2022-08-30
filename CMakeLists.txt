@@ -83,7 +83,7 @@ function(tactile_set_compile_options target)
                            /wd5105  # "macro expansion producing 'defined' has undefined behavior"
                            )
 
-  elseif (CMAKE_CXX_COMPILER_ID MATCHES "AppleClang|GNU")
+  elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang|GNU")
     target_compile_options(${target}
                            PRIVATE
                            -Wall

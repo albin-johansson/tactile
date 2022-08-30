@@ -21,7 +21,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
                          /wd4834  # disable [[nodiscard]] warnings
                          )
 
-elseif (CMAKE_CXX_COMPILER_ID MATCHES "AppleClang|GNU")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang|GNU")
   target_compile_options(${TACTILE_TEST}
                          PRIVATE
                          -Wno-unused-result
