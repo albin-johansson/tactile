@@ -22,6 +22,10 @@ component-definitions:
         type: object
       - name: tint
         type: color
+  - name: Foo
+    attributes:
+      - name: bar
+        type: int
 components:
   - type: Bundle
     values:
@@ -39,6 +43,10 @@ components:
         value: 2
       - name: tint
         value: "#3F1ACECD"
+  - type: Foo
+    values:
+      - name: bar
+        value: 83
 properties:
   - name: foo-int
     type: int
