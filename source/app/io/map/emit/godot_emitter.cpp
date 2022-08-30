@@ -47,69 +47,68 @@ namespace {
 
 using ExtResource = int32;
 using SubResource = int32;
-using Rect2 = Vector4i;
 
 struct GodotTexture final
 {
-  UUID        tileset_uuid {};
+  UUID tileset_uuid {};
   ExtResource id {};
 };
 
 struct GodotAnimationFrame final
 {
   SubResource id {};
-  Rect2       region {};
+  Vector4i region {};
 };
 
 struct GodotAnimation final
 {
-  ExtResource                      texture_id {};
-  std::string                      name;
+  ExtResource texture_id {};
+  std::string name;
   std::vector<GodotAnimationFrame> frames;
-  float                            speed {1.0};
+  float speed {1.0};
 };
 
 struct Identifiers final
 {
-  int32              next_ext_resource {1};
-  int32              next_sub_resource {1};
-  int32              ext_tileset_id {};
+  int32 next_ext_resource {1};
+  int32 next_sub_resource {1};
+  int32 ext_tileset_id {};
   Maybe<SubResource> sprite_frames_id;
 };
 
 struct GodotRectangleShape final
 {
   SubResource id {};
-  float2      extents {};
+  float2 extents {};
 };
 
 struct TilesetExportInfo final
 {
-  std::vector<usize>     sorted_indices;
+  std::vector<usize> sorted_indices;
   HashMap<TileID, int32> tileset_id_for_first_tile;
 };
 
 struct GodotScene final
 {
-  GodotEmitOptions                       options;
-  TilesetExportInfo                      export_info;
-  Identifiers                            identifiers;
-  std::vector<GodotTexture>              textures;
+  GodotEmitOptions options;
+  TilesetExportInfo export_info;
+  Identifiers identifiers;
+  std::vector<GodotTexture> textures;
   HashMap<ObjectID, GodotRectangleShape> rectangle_shapes;
-  HashMap<TileID, GodotAnimation>        animations;
+  HashMap<TileID, GodotAnimation> animations;
 };
 
-[[nodiscard]] auto get_tileset_image_path(const ir::TilesetData&  tileset,
+[[nodiscard]] auto get_tileset_image_path(const ir::TilesetData& tileset,
                                           const GodotEmitOptions& options) -> fs::path
 {
   const auto filename = tileset.name + tileset.image_path.extension().string();
   return options.project_image_dir / filename;
 }
 
-void create_animation(GodotScene&             scene,
-                      TileIndex               tile_index,
-                      const ExtResource       texture_id,
-                      const ir::TilesetData&  tileset,
+void create_animation(GodotScene& scene,
+                      TileIndex tile_index,
+                      const ExtResource texture_id,
+                      const ir::TilesetData& tileset,
                       const ir::MetaTileData& tile)
 {
   const auto tile_id = tileset.first_tile + tile_index;
@@ -132,10 +131,10 @@ void create_animation(GodotScene&             scene,
 
     auto& godot_frame = animation.frames.emplace_back();
     godot_frame.id = scene.identifiers.next_sub_resource++;
-    godot_frame.region = Rect2 {pos.col_to_x(tileset.tile_size.x),
-                                pos.row_to_y(tileset.tile_size.y),
-                                tileset.tile_size.x,
-                                tileset.tile_size.y};
+    godot_frame.region = {pos.col_to_x(tileset.tile_size.x),
+                          pos.row_to_y(tileset.tile_size.y),
+                          tileset.tile_size.x,
+                          tileset.tile_size.y};
   }
 }
 
@@ -165,7 +164,7 @@ void create_animation(GodotScene&             scene,
 }
 
 [[nodiscard]] auto create_godot_scene_data(const ir::MapData& map,
-                                           GodotEmitOptions   options) -> GodotScene
+                                           GodotEmitOptions options) -> GodotScene
 {
   GodotScene scene;
   scene.options = std::move(options);
@@ -205,9 +204,9 @@ void create_animation(GodotScene&             scene,
   return scene;
 }
 
-void emit_tileset_file(const ir::MapData&       map,
+void emit_tileset_file(const ir::MapData& map,
                        const TilesetExportInfo& info,
-                       const GodotEmitOptions&  options)
+                       const GodotEmitOptions& options)
 {
   const auto load_steps = map.tilesets.size() + 1;  // TODO validate
 
@@ -221,7 +220,7 @@ void emit_tileset_file(const ir::MapData&       map,
          << '\n';
 
   for (const auto tileset_index : info.sorted_indices) {
-    const auto  id = static_cast<int32>(tileset_index) + 1;
+    const auto id = static_cast<int32>(tileset_index) + 1;
     const auto& tileset = map.tilesets.at(tileset_index);
 
     const auto image_path = get_tileset_image_path(tileset, options);
@@ -273,9 +272,9 @@ void emit_tileset_file(const ir::MapData&       map,
   }
 }
 
-void emit_textures(std::ostream&           stream,
-                   const GodotScene&       scene,
-                   const ir::MapData&      map,
+void emit_textures(std::ostream& stream,
+                   const GodotScene& scene,
+                   const ir::MapData& map,
                    const GodotEmitOptions& options)
 {
   for (const auto& texture : scene.textures) {
@@ -354,7 +353,8 @@ void emit_sprite_frames(std::ostream& stream, const GodotScene& scene)
 void emit_shapes(std::ostream& stream, const GodotScene& scene)
 {
   for (const auto& [object_id, shape] : scene.rectangle_shapes) {
-    stream << fmt::format(R"([sub_resource type="RectangleShape2D" id={}])", shape.id)
+    stream << '\n'
+           << fmt::format(R"([sub_resource type="RectangleShape2D" id={}])", shape.id)
            << '\n';
     stream << fmt::format("extents = Vector2( {}, {} )\n",
                           shape.extents.x,
@@ -366,7 +366,7 @@ void emit_tile_layer_animation_nodes(std::ostream&            stream,
                                      const GodotScene&        scene,
                                      const ir::MapData&       map,
                                      const ir::TileLayerData& tile_layer,
-                                     std::string_view         layer_name)
+                                     std::string_view layer_name)
 {
   invoke_mn(tile_layer.row_count, tile_layer.col_count, [&](usize row, usize col) {
     const auto tile_id = tile_layer.tiles[row][col];
@@ -394,11 +394,11 @@ void emit_tile_layer_animation_nodes(std::ostream&            stream,
   });
 }
 
-void emit_tile_layer(std::ostream&        stream,
-                     const GodotScene&    scene,
-                     const ir::MapData&   map,
+void emit_tile_layer(std::ostream& stream,
+                     const GodotScene& scene,
+                     const ir::MapData& map,
                      const ir::LayerData& layer,
-                     std::string_view     parent)
+                     std::string_view parent)
 {
   const auto& tile_layer = std::get<ir::TileLayerData>(layer.data);
 
@@ -420,7 +420,7 @@ void emit_tile_layer(std::ostream&        stream,
 
     if (tile_id != empty_tile) {
       const auto x = static_cast<int32>(col);
-      auto       y = static_cast<int32>(row);
+      auto y = static_cast<int32>(row);
 
       if (x < 0) {
         y += 1;
@@ -436,7 +436,7 @@ void emit_tile_layer(std::ostream&        stream,
           lookup_in(scene.export_info.tileset_id_for_first_tile, tileset.first_tile);
 
       const auto encoded_pos = x + (y * tile_offset);
-      auto       encoded_tile = tile_id;
+      auto encoded_tile = tile_id;
 
       const auto tile_index = tile_id - tileset.first_tile;
 
@@ -464,11 +464,11 @@ void emit_tile_layer(std::ostream&        stream,
   emit_tile_layer_animation_nodes(stream, scene, map, tile_layer, layer.name);
 }
 
-void emit_rectangle_object(std::ostream&         stream,
-                           const GodotScene&     scene,
+void emit_rectangle_object(std::ostream& stream,
+                           const GodotScene& scene,
                            const ir::ObjectData& object,
-                           std::string_view      object_name,
-                           std::string_view      parent)
+                           std::string_view object_name,
+                           std::string_view parent)
 {
   stream << '\n'
          << fmt::format(R"([node name="{}" type="Area2D" parent="{}"])",
@@ -488,7 +488,7 @@ void emit_rectangle_object(std::ostream&         stream,
                         scene.rectangle_shapes.at(object.id).id);
 }
 
-[[nodiscard]] auto approximate_ellipse_as_polygon(const ir::ObjectData&   object,
+[[nodiscard]] auto approximate_ellipse_as_polygon(const ir::ObjectData& object,
                                                   const GodotEmitOptions& options)
     -> std::vector<float2>
 {
@@ -511,11 +511,11 @@ void emit_rectangle_object(std::ostream&         stream,
   return points;
 }
 
-void emit_ellipse_object(std::ostream&         stream,
-                         const GodotScene&     scene,
+void emit_ellipse_object(std::ostream& stream,
+                         const GodotScene& scene,
                          const ir::ObjectData& object,
-                         std::string_view      object_name,
-                         std::string_view      parent)
+                         std::string_view object_name,
+                         std::string_view parent)
 {
   stream << '\n'
          << fmt::format(R"([node name="{}" type="Area2D" parent="{}"])",
@@ -547,10 +547,10 @@ void emit_ellipse_object(std::ostream&         stream,
   stream << " )\n";
 }
 
-void emit_object(std::ostream&         stream,
-                 const GodotScene&     scene,
+void emit_object(std::ostream& stream,
+                 const GodotScene& scene,
                  const ir::ObjectData& object,
-                 std::string_view      parent)
+                 std::string_view parent)
 {
   auto object_name = fmt::format("Object {}", object.id);
 
@@ -573,10 +573,10 @@ void emit_object(std::ostream&         stream,
   }
 }
 
-void emit_object_layer(std::ostream&        stream,
-                       const GodotScene&    scene,
+void emit_object_layer(std::ostream& stream,
+                       const GodotScene& scene,
                        const ir::LayerData& layer,
-                       std::string_view     parent)
+                       std::string_view parent)
 {
   stream << '\n'
          << fmt::format(R"([node name="{}" type="Node2D" parent="{}"])",
@@ -590,11 +590,11 @@ void emit_object_layer(std::ostream&        stream,
   }
 }
 
-void emit_layer(std::ostream&        stream,
-                const GodotScene&    scene,
-                const ir::MapData&   map,
+void emit_layer(std::ostream& stream,
+                const GodotScene& scene,
+                const ir::MapData& map,
                 const ir::LayerData& layer,
-                std::string_view     parent)
+                std::string_view parent)
 {
   switch (layer.type) {
     case LayerType::TileLayer:
@@ -613,7 +613,7 @@ void emit_layer(std::ostream&        stream,
              << '\n';
 
       const auto& group_layer = std::get<ir::GroupLayerData>(layer.data);
-      const auto  parent_path =
+      const auto parent_path =
           parent == "." ? layer.name : fmt::format("{}/{}", parent, layer.name);
 
       for (const auto& child_layer : group_layer.children) {
