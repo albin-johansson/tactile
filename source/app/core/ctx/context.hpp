@@ -34,8 +34,6 @@ class ComponentBundle;
 class IContext : public IElement
 {
  public:
-  virtual ~IContext() noexcept = default;
-
   virtual void accept(IContextVisitor& visitor) const = 0;
 
   virtual void set_name(std::string name) = 0;
