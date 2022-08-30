@@ -4,7 +4,7 @@ Language: Cpp
 Standard: c++20
 
 AlignTrailingComments: true
-AlignConsecutiveDeclarations: Consecutive
+AlignConsecutiveDeclarations: None
 AlignConsecutiveBitFields: Consecutive
 QualifierAlignment: Left
 
