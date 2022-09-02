@@ -19,9 +19,10 @@
 
 #pragma once
 
-#include <string>   // string
-#include <variant>  // variant
-#include <vector>   // vector
+#include <concepts>  // invocable
+#include <string>    // string
+#include <variant>   // variant, get
+#include <vector>    // vector
 
 #include "core/attribute.hpp"
 #include "core/common/associative.hpp"
@@ -154,5 +155,35 @@ struct MapData final
   std::vector<LayerData> layers;
   ContextData context;
 };
+
+template <std::invocable<const ObjectLayerData&> T>
+void each_object_layer(const GroupLayerData& root, T&& callable)
+{
+  for (const auto& layer : root.children) {
+    if (layer->type == LayerType::GroupLayer) {
+      const auto& group = std::get<GroupLayerData>(layer->data);
+      each_object_layer(group, callable);
+    }
+    else if (layer->type == LayerType::ObjectLayer) {
+      const auto& object_layer = std::get<ObjectLayerData>(layer->data);
+      callable(object_layer);
+    }
+  }
+}
+
+template <std::invocable<const ObjectLayerData&> T>
+void each_object_layer(const MapData& map, T&& callable)
+{
+  for (const auto& layer : map.layers) {
+    if (layer.type == LayerType::GroupLayer) {
+      const auto& group = std::get<GroupLayerData>(layer.data);
+      each_object_layer(group, callable);
+    }
+    else if (layer.type == LayerType::ObjectLayer) {
+      const auto& object_layer = std::get<ObjectLayerData>(layer.data);
+      callable(object_layer);
+    }
+  }
+}
 
 }  // namespace tactile::ir

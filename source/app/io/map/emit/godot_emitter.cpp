@@ -188,18 +188,15 @@ void create_animation(GodotScene& scene,
     }
   }
 
-  for (const auto& layer : map.layers) {
-    if (layer.type == LayerType::ObjectLayer) {
-      const auto& object_layer = std::get<ir::ObjectLayerData>(layer.data);
-      for (const auto& object : object_layer.objects) {
-        if (object.type == ObjectType::Rect) {
-          auto& shape = scene.rectangle_shapes[object.id];
-          shape.id = scene.identifiers.next_sub_resource++;
-          shape.extents = object.size / 2.0f;
-        }
+  ir::each_object_layer(map, [&](const ir::ObjectLayerData& layer) {
+    for (const auto& object : layer.objects) {
+      if (object.type == ObjectType::Rect) {
+        auto& shape = scene.rectangle_shapes[object.id];
+        shape.id = scene.identifiers.next_sub_resource++;
+        shape.extents = object.size / 2.0f;
       }
     }
-  }
+  });
 
   return scene;
 }
@@ -482,7 +479,7 @@ void emit_tile_layer_animation_nodes(std::ostream& stream,
                                      const GodotScene& scene,
                                      const ir::MapData& map,
                                      const ir::TileLayerData& tile_layer,
-                                     std::string_view layer_name)
+                                     std::string_view parent_path)
 {
   invoke_mn(tile_layer.row_count, tile_layer.col_count, [&](usize row, usize col) {
     const auto tile_id = tile_layer.tiles[row][col];
@@ -492,7 +489,7 @@ void emit_tile_layer_animation_nodes(std::ostream& stream,
                     R"-([node name="Tile ({}, {})" type="AnimatedSprite" parent="{}"])-",
                     row,
                     col,
-                    layer_name)
+                    parent_path)
              << '\n';
 
       const auto pos = TilePos::from(row, col);
@@ -514,14 +511,14 @@ void emit_tile_layer(std::ostream& stream,
                      const GodotScene& scene,
                      const ir::MapData& map,
                      const ir::LayerData& layer,
-                     std::string_view parent)
+                     std::string_view parent_path)
 {
   const auto& tile_layer = std::get<ir::TileLayerData>(layer.data);
 
   stream << '\n'
          << fmt::format(R"([node name="{}" type="TileMap" parent="{}"])",
                         layer.name,
-                        parent)
+                        parent_path)
          << '\n';
   stream << fmt::format("tile_set = ExtResource( {} )\n",
                         scene.identifiers.ext_tileset_id);
@@ -579,19 +576,23 @@ void emit_tile_layer(std::ostream& stream,
 
   emit_metadata(stream, layer.context);
 
-  emit_tile_layer_animation_nodes(stream, scene, map, tile_layer, layer.name);
+  emit_tile_layer_animation_nodes(stream,
+                                  scene,
+                                  map,
+                                  tile_layer,
+                                  fmt::format("{}/{}", parent_path, layer.name));
 }
 
 void emit_rectangle_object(std::ostream& stream,
                            const GodotScene& scene,
                            const ir::ObjectData& object,
                            std::string_view object_name,
-                           std::string_view parent)
+                           std::string_view parent_path)
 {
   stream << '\n'
          << fmt::format(R"([node name="{}" type="Area2D" parent="{}"])",
                         object_name,
-                        parent)
+                        parent_path)
          << '\n';
   stream << fmt::format("position = Vector2( {}, {} )\n",
                         object.pos.x + object.size.x / 2.0f,
@@ -599,7 +600,7 @@ void emit_rectangle_object(std::ostream& stream,
 
   stream << '\n'
          << fmt::format(R"([node name="Shape" type="CollisionShape2D" parent="{}/{}"])",
-                        parent,
+                        parent_path,
                         object_name)
          << '\n';
   stream << fmt::format("shape = SubResource( {} )\n",
@@ -633,12 +634,12 @@ void emit_ellipse_object(std::ostream& stream,
                          const GodotScene& scene,
                          const ir::ObjectData& object,
                          std::string_view object_name,
-                         std::string_view parent)
+                         std::string_view parent_path)
 {
   stream << '\n'
          << fmt::format(R"([node name="{}" type="Area2D" parent="{}"])",
                         object_name,
-                        parent)
+                        parent_path)
          << '\n';
   stream << fmt::format("position = Vector2( {}, {} )\n",
                         object.pos.x + object.size.x / 2.0f,
@@ -646,7 +647,7 @@ void emit_ellipse_object(std::ostream& stream,
 
   stream << '\n'
          << fmt::format(R"([node name="Shape" type="CollisionPolygon2D" parent="{}/{}"])",
-                        parent,
+                        parent_path,
                         object_name)
          << '\n';
   stream << "polygon = PoolVector2Array( ";
@@ -668,7 +669,7 @@ void emit_ellipse_object(std::ostream& stream,
 void emit_object(std::ostream& stream,
                  const GodotScene& scene,
                  const ir::ObjectData& object,
-                 std::string_view parent)
+                 std::string_view parent_path)
 {
   auto object_name = fmt::format("Object {}", object.id);
 
@@ -677,16 +678,16 @@ void emit_object(std::ostream& stream,
   }
 
   if (object.type == ObjectType::Rect) {
-    emit_rectangle_object(stream, scene, object, object_name, parent);
+    emit_rectangle_object(stream, scene, object, object_name, parent_path);
   }
   else if (object.type == ObjectType::Ellipse) {
-    emit_ellipse_object(stream, scene, object, object_name, parent);
+    emit_ellipse_object(stream, scene, object, object_name, parent_path);
   }
   else {
     stream << '\n'
            << fmt::format(R"([node name="{}" type="Node2D" parent="{}"])",
                           object_name,
-                          parent)
+                          parent_path)
            << '\n';
   }
 
@@ -696,19 +697,19 @@ void emit_object(std::ostream& stream,
 void emit_object_layer(std::ostream& stream,
                        const GodotScene& scene,
                        const ir::LayerData& layer,
-                       std::string_view parent)
+                       std::string_view parent_path)
 {
   stream << '\n'
          << fmt::format(R"([node name="{}" type="Node2D" parent="{}"])",
                         layer.name,
-                        parent)
+                        parent_path)
          << '\n';
 
   emit_metadata(stream, layer.context);
 
   const auto& object_layer = std::get<ir::ObjectLayerData>(layer.data);
   for (const auto& object : object_layer.objects) {
-    emit_object(stream, scene, object, layer.name);
+    emit_object(stream, scene, object, fmt::format("{}/{}", parent_path, layer.name));
   }
 }
 
@@ -716,32 +717,33 @@ void emit_layer(std::ostream& stream,
                 const GodotScene& scene,
                 const ir::MapData& map,
                 const ir::LayerData& layer,
-                std::string_view parent)
+                std::string_view parent_path)
 {
   switch (layer.type) {
     case LayerType::TileLayer:
-      emit_tile_layer(stream, scene, map, layer, parent);
+      emit_tile_layer(stream, scene, map, layer, parent_path);
       break;
 
     case LayerType::ObjectLayer:
-      emit_object_layer(stream, scene, layer, parent);
+      emit_object_layer(stream, scene, layer, parent_path);
       break;
 
     case LayerType::GroupLayer: {
       stream << '\n'
              << fmt::format(R"([node name="{}" type="Node2D" parent="{}"])",
                             layer.name,
-                            parent)
+                            parent_path)
              << '\n';
 
       emit_metadata(stream, layer.context);
 
       const auto& group_layer = std::get<ir::GroupLayerData>(layer.data);
-      const auto parent_path =
-          parent == "." ? layer.name : fmt::format("{}/{}", parent, layer.name);
+      const auto child_parent_path = (parent_path == ".")
+                                         ? layer.name
+                                         : fmt::format("{}/{}", parent_path, layer.name);
 
       for (const auto& child_layer : group_layer.children) {
-        emit_layer(stream, scene, map, *child_layer, parent_path);
+        emit_layer(stream, scene, map, *child_layer, child_parent_path);
       }
 
       break;
