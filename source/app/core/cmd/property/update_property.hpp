@@ -45,8 +45,8 @@ class UpdateProperty final : public ICommand
 
  private:
   Shared<IContext> mContext;
-  std::string      mName;
-  Attribute        mNewValue;
+  std::string mName;
+  Attribute mNewValue;
   Maybe<Attribute> mOldValue;
 };
 

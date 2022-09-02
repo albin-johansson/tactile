@@ -66,9 +66,9 @@ void EllipseTool::on_dragged(DocumentModel& model,
   }
 }
 
-void EllipseTool::on_released(DocumentModel&    model,
+void EllipseTool::on_released(DocumentModel& model,
                               entt::dispatcher& dispatcher,
-                              const MouseInfo&  mouse)
+                              const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && is_available(model)) {
     maybe_emit_event(model, dispatcher);
@@ -87,7 +87,7 @@ void EllipseTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispa
     const auto ratio = viewport.get_scaling_ratio(map.tile_size());
 
     const auto radius = (mStroke->current - mStroke->start) / ratio;
-    auto       pos = mStroke->start / ratio;
+    auto pos = mStroke->start / ratio;
 
     if (radius.x < 0) {
       pos.x += radius.x * 2.0f;

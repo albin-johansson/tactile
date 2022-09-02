@@ -123,16 +123,16 @@ class Tileset final : public IContext
   }
 
  private:
-  ContextDelegate             mContext;
-  uint                        mTextureId {};
-  int2                        mTextureSize {};
-  int2                        mTileSize {};
-  int32                       mRowCount {};
-  int32                       mColumnCount {};
-  float2                      mUvSize {};
-  HashMap<TileIndex, UUID>    mIdentifiers;
+  ContextDelegate mContext;
+  uint mTextureId {};
+  int2 mTextureSize {};
+  int2 mTileSize {};
+  int32 mRowCount {};
+  int32 mColumnCount {};
+  float2 mUvSize {};
+  HashMap<TileIndex, UUID> mIdentifiers;
   HashMap<UUID, Shared<Tile>> mMetaTiles;
-  fs::path                    mTexturePath;
+  fs::path mTexturePath;
 
   mutable HashMap<TileIndex, TileIndex> mAppearanceCache;
 

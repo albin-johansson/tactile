@@ -615,7 +615,7 @@ void App::on_pan_down()
 void App::on_increase_zoom()
 {
   if (auto* document = active_document()) {
-    auto&      viewport = document->get_viewport();
+    auto& viewport = document->get_viewport();
     const auto mousePos = ImGui::GetIO().MousePos;
     viewport.zoom_in(float2 {mousePos.x, mousePos.y});
   }
@@ -624,7 +624,7 @@ void App::on_increase_zoom()
 void App::on_decrease_zoom()
 {
   if (auto* document = active_document()) {
-    auto&      viewport = document->get_viewport();
+    auto& viewport = document->get_viewport();
     const auto mousePos = ImGui::GetIO().MousePos;
     viewport.zoom_out(float2 {mousePos.x, mousePos.y});
   }
@@ -696,7 +696,7 @@ void App::on_set_tileset_selection(const SetTilesetSelectionEvent& event)
     auto& tilesets = document->get_map().get_tilesets();
 
     const auto tilesetId = tilesets.active_tileset_id().value();
-    auto&      tilesetRef = tilesets.get_ref(tilesetId);
+    auto& tilesetRef = tilesets.get_ref(tilesetId);
 
     tilesetRef.set_selection(event.selection);
   }

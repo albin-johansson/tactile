@@ -41,13 +41,13 @@ enum class OverlayPos
   BottomRight = 3
 };
 
-inline constexpr auto       def_preferred_format = "YAML";
-inline constexpr auto       def_language = Lang::EN;
-inline constexpr auto       def_viewport_overlay_pos = OverlayPos::BottomRight;
-inline constexpr auto       def_theme = ui::EditorTheme::Nocturnal;
+inline constexpr auto def_preferred_format = "YAML";
+inline constexpr auto def_language = Lang::EN;
+inline constexpr auto def_viewport_overlay_pos = OverlayPos::BottomRight;
+inline constexpr auto def_theme = ui::EditorTheme::Nocturnal;
 inline constexpr cen::color def_viewport_bg {0x3C, 0x3C, 0x3C};
-inline constexpr int2       def_preferred_tile_size {32, 32};
-inline constexpr usize      def_command_capacity = 100;
+inline constexpr int2 def_preferred_tile_size {32, 32};
+inline constexpr usize def_command_capacity = 100;
 
 inline constexpr bool def_embed_tilesets = false;
 inline constexpr bool def_indent_output = true;
@@ -69,29 +69,29 @@ inline constexpr bool def_use_default_font = true;
 /// Note, the boolean members cannot be bitfields because we take the address of them.
 struct PreferenceState final
 {
-  std::string     preferred_format {def_preferred_format};
-  Lang            language {def_language};
+  std::string preferred_format {def_preferred_format};
+  Lang language {def_language};
   ui::EditorTheme theme {def_theme};
-  cen::color      viewport_background {def_viewport_bg};
-  usize           command_capacity {def_command_capacity};
-  int2            preferred_tile_size {def_preferred_tile_size};
-  int32           font_size {ui::def_font_size};
-  OverlayPos      viewport_overlay_pos {def_viewport_overlay_pos};
-  bool            embed_tilesets {def_embed_tilesets};
-  bool            indent_output {def_indent_output};
-  bool            fold_tile_data {def_fold_tile_data};
-  bool            show_grid {def_show_grid};
-  bool            show_layer_dock {def_show_layer_dock};
-  bool            show_tileset_dock {def_show_tileset_dock};
-  bool            show_property_dock {def_show_property_dock};
-  bool            show_component_dock {def_show_component_dock};
-  bool            show_log_dock {def_show_log_dock};
-  bool            window_border {def_window_border};
-  bool            restore_layout {def_restore_layout};
-  bool            restore_last_session {def_restore_last_session};
-  bool            show_viewport_overlay_fps {def_show_viewport_overlay_fps};
-  bool            highlight_active_layer {def_highlight_active_layer};
-  bool            use_default_font {def_use_default_font};
+  cen::color viewport_background {def_viewport_bg};
+  usize command_capacity {def_command_capacity};
+  int2 preferred_tile_size {def_preferred_tile_size};
+  int32 font_size {ui::def_font_size};
+  OverlayPos viewport_overlay_pos {def_viewport_overlay_pos};
+  bool embed_tilesets {def_embed_tilesets};
+  bool indent_output {def_indent_output};
+  bool fold_tile_data {def_fold_tile_data};
+  bool show_grid {def_show_grid};
+  bool show_layer_dock {def_show_layer_dock};
+  bool show_tileset_dock {def_show_tileset_dock};
+  bool show_property_dock {def_show_property_dock};
+  bool show_component_dock {def_show_component_dock};
+  bool show_log_dock {def_show_log_dock};
+  bool window_border {def_window_border};
+  bool restore_layout {def_restore_layout};
+  bool restore_last_session {def_restore_last_session};
+  bool show_viewport_overlay_fps {def_show_viewport_overlay_fps};
+  bool highlight_active_layer {def_highlight_active_layer};
+  bool use_default_font {def_use_default_font};
 };
 
 /// Loads any existing persistent preferences, or assumes the default ones.

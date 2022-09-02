@@ -100,7 +100,7 @@ class FmtString final
 
  private:
   std::array<char, Capacity + 1> mBuffer;  // NOLINT
-  usize                          mSize {};
+  usize mSize {};
 };
 
 }  // namespace tactile

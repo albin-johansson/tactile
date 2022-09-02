@@ -41,8 +41,8 @@ class RenameProperty final : public ICommand
 
  private:
   Shared<IContext> mContext;
-  std::string      mOldName;
-  std::string      mNewName;
+  std::string mOldName;
+  std::string mNewName;
 };
 
 }  // namespace tactile::cmd

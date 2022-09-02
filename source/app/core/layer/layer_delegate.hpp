@@ -68,12 +68,12 @@ class LayerDelegate final
   [[nodiscard]] auto clone() const -> LayerDelegate;
 
  private:
-  UUID            mId {};
-  Maybe<UUID>     mParentId {};
-  Maybe<int32>    mMetaId;
+  UUID mId {};
+  Maybe<UUID> mParentId {};
+  Maybe<int32> mMetaId;
   ContextDelegate mContext;
-  float           mOpacity {1.0f};
-  bool            mVisible : 1 {true};
+  float mOpacity {1.0f};
+  bool mVisible : 1 {true};
 };
 
 }  // namespace tactile

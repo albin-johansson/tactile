@@ -51,21 +51,21 @@ struct ContextData final
 
 struct ObjectData final
 {
-  ObjectID    id {};
-  ObjectType  type {};
-  float2      pos {};
-  float2      size {};
+  ObjectID id {};
+  ObjectType type {};
+  float2 pos {};
+  float2 size {};
   std::string name;
   std::string tag;
   ContextData context;
-  bool        visible {};
+  bool visible {};
 };
 
 struct TileLayerData final
 {
   // The sizes are provided for convenience, they should mirror the map dimensions.
-  usize      row_count {};
-  usize      col_count {};
+  usize row_count {};
+  usize col_count {};
   TileMatrix tiles;
 };
 
@@ -91,14 +91,14 @@ struct LayerData final
 {
   using data_type = std::variant<TileLayerData, ObjectLayerData, GroupLayerData>;
 
-  LayerID     id {};
-  LayerType   type {};
-  usize       index {};  /// Local index.
+  LayerID id {};
+  LayerType type {};
+  usize index {};  /// Local index.
   std::string name;
-  data_type   data;
+  data_type data;
   ContextData context;
-  float       opacity {};
-  bool        visible {};
+  float opacity {};
+  bool visible {};
 };
 
 struct AnimationFrameData final
@@ -111,9 +111,9 @@ struct MetaTileData final
 {
   UUID uuid {make_uuid()};  // This is not persistent! Only here for convenience.
 
-  std::vector<ObjectData>         objects;
+  std::vector<ObjectData> objects;
   std::vector<AnimationFrameData> frames;
-  ContextData                     context;
+  ContextData context;
 };
 
 struct TilesetData final
@@ -123,36 +123,36 @@ struct TilesetData final
   UUID uuid {make_uuid()};  // This is not persistent! Only here for convenience.
 
   std::string name;
-  TileID      first_tile {};
-  int2        tile_size {};
-  int32       tile_count {};
-  int32       column_count {};
-  fs::path    image_path;
-  int2        image_size {};
-  MetaTiles   fancy_tiles;
+  TileID first_tile {};
+  int2 tile_size {};
+  int32 tile_count {};
+  int32 column_count {};
+  fs::path image_path;
+  int2 image_size {};
+  MetaTiles fancy_tiles;
   ContextData context;
 };
 
 struct TileFormatData final
 {
-  TileEncoding    encoding {TileEncoding::Plain};
+  TileEncoding encoding {TileEncoding::Plain};
   TileCompression compression {TileCompression::None};
-  Maybe<int32>    zlib_compression_level {};
-  Maybe<int32>    zstd_compression_level {};
+  Maybe<int32> zlib_compression_level {};
+  Maybe<int32> zstd_compression_level {};
 };
 
 struct MapData final
 {
-  usize                    row_count {};
-  usize                    col_count {};
-  int2                     tile_size {};
-  int32                    next_layer_id {};
-  int32                    next_object_id {};
-  TileFormatData           tile_format;
-  ComponentMap             component_definitions;
+  usize row_count {};
+  usize col_count {};
+  int2 tile_size {};
+  int32 next_layer_id {};
+  int32 next_object_id {};
+  TileFormatData tile_format;
+  ComponentMap component_definitions;
   std::vector<TilesetData> tilesets;
-  std::vector<LayerData>   layers;
-  ContextData              context;
+  std::vector<LayerData> layers;
+  ContextData context;
 };
 
 }  // namespace tactile::ir

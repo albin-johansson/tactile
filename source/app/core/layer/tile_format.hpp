@@ -77,10 +77,10 @@ class TileFormat final
   [[nodiscard]] static auto max_zstd_compression_level() -> int;
 
  private:
-  TileEncoding    mEncoding {TileEncoding::Plain};
+  TileEncoding mEncoding {TileEncoding::Plain};
   TileCompression mCompression {TileCompression::None};
-  int             mZlibCompressionLevel {-1};
-  int             mZstdCompressionLevel {3};
+  int mZlibCompressionLevel {-1};
+  int mZstdCompressionLevel {3};
 };
 
 }  // namespace tactile

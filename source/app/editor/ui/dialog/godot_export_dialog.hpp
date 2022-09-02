@@ -46,7 +46,7 @@ class GodotExportDialog final : public ADialog
   fs::path mMapDir;
   fs::path mImageDir;
   fs::path mTilesetDir;
-  int      mPolygonPointCount {};
+  int mPolygonPointCount {};
 };
 
 }  // namespace tactile::ui

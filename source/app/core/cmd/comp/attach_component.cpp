@@ -29,8 +29,8 @@
 namespace tactile::cmd {
 
 AttachComponent::AttachComponent(Shared<ComponentIndex> index,
-                                 Shared<IContext>       context,
-                                 const UUID&            component_id)
+                                 Shared<IContext> context,
+                                 const UUID& component_id)
     : mIndex {std::move(index)}
     , mContext {std::move(context)}
     , mComponentId {component_id}
@@ -52,7 +52,7 @@ void AttachComponent::undo()
 void AttachComponent::redo()
 {
   const auto& definition = mIndex->at(mComponentId);
-  auto&       comps = mContext->get_comps();
+  auto& comps = mContext->get_comps();
   comps.add(definition.instantiate());
 }
 

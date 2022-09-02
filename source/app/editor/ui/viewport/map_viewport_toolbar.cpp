@@ -48,14 +48,14 @@ constexpr auto toolbar_window_flags =
     ImGuiWindowFlags_NoMove;
 
 constexpr uint32 toolbar_highlight_color = IM_COL32(0, 180, 0, 255);
-constinit bool   toolbar_visible = false;
-constinit bool   toolbar_hovered = false;
-constinit bool   toolbar_focused = false;
-constinit float  toolbar_width = 0;
+constinit bool toolbar_visible = false;
+constinit bool toolbar_hovered = false;
+constinit bool toolbar_focused = false;
+constinit float toolbar_width = 0;
 
 void prepare_window_position(const ImVec2& offset = {})
 {
-  const auto   window_pos = ImGui::GetWindowPos();
+  const auto window_pos = ImGui::GetWindowPos();
   const ImVec2 pos {window_pos.x + offset.x + 6.0f,
                     window_pos.y + offset.y + 6.0f + ImGui::GetFrameHeightWithSpacing()};
   const ImVec2 pivot {0.0f, 0.0f};
@@ -65,11 +65,11 @@ void prepare_window_position(const ImVec2& offset = {})
 }
 
 void tool_button(const DocumentModel& model,
-                 const ToolManager&   tools,
-                 entt::dispatcher&    dispatcher,
-                 const char*          icon,
-                 const char*          tooltip,
-                 const ToolType       tool)
+                 const ToolManager& tools,
+                 entt::dispatcher& dispatcher,
+                 const char* icon,
+                 const char* tooltip,
+                 const ToolType tool)
 {
   const auto selected = tools.is_enabled(tool);
 
@@ -197,7 +197,7 @@ void update_map_viewport_toolbar(const DocumentModel& model, entt::dispatcher& d
   if (toolbar_visible && tools.is_enabled(ToolType::Stamp)) {
     show_extra_toolbar([&] {
       const auto& tools = document.get_tools();
-      const auto  selected = tools.is_stamp_random();
+      const auto selected = tools.is_stamp_random();
 
       if (selected) {
         ImGui::PushStyleColor(ImGuiCol_Button, toolbar_highlight_color);

@@ -44,7 +44,7 @@ inline PreferenceState current_settings;
 [[nodiscard]] auto parse_preferences(const fs::path& path) -> PreferenceState
 {
   PreferenceState result {};
-  std::ifstream   stream {path, std::ios::in | std::ios::binary};
+  std::ifstream stream {path, std::ios::in | std::ios::binary};
 
   proto::Settings cfg;
   if (cfg.ParseFromIstream(&stream)) {
@@ -211,7 +211,7 @@ void save_preferences()
   cfg.set_use_default_font(current_settings.use_default_font);
   cfg.set_font_size(current_settings.font_size);
 
-  const auto&   path = get_preference_file_path();
+  const auto& path = get_preference_file_path();
   std::ofstream stream {path, std::ios::out | std::ios::trunc | std::ios::binary};
   if (!cfg.SerializeToOstream(&stream)) {
     spdlog::error("Failed to save preferences!");

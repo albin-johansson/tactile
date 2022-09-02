@@ -33,8 +33,8 @@ class StampSequence final : public ICommand
  public:
   StampSequence(Shared<Map> map,
                 const UUID& layer_id,
-                TileCache   old_state,
-                TileCache   new_state);
+                TileCache old_state,
+                TileCache new_state);
 
   void undo() override;
 
@@ -44,9 +44,9 @@ class StampSequence final : public ICommand
 
  private:
   Shared<Map> mMap;
-  UUID        mLayerId {};
-  TileCache   mOldState;
-  TileCache   mNewState;
+  UUID mLayerId {};
+  TileCache mOldState;
+  TileCache mNewState;
 
   void apply_sequence(const TileCache& cache);
 };

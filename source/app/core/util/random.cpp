@@ -32,7 +32,7 @@ using SeedArray = std::array<Seed, RandomEngine::state_size>;
 auto make_random_engine() -> RandomEngine
 {
   std::random_device device;
-  SeedArray          data;
+  SeedArray data;
 
   std::generate(data.begin(), data.end(), std::ref(device));
   std::seed_seq seeds(data.begin(), data.end());

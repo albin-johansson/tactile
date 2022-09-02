@@ -28,7 +28,7 @@ namespace tactile::ui {
 auto filename_filter(ImGuiInputTextCallbackData* data) -> int
 {
   const auto& locale = std::locale::classic();
-  const auto  ch = static_cast<wchar_t>(data->EventChar);
+  const auto ch = static_cast<wchar_t>(data->EventChar);
 
   if (std::isalpha(ch, locale) || std::isdigit(ch, locale) || std::isspace(ch, locale) ||
       ch == '-' || ch == '_') {

@@ -77,9 +77,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_image_info(XMLNode          tileset_node,
+[[nodiscard]] auto parse_image_info(XMLNode tileset_node,
                                     ir::TilesetData& tileset,
-                                    const fs::path&  dir) -> ParseError
+                                    const fs::path& dir) -> ParseError
 {
   const auto image_node = tileset_node.child("image");
 
@@ -113,9 +113,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_common_attributes(XMLNode          node,
+[[nodiscard]] auto parse_common_attributes(XMLNode node,
                                            ir::TilesetData& tileset,
-                                           const fs::path&  dir) -> ParseError
+                                           const fs::path& dir) -> ParseError
 {
   if (auto name = as_string(node, "name")) {
     tileset.name = std::move(*name);
@@ -167,9 +167,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_external_tileset(XMLNode          node,
+[[nodiscard]] auto parse_external_tileset(XMLNode node,
                                           ir::TilesetData& tileset,
-                                          const fs::path&  dir) -> ParseError
+                                          const fs::path& dir) -> ParseError
 {
   TACTILE_ASSERT(has_attr(node, "source"));
 

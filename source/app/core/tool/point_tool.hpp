@@ -28,9 +28,9 @@ class PointTool final : public ATool
  public:
   void accept(IToolVisitor& visitor) const override;
 
-  void on_pressed(DocumentModel&    model,
+  void on_pressed(DocumentModel& model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo&  mouse) override;
+                  const MouseInfo& mouse) override;
 
   [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
 

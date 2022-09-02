@@ -41,8 +41,8 @@ class SetLayerOpacity final : public ICommand
 
  private:
   Shared<ILayer> mLayer;
-  float          mNewOpacity {};
-  Maybe<float>   mOldOpacity;
+  float mNewOpacity {};
+  Maybe<float> mOldOpacity;
 };
 
 }  // namespace tactile::cmd

@@ -34,7 +34,7 @@ constexpr auto _button_flags = ImGuiButtonFlags_MouseButtonLeft |
 
 }  // namespace
 
-void update_document_viewport_offset(const ImVec2&     viewportSize,
+void update_document_viewport_offset(const ImVec2& viewportSize,
                                      entt::dispatcher& dispatcher)
 {
   if (ImGui::GetTopMostPopupModal() != nullptr) {
@@ -43,7 +43,7 @@ void update_document_viewport_offset(const ImVec2&     viewportSize,
 
   ImGui::InvisibleButton("update_document_viewport_offset", viewportSize, _button_flags);
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
-    const auto&  io = ImGui::GetIO();
+    const auto& io = ImGui::GetIO();
     const float2 delta {io.MouseDelta.x, io.MouseDelta.y};
     dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
   }

@@ -37,8 +37,8 @@ class ResetAttachedComponent final : public ICommand
 {
  public:
   ResetAttachedComponent(Shared<ComponentIndex> index,
-                         Shared<IContext>       context,
-                         const UUID&            component_id);
+                         Shared<IContext> context,
+                         const UUID& component_id);
 
   void undo() override;
 
@@ -48,9 +48,9 @@ class ResetAttachedComponent final : public ICommand
 
  private:
   Shared<ComponentIndex> mIndex;
-  Shared<IContext>       mContext;
-  UUID                   mComponentId {};
-  Maybe<Component>       mComponent;
+  Shared<IContext> mContext;
+  UUID mComponentId {};
+  Maybe<Component> mComponent;
 };
 
 }  // namespace tactile::cmd

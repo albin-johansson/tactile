@@ -44,9 +44,9 @@ class RemoveLayer final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  MapDocument*   mDocument {};
+  MapDocument* mDocument {};
   Shared<ILayer> mLayer;
-  Maybe<usize>   mIndex;
+  Maybe<usize> mIndex;
 };
 
 }  // namespace cmd

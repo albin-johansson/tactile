@@ -34,9 +34,9 @@
 namespace tactile::ui {
 namespace {
 
-void _render_point_object(GraphicsCtx&      graphics,
-                          const Object&     object,
-                          const ImVec2&     position,
+void _render_point_object(GraphicsCtx& graphics,
+                          const Object& object,
+                          const ImVec2& position,
                           const cen::color& color)
 {
   TACTILE_ASSERT(object.get_type() == ObjectType::Point);
@@ -62,9 +62,9 @@ void _render_point_object(GraphicsCtx&      graphics,
   }
 }
 
-void _render_ellipse_object(GraphicsCtx&      graphics,
-                            const Object&     object,
-                            const ImVec2&     position,
+void _render_ellipse_object(GraphicsCtx& graphics,
+                            const Object& object,
+                            const ImVec2& position,
                             const cen::color& color)
 {
   TACTILE_ASSERT(object.get_type() == ObjectType::Ellipse);
@@ -91,9 +91,9 @@ void _render_ellipse_object(GraphicsCtx&      graphics,
   }
 }
 
-void _render_rectangle_object(GraphicsCtx&      graphics,
-                              const Object&     object,
-                              const ImVec2&     position,
+void _render_rectangle_object(GraphicsCtx& graphics,
+                              const Object& object,
+                              const ImVec2& position,
                               const cen::color& color)
 {
   TACTILE_ASSERT(object.get_type() == ObjectType::Rect);
@@ -146,9 +146,9 @@ void render_object(GraphicsCtx& graphics, const Object& object, const cen::color
   }
 }
 
-void render_object_layer(GraphicsCtx&       graphics,
+void render_object_layer(GraphicsCtx& graphics,
                          const ObjectLayer& layer,
-                         const float        parentOpacity)
+                         const float parentOpacity)
 {
   const auto opacity = parentOpacity * layer.get_opacity();
   const auto objectColor = cen::color::from_norm(1, 0, 0, opacity);

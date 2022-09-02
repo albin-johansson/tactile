@@ -131,8 +131,8 @@ class ComponentDefinition final : public IElement
   }
 
  private:
-  UUID                            mId {make_uuid()};
-  std::string                     mName;
+  UUID mId {make_uuid()};
+  std::string mName;
   TreeMap<std::string, Attribute> mAttributes;
 };
 

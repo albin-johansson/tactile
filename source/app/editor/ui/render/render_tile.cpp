@@ -26,15 +26,15 @@
 
 namespace tactile::ui {
 
-void render_tile(GraphicsCtx&   graphics,
-                 const Map&     map,
-                 const TileID   tileId,
+void render_tile(GraphicsCtx& graphics,
+                 const Map& map,
+                 const TileID tileId,
                  const TilePos& pos)
 {
   TACTILE_ASSERT(tileId != empty_tile);
 
   const auto& tilesets = map.get_tilesets();
-  const auto  tilesetId = tilesets.find_tileset(tileId);
+  const auto tilesetId = tilesets.find_tileset(tileId);
 
   if (!tilesetId) {
     return;
@@ -46,9 +46,9 @@ void render_tile(GraphicsCtx&   graphics,
   const auto textureId = tileset.texture_id();
   const auto uv = from_vec(tileset.uv_size());
 
-  const auto  tileIndex = tileset.appearance_of(tilesetRef.to_index(tileId));
+  const auto tileIndex = tileset.appearance_of(tilesetRef.to_index(tileId));
   const auto& tile = tileset[tileIndex];
-  const auto  source = from_vec(tile.source());
+  const auto source = from_vec(tile.source());
 
   const auto position = graphics.from_matrix_to_absolute(pos.row(), pos.col());
   graphics.render_translated_image(textureId, source, position, uv);

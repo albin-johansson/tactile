@@ -40,8 +40,8 @@ class RenameObject final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<Object>     mObject;
-  std::string        mNewName;
+  Shared<Object> mObject;
+  std::string mNewName;
   Maybe<std::string> mOldName;
 };
 

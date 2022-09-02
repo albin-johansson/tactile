@@ -30,7 +30,7 @@
 
 namespace tactile::cmd {
 
-RemoveComponentAttr::RemoveComponentAttr(ADocument*  document,
+RemoveComponentAttr::RemoveComponentAttr(ADocument* document,
                                          const UUID& component_id,
                                          std::string attribute)
     : mDocument {document}
@@ -47,7 +47,7 @@ RemoveComponentAttr::RemoveComponentAttr(ADocument*  document,
 
 void RemoveComponentAttr::undo()
 {
-  auto  index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index();
   auto& definition = index->at(mComponentId);
 
   auto value = mPreviousValue.value();
@@ -61,7 +61,7 @@ void RemoveComponentAttr::undo()
 
 void RemoveComponentAttr::redo()
 {
-  auto  index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index();
   auto& definition = index->at(mComponentId);
 
   mPreviousValue = definition.get_attr(mAttributeName);

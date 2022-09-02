@@ -122,8 +122,8 @@ void MapDocument::set_layer_visible(const UUID& layer_id, const bool visible)
 }
 
 void MapDocument::register_stamp_sequence(const UUID& layer_id,
-                                          TileCache   previous,
-                                          TileCache   sequence)
+                                          TileCache previous,
+                                          TileCache sequence)
 {
   get_history().store<cmd::StampSequence>(mMap,
                                           layer_id,
@@ -136,14 +136,14 @@ void MapDocument::register_eraser_sequence(const UUID& layer_id, TileCache previ
   get_history().store<cmd::EraserSequence>(mMap, layer_id, std::move(previous));
 }
 
-void MapDocument::flood(const UUID&    layer_id,
+void MapDocument::flood(const UUID& layer_id,
                         const TilePos& origin,
-                        const TileID   replacement)
+                        const TileID replacement)
 {
   get_history().exec<cmd::BucketFill>(mMap, layer_id, origin, replacement);
 }
 
-void MapDocument::add_rectangle(const UUID&   layer_id,
+void MapDocument::add_rectangle(const UUID& layer_id,
                                 const float2& pos,
                                 const float2& size)
 {
@@ -166,7 +166,7 @@ void MapDocument::remove_object(const UUID& object_id)
   get_history().exec<cmd::RemoveObject>(this, layer_id, object_id);
 }
 
-void MapDocument::move_object(const UUID&   object_id,
+void MapDocument::move_object(const UUID& object_id,
                               const float2& previous,
                               const float2& updated)
 {

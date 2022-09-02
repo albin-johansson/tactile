@@ -39,13 +39,13 @@ class AppCfg final
 
  private:
   ProtobufContext mProtobuf;
-  cen::sdl        mSDL;
-  cen::img        mIMG;
+  cen::sdl mSDL;
+  cen::img mIMG;
 
   /// Initialization of these members needs to be deferred
-  Maybe<cen::window>     mWindow;
+  Maybe<cen::window> mWindow;
   Maybe<cen::gl_context> mOpenGL;
-  Maybe<ImGuiContext>    mImGui;
+  Maybe<ImGuiContext> mImGui;
 };
 
 }  // namespace tactile

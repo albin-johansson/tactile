@@ -30,7 +30,7 @@
 
 namespace tactile::cmd {
 
-RenameComponentAttr::RenameComponentAttr(ADocument*  document,
+RenameComponentAttr::RenameComponentAttr(ADocument* document,
                                          const UUID& component_id,
                                          std::string previous_name,
                                          std::string updated_name)

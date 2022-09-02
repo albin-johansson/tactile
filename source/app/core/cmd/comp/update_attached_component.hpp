@@ -36,9 +36,9 @@ class UpdateAttachedComponent final : public ICommand
 {
  public:
   UpdateAttachedComponent(Shared<IContext> context,
-                          const UUID&      component_id,
-                          std::string      attribute,
-                          Attribute        value);
+                          const UUID& component_id,
+                          std::string attribute,
+                          Attribute value);
 
   void undo() override;
 
@@ -50,9 +50,9 @@ class UpdateAttachedComponent final : public ICommand
 
  private:
   Shared<IContext> mContext;
-  UUID             mComponentId {};
-  std::string      mAttributeName;
-  Attribute        mUpdatedValue;
+  UUID mComponentId {};
+  std::string mAttributeName;
+  Attribute mUpdatedValue;
   Maybe<Attribute> mPreviousValue;
 };
 

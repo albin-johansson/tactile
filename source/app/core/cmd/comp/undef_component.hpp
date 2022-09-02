@@ -48,10 +48,10 @@ class UndefComponent final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  ADocument*                 mDocument {};
-  UUID                       mComponentId {};
+  ADocument* mDocument {};
+  UUID mComponentId {};
   Maybe<ComponentDefinition> mPreviousDef;
-  HashMap<UUID, Component>   mRemovedComponents;
+  HashMap<UUID, Component> mRemovedComponents;
 };
 
 }  // namespace tactile::cmd

@@ -26,7 +26,7 @@
 namespace tactile::io {
 namespace {
 
-constexpr int         num_map_patterns = 6;
+constexpr int num_map_patterns = 6;
 constexpr const char* map_patterns[] = {"*.yaml",  //
                                         "*.yml",
                                         "*.json",
@@ -35,7 +35,7 @@ constexpr const char* map_patterns[] = {"*.yaml",  //
                                         "*.xml"};
 constexpr const char* map_pattern_descriptor = "Map files";
 
-constexpr int         num_image_patterns = 3;
+constexpr int num_image_patterns = 3;
 constexpr const char* image_patterns[] = {"*.png", "*.jpg", "*.jpeg"};
 constexpr const char* image_pattern_descriptor = "Image files";
 

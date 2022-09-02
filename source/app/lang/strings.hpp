@@ -511,13 +511,13 @@ struct ParseErrorStrings final
 /// Provides translated strings for a single language.
 struct Strings final
 {
-  MenuStrings       menu;
-  WindowStrings     window;
-  ActionStrings     action;
-  SettingStrings    setting;
-  TooltipStrings    tooltip;
-  MiscStrings       misc;
-  CommandStrings    cmd;
+  MenuStrings menu;
+  WindowStrings window;
+  ActionStrings action;
+  SettingStrings setting;
+  TooltipStrings tooltip;
+  MiscStrings misc;
+  CommandStrings cmd;
   ParseErrorStrings parse_error;
 };
 

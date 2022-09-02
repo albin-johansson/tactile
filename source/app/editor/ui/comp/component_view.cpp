@@ -40,8 +40,8 @@ constexpr auto header_flags =
 constexpr auto table_flags =
     ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX;
 
-void update_attribute_table(const UUID&       context_id,
-                            const Component&  component,
+void update_attribute_table(const UUID& context_id,
+                            const Component& component,
                             entt::dispatcher& dispatcher)
 {
   if (Table table {"##AttributeTable", 2, table_flags}; table.is_open()) {
@@ -65,8 +65,8 @@ void update_attribute_table(const UUID&       context_id,
   }
 }
 
-void update_trailing_button_popup_content(const UUID&       context_id,
-                                          const Component&  component,
+void update_trailing_button_popup_content(const UUID& context_id,
+                                          const Component& component,
                                           entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
@@ -97,10 +97,10 @@ auto update_trailing_button() -> bool
 
 }  // namespace
 
-void component_view(const UUID&        context_id,
-                    const Component&   component,
+void component_view(const UUID& context_id,
+                    const Component& component,
                     const std::string& name,
-                    entt::dispatcher&  dispatcher)
+                    entt::dispatcher& dispatcher)
 {
   const Scope scope {name.c_str()};
 

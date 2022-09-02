@@ -60,7 +60,7 @@ struct SelectToolEvent final
 
 struct StampSequenceEvent final
 {
-  UUID      layer_id {};
+  UUID layer_id {};
   TileCache old_state;
   TileCache sequence;
 };
@@ -72,21 +72,21 @@ struct SetStampRandomizerEvent final
 
 struct EraserSequenceEvent final
 {
-  UUID      layer_id {};
+  UUID layer_id {};
   TileCache old_state;
 };
 
 struct FloodEvent final
 {
-  UUID    layer_id {};
+  UUID layer_id {};
   TilePos origin;
-  TileID  replacement {};
+  TileID replacement {};
 };
 
 /// Emitted when a rectangle should be added to an object layer.
 struct AddRectangleEvent final
 {
-  UUID   layer_id {};
+  UUID layer_id {};
   float2 pos {};
   float2 size {};
 };
@@ -94,7 +94,7 @@ struct AddRectangleEvent final
 /// Emitted when an ellipse should be added to an object layer.
 struct AddEllipseEvent final
 {
-  UUID   layer_id {};
+  UUID layer_id {};
   float2 pos {};
   float2 size {};
 };
@@ -102,7 +102,7 @@ struct AddEllipseEvent final
 /// Emitted when a point should be added to an object layer.
 struct AddPointEvent final
 {
-  UUID   layer_id {};
+  UUID layer_id {};
   float2 pos {};
 };
 

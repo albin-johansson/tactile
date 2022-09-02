@@ -68,9 +68,9 @@ void load_default_layout(ImGuiID id, const bool reset_visibility)
   ImGui::DockBuilderRemoveNodeChildNodes(id);
 
   const auto& lang = get_current_language();
-  const auto  root = id;
+  const auto root = id;
 
-  auto       right = ImGui::DockBuilderSplitNode(id, ImGuiDir_Right, 0.33f, nullptr, &id);
+  auto right = ImGui::DockBuilderSplitNode(id, ImGuiDir_Right, 0.33f, nullptr, &id);
   const auto right_bottom =
       ImGui::DockBuilderSplitNode(right, ImGuiDir_Down, 0.40f, nullptr, &right);
 

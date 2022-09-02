@@ -50,9 +50,9 @@ class AddPropertyDialog final : public ADialog
       -> bool override;
 
  private:
-  Maybe<UUID>           mContextId;
+  Maybe<UUID> mContextId;
   std::array<char, 128> mNameBuffer {};
-  AttributeType         mPropertyType {AttributeType::String};
+  AttributeType mPropertyType {AttributeType::String};
 };
 
 }  // namespace tactile::ui

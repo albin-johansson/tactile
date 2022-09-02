@@ -38,17 +38,17 @@ class ObjectSelectionTool final : public ATool
 
   void on_exited(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  void on_pressed(DocumentModel&    model,
+  void on_pressed(DocumentModel& model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo&  mouse) override;
+                  const MouseInfo& mouse) override;
 
-  void on_dragged(DocumentModel&    model,
+  void on_dragged(DocumentModel& model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo&  mouse) override;
+                  const MouseInfo& mouse) override;
 
-  void on_released(DocumentModel&    model,
+  void on_released(DocumentModel& model,
                    entt::dispatcher& dispatcher,
-                   const MouseInfo&  mouse) override;
+                   const MouseInfo& mouse) override;
 
   [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
 

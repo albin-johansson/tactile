@@ -73,8 +73,8 @@ class Viewport final
   }
 
  private:
-  float2                mOffset {};
-  float2                mTileSize {32, 32};
+  float2 mOffset {};
+  float2 mTileSize {32, 32};
   Maybe<ViewportLimits> mLimits;
 };
 

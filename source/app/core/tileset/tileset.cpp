@@ -50,7 +50,7 @@ void Tileset::load_tiles()
   for (TileIndex index = 0; index < count; ++index) {
     const auto [row, col] = to_matrix_coords(index, mColumnCount);
 
-    auto       tile = std::make_shared<Tile>(index);
+    auto tile = std::make_shared<Tile>(index);
     const auto tileId = tile->get_uuid();
 
     const int2 pos {col * mTileSize.x, row * mTileSize.y};

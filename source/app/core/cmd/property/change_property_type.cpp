@@ -29,8 +29,8 @@
 
 namespace tactile::cmd {
 
-ChangePropertyType::ChangePropertyType(Shared<IContext>    context,
-                                       std::string         name,
+ChangePropertyType::ChangePropertyType(Shared<IContext> context,
+                                       std::string name,
                                        const AttributeType type)
     : mContext {std::move(context)}
     , mName {std::move(name)}
@@ -46,7 +46,7 @@ void ChangePropertyType::undo()
   auto& props = mContext->get_props();
 
   const auto& value = mPreviousValue.value();
-  const auto  type = value.type();
+  const auto type = value.type();
 
   props.change_type(mName, type);
   props.update(mName, value);

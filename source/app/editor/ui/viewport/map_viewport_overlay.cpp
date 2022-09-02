@@ -83,7 +83,7 @@ void show_mouse_tile_labels(const Map& map, const ViewportCursorInfo& cursor)
       ImGui::Text("%s: %i", lang.misc.global_id.c_str(), tile_id);
 
       const auto& tilesets = map.get_tilesets();
-      const auto  tile_index = tilesets.to_tile_index(tile_id);
+      const auto tile_index = tilesets.to_tile_index(tile_id);
       ImGui::Text("%s: %i", lang.misc.local_id.c_str(), tile_index);
     }
     else {
@@ -97,7 +97,7 @@ void update_overlay_context_menu()
   if (auto popup = Popup::for_window("##ViewportOverlayPopup"); popup.is_open()) {
     const auto& lang = get_current_language();
 
-    auto&      prefs = io::get_preferences();
+    auto& prefs = io::get_preferences();
     const auto corner = prefs.viewport_overlay_pos;
 
     if (ImGui::MenuItem(lang.action.top_left.c_str(),

@@ -50,9 +50,9 @@ class ChangePropertyTypeDialog final : public ADialog
       -> bool override;
 
  private:
-  Maybe<UUID>          mContextId;
-  AttributeType        mCurrentType {AttributeType::String};
-  Maybe<std::string>   mPropertyName;
+  Maybe<UUID> mContextId;
+  AttributeType mCurrentType {AttributeType::String};
+  Maybe<std::string> mPropertyName;
   Maybe<AttributeType> mPreviousType;
 };
 

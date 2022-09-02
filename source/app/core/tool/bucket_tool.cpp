@@ -34,9 +34,9 @@ void BucketTool::accept(IToolVisitor& visitor) const
   visitor.visit(*this);
 }
 
-void BucketTool::on_pressed(DocumentModel&    model,
+void BucketTool::on_pressed(DocumentModel& model,
                             entt::dispatcher& dispatcher,
-                            const MouseInfo&  mouse)
+                            const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
       is_available(model)) {
@@ -44,7 +44,7 @@ void BucketTool::on_pressed(DocumentModel&    model,
     const auto& map = document.get_map();
     const auto& tilesets = map.get_tilesets();
 
-    const auto  tilesetId = tilesets.active_tileset_id().value();
+    const auto tilesetId = tilesets.active_tileset_id().value();
     const auto& tilesetRef = tilesets.get_ref(tilesetId);
     const auto& tileset = tilesetRef.view_tileset();
 
@@ -62,7 +62,7 @@ auto BucketTool::is_available(const DocumentModel& model) const -> bool
   const auto& map = document.get_map();
 
   const auto& tilesets = map.get_tilesets();
-  const auto  tilesetId = tilesets.active_tileset_id();
+  const auto tilesetId = tilesets.active_tileset_id();
 
   return map.is_active_layer(LayerType::TileLayer) &&  //
          tilesetId && tilesets.get_ref(*tilesetId).is_single_tile_selected();

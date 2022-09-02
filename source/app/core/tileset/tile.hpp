@@ -88,10 +88,10 @@ class Tile final : public IContext
   }
 
  private:
-  TileIndex                     mIndex;
-  ContextDelegate               mDelegate;
-  Vector4i                      mSource;
-  Maybe<TileAnimation>          mAnimation;
+  TileIndex mIndex;
+  ContextDelegate mDelegate;
+  Vector4i mSource;
+  Maybe<TileAnimation> mAnimation;
   HashMap<UUID, Shared<Object>> mObjects;
 };
 

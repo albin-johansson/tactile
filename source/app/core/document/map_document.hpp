@@ -79,8 +79,8 @@ class MapDocument final : public ADocument
   void set_layer_visible(const UUID& layer_id, bool visible);
 
   void register_stamp_sequence(const UUID& layer_id,
-                               TileCache   previous,
-                               TileCache   sequence);
+                               TileCache previous,
+                               TileCache sequence);
 
   void register_eraser_sequence(const UUID& layer_id, TileCache previous);
 
@@ -155,8 +155,8 @@ class MapDocument final : public ADocument
   }
 
  private:
-  Shared<Map>      mMap;
-  ToolManager      mTools;
+  Shared<Map> mMap;
+  ToolManager mTools;
   DocumentDelegate mDelegate;
 };
 

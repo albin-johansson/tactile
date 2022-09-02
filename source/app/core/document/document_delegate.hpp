@@ -56,11 +56,11 @@ class DocumentDelegate final
   [[nodiscard]] auto get_viewport() const -> const Viewport&;
 
  private:
-  ContextManager         mContexts;
-  CommandStack           mCommands;
+  ContextManager mContexts;
+  CommandStack mCommands;
   Shared<ComponentIndex> mComponentIndex;
-  Viewport               mViewport;
-  Maybe<fs::path>        mPath;
+  Viewport mViewport;
+  Maybe<fs::path> mPath;
 };
 
 }  // namespace tactile

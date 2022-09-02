@@ -108,23 +108,23 @@ auto ContextManager::on_undef_comp(const UUID& componentId) -> HashMap<UUID, Com
   return removed;
 }
 
-void ContextManager::on_new_component_attr(const UUID&        componentId,
+void ContextManager::on_new_component_attr(const UUID& componentId,
                                            const std::string& name,
-                                           const Attribute&   value)
+                                           const Attribute& value)
 {
   on_component_update(componentId,
                       [&](Component& component) { component.add_attr(name, value); });
 }
 
-void ContextManager::on_removed_component_attr(const UUID&      componentId,
+void ContextManager::on_removed_component_attr(const UUID& componentId,
                                                std::string_view name)
 {
   on_component_update(componentId,
                       [name](Component& component) { component.remove_attr(name); });
 }
 
-void ContextManager::on_renamed_component_attr(const UUID&        componentId,
-                                               std::string_view   oldName,
+void ContextManager::on_renamed_component_attr(const UUID& componentId,
+                                               std::string_view oldName,
                                                const std::string& newName)
 {
   on_component_update(componentId, [oldName, &newName](Component& component) {
@@ -132,8 +132,8 @@ void ContextManager::on_renamed_component_attr(const UUID&        componentId,
   });
 }
 
-auto ContextManager::on_changed_component_attr_type(const UUID&         componentId,
-                                                    std::string_view    name,
+auto ContextManager::on_changed_component_attr_type(const UUID& componentId,
+                                                    std::string_view name,
                                                     const AttributeType type)
     -> HashMap<UUID, Attribute>
 {
@@ -153,7 +153,7 @@ auto ContextManager::on_changed_component_attr_type(const UUID&         componen
   return attributes;
 }
 
-void ContextManager::on_component_update(const UUID&          componentId,
+void ContextManager::on_component_update(const UUID& componentId,
                                          const ComponentFunc& func)
 {
   for (auto& [contextId, context] : mContexts) {

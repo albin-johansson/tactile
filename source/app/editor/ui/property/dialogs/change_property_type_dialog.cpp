@@ -35,8 +35,8 @@ ChangePropertyTypeDialog::ChangePropertyTypeDialog()
     : ADialog {"Change Property Type"}
 {}
 
-void ChangePropertyTypeDialog::show(const UUID&         context_id,
-                                    std::string         name,
+void ChangePropertyTypeDialog::show(const UUID& context_id,
+                                    std::string name,
                                     const AttributeType type)
 {
   mContextId = context_id;

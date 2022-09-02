@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-SetTileFormatCompression::SetTileFormatCompression(Shared<Map>           map,
+SetTileFormatCompression::SetTileFormatCompression(Shared<Map> map,
                                                    const TileCompression compression)
     : mMap {std::move(map)}
     , mNewCompression {compression}

@@ -33,7 +33,7 @@ struct ShowAddPropertyDialogEvent final
 
 struct ShowChangePropertyTypeDialogEvent final
 {
-  std::string   name;
+  std::string name;
   AttributeType current_type {};
 };
 
@@ -44,36 +44,36 @@ struct ShowRenamePropertyDialogEvent final
 
 struct AddPropertyEvent final
 {
-  UUID          context_id {};  /// Target context.
-  std::string   name;           /// The property name.
-  AttributeType type {};        /// The property type.
+  UUID context_id {};     /// Target context.
+  std::string name;       /// The property name.
+  AttributeType type {};  /// The property type.
 };
 
 struct RemovePropertyEvent final
 {
-  UUID        context_id {};  /// Target context.
-  std::string name;           ///< Name of the property in the current context.
+  UUID context_id {};  /// Target context.
+  std::string name;    ///< Name of the property in the current context.
 };
 
 struct RenamePropertyEvent final
 {
-  UUID        context_id {};  /// Target context.
-  std::string old_name;       ///< Current property name.
-  std::string new_name;       ///< Requested new property name.
+  UUID context_id {};    /// Target context.
+  std::string old_name;  ///< Current property name.
+  std::string new_name;  ///< Requested new property name.
 };
 
 struct UpdatePropertyEvent final
 {
-  UUID        context_id {};  /// Target context.
-  std::string name;           ///< Name of property to modify.
-  Attribute   value;          ///< Updated value of the property.
+  UUID context_id {};  /// Target context.
+  std::string name;    ///< Name of property to modify.
+  Attribute value;     ///< Updated value of the property.
 };
 
 struct ChangePropertyTypeEvent final
 {
-  UUID          context_id {};  /// Target context.
-  std::string   name;           ///< Name of property to modify.
-  AttributeType type {};        ///< Requested new property type.
+  UUID context_id {};     /// Target context.
+  std::string name;       ///< Name of property to modify.
+  AttributeType type {};  ///< Requested new property type.
 };
 
 struct InspectContextEvent final

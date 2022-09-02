@@ -64,12 +64,12 @@ class App final : AEventLoop
   void on_event(const cen::event_handler& handler) override;
 
  private:
-  AppCfg*          mConfig {}; /* Non-owning */
+  AppCfg* mConfig {}; /* Non-owning */
   entt::dispatcher mDispatcher;
-  DocumentModel    mModel;
-  TextureManager   mTextures;
-  WidgetShowState  mWidgetShowState;
-  bool             mReloadFonts : 1 {};
+  DocumentModel mModel;
+  TextureManager mTextures;
+  WidgetShowState mWidgetShowState;
+  bool mReloadFonts : 1 {};
 
   [[nodiscard]] auto active_document() -> ADocument*;
   [[nodiscard]] auto active_map_document() -> MapDocument*;

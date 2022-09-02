@@ -51,9 +51,9 @@ constexpr int32 tileset_format_version = 1;
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_fancy_tile(const YAML::Node&  node,
+[[nodiscard]] auto parse_fancy_tile(const YAML::Node& node,
                                     const ir::MapData& map,
-                                    ir::TilesetData&   tileset) -> ParseError
+                                    ir::TilesetData& tileset) -> ParseError
 {
   TileID id {};
   if (!read_attribute(node, "id", id)) {
@@ -96,9 +96,9 @@ constexpr int32 tileset_format_version = 1;
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_fancy_tiles(const YAML::Node&  sequence,
+[[nodiscard]] auto parse_fancy_tiles(const YAML::Node& sequence,
                                      const ir::MapData& map,
-                                     ir::TilesetData&   tileset) -> ParseError
+                                     ir::TilesetData& tileset) -> ParseError
 {
   tileset.fancy_tiles.reserve(sequence.size());
 
@@ -112,8 +112,8 @@ constexpr int32 tileset_format_version = 1;
 }
 
 [[nodiscard]] auto parse_tileset(const fs::path& source,
-                                 ir::MapData&    map,
-                                 const TileID    first_tile_id) -> ParseError
+                                 ir::MapData& map,
+                                 const TileID first_tile_id) -> ParseError
 {
   try {
     const auto node = YAML::LoadFile(source.string());

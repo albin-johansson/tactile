@@ -64,19 +64,19 @@ class ContextManager final
 
   auto on_undef_comp(const UUID& componentId) -> HashMap<UUID, Component>;
 
-  void on_new_component_attr(const UUID&        componentId,
+  void on_new_component_attr(const UUID& componentId,
                              const std::string& name,
-                             const Attribute&   value);
+                             const Attribute& value);
 
   void on_removed_component_attr(const UUID& componentId, std::string_view name);
 
-  void on_renamed_component_attr(const UUID&        componentId,
-                                 std::string_view   oldName,
+  void on_renamed_component_attr(const UUID& componentId,
+                                 std::string_view oldName,
                                  const std::string& newName);
 
-  auto on_changed_component_attr_type(const UUID&      componentId,
+  auto on_changed_component_attr_type(const UUID& componentId,
                                       std::string_view name,
-                                      AttributeType    type) -> HashMap<UUID, Attribute>;
+                                      AttributeType type) -> HashMap<UUID, Attribute>;
 
   [[nodiscard]] auto active_context_id() const -> const UUID&
   {
@@ -85,8 +85,8 @@ class ContextManager final
 
  private:
   ContextMap mContexts;
-  UUID       mRootContextId;
-  UUID       mActiveContextId;
+  UUID mRootContextId;
+  UUID mActiveContextId;
   // TODO PERFORMANCE: maybe use HashMap<UUID, std::vector<Shared<IContext>>>?
 
   void on_component_update(const UUID& componentId, const ComponentFunc& func);

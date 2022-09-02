@@ -43,8 +43,8 @@ class ChangePropertyType final : public ICommand
 
  private:
   Shared<IContext> mContext;
-  std::string      mName;
-  AttributeType    mPropertyType;
+  std::string mName;
+  AttributeType mPropertyType;
   Maybe<Attribute> mPreviousValue;
 };
 

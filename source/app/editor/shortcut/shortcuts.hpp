@@ -28,8 +28,8 @@ class DocumentModel;
 
 void load_default_shortcuts();
 
-void update_shortcuts(const DocumentModel&       model,
+void update_shortcuts(const DocumentModel& model,
                       const cen::keyboard_event& event,
-                      entt::dispatcher&          dispatcher);
+                      entt::dispatcher& dispatcher);
 
 }  // namespace tactile

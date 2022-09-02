@@ -40,8 +40,8 @@ class SetObjectTag final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<Object>     mObject;
-  std::string        mNewTag;
+  Shared<Object> mObject;
+  std::string mNewTag;
   Maybe<std::string> mOldTag;
 };
 

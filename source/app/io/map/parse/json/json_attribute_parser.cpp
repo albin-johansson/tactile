@@ -27,9 +27,9 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto parse_value(const JSON&            json,
+[[nodiscard]] auto parse_value(const JSON& json,
                                const std::string_view type,
-                               Attribute&             value) -> ParseError
+                               Attribute& value) -> ParseError
 {
   if (type == "string") {
     value = as_string(json, "value").value();

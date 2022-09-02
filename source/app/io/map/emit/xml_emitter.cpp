@@ -151,8 +151,8 @@ void append_common_layer_attributes(XMLNode node, const ir::LayerData& layer)
   }
 }
 
-void append_csv_tile_layer_data(XMLNode                  data_node,
-                                const ir::MapData&       map,
+void append_csv_tile_layer_data(XMLNode data_node,
+                                const ir::MapData& map,
                                 const ir::TileLayerData& tile_layer)
 {
   data_node.append_attribute("encoding").set_value("csv");
@@ -160,7 +160,7 @@ void append_csv_tile_layer_data(XMLNode                  data_node,
   std::stringstream stream;
 
   const auto& prefs = get_preferences();
-  const auto  tile_count = map.row_count * map.col_count;
+  const auto tile_count = map.row_count * map.col_count;
 
   invoke_mn(map.row_count,
             map.col_count,
@@ -184,8 +184,8 @@ void append_csv_tile_layer_data(XMLNode                  data_node,
   data_node.text().set(stream.str().c_str());
 }
 
-void append_base64_tile_layer_data(XMLNode                  data_node,
-                                   const ir::MapData&       map,
+void append_base64_tile_layer_data(XMLNode data_node,
+                                   const ir::MapData& map,
                                    const ir::TileLayerData& tile_layer)
 {
   data_node.append_attribute("encoding").set_value("base64");
@@ -312,9 +312,9 @@ void append_fancy_tiles(XMLNode node, const ir::TilesetData& tileset)
   }
 }
 
-void append_common_tileset_attributes(XMLNode                node,
+void append_common_tileset_attributes(XMLNode node,
                                       const ir::TilesetData& tileset,
-                                      const fs::path&        dir)
+                                      const fs::path& dir)
 {
   node.append_attribute("name").set_value(tileset.name.c_str());
 
@@ -338,9 +338,9 @@ void append_common_tileset_attributes(XMLNode                node,
   append_properties(node, tileset.context);
 }
 
-void append_embedded_tileset(XMLNode                root,
+void append_embedded_tileset(XMLNode root,
                              const ir::TilesetData& tileset,
-                             const fs::path&        dir)
+                             const fs::path& dir)
 {
   auto node = root.append_child("tileset");
   node.append_attribute("firstgid").set_value(tileset.first_tile);
@@ -348,18 +348,18 @@ void append_embedded_tileset(XMLNode                root,
   append_common_tileset_attributes(node, tileset, dir);
 }
 
-void append_external_tileset(XMLNode                root,
+void append_external_tileset(XMLNode root,
                              const ir::TilesetData& tileset,
-                             const std::string&     filename)
+                             const std::string& filename)
 {
   auto node = root.append_child("tileset");
   node.append_attribute("firstgid").set_value(tileset.first_tile);
   node.append_attribute("source").set_value(filename.c_str());
 }
 
-void emit_external_tileset_file(const fs::path&        path,
+void emit_external_tileset_file(const fs::path& path,
                                 const ir::TilesetData& tileset,
-                                const fs::path&        dir)
+                                const fs::path& dir)
 {
   pugi::xml_document document;
 
@@ -390,7 +390,7 @@ void append_tileset(XMLNode root, const ir::TilesetData& tileset, const fs::path
 void append_root(pugi::xml_document& document, const EmitInfo& info)
 {
   const auto& map = info.data();
-  auto        root = document.append_child("map");
+  auto root = document.append_child("map");
 
   root.append_attribute("version").set_value(tiled_xml_format_version);
   root.append_attribute("tiledversion").set_value(tiled_version);

@@ -33,10 +33,10 @@
 namespace tactile::ui {
 namespace {
 
-void _render_layer(GraphicsCtx&  graphics,
-                   const Map&    map,
+void _render_layer(GraphicsCtx& graphics,
+                   const Map& map,
                    const ILayer* layer,
-                   const float   parentOpacity)
+                   const float parentOpacity)
 {
   TACTILE_ASSERT(layer);
 
@@ -63,14 +63,14 @@ void render_map(GraphicsCtx& graphics, const MapDocument& document)
 {
   const auto& prefs = io::get_preferences();
   const auto& map = document.get_map();
-  const auto  activeLayerId = map.active_layer_id();
+  const auto activeLayerId = map.active_layer_id();
 
   map.visit_layers([&](const ILayer* layer) {
     if (!layer->is_visible()) {
       return;
     }
 
-    const auto  parentId = layer->get_parent();
+    const auto parentId = layer->get_parent();
     const auto* parentLayer = parentId ? map.find_group_layer(*parentId) : nullptr;
 
     if (parentLayer && !parentLayer->is_visible()) {

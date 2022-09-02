@@ -40,9 +40,9 @@ class ParseResult final
   [[nodiscard]] auto data() const -> const ir::MapData&;
 
  private:
-  fs::path    mPath;
+  fs::path mPath;
   ir::MapData mData;
-  ParseError  mError {ParseError::None};
+  ParseError mError {ParseError::None};
 };
 
 }  // namespace tactile::io

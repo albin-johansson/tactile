@@ -34,7 +34,7 @@ namespace tactile::cmd {
 class RemoveComponentAttr final : public ICommand
 {
  public:
-  RemoveComponentAttr(ADocument*  document,
+  RemoveComponentAttr(ADocument* document,
                       const UUID& component_id,
                       std::string attribute);
 
@@ -45,9 +45,9 @@ class RemoveComponentAttr final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  ADocument*       mDocument {};
-  UUID             mComponentId {};
-  std::string      mAttributeName;
+  ADocument* mDocument {};
+  UUID mComponentId {};
+  std::string mAttributeName;
   Maybe<Attribute> mPreviousValue;
 };
 

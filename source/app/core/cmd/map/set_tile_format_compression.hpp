@@ -20,8 +20,8 @@ class SetTileFormatCompression final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<Map>            mMap;
-  TileCompression        mNewCompression;
+  Shared<Map> mMap;
+  TileCompression mNewCompression;
   Maybe<TileCompression> mOldCompression;
 };
 

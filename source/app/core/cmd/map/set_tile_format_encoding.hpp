@@ -20,9 +20,9 @@ class SetTileFormatEncoding final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<Map>            mMap;
-  TileEncoding           mNewEncoding;
-  Maybe<TileEncoding>    mOldEncoding;
+  Shared<Map> mMap;
+  TileEncoding mNewEncoding;
+  Maybe<TileEncoding> mOldEncoding;
   Maybe<TileCompression> mOldCompression;
 };
 

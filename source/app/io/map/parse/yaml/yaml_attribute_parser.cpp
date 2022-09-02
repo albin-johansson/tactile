@@ -61,7 +61,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto parse_attribute_value(const YAML::Node&   value,
+[[nodiscard]] auto parse_attribute_value(const YAML::Node& value,
                                          const AttributeType type) -> Maybe<Attribute>
 {
   switch (type) {
@@ -186,9 +186,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_component(const YAML::Node&  node,
+[[nodiscard]] auto parse_component(const YAML::Node& node,
                                    const ir::MapData& map,
-                                   ir::ContextData&   data) -> ParseError
+                                   ir::ContextData& data) -> ParseError
 {
   std::string type;
   if (!read_attribute(node, "type", type)) {
@@ -197,7 +197,7 @@ namespace {
 
   // TODO invalid component type check, e.g. ParseError::InvalidComponentType
   const auto& prototype = map.component_definitions.at(type);
-  auto&       attributes = data.components[type];
+  auto& attributes = data.components[type];
 
   if (auto sequence = node["values"]) {
     for (const auto& value_node : sequence) {
@@ -240,9 +240,9 @@ auto parse_component_definitions(const YAML::Node& node, ir::MapData& data) -> P
   return ParseError::None;
 }
 
-auto parse_components(const YAML::Node&  node,
+auto parse_components(const YAML::Node& node,
                       const ir::MapData& map,
-                      ir::ContextData&   data) -> ParseError
+                      ir::ContextData& data) -> ParseError
 {
   if (auto sequence = node["components"]) {
     for (const auto& component_node : sequence) {

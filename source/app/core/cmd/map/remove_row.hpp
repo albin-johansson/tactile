@@ -41,9 +41,9 @@ class RemoveRow final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<Map>     mMap;
+  Shared<Map> mMap;
   MapCommandCache mCache;
-  usize           mRows {1};
+  usize mRows {1};
 };
 
 }  // namespace tactile::cmd

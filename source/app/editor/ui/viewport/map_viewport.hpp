@@ -29,8 +29,8 @@ class MapDocument;
 namespace tactile::ui {
 
 void show_map_viewport(const DocumentModel& model,
-                       const MapDocument&   map,
-                       entt::dispatcher&    dispatcher);
+                       const MapDocument& map,
+                       entt::dispatcher& dispatcher);
 
 void center_map_viewport();
 

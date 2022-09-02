@@ -45,7 +45,7 @@ class DetachComponent final : public ICommand
 
  private:
   Shared<IContext> mContext;
-  UUID             mComponentId {};
+  UUID mComponentId {};
   Maybe<Component> mComponent;
 };
 

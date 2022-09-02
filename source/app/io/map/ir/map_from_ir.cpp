@@ -48,9 +48,9 @@
 namespace tactile::io {
 namespace {
 
-void restore_context_no_register(ADocument&              document,
+void restore_context_no_register(ADocument& document,
                                  const Shared<IContext>& context,
-                                 const ir::ContextData&  source)
+                                 const ir::ContextData& source)
 {
   auto& properties = context->get_props();
   auto& components = context->get_comps();
@@ -73,9 +73,9 @@ void restore_context_no_register(ADocument&              document,
   }
 }
 
-void restore_context(ADocument&              document,
+void restore_context(ADocument& document,
                      const Shared<IContext>& context,
-                     const ir::ContextData&  source)
+                     const ir::ContextData& source)
 {
   restore_context_no_register(document, context, source);
   document.get_contexts().add_context(context);
@@ -101,8 +101,8 @@ auto restore_object(ADocument& document, const ir::ObjectData& object_data)
   return object;
 }
 
-void restore_object_layer(MapDocument&               document,
-                          const UUID&                layer_id,
+void restore_object_layer(MapDocument& document,
+                          const UUID& layer_id,
                           const ir::ObjectLayerData& object_layer_data)
 {
   auto& map = document.get_map();
@@ -115,9 +115,9 @@ void restore_object_layer(MapDocument&               document,
   }
 }
 
-auto restore_layer(MapDocument&         document,
+auto restore_layer(MapDocument& document,
                    const ir::LayerData& layer_data,
-                   const Maybe<UUID>&   parent = nothing) -> UUID
+                   const Maybe<UUID>& parent = nothing) -> UUID
 {
   auto& map = document.get_map();
   // TODO respect layerData.index?
@@ -188,8 +188,8 @@ void restore_tile_animation(Tile& tile, const ir::MetaTileData& tile_data)
   tile.set_animation(std::move(animation));
 }
 
-void restore_fancy_tile_objects(TilesetDocument&        document,
-                                Tile&                   tile,
+void restore_fancy_tile_objects(TilesetDocument& document,
+                                Tile& tile,
                                 const ir::MetaTileData& tile_data)
 {
   tile.reserve_objects(tile_data.objects.size());
@@ -218,10 +218,10 @@ void restore_fancy_tiles(TilesetDocument& document, const ir::TilesetData& tiles
   }
 }
 
-void restore_tileset(DocumentModel&                model,
-                     TextureManager&               textures,
+void restore_tileset(DocumentModel& model,
+                     TextureManager& textures,
                      const Shared<ComponentIndex>& index,
-                     const ir::TilesetData&        tileset_data)
+                     const ir::TilesetData& tileset_data)
 {
   TACTILE_ASSERT(model.active_document_id().has_value());
 
@@ -249,10 +249,10 @@ void restore_tileset(DocumentModel&                model,
                               tileset_data.context);
 }
 
-void restore_tilesets(DocumentModel&                model,
-                      TextureManager&               textures,
+void restore_tilesets(DocumentModel& model,
+                      TextureManager& textures,
                       const Shared<ComponentIndex>& index,
-                      const ir::MapData&            map_data)
+                      const ir::MapData& map_data)
 {
   for (const auto& tileset_data : map_data.tilesets) {
     restore_tileset(model, textures, index, tileset_data);
@@ -272,7 +272,7 @@ void restore_component_definitions(MapDocument& document, const ir::MapData& map
   auto index = document.get_component_index();
   for (const auto& [name, attributes] : map_data.component_definitions) {
     const auto id = index->define_comp(name);
-    auto&      def = index->at(id);
+    auto& def = index->at(id);
     for (const auto& [attr_name, attr_value] : attributes) {
       def.add_attr(attr_name, attr_value);
     }
@@ -296,8 +296,8 @@ void restore_tile_format(TileFormat& format, const ir::TileFormatData& data)
 }  // namespace
 
 void map_from_ir(const ParseResult& result,
-                 DocumentModel&     model,
-                 TextureManager&    textures)
+                 DocumentModel& model,
+                 TextureManager& textures)
 {
   const auto& map_data = result.data();
 

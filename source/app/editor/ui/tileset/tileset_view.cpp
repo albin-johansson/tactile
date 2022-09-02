@@ -42,10 +42,10 @@ constexpr cen::color rubber_band_color {0, 0x44, 0xCC, 100};
 constexpr cen::color grid_color {200, 200, 200, 40};
 
 void update_viewport_offset(const TilesetRef& tileset_ref,
-                            const ImVec2&     viewport_size,
+                            const ImVec2& viewport_size,
                             entt::dispatcher& dispatcher)
 {
-  const auto&  tileset = tileset_ref.view_tileset();
+  const auto& tileset = tileset_ref.view_tileset();
   const float2 texture_size = tileset.texture_size();
 
   const float2 min_offset {viewport_size.x - texture_size.x,
@@ -67,13 +67,13 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
 
   /* This has no effect when users use touchpads, but that is handled separately */
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
-    const auto&  io = ImGui::GetIO();
+    const auto& io = ImGui::GetIO();
     const float2 delta {io.MouseDelta.x, io.MouseDelta.y};
     dispatcher.enqueue<OffsetTilesetViewportEvent>(tileset.get_uuid(), delta);
   }
 }
 
-void render_selection(GraphicsCtx&  graphics,
+void render_selection(GraphicsCtx& graphics,
                       const Region& selection,
                       const ImVec2& min,
                       const ImVec2& tile_size)
@@ -90,8 +90,8 @@ void render_selection(GraphicsCtx&  graphics,
 }  // namespace
 
 void update_tileset_view(const DocumentModel& model,
-                         const UUID&          tileset_id,
-                         entt::dispatcher&    dispatcher)
+                         const UUID& tileset_id,
+                         entt::dispatcher& dispatcher)
 {
   const auto& document = model.require_active_map();
   const auto& map = document.get_map();

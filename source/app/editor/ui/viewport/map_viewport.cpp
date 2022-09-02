@@ -88,10 +88,10 @@ void check_for(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T
   }
 }
 
-void center_viewport(const Viewport&   viewport,
-                     const ImVec2&     canvas_size,
-                     const float       row_count,
-                     const float       col_count,
+void center_viewport(const Viewport& viewport,
+                     const ImVec2& canvas_size,
+                     const float row_count,
+                     const float col_count,
                      entt::dispatcher& dispatcher)
 {
   const auto& cell = viewport.get_tile_size();
@@ -100,18 +100,18 @@ void center_viewport(const Viewport&   viewport,
   const auto width = col_count * cell.x;
   const auto height = row_count * cell.y;
 
-  const auto   dx = std::round(((canvas_size.x - width) / 2.0f) - offset.x);
-  const auto   dy = std::round(((canvas_size.y - height) / 2.0f) - offset.y);
+  const auto dx = std::round(((canvas_size.x - width) / 2.0f) - offset.x);
+  const auto dy = std::round(((canvas_size.y - height) / 2.0f) - offset.y);
   const float2 delta {dx, dy};
 
   dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
 }
 
-void draw_cursor_gizmos(GraphicsCtx&              graphics,
-                        const DocumentModel&      model,
-                        const MapDocument&        document,
+void draw_cursor_gizmos(GraphicsCtx& graphics,
+                        const DocumentModel& model,
+                        const MapDocument& document,
                         const ViewportCursorInfo& cursor,
-                        const RenderInfo&         info)
+                        const RenderInfo& info)
 {
   const auto& map = document.get_map();
 
@@ -185,7 +185,7 @@ void update_object_context_menu(const Map& map, entt::dispatcher& dispatcher)
     const auto& lang = get_current_language();
     const auto& layer = map.view_object_layer(map.active_layer_id().value());
 
-    const auto  object_id = layer.active_object_id().value();
+    const auto object_id = layer.active_object_id().value();
     const auto& object = layer.get_object(object_id);
 
     // TODO translate
@@ -226,8 +226,8 @@ void update_object_context_menu(const Map& map, entt::dispatcher& dispatcher)
 }  // namespace
 
 void show_map_viewport(const DocumentModel& model,
-                       const MapDocument&   document,
-                       entt::dispatcher&    dispatcher)
+                       const MapDocument& document,
+                       entt::dispatcher& dispatcher)
 {
   const auto& map = document.get_map();
   const auto& viewport = document.get_viewport();

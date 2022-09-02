@@ -57,8 +57,8 @@ class ADocument
 
   void duplicate_component_attribute(const UUID& component_id, std::string name);
 
-  void set_component_attribute_type(const UUID&   component_id,
-                                    std::string   name,
+  void set_component_attribute_type(const UUID& component_id,
+                                    std::string name,
                                     AttributeType type);
 
   void update_component(const UUID& component_id, std::string name, Attribute value);
@@ -70,7 +70,7 @@ class ADocument
   void update_attached_component(const UUID& context_id,
                                  const UUID& component_id,
                                  std::string name,
-                                 Attribute   value);
+                                 Attribute value);
 
   void reset_attached_component(const UUID& context_id, const UUID& component_id);
 

@@ -83,13 +83,13 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
   }
 }
 
-void tileset_dock_mouse_wheel_event_handler(const TilesetRef&             tileset_ref,
+void tileset_dock_mouse_wheel_event_handler(const TilesetRef& tileset_ref,
                                             const cen::mouse_wheel_event& event,
-                                            entt::dispatcher&             dispatcher)
+                                            entt::dispatcher& dispatcher)
 {
   constexpr float2 scaling {4, 4};
 
-  const auto&  viewport = tileset_ref.get_viewport();
+  const auto& viewport = tileset_ref.get_viewport();
   const float2 precise {event.precise_x(), event.precise_y()};
 
   auto delta = precise * (viewport.get_tile_size() / scaling);

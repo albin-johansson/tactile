@@ -32,9 +32,9 @@
 namespace tactile::io {
 namespace {
 
-void convert_context(const IContext&       context,
+void convert_context(const IContext& context,
                      const ComponentIndex* components,
-                     ir::ContextData&      data)
+                     ir::ContextData& data)
 {
   for (const auto& [name, property] : context.get_props()) {
     data.properties[name] = property;
@@ -53,9 +53,9 @@ void convert_context(const IContext&       context,
   }
 }
 
-void convert_object(const Object&         object,
+void convert_object(const Object& object,
                     const ComponentIndex* components,
-                    ir::ObjectData&       data)
+                    ir::ObjectData& data)
 {
   TACTILE_ASSERT(object.get_meta_id().has_value());
 
@@ -72,14 +72,14 @@ void convert_object(const Object&         object,
   convert_context(object, components, data.context);
 }
 
-void convert_layer(const ILayer&         layer,
-                   usize                 index,
+void convert_layer(const ILayer& layer,
+                   usize index,
                    const ComponentIndex* components,
-                   ir::LayerData&        data);
+                   ir::LayerData& data);
 
-void convert_object_layer(const ObjectLayer&    layer,
+void convert_object_layer(const ObjectLayer& layer,
                           const ComponentIndex* index,
-                          ir::ObjectLayerData&  data)
+                          ir::ObjectLayerData& data)
 {
   data.objects.reserve(layer.object_count());
   for (const auto& [id, object] : layer) {
@@ -88,9 +88,9 @@ void convert_object_layer(const ObjectLayer&    layer,
   }
 }
 
-void convert_group_layer(const GroupLayer&     layer,
+void convert_group_layer(const GroupLayer& layer,
                          const ComponentIndex* components,
-                         ir::GroupLayerData&   data)
+                         ir::GroupLayerData& data)
 {
   data.children.reserve(layer.storage().size());
 
@@ -104,10 +104,10 @@ void convert_group_layer(const GroupLayer&     layer,
   }
 }
 
-void convert_layer(const ILayer&         layer,
-                   const usize           index,
+void convert_layer(const ILayer& layer,
+                   const usize index,
                    const ComponentIndex* components,
-                   ir::LayerData&        layer_data)
+                   ir::LayerData& layer_data)
 {
   TACTILE_ASSERT(layer.get_meta_id().has_value());
   layer_data.index = index;
@@ -132,13 +132,13 @@ void convert_layer(const ILayer&         layer,
     }
     case LayerType::ObjectLayer: {
       const auto& object_layer = dynamic_cast<const ObjectLayer&>(layer);
-      auto&       object_layer_data = layer_data.data.emplace<ir::ObjectLayerData>();
+      auto& object_layer_data = layer_data.data.emplace<ir::ObjectLayerData>();
       convert_object_layer(object_layer, components, object_layer_data);
       break;
     }
     case LayerType::GroupLayer: {
       const auto& group_layer = dynamic_cast<const GroupLayer&>(layer);
-      auto&       group_layer_data = layer_data.data.emplace<ir::GroupLayerData>();
+      auto& group_layer_data = layer_data.data.emplace<ir::GroupLayerData>();
       convert_group_layer(group_layer, components, group_layer_data);
       break;
     }
@@ -147,9 +147,9 @@ void convert_layer(const ILayer&         layer,
   convert_context(layer, components, layer_data.context);
 }
 
-void convert_layers(const MapDocument&    document,
+void convert_layers(const MapDocument& document,
                     const ComponentIndex* components,
-                    ir::MapData&          data)
+                    ir::MapData& data)
 {
   usize index = 0;
 
@@ -175,9 +175,9 @@ void convert_fancy_tile_animation(const TileAnimation& animation, ir::MetaTileDa
   }
 }
 
-void convert_fancy_tiles(const Tileset&        tileset,
+void convert_fancy_tiles(const Tileset& tileset,
                          const ComponentIndex* components,
-                         ir::TilesetData&      data)
+                         ir::TilesetData& data)
 {
   for (const auto& [id, tile] : tileset) {
     const auto is_animated = tile->is_animated();
@@ -206,9 +206,9 @@ void convert_fancy_tiles(const Tileset&        tileset,
   }
 }
 
-void convert_tilesets(const MapDocument&    document,
+void convert_tilesets(const MapDocument& document,
                       const ComponentIndex* components,
-                      ir::MapData&          data)
+                      ir::MapData& data)
 {
   const auto& map = document.get_map();
   for (const auto& [tileset_id, tileset_ref] : map.get_tilesets()) {

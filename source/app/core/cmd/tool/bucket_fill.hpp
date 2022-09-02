@@ -34,10 +34,10 @@ namespace tactile::cmd {
 class BucketFill final : public ICommand
 {
  public:
-  BucketFill(Shared<Map>    map,
-             const UUID&    layer_id,
+  BucketFill(Shared<Map> map,
+             const UUID& layer_id,
              const TilePos& origin,
-             TileID         replacement);
+             TileID replacement);
 
   void undo() override;
 
@@ -46,11 +46,11 @@ class BucketFill final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<Map>          mMap;
-  UUID                 mLayerId {};
-  TilePos              mOrigin;
-  TileID               mReplacement {};
-  Maybe<TileID>        mTarget;
+  Shared<Map> mMap;
+  UUID mLayerId {};
+  TilePos mOrigin;
+  TileID mReplacement {};
+  Maybe<TileID> mTarget;
   std::vector<TilePos> mPositions;
 };
 

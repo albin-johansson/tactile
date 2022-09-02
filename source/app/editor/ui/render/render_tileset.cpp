@@ -32,7 +32,7 @@ void render_tileset(GraphicsCtx& graphics, const TilesetDocument& document)
 {
   const auto& tileset = document.view_tileset();
   const auto& uvTileSize = tileset.uv_size();
-  const auto  textureId = tileset.texture_id();
+  const auto textureId = tileset.texture_id();
 
   const float2 tileSize = tileset.tile_size();
   const ImVec2 uv {uvTileSize.x, uvTileSize.y};
@@ -42,7 +42,7 @@ void render_tileset(GraphicsCtx& graphics, const TilesetDocument& document)
                          static_cast<float>(row * tileset.tile_size().y),
                          tileSize.x,
                          tileSize.y};
-    const auto   position = graphics.from_matrix_to_absolute(row, col);
+    const auto position = graphics.from_matrix_to_absolute(row, col);
     graphics.render_translated_image(textureId, source, position, uv);
   });
 

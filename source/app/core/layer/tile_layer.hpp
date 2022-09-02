@@ -46,8 +46,8 @@ class TileLayer final : public ILayer
   void accept(ILayerVisitor& visitor) override;
   void accept(IConstLayerVisitor& visitor) const override;
 
-  void flood(const TilePos&        origin,
-             TileID                replacement,
+  void flood(const TilePos& origin,
+             TileID replacement,
              std::vector<TilePos>* affected = nullptr);
 
   void add_row();
@@ -111,7 +111,7 @@ class TileLayer final : public ILayer
 
  private:
   LayerDelegate mDelegate;
-  TileMatrix    mTiles;
+  TileMatrix mTiles;
 };
 
 }  // namespace tactile

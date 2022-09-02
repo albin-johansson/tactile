@@ -30,7 +30,7 @@ namespace tactile::ui {
 
 /// Shows a widget for a single layer in a map.
 void layer_selectable(const MapDocument& document,
-                      const ILayer&      layer,
-                      entt::dispatcher&  dispatcher);
+                      const ILayer& layer,
+                      entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

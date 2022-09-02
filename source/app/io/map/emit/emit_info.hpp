@@ -36,8 +36,8 @@ class EmitInfo final
   [[nodiscard]] auto data() const -> const ir::MapData&;
 
  private:
-  fs::path    mDestinationFile;
-  fs::path    mDestinationDir;
+  fs::path mDestinationFile;
+  fs::path mDestinationDir;
   ir::MapData mData;
 };
 

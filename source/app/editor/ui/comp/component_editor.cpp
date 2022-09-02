@@ -83,7 +83,7 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
   const auto* index = document.view_component_index();
   TACTILE_ASSERT(index != nullptr);
 
-  auto&       data = *mData;
+  auto& data = *mData;
   const auto& lang = get_current_language();
 
   /* Ensure that the active component ID hasn't been invalidated */
@@ -150,15 +150,15 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
   ImGui::Separator();
 }
 
-void ComponentEditor::show_component_combo_popup(const ADocument&  document,
+void ComponentEditor::show_component_combo_popup(const ADocument& document,
                                                  entt::dispatcher& dispatcher)
 {
-  auto&       data = *mData;
+  auto& data = *mData;
   const auto& lang = get_current_language();
 
   if (Popup popup {"##ComponentEditorPopup"}; popup.is_open()) {
     if (ImGui::MenuItem(lang.action.rename_component.c_str())) {
-      const auto  id = data.active_component.value();
+      const auto id = data.active_component.value();
       const auto* index = document.view_component_index();
       const auto& name = index->at(id).get_name();
       get_dialogs().rename_component.show(name, id);
@@ -174,9 +174,9 @@ void ComponentEditor::show_component_combo_popup(const ADocument&  document,
 }
 
 void ComponentEditor::show_component_attributes(const ComponentDefinition& definition,
-                                                entt::dispatcher&          dispatcher)
+                                                entt::dispatcher& dispatcher)
 {
-  auto&       data = *mData;
+  auto& data = *mData;
   const auto& lang = get_current_language();
 
   if (definition.empty()) {
@@ -202,13 +202,13 @@ void ComponentEditor::show_component_attributes(const ComponentDefinition& defin
   }
 }
 
-void ComponentEditor::show_component_attribute(const UUID&        componentId,
+void ComponentEditor::show_component_attribute(const UUID& componentId,
                                                const std::string& name,
-                                               const Attribute&   value,
-                                               entt::dispatcher&  dispatcher)
+                                               const Attribute& value,
+                                               entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
-  auto&       data = *mData;
+  auto& data = *mData;
 
   const Scope scope {name.c_str()};
 
@@ -239,7 +239,7 @@ void ComponentEditor::show_component_attribute(const UUID&        componentId,
   ImGui::TableNextColumn();
   ImGui::SetNextItemWidth(-min_float);
 
-  const auto    type = value.type();
+  const auto type = value.type();
   AttributeType newType = type;
   show_property_type_combo(type, newType);
   if (newType != type) {

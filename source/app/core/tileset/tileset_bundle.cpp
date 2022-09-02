@@ -27,8 +27,8 @@
 namespace tactile {
 
 void TilesetBundle::attach_tileset(Shared<Tileset> tileset,
-                                   const TileID    firstTileId,
-                                   const bool      embedded)
+                                   const TileID firstTileId,
+                                   const bool embedded)
 {
   const auto id = tileset->get_uuid();
   mRefs.try_emplace(id, tileset, firstTileId, firstTileId + tileset->tile_count());

@@ -37,9 +37,9 @@ namespace tactile::cmd {
 class SetComponentAttrType final : public ICommand
 {
  public:
-  SetComponentAttrType(ADocument*    document,
-                       const UUID&   component_id,
-                       std::string   attribute,
+  SetComponentAttrType(ADocument* document,
+                       const UUID& component_id,
+                       std::string attribute,
                        AttributeType type);
 
   void undo() override;
@@ -49,11 +49,11 @@ class SetComponentAttrType final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  ADocument*               mDocument {};
-  UUID                     mComponentId {};
-  std::string              mAttributeName;
-  AttributeType            mNewType;
-  Maybe<Attribute>         mSnapshot;
+  ADocument* mDocument {};
+  UUID mComponentId {};
+  std::string mAttributeName;
+  AttributeType mNewType;
+  Maybe<Attribute> mSnapshot;
   HashMap<UUID, Attribute> mPrevAttributes;
 };
 

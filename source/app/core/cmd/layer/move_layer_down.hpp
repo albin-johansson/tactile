@@ -39,7 +39,7 @@ class MoveLayerDown final : public ICommand
 
  private:
   Shared<Map> mMap;
-  UUID        mLayerId {};
+  UUID mLayerId {};
 };
 
 }  // namespace tactile::cmd

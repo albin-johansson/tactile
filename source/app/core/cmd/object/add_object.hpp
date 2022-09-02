@@ -34,9 +34,9 @@ namespace tactile::cmd {
 class AddObject final : public ICommand
 {
  public:
-  AddObject(MapDocument*  document,
-            const UUID&   layer_id,
-            ObjectType    type,
+  AddObject(MapDocument* document,
+            const UUID& layer_id,
+            ObjectType type,
             const float2& pos,
             const float2& size = {});
 
@@ -48,11 +48,11 @@ class AddObject final : public ICommand
 
  private:
   MapDocument* mDocument {};
-  UUID         mLayerId {};
-  ObjectType   mObjectType {};
-  float2       mPos {};
-  float2       mSize {};
-  Maybe<UUID>  mObjectId;
+  UUID mLayerId {};
+  ObjectType mObjectType {};
+  float2 mPos {};
+  float2 mSize {};
+  Maybe<UUID> mObjectId;
 };
 
 }  // namespace tactile::cmd

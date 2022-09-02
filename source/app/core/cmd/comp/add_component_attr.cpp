@@ -30,7 +30,7 @@
 
 namespace tactile::cmd {
 
-AddComponentAttr::AddComponentAttr(ADocument*  document,
+AddComponentAttr::AddComponentAttr(ADocument* document,
                                    const UUID& component_id,
                                    std::string name)
     : mDocument {document}
@@ -44,7 +44,7 @@ AddComponentAttr::AddComponentAttr(ADocument*  document,
 
 void AddComponentAttr::undo()
 {
-  auto  index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index();
   auto& definition = index->at(mComponentId);
   definition.remove_attr(mName);
 
@@ -54,7 +54,7 @@ void AddComponentAttr::undo()
 
 void AddComponentAttr::redo()
 {
-  auto  index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index();
   auto& definition = index->at(mComponentId);
 
   definition.add_attr(mName);

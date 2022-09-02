@@ -21,7 +21,7 @@ namespace {
 static_assert(std::same_as<TileID, int32>);
 
 [[nodiscard]] auto convert_tile_matrix_to_sequence(const TileMatrix& matrix,
-                                                   const usize       rows,
+                                                   const usize rows,
                                                    const usize columns) -> ByteStream
 {
   ByteStream seq;
@@ -41,8 +41,8 @@ static_assert(std::same_as<TileID, int32>);
 }
 
 [[nodiscard]] auto restore_tiles(const std::vector<uchar>& data,
-                                 const usize               rows,
-                                 const usize               columns) -> TileMatrix
+                                 const usize rows,
+                                 const usize columns) -> TileMatrix
 {
   auto matrix = make_tile_matrix(rows, columns);
 
@@ -68,9 +68,9 @@ static_assert(std::same_as<TileID, int32>);
 
 }  // namespace
 
-auto base64_encode_tiles(const TileMatrix&     tiles,
-                         const usize           rows,
-                         const usize           columns,
+auto base64_encode_tiles(const TileMatrix& tiles,
+                         const usize rows,
+                         const usize columns,
                          const TileCompression compression) -> std::string
 {
   const auto sequence = convert_tile_matrix_to_sequence(tiles, rows, columns);
@@ -92,9 +92,9 @@ auto base64_encode_tiles(const TileMatrix&     tiles,
   }
 }
 
-auto base64_decode_tiles(const std::string&    tiles,
-                         const usize           rows,
-                         const usize           columns,
+auto base64_decode_tiles(const std::string& tiles,
+                         const usize rows,
+                         const usize columns,
                          const TileCompression compression) -> TileMatrix
 {
   const auto decoded_bytes = Base64::decode(tiles.data(), tiles.size());

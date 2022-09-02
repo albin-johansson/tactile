@@ -45,14 +45,14 @@ struct OffsetDocumentViewportEvent final
 
 struct OffsetTilesetViewportEvent final
 {
-  UUID   tileset_id {};  /// The target tileset.
-  float2 delta {};       /// The offset to apply.
+  UUID tileset_id {};  /// The target tileset.
+  float2 delta {};     /// The offset to apply.
 };
 
 /// Event used to update the limits of tilesets in the tileset dock widget.
 struct UpdateTilesetViewportLimitsEvent final
 {
-  UUID   tileset_id {};  /// The target tileset.
+  UUID tileset_id {};    /// The target tileset.
   float2 min_offset {};  /// The minimum offset.
   float2 max_offset {};  /// The maximum offset.
 };

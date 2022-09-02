@@ -31,9 +31,9 @@
 
 namespace tactile::cmd {
 
-SetComponentAttrType::SetComponentAttrType(ADocument*          document,
-                                           const UUID&         component_id,
-                                           std::string         attribute,
+SetComponentAttrType::SetComponentAttrType(ADocument* document,
+                                           const UUID& component_id,
+                                           std::string attribute,
                                            const AttributeType type)
     : mDocument {document}
     , mComponentId {component_id}
@@ -47,7 +47,7 @@ SetComponentAttrType::SetComponentAttrType(ADocument*          document,
 
 void SetComponentAttrType::undo()
 {
-  auto  index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index();
   auto& definition = index->at(mComponentId);
 
   definition.remove_attr(mAttributeName);
@@ -67,7 +67,7 @@ void SetComponentAttrType::undo()
 
 void SetComponentAttrType::redo()
 {
-  auto  index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index();
   auto& definition = index->at(mComponentId);
 
   mSnapshot = definition.get_attr(mAttributeName);

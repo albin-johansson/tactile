@@ -37,7 +37,7 @@ class FixMapTiles final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<Map>         mMap;
+  Shared<Map> mMap;
   Map::FixTilesResult mResult;
 };
 

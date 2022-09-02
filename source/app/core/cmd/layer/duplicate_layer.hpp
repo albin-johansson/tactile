@@ -44,10 +44,10 @@ class DuplicateLayer final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  MapDocument*   mDocument {};
-  UUID           mLayerId {};
+  MapDocument* mDocument {};
+  UUID mLayerId {};
   Shared<ILayer> mNewLayer;
-  Maybe<usize>   mNewIndex;
+  Maybe<usize> mNewIndex;
 };
 
 }  // namespace cmd

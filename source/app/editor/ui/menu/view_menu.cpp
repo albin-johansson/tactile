@@ -91,9 +91,9 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
   const auto& lang = get_current_language();
 
   if (Menu menu {lang.menu.view.c_str()}; menu.is_open()) {
-    auto&       prefs = io::get_preferences();
+    auto& prefs = io::get_preferences();
     const auto* document = model.active_document();
-    const auto  hasActiveDocument = model.has_active_document();
+    const auto hasActiveDocument = model.has_active_document();
 
     _update_widgets_menu(model);
 

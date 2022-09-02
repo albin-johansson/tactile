@@ -87,7 +87,7 @@ class TilesetDocument final : public ADocument
   }
 
  private:
-  Shared<Tileset>  mTileset;
+  Shared<Tileset> mTileset;
   DocumentDelegate mDelegate;
 };
 

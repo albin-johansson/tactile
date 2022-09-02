@@ -37,7 +37,7 @@ AddLayer::AddLayer(MapDocument* document, const LayerType type)
 
 void AddLayer::undo()
 {
-  auto&      map = mDocument->get_map();
+  auto& map = mDocument->get_map();
   const auto id = mLayer->get_uuid();
   map.remove_layer(id);
   mDocument->get_contexts().erase(id);

@@ -153,10 +153,10 @@ void emit_object_layer_data(YAML::Emitter& emitter, const ir::ObjectLayerData& d
   emitter << YAML::EndSeq;
 }
 
-void emit_plain_tile_layer_data(YAML::Emitter&           emitter,
+void emit_plain_tile_layer_data(YAML::Emitter& emitter,
                                 const ir::TileLayerData& data,
-                                const usize              rows,
-                                const usize              columns)
+                                const usize rows,
+                                const usize columns)
 {
   const auto& prefs = get_preferences();
 
@@ -205,8 +205,8 @@ void emit_plain_tile_layer_data(YAML::Emitter&           emitter,
   return stream.str();
 }
 
-void emit_layer(YAML::Emitter&       emitter,
-                const ir::MapData&   map,
+void emit_layer(YAML::Emitter& emitter,
+                const ir::MapData& map,
                 const ir::LayerData& layer)
 {
   emitter << YAML::BeginMap;
@@ -328,8 +328,8 @@ void emit_tileset_tiles(YAML::Emitter& emitter, const ir::TilesetData& tileset)
   emitter << YAML::EndSeq;
 }
 
-void emit_tileset_file(const EmitInfo&        info,
-                       const std::string&     filename,
+void emit_tileset_file(const EmitInfo& info,
+                       const std::string& filename,
                        const ir::TilesetData& tileset)
 {
   YAML::Emitter emitter;
@@ -390,9 +390,9 @@ void emit_tilesets(YAML::Emitter& emitter, const EmitInfo& info)
   emitter << YAML::EndSeq;
 }
 
-void emit_component_definition_attribute(YAML::Emitter&     emitter,
+void emit_component_definition_attribute(YAML::Emitter& emitter,
                                          const std::string& name,
-                                         const Attribute&   value)
+                                         const Attribute& value)
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "name" << YAML::Value << name;

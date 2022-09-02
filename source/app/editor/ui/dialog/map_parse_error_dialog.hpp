@@ -42,7 +42,7 @@ class MapParseErrorDialog final : public ADialog
 
  private:
   Maybe<io::ParseError> mError;
-  std::string           mCause;
+  std::string mCause;
 };
 
 }  // namespace tactile::ui

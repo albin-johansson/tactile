@@ -95,9 +95,9 @@ class TilesetBundle final
 
  private:
   HashMap<UUID, TilesetRef> mRefs;
-  HashMap<TileID, UUID>     mTileCache;
-  Maybe<UUID>               mActiveTileset;
-  TileID                    mNextTileId {1};
+  HashMap<TileID, UUID> mTileCache;
+  Maybe<UUID> mActiveTileset;
+  TileID mNextTileId {1};
 };
 
 }  // namespace tactile

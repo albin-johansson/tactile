@@ -29,7 +29,7 @@ namespace tactile::cmd {
 
 SetLayerVisible::SetLayerVisible(Shared<Map> map,
                                  const UUID& layer_id,
-                                 const bool  visible)
+                                 const bool visible)
     : mMap {std::move(map)}
     , mLayerId {layer_id}
     , mNewVisibility {visible}

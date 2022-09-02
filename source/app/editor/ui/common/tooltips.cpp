@@ -42,7 +42,7 @@ void lazy_tooltip(const char* id, const char* tooltip)
   static HashMap<ImGuiID, Maybe<TimePoint>> state;
 
   const auto hashedId = ImGui::GetID(id);
-  auto&      lastHover = state[hashedId];
+  auto& lastHover = state[hashedId];
 
   if (ImGui::IsItemHovered()) {
     if (!lastHover) {

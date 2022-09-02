@@ -65,7 +65,7 @@ struct MoveLayerDownEvent final
 /// Event for changing the opacity of a layer.
 struct SetLayerOpacityEvent final
 {
-  UUID  layer_id {};
+  UUID layer_id {};
   float opacity {};
 };
 
@@ -85,7 +85,7 @@ struct OpenRenameLayerDialogEvent final
 /// Event for changing the name of a layer.
 struct RenameLayerEvent final
 {
-  UUID        layer_id {};
+  UUID layer_id {};
   std::string name;
 };
 

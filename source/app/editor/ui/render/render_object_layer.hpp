@@ -32,8 +32,8 @@ class GraphicsCtx;
 
 void render_object(GraphicsCtx& graphics, const Object& object, const cen::color& color);
 
-void render_object_layer(GraphicsCtx&       graphics,
+void render_object_layer(GraphicsCtx& graphics,
                          const ObjectLayer& layer,
-                         float              parentOpacity);
+                         float parentOpacity);
 
 }  // namespace tactile::ui

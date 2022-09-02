@@ -51,18 +51,18 @@ namespace tactile::io {
  */
 struct GodotEmitOptions final
 {
-  fs::path root_dir;                     ///< Path to the local project directory.
-  fs::path project_map_dir;              ///< Relative path to the map directory.
-  fs::path project_image_dir;            ///< Relative path to the image directory.
-  fs::path project_tileset_dir;          ///< Relative path to the tileset directory.
-  usize    ellipse_polygon_point_count;  ///< Amount of points in ellipse approximations.
+  fs::path root_dir;                  ///< Path to the local project directory.
+  fs::path project_map_dir;           ///< Relative path to the map directory.
+  fs::path project_image_dir;         ///< Relative path to the image directory.
+  fs::path project_tileset_dir;       ///< Relative path to the tileset directory.
+  usize ellipse_polygon_point_count;  ///< Amount of points in ellipse approximations.
 };
 
 /// Emits a map document, inferring the format from the path (or the preferred format)
 void emit_map(const MapDocument& document);
 
 /// Emits a map document as a Godot scene, see options struct for details.
-void emit_map_as_godot_scene(const MapDocument&      document,
+void emit_map_as_godot_scene(const MapDocument& document,
                              const GodotEmitOptions& options);
 
 void emit_json_map(const EmitInfo& info);

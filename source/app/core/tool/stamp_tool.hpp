@@ -50,17 +50,17 @@ class StampTool final : public ATool
 
   void on_exited(DocumentModel& model, entt::dispatcher& dispatcher) override;
 
-  void on_pressed(DocumentModel&    model,
+  void on_pressed(DocumentModel& model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo&  mouse) override;
+                  const MouseInfo& mouse) override;
 
-  void on_dragged(DocumentModel&    model,
+  void on_dragged(DocumentModel& model,
                   entt::dispatcher& dispatcher,
-                  const MouseInfo&  mouse) override;
+                  const MouseInfo& mouse) override;
 
-  void on_released(DocumentModel&    model,
+  void on_released(DocumentModel& model,
                    entt::dispatcher& dispatcher,
-                   const MouseInfo&  mouse) override;
+                   const MouseInfo& mouse) override;
 
   void set_random(bool random);
 
@@ -76,20 +76,20 @@ class StampTool final : public ATool
   }
 
  private:
-  TileCache      mPrevious;  ///< Previous tile state.
-  TileCache      mCurrent;   ///< The current stamp sequence.
+  TileCache mPrevious;  ///< Previous tile state.
+  TileCache mCurrent;   ///< The current stamp sequence.
   Maybe<TilePos> mLastChangedPos;
-  bool           mRandomMode {};
+  bool mRandomMode {};
 
   void update_sequence(DocumentModel& model, const TilePos& cursor);
 
-  void update_sequence_normal(TileLayer&        layer,
+  void update_sequence_normal(TileLayer& layer,
                               const TilesetRef& tilesetRef,
-                              const TilePos&    cursor);
+                              const TilePos& cursor);
 
-  void update_sequence_random(TileLayer&        layer,
+  void update_sequence_random(TileLayer& layer,
                               const TilesetRef& tilesetRef,
-                              const TilePos&    cursor);
+                              const TilePos& cursor);
 
   void maybe_emit_event(const DocumentModel& model, entt::dispatcher& dispatcher);
 

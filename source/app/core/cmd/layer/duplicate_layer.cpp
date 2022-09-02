@@ -37,7 +37,7 @@ DuplicateLayer::DuplicateLayer(MapDocument* document, const UUID& layer_id)
 
 void DuplicateLayer::undo()
 {
-  auto&      map = mDocument->get_map();
+  auto& map = mDocument->get_map();
   const auto id = mNewLayer->get_uuid();
 
   map.remove_layer(id);

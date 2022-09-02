@@ -39,9 +39,9 @@ class RenameLayer final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<Map>        mMap;
-  UUID               mLayerId {};
-  std::string        mNewName;
+  Shared<Map> mMap;
+  UUID mLayerId {};
+  std::string mNewName;
   Maybe<std::string> mOldName;
 };
 

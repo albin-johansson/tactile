@@ -41,7 +41,7 @@ class AddRow final : public ICommand
 
  private:
   Shared<Map> mMap;
-  usize       mRows {1};
+  usize mRows {1};
 };
 
 }  // namespace tactile::cmd

@@ -269,8 +269,8 @@ void emit_object_layer(JSON& json, const ir::LayerData& layer)
   return json;
 }
 
-void add_common_tileset_attributes(JSON&                  json,
-                                   const EmitInfo&        info,
+void add_common_tileset_attributes(JSON& json,
+                                   const EmitInfo& info,
                                    const ir::TilesetData& tileset)
 {
   json["name"] = tileset.name;
@@ -298,7 +298,7 @@ void add_common_tileset_attributes(JSON&                  json,
   }
 }
 
-[[nodiscard]] auto emit_embedded_tileset(const EmitInfo&        info,
+[[nodiscard]] auto emit_embedded_tileset(const EmitInfo& info,
                                          const ir::TilesetData& tileset) -> JSON
 {
   auto json = JSON::object();

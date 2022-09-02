@@ -104,9 +104,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_image_path(const JSON&      json,
+[[nodiscard]] auto parse_image_path(const JSON& json,
                                     ir::TilesetData& tileset_data,
-                                    const fs::path&  dir) -> ParseError
+                                    const fs::path& dir) -> ParseError
 {
   const auto relative = json.find("image");
 
@@ -125,9 +125,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_common_tileset_attributes(const JSON&      json,
+[[nodiscard]] auto parse_common_tileset_attributes(const JSON& json,
                                                    ir::TilesetData& tileset_data,
-                                                   const fs::path&  dir) -> ParseError
+                                                   const fs::path& dir) -> ParseError
 {
   if (auto name = as_string(json, "name")) {
     tileset_data.name = std::move(*name);
@@ -195,9 +195,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_external_tileset(const JSON&      json,
+[[nodiscard]] auto parse_external_tileset(const JSON& json,
                                           ir::TilesetData& tileset_data,
-                                          const fs::path&  dir) -> ParseError
+                                          const fs::path& dir) -> ParseError
 {
   TACTILE_ASSERT(json.contains("source"));
 
@@ -216,9 +216,9 @@ namespace {
   }
 }
 
-[[nodiscard]] auto parse_tileset(const JSON&      json,
+[[nodiscard]] auto parse_tileset(const JSON& json,
                                  ir::TilesetData& tileset_data,
-                                 const fs::path&  dir) -> ParseError
+                                 const fs::path& dir) -> ParseError
 {
   if (const auto first_tile = as_int(json, "firstgid")) {
     tileset_data.first_tile = *first_tile;

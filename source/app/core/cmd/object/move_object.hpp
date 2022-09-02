@@ -40,8 +40,8 @@ class MoveObject final : public ICommand
 
  private:
   Shared<Object> mObject;
-  float2         mPreviousPos {};
-  float2         mUpdatedPos {};
+  float2 mPreviousPos {};
+  float2 mUpdatedPos {};
 };
 
 }  // namespace tactile::cmd

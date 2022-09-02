@@ -70,8 +70,8 @@ void ADocument::duplicate_component_attribute(const UUID& component_id, std::str
   get_history().exec<cmd::DuplicateComponentAttr>(this, component_id, std::move(name));
 }
 
-void ADocument::set_component_attribute_type(const UUID&         component_id,
-                                             std::string         name,
+void ADocument::set_component_attribute_type(const UUID& component_id,
+                                             std::string name,
                                              const AttributeType type)
 {
   get_history().exec<cmd::SetComponentAttrType>(this,
@@ -82,7 +82,7 @@ void ADocument::set_component_attribute_type(const UUID&         component_id,
 
 void ADocument::update_component(const UUID& component_id,
                                  std::string name,
-                                 Attribute   value)
+                                 Attribute value)
 {
   get_history().exec<cmd::UpdateComponent>(get_component_index(),
                                            component_id,
@@ -107,7 +107,7 @@ void ADocument::detach_component(const UUID& context_id, const UUID& component_i
 void ADocument::update_attached_component(const UUID& context_id,
                                           const UUID& component_id,
                                           std::string name,
-                                          Attribute   value)
+                                          Attribute value)
 {
   auto context = get_contexts().get_context(context_id);
   get_history().exec<cmd::UpdateAttachedComponent>(std::move(context),
@@ -124,8 +124,8 @@ void ADocument::reset_attached_component(const UUID& context_id, const UUID& com
                                                   component_id);
 }
 
-void ADocument::add_property(const UUID&         context_id,
-                             std::string         name,
+void ADocument::add_property(const UUID& context_id,
+                             std::string name,
                              const AttributeType type)
 {
   auto context = get_contexts().get_context(context_id);
@@ -156,8 +156,8 @@ void ADocument::update_property(const UUID& context_id, std::string name, Attrib
                                           std::move(value));
 }
 
-void ADocument::change_property_type(const UUID&         context_id,
-                                     std::string         name,
+void ADocument::change_property_type(const UUID& context_id,
+                                     std::string name,
                                      const AttributeType type)
 {
   auto context = get_contexts().get_context(context_id);

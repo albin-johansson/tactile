@@ -40,7 +40,7 @@ constexpr auto child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
                              ImGuiWindowFlags_AlwaysAutoResize;
 
 constinit LogLevel log_filter = LogLevel::debug;
-constinit bool     is_dock_focused = false;
+constinit bool is_dock_focused = false;
 
 [[nodiscard]] auto show_log_level_filter_combo(const LogLevel current_level)
     -> Maybe<LogLevel>
@@ -147,7 +147,7 @@ void update_color_legend_hint()
 
   if (ImGui::IsItemHovered()) {
     StyleColor bg {ImGuiCol_PopupBg, {0.1f, 0.1f, 0.1f, 0.75f}};
-    Tooltip    tooltip;
+    Tooltip tooltip;
 
     constexpr auto verbose_color = color_for_level(LogLevel::trace);
     constexpr auto debug_color = color_for_level(LogLevel::debug);

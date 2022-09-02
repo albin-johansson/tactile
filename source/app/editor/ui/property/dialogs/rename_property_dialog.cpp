@@ -57,7 +57,7 @@ void RenamePropertyDialog::on_accept(entt::dispatcher& dispatcher)
 }
 
 auto RenamePropertyDialog::validate(const DocumentModel& model,
-                                    std::string_view     input) const -> bool
+                                    std::string_view input) const -> bool
 {
   const auto& document = model.require_active_document();
   const auto& context = document.get_contexts().active_context();

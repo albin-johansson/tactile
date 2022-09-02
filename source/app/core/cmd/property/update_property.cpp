@@ -30,8 +30,8 @@
 namespace tactile::cmd {
 
 UpdateProperty::UpdateProperty(Shared<IContext> context,
-                               std::string      name,
-                               Attribute        value)
+                               std::string name,
+                               Attribute value)
     : mContext {std::move(context)}
     , mName {std::move(name)}
     , mNewValue {std::move(value)}

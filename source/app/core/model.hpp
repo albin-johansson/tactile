@@ -139,11 +139,11 @@ class DocumentModel final
   [[nodiscard]] auto active_document_id() const -> Maybe<UUID>;
 
  private:
-  HashMap<UUID, Shared<ADocument>>       mDocuments;  /// All _loaded_ documents
-  HashMap<UUID, Shared<MapDocument>>     mMaps;
+  HashMap<UUID, Shared<ADocument>> mDocuments;  /// All _loaded_ documents
+  HashMap<UUID, Shared<MapDocument>> mMaps;
   HashMap<UUID, Shared<TilesetDocument>> mTilesets;
-  std::vector<UUID> mOpenDocuments;   /// All _open_ documents in the editor
-  Maybe<UUID>       mActiveDocument;  /// ID of the active document.
+  std::vector<UUID> mOpenDocuments;  /// All _open_ documents in the editor
+  Maybe<UUID> mActiveDocument;       /// ID of the active document.
 
   void register_map(Shared<MapDocument> document);
   void register_tileset(Shared<TilesetDocument> document);

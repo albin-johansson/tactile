@@ -32,9 +32,9 @@ namespace tactile {
 /// Emitted after an object has been moved.
 struct MoveObjectEvent final
 {
-  UUID   object_id {};  /// ID of the object to move.
-  float2 previous;      /// Previous position of the object.
-  float2 updated;       /// Updated position of the object.
+  UUID object_id {};  /// ID of the object to move.
+  float2 previous;    /// Previous position of the object.
+  float2 updated;     /// Updated position of the object.
 };
 
 /// Emitted when the visibility of an object should be changed.
@@ -47,15 +47,15 @@ struct SetObjectVisibleEvent final
 /// Emitted when the tag of an object should be changed.
 struct SetObjectTagEvent final
 {
-  UUID        object_id {};  /// ID of target object.
-  std::string tag;           /// The new object tag.
+  UUID object_id {};  /// ID of target object.
+  std::string tag;    /// The new object tag.
 };
 
 /// Emitted when the name of an object should be changed.
 struct SetObjectNameEvent final
 {
-  UUID        object_id {};  /// ID of target object.
-  std::string name;          /// The new object name.
+  UUID object_id {};  /// ID of target object.
+  std::string name;   /// The new object name.
 };
 
 struct DuplicateObjectEvent final

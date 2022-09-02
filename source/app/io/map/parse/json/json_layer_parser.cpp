@@ -58,7 +58,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_tile_layer_csv_data(const JSON&        json,
+[[nodiscard]] auto parse_tile_layer_csv_data(const JSON& json,
                                              ir::TileLayerData& tile_layer) -> ParseError
 {
   if (!json.is_array()) {
@@ -80,8 +80,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_tile_layer_data(const JSON&        json,
-                                         ir::MapData&       map,
+[[nodiscard]] auto parse_tile_layer_data(const JSON& json,
+                                         ir::MapData& map,
                                          ir::TileLayerData& tile_layer) -> ParseError
 {
   if (!json.contains("data")) {
@@ -119,8 +119,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_tile_layer(const JSON&    json,
-                                    ir::MapData&   map,
+[[nodiscard]] auto parse_tile_layer(const JSON& json,
+                                    ir::MapData& map,
                                     ir::LayerData& layer) -> ParseError
 {
   auto& tile_layer = layer.data.emplace<ir::TileLayerData>();
@@ -163,10 +163,10 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_layer(const JSON&    json,
-                               ir::MapData&   map,
+[[nodiscard]] auto parse_layer(const JSON& json,
+                               ir::MapData& map,
                                ir::LayerData& layer,
-                               const usize    index) -> ParseError
+                               const usize index) -> ParseError
 {
   layer.index = index;
 

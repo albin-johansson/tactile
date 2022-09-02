@@ -48,10 +48,10 @@ void RemoveTileset::undo()
   TACTILE_ASSERT(mTilesetDocument != nullptr);
   TACTILE_ASSERT(mModel->active_document_id() == mMapId);
 
-  auto  mapDocument = mModel->get_map(mMapId);
+  auto mapDocument = mModel->get_map(mMapId);
   auto& map = mapDocument->get_map();
 
-  auto       tileset = mTilesetDocument->get_tileset();
+  auto tileset = mTilesetDocument->get_tileset();
   const auto tilesetId = tileset->get_uuid();
 
   map.attach_tileset(tileset, mFirstTile.value(), false);  // TODO
@@ -65,7 +65,7 @@ void RemoveTileset::redo()
   TACTILE_ASSERT(mModel->active_document_id() == mMapId);
   mTilesetDocument = mModel->get_tileset(mTilesetId);
 
-  auto  mapDocument = mModel->get_map(mMapId);
+  auto mapDocument = mModel->get_map(mMapId);
   auto& map = mapDocument->get_map();
 
   const auto& tilesets = map.get_tilesets();

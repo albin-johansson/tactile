@@ -39,8 +39,8 @@ class SetObjectVisible final : public ICommand
 
  private:
   Shared<Object> mObject;
-  bool           mNewVisibility;
-  Maybe<bool>    mOldVisibility;
+  bool mNewVisibility;
+  Maybe<bool> mOldVisibility;
 };
 
 }  // namespace tactile::cmd

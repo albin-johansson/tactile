@@ -110,9 +110,9 @@ class ObjectLayer final : public ILayer
   }
 
  private:
-  LayerDelegate                 mDelegate;
+  LayerDelegate mDelegate;
   HashMap<UUID, Shared<Object>> mObjects;
-  Maybe<UUID>                   mActiveObject;
+  Maybe<UUID> mActiveObject;
 };
 
 }  // namespace tactile

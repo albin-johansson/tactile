@@ -38,8 +38,8 @@ class ToolPreviewRenderer final : public IToolVisitor
 {
  public:
   explicit ToolPreviewRenderer(const DocumentModel& model,
-                               GraphicsCtx&         graphics,
-                               const MouseInfo&     mouse);
+                               GraphicsCtx& graphics,
+                               const MouseInfo& mouse);
 
   void visit(const StampTool& tool) override;
 
@@ -49,8 +49,8 @@ class ToolPreviewRenderer final : public IToolVisitor
 
  private:
   Ref<const DocumentModel> mModel;
-  Ref<GraphicsCtx>         mGraphics;
-  MouseInfo                mMouseInfo;
+  Ref<GraphicsCtx> mGraphics;
+  MouseInfo mMouseInfo;
 
   void render_stamp_normal(const Map& map, const TilesetRef& tileset_ref);
 };

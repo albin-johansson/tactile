@@ -49,7 +49,7 @@ class ADockWidget
 
  protected:
   virtual void on_update([[maybe_unused]] const DocumentModel& model,
-                         [[maybe_unused]] entt::dispatcher&    dispatcher)
+                         [[maybe_unused]] entt::dispatcher& dispatcher)
   {}
 
   void set_close_button_enabled(bool enabled);

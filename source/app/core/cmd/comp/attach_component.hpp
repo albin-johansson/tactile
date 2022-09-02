@@ -35,8 +35,8 @@ class AttachComponent final : public ICommand
 {
  public:
   AttachComponent(Shared<ComponentIndex> index,
-                  Shared<IContext>       context,
-                  const UUID&            component_id);
+                  Shared<IContext> context,
+                  const UUID& component_id);
 
   void undo() override;
 
@@ -46,8 +46,8 @@ class AttachComponent final : public ICommand
 
  private:
   Shared<ComponentIndex> mIndex;
-  Shared<IContext>       mContext;
-  UUID                   mComponentId {};
+  Shared<IContext> mContext;
+  UUID mComponentId {};
 };
 
 }  // namespace tactile::cmd

@@ -47,7 +47,7 @@ void AddComponentAttrDialog::show(const UUID& component_id)
   AStringInputDialog::show("");
 }
 
-auto AddComponentAttrDialog::validate(const DocumentModel&   model,
+auto AddComponentAttrDialog::validate(const DocumentModel& model,
                                       const std::string_view input) const -> bool
 {
   const auto& document = model.require_active_document();

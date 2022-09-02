@@ -42,8 +42,8 @@ constexpr auto tab_bar_flags =
     ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
 
 void update_context_menu(const DocumentModel& model,
-                         const UUID&          tileset_id,
-                         entt::dispatcher&    dispatcher)
+                         const UUID& tileset_id,
+                         entt::dispatcher& dispatcher)
 {
   if (auto popup = Popup::for_item("##TilesetTabContext"); popup.is_open()) {
     const auto& lang = get_current_language();
@@ -94,7 +94,7 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
       const Scope scope {tilesetId};
 
       const auto& name = ref.view_tileset().get_name();
-      const auto  is_active = tilesets.active_tileset_id() == tilesetId;
+      const auto is_active = tilesets.active_tileset_id() == tilesetId;
 
       bool opened = true;
       if (TabItem item {name.c_str(),

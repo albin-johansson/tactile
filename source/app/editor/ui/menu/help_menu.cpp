@@ -49,7 +49,7 @@ struct HelpMenuState final
 void update_help_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
-  auto&       state = _get_state();
+  auto& state = _get_state();
 
   if (Menu menu {lang.menu.help.c_str()}; menu.is_open()) {
     if (ImGui::MenuItem(lang.action.show_about.c_str())) {

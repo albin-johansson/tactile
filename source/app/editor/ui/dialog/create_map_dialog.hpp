@@ -42,8 +42,8 @@ class CreateMapDialog final : public ADialog
 
  private:
   int2 mTileSize {};
-  int  mRows {};
-  int  mColumns {};
+  int mRows {};
+  int mColumns {};
 };
 
 }  // namespace tactile::ui

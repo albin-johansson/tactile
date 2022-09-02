@@ -57,7 +57,7 @@ class AStringInputDialog : public ADialog
    * \return `true` if the input string is valid; `false` otherwise.
    */
   [[nodiscard]] virtual auto validate(const DocumentModel& model,
-                                      std::string_view     input) const -> bool = 0;
+                                      std::string_view input) const -> bool = 0;
 
   /**
    * Returns the current string input.
@@ -74,10 +74,10 @@ class AStringInputDialog : public ADialog
   [[nodiscard]] auto previous_input() const -> const std::string&;
 
  private:
-  Maybe<std::string>    mHint;
-  std::string           mPrevious;
+  Maybe<std::string> mHint;
+  std::string mPrevious;
   std::array<char, 128> mBuffer {};
-  bool                  mShouldAcquireFocus {};
+  bool mShouldAcquireFocus {};
 };
 
 }  // namespace tactile::ui

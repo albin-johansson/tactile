@@ -55,16 +55,16 @@ class ComponentEditor final : public ADialog
   struct Data;
   Unique<Data> mData;
 
-  void show_component_combo_popup(const ADocument&  document,
+  void show_component_combo_popup(const ADocument& document,
                                   entt::dispatcher& dispatcher);
 
   void show_component_attributes(const ComponentDefinition& definition,
-                                 entt::dispatcher&          dispatcher);
+                                 entt::dispatcher& dispatcher);
 
-  void show_component_attribute(const UUID&        componentId,
+  void show_component_attribute(const UUID& componentId,
                                 const std::string& name,
-                                const Attribute&   value,
-                                entt::dispatcher&  dispatcher);
+                                const Attribute& value,
+                                entt::dispatcher& dispatcher);
 };
 
 }  // namespace tactile::ui

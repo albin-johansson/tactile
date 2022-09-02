@@ -103,10 +103,10 @@ void _update_recent_files_menu(entt::dispatcher& dispatcher)
 void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
-  auto&       state = _get_state();
+  auto& state = _get_state();
 
   if (Menu menu {lang.menu.file.c_str()}; menu.is_open()) {
-    const auto  hasActiveDocument = model.has_active_document();
+    const auto hasActiveDocument = model.has_active_document();
     const auto* document = model.active_document();
 
     if (ImGui::MenuItem(lang.action.create_map.c_str(), TACTILE_PRIMARY_MOD "+N")) {

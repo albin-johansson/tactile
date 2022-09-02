@@ -19,10 +19,10 @@ using ZlibProcessFun = int (*)(z_stream*, int);
 
 constexpr usize buffer_size = 32'768;  // About 32 KB for our temporary buffers
 
-[[nodiscard]] auto process_zlib_chunks(z_stream&      stream,
+[[nodiscard]] auto process_zlib_chunks(z_stream& stream,
                                        ZlibProcessFun process,
-                                       Bytef*         out_buffer,
-                                       ByteStream&    result) -> int
+                                       Bytef* out_buffer,
+                                       ByteStream& result) -> int
 {
   const auto copy_written_bytes_in_buffer_to_dest = [&] {
     const auto written_bytes = buffer_size - stream.avail_out;
@@ -89,8 +89,8 @@ auto zlib_compress(const void* source, const usize source_bytes, int level)
   }
 
 #if TACTILE_DEBUG
-  uint       pending {};
-  int        pending_bits {};
+  uint pending {};
+  int pending_bits {};
   const auto pending_state = deflatePending(&stream, &pending, &pending_bits);
   TACTILE_ASSERT(pending_state == Z_OK);
   TACTILE_ASSERT(pending == 0);
@@ -194,7 +194,7 @@ auto zstd_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
   ByteStream out_buffer;
   out_buffer.reserve(out_buffer_size);
 
-  ZSTD_inBuffer  input {.src = source, .size = source_bytes, .pos = 0};
+  ZSTD_inBuffer input {.src = source, .size = source_bytes, .pos = 0};
   ZSTD_outBuffer output {.dst = out_buffer.data(), .size = out_buffer_size, .pos = 0};
 
   ByteStream result;

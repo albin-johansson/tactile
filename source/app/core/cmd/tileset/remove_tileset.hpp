@@ -45,11 +45,11 @@ class RemoveTileset final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  DocumentModel*          mModel {};
-  UUID                    mTilesetId {};
-  UUID                    mMapId {};
+  DocumentModel* mModel {};
+  UUID mTilesetId {};
+  UUID mMapId {};
   Shared<TilesetDocument> mTilesetDocument;
-  Maybe<TileID>           mFirstTile;
+  Maybe<TileID> mFirstTile;
 };
 
 }  // namespace tactile::cmd

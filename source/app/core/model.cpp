@@ -72,7 +72,7 @@ auto DocumentModel::add_map(const int2& tile_size, const usize rows, const usize
 auto DocumentModel::add_tileset(const TilesetInfo& info) -> UUID
 {
   if (mActiveDocument) {
-    auto  map_document = get_map(*mActiveDocument);
+    auto map_document = get_map(*mActiveDocument);
     auto& map = map_document->get_map();
 
     const auto tileset_id = make_uuid();
@@ -91,13 +91,13 @@ auto DocumentModel::restore_tileset(const TileID first_tile_id, const TilesetInf
     -> UUID
 {
   if (mActiveDocument) {
-    auto  map_document = get_map(*mActiveDocument);
+    auto map_document = get_map(*mActiveDocument);
     auto& map = map_document->get_map();
 
     auto tileset_document = std::make_shared<TilesetDocument>(info);
     register_tileset(tileset_document);
 
-    auto       tileset = tileset_document->get_tileset();
+    auto tileset = tileset_document->get_tileset();
     const auto tileset_id = tileset->get_uuid();
 
     map.attach_tileset(tileset, first_tile_id, false);  // TODO embedded option

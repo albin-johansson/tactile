@@ -33,7 +33,7 @@ namespace tactile::cmd {
 class DuplicateComponentAttr final : public ICommand
 {
  public:
-  DuplicateComponentAttr(ADocument*  document,
+  DuplicateComponentAttr(ADocument* document,
                          const UUID& component_id,
                          std::string attribute);
 
@@ -44,9 +44,9 @@ class DuplicateComponentAttr final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  ADocument*         mDocument {};
-  UUID               mComponentId {};
-  std::string        mAttributeName;
+  ADocument* mDocument {};
+  UUID mComponentId {};
+  std::string mAttributeName;
   Maybe<std::string> mDuplicatedName;
 };
 

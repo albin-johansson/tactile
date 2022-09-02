@@ -32,9 +32,9 @@ namespace tactile::ui {
 
 class GraphicsCtx;
 
-void render_tile(GraphicsCtx&   graphics,
-                 const Map&     map,
-                 TileID         tileId,
+void render_tile(GraphicsCtx& graphics,
+                 const Map& map,
+                 TileID tileId,
                  const TilePos& pos);
 
 }  // namespace tactile::ui

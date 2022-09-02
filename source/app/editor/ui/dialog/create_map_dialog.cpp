@@ -57,7 +57,7 @@ void CreateMapDialog::on_update(const DocumentModel&, entt::dispatcher&)
   {
     const auto& rowsLabel = lang.misc.rows;
     const auto& columnsLabel = lang.misc.columns;
-    const auto  offset = minimum_offset_to_align(rowsLabel.c_str(), columnsLabel.c_str());
+    const auto offset = minimum_offset_to_align(rowsLabel.c_str(), columnsLabel.c_str());
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(rowsLabel.c_str());
@@ -75,7 +75,7 @@ void CreateMapDialog::on_update(const DocumentModel&, entt::dispatcher&)
   {
     const auto& tileWidthLabel = lang.misc.tile_width;
     const auto& tileHeightLabel = lang.misc.tile_height;
-    const auto  offset =
+    const auto offset =
         minimum_offset_to_align(tileWidthLabel.c_str(), tileHeightLabel.c_str());
 
     ImGui::AlignTextToFramePadding();

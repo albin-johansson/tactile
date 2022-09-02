@@ -33,9 +33,9 @@
 namespace tactile::cmd {
 
 CreateTileset::CreateTileset(DocumentModel* model,
-                             const UUID&    map_id,
-                             const UUID&    tileset_id,
-                             TilesetInfo    info)
+                             const UUID& map_id,
+                             const UUID& tileset_id,
+                             TilesetInfo info)
     : mModel {model}
     , mMapId {map_id}
     , mTilesetId {tileset_id}
@@ -55,7 +55,7 @@ void CreateTileset::undo()
   TACTILE_ASSERT(!mModel->is_open(mTilesetId));
   TACTILE_ASSERT(mModel->is_tileset(mTilesetId));
 
-  auto  document = mModel->get_map(mMapId);
+  auto document = mModel->get_map(mMapId);
   auto& map = document->get_map();
   map.detach_tileset(mTilesetId);
 
@@ -73,7 +73,7 @@ void CreateTileset::redo()
   TACTILE_ASSERT(mModel->is_tileset(mTilesetId));
   TACTILE_ASSERT(mModel->is_map(mMapId));
 
-  auto  document = mModel->get_map(mMapId);
+  auto document = mModel->get_map(mMapId);
   auto& map = document->get_map();
 
   auto tileset = mTileset->get_tileset();

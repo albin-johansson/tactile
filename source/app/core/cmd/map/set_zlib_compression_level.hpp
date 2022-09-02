@@ -44,8 +44,8 @@ class SetZlibCompressionLevel final : public ICommand
 
  private:
   Shared<Map> mMap;
-  int         mNewLevel {};
-  Maybe<int>  mOldLevel {};
+  int mNewLevel {};
+  Maybe<int> mOldLevel {};
 };
 
 }  // namespace tactile::cmd

@@ -43,14 +43,14 @@ namespace tactile::ui {
 struct DialogState final
 {
   SettingsDialog settings;
-  AboutDialog    about;
-  CreditsDialog  credits;
+  AboutDialog about;
+  CreditsDialog credits;
 
   /* Maps */
-  CreateMapDialog     create_map;
-  ResizeMapDialog     resize_map;
+  CreateMapDialog create_map;
+  ResizeMapDialog resize_map;
   MapParseErrorDialog map_parse_error;
-  GodotExportDialog   godot_export;
+  GodotExportDialog godot_export;
 
   /* Layers */
   RenameLayerDialog rename_layer;
@@ -59,15 +59,15 @@ struct DialogState final
   CreateTilesetDialog create_tileset;
 
   /* Components */
-  ComponentEditor                component_editor;
-  DefineComponentDialog          define_component;
-  AddComponentAttrDialog         add_component_attr;
-  RenameComponentDialog          rename_component;
+  ComponentEditor component_editor;
+  DefineComponentDialog define_component;
+  AddComponentAttrDialog add_component_attr;
+  RenameComponentDialog rename_component;
   RenameComponentAttributeDialog rename_component_attr;
 
   /* Properties */
-  AddPropertyDialog        add_property;
-  RenamePropertyDialog     rename_property;
+  AddPropertyDialog add_property;
+  RenamePropertyDialog rename_property;
   ChangePropertyTypeDialog change_property_type;
 };
 

@@ -31,15 +31,15 @@ namespace tactile::io {
 [[nodiscard]] auto parse_yaml_map(const fs::path& path) -> ParseResult;
 
 [[nodiscard]] auto parse_tilesets(const YAML::Node& sequence,
-                                  ir::MapData&      data,
-                                  const fs::path&   dir) -> ParseError;
+                                  ir::MapData& data,
+                                  const fs::path& dir) -> ParseError;
 
 [[nodiscard]] auto parse_layers(const YAML::Node& sequence, ir::MapData& data)
     -> ParseError;
 
-[[nodiscard]] auto parse_object(const YAML::Node&  node,
+[[nodiscard]] auto parse_object(const YAML::Node& node,
                                 const ir::MapData& map,
-                                ir::ObjectData&    object) -> ParseError;
+                                ir::ObjectData& object) -> ParseError;
 
 [[nodiscard]] auto parse_component_definitions(const YAML::Node& node, ir::MapData& data)
     -> ParseError;
@@ -47,8 +47,8 @@ namespace tactile::io {
 [[nodiscard]] auto parse_properties(const YAML::Node& node, ir::ContextData& context)
     -> ParseError;
 
-[[nodiscard]] auto parse_components(const YAML::Node&  node,
+[[nodiscard]] auto parse_components(const YAML::Node& node,
                                     const ir::MapData& map,
-                                    ir::ContextData&   context) -> ParseError;
+                                    ir::ContextData& context) -> ParseError;
 
 }  // namespace tactile::io

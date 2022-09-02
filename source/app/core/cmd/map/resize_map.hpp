@@ -40,12 +40,12 @@ class ResizeMap final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<Map>     mMap;
-  usize           mRows {};
-  usize           mCols {};
+  Shared<Map> mMap;
+  usize mRows {};
+  usize mCols {};
   MapCommandCache mCache;
-  Maybe<usize>    mPrevRows {};
-  Maybe<usize>    mPrevCols {};
+  Maybe<usize> mPrevRows {};
+  Maybe<usize> mPrevCols {};
 
   [[nodiscard]] auto lossy_resize() const -> bool;
 };

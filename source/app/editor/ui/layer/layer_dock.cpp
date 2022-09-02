@@ -45,8 +45,8 @@ namespace tactile::ui {
 namespace {
 
 inline AddLayerContextMenu add_layer_context_menu;
-inline Maybe<UUID>         rename_target_id;
-constinit bool             is_focused = false;
+inline Maybe<UUID> rename_target_id;
+constinit bool is_focused = false;
 
 void update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatcher)
 {

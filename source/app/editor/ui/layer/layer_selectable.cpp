@@ -110,10 +110,10 @@ void update_layer_popup(const Map& map, const ILayer& layer, entt::dispatcher& d
   }
 }
 
-void show_group_layer_selectable(const MapDocument&       document,
-                                 const ILayer&            layer,
+void show_group_layer_selectable(const MapDocument& document,
+                                 const ILayer& layer,
                                  const ImGuiTreeNodeFlags flags,
-                                 entt::dispatcher&        dispatcher)
+                                 entt::dispatcher& dispatcher)
 {
   const auto& map = document.get_map();
 
@@ -149,8 +149,8 @@ void show_group_layer_selectable(const MapDocument&       document,
 }  // namespace
 
 void layer_selectable(const MapDocument& document,
-                      const ILayer&      layer,
-                      entt::dispatcher&  dispatcher)
+                      const ILayer& layer,
+                      entt::dispatcher& dispatcher)
 {
   const auto& map = document.get_map();
 

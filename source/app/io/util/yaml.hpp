@@ -56,9 +56,9 @@ void read_attribute(const YAML::Node& node, const char* name, T& result, T fallb
 
 template <typename T>
 void read_attribute(const YAML::Node& node,
-                    const char*       name,
-                    Maybe<T>&         result,
-                    T                 fallback)
+                    const char* name,
+                    Maybe<T>& result,
+                    T fallback)
 {
   if (auto attr = node[name]) {
     result = attr.as<T>();

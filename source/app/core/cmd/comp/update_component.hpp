@@ -36,9 +36,9 @@ class UpdateComponent final : public ICommand
 {
  public:
   UpdateComponent(Shared<ComponentIndex> index,
-                  const UUID&            component_id,
-                  std::string            attribute,
-                  Attribute              value);
+                  const UUID& component_id,
+                  std::string attribute,
+                  Attribute value);
 
   void undo() override;
 
@@ -50,10 +50,10 @@ class UpdateComponent final : public ICommand
 
  private:
   Shared<ComponentIndex> mIndex;
-  UUID                   mComponentId {};
-  std::string            mAttributeName;
-  Attribute              mUpdatedValue;
-  Maybe<Attribute>       mPreviousValue;
+  UUID mComponentId {};
+  std::string mAttributeName;
+  Attribute mUpdatedValue;
+  Maybe<Attribute> mPreviousValue;
 };
 
 }  // namespace tactile::cmd

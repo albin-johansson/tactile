@@ -44,7 +44,7 @@ class RemoveProperty final : public ICommand
 
  private:
   Shared<IContext> mContext;
-  std::string      mName;
+  std::string mName;
   Maybe<Attribute> mPreviousValue;
 };
 

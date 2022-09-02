@@ -35,8 +35,8 @@ namespace {
                                       const ImVec2& br,
                                       const ImVec2& origin,
                                       const ImVec2& gridSize,
-                                      const float   rows,
-                                      const float   cols) -> Region
+                                      const float rows,
+                                      const float cols) -> Region
 {
   const auto begin = (tl - origin) / gridSize;
   const auto end = (br - origin) / gridSize;
@@ -56,9 +56,9 @@ namespace {
 }
 
 [[nodiscard]] auto _get_render_info(const Viewport& viewport,
-                                    const ImVec2&   logicalTileSize,
-                                    const int32     rows,
-                                    const int32     columns) -> RenderInfo
+                                    const ImVec2& logicalTileSize,
+                                    const int32 rows,
+                                    const int32 columns) -> RenderInfo
 {
   RenderInfo info;
 

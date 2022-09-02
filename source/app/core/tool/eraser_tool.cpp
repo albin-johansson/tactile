@@ -68,9 +68,9 @@ void EraserTool::on_dragged(DocumentModel& model,
   }
 }
 
-void EraserTool::on_released(DocumentModel&    model,
+void EraserTool::on_released(DocumentModel& model,
                              entt::dispatcher& dispatcher,
-                             const MouseInfo&  mouse)
+                             const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && is_available(model)) {
     maybe_emit_event(model, dispatcher);
@@ -90,19 +90,19 @@ void EraserTool::update_sequence(DocumentModel& model, const TilePos& cursor)
   auto& map = document.get_map();
 
   const auto layerId = map.active_layer_id().value();
-  auto&      layer = map.view_tile_layer(layerId);
+  auto& layer = map.view_tile_layer(layerId);
 
   mPrevState.try_emplace(cursor, layer.tile_at(cursor));
   layer.set_tile(cursor, empty_tile);
 }
 
 void EraserTool::maybe_emit_event(const DocumentModel& model,
-                                  entt::dispatcher&    dispatcher)
+                                  entt::dispatcher& dispatcher)
 {
   if (!mPrevState.empty()) {
     const auto& document = model.require_active_map();
     const auto& map = document.get_map();
-    const auto  layerId = map.active_layer_id().value();
+    const auto layerId = map.active_layer_id().value();
 
     dispatcher.enqueue<EraserSequenceEvent>(layerId, std::move(mPrevState));
     mPrevState.clear();

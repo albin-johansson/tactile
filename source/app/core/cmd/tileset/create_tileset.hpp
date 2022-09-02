@@ -37,9 +37,9 @@ class CreateTileset final : public ICommand
 {
  public:
   CreateTileset(DocumentModel* model,
-                const UUID&    map_id,
-                const UUID&    tileset_id,
-                TilesetInfo    info);
+                const UUID& map_id,
+                const UUID& tileset_id,
+                TilesetInfo info);
 
   void undo() override;
 
@@ -48,10 +48,10 @@ class CreateTileset final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  DocumentModel*          mModel {};
-  UUID                    mMapId {};
-  UUID                    mTilesetId {};
-  TilesetInfo             mTilesetInfo;
+  DocumentModel* mModel {};
+  UUID mMapId {};
+  UUID mTilesetId {};
+  TilesetInfo mTilesetInfo;
   Shared<TilesetDocument> mTileset;  /// The created tileset
 };
 

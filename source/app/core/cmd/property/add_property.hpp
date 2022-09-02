@@ -43,8 +43,8 @@ class AddProperty final : public ICommand
 
  private:
   Shared<IContext> mContext;
-  std::string      mName;
-  AttributeType    mType;
+  std::string mName;
+  AttributeType mType;
 };
 
 }  // namespace tactile::cmd

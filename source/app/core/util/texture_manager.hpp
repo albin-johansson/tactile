@@ -31,8 +31,8 @@ namespace tactile {
 
 struct TextureInfo final
 {
-  uint     id {};
-  int2     size {};
+  uint id {};
+  int2 size {};
   fs::path path;
 };
 

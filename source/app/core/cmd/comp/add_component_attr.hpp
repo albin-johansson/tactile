@@ -42,8 +42,8 @@ class AddComponentAttr final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  ADocument*  mDocument {};
-  UUID        mComponentId {};
+  ADocument* mDocument {};
+  UUID mComponentId {};
   std::string mName;
 };
 

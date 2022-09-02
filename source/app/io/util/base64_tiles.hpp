@@ -24,9 +24,9 @@ namespace tactile::io {
  * \return the encoded (and potentially compressed) tile data.
  */
 [[nodiscard]] auto base64_encode_tiles(const TileMatrix& tiles,
-                                       usize             rows,
-                                       usize             columns,
-                                       TileCompression   compression) -> std::string;
+                                       usize rows,
+                                       usize columns,
+                                       TileCompression compression) -> std::string;
 
 /**
  * Decodes tile data using Base64 and turns it into a tile matrix.
@@ -43,8 +43,8 @@ namespace tactile::io {
  * \return the decoded tile data.
  */
 [[nodiscard]] auto base64_decode_tiles(const std::string& tiles,
-                                       usize              rows,
-                                       usize              columns,
-                                       TileCompression    compression) -> TileMatrix;
+                                       usize rows,
+                                       usize columns,
+                                       TileCompression compression) -> TileMatrix;
 
 }  // namespace tactile::io

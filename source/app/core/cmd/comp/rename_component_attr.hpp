@@ -32,7 +32,7 @@ namespace tactile::cmd {
 class RenameComponentAttr final : public ICommand
 {
  public:
-  RenameComponentAttr(ADocument*  document,
+  RenameComponentAttr(ADocument* document,
                       const UUID& component_id,
                       std::string previous_name,
                       std::string updated_name);
@@ -44,8 +44,8 @@ class RenameComponentAttr final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  ADocument*  mDocument {};
-  UUID        mComponentId {};
+  ADocument* mDocument {};
+  UUID mComponentId {};
   std::string mPreviousName;
   std::string mUpdatedName;
 };

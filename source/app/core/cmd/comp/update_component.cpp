@@ -29,9 +29,9 @@
 namespace tactile::cmd {
 
 UpdateComponent::UpdateComponent(Shared<ComponentIndex> index,
-                                 const UUID&            component_id,
-                                 std::string            attribute,
-                                 Attribute              value)
+                                 const UUID& component_id,
+                                 std::string attribute,
+                                 Attribute value)
     : mIndex {std::move(index)}
     , mComponentId {component_id}
     , mAttributeName {std::move(attribute)}

@@ -44,17 +44,17 @@ class ATool
 
   virtual void on_exited(DocumentModel& model, entt::dispatcher& dispatcher);
 
-  virtual void on_pressed(DocumentModel&    model,
+  virtual void on_pressed(DocumentModel& model,
                           entt::dispatcher& dispatcher,
-                          const MouseInfo&  mouse);
+                          const MouseInfo& mouse);
 
-  virtual void on_dragged(DocumentModel&    model,
+  virtual void on_dragged(DocumentModel& model,
                           entt::dispatcher& dispatcher,
-                          const MouseInfo&  mouse);
+                          const MouseInfo& mouse);
 
-  virtual void on_released(DocumentModel&    model,
+  virtual void on_released(DocumentModel& model,
                            entt::dispatcher& dispatcher,
-                           const MouseInfo&  mouse);
+                           const MouseInfo& mouse);
 
   [[nodiscard]] virtual auto is_available(const DocumentModel& model) const -> bool = 0;
 

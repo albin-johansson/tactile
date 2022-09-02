@@ -31,8 +31,8 @@
 namespace tactile::ui {
 
 ToolPreviewRenderer::ToolPreviewRenderer(const DocumentModel& model,
-                                         GraphicsCtx&         graphics,
-                                         const MouseInfo&     mouse)
+                                         GraphicsCtx& graphics,
+                                         const MouseInfo& mouse)
     : mModel {model}
     , mGraphics {graphics}
     , mMouseInfo {mouse}
@@ -46,7 +46,7 @@ void ToolPreviewRenderer::visit(const StampTool& tool)
   const auto& map = document.get_map();
   const auto& tilesets = map.get_tilesets();
 
-  const auto  tilesetId = tilesets.active_tileset_id().value();
+  const auto tilesetId = tilesets.active_tileset_id().value();
   const auto& tilesetRef = tilesets.get_ref(tilesetId);
 
   if (!mMouseInfo.is_within_contents || !tilesetRef.get_selection()) {
@@ -59,20 +59,20 @@ void ToolPreviewRenderer::visit(const StampTool& tool)
   }
 }
 
-void ToolPreviewRenderer::render_stamp_normal(const Map&        map,
+void ToolPreviewRenderer::render_stamp_normal(const Map& map,
                                               const TilesetRef& tileset_ref)
 {
   auto& graphics = mGraphics.get();
 
-  const auto  layer_id = map.active_layer_id().value();
+  const auto layer_id = map.active_layer_id().value();
   const auto& layer = map.view_tile_layer(layer_id);
 
   const auto& selection = tileset_ref.get_selection().value();
-  const auto  selection_size = selection.end - selection.begin;
-  const auto  offset = selection_size / TilePos {2, 2};
+  const auto selection_size = selection.end - selection.begin;
+  const auto offset = selection_size / TilePos {2, 2};
 
   const auto& tileset = tileset_ref.view_tileset();
-  const auto  texture_id = tileset.texture_id();
+  const auto texture_id = tileset.texture_id();
   const auto& uv = tileset.uv_size();
 
   const auto origin = graphics.get_origin();
@@ -80,7 +80,7 @@ void ToolPreviewRenderer::render_stamp_normal(const Map&        map,
 
   invoke_mn(selection_size.row(), selection_size.col(), [&, this](int32 row, int32 col) {
     const TilePos index {row, col};
-    const auto    preview_pos = mMouseInfo.position_in_viewport + index - offset;
+    const auto preview_pos = mMouseInfo.position_in_viewport + index - offset;
 
     if (layer.is_valid(preview_pos)) {
       const auto real_pos = origin + preview_pos.as_vec2f() * grid_size;

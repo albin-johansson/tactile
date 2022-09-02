@@ -31,8 +31,8 @@
 namespace tactile::cmd {
 
 ResetAttachedComponent::ResetAttachedComponent(Shared<ComponentIndex> index,
-                                               Shared<IContext>       context,
-                                               const UUID&            component_id)
+                                               Shared<IContext> context,
+                                               const UUID& component_id)
     : mIndex {std::move(index)}
     , mContext {std::move(context)}
     , mComponentId {component_id}
@@ -57,7 +57,7 @@ void ResetAttachedComponent::undo()
 
 void ResetAttachedComponent::redo()
 {
-  auto&       comps = mContext->get_comps();
+  auto& comps = mContext->get_comps();
   const auto& definition = mIndex->at(mComponentId);
 
   mComponent = comps.at(mComponentId);

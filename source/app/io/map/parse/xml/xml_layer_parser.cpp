@@ -82,8 +82,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_tile_data(XMLNode            layer_node,
-                                   ir::MapData&       map,
+[[nodiscard]] auto parse_tile_data(XMLNode layer_node,
+                                   ir::MapData& map,
                                    ir::TileLayerData& tile_layer) -> ParseError
 {
   const auto data = layer_node.child("data");
@@ -139,8 +139,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_tile_layer(XMLNode        layer_node,
-                                    ir::MapData&   map,
+[[nodiscard]] auto parse_tile_layer(XMLNode layer_node,
+                                    ir::MapData& map,
                                     ir::LayerData& layer) -> ParseError
 {
   auto& tile_layer = layer.data.emplace<ir::TileLayerData>();
@@ -198,10 +198,10 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_layer(XMLNode        layer_node,
-                               ir::MapData&   map,
+[[nodiscard]] auto parse_layer(XMLNode layer_node,
+                               ir::MapData& map,
                                ir::LayerData& layer,
-                               const usize    index) -> ParseError
+                               const usize index) -> ParseError
 {
   layer.index = index;
 

@@ -28,10 +28,10 @@
 
 namespace tactile::cmd {
 
-BucketFill::BucketFill(Shared<Map>    map,
-                       const UUID&    layer_id,
+BucketFill::BucketFill(Shared<Map> map,
+                       const UUID& layer_id,
                        const TilePos& origin,
-                       const TileID   replacement)
+                       const TileID replacement)
     : mMap {std::move(map)}
     , mLayerId {layer_id}
     , mOrigin {origin}

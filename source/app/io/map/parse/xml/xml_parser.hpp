@@ -30,9 +30,9 @@ namespace tactile::io {
 
 [[nodiscard]] auto parse_xml_map(const fs::path& path) -> ParseResult;
 
-[[nodiscard]] auto parse_tileset(XMLNode          node,
+[[nodiscard]] auto parse_tileset(XMLNode node,
                                  ir::TilesetData& tileset,
-                                 const fs::path&  dir) -> ParseError;
+                                 const fs::path& dir) -> ParseError;
 
 [[nodiscard]] auto parse_object(XMLNode object_node, ir::ObjectData& object)
     -> ParseError;

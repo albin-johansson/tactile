@@ -69,7 +69,7 @@ class Component final
   }
 
  private:
-  UUID         mDefinitionId;
+  UUID mDefinitionId;
   AttributeMap mAttributes;
 };
 

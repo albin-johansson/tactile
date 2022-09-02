@@ -41,9 +41,9 @@ class RemoveColumn final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<Map>     mMap;
+  Shared<Map> mMap;
   MapCommandCache mCache;
-  usize           mColumns {1};
+  usize mColumns {1};
 };
 
 }  // namespace tactile::cmd

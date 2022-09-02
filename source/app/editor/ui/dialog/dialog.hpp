@@ -137,11 +137,11 @@ class ADialog
   void set_close_button_label(Maybe<std::string> label);
 
  private:
-  std::string        mTitle;
+  std::string mTitle;
   Maybe<std::string> mAcceptButtonLabel;
   Maybe<std::string> mCloseButtonLabel;
-  bool               mUseApplyButton : 1 {};
-  bool               mShow           : 1 {};
+  bool mUseApplyButton : 1 {};
+  bool mShow           : 1 {};
 };
 
 }  // namespace tactile::ui

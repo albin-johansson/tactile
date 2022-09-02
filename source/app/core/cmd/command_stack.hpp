@@ -165,9 +165,9 @@ class CommandStack final
 
  private:
   std::deque<Unique<ICommand>> mStack;
-  Maybe<usize>                 mIndex;
-  Maybe<usize>                 mCleanIndex;
-  usize                        mCapacity;
+  Maybe<usize> mIndex;
+  Maybe<usize> mCleanIndex;
+  usize mCapacity;
 
   void remove_oldest_command();
 

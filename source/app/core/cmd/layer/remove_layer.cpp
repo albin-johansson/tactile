@@ -49,7 +49,7 @@ void RemoveLayer::undo()
 
 void RemoveLayer::redo()
 {
-  auto&      map = mDocument->get_map();
+  auto& map = mDocument->get_map();
   const auto id = mLayer->get_uuid();
 
   mIndex = map.local_layer_index(id);

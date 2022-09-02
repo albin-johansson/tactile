@@ -34,9 +34,9 @@ namespace tactile::ui {
  */
 auto button(const char* text,
             const char* tooltip = nullptr,
-            bool        enabled = true,
-            float       width = 0,
-            float       height = 0) -> bool;
+            bool enabled = true,
+            float width = 0,
+            float height = 0) -> bool;
 
 /// Shows a square button, intended to be used with icon characters.
 auto icon_button(const char* icon, const char* tooltip = nullptr, bool enabled = true)

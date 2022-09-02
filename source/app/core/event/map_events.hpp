@@ -47,7 +47,7 @@ struct RemoveColumnEvent final
 
 struct CreateMapEvent final
 {
-  int2  tile_size {};
+  int2 tile_size {};
   usize row_count {};
   usize column_count {};
 };
@@ -79,7 +79,7 @@ struct ExportAsGodotSceneEvent final
   fs::path map_dir;
   fs::path image_dir;
   fs::path tileset_dir;
-  usize    polygon_points {};
+  usize polygon_points {};
 };
 
 struct SetTileFormatCompressionEvent final

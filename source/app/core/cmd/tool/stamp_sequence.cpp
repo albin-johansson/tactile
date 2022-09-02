@@ -30,8 +30,8 @@ namespace tactile::cmd {
 
 StampSequence::StampSequence(Shared<Map> map,
                              const UUID& layer_id,
-                             TileCache   old_state,
-                             TileCache   new_state)
+                             TileCache old_state,
+                             TileCache new_state)
     : mMap {std::move(map)}
     , mLayerId {layer_id}
     , mOldState {std::move(old_state)}

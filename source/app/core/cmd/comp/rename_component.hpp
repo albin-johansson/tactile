@@ -35,8 +35,8 @@ class RenameComponent final : public ICommand
 {
  public:
   RenameComponent(Shared<ComponentIndex> index,
-                  const UUID&            component_id,
-                  std::string            name);
+                  const UUID& component_id,
+                  std::string name);
 
   void undo() override;
 
@@ -46,9 +46,9 @@ class RenameComponent final : public ICommand
 
  private:
   Shared<ComponentIndex> mIndex;
-  UUID                   mComponentId {};
-  std::string            mUpdatedName;
-  Maybe<std::string>     mPreviousName;
+  UUID mComponentId {};
+  std::string mUpdatedName;
+  Maybe<std::string> mPreviousName;
 };
 
 }  // namespace tactile::cmd

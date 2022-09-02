@@ -43,8 +43,8 @@ class DefineComponent final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<ComponentIndex>     mIndex;
-  std::string                mName;
+  Shared<ComponentIndex> mIndex;
+  std::string mName;
   Maybe<ComponentDefinition> mDef;
 };
 

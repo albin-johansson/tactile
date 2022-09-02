@@ -54,7 +54,7 @@ auto main(int, char**) -> int
                  tactile::io::persistent_file_dir());
 
     tactile::AppCfg cfg;
-    tactile::App    app {&cfg};
+    tactile::App app {&cfg};
     app.start();
 
     return EXIT_SUCCESS;

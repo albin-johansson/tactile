@@ -40,8 +40,8 @@ class EraserSequence final : public ICommand
 
  private:
   Shared<Map> mMap;
-  UUID        mLayerId {};
-  TileCache   mOldState;
+  UUID mLayerId {};
+  TileCache mOldState;
 };
 
 }  // namespace tactile::cmd

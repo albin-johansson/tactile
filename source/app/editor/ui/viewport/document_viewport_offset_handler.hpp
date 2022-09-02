@@ -25,7 +25,7 @@ struct ImVec2;
 
 namespace tactile::ui {
 
-void update_document_viewport_offset(const ImVec2&     viewportSize,
+void update_document_viewport_offset(const ImVec2& viewportSize,
                                      entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

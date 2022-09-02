@@ -43,8 +43,8 @@ class RenameTileset final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<Tileset>    mTileset;
-  std::string        mNewName;
+  Shared<Tileset> mTileset;
+  std::string mNewName;
   Maybe<std::string> mOldName;
 };
 

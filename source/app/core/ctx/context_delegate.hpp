@@ -55,10 +55,10 @@ class ContextDelegate final
   [[nodiscard]] auto clone() const -> ContextDelegate;
 
  private:
-  UUID            mId;
-  PropertyBundle  mProps;
+  UUID mId;
+  PropertyBundle mProps;
   ComponentBundle mComps;
-  std::string     mName;
+  std::string mName;
 };
 
 }  // namespace tactile

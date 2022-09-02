@@ -337,8 +337,8 @@ auto Map::get_layer(const UUID& id) -> Shared<ILayer>
 }
 
 void Map::attach_tileset(Shared<Tileset> tileset,
-                         const TileID    firstTileId,
-                         const bool      embedded)
+                         const TileID firstTileId,
+                         const bool embedded)
 {
   mTilesets.attach_tileset(std::move(tileset), firstTileId, embedded);
 }

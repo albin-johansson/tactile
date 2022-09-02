@@ -76,9 +76,9 @@ void StampTool::on_dragged(DocumentModel& model,
   }
 }
 
-void StampTool::on_released(DocumentModel&    model,
+void StampTool::on_released(DocumentModel& model,
                             entt::dispatcher& dispatcher,
-                            const MouseInfo&  mouse)
+                            const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && is_usable(model)) {
     maybe_emit_event(model, dispatcher);
@@ -114,10 +114,10 @@ void StampTool::update_sequence(DocumentModel& model, const TilePos& cursor)
   auto& map = mapDocument.get_map();
 
   const auto activeLayerId = map.active_layer_id().value();
-  auto&      layer = map.view_tile_layer(activeLayerId);
+  auto& layer = map.view_tile_layer(activeLayerId);
 
   const auto& tilesets = map.get_tilesets();
-  const auto  tilesetId = tilesets.active_tileset_id().value();
+  const auto tilesetId = tilesets.active_tileset_id().value();
   const auto& tilesetRef = tilesets.get_ref(tilesetId);
 
   if (behaves_as_if_random(map)) {
@@ -128,18 +128,18 @@ void StampTool::update_sequence(DocumentModel& model, const TilePos& cursor)
   }
 }
 
-void StampTool::update_sequence_normal(TileLayer&        layer,
+void StampTool::update_sequence_normal(TileLayer& layer,
                                        const TilesetRef& tilesetRef,
-                                       const TilePos&    cursor)
+                                       const TilePos& cursor)
 {
   const auto& tileset = tilesetRef.view_tileset();
   const auto& selection = tilesetRef.get_selection().value();
-  const auto  selectionSize = selection.end - selection.begin;
-  const auto  previewOffset = selectionSize / TilePos {2, 2};
+  const auto selectionSize = selection.end - selection.begin;
+  const auto previewOffset = selectionSize / TilePos {2, 2};
 
   invoke_mn(selectionSize.row(), selectionSize.col(), [&](int32 row, int32 col) {
     const TilePos index {row, col};
-    const auto    selectionPosition = selection.begin + index;
+    const auto selectionPosition = selection.begin + index;
 
     const auto tile = tilesetRef.first_tile() + tileset.index_of(selectionPosition);
 
@@ -157,12 +157,12 @@ void StampTool::update_sequence_normal(TileLayer&        layer,
   });
 }
 
-void StampTool::update_sequence_random(TileLayer&        layer,
+void StampTool::update_sequence_random(TileLayer& layer,
                                        const TilesetRef& tilesetRef,
-                                       const TilePos&    cursor)
+                                       const TilePos& cursor)
 {
   const auto& selection = tilesetRef.get_selection().value();
-  const auto  selectionSize = selection.end - selection.begin;
+  const auto selectionSize = selection.end - selection.begin;
 
   if (mLastChangedPos != cursor) {
     const auto index = next_random(0, (selectionSize.row() * selectionSize.col()) - 1);
@@ -170,7 +170,7 @@ void StampTool::update_sequence_random(TileLayer&        layer,
         selection.begin + TilePos::from_index(index, selectionSize.col());
 
     const auto& tileset = tilesetRef.view_tileset();
-    const auto  tile = tilesetRef.first_tile() + tileset.index_of(selectionPos);
+    const auto tile = tilesetRef.first_tile() + tileset.index_of(selectionPos);
 
     if (!mPrevious.contains(cursor)) {
       mPrevious.emplace(cursor, layer.tile_at(cursor));
@@ -188,7 +188,7 @@ void StampTool::maybe_emit_event(const DocumentModel& model, entt::dispatcher& d
   if (!mPrevious.empty() && !mCurrent.empty()) {
     const auto& document = model.require_active_map();
     const auto& map = document.get_map();
-    const auto  layerId = map.active_layer_id().value();
+    const auto layerId = map.active_layer_id().value();
 
     dispatcher.enqueue<StampSequenceEvent>(layerId,
                                            std::move(mPrevious),

@@ -43,15 +43,15 @@ class GraphicsCtx final
 
   void clear();
 
-  void draw_rect(const float2&     pos,
-                 const float2&     size,
+  void draw_rect(const float2& pos,
+                 const float2& size,
                  const cen::color& color,
-                 float             thickness);
+                 float thickness);
 
-  void draw_ellipse(const float2&     center,
-                    const float2&     radius,
+  void draw_ellipse(const float2& center,
+                    const float2& radius,
                     const cen::color& color,
-                    float             thickness);
+                    float thickness);
 
   void draw_rect(const ImVec2& position, const ImVec2& size);
 
@@ -73,12 +73,12 @@ class GraphicsCtx final
 
   void draw_translated_ellipse_with_shadow(const ImVec2& center, const ImVec2& radius);
 
-  void render_image(uint          texture,
+  void render_image(uint texture,
                     const float2& pos,
                     const float2& size,
                     const float2& uvMin,
                     const float2& uvMax,
-                    uint8         opacity);
+                    uint8 opacity);
 
   void render_image(uint texture, const ImVec2& position, const ImVec2& size);
 
@@ -90,12 +90,12 @@ class GraphicsCtx final
    * \param position the position of the rendered image on the screen.
    * \param uv the ratio between the tileset tile size and the texture size.
    */
-  void render_image(uint          texture,
+  void render_image(uint texture,
                     const ImVec4& source,
                     const ImVec2& position,
                     const ImVec2& uv);
 
-  void render_translated_image(uint          texture,
+  void render_translated_image(uint texture,
                                const ImVec4& source,
                                const ImVec2& position,
                                const ImVec2& uv);
@@ -159,17 +159,17 @@ class GraphicsCtx final
   }
 
  private:
-  ImVec2     mCanvasTL;
-  ImVec2     mCanvasBR;
-  ImVec2     mOrigin {0, 0};
-  ImVec2     mViewportTileSize {32, 32};
-  ImVec2     mLogicalTileSize {32, 32};
-  ImVec2     mTileSizeRatio {1, 1};
-  Region     mBounds;
+  ImVec2 mCanvasTL;
+  ImVec2 mCanvasBR;
+  ImVec2 mOrigin {0, 0};
+  ImVec2 mViewportTileSize {32, 32};
+  ImVec2 mLogicalTileSize {32, 32};
+  ImVec2 mTileSizeRatio {1, 1};
+  Region mBounds;
   cen::frect mBoundsRect;
   cen::color mDrawColor {cen::colors::black};
-  float      mLineThickness {1};
-  uint8      mOpacity {0xFF};
+  float mLineThickness {1};
+  uint8 mOpacity {0xFF};
 
   [[nodiscard]] auto get_draw_color() const -> uint32;
 

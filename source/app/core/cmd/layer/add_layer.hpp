@@ -44,8 +44,8 @@ class AddLayer final : public ICommand
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  MapDocument*   mDocument {};
-  LayerType      mLayerType;
+  MapDocument* mDocument {};
+  LayerType mLayerType;
   Shared<ILayer> mLayer;
 };
 

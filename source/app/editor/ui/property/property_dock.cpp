@@ -60,13 +60,13 @@ struct PropertyItemContextMenuState final
 };
 
 inline PropertyItemContextMenuState context_state;
-inline Maybe<std::string>           rename_target;
-inline Maybe<std::string>           change_type_target;
-constinit bool                      is_focused = false;
+inline Maybe<std::string> rename_target;
+inline Maybe<std::string> change_type_target;
+constinit bool is_focused = false;
 
-[[nodiscard]] auto property_item_context_menu(const UUID&                   context_id,
-                                              entt::dispatcher&             dispatcher,
-                                              const std::string&            name,
+[[nodiscard]] auto property_item_context_menu(const UUID& context_id,
+                                              entt::dispatcher& dispatcher,
+                                              const std::string& name,
                                               PropertyItemContextMenuState& state) -> bool
 {
   const auto& lang = get_current_language();
@@ -99,7 +99,7 @@ void prepare_table_row(const char* label)
 }
 
 [[nodiscard]] auto native_name_row(const std::string& name,
-                                   const bool         validate_as_file_name = false)
+                                   const bool validate_as_file_name = false)
     -> Maybe<std::string>
 {
   const auto& lang = get_current_language();
@@ -351,9 +351,9 @@ void show_native_object_properties(const Object& object, entt::dispatcher& dispa
   }
 }
 
-void show_custom_properties(const IContext&   context,
+void show_custom_properties(const IContext& context,
                             entt::dispatcher& dispatcher,
-                            bool&             is_item_context_open)
+                            bool& is_item_context_open)
 {
   bool first = true;
 
@@ -399,7 +399,7 @@ void show_custom_properties(const IContext&   context,
   }
 }
 
-void update_conditional_tileset_button(const ADocument&  document,
+void update_conditional_tileset_button(const ADocument& document,
                                        entt::dispatcher& dispatcher)
 {
   if (document.get_type() == DocumentType::Map) {
@@ -495,7 +495,7 @@ void update_property_table(const DocumentModel& model, entt::dispatcher& dispatc
 
   if (context_state.show_change_type_dialog) {
     const auto& target_name = change_type_target.value();
-    const auto  type = context.get_props().at(target_name).type();
+    const auto type = context.get_props().at(target_name).type();
     dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(target_name, type);
     change_type_target.reset();
     context_state.show_change_type_dialog = false;
