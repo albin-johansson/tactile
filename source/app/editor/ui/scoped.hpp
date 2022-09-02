@@ -77,6 +77,22 @@ struct Disable final
   }
 };
 
+struct Indent final
+{
+  TACTILE_DEFAULT_COPY(Indent);
+  TACTILE_DEFAULT_MOVE(Indent);
+
+  Indent()
+  {
+    ImGui::Indent();
+  }
+
+  ~Indent()
+  {
+    ImGui::Unindent();
+  }
+};
+
 struct Tooltip final
 {
   TACTILE_DEFAULT_COPY(Tooltip);
