@@ -71,7 +71,7 @@ void Tile::set_name(std::string name)
   mDelegate.set_name(std::move(name));
 }
 
-void Tile::set_source(const Vector4i& source)
+void Tile::set_source(const int4& source)
 {
   mSource = source;
 }

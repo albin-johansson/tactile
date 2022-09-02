@@ -55,7 +55,7 @@ class Tile final : public IContext
 
   void set_name(std::string name) override;
 
-  void set_source(const Vector4i& source);
+  void set_source(const int4& source);
 
   [[nodiscard]] auto object_count() const -> usize;
 
@@ -82,7 +82,7 @@ class Tile final : public IContext
     return mIndex;
   }
 
-  [[nodiscard]] auto source() const noexcept -> const Vector4i&
+  [[nodiscard]] auto source() const noexcept -> const int4&
   {
     return mSource;
   }
@@ -90,7 +90,7 @@ class Tile final : public IContext
  private:
   TileIndex mIndex;
   ContextDelegate mDelegate;
-  Vector4i mSource;
+  int4 mSource;
   Maybe<TileAnimation> mAnimation;
   HashMap<UUID, Shared<Object>> mObjects;
 };

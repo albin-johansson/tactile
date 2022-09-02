@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-Tileset::Tileset(const UUID& id, const TilesetInfo& info)
+Tileset::Tileset(const UUID& id, TilesetInfo info)
     : mContext {id}
     , mTextureId {info.texture_id}
     , mTextureSize {info.texture_size}
@@ -40,8 +40,8 @@ Tileset::Tileset(const UUID& id, const TilesetInfo& info)
   load_tiles();
 }
 
-Tileset::Tileset(const TilesetInfo& info)
-    : Tileset {make_uuid(), info}
+Tileset::Tileset(TilesetInfo info)
+    : Tileset {make_uuid(), std::move(info)}
 {}
 
 void Tileset::load_tiles()

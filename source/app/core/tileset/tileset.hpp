@@ -34,17 +34,16 @@
 #include "core/ctx/context_delegate.hpp"
 #include "core/tile_pos.hpp"
 #include "core/tileset/tile.hpp"
+#include "core/tileset/tileset_info.hpp"
 
 namespace tactile {
-
-struct TilesetInfo;
 
 class Tileset final : public IContext
 {
  public:
-  Tileset(const UUID& id, const TilesetInfo& info);
+  Tileset(const UUID& id, TilesetInfo info);
 
-  explicit Tileset(const TilesetInfo& info);
+  explicit Tileset(TilesetInfo info);
 
   void update();
 
@@ -134,6 +133,7 @@ class Tileset final : public IContext
   HashMap<UUID, Shared<Tile>> mMetaTiles;
   fs::path mTexturePath;
 
+  /// A cache of the tiles that should be rendered when a tile is encountered
   mutable HashMap<TileIndex, TileIndex> mAppearanceCache;
 
   void load_tiles();

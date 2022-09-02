@@ -27,17 +27,18 @@
 namespace tactile {
 
 void TilesetBundle::attach_tileset(Shared<Tileset> tileset,
-                                   const TileID firstTileId,
+                                   const TileID first_tile_id,
                                    const bool embedded)
 {
   const auto id = tileset->get_uuid();
-  mRefs.try_emplace(id, tileset, firstTileId, firstTileId + tileset->tile_count());
+  const auto last_tile_id = first_tile_id + tileset->tile_count();
+  mRefs.try_emplace(id, std::move(tileset), first_tile_id, last_tile_id);
 
   auto& ref = lookup_in(mRefs, id);
   ref.set_embedded(embedded);
 
-  for (auto tileId = ref.first_tile(); tileId <= ref.last_tile(); ++tileId) {
-    mTileCache[tileId] = id;
+  for (auto tile_id = ref.first_tile(); tile_id <= ref.last_tile(); ++tile_id) {
+    mTileCache[tile_id] = id;
   }
 }
 

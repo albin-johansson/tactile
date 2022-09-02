@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-TilesetRef::TilesetRef(Shared<Tileset> tileset, TileID first, TileID last)
+TilesetRef::TilesetRef(Shared<Tileset> tileset, const TileID first, const TileID last)
     : mTileset {std::move(tileset)}
     , mFirstTile {first}
     , mLastTile {last}

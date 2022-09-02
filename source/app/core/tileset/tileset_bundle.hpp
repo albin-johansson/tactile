@@ -38,7 +38,7 @@ class TilesetBundle final
  public:
   /// Adds a tileset to the bundle with an explicit first tile identifier.
   /// This function does not touch the next tile ID property, so use with care.
-  void attach_tileset(Shared<Tileset> tileset, TileID firstTileId, bool embedded);
+  void attach_tileset(Shared<Tileset> tileset, TileID first_tile_id, bool embedded);
 
   void attach_tileset(Shared<Tileset> tileset, bool embedded);
 
