@@ -8,7 +8,6 @@ next-object-id: 4
 tile-format:
   encoding: base64
   compression: zlib
-  endianness: little
 component-definitions:
   - name: Drawable
     attributes:

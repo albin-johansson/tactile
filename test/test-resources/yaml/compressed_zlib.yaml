@@ -9,7 +9,6 @@ tile-format:
   encoding: base64
   compression: zlib
   zlib-compression-level: -1
-  endianness: little
 tilesets:
   - first-global-id: 1
     path: terrain.yaml

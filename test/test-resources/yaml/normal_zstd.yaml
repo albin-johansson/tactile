@@ -9,7 +9,6 @@ tile-format:
   encoding: base64
   compression: zstd
   zstd-compression-level: 3
-  endianness: little
 component-definitions:
   - name: Drawable
     attributes:
