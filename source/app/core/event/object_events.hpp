@@ -29,6 +29,12 @@
 
 namespace tactile {
 
+struct SelectObjectEvent final
+{
+  UUID layer_id {};
+  UUID object_id {};
+};
+
 /// Emitted after an object has been moved.
 struct MoveObjectEvent final
 {
