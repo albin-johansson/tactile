@@ -523,6 +523,9 @@ void emit_tile_layer(std::ostream& stream,
   stream << fmt::format("tile_set = ExtResource( {} )\n",
                         scene.identifiers.ext_tileset_id);
   stream << "format = 1\n";
+  if (!layer.visible) {
+    stream << "visible = false\n";
+  }
 
   stream << "tile_data = PoolIntArray(";
 
@@ -588,6 +591,9 @@ void emit_rectangle_object(std::ostream& stream,
   stream << fmt::format("position = Vector2( {}, {} )\n",
                         object.pos.x + object.size.x / 2.0f,
                         object.pos.y + object.size.y / 2.0f);
+  if (!object.visible) {
+    stream << "visible = false\n";
+  }
 
   stream << '\n'
          << fmt::format(R"([node name="Shape" type="CollisionShape2D" parent="{}/{}"])",
@@ -632,9 +638,13 @@ void emit_ellipse_object(std::ostream& stream,
                         object_name,
                         parent_path)
          << '\n';
+
   stream << fmt::format("position = Vector2( {}, {} )\n",
                         object.pos.x + object.size.x / 2.0f,
                         object.pos.y + object.size.y / 2.0f);
+  if (!object.visible) {
+    stream << "visible = false\n";
+  }
 
   stream << '\n'
          << fmt::format(R"([node name="Shape" type="CollisionPolygon2D" parent="{}/{}"])",
@@ -680,6 +690,9 @@ void emit_object(std::ostream& stream,
                           object_name,
                           parent_path)
            << '\n';
+    if (!object.visible) {
+      stream << "visible = false\n";
+    }
   }
 
   emit_metadata(stream, object.context);
@@ -695,6 +708,9 @@ void emit_object_layer(std::ostream& stream,
                         layer.name,
                         parent_path)
          << '\n';
+  if (!layer.visible) {
+    stream << "visible = false\n";
+  }
 
   emit_metadata(stream, layer.context);
 
@@ -725,6 +741,9 @@ void emit_layer(std::ostream& stream,
                             layer.name,
                             parent_path)
              << '\n';
+      if (!layer.visible) {
+        stream << "visible = false\n";
+      }
 
       emit_metadata(stream, layer.context);
 
