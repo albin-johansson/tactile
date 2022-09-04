@@ -19,12 +19,16 @@
 
 #include "layer_selectable.hpp"
 
+#include <string>  // string
+
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/document/map_document.hpp"
 #include "core/event/layer_events.hpp"
+#include "core/event/object_events.hpp"
 #include "core/event/property_events.hpp"
+#include "core/layer/object_layer.hpp"
 #include "core/util/fmt.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
@@ -36,26 +40,8 @@ namespace tactile::ui {
 namespace {
 
 constexpr int base_node_flags =
-    ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow |
-    ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth |
-    ImGuiTreeNodeFlags_SpanFullWidth;
-
-[[nodiscard]] auto get_icon(const LayerType type) -> const char*
-{
-  switch (type) {
-    case LayerType::TileLayer:
-      return TAC_ICON_TILE_LAYER;
-
-    case LayerType::ObjectLayer:
-      return TAC_ICON_OBJECT_LAYER;
-
-    case LayerType::GroupLayer:
-      return TAC_ICON_GROUP_LAYER;
-
-    default:
-      throw TactileError {"Failed to recognize layer type!"};
-  }
-}
+    ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick |
+    ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_SpanFullWidth;
 
 void update_layer_popup(const Map& map, const ILayer& layer, entt::dispatcher& dispatcher)
 {
@@ -110,6 +96,56 @@ void update_layer_popup(const Map& map, const ILayer& layer, entt::dispatcher& d
   }
 }
 
+void show_object_layer_selectable(const Map& map,
+                                  const ObjectLayer& layer,
+                                  const ImGuiTreeNodeFlags flags,
+                                  entt::dispatcher& dispatcher)
+{
+  if (TreeNode tree_node {"##ObjectLayerTree",
+                          flags,
+                          TAC_ICON_OBJECT_LAYER " %s",
+                          layer.get_name().c_str()};
+      tree_node.is_open()) {
+    Indent indent;
+
+    if (ImGui::IsItemActivated() ||
+        (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
+      dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
+    }
+
+    update_layer_popup(map, layer, dispatcher);
+
+    const auto& object_layer = dynamic_cast<const ObjectLayer&>(layer);
+    for (const auto& [object_id, object] : object_layer) {
+      std::string name;
+      if (object->get_name().empty()) {
+        name = fmt::format("{} Object {}",
+                           get_icon(object->get_type()),
+                           object->get_meta_id().value());
+      }
+      else {
+        name = fmt::format("{} {}", get_icon(object->get_type()), object->get_name());
+      }
+
+      const auto highlight = object_layer.active_object_id() == object_id;
+      ImGui::Selectable(name.c_str(), highlight);
+
+      if (ImGui::IsItemActivated() ||
+          (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Left))) {
+        dispatcher.enqueue<SelectObjectEvent>(layer.get_uuid(), object->get_uuid());
+      }
+    }
+  }
+  else {
+    if (ImGui::IsItemActivated() ||
+        (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
+      dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
+    }
+
+    update_layer_popup(map, layer, dispatcher);
+  }
+}
+
 void show_group_layer_selectable(const MapDocument& document,
                                  const ILayer& layer,
                                  const ImGuiTreeNodeFlags flags,
@@ -117,10 +153,12 @@ void show_group_layer_selectable(const MapDocument& document,
 {
   const auto& map = document.get_map();
 
-  ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-  if (TreeNode tree_node {"##GroupLayerTreeNode", flags, "%s", layer.get_name().c_str()};
+  if (TreeNode tree_node {"##GroupLayerTreeNode",
+                          flags,
+                          TAC_ICON_GROUP_LAYER " %s",
+                          layer.get_name().c_str()};
       tree_node.is_open()) {
-    ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
+    Indent indent;
 
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
@@ -135,8 +173,6 @@ void show_group_layer_selectable(const MapDocument& document,
     }
   }
   else {
-    ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
-
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
       dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
@@ -162,20 +198,32 @@ void layer_selectable(const MapDocument& document,
 
   const FmtString name {"{} {}", get_icon(layer.get_type()), layer.get_name()};
 
-  if (layer.get_type() != LayerType::GroupLayer) {
-    if (ImGui::Selectable(name.data(), is_active_layer)) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
-    }
+  switch (layer.get_type()) {
+    case LayerType::TileLayer: {
+      if (ImGui::Selectable(name.data(), is_active_layer)) {
+        dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
+      }
 
-    /* Make sure to select the layer item when right-clicked as well */
-    if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
-    }
+      // Make sure to select the layer item when right-clicked as well
+      if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+        dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
+      }
 
-    update_layer_popup(map, layer, dispatcher);
-  }
-  else {
-    show_group_layer_selectable(document, layer, flags, dispatcher);
+      update_layer_popup(map, layer, dispatcher);
+      break;
+    }
+    case LayerType::ObjectLayer: {
+      const auto& object_layer = dynamic_cast<const ObjectLayer&>(layer);
+      show_object_layer_selectable(map, object_layer, flags, dispatcher);
+      break;
+    }
+    case LayerType::GroupLayer: {
+      show_group_layer_selectable(document,
+                                  layer,
+                                  ImGuiTreeNodeFlags_DefaultOpen | flags,
+                                  dispatcher);
+      break;
+    }
   }
 }
 

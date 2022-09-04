@@ -27,19 +27,53 @@
 namespace tactile::ui {
 namespace {
 
-constinit Maybe<uint> _tactile_icon;
+constinit Maybe<uint> tactile_icon;
 
 }  // namespace
 
 void load_icons(TextureManager& textures)
 {
-  _tactile_icon = textures.load(io::find_resource("assets/icon.png")).value().id;
+  tactile_icon = textures.load(io::find_resource("assets/icon.png")).value().id;
+}
+
+auto get_icon(const LayerType type) -> const char*
+{
+  switch (type) {
+    case LayerType::TileLayer:
+      return TAC_ICON_TILE_LAYER;
+
+    case LayerType::ObjectLayer:
+      return TAC_ICON_OBJECT_LAYER;
+
+    case LayerType::GroupLayer:
+      return TAC_ICON_GROUP_LAYER;
+
+    default:
+      throw TactileError {"Invalid layer type!"};
+  }
+}
+
+auto get_icon(const ObjectType type) -> const char*
+{
+  switch (type) {
+    case ObjectType::Rect:
+      return TAC_ICON_RECTANGLE;
+
+    case ObjectType::Ellipse:
+      return TAC_ICON_ELLIPSE;
+
+    case ObjectType::Point:
+      return TAC_ICON_POINT;
+
+    default:
+      throw TactileError {"Invalid object type!"};
+  }
 }
 
 auto get_tactile_icon() -> uint
 {
-  TACTILE_ASSERT(_tactile_icon.has_value());
-  return _tactile_icon.value();
+  TACTILE_ASSERT(tactile_icon.has_value());
+  return tactile_icon.value();
 }
 
 }  // namespace tactile::ui

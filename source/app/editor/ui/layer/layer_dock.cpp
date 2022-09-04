@@ -32,13 +32,13 @@
 #include "editor/ui/common/labels.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/layer/add_layer_context_menu.hpp"
+#include "editor/ui/layer/layer_selectable.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
 #include "io/persist/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "layer_selectable.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::ui {

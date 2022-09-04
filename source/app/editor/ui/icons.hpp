@@ -23,6 +23,7 @@
 
 #include "core/common/ints.hpp"
 #include "core/layer/layer_type.hpp"
+#include "core/layer/object_type.hpp"
 #include "core/util/texture_manager.hpp"
 
 #define TAC_ICON_UNDO ICON_FA_ROTATE_LEFT
@@ -97,6 +98,9 @@ namespace tactile::ui {
 
 /// Loads icons to be used in the UI.
 void load_icons(TextureManager& textures);
+
+[[nodiscard]] auto get_icon(LayerType type) -> const char*;
+[[nodiscard]] auto get_icon(ObjectType type) -> const char*;
 
 /// Returns the texture identifier for the Tactile icon.
 /// Note, load_icons() must have been called before.
