@@ -532,15 +532,6 @@ void emit_tile_layer(std::ostream& stream,
     const auto tile_id = tile_layer.tiles[row][col];
 
     if (tile_id != empty_tile) {
-      const auto x = static_cast<int32>(col);
-      auto y = static_cast<int32>(row);
-
-      if (x < 0) {
-        y += 1;
-      }
-
-      constexpr int32 tile_offset = 65'536;
-
       const auto& tileset = first_in(map.tilesets, [=](const ir::TilesetData& ts) {
         return tile_id >= ts.first_tile && tile_id <= ts.first_tile + ts.tile_count;
       });
@@ -548,16 +539,16 @@ void emit_tile_layer(std::ostream& stream,
       const auto parent_tileset =
           lookup_in(scene.export_info.tileset_id_for_first_tile, tileset.first_tile);
 
-      const auto encoded_pos = x + (y * tile_offset);
-      auto encoded_tile = tile_id;
+      constexpr int32 tile_offset = 65'536;
 
-      const auto tile_index = tile_id - tileset.first_tile;
-
-      if (tile_index >= tileset.column_count) {
-        const auto tile_x = tile_index % tileset.column_count;
-        const auto tile_y = tile_index / tileset.column_count;
-        encoded_tile = tile_x + tile_y * tile_offset;
+      auto encoded_tile = tile_id - tileset.first_tile;
+      if (encoded_tile >= tileset.column_count) {
+        const auto tileset_pos = TilePos::from_index(encoded_tile, tileset.column_count);
+        encoded_tile = tileset_pos.col() + (tileset_pos.row() * tile_offset);
       }
+
+      const auto encoded_pos =
+          static_cast<int32>(col) + (static_cast<int32>(row) * tile_offset);
 
       if (has_emitted_tile) {
         stream << ", ";
