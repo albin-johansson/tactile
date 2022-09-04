@@ -3,8 +3,8 @@ row-count: 8
 column-count: 10
 tile-width: 32
 tile-height: 32
-next-layer-id: 11
-next-object-id: 4
+next-layer-id: 21
+next-object-id: 6
 tile-format:
   encoding: base64
   compression: zstd
@@ -87,18 +87,18 @@ layers:
     id: 2
     type: object-layer
     objects:
-      - id: 3
+      - id: 5
         type: ellipse
-        name: Around the world
-        x: 232
-        y: 543
-        width: 34
-        height: 29
+        name: Anvil
+        x: 160.893524
+        y: 61.130249
+        width: 30.1886787
+        height: 33.8113213
       - id: 2
         type: rect
         name: Area
-        x: 300
-        y: 214
+        x: 121
+        y: 139
         width: 85
         height: 43
         properties:
