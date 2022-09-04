@@ -28,30 +28,30 @@ namespace tactile::ui {
 
 void render_tile(GraphicsCtx& graphics,
                  const Map& map,
-                 const TileID tileId,
+                 const TileID tile_id,
                  const TilePos& pos)
 {
-  TACTILE_ASSERT(tileId != empty_tile);
+  TACTILE_ASSERT(tile_id != empty_tile);
 
   const auto& tilesets = map.get_tilesets();
-  const auto tilesetId = tilesets.find_tileset(tileId);
+  const auto tileset_id = tilesets.find_tileset(tile_id);
 
-  if (!tilesetId) {
+  if (!tileset_id) {
     return;
   }
 
-  const auto& tilesetRef = tilesets.get_ref(*tilesetId);
-  const auto& tileset = tilesetRef.view_tileset();
+  const auto& tileset_ref = tilesets.get_ref(*tileset_id);
+  const auto& tileset = tileset_ref.view_tileset();
 
-  const auto textureId = tileset.texture_id();
+  const auto texture_id = tileset.texture_id();
   const auto uv = from_vec(tileset.uv_size());
 
-  const auto tileIndex = tileset.appearance_of(tilesetRef.to_index(tileId));
-  const auto& tile = tileset[tileIndex];
+  const auto tile_index = tileset.appearance_of(tileset_ref.to_index(tile_id));
+  const auto& tile = tileset[tile_index];
   const auto source = from_vec(tile.source());
 
   const auto position = graphics.from_matrix_to_absolute(pos.row(), pos.col());
-  graphics.render_translated_image(textureId, source, position, uv);
+  graphics.render_translated_image(texture_id, source, position, uv);
 }
 
 }  // namespace tactile::ui

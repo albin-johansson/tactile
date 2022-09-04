@@ -31,56 +31,55 @@
 namespace tactile::ui {
 namespace {
 
-[[nodiscard]] auto _get_render_bounds(const ImVec2& tl,
-                                      const ImVec2& br,
-                                      const ImVec2& origin,
-                                      const ImVec2& gridSize,
-                                      const float rows,
-                                      const float cols) -> Region
+[[nodiscard]] auto get_render_bounds(const ImVec2& tl,
+                                     const ImVec2& br,
+                                     const ImVec2& origin,
+                                     const ImVec2& grid_size,
+                                     const float rows,
+                                     const float cols) -> Region
 {
-  const auto begin = (tl - origin) / gridSize;
-  const auto end = (br - origin) / gridSize;
+  const auto begin = (tl - origin) / grid_size;
+  const auto end = (br - origin) / grid_size;
 
-  const auto beginRow = (std::max)(0, static_cast<int32>(begin.y));
-  const auto beginCol = (std::max)(0, static_cast<int32>(begin.x));
+  const auto begin_row = (std::max)(0, static_cast<int32>(begin.y));
+  const auto begin_col = (std::max)(0, static_cast<int32>(begin.x));
 
-  const auto endRow = static_cast<int32>((std::min)(rows, end.y + 1));
-  const auto endCol = static_cast<int32>((std::min)(cols, end.x + 1));
+  const auto end_row = static_cast<int32>((std::min)(rows, end.y + 1));
+  const auto end_col = static_cast<int32>((std::min)(cols, end.x + 1));
 
   Region bounds;
 
-  bounds.begin = {beginRow, beginCol};
-  bounds.end = {endRow, endCol};
+  bounds.begin = {begin_row, begin_col};
+  bounds.end = {end_row, end_col};
 
   return bounds;
 }
 
-[[nodiscard]] auto _get_render_info(const Viewport& viewport,
-                                    const ImVec2& logicalTileSize,
-                                    const int32 rows,
-                                    const int32 columns) -> RenderInfo
+[[nodiscard]] auto get_render_info(const Viewport& viewport,
+                                   const ImVec2& logical_tile_size,
+                                   const int32 rows,
+                                   const int32 columns) -> RenderInfo
 {
   RenderInfo info;
 
   info.canvas_tl = ImGui::GetCursorScreenPos();
   info.canvas_br = info.canvas_tl + ImGui::GetContentRegionAvail();
 
-  info.origin =
-      info.canvas_tl + ImVec2 {viewport.get_offset().x, viewport.get_offset().y};
+  info.origin = info.canvas_tl + from_vec(viewport.get_offset());
 
-  info.tile_size = logicalTileSize;
-  info.grid_size = {viewport.get_tile_size().x, viewport.get_tile_size().y};
+  info.tile_size = logical_tile_size;
+  info.grid_size = from_vec(viewport.get_tile_size());
   info.ratio = info.grid_size / info.tile_size;
 
   info.row_count = static_cast<float>(rows);
   info.col_count = static_cast<float>(columns);
 
-  info.bounds = _get_render_bounds(info.canvas_tl,
-                                   info.canvas_br,
-                                   info.origin,
-                                   info.grid_size,
-                                   info.row_count,
-                                   info.col_count);
+  info.bounds = get_render_bounds(info.canvas_tl,
+                                  info.canvas_br,
+                                  info.origin,
+                                  info.grid_size,
+                                  info.row_count,
+                                  info.col_count);
 
   return info;
 }
@@ -89,18 +88,18 @@ namespace {
 
 auto get_render_info(const Viewport& viewport, const Map& map) -> RenderInfo
 {
-  return _get_render_info(viewport,
-                          from_vec(map.tile_size()),
-                          static_cast<int32>(map.row_count()),
-                          static_cast<int32>(map.column_count()));
+  return get_render_info(viewport,
+                         from_vec(map.tile_size()),
+                         static_cast<int32>(map.row_count()),
+                         static_cast<int32>(map.column_count()));
 }
 
 auto get_render_info(const Viewport& viewport, const Tileset& tileset) -> RenderInfo
 {
-  return _get_render_info(viewport,
-                          from_vec(tileset.tile_size()),
-                          tileset.row_count(),
-                          tileset.column_count());
+  return get_render_info(viewport,
+                         from_vec(tileset.tile_size()),
+                         tileset.row_count(),
+                         tileset.column_count());
 }
 
 }  // namespace tactile::ui

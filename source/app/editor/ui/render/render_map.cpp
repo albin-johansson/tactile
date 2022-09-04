@@ -33,22 +33,22 @@
 namespace tactile::ui {
 namespace {
 
-void _render_layer(GraphicsCtx& graphics,
-                   const Map& map,
-                   const ILayer* layer,
-                   const float parentOpacity)
+void render_layer(GraphicsCtx& graphics,
+                  const Map& map,
+                  const ILayer* layer,
+                  const float parent_opacity)
 {
   TACTILE_ASSERT(layer);
 
   switch (layer->get_type()) {
     case LayerType::TileLayer:
-      if (const auto* tileLayer = dynamic_cast<const TileLayer*>(layer)) {
-        render_tile_layer(graphics, map, *tileLayer, parentOpacity);
+      if (const auto* tile_layer = dynamic_cast<const TileLayer*>(layer)) {
+        render_tile_layer(graphics, map, *tile_layer, parent_opacity);
       }
       break;
     case LayerType::ObjectLayer:
-      if (const auto* objectLayer = dynamic_cast<const ObjectLayer*>(layer)) {
-        render_object_layer(graphics, *objectLayer, parentOpacity);
+      if (const auto* object_layer = dynamic_cast<const ObjectLayer*>(layer)) {
+        render_object_layer(graphics, *object_layer, parent_opacity);
       }
       break;
 
@@ -63,36 +63,36 @@ void render_map(GraphicsCtx& graphics, const MapDocument& document)
 {
   const auto& prefs = io::get_preferences();
   const auto& map = document.get_map();
-  const auto activeLayerId = map.active_layer_id();
+  const auto active_layer_id = map.active_layer_id();
 
   map.visit_layers([&](const ILayer* layer) {
     if (!layer->is_visible()) {
       return;
     }
 
-    const auto parentId = layer->get_parent();
-    const auto* parentLayer = parentId ? map.find_group_layer(*parentId) : nullptr;
+    const auto parent_id = layer->get_parent();
+    const auto* parent_layer = parent_id ? map.find_group_layer(*parent_id) : nullptr;
 
-    if (parentLayer && !parentLayer->is_visible()) {
+    if (parent_layer && !parent_layer->is_visible()) {
       return;
     }
 
-    const auto parentOpacity = parentLayer ? parentLayer->get_opacity() : 1.0f;
+    const auto parent_opacity = parent_layer ? parent_layer->get_opacity() : 1.0f;
     if (prefs.highlight_active_layer) {
-      _render_layer(graphics,
-                    map,
-                    layer,
-                    activeLayerId == layer->get_uuid() ? 1.0f : 0.5f);
+      render_layer(graphics,
+                   map,
+                   layer,
+                   active_layer_id == layer->get_uuid() ? 1.0f : 0.5f);
     }
     else {
-      _render_layer(graphics, map, layer, parentOpacity * layer->get_opacity());
+      render_layer(graphics, map, layer, parent_opacity * layer->get_opacity());
     }
   });
 
-  if (activeLayerId) {
-    if (const auto* objectLayer = map.find_object_layer(*activeLayerId)) {
-      if (const auto objectId = objectLayer->active_object_id()) {
-        const auto& object = objectLayer->get_object(*objectId);
+  if (active_layer_id) {
+    if (const auto* object_layer = map.find_object_layer(*active_layer_id)) {
+      if (const auto object_id = object_layer->active_object_id()) {
+        const auto& object = object_layer->get_object(*object_id);
         render_object(graphics, object, cen::colors::yellow);
       }
     }

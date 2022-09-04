@@ -28,16 +28,17 @@
 
 #include "core/layer/object.hpp"
 #include "core/layer/object_layer.hpp"
+#include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::ui {
 namespace {
 
-void _render_point_object(GraphicsCtx& graphics,
-                          const Object& object,
-                          const ImVec2& position,
-                          const cen::color& color)
+void render_point_object(GraphicsCtx& graphics,
+                         const Object& object,
+                         const ImVec2& position,
+                         const cen::color& color)
 {
   TACTILE_ASSERT(object.get_type() == ObjectType::Point);
 
@@ -50,26 +51,26 @@ void _render_point_object(GraphicsCtx& graphics,
 
     const auto& name = object.get_name();
     if (!name.empty()) {
-      const auto textSize = ImGui::CalcTextSize(name.c_str());
-      if (textSize.x <= graphics.viewport_tile_size().x) {
-        const auto textX = position.x - (textSize.x / 2.0f);
-        const auto textY = position.y + radius + 4.0f;
+      const auto text_size = ImGui::CalcTextSize(name.c_str());
+      if (text_size.x <= graphics.viewport_tile_size().x) {
+        const auto text_x = position.x - (text_size.x / 2.0f);
+        const auto text_y = position.y + radius + 4.0f;
 
         graphics.set_draw_color(cen::colors::white);
-        graphics.render_translated_text(name.c_str(), {textX, textY});
+        graphics.render_translated_text(name.c_str(), {text_x, text_y});
       }
     }
   }
 }
 
-void _render_ellipse_object(GraphicsCtx& graphics,
-                            const Object& object,
-                            const ImVec2& position,
-                            const cen::color& color)
+void render_ellipse_object(GraphicsCtx& graphics,
+                           const Object& object,
+                           const ImVec2& position,
+                           const cen::color& color)
 {
   TACTILE_ASSERT(object.get_type() == ObjectType::Ellipse);
 
-  const ImVec2 size = {object.get_size().x, object.get_size().y};
+  const auto size = from_vec(object.get_size());
 
   const auto radius = ImVec2 {0.5f, 0.5f} * size * graphics.tile_size_ratio();
   const auto center = position + radius;
@@ -80,26 +81,25 @@ void _render_ellipse_object(GraphicsCtx& graphics,
 
   const auto& name = object.get_name();
   if (!name.empty()) {
-    const auto textSize = ImGui::CalcTextSize(name.c_str());
-    if (textSize.x <= radius.x) {
-      const auto textX = center.x - (textSize.x / 2.0f);
-      const auto textY = center.y + (textSize.y / 2.0f) + (radius.y);
+    const auto text_size = ImGui::CalcTextSize(name.c_str());
+    if (text_size.x <= radius.x) {
+      const auto text_x = center.x - (text_size.x / 2.0f);
+      const auto text_y = center.y + (text_size.y / 2.0f) + (radius.y);
 
       graphics.set_draw_color(cen::colors::white);
-      graphics.render_translated_text(name.c_str(), {textX, textY});
+      graphics.render_translated_text(name.c_str(), {text_x, text_y});
     }
   }
 }
 
-void _render_rectangle_object(GraphicsCtx& graphics,
-                              const Object& object,
-                              const ImVec2& position,
-                              const cen::color& color)
+void render_rectangle_object(GraphicsCtx& graphics,
+                             const Object& object,
+                             const ImVec2& position,
+                             const cen::color& color)
 {
   TACTILE_ASSERT(object.get_type() == ObjectType::Rect);
 
-  const auto size =
-      ImVec2 {object.get_size().x, object.get_size().y} * graphics.tile_size_ratio();
+  const auto size = from_vec(object.get_size()) * graphics.tile_size_ratio();
 
   if (graphics.is_intersecting_bounds(position, size)) {
     graphics.set_draw_color(color);
@@ -108,13 +108,13 @@ void _render_rectangle_object(GraphicsCtx& graphics,
 
     const auto& name = object.get_name();
     if (!name.empty()) {
-      const auto textSize = ImGui::CalcTextSize(name.c_str());
-      if (textSize.x <= size.x) {
-        const auto textX = (size.x - textSize.x) / 2.0f;
+      const auto text_size = ImGui::CalcTextSize(name.c_str());
+      if (text_size.x <= size.x) {
+        const auto text_x = (size.x - text_size.x) / 2.0f;
 
         graphics.set_draw_color(cen::colors::white.with_alpha(color.alpha()));
         graphics.render_translated_text(name.c_str(),
-                                        position + ImVec2 {textX, size.y + 4.0f});
+                                        position + ImVec2 {text_x, size.y + 4.0f});
       }
     }
   }
@@ -128,33 +128,32 @@ void render_object(GraphicsCtx& graphics, const Object& object, const cen::color
     return;
   }
 
-  const auto position =
-      ImVec2 {object.get_pos().x, object.get_pos().y} * graphics.tile_size_ratio();
+  const auto position = from_vec(object.get_pos()) * graphics.tile_size_ratio();
 
   switch (object.get_type()) {
     case ObjectType::Point:
-      _render_point_object(graphics, object, position, color);
+      render_point_object(graphics, object, position, color);
       break;
 
     case ObjectType::Ellipse:
-      _render_ellipse_object(graphics, object, position, color);
+      render_ellipse_object(graphics, object, position, color);
       break;
 
     case ObjectType::Rect:
-      _render_rectangle_object(graphics, object, position, color);
+      render_rectangle_object(graphics, object, position, color);
       break;
   }
 }
 
 void render_object_layer(GraphicsCtx& graphics,
                          const ObjectLayer& layer,
-                         const float parentOpacity)
+                         const float parent_opacity)
 {
-  const auto opacity = parentOpacity * layer.get_opacity();
-  const auto objectColor = cen::color::from_norm(1, 0, 0, opacity);
+  const auto opacity = parent_opacity * layer.get_opacity();
+  const auto object_color = cen::color::from_norm(1, 0, 0, opacity);
 
   for (const auto& [id, object] : layer) {
-    render_object(graphics, *object, objectColor);
+    render_object(graphics, *object, object_color);
   }
 }
 

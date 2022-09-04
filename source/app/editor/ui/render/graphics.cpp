@@ -34,24 +34,24 @@
 namespace tactile::ui {
 namespace {
 
-[[nodiscard]] auto _convert_bounds_to_rect(const RenderInfo& info) -> cen::frect
+[[nodiscard]] auto convert_bounds_to_rect(const RenderInfo& info) -> cen::frect
 {
   const auto pos = info.origin + (from_pos(info.bounds.begin) * info.grid_size);
   const auto size = from_pos(info.bounds.end - info.bounds.begin) * info.grid_size;
   return {pos.x, pos.y, size.x, size.y};
 }
 
-void _path_elliptical_arc_to(ImDrawList* self,
-                             const ImVec2& center,
-                             const ImVec2& radius,
-                             const float arcMin,
-                             const float arcMax,
-                             const int nSegments = 10)
+void path_elliptical_arc_to(ImDrawList* self,
+                            const ImVec2& center,
+                            const ImVec2& radius,
+                            const float arc_min,
+                            const float arc_max,
+                            const int n_segments = 10)
 {
-  for (int i = 0; i <= nSegments; ++i) {
-    const auto diff = arcMax - arcMin;
+  for (int i = 0; i <= n_segments; ++i) {
+    const auto diff = arc_max - arc_min;
     const float a =
-        arcMin + (static_cast<float>(i) / static_cast<float>(nSegments)) * diff;
+        arc_min + (static_cast<float>(i) / static_cast<float>(n_segments)) * diff;
 
     const ImVec2 pos {center.x + std::cos(a) * radius.x,
                       center.y + std::sin(a) * radius.y};
@@ -59,21 +59,21 @@ void _path_elliptical_arc_to(ImDrawList* self,
   }
 }
 
-void _add_ellipse(ImDrawList* self,
-                  const ImVec2& center,
-                  const ImVec2& radius,
-                  const ImU32 color,
-                  const int nSegments = 12,
-                  const float thickness = 1.0f)
+void add_ellipse(ImDrawList* self,
+                 const ImVec2& center,
+                 const ImVec2& radius,
+                 const ImU32 color,
+                 const int n_segments = 12,
+                 const float thickness = 1.0f)
 {
-  if ((color & IM_COL32_A_MASK) == 0 || nSegments <= 2) {
+  if ((color & IM_COL32_A_MASK) == 0 || n_segments <= 2) {
     return;
   }
 
   // Because we are filling a closed shape we remove 1 from the count of segments/points
-  const float arcMax = IM_PI * 2.0f * (static_cast<float>(nSegments) - 1.0f) /
-                       static_cast<float>(nSegments);
-  _path_elliptical_arc_to(self, center, radius, 0.0f, arcMax, nSegments - 1);
+  const float arcMax = IM_PI * 2.0f * (static_cast<float>(n_segments) - 1.0f) /
+                       static_cast<float>(n_segments);
+  path_elliptical_arc_to(self, center, radius, 0.0f, arcMax, n_segments - 1);
 
   self->PathStroke(color, true, thickness);
 }
@@ -108,7 +108,7 @@ GraphicsCtx::GraphicsCtx(const RenderInfo& info)
     , mLogicalTileSize {info.tile_size}
     , mTileSizeRatio {info.ratio}
     , mBounds {info.bounds}
-    , mBoundsRect {_convert_bounds_to_rect(info)}
+    , mBoundsRect {convert_bounds_to_rect(info)}
 {}
 
 void GraphicsCtx::push_clip()
@@ -141,10 +141,10 @@ void GraphicsCtx::draw_rect(const float2& pos,
 {
   auto* list = ImGui::GetWindowDrawList();
 
-  const auto imMin = from_vec(pos);
-  const auto imMax = imMin + from_vec(size);
+  const auto im_min = from_vec(pos);
+  const auto im_max = im_min + from_vec(size);
 
-  list->AddRect(imMin, imMax, color_to_u32(color), 0.0f, 0, thickness);
+  list->AddRect(im_min, im_max, color_to_u32(color), 0.0f, 0, thickness);
 }
 
 void GraphicsCtx::fill_rect(const ImVec2& position, const ImVec2& size)
@@ -158,12 +158,12 @@ void GraphicsCtx::draw_ellipse(const float2& center,
                                const cen::color& color,
                                const float thickness)
 {
-  const ImVec2 imCenter {center.x, center.y};
-  const ImVec2 imRadius {radius.x, radius.y};
+  const auto im_center = from_vec(center);
+  const auto im_radius = from_vec(radius);
 
   set_draw_color(color);          // TODO remove
   set_line_thickness(thickness);  // TODO remove
-  draw_translated_ellipse_with_shadow(imCenter, imRadius);
+  draw_translated_ellipse_with_shadow(im_center, im_radius);
 }
 
 void GraphicsCtx::draw_translated_rect(const ImVec2& position, const ImVec2& size)
@@ -180,9 +180,9 @@ void GraphicsCtx::draw_rect_with_shadow(const ImVec2& position, const ImVec2& si
 {
   auto* list = ImGui::GetWindowDrawList();
 
-  const auto offsetPosition = position + ImVec2 {mLineThickness, mLineThickness};
-  list->AddRect(offsetPosition,
-                offsetPosition + size,
+  const auto offset_position = position + ImVec2 {mLineThickness, mLineThickness};
+  list->AddRect(offset_position,
+                offset_position + size,
                 get_shadow_draw_color(),
                 0,
                 0,
@@ -215,20 +215,20 @@ void GraphicsCtx::draw_translated_circle_with_shadow(const ImVec2& center,
 
 void GraphicsCtx::draw_ellipse_with_shadow(const ImVec2& center, const ImVec2& radius)
 {
-  constexpr int nSegments = 50;
+  constexpr int n_segments = 50;
 
   if (radius.x == radius.y) {
     draw_circle_with_shadow(center, radius.x);
   }
   else {
     auto* list = ImGui::GetWindowDrawList();
-    _add_ellipse(list,
-                 center + ImVec2 {0, mLineThickness},
-                 radius,
-                 get_shadow_draw_color(),
-                 nSegments,
-                 mLineThickness);
-    _add_ellipse(list, center, radius, get_draw_color(), nSegments, mLineThickness);
+    add_ellipse(list,
+                center + ImVec2 {0, mLineThickness},
+                radius,
+                get_shadow_draw_color(),
+                n_segments,
+                mLineThickness);
+    add_ellipse(list, center, radius, get_draw_color(), n_segments, mLineThickness);
   }
 }
 
@@ -249,20 +249,20 @@ void GraphicsCtx::render_image(const uint texture,
 void GraphicsCtx::render_image(const uint texture,
                                const float2& pos,
                                const float2& size,
-                               const float2& uvMin,
-                               const float2& uvMax,
+                               const float2& uv_min,
+                               const float2& uv_max,
                                const uint8 opacity)
 {
   auto* list = ImGui::GetWindowDrawList();
 
-  const auto imMin = from_vec(pos);
-  const auto imMax = imMin + from_vec(size);
+  const auto im_min = from_vec(pos);
+  const auto im_max = im_min + from_vec(size);
 
   list->AddImage(to_texture_id(texture),
-                 imMin,
-                 imMax,
-                 from_vec(uvMin),
-                 from_vec(uvMax),
+                 im_min,
+                 im_max,
+                 from_vec(uv_min),
+                 from_vec(uv_max),
                  IM_COL32(0xFF, 0xFF, 0xFF, opacity));
 }
 
@@ -273,15 +273,15 @@ void GraphicsCtx::render_image(const uint texture,
 {
   const ImVec2 index {source.x / source.z, source.y / source.w};
 
-  const auto uvMin = index * uv;
-  const auto uvMax = uvMin + uv;
+  const auto uv_min = index * uv;
+  const auto uv_max = uv_min + uv;
 
   auto* list = ImGui::GetWindowDrawList();
   list->AddImage(to_texture_id(texture),
                  position,
                  position + mViewportTileSize,
-                 uvMin,
-                 uvMax,
+                 uv_min,
+                 uv_max,
                  color_to_u32(cen::colors::white.with_alpha(mOpacity)));
 }
 
@@ -318,11 +318,11 @@ void GraphicsCtx::render_centered_text(const char* text, const ImVec2& center)
 
 void GraphicsCtx::render_translated_grid()
 {
-  const auto endRow = mBounds.end.row();
-  const auto endCol = mBounds.end.col();
+  const auto end_row = mBounds.end.row();
+  const auto end_col = mBounds.end.col();
 
-  for (auto row = mBounds.begin.row(); row < endRow; ++row) {
-    for (auto col = mBounds.begin.col(); col < endCol; ++col) {
+  for (auto row = mBounds.begin.row(); row < end_row; ++row) {
+    for (auto col = mBounds.begin.col(); col < end_col; ++col) {
       draw_translated_rect(from_matrix_to_absolute(row, col), mViewportTileSize);
     }
   }
