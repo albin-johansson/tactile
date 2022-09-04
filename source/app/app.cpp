@@ -33,6 +33,7 @@
 #include "core/event/misc_events.hpp"
 #include "core/event/tileset_events.hpp"
 #include "core/event/viewport_events.hpp"
+#include "core/layer/object_layer.hpp"
 #include "core/tileset/tileset_info.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/shortcut/shortcuts.hpp"
@@ -234,6 +235,7 @@ void App::subscribe_to_events()
   d.sink<OpenRenameLayerDialogEvent>().connect<&App::on_open_rename_layer_dialog>(this);
   d.sink<RenameLayerEvent>().connect<&App::on_rename_layer>(this);
 
+  d.sink<SelectObjectEvent>().connect<&App::on_select_object>(this);
   d.sink<RemoveObjectEvent>().connect<&App::on_remove_object>(this);
   d.sink<SetObjectNameEvent>().connect<&App::on_set_object_name>(this);
   d.sink<MoveObjectEvent>().connect<&App::on_move_object>(this);
@@ -852,6 +854,14 @@ void App::on_rename_layer(const RenameLayerEvent& event)
 {
   if (auto* map = active_map_document()) {
     map->rename_layer(event.layer_id, event.name);
+  }
+}
+
+void App::on_select_object(const tactile::SelectObjectEvent& event)
+{
+  if (auto* document = active_map_document()) {
+    auto& layer = document->get_map().view_object_layer(event.layer_id);
+    layer.select_object(event.object_id);
   }
 }
 
