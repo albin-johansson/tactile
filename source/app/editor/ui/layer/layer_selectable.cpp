@@ -22,6 +22,7 @@
 #include <string>  // string
 
 #include <entt/signal/dispatcher.hpp>
+#include <fmt/format.h>
 #include <imgui.h>
 
 #include "core/document/map_document.hpp"
@@ -34,7 +35,7 @@
 #include "editor/ui/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "misc/panic.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile::ui {
 namespace {
@@ -96,6 +97,55 @@ void update_layer_popup(const Map& map, const ILayer& layer, entt::dispatcher& d
   }
 }
 
+void show_object_selectable(const ObjectLayer& layer,
+                            const Object& object,
+                            entt::dispatcher& dispatcher)
+{
+  const auto object_id = object.get_uuid();
+  const auto object_type = object.get_type();
+
+  const Scope scope {object_id};
+
+  const auto& lang = get_current_language();
+  const auto* icon = get_icon(object_type);
+
+  std::string name;
+  if (object.get_name().empty()) {
+    TACTILE_ASSERT(object.get_meta_id().has_value());
+    name = fmt::format("{} Object {}", icon, object.get_meta_id().value());
+  }
+  else {
+    name = fmt::format("{} {}", icon, object.get_name());
+  }
+
+  if (ImGui::Selectable(name.c_str(), layer.active_object_id() == object_id)) {
+    dispatcher.enqueue<SelectObjectEvent>(layer.get_uuid(), object_id);
+  }
+
+  if (ImGui::IsItemActivated() ||
+      (ImGui::IsItemHovered() && ImGui::IsItemClicked(ImGuiMouseButton_Right))) {
+    dispatcher.enqueue<SelectObjectEvent>(layer.get_uuid(), object_id);
+  }
+
+  if (auto popup = Popup::for_item("##ObjectPopup"); popup.is_open()) {
+    if (ImGui::MenuItem(lang.action.inspect_object.c_str())) {
+      dispatcher.enqueue<InspectContextEvent>(object_id);
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(lang.action.toggle_object_visibility.c_str())) {
+      dispatcher.enqueue<SetObjectVisibleEvent>(object_id, !object.is_visible());
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(lang.action.remove_object.c_str())) {
+      dispatcher.enqueue<RemoveObjectEvent>(object_id);
+    }
+  }
+}
+
 void show_object_layer_selectable(const Map& map,
                                   const ObjectLayer& layer,
                                   const ImGuiTreeNodeFlags flags,
@@ -117,23 +167,7 @@ void show_object_layer_selectable(const Map& map,
 
     const auto& object_layer = dynamic_cast<const ObjectLayer&>(layer);
     for (const auto& [object_id, object] : object_layer) {
-      std::string name;
-      if (object->get_name().empty()) {
-        name = fmt::format("{} Object {}",
-                           get_icon(object->get_type()),
-                           object->get_meta_id().value());
-      }
-      else {
-        name = fmt::format("{} {}", get_icon(object->get_type()), object->get_name());
-      }
-
-      const auto highlight = object_layer.active_object_id() == object_id;
-      ImGui::Selectable(name.c_str(), highlight);
-
-      if (ImGui::IsItemActivated() ||
-          (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Left))) {
-        dispatcher.enqueue<SelectObjectEvent>(layer.get_uuid(), object->get_uuid());
-      }
+      show_object_selectable(object_layer, *object, dispatcher);
     }
   }
   else {
