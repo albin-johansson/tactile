@@ -186,25 +186,6 @@ void emit_plain_tile_layer_data(YAML::Emitter& emitter,
   }
 }
 
-[[nodiscard]] auto convert_tiles_to_csv(const ir::TileLayerData& layer) -> std::string
-{
-  std::stringstream stream;
-
-  bool has_emitted_tile = false;
-  for (const auto& row : layer.tiles) {
-    for (const auto tile : row) {
-      if (has_emitted_tile) {
-        stream << ',';
-      }
-
-      stream << tile;
-      has_emitted_tile = true;
-    }
-  }
-
-  return stream.str();
-}
-
 void emit_layer(YAML::Emitter& emitter,
                 const ir::MapData& map,
                 const ir::LayerData& layer)
