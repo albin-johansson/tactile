@@ -213,7 +213,7 @@ void emit_object_layer(JSON& json, const ir::LayerData& layer)
   for (const auto& frame : tile.frames) {
     auto json = JSON::object();
 
-    json["tileid"] = frame.local_id;
+    json["tileid"] = frame.tile_index;
     json["duration"] = frame.duration_ms;
 
     array += json;

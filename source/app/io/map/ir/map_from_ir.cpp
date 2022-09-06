@@ -181,7 +181,7 @@ void restore_tile_animation(Tile& tile, const ir::MetaTileData& tile_data)
   animation.reserve_frames(tile_data.frames.size());
 
   for (const auto& frame_data : tile_data.frames) {
-    animation.add_frame(frame_data.local_id,
+    animation.add_frame(frame_data.tile_index,
                         TileAnimation::Millis {frame_data.duration_ms});
   }
 

@@ -50,8 +50,8 @@ namespace {
     for (const auto& [_, frameJson] : iter->items()) {
       auto& frame_data = tile_data.frames.emplace_back();
 
-      if (const auto local_id = as_int(frameJson, "tileid")) {
-        frame_data.local_id = *local_id;
+      if (const auto index = as_int(frameJson, "tileid")) {
+        frame_data.tile_index = *index;
       }
       else {
         return ParseError::NoAnimationFrameTile;

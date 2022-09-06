@@ -170,7 +170,7 @@ void convert_fancy_tile_animation(const TileAnimation& animation, ir::MetaTileDa
 
   for (const auto& frame : animation) {
     auto& frame_data = data.frames.emplace_back();
-    frame_data.local_id = frame.tile;
+    frame_data.tile_index = frame.tile;
     frame_data.duration_ms = static_cast<uint64>(frame.duration.count());
   }
 }

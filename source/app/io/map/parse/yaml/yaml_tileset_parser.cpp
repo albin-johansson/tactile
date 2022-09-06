@@ -45,7 +45,7 @@ constexpr int32 tileset_format_version = 1;
   }
 
   auto& frame = tile.frames.emplace_back();
-  frame.local_id = tile_index;
+  frame.tile_index = tile_index;
   frame.duration_ms = duration;
 
   return ParseError::None;

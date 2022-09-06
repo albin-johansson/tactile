@@ -294,7 +294,7 @@ void append_fancy_tiles(XMLNode node, const ir::TilesetData& tileset)
 
       for (const auto& frame : tile.frames) {
         auto frame_node = animation_node.append_child("frame");
-        frame_node.append_attribute("tileid").set_value(frame.local_id);
+        frame_node.append_attribute("tileid").set_value(frame.tile_index);
         frame_node.append_attribute("duration").set_value(frame.duration_ms);
       }
     }

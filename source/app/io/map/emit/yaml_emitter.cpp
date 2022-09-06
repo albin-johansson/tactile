@@ -272,7 +272,7 @@ void emit_tileset_tile_animation(YAML::Emitter& emitter, const ir::MetaTileData&
 
   for (const auto& frame_data : data.frames) {
     emitter << YAML::BeginMap;
-    emitter << YAML::Key << "tile" << YAML::Value << frame_data.local_id;
+    emitter << YAML::Key << "tile" << YAML::Value << frame_data.tile_index;
     emitter << YAML::Key << "duration" << YAML::Value << frame_data.duration_ms;
     emitter << YAML::EndMap;
   }

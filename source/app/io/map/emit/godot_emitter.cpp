@@ -127,7 +127,7 @@ void create_animation(GodotScene& scene,
   }
 
   for (const auto& frame : tile.frames) {
-    const auto pos = TilePos::from_index(frame.local_id, tileset.column_count);
+    const auto pos = TilePos::from_index(frame.tile_index, tileset.column_count);
 
     auto& godot_frame = animation.frames.emplace_back();
     godot_frame.id = scene.identifiers.next_sub_resource++;

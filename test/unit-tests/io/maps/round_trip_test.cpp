@@ -148,7 +148,7 @@ void validate_fancy_tiles(const ir::MetaTileData& source,
     const auto& sourceFrame = source.frames.at(index);
     const auto& restoredFrame = restored.frames.at(index);
 
-    ASSERT_EQ(sourceFrame.local_id, restoredFrame.local_id);
+    ASSERT_EQ(sourceFrame.tile_index, restoredFrame.tile_index);
     ASSERT_EQ(sourceFrame.duration_ms, restoredFrame.duration_ms);
   }
 
@@ -377,9 +377,9 @@ constexpr usize col_count = 13;
   data.image_size.x = 1'024;
   data.image_size.y = 1'023;
 
-  data.fancy_tiles[155].frames = {{.local_id = 155, .duration_ms = 150},
-                                  {.local_id = 156, .duration_ms = 120},
-                                  {.local_id = 157, .duration_ms = 145}};
+  data.fancy_tiles[155].frames = {{.tile_index = 155, .duration_ms = 150},
+                                  {.tile_index = 156, .duration_ms = 120},
+                                  {.tile_index = 157, .duration_ms = 145}};
 
   auto& objectData = data.fancy_tiles[80].objects.emplace_back();
   objectData.name = "Fancy Object";

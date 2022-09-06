@@ -46,8 +46,8 @@ namespace {
     for (const auto frame_node : tile_node.child("animation").children("frame")) {
       auto& frame = tile.frames.emplace_back();
 
-      if (const auto local_id = as_int(frame_node, "tileid")) {
-        frame.local_id = *local_id;
+      if (const auto index = as_int(frame_node, "tileid")) {
+        frame.tile_index = *index;
       }
       else {
         return ParseError::NoAnimationFrameTile;

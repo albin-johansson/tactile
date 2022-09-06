@@ -119,7 +119,7 @@ struct LayerData final
 
 struct AnimationFrameData final
 {
-  TileID local_id {};
+  TileIndex tile_index {};
   uint64 duration_ms {};
 };
 
