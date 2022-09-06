@@ -20,7 +20,6 @@
 #include <fstream>  // ofstream
 #include <ios>      // ios
 #include <sstream>  // stringstream
-#include <variant>  // get
 
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>

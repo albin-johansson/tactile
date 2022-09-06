@@ -77,9 +77,9 @@ void validate_object_layers(const ir::ObjectLayerData& source,
 {
   ASSERT_EQ(source.objects.size(), restored.objects.size());
   for (usize index = 0; index < source.objects.size(); ++index) {
-    const auto& sourceObject = source.objects.at(index);
-    const auto& restoredObject = restored.objects.at(index);
-    validate_objects(sourceObject, restoredObject);
+    const auto& source_object = source.objects.at(index);
+    const auto& restored_object = restored.objects.at(index);
+    validate_objects(source_object, restored_object);
   }
 }
 
@@ -96,27 +96,27 @@ void validate_layers(const ir::LayerData& source_layer,
   ASSERT_EQ(source_layer.visible, restored_layer.visible);
 
   if (source_layer.type == LayerType::TileLayer) {
-    const auto& sourceTileData = std::get<ir::TileLayerData>(source_layer.data);
-    const auto& restoredTileData = std::get<ir::TileLayerData>(restored_layer.data);
+    const auto& source_tile_data = source_layer.as_tile_layer();
+    const auto& restored_tile_data = restored_layer.as_tile_layer();
 
-    ASSERT_EQ(sourceTileData.row_count, restoredTileData.row_count);
-    ASSERT_EQ(sourceTileData.col_count, restoredTileData.col_count);
-    ASSERT_EQ(sourceTileData.tiles, restoredTileData.tiles);
+    ASSERT_EQ(source_tile_data.row_count, restored_tile_data.row_count);
+    ASSERT_EQ(source_tile_data.col_count, restored_tile_data.col_count);
+    ASSERT_EQ(source_tile_data.tiles, restored_tile_data.tiles);
   }
   else if (source_layer.type == LayerType::ObjectLayer) {
-    const auto& sourceObjects = std::get<ir::ObjectLayerData>(source_layer.data);
-    const auto& restoredObjects = std::get<ir::ObjectLayerData>(restored_layer.data);
-    validate_object_layers(sourceObjects, restoredObjects);
+    const auto& source_objects = source_layer.as_object_layer();
+    const auto& restored_objects = restored_layer.as_object_layer();
+    validate_object_layers(source_objects, restored_objects);
   }
   else if (source_layer.type == LayerType::GroupLayer) {
-    const auto& sourceGroup = std::get<ir::GroupLayerData>(source_layer.data);
-    const auto& restoredGroup = std::get<ir::GroupLayerData>(restored_layer.data);
+    const auto& source_group = source_layer.as_group_layer();
+    const auto& restored_group = restored_layer.as_group_layer();
 
-    ASSERT_EQ(sourceGroup.children.size(), restoredGroup.children.size());
-    for (usize index = 0; index < sourceGroup.children.size(); ++index) {
-      const auto& sourceChildLayer = sourceGroup.children.at(index);
-      const auto& restoredChildLayer = restoredGroup.children.at(index);
-      validate_layers(*sourceChildLayer, *restoredChildLayer);
+    ASSERT_EQ(source_group.children.size(), restored_group.children.size());
+    for (usize index = 0; index < source_group.children.size(); ++index) {
+      const auto& source_child_layer = source_group.children.at(index);
+      const auto& restored_child_layer = restored_group.children.at(index);
+      validate_layers(*source_child_layer, *restored_child_layer);
     }
   }
 
@@ -127,9 +127,9 @@ void validate_layers(const ir::MapData& source, const ir::MapData& restored)
 {
   ASSERT_EQ(source.layers.size(), restored.layers.size());
   for (usize index = 0; index < source.layers.size(); ++index) {
-    const auto& sourceLayer = source.layers.at(index);
-    const auto& restoredLayer = restored.layers.at(index);
-    validate_layers(sourceLayer, restoredLayer);
+    const auto& source_layer = source.layers.at(index);
+    const auto& restored_layer = restored.layers.at(index);
+    validate_layers(source_layer, restored_layer);
   }
 }
 
@@ -138,18 +138,18 @@ void validate_fancy_tiles(const ir::MetaTileData& source,
 {
   ASSERT_EQ(source.objects.size(), restored.objects.size());
   for (usize index = 0; index < source.objects.size(); ++index) {
-    const auto& sourceObject = source.objects.at(index);
-    const auto& restoredObject = restored.objects.at(index);
-    validate_objects(sourceObject, restoredObject);
+    const auto& source_object = source.objects.at(index);
+    const auto& restored_object = restored.objects.at(index);
+    validate_objects(source_object, restored_object);
   }
 
   ASSERT_EQ(source.frames.size(), restored.frames.size());
   for (usize index = 0; index < source.frames.size(); ++index) {
-    const auto& sourceFrame = source.frames.at(index);
-    const auto& restoredFrame = restored.frames.at(index);
+    const auto& source_frame = source.frames.at(index);
+    const auto& restored_frame = restored.frames.at(index);
 
-    ASSERT_EQ(sourceFrame.tile_index, restoredFrame.tile_index);
-    ASSERT_EQ(sourceFrame.duration_ms, restoredFrame.duration_ms);
+    ASSERT_EQ(source_frame.tile_index, restored_frame.tile_index);
+    ASSERT_EQ(source_frame.duration_ms, restored_frame.duration_ms);
   }
 
   validate_contexts(source.context, restored.context);
@@ -160,27 +160,27 @@ void validate_tilesets(const ir::MapData& source, const ir::MapData& restored)
   ASSERT_EQ(source.tilesets.size(), restored.tilesets.size());
 
   for (usize index = 0; index < source.tilesets.size(); ++index) {
-    const auto& sourceTileset = source.tilesets.at(index);
-    const auto& restoredTileset = restored.tilesets.at(index);
+    const auto& source_tileset = source.tilesets.at(index);
+    const auto& restored_tileset = restored.tilesets.at(index);
 
-    ASSERT_EQ(sourceTileset.name, restoredTileset.name);
-    ASSERT_EQ(sourceTileset.first_tile, restoredTileset.first_tile);
+    ASSERT_EQ(source_tileset.name, restored_tileset.name);
+    ASSERT_EQ(source_tileset.first_tile, restored_tileset.first_tile);
 
-    ASSERT_EQ(sourceTileset.tile_count, restoredTileset.tile_count);
-    ASSERT_EQ(sourceTileset.column_count, restoredTileset.column_count);
+    ASSERT_EQ(source_tileset.tile_count, restored_tileset.tile_count);
+    ASSERT_EQ(source_tileset.column_count, restored_tileset.column_count);
 
-    ASSERT_EQ(sourceTileset.tile_size, restoredTileset.tile_size);
+    ASSERT_EQ(source_tileset.tile_size, restored_tileset.tile_size);
 
     // ASSERT_EQ(sourceTileset.image_path, restoredTileset.image_path);
-    ASSERT_EQ(sourceTileset.image_size, restoredTileset.image_size);
+    ASSERT_EQ(source_tileset.image_size, restored_tileset.image_size);
 
-    ASSERT_EQ(sourceTileset.fancy_tiles.size(), restoredTileset.fancy_tiles.size());
-    for (const auto& [id, sourceTile] : sourceTileset.fancy_tiles) {
-      const auto& restoredTile = restoredTileset.fancy_tiles.at(id);
-      validate_fancy_tiles(sourceTile, restoredTile);
+    ASSERT_EQ(source_tileset.fancy_tiles.size(), restored_tileset.fancy_tiles.size());
+    for (const auto& [id, sourceTile] : source_tileset.fancy_tiles) {
+      const auto& restored_tile = restored_tileset.fancy_tiles.at(id);
+      validate_fancy_tiles(sourceTile, restored_tile);
     }
 
-    validate_contexts(sourceTileset.context, restoredTileset.context);
+    validate_contexts(source_tileset.context, restored_tileset.context);
   }
 }
 
@@ -223,14 +223,14 @@ constexpr usize col_count = 13;
   data.opacity = 0.8f;
   data.visible = true;
 
-  auto& tileData = data.data.emplace<ir::TileLayerData>();
-  tileData.row_count = row_count;
-  tileData.col_count = col_count;
+  auto& tile_data = data.data.emplace<ir::TileLayerData>();
+  tile_data.row_count = row_count;
+  tile_data.col_count = col_count;
 
-  tileData.tiles = make_tile_matrix(row_count, col_count);
+  tile_data.tiles = make_tile_matrix(row_count, col_count);
   for (usize row = 0; row < row_count; ++row) {
     for (usize col = 0; col < col_count; ++col) {
-      tileData.tiles[row][col] = 7;
+      tile_data.tiles[row][col] = 7;
     }
   }
 
@@ -268,10 +268,10 @@ constexpr usize col_count = 13;
     child->opacity = 0.9f;
     child->visible = true;
 
-    auto& tileData = child->data.emplace<ir::TileLayerData>();
-    tileData.row_count = row_count;
-    tileData.col_count = col_count;
-    tileData.tiles = make_tile_matrix(row_count, col_count);
+    auto& tile_data = child->data.emplace<ir::TileLayerData>();
+    tile_data.row_count = row_count;
+    tile_data.col_count = col_count;
+    tile_data.tiles = make_tile_matrix(row_count, col_count);
 
     child->context.properties["path"] = fs::path {"test-resources/exterior.png"};
   }
@@ -287,10 +287,10 @@ constexpr usize col_count = 13;
     child->opacity = 1.0f;
     child->visible = true;
 
-    auto& tileData = child->data.emplace<ir::TileLayerData>();
-    tileData.row_count = row_count;
-    tileData.col_count = col_count;
-    tileData.tiles = make_tile_matrix(row_count, col_count);
+    auto& tile_data = child->data.emplace<ir::TileLayerData>();
+    tile_data.row_count = row_count;
+    tile_data.col_count = col_count;
+    tile_data.tiles = make_tile_matrix(row_count, col_count);
 
     if (use_components) {
       child->context.components["short-component"]["integer"] = 356;
@@ -313,9 +313,9 @@ constexpr usize col_count = 13;
   data.opacity = 1.0f;
   data.visible = true;
 
-  auto& objectLayerData = data.data.emplace<ir::ObjectLayerData>();
+  auto& object_layer_data = data.data.emplace<ir::ObjectLayerData>();
 
-  auto& point = objectLayerData.objects.emplace_back();
+  auto& point = object_layer_data.objects.emplace_back();
   point.name = "Point";
   point.type = ObjectType::Point;
   point.id = 34;
@@ -328,7 +328,7 @@ constexpr usize col_count = 13;
     point.context.components["empty-component"];
   }
 
-  auto& rect = objectLayerData.objects.emplace_back();
+  auto& rect = object_layer_data.objects.emplace_back();
   rect.name = "Rectangle";
   rect.type = ObjectType::Rect;
   rect.id = 26;
@@ -346,7 +346,7 @@ constexpr usize col_count = 13;
     rect.context.components["short-component"]["integer"] = 83;
   }
 
-  auto& ellipse = objectLayerData.objects.emplace_back();
+  auto& ellipse = object_layer_data.objects.emplace_back();
   ellipse.name = "Ellipse";
   ellipse.type = ObjectType::Ellipse;
   ellipse.id = 54;
@@ -381,13 +381,13 @@ constexpr usize col_count = 13;
                                   {.tile_index = 156, .duration_ms = 120},
                                   {.tile_index = 157, .duration_ms = 145}};
 
-  auto& objectData = data.fancy_tiles[80].objects.emplace_back();
-  objectData.name = "Fancy Object";
-  objectData.type = ObjectType::Point;
-  objectData.id = 99;
-  objectData.pos.x = 23;
-  objectData.pos.y = 47;
-  objectData.visible = false;
+  auto& object_data = data.fancy_tiles[80].objects.emplace_back();
+  object_data.name = "Fancy Object";
+  object_data.type = ObjectType::Point;
+  object_data.id = 99;
+  object_data.pos.x = 23;
+  object_data.pos.y = 47;
+  object_data.visible = false;
 
   data.fancy_tiles[27].context.properties["tile-float"] = 45.3f;
 

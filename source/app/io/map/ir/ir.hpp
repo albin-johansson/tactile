@@ -176,11 +176,11 @@ void each_object_layer(const GroupLayerData& root, T&& callable)
 {
   for (const auto& layer : root.children) {
     if (layer->type == LayerType::GroupLayer) {
-      const auto& group = std::get<GroupLayerData>(layer->data);
+      const auto& group = layer->as_group_layer();
       each_object_layer(group, callable);
     }
     else if (layer->type == LayerType::ObjectLayer) {
-      const auto& object_layer = std::get<ObjectLayerData>(layer->data);
+      const auto& object_layer = layer->as_object_layer();
       callable(object_layer);
     }
   }
@@ -191,11 +191,11 @@ void each_object_layer(const MapData& map, T&& callable)
 {
   for (const auto& layer : map.layers) {
     if (layer.type == LayerType::GroupLayer) {
-      const auto& group = std::get<GroupLayerData>(layer.data);
+      const auto& group = layer.as_group_layer();
       each_object_layer(group, callable);
     }
     else if (layer.type == LayerType::ObjectLayer) {
-      const auto& object_layer = std::get<ObjectLayerData>(layer.data);
+      const auto& object_layer = layer.as_object_layer();
       callable(object_layer);
     }
   }

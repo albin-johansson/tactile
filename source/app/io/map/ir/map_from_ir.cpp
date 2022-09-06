@@ -20,7 +20,6 @@
 #include "map_from_ir.hpp"
 
 #include <utility>  // move
-#include <variant>  // get
 
 #include <entt/entity/registry.hpp>
 

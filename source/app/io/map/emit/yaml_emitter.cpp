@@ -208,7 +208,7 @@ void emit_layer(YAML::Emitter& emitter,
     case LayerType::TileLayer: {
       emitter << YAML::Value << "tile-layer";
 
-      const auto& tile_layer = std::get<ir::TileLayerData>(layer.data);
+      const auto& tile_layer = layer.as_tile_layer();
 
       if (map.tile_format.encoding == TileEncoding::Plain) {
         emit_plain_tile_layer_data(emitter, tile_layer, map.row_count, map.col_count);
@@ -227,7 +227,7 @@ void emit_layer(YAML::Emitter& emitter,
     case LayerType::ObjectLayer: {
       emitter << YAML::Value << "object-layer";
 
-      const auto& object_layer = std::get<ir::ObjectLayerData>(layer.data);
+      const auto& object_layer = layer.as_object_layer();
       emit_object_layer_data(emitter, object_layer);
       break;
     }
@@ -235,7 +235,7 @@ void emit_layer(YAML::Emitter& emitter,
       emitter << YAML::Value << "group-layer";
       emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
-      const auto& group_layer = std::get<ir::GroupLayerData>(layer.data);
+      const auto& group_layer = layer.as_group_layer();
       for (const auto& child_layer_data : group_layer.children) {
         emit_layer(emitter, map, *child_layer_data);
       }

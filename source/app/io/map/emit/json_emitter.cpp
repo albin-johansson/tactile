@@ -18,7 +18,6 @@
  */
 
 #include <utility>  // move
-#include <variant>  // get
 
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>

@@ -112,7 +112,7 @@ TEST_P(CompressedYamlMapTest, EmitAndParseMap)
 
   const auto& map = result.data();
   const auto& layer = map.layers.front();
-  const auto& tile_layer = std::get<ir::TileLayerData>(layer.data);
+  const auto& tile_layer = layer.as_tile_layer();
 
   ASSERT_EQ(test_tiles, tile_layer.tiles);
 }
