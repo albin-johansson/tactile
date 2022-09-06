@@ -125,29 +125,29 @@ auto restore_layer(MapDocument& document,
   UUID layer_id;
   switch (layer_data.type) {
     case LayerType::TileLayer: {
-      const auto& data = std::get<ir::TileLayerData>(layer_data.data);
-
       layer_id = map.add_tile_layer(parent);
 
       auto& layer = map.view_tile_layer(layer_id);
-      invoke_mn(data.row_count, data.col_count, [&](const usize r, const usize c) {
-        layer.set_tile(TilePos::from(r, c), data.tiles[r][c]);
-      });
+      const auto& tile_data = layer_data.as_tile_layer();
+
+      invoke_mn(tile_data.row_count,
+                tile_data.col_count,
+                [&](const usize r, const usize c) {
+                  layer.set_tile(TilePos::from(r, c), tile_data.tiles[r][c]);
+                });
 
       break;
     }
     case LayerType::ObjectLayer: {
-      const auto& data = std::get<ir::ObjectLayerData>(layer_data.data);
-
       layer_id = map.add_object_layer(parent);
-      restore_object_layer(document, layer_id, data);
+      restore_object_layer(document, layer_id, layer_data.as_object_layer());
       break;
     }
     case LayerType::GroupLayer: {
-      const auto& data = std::get<ir::GroupLayerData>(layer_data.data);
-
       layer_id = map.add_group_layer(parent);
-      for (const auto& child_layer_data : data.children) {
+
+      const auto& group = layer_data.as_group_layer();
+      for (const auto& child_layer_data : group.children) {
         restore_layer(document, *child_layer_data, layer_id);
       }
 

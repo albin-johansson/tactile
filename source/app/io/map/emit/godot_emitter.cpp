@@ -513,7 +513,7 @@ void emit_tile_layer(std::ostream& stream,
                      const ir::LayerData& layer,
                      std::string_view parent_path)
 {
-  const auto& tile_layer = std::get<ir::TileLayerData>(layer.data);
+  const auto& tile_layer = layer.as_tile_layer();
 
   stream << '\n'
          << fmt::format(R"([node name="{}" type="TileMap" parent="{}"])",
@@ -714,7 +714,7 @@ void emit_object_layer(std::ostream& stream,
 
   emit_metadata(stream, layer.context);
 
-  const auto& object_layer = std::get<ir::ObjectLayerData>(layer.data);
+  const auto& object_layer = layer.as_object_layer();
   for (const auto& object : object_layer.objects) {
     emit_object(stream, scene, object, fmt::format("{}/{}", parent_path, layer.name));
   }

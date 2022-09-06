@@ -90,7 +90,7 @@ namespace {
 
 void emit_tile_layer(JSON& json, const ir::MapData& map, const ir::LayerData& layer)
 {
-  const auto& tile_layer = std::get<ir::TileLayerData>(layer.data);
+  const auto& tile_layer = layer.as_tile_layer();
 
   json["type"] = "tilelayer";
   json["width"] = map.col_count;
@@ -139,7 +139,7 @@ void emit_tile_layer(JSON& json, const ir::MapData& map, const ir::LayerData& la
 
 void emit_object_layer(JSON& json, const ir::LayerData& layer)
 {
-  const auto& object_layer = std::get<ir::ObjectLayerData>(layer.data);
+  const auto& object_layer = layer.as_object_layer();
 
   json["type"] = "objectgroup";
 
@@ -173,7 +173,7 @@ void emit_object_layer(JSON& json, const ir::LayerData& layer)
       break;
 
     case LayerType::GroupLayer: {
-      const auto& group_layer_data = std::get<ir::GroupLayerData>(layer.data);
+      const auto& group_layer_data = layer.as_group_layer();
 
       json["type"] = "group";
 

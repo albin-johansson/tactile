@@ -100,6 +100,21 @@ struct LayerData final
   ContextData context;
   float opacity {};
   bool visible {};
+
+  [[nodiscard]] auto as_tile_layer() const -> const TileLayerData&
+  {
+    return std::get<TileLayerData>(data);
+  }
+
+  [[nodiscard]] auto as_object_layer() const -> const ObjectLayerData&
+  {
+    return std::get<ObjectLayerData>(data);
+  }
+
+  [[nodiscard]] auto as_group_layer() const -> const GroupLayerData&
+  {
+    return std::get<GroupLayerData>(data);
+  }
 };
 
 struct AnimationFrameData final

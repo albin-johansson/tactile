@@ -216,7 +216,7 @@ void append_base64_tile_layer_data(XMLNode data_node,
 
 void append_tile_layer(XMLNode root, const ir::MapData& map, const ir::LayerData& layer)
 {
-  const auto& tile_layer = std::get<ir::TileLayerData>(layer.data);
+  const auto& tile_layer = layer.as_tile_layer();
 
   auto node = root.append_child("layer");
   append_common_layer_attributes(node, layer);
@@ -243,7 +243,7 @@ void append_tile_layer(XMLNode root, const ir::MapData& map, const ir::LayerData
 
 void append_object_layer(XMLNode root, const ir::LayerData& layer)
 {
-  const auto& object_layer = std::get<ir::ObjectLayerData>(layer.data);
+  const auto& object_layer = layer.as_object_layer();
 
   auto node = root.append_child("objectgroup");
   append_common_layer_attributes(node, layer);
@@ -266,7 +266,7 @@ void append_layer(XMLNode root, const ir::MapData& map, const ir::LayerData& lay
       break;
 
     case LayerType::GroupLayer: {
-      const auto& group_layer = std::get<ir::GroupLayerData>(layer.data);
+      const auto& group_layer = layer.as_group_layer();
 
       auto collection = root.append_child("group");
       append_common_layer_attributes(collection, layer);
