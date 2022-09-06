@@ -202,7 +202,7 @@ void ComponentEditor::show_component_attributes(const ComponentDefinition& defin
   }
 }
 
-void ComponentEditor::show_component_attribute(const UUID& componentId,
+void ComponentEditor::show_component_attribute(const UUID& component_id,
                                                const std::string& name,
                                                const Attribute& value,
                                                entt::dispatcher& dispatcher)
@@ -226,13 +226,13 @@ void ComponentEditor::show_component_attribute(const UUID& componentId,
     ImGui::Separator();
 
     if (ImGui::MenuItem(lang.action.duplicate_attribute.c_str())) {
-      dispatcher.enqueue<DuplicateComponentAttrEvent>(componentId, name);
+      dispatcher.enqueue<DuplicateComponentAttrEvent>(component_id, name);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(lang.action.remove_attribute.c_str())) {
-      dispatcher.enqueue<RemoveComponentAttrEvent>(componentId, name);
+      dispatcher.enqueue<RemoveComponentAttrEvent>(component_id, name);
     }
   }
 
@@ -240,16 +240,16 @@ void ComponentEditor::show_component_attribute(const UUID& componentId,
   ImGui::SetNextItemWidth(-min_float);
 
   const auto type = value.type();
-  AttributeType newType = type;
-  show_property_type_combo(type, newType);
-  if (newType != type) {
-    dispatcher.enqueue<SetComponentAttrTypeEvent>(componentId, name, newType);
+  AttributeType new_type = type;
+  show_property_type_combo(type, new_type);
+  if (new_type != type) {
+    dispatcher.enqueue<SetComponentAttrTypeEvent>(component_id, name, new_type);
   }
 
   ImGui::TableNextColumn();
 
   if (auto updated = input_attribute("##DefaultValue", value)) {
-    dispatcher.enqueue<UpdateComponentEvent>(componentId, name, std::move(*updated));
+    dispatcher.enqueue<UpdateComponentEvent>(component_id, name, std::move(*updated));
   }
 }
 

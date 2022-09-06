@@ -46,16 +46,16 @@ void ToolPreviewRenderer::visit(const StampTool& tool)
   const auto& map = document.get_map();
   const auto& tilesets = map.get_tilesets();
 
-  const auto tilesetId = tilesets.active_tileset_id().value();
-  const auto& tilesetRef = tilesets.get_ref(tilesetId);
+  const auto tileset_id = tilesets.active_tileset_id().value();
+  const auto& tileset_ref = tilesets.get_ref(tileset_id);
 
-  if (!mMouseInfo.is_within_contents || !tilesetRef.get_selection()) {
+  if (!mMouseInfo.is_within_contents || !tileset_ref.get_selection()) {
     return;
   }
 
   // TODO implement preview when randomizer is enabled
   if (!tool.behaves_as_if_random(map)) {
-    render_stamp_normal(map, tilesetRef);
+    render_stamp_normal(map, tileset_ref);
   }
 }
 

@@ -61,7 +61,7 @@ class ComponentEditor final : public ADialog
   void show_component_attributes(const ComponentDefinition& definition,
                                  entt::dispatcher& dispatcher);
 
-  void show_component_attribute(const UUID& componentId,
+  void show_component_attribute(const UUID& component_id,
                                 const std::string& name,
                                 const Attribute& value,
                                 entt::dispatcher& dispatcher);
