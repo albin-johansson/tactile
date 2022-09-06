@@ -145,8 +145,8 @@ void emit_object_layer(JSON& json, const ir::LayerData& layer)
 
   auto objects = JSON::array();
 
-  for (const auto& object_data : object_layer.objects) {
-    objects += emit_object(object_data);
+  for (const auto& object : object_layer.objects) {
+    objects += emit_object(object);
   }
 
   json["objects"] = std::move(objects);
@@ -173,14 +173,14 @@ void emit_object_layer(JSON& json, const ir::LayerData& layer)
       break;
 
     case LayerType::GroupLayer: {
-      const auto& group_layer_data = layer.as_group_layer();
+      const auto& group_layer = layer.as_group_layer();
 
       json["type"] = "group";
 
       auto layers = JSON::array();
 
-      for (const auto& child_layer_data : group_layer_data.children) {
-        layers += emit_layer(map, *child_layer_data);
+      for (const auto& child_layer : group_layer.children) {
+        layers += emit_layer(map, *child_layer);
       }
 
       json["layers"] = std::move(layers);
@@ -210,11 +210,11 @@ void emit_object_layer(JSON& json, const ir::LayerData& layer)
 {
   auto array = JSON::array();
 
-  for (const auto& frame_data : tile.frames) {
+  for (const auto& frame : tile.frames) {
     auto json = JSON::object();
 
-    json["tileid"] = frame_data.local_id;
-    json["duration"] = frame_data.duration_ms;
+    json["tileid"] = frame.local_id;
+    json["duration"] = frame.duration_ms;
 
     array += json;
   }
@@ -243,8 +243,8 @@ void emit_object_layer(JSON& json, const ir::LayerData& layer)
     dummy["y"] = 0;
 
     auto objects = JSON::array();
-    for (const auto& object_data : tile.objects) {
-      objects += emit_object(object_data);
+    for (const auto& object : tile.objects) {
+      objects += emit_object(object);
     }
 
     dummy["objects"] = std::move(objects);
