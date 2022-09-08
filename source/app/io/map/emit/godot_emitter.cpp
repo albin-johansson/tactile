@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <algorithm>    // sort
+#include <algorithm>    // sort, replace
 #include <cmath>        // sin, cos
 #include <fstream>      // ofstream
 #include <ios>          // ios
@@ -97,6 +97,13 @@ struct GodotScene final
   HashMap<ObjectID, GodotRectangleShape> rectangle_shapes;
   HashMap<TileID, GodotAnimation> animations;
 };
+
+[[nodiscard]] auto to_godot_name(std::string_view name) -> std::string
+{
+  std::string copy {name};
+  std::replace(copy.begin(), copy.end(), '/', '-');
+  return copy;
+}
 
 [[nodiscard]] auto get_tileset_image_path(const ir::TilesetData& tileset,
                                           const GodotEmitOptions& options) -> fs::path
@@ -235,11 +242,12 @@ void emit_tileset_file(const ir::MapData& map,
 
   for (const auto tileset_index : info.sorted_indices) {
     const auto& tileset = map.tilesets.at(tileset_index);
+    const auto tileset_name = to_godot_name(tileset.name);
 
     const auto id = static_cast<int32>(tileset_index) + 1;
     const auto prefix = fmt::format("{}/", id);
 
-    stream << prefix << fmt::format(R"(name = "{}")", tileset.name) << '\n';
+    stream << prefix << fmt::format(R"(name = "{}")", tileset_name) << '\n';
     stream << prefix << fmt::format("texture = ExtResource( {} )\n", id);
     stream << prefix << "tex_offset = Vector2( 0, 0 )\n";
     stream << prefix << "modulate = Color( 1, 1, 1, 1 )\n";
@@ -511,13 +519,14 @@ void emit_tile_layer(std::ostream& stream,
                      const GodotScene& scene,
                      const ir::MapData& map,
                      const ir::LayerData& layer,
+                     std::string_view layer_name,
                      std::string_view parent_path)
 {
   const auto& tile_layer = layer.as_tile_layer();
 
   stream << '\n'
          << fmt::format(R"([node name="{}" type="TileMap" parent="{}"])",
-                        layer.name,
+                        layer_name,
                         parent_path)
          << '\n';
   stream << fmt::format("tile_set = ExtResource( {} )\n",
@@ -574,7 +583,7 @@ void emit_tile_layer(std::ostream& stream,
                                   scene,
                                   map,
                                   tile_layer,
-                                  fmt::format("{}/{}", parent_path, layer.name));
+                                  fmt::format("{}/{}", parent_path, layer_name));
 }
 
 void emit_rectangle_object(std::ostream& stream,
@@ -701,11 +710,12 @@ void emit_object(std::ostream& stream,
 void emit_object_layer(std::ostream& stream,
                        const GodotScene& scene,
                        const ir::LayerData& layer,
+                       std::string_view layer_name,
                        std::string_view parent_path)
 {
   stream << '\n'
          << fmt::format(R"([node name="{}" type="Node2D" parent="{}"])",
-                        layer.name,
+                        layer_name,
                         parent_path)
          << '\n';
   if (!layer.visible) {
@@ -716,7 +726,7 @@ void emit_object_layer(std::ostream& stream,
 
   const auto& object_layer = layer.as_object_layer();
   for (const auto& object : object_layer.objects) {
-    emit_object(stream, scene, object, fmt::format("{}/{}", parent_path, layer.name));
+    emit_object(stream, scene, object, fmt::format("{}/{}", parent_path, layer_name));
   }
 }
 
@@ -724,21 +734,22 @@ void emit_layer(std::ostream& stream,
                 const GodotScene& scene,
                 const ir::MapData& map,
                 const ir::LayerData& layer,
+                std::string_view layer_name,
                 std::string_view parent_path)
 {
   switch (layer.type) {
     case LayerType::TileLayer:
-      emit_tile_layer(stream, scene, map, layer, parent_path);
+      emit_tile_layer(stream, scene, map, layer, layer_name, parent_path);
       break;
 
     case LayerType::ObjectLayer:
-      emit_object_layer(stream, scene, layer, parent_path);
+      emit_object_layer(stream, scene, layer, layer_name, parent_path);
       break;
 
     case LayerType::GroupLayer: {
       stream << '\n'
              << fmt::format(R"([node name="{}" type="Node2D" parent="{}"])",
-                            layer.name,
+                            layer_name,
                             parent_path)
              << '\n';
       if (!layer.visible) {
@@ -749,11 +760,12 @@ void emit_layer(std::ostream& stream,
 
       const auto& group_layer = std::get<ir::GroupLayerData>(layer.data);
       const auto child_parent_path = (parent_path == ".")
-                                         ? layer.name
-                                         : fmt::format("{}/{}", parent_path, layer.name);
+                                         ? std::string {layer_name}
+                                         : fmt::format("{}/{}", parent_path, layer_name);
 
       for (const auto& child_layer : group_layer.children) {
-        emit_layer(stream, scene, map, *child_layer, child_parent_path);
+        const auto child_name = to_godot_name(child_layer->name);
+        emit_layer(stream, scene, map, *child_layer, child_name, child_parent_path);
       }
 
       break;
@@ -796,7 +808,8 @@ void emit_godot_map(const EmitInfo& info, const GodotEmitOptions& options)
   emit_metadata(stream, map.context);
 
   for (const auto& layer : map.layers) {
-    emit_layer(stream, scene, map, layer, ".");
+    const auto layer_name = to_godot_name(layer.name);
+    emit_layer(stream, scene, map, layer, layer_name, ".");
   }
 }
 
