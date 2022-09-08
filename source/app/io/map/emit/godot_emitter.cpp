@@ -758,7 +758,7 @@ void emit_layer(std::ostream& stream,
 
       emit_metadata(stream, layer.context);
 
-      const auto& group_layer = std::get<ir::GroupLayerData>(layer.data);
+      const auto& group_layer = layer.as_group_layer();
       const auto child_parent_path = (parent_path == ".")
                                          ? std::string {layer_name}
                                          : fmt::format("{}/{}", parent_path, layer_name);
