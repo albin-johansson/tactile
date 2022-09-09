@@ -188,8 +188,6 @@ void update_object_context_menu(const Map& map, entt::dispatcher& dispatcher)
     const auto object_id = layer.active_object_id().value();
     const auto& object = layer.get_object(object_id);
 
-    // TODO translate
-
     if (ImGui::MenuItem(lang.action.inspect_object.c_str())) {
       dispatcher.enqueue<InspectContextEvent>(object_id);
     }
