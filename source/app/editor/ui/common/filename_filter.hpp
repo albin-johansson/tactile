@@ -23,8 +23,8 @@ struct ImGuiInputTextCallbackData;
 
 namespace tactile::ui {
 
-/* This is a basic filter for only allowing a basic subset of characters, to
-   guarantee that the user provides names that are usable as file names. */
+/// A basic filter that only allows a basic subset of characters that
+/// should guarantee use of names that are usable as file names.
 [[nodiscard]] auto filename_filter(ImGuiInputTextCallbackData* data) -> int;
 
 }  // namespace tactile::ui
