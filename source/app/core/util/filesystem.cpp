@@ -29,12 +29,12 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto get_home_prefix() -> const Maybe<fs_string>&
+[[nodiscard]] auto get_home_prefix() -> const fs_string&
 {
   // On Unix platforms, HOME is something like '/Users/username'
   // On Windows, USERPROFILE is something like 'C:\Users\username'
-  static const auto home_env = on_windows ? env_var("USERPROFILE") : env_var("HOME");
-  static const auto home_str = home_env ? to_fs_string(home_env->c_str()) : nullptr;
+  static const auto home_env = env_var(on_windows ? "USERPROFILE" : "HOME").value();
+  static const auto home_str = to_fs_string(home_env.c_str()).value();
   return home_str;
 }
 
@@ -50,20 +50,15 @@ auto convert_to_forward_slashes(const fs::path& path) -> std::string
 auto has_home_prefix(const fs::path& path) -> bool
 {
   const auto& prefix = get_home_prefix();
-  if (prefix.has_value()) {
-    fs_string_view view {path.c_str()};
-    return view.starts_with(*prefix);
-  }
-  else {
-    return false;
-  }
+  fs_string_view view {path.c_str()};
+  return view.starts_with(prefix);
 }
 
 auto to_canonical(const fs::path& path) -> Maybe<std::string>
 {
   if (has_home_prefix(path)) {
     const auto& prefix = get_home_prefix();
-    return '~' + path.string().substr(prefix->size());
+    return '~' + path.string().substr(prefix.size());
   }
   else {
     return nothing;
