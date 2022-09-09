@@ -382,7 +382,17 @@ void emit_json_map(const EmitInfo& info)
   json["infinite"] = false;
   json["orientation"] = "orthogonal";
   json["renderorder"] = "right-down";
-  json["compressionlevel"] = -1;  // TODO use right zlib/zstd level
+
+  if (const auto& format = map.tile_format; format.zlib_compression_level) {
+    json["compressionlevel"] = *format.zlib_compression_level;
+  }
+  else if (format.zstd_compression_level) {
+    json["compressionlevel"] = *format.zstd_compression_level;
+  }
+  else {
+    json["compressionlevel"] = -1;
+  }
+
   json["tiledversion"] = tiled_version;
   json["version"] = tiled_json_format_version;
 
