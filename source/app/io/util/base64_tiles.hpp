@@ -33,8 +33,6 @@ namespace tactile::io {
  *
  * The compression method must be the same as when the tiles were encoded!
  *
- * \todo Need to take endianness parameter
- *
  * \param tiles the encoded tile data that will be decoded.
  * \param rows the amount of tile rows.
  * \param columns the amount of tile columns.
