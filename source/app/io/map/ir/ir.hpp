@@ -153,8 +153,8 @@ struct TileFormatData final
 {
   TileEncoding encoding {TileEncoding::Plain};
   TileCompression compression {TileCompression::None};
-  Maybe<int32> zlib_compression_level {};
-  Maybe<int32> zstd_compression_level {};
+  Maybe<int32> zlib_compression_level;
+  Maybe<int32> zstd_compression_level;
 };
 
 struct MapData final
