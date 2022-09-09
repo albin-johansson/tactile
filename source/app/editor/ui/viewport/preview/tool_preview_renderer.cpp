@@ -27,6 +27,7 @@
 #include "core/tool/stamp_tool.hpp"
 #include "core/util/functional.hpp"
 #include "editor/ui/render/graphics.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile::ui {
 
@@ -46,6 +47,10 @@ void ToolPreviewRenderer::visit(const StampTool& tool)
   const auto& map = document.get_map();
   const auto& tilesets = map.get_tilesets();
 
+  if (!map.is_active_layer(LayerType::TileLayer)) {
+    return;
+  }
+
   const auto tileset_id = tilesets.active_tileset_id().value();
   const auto& tileset_ref = tilesets.get_ref(tileset_id);
 
@@ -64,6 +69,7 @@ void ToolPreviewRenderer::render_stamp_normal(const Map& map,
 {
   auto& graphics = mGraphics.get();
 
+  TACTILE_ASSERT(map.is_active_layer(LayerType::TileLayer));
   const auto layer_id = map.active_layer_id().value();
   const auto& layer = map.view_tile_layer(layer_id);
 
