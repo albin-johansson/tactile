@@ -41,6 +41,7 @@ target_link_libraries(${TACTILE_LIB}
                       nlohmann_json::nlohmann_json
                       pugixml::static
                       tinyfiledialogs::tinyfiledialogs
+                      tl::expected
                       ZLIB::ZLIB
                       GLEW::GLEW
                       OpenGL::GL

@@ -92,6 +92,7 @@ void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
     row("spdlog", "MIT");
     row("stb_image", "MIT");
     row("tinyfiledialogs", "Zlib");
+    row("tl-expected", "CC0-1.0");
     row("yaml-cpp", "MIT");
     row("Zlib", "Zlib");
     row("zstd", "BSD/GPLv2");
