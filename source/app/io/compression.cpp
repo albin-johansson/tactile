@@ -80,7 +80,7 @@ auto zlib_compress(const void* source, const usize source_bytes, int level)
   }
 
   ByteStream dest;
-  dest.reserve(deflateBound(&stream, source_bytes));
+  dest.reserve(deflateBound(&stream, static_cast<uLong>(source_bytes)));
 
   if (const auto status = process_zlib_chunks(stream, deflate, out_buffer, dest);
       status != Z_STREAM_END) {
