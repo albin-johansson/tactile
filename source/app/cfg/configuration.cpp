@@ -41,13 +41,13 @@ namespace {
 
 void init_sdl_attributes()
 {
-  /* Ensure nearest pixel sampling */
+  // Ensure nearest pixel sampling
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
 
-  /* Enable multi-gesture events from touchpads */
+  // Enable multi-gesture events from touchpads
   SDL_SetHint(SDL_HINT_MOUSE_TOUCH_EVENTS, "1");
 
-  /* Make sure that we use OpenGL */
+  // Make sure that we use OpenGL
   SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 
   if constexpr (on_osx) {
@@ -83,7 +83,7 @@ inline void terminate_handler()
                      boost::stacktrace::stacktrace {});
   }
   catch (...) {
-    /* Not much we can do */
+    // Not much we can do!
   }
 
   std::abort();
@@ -119,8 +119,10 @@ AppCfg::AppCfg()
     throw TactileError {"Failed to initialize GLEW!"};
   }
 
-  spdlog::debug("OpenGL version... {}", (const char*) glGetString(GL_VERSION));
-  spdlog::debug("OpenGL renderer... {}", (const char*) glGetString(GL_RENDERER));
+  spdlog::debug("OpenGL version... {}",
+                reinterpret_cast<const char*>(glGetString(GL_VERSION)));
+  spdlog::debug("OpenGL renderer... {}",
+                reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
 
   load_languages();
   io::load_preferences();
