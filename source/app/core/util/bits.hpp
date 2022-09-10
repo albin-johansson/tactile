@@ -19,11 +19,9 @@
 
 #pragma once
 
-#include <bit>          // endian
+#include <bit>          // endian, byteswap
 #include <concepts>     // integral
 #include <type_traits>  // make_unsigned_t
-
-#include <SDL.h>
 
 #include "core/common/ints.hpp"
 
@@ -41,24 +39,10 @@ template <std::integral T>
   return static_cast<uint8>(masked >> offset);
 }
 
-[[nodiscard]] constexpr auto as_little_endian(const int32 value) noexcept -> int32
+template <std::integral T>
+[[nodiscard]] constexpr auto as_little_endian(const T value) noexcept -> T
 {
-  if constexpr (std::endian::native == std::endian::little) {
-    return value;
-  }
-  else {
-    return static_cast<int32>(SDL_Swap32(static_cast<uint32>(value)));
-  }
-}
-
-[[nodiscard]] constexpr auto as_little_endian(const uint32 value) noexcept -> uint32
-{
-  if constexpr (std::endian::native == std::endian::little) {
-    return value;
-  }
-  else {
-    return SDL_Swap32(value);
-  }
+  return (std::endian::native == std::endian::little) ? value : std::byteswap(value);
 }
 
 }  // namespace tactile
