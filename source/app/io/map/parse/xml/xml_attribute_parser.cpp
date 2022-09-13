@@ -37,42 +37,56 @@ namespace {
 {
   TACTILE_ASSERT(type);
 
-  if (std::strcmp(type, "string") == 0) {
-    value = as_string(node, "value").value();
+  const auto attr_type = parse_attr_type(type);
+  if (!attr_type) {
+    return ParseError::UnsupportedPropertyType;
   }
-  else if (std::strcmp(type, "int") == 0) {
-    value = as_int(node, "value").value();
-  }
-  else if (std::strcmp(type, "float") == 0) {
-    value = as_float(node, "value").value();
-  }
-  else if (std::strcmp(type, "bool") == 0) {
-    value = as_bool(node, "value").value();
-  }
-  else if (std::strcmp(type, "file") == 0) {
-    fs::path path = as_string(node, "value").value();
-    value = std::move(path);
-  }
-  else if (std::strcmp(type, "object") == 0) {
-    value = object_t {as_int(node, "value").value()};
-  }
-  else if (std::strcmp(type, "color") == 0) {
-    const auto hex = as_string(node, "value").value();
-    if (hex.empty()) {
-      value.reset_to_default(AttributeType::Color);
+
+  switch (*attr_type) {
+    case AttributeType::String: {
+      value = as_string(node, "value").value();
+      break;
     }
-    else {
-      if (const auto color = (hex.size() == 9) ? cen::color::from_argb(hex)
-                                               : cen::color::from_rgb(hex)) {
-        value = *color;
+    case AttributeType::Int: {
+      value = as_int(node, "value").value();
+      break;
+    }
+    case AttributeType::Float: {
+      value = as_float(node, "value").value();
+      break;
+    }
+    case AttributeType::Bool: {
+      value = as_bool(node, "value").value();
+      break;
+    }
+    case AttributeType::Path: {
+      fs::path path = as_string(node, "value").value();
+      value = std::move(path);
+      break;
+    }
+    case AttributeType::Color: {
+      const auto hex = as_string(node, "value").value();
+
+      // Empty color properties are not supported, so just assume the default color value
+      if (hex.empty()) {
+        value.reset_to_default(AttributeType::Color);
       }
       else {
-        return ParseError::CorruptPropertyValue;
+        if (const auto color = (hex.size() == 9) ? cen::color::from_argb(hex)
+                                                 : cen::color::from_rgb(hex)) {
+          value = *color;
+        }
+        else {
+          return ParseError::CorruptPropertyValue;
+        }
       }
+
+      break;
     }
-  }
-  else {
-    return ParseError::UnsupportedPropertyType;
+    case AttributeType::Object: {
+      value = object_t {as_int(node, "value").value()};
+      break;
+    }
   }
 
   return ParseError::None;

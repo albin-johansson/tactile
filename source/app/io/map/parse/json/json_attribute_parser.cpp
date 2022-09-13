@@ -27,48 +27,59 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto parse_value(const JSON& json,
-                               const std::string_view type,
-                               Attribute& value) -> ParseError
+[[nodiscard]] auto parse_value(const JSON& json, std::string_view type, Attribute& value)
+    -> ParseError
 {
-  if (type == "string") {
-    value = as_string(json, "value").value();
+  const auto attr_type = parse_attr_type(type);
+  if (!attr_type) {
+    return ParseError::UnsupportedPropertyType;
   }
-  else if (type == "int") {
-    value = as_int(json, "value").value();
-  }
-  else if (type == "float") {
-    value = as_float(json, "value").value();
-  }
-  else if (type == "bool") {
-    value = as_bool(json, "value").value();
-  }
-  else if (type == "file") {
-    fs::path path = as_string(json, "value").value();
-    value = std::move(path);
-  }
-  else if (type == "object") {
-    value = object_t {as_int(json, "value").value()};
-  }
-  else if (type == "color") {
-    const auto hex = as_string(json, "value").value();
 
-    // Empty color properties are not supported, so just assume the default color value
-    if (hex.empty()) {
-      value.reset_to_default(AttributeType::Color);
+  switch (*attr_type) {
+    case AttributeType::String: {
+      value = as_string(json, "value").value();
+      break;
     }
-    else {
-      if (const auto color = (hex.size() == 9) ? cen::color::from_argb(hex)
-                                               : cen::color::from_rgb(hex)) {
-        value = *color;
+    case AttributeType::Int: {
+      value = as_int(json, "value").value();
+      break;
+    }
+    case AttributeType::Float: {
+      value = as_float(json, "value").value();
+      break;
+    }
+    case AttributeType::Bool: {
+      value = as_bool(json, "value").value();
+      break;
+    }
+    case AttributeType::Path: {
+      fs::path path = as_string(json, "value").value();
+      value = std::move(path);
+      break;
+    }
+    case AttributeType::Color: {
+      const auto hex = as_string(json, "value").value();
+
+      // Empty color properties are not supported, so just assume the default color value
+      if (hex.empty()) {
+        value.reset_to_default(AttributeType::Color);
       }
       else {
-        return ParseError::CorruptPropertyValue;
+        if (const auto color = (hex.size() == 9) ? cen::color::from_argb(hex)
+                                                 : cen::color::from_rgb(hex)) {
+          value = *color;
+        }
+        else {
+          return ParseError::CorruptPropertyValue;
+        }
       }
+
+      break;
     }
-  }
-  else {
-    return ParseError::UnsupportedPropertyType;
+    case AttributeType::Object: {
+      value = object_t {as_int(json, "value").value()};
+      break;
+    }
   }
 
   return ParseError::None;
