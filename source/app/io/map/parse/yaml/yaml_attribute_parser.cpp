@@ -32,35 +32,6 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto parse_attribute_type(const std::string_view type)
-    -> Maybe<AttributeType>
-{
-  if (type == "string") {
-    return AttributeType::String;
-  }
-  else if (type == "int") {
-    return AttributeType::Int;
-  }
-  else if (type == "float") {
-    return AttributeType::Float;
-  }
-  else if (type == "bool") {
-    return AttributeType::Bool;
-  }
-  else if (type == "color") {
-    return AttributeType::Color;
-  }
-  else if (type == "object") {
-    return AttributeType::Object;
-  }
-  else if (type == "file") {
-    return AttributeType::Path;
-  }
-  else {
-    return nothing;
-  }
-}
-
 [[nodiscard]] auto parse_attribute_value(const YAML::Node& value,
                                          const AttributeType type) -> Maybe<Attribute>
 {
@@ -98,29 +69,28 @@ namespace {
   }
 }
 
-[[nodiscard]] auto parse_component_definition_attribute(const YAML::Node& node,
-                                                        ir::AttributeMap& def)
-    -> ParseError
+[[nodiscard]] auto parse_component_definition_attribute(const YAML::Node& node)
+    -> Expected<Attribute, ParseError>
 {
   std::string name;
   if (!read_attribute(node, "name", name)) {
-    return ParseError::NoComponentDefAttributeName;
+    return error(ParseError::NoComponentDefAttributeName);
   }
 
   std::string type_name;
   if (!read_attribute(node, "type", type_name)) {
-    return ParseError::NoComponentDefAttributeType;
+    return error(ParseError::NoComponentDefAttributeType);
   }
 
   AttributeType type {};
-  if (const auto parsed_type = parse_attribute_type(type_name)) {
+  if (const auto parsed_type = parse_attr_type(type_name)) {
     type = *parsed_type;
   }
   else {
-    return ParseError::UnsupportedComponentDefAttributeType;
+    return error(ParseError::UnsupportedComponentDefAttributeType);
   }
 
-  auto& value = def[name];
+  Attribute value;
   value.reset_to_default(type);
 
   if (auto default_value = node["default"]) {
@@ -151,7 +121,7 @@ namespace {
           value = *color;
         }
         else {
-          return ParseError::CorruptComponentDefAttributeValue;
+          return error(ParseError::CorruptComponentDefAttributeValue);
         }
         break;
       }
@@ -161,139 +131,179 @@ namespace {
     }
   }
 
-  return ParseError::None;
+  return value;
 }
 
-[[nodiscard]] auto parse_component_definition(const YAML::Node& node, ir::MapData& data)
-    -> ParseError
+[[nodiscard]] auto parse_component_definition(const YAML::Node& node)
+    -> Expected<ir::AttributeMap, ParseError>
 {
-  std::string type;
-  if (!read_attribute(node, "name", type)) {
-    return ParseError::NoComponentDefName;
-  }
-
-  auto& def = data.component_definitions[type];
+  ir::AttributeMap def;
 
   if (auto attribute_seq = node["attributes"]) {
     for (auto attribute_node : attribute_seq) {
-      if (const auto err = parse_component_definition_attribute(attribute_node, def);
-          err != ParseError::None) {
-        return err;
+      std::string attribute_name;
+      if (!read_attribute(attribute_node, "name", attribute_name)) {
+        return error(ParseError::NoComponentDefAttributeName);
+      }
+
+      if (auto attr = parse_component_definition_attribute(attribute_node)) {
+        def[std::move(attribute_name)] = std::move(*attr);
+      }
+      else {
+        return pass_on_error(attr);
       }
     }
   }
 
-  return ParseError::None;
+  return def;
 }
 
 [[nodiscard]] auto parse_component(const YAML::Node& node,
                                    const ir::MapData& map,
-                                   ir::ContextData& data) -> ParseError
+                                   const std::string& type)
+    -> Expected<ir::AttributeMap, ParseError>
 {
-  std::string type;
-  if (!read_attribute(node, "type", type)) {
-    return ParseError::NoComponentType;
-  }
-
   // TODO invalid component type check, e.g. ParseError::InvalidComponentType
   const auto& prototype = map.component_definitions.at(type);
-  auto& attributes = data.components[type];
+  ir::AttributeMap comp;
 
   if (auto sequence = node["values"]) {
     for (const auto& value_node : sequence) {
       std::string attr_name;
       if (!read_attribute(value_node, "name", attr_name)) {
-        return ParseError::NoComponentAttributeName;
+        return error(ParseError::NoComponentAttributeName);
       }
 
       if (auto value = value_node["value"]) {
         const auto attr_type = prototype.at(attr_name).type();
         if (auto attribute_value = parse_attribute_value(value, attr_type)) {
-          attributes[attr_name] = std::move(*attribute_value);
+          comp[attr_name] = std::move(*attribute_value);
         }
         else {
-          return ParseError::CorruptComponentAttributeValue;
+          return error(ParseError::CorruptComponentAttributeValue);
         }
       }
       else {
-        return ParseError::NoComponentAttributeValue;
+        return error(ParseError::NoComponentAttributeValue);
       }
     }
   }
 
-  return ParseError::None;
+  return comp;
 }
 
 }  // namespace
 
-auto parse_component_definitions(const YAML::Node& node, ir::MapData& data) -> ParseError
+auto parse_component_definitions(const YAML::Node& node)
+    -> Expected<ir::ComponentMap, ParseError>
 {
+  ir::ComponentMap defs;
+
   if (auto sequence = node["component-definitions"]) {
     for (const auto& def_node : sequence) {
-      if (const auto err = parse_component_definition(def_node, data);
-          err != ParseError::None) {
-        return err;
+      std::string type;
+      if (!read_attribute(def_node, "name", type)) {
+        return error(ParseError::NoComponentDefName);
+      }
+
+      if (auto def = parse_component_definition(def_node)) {
+        defs[std::move(type)] = std::move(*def);
+      }
+      else {
+        return pass_on_error(def);
       }
     }
   }
 
-  return ParseError::None;
+  return defs;
 }
 
-auto parse_components(const YAML::Node& node,
-                      const ir::MapData& map,
-                      ir::ContextData& data) -> ParseError
+auto parse_components(const YAML::Node& node, const ir::MapData& map)
+    -> Expected<ir::ComponentMap, ParseError>
 {
+  ir::ComponentMap comps;
+
   if (auto sequence = node["components"]) {
     for (const auto& component_node : sequence) {
-      if (const auto err = parse_component(component_node, map, data);
-          err != ParseError::None) {
-        return err;
+      std::string type;
+      if (!read_attribute(component_node, "type", type)) {
+        return error(ParseError::NoComponentType);
+      }
+
+      if (auto comp = parse_component(component_node, map, type)) {
+        comps[std::move(type)] = std::move(*comp);
+      }
+      else {
+        return pass_on_error(comp);
       }
     }
   }
 
-  return ParseError::None;
+  return comps;
 }
 
-auto parse_properties(const YAML::Node& node, ir::ContextData& data) -> ParseError
+auto parse_properties(const YAML::Node& node) -> Expected<ir::AttributeMap, ParseError>
 {
+  ir::AttributeMap props;
+
   if (auto sequence = node["properties"]) {
     for (const auto& property_node : sequence) {
       std::string property_name;
       if (!read_attribute(property_node, "name", property_name)) {
-        return ParseError::NoPropertyName;
+        return error(ParseError::NoPropertyName);
       }
 
       std::string type;
       if (!read_attribute(property_node, "type", type)) {
-        return ParseError::NoPropertyType;
+        return error(ParseError::NoPropertyType);
       }
 
       AttributeType property_type {};
-      if (auto parsed_type = parse_attribute_type(type)) {
+      if (auto parsed_type = parse_attr_type(type)) {
         property_type = *parsed_type;
       }
       else {
-        return ParseError::UnsupportedPropertyType;
+        return error(ParseError::UnsupportedPropertyType);
       }
 
       if (auto value_attr = property_node["value"]) {
         if (auto value = parse_attribute_value(value_attr, property_type)) {
-          data.properties[std::move(property_name)] = std::move(*value);
+          props[std::move(property_name)] = std::move(*value);
         }
         else {
-          return ParseError::CorruptPropertyValue;
+          return error(ParseError::CorruptPropertyValue);
         }
       }
       else {
         // TODO make it so that values can be omitted if using default value?
-        return ParseError::CorruptPropertyValue;
+        return error(ParseError::CorruptPropertyValue);
       }
     }
   }
 
-  return ParseError::None;
+  return props;
+}
+
+auto parse_context(const YAML::Node& node, const ir::MapData& map)
+    -> Expected<ir::ContextData, ParseError>
+{
+  ir::ContextData context;
+
+  if (auto props = parse_properties(node)) {
+    context.properties = std::move(*props);
+  }
+  else {
+    return pass_on_error(props);
+  }
+
+  if (auto comps = parse_components(node, map)) {
+    context.components = std::move(*comps);
+  }
+  else {
+    return pass_on_error(comps);
+  }
+
+  return context;
 }
 
 }  // namespace tactile::io

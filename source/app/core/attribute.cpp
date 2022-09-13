@@ -53,6 +53,34 @@ auto stringify(const AttributeType type) -> const char*
   }
 }
 
+auto parse_attr_type(std::string_view name) -> Maybe<AttributeType>
+{
+  if (name == "string") {
+    return AttributeType::String;
+  }
+  else if (name == "int") {
+    return AttributeType::Int;
+  }
+  else if (name == "float") {
+    return AttributeType::Float;
+  }
+  else if (name == "bool") {
+    return AttributeType::Bool;
+  }
+  else if (name == "file" || name == "path") {
+    return AttributeType::Path;
+  }
+  else if (name == "color") {
+    return AttributeType::Color;
+  }
+  else if (name == "object") {
+    return AttributeType::Object;
+  }
+  else {
+    return nothing;
+  }
+}
+
 auto operator<<(std::ostream& stream, const AttributeType type) -> std::ostream&
 {
   return stream << stringify(type);

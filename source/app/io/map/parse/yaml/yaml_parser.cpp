@@ -19,16 +19,21 @@
 
 #include "yaml_parser.hpp"
 
+#include <utility>  // move
+
 #include <yaml-cpp/yaml.h>
 
+#include "core/common/expected.hpp"
 #include "io/util/yaml.hpp"
 
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto parse_tile_format(const YAML::Node& node, ir::TileFormatData& format)
-    -> ParseError
+[[nodiscard]] auto parse_tile_format(const YAML::Node& node)
+    -> Expected<ir::TileFormatData, ParseError>
 {
+  ir::TileFormatData format;
+
   if (auto encoding = node["encoding"]) {
     auto encoding_str = encoding.as<std::string>();
     if (encoding_str == "plain") {
@@ -38,7 +43,7 @@ namespace {
       format.encoding = TileEncoding::Base64;
     }
     else {
-      return ParseError::BadTileFormatEncoding;
+      return error(ParseError::BadTileFormatEncoding);
     }
   }
   else {
@@ -57,7 +62,7 @@ namespace {
       format.compression = TileCompression::Zstd;
     }
     else {
-      return ParseError::BadTileFormatCompression;
+      return error(ParseError::BadTileFormatCompression);
     }
   }
   else {
@@ -69,85 +74,93 @@ namespace {
 
   if (format.encoding == TileEncoding::Plain &&
       format.compression != TileCompression::None) {
-    return ParseError::PlainEncodingWithCompression;
+    return error(ParseError::PlainEncodingWithCompression);
   }
 
   if (const auto level = format.zlib_compression_level;
       level && !TileFormat::is_valid_zlib_compression_level(*level)) {
-    return ParseError::BadZlibCompressionLevel;
+    return error(ParseError::BadZlibCompressionLevel);
   }
 
   if (const auto level = format.zstd_compression_level;
       level && !TileFormat::is_valid_zstd_compression_level(*level)) {
-    return ParseError::BadZstdCompressionLevel;
+    return error(ParseError::BadZstdCompressionLevel);
   }
 
-  return ParseError::None;
+  return format;
 }
 
-[[nodiscard]] auto parse_map(const fs::path& path, ir::MapData& data) -> ParseError
+[[nodiscard]] auto parse_map(const fs::path& path, ir::MapData& map) -> ParseError
 {
   const auto node = YAML::LoadFile(path.string());
   if (!node) {
     return ParseError::CouldNotReadFile;
   }
 
-  if (!read_attribute(node, "row-count", data.row_count)) {
+  if (!read_attribute(node, "row-count", map.row_count)) {
     return ParseError::NoMapHeight;
   }
 
-  if (!read_attribute(node, "column-count", data.col_count)) {
+  if (!read_attribute(node, "column-count", map.col_count)) {
     return ParseError::NoMapWidth;
   }
 
-  if (!read_attribute(node, "tile-width", data.tile_size.x)) {
+  if (!read_attribute(node, "tile-width", map.tile_size.x)) {
     return ParseError::NoMapTileWidth;
   }
 
-  if (!read_attribute(node, "tile-height", data.tile_size.y)) {
+  if (!read_attribute(node, "tile-height", map.tile_size.y)) {
     return ParseError::NoMapTileHeight;
   }
 
-  if (!read_attribute(node, "next-layer-id", data.next_layer_id)) {
+  if (!read_attribute(node, "next-layer-id", map.next_layer_id)) {
     return ParseError::NoMapNextLayerId;
   }
 
-  if (!read_attribute(node, "next-object-id", data.next_object_id)) {
+  if (!read_attribute(node, "next-object-id", map.next_object_id)) {
     return ParseError::NoMapNextObjectId;
   }
 
-  if (auto tile_format = node["tile-format"]) {
-    if (const auto err = parse_tile_format(tile_format, data.tile_format);
-        err != ParseError::None) {
-      return err;
+  if (auto format_node = node["tile-format"]) {
+    if (const auto format = parse_tile_format(format_node)) {
+      map.tile_format = *format;
+    }
+    else {
+      return format.error();
     }
   }
 
-  const auto dir = path.parent_path();
-
-  if (const auto err = parse_component_definitions(node, data); err != ParseError::None) {
-    return err;
+  if (auto components = parse_component_definitions(node)) {
+    map.component_definitions = std::move(*components);
+  }
+  else {
+    return components.error();
   }
 
   if (auto seq = node["tilesets"]) {
-    if (const auto err = parse_tilesets(seq, data, dir); err != ParseError::None) {
-      return err;
+    const auto dir = path.parent_path();
+    if (auto tilesets = parse_tilesets(seq, map, dir)) {
+      map.tilesets = std::move(*tilesets);
+    }
+    else {
+      return tilesets.error();
     }
   }
 
   if (auto seq = node["layers"]) {
-    if (const auto err = parse_layers(seq, data); err != ParseError::None) {
-      return err;
+    if (auto layers = parse_layers(seq, map)) {
+      map.layers = std::move(*layers);
+    }
+    else {
+      return layers.error();
     }
   }
 
-  if (const auto err = parse_properties(node, data.context); err != ParseError::None) {
-    return err;
+  if (auto context = parse_context(node, map)) {
+    map.context = std::move(*context);
   }
-
-  if (const auto err = parse_components(node, data, data.context);
-      err != ParseError::None) {
-    return err;
+  else {
+    return context.error();
   }
 
   return ParseError::None;

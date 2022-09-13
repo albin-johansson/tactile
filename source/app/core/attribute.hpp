@@ -19,16 +19,18 @@
 
 #pragma once
 
-#include <concepts>  // same_as
-#include <ostream>   // ostream
-#include <string>    // string
-#include <utility>   // move
-#include <variant>   // variant, get, get_if, holds_alternative
+#include <concepts>     // same_as
+#include <ostream>      // ostream
+#include <string>       // string
+#include <string_view>  // string_view
+#include <utility>      // move
+#include <variant>      // variant, get, get_if, holds_alternative
 
 #include <centurion/color.hpp>
 
 #include "core/common/fs.hpp"
 #include "core/common/ints.hpp"
+#include "core/common/maybe.hpp"
 
 namespace tactile {
 
@@ -54,6 +56,8 @@ enum class AttributeType
  * \throws TactileError if the type is invalid.
  */
 [[nodiscard]] auto stringify(AttributeType type) -> const char*;
+
+[[nodiscard]] auto parse_attr_type(std::string_view name) -> Maybe<AttributeType>;
 
 /**
  * Outputs an attribute type using an output stream.

@@ -19,8 +19,11 @@
 
 #pragma once
 
+#include <vector>  // vector
+
 #include <yaml-cpp/yaml.h>
 
+#include "core/common/expected.hpp"
 #include "core/common/fs.hpp"
 #include "io/fwd.hpp"
 #include "io/map/parse/parse_error.hpp"
@@ -31,24 +34,26 @@ namespace tactile::io {
 [[nodiscard]] auto parse_yaml_map(const fs::path& path) -> ParseResult;
 
 [[nodiscard]] auto parse_tilesets(const YAML::Node& sequence,
-                                  ir::MapData& data,
-                                  const fs::path& dir) -> ParseError;
+                                  const ir::MapData& map,
+                                  const fs::path& dir)
+    -> Expected<std::vector<ir::TilesetData>, ParseError>;
 
-[[nodiscard]] auto parse_layers(const YAML::Node& sequence, ir::MapData& data)
-    -> ParseError;
+[[nodiscard]] auto parse_layers(const YAML::Node& sequence, const ir::MapData& map)
+    -> Expected<std::vector<ir::LayerData>, ParseError>;
 
-[[nodiscard]] auto parse_object(const YAML::Node& node,
-                                const ir::MapData& map,
-                                ir::ObjectData& object) -> ParseError;
+[[nodiscard]] auto parse_object(const YAML::Node& node, const ir::MapData& map)
+    -> Expected<ir::ObjectData, ParseError>;
 
-[[nodiscard]] auto parse_component_definitions(const YAML::Node& node, ir::MapData& data)
-    -> ParseError;
+[[nodiscard]] auto parse_component_definitions(const YAML::Node& node )
+    -> Expected<ir::ComponentMap, ParseError>;
 
-[[nodiscard]] auto parse_properties(const YAML::Node& node, ir::ContextData& context)
-    -> ParseError;
+[[nodiscard]] auto parse_properties(const YAML::Node& node)
+    -> Expected<ir::AttributeMap, ParseError>;
 
-[[nodiscard]] auto parse_components(const YAML::Node& node,
-                                    const ir::MapData& map,
-                                    ir::ContextData& context) -> ParseError;
+[[nodiscard]] auto parse_components(const YAML::Node& node, const ir::MapData& map)
+    -> Expected<ir::ComponentMap, ParseError>;
+
+[[nodiscard]] auto parse_context(const YAML::Node& node, const ir::MapData& map)
+    -> Expected<ir::ContextData, ParseError>;
 
 }  // namespace tactile::io
