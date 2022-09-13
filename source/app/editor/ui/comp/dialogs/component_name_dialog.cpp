@@ -25,7 +25,7 @@
 namespace tactile::ui {
 
 auto ComponentNameDialog::validate(const DocumentModel& model,
-                                   const std::string_view input) const -> bool
+                                   std::string_view input) const -> bool
 {
   const auto& document = model.require_active_document();
   const auto* index = document.view_component_index();

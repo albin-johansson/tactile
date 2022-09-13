@@ -70,7 +70,7 @@ class FmtString final
 {
  public:
   template <typename... Args>
-  explicit FmtString(const std::string_view fmt, const Args&... args)
+  explicit FmtString(std::string_view fmt, const Args&... args)
   {
     const auto result =
         fmt::format_to_n(mBuffer.begin(), Capacity, fmt::runtime(fmt), args...);
