@@ -26,10 +26,10 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto _get_bounds(const Object& object, const float2& tileSize) -> Vector4f
+[[nodiscard]] auto get_bounds(const Object& object, const float2& tile_size) -> Vector4f
 {
-  if (object.get_type() == ObjectType::Point) {
-    return {object.get_pos() - (tileSize * 0.25f), tileSize * 0.5f};
+  if (object.is_point()) {
+    return {object.get_pos() - (tile_size * 0.25f), tile_size * 0.5f};
   }
   else {
     return {object.get_pos(), object.get_size()};
@@ -38,9 +38,9 @@ namespace {
 
 }  // namespace
 
-auto ObjectLayer::make() -> Shared<ObjectLayer>
+void ObjectLayer::accept(IContextVisitor& visitor) const
 {
-  return std::make_shared<ObjectLayer>();
+  visitor.visit(*this);
 }
 
 void ObjectLayer::accept(ILayerVisitor& visitor)
@@ -63,19 +63,14 @@ void ObjectLayer::set_visible(const bool visible)
   mDelegate.set_visible(visible);
 }
 
-void ObjectLayer::set_parent(const Maybe<UUID>& parentId)
+void ObjectLayer::set_parent(const Maybe<UUID>& parent_id)
 {
-  mDelegate.set_parent(parentId);
+  mDelegate.set_parent(parent_id);
 }
 
 void ObjectLayer::set_meta_id(const int32 id)
 {
   mDelegate.set_meta_id(id);
-}
-
-void ObjectLayer::accept(IContextVisitor& visitor) const
-{
-  visitor.visit(*this);
 }
 
 void ObjectLayer::set_name(std::string name)
@@ -142,16 +137,16 @@ auto ObjectLayer::get_object(const UUID& id) const -> const Object&
   return *lookup_in(mObjects, id);
 }
 
-auto ObjectLayer::object_at(const float2& pos, const float2& tileSize) const
+auto ObjectLayer::object_at(const float2& pos, const float2& tile_size) const
     -> Maybe<UUID>
 {
   for (const auto& [id, object] : mObjects) {
-    const auto bounds = _get_bounds(*object, tileSize);
+    const auto bounds = get_bounds(*object, tile_size);
 
-    const auto maxX = bounds.x + bounds.z;
-    const auto maxY = bounds.y + bounds.w;
+    const auto max_x = bounds.x + bounds.z;
+    const auto max_y = bounds.y + bounds.w;
 
-    if (pos.x >= bounds.x && pos.y >= bounds.y && pos.x <= maxX && pos.y <= maxY) {
+    if (pos.x >= bounds.x && pos.y >= bounds.y && pos.x <= max_x && pos.y <= max_y) {
       return id;
     }
   }
@@ -171,7 +166,7 @@ auto ObjectLayer::is_visible() const -> bool
 
 auto ObjectLayer::clone() const -> Shared<ILayer>
 {
-  auto copy = make();
+  auto copy = std::make_shared<ObjectLayer>();
   copy->mDelegate = mDelegate.clone();
   return copy;
 }
@@ -214,6 +209,11 @@ auto ObjectLayer::get_parent() const -> Maybe<UUID>
 auto ObjectLayer::get_meta_id() const -> Maybe<int32>
 {
   return mDelegate.get_meta_id();
+}
+
+auto ObjectLayer::get_type() const -> LayerType
+{
+  return LayerType::ObjectLayer;
 }
 
 }  // namespace tactile

@@ -36,8 +36,7 @@ TEST(GroupLayer, Defaults)
   GroupLayer root;
   ASSERT_EQ(0u, root.layer_count());
 
-  struct Counter final : IConstLayerVisitor
-  {
+  struct Counter final : IConstLayerVisitor {
     usize count {};
 
     void visit(const TileLayer&) override { ++count; }
@@ -56,7 +55,7 @@ TEST(GroupLayer, SimpleEach)
 
   auto t1 = TileLayer::make();
   auto g1 = GroupLayer::make();
-  auto o1 = ObjectLayer::make();
+  auto o1 = std::make_shared<ObjectLayer>();
 
   root.add_layer(t1);
   root.add_layer(g1);
@@ -173,7 +172,7 @@ TEST(GroupLayer, MoveLayerUp)
   auto t1 = TileLayer::make();
   auto t2 = TileLayer::make();
   auto t3 = TileLayer::make();
-  auto o1 = ObjectLayer::make();
+  auto o1 = std::make_shared<ObjectLayer>();
   auto g1 = GroupLayer::make();
   auto g2 = GroupLayer::make();
 
@@ -368,7 +367,7 @@ TEST(GroupLayer, SiblingCount)
   auto t3 = TileLayer::make();
   auto g1 = GroupLayer::make();
   auto g2 = GroupLayer::make();
-  auto o1 = ObjectLayer::make();
+  auto o1 = std::make_shared<ObjectLayer>();
 
   root.add_layer(g1);
   root.add_layer(g1->get_uuid(), t1);
@@ -465,7 +464,7 @@ TEST(GroupLayer, CanMoveLayerDown)
 
   auto t1 = TileLayer::make();
   auto t2 = TileLayer::make();
-  auto o1 = ObjectLayer::make();
+  auto o1 = std::make_shared<ObjectLayer>();
   auto g1 = GroupLayer::make();
 
   root.add_layer(g1);

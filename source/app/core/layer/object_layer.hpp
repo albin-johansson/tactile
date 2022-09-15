@@ -32,11 +32,10 @@
 
 namespace tactile {
 
-class ObjectLayer final : public ILayer
-{
+/// Represents a collection of map objects, such as rectangles and points.
+class ObjectLayer final : public ILayer {
  public:
-  [[nodiscard]] static auto make() -> Shared<ObjectLayer>;
-
+  void accept(IContextVisitor& visitor) const override;
   void accept(ILayerVisitor& visitor) override;
   void accept(IConstLayerVisitor& visitor) const override;
 
@@ -44,11 +43,9 @@ class ObjectLayer final : public ILayer
 
   void set_visible(bool visible) override;
 
-  void set_parent(const Maybe<UUID>& parentId) override;
+  void set_parent(const Maybe<UUID>& parent_id) override;
 
   void set_meta_id(int32 id) override;
-
-  void accept(IContextVisitor& visitor) const override;
 
   void set_name(std::string name) override;
 
@@ -71,7 +68,7 @@ class ObjectLayer final : public ILayer
   [[nodiscard]] auto get_object(const UUID& id) -> Object&;
   [[nodiscard]] auto get_object(const UUID& id) const -> const Object&;
 
-  [[nodiscard]] auto object_at(const float2& pos, const float2& tileSize) const
+  [[nodiscard]] auto object_at(const float2& pos, const float2& tile_size) const
       -> Maybe<UUID>;
 
   [[nodiscard]] auto get_opacity() const -> float override;
@@ -94,20 +91,10 @@ class ObjectLayer final : public ILayer
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
-  [[nodiscard]] auto get_type() const -> LayerType override
-  {
-    return LayerType::ObjectLayer;
-  }
+  [[nodiscard]] auto get_type() const -> LayerType override;
 
-  [[nodiscard]] auto begin() const noexcept
-  {
-    return mObjects.begin();
-  }
-
-  [[nodiscard]] auto end() const noexcept
-  {
-    return mObjects.end();
-  }
+  [[nodiscard]] auto begin() const noexcept { return mObjects.begin(); }
+  [[nodiscard]] auto end() const noexcept { return mObjects.end(); }
 
  private:
   LayerDelegate mDelegate;

@@ -246,7 +246,7 @@ TEST(Map, AddLayer)
   Map  map;
   auto t1 = TileLayer::make();
   auto t2 = TileLayer::make();
-  auto o1 = ObjectLayer::make();
+  auto o1 = std::make_shared<ObjectLayer>();
   auto g1 = GroupLayer::make();
 
   map.add_layer(t1);

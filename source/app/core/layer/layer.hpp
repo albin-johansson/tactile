@@ -30,8 +30,7 @@
 namespace tactile {
 
 /// Interface for all layer classes.
-class ILayer : public IContext
-{
+class ILayer : public IContext {
  public:
   virtual ~ILayer() noexcept override = default;
 
@@ -46,7 +45,7 @@ class ILayer : public IContext
   virtual void set_visible(bool visible) = 0;
 
   /// Sets the parent layer ID.
-  virtual void set_parent(const Maybe<UUID>& parentId) = 0;
+  virtual void set_parent(const Maybe<UUID>& parent_id) = 0;
 
   /// Sets the human-readable identifier associated with the layer (used in save files).
   virtual void set_meta_id(int32 id) = 0;

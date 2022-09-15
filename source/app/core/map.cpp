@@ -161,7 +161,7 @@ auto Map::add_tile_layer(const Maybe<UUID>& parentId) -> UUID
 
 auto Map::add_object_layer(const Maybe<UUID>& parentId) -> UUID
 {
-  auto layer = ObjectLayer::make();
+  auto layer = std::make_shared<ObjectLayer>();
 
   layer->set_meta_id(fetch_and_increment_next_layer_id());
   layer->set_name(fmt::format("Object Layer {}", mObjectLayerSuffix));
