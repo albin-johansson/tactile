@@ -22,9 +22,9 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/comp/component_bundle.hpp"
 #include "core/comp/component_index.hpp"
 #include "core/ctx/context.hpp"
+#include "core/ctx/context_info.hpp"
 #include "core/ctx/context_manager.hpp"
 #include "core/event/component_events.hpp"
 #include "core/model.hpp"
@@ -58,7 +58,7 @@ void show_add_component_button_popup_content(const ADocument& document,
     ImGui::TextUnformatted(lang.misc.no_available_components.c_str());
   }
   else {
-    const auto& comps = context.get_comps();
+    const auto& comps = context.ctx().comps();
     for (const auto& [definition_id, definition] : *index) {
       Disable disable_if {comps.contains(definition_id)};
 
@@ -79,11 +79,11 @@ void show_contents(const ADocument& document, entt::dispatcher& dispatcher)
   const auto& lang = get_current_language();
   const auto& context = document.get_contexts().active_context();
 
-  const FmtString indicator {"{}: {}", lang.misc.context, context.get_name()};
+  const FmtString indicator {"{}: {}", lang.misc.context, context.ctx().name()};
   ImGui::TextUnformatted(indicator.data());
 
   if (Child pane {"##ComponentsChild"}; pane.is_open()) {
-    const auto& comps = context.get_comps();
+    const auto& comps = context.ctx().comps();
     if (comps.empty()) {
       prepare_vertical_alignment_center(2);
       centered_label(lang.misc.context_has_no_components.c_str());

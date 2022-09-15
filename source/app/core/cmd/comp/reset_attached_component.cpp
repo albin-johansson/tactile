@@ -21,9 +21,9 @@
 
 #include <utility>  // move
 
-#include "core/comp/component_bundle.hpp"
 #include "core/comp/component_index.hpp"
 #include "core/ctx/context.hpp"
+#include "core/ctx/context_info.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
@@ -47,7 +47,7 @@ ResetAttachedComponent::ResetAttachedComponent(Shared<ComponentIndex> index,
 
 void ResetAttachedComponent::undo()
 {
-  auto& comps = mContext->get_comps();
+  auto& comps = mContext->ctx().comps();
 
   comps.erase(mComponentId);
   comps.add(mComponent.value());
@@ -57,7 +57,7 @@ void ResetAttachedComponent::undo()
 
 void ResetAttachedComponent::redo()
 {
-  auto& comps = mContext->get_comps();
+  auto& comps = mContext->ctx().comps();
   const auto& definition = mIndex->at(mComponentId);
 
   mComponent = comps.at(mComponentId);

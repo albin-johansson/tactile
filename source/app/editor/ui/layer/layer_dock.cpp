@@ -100,7 +100,7 @@ void update_rename_dialog(const DocumentModel& model, entt::dispatcher& dispatch
     const auto& map = document.get_map();
     const auto& layer = map.view_layer(target_layer_id);
 
-    dialogs.rename_layer.show(target_layer_id, layer.get_name());
+    dialogs.rename_layer.show(target_layer_id, layer.ctx().name());
     rename_target_id.reset();
   }
 

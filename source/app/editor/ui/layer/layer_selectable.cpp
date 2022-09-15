@@ -110,12 +110,12 @@ void show_object_selectable(const ObjectLayer& layer,
   const auto* icon = get_icon(object_type);
 
   std::string name;
-  if (object.get_name().empty()) {
+  if (object.ctx().name().empty()) {
     TACTILE_ASSERT(object.get_meta_id().has_value());
     name = fmt::format("{} Object {}", icon, object.get_meta_id().value());
   }
   else {
-    name = fmt::format("{} {}", icon, object.get_name());
+    name = fmt::format("{} {}", icon, object.ctx().name());
   }
 
   if (ImGui::Selectable(name.c_str(), layer.active_object_id() == object_id)) {
@@ -154,7 +154,7 @@ void show_object_layer_selectable(const Map& map,
   if (TreeNode tree_node {"##ObjectLayerTree",
                           flags,
                           TAC_ICON_OBJECT_LAYER " %s",
-                          layer.get_name().c_str()};
+                          layer.ctx().name().c_str()};
       tree_node.is_open()) {
     Indent indent;
 
@@ -190,7 +190,7 @@ void show_group_layer_selectable(const MapDocument& document,
   if (TreeNode tree_node {"##GroupLayerTreeNode",
                           flags,
                           TAC_ICON_GROUP_LAYER " %s",
-                          layer.get_name().c_str()};
+                          layer.ctx().name().c_str()};
       tree_node.is_open()) {
     Indent indent;
 
@@ -230,7 +230,7 @@ void layer_selectable(const MapDocument& document,
   const auto flags =
       is_active_layer ? (base_node_flags | ImGuiTreeNodeFlags_Selected) : base_node_flags;
 
-  const FmtString name {"{} {}", get_icon(layer.get_type()), layer.get_name()};
+  const FmtString name {"{} {}", get_icon(layer.get_type()), layer.ctx().name()};
 
   switch (layer.get_type()) {
     case LayerType::TileLayer: {

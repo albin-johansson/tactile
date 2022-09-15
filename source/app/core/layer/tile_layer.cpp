@@ -33,11 +33,13 @@ namespace tactile {
 
 TileLayer::TileLayer()
     : TileLayer {5, 5}
-{}
+{
+}
 
 TileLayer::TileLayer(const usize rows, const usize columns)
     : mTiles {make_tile_matrix(rows, columns)}
-{}
+{
+}
 
 auto TileLayer::make() -> Shared<TileLayer>
 {
@@ -173,11 +175,6 @@ void TileLayer::accept(IContextVisitor& visitor) const
   visitor.visit(*this);
 }
 
-void TileLayer::set_name(std::string name)
-{
-  mDelegate.set_name(std::move(name));
-}
-
 void TileLayer::set_tile(const TilePos& pos, const TileID id)
 {
   if (is_valid(pos)) [[likely]] {
@@ -247,34 +244,19 @@ auto TileLayer::clone() const -> Shared<ILayer>
   return layer;
 }
 
+auto TileLayer::ctx() -> ContextInfo&
+{
+  return mDelegate.ctx();
+}
+
+auto TileLayer::ctx() const -> const ContextInfo&
+{
+  return mDelegate.ctx();
+}
+
 auto TileLayer::get_uuid() const -> const UUID&
 {
-  return mDelegate.get_uuid();
-}
-
-auto TileLayer::get_name() const -> const std::string&
-{
-  return mDelegate.get_name();
-}
-
-auto TileLayer::get_props() -> PropertyBundle&
-{
-  return mDelegate.get_props();
-}
-
-auto TileLayer::get_props() const -> const PropertyBundle&
-{
-  return mDelegate.get_props();
-}
-
-auto TileLayer::get_comps() -> ComponentBundle&
-{
-  return mDelegate.get_comps();
-}
-
-auto TileLayer::get_comps() const -> const ComponentBundle&
-{
-  return mDelegate.get_comps();
+  return mDelegate.ctx().uuid();
 }
 
 auto TileLayer::get_parent() const -> Maybe<UUID>

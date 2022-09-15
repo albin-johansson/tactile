@@ -45,7 +45,7 @@ TEST(SetComponentAttrType, RedoUndo)
                           .result();
 
   auto& map = document->get_map();
-  auto& bundle = map.get_comps();
+  auto& bundle = map.ctx().comps();
   bundle.add(index->at(compId).instantiate());
 
   cmd::SetComponentAttrType cmd {document.get(), compId, "Attr", AttributeType::Int};

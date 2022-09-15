@@ -31,25 +31,22 @@
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/ctx/context.hpp"
-#include "core/ctx/context_delegate.hpp"
+#include "core/ctx/context_info.hpp"
 #include "core/tile_pos.hpp"
 #include "core/tileset/tile.hpp"
 #include "core/tileset/tileset_info.hpp"
 
 namespace tactile {
 
-class Tileset final : public IContext
-{
+class Tileset final : public IContext {
  public:
   Tileset(const UUID& id, TilesetInfo info);
 
   explicit Tileset(TilesetInfo info);
 
-  void update();
-
   void accept(IContextVisitor& visitor) const override;
 
-  void set_name(std::string name) override;
+  void update();
 
   [[nodiscard]] auto operator[](TileIndex index) -> Tile&;
   [[nodiscard]] auto operator[](TileIndex index) const -> const Tile&;
@@ -61,68 +58,36 @@ class Tileset final : public IContext
   /// Returns the index of the tile that should be rendered for a specific tile.
   [[nodiscard]] auto appearance_of(TileIndex index) const -> TileIndex;
 
-  [[nodiscard]] auto get_props() -> PropertyBundle& override;
-  [[nodiscard]] auto get_props() const -> const PropertyBundle& override;
-
-  [[nodiscard]] auto get_comps() -> ComponentBundle& override;
-  [[nodiscard]] auto get_comps() const -> const ComponentBundle& override;
+  [[nodiscard]] auto ctx() -> ContextInfo& override;
+  [[nodiscard]] auto ctx() const -> const ContextInfo& override;
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
-  [[nodiscard]] auto get_name() const -> const std::string& override;
+  [[nodiscard]] auto texture_id() const noexcept -> uint { return mTextureId; }
 
-  [[nodiscard]] auto texture_id() const noexcept -> uint
-  {
-    return mTextureId;
-  }
+  [[nodiscard]] auto texture_path() const -> const fs::path& { return mTexturePath; }
 
-  [[nodiscard]] auto texture_path() const -> const fs::path&
-  {
-    return mTexturePath;
-  }
+  [[nodiscard]] auto texture_size() const noexcept -> const int2& { return mTextureSize; }
 
-  [[nodiscard]] auto texture_size() const noexcept -> const int2&
-  {
-    return mTextureSize;
-  }
+  [[nodiscard]] auto tile_size() const noexcept -> const int2& { return mTileSize; }
 
-  [[nodiscard]] auto tile_size() const noexcept -> const int2&
-  {
-    return mTileSize;
-  }
+  [[nodiscard]] auto uv_size() const noexcept -> const float2& { return mUvSize; }
 
-  [[nodiscard]] auto uv_size() const noexcept -> const float2&
-  {
-    return mUvSize;
-  }
+  [[nodiscard]] auto row_count() const noexcept -> int32 { return mRowCount; }
 
-  [[nodiscard]] auto row_count() const noexcept -> int32
-  {
-    return mRowCount;
-  }
-
-  [[nodiscard]] auto column_count() const noexcept -> int32
-  {
-    return mColumnCount;
-  }
+  [[nodiscard]] auto column_count() const noexcept -> int32 { return mColumnCount; }
 
   [[nodiscard]] auto tile_count() const noexcept -> int32
   {
     return row_count() * column_count();
   }
 
-  [[nodiscard]] auto begin() const noexcept
-  {
-    return mMetaTiles.begin();
-  }
+  [[nodiscard]] auto begin() const noexcept { return mMetaTiles.begin(); }
 
-  [[nodiscard]] auto end() const noexcept
-  {
-    return mMetaTiles.end();
-  }
+  [[nodiscard]] auto end() const noexcept { return mMetaTiles.end(); }
 
  private:
-  ContextDelegate mContext;
+  ContextInfo mContext;
   uint mTextureId {};
   int2 mTextureSize {};
   int2 mTileSize {};

@@ -41,16 +41,17 @@ void RenameLayer::undo()
 {
   auto& layer = mMap->view_layer(mLayerId);
 
-  layer.set_name(mOldName.value());
+  layer.ctx().set_name(mOldName.value());
   mOldName.reset();
 }
 
 void RenameLayer::redo()
 {
   auto& layer = mMap->view_layer(mLayerId);
+  auto& layer_ctx = layer.ctx();
 
-  mOldName = layer.get_name();
-  layer.set_name(mNewName);
+  mOldName = layer_ctx.name();
+  layer_ctx.set_name(mNewName);
 }
 
 auto RenameLayer::get_name() const -> std::string

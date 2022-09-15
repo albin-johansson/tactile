@@ -35,25 +35,22 @@ namespace {
 
 using TileLayerVisitorFunc = Map::TileLayerVisitorFunc;
 
-struct TileLayerVisitor final : ILayerVisitor
-{
+struct TileLayerVisitor final : ILayerVisitor {
   const TileLayerVisitorFunc* callable {};
 
   explicit TileLayerVisitor(const TileLayerVisitorFunc& func)
       : callable {&func}
-  {}
-
-  void visit(TileLayer& layer) override
   {
-    (*callable)(layer);
   }
+
+  void visit(TileLayer& layer) override { (*callable)(layer); }
 };
 
 }  // namespace
 
 Map::Map()
 {
-  set_name("Map");
+  ctx().set_name("Map");
 }
 
 void Map::each_tile_layer(const std::function<void(TileLayer&)>& func)
@@ -153,7 +150,7 @@ auto Map::add_tile_layer(const Maybe<UUID>& parentId) -> UUID
   auto layer = TileLayer::make(mRowCount, mColCount);
 
   layer->set_meta_id(fetch_and_increment_next_layer_id());
-  layer->set_name(fmt::format("Tile Layer {}", mTileLayerSuffix));
+  layer->ctx().set_name(fmt::format("Tile Layer {}", mTileLayerSuffix));
   ++mTileLayerSuffix;
 
   return add_layer(std::move(layer), parentId);
@@ -164,7 +161,7 @@ auto Map::add_object_layer(const Maybe<UUID>& parentId) -> UUID
   auto layer = std::make_shared<ObjectLayer>();
 
   layer->set_meta_id(fetch_and_increment_next_layer_id());
-  layer->set_name(fmt::format("Object Layer {}", mObjectLayerSuffix));
+  layer->ctx().set_name(fmt::format("Object Layer {}", mObjectLayerSuffix));
   ++mObjectLayerSuffix;
 
   return add_layer(std::move(layer), parentId);
@@ -175,7 +172,7 @@ auto Map::add_group_layer(const Maybe<UUID>& parentId) -> UUID
   auto layer = GroupLayer::make();
 
   layer->set_meta_id(fetch_and_increment_next_layer_id());
-  layer->set_name(fmt::format("Group Layer {}", mGroupLayerSuffix));
+  layer->ctx().set_name(fmt::format("Group Layer {}", mGroupLayerSuffix));
   ++mGroupLayerSuffix;
 
   return add_layer(std::move(layer), parentId);
@@ -378,11 +375,6 @@ void Map::accept(IContextVisitor& visitor) const
   visitor.visit(*this);
 }
 
-void Map::set_name(std::string name)
-{
-  mContext.set_name(std::move(name));
-}
-
 auto Map::is_valid_position(const TilePos& pos) const -> bool
 {
   return pos.row() >= 0 &&          //
@@ -417,34 +409,19 @@ auto Map::is_stamp_randomizer_possible() const -> bool
   }
 }
 
-auto Map::get_props() -> PropertyBundle&
+auto Map::ctx() -> ContextInfo&
 {
-  return mContext.get_props();
+  return mContext;
 }
 
-auto Map::get_props() const -> const PropertyBundle&
+auto Map::ctx() const -> const ContextInfo&
 {
-  return mContext.get_props();
-}
-
-auto Map::get_comps() -> ComponentBundle&
-{
-  return mContext.get_comps();
-}
-
-auto Map::get_comps() const -> const ComponentBundle&
-{
-  return mContext.get_comps();
+  return mContext;
 }
 
 auto Map::get_uuid() const -> const UUID&
 {
-  return mId;
-}
-
-auto Map::get_name() const -> const std::string&
-{
-  return mContext.get_name();
+  return mContext.uuid();
 }
 
 auto Map::fetch_and_increment_next_object_id() -> int32

@@ -20,13 +20,8 @@
 #include "layer_delegate.hpp"
 
 #include <algorithm>  // clamp
-#include <utility>    // move
 
 namespace tactile {
-
-LayerDelegate::LayerDelegate()
-    : mId {make_uuid()}
-{}
 
 void LayerDelegate::set_opacity(const float opacity)
 {
@@ -48,11 +43,6 @@ void LayerDelegate::set_meta_id(const int32 id)
   mMetaId = id;
 }
 
-void LayerDelegate::set_name(std::string name)
-{
-  mContext.set_name(std::move(name));
-}
-
 auto LayerDelegate::get_opacity() const -> float
 {
   return mOpacity;
@@ -61,11 +51,6 @@ auto LayerDelegate::get_opacity() const -> float
 auto LayerDelegate::is_visible() const -> bool
 {
   return mVisible;
-}
-
-auto LayerDelegate::get_uuid() const -> const UUID&
-{
-  return mId;
 }
 
 auto LayerDelegate::get_parent() const -> const Maybe<UUID>&
@@ -78,38 +63,22 @@ auto LayerDelegate::get_meta_id() const -> const Maybe<int32>&
   return mMetaId;
 }
 
-auto LayerDelegate::get_name() const -> const std::string&
+auto LayerDelegate::ctx() -> ContextInfo&
 {
-  return mContext.get_name();
+  return mContext;
 }
 
-auto LayerDelegate::get_props() -> PropertyBundle&
+auto LayerDelegate::ctx() const -> const ContextInfo&
 {
-  return mContext.get_props();
-}
-
-auto LayerDelegate::get_props() const -> const PropertyBundle&
-{
-  return mContext.get_props();
-}
-
-auto LayerDelegate::get_comps() -> ComponentBundle&
-{
-  return mContext.get_comps();
-}
-
-auto LayerDelegate::get_comps() const -> const ComponentBundle&
-{
-  return mContext.get_comps();
+  return mContext;
 }
 
 auto LayerDelegate::clone() const -> LayerDelegate
 {
   LayerDelegate result;
 
-  result.mId = make_uuid();
-  result.mParentId = mParentId;
   result.mContext = mContext.clone();
+  result.mParentId = mParentId;
   result.mOpacity = mOpacity;
   result.mVisible = mVisible;
   result.mMetaId = nothing;  // This has to be set separately

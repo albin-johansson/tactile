@@ -19,9 +19,9 @@
 
 #include "attach_component.hpp"
 
-#include "core/comp/component_bundle.hpp"
 #include "core/comp/component_index.hpp"
 #include "core/ctx/context.hpp"
+#include "core/ctx/context_info.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
@@ -45,14 +45,14 @@ AttachComponent::AttachComponent(Shared<ComponentIndex> index,
 
 void AttachComponent::undo()
 {
-  auto& comps = mContext->get_comps();
+  auto& comps = mContext->ctx().comps();
   comps.erase(mComponentId);
 }
 
 void AttachComponent::redo()
 {
   const auto& definition = mIndex->at(mComponentId);
-  auto& comps = mContext->get_comps();
+  auto& comps = mContext->ctx().comps();
   comps.add(definition.instantiate());
 }
 

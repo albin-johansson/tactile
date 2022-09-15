@@ -230,7 +230,7 @@ void MapDocument::set_component_index(Shared<ComponentIndex> index)
 
 void MapDocument::set_name(std::string name)
 {
-  mMap->set_name(name);
+  mMap->ctx().set_name(name);
 }
 
 void MapDocument::set_path(fs::path path)
@@ -295,7 +295,7 @@ auto MapDocument::get_viewport() const -> const Viewport&
 
 auto MapDocument::get_name() const -> const std::string&
 {
-  return mMap->get_name();
+  return mMap->ctx().name();
 }
 
 auto MapDocument::get_path() const -> const fs::path&

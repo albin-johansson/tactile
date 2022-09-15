@@ -22,7 +22,7 @@
 #include <utility>  // move
 
 #include "core/ctx/context.hpp"
-#include "core/ctx/property_bundle.hpp"
+#include "core/ctx/context_info.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
@@ -43,13 +43,13 @@ AddProperty::AddProperty(Shared<IContext> context,
 
 void AddProperty::undo()
 {
-  auto& props = mContext->get_props();
+  auto& props = mContext->ctx().props();
   props.remove(mName);
 }
 
 void AddProperty::redo()
 {
-  auto& props = mContext->get_props();
+  auto& props = mContext->ctx().props();
   props.add(mName, mType);
 }
 

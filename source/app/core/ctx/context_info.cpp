@@ -17,57 +17,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "context_delegate.hpp"
+#include "context_info.hpp"
 
 #include <utility>  // move
 
 namespace tactile {
 
-ContextDelegate::ContextDelegate(const UUID& id)
+ContextInfo::ContextInfo(const UUID& id)
     : mId {id}
-{}
+{
+}
 
-void ContextDelegate::set_name(std::string name)
+void ContextInfo::set_name(std::string name)
 {
   mName = std::move(name);
 }
 
-auto ContextDelegate::get_props() -> PropertyBundle&
+auto ContextInfo::clone() const -> ContextInfo
 {
-  return mProps;
-}
-
-auto ContextDelegate::get_props() const -> const PropertyBundle&
-{
-  return mProps;
-}
-
-auto ContextDelegate::get_comps() -> ComponentBundle&
-{
-  return mComps;
-}
-
-auto ContextDelegate::get_comps() const -> const ComponentBundle&
-{
-  return mComps;
-}
-
-auto ContextDelegate::get_uuid() const -> const UUID&
-{
-  return mId;
-}
-
-auto ContextDelegate::get_name() const -> const std::string&
-{
-  return mName;
-}
-
-auto ContextDelegate::clone() const -> ContextDelegate
-{
-  ContextDelegate other;
-  other.mName = mName;
-  other.mProps = mProps;
-  other.mComps = mComps;
+  ContextInfo other {*this};
+  other.mId = make_uuid();
   return other;
 }
 

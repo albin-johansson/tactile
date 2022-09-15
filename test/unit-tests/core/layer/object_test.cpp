@@ -33,7 +33,7 @@ TEST(Object, Defaults)
   ASSERT_EQ(float2 {}, object.get_pos());
   ASSERT_EQ(float2 {}, object.get_size());
 
-  ASSERT_EQ("", object.get_name());
+  ASSERT_EQ("", object.ctx().name());
   ASSERT_EQ("", object.get_tag());
 
   ASSERT_FALSE(object.get_meta_id());
@@ -134,7 +134,7 @@ TEST(Object, Clone)
   object.set_pos({921, 832});
   object.set_size({43, 83});
   object.set_meta_id(7);
-  object.set_name("abc");
+  object.ctx().set_name("abc");
   object.set_tag("foo");
   object.set_visible(false);
 
@@ -144,7 +144,7 @@ TEST(Object, Clone)
   ASSERT_EQ(object.get_pos(), clone->get_pos());
   ASSERT_EQ(object.get_size(), clone->get_size());
   ASSERT_EQ(object.get_meta_id(), clone->get_meta_id());
-  ASSERT_EQ(object.get_name(), clone->get_name());
+  ASSERT_EQ(object.ctx().name(), clone->ctx().name());
   ASSERT_EQ(object.get_tag(), clone->get_tag());
   ASSERT_EQ(object.is_visible(), clone->is_visible());
 }

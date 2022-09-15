@@ -42,7 +42,8 @@ Tileset::Tileset(const UUID& id, TilesetInfo info)
 
 Tileset::Tileset(TilesetInfo info)
     : Tileset {make_uuid(), std::move(info)}
-{}
+{
+}
 
 void Tileset::load_tiles()
 {
@@ -61,6 +62,11 @@ void Tileset::load_tiles()
   }
 }
 
+void Tileset::accept(IContextVisitor& visitor) const
+{
+  visitor.visit(*this);
+}
+
 void Tileset::update()
 {
   mAppearanceCache.clear();
@@ -69,16 +75,6 @@ void Tileset::update()
   for (auto& [id, tile] : mMetaTiles) {
     tile->update();
   }
-}
-
-void Tileset::accept(IContextVisitor& visitor) const
-{
-  visitor.visit(*this);
-}
-
-void Tileset::set_name(std::string name)
-{
-  mContext.set_name(std::move(name));
 }
 
 auto Tileset::operator[](const TileIndex index) -> Tile&
@@ -131,34 +127,19 @@ auto Tileset::appearance_of(const TileIndex index) const -> TileIndex
   return index;
 }
 
-auto Tileset::get_props() -> PropertyBundle&
+auto Tileset::ctx() -> ContextInfo&
 {
-  return mContext.get_props();
+  return mContext;
 }
 
-auto Tileset::get_props() const -> const PropertyBundle&
+auto Tileset::ctx() const -> const ContextInfo&
 {
-  return mContext.get_props();
-}
-
-auto Tileset::get_comps() -> ComponentBundle&
-{
-  return mContext.get_comps();
-}
-
-auto Tileset::get_comps() const -> const ComponentBundle&
-{
-  return mContext.get_comps();
+  return mContext;
 }
 
 auto Tileset::get_uuid() const -> const UUID&
 {
-  return mContext.get_uuid();
-}
-
-auto Tileset::get_name() const -> const std::string&
-{
-  return mContext.get_name();
+  return mContext.uuid();
 }
 
 auto Tileset::is_valid(const TileIndex index) const -> bool

@@ -21,8 +21,8 @@
 
 #include <utility>  // move
 
-#include "core/comp/component_bundle.hpp"
 #include "core/ctx/context.hpp"
+#include "core/ctx/context_info.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
@@ -40,7 +40,7 @@ DetachComponent::DetachComponent(Shared<IContext> context, const UUID& component
 
 void DetachComponent::undo()
 {
-  auto& comps = mContext->get_comps();
+  auto& comps = mContext->ctx().comps();
 
   comps.add(mComponent.value());
   mComponent.reset();
@@ -48,7 +48,7 @@ void DetachComponent::undo()
 
 void DetachComponent::redo()
 {
-  auto& comps = mContext->get_comps();
+  auto& comps = mContext->ctx().comps();
   mComponent = comps.erase(mComponentId);
 }
 

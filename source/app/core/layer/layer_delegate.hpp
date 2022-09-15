@@ -19,24 +19,16 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/common/ints.hpp"
 #include "core/common/macros.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
-#include "core/ctx/context_delegate.hpp"
+#include "core/ctx/context_info.hpp"
 
 namespace tactile {
 
-class LayerDelegate final
-{
+class LayerDelegate final {
  public:
-  TACTILE_DELETE_COPY(LayerDelegate);
-  TACTILE_DEFAULT_MOVE(LayerDelegate);
-
-  LayerDelegate();
-
   void set_opacity(float opacity);
 
   void set_visible(bool visible);
@@ -45,33 +37,23 @@ class LayerDelegate final
 
   void set_meta_id(int32 id);
 
-  void set_name(std::string name);
-
   [[nodiscard]] auto get_opacity() const -> float;
 
   [[nodiscard]] auto is_visible() const -> bool;
-
-  [[nodiscard]] auto get_uuid() const -> const UUID&;
 
   [[nodiscard]] auto get_parent() const -> const Maybe<UUID>&;
 
   [[nodiscard]] auto get_meta_id() const -> const Maybe<int32>&;
 
-  [[nodiscard]] auto get_name() const -> const std::string&;
-
-  [[nodiscard]] auto get_props() -> PropertyBundle&;
-  [[nodiscard]] auto get_props() const -> const PropertyBundle&;
-
-  [[nodiscard]] auto get_comps() -> ComponentBundle&;
-  [[nodiscard]] auto get_comps() const -> const ComponentBundle&;
+  [[nodiscard]] auto ctx() -> ContextInfo&;
+  [[nodiscard]] auto ctx() const -> const ContextInfo&;
 
   [[nodiscard]] auto clone() const -> LayerDelegate;
 
  private:
-  UUID mId {};
+  ContextInfo mContext;
   Maybe<UUID> mParentId {};
   Maybe<int32> mMetaId;
-  ContextDelegate mContext;
   float mOpacity {1.0f};
   bool mVisible : 1 {true};
 };

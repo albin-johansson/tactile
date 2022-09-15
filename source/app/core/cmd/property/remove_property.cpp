@@ -22,7 +22,7 @@
 #include <utility>  // move
 
 #include "core/ctx/context.hpp"
-#include "core/ctx/property_bundle.hpp"
+#include "core/ctx/context_info.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
@@ -40,14 +40,14 @@ RemoveProperty::RemoveProperty(Shared<IContext> context, std::string name)
 
 void RemoveProperty::undo()
 {
-  auto& props = mContext->get_props();
+  auto& props = mContext->ctx().props();
   props.add(mName, mPreviousValue.value());
   mPreviousValue.reset();
 }
 
 void RemoveProperty::redo()
 {
-  auto& props = mContext->get_props();
+  auto& props = mContext->ctx().props();
   mPreviousValue = props.at(mName);
   props.remove(mName);
 }

@@ -30,7 +30,12 @@ namespace tactile {
 Tile::Tile(const TileIndex index)
     : mIndex {index}
 {
-  mDelegate.set_name(fmt::format("Tile {}", index));
+  mContext.set_name(fmt::format("Tile {}", index));
+}
+
+void Tile::accept(IContextVisitor& visitor) const
+{
+  visitor.visit(*this);
 }
 
 void Tile::update()
@@ -59,16 +64,6 @@ void Tile::clear_animation()
 void Tile::set_animation(TileAnimation animation)
 {
   mAnimation = std::move(animation);
-}
-
-void Tile::accept(IContextVisitor& visitor) const
-{
-  visitor.visit(*this);
-}
-
-void Tile::set_name(std::string name)
-{
-  mDelegate.set_name(std::move(name));
 }
 
 void Tile::set_source(const int4& source)
@@ -106,34 +101,19 @@ auto Tile::get_animation() const -> const TileAnimation&
   }
 }
 
-auto Tile::get_props() -> PropertyBundle&
+auto Tile::ctx() -> ContextInfo&
 {
-  return mDelegate.get_props();
+  return mContext;
 }
 
-auto Tile::get_props() const -> const PropertyBundle&
+auto Tile::ctx() const -> const ContextInfo&
 {
-  return mDelegate.get_props();
-}
-
-auto Tile::get_comps() -> ComponentBundle&
-{
-  return mDelegate.get_comps();
-}
-
-auto Tile::get_comps() const -> const ComponentBundle&
-{
-  return mDelegate.get_comps();
+  return mContext;
 }
 
 auto Tile::get_uuid() const -> const UUID&
 {
-  return mDelegate.get_uuid();
-}
-
-auto Tile::get_name() const -> const std::string&
-{
-  return mDelegate.get_name();
+  return mContext.uuid();
 }
 
 }  // namespace tactile

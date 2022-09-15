@@ -36,7 +36,7 @@ TEST(RenameProperty, RedoUndo)
   auto document = MapBuilder::build().result();
   auto map = document->get_map_ptr();
 
-  auto& props = map->get_props();
+  auto& props = map->ctx().props();
   props.add("foo", cen::colors::red);
 
   cmd::RenameProperty cmd {map, "foo", "bar"};

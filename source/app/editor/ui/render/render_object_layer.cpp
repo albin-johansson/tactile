@@ -40,7 +40,7 @@ void render_point_object(GraphicsCtx& graphics,
                          const ImVec2& position,
                          const cen::color& color)
 {
-  TACTILE_ASSERT(object.get_type() == ObjectType::Point);
+  TACTILE_ASSERT(object.is_point());
 
   const float radius = (std::min)(graphics.viewport_tile_size().x / 4.0f, 6.0f);
 
@@ -49,7 +49,7 @@ void render_point_object(GraphicsCtx& graphics,
     graphics.set_line_thickness(2.0f);
     graphics.draw_translated_circle_with_shadow(position, radius);
 
-    const auto& name = object.get_name();
+    const auto& name = object.ctx().name();
     if (!name.empty()) {
       const auto text_size = ImGui::CalcTextSize(name.c_str());
       if (text_size.x <= graphics.viewport_tile_size().x) {
@@ -68,7 +68,7 @@ void render_ellipse_object(GraphicsCtx& graphics,
                            const ImVec2& position,
                            const cen::color& color)
 {
-  TACTILE_ASSERT(object.get_type() == ObjectType::Ellipse);
+  TACTILE_ASSERT(object.is_ellipse());
 
   const auto size = from_vec(object.get_size());
 
@@ -79,7 +79,7 @@ void render_ellipse_object(GraphicsCtx& graphics,
   graphics.set_line_thickness(2);
   graphics.draw_translated_ellipse_with_shadow(center, radius);
 
-  const auto& name = object.get_name();
+  const auto& name = object.ctx().name();
   if (!name.empty()) {
     const auto text_size = ImGui::CalcTextSize(name.c_str());
     if (text_size.x <= radius.x) {
@@ -97,7 +97,7 @@ void render_rectangle_object(GraphicsCtx& graphics,
                              const ImVec2& position,
                              const cen::color& color)
 {
-  TACTILE_ASSERT(object.get_type() == ObjectType::Rect);
+  TACTILE_ASSERT(object.is_rect());
 
   const auto size = from_vec(object.get_size()) * graphics.tile_size_ratio();
 
@@ -106,7 +106,7 @@ void render_rectangle_object(GraphicsCtx& graphics,
     graphics.set_line_thickness(2.0f);
     graphics.draw_translated_rect_with_shadow(position, size);
 
-    const auto& name = object.get_name();
+    const auto& name = object.ctx().name();
     if (!name.empty()) {
       const auto text_size = ImGui::CalcTextSize(name.c_str());
       if (text_size.x <= size.x) {

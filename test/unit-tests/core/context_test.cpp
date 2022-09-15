@@ -41,19 +41,18 @@ using Contexts = testing::Types<Map,  //
                                 Tile>;
 
 template <typename T>
-struct ContextTest : testing::Test
-{};
+struct ContextTest : testing::Test {};
 
 namespace {
 
 template <typename T>
-auto _make_context() -> T
+auto make_context() -> T
 {
   return T {};
 }
 
 template <>
-auto _make_context<Tileset>() -> Tileset
+auto make_context<Tileset>() -> Tileset
 {
   return Tileset {{.texture_path = "foo.png",
                    .texture_id = 8,
@@ -62,7 +61,7 @@ auto _make_context<Tileset>() -> Tileset
 }
 
 template <>
-auto _make_context<Tile>() -> Tile
+auto make_context<Tile>() -> Tile
 {
   return Tile {42};
 }
@@ -73,19 +72,19 @@ TYPED_TEST_SUITE(ContextTest, Contexts);
 
 TYPED_TEST(ContextTest, Defaults)
 {
-  const auto context = _make_context<TypeParam>();
+  const auto context = make_context<TypeParam>();
   ASSERT_FALSE(context.get_uuid().is_nil());
 
-  ASSERT_TRUE(context.get_comps().empty());
-  ASSERT_TRUE(context.get_props().empty());
+  ASSERT_TRUE(context.ctx().comps().empty());
+  ASSERT_TRUE(context.ctx().props().empty());
 }
 
 TYPED_TEST(ContextTest, SetName)
 {
-  auto context = _make_context<TypeParam>();
+  auto context = make_context<TypeParam>();
 
-  context.set_name("foobar");
-  ASSERT_EQ("foobar", context.get_name());
+  context.ctx().set_name("foobar");
+  ASSERT_EQ("foobar", context.ctx().name());
 }
 
 }  // namespace tactile::test

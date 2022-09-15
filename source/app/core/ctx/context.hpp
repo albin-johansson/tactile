@@ -19,32 +19,21 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/ctx/context_visitor.hpp"
 #include "core/element.hpp"
 
 namespace tactile {
 
-class PropertyBundle;
-class ComponentBundle;
+class ContextInfo;
 
 /// Interface for all objects that may feature properties and components.
 /// Remember to update IContextVisitor when adding a new context implementation.
-class IContext : public IElement
-{
+class IContext : public IElement {
  public:
   virtual void accept(IContextVisitor& visitor) const = 0;
 
-  virtual void set_name(std::string name) = 0;
-
-  [[nodiscard]] virtual auto get_props() -> PropertyBundle& = 0;
-  [[nodiscard]] virtual auto get_props() const -> const PropertyBundle& = 0;
-
-  [[nodiscard]] virtual auto get_comps() -> ComponentBundle& = 0;
-  [[nodiscard]] virtual auto get_comps() const -> const ComponentBundle& = 0;
-
-  [[nodiscard]] virtual auto get_name() const -> const std::string& = 0;
+  [[nodiscard]] virtual auto ctx() -> ContextInfo& = 0;
+  [[nodiscard]] virtual auto ctx() const -> const ContextInfo& = 0;
 };
 
 }  // namespace tactile

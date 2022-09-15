@@ -21,8 +21,8 @@
 
 #include <utility>  // move
 
-#include "core/comp/component_bundle.hpp"
 #include "core/comp/component_index.hpp"
+#include "core/ctx/context_info.hpp"
 #include "core/ctx/context_manager.hpp"
 #include "core/document/document.hpp"
 #include "lang/language.hpp"
@@ -56,7 +56,7 @@ void SetComponentAttrType::undo()
   auto& contexts = mDocument->get_contexts();
   for (const auto& [contextId, attribute] : mPrevAttributes) {
     auto& context = contexts.at(contextId);
-    auto& comp = context.get_comps().at(definition.get_uuid());
+    auto& comp = context.ctx().comps().at(definition.get_uuid());
 
     comp.remove_attr(mAttributeName);
     comp.add_attr(mAttributeName, attribute);

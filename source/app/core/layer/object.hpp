@@ -27,7 +27,7 @@
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/ctx/context.hpp"
-#include "core/ctx/context_delegate.hpp"
+#include "core/ctx/context_info.hpp"
 #include "core/layer/object_type.hpp"
 
 namespace tactile {
@@ -40,6 +40,8 @@ class Object final : public IContext {
   TACTILE_DEFAULT_MOVE(Object);
 
   explicit Object(ObjectType type = ObjectType::Rect);
+
+  void accept(IContextVisitor& visitor) const override;
 
   void set_pos(const float2& pos);
   void set_size(const float2& size);
@@ -54,19 +56,10 @@ class Object final : public IContext {
 
   void set_visible(bool visible);
 
-  void set_name(std::string name) override;
-
-  void accept(IContextVisitor& visitor) const override;
-
-  [[nodiscard]] auto get_props() -> PropertyBundle& override;
-  [[nodiscard]] auto get_props() const -> const PropertyBundle& override;
-
-  [[nodiscard]] auto get_comps() -> ComponentBundle& override;
-  [[nodiscard]] auto get_comps() const -> const ComponentBundle& override;
+  [[nodiscard]] auto ctx() -> ContextInfo& override;
+  [[nodiscard]] auto ctx() const -> const ContextInfo& override;
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
-
-  [[nodiscard]] auto get_name() const -> const std::string& override;
 
   [[nodiscard]] auto get_type() const -> ObjectType;
 
@@ -87,7 +80,7 @@ class Object final : public IContext {
   [[nodiscard]] auto clone() const -> Shared<Object>;
 
  private:
-  ContextDelegate mDelegate;
+  ContextInfo mContext;
   float2 mPos {};            ///< Object position.
   float2 mSize {};           ///< Object size (might be zero).
   ObjectType mType;          ///< Specific object type.

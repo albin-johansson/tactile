@@ -36,7 +36,7 @@ TEST(UpdateProperty, RedoUndo)
   auto document = MapBuilder::build().result();
   auto map = document->get_map_ptr();
 
-  auto& props = map->get_props();
+  auto& props = map->ctx().props();
   props.add("int", 10);
 
   cmd::UpdateProperty cmd {map, "int", 20};
@@ -53,7 +53,7 @@ TEST(UpdateProperty, MergeSupport)
   auto document = MapBuilder::build().result();
   auto map = document->get_map_ptr();
 
-  auto& props = map->get_props();
+  auto& props = map->ctx().props();
   props.add("color", cen::colors::cyan);
 
   cmd::UpdateProperty       a {map, "color", cen::colors::azure};

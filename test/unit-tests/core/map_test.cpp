@@ -67,7 +67,7 @@ struct MapLayerPreset final
 TEST(Map, Defaults)
 {
   const Map map;
-  ASSERT_EQ("Map", map.get_name());
+  ASSERT_EQ("Map", map.ctx().name());
 
   ASSERT_EQ(5, map.row_count());
   ASSERT_EQ(5, map.column_count());

@@ -22,7 +22,7 @@
 #include <utility>  // move
 
 #include "core/ctx/context.hpp"
-#include "core/ctx/property_bundle.hpp"
+#include "core/ctx/context_info.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
@@ -43,7 +43,7 @@ ChangePropertyType::ChangePropertyType(Shared<IContext> context,
 
 void ChangePropertyType::undo()
 {
-  auto& props = mContext->get_props();
+  auto& props = mContext->ctx().props();
 
   const auto& value = mPreviousValue.value();
   const auto type = value.type();
@@ -56,7 +56,7 @@ void ChangePropertyType::undo()
 
 void ChangePropertyType::redo()
 {
-  auto& props = mContext->get_props();
+  auto& props = mContext->ctx().props();
 
   mPreviousValue = props.at(mName);
   props.change_type(mName, mPropertyType);

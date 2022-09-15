@@ -24,8 +24,8 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/ctx/context.hpp"
+#include "core/ctx/context_info.hpp"
 #include "core/ctx/context_manager.hpp"
-#include "core/ctx/property_bundle.hpp"
 #include "core/event/property_events.hpp"
 #include "core/model.hpp"
 #include "lang/language.hpp"
@@ -35,7 +35,8 @@ namespace tactile::ui {
 
 RenamePropertyDialog::RenamePropertyDialog()
     : AStringInputDialog {"Rename Property"}
-{}
+{
+}
 
 void RenamePropertyDialog::open(const UUID& context_id, std::string previous_name)
 {
@@ -61,7 +62,7 @@ auto RenamePropertyDialog::validate(const DocumentModel& model,
 {
   const auto& document = model.require_active_document();
   const auto& context = document.get_contexts().active_context();
-  return !input.empty() && !context.get_props().contains(input);
+  return !input.empty() && !context.ctx().props().contains(input);
 }
 
 }  // namespace tactile::ui

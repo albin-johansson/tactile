@@ -28,10 +28,7 @@
 #include "core/common/maybe.hpp"
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
-#include "core/comp/component_bundle.hpp"
 #include "core/ctx/context.hpp"
-#include "core/ctx/context_delegate.hpp"
-#include "core/ctx/property_bundle.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_format.hpp"
 #include "core/tile_pos.hpp"
@@ -39,8 +36,7 @@
 
 namespace tactile {
 
-class Map final : public IContext
-{
+class Map final : public IContext {
  public:
   using VisitorFunc = std::function<void(const ILayer*)>;
   using TileLayerVisitorFunc = std::function<void(TileLayer&)>;
@@ -126,8 +122,6 @@ class Map final : public IContext
 
   void accept(IContextVisitor& visitor) const override;
 
-  void set_name(std::string name) override;
-
   [[nodiscard]] auto is_valid_position(const TilePos& pos) const -> bool;
 
   [[nodiscard]] auto row_count() const -> usize;
@@ -138,15 +132,10 @@ class Map final : public IContext
 
   [[nodiscard]] auto is_stamp_randomizer_possible() const -> bool;
 
-  [[nodiscard]] auto get_props() -> PropertyBundle& override;
-  [[nodiscard]] auto get_props() const -> const PropertyBundle& override;
-
-  [[nodiscard]] auto get_comps() -> ComponentBundle& override;
-  [[nodiscard]] auto get_comps() const -> const ComponentBundle& override;
+  [[nodiscard]] auto ctx() -> ContextInfo& override;
+  [[nodiscard]] auto ctx() const -> const ContextInfo& override;
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
-
-  [[nodiscard]] auto get_name() const -> const std::string& override;
 
   auto fetch_and_increment_next_object_id() -> int32;
   auto fetch_and_increment_next_layer_id() -> int32;
@@ -162,14 +151,13 @@ class Map final : public IContext
   [[nodiscard]] auto next_group_layer_suffix() const -> int32;
 
  private:
-  UUID mId {make_uuid()};
+  ContextInfo mContext;
   usize mRowCount {5};
   usize mColCount {5};
   int2 mTileSize {32, 32};
   GroupLayer mRootLayer;
   Maybe<UUID> mActiveLayer;
   TilesetBundle mTilesets;
-  ContextDelegate mContext;
   int32 mNextObjectId {1};
   int32 mNextLayerId {1};
   int32 mTileLayerSuffix {1};

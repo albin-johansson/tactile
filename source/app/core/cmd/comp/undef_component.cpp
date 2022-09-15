@@ -21,8 +21,8 @@
 
 #include <utility>  // move
 
-#include "core/comp/component_bundle.hpp"
 #include "core/comp/component_index.hpp"
+#include "core/ctx/context_info.hpp"
 #include "core/ctx/context_manager.hpp"
 #include "core/document/document.hpp"
 #include "lang/language.hpp"
@@ -51,7 +51,7 @@ void UndefComponent::undo()
   auto& contexts = mDocument->get_contexts();
   for (auto [contextId, component] : mRemovedComponents) {
     auto& context = contexts.at(contextId);
-    context.get_comps().add(std::move(component));
+    context.ctx().comps().add(std::move(component));
   }
 
   mRemovedComponents.clear();

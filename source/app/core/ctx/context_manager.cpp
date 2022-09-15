@@ -21,14 +21,15 @@
 
 #include <utility>  // move
 
-#include "core/comp/component_bundle.hpp"
+#include "core/ctx/context_info.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
 ContextManager::ContextManager(const UUID& rootContextId)
     : mRootContextId {rootContextId}
-{}
+{
+}
 
 void ContextManager::add_context(Shared<IContext> context)
 {
@@ -99,7 +100,7 @@ auto ContextManager::on_undef_comp(const UUID& componentId) -> HashMap<UUID, Com
   HashMap<UUID, Component> removed;
 
   for (auto& [contextId, context] : mContexts) {
-    auto& comps = context->get_comps();
+    auto& comps = context->ctx().comps();
     if (comps.contains(componentId)) {
       removed.try_emplace(contextId, comps.erase(componentId));
     }
@@ -140,7 +141,7 @@ auto ContextManager::on_changed_component_attr_type(const UUID& componentId,
   HashMap<UUID, Attribute> attributes;
 
   for (auto& [contextId, context] : mContexts) {
-    auto& comps = context->get_comps();
+    auto& comps = context->ctx().comps();
     if (comps.contains(componentId)) {
       auto& comp = comps.at(componentId);
       attributes[contextId] = comp.get_attr(name);
@@ -157,7 +158,7 @@ void ContextManager::on_component_update(const UUID& componentId,
                                          const ComponentFunc& func)
 {
   for (auto& [contextId, context] : mContexts) {
-    auto& comps = context->get_comps();
+    auto& comps = context->ctx().comps();
     if (auto* component = comps.try_get(componentId)) {
       func(*component);
     }

@@ -51,8 +51,8 @@ void restore_context_no_register(ADocument& document,
                                  const Shared<IContext>& context,
                                  const ir::ContextData& source)
 {
-  auto& properties = context->get_props();
-  auto& components = context->get_comps();
+  auto& properties = context->ctx().props();
+  auto& components = context->ctx().comps();
 
   for (const auto& [propertyName, propertyValue] : source.properties) {
     properties.add(propertyName, propertyValue);
@@ -92,7 +92,7 @@ auto restore_object(ADocument& document, const ir::ObjectData& object_data)
   object->set_tag(object_data.tag);
   object->set_visible(object_data.visible);
 
-  object->set_name(object_data.name);
+  object->ctx().set_name(object_data.name);
   object->set_meta_id(object_data.id);
 
   restore_context(document, object, object_data.context);
@@ -157,7 +157,7 @@ auto restore_layer(MapDocument& document,
   }
 
   auto& layer = map.view_layer(layer_id);
-  layer.set_name(layer_data.name);
+  layer.ctx().set_name(layer_data.name);
   layer.set_opacity(layer_data.opacity);
   layer.set_visible(layer_data.visible);
   layer.set_meta_id(layer_data.id);

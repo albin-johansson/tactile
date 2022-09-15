@@ -29,17 +29,18 @@
 #include "core/common/memory.hpp"
 #include "core/common/uuid.hpp"
 #include "core/ctx/context.hpp"
-#include "core/ctx/context_delegate.hpp"
+#include "core/ctx/context_info.hpp"
 #include "core/layer/object.hpp"
 #include "core/tileset/tile_animation.hpp"
 
 namespace tactile {
 
 /// Provides metadata for tiles in a tileset.
-class Tile final : public IContext
-{
+class Tile final : public IContext {
  public:
   explicit Tile(TileIndex index);
+
+  void accept(IContextVisitor& visitor) const override;
 
   void update();
 
@@ -50,10 +51,6 @@ class Tile final : public IContext
   void clear_animation();
 
   void set_animation(TileAnimation animation);
-
-  void accept(IContextVisitor& visitor) const override;
-
-  void set_name(std::string name) override;
 
   void set_source(const int4& source);
 
@@ -67,29 +64,18 @@ class Tile final : public IContext
 
   [[nodiscard]] auto get_animation() const -> const TileAnimation&;
 
-  [[nodiscard]] auto get_props() -> PropertyBundle& override;
-  [[nodiscard]] auto get_props() const -> const PropertyBundle& override;
-
-  [[nodiscard]] auto get_comps() -> ComponentBundle& override;
-  [[nodiscard]] auto get_comps() const -> const ComponentBundle& override;
+  [[nodiscard]] auto ctx() -> ContextInfo& override;
+  [[nodiscard]] auto ctx() const -> const ContextInfo& override;
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
-  [[nodiscard]] auto get_name() const -> const std::string& override;
+  [[nodiscard]] auto index() const noexcept -> TileIndex { return mIndex; }
 
-  [[nodiscard]] auto index() const noexcept -> TileIndex
-  {
-    return mIndex;
-  }
-
-  [[nodiscard]] auto source() const noexcept -> const int4&
-  {
-    return mSource;
-  }
+  [[nodiscard]] auto source() const noexcept -> const int4& { return mSource; }
 
  private:
   TileIndex mIndex;
-  ContextDelegate mDelegate;
+  ContextInfo mContext;
   int4 mSource;
   Maybe<TileAnimation> mAnimation;
   HashMap<UUID, Shared<Object>> mObjects;

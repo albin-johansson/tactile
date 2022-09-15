@@ -23,8 +23,8 @@
 #include <imgui.h>
 
 #include "core/ctx/context.hpp"
+#include "core/ctx/context_info.hpp"
 #include "core/ctx/context_manager.hpp"
-#include "core/ctx/property_bundle.hpp"
 #include "core/event/property_events.hpp"
 #include "core/model.hpp"
 #include "core/util/buffers.hpp"
@@ -36,7 +36,8 @@ namespace tactile::ui {
 
 AddPropertyDialog::AddPropertyDialog()
     : ADialog {"Add Property"}
-{}
+{
+}
 
 void AddPropertyDialog::open(const UUID& contextId)
 {
@@ -75,7 +76,7 @@ auto AddPropertyDialog::is_current_input_valid(const DocumentModel& model) const
   const auto& document = model.require_active_document();
   const auto& context = document.get_contexts().active_context();
   const auto name = create_string_view_from_buffer(mNameBuffer);
-  return !name.empty() && !context.get_props().contains(name);
+  return !name.empty() && !context.ctx().props().contains(name);
 }
 
 }  // namespace tactile::ui

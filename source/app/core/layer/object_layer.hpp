@@ -47,8 +47,6 @@ class ObjectLayer final : public ILayer {
 
   void set_meta_id(int32 id) override;
 
-  void set_name(std::string name) override;
-
   void add_object(Shared<Object> object);
 
   void remove_object(const UUID& id);
@@ -77,19 +75,14 @@ class ObjectLayer final : public ILayer {
 
   [[nodiscard]] auto clone() const -> Shared<ILayer> override;
 
-  [[nodiscard]] auto get_name() const -> const std::string& override;
+  [[nodiscard]] auto ctx() -> ContextInfo& override;
+  [[nodiscard]] auto ctx() const -> const ContextInfo& override;
 
-  [[nodiscard]] auto get_props() -> PropertyBundle& override;
-  [[nodiscard]] auto get_props() const -> const PropertyBundle& override;
-
-  [[nodiscard]] auto get_comps() -> ComponentBundle& override;
-  [[nodiscard]] auto get_comps() const -> const ComponentBundle& override;
+  [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
   [[nodiscard]] auto get_parent() const -> Maybe<UUID> override;
 
   [[nodiscard]] auto get_meta_id() const -> Maybe<int32> override;
-
-  [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
   [[nodiscard]] auto get_type() const -> LayerType override;
 

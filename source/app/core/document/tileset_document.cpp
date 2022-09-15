@@ -38,7 +38,8 @@ TilesetDocument::TilesetDocument(const UUID& id, const TilesetInfo& info)
 
 TilesetDocument::TilesetDocument(const TilesetInfo& info)
     : TilesetDocument {make_uuid(), info}
-{}
+{
+}
 
 void TilesetDocument::update()
 {
@@ -59,7 +60,7 @@ void TilesetDocument::set_component_index(Shared<ComponentIndex> index)
 
 void TilesetDocument::set_name(std::string name)
 {
-  mTileset->set_name(std::move(name));
+  mTileset->ctx().set_name(std::move(name));
 }
 
 void TilesetDocument::set_path(fs::path path)
@@ -114,7 +115,7 @@ auto TilesetDocument::get_viewport() const -> const Viewport&
 
 auto TilesetDocument::get_name() const -> const std::string&
 {
-  return mTileset->get_name();
+  return mTileset->ctx().name();
 }
 
 auto TilesetDocument::get_path() const -> const fs::path&

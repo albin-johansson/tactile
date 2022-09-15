@@ -30,8 +30,7 @@
 
 namespace tactile {
 
-class TileLayer final : public ILayer
-{
+class TileLayer final : public ILayer {
  public:
   TileLayer();
 
@@ -43,6 +42,7 @@ class TileLayer final : public ILayer
 
   [[nodiscard]] static auto make(usize rows, usize columns) -> Shared<TileLayer>;
 
+  void accept(IContextVisitor& visitor) const override;
   void accept(ILayerVisitor& visitor) override;
   void accept(IConstLayerVisitor& visitor) const override;
 
@@ -66,10 +66,6 @@ class TileLayer final : public ILayer
 
   void set_meta_id(int32 id) override;
 
-  void accept(IContextVisitor& visitor) const override;
-
-  void set_name(std::string name) override;
-
   void set_tile(const TilePos& pos, TileID id);
 
   void set_tiles(const TileCache& cache);
@@ -79,7 +75,6 @@ class TileLayer final : public ILayer
   [[nodiscard]] auto is_valid(const TilePos& pos) const -> bool;
 
   [[nodiscard]] auto row_count() const -> usize;
-
   [[nodiscard]] auto column_count() const -> usize;
 
   [[nodiscard]] auto get_tiles() const -> const TileMatrix&;
@@ -90,15 +85,10 @@ class TileLayer final : public ILayer
 
   [[nodiscard]] auto clone() const -> Shared<ILayer> override;
 
+  [[nodiscard]] auto ctx() -> ContextInfo& override;
+  [[nodiscard]] auto ctx() const -> const ContextInfo& override;
+
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
-
-  [[nodiscard]] auto get_name() const -> const std::string& override;
-
-  [[nodiscard]] auto get_props() -> PropertyBundle& override;
-  [[nodiscard]] auto get_props() const -> const PropertyBundle& override;
-
-  [[nodiscard]] auto get_comps() -> ComponentBundle& override;
-  [[nodiscard]] auto get_comps() const -> const ComponentBundle& override;
 
   [[nodiscard]] auto get_parent() const -> Maybe<UUID> override;
 

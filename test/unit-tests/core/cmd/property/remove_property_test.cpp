@@ -36,7 +36,7 @@ TEST(RemoveProperty, RedoUndo)
   auto document = MapBuilder::build().result();
   auto map = document->get_map_ptr();
 
-  auto& props = map->get_props();
+  auto& props = map->ctx().props();
   props.add("id", 42);
 
   cmd::RemoveProperty cmd {map, "id"};

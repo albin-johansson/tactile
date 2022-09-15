@@ -73,11 +73,6 @@ void ObjectLayer::set_meta_id(const int32 id)
   mDelegate.set_meta_id(id);
 }
 
-void ObjectLayer::set_name(std::string name)
-{
-  mDelegate.set_name(std::move(name));
-}
-
 void ObjectLayer::add_object(Shared<Object> object)
 {
   const auto id = object->get_uuid();
@@ -168,37 +163,25 @@ auto ObjectLayer::clone() const -> Shared<ILayer>
 {
   auto copy = std::make_shared<ObjectLayer>();
   copy->mDelegate = mDelegate.clone();
+
+  // FIXME clone objects
+
   return copy;
 }
 
-auto ObjectLayer::get_name() const -> const std::string&
+auto ObjectLayer::ctx() -> ContextInfo&
 {
-  return mDelegate.get_name();
+  return mDelegate.ctx();
 }
 
-auto ObjectLayer::get_props() -> PropertyBundle&
+auto ObjectLayer::ctx() const -> const ContextInfo&
 {
-  return mDelegate.get_props();
-}
-
-auto ObjectLayer::get_props() const -> const PropertyBundle&
-{
-  return mDelegate.get_props();
-}
-
-auto ObjectLayer::get_comps() -> ComponentBundle&
-{
-  return mDelegate.get_comps();
-}
-
-auto ObjectLayer::get_comps() const -> const ComponentBundle&
-{
-  return mDelegate.get_comps();
+  return mDelegate.ctx();
 }
 
 auto ObjectLayer::get_uuid() const -> const UUID&
 {
-  return mDelegate.get_uuid();
+  return mDelegate.ctx().uuid();
 }
 
 auto ObjectLayer::get_parent() const -> Maybe<UUID>

@@ -22,8 +22,8 @@
 #include <utility>  // move
 
 #include "core/comp/component.hpp"
-#include "core/comp/component_bundle.hpp"
 #include "core/ctx/context.hpp"
+#include "core/ctx/context_info.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
@@ -46,7 +46,7 @@ UpdateAttachedComponent::UpdateAttachedComponent(Shared<IContext> context,
 
 void UpdateAttachedComponent::undo()
 {
-  auto& comps = mContext->get_comps();
+  auto& comps = mContext->ctx().comps();
   auto& component = comps.at(mComponentId);
 
   component.update_attr(mAttributeName, mPreviousValue.value());
@@ -55,7 +55,7 @@ void UpdateAttachedComponent::undo()
 
 void UpdateAttachedComponent::redo()
 {
-  auto& comps = mContext->get_comps();
+  auto& comps = mContext->ctx().comps();
   auto& component = comps.at(mComponentId);
 
   mPreviousValue = component.get_attr(mAttributeName);

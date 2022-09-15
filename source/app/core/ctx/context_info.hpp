@@ -24,41 +24,38 @@
 #include "core/common/macros.hpp"
 #include "core/common/uuid.hpp"
 #include "core/comp/component_bundle.hpp"
-#include "property_bundle.hpp"
+#include "core/ctx/property_bundle.hpp"
 
 namespace tactile {
 
-class ContextDelegate final
-{
+class ContextInfo final {
  public:
-  explicit ContextDelegate(const UUID& id);
+  TACTILE_DEFAULT_COPY(ContextInfo);
+  TACTILE_DEFAULT_MOVE(ContextInfo);
 
-  TACTILE_DEFAULT_COPY(ContextDelegate);
-  TACTILE_DEFAULT_MOVE(ContextDelegate);
+  ContextInfo() = default;
 
-  ContextDelegate()
-      : ContextDelegate {make_uuid()}
-  {}
+  explicit ContextInfo(const UUID& id);
 
   void set_name(std::string name);
 
-  [[nodiscard]] auto get_props() -> PropertyBundle&;
-  [[nodiscard]] auto get_props() const -> const PropertyBundle&;
+  [[nodiscard]] auto clone() const -> ContextInfo;
 
-  [[nodiscard]] auto get_comps() -> ComponentBundle&;
-  [[nodiscard]] auto get_comps() const -> const ComponentBundle&;
+  [[nodiscard]] auto uuid() const -> const UUID& { return mId; }
 
-  [[nodiscard]] auto get_uuid() const -> const UUID&;
+  [[nodiscard]] auto name() const -> const std::string& { return mName; }
 
-  [[nodiscard]] auto get_name() const -> const std::string&;
+  [[nodiscard]] auto props() -> PropertyBundle& { return mProps; }
+  [[nodiscard]] auto props() const -> const PropertyBundle& { return mProps; }
 
-  [[nodiscard]] auto clone() const -> ContextDelegate;
+  [[nodiscard]] auto comps() -> ComponentBundle& { return mComps; }
+  [[nodiscard]] auto comps() const -> const ComponentBundle& { return mComps; }
 
  private:
-  UUID mId;
+  UUID mId {make_uuid()};
+  std::string mName;
   PropertyBundle mProps;
   ComponentBundle mComps;
-  std::string mName;
 };
 
 }  // namespace tactile

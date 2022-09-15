@@ -25,7 +25,13 @@ namespace tactile {
 
 Object::Object(const ObjectType type)
     : mType {type}
-{}
+{
+}
+
+void Object::accept(IContextVisitor& visitor) const
+{
+  visitor.visit(*this);
+}
 
 void Object::set_pos(const float2& pos)
 {
@@ -61,44 +67,19 @@ void Object::set_visible(const bool visible)
   mVisible = visible;
 }
 
-void Object::set_name(std::string name)
+auto Object::ctx() -> ContextInfo&
 {
-  mDelegate.set_name(std::move(name));
+  return mContext;
 }
 
-void Object::accept(IContextVisitor& visitor) const
+auto Object::ctx() const -> const ContextInfo&
 {
-  visitor.visit(*this);
-}
-
-auto Object::get_props() -> PropertyBundle&
-{
-  return mDelegate.get_props();
-}
-
-auto Object::get_props() const -> const PropertyBundle&
-{
-  return mDelegate.get_props();
-}
-
-auto Object::get_comps() -> ComponentBundle&
-{
-  return mDelegate.get_comps();
-}
-
-auto Object::get_comps() const -> const ComponentBundle&
-{
-  return mDelegate.get_comps();
+  return mContext;
 }
 
 auto Object::get_uuid() const -> const UUID&
 {
-  return mDelegate.get_uuid();
-}
-
-auto Object::get_name() const -> const std::string&
-{
-  return mDelegate.get_name();
+  return mContext.uuid();
 }
 
 auto Object::get_type() const -> ObjectType
@@ -149,7 +130,7 @@ auto Object::is_visible() const -> bool
 auto Object::clone() const -> Shared<Object>
 {
   auto copy = std::make_shared<Object>(*this);
-  copy->mDelegate = mDelegate.clone();
+  copy->mContext = mContext.clone();
 
   return copy;
 }
