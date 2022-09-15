@@ -22,21 +22,30 @@
 #include <string>  // string
 
 #include "core/common/ints.hpp"
+#include "core/common/macros.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/memory.hpp"
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_delegate.hpp"
 #include "core/layer/object_type.hpp"
 
 namespace tactile {
 
-class Object final : public IContext
-{
+/// Represents various map objects found in object layers.
+/// The current supported object types are rectangles, ellipses, and points.
+class Object final : public IContext {
  public:
-  void set_pos(const float2& pos);
+  TACTILE_DEFAULT_COPY(Object);
+  TACTILE_DEFAULT_MOVE(Object);
 
+  explicit Object(ObjectType type = ObjectType::Rect);
+
+  void set_pos(const float2& pos);
   void set_size(const float2& size);
 
+  /// Changes the type of the object.
+  /// When converting to point, both width and height are set to zero.
   void set_type(ObjectType type);
 
   void set_tag(std::string tag);
@@ -59,44 +68,32 @@ class Object final : public IContext
 
   [[nodiscard]] auto get_name() const -> const std::string& override;
 
-  [[nodiscard]] auto get_type() const noexcept -> ObjectType
-  {
-    return mType;
-  }
+  [[nodiscard]] auto get_type() const -> ObjectType;
 
-  [[nodiscard]] auto get_pos() const noexcept -> const float2&
-  {
-    return mPos;
-  }
+  [[nodiscard]] auto is_rect() const -> bool;
+  [[nodiscard]] auto is_ellipse() const -> bool;
+  [[nodiscard]] auto is_point() const -> bool;
 
-  [[nodiscard]] auto get_size() const noexcept -> const float2&
-  {
-    return mSize;
-  }
+  [[nodiscard]] auto get_pos() const -> const float2&;
+  [[nodiscard]] auto get_size() const -> const float2&;
 
-  [[nodiscard]] auto get_tag() const -> const std::string&
-  {
-    return mTag;
-  }
+  [[nodiscard]] auto get_tag() const -> const std::string&;
 
-  [[nodiscard]] auto get_meta_id() const -> Maybe<int32>
-  {
-    return mMetaId;
-  }
+  [[nodiscard]] auto get_meta_id() const -> Maybe<int32>;
 
-  [[nodiscard]] auto is_visible() const noexcept -> bool
-  {
-    return mVisible;
-  }
+  [[nodiscard]] auto is_visible() const -> bool;
+
+  /// Creates a copy of the object, with a new UUID.
+  [[nodiscard]] auto clone() const -> Shared<Object>;
 
  private:
   ContextDelegate mDelegate;
-  float2 mPos {};                       /// Object position.
-  float2 mSize {};                      /// Object size (might be zero).
-  ObjectType mType {ObjectType::Rect};  /// Specific object type.
-  std::string mTag;                     /// Optional user-provided tag.
-  Maybe<int32> mMetaId;
-  bool mVisible : 1 {true};
+  float2 mPos {};            ///< Object position.
+  float2 mSize {};           ///< Object size (might be zero).
+  ObjectType mType;          ///< Specific object type.
+  std::string mTag;          ///< Optional user-provided tag.
+  Maybe<int32> mMetaId;      ///< Identifier used in save files.
+  bool mVisible : 1 {true};  ///< Is the object rendered?
 };
 
 }  // namespace tactile

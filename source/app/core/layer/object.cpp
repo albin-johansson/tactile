@@ -23,6 +23,10 @@
 
 namespace tactile {
 
+Object::Object(const ObjectType type)
+    : mType {type}
+{}
+
 void Object::set_pos(const float2& pos)
 {
   mPos = pos;
@@ -36,6 +40,10 @@ void Object::set_size(const float2& size)
 void Object::set_type(const ObjectType type)
 {
   mType = type;
+  if (is_point()) {
+    mSize.x = 0;
+    mSize.y = 0;
+  }
 }
 
 void Object::set_tag(std::string tag)
@@ -91,6 +99,59 @@ auto Object::get_uuid() const -> const UUID&
 auto Object::get_name() const -> const std::string&
 {
   return mDelegate.get_name();
+}
+
+auto Object::get_type() const -> ObjectType
+{
+  return mType;
+}
+
+auto Object::is_rect() const -> bool
+{
+  return mType == ObjectType::Rect;
+}
+
+auto Object::is_ellipse() const -> bool
+{
+  return mType == ObjectType::Ellipse;
+}
+
+auto Object::is_point() const -> bool
+{
+  return mType == ObjectType::Point;
+}
+
+auto Object::get_pos() const -> const float2&
+{
+  return mPos;
+}
+
+auto Object::get_size() const -> const float2&
+{
+  return mSize;
+}
+
+auto Object::get_tag() const -> const std::string&
+{
+  return mTag;
+}
+
+auto Object::get_meta_id() const -> Maybe<int32>
+{
+  return mMetaId;
+}
+
+auto Object::is_visible() const -> bool
+{
+  return mVisible;
+}
+
+auto Object::clone() const -> Shared<Object>
+{
+  auto copy = std::make_shared<Object>(*this);
+  copy->mDelegate = mDelegate.clone();
+
+  return copy;
 }
 
 }  // namespace tactile
