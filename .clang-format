@@ -1,22 +1,20 @@
 BasedOnStyle: Google
 
 Language: Cpp
-Standard: c++20
-
-AlignTrailingComments: true
-AlignConsecutiveDeclarations: None
-AlignConsecutiveBitFields: Consecutive
-QualifierAlignment: Left
+Standard: Latest
 
 ColumnLimit: 90
 IndentWidth: 2
 
 DerivePointerAlignment: false
 PointerAlignment: Left
+QualifierAlignment: Left
 
-IndentRequires: true
+AlignTrailingComments: true
+AlignConsecutiveDeclarations: None
+AlignConsecutiveBitFields: Consecutive
+
 IndentCaseLabels: true
-
 IndentAccessModifiers: false
 AccessModifierOffset: -1
 
@@ -24,7 +22,6 @@ NamespaceIndentation: None
 FixNamespaceComments: true
 
 EmptyLineBeforeAccessModifier: Always
-SpaceAfterCStyleCast: true
 
 AllowAllArgumentsOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
@@ -34,42 +31,22 @@ PackConstructorInitializers: Never
 BinPackParameters: false
 BinPackArguments: false
 
-AllowShortFunctionsOnASingleLine: None
+AllowShortFunctionsOnASingleLine: InlineOnly
 AllowShortIfStatementsOnASingleLine: Never
 AllowShortBlocksOnASingleLine: Empty
 AllowShortLambdasOnASingleLine: All
 AllowShortEnumsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
 
+SpaceAfterCStyleCast: true
+SpaceBeforeCpp11BracedList: true
+
+BreakBeforeBraces: Stroustrup
 BreakBeforeBinaryOperators: None
 BreakBeforeTernaryOperators: true
 BreakBeforeConceptDeclarations: true
 
-SpaceBeforeCpp11BracedList: true
-
-BreakBeforeBraces: Custom
-BraceWrapping:
-  AfterCaseLabel: false
-  AfterClass: true
-  AfterStruct: true
-  AfterControlStatement: Never
-  AfterEnum: true
-  AfterFunction: true
-  AfterNamespace: false
-  AfterObjCDeclaration: false
-  AfterUnion: false
-  AfterExternBlock: false
-  BeforeCatch: true
-  BeforeElse: true
-  BeforeLambdaBody: false
-  BeforeWhile: false
-  IndentBraces: false
-  SplitEmptyFunction: false
-  SplitEmptyRecord: false
-  SplitEmptyNamespace: false
-
 BreakStringLiterals: true
-
 BreakInheritanceList: BeforeComma
 BreakConstructorInitializers: BeforeComma
 
