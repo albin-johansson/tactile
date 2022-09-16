@@ -36,10 +36,9 @@ class Viewport;
 
 /// Abstract base class for document representations.
 /// This is almost an interface, with some command functions implemented for convenience.
-class ADocument
-{
+class Document {
  public:
-  virtual ~ADocument() noexcept = default;
+  virtual ~Document() noexcept = default;
 
   void define_component(std::string name);
 

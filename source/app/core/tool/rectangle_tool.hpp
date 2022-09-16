@@ -31,8 +31,7 @@ struct CurrentRectangleStroke final
   float2 current {};
 };
 
-class RectangleTool final : public ATool
-{
+class RectangleTool final : public Tool {
  public:
   void accept(ToolVisitor& visitor) const override;
 

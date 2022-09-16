@@ -41,8 +41,7 @@ class TilesetRef;
  *
  * \todo Right-click should erase tiles.
  */
-class StampTool final : public ATool
-{
+class StampTool final : public Tool {
  public:
   void accept(ToolVisitor& visitor) const override;
 

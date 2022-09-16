@@ -40,7 +40,7 @@ struct ToolManager::Data final
   PointTool point;
   ObjectSelectionTool object_selection;
 
-  ATool* active_tool {};
+  Tool* active_tool {};
 };
 
 TACTILE_DEFINE_MOVE(ToolManager);

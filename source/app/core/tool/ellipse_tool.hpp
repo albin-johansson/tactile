@@ -31,8 +31,7 @@ struct CurrentEllipseStroke final
   float2 current {};
 };
 
-class EllipseTool final : public ATool
-{
+class EllipseTool final : public Tool {
  public:
   void accept(ToolVisitor& visitor) const override;
 

@@ -23,8 +23,7 @@
 
 namespace tactile {
 
-struct CenterViewportShortcut final : AShortcut
-{
+struct CenterViewportShortcut final : Shortcut {
   CenterViewportShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -32,8 +31,7 @@ struct CenterViewportShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct DecreaseViewportZoomShortcut final : AShortcut
-{
+struct DecreaseViewportZoomShortcut final : Shortcut {
   DecreaseViewportZoomShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -41,8 +39,7 @@ struct DecreaseViewportZoomShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct IncreaseViewportZoomShortcut final : AShortcut
-{
+struct IncreaseViewportZoomShortcut final : Shortcut {
   IncreaseViewportZoomShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -50,8 +47,7 @@ struct IncreaseViewportZoomShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct IncreaseFontSizeShortcut final : AShortcut
-{
+struct IncreaseFontSizeShortcut final : Shortcut {
   IncreaseFontSizeShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -59,8 +55,7 @@ struct IncreaseFontSizeShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct DecreaseFontSizeShortcut final : AShortcut
-{
+struct DecreaseFontSizeShortcut final : Shortcut {
   DecreaseFontSizeShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -68,8 +63,7 @@ struct DecreaseFontSizeShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct PanUpShortcut final : AShortcut
-{
+struct PanUpShortcut final : Shortcut {
   PanUpShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -77,8 +71,7 @@ struct PanUpShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct PanDownShortcut final : AShortcut
-{
+struct PanDownShortcut final : Shortcut {
   PanDownShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -86,8 +79,7 @@ struct PanDownShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct PanLeftShortcut final : AShortcut
-{
+struct PanLeftShortcut final : Shortcut {
   PanLeftShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -95,8 +87,7 @@ struct PanLeftShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct PanRightShortcut final : AShortcut
-{
+struct PanRightShortcut final : Shortcut {
   PanRightShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -104,15 +95,13 @@ struct PanRightShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct ToggleGridShortcut final : AShortcut
-{
+struct ToggleGridShortcut final : Shortcut {
   ToggleGridShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
 };
 
-struct ToggleLayerHighlightShortcut final : AShortcut
-{
+struct ToggleLayerHighlightShortcut final : Shortcut {
   ToggleLayerHighlightShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -120,8 +109,7 @@ struct ToggleLayerHighlightShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct ToggleUiShortcut final : AShortcut
-{
+struct ToggleUiShortcut final : Shortcut {
   ToggleUiShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;

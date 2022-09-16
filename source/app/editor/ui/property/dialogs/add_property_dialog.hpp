@@ -29,8 +29,7 @@
 
 namespace tactile::ui {
 
-class AddPropertyDialog final : public ADialog
-{
+class AddPropertyDialog final : public Dialog {
  public:
   TACTILE_DEFAULT_COPY(AddPropertyDialog);
   TACTILE_DEFAULT_MOVE(AddPropertyDialog);

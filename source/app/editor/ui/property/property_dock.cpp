@@ -398,7 +398,7 @@ void show_custom_properties(const Context& context,
   }
 }
 
-void update_conditional_tileset_button(const ADocument& document,
+void update_conditional_tileset_button(const Document& document,
                                        entt::dispatcher& dispatcher)
 {
   if (document.get_type() == DocumentType::Map) {

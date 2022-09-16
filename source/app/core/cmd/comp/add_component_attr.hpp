@@ -24,7 +24,7 @@
 #include "core/common/uuid.hpp"
 
 namespace tactile {
-class ADocument;
+class Document;
 }  // namespace tactile
 
 namespace tactile::cmd {
@@ -32,7 +32,7 @@ namespace tactile::cmd {
 /// A command for adding an attribute to a component definition.
 class AddComponentAttr final : public Command {
  public:
-  AddComponentAttr(ADocument* document, const UUID& component_id, std::string name);
+  AddComponentAttr(Document* document, const UUID& component_id, std::string name);
 
   void undo() override;
 
@@ -41,7 +41,7 @@ class AddComponentAttr final : public Command {
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  ADocument* mDocument {};
+  Document* mDocument {};
   UUID mComponentId {};
   std::string mName;
 };

@@ -43,8 +43,7 @@
 namespace tactile {
 
 /// Represents a loaded map.
-class MapDocument final : public ADocument
-{
+class MapDocument final : public Document {
  public:
   MapDocument(const int2& tile_size, usize rows, usize columns);
 

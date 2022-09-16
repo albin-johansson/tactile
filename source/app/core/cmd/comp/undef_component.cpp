@@ -31,7 +31,7 @@
 
 namespace tactile::cmd {
 
-UndefComponent::UndefComponent(ADocument* document, const UUID& component_id)
+UndefComponent::UndefComponent(Document* document, const UUID& component_id)
     : mDocument {document}
     , mComponentId {component_id}
 {

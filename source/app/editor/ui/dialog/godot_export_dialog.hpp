@@ -26,8 +26,7 @@
 
 namespace tactile::ui {
 
-class GodotExportDialog final : public ADialog
-{
+class GodotExportDialog final : public Dialog {
  public:
   GodotExportDialog();
 

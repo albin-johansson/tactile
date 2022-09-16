@@ -101,8 +101,8 @@ class DocumentModel final
   [[nodiscard]] auto is_tileset_active() const -> bool;
 
   /// Returns a pointer to the active document, if there is one.
-  [[nodiscard]] auto active_document() -> ADocument*;
-  [[nodiscard]] auto active_document() const -> const ADocument*;
+  [[nodiscard]] auto active_document() -> Document*;
+  [[nodiscard]] auto active_document() const -> const Document*;
 
   [[nodiscard]] auto active_map() -> MapDocument*;
   [[nodiscard]] auto active_map() const -> const MapDocument*;
@@ -110,7 +110,7 @@ class DocumentModel final
   [[nodiscard]] auto active_tileset() -> TilesetDocument*;
   [[nodiscard]] auto active_tileset() const -> const TilesetDocument*;
 
-  [[nodiscard]] auto require_active_document() const -> const ADocument&;
+  [[nodiscard]] auto require_active_document() const -> const Document&;
 
   [[nodiscard]] auto require_active_map() -> MapDocument&;
   [[nodiscard]] auto require_active_map() const -> const MapDocument&;
@@ -127,19 +127,19 @@ class DocumentModel final
   /// Indicates whether a document represents a tileset.
   [[nodiscard]] auto is_tileset(const UUID& id) const -> bool;
 
-  [[nodiscard]] auto get_document(const UUID& id) -> Shared<ADocument>;
+  [[nodiscard]] auto get_document(const UUID& id) -> Shared<Document>;
   [[nodiscard]] auto get_map(const UUID& id) -> Shared<MapDocument>;
   [[nodiscard]] auto get_tileset(const UUID& id) -> Shared<TilesetDocument>;
 
   /// Getters that do not require a copy of shared pointers, which can be expensive
-  [[nodiscard]] auto view_document(const UUID& id) const -> const ADocument&;
+  [[nodiscard]] auto view_document(const UUID& id) const -> const Document&;
   [[nodiscard]] auto view_map(const UUID& id) const -> const MapDocument&;
   [[nodiscard]] auto view_tileset(const UUID& id) const -> const TilesetDocument&;
 
   [[nodiscard]] auto active_document_id() const -> Maybe<UUID>;
 
  private:
-  HashMap<UUID, Shared<ADocument>> mDocuments;  /// All _loaded_ documents
+  HashMap<UUID, Shared<Document>> mDocuments;  /// All _loaded_ documents
   HashMap<UUID, Shared<MapDocument>> mMaps;
   HashMap<UUID, Shared<TilesetDocument>> mTilesets;
   std::vector<UUID> mOpenDocuments;  /// All _open_ documents in the editor

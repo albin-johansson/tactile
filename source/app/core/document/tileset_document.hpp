@@ -34,8 +34,7 @@ namespace tactile {
  * However, tileset documents can be shared across multiple maps as long as they are
  * external.
  */
-class TilesetDocument final : public ADocument
-{
+class TilesetDocument final : public Document {
  public:
   TilesetDocument(const UUID& id, const TilesetInfo& info);
 

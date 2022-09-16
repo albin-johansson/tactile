@@ -23,8 +23,7 @@
 
 namespace tactile {
 
-class PointTool final : public ATool
-{
+class PointTool final : public Tool {
  public:
   void accept(ToolVisitor& visitor) const override;
 

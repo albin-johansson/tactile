@@ -61,7 +61,7 @@
 namespace tactile {
 
 App::App(AppCfg* configuration)
-    : AEventLoop {configuration}
+    : EventLoop {configuration}
     , mConfig {configuration}
 {
   subscribe_to_events();
@@ -127,7 +127,7 @@ void App::on_event(const cen::event_handler& handler)
   }
 }
 
-auto App::active_document() -> ADocument*
+auto App::active_document() -> Document*
 {
   return mModel.active_document();
 }

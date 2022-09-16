@@ -31,15 +31,14 @@ class DocumentModel;
 
 namespace tactile::ui {
 
-class ADockWidget
-{
+class DockWidget {
  public:
-  TACTILE_DELETE_COPY(ADockWidget);
-  TACTILE_DEFAULT_MOVE(ADockWidget);
+  TACTILE_DELETE_COPY(DockWidget);
+  TACTILE_DEFAULT_MOVE(DockWidget);
 
-  ADockWidget(const char* title, ImGuiWindowFlags flags);
+  DockWidget(const char* title, ImGuiWindowFlags flags);
 
-  virtual ~ADockWidget() noexcept;
+  virtual ~DockWidget() noexcept;
 
   void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 

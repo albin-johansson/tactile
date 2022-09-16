@@ -23,8 +23,7 @@
 
 namespace tactile {
 
-class BucketTool final : public ATool
-{
+class BucketTool final : public Tool {
  public:
   void accept(ToolVisitor& visitor) const override;
 

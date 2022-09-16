@@ -29,13 +29,13 @@
 
 namespace tactile::ui {
 
-ADialog::ADialog(std::string title)
+Dialog::Dialog(std::string title)
     : mTitle {std::move(title)}
     , mAcceptButtonLabel {get_current_language().misc.ok}
     , mCloseButtonLabel {get_current_language().misc.cancel}
 {}
 
-void ADialog::update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void Dialog::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (mShow) {
     ImGui::OpenPopup(mTitle.c_str());
@@ -79,27 +79,27 @@ void ADialog::update(const DocumentModel& model, entt::dispatcher& dispatcher)
   }
 }
 
-void ADialog::make_visible()
+void Dialog::make_visible()
 {
   mShow = true;
 }
 
-void ADialog::use_apply_button()
+void Dialog::use_apply_button()
 {
   mUseApplyButton = true;
 }
 
-void ADialog::set_title(std::string title)
+void Dialog::set_title(std::string title)
 {
   mTitle = std::move(title);
 }
 
-void ADialog::set_accept_button_label(Maybe<std::string> label)
+void Dialog::set_accept_button_label(Maybe<std::string> label)
 {
   mAcceptButtonLabel = std::move(label);
 }
 
-void ADialog::set_close_button_label(Maybe<std::string> label)
+void Dialog::set_close_button_label(Maybe<std::string> label)
 {
   mCloseButtonLabel = std::move(label);
 }

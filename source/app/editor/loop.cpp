@@ -30,7 +30,7 @@
 
 namespace tactile {
 
-AEventLoop::AEventLoop(AppCfg* cfg)
+EventLoop::EventLoop(AppCfg* cfg)
     : mCfg {cfg}
 {
   if (!mCfg) {
@@ -38,7 +38,7 @@ AEventLoop::AEventLoop(AppCfg* cfg)
   }
 }
 
-void AEventLoop::start()
+void EventLoop::start()
 {
   mRunning = true;
 
@@ -84,12 +84,12 @@ void AEventLoop::start()
   on_shutdown();
 }
 
-void AEventLoop::stop()
+void EventLoop::stop()
 {
   mRunning = false;
 }
 
-void AEventLoop::poll_events()
+void EventLoop::poll_events()
 {
   mKeyboard.refresh();
 

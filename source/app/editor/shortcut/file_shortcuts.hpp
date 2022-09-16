@@ -23,22 +23,19 @@
 
 namespace tactile {
 
-struct NewMapShortcut final : AShortcut
-{
+struct NewMapShortcut final : Shortcut {
   NewMapShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
 };
 
-struct OpenMapShortcut final : AShortcut
-{
+struct OpenMapShortcut final : Shortcut {
   OpenMapShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
 };
 
-struct SaveShortcut final : AShortcut
-{
+struct SaveShortcut final : Shortcut {
   SaveShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -46,8 +43,7 @@ struct SaveShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct SaveAsShortcut final : AShortcut
-{
+struct SaveAsShortcut final : Shortcut {
   SaveAsShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;

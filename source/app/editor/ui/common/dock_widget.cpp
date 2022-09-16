@@ -25,7 +25,7 @@
 
 namespace tactile::ui {
 
-struct ADockWidget::Data final
+struct DockWidget::Data final
 {
   const char* title {};
   ImGuiWindowFlags window_flags {};
@@ -35,7 +35,7 @@ struct ADockWidget::Data final
   bool contains_mouse {};
 };
 
-ADockWidget::ADockWidget(const char* title, const ImGuiWindowFlags flags)
+DockWidget::DockWidget(const char* title, const ImGuiWindowFlags flags)
     : mData {std::make_unique<Data>()}
 {
   mData->title = title;
@@ -45,9 +45,9 @@ ADockWidget::ADockWidget(const char* title, const ImGuiWindowFlags flags)
   }
 }
 
-ADockWidget::~ADockWidget() noexcept = default;
+DockWidget::~DockWidget() noexcept = default;
 
-void ADockWidget::update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void DockWidget::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   bool visible = is_visible();
 
@@ -68,22 +68,22 @@ void ADockWidget::update(const DocumentModel& model, entt::dispatcher& dispatche
   set_visible(visible);
 }
 
-void ADockWidget::set_close_button_enabled(const bool enabled)
+void DockWidget::set_close_button_enabled(const bool enabled)
 {
   mData->has_close_button = enabled;
 }
 
-void ADockWidget::set_focus_flags(const ImGuiFocusedFlags flags)
+void DockWidget::set_focus_flags(const ImGuiFocusedFlags flags)
 {
   mData->focus_flags = flags;
 }
 
-auto ADockWidget::has_focus() const -> bool
+auto DockWidget::has_focus() const -> bool
 {
   return mData->has_focus;
 }
 
-auto ADockWidget::has_mouse_hover() const -> bool
+auto DockWidget::has_mouse_hover() const -> bool
 {
   return mData->contains_mouse;
 }

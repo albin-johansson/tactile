@@ -32,7 +32,7 @@
 namespace tactile {
 namespace {
 
-inline std::vector<Unique<AShortcut>> _shortcuts;
+inline std::vector<Unique<Shortcut>> _shortcuts;
 
 template <typename T>
 void _load_shortcut()

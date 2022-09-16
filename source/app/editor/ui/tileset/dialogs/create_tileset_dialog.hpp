@@ -27,8 +27,7 @@
 
 namespace tactile::ui {
 
-class CreateTilesetDialog final : public ADialog
-{
+class CreateTilesetDialog final : public Dialog {
  public:
   CreateTilesetDialog();
 

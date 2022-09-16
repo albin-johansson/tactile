@@ -25,8 +25,7 @@
 namespace tactile::ui {
 
 /// Used to create new tilemaps.
-class CreateMapDialog final : public ADialog
-{
+class CreateMapDialog final : public Dialog {
  public:
   CreateMapDialog();
 

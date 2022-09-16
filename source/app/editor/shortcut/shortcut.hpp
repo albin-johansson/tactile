@@ -27,16 +27,15 @@ namespace tactile {
 
 class DocumentModel;
 
-class AShortcut
-{
+class Shortcut {
  public:
-  explicit AShortcut(const cen::scan_code key,
+  explicit Shortcut(const cen::scan_code key,
                      const cen::key_mod modifiers = cen::key_mod::none)
       : mKey {key}
       , mModifiers {modifiers}
   {}
 
-  virtual ~AShortcut() noexcept = default;
+  virtual ~Shortcut() noexcept = default;
 
   void poll(const DocumentModel& model,
             const cen::keyboard_event& event,

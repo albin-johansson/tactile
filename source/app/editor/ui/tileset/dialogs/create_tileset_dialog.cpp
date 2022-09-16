@@ -33,7 +33,7 @@
 namespace tactile::ui {
 
 CreateTilesetDialog::CreateTilesetDialog()
-    : ADialog {"Create Tileset"}
+    : Dialog {"Create Tileset"}
 {}
 
 void CreateTilesetDialog::open()

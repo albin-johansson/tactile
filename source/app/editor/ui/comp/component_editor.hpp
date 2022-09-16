@@ -28,7 +28,7 @@
 #include "editor/ui/dialog/dialog.hpp"
 
 namespace tactile {
-class ADocument;
+class Document;
 class Attribute;
 class ComponentDefinition;
 }  // namespace tactile
@@ -36,8 +36,7 @@ class ComponentDefinition;
 namespace tactile::ui {
 
 /// Used to manage the available component definitions.
-class ComponentEditor final : public ADialog
-{
+class ComponentEditor final : public Dialog {
  public:
   TACTILE_DELETE_COPY(ComponentEditor);
   TACTILE_DEFAULT_MOVE(ComponentEditor);
@@ -55,7 +54,7 @@ class ComponentEditor final : public ADialog
   struct Data;
   Unique<Data> mData;
 
-  void show_component_combo_popup(const ADocument& document,
+  void show_component_combo_popup(const Document& document,
                                   entt::dispatcher& dispatcher);
 
   void show_component_attributes(const ComponentDefinition& definition,

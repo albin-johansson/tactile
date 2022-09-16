@@ -26,8 +26,7 @@
 namespace tactile::ui {
 
 /// Provides the interface for all available persistent settings.
-class SettingsDialog final : public ADialog
-{
+class SettingsDialog final : public Dialog {
  public:
   TACTILE_DEFAULT_COPY(SettingsDialog);
   TACTILE_DEFAULT_MOVE(SettingsDialog);

@@ -21,7 +21,7 @@
 
 namespace tactile {
 
-void AShortcut::poll(const DocumentModel& model,
+void Shortcut::poll(const DocumentModel& model,
                      const cen::keyboard_event& event,
                      entt::dispatcher& dispatcher)
 {

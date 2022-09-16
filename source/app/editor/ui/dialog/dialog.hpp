@@ -33,15 +33,14 @@ class DocumentModel;
 namespace tactile::ui {
 
 /// Serves as the base implementation of all modal dialogs.
-class ADialog
-{
+class Dialog {
  public:
-  TACTILE_DEFAULT_COPY(ADialog);
-  TACTILE_DEFAULT_MOVE(ADialog);
+  TACTILE_DEFAULT_COPY(Dialog);
+  TACTILE_DEFAULT_MOVE(Dialog);
 
-  explicit ADialog(std::string title);
+  explicit Dialog(std::string title);
 
-  virtual ~ADialog() noexcept = default;
+  virtual ~Dialog() noexcept = default;
 
   /**
    * Updates the state of the dialog.
@@ -65,24 +64,21 @@ class ADialog
   /**
    * Invoked when the "Cancel" button is pressed.
    */
-  virtual void on_cancel()
-  {}
+  virtual void on_cancel() {}
 
   /**
    * Invoked when the "OK" (accept) button is pressed.
    *
    * \param dispatcher the event dispatcher used.
    */
-  virtual void on_accept([[maybe_unused]] entt::dispatcher& dispatcher)
-  {}
+  virtual void on_accept([[maybe_unused]] entt::dispatcher& dispatcher) {}
 
   /**
    * Invoked when the "Apply" (secondary accept) button is pressed.
    *
    * \param dispatcher the event dispatcher used.
    */
-  virtual void on_apply([[maybe_unused]] entt::dispatcher& dispatcher)
-  {}
+  virtual void on_apply([[maybe_unused]] entt::dispatcher& dispatcher) {}
 
   /**
    * Indicates whether the current input state is considered acceptable.

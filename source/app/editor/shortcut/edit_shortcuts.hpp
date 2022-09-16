@@ -23,8 +23,7 @@
 
 namespace tactile {
 
-struct UndoShortcut final : AShortcut
-{
+struct UndoShortcut final : Shortcut {
   UndoShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -32,8 +31,7 @@ struct UndoShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct RedoShortcut final : AShortcut
-{
+struct RedoShortcut final : Shortcut {
   RedoShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -41,8 +39,7 @@ struct RedoShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct AddRowShortcut final : AShortcut
-{
+struct AddRowShortcut final : Shortcut {
   AddRowShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -50,8 +47,7 @@ struct AddRowShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct AddColumnShortcut final : AShortcut
-{
+struct AddColumnShortcut final : Shortcut {
   AddColumnShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -59,8 +55,7 @@ struct AddColumnShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct RemoveRowShortcut final : AShortcut
-{
+struct RemoveRowShortcut final : Shortcut {
   RemoveRowShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -68,8 +63,7 @@ struct RemoveRowShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct RemoveColumnShortcut final : AShortcut
-{
+struct RemoveColumnShortcut final : Shortcut {
   RemoveColumnShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -77,8 +71,7 @@ struct RemoveColumnShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct AddTilesetShortcut final : AShortcut
-{
+struct AddTilesetShortcut final : Shortcut {
   AddTilesetShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -86,8 +79,7 @@ struct AddTilesetShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct EnableBucketShortcut final : AShortcut
-{
+struct EnableBucketShortcut final : Shortcut {
   EnableBucketShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -95,8 +87,7 @@ struct EnableBucketShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct EnableEraserShortcut final : AShortcut
-{
+struct EnableEraserShortcut final : Shortcut {
   EnableEraserShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -104,8 +95,7 @@ struct EnableEraserShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct EnableStampShortcut final : AShortcut
-{
+struct EnableStampShortcut final : Shortcut {
   EnableStampShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -113,8 +103,7 @@ struct EnableStampShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct EnableObjectSelectionShortcut final : AShortcut
-{
+struct EnableObjectSelectionShortcut final : Shortcut {
   EnableObjectSelectionShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -122,8 +111,7 @@ struct EnableObjectSelectionShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct EnableRectangleToolShortcut final : AShortcut
-{
+struct EnableRectangleToolShortcut final : Shortcut {
   EnableRectangleToolShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -131,8 +119,7 @@ struct EnableRectangleToolShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct EnableEllipseToolShortcut final : AShortcut
-{
+struct EnableEllipseToolShortcut final : Shortcut {
   EnableEllipseToolShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -140,8 +127,7 @@ struct EnableEllipseToolShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct EnablePointToolShortcut final : AShortcut
-{
+struct EnablePointToolShortcut final : Shortcut {
   EnablePointToolShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
@@ -149,15 +135,13 @@ struct EnablePointToolShortcut final : AShortcut
   [[nodiscard]] auto is_enabled(const DocumentModel& model) const -> bool override;
 };
 
-struct OpenSettingsShortcut final : AShortcut
-{
+struct OpenSettingsShortcut final : Shortcut {
   OpenSettingsShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;
 };
 
-struct OpenComponentEditorShortcut final : AShortcut
-{
+struct OpenComponentEditorShortcut final : Shortcut {
   OpenComponentEditorShortcut();
 
   void activate(entt::dispatcher& dispatcher) override;

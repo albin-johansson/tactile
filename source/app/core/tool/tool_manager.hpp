@@ -30,8 +30,7 @@ namespace tactile {
 /**
  * Manages the tools associated with a map document.
  */
-class ToolManager final : private ATool
-{
+class ToolManager final : private Tool {
  public:
   TACTILE_DELETE_COPY(ToolManager);
   TACTILE_DECLARE_MOVE(ToolManager);

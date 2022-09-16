@@ -33,8 +33,7 @@ namespace tactile::ui {
 /**
  * An abstract class representing dialogs which provide a string input field.
  */
-class AStringInputDialog : public ADialog
-{
+class AStringInputDialog : public Dialog {
  public:
   explicit AStringInputDialog(std::string title);
 

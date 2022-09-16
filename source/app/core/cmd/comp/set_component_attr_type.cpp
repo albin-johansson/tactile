@@ -31,7 +31,7 @@
 
 namespace tactile::cmd {
 
-SetComponentAttrType::SetComponentAttrType(ADocument* document,
+SetComponentAttrType::SetComponentAttrType(Document* document,
                                            const UUID& component_id,
                                            std::string attribute,
                                            const AttributeType type)

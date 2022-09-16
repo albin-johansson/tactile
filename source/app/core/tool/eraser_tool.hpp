@@ -24,8 +24,7 @@
 
 namespace tactile {
 
-class EraserTool final : public ATool
-{
+class EraserTool final : public Tool {
  public:
   void accept(ToolVisitor& visitor) const override;
 

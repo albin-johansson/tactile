@@ -47,7 +47,7 @@
 namespace tactile::io {
 namespace {
 
-void restore_context_no_register(ADocument& document,
+void restore_context_no_register(Document& document,
                                  const Shared<Context>& context,
                                  const ir::ContextData& source)
 {
@@ -72,7 +72,7 @@ void restore_context_no_register(ADocument& document,
   }
 }
 
-void restore_context(ADocument& document,
+void restore_context(Document& document,
                      const Shared<Context>& context,
                      const ir::ContextData& source)
 {
@@ -80,7 +80,7 @@ void restore_context(ADocument& document,
   document.get_contexts().add_context(context);
 }
 
-auto restore_object(ADocument& document, const ir::ObjectData& object_data)
+auto restore_object(Document& document, const ir::ObjectData& object_data)
     -> Shared<Object>
 {
   auto object = std::make_shared<Object>();

@@ -197,7 +197,7 @@ auto DocumentModel::get_id_for_path(const fs::path& path) const -> UUID
   throw TactileError {"No document with the specified path!"};
 }
 
-auto DocumentModel::get_document(const UUID& id) -> Shared<ADocument>
+auto DocumentModel::get_document(const UUID& id) -> Shared<Document>
 {
   return lookup_in(mDocuments, id);
 }
@@ -232,7 +232,7 @@ auto DocumentModel::is_tileset_active() const -> bool
   }
 }
 
-auto DocumentModel::active_document() -> ADocument*
+auto DocumentModel::active_document() -> Document*
 {
   if (mActiveDocument) {
     TACTILE_ASSERT(mDocuments.contains(*mActiveDocument));
@@ -243,7 +243,7 @@ auto DocumentModel::active_document() -> ADocument*
   }
 }
 
-auto DocumentModel::active_document() const -> const ADocument*
+auto DocumentModel::active_document() const -> const Document*
 {
   if (mActiveDocument) {
     TACTILE_ASSERT(mDocuments.contains(*mActiveDocument));
@@ -298,7 +298,7 @@ auto DocumentModel::active_tileset() const -> const TilesetDocument*
   return nullptr;
 }
 
-auto DocumentModel::require_active_document() const -> const ADocument&
+auto DocumentModel::require_active_document() const -> const Document&
 {
   if (const auto* document = active_document()) {
     return *document;
@@ -382,7 +382,7 @@ auto DocumentModel::get_tileset(const UUID& id) -> Shared<TilesetDocument>
   return lookup_in(mTilesets, id);
 }
 
-auto DocumentModel::view_document(const UUID& id) const -> const ADocument&
+auto DocumentModel::view_document(const UUID& id) const -> const Document&
 {
   return *lookup_in(mDocuments, id);
 }

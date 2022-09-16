@@ -28,34 +28,34 @@
 
 namespace tactile {
 
-void ADocument::define_component(std::string name)
+void Document::define_component(std::string name)
 {
   get_history().exec<cmd::DefineComponent>(get_component_index(), std::move(name));
 }
 
-void ADocument::undef_component(const UUID& component_id)
+void Document::undef_component(const UUID& component_id)
 {
   get_history().exec<cmd::UndefComponent>(this, component_id);
 }
 
-void ADocument::rename_component(const UUID& component_id, std::string name)
+void Document::rename_component(const UUID& component_id, std::string name)
 {
   get_history().exec<cmd::RenameComponent>(get_component_index(),
                                            component_id,
                                            std::move(name));
 }
 
-void ADocument::add_component_attribute(const UUID& component_id, std::string name)
+void Document::add_component_attribute(const UUID& component_id, std::string name)
 {
   get_history().exec<cmd::AddComponentAttr>(this, component_id, std::move(name));
 }
 
-void ADocument::remove_component_attribute(const UUID& component_id, std::string name)
+void Document::remove_component_attribute(const UUID& component_id, std::string name)
 {
   get_history().exec<cmd::RemoveComponentAttr>(this, component_id, std::move(name));
 }
 
-void ADocument::rename_component_attribute(const UUID& component_id,
+void Document::rename_component_attribute(const UUID& component_id,
                                            std::string current,
                                            std::string updated)
 {
@@ -65,12 +65,12 @@ void ADocument::rename_component_attribute(const UUID& component_id,
                                                std::move(updated));
 }
 
-void ADocument::duplicate_component_attribute(const UUID& component_id, std::string name)
+void Document::duplicate_component_attribute(const UUID& component_id, std::string name)
 {
   get_history().exec<cmd::DuplicateComponentAttr>(this, component_id, std::move(name));
 }
 
-void ADocument::set_component_attribute_type(const UUID& component_id,
+void Document::set_component_attribute_type(const UUID& component_id,
                                              std::string name,
                                              const AttributeType type)
 {
@@ -80,7 +80,7 @@ void ADocument::set_component_attribute_type(const UUID& component_id,
                                                 type);
 }
 
-void ADocument::update_component(const UUID& component_id,
+void Document::update_component(const UUID& component_id,
                                  std::string name,
                                  Attribute value)
 {
@@ -90,7 +90,7 @@ void ADocument::update_component(const UUID& component_id,
                                            std::move(value));
 }
 
-void ADocument::attach_component(const UUID& context_id, const UUID& component_id)
+void Document::attach_component(const UUID& context_id, const UUID& component_id)
 {
   auto context = get_contexts().get_context(context_id);
   get_history().exec<cmd::AttachComponent>(get_component_index(),
@@ -98,13 +98,13 @@ void ADocument::attach_component(const UUID& context_id, const UUID& component_i
                                            component_id);
 }
 
-void ADocument::detach_component(const UUID& context_id, const UUID& component_id)
+void Document::detach_component(const UUID& context_id, const UUID& component_id)
 {
   auto context = get_contexts().get_context(context_id);
   get_history().exec<cmd::DetachComponent>(std::move(context), component_id);
 }
 
-void ADocument::update_attached_component(const UUID& context_id,
+void Document::update_attached_component(const UUID& context_id,
                                           const UUID& component_id,
                                           std::string name,
                                           Attribute value)
@@ -116,7 +116,7 @@ void ADocument::update_attached_component(const UUID& context_id,
                                                    std::move(value));
 }
 
-void ADocument::reset_attached_component(const UUID& context_id, const UUID& component_id)
+void Document::reset_attached_component(const UUID& context_id, const UUID& component_id)
 {
   auto context = get_contexts().get_context(context_id);
   get_history().exec<cmd::ResetAttachedComponent>(get_component_index(),
@@ -124,7 +124,7 @@ void ADocument::reset_attached_component(const UUID& context_id, const UUID& com
                                                   component_id);
 }
 
-void ADocument::add_property(const UUID& context_id,
+void Document::add_property(const UUID& context_id,
                              std::string name,
                              const AttributeType type)
 {
@@ -132,13 +132,13 @@ void ADocument::add_property(const UUID& context_id,
   get_history().exec<cmd::AddProperty>(std::move(context), std::move(name), type);
 }
 
-void ADocument::remove_property(const UUID& context_id, std::string name)
+void Document::remove_property(const UUID& context_id, std::string name)
 {
   auto context = get_contexts().get_context(context_id);
   get_history().exec<cmd::RemoveProperty>(std::move(context), std::move(name));
 }
 
-void ADocument::rename_property(const UUID& context_id,
+void Document::rename_property(const UUID& context_id,
                                 std::string current,
                                 std::string updated)
 {
@@ -148,7 +148,7 @@ void ADocument::rename_property(const UUID& context_id,
                                           std::move(updated));
 }
 
-void ADocument::update_property(const UUID& context_id, std::string name, Attribute value)
+void Document::update_property(const UUID& context_id, std::string name, Attribute value)
 {
   auto context = get_contexts().get_context(context_id);
   get_history().exec<cmd::UpdateProperty>(std::move(context),
@@ -156,7 +156,7 @@ void ADocument::update_property(const UUID& context_id, std::string name, Attrib
                                           std::move(value));
 }
 
-void ADocument::change_property_type(const UUID& context_id,
+void Document::change_property_type(const UUID& context_id,
                                      std::string name,
                                      const AttributeType type)
 {
@@ -164,12 +164,12 @@ void ADocument::change_property_type(const UUID& context_id,
   get_history().exec<cmd::ChangePropertyType>(std::move(context), std::move(name), type);
 }
 
-auto ADocument::is_map() const -> bool
+auto Document::is_map() const -> bool
 {
   return get_type() == DocumentType::Map;
 }
 
-auto ADocument::is_tileset() const -> bool
+auto Document::is_tileset() const -> bool
 {
   return get_type() == DocumentType::Tileset;
 }

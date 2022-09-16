@@ -31,7 +31,7 @@
 namespace tactile {
 
 NewMapShortcut::NewMapShortcut()
-    : AShortcut {cen::scancodes::n, primary_modifier}
+    : Shortcut {cen::scancodes::n, primary_modifier}
 {}
 
 void NewMapShortcut::activate(entt::dispatcher& dispatcher)
@@ -42,7 +42,7 @@ void NewMapShortcut::activate(entt::dispatcher& dispatcher)
 /* ------------------------------------------------------------------------------------ */
 
 OpenMapShortcut::OpenMapShortcut()
-    : AShortcut {cen::scancodes::o, primary_modifier}
+    : Shortcut {cen::scancodes::o, primary_modifier}
 {}
 
 void OpenMapShortcut::activate(entt::dispatcher& dispatcher)
@@ -53,7 +53,7 @@ void OpenMapShortcut::activate(entt::dispatcher& dispatcher)
 /* ------------------------------------------------------------------------------------ */
 
 SaveShortcut::SaveShortcut()
-    : AShortcut {cen::scancodes::s, primary_modifier}
+    : Shortcut {cen::scancodes::s, primary_modifier}
 {}
 
 void SaveShortcut::activate(entt::dispatcher& dispatcher)
@@ -70,7 +70,7 @@ auto SaveShortcut::is_enabled(const DocumentModel& model) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 SaveAsShortcut::SaveAsShortcut()
-    : AShortcut {cen::scancodes::s, primary_modifier | cen::key_mod::lshift}
+    : Shortcut {cen::scancodes::s, primary_modifier | cen::key_mod::lshift}
 {}
 
 void SaveAsShortcut::activate(entt::dispatcher& dispatcher)

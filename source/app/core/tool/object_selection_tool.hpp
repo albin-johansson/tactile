@@ -31,8 +31,7 @@ struct ObjectDragInfo final
   float2 last_mouse_pos {};     ///< Mouse viewport position at last update.
 };
 
-class ObjectSelectionTool final : public ATool
-{
+class ObjectSelectionTool final : public Tool {
  public:
   void accept(ToolVisitor& visitor) const override;
 

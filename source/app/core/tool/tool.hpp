@@ -29,10 +29,9 @@ namespace tactile {
 struct MouseInfo;
 class DocumentModel;
 
-class ATool
-{
+class Tool {
  public:
-  virtual ~ATool() noexcept = default;
+  virtual ~Tool() noexcept = default;
 
   virtual void accept(ToolVisitor& visitor) const = 0;
 

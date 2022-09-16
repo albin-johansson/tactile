@@ -25,7 +25,7 @@
 #include "core/common/uuid.hpp"
 
 namespace tactile {
-class ADocument;
+class Document;
 }  // namespace tactile
 
 namespace tactile::cmd {
@@ -33,7 +33,7 @@ namespace tactile::cmd {
 /// A command for removing an attribute from a component definition.
 class RemoveComponentAttr final : public Command {
  public:
-  RemoveComponentAttr(ADocument* document,
+  RemoveComponentAttr(Document* document,
                       const UUID& component_id,
                       std::string attribute);
 
@@ -44,7 +44,7 @@ class RemoveComponentAttr final : public Command {
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  ADocument* mDocument {};
+  Document* mDocument {};
   UUID mComponentId {};
   std::string mAttributeName;
   Maybe<Attribute> mPreviousValue;

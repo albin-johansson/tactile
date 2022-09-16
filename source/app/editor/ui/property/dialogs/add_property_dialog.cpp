@@ -35,7 +35,7 @@
 namespace tactile::ui {
 
 AddPropertyDialog::AddPropertyDialog()
-    : ADialog {"Add Property"}
+    : Dialog {"Add Property"}
 {
 }
 

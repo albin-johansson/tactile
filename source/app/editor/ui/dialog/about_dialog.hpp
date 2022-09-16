@@ -24,8 +24,7 @@
 namespace tactile::ui {
 
 /// Provides information about the application.
-class AboutDialog final : public ADialog
-{
+class AboutDialog final : public Dialog {
  public:
   AboutDialog();
 

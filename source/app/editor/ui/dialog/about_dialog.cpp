@@ -31,7 +31,7 @@
 namespace tactile::ui {
 
 AboutDialog::AboutDialog()
-    : ADialog {"About Tactile"}
+    : Dialog {"About Tactile"}
 {
   set_accept_button_label(nothing);
 }

@@ -23,7 +23,7 @@
 #include "core/common/uuid.hpp"
 
 namespace tactile {
-class ADocument;
+class Document;
 }  // namespace tactile
 
 namespace tactile::cmd {
@@ -31,7 +31,7 @@ namespace tactile::cmd {
 /// A command for renaming an attribute in a component definition.
 class RenameComponentAttr final : public Command {
  public:
-  RenameComponentAttr(ADocument* document,
+  RenameComponentAttr(Document* document,
                       const UUID& component_id,
                       std::string previous_name,
                       std::string updated_name);
@@ -43,7 +43,7 @@ class RenameComponentAttr final : public Command {
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  ADocument* mDocument {};
+  Document* mDocument {};
   UUID mComponentId {};
   std::string mPreviousName;
   std::string mUpdatedName;

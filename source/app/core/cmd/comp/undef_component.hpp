@@ -30,7 +30,7 @@
 #include "core/comp/component_definition.hpp"
 
 namespace tactile {
-class ADocument;
+class Document;
 }  // namespace tactile
 
 namespace tactile::cmd {
@@ -38,7 +38,7 @@ namespace tactile::cmd {
 /// A command for removing a component definition.
 class UndefComponent final : public Command {
  public:
-  UndefComponent(ADocument* document, const UUID& component_id);
+  UndefComponent(Document* document, const UUID& component_id);
 
   void undo() override;
 
@@ -47,7 +47,7 @@ class UndefComponent final : public Command {
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  ADocument* mDocument {};
+  Document* mDocument {};
   UUID mComponentId {};
   Maybe<ComponentDefinition> mPreviousDef;
   HashMap<UUID, Component> mRemovedComponents;

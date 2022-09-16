@@ -29,7 +29,7 @@
 namespace tactile::ui {
 
 MapParseErrorDialog::MapParseErrorDialog()
-    : ADialog {"Map Parse Error"}
+    : Dialog {"Map Parse Error"}
 {
   set_close_button_label(nothing);
 }

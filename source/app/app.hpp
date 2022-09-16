@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-class ADocument;
+class Document;
 class MapDocument;
 class TilesetDocument;
 class AppCfg;
@@ -45,12 +45,11 @@ struct WidgetShowState final
 };
 
 /// The heart of the Tactile map editor.
-class App final : AEventLoop
-{
+class App final : EventLoop {
  public:
   explicit App(AppCfg* configuration);
 
-  using AEventLoop::start;
+  using EventLoop::start;
 
  protected:
   void on_startup() override;
@@ -71,7 +70,7 @@ class App final : AEventLoop
   WidgetShowState mWidgetShowState;
   bool mReloadFonts : 1 {};
 
-  [[nodiscard]] auto active_document() -> ADocument*;
+  [[nodiscard]] auto active_document() -> Document*;
   [[nodiscard]] auto active_map_document() -> MapDocument*;
   [[nodiscard]] auto active_tileset_document() -> TilesetDocument*;
 

@@ -53,7 +53,7 @@ struct ComponentEditor::Data final
 };
 
 ComponentEditor::ComponentEditor()
-    : ADialog {get_current_language().window.component_editor}
+    : Dialog {get_current_language().window.component_editor}
     , mData {std::make_unique<Data>()}
 {
   set_accept_button_label(nothing);
@@ -150,7 +150,7 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
   ImGui::Separator();
 }
 
-void ComponentEditor::show_component_combo_popup(const ADocument& document,
+void ComponentEditor::show_component_combo_popup(const Document& document,
                                                  entt::dispatcher& dispatcher)
 {
   auto& data = *mData;

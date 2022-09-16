@@ -78,7 +78,7 @@ void _reset_export_preferences(io::PreferenceState& prefs)
 }  // namespace
 
 SettingsDialog::SettingsDialog()
-    : ADialog {get_current_language().window.settings_dialog}
+    : Dialog {get_current_language().window.settings_dialog}
 {
   use_apply_button();
 }

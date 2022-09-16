@@ -30,7 +30,7 @@
 
 namespace tactile::cmd {
 
-RemoveComponentAttr::RemoveComponentAttr(ADocument* document,
+RemoveComponentAttr::RemoveComponentAttr(Document* document,
                                          const UUID& component_id,
                                          std::string attribute)
     : mDocument {document}

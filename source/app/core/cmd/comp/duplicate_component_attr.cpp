@@ -30,7 +30,7 @@
 
 namespace tactile::cmd {
 
-DuplicateComponentAttr::DuplicateComponentAttr(ADocument* document,
+DuplicateComponentAttr::DuplicateComponentAttr(Document* document,
                                                const UUID& component_id,
                                                std::string attribute)
     : mDocument {document}

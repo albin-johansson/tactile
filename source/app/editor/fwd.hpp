@@ -25,7 +25,7 @@ struct DialogState;
 struct RenderInfo;
 struct ViewportCursorInfo;
 
-class ADockWidget;
+class DockWidget;
 class ViewportArea;
 
 class GraphicsCtx;
@@ -46,7 +46,7 @@ class TreeNode;
 
 class ComponentEditor;
 
-class ADialog;
+class Dialog;
 class AStringInputDialog;
 class AddComponentAttrDialog;
 class ComponentNameDialog;

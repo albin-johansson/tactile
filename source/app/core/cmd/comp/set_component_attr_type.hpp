@@ -28,7 +28,7 @@
 #include "core/common/uuid.hpp"
 
 namespace tactile {
-class ADocument;
+class Document;
 }  // namespace tactile
 
 namespace tactile::cmd {
@@ -36,7 +36,7 @@ namespace tactile::cmd {
 /// A command for changing the type of an attribute in a component definition.
 class SetComponentAttrType final : public Command {
  public:
-  SetComponentAttrType(ADocument* document,
+  SetComponentAttrType(Document* document,
                        const UUID& component_id,
                        std::string attribute,
                        AttributeType type);
@@ -48,7 +48,7 @@ class SetComponentAttrType final : public Command {
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  ADocument* mDocument {};
+  Document* mDocument {};
   UUID mComponentId {};
   std::string mAttributeName;
   AttributeType mNewType;
