@@ -27,8 +27,7 @@
 
 namespace tactile::cmd {
 
-class RenameLayer final : public ICommand
-{
+class RenameLayer final : public Command {
  public:
   RenameLayer(Shared<Map> map, const UUID& layer_id, std::string name);
 

@@ -35,6 +35,7 @@ Checks: "-*,
          -cppcoreguidelines-owning-memory,
          -cppcoreguidelines-avoid-goto,
          -cppcoreguidelines-avoid-c-arrays,
+         -cppcoreguidelines-special-member-functions,
          
          boost-*,
          google-*,

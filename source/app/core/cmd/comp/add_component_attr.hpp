@@ -30,8 +30,7 @@ class ADocument;
 namespace tactile::cmd {
 
 /// A command for adding an attribute to a component definition.
-class AddComponentAttr final : public ICommand
-{
+class AddComponentAttr final : public Command {
  public:
   AddComponentAttr(ADocument* document, const UUID& component_id, std::string name);
 

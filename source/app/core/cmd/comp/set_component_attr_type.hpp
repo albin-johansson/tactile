@@ -34,8 +34,7 @@ class ADocument;
 namespace tactile::cmd {
 
 /// A command for changing the type of an attribute in a component definition.
-class SetComponentAttrType final : public ICommand
-{
+class SetComponentAttrType final : public Command {
  public:
   SetComponentAttrType(ADocument* document,
                        const UUID& component_id,

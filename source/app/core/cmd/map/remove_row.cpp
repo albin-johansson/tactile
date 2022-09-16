@@ -53,7 +53,7 @@ void RemoveRow::redo()
   invoke_n(mRows, [this] { mMap->remove_row(); });
 }
 
-auto RemoveRow::merge_with(const ICommand* cmd) -> bool
+auto RemoveRow::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const RemoveRow*>(cmd)) {
     mRows += other->mRows;

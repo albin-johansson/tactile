@@ -31,8 +31,7 @@ class MapDocument;
 
 namespace tactile::cmd {
 
-class AddObject final : public ICommand
-{
+class AddObject final : public Command {
  public:
   AddObject(MapDocument* document,
             const UUID& layer_id,

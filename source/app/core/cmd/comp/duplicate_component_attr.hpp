@@ -30,8 +30,7 @@ class ADocument;
 namespace tactile::cmd {
 
 /// A command for duplicating an attribute in a component definition.
-class DuplicateComponentAttr final : public ICommand
-{
+class DuplicateComponentAttr final : public Command {
  public:
   DuplicateComponentAttr(ADocument* document,
                          const UUID& component_id,

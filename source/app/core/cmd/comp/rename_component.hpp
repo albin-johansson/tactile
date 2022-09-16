@@ -31,8 +31,7 @@ class ComponentIndex;
 namespace tactile::cmd {
 
 /// A command for renaming a component definition.
-class RenameComponent final : public ICommand
-{
+class RenameComponent final : public Command {
  public:
   RenameComponent(Shared<ComponentIndex> index,
                   const UUID& component_id,

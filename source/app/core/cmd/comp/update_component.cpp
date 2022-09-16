@@ -58,7 +58,7 @@ void UpdateComponent::redo()
   definition.update_attr(mAttributeName, mUpdatedValue);
 }
 
-auto UpdateComponent::merge_with(const ICommand* cmd) -> bool
+auto UpdateComponent::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const UpdateComponent*>(cmd)) {
     if (mComponentId == other->mComponentId && mAttributeName == other->mAttributeName) {

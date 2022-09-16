@@ -31,8 +31,7 @@ class ADocument;
 namespace tactile::cmd {
 
 /// A command for removing an attribute from a component definition.
-class RemoveComponentAttr final : public ICommand
-{
+class RemoveComponentAttr final : public Command {
  public:
   RemoveComponentAttr(ADocument* document,
                       const UUID& component_id,

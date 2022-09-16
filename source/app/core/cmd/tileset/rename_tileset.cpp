@@ -49,7 +49,7 @@ void RenameTileset::redo()
   mTileset->ctx().set_name(mNewName);
 }
 
-auto RenameTileset::merge_with(const ICommand* cmd) -> bool
+auto RenameTileset::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const RenameTileset*>(cmd)) {
     if (mTileset->get_uuid() == other->mTileset->get_uuid()) {

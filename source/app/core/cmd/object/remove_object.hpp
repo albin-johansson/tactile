@@ -30,8 +30,7 @@ class Object;
 
 namespace tactile::cmd {
 
-class RemoveObject final : public ICommand
-{
+class RemoveObject final : public Command {
  public:
   RemoveObject(MapDocument* document, const UUID& layer_id, const UUID& object_id);
 

@@ -26,8 +26,7 @@
 
 namespace tactile::cmd {
 
-class SetObjectVisible final : public ICommand
-{
+class SetObjectVisible final : public Command {
  public:
   SetObjectVisible(Shared<Object> object, bool visible);
 

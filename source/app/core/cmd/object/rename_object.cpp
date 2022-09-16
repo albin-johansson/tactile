@@ -48,7 +48,7 @@ void RenameObject::redo()
   mObject->ctx().set_name(mNewName);
 }
 
-auto RenameObject::merge_with(const ICommand* cmd) -> bool
+auto RenameObject::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const RenameObject*>(cmd)) {
     if (mObject->get_uuid() == other->mObject->get_uuid()) {

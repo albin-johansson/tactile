@@ -31,8 +31,7 @@
 
 namespace tactile::cmd {
 
-class BucketFill final : public ICommand
-{
+class BucketFill final : public Command {
  public:
   BucketFill(Shared<Map> map,
              const UUID& layer_id,

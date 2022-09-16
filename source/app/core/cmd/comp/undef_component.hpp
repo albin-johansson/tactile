@@ -36,8 +36,7 @@ class ADocument;
 namespace tactile::cmd {
 
 /// A command for removing a component definition.
-class UndefComponent final : public ICommand
-{
+class UndefComponent final : public Command {
  public:
   UndefComponent(ADocument* document, const UUID& component_id);
 

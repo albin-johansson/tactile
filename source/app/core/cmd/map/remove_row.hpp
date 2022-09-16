@@ -27,8 +27,7 @@
 
 namespace tactile::cmd {
 
-class RemoveRow final : public ICommand
-{
+class RemoveRow final : public Command {
  public:
   explicit RemoveRow(Shared<Map> map);
 
@@ -36,7 +35,7 @@ class RemoveRow final : public ICommand
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const Command* cmd) -> bool override;
 
   [[nodiscard]] auto get_name() const -> std::string override;
 

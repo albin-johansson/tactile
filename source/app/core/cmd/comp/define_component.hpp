@@ -31,8 +31,7 @@ class ComponentIndex;
 namespace tactile::cmd {
 
 /// A command for defining new components.
-class DefineComponent final : public ICommand
-{
+class DefineComponent final : public Command {
  public:
   DefineComponent(Shared<ComponentIndex> index, std::string name);
 

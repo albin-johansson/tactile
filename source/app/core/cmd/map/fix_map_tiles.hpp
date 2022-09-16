@@ -25,8 +25,7 @@
 
 namespace tactile::cmd {
 
-class FixMapTiles final : public ICommand
-{
+class FixMapTiles final : public Command {
  public:
   explicit FixMapTiles(Shared<Map> map);
 

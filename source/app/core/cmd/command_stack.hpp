@@ -69,7 +69,7 @@ class CommandStack final
    */
   void redo();
 
-  template <std::derived_from<ICommand> T, typename... Args>
+  template <std::derived_from<Command> T, typename... Args>
   void store(Args&&... args)
   {
     if (size() == capacity()) {
@@ -89,7 +89,7 @@ class CommandStack final
    *
    * \param args the arguments that will be forwarded to a command constructor.
    */
-  template <std::derived_from<ICommand> T, typename... Args>
+  template <std::derived_from<Command> T, typename... Args>
   void exec(Args&&... args)
   {
     if (size() == capacity()) {
@@ -164,7 +164,7 @@ class CommandStack final
   }
 
  private:
-  std::deque<Unique<ICommand>> mStack;
+  std::deque<Unique<Command>> mStack;
   Maybe<usize> mIndex;
   Maybe<usize> mCleanIndex;
   usize mCapacity;

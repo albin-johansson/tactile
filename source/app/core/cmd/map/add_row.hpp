@@ -26,8 +26,7 @@
 
 namespace tactile::cmd {
 
-class AddRow final : public ICommand
-{
+class AddRow final : public Command {
  public:
   explicit AddRow(Shared<Map> map);
 
@@ -35,7 +34,7 @@ class AddRow final : public ICommand
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const Command* cmd) -> bool override;
 
   [[nodiscard]] auto get_name() const -> std::string override;
 

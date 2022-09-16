@@ -27,8 +27,7 @@
 
 namespace tactile::cmd {
 
-class SetLayerVisible final : public ICommand
-{
+class SetLayerVisible final : public Command {
  public:
   SetLayerVisible(Shared<Map> map, const UUID& layer_id, bool visible);
 

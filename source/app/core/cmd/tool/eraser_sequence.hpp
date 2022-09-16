@@ -27,8 +27,7 @@
 
 namespace tactile::cmd {
 
-class EraserSequence final : public ICommand
-{
+class EraserSequence final : public Command {
  public:
   EraserSequence(Shared<Map> map, const UUID& layer_id, TileCache old_state);
 

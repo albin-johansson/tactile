@@ -46,7 +46,7 @@ void AddColumn::redo()
   invoke_n(mColumns, [this] { mMap->add_column(); });
 }
 
-auto AddColumn::merge_with(const ICommand* cmd) -> bool
+auto AddColumn::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const AddColumn*>(cmd)) {
     mColumns += other->mColumns;

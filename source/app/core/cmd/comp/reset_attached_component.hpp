@@ -33,8 +33,7 @@ class ComponentIndex;
 namespace tactile::cmd {
 
 /// A command for resetting the attributes of an attached component.
-class ResetAttachedComponent final : public ICommand
-{
+class ResetAttachedComponent final : public Command {
  public:
   ResetAttachedComponent(Shared<ComponentIndex> index,
                          Shared<IContext> context,

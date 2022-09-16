@@ -26,8 +26,7 @@
 namespace tactile::test {
 namespace {
 
-struct FooCmd : ICommand
-{
+struct FooCmd : Command {
   void undo() override
   {}
 
@@ -40,8 +39,7 @@ struct FooCmd : ICommand
   }
 };
 
-struct BarCmd : ICommand
-{
+struct BarCmd : Command {
   void undo() override
   {}
 

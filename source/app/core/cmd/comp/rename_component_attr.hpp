@@ -29,8 +29,7 @@ class ADocument;
 namespace tactile::cmd {
 
 /// A command for renaming an attribute in a component definition.
-class RenameComponentAttr final : public ICommand
-{
+class RenameComponentAttr final : public Command {
  public:
   RenameComponentAttr(ADocument* document,
                       const UUID& component_id,

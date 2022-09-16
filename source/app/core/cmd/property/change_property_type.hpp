@@ -30,8 +30,7 @@ class IContext;
 
 namespace tactile::cmd {
 
-class ChangePropertyType final : public ICommand
-{
+class ChangePropertyType final : public Command {
  public:
   ChangePropertyType(Shared<IContext> context, std::string name, AttributeType type);
 

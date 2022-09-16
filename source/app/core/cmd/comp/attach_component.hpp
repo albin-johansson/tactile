@@ -31,8 +31,7 @@ class ComponentIndex;
 namespace tactile::cmd {
 
 /// Command for attaching a component to a context.
-class AttachComponent final : public ICommand
-{
+class AttachComponent final : public Command {
  public:
   AttachComponent(Shared<ComponentIndex> index,
                   Shared<IContext> context,

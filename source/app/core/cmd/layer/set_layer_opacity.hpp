@@ -26,8 +26,7 @@
 
 namespace tactile::cmd {
 
-class SetLayerOpacity final : public ICommand
-{
+class SetLayerOpacity final : public Command {
  public:
   SetLayerOpacity(Shared<ILayer> layer, float opacity);
 
@@ -35,7 +34,7 @@ class SetLayerOpacity final : public ICommand
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const Command* cmd) -> bool override;
 
   [[nodiscard]] auto get_name() const -> std::string override;
 

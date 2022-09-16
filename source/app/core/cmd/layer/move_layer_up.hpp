@@ -26,8 +26,7 @@
 
 namespace tactile::cmd {
 
-class MoveLayerUp final : public ICommand
-{
+class MoveLayerUp final : public Command {
  public:
   MoveLayerUp(Shared<Map> map, const UUID& layer_id);
 

@@ -33,8 +33,7 @@ class TilesetDocument;
 namespace tactile::cmd {
 
 /// Command for removing a tileset from the active map document.
-class RemoveTileset final : public ICommand
-{
+class RemoveTileset final : public Command {
  public:
   RemoveTileset(DocumentModel* model, const UUID& tileset_id);
 

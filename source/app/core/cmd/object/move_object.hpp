@@ -27,8 +27,7 @@
 namespace tactile::cmd {
 
 /// Command for moving an object in a map.
-class MoveObject final : public ICommand
-{
+class MoveObject final : public Command {
  public:
   MoveObject(Shared<Object> object, const float2& previous, const float2& updated);
 

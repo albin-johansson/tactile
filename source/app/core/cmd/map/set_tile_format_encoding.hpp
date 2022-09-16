@@ -8,8 +8,7 @@
 
 namespace tactile {
 
-class SetTileFormatEncoding final : public ICommand
-{
+class SetTileFormatEncoding final : public Command {
  public:
   SetTileFormatEncoding(Shared<Map> map, TileEncoding encoding);
 

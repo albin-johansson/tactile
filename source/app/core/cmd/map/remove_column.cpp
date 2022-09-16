@@ -53,7 +53,7 @@ void RemoveColumn::redo()
   invoke_n(mColumns, [&] { mMap->remove_column(); });
 }
 
-auto RemoveColumn::merge_with(const ICommand* cmd) -> bool
+auto RemoveColumn::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const RemoveColumn*>(cmd)) {
     mColumns += other->mColumns;

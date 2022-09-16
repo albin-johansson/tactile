@@ -32,8 +32,7 @@ class ILayer;
 
 namespace cmd {
 
-class DuplicateLayer final : public ICommand
-{
+class DuplicateLayer final : public Command {
  public:
   DuplicateLayer(MapDocument* document, const UUID& layer_id);
 

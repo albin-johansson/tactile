@@ -32,8 +32,7 @@ class ILayer;
 
 namespace cmd {
 
-class AddLayer final : public ICommand
-{
+class AddLayer final : public Command {
  public:
   AddLayer(MapDocument* document, LayerType type);
 

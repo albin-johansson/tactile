@@ -8,8 +8,7 @@
 
 namespace tactile {
 
-class SetTileFormatCompression final : public ICommand
-{
+class SetTileFormatCompression final : public Command {
  public:
   SetTileFormatCompression(Shared<Map> map, TileCompression compression);
 

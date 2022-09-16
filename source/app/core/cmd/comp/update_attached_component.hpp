@@ -32,8 +32,7 @@ class IContext;
 namespace tactile::cmd {
 
 /// A command for updating the attribute of a component attached to a context.
-class UpdateAttachedComponent final : public ICommand
-{
+class UpdateAttachedComponent final : public Command {
  public:
   UpdateAttachedComponent(Shared<IContext> context,
                           const UUID& component_id,
@@ -44,7 +43,7 @@ class UpdateAttachedComponent final : public ICommand
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const Command* cmd) -> bool override;
 
   [[nodiscard]] auto get_name() const -> std::string override;
 

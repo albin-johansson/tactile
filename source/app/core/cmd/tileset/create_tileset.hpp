@@ -33,8 +33,7 @@ class TilesetDocument;
 namespace tactile::cmd {
 
 /// Command for creating a tileset and attaching it to a map document.
-class CreateTileset final : public ICommand
-{
+class CreateTileset final : public Command {
  public:
   CreateTileset(DocumentModel* model,
                 const UUID& map_id,

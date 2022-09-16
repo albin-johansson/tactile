@@ -31,8 +31,7 @@ class IContext;
 
 namespace tactile::cmd {
 
-class RemoveProperty final : public ICommand
-{
+class RemoveProperty final : public Command {
  public:
   RemoveProperty(Shared<IContext> context, std::string name);
 

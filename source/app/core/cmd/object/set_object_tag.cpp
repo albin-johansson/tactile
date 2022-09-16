@@ -48,7 +48,7 @@ void SetObjectTag::redo()
   mObject->set_tag(mNewTag);
 }
 
-auto SetObjectTag::merge_with(const ICommand* cmd) -> bool
+auto SetObjectTag::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const SetObjectTag*>(cmd)) {
     if (mObject->get_uuid() == other->mObject->get_uuid()) {

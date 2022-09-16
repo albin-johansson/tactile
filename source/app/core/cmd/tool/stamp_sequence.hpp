@@ -28,8 +28,7 @@
 
 namespace tactile::cmd {
 
-class StampSequence final : public ICommand
-{
+class StampSequence final : public Command {
  public:
   StampSequence(Shared<Map> map,
                 const UUID& layer_id,

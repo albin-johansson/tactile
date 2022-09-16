@@ -28,8 +28,7 @@
 
 namespace tactile::cmd {
 
-class ResizeMap final : public ICommand
-{
+class ResizeMap final : public Command {
  public:
   ResizeMap(Shared<Map> map, usize nRows, usize nCols);
 

@@ -32,8 +32,7 @@ class ComponentIndex;
 namespace tactile::cmd {
 
 /// Command for changing the default value of an attribute in a component.
-class UpdateComponent final : public ICommand
-{
+class UpdateComponent final : public Command {
  public:
   UpdateComponent(Shared<ComponentIndex> index,
                   const UUID& component_id,
@@ -44,7 +43,7 @@ class UpdateComponent final : public ICommand
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const Command* cmd) -> bool override;
 
   [[nodiscard]] auto get_name() const -> std::string override;
 

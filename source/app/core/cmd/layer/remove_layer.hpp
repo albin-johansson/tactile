@@ -32,8 +32,7 @@ class ILayer;
 
 namespace cmd {
 
-class RemoveLayer final : public ICommand
-{
+class RemoveLayer final : public Command {
  public:
   RemoveLayer(MapDocument* document, const UUID& layer_id);
 

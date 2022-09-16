@@ -55,7 +55,7 @@ void UpdateProperty::redo()
   props.update(mName, mNewValue);
 }
 
-auto UpdateProperty::merge_with(const ICommand* cmd) -> bool
+auto UpdateProperty::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const UpdateProperty*>(cmd)) {
     if (mContext->get_uuid() == other->mContext->get_uuid() && mName == other->mName) {

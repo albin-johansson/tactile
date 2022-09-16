@@ -26,8 +26,7 @@
 
 namespace tactile::cmd {
 
-class AddColumn final : public ICommand
-{
+class AddColumn final : public Command {
  public:
   explicit AddColumn(Shared<Map> map);
 
@@ -35,7 +34,7 @@ class AddColumn final : public ICommand
 
   void redo() override;
 
-  [[nodiscard]] auto merge_with(const ICommand* cmd) -> bool override;
+  [[nodiscard]] auto merge_with(const Command* cmd) -> bool override;
 
   [[nodiscard]] auto get_name() const -> std::string override;
 

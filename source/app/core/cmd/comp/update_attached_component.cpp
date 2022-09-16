@@ -62,7 +62,7 @@ void UpdateAttachedComponent::redo()
   component.update_attr(mAttributeName, mUpdatedValue);
 }
 
-auto UpdateAttachedComponent::merge_with(const ICommand* cmd) -> bool
+auto UpdateAttachedComponent::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const UpdateAttachedComponent*>(cmd)) {
     const bool can_merge = mContext->get_uuid() == other->mContext->get_uuid() &&

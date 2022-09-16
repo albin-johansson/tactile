@@ -53,7 +53,7 @@ void SetZstdCompressionLevel::redo()
   format.set_zstd_compression_level(mNewLevel);
 }
 
-auto SetZstdCompressionLevel::merge_with(const ICommand* cmd) -> bool
+auto SetZstdCompressionLevel::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const SetZstdCompressionLevel*>(cmd)) {
     mNewLevel = other->mNewLevel;

@@ -32,8 +32,7 @@ class IContext;
 namespace tactile::cmd {
 
 /// A command for detaching a component from a context.
-class DetachComponent final : public ICommand
-{
+class DetachComponent final : public Command {
  public:
   DetachComponent(Shared<IContext> context, const UUID& component_id);
 

@@ -46,7 +46,7 @@ void AddRow::redo()
   invoke_n(mRows, [this] { mMap->add_row(); });
 }
 
-auto AddRow::merge_with(const ICommand* cmd) -> bool
+auto AddRow::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const AddRow*>(cmd)) {
     mRows += other->mRows;
