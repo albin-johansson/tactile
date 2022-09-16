@@ -31,7 +31,7 @@
 
 namespace tactile {
 
-/// Represents the structure of a component.
+/// Represents the structure of a component type.
 class ComponentDefinition final : public Element {
  public:
   ComponentDefinition();
@@ -40,65 +40,42 @@ class ComponentDefinition final : public Element {
 
   [[nodiscard]] auto instantiate() const -> Component;
 
-  /**
-   * Creates a new attribute.
-   *
-   * \param key the key to associate with the attribute.
-   * \param type the initial type of the attribute.
-   *
-   * \throws TactileError if the key is already being used.
-   */
+  /// Creates a new attribute.
+  ///
+  /// \param key the key to associate with the attribute.
+  /// \param type the initial type of the attribute.
   void add_attr(std::string key, AttributeType type = AttributeType::String);
 
-  /**
-   * Creates a new attribute.
-   *
-   * \param key the key to associate with the attribute.
-   * \param value the initial value of the attribute.
-   *
-   * \throws TactileError if the key is already being used.
-   */
+  /// Creates a new attribute.
+  ///
+  /// \param key the key to associate with the attribute.
+  /// \param value the initial value of the attribute.
   void add_attr(std::string key, Attribute value);
 
-  /**
-   * Updates the value of an existing attribute.
-   *
-   * The new value does not have to be of the same type that the attribute currently has.
-   *
-   * \param key the key associated with the attribute.
-   * \param value the new attribute value.
-   *
-   * \throws TactileError if there is no attribute for the key.
-   */
+  /// Updates the value of an existing attribute.
+  ///
+  /// The new value does not have to be of the same type that the attribute currently has.
+  ///
+  /// \param key the key associated with the attribute.
+  /// \param value the new attribute value.
   void update_attr(std::string_view key, Attribute value);
 
-  /**
-   * Removes an existing attribute.
-   *
-   * \param key the key associated with the attribute.
-   *
-   * \throws TactileError if there is no attribute for the key.
-   */
+  /// Removes an existing attribute.
+  ///
+  /// \param key the key associated with the attribute.
   void remove_attr(std::string_view key);
 
-  /**
-   * Changes the name (key) of an existing attribute.
-   *
-   * \param current the current attribute key.
-   * \param updated the new attribute key.
-   *
-   * \throws TactileError if there is no attribute for the current key.
-   * \throws TactileError if the updated key is already being used.
-   */
+  /// Changes the name (key) of an existing attribute.
+  ///
+  /// \param current the current attribute key.
+  /// \param updated the new attribute key.
   void rename_attr(std::string_view current, std::string updated);
 
-  /**
-   * Duplicates an existing attribute.
-   *
-   * \param key the key associated with the attribute that will be duplicated.
-   *
-   * \return the key of the created attribute.
-   */
+  /// Duplicates an existing attribute.
+  ///
+  /// \param key the key associated with the attribute that will be duplicated.
+  ///
+  /// \return the key of the new attribute.
   auto duplicate_attr(std::string_view key) -> std::string;
 
   /// Returns the value of the attribute for a specific key.
@@ -107,8 +84,10 @@ class ComponentDefinition final : public Element {
   /// Indicates whether there is an attribute for a specific key.
   [[nodiscard]] auto has_attr(std::string_view key) const -> bool;
 
+  /// Sets the unique name of the component definition.
   void set_name(std::string name);
 
+  /// Returns the (unique) name of the component type.
   [[nodiscard]] auto get_name() const -> const std::string&;
 
   /// Returns the amount of attributes in the component.
@@ -119,15 +98,8 @@ class ComponentDefinition final : public Element {
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
-  [[nodiscard]] auto begin() const noexcept
-  {
-    return mAttributes.begin();
-  }
-
-  [[nodiscard]] auto end() const noexcept
-  {
-    return mAttributes.end();
-  }
+  [[nodiscard]] auto begin() const noexcept { return mAttributes.begin(); }
+  [[nodiscard]] auto end() const noexcept { return mAttributes.end(); }
 
  private:
   UUID mId {make_uuid()};

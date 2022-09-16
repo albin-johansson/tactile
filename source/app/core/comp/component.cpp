@@ -26,10 +26,11 @@
 
 namespace tactile {
 
-Component::Component(const UUID& definitionId, AttributeMap attributes)
-    : mDefinitionId {definitionId}
+Component::Component(const UUID& definition_id, AttributeMap attributes)
+    : mDefinitionId {definition_id}
     , mAttributes {std::move(attributes)}
-{}
+{
+}
 
 void Component::add_attr(std::string key, Attribute value)
 {
@@ -57,16 +58,16 @@ void Component::update_attr(std::string_view key, Attribute value)
   attr = std::move(value);
 }
 
-void Component::rename_attr(std::string_view oldKey, std::string newKey)
+void Component::rename_attr(std::string_view old_key, std::string new_key)
 {
-  TACTILE_ASSERT(!mAttributes.contains(newKey));
-  auto value = lookup_in(mAttributes, oldKey);
+  TACTILE_ASSERT(!mAttributes.contains(new_key));
+  auto value = lookup_in(mAttributes, old_key);
 
-  if (const auto iter = mAttributes.find(oldKey); iter != mAttributes.end()) {
+  if (const auto iter = mAttributes.find(old_key); iter != mAttributes.end()) {
     mAttributes.erase(iter);
   }
 
-  mAttributes[std::move(newKey)] = std::move(value);
+  mAttributes[std::move(new_key)] = std::move(value);
 }
 
 auto Component::get_attr(std::string_view key) const -> const Attribute&
@@ -79,14 +80,8 @@ auto Component::has_attr(std::string_view key) const -> bool
   return mAttributes.contains(key);
 }
 
-auto Component::size() const -> usize
-{
-  return mAttributes.size();
-}
+auto Component::size() const -> usize { return mAttributes.size(); }
 
-auto Component::empty() const -> bool
-{
-  return mAttributes.empty();
-}
+auto Component::empty() const -> bool { return mAttributes.empty(); }
 
 }  // namespace tactile

@@ -29,35 +29,25 @@
 namespace tactile {
 
 /// Manages a set of components attached to a context.
-class ComponentBundle final
-{
+class ComponentBundle final {
  public:
-  // TODO
-
   void add(Component component);
 
-  auto erase(const UUID& componentId) -> Component;
+  auto erase(const UUID& comp_id) -> Component;
 
-  [[nodiscard]] auto at(const UUID& componentId) -> Component&;
-  [[nodiscard]] auto at(const UUID& componentId) const -> const Component&;
+  [[nodiscard]] auto at(const UUID& comp_id) -> Component&;
+  [[nodiscard]] auto at(const UUID& comp_id) const -> const Component&;
 
-  [[nodiscard]] auto try_get(const UUID& componentId) -> Component*;
+  [[nodiscard]] auto try_get(const UUID& comp_id) -> Component*;
 
-  [[nodiscard]] auto contains(const UUID& componentId) const -> bool;
+  [[nodiscard]] auto contains(const UUID& comp_id) const -> bool;
 
   [[nodiscard]] auto size() const -> usize;
 
   [[nodiscard]] auto empty() const -> bool;
 
-  [[nodiscard]] auto begin() const noexcept
-  {
-    return mComps.begin();
-  }
-
-  [[nodiscard]] auto end() const noexcept
-  {
-    return mComps.end();
-  }
+  [[nodiscard]] auto begin() const noexcept { return mComps.begin(); }
+  [[nodiscard]] auto end() const noexcept { return mComps.end(); }
 
  private:
   HashMap<UUID, Component> mComps;

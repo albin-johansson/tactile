@@ -32,47 +32,37 @@
 namespace tactile {
 
 /// Manages a set of component definitions.
-class ComponentIndex final
-{
+class ComponentIndex final {
  public:
-  /**
-   * Creates a new component definition.
-   *
-   * \param name a unique name.
-   *
-   * \return the identifier associated with the definition.
-   *
-   * \throws TactileError if the name is already used.
-   */
+  /// Creates a new component definition.
+  ///
+  /// \param name a unique name.
+  ///
+  /// \return the identifier associated with the definition.
   auto define_comp(std::string name) -> UUID;
 
+  /// Restores a previously removed component definition.
   void restore_comp(ComponentDefinition def);
 
-  /**
-   * Removes an existing component definition.
-   *
-   * \param id the ID associated with the definition to remove.
-   *
-   * \throws TactileError if the identifier is invalid.
-   */
+  /// Removes an existing component definition.
+  ///
+  /// \param id the ID associated with the definition to remove.
   void remove_comp(const UUID& id);
 
-  /**
-   * Changes the name of an existing component.
-   *
-   * \param id the ID for the component that will be renamed.
-   * \param name the new component name.
-   *
-   * \throws TactileError if the new name is already in use.
-   */
+  /// Changes the name of an existing component.
+  ///
+  /// \param id the ID for the component that will be renamed.
+  /// \param name the new component name.
   void rename_comp(const UUID& id, std::string name);
 
   /// Returns the component definition for a specific ID.
   [[nodiscard]] auto at(const UUID& id) -> ComponentDefinition&;
   [[nodiscard]] auto at(const UUID& id) const -> const ComponentDefinition&;
 
+  /// Returns the component definition with a specific name.
   [[nodiscard]] auto with_name(std::string_view name) -> ComponentDefinition&;
 
+  /// Indicates whether there is a component definition with a specific ID.
   [[nodiscard]] auto contains(const UUID& id) const -> bool;
 
   /// Indicates whether there is a component with a specific name.
@@ -83,15 +73,8 @@ class ComponentIndex final
 
   [[nodiscard]] auto empty() const -> bool;
 
-  [[nodiscard]] auto begin() const noexcept
-  {
-    return mDefs.begin();
-  }
-
-  [[nodiscard]] auto end() const noexcept
-  {
-    return mDefs.end();
-  }
+  [[nodiscard]] auto begin() const noexcept { return mDefs.begin(); }
+  [[nodiscard]] auto end() const noexcept { return mDefs.end(); }
 
  private:
   HashMap<UUID, ComponentDefinition> mDefs;

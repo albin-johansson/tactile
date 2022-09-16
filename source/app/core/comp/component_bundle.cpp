@@ -31,13 +31,13 @@ void ComponentBundle::add(Component component)
     throw TactileError {"Bundle cannot hold multiple components of same type!"};
   }
 
-  const auto componentId = component.definition_id();
-  mComps.try_emplace(componentId, std::move(component));
+  const auto comp_id = component.definition_id();
+  mComps.try_emplace(comp_id, std::move(component));
 }
 
-auto ComponentBundle::erase(const UUID& componentId) -> Component
+auto ComponentBundle::erase(const UUID& comp_id) -> Component
 {
-  if (const auto iter = mComps.find(componentId); iter != mComps.end()) {
+  if (const auto iter = mComps.find(comp_id); iter != mComps.end()) {
     auto component = iter->second;
     mComps.erase(iter);
     return component;
@@ -47,19 +47,19 @@ auto ComponentBundle::erase(const UUID& componentId) -> Component
   }
 }
 
-auto ComponentBundle::at(const UUID& componentId) -> Component&
+auto ComponentBundle::at(const UUID& comp_id) -> Component&
 {
-  return lookup_in(mComps, componentId);
+  return lookup_in(mComps, comp_id);
 }
 
-auto ComponentBundle::at(const UUID& componentId) const -> const Component&
+auto ComponentBundle::at(const UUID& comp_id) const -> const Component&
 {
-  return lookup_in(mComps, componentId);
+  return lookup_in(mComps, comp_id);
 }
 
-auto ComponentBundle::try_get(const UUID& componentId) -> Component*
+auto ComponentBundle::try_get(const UUID& comp_id) -> Component*
 {
-  if (const auto iter = mComps.find(componentId); iter != mComps.end()) {
+  if (const auto iter = mComps.find(comp_id); iter != mComps.end()) {
     return &iter->second;
   }
   else {
@@ -67,19 +67,13 @@ auto ComponentBundle::try_get(const UUID& componentId) -> Component*
   }
 }
 
-auto ComponentBundle::contains(const UUID& componentId) const -> bool
+auto ComponentBundle::contains(const UUID& comp_id) const -> bool
 {
-  return mComps.contains(componentId);
+  return mComps.contains(comp_id);
 }
 
-auto ComponentBundle::size() const -> usize
-{
-  return mComps.size();
-}
+auto ComponentBundle::size() const -> usize { return mComps.size(); }
 
-auto ComponentBundle::empty() const -> bool
-{
-  return mComps.empty();
-}
+auto ComponentBundle::empty() const -> bool { return mComps.empty(); }
 
 }  // namespace tactile

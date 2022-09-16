@@ -31,12 +31,10 @@ ComponentDefinition::ComponentDefinition() = default;
 
 ComponentDefinition::ComponentDefinition(const UUID& id)
     : mId {id}
-{}
-
-auto ComponentDefinition::instantiate() const -> Component
 {
-  return {mId, mAttributes};
 }
+
+auto ComponentDefinition::instantiate() const -> Component { return {mId, mAttributes}; }
 
 void ComponentDefinition::add_attr(std::string key, const AttributeType type)
 {
@@ -95,14 +93,14 @@ auto ComponentDefinition::duplicate_attr(std::string_view key) -> std::string
   auto value = lookup_in(mAttributes, key);
 
   int suffix = 1;
-  std::string newKey;
+  std::string new_key;
   do {
-    newKey = fmt::format("{} ({})", key, suffix);
+    new_key = fmt::format("{} ({})", key, suffix);
     ++suffix;
-  } while (mAttributes.contains(newKey));
+  } while (mAttributes.contains(new_key));
 
-  mAttributes[newKey] = std::move(value);
-  return newKey;
+  mAttributes[new_key] = std::move(value);
+  return new_key;
 }
 
 auto ComponentDefinition::get_attr(std::string_view key) const -> const Attribute&
@@ -115,29 +113,14 @@ auto ComponentDefinition::has_attr(std::string_view key) const -> bool
   return mAttributes.contains(key);
 }
 
-void ComponentDefinition::set_name(std::string name)
-{
-  mName = std::move(name);
-}
+void ComponentDefinition::set_name(std::string name) { mName = std::move(name); }
 
-auto ComponentDefinition::get_name() const -> const std::string&
-{
-  return mName;
-}
+auto ComponentDefinition::get_name() const -> const std::string& { return mName; }
 
-auto ComponentDefinition::size() const -> usize
-{
-  return mAttributes.size();
-}
+auto ComponentDefinition::size() const -> usize { return mAttributes.size(); }
 
-auto ComponentDefinition::empty() const -> bool
-{
-  return mAttributes.empty();
-}
+auto ComponentDefinition::empty() const -> bool { return mAttributes.empty(); }
 
-auto ComponentDefinition::get_uuid() const -> const UUID&
-{
-  return mId;
-}
+auto ComponentDefinition::get_uuid() const -> const UUID& { return mId; }
 
 }  // namespace tactile

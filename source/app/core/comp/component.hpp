@@ -29,44 +29,63 @@
 
 namespace tactile {
 
-/// Represents instances of component definitions.
-class Component final
-{
+/// Represents an instance of a component definition.
+class Component final {
  public:
   using AttributeMap = TreeMap<std::string, Attribute>;
 
-  Component(const UUID& definitionId, AttributeMap attributes);
+  /// Creates a component.
+  ///
+  /// \param definition_id the ID of a component definition.
+  /// \param attributes the default attribute values.
+  Component(const UUID& definition_id, AttributeMap attributes);
 
+  /// Adds a new attribute to the component.
+  ///
+  /// This is only used on attached components after the component definition is modified.
+  ///
+  /// \param key the name of the attribute.
+  /// \param value the default value of the attribute.
   void add_attr(std::string key, Attribute value);
 
+  /// Removes an attribute from the component.
+  ///
+  /// This is only used on attached components after the component definition is modified.
+  ///
+  /// \param key the name of the attribute.
   void remove_attr(std::string_view key);
 
+  /// Changes the value of an attribute.
+  ///
+  /// \param key the name of the attribute.
+  /// \param value the new value of the attribute.
   void update_attr(std::string_view key, Attribute value);
 
-  void rename_attr(std::string_view oldKey, std::string newKey);
+  /// Changes the name of an attribute.
+  ///
+  /// This is only used on attached components after the component definition is modified.
+  ///
+  /// \param old_key the current name of the attribute.
+  /// \param new_key the new name of the attribute.
+  void rename_attr(std::string_view old_key, std::string new_key);
 
+  /// Returns the value of an attribute.
   [[nodiscard]] auto get_attr(std::string_view key) const -> const Attribute&;
 
+  /// Indicates whether the component has an attribute with a specific name.
   [[nodiscard]] auto has_attr(std::string_view key) const -> bool;
 
+  /// Returns the amount of attributes in the component.
   [[nodiscard]] auto size() const -> usize;
 
+  /// Indicates whether the component has no attributes.
   [[nodiscard]] auto empty() const -> bool;
 
-  [[nodiscard]] auto definition_id() const -> const UUID&
-  {
-    return mDefinitionId;
-  }
+  /// Returns the ID of the associated component definition type.
+  [[nodiscard]] auto definition_id() const -> const UUID& { return mDefinitionId; }
 
-  [[nodiscard]] auto begin() const noexcept
-  {
-    return mAttributes.begin();
-  }
-
-  [[nodiscard]] auto end() const noexcept
-  {
-    return mAttributes.end();
-  }
+  [[nodiscard]] auto begin() const noexcept { return mAttributes.begin(); }
+  [[nodiscard]] auto end() const noexcept { return mAttributes.end(); }
 
  private:
   UUID mDefinitionId;

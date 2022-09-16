@@ -97,10 +97,7 @@ auto ComponentIndex::with_name(std::string_view name) -> ComponentDefinition&
   throw TactileError {"Invalid component name!"};
 }
 
-auto ComponentIndex::contains(const UUID& id) const -> bool
-{
-  return mDefs.contains(id);
-}
+auto ComponentIndex::contains(const UUID& id) const -> bool { return mDefs.contains(id); }
 
 auto ComponentIndex::contains(std::string_view name) const -> bool
 {
@@ -109,14 +106,8 @@ auto ComponentIndex::contains(std::string_view name) const -> bool
   });
 }
 
-auto ComponentIndex::size() const -> usize
-{
-  return mDefs.size();
-}
+auto ComponentIndex::size() const -> usize { return mDefs.size(); }
 
-auto ComponentIndex::empty() const -> bool
-{
-  return mDefs.empty();
-}
+auto ComponentIndex::empty() const -> bool { return mDefs.empty(); }
 
 }  // namespace tactile
