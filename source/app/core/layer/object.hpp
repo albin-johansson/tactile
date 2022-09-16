@@ -34,14 +34,14 @@ namespace tactile {
 
 /// Represents various map objects found in object layers.
 /// The current supported object types are rectangles, ellipses, and points.
-class Object final : public IContext {
+class Object final : public Context {
  public:
   TACTILE_DEFAULT_COPY(Object);
   TACTILE_DEFAULT_MOVE(Object);
 
   explicit Object(ObjectType type = ObjectType::Rect);
 
-  void accept(IContextVisitor& visitor) const override;
+  void accept(ContextVisitor& visitor) const override;
 
   void set_pos(const float2& pos);
   void set_size(const float2& size);

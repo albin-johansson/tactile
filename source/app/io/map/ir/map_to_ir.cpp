@@ -32,7 +32,7 @@
 namespace tactile::io {
 namespace {
 
-void convert_context(const IContext& context,
+void convert_context(const Context& context,
                      const ComponentIndex* components,
                      ir::ContextData& data)
 {
@@ -72,7 +72,7 @@ void convert_object(const Object& object,
   convert_context(object, components, data.context);
 }
 
-void convert_layer(const ILayer& layer,
+void convert_layer(const Layer& layer,
                    usize index,
                    const ComponentIndex* components,
                    ir::LayerData& data);
@@ -104,7 +104,7 @@ void convert_group_layer(const GroupLayer& layer,
   }
 }
 
-void convert_layer(const ILayer& layer,
+void convert_layer(const Layer& layer,
                    const usize index,
                    const ComponentIndex* components,
                    ir::LayerData& layer_data)
@@ -154,7 +154,7 @@ void convert_layers(const MapDocument& document,
   usize index = 0;
 
   const auto& map = document.get_map();
-  map.visit_layers([&](const ILayer* layer) {
+  map.visit_layers([&](const Layer* layer) {
     // Only iterate top-level layers, and convert them recursively
     if (!layer->get_parent()) {
       auto& layer_data = data.layers.emplace_back();

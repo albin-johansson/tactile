@@ -29,7 +29,7 @@
 
 namespace tactile::cmd {
 
-DetachComponent::DetachComponent(Shared<IContext> context, const UUID& component_id)
+DetachComponent::DetachComponent(Shared<Context> context, const UUID& component_id)
     : mContext {std::move(context)}
     , mComponentId {component_id}
 {

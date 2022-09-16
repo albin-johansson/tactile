@@ -28,7 +28,7 @@ namespace tactile::cmd {
 
 class SetLayerOpacity final : public Command {
  public:
-  SetLayerOpacity(Shared<ILayer> layer, float opacity);
+  SetLayerOpacity(Shared<Layer> layer, float opacity);
 
   void undo() override;
 
@@ -39,7 +39,7 @@ class SetLayerOpacity final : public Command {
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<ILayer> mLayer;
+  Shared<Layer> mLayer;
   float mNewOpacity {};
   Maybe<float> mOldOpacity;
 };

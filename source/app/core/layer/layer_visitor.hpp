@@ -25,34 +25,26 @@ class TileLayer;
 class ObjectLayer;
 class GroupLayer;
 
-class ILayerVisitor
-{
+class LayerVisitor {
  public:
-  virtual ~ILayerVisitor() noexcept = default;
+  virtual ~LayerVisitor() noexcept = default;
 
-  virtual void visit([[maybe_unused]] TileLayer& layer)
-  {}
+  virtual void visit([[maybe_unused]] TileLayer& layer) {}
 
-  virtual void visit([[maybe_unused]] ObjectLayer& layer)
-  {}
+  virtual void visit([[maybe_unused]] ObjectLayer& layer) {}
 
-  virtual void visit([[maybe_unused]] GroupLayer& layer)
-  {}
+  virtual void visit([[maybe_unused]] GroupLayer& layer) {}
 };
 
-class IConstLayerVisitor
-{
+class ConstLayerVisitor {
  public:
-  virtual ~IConstLayerVisitor() noexcept = default;
+  virtual ~ConstLayerVisitor() noexcept = default;
 
-  virtual void visit([[maybe_unused]] const TileLayer& layer)
-  {}
+  virtual void visit([[maybe_unused]] const TileLayer& layer) {}
 
-  virtual void visit([[maybe_unused]] const ObjectLayer& layer)
-  {}
+  virtual void visit([[maybe_unused]] const ObjectLayer& layer) {}
 
-  virtual void visit([[maybe_unused]] const GroupLayer& layer)
-  {}
+  virtual void visit([[maybe_unused]] const GroupLayer& layer) {}
 };
 
 }  // namespace tactile

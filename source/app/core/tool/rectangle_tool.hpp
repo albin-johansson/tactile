@@ -34,7 +34,7 @@ struct CurrentRectangleStroke final
 class RectangleTool final : public ATool
 {
  public:
-  void accept(IToolVisitor& visitor) const override;
+  void accept(ToolVisitor& visitor) const override;
 
   void on_disabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
 

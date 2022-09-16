@@ -51,7 +51,7 @@ ToolManager::ToolManager()
 
 ToolManager::~ToolManager() noexcept = default;
 
-void ToolManager::accept(IToolVisitor& visitor) const
+void ToolManager::accept(ToolVisitor& visitor) const
 {
   if (auto* tool = mData->active_tool) {
     tool->accept(visitor);

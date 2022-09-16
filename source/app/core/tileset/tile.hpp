@@ -36,11 +36,11 @@
 namespace tactile {
 
 /// Provides metadata for tiles in a tileset.
-class Tile final : public IContext {
+class Tile final : public Context {
  public:
   explicit Tile(TileIndex index);
 
-  void accept(IContextVisitor& visitor) const override;
+  void accept(ContextVisitor& visitor) const override;
 
   void update();
 

@@ -30,13 +30,11 @@
 namespace tactile {
 
 /// Interface for all layer classes.
-class ILayer : public IContext {
+class Layer : public Context {
  public:
-  virtual ~ILayer() noexcept override = default;
-
-  using IContext::accept;
-  virtual void accept(ILayerVisitor& visitor) = 0;
-  virtual void accept(IConstLayerVisitor& visitor) const = 0;
+  using Context::accept;
+  virtual void accept(LayerVisitor& visitor) = 0;
+  virtual void accept(ConstLayerVisitor& visitor) const = 0;
 
   /// Sets the opacity of the layer, clamped to be within [0, 1].
   virtual void set_opacity(float opacity) = 0;
@@ -57,7 +55,7 @@ class ILayer : public IContext {
   [[nodiscard]] virtual auto is_visible() const -> bool = 0;
 
   /// Clones the layer (with a different UUID).
-  [[nodiscard]] virtual auto clone() const -> Shared<ILayer> = 0;
+  [[nodiscard]] virtual auto clone() const -> Shared<Layer> = 0;
 
   /// Returns the type tag of the layer instance.
   [[nodiscard]] virtual auto get_type() const -> LayerType = 0;

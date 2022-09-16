@@ -39,7 +39,7 @@ using ConstVisitorFunc =
     std::function<void(const LayerStorage&, LayerStorage::const_iterator)>;
 
 /// A generic visitor for operations that may modify layers and their associated storage.
-class LayerMutatorVisitor : public ILayerVisitor {
+class LayerMutatorVisitor : public LayerVisitor {
  public:
   explicit LayerMutatorVisitor(const UUID& target, VisitorFunc func)
       : mTarget {target}
@@ -52,7 +52,7 @@ class LayerMutatorVisitor : public ILayerVisitor {
     auto& storage = layer.storage();
 
     const auto iter =
-        std::find_if(storage.begin(), storage.end(), [this](const Shared<ILayer>& layer) {
+        std::find_if(storage.begin(), storage.end(), [this](const Shared<Layer>& layer) {
           return layer->get_uuid() == mTarget;
         });
 
@@ -68,7 +68,7 @@ class LayerMutatorVisitor : public ILayerVisitor {
 
 /// A generic visitor for queries that don't modify any layers.
 /// Note, this must be used with the accept-function!
-class LayerQueryVisitor : public IConstLayerVisitor {
+class LayerQueryVisitor : public ConstLayerVisitor {
  public:
   explicit LayerQueryVisitor(const UUID& target, ConstVisitorFunc func)
       : mTarget {target}
@@ -81,7 +81,7 @@ class LayerQueryVisitor : public IConstLayerVisitor {
     const auto& storage = layer.storage();
 
     const auto iter =
-        std::find_if(storage.begin(), storage.end(), [this](const Shared<ILayer>& layer) {
+        std::find_if(storage.begin(), storage.end(), [this](const Shared<Layer>& layer) {
           return layer->get_uuid() == mTarget;
         });
 
@@ -96,7 +96,7 @@ class LayerQueryVisitor : public IConstLayerVisitor {
 };
 
 /// A visitor that determines the global index of a layer.
-class GlobalIndexCalculator final : public IConstLayerVisitor {
+class GlobalIndexCalculator final : public ConstLayerVisitor {
  public:
   explicit GlobalIndexCalculator(const UUID& target)
       : mTarget {target}
@@ -124,7 +124,7 @@ class GlobalIndexCalculator final : public IConstLayerVisitor {
   usize mIndex {};
   bool mFound {};
 
-  void check(const ILayer& layer)
+  void check(const Layer& layer)
   {
     if (mFound) {
       return;
@@ -139,7 +139,7 @@ class GlobalIndexCalculator final : public IConstLayerVisitor {
 };
 
 /// A visitor that attempts to find a layer.
-class FindLayerVisitor final : public ILayerVisitor {
+class FindLayerVisitor final : public LayerVisitor {
  public:
   explicit FindLayerVisitor(const UUID& target)
       : mTarget {target}
@@ -152,13 +152,13 @@ class FindLayerVisitor final : public ILayerVisitor {
 
   void visit(GroupLayer& layer) override { check(layer); }
 
-  [[nodiscard]] auto found_layer() -> ILayer* { return mLayer; }
+  [[nodiscard]] auto found_layer() -> Layer* { return mLayer; }
 
  private:
   UUID mTarget;
-  ILayer* mLayer {};
+  Layer* mLayer {};
 
-  void check(ILayer& layer)
+  void check(Layer& layer)
   {
     if (layer.get_uuid() == mTarget) {
       mLayer = &layer;
@@ -166,7 +166,7 @@ class FindLayerVisitor final : public ILayerVisitor {
   }
 };
 
-class FindConstLayerVisitor final : public IConstLayerVisitor {
+class FindConstLayerVisitor final : public ConstLayerVisitor {
  public:
   explicit FindConstLayerVisitor(const UUID& target)
       : mTarget {target}
@@ -179,13 +179,13 @@ class FindConstLayerVisitor final : public IConstLayerVisitor {
 
   void visit(const GroupLayer& layer) override { check(layer); }
 
-  [[nodiscard]] auto found_layer() -> const ILayer* { return mLayer; }
+  [[nodiscard]] auto found_layer() -> const Layer* { return mLayer; }
 
  private:
   UUID mTarget;
-  const ILayer* mLayer {};
+  const Layer* mLayer {};
 
-  void check(const ILayer& layer)
+  void check(const Layer& layer)
   {
     if (layer.get_uuid() == mTarget) {
       mLayer = &layer;
@@ -194,7 +194,7 @@ class FindConstLayerVisitor final : public IConstLayerVisitor {
 };
 
 #define TACTILE_FIND_LAYER_VISITOR(Name, Type)                     \
-  class Name final : public ILayerVisitor {                        \
+  class Name final : public LayerVisitor {                        \
    public:                                                         \
     explicit Name(const UUID& target)                              \
         : mTarget {target}                                         \
@@ -218,7 +218,7 @@ class FindConstLayerVisitor final : public IConstLayerVisitor {
     Type* mLayer {};                                               \
   };                                                               \
                                                                    \
-  class Const##Name final : public IConstLayerVisitor {            \
+  class Const##Name final : public ConstLayerVisitor {            \
    public:                                                         \
     explicit Const##Name(const UUID& target)                       \
         : mTarget {target}                                         \
@@ -247,7 +247,7 @@ TACTILE_FIND_LAYER_VISITOR(FindObjectLayerVisitor, ObjectLayer);
 TACTILE_FIND_LAYER_VISITOR(FindGroupLayerVisitor, GroupLayer);
 
 /// Counts the amount of visited layers.
-class CountingVisitor final : public IConstLayerVisitor {
+class CountingVisitor final : public ConstLayerVisitor {
  public:
   void visit(const TileLayer&) override { ++mCount; }
 
@@ -268,31 +268,31 @@ auto GroupLayer::make() -> Shared<GroupLayer>
   return std::make_shared<GroupLayer>();
 }
 
-void GroupLayer::accept(IContextVisitor& visitor) const
+void GroupLayer::accept(ContextVisitor& visitor) const
 {
   visitor.visit(*this);
 }
 
-void GroupLayer::accept(ILayerVisitor& visitor)
-{
-  visitor.visit(*this);
-  each(visitor);
-}
-
-void GroupLayer::accept(IConstLayerVisitor& visitor) const
+void GroupLayer::accept(LayerVisitor& visitor)
 {
   visitor.visit(*this);
   each(visitor);
 }
 
-void GroupLayer::each(ILayerVisitor& visitor)
+void GroupLayer::accept(ConstLayerVisitor& visitor) const
+{
+  visitor.visit(*this);
+  each(visitor);
+}
+
+void GroupLayer::each(LayerVisitor& visitor)
 {
   for (const auto& layer : mLayers) {
     layer->accept(visitor);
   }
 }
 
-void GroupLayer::each(IConstLayerVisitor& visitor) const
+void GroupLayer::each(ConstLayerVisitor& visitor) const
 {
   for (const auto& layer : mLayers) {
     layer->accept(visitor);
@@ -301,7 +301,7 @@ void GroupLayer::each(IConstLayerVisitor& visitor) const
 
 void GroupLayer::each(const SimpleVisitor& visitor) const
 {
-  struct Visitor final : IConstLayerVisitor {
+  struct Visitor final : ConstLayerVisitor {
     const SimpleVisitor* func {};  // Pointer to avoid copying the function object
 
     void visit(const TileLayer& layer) override { (*func)(&layer); }
@@ -316,7 +316,7 @@ void GroupLayer::each(const SimpleVisitor& visitor) const
   each(v);
 }
 
-void GroupLayer::add_layer(const UUID& parent, const Shared<ILayer>& layer)
+void GroupLayer::add_layer(const UUID& parent, const Shared<Layer>& layer)
 {
   if (auto* group = find_group_layer(parent)) {
     group->add_layer(layer);
@@ -327,7 +327,7 @@ void GroupLayer::add_layer(const UUID& parent, const Shared<ILayer>& layer)
   }
 }
 
-void GroupLayer::add_layer(Shared<ILayer> layer)
+void GroupLayer::add_layer(Shared<Layer> layer)
 {
   if (layer) {
     layer->set_parent(nothing);
@@ -338,9 +338,9 @@ void GroupLayer::add_layer(Shared<ILayer> layer)
   }
 }
 
-auto GroupLayer::remove_layer(const UUID& id) -> Shared<ILayer>
+auto GroupLayer::remove_layer(const UUID& id) -> Shared<Layer>
 {
-  Shared<ILayer> removed;
+  Shared<Layer> removed;
 
   auto op = [&](LayerStorage& storage, LayerStorage::iterator iter) {
     removed = *iter;
@@ -358,9 +358,9 @@ auto GroupLayer::remove_layer(const UUID& id) -> Shared<ILayer>
   }
 }
 
-auto GroupLayer::duplicate_layer(const UUID& id) -> Shared<ILayer>
+auto GroupLayer::duplicate_layer(const UUID& id) -> Shared<Layer>
 {
-  Shared<ILayer> layer;
+  Shared<Layer> layer;
 
   auto op = [&](LayerStorage& storage, LayerStorage::iterator iter) {
     layer = (*iter)->clone();
@@ -523,9 +523,9 @@ auto GroupLayer::can_move_layer_down(const UUID& id) const -> bool
   return get_local_index(id) < sibling_count(id);
 }
 
-auto GroupLayer::get_layer(const UUID& id) -> Shared<ILayer>
+auto GroupLayer::get_layer(const UUID& id) -> Shared<Layer>
 {
-  Shared<ILayer> layer;
+  Shared<Layer> layer;
   auto op = [&](const LayerStorage&, LayerStorage::const_iterator iter) {
     layer = *iter;
   };
@@ -541,7 +541,7 @@ auto GroupLayer::get_layer(const UUID& id) -> Shared<ILayer>
   }
 }
 
-auto GroupLayer::view_layer(const UUID& id) -> ILayer&
+auto GroupLayer::view_layer(const UUID& id) -> Layer&
 {
   if (auto* layer = find_layer(id)) {
     return *layer;
@@ -551,7 +551,7 @@ auto GroupLayer::view_layer(const UUID& id) -> ILayer&
   }
 }
 
-auto GroupLayer::view_layer(const UUID& id) const -> const ILayer&
+auto GroupLayer::view_layer(const UUID& id) const -> const Layer&
 {
   if (const auto* layer = find_layer(id)) {
     return *layer;
@@ -621,14 +621,14 @@ auto GroupLayer::view_group_layer(const UUID& id) const -> const GroupLayer&
   }
 }
 
-auto GroupLayer::find_layer(const UUID& id) -> ILayer*
+auto GroupLayer::find_layer(const UUID& id) -> Layer*
 {
   FindLayerVisitor visitor {id};
   each(visitor);
   return visitor.found_layer();
 }
 
-auto GroupLayer::find_layer(const UUID& id) const -> const ILayer*
+auto GroupLayer::find_layer(const UUID& id) const -> const Layer*
 {
   FindConstLayerVisitor visitor {id};
   each(visitor);
@@ -687,7 +687,7 @@ auto GroupLayer::is_visible() const -> bool
   return mDelegate.is_visible();
 }
 
-auto GroupLayer::clone() const -> Shared<ILayer>
+auto GroupLayer::clone() const -> Shared<Layer>
 {
   auto result = make();
   result->mDelegate = mDelegate.clone();

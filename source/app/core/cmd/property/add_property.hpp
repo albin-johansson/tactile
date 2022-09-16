@@ -25,14 +25,14 @@
 #include "core/common/uuid.hpp"
 
 namespace tactile {
-class IContext;
+class Context;
 }  // namespace tactile
 
 namespace tactile::cmd {
 
 class AddProperty final : public Command {
  public:
-  AddProperty(Shared<IContext> context, std::string name, AttributeType type);
+  AddProperty(Shared<Context> context, std::string name, AttributeType type);
 
   void undo() override;
 
@@ -41,7 +41,7 @@ class AddProperty final : public Command {
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<IContext> mContext;
+  Shared<Context> mContext;
   std::string mName;
   AttributeType mType;
 };

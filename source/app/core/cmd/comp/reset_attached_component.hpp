@@ -26,7 +26,7 @@
 #include "core/comp/component.hpp"
 
 namespace tactile {
-class IContext;
+class Context;
 class ComponentIndex;
 }  // namespace tactile
 
@@ -36,7 +36,7 @@ namespace tactile::cmd {
 class ResetAttachedComponent final : public Command {
  public:
   ResetAttachedComponent(Shared<ComponentIndex> index,
-                         Shared<IContext> context,
+                         Shared<Context> context,
                          const UUID& component_id);
 
   void undo() override;
@@ -47,7 +47,7 @@ class ResetAttachedComponent final : public Command {
 
  private:
   Shared<ComponentIndex> mIndex;
-  Shared<IContext> mContext;
+  Shared<Context> mContext;
   UUID mComponentId {};
   Maybe<Component> mComponent;
 };

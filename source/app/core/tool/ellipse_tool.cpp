@@ -30,7 +30,7 @@
 
 namespace tactile {
 
-void EllipseTool::accept(IToolVisitor& visitor) const
+void EllipseTool::accept(ToolVisitor& visitor) const
 {
   visitor.visit(*this);
 }

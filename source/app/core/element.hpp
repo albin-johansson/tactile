@@ -24,10 +24,9 @@
 namespace tactile {
 
 /// Interface for all identifiable objects in the core model.
-class IElement
-{
+class Element {
  public:
-  virtual ~IElement() noexcept = default;
+  virtual ~Element() noexcept = default;
 
   /// Returns the unique identifier associated with the element.
   [[nodiscard]] virtual auto get_uuid() const -> const UUID& = 0;

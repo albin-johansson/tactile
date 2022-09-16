@@ -25,8 +25,7 @@
 
 namespace tactile {
 
-struct SaveTilesVisitor final : IConstLayerVisitor
-{
+struct SaveTilesVisitor final : ConstLayerVisitor {
   MapCommandCache* self {};
   TilePos begin;
   TilePos end;

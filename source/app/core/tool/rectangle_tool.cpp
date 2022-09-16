@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-void RectangleTool::accept(IToolVisitor& visitor) const
+void RectangleTool::accept(ToolVisitor& visitor) const
 {
   visitor.visit(*this);
 }

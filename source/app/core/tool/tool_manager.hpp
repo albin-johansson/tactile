@@ -40,7 +40,7 @@ class ToolManager final : private ATool
 
   ~ToolManager() noexcept override;
 
-  void accept(IToolVisitor& visitor) const override;
+  void accept(ToolVisitor& visitor) const override;
 
   void select_tool(ToolType type, DocumentModel& model, entt::dispatcher& dispatcher);
 

@@ -26,7 +26,7 @@
 #include "core/common/uuid.hpp"
 
 namespace tactile {
-class IContext;
+class Context;
 }  // namespace tactile
 
 namespace tactile::cmd {
@@ -34,7 +34,7 @@ namespace tactile::cmd {
 /// A command for updating the attribute of a component attached to a context.
 class UpdateAttachedComponent final : public Command {
  public:
-  UpdateAttachedComponent(Shared<IContext> context,
+  UpdateAttachedComponent(Shared<Context> context,
                           const UUID& component_id,
                           std::string attribute,
                           Attribute value);
@@ -48,7 +48,7 @@ class UpdateAttachedComponent final : public Command {
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<IContext> mContext;
+  Shared<Context> mContext;
   UUID mComponentId {};
   std::string mAttributeName;
   Attribute mUpdatedValue;

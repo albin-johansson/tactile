@@ -28,7 +28,7 @@
 namespace tactile {
 
 class MapDocument;
-class ILayer;
+class Layer;
 
 namespace cmd {
 
@@ -45,7 +45,7 @@ class AddLayer final : public Command {
  private:
   MapDocument* mDocument {};
   LayerType mLayerType;
-  Shared<ILayer> mLayer;
+  Shared<Layer> mLayer;
 };
 
 }  // namespace cmd

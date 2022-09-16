@@ -35,7 +35,7 @@ namespace {
 
 using TileLayerVisitorFunc = Map::TileLayerVisitorFunc;
 
-struct TileLayerVisitor final : ILayerVisitor {
+struct TileLayerVisitor final : LayerVisitor {
   const TileLayerVisitorFunc* callable {};
 
   explicit TileLayerVisitor(const TileLayerVisitorFunc& func)
@@ -124,7 +124,7 @@ auto Map::fix_tiles() -> FixTilesResult
   return result;
 }
 
-void Map::add_layer(Shared<ILayer> layer, const Maybe<UUID>& parent_id)
+void Map::add_layer(Shared<Layer> layer, const Maybe<UUID>& parent_id)
 {
   const auto id = layer->get_uuid();
 
@@ -183,7 +183,7 @@ auto Map::add_group_layer(const Maybe<UUID>& parentId) -> UUID
   return id;
 }
 
-void Map::visit_layers(IConstLayerVisitor& visitor) const
+void Map::visit_layers(ConstLayerVisitor& visitor) const
 {
   mRootLayer.each(visitor);
 }
@@ -193,7 +193,7 @@ void Map::visit_layers(const VisitorFunc& visitor) const
   mRootLayer.each(visitor);
 }
 
-auto Map::remove_layer(const UUID& id) -> Shared<ILayer>
+auto Map::remove_layer(const UUID& id) -> Shared<Layer>
 {
   if (mActiveLayer == id) {
     mActiveLayer.reset();
@@ -201,7 +201,7 @@ auto Map::remove_layer(const UUID& id) -> Shared<ILayer>
   return mRootLayer.remove_layer(id);
 }
 
-auto Map::duplicate_layer(const UUID& id) -> Shared<ILayer>
+auto Map::duplicate_layer(const UUID& id) -> Shared<Layer>
 {
   auto layer = mRootLayer.duplicate_layer(id);
   layer->set_meta_id(fetch_and_increment_next_layer_id());
@@ -268,12 +268,12 @@ auto Map::active_layer_id() const -> Maybe<UUID>
   return mActiveLayer;
 }
 
-auto Map::view_layer(const UUID& id) -> ILayer&
+auto Map::view_layer(const UUID& id) -> Layer&
 {
   return mRootLayer.view_layer(id);
 }
 
-auto Map::view_layer(const UUID& id) const -> const ILayer&
+auto Map::view_layer(const UUID& id) const -> const Layer&
 {
   return mRootLayer.view_layer(id);
 }
@@ -323,7 +323,7 @@ auto Map::find_group_layer(const UUID& id) const -> const GroupLayer*
   return mRootLayer.find_group_layer(id);
 }
 
-auto Map::get_layer(const UUID& id) -> Shared<ILayer>
+auto Map::get_layer(const UUID& id) -> Shared<Layer>
 {
   return mRootLayer.get_layer(id);
 }
@@ -365,7 +365,7 @@ void Map::set_tile_size(const int2& size)
   mTileSize = size;
 }
 
-void Map::accept(IContextVisitor& visitor) const
+void Map::accept(ContextVisitor& visitor) const
 {
   visitor.visit(*this);
 }

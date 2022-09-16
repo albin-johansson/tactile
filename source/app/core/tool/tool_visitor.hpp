@@ -29,31 +29,23 @@ class RectangleTool;
 class PointTool;
 class EllipseTool;
 
-class IToolVisitor
-{
+class ToolVisitor {
  public:
-  virtual ~IToolVisitor() noexcept = default;
+  virtual ~ToolVisitor() noexcept = default;
 
-  virtual void visit([[maybe_unused]] const StampTool& tool)
-  {}
+  virtual void visit([[maybe_unused]] const StampTool& tool) {}
 
-  virtual void visit([[maybe_unused]] const EraserTool& tool)
-  {}
+  virtual void visit([[maybe_unused]] const EraserTool& tool) {}
 
-  virtual void visit([[maybe_unused]] const BucketTool& tool)
-  {}
+  virtual void visit([[maybe_unused]] const BucketTool& tool) {}
 
-  virtual void visit([[maybe_unused]] const ObjectSelectionTool& tool)
-  {}
+  virtual void visit([[maybe_unused]] const ObjectSelectionTool& tool) {}
 
-  virtual void visit([[maybe_unused]] const RectangleTool& tool)
-  {}
+  virtual void visit([[maybe_unused]] const RectangleTool& tool) {}
 
-  virtual void visit([[maybe_unused]] const PointTool& tool)
-  {}
+  virtual void visit([[maybe_unused]] const PointTool& tool) {}
 
-  virtual void visit([[maybe_unused]] const EllipseTool& tool)
-  {}
+  virtual void visit([[maybe_unused]] const EllipseTool& tool) {}
 };
 
 }  // namespace tactile

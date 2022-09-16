@@ -28,7 +28,7 @@
 namespace tactile {
 
 class MapDocument;
-class ILayer;
+class Layer;
 
 namespace cmd {
 
@@ -44,7 +44,7 @@ class RemoveLayer final : public Command {
 
  private:
   MapDocument* mDocument {};
-  Shared<ILayer> mLayer;
+  Shared<Layer> mLayer;
   Maybe<usize> mIndex;
 };
 

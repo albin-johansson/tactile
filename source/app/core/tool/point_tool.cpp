@@ -28,7 +28,7 @@
 
 namespace tactile {
 
-void PointTool::accept(IToolVisitor& visitor) const
+void PointTool::accept(ToolVisitor& visitor) const
 {
   visitor.visit(*this);
 }

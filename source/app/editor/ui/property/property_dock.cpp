@@ -273,7 +273,7 @@ void show_native_tileset_ref_properties(const TilesetRef& ref)
   native_read_only_row(lang.misc.embedded.c_str(), ref.is_embedded());
 }
 
-void show_native_layer_properties(const ILayer& layer, entt::dispatcher& dispatcher)
+void show_native_layer_properties(const Layer& layer, entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
@@ -350,7 +350,7 @@ void show_native_object_properties(const Object& object, entt::dispatcher& dispa
   }
 }
 
-void show_custom_properties(const IContext& context,
+void show_custom_properties(const Context& context,
                             entt::dispatcher& dispatcher,
                             bool& is_item_context_open)
 {
@@ -411,7 +411,7 @@ void update_conditional_tileset_button(const ADocument& document,
   }
 }
 
-struct ContextPropertyVisitor final : IContextVisitor {
+struct ContextPropertyVisitor final : ContextVisitor {
   entt::dispatcher* dispatcher {};
 
   explicit ContextPropertyVisitor(entt::dispatcher& dispatcher)

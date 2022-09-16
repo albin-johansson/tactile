@@ -46,7 +46,7 @@ namespace {
 constexpr auto add_component_popup_id = "##AddComponentButtonPopup";
 
 void show_add_component_button_popup_content(const ADocument& document,
-                                             const IContext& context,
+                                             const Context& context,
                                              entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();

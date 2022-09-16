@@ -28,7 +28,7 @@ Object::Object(const ObjectType type)
 {
 }
 
-void Object::accept(IContextVisitor& visitor) const
+void Object::accept(ContextVisitor& visitor) const
 {
   visitor.visit(*this);
 }

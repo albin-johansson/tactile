@@ -25,7 +25,7 @@
 
 namespace tactile::cmd {
 
-SetLayerOpacity::SetLayerOpacity(Shared<ILayer> layer, const float opacity)
+SetLayerOpacity::SetLayerOpacity(Shared<Layer> layer, const float opacity)
     : mLayer {std::move(layer)}
     , mNewOpacity {opacity}
 {

@@ -25,14 +25,14 @@
 #include "core/common/memory.hpp"
 
 namespace tactile {
-class IContext;
+class Context;
 }  // namespace tactile
 
 namespace tactile::cmd {
 
 class ChangePropertyType final : public Command {
  public:
-  ChangePropertyType(Shared<IContext> context, std::string name, AttributeType type);
+  ChangePropertyType(Shared<Context> context, std::string name, AttributeType type);
 
   void undo() override;
 
@@ -41,7 +41,7 @@ class ChangePropertyType final : public Command {
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<IContext> mContext;
+  Shared<Context> mContext;
   std::string mName;
   AttributeType mPropertyType;
   Maybe<Attribute> mPreviousValue;

@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-void ObjectSelectionTool::accept(IToolVisitor& visitor) const
+void ObjectSelectionTool::accept(ToolVisitor& visitor) const
 {
   visitor.visit(*this);
 }

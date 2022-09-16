@@ -36,7 +36,7 @@ TEST(GroupLayer, Defaults)
   GroupLayer root;
   ASSERT_EQ(0u, root.layer_count());
 
-  struct Counter final : IConstLayerVisitor {
+  struct Counter final : ConstLayerVisitor {
     usize count {};
 
     void visit(const TileLayer&) override { ++count; }
@@ -68,7 +68,7 @@ TEST(GroupLayer, SimpleEach)
   ASSERT_EQ(g1->get_uuid(), o1->get_parent());
 
   usize count = 0;
-  root.each([&](const ILayer* layer) {
+  root.each([&](const Layer* layer) {
     ASSERT_TRUE(layer != nullptr);
     ++count;
 

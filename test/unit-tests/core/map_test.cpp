@@ -366,7 +366,7 @@ TEST(Map, SimpleVisitLayersEmpty)
   const Map map;
 
   usize count = 0;
-  map.visit_layers([&](const ILayer*) { ++count; });
+  map.visit_layers([&](const Layer*) { ++count; });
   ASSERT_EQ(0, count);
 }
 
@@ -375,7 +375,7 @@ TEST(Map, SimpleVisitLayers)
   MapLayerPreset preset;
 
   usize count = 0;
-  preset.map.visit_layers([&](const ILayer*) { ++count; });
+  preset.map.visit_layers([&](const Layer*) { ++count; });
 
   ASSERT_EQ(7, count);
 }
@@ -384,8 +384,7 @@ TEST(Map, AdvancedVisitLayers)
 {
   const MapLayerPreset preset;
 
-  struct TestVisitor final : IConstLayerVisitor
-  {
+  struct TestVisitor final : ConstLayerVisitor {
     usize tile_layer_count {};
     usize object_layer_count {};
     usize group_layer_count {};

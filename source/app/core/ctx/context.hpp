@@ -27,10 +27,10 @@ namespace tactile {
 class ContextInfo;
 
 /// Interface for all objects that may feature properties and components.
-/// Remember to update IContextVisitor when adding a new context implementation.
-class IContext : public IElement {
+/// Remember to update the context visitor when adding a new context implementation.
+class Context : public Element {
  public:
-  virtual void accept(IContextVisitor& visitor) const = 0;
+  virtual void accept(ContextVisitor& visitor) const = 0;
 
   [[nodiscard]] virtual auto ctx() -> ContextInfo& = 0;
   [[nodiscard]] virtual auto ctx() const -> const ContextInfo& = 0;

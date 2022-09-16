@@ -53,9 +53,9 @@ namespace tactile {
 /// Every map uses its own tile format specification, which can be used to control aspects
 /// such as whether tile layer data is compressed. By default, maps do not use any
 /// compression along with plain text encoding.
-class Map final : public IContext {
+class Map final : public Context {
  public:
-  using VisitorFunc = std::function<void(const ILayer*)>;
+  using VisitorFunc = std::function<void(const Layer*)>;
   using TileLayerVisitorFunc = std::function<void(TileLayer&)>;
 
   /// Maps previous invalid tile identifiers in a collection of layers.
@@ -64,9 +64,9 @@ class Map final : public IContext {
   /// Creates an empty map.
   Map();
 
-  void accept(IContextVisitor& visitor) const override;
+  void accept(ContextVisitor& visitor) const override;
 
-  void visit_layers(IConstLayerVisitor& visitor) const;
+  void visit_layers(ConstLayerVisitor& visitor) const;
   void visit_layers(const VisitorFunc& visitor) const;
 
   /// Adds an empty row to all tile layers.
@@ -92,7 +92,7 @@ class Map final : public IContext {
 
   /// Adds a layer to the map.
   /// The parent parameter can be used to attach a layer to a group layer.
-  void add_layer(Shared<ILayer> layer, const Maybe<UUID>& parent_id = nothing);
+  void add_layer(Shared<Layer> layer, const Maybe<UUID>& parent_id = nothing);
 
   /// Adds a new tile layer to the map, returning the layer ID.
   auto add_tile_layer(const Maybe<UUID>& parent_id = nothing) -> UUID;
@@ -104,10 +104,10 @@ class Map final : public IContext {
   auto add_group_layer(const Maybe<UUID>& parent_id = nothing) -> UUID;
 
   /// Removes an existing layer from the map and returns it.
-  auto remove_layer(const UUID& id) -> Shared<ILayer>;
+  auto remove_layer(const UUID& id) -> Shared<Layer>;
 
   /// Duplicates an existing layer and inserts it after the source layer.
-  auto duplicate_layer(const UUID& id) -> Shared<ILayer>;
+  auto duplicate_layer(const UUID& id) -> Shared<Layer>;
 
   /// Moves a layer up in the hierarchy, relative to its siblings.
   void move_layer_up(const UUID& id);
@@ -135,8 +135,8 @@ class Map final : public IContext {
 
   [[nodiscard]] auto active_layer_id() const -> Maybe<UUID>;
 
-  [[nodiscard]] auto view_layer(const UUID& id) -> ILayer&;
-  [[nodiscard]] auto view_layer(const UUID& id) const -> const ILayer&;
+  [[nodiscard]] auto view_layer(const UUID& id) -> Layer&;
+  [[nodiscard]] auto view_layer(const UUID& id) const -> const Layer&;
   [[nodiscard]] auto view_tile_layer(const UUID& id) -> TileLayer&;
   [[nodiscard]] auto view_tile_layer(const UUID& id) const -> const TileLayer&;
   [[nodiscard]] auto view_object_layer(const UUID& id) -> ObjectLayer&;
@@ -148,7 +148,7 @@ class Map final : public IContext {
   [[nodiscard]] auto find_object_layer(const UUID& id) const -> const ObjectLayer*;
   [[nodiscard]] auto find_group_layer(const UUID& id) const -> const GroupLayer*;
 
-  [[nodiscard]] auto get_layer(const UUID& id) -> Shared<ILayer>;
+  [[nodiscard]] auto get_layer(const UUID& id) -> Shared<Layer>;
 
   void attach_tileset(Shared<Tileset> tileset, TileID first_tile_id, bool embedded);
   void attach_tileset(Shared<Tileset> tileset, bool embedded);

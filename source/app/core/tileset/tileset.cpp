@@ -62,7 +62,7 @@ void Tileset::load_tiles()
   }
 }
 
-void Tileset::accept(IContextVisitor& visitor) const
+void Tileset::accept(ContextVisitor& visitor) const
 {
   visitor.visit(*this);
 }

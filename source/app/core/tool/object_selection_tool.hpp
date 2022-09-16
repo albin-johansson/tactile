@@ -34,7 +34,7 @@ struct ObjectDragInfo final
 class ObjectSelectionTool final : public ATool
 {
  public:
-  void accept(IToolVisitor& visitor) const override;
+  void accept(ToolVisitor& visitor) const override;
 
   void on_exited(DocumentModel& model, entt::dispatcher& dispatcher) override;
 

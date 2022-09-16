@@ -30,7 +30,7 @@
 
 namespace tactile::cmd {
 
-UpdateAttachedComponent::UpdateAttachedComponent(Shared<IContext> context,
+UpdateAttachedComponent::UpdateAttachedComponent(Shared<Context> context,
                                                  const UUID& component_id,
                                                  std::string attribute,
                                                  Attribute value)

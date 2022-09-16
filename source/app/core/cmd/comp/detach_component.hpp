@@ -26,7 +26,7 @@
 #include "core/comp/component.hpp"
 
 namespace tactile {
-class IContext;
+class Context;
 }  // namespace tactile
 
 namespace tactile::cmd {
@@ -34,7 +34,7 @@ namespace tactile::cmd {
 /// A command for detaching a component from a context.
 class DetachComponent final : public Command {
  public:
-  DetachComponent(Shared<IContext> context, const UUID& component_id);
+  DetachComponent(Shared<Context> context, const UUID& component_id);
 
   void undo() override;
 
@@ -43,7 +43,7 @@ class DetachComponent final : public Command {
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<IContext> mContext;
+  Shared<Context> mContext;
   UUID mComponentId {};
   Maybe<Component> mComponent;
 };

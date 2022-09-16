@@ -35,7 +35,7 @@ namespace {
 
 void render_layer(GraphicsCtx& graphics,
                   const Map& map,
-                  const ILayer* layer,
+                  const Layer* layer,
                   const float parent_opacity)
 {
   TACTILE_ASSERT(layer);
@@ -65,7 +65,7 @@ void render_map(GraphicsCtx& graphics, const MapDocument& document)
   const auto& map = document.get_map();
   const auto active_layer_id = map.active_layer_id();
 
-  map.visit_layers([&](const ILayer* layer) {
+  map.visit_layers([&](const Layer* layer) {
     if (!layer->is_visible()) {
       return;
     }

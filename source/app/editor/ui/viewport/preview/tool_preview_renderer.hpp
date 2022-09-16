@@ -34,8 +34,7 @@ namespace tactile::ui {
 class GraphicsCtx;
 
 /// Handles the in-viewport previews for all relevant mouse tools.
-class ToolPreviewRenderer final : public IToolVisitor
-{
+class ToolPreviewRenderer final : public ToolVisitor {
  public:
   explicit ToolPreviewRenderer(const DocumentModel& model,
                                GraphicsCtx& graphics,

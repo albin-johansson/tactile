@@ -32,8 +32,7 @@
 namespace tactile {
 
 /// Represents the structure of a component.
-class ComponentDefinition final : public IElement
-{
+class ComponentDefinition final : public Element {
  public:
   ComponentDefinition();
 

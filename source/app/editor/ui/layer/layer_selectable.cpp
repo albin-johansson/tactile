@@ -44,7 +44,7 @@ constexpr int base_node_flags =
     ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick |
     ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_SpanFullWidth;
 
-void update_layer_popup(const Map& map, const ILayer& layer, entt::dispatcher& dispatcher)
+void update_layer_popup(const Map& map, const Layer& layer, entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
@@ -181,7 +181,7 @@ void show_object_layer_selectable(const Map& map,
 }
 
 void show_group_layer_selectable(const MapDocument& document,
-                                 const ILayer& layer,
+                                 const Layer& layer,
                                  const ImGuiTreeNodeFlags flags,
                                  entt::dispatcher& dispatcher)
 {
@@ -219,7 +219,7 @@ void show_group_layer_selectable(const MapDocument& document,
 }  // namespace
 
 void layer_selectable(const MapDocument& document,
-                      const ILayer& layer,
+                      const Layer& layer,
                       entt::dispatcher& dispatcher)
 {
   const auto& map = document.get_map();

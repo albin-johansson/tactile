@@ -38,29 +38,29 @@ namespace tactile {
 /// Manages all of the contexts contained within a document.
 class ContextManager final
 {
-  using ContextMap = HashMap<UUID, Shared<IContext>>;
+  using ContextMap = HashMap<UUID, Shared<Context>>;
   using ComponentFunc = std::function<void(Component&)>;
 
  public:
   explicit ContextManager(const UUID& rootContextId);
 
-  void add_context(Shared<IContext> context);
+  void add_context(Shared<Context> context);
 
   void erase(const UUID& contextId);
 
   void select(const UUID& contextId);
 
-  [[nodiscard]] auto get_context(const UUID& id) -> const Shared<IContext>&;
+  [[nodiscard]] auto get_context(const UUID& id) -> const Shared<Context>&;
 
-  [[nodiscard]] auto at(const UUID& contextId) -> IContext&;
-  [[nodiscard]] auto at(const UUID& contextId) const -> const IContext&;
+  [[nodiscard]] auto at(const UUID& contextId) -> Context&;
+  [[nodiscard]] auto at(const UUID& contextId) const -> const Context&;
 
   [[nodiscard]] auto contains(const UUID& contextId) const -> bool;
 
   [[nodiscard]] auto size() const -> usize;
 
-  [[nodiscard]] auto active_context() -> IContext&;
-  [[nodiscard]] auto active_context() const -> const IContext&;
+  [[nodiscard]] auto active_context() -> Context&;
+  [[nodiscard]] auto active_context() const -> const Context&;
 
   auto on_undef_comp(const UUID& componentId) -> HashMap<UUID, Component>;
 

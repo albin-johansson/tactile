@@ -38,17 +38,17 @@ namespace {
 
 }  // namespace
 
-void ObjectLayer::accept(IContextVisitor& visitor) const
+void ObjectLayer::accept(ContextVisitor& visitor) const
 {
   visitor.visit(*this);
 }
 
-void ObjectLayer::accept(ILayerVisitor& visitor)
+void ObjectLayer::accept(LayerVisitor& visitor)
 {
   visitor.visit(*this);
 }
 
-void ObjectLayer::accept(IConstLayerVisitor& visitor) const
+void ObjectLayer::accept(ConstLayerVisitor& visitor) const
 {
   visitor.visit(*this);
 }
@@ -159,7 +159,7 @@ auto ObjectLayer::is_visible() const -> bool
   return mDelegate.is_visible();
 }
 
-auto ObjectLayer::clone() const -> Shared<ILayer>
+auto ObjectLayer::clone() const -> Shared<Layer>
 {
   auto copy = std::make_shared<ObjectLayer>();
   copy->mDelegate = mDelegate.clone();

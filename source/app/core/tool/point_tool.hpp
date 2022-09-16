@@ -26,7 +26,7 @@ namespace tactile {
 class PointTool final : public ATool
 {
  public:
-  void accept(IToolVisitor& visitor) const override;
+  void accept(ToolVisitor& visitor) const override;
 
   void on_pressed(DocumentModel& model,
                   entt::dispatcher& dispatcher,

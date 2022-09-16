@@ -48,7 +48,7 @@ namespace tactile::io {
 namespace {
 
 void restore_context_no_register(ADocument& document,
-                                 const Shared<IContext>& context,
+                                 const Shared<Context>& context,
                                  const ir::ContextData& source)
 {
   auto& properties = context->ctx().props();
@@ -73,7 +73,7 @@ void restore_context_no_register(ADocument& document,
 }
 
 void restore_context(ADocument& document,
-                     const Shared<IContext>& context,
+                     const Shared<Context>& context,
                      const ir::ContextData& source)
 {
   restore_context_no_register(document, context, source);

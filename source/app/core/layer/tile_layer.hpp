@@ -30,7 +30,7 @@
 
 namespace tactile {
 
-class TileLayer final : public ILayer {
+class TileLayer final : public Layer {
  public:
   TileLayer();
 
@@ -42,9 +42,9 @@ class TileLayer final : public ILayer {
 
   [[nodiscard]] static auto make(usize rows, usize columns) -> Shared<TileLayer>;
 
-  void accept(IContextVisitor& visitor) const override;
-  void accept(ILayerVisitor& visitor) override;
-  void accept(IConstLayerVisitor& visitor) const override;
+  void accept(ContextVisitor& visitor) const override;
+  void accept(LayerVisitor& visitor) override;
+  void accept(ConstLayerVisitor& visitor) const override;
 
   void flood(const TilePos& origin,
              TileID replacement,
@@ -83,7 +83,7 @@ class TileLayer final : public ILayer {
 
   [[nodiscard]] auto is_visible() const -> bool override;
 
-  [[nodiscard]] auto clone() const -> Shared<ILayer> override;
+  [[nodiscard]] auto clone() const -> Shared<Layer> override;
 
   [[nodiscard]] auto ctx() -> ContextInfo& override;
   [[nodiscard]] auto ctx() const -> const ContextInfo& override;

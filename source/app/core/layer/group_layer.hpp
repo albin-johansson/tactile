@@ -30,29 +30,29 @@
 
 namespace tactile {
 
-class GroupLayer final : public ILayer {
+class GroupLayer final : public Layer {
  public:
-  using LayerStorage = std::vector<Shared<ILayer>>;
-  using SimpleVisitor = std::function<void(const ILayer*)>;
+  using LayerStorage = std::vector<Shared<Layer>>;
+  using SimpleVisitor = std::function<void(const Layer*)>;
 
   [[nodiscard]] static auto make() -> Shared<GroupLayer>;
 
-  void accept(IContextVisitor& visitor) const override;
-  void accept(ILayerVisitor& visitor) override;
-  void accept(IConstLayerVisitor& visitor) const override;
+  void accept(ContextVisitor& visitor) const override;
+  void accept(LayerVisitor& visitor) override;
+  void accept(ConstLayerVisitor& visitor) const override;
 
   /// Behaves the same as accept(), except for not including itself (the root)
-  void each(ILayerVisitor& visitor);
-  void each(IConstLayerVisitor& visitor) const;
+  void each(LayerVisitor& visitor);
+  void each(ConstLayerVisitor& visitor) const;
 
   void each(const SimpleVisitor& visitor) const;
 
-  void add_layer(const UUID& parent, const Shared<ILayer>& layer);
-  void add_layer(Shared<ILayer> layer);
+  void add_layer(const UUID& parent, const Shared<Layer>& layer);
+  void add_layer(Shared<Layer> layer);
 
-  auto remove_layer(const UUID& id) -> Shared<ILayer>;
+  auto remove_layer(const UUID& id) -> Shared<Layer>;
 
-  auto duplicate_layer(const UUID& id) -> Shared<ILayer>;
+  auto duplicate_layer(const UUID& id) -> Shared<Layer>;
 
   void move_layer_up(const UUID& id);
   void move_layer_down(const UUID& id);
@@ -79,10 +79,10 @@ class GroupLayer final : public ILayer {
 
   [[nodiscard]] auto can_move_layer_down(const UUID& id) const -> bool;
 
-  [[nodiscard]] auto get_layer(const UUID& id) -> Shared<ILayer>;
+  [[nodiscard]] auto get_layer(const UUID& id) -> Shared<Layer>;
 
-  [[nodiscard]] auto view_layer(const UUID& id) -> ILayer&;
-  [[nodiscard]] auto view_layer(const UUID& id) const -> const ILayer&;
+  [[nodiscard]] auto view_layer(const UUID& id) -> Layer&;
+  [[nodiscard]] auto view_layer(const UUID& id) const -> const Layer&;
 
   [[nodiscard]] auto view_tile_layer(const UUID& id) -> TileLayer&;
   [[nodiscard]] auto view_tile_layer(const UUID& id) const -> const TileLayer&;
@@ -93,8 +93,8 @@ class GroupLayer final : public ILayer {
   [[nodiscard]] auto view_group_layer(const UUID& id) -> GroupLayer&;
   [[nodiscard]] auto view_group_layer(const UUID& id) const -> const GroupLayer&;
 
-  [[nodiscard]] auto find_layer(const UUID& id) -> ILayer*;
-  [[nodiscard]] auto find_layer(const UUID& id) const -> const ILayer*;
+  [[nodiscard]] auto find_layer(const UUID& id) -> Layer*;
+  [[nodiscard]] auto find_layer(const UUID& id) const -> const Layer*;
 
   [[nodiscard]] auto find_tile_layer(const UUID& id) -> TileLayer*;
   [[nodiscard]] auto find_tile_layer(const UUID& id) const -> const TileLayer*;
@@ -109,7 +109,7 @@ class GroupLayer final : public ILayer {
 
   [[nodiscard]] auto is_visible() const -> bool override;
 
-  [[nodiscard]] auto clone() const -> Shared<ILayer> override;
+  [[nodiscard]] auto clone() const -> Shared<Layer> override;
 
   [[nodiscard]] auto ctx() -> ContextInfo& override;
   [[nodiscard]] auto ctx() const -> const ContextInfo& override;

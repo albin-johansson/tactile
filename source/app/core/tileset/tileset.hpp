@@ -38,13 +38,13 @@
 
 namespace tactile {
 
-class Tileset final : public IContext {
+class Tileset final : public Context {
  public:
   Tileset(const UUID& id, TilesetInfo info);
 
   explicit Tileset(TilesetInfo info);
 
-  void accept(IContextVisitor& visitor) const override;
+  void accept(ContextVisitor& visitor) const override;
 
   void update();
 

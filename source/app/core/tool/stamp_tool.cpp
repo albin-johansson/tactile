@@ -36,7 +36,7 @@
 
 namespace tactile {
 
-void StampTool::accept(IToolVisitor& visitor) const
+void StampTool::accept(ToolVisitor& visitor) const
 {
   visitor.visit(*this);
 }

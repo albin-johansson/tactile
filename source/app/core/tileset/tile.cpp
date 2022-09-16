@@ -33,7 +33,7 @@ Tile::Tile(const TileIndex index)
   mContext.set_name(fmt::format("Tile {}", index));
 }
 
-void Tile::accept(IContextVisitor& visitor) const
+void Tile::accept(ContextVisitor& visitor) const
 {
   visitor.visit(*this);
 }

@@ -24,7 +24,7 @@
 #include "core/common/uuid.hpp"
 
 namespace tactile {
-class IContext;
+class Context;
 class ComponentIndex;
 }  // namespace tactile
 
@@ -34,7 +34,7 @@ namespace tactile::cmd {
 class AttachComponent final : public Command {
  public:
   AttachComponent(Shared<ComponentIndex> index,
-                  Shared<IContext> context,
+                  Shared<Context> context,
                   const UUID& component_id);
 
   void undo() override;
@@ -45,7 +45,7 @@ class AttachComponent final : public Command {
 
  private:
   Shared<ComponentIndex> mIndex;
-  Shared<IContext> mContext;
+  Shared<Context> mContext;
   UUID mComponentId {};
 };
 

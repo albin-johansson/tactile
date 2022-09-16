@@ -28,7 +28,7 @@
 namespace tactile {
 
 class MapDocument;
-class ILayer;
+class Layer;
 
 namespace cmd {
 
@@ -45,7 +45,7 @@ class DuplicateLayer final : public Command {
  private:
   MapDocument* mDocument {};
   UUID mLayerId {};
-  Shared<ILayer> mNewLayer;
+  Shared<Layer> mNewLayer;
   Maybe<usize> mNewIndex;
 };
 

@@ -32,7 +32,7 @@
 
 namespace tactile {
 
-void EraserTool::accept(IToolVisitor& visitor) const
+void EraserTool::accept(ToolVisitor& visitor) const
 {
   visitor.visit(*this);
 }

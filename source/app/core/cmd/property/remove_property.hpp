@@ -26,14 +26,14 @@
 #include "core/common/memory.hpp"
 
 namespace tactile {
-class IContext;
+class Context;
 }  // namespace tactile
 
 namespace tactile::cmd {
 
 class RemoveProperty final : public Command {
  public:
-  RemoveProperty(Shared<IContext> context, std::string name);
+  RemoveProperty(Shared<Context> context, std::string name);
 
   void undo() override;
 
@@ -42,7 +42,7 @@ class RemoveProperty final : public Command {
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<IContext> mContext;
+  Shared<Context> mContext;
   std::string mName;
   Maybe<Attribute> mPreviousValue;
 };

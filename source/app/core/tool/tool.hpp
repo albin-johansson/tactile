@@ -34,7 +34,7 @@ class ATool
  public:
   virtual ~ATool() noexcept = default;
 
-  virtual void accept(IToolVisitor& visitor) const = 0;
+  virtual void accept(ToolVisitor& visitor) const = 0;
 
   virtual void on_enabled(DocumentModel& model, entt::dispatcher& dispatcher);
 

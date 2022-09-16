@@ -23,14 +23,14 @@
 #include "core/common/memory.hpp"
 
 namespace tactile {
-class IContext;
+class Context;
 }  // namespace tactile
 
 namespace tactile::cmd {
 
 class RenameProperty final : public Command {
  public:
-  RenameProperty(Shared<IContext> context, std::string old_name, std::string new_name);
+  RenameProperty(Shared<Context> context, std::string old_name, std::string new_name);
 
   void undo() override;
 
@@ -39,7 +39,7 @@ class RenameProperty final : public Command {
   [[nodiscard]] auto get_name() const -> std::string override;
 
  private:
-  Shared<IContext> mContext;
+  Shared<Context> mContext;
   std::string mOldName;
   std::string mNewName;
 };

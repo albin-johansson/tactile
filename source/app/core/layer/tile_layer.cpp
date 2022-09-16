@@ -51,12 +51,12 @@ auto TileLayer::make(const usize rows, const usize columns) -> Shared<TileLayer>
   return std::make_shared<TileLayer>(rows, columns);
 }
 
-void TileLayer::accept(ILayerVisitor& visitor)
+void TileLayer::accept(LayerVisitor& visitor)
 {
   visitor.visit(*this);
 }
 
-void TileLayer::accept(IConstLayerVisitor& visitor) const
+void TileLayer::accept(ConstLayerVisitor& visitor) const
 {
   visitor.visit(*this);
 }
@@ -170,7 +170,7 @@ void TileLayer::set_meta_id(const int32 id)
   mDelegate.set_meta_id(id);
 }
 
-void TileLayer::accept(IContextVisitor& visitor) const
+void TileLayer::accept(ContextVisitor& visitor) const
 {
   visitor.visit(*this);
 }
@@ -236,7 +236,7 @@ auto TileLayer::is_visible() const -> bool
   return mDelegate.is_visible();
 }
 
-auto TileLayer::clone() const -> Shared<ILayer>
+auto TileLayer::clone() const -> Shared<Layer>
 {
   auto layer = make();
   layer->mDelegate = mDelegate.clone();

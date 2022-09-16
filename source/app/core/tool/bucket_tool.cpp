@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-void BucketTool::accept(IToolVisitor& visitor) const
+void BucketTool::accept(ToolVisitor& visitor) const
 {
   visitor.visit(*this);
 }

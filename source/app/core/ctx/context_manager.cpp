@@ -31,7 +31,7 @@ ContextManager::ContextManager(const UUID& rootContextId)
 {
 }
 
-void ContextManager::add_context(Shared<IContext> context)
+void ContextManager::add_context(Shared<Context> context)
 {
   const auto id = context->get_uuid();
   mContexts[id] = std::move(context);
@@ -60,17 +60,17 @@ void ContextManager::select(const UUID& contextId)
   }
 }
 
-auto ContextManager::get_context(const UUID& contextId) -> const Shared<IContext>&
+auto ContextManager::get_context(const UUID& contextId) -> const Shared<Context>&
 {
   return lookup_in(mContexts, contextId);
 }
 
-auto ContextManager::at(const UUID& contextId) -> IContext&
+auto ContextManager::at(const UUID& contextId) -> Context&
 {
   return *lookup_in(mContexts, contextId);
 }
 
-auto ContextManager::at(const UUID& contextId) const -> const IContext&
+auto ContextManager::at(const UUID& contextId) const -> const Context&
 {
   return *lookup_in(mContexts, contextId);
 }
@@ -85,12 +85,12 @@ auto ContextManager::size() const -> usize
   return mContexts.size();
 }
 
-auto ContextManager::active_context() -> IContext&
+auto ContextManager::active_context() -> Context&
 {
   return *lookup_in(mContexts, mActiveContextId);
 }
 
-auto ContextManager::active_context() const -> const IContext&
+auto ContextManager::active_context() const -> const Context&
 {
   return *lookup_in(mContexts, mActiveContextId);
 }
