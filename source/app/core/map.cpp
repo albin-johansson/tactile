@@ -124,9 +124,7 @@ auto Map::fix_tiles() -> FixTilesResult
   return result;
 }
 
-auto Map::add_layer(Shared<ILayer> layer, const Maybe<UUID>& parent_id)
-
-    -> UUID
+void Map::add_layer(Shared<ILayer> layer, const Maybe<UUID>& parent_id)
 {
   const auto id = layer->get_uuid();
 
@@ -141,8 +139,6 @@ auto Map::add_layer(Shared<ILayer> layer, const Maybe<UUID>& parent_id)
   if (layer_count() == 1) {
     mActiveLayer = id;
   }
-
-  return id;
 }
 
 auto Map::add_tile_layer(const Maybe<UUID>& parentId) -> UUID
@@ -153,7 +149,10 @@ auto Map::add_tile_layer(const Maybe<UUID>& parentId) -> UUID
   layer->ctx().set_name(fmt::format("Tile Layer {}", mTileLayerSuffix));
   ++mTileLayerSuffix;
 
-  return add_layer(std::move(layer), parentId);
+  const auto id = layer->ctx().uuid();
+  add_layer(std::move(layer), parentId);
+
+  return id;
 }
 
 auto Map::add_object_layer(const Maybe<UUID>& parentId) -> UUID
@@ -164,7 +163,10 @@ auto Map::add_object_layer(const Maybe<UUID>& parentId) -> UUID
   layer->ctx().set_name(fmt::format("Object Layer {}", mObjectLayerSuffix));
   ++mObjectLayerSuffix;
 
-  return add_layer(std::move(layer), parentId);
+  const auto id = layer->ctx().uuid();
+  add_layer(std::move(layer), parentId);
+
+  return id;
 }
 
 auto Map::add_group_layer(const Maybe<UUID>& parentId) -> UUID
@@ -175,7 +177,10 @@ auto Map::add_group_layer(const Maybe<UUID>& parentId) -> UUID
   layer->ctx().set_name(fmt::format("Group Layer {}", mGroupLayerSuffix));
   ++mGroupLayerSuffix;
 
-  return add_layer(std::move(layer), parentId);
+  const auto id = layer->ctx().uuid();
+  add_layer(std::move(layer), parentId);
+
+  return id;
 }
 
 void Map::visit_layers(IConstLayerVisitor& visitor) const
@@ -226,16 +231,6 @@ void Map::select_layer(const UUID& id)
 void Map::set_layer_index(const UUID& id, const usize index)
 {
   mRootLayer.set_layer_index(id, index);
-}
-
-auto Map::tile_format() -> TileFormat&
-{
-  return mTileFormat;
-}
-
-auto Map::tile_format() const -> const TileFormat&
-{
-  return mTileFormat;
 }
 
 auto Map::local_layer_index(const UUID& id) const -> usize
@@ -467,6 +462,16 @@ auto Map::next_object_layer_suffix() const -> int32
 auto Map::next_group_layer_suffix() const -> int32
 {
   return mGroupLayerSuffix;
+}
+
+auto Map::tile_format() -> TileFormat&
+{
+  return mTileFormat;
+}
+
+auto Map::tile_format() const -> const TileFormat&
+{
+  return mTileFormat;
 }
 
 }  // namespace tactile

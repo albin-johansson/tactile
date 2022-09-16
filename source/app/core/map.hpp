@@ -36,6 +36,23 @@
 
 namespace tactile {
 
+/// Represents a tile map.
+///
+/// <p>
+/// Maps a built from multiple layers stacked on top of each other. An invisible group
+/// layer (the "root" layer) manages the layers in every map. This root layer is always
+/// present, even in empty maps. However, this root layer is never included in save files,
+/// it is merely an implementation detail to simplify the map code.
+///
+/// <p>
+/// Each map has a collection of associated tilesets, providing the tiles to be used in
+/// tile layers. Tilesets may be shared with other maps in the case of external tilesets.
+/// See the Tileset class for more information.
+///
+/// <p>
+/// Every map uses its own tile format specification, which can be used to control aspects
+/// such as whether tile layer data is compressed. By default, maps do not use any
+/// compression along with plain text encoding.
 class Map final : public IContext {
  public:
   using VisitorFunc = std::function<void(const ILayer*)>;
@@ -44,73 +61,96 @@ class Map final : public IContext {
   /// Maps previous invalid tile identifiers in a collection of layers.
   using FixTilesResult = HashMap<UUID, HashMap<TilePos, TileID>>;
 
+  /// Creates an empty map.
   Map();
 
+  void accept(IContextVisitor& visitor) const override;
+
+  void visit_layers(IConstLayerVisitor& visitor) const;
+  void visit_layers(const VisitorFunc& visitor) const;
+
+  /// Adds an empty row to all tile layers.
   void add_row();
+
+  /// Adds an empty column to all tile layers.
   void add_column();
 
+  /// Removes the right-most row from all tile layers.
+  /// Raises an exception if there is only a single tile row in the map.
   void remove_row();
+
+  /// Removes a column from the bottom of all tile layers.
+  /// Raises an exception if there is only a single tile column in the map.
   void remove_column();
 
+  /// Changes the size of all tile layers.
+  /// The dimensions must be larger than zero.
   void resize(usize rows, usize columns);
 
   /// Fixes invalid tile identifiers in all tile layers.
   auto fix_tiles() -> FixTilesResult;
 
-  auto add_layer(Shared<ILayer> layer, const Maybe<UUID>& parentId = nothing) -> UUID;
+  /// Adds a layer to the map.
+  /// The parent parameter can be used to attach a layer to a group layer.
+  void add_layer(Shared<ILayer> layer, const Maybe<UUID>& parent_id = nothing);
 
-  auto add_tile_layer(const Maybe<UUID>& parentId = nothing) -> UUID;
-  auto add_object_layer(const Maybe<UUID>& parentId = nothing) -> UUID;
-  auto add_group_layer(const Maybe<UUID>& parentId = nothing) -> UUID;
+  /// Adds a new tile layer to the map, returning the layer ID.
+  auto add_tile_layer(const Maybe<UUID>& parent_id = nothing) -> UUID;
 
+  /// Adds a new object layer to the map, returning the layer ID.
+  auto add_object_layer(const Maybe<UUID>& parent_id = nothing) -> UUID;
+
+  /// Adds a new group layer to the map, returning the layer ID.
+  auto add_group_layer(const Maybe<UUID>& parent_id = nothing) -> UUID;
+
+  /// Removes an existing layer from the map and returns it.
   auto remove_layer(const UUID& id) -> Shared<ILayer>;
 
+  /// Duplicates an existing layer and inserts it after the source layer.
   auto duplicate_layer(const UUID& id) -> Shared<ILayer>;
 
-  void visit_layers(IConstLayerVisitor& visitor) const;
-  void visit_layers(const VisitorFunc& visitor) const;
-
+  /// Moves a layer up in the hierarchy, relative to its siblings.
   void move_layer_up(const UUID& id);
+
+  /// Moves a layer down in the hierarchy, relative to its siblings.
   void move_layer_down(const UUID& id);
 
+  /// Makes a layer active.
   void select_layer(const UUID& id);
 
+  /// Moves a layer to the specific index in relation to its siblings.
   void set_layer_index(const UUID& id, usize index);
 
-  [[nodiscard]] auto tile_format() -> TileFormat&;
-  [[nodiscard]] auto tile_format() const -> const TileFormat&;
-
+  /// Returns the index of a layer, relative to its siblings.
   [[nodiscard]] auto local_layer_index(const UUID& id) const -> usize;
 
   [[nodiscard]] auto can_move_layer_up(const UUID& id) const -> bool;
   [[nodiscard]] auto can_move_layer_down(const UUID& id) const -> bool;
 
+  /// Indicates whether the active layer is of the specified type.
   [[nodiscard]] auto is_active_layer(LayerType type) const -> bool;
 
+  /// Returns the total amount of layers.
   [[nodiscard]] auto layer_count() const -> usize;
 
   [[nodiscard]] auto active_layer_id() const -> Maybe<UUID>;
 
   [[nodiscard]] auto view_layer(const UUID& id) -> ILayer&;
   [[nodiscard]] auto view_layer(const UUID& id) const -> const ILayer&;
-
   [[nodiscard]] auto view_tile_layer(const UUID& id) -> TileLayer&;
   [[nodiscard]] auto view_tile_layer(const UUID& id) const -> const TileLayer&;
-
   [[nodiscard]] auto view_object_layer(const UUID& id) -> ObjectLayer&;
   [[nodiscard]] auto view_object_layer(const UUID& id) const -> const ObjectLayer&;
-
   [[nodiscard]] auto view_group_layer(const UUID& id) -> GroupLayer&;
 
   [[nodiscard]] auto find_tile_layer(const UUID& id) -> TileLayer*;
   [[nodiscard]] auto find_tile_layer(const UUID& id) const -> const TileLayer*;
-
   [[nodiscard]] auto find_object_layer(const UUID& id) const -> const ObjectLayer*;
   [[nodiscard]] auto find_group_layer(const UUID& id) const -> const GroupLayer*;
 
   [[nodiscard]] auto get_layer(const UUID& id) -> Shared<ILayer>;
 
-  void attach_tileset(Shared<Tileset> tileset, TileID firstTileId, bool embedded);
+  void attach_tileset(Shared<Tileset> tileset, TileID first_tile_id, bool embedded);
   void attach_tileset(Shared<Tileset> tileset, bool embedded);
   void detach_tileset(const UUID& id);
   void select_tileset(const UUID& id);
@@ -118,24 +158,19 @@ class Map final : public IContext {
   [[nodiscard]] auto get_tilesets() -> TilesetBundle&;
   [[nodiscard]] auto get_tilesets() const -> const TilesetBundle&;
 
+  /// Sets the logical size of all tiles.
   void set_tile_size(const int2& size);
 
-  void accept(IContextVisitor& visitor) const override;
-
+  /// Indicates whether a position is within the map.
   [[nodiscard]] auto is_valid_position(const TilePos& pos) const -> bool;
 
   [[nodiscard]] auto row_count() const -> usize;
-
   [[nodiscard]] auto column_count() const -> usize;
 
   [[nodiscard]] auto tile_size() const -> const int2&;
 
+  /// Indicates whether the stamp tool randomizer mode is available.
   [[nodiscard]] auto is_stamp_randomizer_possible() const -> bool;
-
-  [[nodiscard]] auto ctx() -> ContextInfo& override;
-  [[nodiscard]] auto ctx() const -> const ContextInfo& override;
-
-  [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
   auto fetch_and_increment_next_object_id() -> int32;
   auto fetch_and_increment_next_layer_id() -> int32;
@@ -150,20 +185,28 @@ class Map final : public IContext {
   [[nodiscard]] auto next_object_layer_suffix() const -> int32;
   [[nodiscard]] auto next_group_layer_suffix() const -> int32;
 
+  [[nodiscard]] auto tile_format() -> TileFormat&;
+  [[nodiscard]] auto tile_format() const -> const TileFormat&;
+
+  [[nodiscard]] auto ctx() -> ContextInfo& override;
+  [[nodiscard]] auto ctx() const -> const ContextInfo& override;
+
+  [[nodiscard]] auto get_uuid() const -> const UUID& override;
+
  private:
-  ContextInfo mContext;
-  usize mRowCount {5};
-  usize mColCount {5};
-  int2 mTileSize {32, 32};
-  GroupLayer mRootLayer;
-  Maybe<UUID> mActiveLayer;
-  TilesetBundle mTilesets;
-  int32 mNextObjectId {1};
-  int32 mNextLayerId {1};
-  int32 mTileLayerSuffix {1};
-  int32 mObjectLayerSuffix {1};
-  int32 mGroupLayerSuffix {1};
-  TileFormat mTileFormat;
+  ContextInfo mContext;          ///< Map context information.
+  usize mRowCount {5};           ///< Amount of rows.
+  usize mColCount {5};           ///< Amount of columns.
+  int2 mTileSize {32, 32};       ///< Logical size of all tiles.
+  GroupLayer mRootLayer;         ///< Invisible root layer.
+  Maybe<UUID> mActiveLayer;      ///< The selected layer.
+  TilesetBundle mTilesets;       ///< The associated tilesets.
+  int32 mNextObjectId {1};       ///< Next available object identifier.
+  int32 mNextLayerId {1};        ///< Next available layer identifier.
+  int32 mTileLayerSuffix {1};    ///< Next tile layer suffix for naming purposes.
+  int32 mObjectLayerSuffix {1};  ///< Next object layer suffix for naming purposes.
+  int32 mGroupLayerSuffix {1};   ///< Next group layer suffix for naming purposes.
+  TileFormat mTileFormat;        ///< The tile format used by the map in save files.
 
   void each_tile_layer(const TileLayerVisitorFunc& func);
 };
