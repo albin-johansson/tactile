@@ -60,7 +60,7 @@ TEST(SetObjectTag, MergeSupport)
 
   object->set_tag("x");
 
-  cmd::SetObjectTag       a {object, "a"};
+  cmd::SetObjectTag a {object, "a"};
   const cmd::SetObjectTag b {object, "b"};
 
   ASSERT_TRUE(a.merge_with(&b));

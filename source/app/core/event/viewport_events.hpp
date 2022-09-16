@@ -26,47 +26,36 @@
 
 namespace tactile {
 
-struct CenterViewportEvent final
-{};
+struct CenterViewportEvent final {};
 
-struct ResetZoomEvent final
-{};
+struct ResetZoomEvent final {};
 
-struct DecreaseZoomEvent final
-{};
+struct DecreaseZoomEvent final {};
 
-struct IncreaseZoomEvent final
-{};
+struct IncreaseZoomEvent final {};
 
-struct OffsetDocumentViewportEvent final
-{
+struct OffsetDocumentViewportEvent final {
   float2 delta {};  /// The offset to apply.
 };
 
-struct OffsetTilesetViewportEvent final
-{
+struct OffsetTilesetViewportEvent final {
   UUID tileset_id {};  /// The target tileset.
   float2 delta {};     /// The offset to apply.
 };
 
 /// Event used to update the limits of tilesets in the tileset dock widget.
-struct UpdateTilesetViewportLimitsEvent final
-{
+struct UpdateTilesetViewportLimitsEvent final {
   UUID tileset_id {};    /// The target tileset.
   float2 min_offset {};  /// The minimum offset.
   float2 max_offset {};  /// The maximum offset.
 };
 
-struct PanUpEvent final
-{};
+struct PanUpEvent final {};
 
-struct PanDownEvent final
-{};
+struct PanDownEvent final {};
 
-struct PanLeftEvent final
-{};
+struct PanLeftEvent final {};
 
-struct PanRightEvent final
-{};
+struct PanRightEvent final {};
 
 }  // namespace tactile

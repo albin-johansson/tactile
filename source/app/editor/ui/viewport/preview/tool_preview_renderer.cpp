@@ -37,7 +37,8 @@ ToolPreviewRenderer::ToolPreviewRenderer(const DocumentModel& model,
     : mModel {model}
     , mGraphics {graphics}
     , mMouseInfo {mouse}
-{}
+{
+}
 
 void ToolPreviewRenderer::visit(const StampTool& tool)
 {

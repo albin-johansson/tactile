@@ -80,8 +80,14 @@ auto Component::has_attr(std::string_view key) const -> bool
   return mAttributes.contains(key);
 }
 
-auto Component::size() const -> usize { return mAttributes.size(); }
+auto Component::size() const -> usize
+{
+  return mAttributes.size();
+}
 
-auto Component::empty() const -> bool { return mAttributes.empty(); }
+auto Component::empty() const -> bool
+{
+  return mAttributes.empty();
+}
 
 }  // namespace tactile

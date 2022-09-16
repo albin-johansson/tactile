@@ -35,7 +35,7 @@ TEST(ComponentIndex, Defaults)
 TEST(ComponentIndex, DefineComp)
 {
   ComponentIndex index;
-  const auto     id = index.define_comp("position");
+  const auto id = index.define_comp("position");
 
   const auto& def = index.at(id);
   ASSERT_EQ("position", def.get_name());

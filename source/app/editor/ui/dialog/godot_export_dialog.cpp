@@ -36,7 +36,8 @@ namespace tactile::ui {
 
 GodotExportDialog::GodotExportDialog()
     : Dialog {"Export As Godot Scene"}
-{}
+{
+}
 
 void GodotExportDialog::open()
 {

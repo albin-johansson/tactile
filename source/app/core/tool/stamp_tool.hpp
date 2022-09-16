@@ -69,10 +69,7 @@ class StampTool final : public Tool {
 
   [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
 
-  [[nodiscard]] auto get_type() const -> ToolType override
-  {
-    return ToolType::Stamp;
-  }
+  [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Stamp; }
 
  private:
   TileCache mPrevious;  ///< Previous tile state.

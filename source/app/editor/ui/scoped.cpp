@@ -139,7 +139,8 @@ Child::Child(const char* id,
              const bool border,
              const ImGuiWindowFlags flags)
     : mOpen {ImGui::BeginChild(id, size, border, flags)}
-{}
+{
+}
 
 Child::~Child()
 {
@@ -148,7 +149,8 @@ Child::~Child()
 
 Combo::Combo(const char* name, const char* current)
     : mOpen {ImGui::BeginCombo(name, current)}
-{}
+{
+}
 
 Combo::~Combo()
 {
@@ -159,7 +161,8 @@ Combo::~Combo()
 
 TabBar::TabBar(const char* name, const ImGuiTabBarFlags flags)
     : mOpen {ImGui::BeginTabBar(name, flags)}
-{}
+{
+}
 
 TabBar::~TabBar()
 {
@@ -170,7 +173,8 @@ TabBar::~TabBar()
 
 TabItem::TabItem(const char* name, bool* open, const ImGuiTabItemFlags flags)
     : mOpen {ImGui::BeginTabItem(name, open, flags)}
-{}
+{
+}
 
 TabItem::~TabItem()
 {
@@ -181,7 +185,8 @@ TabItem::~TabItem()
 
 Table::Table(const char* name, const int column_count, const ImGuiTableFlags flags)
     : mOpen {ImGui::BeginTable(name, column_count, flags)}
-{}
+{
+}
 
 Table::~Table()
 {
@@ -192,11 +197,13 @@ Table::~Table()
 
 Popup::Popup(const bool open)
     : mOpen {open}
-{}
+{
+}
 
 Popup::Popup(const char* name, const ImGuiWindowFlags flags)
     : mOpen {ImGui::BeginPopup(name, flags)}
-{}
+{
+}
 
 Popup::~Popup()
 {
@@ -217,7 +224,8 @@ auto Popup::for_window(const char* name, const ImGuiPopupFlags flags) -> Popup
 
 ListBox::ListBox(const char* label, const ImVec2& size)
     : mOpen {ImGui::BeginListBox(label, size)}
-{}
+{
+}
 
 ListBox::~ListBox()
 {
@@ -228,7 +236,8 @@ ListBox::~ListBox()
 
 Menu::Menu(const char* name, const bool enabled)
     : mOpen {ImGui::BeginMenu(name, enabled)}
-{}
+{
+}
 
 Menu::~Menu()
 {
@@ -239,7 +248,8 @@ Menu::~Menu()
 
 Modal::Modal(const char* name, const ImGuiWindowFlags flags, bool* open)
     : mOpen {ImGui::BeginPopupModal(name, open, flags)}
-{}
+{
+}
 
 Modal::~Modal()
 {
@@ -298,7 +308,8 @@ auto Window::is_hovered() const -> bool
 
 TreeNode::TreeNode(const char* id, const ImGuiTreeNodeFlags flags)
     : mOpen {ImGui::TreeNodeEx(id, flags)}
-{}
+{
+}
 
 TreeNode::~TreeNode()
 {

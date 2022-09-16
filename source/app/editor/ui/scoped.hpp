@@ -30,8 +30,7 @@
 
 namespace tactile::ui {
 
-struct Scope final
-{
+struct Scope final {
   TACTILE_DELETE_COPY(Scope);
   TACTILE_DELETE_MOVE(Scope);
 
@@ -43,8 +42,7 @@ struct Scope final
   ~Scope();
 };
 
-struct Disable final
-{
+struct Disable final {
   TACTILE_DELETE_COPY(Disable);
   TACTILE_DELETE_MOVE(Disable);
 
@@ -52,8 +50,7 @@ struct Disable final
   ~Disable();
 };
 
-struct Indent final
-{
+struct Indent final {
   TACTILE_DELETE_COPY(Indent);
   TACTILE_DELETE_MOVE(Indent);
 
@@ -61,8 +58,7 @@ struct Indent final
   ~Indent();
 };
 
-struct Tooltip final
-{
+struct Tooltip final {
   TACTILE_DELETE_COPY(Tooltip);
   TACTILE_DELETE_MOVE(Tooltip);
 
@@ -70,8 +66,7 @@ struct Tooltip final
   ~Tooltip();
 };
 
-class StyleVar final
-{
+class StyleVar final {
  public:
   TACTILE_DELETE_COPY(StyleVar);
   TACTILE_DELETE_MOVE(StyleVar);
@@ -87,8 +82,7 @@ class StyleVar final
   bool mPopped {};
 };
 
-class StyleColor final
-{
+class StyleColor final {
  public:
   TACTILE_DELETE_COPY(StyleColor);
   TACTILE_DELETE_MOVE(StyleColor);
@@ -104,8 +98,7 @@ class StyleColor final
   bool mPopped {};
 };
 
-struct Group final
-{
+struct Group final {
   TACTILE_DELETE_COPY(Group);
   TACTILE_DELETE_MOVE(Group);
 
@@ -113,8 +106,7 @@ struct Group final
   ~Group();
 };
 
-class Child final
-{
+class Child final {
  public:
   TACTILE_DELETE_COPY(Child);
   TACTILE_DELETE_MOVE(Child);
@@ -126,17 +118,13 @@ class Child final
 
   ~Child();
 
-  [[nodiscard]] auto is_open() const noexcept -> bool
-  {
-    return mOpen;
-  }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen {};
 };
 
-class Combo final
-{
+class Combo final {
  public:
   TACTILE_DELETE_COPY(Combo);
   TACTILE_DELETE_MOVE(Combo);
@@ -145,17 +133,13 @@ class Combo final
 
   ~Combo();
 
-  [[nodiscard]] auto is_open() const noexcept -> bool
-  {
-    return mOpen;
-  }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen {};
 };
 
-class TabBar final
-{
+class TabBar final {
  public:
   TACTILE_DELETE_COPY(TabBar);
   TACTILE_DELETE_MOVE(TabBar);
@@ -164,17 +148,13 @@ class TabBar final
 
   ~TabBar();
 
-  [[nodiscard]] auto is_open() const noexcept -> bool
-  {
-    return mOpen;
-  }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen {};
 };
 
-class TabItem final
-{
+class TabItem final {
  public:
   TACTILE_DELETE_COPY(TabItem);
   TACTILE_DELETE_MOVE(TabItem);
@@ -183,17 +163,13 @@ class TabItem final
 
   ~TabItem();
 
-  [[nodiscard]] auto is_open() const noexcept -> bool
-  {
-    return mOpen;
-  }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen {};
 };
 
-class Table final
-{
+class Table final {
  public:
   TACTILE_DELETE_COPY(Table);
   TACTILE_DELETE_MOVE(Table);
@@ -202,17 +178,13 @@ class Table final
 
   ~Table();
 
-  [[nodiscard]] auto is_open() const noexcept -> bool
-  {
-    return mOpen;
-  }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen {};
 };
 
-class Popup final
-{
+class Popup final {
  public:
   TACTILE_DELETE_COPY(Popup);
   TACTILE_DELETE_MOVE(Popup);
@@ -227,10 +199,7 @@ class Popup final
   [[nodiscard]] static auto for_window(const char* name, ImGuiPopupFlags flags = 1)
       -> Popup;
 
-  [[nodiscard]] auto is_open() const noexcept -> bool
-  {
-    return mOpen;
-  }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen {};
@@ -238,8 +207,7 @@ class Popup final
   explicit Popup(const bool open);
 };
 
-class ListBox final
-{
+class ListBox final {
  public:
   TACTILE_DELETE_COPY(ListBox);
   TACTILE_DELETE_MOVE(ListBox);
@@ -248,17 +216,13 @@ class ListBox final
 
   ~ListBox();
 
-  [[nodiscard]] auto is_open() const noexcept -> bool
-  {
-    return mOpen;
-  }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen {};
 };
 
-class Menu final
-{
+class Menu final {
  public:
   TACTILE_DELETE_COPY(Menu);
   TACTILE_DELETE_MOVE(Menu);
@@ -267,17 +231,13 @@ class Menu final
 
   ~Menu();
 
-  [[nodiscard]] auto is_open() const noexcept -> bool
-  {
-    return mOpen;
-  }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen {};
 };
 
-class Modal final
-{
+class Modal final {
  public:
   TACTILE_DELETE_COPY(Modal);
   TACTILE_DELETE_MOVE(Modal);
@@ -286,19 +246,14 @@ class Modal final
 
   ~Modal();
 
-  [[nodiscard]] auto is_open() const noexcept -> bool
-  {
-    return mOpen;
-  }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen {};
 };
 
-class Window final
-{
-  struct WindowData final
-  {
+class Window final {
+  struct WindowData final {
     bool was_hovered : 1 {};
     bool is_hovered  : 1 {};
   };
@@ -323,18 +278,14 @@ class Window final
 
   [[nodiscard]] auto is_hovered() const -> bool;
 
-  [[nodiscard]] auto is_open() const noexcept -> bool
-  {
-    return mOpen;
-  }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   const char* mLabel {};
   bool mOpen {};
 };
 
-class TreeNode final
-{
+class TreeNode final {
  public:
   TACTILE_DELETE_COPY(TreeNode);
   TACTILE_DELETE_MOVE(TreeNode);
@@ -347,14 +298,12 @@ class TreeNode final
            const char* fmt,
            Args&&... args)
       : mOpen {ImGui::TreeNodeEx(id, flags, fmt, std::forward<Args>(args)...)}
-  {}
+  {
+  }
 
   ~TreeNode();
 
-  [[nodiscard]] auto is_open() const noexcept -> bool
-  {
-    return mOpen;
-  }
+  [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
   bool mOpen {};

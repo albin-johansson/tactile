@@ -29,8 +29,7 @@ class DocumentModel;
 
 namespace tactile::ui {
 
-class ContextMenu
-{
+class ContextMenu {
  public:
   TACTILE_DEFAULT_COPY(ContextMenu);
   TACTILE_DEFAULT_MOVE(ContextMenu);
@@ -46,7 +45,8 @@ class ContextMenu
  protected:
   virtual void on_update([[maybe_unused]] const DocumentModel& model,
                          [[maybe_unused]] entt::dispatcher& dispatcher)
-  {}
+  {
+  }
 
  private:
   const char* mName {};

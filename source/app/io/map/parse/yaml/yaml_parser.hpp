@@ -44,7 +44,7 @@ namespace tactile::io {
 [[nodiscard]] auto parse_object(const YAML::Node& node, const ir::MapData& map)
     -> Expected<ir::ObjectData, ParseError>;
 
-[[nodiscard]] auto parse_component_definitions(const YAML::Node& node )
+[[nodiscard]] auto parse_component_definitions(const YAML::Node& node)
     -> Expected<ir::ComponentMap, ParseError>;
 
 [[nodiscard]] auto parse_properties(const YAML::Node& node)

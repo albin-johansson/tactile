@@ -109,7 +109,8 @@ GraphicsCtx::GraphicsCtx(const RenderInfo& info)
     , mTileSizeRatio {info.ratio}
     , mBounds {info.bounds}
     , mBoundsRect {convert_bounds_to_rect(info)}
-{}
+{
+}
 
 void GraphicsCtx::push_clip()
 {

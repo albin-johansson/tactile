@@ -34,8 +34,8 @@ TEST(AddObject, Constructor)
 
 TEST(AddObject, RedoUndo)
 {
-  UUID  layer_id;
-  auto  document = test::MapBuilder::build().with_object_layer(&layer_id).result();
+  UUID layer_id;
+  auto document = test::MapBuilder::build().with_object_layer(&layer_id).result();
   auto& layer = document->get_map().view_object_layer(layer_id);
 
   cmd::AddObject cmd {document.get(), layer_id, ObjectType::Point, {0, 0}};
@@ -43,7 +43,7 @@ TEST(AddObject, RedoUndo)
   cmd.redo();
   ASSERT_EQ(1, layer.object_count());
 
-  auto       object = layer.begin()->second;
+  auto object = layer.begin()->second;
   const auto object_id = object->get_uuid();
   ASSERT_TRUE(document->get_contexts().contains(object_id));
 

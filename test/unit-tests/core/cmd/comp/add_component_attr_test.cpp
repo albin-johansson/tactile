@@ -37,28 +37,28 @@ TEST(AddComponentAttr, RedoUndo)
   auto document = MapBuilder::build().result();
   auto index = document->get_component_index();
 
-  const auto compId = ComponentBuilder {index, "Demo"}.result();
-  auto&      definition = index->at(compId);
+  const auto comp_id = ComponentBuilder {index, "Demo"}.result();
+  auto& definition = index->at(comp_id);
   ASSERT_TRUE(definition.empty());
 
   auto& map = document->get_map();
   auto& bundle = map.ctx().comps();
 
   bundle.add(definition.instantiate());
-  ASSERT_TRUE(bundle.contains(compId));
-  ASSERT_TRUE(bundle.at(compId).empty());
+  ASSERT_TRUE(bundle.contains(comp_id));
+  ASSERT_TRUE(bundle.at(comp_id).empty());
 
-  cmd::AddComponentAttr cmd {document.get(), compId, "attr"};
+  cmd::AddComponentAttr cmd {document.get(), comp_id, "attr"};
 
   cmd.redo();
   ASSERT_EQ(1, definition.size());
   ASSERT_TRUE(definition.has_attr("attr"));
-  ASSERT_EQ(definition.get_attr("attr"), bundle.at(compId).get_attr("attr"));
+  ASSERT_EQ(definition.get_attr("attr"), bundle.at(comp_id).get_attr("attr"));
 
   cmd.undo();
   ASSERT_TRUE(definition.empty());
   ASSERT_FALSE(definition.has_attr("attr"));
-  ASSERT_THROW(bundle.at(compId).get_attr("attr"), TactileError);
+  ASSERT_THROW(bundle.at(comp_id).get_attr("attr"), TactileError);
 }
 
 }  // namespace tactile::test

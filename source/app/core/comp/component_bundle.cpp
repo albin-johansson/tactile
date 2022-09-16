@@ -72,8 +72,14 @@ auto ComponentBundle::contains(const UUID& comp_id) const -> bool
   return mComps.contains(comp_id);
 }
 
-auto ComponentBundle::size() const -> usize { return mComps.size(); }
+auto ComponentBundle::size() const -> usize
+{
+  return mComps.size();
+}
 
-auto ComponentBundle::empty() const -> bool { return mComps.empty(); }
+auto ComponentBundle::empty() const -> bool
+{
+  return mComps.empty();
+}
 
 }  // namespace tactile

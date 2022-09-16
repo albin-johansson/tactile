@@ -48,48 +48,41 @@ namespace {
 using ExtResource = int32;
 using SubResource = int32;
 
-struct GodotTexture final
-{
+struct GodotTexture final {
   UUID tileset_uuid {};
   ExtResource id {};
 };
 
-struct GodotAnimationFrame final
-{
+struct GodotAnimationFrame final {
   SubResource id {};
   Vector4i region {};
 };
 
-struct GodotAnimation final
-{
+struct GodotAnimation final {
   ExtResource texture_id {};
   std::string name;
   std::vector<GodotAnimationFrame> frames;
   float speed {1.0};
 };
 
-struct Identifiers final
-{
+struct Identifiers final {
   int32 next_ext_resource {1};
   int32 next_sub_resource {1};
   int32 ext_tileset_id {};
   Maybe<SubResource> sprite_frames_id;
 };
 
-struct GodotRectangleShape final
-{
+struct GodotRectangleShape final {
   SubResource id {};
   float2 extents {};
 };
 
-struct TilesetExportInfo final
-{
+struct TilesetExportInfo final {
   std::vector<usize> sorted_indices;
   HashMap<TileID, int32> tileset_id_for_first_tile;
 };
 
-struct GodotScene final
-{
+struct GodotScene final {
   GodotEmitOptions options;
   TilesetExportInfo export_info;
   Identifiers identifiers;

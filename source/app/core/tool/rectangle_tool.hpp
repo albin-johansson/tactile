@@ -25,8 +25,7 @@
 
 namespace tactile {
 
-struct CurrentRectangleStroke final
-{
+struct CurrentRectangleStroke final {
   float2 start {};
   float2 current {};
 };
@@ -55,10 +54,7 @@ class RectangleTool final : public Tool {
 
   [[nodiscard]] auto get_stroke() const -> const Maybe<CurrentRectangleStroke>&;
 
-  [[nodiscard]] auto get_type() const -> ToolType override
-  {
-    return ToolType::Rectangle;
-  }
+  [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Rectangle; }
 
  private:
   Maybe<CurrentRectangleStroke> mStroke;

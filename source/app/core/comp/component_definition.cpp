@@ -34,7 +34,10 @@ ComponentDefinition::ComponentDefinition(const UUID& id)
 {
 }
 
-auto ComponentDefinition::instantiate() const -> Component { return {mId, mAttributes}; }
+auto ComponentDefinition::instantiate() const -> Component
+{
+  return {mId, mAttributes};
+}
 
 void ComponentDefinition::add_attr(std::string key, const AttributeType type)
 {
@@ -113,14 +116,29 @@ auto ComponentDefinition::has_attr(std::string_view key) const -> bool
   return mAttributes.contains(key);
 }
 
-void ComponentDefinition::set_name(std::string name) { mName = std::move(name); }
+void ComponentDefinition::set_name(std::string name)
+{
+  mName = std::move(name);
+}
 
-auto ComponentDefinition::get_name() const -> const std::string& { return mName; }
+auto ComponentDefinition::get_name() const -> const std::string&
+{
+  return mName;
+}
 
-auto ComponentDefinition::size() const -> usize { return mAttributes.size(); }
+auto ComponentDefinition::size() const -> usize
+{
+  return mAttributes.size();
+}
 
-auto ComponentDefinition::empty() const -> bool { return mAttributes.empty(); }
+auto ComponentDefinition::empty() const -> bool
+{
+  return mAttributes.empty();
+}
 
-auto ComponentDefinition::get_uuid() const -> const UUID& { return mId; }
+auto ComponentDefinition::get_uuid() const -> const UUID&
+{
+  return mId;
+}
 
 }  // namespace tactile

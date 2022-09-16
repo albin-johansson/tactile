@@ -29,8 +29,7 @@ namespace tactile {
  * \see Object
  * \see ObjectLayer
  */
-enum class ObjectType
-{
+enum class ObjectType {
   Point,
   Rect,
   Ellipse

@@ -27,10 +27,7 @@
 
 namespace tactile::test {
 
-TEST(FixMapTiles, Constructor)
-{
-  ASSERT_THROW(cmd::FixMapTiles {nullptr}, TactileError);
-}
+TEST(FixMapTiles, Constructor) { ASSERT_THROW(cmd::FixMapTiles {nullptr}, TactileError); }
 
 TEST(FixMapTiles, RedoUndo)
 {

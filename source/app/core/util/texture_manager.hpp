@@ -29,15 +29,13 @@
 
 namespace tactile {
 
-struct TextureInfo final
-{
+struct TextureInfo final {
   uint id {};
   int2 size {};
   fs::path path;
 };
 
-class TextureManager final
-{
+class TextureManager final {
  public:
   TACTILE_DEFAULT_COPY(TextureManager);
   TACTILE_DEFAULT_MOVE(TextureManager);

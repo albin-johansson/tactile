@@ -47,8 +47,7 @@
 
 namespace tactile::ui {
 
-struct ComponentEditor::Data final
-{
+struct ComponentEditor::Data final {
   Maybe<UUID> active_component;
 };
 

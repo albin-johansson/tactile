@@ -56,8 +56,8 @@ void Document::remove_component_attribute(const UUID& component_id, std::string 
 }
 
 void Document::rename_component_attribute(const UUID& component_id,
-                                           std::string current,
-                                           std::string updated)
+                                          std::string current,
+                                          std::string updated)
 {
   get_history().exec<cmd::RenameComponentAttr>(this,
                                                component_id,
@@ -71,8 +71,8 @@ void Document::duplicate_component_attribute(const UUID& component_id, std::stri
 }
 
 void Document::set_component_attribute_type(const UUID& component_id,
-                                             std::string name,
-                                             const AttributeType type)
+                                            std::string name,
+                                            const AttributeType type)
 {
   get_history().exec<cmd::SetComponentAttrType>(this,
                                                 component_id,
@@ -81,8 +81,8 @@ void Document::set_component_attribute_type(const UUID& component_id,
 }
 
 void Document::update_component(const UUID& component_id,
-                                 std::string name,
-                                 Attribute value)
+                                std::string name,
+                                Attribute value)
 {
   get_history().exec<cmd::UpdateComponent>(get_component_index(),
                                            component_id,
@@ -105,9 +105,9 @@ void Document::detach_component(const UUID& context_id, const UUID& component_id
 }
 
 void Document::update_attached_component(const UUID& context_id,
-                                          const UUID& component_id,
-                                          std::string name,
-                                          Attribute value)
+                                         const UUID& component_id,
+                                         std::string name,
+                                         Attribute value)
 {
   auto context = get_contexts().get_context(context_id);
   get_history().exec<cmd::UpdateAttachedComponent>(std::move(context),
@@ -125,8 +125,8 @@ void Document::reset_attached_component(const UUID& context_id, const UUID& comp
 }
 
 void Document::add_property(const UUID& context_id,
-                             std::string name,
-                             const AttributeType type)
+                            std::string name,
+                            const AttributeType type)
 {
   auto context = get_contexts().get_context(context_id);
   get_history().exec<cmd::AddProperty>(std::move(context), std::move(name), type);
@@ -139,8 +139,8 @@ void Document::remove_property(const UUID& context_id, std::string name)
 }
 
 void Document::rename_property(const UUID& context_id,
-                                std::string current,
-                                std::string updated)
+                               std::string current,
+                               std::string updated)
 {
   auto context = get_contexts().get_context(context_id);
   get_history().exec<cmd::RenameProperty>(std::move(context),
@@ -157,8 +157,8 @@ void Document::update_property(const UUID& context_id, std::string name, Attribu
 }
 
 void Document::change_property_type(const UUID& context_id,
-                                     std::string name,
-                                     const AttributeType type)
+                                    std::string name,
+                                    const AttributeType type)
 {
   auto context = get_contexts().get_context(context_id);
   get_history().exec<cmd::ChangePropertyType>(std::move(context), std::move(name), type);

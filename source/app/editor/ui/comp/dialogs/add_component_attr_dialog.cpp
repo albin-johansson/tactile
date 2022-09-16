@@ -33,7 +33,8 @@ namespace tactile::ui {
 
 AddComponentAttrDialog::AddComponentAttrDialog()
     : AStringInputDialog {"Create Attribute"}
-{}
+{
+}
 
 void AddComponentAttrDialog::show(const UUID& component_id)
 {

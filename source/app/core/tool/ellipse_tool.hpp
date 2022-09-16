@@ -25,8 +25,7 @@
 
 namespace tactile {
 
-struct CurrentEllipseStroke final
-{
+struct CurrentEllipseStroke final {
   float2 start {};
   float2 current {};
 };
@@ -55,10 +54,7 @@ class EllipseTool final : public Tool {
 
   [[nodiscard]] auto get_stroke() const -> const Maybe<CurrentEllipseStroke>&;
 
-  [[nodiscard]] auto get_type() const -> ToolType override
-  {
-    return ToolType::Ellipse;
-  }
+  [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Ellipse; }
 
  private:
   Maybe<CurrentEllipseStroke> mStroke;

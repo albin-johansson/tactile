@@ -26,7 +26,8 @@ namespace tactile::test {
 ComponentBuilder::ComponentBuilder(Shared<ComponentIndex> index, std::string name)
     : mIndex {std::move(index)}
     , mComponentId {mIndex->define_comp(std::move(name))}
-{}
+{
+}
 
 auto ComponentBuilder::with_attr(std::string name, Attribute value) -> ComponentBuilder&
 {

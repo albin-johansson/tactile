@@ -30,8 +30,7 @@
 
 namespace tactile {
 
-struct ToolManager::Data final
-{
+struct ToolManager::Data final {
   StampTool stamp;
   EraserTool eraser;
   BucketTool bucket;
@@ -47,7 +46,8 @@ TACTILE_DEFINE_MOVE(ToolManager);
 
 ToolManager::ToolManager()
     : mData {std::make_unique<Data>()}
-{}
+{
+}
 
 ToolManager::~ToolManager() noexcept = default;
 

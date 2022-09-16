@@ -71,7 +71,7 @@ TEST(RemoveColumn, MergeSupport)
                       .result();
   auto map = document->get_map_ptr();
 
-  cmd::RemoveColumn       a {map};
+  cmd::RemoveColumn a {map};
   const cmd::RemoveColumn b {map};
 
   ASSERT_TRUE(a.merge_with(&b));

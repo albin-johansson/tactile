@@ -27,15 +27,13 @@
 
 namespace tactile {
 
-class TileAnimation final
-{
+class TileAnimation final {
  public:
   using Millis = std::chrono::milliseconds;
   using Clock = std::chrono::system_clock;
   using TimePoint = Clock::time_point;
 
-  struct Frame final
-  {
+  struct Frame final {
     TileIndex tile {};
     Millis duration {};
   };
@@ -54,15 +52,9 @@ class TileAnimation final
 
   [[nodiscard]] auto size() const -> usize;
 
-  [[nodiscard]] auto begin() const noexcept
-  {
-    return mFrames.begin();
-  }
+  [[nodiscard]] auto begin() const noexcept { return mFrames.begin(); }
 
-  [[nodiscard]] auto end() const noexcept
-  {
-    return mFrames.end();
-  }
+  [[nodiscard]] auto end() const noexcept { return mFrames.end(); }
 
  private:
   std::vector<Frame> mFrames;

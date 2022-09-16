@@ -31,8 +31,7 @@ using TileRow = std::vector<TileID>;
 using TileMatrix = std::vector<TileRow>;
 
 template <typename T>
-struct MatrixCoords final
-{
+struct MatrixCoords final {
   T row {};
   T col {};
 };

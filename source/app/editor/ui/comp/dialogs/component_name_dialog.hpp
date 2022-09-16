@@ -23,8 +23,7 @@
 
 namespace tactile::ui {
 
-class ComponentNameDialog : public AStringInputDialog
-{
+class ComponentNameDialog : public AStringInputDialog {
  protected:
   using AStringInputDialog::AStringInputDialog;
 

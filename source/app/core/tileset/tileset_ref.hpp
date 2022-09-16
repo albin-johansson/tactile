@@ -31,8 +31,7 @@ namespace tactile {
 
 // TODO improve selection
 
-class TilesetRef final
-{
+class TilesetRef final {
  public:
   TilesetRef(Shared<Tileset> tileset, TileID first, TileID last);
 
@@ -55,30 +54,15 @@ class TilesetRef final
 
   [[nodiscard]] auto view_tileset() const -> const Tileset&;
 
-  [[nodiscard]] auto first_tile() const noexcept -> TileID
-  {
-    return mFirstTile;
-  }
+  [[nodiscard]] auto first_tile() const noexcept -> TileID { return mFirstTile; }
 
-  [[nodiscard]] auto last_tile() const noexcept -> TileID
-  {
-    return mLastTile;
-  }
+  [[nodiscard]] auto last_tile() const noexcept -> TileID { return mLastTile; }
 
-  [[nodiscard]] auto get_viewport() -> Viewport&
-  {
-    return mViewport;
-  }
+  [[nodiscard]] auto get_viewport() -> Viewport& { return mViewport; }
 
-  [[nodiscard]] auto get_viewport() const -> const Viewport&
-  {
-    return mViewport;
-  }
+  [[nodiscard]] auto get_viewport() const -> const Viewport& { return mViewport; }
 
-  [[nodiscard]] auto is_embedded() const noexcept -> bool
-  {
-    return mEmbedded;
-  }
+  [[nodiscard]] auto is_embedded() const noexcept -> bool { return mEmbedded; }
 
  private:
   Shared<Tileset> mTileset;  /// The referenced tileset.

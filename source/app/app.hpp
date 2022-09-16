@@ -35,8 +35,7 @@ class TilesetDocument;
 class AppCfg;
 
 /// Tracks visibility of widgets for the "Toggle UI" feature.
-struct WidgetShowState final
-{
+struct WidgetShowState final {
   bool prev_show_layer_dock     : 1 {};
   bool prev_show_tileset_dock   : 1 {};
   bool prev_show_property_dock  : 1 {};

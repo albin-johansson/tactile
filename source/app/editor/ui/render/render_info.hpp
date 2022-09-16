@@ -36,8 +36,7 @@ namespace tactile::ui {
  *
  * \see get_render_info()
  */
-struct RenderInfo final
-{
+struct RenderInfo final {
   ImVec2 canvas_tl {};  ///< Top-left point of the canvas.
   ImVec2 canvas_br {};  ///< Bottom-right point of the canvas.
 

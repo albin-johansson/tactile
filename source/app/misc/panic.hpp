@@ -25,20 +25,13 @@
 namespace tactile {
 
 /// The exception type used for all exceptions thrown in the codebase.
-class TactileError : public std::exception
-{
+class TactileError : public std::exception {
  public:
   explicit TactileError(const char* what);
 
-  [[nodiscard]] auto what() const noexcept -> const char* override
-  {
-    return mWhat;
-  }
+  [[nodiscard]] auto what() const noexcept -> const char* override { return mWhat; }
 
-  [[nodiscard]] auto trace() const -> const std::string&
-  {
-    return mTrace;
-  }
+  [[nodiscard]] auto trace() const -> const std::string& { return mTrace; }
 
  private:
   const char* mWhat {"N/A"};

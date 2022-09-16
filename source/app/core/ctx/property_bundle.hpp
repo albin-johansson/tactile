@@ -28,8 +28,7 @@
 
 namespace tactile {
 
-class PropertyBundle final
-{
+class PropertyBundle final {
  public:
   void add(std::string name, AttributeType type);
   void add(std::string name, Attribute value);
@@ -54,15 +53,9 @@ class PropertyBundle final
 
   [[nodiscard]] auto empty() const -> bool;
 
-  [[nodiscard]] auto begin() const noexcept
-  {
-    return mProps.begin();
-  }
+  [[nodiscard]] auto begin() const noexcept { return mProps.begin(); }
 
-  [[nodiscard]] auto end() const noexcept
-  {
-    return mProps.end();
-  }
+  [[nodiscard]] auto end() const noexcept { return mProps.end(); }
 
  private:
   TreeMap<std::string, Attribute> mProps;

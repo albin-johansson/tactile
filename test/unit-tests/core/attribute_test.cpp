@@ -116,7 +116,7 @@ TEST(Attribute, BoolAttribute)
 TEST(Attribute, FileAttribute)
 {
   const std::filesystem::path file {"test-resources/foo.txt"};
-  const Attribute             value {file};
+  const Attribute value {file};
 
   ASSERT_TRUE(value.is_path());
   ASSERT_TRUE(value.try_as_path());

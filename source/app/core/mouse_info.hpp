@@ -27,8 +27,7 @@
 namespace tactile {
 
 /// Provides general information about the mouse, used in response to mouse events.
-struct MouseInfo final
-{
+struct MouseInfo final {
   float2 pos {};                   /// The raw mouse position.
   TilePos position_in_viewport;    /// The hovered tile position.
   cen::mouse_button button {};     /// The activated mouse button.

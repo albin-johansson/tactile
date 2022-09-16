@@ -35,8 +35,7 @@
 namespace fmt {
 
 template <>
-struct formatter<tactile::fs::path> : formatter<std::string_view>
-{
+struct formatter<tactile::fs::path> : formatter<std::string_view> {
   auto format(const tactile::fs::path& path, auto& ctx) const
   {
 #if TACTILE_PLATFORM_WINDOWS
@@ -48,8 +47,7 @@ struct formatter<tactile::fs::path> : formatter<std::string_view>
 };
 
 template <>
-struct formatter<boost::stacktrace::stacktrace> : formatter<std::string_view>
-{
+struct formatter<boost::stacktrace::stacktrace> : formatter<std::string_view> {
   auto format(const boost::stacktrace::stacktrace& trace, auto& ctx) const
   {
     std::stringstream stream;
@@ -66,8 +64,7 @@ static_assert(is_formattable<boost::stacktrace::stacktrace, char>::value);
 namespace tactile {
 
 template <usize Capacity = 128>
-class FmtString final
-{
+class FmtString final {
  public:
   template <typename... Args>
   explicit FmtString(std::string_view fmt, const Args&... args)
@@ -78,25 +75,16 @@ class FmtString final
     mSize = (std::min)(result.size, Capacity);
   }
 
-  [[nodiscard]] auto data() const noexcept -> const char*
-  {
-    return mBuffer.data();
-  }
+  [[nodiscard]] auto data() const noexcept -> const char* { return mBuffer.data(); }
 
   [[nodiscard]] auto view() const noexcept -> std::string_view
   {
     return std::string_view {mBuffer.data(), mSize};
   }
 
-  [[nodiscard]] auto size() const noexcept -> usize
-  {
-    return view().size();
-  }
+  [[nodiscard]] auto size() const noexcept -> usize { return view().size(); }
 
-  [[nodiscard]] constexpr auto capacity() const noexcept -> usize
-  {
-    return Capacity;
-  }
+  [[nodiscard]] constexpr auto capacity() const noexcept -> usize { return Capacity; }
 
  private:
   std::array<char, Capacity + 1> mBuffer;  // NOLINT

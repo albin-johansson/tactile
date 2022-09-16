@@ -28,8 +28,7 @@ namespace tactile {
 
 class Map;
 
-class MapCommandCache final
-{
+class MapCommandCache final {
   friend struct SaveTilesVisitor;
 
   using TileCache = TreeMap<TilePos, TileID>;

@@ -24,8 +24,7 @@
 
 namespace tactile::ui {
 
-class AddComponentAttrDialog final : public AStringInputDialog
-{
+class AddComponentAttrDialog final : public AStringInputDialog {
  public:
   AddComponentAttrDialog();
 

@@ -47,8 +47,7 @@ class RemoveTileset;
 }  // namespace cmd
 
 /// The primary facade between the editor and the underlying core documents.
-class DocumentModel final
-{
+class DocumentModel final {
   friend class cmd::CreateTileset;
   friend class cmd::RemoveTileset;
 

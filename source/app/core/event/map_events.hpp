@@ -27,54 +27,41 @@
 
 namespace tactile {
 
-struct ShowNewMapDialogEvent final
-{};
+struct ShowNewMapDialogEvent final {};
 
-struct ShowOpenMapDialogEvent final
-{};
+struct ShowOpenMapDialogEvent final {};
 
-struct AddRowEvent final
-{};
+struct AddRowEvent final {};
 
-struct AddColumnEvent final
-{};
+struct AddColumnEvent final {};
 
-struct RemoveRowEvent final
-{};
+struct RemoveRowEvent final {};
 
-struct RemoveColumnEvent final
-{};
+struct RemoveColumnEvent final {};
 
-struct CreateMapEvent final
-{
+struct CreateMapEvent final {
   int2 tile_size {};
   usize row_count {};
   usize column_count {};
 };
 
-struct OpenMapEvent final
-{
+struct OpenMapEvent final {
   fs::path path;
 };
 
-struct InspectMapEvent final
-{};
+struct InspectMapEvent final {};
 
-struct OpenResizeMapDialogEvent final
-{};
+struct OpenResizeMapDialogEvent final {};
 
-struct ResizeMapEvent final
-{
+struct ResizeMapEvent final {
   usize row_count {};
   usize col_count {};
 };
 
-struct FixTilesInMapEvent final
-{};
+struct FixTilesInMapEvent final {};
 
 /// Event emitted when the user wants to save a map as a Godot scene.
-struct ExportAsGodotSceneEvent final
-{
+struct ExportAsGodotSceneEvent final {
   fs::path root_dir;
   fs::path map_dir;
   fs::path image_dir;
@@ -82,23 +69,19 @@ struct ExportAsGodotSceneEvent final
   usize polygon_points {};
 };
 
-struct SetTileFormatCompressionEvent final
-{
+struct SetTileFormatCompressionEvent final {
   TileCompression compression {};
 };
 
-struct SetTileFormatEncodingEvent final
-{
+struct SetTileFormatEncodingEvent final {
   TileEncoding encoding {};
 };
 
-struct SetZlibCompressionLevelEvent final
-{
+struct SetZlibCompressionLevelEvent final {
   int level {};
 };
 
-struct SetZstdCompressionLevelEvent final
-{
+struct SetZstdCompressionLevelEvent final {
   int level {};
 };
 

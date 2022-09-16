@@ -33,8 +33,7 @@
 namespace tactile::ui {
 namespace {
 
-struct HelpMenuState final
-{
+struct HelpMenuState final {
   bool show_about_imgui {};
 };
 

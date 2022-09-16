@@ -33,8 +33,8 @@ TEST(AddProperty, Constructor)
 
 TEST(AddProperty, RedoUndo)
 {
-  auto  document = MapBuilder::build().result();
-  auto  map = document->get_map_ptr();
+  auto document = MapBuilder::build().result();
+  auto map = document->get_map_ptr();
   auto& props = map->ctx().props();
 
   ASSERT_TRUE(props.empty());

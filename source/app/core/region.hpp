@@ -24,8 +24,7 @@
 namespace tactile {
 
 /// Represents a region of a grid.
-struct Region final
-{
+struct Region final {
   TilePos begin;  /// The top-left position.
   TilePos end;    /// The bottom-right position.
 

@@ -22,8 +22,8 @@
 namespace tactile {
 
 void Shortcut::poll(const DocumentModel& model,
-                     const cen::keyboard_event& event,
-                     entt::dispatcher& dispatcher)
+                    const cen::keyboard_event& event,
+                    entt::dispatcher& dispatcher)
 {
   if (is_enabled(model)) {
     if (event.pressed() && event.scan() == mKey && event.is_only_active(mModifiers)) {

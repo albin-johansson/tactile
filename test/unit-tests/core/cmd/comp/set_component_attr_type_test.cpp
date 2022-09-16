@@ -38,22 +38,22 @@ TEST(SetComponentAttrType, RedoUndo)
   auto document = MapBuilder::build().result();
   auto index = document->get_component_index();
 
-  const auto compId = ComponentBuilder {index, "Demo"}  //
-                          .with_attr("Attr", true)
-                          .with_attr("Attr2", 938)
-                          .with_attr("Attr3", 94.3f)
-                          .result();
+  const auto comp_id = ComponentBuilder {index, "Demo"}  //
+                           .with_attr("Attr", true)
+                           .with_attr("Attr2", 938)
+                           .with_attr("Attr3", 94.3f)
+                           .result();
 
   auto& map = document->get_map();
   auto& bundle = map.ctx().comps();
-  bundle.add(index->at(compId).instantiate());
+  bundle.add(index->at(comp_id).instantiate());
 
-  cmd::SetComponentAttrType cmd {document.get(), compId, "Attr", AttributeType::Int};
+  cmd::SetComponentAttrType cmd {document.get(), comp_id, "Attr", AttributeType::Int};
   cmd.redo();
 
   {
-    const auto& def = index->at(compId);
-    const auto& comp = bundle.at(compId);
+    const auto& def = index->at(comp_id);
+    const auto& comp = bundle.at(comp_id);
 
     ASSERT_EQ(AttributeType::Int, def.get_attr("Attr").type());
     ASSERT_EQ(AttributeType::Int, comp.get_attr("Attr").type());
@@ -65,8 +65,8 @@ TEST(SetComponentAttrType, RedoUndo)
   cmd.undo();
 
   {
-    const auto& def = index->at(compId);
-    const auto& comp = bundle.at(compId);
+    const auto& def = index->at(comp_id);
+    const auto& comp = bundle.at(comp_id);
 
     ASSERT_EQ(AttributeType::Bool, def.get_attr("Attr").type());
     ASSERT_EQ(AttributeType::Bool, comp.get_attr("Attr").type());

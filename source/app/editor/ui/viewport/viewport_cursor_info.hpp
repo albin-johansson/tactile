@@ -26,8 +26,7 @@
 
 namespace tactile::ui {
 
-struct ViewportCursorInfo final
-{
+struct ViewportCursorInfo final {
   TilePos map_position;
   ImVec2 clamped_position {};
   ImVec2 raw_position {};

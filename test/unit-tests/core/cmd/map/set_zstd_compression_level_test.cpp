@@ -52,7 +52,7 @@ TEST(SetZstdCompressionLevel, MergeSupport)
 
   map->tile_format().set_zstd_compression_level(8);
 
-  cmd::SetZstdCompressionLevel       a {map, 5};
+  cmd::SetZstdCompressionLevel a {map, 5};
   const cmd::SetZstdCompressionLevel b {map, 12};
   const cmd::SetZstdCompressionLevel c {map, 18};
 

@@ -27,7 +27,8 @@ EmitInfo::EmitInfo(fs::path destination, ir::MapData data)
     : mDestinationFile {std::move(destination)}
     , mDestinationDir {mDestinationFile.parent_path()}
     , mData {std::move(data)}
-{}
+{
+}
 
 auto EmitInfo::destination_file() const -> const fs::path&
 {

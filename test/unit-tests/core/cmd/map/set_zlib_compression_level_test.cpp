@@ -52,7 +52,7 @@ TEST(SetZlibCompressionLevel, MergeSupport)
 
   map->tile_format().set_zlib_compression_level(7);
 
-  cmd::SetZlibCompressionLevel       a {map, 6};
+  cmd::SetZlibCompressionLevel a {map, 6};
   const cmd::SetZlibCompressionLevel b {map, 4};
   const cmd::SetZlibCompressionLevel c {map, 9};
 

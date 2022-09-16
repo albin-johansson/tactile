@@ -29,7 +29,8 @@ namespace tactile::ui {
 
 AStringInputDialog::AStringInputDialog(std::string title)
     : Dialog {std::move(title)}
-{}
+{
+}
 
 void AStringInputDialog::show(std::string previous)
 {

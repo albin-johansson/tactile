@@ -45,7 +45,7 @@ TEST(FmtString, SimpleFormatting)
 TEST(FmtString, AdvancedFormatting)
 {
   const std::filesystem::path path = "foo/bar.txt";
-  const FmtString             str {"The answer is {}, here's a path: {}", 42, path};
+  const FmtString str {"The answer is {}, here's a path: {}", 42, path};
   ASSERT_EQ("The answer is 42, here's a path: foo/bar.txt", str.view());
 }
 

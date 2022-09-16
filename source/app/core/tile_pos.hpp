@@ -34,8 +34,7 @@ namespace tactile {
  *
  * Note, this class may represent positions with negative indices.
  */
-class TilePos final
-{
+class TilePos final {
  public:
   /// Creates a tile position at origin, (0, 0).
   constexpr TilePos() noexcept = default;
@@ -43,7 +42,8 @@ class TilePos final
   constexpr TilePos(const int32 row, const int32 column) noexcept
       : mRow {row}
       , mCol {column}
-  {}
+  {
+  }
 
   /// Creates a position from unsigned row and column indices.
   [[nodiscard]] constexpr static auto from(const usize row, const usize column) noexcept
@@ -60,16 +60,10 @@ class TilePos final
   }
 
   /// Sets the row index associated with the position.
-  constexpr void set_row(const int32 row) noexcept
-  {
-    mRow = row;
-  }
+  constexpr void set_row(const int32 row) noexcept { mRow = row; }
 
   /// Sets the column index associated with the position.
-  constexpr void set_col(const int32 column) noexcept
-  {
-    mCol = column;
-  }
+  constexpr void set_col(const int32 column) noexcept { mCol = column; }
 
   /// Creates a new position, offset from this position.
   [[nodiscard]] constexpr auto offset_by(const int32 row,
@@ -103,16 +97,10 @@ class TilePos final
   }
 
   /// Returns the row index of the tile position.
-  [[nodiscard]] constexpr auto row() const noexcept -> int32
-  {
-    return mRow;
-  }
+  [[nodiscard]] constexpr auto row() const noexcept -> int32 { return mRow; }
 
   /// Returns the column index of the tile position.
-  [[nodiscard]] constexpr auto col() const noexcept -> int32
-  {
-    return mCol;
-  }
+  [[nodiscard]] constexpr auto col() const noexcept -> int32 { return mCol; }
 
   /**
    * Returns the raw row index associated with the tile position.
@@ -152,10 +140,7 @@ class TilePos final
     return mCol * tileWidth;
   }
 
-  [[nodiscard]] constexpr auto as_vec2() const noexcept -> int2
-  {
-    return {mCol, mRow};
-  }
+  [[nodiscard]] constexpr auto as_vec2() const noexcept -> int2 { return {mCol, mRow}; }
 
   [[nodiscard]] constexpr auto as_vec2f() const noexcept -> float2
   {
@@ -198,8 +183,7 @@ class TilePos final
 namespace std {
 
 template <>
-struct hash<tactile::TilePos> final
-{
+struct hash<tactile::TilePos> final {
   [[nodiscard]] auto operator()(const tactile::TilePos& pos) const -> size_t
   {
     size_t res = 0;

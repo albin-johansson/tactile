@@ -27,8 +27,7 @@ namespace tactile::ui {
 
 /// Represents the different available themes.
 /// The enumerator values cannot change, and should mirror those of proto::Theme.
-enum class EditorTheme
-{
+enum class EditorTheme {
   DearDark = 0,   ///< The standard Dear ImGui dark theme.
   DearLight = 1,  ///< The standard Dear ImGui light theme.
   Ruby = 2,

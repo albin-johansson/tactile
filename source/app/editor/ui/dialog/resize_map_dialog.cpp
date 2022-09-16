@@ -31,7 +31,8 @@ namespace tactile::ui {
 
 ResizeMapDialog::ResizeMapDialog()
     : Dialog {"Resize Map"}
-{}
+{
+}
 
 void ResizeMapDialog::show(usize nCurrentRows, usize nCurrentColumns)
 {

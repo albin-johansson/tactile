@@ -28,8 +28,7 @@ namespace tactile::test {
 using LayerTypes = testing::Types<TileLayer, ObjectLayer, GroupLayer>;
 
 template <typename T>
-struct LayerTest : testing::Test
-{};
+struct LayerTest : testing::Test {};
 
 TYPED_TEST_SUITE(LayerTest, LayerTypes);
 

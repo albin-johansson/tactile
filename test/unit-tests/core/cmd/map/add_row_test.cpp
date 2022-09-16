@@ -26,10 +26,7 @@
 
 namespace tactile::test {
 
-TEST(AddRow, Constructor)
-{
-  ASSERT_THROW(cmd::AddRow {nullptr}, TactileError);
-}
+TEST(AddRow, Constructor) { ASSERT_THROW(cmd::AddRow {nullptr}, TactileError); }
 
 TEST(AddRow, RedoUndo)
 {
@@ -61,7 +58,7 @@ TEST(AddRow, MergeSupport)
       test::MapBuilder::build().with_size(initial_rows, initial_cols).result();
   auto map = document->get_map_ptr();
 
-  cmd::AddRow       a {map};
+  cmd::AddRow a {map};
   const cmd::AddRow b {map};
 
   ASSERT_TRUE(a.merge_with(&b));

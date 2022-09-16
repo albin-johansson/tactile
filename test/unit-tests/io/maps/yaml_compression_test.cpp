@@ -92,8 +92,7 @@ const auto cases =
 
 }  // namespace
 
-struct CompressedYamlMapTest : testing::TestWithParam<TestData>
-{};
+struct CompressedYamlMapTest : testing::TestWithParam<TestData> {};
 
 TEST_P(CompressedYamlMapTest, EmitAndParseMap)
 {

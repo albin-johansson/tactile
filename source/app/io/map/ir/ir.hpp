@@ -44,14 +44,12 @@ namespace tactile::ir {
 using AttributeMap = TreeMap<std::string, Attribute>;
 using ComponentMap = TreeMap<std::string, AttributeMap>;
 
-struct ContextData final
-{
+struct ContextData final {
   AttributeMap properties;
   ComponentMap components;
 };
 
-struct ObjectData final
-{
+struct ObjectData final {
   ObjectID id {};
   ObjectType type {};
   float2 pos {};
@@ -62,23 +60,20 @@ struct ObjectData final
   bool visible {};
 };
 
-struct TileLayerData final
-{
+struct TileLayerData final {
   // The sizes are provided for convenience, they should mirror the map dimensions.
   usize row_count {};
   usize col_count {};
   TileMatrix tiles;
 };
 
-struct ObjectLayerData final
-{
+struct ObjectLayerData final {
   std::vector<ObjectData> objects;
 };
 
 struct LayerData;
 
-struct GroupLayerData final
-{
+struct GroupLayerData final {
   GroupLayerData() = default;
   ~GroupLayerData() noexcept = default;
 
@@ -88,8 +83,7 @@ struct GroupLayerData final
   std::vector<Unique<LayerData>> children;
 };
 
-struct LayerData final
-{
+struct LayerData final {
   using data_type = std::variant<TileLayerData, ObjectLayerData, GroupLayerData>;
 
   LayerID id {};
@@ -117,14 +111,12 @@ struct LayerData final
   }
 };
 
-struct AnimationFrameData final
-{
+struct AnimationFrameData final {
   TileIndex tile_index {};
   uint64 duration_ms {};
 };
 
-struct MetaTileData final
-{
+struct MetaTileData final {
   UUID uuid {make_uuid()};  // This is not persistent! Only here for convenience.
 
   std::vector<ObjectData> objects;
@@ -132,8 +124,7 @@ struct MetaTileData final
   ContextData context;
 };
 
-struct TilesetData final
-{
+struct TilesetData final {
   using MetaTiles = HashMap<TileIndex, MetaTileData>;
 
   UUID uuid {make_uuid()};  // This is not persistent! Only here for convenience.
@@ -149,16 +140,14 @@ struct TilesetData final
   ContextData context;
 };
 
-struct TileFormatData final
-{
+struct TileFormatData final {
   TileEncoding encoding {TileEncoding::Plain};
   TileCompression compression {TileCompression::None};
   Maybe<int32> zlib_compression_level;
   Maybe<int32> zstd_compression_level;
 };
 
-struct MapData final
-{
+struct MapData final {
   usize row_count {};
   usize col_count {};
   int2 tile_size {};

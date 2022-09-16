@@ -219,8 +219,7 @@ const auto cases = testing::Values(
 
 }  // namespace
 
-struct MapParserTest : testing::TestWithParam<TestData>
-{};
+struct MapParserTest : testing::TestWithParam<TestData> {};
 
 TEST_P(MapParserTest, Parsing)
 {

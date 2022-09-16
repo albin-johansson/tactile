@@ -22,15 +22,13 @@
 namespace tactile {
 
 /// Represents the different supported tile layer data encodings.
-enum class TileEncoding
-{
+enum class TileEncoding {
   Plain,  ///< Encode the tile layer data in ordinary plain text.
   Base64  ///< Use Base64 encoding.
 };
 
 /// Represents the different supported tile data compression methods.
-enum class TileCompression
-{
+enum class TileCompression {
   None,  ///< Apply no compression to tile layer data.
   Zlib,  ///< Use the Zlib compression library.
   Zstd   ///< Use the zstd compression library.
@@ -41,8 +39,7 @@ enum class TileCompression
 /// An instance of this class is guaranteed to be in a valid state,
 /// and will as such raise exceptions if you try to specify an invalid
 /// tile format.
-class TileFormat final
-{
+class TileFormat final {
  public:
   void set_encoding(TileEncoding encoding);
 

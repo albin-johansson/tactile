@@ -37,15 +37,13 @@
 namespace tactile {
 namespace {
 
-struct LogEntry final
-{
+struct LogEntry final {
   spdlog::level::level_enum level {};
   std::string msg;
 };
 
 /// Records logged messages, intended to be displayed in the log dock.
-class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_mutex>
-{
+class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_mutex> {
  public:
   void sink_it_(const spdlog::details::log_msg& msg) override
   {
@@ -59,10 +57,7 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
     // Do nothing
   }
 
-  void clear()
-  {
-    mHistory.clear();
-  }
+  void clear() { mHistory.clear(); }
 
   [[nodiscard]] auto get_entry(const LogLevel filter, usize index)
       -> std::pair<LogLevel, const std::string&>

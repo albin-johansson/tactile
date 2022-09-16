@@ -194,7 +194,7 @@ class FindConstLayerVisitor final : public ConstLayerVisitor {
 };
 
 #define TACTILE_FIND_LAYER_VISITOR(Name, Type)                     \
-  class Name final : public LayerVisitor {                        \
+  class Name final : public LayerVisitor {                         \
    public:                                                         \
     explicit Name(const UUID& target)                              \
         : mTarget {target}                                         \
@@ -218,7 +218,7 @@ class FindConstLayerVisitor final : public ConstLayerVisitor {
     Type* mLayer {};                                               \
   };                                                               \
                                                                    \
-  class Const##Name final : public ConstLayerVisitor {            \
+  class Const##Name final : public ConstLayerVisitor {             \
    public:                                                         \
     explicit Const##Name(const UUID& target)                       \
         : mTarget {target}                                         \

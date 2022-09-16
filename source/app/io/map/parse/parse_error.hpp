@@ -29,8 +29,7 @@ namespace tactile::io {
  *
  * \see to_cause(ParseError)
  */
-enum class ParseError
-{
+enum class ParseError {
   None,
   Unknown,
 

@@ -35,8 +35,7 @@
 namespace tactile {
 
 /// Represents the different possible attributes types.
-enum class AttributeType
-{
+enum class AttributeType {
   String,  /// A string property.
   Int,     /// An integer property.
   Float,   /// A floating-point property.
@@ -73,8 +72,7 @@ enum class AttributeType
 auto operator<<(std::ostream& stream, AttributeType type) -> std::ostream&;
 
 /// Strong type that represents object references.
-enum object_t : int32
-{
+enum object_t : int32 {
 };
 
 template <typename T>
@@ -87,8 +85,7 @@ concept CAttributeType = std::same_as<T, std::string> ||  //
                          std::same_as<T, object_t>;
 
 /// Represents an "attribute" value, used by both property and component facilities.
-class Attribute final
-{
+class Attribute final {
  public:
   using string_type = std::string;
   using integer_type = int32;
@@ -107,10 +104,7 @@ class Attribute final
   /// Creates an empty string attribute.
   Attribute() = default;
 
-  explicit Attribute(const AttributeType type)
-  {
-    reset_to_default(type);
-  }
+  explicit Attribute(const AttributeType type) { reset_to_default(type); }
 
   /**
    * Creates a property.

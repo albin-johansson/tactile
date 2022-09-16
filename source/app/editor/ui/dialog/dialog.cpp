@@ -33,7 +33,8 @@ Dialog::Dialog(std::string title)
     : mTitle {std::move(title)}
     , mAcceptButtonLabel {get_current_language().misc.ok}
     , mCloseButtonLabel {get_current_language().misc.cancel}
-{}
+{
+}
 
 void Dialog::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {

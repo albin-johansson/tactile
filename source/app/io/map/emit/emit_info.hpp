@@ -24,8 +24,7 @@
 
 namespace tactile::io {
 
-class EmitInfo final
-{
+class EmitInfo final {
  public:
   explicit EmitInfo(fs::path destination, ir::MapData data);
 

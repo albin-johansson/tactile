@@ -40,9 +40,8 @@ namespace {
 //     - e  (object layer)
 //     - f  (tile layer)
 //   - g    (tile layer)
-struct MapLayerPreset final
-{
-  Map  map;
+struct MapLayerPreset final {
+  Map map;
   UUID a;
   UUID b;
   UUID c;
@@ -59,7 +58,8 @@ struct MapLayerPreset final
       , e {map.add_object_layer(d)}
       , f {map.add_tile_layer(d)}
       , g {map.add_tile_layer(b)}
-  {}
+  {
+  }
 };
 
 }  // namespace
@@ -93,7 +93,7 @@ TEST(Map, AddRow)
   ASSERT_EQ(6, map.row_count());
   ASSERT_EQ(5, map.column_count());
 
-  const auto  id = map.add_tile_layer();
+  const auto id = map.add_tile_layer();
   const auto& layer = map.view_tile_layer(id);
 
   ASSERT_EQ(6, layer.row_count());
@@ -104,7 +104,7 @@ TEST(Map, AddColumn)
 {
   Map map;
 
-  const auto  id = map.add_tile_layer();
+  const auto id = map.add_tile_layer();
   const auto& layer = map.view_tile_layer(id);
 
   map.add_column();
@@ -188,7 +188,7 @@ TEST(Map, FixTiles)
   auto map = document->get_map_ptr();
 
   const auto& tilesetRef = map->get_tilesets().get_ref(tilesetId);
-  auto&       layer = map->view_tile_layer(layerId);
+  auto& layer = map->view_tile_layer(layerId);
 
   // Valid
   layer.set_tile({0, 1}, tilesetRef.first_tile());
@@ -201,7 +201,7 @@ TEST(Map, FixTiles)
   layer.set_tile({3, 2}, tilesetRef.last_tile() + 934);
   layer.set_tile({4, 4}, tilesetRef.first_tile() - 32);
 
-  const auto  result = map->fix_tiles();
+  const auto result = map->fix_tiles();
   const auto& previous = lookup_in(result, layerId);
 
   ASSERT_EQ(4, previous.size());
@@ -230,7 +230,7 @@ TEST(Map, SetTileSize)
 
 TEST(Map, IsValidPosition)
 {
-  const Map  map;
+  const Map map;
   const auto end = TilePos::from(map.row_count(), map.column_count());
 
   ASSERT_FALSE(map.is_valid_position({-1, 0}));
@@ -243,7 +243,7 @@ TEST(Map, IsValidPosition)
 
 TEST(Map, AddLayer)
 {
-  Map  map;
+  Map map;
   auto t1 = TileLayer::make();
   auto t2 = TileLayer::make();
   auto o1 = std::make_shared<ObjectLayer>();
@@ -276,7 +276,7 @@ TEST(Map, AddTileLayer)
 {
   Map map;
 
-  const auto  id = map.add_tile_layer();
+  const auto id = map.add_tile_layer();
   const auto* layer = map.find_tile_layer(id);
 
   ASSERT_NE(nullptr, layer);
@@ -290,10 +290,10 @@ TEST(Map, AddTileLayer)
 
 TEST(Map, AddObjectLayer)
 {
-  Map        map;
+  Map map;
   const auto parent = map.add_group_layer();
 
-  const auto  id = map.add_object_layer(parent);
+  const auto id = map.add_object_layer(parent);
   const auto& layer = map.view_object_layer(id);
 
   ASSERT_EQ(nullptr, map.find_tile_layer(id));
@@ -307,7 +307,7 @@ TEST(Map, AddGroupLayer)
 {
   Map map;
 
-  const auto  id = map.add_group_layer();
+  const auto id = map.add_group_layer();
   const auto& layer = map.view_group_layer(id);
 
   ASSERT_EQ(nullptr, map.find_tile_layer(id));

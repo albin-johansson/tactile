@@ -30,8 +30,7 @@
 namespace tactile {
 
 /// Handles the configuration of the application window, OpenGL context, etc.
-class AppCfg final
-{
+class AppCfg final {
  public:
   AppCfg();
 

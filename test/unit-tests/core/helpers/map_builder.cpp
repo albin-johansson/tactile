@@ -36,10 +36,7 @@ MapBuilder::MapBuilder()
   mDocument->set_component_index(std::make_shared<ComponentIndex>());
 }
 
-auto MapBuilder::build() -> MapBuilder
-{
-  return MapBuilder {};
-}
+auto MapBuilder::build() -> MapBuilder { return MapBuilder {}; }
 
 auto MapBuilder::with_tile_size(const int2& size) -> MapBuilder&
 {
@@ -89,8 +86,8 @@ auto MapBuilder::with_object_layer(UUID* id) -> MapBuilder&
 }
 
 auto MapBuilder::with_object(const ObjectType type,
-                             Shared<Object>*  out_object,
-                             UUID*            out_layer) -> MapBuilder&
+                             Shared<Object>* out_object,
+                             UUID* out_layer) -> MapBuilder&
 {
   auto& map = mDocument->get_map();
 
@@ -139,9 +136,6 @@ auto MapBuilder::with_tileset(UUID* id) -> MapBuilder&
   return *this;
 }
 
-auto MapBuilder::result() -> Unique<MapDocument>
-{
-  return std::move(mDocument);
-}
+auto MapBuilder::result() -> Unique<MapDocument> { return std::move(mDocument); }
 
 }  // namespace tactile::test

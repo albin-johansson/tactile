@@ -33,8 +33,7 @@ namespace tactile::io {
 
 /// Encodes different viewport overlay positions.
 /// The enumerator values cannot change, and should mirror those of proto::OverlayPos.
-enum class OverlayPos
-{
+enum class OverlayPos {
   TopLeft = 0,
   TopRight = 1,
   BottomLeft = 2,
@@ -67,8 +66,7 @@ inline constexpr bool def_use_default_font = true;
 
 /// Contains all persistent settings.
 /// Note, the boolean members cannot be bitfields because we take the address of them.
-struct PreferenceState final
-{
+struct PreferenceState final {
   std::string preferred_format {def_preferred_format};
   Lang language {def_language};
   ui::EditorTheme theme {def_theme};

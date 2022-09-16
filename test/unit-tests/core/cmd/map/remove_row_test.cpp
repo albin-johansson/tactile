@@ -27,10 +27,7 @@
 
 namespace tactile::test {
 
-TEST(RemoveRow, Constructor)
-{
-  ASSERT_THROW(cmd::RemoveRow {nullptr}, TactileError);
-}
+TEST(RemoveRow, Constructor) { ASSERT_THROW(cmd::RemoveRow {nullptr}, TactileError); }
 
 TEST(RemoveRow, RedoUndo)
 {
@@ -66,7 +63,7 @@ TEST(RemoveRow, MergeSupport)
                       .result();
   auto map = document->get_map_ptr();
 
-  cmd::RemoveRow       a {map};
+  cmd::RemoveRow a {map};
   const cmd::RemoveRow b {map};
 
   ASSERT_TRUE(a.merge_with(&b));

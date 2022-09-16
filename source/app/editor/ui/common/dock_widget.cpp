@@ -25,8 +25,7 @@
 
 namespace tactile::ui {
 
-struct DockWidget::Data final
-{
+struct DockWidget::Data final {
   const char* title {};
   ImGuiWindowFlags window_flags {};
   ImGuiFocusedFlags focus_flags {};

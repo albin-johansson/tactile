@@ -31,7 +31,8 @@ namespace tactile::ui {
 
 RenameLayerDialog::RenameLayerDialog()
     : AStringInputDialog {"Rename Layer"}
-{}
+{
+}
 
 void RenameLayerDialog::show(const UUID& layerId, std::string oldName)
 {

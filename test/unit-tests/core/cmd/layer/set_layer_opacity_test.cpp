@@ -49,7 +49,7 @@ TEST(SetLayerOpacity, MergeSupport)
 {
   auto layer = std::make_shared<TileLayer>();
 
-  cmd::SetLayerOpacity       a {layer, 0.8f};
+  cmd::SetLayerOpacity a {layer, 0.8f};
   const cmd::SetLayerOpacity b {layer, 0.6f};
   const cmd::SetLayerOpacity c {layer, 0.4f};
 

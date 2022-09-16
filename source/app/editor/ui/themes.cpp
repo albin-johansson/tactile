@@ -27,8 +27,7 @@
 namespace tactile::ui {
 namespace {
 
-struct ThemeCfg final
-{
+struct ThemeCfg final {
   ImVec4 accent {};
   ImVec4 accent_active {};
   ImVec4 window {};

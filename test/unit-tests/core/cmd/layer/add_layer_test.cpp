@@ -33,7 +33,7 @@ TEST(AddLayer, Constructor)
 
 TEST(AddLayer, RedoUndo)
 {
-  auto  document = MapBuilder::build().result();
+  auto document = MapBuilder::build().result();
   auto& map = document->get_map();
   auto& contexts = document->get_contexts();
 

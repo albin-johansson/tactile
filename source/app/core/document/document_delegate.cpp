@@ -28,7 +28,8 @@ namespace tactile {
 DocumentDelegate::DocumentDelegate(const UUID& rootContext)
     : mContexts {rootContext}
     , mComponentIndex {std::make_shared<ComponentIndex>()}
-{}
+{
+}
 
 void DocumentDelegate::set_component_index(Shared<ComponentIndex> index)
 {

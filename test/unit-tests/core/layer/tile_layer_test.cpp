@@ -43,18 +43,18 @@ TEST(TileLayer, Defaults)
 
 TEST(TileLayer, Flood)
 {
-  /* 0  0  0  0  0
-     0  0  0  0  0
-     0  0  0  0  0
-     0  0  0  0  0
-     0  0  0  0  0 */
+  // 0  0  0  0  0
+  // 0  0  0  0  0
+  // 0  0  0  0  0
+  // 0  0  0  0  0
+  // 0  0  0  0  0
   TileLayer layer {5, 5};
 
-  /* 0  0  0  0  0
-     0  0  0  1  1
-     0  0  0  1  0
-     0  1  1  1  0
-     1  0  0  0  0 */
+  // 0  0  0  0  0
+  // 0  0  0  1  1
+  // 0  0  0  1  0
+  // 0  1  1  1  0
+  // 1  0  0  0  0
   layer.set_tile({1, 3}, 1);
   layer.set_tile({1, 4}, 1);
   layer.set_tile({2, 3}, 1);
@@ -151,9 +151,10 @@ TEST(TileLayer, SetTile)
   layer.set_tile({1, 2}, 42);
   ASSERT_EQ(42, layer.tile_at({1, 2}));
 
-  const auto bottomRight = TilePos::from(layer.row_count() - 1, layer.column_count() - 1);
-  layer.set_tile(bottomRight, 7);
-  ASSERT_EQ(7, layer.tile_at(bottomRight));
+  const auto bottom_right =
+      TilePos::from(layer.row_count() - 1, layer.column_count() - 1);
+  layer.set_tile(bottom_right, 7);
+  ASSERT_EQ(7, layer.tile_at(bottom_right));
 }
 
 TEST(TileLayer, TileAtWithInvalidPositions)

@@ -30,78 +30,65 @@
 namespace tactile {
 
 /// Emitted when a mouse tool is pressed.
-struct ToolPressedEvent final
-{
+struct ToolPressedEvent final {
   MouseInfo info;
 };
 
 /// Emitted when a mouse tool is dragged.
-struct ToolDraggedEvent final
-{
+struct ToolDraggedEvent final {
   MouseInfo info;
 };
 
 /// Emitted when a mouse tool is released.
-struct ToolReleasedEvent final
-{
+struct ToolReleasedEvent final {
   MouseInfo info;
 };
 
-struct ToolEnteredEvent final
-{};
+struct ToolEnteredEvent final {};
 
-struct ToolExitedEvent final
-{};
+struct ToolExitedEvent final {};
 
-struct SelectToolEvent final
-{
+struct SelectToolEvent final {
   ToolType type {};
 };
 
-struct StampSequenceEvent final
-{
+struct StampSequenceEvent final {
   UUID layer_id {};
   TileCache old_state;
   TileCache sequence;
 };
 
-struct SetStampRandomizerEvent final
-{
+struct SetStampRandomizerEvent final {
   bool enabled {};  /// Whether the randomizer mode is enabled.
 };
 
-struct EraserSequenceEvent final
-{
+struct EraserSequenceEvent final {
   UUID layer_id {};
   TileCache old_state;
 };
 
-struct FloodEvent final
-{
+struct FloodEvent final {
   UUID layer_id {};
   TilePos origin;
   TileID replacement {};
 };
 
 /// Emitted when a rectangle should be added to an object layer.
-struct AddRectangleEvent final
-{
+struct AddRectangleEvent final {
   UUID layer_id {};
   float2 pos {};
   float2 size {};
 };
 
 /// Emitted when an ellipse should be added to an object layer.
-struct AddEllipseEvent final
-{
+struct AddEllipseEvent final {
   UUID layer_id {};
   float2 pos {};
   float2 size {};
 };
 
 /// Emitted when a point should be added to an object layer.
-struct AddPointEvent final
-{
+struct AddPointEvent final {
   UUID layer_id {};
   float2 pos {};
 };

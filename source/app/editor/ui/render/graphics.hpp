@@ -32,8 +32,7 @@ namespace tactile::ui {
 /**
  * Provides a common simplified rendering API.
  */
-class GraphicsCtx final
-{
+class GraphicsCtx final {
  public:
   explicit GraphicsCtx(const RenderInfo& info);
 
@@ -123,15 +122,9 @@ class GraphicsCtx final
 
   [[nodiscard]] auto translate(const ImVec2& position) const -> ImVec2;
 
-  [[nodiscard]] auto origin() const -> const ImVec2&
-  {
-    return mOrigin;
-  }
+  [[nodiscard]] auto origin() const -> const ImVec2& { return mOrigin; }
 
-  [[nodiscard]] auto get_origin() const -> float2
-  {
-    return {mOrigin.x, mOrigin.y};
-  }
+  [[nodiscard]] auto get_origin() const -> float2 { return {mOrigin.x, mOrigin.y}; }
 
   [[nodiscard]] auto get_grid_size() const -> float2
   {
@@ -148,15 +141,9 @@ class GraphicsCtx final
     return mLogicalTileSize;
   }
 
-  [[nodiscard]] auto tile_size_ratio() const -> const ImVec2&
-  {
-    return mTileSizeRatio;
-  }
+  [[nodiscard]] auto tile_size_ratio() const -> const ImVec2& { return mTileSizeRatio; }
 
-  [[nodiscard]] auto bounds() const -> const Region&
-  {
-    return mBounds;
-  }
+  [[nodiscard]] auto bounds() const -> const Region& { return mBounds; }
 
  private:
   ImVec2 mCanvasTL;

@@ -88,7 +88,7 @@ TEST(PropertyBundle, ChangeType)
 TEST(PropertyBundle, Find)
 {
   PropertyBundle bundle;
-  const auto&    ref = bundle;
+  const auto& ref = bundle;
 
   ASSERT_FALSE(bundle.find("foo"));
   ASSERT_FALSE(ref.find("foo"));
@@ -102,7 +102,7 @@ TEST(PropertyBundle, Find)
 TEST(PropertyBundle, At)
 {
   PropertyBundle bundle;
-  const auto&    ref = bundle;
+  const auto& ref = bundle;
 
   ASSERT_THROW(bundle.at("foo"), TactileError);
   ASSERT_THROW(ref.at("foo"), TactileError);

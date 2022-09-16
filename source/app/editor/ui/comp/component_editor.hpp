@@ -54,8 +54,7 @@ class ComponentEditor final : public Dialog {
   struct Data;
   Unique<Data> mData;
 
-  void show_component_combo_popup(const Document& document,
-                                  entt::dispatcher& dispatcher);
+  void show_component_combo_popup(const Document& document, entt::dispatcher& dispatcher);
 
   void show_component_attributes(const ComponentDefinition& definition,
                                  entt::dispatcher& dispatcher);

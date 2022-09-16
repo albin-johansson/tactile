@@ -39,7 +39,8 @@ namespace tactile {
 
 UndoShortcut::UndoShortcut()
     : Shortcut {cen::scancodes::z, primary_modifier}
-{}
+{
+}
 
 void UndoShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -56,7 +57,8 @@ auto UndoShortcut::is_enabled(const DocumentModel& model) const -> bool
 
 RedoShortcut::RedoShortcut()
     : Shortcut {cen::scancodes::y, primary_modifier}
-{}
+{
+}
 
 void RedoShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -73,7 +75,8 @@ auto RedoShortcut::is_enabled(const DocumentModel& model) const -> bool
 
 AddRowShortcut::AddRowShortcut()
     : Shortcut {cen::scancodes::r, secondary_modifier}
-{}
+{
+}
 
 void AddRowShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -89,7 +92,8 @@ auto AddRowShortcut::is_enabled(const DocumentModel& model) const -> bool
 
 AddColumnShortcut::AddColumnShortcut()
     : Shortcut {cen::scancodes::c, secondary_modifier}
-{}
+{
+}
 
 void AddColumnShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -105,7 +109,8 @@ auto AddColumnShortcut::is_enabled(const DocumentModel& model) const -> bool
 
 RemoveRowShortcut::RemoveRowShortcut()
     : Shortcut {cen::scancodes::r, secondary_modifier | cen::key_mod::lshift}
-{}
+{
+}
 
 void RemoveRowShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -128,7 +133,8 @@ auto RemoveRowShortcut::is_enabled(const DocumentModel& model) const -> bool
 
 RemoveColumnShortcut::RemoveColumnShortcut()
     : Shortcut {cen::scancodes::c, secondary_modifier | cen::key_mod::lshift}
-{}
+{
+}
 
 void RemoveColumnShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -151,7 +157,8 @@ auto RemoveColumnShortcut::is_enabled(const DocumentModel& model) const -> bool
 
 AddTilesetShortcut::AddTilesetShortcut()
     : Shortcut {cen::scancodes::t, primary_modifier}
-{}
+{
+}
 
 void AddTilesetShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -167,7 +174,8 @@ auto AddTilesetShortcut::is_enabled(const DocumentModel& model) const -> bool
 
 EnableBucketShortcut::EnableBucketShortcut()
     : Shortcut {cen::scancodes::b}
-{}
+{
+}
 
 void EnableBucketShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -191,7 +199,8 @@ auto EnableBucketShortcut::is_enabled(const DocumentModel& model) const -> bool
 
 EnableEraserShortcut::EnableEraserShortcut()
     : Shortcut {cen::scancodes::e}
-{}
+{
+}
 
 void EnableEraserShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -215,7 +224,8 @@ auto EnableEraserShortcut::is_enabled(const DocumentModel& model) const -> bool
 
 EnableStampShortcut::EnableStampShortcut()
     : Shortcut {cen::scancodes::s}
-{}
+{
+}
 
 void EnableStampShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -239,7 +249,8 @@ auto EnableStampShortcut::is_enabled(const DocumentModel& model) const -> bool
 
 EnableObjectSelectionShortcut::EnableObjectSelectionShortcut()
     : Shortcut {cen::scancodes::q}
-{}
+{
+}
 
 void EnableObjectSelectionShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -263,7 +274,8 @@ auto EnableObjectSelectionShortcut::is_enabled(const DocumentModel& model) const
 
 EnableRectangleToolShortcut::EnableRectangleToolShortcut()
     : Shortcut {cen::scancodes::r}
-{}
+{
+}
 
 void EnableRectangleToolShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -287,7 +299,8 @@ auto EnableRectangleToolShortcut::is_enabled(const DocumentModel& model) const -
 
 EnableEllipseToolShortcut::EnableEllipseToolShortcut()
     : Shortcut {cen::scancodes::t}
-{}
+{
+}
 
 void EnableEllipseToolShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -311,7 +324,8 @@ auto EnableEllipseToolShortcut::is_enabled(const DocumentModel& model) const -> 
 
 EnablePointToolShortcut::EnablePointToolShortcut()
     : Shortcut {cen::scancodes::y}
-{}
+{
+}
 
 void EnablePointToolShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -335,7 +349,8 @@ auto EnablePointToolShortcut::is_enabled(const DocumentModel& model) const -> bo
 
 OpenSettingsShortcut::OpenSettingsShortcut()
     : Shortcut {SDL_SCANCODE_COMMA, primary_modifier}
-{}
+{
+}
 
 void OpenSettingsShortcut::activate(entt::dispatcher& dispatcher)
 {
@@ -346,7 +361,8 @@ void OpenSettingsShortcut::activate(entt::dispatcher& dispatcher)
 
 OpenComponentEditorShortcut::OpenComponentEditorShortcut()
     : Shortcut {cen::scancodes::c, primary_modifier | cen::key_mod::lshift}
-{}
+{
+}
 
 void OpenComponentEditorShortcut::activate(entt::dispatcher& dispatcher)
 {

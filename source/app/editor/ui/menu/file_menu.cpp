@@ -39,8 +39,7 @@
 namespace tactile::ui {
 namespace {
 
-struct FileMenuState final
-{
+struct FileMenuState final {
   bool show_map_selector {};
 };
 

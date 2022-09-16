@@ -26,8 +26,7 @@
 namespace tactile {
 
 /// Provides information necessary to construct tilesets.
-struct TilesetInfo final
-{
+struct TilesetInfo final {
   fs::path texture_path;  /// Path to associated texture.
   uint texture_id {};     /// The associated OpenGL texture identifier.
   int2 texture_size {};   /// The size of the texture.

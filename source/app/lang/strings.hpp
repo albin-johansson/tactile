@@ -23,8 +23,7 @@
 
 namespace tactile {
 
-struct MenuStrings final
-{
+struct MenuStrings final {
   std::string file;
   std::string edit;
   std::string view;
@@ -37,8 +36,7 @@ struct MenuStrings final
   std::string export_as;
 };
 
-struct WindowStrings final
-{
+struct WindowStrings final {
   std::string layer_dock;
   std::string tileset_dock;
   std::string property_dock;
@@ -63,8 +61,7 @@ struct WindowStrings final
   std::string export_as_godot_scene;
 };
 
-struct ActionStrings final
-{
+struct ActionStrings final {
   std::string create_map;
   std::string open_map;
   std::string save;
@@ -179,8 +176,7 @@ struct ActionStrings final
   std::string show_frame_rate;
 };
 
-struct SettingStrings final
-{
+struct SettingStrings final {
   std::string appearance_tab;
   std::string behavior_tab;
   std::string export_tab;
@@ -204,8 +200,7 @@ struct SettingStrings final
   std::string fold_tile_data;
 };
 
-struct TooltipStrings final
-{
+struct TooltipStrings final {
   std::string fix_invalid_tiles;
   std::string pref_tile_width;
   std::string pref_tile_height;
@@ -244,8 +239,7 @@ struct TooltipStrings final
   std::string godot_polygon_points;
 };
 
-struct MiscStrings final
-{
+struct MiscStrings final {
   std::string ok;
   std::string cancel;
   std::string apply;
@@ -367,8 +361,7 @@ struct MiscStrings final
   std::string global_id;
 };
 
-struct CommandStrings final
-{
+struct CommandStrings final {
   std::string add_row;
   std::string add_rows;
   std::string remove_row;
@@ -437,8 +430,7 @@ struct CommandStrings final
   std::string set_zstd_compression_level;
 };
 
-struct ParseErrorStrings final
-{
+struct ParseErrorStrings final {
   std::string none;
   std::string unknown;
 
@@ -509,8 +501,7 @@ struct ParseErrorStrings final
 };
 
 /// Provides translated strings for a single language.
-struct Strings final
-{
+struct Strings final {
   MenuStrings menu;
   WindowStrings window;
   ActionStrings action;

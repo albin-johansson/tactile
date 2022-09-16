@@ -31,8 +31,7 @@
 
 namespace tactile::test {
 
-class MapBuilder final
-{
+class MapBuilder final {
  public:
   TACTILE_DELETE_COPY(MapBuilder);
   TACTILE_DEFAULT_MOVE(MapBuilder);
@@ -48,9 +47,9 @@ class MapBuilder final
 
   auto with_object_layer(UUID* id = nullptr) -> MapBuilder&;
 
-  auto with_object(ObjectType      type,
+  auto with_object(ObjectType type,
                    Shared<Object>* out_object = nullptr,
-                   UUID*           out_layer = nullptr) -> MapBuilder&;
+                   UUID* out_layer = nullptr) -> MapBuilder&;
 
   auto with_tileset(UUID* id = nullptr) -> MapBuilder&;
 
@@ -58,7 +57,7 @@ class MapBuilder final
 
  private:
   Unique<MapDocument> mDocument;
-  Maybe<UUID>         mDedicatedObjectLayer;
+  Maybe<UUID> mDedicatedObjectLayer;
 
   MapBuilder();
 };

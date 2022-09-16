@@ -29,36 +29,29 @@
 
 namespace tactile {
 
-struct ShowTilesetCreationDialogEvent final
-{};
+struct ShowTilesetCreationDialogEvent final {};
 
-struct InspectTilesetEvent final
-{};
+struct InspectTilesetEvent final {};
 
-struct LoadTilesetEvent final
-{
+struct LoadTilesetEvent final {
   fs::path path;
   int2 tile_size {};
 };
 
-struct RemoveTilesetEvent final
-{
+struct RemoveTilesetEvent final {
   UUID tileset_id {};
 };
 
-struct SelectTilesetEvent final
-{
+struct SelectTilesetEvent final {
   UUID tileset_id {};
 };
 
-struct SetTilesetSelectionEvent final
-{
+struct SetTilesetSelectionEvent final {
   Region selection;
 };
 
 /// Event for changing the name a tileset.
-struct RenameTilesetEvent final
-{
+struct RenameTilesetEvent final {
   UUID tileset_id {};  /// Target tileset.
   std::string name;    /// New tileset name.
 };

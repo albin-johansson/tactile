@@ -21,6 +21,7 @@ AccessModifierOffset: -1
 NamespaceIndentation: None
 FixNamespaceComments: true
 
+MaxEmptyLinesToKeep: 1
 EmptyLineBeforeAccessModifier: Always
 
 AllowAllArgumentsOnNextLine: false
@@ -31,7 +32,7 @@ PackConstructorInitializers: Never
 BinPackParameters: false
 BinPackArguments: false
 
-AllowShortFunctionsOnASingleLine: InlineOnly
+AllowShortFunctionsOnASingleLine: Inline
 AllowShortIfStatementsOnASingleLine: Never
 AllowShortBlocksOnASingleLine: Empty
 AllowShortLambdasOnASingleLine: All

@@ -29,8 +29,7 @@ namespace tactile::io {
  * This class is a simple wrapper around the native-file-dialogs library, with
  * some additional utilities for dealing with map and image files, etc.
  */
-class FileDialog final
-{
+class FileDialog final {
  public:
   [[nodiscard]] static auto open_folder() -> FileDialog;
 

@@ -23,8 +23,7 @@
 
 namespace tactile::ui {
 
-class AddLayerContextMenu final : public ContextMenu
-{
+class AddLayerContextMenu final : public ContextMenu {
  public:
   AddLayerContextMenu();
 

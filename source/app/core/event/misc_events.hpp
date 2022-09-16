@@ -23,36 +23,26 @@
 
 namespace tactile {
 
-struct QuitEvent final
-{};
+struct QuitEvent final {};
 
-struct ToggleUiEvent final
-{};
+struct ToggleUiEvent final {};
 
-struct ShowSettingsEvent final
-{};
+struct ShowSettingsEvent final {};
 
-struct SaveEvent final
-{};
+struct SaveEvent final {};
 
-struct SaveAsEvent final
-{
+struct SaveAsEvent final {
   fs::path path;
 };
 
-struct OpenSaveAsDialogEvent final
-{};
+struct OpenSaveAsDialogEvent final {};
 
-struct ReloadFontsEvent final
-{};
+struct ReloadFontsEvent final {};
 
-struct ResetFontSizeEvent final
-{};
+struct ResetFontSizeEvent final {};
 
-struct IncreaseFontSizeEvent final
-{};
+struct IncreaseFontSizeEvent final {};
 
-struct DecreaseFontSizeEvent final
-{};
+struct DecreaseFontSizeEvent final {};
 
 }  // namespace tactile

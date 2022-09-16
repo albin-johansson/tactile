@@ -40,8 +40,7 @@
 
 namespace tactile::ui {
 
-struct DialogState final
-{
+struct DialogState final {
   SettingsDialog settings;
   AboutDialog about;
   CreditsDialog credits;

@@ -21,8 +21,7 @@
 
 namespace tactile {
 
-enum class DocumentType
-{
+enum class DocumentType {
   Map,
   Tileset
 };

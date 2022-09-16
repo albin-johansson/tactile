@@ -74,7 +74,7 @@ TEST(TilePosition, SetCol)
 TEST(TilePosition, OffsetBy)
 {
   const TilePos position {3, 4};
-  const auto    result = position.offset_by(4, 6);
+  const auto result = position.offset_by(4, 6);
   ASSERT_EQ(7, result.row());
   ASSERT_EQ(10, result.col());
 }
@@ -105,16 +105,16 @@ TEST(TilePosition, UCol)
 
 TEST(TilePosition, RowToY)
 {
-  const auto    tileSize = 134;
+  const auto tile_size = 134;
   const TilePos position {12, 34};
-  ASSERT_EQ(12 * tileSize, position.row_to_y(tileSize));
+  ASSERT_EQ(12 * tile_size, position.row_to_y(tile_size));
 }
 
 TEST(TilePosition, ColToX)
 {
-  const auto    tileSize = 68;
+  const auto tile_size = 68;
   const TilePos position {12, 34};
-  ASSERT_EQ(34 * tileSize, position.col_to_x(tileSize));
+  ASSERT_EQ(34 * tile_size, position.col_to_x(tile_size));
 }
 
 TEST(TilePosition, North)
@@ -176,7 +176,7 @@ TEST(TilePosition, Subtraction)
 TEST(TilePosition, AsVec2)
 {
   const TilePos pos {832, 234};
-  const auto    vec = pos.as_vec2();
+  const auto vec = pos.as_vec2();
 
   ASSERT_EQ(pos.row(), vec.y);
   ASSERT_EQ(pos.col(), vec.x);
@@ -185,7 +185,7 @@ TEST(TilePosition, AsVec2)
 TEST(TilePosition, AsVec2f)
 {
   const TilePos pos {-325, 834};
-  const auto    vec = pos.as_vec2f();
+  const auto vec = pos.as_vec2f();
 
   ASSERT_EQ(static_cast<float>(pos.row()), vec.y);
   ASSERT_EQ(static_cast<float>(pos.col()), vec.x);

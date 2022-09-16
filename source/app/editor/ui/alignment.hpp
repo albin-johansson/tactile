@@ -49,7 +49,7 @@ auto right_align_next_item(float width) -> float;
 
 /// Prepares the cursor for a right-aligned standard component with a label.
 ///
-/// Use the `standard_component_width()` to query expected component widths 
+/// Use the `standard_component_width()` to query expected component widths
 /// based on the label of the component.
 ///
 /// \param text the component label text.

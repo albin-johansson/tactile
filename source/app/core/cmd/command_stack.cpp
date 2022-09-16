@@ -27,7 +27,8 @@ namespace tactile {
 
 CommandStack::CommandStack()
     : mCapacity {io::get_preferences().command_capacity}
-{}
+{
+}
 
 void CommandStack::clear()
 {

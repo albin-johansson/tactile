@@ -28,8 +28,7 @@
 namespace tactile::ui {
 
 /// Used to change the name of a component definition.
-class RenameComponentDialog final : public ComponentNameDialog
-{
+class RenameComponentDialog final : public ComponentNameDialog {
  public:
   RenameComponentDialog();
 

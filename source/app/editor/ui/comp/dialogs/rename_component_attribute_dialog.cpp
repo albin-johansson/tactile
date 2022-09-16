@@ -33,7 +33,8 @@ namespace tactile::ui {
 
 RenameComponentAttributeDialog::RenameComponentAttributeDialog()
     : AStringInputDialog {"Rename Component Attribute"}
-{}
+{
+}
 
 void RenameComponentAttributeDialog::show(std::string previous_name,
                                           const UUID& component_id)

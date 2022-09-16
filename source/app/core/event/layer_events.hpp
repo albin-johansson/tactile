@@ -27,64 +27,54 @@
 namespace tactile {
 
 /// Event for creating a new layer.
-struct AddLayerEvent final
-{
+struct AddLayerEvent final {
   LayerType type {};
 };
 
 /// Event for removing a layer.
-struct RemoveLayerEvent final
-{
+struct RemoveLayerEvent final {
   UUID layer_id {};
 };
 
 /// Event for duplicating an existing layer.
-struct DuplicateLayerEvent final
-{
+struct DuplicateLayerEvent final {
   UUID layer_id {};
 };
 
 /// Event for setting the active layer.
-struct SelectLayerEvent final
-{
+struct SelectLayerEvent final {
   UUID layer_id {};
 };
 
 /// Event for moving a layer up in the render order.
-struct MoveLayerUpEvent final
-{
+struct MoveLayerUpEvent final {
   UUID id {};
 };
 
 /// Event for moving a layer down in the render order.
-struct MoveLayerDownEvent final
-{
+struct MoveLayerDownEvent final {
   UUID layer_id {};
 };
 
 /// Event for changing the opacity of a layer.
-struct SetLayerOpacityEvent final
-{
+struct SetLayerOpacityEvent final {
   UUID layer_id {};
   float opacity {};
 };
 
 /// Event for changing the visibility of a layer.
-struct SetLayerVisibleEvent final
-{
+struct SetLayerVisibleEvent final {
   UUID layer_id {};
   bool visible {};
 };
 
 /// Event for opening the dialog to change a layer name.
-struct OpenRenameLayerDialogEvent final
-{
+struct OpenRenameLayerDialogEvent final {
   UUID layer_id {};
 };
 
 /// Event for changing the name of a layer.
-struct RenameLayerEvent final
-{
+struct RenameLayerEvent final {
   UUID layer_id {};
   std::string name;
 };

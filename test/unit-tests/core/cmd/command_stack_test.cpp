@@ -27,29 +27,19 @@ namespace tactile::test {
 namespace {
 
 struct FooCmd : Command {
-  void undo() override
-  {}
+  void undo() override {}
 
-  void redo() override
-  {}
+  void redo() override {}
 
-  [[nodiscard]] auto get_name() const -> std::string override
-  {
-    return "FooCmd";
-  }
+  [[nodiscard]] auto get_name() const -> std::string override { return "FooCmd"; }
 };
 
 struct BarCmd : Command {
-  void undo() override
-  {}
+  void undo() override {}
 
-  void redo() override
-  {}
+  void redo() override {}
 
-  [[nodiscard]] auto get_name() const -> std::string override
-  {
-    return "BarCmd";
-  }
+  [[nodiscard]] auto get_name() const -> std::string override { return "BarCmd"; }
 };
 
 }  // namespace

@@ -31,7 +31,8 @@ namespace tactile::ui {
 
 DefineComponentDialog::DefineComponentDialog()
     : ComponentNameDialog {"Create Component"}
-{}
+{
+}
 
 void DefineComponentDialog::show()
 {

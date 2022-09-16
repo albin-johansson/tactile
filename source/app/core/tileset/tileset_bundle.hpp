@@ -33,8 +33,7 @@
 namespace tactile {
 
 /// Manager class used by maps to track attached tilesets.
-class TilesetBundle final
-{
+class TilesetBundle final {
  public:
   /// Adds a tileset to the bundle with an explicit first tile identifier.
   /// This function does not touch the next tile ID property, so use with care.
@@ -68,30 +67,15 @@ class TilesetBundle final
 
   [[nodiscard]] auto active_tileset_id() const -> const Maybe<UUID>&;
 
-  [[nodiscard]] auto next_tile_id() const noexcept -> TileID
-  {
-    return mNextTileId;
-  }
+  [[nodiscard]] auto next_tile_id() const noexcept -> TileID { return mNextTileId; }
 
-  [[nodiscard]] auto begin() noexcept
-  {
-    return mRefs.begin();
-  }
+  [[nodiscard]] auto begin() noexcept { return mRefs.begin(); }
 
-  [[nodiscard]] auto begin() const noexcept
-  {
-    return mRefs.begin();
-  }
+  [[nodiscard]] auto begin() const noexcept { return mRefs.begin(); }
 
-  [[nodiscard]] auto end() noexcept
-  {
-    return mRefs.end();
-  }
+  [[nodiscard]] auto end() noexcept { return mRefs.end(); }
 
-  [[nodiscard]] auto end() const noexcept
-  {
-    return mRefs.end();
-  }
+  [[nodiscard]] auto end() const noexcept { return mRefs.end(); }
 
  private:
   HashMap<UUID, TilesetRef> mRefs;

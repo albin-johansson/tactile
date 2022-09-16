@@ -30,8 +30,7 @@ using io::ParseError;
 const auto cases = testing::Values("test-resources/json/properties.tmj",
                                    "test-resources/xml/properties.tmx");
 
-struct PropertySpecialCaseTest : testing::TestWithParam<std::string_view>
-{};
+struct PropertySpecialCaseTest : testing::TestWithParam<std::string_view> {};
 
 TEST_P(PropertySpecialCaseTest, Parsing)
 {

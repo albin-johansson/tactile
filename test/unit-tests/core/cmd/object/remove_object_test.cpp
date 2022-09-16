@@ -34,14 +34,14 @@ TEST(RemoveObject, Constructor)
 
 TEST(RemoveObject, RedoUndo)
 {
-  UUID           layer_id;
+  UUID layer_id;
   Shared<Object> object;
 
   auto document = MapBuilder::build()  //
                       .with_object(ObjectType::Rect, &object, &layer_id)
                       .result();
 
-  auto  map = document->get_map_ptr();
+  auto map = document->get_map_ptr();
   auto& contexts = document->get_contexts();
 
   auto& layer = map->view_object_layer(layer_id);

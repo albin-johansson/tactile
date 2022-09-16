@@ -30,8 +30,7 @@
 
 namespace tactile {
 
-class DocumentDelegate final
-{
+class DocumentDelegate final {
  public:
   explicit DocumentDelegate(const UUID& rootContext);
 

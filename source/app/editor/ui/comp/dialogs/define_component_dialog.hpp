@@ -24,8 +24,7 @@
 namespace tactile::ui {
 
 /// Used to create new component definitions.
-class DefineComponentDialog final : public ComponentNameDialog
-{
+class DefineComponentDialog final : public ComponentNameDialog {
  public:
   DefineComponentDialog();
 

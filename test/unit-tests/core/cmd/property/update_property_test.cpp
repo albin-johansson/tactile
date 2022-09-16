@@ -56,7 +56,7 @@ TEST(UpdateProperty, MergeSupport)
   auto& props = map->ctx().props();
   props.add("color", cen::colors::cyan);
 
-  cmd::UpdateProperty       a {map, "color", cen::colors::azure};
+  cmd::UpdateProperty a {map, "color", cen::colors::azure};
   const cmd::UpdateProperty b {map, "color", cen::colors::gold};
   const cmd::UpdateProperty c {map, "color", cen::colors::violet};
 

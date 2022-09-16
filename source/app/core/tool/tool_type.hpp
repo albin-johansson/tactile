@@ -22,8 +22,7 @@
 namespace tactile {
 
 /// Represents the various available mouse tool types.
-enum class ToolType
-{
+enum class ToolType {
   None,  /// Used when no tool is enabled.
   Stamp,
   Eraser,

@@ -26,8 +26,7 @@ namespace tactile {
 struct Strings;
 
 /// All of the supported languages.
-enum class Lang
-{
+enum class Lang {
   EN = 0,     ///< American English
   EN_GB = 1,  ///< British English
   SV = 2      ///< Swedish

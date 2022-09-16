@@ -27,18 +27,18 @@
 namespace tactile::test {
 namespace {
 
-constexpr const char* _default_texture_path = "foo/bar.png";
-constexpr uint        _default_texture_id = 7;
-constexpr int2        _default_texture_size = {1024, 768};
-constexpr int2        _default_tile_size = {28, 42};
+constexpr const char* default_texture_path = "foo/bar.png";
+constexpr uint default_texture_id = 7;
+constexpr int2 default_texture_size = {1024, 768};
+constexpr int2 default_tile_size = {28, 42};
 
-[[nodiscard]] auto _make_tileset() -> Tileset
+[[nodiscard]] auto make_tileset() -> Tileset
 {
   return Tileset {{
-      .texture_path = _default_texture_path,
-      .texture_id = _default_texture_id,
-      .texture_size = _default_texture_size,
-      .tile_size = _default_tile_size,
+      .texture_path = default_texture_path,
+      .texture_id = default_texture_id,
+      .texture_size = default_texture_size,
+      .tile_size = default_tile_size,
   }};
 }
 
@@ -46,16 +46,16 @@ constexpr int2        _default_tile_size = {28, 42};
 
 TEST(Tileset, Defaults)
 {
-  const auto tileset = _make_tileset();
-  ASSERT_EQ(_default_texture_path, tileset.texture_path());
-  ASSERT_EQ(_default_texture_id, tileset.texture_id());
-  ASSERT_EQ(_default_tile_size, tileset.tile_size());
-  ASSERT_EQ(_default_texture_size, tileset.texture_size());
+  const auto tileset = make_tileset();
+  ASSERT_EQ(default_texture_path, tileset.texture_path());
+  ASSERT_EQ(default_texture_id, tileset.texture_id());
+  ASSERT_EQ(default_tile_size, tileset.tile_size());
+  ASSERT_EQ(default_texture_size, tileset.texture_size());
 }
 
 TEST(Tileset, SubscriptOperator)
 {
-  auto tileset = _make_tileset();
+  auto tileset = make_tileset();
 
   ASSERT_THROW(tileset[-1], TactileError);
   ASSERT_THROW(tileset[tileset.tile_count()], TactileError);
@@ -66,7 +66,7 @@ TEST(Tileset, SubscriptOperator)
 
 TEST(Tileset, IndexOf)
 {
-  auto tileset = _make_tileset();
+  auto tileset = make_tileset();
 
   ASSERT_THROW(tileset.index_of({-1, -1}), TactileError);
   ASSERT_THROW(tileset.index_of({tileset.row_count(), tileset.column_count()}),
@@ -79,7 +79,7 @@ TEST(Tileset, IndexOf)
 
 TEST(Tileset, TileCount)
 {
-  const auto tileset = _make_tileset();
+  const auto tileset = make_tileset();
   ASSERT_EQ(tileset.row_count() * tileset.column_count(), tileset.tile_count());
 }
 

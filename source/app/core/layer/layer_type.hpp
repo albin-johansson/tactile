@@ -22,8 +22,7 @@
 namespace tactile {
 
 /// Represents all of the supported layer types.
-enum class LayerType
-{
+enum class LayerType {
   TileLayer,
   ObjectLayer,
   GroupLayer

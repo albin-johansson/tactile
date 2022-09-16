@@ -70,7 +70,7 @@ TEST(BufferUtils, CopyStringIntoBufferThatIsTooSmall)
 TEST(BufferUtils, CreateStringFromBuffer)
 {
   const std::array buffer = {'a', 'b', 'c', 'd', 'e', 'f', '\0'};
-  const auto       str = create_string_from_buffer(buffer);
+  const auto str = create_string_from_buffer(buffer);
 
   ASSERT_EQ("abcdef", str);
 }
@@ -78,7 +78,7 @@ TEST(BufferUtils, CreateStringFromBuffer)
 TEST(BufferUtils, CreateStringViewFromBuffer)
 {
   const std::array buffer = {'a', 'b', 'c', 'd', 'e', 'f', '\0'};
-  const auto       str = create_string_view_from_buffer(buffer);
+  const auto str = create_string_view_from_buffer(buffer);
 
   ASSERT_EQ(6, str.size());
   ASSERT_EQ("abcdef", str);

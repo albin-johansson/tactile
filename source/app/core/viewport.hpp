@@ -24,14 +24,12 @@
 
 namespace tactile {
 
-struct ViewportLimits final
-{
+struct ViewportLimits final {
   float2 min_offset {};
   float2 max_offset {};
 };
 
-class Viewport final
-{
+class Viewport final {
  public:
   void reset_limits();
 
@@ -57,15 +55,9 @@ class Viewport final
 
   [[nodiscard]] auto get_scaling_ratio(const float2& tileSize) const -> float2;
 
-  [[nodiscard]] auto get_offset() const noexcept -> const float2&
-  {
-    return mOffset;
-  }
+  [[nodiscard]] auto get_offset() const noexcept -> const float2& { return mOffset; }
 
-  [[nodiscard]] auto get_tile_size() const noexcept -> const float2&
-  {
-    return mTileSize;
-  }
+  [[nodiscard]] auto get_tile_size() const noexcept -> const float2& { return mTileSize; }
 
   [[nodiscard]] auto get_limits() const noexcept -> const Maybe<ViewportLimits>&
   {

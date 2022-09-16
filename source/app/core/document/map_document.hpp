@@ -138,20 +138,11 @@ class MapDocument final : public Document {
 
   [[nodiscard]] auto get_type() const -> DocumentType override;
 
-  [[nodiscard]] auto get_map_ptr() -> const Shared<Map>&
-  {
-    return mMap;
-  }
+  [[nodiscard]] auto get_map_ptr() -> const Shared<Map>& { return mMap; }
 
-  [[nodiscard]] auto get_map() -> Map&
-  {
-    return *mMap;
-  }
+  [[nodiscard]] auto get_map() -> Map& { return *mMap; }
 
-  [[nodiscard]] auto get_map() const -> const Map&
-  {
-    return *mMap;
-  }
+  [[nodiscard]] auto get_map() const -> const Map& { return *mMap; }
 
  private:
   Shared<Map> mMap;

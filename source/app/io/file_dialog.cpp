@@ -43,7 +43,8 @@ constexpr const char* image_pattern_descriptor = "Image files";
 
 FileDialog::FileDialog(const char* path)
     : mPath {path}
-{}
+{
+}
 
 auto FileDialog::is_okay() const noexcept -> bool
 {

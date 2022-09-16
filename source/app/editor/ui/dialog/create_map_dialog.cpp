@@ -33,7 +33,8 @@ namespace tactile::ui {
 
 CreateMapDialog::CreateMapDialog()
     : Dialog {"Create Map"}
-{}
+{
+}
 
 void CreateMapDialog::show()
 {

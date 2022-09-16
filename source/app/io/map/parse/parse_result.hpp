@@ -25,8 +25,7 @@
 
 namespace tactile::io {
 
-class ParseResult final
-{
+class ParseResult final {
  public:
   void set_path(const fs::path& path);
 

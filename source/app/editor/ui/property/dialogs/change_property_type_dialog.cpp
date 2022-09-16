@@ -33,7 +33,8 @@ namespace tactile::ui {
 
 ChangePropertyTypeDialog::ChangePropertyTypeDialog()
     : Dialog {"Change Property Type"}
-{}
+{
+}
 
 void ChangePropertyTypeDialog::show(const UUID& context_id,
                                     std::string name,

@@ -60,7 +60,7 @@ TEST(RenameObject, MergeSupport)
 
   object->ctx().set_name("start");
 
-  cmd::RenameObject       a {object, "a"};
+  cmd::RenameObject a {object, "a"};
   const cmd::RenameObject b {object, "b"};
   const cmd::RenameObject c {object, "c"};
 
