@@ -316,7 +316,7 @@ void GroupLayer::each(const SimpleVisitor& visitor) const
   each(v);
 }
 
-void GroupLayer::add_layer(const UUID& parent, Shared<ILayer> layer)
+void GroupLayer::add_layer(const UUID& parent, const Shared<ILayer>& layer)
 {
   if (auto* group = find_group_layer(parent)) {
     group->add_layer(layer);
@@ -430,9 +430,9 @@ void GroupLayer::set_visible(const bool visible)
   mDelegate.set_visible(visible);
 }
 
-void GroupLayer::set_parent(const Maybe<UUID>& parentId)
+void GroupLayer::set_parent(const Maybe<UUID>& parent_id)
 {
-  mDelegate.set_parent(parentId);
+  mDelegate.set_parent(parent_id);
 }
 
 void GroupLayer::set_meta_id(const int32 id)
@@ -442,12 +442,12 @@ void GroupLayer::set_meta_id(const int32 id)
 
 void GroupLayer::set_layer_index(const UUID& id, const usize index)
 {
-  const auto currentIndex = get_local_index(id);
-  const auto shouldMoveUp = currentIndex > index;
-  const auto nSteps = udiff(currentIndex, index);
+  const auto current_index = get_local_index(id);
+  const auto should_move_up = current_index > index;
+  const auto n_steps = udiff(current_index, index);
 
-  invoke_n(nSteps, [&] {
-    if (shouldMoveUp) {
+  invoke_n(n_steps, [&, this] {
+    if (should_move_up) {
       move_layer_up(id);
     }
     else {
@@ -467,7 +467,7 @@ auto GroupLayer::sibling_count(const UUID& id) const -> usize
 {
   Maybe<usize> count;
   auto op = [&](const LayerStorage& storage, LayerStorage::const_iterator) {
-    TACTILE_ASSERT(storage.size() >= 1);
+    TACTILE_ASSERT(!storage.empty());
     count = storage.size() - 1;
   };
 

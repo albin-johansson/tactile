@@ -47,7 +47,7 @@ class GroupLayer final : public ILayer {
 
   void each(const SimpleVisitor& visitor) const;
 
-  void add_layer(const UUID& parent, Shared<ILayer> layer);
+  void add_layer(const UUID& parent, const Shared<ILayer>& layer);
   void add_layer(Shared<ILayer> layer);
 
   auto remove_layer(const UUID& id) -> Shared<ILayer>;
@@ -61,7 +61,7 @@ class GroupLayer final : public ILayer {
 
   void set_visible(bool visible) override;
 
-  void set_parent(const Maybe<UUID>& parentId) override;
+  void set_parent(const Maybe<UUID>& parent_id) override;
 
   void set_meta_id(int32 id) override;
 
@@ -121,7 +121,6 @@ class GroupLayer final : public ILayer {
   [[nodiscard]] auto get_meta_id() const -> Maybe<int32> override;
 
   [[nodiscard]] auto storage() -> LayerStorage& { return mLayers; }
-
   [[nodiscard]] auto storage() const -> const LayerStorage& { return mLayers; }
 
   [[nodiscard]] auto get_type() const -> LayerType override
