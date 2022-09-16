@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "core/common/expected.hpp"
 #include "core/common/fs.hpp"
 #include "io/fwd.hpp"
 #include "io/map/ir/ir.hpp"
@@ -30,15 +31,18 @@ namespace tactile::io {
 
 [[nodiscard]] auto parse_xml_map(const fs::path& path) -> ParseResult;
 
-[[nodiscard]] auto parse_tileset(XMLNode node,
-                                 ir::TilesetData& tileset,
-                                 const fs::path& dir) -> ParseError;
+[[nodiscard]] auto parse_tileset(XMLNode node, const fs::path& dir)
+    -> Expected<ir::TilesetData, ParseError>;
 
-[[nodiscard]] auto parse_object(XMLNode object_node, ir::ObjectData& object)
-    -> ParseError;
+[[nodiscard]] auto parse_object(XMLNode object_node)
+    -> Expected<ir::ObjectData, ParseError>;
 
-[[nodiscard]] auto parse_layers(XMLNode map_node, ir::MapData& map_data) -> ParseError;
+[[nodiscard]] auto parse_layers(XMLNode map_node, ir::MapData& map)
+    -> Expected<std::vector<ir::LayerData>, ParseError>;
 
-[[nodiscard]] auto parse_properties(XMLNode node, ir::ContextData& context) -> ParseError;
+[[nodiscard]] auto parse_properties(XMLNode node)
+    -> Expected<ir::AttributeMap, ParseError>;
+
+[[nodiscard]] auto parse_context(XMLNode node) -> Expected<ir::ContextData, ParseError>;
 
 }  // namespace tactile::io

@@ -19,6 +19,8 @@
 
 #include "xml_parser.hpp"
 
+#include <utility>  // move
+
 #include "core/common/fs.hpp"
 #include "io/util/xml.hpp"
 
@@ -96,20 +98,26 @@ namespace {
   const auto dir = path.parent_path();
 
   for (auto tileset_node : map_node.children("tileset")) {
-    auto& tileset_data = data.tilesets.emplace_back();
-    if (const auto err = parse_tileset(tileset_node, tileset_data, dir);
-        err != ParseError::None) {
-      return err;
+    if (auto tileset = parse_tileset(tileset_node, dir)) {
+      data.tilesets.push_back(std::move(*tileset));
+    }
+    else {
+      return tileset.error();
     }
   }
 
-  if (const auto err = parse_layers(map_node, data); err != ParseError::None) {
-    return err;
+  if (auto layers = parse_layers(map_node, data)) {
+    data.layers = std::move(*layers);
+  }
+  else {
+    return layers.error();
   }
 
-  if (const auto err = parse_properties(map_node, data.context);
-      err != ParseError::None) {
-    return err;
+  if (auto props = parse_properties(map_node)) {
+    data.context.properties = std::move(*props);
+  }
+  else {
+    return props.error();
   }
 
   return ParseError::None;

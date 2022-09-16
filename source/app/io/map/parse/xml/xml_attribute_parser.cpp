@@ -32,16 +32,17 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto parse_value(XMLNode node, const char* type, Attribute& value)
-    -> ParseError
+[[nodiscard]] auto parse_value(XMLNode node, const char* type)
+    -> Expected<Attribute, ParseError>
 {
   TACTILE_ASSERT(type);
 
   const auto attr_type = parse_attr_type(type);
   if (!attr_type) {
-    return ParseError::UnsupportedPropertyType;
+    return error(ParseError::UnsupportedPropertyType);
   }
 
+  Attribute value;
   switch (*attr_type) {
     case AttributeType::String: {
       value = as_string(node, "value").value();
@@ -77,7 +78,7 @@ namespace {
           value = *color;
         }
         else {
-          return ParseError::CorruptPropertyValue;
+          return error(ParseError::CorruptPropertyValue);
         }
       }
 
@@ -89,44 +90,60 @@ namespace {
     }
   }
 
-  return ParseError::None;
+  return value;
 }
 
-[[nodiscard]] auto parse_property(XMLNode node, ir::ContextData& context) -> ParseError
+[[nodiscard]] auto parse_property(XMLNode node) -> Expected<Attribute, ParseError>
 {
-  std::string property_name;
-
-  if (auto name = as_string(node, "name")) {
-    property_name = std::move(*name);
-  }
-  else {
-    return ParseError::NoPropertyName;
-  }
-
-  auto& value = context.properties[std::move(property_name)];
-
   // String properties may exclude the type attribute
   const char* type = node.attribute("type").as_string("string");
 
-  if (const auto err = parse_value(node, type, value); err != ParseError::None) {
-    return err;
+  if (auto value = parse_value(node, type)) {
+    return std::move(*value);
   }
-
-  return ParseError::None;
+  else {
+    return pass_on_error(value);
+  }
 }
 
 }  // namespace
 
-auto parse_properties(XMLNode node, ir::ContextData& context) -> ParseError
+auto parse_properties(XMLNode node) -> Expected<ir::AttributeMap, ParseError>
 {
+  ir::AttributeMap props;
+
   for (const auto property_node : node.child("properties").children("property")) {
-    if (const auto err = parse_property(property_node, context);
-        err != ParseError::None) {
-      return err;
+    std::string property_name;
+    if (auto name = as_string(property_node, "name")) {
+      property_name = std::move(*name);
+    }
+    else {
+      return error(ParseError::NoPropertyName);
+    }
+
+    if (auto value = parse_property(property_node)) {
+      props[std::move(property_name)] = std::move(*value);
+    }
+    else {
+      return pass_on_error(value);
     }
   }
 
-  return ParseError::None;
+  return props;
+}
+
+auto parse_context(XMLNode node) -> Expected<ir::ContextData, ParseError>
+{
+  ir::ContextData context;
+
+  if (auto props = parse_properties(node)) {
+    context.properties = std::move(*props);
+  }
+  else {
+    return pass_on_error(props);
+  }
+
+  return context;
 }
 
 }  // namespace tactile::io
