@@ -34,7 +34,7 @@
 namespace tactile::ui {
 
 RenamePropertyDialog::RenamePropertyDialog()
-    : AStringInputDialog {"Rename Property"}
+    : StringInputDialog {"Rename Property"}
 {
 }
 

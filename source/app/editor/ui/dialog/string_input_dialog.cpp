@@ -27,12 +27,12 @@
 
 namespace tactile::ui {
 
-AStringInputDialog::AStringInputDialog(std::string title)
+StringInputDialog::StringInputDialog(std::string title)
     : Dialog {std::move(title)}
 {
 }
 
-void AStringInputDialog::show(std::string previous)
+void StringInputDialog::show(std::string previous)
 {
   mShouldAcquireFocus = true;
   mPrevious = std::move(previous);
@@ -40,12 +40,12 @@ void AStringInputDialog::show(std::string previous)
   make_visible();
 }
 
-void AStringInputDialog::set_input_hint(Maybe<std::string> hint)
+void StringInputDialog::set_input_hint(Maybe<std::string> hint)
 {
   mHint = std::move(hint);
 }
 
-void AStringInputDialog::on_update(const DocumentModel&, entt::dispatcher&)
+void StringInputDialog::on_update(const DocumentModel&, entt::dispatcher&)
 {
   if (mShouldAcquireFocus) {
     ImGui::SetKeyboardFocusHere();
@@ -57,17 +57,17 @@ void AStringInputDialog::on_update(const DocumentModel&, entt::dispatcher&)
                            sizeof mBuffer);
 }
 
-auto AStringInputDialog::is_current_input_valid(const DocumentModel& model) const -> bool
+auto StringInputDialog::is_current_input_valid(const DocumentModel& model) const -> bool
 {
   return validate(model, current_input());
 }
 
-auto AStringInputDialog::current_input() const -> std::string_view
+auto StringInputDialog::current_input() const -> std::string_view
 {
   return create_string_view_from_buffer(mBuffer);
 }
 
-auto AStringInputDialog::previous_input() const -> const std::string&
+auto StringInputDialog::previous_input() const -> const std::string&
 {
   return mPrevious;
 }
