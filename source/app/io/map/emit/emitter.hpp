@@ -23,13 +23,14 @@
 
 #include "core/common/fs.hpp"
 #include "core/common/vocabulary.hpp"
-#include "io/fwd.hpp"
 
 namespace tactile {
 class MapDocument;
 }  // namespace tactile
 
 namespace tactile::io {
+
+class EmitInfo;
 
 /// Provides options for the Godot scene emitter.
 ///

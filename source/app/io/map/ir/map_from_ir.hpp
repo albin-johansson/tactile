@@ -19,14 +19,13 @@
 
 #pragma once
 
-#include "editor/fwd.hpp"
-#include "io/fwd.hpp"
-
 namespace tactile {
-class DocumentModel;
-}  // namespace tactile
 
-namespace tactile::io {
+class DocumentModel;
+
+namespace io {
+
+class ParseResult;
 
 /// Restores a map document from an intermediate map representation.
 ///
@@ -34,4 +33,5 @@ namespace tactile::io {
 /// \param model the target document model.
 void map_from_ir(const ParseResult& result, DocumentModel& model);
 
-}  // namespace tactile::io
+}  // namespace io
+}  // namespace tactile

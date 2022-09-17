@@ -22,9 +22,10 @@
 #include <imgui.h>
 
 #include "core/tile_pos.hpp"
-#include "editor/fwd.hpp"
 
 namespace tactile::ui {
+
+struct RenderInfo;
 
 struct ViewportCursorInfo final {
   TilePos map_position;

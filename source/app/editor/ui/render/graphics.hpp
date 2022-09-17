@@ -25,9 +25,10 @@
 
 #include "core/common/vocabulary.hpp"
 #include "core/region.hpp"
-#include "editor/fwd.hpp"
 
 namespace tactile::ui {
+
+struct RenderInfo;
 
 /// Provides a common simplified rendering API.
 class GraphicsCtx final {
