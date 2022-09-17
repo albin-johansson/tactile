@@ -23,10 +23,9 @@
 
 #include <imgui.h>
 
-#include "core/common/associative.hpp"
-#include "core/common/ints.hpp"
-#include "core/common/macros.hpp"
+#include "core/common/assoc.hpp"
 #include "core/common/uuid.hpp"
+#include "core/common/vocabulary.hpp"
 
 namespace tactile::ui {
 

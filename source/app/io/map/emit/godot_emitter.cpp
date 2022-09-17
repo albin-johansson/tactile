@@ -29,9 +29,9 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "core/common/associative.hpp"
-#include "core/common/ints.hpp"
+#include "core/common/assoc.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/vocabulary.hpp"
 #include "core/tile_pos.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/functional.hpp"

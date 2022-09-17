@@ -21,9 +21,9 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/common/macros.hpp"
-#include "core/common/memory.hpp"
+#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
+#include "core/common/vocabulary.hpp"
 #include "editor/fwd.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 

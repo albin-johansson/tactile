@@ -22,10 +22,9 @@
 #include <vector>  // vector
 
 #include "core/common/fs.hpp"
-#include "core/common/ints.hpp"
-#include "core/common/macros.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/vocabulary.hpp"
 
 namespace tactile {
 

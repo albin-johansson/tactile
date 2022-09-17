@@ -23,8 +23,8 @@
 
 #include <centurion/color.hpp>
 
-#include "core/common/ints.hpp"
 #include "core/common/math.hpp"
+#include "core/common/vocabulary.hpp"
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/themes.hpp"
 #include "lang/language.hpp"

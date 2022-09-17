@@ -21,10 +21,8 @@
 
 #include <vector>  // vector
 
-#include "core/common/identifiers.hpp"
-#include "core/common/ints.hpp"
 #include "core/common/tile_cache.hpp"
-#include "core/common/tiles.hpp"
+#include "core/common/vocabulary.hpp"
 #include "core/layer/layer.hpp"
 #include "core/layer/layer_delegate.hpp"
 

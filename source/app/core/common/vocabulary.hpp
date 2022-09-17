@@ -17,7 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+/// Header providing common vocabulary types, constants, and macros.
+
 #pragma once
+
+#include <cstddef>  // size_t
+#include <cstdint>  // int{}_t, uint{}_t
+#include <vector>   // vector
 
 #define TACTILE_DEFAULT_COPY(Class) \
   Class(const Class&) = default;    \
@@ -55,3 +61,39 @@
   TACTILE_DECLARE_COPY(Class);                 \
   TACTILE_DECLARE_MOVE(Class);                 \
   ~Class()
+
+namespace tactile {
+
+using uchar = unsigned char;
+using uint = unsigned int;
+using ulonglong = unsigned long long int;
+using usize = std::size_t;
+
+using uint8 = std::uint8_t;
+using uint16 = std::uint16_t;
+using uint32 = std::uint32_t;
+using uint64 = std::uint64_t;
+
+using int8 = std::int8_t;
+using int16 = std::int16_t;
+using int32 = std::int32_t;
+using int64 = std::int64_t;
+
+using float32 = float;
+using float64 = double;
+
+static_assert(sizeof(float32) == 4);
+static_assert(sizeof(float64) == 8);
+
+using LayerID = int32;
+using ObjectID = int32;
+
+using TileIndex = int32;  ///< For local tile identifiers.
+using TileID = int32;     ///< For global tile identifiers.
+
+inline constexpr TileID empty_tile = 0;
+
+using TileRow = std::vector<TileID>;
+using TileMatrix = std::vector<TileRow>;
+
+}  // namespace tactile

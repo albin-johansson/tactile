@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include "core/common/ints.hpp"
-#include "core/common/macros.hpp"
+#include "core/common/vocabulary.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 
 namespace tactile::ui {

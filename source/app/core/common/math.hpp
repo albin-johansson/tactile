@@ -25,7 +25,7 @@
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 
-#include "core/common/ints.hpp"
+#include "core/common/vocabulary.hpp"
 
 namespace tactile {
 

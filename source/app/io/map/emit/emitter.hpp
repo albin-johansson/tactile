@@ -22,7 +22,7 @@
 #include <string>  // string
 
 #include "core/common/fs.hpp"
-#include "core/common/ints.hpp"
+#include "core/common/vocabulary.hpp"
 #include "io/fwd.hpp"
 
 namespace tactile {

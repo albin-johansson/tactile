@@ -22,9 +22,9 @@
 #include <string>  // string
 
 #include "core/attribute.hpp"
-#include "core/common/macros.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
+#include "core/common/vocabulary.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 
 namespace tactile::ui {

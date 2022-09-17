@@ -23,7 +23,7 @@
 
 #include "core/attribute.hpp"
 #include "core/cmd/command.hpp"
-#include "core/common/associative.hpp"
+#include "core/common/assoc.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
 

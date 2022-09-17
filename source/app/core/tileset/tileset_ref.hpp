@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "core/common/identifiers.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/memory.hpp"
+#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
+#include "core/common/vocabulary.hpp"
 #include "core/region.hpp"
 #include "core/tileset/tileset.hpp"
 #include "core/viewport.hpp"

@@ -21,7 +21,7 @@
 
 #include <boost/container/flat_map.hpp>
 
-#include "core/common/identifiers.hpp"
+#include "core/common/vocabulary.hpp"
 #include "core/tile_pos.hpp"
 
 namespace tactile {

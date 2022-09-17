@@ -23,8 +23,8 @@
 
 #include <boost/container_hash/hash.hpp>
 
-#include "core/common/ints.hpp"
 #include "core/common/math.hpp"
+#include "core/common/vocabulary.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {

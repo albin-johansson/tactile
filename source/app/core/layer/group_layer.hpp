@@ -22,9 +22,9 @@
 #include <functional>  // function
 #include <vector>      // vector
 
-#include "core/common/ints.hpp"
-#include "core/common/memory.hpp"
+#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
+#include "core/common/vocabulary.hpp"
 #include "core/layer/layer.hpp"
 #include "core/layer/layer_delegate.hpp"
 

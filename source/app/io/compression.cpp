@@ -7,7 +7,7 @@
 #include <zlib.h>
 #include <zstd.h>
 
-#include "core/common/memory.hpp"
+#include "core/common/ptr.hpp"
 #include "meta/build.hpp"
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"

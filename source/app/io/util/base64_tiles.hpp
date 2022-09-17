@@ -3,8 +3,7 @@
 #include <string>  // string
 #include <vector>  // vector
 
-#include "core/common/ints.hpp"
-#include "core/common/tiles.hpp"
+#include "core/common/vocabulary.hpp"
 #include "core/layer/tile_format.hpp"
 
 namespace tactile::io {

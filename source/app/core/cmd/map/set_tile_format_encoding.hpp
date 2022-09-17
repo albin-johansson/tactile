@@ -2,7 +2,7 @@
 
 #include "core/cmd/command.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/memory.hpp"
+#include "core/common/ptr.hpp"
 #include "core/layer/tile_format.hpp"
 #include "core/map.hpp"
 

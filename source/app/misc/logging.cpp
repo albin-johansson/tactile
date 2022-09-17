@@ -29,7 +29,7 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
-#include "core/common/memory.hpp"
+#include "core/common/ptr.hpp"
 #include "io/directories.hpp"
 #include "meta/build.hpp"
 #include "misc/panic.hpp"

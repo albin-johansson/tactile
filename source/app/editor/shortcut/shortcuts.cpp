@@ -24,7 +24,7 @@
 #include <centurion/event.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/common/memory.hpp"
+#include "core/common/ptr.hpp"
 #include "editor/shortcut/edit_shortcuts.hpp"
 #include "editor/shortcut/file_shortcuts.hpp"
 #include "editor/shortcut/view_shortcuts.hpp"

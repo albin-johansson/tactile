@@ -23,7 +23,7 @@
 
 #include "core/attribute.hpp"
 #include "core/common/fs.hpp"
-#include "core/common/memory.hpp"
+#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
 #include "core/document/document_type.hpp"
 

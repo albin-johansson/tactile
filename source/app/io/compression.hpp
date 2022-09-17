@@ -3,8 +3,8 @@
 #include <span>    // span
 #include <vector>  // vector
 
-#include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/vocabulary.hpp"
 
 namespace tactile::io {
 

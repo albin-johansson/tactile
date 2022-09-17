@@ -26,8 +26,8 @@
 
 #include <imgui.h>
 
-#include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/vocabulary.hpp"
 #include "editor/ui/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

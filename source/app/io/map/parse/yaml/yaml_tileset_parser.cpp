@@ -21,7 +21,7 @@
 #include <utility>  // move
 
 #include "core/common/fs.hpp"
-#include "core/common/ints.hpp"
+#include "core/common/vocabulary.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"

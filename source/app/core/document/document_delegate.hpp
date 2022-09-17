@@ -22,7 +22,7 @@
 #include "core/cmd/command_stack.hpp"
 #include "core/common/fs.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/memory.hpp"
+#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
 #include "core/comp/component_index.hpp"
 #include "core/ctx/context_manager.hpp"

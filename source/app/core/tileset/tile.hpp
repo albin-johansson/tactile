@@ -21,13 +21,12 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/common/associative.hpp"
-#include "core/common/identifiers.hpp"
-#include "core/common/ints.hpp"
+#include "core/common/assoc.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/memory.hpp"
+#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
+#include "core/common/vocabulary.hpp"
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_info.hpp"
 #include "core/layer/object.hpp"
@@ -35,13 +34,17 @@
 
 namespace tactile {
 
-/// Provides metadata for tiles in a tileset.
+/// Provides metadata for a tile in a tileset.
 class Tile final : public Context {
  public:
+  using ObjectMap = HashMap<UUID, Shared<Object>>;
+
+  /// Creates a tile with a specific index.
   explicit Tile(TileIndex index);
 
   void accept(ContextVisitor& visitor) const override;
 
+  /// Updates the state of the tile animation, if there is one.
   void update();
 
   void reserve_objects(usize n);
@@ -54,14 +57,16 @@ class Tile final : public Context {
 
   void set_source(const int4& source);
 
+  /// Returns the amount of embedded objects.
   [[nodiscard]] auto object_count() const -> usize;
 
-  [[nodiscard]] auto object_capacity() const -> usize;
+  /// Returns all embedded objects.
+  [[nodiscard]] auto get_objects() const -> const ObjectMap&;
 
-  [[nodiscard]] auto get_objects() const -> const HashMap<UUID, Shared<Object>>&;
-
+  /// Indicates whether the tile has an animation.
   [[nodiscard]] auto is_animated() const -> bool;
 
+  /// Returns the associated animation, if there is one.
   [[nodiscard]] auto get_animation() const -> const TileAnimation&;
 
   [[nodiscard]] auto ctx() -> ContextInfo& override;
@@ -78,7 +83,7 @@ class Tile final : public Context {
   ContextInfo mContext;
   int4 mSource;
   Maybe<TileAnimation> mAnimation;
-  HashMap<UUID, Shared<Object>> mObjects;
+  ObjectMap mObjects;
 };
 
 }  // namespace tactile

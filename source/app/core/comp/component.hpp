@@ -23,9 +23,9 @@
 #include <string_view>  // string_view
 
 #include "core/attribute.hpp"
-#include "core/common/associative.hpp"
-#include "core/common/ints.hpp"
+#include "core/common/assoc.hpp"
 #include "core/common/uuid.hpp"
+#include "core/common/vocabulary.hpp"
 
 namespace tactile {
 

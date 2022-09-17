@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/common/memory.hpp"
+#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
 #include "core/document/document.hpp"
 #include "core/document/document_delegate.hpp"

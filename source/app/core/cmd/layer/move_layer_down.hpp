@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/cmd/command.hpp"
-#include "core/common/memory.hpp"
+#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
 #include "core/map.hpp"
 

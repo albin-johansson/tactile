@@ -23,7 +23,7 @@
 #include <random>       // mt19937, uniform_real_distribution, uniform_int_distribution
 #include <type_traits>  // is_floating_point_v
 
-#include "core/common/ints.hpp"
+#include "core/common/vocabulary.hpp"
 
 namespace tactile {
 

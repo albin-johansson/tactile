@@ -24,9 +24,9 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/common/associative.hpp"
-#include "core/common/ints.hpp"
+#include "core/common/assoc.hpp"
 #include "core/common/uuid.hpp"
+#include "core/common/vocabulary.hpp"
 #include "core/comp/component_definition.hpp"
 
 namespace tactile {

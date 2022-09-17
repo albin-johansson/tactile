@@ -23,7 +23,7 @@
 #include <centurion/math.hpp>
 #include <imgui.h>
 
-#include "core/common/ints.hpp"
+#include "core/common/vocabulary.hpp"
 #include "core/region.hpp"
 #include "editor/fwd.hpp"
 

@@ -23,9 +23,9 @@
 
 #include <entt/entity/entity.hpp>
 
-#include "core/common/identifiers.hpp"
 #include "core/common/math.hpp"
 #include "core/common/uuid.hpp"
+#include "core/common/vocabulary.hpp"
 
 namespace tactile {
 

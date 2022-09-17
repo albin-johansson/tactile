@@ -22,8 +22,7 @@
 #include <concepts>  // integral
 #include <vector>    // vector
 
-#include "core/common/identifiers.hpp"
-#include "core/common/ints.hpp"
+#include "core/common/vocabulary.hpp"
 
 namespace tactile {
 

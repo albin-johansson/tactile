@@ -23,7 +23,7 @@
 #include <concepts>     // integral
 #include <type_traits>  // make_unsigned_t
 
-#include "core/common/ints.hpp"
+#include "core/common/vocabulary.hpp"
 
 namespace tactile {
 

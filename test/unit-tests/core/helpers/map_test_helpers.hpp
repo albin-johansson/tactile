@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/common/identifiers.hpp"
+#include "core/common/vocabulary.hpp"
 #include "core/layer/tile_layer.hpp"
 
 namespace tactile::test {

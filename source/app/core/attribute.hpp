@@ -29,8 +29,8 @@
 #include <centurion/color.hpp>
 
 #include "core/common/fs.hpp"
-#include "core/common/ints.hpp"
 #include "core/common/maybe.hpp"
+#include "core/common/vocabulary.hpp"
 
 namespace tactile {
 

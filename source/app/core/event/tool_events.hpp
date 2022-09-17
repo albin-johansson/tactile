@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "core/common/identifiers.hpp"
 #include "core/common/math.hpp"
 #include "core/common/tile_cache.hpp"
 #include "core/common/uuid.hpp"
+#include "core/common/vocabulary.hpp"
 #include "core/mouse_info.hpp"
 #include "core/tile_pos.hpp"
 #include "core/tool/tool_type.hpp"

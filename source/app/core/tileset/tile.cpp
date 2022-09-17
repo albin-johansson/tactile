@@ -76,12 +76,7 @@ auto Tile::object_count() const -> usize
   return mObjects.size();
 }
 
-auto Tile::object_capacity() const -> usize
-{
-  return mObjects.bucket_count();
-}
-
-auto Tile::get_objects() const -> const HashMap<UUID, Shared<Object>>&
+auto Tile::get_objects() const -> const ObjectMap&
 {
   return mObjects;
 }

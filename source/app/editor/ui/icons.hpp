@@ -21,7 +21,7 @@
 
 #include <IconsFontAwesome6.h>
 
-#include "core/common/ints.hpp"
+#include "core/common/vocabulary.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/object_type.hpp"
 #include "core/util/texture_manager.hpp"

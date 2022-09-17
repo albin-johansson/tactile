@@ -23,13 +23,12 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/common/associative.hpp"
+#include "core/common/assoc.hpp"
 #include "core/common/fs.hpp"
-#include "core/common/identifiers.hpp"
-#include "core/common/ints.hpp"
 #include "core/common/math.hpp"
-#include "core/common/memory.hpp"
+#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
+#include "core/common/vocabulary.hpp"
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_info.hpp"
 #include "core/tile_pos.hpp"

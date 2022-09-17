@@ -29,7 +29,7 @@
 #include <fmt/ostream.h>
 
 #include "core/common/fs.hpp"
-#include "core/common/ints.hpp"
+#include "core/common/vocabulary.hpp"
 #include "meta/build.hpp"
 
 namespace fmt {

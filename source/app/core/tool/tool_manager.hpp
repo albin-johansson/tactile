@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/common/macros.hpp"
-#include "core/common/memory.hpp"
+#include "core/common/ptr.hpp"
+#include "core/common/vocabulary.hpp"
 #include "core/tool/tool.hpp"
 #include "core/tool/tool_type.hpp"
 #include "core/tool/tool_visitor.hpp"
