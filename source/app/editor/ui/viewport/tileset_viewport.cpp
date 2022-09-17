@@ -24,6 +24,7 @@
 
 #include "core/document/tileset_document.hpp"
 #include "document_viewport_offset_handler.hpp"
+#include "editor/ui/common/colors.hpp"
 #include "editor/ui/render/graphics.hpp"
 #include "editor/ui/render/render_info.hpp"
 #include "editor/ui/render/render_tileset.hpp"
@@ -40,10 +41,9 @@ void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& di
   update_document_viewport_offset(renderInfo.canvas_br - renderInfo.canvas_tl,
                                   dispatcher);
 
-  GraphicsCtx graphics {renderInfo};
+  Graphics graphics {renderInfo};
 
-  graphics.set_draw_color(io::get_preferences().viewport_background);
-  graphics.clear();
+  graphics.clear(color_to_u32(io::get_preferences().viewport_background));
 
   graphics.push_clip();
   render_tileset(graphics, document);

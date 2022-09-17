@@ -29,6 +29,7 @@
 #include "core/event/tileset_events.hpp"
 #include "core/event/viewport_events.hpp"
 #include "core/model.hpp"
+#include "editor/ui/common/colors.hpp"
 #include "editor/ui/common/rubber_band.hpp"
 #include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"
@@ -38,8 +39,8 @@
 namespace tactile::ui {
 namespace {
 
-constexpr cen::color rubber_band_color {0, 0x44, 0xCC, 100};
-constexpr cen::color grid_color {200, 200, 200, 40};
+constexpr uint32 rubber_band_color = IM_COL32(0, 0x44, 0xCC, 100);
+constexpr uint32 grid_color = IM_COL32(200, 200, 200, 40);
 
 void update_viewport_offset(const TilesetRef& tileset_ref,
                             const ImVec2& viewport_size,
@@ -73,7 +74,7 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
   }
 }
 
-void render_selection(GraphicsCtx& graphics,
+void render_selection(Graphics& graphics,
                       const Region& selection,
                       const ImVec2& min,
                       const ImVec2& tile_size)
@@ -83,8 +84,7 @@ void render_selection(GraphicsCtx& graphics,
   const auto origin = from_pos(selection.begin) * tile_size;
   const auto size = from_pos(diff) * tile_size;
 
-  graphics.set_draw_color(rubber_band_color);
-  graphics.fill_rect(min + origin, size);
+  graphics.fill_rect(min + origin, size, rubber_band_color);
 }
 
 }  // namespace
@@ -103,9 +103,8 @@ void update_tileset_view(const DocumentModel& model,
   const auto info = get_render_info(viewport, tileset);
   update_viewport_offset(tileset_ref, info.canvas_br - info.canvas_tl, dispatcher);
 
-  GraphicsCtx graphics {info};
-  graphics.set_draw_color(io::get_preferences().viewport_background);
-  graphics.clear();
+  Graphics graphics {info};
+  graphics.clear(color_to_u32(io::get_preferences().viewport_background));
 
   const auto offset = from_vec(viewport.get_offset());
   const auto tile_size = from_vec(tileset.tile_size());
@@ -124,10 +123,7 @@ void update_tileset_view(const DocumentModel& model,
     render_selection(graphics, *selection, position, tile_size);
   }
 
-  graphics.set_line_thickness(1);
-  graphics.set_draw_color(grid_color);
-  graphics.render_translated_grid();
-
+  graphics.render_translated_grid(grid_color);
   graphics.pop_clip();
 }
 

@@ -32,7 +32,7 @@
 namespace tactile::ui {
 
 ToolPreviewRenderer::ToolPreviewRenderer(const DocumentModel& model,
-                                         GraphicsCtx& graphics,
+                                         Graphics& graphics,
                                          const MouseInfo& mouse)
     : mModel {model}
     , mGraphics {graphics}
@@ -110,8 +110,8 @@ void ToolPreviewRenderer::visit(const RectangleTool& tool)
     const auto pos = graphics.get_origin() + stroke->start;
     const auto size = stroke->current - stroke->start;
 
-    graphics.draw_rect(pos + Float2 {1, 1}, size, cen::colors::black, 1.0f);
-    graphics.draw_rect(pos, size, cen::colors::yellow, 1.0f);
+    graphics.draw_rect(pos + Float2 {1, 1}, size, IM_COL32_BLACK, 1.0f);
+    graphics.draw_rect(pos, size, IM_COL32(0xFF, 0xFF, 0, 0xFF), 1.0f);
   }
 }
 
@@ -124,8 +124,8 @@ void ToolPreviewRenderer::visit(const EllipseTool& tool)
     const auto radius = stroke->current - stroke->start;
     const auto center = stroke->start + radius;
 
-    graphics.draw_ellipse(center + Float2 {1, 1}, radius, cen::colors::black, 1.0f);
-    graphics.draw_ellipse(center, radius, cen::colors::yellow, 1.0f);
+    graphics.draw_ellipse(center + Float2 {1, 1}, radius, IM_COL32_BLACK, 1.0f);
+    graphics.draw_ellipse(center, radius, IM_COL32(0xFF, 0xFF, 0, 0xFF), 1.0f);
   }
 }
 

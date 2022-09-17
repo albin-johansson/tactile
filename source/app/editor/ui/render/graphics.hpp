@@ -31,84 +31,98 @@ namespace tactile::ui {
 struct RenderInfo;
 
 /// Provides a common simplified rendering API.
-class GraphicsCtx final {
+class Graphics final {
  public:
-  explicit GraphicsCtx(const RenderInfo& info);
+  explicit Graphics(const RenderInfo& info);
 
   void push_clip();
 
   void pop_clip();
 
-  void clear();
+  void clear(uint32 color = IM_COL32_BLACK);
 
   void draw_rect(const Float2& pos,
                  const Float2& size,
-                 const cen::color& color,
-                 float thickness);
+                 uint32 color,
+                 float thickness = 1.0f);
 
   void draw_ellipse(const Float2& center,
                     const Float2& radius,
-                    const cen::color& color,
-                    float thickness);
+                    uint32 color,
+                    float thickness = 1.0f);
 
-  void draw_rect(const ImVec2& position, const ImVec2& size);
+  void draw_rect(const ImVec2& position,
+                 const ImVec2& size,
+                 uint32 color,
+                 float thickness = 1.0f);
 
-  void fill_rect(const ImVec2& position, const ImVec2& size);
+  void fill_rect(const ImVec2& position, const ImVec2& size, uint32 color);
 
-  void draw_translated_rect(const ImVec2& position, const ImVec2& size);
+  void draw_translated_rect(const ImVec2& position,
+                            const ImVec2& size,
+                            uint32 color,
+                            float thickness = 1.0f);
 
-  void fill_translated_rect(const ImVec2& position, const ImVec2& size);
+  void fill_translated_rect(const ImVec2& position, const ImVec2& size, uint32 color);
 
-  void draw_rect_with_shadow(const ImVec2& position, const ImVec2& size);
+  void draw_rect_with_shadow(const ImVec2& position,
+                             const ImVec2& size,
+                             uint32 color,
+                             float thickness = 1.0f);
 
-  void draw_translated_rect_with_shadow(const ImVec2& position, const ImVec2& size);
+  void draw_translated_rect_with_shadow(const ImVec2& position,
+                                        const ImVec2& size,
+                                        uint32 color,
+                                        float thickness = 1.0f);
 
-  void draw_circle_with_shadow(const ImVec2& center, float radius);
+  void draw_circle_with_shadow(const ImVec2& center,
+                               float radius,
+                               uint32 color,
+                               float thickness = 1.0f);
 
-  void draw_translated_circle_with_shadow(const ImVec2& center, float radius);
+  void draw_translated_circle_with_shadow(const ImVec2& center,
+                                          float radius,
+                                          uint32 color,
+                                          float thickness = 1.0f);
 
-  void draw_ellipse_with_shadow(const ImVec2& center, const ImVec2& radius);
+  void draw_ellipse_with_shadow(const ImVec2& center,
+                                const ImVec2& radius,
+                                uint32 color,
+                                float thickness = 1.0f);
 
-  void draw_translated_ellipse_with_shadow(const ImVec2& center, const ImVec2& radius);
+  void draw_translated_ellipse_with_shadow(const ImVec2& center,
+                                           const ImVec2& radius,
+                                           uint32 color,
+                                           float thickness = 1.0f);
 
   void render_image(uint texture,
                     const Float2& pos,
                     const Float2& size,
-                    const Float2& uvMin,
-                    const Float2& uvMax,
+                    const Float2& uv_min,
+                    const Float2& uv_max,
                     uint8 opacity);
 
   void render_image(uint texture, const ImVec2& position, const ImVec2& size);
 
-  /// Renders a portion of a tileset texture.
-  ///
-  /// \param texture the identifier for the source texture that will be rendered.
-  /// \param source the region of the texture that will be rendered.
-  /// \param position the position of the rendered image on the screen.
-  /// \param uv the ratio between the tileset tile size and the texture size.
   void render_image(uint texture,
                     const ImVec4& source,
                     const ImVec2& position,
-                    const ImVec2& uv);
+                    const ImVec2& uv,
+                    float opacity = 1.0f);
 
   void render_translated_image(uint texture,
                                const ImVec4& source,
                                const ImVec2& position,
-                               const ImVec2& uv);
+                               const ImVec2& uv,
+                               float opacity = 1.0f);
 
-  void render_text(const char* text, const ImVec2& position);
+  void render_text(const char* text, const ImVec2& position, uint32 color);
 
-  void render_translated_text(const char* text, const ImVec2& position);
+  void render_translated_text(const char* text, const ImVec2& position, uint32 color);
 
-  void render_centered_text(const char* text, const ImVec2& center);
+  void render_centered_text(const char* text, const ImVec2& center, uint32 color);
 
-  void render_translated_grid();
-
-  void set_draw_color(const cen::color& color);
-
-  void set_opacity(float opacity);
-
-  void set_line_thickness(float thickness);
+  void render_translated_grid(uint32 color);
 
   [[nodiscard]] auto from_matrix_to_absolute(int32 row, int32 column) const -> ImVec2;
 
@@ -151,13 +165,6 @@ class GraphicsCtx final {
   ImVec2 mTileSizeRatio {1, 1};
   Region mBounds;
   cen::frect mBoundsRect;
-  cen::color mDrawColor {cen::colors::black};
-  float mLineThickness {1};
-  uint8 mOpacity {0xFF};
-
-  [[nodiscard]] auto get_draw_color() const -> uint32;
-
-  [[nodiscard]] auto get_shadow_draw_color() const -> uint32;
 };
 
 }  // namespace tactile::ui

@@ -26,9 +26,9 @@ class TileLayer;
 
 namespace tactile::ui {
 
-class GraphicsCtx;
+class Graphics;
 
-void render_tile_layer(GraphicsCtx& graphics,
+void render_tile_layer(Graphics& graphics,
                        const Map& map,
                        const TileLayer& layer,
                        float parentOpacity);

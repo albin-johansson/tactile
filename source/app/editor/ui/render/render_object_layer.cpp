@@ -35,19 +35,17 @@
 namespace tactile::ui {
 namespace {
 
-void render_point_object(GraphicsCtx& graphics,
+void render_point_object(Graphics& graphics,
                          const Object& object,
                          const ImVec2& position,
-                         const cen::color& color)
+                         const uint32 color)
 {
   TACTILE_ASSERT(object.is_point());
 
   const float radius = (std::min)(graphics.viewport_tile_size().x / 4.0f, 6.0f);
 
   if (graphics.is_within_translated_bounds(position)) {
-    graphics.set_draw_color(color);
-    graphics.set_line_thickness(2.0f);
-    graphics.draw_translated_circle_with_shadow(position, radius);
+    graphics.draw_translated_circle_with_shadow(position, radius, color, 2.0f);
 
     const auto& name = object.ctx().name();
     if (!name.empty()) {
@@ -56,17 +54,16 @@ void render_point_object(GraphicsCtx& graphics,
         const auto text_x = position.x - (text_size.x / 2.0f);
         const auto text_y = position.y + radius + 4.0f;
 
-        graphics.set_draw_color(cen::colors::white);
-        graphics.render_translated_text(name.c_str(), {text_x, text_y});
+        graphics.render_translated_text(name.c_str(), {text_x, text_y}, IM_COL32_WHITE);
       }
     }
   }
 }
 
-void render_ellipse_object(GraphicsCtx& graphics,
+void render_ellipse_object(Graphics& graphics,
                            const Object& object,
                            const ImVec2& position,
-                           const cen::color& color)
+                           const uint32 color)
 {
   TACTILE_ASSERT(object.is_ellipse());
 
@@ -75,9 +72,7 @@ void render_ellipse_object(GraphicsCtx& graphics,
   const auto radius = ImVec2 {0.5f, 0.5f} * size * graphics.tile_size_ratio();
   const auto center = position + radius;
 
-  graphics.set_draw_color(color);
-  graphics.set_line_thickness(2);
-  graphics.draw_translated_ellipse_with_shadow(center, radius);
+  graphics.draw_translated_ellipse_with_shadow(center, radius, color, 2.0f);
 
   const auto& name = object.ctx().name();
   if (!name.empty()) {
@@ -86,25 +81,22 @@ void render_ellipse_object(GraphicsCtx& graphics,
       const auto text_x = center.x - (text_size.x / 2.0f);
       const auto text_y = center.y + (text_size.y / 2.0f) + (radius.y);
 
-      graphics.set_draw_color(cen::colors::white);
-      graphics.render_translated_text(name.c_str(), {text_x, text_y});
+      graphics.render_translated_text(name.c_str(), {text_x, text_y}, IM_COL32_WHITE);
     }
   }
 }
 
-void render_rectangle_object(GraphicsCtx& graphics,
+void render_rectangle_object(Graphics& graphics,
                              const Object& object,
                              const ImVec2& position,
-                             const cen::color& color)
+                             const uint32 color)
 {
   TACTILE_ASSERT(object.is_rect());
 
   const auto size = from_vec(object.get_size()) * graphics.tile_size_ratio();
 
   if (graphics.is_intersecting_bounds(position, size)) {
-    graphics.set_draw_color(color);
-    graphics.set_line_thickness(2.0f);
-    graphics.draw_translated_rect_with_shadow(position, size);
+    graphics.draw_translated_rect_with_shadow(position, size, color, 2.0f);
 
     const auto& name = object.ctx().name();
     if (!name.empty()) {
@@ -112,9 +104,9 @@ void render_rectangle_object(GraphicsCtx& graphics,
       if (text_size.x <= size.x) {
         const auto text_x = (size.x - text_size.x) / 2.0f;
 
-        graphics.set_draw_color(cen::colors::white.with_alpha(color.alpha()));
         graphics.render_translated_text(name.c_str(),
-                                        position + ImVec2 {text_x, size.y + 4.0f});
+                                        position + ImVec2 {text_x, size.y + 4.0f},
+                                        IM_COL32_WHITE);
       }
     }
   }
@@ -122,7 +114,7 @@ void render_rectangle_object(GraphicsCtx& graphics,
 
 }  // namespace
 
-void render_object(GraphicsCtx& graphics, const Object& object, const cen::color& color)
+void render_object(Graphics& graphics, const Object& object, const uint32 color)
 {
   if (!object.is_visible()) {
     return;
@@ -145,12 +137,12 @@ void render_object(GraphicsCtx& graphics, const Object& object, const cen::color
   }
 }
 
-void render_object_layer(GraphicsCtx& graphics,
+void render_object_layer(Graphics& graphics,
                          const ObjectLayer& layer,
                          const float parent_opacity)
 {
   const auto opacity = parent_opacity * layer.get_opacity();
-  const auto object_color = cen::color::from_norm(1, 0, 0, opacity);
+  const auto object_color = IM_COL32(0xFF, 0, 0, static_cast<uint8>(255 * opacity));
 
   for (const auto& [id, object] : layer) {
     render_object(graphics, *object, object_color);

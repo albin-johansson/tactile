@@ -78,11 +78,11 @@ class StampTool final : public Tool {
   void update_sequence(DocumentModel& model, const TilePos& cursor);
 
   void update_sequence_normal(TileLayer& layer,
-                              const TilesetRef& tilesetRef,
+                              const TilesetRef& tileset_ref,
                               const TilePos& cursor);
 
   void update_sequence_random(TileLayer& layer,
-                              const TilesetRef& tilesetRef,
+                              const TilesetRef& tileset_ref,
                               const TilePos& cursor);
 
   void maybe_emit_event(const DocumentModel& model, entt::dispatcher& dispatcher);

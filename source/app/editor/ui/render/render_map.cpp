@@ -33,7 +33,7 @@
 namespace tactile::ui {
 namespace {
 
-void render_layer(GraphicsCtx& graphics,
+void render_layer(Graphics& graphics,
                   const Map& map,
                   const Layer* layer,
                   const float parent_opacity)
@@ -59,7 +59,7 @@ void render_layer(GraphicsCtx& graphics,
 
 }  // namespace
 
-void render_map(GraphicsCtx& graphics, const MapDocument& document)
+void render_map(Graphics& graphics, const MapDocument& document)
 {
   const auto& prefs = io::get_preferences();
   const auto& map = document.get_map();
@@ -93,16 +93,13 @@ void render_map(GraphicsCtx& graphics, const MapDocument& document)
     if (const auto* object_layer = map.find_object_layer(*active_layer_id)) {
       if (const auto object_id = object_layer->active_object_id()) {
         const auto& object = object_layer->get_object(*object_id);
-        render_object(graphics, object, cen::colors::yellow);
+        render_object(graphics, object, IM_COL32(0xFF, 0xFF, 0, 0xFF));
       }
     }
   }
 
-  graphics.set_line_thickness(1.0f);
-
   if (prefs.show_grid) {
-    graphics.set_draw_color(cen::colors::white.with_alpha(20));
-    graphics.render_translated_grid();
+    graphics.render_translated_grid(IM_COL32(0xFF, 0xFF, 0xFF, 20));
   }
 }
 

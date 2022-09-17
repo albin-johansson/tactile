@@ -33,6 +33,7 @@
 #include "core/layer/object_layer.hpp"
 #include "core/model.hpp"
 #include "document_viewport_offset_handler.hpp"
+#include "editor/ui/common/colors.hpp"
 #include "editor/ui/render/graphics.hpp"
 #include "editor/ui/render/render_info.hpp"
 #include "editor/ui/render/render_map.hpp"
@@ -107,7 +108,7 @@ void center_viewport(const Viewport& viewport,
   dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
 }
 
-void draw_cursor_gizmos(GraphicsCtx& graphics,
+void draw_cursor_gizmos(Graphics& graphics,
                         const DocumentModel& model,
                         const MapDocument& document,
                         const ViewportCursorInfo& cursor,
@@ -116,15 +117,16 @@ void draw_cursor_gizmos(GraphicsCtx& graphics,
   const auto& map = document.get_map();
 
   if (cursor.is_within_map && map.is_active_layer(LayerType::TileLayer)) {
-    graphics.set_draw_color(cen::colors::lime.with_alpha(200));
-    graphics.set_line_thickness(2);
-    graphics.draw_rect_with_shadow(cursor.clamped_position, info.grid_size);
+    graphics.draw_rect_with_shadow(cursor.clamped_position,
+                                   info.grid_size,
+                                   IM_COL32(0, 0xFF, 0, 200),
+                                   2.0f);
   }
 
-  ToolPreviewRenderer previewRenderer {model, graphics, make_mouse_info(cursor)};
+  ToolPreviewRenderer preview_renderer {model, graphics, make_mouse_info(cursor)};
 
   const auto& tools = document.get_tools();
-  tools.accept(previewRenderer);
+  tools.accept(preview_renderer);
 }
 
 void poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
@@ -233,11 +235,9 @@ void show_map_viewport(const DocumentModel& model,
   const auto info = get_render_info(viewport, map);
   update_document_viewport_offset(info.canvas_br - info.canvas_tl, dispatcher);
 
-  GraphicsCtx graphics {info};
+  Graphics graphics {info};
 
-  graphics.set_draw_color(io::get_preferences().viewport_background);
-  graphics.clear();
-
+  graphics.clear(color_to_u32(io::get_preferences().viewport_background));
   graphics.push_clip();
 
   // TODO viewport should be centered by default

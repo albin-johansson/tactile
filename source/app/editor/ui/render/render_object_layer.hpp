@@ -21,6 +21,8 @@
 
 #include <centurion/fwd.hpp>
 
+#include "core/common/vocabulary.hpp"
+
 namespace tactile {
 class ObjectLayer;
 class Object;
@@ -28,12 +30,12 @@ class Object;
 
 namespace tactile::ui {
 
-class GraphicsCtx;
+class Graphics;
 
-void render_object(GraphicsCtx& graphics, const Object& object, const cen::color& color);
+void render_object(Graphics& graphics, const Object& object, uint32 color);
 
-void render_object_layer(GraphicsCtx& graphics,
+void render_object_layer(Graphics& graphics,
                          const ObjectLayer& layer,
-                         float parentOpacity);
+                         float parent_opacity);
 
 }  // namespace tactile::ui

@@ -31,13 +31,13 @@ class TilesetRef;
 
 namespace tactile::ui {
 
-class GraphicsCtx;
+class Graphics;
 
 /// Handles the in-viewport previews for all relevant mouse tools.
 class ToolPreviewRenderer final : public ToolVisitor {
  public:
   explicit ToolPreviewRenderer(const DocumentModel& model,
-                               GraphicsCtx& graphics,
+                               Graphics& graphics,
                                const MouseInfo& mouse);
 
   void visit(const StampTool& tool) override;
@@ -48,7 +48,7 @@ class ToolPreviewRenderer final : public ToolVisitor {
 
  private:
   Ref<const DocumentModel> mModel;
-  Ref<GraphicsCtx> mGraphics;
+  Ref<Graphics> mGraphics;
   MouseInfo mMouseInfo;
 
   void render_stamp_normal(const Map& map, const TilesetRef& tileset_ref);

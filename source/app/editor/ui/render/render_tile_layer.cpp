@@ -26,12 +26,12 @@
 
 namespace tactile::ui {
 
-void render_tile_layer(GraphicsCtx& graphics,
+void render_tile_layer(Graphics& graphics,
                        const Map& map,
                        const TileLayer& layer,
                        const float parent_opacity)
 {
-  graphics.set_opacity(parent_opacity * layer.get_opacity());
+  const auto tile_opacity = parent_opacity * layer.get_opacity();
 
   const auto bounds = graphics.bounds();
   const auto end_row = bounds.end.row();
@@ -42,7 +42,7 @@ void render_tile_layer(GraphicsCtx& graphics,
       const TilePos pos {row, col};
       const auto tile = layer.tile_at(pos);
       if (tile != empty_tile) {
-        render_tile(graphics, map, tile, pos);
+        render_tile(graphics, map, tile, pos, tile_opacity);
       }
     }
   }

@@ -25,8 +25,8 @@ class MapDocument;
 
 namespace tactile::ui {
 
-class GraphicsCtx;
+class Graphics;
 
-void render_map(GraphicsCtx& graphics, const MapDocument& document);
+void render_map(Graphics& graphics, const MapDocument& document);
 
 }  // namespace tactile::ui

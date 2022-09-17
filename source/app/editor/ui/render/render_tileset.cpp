@@ -29,7 +29,7 @@
 
 namespace tactile::ui {
 
-void render_tileset(GraphicsCtx& graphics, const TilesetDocument& document)
+void render_tileset(Graphics& graphics, const TilesetDocument& document)
 {
   const auto& tileset = document.view_tileset();
 
@@ -46,9 +46,7 @@ void render_tileset(GraphicsCtx& graphics, const TilesetDocument& document)
   });
 
   if (io::get_preferences().show_grid) {
-    graphics.set_line_thickness(1.0f);
-    graphics.set_draw_color(cen::colors::white.with_alpha(20));
-    graphics.render_translated_grid();
+    graphics.render_translated_grid(IM_COL32(0xFF, 0xFF, 0xFF, 20));
   }
 }
 

@@ -30,11 +30,12 @@ class TilePos;
 
 namespace tactile::ui {
 
-class GraphicsCtx;
+class Graphics;
 
-void render_tile(GraphicsCtx& graphics,
+void render_tile(Graphics& graphics,
                  const Map& map,
-                 TileID tileId,
-                 const TilePos& pos);
+                 TileID tile_id,
+                 const TilePos& pos,
+                 float opacity);
 
 }  // namespace tactile::ui

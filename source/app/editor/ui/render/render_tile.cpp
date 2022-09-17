@@ -26,10 +26,11 @@
 
 namespace tactile::ui {
 
-void render_tile(GraphicsCtx& graphics,
+void render_tile(Graphics& graphics,
                  const Map& map,
                  const TileID tile_id,
-                 const TilePos& pos)
+                 const TilePos& pos,
+                 const float opacity)
 {
   TACTILE_ASSERT(tile_id != empty_tile);
 
@@ -51,7 +52,7 @@ void render_tile(GraphicsCtx& graphics,
   const auto source = from_vec(tile.source());
 
   const auto position = graphics.from_matrix_to_absolute(pos.row(), pos.col());
-  graphics.render_translated_image(texture_id, source, position, uv);
+  graphics.render_translated_image(texture_id, source, position, uv, opacity);
 }
 
 }  // namespace tactile::ui
