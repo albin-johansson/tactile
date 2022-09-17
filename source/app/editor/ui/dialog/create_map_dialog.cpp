@@ -24,7 +24,7 @@
 
 #include "core/event/map_events.hpp"
 #include "editor/ui/alignment.hpp"
-#include "io/persist/preferences.hpp"
+#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/assert.hpp"

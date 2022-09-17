@@ -26,7 +26,7 @@
 
 #include "editor/ui/themes.hpp"
 #include "io/directories.hpp"
-#include "io/persist/preferences.hpp"
+#include "io/proto/preferences.hpp"
 
 namespace tactile {
 

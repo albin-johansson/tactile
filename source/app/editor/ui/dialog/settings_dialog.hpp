@@ -21,7 +21,7 @@
 
 #include "core/common/vocabulary.hpp"
 #include "editor/ui/dialog/dialog.hpp"
-#include "io/persist/preferences.hpp"
+#include "io/proto/preferences.hpp"
 
 namespace tactile::ui {
 

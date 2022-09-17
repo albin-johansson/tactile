@@ -26,7 +26,7 @@
 #include "core/util/buffers.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "io/file_dialog.hpp"
-#include "io/persist/preferences.hpp"
+#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 

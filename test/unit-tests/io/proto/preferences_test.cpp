@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "io/persist/preferences.hpp"
+#include "io/proto/preferences.hpp"
 
 #include <utility>  // to_underlying
 

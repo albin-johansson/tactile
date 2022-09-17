@@ -30,7 +30,7 @@
 #include "core/common/vocabulary.hpp"
 #include "core/util/filesystem.hpp"
 #include "io/directories.hpp"
-#include "io/persist/proto.hpp"
+#include "io/proto/proto.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::io {

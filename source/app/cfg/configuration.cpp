@@ -30,7 +30,7 @@
 #include "cfg/platform_specific.hpp"
 #include "core/util/fmt.hpp"
 #include "io/directories.hpp"
-#include "io/persist/preferences.hpp"
+#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "meta/build.hpp"
 #include "misc/assert.hpp"

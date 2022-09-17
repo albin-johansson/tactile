@@ -45,7 +45,7 @@
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
-#include "io/persist/preferences.hpp"
+#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 

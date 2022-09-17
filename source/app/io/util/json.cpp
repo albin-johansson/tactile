@@ -24,7 +24,7 @@
 #include <ios>      // ios
 
 #include "core/util/filesystem.hpp"
-#include "io/persist/preferences.hpp"
+#include "io/proto/preferences.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {

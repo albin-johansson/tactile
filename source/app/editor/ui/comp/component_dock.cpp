@@ -35,7 +35,7 @@
 #include "editor/ui/comp/component_view.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
-#include "io/persist/preferences.hpp"
+#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/assert.hpp"

@@ -21,7 +21,7 @@
 
 #include <gtest/gtest.h>
 
-#include "io/persist/preferences.hpp"
+#include "io/proto/preferences.hpp"
 
 namespace tactile::test {
 namespace {

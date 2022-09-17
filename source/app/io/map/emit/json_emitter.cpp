@@ -27,7 +27,7 @@
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/tiled_info.hpp"
-#include "io/persist/preferences.hpp"
+#include "io/proto/preferences.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/json.hpp"
 

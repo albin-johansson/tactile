@@ -33,7 +33,7 @@
 #include "editor/ui/common/labels.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/tileset/tileset_tabs.hpp"
-#include "io/persist/preferences.hpp"
+#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 

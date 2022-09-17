@@ -28,7 +28,7 @@
 
 #include "core/common/fs.hpp"
 #include "io/directories.hpp"
-#include "io/persist/proto.hpp"
+#include "io/proto/proto.hpp"
 
 namespace tactile::io {
 namespace {

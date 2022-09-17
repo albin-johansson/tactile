@@ -34,7 +34,7 @@
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/themes.hpp"
-#include "io/persist/preferences.hpp"
+#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 

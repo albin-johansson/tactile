@@ -53,9 +53,9 @@
 #include "io/map/emit/emitter.hpp"
 #include "io/map/ir/map_from_ir.hpp"
 #include "io/map/parse/parse_map.hpp"
-#include "io/persist/history.hpp"
-#include "io/persist/preferences.hpp"
-#include "io/persist/session.hpp"
+#include "io/proto/history.hpp"
+#include "io/proto/preferences.hpp"
+#include "io/proto/session.hpp"
 #include "io/textures.hpp"
 #include "misc/assert.hpp"
 

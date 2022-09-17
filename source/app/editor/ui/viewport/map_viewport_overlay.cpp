@@ -26,7 +26,7 @@
 #include "core/map.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/viewport/viewport_cursor_info.hpp"
-#include "io/persist/preferences.hpp"
+#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 
