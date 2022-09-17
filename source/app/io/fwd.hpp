@@ -20,9 +20,6 @@
 #pragma once
 
 namespace tactile {
-
-class PreferenceState;
-
 namespace io {
 class FileDialog;
 class EmitInfo;

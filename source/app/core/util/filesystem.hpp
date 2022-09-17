@@ -44,6 +44,6 @@ namespace tactile {
 [[nodiscard]] auto to_canonical(const fs::path& path) -> Maybe<std::string>;
 
 /// Creates a string using the native filesystem character type.
-[[nodiscard]] auto to_fs_string(const char* str) -> Maybe<fs_string>;
+[[nodiscard]] auto to_fs_string(const char* str) -> Maybe<FileString>;
 
 }  // namespace tactile

@@ -29,7 +29,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto get_home_prefix() -> const fs_string&
+[[nodiscard]] auto get_home_prefix() -> const FileString&
 {
   // On Unix platforms, HOME is something like '/Users/username'
   // On Windows, USERPROFILE is something like 'C:\Users\username'
@@ -50,7 +50,7 @@ auto convert_to_forward_slashes(const fs::path& path) -> std::string
 auto has_home_prefix(const fs::path& path) -> bool
 {
   const auto& prefix = get_home_prefix();
-  fs_string_view view {path.c_str()};
+  FileStringView view {path.c_str()};
   return view.starts_with(prefix);
 }
 
@@ -65,7 +65,7 @@ auto to_canonical(const fs::path& path) -> Maybe<std::string>
   }
 }
 
-auto to_fs_string(const char* str) -> Maybe<fs_string>
+auto to_fs_string(const char* str) -> Maybe<FileString>
 {
   if (!str) {
     return nothing;

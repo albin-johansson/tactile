@@ -25,8 +25,9 @@ namespace tactile {
 
 namespace fs = std::filesystem;
 
-using fs_char_type = fs::path::value_type;
-using fs_string = std::basic_string<fs_char_type>;
-using fs_string_view = std::basic_string_view<fs_char_type>;
+using fs_char = fs::path::value_type;
+
+using FileString = std::basic_string<fs_char>;
+using FileStringView = std::basic_string_view<fs_char>;
 
 }  // namespace tactile

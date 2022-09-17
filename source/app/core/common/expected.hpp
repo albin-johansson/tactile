@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <utility>  // forward
+#include <type_traits>  // decay_t
+#include <utility>      // forward
 
 #include <tl/expected.hpp>
 
@@ -32,7 +33,7 @@ template <typename E>
 using Unexpected = tl::unexpected<E>;
 
 template <typename E>
-[[nodiscard]] auto error(E&& e)
+[[nodiscard]] auto error(E&& e) -> Unexpected<std::decay_t<E>>
 {
   return tl::make_unexpected(std::forward<E>(e));
 }
