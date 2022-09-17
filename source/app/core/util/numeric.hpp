@@ -19,30 +19,29 @@
 
 #pragma once
 
-#include <bit>          // endian, byteswap
-#include <concepts>     // integral
-#include <type_traits>  // make_unsigned_t
+#include <concepts>  // integral, unsigned_integral, invocable
 
 #include "core/common/vocabulary.hpp"
 
 namespace tactile {
 
-/// Returns the byte at a specific index in an integer (starting at the rightmost byte).
-template <std::integral T>
-[[nodiscard]] constexpr auto nth_byte(const T value, const uint n) noexcept -> uint8
+/// Returns the difference between two unsigned integers
+template <std::unsigned_integral T>
+[[nodiscard]] constexpr auto udiff(const T a, const T b) noexcept -> T
 {
-  using UT = std::make_unsigned_t<T>;
-
-  const auto offset = static_cast<UT>(n * 8u);
-  const auto masked = static_cast<UT>(value) & (UT {0xFF} << offset);
-
-  return static_cast<uint8>(masked >> offset);
+  return (a < b) ? (b - a) : (a - b);
 }
 
-template <std::integral T>
-[[nodiscard]] constexpr auto as_little_endian(const T value) noexcept -> T
+[[nodiscard]] auto as_little_endian(int32 value) noexcept -> int32;
+[[nodiscard]] auto as_little_endian(uint32 value) noexcept -> uint32;
+
+template <std::integral Int, std::invocable<uint8> T>
+void each_byte(const Int value, T&& callable)
 {
-  return (std::endian::native == std::endian::little) ? value : std::byteswap(value);
+  const auto* bytes = static_cast<const uint8*>(static_cast<const void*>(&value));
+  for (usize idx = 0; idx < sizeof(Int); ++idx) {
+    callable(bytes[idx]);
+  }
 }
 
 }  // namespace tactile

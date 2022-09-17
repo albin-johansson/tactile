@@ -25,6 +25,7 @@
 #include "core/common/math.hpp"
 #include "core/tile_pos.hpp"
 #include "core/util/functional.hpp"
+#include "core/util/numeric.hpp"
 #include "core/util/tiles.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"

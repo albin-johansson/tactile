@@ -27,6 +27,7 @@
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/util/functional.hpp"
+#include "core/util/numeric.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
