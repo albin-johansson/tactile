@@ -29,18 +29,16 @@ class Map;
 class TileLayer;
 class TilesetRef;
 
-/**
- * A tool used to draw (or "stamp") selected tileset tiles to tile layers.
- *
- * The stamp tool, in its default mode, will simply stamp the selected tiles in the active
- * tileset to tile layers. It also has a "random" mode, where a single tile is randomly
- * picked from the tile selection, and subsequently stamped to the tile layer.
- *
- * Changes are applied to the target tile layer immediately, and later submitted
- * as a command when the user ends the sequence.
- *
- * \todo Right-click should erase tiles.
- */
+/// A tool used to draw (or "stamp") selected tileset tiles to tile layers.
+///
+/// The stamp tool, in its default mode, will simply stamp the selected tiles in the
+/// active tileset to tile layers. It also has a "random" mode, where a single tile is
+/// randomly picked from the tile selection, and subsequently stamped to the tile layer.
+///
+/// Changes are applied to the target tile layer immediately, and later submitted
+/// as a command when the user ends the sequence.
+///
+/// \todo Right-click should erase tiles.
 class StampTool final : public Tool {
  public:
   void accept(ToolVisitor& visitor) const override;

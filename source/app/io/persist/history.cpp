@@ -39,8 +39,8 @@ namespace {
 constexpr int history_format_version [[maybe_unused]] = 1;
 constexpr usize history_max_size = 10;
 
-/* We store paths as strings because that makes displaying them in menus
-   _much_ easier (and faster) */
+// We store paths as strings because that makes displaying them
+// in menus much easier (and faster)
 inline Maybe<std::string> history_last_closed_file;
 inline std::deque<std::string> history_entries;
 

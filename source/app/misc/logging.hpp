@@ -36,26 +36,20 @@ void init_logger();
 /// Clears the entire log history.
 void clear_log_history();
 
-/**
- * Returns the log entry at a specific index amongst entries that satisfy a filter.
- *
- * \param filter the log level filter to apply before querying log entries.
- * \param index the index of the desired log entry among those that satisfy the filter.
- *
- * \return a pair of the found log level and logged message.
- *
- * \throws TactileError if no log entry was found.
- */
+/// Returns the log entry at a specific index amongst entries that satisfy a filter.
+///
+/// \param filter the log level filter to apply before querying log entries.
+/// \param index the index of the desired log entry among those that satisfy the filter.
+///
+/// \return a pair of the found log level and logged message.
 [[nodiscard]] auto get_log_entry(LogLevel filter, usize index)
     -> std::pair<LogLevel, const std::string&>;
 
-/**
- * Returns the amount of log entries that satisfy a filter.
- *
- * \param filter the filter that will be used.
- *
- * \return the amount of log entries that weren't filtered out.
- */
+/// Returns the amount of log entries that satisfy a filter.
+///
+/// \param filter the filter that will be used.
+///
+/// \return the amount of log entries that weren't filtered out.
 [[nodiscard]] auto log_size(LogLevel filter) -> usize;
 
 }  // namespace tactile

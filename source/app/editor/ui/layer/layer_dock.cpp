@@ -161,9 +161,9 @@ void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
   }
 }
 
-void show_rename_layer_dialog(const UUID& layerId)
+void show_rename_layer_dialog(const UUID& layer_id)
 {
-  rename_target_id = layerId;
+  rename_target_id = layer_id;
 }
 
 auto is_layer_dock_focused() -> bool

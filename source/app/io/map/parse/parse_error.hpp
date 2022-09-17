@@ -24,11 +24,9 @@
 
 namespace tactile::io {
 
-/**
- * Represents various possible errors related to map parsing.
- *
- * \see to_cause(ParseError)
- */
+/// Represents various possible errors related to map parsing.
+///
+/// \see to_cause(ParseError)
 enum class ParseError {
   None,
   Unknown,
@@ -100,13 +98,7 @@ enum class ParseError {
   PlainEncodingWithCompression
 };
 
-/**
- * Returns a short human-readable message that provides a cause for an error.
- *
- * \param error the parse error to retrieve the cause for.
- *
- * \return an error cause message.
- */
+/// Returns a (translated) human-readable message with an explanation of an error.
 [[nodiscard]] auto to_cause(ParseError error) -> std::string_view;
 
 auto operator<<(std::ostream& stream, ParseError error) -> std::ostream&;

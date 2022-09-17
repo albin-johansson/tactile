@@ -29,24 +29,18 @@ class DocumentModel;
 
 namespace tactile::ui {
 
-/**
- * Updates the layer dock widget.
- *
- * There must be an active map document when this function is called.
- *
- * \param model the current document model.
- * \param dispatcher the event dispatcher used.
- */
+/// Updates the layer dock widget.
+///
+/// There must be an active map document when this function is called.
+///
+/// \param model the current document model.
+/// \param dispatcher the event dispatcher used.
 void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 /// Makes the dialog for renaming layers visible.
-void show_rename_layer_dialog(const UUID& layerId);
+void show_rename_layer_dialog(const UUID& layer_id);
 
-/**
- * Indicates whether the layer dock widget has input focus.
- *
- * \return `true` if the layer dock is focused; `false` otherwise.
- */
+/// Indicates whether the layer dock widget has input focus.
 [[nodiscard]] auto is_layer_dock_focused() -> bool;
 
 }  // namespace tactile::ui

@@ -27,13 +27,11 @@
 
 namespace tactile {
 
-/**
- * Represents a loaded tileset.
- *
- * The document model holds a tileset document for each tileset attached to a map.
- * However, tileset documents can be shared across multiple maps as long as they are
- * external.
- */
+/// Represents a loaded tileset.
+///
+/// The document model holds a tileset document for each tileset attached to a map.
+/// However, tileset documents can be shared across multiple maps as long as they are
+/// external.
 class TilesetDocument final : public Document {
  public:
   TilesetDocument(const UUID& id, const TilesetInfo& info);
@@ -73,7 +71,6 @@ class TilesetDocument final : public Document {
   [[nodiscard]] auto get_tileset() -> Shared<Tileset> { return mTileset; }
 
   [[nodiscard]] auto view_tileset() -> Tileset& { return *mTileset; }
-
   [[nodiscard]] auto view_tileset() const -> const Tileset& { return *mTileset; }
 
  private:

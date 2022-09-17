@@ -23,26 +23,14 @@
 
 namespace tactile {
 
-/**
- * Represents the different available map object types.
- *
- * \see Object
- * \see ObjectLayer
- */
+/// Represents the available map object types.
 enum class ObjectType {
   Point,
   Rect,
   Ellipse
 };
 
-/**
- * Outputs an object type as the enumerator name.
- *
- * \param stream the output stream.
- * \param type the object type to output.
- *
- * \return the used stream.
- */
+/// Outputs an object type to a stream for debugging purposes.
 auto operator<<(std::ostream& stream, ObjectType type) -> std::ostream&;
 
 }  // namespace tactile

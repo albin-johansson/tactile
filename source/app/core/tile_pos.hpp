@@ -29,11 +29,9 @@
 
 namespace tactile {
 
-/**
- * Represents a tile position in a map or tileset.
- *
- * Note, this class may represent positions with negative indices.
- */
+/// Represents a tile position in a map or tileset.
+///
+/// Note, this class may represent positions with negative indices.
 class TilePos final {
  public:
   /// Creates a tile position at origin, (0, 0).
@@ -102,26 +100,22 @@ class TilePos final {
   /// Returns the column index of the tile position.
   [[nodiscard]] constexpr auto col() const noexcept -> int32 { return mCol; }
 
-  /**
-   * Returns the raw row index associated with the tile position.
-   *
-   * This function is meant to be used when indexing vectors, etc.
-   *
-   * \return an unsigned row index.
-   */
+  /// Returns the raw row index associated with the tile position.
+  ///
+  /// This function is meant to be used when indexing vectors, etc.
+  ///
+  /// \return an unsigned row index.
   [[nodiscard]] constexpr auto urow() const noexcept -> usize
   {
     TACTILE_ASSERT(mRow >= 0);
     return static_cast<usize>(mRow);
   }
 
-  /**
-   * Returns the column index associated with the tile position.
-   *
-   * This function is meant to be used when indexing vectors, etc.
-   *
-   * \return an unsigned column index.
-   */
+  /// Returns the column index associated with the tile position.
+  ///
+  /// This function is meant to be used when indexing vectors, etc.
+  ///
+  /// \return an unsigned column index.
   [[nodiscard]] constexpr auto ucol() const noexcept -> usize
   {
     TACTILE_ASSERT(mCol >= 0);

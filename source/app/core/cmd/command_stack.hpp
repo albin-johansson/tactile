@@ -43,29 +43,19 @@ class CommandStack final {
   /// Clears the command stack of all commands.
   void clear();
 
-  /**
-   * Marks the current command stack state as "clean".
-   *
-   * The notion of a clean command stack is used to prevent unnecessary saving of files,
-   * etc. For example, when a document is saved, it should be marked as clean.
-   */
+  /// Marks the current command stack state as "clean".
+  ///
+  /// The notion of a clean command stack is used to prevent unnecessary saving of files,
+  /// etc. For example, when a document is saved, it should be marked as clean.
   void mark_as_clean();
 
   /// Resets any current clean state.
   void reset_clean();
 
-  /**
-   * Undoes the current command.
-   *
-   * \pre There must be an undoable command.
-   */
+  /// Undoes the last command.
   void undo();
 
-  /**
-   * Redoes the current command.
-   *
-   * \pre There must be a redoable command.
-   */
+  /// Redoes the last command.
   void redo();
 
   template <std::derived_from<Command> T, typename... Args>
@@ -81,13 +71,12 @@ class CommandStack final {
     mStack.push_back(std::move(cmd));
   }
 
-  /**
-   * Pushes a command to the command stack and executes it.
-   *
-   * Any redoable commands will be removed when this function is called.
-   *
-   * \param args the arguments that will be forwarded to a command constructor.
-   */
+  /// Pushes a command to the command stack and executes it.
+  ///
+  /// Any redoable commands will be removed when this function is called.
+  ///
+  /// \param args the arguments that will be forwarded to a command constructor.
+  ///
   template <std::derived_from<Command> T, typename... Args>
   void exec(Args&&... args)
   {
@@ -113,14 +102,12 @@ class CommandStack final {
     }
   }
 
-  /**
-   * Sets the maximum amount of commands that the stack can hold.
-   *
-   * If the supplied capacity is smaller than the current capacity, then commands are
-   * removed so that the size doesn't exceed the new capacity.
-   *
-   * \param capacity the maximum amount of commands.
-   */
+  /// Sets the maximum amount of commands that the stack can hold.
+  ///
+  /// If the supplied capacity is smaller than the current capacity, then commands are
+  /// removed so that the size doesn't exceed the new capacity.
+  ///
+  /// \param capacity the maximum amount of commands.
   void set_capacity(usize capacity);
 
   /// Indicates whether or not the current command stack state is clean.

@@ -28,15 +28,8 @@
 
 namespace tactile::ui {
 
-/**
- * Converts a color into an array of normalized color components.
- *
- * The array values are stored in the order red/green/blue/alpha.
- *
- * \param color the color that will be converted.
- *
- * \return an array of normalized color components.
- */
+/// Converts a color into an array of normalized color components.
+/// The array values are stored in the order red/green/blue/alpha.
 [[nodiscard]] constexpr auto color_to_array(const cen::color& color) noexcept
     -> std::array<float, 4>
 {

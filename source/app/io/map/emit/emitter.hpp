@@ -31,24 +31,22 @@ class MapDocument;
 
 namespace tactile::io {
 
-/**
- * Provides options for the Godot scene emitter.
- *
- * Note, all directory arguments will have "res://" prepended to them, i.e. they are
- * considered to be "project relative".
- *
- * There are of course differences in how Godot and Tactile handle tilemaps, so some
- * transformations have to be made in order to export a Tactile map to be usable within
- * Godot.
- *
- * The major differences include:
- * - Ellipses are not supported in Godot
- * - A `TileMap` in Godot is really just a tile layer, so we generate multiple such nodes
- * - A `TileMap` node in Godot may only have a single associated `TileSet`
- *
- * There is no one true way to organize a Godot project, so we let the user specify how
- * their repository is arranged.
- */
+/// Provides options for the Godot scene emitter.
+///
+/// Note, all directory arguments will have "res://" prepended to them, i.e. they are
+/// considered to be "project relative".
+///
+/// There are of course differences in how Godot and Tactile handle tilemaps, so some
+/// transformations have to be made in order to export a Tactile map to be usable within
+/// Godot.
+///
+/// The major differences include:
+/// - Ellipses are not supported in Godot
+/// - A `TileMap` in Godot is really just a tile layer, so we generate multiple such nodes
+/// - A `TileMap` node in Godot may only have a single associated `TileSet`
+///
+/// There is no one true way to organize a Godot project, so we let the user specify how
+/// their repository is arranged.
 struct GodotEmitOptions final {
   fs::path root_dir;                  ///< Path to the local project directory.
   fs::path project_map_dir;           ///< Relative path to the map directory.

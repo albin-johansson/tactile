@@ -45,30 +45,13 @@ enum class AttributeType {
   Object   /// An integer ID property, that refers to a map object.
 };
 
-/**
- * Returns the name of an attribute type for use in save files.
- *
- * \param type the type to query.
- *
- * \return a type name.
- *
- * \throws TactileError if the type is invalid.
- */
+/// Returns the name of an attribute type for use in save files.
 [[nodiscard]] auto stringify(AttributeType type) -> const char*;
 
+/// Parses an attribute type from a type name used in save files.
 [[nodiscard]] auto parse_attr_type(std::string_view name) -> Maybe<AttributeType>;
 
-/**
- * Outputs an attribute type using an output stream.
- *
- * This function simply forwards the result from `stringify(AttributeType)` to a
- * stream.
- *
- * \param stream the output stream.
- * \param type the attribute type to output.
- *
- * \return the used stream.
- */
+/// Outputs the result of calling `stringify` with the type to a stream.
 auto operator<<(std::ostream& stream, AttributeType type) -> std::ostream&;
 
 /// Strong type that represents object references.
@@ -76,13 +59,13 @@ enum object_t : int32 {
 };
 
 template <typename T>
-concept CAttributeType = std::same_as<T, std::string> ||  //
-                         std::same_as<T, int32> ||        //
-                         std::same_as<T, float> ||        //
-                         std::same_as<T, bool> ||         //
-                         std::same_as<T, cen::color> ||   //
-                         std::same_as<T, fs::path> ||     //
-                         std::same_as<T, object_t>;
+concept AnAttributeType = std::same_as<T, std::string> ||  //
+                          std::same_as<T, int32> ||        //
+                          std::same_as<T, float> ||        //
+                          std::same_as<T, bool> ||         //
+                          std::same_as<T, cen::color> ||   //
+                          std::same_as<T, fs::path> ||     //
+                          std::same_as<T, object_t>;
 
 /// Represents an "attribute" value, used by both property and component facilities.
 class Attribute final {
@@ -106,37 +89,21 @@ class Attribute final {
 
   explicit Attribute(const AttributeType type) { reset_to_default(type); }
 
-  /**
-   * Creates a property.
-   *
-   * \tparam T the type of the property value.
-   *
-   * \param value the attribute value.
-   */
-  template <CAttributeType T>
-  /*implicit*/ Attribute(T value)
+  /// Creates an attribute with an initial value.
+  template <AnAttributeType T>
+  /* implicit */ Attribute(T value)
   {
     mValue.emplace<T>(std::move(value));
   }
 
-  /**
-   * Updates the attribute value.
-   *
-   * \tparam T the value type.
-   *
-   * \param value the new attribute value.
-   */
-  template <CAttributeType T>
+  /// Updates the stored value of the attribute.
+  template <AnAttributeType T>
   void set_value(T value)
   {
     mValue.emplace<T>(std::move(value));
   }
 
-  /**
-   * Resets the value of the attribute to the the default of a specific type.
-   *
-   * \param type the new value type.
-   */
+  /// Resets the attribute to use the default value of the specified type.
   void reset_to_default(AttributeType type);
 
   /// Indicates whether the stored value is the default one.
@@ -235,19 +202,20 @@ class Attribute final {
  private:
   value_type mValue;
 
-  template <CAttributeType T>
+  template <AnAttributeType T>
   [[nodiscard]] auto holds() const noexcept -> bool
   {
     return std::holds_alternative<T>(mValue);
   }
 
-  template <CAttributeType T>
+  template <AnAttributeType T>
   [[nodiscard]] auto get_if() const noexcept -> const T*
   {
     return std::get_if<T>(&mValue);
   }
 };
 
+/// Outputs an attribute to a stream for debugging purposes.
 auto operator<<(std::ostream& stream, const Attribute& value) -> std::ostream&;
 
 }  // namespace tactile

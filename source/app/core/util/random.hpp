@@ -29,21 +29,15 @@ namespace tactile {
 
 using RandomEngine = std::mt19937;
 
-/**
- * Creates a seeded pseudo-random number generation engine.
- *
- * \return a seeded random engine.
- */
+/// Creates a seeded pseudo-random number generation engine.
 [[nodiscard]] auto make_random_engine() -> RandomEngine;
 
-/**
- * Returns a random value in the range [min, max].
- *
- * \param min the minimum possible value.
- * \param max the maximum possible value.
- *
- * \return a random value in the range.
- */
+/// Returns a random value in the range [min, max].
+///
+/// \param min the minimum possible value.
+/// \param max the maximum possible value.
+///
+/// \return a random value in the range.
 template <typename T>
 [[nodiscard]] auto next_random(const T min, const T max) -> T
 {
@@ -61,18 +55,10 @@ template <typename T>
   }
 }
 
-/**
- * Returns a random boolean value.
- *
- * \return a random boolean value.
- */
+/// Returns a random boolean value.
 [[nodiscard]] auto next_bool() -> bool;
 
-/**
- * Returns a random float in the interval [0, 1].
- *
- * \return a random normalized float.
- */
+/// Returns a random float in the interval [0, 1].
 [[nodiscard]] auto next_float() -> float;
 
 }  // namespace tactile

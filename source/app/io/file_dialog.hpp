@@ -23,12 +23,10 @@
 
 namespace tactile::io {
 
-/**
- * Utility class for importing and saving files.
- *
- * This class is a simple wrapper around the native-file-dialogs library, with
- * some additional utilities for dealing with map and image files, etc.
- */
+/// Utility class for importing and saving files.
+///
+/// This class is a simple wrapper around the native-file-dialogs library, with
+/// some additional utilities for dealing with map and image files, etc.
 class FileDialog final {
  public:
   [[nodiscard]] static auto open_folder() -> FileDialog;
@@ -50,7 +48,7 @@ class FileDialog final {
  private:
   const char* mPath {};
 
-  FileDialog(const char* path);
+  /* implicit */ FileDialog(const char* path);
 };
 
 }  // namespace tactile::io

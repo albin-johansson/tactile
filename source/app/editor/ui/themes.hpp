@@ -44,38 +44,39 @@ enum class EditorTheme {
   Vanilla = 13
 };
 
-constexpr std::array light_themes {EditorTheme::DearLight, EditorTheme::Vanilla};
+inline constexpr std::array light_themes [[maybe_unused]] = {
+    EditorTheme::DearLight,
+    EditorTheme::Vanilla,
+};
 
-constexpr std::array dark_themes {EditorTheme::DearDark,
-                                  EditorTheme::Ruby,
-                                  EditorTheme::Sapphire,
-                                  EditorTheme::Emerald,
-                                  EditorTheme::Amethyst,
-                                  EditorTheme::Amber,
-                                  EditorTheme::Diamond,
-                                  EditorTheme::Joker,
-                                  EditorTheme::Raspberry,
-                                  EditorTheme::Nocturnal,
-                                  EditorTheme::Ash,
-                                  EditorTheme::Stealth};
+inline constexpr std::array dark_themes [[maybe_unused]] = {
+    EditorTheme::DearDark,
+    EditorTheme::Ruby,
+    EditorTheme::Sapphire,
+    EditorTheme::Emerald,
+    EditorTheme::Amethyst,
+    EditorTheme::Amber,
+    EditorTheme::Diamond,
+    EditorTheme::Joker,
+    EditorTheme::Raspberry,
+    EditorTheme::Nocturnal,
+    EditorTheme::Ash,
+    EditorTheme::Stealth,
+};
 
 [[nodiscard]] auto human_readable_name(EditorTheme theme) -> std::string_view;
 
-/**
- * Applies the styling used by Tactile to a style instance.
- *
- * Note, this function does not affect the colors of the style.
- *
- * \param style the style that will be updated.
- */
+/// Applies the styling used by Tactile to a style instance.
+///
+/// Note, this function does not affect the colors of the style.
+///
+/// \param style the style that will be updated.
 void apply_style(ImGuiStyle& style);
 
-/**
- * Applies a theme to a style.
- *
- * \param style the style that will be affected.
- * \param theme the theme that will be applied to the style.
- */
+/// Applies a theme to a style.
+///
+/// \param style the style that will be affected.
+/// \param theme the theme that will be applied to the style.
 void apply_theme(ImGuiStyle& style, EditorTheme theme);
 
 }  // namespace tactile::ui

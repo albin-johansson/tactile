@@ -26,8 +26,8 @@ namespace tactile {
 using LayerID = int32;
 using ObjectID = int32;
 
-using TileIndex = int32;  /// For local tile identifiers.
-using TileID = int32;     /// For global tile identifiers.
+using TileIndex = int32;  ///< For local tile identifiers.
+using TileID = int32;     ///< For global tile identifiers.
 
 inline constexpr TileID empty_tile = 0;
 

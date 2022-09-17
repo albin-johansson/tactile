@@ -26,12 +26,10 @@
 
 namespace tactile {
 
-/**
- * Invokes a function object N times.
- *
- * \param n the amount of times the callable should be invoked.
- * \param callable a function object.
- */
+/// Invokes a function object N times.
+///
+/// \param n the amount of times the callable should be invoked.
+/// \param callable a function object.
 template <std::integral T, std::invocable U>
 constexpr void invoke_n(const T n, U&& callable) noexcept(noexcept(callable()))
 {
@@ -40,15 +38,13 @@ constexpr void invoke_n(const T n, U&& callable) noexcept(noexcept(callable()))
   }
 }
 
-/**
- * Invokes a function object M*N times.
- *
- * This function is a more functional approach to nested for-loops.
- *
- * \param m the amount of times the outer loop is run.
- * \param n the amount of times the inner loop is run (for each outer loop iteration).
- * \param callable a function object.
- */
+/// Invokes a function object M*N times.
+///
+/// This function is a more functional approach to nested for-loops.
+///
+/// \param m the amount of times the outer loop is run.
+/// \param n the amount of times the inner loop is run (for each outer loop iteration).
+/// \param callable a function object.
 template <std::integral T, std::invocable<T, T> U>
 constexpr void invoke_mn(const T m,
                          const T n,

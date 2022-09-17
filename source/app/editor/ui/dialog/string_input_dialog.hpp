@@ -30,9 +30,7 @@
 
 namespace tactile::ui {
 
-/**
- * An abstract class representing dialogs which provide a string input field.
- */
+/// Abstract class representing dialogs which provide a string input field.
 class AStringInputDialog : public Dialog {
  public:
   explicit AStringInputDialog(std::string title);
@@ -47,29 +45,12 @@ class AStringInputDialog : public Dialog {
   [[nodiscard]] auto is_current_input_valid(const DocumentModel& model) const
       -> bool final;
 
-  /**
-   * Validates an input string.
-   *
-   * \param model the associated model instance.
-   * \param input the current input string.
-   *
-   * \return `true` if the input string is valid; `false` otherwise.
-   */
+  /// Validates an input string.
   [[nodiscard]] virtual auto validate(const DocumentModel& model,
                                       std::string_view input) const -> bool = 0;
 
-  /**
-   * Returns the current string input.
-   *
-   * \return a view into the current input.
-   */
   [[nodiscard]] auto current_input() const -> std::string_view;
 
-  /**
-   * Returns the initial input string.
-   *
-   * \return the initial input.
-   */
   [[nodiscard]] auto previous_input() const -> const std::string&;
 
  private:

@@ -27,9 +27,7 @@
 
 namespace tactile::ui {
 
-/**
- * Provides information about a failed attempt to parse a map.
- */
+/// Provides information about a failed attempt to parse a map.
 class MapParseErrorDialog final : public Dialog {
  public:
   MapParseErrorDialog();

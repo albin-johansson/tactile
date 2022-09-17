@@ -27,9 +27,7 @@
 
 namespace tactile {
 
-/**
- * Manages the tools associated with a map document.
- */
+/// Manages the tools associated with a map document.
 class ToolManager final : private Tool {
  public:
   TACTILE_DELETE_COPY(ToolManager);
@@ -76,7 +74,7 @@ class ToolManager final : private Tool {
   struct Data;
   Unique<Data> mData;
 
-  /* Do not call these functions, they will just raise exceptions */
+  // Do not call these functions, they will just raise exceptions
   [[nodiscard, deprecated]] auto get_type() const -> ToolType override;
   [[nodiscard, deprecated]] auto is_available(const DocumentModel& model) const
       -> bool override;

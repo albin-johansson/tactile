@@ -51,25 +51,21 @@ class EventLoop {
   /// Called immediately after the event loop stops running.
   virtual void on_shutdown() {}
 
-  /**
-   * Called once for each frame before `on_update()`.
-   *
-   * This function is useful to do tasks that cannot be done between calls to the
-   * NewFrame/EndFrame functions of Dear ImGui.
-   */
+  /// Called once for each frame before `on_update`.
+  ///
+  /// This function is useful to do tasks that cannot be done between calls to the
+  /// NewFrame/EndFrame functions of Dear ImGui.
   virtual void on_pre_update() {}
 
   /// Called once for each frame.
   virtual void on_update() = 0;
 
-  /**
-   * Called for every pending event.
-   *
-   * Note, quit events are handled automatically, so don't check for them in the
-   * overridden version.
-   *
-   * \param handler the event handler for the pending event.
-   */
+  /// Called for every pending event.
+  ///
+  /// Note, quit events are handled automatically, so don't check for them in the
+  /// overridden version.
+  ///
+  /// \param handler the event handler for the pending event.
   virtual void on_event(const cen::event_handler& handler) = 0;
 
  private:

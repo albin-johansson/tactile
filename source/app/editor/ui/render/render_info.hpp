@@ -31,11 +31,7 @@ class Viewport;
 
 namespace tactile::ui {
 
-/**
- * Provides useful information about a rendering context.
- *
- * \see get_render_info()
- */
+/// Provides useful information about a rendering context.
 struct RenderInfo final {
   ImVec2 canvas_tl {};  ///< Top-left point of the canvas.
   ImVec2 canvas_br {};  ///< Bottom-right point of the canvas.

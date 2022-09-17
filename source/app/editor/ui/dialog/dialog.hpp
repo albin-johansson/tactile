@@ -32,7 +32,7 @@ class DocumentModel;
 
 namespace tactile::ui {
 
-/// Serves as the base implementation of all modal dialogs.
+/// The base class of all modal dialogs.
 class Dialog {
  public:
   TACTILE_DEFAULT_COPY(Dialog);
@@ -42,94 +42,57 @@ class Dialog {
 
   virtual ~Dialog() noexcept = default;
 
-  /**
-   * Updates the state of the dialog.
-   *
-   * \param model the associated model.
-   * \param dispatcher the event dispatcher used.
-   */
+  /// Updates the state of the dialog.
   void update(const DocumentModel& model, entt::dispatcher& dispatcher);
 
  protected:
-  /**
-   * Updates dialog specific components.
-   *
-   * Do not provide components such as accept and close buttons in this function.
-   *
-   * \param model the associated model.
-   * \param dispatcher the event dispatcher used.
-   */
+  /// Updates dialog specific components.
+  /// Do not provide widgets such as accept and close buttons in this function.
   virtual void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) = 0;
 
-  /**
-   * Invoked when the "Cancel" button is pressed.
-   */
+  /// Invoked when the "Cancel" button is pressed.
   virtual void on_cancel() {}
 
-  /**
-   * Invoked when the "OK" (accept) button is pressed.
-   *
-   * \param dispatcher the event dispatcher used.
-   */
+  /// Invoked when the "OK" (accept) button is pressed.
   virtual void on_accept([[maybe_unused]] entt::dispatcher& dispatcher) {}
 
-  /**
-   * Invoked when the "Apply" (secondary accept) button is pressed.
-   *
-   * \param dispatcher the event dispatcher used.
-   */
+  /// Invoked when the "Apply" (secondary accept) button is pressed.
   virtual void on_apply([[maybe_unused]] entt::dispatcher& dispatcher) {}
 
-  /**
-   * Indicates whether the current input state is considered acceptable.
-   *
-   * \param model the associated model.
-   *
-   * \return `true` if the state of the input is acceptable; `false` otherwise.
-   */
+  /// Indicates whether the current input state is considered acceptable.
   [[nodiscard]] virtual auto is_current_input_valid(
       [[maybe_unused]] const DocumentModel& model) const -> bool
   {
     return true;
   }
 
-  /**
-   * Makes the dialog visible.
-   *
-   * This is meant to be used by derived classes to actually display the dialog.
-   * This function is protected since not all dialogs supports being shown with no initial
-   * arguments.
-   */
+  /// Makes the dialog visible.
+  ///
+  /// This is meant to be used by derived classes to actually display the dialog.
+  /// This function is protected since not all dialogs supports being shown with no
+  /// initial arguments.
   void make_visible();
 
-  /**
-   * Includes an "Apply" button.
-   *
-   * By default, the apply button is not shown.
-   *
-   * \see on_apply()
-   */
+  /// Includes an "Apply" button.
+  /// By default, the apply button is not shown.
   void use_apply_button();
 
+  /// Sets the title of the dialog, this must be set before the dialog is updated.
   void set_title(std::string title);
 
-  /**
-   * Sets the label of the "accept" button.
-   *
-   * By default, the accept button uses "OK" as its label. However, it is often
-   * more intuitive to use more descriptive verbs as the label.
-   *
-   * \param label the label text, use an empty optional to hide the button.
-   */
+  /// Sets the label of the "accept" button.
+  ///
+  /// By default, the accept button uses "OK" as its label. However, it is often
+  /// more intuitive to use more descriptive verbs as the label.
+  ///
+  /// \param label the label text, use an empty optional to hide the button.
   void set_accept_button_label(Maybe<std::string> label);
 
-  /**
-   * Sets the label of the "close" button.
-   *
-   * By default, the accept button uses "Cancel" as its label.
-   *
-   * \param label the label text, use an empty optional to hide the button.
-   */
+  /// Sets the label of the "close" button.
+  ///
+  /// By default, the accept button uses "Cancel" as its label.
+  ///
+  /// \param label the label text, use an empty optional to hide the button.
   void set_close_button_label(Maybe<std::string> label);
 
  private:

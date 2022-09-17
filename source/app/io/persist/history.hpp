@@ -44,13 +44,11 @@ void set_last_closed_file(const fs::path& path);
 /// Returns the current in-memory recent file history.
 [[nodiscard]] auto file_history() -> const std::deque<std::string>&;
 
-/**
- * Indicates whether there is a valid most recently closed file entry.
- *
- * The last closed file is considered valid if it's set and refers to an existing file.
- *
- * \return `true` if the last closed file is valid; `false` otherwise.
- */
+/// Indicates whether there is a valid most recently closed file entry.
+///
+/// The last closed file is considered valid if it's set and refers to an existing file.
+///
+/// \return true if the last closed file is valid; false otherwise.
 [[nodiscard]] auto is_last_closed_file_valid() -> bool;
 
 /// Returns the file path to the most recently closed file.

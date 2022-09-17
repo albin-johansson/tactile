@@ -29,9 +29,7 @@
 
 namespace tactile::ui {
 
-/**
- * Provides a common simplified rendering API.
- */
+/// Provides a common simplified rendering API.
 class GraphicsCtx final {
  public:
   explicit GraphicsCtx(const RenderInfo& info);
@@ -81,14 +79,12 @@ class GraphicsCtx final {
 
   void render_image(uint texture, const ImVec2& position, const ImVec2& size);
 
-  /**
-   * Renders a portion of a tileset texture.
-   *
-   * \param texture the identifier for the source texture that will be rendered.
-   * \param source the region of the texture that will be rendered.
-   * \param position the position of the rendered image on the screen.
-   * \param uv the ratio between the tileset tile size and the texture size.
-   */
+  /// Renders a portion of a tileset texture.
+  ///
+  /// \param texture the identifier for the source texture that will be rendered.
+  /// \param source the region of the texture that will be rendered.
+  /// \param position the position of the rendered image on the screen.
+  /// \param uv the ratio between the tileset tile size and the texture size.
   void render_image(uint texture,
                     const ImVec4& source,
                     const ImVec2& position,
