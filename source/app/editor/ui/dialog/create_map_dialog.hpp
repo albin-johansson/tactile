@@ -40,7 +40,7 @@ class CreateMapDialog final : public Dialog {
       -> bool override;
 
  private:
-  int2 mTileSize {};
+  Int2 mTileSize {};
   int mRows {};
   int mColumns {};
 };

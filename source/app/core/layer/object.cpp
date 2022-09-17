@@ -33,12 +33,12 @@ void Object::accept(ContextVisitor& visitor) const
   visitor.visit(*this);
 }
 
-void Object::set_pos(const float2& pos)
+void Object::set_pos(const Float2& pos)
 {
   mPos = pos;
 }
 
-void Object::set_size(const float2& size)
+void Object::set_size(const Float2& size)
 {
   mSize = size;
 }
@@ -102,12 +102,12 @@ auto Object::is_point() const -> bool
   return mType == ObjectType::Point;
 }
 
-auto Object::get_pos() const -> const float2&
+auto Object::get_pos() const -> const Float2&
 {
   return mPos;
 }
 
-auto Object::get_size() const -> const float2&
+auto Object::get_size() const -> const Float2&
 {
   return mSize;
 }

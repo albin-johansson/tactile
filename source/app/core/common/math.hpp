@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include <concepts>  // unsigned_integral
-
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
@@ -29,27 +27,12 @@
 
 namespace tactile {
 
-using Vector2i = glm::vec<2, int32>;
-using Vector3i = glm::vec<3, int32>;
-using Vector4i = glm::vec<4, int32>;
+using Int2 = glm::vec<2, int32>;
+using Int3 = glm::vec<3, int32>;
+using Int4 = glm::vec<4, int32>;
 
-using Vector2f = glm::vec2;
-using Vector3f = glm::vec3;
-using Vector4f = glm::vec4;
-
-using int2 = Vector2i;
-using int3 = Vector3i;
-using int4 = Vector4i;
-
-using float2 = Vector2f;
-using float3 = Vector3f;
-using float4 = Vector4f;
-
-/// Returns the difference between two unsigned integers
-template <std::unsigned_integral T>
-[[nodiscard]] constexpr auto udiff(const T a, const T b) noexcept -> T
-{
-  return (a < b) ? (b - a) : (a - b);
-}
+using Float2 = glm::vec2;
+using Float3 = glm::vec3;
+using Float4 = glm::vec4;
 
 }  // namespace tactile

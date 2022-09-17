@@ -50,7 +50,7 @@ void DocumentModel::each(const VisitorFunc& func) const
   }
 }
 
-auto DocumentModel::add_map(const int2& tile_size, const usize rows, const usize columns)
+auto DocumentModel::add_map(const Int2& tile_size, const usize rows, const usize columns)
     -> UUID
 {
   // TODO move this to a command

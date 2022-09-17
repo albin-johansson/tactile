@@ -26,7 +26,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto get_bounds(const Object& object, const float2& tile_size) -> Vector4f
+[[nodiscard]] auto get_bounds(const Object& object, const Float2& tile_size) -> Float4
 {
   if (object.is_point()) {
     return {object.get_pos() - (tile_size * 0.25f), tile_size * 0.5f};
@@ -132,7 +132,7 @@ auto ObjectLayer::get_object(const UUID& id) const -> const Object&
   return *lookup_in(mObjects, id);
 }
 
-auto ObjectLayer::object_at(const float2& pos, const float2& tile_size) const
+auto ObjectLayer::object_at(const Float2& pos, const Float2& tile_size) const
     -> Maybe<UUID>
 {
   for (const auto& [id, object] : mObjects) {

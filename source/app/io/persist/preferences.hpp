@@ -45,7 +45,7 @@ inline constexpr auto def_language = Lang::EN;
 inline constexpr auto def_viewport_overlay_pos = OverlayPos::BottomRight;
 inline constexpr auto def_theme = ui::EditorTheme::Nocturnal;
 inline constexpr cen::color def_viewport_bg {0x3C, 0x3C, 0x3C};
-inline constexpr int2 def_preferred_tile_size {32, 32};
+inline constexpr Int2 def_preferred_tile_size {32, 32};
 inline constexpr usize def_command_capacity = 100;
 
 inline constexpr bool def_embed_tilesets = false;
@@ -72,7 +72,7 @@ struct PreferenceState final {
   ui::EditorTheme theme {def_theme};
   cen::color viewport_background {def_viewport_bg};
   usize command_capacity {def_command_capacity};
-  int2 preferred_tile_size {def_preferred_tile_size};
+  Int2 preferred_tile_size {def_preferred_tile_size};
   int32 font_size {ui::def_font_size};
   OverlayPos viewport_overlay_pos {def_viewport_overlay_pos};
   bool embed_tilesets {def_embed_tilesets};

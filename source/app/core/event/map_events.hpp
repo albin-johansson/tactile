@@ -39,7 +39,7 @@ struct RemoveRowEvent final {};
 struct RemoveColumnEvent final {};
 
 struct CreateMapEvent final {
-  int2 tile_size {};
+  Int2 tile_size {};
   usize row_count {};
   usize column_count {};
 };

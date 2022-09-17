@@ -76,21 +76,21 @@ struct FloodEvent final {
 /// Emitted when a rectangle should be added to an object layer.
 struct AddRectangleEvent final {
   UUID layer_id {};
-  float2 pos {};
-  float2 size {};
+  Float2 pos {};
+  Float2 size {};
 };
 
 /// Emitted when an ellipse should be added to an object layer.
 struct AddEllipseEvent final {
   UUID layer_id {};
-  float2 pos {};
-  float2 size {};
+  Float2 pos {};
+  Float2 size {};
 };
 
 /// Emitted when a point should be added to an object layer.
 struct AddPointEvent final {
   UUID layer_id {};
-  float2 pos {};
+  Float2 pos {};
 };
 
 }  // namespace tactile

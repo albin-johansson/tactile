@@ -66,7 +66,7 @@ class ObjectLayer final : public Layer {
   [[nodiscard]] auto get_object(const UUID& id) -> Object&;
   [[nodiscard]] auto get_object(const UUID& id) const -> const Object&;
 
-  [[nodiscard]] auto object_at(const float2& pos, const float2& tile_size) const
+  [[nodiscard]] auto object_at(const Float2& pos, const Float2& tile_size) const
       -> Maybe<UUID>;
 
   [[nodiscard]] auto get_opacity() const -> float override;

@@ -30,8 +30,8 @@ TEST(Object, Defaults)
   ASSERT_EQ(ObjectType::Rect, object.get_type());
   ASSERT_TRUE(object.is_rect());
 
-  ASSERT_EQ(float2 {}, object.get_pos());
-  ASSERT_EQ(float2 {}, object.get_size());
+  ASSERT_EQ(Float2 {}, object.get_pos());
+  ASSERT_EQ(Float2 {}, object.get_size());
 
   ASSERT_EQ("", object.ctx().name());
   ASSERT_EQ("", object.get_tag());

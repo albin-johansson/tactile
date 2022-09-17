@@ -66,11 +66,11 @@ class Tileset final : public Context {
 
   [[nodiscard]] auto texture_path() const -> const fs::path& { return mTexturePath; }
 
-  [[nodiscard]] auto texture_size() const noexcept -> const int2& { return mTextureSize; }
+  [[nodiscard]] auto texture_size() const noexcept -> const Int2& { return mTextureSize; }
 
-  [[nodiscard]] auto tile_size() const noexcept -> const int2& { return mTileSize; }
+  [[nodiscard]] auto tile_size() const noexcept -> const Int2& { return mTileSize; }
 
-  [[nodiscard]] auto uv_size() const noexcept -> const float2& { return mUvSize; }
+  [[nodiscard]] auto uv_size() const noexcept -> const Float2& { return mUvSize; }
 
   [[nodiscard]] auto row_count() const noexcept -> int32 { return mRowCount; }
 
@@ -88,11 +88,11 @@ class Tileset final : public Context {
  private:
   ContextInfo mContext;
   uint mTextureId {};
-  int2 mTextureSize {};
-  int2 mTileSize {};
+  Int2 mTextureSize {};
+  Int2 mTileSize {};
   int32 mRowCount {};
   int32 mColumnCount {};
-  float2 mUvSize {};
+  Float2 mUvSize {};
   HashMap<TileIndex, UUID> mIdentifiers;
   HashMap<UUID, Shared<Tile>> mMetaTiles;
   fs::path mTexturePath;

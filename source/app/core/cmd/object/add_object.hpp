@@ -36,8 +36,8 @@ class AddObject final : public Command {
   AddObject(MapDocument* document,
             const UUID& layer_id,
             ObjectType type,
-            const float2& pos,
-            const float2& size = {});
+            const Float2& pos,
+            const Float2& size = {});
 
   void undo() override;
 
@@ -49,8 +49,8 @@ class AddObject final : public Command {
   MapDocument* mDocument {};
   UUID mLayerId {};
   ObjectType mObjectType {};
-  float2 mPos {};
-  float2 mSize {};
+  Float2 mPos {};
+  Float2 mSize {};
   Maybe<UUID> mObjectId;
 };
 

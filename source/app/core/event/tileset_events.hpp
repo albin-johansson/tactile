@@ -35,7 +35,7 @@ struct InspectTilesetEvent final {};
 
 struct LoadTilesetEvent final {
   fs::path path;
-  int2 tile_size {};
+  Int2 tile_size {};
 };
 
 struct RemoveTilesetEvent final {

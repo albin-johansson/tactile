@@ -46,11 +46,11 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
                             entt::dispatcher& dispatcher)
 {
   const auto& tileset = tileset_ref.view_tileset();
-  const float2 texture_size = tileset.texture_size();
+  const Float2 texture_size = tileset.texture_size();
 
-  const float2 min_offset {viewport_size.x - texture_size.x,
+  const Float2 min_offset {viewport_size.x - texture_size.x,
                            viewport_size.y - texture_size.y};
-  const float2 max_offset {};
+  const Float2 max_offset {};
 
   const auto& limits = tileset_ref.get_viewport().get_limits();
   if (!limits.has_value() || min_offset != limits->min_offset) {
@@ -68,7 +68,7 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
   /* This has no effect when users use touchpads, but that is handled separately */
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto& io = ImGui::GetIO();
-    const float2 delta {io.MouseDelta.x, io.MouseDelta.y};
+    const Float2 delta {io.MouseDelta.x, io.MouseDelta.y};
     dispatcher.enqueue<OffsetTilesetViewportEvent>(tileset.get_uuid(), delta);
   }
 }

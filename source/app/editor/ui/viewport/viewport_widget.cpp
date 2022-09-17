@@ -120,7 +120,7 @@ void viewport_widget_mouse_wheel_event_handler(const Viewport& viewport,
     }
   }
   else {
-    const float2 precise {event.precise_x(), event.precise_y()};
+    const Float2 precise {event.precise_x(), event.precise_y()};
 
     auto delta = precise * (viewport.get_tile_size() / scaling);
     delta.x = -delta.x;

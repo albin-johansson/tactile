@@ -28,8 +28,8 @@
 namespace tactile::cmd {
 
 MoveObject::MoveObject(Shared<Object> object,
-                       const float2& previous,
-                       const float2& updated)
+                       const Float2& previous,
+                       const Float2& updated)
     : mObject {std::move(object)}
     , mPreviousPos {previous}
     , mUpdatedPos {updated}

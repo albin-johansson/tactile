@@ -32,8 +32,8 @@ namespace tactile::cmd {
 AddObject::AddObject(MapDocument* document,
                      const UUID& layer_id,
                      ObjectType type,
-                     const float2& pos,
-                     const float2& size)
+                     const Float2& pos,
+                     const Float2& size)
     : mDocument {document}
     , mLayerId {layer_id}
     , mObjectType {type}

@@ -55,7 +55,7 @@ class Tile final : public Context {
 
   void set_animation(TileAnimation animation);
 
-  void set_source(const int4& source);
+  void set_source(const Int4& source);
 
   /// Returns the amount of embedded objects.
   [[nodiscard]] auto object_count() const -> usize;
@@ -76,12 +76,12 @@ class Tile final : public Context {
 
   [[nodiscard]] auto index() const noexcept -> TileIndex { return mIndex; }
 
-  [[nodiscard]] auto source() const noexcept -> const int4& { return mSource; }
+  [[nodiscard]] auto source() const noexcept -> const Int4& { return mSource; }
 
  private:
   TileIndex mIndex;
   ContextInfo mContext;
-  int4 mSource;
+  Int4 mSource {};
   Maybe<TileAnimation> mAnimation;
   ObjectMap mObjects;
 };

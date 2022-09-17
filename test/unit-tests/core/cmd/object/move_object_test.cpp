@@ -39,10 +39,10 @@ TEST(MoveObject, RedoUndo)
                       .with_object(ObjectType::Rect, &object)
                       .result();
 
-  const float2 initial_pos {843, 317};
+  const Float2 initial_pos {843, 317};
   object->set_pos(initial_pos);
 
-  const float2 new_pos {-835, 94};
+  const Float2 new_pos {-835, 94};
   cmd::MoveObject cmd {object, initial_pos, new_pos};
 
   cmd.redo();

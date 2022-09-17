@@ -55,7 +55,7 @@ struct GodotTexture final {
 
 struct GodotAnimationFrame final {
   SubResource id {};
-  Vector4i region {};
+  Int4 region {};
 };
 
 struct GodotAnimation final {
@@ -74,7 +74,7 @@ struct Identifiers final {
 
 struct GodotRectangleShape final {
   SubResource id {};
-  float2 extents {};
+  Float2 extents {};
 };
 
 struct TilesetExportInfo final {
@@ -608,11 +608,11 @@ void emit_rectangle_object(std::ostream& stream,
 
 [[nodiscard]] auto approximate_ellipse_as_polygon(const ir::ObjectData& object,
                                                   const GodotEmitOptions& options)
-    -> std::vector<float2>
+    -> std::vector<Float2>
 {
   TACTILE_ASSERT(object.type == ObjectType::Ellipse);
 
-  std::vector<float2> points;
+  std::vector<Float2> points;
   points.reserve(options.ellipse_polygon_point_count);
 
   const auto n = static_cast<double>(options.ellipse_polygon_point_count);

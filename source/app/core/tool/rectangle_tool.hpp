@@ -26,8 +26,8 @@
 namespace tactile {
 
 struct CurrentRectangleStroke final {
-  float2 start {};
-  float2 current {};
+  Float2 start {};
+  Float2 current {};
 };
 
 class RectangleTool final : public Tool {

@@ -158,7 +158,7 @@ class Map final : public Context {
   [[nodiscard]] auto get_tilesets() const -> const TilesetBundle&;
 
   /// Sets the logical size of all tiles.
-  void set_tile_size(const int2& size);
+  void set_tile_size(const Int2& size);
 
   /// Indicates whether a position is within the map.
   [[nodiscard]] auto is_valid_position(const TilePos& pos) const -> bool;
@@ -166,7 +166,7 @@ class Map final : public Context {
   [[nodiscard]] auto row_count() const -> usize;
   [[nodiscard]] auto column_count() const -> usize;
 
-  [[nodiscard]] auto tile_size() const -> const int2&;
+  [[nodiscard]] auto tile_size() const -> const Int2&;
 
   /// Indicates whether the stamp tool randomizer mode is available.
   [[nodiscard]] auto is_stamp_randomizer_possible() const -> bool;
@@ -196,7 +196,7 @@ class Map final : public Context {
   ContextInfo mContext;          ///< Map context information.
   usize mRowCount {5};           ///< Amount of rows.
   usize mColCount {5};           ///< Amount of columns.
-  int2 mTileSize {32, 32};       ///< Logical size of all tiles.
+  Int2 mTileSize {32, 32};       ///< Logical size of all tiles.
   GroupLayer mRootLayer;         ///< Invisible root layer.
   Maybe<UUID> mActiveLayer;      ///< The selected layer.
   TilesetBundle mTilesets;       ///< The associated tilesets.

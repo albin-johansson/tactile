@@ -102,7 +102,7 @@ void center_viewport(const Viewport& viewport,
 
   const auto dx = std::round(((canvas_size.x - width) / 2.0f) - offset.x);
   const auto dy = std::round(((canvas_size.y - height) / 2.0f) - offset.y);
-  const float2 delta {dx, dy};
+  const Float2 delta {dx, dy};
 
   dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
 }

@@ -66,7 +66,7 @@ void Tile::set_animation(TileAnimation animation)
   mAnimation = std::move(animation);
 }
 
-void Tile::set_source(const int4& source)
+void Tile::set_source(const Int4& source)
 {
   mSource = source;
 }

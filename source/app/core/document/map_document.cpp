@@ -31,7 +31,7 @@
 
 namespace tactile {
 
-MapDocument::MapDocument(const int2& tile_size, const usize rows, const usize columns)
+MapDocument::MapDocument(const Int2& tile_size, const usize rows, const usize columns)
     : mMap {std::make_shared<Map>()}
     , mDelegate {mMap->get_uuid()}
 {
@@ -144,18 +144,18 @@ void MapDocument::flood(const UUID& layer_id,
 }
 
 void MapDocument::add_rectangle(const UUID& layer_id,
-                                const float2& pos,
-                                const float2& size)
+                                const Float2& pos,
+                                const Float2& size)
 {
   get_history().exec<cmd::AddObject>(this, layer_id, ObjectType::Rect, pos, size);
 }
 
-void MapDocument::add_ellipse(const UUID& layer_id, const float2& pos, const float2& size)
+void MapDocument::add_ellipse(const UUID& layer_id, const Float2& pos, const Float2& size)
 {
   get_history().exec<cmd::AddObject>(this, layer_id, ObjectType::Ellipse, pos, size);
 }
 
-void MapDocument::add_point(const UUID& layer_id, const float2& pos)
+void MapDocument::add_point(const UUID& layer_id, const Float2& pos)
 {
   get_history().exec<cmd::AddObject>(this, layer_id, ObjectType::Point, pos);
 }
@@ -167,8 +167,8 @@ void MapDocument::remove_object(const UUID& object_id)
 }
 
 void MapDocument::move_object(const UUID& object_id,
-                              const float2& previous,
-                              const float2& updated)
+                              const Float2& previous,
+                              const Float2& updated)
 {
   auto object = get_object(object_id);
   get_history().exec<cmd::MoveObject>(std::move(object), previous, updated);

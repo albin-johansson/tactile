@@ -35,19 +35,19 @@ struct DecreaseZoomEvent final {};
 struct IncreaseZoomEvent final {};
 
 struct OffsetDocumentViewportEvent final {
-  float2 delta {};  /// The offset to apply.
+  Float2 delta {};  /// The offset to apply.
 };
 
 struct OffsetTilesetViewportEvent final {
   UUID tileset_id {};  /// The target tileset.
-  float2 delta {};     /// The offset to apply.
+  Float2 delta {};     /// The offset to apply.
 };
 
 /// Event used to update the limits of tilesets in the tileset dock widget.
 struct UpdateTilesetViewportLimitsEvent final {
   UUID tileset_id {};    /// The target tileset.
-  float2 min_offset {};  /// The minimum offset.
-  float2 max_offset {};  /// The maximum offset.
+  Float2 min_offset {};  /// The minimum offset.
+  Float2 max_offset {};  /// The maximum offset.
 };
 
 struct PanUpEvent final {};

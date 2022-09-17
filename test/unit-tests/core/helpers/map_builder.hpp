@@ -36,7 +36,7 @@ class MapBuilder final {
 
   [[nodiscard]] static auto build() -> MapBuilder;
 
-  auto with_tile_size(const int2& size) -> MapBuilder&;
+  auto with_tile_size(const Int2& size) -> MapBuilder&;
 
   auto with_size(usize rows, usize columns) -> MapBuilder&;
 

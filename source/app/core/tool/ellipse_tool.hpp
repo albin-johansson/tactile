@@ -26,8 +26,8 @@
 namespace tactile {
 
 struct CurrentEllipseStroke final {
-  float2 start {};
-  float2 current {};
+  Float2 start {};
+  Float2 current {};
 };
 
 class EllipseTool final : public Tool {

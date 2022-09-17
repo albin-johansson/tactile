@@ -619,7 +619,7 @@ void App::on_increase_zoom()
   if (auto* document = active_document()) {
     auto& viewport = document->get_viewport();
     const auto mousePos = ImGui::GetIO().MousePos;
-    viewport.zoom_in(float2 {mousePos.x, mousePos.y});
+    viewport.zoom_in(Float2 {mousePos.x, mousePos.y});
   }
 }
 
@@ -628,7 +628,7 @@ void App::on_decrease_zoom()
   if (auto* document = active_document()) {
     auto& viewport = document->get_viewport();
     const auto mousePos = ImGui::GetIO().MousePos;
-    viewport.zoom_out(float2 {mousePos.x, mousePos.y});
+    viewport.zoom_out(Float2 {mousePos.x, mousePos.y});
   }
 }
 

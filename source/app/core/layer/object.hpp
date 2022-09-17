@@ -42,8 +42,8 @@ class Object final : public Context {
 
   void accept(ContextVisitor& visitor) const override;
 
-  void set_pos(const float2& pos);
-  void set_size(const float2& size);
+  void set_pos(const Float2& pos);
+  void set_size(const Float2& size);
 
   /// Changes the type of the object.
   /// When converting to point, both width and height are set to zero.
@@ -66,8 +66,8 @@ class Object final : public Context {
   [[nodiscard]] auto is_ellipse() const -> bool;
   [[nodiscard]] auto is_point() const -> bool;
 
-  [[nodiscard]] auto get_pos() const -> const float2&;
-  [[nodiscard]] auto get_size() const -> const float2&;
+  [[nodiscard]] auto get_pos() const -> const Float2&;
+  [[nodiscard]] auto get_size() const -> const Float2&;
 
   [[nodiscard]] auto get_tag() const -> const std::string&;
 
@@ -80,8 +80,8 @@ class Object final : public Context {
 
  private:
   ContextInfo mContext;
-  float2 mPos {};            ///< Object position.
-  float2 mSize {};           ///< Object size (might be zero).
+  Float2 mPos {};            ///< Object position.
+  Float2 mSize {};           ///< Object size (might be zero).
   ObjectType mType;          ///< Specific object type.
   std::string mTag;          ///< Optional user-provided tag.
   Maybe<int32> mMetaId;      ///< Identifier used in save files.

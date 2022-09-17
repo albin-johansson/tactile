@@ -29,7 +29,7 @@ namespace tactile::cmd {
 /// Command for moving an object in a map.
 class MoveObject final : public Command {
  public:
-  MoveObject(Shared<Object> object, const float2& previous, const float2& updated);
+  MoveObject(Shared<Object> object, const Float2& previous, const Float2& updated);
 
   void undo() override;
 
@@ -39,8 +39,8 @@ class MoveObject final : public Command {
 
  private:
   Shared<Object> mObject;
-  float2 mPreviousPos {};
-  float2 mUpdatedPos {};
+  Float2 mPreviousPos {};
+  Float2 mUpdatedPos {};
 };
 
 }  // namespace tactile::cmd

@@ -33,7 +33,7 @@ void render_tileset(GraphicsCtx& graphics, const TilesetDocument& document)
 {
   const auto& tileset = document.view_tileset();
 
-  const float2 tile_size = tileset.tile_size();
+  const Float2 tile_size = tileset.tile_size();
   const auto uv = from_vec(tileset.uv_size());
 
   invoke_mn(tileset.row_count(), tileset.column_count(), [&](int32 row, int32 col) {

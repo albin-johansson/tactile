@@ -37,8 +37,8 @@ struct SelectObjectEvent final {
 /// Emitted after an object has been moved.
 struct MoveObjectEvent final {
   UUID object_id {};  /// ID of the object to move.
-  float2 previous;    /// Previous position of the object.
-  float2 updated;     /// Updated position of the object.
+  Float2 previous;    /// Previous position of the object.
+  Float2 updated;     /// Updated position of the object.
 };
 
 /// Emitted when the visibility of an object should be changed.

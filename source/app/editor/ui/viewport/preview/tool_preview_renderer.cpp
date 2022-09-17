@@ -110,7 +110,7 @@ void ToolPreviewRenderer::visit(const RectangleTool& tool)
     const auto pos = graphics.get_origin() + stroke->start;
     const auto size = stroke->current - stroke->start;
 
-    graphics.draw_rect(pos + float2 {1, 1}, size, cen::colors::black, 1.0f);
+    graphics.draw_rect(pos + Float2 {1, 1}, size, cen::colors::black, 1.0f);
     graphics.draw_rect(pos, size, cen::colors::yellow, 1.0f);
   }
 }
@@ -124,7 +124,7 @@ void ToolPreviewRenderer::visit(const EllipseTool& tool)
     const auto radius = stroke->current - stroke->start;
     const auto center = stroke->start + radius;
 
-    graphics.draw_ellipse(center + float2 {1, 1}, radius, cen::colors::black, 1.0f);
+    graphics.draw_ellipse(center + Float2 {1, 1}, radius, cen::colors::black, 1.0f);
     graphics.draw_ellipse(center, radius, cen::colors::yellow, 1.0f);
   }
 }

@@ -31,22 +31,22 @@ namespace tactile::ui {
   return {static_cast<float>(pos.col()), static_cast<float>(pos.row())};
 }
 
-[[nodiscard]] inline auto from_vec(const float2& vec) noexcept -> ImVec2
+[[nodiscard]] inline auto from_vec(const Float2& vec) noexcept -> ImVec2
 {
   return {vec.x, vec.y};
 }
 
-[[nodiscard]] inline auto from_vec(const int2& vec) noexcept -> ImVec2
+[[nodiscard]] inline auto from_vec(const Int2& vec) noexcept -> ImVec2
 {
   return {static_cast<float>(vec.x), static_cast<float>(vec.y)};
 }
 
-[[nodiscard]] inline auto from_vec(const Vector4f& vec) noexcept -> ImVec4
+[[nodiscard]] inline auto from_vec(const Float4& vec) noexcept -> ImVec4
 {
   return {vec.x, vec.y, vec.z, vec.w};
 }
 
-[[nodiscard]] inline auto from_vec(const Vector4i& vec) noexcept -> ImVec4
+[[nodiscard]] inline auto from_vec(const Int4& vec) noexcept -> ImVec4
 {
   return {static_cast<float>(vec.x),
           static_cast<float>(vec.y),

@@ -134,9 +134,9 @@ class TilePos final {
     return mCol * tileWidth;
   }
 
-  [[nodiscard]] constexpr auto as_vec2() const noexcept -> int2 { return {mCol, mRow}; }
+  [[nodiscard]] constexpr auto as_vec2() const noexcept -> Int2 { return {mCol, mRow}; }
 
-  [[nodiscard]] constexpr auto as_vec2f() const noexcept -> float2
+  [[nodiscard]] constexpr auto as_vec2f() const noexcept -> Float2
   {
     return {static_cast<float>(mCol), static_cast<float>(mRow)};
   }
