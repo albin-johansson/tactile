@@ -56,6 +56,7 @@
 #include "io/persist/history.hpp"
 #include "io/persist/preferences.hpp"
 #include "io/persist/session.hpp"
+#include "io/textures.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {
@@ -68,7 +69,12 @@ App::App(AppCfg* configuration)
   load_default_shortcuts();
 
   ui::init_dialogs();
-  ui::load_icons(mTextures);
+  ui::load_icons();
+}
+
+App::~App()
+{
+  free_textures();
 }
 
 void App::on_startup()
@@ -76,7 +82,7 @@ void App::on_startup()
   io::load_file_history();
 
   if (io::get_preferences().restore_last_session) {
-    io::restore_last_session(mModel, mTextures);
+    io::restore_last_session(mModel);
   }
 
   auto& window = mConfig->window();
@@ -297,9 +303,9 @@ void App::on_keyboard_event(cen::keyboard_event event)
 
 void App::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 {
-  /* There doesn't seem to be a good way to handle mouse "wheel" events using the public
-     ImGui APIs. Otherwise, it would be nicer to keep this code closer to the actual
-     widgets. */
+  // There doesn't seem to be a good way to handle mouse "wheel" events using the public
+  // ImGui APIs. Otherwise, it would be nicer to keep this code closer to the actual
+  // widgets.
 
   const auto* document = active_document();
   if (document && !ImGui::GetTopMostPopupModal()) {
@@ -309,14 +315,14 @@ void App::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
                                                     event);
     }
     else if (document->is_map() && ui::is_tileset_dock_hovered()) {
-      const auto& mapDocument = mModel.require_active_map();
+      const auto& map_document = mModel.require_active_map();
 
-      const auto& map = mapDocument.get_map();
+      const auto& map = map_document.get_map();
       const auto& tilesets = map.get_tilesets();
 
-      if (const auto tilesetId = tilesets.active_tileset_id()) {
-        const auto& tilesetRef = tilesets.get_ref(*tilesetId);
-        ui::tileset_dock_mouse_wheel_event_handler(tilesetRef, event, mDispatcher);
+      if (const auto tileset_id = tilesets.active_tileset_id()) {
+        const auto& tileset_ref = tilesets.get_ref(*tileset_id);
+        ui::tileset_dock_mouse_wheel_event_handler(tileset_ref, event, mDispatcher);
       }
     }
   }
@@ -442,7 +448,7 @@ void App::on_open_map(const OpenMapEvent& event)
 
   const auto ir = io::parse_map(event.path);
   if (ir.error() == io::ParseError::None) {
-    map_from_ir(ir, mModel, mTextures);
+    map_from_ir(ir, mModel);
     io::add_file_to_history(event.path);
   }
   else {
@@ -558,8 +564,8 @@ void App::on_add_point(const AddPointEvent& event)
 void App::on_update_tileset_viewport_limits(const UpdateTilesetViewportLimitsEvent& event)
 {
   if (auto* document = active_map_document()) {
-    auto& tilesetRef = document->get_map().get_tilesets().get_ref(event.tileset_id);
-    auto& viewport = tilesetRef.get_viewport();
+    auto& tileset_ref = document->get_map().get_tilesets().get_ref(event.tileset_id);
+    auto& viewport = tileset_ref.get_viewport();
     viewport.set_limits({event.min_offset, event.max_offset});
   }
 }
@@ -576,8 +582,8 @@ void App::on_offset_document_viewport(const OffsetDocumentViewportEvent& event)
 void App::on_offset_tileset_viewport(const OffsetTilesetViewportEvent& event)
 {
   if (auto* document = active_map_document()) {
-    auto& tilesetRef = document->get_map().get_tilesets().get_ref(event.tileset_id);
-    auto& viewport = tilesetRef.get_viewport();
+    auto& tileset_ref = document->get_map().get_tilesets().get_ref(event.tileset_id);
+    auto& viewport = tileset_ref.get_viewport();
     viewport.offset(event.delta);
   }
 }
@@ -618,8 +624,8 @@ void App::on_increase_zoom()
 {
   if (auto* document = active_document()) {
     auto& viewport = document->get_viewport();
-    const auto mousePos = ImGui::GetIO().MousePos;
-    viewport.zoom_in(Float2 {mousePos.x, mousePos.y});
+    const auto mouse_pos = ImGui::GetIO().MousePos;
+    viewport.zoom_in(Float2 {mouse_pos.x, mouse_pos.y});
   }
 }
 
@@ -627,8 +633,8 @@ void App::on_decrease_zoom()
 {
   if (auto* document = active_document()) {
     auto& viewport = document->get_viewport();
-    const auto mousePos = ImGui::GetIO().MousePos;
-    viewport.zoom_out(Float2 {mousePos.x, mousePos.y});
+    const auto mouse_pos = ImGui::GetIO().MousePos;
+    viewport.zoom_out(Float2 {mouse_pos.x, mouse_pos.y});
   }
 }
 
@@ -668,7 +674,7 @@ void App::on_decrease_font_size()
 
 void App::on_load_tileset(const LoadTilesetEvent& event)
 {
-  if (auto info = mTextures.load(event.path)) {
+  if (auto info = load_texture(event.path)) {
     mModel.add_tileset({.texture_path = info->path,
                         .texture_id = info->id,
                         .texture_size = info->size,
@@ -697,10 +703,10 @@ void App::on_set_tileset_selection(const SetTilesetSelectionEvent& event)
   if (auto* document = active_map_document()) {
     auto& tilesets = document->get_map().get_tilesets();
 
-    const auto tilesetId = tilesets.active_tileset_id().value();
-    auto& tilesetRef = tilesets.get_ref(tilesetId);
+    const auto tileset_id = tilesets.active_tileset_id().value();
+    auto& tileset_ref = tilesets.get_ref(tileset_id);
 
-    tilesetRef.set_selection(event.selection);
+    tileset_ref.set_selection(event.selection);
   }
 }
 
@@ -908,16 +914,16 @@ void App::on_spawn_object_context_menu(const SpawnObjectContextMenuEvent&)
 void App::on_show_add_property_dialog()
 {
   if (auto* document = active_document()) {
-    const auto& contextId = document->get_contexts().active_context_id();
-    ui::get_dialogs().add_property.open(contextId);
+    const auto& context_id = document->get_contexts().active_context_id();
+    ui::get_dialogs().add_property.open(context_id);
   }
 }
 
 void App::on_show_rename_property_dialog(const ShowRenamePropertyDialogEvent& event)
 {
   if (const auto* document = active_document()) {
-    const auto& contextId = document->get_contexts().active_context_id();
-    ui::get_dialogs().rename_property.open(contextId, event.current_name);
+    const auto& context_id = document->get_contexts().active_context_id();
+    ui::get_dialogs().rename_property.open(context_id, event.current_name);
   }
 }
 

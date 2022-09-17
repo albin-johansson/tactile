@@ -39,9 +39,9 @@
 #include "core/tile_pos.hpp"
 #include "core/tileset/tileset_info.hpp"
 #include "core/util/functional.hpp"
-#include "core/util/texture_manager.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/parse_result.hpp"
+#include "io/textures.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::io {
@@ -218,7 +218,6 @@ void restore_fancy_tiles(TilesetDocument& document, const ir::TilesetData& tiles
 }
 
 void restore_tileset(DocumentModel& model,
-                     TextureManager& textures,
                      const Shared<ComponentIndex>& index,
                      const ir::TilesetData& tileset_data)
 {
@@ -227,7 +226,7 @@ void restore_tileset(DocumentModel& model,
   // TODO compare tileset document absolute paths to recognize the same tileset being
   // loaded multiple times
 
-  const auto texture = textures.load(tileset_data.image_path).value();
+  const auto texture = load_texture(tileset_data.image_path).value();
 
   TilesetInfo info;
   info.texture_id = texture.id;
@@ -249,12 +248,11 @@ void restore_tileset(DocumentModel& model,
 }
 
 void restore_tilesets(DocumentModel& model,
-                      TextureManager& textures,
                       const Shared<ComponentIndex>& index,
                       const ir::MapData& map_data)
 {
   for (const auto& tileset_data : map_data.tilesets) {
-    restore_tileset(model, textures, index, tileset_data);
+    restore_tileset(model, index, tileset_data);
   }
 
   auto& document = model.require_active_map();
@@ -294,9 +292,7 @@ void restore_tile_format(TileFormat& format, const ir::TileFormatData& data)
 
 }  // namespace
 
-void map_from_ir(const ParseResult& result,
-                 DocumentModel& model,
-                 TextureManager& textures)
+void map_from_ir(const ParseResult& result, DocumentModel& model)
 {
   const auto& map_data = result.data();
 
@@ -322,7 +318,7 @@ void map_from_ir(const ParseResult& result,
 
   restore_tile_format(map.tile_format(), map_data.tile_format);
   restore_component_definitions(*document, map_data);
-  restore_tilesets(model, textures, document->get_component_index(), map_data);
+  restore_tilesets(model, document->get_component_index(), map_data);
   restore_layers(*document, map_data);
 
   restore_context_no_register(*document, document->get_map_ptr(), map_data.context);

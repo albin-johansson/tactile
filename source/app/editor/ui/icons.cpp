@@ -31,9 +31,9 @@ constinit Maybe<uint> tactile_icon;
 
 }  // namespace
 
-void load_icons(TextureManager& textures)
+void load_icons()
 {
-  tactile_icon = textures.load(io::find_resource("assets/icon.png")).value().id;
+  tactile_icon = load_texture(io::find_resource("assets/icon.png")).value().id;
 }
 
 auto get_icon(const LayerType type) -> const char*

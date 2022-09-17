@@ -24,7 +24,6 @@
 
 namespace tactile {
 class DocumentModel;
-class TextureManager;
 }  // namespace tactile
 
 namespace tactile::io {
@@ -33,9 +32,6 @@ namespace tactile::io {
 ///
 /// \param result the intermediate representation of the map data.
 /// \param model the target document model.
-/// \param textures the texture manager that will be used.
-void map_from_ir(const ParseResult& result,
-                 DocumentModel& model,
-                 TextureManager& textures);
+void map_from_ir(const ParseResult& result, DocumentModel& model);
 
 }  // namespace tactile::io

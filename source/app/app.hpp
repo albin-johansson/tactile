@@ -24,7 +24,6 @@
 
 #include "core/event/all.hpp"
 #include "core/model.hpp"
-#include "core/util/texture_manager.hpp"
 #include "editor/loop.hpp"
 
 namespace tactile {
@@ -48,6 +47,8 @@ class App final : EventLoop {
  public:
   explicit App(AppCfg* configuration);
 
+  ~App();
+
   using EventLoop::start;
 
  protected:
@@ -65,7 +66,6 @@ class App final : EventLoop {
   AppCfg* mConfig {}; /* Non-owning */
   entt::dispatcher mDispatcher;
   DocumentModel mModel;
-  TextureManager mTextures;
   WidgetShowState mWidgetShowState;
   bool mReloadFonts : 1 {};
 

@@ -45,7 +45,7 @@ constexpr int session_format_version [[maybe_unused]] = 1;
 
 }  // namespace
 
-void restore_last_session(DocumentModel& model, TextureManager& textures)
+void restore_last_session(DocumentModel& model)
 {
   proto::Session session;
 
@@ -54,7 +54,7 @@ void restore_last_session(DocumentModel& model, TextureManager& textures)
     for (const auto& file : session.files()) {
       const auto ir = parse_map(file);
       if (ir.error() == ParseError::None) {
-        map_from_ir(ir, model, textures);
+        map_from_ir(ir, model);
       }
       else {
         spdlog::warn("Failed to restore map from last session!");

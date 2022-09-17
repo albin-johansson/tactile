@@ -17,7 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "texture_manager.hpp"
+#include "textures.hpp"
+
+#include <vector>  // vector
 
 #define STB_IMAGE_IMPLEMENTATION
 
@@ -36,19 +38,11 @@ struct TextureDataDeleter final {
 
 using TextureDataPtr = Unique<uchar, TextureDataDeleter>;
 
+inline std::vector<uint> textures;
+
 }  // namespace
 
-TextureManager::~TextureManager()
-{
-  for (const auto texture : mTextures) {
-    spdlog::debug("Deleting texture {}", texture);
-    glDeleteTextures(1, &texture);
-  }
-
-  mTextures.clear();
-}
-
-auto TextureManager::load(const fs::path& path) -> Maybe<TextureInfo>
+auto load_texture(const fs::path& path) -> Maybe<TextureInfo>
 {
   TextureInfo texture;
   texture.path = path;
@@ -87,10 +81,20 @@ auto TextureManager::load(const fs::path& path) -> Maybe<TextureInfo>
                GL_UNSIGNED_BYTE,
                data.get());
 
-  spdlog::debug("Loaded texture with ID {}", texture.id);
-  mTextures.push_back(texture.id);
+  spdlog::trace("Loaded texture with ID {}", texture.id);
+  textures.push_back(texture.id);
 
   return texture;
+}
+
+void free_textures()
+{
+  for (const auto texture : textures) {
+    spdlog::trace("Deleting texture {}", texture);
+    glDeleteTextures(1, &texture);
+  }
+
+  textures.clear();
 }
 
 }  // namespace tactile

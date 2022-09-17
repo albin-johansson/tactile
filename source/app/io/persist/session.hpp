@@ -21,13 +21,12 @@
 
 namespace tactile {
 class DocumentModel;
-class TextureManager;
 }  // namespace tactile
 
 namespace tactile::io {
 
 /// Restores the open documents from the last session.
-void restore_last_session(DocumentModel& model, TextureManager& textures);
+void restore_last_session(DocumentModel& model);
 
 /// Saves the current session, i.e. the paths of the currently open documents.
 void save_session(const DocumentModel& model);

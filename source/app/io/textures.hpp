@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include <vector>  // vector
-
 #include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
@@ -34,19 +32,9 @@ struct TextureInfo final {
   fs::path path;
 };
 
-class TextureManager final {
- public:
-  TACTILE_DEFAULT_COPY(TextureManager);
-  TACTILE_DEFAULT_MOVE(TextureManager);
+[[nodiscard]] auto load_texture(const fs::path& path) -> Maybe<TextureInfo>;
 
-  TextureManager() = default;
-
-  ~TextureManager();
-
-  [[nodiscard]] auto load(const fs::path& path) -> Maybe<TextureInfo>;
-
- private:
-  std::vector<uint> mTextures;
-};
+/// Destroys all previously loaded textures.
+void free_textures();
 
 }  // namespace tactile
