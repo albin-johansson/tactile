@@ -59,7 +59,7 @@ namespace {
 
   usize index {};
   for (const auto& token : split(csv, ',')) {
-    if (const auto id = from_string<int32>(token.c_str())) {
+    if (const auto id = parse_i32(token)) {
       const auto [row, col] = to_matrix_coords(index, col_count);
       tiles[row][col] = *id;
 

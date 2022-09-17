@@ -19,14 +19,42 @@
 
 #include "string.hpp"
 
-#include <sstream>  // stringstream
-#include <utility>  // move
+#include <charconv>      // from_chars
+#include <concepts>      // integral
+#include <sstream>       // stringstream
+#include <system_error>  // errc
+#include <utility>       // move
 
 namespace tactile {
+namespace {
 
-auto split(const char* str, const char sep) -> std::vector<std::string>
+template <std::integral T>
+[[nodiscard]] auto parse(const char* begin, const char* end, const int base) -> Maybe<T>
 {
-  std::stringstream stream {str};
+  if (!begin || !end) {
+    return nothing;
+  }
+
+  T value {};
+  const auto [ptr, err] = std::from_chars(begin, end, value, base);
+
+  if (err == std::errc {}) {
+    return value;
+  }
+  else {
+    return nothing;
+  }
+}
+
+void foo() = delete;
+
+}  // namespace
+
+auto split(std::string_view str, const char sep) -> std::vector<std::string>
+{
+  std::stringstream stream;
+  stream << str;
+
   std::vector<std::string> tokens;
 
   std::string token;
@@ -37,6 +65,11 @@ auto split(const char* str, const char sep) -> std::vector<std::string>
   }
 
   return tokens;
+}
+
+auto parse_i32(std::string_view str, const int base) -> Maybe<int32>
+{
+  return parse<int32>(str.begin(), str.end(), base);
 }
 
 }  // namespace tactile

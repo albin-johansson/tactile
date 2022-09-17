@@ -46,8 +46,8 @@ namespace {
   auto tiles = make_tile_matrix(rows, columns);
 
   usize index = 0;
-  for (const auto& token : split(tile_data.c_str(), ' ')) {
-    if (const auto id = from_string<TileID>(token.c_str())) {
+  for (const auto& token : split(tile_data, ' ')) {
+    if (const auto id = parse_i32(token)) {
       const auto [row, col] = to_matrix_coords(index, columns);
       tiles[row][col] = *id;
       ++index;
