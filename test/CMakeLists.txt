@@ -6,9 +6,9 @@ enable_testing()
 
 file(GLOB_RECURSE TEST_FILES
      CONFIGURE_DEPENDS
-     unit-tests/**/*.cpp
-     unit-tests/**/*.hpp
-     unit-tests/test_main.cpp
+     src/**/*.cpp
+     src/**/*.hpp
+     src/test_main.cpp
      )
 
 add_executable(${TACTILE_TEST} ${TEST_FILES})
@@ -28,7 +28,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang|GNU")
                          )
 endif ()
 
-target_include_directories(${TACTILE_TEST} PRIVATE ${PROJECT_SOURCE_DIR})
+target_include_directories(${TACTILE_TEST} PRIVATE src)
 
 target_link_libraries(${TACTILE_TEST}
                       PRIVATE
