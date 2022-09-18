@@ -25,9 +25,9 @@ jobs:
         shell: bash
         run: sudo apt-get install libegl1-mesa-dev libgles2-mesa-dev libasound2-dev libpulse-dev libxmu-dev libxi-dev libgl-dev
 
-      - name: Install GCC 10
+      - name: Install GCC
         shell: bash
-        run: sudo apt install gcc-10 g++-10
+        run: sudo apt install gcc-11 g++-11
 
       - name: Install xvfb
         shell: bash
@@ -78,16 +78,16 @@ jobs:
         working-directory: ./build
         shell: bash
         env:
-          CC: gcc-10
-          CXX: g++-10
+          CC: gcc-11
+          CXX: g++-11
         run: cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
 
       - name: Build
         working-directory: ./build
         shell: bash
         env:
-          CC: gcc-10
-          CXX: g++-10
+          CC: gcc-11
+          CXX: g++-11
         run: ninja
 
       - name: Run tests
