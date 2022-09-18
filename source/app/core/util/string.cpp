@@ -46,8 +46,6 @@ template <std::integral T>
   }
 }
 
-void foo() = delete;
-
 }  // namespace
 
 auto split(std::string_view str, const char sep) -> std::vector<std::string>
@@ -69,7 +67,7 @@ auto split(std::string_view str, const char sep) -> std::vector<std::string>
 
 auto parse_i32(std::string_view str, const int base) -> Maybe<int32>
 {
-  return parse<int32>(str.begin(), str.end(), base);
+  return parse<int32>(str.data(), str.data() + str.size(), base);
 }
 
 }  // namespace tactile
