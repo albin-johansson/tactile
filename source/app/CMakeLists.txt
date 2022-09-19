@@ -62,6 +62,7 @@ target_compile_definitions(${TACTILE_LIB}
                            BOOST_ENABLE_ASSERT_DEBUG_HANDLER
                            BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
                            BOOST_UUID_RANDOM_PROVIDER_FORCE_WINCRYPT
+                           BOOST_NO_CXX98_FUNCTION_BASE
                            ENTT_STANDARD_CPP
                            SPDLOG_FMT_EXTERNAL
                            )
