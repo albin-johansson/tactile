@@ -22,7 +22,6 @@ target_include_directories(${TACTILE_LIB}
                            ${LIBRARY_DIR}/centurion
                            ${LIBRARY_DIR}/fontawesome
                            ${STB_INCLUDE_DIRS}
-                           ${CPPCODEC_INCLUDE_DIRS}
                            ${TACTILE_PROTO_GENERATED_DIR}
                            )
 
@@ -35,13 +34,13 @@ target_link_libraries(${TACTILE_LIB}
                       EnTT::EnTT
                       magic_enum::magic_enum
                       fmt::fmt
+                      Folly::folly
                       glm::glm
                       protobuf::libprotobuf
                       yaml-cpp
                       nlohmann_json::nlohmann_json
                       pugixml::static
                       tinyfiledialogs::tinyfiledialogs
-                      tl::expected
                       ZLIB::ZLIB
                       GLEW::GLEW
                       OpenGL::GL

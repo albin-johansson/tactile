@@ -14,9 +14,15 @@
     "boost-endian",
     "boost-stacktrace",
     "boost-uuid",
-    "cppcodec",
     "entt",
     "fmt",
+    {
+      "name": "folly",
+      "features": [
+        "zlib",
+        "zstd"
+      ]
+    },
     "glew",
     "glm",
     "gtest",
@@ -37,7 +43,6 @@
     "spdlog",
     "stb",
     "tinyfiledialogs",
-    "tl-expected",
     "yaml-cpp",
     "zlib",
     "zstd"
