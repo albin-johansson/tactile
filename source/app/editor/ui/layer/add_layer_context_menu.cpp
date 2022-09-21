@@ -38,15 +38,15 @@ void AddLayerContextMenu::on_update(const DocumentModel&, entt::dispatcher& disp
 {
   const auto& lang = get_current_language();
 
-  if (ImGui::Selectable(lang.action.tile_layer.c_str())) {
+  if (ImGui::MenuItem(lang.action.tile_layer.c_str())) {
     dispatcher.enqueue<AddLayerEvent>(LayerType::TileLayer);
   }
 
-  if (ImGui::Selectable(lang.action.object_layer.c_str())) {
+  if (ImGui::MenuItem(lang.action.object_layer.c_str())) {
     dispatcher.enqueue<AddLayerEvent>(LayerType::ObjectLayer);
   }
 
-  if (ImGui::Selectable(lang.action.group_layer.c_str())) {
+  if (ImGui::MenuItem(lang.action.group_layer.c_str())) {
     dispatcher.enqueue<AddLayerEvent>(LayerType::GroupLayer);
   }
 }
