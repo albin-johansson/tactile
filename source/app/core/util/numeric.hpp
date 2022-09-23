@@ -32,9 +32,6 @@ template <std::unsigned_integral T>
   return (a < b) ? (b - a) : (a - b);
 }
 
-[[nodiscard]] auto as_little_endian(int32 value) noexcept -> int32;
-[[nodiscard]] auto as_little_endian(uint32 value) noexcept -> uint32;
-
 template <std::integral Int, std::invocable<uint8> T>
 void each_byte(const Int value, T&& callable)
 {

@@ -21,7 +21,9 @@
 
 #include <bit>       // endian
 #include <concepts>  // same_as
+#include <cstring>   // memcpy
 
+#include <folly/Bits.h>
 #include <folly/base64.h>
 
 #include "core/util/functional.hpp"
@@ -45,7 +47,7 @@ static_assert(std::same_as<TileID, int32>);
 
   invoke_mn(rows, columns, [&](const usize row, const usize col) {
     // Always store tile identifiers as little endian values
-    const auto tile_id = as_little_endian(matrix[row][col]);
+    const auto tile_id = folly::Endian::little(matrix[row][col]);
     each_byte(tile_id, [&](const uint8 byte) { seq.push_back(byte); });
   });
 
@@ -61,14 +63,12 @@ static_assert(std::same_as<TileID, int32>);
   for (usize i = 0; i < count; ++i) {
     const auto index = i * sizeof(int32);
 
-    const auto a = static_cast<int32>(static_cast<uchar>(data[index]));
-    const auto b = static_cast<int32>(static_cast<uchar>(data[index + 1]));
-    const auto c = static_cast<int32>(static_cast<uchar>(data[index + 2]));
-    const auto d = static_cast<int32>(static_cast<uchar>(data[index + 3]));
+    TileID tile {};
+    std::memcpy(&tile, &data[index], sizeof(TileID));
 
-    const TileID tile = std::endian::native == std::endian::little
-                            ? (d << 24) | (c << 16) | (b << 8) | a
-                            : (a << 24) | (b << 16) | (c << 8) | d;
+    if constexpr (std::endian::native == std::endian::big) {
+      tile = folly::Endian::swap(tile);
+    }
 
     const auto [row, col] = to_matrix_coords(i, columns);
     matrix[row][col] = tile;

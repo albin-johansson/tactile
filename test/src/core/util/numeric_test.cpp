@@ -40,28 +40,4 @@ TEST(Numeric, Udiff)
   ASSERT_EQ(46u, udiff(28u, 74u));
 }
 
-TEST(Numeric, AsLittleEndianU32)
-{
-  const auto value = as_little_endian(0xA1B2C3D4);
-  const auto* bytes = static_cast<const uint8*>(static_cast<const void*>(&value));
-
-  ASSERT_EQ(0xD4, bytes[0]);
-  ASSERT_EQ(0xC3, bytes[1]);
-  ASSERT_EQ(0xB2, bytes[2]);
-  ASSERT_EQ(0xA1, bytes[3]);
-}
-
-TEST(Numeric, AsLittleEndianI32)
-{
-  const auto source = static_cast<int32>(0xA1B2C3D4);
-
-  const auto value = as_little_endian(source);
-  const auto* bytes = static_cast<const uint8*>(static_cast<const void*>(&value));
-
-  ASSERT_EQ(0xD4, bytes[0]);
-  ASSERT_EQ(0xC3, bytes[1]);
-  ASSERT_EQ(0xB2, bytes[2]);
-  ASSERT_EQ(0xA1, bytes[3]);
-}
-
 }  // namespace tactile::test
