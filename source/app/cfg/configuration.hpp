@@ -22,6 +22,7 @@
 #include <centurion/initialization.hpp>
 #include <centurion/opengl.hpp>
 #include <centurion/window.hpp>
+#include <folly/init/Init.h>
 
 #include "cfg/imgui_context.hpp"
 #include "cfg/protobuf_context.hpp"
@@ -32,11 +33,12 @@ namespace tactile {
 /// Handles the configuration of the application window, OpenGL context, etc.
 class AppCfg final {
  public:
-  AppCfg();
+  AppCfg(int argc, char* argv[]);
 
   [[nodiscard]] auto window() -> cen::window&;
 
  private:
+  folly::Init mFolly;
   ProtobufContext mProtobuf;
   cen::sdl mSDL;
   cen::img mIMG;

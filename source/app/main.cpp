@@ -45,7 +45,7 @@ void show_crash_message_box(const char* error_msg)
 
 }  // namespace
 
-auto main(int, char**) -> int
+auto main(int argc, char* argv[]) -> int
 {
   tactile::init_logger();
 
@@ -53,7 +53,7 @@ auto main(int, char**) -> int
     spdlog::info("Using persistent file directory {}",
                  tactile::io::persistent_file_dir());
 
-    tactile::AppCfg cfg;
+    tactile::AppCfg cfg {argc, argv};
     tactile::App app {&cfg};
     app.start();
 

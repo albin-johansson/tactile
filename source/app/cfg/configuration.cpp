@@ -25,6 +25,7 @@
 #include <GL/glew.h>
 #include <SDL.h>
 #include <boost/stacktrace/stacktrace.hpp>
+#include <folly/init/Init.h>
 #include <spdlog/spdlog.h>
 
 #include "cfg/platform_specific.hpp"
@@ -73,6 +74,14 @@ void init_sdl_attributes()
   return flags;
 }
 
+[[nodiscard]] auto make_folly_init_options() -> folly::InitOptions
+{
+  folly::InitOptions options;
+  options.remove_flags = false;
+  options.use_gflags = false;
+  return options;
+}
+
 }  // namespace
 
 // Keep the handler out of the anonymous namespace
@@ -89,7 +98,8 @@ inline void terminate_handler()
   std::abort();
 }
 
-AppCfg::AppCfg()
+AppCfg::AppCfg(int argc, char* argv[])
+    : mFolly {&argc, &argv, make_folly_init_options()}
 {
   std::set_terminate(&terminate_handler);
 

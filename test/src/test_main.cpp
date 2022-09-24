@@ -26,7 +26,7 @@ auto main(int argc, char* argv[]) -> int
 {
   tactile::init_logger();
 
-  tactile::AppCfg cfg;
+  tactile::AppCfg cfg {argc, argv};
   cfg.window().show();
 
   testing::InitGoogleTest(&argc, argv);
