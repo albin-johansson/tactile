@@ -51,16 +51,15 @@ void TilesetBundle::attach_tileset(Shared<Tileset> tileset, const bool embedded)
 
 void TilesetBundle::detach_tileset(const UUID& id)
 {
-  if (!mRefs.contains(id)) {
+  if (!has_tileset(id)) {
     throw TactileError {"Invalid tileset identifier!"};
   }
 
-  TACTILE_ASSERT(mRefs.contains(id));
   const auto& ref = lookup_in(mRefs, id);
 
   // Removes all cached tile entries for the tileset that will be removed
-  std::erase_if(mTileCache,
-                [&](const auto& pair) { return ref.is_valid_tile(pair.first); });
+  eastl::erase_if(mTileCache,
+                  [&](const auto& pair) { return ref.is_valid_tile(pair.first); });
 
   mRefs.erase(id);
 
@@ -72,12 +71,12 @@ void TilesetBundle::detach_tileset(const UUID& id)
     mActiveTileset = mRefs.begin()->first;
   }
 
-  TACTILE_ASSERT(!mRefs.contains(id));
+  TACTILE_ASSERT(!has_tileset(id));
 }
 
 void TilesetBundle::select_tileset(const UUID& id)
 {
-  if (mRefs.contains(id)) {
+  if (has_tileset(id)) {
     mActiveTileset = id;
   }
   else {
@@ -87,12 +86,12 @@ void TilesetBundle::select_tileset(const UUID& id)
 
 auto TilesetBundle::has_tileset(const UUID& id) const -> bool
 {
-  return mRefs.contains(id);
+  return mRefs.find(id) != mRefs.end();
 }
 
 auto TilesetBundle::is_valid_tile(const TileID id) const -> bool
 {
-  return mTileCache.contains(id);
+  return mTileCache.find(id) != mTileCache.end();
 }
 
 auto TilesetBundle::find_tileset(const TileID tile) const -> Maybe<UUID>
@@ -137,8 +136,8 @@ auto TilesetBundle::find_ref(const UUID& id) const -> const TilesetRef*
 
 auto TilesetBundle::to_tile_index(const TileID id) const -> TileIndex
 {
-  if (const auto tilesetId = find_tileset(id)) {
-    const auto& ref = get_ref(*tilesetId);
+  if (const auto tileset_id = find_tileset(id)) {
+    const auto& ref = get_ref(*tileset_id);
     return ref.to_index(id);
   }
   else {

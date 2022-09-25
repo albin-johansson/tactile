@@ -51,7 +51,7 @@ void ComponentIndex::restore_comp(ComponentDefinition def)
   }
 
   const auto id = def.get_uuid();
-  TACTILE_ASSERT(!mDefs.contains(id));
+  TACTILE_ASSERT(!contains(id));
 
   mDefs[id] = std::move(def);
 }
@@ -99,7 +99,7 @@ auto ComponentIndex::with_name(std::string_view name) -> ComponentDefinition&
 
 auto ComponentIndex::contains(const UUID& id) const -> bool
 {
-  return mDefs.contains(id);
+  return mDefs.find(id) != mDefs.end();
 }
 
 auto ComponentIndex::contains(std::string_view name) const -> bool

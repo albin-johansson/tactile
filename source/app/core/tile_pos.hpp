@@ -19,9 +19,12 @@
 
 #pragma once
 
-#include <compare>  // <=>
+#include <compare>     // <=>
+#include <cstddef>     // size_t
+#include <functional>  // hash
 
-#include <boost/container_hash/hash.hpp>
+#include <EASTL/functional.h>
+#include <folly/hash/Hash.h>
 
 #include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
@@ -174,17 +177,18 @@ class TilePos final {
 
 }  // namespace tactile
 
-namespace std {
-
 template <>
-struct hash<tactile::TilePos> final {
-  [[nodiscard]] auto operator()(const tactile::TilePos& pos) const -> size_t
+struct std::hash<tactile::TilePos> final {
+  [[nodiscard]] auto operator()(const tactile::TilePos& pos) const -> std::size_t
   {
-    size_t res = 0;
-    boost::hash_combine(res, pos.row());
-    boost::hash_combine(res, pos.col());
-    return res;
+    return folly::hash::hash_combine(pos.row(), pos.col());
   }
 };
 
-}  // namespace std
+template <>
+struct eastl::hash<tactile::TilePos> final {
+  [[nodiscard]] auto operator()(const tactile::TilePos& pos) const -> std::size_t
+  {
+    return folly::hash::hash_combine(pos.row(), pos.col());
+  }
+};

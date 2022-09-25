@@ -19,24 +19,49 @@
 
 #pragma once
 
-#include <functional>     // less
-#include <map>            // map
-#include <unordered_map>  // unordered_map
+#include <algorithm>   // find_if
+#include <concepts>    // equality_comparable_with
+#include <functional>  // less
+#include <map>         // map
 
+#include <EASTL/algorithm.h>
+#include <EASTL/hash_map.h>
+#include <EASTL/vector_map.h>
+
+#include "core/container/eastl_new.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
+
+// clang-format off
+
+template <typename T>
+concept MapType = requires (T t) {
+  typename T::key_type;
+  typename T::mapped_type;
+  { t.begin() };
+  { t.end() };
+};
+
+// clang-format on
 
 template <typename K, typename V>
 using TreeMap = std::map<K, V, std::less<>>;
 
 template <typename K, typename V>
-using HashMap = std::unordered_map<K, V>;
+using HashMap = eastl::hash_map<K, V>;
 
 template <typename K, typename V>
-[[nodiscard]] auto lookup_in(TreeMap<K, V>& map, auto&& key) -> V&
+using VectorMap = eastl::vector_map<K, V>;
+
+template <MapType Map, std::equality_comparable_with<typename Map::key_type> T>
+[[nodiscard]] auto lookup_in(Map& map, T&& key) -> typename Map::mapped_type&
 {
-  if (const auto iter = map.find(key); iter != map.end()) {
+  const auto iter = std::find_if(map.begin(), map.end(), [&](const auto& pair) {
+    return pair.first == key;
+  });
+
+  if (iter != map.end()) {
     return iter->second;
   }
   else {
@@ -44,32 +69,14 @@ template <typename K, typename V>
   }
 }
 
-template <typename K, typename V>
-[[nodiscard]] auto lookup_in(const TreeMap<K, V>& map, auto&& key) -> const V&
+template <MapType Map, std::equality_comparable_with<typename Map::key_type> T>
+[[nodiscard]] auto lookup_in(const Map& map, T&& key) -> const typename Map::mapped_type&
 {
-  if (const auto iter = map.find(key); iter != map.end()) {
-    return iter->second;
-  }
-  else {
-    throw TactileError {"Invalid key!"};
-  }
-}
+  const auto iter = std::find_if(map.begin(), map.end(), [&](const auto& pair) {
+    return pair.first == key;
+  });
 
-template <typename K, typename V>
-[[nodiscard]] auto lookup_in(HashMap<K, V>& map, auto&& key) -> V&
-{
-  if (const auto iter = map.find(key); iter != map.end()) {
-    return iter->second;
-  }
-  else {
-    throw TactileError {"Invalid key!"};
-  }
-}
-
-template <typename K, typename V>
-[[nodiscard]] auto lookup_in(const HashMap<K, V>& map, auto&& key) -> const V&
-{
-  if (const auto iter = map.find(key); iter != map.end()) {
+  if (iter != map.end()) {
     return iter->second;
   }
   else {

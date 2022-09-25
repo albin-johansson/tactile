@@ -83,6 +83,8 @@ class DocumentModel final {
   /// Sets the undo stack capacity of all loaded documents.
   void set_command_capacity(usize capacity);
 
+  [[nodiscard]] auto has_document(const UUID& id) const -> bool;
+
   /// Indicates whether any of the loaded documents are located at the specific path.
   [[nodiscard]] auto has_document_with_path(const fs::path& path) const -> bool;
 

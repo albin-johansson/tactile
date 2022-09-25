@@ -40,7 +40,8 @@ set(BOOST_ROOT "${_VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}")
 # Not acquired using vcpkg
 find_package(OpenGL REQUIRED)
 
-find_package(Boost REQUIRED COMPONENTS container exception)
+find_package(Boost REQUIRED COMPONENTS exception)
+find_package(EASTL CONFIG REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(folly CONFIG REQUIRED)

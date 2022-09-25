@@ -97,14 +97,14 @@ void ObjectLayer::reserve_objects(const usize n)
 void ObjectLayer::select_object(const Maybe<UUID>& id)
 {
   mActiveObject = id;
-  if (mActiveObject && !mObjects.contains(*mActiveObject)) {
+  if (mActiveObject && !has_object(*mActiveObject)) {
     throw TactileError {"Invalid object identifier!"};
   }
 }
 
 auto ObjectLayer::has_object(const UUID& id) const -> bool
 {
-  return mObjects.contains(id);
+  return mObjects.find(id) != mObjects.end();
 }
 
 auto ObjectLayer::object_count() const -> usize

@@ -11,9 +11,9 @@
     "boost-assert",
     "boost-container",
     "boost-exception",
-    "boost-endian",
     "boost-stacktrace",
     "boost-uuid",
+    "eastl",
     "entt",
     "fmt",
     {

@@ -112,7 +112,7 @@ auto DocumentModel::restore_tileset(const TileID first_tile_id, const TilesetInf
 
 void DocumentModel::select_document(const UUID& id)
 {
-  if (mDocuments.contains(id)) {
+  if (has_document(id)) [[likely]] {
     mActiveDocument = id;
   }
   else {
@@ -122,7 +122,7 @@ void DocumentModel::select_document(const UUID& id)
 
 void DocumentModel::open_document(const UUID& id)
 {
-  if (!mDocuments.contains(id)) {
+  if (!has_document(id)) {
     throw TactileError {"Cannot open document that does not exist!"};
   }
 
@@ -140,7 +140,7 @@ void DocumentModel::open_document(const UUID& id)
 
 void DocumentModel::close_document(const UUID& id)
 {
-  if (!mDocuments.contains(id)) {
+  if (!has_document(id)) {
     throw TactileError {"Cannot close document that does not exist!"};
   }
 
@@ -176,6 +176,11 @@ void DocumentModel::remove_tileset(const UUID& id)
   else {
     throw TactileError {"No active map!"};
   }
+}
+
+auto DocumentModel::has_document(const UUID& id) const -> bool
+{
+  return mDocuments.find(id) != mDocuments.end();
 }
 
 auto DocumentModel::has_document_with_path(const fs::path& path) const -> bool
@@ -235,7 +240,7 @@ auto DocumentModel::is_tileset_active() const -> bool
 auto DocumentModel::active_document() -> Document*
 {
   if (mActiveDocument) {
-    TACTILE_ASSERT(mDocuments.contains(*mActiveDocument));
+    TACTILE_ASSERT(has_document(*mActiveDocument));
     return mDocuments.at(*mActiveDocument).get();
   }
   else {
@@ -246,7 +251,7 @@ auto DocumentModel::active_document() -> Document*
 auto DocumentModel::active_document() const -> const Document*
 {
   if (mActiveDocument) {
-    TACTILE_ASSERT(mDocuments.contains(*mActiveDocument));
+    TACTILE_ASSERT(has_document(*mActiveDocument));
     return mDocuments.at(*mActiveDocument).get();
   }
   else {
@@ -364,12 +369,12 @@ auto DocumentModel::is_open(const UUID& id) const -> bool
 
 auto DocumentModel::is_map(const UUID& id) const -> bool
 {
-  return mMaps.contains(id);
+  return mMaps.find(id) != mMaps.end();
 }
 
 auto DocumentModel::is_tileset(const UUID& id) const -> bool
 {
-  return mTilesets.contains(id);
+  return mTilesets.find(id) != mTilesets.end();
 }
 
 auto DocumentModel::get_map(const UUID& id) -> Shared<MapDocument>

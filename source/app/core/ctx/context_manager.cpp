@@ -52,7 +52,7 @@ void ContextManager::erase(const UUID& contextId)
 
 void ContextManager::select(const UUID& contextId)
 {
-  if (mContexts.contains(contextId)) [[likely]] {
+  if (contains(contextId)) [[likely]] {
     mActiveContextId = contextId;
   }
   else {
@@ -77,7 +77,7 @@ auto ContextManager::at(const UUID& contextId) const -> const Context&
 
 auto ContextManager::contains(const UUID& contextId) const -> bool
 {
-  return mContexts.contains(contextId);
+  return mContexts.find(contextId) != mContexts.end();
 }
 
 auto ContextManager::size() const -> usize

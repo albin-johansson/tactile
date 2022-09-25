@@ -19,13 +19,12 @@
 
 #pragma once
 
-#include <boost/container/flat_map.hpp>
-
+#include "core/common/assoc.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/tile_pos.hpp"
 
 namespace tactile {
 
-using TileCache = boost::container::flat_map<TilePos, TileID>;
+using TileCache = VectorMap<TilePos, TileID>;
 
 }  // namespace tactile

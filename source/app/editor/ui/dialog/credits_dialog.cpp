@@ -77,6 +77,7 @@ void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
     row("Boost", "BSL-1.0");
     row("Centurion", "MIT");
     row("Dear ImGui", "MIT");
+    row("EASTL", "BSD 3-Clause");
     row("EnTT", "MIT");
     row("fmt", "MIT");
     row("folly", "Apache-2.0");

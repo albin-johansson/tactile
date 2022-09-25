@@ -31,6 +31,7 @@ target_link_libraries(${TACTILE_LIB}
                       SDL2::SDL2-static
                       SDL2::SDL2_image
                       imgui::imgui
+                      EASTL
                       EnTT::EnTT
                       magic_enum::magic_enum
                       fmt::fmt
@@ -45,7 +46,6 @@ target_link_libraries(${TACTILE_LIB}
                       GLEW::GLEW
                       OpenGL::GL
                       Boost::boost
-                      Boost::container
                       Boost::exception
                       spdlog::spdlog
                       $<IF:$<TARGET_EXISTS:zstd::libzstd_shared>,zstd::libzstd_shared,zstd::libzstd_static>
