@@ -35,6 +35,7 @@
 #include "core/layer/layer_type.hpp"
 #include "core/layer/object_type.hpp"
 #include "core/layer/tile_format.hpp"
+#include "core/util/query.hpp"
 
 namespace tactile::ir {
 
@@ -135,6 +136,12 @@ struct TilesetData final {
   Int2 image_size {};
   MetaTiles fancy_tiles;
   ContextData context;
+
+  [[nodiscard]] auto is_animated(const TileIndex index) const -> bool
+  {
+    const auto iter = fancy_tiles.find(index);
+    return iter != fancy_tiles.end() && !iter->second.frames.empty();
+  }
 };
 
 struct TileFormatData final {
@@ -155,6 +162,13 @@ struct MapData final {
   std::vector<TilesetData> tilesets;
   std::vector<LayerData> layers;
   ContextData context;
+
+  [[nodiscard]] auto find_tileset_with_tile(const TileID id) const -> const TilesetData&
+  {
+    return first_in(tilesets, [id](const ir::TilesetData& ts) {
+      return id >= ts.first_tile && id <= ts.first_tile + ts.tile_count;
+    });
+  }
 };
 
 template <std::invocable<const ObjectLayerData&> T>

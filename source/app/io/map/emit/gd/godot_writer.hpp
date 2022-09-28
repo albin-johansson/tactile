@@ -19,29 +19,11 @@
 
 #pragma once
 
-#include <string>  // string
-
-#include "core/common/fs.hpp"
-#include "core/common/vocabulary.hpp"
-
-namespace tactile {
-class MapDocument;
-}  // namespace tactile
-
 namespace tactile::io {
 
-class EmitInfo;
+class GodotScene;
 struct GodotEmitOptions;
 
-/// Emits a map document, inferring the format from the path (or the preferred format)
-void emit_map(const MapDocument& document);
-
-/// Emits a map document as a Godot scene, see options struct for details.
-void emit_map_as_godot_scene(const MapDocument& document,
-                             const GodotEmitOptions& options);
-
-void emit_json_map(const EmitInfo& info);
-void emit_xml_map(const EmitInfo& info);
-void emit_yaml_map(const EmitInfo& info);
+void write_godot_scene(const GodotScene& scene, const GodotEmitOptions& options);
 
 }  // namespace tactile::io

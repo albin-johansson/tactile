@@ -25,6 +25,9 @@
 #include "core/document/map_document.hpp"
 #include "core/util/fmt.hpp"
 #include "io/map/emit/emit_info.hpp"
+#include "io/map/emit/gd/godot_converter.hpp"
+#include "io/map/emit/gd/godot_options.hpp"
+#include "io/map/emit/gd/godot_writer.hpp"
 #include "io/map/ir/map_to_ir.hpp"
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
@@ -71,7 +74,10 @@ void emit_map_as_godot_scene(const MapDocument& document, const GodotEmitOptions
 
   // FIXME path
   EmitInfo info {path, map_to_ir(document)};
-  emit_godot_map(info, options);
+
+  const auto& map = info.data();
+  const auto scene = convert_to_godot(map, options);
+  write_godot_scene(scene, options);
 
   TACTILE_DEBUG_PROFILE_END("Saved map as Godot scene")
 }

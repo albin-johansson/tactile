@@ -51,6 +51,7 @@
 #include "editor/ui/viewport/map_viewport.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
 #include "io/map/emit/emitter.hpp"
+#include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/ir/map_from_ir.hpp"
 #include "io/map/parse/parse_map.hpp"
 #include "io/proto/history.hpp"

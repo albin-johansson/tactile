@@ -17,31 +17,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "godot_scene.hpp"
 
-#include <string>  // string
+#include <utility>  // move
 
-#include "core/common/fs.hpp"
-#include "core/common/vocabulary.hpp"
+#include <fmt/format.h>
 
-namespace tactile {
-class MapDocument;
-}  // namespace tactile
+#include "core/util/filesystem.hpp"
 
 namespace tactile::io {
 
-class EmitInfo;
-struct GodotEmitOptions;
+void GodotScene::set_tileset(GodotTileset tileset, const fs::path& dest)
+{
+  mTilesetId = add_ext_resource(fmt::format("res://{}", convert_to_forward_slashes(dest)),
+                                "TileSet");
+  mTileset = std::move(tileset);
+}
 
-/// Emits a map document, inferring the format from the path (or the preferred format)
-void emit_map(const MapDocument& document);
+void GodotScene::add_layer(GdLayer layer)
+{
+  mLayers.push_back(std::move(layer));
+}
 
-/// Emits a map document as a Godot scene, see options struct for details.
-void emit_map_as_godot_scene(const MapDocument& document,
-                             const GodotEmitOptions& options);
+auto GodotScene::tileset_id() const -> GdExtRes
+{
+  return mTilesetId;
+}
 
-void emit_json_map(const EmitInfo& info);
-void emit_xml_map(const EmitInfo& info);
-void emit_yaml_map(const EmitInfo& info);
+auto GodotScene::tileset() const -> const GodotTileset&
+{
+  return mTileset;
+}
+
+auto GodotScene::layers() const -> const std::vector<GdLayer>&
+{
+  return mLayers;
+}
 
 }  // namespace tactile::io
