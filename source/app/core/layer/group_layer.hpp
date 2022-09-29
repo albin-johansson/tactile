@@ -20,19 +20,19 @@
 #pragma once
 
 #include <functional>  // function
-#include <vector>      // vector
 
 #include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/layer/layer.hpp"
 #include "core/layer/layer_delegate.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/vector.hpp"
 
 namespace tactile {
 
 class GroupLayer final : public Layer {
  public:
-  using LayerStorage = std::vector<Shared<Layer>>;
+  using LayerStorage = Vec<Shared<Layer>>;
   using SimpleVisitor = std::function<void(const Layer*)>;
 
   [[nodiscard]] static auto make() -> Shared<GroupLayer>;

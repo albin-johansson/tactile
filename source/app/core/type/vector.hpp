@@ -19,36 +19,13 @@
 
 #pragma once
 
-#include <algorithm>  // find_if
-#include <concepts>   // predicate
+#include <EASTL/vector.h>
 
-#include "core/type/vector.hpp"
-#include "misc/panic.hpp"
+#include "core/type/eastl_new.hpp"
 
 namespace tactile {
 
-template <typename T, std::predicate<const T&> P>
-[[nodiscard]] auto first_in(Vec<T>& vec, P&& pred) -> T&
-{
-  const auto iter = std::find_if(vec.begin(), vec.end(), pred);
-  if (iter != vec.end()) {
-    return *iter;
-  }
-  else {
-    throw TactileError {"No element matched predicate!"};
-  }
-}
-
-template <typename T, std::predicate<const T&> P>
-[[nodiscard]] auto first_in(const Vec<T>& vec, P&& pred) -> const T&
-{
-  const auto iter = std::find_if(vec.begin(), vec.end(), pred);
-  if (iter != vec.end()) {
-    return *iter;
-  }
-  else {
-    throw TactileError {"No element matched predicate!"};
-  }
-}
+template <typename T>
+using Vec = eastl::vector<T>;
 
 }  // namespace tactile

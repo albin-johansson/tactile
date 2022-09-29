@@ -49,7 +49,7 @@ auto GodotScene::tileset() const -> const GodotTileset&
   return mTileset;
 }
 
-auto GodotScene::layers() const -> const std::vector<GdLayer>&
+auto GodotScene::layers() const -> const Vec<GdLayer>&
 {
   return mLayers;
 }

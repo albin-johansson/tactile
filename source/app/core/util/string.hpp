@@ -21,15 +21,15 @@
 
 #include <string>       // string
 #include <string_view>  // string_view
-#include <vector>       // vector
 
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/vector.hpp"
 
 namespace tactile {
 
 /// Splits a string into a collection of tokens, separated by a specific character.
-[[nodiscard]] auto split(std::string_view str, char sep) -> std::vector<std::string>;
+[[nodiscard]] auto split(std::string_view str, char sep) -> Vec<std::string>;
 
 /// Converts a string into a 32-bit signed integer.
 [[nodiscard]] auto parse_i32(std::string_view str, int base = 10) -> Maybe<int32>;

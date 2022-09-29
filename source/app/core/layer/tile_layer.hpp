@@ -19,12 +19,11 @@
 
 #pragma once
 
-#include <vector>  // vector
-
 #include "core/common/tile_cache.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/layer/layer.hpp"
 #include "core/layer/layer_delegate.hpp"
+#include "core/type/vector.hpp"
 
 namespace tactile {
 
@@ -44,9 +43,7 @@ class TileLayer final : public Layer {
   void accept(LayerVisitor& visitor) override;
   void accept(ConstLayerVisitor& visitor) const override;
 
-  void flood(const TilePos& origin,
-             TileID replacement,
-             std::vector<TilePos>* affected = nullptr);
+  void flood(const TilePos& origin, TileID replacement, Vec<TilePos>* affected = nullptr);
 
   void add_row();
   void add_column();

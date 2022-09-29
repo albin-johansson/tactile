@@ -27,7 +27,7 @@ namespace tactile {
 
 void ComponentBundle::add(Component component)
 {
-  if (contains(component.definition_id())  ) {
+  if (contains(component.definition_id())) {
     throw TactileError {"Bundle cannot hold multiple components of same type!"};
   }
 

@@ -48,12 +48,12 @@ template <std::integral T>
 
 }  // namespace
 
-auto split(std::string_view str, const char sep) -> std::vector<std::string>
+auto split(std::string_view str, const char sep) -> Vec<std::string>
 {
   std::stringstream stream;
   stream << str;
 
-  std::vector<std::string> tokens;
+  Vec<std::string> tokens;
 
   std::string token;
   while (std::getline(stream, token, sep)) {

@@ -21,11 +21,11 @@
 
 #include <string>   // string
 #include <variant>  // variant, monostate
-#include <vector>   // vector
 
 #include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/vector.hpp"
 #include "io/map/emit/gd/godot_file.hpp"
 #include "io/map/emit/gd/godot_tileset.hpp"
 
@@ -38,7 +38,7 @@ struct GdRect final {
 };
 
 struct GdPolygon final {
-  std::vector<Float2> points;
+  Vec<Float2> points;
 };
 
 struct GdObject final {
@@ -53,7 +53,7 @@ struct GdObject final {
 };
 
 struct GdObjectLayer final {
-  std::vector<GdObject> objects;
+  Vec<GdObject> objects;
 };
 
 struct GdEncodedTile final {
@@ -71,8 +71,8 @@ struct GdTileAnimation final {
 
 struct GdTileLayer final {
   Int2 cell_size {};
-  std::vector<GdEncodedTile> data;
-  std::vector<GdTileAnimation> animations;
+  Vec<GdEncodedTile> data;
+  Vec<GdTileAnimation> animations;
 };
 
 struct GdLayer final {
@@ -96,12 +96,12 @@ class GodotScene final : public GodotFile {
   [[nodiscard]] auto tileset_id() const -> GdExtRes;
   [[nodiscard]] auto tileset() const -> const GodotTileset&;
 
-  [[nodiscard]] auto layers() const -> const std::vector<GdLayer>&;
+  [[nodiscard]] auto layers() const -> const Vec<GdLayer>&;
 
  private:
   GdExtRes mTilesetId {};
   GodotTileset mTileset;
-  std::vector<GdLayer> mLayers;
+  Vec<GdLayer> mLayers;
 };
 
 }  // namespace tactile::io

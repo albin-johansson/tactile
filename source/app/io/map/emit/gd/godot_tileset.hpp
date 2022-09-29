@@ -20,13 +20,13 @@
 #pragma once
 
 #include <string>  // string
-#include <vector>  // vector
 
 #include "core/common/assoc.hpp"
 #include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/vector.hpp"
 #include "io/map/emit/gd/godot_file.hpp"
 
 namespace tactile::io {
@@ -53,13 +53,13 @@ class GodotTileset final : public GodotFile {
 
   [[nodiscard]] auto index_of(const UUID& tileset_id) const -> int32;
 
-  [[nodiscard]] auto texture_paths() const -> const std::vector<TextureNamePair>&;
+  [[nodiscard]] auto texture_paths() const -> const Vec<TextureNamePair>&;
 
-  [[nodiscard]] auto tilesets() const -> const std::vector<GdTilesetInfo>&;
+  [[nodiscard]] auto tilesets() const -> const Vec<GdTilesetInfo>&;
 
  private:
-  std::vector<TextureNamePair> mSourceTexturePaths;
-  std::vector<GdTilesetInfo> mTilesetInfos;
+  Vec<TextureNamePair> mSourceTexturePaths;
+  Vec<GdTilesetInfo> mTilesetInfos;
 };
 
 }  // namespace tactile::io

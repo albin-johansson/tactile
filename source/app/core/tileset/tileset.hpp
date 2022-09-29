@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include <vector>  // vector
-
 #include <boost/uuid/uuid_hash.hpp>
 
 #include "core/common/assoc.hpp"
@@ -34,6 +32,7 @@
 #include "core/tileset/tile.hpp"
 #include "core/tileset/tileset_info.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/vector.hpp"
 
 namespace tactile {
 

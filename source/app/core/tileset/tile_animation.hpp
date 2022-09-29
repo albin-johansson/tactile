@@ -20,9 +20,9 @@
 #pragma once
 
 #include <chrono>  // system_clock, milliseconds
-#include <vector>  // vector
 
 #include "core/common/vocabulary.hpp"
+#include "core/type/vector.hpp"
 
 namespace tactile {
 
@@ -56,7 +56,7 @@ class TileAnimation final {
   [[nodiscard]] auto end() const noexcept { return mFrames.end(); }
 
  private:
-  std::vector<Frame> mFrames;
+  Vec<Frame> mFrames;
   usize mIndex {};
   TimePoint mLastUpdate {};
 };

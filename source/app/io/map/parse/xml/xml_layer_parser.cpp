@@ -20,10 +20,10 @@
 #include <cstring>  // strcmp
 #include <string>   // string
 #include <utility>  // move
-#include <vector>   // vector
 
 #include <spdlog/spdlog.h>
 
+#include "core/type/vector.hpp"
 #include "core/util/string.hpp"
 #include "core/util/tiles.hpp"
 #include "io/map/ir/ir.hpp"
@@ -35,9 +35,9 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto collect_layer_nodes(XMLNode map_node) -> std::vector<XMLNode>
+[[nodiscard]] auto collect_layer_nodes(XMLNode map_node) -> Vec<XMLNode>
 {
-  std::vector<XMLNode> nodes;
+  Vec<XMLNode> nodes;
 
   for (auto node : map_node.children()) {
     if (std::strcmp(node.name(), "layer") == 0 ||
@@ -322,9 +322,9 @@ auto parse_object(XMLNode object_node) -> Expected<ir::ObjectData, ParseError>
 }
 
 auto parse_layers(XMLNode map_node, ir::MapData& map)
-    -> Expected<std::vector<ir::LayerData>, ParseError>
+    -> Expected<Vec<ir::LayerData>, ParseError>
 {
-  std::vector<ir::LayerData> layers;
+  Vec<ir::LayerData> layers;
 
   usize index = 0;
   for (const auto layer_node : collect_layer_nodes(map_node)) {

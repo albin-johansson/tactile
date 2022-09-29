@@ -20,7 +20,6 @@
 #pragma once
 
 #include <functional>  // function
-#include <vector>      // vector
 
 #include <boost/uuid/uuid_hash.hpp>
 
@@ -33,6 +32,7 @@
 #include "core/document/document.hpp"
 #include "core/tool/tool_type.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/vector.hpp"
 
 namespace tactile {
 
@@ -142,8 +142,8 @@ class DocumentModel final {
   HashMap<UUID, Shared<Document>> mDocuments;  /// All _loaded_ documents
   HashMap<UUID, Shared<MapDocument>> mMaps;
   HashMap<UUID, Shared<TilesetDocument>> mTilesets;
-  std::vector<UUID> mOpenDocuments;  /// All _open_ documents in the editor
-  Maybe<UUID> mActiveDocument;       /// ID of the active document.
+  Vec<UUID> mOpenDocuments;     /// All _open_ documents in the editor
+  Maybe<UUID> mActiveDocument;  /// ID of the active document.
 
   void register_map(Shared<MapDocument> document);
   void register_tileset(Shared<TilesetDocument> document);

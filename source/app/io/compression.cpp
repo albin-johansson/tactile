@@ -72,7 +72,7 @@ auto zlib_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
   return to_byte_stream(*uncompressed);
 }
 
-auto zlib_decompress(std::span<const uint8> span) -> Maybe<ByteStream>
+auto zlib_decompress(eastl::span<const uint8> span) -> Maybe<ByteStream>
 {
   return zlib_decompress(span.data(), span.size_bytes());
 }
@@ -107,7 +107,7 @@ auto zstd_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
   return to_byte_stream(*uncompressed);
 }
 
-auto zstd_decompress(std::span<const uint8> span) -> Maybe<ByteStream>
+auto zstd_decompress(eastl::span<const uint8> span) -> Maybe<ByteStream>
 {
   return zstd_decompress(span.data(), span.size_bytes());
 }

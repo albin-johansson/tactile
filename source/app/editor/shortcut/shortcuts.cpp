@@ -19,12 +19,11 @@
 
 #include "shortcuts.hpp"
 
-#include <vector>  // vector
-
 #include <centurion/event.hpp>
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/type/ptr.hpp"
+#include "core/type/vector.hpp"
 #include "editor/shortcut/edit_shortcuts.hpp"
 #include "editor/shortcut/file_shortcuts.hpp"
 #include "editor/shortcut/view_shortcuts.hpp"
@@ -32,7 +31,7 @@
 namespace tactile {
 namespace {
 
-inline std::vector<Unique<Shortcut>> _shortcuts;
+inline Vec<Unique<Shortcut>> _shortcuts;
 
 template <typename T>
 void _load_shortcut()

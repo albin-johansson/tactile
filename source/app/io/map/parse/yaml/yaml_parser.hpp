@@ -19,12 +19,11 @@
 
 #pragma once
 
-#include <vector>  // vector
-
 #include <yaml-cpp/yaml.h>
 
 #include "core/common/fs.hpp"
 #include "core/type/expected.hpp"
+#include "core/type/vector.hpp"
 #include "io/map/parse/parse_error.hpp"
 #include "io/map/parse/parse_result.hpp"
 
@@ -35,10 +34,10 @@ namespace tactile::io {
 [[nodiscard]] auto parse_tilesets(const YAML::Node& sequence,
                                   const ir::MapData& map,
                                   const fs::path& dir)
-    -> Expected<std::vector<ir::TilesetData>, ParseError>;
+    -> Expected<Vec<ir::TilesetData>, ParseError>;
 
 [[nodiscard]] auto parse_layers(const YAML::Node& sequence, const ir::MapData& map)
-    -> Expected<std::vector<ir::LayerData>, ParseError>;
+    -> Expected<Vec<ir::LayerData>, ParseError>;
 
 [[nodiscard]] auto parse_object(const YAML::Node& node, const ir::MapData& map)
     -> Expected<ir::ObjectData, ParseError>;

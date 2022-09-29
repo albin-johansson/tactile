@@ -20,10 +20,10 @@
 #pragma once
 
 #include <string>  // string
-#include <vector>  // vector
 
 #include "core/common/vocabulary.hpp"
 #include "core/layer/tile_format.hpp"
+#include "core/type/vector.hpp"
 
 namespace tactile::io {
 

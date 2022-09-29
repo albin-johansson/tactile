@@ -208,10 +208,9 @@ constexpr int32 tileset_format_version = 1;
 
 auto parse_tilesets(const YAML::Node& sequence,
                     const ir::MapData& map,
-                    const fs::path& dir)
-    -> Expected<std::vector<ir::TilesetData>, ParseError>
+                    const fs::path& dir) -> Expected<Vec<ir::TilesetData>, ParseError>
 {
-  std::vector<ir::TilesetData> tilesets;
+  Vec<ir::TilesetData> tilesets;
   tilesets.reserve(sequence.size());
 
   for (const auto& node : sequence) {

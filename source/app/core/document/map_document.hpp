@@ -20,7 +20,6 @@
 #pragma once
 
 #include <string>  // string
-#include <vector>  // vector
 
 #include <boost/uuid/uuid_hash.hpp>
 
@@ -38,6 +37,7 @@
 #include "core/tool/tool_manager.hpp"
 #include "core/tool/tool_type.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/vector.hpp"
 #include "core/viewport.hpp"
 
 namespace tactile {

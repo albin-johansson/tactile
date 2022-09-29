@@ -25,7 +25,6 @@
 #include <string>       // string
 #include <string_view>  // string_view
 #include <utility>      // move
-#include <vector>       // vector
 
 #include <boost/uuid/uuid_hash.hpp>
 #include <fmt/format.h>
@@ -33,6 +32,7 @@
 
 #include "core/common/assoc.hpp"
 #include "core/tile_pos.hpp"
+#include "core/type/vector.hpp"
 #include "core/util/functional.hpp"
 #include "core/util/query.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
@@ -156,12 +156,11 @@ void add_animations(const ir::MapData& map,
 }
 
 [[nodiscard]] auto approximate_ellipse_as_polygon(const ir::ObjectData& object,
-                                                  const usize point_count)
-    -> std::vector<Float2>
+                                                  const usize point_count) -> Vec<Float2>
 {
   TACTILE_ASSERT(object.type == ObjectType::Ellipse);
 
-  std::vector<Float2> points;
+  Vec<Float2> points;
   points.reserve(point_count);
 
   const auto n = static_cast<double>(point_count);

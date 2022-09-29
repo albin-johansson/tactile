@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include <vector>  // vector
-
 #include "core/cmd/command.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/uuid.hpp"
@@ -28,6 +26,7 @@
 #include "core/map.hpp"
 #include "core/tile_pos.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/vector.hpp"
 
 namespace tactile::cmd {
 
@@ -50,7 +49,7 @@ class BucketFill final : public Command {
   TilePos mOrigin;
   TileID mReplacement {};
   Maybe<TileID> mTarget;
-  std::vector<TilePos> mPositions;
+  Vec<TilePos> mPositions;
 };
 
 }  // namespace tactile::cmd

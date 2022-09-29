@@ -251,9 +251,9 @@ auto parse_object(const YAML::Node& node, const ir::MapData& map)
 }
 
 auto parse_layers(const YAML::Node& sequence, const ir::MapData& map)
-    -> Expected<std::vector<ir::LayerData>, ParseError>
+    -> Expected<Vec<ir::LayerData>, ParseError>
 {
-  std::vector<ir::LayerData> layers;
+  Vec<ir::LayerData> layers;
   layers.reserve(sequence.size());
 
   usize index = 0;

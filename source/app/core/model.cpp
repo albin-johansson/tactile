@@ -422,7 +422,7 @@ auto DocumentModel::unregister_map(const UUID& id) -> Shared<MapDocument>
 
   mDocuments.erase(id);
   mMaps.erase(id);
-  std::erase(mOpenDocuments, id);
+  erase(mOpenDocuments, id);
 
   return map;
 }
@@ -433,7 +433,7 @@ auto DocumentModel::unregister_tileset(const UUID& id) -> Shared<TilesetDocument
 
   mDocuments.erase(id);
   mTilesets.erase(id);
-  std::erase(mOpenDocuments, id);
+  erase(mOpenDocuments, id);
 
   return tileset;
 }

@@ -37,7 +37,7 @@ namespace tactile::io {
     -> Expected<ir::ObjectData, ParseError>;
 
 [[nodiscard]] auto parse_layers(XMLNode map_node, ir::MapData& map)
-    -> Expected<std::vector<ir::LayerData>, ParseError>;
+    -> Expected<Vec<ir::LayerData>, ParseError>;
 
 [[nodiscard]] auto parse_properties(XMLNode node)
     -> Expected<ir::AttributeMap, ParseError>;

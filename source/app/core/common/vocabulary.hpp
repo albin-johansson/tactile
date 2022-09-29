@@ -23,9 +23,10 @@
 
 #include <cstddef>  // size_t
 #include <cstdint>  // int{}_t, uint{}_t
-#include <vector>   // vector
 
 #include <folly/CPortability.h>
+
+#include "core/type/vector.hpp"
 
 #define TACTILE_NOINLINE FOLLY_NOINLINE
 
@@ -97,7 +98,7 @@ using TileID = int32;     ///< For global tile identifiers.
 
 inline constexpr TileID empty_tile = 0;
 
-using TileRow = std::vector<TileID>;
-using TileMatrix = std::vector<TileRow>;
+using TileRow = Vec<TileID>;
+using TileMatrix = Vec<TileRow>;
 
 }  // namespace tactile

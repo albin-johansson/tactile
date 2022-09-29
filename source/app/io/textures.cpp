@@ -19,7 +19,7 @@
 
 #include "textures.hpp"
 
-#include <vector>  // vector
+#include "core/type/vector.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
 
@@ -38,7 +38,7 @@ struct TextureDataDeleter final {
 
 using TextureDataPtr = Unique<uchar, TextureDataDeleter>;
 
-inline std::vector<uint> textures;
+inline Vec<uint> textures;
 
 }  // namespace
 

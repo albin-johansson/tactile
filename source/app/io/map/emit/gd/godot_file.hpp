@@ -20,13 +20,13 @@
 #pragma once
 
 #include <string>  // string
-#include <vector>  // vector
 
 #include "core/attribute.hpp"
 #include "core/common/assoc.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/vector.hpp"
 
 namespace tactile::io {
 
@@ -52,13 +52,13 @@ struct GdAtlasTexture final {
 
 struct GdAnimation final {
   std::string name;
-  std::vector<GdSubRes> frames;  /// Atlas textures
+  Vec<GdSubRes> frames;  /// Atlas textures
   float speed {};
 };
 
 struct GdSpriteFrames final {
   GdSubRes id {};
-  std::vector<GdAnimation> animations;
+  Vec<GdAnimation> animations;
 };
 
 struct GdRectShape final {

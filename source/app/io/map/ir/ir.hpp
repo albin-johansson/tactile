@@ -22,7 +22,6 @@
 #include <concepts>  // invocable
 #include <string>    // string
 #include <variant>   // variant, get
-#include <vector>    // vector
 
 #include "core/attribute.hpp"
 #include "core/common/assoc.hpp"
@@ -35,6 +34,7 @@
 #include "core/layer/object_type.hpp"
 #include "core/layer/tile_format.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/vector.hpp"
 #include "core/util/query.hpp"
 
 namespace tactile::ir {
@@ -66,7 +66,7 @@ struct TileLayerData final {
 };
 
 struct ObjectLayerData final {
-  std::vector<ObjectData> objects;
+  Vec<ObjectData> objects;
 };
 
 struct LayerData;
@@ -78,7 +78,7 @@ struct GroupLayerData final {
   TACTILE_DELETE_COPY(GroupLayerData);
   TACTILE_DEFAULT_MOVE(GroupLayerData);
 
-  std::vector<Unique<LayerData>> children;
+  Vec<Unique<LayerData>> children;
 };
 
 struct LayerData final {
@@ -117,8 +117,8 @@ struct AnimationFrameData final {
 struct MetaTileData final {
   UUID uuid {make_uuid()};  // This is not persistent! Only here for convenience.
 
-  std::vector<ObjectData> objects;
-  std::vector<AnimationFrameData> frames;
+  Vec<ObjectData> objects;
+  Vec<AnimationFrameData> frames;
   ContextData context;
 };
 
@@ -159,8 +159,8 @@ struct MapData final {
   int32 next_object_id {};
   TileFormatData tile_format;
   ComponentMap component_definitions;
-  std::vector<TilesetData> tilesets;
-  std::vector<LayerData> layers;
+  Vec<TilesetData> tilesets;
+  Vec<LayerData> layers;
   ContextData context;
 
   [[nodiscard]] auto find_tileset_with_tile(const TileID id) const -> const TilesetData&
