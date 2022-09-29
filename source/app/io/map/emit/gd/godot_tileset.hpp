@@ -21,11 +21,11 @@
 
 #include <string>  // string
 
-#include "core/common/assoc.hpp"
 #include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/type/vector.hpp"
+#include "core/util/assoc.hpp"
 #include "core/uuid.hpp"
 #include "io/map/emit/gd/godot_file.hpp"
 

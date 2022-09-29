@@ -30,9 +30,9 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "core/common/assoc.hpp"
 #include "core/tile_pos.hpp"
 #include "core/type/vector.hpp"
+#include "core/util/assoc.hpp"
 #include "core/util/functional.hpp"
 #include "core/util/query.hpp"
 #include "io/map/emit/gd/godot_options.hpp"

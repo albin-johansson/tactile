@@ -22,6 +22,7 @@
 #include <utility>  // move
 
 #include "core/tileset/tileset_info.hpp"
+#include "core/util/assoc.hpp"
 #include "core/util/tiles.hpp"
 #include "misc/panic.hpp"
 

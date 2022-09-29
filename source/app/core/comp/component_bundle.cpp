@@ -21,6 +21,7 @@
 
 #include <utility>  // move
 
+#include "core/util/assoc.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {

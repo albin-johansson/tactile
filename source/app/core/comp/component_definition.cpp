@@ -23,6 +23,7 @@
 
 #include <fmt/format.h>
 
+#include "core/util/assoc.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -41,7 +42,7 @@ auto ComponentDefinition::instantiate() const -> Component
 
 void ComponentDefinition::add_attr(std::string key, const AttributeType type)
 {
-  if (!mAttributes.contains(key)) {
+  if (!has_key(mAttributes, key)) {
     mAttributes[std::move(key)].reset_to_default(type);
   }
   else {
@@ -51,7 +52,7 @@ void ComponentDefinition::add_attr(std::string key, const AttributeType type)
 
 void ComponentDefinition::add_attr(std::string key, Attribute value)
 {
-  if (!mAttributes.contains(key)) {
+  if (!has_key(mAttributes, key)) {
     mAttributes[std::move(key)] = std::move(value);
   }
   else {
@@ -67,7 +68,7 @@ void ComponentDefinition::update_attr(std::string_view key, Attribute value)
 
 void ComponentDefinition::remove_attr(std::string_view key)
 {
-  if (const auto iter = mAttributes.find(key); iter != mAttributes.end()) {
+  if (const auto iter = find_in(mAttributes, key); iter != mAttributes.end()) {
     mAttributes.erase(iter);
   }
   else {
@@ -77,11 +78,11 @@ void ComponentDefinition::remove_attr(std::string_view key)
 
 void ComponentDefinition::rename_attr(std::string_view current, std::string updated)
 {
-  if (mAttributes.contains(updated)) {
+  if (has_key(mAttributes, updated)) {
     throw TactileError {"Attribute name must be unique!"};
   }
 
-  if (const auto iter = mAttributes.find(current); iter != mAttributes.end()) {
+  if (const auto iter = find_in(mAttributes, current); iter != mAttributes.end()) {
     auto value = iter->second;
     mAttributes.erase(iter);
     mAttributes[std::move(updated)] = std::move(value);
@@ -100,7 +101,7 @@ auto ComponentDefinition::duplicate_attr(std::string_view key) -> std::string
   do {
     new_key = fmt::format("{} ({})", key, suffix);
     ++suffix;
-  } while (mAttributes.contains(new_key));
+  } while (has_key(mAttributes, new_key));
 
   mAttributes[new_key] = std::move(value);
   return new_key;
@@ -113,7 +114,7 @@ auto ComponentDefinition::get_attr(std::string_view key) const -> const Attribut
 
 auto ComponentDefinition::has_attr(std::string_view key) const -> bool
 {
-  return mAttributes.contains(key);
+  return has_key(mAttributes, key);
 }
 
 void ComponentDefinition::set_name(std::string name)

@@ -31,6 +31,7 @@
 #include <gtest/gtest.h>
 
 #include "core/common/fs.hpp"
+#include "core/util/assoc.hpp"
 #include "core/util/tiles.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
@@ -51,7 +52,7 @@ void validate_contexts(const ir::ContextData& source, const ir::ContextData& res
   ASSERT_EQ(source.properties, restored.properties);
 
   for (const auto& [name, attributes] : source.components) {
-    ASSERT_TRUE(restored.components.contains(name));
+    ASSERT_TRUE(has_key(restored.components, name));
     ASSERT_EQ(attributes, restored.components.at(name));
   }
 }

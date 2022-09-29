@@ -23,7 +23,6 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/common/assoc.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/tile_cache.hpp"

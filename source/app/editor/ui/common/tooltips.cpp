@@ -23,8 +23,9 @@
 
 #include <imgui.h>
 
-#include "core/common/assoc.hpp"
 #include "core/common/maybe.hpp"
+#include "core/type/hash_map.hpp"
+#include "core/util/assoc.hpp"
 #include "misc/assert.hpp"
 
 using namespace std::chrono_literals;
@@ -41,20 +42,20 @@ void lazy_tooltip(const char* id, const char* tooltip)
 
   static HashMap<ImGuiID, Maybe<TimePoint>> state;
 
-  const auto hashedId = ImGui::GetID(id);
-  auto& lastHover = state[hashedId];
+  const auto hashed_id = ImGui::GetID(id);
+  auto& last_hover = state[hashed_id];
 
   if (ImGui::IsItemHovered()) {
-    if (!lastHover) {
-      lastHover = Clock::now();
+    if (!last_hover) {
+      last_hover = Clock::now();
     }
 
-    if (Clock::now() - lastHover.value() > 1s) {
+    if (Clock::now() - last_hover.value() > 1s) {
       ImGui::SetTooltip("%s", tooltip);
     }
   }
   else {
-    lastHover.reset();
+    last_hover.reset();
   }
 }
 

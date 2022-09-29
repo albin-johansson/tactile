@@ -31,6 +31,7 @@
 #include "core/document/tileset_document.hpp"
 #include "core/tileset/tileset_info.hpp"
 #include "core/tool/tool_manager.hpp"
+#include "core/util/assoc.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 

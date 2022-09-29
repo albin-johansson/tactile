@@ -23,8 +23,8 @@
 
 #include <imgui.h>
 
-#include "core/common/assoc.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/hash_map.hpp"
 #include "core/uuid.hpp"
 
 namespace tactile::ui {

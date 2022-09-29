@@ -21,6 +21,7 @@
 
 #include <utility>  // move
 
+#include "core/util/assoc.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
@@ -34,7 +35,7 @@ Component::Component(const UUID& definition_id, AttributeMap attributes)
 
 void Component::add_attr(std::string key, Attribute value)
 {
-  if (!mAttributes.contains(key)) {
+  if (mAttributes.find(key) == mAttributes.end()) {
     mAttributes[std::move(key)] = std::move(value);
   }
   else {
@@ -44,7 +45,7 @@ void Component::add_attr(std::string key, Attribute value)
 
 void Component::remove_attr(std::string_view key)
 {
-  if (const auto iter = mAttributes.find(key); iter != mAttributes.end()) {
+  if (const auto iter = find_in(mAttributes, key); iter != mAttributes.end()) {
     mAttributes.erase(iter);
   }
   else {
@@ -60,10 +61,10 @@ void Component::update_attr(std::string_view key, Attribute value)
 
 void Component::rename_attr(std::string_view old_key, std::string new_key)
 {
-  TACTILE_ASSERT(!mAttributes.contains(new_key));
+  TACTILE_ASSERT(!has_key(mAttributes, new_key));
   auto value = lookup_in(mAttributes, old_key);
 
-  if (const auto iter = mAttributes.find(old_key); iter != mAttributes.end()) {
+  if (const auto iter = find_in(mAttributes, old_key); iter != mAttributes.end()) {
     mAttributes.erase(iter);
   }
 
@@ -77,7 +78,7 @@ auto Component::get_attr(std::string_view key) const -> const Attribute&
 
 auto Component::has_attr(std::string_view key) const -> bool
 {
-  return mAttributes.contains(key);
+  return has_key(mAttributes, key);
 }
 
 auto Component::size() const -> usize

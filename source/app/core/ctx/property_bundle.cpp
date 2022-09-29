@@ -21,6 +21,7 @@
 
 #include <utility>  // move
 
+#include "core/util/assoc.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -53,7 +54,7 @@ void PropertyBundle::update(std::string_view name, Attribute value)
 
 void PropertyBundle::remove(std::string_view name)
 {
-  if (const auto iter = mProps.find(name); iter != mProps.end()) {
+  if (const auto iter = find_in(mProps, name); iter != mProps.end()) {
     mProps.erase(iter);
   }
   else {
@@ -67,7 +68,7 @@ void PropertyBundle::rename(std::string_view current, std::string updated)
     throw TactileError {"Duplicated property name!"};
   }
 
-  if (const auto iter = mProps.find(current); iter != mProps.end()) {
+  if (const auto iter = find_in(mProps, current); iter != mProps.end()) {
     auto value = iter->second;
     mProps.erase(iter);
     mProps[std::move(updated)] = value;
@@ -90,7 +91,7 @@ auto PropertyBundle::change_type(std::string_view name, const AttributeType type
 
 auto PropertyBundle::find(std::string_view name) -> Attribute*
 {
-  if (const auto iter = mProps.find(name); iter != mProps.end()) {
+  if (const auto iter = find_in(mProps, name); iter != mProps.end()) {
     return &iter->second;
   }
   else {
@@ -100,7 +101,7 @@ auto PropertyBundle::find(std::string_view name) -> Attribute*
 
 auto PropertyBundle::find(std::string_view name) const -> const Attribute*
 {
-  if (const auto iter = mProps.find(name); iter != mProps.end()) {
+  if (const auto iter = find_in(mProps, name); iter != mProps.end()) {
     return &iter->second;
   }
   else {

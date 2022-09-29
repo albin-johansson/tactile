@@ -19,32 +19,15 @@
 
 #pragma once
 
-#include "core/common/vocabulary.hpp"
-#include "core/tile_pos.hpp"
-#include "core/type/tree_map.hpp"
-#include "core/uuid.hpp"
+#include <unordered_map>
+
+#include <EASTL/hash_map.h>
+
+#include "core/type/eastl_new.hpp"
 
 namespace tactile {
 
-class Map;
-
-class MapCommandCache final {
-  friend struct SaveTilesVisitor;
-
-  using TileCache = TreeMap<TilePos, TileID>;
-  using LayerCache = TreeMap<UUID, TileCache>;
-
- public:
-  void clear() noexcept;
-
-  void restore_tiles(Map& map);
-
-  void save_tiles(const Map& map, const TilePos& begin, const TilePos& end);
-
-  void merge_with(const MapCommandCache& other);
-
- private:
-  LayerCache mCache;
-};
+template <typename K, typename V>
+using HashMap = std::unordered_map<K, V>;
 
 }  // namespace tactile

@@ -21,7 +21,6 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/common/assoc.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
@@ -29,6 +28,7 @@
 #include "core/ctx/context_info.hpp"
 #include "core/layer/object.hpp"
 #include "core/tileset/tile_animation.hpp"
+#include "core/type/hash_map.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"
 

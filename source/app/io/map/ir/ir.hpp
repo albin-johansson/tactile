@@ -24,7 +24,6 @@
 #include <variant>   // variant, get
 
 #include "core/attribute.hpp"
-#include "core/common/assoc.hpp"
 #include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
@@ -32,7 +31,9 @@
 #include "core/layer/layer_type.hpp"
 #include "core/layer/object_type.hpp"
 #include "core/layer/tile_format.hpp"
+#include "core/type/hash_map.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/tree_map.hpp"
 #include "core/type/vector.hpp"
 #include "core/util/query.hpp"
 #include "core/uuid.hpp"

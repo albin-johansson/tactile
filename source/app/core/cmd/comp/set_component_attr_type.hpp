@@ -23,8 +23,8 @@
 
 #include "core/attribute.hpp"
 #include "core/cmd/command.hpp"
-#include "core/common/assoc.hpp"
 #include "core/common/maybe.hpp"
+#include "core/type/hash_map.hpp"
 #include "core/uuid.hpp"
 
 namespace tactile {

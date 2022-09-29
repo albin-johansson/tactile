@@ -21,7 +21,6 @@
 
 #include <functional>  // function
 
-#include "core/common/assoc.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
@@ -30,6 +29,7 @@
 #include "core/layer/tile_format.hpp"
 #include "core/tile_pos.hpp"
 #include "core/tileset/tileset_bundle.hpp"
+#include "core/type/hash_map.hpp"
 #include "core/type/ptr.hpp"
 #include "uuid.hpp"
 

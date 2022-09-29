@@ -26,10 +26,10 @@
 #include <boost/uuid/uuid_hash.hpp>
 
 #include "core/attribute.hpp"
-#include "core/common/assoc.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/comp/component.hpp"
 #include "core/ctx/context.hpp"
+#include "core/type/hash_map.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"
 

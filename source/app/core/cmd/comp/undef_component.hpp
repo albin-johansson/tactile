@@ -22,10 +22,10 @@
 #include <boost/uuid/uuid_hash.hpp>
 
 #include "core/cmd/command.hpp"
-#include "core/common/assoc.hpp"
 #include "core/common/maybe.hpp"
 #include "core/comp/component.hpp"
 #include "core/comp/component_definition.hpp"
+#include "core/type/hash_map.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"
 

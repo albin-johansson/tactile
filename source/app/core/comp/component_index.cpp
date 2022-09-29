@@ -23,6 +23,7 @@
 #include <utility>    // move
 
 #include "core/comp/component_definition.hpp"
+#include "core/util/assoc.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 

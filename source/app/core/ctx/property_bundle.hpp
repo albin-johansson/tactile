@@ -23,8 +23,8 @@
 #include <string_view>  // string_view
 
 #include "core/attribute.hpp"
-#include "core/common/assoc.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/tree_map.hpp"
 
 namespace tactile {
 

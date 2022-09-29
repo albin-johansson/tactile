@@ -21,11 +21,11 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/common/assoc.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/tileset/tileset.hpp"
 #include "core/tileset/tileset_ref.hpp"
+#include "core/type/hash_map.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"
 
