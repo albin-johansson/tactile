@@ -81,12 +81,7 @@ void ObjectLayer::add_object(Shared<Object> object)
 
 void ObjectLayer::remove_object(const UUID& id)
 {
-  if (const auto iter = mObjects.find(id); iter != mObjects.end()) {
-    mObjects.erase(iter);
-  }
-  else {
-    throw TactileError {"Invalid object identifier!"};
-  }
+  mObjects.erase(id);
 }
 
 void ObjectLayer::reserve_objects(const usize n)
