@@ -24,10 +24,10 @@
 #include "core/cmd/command.hpp"
 #include "core/common/assoc.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
 #include "core/comp/component.hpp"
 #include "core/comp/component_definition.hpp"
+#include "core/type/ptr.hpp"
 
 namespace tactile {
 class Document;

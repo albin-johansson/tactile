@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "core/common/ref.hpp"
 #include "core/mouse_info.hpp"
 #include "core/tool/tool_visitor.hpp"
+#include "core/type/ref.hpp"
 
 namespace tactile {
 class DocumentModel;

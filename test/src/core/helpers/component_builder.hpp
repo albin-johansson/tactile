@@ -22,9 +22,9 @@
 #include <string>  // string
 
 #include "core/attribute.hpp"
-#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
 #include "core/comp/component_index.hpp"
+#include "core/type/ptr.hpp"
 
 namespace tactile::test {
 

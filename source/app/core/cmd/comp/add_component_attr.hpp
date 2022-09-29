@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/cmd/command.hpp"
-#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
+#include "core/type/ptr.hpp"
 
 namespace tactile {
 class Document;

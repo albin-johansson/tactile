@@ -19,10 +19,11 @@
 
 #pragma once
 
-#include <map>     // map
 #include <string>  // string
 #include <vector>  // vector
 
+#include "core/attribute.hpp"
+#include "core/common/assoc.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
@@ -31,6 +32,13 @@ namespace tactile::io {
 
 using GdExtRes = int32;  ///< External resource identifier.
 using GdSubRes = int32;  ///< Subresource identifier.
+
+using GdAttributes = HashMap<std::string, Attribute>;
+
+struct GdMetaData final {
+  GdAttributes props;
+  HashMap<std::string, GdAttributes> comps;
+};
 
 struct GdExtResource final {
   std::string path;
@@ -59,9 +67,9 @@ struct GdRectShape final {
 
 class GodotFile {
  public:
-  using ExtResources = std::map<GdExtRes, GdExtResource>;
-  using AtlasTextures = std::map<GdSubRes, GdAtlasTexture>;
-  using RectShapes = std::map<GdSubRes, GdRectShape>;
+  using ExtResources = TreeMap<GdExtRes, GdExtResource>;
+  using AtlasTextures = TreeMap<GdSubRes, GdAtlasTexture>;
+  using RectShapes = TreeMap<GdSubRes, GdRectShape>;
 
   auto add_ext_resource(std::string path, std::string type) -> GdExtRes;
 

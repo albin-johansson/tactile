@@ -21,7 +21,7 @@
 
 #include "core/cmd/command.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/ptr.hpp"
+#include "core/type/ptr.hpp"
 
 namespace tactile {
 class Map;

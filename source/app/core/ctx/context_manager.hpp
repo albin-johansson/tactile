@@ -27,11 +27,11 @@
 
 #include "core/attribute.hpp"
 #include "core/common/assoc.hpp"
-#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/comp/component.hpp"
 #include "core/ctx/context.hpp"
+#include "core/type/ptr.hpp"
 
 namespace tactile {
 

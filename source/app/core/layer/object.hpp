@@ -23,11 +23,11 @@
 
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/ptr.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_info.hpp"
 #include "core/layer/object_type.hpp"
+#include "core/type/ptr.hpp"
 
 namespace tactile {
 

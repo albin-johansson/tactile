@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "core/common/assoc.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/tile_pos.hpp"
+#include "core/type/vector_map.hpp"
 
 namespace tactile {
 

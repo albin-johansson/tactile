@@ -76,7 +76,7 @@ namespace {
 }
 
 void write_attributes(std::ostream& stream,
-                      const HashMap<String, Attribute>& attrs,
+                      const GdAttributes& attrs,
                       std::string_view prefix)
 {
   const auto count = attrs.size();

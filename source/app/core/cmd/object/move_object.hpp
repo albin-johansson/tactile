@@ -21,8 +21,8 @@
 
 #include "core/cmd/command.hpp"
 #include "core/common/math.hpp"
-#include "core/common/ptr.hpp"
 #include "core/layer/object.hpp"
+#include "core/type/ptr.hpp"
 
 namespace tactile::cmd {
 

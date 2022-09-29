@@ -28,11 +28,11 @@
 #include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/document/document.hpp"
 #include "core/tool/tool_type.hpp"
+#include "core/type/ptr.hpp"
 
 namespace tactile {
 

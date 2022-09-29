@@ -21,9 +21,9 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/ptr.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 
 namespace tactile {

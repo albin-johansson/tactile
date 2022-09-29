@@ -29,12 +29,12 @@
 #include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/object_type.hpp"
 #include "core/layer/tile_format.hpp"
+#include "core/type/ptr.hpp"
 #include "core/util/query.hpp"
 
 namespace tactile::ir {

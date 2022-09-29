@@ -23,11 +23,11 @@
 
 #include "core/cmd/command.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/map.hpp"
 #include "core/tile_pos.hpp"
+#include "core/type/ptr.hpp"
 
 namespace tactile::cmd {
 

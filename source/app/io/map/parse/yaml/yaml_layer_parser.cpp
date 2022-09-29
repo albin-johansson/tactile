@@ -21,7 +21,7 @@
 #include <string>     // string
 #include <utility>    // move
 
-#include "core/common/expected.hpp"
+#include "core/type/expected.hpp"
 #include "core/util/string.hpp"
 #include "core/util/tiles.hpp"
 #include "io/map/ir/ir.hpp"

@@ -21,9 +21,9 @@
 
 #include "core/cmd/command.hpp"
 #include "core/common/math.hpp"
-#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
 #include "core/tileset/tileset_info.hpp"
+#include "core/type/ptr.hpp"
 
 namespace tactile {
 class DocumentModel;

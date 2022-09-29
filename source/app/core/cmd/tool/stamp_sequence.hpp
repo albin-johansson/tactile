@@ -20,11 +20,11 @@
 #pragma once
 
 #include "core/cmd/command.hpp"
-#include "core/common/ptr.hpp"
 #include "core/common/tile_cache.hpp"
 #include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/map.hpp"
+#include "core/type/ptr.hpp"
 
 namespace tactile::cmd {
 

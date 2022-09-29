@@ -26,7 +26,6 @@
 #include "core/common/assoc.hpp"
 #include "core/common/fs.hpp"
 #include "core/common/math.hpp"
-#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/ctx/context.hpp"
@@ -34,6 +33,7 @@
 #include "core/tile_pos.hpp"
 #include "core/tileset/tile.hpp"
 #include "core/tileset/tileset_info.hpp"
+#include "core/type/ptr.hpp"
 
 namespace tactile {
 

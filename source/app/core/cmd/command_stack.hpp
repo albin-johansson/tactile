@@ -26,8 +26,8 @@
 
 #include "core/cmd/command.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/ptr.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/ptr.hpp"
 
 namespace tactile {
 

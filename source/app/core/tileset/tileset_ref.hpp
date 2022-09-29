@@ -20,11 +20,11 @@
 #pragma once
 
 #include "core/common/maybe.hpp"
-#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/region.hpp"
 #include "core/tileset/tileset.hpp"
+#include "core/type/ptr.hpp"
 #include "core/viewport.hpp"
 
 namespace tactile {

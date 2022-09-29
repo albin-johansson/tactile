@@ -22,11 +22,11 @@
 #include <functional>  // function
 #include <vector>      // vector
 
-#include "core/common/ptr.hpp"
 #include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/layer/layer.hpp"
 #include "core/layer/layer_delegate.hpp"
+#include "core/type/ptr.hpp"
 
 namespace tactile {
 

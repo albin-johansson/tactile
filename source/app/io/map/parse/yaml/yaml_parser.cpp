@@ -23,7 +23,7 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "core/common/expected.hpp"
+#include "core/type/expected.hpp"
 #include "io/util/yaml.hpp"
 
 namespace tactile::io {

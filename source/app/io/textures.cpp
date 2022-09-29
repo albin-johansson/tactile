@@ -27,7 +27,7 @@
 #include <spdlog/spdlog.h>
 #include <stb_image.h>
 
-#include "core/common/ptr.hpp"
+#include "core/type/ptr.hpp"
 
 namespace tactile {
 namespace {
