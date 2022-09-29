@@ -19,18 +19,20 @@
 
 #pragma once
 
-#include "core/type/ostream.hpp"
+#include "core/type/fstream.hpp"
+#include "core/type/path.hpp"
 
 namespace tactile {
 
-/// Represents the available map object types.
-enum class ObjectType {
-  Point,
-  Rect,
-  Ellipse
+enum class FileType {
+  Text,
+  Binary
 };
 
-/// Outputs an object type to a stream for debugging purposes.
-auto operator<<(OStream& stream, ObjectType type) -> OStream&;
+[[nodiscard]] auto read_file(const char* path, FileType type) -> IfStream;
+[[nodiscard]] auto read_file(const Path& path, FileType type) -> IfStream;
+
+[[nodiscard]] auto write_file(const char* path, FileType type) -> OfStream;
+[[nodiscard]] auto write_file(const Path& path, FileType type) -> OfStream;
 
 }  // namespace tactile

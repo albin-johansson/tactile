@@ -281,7 +281,7 @@ auto Attribute::as_color() const -> const color_type&
   }
 }
 
-auto operator<<(std::ostream& stream, const Attribute& value) -> std::ostream&
+auto operator<<(OStream& stream, const Attribute& value) -> OStream&
 {
   switch (value.type()) {
     case AttributeType::String:

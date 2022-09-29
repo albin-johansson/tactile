@@ -19,13 +19,11 @@
 
 #include "session.hpp"
 
-#include <fstream>  // ifstream, ofstream
-#include <ios>      // ios
-
 #include <spdlog/spdlog.h>
 
 #include "core/document/map_document.hpp"
 #include "core/model.hpp"
+#include "core/util/file.hpp"
 #include "core/util/filesystem.hpp"
 #include "io/directories.hpp"
 #include "io/map/ir/map_from_ir.hpp"
@@ -49,7 +47,7 @@ void restore_last_session(DocumentModel& model)
 {
   proto::Session session;
 
-  std::ifstream stream {get_file_path(), std::ios::in | std::ios::binary};
+  auto stream = read_file(get_file_path(), FileType::Binary);
   if (session.ParseFromIstream(&stream)) {
     for (const auto& file : session.files()) {
       const auto ir = parse_map(file);
@@ -79,8 +77,7 @@ void save_session(const DocumentModel& model)
     }
   });
 
-  std::ofstream stream {get_file_path(),
-                        std::ios::out | std::ios::trunc | std::ios::binary};
+  auto stream = write_file(get_file_path(), FileType::Binary);
   if (!session.SerializeToOstream(&stream)) {
     spdlog::error("Failed to save session file!");
   }

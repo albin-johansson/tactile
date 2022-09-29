@@ -20,7 +20,6 @@
 #pragma once
 
 #include <concepts>     // same_as
-#include <ostream>      // ostream
 #include <string>       // string
 #include <string_view>  // string_view
 #include <utility>      // move
@@ -31,6 +30,7 @@
 #include "core/common/fs.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/ostream.hpp"
 
 namespace tactile {
 
@@ -216,6 +216,6 @@ class Attribute final {
 };
 
 /// Outputs an attribute to a stream for debugging purposes.
-auto operator<<(std::ostream& stream, const Attribute& value) -> std::ostream&;
+auto operator<<(OStream& stream, const Attribute& value) -> OStream&;
 
 }  // namespace tactile

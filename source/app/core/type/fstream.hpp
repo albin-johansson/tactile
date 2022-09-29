@@ -19,18 +19,11 @@
 
 #pragma once
 
-#include "core/type/ostream.hpp"
+#include <fstream>  // ifstream, ofstream
 
 namespace tactile {
 
-/// Represents the available map object types.
-enum class ObjectType {
-  Point,
-  Rect,
-  Ellipse
-};
-
-/// Outputs an object type to a stream for debugging purposes.
-auto operator<<(OStream& stream, ObjectType type) -> OStream&;
+using IfStream = std::ifstream;
+using OfStream = std::ofstream;
 
 }  // namespace tactile

@@ -19,14 +19,13 @@
 
 #include "preferences.hpp"
 
-#include <fstream>  // ifstream, ofstream
-#include <ios>      // ios
 #include <utility>  // move
 
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
 #include "core/common/fs.hpp"
+#include "core/util/file.hpp"
 #include "io/directories.hpp"
 #include "io/proto/proto.hpp"
 
@@ -44,7 +43,7 @@ inline PreferenceState current_settings;
 [[nodiscard]] auto parse_preferences(const fs::path& path) -> PreferenceState
 {
   PreferenceState result {};
-  std::ifstream stream {path, std::ios::in | std::ios::binary};
+  auto stream = read_file(path, FileType::Binary);
 
   proto::Settings cfg;
   if (cfg.ParseFromIstream(&stream)) {
@@ -212,7 +211,8 @@ void save_preferences()
   cfg.set_font_size(current_settings.font_size);
 
   const auto& path = get_preference_file_path();
-  std::ofstream stream {path, std::ios::out | std::ios::trunc | std::ios::binary};
+  auto stream = write_file(path, FileType::Binary);
+
   if (!cfg.SerializeToOstream(&stream)) {
     spdlog::error("Failed to save preferences!");
   }

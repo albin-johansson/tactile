@@ -19,10 +19,9 @@
 
 #include "json.hpp"
 
-#include <fstream>  // ifstream, ofstream
 #include <iomanip>  // setw
-#include <ios>      // ios
 
+#include "core/util/file.hpp"
 #include "core/util/filesystem.hpp"
 #include "io/proto/preferences.hpp"
 #include "misc/panic.hpp"
@@ -82,7 +81,7 @@ void to_json(JSON& json, const Attribute& value)
 
 void write_json(const JSON& json, const fs::path& path)
 {
-  std::ofstream stream {path, std::ios::out | std::ios::trunc};
+  auto stream = write_file(path, FileType::Text);
 
   if (io::get_preferences().indent_output) {
     stream << std::setw(2);
@@ -104,7 +103,7 @@ auto try_get(const JSON& json, const char* key) -> const JSON*
 auto read_json(const fs::path& path) -> Maybe<JSON>
 {
   try {
-    std::ifstream stream {path, std::ios::in};
+    auto stream = read_file(path, FileType::Text);
 
     JSON json;
     stream >> json;

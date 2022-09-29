@@ -17,8 +17,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <fstream>  // ofstream
-#include <ios>      // ios
 #include <sstream>  // stringstream
 #include <string>   // string
 
@@ -27,6 +25,7 @@
 
 #include "core/attribute.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/util/file.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/fmt.hpp"
 #include "io/compression.hpp"
@@ -344,7 +343,7 @@ void emit_tileset_file(const EmitInfo& info,
   const auto path = info.destination_dir() / filename;
   spdlog::debug("Saving external tileset to {}", path);
 
-  std::ofstream stream {path, std::ios::out | std::ios::trunc};
+  auto stream = write_file(path, FileType::Text);
   stream << emitter.c_str();
 }
 
@@ -474,7 +473,7 @@ void emit_yaml_map(const EmitInfo& info)
 
   emitter << YAML::EndMap;
 
-  std::ofstream stream {info.destination_file(), std::ios::out | std::ios::trunc};
+  auto stream = write_file(info.destination_file(), FileType::Text);
   stream << emitter.c_str();
 }
 

@@ -17,14 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <fstream>  // ofstream
-#include <ios>      // ios
 #include <sstream>  // stringstream
 
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
 #include "core/common/fs.hpp"
+#include "core/util/file.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/functional.hpp"
 #include "io/map/emit/emit_info.hpp"
@@ -368,7 +367,7 @@ void emit_external_tileset_file(const fs::path& path,
 
   append_common_tileset_attributes(root, tileset, dir);
 
-  std::ofstream stream {path, std::ios::out};
+  auto stream = write_file(path, FileType::Text);
   document.save(stream, " ");
 }
 
@@ -429,7 +428,7 @@ void emit_xml_map(const EmitInfo& info)
   pugi::xml_document document;
   append_root(document, info);
 
-  std::ofstream stream {info.destination_file(), std::ios::out | std::ios::trunc};
+  auto stream = write_file(info.destination_file(), FileType::Text);
   document.save(stream, " ");
 }
 

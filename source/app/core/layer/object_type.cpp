@@ -23,7 +23,7 @@
 
 namespace tactile {
 
-auto operator<<(std::ostream& stream, const ObjectType type) -> std::ostream&
+auto operator<<(OStream& stream, const ObjectType type) -> OStream&
 {
   return stream << magic_enum::enum_name(type);
 }

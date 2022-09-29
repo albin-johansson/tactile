@@ -20,14 +20,13 @@
 #include "history.hpp"
 
 #include <algorithm>  // find
-#include <fstream>    // ifstream, ofstream
-#include <ios>        // ios
 #include <utility>    // move
 
 #include <spdlog/spdlog.h>
 
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/util/file.hpp"
 #include "core/util/filesystem.hpp"
 #include "io/directories.hpp"
 #include "io/proto/proto.hpp"
@@ -55,7 +54,7 @@ inline Deque<std::string> history_entries;
 void load_file_history()
 {
   spdlog::debug("Loading file history...");
-  std::ifstream stream {get_file_path(), std::ios::in | std::ios::binary};
+  auto stream = read_file(get_file_path(), FileType::Binary);
 
   proto::History h;
   if (h.ParseFromIstream(&stream)) {
@@ -88,8 +87,7 @@ void save_file_history()
     h.add_files(path);
   }
 
-  std::ofstream stream {get_file_path(),
-                        std::ios::out | std::ios::trunc | std::ios::binary};
+  auto stream = write_file(get_file_path(), FileType::Binary);
   if (!h.SerializeToOstream(&stream)) {
     spdlog::error("Failed to save file history!");
   }
