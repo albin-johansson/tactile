@@ -139,6 +139,8 @@ void poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
     return;
   }
 
+  // FIXME crash: we need to track origin dock for these mouse events, otherwise we might
+  // end up emitting dragged events without an initial pressed event, etc.
   if (Window::contains_mouse()) {
     check_for<ToolPressedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
       return ImGui::IsMouseClicked(button);
