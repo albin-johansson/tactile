@@ -58,8 +58,7 @@ void TilesetBundle::detach_tileset(const UUID& id)
   const auto& ref = lookup_in(mRefs, id);
 
   // Removes all cached tile entries for the tileset that will be removed
-  eastl::erase_if(mTileCache,
-                  [&](const auto& pair) { return ref.is_valid_tile(pair.first); });
+  erase_if(mTileCache, [&](const auto& pair) { return ref.is_valid_tile(pair.first); });
 
   mRefs.erase(id);
 
