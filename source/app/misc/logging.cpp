@@ -20,7 +20,6 @@
 #include "logging.hpp"
 
 #include <ctime>    // time
-#include <deque>    // deque
 #include <utility>  // move
 
 #include <fmt/chrono.h>
@@ -29,6 +28,7 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
+#include "core/type/deque.hpp"
 #include "core/type/ptr.hpp"
 #include "io/directories.hpp"
 #include "meta/build.hpp"
@@ -91,7 +91,7 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
   }
 
  private:
-  std::deque<LogEntry> mHistory;
+  Deque<LogEntry> mHistory;
 };
 
 inline Shared<HistorySink> _history_sink;

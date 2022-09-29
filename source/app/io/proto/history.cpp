@@ -42,7 +42,7 @@ constexpr usize history_max_size = 10;
 // We store paths as strings because that makes displaying them
 // in menus much easier (and faster)
 inline Maybe<std::string> history_last_closed_file;
-inline std::deque<std::string> history_entries;
+inline Deque<std::string> history_entries;
 
 [[nodiscard]] auto get_file_path() -> const fs::path&
 {
@@ -126,7 +126,7 @@ void set_last_closed_file(const fs::path& path)
   add_file_to_history(path);
 }
 
-auto file_history() -> const std::deque<std::string>&
+auto file_history() -> const Deque<std::string>&
 {
   return history_entries;
 }

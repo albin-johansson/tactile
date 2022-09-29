@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include <deque>   // deque
 #include <string>  // string
 
 #include "core/common/fs.hpp"
+#include "core/type/deque.hpp"
 
 namespace tactile::io {
 
@@ -42,7 +42,7 @@ void add_file_to_history(const fs::path& path);
 void set_last_closed_file(const fs::path& path);
 
 /// Returns the current in-memory recent file history.
-[[nodiscard]] auto file_history() -> const std::deque<std::string>&;
+[[nodiscard]] auto file_history() -> const Deque<std::string>&;
 
 /// Indicates whether there is a valid most recently closed file entry.
 ///
