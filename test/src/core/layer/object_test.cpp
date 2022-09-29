@@ -100,14 +100,6 @@ TEST(Object, SetTypeToPoint)
   ASSERT_EQ(0, object.get_size().y);
 }
 
-TEST(Object, SetTag)
-{
-  Object object;
-
-  object.set_tag("foo");
-  ASSERT_EQ("foo", object.get_tag());
-}
-
 TEST(Object, SetMetaId)
 {
   Object object;
@@ -127,6 +119,14 @@ TEST(Object, SetVisible)
   ASSERT_TRUE(object.is_visible());
 }
 
+TEST(Object, SetTag)
+{
+  Object object;
+
+  object.set_tag("foo");
+  ASSERT_EQ("foo", object.get_tag());
+}
+
 TEST(Object, Clone)
 {
   Object object;
@@ -134,17 +134,16 @@ TEST(Object, Clone)
   object.set_pos({921, 832});
   object.set_size({43, 83});
   object.set_meta_id(7);
-  object.ctx().set_name("abc");
   object.set_tag("foo");
   object.set_visible(false);
 
   const auto clone = object.clone();
+  ASSERT_NE(object.get_uuid(), clone->get_uuid());
 
   ASSERT_EQ(object.get_type(), clone->get_type());
   ASSERT_EQ(object.get_pos(), clone->get_pos());
   ASSERT_EQ(object.get_size(), clone->get_size());
   ASSERT_EQ(object.get_meta_id(), clone->get_meta_id());
-  ASSERT_EQ(object.ctx().name(), clone->ctx().name());
   ASSERT_EQ(object.get_tag(), clone->get_tag());
   ASSERT_EQ(object.is_visible(), clone->is_visible());
 }
