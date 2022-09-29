@@ -23,6 +23,7 @@
 
 #include <EASTL/functional.h>
 #include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_hash.hpp>
 
 #include "core/common/vocabulary.hpp"
 
@@ -37,11 +38,3 @@ using UUID = boost::uuids::uuid;
 [[nodiscard]] auto hash(const UUID& uuid) -> usize;
 
 }  // namespace tactile
-
-template <>
-struct eastl::hash<tactile::UUID> final {
-  auto operator()(const tactile::UUID& uuid) const -> std::size_t
-  {
-    return tactile::hash(uuid);
-  }
-};
