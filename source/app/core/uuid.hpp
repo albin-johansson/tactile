@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <cstddef>  // size_t
+
 #include <EASTL/functional.h>
 #include <boost/uuid/uuid.hpp>
 
