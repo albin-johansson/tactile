@@ -28,8 +28,8 @@ namespace tactile {
 TactileError::TactileError(const char* what)
     : mWhat {what ? what : "N/A"}
 {
-  /* To avoid odd behavior whilst passing around stacktrace objects, we simply convert
-     the trace into a string, and log it later. */
+  // To avoid odd behavior whilst passing around stacktrace objects, we simply convert
+  // the trace into a string, and log it later.
   std::stringstream stream;
   stream << boost::stacktrace::stacktrace {};
   mTrace = stream.str();

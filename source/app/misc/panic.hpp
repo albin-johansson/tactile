@@ -22,12 +22,14 @@
 #include <exception>  // exception
 #include <string>     // string
 
+#include "core/common/vocabulary.hpp"
+
 namespace tactile {
 
 /// The exception type used for all exceptions thrown in the codebase.
 class TactileError : public std::exception {
  public:
-  explicit TactileError(const char* what);
+  TACTILE_NOINLINE explicit TactileError(const char* what);
 
   [[nodiscard]] auto what() const noexcept -> const char* override { return mWhat; }
 

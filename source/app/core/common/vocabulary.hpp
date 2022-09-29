@@ -25,6 +25,10 @@
 #include <cstdint>  // int{}_t, uint{}_t
 #include <vector>   // vector
 
+#include <folly/CPortability.h>
+
+#define TACTILE_NOINLINE FOLLY_NOINLINE
+
 #define TACTILE_DEFAULT_COPY(Class) \
   Class(const Class&) = default;    \
   auto operator=(const Class&)->Class& = default
