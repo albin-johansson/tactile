@@ -21,9 +21,9 @@
 
 #include "core/cmd/command.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/uuid.hpp"
 #include "core/comp/component.hpp"
 #include "core/type/ptr.hpp"
+#include "core/uuid.hpp"
 
 namespace tactile {
 class Context;

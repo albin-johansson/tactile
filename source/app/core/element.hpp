@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/common/uuid.hpp"
+#include "uuid.hpp"
 
 namespace tactile {
 

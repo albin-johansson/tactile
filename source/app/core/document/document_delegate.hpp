@@ -22,10 +22,10 @@
 #include "core/cmd/command_stack.hpp"
 #include "core/common/fs.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/uuid.hpp"
 #include "core/comp/component_index.hpp"
 #include "core/ctx/context_manager.hpp"
 #include "core/type/ptr.hpp"
+#include "core/uuid.hpp"
 #include "core/viewport.hpp"
 
 namespace tactile {

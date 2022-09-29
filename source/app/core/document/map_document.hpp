@@ -27,7 +27,6 @@
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/tile_cache.hpp"
-#include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/ctx/context_manager.hpp"
 #include "core/document/document.hpp"
@@ -38,6 +37,7 @@
 #include "core/tool/tool_type.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/vector.hpp"
+#include "core/uuid.hpp"
 #include "core/viewport.hpp"
 
 namespace tactile {

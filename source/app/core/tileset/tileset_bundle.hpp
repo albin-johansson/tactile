@@ -23,11 +23,11 @@
 
 #include "core/common/assoc.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/tileset/tileset.hpp"
 #include "core/tileset/tileset_ref.hpp"
 #include "core/type/ptr.hpp"
+#include "core/uuid.hpp"
 
 namespace tactile {
 

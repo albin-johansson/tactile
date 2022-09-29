@@ -24,8 +24,8 @@
 
 #include "core/attribute.hpp"
 #include "core/common/assoc.hpp"
-#include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/uuid.hpp"
 
 namespace tactile {
 

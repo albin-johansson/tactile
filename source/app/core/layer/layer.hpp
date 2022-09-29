@@ -20,12 +20,12 @@
 #pragma once
 
 #include "core/common/maybe.hpp"
-#include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/ctx/context.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/layer_visitor.hpp"
 #include "core/type/ptr.hpp"
+#include "core/uuid.hpp"
 
 namespace tactile {
 

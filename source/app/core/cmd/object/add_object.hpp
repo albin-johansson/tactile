@@ -22,8 +22,8 @@
 #include "core/cmd/command.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/uuid.hpp"
 #include "core/layer/object_type.hpp"
+#include "core/uuid.hpp"
 
 namespace tactile {
 class MapDocument;

@@ -28,7 +28,6 @@
 #include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/object_type.hpp"
@@ -36,6 +35,7 @@
 #include "core/type/ptr.hpp"
 #include "core/type/vector.hpp"
 #include "core/util/query.hpp"
+#include "core/uuid.hpp"
 
 namespace tactile::ir {
 

@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "core/common/uuid.hpp"
 #include "core/document/document.hpp"
 #include "core/document/document_delegate.hpp"
 #include "core/tileset/tileset.hpp"
 #include "core/type/ptr.hpp"
+#include "core/uuid.hpp"
 
 namespace tactile {
 

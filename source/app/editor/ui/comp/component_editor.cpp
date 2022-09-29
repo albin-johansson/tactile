@@ -28,10 +28,10 @@
 
 #include "core/attribute.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/uuid.hpp"
 #include "core/comp/component_index.hpp"
 #include "core/event/component_events.hpp"
 #include "core/model.hpp"
+#include "core/uuid.hpp"
 #include "editor/constants.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/input_widgets.hpp"

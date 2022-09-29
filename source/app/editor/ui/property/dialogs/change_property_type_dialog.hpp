@@ -23,8 +23,8 @@
 
 #include "core/attribute.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/uuid.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 
 namespace tactile::ui {

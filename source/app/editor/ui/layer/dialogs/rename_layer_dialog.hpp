@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/common/maybe.hpp"
-#include "core/common/uuid.hpp"
+#include "core/uuid.hpp"
 #include "editor/ui/dialog/string_input_dialog.hpp"
 
 namespace tactile::ui {

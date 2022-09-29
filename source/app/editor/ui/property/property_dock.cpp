@@ -25,7 +25,6 @@
 #include <imgui.h>
 
 #include "core/common/maybe.hpp"
-#include "core/common/uuid.hpp"
 #include "core/ctx/context_visitor.hpp"
 #include "core/document/tileset_document.hpp"
 #include "core/event/document_events.hpp"
@@ -40,6 +39,7 @@
 #include "core/map.hpp"
 #include "core/model.hpp"
 #include "core/tileset/tileset.hpp"
+#include "core/uuid.hpp"
 #include "editor/ui/common/filename_filter.hpp"
 #include "editor/ui/common/input_widgets.hpp"
 #include "editor/ui/scoped.hpp"

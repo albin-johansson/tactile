@@ -23,9 +23,9 @@
 
 #include "core/common/fs.hpp"
 #include "core/common/math.hpp"
-#include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/region.hpp"
+#include "core/uuid.hpp"
 
 namespace tactile {
 

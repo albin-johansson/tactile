@@ -23,12 +23,12 @@
 
 #include "core/common/assoc.hpp"
 #include "core/common/maybe.hpp"
-#include "core/common/uuid.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/layer/layer.hpp"
 #include "core/layer/layer_delegate.hpp"
 #include "core/layer/object.hpp"
 #include "core/type/ptr.hpp"
+#include "core/uuid.hpp"
 
 namespace tactile {
 
