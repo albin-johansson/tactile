@@ -48,7 +48,7 @@ void TilesetDocument::update()
   //  sys::update_animations(mRegistry);
 }
 
-void TilesetDocument::rename_tileset(std::string name)
+void TilesetDocument::rename_tileset(String name)
 {
   get_history().exec<cmd::RenameTileset>(mTileset, std::move(name));
 }
@@ -58,7 +58,7 @@ void TilesetDocument::set_component_index(Shared<ComponentIndex> index)
   mDelegate.set_component_index(std::move(index));
 }
 
-void TilesetDocument::set_name(std::string name)
+void TilesetDocument::set_name(String name)
 {
   mTileset->ctx().set_name(std::move(name));
 }
@@ -113,7 +113,7 @@ auto TilesetDocument::get_viewport() const -> const Viewport&
   return mDelegate.get_viewport();
 }
 
-auto TilesetDocument::get_name() const -> const std::string&
+auto TilesetDocument::get_name() const -> const String&
 {
   return mTileset->ctx().name();
 }

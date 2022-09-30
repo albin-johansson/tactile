@@ -33,20 +33,18 @@ namespace tactile::cmd {
 /// A command for removing an attribute from a component definition.
 class RemoveComponentAttr final : public Command {
  public:
-  RemoveComponentAttr(Document* document,
-                      const UUID& component_id,
-                      std::string attribute);
+  RemoveComponentAttr(Document* document, const UUID& component_id, String attribute);
 
   void undo() override;
 
   void redo() override;
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+  [[nodiscard]] auto get_name() const -> String override;
 
  private:
   Document* mDocument {};
   UUID mComponentId {};
-  std::string mAttributeName;
+  String mAttributeName;
   Maybe<Attribute> mPreviousValue;
 };
 

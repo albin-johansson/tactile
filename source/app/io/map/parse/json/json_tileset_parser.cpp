@@ -17,12 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <string>   // string
 #include <utility>  // move
 
 #include <spdlog/spdlog.h>
 
 #include "core/common/fs.hpp"
+#include "core/type/string.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 #include "io/util/json.hpp"
@@ -114,7 +114,7 @@ namespace {
     return ParseError::NoTilesetImagePath;
   }
 
-  auto absolute = fs::weakly_canonical(dir / relative->get<std::string>());
+  auto absolute = fs::weakly_canonical(dir / relative->get<String>());
   if (fs::exists(absolute)) {
     tileset_data.image_path = std::move(absolute);
   }
@@ -201,7 +201,7 @@ namespace {
 {
   TACTILE_ASSERT(json.contains("source"));
 
-  const auto relative = json.at("source").get<std::string>();
+  const auto relative = json.at("source").get<String>();
   const auto source = fs::weakly_canonical(dir / relative);
 
   if (!fs::exists(source)) {

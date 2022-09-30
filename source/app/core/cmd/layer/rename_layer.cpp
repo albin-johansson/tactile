@@ -27,7 +27,7 @@
 
 namespace tactile::cmd {
 
-RenameLayer::RenameLayer(Shared<Map> map, const UUID& layer_id, std::string name)
+RenameLayer::RenameLayer(Shared<Map> map, const UUID& layer_id, String name)
     : mMap {std::move(map)}
     , mLayerId {layer_id}
     , mNewName {std::move(name)}
@@ -54,7 +54,7 @@ void RenameLayer::redo()
   layer_ctx.set_name(mNewName);
 }
 
-auto RenameLayer::get_name() const -> std::string
+auto RenameLayer::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.rename_layer;

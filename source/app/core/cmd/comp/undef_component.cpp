@@ -68,7 +68,7 @@ void UndefComponent::redo()
   mRemovedComponents = contexts.on_undef_comp(mComponentId);
 }
 
-auto UndefComponent::get_name() const -> std::string
+auto UndefComponent::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.undef_comp;

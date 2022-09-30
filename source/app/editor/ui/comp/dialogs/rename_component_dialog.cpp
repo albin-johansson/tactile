@@ -34,7 +34,7 @@ RenameComponentDialog::RenameComponentDialog()
 {
 }
 
-void RenameComponentDialog::show(std::string previous_name, const UUID& component_id)
+void RenameComponentDialog::show(String previous_name, const UUID& component_id)
 {
   mComponentId = component_id;
 
@@ -48,7 +48,7 @@ void RenameComponentDialog::show(std::string previous_name, const UUID& componen
 void RenameComponentDialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<RenameComponentEvent>(mComponentId.value(),
-                                           std::string {current_input()});
+                                           String {current_input()});
 }
 
 }  // namespace tactile::ui

@@ -28,7 +28,7 @@ namespace tactile::cmd {
 
 class SetObjectTag final : public Command {
  public:
-  SetObjectTag(Shared<Object> object, std::string tag);
+  SetObjectTag(Shared<Object> object, String tag);
 
   void undo() override;
 
@@ -36,12 +36,12 @@ class SetObjectTag final : public Command {
 
   [[nodiscard]] auto merge_with(const Command* cmd) -> bool override;
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+  [[nodiscard]] auto get_name() const -> String override;
 
  private:
   Shared<Object> mObject;
-  std::string mNewTag;
-  Maybe<std::string> mOldTag;
+  String mNewTag;
+  Maybe<String> mOldTag;
 };
 
 }  // namespace tactile::cmd

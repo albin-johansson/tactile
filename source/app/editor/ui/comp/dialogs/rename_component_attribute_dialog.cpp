@@ -36,8 +36,7 @@ RenameComponentAttributeDialog::RenameComponentAttributeDialog()
 {
 }
 
-void RenameComponentAttributeDialog::show(std::string previous_name,
-                                          const UUID& component_id)
+void RenameComponentAttributeDialog::show(String previous_name, const UUID& component_id)
 {
   mComponentId = component_id;
 
@@ -53,11 +52,11 @@ void RenameComponentAttributeDialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<RenameComponentAttrEvent>(mComponentId.value(),
                                                previous_input(),
-                                               std::string {current_input()});
+                                               String {current_input()});
 }
 
 auto RenameComponentAttributeDialog::validate(const DocumentModel& model,
-                                              std::string_view input) const -> bool
+                                              StringView input) const -> bool
 {
   const auto& document = model.require_active_document();
   const auto* index = document.view_component_index();

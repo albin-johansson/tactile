@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
@@ -28,6 +26,7 @@
 #include "core/ctx/context_info.hpp"
 #include "core/layer/object_type.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/string.hpp"
 
 namespace tactile {
 
@@ -49,7 +48,7 @@ class Object final : public Context {
   /// When converting to point, both width and height are set to zero.
   void set_type(ObjectType type);
 
-  void set_tag(std::string tag);
+  void set_tag(String tag);
 
   void set_meta_id(int32 id);
 
@@ -69,7 +68,7 @@ class Object final : public Context {
   [[nodiscard]] auto get_pos() const -> const Float2&;
   [[nodiscard]] auto get_size() const -> const Float2&;
 
-  [[nodiscard]] auto get_tag() const -> const std::string&;
+  [[nodiscard]] auto get_tag() const -> const String&;
 
   [[nodiscard]] auto get_meta_id() const -> Maybe<int32>;
 
@@ -83,7 +82,7 @@ class Object final : public Context {
   Float2 mPos {};            ///< Object position.
   Float2 mSize {};           ///< Object size (might be zero).
   ObjectType mType;          ///< Specific object type.
-  std::string mTag;          ///< Optional user-provided tag.
+  String mTag;               ///< Optional user-provided tag.
   Maybe<int32> mMetaId;      ///< Identifier used in save files.
   bool mVisible : 1 {true};  ///< Is the object rendered?
 };

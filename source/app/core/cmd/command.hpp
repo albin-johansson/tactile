@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <string>  // string
+#include "core/type/string.hpp"
 
 namespace tactile {
 
@@ -56,7 +56,7 @@ class Command {
 
   /// Returns a short human-readable string that describes the command.
   /// The string returned by this function is user facing, so make sure it's translated!
-  [[nodiscard]] virtual auto get_name() const -> std::string = 0;
+  [[nodiscard]] virtual auto get_name() const -> String = 0;
 
   /// Attempts to combine a command with this command.
   ///

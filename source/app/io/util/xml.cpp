@@ -39,7 +39,7 @@ auto has_attr(XMLNode node, const char* attr_name) -> bool
                      });
 }
 
-auto as_string(XMLNode node, const char* attr_name) -> Maybe<std::string>
+auto as_string(XMLNode node, const char* attr_name) -> Maybe<String>
 {
   TACTILE_ASSERT(attr_name);
 

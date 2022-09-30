@@ -71,7 +71,7 @@ void RemoveObject::redo()
   mDocument->get_contexts().erase(id);
 }
 
-auto RemoveObject::get_name() const -> std::string
+auto RemoveObject::get_name() const -> String
 {
   const auto& lang = get_current_language();
   switch (mObject->get_type()) {

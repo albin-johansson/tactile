@@ -32,17 +32,17 @@ namespace tactile::cmd {
 
 class AddProperty final : public Command {
  public:
-  AddProperty(Shared<Context> context, std::string name, AttributeType type);
+  AddProperty(Shared<Context> context, String name, AttributeType type);
 
   void undo() override;
 
   void redo() override;
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+  [[nodiscard]] auto get_name() const -> String override;
 
  private:
   Shared<Context> mContext;
-  std::string mName;
+  String mName;
   AttributeType mType;
 };
 

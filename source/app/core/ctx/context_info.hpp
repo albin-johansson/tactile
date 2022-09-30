@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/common/vocabulary.hpp"
 #include "core/comp/component_bundle.hpp"
 #include "core/ctx/property_bundle.hpp"
+#include "core/type/string.hpp"
 #include "core/uuid.hpp"
 
 namespace tactile {
@@ -37,13 +36,13 @@ class ContextInfo final {
 
   explicit ContextInfo(const UUID& id);
 
-  void set_name(std::string name);
+  void set_name(String name);
 
   [[nodiscard]] auto clone() const -> ContextInfo;
 
   [[nodiscard]] auto uuid() const -> const UUID& { return mId; }
 
-  [[nodiscard]] auto name() const -> const std::string& { return mName; }
+  [[nodiscard]] auto name() const -> const String& { return mName; }
 
   [[nodiscard]] auto props() -> PropertyBundle& { return mProps; }
   [[nodiscard]] auto props() const -> const PropertyBundle& { return mProps; }
@@ -53,7 +52,7 @@ class ContextInfo final {
 
  private:
   UUID mId {make_uuid()};
-  std::string mName;
+  String mName;
   PropertyBundle mProps;
   ComponentBundle mComps;
 };

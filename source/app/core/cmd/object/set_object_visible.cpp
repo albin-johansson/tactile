@@ -48,7 +48,7 @@ void SetObjectVisible::redo()
   mObject->set_visible(mNewVisibility);
 }
 
-auto SetObjectVisible::get_name() const -> std::string
+auto SetObjectVisible::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return mNewVisibility ? lang.cmd.show_object : lang.cmd.hide_object;

@@ -32,7 +32,7 @@ namespace tactile::cmd {
 
 DuplicateComponentAttr::DuplicateComponentAttr(Document* document,
                                                const UUID& component_id,
-                                               std::string attribute)
+                                               String attribute)
     : mDocument {document}
     , mComponentId {component_id}
     , mAttributeName {std::move(attribute)}
@@ -68,7 +68,7 @@ void DuplicateComponentAttr::redo()
                                  definition.get_attr(*mDuplicatedName));
 }
 
-auto DuplicateComponentAttr::get_name() const -> std::string
+auto DuplicateComponentAttr::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.duplicate_comp_attr;

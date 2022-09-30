@@ -53,7 +53,7 @@ auto stringify(const AttributeType type) -> const char*
   }
 }
 
-auto parse_attr_type(std::string_view name) -> Maybe<AttributeType>
+auto parse_attr_type(StringView name) -> Maybe<AttributeType>
 {
   if (name == "string") {
     return AttributeType::String;

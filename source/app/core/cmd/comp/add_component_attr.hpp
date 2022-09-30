@@ -32,18 +32,18 @@ namespace tactile::cmd {
 /// A command for adding an attribute to a component definition.
 class AddComponentAttr final : public Command {
  public:
-  AddComponentAttr(Document* document, const UUID& component_id, std::string name);
+  AddComponentAttr(Document* document, const UUID& component_id, String name);
 
   void undo() override;
 
   void redo() override;
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+  [[nodiscard]] auto get_name() const -> String override;
 
  private:
   Document* mDocument {};
   UUID mComponentId {};
-  std::string mName;
+  String mName;
 };
 
 }  // namespace tactile::cmd

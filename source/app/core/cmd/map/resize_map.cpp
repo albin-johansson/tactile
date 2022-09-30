@@ -67,7 +67,7 @@ void ResizeMap::redo()
   mMap->resize(mRows, mCols);
 }
 
-auto ResizeMap::get_name() const -> std::string
+auto ResizeMap::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.resize_map;

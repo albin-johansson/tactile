@@ -46,7 +46,7 @@ void MoveLayerDown::redo()
   mMap->move_layer_down(mLayerId);
 }
 
-auto MoveLayerDown::get_name() const -> std::string
+auto MoveLayerDown::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.move_layer_down;

@@ -33,7 +33,7 @@ void zero_buffer(std::span<char> buffer)
   std::memset(buffer.data(), 0, buffer.size_bytes());
 }
 
-void copy_string_into_buffer(std::span<char> buffer, std::string_view str)
+void copy_string_into_buffer(std::span<char> buffer, StringView str)
 {
   zero_buffer(buffer);
 
@@ -51,17 +51,17 @@ void copy_string_into_buffer(std::span<char> buffer, std::string_view str)
   }
 }
 
-auto create_string_from_buffer(std::span<const char> buffer) -> std::string
+auto create_string_from_buffer(std::span<const char> buffer) -> String
 {
-  return std::string {create_string_view_from_buffer(buffer)};
+  return String {create_string_view_from_buffer(buffer)};
 }
 
-auto create_string_view_from_buffer(std::span<const char> buffer) -> std::string_view
+auto create_string_view_from_buffer(std::span<const char> buffer) -> StringView
 {
   const auto iter = std::find(buffer.begin(), buffer.end(), '\0');
   if (iter != buffer.end()) {
     const auto index = static_cast<usize>(std::distance(buffer.begin(), iter));
-    return std::string_view {buffer.data(), index};
+    return StringView {buffer.data(), index};
   }
   else {
     throw TactileError {"Invalid string buffer!"};

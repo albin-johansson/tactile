@@ -23,7 +23,7 @@
 
 namespace tactile::io {
 
-auto GodotFile::add_ext_resource(std::string path, std::string type) -> GdExtRes
+auto GodotFile::add_ext_resource(String path, String type) -> GdExtRes
 {
   const auto id = mNextExtRes++;
   mExtResources[id] = GdExtResource {std::move(path), std::move(type)};

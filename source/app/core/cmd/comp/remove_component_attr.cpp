@@ -32,7 +32,7 @@ namespace tactile::cmd {
 
 RemoveComponentAttr::RemoveComponentAttr(Document* document,
                                          const UUID& component_id,
-                                         std::string attribute)
+                                         String attribute)
     : mDocument {document}
     , mComponentId {component_id}
     , mAttributeName {std::move(attribute)}
@@ -71,7 +71,7 @@ void RemoveComponentAttr::redo()
   contexts.on_removed_component_attr(definition.get_uuid(), mAttributeName);
 }
 
-auto RemoveComponentAttr::get_name() const -> std::string
+auto RemoveComponentAttr::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.remove_comp_attr;

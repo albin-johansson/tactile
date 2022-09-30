@@ -23,6 +23,7 @@
 
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 
 namespace tactile::io {
 
@@ -30,7 +31,7 @@ using XMLNode = pugi::xml_node;
 
 [[nodiscard]] auto has_attr(XMLNode node, const char* attr_name) -> bool;
 
-[[nodiscard]] auto as_string(XMLNode node, const char* attr_name) -> Maybe<std::string>;
+[[nodiscard]] auto as_string(XMLNode node, const char* attr_name) -> Maybe<String>;
 
 [[nodiscard]] auto as_int(XMLNode node, const char* attr_name) -> Maybe<int32>;
 

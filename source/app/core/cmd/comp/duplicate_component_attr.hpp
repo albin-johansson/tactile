@@ -32,21 +32,19 @@ namespace tactile::cmd {
 /// A command for duplicating an attribute in a component definition.
 class DuplicateComponentAttr final : public Command {
  public:
-  DuplicateComponentAttr(Document* document,
-                         const UUID& component_id,
-                         std::string attribute);
+  DuplicateComponentAttr(Document* document, const UUID& component_id, String attribute);
 
   void undo() override;
 
   void redo() override;
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+  [[nodiscard]] auto get_name() const -> String override;
 
  private:
   Document* mDocument {};
   UUID mComponentId {};
-  std::string mAttributeName;
-  Maybe<std::string> mDuplicatedName;
+  String mAttributeName;
+  Maybe<String> mDuplicatedName;
 };
 
 }  // namespace tactile::cmd

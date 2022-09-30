@@ -66,7 +66,7 @@ void ResetAttachedComponent::redo()
   comps.add(definition.instantiate());
 }
 
-auto ResetAttachedComponent::get_name() const -> std::string
+auto ResetAttachedComponent::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.reset_comp;

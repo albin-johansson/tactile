@@ -140,7 +140,7 @@ void apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
 
 }  // namespace
 
-auto human_readable_name(const EditorTheme theme) -> std::string_view
+auto human_readable_name(const EditorTheme theme) -> StringView
 {
   switch (theme) {
     case EditorTheme::DearDark:

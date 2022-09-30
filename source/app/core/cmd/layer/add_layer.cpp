@@ -79,7 +79,7 @@ void AddLayer::redo()
   mDocument->get_contexts().add_context(mLayer);
 }
 
-auto AddLayer::get_name() const -> std::string
+auto AddLayer::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.add_layer;

@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-auto ComponentIndex::define_comp(std::string name) -> UUID
+auto ComponentIndex::define_comp(String name) -> UUID
 {
   if (contains(name)) {
     throw TactileError {"Component definition name is not unique!"};
@@ -67,7 +67,7 @@ void ComponentIndex::remove_comp(const UUID& id)
   }
 }
 
-void ComponentIndex::rename_comp(const UUID& id, std::string name)
+void ComponentIndex::rename_comp(const UUID& id, String name)
 {
   if (contains(name)) {
     throw TactileError {"New component name was not unique!"};
@@ -87,7 +87,7 @@ auto ComponentIndex::at(const UUID& id) const -> const ComponentDefinition&
   return lookup_in(mDefs, id);
 }
 
-auto ComponentIndex::with_name(std::string_view name) -> ComponentDefinition&
+auto ComponentIndex::with_name(StringView name) -> ComponentDefinition&
 {
   for (auto& [id, def] : mDefs) {
     if (def.get_name() == name) {
@@ -103,7 +103,7 @@ auto ComponentIndex::contains(const UUID& id) const -> bool
   return mDefs.find(id) != mDefs.end();
 }
 
-auto ComponentIndex::contains(std::string_view name) const -> bool
+auto ComponentIndex::contains(StringView name) const -> bool
 {
   return std::any_of(mDefs.begin(), mDefs.end(), [name](const auto& pair) {
     return pair.second.get_name() == name;

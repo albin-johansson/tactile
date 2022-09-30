@@ -19,14 +19,12 @@
 
 #pragma once
 
-#include <string>       // string
-#include <string_view>  // string_view
-
 #include <boost/uuid/uuid_hash.hpp>
 
 #include "core/common/vocabulary.hpp"
 #include "core/comp/component_definition.hpp"
 #include "core/type/hash_map.hpp"
+#include "core/type/string.hpp"
 #include "core/uuid.hpp"
 
 namespace tactile {
@@ -39,7 +37,7 @@ class ComponentIndex final {
   /// \param name a unique name.
   ///
   /// \return the identifier associated with the definition.
-  auto define_comp(std::string name) -> UUID;
+  auto define_comp(String name) -> UUID;
 
   /// Restores a previously removed component definition.
   void restore_comp(ComponentDefinition def);
@@ -53,20 +51,20 @@ class ComponentIndex final {
   ///
   /// \param id the ID for the component that will be renamed.
   /// \param name the new component name.
-  void rename_comp(const UUID& id, std::string name);
+  void rename_comp(const UUID& id, String name);
 
   /// Returns the component definition for a specific ID.
   [[nodiscard]] auto at(const UUID& id) -> ComponentDefinition&;
   [[nodiscard]] auto at(const UUID& id) const -> const ComponentDefinition&;
 
   /// Returns the component definition with a specific name.
-  [[nodiscard]] auto with_name(std::string_view name) -> ComponentDefinition&;
+  [[nodiscard]] auto with_name(StringView name) -> ComponentDefinition&;
 
   /// Indicates whether there is a component definition with a specific ID.
   [[nodiscard]] auto contains(const UUID& id) const -> bool;
 
   /// Indicates whether there is a component with a specific name.
-  [[nodiscard]] auto contains(std::string_view name) const -> bool;
+  [[nodiscard]] auto contains(StringView name) const -> bool;
 
   /// Returns the amount of component definition.
   [[nodiscard]] auto size() const -> usize;

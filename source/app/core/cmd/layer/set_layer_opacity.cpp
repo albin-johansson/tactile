@@ -58,7 +58,7 @@ auto SetLayerOpacity::merge_with(const Command* cmd) -> bool
   return false;
 }
 
-auto SetLayerOpacity::get_name() const -> std::string
+auto SetLayerOpacity::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.set_layer_opacity;

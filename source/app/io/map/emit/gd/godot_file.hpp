@@ -19,13 +19,12 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/attribute.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/type/hash_map.hpp"
+#include "core/type/string.hpp"
 #include "core/type/tree_map.hpp"
 #include "core/type/vector.hpp"
 
@@ -34,16 +33,16 @@ namespace tactile::io {
 using GdExtRes = int32;  ///< External resource identifier.
 using GdSubRes = int32;  ///< Subresource identifier.
 
-using GdAttributes = HashMap<std::string, Attribute>;
+using GdAttributes = HashMap<String, Attribute>;
 
 struct GdMetaData final {
   GdAttributes props;
-  HashMap<std::string, GdAttributes> comps;
+  HashMap<String, GdAttributes> comps;
 };
 
 struct GdExtResource final {
-  std::string path;
-  std::string type;
+  String path;
+  String type;
 };
 
 struct GdAtlasTexture final {
@@ -52,7 +51,7 @@ struct GdAtlasTexture final {
 };
 
 struct GdAnimation final {
-  std::string name;
+  String name;
   Vec<GdSubRes> frames;  /// Atlas textures
   float speed {};
 };
@@ -72,7 +71,7 @@ class GodotFile {
   using AtlasTextures = TreeMap<GdSubRes, GdAtlasTexture>;
   using RectShapes = TreeMap<GdSubRes, GdRectShape>;
 
-  auto add_ext_resource(std::string path, std::string type) -> GdExtRes;
+  auto add_ext_resource(String path, String type) -> GdExtRes;
 
   auto add_atlas_texture(GdAtlasTexture texture) -> GdSubRes;
 

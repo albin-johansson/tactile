@@ -19,485 +19,485 @@
 
 #pragma once
 
-#include <string>  // string
+#include "core/type/string.hpp"
 
 namespace tactile {
 
 struct MenuStrings final {
-  std::string file;
-  std::string edit;
-  std::string view;
-  std::string map;
-  std::string tileset;
-  std::string help;
-  std::string debug;
-  std::string recent_files;
-  std::string widgets;
-  std::string export_as;
+  String file;
+  String edit;
+  String view;
+  String map;
+  String tileset;
+  String help;
+  String debug;
+  String recent_files;
+  String widgets;
+  String export_as;
 };
 
 struct WindowStrings final {
-  std::string layer_dock;
-  std::string tileset_dock;
-  std::string property_dock;
-  std::string component_dock;
-  std::string log_dock;
-  std::string component_editor;
-  std::string settings_dialog;
-  std::string about_tactile;
-  std::string create_new_map;
-  std::string create_tileset;
-  std::string resize_map;
-  std::string create_component;
-  std::string credits;
-  std::string map_parse_error;
-  std::string add_property;
-  std::string change_property_type;
-  std::string rename_property;
-  std::string create_attribute;
-  std::string rename_layer;
-  std::string rename_component;
-  std::string rename_component_attribute;
-  std::string export_as_godot_scene;
+  String layer_dock;
+  String tileset_dock;
+  String property_dock;
+  String component_dock;
+  String log_dock;
+  String component_editor;
+  String settings_dialog;
+  String about_tactile;
+  String create_new_map;
+  String create_tileset;
+  String resize_map;
+  String create_component;
+  String credits;
+  String map_parse_error;
+  String add_property;
+  String change_property_type;
+  String rename_property;
+  String create_attribute;
+  String rename_layer;
+  String rename_component;
+  String rename_component_attribute;
+  String export_as_godot_scene;
 };
 
 struct ActionStrings final {
-  std::string create_map;
-  std::string open_map;
-  std::string save;
-  std::string save_as;
-  std::string close_document;
-  std::string exit;
-  std::string reopen_last_closed_file;
-  std::string clear_file_history;
+  String create_map;
+  String open_map;
+  String save;
+  String save_as;
+  String close_document;
+  String exit;
+  String reopen_last_closed_file;
+  String clear_file_history;
 
-  std::string undo;
-  std::string redo;
+  String undo;
+  String redo;
 
-  std::string stamp_tool;
-  std::string bucket_tool;
-  std::string eraser_tool;
-  std::string object_selection_tool;
-  std::string rectangle_tool;
-  std::string ellipse_tool;
-  std::string point_tool;
+  String stamp_tool;
+  String bucket_tool;
+  String eraser_tool;
+  String object_selection_tool;
+  String rectangle_tool;
+  String ellipse_tool;
+  String point_tool;
 
-  std::string show_component_editor;
-  std::string show_settings;
+  String show_component_editor;
+  String show_settings;
 
-  std::string center_viewport;
-  std::string toggle_grid;
-  std::string increase_zoom;
-  std::string decrease_zoom;
-  std::string reset_zoom;
+  String center_viewport;
+  String toggle_grid;
+  String increase_zoom;
+  String decrease_zoom;
+  String reset_zoom;
 
-  std::string increase_font_size;
-  std::string decrease_font_size;
-  std::string reset_font_size;
+  String increase_font_size;
+  String decrease_font_size;
+  String reset_font_size;
 
-  std::string pan_up;
-  std::string pan_down;
-  std::string pan_right;
-  std::string pan_left;
+  String pan_up;
+  String pan_down;
+  String pan_right;
+  String pan_left;
 
-  std::string highlight_layer;
-  std::string toggle_ui;
+  String highlight_layer;
+  String toggle_ui;
 
-  std::string inspect_map;
-  std::string inspect_tileset;
-  std::string inspect_layer;
-  std::string inspect_object;
+  String inspect_map;
+  String inspect_tileset;
+  String inspect_layer;
+  String inspect_object;
 
-  std::string add_tileset;
-  std::string add_row;
-  std::string add_column;
-  std::string remove_row;
-  std::string remove_column;
-  std::string resize_map;
-  std::string fix_invalid_tiles;
-  std::string fix_invalid_tiles_tooltip;
+  String add_tileset;
+  String add_row;
+  String add_column;
+  String remove_row;
+  String remove_column;
+  String resize_map;
+  String fix_invalid_tiles;
+  String fix_invalid_tiles_tooltip;
 
-  std::string reset_layout;
-  std::string report_issue;
+  String reset_layout;
+  String report_issue;
 
-  std::string show_about;
-  std::string show_credits;
-  std::string show_metrics;
-  std::string open_persistent_file_dir;
+  String show_about;
+  String show_credits;
+  String show_metrics;
+  String open_persistent_file_dir;
 
-  std::string about_dear_imgui;
+  String about_dear_imgui;
 
-  std::string quick_theme;
-  std::string quick_language;
+  String quick_theme;
+  String quick_language;
 
-  std::string create_attribute;
-  std::string duplicate_attribute;
-  std::string rename_attribute;
-  std::string remove_attribute;
+  String create_attribute;
+  String duplicate_attribute;
+  String rename_attribute;
+  String remove_attribute;
 
-  std::string rename_component;
-  std::string remove_component;
+  String rename_component;
+  String remove_component;
 
-  std::string clear_log;
+  String clear_log;
 
-  std::string create_property;
-  std::string rename_property;
-  std::string change_property_type;
-  std::string remove_property;
+  String create_property;
+  String rename_property;
+  String change_property_type;
+  String remove_property;
 
-  std::string tile_layer;
-  std::string object_layer;
-  std::string group_layer;
-  std::string rename_layer;
-  std::string duplicate_layer;
-  std::string remove_layer;
-  std::string toggle_layer_visible;
-  std::string move_layer_up;
-  std::string move_layer_down;
+  String tile_layer;
+  String object_layer;
+  String group_layer;
+  String rename_layer;
+  String duplicate_layer;
+  String remove_layer;
+  String toggle_layer_visible;
+  String move_layer_up;
+  String move_layer_down;
 
-  std::string toggle_object_visibility;
-  std::string duplicate_object;
-  std::string remove_object;
+  String toggle_object_visibility;
+  String duplicate_object;
+  String remove_object;
 
-  std::string reset_attached_component;
-  std::string detach_component;
-  std::string component_editor;
+  String reset_attached_component;
+  String detach_component;
+  String component_editor;
 
-  std::string create_tileset;
-  std::string open_tileset;
-  std::string remove_tileset;
+  String create_tileset;
+  String open_tileset;
+  String remove_tileset;
 
-  std::string export_as_godot_scene;
+  String export_as_godot_scene;
 
-  std::string top_left;
-  std::string top_right;
-  std::string bottom_left;
-  std::string bottom_right;
-  std::string show_frame_rate;
+  String top_left;
+  String top_right;
+  String bottom_left;
+  String bottom_right;
+  String show_frame_rate;
 };
 
 struct SettingStrings final {
-  std::string appearance_tab;
-  std::string behavior_tab;
-  std::string export_tab;
+  String appearance_tab;
+  String behavior_tab;
+  String export_tab;
 
-  std::string restore_defaults;
-  std::string restore_last_session;
-  std::string pref_tile_width;
-  std::string pref_tile_height;
-  std::string command_capacity;
+  String restore_defaults;
+  String restore_last_session;
+  String pref_tile_width;
+  String pref_tile_height;
+  String command_capacity;
 
-  std::string language;
-  std::string theme;
-  std::string viewport_bg_color;
-  std::string window_border;
-  std::string restore_layout;
-  std::string use_default_font;
-  std::string font_size;
-  std::string pref_format;
-  std::string embed_tilesets;
-  std::string indent_output;
-  std::string fold_tile_data;
+  String language;
+  String theme;
+  String viewport_bg_color;
+  String window_border;
+  String restore_layout;
+  String use_default_font;
+  String font_size;
+  String pref_format;
+  String embed_tilesets;
+  String indent_output;
+  String fold_tile_data;
 };
 
 struct TooltipStrings final {
-  std::string fix_invalid_tiles;
-  std::string pref_tile_width;
-  std::string pref_tile_height;
-  std::string command_capacity;
-  std::string restore_layout;
-  std::string use_default_font;
-  std::string pref_format;
-  std::string embed_tilesets;
-  std::string indent_output;
-  std::string fold_tile_data;
-  std::string repository_link;
-  std::string create_component;
-  std::string show_component_actions;
-  std::string add_new_layer;
-  std::string remove_layer;
-  std::string duplicate_layer;
-  std::string move_layer_up;
-  std::string move_layer_down;
+  String fix_invalid_tiles;
+  String pref_tile_width;
+  String pref_tile_height;
+  String command_capacity;
+  String restore_layout;
+  String use_default_font;
+  String pref_format;
+  String embed_tilesets;
+  String indent_output;
+  String fold_tile_data;
+  String repository_link;
+  String create_component;
+  String show_component_actions;
+  String add_new_layer;
+  String remove_layer;
+  String duplicate_layer;
+  String move_layer_up;
+  String move_layer_down;
 
-  std::string stamp_random_tile;
+  String stamp_random_tile;
 
-  std::string create_tileset;
+  String create_tileset;
 
-  std::string log_verbose_msg;
-  std::string log_debug_msg;
-  std::string log_info_msg;
-  std::string log_warn_msg;
-  std::string log_error_msg;
-  std::string log_critical_msg;
-  std::string add_component;
+  String log_verbose_msg;
+  String log_debug_msg;
+  String log_info_msg;
+  String log_warn_msg;
+  String log_error_msg;
+  String log_critical_msg;
+  String add_component;
 
-  std::string godot_project_folder;
-  std::string godot_map_folder;
-  std::string godot_image_folder;
-  std::string godot_tileset_folder;
-  std::string godot_polygon_points;
+  String godot_project_folder;
+  String godot_map_folder;
+  String godot_image_folder;
+  String godot_tileset_folder;
+  String godot_polygon_points;
 };
 
 struct MiscStrings final {
-  std::string ok;
-  std::string cancel;
-  std::string apply;
-  std::string create;
-  std::string close;
-  std::string change;
-  std::string add;
-  std::string rename;
-  std::string export_;
-  std::string empty;
-  std::string none;
+  String ok;
+  String cancel;
+  String apply;
+  String create;
+  String close;
+  String change;
+  String add;
+  String rename;
+  String export_;
+  String empty;
+  String none;
 
-  std::string undo;
-  std::string redo;
+  String undo;
+  String redo;
 
-  std::string row;
-  std::string rows;
-  std::string column;
-  std::string columns;
+  String row;
+  String rows;
+  String column;
+  String columns;
 
-  std::string name;
-  std::string type;
-  std::string default_value;
-  std::string component;
+  String name;
+  String type;
+  String default_value;
+  String component;
 
-  std::string cause;
+  String cause;
 
-  std::string license_info;
-  std::string repository_link;
-  std::string font_awesome_credit;
+  String license_info;
+  String repository_link;
+  String font_awesome_credit;
 
-  std::string credits_info;
-  std::string license;
-  std::string library;
+  String credits_info;
+  String license;
+  String library;
 
-  std::string tile_width;
-  std::string tile_height;
-  std::string tile_count;
-  std::string tileset;
-  std::string row_count;
-  std::string column_count;
-  std::string first_tile_id;
-  std::string last_tile_id;
-  std::string embedded;
-  std::string map;
-  std::string tile_layer;
-  std::string object_layer;
-  std::string group_layer;
+  String tile_width;
+  String tile_height;
+  String tile_count;
+  String tileset;
+  String row_count;
+  String column_count;
+  String first_tile_id;
+  String last_tile_id;
+  String embedded;
+  String map;
+  String tile_layer;
+  String object_layer;
+  String group_layer;
 
-  std::string opacity;
-  std::string visible;
+  String opacity;
+  String visible;
 
-  std::string rectangle;
-  std::string ellipse;
-  std::string point;
+  String rectangle;
+  String ellipse;
+  String point;
 
-  std::string stamp_tool;
-  std::string eraser_tool;
-  std::string bucket_tool;
-  std::string object_selection_tool;
-  std::string rectangle_tool;
-  std::string ellipse_tool;
-  std::string point_tool;
+  String stamp_tool;
+  String eraser_tool;
+  String bucket_tool;
+  String object_selection_tool;
+  String rectangle_tool;
+  String ellipse_tool;
+  String point_tool;
 
-  std::string width;
-  std::string height;
+  String width;
+  String height;
 
-  std::string tag;
+  String tag;
 
-  std::string select_image;
-  std::string create_tileset_instruction;
-  std::string tileset_image_input_hint;
+  String select_image;
+  String create_tileset_instruction;
+  String tileset_image_input_hint;
 
-  std::string empty_component;
-  std::string map_has_no_components;
-  std::string component_name_hint;
+  String empty_component;
+  String map_has_no_components;
+  String component_name_hint;
 
-  std::string map_parse_error;
-  std::string map_has_no_layers;
+  String map_parse_error;
+  String map_has_no_layers;
 
-  std::string log_no_messages_match_filter;
-  std::string filter;
-  std::string log_trace_filter;
-  std::string log_debug_filter;
-  std::string log_info_filter;
-  std::string log_warn_filter;
-  std::string log_error_filter;
-  std::string log_critical_filter;
+  String log_no_messages_match_filter;
+  String filter;
+  String log_trace_filter;
+  String log_debug_filter;
+  String log_info_filter;
+  String log_warn_filter;
+  String log_error_filter;
+  String log_critical_filter;
 
-  std::string property_name_hint;
-  std::string type_int;
-  std::string type_float;
-  std::string type_bool;
-  std::string type_string;
-  std::string type_color;
-  std::string type_object;
-  std::string type_path;
+  String property_name_hint;
+  String type_int;
+  String type_float;
+  String type_bool;
+  String type_string;
+  String type_color;
+  String type_object;
+  String type_path;
 
-  std::string context;
-  std::string context_has_no_components;
-  std::string no_available_components;
+  String context;
+  String context_has_no_components;
+  String no_available_components;
 
-  std::string attribute_name_hint;
+  String attribute_name_hint;
 
-  std::string map_has_no_tilesets;
+  String map_has_no_tilesets;
 
-  std::string godot_project_folder_label;
-  std::string godot_map_folder_label;
-  std::string godot_image_folder_label;
-  std::string godot_tileset_folder_label;
-  std::string godot_polygon_points_label;
+  String godot_project_folder_label;
+  String godot_map_folder_label;
+  String godot_image_folder_label;
+  String godot_tileset_folder_label;
+  String godot_polygon_points_label;
 
-  std::string tile_encoding;
-  std::string plain_encoding;
-  std::string tile_compression;
-  std::string compression_level;
+  String tile_encoding;
+  String plain_encoding;
+  String tile_compression;
+  String compression_level;
 
-  std::string local_id;
-  std::string global_id;
+  String local_id;
+  String global_id;
 };
 
 struct CommandStrings final {
-  std::string add_row;
-  std::string add_rows;
-  std::string remove_row;
-  std::string remove_rows;
-  std::string add_column;
-  std::string add_columns;
-  std::string remove_column;
-  std::string remove_columns;
-  std::string fix_map_tiles;
-  std::string resize_map;
+  String add_row;
+  String add_rows;
+  String remove_row;
+  String remove_rows;
+  String add_column;
+  String add_columns;
+  String remove_column;
+  String remove_columns;
+  String fix_map_tiles;
+  String resize_map;
 
-  std::string set_tile_format_encoding;
-  std::string set_tile_format_compression;
+  String set_tile_format_encoding;
+  String set_tile_format_compression;
 
-  std::string add_layer;
-  std::string remove_layer;
-  std::string duplicate_layer;
-  std::string move_layer_up;
-  std::string move_layer_down;
-  std::string rename_layer;
-  std::string set_layer_opacity;
-  std::string show_layer;
-  std::string hide_layer;
+  String add_layer;
+  String remove_layer;
+  String duplicate_layer;
+  String move_layer_up;
+  String move_layer_down;
+  String rename_layer;
+  String set_layer_opacity;
+  String show_layer;
+  String hide_layer;
 
-  std::string add_point_object;
-  std::string add_rectangle_object;
-  std::string add_ellipse_object;
-  std::string move_object;
-  std::string rename_object;
-  std::string update_object_tag;
-  std::string show_object;
-  std::string hide_object;
-  std::string remove_point_object;
-  std::string remove_rectangle_object;
-  std::string remove_ellipse_object;
+  String add_point_object;
+  String add_rectangle_object;
+  String add_ellipse_object;
+  String move_object;
+  String rename_object;
+  String update_object_tag;
+  String show_object;
+  String hide_object;
+  String remove_point_object;
+  String remove_rectangle_object;
+  String remove_ellipse_object;
 
-  std::string define_comp;
-  std::string undef_comp;
-  std::string attach_comp;
-  std::string detach_comp;
-  std::string rename_comp;
-  std::string create_comp_attr;
-  std::string remove_comp_attr;
-  std::string update_comp_attr;
-  std::string duplicate_comp_attr;
-  std::string update_comp_attr_defaults;
-  std::string change_comp_attr_type;
-  std::string rename_comp_attr;
-  std::string reset_comp;
+  String define_comp;
+  String undef_comp;
+  String attach_comp;
+  String detach_comp;
+  String rename_comp;
+  String create_comp_attr;
+  String remove_comp_attr;
+  String update_comp_attr;
+  String duplicate_comp_attr;
+  String update_comp_attr_defaults;
+  String change_comp_attr_type;
+  String rename_comp_attr;
+  String reset_comp;
 
-  std::string add_property;
-  std::string remove_property;
-  std::string rename_property;
-  std::string update_property;
-  std::string change_property_type;
+  String add_property;
+  String remove_property;
+  String rename_property;
+  String update_property;
+  String change_property_type;
 
-  std::string add_tileset;
-  std::string remove_tileset;
-  std::string rename_tileset;
+  String add_tileset;
+  String remove_tileset;
+  String rename_tileset;
 
-  std::string stamp_tool;
-  std::string eraser_tool;
-  std::string bucket_tool;
+  String stamp_tool;
+  String eraser_tool;
+  String bucket_tool;
 
-  std::string set_zlib_compression_level;
-  std::string set_zstd_compression_level;
+  String set_zlib_compression_level;
+  String set_zstd_compression_level;
 };
 
 struct ParseErrorStrings final {
-  std::string none;
-  std::string unknown;
+  String none;
+  String unknown;
 
-  std::string could_not_read_file;
-  std::string map_does_not_exist;
+  String could_not_read_file;
+  String map_does_not_exist;
 
-  std::string unsupported_map_format;
-  std::string unsupported_map_orientation;
-  std::string unsupported_infinite_map;
-  std::string no_map_width;
-  std::string no_map_height;
-  std::string no_map_tile_width;
-  std::string no_map_tile_height;
-  std::string no_next_layer_id;
-  std::string no_next_object_id;
+  String unsupported_map_format;
+  String unsupported_map_orientation;
+  String unsupported_infinite_map;
+  String no_map_width;
+  String no_map_height;
+  String no_map_tile_width;
+  String no_map_tile_height;
+  String no_next_layer_id;
+  String no_next_object_id;
 
-  std::string invalid_layer_type;
-  std::string no_layer_type;
-  std::string no_tile_layer_data;
-  std::string corrupt_tile_layer_data;
-  std::string unsupported_tile_layer_encoding;
+  String invalid_layer_type;
+  String no_layer_type;
+  String no_tile_layer_data;
+  String corrupt_tile_layer_data;
+  String unsupported_tile_layer_encoding;
 
-  std::string external_tileset_does_not_exist;
-  std::string unknown_external_tileset_error;
-  std::string no_first_tileset_tile_id;
-  std::string no_tileset_tile_width;
-  std::string no_tileset_tile_height;
-  std::string no_tileset_name;
-  std::string no_tileset_image_path;
-  std::string no_tileset_image_width;
-  std::string no_tileset_image_height;
-  std::string no_tileset_tile_count;
-  std::string no_tileset_column_count;
-  std::string no_tileset_version;
-  std::string no_external_tileset_source;
-  std::string tileset_image_does_not_exist;
-  std::string unsupported_tileset_version;
+  String external_tileset_does_not_exist;
+  String unknown_external_tileset_error;
+  String no_first_tileset_tile_id;
+  String no_tileset_tile_width;
+  String no_tileset_tile_height;
+  String no_tileset_name;
+  String no_tileset_image_path;
+  String no_tileset_image_width;
+  String no_tileset_image_height;
+  String no_tileset_tile_count;
+  String no_tileset_column_count;
+  String no_tileset_version;
+  String no_external_tileset_source;
+  String tileset_image_does_not_exist;
+  String unsupported_tileset_version;
 
-  std::string corrupt_property_value;
-  std::string no_property_name;
-  std::string no_property_type;
-  std::string unsupported_property_type;
+  String corrupt_property_value;
+  String no_property_name;
+  String no_property_type;
+  String unsupported_property_type;
 
-  std::string comp_def_no_name;
-  std::string comp_def_no_attr_name;
-  std::string comp_def_no_attr_type;
-  std::string comp_def_unsupported_attr_type;
-  std::string comp_def_corrupt_attr_value;
+  String comp_def_no_name;
+  String comp_def_no_attr_name;
+  String comp_def_no_attr_type;
+  String comp_def_unsupported_attr_type;
+  String comp_def_corrupt_attr_value;
 
-  std::string no_component_type;
-  std::string no_component_attr_name;
-  std::string no_component_attr_value;
-  std::string corrupt_component_attr_value;
+  String no_component_type;
+  String no_component_attr_name;
+  String no_component_attr_value;
+  String corrupt_component_attr_value;
 
-  std::string no_object_id;
-  std::string no_object_type;
-  std::string unsupported_object_type;
+  String no_object_id;
+  String no_object_type;
+  String unsupported_object_type;
 
-  std::string tile_def_no_id;
-  std::string tile_def_no_anim_frame_tile;
-  std::string tile_def_no_anim_frame_duration;
+  String tile_def_no_id;
+  String tile_def_no_anim_frame_tile;
+  String tile_def_no_anim_frame_duration;
 
-  std::string bad_tile_format_encoding;
-  std::string bad_tile_format_compression;
-  std::string bad_zlib_compression_level;
-  std::string bad_zstd_compression_level;
-  std::string plain_encoding_with_compression;
+  String bad_tile_format_encoding;
+  String bad_tile_format_compression;
+  String bad_zlib_compression_level;
+  String bad_zstd_compression_level;
+  String plain_encoding_with_compression;
 };
 
 /// Provides translated strings for a single language.

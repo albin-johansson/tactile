@@ -30,7 +30,7 @@ namespace tactile {
 namespace {
 
 template <typename T>
-[[nodiscard]] auto as(const JSON& json, std::string_view name) -> Maybe<T>
+[[nodiscard]] auto as(const JSON& json, StringView name) -> Maybe<T>
 {
   const auto iter = json.find(name);
   if (iter != json.end()) {
@@ -117,27 +117,27 @@ auto read_json(const fs::path& path) -> Maybe<JSON>
 
 namespace io {
 
-auto as_string(const JSON& json, std::string_view name) -> Maybe<std::string>
+auto as_string(const JSON& json, StringView name) -> Maybe<String>
 {
-  return as<std::string>(json, name);
+  return as<String>(json, name);
 }
 
-auto as_int(const JSON& json, std::string_view name) -> Maybe<int32>
+auto as_int(const JSON& json, StringView name) -> Maybe<int32>
 {
   return as<int32>(json, name);
 }
 
-auto as_uint(const JSON& json, std::string_view name) -> Maybe<uint32>
+auto as_uint(const JSON& json, StringView name) -> Maybe<uint32>
 {
   return as<uint32>(json, name);
 }
 
-auto as_float(const JSON& json, std::string_view name) -> Maybe<float>
+auto as_float(const JSON& json, StringView name) -> Maybe<float>
 {
   return as<float>(json, name);
 }
 
-auto as_bool(const JSON& json, std::string_view name) -> Maybe<bool>
+auto as_bool(const JSON& json, StringView name) -> Maybe<bool>
 {
   return as<bool>(json, name);
 }

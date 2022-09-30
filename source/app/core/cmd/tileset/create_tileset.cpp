@@ -82,7 +82,7 @@ void CreateTileset::redo()
   document->get_contexts().add_context(tileset);
 }
 
-auto CreateTileset::get_name() const -> std::string
+auto CreateTileset::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.add_tileset;

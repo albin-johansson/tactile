@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/attribute.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 #include "core/uuid.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 
@@ -38,7 +37,7 @@ class ChangePropertyTypeDialog final : public Dialog {
 
   ~ChangePropertyTypeDialog() override = default;
 
-  void show(const UUID& context_id, std::string name, AttributeType type);
+  void show(const UUID& context_id, String name, AttributeType type);
 
  protected:
   void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
@@ -51,7 +50,7 @@ class ChangePropertyTypeDialog final : public Dialog {
  private:
   Maybe<UUID> mContextId;
   AttributeType mCurrentType {AttributeType::String};
-  Maybe<std::string> mPropertyName;
+  Maybe<String> mPropertyName;
   Maybe<AttributeType> mPreviousType;
 };
 

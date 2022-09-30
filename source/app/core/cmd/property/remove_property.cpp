@@ -29,7 +29,7 @@
 
 namespace tactile::cmd {
 
-RemoveProperty::RemoveProperty(Shared<Context> context, std::string name)
+RemoveProperty::RemoveProperty(Shared<Context> context, String name)
     : mContext {std::move(context)}
     , mName {std::move(name)}
 {
@@ -52,7 +52,7 @@ void RemoveProperty::redo()
   props.remove(mName);
 }
 
-auto RemoveProperty::get_name() const -> std::string
+auto RemoveProperty::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.remove_property;

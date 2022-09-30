@@ -52,7 +52,7 @@ void DetachComponent::redo()
   mComponent = comps.erase(mComponentId);
 }
 
-auto DetachComponent::get_name() const -> std::string
+auto DetachComponent::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.detach_comp;

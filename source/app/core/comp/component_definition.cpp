@@ -40,7 +40,7 @@ auto ComponentDefinition::instantiate() const -> Component
   return {mId, mAttributes};
 }
 
-void ComponentDefinition::add_attr(std::string key, const AttributeType type)
+void ComponentDefinition::add_attr(String key, const AttributeType type)
 {
   if (!has_key(mAttributes, key)) {
     mAttributes[std::move(key)].reset_to_default(type);
@@ -50,7 +50,7 @@ void ComponentDefinition::add_attr(std::string key, const AttributeType type)
   }
 }
 
-void ComponentDefinition::add_attr(std::string key, Attribute value)
+void ComponentDefinition::add_attr(String key, Attribute value)
 {
   if (!has_key(mAttributes, key)) {
     mAttributes[std::move(key)] = std::move(value);
@@ -60,13 +60,13 @@ void ComponentDefinition::add_attr(std::string key, Attribute value)
   }
 }
 
-void ComponentDefinition::update_attr(std::string_view key, Attribute value)
+void ComponentDefinition::update_attr(StringView key, Attribute value)
 {
   auto& attribute = lookup_in(mAttributes, key);
   attribute = std::move(value);
 }
 
-void ComponentDefinition::remove_attr(std::string_view key)
+void ComponentDefinition::remove_attr(StringView key)
 {
   if (const auto iter = find_in(mAttributes, key); iter != mAttributes.end()) {
     mAttributes.erase(iter);
@@ -76,7 +76,7 @@ void ComponentDefinition::remove_attr(std::string_view key)
   }
 }
 
-void ComponentDefinition::rename_attr(std::string_view current, std::string updated)
+void ComponentDefinition::rename_attr(StringView current, String updated)
 {
   if (has_key(mAttributes, updated)) {
     throw TactileError {"Attribute name must be unique!"};
@@ -92,12 +92,12 @@ void ComponentDefinition::rename_attr(std::string_view current, std::string upda
   }
 }
 
-auto ComponentDefinition::duplicate_attr(std::string_view key) -> std::string
+auto ComponentDefinition::duplicate_attr(StringView key) -> String
 {
   auto value = lookup_in(mAttributes, key);
 
   int suffix = 1;
-  std::string new_key;
+  String new_key;
   do {
     new_key = fmt::format("{} ({})", key, suffix);
     ++suffix;
@@ -107,22 +107,22 @@ auto ComponentDefinition::duplicate_attr(std::string_view key) -> std::string
   return new_key;
 }
 
-auto ComponentDefinition::get_attr(std::string_view key) const -> const Attribute&
+auto ComponentDefinition::get_attr(StringView key) const -> const Attribute&
 {
   return lookup_in(mAttributes, key);
 }
 
-auto ComponentDefinition::has_attr(std::string_view key) const -> bool
+auto ComponentDefinition::has_attr(StringView key) const -> bool
 {
   return has_key(mAttributes, key);
 }
 
-void ComponentDefinition::set_name(std::string name)
+void ComponentDefinition::set_name(String name)
 {
   mName = std::move(name);
 }
 
-auto ComponentDefinition::get_name() const -> const std::string&
+auto ComponentDefinition::get_name() const -> const String&
 {
   return mName;
 }

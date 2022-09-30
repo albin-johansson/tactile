@@ -41,7 +41,7 @@ namespace tactile::ui {
 namespace {
 
 template <std::invocable T>
-[[nodiscard]] auto input_file_path(const char* id, const std::string& text, T&& callback)
+[[nodiscard]] auto input_file_path(const char* id, const String& text, T&& callback)
     -> Maybe<fs::path>
 {
   const Scope scope {id};
@@ -165,10 +165,10 @@ auto input_float(const char* id, float value, const float min, const float max)
 
 auto input_string_with_hint(const char* id,
                             const char* hint,
-                            const std::string& value,
+                            const String& value,
                             const char* label,
                             const ImGuiInputTextFlags flags,
-                            const ImGuiInputTextCallback filter) -> Maybe<std::string>
+                            const ImGuiInputTextCallback filter) -> Maybe<String>
 {
   const Scope scope {id};
 
@@ -201,10 +201,10 @@ auto input_string_with_hint(const char* id,
 }
 
 auto input_string(const char* id,
-                  const std::string& value,
+                  const String& value,
                   const char* label,
                   const ImGuiInputTextFlags flags,
-                  const ImGuiInputTextCallback filter) -> Maybe<std::string>
+                  const ImGuiInputTextCallback filter) -> Maybe<String>
 {
   return input_string_with_hint(id, nullptr, value, label, flags, filter);
 }

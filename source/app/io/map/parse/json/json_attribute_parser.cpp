@@ -17,17 +17,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <string>       // string
-#include <string_view>  // string_view
-#include <utility>      // move
+#include <utility>  // move
 
+#include "core/type/string.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto parse_value(const JSON& json, std::string_view type, Attribute& value)
+[[nodiscard]] auto parse_value(const JSON& json, StringView type, Attribute& value)
     -> ParseError
 {
   const auto attr_type = parse_attr_type(type);
@@ -88,7 +87,7 @@ namespace {
 [[nodiscard]] auto parse_property(const JSON& json, ir::ContextData& context_data)
     -> ParseError
 {
-  std::string property_name;
+  String property_name;
 
   if (auto name = as_string(json, "name")) {
     property_name = std::move(*name);

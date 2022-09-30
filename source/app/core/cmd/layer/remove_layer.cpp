@@ -58,7 +58,7 @@ void RemoveLayer::redo()
   mDocument->get_contexts().erase(id);
 }
 
-auto RemoveLayer::get_name() const -> std::string
+auto RemoveLayer::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.remove_layer;

@@ -77,10 +77,10 @@ static_assert(std::same_as<TileID, int32>);
   return matrix;
 }
 
-[[nodiscard]] auto encode(const ByteStream& stream) -> std::string
+[[nodiscard]] auto encode(const ByteStream& stream) -> String
 {
   const auto* data = static_cast<const char*>(static_cast<const void*>(stream.data()));
-  std::string_view view {data, stream.size()};
+  StringView view {data, stream.size()};
   return folly::base64Encode(view);
 }
 
@@ -89,7 +89,7 @@ static_assert(std::same_as<TileID, int32>);
 auto base64_encode_tiles(const TileMatrix& tiles,
                          const usize rows,
                          const usize columns,
-                         const TileCompression compression) -> std::string
+                         const TileCompression compression) -> String
 {
   const auto sequence = convert_tile_matrix_to_sequence(tiles, rows, columns);
 
@@ -110,7 +110,7 @@ auto base64_encode_tiles(const TileMatrix& tiles,
   }
 }
 
-auto base64_decode_tiles(const std::string& tiles,
+auto base64_decode_tiles(const String& tiles,
                          const usize rows,
                          const usize columns,
                          const TileCompression compression) -> TileMatrix

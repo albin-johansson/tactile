@@ -56,7 +56,7 @@ auto AddRow::merge_with(const Command* cmd) -> bool
   return false;
 }
 
-auto AddRow::get_name() const -> std::string
+auto AddRow::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return mRows == 1 ? lang.cmd.add_row : lang.cmd.add_rows;

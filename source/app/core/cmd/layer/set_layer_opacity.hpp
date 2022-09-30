@@ -36,7 +36,7 @@ class SetLayerOpacity final : public Command {
 
   [[nodiscard]] auto merge_with(const Command* cmd) -> bool override;
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+  [[nodiscard]] auto get_name() const -> String override;
 
  private:
   Shared<Layer> mLayer;

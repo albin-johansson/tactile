@@ -64,7 +64,7 @@ auto RemoveRow::merge_with(const Command* cmd) -> bool
   return false;
 }
 
-auto RemoveRow::get_name() const -> std::string
+auto RemoveRow::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return mRows == 1 ? lang.cmd.remove_row : lang.cmd.remove_rows;

@@ -17,11 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <string>   // string
 #include <utility>  // move
 
 #include "core/common/fs.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"
@@ -160,7 +160,7 @@ constexpr int32 tileset_format_version = 1;
       return error(ParseError::NoTilesetColumnCount);
     }
 
-    std::string relative;
+    String relative;
     if (!read_attribute(node, "image-path", relative)) {
       return error(ParseError::NoTilesetImagePath);
     }
@@ -219,7 +219,7 @@ auto parse_tilesets(const YAML::Node& sequence,
       return error(ParseError::NoTilesetFirstTileId);
     }
 
-    std::string path;
+    String path;
     if (!read_attribute(node, "path", path)) {
       return error(ParseError::NoExternalTilesetPath);
     }

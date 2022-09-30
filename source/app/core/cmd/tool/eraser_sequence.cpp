@@ -53,7 +53,7 @@ void EraserSequence::redo()
   }
 }
 
-auto EraserSequence::get_name() const -> std::string
+auto EraserSequence::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.eraser_tool;

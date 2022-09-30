@@ -21,6 +21,8 @@
 
 #include <array>  // array
 
+#include "core/type/string.hpp"
+
 struct ImGuiStyle;
 
 namespace tactile::ui {
@@ -64,7 +66,7 @@ inline constexpr std::array dark_themes [[maybe_unused]] = {
     EditorTheme::Stealth,
 };
 
-[[nodiscard]] auto human_readable_name(EditorTheme theme) -> std::string_view;
+[[nodiscard]] auto human_readable_name(EditorTheme theme) -> StringView;
 
 /// Applies the styling used by Tactile to a style instance.
 ///

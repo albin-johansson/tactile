@@ -48,14 +48,14 @@ template <std::integral T>
 
 }  // namespace
 
-auto split(std::string_view str, const char sep) -> Vec<std::string>
+auto split(StringView str, const char sep) -> Vec<String>
 {
   std::stringstream stream;
   stream << str;
 
-  Vec<std::string> tokens;
+  Vec<String> tokens;
 
-  std::string token;
+  String token;
   while (std::getline(stream, token, sep)) {
     std::erase(token, '\n');
     tokens.push_back(std::move(token));
@@ -65,7 +65,7 @@ auto split(std::string_view str, const char sep) -> Vec<std::string>
   return tokens;
 }
 
-auto parse_i32(std::string_view str, const int base) -> Maybe<int32>
+auto parse_i32(StringView str, const int base) -> Maybe<int32>
 {
   return parse<int32>(str.data(), str.data() + str.size(), base);
 }

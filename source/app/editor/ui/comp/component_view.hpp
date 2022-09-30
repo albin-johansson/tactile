@@ -19,10 +19,9 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include <entt/fwd.hpp>
 
+#include "core/type/string.hpp"
 #include "core/uuid.hpp"
 
 namespace tactile {
@@ -34,7 +33,7 @@ namespace tactile::ui {
 /// Shows a view of a single component, attached to a context.
 void component_view(const UUID& context_id,
                     const Component& component,
-                    const std::string& name,
+                    const String& name,
                     entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

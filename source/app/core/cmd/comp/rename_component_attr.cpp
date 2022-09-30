@@ -32,8 +32,8 @@ namespace tactile::cmd {
 
 RenameComponentAttr::RenameComponentAttr(Document* document,
                                          const UUID& component_id,
-                                         std::string previous_name,
-                                         std::string updated_name)
+                                         String previous_name,
+                                         String updated_name)
     : mDocument {document}
     , mComponentId {component_id}
     , mPreviousName {std::move(previous_name)}
@@ -66,7 +66,7 @@ void RenameComponentAttr::redo()
   contexts.on_renamed_component_attr(definition.get_uuid(), mPreviousName, mUpdatedName);
 }
 
-auto RenameComponentAttr::get_name() const -> std::string
+auto RenameComponentAttr::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.rename_comp_attr;

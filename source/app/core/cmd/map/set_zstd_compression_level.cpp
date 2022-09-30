@@ -63,7 +63,7 @@ auto SetZstdCompressionLevel::merge_with(const Command* cmd) -> bool
   return false;
 }
 
-auto SetZstdCompressionLevel::get_name() const -> std::string
+auto SetZstdCompressionLevel::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.set_zstd_compression_level;

@@ -20,9 +20,9 @@
 #pragma once
 
 #include <exception>  // exception
-#include <string>     // string
 
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 
 namespace tactile {
 
@@ -33,11 +33,11 @@ class TactileError : public std::exception {
 
   [[nodiscard]] auto what() const noexcept -> const char* override { return mWhat; }
 
-  [[nodiscard]] auto trace() const -> const std::string& { return mTrace; }
+  [[nodiscard]] auto trace() const -> const String& { return mTrace; }
 
  private:
   const char* mWhat {"N/A"};
-  std::string mTrace;
+  String mTrace;
 };
 
 }  // namespace tactile

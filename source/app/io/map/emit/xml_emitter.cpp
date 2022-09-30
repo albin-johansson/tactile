@@ -348,7 +348,7 @@ void append_embedded_tileset(XMLNode root,
 
 void append_external_tileset(XMLNode root,
                              const ir::TilesetData& tileset,
-                             const std::string& filename)
+                             const String& filename)
 {
   auto node = root.append_child("tileset");
   node.append_attribute("firstgid").set_value(tileset.first_tile);

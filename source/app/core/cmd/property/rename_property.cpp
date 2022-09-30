@@ -29,9 +29,7 @@
 
 namespace tactile::cmd {
 
-RenameProperty::RenameProperty(Shared<Context> context,
-                               std::string old_name,
-                               std::string new_name)
+RenameProperty::RenameProperty(Shared<Context> context, String old_name, String new_name)
     : mContext {std::move(context)}
     , mOldName {std::move(old_name)}
     , mNewName {std::move(new_name)}
@@ -53,7 +51,7 @@ void RenameProperty::redo()
   props.rename(mOldName, mNewName);
 }
 
-auto RenameProperty::get_name() const -> std::string
+auto RenameProperty::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.rename_property;

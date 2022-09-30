@@ -27,7 +27,7 @@
 
 namespace tactile::cmd {
 
-SetObjectTag::SetObjectTag(Shared<Object> object, std::string tag)
+SetObjectTag::SetObjectTag(Shared<Object> object, String tag)
     : mObject {std::move(object)}
     , mNewTag {std::move(tag)}
 {
@@ -60,7 +60,7 @@ auto SetObjectTag::merge_with(const Command* cmd) -> bool
   return false;
 }
 
-auto SetObjectTag::get_name() const -> std::string
+auto SetObjectTag::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.update_object_tag;

@@ -19,10 +19,9 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/common/fs.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 
 namespace tactile {
 class MapDocument;

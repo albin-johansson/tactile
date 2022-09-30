@@ -19,8 +19,7 @@
 
 #include "json_parser.hpp"
 
-#include <string>  // string
-
+#include "core/type/string.hpp"
 #include "io/util/json.hpp"
 
 namespace tactile::io {
@@ -29,7 +28,7 @@ namespace {
 [[nodiscard]] auto validate_map(const JSON& json) -> ParseError
 {
   if (const auto iter = json.find("orientation");
-      iter == json.end() || iter->get<std::string>() != "orthogonal") {
+      iter == json.end() || iter->get<String>() != "orthogonal") {
     return ParseError::UnsupportedMapOrientation;
   }
 

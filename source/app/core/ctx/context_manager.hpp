@@ -19,9 +19,7 @@
 
 #pragma once
 
-#include <functional>   // function
-#include <string>       // string
-#include <string_view>  // string_view
+#include <functional>  // function
 
 #include <boost/uuid/uuid_hash.hpp>
 
@@ -31,6 +29,7 @@
 #include "core/ctx/context.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/string.hpp"
 #include "core/uuid.hpp"
 
 namespace tactile {
@@ -64,17 +63,17 @@ class ContextManager final {
   auto on_undef_comp(const UUID& componentId) -> HashMap<UUID, Component>;
 
   void on_new_component_attr(const UUID& componentId,
-                             const std::string& name,
+                             const String& name,
                              const Attribute& value);
 
-  void on_removed_component_attr(const UUID& componentId, std::string_view name);
+  void on_removed_component_attr(const UUID& componentId, StringView name);
 
   void on_renamed_component_attr(const UUID& componentId,
-                                 std::string_view oldName,
-                                 const std::string& newName);
+                                 StringView oldName,
+                                 const String& newName);
 
   auto on_changed_component_attr_type(const UUID& componentId,
-                                      std::string_view name,
+                                      StringView name,
                                       AttributeType type) -> HashMap<UUID, Attribute>;
 
   [[nodiscard]] auto active_context_id() const -> const UUID& { return mActiveContextId; }

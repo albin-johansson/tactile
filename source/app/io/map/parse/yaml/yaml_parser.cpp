@@ -35,7 +35,7 @@ namespace {
   ir::TileFormatData format;
 
   if (auto encoding = node["encoding"]) {
-    auto encoding_str = encoding.as<std::string>();
+    auto encoding_str = encoding.as<String>();
     if (encoding_str == "plain") {
       format.encoding = TileEncoding::Plain;
     }
@@ -51,7 +51,7 @@ namespace {
   }
 
   if (auto compression = node["compression"]) {
-    auto compression_str = compression.as<std::string>();
+    auto compression_str = compression.as<String>();
     if (compression_str == "none") {
       format.compression = TileCompression::None;
     }

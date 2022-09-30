@@ -19,18 +19,17 @@
 
 #include "godot_converter.hpp"
 
-#include <algorithm>    // replace
-#include <cmath>        // sin, cos
-#include <numbers>      // pi
-#include <string>       // string
-#include <string_view>  // string_view
-#include <utility>      // move
+#include <algorithm>  // replace
+#include <cmath>      // sin, cos
+#include <numbers>    // pi
+#include <utility>    // move
 
 #include <boost/uuid/uuid_hash.hpp>
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
 #include "core/tile_pos.hpp"
+#include "core/type/string.hpp"
 #include "core/type/vector.hpp"
 #include "core/util/assoc.hpp"
 #include "core/util/functional.hpp"
@@ -43,9 +42,9 @@ namespace {
 
 using TilesetTextures = HashMap<UUID, GdExtRes>;
 
-[[nodiscard]] auto to_godot_name(std::string_view name) -> std::string
+[[nodiscard]] auto to_godot_name(StringView name) -> String
 {
-  std::string copy {name};
+  String copy {name};
   std::replace(copy.begin(), copy.end(), '/', '-');
   return copy;
 }
@@ -179,7 +178,7 @@ void add_animations(const ir::MapData& map,
 
 [[nodiscard]] auto create_object(const GodotEmitOptions& options,
                                  const ir::ObjectData& object,
-                                 std::string parent,
+                                 String parent,
                                  GodotFile& file) -> GdObject
 {
   auto object_name = fmt::format("Object {}", object.id);
@@ -219,7 +218,7 @@ void add_animations(const ir::MapData& map,
 
 void add_object_layer(const GodotEmitOptions& options,
                       const ir::LayerData& layer,
-                      std::string parent,
+                      String parent,
                       GodotScene& scene)
 {
   const auto& object_layer = layer.as_object_layer();
@@ -248,7 +247,7 @@ void add_object_layer(const GodotEmitOptions& options,
 
 void add_tile_layer(const ir::MapData& map,
                     const ir::LayerData& layer,
-                    std::string parent,
+                    String parent,
                     GodotScene& scene)
 {
   const auto& tile_layer = layer.as_tile_layer();
@@ -304,7 +303,7 @@ void add_tile_layer(const ir::MapData& map,
 void add_layer(const GodotEmitOptions& options,
                const ir::MapData& map,
                const ir::LayerData& layer,
-               std::string parent,
+               String parent,
                GodotScene& scene)
 {
   switch (layer.type) {

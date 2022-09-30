@@ -59,13 +59,13 @@ struct PropertyItemContextMenuState final {
 };
 
 inline PropertyItemContextMenuState context_state;
-inline Maybe<std::string> rename_target;
-inline Maybe<std::string> change_type_target;
+inline Maybe<String> rename_target;
+inline Maybe<String> change_type_target;
 constinit bool is_focused = false;
 
 [[nodiscard]] auto property_item_context_menu(const UUID& context_id,
                                               entt::dispatcher& dispatcher,
-                                              const std::string& name,
+                                              const String& name,
                                               PropertyItemContextMenuState& state) -> bool
 {
   const auto& lang = get_current_language();
@@ -97,9 +97,9 @@ void prepare_table_row(const char* label)
   ImGui::TextUnformatted(label);
 }
 
-[[nodiscard]] auto native_name_row(const std::string& name,
+[[nodiscard]] auto native_name_row(const String& name,
                                    const bool validate_as_file_name = false)
-    -> Maybe<std::string>
+    -> Maybe<String>
 {
   const auto& lang = get_current_language();
   prepare_table_row(lang.misc.name.c_str());

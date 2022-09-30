@@ -19,10 +19,9 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 #include "core/uuid.hpp"
 #include "editor/ui/dialog/string_input_dialog.hpp"
 
@@ -37,14 +36,14 @@ class RenamePropertyDialog final : public StringInputDialog {
 
   ~RenamePropertyDialog() override = default;
 
-  void open(const UUID& context_id, std::string previous_name);
+  void open(const UUID& context_id, String previous_name);
 
  protected:
   using StringInputDialog::show;
 
   void on_accept(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto validate(const DocumentModel& model, std::string_view input) const
+  [[nodiscard]] auto validate(const DocumentModel& model, StringView input) const
       -> bool override;
 
  private:

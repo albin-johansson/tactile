@@ -18,11 +18,11 @@
  */
 
 #include <cstring>  // strcmp
-#include <string>   // string
 #include <utility>  // move
 
 #include <spdlog/spdlog.h>
 
+#include "core/type/string.hpp"
 #include "core/type/vector.hpp"
 #include "core/util/string.hpp"
 #include "core/util/tiles.hpp"

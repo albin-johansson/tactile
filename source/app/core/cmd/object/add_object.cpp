@@ -73,7 +73,7 @@ void AddObject::redo()
   mDocument->get_contexts().add_context(std::move(object));
 }
 
-auto AddObject::get_name() const -> std::string
+auto AddObject::get_name() const -> String
 {
   const auto& lang = get_current_language();
   switch (mObjectType) {

@@ -19,35 +19,33 @@
 
 #pragma once
 
-#include <string>       // string
-#include <string_view>  // string_view
-
 #include "core/attribute.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 #include "core/type/tree_map.hpp"
 
 namespace tactile {
 
 class PropertyBundle final {
  public:
-  void add(std::string name, AttributeType type);
-  void add(std::string name, Attribute value);
+  void add(String name, AttributeType type);
+  void add(String name, Attribute value);
 
-  void update(std::string_view name, Attribute value);
+  void update(StringView name, Attribute value);
 
-  void remove(std::string_view name);
+  void remove(StringView name);
 
-  void rename(std::string_view current, std::string updated);
+  void rename(StringView current, String updated);
 
-  auto change_type(std::string_view name, AttributeType type) -> Attribute;
+  auto change_type(StringView name, AttributeType type) -> Attribute;
 
-  [[nodiscard]] auto find(std::string_view name) -> Attribute*;
-  [[nodiscard]] auto find(std::string_view name) const -> const Attribute*;
+  [[nodiscard]] auto find(StringView name) -> Attribute*;
+  [[nodiscard]] auto find(StringView name) const -> const Attribute*;
 
-  [[nodiscard]] auto at(std::string_view name) -> Attribute&;
-  [[nodiscard]] auto at(std::string_view name) const -> const Attribute&;
+  [[nodiscard]] auto at(StringView name) -> Attribute&;
+  [[nodiscard]] auto at(StringView name) const -> const Attribute&;
 
-  [[nodiscard]] auto contains(std::string_view name) const -> bool;
+  [[nodiscard]] auto contains(StringView name) const -> bool;
 
   [[nodiscard]] auto size() const -> usize;
 
@@ -58,7 +56,7 @@ class PropertyBundle final {
   [[nodiscard]] auto end() const noexcept { return mProps.end(); }
 
  private:
-  TreeMap<std::string, Attribute> mProps;
+  TreeMap<String, Attribute> mProps;
 };
 
 }  // namespace tactile

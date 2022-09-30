@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include <string>   // string
 #include <variant>  // variant, monostate
 
 #include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 #include "core/type/vector.hpp"
 #include "io/map/emit/gd/godot_file.hpp"
 #include "io/map/emit/gd/godot_tileset.hpp"
@@ -44,8 +44,8 @@ struct GdPolygon final {
 struct GdObject final {
   using Value = std::variant<GdRect, GdPolygon, GdPoint>;
 
-  std::string name;
-  std::string parent;
+  String name;
+  String parent;
   Float2 position {};
   Value value;
   GdMetaData meta;
@@ -63,7 +63,7 @@ struct GdEncodedTile final {
 };
 
 struct GdTileAnimation final {
-  std::string parent;
+  String parent;
   usize row {};
   usize col {};
   TileID tile_id {};
@@ -78,8 +78,8 @@ struct GdTileLayer final {
 struct GdLayer final {
   using Value = std::variant<std::monostate, GdTileLayer, GdObjectLayer>;
 
-  std::string name;
-  std::string parent;
+  String name;
+  String parent;
   Value value;
   GdMetaData meta;
   bool visible : 1 {};

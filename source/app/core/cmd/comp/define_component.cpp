@@ -28,7 +28,7 @@
 
 namespace tactile::cmd {
 
-DefineComponent::DefineComponent(Shared<ComponentIndex> index, std::string name)
+DefineComponent::DefineComponent(Shared<ComponentIndex> index, String name)
     : mIndex {std::move(index)}
     , mName {std::move(name)}
 {
@@ -54,7 +54,7 @@ void DefineComponent::redo()
   }
 }
 
-auto DefineComponent::get_name() const -> std::string
+auto DefineComponent::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.define_comp;

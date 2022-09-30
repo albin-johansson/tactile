@@ -31,7 +31,7 @@ namespace tactile::cmd {
 
 class RenameTileset final : public Command {
  public:
-  RenameTileset(Shared<Tileset> tileset, std::string name);
+  RenameTileset(Shared<Tileset> tileset, String name);
 
   void undo() override;
 
@@ -39,12 +39,12 @@ class RenameTileset final : public Command {
 
   [[nodiscard]] auto merge_with(const Command* cmd) -> bool override;
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+  [[nodiscard]] auto get_name() const -> String override;
 
  private:
   Shared<Tileset> mTileset;
-  std::string mNewName;
-  Maybe<std::string> mOldName;
+  String mNewName;
+  Maybe<String> mOldName;
 };
 
 }  // namespace tactile::cmd

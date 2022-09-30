@@ -19,9 +19,8 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/common/maybe.hpp"
+#include "core/type/string.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 #include "io/map/parse/parse_error.hpp"
 
@@ -39,7 +38,7 @@ class MapParseErrorDialog final : public Dialog {
 
  private:
   Maybe<io::ParseError> mError;
-  std::string mCause;
+  String mCause;
 };
 
 }  // namespace tactile::ui

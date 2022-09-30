@@ -149,7 +149,7 @@ void StampTool::update_sequence_normal(TileLayer& layer,
         if (mPrevious.find(pos) == mPrevious.end()) {
           mPrevious.emplace(pos, layer.tile_at(pos));
         }
-        mCurrent.insert_or_assign(pos, tile);
+        mCurrent[pos] = tile;
         layer.set_tile(pos, tile);
       }
     }

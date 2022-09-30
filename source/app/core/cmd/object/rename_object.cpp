@@ -27,7 +27,7 @@
 
 namespace tactile::cmd {
 
-RenameObject::RenameObject(Shared<Object> object, std::string name)
+RenameObject::RenameObject(Shared<Object> object, String name)
     : mObject {std::move(object)}
     , mNewName {std::move(name)}
 {
@@ -60,7 +60,7 @@ auto RenameObject::merge_with(const Command* cmd) -> bool
   return false;
 }
 
-auto RenameObject::get_name() const -> std::string
+auto RenameObject::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.rename_object;

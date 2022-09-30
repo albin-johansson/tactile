@@ -33,7 +33,7 @@ Component::Component(const UUID& definition_id, AttributeMap attributes)
 {
 }
 
-void Component::add_attr(std::string key, Attribute value)
+void Component::add_attr(String key, Attribute value)
 {
   if (mAttributes.find(key) == mAttributes.end()) {
     mAttributes[std::move(key)] = std::move(value);
@@ -43,7 +43,7 @@ void Component::add_attr(std::string key, Attribute value)
   }
 }
 
-void Component::remove_attr(std::string_view key)
+void Component::remove_attr(StringView key)
 {
   if (const auto iter = find_in(mAttributes, key); iter != mAttributes.end()) {
     mAttributes.erase(iter);
@@ -53,13 +53,13 @@ void Component::remove_attr(std::string_view key)
   }
 }
 
-void Component::update_attr(std::string_view key, Attribute value)
+void Component::update_attr(StringView key, Attribute value)
 {
   auto& attr = lookup_in(mAttributes, key);
   attr = std::move(value);
 }
 
-void Component::rename_attr(std::string_view old_key, std::string new_key)
+void Component::rename_attr(StringView old_key, String new_key)
 {
   TACTILE_ASSERT(!has_key(mAttributes, new_key));
   auto value = lookup_in(mAttributes, old_key);
@@ -71,12 +71,12 @@ void Component::rename_attr(std::string_view old_key, std::string new_key)
   mAttributes[std::move(new_key)] = std::move(value);
 }
 
-auto Component::get_attr(std::string_view key) const -> const Attribute&
+auto Component::get_attr(StringView key) const -> const Attribute&
 {
   return lookup_in(mAttributes, key);
 }
 
-auto Component::has_attr(std::string_view key) const -> bool
+auto Component::has_attr(StringView key) const -> bool
 {
   return has_key(mAttributes, key);
 }

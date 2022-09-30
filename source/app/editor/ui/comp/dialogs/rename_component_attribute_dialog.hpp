@@ -19,9 +19,8 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/common/maybe.hpp"
+#include "core/type/string.hpp"
 #include "core/uuid.hpp"
 #include "editor/ui/dialog/string_input_dialog.hpp"
 
@@ -32,12 +31,12 @@ class RenameComponentAttributeDialog final : public StringInputDialog {
  public:
   RenameComponentAttributeDialog();
 
-  void show(std::string previousName, const UUID& componentId);
+  void show(String previousName, const UUID& componentId);
 
  protected:
   void on_accept(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto validate(const DocumentModel& model, std::string_view input) const
+  [[nodiscard]] auto validate(const DocumentModel& model, StringView input) const
       -> bool override;
 
  private:

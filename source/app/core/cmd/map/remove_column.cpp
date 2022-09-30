@@ -64,7 +64,7 @@ auto RemoveColumn::merge_with(const Command* cmd) -> bool
   return false;
 }
 
-auto RemoveColumn::get_name() const -> std::string
+auto RemoveColumn::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return mColumns == 1 ? lang.cmd.remove_column : lang.cmd.remove_columns;

@@ -19,12 +19,11 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include <entt/fwd.hpp>
 
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 
 namespace tactile {
 class DocumentModel;
@@ -38,7 +37,7 @@ class Dialog {
   TACTILE_DEFAULT_COPY(Dialog);
   TACTILE_DEFAULT_MOVE(Dialog);
 
-  explicit Dialog(std::string title);
+  explicit Dialog(String title);
 
   virtual ~Dialog() noexcept = default;
 
@@ -78,7 +77,7 @@ class Dialog {
   void use_apply_button();
 
   /// Sets the title of the dialog, this must be set before the dialog is updated.
-  void set_title(std::string title);
+  void set_title(String title);
 
   /// Sets the label of the "accept" button.
   ///
@@ -86,19 +85,19 @@ class Dialog {
   /// more intuitive to use more descriptive verbs as the label.
   ///
   /// \param label the label text, use an empty optional to hide the button.
-  void set_accept_button_label(Maybe<std::string> label);
+  void set_accept_button_label(Maybe<String> label);
 
   /// Sets the label of the "close" button.
   ///
   /// By default, the accept button uses "Cancel" as its label.
   ///
   /// \param label the label text, use an empty optional to hide the button.
-  void set_close_button_label(Maybe<std::string> label);
+  void set_close_button_label(Maybe<String> label);
 
  private:
-  std::string mTitle;
-  Maybe<std::string> mAcceptButtonLabel;
-  Maybe<std::string> mCloseButtonLabel;
+  String mTitle;
+  Maybe<String> mAcceptButtonLabel;
+  Maybe<String> mCloseButtonLabel;
   bool mUseApplyButton : 1 {};
   bool mShow           : 1 {};
 };

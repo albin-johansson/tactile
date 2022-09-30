@@ -53,7 +53,7 @@ void SetTileFormatCompression::redo()
   format.set_compression(mNewCompression);
 }
 
-auto SetTileFormatCompression::get_name() const -> std::string
+auto SetTileFormatCompression::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.set_tile_format_compression;

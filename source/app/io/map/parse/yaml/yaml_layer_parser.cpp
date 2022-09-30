@@ -18,10 +18,10 @@
  */
 
 #include <algorithm>  // replace
-#include <string>     // string
 #include <utility>    // move
 
 #include "core/type/expected.hpp"
+#include "core/type/string.hpp"
 #include "core/util/string.hpp"
 #include "core/util/tiles.hpp"
 #include "io/map/ir/ir.hpp"
@@ -38,7 +38,7 @@ namespace {
                                const ir::MapData& map,
                                usize index) -> Expected<ir::LayerData, ParseError>;
 
-[[nodiscard]] auto parse_plain_tile_layer_data(const std::string& tile_data,
+[[nodiscard]] auto parse_plain_tile_layer_data(const String& tile_data,
                                                const usize rows,
                                                const usize columns)
     -> Expected<TileMatrix, ParseError>
@@ -70,7 +70,7 @@ namespace {
   tile_layer.row_count = rows;
   tile_layer.col_count = columns;
 
-  std::string str_data;
+  String str_data;
   if (!read_attribute(node, "data", str_data)) {
     return error(ParseError::NoTileLayerData);
   }
@@ -155,7 +155,7 @@ namespace {
   read_attribute(node, "visible", layer.visible, true);
   read_attribute(node, "name", layer.name, "Layer"s);
 
-  std::string type;
+  String type;
   if (!read_attribute(node, "type", type)) {
     return error(ParseError::NoLayerType);
   }
@@ -212,7 +212,7 @@ auto parse_object(const YAML::Node& node, const ir::MapData& map)
     return error(ParseError::NoObjectId);
   }
 
-  std::string type;
+  String type;
   if (!read_attribute(node, "type", type)) {
     return error(ParseError::NoObjectType);
   }

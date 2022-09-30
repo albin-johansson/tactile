@@ -19,7 +19,6 @@
 
 #include "component_editor.hpp"
 
-#include <string>   // string
 #include <utility>  // move
 
 #include <entt/entity/registry.hpp>
@@ -31,6 +30,7 @@
 #include "core/comp/component_index.hpp"
 #include "core/event/component_events.hpp"
 #include "core/model.hpp"
+#include "core/type/string.hpp"
 #include "core/uuid.hpp"
 #include "editor/constants.hpp"
 #include "editor/ui/common/buttons.hpp"
@@ -202,7 +202,7 @@ void ComponentEditor::show_component_attributes(const ComponentDefinition& defin
 }
 
 void ComponentEditor::show_component_attribute(const UUID& component_id,
-                                               const std::string& name,
+                                               const String& name,
                                                const Attribute& value,
                                                entt::dispatcher& dispatcher)
 {

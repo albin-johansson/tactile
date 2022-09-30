@@ -38,19 +38,19 @@ class SetComponentAttrType final : public Command {
  public:
   SetComponentAttrType(Document* document,
                        const UUID& component_id,
-                       std::string attribute,
+                       String attribute,
                        AttributeType type);
 
   void undo() override;
 
   void redo() override;
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+  [[nodiscard]] auto get_name() const -> String override;
 
  private:
   Document* mDocument {};
   UUID mComponentId {};
-  std::string mAttributeName;
+  String mAttributeName;
   AttributeType mNewType;
   Maybe<Attribute> mSnapshot;
   HashMap<UUID, Attribute> mPrevAttributes;

@@ -29,19 +29,19 @@ namespace tactile::cmd {
 
 class RenameLayer final : public Command {
  public:
-  RenameLayer(Shared<Map> map, const UUID& layer_id, std::string name);
+  RenameLayer(Shared<Map> map, const UUID& layer_id, String name);
 
   void undo() override;
 
   void redo() override;
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+  [[nodiscard]] auto get_name() const -> String override;
 
  private:
   Shared<Map> mMap;
   UUID mLayerId {};
-  std::string mNewName;
-  Maybe<std::string> mOldName;
+  String mNewName;
+  Maybe<String> mOldName;
 };
 
 }  // namespace tactile::cmd

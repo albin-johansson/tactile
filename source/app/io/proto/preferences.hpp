@@ -19,12 +19,11 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include <centurion/color.hpp>
 
 #include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/themes.hpp"
 #include "lang/language.hpp"
@@ -67,7 +66,7 @@ inline constexpr bool def_use_default_font = true;
 /// Contains all persistent settings.
 /// Note, the boolean members cannot be bitfields because we take the address of them.
 struct PreferenceState final {
-  std::string preferred_format {def_preferred_format};
+  String preferred_format {def_preferred_format};
   Lang language {def_language};
   ui::EditorTheme theme {def_theme};
   cen::color viewport_background {def_viewport_bg};

@@ -32,7 +32,7 @@ namespace tactile::cmd {
 
 class UpdateProperty final : public Command {
  public:
-  UpdateProperty(Shared<Context> context, std::string name, Attribute value);
+  UpdateProperty(Shared<Context> context, String name, Attribute value);
 
   void undo() override;
 
@@ -40,11 +40,11 @@ class UpdateProperty final : public Command {
 
   [[nodiscard]] auto merge_with(const Command* cmd) -> bool override;
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+  [[nodiscard]] auto get_name() const -> String override;
 
  private:
   Shared<Context> mContext;
-  std::string mName;
+  String mName;
   Attribute mNewValue;
   Maybe<Attribute> mOldValue;
 };

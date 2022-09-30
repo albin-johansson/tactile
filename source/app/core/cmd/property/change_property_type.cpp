@@ -30,7 +30,7 @@
 namespace tactile::cmd {
 
 ChangePropertyType::ChangePropertyType(Shared<Context> context,
-                                       std::string name,
+                                       String name,
                                        const AttributeType type)
     : mContext {std::move(context)}
     , mName {std::move(name)}
@@ -62,7 +62,7 @@ void ChangePropertyType::redo()
   props.change_type(mName, mPropertyType);
 }
 
-auto ChangePropertyType::get_name() const -> std::string
+auto ChangePropertyType::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.change_property_type;

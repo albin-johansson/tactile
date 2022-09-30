@@ -30,6 +30,7 @@
 
 #include "core/common/fs.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 #include "meta/build.hpp"
 
 namespace fmt {
@@ -67,19 +68,19 @@ template <usize Capacity = 128>
 class FmtString final {
  public:
   template <typename... Args>
-  explicit FmtString(std::string_view fmt, const Args&... args)
+  explicit FmtString(StringView fmt, const Args&... args)
   {
     const auto result =
         fmt::format_to_n(mBuffer.begin(), Capacity, fmt::runtime(fmt), args...);
-    *result.out = '\0'; /* Ensure null-terminator */
+    *result.out = '\0';  // Ensure null-terminator
     mSize = (std::min)(result.size, Capacity);
   }
 
   [[nodiscard]] auto data() const noexcept -> const char* { return mBuffer.data(); }
 
-  [[nodiscard]] auto view() const noexcept -> std::string_view
+  [[nodiscard]] auto view() const noexcept -> StringView
   {
-    return std::string_view {mBuffer.data(), mSize};
+    return StringView {mBuffer.data(), mSize};
   }
 
   [[nodiscard]] auto size() const noexcept -> usize { return view().size(); }

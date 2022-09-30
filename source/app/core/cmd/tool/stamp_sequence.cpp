@@ -52,7 +52,7 @@ void StampSequence::redo()
   apply_sequence(mNewState);
 }
 
-auto StampSequence::get_name() const -> std::string
+auto StampSequence::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.stamp_tool;

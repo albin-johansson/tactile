@@ -29,7 +29,7 @@
 
 namespace tactile::cmd {
 
-UpdateProperty::UpdateProperty(Shared<Context> context, std::string name, Attribute value)
+UpdateProperty::UpdateProperty(Shared<Context> context, String name, Attribute value)
     : mContext {std::move(context)}
     , mName {std::move(name)}
     , mNewValue {std::move(value)}
@@ -65,7 +65,7 @@ auto UpdateProperty::merge_with(const Command* cmd) -> bool
   return false;
 }
 
-auto UpdateProperty::get_name() const -> std::string
+auto UpdateProperty::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.update_property;

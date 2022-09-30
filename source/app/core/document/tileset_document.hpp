@@ -40,11 +40,11 @@ class TilesetDocument final : public Document {
 
   void update() override;
 
-  void rename_tileset(std::string name);
+  void rename_tileset(String name);
 
   void set_component_index(Shared<ComponentIndex> index) override;
 
-  void set_name(std::string name) override;
+  void set_name(String name) override;
 
   void set_path(fs::path path) override;
 
@@ -62,7 +62,7 @@ class TilesetDocument final : public Document {
   [[nodiscard]] auto get_viewport() -> Viewport& override;
   [[nodiscard]] auto get_viewport() const -> const Viewport& override;
 
-  [[nodiscard]] auto get_name() const -> const std::string& override;
+  [[nodiscard]] auto get_name() const -> const String& override;
 
   [[nodiscard]] auto get_path() const -> const fs::path& override;
 

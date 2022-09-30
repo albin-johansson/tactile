@@ -29,9 +29,7 @@
 
 namespace tactile::cmd {
 
-AddProperty::AddProperty(Shared<Context> context,
-                         std::string name,
-                         const AttributeType type)
+AddProperty::AddProperty(Shared<Context> context, String name, const AttributeType type)
     : mContext {std::move(context)}
     , mName {std::move(name)}
     , mType {type}
@@ -53,7 +51,7 @@ void AddProperty::redo()
   props.add(mName, mType);
 }
 
-auto AddProperty::get_name() const -> std::string
+auto AddProperty::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.add_property;

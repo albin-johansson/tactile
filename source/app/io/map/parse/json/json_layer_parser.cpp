@@ -106,7 +106,7 @@ namespace {
     map.tile_format.encoding = TileEncoding::Base64;
     map.tile_format.compression = compression;
 
-    const auto data_str = data.get<std::string>();
+    const auto data_str = data.get<String>();
     tile_layer.tiles = base64_decode_tiles(data_str,
                                            tile_layer.row_count,
                                            tile_layer.col_count,

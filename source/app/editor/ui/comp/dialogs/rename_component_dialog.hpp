@@ -19,9 +19,8 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/common/maybe.hpp"
+#include "core/type/string.hpp"
 #include "core/uuid.hpp"
 #include "editor/ui/comp/dialogs/component_name_dialog.hpp"
 
@@ -32,7 +31,7 @@ class RenameComponentDialog final : public ComponentNameDialog {
  public:
   RenameComponentDialog();
 
-  void show(std::string previous_name, const UUID& component_id);
+  void show(String previous_name, const UUID& component_id);
 
  protected:
   void on_accept(entt::dispatcher& dispatcher) override;

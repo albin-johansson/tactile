@@ -17,14 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <string>       // string
-#include <string_view>  // string_view
-#include <utility>      // move
+#include <utility>  // move
 
 #include <centurion/color.hpp>
 
 #include "core/common/fs.hpp"
 #include "core/common/maybe.hpp"
+#include "core/type/string.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"
@@ -37,7 +36,7 @@ namespace {
 {
   switch (type) {
     case AttributeType::String:
-      return value.as<std::string>();
+      return value.as<String>();
 
     case AttributeType::Int:
       return value.as<int32>();
@@ -49,11 +48,11 @@ namespace {
       return value.as<bool>();
 
     case AttributeType::Path: {
-      const fs::path file = value.as<std::string>();
+      const fs::path file = value.as<String>();
       return file;
     }
     case AttributeType::Color: {
-      const auto hex = value.as<std::string>();
+      const auto hex = value.as<String>();
       if (const auto color = cen::color::from_rgba(hex)) {
         return *color;
       }
@@ -72,12 +71,12 @@ namespace {
 [[nodiscard]] auto parse_component_definition_attribute(const YAML::Node& node)
     -> Expected<Attribute, ParseError>
 {
-  std::string name;
+  String name;
   if (!read_attribute(node, "name", name)) {
     return error(ParseError::NoComponentDefAttributeName);
   }
 
-  std::string type_name;
+  String type_name;
   if (!read_attribute(node, "type", type_name)) {
     return error(ParseError::NoComponentDefAttributeType);
   }
@@ -96,7 +95,7 @@ namespace {
   if (auto default_value = node["default"]) {
     switch (type) {
       case AttributeType::String:
-        value = default_value.as<std::string>();
+        value = default_value.as<String>();
         break;
 
       case AttributeType::Int:
@@ -112,12 +111,12 @@ namespace {
         break;
 
       case AttributeType::Path: {
-        fs::path path = default_value.as<std::string>();
+        fs::path path = default_value.as<String>();
         value = std::move(path);
         break;
       }
       case AttributeType::Color: {
-        if (auto color = cen::color::from_rgba(default_value.as<std::string>())) {
+        if (auto color = cen::color::from_rgba(default_value.as<String>())) {
           value = *color;
         }
         else {
@@ -141,7 +140,7 @@ namespace {
 
   if (auto attribute_seq = node["attributes"]) {
     for (auto attribute_node : attribute_seq) {
-      std::string attribute_name;
+      String attribute_name;
       if (!read_attribute(attribute_node, "name", attribute_name)) {
         return error(ParseError::NoComponentDefAttributeName);
       }
@@ -160,7 +159,7 @@ namespace {
 
 [[nodiscard]] auto parse_component(const YAML::Node& node,
                                    const ir::MapData& map,
-                                   const std::string& type)
+                                   const String& type)
     -> Expected<ir::AttributeMap, ParseError>
 {
   // TODO invalid component type check, e.g. ParseError::InvalidComponentType
@@ -169,7 +168,7 @@ namespace {
 
   if (auto sequence = node["values"]) {
     for (const auto& value_node : sequence) {
-      std::string attr_name;
+      String attr_name;
       if (!read_attribute(value_node, "name", attr_name)) {
         return error(ParseError::NoComponentAttributeName);
       }
@@ -201,7 +200,7 @@ auto parse_component_definitions(const YAML::Node& node)
 
   if (auto sequence = node["component-definitions"]) {
     for (const auto& def_node : sequence) {
-      std::string type;
+      String type;
       if (!read_attribute(def_node, "name", type)) {
         return error(ParseError::NoComponentDefName);
       }
@@ -225,7 +224,7 @@ auto parse_components(const YAML::Node& node, const ir::MapData& map)
 
   if (auto sequence = node["components"]) {
     for (const auto& component_node : sequence) {
-      std::string type;
+      String type;
       if (!read_attribute(component_node, "type", type)) {
         return error(ParseError::NoComponentType);
       }
@@ -248,12 +247,12 @@ auto parse_properties(const YAML::Node& node) -> Expected<ir::AttributeMap, Pars
 
   if (auto sequence = node["properties"]) {
     for (const auto& property_node : sequence) {
-      std::string property_name;
+      String property_name;
       if (!read_attribute(property_node, "name", property_name)) {
         return error(ParseError::NoPropertyName);
       }
 
-      std::string type;
+      String type;
       if (!read_attribute(property_node, "type", type)) {
         return error(ParseError::NoPropertyType);
       }

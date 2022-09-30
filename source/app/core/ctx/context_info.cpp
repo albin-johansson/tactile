@@ -28,7 +28,7 @@ ContextInfo::ContextInfo(const UUID& id)
 {
 }
 
-void ContextInfo::set_name(std::string name)
+void ContextInfo::set_name(String name)
 {
   mName = std::move(name);
 }

@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include <boost/uuid/uuid_hash.hpp>
 
 #include "core/common/math.hpp"
@@ -35,6 +33,7 @@
 #include "core/tool/tool_manager.hpp"
 #include "core/tool/tool_type.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/string.hpp"
 #include "core/type/vector.hpp"
 #include "core/uuid.hpp"
 #include "core/viewport.hpp"
@@ -66,7 +65,7 @@ class MapDocument final : public Document {
 
   void duplicate_layer(const UUID& layer_id);
 
-  void rename_layer(const UUID& layer_id, std::string name);
+  void rename_layer(const UUID& layer_id, String name);
 
   void move_layer_up(const UUID& layer_id);
 
@@ -96,9 +95,9 @@ class MapDocument final : public Document {
 
   void set_object_visible(const UUID& object_id, bool visible);
 
-  void set_object_name(const UUID& object_id, std::string name);
+  void set_object_name(const UUID& object_id, String name);
 
-  void set_object_tag(const UUID& object_id, std::string tag);
+  void set_object_tag(const UUID& object_id, String tag);
 
   [[nodiscard]] auto get_object(const UUID& object_id) -> Shared<Object>;
 
@@ -110,7 +109,7 @@ class MapDocument final : public Document {
 
   void set_component_index(Shared<ComponentIndex> index) override;
 
-  void set_name(std::string name) override;
+  void set_name(String name) override;
 
   void set_path(fs::path path) override;
 
@@ -131,7 +130,7 @@ class MapDocument final : public Document {
   [[nodiscard]] auto get_viewport() -> Viewport& override;
   [[nodiscard]] auto get_viewport() const -> const Viewport& override;
 
-  [[nodiscard]] auto get_name() const -> const std::string& override;
+  [[nodiscard]] auto get_name() const -> const String& override;
 
   [[nodiscard]] auto get_path() const -> const fs::path& override;
 

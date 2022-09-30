@@ -19,13 +19,12 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/common/maybe.hpp"
+#include "core/type/string.hpp"
 
 namespace tactile {
 
 /// Returns the value of an environment variable.
-[[nodiscard]] auto env_var(const char* var) -> Maybe<std::string>;
+[[nodiscard]] auto env_var(const char* var) -> Maybe<String>;
 
 }  // namespace tactile

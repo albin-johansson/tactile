@@ -20,7 +20,6 @@
 #pragma once
 
 #include <concepts>  // invocable
-#include <string>    // string
 #include <variant>   // variant, get
 
 #include "core/attribute.hpp"
@@ -33,6 +32,7 @@
 #include "core/layer/tile_format.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/string.hpp"
 #include "core/type/tree_map.hpp"
 #include "core/type/vector.hpp"
 #include "core/util/query.hpp"
@@ -40,8 +40,8 @@
 
 namespace tactile::ir {
 
-using AttributeMap = TreeMap<std::string, Attribute>;
-using ComponentMap = TreeMap<std::string, AttributeMap>;
+using AttributeMap = TreeMap<String, Attribute>;
+using ComponentMap = TreeMap<String, AttributeMap>;
 
 struct ContextData final {
   AttributeMap properties;
@@ -53,8 +53,8 @@ struct ObjectData final {
   ObjectType type {};
   Float2 pos {};
   Float2 size {};
-  std::string name;
-  std::string tag;
+  String name;
+  String tag;
   ContextData context;
   bool visible {};
 };
@@ -88,7 +88,7 @@ struct LayerData final {
   LayerID id {};
   LayerType type {};
   usize index {};  /// Local index.
-  std::string name;
+  String name;
   data_type data;
   ContextData context;
   float opacity {};
@@ -128,7 +128,7 @@ struct TilesetData final {
 
   UUID uuid {make_uuid()};  // This is not persistent! Only here for convenience.
 
-  std::string name;
+  String name;
   TileID first_tile {};
   Int2 tile_size {};
   int32 tile_count {};

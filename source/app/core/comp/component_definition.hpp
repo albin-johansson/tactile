@@ -19,13 +19,11 @@
 
 #pragma once
 
-#include <string>       // string
-#include <string_view>  // string_view
-
 #include "core/attribute.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/comp/component.hpp"
 #include "core/element.hpp"
+#include "core/type/string.hpp"
 #include "core/type/tree_map.hpp"
 #include "core/uuid.hpp"
 
@@ -44,13 +42,13 @@ class ComponentDefinition final : public Element {
   ///
   /// \param key the key to associate with the attribute.
   /// \param type the initial type of the attribute.
-  void add_attr(std::string key, AttributeType type = AttributeType::String);
+  void add_attr(String key, AttributeType type = AttributeType::String);
 
   /// Creates a new attribute.
   ///
   /// \param key the key to associate with the attribute.
   /// \param value the initial value of the attribute.
-  void add_attr(std::string key, Attribute value);
+  void add_attr(String key, Attribute value);
 
   /// Updates the value of an existing attribute.
   ///
@@ -58,37 +56,37 @@ class ComponentDefinition final : public Element {
   ///
   /// \param key the key associated with the attribute.
   /// \param value the new attribute value.
-  void update_attr(std::string_view key, Attribute value);
+  void update_attr(StringView key, Attribute value);
 
   /// Removes an existing attribute.
   ///
   /// \param key the key associated with the attribute.
-  void remove_attr(std::string_view key);
+  void remove_attr(StringView key);
 
   /// Changes the name (key) of an existing attribute.
   ///
   /// \param current the current attribute key.
   /// \param updated the new attribute key.
-  void rename_attr(std::string_view current, std::string updated);
+  void rename_attr(StringView current, String updated);
 
   /// Duplicates an existing attribute.
   ///
   /// \param key the key associated with the attribute that will be duplicated.
   ///
   /// \return the key of the new attribute.
-  auto duplicate_attr(std::string_view key) -> std::string;
+  auto duplicate_attr(StringView key) -> String;
 
   /// Returns the value of the attribute for a specific key.
-  [[nodiscard]] auto get_attr(std::string_view key) const -> const Attribute&;
+  [[nodiscard]] auto get_attr(StringView key) const -> const Attribute&;
 
   /// Indicates whether there is an attribute for a specific key.
-  [[nodiscard]] auto has_attr(std::string_view key) const -> bool;
+  [[nodiscard]] auto has_attr(StringView key) const -> bool;
 
   /// Sets the unique name of the component definition.
-  void set_name(std::string name);
+  void set_name(String name);
 
   /// Returns the (unique) name of the component type.
-  [[nodiscard]] auto get_name() const -> const std::string&;
+  [[nodiscard]] auto get_name() const -> const String&;
 
   /// Returns the amount of attributes in the component.
   [[nodiscard]] auto size() const -> usize;
@@ -103,8 +101,8 @@ class ComponentDefinition final : public Element {
 
  private:
   UUID mId {make_uuid()};
-  std::string mName;
-  TreeMap<std::string, Attribute> mAttributes;
+  String mName;
+  TreeMap<String, Attribute> mAttributes;
 };
 
 }  // namespace tactile

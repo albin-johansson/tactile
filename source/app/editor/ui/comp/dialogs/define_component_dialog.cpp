@@ -19,11 +19,10 @@
 
 #include "define_component_dialog.hpp"
 
-#include <string>  // string
-
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/event/component_events.hpp"
+#include "core/type/string.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 
@@ -47,7 +46,7 @@ void DefineComponentDialog::show()
 
 void DefineComponentDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<DefineComponentEvent>(std::string {current_input()});
+  dispatcher.enqueue<DefineComponentEvent>(String {current_input()});
 }
 
 }  // namespace tactile::ui

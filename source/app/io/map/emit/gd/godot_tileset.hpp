@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 #include "core/type/vector.hpp"
 #include "core/util/assoc.hpp"
 #include "core/uuid.hpp"
@@ -35,7 +34,7 @@ namespace tactile::io {
 struct GdTilesetInfo final {
   UUID uuid;  /// Identifier of associated IR-tileset.
 
-  std::string name;
+  String name;
   GdExtRes texture_ref {};
   TileID first_tile {};
   Int2 tile_size {};
@@ -45,7 +44,7 @@ struct GdTilesetInfo final {
 /// Intermediate representation of an amalgamated Godot tileset, stored in its own file.
 class GodotTileset final : public GodotFile {
  public:
-  using TextureNamePair = std::pair<fs::path, std::string>;
+  using TextureNamePair = std::pair<fs::path, String>;
 
   auto add_texture(const fs::path& dest, fs::path source) -> GdExtRes;
 

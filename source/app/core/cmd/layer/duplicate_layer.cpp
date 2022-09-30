@@ -60,7 +60,7 @@ void DuplicateLayer::redo()
   mDocument->get_contexts().add_context(mNewLayer);
 }
 
-auto DuplicateLayer::get_name() const -> std::string
+auto DuplicateLayer::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.duplicate_layer;

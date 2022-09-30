@@ -20,7 +20,6 @@
 #pragma once
 
 #include <concepts>  // derived_from
-#include <string>    // string
 #include <utility>   // move
 
 #include "core/cmd/command.hpp"
@@ -28,6 +27,7 @@
 #include "core/common/vocabulary.hpp"
 #include "core/type/deque.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/string.hpp"
 
 namespace tactile {
 
@@ -119,10 +119,10 @@ class CommandStack final {
   [[nodiscard]] auto can_redo() const -> bool;
 
   /// Returns the text associated with the current undoable command.
-  [[nodiscard]] auto get_undo_text() const -> std::string;
+  [[nodiscard]] auto get_undo_text() const -> String;
 
   /// Returns the text associated with the current redoable command.
-  [[nodiscard]] auto get_redo_text() const -> std::string;
+  [[nodiscard]] auto get_redo_text() const -> String;
 
   /// Returns the number of commands on the stack.
   [[nodiscard]] auto size() const noexcept -> usize { return mStack.size(); }

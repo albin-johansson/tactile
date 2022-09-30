@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include <span>         // span
-#include <string>       // string
-#include <string_view>  // string_view
+#include <span>  // span
+
+#include "core/type/string.hpp"
 
 namespace tactile {
 
@@ -37,7 +37,7 @@ void zero_buffer(std::span<char> buffer);
 ///
 /// \param buffer the buffer that will be modified.
 /// \param str the string that will be copied into the buffer.
-void copy_string_into_buffer(std::span<char> buffer, std::string_view str);
+void copy_string_into_buffer(std::span<char> buffer, StringView str);
 
 /// Creates a string from a character buffer.
 ///
@@ -47,7 +47,7 @@ void copy_string_into_buffer(std::span<char> buffer, std::string_view str);
 /// \param buffer the character buffer that contains the string data.
 ///
 /// \return a string created from the buffer.
-[[nodiscard]] auto create_string_from_buffer(std::span<const char> buffer) -> std::string;
+[[nodiscard]] auto create_string_from_buffer(std::span<const char> buffer) -> String;
 
 /// Creates a string view from a character buffer.
 ///
@@ -63,6 +63,6 @@ void copy_string_into_buffer(std::span<char> buffer, std::string_view str);
 ///
 /// \return a string created from the buffer.
 [[nodiscard]] auto create_string_view_from_buffer(std::span<const char> buffer)
-    -> std::string_view;
+    -> StringView;
 
 }  // namespace tactile

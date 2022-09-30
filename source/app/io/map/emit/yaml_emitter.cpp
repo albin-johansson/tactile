@@ -18,13 +18,13 @@
  */
 
 #include <sstream>  // stringstream
-#include <string>   // string
 
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
 #include "core/attribute.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 #include "core/util/file.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/fmt.hpp"
@@ -309,7 +309,7 @@ void emit_tileset_tiles(YAML::Emitter& emitter, const ir::TilesetData& tileset)
 }
 
 void emit_tileset_file(const EmitInfo& info,
-                       const std::string& filename,
+                       const String& filename,
                        const ir::TilesetData& tileset)
 {
   YAML::Emitter emitter;
@@ -371,7 +371,7 @@ void emit_tilesets(YAML::Emitter& emitter, const EmitInfo& info)
 }
 
 void emit_component_definition_attribute(YAML::Emitter& emitter,
-                                         const std::string& name,
+                                         const String& name,
                                          const Attribute& value)
 {
   emitter << YAML::BeginMap;

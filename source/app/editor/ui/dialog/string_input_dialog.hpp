@@ -19,13 +19,12 @@
 
 #pragma once
 
-#include <array>        // array
-#include <string>       // string
-#include <string_view>  // string_view
+#include <array>  // array
 
 #include <entt/fwd.hpp>
 
 #include "core/common/maybe.hpp"
+#include "core/type/string.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
@@ -33,12 +32,12 @@ namespace tactile::ui {
 /// Abstract class representing dialogs which provide a string input field.
 class StringInputDialog : public Dialog {
  public:
-  explicit StringInputDialog(std::string title);
+  explicit StringInputDialog(String title);
 
-  void show(std::string previous);
+  void show(String previous);
 
  protected:
-  void set_input_hint(Maybe<std::string> hint);
+  void set_input_hint(Maybe<String> hint);
 
   void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) final;
 
@@ -46,16 +45,16 @@ class StringInputDialog : public Dialog {
       -> bool final;
 
   /// Validates an input string.
-  [[nodiscard]] virtual auto validate(const DocumentModel& model,
-                                      std::string_view input) const -> bool = 0;
+  [[nodiscard]] virtual auto validate(const DocumentModel& model, StringView input) const
+      -> bool = 0;
 
-  [[nodiscard]] auto current_input() const -> std::string_view;
+  [[nodiscard]] auto current_input() const -> StringView;
 
-  [[nodiscard]] auto previous_input() const -> const std::string&;
+  [[nodiscard]] auto previous_input() const -> const String&;
 
  private:
-  Maybe<std::string> mHint;
-  std::string mPrevious;
+  Maybe<String> mHint;
+  String mPrevious;
   std::array<char, 128> mBuffer {};
   bool mShouldAcquireFocus {};
 };

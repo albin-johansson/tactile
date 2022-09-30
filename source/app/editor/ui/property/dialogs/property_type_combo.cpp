@@ -19,15 +19,15 @@
 
 #include "property_type_combo.hpp"
 
-#include <algorithm>    // find_if
-#include <array>        // array
-#include <string_view>  // string_view
-#include <utility>      // pair, make_pair
+#include <algorithm>  // find_if
+#include <array>      // array
+#include <utility>    // pair, make_pair
 
 #include <imgui.h>
 
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 #include "editor/ui/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
@@ -54,7 +54,7 @@ void property_type_combo_impl(AttributeType& out, Maybe<AttributeType> previous_
 {
   const auto& lang = get_current_language();
 
-  using TypeArray = std::array<std::pair<std::string_view, AttributeType>, 7>;
+  using TypeArray = std::array<std::pair<StringView, AttributeType>, 7>;
   const TypeArray items {
       std::make_pair(lang.misc.type_string.c_str(), AttributeType::String),
       std::make_pair(lang.misc.type_int.c_str(), AttributeType::Int),

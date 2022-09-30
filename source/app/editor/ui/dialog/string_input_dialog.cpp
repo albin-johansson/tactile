@@ -27,12 +27,12 @@
 
 namespace tactile::ui {
 
-StringInputDialog::StringInputDialog(std::string title)
+StringInputDialog::StringInputDialog(String title)
     : Dialog {std::move(title)}
 {
 }
 
-void StringInputDialog::show(std::string previous)
+void StringInputDialog::show(String previous)
 {
   mShouldAcquireFocus = true;
   mPrevious = std::move(previous);
@@ -40,7 +40,7 @@ void StringInputDialog::show(std::string previous)
   make_visible();
 }
 
-void StringInputDialog::set_input_hint(Maybe<std::string> hint)
+void StringInputDialog::set_input_hint(Maybe<String> hint)
 {
   mHint = std::move(hint);
 }
@@ -62,12 +62,12 @@ auto StringInputDialog::is_current_input_valid(const DocumentModel& model) const
   return validate(model, current_input());
 }
 
-auto StringInputDialog::current_input() const -> std::string_view
+auto StringInputDialog::current_input() const -> StringView
 {
   return create_string_view_from_buffer(mBuffer);
 }
 
-auto StringInputDialog::previous_input() const -> const std::string&
+auto StringInputDialog::previous_input() const -> const String&
 {
   return mPrevious;
 }

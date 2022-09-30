@@ -95,7 +95,7 @@ void MapDocument::duplicate_layer(const UUID& layer_id)
   get_history().exec<cmd::DuplicateLayer>(this, layer_id);
 }
 
-void MapDocument::rename_layer(const UUID& layer_id, std::string name)
+void MapDocument::rename_layer(const UUID& layer_id, String name)
 {
   get_history().exec<cmd::RenameLayer>(mMap, layer_id, std::move(name));
 }
@@ -180,13 +180,13 @@ void MapDocument::set_object_visible(const UUID& object_id, const bool visible)
   get_history().exec<cmd::SetObjectVisible>(std::move(object), visible);
 }
 
-void MapDocument::set_object_name(const UUID& object_id, std::string name)
+void MapDocument::set_object_name(const UUID& object_id, String name)
 {
   auto object = get_object(object_id);
   get_history().exec<cmd::RenameObject>(std::move(object), std::move(name));
 }
 
-void MapDocument::set_object_tag(const UUID& object_id, std::string tag)
+void MapDocument::set_object_tag(const UUID& object_id, String tag)
 {
   auto object = get_object(object_id);
   get_history().exec<cmd::SetObjectTag>(std::move(object), std::move(tag));
@@ -228,7 +228,7 @@ void MapDocument::set_component_index(Shared<ComponentIndex> index)
   mDelegate.set_component_index(std::move(index));
 }
 
-void MapDocument::set_name(std::string name)
+void MapDocument::set_name(String name)
 {
   mMap->ctx().set_name(name);
 }
@@ -293,7 +293,7 @@ auto MapDocument::get_viewport() const -> const Viewport&
   return mDelegate.get_viewport();
 }
 
-auto MapDocument::get_name() const -> const std::string&
+auto MapDocument::get_name() const -> const String&
 {
   return mMap->ctx().name();
 }

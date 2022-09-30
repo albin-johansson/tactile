@@ -49,7 +49,7 @@ void MoveObject::redo()
   mObject->set_pos(mUpdatedPos);
 }
 
-auto MoveObject::get_name() const -> std::string
+auto MoveObject::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.move_object;

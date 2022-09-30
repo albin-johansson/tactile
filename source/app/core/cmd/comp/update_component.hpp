@@ -36,7 +36,7 @@ class UpdateComponent final : public Command {
  public:
   UpdateComponent(Shared<ComponentIndex> index,
                   const UUID& component_id,
-                  std::string attribute,
+                  String attribute,
                   Attribute value);
 
   void undo() override;
@@ -45,12 +45,12 @@ class UpdateComponent final : public Command {
 
   [[nodiscard]] auto merge_with(const Command* cmd) -> bool override;
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+  [[nodiscard]] auto get_name() const -> String override;
 
  private:
   Shared<ComponentIndex> mIndex;
   UUID mComponentId {};
-  std::string mAttributeName;
+  String mAttributeName;
   Attribute mUpdatedValue;
   Maybe<Attribute> mPreviousValue;
 };

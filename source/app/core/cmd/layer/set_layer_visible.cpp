@@ -55,7 +55,7 @@ void SetLayerVisible::redo()
   layer.set_visible(mNewVisibility);
 }
 
-auto SetLayerVisible::get_name() const -> std::string
+auto SetLayerVisible::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return mNewVisibility ? lang.cmd.show_layer : lang.cmd.hide_layer;

@@ -30,7 +30,7 @@ namespace tactile::cmd {
 
 UpdateComponent::UpdateComponent(Shared<ComponentIndex> index,
                                  const UUID& component_id,
-                                 std::string attribute,
+                                 String attribute,
                                  Attribute value)
     : mIndex {std::move(index)}
     , mComponentId {component_id}
@@ -70,7 +70,7 @@ auto UpdateComponent::merge_with(const Command* cmd) -> bool
   return false;
 }
 
-auto UpdateComponent::get_name() const -> std::string
+auto UpdateComponent::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.update_comp_attr_defaults;

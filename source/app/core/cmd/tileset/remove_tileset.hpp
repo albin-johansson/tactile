@@ -41,7 +41,7 @@ class RemoveTileset final : public Command {
 
   void redo() override;
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+  [[nodiscard]] auto get_name() const -> String override;
 
  private:
   DocumentModel* mModel {};

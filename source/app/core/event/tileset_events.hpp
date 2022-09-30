@@ -19,12 +19,11 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/region.hpp"
+#include "core/type/string.hpp"
 #include "core/uuid.hpp"
 
 namespace tactile {
@@ -53,7 +52,7 @@ struct SetTilesetSelectionEvent final {
 /// Event for changing the name a tileset.
 struct RenameTilesetEvent final {
   UUID tileset_id {};  /// Target tileset.
-  std::string name;    /// New tileset name.
+  String name;         /// New tileset name.
 };
 
 }  // namespace tactile

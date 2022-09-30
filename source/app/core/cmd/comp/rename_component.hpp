@@ -33,21 +33,19 @@ namespace tactile::cmd {
 /// A command for renaming a component definition.
 class RenameComponent final : public Command {
  public:
-  RenameComponent(Shared<ComponentIndex> index,
-                  const UUID& component_id,
-                  std::string name);
+  RenameComponent(Shared<ComponentIndex> index, const UUID& component_id, String name);
 
   void undo() override;
 
   void redo() override;
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+  [[nodiscard]] auto get_name() const -> String override;
 
  private:
   Shared<ComponentIndex> mIndex;
   UUID mComponentId {};
-  std::string mUpdatedName;
-  Maybe<std::string> mPreviousName;
+  String mUpdatedName;
+  Maybe<String> mPreviousName;
 };
 
 }  // namespace tactile::cmd

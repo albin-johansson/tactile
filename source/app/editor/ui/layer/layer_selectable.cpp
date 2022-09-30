@@ -19,8 +19,6 @@
 
 #include "layer_selectable.hpp"
 
-#include <string>  // string
-
 #include <entt/signal/dispatcher.hpp>
 #include <fmt/format.h>
 #include <imgui.h>
@@ -30,6 +28,7 @@
 #include "core/event/object_events.hpp"
 #include "core/event/property_events.hpp"
 #include "core/layer/object_layer.hpp"
+#include "core/type/string.hpp"
 #include "core/util/fmt.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
@@ -109,7 +108,7 @@ void show_object_selectable(const ObjectLayer& layer,
   const auto& lang = get_current_language();
   const auto* icon = get_icon(object_type);
 
-  std::string name;
+  String name;
   if (object.ctx().name().empty()) {
     TACTILE_ASSERT(object.get_meta_id().has_value());
     name = fmt::format("{} Object {}", icon, object.get_meta_id().value());

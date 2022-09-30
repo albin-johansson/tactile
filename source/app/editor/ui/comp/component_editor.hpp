@@ -59,7 +59,7 @@ class ComponentEditor final : public Dialog {
                                  entt::dispatcher& dispatcher);
 
   void show_component_attribute(const UUID& component_id,
-                                const std::string& name,
+                                const String& name,
                                 const Attribute& value,
                                 entt::dispatcher& dispatcher);
 };

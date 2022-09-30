@@ -31,7 +31,7 @@ class AddComponentAttrDialog final : public StringInputDialog {
   void show(const UUID& componentId);
 
  protected:
-  [[nodiscard]] auto validate(const DocumentModel& model, std::string_view input) const
+  [[nodiscard]] auto validate(const DocumentModel& model, StringView input) const
       -> bool override;
 
   void on_accept(entt::dispatcher& dispatcher) override;

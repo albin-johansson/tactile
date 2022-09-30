@@ -39,7 +39,7 @@ namespace {
 
 struct LogEntry final {
   spdlog::level::level_enum level {};
-  std::string msg;
+  String msg;
 };
 
 /// Records logged messages, intended to be displayed in the log dock.
@@ -60,7 +60,7 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
   void clear() { mHistory.clear(); }
 
   [[nodiscard]] auto get_entry(const LogLevel filter, usize index)
-      -> std::pair<LogLevel, const std::string&>
+      -> std::pair<LogLevel, const String&>
   {
     usize i = 0;
 
@@ -126,7 +126,7 @@ void clear_log_history()
 }
 
 auto get_log_entry(const LogLevel filter, const usize index)
-    -> std::pair<LogLevel, const std::string&>
+    -> std::pair<LogLevel, const String&>
 {
   return _history_sink->get_entry(filter, index);
 }

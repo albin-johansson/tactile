@@ -27,7 +27,7 @@ class ComponentNameDialog : public StringInputDialog {
  protected:
   using StringInputDialog::StringInputDialog;
 
-  [[nodiscard]] auto validate(const DocumentModel& model, std::string_view input) const
+  [[nodiscard]] auto validate(const DocumentModel& model, StringView input) const
       -> bool final;
 };
 

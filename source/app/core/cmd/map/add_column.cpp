@@ -56,7 +56,7 @@ auto AddColumn::merge_with(const Command* cmd) -> bool
   return false;
 }
 
-auto AddColumn::get_name() const -> std::string
+auto AddColumn::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return mColumns == 1 ? lang.cmd.add_column : lang.cmd.add_columns;

@@ -28,7 +28,7 @@
 
 namespace tactile::cmd {
 
-RenameTileset::RenameTileset(Shared<Tileset> tileset, std::string name)
+RenameTileset::RenameTileset(Shared<Tileset> tileset, String name)
     : mTileset {std::move(tileset)}
     , mNewName {std::move(name)}
 {
@@ -61,7 +61,7 @@ auto RenameTileset::merge_with(const Command* cmd) -> bool
   return false;
 }
 
-auto RenameTileset::get_name() const -> std::string
+auto RenameTileset::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.rename_tileset;

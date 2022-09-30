@@ -57,7 +57,7 @@ void SetTileFormatEncoding::redo()
   format.set_encoding(mNewEncoding);
 }
 
-auto SetTileFormatEncoding::get_name() const -> std::string
+auto SetTileFormatEncoding::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.set_tile_format_encoding;

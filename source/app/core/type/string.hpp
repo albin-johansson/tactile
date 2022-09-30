@@ -19,8 +19,9 @@
 
 #pragma once
 
-#include <filesystem>  // path
-#include <string>      // string, string_view, basic_string, basic_string_view
+#include <filesystem>   // path
+#include <string>       // basic_string, basic_string
+#include <string_view>  // string_view, basic_string_view
 
 namespace tactile {
 

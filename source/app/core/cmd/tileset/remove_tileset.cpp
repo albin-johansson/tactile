@@ -80,7 +80,7 @@ void RemoveTileset::redo()
   mapDocument->get_contexts().erase(mTilesetId);
 }
 
-auto RemoveTileset::get_name() const -> std::string
+auto RemoveTileset::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.remove_tileset;

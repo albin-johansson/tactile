@@ -18,12 +18,12 @@
  */
 
 #include <cstring>  // strcmp
-#include <string>   // string
 #include <utility>  // move
 
 #include <centurion/color.hpp>
 
 #include "core/common/fs.hpp"
+#include "core/type/string.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/util/xml.hpp"
@@ -113,7 +113,7 @@ auto parse_properties(XMLNode node) -> Expected<ir::AttributeMap, ParseError>
   ir::AttributeMap props;
 
   for (const auto property_node : node.child("properties").children("property")) {
-    std::string property_name;
+    String property_name;
     if (auto name = as_string(property_node, "name")) {
       property_name = std::move(*name);
     }

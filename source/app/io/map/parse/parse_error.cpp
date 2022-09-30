@@ -27,7 +27,7 @@
 
 namespace tactile::io {
 
-auto to_cause(const ParseError error) -> std::string_view
+auto to_cause(const ParseError error) -> StringView
 {
   const auto& lang = get_current_language();
   switch (error) {

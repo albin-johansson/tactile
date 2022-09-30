@@ -19,10 +19,9 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/common/fs.hpp"
 #include "core/common/maybe.hpp"
+#include "core/type/string.hpp"
 
 namespace tactile {
 
@@ -35,13 +34,13 @@ namespace tactile {
 /// \param path the file path that will be converted.
 ///
 /// \return a version of the path with forward slashes instead of backslashes.
-[[nodiscard]] auto convert_to_forward_slashes(const fs::path& path) -> std::string;
+[[nodiscard]] auto convert_to_forward_slashes(const fs::path& path) -> String;
 
 /// Indicates whether a file path starts with the home directory.
 [[nodiscard]] auto has_home_prefix(const fs::path& path) -> bool;
 
 /// Converts file paths to use a '~' prefix (if possible).
-[[nodiscard]] auto to_canonical(const fs::path& path) -> Maybe<std::string>;
+[[nodiscard]] auto to_canonical(const fs::path& path) -> Maybe<String>;
 
 /// Creates a string using the native filesystem character type.
 [[nodiscard]] auto to_fs_string(const char* str) -> Maybe<FileString>;

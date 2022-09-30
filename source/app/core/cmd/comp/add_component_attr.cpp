@@ -32,7 +32,7 @@ namespace tactile::cmd {
 
 AddComponentAttr::AddComponentAttr(Document* document,
                                    const UUID& component_id,
-                                   std::string name)
+                                   String name)
     : mDocument {document}
     , mComponentId {component_id}
     , mName {std::move(name)}
@@ -64,7 +64,7 @@ void AddComponentAttr::redo()
   contexts.on_new_component_attr(definition.get_uuid(), mName, value);
 }
 
-auto AddComponentAttr::get_name() const -> std::string
+auto AddComponentAttr::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.create_comp_attr;

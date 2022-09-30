@@ -40,7 +40,7 @@ namespace {
 
 }  // namespace
 
-auto convert_to_forward_slashes(const fs::path& path) -> std::string
+auto convert_to_forward_slashes(const fs::path& path) -> String
 {
   auto str = path.string();
   std::replace(str.begin(), str.end(), '\\', '/');
@@ -54,7 +54,7 @@ auto has_home_prefix(const fs::path& path) -> bool
   return view.starts_with(prefix);
 }
 
-auto to_canonical(const fs::path& path) -> Maybe<std::string>
+auto to_canonical(const fs::path& path) -> Maybe<String>
 {
   if (has_home_prefix(path)) {
     const auto& prefix = get_home_prefix();

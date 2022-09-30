@@ -19,19 +19,17 @@
 
 #pragma once
 
-#include <string>       // string
-#include <string_view>  // string_view
-
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 #include "core/type/vector.hpp"
 
 namespace tactile {
 
 /// Splits a string into a collection of tokens, separated by a specific character.
-[[nodiscard]] auto split(std::string_view str, char sep) -> Vec<std::string>;
+[[nodiscard]] auto split(StringView str, char sep) -> Vec<String>;
 
 /// Converts a string into a 32-bit signed integer.
-[[nodiscard]] auto parse_i32(std::string_view str, int base = 10) -> Maybe<int32>;
+[[nodiscard]] auto parse_i32(StringView str, int base = 10) -> Maybe<int32>;
 
 }  // namespace tactile

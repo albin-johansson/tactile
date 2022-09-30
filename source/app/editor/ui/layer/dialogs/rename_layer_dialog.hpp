@@ -30,17 +30,17 @@ class RenameLayerDialog final : public StringInputDialog {
  public:
   RenameLayerDialog();
 
-  void show(const UUID& layerId, std::string oldName);
+  void show(const UUID& layerId, String oldName);
 
  protected:
   void on_accept(entt::dispatcher& dispatcher) override;
 
-  [[nodiscard]] auto validate(const DocumentModel& model, std::string_view input) const
+  [[nodiscard]] auto validate(const DocumentModel& model, StringView input) const
       -> bool override;
 
  private:
   Maybe<UUID> mTargetId;
-  Maybe<std::string> mOldName;
+  Maybe<String> mOldName;
 };
 
 }  // namespace tactile::ui

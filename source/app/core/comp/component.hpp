@@ -19,11 +19,9 @@
 
 #pragma once
 
-#include <string>       // string
-#include <string_view>  // string_view
-
 #include "core/attribute.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 #include "core/type/tree_map.hpp"
 #include "core/uuid.hpp"
 
@@ -32,7 +30,7 @@ namespace tactile {
 /// Represents an instance of a component definition.
 class Component final {
  public:
-  using AttributeMap = TreeMap<std::string, Attribute>;
+  using AttributeMap = TreeMap<String, Attribute>;
 
   /// Creates a component.
   ///
@@ -46,20 +44,20 @@ class Component final {
   ///
   /// \param key the name of the attribute.
   /// \param value the default value of the attribute.
-  void add_attr(std::string key, Attribute value);
+  void add_attr(String key, Attribute value);
 
   /// Removes an attribute from the component.
   ///
   /// This is only used on attached components after the component definition is modified.
   ///
   /// \param key the name of the attribute.
-  void remove_attr(std::string_view key);
+  void remove_attr(StringView key);
 
   /// Changes the value of an attribute.
   ///
   /// \param key the name of the attribute.
   /// \param value the new value of the attribute.
-  void update_attr(std::string_view key, Attribute value);
+  void update_attr(StringView key, Attribute value);
 
   /// Changes the name of an attribute.
   ///
@@ -67,13 +65,13 @@ class Component final {
   ///
   /// \param old_key the current name of the attribute.
   /// \param new_key the new name of the attribute.
-  void rename_attr(std::string_view old_key, std::string new_key);
+  void rename_attr(StringView old_key, String new_key);
 
   /// Returns the value of an attribute.
-  [[nodiscard]] auto get_attr(std::string_view key) const -> const Attribute&;
+  [[nodiscard]] auto get_attr(StringView key) const -> const Attribute&;
 
   /// Indicates whether the component has an attribute with a specific name.
-  [[nodiscard]] auto has_attr(std::string_view key) const -> bool;
+  [[nodiscard]] auto has_attr(StringView key) const -> bool;
 
   /// Returns the amount of attributes in the component.
   [[nodiscard]] auto size() const -> usize;

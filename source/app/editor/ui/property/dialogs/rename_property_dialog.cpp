@@ -38,7 +38,7 @@ RenamePropertyDialog::RenamePropertyDialog()
 {
 }
 
-void RenamePropertyDialog::open(const UUID& context_id, std::string previous_name)
+void RenamePropertyDialog::open(const UUID& context_id, String previous_name)
 {
   mContextId = context_id;
 
@@ -53,12 +53,12 @@ void RenamePropertyDialog::on_accept(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<RenamePropertyEvent>(mContextId.value(),
                                           previous_input(),
-                                          std::string {current_input()});
+                                          String {current_input()});
   mContextId.reset();
 }
 
-auto RenamePropertyDialog::validate(const DocumentModel& model,
-                                    std::string_view input) const -> bool
+auto RenamePropertyDialog::validate(const DocumentModel& model, StringView input) const
+    -> bool
 {
   const auto& document = model.require_active_document();
   const auto& context = document.get_contexts().active_context();

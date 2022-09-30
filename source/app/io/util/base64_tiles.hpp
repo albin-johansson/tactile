@@ -19,10 +19,9 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/common/vocabulary.hpp"
 #include "core/layer/tile_format.hpp"
+#include "core/type/string.hpp"
 #include "core/type/vector.hpp"
 
 namespace tactile::io {
@@ -42,7 +41,7 @@ namespace tactile::io {
 [[nodiscard]] auto base64_encode_tiles(const TileMatrix& tiles,
                                        usize rows,
                                        usize columns,
-                                       TileCompression compression) -> std::string;
+                                       TileCompression compression) -> String;
 
 /// Decodes tile data using Base64 and turns it into a tile matrix.
 ///
@@ -54,7 +53,7 @@ namespace tactile::io {
 /// \param compression the compression method used when encoding the tiles.
 ///
 /// \return the decoded tile data.
-[[nodiscard]] auto base64_decode_tiles(const std::string& tiles,
+[[nodiscard]] auto base64_decode_tiles(const String& tiles,
                                        usize rows,
                                        usize columns,
                                        TileCompression compression) -> TileMatrix;

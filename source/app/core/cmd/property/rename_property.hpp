@@ -30,18 +30,18 @@ namespace tactile::cmd {
 
 class RenameProperty final : public Command {
  public:
-  RenameProperty(Shared<Context> context, std::string old_name, std::string new_name);
+  RenameProperty(Shared<Context> context, String old_name, String new_name);
 
   void undo() override;
 
   void redo() override;
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+  [[nodiscard]] auto get_name() const -> String override;
 
  private:
   Shared<Context> mContext;
-  std::string mOldName;
-  std::string mNewName;
+  String mOldName;
+  String mNewName;
 };
 
 }  // namespace tactile::cmd

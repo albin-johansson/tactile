@@ -30,7 +30,7 @@ namespace tactile::cmd {
 
 RenameComponent::RenameComponent(Shared<ComponentIndex> index,
                                  const UUID& component_id,
-                                 std::string name)
+                                 String name)
     : mIndex {std::move(index)}
     , mComponentId {component_id}
     , mUpdatedName {std::move(name)}
@@ -53,7 +53,7 @@ void RenameComponent::redo()
   mIndex->rename_comp(mComponentId, mUpdatedName);
 }
 
-auto RenameComponent::get_name() const -> std::string
+auto RenameComponent::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.rename_comp;

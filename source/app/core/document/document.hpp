@@ -19,12 +19,11 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/attribute.hpp"
 #include "core/common/fs.hpp"
 #include "core/document/document_type.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/string.hpp"
 #include "core/uuid.hpp"
 
 namespace tactile {
@@ -40,27 +39,27 @@ class Document {
  public:
   virtual ~Document() noexcept = default;
 
-  void define_component(std::string name);
+  void define_component(String name);
 
   void undef_component(const UUID& component_id);
 
-  void rename_component(const UUID& component_id, std::string name);
+  void rename_component(const UUID& component_id, String name);
 
-  void add_component_attribute(const UUID& component_id, std::string name);
+  void add_component_attribute(const UUID& component_id, String name);
 
-  void remove_component_attribute(const UUID& component_id, std::string name);
+  void remove_component_attribute(const UUID& component_id, String name);
 
   void rename_component_attribute(const UUID& component_id,
-                                  std::string current,
-                                  std::string updated);
+                                  String current,
+                                  String updated);
 
-  void duplicate_component_attribute(const UUID& component_id, std::string name);
+  void duplicate_component_attribute(const UUID& component_id, String name);
 
   void set_component_attribute_type(const UUID& component_id,
-                                    std::string name,
+                                    String name,
                                     AttributeType type);
 
-  void update_component(const UUID& component_id, std::string name, Attribute value);
+  void update_component(const UUID& component_id, String name, Attribute value);
 
   void attach_component(const UUID& context_id, const UUID& component_id);
 
@@ -68,20 +67,20 @@ class Document {
 
   void update_attached_component(const UUID& context_id,
                                  const UUID& component_id,
-                                 std::string name,
+                                 String name,
                                  Attribute value);
 
   void reset_attached_component(const UUID& context_id, const UUID& component_id);
 
-  void add_property(const UUID& context_id, std::string name, AttributeType type);
+  void add_property(const UUID& context_id, String name, AttributeType type);
 
-  void remove_property(const UUID& context_id, std::string name);
+  void remove_property(const UUID& context_id, String name);
 
-  void rename_property(const UUID& context_id, std::string current, std::string updated);
+  void rename_property(const UUID& context_id, String current, String updated);
 
-  void update_property(const UUID& context_id, std::string name, Attribute value);
+  void update_property(const UUID& context_id, String name, Attribute value);
 
-  void change_property_type(const UUID& context_id, std::string name, AttributeType type);
+  void change_property_type(const UUID& context_id, String name, AttributeType type);
 
   /// Indicates whether the document represents a map.
   [[nodiscard]] auto is_map() const -> bool;
@@ -95,7 +94,7 @@ class Document {
   virtual void set_component_index(Shared<ComponentIndex> index) = 0;
 
   /// Sets the name of the root document context.
-  [[deprecated]] virtual void set_name(std::string name) = 0;
+  [[deprecated]] virtual void set_name(String name) = 0;
 
   /// Sets the file path associated with the document.
   virtual void set_path(fs::path path) = 0;
@@ -107,7 +106,7 @@ class Document {
   [[nodiscard]] virtual auto get_path() const -> const fs::path& = 0;
 
   /// Returns the name of the root document context.
-  [[nodiscard]] virtual auto get_name() const -> const std::string& = 0;
+  [[nodiscard]] virtual auto get_name() const -> const String& = 0;
 
   [[nodiscard]] virtual auto get_component_index() -> Shared<ComponentIndex> = 0;
   [[nodiscard]] virtual auto view_component_index() const -> const ComponentIndex* = 0;

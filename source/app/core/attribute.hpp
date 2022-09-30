@@ -19,11 +19,9 @@
 
 #pragma once
 
-#include <concepts>     // same_as
-#include <string>       // string
-#include <string_view>  // string_view
-#include <utility>      // move
-#include <variant>      // variant, get, get_if, holds_alternative
+#include <concepts>  // same_as
+#include <utility>   // move
+#include <variant>   // variant, get, get_if, holds_alternative
 
 #include <centurion/color.hpp>
 
@@ -31,6 +29,7 @@
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/type/ostream.hpp"
+#include "core/type/string.hpp"
 
 namespace tactile {
 
@@ -49,7 +48,7 @@ enum class AttributeType {
 [[nodiscard]] auto stringify(AttributeType type) -> const char*;
 
 /// Parses an attribute type from a type name used in save files.
-[[nodiscard]] auto parse_attr_type(std::string_view name) -> Maybe<AttributeType>;
+[[nodiscard]] auto parse_attr_type(StringView name) -> Maybe<AttributeType>;
 
 /// Outputs the result of calling `stringify` with the type to a stream.
 auto operator<<(std::ostream& stream, AttributeType type) -> std::ostream&;
@@ -59,18 +58,18 @@ enum object_t : int32 {
 };
 
 template <typename T>
-concept AnAttributeType = std::same_as<T, std::string> ||  //
-                          std::same_as<T, int32> ||        //
-                          std::same_as<T, float> ||        //
-                          std::same_as<T, bool> ||         //
-                          std::same_as<T, cen::color> ||   //
-                          std::same_as<T, fs::path> ||     //
+concept AnAttributeType = std::same_as<T, String> ||      //
+                          std::same_as<T, int32> ||       //
+                          std::same_as<T, float> ||       //
+                          std::same_as<T, bool> ||        //
+                          std::same_as<T, cen::color> ||  //
+                          std::same_as<T, fs::path> ||    //
                           std::same_as<T, object_t>;
 
 /// Represents an "attribute" value, used by both property and component facilities.
 class Attribute final {
  public:
-  using string_type = std::string;
+  using string_type = String;
   using integer_type = int32;
   using float_type = float;
   using color_type = cen::color;

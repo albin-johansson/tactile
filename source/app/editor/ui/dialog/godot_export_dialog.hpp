@@ -19,9 +19,8 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/common/fs.hpp"
+#include "core/type/string.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 
 namespace tactile::ui {

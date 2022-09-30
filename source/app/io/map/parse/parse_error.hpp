@@ -19,9 +19,8 @@
 
 #pragma once
 
-#include <string_view>  // string_view
-
 #include "core/type/ostream.hpp"
+#include "core/type/string.hpp"
 
 namespace tactile::io {
 
@@ -100,7 +99,7 @@ enum class ParseError {
 };
 
 /// Returns a (translated) human-readable message with an explanation of an error.
-[[nodiscard]] auto to_cause(ParseError error) -> std::string_view;
+[[nodiscard]] auto to_cause(ParseError error) -> StringView;
 
 auto operator<<(OStream& stream, ParseError error) -> OStream&;
 

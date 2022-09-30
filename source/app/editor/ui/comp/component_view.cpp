@@ -99,7 +99,7 @@ auto update_trailing_button() -> bool
 
 void component_view(const UUID& context_id,
                     const Component& component,
-                    const std::string& name,
+                    const String& name,
                     entt::dispatcher& dispatcher)
 {
   const Scope scope {name.c_str()};

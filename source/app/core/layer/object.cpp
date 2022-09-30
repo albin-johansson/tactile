@@ -52,7 +52,7 @@ void Object::set_type(const ObjectType type)
   }
 }
 
-void Object::set_tag(std::string tag)
+void Object::set_tag(String tag)
 {
   mTag = std::move(tag);
 }
@@ -112,7 +112,7 @@ auto Object::get_size() const -> const Float2&
   return mSize;
 }
 
-auto Object::get_tag() const -> const std::string&
+auto Object::get_tag() const -> const String&
 {
   return mTag;
 }

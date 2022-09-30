@@ -63,7 +63,7 @@ void BucketFill::redo()
   layer.flood(mOrigin, mReplacement, &mPositions);
 }
 
-auto BucketFill::get_name() const -> std::string
+auto BucketFill::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.bucket_tool;

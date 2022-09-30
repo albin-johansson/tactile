@@ -19,15 +19,13 @@
 
 #pragma once
 
-#include <string>       // string
-#include <string_view>  // string_view
-
 #include <nlohmann/json.hpp>
 
 #include "core/attribute.hpp"
 #include "core/common/fs.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 
 namespace tactile {
 
@@ -54,16 +52,15 @@ void write_json(const JSON& json, const fs::path& path);
 
 namespace io {
 
-[[nodiscard]] auto as_string(const JSON& json, std::string_view name)
-    -> Maybe<std::string>;
+[[nodiscard]] auto as_string(const JSON& json, StringView name) -> Maybe<String>;
 
-[[nodiscard]] auto as_int(const JSON& json, std::string_view name) -> Maybe<int32>;
+[[nodiscard]] auto as_int(const JSON& json, StringView name) -> Maybe<int32>;
 
-[[nodiscard]] auto as_uint(const JSON& json, std::string_view name) -> Maybe<uint32>;
+[[nodiscard]] auto as_uint(const JSON& json, StringView name) -> Maybe<uint32>;
 
-[[nodiscard]] auto as_float(const JSON& json, std::string_view name) -> Maybe<float>;
+[[nodiscard]] auto as_float(const JSON& json, StringView name) -> Maybe<float>;
 
-[[nodiscard]] auto as_bool(const JSON& json, std::string_view name) -> Maybe<bool>;
+[[nodiscard]] auto as_bool(const JSON& json, StringView name) -> Maybe<bool>;
 
 }  // namespace io
 }  // namespace tactile

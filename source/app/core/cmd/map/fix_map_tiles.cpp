@@ -54,7 +54,7 @@ void FixMapTiles::redo()
   mResult = mMap->fix_tiles();
 }
 
-auto FixMapTiles::get_name() const -> std::string
+auto FixMapTiles::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.fix_map_tiles;

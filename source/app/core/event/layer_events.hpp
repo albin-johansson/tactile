@@ -19,9 +19,8 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/layer/layer_type.hpp"
+#include "core/type/string.hpp"
 #include "core/uuid.hpp"
 
 namespace tactile {
@@ -76,7 +75,7 @@ struct OpenRenameLayerDialogEvent final {
 /// Event for changing the name of a layer.
 struct RenameLayerEvent final {
   UUID layer_id {};
-  std::string name;
+  String name;
 };
 
 }  // namespace tactile

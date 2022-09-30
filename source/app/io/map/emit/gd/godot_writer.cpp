@@ -35,8 +35,7 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto write_attribute(std::string_view name, const Attribute& value)
-    -> std::string
+[[nodiscard]] auto write_attribute(StringView name, const Attribute& value) -> String
 {
   switch (value.type()) {
     case AttributeType::String:
@@ -73,7 +72,7 @@ namespace {
   }
 }
 
-void write_attributes(OStream& stream, const GdAttributes& attrs, std::string_view prefix)
+void write_attributes(OStream& stream, const GdAttributes& attrs, StringView prefix)
 {
   const auto count = attrs.size();
 

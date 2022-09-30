@@ -19,14 +19,13 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include <centurion/color.hpp>
 #include <imgui.h>
 
 #include "core/attribute.hpp"
 #include "core/common/fs.hpp"
 #include "core/common/maybe.hpp"
+#include "core/type/string.hpp"
 
 namespace tactile::ui {
 
@@ -40,18 +39,17 @@ namespace tactile::ui {
 
 [[nodiscard]] auto input_string_with_hint(const char* id,
                                           const char* hint,
-                                          const std::string& value,
+                                          const String& value,
                                           const char* label = nullptr,
                                           ImGuiInputTextFlags flags = 0,
                                           ImGuiInputTextCallback filter = nullptr)
-    -> Maybe<std::string>;
+    -> Maybe<String>;
 
 [[nodiscard]] auto input_string(const char* id,
-                                const std::string& value,
+                                const String& value,
                                 const char* label = nullptr,
                                 ImGuiInputTextFlags flags = 0,
-                                ImGuiInputTextCallback filter = nullptr)
-    -> Maybe<std::string>;
+                                ImGuiInputTextCallback filter = nullptr) -> Maybe<String>;
 
 [[nodiscard]] auto input_bool(const char* id, bool value) -> Maybe<bool>;
 

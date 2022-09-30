@@ -31,7 +31,7 @@
 namespace tactile::io {
 namespace {
 
-void load(const JSON& json, std::string& string, const char* key)
+void load(const JSON& json, String& string, const char* key)
 {
   if (const auto* value = try_get(json, key)) {
     string = *value;
@@ -45,7 +45,7 @@ void load(const JSON& json, std::string& string, const char* key)
   }
 }
 
-void load(const JSON& json, std::string& string, const char* key, const char* icon)
+void load(const JSON& json, String& string, const char* key, const char* icon)
 {
   if (const auto* value = try_get(json, key)) {
     string = fmt::format("{} {}", icon, *value);

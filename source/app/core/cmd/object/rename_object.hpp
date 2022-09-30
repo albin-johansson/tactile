@@ -28,7 +28,7 @@ namespace tactile::cmd {
 
 class RenameObject final : public Command {
  public:
-  RenameObject(Shared<Object> object, std::string name);
+  RenameObject(Shared<Object> object, String name);
 
   void undo() override;
 
@@ -36,12 +36,12 @@ class RenameObject final : public Command {
 
   [[nodiscard]] auto merge_with(const Command* cmd) -> bool override;
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+  [[nodiscard]] auto get_name() const -> String override;
 
  private:
   Shared<Object> mObject;
-  std::string mNewName;
-  Maybe<std::string> mOldName;
+  String mNewName;
+  Maybe<String> mOldName;
 };
 
 }  // namespace tactile::cmd

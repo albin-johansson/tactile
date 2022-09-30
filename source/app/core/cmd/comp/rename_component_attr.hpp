@@ -33,20 +33,20 @@ class RenameComponentAttr final : public Command {
  public:
   RenameComponentAttr(Document* document,
                       const UUID& component_id,
-                      std::string previous_name,
-                      std::string updated_name);
+                      String previous_name,
+                      String updated_name);
 
   void undo() override;
 
   void redo() override;
 
-  [[nodiscard]] auto get_name() const -> std::string override;
+  [[nodiscard]] auto get_name() const -> String override;
 
  private:
   Document* mDocument {};
   UUID mComponentId {};
-  std::string mPreviousName;
-  std::string mUpdatedName;
+  String mPreviousName;
+  String mUpdatedName;
 };
 
 }  // namespace tactile::cmd

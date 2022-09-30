@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include <entt/entity/entity.hpp>
 
 #include "core/attribute.hpp"
+#include "core/type/string.hpp"
 #include "core/uuid.hpp"
 
 namespace tactile {
@@ -31,40 +30,40 @@ namespace tactile {
 struct ShowAddPropertyDialogEvent final {};
 
 struct ShowChangePropertyTypeDialogEvent final {
-  std::string name;
+  String name;
   AttributeType current_type {};
 };
 
 struct ShowRenamePropertyDialogEvent final {
-  std::string current_name;
+  String current_name;
 };
 
 struct AddPropertyEvent final {
   UUID context_id {};     /// Target context.
-  std::string name;       /// The property name.
+  String name;            /// The property name.
   AttributeType type {};  /// The property type.
 };
 
 struct RemovePropertyEvent final {
   UUID context_id {};  /// Target context.
-  std::string name;    ///< Name of the property in the current context.
+  String name;         ///< Name of the property in the current context.
 };
 
 struct RenamePropertyEvent final {
-  UUID context_id {};    /// Target context.
-  std::string old_name;  ///< Current property name.
-  std::string new_name;  ///< Requested new property name.
+  UUID context_id {};  /// Target context.
+  String old_name;     ///< Current property name.
+  String new_name;     ///< Requested new property name.
 };
 
 struct UpdatePropertyEvent final {
   UUID context_id {};  /// Target context.
-  std::string name;    ///< Name of property to modify.
+  String name;         ///< Name of property to modify.
   Attribute value;     ///< Updated value of the property.
 };
 
 struct ChangePropertyTypeEvent final {
   UUID context_id {};     /// Target context.
-  std::string name;       ///< Name of property to modify.
+  String name;            ///< Name of property to modify.
   AttributeType type {};  ///< Requested new property type.
 };
 

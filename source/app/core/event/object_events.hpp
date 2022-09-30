@@ -19,12 +19,11 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include <entt/entity/entity.hpp>
 
 #include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/string.hpp"
 #include "core/uuid.hpp"
 
 namespace tactile {
@@ -50,13 +49,13 @@ struct SetObjectVisibleEvent final {
 /// Emitted when the tag of an object should be changed.
 struct SetObjectTagEvent final {
   UUID object_id {};  /// ID of target object.
-  std::string tag;    /// The new object tag.
+  String tag;         /// The new object tag.
 };
 
 /// Emitted when the name of an object should be changed.
 struct SetObjectNameEvent final {
   UUID object_id {};  /// ID of target object.
-  std::string name;   /// The new object name.
+  String name;        /// The new object name.
 };
 
 struct DuplicateObjectEvent final {

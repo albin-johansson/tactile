@@ -56,7 +56,7 @@ void AttachComponent::redo()
   comps.add(definition.instantiate());
 }
 
-auto AttachComponent::get_name() const -> std::string
+auto AttachComponent::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.attach_comp;

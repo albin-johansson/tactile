@@ -33,7 +33,7 @@ namespace tactile::cmd {
 
 SetComponentAttrType::SetComponentAttrType(Document* document,
                                            const UUID& component_id,
-                                           std::string attribute,
+                                           String attribute,
                                            const AttributeType type)
     : mDocument {document}
     , mComponentId {component_id}
@@ -81,7 +81,7 @@ void SetComponentAttrType::redo()
                                                             mNewType);
 }
 
-auto SetComponentAttrType::get_name() const -> std::string
+auto SetComponentAttrType::get_name() const -> String
 {
   const auto& lang = get_current_language();
   return lang.cmd.change_comp_attr_type;

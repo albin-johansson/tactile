@@ -34,7 +34,7 @@ RenameLayerDialog::RenameLayerDialog()
 {
 }
 
-void RenameLayerDialog::show(const UUID& layerId, std::string oldName)
+void RenameLayerDialog::show(const UUID& layerId, String oldName)
 {
   mTargetId = layerId;
   mOldName = std::move(oldName);
@@ -48,11 +48,10 @@ void RenameLayerDialog::show(const UUID& layerId, std::string oldName)
 
 void RenameLayerDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<RenameLayerEvent>(mTargetId.value(), std::string {current_input()});
+  dispatcher.enqueue<RenameLayerEvent>(mTargetId.value(), String {current_input()});
 }
 
-auto RenameLayerDialog::validate(const DocumentModel&, std::string_view input) const
-    -> bool
+auto RenameLayerDialog::validate(const DocumentModel&, StringView input) const -> bool
 {
   return !input.empty() && mOldName != input;
 }

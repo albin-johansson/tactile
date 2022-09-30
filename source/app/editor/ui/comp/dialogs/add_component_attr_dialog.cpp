@@ -19,13 +19,12 @@
 
 #include "add_component_attr_dialog.hpp"
 
-#include <string>  // string
-
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/comp/component_index.hpp"
 #include "core/event/component_events.hpp"
 #include "core/model.hpp"
+#include "core/type/string.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 
@@ -48,8 +47,8 @@ void AddComponentAttrDialog::show(const UUID& component_id)
   StringInputDialog::show("");
 }
 
-auto AddComponentAttrDialog::validate(const DocumentModel& model,
-                                      std::string_view input) const -> bool
+auto AddComponentAttrDialog::validate(const DocumentModel& model, StringView input) const
+    -> bool
 {
   const auto& document = model.require_active_document();
   const auto* index = document.view_component_index();
@@ -58,7 +57,7 @@ auto AddComponentAttrDialog::validate(const DocumentModel& model,
 
 void AddComponentAttrDialog::on_accept(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<AddComponentAttrEvent>(mComponentId, std::string {current_input()});
+  dispatcher.enqueue<AddComponentAttrEvent>(mComponentId, String {current_input()});
 }
 
 }  // namespace tactile::ui
