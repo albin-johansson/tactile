@@ -27,7 +27,7 @@ jobs:
 
       - name: Install GCC
         shell: bash
-        run: sudo apt install gcc-11 g++-11
+        run: sudo apt install gcc-12 g++-12
 
       - name: Install xvfb
         shell: bash
@@ -78,16 +78,16 @@ jobs:
         working-directory: ./build
         shell: bash
         env:
-          CC: gcc-11
-          CXX: g++-11
+          CC: gcc-12
+          CXX: g++-12
         run: cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
 
       - name: Build
         working-directory: ./build
         shell: bash
         env:
-          CC: gcc-11
-          CXX: g++-11
+          CC: gcc-12
+          CXX: g++-12
         run: ninja
 
       - name: Run tests
