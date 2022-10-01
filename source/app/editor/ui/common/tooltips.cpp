@@ -23,8 +23,8 @@
 
 #include <imgui.h>
 
-#include "core/common/maybe.hpp"
 #include "core/type/hash_map.hpp"
+#include "core/type/maybe.hpp"
 #include "core/util/assoc.hpp"
 #include "misc/assert.hpp"
 

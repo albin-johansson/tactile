@@ -23,9 +23,9 @@
 #include <iterator>   // distance
 #include <utility>    // move
 
-#include "core/common/maybe.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
+#include "core/type/maybe.hpp"
 #include "core/util/functional.hpp"
 #include "core/util/numeric.hpp"
 #include "misc/assert.hpp"

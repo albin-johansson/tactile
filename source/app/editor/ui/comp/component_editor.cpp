@@ -26,10 +26,10 @@
 #include <imgui.h>
 
 #include "core/attribute.hpp"
-#include "core/common/maybe.hpp"
 #include "core/comp/component_index.hpp"
 #include "core/event/component_events.hpp"
 #include "core/model.hpp"
+#include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
 #include "core/uuid.hpp"
 #include "editor/constants.hpp"

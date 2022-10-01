@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/cmd/command.hpp"
-#include "core/common/maybe.hpp"
 #include "core/comp/component.hpp"
+#include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"
 

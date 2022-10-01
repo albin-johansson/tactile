@@ -23,9 +23,9 @@
 #include <utility>   // move
 
 #include "core/cmd/command.hpp"
-#include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/type/deque.hpp"
+#include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"
 

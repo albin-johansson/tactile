@@ -20,10 +20,10 @@
 #pragma once
 
 #include "core/cmd/command.hpp"
-#include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/map.hpp"
 #include "core/tile_pos.hpp"
+#include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/vector.hpp"
 #include "core/uuid.hpp"

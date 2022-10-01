@@ -20,9 +20,9 @@
 #pragma once
 
 #include "core/cmd/command_stack.hpp"
-#include "core/common/maybe.hpp"
 #include "core/comp/component_index.hpp"
 #include "core/ctx/context_manager.hpp"
+#include "core/type/maybe.hpp"
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"

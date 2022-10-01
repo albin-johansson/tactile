@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/common/maybe.hpp"
+#include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 #include "io/map/parse/parse_error.hpp"

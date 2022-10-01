@@ -21,8 +21,8 @@
 
 #include <EASTL/span.h>
 
-#include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/maybe.hpp"
 #include "core/type/vector.hpp"
 
 namespace tactile::io {

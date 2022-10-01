@@ -20,11 +20,11 @@
 #pragma once
 
 #include "core/common/math.hpp"
-#include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/document/map_document.hpp"
 #include "core/layer/object.hpp"
 #include "core/map.hpp"
+#include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
 
 namespace tactile::test {

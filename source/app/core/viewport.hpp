@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/common/math.hpp"
-#include "core/common/maybe.hpp"
+#include "core/type/maybe.hpp"
 
 namespace tactile {
 

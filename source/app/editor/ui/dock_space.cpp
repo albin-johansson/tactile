@@ -21,7 +21,7 @@
 
 #include <imgui_internal.h>
 
-#include "core/common/maybe.hpp"
+#include "core/type/maybe.hpp"
 #include "io/directories.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"

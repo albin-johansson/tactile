@@ -22,7 +22,7 @@
 
 #include <centurion/color.hpp>
 
-#include "core/common/maybe.hpp"
+#include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
 #include "core/util/string.hpp"
 #include "io/map/ir/ir.hpp"

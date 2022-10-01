@@ -23,9 +23,9 @@
 
 #include <imgui.h>
 
-#include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/type/array.hpp"
+#include "core/type/maybe.hpp"
 #include "core/type/pair.hpp"
 #include "core/type/string.hpp"
 #include "editor/ui/scoped.hpp"

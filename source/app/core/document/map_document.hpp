@@ -22,7 +22,6 @@
 #include <boost/uuid/uuid_hash.hpp>
 
 #include "core/common/math.hpp"
-#include "core/common/maybe.hpp"
 #include "core/common/tile_cache.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/ctx/context_manager.hpp"
@@ -32,6 +31,7 @@
 #include "core/map.hpp"
 #include "core/tool/tool_manager.hpp"
 #include "core/tool/tool_type.hpp"
+#include "core/type/maybe.hpp"
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"

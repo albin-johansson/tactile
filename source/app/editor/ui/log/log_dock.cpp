@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "core/common/maybe.hpp"
+#include "core/type/maybe.hpp"
 #include "editor/ui/common/labels.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"

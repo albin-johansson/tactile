@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/common/maybe.hpp"
 #include "core/region.hpp"
+#include "core/type/maybe.hpp"
 
 struct ImVec2;
 

@@ -21,9 +21,9 @@
 
 #include "core/attribute.hpp"
 #include "core/common/math.hpp"
-#include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/type/hash_map.hpp"
+#include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
 #include "core/type/tree_map.hpp"
 #include "core/type/vector.hpp"

@@ -25,8 +25,8 @@
 #include <yaml-cpp/yaml.h>
 
 #include "core/attribute.hpp"
-#include "core/common/maybe.hpp"
 #include "core/layer/tile_format.hpp"
+#include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
 #include "core/util/string.hpp"
 

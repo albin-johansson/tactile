@@ -20,9 +20,9 @@
 #pragma once
 
 #include "core/attribute.hpp"
-#include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/type/array.hpp"
+#include "core/type/maybe.hpp"
 #include "core/uuid.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 

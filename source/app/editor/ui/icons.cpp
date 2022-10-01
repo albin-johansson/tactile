@@ -19,7 +19,7 @@
 
 #include "icons.hpp"
 
-#include "core/common/maybe.hpp"
+#include "core/type/maybe.hpp"
 #include "io/directories.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"

@@ -25,8 +25,8 @@
 
 #include <centurion/color.hpp>
 
-#include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/maybe.hpp"
 #include "core/type/ostream.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"

@@ -24,8 +24,8 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/maybe.hpp"
 #include "core/util/file.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/fmt.hpp"
