@@ -51,7 +51,7 @@ enum class AttributeType {
 [[nodiscard]] auto parse_attr_type(StringView name) -> Maybe<AttributeType>;
 
 /// Outputs the result of calling `stringify` with the type to a stream.
-auto operator<<(std::ostream& stream, AttributeType type) -> std::ostream&;
+auto operator<<(OStream& stream, AttributeType type) -> OStream&;
 
 /// Strong type that represents object references.
 enum object_t : int32 {

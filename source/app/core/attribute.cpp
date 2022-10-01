@@ -82,11 +82,6 @@ auto parse_attr_type(StringView name) -> Maybe<AttributeType>
   }
 }
 
-auto operator<<(std::ostream& stream, const AttributeType type) -> std::ostream&
-{
-  return stream << stringify(type);
-}
-
 void Attribute::reset_to_default(const AttributeType type)
 {
   switch (type) {
@@ -280,6 +275,11 @@ auto Attribute::as_color() const -> const color_type&
   else {
     throw TactileError {"Attribute was not a color!"};
   }
+}
+
+auto operator<<(OStream& stream, const AttributeType type) -> OStream&
+{
+  return stream << stringify(type);
 }
 
 auto operator<<(OStream& stream, const Attribute& value) -> OStream&

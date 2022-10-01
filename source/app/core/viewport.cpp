@@ -19,8 +19,6 @@
 
 #include "viewport.hpp"
 
-#include <cmath>  // round
-
 #include <glm/common.hpp>
 
 #include "misc/assert.hpp"
@@ -28,12 +26,12 @@
 namespace tactile {
 namespace {
 
-constexpr float _min_tile_height = 4;
+constexpr float viewport_min_tile_height = 4;
 
-[[nodiscard]] auto _viewport_offset_delta(const float tileWidth, const float ratio)
+[[nodiscard]] auto viewport_offset_delta(const float tile_width, const float ratio)
     -> Float2
 {
-  const auto dx = std::round((std::max)(2.0f, tileWidth * 0.05f));
+  const auto dx = glm::round((glm::max)(2.0f, tile_width * 0.05f));
   const auto dy = dx / ratio;
   return {dx, dy};
 }
@@ -80,7 +78,7 @@ void Viewport::zoom_in(const Float2& anchor)
   // Percentages of area to the left of and above the cursor
   const auto percentage = (anchor - mOffset) / mTileSize;
 
-  mTileSize += _viewport_offset_delta(mTileSize.x, mTileSize.x / mTileSize.y);
+  mTileSize += viewport_offset_delta(mTileSize.x, mTileSize.x / mTileSize.y);
   mOffset = anchor - (percentage * mTileSize);
 }
 
@@ -91,9 +89,9 @@ void Viewport::zoom_out(const Float2& anchor)
 
   {
     const auto ratio = mTileSize.x / mTileSize.y;
-    mTileSize -= _viewport_offset_delta(mTileSize.x, ratio);
+    mTileSize -= viewport_offset_delta(mTileSize.x, ratio);
 
-    const Float2 minimum {_min_tile_height * ratio, _min_tile_height};
+    const Float2 minimum {viewport_min_tile_height * ratio, viewport_min_tile_height};
     mTileSize = (glm::max)(minimum, mTileSize);
   }
 
@@ -114,12 +112,12 @@ void Viewport::set_limits(const ViewportLimits& limits)
 
 auto Viewport::can_zoom_out() const -> bool
 {
-  return mTileSize.y > _min_tile_height;
+  return mTileSize.y > viewport_min_tile_height;
 }
 
-auto Viewport::get_scaling_ratio(const Float2& tileSize) const -> Float2
+auto Viewport::get_scaling_ratio(const Float2& tile_size) const -> Float2
 {
-  return mTileSize / tileSize;
+  return mTileSize / tile_size;
 }
 
 }  // namespace tactile
