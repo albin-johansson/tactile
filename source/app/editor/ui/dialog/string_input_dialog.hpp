@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include <array>  // array
-
 #include <entt/fwd.hpp>
 
 #include "core/common/maybe.hpp"
+#include "core/type/array.hpp"
 #include "core/type/string.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 
@@ -55,7 +54,7 @@ class StringInputDialog : public Dialog {
  private:
   Maybe<String> mHint;
   String mPrevious;
-  std::array<char, 128> mBuffer {};
+  Array<char, 128> mBuffer {};
   bool mShouldAcquireFocus {};
 };
 

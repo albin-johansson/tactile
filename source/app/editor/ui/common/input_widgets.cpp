@@ -19,13 +19,11 @@
 
 #include "input_widgets.hpp"
 
-#include <array>     // array
 #include <concepts>  // invocable
 #include <utility>   // move
 
-#include <spdlog/spdlog.h>
-
 #include "colors.hpp"
+#include "core/type/array.hpp"
 #include "core/util/buffers.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/string.hpp"
@@ -57,7 +55,7 @@ template <std::invocable T>
 
   const auto& lang = get_current_language();
 
-  std::array<char, 256> buffer;  // NOLINT
+  Array<char, 256> buffer;  // NOLINT
   copy_string_into_buffer(buffer, text);
 
   ImGui::InputTextWithHint("##Path",
@@ -173,7 +171,7 @@ auto input_string_with_hint(const char* id,
 {
   const Scope scope {id};
 
-  std::array<char, 128> buffer;  // NOLINT safely uninitialized
+  Array<char, 128> buffer;  // NOLINT safely uninitialized
   copy_string_into_buffer(buffer, value);
 
   if (label) {

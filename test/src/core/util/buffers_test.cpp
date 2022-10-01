@@ -19,15 +19,15 @@
 
 #include "core/util/buffers.hpp"
 
-#include <array>  // array
-
 #include <gtest/gtest.h>
+
+#include "core/type/array.hpp"
 
 namespace tactile::test {
 
 TEST(BufferUtils, ZeroBuffer)
 {
-  std::array buffer = {'0', '1', '2', '3', '4'};
+  Array<char, 5> buffer = {'0', '1', '2', '3', '4'};
   zero_buffer(buffer);
 
   ASSERT_EQ(0, buffer[0]);
@@ -39,7 +39,7 @@ TEST(BufferUtils, ZeroBuffer)
 
 TEST(BufferUtils, CopyStringIntoBuffer)
 {
-  std::array buffer = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+  Array<char, 10> buffer = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
   copy_string_into_buffer(buffer, "abcdef");
 
   ASSERT_EQ('a', buffer.at(0));
@@ -58,7 +58,7 @@ TEST(BufferUtils, CopyStringIntoBuffer)
 
 TEST(BufferUtils, CopyStringIntoBufferThatIsTooSmall)
 {
-  std::array buffer = {'0', '1', '2', '3'};
+  Array<char, 4> buffer = {'0', '1', '2', '3'};
   copy_string_into_buffer(buffer, "abcdef");
 
   ASSERT_EQ('a', buffer.at(0));
@@ -69,7 +69,7 @@ TEST(BufferUtils, CopyStringIntoBufferThatIsTooSmall)
 
 TEST(BufferUtils, CreateStringFromBuffer)
 {
-  const std::array buffer = {'a', 'b', 'c', 'd', 'e', 'f', '\0'};
+  const Array<char, 7> buffer = {'a', 'b', 'c', 'd', 'e', 'f', '\0'};
   const auto str = create_string_from_buffer(buffer);
 
   ASSERT_EQ("abcdef", str);
@@ -77,7 +77,7 @@ TEST(BufferUtils, CreateStringFromBuffer)
 
 TEST(BufferUtils, CreateStringViewFromBuffer)
 {
-  const std::array buffer = {'a', 'b', 'c', 'd', 'e', 'f', '\0'};
+  const Array<char, 7> buffer = {'a', 'b', 'c', 'd', 'e', 'f', '\0'};
   const auto str = create_string_view_from_buffer(buffer);
 
   ASSERT_EQ(6, str.size());

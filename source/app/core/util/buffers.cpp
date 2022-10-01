@@ -28,12 +28,12 @@
 
 namespace tactile {
 
-void zero_buffer(std::span<char> buffer)
+void zero_buffer(Span<char> buffer)
 {
   std::memset(buffer.data(), 0, buffer.size_bytes());
 }
 
-void copy_string_into_buffer(std::span<char> buffer, StringView str)
+void copy_string_into_buffer(Span<char> buffer, StringView str)
 {
   zero_buffer(buffer);
 
@@ -43,7 +43,7 @@ void copy_string_into_buffer(std::span<char> buffer, StringView str)
       buffer[index] = ch;
     }
     else {
-      /* The string is larger than the buffer, so we are finished */
+      // The string is larger than the buffer, so we are finished.
       break;
     }
 
@@ -51,12 +51,12 @@ void copy_string_into_buffer(std::span<char> buffer, StringView str)
   }
 }
 
-auto create_string_from_buffer(std::span<const char> buffer) -> String
+auto create_string_from_buffer(Span<const char> buffer) -> String
 {
   return String {create_string_view_from_buffer(buffer)};
 }
 
-auto create_string_view_from_buffer(std::span<const char> buffer) -> StringView
+auto create_string_view_from_buffer(Span<const char> buffer) -> StringView
 {
   const auto iter = std::find(buffer.begin(), buffer.end(), '\0');
   if (iter != buffer.end()) {

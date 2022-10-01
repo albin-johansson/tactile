@@ -20,14 +20,15 @@
 #include "random.hpp"
 
 #include <algorithm>   // generate
-#include <array>       // array
 #include <functional>  // ref
 #include <random>      // random_device, seed_seq
+
+#include "core/type/array.hpp"
 
 namespace tactile {
 
 using Seed = std::random_device::result_type;
-using SeedArray = std::array<Seed, RandomEngine::state_size>;
+using SeedArray = Array<Seed, RandomEngine::state_size>;
 
 auto make_random_engine() -> RandomEngine
 {

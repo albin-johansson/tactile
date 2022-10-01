@@ -19,10 +19,9 @@
 
 #pragma once
 
-#include <array>  // array
-
 #include "core/common/fs.hpp"
 #include "core/common/math.hpp"
+#include "core/type/array.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
@@ -43,7 +42,7 @@ class CreateTilesetDialog final : public Dialog {
 
  private:
   fs::path mFullImagePath;
-  std::array<char, 100> mPathPreviewBuffer {};
+  Array<char, 100> mPathPreviewBuffer {};
   Int2 mTileSize {32, 32};
 
   void show_image_file_dialog();

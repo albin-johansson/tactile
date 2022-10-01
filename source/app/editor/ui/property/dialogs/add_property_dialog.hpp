@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include <array>  // array
-
 #include "core/attribute.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/array.hpp"
 #include "core/uuid.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 
@@ -50,7 +49,7 @@ class AddPropertyDialog final : public Dialog {
 
  private:
   Maybe<UUID> mContextId;
-  std::array<char, 128> mNameBuffer {};
+  Array<char, 128> mNameBuffer {};
   AttributeType mPropertyType {AttributeType::String};
 };
 

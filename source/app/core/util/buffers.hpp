@@ -19,14 +19,13 @@
 
 #pragma once
 
-#include <span>  // span
-
+#include "core/type/span.hpp"
 #include "core/type/string.hpp"
 
 namespace tactile {
 
 /// Zeroes the values of a buffer.
-void zero_buffer(std::span<char> buffer);
+void zero_buffer(Span<char> buffer);
 
 /// Copies a string into a character buffer.
 ///
@@ -37,7 +36,7 @@ void zero_buffer(std::span<char> buffer);
 ///
 /// \param buffer the buffer that will be modified.
 /// \param str the string that will be copied into the buffer.
-void copy_string_into_buffer(std::span<char> buffer, StringView str);
+void copy_string_into_buffer(Span<char> buffer, StringView str);
 
 /// Creates a string from a character buffer.
 ///
@@ -47,7 +46,7 @@ void copy_string_into_buffer(std::span<char> buffer, StringView str);
 /// \param buffer the character buffer that contains the string data.
 ///
 /// \return a string created from the buffer.
-[[nodiscard]] auto create_string_from_buffer(std::span<const char> buffer) -> String;
+[[nodiscard]] auto create_string_from_buffer(Span<const char> buffer) -> String;
 
 /// Creates a string view from a character buffer.
 ///
@@ -62,7 +61,6 @@ void copy_string_into_buffer(std::span<char> buffer, StringView str);
 /// \param buffer the character buffer that contains the string data.
 ///
 /// \return a string created from the buffer.
-[[nodiscard]] auto create_string_view_from_buffer(std::span<const char> buffer)
-    -> StringView;
+[[nodiscard]] auto create_string_view_from_buffer(Span<const char> buffer) -> StringView;
 
 }  // namespace tactile

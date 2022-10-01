@@ -19,19 +19,18 @@
 
 #pragma once
 
-#include <array>  // array
-
 #include <centurion/color.hpp>
 #include <imgui.h>
 
 #include "core/common/vocabulary.hpp"
+#include "core/type/array.hpp"
 
 namespace tactile::ui {
 
 /// Converts a color into an array of normalized color components.
 /// The array values are stored in the order red/green/blue/alpha.
 [[nodiscard]] constexpr auto color_to_array(const cen::color& color) noexcept
-    -> std::array<float, 4>
+    -> Array<float, 4>
 {
   const auto r = color.norm_red();
   const auto g = color.norm_green();

@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include <algorithm>    // min
-#include <array>        // array
 #include <sstream>      // stringstream
 #include <string_view>  // string_view
 
+#include <EASTL/algorithm.h>
 #include <EASTL/string.h>
 #include <EASTL/string_view.h>
 #include <boost/stacktrace/stacktrace.hpp>
@@ -32,6 +31,7 @@
 
 #include "core/common/fs.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/array.hpp"
 #include "core/type/string.hpp"
 #include "core/util/string.hpp"
 #include "meta/build.hpp"
@@ -96,7 +96,7 @@ class FmtString final {
                                          fmt::runtime(to_std_view(fmt)),
                                          args...);
     *result.out = '\0';  // Ensure null-terminator
-    mSize = (std::min)(result.size, Capacity);
+    mSize = (eastl::min)(result.size, Capacity);
   }
 
   [[nodiscard]] auto data() const noexcept -> const char* { return mBuffer.data(); }
@@ -111,7 +111,7 @@ class FmtString final {
   [[nodiscard]] constexpr auto capacity() const noexcept -> usize { return Capacity; }
 
  private:
-  std::array<char, Capacity + 1> mBuffer;  // NOLINT
+  Array<char, Capacity + 1> mBuffer;  // NOLINT
   usize mSize {};
 };
 

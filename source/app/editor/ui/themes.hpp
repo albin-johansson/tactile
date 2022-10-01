@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <array>  // array
-
+#include "core/type/array.hpp"
 #include "core/type/string.hpp"
 
 struct ImGuiStyle;
@@ -46,12 +45,12 @@ enum class EditorTheme {
   Vanilla = 13
 };
 
-inline constexpr std::array light_themes [[maybe_unused]] = {
+inline constexpr Array<EditorTheme, 2> light_themes [[maybe_unused]] = {
     EditorTheme::DearLight,
     EditorTheme::Vanilla,
 };
 
-inline constexpr std::array dark_themes [[maybe_unused]] = {
+inline constexpr Array<EditorTheme, 12> dark_themes [[maybe_unused]] = {
     EditorTheme::DearDark,
     EditorTheme::Ruby,
     EditorTheme::Sapphire,
