@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include <utility>  // pair
+#include <EASTL/utility.h>
 
 namespace tactile {
 
 template <typename X, typename Y>
-using Pair = std::pair<X, Y>;
+using Pair = eastl::pair<X, Y>;
 
 }  // namespace tactile

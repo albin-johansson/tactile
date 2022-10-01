@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include <utility>  // pair
-
 #include <spdlog/spdlog.h>
 
 #include "core/common/vocabulary.hpp"
+#include "core/type/pair.hpp"
 #include "core/type/string.hpp"
 
 namespace tactile {
@@ -43,7 +42,7 @@ void clear_log_history();
 ///
 /// \return a pair of the found log level and logged message.
 [[nodiscard]] auto get_log_entry(LogLevel filter, usize index)
-    -> std::pair<LogLevel, const String&>;
+    -> Pair<LogLevel, const String&>;
 
 /// Returns the amount of log entries that satisfy a filter.
 ///
