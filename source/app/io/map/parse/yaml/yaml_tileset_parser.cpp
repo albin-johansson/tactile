@@ -22,6 +22,7 @@
 #include "core/common/fs.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/type/string.hpp"
+#include "core/util/string.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"
@@ -165,7 +166,7 @@ constexpr int32 tileset_format_version = 1;
       return error(ParseError::NoTilesetImagePath);
     }
 
-    auto absolute = fs::weakly_canonical(dir / relative);
+    auto absolute = fs::weakly_canonical(dir / to_std_view(relative));
     if (fs::exists(absolute)) {
       tileset.image_path = std::move(absolute);
     }
@@ -224,7 +225,7 @@ auto parse_tilesets(const YAML::Node& sequence,
       return error(ParseError::NoExternalTilesetPath);
     }
 
-    const auto source = fs::weakly_canonical(dir / path);
+    const auto source = fs::weakly_canonical(dir / to_std_view(path));
 
     if (fs::exists(source)) {
       if (auto tileset = parse_tileset(map, source, first)) {

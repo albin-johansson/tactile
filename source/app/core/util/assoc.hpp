@@ -36,30 +36,28 @@ template <typename K, typename V, TransparentKey<K> T>
 [[nodiscard]] auto find_in(HashMap<K, V>& map, T&& key) ->
     typename HashMap<K, V>::iterator
 {
-  return map.find(eastl::forward<T>(key));
-  // return map.find_as(eastl::forward<T>(key));
+  return map.find_as(eastl::forward<T>(key));
 }
 
 template <typename K, typename V, TransparentKey<K> T>
 [[nodiscard]] auto find_in(const HashMap<K, V>& map, T&& key) ->
     typename HashMap<K, V>::const_iterator
 {
-  return map.find(eastl::forward<T>(key));
-  //  return map.find_as(eastl::forward<T>(key));
+  return map.find_as(eastl::forward<T>(key));
 }
 
 template <typename K, typename V, TransparentKey<K> T>
 [[nodiscard]] auto find_in(TreeMap<K, V>& map, T&& key) ->
     typename TreeMap<K, V>::iterator
 {
-  return map.find_as(eastl::forward<T>(key), eastl::equal_to_2<K, std::decay_t<T>> {});
+  return map.find_as(eastl::forward<T>(key), eastl::less_2<K, eastl::decay_t<T>> {});
 }
 
 template <typename K, typename V, TransparentKey<K> T>
 [[nodiscard]] auto find_in(const TreeMap<K, V>& map, T&& key) ->
     typename TreeMap<K, V>::const_iterator
 {
-  return map.find_as(eastl::forward<T>(key), eastl::equal_to_2<K, std::decay_t<T>> {});
+  return map.find_as(eastl::forward<T>(key), eastl::less_2<K, eastl::decay_t<T>> {});
 }
 
 template <typename K, typename V, TransparentKey<K> T>

@@ -21,8 +21,7 @@
 
 #include <utility>  // move
 
-#include <fmt/format.h>
-
+#include "core/util/fmt.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -30,7 +29,7 @@ namespace tactile {
 Tile::Tile(const TileIndex index)
     : mIndex {index}
 {
-  mContext.set_name(fmt::format("Tile {}", index));
+  mContext.set_name(format_str("Tile {}", index));
 }
 
 void Tile::accept(ContextVisitor& visitor) const

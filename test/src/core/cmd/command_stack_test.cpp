@@ -31,7 +31,7 @@ struct FooCmd : Command {
 
   void redo() override {}
 
-  [[nodiscard]] auto get_name() const -> std::string override { return "FooCmd"; }
+  [[nodiscard]] auto get_name() const -> String override { return "FooCmd"; }
 };
 
 struct BarCmd : Command {
@@ -39,7 +39,7 @@ struct BarCmd : Command {
 
   void redo() override {}
 
-  [[nodiscard]] auto get_name() const -> std::string override { return "BarCmd"; }
+  [[nodiscard]] auto get_name() const -> String override { return "BarCmd"; }
 };
 
 }  // namespace

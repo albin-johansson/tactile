@@ -19,17 +19,18 @@
 
 #pragma once
 
-#include <filesystem>   // path
-#include <string>       // basic_string, basic_string
-#include <string_view>  // string_view, basic_string_view
+#include <filesystem>  // path
+
+#include <EASTL/string.h>
+#include <EASTL/string_view.h>
 
 namespace tactile {
 
-using String = std::string;
-using StringView = std::string_view;
+using String = eastl::string;
+using StringView = eastl::string_view;
 
 using OsStrChar = std::filesystem::path::value_type;
-using OsString = std::basic_string<OsStrChar>;
-using OsStringView = std::basic_string_view<OsStrChar>;
+using OsString = eastl::basic_string<OsStrChar>;
+using OsStringView = eastl::basic_string_view<OsStrChar>;
 
 }  // namespace tactile

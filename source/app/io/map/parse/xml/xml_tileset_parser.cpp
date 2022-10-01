@@ -20,6 +20,7 @@
 #include <utility>  // move
 
 #include "core/common/fs.hpp"
+#include "core/util/string.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/util/xml.hpp"
@@ -108,7 +109,7 @@ namespace {
     return ParseError::NoTilesetImagePath;
   }
 
-  auto absolute_path = fs::weakly_canonical(dir / *relative_path);
+  auto absolute_path = fs::weakly_canonical(dir / to_std_view(*relative_path));
   if (fs::exists(absolute_path)) {
     tileset.image_path = std::move(absolute_path);
   }
@@ -191,7 +192,7 @@ namespace {
   TACTILE_ASSERT(has_attr(node, "source"));
 
   const auto relative_path = as_string(node, "source").value();
-  const auto source_path = fs::weakly_canonical(dir / relative_path);
+  const auto source_path = fs::weakly_canonical(dir / to_std_view(relative_path));
 
   if (!fs::exists(source_path)) {
     return error(ParseError::ExternalTilesetDoesNotExist);

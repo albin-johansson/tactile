@@ -24,6 +24,7 @@
 #include <locale>     // wstring_convert
 
 #include "core/util/env.hpp"
+#include "core/util/string.hpp"
 #include "meta/build.hpp"
 
 namespace tactile {
@@ -44,7 +45,7 @@ auto convert_to_forward_slashes(const fs::path& path) -> String
 {
   auto str = path.string();
   std::replace(str.begin(), str.end(), '\\', '/');
-  return str;
+  return from_std(str);
 }
 
 auto has_home_prefix(const fs::path& path) -> bool
@@ -54,11 +55,16 @@ auto has_home_prefix(const fs::path& path) -> bool
   return view.starts_with(prefix);
 }
 
+auto to_path(StringView str) -> fs::path
+{
+  return {to_std_view(str)};
+}
+
 auto to_canonical(const fs::path& path) -> Maybe<String>
 {
   if (has_home_prefix(path)) {
     const auto& prefix = get_home_prefix();
-    return '~' + path.string().substr(prefix.size());
+    return '~' + from_std(path.string().substr(prefix.size()));
   }
   else {
     return nothing;

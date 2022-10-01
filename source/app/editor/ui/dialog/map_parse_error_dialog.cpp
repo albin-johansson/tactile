@@ -19,10 +19,10 @@
 
 #include "map_parse_error_dialog.hpp"
 
-#include <fmt/format.h>
 #include <imgui.h>
 
-#include "editor/ui/icons.hpp"
+#include "core/util/fmt.hpp"
+#include "core/util/string.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 
@@ -39,7 +39,7 @@ void MapParseErrorDialog::show(const io::ParseError error)
   const auto& lang = get_current_language();
 
   mError = error;
-  mCause = fmt::format("{}: {}", lang.misc.cause, io::to_cause(mError.value()));
+  mCause = format_str("{}: {}", lang.misc.cause, io::to_cause(mError.value()));
 
   set_title(lang.window.map_parse_error);
 

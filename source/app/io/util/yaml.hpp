@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include <string>   // string
 #include <utility>  // move
 
 #include <yaml-cpp/yaml.h>
@@ -26,6 +27,8 @@
 #include "core/attribute.hpp"
 #include "core/common/maybe.hpp"
 #include "core/layer/tile_format.hpp"
+#include "core/type/string.hpp"
+#include "core/util/string.hpp"
 
 namespace tactile::io {
 
@@ -35,6 +38,19 @@ auto read_attribute(const YAML::Node& node, const char* name, T& result) -> bool
 {
   if (auto attr = node[name]) {
     result = attr.as<T>();
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+template <>
+inline auto read_attribute(const YAML::Node& node, const char* name, String& result)
+    -> bool
+{
+  if (auto attr = node[name]) {
+    result = from_std(attr.as<std::string>());
     return true;
   }
   else {
@@ -54,6 +70,20 @@ void read_attribute(const YAML::Node& node, const char* name, T& result, T fallb
   }
 }
 
+template <>
+inline void read_attribute(const YAML::Node& node,
+                           const char* name,
+                           String& result,
+                           String fallback)
+{
+  if (auto attr = node[name]) {
+    result = from_std(attr.as<std::string>());
+  }
+  else {
+    result = std::move(fallback);
+  }
+}
+
 template <typename T>
 void read_attribute(const YAML::Node& node,
                     const char* name,
@@ -62,6 +92,19 @@ void read_attribute(const YAML::Node& node,
 {
   if (auto attr = node[name]) {
     result = attr.as<T>();
+  }
+  else {
+    result = std::move(fallback);
+  }
+}
+template <>
+inline void read_attribute(const YAML::Node& node,
+                           const char* name,
+                           Maybe<String>& result,
+                           String fallback)
+{
+  if (auto attr = node[name]) {
+    result = from_std(attr.as<std::string>());
   }
   else {
     result = std::move(fallback);

@@ -27,6 +27,7 @@
 #include "core/event/map_events.hpp"
 #include "core/event/misc_events.hpp"
 #include "core/model.hpp"
+#include "core/util/filesystem.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
@@ -70,7 +71,7 @@ void _update_recent_files_menu(entt::dispatcher& dispatcher)
                         false,
                         io::is_last_closed_file_valid())) {
       // TODO this will need to be tweaked if tileset documents viewing will be supported
-      dispatcher.enqueue<OpenMapEvent>(io::last_closed_file());
+      dispatcher.enqueue<OpenMapEvent>(to_path(io::last_closed_file()));
     }
 
     const auto& history = io::file_history();
@@ -81,8 +82,8 @@ void _update_recent_files_menu(entt::dispatcher& dispatcher)
 
     for (const auto& path : history) {
       if (ImGui::MenuItem(path.c_str())) {
-        /* It's fine if the file doesn't exist anymore, the parser handles that */
-        dispatcher.enqueue<OpenMapEvent>(path);
+        // It's fine if the file doesn't exist anymore, the parser handles that.
+        dispatcher.enqueue<OpenMapEvent>(to_path(path));
       }
     }
 

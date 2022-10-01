@@ -19,20 +19,19 @@
 
 #pragma once
 
-#include <string>  // string
-
 #include "core/attribute.hpp"
 #include "core/comp/component_index.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/string.hpp"
 #include "core/uuid.hpp"
 
 namespace tactile::test {
 
 class ComponentBuilder {
  public:
-  ComponentBuilder(Shared<ComponentIndex> index, std::string name);
+  ComponentBuilder(Shared<ComponentIndex> index, String name);
 
-  auto with_attr(std::string name, Attribute value = std::string {}) -> ComponentBuilder&;
+  auto with_attr(String name, Attribute value = String {}) -> ComponentBuilder&;
 
   [[nodiscard]] auto result() -> UUID { return mComponentId; }
 

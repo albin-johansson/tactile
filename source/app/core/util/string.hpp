@@ -19,6 +19,9 @@
 
 #pragma once
 
+#include <string>       // string
+#include <string_view>  // string_view
+
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/type/string.hpp"
@@ -31,5 +34,16 @@ namespace tactile {
 
 /// Converts a string into a 32-bit signed integer.
 [[nodiscard]] auto parse_i32(StringView str, int base = 10) -> Maybe<int32>;
+
+/// Converts a Tactile string to a standard string.
+[[nodiscard]] auto to_std(StringView str) -> std::string;
+
+/// Converts a Tactile string view to a standard string view.
+[[nodiscard]] auto to_std_view(StringView str) -> std::string_view;
+
+/// Converts a standard string to the representation used in Tactile.
+/// Use of this function is discouraged other than in low-level scenarios where standard
+/// strings have to be handled.
+[[nodiscard]] auto from_std(std::string_view str) -> String;
 
 }  // namespace tactile

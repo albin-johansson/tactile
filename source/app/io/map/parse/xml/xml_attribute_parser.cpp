@@ -24,6 +24,7 @@
 
 #include "core/common/fs.hpp"
 #include "core/type/string.hpp"
+#include "core/util/string.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/util/xml.hpp"
@@ -61,12 +62,12 @@ namespace {
       break;
     }
     case AttributeType::Path: {
-      fs::path path = as_string(node, "value").value();
+      fs::path path = to_std(as_string(node, "value").value());
       value = std::move(path);
       break;
     }
     case AttributeType::Color: {
-      const auto hex = as_string(node, "value").value();
+      const auto hex = to_std(as_string(node, "value").value());
 
       // Empty color properties are not supported, so just assume the default color value
       if (hex.empty()) {

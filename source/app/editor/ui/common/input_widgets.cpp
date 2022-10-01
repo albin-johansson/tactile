@@ -28,6 +28,7 @@
 #include "colors.hpp"
 #include "core/util/buffers.hpp"
 #include "core/util/filesystem.hpp"
+#include "core/util/string.hpp"
 #include "editor/constants.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/tooltips.hpp"
@@ -41,7 +42,7 @@ namespace tactile::ui {
 namespace {
 
 template <std::invocable T>
-[[nodiscard]] auto input_file_path(const char* id, const String& text, T&& callback)
+[[nodiscard]] auto input_file_path(const char* id, StringView text, T&& callback)
     -> Maybe<fs::path>
 {
   const Scope scope {id};
@@ -253,16 +254,18 @@ auto input_color(const char* id, const cen::color value) -> Maybe<cen::color>
 
 auto input_file(const char* id, const fs::path& value) -> Maybe<fs::path>
 {
-  return input_file_path(id, value.filename().string(), []() -> Maybe<fs::path> {
-    auto dialog = io::FileDialog::open_file();
-    return dialog.is_okay() ? dialog.path() : Maybe<fs::path> {};
-  });
+  return input_file_path(id,
+                         from_std(value.filename().string()),
+                         []() -> Maybe<fs::path> {
+                           auto dialog = io::FileDialog::open_file();
+                           return dialog.is_okay() ? dialog.path() : Maybe<fs::path> {};
+                         });
 }
 
 auto input_folder(const char* id, const fs::path& value) -> Maybe<fs::path>
 {
   return input_file_path(id,
-                         to_canonical(value).value_or(value.string()),
+                         to_canonical(value).value_or(from_std(value.string())),
                          []() -> Maybe<fs::path> {
                            auto dialog = io::FileDialog::open_folder();
                            return dialog.is_okay() ? dialog.path() : Maybe<fs::path> {};

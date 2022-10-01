@@ -41,21 +41,21 @@ TEST(Filesystem, HasHomePrefix)
   ASSERT_FALSE(has_home_prefix("foo/bar.yaml"));
   ASSERT_FALSE(has_home_prefix("some/random/path"));
 
-  ASSERT_TRUE(has_home_prefix(home));
-  ASSERT_TRUE(has_home_prefix(home + "/"));
-  ASSERT_TRUE(has_home_prefix(home + "/foo"));
-  ASSERT_TRUE(has_home_prefix(home + "/foo.txt"));
-  ASSERT_TRUE(has_home_prefix(home + "/foo/bar.txt"));
+  ASSERT_TRUE(has_home_prefix(to_path(home)));
+  ASSERT_TRUE(has_home_prefix(to_path(home + "/")));
+  ASSERT_TRUE(has_home_prefix(to_path(home + "/foo")));
+  ASSERT_TRUE(has_home_prefix(to_path(home + "/foo.txt")));
+  ASSERT_TRUE(has_home_prefix(to_path(home + "/foo/bar.txt")));
 }
 
 TEST(Filesystem, ToCanonical)
 {
   const auto home = env_var(on_windows ? "USERPROFILE" : "HOME").value();
 
-  ASSERT_EQ("~", to_canonical(home).value());
-  ASSERT_EQ("~/", to_canonical(home + '/').value());
-  ASSERT_EQ("~/foo/", to_canonical(home + "/foo/").value());
-  ASSERT_EQ("~/foo/bar.txt", to_canonical(home + "/foo/bar.txt").value());
+  ASSERT_EQ("~", to_canonical(to_path(home)).value());
+  ASSERT_EQ("~/", to_canonical(to_path(home + '/')).value());
+  ASSERT_EQ("~/foo/", to_canonical(to_path(home + "/foo/")).value());
+  ASSERT_EQ("~/foo/bar.txt", to_canonical(to_path(home + "/foo/bar.txt")).value());
 
   ASSERT_FALSE(to_canonical("some/random/path").has_value());
   ASSERT_FALSE(to_canonical("file.txt").has_value());

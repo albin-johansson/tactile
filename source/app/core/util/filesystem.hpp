@@ -39,6 +39,9 @@ namespace tactile {
 /// Indicates whether a file path starts with the home directory.
 [[nodiscard]] auto has_home_prefix(const fs::path& path) -> bool;
 
+/// Converts a string into a file path.
+[[nodiscard]] auto to_path(StringView str) -> fs::path;
+
 /// Converts file paths to use a '~' prefix (if possible).
 [[nodiscard]] auto to_canonical(const fs::path& path) -> Maybe<String>;
 

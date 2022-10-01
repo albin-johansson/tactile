@@ -21,13 +21,13 @@
 
 #include <utility>  // move
 
-#include <fmt/format.h>
-
 #include "core/layer/layer_visitor.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/tile_pos.hpp"
+#include "core/util/fmt.hpp"
 #include "core/util/functional.hpp"
+#include "core/util/string.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -146,7 +146,7 @@ auto Map::add_tile_layer(const Maybe<UUID>& parentId) -> UUID
   auto layer = TileLayer::make(mRowCount, mColCount);
 
   layer->set_meta_id(fetch_and_increment_next_layer_id());
-  layer->ctx().set_name(fmt::format("Tile Layer {}", mTileLayerSuffix));
+  layer->ctx().set_name(format_str("Tile Layer {}", mTileLayerSuffix));
   ++mTileLayerSuffix;
 
   const auto id = layer->ctx().uuid();
@@ -160,7 +160,7 @@ auto Map::add_object_layer(const Maybe<UUID>& parentId) -> UUID
   auto layer = std::make_shared<ObjectLayer>();
 
   layer->set_meta_id(fetch_and_increment_next_layer_id());
-  layer->ctx().set_name(fmt::format("Object Layer {}", mObjectLayerSuffix));
+  layer->ctx().set_name(format_str("Object Layer {}", mObjectLayerSuffix));
   ++mObjectLayerSuffix;
 
   const auto id = layer->ctx().uuid();
@@ -174,7 +174,7 @@ auto Map::add_group_layer(const Maybe<UUID>& parentId) -> UUID
   auto layer = GroupLayer::make();
 
   layer->set_meta_id(fetch_and_increment_next_layer_id());
-  layer->ctx().set_name(fmt::format("Group Layer {}", mGroupLayerSuffix));
+  layer->ctx().set_name(format_str("Group Layer {}", mGroupLayerSuffix));
   ++mGroupLayerSuffix;
 
   const auto id = layer->ctx().uuid();

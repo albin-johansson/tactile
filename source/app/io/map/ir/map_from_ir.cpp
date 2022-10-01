@@ -38,6 +38,7 @@
 #include "core/tile_pos.hpp"
 #include "core/tileset/tileset_info.hpp"
 #include "core/util/functional.hpp"
+#include "core/util/string.hpp"
 #include "core/uuid.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/parse_result.hpp"
@@ -309,7 +310,7 @@ void map_from_ir(const ParseResult& result, DocumentModel& model)
 
   const auto path = fs::absolute(result.path());
   document->set_path(path);
-  document->set_name(path.filename().string());
+  document->set_name(from_std(path.filename().string()));
 
   map.set_tile_size(map_data.tile_size);
   map.set_next_layer_id(map_data.next_layer_id);

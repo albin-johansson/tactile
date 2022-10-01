@@ -20,6 +20,7 @@
 #include <spdlog/spdlog.h>
 
 #include "core/layer/tile_format.hpp"
+#include "core/util/string.hpp"
 #include "core/util/tiles.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/json/json_parser.hpp"
@@ -106,8 +107,8 @@ namespace {
     map.tile_format.encoding = TileEncoding::Base64;
     map.tile_format.compression = compression;
 
-    const auto data_str = data.get<String>();
-    tile_layer.tiles = base64_decode_tiles(data_str,
+    const auto data_str = data.get<std::string>();
+    tile_layer.tiles = base64_decode_tiles(StringView {data_str.data(), data_str.size()},
                                            tile_layer.row_count,
                                            tile_layer.col_count,
                                            compression);

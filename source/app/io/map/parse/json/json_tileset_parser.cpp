@@ -17,6 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <string>   // string
 #include <utility>  // move
 
 #include <spdlog/spdlog.h>
@@ -114,7 +115,7 @@ namespace {
     return ParseError::NoTilesetImagePath;
   }
 
-  auto absolute = fs::weakly_canonical(dir / relative->get<String>());
+  auto absolute = fs::weakly_canonical(dir / relative->get<std::string>());
   if (fs::exists(absolute)) {
     tileset_data.image_path = std::move(absolute);
   }
@@ -201,7 +202,7 @@ namespace {
 {
   TACTILE_ASSERT(json.contains("source"));
 
-  const auto relative = json.at("source").get<String>();
+  const auto relative = json.at("source").get<std::string>();
   const auto source = fs::weakly_canonical(dir / relative);
 
   if (!fs::exists(source)) {

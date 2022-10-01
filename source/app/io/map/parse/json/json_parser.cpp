@@ -19,6 +19,8 @@
 
 #include "json_parser.hpp"
 
+#include <string>  // string
+
 #include "core/type/string.hpp"
 #include "io/util/json.hpp"
 
@@ -28,7 +30,7 @@ namespace {
 [[nodiscard]] auto validate_map(const JSON& json) -> ParseError
 {
   if (const auto iter = json.find("orientation");
-      iter == json.end() || iter->get<String>() != "orthogonal") {
+      iter == json.end() || iter->get<std::string>() != "orthogonal") {
     return ParseError::UnsupportedMapOrientation;
   }
 

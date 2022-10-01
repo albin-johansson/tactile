@@ -23,13 +23,13 @@
 
 namespace tactile::test {
 
-ComponentBuilder::ComponentBuilder(Shared<ComponentIndex> index, std::string name)
+ComponentBuilder::ComponentBuilder(Shared<ComponentIndex> index, String name)
     : mIndex {std::move(index)}
     , mComponentId {mIndex->define_comp(std::move(name))}
 {
 }
 
-auto ComponentBuilder::with_attr(std::string name, Attribute value) -> ComponentBuilder&
+auto ComponentBuilder::with_attr(String name, Attribute value) -> ComponentBuilder&
 {
   auto& comp = mIndex->at(mComponentId);
   comp.add_attr(std::move(name), std::move(value));

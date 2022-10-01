@@ -26,23 +26,22 @@
  * and height, etc.
  */
 
-#include <string>  // string
-
 #include <gtest/gtest.h>
 
 #include "core/common/fs.hpp"
+#include "core/type/string.hpp"
 #include "core/util/assoc.hpp"
 #include "core/util/tiles.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/parse/parse_map.hpp"
 
-using namespace std::string_literals;
+using namespace eastl::string_literals;
 
 namespace tactile::test {
 namespace {
 
-inline std::string current_parser;
+inline String current_parser;
 
 void validate_contexts(const ir::ContextData& source, const ir::ContextData& restored)
 {

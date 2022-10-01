@@ -24,16 +24,13 @@
 #include <numbers>    // pi
 #include <utility>    // move
 
-#include <boost/uuid/uuid_hash.hpp>
-#include <fmt/format.h>
-#include <spdlog/spdlog.h>
-
 #include "core/tile_pos.hpp"
 #include "core/type/string.hpp"
 #include "core/type/vector.hpp"
 #include "core/util/assoc.hpp"
+#include "core/util/fmt.hpp"
 #include "core/util/functional.hpp"
-#include "core/util/query.hpp"
+#include "core/util/string.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "misc/assert.hpp"
 
@@ -98,10 +95,11 @@ void add_tileset_textures(const ir::MapData& map,
                           HashMap<UUID, GdExtRes>& tileset_textures)
 {
   for (const auto& tileset : map.tilesets) {
-    const auto filename = tileset.name + tileset.image_path.extension().string();
-    const auto relpath = options.project_image_dir / filename;
+    const auto filename =
+        tileset.name + from_std(tileset.image_path.extension().string());
+    const auto relpath = options.project_image_dir / to_std_view(filename);
     const auto id =
-        file.add_ext_resource(fmt::format("res://{}", relpath.string()), "Texture");
+        file.add_ext_resource(format_str("res://{}", relpath.string()), "Texture");
 
     tileset_textures[tileset.uuid] = id;
   }
@@ -118,7 +116,7 @@ void add_animation(const ir::TilesetData& tileset,
   const auto tile_id = tileset.first_tile + tile_index;
 
   GdAnimation animation;
-  animation.name = fmt::format("Tile {}", tile_id);
+  animation.name = format_str("Tile {}", tile_id);
   animation.frames.reserve(tile.frames.size());
 
   // Godot only supports a single speed for animations, so we just use the first frame
@@ -181,9 +179,9 @@ void add_animations(const ir::MapData& map,
                                  String parent,
                                  GodotFile& file) -> GdObject
 {
-  auto object_name = fmt::format("Object {}", object.id);
+  auto object_name = format_str("Object {}", object.id);
   if (!object.name.empty()) {
-    object_name += fmt::format(" ('{}')", object.name);
+    object_name += format_str(" ('{}')", object.name);
   }
 
   GdObject gd_object;
@@ -233,9 +231,9 @@ void add_object_layer(const GodotEmitOptions& options,
   auto& gd_object_layer = gd_layer.value.emplace<GdObjectLayer>();
   gd_object_layer.objects.reserve(object_layer.objects.size());
 
-  const auto object_parent =
-      (gd_layer.parent == ".") ? to_godot_name(layer.name)
-                               : fmt::format("{}/{}", parent, to_godot_name(layer.name));
+  const auto object_parent = (gd_layer.parent == ".")
+                                 ? to_godot_name(layer.name)
+                                 : format_str("{}/{}", parent, to_godot_name(layer.name));
 
   for (const auto& object : object_layer.objects) {
     gd_object_layer.objects.push_back(
@@ -292,7 +290,7 @@ void add_tile_layer(const ir::MapData& map,
         animation.tile_id = tile_id;
         animation.row = row;
         animation.col = col;
-        animation.parent = fmt::format("{}/{}", gd_layer.parent, gd_layer.name);
+        animation.parent = format_str("{}/{}", gd_layer.parent, gd_layer.name);
       }
     }
   });
@@ -325,9 +323,8 @@ void add_layer(const GodotEmitOptions& options,
           .visible = layer.visible,
       });
 
-      const auto child_parent_path = (parent == ".")
-                                         ? layer_name  //
-                                         : fmt::format("{}/{}", parent, layer_name);
+      const auto child_parent_path =
+          (parent == ".") ? layer_name : format_str("{}/{}", parent, layer_name);
 
       const auto& group_layer = layer.as_group_layer();
       for (const auto& child_layer : group_layer.children) {

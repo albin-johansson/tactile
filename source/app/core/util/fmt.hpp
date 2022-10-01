@@ -24,6 +24,8 @@
 #include <sstream>      // stringstream
 #include <string_view>  // string_view
 
+#include <EASTL/string.h>
+#include <EASTL/string_view.h>
 #include <boost/stacktrace/stacktrace.hpp>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
@@ -31,9 +33,28 @@
 #include "core/common/fs.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/type/string.hpp"
+#include "core/util/string.hpp"
 #include "meta/build.hpp"
 
 namespace fmt {
+
+template <>
+struct formatter<eastl::string_view> : formatter<std::string_view> {
+  auto format(eastl::string_view str, auto& ctx) const
+  {
+    const auto view = tactile::to_std_view(str);
+    return formatter<std::string_view>::format(view, ctx);
+  }
+};
+
+template <>
+struct formatter<eastl::string> : formatter<std::string_view> {
+  auto format(const eastl::string& str, auto& ctx) const
+  {
+    const auto view = tactile::to_std_view(str);
+    return formatter<std::string_view>::format(view, ctx);
+  }
+};
 
 template <>
 struct formatter<tactile::fs::path> : formatter<std::string_view> {
@@ -70,8 +91,10 @@ class FmtString final {
   template <typename... Args>
   explicit FmtString(StringView fmt, const Args&... args)
   {
-    const auto result =
-        fmt::format_to_n(mBuffer.begin(), Capacity, fmt::runtime(fmt), args...);
+    const auto result = fmt::format_to_n(mBuffer.begin(),
+                                         Capacity,
+                                         fmt::runtime(to_std_view(fmt)),
+                                         args...);
     *result.out = '\0';  // Ensure null-terminator
     mSize = (std::min)(result.size, Capacity);
   }
@@ -91,5 +114,16 @@ class FmtString final {
   std::array<char, Capacity + 1> mBuffer;  // NOLINT
   usize mSize {};
 };
+
+[[nodiscard]] auto format_str(StringView fmt, const auto&... args) -> String
+{
+  const auto real_fmt = fmt::runtime(to_std_view(fmt));
+
+  String out;
+  out.reserve(fmt::formatted_size(real_fmt, args...));
+
+  fmt::format_to(std::back_inserter(out), real_fmt, args...);
+  return out;
+}
 
 }  // namespace tactile

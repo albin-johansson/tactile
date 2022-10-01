@@ -19,12 +19,12 @@
 
 #include <sstream>  // stringstream
 
-#include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
 #include "core/common/fs.hpp"
 #include "core/util/file.hpp"
 #include "core/util/filesystem.hpp"
+#include "core/util/fmt.hpp"
 #include "core/util/functional.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
@@ -378,8 +378,8 @@ void append_tileset(XMLNode root, const ir::TilesetData& tileset, const fs::path
     append_embedded_tileset(root, tileset, dir);
   }
   else {
-    const auto filename = fmt::format("{}.tsx", tileset.name);
-    const auto source = dir / filename;
+    const auto filename = format_str("{}.tsx", tileset.name);
+    const auto source = dir / to_std_view(filename);
     emit_external_tileset_file(source, tileset, dir);
     append_external_tileset(root, tileset, filename);
   }

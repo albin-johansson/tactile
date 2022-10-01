@@ -19,6 +19,7 @@
 
 #include "yaml_parser.hpp"
 
+#include <string>   // string
 #include <utility>  // move
 
 #include <yaml-cpp/yaml.h>
@@ -35,7 +36,7 @@ namespace {
   ir::TileFormatData format;
 
   if (auto encoding = node["encoding"]) {
-    auto encoding_str = encoding.as<String>();
+    const auto encoding_str = encoding.as<std::string>();
     if (encoding_str == "plain") {
       format.encoding = TileEncoding::Plain;
     }
@@ -51,7 +52,7 @@ namespace {
   }
 
   if (auto compression = node["compression"]) {
-    auto compression_str = compression.as<String>();
+    const auto compression_str = compression.as<std::string>();
     if (compression_str == "none") {
       format.compression = TileCompression::None;
     }

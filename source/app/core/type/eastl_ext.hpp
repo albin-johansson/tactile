@@ -19,14 +19,23 @@
 
 #pragma once
 
-#include <EASTL/map.h>
+#include <EASTL/string.h>
+#include <EASTL/string_view.h>
 
-#include "core/type/eastl_ext.hpp"
-#include "core/type/eastl_new.hpp"
+namespace eastl {
 
-namespace tactile {
+template <typename T, typename Allocator>
+inline auto operator<(const basic_string<T, Allocator>& a, const basic_string_view<T>& b)
+    -> bool
+{
+  return basic_string<T, Allocator>::compare(a.begin(), a.end(), b.begin(), b.end()) < 0;
+}
 
-template <typename K, typename V>
-using TreeMap = eastl::map<K, V>;
+template <typename T, typename Allocator>
+inline auto operator<(const basic_string_view<T>& a, const basic_string<T, Allocator>& b)
+    -> bool
+{
+  return basic_string_view<T>::compare(a.begin(), a.end(), b.begin(), b.end()) < 0;
+}
 
-}  // namespace tactile
+}  // namespace eastl

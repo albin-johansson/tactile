@@ -35,6 +35,7 @@
 #include "core/event/viewport_events.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/tileset/tileset_info.hpp"
+#include "core/util/string.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/shortcut/shortcuts.hpp"
 #include "editor/ui/dialog/save_as_dialog.hpp"
@@ -358,7 +359,7 @@ void App::on_save()
       io::emit_map(*document);
 
       document->get_history().mark_as_clean();
-      document->set_name(document->get_path().filename().string());
+      document->set_name(from_std(document->get_path().filename().string()));
     }
     else {
       on_open_save_as_dialog();

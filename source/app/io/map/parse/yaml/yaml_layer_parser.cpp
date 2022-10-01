@@ -29,7 +29,7 @@
 #include "io/util/base64_tiles.hpp"
 #include "io/util/yaml.hpp"
 
-using namespace std::string_literals;
+using namespace eastl::string_literals;
 
 namespace tactile::io {
 namespace {

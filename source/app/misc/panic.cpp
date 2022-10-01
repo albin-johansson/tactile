@@ -23,6 +23,8 @@
 
 #include <boost/stacktrace.hpp>
 
+#include "core/util/string.hpp"
+
 namespace tactile {
 
 TactileError::TactileError(const char* what)
@@ -32,7 +34,7 @@ TactileError::TactileError(const char* what)
   // the trace into a string, and log it later.
   std::stringstream stream;
   stream << boost::stacktrace::stacktrace {};
-  mTrace = stream.str();
+  mTrace = from_std(stream.str());
 }
 
 }  // namespace tactile

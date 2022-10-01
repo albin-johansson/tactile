@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include <unordered_map>
-
 #include <EASTL/hash_map.h>
 
 #include "core/type/eastl_new.hpp"
@@ -28,6 +26,6 @@
 namespace tactile {
 
 template <typename K, typename V>
-using HashMap = std::unordered_map<K, V>;
+using HashMap = eastl::hash_map<K, V>;
 
 }  // namespace tactile

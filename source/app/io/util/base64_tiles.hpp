@@ -53,7 +53,7 @@ namespace tactile::io {
 /// \param compression the compression method used when encoding the tiles.
 ///
 /// \return the decoded tile data.
-[[nodiscard]] auto base64_decode_tiles(const String& tiles,
+[[nodiscard]] auto base64_decode_tiles(StringView tiles,
                                        usize rows,
                                        usize columns,
                                        TileCompression compression) -> TileMatrix;

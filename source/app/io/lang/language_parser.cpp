@@ -19,9 +19,12 @@
 
 #include "language_parser.hpp"
 
-#include <fmt/format.h>
+#include <string>  // string
+
 #include <spdlog/spdlog.h>
 
+#include "core/util/fmt.hpp"
+#include "core/util/string.hpp"
 #include "editor/ui/icons.hpp"
 #include "io/directories.hpp"
 #include "io/util/json.hpp"
@@ -34,7 +37,7 @@ namespace {
 void load(const JSON& json, String& string, const char* key)
 {
   if (const auto* value = try_get(json, key)) {
-    string = *value;
+    string = from_std(value->get<std::string>());
   }
 
   if (string.empty()) {
@@ -48,7 +51,7 @@ void load(const JSON& json, String& string, const char* key)
 void load(const JSON& json, String& string, const char* key, const char* icon)
 {
   if (const auto* value = try_get(json, key)) {
-    string = fmt::format("{} {}", icon, *value);
+    string = format_str("{} {}", icon, *value);
   }
 
   if (string.empty()) {

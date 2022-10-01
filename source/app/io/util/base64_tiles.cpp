@@ -19,15 +19,17 @@
 
 #include "base64_tiles.hpp"
 
-#include <bit>       // endian
-#include <concepts>  // same_as
-#include <cstring>   // memcpy
+#include <bit>          // endian
+#include <concepts>     // same_as
+#include <cstring>      // memcpy
+#include <string_view>  // string_view
 
 #include <folly/Bits.h>
 #include <folly/base64.h>
 
 #include "core/util/functional.hpp"
 #include "core/util/numeric.hpp"
+#include "core/util/string.hpp"
 #include "core/util/tiles.hpp"
 #include "io/compression.hpp"
 #include "misc/panic.hpp"
@@ -80,8 +82,8 @@ static_assert(std::same_as<TileID, int32>);
 [[nodiscard]] auto encode(const ByteStream& stream) -> String
 {
   const auto* data = static_cast<const char*>(static_cast<const void*>(stream.data()));
-  StringView view {data, stream.size()};
-  return folly::base64Encode(view);
+  std::string_view view {data, stream.size()};
+  return from_std(folly::base64Encode(view));
 }
 
 }  // namespace
@@ -110,12 +112,12 @@ auto base64_encode_tiles(const TileMatrix& tiles,
   }
 }
 
-auto base64_decode_tiles(const String& tiles,
+auto base64_decode_tiles(StringView tiles,
                          const usize rows,
                          const usize columns,
                          const TileCompression compression) -> TileMatrix
 {
-  const auto decoded = folly::base64Decode(tiles);
+  const auto decoded = folly::base64Decode(to_std_view(tiles));
 
   switch (compression) {
     case TileCompression::None:
