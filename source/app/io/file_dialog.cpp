@@ -51,7 +51,7 @@ auto FileDialog::is_okay() const noexcept -> bool
   return mPath != nullptr;
 }
 
-auto FileDialog::path() const -> fs::path
+auto FileDialog::path() const -> Path
 {
   TACTILE_ASSERT(is_okay());
   return {mPath};

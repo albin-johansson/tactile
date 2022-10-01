@@ -24,7 +24,6 @@
 #include <entt/entity/registry.hpp>
 
 #include "core/cmd/command_stack.hpp"
-#include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/comp/component_index.hpp"

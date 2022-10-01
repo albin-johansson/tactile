@@ -32,6 +32,7 @@
 #include "core/map.hpp"
 #include "core/tool/tool_manager.hpp"
 #include "core/tool/tool_type.hpp"
+#include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"
 #include "core/type/vector.hpp"
@@ -111,7 +112,7 @@ class MapDocument final : public Document {
 
   void set_name(String name) override;
 
-  void set_path(fs::path path) override;
+  void set_path(Path path) override;
 
   [[nodiscard]] auto has_path() const -> bool override;
 
@@ -132,7 +133,7 @@ class MapDocument final : public Document {
 
   [[nodiscard]] auto get_name() const -> const String& override;
 
-  [[nodiscard]] auto get_path() const -> const fs::path& override;
+  [[nodiscard]] auto get_path() const -> const Path& override;
 
   [[nodiscard]] auto get_type() const -> DocumentType override;
 

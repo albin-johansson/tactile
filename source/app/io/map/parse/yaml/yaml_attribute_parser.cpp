@@ -22,7 +22,6 @@
 
 #include <centurion/color.hpp>
 
-#include "core/common/fs.hpp"
 #include "core/common/maybe.hpp"
 #include "core/type/string.hpp"
 #include "core/util/string.hpp"
@@ -50,7 +49,7 @@ namespace {
       return value.as<bool>();
 
     case AttributeType::Path: {
-      const fs::path file = value.as<std::string>();
+      const Path file = value.as<std::string>();
       return file;
     }
     case AttributeType::Color: {
@@ -113,7 +112,7 @@ namespace {
         break;
 
       case AttributeType::Path: {
-        fs::path path = default_value.as<std::string>();
+        Path path = default_value.as<std::string>();
         value = std::move(path);
         break;
       }

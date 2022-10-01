@@ -22,9 +22,9 @@
 #include <nlohmann/json.hpp>
 
 #include "core/attribute.hpp"
-#include "core/common/fs.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/path.hpp"
 #include "core/type/string.hpp"
 
 namespace tactile {
@@ -44,11 +44,11 @@ NLOHMANN_JSON_SERIALIZE_ENUM(AttributeType,
 
 void to_json(JSON& json, const Attribute& value);
 
-void write_json(const JSON& json, const fs::path& path);
+void write_json(const JSON& json, const Path& path);
 
 [[nodiscard]] auto try_get(const JSON& json, const char* key) -> const JSON*;
 
-[[nodiscard]] auto read_json(const fs::path& path) -> Maybe<JSON>;
+[[nodiscard]] auto read_json(const Path& path) -> Maybe<JSON>;
 
 namespace io {
 

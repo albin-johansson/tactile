@@ -19,7 +19,6 @@
 
 #include <utility>  // move
 
-#include "core/common/fs.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/type/string.hpp"
 #include "core/util/string.hpp"
@@ -117,7 +116,7 @@ constexpr int32 tileset_format_version = 1;
 }
 
 [[nodiscard]] auto parse_tileset(const ir::MapData& map,
-                                 const fs::path& source,
+                                 const Path& source,
                                  const TileID first_tile_id)
     -> Expected<ir::TilesetData, ParseError>
 {
@@ -207,9 +206,8 @@ constexpr int32 tileset_format_version = 1;
 
 }  // namespace
 
-auto parse_tilesets(const YAML::Node& sequence,
-                    const ir::MapData& map,
-                    const fs::path& dir) -> Expected<Vec<ir::TilesetData>, ParseError>
+auto parse_tilesets(const YAML::Node& sequence, const ir::MapData& map, const Path& dir)
+    -> Expected<Vec<ir::TilesetData>, ParseError>
 {
   Vec<ir::TilesetData> tilesets;
   tilesets.reserve(sequence.size());

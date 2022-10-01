@@ -20,10 +20,10 @@
 #pragma once
 
 #include "core/cmd/command_stack.hpp"
-#include "core/common/fs.hpp"
 #include "core/common/maybe.hpp"
 #include "core/comp/component_index.hpp"
 #include "core/ctx/context_manager.hpp"
+#include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"
 #include "core/viewport.hpp"
@@ -36,12 +36,12 @@ class DocumentDelegate final {
 
   void set_component_index(Shared<ComponentIndex> index);
 
-  void set_path(fs::path path);
+  void set_path(Path path);
 
   [[nodiscard]] auto get_component_index() -> const Shared<ComponentIndex>&;
   [[nodiscard]] auto view_component_index() const -> const ComponentIndex*;
 
-  [[nodiscard]] auto path() const -> const fs::path&;
+  [[nodiscard]] auto path() const -> const Path&;
 
   [[nodiscard]] auto has_path() const -> bool;
 
@@ -59,7 +59,7 @@ class DocumentDelegate final {
   CommandStack mCommands;
   Shared<ComponentIndex> mComponentIndex;
   Viewport mViewport;
-  Maybe<fs::path> mPath;
+  Maybe<Path> mPath;
 };
 
 }  // namespace tactile

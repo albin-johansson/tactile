@@ -21,19 +21,19 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "core/common/fs.hpp"
 #include "core/type/expected.hpp"
+#include "core/type/path.hpp"
 #include "core/type/vector.hpp"
 #include "io/map/parse/parse_error.hpp"
 #include "io/map/parse/parse_result.hpp"
 
 namespace tactile::io {
 
-[[nodiscard]] auto parse_yaml_map(const fs::path& path) -> ParseResult;
+[[nodiscard]] auto parse_yaml_map(const Path& path) -> ParseResult;
 
 [[nodiscard]] auto parse_tilesets(const YAML::Node& sequence,
                                   const ir::MapData& map,
-                                  const fs::path& dir)
+                                  const Path& dir)
     -> Expected<Vec<ir::TilesetData>, ParseError>;
 
 [[nodiscard]] auto parse_layers(const YAML::Node& sequence, const ir::MapData& map)

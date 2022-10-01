@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/type/pair.hpp"
+#include "core/type/path.hpp"
 #include "core/type/string.hpp"
 #include "core/type/vector.hpp"
 #include "core/util/assoc.hpp"
@@ -45,9 +45,9 @@ struct GdTilesetInfo final {
 /// Intermediate representation of an amalgamated Godot tileset, stored in its own file.
 class GodotTileset final : public GodotFile {
  public:
-  using TextureNamePair = Pair<fs::path, String>;
+  using TextureNamePair = Pair<Path, String>;
 
-  auto add_texture(const fs::path& dest, fs::path source) -> GdExtRes;
+  auto add_texture(const Path& dest, Path source) -> GdExtRes;
 
   void add_tileset(GdTilesetInfo info);
 

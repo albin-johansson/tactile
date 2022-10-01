@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/common/fs.hpp"
+#include "core/type/path.hpp"
 
 namespace tactile::io {
 
@@ -43,7 +43,7 @@ class FileDialog final {
 
   [[nodiscard]] auto is_okay() const noexcept -> bool;
 
-  [[nodiscard]] auto path() const -> fs::path;
+  [[nodiscard]] auto path() const -> Path;
 
  private:
   const char* mPath {};

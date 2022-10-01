@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/common/fs.hpp"
 #include "core/type/deque.hpp"
+#include "core/type/path.hpp"
 #include "core/type/string.hpp"
 
 namespace tactile::io {
@@ -35,10 +35,10 @@ void save_file_history();
 void clear_file_history();
 
 /// Adds a file path to the recent file history, if it doesn't already exist.
-void add_file_to_history(const fs::path& path);
+void add_file_to_history(const Path& path);
 
 /// Sets the most recently closed file, and stores it in the file history.
-void set_last_closed_file(const fs::path& path);
+void set_last_closed_file(const Path& path);
 
 /// Returns the current in-memory recent file history.
 [[nodiscard]] auto file_history() -> const Deque<String>&;

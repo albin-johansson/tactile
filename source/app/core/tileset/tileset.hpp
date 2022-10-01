@@ -21,7 +21,6 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/ctx/context.hpp"
@@ -30,6 +29,7 @@
 #include "core/tileset/tile.hpp"
 #include "core/tileset/tileset_info.hpp"
 #include "core/type/hash_map.hpp"
+#include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/vector.hpp"
 #include "core/uuid.hpp"
@@ -63,7 +63,7 @@ class Tileset final : public Context {
 
   [[nodiscard]] auto texture_id() const noexcept -> uint { return mTextureId; }
 
-  [[nodiscard]] auto texture_path() const -> const fs::path& { return mTexturePath; }
+  [[nodiscard]] auto texture_path() const -> const Path& { return mTexturePath; }
 
   [[nodiscard]] auto texture_size() const noexcept -> const Int2& { return mTextureSize; }
 
@@ -94,7 +94,7 @@ class Tileset final : public Context {
   Float2 mUvSize {};
   HashMap<TileIndex, UUID> mIdentifiers;
   HashMap<UUID, Shared<Tile>> mMetaTiles;
-  fs::path mTexturePath;
+  Path mTexturePath;
 
   /// A cache of the tiles that should be rendered when a tile is encountered
   mutable HashMap<TileIndex, TileIndex> mAppearanceCache;

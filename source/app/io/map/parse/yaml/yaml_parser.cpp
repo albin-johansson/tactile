@@ -91,7 +91,7 @@ namespace {
   return format;
 }
 
-[[nodiscard]] auto parse_map(const fs::path& path, ir::MapData& map) -> ParseError
+[[nodiscard]] auto parse_map(const Path& path, ir::MapData& map) -> ParseError
 {
   const auto node = YAML::LoadFile(path.string());
   if (!node) {
@@ -169,7 +169,7 @@ namespace {
 
 }  // namespace
 
-auto parse_yaml_map(const fs::path& path) -> ParseResult
+auto parse_yaml_map(const Path& path) -> ParseResult
 {
   ParseResult result;
   result.set_path(path);

@@ -21,9 +21,9 @@
 
 #include <variant>  // variant, monostate
 
-#include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/path.hpp"
 #include "core/type/string.hpp"
 #include "core/type/vector.hpp"
 #include "io/map/emit/gd/godot_file.hpp"
@@ -89,7 +89,7 @@ struct GdLayer final {
 /// This is used by the Godot emitter to simplify the emission of Godot maps.
 class GodotScene final : public GodotFile {
  public:
-  void set_tileset(GodotTileset tileset, const fs::path& dest);
+  void set_tileset(GodotTileset tileset, const Path& dest);
 
   void add_layer(GdLayer layer);
 

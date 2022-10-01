@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/attribute.hpp"
-#include "core/common/fs.hpp"
 #include "core/document/document_type.hpp"
+#include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"
 #include "core/uuid.hpp"
@@ -97,13 +97,13 @@ class Document {
   [[deprecated]] virtual void set_name(String name) = 0;
 
   /// Sets the file path associated with the document.
-  virtual void set_path(fs::path path) = 0;
+  virtual void set_path(Path path) = 0;
 
   /// Indicates whether the document has a defined path.
   [[nodiscard]] virtual auto has_path() const -> bool = 0;
 
   /// Returns the previously set document path, throwing if there is none.
-  [[nodiscard]] virtual auto get_path() const -> const fs::path& = 0;
+  [[nodiscard]] virtual auto get_path() const -> const Path& = 0;
 
   /// Returns the name of the root document context.
   [[nodiscard]] virtual auto get_name() const -> const String& = 0;

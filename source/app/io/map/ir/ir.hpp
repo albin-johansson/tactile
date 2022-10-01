@@ -23,7 +23,6 @@
 #include <variant>   // variant, get
 
 #include "core/attribute.hpp"
-#include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
@@ -31,6 +30,7 @@
 #include "core/layer/object_type.hpp"
 #include "core/layer/tile_format.hpp"
 #include "core/type/hash_map.hpp"
+#include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"
 #include "core/type/tree_map.hpp"
@@ -133,7 +133,7 @@ struct TilesetData final {
   Int2 tile_size {};
   int32 tile_count {};
   int32 column_count {};
-  fs::path image_path;
+  Path image_path;
   Int2 image_size {};
   MetaTiles fancy_tiles;
   ContextData context;

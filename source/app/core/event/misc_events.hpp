@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/common/fs.hpp"
+#include "core/type/path.hpp"
 
 namespace tactile {
 
@@ -32,7 +32,7 @@ struct ShowSettingsEvent final {};
 struct SaveEvent final {};
 
 struct SaveAsEvent final {
-  fs::path path;
+  Path path;
 };
 
 struct OpenSaveAsDialogEvent final {};

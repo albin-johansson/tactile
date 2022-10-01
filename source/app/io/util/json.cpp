@@ -92,7 +92,7 @@ void to_json(JSON& json, const Attribute& value)
   }
 }
 
-void write_json(const JSON& json, const fs::path& path)
+void write_json(const JSON& json, const Path& path)
 {
   auto stream = write_file(path, FileType::Text);
 
@@ -113,7 +113,7 @@ auto try_get(const JSON& json, const char* key) -> const JSON*
   }
 }
 
-auto read_json(const fs::path& path) -> Maybe<JSON>
+auto read_json(const Path& path) -> Maybe<JSON>
 {
   try {
     auto stream = read_file(path, FileType::Text);

@@ -28,7 +28,6 @@
 
 #include <gtest/gtest.h>
 
-#include "core/common/fs.hpp"
 #include "core/type/string.hpp"
 #include "core/util/assoc.hpp"
 #include "core/util/tiles.hpp"

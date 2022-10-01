@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/common/fs.hpp"
 #include "core/type/expected.hpp"
+#include "core/type/path.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/parse_error.hpp"
 #include "io/map/parse/parse_result.hpp"
@@ -28,9 +28,9 @@
 
 namespace tactile::io {
 
-[[nodiscard]] auto parse_xml_map(const fs::path& path) -> ParseResult;
+[[nodiscard]] auto parse_xml_map(const Path& path) -> ParseResult;
 
-[[nodiscard]] auto parse_tileset(XMLNode node, const fs::path& dir)
+[[nodiscard]] auto parse_tileset(XMLNode node, const Path& dir)
     -> Expected<ir::TilesetData, ParseError>;
 
 [[nodiscard]] auto parse_object(XMLNode object_node)

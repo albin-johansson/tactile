@@ -30,37 +30,37 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto get_home_prefix() -> const FileString&
+[[nodiscard]] auto get_home_prefix() -> const OsString&
 {
   // On Unix platforms, HOME is something like '/Users/username'
   // On Windows, USERPROFILE is something like 'C:\Users\username'
   static const auto home_env = env_var(on_windows ? "USERPROFILE" : "HOME").value();
-  static const auto home_str = to_fs_string(home_env.c_str()).value();
+  static const auto home_str = to_os_string(home_env.c_str()).value();
   return home_str;
 }
 
 }  // namespace
 
-auto convert_to_forward_slashes(const fs::path& path) -> String
+auto convert_to_forward_slashes(const Path& path) -> String
 {
   auto str = path.string();
   std::replace(str.begin(), str.end(), '\\', '/');
   return from_std(str);
 }
 
-auto has_home_prefix(const fs::path& path) -> bool
+auto has_home_prefix(const Path& path) -> bool
 {
   const auto& prefix = get_home_prefix();
-  FileStringView view {path.c_str()};
+  OsStringView view {path.c_str()};
   return view.starts_with(prefix);
 }
 
-auto to_path(StringView str) -> fs::path
+auto to_path(StringView str) -> Path
 {
   return {to_std_view(str)};
 }
 
-auto to_canonical(const fs::path& path) -> Maybe<String>
+auto to_canonical(const Path& path) -> Maybe<String>
 {
   if (has_home_prefix(path)) {
     const auto& prefix = get_home_prefix();
@@ -71,7 +71,7 @@ auto to_canonical(const fs::path& path) -> Maybe<String>
   }
 }
 
-auto to_fs_string(const char* str) -> Maybe<FileString>
+auto to_os_string(const char* str) -> Maybe<OsString>
 {
   if (!str) {
     return nothing;

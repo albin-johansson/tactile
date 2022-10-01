@@ -21,7 +21,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/common/fs.hpp"
 #include "core/util/file.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/fmt.hpp"
@@ -312,7 +311,7 @@ void append_fancy_tiles(XMLNode node, const ir::TilesetData& tileset)
 
 void append_common_tileset_attributes(XMLNode node,
                                       const ir::TilesetData& tileset,
-                                      const fs::path& dir)
+                                      const Path& dir)
 {
   node.append_attribute("name").set_value(tileset.name.c_str());
 
@@ -338,7 +337,7 @@ void append_common_tileset_attributes(XMLNode node,
 
 void append_embedded_tileset(XMLNode root,
                              const ir::TilesetData& tileset,
-                             const fs::path& dir)
+                             const Path& dir)
 {
   auto node = root.append_child("tileset");
   node.append_attribute("firstgid").set_value(tileset.first_tile);
@@ -355,9 +354,9 @@ void append_external_tileset(XMLNode root,
   node.append_attribute("source").set_value(filename.c_str());
 }
 
-void emit_external_tileset_file(const fs::path& path,
+void emit_external_tileset_file(const Path& path,
                                 const ir::TilesetData& tileset,
-                                const fs::path& dir)
+                                const Path& dir)
 {
   pugi::xml_document document;
 
@@ -371,7 +370,7 @@ void emit_external_tileset_file(const fs::path& path,
   document.save(stream, " ");
 }
 
-void append_tileset(XMLNode root, const ir::TilesetData& tileset, const fs::path& dir)
+void append_tileset(XMLNode root, const ir::TilesetData& tileset, const Path& dir)
 {
   const auto& prefs = get_preferences();
   if (prefs.embed_tilesets) {

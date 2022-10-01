@@ -23,6 +23,8 @@
 
 namespace tactile {
 
+namespace fs = std::filesystem;
+
 using Path = std::filesystem::path;
 
 }  // namespace tactile

@@ -19,24 +19,24 @@
 
 #pragma once
 
-#include "core/common/fs.hpp"
+#include "core/type/path.hpp"
 #include "io/map/ir/ir.hpp"
 
 namespace tactile::io {
 
 class EmitInfo final {
  public:
-  explicit EmitInfo(fs::path destination, ir::MapData data);
+  explicit EmitInfo(Path destination, ir::MapData data);
 
-  [[nodiscard]] auto destination_file() const -> const fs::path&;
+  [[nodiscard]] auto destination_file() const -> const Path&;
 
-  [[nodiscard]] auto destination_dir() const -> const fs::path&;
+  [[nodiscard]] auto destination_dir() const -> const Path&;
 
   [[nodiscard]] auto data() const -> const ir::MapData&;
 
  private:
-  fs::path mDestinationFile;
-  fs::path mDestinationDir;
+  Path mDestinationFile;
+  Path mDestinationDir;
   ir::MapData mData;
 };
 

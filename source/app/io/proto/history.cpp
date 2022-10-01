@@ -45,7 +45,7 @@ constexpr usize history_max_size = 10;
 inline Maybe<String> history_last_closed_file;
 inline Deque<String> history_entries;
 
-[[nodiscard]] auto get_file_path() -> const fs::path&
+[[nodiscard]] auto get_file_path() -> const Path&
 {
   static const auto path = persistent_file_dir() / "history.bin";
   return path;
@@ -101,7 +101,7 @@ void clear_file_history()
   history_entries.clear();
 }
 
-void add_file_to_history(const fs::path& path)
+void add_file_to_history(const Path& path)
 {
   auto converted = convert_to_forward_slashes(path);
   if (std::find(history_entries.begin(), history_entries.end(), converted) ==
@@ -118,7 +118,7 @@ void add_file_to_history(const fs::path& path)
   }
 }
 
-void set_last_closed_file(const fs::path& path)
+void set_last_closed_file(const Path& path)
 {
   history_last_closed_file = convert_to_forward_slashes(path);
   spdlog::trace("Last closed file is now '{}'", *history_last_closed_file);

@@ -26,7 +26,7 @@
 
 namespace tactile::io {
 
-void GodotScene::set_tileset(GodotTileset tileset, const fs::path& dest)
+void GodotScene::set_tileset(GodotTileset tileset, const Path& dest)
 {
   mTilesetId = add_ext_resource(format_str("res://{}", convert_to_forward_slashes(dest)),
                                 "TileSet");

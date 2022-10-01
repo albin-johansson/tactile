@@ -25,10 +25,10 @@
 
 #include <centurion/color.hpp>
 
-#include "core/common/fs.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/type/ostream.hpp"
+#include "core/type/path.hpp"
 #include "core/type/string.hpp"
 
 namespace tactile {
@@ -63,7 +63,7 @@ concept AnAttributeType = std::same_as<T, String> ||      //
                           std::same_as<T, float> ||       //
                           std::same_as<T, bool> ||        //
                           std::same_as<T, cen::color> ||  //
-                          std::same_as<T, fs::path> ||    //
+                          std::same_as<T, Path> ||        //
                           std::same_as<T, object_t>;
 
 /// Represents an "attribute" value, used by both property and component facilities.
@@ -73,7 +73,7 @@ class Attribute final {
   using integer_type = int32;
   using float_type = float;
   using color_type = cen::color;
-  using path_type = fs::path;
+  using path_type = Path;
 
   using value_type = std::variant<string_type,
                                   integer_type,

@@ -19,20 +19,20 @@
 
 #pragma once
 
-#include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/path.hpp"
 
 namespace tactile {
 
 struct TextureInfo final {
   uint id {};
   Int2 size {};
-  fs::path path;
+  Path path;
 };
 
-[[nodiscard]] auto load_texture(const fs::path& path) -> Maybe<TextureInfo>;
+[[nodiscard]] auto load_texture(const Path& path) -> Maybe<TextureInfo>;
 
 /// Destroys all previously loaded textures.
 void free_textures();

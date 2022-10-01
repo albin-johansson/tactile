@@ -22,7 +22,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/common/fs.hpp"
 #include "core/type/string.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/json/json_parser.hpp"
@@ -107,7 +106,7 @@ namespace {
 
 [[nodiscard]] auto parse_image_path(const JSON& json,
                                     ir::TilesetData& tileset_data,
-                                    const fs::path& dir) -> ParseError
+                                    const Path& dir) -> ParseError
 {
   const auto relative = json.find("image");
 
@@ -128,7 +127,7 @@ namespace {
 
 [[nodiscard]] auto parse_common_tileset_attributes(const JSON& json,
                                                    ir::TilesetData& tileset_data,
-                                                   const fs::path& dir) -> ParseError
+                                                   const Path& dir) -> ParseError
 {
   if (auto name = as_string(json, "name")) {
     tileset_data.name = std::move(*name);
@@ -198,7 +197,7 @@ namespace {
 
 [[nodiscard]] auto parse_external_tileset(const JSON& json,
                                           ir::TilesetData& tileset_data,
-                                          const fs::path& dir) -> ParseError
+                                          const Path& dir) -> ParseError
 {
   TACTILE_ASSERT(json.contains("source"));
 
@@ -219,7 +218,7 @@ namespace {
 
 [[nodiscard]] auto parse_tileset(const JSON& json,
                                  ir::TilesetData& tileset_data,
-                                 const fs::path& dir) -> ParseError
+                                 const Path& dir) -> ParseError
 {
   if (const auto first_tile = as_int(json, "firstgid")) {
     tileset_data.first_tile = *first_tile;
@@ -238,7 +237,7 @@ namespace {
 
 }  // namespace
 
-auto parse_tilesets(const JSON& json, ir::MapData& map_data, const fs::path& dir)
+auto parse_tilesets(const JSON& json, ir::MapData& map_data, const Path& dir)
     -> ParseError
 {
   const auto iter = json.find("tilesets");

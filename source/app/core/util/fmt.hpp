@@ -29,9 +29,9 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
-#include "core/common/fs.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/type/array.hpp"
+#include "core/type/path.hpp"
 #include "core/type/string.hpp"
 #include "core/util/string.hpp"
 #include "meta/build.hpp"
@@ -57,8 +57,8 @@ struct formatter<eastl::string> : formatter<std::string_view> {
 };
 
 template <>
-struct formatter<tactile::fs::path> : formatter<std::string_view> {
-  auto format(const tactile::fs::path& path, auto& ctx) const
+struct formatter<tactile::Path> : formatter<std::string_view> {
+  auto format(const tactile::Path& path, auto& ctx) const
   {
 #if TACTILE_PLATFORM_WINDOWS
     return formatter<std::string_view>::format(path.string(), ctx);
@@ -78,7 +78,7 @@ struct formatter<boost::stacktrace::stacktrace> : formatter<std::string_view> {
   }
 };
 
-static_assert(is_formattable<tactile::fs::path, char>::value);
+static_assert(is_formattable<tactile::Path, char>::value);
 static_assert(is_formattable<boost::stacktrace::stacktrace, char>::value);
 
 }  // namespace fmt

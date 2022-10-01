@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/common/fs.hpp"
+#include "core/type/path.hpp"
 #include "core/type/string.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 
@@ -40,10 +40,10 @@ class GodotExportDialog final : public Dialog {
       -> bool override;
 
  private:
-  fs::path mRootDir;
-  fs::path mMapDir;
-  fs::path mImageDir;
-  fs::path mTilesetDir;
+  Path mRootDir;
+  Path mMapDir;
+  Path mImageDir;
+  Path mTilesetDir;
   int mPolygonPointCount {};
 };
 

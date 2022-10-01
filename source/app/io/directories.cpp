@@ -31,7 +31,7 @@
 
 namespace tactile::io {
 
-void open_directory(const fs::path& dir)
+void open_directory(const Path& dir)
 {
   if (fs::is_directory(dir)) {
     static const auto path = persistent_file_dir().string();
@@ -56,22 +56,22 @@ void open_directory(const fs::path& dir)
   }
 }
 
-auto find_resource(const char* resource) -> fs::path
+auto find_resource(const char* resource) -> Path
 {
   TACTILE_ASSERT(resource);
-  static const fs::path dir {cen::base_path().copy()};
+  static const Path dir {cen::base_path().copy()};
   return dir / resource;
 }
 
-auto widget_ini_path() -> const fs::path&
+auto widget_ini_path() -> const Path&
 {
   static const auto ini = fs::absolute(find_resource("imgui.ini"));
   return ini;
 }
 
-auto persistent_file_dir() -> const fs::path&
+auto persistent_file_dir() -> const Path&
 {
-  static const fs::path path {cen::preferred_path("albin-johansson", "tactile").copy()};
+  static const Path path {cen::preferred_path("albin-johansson", "tactile").copy()};
   return path;
 }
 

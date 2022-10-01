@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/layer/tile_format.hpp"
+#include "core/type/path.hpp"
 
 namespace tactile {
 
@@ -45,7 +45,7 @@ struct CreateMapEvent final {
 };
 
 struct OpenMapEvent final {
-  fs::path path;
+  Path path;
 };
 
 struct InspectMapEvent final {};
@@ -61,10 +61,10 @@ struct FixTilesInMapEvent final {};
 
 /// Event emitted when the user wants to save a map as a Godot scene.
 struct ExportAsGodotSceneEvent final {
-  fs::path root_dir;
-  fs::path map_dir;
-  fs::path image_dir;
-  fs::path tileset_dir;
+  Path root_dir;
+  Path map_dir;
+  Path image_dir;
+  Path tileset_dir;
   usize polygon_points {};
 };
 

@@ -61,14 +61,14 @@ TEST(Filesystem, ToCanonical)
   ASSERT_FALSE(to_canonical("file.txt").has_value());
 }
 
-TEST(Filesystem, ToFsString)
+TEST(Filesystem, ToOsString)
 {
-  ASSERT_FALSE(to_fs_string(nullptr).has_value());
+  ASSERT_FALSE(to_os_string(nullptr).has_value());
 
 #if TACTILE_PLATFORM_WINDOWS
   ASSERT_EQ(L"foo/bar.txt", to_fs_string("foo/bar.txt").value());
 #else
-  ASSERT_EQ("foo/bar.txt", to_fs_string("foo/bar.txt").value());
+  ASSERT_EQ("foo/bar.txt", to_os_string("foo/bar.txt").value());
 #endif  // TACTILE_PLATFORM_WINDOWS
 }
 

@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/type/array.hpp"
+#include "core/type/path.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
@@ -41,7 +41,7 @@ class CreateTilesetDialog final : public Dialog {
       -> bool override;
 
  private:
-  fs::path mFullImagePath;
+  Path mFullImagePath;
   Array<char, 100> mPathPreviewBuffer {};
   Int2 mTileSize {32, 32};
 

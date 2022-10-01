@@ -21,7 +21,6 @@
 
 #include <utility>  // move
 
-#include "core/common/fs.hpp"
 #include "io/util/xml.hpp"
 
 namespace tactile::io {
@@ -40,7 +39,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_map(const fs::path& path, ir::MapData& data) -> ParseError
+[[nodiscard]] auto parse_map(const Path& path, ir::MapData& data) -> ParseError
 {
   pugi::xml_document document;
   if (!document.load_file(path.c_str(), pugi::parse_default | pugi::parse_trim_pcdata)) {
@@ -125,7 +124,7 @@ namespace {
 
 }  // namespace
 
-auto parse_xml_map(const fs::path& path) -> ParseResult
+auto parse_xml_map(const Path& path) -> ParseResult
 {
   ParseResult result;
   result.set_path(path);

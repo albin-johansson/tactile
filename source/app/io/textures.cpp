@@ -42,7 +42,7 @@ inline Vec<uint> textures;
 
 }  // namespace
 
-auto load_texture(const fs::path& path) -> Maybe<TextureInfo>
+auto load_texture(const Path& path) -> Maybe<TextureInfo>
 {
   TextureInfo texture;
   texture.path = path;

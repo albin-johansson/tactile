@@ -24,7 +24,7 @@
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
-#include "core/common/fs.hpp"
+#include "core/type/path.hpp"
 #include "core/util/file.hpp"
 #include "core/util/fmt.hpp"
 #include "core/util/string.hpp"
@@ -36,13 +36,13 @@ namespace {
 
 inline PreferenceState current_settings;
 
-[[nodiscard]] auto get_preference_file_path() -> const fs::path&
+[[nodiscard]] auto get_preference_file_path() -> const Path&
 {
   static const auto path = persistent_file_dir() / "settings.bin";
   return path;
 }
 
-[[nodiscard]] auto parse_preferences(const fs::path& path) -> PreferenceState
+[[nodiscard]] auto parse_preferences(const Path& path) -> PreferenceState
 {
   PreferenceState result {};
   auto stream = read_file(path, FileType::Binary);

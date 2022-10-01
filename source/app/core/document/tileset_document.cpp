@@ -63,7 +63,7 @@ void TilesetDocument::set_name(String name)
   mTileset->ctx().set_name(std::move(name));
 }
 
-void TilesetDocument::set_path(fs::path path)
+void TilesetDocument::set_path(Path path)
 {
   mDelegate.set_path(std::move(path));
 }
@@ -118,7 +118,7 @@ auto TilesetDocument::get_name() const -> const String&
   return mTileset->ctx().name();
 }
 
-auto TilesetDocument::get_path() const -> const fs::path&
+auto TilesetDocument::get_path() const -> const Path&
 {
   return mDelegate.path();
 }

@@ -21,7 +21,7 @@
 
 namespace tactile::io {
 
-void ParseResult::set_path(const fs::path& path)
+void ParseResult::set_path(const Path& path)
 {
   mPath = fs::absolute(path);
 }
@@ -31,7 +31,7 @@ void ParseResult::set_error(const ParseError error)
   mError = error;
 }
 
-auto ParseResult::path() const -> const fs::path&
+auto ParseResult::path() const -> const Path&
 {
   return mPath;
 }

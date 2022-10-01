@@ -184,7 +184,7 @@ auto DocumentModel::has_document(const UUID& id) const -> bool
   return mDocuments.find(id) != mDocuments.end();
 }
 
-auto DocumentModel::has_document_with_path(const fs::path& path) const -> bool
+auto DocumentModel::has_document_with_path(const Path& path) const -> bool
 {
   return std::any_of(mDocuments.begin(), mDocuments.end(), [&](const auto& pair) {
     const auto& document = pair.second;
@@ -192,7 +192,7 @@ auto DocumentModel::has_document_with_path(const fs::path& path) const -> bool
   });
 }
 
-auto DocumentModel::get_id_for_path(const fs::path& path) const -> UUID
+auto DocumentModel::get_id_for_path(const Path& path) const -> UUID
 {
   for (const auto& [id, document] : mDocuments) {
     if (document->has_path() && document->get_path() == path) {

@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/common/fs.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/path.hpp"
 
 namespace tactile::io {
 
@@ -36,10 +36,10 @@ namespace tactile::io {
 /// There is no one true way to organize a Godot project, so we let the user specify how
 /// their repository is arranged.
 struct GodotEmitOptions final {
-  fs::path root_dir;                  ///< Path to the local project directory.
-  fs::path project_map_dir;           ///< Relative path to the map directory.
-  fs::path project_image_dir;         ///< Relative path to the image directory.
-  fs::path project_tileset_dir;       ///< Relative path to the tileset directory.
+  Path root_dir;                      ///< Path to the local project directory.
+  Path project_map_dir;               ///< Relative path to the map directory.
+  Path project_image_dir;             ///< Relative path to the image directory.
+  Path project_tileset_dir;           ///< Relative path to the tileset directory.
   usize ellipse_polygon_point_count;  ///< Amount of points in ellipse approximations.
 };
 

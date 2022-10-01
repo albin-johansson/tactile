@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include "core/common/fs.hpp"
+#include "core/type/path.hpp"
 
 namespace tactile::io {
 
 /// Opens a directory in the OS file explorer
-void open_directory(const fs::path& dir);
+void open_directory(const Path& dir);
 
 /// Returns the path to a resource.
 ///
@@ -34,12 +34,12 @@ void open_directory(const fs::path& dir);
 /// \param resource the path to the resource, e.g "assets/foo.png".
 ///
 /// \return the resolved file path.
-[[nodiscard]] auto find_resource(const char* resource) -> fs::path;
+[[nodiscard]] auto find_resource(const char* resource) -> Path;
 
 /// Returns the file path to the associated `imgui.ini` file.
-[[nodiscard]] auto widget_ini_path() -> const fs::path&;
+[[nodiscard]] auto widget_ini_path() -> const Path&;
 
 /// Returns the path to the persistent file directory.
-[[nodiscard]] auto persistent_file_dir() -> const fs::path&;
+[[nodiscard]] auto persistent_file_dir() -> const Path&;
 
 }  // namespace tactile::io

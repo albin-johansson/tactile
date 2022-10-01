@@ -22,7 +22,6 @@
 
 #include <centurion/color.hpp>
 
-#include "core/common/fs.hpp"
 #include "core/type/string.hpp"
 #include "core/util/string.hpp"
 #include "io/map/ir/ir.hpp"
@@ -62,7 +61,7 @@ namespace {
       break;
     }
     case AttributeType::Path: {
-      fs::path path = to_std(as_string(node, "value").value());
+      Path path = to_std(as_string(node, "value").value());
       value = std::move(path);
       break;
     }

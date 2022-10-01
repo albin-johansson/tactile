@@ -23,13 +23,13 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/maybe.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/document/document.hpp"
 #include "core/tool/tool_type.hpp"
 #include "core/type/hash_map.hpp"
+#include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/vector.hpp"
 #include "uuid.hpp"
@@ -86,10 +86,10 @@ class DocumentModel final {
   [[nodiscard]] auto has_document(const UUID& id) const -> bool;
 
   /// Indicates whether any of the loaded documents are located at the specific path.
-  [[nodiscard]] auto has_document_with_path(const fs::path& path) const -> bool;
+  [[nodiscard]] auto has_document_with_path(const Path& path) const -> bool;
 
   /// Returns the document ID of the loaded document with the specified path.
-  [[nodiscard]] auto get_id_for_path(const fs::path& path) const -> UUID;
+  [[nodiscard]] auto get_id_for_path(const Path& path) const -> UUID;
 
   /// Indicates whether there is an active document, of any type.
   [[nodiscard]] auto has_active_document() const -> bool;

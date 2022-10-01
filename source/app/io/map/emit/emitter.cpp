@@ -21,7 +21,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/common/fs.hpp"
 #include "core/document/map_document.hpp"
 #include "core/util/fmt.hpp"
 #include "io/map/emit/emit_info.hpp"

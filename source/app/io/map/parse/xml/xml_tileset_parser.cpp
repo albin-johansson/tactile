@@ -19,7 +19,6 @@
 
 #include <utility>  // move
 
-#include "core/common/fs.hpp"
 #include "core/util/string.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
@@ -86,7 +85,7 @@ namespace {
 
 [[nodiscard]] auto parse_image_info(XMLNode tileset_node,
                                     ir::TilesetData& tileset,
-                                    const fs::path& dir) -> ParseError
+                                    const Path& dir) -> ParseError
 {
   const auto image_node = tileset_node.child("image");
 
@@ -122,7 +121,7 @@ namespace {
 
 [[nodiscard]] auto parse_common_attributes(XMLNode node,
                                            const TileID first_id,
-                                           const fs::path& dir)
+                                           const Path& dir)
     -> Expected<ir::TilesetData, ParseError>
 {
   ir::TilesetData tileset;
@@ -186,7 +185,7 @@ namespace {
 
 [[nodiscard]] auto parse_external_tileset(XMLNode node,
                                           const TileID first_id,
-                                          const fs::path& dir)
+                                          const Path& dir)
     -> Expected<ir::TilesetData, ParseError>
 {
   TACTILE_ASSERT(has_attr(node, "source"));
@@ -209,8 +208,7 @@ namespace {
 
 }  // namespace
 
-auto parse_tileset(XMLNode node, const fs::path& dir)
-    -> Expected<ir::TilesetData, ParseError>
+auto parse_tileset(XMLNode node, const Path& dir) -> Expected<ir::TilesetData, ParseError>
 {
   TileID first_id {};
   if (const auto id = as_int(node, "firstgid")) {

@@ -233,7 +233,7 @@ void MapDocument::set_name(String name)
   mMap->ctx().set_name(name);
 }
 
-void MapDocument::set_path(fs::path path)
+void MapDocument::set_path(Path path)
 {
   mDelegate.set_path(std::move(path));
 }
@@ -298,7 +298,7 @@ auto MapDocument::get_name() const -> const String&
   return mMap->ctx().name();
 }
 
-auto MapDocument::get_path() const -> const fs::path&
+auto MapDocument::get_path() const -> const Path&
 {
   return mDelegate.path();
 }

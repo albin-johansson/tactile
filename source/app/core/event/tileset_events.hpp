@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "core/common/fs.hpp"
 #include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/region.hpp"
+#include "core/type/path.hpp"
 #include "core/type/string.hpp"
 #include "core/uuid.hpp"
 
@@ -33,7 +33,7 @@ struct ShowTilesetCreationDialogEvent final {};
 struct InspectTilesetEvent final {};
 
 struct LoadTilesetEvent final {
-  fs::path path;
+  Path path;
   Int2 tile_size {};
 };
 

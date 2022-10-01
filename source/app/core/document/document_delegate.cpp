@@ -36,7 +36,7 @@ void DocumentDelegate::set_component_index(Shared<ComponentIndex> index)
   mComponentIndex = std::move(index);
 }
 
-void DocumentDelegate::set_path(fs::path path)
+void DocumentDelegate::set_path(Path path)
 {
   mPath = std::move(path);
 }
@@ -51,7 +51,7 @@ auto DocumentDelegate::view_component_index() const -> const ComponentIndex*
   return mComponentIndex.get();
 }
 
-auto DocumentDelegate::path() const -> const fs::path&
+auto DocumentDelegate::path() const -> const Path&
 {
   TACTILE_ASSERT(mPath.has_value());
   return mPath.value();

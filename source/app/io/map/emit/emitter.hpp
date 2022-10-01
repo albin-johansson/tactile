@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "core/common/fs.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/type/string.hpp"
 

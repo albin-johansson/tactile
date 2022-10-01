@@ -53,7 +53,7 @@ namespace {
       break;
     }
     case AttributeType::Path: {
-      fs::path path = to_std(as_string(json, "value").value());
+      Path path = to_std(as_string(json, "value").value());
       value = std::move(path);
       break;
     }

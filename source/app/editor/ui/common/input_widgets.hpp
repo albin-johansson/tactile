@@ -23,8 +23,8 @@
 #include <imgui.h>
 
 #include "core/attribute.hpp"
-#include "core/common/fs.hpp"
 #include "core/common/maybe.hpp"
+#include "core/type/path.hpp"
 #include "core/type/string.hpp"
 
 namespace tactile::ui {
@@ -57,8 +57,8 @@ namespace tactile::ui {
 
 [[nodiscard]] auto input_color(const char* id, cen::color value) -> Maybe<cen::color>;
 
-[[nodiscard]] auto input_file(const char* id, const fs::path& value) -> Maybe<fs::path>;
+[[nodiscard]] auto input_file(const char* id, const Path& value) -> Maybe<Path>;
 
-[[nodiscard]] auto input_folder(const char* id, const fs::path& value) -> Maybe<fs::path>;
+[[nodiscard]] auto input_folder(const char* id, const Path& value) -> Maybe<Path>;
 
 }  // namespace tactile::ui
