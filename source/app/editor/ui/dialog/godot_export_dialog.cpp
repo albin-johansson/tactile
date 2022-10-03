@@ -25,10 +25,10 @@
 #include <imgui.h>
 
 #include "core/event/map_events.hpp"
-#include "editor/ui/alignment.hpp"
-#include "editor/ui/common/input_widgets.hpp"
-#include "editor/ui/common/tooltips.hpp"
-#include "editor/ui/scoped.hpp"
+#include "editor/ui/style/alignment.hpp"
+#include "editor/ui/widget/input_widgets.hpp"
+#include "editor/ui/widget/scoped.hpp"
+#include "editor/ui/widget/tooltips.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 

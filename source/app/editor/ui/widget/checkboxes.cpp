@@ -17,46 +17,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "tooltips.hpp"
-
-#include <chrono>  //
+#include "checkboxes.hpp"
 
 #include <imgui.h>
 
-#include "core/type/hash_map.hpp"
-#include "core/type/maybe.hpp"
-#include "core/util/assoc.hpp"
+#include "editor/ui/widget/tooltips.hpp"
 #include "misc/assert.hpp"
-
-using namespace std::chrono_literals;
-
-using Clock = std::chrono::system_clock;
-using TimePoint = Clock::time_point;
 
 namespace tactile::ui {
 
-void lazy_tooltip(const char* id, const char* tooltip)
+auto checkbox(const char* label, bool* value, const char* tooltip) -> bool
 {
-  TACTILE_ASSERT(id);
-  TACTILE_ASSERT(tooltip);
+  TACTILE_ASSERT(label);
+  TACTILE_ASSERT(value);
+  const auto changed = ImGui::Checkbox(label, value);
 
-  static HashMap<ImGuiID, Maybe<TimePoint>> state;
-
-  const auto hashed_id = ImGui::GetID(id);
-  auto& last_hover = state[hashed_id];
-
-  if (ImGui::IsItemHovered()) {
-    if (!last_hover) {
-      last_hover = Clock::now();
-    }
-
-    if (Clock::now() - last_hover.value() > 1s) {
-      ImGui::SetTooltip("%s", tooltip);
-    }
+  if (tooltip) {
+    lazy_tooltip(label, tooltip);
   }
-  else {
-    last_hover.reset();
-  }
+
+  return changed;
 }
 
 }  // namespace tactile::ui

@@ -21,10 +21,10 @@
 
 #include <imgui.h>
 
-#include "editor/ui/alignment.hpp"
-#include "editor/ui/common/tooltips.hpp"
-#include "editor/ui/scoped.hpp"
+#include "editor/ui/style/alignment.hpp"
+#include "editor/ui/widget/tooltips.hpp"
 #include "misc/assert.hpp"
+#include "scoped.hpp"
 
 namespace tactile::ui {
 

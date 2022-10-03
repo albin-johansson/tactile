@@ -28,7 +28,7 @@
 #include "core/type/maybe.hpp"
 #include "core/type/pair.hpp"
 #include "core/type/string.hpp"
-#include "editor/ui/scoped.hpp"
+#include "editor/ui/widget/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"

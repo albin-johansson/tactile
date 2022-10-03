@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "editor/ui/common/context_menu.hpp"
+#include "editor/ui/widget/context_menu.hpp"
 
 namespace tactile::ui {
 

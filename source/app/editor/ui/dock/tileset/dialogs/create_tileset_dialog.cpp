@@ -25,7 +25,7 @@
 #include "core/event/tileset_events.hpp"
 #include "core/util/buffers.hpp"
 #include "core/util/string.hpp"
-#include "editor/ui/common/buttons.hpp"
+#include "editor/ui/widget/buttons.hpp"
 #include "io/file_dialog.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"

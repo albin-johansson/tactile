@@ -25,7 +25,7 @@
 
 #include "core/util/fmt.hpp"
 #include "core/util/string.hpp"
-#include "editor/ui/icons.hpp"
+#include "editor/ui/style/icons.hpp"
 #include "io/directories.hpp"
 #include "io/util/json.hpp"
 #include "meta/build.hpp"

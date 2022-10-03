@@ -17,38 +17,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "context_menu.hpp"
+#include "dialogs.hpp"
 
-#include <entt/signal/dispatcher.hpp>
+#include <utility>  // move
 
-#include "editor/ui/scoped.hpp"
+#include "editor/ui/dialog/dialog_state.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::ui {
+namespace {
 
-ContextMenu::ContextMenu(const char* name)
-    : mName {name}
+inline Unique<DialogState> _dialogs;
+
+}  // namespace
+
+void init_dialogs()
 {
-  if (!mName) {
-    throw TactileError("Invalid null context menu name!");
-  }
+  _dialogs = std::make_unique<DialogState>();
 }
 
-void ContextMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void set_dialog_state(Unique<DialogState> state)
 {
-  if (Popup popup {mName}; popup.is_open()) {
-    on_update(model, dispatcher);
-  }
-
-  if (mShow) {
-    ImGui::OpenPopup(mName);
-    mShow = false;
-  }
+  _dialogs = std::move(state);
 }
 
-void ContextMenu::show()
+auto get_dialogs() -> DialogState&
 {
-  mShow = true;
+  if (_dialogs) [[likely]] {
+    return *_dialogs;
+  }
+  else {
+    throw TactileError {"No available dialog state!"};
+  }
 }
 
 }  // namespace tactile::ui

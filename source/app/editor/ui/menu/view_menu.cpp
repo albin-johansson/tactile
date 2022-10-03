@@ -29,7 +29,7 @@
 #include "editor/shortcut/mappings.hpp"
 #include "editor/ui/dock/dock_space.hpp"
 #include "editor/ui/fonts.hpp"
-#include "editor/ui/scoped.hpp"
+#include "editor/ui/widget/scoped.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

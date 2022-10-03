@@ -20,6 +20,8 @@
 #include "ui.hpp"
 
 #include "core/model.hpp"
+#include "editor/ui/dialog/dialog_state.hpp"
+#include "editor/ui/dialog/dialogs.hpp"
 #include "editor/ui/dock/comp/component_dock.hpp"
 #include "editor/ui/dock/dock_space.hpp"
 #include "editor/ui/dock/layer/layer_dock.hpp"
@@ -27,8 +29,6 @@
 #include "editor/ui/dock/property/property_dock.hpp"
 #include "editor/ui/dock/tileset/tileset_dock.hpp"
 #include "editor/ui/menu/menu_bar.hpp"
-#include "editor/ui/shared/dialog_state.hpp"
-#include "editor/ui/shared/dialogs.hpp"
 #include "editor/ui/viewport/map_viewport_toolbar.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
 

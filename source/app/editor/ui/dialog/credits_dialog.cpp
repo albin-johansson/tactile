@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "editor/ui/scoped.hpp"
+#include "editor/ui/widget/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 

@@ -25,10 +25,10 @@
 
 #include "core/comp/component.hpp"
 #include "core/event/component_events.hpp"
-#include "editor/ui/alignment.hpp"
-#include "editor/ui/common/input_widgets.hpp"
-#include "editor/ui/icons.hpp"
-#include "editor/ui/scoped.hpp"
+#include "editor/ui/style/alignment.hpp"
+#include "editor/ui/style/icons.hpp"
+#include "editor/ui/widget/input_widgets.hpp"
+#include "editor/ui/widget/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 

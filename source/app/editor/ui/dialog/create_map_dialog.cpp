@@ -23,7 +23,7 @@
 #include <imgui.h>
 
 #include "core/event/map_events.hpp"
-#include "editor/ui/alignment.hpp"
+#include "editor/ui/style/alignment.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

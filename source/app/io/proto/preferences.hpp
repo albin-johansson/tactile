@@ -25,7 +25,7 @@
 #include "core/common/vocabulary.hpp"
 #include "core/type/string.hpp"
 #include "editor/ui/fonts.hpp"
-#include "editor/ui/themes.hpp"
+#include "editor/ui/style/themes.hpp"
 #include "lang/language.hpp"
 
 namespace tactile::io {

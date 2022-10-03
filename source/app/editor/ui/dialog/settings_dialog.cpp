@@ -25,15 +25,15 @@
 
 #include "core/event/command_events.hpp"
 #include "core/event/misc_events.hpp"
-#include "editor/ui/alignment.hpp"
-#include "editor/ui/common/buttons.hpp"
-#include "editor/ui/common/checkboxes.hpp"
-#include "editor/ui/common/colors.hpp"
-#include "editor/ui/common/tooltips.hpp"
 #include "editor/ui/dock/dock_space.hpp"
 #include "editor/ui/fonts.hpp"
-#include "editor/ui/scoped.hpp"
-#include "editor/ui/themes.hpp"
+#include "editor/ui/style/alignment.hpp"
+#include "editor/ui/style/colors.hpp"
+#include "editor/ui/style/themes.hpp"
+#include "editor/ui/widget/buttons.hpp"
+#include "editor/ui/widget/checkboxes.hpp"
+#include "editor/ui/widget/scoped.hpp"
+#include "editor/ui/widget/tooltips.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
@@ -41,13 +41,13 @@
 namespace tactile::ui {
 namespace {
 
-void _update_preview_settings(const io::PreferenceState& prefs)
+void update_preview_settings(const io::PreferenceState& prefs)
 {
   apply_theme(ImGui::GetStyle(), prefs.theme);
   ImGui::GetStyle().WindowBorderSize = prefs.window_border ? 1.0f : 0.0f;
 }
 
-void _reset_appearance_preferences(io::PreferenceState& prefs)
+void reset_appearance_preferences(io::PreferenceState& prefs)
 {
   prefs.theme = io::def_theme;
   prefs.viewport_background = io::def_viewport_bg;
@@ -60,14 +60,14 @@ void _reset_appearance_preferences(io::PreferenceState& prefs)
   prefs.font_size = ui::def_font_size;
 }
 
-void _reset_behavior_preferences(io::PreferenceState& prefs)
+void reset_behavior_preferences(io::PreferenceState& prefs)
 {
   prefs.command_capacity = io::def_command_capacity;
   prefs.preferred_tile_size = io::def_preferred_tile_size;
   prefs.restore_last_session = io::def_restore_last_session;
 }
 
-void _reset_export_preferences(io::PreferenceState& prefs)
+void reset_export_preferences(io::PreferenceState& prefs)
 {
   prefs.preferred_format = io::def_preferred_format;
   prefs.embed_tilesets = io::def_embed_tilesets;
@@ -104,19 +104,19 @@ void SettingsDialog::on_update(const DocumentModel&, entt::dispatcher&)
 void SettingsDialog::on_cancel()
 {
   /* Reset any changes we made for preview purposes */
-  _update_preview_settings(io::get_preferences());
+  update_preview_settings(io::get_preferences());
 }
 
 void SettingsDialog::on_accept(entt::dispatcher& dispatcher)
 {
   apply_settings(dispatcher);
-  _update_preview_settings(io::get_preferences());
+  update_preview_settings(io::get_preferences());
 }
 
 void SettingsDialog::on_apply(entt::dispatcher& dispatcher)
 {
   apply_settings(dispatcher);
-  _update_preview_settings(io::get_preferences());
+  update_preview_settings(io::get_preferences());
 }
 
 void SettingsDialog::apply_settings(entt::dispatcher& dispatcher)
@@ -147,8 +147,8 @@ void SettingsDialog::update_behavior_tab()
     ImGui::Spacing();
 
     if (button(lang.setting.restore_defaults.c_str())) {
-      _reset_behavior_preferences(mUiSettings);
-      _update_preview_settings(mUiSettings);
+      reset_behavior_preferences(mUiSettings);
+      update_preview_settings(mUiSettings);
     }
 
     ImGui::Spacing();
@@ -198,8 +198,8 @@ void SettingsDialog::update_appearance_tab()
     ImGui::Spacing();
 
     if (button(lang.setting.restore_defaults.c_str())) {
-      _reset_appearance_preferences(mUiSettings);
-      _update_preview_settings(mUiSettings);
+      reset_appearance_preferences(mUiSettings);
+      update_preview_settings(mUiSettings);
     }
 
     ImGui::Spacing();
@@ -296,8 +296,8 @@ void SettingsDialog::update_export_tab()
     ImGui::Spacing();
 
     if (button(lang.setting.restore_defaults.c_str())) {
-      _reset_export_preferences(mUiSettings);
-      _update_preview_settings(mUiSettings);
+      reset_export_preferences(mUiSettings);
+      update_preview_settings(mUiSettings);
     }
 
     ImGui::Spacing();

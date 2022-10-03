@@ -24,10 +24,10 @@
 
 #include "core/document/tileset_document.hpp"
 #include "document_viewport_offset_handler.hpp"
-#include "editor/ui/common/colors.hpp"
 #include "editor/ui/render/graphics.hpp"
 #include "editor/ui/render/render_info.hpp"
 #include "editor/ui/render/render_tileset.hpp"
+#include "editor/ui/style/colors.hpp"
 #include "io/proto/preferences.hpp"
 
 namespace tactile::ui {

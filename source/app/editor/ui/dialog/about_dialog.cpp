@@ -22,8 +22,8 @@
 #include <centurion/system.hpp>
 #include <imgui.h>
 
-#include "editor/ui/common/buttons.hpp"
-#include "editor/ui/icons.hpp"
+#include "editor/ui/style/icons.hpp"
+#include "editor/ui/widget/buttons.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "meta/build.hpp"

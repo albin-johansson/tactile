@@ -23,7 +23,7 @@
 #include <imgui.h>
 
 #include "core/event/layer_events.hpp"
-#include "editor/ui/icons.hpp"
+#include "editor/ui/style/icons.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 

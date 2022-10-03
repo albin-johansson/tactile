@@ -29,9 +29,9 @@
 #include "core/tool/tool_type.hpp"
 #include "core/util/fmt.hpp"
 #include "editor/shortcut/mappings.hpp"
-#include "editor/ui/scoped.hpp"
-#include "editor/ui/shared/dialog_state.hpp"
-#include "editor/ui/shared/dialogs.hpp"
+#include "editor/ui/dialog/dialog_state.hpp"
+#include "editor/ui/dialog/dialogs.hpp"
+#include "editor/ui/widget/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 

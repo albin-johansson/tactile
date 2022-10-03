@@ -22,9 +22,9 @@
 #include <imgui.h>
 
 #include "core/type/maybe.hpp"
-#include "editor/ui/common/labels.hpp"
-#include "editor/ui/icons.hpp"
-#include "editor/ui/scoped.hpp"
+#include "editor/ui/style/icons.hpp"
+#include "editor/ui/widget/labels.hpp"
+#include "editor/ui/widget/scoped.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

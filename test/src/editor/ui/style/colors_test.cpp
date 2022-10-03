@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "editor/ui/common/colors.hpp"
+#include "editor/ui/style/colors.hpp"
 
 #include <gtest/gtest.h>
 

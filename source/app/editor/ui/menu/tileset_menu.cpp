@@ -24,7 +24,7 @@
 
 #include "core/event/tileset_events.hpp"
 #include "core/model.hpp"
-#include "editor/ui/scoped.hpp"
+#include "editor/ui/widget/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 

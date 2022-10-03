@@ -29,11 +29,11 @@
 #include "core/event/tileset_events.hpp"
 #include "core/event/viewport_events.hpp"
 #include "core/model.hpp"
-#include "editor/ui/common/colors.hpp"
-#include "editor/ui/common/rubber_band.hpp"
 #include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"
 #include "editor/ui/render/render_info.hpp"
+#include "editor/ui/style/colors.hpp"
+#include "editor/ui/widget/rubber_band.hpp"
 #include "io/proto/preferences.hpp"
 
 namespace tactile::ui {

@@ -21,9 +21,9 @@
 
 #include <utility>  // move
 
-#include "editor/ui/alignment.hpp"
-#include "editor/ui/common/buttons.hpp"
-#include "editor/ui/scoped.hpp"
+#include "editor/ui/style/alignment.hpp"
+#include "editor/ui/widget/buttons.hpp"
+#include "editor/ui/widget/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 

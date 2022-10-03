@@ -20,7 +20,7 @@
 #include "dock_widget.hpp"
 
 #include "core/model.hpp"
-#include "editor/ui/scoped.hpp"
+#include "editor/ui/widget/scoped.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::ui {

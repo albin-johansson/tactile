@@ -17,26 +17,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "checkboxes.hpp"
+#include "context_menu.hpp"
 
-#include <imgui.h>
+#include <entt/signal/dispatcher.hpp>
 
-#include "editor/ui/common/tooltips.hpp"
-#include "misc/assert.hpp"
+#include "editor/ui/widget/scoped.hpp"
+#include "misc/panic.hpp"
 
 namespace tactile::ui {
 
-auto checkbox(const char* label, bool* value, const char* tooltip) -> bool
+ContextMenu::ContextMenu(const char* name)
+    : mName {name}
 {
-  TACTILE_ASSERT(label);
-  TACTILE_ASSERT(value);
-  const auto changed = ImGui::Checkbox(label, value);
+  if (!mName) {
+    throw TactileError("Invalid null context menu name!");
+  }
+}
 
-  if (tooltip) {
-    lazy_tooltip(label, tooltip);
+void ContextMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
+{
+  if (Popup popup {mName}; popup.is_open()) {
+    on_update(model, dispatcher);
   }
 
-  return changed;
+  if (mShow) {
+    ImGui::OpenPopup(mName);
+    mShow = false;
+  }
+}
+
+void ContextMenu::show()
+{
+  mShow = true;
 }
 
 }  // namespace tactile::ui

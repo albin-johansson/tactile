@@ -17,37 +17,45 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "dialogs.hpp"
+#include "tooltips.hpp"
 
-#include <utility>  // move
+#include <chrono>  // system_clock
 
-#include "editor/ui/shared/dialog_state.hpp"
-#include "misc/panic.hpp"
+#include <imgui.h>
+
+#include "core/type/hash_map.hpp"
+#include "core/type/maybe.hpp"
+#include "core/util/assoc.hpp"
+#include "misc/assert.hpp"
+
+using namespace std::chrono_literals;
+
+using Clock = std::chrono::system_clock;
+using TimePoint = Clock::time_point;
 
 namespace tactile::ui {
-namespace {
 
-inline Unique<DialogState> _dialogs;
-
-}  // namespace
-
-void init_dialogs()
+void lazy_tooltip(const char* id, const char* tooltip)
 {
-  _dialogs = std::make_unique<DialogState>();
-}
+  TACTILE_ASSERT(id);
+  TACTILE_ASSERT(tooltip);
 
-void set_dialog_state(Unique<DialogState> state)
-{
-  _dialogs = std::move(state);
-}
+  static HashMap<ImGuiID, Maybe<TimePoint>> state;
 
-auto get_dialogs() -> DialogState&
-{
-  if (_dialogs) [[likely]] {
-    return *_dialogs;
+  const auto hashed_id = ImGui::GetID(id);
+  auto& last_hover = state[hashed_id];
+
+  if (ImGui::IsItemHovered()) {
+    if (!last_hover) {
+      last_hover = Clock::now();
+    }
+
+    if (Clock::now() - last_hover.value() > 1s) {
+      ImGui::SetTooltip("%s", tooltip);
+    }
   }
   else {
-    throw TactileError {"No available dialog state!"};
+    last_hover.reset();
   }
 }
 

@@ -25,9 +25,9 @@
 #include "core/cmd/command_stack.hpp"
 #include "core/event/document_events.hpp"
 #include "core/model.hpp"
-#include "editor/ui/scoped.hpp"
 #include "editor/ui/viewport/map_viewport.hpp"
 #include "editor/ui/viewport/tileset_viewport.hpp"
+#include "editor/ui/widget/scoped.hpp"
 
 namespace tactile::ui {
 

@@ -22,11 +22,11 @@
 #include <centurion/system.hpp>
 #include <imgui.h>
 
-#include "editor/ui/alignment.hpp"
-#include "editor/ui/icons.hpp"
-#include "editor/ui/scoped.hpp"
-#include "editor/ui/shared/dialog_state.hpp"
-#include "editor/ui/shared/dialogs.hpp"
+#include "editor/ui/dialog/dialog_state.hpp"
+#include "editor/ui/dialog/dialogs.hpp"
+#include "editor/ui/style/alignment.hpp"
+#include "editor/ui/style/icons.hpp"
+#include "editor/ui/widget/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 
