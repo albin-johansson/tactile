@@ -22,6 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "add_layer_context_menu.hpp"
 #include "core/document/map_document.hpp"
 #include "core/event/layer_events.hpp"
 #include "core/model.hpp"
@@ -31,14 +32,13 @@
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/labels.hpp"
 #include "editor/ui/icons.hpp"
-#include "editor/ui/layer/add_layer_context_menu.hpp"
-#include "editor/ui/layer/layer_selectable.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/shared/dialog_state.hpp"
 #include "editor/ui/shared/dialogs.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "layer_selectable.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::ui {

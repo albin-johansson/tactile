@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "editor/ui/comp/dialogs/component_name_dialog.hpp"
+#include "editor/ui/dock/comp/dialogs/component_name_dialog.hpp"
 
 namespace tactile::ui {
 

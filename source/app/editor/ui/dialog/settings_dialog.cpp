@@ -30,7 +30,7 @@
 #include "editor/ui/common/checkboxes.hpp"
 #include "editor/ui/common/colors.hpp"
 #include "editor/ui/common/tooltips.hpp"
-#include "editor/ui/dock_space.hpp"
+#include "editor/ui/dock/dock_space.hpp"
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/scoped.hpp"
 #include "editor/ui/themes.hpp"

@@ -19,11 +19,6 @@
 
 #pragma once
 
-#include "editor/ui/comp/component_editor.hpp"
-#include "editor/ui/comp/dialogs/add_component_attr_dialog.hpp"
-#include "editor/ui/comp/dialogs/define_component_dialog.hpp"
-#include "editor/ui/comp/dialogs/rename_component_attribute_dialog.hpp"
-#include "editor/ui/comp/dialogs/rename_component_dialog.hpp"
 #include "editor/ui/dialog/about_dialog.hpp"
 #include "editor/ui/dialog/create_map_dialog.hpp"
 #include "editor/ui/dialog/credits_dialog.hpp"
@@ -31,12 +26,17 @@
 #include "editor/ui/dialog/map_parse_error_dialog.hpp"
 #include "editor/ui/dialog/resize_map_dialog.hpp"
 #include "editor/ui/dialog/settings_dialog.hpp"
-#include "editor/ui/layer/add_layer_context_menu.hpp"
-#include "editor/ui/layer/dialogs/rename_layer_dialog.hpp"
-#include "editor/ui/property/dialogs/add_property_dialog.hpp"
-#include "editor/ui/property/dialogs/change_property_type_dialog.hpp"
-#include "editor/ui/property/dialogs/rename_property_dialog.hpp"
-#include "editor/ui/tileset/dialogs/create_tileset_dialog.hpp"
+#include "editor/ui/dock/comp/component_editor.hpp"
+#include "editor/ui/dock/comp/dialogs/add_component_attr_dialog.hpp"
+#include "editor/ui/dock/comp/dialogs/define_component_dialog.hpp"
+#include "editor/ui/dock/comp/dialogs/rename_component_attribute_dialog.hpp"
+#include "editor/ui/dock/comp/dialogs/rename_component_dialog.hpp"
+#include "editor/ui/dock/layer/add_layer_context_menu.hpp"
+#include "editor/ui/dock/layer/dialogs/rename_layer_dialog.hpp"
+#include "editor/ui/dock/property/dialogs/add_property_dialog.hpp"
+#include "editor/ui/dock/property/dialogs/change_property_type_dialog.hpp"
+#include "editor/ui/dock/property/dialogs/rename_property_dialog.hpp"
+#include "editor/ui/dock/tileset/dialogs/create_tileset_dialog.hpp"
 
 namespace tactile::ui {
 

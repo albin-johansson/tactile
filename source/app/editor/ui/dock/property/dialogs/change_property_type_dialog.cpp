@@ -25,9 +25,9 @@
 #include <imgui.h>
 
 #include "core/event/property_events.hpp"
-#include "editor/ui/property/dialogs/property_type_combo.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "property_type_combo.hpp"
 
 namespace tactile::ui {
 

@@ -27,7 +27,7 @@
 #include "core/model.hpp"
 #include "core/viewport.hpp"
 #include "editor/shortcut/mappings.hpp"
-#include "editor/ui/dock_space.hpp"
+#include "editor/ui/dock/dock_space.hpp"
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/scoped.hpp"
 #include "io/proto/preferences.hpp"

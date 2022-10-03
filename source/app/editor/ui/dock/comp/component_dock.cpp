@@ -32,7 +32,7 @@
 #include "editor/ui/alignment.hpp"
 #include "editor/ui/common/buttons.hpp"
 #include "editor/ui/common/labels.hpp"
-#include "editor/ui/comp/component_view.hpp"
+#include "editor/ui/dock/comp/component_view.hpp"
 #include "editor/ui/icons.hpp"
 #include "editor/ui/scoped.hpp"
 #include "io/proto/preferences.hpp"
