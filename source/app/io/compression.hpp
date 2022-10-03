@@ -19,10 +19,9 @@
 
 #pragma once
 
-#include <EASTL/span.h>
-
 #include "core/common/vocabulary.hpp"
 #include "core/type/maybe.hpp"
+#include "core/type/span.hpp"
 #include "core/type/vector.hpp"
 
 namespace tactile::io {
@@ -41,8 +40,8 @@ using ByteStream = Vec<uint8>;
 [[nodiscard]] auto zstd_decompress(const void* source, usize source_bytes)
     -> Maybe<ByteStream>;
 
-[[nodiscard]] auto zlib_decompress(eastl::span<const uint8> span) -> Maybe<ByteStream>;
-[[nodiscard]] auto zstd_decompress(eastl::span<const uint8> span) -> Maybe<ByteStream>;
+[[nodiscard]] auto zlib_decompress(Span<const uint8> span) -> Maybe<ByteStream>;
+[[nodiscard]] auto zstd_decompress(Span<const uint8> span) -> Maybe<ByteStream>;
 
 template <typename T>
 [[nodiscard]] auto zlib_compress(const Vec<T>& vec, const int level = -1)
