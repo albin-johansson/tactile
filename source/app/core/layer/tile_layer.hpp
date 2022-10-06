@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "core/common/tile_cache.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/layer/layer.hpp"
 #include "core/layer/layer_delegate.hpp"
+#include "core/type/tile_cache.hpp"
 #include "core/type/vector.hpp"
 
 namespace tactile {

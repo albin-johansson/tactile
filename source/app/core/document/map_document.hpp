@@ -21,7 +21,6 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/common/tile_cache.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/ctx/context_manager.hpp"
 #include "core/document/document.hpp"
@@ -35,6 +34,7 @@
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"
+#include "core/type/tile_cache.hpp"
 #include "core/type/vector.hpp"
 #include "core/uuid.hpp"
 #include "core/viewport.hpp"

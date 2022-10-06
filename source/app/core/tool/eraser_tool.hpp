@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/common/tile_cache.hpp"
 #include "core/tool/tool.hpp"
+#include "core/type/tile_cache.hpp"
 
 namespace tactile {
 
