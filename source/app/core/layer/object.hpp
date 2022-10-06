@@ -37,21 +37,31 @@ class Object final : public Context {
   TACTILE_DEFAULT_COPY(Object);
   TACTILE_DEFAULT_MOVE(Object);
 
+  /// Creates an object of the specified type.
   explicit Object(ObjectType type = ObjectType::Rect);
 
   void accept(ContextVisitor& visitor) const override;
 
+  /// Sets the object position.
   void set_pos(const Float2& pos);
+
+  /// Sets the object size.
+  /// May be called on point objects, the size is just not used for such objects.
   void set_size(const Float2& size);
 
   /// Changes the type of the object.
   /// When converting to point, both width and height are set to zero.
   void set_type(ObjectType type);
 
+  /// Sets a tag associated with the object.
+  /// This can be used to classify objects, e.g. "spawn-point" for a point object.
   void set_tag(String tag);
 
+  /// Sets an associated "meta" identifier.
+  /// This is used to track objects in save files, instead of UUIDs.
   void set_meta_id(int32 id);
 
+  /// Sets whether the object is rendered.
   void set_visible(bool visible);
 
   [[nodiscard]] auto ctx() -> ContextInfo& override;
@@ -70,6 +80,7 @@ class Object final : public Context {
 
   [[nodiscard]] auto get_tag() const -> const String&;
 
+  /// Returns the associated meta identifier, if there is one.
   [[nodiscard]] auto get_meta_id() const -> Maybe<int32>;
 
   [[nodiscard]] auto is_visible() const -> bool;
