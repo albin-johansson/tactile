@@ -21,8 +21,8 @@
 
 #include <imgui.h>
 
-#include "core/common/math.hpp"
 #include "core/tile_pos.hpp"
+#include "core/type/math.hpp"
 
 namespace tactile::ui {
 

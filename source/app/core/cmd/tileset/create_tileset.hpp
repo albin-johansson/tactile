@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/cmd/command.hpp"
-#include "core/common/math.hpp"
 #include "core/tileset/tileset_info.hpp"
+#include "core/type/math.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"
 

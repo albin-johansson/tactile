@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/region.hpp"
+#include "core/type/math.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
 #include "core/uuid.hpp"

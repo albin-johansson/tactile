@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/common/math.hpp"
 #include "core/type/array.hpp"
+#include "core/type/math.hpp"
 #include "core/type/path.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 

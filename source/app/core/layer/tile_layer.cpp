@@ -22,8 +22,8 @@
 #include <queue>    // queue
 #include <utility>  // move
 
-#include "core/common/math.hpp"
 #include "core/tile_pos.hpp"
+#include "core/type/math.hpp"
 #include "core/util/functional.hpp"
 #include "core/util/numeric.hpp"
 #include "core/util/tiles.hpp"

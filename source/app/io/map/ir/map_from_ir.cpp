@@ -24,7 +24,6 @@
 #include <entt/entity/registry.hpp>
 
 #include "core/cmd/command_stack.hpp"
-#include "core/common/math.hpp"
 #include "core/comp/component_index.hpp"
 #include "core/document/document.hpp"
 #include "core/document/map_document.hpp"
@@ -35,6 +34,7 @@
 #include "core/model.hpp"
 #include "core/tile_pos.hpp"
 #include "core/tileset/tileset_info.hpp"
+#include "core/type/math.hpp"
 #include "core/type/maybe.hpp"
 #include "core/util/functional.hpp"
 #include "core/util/string.hpp"

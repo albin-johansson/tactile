@@ -22,10 +22,10 @@
 #include <entt/signal/dispatcher.hpp>
 #include <glm/common.hpp>
 
-#include "core/common/math.hpp"
 #include "core/document/map_document.hpp"
 #include "core/event/tool_events.hpp"
 #include "core/model.hpp"
+#include "core/type/math.hpp"
 
 namespace tactile {
 

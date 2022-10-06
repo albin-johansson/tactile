@@ -21,8 +21,8 @@
 
 #include <centurion/color.hpp>
 
-#include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/math.hpp"
 #include "core/type/string.hpp"
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/style/themes.hpp"

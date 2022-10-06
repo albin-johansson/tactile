@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/layer/tile_format.hpp"
+#include "core/type/math.hpp"
 #include "core/type/path.hpp"
 
 namespace tactile {

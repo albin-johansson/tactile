@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_info.hpp"
 #include "core/layer/object_type.hpp"
+#include "core/type/math.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"

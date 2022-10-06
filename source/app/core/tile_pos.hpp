@@ -25,8 +25,8 @@
 #include <EASTL/functional.h>
 #include <folly/hash/Hash.h>
 
-#include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/math.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile {

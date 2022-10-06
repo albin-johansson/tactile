@@ -21,8 +21,8 @@
 
 #include <entt/entity/entity.hpp>
 
-#include "core/common/math.hpp"
 #include "core/common/vocabulary.hpp"
+#include "core/type/math.hpp"
 #include "core/type/string.hpp"
 #include "core/uuid.hpp"
 
