@@ -25,7 +25,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/common/vocabulary.hpp"
+#include "vocabulary.hpp"
 
 namespace tactile {
 

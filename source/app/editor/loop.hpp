@@ -22,7 +22,7 @@
 #include <centurion/event.hpp>
 #include <centurion/keyboard.hpp>
 
-#include "core/common/vocabulary.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 

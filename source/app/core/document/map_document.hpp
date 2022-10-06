@@ -21,7 +21,6 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/common/vocabulary.hpp"
 #include "core/ctx/context_manager.hpp"
 #include "core/document/document.hpp"
 #include "core/document/document_delegate.hpp"
@@ -38,6 +37,7 @@
 #include "core/type/vector.hpp"
 #include "core/uuid.hpp"
 #include "core/viewport.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 

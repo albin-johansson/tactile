@@ -21,13 +21,13 @@
 
 #include "godot_writer.hpp"
 
-#include "core/common/vocabulary.hpp"
 #include "core/tile_pos.hpp"
 #include "core/type/ostream.hpp"
 #include "core/util/file.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/fmt.hpp"
 #include "core/util/string.hpp"
+#include "core/vocabulary.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/emit/gd/godot_scene.hpp"
 #include "misc/assert.hpp"

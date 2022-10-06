@@ -23,9 +23,9 @@
 
 #include <imgui.h>
 
-#include "core/common/vocabulary.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/uuid.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile::ui {
 

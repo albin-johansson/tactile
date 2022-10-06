@@ -21,8 +21,8 @@
 
 #include <chrono>  // system_clock, milliseconds
 
-#include "core/common/vocabulary.hpp"
 #include "core/type/vector.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 

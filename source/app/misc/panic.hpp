@@ -21,8 +21,8 @@
 
 #include <exception>  // exception
 
-#include "core/common/vocabulary.hpp"
 #include "core/type/string.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 

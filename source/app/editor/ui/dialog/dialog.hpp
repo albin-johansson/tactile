@@ -21,9 +21,9 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/common/vocabulary.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 class DocumentModel;

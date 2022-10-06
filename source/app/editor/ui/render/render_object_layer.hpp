@@ -21,7 +21,7 @@
 
 #include <centurion/fwd.hpp>
 
-#include "core/common/vocabulary.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 class ObjectLayer;

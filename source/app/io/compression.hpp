@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "core/common/vocabulary.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/span.hpp"
 #include "core/type/vector.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile::io {
 

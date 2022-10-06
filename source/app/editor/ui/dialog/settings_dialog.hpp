@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/common/vocabulary.hpp"
+#include "core/vocabulary.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 #include "io/proto/preferences.hpp"
 

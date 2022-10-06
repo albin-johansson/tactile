@@ -22,8 +22,8 @@
 #include <centurion/color.hpp>
 #include <imgui.h>
 
-#include "core/common/vocabulary.hpp"
 #include "core/type/array.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile::ui {
 

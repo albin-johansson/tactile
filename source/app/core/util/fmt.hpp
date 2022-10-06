@@ -29,11 +29,11 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
-#include "core/common/vocabulary.hpp"
 #include "core/type/array.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
 #include "core/util/string.hpp"
+#include "core/vocabulary.hpp"
 #include "meta/build.hpp"
 
 namespace fmt {

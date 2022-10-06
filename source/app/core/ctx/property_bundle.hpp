@@ -20,9 +20,9 @@
 #pragma once
 
 #include "core/attribute.hpp"
-#include "core/common/vocabulary.hpp"
 #include "core/type/string.hpp"
 #include "core/type/tree_map.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 

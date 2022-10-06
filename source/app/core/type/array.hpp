@@ -21,8 +21,8 @@
 
 #include <EASTL/array.h>
 
-#include "core/common/vocabulary.hpp"
 #include "core/type/eastl_new.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 

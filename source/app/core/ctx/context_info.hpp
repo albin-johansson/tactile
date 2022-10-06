@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "core/common/vocabulary.hpp"
 #include "core/comp/component_bundle.hpp"
 #include "core/ctx/property_bundle.hpp"
 #include "core/type/string.hpp"
 #include "core/uuid.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 

@@ -21,11 +21,11 @@
 
 #include <variant>  // variant, monostate
 
-#include "core/common/vocabulary.hpp"
 #include "core/type/math.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
 #include "core/type/vector.hpp"
+#include "core/vocabulary.hpp"
 #include "io/map/emit/gd/godot_file.hpp"
 #include "io/map/emit/gd/godot_tileset.hpp"
 

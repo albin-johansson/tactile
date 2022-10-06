@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "core/common/vocabulary.hpp"
 #include "core/document/map_document.hpp"
 #include "core/layer/object.hpp"
 #include "core/map.hpp"
 #include "core/type/math.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile::test {
 

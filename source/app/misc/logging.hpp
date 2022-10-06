@@ -21,9 +21,9 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/common/vocabulary.hpp"
 #include "core/type/pair.hpp"
 #include "core/type/string.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 

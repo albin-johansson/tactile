@@ -23,11 +23,11 @@
 
 #include <imgui.h>
 
-#include "core/common/vocabulary.hpp"
 #include "core/type/array.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/pair.hpp"
 #include "core/type/string.hpp"
+#include "core/vocabulary.hpp"
 #include "editor/ui/widget/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

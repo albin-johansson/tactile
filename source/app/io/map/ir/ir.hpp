@@ -23,7 +23,6 @@
 #include <variant>   // variant, get
 
 #include "core/attribute.hpp"
-#include "core/common/vocabulary.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/object_type.hpp"
 #include "core/layer/tile_format.hpp"
@@ -37,6 +36,7 @@
 #include "core/type/vector.hpp"
 #include "core/util/query.hpp"
 #include "core/uuid.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile::ir {
 

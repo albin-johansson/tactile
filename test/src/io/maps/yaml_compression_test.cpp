@@ -21,8 +21,8 @@
 
 #include <gtest/gtest.h>
 
-#include "core/common/vocabulary.hpp"
 #include "core/util/tiles.hpp"
+#include "core/vocabulary.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/ir/ir.hpp"

@@ -20,10 +20,10 @@
 #pragma once
 
 #include "core/attribute.hpp"
-#include "core/common/vocabulary.hpp"
 #include "core/type/array.hpp"
 #include "core/type/maybe.hpp"
 #include "core/uuid.hpp"
+#include "core/vocabulary.hpp"
 #include "editor/ui/dialog/dialog.hpp"
 
 namespace tactile::ui {

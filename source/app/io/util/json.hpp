@@ -22,10 +22,10 @@
 #include <nlohmann/json.hpp>
 
 #include "core/attribute.hpp"
-#include "core/common/vocabulary.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 

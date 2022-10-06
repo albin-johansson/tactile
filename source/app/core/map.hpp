@@ -21,7 +21,6 @@
 
 #include <functional>  // function
 
-#include "core/common/vocabulary.hpp"
 #include "core/ctx/context.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_format.hpp"
@@ -32,6 +31,7 @@
 #include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
 #include "uuid.hpp"
+#include "vocabulary.hpp"
 
 namespace tactile {
 

@@ -21,9 +21,9 @@
 
 #include "core/cmd/command.hpp"
 #include "core/cmd/map/map_command_cache.hpp"
-#include "core/common/vocabulary.hpp"
 #include "core/map.hpp"
 #include "core/type/ptr.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile::cmd {
 

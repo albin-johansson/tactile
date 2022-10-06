@@ -21,7 +21,7 @@
 
 #include <concepts>  // integral, unsigned_integral, invocable
 
-#include "core/common/vocabulary.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 

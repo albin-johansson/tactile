@@ -21,7 +21,7 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/common/vocabulary.hpp"
+#include "core/vocabulary.hpp"
 #include "io/map/parse/parse_error.hpp"
 
 namespace tactile {

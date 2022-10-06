@@ -21,7 +21,6 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/common/vocabulary.hpp"
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_info.hpp"
 #include "core/tile_pos.hpp"
@@ -33,6 +32,7 @@
 #include "core/type/ptr.hpp"
 #include "core/type/vector.hpp"
 #include "core/uuid.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 

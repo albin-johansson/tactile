@@ -22,8 +22,8 @@
 #include <entt/fwd.hpp>
 #include <imgui.h>
 
-#include "core/common/vocabulary.hpp"
 #include "core/type/ptr.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 class DocumentModel;

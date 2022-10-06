@@ -21,13 +21,13 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/common/vocabulary.hpp"
 #include "core/tileset/tileset.hpp"
 #include "core/tileset/tileset_ref.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 
