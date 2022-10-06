@@ -25,25 +25,23 @@ class TileLayer;
 class ObjectLayer;
 class GroupLayer;
 
+/// Visitor for all layer types.
 class LayerVisitor {
  public:
   virtual ~LayerVisitor() noexcept = default;
 
   virtual void visit([[maybe_unused]] TileLayer& layer) {}
-
   virtual void visit([[maybe_unused]] ObjectLayer& layer) {}
-
   virtual void visit([[maybe_unused]] GroupLayer& layer) {}
 };
 
+/// Read-only visitor for all layer types.
 class ConstLayerVisitor {
  public:
   virtual ~ConstLayerVisitor() noexcept = default;
 
   virtual void visit([[maybe_unused]] const TileLayer& layer) {}
-
   virtual void visit([[maybe_unused]] const ObjectLayer& layer) {}
-
   virtual void visit([[maybe_unused]] const GroupLayer& layer) {}
 };
 
