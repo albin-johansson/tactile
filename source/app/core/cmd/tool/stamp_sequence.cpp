@@ -61,7 +61,9 @@ auto StampSequence::get_name() const -> String
 void StampSequence::apply_sequence(const TileCache& cache)
 {
   auto& layer = mMap->view_tile_layer(mLayerId);
-  layer.set_tiles(cache);
+  for (const auto& [pos, tile] : cache) {
+    layer.set_tile(pos, tile);
+  }
 }
 
 }  // namespace tactile::cmd

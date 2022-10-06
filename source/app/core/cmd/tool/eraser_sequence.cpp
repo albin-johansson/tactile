@@ -41,7 +41,10 @@ EraserSequence::EraserSequence(Shared<Map> map, const UUID& layer_id, TileCache 
 void EraserSequence::undo()
 {
   auto& layer = mMap->view_tile_layer(mLayerId);
-  layer.set_tiles(mOldState);
+
+  for (const auto& [pos, tile] : mOldState) {
+    layer.set_tile(pos, tile);
+  }
 }
 
 void EraserSequence::redo()

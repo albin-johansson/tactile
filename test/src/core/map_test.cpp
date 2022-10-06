@@ -245,8 +245,8 @@ TEST(Map, IsValidPosition)
 TEST(Map, AddLayer)
 {
   Map map;
-  auto t1 = TileLayer::make();
-  auto t2 = TileLayer::make();
+  auto t1 = std::make_shared<TileLayer>();
+  auto t2 = std::make_shared<TileLayer>();
   auto o1 = std::make_shared<ObjectLayer>();
   auto g1 = GroupLayer::make();
 

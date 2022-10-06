@@ -143,7 +143,7 @@ void Map::add_layer(Shared<Layer> layer, const Maybe<UUID>& parent_id)
 
 auto Map::add_tile_layer(const Maybe<UUID>& parentId) -> UUID
 {
-  auto layer = TileLayer::make(mRowCount, mColCount);
+  auto layer = std::make_shared<TileLayer>(mRowCount, mColCount);
 
   layer->set_meta_id(fetch_and_increment_next_layer_id());
   layer->ctx().set_name(format_str("Tile Layer {}", mTileLayerSuffix));

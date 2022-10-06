@@ -53,7 +53,7 @@ TEST(GroupLayer, SimpleEach)
 {
   GroupLayer root;
 
-  auto t1 = TileLayer::make();
+  auto t1 = std::make_shared<TileLayer>();
   auto g1 = GroupLayer::make();
   auto o1 = std::make_shared<ObjectLayer>();
 
@@ -98,7 +98,7 @@ TEST(GroupLayer, AddLayer)
   GroupLayer root;
   ASSERT_THROW(root.add_layer(nullptr), TactileError);
 
-  auto t1 = TileLayer::make();
+  auto t1 = std::make_shared<TileLayer>();
   root.add_layer(t1);
 
   ASSERT_EQ(1u, root.layer_count());
@@ -106,7 +106,7 @@ TEST(GroupLayer, AddLayer)
   ASSERT_EQ(0u, root.get_global_index(t1->get_uuid()));
   ASSERT_EQ(nothing, t1->get_parent());
 
-  auto t2 = TileLayer::make();
+  auto t2 = std::make_shared<TileLayer>();
   root.add_layer(t2);
 
   ASSERT_EQ(2u, root.layer_count());
@@ -117,7 +117,7 @@ TEST(GroupLayer, AddLayer)
   ASSERT_EQ(nothing, t2->get_parent());
 
   auto g1 = GroupLayer::make();
-  auto t3 = TileLayer::make();
+  auto t3 = std::make_shared<TileLayer>();
 
   root.add_layer(g1);
   root.add_layer(g1->get_uuid(), t3);
@@ -141,7 +141,8 @@ TEST(GroupLayer, AddLayer)
 TEST(GroupLayer, AddLayerToParent)
 {
   GroupLayer root;
-  ASSERT_THROW(root.add_layer(root.get_uuid(), TileLayer::make()), TactileError);
+  ASSERT_THROW(root.add_layer(root.get_uuid(), std::make_shared<TileLayer>()),
+               TactileError);
 }
 
 TEST(GroupLayer, RemoveLayer)
@@ -149,8 +150,8 @@ TEST(GroupLayer, RemoveLayer)
   GroupLayer root;
   ASSERT_THROW(root.remove_layer(root.get_uuid()), TactileError);
 
-  auto t1 = TileLayer::make();
-  auto t2 = TileLayer::make();
+  auto t1 = std::make_shared<TileLayer>();
+  auto t2 = std::make_shared<TileLayer>();
   auto g1 = GroupLayer::make();
 
   root.add_layer(g1);
@@ -169,9 +170,9 @@ TEST(GroupLayer, MoveLayerUp)
   GroupLayer root;
   ASSERT_THROW(root.move_layer_up(root.get_uuid()), TactileError);
 
-  auto t1 = TileLayer::make();
-  auto t2 = TileLayer::make();
-  auto t3 = TileLayer::make();
+  auto t1 = std::make_shared<TileLayer>();
+  auto t2 = std::make_shared<TileLayer>();
+  auto t3 = std::make_shared<TileLayer>();
   auto o1 = std::make_shared<ObjectLayer>();
   auto g1 = GroupLayer::make();
   auto g2 = GroupLayer::make();
@@ -275,10 +276,10 @@ TEST(GroupLayer, MoveLayerDown)
   GroupLayer root;
   ASSERT_THROW(root.move_layer_down(root.get_uuid()), TactileError);
 
-  auto t1 = TileLayer::make();
-  auto t2 = TileLayer::make();
-  auto t3 = TileLayer::make();
-  auto t4 = TileLayer::make();
+  auto t1 = std::make_shared<TileLayer>();
+  auto t2 = std::make_shared<TileLayer>();
+  auto t3 = std::make_shared<TileLayer>();
+  auto t4 = std::make_shared<TileLayer>();
   auto g1 = GroupLayer::make();
   auto g2 = GroupLayer::make();
 
@@ -362,9 +363,9 @@ TEST(GroupLayer, SiblingCount)
   GroupLayer root;
   ASSERT_THROW(root.sibling_count(root.get_uuid()), TactileError);
 
-  auto t1 = TileLayer::make();
-  auto t2 = TileLayer::make();
-  auto t3 = TileLayer::make();
+  auto t1 = std::make_shared<TileLayer>();
+  auto t2 = std::make_shared<TileLayer>();
+  auto t3 = std::make_shared<TileLayer>();
   auto g1 = GroupLayer::make();
   auto g2 = GroupLayer::make();
   auto o1 = std::make_shared<ObjectLayer>();
@@ -391,9 +392,9 @@ TEST(GroupLayer, GetLocalIndex)
   GroupLayer root;
   ASSERT_THROW(root.get_local_index(root.get_uuid()), TactileError);
 
-  auto layer1 = TileLayer::make();
-  auto layer2 = TileLayer::make();
-  auto layer3 = TileLayer::make();
+  auto layer1 = std::make_shared<TileLayer>();
+  auto layer2 = std::make_shared<TileLayer>();
+  auto layer3 = std::make_shared<TileLayer>();
 
   root.add_layer(layer1);
   ASSERT_EQ(0u, root.get_local_index(layer1->get_uuid()));
@@ -411,9 +412,9 @@ TEST(GroupLayer, GetGlobalIndex)
   GroupLayer root;
   ASSERT_THROW(root.get_global_index(root.get_uuid()), TactileError);
 
-  auto t1 = TileLayer::make();
-  auto t2 = TileLayer::make();
-  auto t3 = TileLayer::make();
+  auto t1 = std::make_shared<TileLayer>();
+  auto t2 = std::make_shared<TileLayer>();
+  auto t3 = std::make_shared<TileLayer>();
   auto g1 = GroupLayer::make();
   auto g2 = GroupLayer::make();
 
@@ -441,9 +442,9 @@ TEST(GroupLayer, CanMoveLayerUp)
   GroupLayer root;
   ASSERT_THROW(root.can_move_layer_up(root.get_uuid()), TactileError);
 
-  auto t1 = TileLayer::make();
-  auto t2 = TileLayer::make();
-  auto t3 = TileLayer::make();
+  auto t1 = std::make_shared<TileLayer>();
+  auto t2 = std::make_shared<TileLayer>();
+  auto t3 = std::make_shared<TileLayer>();
   auto g1 = GroupLayer::make();
 
   root.add_layer(t1);
@@ -462,8 +463,8 @@ TEST(GroupLayer, CanMoveLayerDown)
   GroupLayer root;
   ASSERT_THROW(root.can_move_layer_down(root.get_uuid()), TactileError);
 
-  auto t1 = TileLayer::make();
-  auto t2 = TileLayer::make();
+  auto t1 = std::make_shared<TileLayer>();
+  auto t2 = std::make_shared<TileLayer>();
   auto o1 = std::make_shared<ObjectLayer>();
   auto g1 = GroupLayer::make();
 

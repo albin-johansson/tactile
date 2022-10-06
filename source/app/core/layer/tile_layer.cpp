@@ -19,11 +19,9 @@
 
 #include "tile_layer.hpp"
 
-#include <queue>    // queue
-#include <utility>  // move
-
 #include "core/tile_pos.hpp"
 #include "core/type/math.hpp"
+#include "core/type/queue.hpp"
 #include "core/util/functional.hpp"
 #include "core/util/numeric.hpp"
 #include "core/util/tiles.hpp"
@@ -40,16 +38,12 @@ TileLayer::TileLayer()
 TileLayer::TileLayer(const usize rows, const usize columns)
     : mTiles {make_tile_matrix(rows, columns)}
 {
-}
-
-auto TileLayer::make() -> Shared<TileLayer>
-{
-  return std::make_shared<TileLayer>();
-}
-
-auto TileLayer::make(const usize rows, const usize columns) -> Shared<TileLayer>
-{
-  return std::make_shared<TileLayer>(rows, columns);
+  if (rows == 0) {
+    throw TactileError {"Invalid row count!"};
+  }
+  else if (columns == 0) {
+    throw TactileError {"Invalid column count!"};
+  }
 }
 
 void TileLayer::accept(LayerVisitor& visitor)
@@ -72,7 +66,7 @@ void TileLayer::flood(const TilePos& origin,
     return;
   }
 
-  std::queue<TilePos> positions;
+  Queue<TilePos> positions;
   positions.push(origin);
 
   set_tile(origin, replacement);
@@ -133,17 +127,24 @@ void TileLayer::remove_column()
 
 void TileLayer::resize(const usize rows, const usize columns)
 {
-  const auto currentRows = row_count();
-  const auto currentCols = column_count();
+  if (rows == 0) {
+    throw TactileError {"Invalid row count!"};
+  }
+  else if (columns == 0) {
+    throw TactileError {"Invalid column count!"};
+  }
 
-  if (const auto n = udiff(currentRows, rows); currentRows < rows) {
+  const auto current_rows = row_count();
+  const auto current_cols = column_count();
+
+  if (const auto n = udiff(current_rows, rows); current_rows < rows) {
     invoke_n(n, [this] { add_row(); });
   }
   else {
     invoke_n(n, [this] { remove_row(); });
   }
 
-  if (const auto n = udiff(currentCols, columns); currentCols < columns) {
+  if (const auto n = udiff(current_cols, columns); current_cols < columns) {
     invoke_n(n, [this] { add_column(); });
   }
   else {
@@ -161,9 +162,9 @@ void TileLayer::set_visible(const bool visible)
   mDelegate.set_visible(visible);
 }
 
-void TileLayer::set_parent(const Maybe<UUID>& parentId)
+void TileLayer::set_parent(const Maybe<UUID>& parent_id)
 {
-  mDelegate.set_parent(parentId);
+  mDelegate.set_parent(parent_id);
 }
 
 void TileLayer::set_meta_id(const int32 id)
@@ -183,13 +184,6 @@ void TileLayer::set_tile(const TilePos& pos, const TileID id)
   }
   else {
     throw TactileError {"Invalid position!"};
-  }
-}
-
-void TileLayer::set_tiles(const TileCache& cache)
-{
-  for (const auto& [pos, tile] : cache) {
-    set_tile(pos, tile);
   }
 }
 
@@ -218,7 +212,7 @@ auto TileLayer::row_count() const -> usize
 
 auto TileLayer::column_count() const -> usize
 {
-  TACTILE_ASSERT(mTiles.size() > 0);
+  TACTILE_ASSERT(!mTiles.empty());
   return mTiles.at(0).size();
 }
 
@@ -239,7 +233,7 @@ auto TileLayer::is_visible() const -> bool
 
 auto TileLayer::clone() const -> Shared<Layer>
 {
-  auto layer = make();
+  auto layer = std::make_shared<TileLayer>();
   layer->mDelegate = mDelegate.clone();
   layer->mTiles = mTiles;
   return layer;

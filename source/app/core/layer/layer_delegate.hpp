@@ -26,6 +26,9 @@
 
 namespace tactile {
 
+/// Used to implement the layer interface.
+/// This class does intentionally not inherit from the layer interface.
+/// Refer to the layer interface for more documentation on the member functions.
 class LayerDelegate final {
  public:
   void set_opacity(float opacity);
@@ -47,6 +50,7 @@ class LayerDelegate final {
   [[nodiscard]] auto ctx() -> ContextInfo&;
   [[nodiscard]] auto ctx() const -> const ContextInfo&;
 
+  /// Clones the layer delegate, but the meta identifier is not copied.
   [[nodiscard]] auto clone() const -> LayerDelegate;
 
  private:
