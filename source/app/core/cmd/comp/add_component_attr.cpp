@@ -49,7 +49,7 @@ void AddComponentAttr::undo()
   definition.remove_attr(mName);
 
   auto& contexts = mDocument->get_contexts();
-  contexts.on_removed_component_attr(definition.get_uuid(), mName);
+  contexts.on_removed_component_attr(definition.uuid(), mName);
 }
 
 void AddComponentAttr::redo()
@@ -61,7 +61,7 @@ void AddComponentAttr::redo()
   const auto& value = definition.get_attr(mName);
 
   auto& contexts = mDocument->get_contexts();
-  contexts.on_new_component_attr(definition.get_uuid(), mName, value);
+  contexts.on_new_component_attr(definition.uuid(), mName, value);
 }
 
 auto AddComponentAttr::get_name() const -> String

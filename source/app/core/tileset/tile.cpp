@@ -51,7 +51,7 @@ void Tile::reserve_objects(usize n)
 
 void Tile::add_object(Shared<Object> object)
 {
-  const auto id = object->get_uuid();
+  const auto id = object->uuid();
   mObjects[id] = std::move(object);
 }
 
@@ -105,7 +105,7 @@ auto Tile::ctx() const -> const ContextInfo&
   return mContext;
 }
 
-auto Tile::get_uuid() const -> const UUID&
+auto Tile::uuid() const -> const UUID&
 {
   return mContext.uuid();
 }

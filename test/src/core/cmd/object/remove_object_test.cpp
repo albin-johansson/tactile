@@ -46,15 +46,15 @@ TEST(RemoveObject, RedoUndo)
 
   auto& layer = map->invisible_root().object_layer(layer_id);
 
-  cmd::RemoveObject cmd {document.get(), layer_id, object->get_uuid()};
+  cmd::RemoveObject cmd {document.get(), layer_id, object->uuid()};
 
   cmd.redo();
-  ASSERT_FALSE(contexts.contains(object->get_uuid()));
-  ASSERT_FALSE(layer.has_object(object->get_uuid()));
+  ASSERT_FALSE(contexts.contains(object->uuid()));
+  ASSERT_FALSE(layer.has_object(object->uuid()));
 
   cmd.undo();
-  ASSERT_TRUE(contexts.contains(object->get_uuid()));
-  ASSERT_TRUE(layer.has_object(object->get_uuid()));
+  ASSERT_TRUE(contexts.contains(object->uuid()));
+  ASSERT_TRUE(layer.has_object(object->uuid()));
 }
 
 }  // namespace tactile::test

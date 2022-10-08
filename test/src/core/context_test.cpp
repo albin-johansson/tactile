@@ -73,7 +73,7 @@ TYPED_TEST_SUITE(ContextTest, Contexts);
 TYPED_TEST(ContextTest, Defaults)
 {
   const auto context = make_context<TypeParam>();
-  ASSERT_FALSE(context.get_uuid().is_nil());
+  ASSERT_FALSE(context.uuid().is_nil());
 
   ASSERT_TRUE(context.ctx().comps().empty());
   ASSERT_TRUE(context.ctx().props().empty());

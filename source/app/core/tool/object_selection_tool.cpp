@@ -146,7 +146,7 @@ void ObjectSelectionTool::maybe_emit_event(DocumentModel& model,
 
         // Only emit an event if the object has been moved along any axis
         if (mDragInfo->origin_object_pos != object.pos()) {
-          dispatcher.enqueue<MoveObjectEvent>(object.get_uuid(),
+          dispatcher.enqueue<MoveObjectEvent>(object.uuid(),
                                               mDragInfo->origin_object_pos,
                                               object.pos());
         }

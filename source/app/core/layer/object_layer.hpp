@@ -78,7 +78,7 @@ class ObjectLayer final : public Layer {
   [[nodiscard]] auto ctx() -> ContextInfo& override;
   [[nodiscard]] auto ctx() const -> const ContextInfo& override;
 
-  [[nodiscard]] auto get_uuid() const -> const UUID& override;
+  [[nodiscard]] auto uuid() const -> const UUID& override;
 
   [[nodiscard]] auto parent() const -> Maybe<UUID> override;
 

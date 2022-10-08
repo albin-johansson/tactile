@@ -54,7 +54,7 @@ class LayerMutatorVisitor : public LayerVisitor {
 
     const auto iter =
         std::find_if(storage.begin(), storage.end(), [this](const Shared<Layer>& layer) {
-          return layer->get_uuid() == mTarget;
+          return layer->uuid() == mTarget;
         });
 
     if (iter != storage.end()) {
@@ -83,7 +83,7 @@ class LayerQueryVisitor : public ConstLayerVisitor {
 
     const auto iter =
         std::find_if(storage.begin(), storage.end(), [this](const Shared<Layer>& layer) {
-          return layer->get_uuid() == mTarget;
+          return layer->uuid() == mTarget;
         });
 
     if (iter != storage.end()) {
@@ -129,7 +129,7 @@ class GlobalIndexCalculator final : public ConstLayerVisitor {
       return;
     }
 
-    mFound = layer.get_uuid() == mTarget;
+    mFound = layer.uuid() == mTarget;
 
     if (!mFound) {
       ++mIndex;
@@ -159,7 +159,7 @@ class FindLayerVisitor final : public LayerVisitor {
 
   void check(Layer& layer)
   {
-    if (layer.get_uuid() == mTarget) {
+    if (layer.uuid() == mTarget) {
       mLayer = &layer;
     }
   }
@@ -186,7 +186,7 @@ class FindConstLayerVisitor final : public ConstLayerVisitor {
 
   void check(const Layer& layer)
   {
-    if (layer.get_uuid() == mTarget) {
+    if (layer.uuid() == mTarget) {
       mLayer = &layer;
     }
   }
@@ -202,7 +202,7 @@ class FindConstLayerVisitor final : public ConstLayerVisitor {
                                                                    \
     void visit(Type& layer) override                               \
     {                                                              \
-      if (mTarget == layer.get_uuid()) {                           \
+      if (mTarget == layer.uuid()) {                               \
         mLayer = &layer;                                           \
       }                                                            \
     }                                                              \
@@ -226,7 +226,7 @@ class FindConstLayerVisitor final : public ConstLayerVisitor {
                                                                    \
     void visit(const Type& layer) override                         \
     {                                                              \
-      if (mTarget == layer.get_uuid()) {                           \
+      if (mTarget == layer.uuid()) {                               \
         mLayer = &layer;                                           \
       }                                                            \
     }                                                              \
@@ -701,7 +701,7 @@ auto GroupLayer::ctx() const -> const ContextInfo&
   return mDelegate.ctx();
 }
 
-auto GroupLayer::get_uuid() const -> const UUID&
+auto GroupLayer::uuid() const -> const UUID&
 {
   return mDelegate.ctx().uuid();
 }

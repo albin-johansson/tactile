@@ -130,7 +130,7 @@ auto MapBuilder::with_tileset(UUID* id) -> MapBuilder&
   });
 
   if (id) {
-    *id = tileset->get_uuid();
+    *id = tileset->uuid();
   }
 
   mDocument->get_contexts().add_context(tileset);

@@ -137,7 +137,7 @@ auto ComponentDefinition::empty() const -> bool
   return mAttributes.empty();
 }
 
-auto ComponentDefinition::get_uuid() const -> const UUID&
+auto ComponentDefinition::uuid() const -> const UUID&
 {
   return mId;
 }

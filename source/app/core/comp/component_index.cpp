@@ -51,7 +51,7 @@ void ComponentIndex::restore_comp(ComponentDefinition def)
     throw TactileError {"Component definition name is not unique!"};
   }
 
-  const auto id = def.get_uuid();
+  const auto id = def.uuid();
   TACTILE_ASSERT(!contains(id));
 
   mDefs[id] = std::move(def);

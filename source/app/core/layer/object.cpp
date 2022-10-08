@@ -77,7 +77,7 @@ auto Object::ctx() const -> const ContextInfo&
   return mContext;
 }
 
-auto Object::get_uuid() const -> const UUID&
+auto Object::uuid() const -> const UUID&
 {
   return mContext.uuid();
 }

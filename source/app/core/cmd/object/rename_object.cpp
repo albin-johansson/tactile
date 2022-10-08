@@ -51,7 +51,7 @@ void RenameObject::redo()
 auto RenameObject::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const RenameObject*>(cmd)) {
-    if (mObject->get_uuid() == other->mObject->get_uuid()) {
+    if (mObject->uuid() == other->mObject->uuid()) {
       mNewName = other->mNewName;
       return true;
     }

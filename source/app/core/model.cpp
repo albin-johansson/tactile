@@ -65,9 +65,9 @@ auto DocumentModel::add_map(const Int2& tile_size, const usize rows, const usize
   auto& map = map_document->get_map();
 
   register_map(map_document);
-  mOpenDocuments.push_back(map.get_uuid());
+  mOpenDocuments.push_back(map.uuid());
 
-  return map.get_uuid();
+  return map.uuid();
 }
 
 auto DocumentModel::add_tileset(const TilesetInfo& info) -> UUID
@@ -79,7 +79,7 @@ auto DocumentModel::add_tileset(const TilesetInfo& info) -> UUID
     const auto tileset_id = make_uuid();
 
     auto& commands = map_document->get_history();
-    commands.exec<cmd::CreateTileset>(this, map.get_uuid(), tileset_id, info);
+    commands.exec<cmd::CreateTileset>(this, map.uuid(), tileset_id, info);
 
     return tileset_id;
   }
@@ -99,7 +99,7 @@ auto DocumentModel::restore_tileset(const TileID first_tile_id, const TilesetInf
     register_tileset(tileset_document);
 
     auto tileset = tileset_document->get_tileset();
-    const auto tileset_id = tileset->get_uuid();
+    const auto tileset_id = tileset->uuid();
 
     auto& tilesets = map.tileset_bundle();
     tilesets.attach_tileset(tileset, first_tile_id, false);  // TODO embedded option
@@ -406,14 +406,14 @@ auto DocumentModel::view_tileset(const UUID& id) const -> const TilesetDocument&
 
 void DocumentModel::register_map(Shared<MapDocument> document)
 {
-  const auto id = document->get_map().get_uuid();
+  const auto id = document->get_map().uuid();
   mDocuments[id] = document;
   mMaps[id] = std::move(document);
 }
 
 void DocumentModel::register_tileset(Shared<TilesetDocument> document)
 {
-  const auto id = document->view_tileset().get_uuid();
+  const auto id = document->view_tileset().uuid();
   mDocuments[id] = document;
   mTilesets[id] = std::move(document);
 }

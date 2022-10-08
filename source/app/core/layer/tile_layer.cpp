@@ -249,7 +249,7 @@ auto TileLayer::ctx() const -> const ContextInfo&
   return mDelegate.ctx();
 }
 
-auto TileLayer::get_uuid() const -> const UUID&
+auto TileLayer::uuid() const -> const UUID&
 {
   return mDelegate.ctx().uuid();
 }

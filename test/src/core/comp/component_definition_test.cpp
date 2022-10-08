@@ -30,7 +30,7 @@ namespace tactile::test {
 TEST(ComponentDefinition, Defaults)
 {
   const ComponentDefinition def;
-  ASSERT_FALSE(def.get_uuid().is_nil());
+  ASSERT_FALSE(def.uuid().is_nil());
   ASSERT_EQ(0, def.size());
   ASSERT_TRUE(def.empty());
 }

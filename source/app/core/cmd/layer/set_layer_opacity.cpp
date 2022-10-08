@@ -49,7 +49,7 @@ void SetLayerOpacity::redo()
 auto SetLayerOpacity::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const SetLayerOpacity*>(cmd)) {
-    if (mLayer->get_uuid() == other->mLayer->get_uuid()) {
+    if (mLayer->uuid() == other->mLayer->uuid()) {
       mNewOpacity = other->mNewOpacity;
       return true;
     }

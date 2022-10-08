@@ -385,14 +385,14 @@ void App::on_open_save_as_dialog()
 void App::on_inspect_map()
 {
   if (auto* document = active_map_document()) {
-    document->get_contexts().select(document->get_map().get_uuid());
+    document->get_contexts().select(document->get_map().uuid());
   }
 }
 
 void App::on_inspect_tileset()
 {
   if (auto* document = active_tileset_document()) {
-    document->get_contexts().select(document->view_tileset().get_uuid());
+    document->get_contexts().select(document->view_tileset().uuid());
   }
 }
 

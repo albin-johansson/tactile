@@ -80,10 +80,7 @@ void render_map(Graphics& graphics, const MapDocument& document)
 
     const auto parent_opacity = parent_layer ? parent_layer->opacity() : 1.0f;
     if (prefs.highlight_active_layer) {
-      render_layer(graphics,
-                   map,
-                   layer,
-                   active_layer_id == layer->get_uuid() ? 1.0f : 0.5f);
+      render_layer(graphics, map, layer, active_layer_id == layer->uuid() ? 1.0f : 0.5f);
     }
     else {
       render_layer(graphics, map, layer, parent_opacity * layer->opacity());

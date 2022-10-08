@@ -52,7 +52,7 @@ void RenameComponentAttr::undo()
   definition.rename_attr(mUpdatedName, mPreviousName);
 
   auto& contexts = mDocument->get_contexts();
-  contexts.on_renamed_component_attr(definition.get_uuid(), mUpdatedName, mPreviousName);
+  contexts.on_renamed_component_attr(definition.uuid(), mUpdatedName, mPreviousName);
 }
 
 void RenameComponentAttr::redo()
@@ -63,7 +63,7 @@ void RenameComponentAttr::redo()
   definition.rename_attr(mPreviousName, mUpdatedName);
 
   auto& contexts = mDocument->get_contexts();
-  contexts.on_renamed_component_attr(definition.get_uuid(), mPreviousName, mUpdatedName);
+  contexts.on_renamed_component_attr(definition.uuid(), mPreviousName, mUpdatedName);
 }
 
 auto RenameComponentAttr::get_name() const -> String

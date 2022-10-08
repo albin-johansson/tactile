@@ -50,7 +50,7 @@ void DuplicateComponentAttr::undo()
   definition.remove_attr(mDuplicatedName.value());
 
   auto& contexts = mDocument->get_contexts();
-  contexts.on_removed_component_attr(definition.get_uuid(), mDuplicatedName.value());
+  contexts.on_removed_component_attr(definition.uuid(), mDuplicatedName.value());
 
   mDuplicatedName.reset();
 }
@@ -63,7 +63,7 @@ void DuplicateComponentAttr::redo()
   mDuplicatedName = definition.duplicate_attr(mAttributeName);
 
   auto& contexts = mDocument->get_contexts();
-  contexts.on_new_component_attr(definition.get_uuid(),
+  contexts.on_new_component_attr(definition.uuid(),
                                  *mDuplicatedName,
                                  definition.get_attr(*mDuplicatedName));
 }

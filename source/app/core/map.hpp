@@ -152,7 +152,7 @@ class Map final : public Context {
   [[nodiscard]] auto ctx() -> ContextInfo& override;
   [[nodiscard]] auto ctx() const -> const ContextInfo& override;
 
-  [[nodiscard]] auto get_uuid() const -> const UUID& override;
+  [[nodiscard]] auto uuid() const -> const UUID& override;
 
  private:
   ContextInfo mContext;          ///< Map context information.

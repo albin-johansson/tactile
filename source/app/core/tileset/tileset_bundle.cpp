@@ -31,7 +31,7 @@ void TilesetBundle::attach_tileset(Shared<Tileset> tileset,
                                    const TileID first_tile_id,
                                    const bool embedded)
 {
-  const auto id = tileset->get_uuid();
+  const auto id = tileset->uuid();
   const auto last_tile_id = first_tile_id + tileset->tile_count();
   mRefs.try_emplace(id, std::move(tileset), first_tile_id, last_tile_id);
 

@@ -242,7 +242,7 @@ void show_native_tileset_properties(const Tileset& tileset, entt::dispatcher& di
 
   if (const auto updated_name = native_name_row(tileset.ctx().name(), true);
       updated_name && !updated_name->empty()) {
-    dispatcher.enqueue<RenameTilesetEvent>(tileset.get_uuid(), *updated_name);
+    dispatcher.enqueue<RenameTilesetEvent>(tileset.uuid(), *updated_name);
   }
 
   native_read_only_row(lang.misc.tile_count.c_str(), tileset.tile_count());
@@ -273,13 +273,13 @@ void show_native_layer_properties(const Layer& layer, entt::dispatcher& dispatch
   prepare_table_row(lang.misc.opacity.c_str());
   ImGui::TableNextColumn();
   if (const auto value = input_float("##Opacity", layer.opacity(), 0.0f, 1.0f)) {
-    dispatcher.enqueue<SetLayerOpacityEvent>(layer.get_uuid(), *value);
+    dispatcher.enqueue<SetLayerOpacityEvent>(layer.uuid(), *value);
   }
 
   prepare_table_row(lang.misc.visible.c_str());
   ImGui::TableNextColumn();
   if (const auto value = input_bool("##Visible", layer.visible())) {
-    dispatcher.enqueue<SetLayerVisibleEvent>(layer.get_uuid(), *value);
+    dispatcher.enqueue<SetLayerVisibleEvent>(layer.uuid(), *value);
   }
 }
 
@@ -302,7 +302,7 @@ void show_native_object_properties(const Object& object, entt::dispatcher& dispa
   }
 
   if (const auto updated_name = native_name_row(object.ctx().name())) {
-    dispatcher.enqueue<SetObjectNameEvent>(object.get_uuid(), *updated_name);
+    dispatcher.enqueue<SetObjectNameEvent>(object.uuid(), *updated_name);
   }
 
   const auto& pos = object.pos();
@@ -318,14 +318,14 @@ void show_native_object_properties(const Object& object, entt::dispatcher& dispa
   prepare_table_row(lang.misc.visible.c_str());
   ImGui::TableNextColumn();
   if (const auto visible = input_bool("##Visible", object.visible())) {
-    dispatcher.enqueue<SetObjectVisibleEvent>(object.get_uuid(), *visible);
+    dispatcher.enqueue<SetObjectVisibleEvent>(object.uuid(), *visible);
   }
 
   prepare_table_row(lang.misc.tag.c_str());
 
   ImGui::TableNextColumn();
   if (const auto tag = input_string("##Tag", object.tag())) {
-    dispatcher.enqueue<SetObjectTagEvent>(object.get_uuid(), *tag);
+    dispatcher.enqueue<SetObjectTagEvent>(object.uuid(), *tag);
   }
 }
 
@@ -350,7 +350,7 @@ void show_custom_properties(const Context& context,
 
     if (!is_item_context_open) {
       is_item_context_open =
-          property_item_context_menu(context.get_uuid(), dispatcher, name, context_state);
+          property_item_context_menu(context.uuid(), dispatcher, name, context_state);
     }
 
     if (context_state.show_rename_dialog && !rename_target) {
@@ -368,9 +368,7 @@ void show_custom_properties(const Context& context,
     }
 
     if (auto updated = input_attribute("##CustomPropertyInput", value)) {
-      dispatcher.enqueue<UpdatePropertyEvent>(context.get_uuid(),
-                                              name,
-                                              std::move(*updated));
+      dispatcher.enqueue<UpdatePropertyEvent>(context.uuid(), name, std::move(*updated));
     }
 
     first = false;

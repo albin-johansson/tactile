@@ -44,7 +44,7 @@ TEST(AddObject, RedoUndo)
   ASSERT_EQ(1, layer.object_count());
 
   auto object = layer.begin()->second;
-  const auto object_id = object->get_uuid();
+  const auto object_id = object->uuid();
   ASSERT_TRUE(document->get_contexts().contains(object_id));
 
   cmd.undo();

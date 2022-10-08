@@ -67,7 +67,7 @@ void AddObject::redo()
   object->set_size(mSize);
   object->set_meta_id(map.fetch_and_increment_next_object_id());
 
-  mObjectId = object->get_uuid();
+  mObjectId = object->uuid();
   layer.add_object(object);
 
   mDocument->get_contexts().add_context(std::move(object));

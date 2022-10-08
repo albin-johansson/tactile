@@ -37,12 +37,12 @@ TEST(ObjectLayer, AddObject)
   auto object = std::make_shared<Object>();
 
   ASSERT_EQ(0, layer.object_count());
-  ASSERT_FALSE(layer.has_object(object->get_uuid()));
+  ASSERT_FALSE(layer.has_object(object->uuid()));
 
   layer.add_object(object);
 
   ASSERT_EQ(1, layer.object_count());
-  ASSERT_TRUE(layer.has_object(object->get_uuid()));
+  ASSERT_TRUE(layer.has_object(object->uuid()));
 }
 
 TEST(ObjectLayer, RemoveObject)
@@ -50,7 +50,7 @@ TEST(ObjectLayer, RemoveObject)
   ObjectLayer layer;
   auto object = std::make_shared<Object>();
 
-  ASSERT_NO_THROW(layer.remove_object(object->get_uuid()));
+  ASSERT_NO_THROW(layer.remove_object(object->uuid()));
 }
 
 }  // namespace tactile::test

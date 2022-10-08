@@ -120,7 +120,7 @@ auto Map::fix_tiles() -> FixTilesResult
       }
     });
 
-    result[layer.get_uuid()] = std::move(previous);
+    result[layer.uuid()] = std::move(previous);
   });
 
   return result;
@@ -128,7 +128,7 @@ auto Map::fix_tiles() -> FixTilesResult
 
 void Map::add_layer(Shared<Layer> layer, const Maybe<UUID>& parent_id)
 {
-  const auto id = layer->get_uuid();
+  const auto id = layer->uuid();
 
   if (parent_id) {
     mRootLayer.add(*parent_id, layer);
@@ -299,7 +299,7 @@ auto Map::ctx() const -> const ContextInfo&
   return mContext;
 }
 
-auto Map::get_uuid() const -> const UUID&
+auto Map::uuid() const -> const UUID&
 {
   return mContext.uuid();
 }

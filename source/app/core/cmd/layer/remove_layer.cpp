@@ -41,7 +41,7 @@ void RemoveLayer::undo()
   auto& map = mDocument->get_map();
 
   map.add_layer(mLayer, mLayer->parent());
-  map.invisible_root().set_index(mLayer->get_uuid(), mIndex.value());
+  map.invisible_root().set_index(mLayer->uuid(), mIndex.value());
 
   mDocument->get_contexts().add_context(mLayer);
   mIndex.reset();
@@ -50,7 +50,7 @@ void RemoveLayer::undo()
 void RemoveLayer::redo()
 {
   auto& map = mDocument->get_map();
-  const auto id = mLayer->get_uuid();
+  const auto id = mLayer->uuid();
 
   mIndex = map.invisible_root().local_index(id);
   map.remove_layer(id);

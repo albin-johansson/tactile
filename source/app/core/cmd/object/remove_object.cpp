@@ -62,7 +62,7 @@ void RemoveObject::redo()
   auto& map = mDocument->get_map();
   auto& layer = map.invisible_root().object_layer(mLayerId);
 
-  const auto& id = mObject->get_uuid();
+  const auto& id = mObject->uuid();
 
   if (layer.active_object_id() == id) {
     layer.select_object(nothing);

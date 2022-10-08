@@ -40,7 +40,7 @@ DefineComponent::DefineComponent(Shared<ComponentIndex> index, String name)
 void DefineComponent::undo()
 {
   const auto& def = mDef.value();
-  mIndex->remove_comp(def.get_uuid());
+  mIndex->remove_comp(def.uuid());
 }
 
 void DefineComponent::redo()

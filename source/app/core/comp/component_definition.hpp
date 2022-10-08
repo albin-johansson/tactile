@@ -94,7 +94,7 @@ class ComponentDefinition final : public Element {
   /// Indicates whether the component has no attributes.
   [[nodiscard]] auto empty() const -> bool;
 
-  [[nodiscard]] auto get_uuid() const -> const UUID& override;
+  [[nodiscard]] auto uuid() const -> const UUID& override;
 
   [[nodiscard]] auto begin() const noexcept { return mAttributes.begin(); }
   [[nodiscard]] auto end() const noexcept { return mAttributes.end(); }
