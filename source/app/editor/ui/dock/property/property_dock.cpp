@@ -252,27 +252,6 @@ void show_native_tileset_properties(const Tileset& tileset, entt::dispatcher& di
   native_read_only_row(lang.misc.tile_height.c_str(), tileset.tile_size().y);
 }
 
-// TODO think about how to show the ref info? Maybe as overlay in tileset view?
-void show_native_tileset_ref_properties(const TilesetRef& ref)
-{
-  const auto& lang = get_current_language();
-  const auto& tileset = ref.view_tileset();
-
-  native_read_only_row(lang.misc.type.c_str(), lang.misc.tileset.c_str());
-  native_read_only_row(lang.misc.name.c_str(), tileset.ctx().name().c_str());
-
-  native_read_only_row(lang.misc.tile_count.c_str(), tileset.tile_count());
-  native_read_only_row(lang.misc.column_count.c_str(), tileset.column_count());
-
-  native_read_only_row(lang.misc.tile_width.c_str(), tileset.tile_size().x);
-  native_read_only_row(lang.misc.tile_height.c_str(), tileset.tile_size().y);
-
-  native_read_only_row(lang.misc.first_tile_id.c_str(), ref.first_tile());
-  native_read_only_row(lang.misc.last_tile_id.c_str(), ref.last_tile());
-
-  native_read_only_row(lang.misc.embedded.c_str(), ref.is_embedded());
-}
-
 void show_native_layer_properties(const Layer& layer, entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
