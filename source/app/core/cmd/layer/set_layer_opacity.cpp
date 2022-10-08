@@ -42,7 +42,7 @@ void SetLayerOpacity::undo()
 
 void SetLayerOpacity::redo()
 {
-  mOldOpacity = mLayer->get_opacity();
+  mOldOpacity = mLayer->opacity();
   mLayer->set_opacity(mNewOpacity);
 }
 

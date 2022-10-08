@@ -221,12 +221,12 @@ auto TileLayer::get_tiles() const -> const TileMatrix&
   return mTiles;
 }
 
-auto TileLayer::get_opacity() const -> float
+auto TileLayer::opacity() const -> float
 {
   return mDelegate.get_opacity();
 }
 
-auto TileLayer::is_visible() const -> bool
+auto TileLayer::visible() const -> bool
 {
   return mDelegate.is_visible();
 }
@@ -254,12 +254,12 @@ auto TileLayer::get_uuid() const -> const UUID&
   return mDelegate.ctx().uuid();
 }
 
-auto TileLayer::get_parent() const -> Maybe<UUID>
+auto TileLayer::parent() const -> Maybe<UUID>
 {
   return mDelegate.get_parent();
 }
 
-auto TileLayer::get_meta_id() const -> Maybe<int32>
+auto TileLayer::meta_id() const -> Maybe<int32>
 {
   return mDelegate.get_meta_id();
 }

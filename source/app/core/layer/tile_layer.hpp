@@ -97,9 +97,9 @@ class TileLayer final : public Layer {
   /// Returns the associated tile matrix.
   [[nodiscard]] auto get_tiles() const -> const TileMatrix&;
 
-  [[nodiscard]] auto get_opacity() const -> float override;
+  [[nodiscard]] auto opacity() const -> float override;
 
-  [[nodiscard]] auto is_visible() const -> bool override;
+  [[nodiscard]] auto visible() const -> bool override;
 
   [[nodiscard]] auto clone() const -> Shared<Layer> override;
 
@@ -108,11 +108,11 @@ class TileLayer final : public Layer {
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
-  [[nodiscard]] auto get_parent() const -> Maybe<UUID> override;
+  [[nodiscard]] auto parent() const -> Maybe<UUID> override;
 
-  [[nodiscard]] auto get_meta_id() const -> Maybe<int32> override;
+  [[nodiscard]] auto meta_id() const -> Maybe<int32> override;
 
-  [[nodiscard]] auto get_type() const -> LayerType override
+  [[nodiscard]] auto type() const -> LayerType override
   {
     return LayerType::TileLayer;
   }

@@ -26,9 +26,9 @@ namespace tactile::test {
 TEST(ObjectLayer, Defaults)
 {
   const ObjectLayer layer;
-  ASSERT_EQ(LayerType::ObjectLayer, layer.get_type());
+  ASSERT_EQ(LayerType::ObjectLayer, layer.type());
   ASSERT_EQ(0, layer.object_count());
-  ASSERT_FALSE(layer.get_meta_id().has_value());
+  ASSERT_FALSE(layer.meta_id().has_value());
 }
 
 TEST(ObjectLayer, AddObject)

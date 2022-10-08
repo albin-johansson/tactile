@@ -69,11 +69,11 @@ void update_layer_popup(const Map& map, const Layer& layer, entt::dispatcher& di
     ImGui::Separator();
     if (ImGui::MenuItem(lang.action.toggle_layer_visible.c_str(),
                         nullptr,
-                        layer.is_visible())) {
-      dispatcher.enqueue<SetLayerVisibleEvent>(layer.get_uuid(), !layer.is_visible());
+                        layer.visible())) {
+      dispatcher.enqueue<SetLayerVisibleEvent>(layer.get_uuid(), !layer.visible());
     }
 
-    if (auto opacity = layer.get_opacity();
+    if (auto opacity = layer.opacity();
         ImGui::SliderFloat(lang.misc.opacity.c_str(), &opacity, 0, 1.0f)) {
       dispatcher.enqueue<SetLayerOpacityEvent>(layer.get_uuid(), opacity);
     }
@@ -230,9 +230,9 @@ void layer_selectable(const MapDocument& document,
   const auto flags =
       is_active_layer ? (base_node_flags | ImGuiTreeNodeFlags_Selected) : base_node_flags;
 
-  const FmtString name {"{} {}", get_icon(layer.get_type()), layer.ctx().name()};
+  const FmtString name {"{} {}", get_icon(layer.type()), layer.ctx().name()};
 
-  switch (layer.get_type()) {
+  switch (layer.type()) {
     case LayerType::TileLayer: {
       if (ImGui::Selectable(name.data(), is_active_layer)) {
         dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());

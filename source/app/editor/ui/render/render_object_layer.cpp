@@ -141,7 +141,7 @@ void render_object_layer(Graphics& graphics,
                          const ObjectLayer& layer,
                          const float parent_opacity)
 {
-  const auto opacity = parent_opacity * layer.get_opacity();
+  const auto opacity = parent_opacity * layer.opacity();
   const auto object_color = IM_COL32(0xFF, 0, 0, static_cast<uint8>(255 * opacity));
 
   for (const auto& [id, object] : layer) {

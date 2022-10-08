@@ -40,7 +40,7 @@ void render_layer(Graphics& graphics,
 {
   TACTILE_ASSERT(layer);
 
-  switch (layer->get_type()) {
+  switch (layer->type()) {
     case LayerType::TileLayer:
       if (const auto* tile_layer = dynamic_cast<const TileLayer*>(layer)) {
         render_tile_layer(graphics, map, *tile_layer, parent_opacity);
@@ -67,18 +67,18 @@ void render_map(Graphics& graphics, const MapDocument& document)
   const auto active_layer_id = map.active_layer_id();
 
   root.each([&](const Layer* layer) {
-    if (!layer->is_visible()) {
+    if (!layer->visible()) {
       return;
     }
 
-    const auto parent_id = layer->get_parent();
+    const auto parent_id = layer->parent();
     const auto* parent_layer = parent_id ? root.as_group_layer(*parent_id) : nullptr;
 
-    if (parent_layer && !parent_layer->is_visible()) {
+    if (parent_layer && !parent_layer->visible()) {
       return;
     }
 
-    const auto parent_opacity = parent_layer ? parent_layer->get_opacity() : 1.0f;
+    const auto parent_opacity = parent_layer ? parent_layer->opacity() : 1.0f;
     if (prefs.highlight_active_layer) {
       render_layer(graphics,
                    map,
@@ -86,7 +86,7 @@ void render_map(Graphics& graphics, const MapDocument& document)
                    active_layer_id == layer->get_uuid() ? 1.0f : 0.5f);
     }
     else {
-      render_layer(graphics, map, layer, parent_opacity * layer->get_opacity());
+      render_layer(graphics, map, layer, parent_opacity * layer->opacity());
     }
   });
 

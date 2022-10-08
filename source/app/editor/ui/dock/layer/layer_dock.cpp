@@ -129,7 +129,7 @@ void update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
     const ImVec2 size {-min_float, -min_float};
     if (ListBox list {"##LayerTreeNode", size}; list.is_open()) {
       root.each([&](const Layer* layer) {
-        if (!layer->get_parent().has_value()) {
+        if (!layer->parent().has_value()) {
           layer_selectable(document, *layer, dispatcher);
         }
       });

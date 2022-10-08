@@ -69,9 +69,9 @@ class ObjectLayer final : public Layer {
   [[nodiscard]] auto object_at(const Float2& pos, const Float2& tile_size) const
       -> Maybe<UUID>;
 
-  [[nodiscard]] auto get_opacity() const -> float override;
+  [[nodiscard]] auto opacity() const -> float override;
 
-  [[nodiscard]] auto is_visible() const -> bool override;
+  [[nodiscard]] auto visible() const -> bool override;
 
   [[nodiscard]] auto clone() const -> Shared<Layer> override;
 
@@ -80,11 +80,11 @@ class ObjectLayer final : public Layer {
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
-  [[nodiscard]] auto get_parent() const -> Maybe<UUID> override;
+  [[nodiscard]] auto parent() const -> Maybe<UUID> override;
 
-  [[nodiscard]] auto get_meta_id() const -> Maybe<int32> override;
+  [[nodiscard]] auto meta_id() const -> Maybe<int32> override;
 
-  [[nodiscard]] auto get_type() const -> LayerType override;
+  [[nodiscard]] auto type() const -> LayerType override;
 
   [[nodiscard]] auto begin() const noexcept { return mObjects.begin(); }
   [[nodiscard]] auto end() const noexcept { return mObjects.end(); }

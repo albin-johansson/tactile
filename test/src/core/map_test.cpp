@@ -262,7 +262,7 @@ TEST(Map, AddLayer)
   ASSERT_EQ(1, root.size());
   ASSERT_NE(nullptr, root.as_tile_layer(t1->get_uuid()));
   ASSERT_EQ(nullptr, root.as_object_layer(o1->get_uuid()));
-  ASSERT_FALSE(t1->get_parent().has_value());
+  ASSERT_FALSE(t1->parent().has_value());
 
   map.add_layer(o1);
   map.add_layer(g1);
@@ -275,10 +275,10 @@ TEST(Map, AddLayer)
   ASSERT_NE(nullptr, root.as_object_layer(o1->get_uuid()));
   ASSERT_NE(nullptr, root.as_group_layer(g1->get_uuid()));
 
-  ASSERT_EQ(g1->get_uuid(), t2->get_parent());
-  ASSERT_EQ(nothing, t1->get_parent());
-  ASSERT_EQ(nothing, o1->get_parent());
-  ASSERT_EQ(nothing, g1->get_parent());
+  ASSERT_EQ(g1->get_uuid(), t2->parent());
+  ASSERT_EQ(nothing, t1->parent());
+  ASSERT_EQ(nothing, o1->parent());
+  ASSERT_EQ(nothing, g1->parent());
 }
 
 TEST(Map, AddTileLayer)
@@ -312,7 +312,7 @@ TEST(Map, AddObjectLayer)
   ASSERT_EQ(nullptr, root.as_group_layer(id));
   ASSERT_EQ(2, root.size());
 
-  ASSERT_EQ(parent, layer.get_parent());
+  ASSERT_EQ(parent, layer.parent());
 }
 
 TEST(Map, AddGroupLayer)

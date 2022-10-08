@@ -96,7 +96,7 @@ void convert_group_layer(const GroupLayer& layer,
 
   usize index {0};
   for (const auto& immediate_child : layer.storage()) {
-    TACTILE_ASSERT(immediate_child->get_parent() == layer.get_uuid());
+    TACTILE_ASSERT(immediate_child->parent() == layer.get_uuid());
 
     auto& layer_data = data.children.emplace_back(std::make_unique<ir::LayerData>());
     convert_layer(*immediate_child, index, components, *layer_data);
@@ -109,17 +109,17 @@ void convert_layer(const Layer& layer,
                    const ComponentIndex* components,
                    ir::LayerData& layer_data)
 {
-  TACTILE_ASSERT(layer.get_meta_id().has_value());
+  TACTILE_ASSERT(layer.meta_id().has_value());
   layer_data.index = index;
 
-  layer_data.id = layer.get_meta_id().value();
-  layer_data.type = layer.get_type();
-  layer_data.opacity = layer.get_opacity();
-  layer_data.visible = layer.is_visible();
+  layer_data.id = layer.meta_id().value();
+  layer_data.type = layer.type();
+  layer_data.opacity = layer.opacity();
+  layer_data.visible = layer.visible();
 
   layer_data.name = layer.ctx().name();
 
-  switch (layer.get_type()) {
+  switch (layer.type()) {
     case LayerType::TileLayer: {
       const auto& tile_layer = dynamic_cast<const TileLayer&>(layer);
 
@@ -156,7 +156,7 @@ void convert_layers(const MapDocument& document,
   const auto& root = document.get_map().invisible_root();
   root.each([&](const Layer* layer) {
     // Only iterate top-level layers, and convert them recursively
-    if (!layer->get_parent()) {
+    if (!layer->parent()) {
       auto& layer_data = data.layers.emplace_back();
       convert_layer(*layer, index, components, layer_data);
       ++index;

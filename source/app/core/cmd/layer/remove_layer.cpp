@@ -40,7 +40,7 @@ void RemoveLayer::undo()
 {
   auto& map = mDocument->get_map();
 
-  map.add_layer(mLayer, mLayer->get_parent());
+  map.add_layer(mLayer, mLayer->parent());
   map.invisible_root().set_index(mLayer->get_uuid(), mIndex.value());
 
   mDocument->get_contexts().add_context(mLayer);

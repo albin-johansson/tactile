@@ -213,7 +213,7 @@ void Map::select_layer(const UUID& id)
 auto Map::is_active_layer(const LayerType type) const -> bool
 {
   if (mActiveLayer) {
-    return mRootLayer.at(*mActiveLayer).get_type() == type;
+    return mRootLayer.at(*mActiveLayer).type() == type;
   }
   else {
     return false;
