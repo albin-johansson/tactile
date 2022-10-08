@@ -398,19 +398,6 @@ void show_custom_properties(const Context& context,
   }
 }
 
-void update_conditional_tileset_button(const Document& document,
-                                       entt::dispatcher& dispatcher)
-{
-  if (document.get_type() == DocumentType::Map) {
-    // TODO if active context is tileset, show extra stuff
-
-    /*if (centered_button("Open Tileset")) {
-      dispatcher.enqueue<OpenDocumentEvent>(ref.source_tileset);
-      dispatcher.enqueue<SelectDocumentEvent>(ref.source_tileset);
-    }*/
-  }
-}
-
 struct ContextPropertyVisitor final : ContextVisitor {
   entt::dispatcher* dispatcher {};
 
@@ -460,8 +447,6 @@ void update_property_table(const DocumentModel& model, entt::dispatcher& dispatc
   const auto& lang = get_current_language();
   const auto& document = model.require_active_document();
   const auto& context = document.get_contexts().active_context();
-
-  update_conditional_tileset_button(document, dispatcher);
 
   if (Table table {"##PropertyTable", 2, flags}; table.is_open()) {
     ContextPropertyVisitor visitor {dispatcher};
