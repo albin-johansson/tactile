@@ -19,7 +19,6 @@
 
 #include "core/layer/group_layer.hpp"
 
-#include <boost/uuid/uuid_io.hpp>
 #include <fmt/ostream.h>
 #include <gtest/gtest.h>
 #include <spdlog/spdlog.h>
@@ -34,7 +33,7 @@ namespace tactile::test {
 TEST(GroupLayer, Defaults)
 {
   GroupLayer root;
-  ASSERT_EQ(0u, root.layer_count());
+  ASSERT_EQ(0u, root.size());
 
   struct Counter final : ConstLayerVisitor {
     usize count {};
@@ -57,11 +56,11 @@ TEST(GroupLayer, SimpleEach)
   auto g1 = std::make_shared<GroupLayer>();
   auto o1 = std::make_shared<ObjectLayer>();
 
-  root.add_layer(t1);
-  root.add_layer(g1);
-  root.add_layer(g1->get_uuid(), o1);
+  root.add(t1);
+  root.add(g1);
+  root.add(g1->get_uuid(), o1);
 
-  ASSERT_EQ(3, root.layer_count());
+  ASSERT_EQ(3, root.size());
 
   ASSERT_EQ(nothing, t1->get_parent());
   ASSERT_EQ(nothing, g1->get_parent());
@@ -75,17 +74,17 @@ TEST(GroupLayer, SimpleEach)
     switch (layer->get_type()) {
       case LayerType::TileLayer:
         ASSERT_FALSE(layer->get_parent().has_value());
-        ASSERT_EQ(0, root.get_global_index(layer->get_uuid()));
+        ASSERT_EQ(0, root.global_index(layer->get_uuid()));
         break;
 
       case LayerType::ObjectLayer:
         ASSERT_EQ(g1->get_uuid(), layer->get_parent());
-        ASSERT_EQ(2, root.get_global_index(layer->get_uuid()));
+        ASSERT_EQ(2, root.global_index(layer->get_uuid()));
         break;
 
       case LayerType::GroupLayer:
         ASSERT_FALSE(layer->get_parent().has_value());
-        ASSERT_EQ(1, root.get_global_index(layer->get_uuid()));
+        ASSERT_EQ(1, root.global_index(layer->get_uuid()));
         break;
     }
   });
@@ -93,82 +92,81 @@ TEST(GroupLayer, SimpleEach)
   ASSERT_EQ(3u, count);
 }
 
-TEST(GroupLayer, AddLayer)
+TEST(GroupLayer, Add)
 {
   GroupLayer root;
-  ASSERT_THROW(root.add_layer(nullptr), TactileError);
+  ASSERT_THROW(root.add(nullptr), TactileError);
 
   auto t1 = std::make_shared<TileLayer>();
-  root.add_layer(t1);
+  root.add(t1);
 
-  ASSERT_EQ(1u, root.layer_count());
-  ASSERT_EQ(0u, root.get_local_index(t1->get_uuid()));
-  ASSERT_EQ(0u, root.get_global_index(t1->get_uuid()));
+  ASSERT_EQ(1u, root.size());
+  ASSERT_EQ(0u, root.local_index(t1->get_uuid()));
+  ASSERT_EQ(0u, root.global_index(t1->get_uuid()));
   ASSERT_EQ(nothing, t1->get_parent());
 
   auto t2 = std::make_shared<TileLayer>();
-  root.add_layer(t2);
+  root.add(t2);
 
-  ASSERT_EQ(2u, root.layer_count());
-  ASSERT_EQ(0u, root.get_local_index(t1->get_uuid()));
-  ASSERT_EQ(1u, root.get_local_index(t2->get_uuid()));
-  ASSERT_EQ(0u, root.get_global_index(t1->get_uuid()));
-  ASSERT_EQ(1u, root.get_global_index(t2->get_uuid()));
+  ASSERT_EQ(2u, root.size());
+  ASSERT_EQ(0u, root.local_index(t1->get_uuid()));
+  ASSERT_EQ(1u, root.local_index(t2->get_uuid()));
+  ASSERT_EQ(0u, root.global_index(t1->get_uuid()));
+  ASSERT_EQ(1u, root.global_index(t2->get_uuid()));
   ASSERT_EQ(nothing, t2->get_parent());
 
   auto g1 = std::make_shared<GroupLayer>();
   auto t3 = std::make_shared<TileLayer>();
 
-  root.add_layer(g1);
-  root.add_layer(g1->get_uuid(), t3);
+  root.add(g1);
+  root.add(g1->get_uuid(), t3);
 
-  ASSERT_EQ(4u, root.layer_count());
+  ASSERT_EQ(4u, root.size());
 
-  ASSERT_EQ(0u, root.get_local_index(t1->get_uuid()));
-  ASSERT_EQ(1u, root.get_local_index(t2->get_uuid()));
-  ASSERT_EQ(2u, root.get_local_index(g1->get_uuid()));
-  ASSERT_EQ(0u, root.get_local_index(t3->get_uuid()));
+  ASSERT_EQ(0u, root.local_index(t1->get_uuid()));
+  ASSERT_EQ(1u, root.local_index(t2->get_uuid()));
+  ASSERT_EQ(2u, root.local_index(g1->get_uuid()));
+  ASSERT_EQ(0u, root.local_index(t3->get_uuid()));
 
-  ASSERT_EQ(0u, root.get_global_index(t1->get_uuid()));
-  ASSERT_EQ(1u, root.get_global_index(t2->get_uuid()));
-  ASSERT_EQ(2u, root.get_global_index(g1->get_uuid()));
-  ASSERT_EQ(3u, root.get_global_index(t3->get_uuid()));
+  ASSERT_EQ(0u, root.global_index(t1->get_uuid()));
+  ASSERT_EQ(1u, root.global_index(t2->get_uuid()));
+  ASSERT_EQ(2u, root.global_index(g1->get_uuid()));
+  ASSERT_EQ(3u, root.global_index(t3->get_uuid()));
 
   ASSERT_EQ(nothing, g1->get_parent());
   ASSERT_EQ(g1->get_uuid(), t3->get_parent());
 }
 
-TEST(GroupLayer, AddLayerToParent)
+TEST(GroupLayer, AddToParent)
 {
   GroupLayer root;
-  ASSERT_THROW(root.add_layer(root.get_uuid(), std::make_shared<TileLayer>()),
-               TactileError);
+  ASSERT_THROW(root.add(root.get_uuid(), std::make_shared<TileLayer>()), TactileError);
 }
 
-TEST(GroupLayer, RemoveLayer)
+TEST(GroupLayer, Remove)
 {
   GroupLayer root;
-  ASSERT_THROW(root.remove_layer(root.get_uuid()), TactileError);
+  ASSERT_THROW(root.remove(root.get_uuid()), TactileError);
 
   auto t1 = std::make_shared<TileLayer>();
   auto t2 = std::make_shared<TileLayer>();
   auto g1 = std::make_shared<GroupLayer>();
 
-  root.add_layer(g1);
-  root.add_layer(g1->get_uuid(), t1);
-  root.add_layer(t2);
+  root.add(g1);
+  root.add(g1->get_uuid(), t1);
+  root.add(t2);
 
-  ASSERT_EQ(t1, root.remove_layer(t1->get_uuid()));
-  ASSERT_EQ(g1, root.remove_layer(g1->get_uuid()));
-  ASSERT_EQ(t2, root.remove_layer(t2->get_uuid()));
+  ASSERT_EQ(t1, root.remove(t1->get_uuid()));
+  ASSERT_EQ(g1, root.remove(g1->get_uuid()));
+  ASSERT_EQ(t2, root.remove(t2->get_uuid()));
 
-  ASSERT_EQ(0, root.layer_count());
+  ASSERT_EQ(0, root.size());
 }
 
-TEST(GroupLayer, MoveLayerUp)
+TEST(GroupLayer, MoveUp)
 {
   GroupLayer root;
-  ASSERT_THROW(root.move_layer_up(root.get_uuid()), TactileError);
+  ASSERT_THROW(root.move_up(root.get_uuid()), TactileError);
 
   auto t1 = std::make_shared<TileLayer>();
   auto t2 = std::make_shared<TileLayer>();
@@ -184,26 +182,26 @@ TEST(GroupLayer, MoveLayerUp)
   // ------ t2
   // ---- t3
   // -- o1
-  root.add_layer(g1);
-  root.add_layer(g1->get_uuid(), g2);
-  root.add_layer(g2->get_uuid(), t1);
-  root.add_layer(g2->get_uuid(), t2);
-  root.add_layer(g1->get_uuid(), t3);
-  root.add_layer(o1);
+  root.add(g1);
+  root.add(g1->get_uuid(), g2);
+  root.add(g2->get_uuid(), t1);
+  root.add(g2->get_uuid(), t2);
+  root.add(g1->get_uuid(), t3);
+  root.add(o1);
 
-  ASSERT_EQ(0, root.get_global_index(g1->get_uuid()));
-  ASSERT_EQ(1, root.get_global_index(g2->get_uuid()));
-  ASSERT_EQ(2, root.get_global_index(t1->get_uuid()));
-  ASSERT_EQ(3, root.get_global_index(t2->get_uuid()));
-  ASSERT_EQ(4, root.get_global_index(t3->get_uuid()));
-  ASSERT_EQ(5, root.get_global_index(o1->get_uuid()));
+  ASSERT_EQ(0, root.global_index(g1->get_uuid()));
+  ASSERT_EQ(1, root.global_index(g2->get_uuid()));
+  ASSERT_EQ(2, root.global_index(t1->get_uuid()));
+  ASSERT_EQ(3, root.global_index(t2->get_uuid()));
+  ASSERT_EQ(4, root.global_index(t3->get_uuid()));
+  ASSERT_EQ(5, root.global_index(o1->get_uuid()));
 
-  ASSERT_EQ(0, root.get_local_index(g1->get_uuid()));
-  ASSERT_EQ(0, root.get_local_index(g2->get_uuid()));
-  ASSERT_EQ(0, root.get_local_index(t1->get_uuid()));
-  ASSERT_EQ(1, root.get_local_index(t2->get_uuid()));
-  ASSERT_EQ(1, root.get_local_index(t3->get_uuid()));
-  ASSERT_EQ(1, root.get_local_index(o1->get_uuid()));
+  ASSERT_EQ(0, root.local_index(g1->get_uuid()));
+  ASSERT_EQ(0, root.local_index(g2->get_uuid()));
+  ASSERT_EQ(0, root.local_index(t1->get_uuid()));
+  ASSERT_EQ(1, root.local_index(t2->get_uuid()));
+  ASSERT_EQ(1, root.local_index(t3->get_uuid()));
+  ASSERT_EQ(1, root.local_index(o1->get_uuid()));
 
   // root
   // -- g1
@@ -212,19 +210,19 @@ TEST(GroupLayer, MoveLayerUp)
   // ------ t1
   // ---- t3
   // -- o1
-  root.move_layer_up(t2->get_uuid());
+  root.move_up(t2->get_uuid());
 
-  ASSERT_EQ(0, root.get_global_index(g1->get_uuid()));
-  ASSERT_EQ(1, root.get_global_index(g2->get_uuid()));
-  ASSERT_EQ(2, root.get_global_index(t2->get_uuid()));
-  ASSERT_EQ(3, root.get_global_index(t1->get_uuid()));
-  ASSERT_EQ(4, root.get_global_index(t3->get_uuid()));
+  ASSERT_EQ(0, root.global_index(g1->get_uuid()));
+  ASSERT_EQ(1, root.global_index(g2->get_uuid()));
+  ASSERT_EQ(2, root.global_index(t2->get_uuid()));
+  ASSERT_EQ(3, root.global_index(t1->get_uuid()));
+  ASSERT_EQ(4, root.global_index(t3->get_uuid()));
 
-  ASSERT_EQ(0, root.get_local_index(g1->get_uuid()));
-  ASSERT_EQ(0, root.get_local_index(g2->get_uuid()));
-  ASSERT_EQ(0, root.get_local_index(t2->get_uuid()));
-  ASSERT_EQ(1, root.get_local_index(t1->get_uuid()));
-  ASSERT_EQ(1, root.get_local_index(t3->get_uuid()));
+  ASSERT_EQ(0, root.local_index(g1->get_uuid()));
+  ASSERT_EQ(0, root.local_index(g2->get_uuid()));
+  ASSERT_EQ(0, root.local_index(t2->get_uuid()));
+  ASSERT_EQ(1, root.local_index(t1->get_uuid()));
+  ASSERT_EQ(1, root.local_index(t3->get_uuid()));
 
   // root
   // -- g1
@@ -233,19 +231,19 @@ TEST(GroupLayer, MoveLayerUp)
   // ------ t2
   // ------ t1
   // -- o1
-  root.move_layer_up(t3->get_uuid());
+  root.move_up(t3->get_uuid());
 
-  ASSERT_EQ(0, root.get_global_index(g1->get_uuid()));
-  ASSERT_EQ(1, root.get_global_index(t3->get_uuid()));
-  ASSERT_EQ(2, root.get_global_index(g2->get_uuid()));
-  ASSERT_EQ(3, root.get_global_index(t2->get_uuid()));
-  ASSERT_EQ(4, root.get_global_index(t1->get_uuid()));
+  ASSERT_EQ(0, root.global_index(g1->get_uuid()));
+  ASSERT_EQ(1, root.global_index(t3->get_uuid()));
+  ASSERT_EQ(2, root.global_index(g2->get_uuid()));
+  ASSERT_EQ(3, root.global_index(t2->get_uuid()));
+  ASSERT_EQ(4, root.global_index(t1->get_uuid()));
 
-  ASSERT_EQ(0, root.get_local_index(g1->get_uuid()));
-  ASSERT_EQ(0, root.get_local_index(t3->get_uuid()));
-  ASSERT_EQ(1, root.get_local_index(g2->get_uuid()));
-  ASSERT_EQ(0, root.get_local_index(t2->get_uuid()));
-  ASSERT_EQ(1, root.get_local_index(t1->get_uuid()));
+  ASSERT_EQ(0, root.local_index(g1->get_uuid()));
+  ASSERT_EQ(0, root.local_index(t3->get_uuid()));
+  ASSERT_EQ(1, root.local_index(g2->get_uuid()));
+  ASSERT_EQ(0, root.local_index(t2->get_uuid()));
+  ASSERT_EQ(1, root.local_index(t1->get_uuid()));
 
   // root
   // -- o1
@@ -254,27 +252,27 @@ TEST(GroupLayer, MoveLayerUp)
   // ---- g2
   // ------ t2
   // ------ t1
-  root.move_layer_up(o1->get_uuid());
+  root.move_up(o1->get_uuid());
 
-  ASSERT_EQ(0, root.get_global_index(o1->get_uuid()));
-  ASSERT_EQ(1, root.get_global_index(g1->get_uuid()));
-  ASSERT_EQ(2, root.get_global_index(t3->get_uuid()));
-  ASSERT_EQ(3, root.get_global_index(g2->get_uuid()));
-  ASSERT_EQ(4, root.get_global_index(t2->get_uuid()));
-  ASSERT_EQ(5, root.get_global_index(t1->get_uuid()));
+  ASSERT_EQ(0, root.global_index(o1->get_uuid()));
+  ASSERT_EQ(1, root.global_index(g1->get_uuid()));
+  ASSERT_EQ(2, root.global_index(t3->get_uuid()));
+  ASSERT_EQ(3, root.global_index(g2->get_uuid()));
+  ASSERT_EQ(4, root.global_index(t2->get_uuid()));
+  ASSERT_EQ(5, root.global_index(t1->get_uuid()));
 
-  ASSERT_EQ(0, root.get_local_index(o1->get_uuid()));
-  ASSERT_EQ(1, root.get_local_index(g1->get_uuid()));
-  ASSERT_EQ(0, root.get_local_index(t3->get_uuid()));
-  ASSERT_EQ(1, root.get_local_index(g2->get_uuid()));
-  ASSERT_EQ(0, root.get_local_index(t2->get_uuid()));
-  ASSERT_EQ(1, root.get_local_index(t1->get_uuid()));
+  ASSERT_EQ(0, root.local_index(o1->get_uuid()));
+  ASSERT_EQ(1, root.local_index(g1->get_uuid()));
+  ASSERT_EQ(0, root.local_index(t3->get_uuid()));
+  ASSERT_EQ(1, root.local_index(g2->get_uuid()));
+  ASSERT_EQ(0, root.local_index(t2->get_uuid()));
+  ASSERT_EQ(1, root.local_index(t1->get_uuid()));
 }
 
-TEST(GroupLayer, MoveLayerDown)
+TEST(GroupLayer, MoveDown)
 {
   GroupLayer root;
-  ASSERT_THROW(root.move_layer_down(root.get_uuid()), TactileError);
+  ASSERT_THROW(root.move_down(root.get_uuid()), TactileError);
 
   auto t1 = std::make_shared<TileLayer>();
   auto t2 = std::make_shared<TileLayer>();
@@ -290,26 +288,26 @@ TEST(GroupLayer, MoveLayerDown)
   // ------ t2
   // ---- t3
   // -- t4
-  root.add_layer(g1);
-  root.add_layer(g1->get_uuid(), t1);
-  root.add_layer(g1->get_uuid(), g2);
-  root.add_layer(g2->get_uuid(), t2);
-  root.add_layer(g1->get_uuid(), t3);
-  root.add_layer(t4);
+  root.add(g1);
+  root.add(g1->get_uuid(), t1);
+  root.add(g1->get_uuid(), g2);
+  root.add(g2->get_uuid(), t2);
+  root.add(g1->get_uuid(), t3);
+  root.add(t4);
 
-  ASSERT_EQ(0, root.get_global_index(g1->get_uuid()));
-  ASSERT_EQ(1, root.get_global_index(t1->get_uuid()));
-  ASSERT_EQ(2, root.get_global_index(g2->get_uuid()));
-  ASSERT_EQ(3, root.get_global_index(t2->get_uuid()));
-  ASSERT_EQ(4, root.get_global_index(t3->get_uuid()));
-  ASSERT_EQ(5, root.get_global_index(t4->get_uuid()));
+  ASSERT_EQ(0, root.global_index(g1->get_uuid()));
+  ASSERT_EQ(1, root.global_index(t1->get_uuid()));
+  ASSERT_EQ(2, root.global_index(g2->get_uuid()));
+  ASSERT_EQ(3, root.global_index(t2->get_uuid()));
+  ASSERT_EQ(4, root.global_index(t3->get_uuid()));
+  ASSERT_EQ(5, root.global_index(t4->get_uuid()));
 
-  ASSERT_EQ(0, root.get_local_index(g1->get_uuid()));
-  ASSERT_EQ(0, root.get_local_index(t1->get_uuid()));
-  ASSERT_EQ(1, root.get_local_index(g2->get_uuid()));
-  ASSERT_EQ(0, root.get_local_index(t2->get_uuid()));
-  ASSERT_EQ(2, root.get_local_index(t3->get_uuid()));
-  ASSERT_EQ(1, root.get_local_index(t4->get_uuid()));
+  ASSERT_EQ(0, root.local_index(g1->get_uuid()));
+  ASSERT_EQ(0, root.local_index(t1->get_uuid()));
+  ASSERT_EQ(1, root.local_index(g2->get_uuid()));
+  ASSERT_EQ(0, root.local_index(t2->get_uuid()));
+  ASSERT_EQ(2, root.local_index(t3->get_uuid()));
+  ASSERT_EQ(1, root.local_index(t4->get_uuid()));
 
   // root
   // -- g1
@@ -318,21 +316,21 @@ TEST(GroupLayer, MoveLayerDown)
   // ---- g2
   // ------ t2
   // -- t4
-  root.move_layer_down(g2->get_uuid());
+  root.move_down(g2->get_uuid());
 
-  ASSERT_EQ(0, root.get_global_index(g1->get_uuid()));
-  ASSERT_EQ(1, root.get_global_index(t1->get_uuid()));
-  ASSERT_EQ(2, root.get_global_index(t3->get_uuid()));
-  ASSERT_EQ(3, root.get_global_index(g2->get_uuid()));
-  ASSERT_EQ(4, root.get_global_index(t2->get_uuid()));
-  ASSERT_EQ(5, root.get_global_index(t4->get_uuid()));
+  ASSERT_EQ(0, root.global_index(g1->get_uuid()));
+  ASSERT_EQ(1, root.global_index(t1->get_uuid()));
+  ASSERT_EQ(2, root.global_index(t3->get_uuid()));
+  ASSERT_EQ(3, root.global_index(g2->get_uuid()));
+  ASSERT_EQ(4, root.global_index(t2->get_uuid()));
+  ASSERT_EQ(5, root.global_index(t4->get_uuid()));
 
-  ASSERT_EQ(0, root.get_local_index(g1->get_uuid()));
-  ASSERT_EQ(0, root.get_local_index(t1->get_uuid()));
-  ASSERT_EQ(1, root.get_local_index(t3->get_uuid()));
-  ASSERT_EQ(2, root.get_local_index(g2->get_uuid()));
-  ASSERT_EQ(0, root.get_local_index(t2->get_uuid()));
-  ASSERT_EQ(1, root.get_local_index(t4->get_uuid()));
+  ASSERT_EQ(0, root.local_index(g1->get_uuid()));
+  ASSERT_EQ(0, root.local_index(t1->get_uuid()));
+  ASSERT_EQ(1, root.local_index(t3->get_uuid()));
+  ASSERT_EQ(2, root.local_index(g2->get_uuid()));
+  ASSERT_EQ(0, root.local_index(t2->get_uuid()));
+  ASSERT_EQ(1, root.local_index(t4->get_uuid()));
 
   // root
   // -- t4
@@ -341,21 +339,21 @@ TEST(GroupLayer, MoveLayerDown)
   // ---- t3
   // ---- g2
   // ------ t2
-  root.move_layer_down(g1->get_uuid());
+  root.move_down(g1->get_uuid());
 
-  ASSERT_EQ(0, root.get_global_index(t4->get_uuid()));
-  ASSERT_EQ(1, root.get_global_index(g1->get_uuid()));
-  ASSERT_EQ(2, root.get_global_index(t1->get_uuid()));
-  ASSERT_EQ(3, root.get_global_index(t3->get_uuid()));
-  ASSERT_EQ(4, root.get_global_index(g2->get_uuid()));
-  ASSERT_EQ(5, root.get_global_index(t2->get_uuid()));
+  ASSERT_EQ(0, root.global_index(t4->get_uuid()));
+  ASSERT_EQ(1, root.global_index(g1->get_uuid()));
+  ASSERT_EQ(2, root.global_index(t1->get_uuid()));
+  ASSERT_EQ(3, root.global_index(t3->get_uuid()));
+  ASSERT_EQ(4, root.global_index(g2->get_uuid()));
+  ASSERT_EQ(5, root.global_index(t2->get_uuid()));
 
-  ASSERT_EQ(0, root.get_local_index(t4->get_uuid()));
-  ASSERT_EQ(1, root.get_local_index(g1->get_uuid()));
-  ASSERT_EQ(0, root.get_local_index(t1->get_uuid()));
-  ASSERT_EQ(1, root.get_local_index(t3->get_uuid()));
-  ASSERT_EQ(2, root.get_local_index(g2->get_uuid()));
-  ASSERT_EQ(0, root.get_local_index(t2->get_uuid()));
+  ASSERT_EQ(0, root.local_index(t4->get_uuid()));
+  ASSERT_EQ(1, root.local_index(g1->get_uuid()));
+  ASSERT_EQ(0, root.local_index(t1->get_uuid()));
+  ASSERT_EQ(1, root.local_index(t3->get_uuid()));
+  ASSERT_EQ(2, root.local_index(g2->get_uuid()));
+  ASSERT_EQ(0, root.local_index(t2->get_uuid()));
 }
 
 TEST(GroupLayer, SiblingCount)
@@ -370,12 +368,12 @@ TEST(GroupLayer, SiblingCount)
   auto g2 = std::make_shared<GroupLayer>();
   auto o1 = std::make_shared<ObjectLayer>();
 
-  root.add_layer(g1);
-  root.add_layer(g1->get_uuid(), t1);
-  root.add_layer(g1->get_uuid(), t2);
-  root.add_layer(g2);
-  root.add_layer(g2->get_uuid(), o1);
-  root.add_layer(t3);
+  root.add(g1);
+  root.add(g1->get_uuid(), t1);
+  root.add(g1->get_uuid(), t2);
+  root.add(g2);
+  root.add(g2->get_uuid(), o1);
+  root.add(t3);
 
   ASSERT_EQ(2, root.sibling_count(g1->get_uuid()));
   ASSERT_EQ(2, root.sibling_count(g2->get_uuid()));
@@ -387,30 +385,30 @@ TEST(GroupLayer, SiblingCount)
   ASSERT_EQ(0, root.sibling_count(o1->get_uuid()));
 }
 
-TEST(GroupLayer, GetLocalIndex)
+TEST(GroupLayer, LocalIndex)
 {
   GroupLayer root;
-  ASSERT_THROW(root.get_local_index(root.get_uuid()), TactileError);
+  ASSERT_THROW(root.local_index(root.get_uuid()), TactileError);
 
   auto layer1 = std::make_shared<TileLayer>();
   auto layer2 = std::make_shared<TileLayer>();
   auto layer3 = std::make_shared<TileLayer>();
 
-  root.add_layer(layer1);
-  ASSERT_EQ(0u, root.get_local_index(layer1->get_uuid()));
+  root.add(layer1);
+  ASSERT_EQ(0u, root.local_index(layer1->get_uuid()));
 
-  root.add_layer(layer2);
-  root.add_layer(layer3);
+  root.add(layer2);
+  root.add(layer3);
 
-  ASSERT_EQ(0u, root.get_local_index(layer1->get_uuid()));
-  ASSERT_EQ(1u, root.get_local_index(layer2->get_uuid()));
-  ASSERT_EQ(2u, root.get_local_index(layer3->get_uuid()));
+  ASSERT_EQ(0u, root.local_index(layer1->get_uuid()));
+  ASSERT_EQ(1u, root.local_index(layer2->get_uuid()));
+  ASSERT_EQ(2u, root.local_index(layer3->get_uuid()));
 }
 
-TEST(GroupLayer, GetGlobalIndex)
+TEST(GroupLayer, GlobalIndex)
 {
   GroupLayer root;
-  ASSERT_THROW(root.get_global_index(root.get_uuid()), TactileError);
+  ASSERT_THROW(root.global_index(root.get_uuid()), TactileError);
 
   auto t1 = std::make_shared<TileLayer>();
   auto t2 = std::make_shared<TileLayer>();
@@ -424,59 +422,59 @@ TEST(GroupLayer, GetGlobalIndex)
   // ---- g2
   // ------ t2
   // ---- t3
-  root.add_layer(t1);
-  root.add_layer(g1);
-  root.add_layer(g1->get_uuid(), g2);
-  root.add_layer(g2->get_uuid(), t2);
-  root.add_layer(g1->get_uuid(), t3);
+  root.add(t1);
+  root.add(g1);
+  root.add(g1->get_uuid(), g2);
+  root.add(g2->get_uuid(), t2);
+  root.add(g1->get_uuid(), t3);
 
-  ASSERT_EQ(0u, root.get_global_index(t1->get_uuid()));
-  ASSERT_EQ(1u, root.get_global_index(g1->get_uuid()));
-  ASSERT_EQ(2u, root.get_global_index(g2->get_uuid()));
-  ASSERT_EQ(3u, root.get_global_index(t2->get_uuid()));
-  ASSERT_EQ(4u, root.get_global_index(t3->get_uuid()));
+  ASSERT_EQ(0u, root.global_index(t1->get_uuid()));
+  ASSERT_EQ(1u, root.global_index(g1->get_uuid()));
+  ASSERT_EQ(2u, root.global_index(g2->get_uuid()));
+  ASSERT_EQ(3u, root.global_index(t2->get_uuid()));
+  ASSERT_EQ(4u, root.global_index(t3->get_uuid()));
 }
 
-TEST(GroupLayer, CanMoveLayerUp)
+TEST(GroupLayer, CanMoveUp)
 {
   GroupLayer root;
-  ASSERT_THROW(root.can_move_layer_up(root.get_uuid()), TactileError);
+  ASSERT_THROW(root.can_move_up(root.get_uuid()), TactileError);
 
   auto t1 = std::make_shared<TileLayer>();
   auto t2 = std::make_shared<TileLayer>();
   auto t3 = std::make_shared<TileLayer>();
   auto g1 = std::make_shared<GroupLayer>();
 
-  root.add_layer(t1);
-  root.add_layer(g1);
-  root.add_layer(g1->get_uuid(), t2);
-  root.add_layer(t3);
+  root.add(t1);
+  root.add(g1);
+  root.add(g1->get_uuid(), t2);
+  root.add(t3);
 
-  ASSERT_FALSE(root.can_move_layer_up(t1->get_uuid()));
-  ASSERT_TRUE(root.can_move_layer_up(g1->get_uuid()));
-  ASSERT_FALSE(root.can_move_layer_up(t2->get_uuid()));
-  ASSERT_TRUE(root.can_move_layer_up(t3->get_uuid()));
+  ASSERT_FALSE(root.can_move_up(t1->get_uuid()));
+  ASSERT_TRUE(root.can_move_up(g1->get_uuid()));
+  ASSERT_FALSE(root.can_move_up(t2->get_uuid()));
+  ASSERT_TRUE(root.can_move_up(t3->get_uuid()));
 }
 
-TEST(GroupLayer, CanMoveLayerDown)
+TEST(GroupLayer, CanMoveDown)
 {
   GroupLayer root;
-  ASSERT_THROW(root.can_move_layer_down(root.get_uuid()), TactileError);
+  ASSERT_THROW(root.can_move_down(root.get_uuid()), TactileError);
 
   auto t1 = std::make_shared<TileLayer>();
   auto t2 = std::make_shared<TileLayer>();
   auto o1 = std::make_shared<ObjectLayer>();
   auto g1 = std::make_shared<GroupLayer>();
 
-  root.add_layer(g1);
-  root.add_layer(g1->get_uuid(), t1);
-  root.add_layer(g1->get_uuid(), o1);
-  root.add_layer(t2);
+  root.add(g1);
+  root.add(g1->get_uuid(), t1);
+  root.add(g1->get_uuid(), o1);
+  root.add(t2);
 
-  ASSERT_TRUE(root.can_move_layer_down(g1->get_uuid()));
-  ASSERT_TRUE(root.can_move_layer_down(t1->get_uuid()));
-  ASSERT_FALSE(root.can_move_layer_down(o1->get_uuid()));
-  ASSERT_FALSE(root.can_move_layer_down(t2->get_uuid()));
+  ASSERT_TRUE(root.can_move_down(g1->get_uuid()));
+  ASSERT_TRUE(root.can_move_down(t1->get_uuid()));
+  ASSERT_FALSE(root.can_move_down(o1->get_uuid()));
+  ASSERT_FALSE(root.can_move_down(t2->get_uuid()));
 }
 
 }  // namespace tactile::test

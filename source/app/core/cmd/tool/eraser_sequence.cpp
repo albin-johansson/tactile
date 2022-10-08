@@ -40,7 +40,7 @@ EraserSequence::EraserSequence(Shared<Map> map, const UUID& layer_id, TileCache 
 
 void EraserSequence::undo()
 {
-  auto& layer = mMap->invisible_root().view_tile_layer(mLayerId);
+  auto& layer = mMap->invisible_root().tile_layer(mLayerId);
 
   for (const auto& [pos, tile] : mOldState) {
     layer.set_tile(pos, tile);
@@ -49,7 +49,7 @@ void EraserSequence::undo()
 
 void EraserSequence::redo()
 {
-  auto& layer = mMap->invisible_root().view_tile_layer(mLayerId);
+  auto& layer = mMap->invisible_root().tile_layer(mLayerId);
 
   for (const auto& [position, _] : mOldState) {
     layer.set_tile(position, empty_tile);

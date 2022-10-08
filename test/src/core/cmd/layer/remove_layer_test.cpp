@@ -48,11 +48,11 @@ TEST(RemoveLayer, RedoUndo)
   cmd::RemoveLayer cmd {document.get(), layer_id};
 
   cmd.redo();
-  ASSERT_EQ(0, root.layer_count());
+  ASSERT_EQ(0, root.size());
   ASSERT_FALSE(contexts.contains(layer_id));
 
   cmd.undo();
-  ASSERT_EQ(1, root.layer_count());
+  ASSERT_EQ(1, root.size());
   ASSERT_TRUE(contexts.contains(layer_id));
 }
 

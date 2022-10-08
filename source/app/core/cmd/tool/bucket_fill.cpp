@@ -44,7 +44,7 @@ BucketFill::BucketFill(Shared<Map> map,
 
 void BucketFill::undo()
 {
-  auto& layer = mMap->invisible_root().view_tile_layer(mLayerId);
+  auto& layer = mMap->invisible_root().tile_layer(mLayerId);
 
   const auto target = mTarget.value();
   for (const auto& position : mPositions) {
@@ -57,7 +57,7 @@ void BucketFill::undo()
 
 void BucketFill::redo()
 {
-  auto& layer = mMap->invisible_root().view_tile_layer(mLayerId);
+  auto& layer = mMap->invisible_root().tile_layer(mLayerId);
 
   mTarget = layer.tile_at(mOrigin);
   layer.flood(mOrigin, mReplacement, &mPositions);

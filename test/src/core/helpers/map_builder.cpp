@@ -59,14 +59,14 @@ auto MapBuilder::with_tile_layer(UUID* id, Maybe<TileID> initial_value) -> MapBu
   auto& root = map.invisible_root();
 
   const auto layer_id = map.add_tile_layer();
-  mDocument->get_contexts().add_context(root.get_layer(layer_id));
+  mDocument->get_contexts().add_context(root.ptr(layer_id));
 
   if (id) {
     *id = layer_id;
   }
 
   if (initial_value) {
-    auto& layer = root.view_tile_layer(layer_id);
+    auto& layer = root.tile_layer(layer_id);
     invoke_mn(map.row_count(), map.column_count(), [&](const usize r, const usize c) {
       layer.set_tile(TilePos::from(r, c), *initial_value);
     });
@@ -80,7 +80,7 @@ auto MapBuilder::with_object_layer(UUID* id) -> MapBuilder&
   auto& map = mDocument->get_map();
 
   const auto layer_id = map.add_object_layer();
-  mDocument->get_contexts().add_context(map.invisible_root().get_layer(layer_id));
+  mDocument->get_contexts().add_context(map.invisible_root().ptr(layer_id));
 
   if (id) {
     *id = layer_id;
@@ -98,7 +98,7 @@ auto MapBuilder::with_object(const ObjectType type,
 
   if (!mDedicatedObjectLayer) {
     mDedicatedObjectLayer = map.add_object_layer();
-    mDocument->get_contexts().add_context(root.get_layer(*mDedicatedObjectLayer));
+    mDocument->get_contexts().add_context(root.ptr(*mDedicatedObjectLayer));
   }
 
   auto object = std::make_shared<Object>();
@@ -114,7 +114,7 @@ auto MapBuilder::with_object(const ObjectType type,
 
   mDocument->get_contexts().add_context(object);
 
-  auto& layer = root.view_object_layer(*mDedicatedObjectLayer);
+  auto& layer = root.object_layer(*mDedicatedObjectLayer);
   layer.add_object(std::move(object));
 
   return *this;

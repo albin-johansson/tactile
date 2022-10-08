@@ -56,7 +56,7 @@ TEST(RemoveColumn, RedoUndo)
   ASSERT_EQ(initial_rows, map->row_count());
   ASSERT_EQ(initial_cols, map->column_count());
 
-  const auto& layer = map->invisible_root().view_tile_layer(layer_id);
+  const auto& layer = map->invisible_root().tile_layer(layer_id);
   test::verify_all_tiles_matches(layer, 42);
 }
 

@@ -84,14 +84,14 @@ void update_layer_popup(const Map& map, const Layer& layer, entt::dispatcher& di
     if (ImGui::MenuItem(lang.action.move_layer_up.c_str(),
                         nullptr,
                         false,
-                        root.can_move_layer_up(layer.get_uuid()))) {
+                        root.can_move_up(layer.get_uuid()))) {
       dispatcher.enqueue<MoveLayerUpEvent>(layer.get_uuid());
     }
 
     if (ImGui::MenuItem(lang.action.move_layer_down.c_str(),
                         nullptr,
                         false,
-                        root.can_move_layer_down(layer.get_uuid()))) {
+                        root.can_move_down(layer.get_uuid()))) {
       dispatcher.enqueue<MoveLayerDownEvent>(layer.get_uuid());
     }
   }

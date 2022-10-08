@@ -106,7 +106,7 @@ void restore_object_layer(MapDocument& document,
 {
   auto& map = document.get_map();
 
-  auto& layer = map.invisible_root().view_object_layer(layer_id);
+  auto& layer = map.invisible_root().object_layer(layer_id);
   layer.reserve_objects(object_layer_data.objects.size());
 
   for (const auto& object_data : object_layer_data.objects) {
@@ -127,7 +127,7 @@ auto restore_layer(MapDocument& document,
     case LayerType::TileLayer: {
       layer_id = map.add_tile_layer(parent);
 
-      auto& layer = root.view_tile_layer(layer_id);
+      auto& layer = root.tile_layer(layer_id);
       const auto& tile_data = layer_data.as_tile_layer();
 
       invoke_mn(tile_data.row_count,
@@ -157,13 +157,13 @@ auto restore_layer(MapDocument& document,
       throw TactileError {"Invalid layer type!"};
   }
 
-  auto& layer = root.view_layer(layer_id);
+  auto& layer = root.at(layer_id);
   layer.ctx().set_name(layer_data.name);
   layer.set_opacity(layer_data.opacity);
   layer.set_visible(layer_data.visible);
   layer.set_meta_id(layer_data.id);
 
-  restore_context(document, root.get_layer(layer_id), layer_data.context);
+  restore_context(document, root.ptr(layer_id), layer_data.context);
 
   return layer_id;
 }

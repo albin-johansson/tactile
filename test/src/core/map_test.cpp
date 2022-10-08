@@ -75,7 +75,7 @@ TEST(Map, Defaults)
   ASSERT_EQ(5, map.row_count());
   ASSERT_EQ(5, map.column_count());
 
-  ASSERT_EQ(0, root.layer_count());
+  ASSERT_EQ(0, root.size());
   ASSERT_FALSE(map.active_layer_id().has_value());
 
   ASSERT_EQ(1, map.next_tile_layer_suffix());
@@ -98,7 +98,7 @@ TEST(Map, AddRow)
   ASSERT_EQ(5, map.column_count());
 
   const auto id = map.add_tile_layer();
-  const auto& layer = root.view_tile_layer(id);
+  const auto& layer = root.tile_layer(id);
 
   ASSERT_EQ(6, layer.row_count());
   ASSERT_EQ(5, layer.column_count());
@@ -110,7 +110,7 @@ TEST(Map, AddColumn)
   auto& root = map.invisible_root();
 
   const auto id = map.add_tile_layer();
-  const auto& layer = root.view_tile_layer(id);
+  const auto& layer = root.tile_layer(id);
 
   map.add_column();
   ASSERT_EQ(5, map.row_count());
@@ -166,7 +166,7 @@ TEST(Map, Resize)
   ASSERT_EQ(3, preset.map.column_count());
 
   auto& root = preset.map.invisible_root();
-  auto& layer = root.view_tile_layer(preset.f);
+  auto& layer = root.tile_layer(preset.f);
   ASSERT_EQ(8, layer.row_count());
   ASSERT_EQ(3, layer.column_count());
 
@@ -195,7 +195,7 @@ TEST(Map, FixTiles)
   auto& root = map->invisible_root();
 
   const auto& tileset_ref = map->tileset_bundle().get_ref(tileset_id);
-  auto& layer = root.view_tile_layer(layer_id);
+  auto& layer = root.tile_layer(layer_id);
 
   // Valid
   layer.set_tile({0, 1}, tileset_ref.first_tile());
@@ -259,21 +259,21 @@ TEST(Map, AddLayer)
   auto g1 = std::make_shared<GroupLayer>();
 
   map.add_layer(t1);
-  ASSERT_EQ(1, root.layer_count());
-  ASSERT_NE(nullptr, root.find_tile_layer(t1->get_uuid()));
-  ASSERT_EQ(nullptr, root.find_object_layer(o1->get_uuid()));
+  ASSERT_EQ(1, root.size());
+  ASSERT_NE(nullptr, root.as_tile_layer(t1->get_uuid()));
+  ASSERT_EQ(nullptr, root.as_object_layer(o1->get_uuid()));
   ASSERT_FALSE(t1->get_parent().has_value());
 
   map.add_layer(o1);
   map.add_layer(g1);
   map.add_layer(t2, g1->get_uuid());
 
-  ASSERT_EQ(4, root.layer_count());
+  ASSERT_EQ(4, root.size());
 
-  ASSERT_NE(nullptr, root.find_tile_layer(t1->get_uuid()));
-  ASSERT_NE(nullptr, root.find_tile_layer(t2->get_uuid()));
-  ASSERT_NE(nullptr, root.find_object_layer(o1->get_uuid()));
-  ASSERT_NE(nullptr, root.find_group_layer(g1->get_uuid()));
+  ASSERT_NE(nullptr, root.as_tile_layer(t1->get_uuid()));
+  ASSERT_NE(nullptr, root.as_tile_layer(t2->get_uuid()));
+  ASSERT_NE(nullptr, root.as_object_layer(o1->get_uuid()));
+  ASSERT_NE(nullptr, root.as_group_layer(g1->get_uuid()));
 
   ASSERT_EQ(g1->get_uuid(), t2->get_parent());
   ASSERT_EQ(nothing, t1->get_parent());
@@ -287,12 +287,12 @@ TEST(Map, AddTileLayer)
   auto& root = map.invisible_root();
 
   const auto id = map.add_tile_layer();
-  const auto* layer = root.find_tile_layer(id);
+  const auto* layer = root.as_tile_layer(id);
 
   ASSERT_NE(nullptr, layer);
-  ASSERT_EQ(nullptr, root.find_object_layer(id));
-  ASSERT_EQ(nullptr, root.find_group_layer(id));
-  ASSERT_EQ(1, root.layer_count());
+  ASSERT_EQ(nullptr, root.as_object_layer(id));
+  ASSERT_EQ(nullptr, root.as_group_layer(id));
+  ASSERT_EQ(1, root.size());
 
   ASSERT_EQ(map.row_count(), layer->row_count());
   ASSERT_EQ(map.column_count(), layer->column_count());
@@ -306,11 +306,11 @@ TEST(Map, AddObjectLayer)
   const auto parent = map.add_group_layer();
 
   const auto id = map.add_object_layer(parent);
-  const auto& layer = root.view_object_layer(id);
+  const auto& layer = root.object_layer(id);
 
-  ASSERT_EQ(nullptr, root.find_tile_layer(id));
-  ASSERT_EQ(nullptr, root.find_group_layer(id));
-  ASSERT_EQ(2, root.layer_count());
+  ASSERT_EQ(nullptr, root.as_tile_layer(id));
+  ASSERT_EQ(nullptr, root.as_group_layer(id));
+  ASSERT_EQ(2, root.size());
 
   ASSERT_EQ(parent, layer.get_parent());
 }
@@ -321,13 +321,13 @@ TEST(Map, AddGroupLayer)
   auto& root = map.invisible_root();
 
   const auto id = map.add_group_layer();
-  const auto& layer = root.view_group_layer(id);
+  const auto& layer = root.group_layer(id);
 
-  ASSERT_EQ(nullptr, root.find_tile_layer(id));
-  ASSERT_EQ(nullptr, root.find_object_layer(id));
-  ASSERT_EQ(1, root.layer_count());
+  ASSERT_EQ(nullptr, root.as_tile_layer(id));
+  ASSERT_EQ(nullptr, root.as_object_layer(id));
+  ASSERT_EQ(1, root.size());
 
-  ASSERT_EQ(0, layer.layer_count());
+  ASSERT_EQ(0, layer.size());
 }
 
 TEST(Map, RemoveLayer)
@@ -337,26 +337,26 @@ TEST(Map, RemoveLayer)
 
   ASSERT_THROW(preset.map.remove_layer(make_uuid()), TactileError);
 
-  ASSERT_NE(nullptr, root.find_object_layer(preset.a));
-  ASSERT_EQ(7, root.layer_count());
+  ASSERT_NE(nullptr, root.as_object_layer(preset.a));
+  ASSERT_EQ(7, root.size());
 
   preset.map.remove_layer(preset.a);
 
-  ASSERT_EQ(6, root.layer_count());
-  ASSERT_EQ(nullptr, root.find_object_layer(preset.a));
+  ASSERT_EQ(6, root.size());
+  ASSERT_EQ(nullptr, root.as_object_layer(preset.a));
 
   auto group = std::dynamic_pointer_cast<GroupLayer>(preset.map.remove_layer(preset.d));
 
-  ASSERT_EQ(3, root.layer_count());
-  ASSERT_EQ(nullptr, root.find_group_layer(preset.d));
-  ASSERT_EQ(nullptr, root.find_object_layer(preset.e));
-  ASSERT_EQ(nullptr, root.find_tile_layer(preset.f));
+  ASSERT_EQ(3, root.size());
+  ASSERT_EQ(nullptr, root.as_group_layer(preset.d));
+  ASSERT_EQ(nullptr, root.as_object_layer(preset.e));
+  ASSERT_EQ(nullptr, root.as_tile_layer(preset.f));
 
-  ASSERT_EQ(2, group->layer_count());
-  ASSERT_NE(nullptr, group->find_object_layer(preset.e));
-  ASSERT_NE(nullptr, group->find_tile_layer(preset.f));
+  ASSERT_EQ(2, group->size());
+  ASSERT_NE(nullptr, group->as_object_layer(preset.e));
+  ASSERT_NE(nullptr, group->as_tile_layer(preset.f));
 
-  ASSERT_NE(nullptr, root.find_tile_layer(preset.c));
+  ASSERT_NE(nullptr, root.as_tile_layer(preset.c));
 }
 
 TEST(Map, DuplicateLayer)
@@ -366,16 +366,16 @@ TEST(Map, DuplicateLayer)
 
   ASSERT_THROW(preset.map.duplicate_layer(make_uuid()), TactileError);
 
-  ASSERT_EQ(7, root.layer_count());
-  ASSERT_EQ(5, root.find_group_layer(preset.b)->layer_count());
-  ASSERT_EQ(2, root.find_group_layer(preset.d)->layer_count());
+  ASSERT_EQ(7, root.size());
+  ASSERT_EQ(5, root.as_group_layer(preset.b)->size());
+  ASSERT_EQ(2, root.as_group_layer(preset.d)->size());
 
   const auto layer = preset.map.duplicate_layer(preset.d);
 
-  ASSERT_EQ(10, root.layer_count());
-  ASSERT_EQ(8, root.find_group_layer(preset.b)->layer_count());
-  ASSERT_EQ(2, root.find_group_layer(preset.d)->layer_count());
-  ASSERT_EQ(2, root.find_group_layer(layer->get_uuid())->layer_count());
+  ASSERT_EQ(10, root.size());
+  ASSERT_EQ(8, root.as_group_layer(preset.b)->size());
+  ASSERT_EQ(2, root.as_group_layer(preset.d)->size());
+  ASSERT_EQ(2, root.as_group_layer(layer->get_uuid())->size());
 }
 
 TEST(Map, SelectLayer)

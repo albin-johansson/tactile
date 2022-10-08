@@ -72,7 +72,7 @@ void render_map(Graphics& graphics, const MapDocument& document)
     }
 
     const auto parent_id = layer->get_parent();
-    const auto* parent_layer = parent_id ? root.find_group_layer(*parent_id) : nullptr;
+    const auto* parent_layer = parent_id ? root.as_group_layer(*parent_id) : nullptr;
 
     if (parent_layer && !parent_layer->is_visible()) {
       return;
@@ -91,7 +91,7 @@ void render_map(Graphics& graphics, const MapDocument& document)
   });
 
   if (active_layer_id) {
-    if (const auto* object_layer = root.find_object_layer(*active_layer_id)) {
+    if (const auto* object_layer = root.as_object_layer(*active_layer_id)) {
       if (const auto object_id = object_layer->active_object_id()) {
         const auto& object = object_layer->get_object(*object_id);
         render_object(graphics, object, IM_COL32(0xFF, 0xFF, 0, 0xFF));

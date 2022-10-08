@@ -868,7 +868,7 @@ void App::on_rename_layer(const RenameLayerEvent& event)
 void App::on_select_object(const tactile::SelectObjectEvent& event)
 {
   if (auto* document = active_map_document()) {
-    auto& layer = document->get_map().invisible_root().view_object_layer(event.layer_id);
+    auto& layer = document->get_map().invisible_root().object_layer(event.layer_id);
     layer.select_object(event.object_id);
   }
 }

@@ -131,14 +131,14 @@ void Map::add_layer(Shared<Layer> layer, const Maybe<UUID>& parent_id)
   const auto id = layer->get_uuid();
 
   if (parent_id) {
-    mRootLayer.add_layer(*parent_id, layer);
+    mRootLayer.add(*parent_id, layer);
   }
   else {
-    mRootLayer.add_layer(std::move(layer));
+    mRootLayer.add(std::move(layer));
   }
 
   // Select the layer if it's the first one to be added
-  if (mRootLayer.layer_count() == 1) {
+  if (mRootLayer.size() == 1) {
     mActiveLayer = id;
   }
 }
@@ -190,19 +190,19 @@ auto Map::remove_layer(const UUID& id) -> Shared<Layer>
   if (mActiveLayer == id) {
     mActiveLayer.reset();
   }
-  return mRootLayer.remove_layer(id);
+  return mRootLayer.remove(id);
 }
 
 auto Map::duplicate_layer(const UUID& id) -> Shared<Layer>
 {
-  auto layer = mRootLayer.duplicate_layer(id);
+  auto layer = mRootLayer.duplicate(id);
   layer->set_meta_id(fetch_and_increment_next_layer_id());
   return layer;
 }
 
 void Map::select_layer(const UUID& id)
 {
-  if (mRootLayer.find_layer(id)) {
+  if (mRootLayer.find(id)) {
     mActiveLayer = id;
   }
   else {
@@ -213,7 +213,7 @@ void Map::select_layer(const UUID& id)
 auto Map::is_active_layer(const LayerType type) const -> bool
 {
   if (mActiveLayer) {
-    return mRootLayer.view_layer(*mActiveLayer).get_type() == type;
+    return mRootLayer.at(*mActiveLayer).get_type() == type;
   }
   else {
     return false;

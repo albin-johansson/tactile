@@ -40,7 +40,7 @@ void FixMapTiles::undo()
 {
   auto& root = mMap->invisible_root();
   for (const auto& [layerId, previous] : mResult) {
-    auto& layer = root.view_tile_layer(layerId);
+    auto& layer = root.tile_layer(layerId);
 
     for (const auto& [pos, tile] : previous) {
       layer.set_tile(pos, tile);
