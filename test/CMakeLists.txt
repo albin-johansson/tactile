@@ -13,6 +13,8 @@ file(GLOB_RECURSE TEST_FILES
 
 add_executable(${TACTILE_TEST} ${TEST_FILES})
 
+add_dependencies(${TACTILE_TEST} ${TACTILE_LIB})
+
 tactile_set_compile_options(${TACTILE_TEST})
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
