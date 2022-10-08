@@ -84,7 +84,7 @@ void EllipseTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispa
     const auto& map = document.get_map();
     const auto& viewport = document.get_viewport();
 
-    const auto ratio = viewport.get_scaling_ratio(map.tile_size());
+    const auto ratio = viewport.scaling_ratio(map.tile_size());
 
     const auto radius = (mStroke->current - mStroke->start) / ratio;
     auto pos = mStroke->start / ratio;

@@ -95,7 +95,7 @@ void center_viewport(const Viewport& viewport,
                      const float col_count,
                      entt::dispatcher& dispatcher)
 {
-  const auto& cell = viewport.get_tile_size();
+  const auto& cell = viewport.tile_size();
   const auto& offset = viewport.get_offset();
 
   const auto width = col_count * cell.x;

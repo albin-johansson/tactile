@@ -93,7 +93,7 @@ void RectangleTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dis
     const auto& map = document.get_map();
     const auto& viewport = document.get_viewport();
 
-    const auto ratio = viewport.get_scaling_ratio(map.tile_size());
+    const auto ratio = viewport.scaling_ratio(map.tile_size());
     const auto pos = (glm::min)(mStroke->start, mStroke->current) / ratio;
     const auto size = glm::abs(mStroke->current - mStroke->start) / ratio;
 

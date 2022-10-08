@@ -122,7 +122,7 @@ void viewport_widget_mouse_wheel_event_handler(const Viewport& viewport,
   else {
     const Float2 precise {event.precise_x(), event.precise_y()};
 
-    auto delta = precise * (viewport.get_tile_size() / scaling);
+    auto delta = precise * (viewport.tile_size() / scaling);
     delta.x = -delta.x;
 
     dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);

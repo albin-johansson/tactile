@@ -53,7 +53,7 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
                            viewport_size.y - texture_size.y};
   const Float2 max_offset {};
 
-  const auto& limits = tileset_ref.get_viewport().get_limits();
+  const auto& limits = tileset_ref.get_viewport().limits();
   if (!limits.has_value() || min_offset != limits->min_offset) {
     dispatcher.enqueue<UpdateTilesetViewportLimitsEvent>(tileset.uuid(),
                                                          min_offset,

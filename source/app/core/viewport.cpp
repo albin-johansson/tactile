@@ -115,9 +115,9 @@ auto Viewport::can_zoom_out() const -> bool
   return mTileSize.y > viewport_min_tile_height;
 }
 
-auto Viewport::get_scaling_ratio(const Float2& tile_size) const -> Float2
+auto Viewport::scaling_ratio(const Float2& tileSize) const -> Float2
 {
-  return mTileSize / tile_size;
+  return mTileSize / tileSize;
 }
 
 }  // namespace tactile

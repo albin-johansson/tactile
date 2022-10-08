@@ -53,7 +53,7 @@ void ObjectSelectionTool::on_pressed(DocumentModel& model,
     const auto layer_id = map.active_layer_id().value();
     auto& layer = map.invisible_root().object_layer(layer_id);
 
-    const auto ratio = viewport.get_scaling_ratio(map.tile_size());
+    const auto ratio = viewport.scaling_ratio(map.tile_size());
     const auto object_id = layer.object_at(mouse.pos / ratio, map.tile_size());
 
     switch (mouse.button) {
@@ -102,7 +102,7 @@ void ObjectSelectionTool::on_dragged(DocumentModel& model,
       if (mouse.is_within_contents) {
         const auto& viewport = document.get_viewport();
 
-        const auto ratio = viewport.get_scaling_ratio(map.tile_size());
+        const auto ratio = viewport.scaling_ratio(map.tile_size());
         const auto delta = (mouse.pos - mDragInfo->last_mouse_pos) / ratio;
 
         object.set_pos(object.pos() + delta);

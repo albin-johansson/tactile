@@ -92,7 +92,7 @@ void tileset_dock_mouse_wheel_event_handler(const TilesetRef& tileset_ref,
   const auto& viewport = tileset_ref.get_viewport();
   const Float2 precise {event.precise_x(), event.precise_y()};
 
-  auto delta = precise * (viewport.get_tile_size() / scaling);
+  auto delta = precise * (viewport.tile_size() / scaling);
   delta.x = -delta.x;
 
   dispatcher.enqueue<OffsetTilesetViewportEvent>(tileset_ref.view_tileset().uuid(),

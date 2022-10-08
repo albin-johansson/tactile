@@ -43,7 +43,7 @@ void PointTool::on_pressed(DocumentModel& model,
     const auto& map = document.get_map();
     const auto& viewport = document.get_viewport();
 
-    const auto ratio = viewport.get_scaling_ratio(map.tile_size());
+    const auto ratio = viewport.scaling_ratio(map.tile_size());
     const auto pos = mouse.pos / ratio;
 
     const auto layerId = map.active_layer_id().value();

@@ -53,13 +53,13 @@ class Viewport final {
 
   [[nodiscard]] auto can_zoom_out() const -> bool;
 
-  [[nodiscard]] auto get_scaling_ratio(const Float2& tileSize) const -> Float2;
+  [[nodiscard]] auto scaling_ratio(const Float2& tile_size) const -> Float2;
 
   [[nodiscard]] auto get_offset() const noexcept -> const Float2& { return mOffset; }
 
-  [[nodiscard]] auto get_tile_size() const noexcept -> const Float2& { return mTileSize; }
+  [[nodiscard]] auto tile_size() const noexcept -> const Float2& { return mTileSize; }
 
-  [[nodiscard]] auto get_limits() const noexcept -> const Maybe<ViewportLimits>&
+  [[nodiscard]] auto limits() const noexcept -> const Maybe<ViewportLimits>&
   {
     return mLimits;
   }

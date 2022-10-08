@@ -68,7 +68,7 @@ namespace {
   info.origin = info.canvas_tl + from_vec(viewport.get_offset());
 
   info.tile_size = logical_tile_size;
-  info.grid_size = from_vec(viewport.get_tile_size());
+  info.grid_size = from_vec(viewport.tile_size());
   info.ratio = info.grid_size / info.tile_size;
 
   info.row_count = static_cast<float>(rows);
