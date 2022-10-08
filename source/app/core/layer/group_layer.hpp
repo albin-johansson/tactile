@@ -30,12 +30,12 @@
 
 namespace tactile {
 
+/// A layer variant that serves as a container for other layers.
+/// Group layers are recursive, and can store an unlimited amount of child layers.
 class GroupLayer final : public Layer {
  public:
   using LayerStorage = Vec<Shared<Layer>>;
   using SimpleVisitor = std::function<void(const Layer*)>;
-
-  [[nodiscard]] static auto make() -> Shared<GroupLayer>;
 
   void accept(ContextVisitor& visitor) const override;
   void accept(LayerVisitor& visitor) override;
@@ -44,17 +44,25 @@ class GroupLayer final : public Layer {
   /// Behaves the same as accept(), except for not including itself (the root)
   void each(LayerVisitor& visitor);
   void each(ConstLayerVisitor& visitor) const;
-
   void each(const SimpleVisitor& visitor) const;
 
+  /// Adds a layer to the hierarchy, with the specified group layer as the parent.
   void add_layer(const UUID& parent, const Shared<Layer>& layer);
+
+  /// Adds a layer as an immediate child of the group layer.
   void add_layer(Shared<Layer> layer);
 
+  /// Removes a child layer.
   auto remove_layer(const UUID& id) -> Shared<Layer>;
 
+  /// Duplicates an existing layer in the hierarchy.
+  /// The new layer is inserted below the target layer (rendered above it).
   auto duplicate_layer(const UUID& id) -> Shared<Layer>;
 
+  /// Moves a layer up relative to its siblings (it will be rendered earlier).
   void move_layer_up(const UUID& id);
+
+  /// Moves a layer down relative to its siblings (it will be rendered later).
   void move_layer_down(const UUID& id);
 
   void set_opacity(float opacity) override;
@@ -65,18 +73,25 @@ class GroupLayer final : public Layer {
 
   void set_meta_id(int32 id) override;
 
+  /// Moves a layer to a specific index, relative to its siblings.
   void set_layer_index(const UUID& id, usize index);
 
+  /// Returns the total number of layers in the hierarchy.
   [[nodiscard]] auto layer_count() const -> usize;
 
+  /// Returns the amount of siblings for a specific layer.
   [[nodiscard]] auto sibling_count(const UUID& id) const -> usize;
 
+  /// Returns the index of a layer in relation to its siblings.
   [[nodiscard]] auto get_local_index(const UUID& id) const -> usize;
 
+  /// Returns the index of a layer when the hierarchy is iterated.
   [[nodiscard]] auto get_global_index(const UUID& id) const -> usize;
 
+  /// Indicates whether a layer can be moved up.
   [[nodiscard]] auto can_move_layer_up(const UUID& id) const -> bool;
 
+  /// Indicates whether a layer can be moved down.
   [[nodiscard]] auto can_move_layer_down(const UUID& id) const -> bool;
 
   [[nodiscard]] auto get_layer(const UUID& id) -> Shared<Layer>;

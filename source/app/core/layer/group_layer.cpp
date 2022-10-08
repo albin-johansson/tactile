@@ -105,9 +105,7 @@ class GlobalIndexCalculator final : public ConstLayerVisitor {
   }
 
   void visit(const TileLayer& layer) override { check(layer); }
-
   void visit(const ObjectLayer& layer) override { check(layer); }
-
   void visit(const GroupLayer& layer) override { check(layer); }
 
   [[nodiscard]] auto get_index() const -> Maybe<usize>
@@ -251,9 +249,7 @@ TACTILE_FIND_LAYER_VISITOR(FindGroupLayerVisitor, GroupLayer);
 class CountingVisitor final : public ConstLayerVisitor {
  public:
   void visit(const TileLayer&) override { ++mCount; }
-
   void visit(const ObjectLayer&) override { ++mCount; }
-
   void visit(const GroupLayer&) override { ++mCount; }
 
   [[nodiscard]] auto count() const -> usize { return mCount; }
@@ -263,11 +259,6 @@ class CountingVisitor final : public ConstLayerVisitor {
 };
 
 }  // namespace
-
-auto GroupLayer::make() -> Shared<GroupLayer>
-{
-  return std::make_shared<GroupLayer>();
-}
 
 void GroupLayer::accept(ContextVisitor& visitor) const
 {
@@ -330,7 +321,7 @@ void GroupLayer::add_layer(const UUID& parent, const Shared<Layer>& layer)
 
 void GroupLayer::add_layer(Shared<Layer> layer)
 {
-  if (layer) {
+  if (layer) [[likely]] {
     layer->set_parent(nothing);
     mLayers.push_back(std::move(layer));
   }
@@ -690,7 +681,7 @@ auto GroupLayer::is_visible() const -> bool
 
 auto GroupLayer::clone() const -> Shared<Layer>
 {
-  auto result = make();
+  auto result = std::make_shared<GroupLayer>();
   result->mDelegate = mDelegate.clone();
 
   for (const auto& layer : mLayers) {

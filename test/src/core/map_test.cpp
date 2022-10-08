@@ -248,7 +248,7 @@ TEST(Map, AddLayer)
   auto t1 = std::make_shared<TileLayer>();
   auto t2 = std::make_shared<TileLayer>();
   auto o1 = std::make_shared<ObjectLayer>();
-  auto g1 = GroupLayer::make();
+  auto g1 = std::make_shared<GroupLayer>();
 
   map.add_layer(t1);
   ASSERT_EQ(1, map.layer_count());

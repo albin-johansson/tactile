@@ -54,7 +54,7 @@ TEST(GroupLayer, SimpleEach)
   GroupLayer root;
 
   auto t1 = std::make_shared<TileLayer>();
-  auto g1 = GroupLayer::make();
+  auto g1 = std::make_shared<GroupLayer>();
   auto o1 = std::make_shared<ObjectLayer>();
 
   root.add_layer(t1);
@@ -116,7 +116,7 @@ TEST(GroupLayer, AddLayer)
   ASSERT_EQ(1u, root.get_global_index(t2->get_uuid()));
   ASSERT_EQ(nothing, t2->get_parent());
 
-  auto g1 = GroupLayer::make();
+  auto g1 = std::make_shared<GroupLayer>();
   auto t3 = std::make_shared<TileLayer>();
 
   root.add_layer(g1);
@@ -152,7 +152,7 @@ TEST(GroupLayer, RemoveLayer)
 
   auto t1 = std::make_shared<TileLayer>();
   auto t2 = std::make_shared<TileLayer>();
-  auto g1 = GroupLayer::make();
+  auto g1 = std::make_shared<GroupLayer>();
 
   root.add_layer(g1);
   root.add_layer(g1->get_uuid(), t1);
@@ -174,8 +174,8 @@ TEST(GroupLayer, MoveLayerUp)
   auto t2 = std::make_shared<TileLayer>();
   auto t3 = std::make_shared<TileLayer>();
   auto o1 = std::make_shared<ObjectLayer>();
-  auto g1 = GroupLayer::make();
-  auto g2 = GroupLayer::make();
+  auto g1 = std::make_shared<GroupLayer>();
+  auto g2 = std::make_shared<GroupLayer>();
 
   // root
   // -- g1
@@ -280,8 +280,8 @@ TEST(GroupLayer, MoveLayerDown)
   auto t2 = std::make_shared<TileLayer>();
   auto t3 = std::make_shared<TileLayer>();
   auto t4 = std::make_shared<TileLayer>();
-  auto g1 = GroupLayer::make();
-  auto g2 = GroupLayer::make();
+  auto g1 = std::make_shared<GroupLayer>();
+  auto g2 = std::make_shared<GroupLayer>();
 
   // root
   // -- g1
@@ -366,8 +366,8 @@ TEST(GroupLayer, SiblingCount)
   auto t1 = std::make_shared<TileLayer>();
   auto t2 = std::make_shared<TileLayer>();
   auto t3 = std::make_shared<TileLayer>();
-  auto g1 = GroupLayer::make();
-  auto g2 = GroupLayer::make();
+  auto g1 = std::make_shared<GroupLayer>();
+  auto g2 = std::make_shared<GroupLayer>();
   auto o1 = std::make_shared<ObjectLayer>();
 
   root.add_layer(g1);
@@ -415,8 +415,8 @@ TEST(GroupLayer, GetGlobalIndex)
   auto t1 = std::make_shared<TileLayer>();
   auto t2 = std::make_shared<TileLayer>();
   auto t3 = std::make_shared<TileLayer>();
-  auto g1 = GroupLayer::make();
-  auto g2 = GroupLayer::make();
+  auto g1 = std::make_shared<GroupLayer>();
+  auto g2 = std::make_shared<GroupLayer>();
 
   // root
   // -- t1
@@ -445,7 +445,7 @@ TEST(GroupLayer, CanMoveLayerUp)
   auto t1 = std::make_shared<TileLayer>();
   auto t2 = std::make_shared<TileLayer>();
   auto t3 = std::make_shared<TileLayer>();
-  auto g1 = GroupLayer::make();
+  auto g1 = std::make_shared<GroupLayer>();
 
   root.add_layer(t1);
   root.add_layer(g1);
@@ -466,7 +466,7 @@ TEST(GroupLayer, CanMoveLayerDown)
   auto t1 = std::make_shared<TileLayer>();
   auto t2 = std::make_shared<TileLayer>();
   auto o1 = std::make_shared<ObjectLayer>();
-  auto g1 = GroupLayer::make();
+  auto g1 = std::make_shared<GroupLayer>();
 
   root.add_layer(g1);
   root.add_layer(g1->get_uuid(), t1);

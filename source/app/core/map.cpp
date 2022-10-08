@@ -171,7 +171,7 @@ auto Map::add_object_layer(const Maybe<UUID>& parentId) -> UUID
 
 auto Map::add_group_layer(const Maybe<UUID>& parentId) -> UUID
 {
-  auto layer = GroupLayer::make();
+  auto layer = std::make_shared<GroupLayer>();
 
   layer->set_meta_id(fetch_and_increment_next_layer_id());
   layer->ctx().set_name(format_str("Group Layer {}", mGroupLayerSuffix));
