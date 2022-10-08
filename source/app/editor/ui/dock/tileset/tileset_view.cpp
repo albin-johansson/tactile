@@ -96,7 +96,7 @@ void update_tileset_view(const DocumentModel& model,
   const auto& document = model.require_active_map();
   const auto& map = document.get_map();
 
-  const auto& tileset_ref = map.get_tilesets().get_ref(tileset_id);
+  const auto& tileset_ref = map.tileset_bundle().get_ref(tileset_id);
   const auto& tileset = tileset_ref.view_tileset();
   const auto& viewport = tileset_ref.get_viewport();
 

@@ -43,8 +43,8 @@ void verify_all_tiles_matches(const TileLayer& layer, const TileID tile)
 
 auto add_tile_layer(Map& map) -> TileLayer&
 {
-  const auto layerId = map.add_tile_layer();
-  return map.view_tile_layer(layerId);
+  const auto layer_id = map.add_tile_layer();
+  return map.invisible_root().view_tile_layer(layer_id);
 }
 
 }  // namespace tactile::test

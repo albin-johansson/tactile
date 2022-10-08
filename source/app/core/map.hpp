@@ -65,9 +65,6 @@ class Map final : public Context {
 
   void accept(ContextVisitor& visitor) const override;
 
-  void visit_layers(ConstLayerVisitor& visitor) const;
-  void visit_layers(const VisitorFunc& visitor) const;
-
   /// Adds an empty row to all tile layers.
   void add_row();
 
@@ -108,74 +105,28 @@ class Map final : public Context {
   /// Duplicates an existing layer and inserts it after the source layer.
   auto duplicate_layer(const UUID& id) -> Shared<Layer>;
 
-  /// Moves a layer up in the hierarchy, relative to its siblings.
-  void move_layer_up(const UUID& id);
-
-  /// Moves a layer down in the hierarchy, relative to its siblings.
-  void move_layer_down(const UUID& id);
-
   /// Makes a layer active.
   void select_layer(const UUID& id);
 
-  /// Moves a layer to the specific index in relation to its siblings.
-  void set_layer_index(const UUID& id, usize index);
-
-  /// Returns the index of a layer, relative to its siblings.
-  [[nodiscard]] auto local_layer_index(const UUID& id) const -> usize;
-
-  [[nodiscard]] auto can_move_layer_up(const UUID& id) const -> bool;
-  [[nodiscard]] auto can_move_layer_down(const UUID& id) const -> bool;
-
-  /// Indicates whether the active layer is of the specified type.
-  [[nodiscard]] auto is_active_layer(LayerType type) const -> bool;
-
-  /// Returns the total amount of layers.
-  [[nodiscard]] auto layer_count() const -> usize;
-
-  [[nodiscard]] auto active_layer_id() const -> Maybe<UUID>;
-
-  [[nodiscard]] auto view_layer(const UUID& id) -> Layer&;
-  [[nodiscard]] auto view_layer(const UUID& id) const -> const Layer&;
-  [[nodiscard]] auto view_tile_layer(const UUID& id) -> TileLayer&;
-  [[nodiscard]] auto view_tile_layer(const UUID& id) const -> const TileLayer&;
-  [[nodiscard]] auto view_object_layer(const UUID& id) -> ObjectLayer&;
-  [[nodiscard]] auto view_object_layer(const UUID& id) const -> const ObjectLayer&;
-  [[nodiscard]] auto view_group_layer(const UUID& id) -> GroupLayer&;
-
-  [[nodiscard]] auto find_tile_layer(const UUID& id) -> TileLayer*;
-  [[nodiscard]] auto find_tile_layer(const UUID& id) const -> const TileLayer*;
-  [[nodiscard]] auto find_object_layer(const UUID& id) const -> const ObjectLayer*;
-  [[nodiscard]] auto find_group_layer(const UUID& id) const -> const GroupLayer*;
-
-  [[nodiscard]] auto get_layer(const UUID& id) -> Shared<Layer>;
-
-  void attach_tileset(Shared<Tileset> tileset, TileID first_tile_id, bool embedded);
-  void attach_tileset(Shared<Tileset> tileset, bool embedded);
-  void detach_tileset(const UUID& id);
-  void select_tileset(const UUID& id);
-
-  [[nodiscard]] auto get_tilesets() -> TilesetBundle&;
-  [[nodiscard]] auto get_tilesets() const -> const TilesetBundle&;
-
   /// Sets the logical size of all tiles.
   void set_tile_size(const Int2& size);
-
-  /// Indicates whether a position is within the map.
-  [[nodiscard]] auto is_valid_position(const TilePos& pos) const -> bool;
-
-  [[nodiscard]] auto row_count() const -> usize;
-  [[nodiscard]] auto column_count() const -> usize;
-
-  [[nodiscard]] auto tile_size() const -> const Int2&;
-
-  /// Indicates whether the stamp tool randomizer mode is available.
-  [[nodiscard]] auto is_stamp_randomizer_possible() const -> bool;
 
   auto fetch_and_increment_next_object_id() -> int32;
   auto fetch_and_increment_next_layer_id() -> int32;
 
   void set_next_object_id(int32 id);
   void set_next_layer_id(int32 id);
+
+  /// Indicates whether the active layer is of the specified type.
+  [[nodiscard]] auto is_active_layer(LayerType type) const -> bool;
+
+  [[nodiscard]] auto active_layer_id() const -> Maybe<UUID>;
+
+  /// Indicates whether the stamp tool randomizer mode is available.
+  [[nodiscard]] auto is_stamp_randomizer_possible() const -> bool;
+
+  /// Indicates whether a position is within the map.
+  [[nodiscard]] auto is_valid_position(const TilePos& pos) const -> bool;
 
   [[nodiscard]] auto next_object_id() const -> int32;
   [[nodiscard]] auto next_layer_id() const -> int32;
@@ -184,8 +135,19 @@ class Map final : public Context {
   [[nodiscard]] auto next_object_layer_suffix() const -> int32;
   [[nodiscard]] auto next_group_layer_suffix() const -> int32;
 
+  [[nodiscard]] auto row_count() const -> usize;
+  [[nodiscard]] auto column_count() const -> usize;
+
+  [[nodiscard]] auto tile_size() const -> const Int2&;
+
   [[nodiscard]] auto tile_format() -> TileFormat&;
   [[nodiscard]] auto tile_format() const -> const TileFormat&;
+
+  [[nodiscard]] auto invisible_root() -> GroupLayer&;
+  [[nodiscard]] auto invisible_root() const -> const GroupLayer&;
+
+  [[nodiscard]] auto tileset_bundle() -> TilesetBundle&;
+  [[nodiscard]] auto tileset_bundle() const -> const TilesetBundle&;
 
   [[nodiscard]] auto ctx() -> ContextInfo& override;
   [[nodiscard]] auto ctx() const -> const ContextInfo& override;

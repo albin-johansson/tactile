@@ -60,7 +60,7 @@ auto StampSequence::get_name() const -> String
 
 void StampSequence::apply_sequence(const TileCache& cache)
 {
-  auto& layer = mMap->view_tile_layer(mLayerId);
+  auto& layer = mMap->invisible_root().view_tile_layer(mLayerId);
   for (const auto& [pos, tile] : cache) {
     layer.set_tile(pos, tile);
   }

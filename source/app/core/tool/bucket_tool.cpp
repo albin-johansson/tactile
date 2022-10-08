@@ -42,7 +42,7 @@ void BucketTool::on_pressed(DocumentModel& model,
       is_available(model)) {
     const auto& document = model.require_active_map();
     const auto& map = document.get_map();
-    const auto& tilesets = map.get_tilesets();
+    const auto& tilesets = map.tileset_bundle();
 
     const auto tilesetId = tilesets.active_tileset_id().value();
     const auto& tilesetRef = tilesets.get_ref(tilesetId);
@@ -61,7 +61,7 @@ auto BucketTool::is_available(const DocumentModel& model) const -> bool
   const auto& document = model.require_active_map();
   const auto& map = document.get_map();
 
-  const auto& tilesets = map.get_tilesets();
+  const auto& tilesets = map.tileset_bundle();
   const auto tilesetId = tilesets.active_tileset_id();
 
   return map.is_active_layer(LayerType::TileLayer) &&  //

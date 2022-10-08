@@ -81,7 +81,7 @@ TEST(RemoveRow, MergeSupport)
   ASSERT_EQ(initial_rows, map->row_count());
   ASSERT_EQ(initial_cols, map->column_count());
 
-  test::verify_all_tiles_matches(map->view_tile_layer(layer_id), 42);
+  test::verify_all_tiles_matches(map->invisible_root().view_tile_layer(layer_id), 42);
 }
 
 }  // namespace tactile::test

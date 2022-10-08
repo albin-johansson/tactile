@@ -50,18 +50,18 @@ void ObjectSelectionTool::on_pressed(DocumentModel& model,
     auto& map = document.get_map();
     const auto& viewport = document.get_viewport();
 
-    const auto layerId = map.active_layer_id().value();
-    auto& layer = map.view_object_layer(layerId);
+    const auto layer_id = map.active_layer_id().value();
+    auto& layer = map.invisible_root().view_object_layer(layer_id);
 
     const auto ratio = viewport.get_scaling_ratio(map.tile_size());
-    const auto objectId = layer.object_at(mouse.pos / ratio, map.tile_size());
+    const auto object_id = layer.object_at(mouse.pos / ratio, map.tile_size());
 
     switch (mouse.button) {
       case cen::mouse_button::left: {
-        layer.select_object(objectId);
+        layer.select_object(object_id);
 
-        if (objectId) {
-          const auto& object = layer.get_object(*objectId);
+        if (object_id) {
+          const auto& object = layer.get_object(*object_id);
 
           auto& drag = mDragInfo.emplace();
           drag.origin_object_pos = object.get_pos();
@@ -71,10 +71,10 @@ void ObjectSelectionTool::on_pressed(DocumentModel& model,
         break;
       }
       case cen::mouse_button::right: {
-        layer.select_object(objectId);
+        layer.select_object(object_id);
 
-        if (objectId) {
-          dispatcher.enqueue<SpawnObjectContextMenuEvent>(*objectId);
+        if (object_id) {
+          dispatcher.enqueue<SpawnObjectContextMenuEvent>(*object_id);
         }
 
         break;
@@ -93,11 +93,11 @@ void ObjectSelectionTool::on_dragged(DocumentModel& model,
     auto& document = model.require_active_map();
     auto& map = document.get_map();
 
-    const auto layerId = map.active_layer_id().value();
-    auto& layer = map.view_object_layer(layerId);
+    const auto layer_id = map.active_layer_id().value();
+    auto& layer = map.invisible_root().view_object_layer(layer_id);
 
-    if (const auto objectId = layer.active_object_id()) {
-      auto& object = layer.get_object(*objectId);
+    if (const auto object_id = layer.active_object_id()) {
+      auto& object = layer.get_object(*object_id);
 
       if (mouse.is_within_contents) {
         const auto& viewport = document.get_viewport();
@@ -138,11 +138,11 @@ void ObjectSelectionTool::maybe_emit_event(DocumentModel& model,
   const auto& map = document.get_map();
 
   if (mDragInfo) {
-    if (const auto layerId = map.active_layer_id()) {
-      const auto& layer = map.view_object_layer(*layerId);
+    if (const auto layer_id = map.active_layer_id()) {
+      const auto& layer = map.invisible_root().view_object_layer(*layer_id);
 
-      if (const auto objectId = layer.active_object_id()) {
-        const auto& object = layer.get_object(*objectId);
+      if (const auto object_id = layer.active_object_id()) {
+        const auto& object = layer.get_object(*object_id);
 
         // Only emit an event if the object has been moved along any axis
         if (mDragInfo->origin_object_pos != object.get_pos()) {

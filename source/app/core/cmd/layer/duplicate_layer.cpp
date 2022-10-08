@@ -47,14 +47,15 @@ void DuplicateLayer::undo()
 void DuplicateLayer::redo()
 {
   auto& map = mDocument->get_map();
+  auto& root = map.invisible_root();
 
   if (mNewLayer) {
     map.add_layer(mNewLayer, mNewLayer->get_parent());
-    map.set_layer_index(mNewLayer->get_uuid(), mNewIndex.value());
+    root.set_layer_index(mNewLayer->get_uuid(), mNewIndex.value());
   }
   else {
     mNewLayer = map.duplicate_layer(mLayerId);
-    mNewIndex = map.local_layer_index(mNewLayer->get_uuid());
+    mNewIndex = root.get_local_index(mNewLayer->get_uuid());
   }
 
   mDocument->get_contexts().add_context(mNewLayer);

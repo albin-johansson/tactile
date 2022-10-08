@@ -48,7 +48,7 @@ AddObject::AddObject(MapDocument* document,
 void AddObject::undo()
 {
   auto& map = mDocument->get_map();
-  auto& layer = map.view_object_layer(mLayerId);
+  auto& layer = map.invisible_root().view_object_layer(mLayerId);
 
   const auto object_id = mObjectId.value();
   layer.remove_object(object_id);
@@ -59,7 +59,7 @@ void AddObject::undo()
 void AddObject::redo()
 {
   auto& map = mDocument->get_map();
-  auto& layer = map.view_object_layer(mLayerId);
+  auto& layer = map.invisible_root().view_object_layer(mLayerId);
 
   auto object = std::make_shared<Object>();
   object->set_type(mObjectType);

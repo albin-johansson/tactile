@@ -101,7 +101,8 @@ auto DocumentModel::restore_tileset(const TileID first_tile_id, const TilesetInf
     auto tileset = tileset_document->get_tileset();
     const auto tileset_id = tileset->get_uuid();
 
-    map.attach_tileset(tileset, first_tile_id, false);  // TODO embedded option
+    auto& tilesets = map.tileset_bundle();
+    tilesets.attach_tileset(tileset, first_tile_id, false);  // TODO embedded option
     map_document->get_contexts().add_context(std::move(tileset));
 
     return tileset_id;

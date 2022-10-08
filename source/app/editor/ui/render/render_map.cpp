@@ -63,15 +63,16 @@ void render_map(Graphics& graphics, const MapDocument& document)
 {
   const auto& prefs = io::get_preferences();
   const auto& map = document.get_map();
+  const auto& root = map.invisible_root();
   const auto active_layer_id = map.active_layer_id();
 
-  map.visit_layers([&](const Layer* layer) {
+  root.each([&](const Layer* layer) {
     if (!layer->is_visible()) {
       return;
     }
 
     const auto parent_id = layer->get_parent();
-    const auto* parent_layer = parent_id ? map.find_group_layer(*parent_id) : nullptr;
+    const auto* parent_layer = parent_id ? root.find_group_layer(*parent_id) : nullptr;
 
     if (parent_layer && !parent_layer->is_visible()) {
       return;
@@ -90,7 +91,7 @@ void render_map(Graphics& graphics, const MapDocument& document)
   });
 
   if (active_layer_id) {
-    if (const auto* object_layer = map.find_object_layer(*active_layer_id)) {
+    if (const auto* object_layer = root.find_object_layer(*active_layer_id)) {
       if (const auto object_id = object_layer->active_object_id()) {
         const auto& object = object_layer->get_object(*object_id);
         render_object(graphics, object, IM_COL32(0xFF, 0xFF, 0, 0xFF));

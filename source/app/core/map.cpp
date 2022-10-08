@@ -35,15 +35,17 @@ namespace {
 
 using TileLayerVisitorFunc = Map::TileLayerVisitorFunc;
 
-struct TileLayerVisitor final : LayerVisitor {
-  const TileLayerVisitorFunc* callable {};
-
+class TileLayerVisitor final : public LayerVisitor {
+ public:
   explicit TileLayerVisitor(const TileLayerVisitorFunc& func)
-      : callable {&func}
+      : mCallable {&func}
   {
   }
 
-  void visit(TileLayer& layer) override { (*callable)(layer); }
+  void visit(TileLayer& layer) override { (*mCallable)(layer); }
+
+ private:
+  const TileLayerVisitorFunc* mCallable {};
 };
 
 }  // namespace
@@ -129,19 +131,19 @@ void Map::add_layer(Shared<Layer> layer, const Maybe<UUID>& parent_id)
   const auto id = layer->get_uuid();
 
   if (parent_id) {
-    mRootLayer.add_layer(*parent_id, std::move(layer));
+    mRootLayer.add_layer(*parent_id, layer);
   }
   else {
     mRootLayer.add_layer(std::move(layer));
   }
 
   // Select the layer if it's the first one to be added
-  if (layer_count() == 1) {
+  if (mRootLayer.layer_count() == 1) {
     mActiveLayer = id;
   }
 }
 
-auto Map::add_tile_layer(const Maybe<UUID>& parentId) -> UUID
+auto Map::add_tile_layer(const Maybe<UUID>& parent_id) -> UUID
 {
   auto layer = std::make_shared<TileLayer>(mRowCount, mColCount);
 
@@ -150,12 +152,12 @@ auto Map::add_tile_layer(const Maybe<UUID>& parentId) -> UUID
   ++mTileLayerSuffix;
 
   const auto id = layer->ctx().uuid();
-  add_layer(std::move(layer), parentId);
+  add_layer(std::move(layer), parent_id);
 
   return id;
 }
 
-auto Map::add_object_layer(const Maybe<UUID>& parentId) -> UUID
+auto Map::add_object_layer(const Maybe<UUID>& parent_id) -> UUID
 {
   auto layer = std::make_shared<ObjectLayer>();
 
@@ -164,12 +166,12 @@ auto Map::add_object_layer(const Maybe<UUID>& parentId) -> UUID
   ++mObjectLayerSuffix;
 
   const auto id = layer->ctx().uuid();
-  add_layer(std::move(layer), parentId);
+  add_layer(std::move(layer), parent_id);
 
   return id;
 }
 
-auto Map::add_group_layer(const Maybe<UUID>& parentId) -> UUID
+auto Map::add_group_layer(const Maybe<UUID>& parent_id) -> UUID
 {
   auto layer = std::make_shared<GroupLayer>();
 
@@ -178,19 +180,9 @@ auto Map::add_group_layer(const Maybe<UUID>& parentId) -> UUID
   ++mGroupLayerSuffix;
 
   const auto id = layer->ctx().uuid();
-  add_layer(std::move(layer), parentId);
+  add_layer(std::move(layer), parent_id);
 
   return id;
-}
-
-void Map::visit_layers(ConstLayerVisitor& visitor) const
-{
-  mRootLayer.each(visitor);
-}
-
-void Map::visit_layers(const VisitorFunc& visitor) const
-{
-  mRootLayer.each(visitor);
 }
 
 auto Map::remove_layer(const UUID& id) -> Shared<Layer>
@@ -208,16 +200,6 @@ auto Map::duplicate_layer(const UUID& id) -> Shared<Layer>
   return layer;
 }
 
-void Map::move_layer_up(const UUID& id)
-{
-  mRootLayer.move_layer_up(id);
-}
-
-void Map::move_layer_down(const UUID& id)
-{
-  mRootLayer.move_layer_down(id);
-}
-
 void Map::select_layer(const UUID& id)
 {
   if (mRootLayer.find_layer(id)) {
@@ -226,26 +208,6 @@ void Map::select_layer(const UUID& id)
   else {
     throw TactileError {"Invalid layer identifier!"};
   }
-}
-
-void Map::set_layer_index(const UUID& id, const usize index)
-{
-  mRootLayer.set_layer_index(id, index);
-}
-
-auto Map::local_layer_index(const UUID& id) const -> usize
-{
-  return mRootLayer.get_local_index(id);
-}
-
-auto Map::can_move_layer_up(const UUID& id) const -> bool
-{
-  return mRootLayer.can_move_layer_up(id);
-}
-
-auto Map::can_move_layer_down(const UUID& id) const -> bool
-{
-  return mRootLayer.can_move_layer_down(id);
 }
 
 auto Map::is_active_layer(const LayerType type) const -> bool
@@ -258,104 +220,27 @@ auto Map::is_active_layer(const LayerType type) const -> bool
   }
 }
 
-auto Map::layer_count() const -> usize
-{
-  return mRootLayer.layer_count();
-}
-
 auto Map::active_layer_id() const -> Maybe<UUID>
 {
   return mActiveLayer;
 }
 
-auto Map::view_layer(const UUID& id) -> Layer&
+auto Map::invisible_root() -> GroupLayer&
 {
-  return mRootLayer.view_layer(id);
+  return mRootLayer;
 }
 
-auto Map::view_layer(const UUID& id) const -> const Layer&
+auto Map::invisible_root() const -> const GroupLayer&
 {
-  return mRootLayer.view_layer(id);
+  return mRootLayer;
 }
 
-auto Map::view_tile_layer(const UUID& id) -> TileLayer&
-{
-  return mRootLayer.view_tile_layer(id);
-}
-
-auto Map::view_tile_layer(const UUID& id) const -> const TileLayer&
-{
-  return mRootLayer.view_tile_layer(id);
-}
-
-auto Map::view_object_layer(const UUID& id) -> ObjectLayer&
-{
-  return mRootLayer.view_object_layer(id);
-}
-
-auto Map::view_object_layer(const UUID& id) const -> const ObjectLayer&
-{
-  return mRootLayer.view_object_layer(id);
-}
-
-auto Map::view_group_layer(const UUID& id) -> GroupLayer&
-{
-  return mRootLayer.view_group_layer(id);
-}
-
-auto Map::find_tile_layer(const UUID& id) -> TileLayer*
-{
-  return mRootLayer.find_tile_layer(id);
-}
-
-auto Map::find_tile_layer(const UUID& id) const -> const TileLayer*
-{
-  return mRootLayer.find_tile_layer(id);
-}
-
-auto Map::find_object_layer(const UUID& id) const -> const ObjectLayer*
-{
-  return mRootLayer.find_object_layer(id);
-}
-
-auto Map::find_group_layer(const UUID& id) const -> const GroupLayer*
-{
-  return mRootLayer.find_group_layer(id);
-}
-
-auto Map::get_layer(const UUID& id) -> Shared<Layer>
-{
-  return mRootLayer.get_layer(id);
-}
-
-void Map::attach_tileset(Shared<Tileset> tileset,
-                         const TileID firstTileId,
-                         const bool embedded)
-{
-  mTilesets.attach_tileset(std::move(tileset), firstTileId, embedded);
-}
-
-void Map::attach_tileset(Shared<Tileset> tileset, const bool embedded)
-{
-  mTilesets.attach_tileset(std::move(tileset), embedded);
-}
-
-void Map::detach_tileset(const UUID& id)
-{
-  mTilesets.detach_tileset(id);
-}
-
-void Map::select_tileset(const UUID& id)
-{
-  mTilesets.select_tileset(id);
-}
-
-auto Map::get_tilesets() -> TilesetBundle&
+auto Map::tileset_bundle() -> TilesetBundle&
 {
   return mTilesets;
 }
 
-auto Map::get_tilesets() const -> const TilesetBundle&
+auto Map::tileset_bundle() const -> const TilesetBundle&
 {
   return mTilesets;
 }
@@ -395,8 +280,8 @@ auto Map::tile_size() const -> const Int2&
 
 auto Map::is_stamp_randomizer_possible() const -> bool
 {
-  if (const auto tilesetId = mTilesets.active_tileset_id()) {
-    const auto& ref = mTilesets.get_ref(*tilesetId);
+  if (const auto tileset_id = mTilesets.active_tileset_id()) {
+    const auto& ref = mTilesets.get_ref(*tileset_id);
     return !ref.is_single_tile_selected();
   }
   else {

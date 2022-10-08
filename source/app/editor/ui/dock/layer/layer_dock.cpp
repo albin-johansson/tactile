@@ -76,15 +76,17 @@ void update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatche
     dispatcher.enqueue<DuplicateLayerEvent>(active_layer_id.value());
   }
 
+  const auto& root = map.invisible_root();
+
   if (icon_button(TAC_ICON_MOVE_UP,
                   lang.tooltip.move_layer_up.c_str(),
-                  has_active_layer && map.can_move_layer_up(*active_layer_id))) {
+                  has_active_layer && root.can_move_layer_up(*active_layer_id))) {
     dispatcher.enqueue<MoveLayerUpEvent>(active_layer_id.value());
   }
 
   if (icon_button(TAC_ICON_MOVE_DOWN,
                   lang.tooltip.move_layer_down.c_str(),
-                  has_active_layer && map.can_move_layer_down(*active_layer_id))) {
+                  has_active_layer && root.can_move_layer_down(*active_layer_id))) {
     dispatcher.enqueue<MoveLayerDownEvent>(active_layer_id.value());
   }
 }
@@ -98,7 +100,7 @@ void update_rename_dialog(const DocumentModel& model, entt::dispatcher& dispatch
 
     const auto& document = model.require_active_map();
     const auto& map = document.get_map();
-    const auto& layer = map.view_layer(target_layer_id);
+    const auto& layer = map.invisible_root().view_layer(target_layer_id);
 
     dialogs.rename_layer.show(target_layer_id, layer.ctx().name());
     rename_target_id.reset();
@@ -115,9 +117,9 @@ void update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
   Group group;
 
   const auto& document = model.require_active_map();
-  const auto& map = document.get_map();
+  const auto& root = document.get_map().invisible_root();
 
-  if (map.layer_count() == 0) {
+  if (root.layer_count() == 0) {
     const auto& lang = get_current_language();
 
     prepare_vertical_alignment_center(1);
@@ -126,7 +128,7 @@ void update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
   else {
     const ImVec2 size {-min_float, -min_float};
     if (ListBox list {"##LayerTreeNode", size}; list.is_open()) {
-      map.visit_layers([&](const Layer* layer) {
+      root.each([&](const Layer* layer) {
         if (!layer->get_parent().has_value()) {
           layer_selectable(document, *layer, dispatcher);
         }

@@ -320,7 +320,7 @@ void App::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
       const auto& map_document = mModel.require_active_map();
 
       const auto& map = map_document.get_map();
-      const auto& tilesets = map.get_tilesets();
+      const auto& tilesets = map.tileset_bundle();
 
       if (const auto tileset_id = tilesets.active_tileset_id()) {
         const auto& tileset_ref = tilesets.get_ref(*tileset_id);
@@ -566,7 +566,7 @@ void App::on_add_point(const AddPointEvent& event)
 void App::on_update_tileset_viewport_limits(const UpdateTilesetViewportLimitsEvent& event)
 {
   if (auto* document = active_map_document()) {
-    auto& tileset_ref = document->get_map().get_tilesets().get_ref(event.tileset_id);
+    auto& tileset_ref = document->get_map().tileset_bundle().get_ref(event.tileset_id);
     auto& viewport = tileset_ref.get_viewport();
     viewport.set_limits({event.min_offset, event.max_offset});
   }
@@ -584,7 +584,7 @@ void App::on_offset_document_viewport(const OffsetDocumentViewportEvent& event)
 void App::on_offset_tileset_viewport(const OffsetTilesetViewportEvent& event)
 {
   if (auto* document = active_map_document()) {
-    auto& tileset_ref = document->get_map().get_tilesets().get_ref(event.tileset_id);
+    auto& tileset_ref = document->get_map().tileset_bundle().get_ref(event.tileset_id);
     auto& viewport = tileset_ref.get_viewport();
     viewport.offset(event.delta);
   }
@@ -695,7 +695,7 @@ void App::on_remove_tileset(const RemoveTilesetEvent& event)
 void App::on_select_tileset(const SelectTilesetEvent& event)
 {
   if (auto* document = active_map_document()) {
-    auto& tilesets = document->get_map().get_tilesets();
+    auto& tilesets = document->get_map().tileset_bundle();
     tilesets.select_tileset(event.tileset_id);
   }
 }
@@ -703,7 +703,7 @@ void App::on_select_tileset(const SelectTilesetEvent& event)
 void App::on_set_tileset_selection(const SetTilesetSelectionEvent& event)
 {
   if (auto* document = active_map_document()) {
-    auto& tilesets = document->get_map().get_tilesets();
+    auto& tilesets = document->get_map().tileset_bundle();
 
     const auto tileset_id = tilesets.active_tileset_id().value();
     auto& tileset_ref = tilesets.get_ref(tileset_id);
@@ -868,7 +868,7 @@ void App::on_rename_layer(const RenameLayerEvent& event)
 void App::on_select_object(const tactile::SelectObjectEvent& event)
 {
   if (auto* document = active_map_document()) {
-    auto& layer = document->get_map().view_object_layer(event.layer_id);
+    auto& layer = document->get_map().invisible_root().view_object_layer(event.layer_id);
     layer.select_object(event.object_id);
   }
 }

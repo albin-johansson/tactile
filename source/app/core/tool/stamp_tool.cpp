@@ -114,9 +114,9 @@ void StampTool::update_sequence(DocumentModel& model, const TilePos& cursor)
   auto& map = map_document.get_map();
 
   const auto active_layer_id = map.active_layer_id().value();
-  auto& layer = map.view_tile_layer(active_layer_id);
+  auto& layer = map.invisible_root().view_tile_layer(active_layer_id);
 
-  const auto& tilesets = map.get_tilesets();
+  const auto& tilesets = map.tileset_bundle();
   const auto tileset_id = tilesets.active_tileset_id().value();
   const auto& tileset_ref = tilesets.get_ref(tileset_id);
 
@@ -204,7 +204,7 @@ auto StampTool::is_usable(const DocumentModel& model) const -> bool
 {
   const auto& document = model.require_active_map();
   const auto& map = document.get_map();
-  const auto& tilesets = map.get_tilesets();
+  const auto& tilesets = map.tileset_bundle();
 
   if (const auto tileset_id = tilesets.active_tileset_id()) {
     return map.is_active_layer(LayerType::TileLayer) &&

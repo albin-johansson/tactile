@@ -45,7 +45,7 @@ MapDocument::MapDocument(const Int2& tile_size, const usize rows, const usize co
 
 void MapDocument::update()
 {
-  for (auto& [id, ref] : mMap->get_tilesets()) {
+  for (auto& [id, ref] : mMap->tileset_bundle()) {
     ref.update();
   }
 }
@@ -112,7 +112,7 @@ void MapDocument::move_layer_down(const UUID& layer_id)
 
 void MapDocument::set_layer_opacity(const UUID& layer_id, const float opacity)
 {
-  auto layer = mMap->get_layer(layer_id);
+  auto layer = mMap->invisible_root().get_layer(layer_id);
   get_history().exec<cmd::SetLayerOpacity>(std::move(layer), opacity);
 }
 

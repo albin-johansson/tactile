@@ -38,7 +38,7 @@ TEST(RenameLayer, RedoUndo)
   auto document = MapBuilder::build().with_tile_layer(&layer_id).result();
   auto map = document->get_map_ptr();
 
-  auto layer = map->get_layer(layer_id);
+  auto layer = map->invisible_root().get_layer(layer_id);
   layer->ctx().set_name("barfoo");
 
   cmd::RenameLayer cmd {map, layer_id, "foobar"};

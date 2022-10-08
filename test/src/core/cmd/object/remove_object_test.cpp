@@ -44,7 +44,7 @@ TEST(RemoveObject, RedoUndo)
   auto map = document->get_map_ptr();
   auto& contexts = document->get_contexts();
 
-  auto& layer = map->view_object_layer(layer_id);
+  auto& layer = map->invisible_root().view_object_layer(layer_id);
 
   cmd::RemoveObject cmd {document.get(), layer_id, object->get_uuid()};
 

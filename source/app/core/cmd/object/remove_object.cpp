@@ -39,7 +39,9 @@ RemoveObject::RemoveObject(MapDocument* document,
     throw TactileError {"Invalid null document!"};
   }
 
-  TACTILE_ASSERT(document->get_map().view_object_layer(layer_id).has_object(object_id));
+  TACTILE_ASSERT(
+      document->get_map().invisible_root().view_object_layer(layer_id).has_object(
+          object_id));
 
   mObject = document->get_object(object_id);
   if (!mObject) {
@@ -50,7 +52,7 @@ RemoveObject::RemoveObject(MapDocument* document,
 void RemoveObject::undo()
 {
   auto& map = mDocument->get_map();
-  auto& layer = map.view_object_layer(mLayerId);
+  auto& layer = map.invisible_root().view_object_layer(mLayerId);
 
   layer.add_object(mObject);
   mDocument->get_contexts().add_context(mObject);
@@ -59,7 +61,7 @@ void RemoveObject::undo()
 void RemoveObject::redo()
 {
   auto& map = mDocument->get_map();
-  auto& layer = map.view_object_layer(mLayerId);
+  auto& layer = map.invisible_root().view_object_layer(mLayerId);
 
   const auto& id = mObject->get_uuid();
 

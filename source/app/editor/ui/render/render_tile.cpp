@@ -34,7 +34,7 @@ void render_tile(Graphics& graphics,
 {
   TACTILE_ASSERT(tile_id != empty_tile);
 
-  const auto& tilesets = map.get_tilesets();
+  const auto& tilesets = map.tileset_bundle();
   const auto tileset_id = tilesets.find_tileset(tile_id);
 
   if (!tileset_id) {

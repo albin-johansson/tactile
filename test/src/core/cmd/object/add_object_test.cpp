@@ -36,7 +36,7 @@ TEST(AddObject, RedoUndo)
 {
   UUID layer_id;
   auto document = test::MapBuilder::build().with_object_layer(&layer_id).result();
-  auto& layer = document->get_map().view_object_layer(layer_id);
+  auto& layer = document->get_map().invisible_root().view_object_layer(layer_id);
 
   cmd::AddObject cmd {document.get(), layer_id, ObjectType::Point, {0, 0}};
 

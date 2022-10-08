@@ -38,12 +38,12 @@ MoveLayerUp::MoveLayerUp(Shared<Map> map, const UUID& layer_id)
 
 void MoveLayerUp::undo()
 {
-  mMap->move_layer_down(mLayerId);
+  mMap->invisible_root().move_layer_down(mLayerId);
 }
 
 void MoveLayerUp::redo()
 {
-  mMap->move_layer_up(mLayerId);
+  mMap->invisible_root().move_layer_up(mLayerId);
 }
 
 auto MoveLayerUp::get_name() const -> String

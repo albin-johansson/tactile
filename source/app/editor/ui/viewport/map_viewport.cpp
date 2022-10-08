@@ -187,7 +187,8 @@ void update_object_context_menu(const Map& map, entt::dispatcher& dispatcher)
 {
   if (Popup popup {viewport_object_context_menu_id}; popup.is_open()) {
     const auto& lang = get_current_language();
-    const auto& layer = map.view_object_layer(map.active_layer_id().value());
+    const auto& layer =
+        map.invisible_root().view_object_layer(map.active_layer_id().value());
 
     const auto object_id = layer.active_object_id().value();
     const auto& object = layer.get_object(object_id);

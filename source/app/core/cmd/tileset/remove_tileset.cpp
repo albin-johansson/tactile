@@ -48,16 +48,17 @@ void RemoveTileset::undo()
   TACTILE_ASSERT(mTilesetDocument != nullptr);
   TACTILE_ASSERT(mModel->active_document_id() == mMapId);
 
-  auto mapDocument = mModel->get_map(mMapId);
-  auto& map = mapDocument->get_map();
+  auto map_document = mModel->get_map(mMapId);
+  auto& map = map_document->get_map();
 
   auto tileset = mTilesetDocument->get_tileset();
-  const auto tilesetId = tileset->get_uuid();
+  const auto tileset_id = tileset->get_uuid();
 
-  map.attach_tileset(tileset, mFirstTile.value(), false);  // TODO
-  map.select_tileset(tilesetId);
+  auto& tilesets = map.tileset_bundle();
+  tilesets.attach_tileset(tileset, mFirstTile.value(), false);  // TODO
+  tilesets.select_tileset(tileset_id);
 
-  mapDocument->get_contexts().add_context(std::move(tileset));
+  map_document->get_contexts().add_context(std::move(tileset));
 }
 
 void RemoveTileset::redo()
@@ -65,19 +66,19 @@ void RemoveTileset::redo()
   TACTILE_ASSERT(mModel->active_document_id() == mMapId);
   mTilesetDocument = mModel->get_tileset(mTilesetId);
 
-  auto mapDocument = mModel->get_map(mMapId);
-  auto& map = mapDocument->get_map();
+  auto map_document = mModel->get_map(mMapId);
+  auto& map = map_document->get_map();
 
-  const auto& tilesets = map.get_tilesets();
-  const auto& tilesetRef = tilesets.get_ref(mTilesetId);
-  mFirstTile = tilesetRef.first_tile();
+  auto& tilesets = map.tileset_bundle();
+  const auto& tileset_ref = tilesets.get_ref(mTilesetId);
+  mFirstTile = tileset_ref.first_tile();
 
-  if (tilesetRef.is_embedded()) {
+  if (tileset_ref.is_embedded()) {
     mModel->close_document(mTilesetId);
   }
 
-  map.detach_tileset(mTilesetId);
-  mapDocument->get_contexts().erase(mTilesetId);
+  tilesets.detach_tileset(mTilesetId);
+  map_document->get_contexts().erase(mTilesetId);
 }
 
 auto RemoveTileset::get_name() const -> String

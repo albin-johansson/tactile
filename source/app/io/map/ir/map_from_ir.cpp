@@ -106,7 +106,7 @@ void restore_object_layer(MapDocument& document,
 {
   auto& map = document.get_map();
 
-  auto& layer = map.view_object_layer(layer_id);
+  auto& layer = map.invisible_root().view_object_layer(layer_id);
   layer.reserve_objects(object_layer_data.objects.size());
 
   for (const auto& object_data : object_layer_data.objects) {
@@ -119,6 +119,7 @@ auto restore_layer(MapDocument& document,
                    const Maybe<UUID>& parent = nothing) -> UUID
 {
   auto& map = document.get_map();
+  auto& root = map.invisible_root();
   // TODO respect layerData.index?
 
   UUID layer_id;
@@ -126,7 +127,7 @@ auto restore_layer(MapDocument& document,
     case LayerType::TileLayer: {
       layer_id = map.add_tile_layer(parent);
 
-      auto& layer = map.view_tile_layer(layer_id);
+      auto& layer = root.view_tile_layer(layer_id);
       const auto& tile_data = layer_data.as_tile_layer();
 
       invoke_mn(tile_data.row_count,
@@ -156,13 +157,13 @@ auto restore_layer(MapDocument& document,
       throw TactileError {"Invalid layer type!"};
   }
 
-  auto& layer = map.view_layer(layer_id);
+  auto& layer = root.view_layer(layer_id);
   layer.ctx().set_name(layer_data.name);
   layer.set_opacity(layer_data.opacity);
   layer.set_visible(layer_data.visible);
   layer.set_meta_id(layer_data.id);
 
-  restore_context(document, map.get_layer(layer_id), layer_data.context);
+  restore_context(document, root.get_layer(layer_id), layer_data.context);
 
   return layer_id;
 }
@@ -257,10 +258,10 @@ void restore_tilesets(DocumentModel& model,
 
   auto& document = model.require_active_map();
   auto& map = document.get_map();
-  auto& tilesets = map.get_tilesets();
+  auto& tilesets = map.tileset_bundle();
 
   if (!tilesets.empty()) {
-    map.select_tileset(tilesets.begin()->first);
+    map.tileset_bundle().select_tileset(tilesets.begin()->first);
   }
 }
 

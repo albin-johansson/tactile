@@ -40,6 +40,7 @@ TEST(RemoveLayer, RedoUndo)
                       .result();
 
   auto& map = document->get_map();
+  auto& root = map.invisible_root();
   auto& contexts = document->get_contexts();
 
   ASSERT_TRUE(contexts.contains(layer_id));
@@ -47,11 +48,11 @@ TEST(RemoveLayer, RedoUndo)
   cmd::RemoveLayer cmd {document.get(), layer_id};
 
   cmd.redo();
-  ASSERT_EQ(0, map.layer_count());
+  ASSERT_EQ(0, root.layer_count());
   ASSERT_FALSE(contexts.contains(layer_id));
 
   cmd.undo();
-  ASSERT_EQ(1, map.layer_count());
+  ASSERT_EQ(1, root.layer_count());
   ASSERT_TRUE(contexts.contains(layer_id));
 }
 
