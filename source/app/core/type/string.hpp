@@ -22,6 +22,7 @@
 #include <EASTL/string.h>
 #include <EASTL/string_view.h>
 
+#include "core/type/eastl_new.hpp"
 #include "core/type/path.hpp"
 
 namespace tactile {
