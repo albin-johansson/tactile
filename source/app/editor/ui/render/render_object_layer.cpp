@@ -67,7 +67,7 @@ void render_ellipse_object(Graphics& graphics,
 {
   TACTILE_ASSERT(object.is_ellipse());
 
-  const auto size = from_vec(object.get_size());
+  const auto size = from_vec(object.size());
 
   const auto radius = ImVec2 {0.5f, 0.5f} * size * graphics.tile_size_ratio();
   const auto center = position + radius;
@@ -93,7 +93,7 @@ void render_rectangle_object(Graphics& graphics,
 {
   TACTILE_ASSERT(object.is_rect());
 
-  const auto size = from_vec(object.get_size()) * graphics.tile_size_ratio();
+  const auto size = from_vec(object.size()) * graphics.tile_size_ratio();
 
   if (graphics.is_intersecting_bounds(position, size)) {
     graphics.draw_translated_rect_with_shadow(position, size, color, 2.0f);
@@ -116,13 +116,13 @@ void render_rectangle_object(Graphics& graphics,
 
 void render_object(Graphics& graphics, const Object& object, const uint32 color)
 {
-  if (!object.is_visible()) {
+  if (!object.visible()) {
     return;
   }
 
-  const auto position = from_vec(object.get_pos()) * graphics.tile_size_ratio();
+  const auto position = from_vec(object.pos()) * graphics.tile_size_ratio();
 
-  switch (object.get_type()) {
+  switch (object.type()) {
     case ObjectType::Point:
       render_point_object(graphics, object, position, color);
       break;

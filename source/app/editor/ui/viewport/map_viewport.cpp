@@ -199,8 +199,8 @@ void update_object_context_menu(const Map& map, entt::dispatcher& dispatcher)
     ImGui::Separator();
     if (ImGui::MenuItem(lang.action.toggle_object_visibility.c_str(),
                         nullptr,
-                        object.is_visible())) {
-      dispatcher.enqueue<SetObjectVisibleEvent>(object_id, !object.is_visible());
+                        object.visible())) {
+      dispatcher.enqueue<SetObjectVisibleEvent>(object_id, !object.visible());
     }
 
     // TODO implement the object actions

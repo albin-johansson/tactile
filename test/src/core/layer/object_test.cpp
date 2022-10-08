@@ -27,17 +27,17 @@ TEST(Object, Defaults)
 {
   const Object object;
 
-  ASSERT_EQ(ObjectType::Rect, object.get_type());
+  ASSERT_EQ(ObjectType::Rect, object.type());
   ASSERT_TRUE(object.is_rect());
 
-  ASSERT_EQ(Float2 {}, object.get_pos());
-  ASSERT_EQ(Float2 {}, object.get_size());
+  ASSERT_EQ(Float2 {}, object.pos());
+  ASSERT_EQ(Float2 {}, object.size());
 
   ASSERT_EQ("", object.ctx().name());
-  ASSERT_EQ("", object.get_tag());
+  ASSERT_EQ("", object.tag());
 
-  ASSERT_FALSE(object.get_meta_id());
-  ASSERT_TRUE(object.is_visible());
+  ASSERT_FALSE(object.meta_id());
+  ASSERT_TRUE(object.visible());
 }
 
 TEST(Object, SetPos)
@@ -45,12 +45,12 @@ TEST(Object, SetPos)
   Object object;
 
   object.set_pos({12, 83});
-  ASSERT_EQ(12, object.get_pos().x);
-  ASSERT_EQ(83, object.get_pos().y);
+  ASSERT_EQ(12, object.pos().x);
+  ASSERT_EQ(83, object.pos().y);
 
   object.set_pos({-23, -254});
-  ASSERT_EQ(-23, object.get_pos().x);
-  ASSERT_EQ(-254, object.get_pos().y);
+  ASSERT_EQ(-23, object.pos().x);
+  ASSERT_EQ(-254, object.pos().y);
 }
 
 TEST(Object, SetSize)
@@ -58,8 +58,8 @@ TEST(Object, SetSize)
   Object object;
 
   object.set_size({391, 34});
-  ASSERT_EQ(391, object.get_size().x);
-  ASSERT_EQ(34, object.get_size().y);
+  ASSERT_EQ(391, object.size().x);
+  ASSERT_EQ(34, object.size().y);
 
   ASSERT_NO_THROW(object.set_size({-54, -78}));
 }
@@ -69,21 +69,21 @@ TEST(Object, SetType)
   Object object;
 
   object.set_type(ObjectType::Ellipse);
-  ASSERT_EQ(ObjectType::Ellipse, object.get_type());
+  ASSERT_EQ(ObjectType::Ellipse, object.type());
 
   ASSERT_TRUE(object.is_ellipse());
   ASSERT_FALSE(object.is_rect());
   ASSERT_FALSE(object.is_point());
 
   object.set_type(ObjectType::Point);
-  ASSERT_EQ(ObjectType::Point, object.get_type());
+  ASSERT_EQ(ObjectType::Point, object.type());
 
   ASSERT_TRUE(object.is_point());
   ASSERT_FALSE(object.is_ellipse());
   ASSERT_FALSE(object.is_rect());
 
   object.set_type(ObjectType::Rect);
-  ASSERT_EQ(ObjectType::Rect, object.get_type());
+  ASSERT_EQ(ObjectType::Rect, object.type());
 
   ASSERT_TRUE(object.is_rect());
   ASSERT_FALSE(object.is_point());
@@ -96,8 +96,8 @@ TEST(Object, SetTypeToPoint)
   object.set_size({123, 456});
 
   object.set_type(ObjectType::Point);
-  ASSERT_EQ(0, object.get_size().x);
-  ASSERT_EQ(0, object.get_size().y);
+  ASSERT_EQ(0, object.size().x);
+  ASSERT_EQ(0, object.size().y);
 }
 
 TEST(Object, SetMetaId)
@@ -105,7 +105,7 @@ TEST(Object, SetMetaId)
   Object object;
 
   object.set_meta_id(42);
-  ASSERT_EQ(42, object.get_meta_id());
+  ASSERT_EQ(42, object.meta_id());
 }
 
 TEST(Object, SetVisible)
@@ -113,10 +113,10 @@ TEST(Object, SetVisible)
   Object object;
 
   object.set_visible(false);
-  ASSERT_FALSE(object.is_visible());
+  ASSERT_FALSE(object.visible());
 
   object.set_visible(true);
-  ASSERT_TRUE(object.is_visible());
+  ASSERT_TRUE(object.visible());
 }
 
 TEST(Object, SetTag)
@@ -124,7 +124,7 @@ TEST(Object, SetTag)
   Object object;
 
   object.set_tag("foo");
-  ASSERT_EQ("foo", object.get_tag());
+  ASSERT_EQ("foo", object.tag());
 }
 
 TEST(Object, Clone)
@@ -140,12 +140,12 @@ TEST(Object, Clone)
   const auto clone = object.clone();
   ASSERT_NE(object.get_uuid(), clone->get_uuid());
 
-  ASSERT_EQ(object.get_type(), clone->get_type());
-  ASSERT_EQ(object.get_pos(), clone->get_pos());
-  ASSERT_EQ(object.get_size(), clone->get_size());
-  ASSERT_EQ(object.get_meta_id(), clone->get_meta_id());
-  ASSERT_EQ(object.get_tag(), clone->get_tag());
-  ASSERT_EQ(object.is_visible(), clone->is_visible());
+  ASSERT_EQ(object.type(), clone->type());
+  ASSERT_EQ(object.pos(), clone->pos());
+  ASSERT_EQ(object.size(), clone->size());
+  ASSERT_EQ(object.meta_id(), clone->meta_id());
+  ASSERT_EQ(object.tag(), clone->tag());
+  ASSERT_EQ(object.visible(), clone->visible());
 }
 
 }  // namespace tactile::test

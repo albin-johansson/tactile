@@ -44,7 +44,7 @@ void SetObjectTag::undo()
 
 void SetObjectTag::redo()
 {
-  mOldTag = mObject->get_tag();
+  mOldTag = mObject->tag();
   mObject->set_tag(mNewTag);
 }
 

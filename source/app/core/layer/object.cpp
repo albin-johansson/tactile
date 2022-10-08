@@ -82,7 +82,7 @@ auto Object::get_uuid() const -> const UUID&
   return mContext.uuid();
 }
 
-auto Object::get_type() const -> ObjectType
+auto Object::type() const -> ObjectType
 {
   return mType;
 }
@@ -102,27 +102,27 @@ auto Object::is_point() const -> bool
   return mType == ObjectType::Point;
 }
 
-auto Object::get_pos() const -> const Float2&
+auto Object::pos() const -> const Float2&
 {
   return mPos;
 }
 
-auto Object::get_size() const -> const Float2&
+auto Object::size() const -> const Float2&
 {
   return mSize;
 }
 
-auto Object::get_tag() const -> const String&
+auto Object::tag() const -> const String&
 {
   return mTag;
 }
 
-auto Object::get_meta_id() const -> Maybe<int32>
+auto Object::meta_id() const -> Maybe<int32>
 {
   return mMetaId;
 }
 
-auto Object::is_visible() const -> bool
+auto Object::visible() const -> bool
 {
   return mVisible;
 }

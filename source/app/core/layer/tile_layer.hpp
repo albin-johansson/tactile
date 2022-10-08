@@ -112,10 +112,7 @@ class TileLayer final : public Layer {
 
   [[nodiscard]] auto meta_id() const -> Maybe<int32> override;
 
-  [[nodiscard]] auto type() const -> LayerType override
-  {
-    return LayerType::TileLayer;
-  }
+  [[nodiscard]] auto type() const -> LayerType override { return LayerType::TileLayer; }
 
  private:
   LayerDelegate mDelegate;

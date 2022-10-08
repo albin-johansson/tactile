@@ -44,7 +44,7 @@ void SetObjectVisible::undo()
 
 void SetObjectVisible::redo()
 {
-  mOldVisibility = mObject->is_visible();
+  mOldVisibility = mObject->visible();
   mObject->set_visible(mNewVisibility);
 }
 

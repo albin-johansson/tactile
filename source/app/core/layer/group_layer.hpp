@@ -138,10 +138,7 @@ class GroupLayer final : public Layer {
   [[nodiscard]] auto storage() -> LayerStorage& { return mLayers; }
   [[nodiscard]] auto storage() const -> const LayerStorage& { return mLayers; }
 
-  [[nodiscard]] auto type() const -> LayerType override
-  {
-    return LayerType::GroupLayer;
-  }
+  [[nodiscard]] auto type() const -> LayerType override { return LayerType::GroupLayer; }
 
  private:
   LayerDelegate mDelegate;

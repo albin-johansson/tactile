@@ -64,7 +64,7 @@ void ObjectSelectionTool::on_pressed(DocumentModel& model,
           const auto& object = layer.get_object(*object_id);
 
           auto& drag = mDragInfo.emplace();
-          drag.origin_object_pos = object.get_pos();
+          drag.origin_object_pos = object.pos();
           drag.last_mouse_pos = mouse.pos;
         }
 
@@ -105,7 +105,7 @@ void ObjectSelectionTool::on_dragged(DocumentModel& model,
         const auto ratio = viewport.get_scaling_ratio(map.tile_size());
         const auto delta = (mouse.pos - mDragInfo->last_mouse_pos) / ratio;
 
-        object.set_pos(object.get_pos() + delta);
+        object.set_pos(object.pos() + delta);
         mDragInfo->last_mouse_pos = mouse.pos;
       }
       else {
@@ -145,10 +145,10 @@ void ObjectSelectionTool::maybe_emit_event(DocumentModel& model,
         const auto& object = layer.get_object(*object_id);
 
         // Only emit an event if the object has been moved along any axis
-        if (mDragInfo->origin_object_pos != object.get_pos()) {
+        if (mDragInfo->origin_object_pos != object.pos()) {
           dispatcher.enqueue<MoveObjectEvent>(object.get_uuid(),
                                               mDragInfo->origin_object_pos,
-                                              object.get_pos());
+                                              object.pos());
         }
       }
     }
