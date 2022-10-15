@@ -23,11 +23,14 @@ target_include_directories(${TACTILE_LIB}
                            ${LIBRARY_DIR}/fontawesome
                            ${STB_INCLUDE_DIRS}
                            ${TACTILE_PROTO_GENERATED_DIR}
+                           ${Boost_INCLUDE_DIRS}
+                           ${CPPCODEC_INCLUDE_DIRS}
                            )
 
 target_link_libraries(${TACTILE_LIB}
                       PUBLIC
                       ${TACTILE_PROTO}
+                      ${Boost_LIBRARIES}
                       SDL2::SDL2-static
                       SDL2::SDL2_image
                       imgui::imgui
@@ -35,18 +38,16 @@ target_link_libraries(${TACTILE_LIB}
                       EnTT::EnTT
                       magic_enum::magic_enum
                       fmt::fmt
-                      Folly::folly
                       glm::glm
                       protobuf::libprotobuf
                       yaml-cpp
                       nlohmann_json::nlohmann_json
                       pugixml::static
                       tinyfiledialogs::tinyfiledialogs
+                      tl::expected
                       ZLIB::ZLIB
                       GLEW::GLEW
                       OpenGL::GL
-                      Boost::boost
-                      Boost::exception
                       spdlog::spdlog
                       $<IF:$<TARGET_EXISTS:zstd::libzstd_shared>,zstd::libzstd_shared,zstd::libzstd_static>
                       )
@@ -161,5 +162,7 @@ target_link_libraries(${TACTILE_EXE}
 
 # Do not copy the resources when building as macOS app bundle
 if (TACTILE_BUILD_APP_BUNDLE MATCHES OFF)
-  copy_directory_post_build(${TACTILE_EXE} ${RESOURCE_DIR} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets)
+  copy_directory_post_build(${TACTILE_EXE}
+                            ${RESOURCE_DIR}
+                            "${CMAKE_CURRENT_BINARY_DIR}/assets")
 endif ()

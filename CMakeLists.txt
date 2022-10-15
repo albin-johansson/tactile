@@ -4,6 +4,9 @@ if (DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
   set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
 endif ()
 
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 message("[Tactile]: CMake toolchain file is... ${CMAKE_TOOLCHAIN_FILE}")
 message("[Tactile]: Vcpkg target triplet is... ${VCPKG_TARGET_TRIPLET}")
 
@@ -14,10 +17,6 @@ project(tactile
 
 message("[Tactile]: C++ compiler is... ${CMAKE_CXX_COMPILER_ID}")
 message("[Tactile]: Current version is ${CMAKE_PROJECT_VERSION}")
-
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build")
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_EXTENSIONS OFF)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
   message("[Tactile]: Enabling IPO...")
@@ -34,17 +33,15 @@ set(TACTILE_LIB TactileCore)
 set(TACTILE_EXE Tactile)
 set(TACTILE_TEST TactileTests)
 
-# We need this to avoid getting CMake confused over which Boost to use
-set(BOOST_ROOT "${_VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}")
+set(Boost_NO_WARN_NEW_VERSIONS ON)
 
 # Not acquired using vcpkg
 find_package(OpenGL REQUIRED)
+find_package(Boost REQUIRED)
 
-find_package(Boost REQUIRED COMPONENTS exception)
 find_package(EASTL CONFIG REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
-find_package(folly CONFIG REQUIRED)
 find_package(GLEW CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(GTest CONFIG REQUIRED)
@@ -57,9 +54,11 @@ find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2-image CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 find_package(tinyfiledialogs CONFIG REQUIRED)
+find_package(tl-expected CONFIG REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
 find_package(zstd CONFIG REQUIRED)
 
+find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
 find_path(STB_INCLUDE_DIRS "stb_c_lexer.h")
 
 option(TACTILE_BUILD_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)

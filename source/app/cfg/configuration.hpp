@@ -22,7 +22,6 @@
 #include <centurion/initialization.hpp>
 #include <centurion/opengl.hpp>
 #include <centurion/window.hpp>
-#include <folly/init/Init.h>
 
 #include "cfg/imgui_context.hpp"
 #include "cfg/protobuf_context.hpp"
@@ -38,7 +37,6 @@ class AppCfg final {
   [[nodiscard]] auto window() -> cen::window&;
 
  private:
-  folly::Init mFolly;
   ProtobufContext mProtobuf;
   cen::sdl mSDL;
   cen::img mIMG;

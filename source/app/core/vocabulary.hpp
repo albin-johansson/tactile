@@ -24,11 +24,10 @@
 #include <cstddef>  // size_t
 #include <cstdint>  // int{}_t, uint{}_t
 
-#include <folly/CPortability.h>
-
 #include "core/type/vector.hpp"
 
-#define TACTILE_NOINLINE FOLLY_NOINLINE
+// No definition for now :(
+#define TACTILE_NOINLINE
 
 #define TACTILE_DEFAULT_COPY(Class) \
   Class(const Class&) = default;    \

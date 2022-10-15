@@ -22,20 +22,20 @@
 #include <type_traits>  // decay_t
 #include <utility>      // forward
 
-#include <folly/Expected.h>
+#include <tl/expected.hpp>
 
 namespace tactile {
 
 template <typename T, typename E>
-using Expected = folly::Expected<T, E>;
+using Expected = tl::expected<T, E>;
 
 template <typename E>
-using Unexpected = folly::Unexpected<E>;
+using Unexpected = tl::unexpected<E>;
 
 template <typename E>
 [[nodiscard]] auto error(E&& e) -> Unexpected<std::decay_t<E>>
 {
-  return folly::makeUnexpected(std::forward<E>(e));
+  return tl::make_unexpected(std::forward<E>(e));
 }
 
 template <typename T, typename E>

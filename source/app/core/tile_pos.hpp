@@ -20,12 +20,9 @@
 #pragma once
 
 #include <compare>  // <=>
-#include <cstddef>  // size_t
-
-#include <EASTL/functional.h>
-#include <folly/hash/Hash.h>
 
 #include "core/type/math.hpp"
+#include "core/util/hash.hpp"
 #include "misc/assert.hpp"
 #include "vocabulary.hpp"
 
@@ -176,10 +173,4 @@ class TilePos final {
 
 }  // namespace tactile
 
-template <>
-struct eastl::hash<tactile::TilePos> final {
-  [[nodiscard]] auto operator()(const tactile::TilePos& pos) const -> std::size_t
-  {
-    return folly::hash::hash_combine(pos.row(), pos.col());
-  }
-};
+TACTILE_IMPLEMENT_HASH(tactile::TilePos, t.row(), t.col());

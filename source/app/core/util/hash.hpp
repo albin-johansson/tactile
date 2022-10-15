@@ -19,30 +19,33 @@
 
 #pragma once
 
-#include <cstddef>  // size_t
-
 #include <EASTL/functional.h>
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_hash.hpp>
 
 #include "core/vocabulary.hpp"
 
 namespace tactile {
 
-using UUID = boost::uuids::uuid;
+template <typename T>
+void hash_combine(usize& seed, const T& val)
+{
+  // https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0814r0.pdf
+  seed ^= eastl::hash<T> {}(val) + 0x9E3779B9 + (seed << 6) + (seed >> 2);
+}
 
-/// Creates a universally unique identifier (UUID).
-[[nodiscard]] auto make_uuid() -> UUID;
-
-/// Hashes a UUID.
-[[nodiscard]] auto hash(const UUID& uuid) -> usize;
+[[nodiscard]] auto hash_combine(const auto&... args) -> usize
+{
+  usize seed = 0;
+  (hash_combine(seed, args), ...);
+  return seed;
+}
 
 }  // namespace tactile
 
-template <>
-struct eastl::hash<tactile::UUID> final {
-  auto operator()(const tactile::UUID& uuid) const -> std::size_t
-  {
-    return tactile::hash(uuid);
+#define TACTILE_IMPLEMENT_HASH(Type, ...)                                \
+  template <>                                                            \
+  struct eastl::hash<Type> final {                                       \
+    [[nodiscard]] auto operator()(const Type& t) const -> tactile::usize \
+    {                                                                    \
+      return tactile::hash_combine(__VA_ARGS__);                         \
+    }                                                                    \
   }
-};

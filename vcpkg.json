@@ -8,20 +8,10 @@
   ],
   "builtin-baseline": "a2261f65ea979eebf56074f604776160f0074b09",
   "dependencies": [
-    "boost-assert",
-    "boost-exception",
-    "boost-stacktrace",
-    "boost-uuid",
     "eastl",
     "entt",
+    "cppcodec",
     "fmt",
-    {
-      "name": "folly",
-      "features": [
-        "zlib",
-        "zstd"
-      ]
-    },
     "glew",
     "glm",
     "gtest",
@@ -42,6 +32,7 @@
     "spdlog",
     "stb",
     "tinyfiledialogs",
+    "tl-expected",
     "yaml-cpp",
     "zlib",
     "zstd"

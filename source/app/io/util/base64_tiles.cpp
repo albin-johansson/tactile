@@ -19,20 +19,22 @@
 
 #include "base64_tiles.hpp"
 
-#include <bit>          // endian
-#include <concepts>     // same_as
-#include <cstring>      // memcpy
-#include <string_view>  // string_view
+#include <bit>       // endian
+#include <concepts>  // same_as
+#include <cstring>   // memcpy
 
-#include <folly/Bits.h>
-#include <folly/base64.h>
+#include <cppcodec/base64_rfc4648.hpp>
 
+#include "core/type/array.hpp"
+#include "core/util/bit.hpp"
 #include "core/util/functional.hpp"
 #include "core/util/numeric.hpp"
 #include "core/util/string.hpp"
 #include "core/util/tiles.hpp"
 #include "io/compression.hpp"
 #include "misc/panic.hpp"
+
+using Base64 = cppcodec::base64_rfc4648;
 
 namespace tactile::io {
 namespace {
@@ -49,7 +51,7 @@ static_assert(std::same_as<TileID, int32>);
 
   invoke_mn(rows, columns, [&](const usize row, const usize col) {
     // Always store tile identifiers as little endian values
-    const auto tile_id = folly::Endian::little(matrix[row][col]);
+    const auto tile_id = to_little_endian(matrix[row][col]);
     each_byte(tile_id, [&](const uint8 byte) { seq.push_back(byte); });
   });
 
@@ -69,7 +71,7 @@ static_assert(std::same_as<TileID, int32>);
     std::memcpy(&tile, &data[index], sizeof(TileID));
 
     if constexpr (std::endian::native == std::endian::big) {
-      tile = folly::Endian::swap(tile);
+      tile = byteswap(tile);
     }
 
     const auto [row, col] = to_matrix_coords(i, columns);
@@ -81,9 +83,7 @@ static_assert(std::same_as<TileID, int32>);
 
 [[nodiscard]] auto encode(const ByteStream& stream) -> String
 {
-  const auto* data = static_cast<const char*>(static_cast<const void*>(stream.data()));
-  std::string_view view {data, stream.size()};
-  return from_std(folly::base64Encode(view));
+  return from_std(Base64::encode(stream.data(), stream.size()));
 }
 
 }  // namespace
@@ -117,7 +117,7 @@ auto base64_decode_tiles(StringView tiles,
                          const usize columns,
                          const TileCompression compression) -> TileMatrix
 {
-  const auto decoded = folly::base64Decode(to_std_view(tiles));
+  const auto decoded = Base64::decode(tiles.data(), tiles.size());
 
   switch (compression) {
     case TileCompression::None:

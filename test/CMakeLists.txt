@@ -44,5 +44,9 @@ target_precompile_headers(${TACTILE_TEST} REUSE_FROM ${TACTILE_LIB})
 add_test(NAME ${TACTILE_TEST} COMMAND ${TACTILE_TEST})
 
 copy_directory_post_build(${TACTILE_TEST}
-                          ${CMAKE_CURRENT_SOURCE_DIR}/test-resources
-                          ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/test-resources)
+                          "${CMAKE_CURRENT_SOURCE_DIR}/test-resources"
+                          "${CMAKE_CURRENT_BINARY_DIR}/test-resources")
+
+copy_directory_post_build(${TACTILE_TEST}
+                          ${RESOURCE_DIR}
+                          "${CMAKE_CURRENT_BINARY_DIR}/assets")

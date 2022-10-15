@@ -76,11 +76,11 @@ void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
 
     row("Boost", "BSL-1.0");
     row("Centurion", "MIT");
+    row("cppcodec", "MIT");
     row("Dear ImGui", "MIT");
     row("EASTL", "BSD 3-Clause");
     row("EnTT", "MIT");
     row("fmt", "MIT");
-    row("folly", "Apache-2.0");
     row("GLEW", "BSD/MIT");
     row("glm", "Happy Bunny/MIT");  // Yes, there is a Happy Bunny license
     row("IconFontCppHeaders", "Zlib");
@@ -93,6 +93,7 @@ void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
     row("spdlog", "MIT");
     row("stb_image", "MIT");
     row("tinyfiledialogs", "Zlib");
+    row("tl-expected", "CC0-1.0");
     row("yaml-cpp", "MIT");
     row("Zlib", "Zlib");
     row("zstd", "BSD/GPLv2");
