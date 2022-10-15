@@ -5,7 +5,7 @@ Checks: "-*,
 
          bugprone-*,
          -bugprone-easily-swappable-parameters,
-         
+
          readability-*,
          readability-identifier-naming,
          -readability-identifier-length,
@@ -18,13 +18,13 @@ Checks: "-*,
 
          modernize-*,
          -modernize-avoid-c-arrays,
-        
+
          clang-analyzer-*,
-         
+
          misc-*,
          -misc-no-recursion,
          -misc-non-private-member-variables-in-classes,
-         
+
          cppcoreguidelines-*,
          -cppcoreguidelines-avoid-magic-numbers,
          -cppcoreguidelines-avoid-non-const-global-variables,
@@ -36,9 +36,11 @@ Checks: "-*,
          -cppcoreguidelines-avoid-goto,
          -cppcoreguidelines-avoid-c-arrays,
          -cppcoreguidelines-special-member-functions,
-         
-         boost-*,
+
          google-*,
+         -google-build-using-namespace,
+
+         boost-*,
          darwin-*
          "
 CheckOptions:
