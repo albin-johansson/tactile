@@ -35,96 +35,96 @@ TEST(ComponentDefinition, Defaults)
   ASSERT_TRUE(def.empty());
 }
 
-TEST(ComponentDefinition, AddAttrWithType)
+TEST(ComponentDefinition, AddWithType)
 {
   ComponentDefinition def;
 
-  def.add_attr("str");
-  ASSERT_EQ(""s, def.get_attr("str").as_string());
+  def.add("str");
+  ASSERT_EQ(""s, def.at("str").as_string());
 
-  def.add_attr("abc", AttributeType::Int);
-  ASSERT_EQ(0, def.get_attr("abc").as_int());
-  ASSERT_THROW(def.add_attr("abc", AttributeType::Float), TactileError);
+  def.add("abc", AttributeType::Int);
+  ASSERT_EQ(0, def.at("abc").as_int());
+  ASSERT_THROW(def.add("abc", AttributeType::Float), TactileError);
 
-  def.add_attr("def", AttributeType::Bool);
-  ASSERT_FALSE(def.get_attr("def").as_bool());
+  def.add("def", AttributeType::Bool);
+  ASSERT_FALSE(def.at("def").as_bool());
 }
 
-TEST(ComponentDefinition, AddAttrWithValue)
+TEST(ComponentDefinition, AddWithValue)
 {
   ComponentDefinition def;
 
-  def.add_attr("foo", "bar"s);
-  ASSERT_TRUE(def.has_attr("foo"));
-  ASSERT_THROW(def.add_attr("foo", 42), TactileError);
+  def.add("foo", "bar"s);
+  ASSERT_TRUE(def.has("foo"));
+  ASSERT_THROW(def.add("foo", 42), TactileError);
 
-  def.add_attr("bar", 123);
-  ASSERT_EQ(123, def.get_attr("bar"));
+  def.add("bar", 123);
+  ASSERT_EQ(123, def.at("bar"));
 }
 
-TEST(ComponentDefinition, UpdateAttr)
+TEST(ComponentDefinition, Update)
 {
   ComponentDefinition def;
-  ASSERT_THROW(def.update_attr("foo", 42), TactileError);
+  ASSERT_THROW(def.update("foo", 42), TactileError);
 
-  def.add_attr("foo", "str"s);
-  ASSERT_EQ("str", def.get_attr("foo").as_string());
+  def.add("foo", "str"s);
+  ASSERT_EQ("str", def.at("foo").as_string());
 
-  def.update_attr("foo", 27);
-  ASSERT_EQ(27, def.get_attr("foo").as_int());
+  def.update("foo", 27);
+  ASSERT_EQ(27, def.at("foo").as_int());
 
-  def.update_attr("foo", cen::colors::red);
-  ASSERT_EQ(cen::colors::red, def.get_attr("foo").as_color());
+  def.update("foo", cen::colors::red);
+  ASSERT_EQ(cen::colors::red, def.at("foo").as_color());
 }
 
-TEST(ComponentDefinition, RemoveAttr)
+TEST(ComponentDefinition, Remove)
 {
   ComponentDefinition def;
-  ASSERT_THROW(def.remove_attr("abc"), TactileError);
+  ASSERT_FALSE(def.remove("abc"));
 
-  def.add_attr("foo", 3.5f);
-  def.add_attr("bar", true);
+  def.add("foo", 3.5f);
+  def.add("bar", true);
 
-  ASSERT_TRUE(def.has_attr("foo"));
-  ASSERT_TRUE(def.has_attr("bar"));
+  ASSERT_TRUE(def.has("foo"));
+  ASSERT_TRUE(def.has("bar"));
 
-  def.remove_attr("foo");
+  ASSERT_TRUE(def.remove("foo"));
 
-  ASSERT_FALSE(def.has_attr("foo"));
-  ASSERT_TRUE(def.has_attr("bar"));
+  ASSERT_FALSE(def.has("foo"));
+  ASSERT_TRUE(def.has("bar"));
 }
 
-TEST(ComponentDefinition, RenameAttr)
+TEST(ComponentDefinition, Rename)
 {
   ComponentDefinition def;
-  ASSERT_THROW(def.rename_attr("foo", "boo"), TactileError);
+  ASSERT_FALSE(def.rename("foo", "boo"));
 
-  def.add_attr("foo");
+  def.add("foo");
 
   ASSERT_EQ(1, def.size());
-  ASSERT_TRUE(def.has_attr("foo"));
-  ASSERT_FALSE(def.has_attr("boo"));
+  ASSERT_TRUE(def.has("foo"));
+  ASSERT_FALSE(def.has("boo"));
 
-  def.rename_attr("foo", "boo");
+  ASSERT_TRUE(def.rename("foo", "boo"));
 
   ASSERT_EQ(1, def.size());
-  ASSERT_FALSE(def.has_attr("foo"));
-  ASSERT_TRUE(def.has_attr("boo"));
+  ASSERT_FALSE(def.has("foo"));
+  ASSERT_TRUE(def.has("boo"));
 }
 
-TEST(ComponentDefinition, DuplicateAttr)
+TEST(ComponentDefinition, Duplicate)
 {
   ComponentDefinition def;
-  ASSERT_THROW(def.duplicate_attr("foo"), TactileError);
+  ASSERT_THROW(def.duplicate("foo"), TactileError);
 
-  def.add_attr("hello", "world"s);
+  def.add("hello", "world"s);
   ASSERT_EQ(1, def.size());
 
-  const auto key = def.duplicate_attr("hello");
+  const auto key = def.duplicate("hello");
   ASSERT_EQ(2, def.size());
 
   ASSERT_NE("hello", key);
-  ASSERT_EQ(def.get_attr("hello"), def.get_attr(key));
+  ASSERT_EQ(def.at("hello"), def.at(key));
 }
 
 }  // namespace tactile::test

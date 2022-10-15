@@ -50,8 +50,8 @@ void SetComponentAttrType::undo()
   auto index = mDocument->get_component_index();
   auto& definition = index->at(mComponentId);
 
-  definition.remove_attr(mAttributeName);
-  definition.add_attr(mAttributeName, mSnapshot.value());
+  definition.remove(mAttributeName);
+  definition.add(mAttributeName, mSnapshot.value());
 
   auto& contexts = mDocument->get_contexts();
   for (const auto& [contextId, attribute] : mPrevAttributes) {
@@ -70,10 +70,10 @@ void SetComponentAttrType::redo()
   auto index = mDocument->get_component_index();
   auto& definition = index->at(mComponentId);
 
-  mSnapshot = definition.get_attr(mAttributeName);
+  mSnapshot = definition.at(mAttributeName);
 
-  definition.remove_attr(mAttributeName);
-  definition.add_attr(mAttributeName, mNewType);
+  definition.remove(mAttributeName);
+  definition.add(mAttributeName, mNewType);
 
   auto& contexts = mDocument->get_contexts();
   mPrevAttributes = contexts.on_changed_component_attr_type(definition.uuid(),

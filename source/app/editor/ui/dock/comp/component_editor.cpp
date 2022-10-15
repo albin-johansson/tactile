@@ -108,10 +108,10 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
     }
 
     const auto& definition = index->at(data.active_component.value());
-    const auto& name = definition.get_name();
+    const auto& name = definition.name();
     if (Combo combo {"##ComponentEditorCombo", name.c_str()}; combo.is_open()) {
       for (const auto& [componentId, component] : *index) {
-        if (ImGui::Selectable(component.get_name().c_str())) {
+        if (ImGui::Selectable(component.name().c_str())) {
           data.active_component = component.uuid();
         }
       }
@@ -159,7 +159,7 @@ void ComponentEditor::show_component_combo_popup(const Document& document,
     if (ImGui::MenuItem(lang.action.rename_component.c_str())) {
       const auto id = data.active_component.value();
       const auto* index = document.view_component_index();
-      const auto& name = index->at(id).get_name();
+      const auto& name = index->at(id).name();
       get_dialogs().rename_component.show(name, id);
     }
 

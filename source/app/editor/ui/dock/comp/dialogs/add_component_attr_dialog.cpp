@@ -52,7 +52,7 @@ auto AddComponentAttrDialog::validate(const DocumentModel& model, StringView inp
 {
   const auto& document = model.require_active_document();
   const auto* index = document.view_component_index();
-  return !input.empty() && index && !index->at(mComponentId).has_attr(input);
+  return !input.empty() && index && !index->at(mComponentId).has(input);
 }
 
 void AddComponentAttrDialog::on_accept(entt::dispatcher& dispatcher)

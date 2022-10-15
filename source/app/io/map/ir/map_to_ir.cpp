@@ -43,7 +43,7 @@ void convert_context(const Context& context,
   if (components) {
     for (const auto& [component_id, component] : context.ctx().comps()) {
       const auto& definition = components->at(component.definition_id());
-      const auto& name = definition.get_name();
+      const auto& name = definition.name();
 
       auto& attributes = data.components[name];
       for (const auto& [attr_name, attr_value] : component) {
@@ -233,7 +233,7 @@ void convert_tilesets(const MapDocument& document,
 void convert_component_definitions(const ComponentIndex& manager, ir::MapData& data)
 {
   for (const auto& [id, definition] : manager) {
-    auto& attributes = data.component_definitions[definition.get_name()];
+    auto& attributes = data.component_definitions[definition.name()];
     for (const auto& [attr_name, attr_value] : definition) {
       attributes[attr_name] = attr_value;
     }

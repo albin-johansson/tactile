@@ -49,7 +49,7 @@ void RenameComponentAttr::undo()
   auto index = mDocument->get_component_index();
 
   auto& definition = index->at(mComponentId);
-  definition.rename_attr(mUpdatedName, mPreviousName);
+  definition.rename(mUpdatedName, mPreviousName);
 
   auto& contexts = mDocument->get_contexts();
   contexts.on_renamed_component_attr(definition.uuid(), mUpdatedName, mPreviousName);
@@ -60,7 +60,7 @@ void RenameComponentAttr::redo()
   auto index = mDocument->get_component_index();
 
   auto& definition = index->at(mComponentId);
-  definition.rename_attr(mPreviousName, mUpdatedName);
+  definition.rename(mPreviousName, mUpdatedName);
 
   auto& contexts = mDocument->get_contexts();
   contexts.on_renamed_component_attr(definition.uuid(), mPreviousName, mUpdatedName);

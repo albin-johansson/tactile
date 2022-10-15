@@ -53,9 +53,9 @@ TEST(DuplicateComponentAttr, RedoUndo)
     const auto& comp = bundle.at(comp_id);
 
     ASSERT_EQ(2, def.size());
-    ASSERT_TRUE(def.has_attr("Attr"));
-    ASSERT_TRUE(def.has_attr("Attr (1)"));
-    ASSERT_EQ(def.get_attr("Attr"), def.get_attr("Attr (1)"));
+    ASSERT_TRUE(def.has("Attr"));
+    ASSERT_TRUE(def.has("Attr (1)"));
+    ASSERT_EQ(def.at("Attr"), def.at("Attr (1)"));
 
     ASSERT_EQ(2, comp.size());
     ASSERT_TRUE(comp.has_attr("Attr"));
@@ -70,8 +70,8 @@ TEST(DuplicateComponentAttr, RedoUndo)
     const auto& comp = bundle.at(comp_id);
 
     ASSERT_EQ(1, def.size());
-    ASSERT_TRUE(def.has_attr("Attr"));
-    ASSERT_FALSE(def.has_attr("Attr (1)"));
+    ASSERT_TRUE(def.has("Attr"));
+    ASSERT_FALSE(def.has("Attr (1)"));
 
     ASSERT_EQ(1, comp.size());
     ASSERT_TRUE(comp.has_attr("Attr"));

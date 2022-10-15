@@ -49,7 +49,7 @@ void RenameComponent::undo()
 void RenameComponent::redo()
 {
   const auto& definition = mIndex->at(mComponentId);
-  mPreviousName = definition.get_name();
+  mPreviousName = definition.name();
   mIndex->rename(mComponentId, mUpdatedName);
 }
 

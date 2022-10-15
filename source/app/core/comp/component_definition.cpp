@@ -40,7 +40,7 @@ auto ComponentDefinition::instantiate() const -> Component
   return {mId, mAttributes};
 }
 
-void ComponentDefinition::add_attr(String key, const AttributeType type)
+void ComponentDefinition::add(String key, AttributeType type)
 {
   if (!has_key(mAttributes, key)) {
     mAttributes[std::move(key)].reset_to_default(type);
@@ -50,7 +50,7 @@ void ComponentDefinition::add_attr(String key, const AttributeType type)
   }
 }
 
-void ComponentDefinition::add_attr(String key, Attribute value)
+void ComponentDefinition::add(String key, Attribute value)
 {
   if (!has_key(mAttributes, key)) {
     mAttributes[std::move(key)] = std::move(value);
@@ -60,23 +60,24 @@ void ComponentDefinition::add_attr(String key, Attribute value)
   }
 }
 
-void ComponentDefinition::update_attr(StringView key, Attribute value)
+void ComponentDefinition::update(StringView key, Attribute value)
 {
   auto& attribute = lookup_in(mAttributes, key);
   attribute = std::move(value);
 }
 
-void ComponentDefinition::remove_attr(StringView key)
+auto ComponentDefinition::remove(StringView key) -> bool
 {
   if (const auto iter = find_in(mAttributes, key); iter != mAttributes.end()) {
     mAttributes.erase(iter);
+    return true;
   }
   else {
-    throw TactileError {"Tried to remove non-existent attribute!"};
+    return false;
   }
 }
 
-void ComponentDefinition::rename_attr(StringView current, String updated)
+auto ComponentDefinition::rename(StringView current, String updated) -> bool
 {
   if (has_key(mAttributes, updated)) {
     throw TactileError {"Attribute name must be unique!"};
@@ -86,13 +87,14 @@ void ComponentDefinition::rename_attr(StringView current, String updated)
     auto value = iter->second;
     mAttributes.erase(iter);
     mAttributes[std::move(updated)] = std::move(value);
+    return true;
   }
   else {
-    throw TactileError {"Tried to rename non-existent attribute!"};
+    return false;
   }
 }
 
-auto ComponentDefinition::duplicate_attr(StringView key) -> String
+auto ComponentDefinition::duplicate(StringView key) -> String
 {
   auto value = lookup_in(mAttributes, key);
 
@@ -107,12 +109,12 @@ auto ComponentDefinition::duplicate_attr(StringView key) -> String
   return new_key;
 }
 
-auto ComponentDefinition::get_attr(StringView key) const -> const Attribute&
+auto ComponentDefinition::at(StringView key) const -> const Attribute&
 {
   return lookup_in(mAttributes, key);
 }
 
-auto ComponentDefinition::has_attr(StringView key) const -> bool
+auto ComponentDefinition::has(StringView key) const -> bool
 {
   return has_key(mAttributes, key);
 }
@@ -122,7 +124,7 @@ void ComponentDefinition::set_name(String name)
   mName = std::move(name);
 }
 
-auto ComponentDefinition::get_name() const -> const String&
+auto ComponentDefinition::name() const -> const String&
 {
   return mName;
 }

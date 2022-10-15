@@ -32,7 +32,7 @@ ComponentBuilder::ComponentBuilder(Shared<ComponentIndex> index, String name)
 auto ComponentBuilder::with_attr(String name, Attribute value) -> ComponentBuilder&
 {
   auto& comp = mIndex->at(mComponentId);
-  comp.add_attr(std::move(name), std::move(value));
+  comp.add(std::move(name), std::move(value));
   return *this;
 }
 

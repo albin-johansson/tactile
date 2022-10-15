@@ -46,7 +46,7 @@ void AddComponentAttr::undo()
 {
   auto index = mDocument->get_component_index();
   auto& definition = index->at(mComponentId);
-  definition.remove_attr(mName);
+  definition.remove(mName);
 
   auto& contexts = mDocument->get_contexts();
   contexts.on_removed_component_attr(definition.uuid(), mName);
@@ -57,8 +57,8 @@ void AddComponentAttr::redo()
   auto index = mDocument->get_component_index();
   auto& definition = index->at(mComponentId);
 
-  definition.add_attr(mName);
-  const auto& value = definition.get_attr(mName);
+  definition.add(mName);
+  const auto& value = definition.at(mName);
 
   auto& contexts = mDocument->get_contexts();
   contexts.on_new_component_attr(definition.uuid(), mName, value);

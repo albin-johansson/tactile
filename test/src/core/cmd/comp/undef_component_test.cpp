@@ -65,8 +65,8 @@ TEST(UndefComponent, RedoUndo)
   ASSERT_TRUE(index->contains("Demo"));
   ASSERT_TRUE(index->contains(comp_id));
 
-  ASSERT_EQ("bar", index->at(comp_id).get_attr("foo").as_string());
-  ASSERT_EQ(1.5f, index->at(comp_id).get_attr("threshold").as_float());
+  ASSERT_EQ("bar", index->at(comp_id).at("foo").as_string());
+  ASSERT_EQ(1.5f, index->at(comp_id).at("threshold").as_float());
 
   ASSERT_EQ("abc", bundle.at(comp_id).get_attr("foo").as_string());
   ASSERT_EQ(8.9f, bundle.at(comp_id).get_attr("threshold").as_float());

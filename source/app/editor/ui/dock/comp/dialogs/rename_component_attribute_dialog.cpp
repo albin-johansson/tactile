@@ -60,7 +60,7 @@ auto RenameComponentAttributeDialog::validate(const DocumentModel& model,
 {
   const auto& document = model.require_active_document();
   const auto* index = document.view_component_index();
-  return !input.empty() && index && !index->at(mComponentId.value()).has_attr(input);
+  return !input.empty() && index && !index->at(mComponentId.value()).has(input);
 }
 
 }  // namespace tactile::ui

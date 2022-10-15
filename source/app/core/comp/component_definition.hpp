@@ -29,26 +29,27 @@
 
 namespace tactile {
 
-/// Represents the structure of a component type.
+/// Represents the structure of a component type, providing attributes and default values.
 class ComponentDefinition final : public Element {
  public:
   ComponentDefinition();
 
   explicit ComponentDefinition(const UUID& id);
 
+  /// Creates a new component using the component definition as a template.
   [[nodiscard]] auto instantiate() const -> Component;
 
   /// Creates a new attribute.
   ///
   /// \param key the key to associate with the attribute.
   /// \param type the initial type of the attribute.
-  void add_attr(String key, AttributeType type = AttributeType::String);
+  void add(String key, AttributeType type = AttributeType::String);
 
   /// Creates a new attribute.
   ///
   /// \param key the key to associate with the attribute.
   /// \param value the initial value of the attribute.
-  void add_attr(String key, Attribute value);
+  void add(String key, Attribute value);
 
   /// Updates the value of an existing attribute.
   ///
@@ -56,37 +57,41 @@ class ComponentDefinition final : public Element {
   ///
   /// \param key the key associated with the attribute.
   /// \param value the new attribute value.
-  void update_attr(StringView key, Attribute value);
+  void update(StringView key, Attribute value);
 
-  /// Removes an existing attribute.
+  /// Removes an existing attribute (returning true if an attribute was removed).
   ///
   /// \param key the key associated with the attribute.
-  void remove_attr(StringView key);
+  auto remove(StringView key) -> bool;
 
   /// Changes the name (key) of an existing attribute.
   ///
+  /// The new attribute name must be unique.
+  ///
   /// \param current the current attribute key.
   /// \param updated the new attribute key.
-  void rename_attr(StringView current, String updated);
+  ///
+  /// \return true if an attribute was renamed; false otherwise.
+  auto rename(StringView current, String updated) -> bool;
 
   /// Duplicates an existing attribute.
   ///
   /// \param key the key associated with the attribute that will be duplicated.
   ///
   /// \return the key of the new attribute.
-  auto duplicate_attr(StringView key) -> String;
+  auto duplicate(StringView key) -> String;
 
   /// Returns the value of the attribute for a specific key.
-  [[nodiscard]] auto get_attr(StringView key) const -> const Attribute&;
+  [[nodiscard]] auto at(StringView key) const -> const Attribute&;
 
   /// Indicates whether there is an attribute for a specific key.
-  [[nodiscard]] auto has_attr(StringView key) const -> bool;
+  [[nodiscard]] auto has(StringView key) const -> bool;
 
   /// Sets the unique name of the component definition.
   void set_name(String name);
 
   /// Returns the (unique) name of the component type.
-  [[nodiscard]] auto get_name() const -> const String&;
+  [[nodiscard]] auto name() const -> const String&;
 
   /// Returns the amount of attributes in the component.
   [[nodiscard]] auto size() const -> usize;

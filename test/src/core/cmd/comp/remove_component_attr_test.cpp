@@ -54,11 +54,11 @@ TEST(RemoveComponentAttr, RedoUndo)
   ASSERT_TRUE(bundle.at(comp_id).empty());
 
   cmd.undo();
-  ASSERT_TRUE(definition.has_attr("attr"));
-  ASSERT_EQ(42, definition.get_attr("attr"));
+  ASSERT_TRUE(definition.has("attr"));
+  ASSERT_EQ(42, definition.at("attr"));
 
   ASSERT_TRUE(bundle.at(comp_id).has_attr("attr"));
-  ASSERT_EQ(definition.get_attr("attr"), bundle.at(comp_id).get_attr("attr"));
+  ASSERT_EQ(definition.at("attr"), bundle.at(comp_id).get_attr("attr"));
 }
 
 }  // namespace tactile::test

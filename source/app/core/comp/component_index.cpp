@@ -47,7 +47,7 @@ auto ComponentIndex::define(String name) -> UUID
 
 void ComponentIndex::restore(ComponentDefinition def)
 {
-  if (contains(def.get_name())) {
+  if (contains(def.name())) {
     throw TactileError {"Component definition name is not unique!"};
   }
 
@@ -90,7 +90,7 @@ auto ComponentIndex::at(const UUID& id) const -> const ComponentDefinition&
 auto ComponentIndex::with_name(StringView name) -> ComponentDefinition&
 {
   for (auto& [id, def] : mDefs) {
-    if (def.get_name() == name) {
+    if (def.name() == name) {
       return def;
     }
   }
@@ -106,7 +106,7 @@ auto ComponentIndex::contains(const UUID& id) const -> bool
 auto ComponentIndex::contains(StringView name) const -> bool
 {
   return std::any_of(mDefs.begin(), mDefs.end(), [name](const auto& pair) {
-    return pair.second.get_name() == name;
+    return pair.second.name() == name;
   });
 }
 

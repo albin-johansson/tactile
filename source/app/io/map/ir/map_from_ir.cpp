@@ -272,7 +272,7 @@ void restore_component_definitions(MapDocument& document, const ir::MapData& map
     const auto id = index->define(name);
     auto& def = index->at(id);
     for (const auto& [attr_name, attr_value] : attributes) {
-      def.add_attr(attr_name, attr_value);
+      def.add(attr_name, attr_value);
     }
   }
 }

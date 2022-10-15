@@ -62,7 +62,7 @@ void show_add_component_button_popup_content(const Document& document,
     for (const auto& [definition_id, definition] : *index) {
       Disable disable_if {comps.contains(definition_id)};
 
-      if (ImGui::MenuItem(definition.get_name().c_str())) {
+      if (ImGui::MenuItem(definition.name().c_str())) {
         dispatcher.enqueue<AttachComponentEvent>(context.uuid(), definition_id);
       }
     }
@@ -95,7 +95,7 @@ void show_contents(const Document& document, entt::dispatcher& dispatcher)
       for (const auto& [component_id, component] : comps) {
         ImGui::Separator();
 
-        const auto& component_name = index->at(component_id).get_name();
+        const auto& component_name = index->at(component_id).name();
         component_view(context.uuid(), component, component_name, dispatcher);
       }
 

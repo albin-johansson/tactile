@@ -47,7 +47,7 @@ void DuplicateComponentAttr::undo()
   auto index = mDocument->get_component_index();
 
   auto& definition = index->at(mComponentId);
-  definition.remove_attr(mDuplicatedName.value());
+  definition.remove(mDuplicatedName.value());
 
   auto& contexts = mDocument->get_contexts();
   contexts.on_removed_component_attr(definition.uuid(), mDuplicatedName.value());
@@ -60,12 +60,12 @@ void DuplicateComponentAttr::redo()
   auto index = mDocument->get_component_index();
 
   auto& definition = index->at(mComponentId);
-  mDuplicatedName = definition.duplicate_attr(mAttributeName);
+  mDuplicatedName = definition.duplicate(mAttributeName);
 
   auto& contexts = mDocument->get_contexts();
   contexts.on_new_component_attr(definition.uuid(),
                                  *mDuplicatedName,
-                                 definition.get_attr(*mDuplicatedName));
+                                 definition.at(*mDuplicatedName));
 }
 
 auto DuplicateComponentAttr::get_name() const -> String

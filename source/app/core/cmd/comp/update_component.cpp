@@ -45,7 +45,7 @@ UpdateComponent::UpdateComponent(Shared<ComponentIndex> index,
 void UpdateComponent::undo()
 {
   auto& component = mIndex->at(mComponentId);
-  component.update_attr(mAttributeName, mPreviousValue.value());
+  component.update(mAttributeName, mPreviousValue.value());
 
   mPreviousValue.reset();
 }
@@ -54,8 +54,8 @@ void UpdateComponent::redo()
 {
   auto& definition = mIndex->at(mComponentId);
 
-  mPreviousValue = definition.get_attr(mAttributeName);
-  definition.update_attr(mAttributeName, mUpdatedValue);
+  mPreviousValue = definition.at(mAttributeName);
+  definition.update(mAttributeName, mUpdatedValue);
 }
 
 auto UpdateComponent::merge_with(const Command* cmd) -> bool

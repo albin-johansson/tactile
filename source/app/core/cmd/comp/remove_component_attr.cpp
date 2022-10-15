@@ -51,7 +51,7 @@ void RemoveComponentAttr::undo()
   auto& definition = index->at(mComponentId);
 
   auto value = mPreviousValue.value();
-  definition.add_attr(mAttributeName, value);
+  definition.add(mAttributeName, value);
 
   auto& contexts = mDocument->get_contexts();
   contexts.on_new_component_attr(definition.uuid(), mAttributeName, value);
@@ -64,8 +64,8 @@ void RemoveComponentAttr::redo()
   auto index = mDocument->get_component_index();
   auto& definition = index->at(mComponentId);
 
-  mPreviousValue = definition.get_attr(mAttributeName);
-  definition.remove_attr(mAttributeName);
+  mPreviousValue = definition.at(mAttributeName);
+  definition.remove(mAttributeName);
 
   auto& contexts = mDocument->get_contexts();
   contexts.on_removed_component_attr(definition.uuid(), mAttributeName);
