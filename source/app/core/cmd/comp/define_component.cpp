@@ -40,16 +40,16 @@ DefineComponent::DefineComponent(Shared<ComponentIndex> index, String name)
 void DefineComponent::undo()
 {
   const auto& def = mDef.value();
-  mIndex->remove_comp(def.uuid());
+  mIndex->remove(def.uuid());
 }
 
 void DefineComponent::redo()
 {
   if (mDef.has_value()) {
-    mIndex->restore_comp(*mDef);
+    mIndex->restore(*mDef);
   }
   else {
-    const auto id = mIndex->define_comp(mName);
+    const auto id = mIndex->define(mName);
     mDef = mIndex->at(id);
   }
 }

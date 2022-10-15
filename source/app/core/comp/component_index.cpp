@@ -29,7 +29,7 @@
 
 namespace tactile {
 
-auto ComponentIndex::define_comp(String name) -> UUID
+auto ComponentIndex::define(String name) -> UUID
 {
   if (contains(name)) {
     throw TactileError {"Component definition name is not unique!"};
@@ -45,7 +45,7 @@ auto ComponentIndex::define_comp(String name) -> UUID
   return id;
 }
 
-void ComponentIndex::restore_comp(ComponentDefinition def)
+void ComponentIndex::restore(ComponentDefinition def)
 {
   if (contains(def.get_name())) {
     throw TactileError {"Component definition name is not unique!"};
@@ -57,7 +57,7 @@ void ComponentIndex::restore_comp(ComponentDefinition def)
   mDefs[id] = std::move(def);
 }
 
-void ComponentIndex::remove_comp(const UUID& id)
+void ComponentIndex::remove(const UUID& id)
 {
   if (const auto iter = mDefs.find(id); iter != mDefs.end()) {
     mDefs.erase(iter);
@@ -67,7 +67,7 @@ void ComponentIndex::remove_comp(const UUID& id)
   }
 }
 
-void ComponentIndex::rename_comp(const UUID& id, String name)
+void ComponentIndex::rename(const UUID& id, String name)
 {
   if (contains(name)) {
     throw TactileError {"New component name was not unique!"};

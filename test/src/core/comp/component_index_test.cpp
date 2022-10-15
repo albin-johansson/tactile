@@ -32,10 +32,10 @@ TEST(ComponentIndex, Defaults)
   ASSERT_EQ(0, index.size());
 }
 
-TEST(ComponentIndex, DefineComp)
+TEST(ComponentIndex, Define)
 {
   ComponentIndex index;
-  const auto id = index.define_comp("position");
+  const auto id = index.define("position");
 
   const auto& def = index.at(id);
   ASSERT_EQ("position", def.get_name());
@@ -45,41 +45,41 @@ TEST(ComponentIndex, DefineComp)
   ASSERT_TRUE(index.contains("position"));
   ASSERT_EQ(1, index.size());
 
-  ASSERT_THROW(index.define_comp("position"), TactileError);
+  ASSERT_THROW(index.define("position"), TactileError);
 }
 
-TEST(ComponentIndex, RemoveComp)
+TEST(ComponentIndex, Remove)
 {
   ComponentIndex index;
-  ASSERT_THROW(index.remove_comp(make_uuid()), TactileError);
+  ASSERT_THROW(index.remove(make_uuid()), TactileError);
 
-  const auto id = index.define_comp("foo");
+  const auto id = index.define("foo");
   ASSERT_EQ(1, index.size());
   ASSERT_TRUE(index.contains("foo"));
 
-  index.remove_comp(id);
+  index.remove(id);
 
   ASSERT_EQ(0, index.size());
   ASSERT_FALSE(index.contains("foo"));
 }
 
-TEST(ComponentIndex, RenameComp)
+TEST(ComponentIndex, Rename)
 {
   ComponentIndex index;
-  ASSERT_THROW(index.rename_comp(make_uuid(), "foo"), TactileError);
+  ASSERT_THROW(index.rename(make_uuid(), "foo"), TactileError);
 
-  const auto id = index.define_comp("foo");
+  const auto id = index.define("foo");
 
   ASSERT_TRUE(index.contains("foo"));
   ASSERT_FALSE(index.contains("zoo"));
 
-  index.rename_comp(id, "zoo");
+  index.rename(id, "zoo");
 
   ASSERT_FALSE(index.contains("foo"));
   ASSERT_TRUE(index.contains("zoo"));
 
-  index.define_comp("woo");
-  ASSERT_THROW(index.rename_comp(id, "woo"), TactileError);
+  index.define("woo");
+  ASSERT_THROW(index.rename(id, "woo"), TactileError);
 }
 
 }  // namespace tactile::test

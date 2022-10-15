@@ -37,21 +37,21 @@ class ComponentIndex final {
   /// \param name a unique name.
   ///
   /// \return the identifier associated with the definition.
-  auto define_comp(String name) -> UUID;
+  auto define(String name) -> UUID;
 
   /// Restores a previously removed component definition.
-  void restore_comp(ComponentDefinition def);
+  void restore(ComponentDefinition def);
 
   /// Removes an existing component definition.
   ///
   /// \param id the ID associated with the definition to remove.
-  void remove_comp(const UUID& id);
+  void remove(const UUID& id);
 
   /// Changes the name of an existing component.
   ///
   /// \param id the ID for the component that will be renamed.
   /// \param name the new component name.
-  void rename_comp(const UUID& id, String name);
+  void rename(const UUID& id, String name);
 
   /// Returns the component definition for a specific ID.
   [[nodiscard]] auto at(const UUID& id) -> ComponentDefinition&;

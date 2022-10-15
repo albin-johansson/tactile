@@ -42,7 +42,7 @@ RenameComponent::RenameComponent(Shared<ComponentIndex> index,
 
 void RenameComponent::undo()
 {
-  mIndex->rename_comp(mComponentId, mPreviousName.value());
+  mIndex->rename(mComponentId, mPreviousName.value());
   mPreviousName.reset();
 }
 
@@ -50,7 +50,7 @@ void RenameComponent::redo()
 {
   const auto& definition = mIndex->at(mComponentId);
   mPreviousName = definition.get_name();
-  mIndex->rename_comp(mComponentId, mUpdatedName);
+  mIndex->rename(mComponentId, mUpdatedName);
 }
 
 auto RenameComponent::get_name() const -> String

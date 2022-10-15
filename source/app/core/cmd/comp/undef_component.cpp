@@ -44,7 +44,7 @@ void UndefComponent::undo()
 {
   auto index = mDocument->get_component_index();
 
-  index->restore_comp(std::move(mPreviousDef.value()));
+  index->restore(std::move(mPreviousDef.value()));
   mPreviousDef.reset();
 
   // Restores previously removed components
@@ -62,7 +62,7 @@ void UndefComponent::redo()
   auto index = mDocument->get_component_index();
 
   mPreviousDef = index->at(mComponentId);
-  index->remove_comp(mComponentId);
+  index->remove(mComponentId);
 
   auto& contexts = mDocument->get_contexts();
   mRemovedComponents = contexts.on_undef_comp(mComponentId);
