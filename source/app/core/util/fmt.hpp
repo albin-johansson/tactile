@@ -25,7 +25,6 @@
 #include <EASTL/algorithm.h>
 #include <EASTL/string.h>
 #include <EASTL/string_view.h>
-#include <boost/stacktrace/stacktrace.hpp>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
@@ -35,6 +34,7 @@
 #include "core/util/string.hpp"
 #include "core/vocabulary.hpp"
 #include "meta/build.hpp"
+#include "misc/stacktrace.hpp"
 
 namespace fmt {
 

@@ -17,32 +17,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "uuid.hpp"
+#pragma once
 
 #include "meta/build.hpp"
 
 #if TACTILE_COMPILER_CLANG
 #pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundefined-inline"
 #pragma clang diagnostic ignored "-Wsign-conversion"
 #endif  // TACTILE_COMPILER_CLANG
 
-#include <boost/uuid/uuid_generators.hpp>
+#include <boost/stacktrace.hpp>
 
 #if TACTILE_COMPILER_CLANG
 #pragma clang diagnostic pop
 #endif  // TACTILE_COMPILER_CLANG
-
-namespace tactile {
-
-auto make_uuid() -> boost::uuids::uuid
-{
-  static boost::uuids::random_generator generator;
-  return generator();
-}
-
-auto hash(const UUID& uuid) -> usize
-{
-  return boost::uuids::hash_value(uuid);
-}
-
-}  // namespace tactile

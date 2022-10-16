@@ -24,7 +24,6 @@
 
 #include <GL/glew.h>
 #include <SDL.h>
-#include <boost/stacktrace/stacktrace.hpp>
 #include <spdlog/spdlog.h>
 
 #include "cfg/platform_specific.hpp"
@@ -36,6 +35,7 @@
 #include "meta/build.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
+#include "misc/stacktrace.hpp"
 
 namespace tactile {
 namespace {
