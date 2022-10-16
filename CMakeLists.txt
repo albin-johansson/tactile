@@ -29,7 +29,7 @@ set(RESOURCE_DIR ${ROOT_DIR}/assets)
 
 # Target names
 set(TACTILE_PROTO TactileProto)
-set(TACTILE_LIB TactileCore)
+set(TACTILE_LIB TactileLib)
 set(TACTILE_EXE Tactile)
 set(TACTILE_TEST TactileTests)
 
