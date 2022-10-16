@@ -61,11 +61,6 @@ auto TileAnimation::current_frame() const -> const TileAnimation::Frame&
   return mFrames.at(mIndex);
 }
 
-auto TileAnimation::current_tile() const -> TileIndex
-{
-  return current_frame().tile;
-}
-
 auto TileAnimation::capacity() const -> usize
 {
   return mFrames.capacity();

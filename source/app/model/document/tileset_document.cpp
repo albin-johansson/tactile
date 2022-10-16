@@ -27,18 +27,13 @@
 
 namespace tactile {
 
-TilesetDocument::TilesetDocument(const UUID& id, const TilesetInfo& info)
-    : mTileset {std::make_shared<Tileset>(id, info)}
+TilesetDocument::TilesetDocument(const TilesetInfo& info, const UUID& id)
+    : mTileset {std::make_shared<Tileset>(info, id)}
     , mDelegate {mTileset->uuid()}
 {
   auto& contexts = get_contexts();
   contexts.add_context(mTileset);
   contexts.select(mTileset->uuid());
-}
-
-TilesetDocument::TilesetDocument(const TilesetInfo& info)
-    : TilesetDocument {make_uuid(), info}
-{
 }
 
 void TilesetDocument::update()

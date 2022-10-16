@@ -36,53 +36,64 @@
 
 namespace tactile {
 
+/// Represents a collection of tiles encoded in a texture.
 class Tileset final : public Context {
  public:
-  Tileset(const UUID& id, TilesetInfo info);
-
-  explicit Tileset(TilesetInfo info);
+  explicit Tileset(TilesetInfo info, const UUID& id = make_uuid());
 
   void accept(ContextVisitor& visitor) const override;
 
+  /// Updates animations and internal caches.
   void update();
 
+  /// Returns the tile at a specific index.
   [[nodiscard]] auto operator[](TileIndex index) -> Tile&;
   [[nodiscard]] auto operator[](TileIndex index) const -> const Tile&;
 
-  [[nodiscard]] auto get_tile(TileIndex index) -> const Shared<Tile>&;
+  /// Returns a shared pointer to the tile at a specific index.
+  /// Prefer use of the subscript operator if you only need to view the tile.
+  [[nodiscard]] auto get_tile_ptr(TileIndex index) -> const Shared<Tile>&;
 
+  /// Converts a (valid) tile position to a tile index in the tile set.
   [[nodiscard]] auto index_of(const TilePos& pos) const -> TileIndex;
 
   /// Returns the index of the tile that should be rendered for a specific tile.
   [[nodiscard]] auto appearance_of(TileIndex index) const -> TileIndex;
+
+  /// Indicates whether the tile set has a tile at a specific position.
+  [[nodiscard]] auto is_valid(const TilePos& pos) const -> bool;
 
   [[nodiscard]] auto ctx() -> ContextInfo& override;
   [[nodiscard]] auto ctx() const -> const ContextInfo& override;
 
   [[nodiscard]] auto uuid() const -> const UUID& override;
 
-  [[nodiscard]] auto texture_id() const noexcept -> uint { return mTextureId; }
+  /// Returns the identifier for the associated texture.
+  [[nodiscard]] auto texture_id() const noexcept -> uint;
 
-  [[nodiscard]] auto texture_path() const -> const Path& { return mTexturePath; }
+  /// Returns the source path of the associated texture.
+  [[nodiscard]] auto texture_path() const -> const Path&;
 
-  [[nodiscard]] auto texture_size() const noexcept -> const Int2& { return mTextureSize; }
+  /// Returns the size of the associated texture.
+  [[nodiscard]] auto texture_size() const noexcept -> const Int2&;
 
-  [[nodiscard]] auto tile_size() const noexcept -> const Int2& { return mTileSize; }
+  /// Returns the size of each tile.
+  [[nodiscard]] auto tile_size() const noexcept -> const Int2&;
 
-  [[nodiscard]] auto uv_size() const noexcept -> const Float2& { return mUvSize; }
+  /// Returns the normalized size of a tile in the tile set.
+  [[nodiscard]] auto uv_size() const noexcept -> const Float2&;
 
-  [[nodiscard]] auto row_count() const noexcept -> int32 { return mRowCount; }
+  /// Returns the amount of tile rows.
+  [[nodiscard]] auto row_count() const noexcept -> int32;
 
-  [[nodiscard]] auto column_count() const noexcept -> int32 { return mColumnCount; }
+  /// Returns the amount of tile columns.
+  [[nodiscard]] auto column_count() const noexcept -> int32;
 
-  [[nodiscard]] auto tile_count() const noexcept -> int32
-  {
-    return row_count() * column_count();
-  }
+  /// Returns the total amount of tiles.
+  [[nodiscard]] auto tile_count() const noexcept -> int32;
 
-  [[nodiscard]] auto begin() const noexcept { return mMetaTiles.begin(); }
-
-  [[nodiscard]] auto end() const noexcept { return mMetaTiles.end(); }
+  [[nodiscard]] auto begin() const noexcept { return mTiles.begin(); }
+  [[nodiscard]] auto end() const noexcept { return mTiles.end(); }
 
  private:
   ContextInfo mContext;
@@ -93,15 +104,13 @@ class Tileset final : public Context {
   int32 mColumnCount {};
   Float2 mUvSize {};
   HashMap<TileIndex, UUID> mIdentifiers;
-  HashMap<UUID, Shared<Tile>> mMetaTiles;
+  HashMap<UUID, Shared<Tile>> mTiles;
   Path mTexturePath;
 
   /// A cache of the tiles that should be rendered when a tile is encountered
   mutable HashMap<TileIndex, TileIndex> mAppearanceCache;
 
   void load_tiles();
-
-  [[nodiscard]] auto is_valid(TileIndex index) const -> bool;
 };
 
 }  // namespace tactile

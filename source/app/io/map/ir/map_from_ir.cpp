@@ -203,7 +203,7 @@ void restore_fancy_tiles(TilesetDocument& document, const ir::TilesetData& tiles
 {
   auto& tileset = document.view_tileset();
   for (const auto& [index, tileData] : tileset_data.fancy_tiles) {
-    auto tile = tileset.get_tile(index);
+    auto tile = tileset.get_tile_ptr(index);
     TACTILE_ASSERT(tile->index() == index);
 
     if (!tileData.frames.empty()) {

@@ -67,7 +67,7 @@ void CreateTileset::redo()
 {
   // We only need to create and register the document once
   if (!mTileset) {
-    mTileset = std::make_shared<TilesetDocument>(mTilesetId, mTilesetInfo);
+    mTileset = std::make_shared<TilesetDocument>(mTilesetInfo, mTilesetId);
     mModel->register_tileset(mTileset);
   }
 

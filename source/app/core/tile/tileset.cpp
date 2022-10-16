@@ -28,7 +28,7 @@
 
 namespace tactile {
 
-Tileset::Tileset(const UUID& id, TilesetInfo info)
+Tileset::Tileset(TilesetInfo info, const UUID& id)
     : mContext {id}
     , mTextureId {info.texture_id}
     , mTextureSize {info.texture_size}
@@ -41,11 +41,6 @@ Tileset::Tileset(const UUID& id, TilesetInfo info)
   load_tiles();
 }
 
-Tileset::Tileset(TilesetInfo info)
-    : Tileset {make_uuid(), std::move(info)}
-{
-}
-
 void Tileset::load_tiles()
 {
   const TileIndex count = tile_count();
@@ -53,13 +48,13 @@ void Tileset::load_tiles()
     const auto [row, col] = to_matrix_coords(index, mColumnCount);
 
     auto tile = std::make_shared<Tile>(index);
-    const auto tileId = tile->uuid();
+    const auto tile_id = tile->uuid();
 
     const Int2 pos {col * mTileSize.x, row * mTileSize.y};
     tile->set_source({pos, mTileSize});
 
-    mMetaTiles.try_emplace(tileId, std::move(tile));
-    mIdentifiers[index] = tileId;
+    mTiles.try_emplace(tile_id, std::move(tile));
+    mIdentifiers[index] = tile_id;
   }
 }
 
@@ -73,35 +68,32 @@ void Tileset::update()
   mAppearanceCache.clear();
 
   // TODO usually a lot of tiles to visit here, store which tiles that need updating?
-  for (auto& [id, tile] : mMetaTiles) {
+  for (auto& [id, tile] : mTiles) {
     tile->update();
   }
 }
 
 auto Tileset::operator[](const TileIndex index) -> Tile&
 {
-  return *get_tile(index);
+  return *get_tile_ptr(index);
 }
 
 auto Tileset::operator[](const TileIndex index) const -> const Tile&
 {
   const auto id = lookup_in(mIdentifiers, index);
-  return *lookup_in(mMetaTiles, id);
+  return *lookup_in(mTiles, id);
 }
 
-auto Tileset::get_tile(TileIndex index) -> const Shared<Tile>&
+auto Tileset::get_tile_ptr(TileIndex index) -> const Shared<Tile>&
 {
   const auto id = lookup_in(mIdentifiers, index);
-  return lookup_in(mMetaTiles, id);
+  return lookup_in(mTiles, id);
 }
 
 auto Tileset::index_of(const TilePos& pos) const -> TileIndex
 {
-  const auto row = pos.row();
-  const auto col = pos.col();
-
-  if (row >= 0 && col >= 0 && row < mRowCount && col < mColumnCount) {
-    return row * mColumnCount + col;
+  if (is_valid(pos)) {
+    return pos.row() * mColumnCount + pos.col();
   }
   else {
     throw TactileError {"Invalid tile position!"};
@@ -116,7 +108,7 @@ auto Tileset::appearance_of(const TileIndex index) const -> TileIndex
 
   if (const auto iter = mIdentifiers.find(index); iter != mIdentifiers.end()) {
     const auto& id = iter->second;
-    const auto& tile = lookup_in(mMetaTiles, id);
+    const auto& tile = lookup_in(mTiles, id);
 
     if (tile->is_animated()) {
       const auto appearance = tile->animation().current_frame().tile;
@@ -143,9 +135,51 @@ auto Tileset::uuid() const -> const UUID&
   return mContext.uuid();
 }
 
-auto Tileset::is_valid(const TileIndex index) const -> bool
+auto Tileset::texture_id() const noexcept -> uint
 {
-  return index >= 0 && index < tile_count();
+  return mTextureId;
+}
+
+auto Tileset::texture_path() const -> const Path&
+{
+  return mTexturePath;
+}
+
+auto Tileset::texture_size() const noexcept -> const Int2&
+{
+  return mTextureSize;
+}
+
+auto Tileset::tile_size() const noexcept -> const Int2&
+{
+  return mTileSize;
+}
+
+auto Tileset::uv_size() const noexcept -> const Float2&
+{
+  return mUvSize;
+}
+
+auto Tileset::row_count() const noexcept -> int32
+{
+  return mRowCount;
+}
+
+auto Tileset::column_count() const noexcept -> int32
+{
+  return mColumnCount;
+}
+
+auto Tileset::tile_count() const noexcept -> int32
+{
+  return mRowCount * mColumnCount;
+}
+
+auto Tileset::is_valid(const TilePos& pos) const -> bool
+{
+  const auto row = pos.row();
+  const auto col = pos.col();
+  return row >= 0 && col >= 0 && row < mRowCount && col < mColumnCount;
 }
 
 }  // namespace tactile

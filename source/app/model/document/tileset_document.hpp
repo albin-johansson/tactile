@@ -35,9 +35,7 @@ namespace tactile {
 /// external.
 class TilesetDocument final : public Document {
  public:
-  TilesetDocument(const UUID& id, const TilesetInfo& info);
-
-  explicit TilesetDocument(const TilesetInfo& info);
+  explicit TilesetDocument(const TilesetInfo& info, const UUID& id = make_uuid());
 
   void update() override;
 
