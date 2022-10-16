@@ -26,6 +26,7 @@
 
 namespace tactile {
 
+/// Linear animation for single tile, represented as a sequence of tile indices.
 class TileAnimation final {
  public:
   using Millis = std::chrono::milliseconds;
@@ -37,22 +38,28 @@ class TileAnimation final {
     Millis duration {};
   };
 
+  /// Updates the animation
   void update();
 
+  /// Reserves enough memory for a set amount of frames.
   void reserve_frames(usize n);
 
+  /// Adds a new frame to the animation sequence.
   void add_frame(TileIndex tile, Millis duration);
 
-  [[nodiscard]] auto nth(usize index) const -> const Frame&;
+  /// Returns the frame at a specific index.
+  [[nodiscard]] auto operator[](usize index) const -> const Frame&;
 
-  [[nodiscard]] auto current_tile() const -> TileIndex;
+  /// Returns the current frame.
+  [[nodiscard]] auto current_frame() const -> const Frame&;
 
+  /// Returns the frame capacity.
   [[nodiscard]] auto capacity() const -> usize;
 
+  /// Returns the amount of frames.
   [[nodiscard]] auto size() const -> usize;
 
   [[nodiscard]] auto begin() const noexcept { return mFrames.begin(); }
-
   [[nodiscard]] auto end() const noexcept { return mFrames.end(); }
 
  private:

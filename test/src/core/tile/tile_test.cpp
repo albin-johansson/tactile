@@ -72,11 +72,11 @@ TEST(Tile, SetAnimation)
 
   ASSERT_EQ(2, animation.size());
 
-  ASSERT_EQ(7, animation.nth(0).tile);
-  ASSERT_EQ(Millis {42}, animation.nth(0).duration);
+  ASSERT_EQ(7, animation[0].tile);
+  ASSERT_EQ(Millis {42}, animation[0].duration);
 
-  ASSERT_EQ(8, animation.nth(1).tile);
-  ASSERT_EQ(Millis {37}, animation.nth(1).duration);
+  ASSERT_EQ(8, animation[1].tile);
+  ASSERT_EQ(Millis {37}, animation[1].duration);
 }
 
 }  // namespace tactile::test
