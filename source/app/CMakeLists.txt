@@ -75,6 +75,10 @@ if (MSVC)
                              )
 endif ()
 
+if (TACTILE_BUILD_APP_BUNDLE MATCHES ON)
+  target_compile_definitions(${TACTILE_LIB} PUBLIC TACTILE_BUILD_APP_BUNDLE)
+endif ()
+
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
   message("[Tactile]: Building executable as WIN32 (non-console) executable...")
   add_executable(${TACTILE_EXE} WIN32 ${SOURCE_FILES} main.cpp)

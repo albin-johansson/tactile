@@ -97,4 +97,10 @@ inline constexpr bool on_linux = true;
 inline constexpr bool on_linux = false;
 #endif  // TACTILE_PLATFORM_LINUX
 
+#ifdef TACTILE_BUILD_APP_BUNDLE
+inline constexpr bool is_app_bundle = true;
+#else
+inline constexpr bool is_app_bundle = false;
+#endif  // TACTILE_BUILD_APP_BUNDLE
+
 }  // namespace tactile

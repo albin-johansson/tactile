@@ -20,7 +20,7 @@
 #include "configuration.hpp"
 
 #include <cstdlib>    // abort
-#include <exception>  // set_terminate
+#include <exception>  // set_terminate, exception
 
 #include <GL/glew.h>
 #include <SDL.h>
@@ -28,6 +28,7 @@
 #include <spdlog/spdlog.h>
 
 #include "cfg/platform_specific.hpp"
+#include "core/type/path.hpp"
 #include "core/util/fmt.hpp"
 #include "io/directories.hpp"
 #include "io/proto/preferences.hpp"
@@ -73,6 +74,25 @@ void init_sdl_attributes()
   return flags;
 }
 
+void load_window_icon(cen::window& window)
+{
+  try {
+    // This is ugly, but it's necessary to allow macOS builds in different flavours
+    Path icon_path;
+    if constexpr (is_app_bundle) {
+      icon_path = io::find_resource("Tactile.icns");
+    }
+    else {
+      icon_path = io::find_resource(on_osx ? "assets/Tactile.icns" : "assets/icon.png");
+    }
+
+    window.set_icon(cen::surface {icon_path.string()});
+  }
+  catch (const std::exception& e) {
+    spdlog::error("Failed to load window icon: {}", e.what() ? e.what() : "n/a");
+  }
+}
+
 }  // namespace
 
 // Keep the handler out of the anonymous namespace
@@ -99,16 +119,7 @@ AppCfg::AppCfg(int, char*[])
   TACTILE_ASSERT(mWindow.has_value());
 
   use_immersive_dark_mode(*mWindow);
-
-  // This is ugly, but it's necessary to allow macOS builds in different flavours
-#ifdef TACTILE_BUILD_APP_BUNDLE
-  const auto icon_path = find_resource("Tactile.icns");
-#else
-  const auto icon_path =
-      io::find_resource(on_osx ? "assets/Tactile.icns" : "assets/icon.png");
-#endif
-
-  mWindow->set_icon(cen::surface {icon_path.string()});
+  load_window_icon(*mWindow);
 
   mOpenGL.emplace(*mWindow);
   mOpenGL->make_current(*mWindow);
