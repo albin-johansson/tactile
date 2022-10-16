@@ -31,7 +31,6 @@
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
-#include "core/model.hpp"
 #include "core/tile_pos.hpp"
 #include "core/tileset/tileset_info.hpp"
 #include "core/type/math.hpp"
@@ -43,6 +42,7 @@
 #include "io/map/parse/parse_result.hpp"
 #include "io/textures.hpp"
 #include "misc/assert.hpp"
+#include "model/model.hpp"
 
 namespace tactile::io {
 namespace {

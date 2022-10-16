@@ -27,9 +27,9 @@
 #include "core/ctx/context_info.hpp"
 #include "core/ctx/context_manager.hpp"
 #include "core/event/property_events.hpp"
-#include "core/model.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 

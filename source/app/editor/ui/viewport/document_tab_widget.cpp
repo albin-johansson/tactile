@@ -24,10 +24,10 @@
 
 #include "core/cmd/command_stack.hpp"
 #include "core/event/document_events.hpp"
-#include "core/model.hpp"
 #include "editor/ui/viewport/map_viewport.hpp"
 #include "editor/ui/viewport/tileset_viewport.hpp"
 #include "editor/ui/widget/scoped.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 

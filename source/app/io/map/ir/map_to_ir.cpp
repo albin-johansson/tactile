@@ -25,9 +25,9 @@
 #include "core/layer/object.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
-#include "core/model.hpp"
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
+#include "model/model.hpp"
 
 namespace tactile::io {
 namespace {

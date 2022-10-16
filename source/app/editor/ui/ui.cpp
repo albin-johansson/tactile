@@ -19,7 +19,6 @@
 
 #include "ui.hpp"
 
-#include "core/model.hpp"
 #include "editor/ui/dialog/dialog_state.hpp"
 #include "editor/ui/dialog/dialogs.hpp"
 #include "editor/ui/dock/comp/component_dock.hpp"
@@ -31,6 +30,7 @@
 #include "editor/ui/menu/menu_bar.hpp"
 #include "editor/ui/viewport/map_viewport_toolbar.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 

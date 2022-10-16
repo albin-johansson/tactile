@@ -26,7 +26,6 @@
 #include "core/event/document_events.hpp"
 #include "core/event/map_events.hpp"
 #include "core/event/misc_events.hpp"
-#include "core/model.hpp"
 #include "core/util/filesystem.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/ui/dialog/dialog_state.hpp"
@@ -36,6 +35,7 @@
 #include "io/proto/history.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 namespace {

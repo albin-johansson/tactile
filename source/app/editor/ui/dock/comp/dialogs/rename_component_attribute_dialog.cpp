@@ -25,9 +25,9 @@
 
 #include "core/comp/component_index.hpp"
 #include "core/event/component_events.hpp"
-#include "core/model.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 

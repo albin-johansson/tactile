@@ -31,8 +31,8 @@
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/vector.hpp"
-#include "uuid.hpp"
-#include "vocabulary.hpp"
+#include "core/uuid.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 

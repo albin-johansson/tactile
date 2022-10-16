@@ -31,7 +31,6 @@
 #include "core/event/tool_events.hpp"
 #include "core/event/viewport_events.hpp"
 #include "core/layer/object_layer.hpp"
-#include "core/model.hpp"
 #include "document_viewport_offset_handler.hpp"
 #include "editor/ui/render/graphics.hpp"
 #include "editor/ui/render/render_info.hpp"
@@ -45,6 +44,7 @@
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 namespace {

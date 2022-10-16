@@ -25,7 +25,7 @@
 #include "core/document/map_document.hpp"
 #include "core/document/tileset_document.hpp"
 #include "core/event/tool_events.hpp"
-#include "core/model.hpp"
+#include "model/model.hpp"
 
 namespace tactile {
 

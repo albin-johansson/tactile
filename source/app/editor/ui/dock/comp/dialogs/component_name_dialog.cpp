@@ -20,7 +20,7 @@
 #include "component_name_dialog.hpp"
 
 #include "core/comp/component_index.hpp"
-#include "core/model.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 

@@ -23,8 +23,8 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/event/all.hpp"
-#include "core/model.hpp"
 #include "editor/loop.hpp"
+#include "model/model.hpp"
 
 namespace tactile {
 

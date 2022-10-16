@@ -29,7 +29,6 @@
 #include "core/event/command_events.hpp"
 #include "core/event/tileset_events.hpp"
 #include "core/event/tool_events.hpp"
-#include "core/model.hpp"
 #include "core/tool/tool_manager.hpp"
 #include "editor/ui/style/icons.hpp"
 #include "editor/ui/widget/buttons.hpp"
@@ -37,6 +36,7 @@
 #include "editor/ui/widget/windows.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 namespace {

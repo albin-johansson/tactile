@@ -23,10 +23,10 @@
 #include <imgui.h>
 
 #include "core/event/tileset_events.hpp"
-#include "core/model.hpp"
 #include "editor/ui/widget/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 

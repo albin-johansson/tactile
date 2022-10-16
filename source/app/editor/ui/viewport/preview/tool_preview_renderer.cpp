@@ -21,13 +21,13 @@
 
 #include "core/document/map_document.hpp"
 #include "core/layer/tile_layer.hpp"
-#include "core/model.hpp"
 #include "core/tool/ellipse_tool.hpp"
 #include "core/tool/rectangle_tool.hpp"
 #include "core/tool/stamp_tool.hpp"
 #include "core/util/functional.hpp"
 #include "editor/ui/render/graphics.hpp"
 #include "misc/assert.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 

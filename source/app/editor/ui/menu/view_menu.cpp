@@ -24,7 +24,6 @@
 
 #include "core/event/misc_events.hpp"
 #include "core/event/viewport_events.hpp"
-#include "core/model.hpp"
 #include "core/viewport.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/ui/dock/dock_space.hpp"
@@ -33,6 +32,7 @@
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 namespace {

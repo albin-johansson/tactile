@@ -29,11 +29,11 @@
 #include "core/event/misc_events.hpp"
 #include "core/event/tileset_events.hpp"
 #include "core/event/tool_events.hpp"
-#include "core/model.hpp"
 #include "core/tool/tool_manager.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/ui/menu/map_menu.hpp"
 #include "editor/ui/ui.hpp"
+#include "model/model.hpp"
 
 namespace tactile {
 

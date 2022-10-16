@@ -21,7 +21,6 @@
 
 #include <imgui.h>
 
-#include "core/model.hpp"
 #include "editor/ui/menu/debug_menu.hpp"
 #include "editor/ui/menu/edit_menu.hpp"
 #include "editor/ui/menu/file_menu.hpp"
@@ -29,6 +28,7 @@
 #include "editor/ui/menu/map_menu.hpp"
 #include "editor/ui/menu/tileset_menu.hpp"
 #include "editor/ui/menu/view_menu.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 

@@ -25,7 +25,7 @@
 #include "core/event/object_events.hpp"
 #include "core/event/tool_events.hpp"
 #include "core/layer/object_layer.hpp"
-#include "core/model.hpp"
+#include "model/model.hpp"
 
 namespace tactile {
 

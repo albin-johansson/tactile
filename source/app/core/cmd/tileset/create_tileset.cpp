@@ -24,11 +24,11 @@
 
 #include "core/document/map_document.hpp"
 #include "core/document/tileset_document.hpp"
-#include "core/model.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
