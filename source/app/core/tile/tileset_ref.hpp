@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/region.hpp"
-#include "core/tileset/tileset.hpp"
+#include "core/tile/tileset.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"

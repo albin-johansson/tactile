@@ -29,7 +29,7 @@
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/map.hpp"
-#include "core/tileset/tileset.hpp"
+#include "core/tile/tileset.hpp"
 #include "core/type/maybe.hpp"
 #include "core/uuid.hpp"
 #include "editor/ui/dialog/dialog_state.hpp"

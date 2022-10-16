@@ -21,8 +21,8 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/tileset/tileset.hpp"
-#include "core/tileset/tileset_ref.hpp"
+#include "core/tile/tileset.hpp"
+#include "core/tile/tileset_ref.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"

@@ -24,7 +24,7 @@
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_info.hpp"
 #include "core/layer/object.hpp"
-#include "core/tileset/tile_animation.hpp"
+#include "core/tile/tile_animation.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/math.hpp"
 #include "core/type/maybe.hpp"

@@ -23,9 +23,9 @@
 
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_info.hpp"
+#include "core/tile/tile.hpp"
+#include "core/tile/tileset_info.hpp"
 #include "core/tile_pos.hpp"
-#include "core/tileset/tile.hpp"
-#include "core/tileset/tileset_info.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/math.hpp"
 #include "core/type/path.hpp"

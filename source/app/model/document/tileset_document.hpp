@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/tileset/tileset.hpp"
+#include "core/tile/tileset.hpp"
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"

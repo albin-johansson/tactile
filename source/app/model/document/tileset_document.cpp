@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/tileset/tileset_info.hpp"
+#include "core/tile/tileset_info.hpp"
 #include "core/util/tiles.hpp"
 #include "model/cmd/tileset/all.hpp"
 

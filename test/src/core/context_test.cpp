@@ -26,9 +26,9 @@
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/map.hpp"
-#include "core/tileset/tile.hpp"
-#include "core/tileset/tileset.hpp"
-#include "core/tileset/tileset_info.hpp"
+#include "core/tile/tile.hpp"
+#include "core/tile/tileset.hpp"
+#include "core/tile/tileset_info.hpp"
 
 namespace tactile::test {
 

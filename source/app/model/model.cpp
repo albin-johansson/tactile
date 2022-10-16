@@ -25,7 +25,7 @@
 #include <spdlog/spdlog.h>
 
 #include "core/comp/component_index.hpp"
-#include "core/tileset/tileset_info.hpp"
+#include "core/tile/tileset_info.hpp"
 #include "core/util/assoc.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
