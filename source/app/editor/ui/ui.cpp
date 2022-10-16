@@ -19,6 +19,9 @@
 
 #include "ui.hpp"
 
+#include <spdlog/spdlog.h>
+
+#include "core/type/path.hpp"
 #include "editor/ui/dialog/dialog_state.hpp"
 #include "editor/ui/dialog/dialogs.hpp"
 #include "editor/ui/dock/comp/component_dock.hpp"
@@ -30,9 +33,25 @@
 #include "editor/ui/menu/menu_bar.hpp"
 #include "editor/ui/viewport/map_viewport_toolbar.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
+#include "io/directories.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
+namespace {
+
+void check_for_missing_ini_file()
+{
+  const auto& ini = io::widget_ini_path();
+  if (!fs::exists(ini)) {
+    spdlog::info("Resetting layout because imgui.ini file was missing...");
+    reset_layout();
+
+    const auto str = ini.string();
+    ImGui::SaveIniSettingsToDisk(str.c_str());
+  }
+}
+
+}  // namespace
 
 void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
@@ -57,6 +76,8 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
   auto& dialogs = get_dialogs();
   dialogs.resize_map.update(model, dispatcher);
   dialogs.map_parse_error.update(model, dispatcher);
+
+  check_for_missing_ini_file();
 }
 
 auto is_editor_focused() -> bool
