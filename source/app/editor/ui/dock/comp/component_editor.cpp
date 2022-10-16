@@ -27,7 +27,6 @@
 
 #include "core/attribute.hpp"
 #include "core/comp/component_index.hpp"
-#include "core/event/component_events.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
 #include "core/uuid.hpp"
@@ -43,6 +42,7 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/assert.hpp"
+#include "model/event/component_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {

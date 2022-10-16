@@ -24,9 +24,9 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/event/property_events.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/event/property_events.hpp"
 #include "property_type_combo.hpp"
 
 namespace tactile::ui {

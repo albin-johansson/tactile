@@ -22,7 +22,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/event/tileset_events.hpp"
 #include "core/util/buffers.hpp"
 #include "core/util/string.hpp"
 #include "editor/ui/widget/buttons.hpp"
@@ -30,6 +29,7 @@
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/event/tileset_events.hpp"
 
 namespace tactile::ui {
 

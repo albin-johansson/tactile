@@ -24,13 +24,13 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/comp/component.hpp"
-#include "core/event/component_events.hpp"
 #include "editor/ui/style/alignment.hpp"
 #include "editor/ui/style/icons.hpp"
 #include "editor/ui/widget/input_widgets.hpp"
 #include "editor/ui/widget/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/event/component_events.hpp"
 
 namespace tactile::ui {
 namespace {

@@ -26,7 +26,6 @@
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_info.hpp"
 #include "core/ctx/context_manager.hpp"
-#include "core/event/component_events.hpp"
 #include "core/util/fmt.hpp"
 #include "editor/ui/dock/comp/component_view.hpp"
 #include "editor/ui/style/alignment.hpp"
@@ -38,6 +37,7 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/assert.hpp"
+#include "model/event/component_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {

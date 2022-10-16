@@ -21,7 +21,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/document/map_document.hpp"
 #include "core/util/fmt.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/gd/godot_converter.hpp"
@@ -30,6 +29,7 @@
 #include "io/map/ir/map_to_ir.hpp"
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
+#include "model/document/map_document.hpp"
 
 namespace tactile::io {
 

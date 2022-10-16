@@ -22,7 +22,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/event/map_events.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/ui/dialog/dialog_state.hpp"
 #include "editor/ui/dialog/dialogs.hpp"
@@ -33,6 +32,7 @@
 #include "editor/ui/widget/tooltips.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/event/map_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {

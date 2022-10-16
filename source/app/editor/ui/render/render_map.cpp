@@ -19,7 +19,6 @@
 
 #include "render_map.hpp"
 
-#include "core/document/map_document.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/layer_visitor.hpp"
 #include "core/layer/object_layer.hpp"
@@ -29,6 +28,7 @@
 #include "editor/ui/render/render_tile_layer.hpp"
 #include "io/proto/preferences.hpp"
 #include "misc/assert.hpp"
+#include "model/document/map_document.hpp"
 
 namespace tactile::ui {
 namespace {

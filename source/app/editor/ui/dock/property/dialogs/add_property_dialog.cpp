@@ -25,10 +25,10 @@
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_info.hpp"
 #include "core/ctx/context_manager.hpp"
-#include "core/event/property_events.hpp"
 #include "core/util/buffers.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/event/property_events.hpp"
 #include "model/model.hpp"
 #include "property_type_combo.hpp"
 

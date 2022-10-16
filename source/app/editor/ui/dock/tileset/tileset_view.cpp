@@ -24,16 +24,16 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/document/map_document.hpp"
-#include "core/document/tileset_document.hpp"
-#include "core/event/tileset_events.hpp"
-#include "core/event/viewport_events.hpp"
 #include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"
 #include "editor/ui/render/render_info.hpp"
 #include "editor/ui/style/colors.hpp"
 #include "editor/ui/widget/rubber_band.hpp"
 #include "io/proto/preferences.hpp"
+#include "model/document/map_document.hpp"
+#include "model/document/tileset_document.hpp"
+#include "model/event/tileset_events.hpp"
+#include "model/event/viewport_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {

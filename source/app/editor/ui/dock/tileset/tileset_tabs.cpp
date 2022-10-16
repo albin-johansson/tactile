@@ -22,17 +22,17 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/document/map_document.hpp"
-#include "core/document/tileset_document.hpp"
-#include "core/event/document_events.hpp"
-#include "core/event/property_events.hpp"
-#include "core/event/tileset_events.hpp"
 #include "editor/ui/dock/tileset/tileset_view.hpp"
 #include "editor/ui/style/icons.hpp"
 #include "editor/ui/widget/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/assert.hpp"
+#include "model/document/map_document.hpp"
+#include "model/document/tileset_document.hpp"
+#include "model/event/document_events.hpp"
+#include "model/event/property_events.hpp"
+#include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {

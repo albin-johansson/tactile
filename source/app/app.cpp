@@ -26,13 +26,6 @@
 #include <spdlog/spdlog.h>
 
 #include "cfg/configuration.hpp"
-#include "core/cmd/commands.hpp"
-#include "core/document/map_document.hpp"
-#include "core/document/tileset_document.hpp"
-#include "core/event/map_events.hpp"
-#include "core/event/misc_events.hpp"
-#include "core/event/tileset_events.hpp"
-#include "core/event/viewport_events.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/tileset/tileset_info.hpp"
 #include "core/util/string.hpp"
@@ -60,6 +53,13 @@
 #include "io/proto/session.hpp"
 #include "io/textures.hpp"
 #include "misc/assert.hpp"
+#include "model/cmd/commands.hpp"
+#include "model/document/map_document.hpp"
+#include "model/document/tileset_document.hpp"
+#include "model/event/map_events.hpp"
+#include "model/event/misc_events.hpp"
+#include "model/event/tileset_events.hpp"
+#include "model/event/viewport_events.hpp"
 
 namespace tactile {
 

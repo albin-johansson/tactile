@@ -21,10 +21,10 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/event/component_events.hpp"
 #include "core/type/string.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/event/component_events.hpp"
 
 namespace tactile::ui {
 

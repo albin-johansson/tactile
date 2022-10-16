@@ -25,9 +25,6 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/event/map_events.hpp"
-#include "core/event/tool_events.hpp"
-#include "core/event/viewport_events.hpp"
 #include "core/viewport.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/ui/style/alignment.hpp"
@@ -39,6 +36,9 @@
 #include "editor/ui/widget/windows.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/event/map_events.hpp"
+#include "model/event/tool_events.hpp"
+#include "model/event/viewport_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {

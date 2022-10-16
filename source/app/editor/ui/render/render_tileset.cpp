@@ -21,11 +21,11 @@
 
 #include <imgui.h>
 
-#include "core/document/tileset_document.hpp"
 #include "core/util/functional.hpp"
 #include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"
 #include "io/proto/preferences.hpp"
+#include "model/document/tileset_document.hpp"
 
 namespace tactile::ui {
 

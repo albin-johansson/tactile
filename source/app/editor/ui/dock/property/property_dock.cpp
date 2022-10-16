@@ -25,13 +25,6 @@
 #include <imgui.h>
 
 #include "core/ctx/context_visitor.hpp"
-#include "core/document/tileset_document.hpp"
-#include "core/event/document_events.hpp"
-#include "core/event/layer_events.hpp"
-#include "core/event/map_events.hpp"
-#include "core/event/object_events.hpp"
-#include "core/event/property_events.hpp"
-#include "core/event/tileset_events.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
@@ -47,6 +40,13 @@
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/document/tileset_document.hpp"
+#include "model/event/document_events.hpp"
+#include "model/event/layer_events.hpp"
+#include "model/event/map_events.hpp"
+#include "model/event/object_events.hpp"
+#include "model/event/property_events.hpp"
+#include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {

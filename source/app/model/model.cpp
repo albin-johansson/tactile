@@ -24,16 +24,16 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/cmd/command_stack.hpp"
-#include "core/cmd/commands.hpp"
 #include "core/comp/component_index.hpp"
-#include "core/document/map_document.hpp"
-#include "core/document/tileset_document.hpp"
 #include "core/tileset/tileset_info.hpp"
-#include "core/tool/tool_manager.hpp"
 #include "core/util/assoc.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
+#include "model/cmd/command_stack.hpp"
+#include "model/cmd/commands.hpp"
+#include "model/document/map_document.hpp"
+#include "model/document/tileset_document.hpp"
+#include "model/tool/tool_manager.hpp"
 
 namespace tactile {
 

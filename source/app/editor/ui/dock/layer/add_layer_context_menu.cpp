@@ -22,10 +22,10 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/event/layer_events.hpp"
 #include "editor/ui/style/icons.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/event/layer_events.hpp"
 
 namespace tactile::ui {
 

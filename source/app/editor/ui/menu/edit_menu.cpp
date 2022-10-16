@@ -22,10 +22,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/document/map_document.hpp"
-#include "core/event/command_events.hpp"
-#include "core/event/tool_events.hpp"
-#include "core/tool/tool_type.hpp"
 #include "core/util/fmt.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/ui/dialog/dialog_state.hpp"
@@ -33,7 +29,11 @@
 #include "editor/ui/widget/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/document/map_document.hpp"
+#include "model/event/command_events.hpp"
+#include "model/event/tool_events.hpp"
 #include "model/model.hpp"
+#include "model/tool/tool_type.hpp"
 
 namespace tactile::ui {
 

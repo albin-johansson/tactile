@@ -22,11 +22,11 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/cmd/command_stack.hpp"
-#include "core/event/document_events.hpp"
 #include "editor/ui/viewport/map_viewport.hpp"
 #include "editor/ui/viewport/tileset_viewport.hpp"
 #include "editor/ui/widget/scoped.hpp"
+#include "model/cmd/command_stack.hpp"
+#include "model/event/document_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {

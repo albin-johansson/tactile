@@ -23,11 +23,7 @@
 
 #include <entt/entity/registry.hpp>
 
-#include "core/cmd/command_stack.hpp"
 #include "core/comp/component_index.hpp"
-#include "core/document/document.hpp"
-#include "core/document/map_document.hpp"
-#include "core/document/tileset_document.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
@@ -42,6 +38,10 @@
 #include "io/map/parse/parse_result.hpp"
 #include "io/textures.hpp"
 #include "misc/assert.hpp"
+#include "model/cmd/command_stack.hpp"
+#include "model/document/document.hpp"
+#include "model/document/map_document.hpp"
+#include "model/document/tileset_document.hpp"
 #include "model/model.hpp"
 
 namespace tactile::io {

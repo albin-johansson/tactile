@@ -23,8 +23,6 @@
 #include <imgui.h>
 
 #include "add_layer_context_menu.hpp"
-#include "core/document/map_document.hpp"
-#include "core/event/layer_events.hpp"
 #include "core/type/maybe.hpp"
 #include "editor/constants.hpp"
 #include "editor/ui/dialog/dialog_state.hpp"
@@ -39,6 +37,8 @@
 #include "lang/strings.hpp"
 #include "layer_selectable.hpp"
 #include "misc/assert.hpp"
+#include "model/document/map_document.hpp"
+#include "model/event/layer_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {

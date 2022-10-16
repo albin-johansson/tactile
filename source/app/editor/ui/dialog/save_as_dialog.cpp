@@ -24,10 +24,10 @@
 #include <entt/signal/dispatcher.hpp>
 #include <spdlog/spdlog.h>
 
-#include "core/event/misc_events.hpp"
 #include "core/util/fmt.hpp"
 #include "io/file_dialog.hpp"
 #include "io/proto/preferences.hpp"
+#include "model/event/misc_events.hpp"
 
 namespace tactile::ui {
 

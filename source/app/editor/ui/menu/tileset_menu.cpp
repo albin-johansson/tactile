@@ -22,10 +22,10 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/event/tileset_events.hpp"
 #include "editor/ui/widget/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {

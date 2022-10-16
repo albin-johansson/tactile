@@ -25,18 +25,18 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/document/map_document.hpp"
-#include "core/event/command_events.hpp"
-#include "core/event/tileset_events.hpp"
-#include "core/event/tool_events.hpp"
-#include "core/tool/tool_manager.hpp"
 #include "editor/ui/style/icons.hpp"
 #include "editor/ui/widget/buttons.hpp"
 #include "editor/ui/widget/scoped.hpp"
 #include "editor/ui/widget/windows.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/document/map_document.hpp"
+#include "model/event/command_events.hpp"
+#include "model/event/tileset_events.hpp"
+#include "model/event/tool_events.hpp"
 #include "model/model.hpp"
+#include "model/tool/tool_manager.hpp"
 
 namespace tactile::ui {
 namespace {

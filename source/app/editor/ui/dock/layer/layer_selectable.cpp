@@ -22,10 +22,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/document/map_document.hpp"
-#include "core/event/layer_events.hpp"
-#include "core/event/object_events.hpp"
-#include "core/event/property_events.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/type/string.hpp"
 #include "core/util/fmt.hpp"
@@ -34,6 +30,10 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/assert.hpp"
+#include "model/document/map_document.hpp"
+#include "model/event/layer_events.hpp"
+#include "model/event/object_events.hpp"
+#include "model/event/property_events.hpp"
 
 namespace tactile::ui {
 namespace {

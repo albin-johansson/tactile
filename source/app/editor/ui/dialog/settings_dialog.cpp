@@ -23,8 +23,6 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/event/command_events.hpp"
-#include "core/event/misc_events.hpp"
 #include "editor/ui/dock/dock_space.hpp"
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/style/alignment.hpp"
@@ -37,6 +35,8 @@
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/event/command_events.hpp"
+#include "model/event/misc_events.hpp"
 
 namespace tactile::ui {
 namespace {

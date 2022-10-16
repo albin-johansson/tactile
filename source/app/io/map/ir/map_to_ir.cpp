@@ -20,13 +20,13 @@
 #include "map_to_ir.hpp"
 
 #include "core/comp/component_index.hpp"
-#include "core/document/map_document.hpp"
-#include "core/document/tileset_document.hpp"
 #include "core/layer/object.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
+#include "model/document/map_document.hpp"
+#include "model/document/tileset_document.hpp"
 #include "model/model.hpp"
 
 namespace tactile::io {

@@ -22,8 +22,8 @@
 #include <centurion/event.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/event/all.hpp"
 #include "editor/loop.hpp"
+#include "model/event/all.hpp"
 #include "model/model.hpp"
 
 namespace tactile {

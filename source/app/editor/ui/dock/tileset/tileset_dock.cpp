@@ -23,9 +23,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/document/map_document.hpp"
-#include "core/event/tileset_events.hpp"
-#include "core/event/viewport_events.hpp"
 #include "core/viewport.hpp"
 #include "editor/ui/dock/tileset/tileset_tabs.hpp"
 #include "editor/ui/style/alignment.hpp"
@@ -35,6 +32,9 @@
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/document/map_document.hpp"
+#include "model/event/tileset_events.hpp"
+#include "model/event/viewport_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {

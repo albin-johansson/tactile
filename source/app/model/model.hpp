@@ -23,8 +23,6 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/document/document.hpp"
-#include "core/tool/tool_type.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/math.hpp"
 #include "core/type/maybe.hpp"
@@ -33,6 +31,8 @@
 #include "core/type/vector.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
+#include "model/document/document.hpp"
+#include "model/tool/tool_type.hpp"
 
 namespace tactile {
 
