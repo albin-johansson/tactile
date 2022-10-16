@@ -15,7 +15,8 @@ project(tactile
         VERSION 0.5.0
         LANGUAGES CXX)
 
-message("[Tactile]: C++ compiler is... ${CMAKE_CXX_COMPILER_ID}")
+message("[Tactile]: Using C++${CMAKE_CXX_STANDARD}")
+message("[Tactile]: Compiler is ${CMAKE_CXX_COMPILER_ID}")
 message("[Tactile]: Current version is ${CMAKE_PROJECT_VERSION}")
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -79,9 +80,10 @@ function(tactile_set_compile_options target)
                            /MP
                            /W4
                            /bigobj
+                           /permissive-
                            /Zc:preprocessor
                            /Zc:__cplusplus
-                           /wd5105  # "macro expansion producing 'defined' has undefined behavior"
+                           /Zc:alignedNew
                            )
 
   elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang|GNU")
