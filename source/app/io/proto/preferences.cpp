@@ -25,10 +25,10 @@
 #include <spdlog/spdlog.h>
 
 #include "core/type/path.hpp"
-#include "core/util/file.hpp"
 #include "core/util/fmt.hpp"
 #include "core/util/string.hpp"
 #include "io/directories.hpp"
+#include "io/file.hpp"
 #include "io/proto/proto.hpp"
 
 namespace tactile::io {

@@ -21,10 +21,10 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/util/file.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/fmt.hpp"
 #include "core/util/functional.hpp"
+#include "io/file.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/tiled_info.hpp"

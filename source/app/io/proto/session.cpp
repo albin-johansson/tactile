@@ -21,10 +21,10 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/util/file.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/string.hpp"
 #include "io/directories.hpp"
+#include "io/file.hpp"
 #include "io/map/ir/map_from_ir.hpp"
 #include "io/map/parse/parse_map.hpp"
 #include "io/proto/proto.hpp"

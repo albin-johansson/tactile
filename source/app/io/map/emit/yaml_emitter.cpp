@@ -24,11 +24,11 @@
 
 #include "core/attribute.hpp"
 #include "core/type/string.hpp"
-#include "core/util/file.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/fmt.hpp"
 #include "core/vocabulary.hpp"
 #include "io/compression.hpp"
+#include "io/file.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/proto/preferences.hpp"
