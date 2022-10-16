@@ -195,7 +195,7 @@ void apply_style(ImGuiStyle& style)
   style.WindowMenuButtonPosition = ImGuiDir_Left;
   style.WindowBorderSize = 0;
 
-  if constexpr (on_osx) {
+  if constexpr (on_macos) {
     style.WindowTitleAlign.x = 0.5f;
   }
 

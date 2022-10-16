@@ -78,13 +78,13 @@ auto to_os_string(const char* str) -> Maybe<OsString>
   }
 
   // Windows is the only platform that we support that uses wchar_t filesystem paths
-#if TACTILE_PLATFORM_WINDOWS
+#if TACTILE_OS_WINDOWS
   using convert_type = std::codecvt_utf8<wchar_t>;
   std::wstring_convert<convert_type, wchar_t> converter;
   return converter.from_bytes(str);
 #else
   return str;
-#endif  // TACTILE_PLATFORM_WINDOWS
+#endif  // TACTILE_OS_WINDOWS
 }
 
 }  // namespace tactile

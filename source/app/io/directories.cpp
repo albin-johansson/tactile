@@ -35,7 +35,7 @@ void open_directory(const Path& dir)
 {
   if (fs::is_directory(dir)) {
     static const auto path = persistent_file_dir().string();
-    if constexpr (on_osx) {
+    if constexpr (on_macos) {
       static const auto cmd = fmt::format("open \"{}\"", path);
       std::system(cmd.c_str());
     }

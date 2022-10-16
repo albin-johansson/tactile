@@ -26,9 +26,6 @@
 
 #include "core/type/vector.hpp"
 
-// No definition for now :(
-#define TACTILE_NOINLINE
-
 #define TACTILE_DEFAULT_COPY(Class) \
   Class(const Class&) = default;    \
   auto operator=(const Class&)->Class& = default

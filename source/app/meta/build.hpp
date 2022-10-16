@@ -19,55 +19,34 @@
 
 #pragma once
 
+#include <boost/config.hpp>
+#include <boost/predef/compiler.h>
+#include <boost/predef/os.h>
+
 #define TACTILE_VERSION_STRING "0.5.0 [WIP]"
 
+// Build mode
 #ifdef NDEBUG
 #define TACTILE_DEBUG 0
+#define TACTILE_RELEASE 1
 #else
 #define TACTILE_DEBUG 1
+#define TACTILE_RELEASE 0
 #endif  // NDEBUG
 
-#if TACTILE_DEBUG
-#define TACTILE_RELEASE 0
-#else
-#define TACTILE_RELEASE 1
-#endif  // TACTILE_DEBUG
+// Compiler detection
+#define TACTILE_COMPILER_MSVC BOOST_COMP_MSVC
+#define TACTILE_COMPILER_CLANG BOOST_COMP_CLANG
+#define TACTILE_COMPILER_GCC BOOST_COMP_GNUC
 
-#ifdef _MSC_VER
-#define TACTILE_COMPILER_MSVC 1
-#else
-#define TACTILE_COMPILER_MSVC 0
-#endif  // _MSC_VER
+// OS detection
+#define TACTILE_PLATFORM_WINDOWS BOOST_OS_WINDOWS
+#define TACTILE_OS_WINDOWS BOOST_OS_WINDOWS
+#define TACTILE_OS_LINUX BOOST_OS_LINUX
+#define TACTILE_OS_MACOS BOOST_OS_MACOS
 
-#ifdef __GNUC__
-#define TACTILE_COMPILER_GCC 1
-#else
-#define TACTILE_COMPILER_GCC 0
-#endif  // __GNUC__
-
-#ifdef __clang__
-#define TACTILE_COMPILER_CLANG 1
-#else
-#define TACTILE_COMPILER_CLANG 0
-#endif  // __clang__
-
-#ifdef WIN32
-#define TACTILE_PLATFORM_WINDOWS 1
-#else
-#define TACTILE_PLATFORM_WINDOWS 0
-#endif  // WIN32
-
-#ifdef __linux__
-#define TACTILE_PLATFORM_LINUX 1
-#else
-#define TACTILE_PLATFORM_LINUX 0
-#endif  // __linux__
-
-#ifdef __APPLE__
-#define TACTILE_PLATFORM_OSX 1
-#else
-#define TACTILE_PLATFORM_OSX 0
-#endif  // __APPLE__
+// Attributes
+#define TACTILE_NOINLINE BOOST_NOINLINE
 
 namespace tactile {
 
@@ -79,23 +58,23 @@ inline constexpr bool is_debug_build = false;
 inline constexpr bool is_release_build = true;
 #endif  // TACTILE_DEBUG
 
-#if TACTILE_PLATFORM_WINDOWS
+#if TACTILE_OS_WINDOWS
 inline constexpr bool on_windows = true;
 #else
 inline constexpr bool on_windows = false;
-#endif  // TACTILE_PLATFORM_WINDOWS
+#endif  // TACTILE_OS_WINDOWS
 
-#if TACTILE_PLATFORM_OSX
-inline constexpr bool on_osx = true;
+#if TACTILE_OS_MACOS
+inline constexpr bool on_macos = true;
 #else
-inline constexpr bool on_osx = false;
-#endif  // TACTILE_PLATFORM_OSX
+inline constexpr bool on_macos = false;
+#endif  // TACTILE_OS_MACOS
 
-#if TACTILE_PLATFORM_LINUX
+#if TACTILE_OS_LINUX
 inline constexpr bool on_linux = true;
 #else
 inline constexpr bool on_linux = false;
-#endif  // TACTILE_PLATFORM_LINUX
+#endif  // TACTILE_OS_LINUX
 
 #ifdef TACTILE_BUILD_APP_BUNDLE
 inline constexpr bool is_app_bundle = true;

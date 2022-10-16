@@ -48,10 +48,10 @@ void init_sdl_attributes()
   // Enable multi-gesture events from touchpads
   SDL_SetHint(SDL_HINT_MOUSE_TOUCH_EVENTS, "1");
 
-  // Make sure that we use OpenGL
+  // Make sure we use OpenGL
   SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 
-  if constexpr (on_osx) {
+  if constexpr (on_macos) {
     cen::gl::set(cen::gl_attribute::context_flags,
                  SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
   }
@@ -67,7 +67,7 @@ void init_sdl_attributes()
 {
   auto flags = cen::window::hidden | cen::window::resizable | cen::window::opengl;
 
-  if constexpr (on_osx) {
+  if constexpr (on_macos) {
     flags |= cen::window::allow_high_dpi;
   }
 
@@ -83,7 +83,7 @@ void load_window_icon(cen::window& window)
       icon_path = io::find_resource("Tactile.icns");
     }
     else {
-      icon_path = io::find_resource(on_osx ? "assets/Tactile.icns" : "assets/icon.png");
+      icon_path = io::find_resource(on_macos ? "assets/Tactile.icns" : "assets/icon.png");
     }
 
     window.set_icon(cen::surface {icon_path.string()});

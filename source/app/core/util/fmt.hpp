@@ -60,11 +60,11 @@ template <>
 struct formatter<tactile::Path> : formatter<std::string_view> {
   auto format(const tactile::Path& path, auto& ctx) const
   {
-#if TACTILE_PLATFORM_WINDOWS
+#if TACTILE_OS_WINDOWS
     return formatter<std::string_view>::format(path.string(), ctx);
 #else
     return formatter<std::string_view>::format(path.c_str(), ctx);
-#endif  // TACTILE_PLATFORM_WINDOWS
+#endif  // TACTILE_OS_WINDOWS
   }
 };
 

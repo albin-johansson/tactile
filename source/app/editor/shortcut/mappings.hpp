@@ -25,22 +25,16 @@
 
 namespace tactile {
 
-#if TACTILE_PLATFORM_OSX
-
+#if TACTILE_OS_MACOS
 #define TACTILE_PRIMARY_MOD "Cmd"
 #define TACTILE_SECONDARY_MOD "Option"
-
-inline constexpr cen::key_mod primary_modifier = cen::key_mod::lgui;
-
 #else
-
 #define TACTILE_PRIMARY_MOD "Ctrl"
 #define TACTILE_SECONDARY_MOD "Alt"
+#endif  // TACTILE_OS_MACOS
 
-inline constexpr cen::key_mod primary_modifier = cen::key_mod::lctrl;
-
-#endif  // TACTILE_PLATFORM_OSX
-
+inline constexpr cen::key_mod primary_modifier =
+    on_macos ? cen::key_mod::lgui : cen::key_mod::lctrl;
 inline constexpr cen::key_mod secondary_modifier = cen::key_mod::lalt;
 
 }  // namespace tactile

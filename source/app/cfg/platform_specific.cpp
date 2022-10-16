@@ -21,19 +21,19 @@
 
 #include "meta/build.hpp"
 
-#if TACTILE_PLATFORM_WINDOWS
+#if TACTILE_OS_WINDOWS
 
 #include <SDL_syswm.h>
 #include <centurion/system.hpp>
 #include <dwmapi.h>
 
-#endif  // TACTILE_PLATFORM_WINDOWS
+#endif  // TACTILE_OS_WINDOWS
 
 namespace tactile {
 
 void use_immersive_dark_mode([[maybe_unused]] cen::window& window)
 {
-#if TACTILE_PLATFORM_WINDOWS
+#if TACTILE_OS_WINDOWS
   SDL_SysWMinfo wm {};
   SDL_VERSION(&wm.version);
   if (SDL_GetWindowWMInfo(window.get(), &wm)) {
@@ -46,7 +46,7 @@ void use_immersive_dark_mode([[maybe_unused]] cen::window& window)
       setAttribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE, &mode, sizeof mode);
     }
   }
-#endif  // TACTILE_PLATFORM_WINDOWS
+#endif  // TACTILE_OS_WINDOWS
 }
 
 }  // namespace tactile

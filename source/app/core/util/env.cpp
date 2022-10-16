@@ -28,7 +28,7 @@ namespace tactile {
 auto env_var(const char* var) -> Maybe<String>
 {
   if (var) {
-#if TACTILE_PLATFORM_WINDOWS
+#if TACTILE_OS_WINDOWS
     char* temp {};
     _dupenv_s(&temp, nullptr, var);
 
@@ -41,7 +41,7 @@ auto env_var(const char* var) -> Maybe<String>
     if (const auto* value = std::getenv(var)) {
       return String {value};
     }
-#endif  // TACTILE_PLATFORM_WINDOWS
+#endif  // TACTILE_OS_WINDOWS
   }
 
   return nothing;

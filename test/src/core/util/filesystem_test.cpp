@@ -65,11 +65,13 @@ TEST(Filesystem, ToOsString)
 {
   ASSERT_FALSE(to_os_string(nullptr).has_value());
 
-#if TACTILE_PLATFORM_WINDOWS
-  ASSERT_EQ(L"foo/bar.txt", to_fs_string("foo/bar.txt").value());
+  const auto str = to_os_string("foo/bar.txt").value();
+
+#if TACTILE_OS_WINDOWS
+  ASSERT_EQ(L"foo/bar.txt", str);
 #else
-  ASSERT_EQ("foo/bar.txt", to_os_string("foo/bar.txt").value());
-#endif  // TACTILE_PLATFORM_WINDOWS
+  ASSERT_EQ("foo/bar.txt", str);
+#endif  // TACTILE_OS_WINDOWS
 }
 
 }  // namespace tactile::test

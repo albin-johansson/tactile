@@ -23,6 +23,7 @@
 
 #include "core/type/string.hpp"
 #include "core/vocabulary.hpp"
+#include "meta/build.hpp"
 
 namespace tactile {
 
