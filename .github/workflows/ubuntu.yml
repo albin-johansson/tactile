@@ -98,6 +98,6 @@ jobs:
         run: ninja
 
       - name: Run tests
-        working-directory: ./build/build
+        working-directory: ./build/test
         shell: bash
         run: ./TactileTests
