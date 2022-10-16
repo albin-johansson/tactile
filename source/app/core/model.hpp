@@ -60,13 +60,13 @@ class DocumentModel final {
   void each(const VisitorFunc& func) const;
 
   /// Creates an empty map document with the specified attributes.
-  auto add_map(const Int2& tileSize, usize rows, usize columns) -> UUID;
+  auto add_map(const Int2& tile_size, usize rows, usize columns) -> UUID;
 
   /// Creates a tileset document and adds it to the active map document.
   auto add_tileset(const TilesetInfo& info) -> UUID;
 
   /// Restores a tileset, intended to be used after parsing maps.
-  auto restore_tileset(TileID firstTileId, const TilesetInfo& info) -> UUID;
+  auto restore_tileset(TileID first_tile_id, const TilesetInfo& info) -> UUID;
 
   /// Makes a specific document active.
   void select_document(const UUID& id);
@@ -139,10 +139,10 @@ class DocumentModel final {
   [[nodiscard]] auto active_document_id() const -> Maybe<UUID>;
 
  private:
-  HashMap<UUID, Shared<Document>> mDocuments;  /// All _loaded_ documents
+  HashMap<UUID, Shared<Document>> mDocuments;  /// All loaded documents
   HashMap<UUID, Shared<MapDocument>> mMaps;
   HashMap<UUID, Shared<TilesetDocument>> mTilesets;
-  Vec<UUID> mOpenDocuments;     /// All _open_ documents in the editor
+  Vec<UUID> mOpenDocuments;     /// All documents that are open in the editor
   Maybe<UUID> mActiveDocument;  /// ID of the active document.
 
   void register_map(Shared<MapDocument> document);

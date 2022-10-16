@@ -146,7 +146,7 @@ void DocumentModel::close_document(const UUID& id)
     throw TactileError {"Cannot close document that does not exist!"};
   }
 
-  const auto iter = std::find(mOpenDocuments.begin(), mOpenDocuments.end(), id);
+  const auto* iter = std::find(mOpenDocuments.begin(), mOpenDocuments.end(), id);
   if (iter != mOpenDocuments.end()) {
     mOpenDocuments.erase(iter);
 
