@@ -23,8 +23,8 @@
 
 #include "core/type/math.hpp"
 #include "core/util/hash.hpp"
+#include "core/vocabulary.hpp"
 #include "misc/assert.hpp"
-#include "vocabulary.hpp"
 
 namespace tactile {
 

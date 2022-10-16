@@ -29,7 +29,7 @@
 #include "core/type/ostream.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
-#include "vocabulary.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 

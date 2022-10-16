@@ -30,8 +30,8 @@
 #include "core/type/math.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
-#include "uuid.hpp"
-#include "vocabulary.hpp"
+#include "core/uuid.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 
