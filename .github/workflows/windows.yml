@@ -18,6 +18,13 @@ jobs:
       - uses: ilammy/msvc-dev-cmd@v1.11.0
       - uses: lukka/get-cmake@latest
 
+      - name: Install Boost
+        id: install-boost
+        uses: MarkusJx/install-boost@v2.3.1
+        with:
+          boost_version: 1.80.0
+          toolset: msvc
+
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
         uses: actions/cache@v2
@@ -51,6 +58,8 @@ jobs:
         working-directory: ./build
         shell: cmd
         run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} -GNinja
+        env:
+          BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
 
       - name: Build
         working-directory: ./build

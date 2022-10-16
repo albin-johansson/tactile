@@ -45,6 +45,12 @@ jobs:
         shell: bash
         run: sleep 3
 
+      - name: Install Boost
+        id: install-boost
+        uses: MarkusJx/install-boost@v2.3.1
+        with:
+          boost_version: 1.80.0
+
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
         uses: actions/cache@v2
@@ -77,10 +83,11 @@ jobs:
       - name: Generate build files
         working-directory: ./build
         shell: bash
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
         env:
           CC: gcc-11
           CXX: g++-11
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
+          BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
 
       - name: Build
         working-directory: ./build
