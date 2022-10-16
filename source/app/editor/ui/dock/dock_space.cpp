@@ -22,6 +22,7 @@
 #include <imgui_internal.h>
 
 #include "core/type/maybe.hpp"
+#include "core/type/path.hpp"
 #include "io/directories.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
@@ -54,7 +55,7 @@ void update_dock_space()
     if (size.x > 0 && size.y > 0) {
       const auto& prefs = io::get_preferences();
 
-      if (!prefs.restore_layout || !exists(io::widget_ini_path())) {
+      if (!prefs.restore_layout || !fs::exists(io::widget_ini_path())) {
         load_default_layout(dock_root_id.value(), false);
       }
 

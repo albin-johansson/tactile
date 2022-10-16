@@ -12,6 +12,11 @@ file(GLOB_RECURSE SOURCE_FILES
 
 add_library(${TACTILE_LIB} ${SOURCE_FILES})
 
+set_target_properties(${TACTILE_LIB} PROPERTIES
+                      PREFIX "lib"
+                      OUTPUT_NAME "tactile"
+                      )
+
 add_dependencies(${TACTILE_LIB} ${TACTILE_PROTO})
 
 target_include_directories(${TACTILE_LIB}

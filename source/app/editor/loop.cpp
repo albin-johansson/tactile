@@ -47,14 +47,14 @@ void EventLoop::start()
   const auto& io = ImGui::GetIO();
   auto& window = mCfg->window();
 
-  ImVec2 prevScale {};
+  ImVec2 prev_scale {};
   while (mRunning) {
     poll_events();
 
     /* We reload the fonts when the framebuffer scale changes. Since it is initially zero,
        we know that we will load the fonts at least once. */
-    if (const auto& scale = io.DisplayFramebufferScale; prevScale.x != scale.x) {
-      prevScale = scale;
+    if (const auto& scale = io.DisplayFramebufferScale; prev_scale.x != scale.x) {
+      prev_scale = scale;
       ui::reload_fonts();
     }
 
@@ -66,7 +66,6 @@ void EventLoop::start()
 
     on_update();
 
-    ImGui::EndFrame();
     ImGui::Render();
 
     glViewport(0,
