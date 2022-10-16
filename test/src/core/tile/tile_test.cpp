@@ -68,7 +68,7 @@ TEST(Tile, SetAnimation)
   }
 
   ASSERT_TRUE(tile.is_animated());
-  const auto& animation = tile.get_animation();
+  const auto& animation = tile.animation();
 
   ASSERT_EQ(2, animation.size());
 

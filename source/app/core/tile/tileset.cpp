@@ -119,7 +119,7 @@ auto Tileset::appearance_of(const TileIndex index) const -> TileIndex
     const auto& tile = lookup_in(mMetaTiles, id);
 
     if (tile->is_animated()) {
-      const auto appearance = tile->get_animation().current_tile();
+      const auto appearance = tile->animation().current_tile();
       mAppearanceCache[index] = appearance;
       return appearance;
     }

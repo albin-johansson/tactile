@@ -47,14 +47,19 @@ class Tile final : public Context {
   /// Updates the state of the tile animation, if there is one.
   void update();
 
+  /// Reserves capacity for a certain amount of objects (before reallocation).
   void reserve_objects(usize n);
 
+  /// Adds an object to the tile.
   void add_object(Shared<Object> object);
 
+  /// Removes any associated animation.
   void clear_animation();
 
+  /// Adds an animation to the tile.
   void set_animation(TileAnimation animation);
 
+  /// Sets the tile region in the associated tile set.
   void set_source(const Int4& source);
 
   /// Returns the amount of embedded objects.
@@ -67,15 +72,17 @@ class Tile final : public Context {
   [[nodiscard]] auto is_animated() const -> bool;
 
   /// Returns the associated animation, if there is one.
-  [[nodiscard]] auto get_animation() const -> const TileAnimation&;
+  [[nodiscard]] auto animation() const -> const TileAnimation&;
 
   [[nodiscard]] auto ctx() -> ContextInfo& override;
   [[nodiscard]] auto ctx() const -> const ContextInfo& override;
 
   [[nodiscard]] auto uuid() const -> const UUID& override;
 
+  /// Returns the index of the tile in the associated tile set.
   [[nodiscard]] auto index() const noexcept -> TileIndex { return mIndex; }
 
+  /// Returns the tile region in the associated tile set.
   [[nodiscard]] auto source() const noexcept -> const Int4& { return mSource; }
 
  private:

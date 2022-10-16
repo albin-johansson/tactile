@@ -189,7 +189,7 @@ void convert_fancy_tiles(const Tileset& tileset,
       auto& tile_data = data.fancy_tiles[tile->index()];
 
       if (is_animated) {
-        convert_fancy_tile_animation(tile->get_animation(), tile_data);
+        convert_fancy_tile_animation(tile->animation(), tile_data);
       }
 
       if (has_props || has_comps) {

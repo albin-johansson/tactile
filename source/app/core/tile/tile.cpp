@@ -85,7 +85,7 @@ auto Tile::is_animated() const -> bool
   return mAnimation.has_value();
 }
 
-auto Tile::get_animation() const -> const TileAnimation&
+auto Tile::animation() const -> const TileAnimation&
 {
   if (mAnimation) {
     return *mAnimation;
