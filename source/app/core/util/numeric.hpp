@@ -19,9 +19,7 @@
 
 #pragma once
 
-#include <concepts>  // integral, unsigned_integral, invocable
-
-#include "core/vocabulary.hpp"
+#include <concepts>  // unsigned_integral
 
 namespace tactile {
 
@@ -30,15 +28,6 @@ template <std::unsigned_integral T>
 [[nodiscard]] constexpr auto udiff(const T a, const T b) noexcept -> T
 {
   return (a < b) ? (b - a) : (a - b);
-}
-
-template <std::integral Int, std::invocable<uint8> T>
-void each_byte(const Int value, T&& callable)
-{
-  const auto* bytes = static_cast<const uint8*>(static_cast<const void*>(&value));
-  for (usize idx = 0; idx < sizeof(Int); ++idx) {
-    callable(bytes[idx]);
-  }
 }
 
 }  // namespace tactile

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <concepts>  // integral
+#include <concepts>  // integral, invocable
 
 #include <EASTL/algorithm.h>
 #include <EASTL/bit.h>
@@ -54,6 +54,15 @@ template <std::integral T>
   eastl::reverse(eastl::begin(bytes), eastl::end(bytes));
 
   return eastl::bit_cast<T>(bytes);
+}
+
+template <std::integral Int, std::invocable<uint8> T>
+void each_byte(const Int value, T&& callable)
+{
+  const auto* bytes = static_cast<const uint8*>(static_cast<const void*>(&value));
+  for (usize idx = 0; idx < sizeof(Int); ++idx) {
+    callable(bytes[idx]);
+  }
 }
 
 }  // namespace tactile

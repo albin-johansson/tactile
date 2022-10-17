@@ -24,6 +24,7 @@
 #include <type_traits>  // is_floating_point_v
 
 #include "core/vocabulary.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile {
 
@@ -33,11 +34,6 @@ using RandomEngine = std::mt19937;
 [[nodiscard]] auto make_random_engine() -> RandomEngine;
 
 /// Returns a random value in the range [min, max].
-///
-/// \param min the minimum possible value.
-/// \param max the maximum possible value.
-///
-/// \return a random value in the range.
 template <typename T>
 [[nodiscard]] auto next_random(const T min, const T max) -> T
 {
@@ -45,6 +41,7 @@ template <typename T>
   static_assert(!std::same_as<T, char>);
   static_assert(!std::same_as<T, uchar>);
 
+  TACTILE_ASSERT(min <= max);
   thread_local static auto engine = make_random_engine();
 
   if constexpr (std::is_floating_point_v<T>) {

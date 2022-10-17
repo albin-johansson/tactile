@@ -23,6 +23,8 @@
 
 #include <gtest/gtest.h>
 
+#include "core/vocabulary.hpp"
+
 namespace tactile::test {
 namespace {
 

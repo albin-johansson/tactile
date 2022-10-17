@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include <cstddef>  // size_t
+#include <cstddef>  // size_t, ptrdiff_t
 #include <cstdint>  // int{}_t, uint{}_t
 
 #include "core/type/vector.hpp"
@@ -69,6 +69,7 @@ using uchar = unsigned char;
 using uint = unsigned int;
 using ulonglong = unsigned long long int;
 using usize = std::size_t;
+using diff_t = std::ptrdiff_t;
 
 using uint8 = std::uint8_t;
 using uint16 = std::uint16_t;
