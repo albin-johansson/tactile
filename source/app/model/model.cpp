@@ -27,6 +27,7 @@
 #include "core/comp/component_index.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "core/util/assoc.hpp"
+#include "core/util/fmt.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 #include "model/cmd/command_stack.hpp"
@@ -151,11 +152,12 @@ void DocumentModel::close_document(const UUID& id)
     mOpenDocuments.erase(iter);
 
     if (mActiveDocument == id) {
-      mActiveDocument.reset();
+      select_another_document();
     }
 
-    if (!mActiveDocument && !mOpenDocuments.empty()) {
-      mActiveDocument = mOpenDocuments.front();
+    // Only map documents are removed when they are closed
+    if (is_map(id)) {
+      unregister_map(id);
     }
 
     TACTILE_ASSERT(!is_open(id));
@@ -365,7 +367,7 @@ void DocumentModel::set_command_capacity(const usize capacity)
 
 auto DocumentModel::is_open(const UUID& id) const -> bool
 {
-  const auto iter = std::find(mOpenDocuments.begin(), mOpenDocuments.end(), id);
+  const auto* iter = std::find(mOpenDocuments.begin(), mOpenDocuments.end(), id);
   return iter != mOpenDocuments.end();
 }
 
@@ -420,13 +422,21 @@ void DocumentModel::register_tileset(Shared<TilesetDocument> document)
 
 auto DocumentModel::unregister_map(const UUID& id) -> Shared<MapDocument>
 {
-  auto map = get_map(id);
+  spdlog::debug("Removing map document {}", id);
+  auto document = get_map(id);
+
+  if (mActiveDocument == id) {
+    mActiveDocument.reset();
+  }
 
   mDocuments.erase(id);
   mMaps.erase(id);
   erase(mOpenDocuments, id);
 
-  return map;
+  remove_associated_tilesets_unless_referenced(*document);
+  TACTILE_ASSERT(!mActiveDocument || has_document(*mActiveDocument));
+
+  return document;
 }
 
 auto DocumentModel::unregister_tileset(const UUID& id) -> Shared<TilesetDocument>
@@ -438,6 +448,36 @@ auto DocumentModel::unregister_tileset(const UUID& id) -> Shared<TilesetDocument
   erase(mOpenDocuments, id);
 
   return tileset;
+}
+
+void DocumentModel::select_another_document()
+{
+  mActiveDocument.reset();
+  if (!mOpenDocuments.empty()) {
+    mActiveDocument = mOpenDocuments.front();
+  }
+}
+
+void DocumentModel::remove_associated_tilesets_unless_referenced(const MapDocument& doc)
+{
+  const auto& tilesets = doc.get_map().tileset_bundle();
+  for (const auto& [ts_id, ts_doc] : tilesets) {
+    if (!is_tileset_referenced(ts_id)) {
+      unregister_tileset(ts_id);
+
+      if (mActiveDocument == ts_id) {
+        select_another_document();
+      }
+    }
+  }
+}
+
+auto DocumentModel::is_tileset_referenced(const UUID& tileset_id) const -> bool
+{
+  return std::any_of(mMaps.begin(), mMaps.end(), [&](const auto& pair) {
+    const auto& map = pair.second->get_map();
+    return map.tileset_bundle().has_tileset(tileset_id);
+  });
 }
 
 }  // namespace tactile

@@ -71,10 +71,10 @@ class DocumentModel final {
   /// Makes a specific document active.
   void select_document(const UUID& id);
 
-  /// Opens a document as a separate tab.
+  /// Opens a document in a separate tab.
   void open_document(const UUID& id);
 
-  /// Closes an open document, but does not remove it!
+  /// Closes an open document, only removing it if it's a map document.
   void close_document(const UUID& id);
 
   /// Removes a tileset from the active map document.
@@ -150,6 +150,14 @@ class DocumentModel final {
 
   auto unregister_map(const UUID& id) -> Shared<MapDocument>;
   auto unregister_tileset(const UUID& id) -> Shared<TilesetDocument>;
+
+  /// Used to select another document after a document is removed.
+  void select_another_document();
+
+  void remove_associated_tilesets_unless_referenced(const MapDocument& document);
+
+  /// Indicates whether there are any map documents that use a specific tileset.
+  [[nodiscard]] auto is_tileset_referenced(const UUID& tileset_id) const -> bool;
 };
 
 }  // namespace tactile
