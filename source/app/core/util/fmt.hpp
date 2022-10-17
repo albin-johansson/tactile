@@ -31,7 +31,7 @@
 #include "core/type/array.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "core/vocabulary.hpp"
 #include "meta/build.hpp"
 #include "misc/stacktrace.hpp"

@@ -25,7 +25,7 @@
 #include "core/type/ostream.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/fmt.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "core/vocabulary.hpp"
 #include "io/file.hpp"
 #include "io/map/emit/gd/godot_options.hpp"

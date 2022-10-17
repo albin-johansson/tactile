@@ -22,7 +22,7 @@
 #include <algorithm>  // replace
 
 #include "core/util/env.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "meta/build.hpp"
 
 #if TACTILE_OS_WINDOWS

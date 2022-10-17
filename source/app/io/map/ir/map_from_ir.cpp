@@ -32,7 +32,7 @@
 #include "core/type/math.hpp"
 #include "core/type/maybe.hpp"
 #include "core/util/functional.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "core/uuid.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/parse_result.hpp"

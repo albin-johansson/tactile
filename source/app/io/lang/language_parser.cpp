@@ -24,7 +24,7 @@
 #include <spdlog/spdlog.h>
 
 #include "core/util/fmt.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "editor/ui/style/icons.hpp"
 #include "io/directories.hpp"
 #include "io/util/json.hpp"

@@ -23,7 +23,7 @@
 
 #include "core/util/assoc.hpp"
 #include "core/util/fmt.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {

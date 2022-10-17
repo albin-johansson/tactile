@@ -28,7 +28,7 @@
 #include "cfg/configuration.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/tile/tileset_info.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/shortcut/shortcuts.hpp"
 #include "editor/ui/dialog/dialog_state.hpp"

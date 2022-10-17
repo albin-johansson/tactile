@@ -23,7 +23,7 @@
 #include "core/tile_matrix.hpp"
 #include "core/type/expected.hpp"
 #include "core/type/string.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/base64_tiles.hpp"

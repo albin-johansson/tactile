@@ -22,7 +22,7 @@
 #include <iomanip>  // setw
 
 #include "core/util/filesystem.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "io/file.hpp"
 #include "io/proto/preferences.hpp"
 #include "misc/panic.hpp"

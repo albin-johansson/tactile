@@ -19,7 +19,7 @@
 
 #include "attribute.hpp"
 
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 

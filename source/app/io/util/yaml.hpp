@@ -28,7 +28,7 @@
 #include "core/layer/tile_format.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 
 namespace tactile::io {
 

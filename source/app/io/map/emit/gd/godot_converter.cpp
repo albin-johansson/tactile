@@ -30,7 +30,7 @@
 #include "core/util/assoc.hpp"
 #include "core/util/fmt.hpp"
 #include "core/util/functional.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "misc/assert.hpp"
 

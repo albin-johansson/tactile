@@ -30,7 +30,7 @@
 #include "core/util/bit.hpp"
 #include "core/util/functional.hpp"
 #include "core/util/numeric.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "io/compression.hpp"
 #include "misc/panic.hpp"
 

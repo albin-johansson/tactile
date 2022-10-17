@@ -20,7 +20,7 @@
 #include <utility>  // move
 
 #include "core/type/string.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "core/vocabulary.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"

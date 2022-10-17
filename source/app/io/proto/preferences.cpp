@@ -26,7 +26,7 @@
 
 #include "core/type/path.hpp"
 #include "core/util/fmt.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "io/directories.hpp"
 #include "io/file.hpp"
 #include "io/proto/proto.hpp"

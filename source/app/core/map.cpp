@@ -27,7 +27,7 @@
 #include "core/tile_pos.hpp"
 #include "core/util/fmt.hpp"
 #include "core/util/functional.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {

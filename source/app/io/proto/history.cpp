@@ -27,7 +27,7 @@
 #include "core/type/maybe.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/fmt.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "core/vocabulary.hpp"
 #include "io/directories.hpp"
 #include "io/file.hpp"

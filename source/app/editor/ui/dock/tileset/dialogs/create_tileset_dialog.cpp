@@ -23,7 +23,7 @@
 #include <imgui.h>
 
 #include "core/util/buffers.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "editor/ui/widget/buttons.hpp"
 #include "io/file_dialog.hpp"
 #include "io/proto/preferences.hpp"

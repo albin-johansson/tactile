@@ -25,7 +25,7 @@
 #include "core/type/array.hpp"
 #include "core/util/buffers.hpp"
 #include "core/util/filesystem.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "editor/constants.hpp"
 #include "editor/ui/style/colors.hpp"
 #include "editor/ui/style/icons.hpp"

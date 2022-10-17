@@ -30,7 +30,7 @@
 #include "core/type/deque.hpp"
 #include "core/type/ptr.hpp"
 #include "core/util/fmt.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "io/directories.hpp"
 #include "meta/build.hpp"
 #include "misc/panic.hpp"

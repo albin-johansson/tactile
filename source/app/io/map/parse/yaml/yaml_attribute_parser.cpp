@@ -24,7 +24,7 @@
 
 #include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
-#include "core/util/string.hpp"
+#include "core/util/str.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"
