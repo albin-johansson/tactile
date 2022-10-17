@@ -20,12 +20,17 @@
 #include "filesystem.hpp"
 
 #include <algorithm>  // replace
-#include <codecvt>    // codecvt_utf8
-#include <locale>     // wstring_convert
 
 #include "core/util/env.hpp"
 #include "core/util/string.hpp"
 #include "meta/build.hpp"
+
+#if TACTILE_OS_WINDOWS
+
+#include <codecvt>  // codecvt_utf8
+#include <locale>   // wstring_convert
+
+#endif  // TACTILE_OS_WINDOWS
 
 namespace tactile {
 namespace {
