@@ -21,7 +21,7 @@
 
 #include <gtest/gtest.h>
 
-#include "core/util/tiles.hpp"
+#include "core/tile_matrix.hpp"
 #include "core/vocabulary.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"

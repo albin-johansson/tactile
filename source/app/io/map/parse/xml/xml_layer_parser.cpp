@@ -22,10 +22,10 @@
 
 #include <spdlog/spdlog.h>
 
+#include "core/tile_matrix.hpp"
 #include "core/type/string.hpp"
 #include "core/type/vector.hpp"
 #include "core/util/string.hpp"
-#include "core/util/tiles.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/util/base64_tiles.hpp"

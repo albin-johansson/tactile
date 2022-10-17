@@ -25,12 +25,12 @@
 
 #include <cppcodec/base64_rfc4648.hpp>
 
+#include "core/tile_matrix.hpp"
 #include "core/type/array.hpp"
 #include "core/util/bit.hpp"
 #include "core/util/functional.hpp"
 #include "core/util/numeric.hpp"
 #include "core/util/string.hpp"
-#include "core/util/tiles.hpp"
 #include "io/compression.hpp"
 #include "misc/panic.hpp"
 

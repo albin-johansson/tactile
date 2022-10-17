@@ -28,9 +28,9 @@
 
 #include <gtest/gtest.h>
 
+#include "core/tile_matrix.hpp"
 #include "core/type/string.hpp"
 #include "core/util/assoc.hpp"
-#include "core/util/tiles.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/parse/parse_map.hpp"

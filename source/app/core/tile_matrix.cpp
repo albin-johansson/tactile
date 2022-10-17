@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "tiles.hpp"
+#include "tile_matrix.hpp"
 
 namespace tactile {
 
