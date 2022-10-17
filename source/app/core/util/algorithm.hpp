@@ -19,8 +19,10 @@
 
 #pragma once
 
-#include <algorithm>  // find_if
-#include <concepts>   // predicate
+#include <concepts>  // predicate
+
+#include <EASTL/algorithm.h>
+#include <EASTL/utility.h>
 
 #include "core/type/vector.hpp"
 #include "misc/panic.hpp"
@@ -30,7 +32,7 @@ namespace tactile {
 template <typename T, std::predicate<const T&> P>
 [[nodiscard]] auto first_in(Vec<T>& vec, P&& pred) -> T&
 {
-  const auto iter = std::find_if(vec.begin(), vec.end(), pred);
+  const auto iter = eastl::find_if(vec.begin(), vec.end(), eastl::forward<P>(pred));
   if (iter != vec.end()) {
     return *iter;
   }
@@ -42,7 +44,7 @@ template <typename T, std::predicate<const T&> P>
 template <typename T, std::predicate<const T&> P>
 [[nodiscard]] auto first_in(const Vec<T>& vec, P&& pred) -> const T&
 {
-  const auto iter = std::find_if(vec.begin(), vec.end(), pred);
+  const auto iter = eastl::find_if(vec.begin(), vec.end(), eastl::forward<P>(pred));
   if (iter != vec.end()) {
     return *iter;
   }

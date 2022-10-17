@@ -34,7 +34,7 @@
 #include "core/type/string.hpp"
 #include "core/type/tree_map.hpp"
 #include "core/type/vector.hpp"
-#include "core/util/query.hpp"
+#include "core/util/algorithm.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
 
