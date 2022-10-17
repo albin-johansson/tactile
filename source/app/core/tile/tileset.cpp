@@ -22,8 +22,8 @@
 #include <utility>  // move
 
 #include "core/tile/tileset_info.hpp"
+#include "core/tile_matrix.hpp"
 #include "core/util/assoc.hpp"
-#include "core/util/tiles.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
