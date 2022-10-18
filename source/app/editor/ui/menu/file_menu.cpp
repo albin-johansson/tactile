@@ -40,17 +40,9 @@
 namespace tactile::ui {
 namespace {
 
-struct FileMenuState final {
-  bool show_map_selector {};
-};
+inline constinit bool menu_show_map_selector = false;
 
-[[nodiscard]] auto _get_state() -> FileMenuState&
-{
-  static FileMenuState state;
-  return state;
-}
-
-void _update_map_file_dialog(entt::dispatcher& dispatcher)
+void update_map_file_dialog(entt::dispatcher& dispatcher)
 {
   auto dialog = io::FileDialog::open_map();
 
@@ -58,10 +50,10 @@ void _update_map_file_dialog(entt::dispatcher& dispatcher)
     dispatcher.enqueue<OpenMapEvent>(dialog.path());
   }
 
-  _get_state().show_map_selector = false;
+  menu_show_map_selector = false;
 }
 
-void _update_recent_files_menu(entt::dispatcher& dispatcher)
+void update_recent_files_menu(entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
@@ -103,20 +95,19 @@ void _update_recent_files_menu(entt::dispatcher& dispatcher)
 void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
-  auto& state = _get_state();
 
   if (Menu menu {lang.menu.file.c_str()}; menu.is_open()) {
-    const auto hasActiveDocument = model.has_active_document();
+    const auto has_active_document = model.has_active_document();
     const auto* document = model.active_document();
 
     if (ImGui::MenuItem(lang.action.create_map.c_str(), TACTILE_PRIMARY_MOD "+N")) {
       get_dialogs().create_map.show();
     }
 
-    state.show_map_selector =
+    menu_show_map_selector =
         ImGui::MenuItem(lang.action.open_map.c_str(), TACTILE_PRIMARY_MOD "+O");
 
-    _update_recent_files_menu(dispatcher);
+    update_recent_files_menu(dispatcher);
 
     ImGui::Separator();
 
@@ -130,7 +121,7 @@ void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(lang.action.save_as.c_str(),
                         TACTILE_PRIMARY_MOD "+Shift+S",
                         false,
-                        hasActiveDocument)) {
+                        has_active_document)) {
       dispatcher.enqueue<OpenSaveAsDialogEvent>();
     }
 
@@ -139,7 +130,7 @@ void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(lang.action.close_document.c_str(),
                         nullptr,
                         false,
-                        hasActiveDocument)) {
+                        has_active_document)) {
       dispatcher.enqueue<CloseDocumentEvent>(model.active_document_id().value());
     }
 
@@ -152,8 +143,8 @@ void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
   get_dialogs().create_map.update(model, dispatcher);
 
-  if (state.show_map_selector) {
-    _update_map_file_dialog(dispatcher);
+  if (menu_show_map_selector) {
+    update_map_file_dialog(dispatcher);
   }
 }
 
@@ -164,7 +155,7 @@ void show_map_creation_dialog()
 
 void show_map_selector_dialog()
 {
-  _get_state().show_map_selector = true;
+  menu_show_map_selector = true;
 }
 
 }  // namespace tactile::ui
