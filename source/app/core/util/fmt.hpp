@@ -25,6 +25,7 @@
 #include <EASTL/algorithm.h>
 #include <EASTL/string.h>
 #include <EASTL/string_view.h>
+#include <boost/uuid/uuid_io.hpp>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
@@ -32,6 +33,7 @@
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
 #include "core/util/str.hpp"
+#include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "meta/build.hpp"
 #include "misc/stacktrace.hpp"
@@ -74,6 +76,16 @@ struct formatter<boost::stacktrace::stacktrace> : formatter<std::string_view> {
   {
     std::stringstream stream;
     stream << trace;
+    return formatter<std::string_view>::format(stream.str(), ctx);
+  }
+};
+
+template <>
+struct formatter<tactile::UUID> : formatter<std::string_view> {
+  auto format(const tactile::UUID& uuid, auto& ctx) const
+  {
+    std::stringstream stream;
+    stream << uuid;
     return formatter<std::string_view>::format(stream.str(), ctx);
   }
 };
