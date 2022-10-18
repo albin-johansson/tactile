@@ -83,8 +83,13 @@ void show_mouse_tile_labels(const Map& map, const ViewportCursorInfo& cursor)
       ImGui::Text("%s: %i", lang.misc.global_id.c_str(), tile_id);
 
       const auto& tilesets = map.tileset_bundle();
-      const auto tile_index = tilesets.to_tile_index(tile_id);
-      ImGui::Text("%s: %i", lang.misc.local_id.c_str(), tile_index);
+      if (tilesets.is_valid_tile(tile_id)) {
+        const auto tile_index = tilesets.to_tile_index(tile_id);
+        ImGui::Text("%s: %i", lang.misc.local_id.c_str(), tile_index);
+      }
+      else {
+        ImGui::Text("%s: -", lang.misc.local_id.c_str());
+      }
     }
     else {
       ImGui::Text("%s: %s", lang.misc.global_id.c_str(), lang.misc.empty.c_str());
