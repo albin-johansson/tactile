@@ -65,7 +65,7 @@ void restore_context_no_register(Document& document,
 
       auto component = definition.instantiate();
       for (const auto& [attrName, attrValue] : attributes) {
-        component.update_attr(attrName, attrValue);
+        component.update(attrName, attrValue);
       }
 
       components.add(std::move(component));

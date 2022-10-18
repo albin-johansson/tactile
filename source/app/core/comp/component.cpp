@@ -21,74 +21,17 @@
 
 #include <utility>  // move
 
-#include "core/util/assoc.hpp"
-#include "misc/assert.hpp"
-#include "misc/panic.hpp"
-
 namespace tactile {
 
 Component::Component(const UUID& definition_id, AttributeMap attributes)
-    : mDefinitionId {definition_id}
-    , mAttributes {std::move(attributes)}
+    : ComponentBase {definition_id}
 {
+  mAttributes = std::move(attributes);
 }
 
-void Component::add_attr(String key, Attribute value)
+auto Component::definition_id() const -> const UUID&
 {
-  if (mAttributes.find(key) == mAttributes.end()) {
-    mAttributes[std::move(key)] = std::move(value);
-  }
-  else {
-    throw TactileError {"Attribute already exists!"};
-  }
-}
-
-void Component::remove_attr(StringView key)
-{
-  if (const auto iter = find_in(mAttributes, key); iter != mAttributes.end()) {
-    mAttributes.erase(iter);
-  }
-  else {
-    throw TactileError {"Invalid attribute name!"};
-  }
-}
-
-void Component::update_attr(StringView key, Attribute value)
-{
-  auto& attr = lookup_in(mAttributes, key);
-  attr = std::move(value);
-}
-
-void Component::rename_attr(StringView old_key, String new_key)
-{
-  TACTILE_ASSERT(!has_key(mAttributes, new_key));
-  auto value = lookup_in(mAttributes, old_key);
-
-  if (const auto iter = find_in(mAttributes, old_key); iter != mAttributes.end()) {
-    mAttributes.erase(iter);
-  }
-
-  mAttributes[std::move(new_key)] = std::move(value);
-}
-
-auto Component::get_attr(StringView key) const -> const Attribute&
-{
-  return lookup_in(mAttributes, key);
-}
-
-auto Component::has_attr(StringView key) const -> bool
-{
-  return has_key(mAttributes, key);
-}
-
-auto Component::size() const -> usize
-{
-  return mAttributes.size();
-}
-
-auto Component::empty() const -> bool
-{
-  return mAttributes.empty();
+  return mTypeId;
 }
 
 }  // namespace tactile

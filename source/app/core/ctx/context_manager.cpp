@@ -115,13 +115,13 @@ void ContextManager::on_new_component_attr(const UUID& componentId,
                                            const Attribute& value)
 {
   on_component_update(componentId,
-                      [&](Component& component) { component.add_attr(name, value); });
+                      [&](Component& component) { component.add(name, value); });
 }
 
 void ContextManager::on_removed_component_attr(const UUID& componentId, StringView name)
 {
   on_component_update(componentId,
-                      [name](Component& component) { component.remove_attr(name); });
+                      [name](Component& component) { component.remove(name); });
 }
 
 void ContextManager::on_renamed_component_attr(const UUID& componentId,
@@ -129,7 +129,7 @@ void ContextManager::on_renamed_component_attr(const UUID& componentId,
                                                const String& newName)
 {
   on_component_update(componentId, [oldName, &newName](Component& component) {
-    component.rename_attr(oldName, newName);
+    component.rename(oldName, newName);
   });
 }
 
@@ -144,10 +144,10 @@ auto ContextManager::on_changed_component_attr_type(const UUID& componentId,
     auto& comps = context->ctx().comps();
     if (comps.contains(componentId)) {
       auto& comp = comps.at(componentId);
-      attributes[contextId] = comp.get_attr(name);
+      attributes[contextId] = comp.at(name);
 
-      comp.remove_attr(name);
-      comp.add_attr(String {name}, Attribute {type});
+      comp.remove(name);
+      comp.add(String {name}, Attribute {type});
     }
   }
 

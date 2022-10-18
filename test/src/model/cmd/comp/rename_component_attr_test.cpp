@@ -53,13 +53,13 @@ TEST(RenameComponentAttr, RedoUndo)
     const auto& comp = bundle.at(comp_id);
 
     ASSERT_FALSE(def.has("Foo"));
-    ASSERT_FALSE(comp.has_attr("Foo"));
+    ASSERT_FALSE(comp.has("Foo"));
 
     ASSERT_TRUE(def.has("Bar"));
-    ASSERT_TRUE(comp.has_attr("Bar"));
+    ASSERT_TRUE(comp.has("Bar"));
 
     ASSERT_EQ(123, def.at("Bar"));
-    ASSERT_EQ(123, comp.get_attr("Bar"));
+    ASSERT_EQ(123, comp.at("Bar"));
   }
 
   cmd.undo();
@@ -69,13 +69,13 @@ TEST(RenameComponentAttr, RedoUndo)
     const auto& comp = bundle.at(comp_id);
 
     ASSERT_TRUE(def.has("Foo"));
-    ASSERT_TRUE(comp.has_attr("Foo"));
+    ASSERT_TRUE(comp.has("Foo"));
 
     ASSERT_FALSE(def.has("Bar"));
-    ASSERT_FALSE(comp.has_attr("Bar"));
+    ASSERT_FALSE(comp.has("Bar"));
 
     ASSERT_EQ(123, def.at("Foo"));
-    ASSERT_EQ(123, comp.get_attr("Foo"));
+    ASSERT_EQ(123, comp.at("Foo"));
   }
 }
 

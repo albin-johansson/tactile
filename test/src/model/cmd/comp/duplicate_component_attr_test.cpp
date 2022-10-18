@@ -58,9 +58,9 @@ TEST(DuplicateComponentAttr, RedoUndo)
     ASSERT_EQ(def.at("Attr"), def.at("Attr (1)"));
 
     ASSERT_EQ(2, comp.size());
-    ASSERT_TRUE(comp.has_attr("Attr"));
-    ASSERT_TRUE(comp.has_attr("Attr (1)"));
-    ASSERT_EQ(comp.get_attr("Attr"), comp.get_attr("Attr (1)"));
+    ASSERT_TRUE(comp.has("Attr"));
+    ASSERT_TRUE(comp.has("Attr (1)"));
+    ASSERT_EQ(comp.at("Attr"), comp.at("Attr (1)"));
   }
 
   cmd.undo();
@@ -74,8 +74,8 @@ TEST(DuplicateComponentAttr, RedoUndo)
     ASSERT_FALSE(def.has("Attr (1)"));
 
     ASSERT_EQ(1, comp.size());
-    ASSERT_TRUE(comp.has_attr("Attr"));
-    ASSERT_FALSE(comp.has_attr("Attr (1)"));
+    ASSERT_TRUE(comp.has("Attr"));
+    ASSERT_FALSE(comp.has("Attr (1)"));
   }
 }
 

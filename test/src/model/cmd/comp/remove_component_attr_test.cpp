@@ -45,7 +45,7 @@ TEST(RemoveComponentAttr, RedoUndo)
 
   bundle.add(definition.instantiate());
   ASSERT_TRUE(bundle.contains(comp_id));
-  ASSERT_EQ(42, bundle.at(comp_id).get_attr("attr"));
+  ASSERT_EQ(42, bundle.at(comp_id).at("attr"));
 
   cmd::RemoveComponentAttr cmd {document.get(), comp_id, "attr"};
 
@@ -57,8 +57,8 @@ TEST(RemoveComponentAttr, RedoUndo)
   ASSERT_TRUE(definition.has("attr"));
   ASSERT_EQ(42, definition.at("attr"));
 
-  ASSERT_TRUE(bundle.at(comp_id).has_attr("attr"));
-  ASSERT_EQ(definition.at("attr"), bundle.at(comp_id).get_attr("attr"));
+  ASSERT_TRUE(bundle.at(comp_id).has("attr"));
+  ASSERT_EQ(definition.at("attr"), bundle.at(comp_id).at("attr"));
 }
 
 }  // namespace tactile::test

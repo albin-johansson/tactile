@@ -56,10 +56,10 @@ TEST(SetComponentAttrType, RedoUndo)
     const auto& comp = bundle.at(comp_id);
 
     ASSERT_EQ(AttributeType::Int, def.at("Attr").type());
-    ASSERT_EQ(AttributeType::Int, comp.get_attr("Attr").type());
+    ASSERT_EQ(AttributeType::Int, comp.at("Attr").type());
 
     ASSERT_EQ(0, def.at("Attr").as_int());
-    ASSERT_EQ(0, comp.get_attr("Attr").as_int());
+    ASSERT_EQ(0, comp.at("Attr").as_int());
   }
 
   cmd.undo();
@@ -69,10 +69,10 @@ TEST(SetComponentAttrType, RedoUndo)
     const auto& comp = bundle.at(comp_id);
 
     ASSERT_EQ(AttributeType::Bool, def.at("Attr").type());
-    ASSERT_EQ(AttributeType::Bool, comp.get_attr("Attr").type());
+    ASSERT_EQ(AttributeType::Bool, comp.at("Attr").type());
 
     ASSERT_TRUE(def.at("Attr").as_bool());
-    ASSERT_TRUE(comp.get_attr("Attr").as_bool());
+    ASSERT_TRUE(comp.at("Attr").as_bool());
   }
 }
 

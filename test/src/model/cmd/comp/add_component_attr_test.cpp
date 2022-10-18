@@ -53,12 +53,12 @@ TEST(AddComponentAttr, RedoUndo)
   cmd.redo();
   ASSERT_EQ(1, definition.size());
   ASSERT_TRUE(definition.has("attr"));
-  ASSERT_EQ(definition.at("attr"), bundle.at(comp_id).get_attr("attr"));
+  ASSERT_EQ(definition.at("attr"), bundle.at(comp_id).at("attr"));
 
   cmd.undo();
   ASSERT_TRUE(definition.empty());
   ASSERT_FALSE(definition.has("attr"));
-  ASSERT_THROW(bundle.at(comp_id).get_attr("attr"), TactileError);
+  ASSERT_THROW(bundle.at(comp_id).at("attr"), TactileError);
 }
 
 }  // namespace tactile::test

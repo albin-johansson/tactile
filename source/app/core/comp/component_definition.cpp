@@ -21,102 +21,11 @@
 
 #include <utility>  // move
 
-#include "core/util/assoc.hpp"
-#include "core/util/fmt.hpp"
-#include "core/util/str.hpp"
-#include "misc/panic.hpp"
-
 namespace tactile {
 
-ComponentDefinition::ComponentDefinition() = default;
-
 ComponentDefinition::ComponentDefinition(const UUID& id)
-    : mId {id}
+    : ComponentBase {id}
 {
-}
-
-auto ComponentDefinition::instantiate() const -> Component
-{
-  return {mId, mAttributes};
-}
-
-void ComponentDefinition::add(String key, AttributeType type)
-{
-  if (!has_key(mAttributes, key)) {
-    mAttributes[std::move(key)].reset_to_default(type);
-  }
-  else {
-    throw TactileError {"Attribute key must be unique!"};
-  }
-}
-
-void ComponentDefinition::add(String key, Attribute value)
-{
-  if (!has_key(mAttributes, key)) {
-    mAttributes[std::move(key)] = std::move(value);
-  }
-  else {
-    throw TactileError {"Attribute key must be unique!"};
-  }
-}
-
-void ComponentDefinition::update(StringView key, Attribute value)
-{
-  auto& attribute = lookup_in(mAttributes, key);
-  attribute = std::move(value);
-}
-
-auto ComponentDefinition::remove(StringView key) -> bool
-{
-  if (const auto iter = find_in(mAttributes, key); iter != mAttributes.end()) {
-    mAttributes.erase(iter);
-    return true;
-  }
-  else {
-    return false;
-  }
-}
-
-auto ComponentDefinition::rename(StringView current, String updated) -> bool
-{
-  if (has_key(mAttributes, updated)) {
-    throw TactileError {"Attribute name must be unique!"};
-  }
-
-  if (const auto iter = find_in(mAttributes, current); iter != mAttributes.end()) {
-    auto value = iter->second;
-    mAttributes.erase(iter);
-    mAttributes[std::move(updated)] = std::move(value);
-    return true;
-  }
-  else {
-    return false;
-  }
-}
-
-auto ComponentDefinition::duplicate(StringView key) -> String
-{
-  auto value = lookup_in(mAttributes, key);
-
-  int suffix = 1;
-  String new_key;
-  do {
-    new_key = format_str("{} ({})", key, suffix);
-    ++suffix;
-  } while (has_key(mAttributes, new_key));
-
-  mAttributes[new_key] = std::move(value);
-  return new_key;
-}
-
-auto ComponentDefinition::at(StringView key) const -> const Attribute&
-{
-  return lookup_in(mAttributes, key);
-}
-
-auto ComponentDefinition::has(StringView key) const -> bool
-{
-  return has_key(mAttributes, key);
 }
 
 void ComponentDefinition::set_name(String name)
@@ -129,19 +38,14 @@ auto ComponentDefinition::name() const -> const String&
   return mName;
 }
 
-auto ComponentDefinition::size() const -> usize
-{
-  return mAttributes.size();
-}
-
-auto ComponentDefinition::empty() const -> bool
-{
-  return mAttributes.empty();
-}
-
 auto ComponentDefinition::uuid() const -> const UUID&
 {
-  return mId;
+  return mTypeId;
+}
+
+auto ComponentDefinition::instantiate() const -> Component
+{
+  return {mTypeId, mAttributes};
 }
 
 }  // namespace tactile

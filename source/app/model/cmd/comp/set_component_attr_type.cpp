@@ -58,8 +58,8 @@ void SetComponentAttrType::undo()
     auto& context = contexts.at(contextId);
     auto& comp = context.ctx().comps().at(definition.uuid());
 
-    comp.remove_attr(mAttributeName);
-    comp.add_attr(mAttributeName, attribute);
+    comp.remove(mAttributeName);
+    comp.add(mAttributeName, attribute);
   }
 
   mSnapshot.reset();

@@ -48,8 +48,8 @@ TEST(UndefComponent, RedoUndo)
   auto& bundle = map.ctx().comps();
 
   bundle.add(index->at(comp_id).instantiate());
-  bundle.at(comp_id).update_attr("foo", "abc"s);
-  bundle.at(comp_id).update_attr("threshold", 8.9f);
+  bundle.at(comp_id).update("foo", "abc"s);
+  bundle.at(comp_id).update("threshold", 8.9f);
 
   cmd::UndefComponent cmd {document.get(), comp_id};
   cmd.redo();
@@ -68,8 +68,8 @@ TEST(UndefComponent, RedoUndo)
   ASSERT_EQ("bar", index->at(comp_id).at("foo").as_string());
   ASSERT_EQ(1.5f, index->at(comp_id).at("threshold").as_float());
 
-  ASSERT_EQ("abc", bundle.at(comp_id).get_attr("foo").as_string());
-  ASSERT_EQ(8.9f, bundle.at(comp_id).get_attr("threshold").as_float());
+  ASSERT_EQ("abc", bundle.at(comp_id).at("foo").as_string());
+  ASSERT_EQ(8.9f, bundle.at(comp_id).at("threshold").as_float());
 }
 
 }  // namespace tactile::test
