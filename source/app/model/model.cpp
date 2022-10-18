@@ -64,17 +64,17 @@ auto DocumentModel::restore_tileset(const TileID first_tile_id, const TilesetInf
 
 void DocumentModel::select_document(const UUID& id)
 {
-  mImpl->select_document(id);
+  mImpl->documents().select(id);
 }
 
 void DocumentModel::open_document(const UUID& id)
 {
-  mImpl->open_document(id);
+  mImpl->documents().open(id);
 }
 
 void DocumentModel::close_document(const UUID& id)
 {
-  mImpl->close_document(id);
+  mImpl->documents().close(id);
 }
 
 auto DocumentModel::has_document(const UUID& id) const -> bool
@@ -94,57 +94,57 @@ auto DocumentModel::get_id_for_path(const Path& path) const -> UUID
 
 auto DocumentModel::get_document(const UUID& id) -> Shared<Document>
 {
-  return mImpl->get_document(id);
+  return mImpl->documents().get_document(id);
 }
 
 auto DocumentModel::active_document_id() const -> Maybe<UUID>
 {
-  return mImpl->active_document_id();
+  return mImpl->documents().current();
 }
 
 auto DocumentModel::has_active_document() const -> bool
 {
-  return mImpl->has_active_document();
+  return mImpl->documents().current().has_value();
 }
 
 auto DocumentModel::is_map_active() const -> bool
 {
-  return mImpl->is_map_active();
+  return mImpl->documents().is_map_active();
 }
 
 auto DocumentModel::is_tileset_active() const -> bool
 {
-  return mImpl->is_tileset_active();
+  return mImpl->documents().is_tileset_active();
 }
 
 auto DocumentModel::active_document() -> Document*
 {
-  return mImpl->active_document();
+  return mImpl->documents().current_document();
 }
 
 auto DocumentModel::active_document() const -> const Document*
 {
-  return mImpl->active_document();
+  return mImpl->documents().current_document();
 }
 
 auto DocumentModel::active_map() -> MapDocument*
 {
-  return mImpl->active_map();
+  return mImpl->documents().current_map();
 }
 
 auto DocumentModel::active_map() const -> const MapDocument*
 {
-  return mImpl->active_map();
+  return mImpl->documents().current_map();
 }
 
 auto DocumentModel::active_tileset() -> TilesetDocument*
 {
-  return mImpl->active_tileset();
+  return mImpl->documents().current_tileset();
 }
 
 auto DocumentModel::active_tileset() const -> const TilesetDocument*
 {
-  return mImpl->active_tileset();
+  return mImpl->documents().current_tileset();
 }
 
 auto DocumentModel::require_active_document() const -> const Document&
@@ -179,62 +179,62 @@ void DocumentModel::set_command_capacity(const usize capacity)
 
 auto DocumentModel::is_open(const UUID& id) const -> bool
 {
-  return mImpl->is_open(id);
+  return mImpl->documents().is_open(id);
 }
 
 auto DocumentModel::is_map(const UUID& id) const -> bool
 {
-  return mImpl->is_map(id);
+  return mImpl->documents().is_map(id);
 }
 
 auto DocumentModel::is_tileset(const UUID& id) const -> bool
 {
-  return mImpl->is_tileset(id);
+  return mImpl->documents().is_tileset(id);
 }
 
 auto DocumentModel::get_map(const UUID& id) -> Shared<MapDocument>
 {
-  return mImpl->get_map(id);
+  return mImpl->documents().get_map(id);
 }
 
 auto DocumentModel::get_tileset(const UUID& id) -> Shared<TilesetDocument>
 {
-  return mImpl->get_tileset(id);
+  return mImpl->documents().get_tileset(id);
 }
 
 auto DocumentModel::view_document(const UUID& id) const -> const Document&
 {
-  return mImpl->view_document(id);
+  return mImpl->documents().view_document(id);
 }
 
 auto DocumentModel::view_map(const UUID& id) const -> const MapDocument&
 {
-  return mImpl->view_map(id);
+  return mImpl->documents().view_map(id);
 }
 
 auto DocumentModel::view_tileset(const UUID& id) const -> const TilesetDocument&
 {
-  return mImpl->view_tileset(id);
+  return mImpl->documents().view_tileset(id);
 }
 
 void DocumentModel::register_map(Shared<MapDocument> document)
 {
-  mImpl->register_map(std::move(document));
+  mImpl->documents().add_map(std::move(document));
 }
 
 void DocumentModel::register_tileset(Shared<TilesetDocument> document)
 {
-  mImpl->register_tileset(std::move(document));
+  mImpl->documents().add_tileset(std::move(document));
 }
 
 auto DocumentModel::unregister_map(const UUID& id) -> Shared<MapDocument>
 {
-  return mImpl->unregister_map(id);
+  return mImpl->documents().remove_map(id);
 }
 
 auto DocumentModel::unregister_tileset(const UUID& id) -> Shared<TilesetDocument>
 {
-  return mImpl->unregister_tileset(id);
+  return mImpl->documents().remove_tileset(id);
 }
 
 }  // namespace tactile
