@@ -19,9 +19,10 @@
 
 #include "buffers.hpp"
 
-#include <algorithm>  // find
-#include <cstring>    // memset
-#include <iterator>   // distance
+#include <cstring>  // memset
+
+#include <EASTL/algorithm.h>
+#include <EASTL/iterator.h>
 
 #include "core/vocabulary.hpp"
 #include "misc/panic.hpp"
@@ -58,9 +59,9 @@ auto create_string_from_buffer(Span<const char> buffer) -> String
 
 auto create_string_view_from_buffer(Span<const char> buffer) -> StringView
 {
-  const auto iter = std::find(buffer.begin(), buffer.end(), '\0');
+  auto iter = eastl::find(buffer.begin(), buffer.end(), '\0');
   if (iter != buffer.end()) {
-    const auto index = static_cast<usize>(std::distance(buffer.begin(), iter));
+    const auto index = static_cast<usize>(eastl::distance(buffer.begin(), iter));
     return StringView {buffer.data(), index};
   }
   else {

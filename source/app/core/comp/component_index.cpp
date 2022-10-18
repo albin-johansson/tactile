@@ -19,8 +19,9 @@
 
 #include "component_index.hpp"
 
-#include <algorithm>  // any_of
-#include <utility>    // move
+#include <utility>  // move
+
+#include <EASTL/algorithm.h>
 
 #include "core/comp/component_definition.hpp"
 #include "core/util/assoc.hpp"
@@ -105,7 +106,7 @@ auto ComponentIndex::contains(const UUID& id) const -> bool
 
 auto ComponentIndex::contains(StringView name) const -> bool
 {
-  return std::any_of(mDefs.begin(), mDefs.end(), [name](const auto& pair) {
+  return eastl::any_of(mDefs.begin(), mDefs.end(), [name](const auto& pair) {
     return pair.second.name() == name;
   });
 }

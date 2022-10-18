@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <algorithm>  // max
-
+#include <EASTL/algorithm.h>
 #include <imgui.h>
 
 namespace tactile::ui {
@@ -69,7 +68,7 @@ auto right_align_next_item(const char* text) -> float;
 [[nodiscard]] auto minimum_offset_to_align(auto&&... strings) -> float
 {
   const auto spacing = ImGui::GetStyle().ItemSpacing.x * 2.0f;
-  return spacing + (std::max)({ImGui::CalcTextSize(strings).x...});
+  return spacing + (eastl::max)({ImGui::CalcTextSize(strings).x...});
 }
 
 }  // namespace tactile::ui

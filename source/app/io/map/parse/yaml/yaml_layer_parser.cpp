@@ -17,8 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <algorithm>  // replace
-#include <utility>    // move
+#include <utility>  // move
+
+#include <EASTL/algorithm.h>
 
 #include "core/tile_matrix.hpp"
 #include "core/type/expected.hpp"
@@ -76,7 +77,7 @@ namespace {
   }
 
   if (map.tile_format.encoding == TileEncoding::Plain) {
-    std::replace(str_data.begin(), str_data.end(), '\n', ' ');
+    eastl::replace(str_data.begin(), str_data.end(), '\n', ' ');
     if (auto matrix = parse_plain_tile_layer_data(str_data, rows, columns)) {
       tile_layer.tiles = std::move(*matrix);
     }

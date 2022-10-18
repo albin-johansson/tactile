@@ -19,9 +19,10 @@
 
 #include "random.hpp"
 
-#include <algorithm>   // generate
-#include <functional>  // ref
-#include <random>      // random_device, seed_seq
+#include <random>  // random_device, seed_seq
+
+#include <EASTL/algorithm.h>
+#include <EASTL/functional.h>
 
 #include "core/type/array.hpp"
 
@@ -33,11 +34,11 @@ using SeedArray = Array<Seed, RandomEngine::state_size>;
 auto make_random_engine() -> RandomEngine
 {
   std::random_device device;
+
   SeedArray data;
+  eastl::generate(data.begin(), data.end(), eastl::ref(device));
 
-  std::generate(data.begin(), data.end(), std::ref(device));
   std::seed_seq seeds(data.begin(), data.end());
-
   return RandomEngine {seeds};
 }
 

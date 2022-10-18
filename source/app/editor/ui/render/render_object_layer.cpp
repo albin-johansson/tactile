@@ -19,10 +19,7 @@
 
 #include "render_object_layer.hpp"
 
-#include <algorithm>  // min
-
-#include <centurion/color.hpp>
-#include <entt/entity/registry.hpp>
+#include <EASTL/algorithm.h>
 #include <imgui.h>
 #include <imgui_internal.h>
 
@@ -42,7 +39,7 @@ void render_point_object(Graphics& graphics,
 {
   TACTILE_ASSERT(object.is_point());
 
-  const float radius = (std::min)(graphics.viewport_tile_size().x / 4.0f, 6.0f);
+  const float radius = (eastl::min)(graphics.viewport_tile_size().x / 4.0f, 6.0f);
 
   if (graphics.is_within_translated_bounds(position)) {
     graphics.draw_translated_circle_with_shadow(position, radius, color, 2.0f);

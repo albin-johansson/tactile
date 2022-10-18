@@ -19,8 +19,9 @@
 
 #include "xml.hpp"
 
-#include <algorithm>  // any_of
-#include <cstring>    // strcmp
+#include <cstring>  // strcmp
+
+#include <EASTL/algorithm.h>
 
 #include "editor/constants.hpp"
 #include "misc/assert.hpp"
@@ -32,11 +33,11 @@ using XMLAttr = pugi::xml_attribute;
 auto has_attr(XMLNode node, const char* attr_name) -> bool
 {
   TACTILE_ASSERT(attr_name != nullptr);
-  return std::any_of(node.attributes_begin(),
-                     node.attributes_end(),
-                     [attr_name](const XMLAttr attribute) {
-                       return std::strcmp(attribute.name(), attr_name) == 0;
-                     });
+  return eastl::any_of(node.attributes_begin(),
+                       node.attributes_end(),
+                       [attr_name](const XMLAttr attribute) {
+                         return std::strcmp(attribute.name(), attr_name) == 0;
+                       });
 }
 
 auto as_string(XMLNode node, const char* attr_name) -> Maybe<String>

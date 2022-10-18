@@ -19,8 +19,7 @@
 
 #include "property_type_combo.hpp"
 
-#include <algorithm>  // find_if
-
+#include <EASTL/algorithm.h>
 #include <imgui.h>
 
 #include "core/type/array.hpp"
@@ -38,7 +37,7 @@ namespace {
 
 [[nodiscard]] auto index_from_type(const auto& items, const AttributeType type) -> usize
 {
-  const auto iter = std::find_if(items.begin(), items.end(), [=](const auto& pair) {
+  auto iter = eastl::find_if(items.begin(), items.end(), [=](const auto& pair) {
     return type == pair.second;
   });
 

@@ -19,8 +19,7 @@
 
 #include "map_document.hpp"
 
-#include <algorithm>  // find_if
-#include <utility>    // move
+#include <utility>  // move
 
 #include "misc/panic.hpp"
 #include "model/cmd/command_stack.hpp"

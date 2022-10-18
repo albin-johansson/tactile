@@ -19,8 +19,7 @@
 
 #include "graphics.hpp"
 
-#include <algorithm>  // clamp
-#include <cmath>      // sin, cos
+#include <cmath>  // sin, cos
 
 #include <imgui_internal.h>
 

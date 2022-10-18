@@ -19,8 +19,7 @@
 
 #include "render_info.hpp"
 
-#include <algorithm>  // min, max
-
+#include <EASTL/algorithm.h>
 #include <imgui_internal.h>
 
 #include "core/map.hpp"
@@ -41,11 +40,11 @@ namespace {
   const auto begin = (tl - origin) / grid_size;
   const auto end = (br - origin) / grid_size;
 
-  const auto begin_row = (std::max)(0, static_cast<int32>(begin.y));
-  const auto begin_col = (std::max)(0, static_cast<int32>(begin.x));
+  const auto begin_row = (eastl::max)(0, static_cast<int32>(begin.y));
+  const auto begin_col = (eastl::max)(0, static_cast<int32>(begin.x));
 
-  const auto end_row = static_cast<int32>((std::min)(rows, end.y + 1));
-  const auto end_col = static_cast<int32>((std::min)(cols, end.x + 1));
+  const auto end_row = static_cast<int32>((eastl::min)(rows, end.y + 1));
+  const auto end_col = static_cast<int32>((eastl::min)(cols, end.x + 1));
 
   Region bounds;
 
