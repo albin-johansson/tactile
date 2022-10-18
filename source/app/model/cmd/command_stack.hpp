@@ -75,9 +75,8 @@ class CommandStack final {
   /// Any redoable commands will be removed when this function is called.
   ///
   /// \param args the arguments that will be forwarded to a command constructor.
-  ///
   template <std::derived_from<Command> T, typename... Args>
-  void exec(Args&&... args)
+  void push(Args&&... args)
   {
     if (size() == capacity()) {
       remove_oldest_command();
@@ -85,18 +84,20 @@ class CommandStack final {
 
     remove_commands_after_current_index();
 
+    // Minor optimization: we don't allocate the commands on the heap until we now for
+    // sure they should be kept (a lot of commands can get created in a short duration).
     T cmd {std::forward<Args>(args)...};
     cmd.redo();
 
-    /* If the stack is empty, we simply push the command to the stack. However,
-       if there are commands on the stack, we try to merge the command into the
-       top of the stack and if that succeeds we discard the command. */
+    // If the stack is empty, we simply push the command on the stack. However, if there
+    // are commands on the stack, we try to merge the command into the top of the stack.
+    // If that succeeds, we discard the temporary command. Otherwise, just add the command
+    // to the stack as per usual.
     if (mStack.empty() || !mStack.back()->merge_with(&cmd)) {
-      mIndex = mIndex ? *mIndex + 1 : 0;
+      mIndex = mIndex ? (*mIndex + 1) : 0;
       mStack.push_back(std::make_unique<T>(std::move(cmd)));
     }
     else if (!mStack.empty()) {
-      /* If we get here, the command was merged into the top-most command */
       mCleanIndex.reset();
     }
   }

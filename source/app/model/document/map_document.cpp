@@ -52,73 +52,73 @@ void MapDocument::update()
 
 void MapDocument::add_row()
 {
-  get_history().exec<cmd::AddRow>(mMap);
+  get_history().push<cmd::AddRow>(mMap);
 }
 
 void MapDocument::add_column()
 {
-  get_history().exec<cmd::AddColumn>(mMap);
+  get_history().push<cmd::AddColumn>(mMap);
 }
 
 void MapDocument::remove_row()
 {
-  get_history().exec<cmd::RemoveRow>(mMap);
+  get_history().push<cmd::RemoveRow>(mMap);
 }
 
 void MapDocument::remove_column()
 {
-  get_history().exec<cmd::RemoveColumn>(mMap);
+  get_history().push<cmd::RemoveColumn>(mMap);
 }
 
 void MapDocument::resize(const usize rows, const usize cols)
 {
-  get_history().exec<cmd::ResizeMap>(mMap, rows, cols);
+  get_history().push<cmd::ResizeMap>(mMap, rows, cols);
 }
 
 void MapDocument::fix_tiles()
 {
-  get_history().exec<cmd::FixMapTiles>(mMap);
+  get_history().push<cmd::FixMapTiles>(mMap);
 }
 
 void MapDocument::add_layer(const LayerType type)
 {
-  get_history().exec<cmd::AddLayer>(this, type);
+  get_history().push<cmd::AddLayer>(this, type);
 }
 
 void MapDocument::remove_layer(const UUID& layer_id)
 {
-  get_history().exec<cmd::RemoveLayer>(this, layer_id);
+  get_history().push<cmd::RemoveLayer>(this, layer_id);
 }
 
 void MapDocument::duplicate_layer(const UUID& layer_id)
 {
-  get_history().exec<cmd::DuplicateLayer>(this, layer_id);
+  get_history().push<cmd::DuplicateLayer>(this, layer_id);
 }
 
 void MapDocument::rename_layer(const UUID& layer_id, String name)
 {
-  get_history().exec<cmd::RenameLayer>(mMap, layer_id, std::move(name));
+  get_history().push<cmd::RenameLayer>(mMap, layer_id, std::move(name));
 }
 
 void MapDocument::move_layer_up(const UUID& layer_id)
 {
-  get_history().exec<cmd::MoveLayerUp>(mMap, layer_id);
+  get_history().push<cmd::MoveLayerUp>(mMap, layer_id);
 }
 
 void MapDocument::move_layer_down(const UUID& layer_id)
 {
-  get_history().exec<cmd::MoveLayerDown>(mMap, layer_id);
+  get_history().push<cmd::MoveLayerDown>(mMap, layer_id);
 }
 
 void MapDocument::set_layer_opacity(const UUID& layer_id, const float opacity)
 {
   auto layer = mMap->invisible_root().ptr(layer_id);
-  get_history().exec<cmd::SetLayerOpacity>(std::move(layer), opacity);
+  get_history().push<cmd::SetLayerOpacity>(std::move(layer), opacity);
 }
 
 void MapDocument::set_layer_visible(const UUID& layer_id, const bool visible)
 {
-  get_history().exec<cmd::SetLayerVisible>(mMap, layer_id, visible);
+  get_history().push<cmd::SetLayerVisible>(mMap, layer_id, visible);
 }
 
 void MapDocument::register_stamp_sequence(const UUID& layer_id,
@@ -140,30 +140,30 @@ void MapDocument::flood(const UUID& layer_id,
                         const TilePos& origin,
                         const TileID replacement)
 {
-  get_history().exec<cmd::BucketFill>(mMap, layer_id, origin, replacement);
+  get_history().push<cmd::BucketFill>(mMap, layer_id, origin, replacement);
 }
 
 void MapDocument::add_rectangle(const UUID& layer_id,
                                 const Float2& pos,
                                 const Float2& size)
 {
-  get_history().exec<cmd::AddObject>(this, layer_id, ObjectType::Rect, pos, size);
+  get_history().push<cmd::AddObject>(this, layer_id, ObjectType::Rect, pos, size);
 }
 
 void MapDocument::add_ellipse(const UUID& layer_id, const Float2& pos, const Float2& size)
 {
-  get_history().exec<cmd::AddObject>(this, layer_id, ObjectType::Ellipse, pos, size);
+  get_history().push<cmd::AddObject>(this, layer_id, ObjectType::Ellipse, pos, size);
 }
 
 void MapDocument::add_point(const UUID& layer_id, const Float2& pos)
 {
-  get_history().exec<cmd::AddObject>(this, layer_id, ObjectType::Point, pos);
+  get_history().push<cmd::AddObject>(this, layer_id, ObjectType::Point, pos);
 }
 
 void MapDocument::remove_object(const UUID& object_id)
 {
   const auto layer_id = mMap->active_layer_id().value();
-  get_history().exec<cmd::RemoveObject>(this, layer_id, object_id);
+  get_history().push<cmd::RemoveObject>(this, layer_id, object_id);
 }
 
 void MapDocument::move_object(const UUID& object_id,
@@ -171,25 +171,25 @@ void MapDocument::move_object(const UUID& object_id,
                               const Float2& updated)
 {
   auto object = get_object(object_id);
-  get_history().exec<cmd::MoveObject>(std::move(object), previous, updated);
+  get_history().push<cmd::MoveObject>(std::move(object), previous, updated);
 }
 
 void MapDocument::set_object_visible(const UUID& object_id, const bool visible)
 {
   auto object = get_object(object_id);
-  get_history().exec<cmd::SetObjectVisible>(std::move(object), visible);
+  get_history().push<cmd::SetObjectVisible>(std::move(object), visible);
 }
 
 void MapDocument::set_object_name(const UUID& object_id, String name)
 {
   auto object = get_object(object_id);
-  get_history().exec<cmd::RenameObject>(std::move(object), std::move(name));
+  get_history().push<cmd::RenameObject>(std::move(object), std::move(name));
 }
 
 void MapDocument::set_object_tag(const UUID& object_id, String tag)
 {
   auto object = get_object(object_id);
-  get_history().exec<cmd::SetObjectTag>(std::move(object), std::move(tag));
+  get_history().push<cmd::SetObjectTag>(std::move(object), std::move(tag));
 }
 
 auto MapDocument::get_object(const UUID& object_id) -> Shared<Object>
@@ -205,22 +205,22 @@ auto MapDocument::get_object(const UUID& object_id) -> Shared<Object>
 
 void MapDocument::set_tile_format_encoding(const TileEncoding encoding)
 {
-  get_history().exec<SetTileFormatEncoding>(mMap, encoding);
+  get_history().push<SetTileFormatEncoding>(mMap, encoding);
 }
 
 void MapDocument::set_tile_format_compression(const TileCompression compression)
 {
-  get_history().exec<SetTileFormatCompression>(mMap, compression);
+  get_history().push<SetTileFormatCompression>(mMap, compression);
 }
 
 void MapDocument::set_zlib_compression_level(const int level)
 {
-  get_history().exec<cmd::SetZlibCompressionLevel>(mMap, level);
+  get_history().push<cmd::SetZlibCompressionLevel>(mMap, level);
 }
 
 void MapDocument::set_zstd_compression_level(const int level)
 {
-  get_history().exec<cmd::SetZstdCompressionLevel>(mMap, level);
+  get_history().push<cmd::SetZstdCompressionLevel>(mMap, level);
 }
 
 void MapDocument::set_component_index(Shared<ComponentIndex> index)
