@@ -44,7 +44,7 @@ auto make_random_engine() -> RandomEngine
 
 auto next_bool() -> bool
 {
-  return next_random(0, 100) <= 50;
+  return next_random(0, 99) < 50;
 }
 
 auto next_float() -> float
