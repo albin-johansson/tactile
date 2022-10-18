@@ -23,6 +23,7 @@
 #include "core/layer/object.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
+#include "core/tile/tile.hpp"
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
 #include "model/document/map_document.hpp"

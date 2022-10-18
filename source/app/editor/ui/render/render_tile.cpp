@@ -20,6 +20,7 @@
 #include "render_tile.hpp"
 
 #include "core/map.hpp"
+#include "core/tile/tile.hpp"
 #include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"
 #include "misc/assert.hpp"

@@ -27,6 +27,7 @@
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
+#include "core/tile/tile.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "core/tile_pos.hpp"
 #include "core/type/math.hpp"

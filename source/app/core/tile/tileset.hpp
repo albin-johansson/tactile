@@ -19,27 +19,30 @@
 
 #pragma once
 
-#include <boost/uuid/uuid_hash.hpp>
-
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_info.hpp"
-#include "core/tile/tile.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "core/tile_pos.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/math.hpp"
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
-#include "core/type/vector.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
 
+TACTILE_FWD_DECLARE_CLASS(Tile);
+
 /// Represents a collection of tiles encoded in a texture.
 class Tileset final : public Context {
+  using Tiles = HashMap<UUID, Shared<Tile>>;
+  using iterator = Tiles::iterator;
+
  public:
   explicit Tileset(TilesetInfo info, const UUID& id = make_uuid());
+
+  ~Tileset() noexcept override;
 
   void accept(ContextVisitor& visitor) const override;
 
@@ -92,23 +95,12 @@ class Tileset final : public Context {
   /// Returns the total amount of tiles.
   [[nodiscard]] auto tile_count() const noexcept -> int32;
 
-  [[nodiscard]] auto begin() const noexcept { return mTiles.begin(); }
-  [[nodiscard]] auto end() const noexcept { return mTiles.end(); }
+  [[nodiscard]] auto begin() const noexcept -> iterator;
+  [[nodiscard]] auto end() const noexcept -> iterator;
 
  private:
-  ContextInfo mContext;
-  uint mTextureId {};
-  Int2 mTextureSize {};
-  Int2 mTileSize {};
-  int32 mRowCount {};
-  int32 mColumnCount {};
-  Float2 mUvSize {};
-  HashMap<TileIndex, UUID> mIdentifiers;
-  HashMap<UUID, Shared<Tile>> mTiles;
-  Path mTexturePath;
-
-  /// A cache of the tiles that should be rendered when a tile is encountered
-  mutable HashMap<TileIndex, TileIndex> mAppearanceCache;
+  struct Data;
+  Unique<Data> mData;
 
   void load_tiles();
 };

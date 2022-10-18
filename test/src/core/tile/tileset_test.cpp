@@ -21,6 +21,7 @@
 
 #include <gtest/gtest.h>
 
+#include "core/tile/tile.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "misc/panic.hpp"
 
