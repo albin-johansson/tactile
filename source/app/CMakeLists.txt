@@ -160,6 +160,23 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <utility>
                           <variant>
                           <vector>
+
+                          <EASTL/algorithm.h>
+                          <EASTL/array.h>
+                          <EASTL/deque.h>
+                          <EASTL/functional.h>
+                          <EASTL/hash_map.h>
+                          <EASTL/optional.h>
+                          <EASTL/utility.h>
+                          <EASTL/queue.h>
+                          <EASTL/set.h>
+                          <EASTL/span.h>
+                          <EASTL/string.h>
+                          <EASTL/string_view.h>
+                          <EASTL/map.h>
+                          <EASTL/variant.h>
+                          <EASTL/vector.h>
+                          <EASTL/vector_map.h>
                           )
 
 target_precompile_headers(${TACTILE_EXE} REUSE_FROM ${TACTILE_LIB})
