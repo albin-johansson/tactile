@@ -24,7 +24,7 @@
 
 #include "core/tile_matrix.hpp"
 #include "core/type/string.hpp"
-#include "core/type/vector.hpp"
+#include "core/type/vec.hpp"
 #include "core/util/str.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"

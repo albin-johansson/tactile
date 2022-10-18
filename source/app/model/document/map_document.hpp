@@ -30,7 +30,7 @@
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"
 #include "core/type/tile_cache.hpp"
-#include "core/type/vector.hpp"
+#include "core/type/vec.hpp"
 #include "core/uuid.hpp"
 #include "core/viewport.hpp"
 #include "core/vocabulary.hpp"

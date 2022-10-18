@@ -24,7 +24,7 @@
 #include <cstddef>  // size_t, ptrdiff_t
 #include <cstdint>  // int{}_t, uint{}_t
 
-#include "core/type/vector.hpp"
+#include "core/type/vec.hpp"
 
 #define TACTILE_FWD_DECLARE_CLASS(Name) class Name;
 #define TACTILE_FWD_DECLARE_STRUCT(Name) struct Name;

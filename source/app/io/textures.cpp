@@ -19,7 +19,7 @@
 
 #include "textures.hpp"
 
-#include "core/type/vector.hpp"
+#include "core/type/vec.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
 

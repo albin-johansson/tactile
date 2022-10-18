@@ -23,7 +23,7 @@
 #include "core/tile_pos.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
-#include "core/type/vector.hpp"
+#include "core/type/vec.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"

@@ -22,7 +22,7 @@
 #include "core/layer/layer.hpp"
 #include "core/layer/layer_delegate.hpp"
 #include "core/tile_pos.hpp"
-#include "core/type/vector.hpp"
+#include "core/type/vec.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

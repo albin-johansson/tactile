@@ -23,7 +23,7 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/type/ptr.hpp"
-#include "core/type/vector.hpp"
+#include "core/type/vec.hpp"
 #include "editor/shortcut/edit_shortcuts.hpp"
 #include "editor/shortcut/file_shortcuts.hpp"
 #include "editor/shortcut/view_shortcuts.hpp"

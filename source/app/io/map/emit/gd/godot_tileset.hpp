@@ -23,7 +23,7 @@
 #include "core/type/pair.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
-#include "core/type/vector.hpp"
+#include "core/type/vec.hpp"
 #include "core/util/assoc.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"

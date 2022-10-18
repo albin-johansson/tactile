@@ -33,7 +33,7 @@
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"
 #include "core/type/tree_map.hpp"
-#include "core/type/vector.hpp"
+#include "core/type/vec.hpp"
 #include "core/util/algorithm.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"

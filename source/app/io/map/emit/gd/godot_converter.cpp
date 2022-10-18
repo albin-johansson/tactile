@@ -26,7 +26,7 @@
 
 #include "core/tile_pos.hpp"
 #include "core/type/string.hpp"
-#include "core/type/vector.hpp"
+#include "core/type/vec.hpp"
 #include "core/util/assoc.hpp"
 #include "core/util/fmt.hpp"
 #include "core/util/functional.hpp"

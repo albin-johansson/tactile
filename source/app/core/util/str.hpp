@@ -24,7 +24,7 @@
 
 #include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
-#include "core/type/vector.hpp"
+#include "core/type/vec.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

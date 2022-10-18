@@ -24,7 +24,7 @@
 #include <EASTL/algorithm.h>
 #include <EASTL/utility.h>
 
-#include "core/type/vector.hpp"
+#include "core/type/vec.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {

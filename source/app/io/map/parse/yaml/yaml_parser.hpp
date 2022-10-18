@@ -23,7 +23,7 @@
 
 #include "core/type/expected.hpp"
 #include "core/type/path.hpp"
-#include "core/type/vector.hpp"
+#include "core/type/vec.hpp"
 #include "io/map/parse/parse_error.hpp"
 #include "io/map/parse/parse_result.hpp"
 
