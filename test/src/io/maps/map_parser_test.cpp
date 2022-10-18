@@ -30,14 +30,14 @@
 
 #include "io/map/parse/parse_map.hpp"
 
-#define YAML_DIR "test-resources/yaml/"
-#define YAML_ERR "test-resources/yaml/errors/"
+#define YAML_DIR "resources/yaml/"
+#define YAML_ERR "resources/yaml/errors/"
 
-#define JSON_DIR "test-resources/json/"
-#define JSON_ERR "test-resources/json/errors/"
+#define JSON_DIR "resources/json/"
+#define JSON_ERR "resources/json/errors/"
 
-#define XML_DIR "test-resources/xml/"
-#define XML_ERR "test-resources/xml/errors/"
+#define XML_DIR "resources/xml/"
+#define XML_ERR "resources/xml/errors/"
 
 namespace tactile::test {
 
@@ -55,7 +55,7 @@ namespace {
 // clang-format off
 
 const auto cases = testing::Values(
-  with("test-resources/dummy.txt", PE::UnsupportedMapExtension),
+  with("resources/dummy.txt", PE::UnsupportedMapExtension),
 
   with("foo.yaml", PE::MapDoesNotExist),
   with("foo.json", PE::MapDoesNotExist),

@@ -27,8 +27,8 @@ namespace tactile::test {
 
 using io::ParseError;
 
-const auto cases = testing::Values("test-resources/json/properties.tmj",
-                                   "test-resources/xml/properties.tmx");
+const auto cases =
+    testing::Values("resources/json/properties.tmj", "resources/xml/properties.tmx");
 
 struct PropertySpecialCaseTest : testing::TestWithParam<std::string_view> {};
 

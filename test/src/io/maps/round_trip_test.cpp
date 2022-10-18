@@ -272,7 +272,7 @@ constexpr usize col_count = 13;
     tile_data.col_count = col_count;
     tile_data.tiles = make_tile_matrix(row_count, col_count);
 
-    child->context.properties["path"] = fs::path {"test-resources/exterior.png"};
+    child->context.properties["path"] = fs::path {"resources/exterior.png"};
   }
 
   {
@@ -372,7 +372,7 @@ constexpr usize col_count = 13;
   data.tile_count = 768;
   data.column_count = 28;
 
-  data.image_path = "test-resources/terrain.png";
+  data.image_path = "resources/terrain.png";
   data.image_size.x = 1'024;
   data.image_size.y = 1'023;
 
