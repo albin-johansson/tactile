@@ -19,13 +19,10 @@
 
 #pragma once
 
-#include <functional>  // function
-
-#include <boost/uuid/uuid_hash.hpp>
-
 #include "core/attribute.hpp"
 #include "core/comp/component.hpp"
 #include "core/ctx/context.hpp"
+#include "core/type/fn.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"
@@ -37,7 +34,7 @@ namespace tactile {
 /// Manages all of the contexts contained within a document.
 class ContextManager final {
   using ContextMap = HashMap<UUID, Shared<Context>>;
-  using ComponentFunc = std::function<void(Component&)>;
+  using ComponentFunc = Fn<void(Component&)>;
 
  public:
   explicit ContextManager(const UUID& root_context_id);

@@ -55,7 +55,7 @@ Map::Map()
   ctx().set_name("Map");
 }
 
-void Map::each_tile_layer(const std::function<void(TileLayer&)>& func)
+void Map::each_tile_layer(const TileLayerVisitorFunc& func)
 {
   TileLayerVisitor visitor {func};
   mRootLayer.each(visitor);

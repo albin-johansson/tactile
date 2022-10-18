@@ -35,9 +35,8 @@ namespace tactile {
 namespace {
 
 using LayerStorage = GroupLayer::LayerStorage;
-using VisitorFunc = std::function<void(LayerStorage&, LayerStorage::iterator)>;
-using ConstVisitorFunc =
-    std::function<void(const LayerStorage&, LayerStorage::const_iterator)>;
+using VisitorFunc = Fn<void(LayerStorage&, LayerStorage::iterator)>;
+using ConstVisitorFunc = Fn<void(const LayerStorage&, LayerStorage::const_iterator)>;
 
 /// A generic visitor for operations that may modify layers and their associated storage.
 class LayerMutatorVisitor : public LayerVisitor {

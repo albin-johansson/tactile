@@ -19,13 +19,12 @@
 
 #pragma once
 
-#include <functional>  // function
-
 #include "core/ctx/context.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_format.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/tile_pos.hpp"
+#include "core/type/fn.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/math.hpp"
 #include "core/type/maybe.hpp"
@@ -54,8 +53,8 @@ namespace tactile {
 /// compression along with plain text encoding.
 class Map final : public Context {
  public:
-  using VisitorFunc = std::function<void(const Layer*)>;
-  using TileLayerVisitorFunc = std::function<void(TileLayer&)>;
+  using VisitorFunc = Fn<void(const Layer*)>;
+  using TileLayerVisitorFunc = Fn<void(TileLayer&)>;
 
   /// Maps previous invalid tile identifiers in a collection of layers.
   using FixTilesResult = HashMap<UUID, HashMap<TilePos, TileID>>;

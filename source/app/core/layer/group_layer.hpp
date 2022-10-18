@@ -19,10 +19,9 @@
 
 #pragma once
 
-#include <functional>  // function
-
 #include "core/layer/layer.hpp"
 #include "core/layer/layer_delegate.hpp"
+#include "core/type/fn.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/vector.hpp"
 #include "core/uuid.hpp"
@@ -35,7 +34,7 @@ namespace tactile {
 class GroupLayer final : public Layer {
  public:
   using LayerStorage = Vec<Shared<Layer>>;
-  using SimpleVisitor = std::function<void(const Layer*)>;
+  using SimpleVisitor = Fn<void(const Layer*)>;
 
   void accept(ContextVisitor& visitor) const override;
   void accept(LayerVisitor& visitor) override;
