@@ -145,6 +145,7 @@ target_precompile_headers(${TACTILE_LIB} PRIVATE
                           <locale>
                           <map>
                           <memory>
+                          <numbers>
                           <optional>
                           <ostream>
                           <queue>
