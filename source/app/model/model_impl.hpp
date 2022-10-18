@@ -19,85 +19,57 @@
 
 #pragma once
 
-#include <functional>  // function
-
+#include "core/type/hash_map.hpp"
 #include "core/type/math.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/vector.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
-#include "model/document/document.hpp"
-#include "model/tool/tool_type.hpp"
+#include "model/model.hpp"
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_STRUCT(TilesetInfo);
-TACTILE_FWD_DECLARE_CLASS(MapDocument);
-TACTILE_FWD_DECLARE_CLASS(TilesetDocument);
+class Document;
+class MapDocument;
+class TilesetDocument;
+struct TilesetInfo;
 
-TACTILE_FWD_DECLARE_CLASS_NS(cmd, CreateTileset);
-TACTILE_FWD_DECLARE_CLASS_NS(cmd, RemoveTileset);
-
-/// The primary facade between the editor and the underlying core documents.
-class DocumentModel final {
-  friend class cmd::CreateTileset;
-  friend class cmd::RemoveTileset;
-
+/// Implementation used by the DocumentModel class, not to be used directly elsewhere.
+class DocumentModel::Impl {
  public:
-  using VisitorFunc = std::function<void(const UUID&)>;
+  explicit Impl(DocumentModel* parent);
 
-  DocumentModel();
-  ~DocumentModel() noexcept;
-
-  /// Updates systems that need to be consistently updated, e.g. animations.
   void update();
 
-  /// Visits each open document.
   void each(const VisitorFunc& func) const;
 
-  /// Creates an empty map document with the specified attributes.
   auto add_map(const Int2& tile_size, usize rows, usize columns) -> UUID;
 
-  /// Creates a tileset document and adds it to the active map document.
   auto add_tileset(const TilesetInfo& info) -> UUID;
 
-  /// Restores a tileset, intended to be used after parsing maps.
-  auto restore_tileset(TileID first_tile_id, const TilesetInfo& info) -> UUID;
-
-  /// Makes a specific document active.
-  void select_document(const UUID& id);
-
-  /// Opens a document in a separate tab.
-  void open_document(const UUID& id);
-
-  /// Closes an open document, only removing it if it's a map document.
-  void close_document(const UUID& id);
-
-  /// Removes a tileset from the active map document.
   void remove_tileset(const UUID& id);
 
-  /// Sets the undo stack capacity of all loaded documents.
+  auto restore_tileset(TileID first_tile_id, const TilesetInfo& info) -> UUID;
+
+  void select_document(const UUID& id);
+  void open_document(const UUID& id);
+  void close_document(const UUID& id);
+
   void set_command_capacity(usize capacity);
 
   [[nodiscard]] auto has_document(const UUID& id) const -> bool;
 
-  /// Indicates whether any of the loaded documents are located at the specific path.
   [[nodiscard]] auto has_document_with_path(const Path& path) const -> bool;
 
-  /// Returns the document ID of the loaded document with the specified path.
   [[nodiscard]] auto get_id_for_path(const Path& path) const -> UUID;
 
-  /// Indicates whether there is an active document, of any type.
   [[nodiscard]] auto has_active_document() const -> bool;
 
-  /// Indicates whether a map document is currently active.
   [[nodiscard]] auto is_map_active() const -> bool;
-
-  /// Indicates whether a tileset document is currently active.
   [[nodiscard]] auto is_tileset_active() const -> bool;
 
-  /// Returns a pointer to the active document, if there is one.
   [[nodiscard]] auto active_document() -> Document*;
   [[nodiscard]] auto active_document() const -> const Document*;
 
@@ -115,35 +87,40 @@ class DocumentModel final {
   [[nodiscard]] auto require_active_tileset() -> TilesetDocument&;
   [[nodiscard]] auto require_active_tileset() const -> const TilesetDocument&;
 
-  /// Indicates whether a document is open.
   [[nodiscard]] auto is_open(const UUID& id) const -> bool;
 
-  /// Indicates whether a document represents a map.
   [[nodiscard]] auto is_map(const UUID& id) const -> bool;
-
-  /// Indicates whether a document represents a tileset.
   [[nodiscard]] auto is_tileset(const UUID& id) const -> bool;
 
   [[nodiscard]] auto get_document(const UUID& id) -> Shared<Document>;
   [[nodiscard]] auto get_map(const UUID& id) -> Shared<MapDocument>;
   [[nodiscard]] auto get_tileset(const UUID& id) -> Shared<TilesetDocument>;
 
-  /// Getters that do not require a copy of shared pointers, which can be expensive
   [[nodiscard]] auto view_document(const UUID& id) const -> const Document&;
   [[nodiscard]] auto view_map(const UUID& id) const -> const MapDocument&;
   [[nodiscard]] auto view_tileset(const UUID& id) const -> const TilesetDocument&;
 
   [[nodiscard]] auto active_document_id() const -> Maybe<UUID>;
 
- private:
-  class Impl;
-  Unique<Impl> mImpl;
+  void select_another_document();
+
+  void remove_unreferenced_tilesets(const MapDocument& doc);
 
   void register_map(Shared<MapDocument> document);
   void register_tileset(Shared<TilesetDocument> document);
 
   auto unregister_map(const UUID& id) -> Shared<MapDocument>;
   auto unregister_tileset(const UUID& id) -> Shared<TilesetDocument>;
+
+  [[nodiscard]] auto is_tileset_referenced(const UUID& tileset_id) const -> bool;
+
+ private:
+  DocumentModel* mParent {};
+  HashMap<UUID, Shared<Document>> mDocuments;        /// All loaded documents.
+  HashMap<UUID, Shared<MapDocument>> mMaps;          /// All maps.
+  HashMap<UUID, Shared<TilesetDocument>> mTilesets;  /// All tilesets.
+  Vec<UUID> mOpenDocuments;     /// Documents that are open in the editor.
+  Maybe<UUID> mActiveDocument;  /// The active document ID.
 };
 
 }  // namespace tactile

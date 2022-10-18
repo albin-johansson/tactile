@@ -19,465 +19,222 @@
 
 #include "model.hpp"
 
-#include <algorithm>  // any_of, find
-#include <utility>    // move
-
-#include <spdlog/spdlog.h>
-
-#include "core/comp/component_index.hpp"
-#include "core/tile/tileset_info.hpp"
-#include "core/util/assoc.hpp"
-#include "core/util/fmt.hpp"
-#include "misc/assert.hpp"
-#include "misc/panic.hpp"
-#include "model/cmd/command_stack.hpp"
-#include "model/cmd/commands.hpp"
-#include "model/document/map_document.hpp"
-#include "model/document/tileset_document.hpp"
-#include "model/tool/tool_manager.hpp"
+#include "model/model_impl.hpp"
 
 namespace tactile {
 
+DocumentModel::DocumentModel()
+    : mImpl {std::make_unique<Impl>(this)}
+{
+}
+
+DocumentModel::~DocumentModel() noexcept = default;
+
 void DocumentModel::update()
 {
-  if (mActiveDocument) {
-    lookup_in(mDocuments, *mActiveDocument)->update();
-  }
+  mImpl->update();
 }
 
 void DocumentModel::each(const VisitorFunc& func) const
 {
-  for (const auto& id : mOpenDocuments) {
-    func(id);
-  }
+  mImpl->each(func);
 }
 
 auto DocumentModel::add_map(const Int2& tile_size, const usize rows, const usize columns)
     -> UUID
 {
-  // TODO move this to a command
-
-  TACTILE_ASSERT(tile_size.x > 0);
-  TACTILE_ASSERT(tile_size.y > 0);
-
-  auto map_document = std::make_shared<MapDocument>(tile_size, rows, columns);
-  map_document->set_component_index(std::make_shared<ComponentIndex>());
-
-  auto& map = map_document->get_map();
-
-  register_map(map_document);
-  mOpenDocuments.push_back(map.uuid());
-
-  return map.uuid();
+  return mImpl->add_map(tile_size, rows, columns);
 }
 
 auto DocumentModel::add_tileset(const TilesetInfo& info) -> UUID
 {
-  if (mActiveDocument) {
-    auto map_document = get_map(*mActiveDocument);
-    auto& map = map_document->get_map();
+  return mImpl->add_tileset(info);
+}
 
-    const auto tileset_id = make_uuid();
-
-    auto& commands = map_document->get_history();
-    commands.exec<cmd::CreateTileset>(this, map.uuid(), tileset_id, info);
-
-    return tileset_id;
-  }
-  else {
-    throw TactileError {"No active map to add tileset to!"};
-  }
+void DocumentModel::remove_tileset(const UUID& id)
+{
+  mImpl->remove_tileset(id);
 }
 
 auto DocumentModel::restore_tileset(const TileID first_tile_id, const TilesetInfo& info)
     -> UUID
 {
-  if (mActiveDocument) {
-    auto map_document = get_map(*mActiveDocument);
-    auto& map = map_document->get_map();
-
-    auto tileset_document = std::make_shared<TilesetDocument>(info);
-    register_tileset(tileset_document);
-
-    auto tileset = tileset_document->get_tileset();
-    const auto tileset_id = tileset->uuid();
-
-    auto& tilesets = map.tileset_bundle();
-    tilesets.attach_tileset(tileset, first_tile_id, false);  // TODO embedded option
-    map_document->get_contexts().add_context(std::move(tileset));
-
-    return tileset_id;
-  }
-  else {
-    throw TactileError {"No active map to restore tileset to!"};
-  }
+  return mImpl->restore_tileset(first_tile_id, info);
 }
 
 void DocumentModel::select_document(const UUID& id)
 {
-  if (has_document(id)) [[likely]] {
-    mActiveDocument = id;
-  }
-  else {
-    throw TactileError {"Invalid document identifier!"};
-  }
+  mImpl->select_document(id);
 }
 
 void DocumentModel::open_document(const UUID& id)
 {
-  if (!has_document(id)) {
-    throw TactileError {"Cannot open document that does not exist!"};
-  }
-
-  if (!is_open(id)) {
-    mOpenDocuments.push_back(id);
-
-    if (!mActiveDocument) {
-      mActiveDocument = id;
-    }
-  }
-  else {
-    throw TactileError {"Cannot open document that was already open!"};
-  }
+  mImpl->open_document(id);
 }
 
 void DocumentModel::close_document(const UUID& id)
 {
-  if (!has_document(id)) {
-    throw TactileError {"Cannot close document that does not exist!"};
-  }
-
-  const auto* iter = std::find(mOpenDocuments.begin(), mOpenDocuments.end(), id);
-  if (iter != mOpenDocuments.end()) {
-    mOpenDocuments.erase(iter);
-
-    if (mActiveDocument == id) {
-      select_another_document();
-    }
-
-    // Only map documents are removed when they are closed
-    if (is_map(id)) {
-      unregister_map(id);
-    }
-
-    TACTILE_ASSERT(!is_open(id));
-  }
-  else {
-    throw TactileError {"Cannot close document that was not open!"};
-  }
-}
-
-void DocumentModel::remove_tileset(const UUID& id)
-{
-  if (!is_tileset(id)) {
-    throw TactileError {"Document is not a tileset!"};
-  }
-
-  if (mActiveDocument && is_map(*mActiveDocument)) {
-    auto map = get_map(*mActiveDocument);
-    map->get_history().exec<cmd::RemoveTileset>(this, id);
-  }
-  else {
-    throw TactileError {"No active map!"};
-  }
+  mImpl->close_document(id);
 }
 
 auto DocumentModel::has_document(const UUID& id) const -> bool
 {
-  return mDocuments.find(id) != mDocuments.end();
+  return mImpl->has_document(id);
 }
 
 auto DocumentModel::has_document_with_path(const Path& path) const -> bool
 {
-  return std::any_of(mDocuments.begin(), mDocuments.end(), [&](const auto& pair) {
-    const auto& document = pair.second;
-    return document->has_path() && document->get_path() == path;
-  });
+  return mImpl->has_document_with_path(path);
 }
 
 auto DocumentModel::get_id_for_path(const Path& path) const -> UUID
 {
-  for (const auto& [id, document] : mDocuments) {
-    if (document->has_path() && document->get_path() == path) {
-      return id;
-    }
-  }
-
-  throw TactileError {"No document with the specified path!"};
+  return mImpl->get_id_for_path(path);
 }
 
 auto DocumentModel::get_document(const UUID& id) -> Shared<Document>
 {
-  return lookup_in(mDocuments, id);
+  return mImpl->get_document(id);
 }
 
 auto DocumentModel::active_document_id() const -> Maybe<UUID>
 {
-  return mActiveDocument;
+  return mImpl->active_document_id();
 }
 
 auto DocumentModel::has_active_document() const -> bool
 {
-  return mActiveDocument.has_value();
+  return mImpl->has_active_document();
 }
 
 auto DocumentModel::is_map_active() const -> bool
 {
-  if (mActiveDocument) {
-    return is_map(*mActiveDocument);
-  }
-  else {
-    return false;
-  }
+  return mImpl->is_map_active();
 }
 
 auto DocumentModel::is_tileset_active() const -> bool
 {
-  if (mActiveDocument) {
-    return is_tileset(*mActiveDocument);
-  }
-  else {
-    return false;
-  }
+  return mImpl->is_tileset_active();
 }
 
 auto DocumentModel::active_document() -> Document*
 {
-  if (mActiveDocument) {
-    TACTILE_ASSERT(has_document(*mActiveDocument));
-    return mDocuments.at(*mActiveDocument).get();
-  }
-  else {
-    return nullptr;
-  }
+  return mImpl->active_document();
 }
 
 auto DocumentModel::active_document() const -> const Document*
 {
-  if (mActiveDocument) {
-    TACTILE_ASSERT(has_document(*mActiveDocument));
-    return mDocuments.at(*mActiveDocument).get();
-  }
-  else {
-    return nullptr;
-  }
+  return mImpl->active_document();
 }
 
 auto DocumentModel::active_map() -> MapDocument*
 {
-  if (mActiveDocument) {
-    if (const auto iter = mMaps.find(*mActiveDocument); iter != mMaps.end()) {
-      return iter->second.get();
-    }
-  }
-
-  return nullptr;
+  return mImpl->active_map();
 }
 
 auto DocumentModel::active_map() const -> const MapDocument*
 {
-  if (mActiveDocument) {
-    if (const auto iter = mMaps.find(*mActiveDocument); iter != mMaps.end()) {
-      return iter->second.get();
-    }
-  }
-
-  return nullptr;
+  return mImpl->active_map();
 }
 
 auto DocumentModel::active_tileset() -> TilesetDocument*
 {
-  if (mActiveDocument) {
-    if (const auto iter = mTilesets.find(*mActiveDocument); iter != mTilesets.end()) {
-      return iter->second.get();
-    }
-  }
-
-  return nullptr;
+  return mImpl->active_tileset();
 }
 
 auto DocumentModel::active_tileset() const -> const TilesetDocument*
 {
-  if (mActiveDocument) {
-    if (const auto iter = mTilesets.find(*mActiveDocument); iter != mTilesets.end()) {
-      return iter->second.get();
-    }
-  }
-
-  return nullptr;
+  return mImpl->active_tileset();
 }
 
 auto DocumentModel::require_active_document() const -> const Document&
 {
-  if (const auto* document = active_document()) {
-    return *document;
-  }
-  else {
-    throw TactileError {"No document was active!"};
-  }
+  return mImpl->require_active_document();
 }
 
 auto DocumentModel::require_active_map() -> MapDocument&
 {
-  if (auto* document = active_map()) {
-    return *document;
-  }
-  else {
-    throw TactileError {"No map document was active!"};
-  }
+  return mImpl->require_active_map();
 }
 
 auto DocumentModel::require_active_map() const -> const MapDocument&
 {
-  if (const auto* document = active_map()) {
-    return *document;
-  }
-  else {
-    throw TactileError {"No map document was active!"};
-  }
+  return mImpl->require_active_map();
 }
 
 auto DocumentModel::require_active_tileset() -> TilesetDocument&
 {
-  if (auto* document = active_tileset()) {
-    return *document;
-  }
-  else {
-    throw TactileError {"No tileset document was active!"};
-  }
+  return mImpl->require_active_tileset();
 }
 
 auto DocumentModel::require_active_tileset() const -> const TilesetDocument&
 {
-  if (const auto* document = active_tileset()) {
-    return *document;
-  }
-  else {
-    throw TactileError {"No tileset document was active!"};
-  }
+  return mImpl->require_active_tileset();
 }
 
 void DocumentModel::set_command_capacity(const usize capacity)
 {
-  for (auto& [id, document] : mDocuments) {
-    auto& commands = document->get_history();
-    commands.set_capacity(capacity);
-  }
+  mImpl->set_command_capacity(capacity);
 }
 
 auto DocumentModel::is_open(const UUID& id) const -> bool
 {
-  const auto* iter = std::find(mOpenDocuments.begin(), mOpenDocuments.end(), id);
-  return iter != mOpenDocuments.end();
+  return mImpl->is_open(id);
 }
 
 auto DocumentModel::is_map(const UUID& id) const -> bool
 {
-  return mMaps.find(id) != mMaps.end();
+  return mImpl->is_map(id);
 }
 
 auto DocumentModel::is_tileset(const UUID& id) const -> bool
 {
-  return mTilesets.find(id) != mTilesets.end();
+  return mImpl->is_tileset(id);
 }
 
 auto DocumentModel::get_map(const UUID& id) -> Shared<MapDocument>
 {
-  return lookup_in(mMaps, id);
+  return mImpl->get_map(id);
 }
 
 auto DocumentModel::get_tileset(const UUID& id) -> Shared<TilesetDocument>
 {
-  return lookup_in(mTilesets, id);
+  return mImpl->get_tileset(id);
 }
 
 auto DocumentModel::view_document(const UUID& id) const -> const Document&
 {
-  return *lookup_in(mDocuments, id);
+  return mImpl->view_document(id);
 }
 
 auto DocumentModel::view_map(const UUID& id) const -> const MapDocument&
 {
-  return *lookup_in(mMaps, id);
+  return mImpl->view_map(id);
 }
 
 auto DocumentModel::view_tileset(const UUID& id) const -> const TilesetDocument&
 {
-  return *lookup_in(mTilesets, id);
+  return mImpl->view_tileset(id);
 }
 
 void DocumentModel::register_map(Shared<MapDocument> document)
 {
-  const auto id = document->get_map().uuid();
-  mDocuments[id] = document;
-  mMaps[id] = std::move(document);
+  mImpl->register_map(std::move(document));
 }
 
 void DocumentModel::register_tileset(Shared<TilesetDocument> document)
 {
-  const auto id = document->view_tileset().uuid();
-  mDocuments[id] = document;
-  mTilesets[id] = std::move(document);
+  mImpl->register_tileset(std::move(document));
 }
 
 auto DocumentModel::unregister_map(const UUID& id) -> Shared<MapDocument>
 {
-  spdlog::debug("Removing map document {}", id);
-  auto document = get_map(id);
-
-  if (mActiveDocument == id) {
-    mActiveDocument.reset();
-  }
-
-  mDocuments.erase(id);
-  mMaps.erase(id);
-  erase(mOpenDocuments, id);
-
-  remove_associated_tilesets_unless_referenced(*document);
-  TACTILE_ASSERT(!mActiveDocument || has_document(*mActiveDocument));
-
-  return document;
+  return mImpl->unregister_map(id);
 }
 
 auto DocumentModel::unregister_tileset(const UUID& id) -> Shared<TilesetDocument>
 {
-  auto tileset = get_tileset(id);
-
-  mDocuments.erase(id);
-  mTilesets.erase(id);
-  erase(mOpenDocuments, id);
-
-  return tileset;
-}
-
-void DocumentModel::select_another_document()
-{
-  mActiveDocument.reset();
-  if (!mOpenDocuments.empty()) {
-    mActiveDocument = mOpenDocuments.front();
-  }
-}
-
-void DocumentModel::remove_associated_tilesets_unless_referenced(const MapDocument& doc)
-{
-  const auto& tilesets = doc.get_map().tileset_bundle();
-  for (const auto& [ts_id, ts_doc] : tilesets) {
-    if (!is_tileset_referenced(ts_id)) {
-      unregister_tileset(ts_id);
-
-      if (mActiveDocument == ts_id) {
-        select_another_document();
-      }
-    }
-  }
-}
-
-auto DocumentModel::is_tileset_referenced(const UUID& tileset_id) const -> bool
-{
-  return std::any_of(mMaps.begin(), mMaps.end(), [&](const auto& pair) {
-    const auto& map = pair.second->get_map();
-    return map.tileset_bundle().has_tileset(tileset_id);
-  });
+  return mImpl->unregister_tileset(id);
 }
 
 }  // namespace tactile
