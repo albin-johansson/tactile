@@ -26,8 +26,18 @@
 
 #include "core/type/vector.hpp"
 
-#define TACTILE_FWD_DECLARE_CLASS(Name) class Name
-#define TACTILE_FWD_DECLARE_STRUCT(Name) struct Name
+#define TACTILE_FWD_DECLARE_CLASS(Name) class Name;
+#define TACTILE_FWD_DECLARE_STRUCT(Name) struct Name;
+
+#define TACTILE_FWD_DECLARE_CLASS_NS(Ns, Name) \
+  namespace Ns {                               \
+  class Name;                                  \
+  }
+
+#define TACTILE_FWD_DECLARE_STRUCT_NS(Ns, Name) \
+  namespace Ns {                                \
+  struct Name;                                  \
+  }
 
 #define TACTILE_DEFAULT_COPY(Class) \
   Class(const Class&) = default;    \
