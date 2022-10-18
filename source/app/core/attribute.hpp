@@ -21,7 +21,6 @@
 
 #include <concepts>  // same_as
 #include <utility>   // move
-#include <variant>   // variant, get, get_if, holds_alternative
 
 #include <centurion/color.hpp>
 
@@ -29,6 +28,7 @@
 #include "core/type/ostream.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
+#include "core/type/variant.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
@@ -75,13 +75,13 @@ class Attribute final {
   using color_type = cen::color;
   using path_type = Path;
 
-  using value_type = std::variant<string_type,
-                                  integer_type,
-                                  float_type,
-                                  bool,
-                                  color_type,
-                                  path_type,
-                                  object_t>;
+  using value_type = Variant<string_type,
+                             integer_type,
+                             float_type,
+                             bool,
+                             color_type,
+                             path_type,
+                             object_t>;
 
   /// Creates an empty string attribute.
   Attribute() = default;
@@ -204,13 +204,13 @@ class Attribute final {
   template <AnAttributeType T>
   [[nodiscard]] auto holds() const noexcept -> bool
   {
-    return std::holds_alternative<T>(mValue);
+    return eastl::holds_alternative<T>(mValue);
   }
 
   template <AnAttributeType T>
   [[nodiscard]] auto get_if() const noexcept -> const T*
   {
-    return std::get_if<T>(&mValue);
+    return eastl::get_if<T>(&mValue);
   }
 };
 

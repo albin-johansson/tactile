@@ -20,7 +20,6 @@
 #pragma once
 
 #include <concepts>  // invocable
-#include <variant>   // variant, get
 
 #include "core/attribute.hpp"
 #include "core/layer/layer_type.hpp"
@@ -33,6 +32,7 @@
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"
 #include "core/type/tree_map.hpp"
+#include "core/type/variant.hpp"
 #include "core/type/vec.hpp"
 #include "core/util/algorithm.hpp"
 #include "core/uuid.hpp"
@@ -83,30 +83,30 @@ struct GroupLayerData final {
 };
 
 struct LayerData final {
-  using data_type = std::variant<TileLayerData, ObjectLayerData, GroupLayerData>;
+  using Data = Variant<TileLayerData, ObjectLayerData, GroupLayerData>;
 
   LayerID id {};
   LayerType type {};
   usize index {};  /// Local index.
   String name;
-  data_type data;
+  Data data;
   ContextData context;
   float opacity {};
   bool visible {};
 
   [[nodiscard]] auto as_tile_layer() const -> const TileLayerData&
   {
-    return std::get<TileLayerData>(data);
+    return eastl::get<TileLayerData>(data);
   }
 
   [[nodiscard]] auto as_object_layer() const -> const ObjectLayerData&
   {
-    return std::get<ObjectLayerData>(data);
+    return eastl::get<ObjectLayerData>(data);
   }
 
   [[nodiscard]] auto as_group_layer() const -> const GroupLayerData&
   {
-    return std::get<GroupLayerData>(data);
+    return eastl::get<GroupLayerData>(data);
   }
 };
 

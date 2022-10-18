@@ -294,7 +294,7 @@ void write_tile_layer_animation_nodes(OStream& stream,
 
 void write_tile_layer(OStream& stream, const GodotScene& scene, const GdLayer& layer)
 {
-  const auto& tile_layer = std::get<GdTileLayer>(layer.value);
+  const auto& tile_layer = eastl::get<GdTileLayer>(layer.value);
 
   stream << format_str("\n[node name=\"{}\" type=\"TileMap\" parent=\"{}\"]\n",
                        layer.name,
@@ -333,7 +333,7 @@ void write_tile_layer(OStream& stream, const GodotScene& scene, const GdLayer& l
 
 void write_rectangle_object(OStream& stream, const GdObject& object)
 {
-  const auto& rect = std::get<GdRect>(object.value);
+  const auto& rect = eastl::get<GdRect>(object.value);
 
   stream << format_str("\n[node name=\"{}\" type=\"Area2D\" parent=\"{}\"]\n",
                        object.name,
@@ -356,7 +356,7 @@ void write_rectangle_object(OStream& stream, const GdObject& object)
 
 void write_polygon_object(OStream& stream, const GdObject& object)
 {
-  const auto& polygon = std::get<GdPolygon>(object.value);
+  const auto& polygon = eastl::get<GdPolygon>(object.value);
 
   stream << format_str("\n[node name=\"{}\" type=\"Area2D\" parent=\"{}\"]\n",
                        object.name,
@@ -391,10 +391,10 @@ void write_polygon_object(OStream& stream, const GdObject& object)
 
 void write_object(OStream& stream, const GdObject& object)
 {
-  if (std::holds_alternative<GdRect>(object.value)) {
+  if (eastl::holds_alternative<GdRect>(object.value)) {
     write_rectangle_object(stream, object);
   }
-  else if (std::holds_alternative<GdPolygon>(object.value)) {
+  else if (eastl::holds_alternative<GdPolygon>(object.value)) {
     write_polygon_object(stream, object);
   }
   else {
@@ -414,7 +414,7 @@ void write_object(OStream& stream, const GdObject& object)
 
 void write_object_layer(OStream& stream, const GdLayer& layer)
 {
-  const auto& object_layer = std::get<GdObjectLayer>(layer.value);
+  const auto& object_layer = eastl::get<GdObjectLayer>(layer.value);
 
   stream << format_str("\n[node name=\"{}\" type=\"Node2D\" parent=\"{}\"]\n",
                        layer.name,
@@ -433,10 +433,10 @@ void write_object_layer(OStream& stream, const GdLayer& layer)
 void write_layers(OStream& stream, const GodotScene& scene)
 {
   for (const auto& layer: scene.layers()) {
-    if (std::holds_alternative<GdTileLayer>(layer.value)) {
+    if (eastl::holds_alternative<GdTileLayer>(layer.value)) {
       write_tile_layer(stream, scene, layer);
     }
-    else if (std::holds_alternative<GdObjectLayer>(layer.value)) {
+    else if (eastl::holds_alternative<GdObjectLayer>(layer.value)) {
       write_object_layer(stream, layer);
     }
     else {

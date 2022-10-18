@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include <variant>  // variant, monostate
-
 #include "core/type/math.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
+#include "core/type/variant.hpp"
 #include "core/type/vec.hpp"
 #include "core/vocabulary.hpp"
 #include "io/map/emit/gd/godot_file.hpp"
@@ -42,7 +41,7 @@ struct GdPolygon final {
 };
 
 struct GdObject final {
-  using Value = std::variant<GdRect, GdPolygon, GdPoint>;
+  using Value = Variant<GdRect, GdPolygon, GdPoint>;
 
   String name;
   String parent;
@@ -76,7 +75,7 @@ struct GdTileLayer final {
 };
 
 struct GdLayer final {
-  using Value = std::variant<std::monostate, GdTileLayer, GdObjectLayer>;
+  using Value = Variant<Monostate, GdTileLayer, GdObjectLayer>;
 
   String name;
   String parent;

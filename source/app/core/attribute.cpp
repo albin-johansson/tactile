@@ -120,25 +120,25 @@ void Attribute::reset_to_default(const AttributeType type)
 
 auto Attribute::has_default_value() const -> bool
 {
-  if (const auto* str = std::get_if<string_type>(&mValue)) {
+  if (const auto* str = eastl::get_if<string_type>(&mValue)) {
     return str->empty();
   }
-  else if (const auto* i = std::get_if<integer_type>(&mValue)) {
+  else if (const auto* i = eastl::get_if<integer_type>(&mValue)) {
     return *i == 0;
   }
-  else if (const auto* f = std::get_if<float_type>(&mValue)) {
+  else if (const auto* f = eastl::get_if<float_type>(&mValue)) {
     return *f == 0;
   }
-  else if (const auto* b = std::get_if<bool>(&mValue)) {
+  else if (const auto* b = eastl::get_if<bool>(&mValue)) {
     return !*b;
   }
-  else if (const auto* path = std::get_if<path_type>(&mValue)) {
+  else if (const auto* path = eastl::get_if<path_type>(&mValue)) {
     return path->empty();
   }
-  else if (const auto* obj = std::get_if<object_t>(&mValue)) {
+  else if (const auto* obj = eastl::get_if<object_t>(&mValue)) {
     return *obj == object_t {};
   }
-  else if (const auto* color = std::get_if<color_type>(&mValue)) {
+  else if (const auto* color = eastl::get_if<color_type>(&mValue)) {
     return *color == cen::colors::black;
   }
   else {
