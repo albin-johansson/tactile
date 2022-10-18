@@ -24,14 +24,15 @@
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"
 #include "core/uuid.hpp"
-#include "document_type.hpp"
+#include "core/vocabulary.hpp"
+#include "model/document/document_type.hpp"
 
 namespace tactile {
 
-class CommandStack;
-class ContextManager;
-class ComponentIndex;
-class Viewport;
+TACTILE_FWD_DECLARE_CLASS(CommandStack);
+TACTILE_FWD_DECLARE_CLASS(ContextManager);
+TACTILE_FWD_DECLARE_CLASS(ComponentIndex);
+TACTILE_FWD_DECLARE_CLASS(Viewport);
 
 /// Abstract base class for document representations.
 /// This is almost an interface, with some command functions implemented for convenience.
