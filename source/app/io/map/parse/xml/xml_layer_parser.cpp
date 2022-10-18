@@ -39,7 +39,7 @@ namespace {
 {
   Vec<XMLNode> nodes;
 
-  for (auto node : map_node.children()) {
+  for (auto node: map_node.children()) {
     if (std::strcmp(node.name(), "layer") == 0 ||
         std::strcmp(node.name(), "objectgroup") == 0 ||
         std::strcmp(node.name(), "group") == 0) {
@@ -58,7 +58,7 @@ namespace {
   auto tiles = make_tile_matrix(row_count, col_count);
 
   usize index {};
-  for (const auto& token : split(csv, ',')) {
+  for (const auto& token: split(csv, ',')) {
     if (const auto id = parse_i32(token)) {
       const auto [row, col] = to_matrix_coords(index, col_count);
       tiles[row][col] = *id;
@@ -81,7 +81,7 @@ namespace {
   auto tiles = make_tile_matrix(row_count, col_count);
 
   usize index = 0;
-  for (const auto tile_node : data_node.children("tile")) {
+  for (const auto tile_node: data_node.children("tile")) {
     const auto [row, col] = to_matrix_coords(index, col_count);
     tiles[row][col] = tile_node.attribute("gid").as_int(empty_tile);
 
@@ -197,7 +197,7 @@ namespace {
 {
   ir::ObjectLayerData object_layer;
 
-  for (const auto object_node : layer_node.children("object")) {
+  for (const auto object_node: layer_node.children("object")) {
     if (auto object = parse_object(object_node)) {
       object_layer.objects.push_back(std::move(*object));
     }
@@ -251,7 +251,7 @@ namespace {
     auto& group = layer.data.emplace<ir::GroupLayerData>();
 
     usize child_index = 0;
-    for (auto child_node : collect_layer_nodes(layer_node)) {
+    for (auto child_node: collect_layer_nodes(layer_node)) {
       if (auto child_layer = parse_layer(child_node, map, child_index)) {
         group.children.push_back(
             std::make_unique<ir::LayerData>(std::move(*child_layer)));
@@ -327,7 +327,7 @@ auto parse_layers(XMLNode map_node, ir::MapData& map)
   Vec<ir::LayerData> layers;
 
   usize index = 0;
-  for (const auto layer_node : collect_layer_nodes(map_node)) {
+  for (const auto layer_node: collect_layer_nodes(map_node)) {
     if (auto layer = parse_layer(layer_node, map, index)) {
       layers.push_back(std::move(*layer));
     }

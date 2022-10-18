@@ -40,39 +40,39 @@ class ContextManager final {
   using ComponentFunc = std::function<void(Component&)>;
 
  public:
-  explicit ContextManager(const UUID& rootContextId);
+  explicit ContextManager(const UUID& root_context_id);
 
   void add_context(Shared<Context> context);
 
-  void erase(const UUID& contextId);
+  void erase(const UUID& context_id);
 
-  void select(const UUID& contextId);
+  void select(const UUID& context_id);
 
   [[nodiscard]] auto get_context(const UUID& id) -> const Shared<Context>&;
 
-  [[nodiscard]] auto at(const UUID& contextId) -> Context&;
-  [[nodiscard]] auto at(const UUID& contextId) const -> const Context&;
+  [[nodiscard]] auto at(const UUID& context_id) -> Context&;
+  [[nodiscard]] auto at(const UUID& context_id) const -> const Context&;
 
-  [[nodiscard]] auto contains(const UUID& contextId) const -> bool;
+  [[nodiscard]] auto contains(const UUID& context_id) const -> bool;
 
   [[nodiscard]] auto size() const -> usize;
 
   [[nodiscard]] auto active_context() -> Context&;
   [[nodiscard]] auto active_context() const -> const Context&;
 
-  auto on_undef_comp(const UUID& componentId) -> HashMap<UUID, Component>;
+  auto on_undef_comp(const UUID& component_id) -> HashMap<UUID, Component>;
 
-  void on_new_component_attr(const UUID& componentId,
+  void on_new_component_attr(const UUID& component_id,
                              const String& name,
                              const Attribute& value);
 
-  void on_removed_component_attr(const UUID& componentId, StringView name);
+  void on_removed_component_attr(const UUID& component_id, StringView name);
 
-  void on_renamed_component_attr(const UUID& componentId,
-                                 StringView oldName,
-                                 const String& newName);
+  void on_renamed_component_attr(const UUID& component_id,
+                                 StringView old_name,
+                                 const String& new_name);
 
-  auto on_changed_component_attr_type(const UUID& componentId,
+  auto on_changed_component_attr_type(const UUID& component_id,
                                       StringView name,
                                       AttributeType type) -> HashMap<UUID, Attribute>;
 
@@ -84,7 +84,7 @@ class ContextManager final {
   UUID mActiveContextId;
   // TODO PERFORMANCE: maybe use HashMap<UUID, Vec<Shared<IContext>>>?
 
-  void on_component_update(const UUID& componentId, const ComponentFunc& func);
+  void on_component_update(const UUID& component_id, const ComponentFunc& func);
 };
 
 }  // namespace tactile

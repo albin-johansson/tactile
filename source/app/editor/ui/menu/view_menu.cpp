@@ -108,13 +108,13 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
         }
       };
 
-      for (const auto theme : light_themes) {
+      for (const auto theme: light_themes) {
         themeItem(theme);
       }
 
       ImGui::Separator();
 
-      for (const auto theme : dark_themes) {
+      for (const auto theme: dark_themes) {
         themeItem(theme);
       }
     }

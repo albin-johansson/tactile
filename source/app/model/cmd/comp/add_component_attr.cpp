@@ -33,9 +33,9 @@ namespace tactile::cmd {
 AddComponentAttr::AddComponentAttr(Document* document,
                                    const UUID& component_id,
                                    String name)
-    : mDocument {document}
-    , mComponentId {component_id}
-    , mName {std::move(name)}
+    : mDocument {document},
+      mComponentId {component_id},
+      mName {std::move(name)}
 {
   if (!mDocument) {
     throw TactileError {"Invalid null document!"};

@@ -106,7 +106,7 @@ void TileLayer::add_row()
 
 void TileLayer::add_column()
 {
-  for (auto& row : mTiles) {
+  for (auto& row: mTiles) {
     row.push_back(empty_tile);
   }
 }
@@ -119,7 +119,7 @@ void TileLayer::remove_row()
 
 void TileLayer::remove_column()
 {
-  for (auto& row : mTiles) {
+  for (auto& row: mTiles) {
     TACTILE_ASSERT(row.size() > 1);
     row.pop_back();
   }

@@ -48,7 +48,7 @@ namespace {
   if (const auto iter = json.find("objects"); iter != json.end()) {
     object_layer_data.objects.reserve(iter->size());
 
-    for (const auto& [_, value] : iter->items()) {
+    for (const auto& [_, value]: iter->items()) {
       auto& object_data = object_layer_data.objects.emplace_back();
       if (const auto err = parse_object(value, object_data); err != ParseError::None) {
         return err;
@@ -67,7 +67,7 @@ namespace {
   }
 
   usize index = 0;
-  for (const auto& [_, value] : json.items()) {
+  for (const auto& [_, value]: json.items()) {
     if (value.is_number_integer()) {
       const auto [row, col] = to_matrix_coords(index, tile_layer.col_count);
       tile_layer.tiles[row][col] = value.get<TileID>();
@@ -200,7 +200,7 @@ namespace {
       auto& group_layer = layer.data.emplace<ir::GroupLayerData>();
 
       usize child_index = 0;
-      for (const auto& [_, value] : json.at("layers").items()) {
+      for (const auto& [_, value]: json.at("layers").items()) {
         auto& child_layer =
             group_layer.children.emplace_back(std::make_unique<ir::LayerData>());
 
@@ -277,7 +277,7 @@ auto parse_layers(const JSON& json, ir::MapData& map) -> ParseError
   map.layers.reserve(iter->size());
 
   usize index = 0;
-  for (const auto& [key, value] : iter->items()) {
+  for (const auto& [key, value]: iter->items()) {
     auto& layer_data = map.layers.emplace_back();
 
     if (const auto err = parse_layer(value, map, layer_data, index);

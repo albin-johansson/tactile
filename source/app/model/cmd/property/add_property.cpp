@@ -30,9 +30,9 @@
 namespace tactile::cmd {
 
 AddProperty::AddProperty(Shared<Context> context, String name, const AttributeType type)
-    : mContext {std::move(context)}
-    , mName {std::move(name)}
-    , mType {type}
+    : mContext {std::move(context)},
+      mName {std::move(name)},
+      mType {type}
 {
   if (!mContext) {
     throw TactileError {"Invalid null context!"};

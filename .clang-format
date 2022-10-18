@@ -41,6 +41,8 @@ AllowShortLoopsOnASingleLine: false
 
 SpaceAfterCStyleCast: true
 SpaceBeforeCpp11BracedList: true
+SpaceBeforeCtorInitializerColon: false
+SpaceBeforeRangeBasedForLoopColon: false
 
 BreakBeforeBraces: Stroustrup
 BreakBeforeBinaryOperators: None
@@ -48,8 +50,8 @@ BreakBeforeTernaryOperators: true
 BreakBeforeConceptDeclarations: true
 
 BreakStringLiterals: true
-BreakInheritanceList: BeforeComma
-BreakConstructorInitializers: BeforeComma
+BreakInheritanceList: AfterColon
+BreakConstructorInitializers: BeforeColon
 
 SortIncludes: CaseSensitive
 IncludeBlocks: Regroup

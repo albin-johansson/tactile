@@ -32,14 +32,14 @@ namespace tactile {
 
 void DocumentManager::each(const DocVisitorFn& op) const
 {
-  for (const auto& [id, doc] : mDocuments) {
+  for (const auto& [id, doc]: mDocuments) {
     op(doc);
   }
 }
 
 void DocumentManager::each_open(const IdVisitorFn& op) const
 {
-  for (const auto& id : mOpenDocuments) {
+  for (const auto& id: mOpenDocuments) {
     op(id);
   }
 }
@@ -160,7 +160,7 @@ void DocumentManager::close(const UUID& id)
 
 void DocumentManager::remove_unused_tilesets_from(const TilesetBundle& bundle)
 {
-  for (const auto& [id, tileset] : bundle) {
+  for (const auto& [id, tileset]: bundle) {
     if (!is_tileset_used(id)) {
       remove_tileset(id);
     }
@@ -304,7 +304,7 @@ auto DocumentManager::view_tileset(const UUID& id) const -> const TilesetDocumen
 
 auto DocumentManager::first_match(const PredicateFn& pred) const -> Maybe<UUID>
 {
-  for (const auto& [id, document] : mDocuments) {
+  for (const auto& [id, document]: mDocuments) {
     if (pred(*document)) {
       return id;
     }

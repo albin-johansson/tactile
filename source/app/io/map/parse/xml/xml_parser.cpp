@@ -96,7 +96,7 @@ namespace {
 
   const auto dir = path.parent_path();
 
-  for (auto tileset_node : map_node.children("tileset")) {
+  for (auto tileset_node: map_node.children("tileset")) {
     if (auto tileset = parse_tileset(tileset_node, dir)) {
       data.tilesets.push_back(std::move(*tileset));
     }

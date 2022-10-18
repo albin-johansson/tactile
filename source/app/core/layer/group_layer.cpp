@@ -43,8 +43,8 @@ using ConstVisitorFunc =
 class LayerMutatorVisitor : public LayerVisitor {
  public:
   explicit LayerMutatorVisitor(const UUID& target, VisitorFunc func)
-      : mTarget {target}
-      , mFunc {std::move(func)}
+      : mTarget {target},
+        mFunc {std::move(func)}
   {
   }
 
@@ -72,8 +72,8 @@ class LayerMutatorVisitor : public LayerVisitor {
 class LayerQueryVisitor : public ConstLayerVisitor {
  public:
   explicit LayerQueryVisitor(const UUID& target, ConstVisitorFunc func)
-      : mTarget {target}
-      , mFunc {std::move(func)}
+      : mTarget {target},
+        mFunc {std::move(func)}
   {
   }
 
@@ -279,14 +279,14 @@ void GroupLayer::accept(ConstLayerVisitor& visitor) const
 
 void GroupLayer::each(LayerVisitor& visitor)
 {
-  for (const auto& layer : mLayers) {
+  for (const auto& layer: mLayers) {
     layer->accept(visitor);
   }
 }
 
 void GroupLayer::each(ConstLayerVisitor& visitor) const
 {
-  for (const auto& layer : mLayers) {
+  for (const auto& layer: mLayers) {
     layer->accept(visitor);
   }
 }
@@ -684,7 +684,7 @@ auto GroupLayer::clone() const -> Shared<Layer>
   auto result = std::make_shared<GroupLayer>();
   result->mDelegate = mDelegate.clone();
 
-  for (const auto& layer : mLayers) {
+  for (const auto& layer: mLayers) {
     result->mLayers.push_back(layer->clone());
   }
 

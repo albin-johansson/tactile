@@ -46,7 +46,7 @@ namespace {
   auto tiles = make_tile_matrix(rows, columns);
 
   usize index = 0;
-  for (const auto& token : split(tile_data, ' ')) {
+  for (const auto& token: split(tile_data, ' ')) {
     if (const auto id = parse_i32(token)) {
       const auto [row, col] = to_matrix_coords(index, columns);
       tiles[row][col] = *id;
@@ -103,7 +103,7 @@ namespace {
   if (auto sequence = node["objects"]) {
     object_layer.objects.reserve(sequence.size());
 
-    for (const auto& object_node : sequence) {
+    for (const auto& object_node: sequence) {
       if (auto object = parse_object(object_node, map)) {
         object_layer.objects.push_back(std::move(*object));
       }
@@ -125,7 +125,7 @@ namespace {
     group.children.reserve(sequence.size());
 
     usize index = 0;
-    for (const auto& layer_node : sequence) {
+    for (const auto& layer_node: sequence) {
       if (auto child = parse_layer(layer_node, map, index)) {
         group.children.push_back(std::make_unique<ir::LayerData>(std::move(*child)));
       }
@@ -257,7 +257,7 @@ auto parse_layers(const YAML::Node& sequence, const ir::MapData& map)
   layers.reserve(sequence.size());
 
   usize index = 0;
-  for (const auto& layer_node : sequence) {
+  for (const auto& layer_node: sequence) {
     if (auto layer = parse_layer(layer_node, map, index)) {
       layers.push_back(std::move(*layer));
     }

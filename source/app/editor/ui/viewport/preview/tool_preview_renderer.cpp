@@ -34,9 +34,9 @@ namespace tactile::ui {
 ToolPreviewRenderer::ToolPreviewRenderer(const DocumentModel& model,
                                          Graphics& graphics,
                                          const MouseInfo& mouse)
-    : mModel {model}
-    , mGraphics {graphics}
-    , mMouseInfo {mouse}
+    : mModel {model},
+      mGraphics {graphics},
+      mMouseInfo {mouse}
 {
 }
 

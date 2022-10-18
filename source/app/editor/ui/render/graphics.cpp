@@ -81,14 +81,14 @@ void add_ellipse(ImDrawList* self,
 }  // namespace
 
 Graphics::Graphics(const RenderInfo& info)
-    : mCanvasTL {info.canvas_tl}
-    , mCanvasBR {info.canvas_br}
-    , mOrigin {info.origin}
-    , mViewportTileSize {info.grid_size}
-    , mLogicalTileSize {info.tile_size}
-    , mTileSizeRatio {info.ratio}
-    , mBounds {info.bounds}
-    , mBoundsRect {convert_bounds_to_rect(info)}
+    : mCanvasTL {info.canvas_tl},
+      mCanvasBR {info.canvas_br},
+      mOrigin {info.origin},
+      mViewportTileSize {info.grid_size},
+      mLogicalTileSize {info.tile_size},
+      mTileSizeRatio {info.ratio},
+      mBounds {info.bounds},
+      mBoundsRect {convert_bounds_to_rect(info)}
 {
 }
 

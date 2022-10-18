@@ -89,7 +89,7 @@ auto load_texture(const Path& path) -> Maybe<TextureInfo>
 
 void free_textures()
 {
-  for (const auto texture : textures) {
+  for (const auto texture: textures) {
     spdlog::trace("Deleting texture {}", texture);
     glDeleteTextures(1, &texture);
   }

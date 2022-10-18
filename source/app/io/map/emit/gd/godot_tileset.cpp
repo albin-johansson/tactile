@@ -46,7 +46,7 @@ auto GodotTileset::index_of(const UUID& tileset_id) const -> int32
 {
   int32 index {};
 
-  for (const auto& info : mTilesetInfos) {
+  for (const auto& info: mTilesetInfos) {
     if (info.uuid == tileset_id) {
       return index;
     }

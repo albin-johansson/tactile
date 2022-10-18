@@ -45,7 +45,7 @@ void emit_properties(YAML::Emitter& emitter, const ir::ContextData& context)
   if (!context.properties.empty()) {
     emitter << YAML::Key << "properties" << YAML::BeginSeq;
 
-    for (const auto& [name, value] : context.properties) {
+    for (const auto& [name, value]: context.properties) {
       emitter << YAML::BeginMap;
       emitter << YAML::Key << "name" << YAML::Value << name;
       emitter << YAML::Key << "type" << YAML::Value << value.type();
@@ -62,13 +62,13 @@ void emit_components(YAML::Emitter& emitter, const ir::ContextData& context)
   if (!context.components.empty()) {
     emitter << YAML::Key << "components" << YAML::BeginSeq;
 
-    for (const auto& [type, values] : context.components) {
+    for (const auto& [type, values]: context.components) {
       emitter << YAML::BeginMap;
 
       emitter << YAML::Key << "type" << YAML::Value << type;
       emitter << YAML::Key << "values" << YAML::BeginSeq;
 
-      for (const auto& [attr_name, attr_value] : values) {
+      for (const auto& [attr_name, attr_value]: values) {
         emitter << YAML::BeginMap;
         emitter << YAML::Key << "name" << YAML::Value << attr_name;
         emitter << YAML::Key << "value" << YAML::Value << attr_value;
@@ -145,7 +145,7 @@ void emit_object_layer_data(YAML::Emitter& emitter, const ir::ObjectLayerData& d
 
   emitter << YAML::Key << "objects" << YAML::BeginSeq;
 
-  for (const auto& object_data : data.objects) {
+  for (const auto& object_data: data.objects) {
     emit_object_data(emitter, object_data);
   }
 
@@ -235,7 +235,7 @@ void emit_layer(YAML::Emitter& emitter,
       emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
       const auto& group_layer = layer.as_group_layer();
-      for (const auto& child_layer_data : group_layer.children) {
+      for (const auto& child_layer_data: group_layer.children) {
         emit_layer(emitter, map, *child_layer_data);
       }
 
@@ -258,7 +258,7 @@ void emit_layers(YAML::Emitter& emitter, const ir::MapData& map)
 
   emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
-  for (const auto& layer_data : map.layers) {
+  for (const auto& layer_data: map.layers) {
     emit_layer(emitter, map, layer_data);
   }
 
@@ -269,7 +269,7 @@ void emit_tileset_tile_animation(YAML::Emitter& emitter, const ir::MetaTileData&
 {
   emitter << YAML::Key << "animation" << YAML::BeginSeq;
 
-  for (const auto& frame_data : data.frames) {
+  for (const auto& frame_data: data.frames) {
     emitter << YAML::BeginMap;
     emitter << YAML::Key << "tile" << YAML::Value << frame_data.tile_index;
     emitter << YAML::Key << "duration" << YAML::Value << frame_data.duration_ms;
@@ -283,7 +283,7 @@ void emit_tileset_tiles(YAML::Emitter& emitter, const ir::TilesetData& tileset)
 {
   emitter << YAML::Key << "tiles" << YAML::BeginSeq;
 
-  for (const auto& [id, tile] : tileset.fancy_tiles) {
+  for (const auto& [id, tile]: tileset.fancy_tiles) {
     emitter << YAML::BeginMap;
     emitter << YAML::Key << "id" << YAML::Value << id;
 
@@ -293,7 +293,7 @@ void emit_tileset_tiles(YAML::Emitter& emitter, const ir::TilesetData& tileset)
 
     if (!tile.objects.empty()) {
       emitter << YAML::Key << "objects" << YAML::BeginSeq;
-      for (const auto& object_data : tile.objects) {
+      for (const auto& object_data: tile.objects) {
         emit_object_data(emitter, object_data);
       }
       emitter << YAML::EndSeq;
@@ -357,7 +357,7 @@ void emit_tilesets(YAML::Emitter& emitter, const EmitInfo& info)
 
   emitter << YAML::Key << "tilesets" << YAML::BeginSeq;
 
-  for (const auto& tileset : data.tilesets) {
+  for (const auto& tileset: data.tilesets) {
     const auto source = format_str("{}.yaml", tileset.name);
     emit_tileset_file(info, source, tileset);
 
@@ -395,14 +395,14 @@ void emit_component_definitions(YAML::Emitter& emitter, const EmitInfo& info)
 
   emitter << YAML::Key << "component-definitions" << YAML::BeginSeq;
 
-  for (const auto& [name, attributes] : data.component_definitions) {
+  for (const auto& [name, attributes]: data.component_definitions) {
     emitter << YAML::BeginMap;
     emitter << YAML::Key << "name" << YAML::Value << name;
 
     if (!attributes.empty()) {
       emitter << YAML::Key << "attributes" << YAML::BeginSeq;
 
-      for (const auto& [attrName, attrValue] : attributes) {
+      for (const auto& [attrName, attrValue]: attributes) {
         emit_component_definition_attribute(emitter, attrName, attrValue);
       }
 

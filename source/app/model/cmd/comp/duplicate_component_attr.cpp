@@ -33,9 +33,9 @@ namespace tactile::cmd {
 DuplicateComponentAttr::DuplicateComponentAttr(Document* document,
                                                const UUID& component_id,
                                                String attribute)
-    : mDocument {document}
-    , mComponentId {component_id}
-    , mAttributeName {std::move(attribute)}
+    : mDocument {document},
+      mComponentId {component_id},
+      mAttributeName {std::move(attribute)}
 {
   if (!mDocument) {
     throw TactileError {"Invalid null document!"};

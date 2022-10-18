@@ -175,7 +175,7 @@ struct MapData final {
 template <std::invocable<const ObjectLayerData&> T>
 void each_object_layer(const GroupLayerData& root, T&& callable)
 {
-  for (const auto& layer : root.children) {
+  for (const auto& layer: root.children) {
     if (layer->type == LayerType::GroupLayer) {
       const auto& group = layer->as_group_layer();
       each_object_layer(group, callable);
@@ -190,7 +190,7 @@ void each_object_layer(const GroupLayerData& root, T&& callable)
 template <std::invocable<const ObjectLayerData&> T>
 void each_object_layer(const MapData& map, T&& callable)
 {
-  for (const auto& layer : map.layers) {
+  for (const auto& layer: map.layers) {
     if (layer.type == LayerType::GroupLayer) {
       const auto& group = layer.as_group_layer();
       each_object_layer(group, callable);

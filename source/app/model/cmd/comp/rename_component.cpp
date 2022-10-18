@@ -31,9 +31,9 @@ namespace tactile::cmd {
 RenameComponent::RenameComponent(Shared<ComponentIndex> index,
                                  const UUID& component_id,
                                  String name)
-    : mIndex {std::move(index)}
-    , mComponentId {component_id}
-    , mUpdatedName {std::move(name)}
+    : mIndex {std::move(index)},
+      mComponentId {component_id},
+      mUpdatedName {std::move(name)}
 {
   if (!mIndex) {
     throw TactileError {"Invalid null component index!"};

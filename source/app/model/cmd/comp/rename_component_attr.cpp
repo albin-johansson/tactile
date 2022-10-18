@@ -34,10 +34,10 @@ RenameComponentAttr::RenameComponentAttr(Document* document,
                                          const UUID& component_id,
                                          String previous_name,
                                          String updated_name)
-    : mDocument {document}
-    , mComponentId {component_id}
-    , mPreviousName {std::move(previous_name)}
-    , mUpdatedName {std::move(updated_name)}
+    : mDocument {document},
+      mComponentId {component_id},
+      mPreviousName {std::move(previous_name)},
+      mUpdatedName {std::move(updated_name)}
 {
   if (!mDocument) {
     throw TactileError {"Invalid null document!"};

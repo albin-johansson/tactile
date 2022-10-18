@@ -27,9 +27,9 @@
 namespace tactile {
 
 TilesetRef::TilesetRef(Shared<Tileset> tileset, const TileID first, const TileID last)
-    : mTileset {std::move(tileset)}
-    , mFirstTile {first}
-    , mLastTile {last}
+    : mTileset {std::move(tileset)},
+      mFirstTile {first},
+      mLastTile {last}
 {
   if (!mTileset) {
     throw TactileError {"Invalid null tileset!"};

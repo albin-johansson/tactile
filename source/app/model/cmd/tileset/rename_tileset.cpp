@@ -29,8 +29,8 @@
 namespace tactile::cmd {
 
 RenameTileset::RenameTileset(Shared<Tileset> tileset, String name)
-    : mTileset {std::move(tileset)}
-    , mNewName {std::move(name)}
+    : mTileset {std::move(tileset)},
+      mNewName {std::move(name)}
 {
   if (!mTileset) {
     throw TactileError {"Invalid null tileset!"};

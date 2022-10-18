@@ -28,8 +28,8 @@
 namespace tactile::cmd {
 
 MoveLayerDown::MoveLayerDown(Shared<Map> map, const UUID& layer_id)
-    : mMap {std::move(map)}
-    , mLayerId {layer_id}
+    : mMap {std::move(map)},
+      mLayerId {layer_id}
 {
   if (!mMap) {
     throw TactileError {"Invalid null map!"};

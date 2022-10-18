@@ -34,7 +34,7 @@ TEST(ComponentBase, Defaults)
   ASSERT_EQ(0, component.size());
 
   usize count = 0;
-  for (const auto& x : component) {
+  for (const auto& x [[maybe_unused]]: component) {
     ++count;
   }
 

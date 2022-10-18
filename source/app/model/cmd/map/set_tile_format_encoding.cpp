@@ -28,8 +28,8 @@
 namespace tactile {
 
 SetTileFormatEncoding::SetTileFormatEncoding(Shared<Map> map, const TileEncoding encoding)
-    : mMap {std::move(map)}
-    , mNewEncoding {encoding}
+    : mMap {std::move(map)},
+      mNewEncoding {encoding}
 {
   if (!mMap) {
     throw TactileError {"Invalid null map!"};

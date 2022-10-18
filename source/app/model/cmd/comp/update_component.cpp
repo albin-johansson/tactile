@@ -32,10 +32,10 @@ UpdateComponent::UpdateComponent(Shared<ComponentIndex> index,
                                  const UUID& component_id,
                                  String attribute,
                                  Attribute value)
-    : mIndex {std::move(index)}
-    , mComponentId {component_id}
-    , mAttributeName {std::move(attribute)}
-    , mUpdatedValue {std::move(value)}
+    : mIndex {std::move(index)},
+      mComponentId {component_id},
+      mAttributeName {std::move(attribute)},
+      mUpdatedValue {std::move(value)}
 {
   if (!mIndex) {
     throw TactileError {"Invalid null component index!"};

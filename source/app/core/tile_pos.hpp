@@ -37,8 +37,8 @@ class TilePos final {
   constexpr TilePos() noexcept = default;
 
   constexpr TilePos(const int32 row, const int32 column) noexcept
-      : mRow {row}
-      , mCol {column}
+      : mRow {row},
+        mCol {column}
   {
   }
 

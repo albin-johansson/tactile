@@ -90,7 +90,7 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
     const auto& map = map_document.get_map();
     const auto& tilesets = map.tileset_bundle();
 
-    for (const auto& [tilesetId, ref] : tilesets) {
+    for (const auto& [tilesetId, ref]: tilesets) {
       const Scope scope {tilesetId};
 
       const auto& name = ref.view_tileset().ctx().name();

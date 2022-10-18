@@ -166,7 +166,7 @@ void show_object_layer_selectable(const Map& map,
     update_layer_popup(map, layer, dispatcher);
 
     const auto& object_layer = dynamic_cast<const ObjectLayer&>(layer);
-    for (const auto& [object_id, object] : object_layer) {
+    for (const auto& [object_id, object]: object_layer) {
       show_object_selectable(object_layer, *object, dispatcher);
     }
   }
@@ -202,7 +202,7 @@ void show_group_layer_selectable(const MapDocument& document,
     update_layer_popup(map, layer, dispatcher);
 
     const auto& group = dynamic_cast<const GroupLayer&>(layer);
-    for (const auto& child : group.storage()) {
+    for (const auto& child: group.storage()) {
       layer_selectable(document, *child, dispatcher);
     }
   }

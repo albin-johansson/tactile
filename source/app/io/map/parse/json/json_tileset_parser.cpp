@@ -47,7 +47,7 @@ namespace {
   if (const auto iter = json.find("animation"); iter != json.end()) {
     tile_data.frames.reserve(iter->size());
 
-    for (const auto& [_, frameJson] : iter->items()) {
+    for (const auto& [_, frameJson]: iter->items()) {
       auto& frame_data = tile_data.frames.emplace_back();
 
       if (const auto index = as_int(frameJson, "tileid")) {
@@ -71,7 +71,7 @@ namespace {
     if (objects_iter != layer_iter->end()) {
       tile_data.objects.reserve(objects_iter->size());
 
-      for (const auto& [_, objectJson] : objects_iter->items()) {
+      for (const auto& [_, objectJson]: objects_iter->items()) {
         auto& object_data = tile_data.objects.emplace_back();
         if (const auto err = parse_object(objectJson, object_data);
             err != ParseError::None) {
@@ -93,7 +93,7 @@ namespace {
     -> ParseError
 {
   if (json.contains("tiles")) {
-    for (const auto& [_, value] : json.at("tiles").items()) {
+    for (const auto& [_, value]: json.at("tiles").items()) {
       if (const auto err = parse_fancy_tile(value, tileset_data);
           err != ParseError::None) {
         return err;
@@ -249,7 +249,7 @@ auto parse_tilesets(const JSON& json, ir::MapData& map_data, const Path& dir)
 
   map_data.tilesets.reserve(iter->size());
 
-  for (const auto& [_, value] : iter->items()) {
+  for (const auto& [_, value]: iter->items()) {
     auto& tileset_data = map_data.tilesets.emplace_back();
     if (const auto err = parse_tileset(value, tileset_data, dir);
         err != ParseError::None) {

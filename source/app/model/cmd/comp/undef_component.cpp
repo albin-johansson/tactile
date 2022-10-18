@@ -32,8 +32,8 @@
 namespace tactile::cmd {
 
 UndefComponent::UndefComponent(Document* document, const UUID& component_id)
-    : mDocument {document}
-    , mComponentId {component_id}
+    : mDocument {document},
+      mComponentId {component_id}
 {
   if (!mDocument) {
     throw TactileError {"Invalid null document!"};
@@ -49,7 +49,7 @@ void UndefComponent::undo()
 
   // Restores previously removed components
   auto& contexts = mDocument->get_contexts();
-  for (auto [contextId, component] : mRemovedComponents) {
+  for (auto [contextId, component]: mRemovedComponents) {
     auto& context = contexts.at(contextId);
     context.ctx().comps().add(std::move(component));
   }

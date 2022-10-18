@@ -35,10 +35,10 @@ SetComponentAttrType::SetComponentAttrType(Document* document,
                                            const UUID& component_id,
                                            String attribute,
                                            const AttributeType type)
-    : mDocument {document}
-    , mComponentId {component_id}
-    , mAttributeName {std::move(attribute)}
-    , mNewType {type}
+    : mDocument {document},
+      mComponentId {component_id},
+      mAttributeName {std::move(attribute)},
+      mNewType {type}
 {
   if (!mDocument) {
     throw TactileError {"Invalid null document!"};
@@ -54,7 +54,7 @@ void SetComponentAttrType::undo()
   definition.add(mAttributeName, mSnapshot.value());
 
   auto& contexts = mDocument->get_contexts();
-  for (const auto& [contextId, attribute] : mPrevAttributes) {
+  for (const auto& [contextId, attribute]: mPrevAttributes) {
     auto& context = contexts.at(contextId);
     auto& comp = context.ctx().comps().at(definition.uuid());
 

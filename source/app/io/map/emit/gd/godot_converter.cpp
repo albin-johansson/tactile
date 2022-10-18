@@ -50,13 +50,13 @@ using TilesetTextures = HashMap<UUID, GdExtRes>;
 {
   GdMetaData meta;
 
-  for (const auto& [name, value] : context.properties) {
+  for (const auto& [name, value]: context.properties) {
     meta.props[name] = value;
   }
 
-  for (const auto& [name, attrs] : context.components) {
+  for (const auto& [name, attrs]: context.components) {
     auto& comp = meta.comps[name];
-    for (const auto& [attr_name, attr_value] : attrs) {
+    for (const auto& [attr_name, attr_value]: attrs) {
       comp[attr_name] = attr_value;
     }
   }
@@ -69,7 +69,7 @@ using TilesetTextures = HashMap<UUID, GdExtRes>;
 {
   GodotTileset result;
 
-  for (const auto& tileset : map.tilesets) {
+  for (const auto& tileset: map.tilesets) {
     const auto image_name = tileset.image_path.filename().string();
     const auto texture_id =
         result.add_texture(options.project_image_dir / image_name, tileset.image_path);
@@ -94,7 +94,7 @@ void add_tileset_textures(const ir::MapData& map,
                           GodotFile& file,
                           HashMap<UUID, GdExtRes>& tileset_textures)
 {
-  for (const auto& tileset : map.tilesets) {
+  for (const auto& tileset: map.tilesets) {
     const auto filename =
         tileset.name + from_std(tileset.image_path.extension().string());
     const auto relpath = options.project_image_dir / to_std_view(filename);
@@ -122,7 +122,7 @@ void add_animation(const ir::TilesetData& tileset,
   // Godot only supports a single speed for animations, so we just use the first frame
   animation.speed = 1'000.0f / static_cast<float>(tile.frames.front().duration_ms);
 
-  for (const auto& frame : tile.frames) {
+  for (const auto& frame: tile.frames) {
     const auto pos = TilePos::from_index(frame.tile_index, tileset.column_count);
 
     GdAtlasTexture texture;
@@ -142,8 +142,8 @@ void add_animations(const ir::MapData& map,
                     const TilesetTextures& tileset_textures,
                     GodotFile& file)
 {
-  for (const auto& tileset : map.tilesets) {
-    for (const auto& [tile_index, tile] : tileset.fancy_tiles) {
+  for (const auto& tileset: map.tilesets) {
+    for (const auto& [tile_index, tile]: tileset.fancy_tiles) {
       if (!tile.frames.empty()) {
         const auto texture_id = lookup_in(tileset_textures, tileset.uuid);
         add_animation(tileset, texture_id, tile_index, tile, file);
@@ -235,7 +235,7 @@ void add_object_layer(const GodotEmitOptions& options,
                                  ? to_godot_name(layer.name)
                                  : format_str("{}/{}", parent, to_godot_name(layer.name));
 
-  for (const auto& object : object_layer.objects) {
+  for (const auto& object: object_layer.objects) {
     gd_object_layer.objects.push_back(
         create_object(options, object, object_parent, scene));
   }
@@ -327,7 +327,7 @@ void add_layer(const GodotEmitOptions& options,
           (parent == ".") ? layer_name : format_str("{}/{}", parent, layer_name);
 
       const auto& group_layer = layer.as_group_layer();
-      for (const auto& child_layer : group_layer.children) {
+      for (const auto& child_layer: group_layer.children) {
         add_layer(options, map, *child_layer, child_parent_path, scene);
       }
 
@@ -353,7 +353,7 @@ auto convert_to_godot(const ir::MapData& map, const GodotEmitOptions& options)
   add_tileset_textures(map, options, scene, tileset_textures);
   add_animations(map, tileset_textures, scene);
 
-  for (const auto& layer : map.layers) {
+  for (const auto& layer: map.layers) {
     add_layer(options, map, layer, ".", scene);
   }
 

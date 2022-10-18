@@ -48,7 +48,7 @@ TEST(ComponentDefinition, Instantiate)
   ASSERT_EQ(definition.uuid(), instance.definition_id());
   ASSERT_EQ(definition.size(), instance.size());
 
-  for (const auto& [key, value] : instance) {
+  for (const auto& [key, value]: instance) {
     ASSERT_EQ(definition.at(key), value);
   }
 }

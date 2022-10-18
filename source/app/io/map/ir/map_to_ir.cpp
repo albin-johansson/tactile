@@ -37,17 +37,17 @@ void convert_context(const Context& context,
                      const ComponentIndex* components,
                      ir::ContextData& data)
 {
-  for (const auto& [name, property] : context.ctx().props()) {
+  for (const auto& [name, property]: context.ctx().props()) {
     data.properties[name] = property;
   }
 
   if (components) {
-    for (const auto& [component_id, component] : context.ctx().comps()) {
+    for (const auto& [component_id, component]: context.ctx().comps()) {
       const auto& definition = components->at(component.definition_id());
       const auto& name = definition.name();
 
       auto& attributes = data.components[name];
-      for (const auto& [attr_name, attr_value] : component) {
+      for (const auto& [attr_name, attr_value]: component) {
         attributes[attr_name] = attr_value;
       }
     }
@@ -83,7 +83,7 @@ void convert_object_layer(const ObjectLayer& layer,
                           ir::ObjectLayerData& data)
 {
   data.objects.reserve(layer.object_count());
-  for (const auto& [id, object] : layer) {
+  for (const auto& [id, object]: layer) {
     auto& object_data = data.objects.emplace_back();
     convert_object(*object, index, object_data);
   }
@@ -96,7 +96,7 @@ void convert_group_layer(const GroupLayer& layer,
   data.children.reserve(layer.storage().size());
 
   usize index {0};
-  for (const auto& immediate_child : layer.storage()) {
+  for (const auto& immediate_child: layer.storage()) {
     TACTILE_ASSERT(immediate_child->parent() == layer.uuid());
 
     auto& layer_data = data.children.emplace_back(std::make_unique<ir::LayerData>());
@@ -169,7 +169,7 @@ void convert_fancy_tile_animation(const TileAnimation& animation, ir::MetaTileDa
 {
   data.frames.reserve(animation.size());
 
-  for (const auto& frame : animation) {
+  for (const auto& frame: animation) {
     auto& frame_data = data.frames.emplace_back();
     frame_data.tile_index = frame.tile;
     frame_data.duration_ms = static_cast<uint64>(frame.duration.count());
@@ -180,7 +180,7 @@ void convert_fancy_tiles(const Tileset& tileset,
                          const ComponentIndex* components,
                          ir::TilesetData& data)
 {
-  for (const auto& [id, tile] : tileset) {
+  for (const auto& [id, tile]: tileset) {
     const auto is_animated = tile->is_animated();
     const auto has_objects = tile->object_count() != 0;
     const auto has_props = !tile->ctx().props().empty();
@@ -198,7 +198,7 @@ void convert_fancy_tiles(const Tileset& tileset,
       }
 
       if (has_objects) {
-        for (const auto& [objectId, object] : tile->get_objects()) {
+        for (const auto& [objectId, object]: tile->get_objects()) {
           auto& object_data = tile_data.objects.emplace_back();
           convert_object(*object, components, object_data);
         }
@@ -212,7 +212,7 @@ void convert_tilesets(const MapDocument& document,
                       ir::MapData& data)
 {
   const auto& map = document.get_map();
-  for (const auto& [tileset_id, tileset_ref] : map.tileset_bundle()) {
+  for (const auto& [tileset_id, tileset_ref]: map.tileset_bundle()) {
     const auto& tileset = tileset_ref.view_tileset();
 
     auto& tileset_data = data.tilesets.emplace_back();
@@ -233,9 +233,9 @@ void convert_tilesets(const MapDocument& document,
 
 void convert_component_definitions(const ComponentIndex& manager, ir::MapData& data)
 {
-  for (const auto& [id, definition] : manager) {
+  for (const auto& [id, definition]: manager) {
     auto& attributes = data.component_definitions[definition.name()];
-    for (const auto& [attr_name, attr_value] : definition) {
+    for (const auto& [attr_name, attr_value]: definition) {
       attributes[attr_name] = attr_value;
     }
   }

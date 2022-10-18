@@ -52,8 +52,8 @@ struct ComponentEditor::Data final {
 };
 
 ComponentEditor::ComponentEditor()
-    : Dialog {get_current_language().window.component_editor}
-    , mData {std::make_unique<Data>()}
+    : Dialog {get_current_language().window.component_editor},
+      mData {std::make_unique<Data>()}
 {
   set_accept_button_label(nothing);
 }
@@ -110,7 +110,7 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
     const auto& definition = index->at(data.active_component.value());
     const auto& name = definition.name();
     if (Combo combo {"##ComponentEditorCombo", name.c_str()}; combo.is_open()) {
-      for (const auto& [componentId, component] : *index) {
+      for (const auto& [componentId, component]: *index) {
         if (ImGui::Selectable(component.name().c_str())) {
           data.active_component = component.uuid();
         }
@@ -190,7 +190,7 @@ void ComponentEditor::show_component_attributes(const ComponentDefinition& defin
                               ImGuiTableColumnFlags_WidthStretch);
       ImGui::TableHeadersRow();
 
-      for (const auto& [name, attr] : definition) {
+      for (const auto& [name, attr]: definition) {
         show_component_attribute(definition.uuid(), name, attr, dispatcher);
       }
     }

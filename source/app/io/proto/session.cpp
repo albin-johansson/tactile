@@ -50,7 +50,7 @@ void restore_last_session(DocumentModel& model)
 
   auto stream = read_file(get_file_path(), FileType::Binary);
   if (session.ParseFromIstream(&stream)) {
-    for (const auto& file : session.files()) {
+    for (const auto& file: session.files()) {
       const auto ir = parse_map(file);
       if (ir.error() == ParseError::None) {
         map_from_ir(ir, model);

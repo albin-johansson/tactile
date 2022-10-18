@@ -32,8 +32,8 @@
 namespace tactile {
 
 MapDocument::MapDocument(const Int2& tile_size, const usize rows, const usize columns)
-    : mMap {std::make_shared<Map>()}
-    , mDelegate {mMap->uuid()}
+    : mMap {std::make_shared<Map>()},
+      mDelegate {mMap->uuid()}
 {
   mMap->resize(rows, columns);
   mMap->set_tile_size(tile_size);
@@ -45,7 +45,7 @@ MapDocument::MapDocument(const Int2& tile_size, const usize rows, const usize co
 
 void MapDocument::update()
 {
-  for (auto& [id, ref] : mMap->tileset_bundle()) {
+  for (auto& [id, ref]: mMap->tileset_bundle()) {
     ref.update();
   }
 }

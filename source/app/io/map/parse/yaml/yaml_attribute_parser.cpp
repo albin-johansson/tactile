@@ -140,7 +140,7 @@ namespace {
   ir::AttributeMap def;
 
   if (auto attribute_seq = node["attributes"]) {
-    for (auto attribute_node : attribute_seq) {
+    for (auto attribute_node: attribute_seq) {
       String attribute_name;
       if (!read_attribute(attribute_node, "name", attribute_name)) {
         return error(ParseError::NoComponentDefAttributeName);
@@ -168,7 +168,7 @@ namespace {
   ir::AttributeMap comp;
 
   if (auto sequence = node["values"]) {
-    for (const auto& value_node : sequence) {
+    for (const auto& value_node: sequence) {
       String attr_name;
       if (!read_attribute(value_node, "name", attr_name)) {
         return error(ParseError::NoComponentAttributeName);
@@ -200,7 +200,7 @@ auto parse_component_definitions(const YAML::Node& node)
   ir::ComponentMap defs;
 
   if (auto sequence = node["component-definitions"]) {
-    for (const auto& def_node : sequence) {
+    for (const auto& def_node: sequence) {
       String type;
       if (!read_attribute(def_node, "name", type)) {
         return error(ParseError::NoComponentDefName);
@@ -224,7 +224,7 @@ auto parse_components(const YAML::Node& node, const ir::MapData& map)
   ir::ComponentMap comps;
 
   if (auto sequence = node["components"]) {
-    for (const auto& component_node : sequence) {
+    for (const auto& component_node: sequence) {
       String type;
       if (!read_attribute(component_node, "type", type)) {
         return error(ParseError::NoComponentType);
@@ -247,7 +247,7 @@ auto parse_properties(const YAML::Node& node) -> Expected<ir::AttributeMap, Pars
   ir::AttributeMap props;
 
   if (auto sequence = node["properties"]) {
-    for (const auto& property_node : sequence) {
+    for (const auto& property_node: sequence) {
       String property_name;
       if (!read_attribute(property_node, "name", property_name)) {
         return error(ParseError::NoPropertyName);

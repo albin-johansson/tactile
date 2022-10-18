@@ -32,8 +32,8 @@
 namespace tactile::cmd {
 
 RemoveTileset::RemoveTileset(DocumentModel* model, const UUID& tileset_id)
-    : mModel {model}
-    , mTilesetId {tileset_id}
+    : mModel {model},
+      mTilesetId {tileset_id}
 {
   if (!mModel) {
     throw TactileError {"Invalid null model!"};

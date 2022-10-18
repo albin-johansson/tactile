@@ -335,7 +335,7 @@ void show_custom_properties(const Context& context,
 {
   bool first = true;
 
-  for (const auto& [name, value] : context.ctx().props()) {
+  for (const auto& [name, value]: context.ctx().props()) {
     const Scope scope {name.c_str()};
 
     ImGui::TableNextRow();

@@ -31,8 +31,8 @@ class Shortcut {
  public:
   explicit Shortcut(const cen::scan_code key,
                     const cen::key_mod modifiers = cen::key_mod::none)
-      : mKey {key}
-      , mModifiers {modifiers}
+      : mKey {key},
+        mModifiers {modifiers}
   {
   }
 

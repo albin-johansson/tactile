@@ -77,7 +77,7 @@ void write_attributes(OStream& stream, const GdAttributes& attrs, StringView pre
   const auto count = attrs.size();
 
   usize index = 0;
-  for (const auto& [name, value] : attrs) {
+  for (const auto& [name, value]: attrs) {
     stream << to_std_view(prefix) << write_attribute(name, value);
 
     if (index < count - 1) {
@@ -95,7 +95,7 @@ void write_components(OStream& stream, const GdMetaData& meta)
   stream << "  \"components\": {\n";
 
   bool first_comp = true;
-  for (const auto& [comp_name, comp_attrs] : meta.comps) {
+  for (const auto& [comp_name, comp_attrs]: meta.comps) {
     if (!first_comp) {
       stream << ",\n";
     }
@@ -150,7 +150,7 @@ void write_ext_resources(OStream& stream, const GodotFile::ExtResources& resourc
 {
   if (!resources.empty()) {
     stream << '\n';
-    for (const auto& [id, resource] : resources) {
+    for (const auto& [id, resource]: resources) {
       stream << format_str("[ext_resource path=\"{}\" type=\"{}\" id={}]\n",
                            resource.path,
                            resource.type,
@@ -169,7 +169,7 @@ void write_tileset_file(const GodotTileset& tileset, const GodotEmitOptions& opt
 
   write_ext_resources(stream, tileset.ext_resources());
 
-  for (const auto& [source, filename] : tileset.texture_paths()) {
+  for (const auto& [source, filename]: tileset.texture_paths()) {
     const auto relpath = options.project_image_dir / to_std_view(filename);
     const auto dest = options.root_dir / relpath;
     fs::copy(source, dest, fs::copy_options::overwrite_existing);
@@ -177,7 +177,7 @@ void write_tileset_file(const GodotTileset& tileset, const GodotEmitOptions& opt
 
   stream << "\n[resource]\n";
 
-  for (usize index = 0; const auto& info : tileset.tilesets()) {
+  for (usize index = 0; const auto& info: tileset.tilesets()) {
     const auto prefix = format_str("{}/", index + 1);
 
     stream << prefix << format_str("name = \"{}\"\n", info.name);
@@ -215,7 +215,7 @@ void write_tileset_file(const GodotTileset& tileset, const GodotEmitOptions& opt
 void write_atlas_textures(OStream& stream, const GodotScene& scene)
 {
   if (!scene.atlas_textures().empty()) {
-    for (const auto& [id, texture] : scene.atlas_textures()) {
+    for (const auto& [id, texture]: scene.atlas_textures()) {
       stream << '\n';
       stream << format_str("[sub_resource type=\"AtlasTexture\" id={}]\n", id);
       stream << format_str("atlas = ExtResource( {} )\n", texture.atlas_id);
@@ -234,12 +234,12 @@ void write_sprite_frames(OStream& stream, const GdSpriteFrames& sprite_frames)
                        sprite_frames.id);
   stream << "animations = [\n";
 
-  for (const auto& animation : sprite_frames.animations) {
+  for (const auto& animation: sprite_frames.animations) {
     stream << "  {\n";
 
     stream << "    \"frames\": [ ";
     bool first_frame = true;
-    for (const auto& frame : animation.frames) {
+    for (const auto& frame: animation.frames) {
       if (!first_frame) {
         stream << ", ";
       }
@@ -259,7 +259,7 @@ void write_sprite_frames(OStream& stream, const GdSpriteFrames& sprite_frames)
 
 void write_shapes(OStream& stream, const GodotScene& scene)
 {
-  for (const auto& [id, shape] : scene.rectangle_shapes()) {
+  for (const auto& [id, shape]: scene.rectangle_shapes()) {
     stream << format_str("\n[sub_resource type=\"RectangleShape2D\" id={}]\n", id);
     stream << format_str("extents = Vector2( {}, {} )\n",
                          shape.extents.x,
@@ -273,7 +273,7 @@ void write_tile_layer_animation_nodes(OStream& stream,
 {
   const auto& sprite_frames = scene.sprite_frames();
 
-  for (const auto& animation : tile_layer.animations) {
+  for (const auto& animation: tile_layer.animations) {
     const auto name = format_str("Tile ({}, {})", animation.row, animation.col);
     stream << format_str("\n[node name=\"{}\" type=\"AnimatedSprite\" parent=\"{}\"]\n",
                          name,
@@ -308,7 +308,7 @@ void write_tile_layer(OStream& stream, const GodotScene& scene, const GdLayer& l
   stream << "tile_data = PoolIntArray( ";
 
   bool first_tile = true;
-  for (const auto& encoded_tile : tile_layer.data) {
+  for (const auto& encoded_tile: tile_layer.data) {
     if (!first_tile) {
       stream << ", ";
     }
@@ -378,7 +378,7 @@ void write_polygon_object(OStream& stream, const GdObject& object)
   stream << "polygon = PoolVector2Array( ";
 
   bool first_point = true;
-  for (const auto& point : polygon.points) {
+  for (const auto& point: polygon.points) {
     if (!first_point) {
       stream << ", ";
     }
@@ -425,14 +425,14 @@ void write_object_layer(OStream& stream, const GdLayer& layer)
 
   write_metadata(stream, layer.meta);
 
-  for (const auto& object : object_layer.objects) {
+  for (const auto& object: object_layer.objects) {
     write_object(stream, object);
   }
 }
 
 void write_layers(OStream& stream, const GodotScene& scene)
 {
-  for (const auto& layer : scene.layers()) {
+  for (const auto& layer: scene.layers()) {
     if (std::holds_alternative<GdTileLayer>(layer.value)) {
       write_tile_layer(stream, scene, layer);
     }

@@ -32,8 +32,8 @@ namespace tactile::cmd {
 RemoveObject::RemoveObject(MapDocument* document,
                            const UUID& layer_id,
                            const UUID& object_id)
-    : mDocument {document}
-    , mLayerId {layer_id}
+    : mDocument {document},
+      mLayerId {layer_id}
 {
   if (!mDocument) {
     throw TactileError {"Invalid null document!"};

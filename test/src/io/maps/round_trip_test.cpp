@@ -49,7 +49,7 @@ void validate_contexts(const ir::ContextData& source, const ir::ContextData& res
 
   ASSERT_EQ(source.properties, restored.properties);
 
-  for (const auto& [name, attributes] : source.components) {
+  for (const auto& [name, attributes]: source.components) {
     ASSERT_TRUE(has_key(restored.components, name));
     ASSERT_EQ(attributes, restored.components.at(name));
   }
@@ -174,7 +174,7 @@ void validate_tilesets(const ir::MapData& source, const ir::MapData& restored)
     ASSERT_EQ(source_tileset.image_size, restored_tileset.image_size);
 
     ASSERT_EQ(source_tileset.fancy_tiles.size(), restored_tileset.fancy_tiles.size());
-    for (const auto& [id, sourceTile] : source_tileset.fancy_tiles) {
+    for (const auto& [id, sourceTile]: source_tileset.fancy_tiles) {
       const auto& restored_tile = restored_tileset.fancy_tiles.at(id);
       validate_fancy_tiles(sourceTile, restored_tile);
     }

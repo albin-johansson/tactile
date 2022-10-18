@@ -29,8 +29,8 @@
 namespace tactile::cmd {
 
 SetZstdCompressionLevel::SetZstdCompressionLevel(Shared<Map> map, const int level)
-    : mMap {std::move(map)}
-    , mNewLevel {level}
+    : mMap {std::move(map)},
+      mNewLevel {level}
 {
   if (!mMap) {
     throw TactileError {"Invalid null map!"};

@@ -64,7 +64,7 @@ void load_file_history()
       history_last_closed_file = from_std(h.last_opened_file());
     }
 
-    for (const auto& file : h.files()) {
+    for (const auto& file: h.files()) {
       if (fs::exists(file)) {
         spdlog::debug("Loaded '{}' from file history", file);
         history_entries.push_back(from_std(file));
@@ -84,7 +84,7 @@ void save_file_history()
     h.set_last_opened_file(to_std(*history_last_closed_file));
   }
 
-  for (const auto& path : history_entries) {
+  for (const auto& path: history_entries) {
     spdlog::debug("Saving '{}' to file history", path);
     h.add_files(to_std(path));
   }

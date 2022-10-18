@@ -131,7 +131,7 @@ auto ObjectLayer::get_object(const UUID& id) const -> const Object&
 auto ObjectLayer::object_at(const Float2& pos, const Float2& tile_size) const
     -> Maybe<UUID>
 {
-  for (const auto& [id, object] : mObjects) {
+  for (const auto& [id, object]: mObjects) {
     const auto bounds = get_bounds(*object, tile_size);
 
     const auto max_x = bounds.x + bounds.z;

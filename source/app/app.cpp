@@ -64,8 +64,8 @@
 namespace tactile {
 
 App::App(AppCfg* configuration)
-    : EventLoop {configuration}
-    , mConfig {configuration}
+    : EventLoop {configuration},
+      mConfig {configuration}
 {
   subscribe_to_events();
   load_default_shortcuts();

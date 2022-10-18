@@ -59,7 +59,7 @@ void show_add_component_button_popup_content(const Document& document,
   }
   else {
     const auto& comps = context.ctx().comps();
-    for (const auto& [definition_id, definition] : *index) {
+    for (const auto& [definition_id, definition]: *index) {
       Disable disable_if {comps.contains(definition_id)};
 
       if (ImGui::MenuItem(definition.name().c_str())) {
@@ -92,7 +92,7 @@ void show_contents(const Document& document, entt::dispatcher& dispatcher)
       const auto* index = document.view_component_index();
       TACTILE_ASSERT(index != nullptr);
 
-      for (const auto& [component_id, component] : comps) {
+      for (const auto& [component_id, component]: comps) {
         ImGui::Separator();
 
         const auto& component_name = index->at(component_id).name();

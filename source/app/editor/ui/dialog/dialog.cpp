@@ -30,9 +30,9 @@
 namespace tactile::ui {
 
 Dialog::Dialog(String title)
-    : mTitle {std::move(title)}
-    , mAcceptButtonLabel {get_current_language().misc.ok}
-    , mCloseButtonLabel {get_current_language().misc.cancel}
+    : mTitle {std::move(title)},
+      mAcceptButtonLabel {get_current_language().misc.ok},
+      mCloseButtonLabel {get_current_language().misc.cancel}
 {
 }
 

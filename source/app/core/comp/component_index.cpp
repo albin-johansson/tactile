@@ -89,7 +89,7 @@ auto ComponentIndex::at(const UUID& id) const -> const ComponentDefinition&
 
 auto ComponentIndex::with_name(StringView name) -> ComponentDefinition&
 {
-  for (auto& [id, def] : mDefs) {
+  for (auto& [id, def]: mDefs) {
     if (def.name() == name) {
       return def;
     }

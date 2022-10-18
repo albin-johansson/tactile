@@ -44,7 +44,7 @@ void append_properties(XMLNode node, const ir::ContextData& context)
 
   auto collection = node.append_child("properties");
 
-  for (const auto& [property_name, property_value] : context.properties) {
+  for (const auto& [property_name, property_value]: context.properties) {
     auto property_node = collection.append_child("property");
     property_node.append_attribute("name").set_value(property_name.c_str());
 
@@ -246,7 +246,7 @@ void append_object_layer(XMLNode root, const ir::LayerData& layer)
   append_common_layer_attributes(node, layer);
   append_properties(node, layer.context);
 
-  for (const auto& object : object_layer.objects) {
+  for (const auto& object: object_layer.objects) {
     append_object(node, object);
   }
 }
@@ -269,7 +269,7 @@ void append_layer(XMLNode root, const ir::MapData& map, const ir::LayerData& lay
       append_common_layer_attributes(collection, layer);
       append_properties(collection, layer.context);
 
-      for (const auto& child_layer : group_layer.children) {
+      for (const auto& child_layer: group_layer.children) {
         append_layer(collection, map, *child_layer);
       }
 
@@ -282,14 +282,14 @@ void append_layer(XMLNode root, const ir::MapData& map, const ir::LayerData& lay
 
 void append_fancy_tiles(XMLNode node, const ir::TilesetData& tileset)
 {
-  for (const auto& [id, tile] : tileset.fancy_tiles) {
+  for (const auto& [id, tile]: tileset.fancy_tiles) {
     auto tile_node = node.append_child("tile");
     tile_node.append_attribute("id").set_value(id);
 
     if (!tile.frames.empty()) {
       auto animation_node = tile_node.append_child("animation");
 
-      for (const auto& frame : tile.frames) {
+      for (const auto& frame: tile.frames) {
         auto frame_node = animation_node.append_child("frame");
         frame_node.append_attribute("tileid").set_value(frame.tile_index);
         frame_node.append_attribute("duration").set_value(frame.duration_ms);
@@ -300,7 +300,7 @@ void append_fancy_tiles(XMLNode node, const ir::TilesetData& tileset)
       auto object_layer_node = tile_node.append_child("objectgroup");
       object_layer_node.append_attribute("draworder").set_value("index");
 
-      for (const auto& object : tile.objects) {
+      for (const auto& object: tile.objects) {
         append_object(object_layer_node, object);
       }
     }
@@ -407,11 +407,11 @@ void append_root(pugi::xml_document& document, const EmitInfo& info)
 
   append_properties(root, map.context);
 
-  for (const auto& tileset : map.tilesets) {
+  for (const auto& tileset: map.tilesets) {
     append_tileset(root, tileset, info.destination_dir());
   }
 
-  for (const auto& layer : map.layers) {
+  for (const auto& layer: map.layers) {
     append_layer(root, map, layer);
   }
 }

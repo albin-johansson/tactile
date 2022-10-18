@@ -29,9 +29,9 @@
 namespace tactile::cmd {
 
 EraserSequence::EraserSequence(Shared<Map> map, const UUID& layer_id, TileCache old_state)
-    : mMap {std::move(map)}
-    , mLayerId {layer_id}
-    , mOldState {std::move(old_state)}
+    : mMap {std::move(map)},
+      mLayerId {layer_id},
+      mOldState {std::move(old_state)}
 {
   if (!mMap) {
     throw TactileError {"Invalid null map!"};
@@ -42,7 +42,7 @@ void EraserSequence::undo()
 {
   auto& layer = mMap->invisible_root().tile_layer(mLayerId);
 
-  for (const auto& [pos, tile] : mOldState) {
+  for (const auto& [pos, tile]: mOldState) {
     layer.set_tile(pos, tile);
   }
 }
@@ -51,7 +51,7 @@ void EraserSequence::redo()
 {
   auto& layer = mMap->invisible_root().tile_layer(mLayerId);
 
-  for (const auto& [position, _] : mOldState) {
+  for (const auto& [position, _]: mOldState) {
     layer.set_tile(position, empty_tile);
   }
 }

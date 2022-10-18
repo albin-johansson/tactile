@@ -28,9 +28,9 @@
 namespace tactile::cmd {
 
 RenameLayer::RenameLayer(Shared<Map> map, const UUID& layer_id, String name)
-    : mMap {std::move(map)}
-    , mLayerId {layer_id}
-    , mNewName {std::move(name)}
+    : mMap {std::move(map)},
+      mLayerId {layer_id},
+      mNewName {std::move(name)}
 {
   if (!mMap) {
     throw TactileError {"Invalid null map!"};

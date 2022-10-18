@@ -28,8 +28,8 @@
 namespace tactile::cmd {
 
 RenameObject::RenameObject(Shared<Object> object, String name)
-    : mObject {std::move(object)}
-    , mNewName {std::move(name)}
+    : mObject {std::move(object)},
+      mNewName {std::move(name)}
 {
   if (!mObject) {
     throw TactileError {"Invalid null object!"};

@@ -38,7 +38,7 @@ void copy_string_into_buffer(Span<char> buffer, StringView str)
   zero_buffer(buffer);
 
   usize index = 0;
-  for (const auto ch : str) {
+  for (const auto ch: str) {
     if (index < buffer.size()) {
       buffer[index] = ch;
     }

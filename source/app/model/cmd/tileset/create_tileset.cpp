@@ -36,10 +36,10 @@ CreateTileset::CreateTileset(DocumentModel* model,
                              const UUID& map_id,
                              const UUID& tileset_id,
                              TilesetInfo info)
-    : mModel {model}
-    , mMapId {map_id}
-    , mTilesetId {tileset_id}
-    , mTilesetInfo {std::move(info)}
+    : mModel {model},
+      mMapId {map_id},
+      mTilesetId {tileset_id},
+      mTilesetInfo {std::move(info)}
 {
   if (!mModel) {
     throw TactileError {"Invalid null model!"};

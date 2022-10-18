@@ -30,8 +30,8 @@
 namespace tactile::cmd {
 
 RemoveProperty::RemoveProperty(Shared<Context> context, String name)
-    : mContext {std::move(context)}
-    , mName {std::move(name)}
+    : mContext {std::move(context)},
+      mName {std::move(name)}
 {
   if (!mContext) {
     throw TactileError {"Invalid null context!"};

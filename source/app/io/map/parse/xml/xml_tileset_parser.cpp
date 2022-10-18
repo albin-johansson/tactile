@@ -33,7 +33,7 @@ namespace {
 {
   ir::TilesetData::MetaTiles tiles;
 
-  for (const auto tile_node : tileset_node.children("tile")) {
+  for (const auto tile_node: tileset_node.children("tile")) {
     TileID tile_id {};
 
     if (const auto id = as_int(tile_node, "id")) {
@@ -45,7 +45,7 @@ namespace {
 
     auto& tile = tiles[tile_id];
 
-    for (const auto frame_node : tile_node.child("animation").children("frame")) {
+    for (const auto frame_node: tile_node.child("animation").children("frame")) {
       auto& frame = tile.frames.emplace_back();
 
       if (const auto index = as_int(frame_node, "tileid")) {
@@ -63,7 +63,7 @@ namespace {
       }
     }
 
-    for (const auto object_node : tile_node.child("objectgroup").children("object")) {
+    for (const auto object_node: tile_node.child("objectgroup").children("object")) {
       if (auto object = parse_object(object_node)) {
         tile.objects.push_back(std::move(*object));
       }

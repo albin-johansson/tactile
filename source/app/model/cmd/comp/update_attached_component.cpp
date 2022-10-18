@@ -34,10 +34,10 @@ UpdateAttachedComponent::UpdateAttachedComponent(Shared<Context> context,
                                                  const UUID& component_id,
                                                  String attribute,
                                                  Attribute value)
-    : mContext {std::move(context)}
-    , mComponentId {component_id}
-    , mAttributeName {std::move(attribute)}
-    , mUpdatedValue {std::move(value)}
+    : mContext {std::move(context)},
+      mComponentId {component_id},
+      mAttributeName {std::move(attribute)},
+      mUpdatedValue {std::move(value)}
 {
   if (!mContext) {
     throw TactileError {"Invalid null context!"};

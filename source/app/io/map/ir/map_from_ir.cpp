@@ -55,16 +55,16 @@ void restore_context_no_register(Document& document,
   auto& properties = context->ctx().props();
   auto& components = context->ctx().comps();
 
-  for (const auto& [propertyName, propertyValue] : source.properties) {
+  for (const auto& [propertyName, propertyValue]: source.properties) {
     properties.add(propertyName, propertyValue);
   }
 
   if (auto index = document.get_component_index()) {
-    for (const auto& [type, attributes] : source.components) {
+    for (const auto& [type, attributes]: source.components) {
       const auto& definition = index->with_name(type);
 
       auto component = definition.instantiate();
-      for (const auto& [attrName, attrValue] : attributes) {
+      for (const auto& [attrName, attrValue]: attributes) {
         component.update(attrName, attrValue);
       }
 
@@ -110,7 +110,7 @@ void restore_object_layer(MapDocument& document,
   auto& layer = map.invisible_root().object_layer(layer_id);
   layer.reserve_objects(object_layer_data.objects.size());
 
-  for (const auto& object_data : object_layer_data.objects) {
+  for (const auto& object_data: object_layer_data.objects) {
     layer.add_object(restore_object(document, object_data));
   }
 }
@@ -148,7 +148,7 @@ auto restore_layer(MapDocument& document,
       layer_id = map.add_group_layer(parent);
 
       const auto& group = layer_data.as_group_layer();
-      for (const auto& child_layer_data : group.children) {
+      for (const auto& child_layer_data: group.children) {
         restore_layer(document, *child_layer_data, layer_id);
       }
 
@@ -171,7 +171,7 @@ auto restore_layer(MapDocument& document,
 
 void restore_layers(MapDocument& document, const ir::MapData& map_data)
 {
-  for (const auto& layer_data : map_data.layers) {
+  for (const auto& layer_data: map_data.layers) {
     restore_layer(document, layer_data);
   }
 }
@@ -181,7 +181,7 @@ void restore_tile_animation(Tile& tile, const ir::MetaTileData& tile_data)
   TileAnimation animation;
   animation.reserve_frames(tile_data.frames.size());
 
-  for (const auto& frame_data : tile_data.frames) {
+  for (const auto& frame_data: tile_data.frames) {
     animation.add_frame(frame_data.tile_index,
                         TileAnimation::Millis {frame_data.duration_ms});
   }
@@ -195,7 +195,7 @@ void restore_fancy_tile_objects(TilesetDocument& document,
 {
   tile.reserve_objects(tile_data.objects.size());
 
-  for (const auto& object_data : tile_data.objects) {
+  for (const auto& object_data: tile_data.objects) {
     tile.add_object(restore_object(document, object_data));
   }
 }
@@ -203,7 +203,7 @@ void restore_fancy_tile_objects(TilesetDocument& document,
 void restore_fancy_tiles(TilesetDocument& document, const ir::TilesetData& tileset_data)
 {
   auto& tileset = document.view_tileset();
-  for (const auto& [index, tileData] : tileset_data.fancy_tiles) {
+  for (const auto& [index, tileData]: tileset_data.fancy_tiles) {
     auto tile = tileset.get_tile_ptr(index);
     TACTILE_ASSERT(tile->index() == index);
 
@@ -253,7 +253,7 @@ void restore_tilesets(DocumentModel& model,
                       const Shared<ComponentIndex>& index,
                       const ir::MapData& map_data)
 {
-  for (const auto& tileset_data : map_data.tilesets) {
+  for (const auto& tileset_data: map_data.tilesets) {
     restore_tileset(model, index, tileset_data);
   }
 
@@ -269,10 +269,10 @@ void restore_tilesets(DocumentModel& model,
 void restore_component_definitions(MapDocument& document, const ir::MapData& map_data)
 {
   auto index = document.get_component_index();
-  for (const auto& [name, attributes] : map_data.component_definitions) {
+  for (const auto& [name, attributes]: map_data.component_definitions) {
     const auto id = index->define(name);
     auto& def = index->at(id);
-    for (const auto& [attr_name, attr_value] : attributes) {
+    for (const auto& [attr_name, attr_value]: attributes) {
       def.add(attr_name, attr_value);
     }
   }

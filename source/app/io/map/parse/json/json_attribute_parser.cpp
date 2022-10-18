@@ -116,7 +116,7 @@ namespace {
 auto parse_properties(const JSON& json, ir::ContextData& context_data) -> ParseError
 {
   if (const auto it = json.find("properties"); it != json.end()) {
-    for (const auto& [_, value] : it->items()) {
+    for (const auto& [_, value]: it->items()) {
       if (const auto err = parse_property(value, context_data); err != ParseError::None) {
         return err;
       }

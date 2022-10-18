@@ -259,8 +259,8 @@ Modal::~Modal()
 }
 
 Window::Window(const char* label, const ImGuiWindowFlags flags, bool* open)
-    : mLabel {label}
-    , mOpen {ImGui::Begin(label, open, flags)}
+    : mLabel {label},
+      mOpen {ImGui::Begin(label, open, flags)}
 {
   if (!label) {
     throw TactileError {"Invalid null window label!"};

@@ -53,7 +53,7 @@ template <typename To>
   To res;
   res.reserve(from.size());
 
-  for (const auto ch : from) {
+  for (const auto ch: from) {
     res.push_back(ch);
   }
 

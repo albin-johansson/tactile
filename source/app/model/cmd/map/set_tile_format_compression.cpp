@@ -29,8 +29,8 @@ namespace tactile {
 
 SetTileFormatCompression::SetTileFormatCompression(Shared<Map> map,
                                                    const TileCompression compression)
-    : mMap {std::move(map)}
-    , mNewCompression {compression}
+    : mMap {std::move(map)},
+      mNewCompression {compression}
 {
   if (!mMap) {
     throw TactileError {"Invalid null map!"};

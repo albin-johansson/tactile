@@ -34,11 +34,11 @@ AddObject::AddObject(MapDocument* document,
                      ObjectType type,
                      const Float2& pos,
                      const Float2& size)
-    : mDocument {document}
-    , mLayerId {layer_id}
-    , mObjectType {type}
-    , mPos {pos}
-    , mSize {size}
+    : mDocument {document},
+      mLayerId {layer_id},
+      mObjectType {type},
+      mPos {pos},
+      mSize {size}
 {
   if (!mDocument) {
     throw TactileError {"Invalid null map document!"};

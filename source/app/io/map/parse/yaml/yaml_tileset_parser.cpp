@@ -59,7 +59,7 @@ constexpr int32 tileset_format_version = 1;
   if (auto sequence = node["animation"]) {
     tile.frames.reserve(sequence.size());
 
-    for (const auto& frame_node : sequence) {
+    for (const auto& frame_node: sequence) {
       if (auto frame = parse_animation_frame(frame_node)) {
         tile.frames.push_back(*frame);
       }
@@ -72,7 +72,7 @@ constexpr int32 tileset_format_version = 1;
   if (auto sequence = node["objects"]) {
     tile.objects.reserve(sequence.size());
 
-    for (const auto& object_node : sequence) {
+    for (const auto& object_node: sequence) {
       if (auto object = parse_object(object_node, map)) {
         tile.objects.push_back(std::move(*object));
       }
@@ -98,7 +98,7 @@ constexpr int32 tileset_format_version = 1;
   ir::TilesetData::MetaTiles fancy_tiles;
   fancy_tiles.reserve(sequence.size());
 
-  for (const auto& node : sequence) {
+  for (const auto& node: sequence) {
     TileID id {};
     if (!read_attribute(node, "id", id)) {
       return error(ParseError::NoFancyTileId);
@@ -212,7 +212,7 @@ auto parse_tilesets(const YAML::Node& sequence, const ir::MapData& map, const Pa
   Vec<ir::TilesetData> tilesets;
   tilesets.reserve(sequence.size());
 
-  for (const auto& node : sequence) {
+  for (const auto& node: sequence) {
     TileID first {};
     if (!read_attribute(node, "first-global-id", first)) {
       return error(ParseError::NoTilesetFirstTileId);

@@ -26,8 +26,8 @@
 namespace tactile::cmd {
 
 SetLayerOpacity::SetLayerOpacity(Shared<Layer> layer, const float opacity)
-    : mLayer {std::move(layer)}
-    , mNewOpacity {opacity}
+    : mLayer {std::move(layer)},
+      mNewOpacity {opacity}
 {
   if (!mLayer) {
     throw TactileError {"Invalid null layer!"};

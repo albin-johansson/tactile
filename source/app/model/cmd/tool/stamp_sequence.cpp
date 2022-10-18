@@ -32,10 +32,10 @@ StampSequence::StampSequence(Shared<Map> map,
                              const UUID& layer_id,
                              TileCache old_state,
                              TileCache new_state)
-    : mMap {std::move(map)}
-    , mLayerId {layer_id}
-    , mOldState {std::move(old_state)}
-    , mNewState {std::move(new_state)}
+    : mMap {std::move(map)},
+      mLayerId {layer_id},
+      mOldState {std::move(old_state)},
+      mNewState {std::move(new_state)}
 {
   if (!mMap) {
     throw TactileError {"Invalid null map!"};
@@ -61,7 +61,7 @@ auto StampSequence::get_name() const -> String
 void StampSequence::apply_sequence(const TileCache& cache)
 {
   auto& layer = mMap->invisible_root().tile_layer(mLayerId);
-  for (const auto& [pos, tile] : cache) {
+  for (const auto& [pos, tile]: cache) {
     layer.set_tile(pos, tile);
   }
 }

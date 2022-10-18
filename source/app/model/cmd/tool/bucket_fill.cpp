@@ -32,10 +32,10 @@ BucketFill::BucketFill(Shared<Map> map,
                        const UUID& layer_id,
                        const TilePos& origin,
                        const TileID replacement)
-    : mMap {std::move(map)}
-    , mLayerId {layer_id}
-    , mOrigin {origin}
-    , mReplacement {replacement}
+    : mMap {std::move(map)},
+      mLayerId {layer_id},
+      mOrigin {origin},
+      mReplacement {replacement}
 {
   if (!mMap) {
     throw TactileError {"Invalid null map!"};
@@ -47,7 +47,7 @@ void BucketFill::undo()
   auto& layer = mMap->invisible_root().tile_layer(mLayerId);
 
   const auto target = mTarget.value();
-  for (const auto& position : mPositions) {
+  for (const auto& position: mPositions) {
     layer.set_tile(position, target);
   }
 

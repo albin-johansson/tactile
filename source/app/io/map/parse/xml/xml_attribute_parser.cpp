@@ -112,7 +112,7 @@ auto parse_properties(XMLNode node) -> Expected<ir::AttributeMap, ParseError>
 {
   ir::AttributeMap props;
 
-  for (const auto property_node : node.child("properties").children("property")) {
+  for (const auto property_node: node.child("properties").children("property")) {
     String property_name;
     if (auto name = as_string(property_node, "name")) {
       property_name = std::move(*name);

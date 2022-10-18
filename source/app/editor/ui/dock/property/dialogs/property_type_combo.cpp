@@ -69,7 +69,7 @@ void property_type_combo_impl(AttributeType& out, Maybe<AttributeType> previous_
   auto&& [current_name, current_type] = items.at(current_index);
 
   if (Combo combo {"##PropertyTypeCombo", current_name.data()}; combo.is_open()) {
-    for (auto&& [name, type] : items) {
+    for (auto&& [name, type]: items) {
       Disable disable_if {previous_type == type};
 
       const auto selected = current_name == name;

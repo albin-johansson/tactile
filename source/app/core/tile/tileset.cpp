@@ -48,14 +48,14 @@ struct Tileset::Data final {
   mutable HashMap<TileIndex, TileIndex> appearance_cache;
 
   Data(TilesetInfo info, const UUID& id)
-      : context {id}
-      , texture_id {info.texture_id}
-      , texture_size {info.texture_size}
-      , tile_size {info.tile_size}
-      , row_count {texture_size.y / tile_size.y}
-      , column_count {texture_size.x / tile_size.x}
-      , uv_size {Float2 {tile_size} / Float2 {texture_size}}
-      , texture_path {std::move(info.texture_path)}
+      : context {id},
+        texture_id {info.texture_id},
+        texture_size {info.texture_size},
+        tile_size {info.tile_size},
+        row_count {texture_size.y / tile_size.y},
+        column_count {texture_size.x / tile_size.x},
+        uv_size {Float2 {tile_size} / Float2 {texture_size}},
+        texture_path {std::move(info.texture_path)}
   {
   }
 };
@@ -103,7 +103,7 @@ void Tileset::update()
   //    tile->update();
   //  }
 
-  for (auto& [id, tile] : data.tiles) {
+  for (auto& [id, tile]: data.tiles) {
     tile->update();
   }
 }

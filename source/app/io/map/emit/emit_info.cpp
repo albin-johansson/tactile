@@ -24,9 +24,9 @@
 namespace tactile::io {
 
 EmitInfo::EmitInfo(Path destination, ir::MapData data)
-    : mDestinationFile {std::move(destination)}
-    , mDestinationDir {mDestinationFile.parent_path()}
-    , mData {std::move(data)}
+    : mDestinationFile {std::move(destination)},
+      mDestinationDir {mDestinationFile.parent_path()},
+      mData {std::move(data)}
 {
 }
 

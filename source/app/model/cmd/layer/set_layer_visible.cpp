@@ -30,9 +30,9 @@ namespace tactile::cmd {
 SetLayerVisible::SetLayerVisible(Shared<Map> map,
                                  const UUID& layer_id,
                                  const bool visible)
-    : mMap {std::move(map)}
-    , mLayerId {layer_id}
-    , mNewVisibility {visible}
+    : mMap {std::move(map)},
+      mLayerId {layer_id},
+      mNewVisibility {visible}
 {
   if (!mMap) {
     throw TactileError {"Invalid null map!"};

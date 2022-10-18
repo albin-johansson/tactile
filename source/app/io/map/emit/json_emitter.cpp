@@ -39,7 +39,7 @@ namespace {
 {
   auto array = JSON::array();
 
-  for (const auto& [name, value] : context.properties) {
+  for (const auto& [name, value]: context.properties) {
     auto json = JSON::object();
 
     json["name"] = to_std(name);
@@ -145,7 +145,7 @@ void emit_object_layer(JSON& json, const ir::LayerData& layer)
 
   auto objects = JSON::array();
 
-  for (const auto& object : object_layer.objects) {
+  for (const auto& object: object_layer.objects) {
     objects += emit_object(object);
   }
 
@@ -179,7 +179,7 @@ void emit_object_layer(JSON& json, const ir::LayerData& layer)
 
       auto layers = JSON::array();
 
-      for (const auto& child_layer : group_layer.children) {
+      for (const auto& child_layer: group_layer.children) {
         layers += emit_layer(map, *child_layer);
       }
 
@@ -199,7 +199,7 @@ void emit_object_layer(JSON& json, const ir::LayerData& layer)
 {
   auto array = JSON::array();
 
-  for (const auto& layer : map.layers) {
+  for (const auto& layer: map.layers) {
     array += emit_layer(map, layer);
   }
 
@@ -210,7 +210,7 @@ void emit_object_layer(JSON& json, const ir::LayerData& layer)
 {
   auto array = JSON::array();
 
-  for (const auto& frame : tile.frames) {
+  for (const auto& frame: tile.frames) {
     auto json = JSON::object();
 
     json["tileid"] = frame.tile_index;
@@ -243,7 +243,7 @@ void emit_object_layer(JSON& json, const ir::LayerData& layer)
     dummy["y"] = 0;
 
     auto objects = JSON::array();
-    for (const auto& object : tile.objects) {
+    for (const auto& object: tile.objects) {
       objects += emit_object(object);
     }
 
@@ -262,7 +262,7 @@ void emit_object_layer(JSON& json, const ir::LayerData& layer)
 {
   auto json = JSON::array();
 
-  for (const auto& [id, tileData] : tileset.fancy_tiles) {
+  for (const auto& [id, tileData]: tileset.fancy_tiles) {
     json += emit_fancy_tile(id, tileData);
   }
 
@@ -351,7 +351,7 @@ void create_external_tileset_file(const EmitInfo& info, const ir::TilesetData& t
   auto json = JSON::array();
 
   const auto& data = info.data();
-  for (const auto& tileset : data.tilesets) {
+  for (const auto& tileset: data.tilesets) {
     json += emit_tileset(info, tileset);
   }
 

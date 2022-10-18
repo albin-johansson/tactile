@@ -56,7 +56,7 @@ TEST(Str, ToStd)
   ASSERT_EQ(source.size(), conv_view.size());
 
   usize index = 0;
-  for (const auto ch : source) {
+  for (const auto ch: source) {
     ASSERT_EQ(ch, conv_str.at(index));
     ASSERT_EQ(ch, conv_view.at(index));
     ++index;
@@ -71,7 +71,7 @@ TEST(Str, FromStd)
   ASSERT_EQ(source.size(), conv.size());
 
   usize index = 0;
-  for (const auto ch : source) {
+  for (const auto ch: source) {
     ASSERT_EQ(ch, conv.at(index));
     ++index;
   }

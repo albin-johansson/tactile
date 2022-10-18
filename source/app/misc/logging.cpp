@@ -65,7 +65,7 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
   {
     usize i = 0;
 
-    for (const auto& [level, str] : mHistory) {
+    for (const auto& [level, str]: mHistory) {
       if (level >= filter) {
         if (i == index) {
           return {level, str};
@@ -82,7 +82,7 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
   {
     usize count = 0;
 
-    for (const auto& [level, str] : mHistory) {
+    for (const auto& [level, str]: mHistory) {
       if (level >= filter) {
         ++count;
       }

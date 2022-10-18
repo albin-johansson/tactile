@@ -54,10 +54,10 @@ void MapCommandCache::clear() noexcept
 void MapCommandCache::restore_tiles(Map& map)
 {
   auto& root = map.invisible_root();
-  for (const auto& [layerId, tileCache] : mCache) {
+  for (const auto& [layerId, tileCache]: mCache) {
     auto& layer = root.tile_layer(layerId);
 
-    for (const auto& [position, tileId] : tileCache) {
+    for (const auto& [position, tileId]: tileCache) {
       layer.set_tile(position, tileId);
     }
   }
@@ -74,9 +74,9 @@ void MapCommandCache::save_tiles(const Map& map, const TilePos& begin, const Til
 
 void MapCommandCache::merge_with(const MapCommandCache& other)
 {
-  for (const auto& [otherLayer, otherTileCache] : other.mCache) {
+  for (const auto& [otherLayer, otherTileCache]: other.mCache) {
     auto& tileCache = mCache[otherLayer];
-    for (const auto& [otherPos, otherTile] : otherTileCache) {
+    for (const auto& [otherPos, otherTile]: otherTileCache) {
       tileCache.try_emplace(otherPos, otherTile);
     }
   }

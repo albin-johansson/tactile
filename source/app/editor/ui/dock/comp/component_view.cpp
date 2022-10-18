@@ -45,7 +45,7 @@ void update_attribute_table(const UUID& context_id,
                             entt::dispatcher& dispatcher)
 {
   if (Table table {"##AttributeTable", 2, table_flags}; table.is_open()) {
-    for (const auto& [attr_name, attr_value] : component) {
+    for (const auto& [attr_name, attr_value]: component) {
       const Scope scope {attr_name.c_str()};
 
       ImGui::TableNextRow();

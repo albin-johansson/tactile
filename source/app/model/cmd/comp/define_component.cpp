@@ -29,8 +29,8 @@
 namespace tactile::cmd {
 
 DefineComponent::DefineComponent(Shared<ComponentIndex> index, String name)
-    : mIndex {std::move(index)}
-    , mName {std::move(name)}
+    : mIndex {std::move(index)},
+      mName {std::move(name)}
 {
   if (!mIndex) {
     throw TactileError {"Invalid null component index!"};

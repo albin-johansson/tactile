@@ -33,9 +33,9 @@ namespace tactile::cmd {
 ResetAttachedComponent::ResetAttachedComponent(Shared<ComponentIndex> index,
                                                Shared<Context> context,
                                                const UUID& component_id)
-    : mIndex {std::move(index)}
-    , mContext {std::move(context)}
-    , mComponentId {component_id}
+    : mIndex {std::move(index)},
+      mContext {std::move(context)},
+      mComponentId {component_id}
 {
   if (!mIndex) {
     throw TactileError {"Invalid null component index!"};

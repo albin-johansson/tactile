@@ -27,8 +27,8 @@
 namespace tactile::cmd {
 
 AddLayer::AddLayer(MapDocument* document, const LayerType type)
-    : mDocument {document}
-    , mLayerType {type}
+    : mDocument {document},
+      mLayerType {type}
 {
   if (!mDocument) {
     throw TactileError {"Invalid null map document!"};
