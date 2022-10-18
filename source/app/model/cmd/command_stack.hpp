@@ -97,7 +97,7 @@ class CommandStack final {
       mIndex = mIndex ? (*mIndex + 1) : 0;
       mStack.push_back(std::make_unique<T>(std::move(cmd)));
     }
-    else if (!mStack.empty()) {
+    else {
       mCleanIndex.reset();
     }
   }
