@@ -71,7 +71,7 @@ auto main(int argc, char* argv[]) -> int
   }
   catch (...) {
     show_crash_message_box("N/A");
-    spdlog::critical("Unhandled value exception!");
+    spdlog::critical("Unhandled exception!");
     return EXIT_FAILURE;
   }
 }
