@@ -84,6 +84,7 @@ function(tactile_set_compile_options target)
                            /Zc:preprocessor
                            /Zc:__cplusplus
                            /Zc:alignedNew
+                           /wd4005 # Avoid macro redefinition warnings in third-party libraries
                            )
 
   elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang|GNU")
