@@ -15,7 +15,7 @@ jobs:
     runs-on: macos-latest
     if: contains(github.event.head_commit.message, '[skip-ci]') == false
     steps:
-      - uses: actions/checkout@main
+      - uses: actions/checkout@v3
 
       - name: Install CMake
         shell: bash
@@ -41,7 +41,7 @@ jobs:
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ${{env.VCPKG_ROOT}}
