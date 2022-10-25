@@ -22,11 +22,13 @@
 #include "core/layer/object_type.hpp"
 #include "core/type/math.hpp"
 #include "core/type/maybe.hpp"
+#include "core/type/ptr.hpp"
 #include "core/uuid.hpp"
 #include "model/cmd/command.hpp"
 
 namespace tactile {
 class MapDocument;
+class Object;
 }  // namespace tactile
 
 namespace tactile::cmd {
@@ -52,6 +54,7 @@ class AddObject final : public Command {
   Float2 mPos {};
   Float2 mSize {};
   Maybe<UUID> mObjectId;
+  Shared<Object> mObject;  /// The added object (needed to make subsequent commands work)
 };
 
 }  // namespace tactile::cmd
