@@ -22,7 +22,9 @@
 #include <algorithm>    // reverse
 #include <bit>          // bit_cast
 #include <concepts>     // integral, invocable
-#include <type_traits>  // has_unique_object_representations_v
+#include <cstring>      // memcpy
+#include <type_traits>  // has_unique_object_representations_v, is_trivially_copyable_v, is_trivially_constructible_v
+#include <version>
 
 #include <SDL.h>
 
@@ -41,6 +43,22 @@ namespace tactile {
   return SDL_SwapLE32(value);
 }
 
+template <typename To, typename From>
+  requires(sizeof(To) == sizeof(From) &&          //
+           std::is_trivially_copyable_v<From> &&  //
+           std::is_trivially_copyable_v<To> &&    //
+           std::is_trivially_constructible_v<To>)
+[[nodiscard]] auto bit_cast(const From& src) noexcept -> To
+{
+#if __cpp_lib_bit_cast >= 201806L
+  return std::bit_cast<To>(src);
+#else
+  To dst;
+  std::memcpy(&dst, &src, sizeof(To));
+  return dst;
+#endif  // __cpp_lib_bit_cast >= 201806L
+}
+
 template <std::integral T>
 [[nodiscard]] constexpr auto byteswap(T value) noexcept -> T
 {
@@ -50,10 +68,10 @@ template <std::integral T>
 
   using Bytes = Array<uint8, sizeof(value)>;
 
-  auto bytes = std::bit_cast<Bytes>(value);
+  auto bytes = bit_cast<Bytes>(value);
   std::reverse(std::begin(bytes), std::end(bytes));
 
-  return std::bit_cast<T>(bytes);
+  return bit_cast<T>(bytes);
 }
 
 template <std::integral Int, std::invocable<uint8> T>
