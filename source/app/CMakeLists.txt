@@ -12,10 +12,13 @@ file(GLOB_RECURSE SOURCE_FILES
 
 add_library(${TACTILE_LIB} ${SOURCE_FILES})
 
-set_target_properties(${TACTILE_LIB} PROPERTIES
-                      PREFIX "lib"
-                      OUTPUT_NAME "tactile"
-                      )
+if (NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  # Can't do this on MSVC for some reason, it causes issues with the precompiled headers
+  set_target_properties(${TACTILE_LIB} PROPERTIES
+                        PREFIX "lib"
+                        OUTPUT_NAME "tactile"
+                        )
+endif ()
 
 add_dependencies(${TACTILE_LIB} ${TACTILE_PROTO})
 
