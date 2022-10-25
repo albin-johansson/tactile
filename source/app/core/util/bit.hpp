@@ -48,7 +48,7 @@ template <typename To, typename From>
            std::is_trivially_copyable_v<From> &&  //
            std::is_trivially_copyable_v<To> &&    //
            std::is_trivially_constructible_v<To>)
-[[nodiscard]] auto bit_cast(const From& src) noexcept -> To
+[[nodiscard]] auto bitcast(const From& src) noexcept -> To
 {
 #if __cpp_lib_bit_cast >= 201806L
   return std::bit_cast<To>(src);
@@ -68,10 +68,10 @@ template <std::integral T>
 
   using Bytes = Array<uint8, sizeof(value)>;
 
-  auto bytes = bit_cast<Bytes>(value);
+  auto bytes = bitcast<Bytes>(value);
   std::reverse(std::begin(bytes), std::end(bytes));
 
-  return bit_cast<T>(bytes);
+  return bitcast<T>(bytes);
 }
 
 template <std::integral Int, std::invocable<uint8> T>
