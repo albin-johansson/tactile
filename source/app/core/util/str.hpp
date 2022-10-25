@@ -20,7 +20,7 @@
 #pragma once
 
 #include <string>       // string
-#include <string_view>  // string_view
+#include <string_view>  // string_view, wstring_view
 
 #include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
@@ -45,5 +45,6 @@ namespace tactile {
 /// Use of this function is discouraged other than in low-level scenarios where standard
 /// strings have to be handled.
 [[nodiscard]] auto from_std(std::string_view str) -> String;
+[[nodiscard]] auto from_std(std::wstring_view str) -> WString;
 
 }  // namespace tactile

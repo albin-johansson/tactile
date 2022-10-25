@@ -30,6 +30,9 @@ namespace tactile {
 using String = eastl::string;
 using StringView = eastl::string_view;
 
+using WString = eastl::wstring;
+using WStringView = eastl::wstring_view;
+
 using OsStrChar = Path::value_type;
 using OsString = eastl::basic_string<OsStrChar>;
 using OsStringView = eastl::basic_string_view<OsStrChar>;

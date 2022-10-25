@@ -86,7 +86,7 @@ auto to_os_string(const char* str) -> Maybe<OsString>
 #if TACTILE_OS_WINDOWS
   using convert_type = std::codecvt_utf8<wchar_t>;
   std::wstring_convert<convert_type, wchar_t> converter;
-  return converter.from_bytes(str);
+  return from_std(converter.from_bytes(str));
 #else
   return str;
 #endif  // TACTILE_OS_WINDOWS

@@ -99,4 +99,9 @@ auto from_std(std::string_view str) -> String
   return convert_str<String>(str);
 }
 
+auto from_std(std::wstring_view str) -> WString
+{
+  return convert_str<WString>(str);
+}
+
 }  // namespace tactile
