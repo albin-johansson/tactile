@@ -24,6 +24,7 @@
 #include "core/attribute.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/string.hpp"
+#include "core/type/string_map.hpp"
 #include "core/type/tree_map.hpp"
 
 using namespace std::string_literals;
@@ -33,7 +34,7 @@ namespace tactile::test {
 
 TEST(Assoc, EmptyHashMap)
 {
-  const HashMap<String, int> map;
+  const StringMap<int> map;
 
   ASSERT_FALSE(has_key(map, "foo"));
   ASSERT_THROW((void) lookup_in(map, "foo"), TactileError);
@@ -49,7 +50,7 @@ TEST(Assoc, EmptyTreeMap)
 
 TEST(Assoc, LookupInHashMap)
 {
-  HashMap<String, Attribute> map;
+  StringMap<Attribute> map;
   map["foo"] = 3.5f;
   map["bar"] = true;
 
@@ -76,7 +77,7 @@ TEST(Assoc, LookupInTreeMap)
 
 TEST(Assoc, HashMapHasKey)
 {
-  HashMap<String, int> map;
+  StringMap<int> map;
   map["foo"] = 10;
   map["bar"] = 20;
   map["abc"] = 30;
