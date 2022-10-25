@@ -54,4 +54,9 @@ namespace tactile::ui {
           static_cast<float>(vec.w)};
 }
 
+[[nodiscard]] inline auto to_vec(const ImVec2& vec) noexcept -> Float2
+{
+  return {vec.x, vec.y};
+}
+
 }  // namespace tactile::ui
