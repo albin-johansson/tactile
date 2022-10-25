@@ -20,6 +20,7 @@
 #pragma once
 
 #include <concepts>  // invocable
+#include <variant>   // get
 
 #include "core/attribute.hpp"
 #include "core/layer/layer_type.hpp"
@@ -96,17 +97,17 @@ struct LayerData final {
 
   [[nodiscard]] auto as_tile_layer() const -> const TileLayerData&
   {
-    return eastl::get<TileLayerData>(data);
+    return std::get<TileLayerData>(data);
   }
 
   [[nodiscard]] auto as_object_layer() const -> const ObjectLayerData&
   {
-    return eastl::get<ObjectLayerData>(data);
+    return std::get<ObjectLayerData>(data);
   }
 
   [[nodiscard]] auto as_group_layer() const -> const GroupLayerData&
   {
-    return eastl::get<GroupLayerData>(data);
+    return std::get<GroupLayerData>(data);
   }
 };
 

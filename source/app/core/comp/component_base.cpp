@@ -60,7 +60,7 @@ void ComponentBase::update(StringView key, Attribute value)
 
 auto ComponentBase::remove(StringView key) -> bool
 {
-  if (const auto iter = find_in(mAttributes, key); iter != mAttributes.end()) {
+  if (const auto iter = mAttributes.find(key); iter != mAttributes.end()) {
     mAttributes.erase(iter);
     return true;
   }
@@ -75,7 +75,7 @@ auto ComponentBase::rename(StringView current, String updated) -> bool
     throw TactileError {"Attribute name must be unique!"};
   }
 
-  if (const auto iter = find_in(mAttributes, current); iter != mAttributes.end()) {
+  if (const auto iter = mAttributes.find(current); iter != mAttributes.end()) {
     auto value = iter->second;
     mAttributes.erase(iter);
     mAttributes[std::move(updated)] = std::move(value);

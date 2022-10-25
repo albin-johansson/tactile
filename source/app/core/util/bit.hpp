@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include <concepts>  // integral, invocable
+#include <algorithm>    // reverse
+#include <bit>          // bit_cast
+#include <concepts>     // integral, invocable
+#include <type_traits>  // has_unique_object_representations_v
 
-#include <EASTL/algorithm.h>
-#include <EASTL/bit.h>
-#include <EASTL/type_traits.h>
 #include <SDL.h>
 
 #include "core/type/array.hpp"
@@ -45,15 +45,15 @@ template <std::integral T>
 [[nodiscard]] constexpr auto byteswap(T value) noexcept -> T
 {
   // Based on example implementation: https://en.cppreference.com/w/cpp/numeric/byteswap
-  static_assert(eastl::has_unique_object_representations_v<T>,
+  static_assert(std::has_unique_object_representations_v<T>,
                 "T may not have padding bits");
 
   using Bytes = Array<uint8, sizeof(value)>;
 
-  auto bytes = eastl::bit_cast<Bytes>(value);
-  eastl::reverse(eastl::begin(bytes), eastl::end(bytes));
+  auto bytes = std::bit_cast<Bytes>(value);
+  std::reverse(std::begin(bytes), std::end(bytes));
 
-  return eastl::bit_cast<T>(bytes);
+  return std::bit_cast<T>(bytes);
 }
 
 template <std::integral Int, std::invocable<uint8> T>

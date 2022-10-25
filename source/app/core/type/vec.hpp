@@ -19,13 +19,11 @@
 
 #pragma once
 
-#include <EASTL/vector.h>
-
-#include "core/type/eastl_new.hpp"
+#include <vector>  // vector
 
 namespace tactile {
 
 template <typename T>
-using Vec = eastl::vector<T>;
+using Vec = std::vector<T>;
 
 }  // namespace tactile

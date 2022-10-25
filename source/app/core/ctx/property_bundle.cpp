@@ -54,7 +54,7 @@ void PropertyBundle::update(StringView name, Attribute value)
 
 void PropertyBundle::remove(StringView name)
 {
-  if (const auto iter = find_in(mProps, name); iter != mProps.end()) {
+  if (const auto iter = mProps.find(name); iter != mProps.end()) {
     mProps.erase(iter);
   }
   else {
@@ -68,7 +68,7 @@ void PropertyBundle::rename(StringView current, String updated)
     throw TactileError {"Duplicated property name!"};
   }
 
-  if (const auto iter = find_in(mProps, current); iter != mProps.end()) {
+  if (const auto iter = mProps.find(current); iter != mProps.end()) {
     auto value = iter->second;
     mProps.erase(iter);
     mProps[std::move(updated)] = value;
@@ -90,7 +90,7 @@ auto PropertyBundle::change_type(StringView name, const AttributeType type) -> A
 
 auto PropertyBundle::find(StringView name) -> Attribute*
 {
-  if (const auto iter = find_in(mProps, name); iter != mProps.end()) {
+  if (const auto iter = mProps.find(name); iter != mProps.end()) {
     return &iter->second;
   }
   else {
@@ -100,7 +100,7 @@ auto PropertyBundle::find(StringView name) -> Attribute*
 
 auto PropertyBundle::find(StringView name) const -> const Attribute*
 {
-  if (const auto iter = find_in(mProps, name); iter != mProps.end()) {
+  if (const auto iter = mProps.find(name); iter != mProps.end()) {
     return &iter->second;
   }
   else {

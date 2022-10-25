@@ -8,7 +8,6 @@
   ],
   "builtin-baseline": "a2261f65ea979eebf56074f604776160f0074b09",
   "dependencies": [
-    "eastl",
     "entt",
     "cppcodec",
     "fmt",

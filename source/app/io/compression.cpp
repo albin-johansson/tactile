@@ -19,8 +19,9 @@
 
 #include "compression.hpp"
 
-#include <EASTL/algorithm.h>
-#include <EASTL/iterator.h>
+#include <algorithm>  // copy_n, clamp
+#include <iterator>   // back_inserter
+
 #include <spdlog/spdlog.h>
 #include <zlib.h>
 #include <zstd.h>
@@ -80,7 +81,7 @@ auto zlib_compress(const void* source, const usize source_bytes, int level)
   }
 
   if (level != Z_DEFAULT_COMPRESSION) {
-    level = eastl::clamp(level, Z_BEST_SPEED, Z_BEST_COMPRESSION);
+    level = std::clamp(level, Z_BEST_SPEED, Z_BEST_COMPRESSION);
   }
 
   Bytef out_buffer[buffer_size];
@@ -218,7 +219,7 @@ auto zstd_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
   result.reserve(out_buffer_size);  // Won't be enough, but better than nothing
 
   const auto copy_output_buffer_to_result = [&] {
-    eastl::copy_n(out_buffer.data(), output.pos, eastl::back_inserter(result));
+    std::copy_n(out_buffer.data(), output.pos, std::back_inserter(result));
   };
 
   usize written_bytes = 0;

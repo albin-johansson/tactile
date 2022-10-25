@@ -41,8 +41,8 @@ TEST(Bit, Byteswap)
   const auto swapped = byteswap(original);
 
   using ByteArray = Array<uint8, sizeof(uint32)>;
-  const auto original_bytes = eastl::bit_cast<ByteArray>(original);
-  const auto swapped_bytes = eastl::bit_cast<ByteArray>(swapped);
+  const auto original_bytes = std::bit_cast<ByteArray>(original);
+  const auto swapped_bytes = std::bit_cast<ByteArray>(swapped);
 
   ASSERT_EQ(original_bytes.at(0), swapped_bytes.at(3));
   ASSERT_EQ(original_bytes.at(1), swapped_bytes.at(2));

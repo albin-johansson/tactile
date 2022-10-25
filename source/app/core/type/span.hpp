@@ -19,14 +19,13 @@
 
 #pragma once
 
-#include <EASTL/span.h>
+#include <span>  // span, dynamic_extent
 
-#include "core/type/eastl_new.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
 
-template <typename T, usize Extent = eastl::dynamic_extent>
-using Span = eastl::span<T, Extent>;
+template <typename T, usize Extent = std::dynamic_extent>
+using Span = std::span<T, Extent>;
 
 }  // namespace tactile

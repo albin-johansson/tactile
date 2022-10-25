@@ -19,9 +19,9 @@
 
 #include "history.hpp"
 
-#include <utility>  // move
+#include <algorithm>  // find
+#include <utility>    // move
 
-#include <EASTL/algorithm.h>
 #include <spdlog/spdlog.h>
 
 #include "core/type/maybe.hpp"
@@ -104,7 +104,7 @@ void clear_file_history()
 void add_file_to_history(const Path& path)
 {
   auto converted = convert_to_forward_slashes(path);
-  if (eastl::find(history_entries.begin(), history_entries.end(), converted) ==
+  if (std::find(history_entries.begin(), history_entries.end(), converted) ==
       history_entries.end()) {
     spdlog::debug("Adding '{}' to history...", converted);
     history_entries.push_back(std::move(converted));

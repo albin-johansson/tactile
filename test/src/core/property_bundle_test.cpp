@@ -23,7 +23,7 @@
 
 #include "misc/panic.hpp"
 
-using namespace eastl::string_literals;
+using namespace std::string_literals;
 
 namespace tactile::test {
 

@@ -19,8 +19,8 @@
 
 #include "document_manager.hpp"
 
-#include <EASTL/algorithm.h>
-#include <EASTL/utility.h>
+#include <algorithm>  // any_of
+#include <utility>    // move
 
 #include "core/util/assoc.hpp"
 #include "misc/assert.hpp"
@@ -53,7 +53,7 @@ void DocumentManager::add_map(Shared<MapDocument> document)
   const auto id = document->get_map().uuid();
 
   mDocuments[id] = document;
-  mMaps[id] = eastl::move(document);
+  mMaps[id] = std::move(document);
 
   mOpenDocuments.insert(id);
   mActiveDocument = id;
@@ -68,7 +68,7 @@ void DocumentManager::add_tileset(Shared<TilesetDocument> document)
   const auto id = document->get_tileset()->uuid();
 
   mDocuments[id] = document;
-  mTilesets[id] = eastl::move(document);
+  mTilesets[id] = std::move(document);
 }
 
 auto DocumentManager::remove_map(const UUID& id) -> Shared<MapDocument>
@@ -185,7 +185,7 @@ auto DocumentManager::current_document() const -> const Document*
 auto DocumentManager::current_map() -> MapDocument*
 {
   if (mActiveDocument) {
-    if (auto iter = find_in(mMaps, *mActiveDocument); iter != mMaps.end()) {
+    if (auto iter = mMaps.find(*mActiveDocument); iter != mMaps.end()) {
       return iter->second.get();
     }
   }
@@ -196,7 +196,7 @@ auto DocumentManager::current_map() -> MapDocument*
 auto DocumentManager::current_map() const -> const MapDocument*
 {
   if (mActiveDocument) {
-    if (auto iter = find_in(mMaps, *mActiveDocument); iter != mMaps.end()) {
+    if (auto iter = mMaps.find(*mActiveDocument); iter != mMaps.end()) {
       return iter->second.get();
     }
   }
@@ -207,7 +207,7 @@ auto DocumentManager::current_map() const -> const MapDocument*
 auto DocumentManager::current_tileset() -> TilesetDocument*
 {
   if (mActiveDocument) {
-    if (auto iter = find_in(mTilesets, *mActiveDocument); iter != mTilesets.end()) {
+    if (auto iter = mTilesets.find(*mActiveDocument); iter != mTilesets.end()) {
       return iter->second.get();
     }
   }
@@ -218,7 +218,7 @@ auto DocumentManager::current_tileset() -> TilesetDocument*
 auto DocumentManager::current_tileset() const -> const TilesetDocument*
 {
   if (mActiveDocument) {
-    if (auto iter = find_in(mTilesets, *mActiveDocument); iter != mTilesets.end()) {
+    if (auto iter = mTilesets.find(*mActiveDocument); iter != mTilesets.end()) {
       return iter->second.get();
     }
   }
@@ -258,7 +258,7 @@ auto DocumentManager::is_tileset(const UUID& id) const -> bool
 
 auto DocumentManager::is_tileset_used(const UUID& id) const -> bool
 {
-  return eastl::any_of(mMaps.begin(), mMaps.end(), [&](const auto& pair) {
+  return std::any_of(mMaps.begin(), mMaps.end(), [&](const auto& pair) {
     const auto& map = pair.second->get_map();
     return map.tileset_bundle().has_tileset(id);
   });
@@ -266,7 +266,7 @@ auto DocumentManager::is_tileset_used(const UUID& id) const -> bool
 
 auto DocumentManager::has_with_path(const Path& path) const -> bool
 {
-  return eastl::any_of(mDocuments.begin(), mDocuments.end(), [&](const auto& pair) {
+  return std::any_of(mDocuments.begin(), mDocuments.end(), [&](const auto& pair) {
     const auto& document = pair.second;
     return document->has_path() && document->get_path() == path;
   });

@@ -40,7 +40,6 @@ set(Boost_NO_WARN_NEW_VERSIONS ON)
 find_package(OpenGL REQUIRED)
 find_package(Boost REQUIRED)
 
-find_package(EASTL CONFIG REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(GLEW CONFIG REQUIRED)
@@ -83,7 +82,6 @@ function(tactile_set_compile_options target)
                            /permissive-
                            /Zc:preprocessor
                            /Zc:__cplusplus
-                           /Zc:alignedNew
                            /wd4005 # Avoid macro redefinition warnings in third-party libraries
                            )
 

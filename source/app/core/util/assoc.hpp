@@ -20,50 +20,16 @@
 #pragma once
 
 #include <concepts>  // equality_comparable_with
+#include <utility>   // forward
 
-#include <EASTL/utility.h>
-
-#include "core/type/hash_map.hpp"
-#include "core/type/tree_map.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
 
-template <typename T, typename U>
-concept TransparentKey = std::equality_comparable_with<T, U>;
-
-template <typename K, typename V, TransparentKey<K> T>
-[[nodiscard]] auto find_in(HashMap<K, V>& map, T&& key) ->
-    typename HashMap<K, V>::iterator
+template <typename M, std::equality_comparable_with<typename M::key_type> K>
+[[nodiscard]] auto lookup_in(M& map, K&& key) -> typename M::mapped_type&
 {
-  return map.find_as(eastl::forward<T>(key));
-}
-
-template <typename K, typename V, TransparentKey<K> T>
-[[nodiscard]] auto find_in(const HashMap<K, V>& map, T&& key) ->
-    typename HashMap<K, V>::const_iterator
-{
-  return map.find_as(eastl::forward<T>(key));
-}
-
-template <typename K, typename V, TransparentKey<K> T>
-[[nodiscard]] auto find_in(TreeMap<K, V>& map, T&& key) ->
-    typename TreeMap<K, V>::iterator
-{
-  return map.find_as(eastl::forward<T>(key), eastl::less_2<K, eastl::decay_t<T>> {});
-}
-
-template <typename K, typename V, TransparentKey<K> T>
-[[nodiscard]] auto find_in(const TreeMap<K, V>& map, T&& key) ->
-    typename TreeMap<K, V>::const_iterator
-{
-  return map.find_as(eastl::forward<T>(key), eastl::less_2<K, eastl::decay_t<T>> {});
-}
-
-template <typename K, typename V, TransparentKey<K> T>
-[[nodiscard]] auto lookup_in(HashMap<K, V>& map, T&& key) -> V&
-{
-  const auto iter = find_in(map, eastl::forward<T>(key));
+  const auto iter = map.find(std::forward<K>(key));
   if (iter != map.end()) {
     return iter->second;
   }
@@ -72,10 +38,10 @@ template <typename K, typename V, TransparentKey<K> T>
   }
 }
 
-template <typename K, typename V, TransparentKey<K> T>
-[[nodiscard]] auto lookup_in(const HashMap<K, V>& map, T&& key) -> const V&
+template <typename M, std::equality_comparable_with<typename M::key_type> K>
+[[nodiscard]] auto lookup_in(const M& map, K&& key) -> const typename M::mapped_type&
 {
-  const auto iter = find_in(map, eastl::forward<T>(key));
+  const auto iter = map.find(std::forward<K>(key));
   if (iter != map.end()) {
     return iter->second;
   }
@@ -84,40 +50,10 @@ template <typename K, typename V, TransparentKey<K> T>
   }
 }
 
-template <typename K, typename V, TransparentKey<K> T>
-[[nodiscard]] auto lookup_in(TreeMap<K, V>& map, T&& key) -> V&
+template <typename M, std::equality_comparable_with<typename M::key_type> K>
+[[nodiscard]] auto has_key(const M& map, K&& key) -> bool
 {
-  const auto iter = find_in(map, eastl::forward<T>(key));
-  if (iter != map.end()) {
-    return iter->second;
-  }
-  else {
-    throw TactileError {"Invalid key!"};
-  }
-}
-
-template <typename K, typename V, TransparentKey<K> T>
-[[nodiscard]] auto lookup_in(const TreeMap<K, V>& map, T&& key) -> const V&
-{
-  const auto iter = find_in(map, eastl::forward<T>(key));
-  if (iter != map.end()) {
-    return iter->second;
-  }
-  else {
-    throw TactileError {"Invalid key!"};
-  }
-}
-
-template <typename K, typename V, TransparentKey<K> T>
-[[nodiscard]] auto has_key(const HashMap<K, V>& map, T&& key) -> bool
-{
-  return find_in(map, eastl::forward<T>(key)) != map.end();
-}
-
-template <typename K, typename V, TransparentKey<K> T>
-[[nodiscard]] auto has_key(const TreeMap<K, V>& map, T&& key) -> bool
-{
-  return find_in(map, eastl::forward<T>(key)) != map.end();
+  return map.find(std::forward<K>(key)) != map.end();
 }
 
 }  // namespace tactile

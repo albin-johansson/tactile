@@ -19,7 +19,9 @@
 
 #include "property_type_combo.hpp"
 
-#include <EASTL/algorithm.h>
+#include <algorithm>  // find_if
+#include <utility>    // make_pair
+
 #include <imgui.h>
 
 #include "core/type/array.hpp"
@@ -37,7 +39,7 @@ namespace {
 
 [[nodiscard]] auto index_from_type(const auto& items, const AttributeType type) -> usize
 {
-  auto iter = eastl::find_if(items.begin(), items.end(), [=](const auto& pair) {
+  auto iter = std::find_if(items.begin(), items.end(), [=](const auto& pair) {
     return type == pair.second;
   });
 
@@ -55,13 +57,13 @@ void property_type_combo_impl(AttributeType& out, Maybe<AttributeType> previous_
 
   using TypeArray = Array<Pair<StringView, AttributeType>, 7>;
   const TypeArray items {
-      eastl::make_pair(lang.misc.type_string.c_str(), AttributeType::String),
-      eastl::make_pair(lang.misc.type_int.c_str(), AttributeType::Int),
-      eastl::make_pair(lang.misc.type_float.c_str(), AttributeType::Float),
-      eastl::make_pair(lang.misc.type_bool.c_str(), AttributeType::Bool),
-      eastl::make_pair(lang.misc.type_color.c_str(), AttributeType::Color),
-      eastl::make_pair(lang.misc.type_object.c_str(), AttributeType::Object),
-      eastl::make_pair(lang.misc.type_path.c_str(), AttributeType::Path),
+      std::make_pair(lang.misc.type_string.c_str(), AttributeType::String),
+      std::make_pair(lang.misc.type_int.c_str(), AttributeType::Int),
+      std::make_pair(lang.misc.type_float.c_str(), AttributeType::Float),
+      std::make_pair(lang.misc.type_bool.c_str(), AttributeType::Bool),
+      std::make_pair(lang.misc.type_color.c_str(), AttributeType::Color),
+      std::make_pair(lang.misc.type_object.c_str(), AttributeType::Object),
+      std::make_pair(lang.misc.type_path.c_str(), AttributeType::Path),
   };
 
   const auto current_index = index_from_type(items, out);

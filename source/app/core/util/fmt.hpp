@@ -19,12 +19,11 @@
 
 #pragma once
 
+#include <algorithm>    // min
+#include <iterator>     // back_inserter
 #include <sstream>      // stringstream
 #include <string_view>  // string_view
 
-#include <EASTL/algorithm.h>
-#include <EASTL/string.h>
-#include <EASTL/string_view.h>
 #include <boost/uuid/uuid_io.hpp>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
@@ -39,24 +38,6 @@
 #include "misc/stacktrace.hpp"
 
 namespace fmt {
-
-template <>
-struct formatter<eastl::string_view> : formatter<std::string_view> {
-  auto format(eastl::string_view str, auto& ctx) const
-  {
-    const auto view = tactile::to_std_view(str);
-    return formatter<std::string_view>::format(view, ctx);
-  }
-};
-
-template <>
-struct formatter<eastl::string> : formatter<std::string_view> {
-  auto format(const eastl::string& str, auto& ctx) const
-  {
-    const auto view = tactile::to_std_view(str);
-    return formatter<std::string_view>::format(view, ctx);
-  }
-};
 
 template <>
 struct formatter<tactile::Path> : formatter<std::string_view> {
@@ -108,7 +89,7 @@ class FmtString final {
                                          fmt::runtime(to_std_view(fmt)),
                                          args...);
     *result.out = '\0';  // Ensure null-terminator
-    mSize = (eastl::min)(result.size, Capacity);
+    mSize = std::min(result.size, Capacity);
   }
 
   [[nodiscard]] auto data() const noexcept -> const char* { return mBuffer.data(); }

@@ -19,7 +19,7 @@
 
 #include "filesystem.hpp"
 
-#include <EASTL/algorithm.h>
+#include <algorithm>  // replace
 
 #include "core/util/env.hpp"
 #include "core/util/str.hpp"
@@ -49,7 +49,7 @@ namespace {
 auto convert_to_forward_slashes(const Path& path) -> String
 {
   auto str = path.string();
-  eastl::replace(str.begin(), str.end(), '\\', '/');
+  std::replace(str.begin(), str.end(), '\\', '/');
   return from_std(str);
 }
 

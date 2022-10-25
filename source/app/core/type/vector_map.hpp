@@ -19,13 +19,12 @@
 
 #pragma once
 
-#include <EASTL/vector_map.h>
-
-#include "core/type/eastl_new.hpp"
+#include <functional>  // less
+#include <map>         // map
 
 namespace tactile {
 
 template <typename K, typename V>
-using VectorMap = eastl::vector_map<K, V>;
+using VectorMap = std::map<K, V, std::less<>>;
 
 }  // namespace tactile

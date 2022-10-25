@@ -19,13 +19,11 @@
 
 #pragma once
 
-#include <EASTL/deque.h>
-
-#include "core/type/eastl_new.hpp"
+#include <deque>  // deque
 
 namespace tactile {
 
 template <typename T>
-using Deque = eastl::deque<T>;
+using Deque = std::deque<T>;
 
 }  // namespace tactile

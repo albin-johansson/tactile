@@ -19,7 +19,8 @@
 
 #include "core/util/random.hpp"
 
-#include <EASTL/algorithm.h>
+#include <algorithm>  // generate_n, count
+
 #include <gtest/gtest.h>
 #include <spdlog/spdlog.h>
 
@@ -48,9 +49,9 @@ TEST(Random, NextRandomFloat)
 TEST(Random, NextBool)
 {
   Array<bool, 1'000> values {};
-  eastl::generate_n(values.begin(), 1'000, next_bool);
+  std::generate_n(values.begin(), 1'000, next_bool);
 
-  const auto n_true = eastl::count(values.begin(), values.end(), true);
+  const auto n_true = std::count(values.begin(), values.end(), true);
   const auto n_false = static_cast<diff_t>(values.size()) - n_true;
 
   spdlog::debug("[Random] {} next_bool invocations: {} true, {} false",

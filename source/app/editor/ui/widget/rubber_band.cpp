@@ -19,9 +19,9 @@
 
 #include "rubber_band.hpp"
 
-#include <cmath>  // fmod
+#include <algorithm>  // min, max
+#include <cmath>      // fmod
 
-#include <EASTL/algorithm.h>
 #include <centurion/math.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -57,10 +57,10 @@ auto rubber_band(const ImVec2& scroll_offset, const ImVec2& tile_size) -> Maybe<
       const auto p1 = offset_origin + delta;
 
       // Determine coordinates for top-left and bottom-right points
-      const auto x1 = (eastl::min)(p0.x, p1.x);
-      const auto y1 = (eastl::min)(p0.y, p1.y);
-      const auto x2 = (eastl::max)(p0.x, p1.x);
-      const auto y2 = (eastl::max)(p0.y, p1.y);
+      const auto x1 = std::min(p0.x, p1.x);
+      const auto y1 = std::min(p0.y, p1.y);
+      const auto x2 = std::max(p0.x, p1.x);
+      const auto y2 = std::max(p0.y, p1.y);
 
       // Convert coordinates to row/column indices
       const auto r1 = to_row(y1);
@@ -69,8 +69,8 @@ auto rubber_band(const ImVec2& scroll_offset, const ImVec2& tile_size) -> Maybe<
       const auto c2 = to_column(x2);
 
       // Ensure that the selection width and height are non-zero
-      const auto w = (eastl::max)(1, c2 - c1);
-      const auto h = (eastl::max)(1, r2 - r1);
+      const auto w = std::max(1, c2 - c1);
+      const auto h = std::max(1, r2 - r1);
 
       // Calculate width/height offsets for single tile selections
       const auto ww = (c1 != c2) ? 1 : 0;

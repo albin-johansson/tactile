@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include <EASTL/set.h>
+#include <set>  // set
 
 namespace tactile {
 
 template <typename T>
-using Set = eastl::set<T>;
+using Set = std::set<T>;
 
 }  // namespace tactile

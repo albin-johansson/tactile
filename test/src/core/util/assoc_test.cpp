@@ -22,10 +22,12 @@
 #include <gtest/gtest.h>
 
 #include "core/attribute.hpp"
+#include "core/type/hash_map.hpp"
 #include "core/type/string.hpp"
+#include "core/type/tree_map.hpp"
 
-using namespace eastl::string_literals;
-using namespace eastl::string_view_literals;
+using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 namespace tactile::test {
 
@@ -34,7 +36,6 @@ TEST(Assoc, EmptyHashMap)
   const HashMap<String, int> map;
 
   ASSERT_FALSE(has_key(map, "foo"));
-  ASSERT_EQ(map.end(), find_in(map, "foo"));
   ASSERT_THROW((void) lookup_in(map, "foo"), TactileError);
 }
 
@@ -43,50 +44,7 @@ TEST(Assoc, EmptyTreeMap)
   const TreeMap<String, int> map;
 
   ASSERT_FALSE(has_key(map, "foo"));
-  ASSERT_EQ(map.end(), find_in(map, "foo"));
   ASSERT_THROW((void) lookup_in(map, "foo"), TactileError);
-}
-
-TEST(Assoc, FindInHashMap)
-{
-  HashMap<String, int> map;
-  map["a"] = 10;
-  map["b"] = 20;
-  map["c"] = 30;
-
-  ASSERT_NE(map.end(), find_in(map, "a"));
-  ASSERT_NE(map.end(), find_in(map, "a"sv));
-  ASSERT_NE(map.end(), find_in(map, "a"s));
-
-  ASSERT_NE(map.end(), find_in(map, "b"));
-  ASSERT_NE(map.end(), find_in(map, "c"));
-
-  ASSERT_EQ(map.end(), find_in(map, "C"));
-  ASSERT_EQ(map.end(), find_in(map, "d"));
-}
-
-TEST(Assoc, FindInTreeMap)
-{
-  TreeMap<String, Attribute> map;
-  map["a"].reset_to_default(AttributeType::Int);
-  map["b"].reset_to_default(AttributeType::String);
-  map["c"].reset_to_default(AttributeType::Float);
-
-  ASSERT_NE(map.end(), find_in(map, "a"));
-  ASSERT_EQ(map.end(), find_in(map, "A"));
-  ASSERT_EQ(map.end(), find_in(map, "A"s));
-  ASSERT_EQ(map.end(), find_in(map, "A"sv));
-
-  ASSERT_NE(map.end(), find_in(map, "a"));
-  ASSERT_NE(map.end(), find_in(map, "a"s));
-  ASSERT_NE(map.end(), find_in(map, "a"sv));
-
-  ASSERT_NE(map.end(), find_in(map, "b"));
-  ASSERT_NE(map.end(), find_in(map, "c"));
-
-  ASSERT_EQ(map.end(), find_in(map, "C"));
-  ASSERT_EQ(map.end(), find_in(map, "d"));
-  ASSERT_EQ(map.end(), find_in(map, "asdx"sv));
 }
 
 TEST(Assoc, LookupInHashMap)
@@ -95,9 +53,9 @@ TEST(Assoc, LookupInHashMap)
   map["foo"] = 3.5f;
   map["bar"] = true;
 
-  ASSERT_THROW(lookup_in(map, ""), TactileError);
-  ASSERT_THROW(lookup_in(map, "foO"), TactileError);
-  ASSERT_THROW(lookup_in(map, "BAR"), TactileError);
+  ASSERT_THROW((void) lookup_in(map, ""), TactileError);
+  ASSERT_THROW((void) lookup_in(map, "foO"), TactileError);
+  ASSERT_THROW((void) lookup_in(map, "BAR"), TactileError);
 
   ASSERT_EQ(3.5f, lookup_in(map, "foo"));
   ASSERT_EQ(true, lookup_in(map, "bar"));
@@ -109,8 +67,8 @@ TEST(Assoc, LookupInTreeMap)
   map[10] = "hello"s;
   map[11] = cen::colors::red;
 
-  ASSERT_THROW(lookup_in(map, 9), TactileError);
-  ASSERT_THROW(lookup_in(map, 12), TactileError);
+  ASSERT_THROW((void) lookup_in(map, 9), TactileError);
+  ASSERT_THROW((void) lookup_in(map, 12), TactileError);
 
   ASSERT_EQ("hello"s, lookup_in(map, 10));
   ASSERT_EQ(cen::colors::red, lookup_in(map, 11));
@@ -138,7 +96,7 @@ TEST(Assoc, HashMapHasKey)
 
 TEST(Assoc, TreeMapHasKey)
 {
-  HashMap<StringView, float> map;
+  TreeMap<StringView, float> map;
   map["A"] = 1.0f;
   map["B"] = 42.0f;
 

@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include <EASTL/functional.h>
+#include <functional>  // function
 
 namespace tactile {
 
 template <typename T>
-using Fn = eastl::function<T>;
+using Fn = std::function<T>;
 
 }  // namespace tactile

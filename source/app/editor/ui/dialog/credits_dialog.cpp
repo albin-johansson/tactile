@@ -78,7 +78,6 @@ void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
     row("Centurion", "MIT");
     row("cppcodec", "MIT");
     row("Dear ImGui", "MIT");
-    row("EASTL", "BSD 3-Clause");
     row("EnTT", "MIT");
     row("fmt", "MIT");
     row("GLEW", "BSD/MIT");

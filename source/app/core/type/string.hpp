@@ -19,22 +19,21 @@
 
 #pragma once
 
-#include <EASTL/string.h>
-#include <EASTL/string_view.h>
+#include <string>       // basic_string, string
+#include <string_view>  // basic_string_view, string_view, wstring_view
 
-#include "core/type/eastl_new.hpp"
 #include "core/type/path.hpp"
 
 namespace tactile {
 
-using String = eastl::string;
-using StringView = eastl::string_view;
+using String = std::string;
+using StringView = std::string_view;
 
-using WString = eastl::wstring;
-using WStringView = eastl::wstring_view;
+using WString = std::wstring;
+using WStringView = std::wstring_view;
 
 using OsStrChar = Path::value_type;
-using OsString = eastl::basic_string<OsStrChar>;
-using OsStringView = eastl::basic_string_view<OsStrChar>;
+using OsString = std::basic_string<OsStrChar>;
+using OsStringView = std::basic_string_view<OsStrChar>;
 
 }  // namespace tactile

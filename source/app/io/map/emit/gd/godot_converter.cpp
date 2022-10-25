@@ -19,11 +19,10 @@
 
 #include "godot_converter.hpp"
 
-#include <cmath>    // sin, cos
-#include <numbers>  // pi
-#include <utility>  // move
-
-#include <EASTL/algorithm.h>
+#include <algorithm>  // replace
+#include <cmath>      // sin, cos
+#include <numbers>    // pi
+#include <utility>    // move
 
 #include "core/tile_pos.hpp"
 #include "core/type/string.hpp"
@@ -43,7 +42,7 @@ using TilesetTextures = HashMap<UUID, GdExtRes>;
 [[nodiscard]] auto to_godot_name(StringView name) -> String
 {
   String copy {name};
-  eastl::replace(copy.begin(), copy.end(), '/', '-');
+  std::replace(copy.begin(), copy.end(), '/', '-');
   return copy;
 }
 
