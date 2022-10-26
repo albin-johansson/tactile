@@ -23,9 +23,9 @@
 #include <centurion/message_box.hpp>
 #include <spdlog/spdlog.h>
 
-#include "app.hpp"
 #include "cfg/configuration.hpp"
 #include "core/util/fmt.hpp"
+#include "editor/app.hpp"
 #include "editor/app_context.hpp"
 #include "io/directories.hpp"
 #include "misc/logging.hpp"
