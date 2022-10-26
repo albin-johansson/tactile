@@ -25,18 +25,11 @@
 #include <imgui_impl_sdl.h>
 
 #include "cfg/configuration.hpp"
+#include "editor/app_context.hpp"
 #include "editor/ui/fonts.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
-
-EventLoop::EventLoop(AppCfg* cfg)
-    : mCfg {cfg}
-{
-  if (!mCfg) {
-    throw TactileError {"Invalid null application configuration!"};
-  }
-}
 
 void EventLoop::start()
 {
@@ -45,14 +38,13 @@ void EventLoop::start()
   on_startup();
 
   const auto& io = ImGui::GetIO();
-  auto& window = mCfg->window();
 
   ImVec2 prev_scale {};
   while (mRunning) {
     poll_events();
 
-    /* We reload the fonts when the framebuffer scale changes. Since it is initially zero,
-       we know that we will load the fonts at least once. */
+    // We reload the fonts when the framebuffer scale changes. Since it is initially zero,
+    // we know that we will load the fonts at least once.
     if (const auto& scale = io.DisplayFramebufferScale; prev_scale.x != scale.x) {
       prev_scale = scale;
       ui::reload_fonts();
@@ -77,7 +69,7 @@ void EventLoop::start()
     glClear(GL_COLOR_BUFFER_BIT);
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-    cen::gl::swap(window);
+    cen::gl::swap(get_window());
   }
 
   on_shutdown();

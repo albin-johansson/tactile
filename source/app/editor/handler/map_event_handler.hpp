@@ -19,42 +19,8 @@
 
 #pragma once
 
-#include <centurion/event.hpp>
-
-#include "editor/loop.hpp"
-
 namespace tactile {
 
-/// The heart of the Tactile map editor.
-class App final : EventLoop {
- public:
-  App();
-
-  ~App();
-
-  using EventLoop::start;
-
- protected:
-  void on_startup() override;
-
-  void on_shutdown() override;
-
-  void on_pre_update() override;
-
-  void on_update() override;
-
-  void on_event(const cen::event_handler& handler) override;
-
- private:
-  void subscribe_to_events();
-
-  void save_current_files_to_history();
-
-  void on_keyboard_event(cen::keyboard_event event);
-
-  void on_mouse_wheel_event(const cen::mouse_wheel_event& event);
-
-  void on_quit();
-};
+void install_map_event_handler();
 
 }  // namespace tactile

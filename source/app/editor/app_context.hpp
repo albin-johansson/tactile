@@ -19,42 +19,27 @@
 
 #pragma once
 
-#include <centurion/event.hpp>
+#include <centurion/window.hpp>
+#include <entt/fwd.hpp>
 
-#include "editor/loop.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 
-/// The heart of the Tactile map editor.
-class App final : EventLoop {
- public:
-  App();
+TACTILE_FWD_DECLARE_CLASS(AppCfg)
+TACTILE_FWD_DECLARE_CLASS(DocumentModel)
+TACTILE_FWD_DECLARE_STRUCT(WidgetShowState)
 
-  ~App();
+void init_app_context(AppCfg* cfg);
 
-  using EventLoop::start;
+void request_font_reload();
+void handled_font_reload();
 
- protected:
-  void on_startup() override;
+[[nodiscard]] auto get_window() -> cen::window&;
+[[nodiscard]] auto get_dispatcher() -> entt::dispatcher&;
+[[nodiscard]] auto get_model() -> DocumentModel&;
+[[nodiscard]] auto get_widget_show_state() -> WidgetShowState&;
 
-  void on_shutdown() override;
-
-  void on_pre_update() override;
-
-  void on_update() override;
-
-  void on_event(const cen::event_handler& handler) override;
-
- private:
-  void subscribe_to_events();
-
-  void save_current_files_to_history();
-
-  void on_keyboard_event(cen::keyboard_event event);
-
-  void on_mouse_wheel_event(const cen::mouse_wheel_event& event);
-
-  void on_quit();
-};
+[[nodiscard]] auto is_font_reload_scheduled() -> bool;
 
 }  // namespace tactile

@@ -27,7 +27,7 @@
 #include "core/util/fmt.hpp"
 #include "io/file_dialog.hpp"
 #include "io/proto/preferences.hpp"
-#include "model/event/misc_events.hpp"
+#include "model/event/document_events.hpp"
 
 namespace tactile::ui {
 

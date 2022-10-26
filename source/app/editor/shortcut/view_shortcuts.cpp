@@ -27,7 +27,7 @@
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/ui.hpp"
 #include "io/proto/preferences.hpp"
-#include "model/event/misc_events.hpp"
+#include "model/event/view_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/model.hpp"
 

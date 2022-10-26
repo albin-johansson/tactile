@@ -36,7 +36,7 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/command_events.hpp"
-#include "model/event/misc_events.hpp"
+#include "model/event/view_events.hpp"
 
 namespace tactile::ui {
 namespace {

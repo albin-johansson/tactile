@@ -20,6 +20,7 @@
 #include <gtest/gtest.h>
 
 #include "cfg/configuration.hpp"
+#include "editor/app_context.hpp"
 #include "misc/logging.hpp"
 
 auto main(int argc, char* argv[]) -> int
@@ -27,6 +28,8 @@ auto main(int argc, char* argv[]) -> int
   tactile::init_logger();
 
   tactile::AppCfg cfg {argc, argv};
+  tactile::init_app_context(&cfg);
+
   cfg.window().show();
 
   testing::InitGoogleTest(&argc, argv);

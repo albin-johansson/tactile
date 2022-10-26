@@ -19,30 +19,8 @@
 
 #pragma once
 
-#include "core/type/path.hpp"
-
 namespace tactile {
 
-struct QuitEvent final {};
-
-struct ToggleUiEvent final {};
-
-struct ShowSettingsEvent final {};
-
-struct SaveEvent final {};
-
-struct SaveAsEvent final {
-  Path path;
-};
-
-struct OpenSaveAsDialogEvent final {};
-
-struct ReloadFontsEvent final {};
-
-struct ResetFontSizeEvent final {};
-
-struct IncreaseFontSizeEvent final {};
-
-struct DecreaseFontSizeEvent final {};
+void install_property_event_handler();
 
 }  // namespace tactile
