@@ -22,7 +22,6 @@
 #include <iomanip>  // setw
 
 #include "core/util/filesystem.hpp"
-#include "core/util/str.hpp"
 #include "io/file.hpp"
 #include "io/proto/preferences.hpp"
 #include "misc/panic.hpp"
@@ -33,7 +32,7 @@ namespace {
 template <typename T>
 [[nodiscard]] auto as(const JSON& json, StringView name) -> Maybe<T>
 {
-  const auto iter = json.find(to_std_view(name));
+  const auto iter = json.find(name);
   if (iter != json.end()) {
     return iter->get<T>();
   }
@@ -45,9 +44,9 @@ template <typename T>
 template <>
 [[nodiscard]] auto as(const JSON& json, StringView name) -> Maybe<String>
 {
-  const auto iter = json.find(to_std_view(name));
+  const auto iter = json.find(name);
   if (iter != json.end()) {
-    return from_std(iter->get<std::string>());
+    return iter->get<String>();
   }
   else {
     return nothing;
@@ -60,7 +59,7 @@ void to_json(JSON& json, const Attribute& value)
 {
   switch (value.type()) {
     case AttributeType::String:
-      json = to_std(value.as_string());
+      json = value.as_string();
       break;
 
     case AttributeType::Int:
@@ -76,7 +75,7 @@ void to_json(JSON& json, const Attribute& value)
       break;
 
     case AttributeType::Path:
-      json = to_std(convert_to_forward_slashes(value.as_path()));
+      json = convert_to_forward_slashes(value.as_path());
       break;
 
     case AttributeType::Color:

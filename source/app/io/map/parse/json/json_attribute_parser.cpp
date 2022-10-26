@@ -20,7 +20,6 @@
 #include <utility>  // move
 
 #include "core/type/string.hpp"
-#include "core/util/str.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 
@@ -53,12 +52,12 @@ namespace {
       break;
     }
     case AttributeType::Path: {
-      Path path = to_std(as_string(json, "value").value());
+      Path path = as_string(json, "value").value();
       value = std::move(path);
       break;
     }
     case AttributeType::Color: {
-      const auto hex = to_std(as_string(json, "value").value());
+      const auto hex = as_string(json, "value").value();
 
       // Empty color properties are not supported, so just assume the default color value
       if (hex.empty()) {

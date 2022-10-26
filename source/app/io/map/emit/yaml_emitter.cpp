@@ -19,6 +19,7 @@
 
 #include <sstream>  // stringstream
 
+#include <fmt/format.h>
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
@@ -340,7 +341,7 @@ void emit_tileset_file(const EmitInfo& info,
 
   emitter << YAML::EndMap;
 
-  const auto path = info.destination_dir() / to_std_view(filename);
+  const auto path = info.destination_dir() / filename;
   spdlog::debug("Saving external tileset to {}", path);
 
   auto stream = write_file(path, FileType::Text);
@@ -358,7 +359,7 @@ void emit_tilesets(YAML::Emitter& emitter, const EmitInfo& info)
   emitter << YAML::Key << "tilesets" << YAML::BeginSeq;
 
   for (const auto& tileset: data.tilesets) {
-    const auto source = format_str("{}.yaml", tileset.name);
+    const auto source = fmt::format("{}.yaml", tileset.name);
     emit_tileset_file(info, source, tileset);
 
     emitter << YAML::BeginMap;

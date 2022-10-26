@@ -21,7 +21,6 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/util/str.hpp"
 #include "editor/app_context.hpp"
 #include "editor/ui/dialog/save_as_dialog.hpp"
 #include "io/map/emit/emitter.hpp"
@@ -70,7 +69,7 @@ void on_save()
       io::emit_map(*document);
 
       document->get_history().mark_as_clean();
-      document->set_name(from_std(document->get_path().filename().string()));
+      document->set_name(document->get_path().filename().string());
     }
     else {
       on_open_save_as_dialog();

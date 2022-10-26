@@ -19,12 +19,11 @@
 
 #include <utility>  // move
 
+#include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
 #include "core/util/filesystem.hpp"
-#include "core/util/fmt.hpp"
 #include "core/util/functional.hpp"
-#include "core/util/str.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/tiled_info.hpp"
@@ -42,7 +41,7 @@ namespace {
   for (const auto& [name, value]: context.properties) {
     auto json = JSON::object();
 
-    json["name"] = to_std(name);
+    json["name"] = name;
     json["type"] = value.type();
     json["value"] = value;
 
@@ -57,13 +56,13 @@ namespace {
   auto json = JSON::object();
 
   json["id"] = object.id;
-  json["name"] = to_std(object.name);
+  json["name"] = object.name;
   json["x"] = object.pos.x;
   json["y"] = object.pos.y;
   json["width"] = object.size.x;
   json["height"] = object.size.y;
   json["visible"] = object.visible;
-  json["type"] = to_std(object.tag);
+  json["type"] = object.tag;
   json["rotation"] = 0;
 
   switch (object.type) {
@@ -121,10 +120,10 @@ void emit_tile_layer(JSON& json, const ir::MapData& map, const ir::LayerData& la
   }
 
   if (map.tile_format.encoding == TileEncoding::Base64) {
-    json["data"] = to_std(base64_encode_tiles(tile_layer.tiles,
-                                              map.row_count,
-                                              map.col_count,
-                                              map.tile_format.compression));
+    json["data"] = base64_encode_tiles(tile_layer.tiles,
+                                       map.row_count,
+                                       map.col_count,
+                                       map.tile_format.compression);
   }
   else {
     auto tiles = JSON::array();
@@ -157,7 +156,7 @@ void emit_object_layer(JSON& json, const ir::LayerData& layer)
   auto json = JSON::object();
 
   json["id"] = layer.id;
-  json["name"] = to_std(layer.name);
+  json["name"] = layer.name;
   json["opacity"] = layer.opacity;
   json["visible"] = layer.visible;
   json["x"] = 0;
@@ -273,7 +272,7 @@ void add_common_tileset_attributes(JSON& json,
                                    const EmitInfo& info,
                                    const ir::TilesetData& tileset)
 {
-  json["name"] = to_std(tileset.name);
+  json["name"] = tileset.name;
   json["columns"] = tileset.column_count;
 
   json["tilewidth"] = tileset.tile_size.x;
@@ -281,7 +280,7 @@ void add_common_tileset_attributes(JSON& json,
   json["tilecount"] = tileset.tile_count;
 
   const auto image_path = fs::relative(tileset.image_path, info.destination_dir());
-  json["image"] = to_std(convert_to_forward_slashes(image_path));
+  json["image"] = convert_to_forward_slashes(image_path);
 
   json["imagewidth"] = tileset.image_size.x;
   json["imageheight"] = tileset.image_size.y;
@@ -314,7 +313,7 @@ void add_common_tileset_attributes(JSON& json,
   auto json = JSON::object();
 
   json["firstgid"] = tileset.first_tile;
-  json["source"] = to_std(format_str("{}.json", tileset.name));
+  json["source"] = fmt::format("{}.json", tileset.name);
 
   return json;
 }
@@ -328,8 +327,8 @@ void create_external_tileset_file(const EmitInfo& info, const ir::TilesetData& t
   json["tiledversion"] = tiled_version;
   json["version"] = tiled_json_format_version;
 
-  const auto name = format_str("{}.json", tileset.name);
-  const auto path = info.destination_dir() / to_std_view(name);
+  const auto name = fmt::format("{}.json", tileset.name);
+  const auto path = info.destination_dir() / name;
 
   write_json(json, path);
 }

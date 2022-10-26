@@ -25,8 +25,6 @@
 #include <spdlog/spdlog.h>
 
 #include "core/type/path.hpp"
-#include "core/util/fmt.hpp"
-#include "core/util/str.hpp"
 #include "io/directories.hpp"
 #include "io/file.hpp"
 #include "io/proto/proto.hpp"
@@ -94,7 +92,7 @@ inline PreferenceState current_settings;
     }
 
     if (cfg.has_preferred_format()) {
-      result.preferred_format = from_std(cfg.preferred_format());
+      result.preferred_format = cfg.preferred_format();
     }
 
     if (cfg.has_embed_tilesets()) {
@@ -194,7 +192,7 @@ void save_preferences()
   cfg.set_preferred_tile_width(current_settings.preferred_tile_size.x);
   cfg.set_preferred_tile_height(current_settings.preferred_tile_size.y);
 
-  cfg.set_preferred_format(to_std(current_settings.preferred_format));
+  cfg.set_preferred_format(current_settings.preferred_format);
   cfg.set_embed_tilesets(current_settings.embed_tilesets);
   cfg.set_indent_output(current_settings.indent_output);
   cfg.set_fold_tile_data(current_settings.fold_tile_data);

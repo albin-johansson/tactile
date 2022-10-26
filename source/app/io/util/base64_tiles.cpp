@@ -26,10 +26,8 @@
 #include <cppcodec/base64_rfc4648.hpp>
 
 #include "core/tile_matrix.hpp"
-#include "core/type/array.hpp"
 #include "core/util/bit.hpp"
 #include "core/util/functional.hpp"
-#include "core/util/str.hpp"
 #include "io/compression.hpp"
 #include "misc/panic.hpp"
 
@@ -82,7 +80,7 @@ static_assert(std::same_as<TileID, int32>);
 
 [[nodiscard]] auto encode(const ByteStream& stream) -> String
 {
-  return from_std(Base64::encode(stream.data(), stream.size()));
+  return Base64::encode(stream.data(), stream.size());
 }
 
 }  // namespace

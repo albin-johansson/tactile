@@ -22,7 +22,6 @@
 #include <algorithm>  // replace
 
 #include "core/util/env.hpp"
-#include "core/util/str.hpp"
 #include "meta/build.hpp"
 
 #if TACTILE_OS_WINDOWS
@@ -50,7 +49,7 @@ auto convert_to_forward_slashes(const Path& path) -> String
 {
   auto str = path.string();
   std::replace(str.begin(), str.end(), '\\', '/');
-  return from_std(str);
+  return str;
 }
 
 auto has_home_prefix(const Path& path) -> bool
@@ -62,14 +61,14 @@ auto has_home_prefix(const Path& path) -> bool
 
 auto to_path(StringView str) -> Path
 {
-  return {to_std_view(str)};
+  return {str};
 }
 
 auto to_canonical(const Path& path) -> Maybe<String>
 {
   if (has_home_prefix(path)) {
     const auto& prefix = get_home_prefix();
-    return '~' + from_std(path.string().substr(prefix.size()));
+    return '~' + path.string().substr(prefix.size());
   }
   else {
     return nothing;

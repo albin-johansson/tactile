@@ -19,7 +19,6 @@
 
 #include "attribute.hpp"
 
-#include "core/util/str.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
@@ -286,7 +285,7 @@ auto operator<<(OStream& stream, const Attribute& value) -> OStream&
 {
   switch (value.type()) {
     case AttributeType::String:
-      return stream << to_std(value.as_string());
+      return stream << value.as_string();
 
     case AttributeType::Int:
       return stream << value.as_int();

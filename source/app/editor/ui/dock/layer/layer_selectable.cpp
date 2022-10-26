@@ -20,6 +20,7 @@
 #include "layer_selectable.hpp"
 
 #include <entt/signal/dispatcher.hpp>
+#include <fmt/format.h>
 #include <imgui.h>
 
 #include "core/layer/object_layer.hpp"
@@ -112,10 +113,10 @@ void show_object_selectable(const ObjectLayer& layer,
   String name;
   if (object.ctx().name().empty()) {
     TACTILE_ASSERT(object.meta_id().has_value());
-    name = format_str("{} Object {}", icon, object.meta_id().value());
+    name = fmt::format("{} Object {}", icon, object.meta_id().value());
   }
   else {
-    name = format_str("{} {}", icon, object.ctx().name());
+    name = fmt::format("{} {}", icon, object.ctx().name());
   }
 
   if (ImGui::Selectable(name.c_str(), layer.active_object_id() == object_id)) {

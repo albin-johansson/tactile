@@ -21,8 +21,9 @@
 
 #include <utility>  // move
 
+#include <fmt/format.h>
+
 #include "core/util/assoc.hpp"
-#include "core/util/fmt.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -93,7 +94,7 @@ auto ComponentBase::duplicate(StringView key) -> String
   int suffix = 1;
   String new_key;
   do {
-    new_key = format_str("{} ({})", key, suffix);
+    new_key = fmt::format("{} ({})", key, suffix);
     ++suffix;
   } while (has_key(mAttributes, new_key));
 

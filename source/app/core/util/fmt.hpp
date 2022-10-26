@@ -20,7 +20,6 @@
 #pragma once
 
 #include <algorithm>    // min
-#include <iterator>     // back_inserter
 #include <sstream>      // stringstream
 #include <string_view>  // string_view
 
@@ -31,7 +30,6 @@
 #include "core/type/array.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
-#include "core/util/str.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "meta/build.hpp"
@@ -84,10 +82,8 @@ class FmtString final {
   template <typename... Args>
   explicit FmtString(StringView fmt, const Args&... args)
   {
-    const auto result = fmt::format_to_n(mBuffer.begin(),
-                                         Capacity,
-                                         fmt::runtime(to_std_view(fmt)),
-                                         args...);
+    const auto result =
+        fmt::format_to_n(mBuffer.begin(), Capacity, fmt::runtime(fmt), args...);
     *result.out = '\0';  // Ensure null-terminator
     mSize = std::min(result.size, Capacity);
   }
@@ -107,16 +103,5 @@ class FmtString final {
   Array<char, Capacity + 1> mBuffer;  // NOLINT
   usize mSize {};
 };
-
-[[nodiscard]] auto format_str(StringView fmt, const auto&... args) -> String
-{
-  const auto real_fmt = fmt::runtime(to_std_view(fmt));
-
-  String out;
-  out.reserve(fmt::formatted_size(real_fmt, args...));
-
-  fmt::format_to(std::back_inserter(out), real_fmt, args...);
-  return out;
-}
 
 }  // namespace tactile

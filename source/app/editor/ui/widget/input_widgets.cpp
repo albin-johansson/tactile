@@ -25,7 +25,6 @@
 #include "core/type/array.hpp"
 #include "core/util/buffers.hpp"
 #include "core/util/filesystem.hpp"
-#include "core/util/str.hpp"
 #include "editor/constants.hpp"
 #include "editor/ui/style/colors.hpp"
 #include "editor/ui/style/icons.hpp"
@@ -252,7 +251,7 @@ auto input_color(const char* id, const cen::color value) -> Maybe<cen::color>
 
 auto input_file(const char* id, const Path& value) -> Maybe<Path>
 {
-  return input_file_path(id, from_std(value.filename().string()), []() -> Maybe<Path> {
+  return input_file_path(id, value.filename().string(), []() -> Maybe<Path> {
     auto dialog = io::FileDialog::open_file();
     return dialog.is_okay() ? dialog.path() : Maybe<Path> {};
   });
@@ -261,7 +260,7 @@ auto input_file(const char* id, const Path& value) -> Maybe<Path>
 auto input_folder(const char* id, const Path& value) -> Maybe<Path>
 {
   return input_file_path(id,
-                         to_canonical(value).value_or(from_std(value.string())),
+                         to_canonical(value).value_or(value.string()),
                          []() -> Maybe<Path> {
                            auto dialog = io::FileDialog::open_folder();
                            return dialog.is_okay() ? dialog.path() : Maybe<Path> {};

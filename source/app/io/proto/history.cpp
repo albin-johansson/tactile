@@ -27,7 +27,6 @@
 #include "core/type/maybe.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/fmt.hpp"
-#include "core/util/str.hpp"
 #include "core/vocabulary.hpp"
 #include "io/directories.hpp"
 #include "io/file.hpp"
@@ -61,13 +60,13 @@ void load_file_history()
   proto::History h;
   if (h.ParseFromIstream(&stream)) {
     if (h.has_last_opened_file()) {
-      history_last_closed_file = from_std(h.last_opened_file());
+      history_last_closed_file = h.last_opened_file();
     }
 
     for (const auto& file: h.files()) {
       if (fs::exists(file)) {
         spdlog::debug("Loaded '{}' from file history", file);
-        history_entries.push_back(from_std(file));
+        history_entries.push_back(file);
       }
     }
   }
@@ -81,12 +80,12 @@ void save_file_history()
   proto::History h;
 
   if (history_last_closed_file) {
-    h.set_last_opened_file(to_std(*history_last_closed_file));
+    h.set_last_opened_file(*history_last_closed_file);
   }
 
   for (const auto& path: history_entries) {
     spdlog::debug("Saving '{}' to file history", path);
-    h.add_files(to_std(path));
+    h.add_files(path);
   }
 
   auto stream = write_file(get_file_path(), FileType::Binary);

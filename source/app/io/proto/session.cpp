@@ -22,7 +22,6 @@
 #include <spdlog/spdlog.h>
 
 #include "core/util/filesystem.hpp"
-#include "core/util/str.hpp"
 #include "io/directories.hpp"
 #include "io/file.hpp"
 #include "io/map/ir/map_from_ir.hpp"
@@ -73,7 +72,7 @@ void save_session(const DocumentModel& model)
       const auto& map = model.view_map(id);
       if (map.has_path()) {
         const auto document_path = fs::absolute(map.get_path());
-        session.add_files(to_std(convert_to_forward_slashes(document_path)));
+        session.add_files(convert_to_forward_slashes(document_path));
       }
     }
   });
