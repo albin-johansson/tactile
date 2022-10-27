@@ -81,13 +81,6 @@ void add_ellipse(ImDrawList* self,
 
 Graphics::Graphics(const RenderInfo& info)
     : mInfo {info},
-      mCanvasTL {info.canvas_tl},
-      mCanvasBR {info.canvas_br},
-      mOrigin {info.origin},
-      mViewportTileSize {info.grid_size},
-      mLogicalTileSize {info.tile_size},
-      mTileSizeRatio {info.ratio},
-      mBounds {info.bounds},
       mBoundsRect {convert_bounds_to_rect(info)}
 {
 }
@@ -95,7 +88,7 @@ Graphics::Graphics(const RenderInfo& info)
 void Graphics::push_clip()
 {
   auto* list = ImGui::GetWindowDrawList();
-  list->PushClipRect(mCanvasTL, mCanvasBR, true);
+  list->PushClipRect(mInfo.canvas_tl, mInfo.canvas_br, true);
 }
 
 void Graphics::pop_clip()
@@ -106,7 +99,7 @@ void Graphics::pop_clip()
 
 void Graphics::clear(const uint32 color)
 {
-  fill_rect(mCanvasTL, mCanvasBR - mCanvasTL, color);
+  fill_rect(mInfo.canvas_tl, mInfo.canvas_br - mInfo.canvas_tl, color);
 }
 
 void Graphics::draw_rect(const ImVec2& position,
@@ -282,7 +275,7 @@ void Graphics::render_image(const uint texture,
   auto* list = ImGui::GetWindowDrawList();
   list->AddImage(to_texture_id(texture),
                  position,
-                 position + mViewportTileSize,
+                 position + mInfo.grid_size,
                  uv_min,
                  uv_max,
                  IM_COL32(0xFF, 0xFF, 0xFF, static_cast<uint8>(255 * opacity)));
@@ -326,12 +319,12 @@ void Graphics::render_centered_text(const char* text,
 
 void Graphics::render_translated_grid(const uint32 color)
 {
-  const auto end_row = mBounds.end.row();
-  const auto end_col = mBounds.end.col();
+  const auto end_row = mInfo.bounds.end.row();
+  const auto end_col = mInfo.bounds.end.col();
 
-  for (auto row = mBounds.begin.row(); row < end_row; ++row) {
-    for (auto col = mBounds.begin.col(); col < end_col; ++col) {
-      draw_translated_rect(from_matrix_to_absolute(row, col), mViewportTileSize, color);
+  for (auto row = mInfo.bounds.begin.row(); row < end_row; ++row) {
+    for (auto col = mInfo.bounds.begin.col(); col < end_col; ++col) {
+      draw_translated_rect(from_matrix_to_absolute(row, col), mInfo.grid_size, color);
     }
   }
 }
@@ -356,7 +349,7 @@ void Graphics::render_infinite_grid(const cen::color& color)
   for (auto row = begin_row; row < end_row; ++row) {
     for (auto col = begin_col; col < end_col; ++col) {
       const auto pos = from_matrix_to_absolute(row, col);
-      draw_translated_rect(pos, mViewportTileSize, color);
+      draw_translated_rect(pos, mInfo.grid_size, color);
     }
   }
 }
@@ -370,7 +363,7 @@ void Graphics::outline_contents(const cen::color& color)
 auto Graphics::from_matrix_to_absolute(const int32 row, const int32 column) const
     -> ImVec2
 {
-  return mViewportTileSize * ImVec2 {static_cast<float>(column), static_cast<float>(row)};
+  return mInfo.grid_size * ImVec2 {static_cast<float>(column), static_cast<float>(row)};
 }
 
 auto Graphics::is_intersecting_bounds(const ImVec2& position, const ImVec2& size) const
@@ -389,7 +382,7 @@ auto Graphics::is_within_translated_bounds(const ImVec2& position) const -> bool
 
 auto Graphics::translate(const ImVec2& position) const -> ImVec2
 {
-  return mOrigin + position;
+  return mInfo.origin + position;
 }
 
 }  // namespace tactile::ui

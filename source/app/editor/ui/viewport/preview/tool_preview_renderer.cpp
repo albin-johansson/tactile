@@ -21,6 +21,7 @@
 
 #include "core/layer/tile_layer.hpp"
 #include "core/util/functional.hpp"
+#include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"
 #include "misc/assert.hpp"
 #include "model/document/map_document.hpp"
@@ -82,8 +83,9 @@ void ToolPreviewRenderer::render_stamp_normal(const Map& map,
   const auto texture_id = tileset.texture_id();
   const auto& uv = tileset.uv_size();
 
-  const auto origin = graphics.get_origin();
-  const auto grid_size = graphics.get_grid_size();
+  const auto& info = graphics.info();
+  const auto origin = to_vec(info.origin);
+  const auto grid_size = to_vec(info.grid_size);
 
   invoke_mn(selection_size.row(), selection_size.col(), [&, this](int32 row, int32 col) {
     const TilePos index {row, col};
@@ -107,7 +109,7 @@ void ToolPreviewRenderer::visit(const RectangleTool& tool)
   if (stroke.has_value()) {
     auto& graphics = mGraphics.get();
 
-    const auto pos = graphics.get_origin() + stroke->start;
+    const auto pos = to_vec(graphics.info().origin) + stroke->start;
     const auto size = stroke->current - stroke->start;
 
     graphics.draw_rect(pos + Float2 {1, 1}, size, IM_COL32_BLACK, 1.0f);

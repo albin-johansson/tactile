@@ -142,40 +142,10 @@ class Graphics final {
 
   [[nodiscard]] auto translate(const ImVec2& position) const -> ImVec2;
 
-  [[nodiscard]] auto origin() const -> const ImVec2& { return mOrigin; }
-
-  [[nodiscard]] auto get_origin() const -> Float2 { return {mOrigin.x, mOrigin.y}; }
-
-  [[nodiscard]] auto get_grid_size() const -> Float2
-  {
-    return {mViewportTileSize.x, mViewportTileSize.y};
-  }
-
-  [[nodiscard]] auto viewport_tile_size() const -> const ImVec2&
-  {
-    return mViewportTileSize;
-  }
-
-  [[nodiscard]] auto logical_tile_size() const -> const ImVec2&
-  {
-    return mLogicalTileSize;
-  }
-
-  [[nodiscard]] auto tile_size_ratio() const -> const ImVec2& { return mTileSizeRatio; }
-
-  [[nodiscard]] auto bounds() const -> const Region& { return mBounds; }
-
   [[nodiscard]] auto info() const -> const RenderInfo& { return mInfo; }
 
  private:
   RenderInfo mInfo;
-  ImVec2 mCanvasTL;
-  ImVec2 mCanvasBR;
-  ImVec2 mOrigin {0, 0};
-  ImVec2 mViewportTileSize {32, 32};
-  ImVec2 mLogicalTileSize {32, 32};
-  ImVec2 mTileSizeRatio {1, 1};
-  Region mBounds;
   cen::frect mBoundsRect;
 };
 

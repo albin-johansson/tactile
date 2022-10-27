@@ -33,12 +33,12 @@ void render_tile_layer(Graphics& graphics,
 {
   const auto tile_opacity = parent_opacity * layer.opacity();
 
-  const auto bounds = graphics.bounds();
-  const auto end_row = bounds.end.row();
-  const auto end_col = bounds.end.col();
+  const auto& info = graphics.info();
+  const auto end_row = info.bounds.end.row();
+  const auto end_col = info.bounds.end.col();
 
-  for (auto row = bounds.begin.row(); row < end_row; ++row) {
-    for (auto col = bounds.begin.col(); col < end_col; ++col) {
+  for (auto row = info.bounds.begin.row(); row < end_row; ++row) {
+    for (auto col = info.bounds.begin.col(); col < end_col; ++col) {
       const TilePos pos {row, col};
       const auto tile = layer.tile_at(pos);
       if (tile != empty_tile) {
