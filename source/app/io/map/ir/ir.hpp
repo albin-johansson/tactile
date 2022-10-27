@@ -32,7 +32,7 @@
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"
-#include "core/type/tree_map.hpp"
+#include "core/type/string_map.hpp"
 #include "core/type/variant.hpp"
 #include "core/type/vec.hpp"
 #include "core/util/algorithm.hpp"
@@ -41,8 +41,8 @@
 
 namespace tactile::ir {
 
-using AttributeMap = TreeMap<String, Attribute>;
-using ComponentMap = TreeMap<String, AttributeMap>;
+using AttributeMap = StringMap<Attribute>;
+using ComponentMap = StringMap<AttributeMap>;
 
 struct ContextData final {
   AttributeMap properties;

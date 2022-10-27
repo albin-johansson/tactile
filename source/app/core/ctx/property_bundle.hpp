@@ -21,7 +21,7 @@
 
 #include "core/attribute.hpp"
 #include "core/type/string.hpp"
-#include "core/type/tree_map.hpp"
+#include "core/type/string_map.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
@@ -83,7 +83,7 @@ class PropertyBundle final {
   [[nodiscard]] auto end() const noexcept { return mProps.end(); }
 
  private:
-  TreeMap<String, Attribute> mProps;
+  StringMap<Attribute> mProps;
 };
 
 }  // namespace tactile
