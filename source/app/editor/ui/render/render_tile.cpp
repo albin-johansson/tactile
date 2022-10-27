@@ -44,8 +44,8 @@ void render_tile(Graphics& graphics,
 
   const auto& tileset_ref = tilesets.get_ref(*tileset_id);
   const auto& tileset = tileset_ref.view_tileset();
+  const auto& texture = tileset.texture();
 
-  const auto texture_id = tileset.texture_id();
   const auto uv = from_vec(tileset.uv_size());
 
   const auto tile_index = tileset.appearance_of(tileset_ref.to_index(tile_id));
@@ -53,7 +53,7 @@ void render_tile(Graphics& graphics,
   const auto source = from_vec(tile.source());
 
   const auto position = graphics.from_matrix_to_absolute(pos.row(), pos.col());
-  graphics.render_translated_image(texture_id, source, position, uv, opacity);
+  graphics.render_translated_image(texture.id(), source, position, uv, opacity);
 }
 
 }  // namespace tactile::ui

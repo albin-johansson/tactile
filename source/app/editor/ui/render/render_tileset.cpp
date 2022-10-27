@@ -32,6 +32,7 @@ namespace tactile::ui {
 void render_tileset(Graphics& graphics, const TilesetDocument& document)
 {
   const auto& tileset = document.view_tileset();
+  const auto& texture = tileset.texture();
 
   const Float2 tile_size = tileset.tile_size();
   const auto uv = from_vec(tileset.uv_size());
@@ -42,7 +43,7 @@ void render_tileset(Graphics& graphics, const TilesetDocument& document)
                          tile_size.x,
                          tile_size.y};
     const auto position = graphics.from_matrix_to_absolute(row, col);
-    graphics.render_translated_image(tileset.texture_id(), source, position, uv);
+    graphics.render_translated_image(texture.id(), source, position, uv);
   });
 
   const auto& prefs = io::get_preferences();

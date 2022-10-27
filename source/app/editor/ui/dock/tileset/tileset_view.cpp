@@ -47,7 +47,7 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
                             entt::dispatcher& dispatcher)
 {
   const auto& tileset = tileset_ref.view_tileset();
-  const Float2 texture_size = tileset.texture_size();
+  const Float2 texture_size = tileset.texture().size();
 
   const Float2 min_offset {viewport_size.x - texture_size.x,
                            viewport_size.y - texture_size.y};
@@ -95,6 +95,7 @@ void update_tileset_view(const DocumentModel& model,
 
   const auto& tileset_ref = map.tileset_bundle().get_ref(tileset_id);
   const auto& tileset = tileset_ref.view_tileset();
+  const auto& texture = tileset.texture();
   const auto& viewport = tileset_ref.get_viewport();
 
   const auto info = get_render_info(viewport, tileset);
@@ -113,7 +114,7 @@ void update_tileset_view(const DocumentModel& model,
   graphics.push_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
-  render_image(tileset.texture_id(), to_vec(position), tileset.texture_size());
+  render_image(texture.id(), to_vec(position), texture.size());
 
   const auto& selection = tileset_ref.get_selection();
   if (selection.has_value()) {

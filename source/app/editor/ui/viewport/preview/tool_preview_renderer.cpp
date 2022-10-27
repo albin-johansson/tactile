@@ -81,7 +81,7 @@ void ToolPreviewRenderer::render_stamp_normal(const Map& map,
   const auto offset = selection_size / TilePos {2, 2};
 
   const auto& tileset = tileset_ref.view_tileset();
-  const auto texture_id = tileset.texture_id();
+  const auto& texture = tileset.texture();
   const auto& uv = tileset.uv_size();
 
   const auto& info = graphics.info();
@@ -99,7 +99,7 @@ void ToolPreviewRenderer::render_stamp_normal(const Map& map,
       const auto uv_max = uv_min + uv;
 
       constexpr uint8 opacity = 150;
-      render_image(texture_id, real_pos, grid_size, uv_min, uv_max, opacity);
+      render_image(texture.id(), real_pos, grid_size, uv_min, uv_max, opacity);
     }
   });
 }

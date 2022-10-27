@@ -176,21 +176,6 @@ auto Tileset::texture() const -> const Texture&
   return *mData->texture;
 }
 
-auto Tileset::texture_id() const noexcept -> uint
-{
-  return mData->texture->id();
-}
-
-auto Tileset::texture_path() const -> const Path&
-{
-  return mData->texture->path();
-}
-
-auto Tileset::texture_size() const noexcept -> const Int2&
-{
-  return mData->texture->size();
-}
-
 auto Tileset::tile_size() const noexcept -> const Int2&
 {
   return mData->tile_size;

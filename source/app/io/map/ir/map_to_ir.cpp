@@ -223,8 +223,9 @@ void convert_tilesets(const MapDocument& document,
     tileset_data.column_count = tileset.column_count();
     tileset_data.tile_count = tileset.tile_count();
 
-    tileset_data.image_path = tileset.texture_path();
-    tileset_data.image_size = tileset.texture_size();
+    const auto& texture = tileset.texture();
+    tileset_data.image_path = texture.path();
+    tileset_data.image_size = texture.size();
 
     convert_fancy_tiles(tileset, components, tileset_data);
     convert_context(tileset, components, tileset_data.context);

@@ -25,7 +25,6 @@
 #include "core/tile_pos.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/math.hpp"
-#include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
@@ -73,15 +72,6 @@ class Tileset final : public Context {
 
   /// Returns the associated texture.
   [[nodiscard]] auto texture() const -> const Texture&;
-
-  /// Returns the identifier for the associated texture.
-  [[nodiscard, deprecated]] auto texture_id() const noexcept -> uint;
-
-  /// Returns the source path of the associated texture.
-  [[nodiscard, deprecated]] auto texture_path() const -> const Path&;
-
-  /// Returns the size of the associated texture.
-  [[nodiscard, deprecated]] auto texture_size() const noexcept -> const Int2&;
 
   /// Returns the size of each tile.
   [[nodiscard]] auto tile_size() const noexcept -> const Int2&;
