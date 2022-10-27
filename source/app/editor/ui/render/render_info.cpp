@@ -71,8 +71,15 @@ namespace {
   info.grid_size = from_vec(viewport.tile_size());
   info.ratio = info.grid_size / info.tile_size;
 
+  const auto viewport_size = info.canvas_br - info.canvas_tl;
+  const auto tiles_in_viewport = viewport_size / info.grid_size;
+  info.tiles_in_viewport_x = static_cast<int32>(tiles_in_viewport.x) + 1;
+  info.tiles_in_viewport_y = static_cast<int32>(tiles_in_viewport.y) + 1;
+
   info.row_count = static_cast<float>(rows);
   info.col_count = static_cast<float>(columns);
+
+  info.contents_size = ImVec2 {info.col_count, info.row_count} * info.grid_size;
 
   info.bounds = get_render_bounds(info.canvas_tl,
                                   info.canvas_br,

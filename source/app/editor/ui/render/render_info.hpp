@@ -36,12 +36,16 @@ struct RenderInfo final {
   ImVec2 canvas_tl {};  ///< Top-left point of the canvas.
   ImVec2 canvas_br {};  ///< Bottom-right point of the canvas.
 
-  Region bounds;  ///< The region that that should be rendered.
+  Region bounds;  ///< The region of the map that that should be rendered.
 
   ImVec2 origin {};     ///< Origin screen position.
   ImVec2 grid_size {};  ///< Graphical tile size.
   ImVec2 tile_size {};  ///< Logical tile size.
   ImVec2 ratio {};      ///< Graphical tile size divided by logical tile size.
+  ImVec2 contents_size {};  ///< Graphical size of the map or tileset.
+
+  int32 tiles_in_viewport_x {};  ///< Amount of visible tiles in the viewport, x-axis.
+  int32 tiles_in_viewport_y {};  ///< Amount of visible tiles in the viewport, y-axis.
 
   float row_count {};  ///< Total amount of rows.
   float col_count {};  ///< Total amount of columns.

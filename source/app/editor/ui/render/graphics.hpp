@@ -25,10 +25,9 @@
 
 #include "core/region.hpp"
 #include "core/vocabulary.hpp"
+#include "editor/ui/render/render_info.hpp"
 
 namespace tactile::ui {
-
-struct RenderInfo;
 
 /// Provides a common simplified rendering API.
 class Graphics final {
@@ -156,7 +155,10 @@ class Graphics final {
 
   [[nodiscard]] auto bounds() const -> const Region& { return mBounds; }
 
+  [[nodiscard]] auto info() const -> const RenderInfo& { return mInfo; }
+
  private:
+  RenderInfo mInfo;
   ImVec2 mCanvasTL;
   ImVec2 mCanvasBR;
   ImVec2 mOrigin {0, 0};

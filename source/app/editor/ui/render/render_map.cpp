@@ -19,8 +19,9 @@
 
 #include "render_map.hpp"
 
+#include <imgui_internal.h>
+
 #include "core/layer/group_layer.hpp"
-#include "core/layer/layer_visitor.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "editor/ui/render/graphics.hpp"
@@ -32,6 +33,31 @@
 
 namespace tactile::ui {
 namespace {
+
+inline constexpr uint32 active_object_color = IM_COL32(0xFF, 0xFF, 0x00, 0xFF);
+inline constexpr uint32 grid_color = IM_COL32(0xFF, 0xFF, 0xFF, 0x05);
+
+void render_map_outline(Graphics& graphics)
+{
+  const auto& info = graphics.info();
+  const auto& color = ImGui::GetStyle().Colors[ImGuiCol_HeaderActive];
+  graphics.draw_rect(
+      info.origin,
+      info.contents_size,
+      IM_COL32(color.x * 255.0f, color.y * 255.0f, color.z * 255.0f, 0xFF));
+}
+
+void highlight_active_object(Graphics& graphics,
+                             const Map& map,
+                             const UUID& active_layer_id)
+{
+  if (const auto* object_layer = map.invisible_root().as_object_layer(active_layer_id)) {
+    if (const auto object_id = object_layer->active_object_id()) {
+      const auto& object = object_layer->get_object(*object_id);
+      render_object(graphics, object, active_object_color);
+    }
+  }
+}
 
 void render_layer(Graphics& graphics,
                   const Map& map,
@@ -57,12 +83,9 @@ void render_layer(Graphics& graphics,
   }
 }
 
-}  // namespace
-
-void render_map(Graphics& graphics, const MapDocument& document)
+void render_layers(Graphics& graphics, const Map& map)
 {
   const auto& prefs = io::get_preferences();
-  const auto& map = document.get_map();
   const auto& root = map.invisible_root();
   const auto active_layer_id = map.active_layer_id();
 
@@ -86,19 +109,47 @@ void render_map(Graphics& graphics, const MapDocument& document)
       render_layer(graphics, map, layer, parent_opacity * layer->opacity());
     }
   });
+}
 
-  if (active_layer_id) {
-    if (const auto* object_layer = root.as_object_layer(*active_layer_id)) {
-      if (const auto object_id = object_layer->active_object_id()) {
-        const auto& object = object_layer->get_object(*object_id);
-        render_object(graphics, object, IM_COL32(0xFF, 0xFF, 0, 0xFF));
-      }
+void render_grid(Graphics& graphics)
+{
+  const auto& info = graphics.info();
+
+  const auto origin_tile_pos = ImFloor(info.origin / info.grid_size);
+  const auto col_offset = static_cast<int32>(origin_tile_pos.x);
+  const auto row_offset = static_cast<int32>(origin_tile_pos.y);
+
+  const auto begin_row = -(row_offset + 1);
+  const auto begin_col = -(col_offset + 1);
+  const auto end_row = (info.tiles_in_viewport_y - row_offset) + 3;  // A little extra
+  const auto end_col = (info.tiles_in_viewport_x - col_offset) + 1;
+
+  for (auto row = begin_row; row < end_row; ++row) {
+    for (auto col = begin_col; col < end_col; ++col) {
+      const auto pos = graphics.from_matrix_to_absolute(row, col);
+      graphics.draw_translated_rect(pos, graphics.viewport_tile_size(), grid_color);
     }
+  }
+}
+
+}  // namespace
+
+void render_map(Graphics& graphics, const MapDocument& document)
+{
+  const auto& prefs = io::get_preferences();
+  const auto& map = document.get_map();
+
+  render_layers(graphics, map);
+
+  if (const auto active_layer_id = map.active_layer_id()) {
+    highlight_active_object(graphics, map, *active_layer_id);
   }
 
   if (prefs.show_grid) {
-    graphics.render_translated_grid(IM_COL32(0xFF, 0xFF, 0xFF, 20));
+    render_grid(graphics);
   }
+
+  render_map_outline(graphics);
 }
 
 }  // namespace tactile::ui

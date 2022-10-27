@@ -80,7 +80,8 @@ void add_ellipse(ImDrawList* self,
 }  // namespace
 
 Graphics::Graphics(const RenderInfo& info)
-    : mCanvasTL {info.canvas_tl},
+    : mInfo {info},
+      mCanvasTL {info.canvas_tl},
       mCanvasBR {info.canvas_br},
       mOrigin {info.origin},
       mViewportTileSize {info.grid_size},
