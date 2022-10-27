@@ -44,6 +44,7 @@ inline constexpr auto def_language = Lang::EN;
 inline constexpr auto def_viewport_overlay_pos = OverlayPos::BottomRight;
 inline constexpr auto def_theme = ui::EditorTheme::Nocturnal;
 inline constexpr cen::color def_viewport_bg {0x3C, 0x3C, 0x3C};
+inline constexpr cen::color def_grid_color {0xFF, 0xFF, 0xFF, 0x05};
 inline constexpr Int2 def_preferred_tile_size {32, 32};
 inline constexpr usize def_command_capacity = 100;
 
@@ -70,6 +71,7 @@ struct PreferenceState final {
   Lang language {def_language};
   ui::EditorTheme theme {def_theme};
   cen::color viewport_background {def_viewport_bg};
+  cen::color grid_color {def_grid_color};
   usize command_capacity {def_command_capacity};
   Int2 preferred_tile_size {def_preferred_tile_size};
   int32 font_size {ui::def_font_size};

@@ -4,7 +4,8 @@
   },
   "settings": {
     "behavior-tab": "Behaviour",
-    "viewport-bg-color": "Viewport background colour"
+    "viewport-bg-color": "Viewport background colour",
+    "grid-color": "Grid colour"
   },
   "misc": {
     "type-color": "Colour"

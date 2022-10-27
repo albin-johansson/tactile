@@ -51,6 +51,7 @@ void reset_appearance_preferences(io::PreferenceState& prefs)
 {
   prefs.theme = io::def_theme;
   prefs.viewport_background = io::def_viewport_bg;
+  prefs.grid_color = io::def_grid_color;
 
   prefs.window_border = io::def_window_border;
   prefs.show_grid = io::def_show_grid;
@@ -255,6 +256,16 @@ void SettingsDialog::update_appearance_tab()
                           ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoAlpha)) {
       const auto color = cen::color::from_norm(arr.at(0), arr.at(1), arr.at(2));
       mUiSettings.viewport_background = color;
+    }
+
+    if (auto arr = color_to_array(mUiSettings.grid_color);
+        ImGui::ColorEdit4(lang.setting.grid_color.c_str(),
+                          arr.data(),
+                          ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar |
+                              ImGuiColorEditFlags_AlphaPreviewHalf)) {
+      const auto color =
+          cen::color::from_norm(arr.at(0), arr.at(1), arr.at(2), arr.at(3));
+      mUiSettings.grid_color = color;
     }
 
     if (ImGui::Checkbox(lang.setting.window_border.c_str(), &mUiSettings.window_border)) {

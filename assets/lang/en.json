@@ -137,6 +137,7 @@
     "language": "Language",
     "theme": "Theme",
     "viewport-bg-color": "Viewport background color",
+    "grid-color": "Grid color",
     "window-border": "Window border",
     "restore-layout": "Restore layout",
     "use-default-font": "Use default font",

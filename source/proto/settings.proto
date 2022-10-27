@@ -50,6 +50,7 @@ message Settings {
   optional int32 preferred_tile_height = 3;
 
   optional Color viewport_background = 4;
+  optional Color grid_color = 9;
 
   optional string preferred_format = 16;
   optional uint64 command_capacity = 17;
@@ -74,5 +75,5 @@ message Settings {
   optional bool viewport_overlay_show_fps = 29;
 
   optional bool use_default_font = 6;
-  optional int32 font_size = 7;  /* Only applies when the default font is not used */
+  optional int32 font_size = 7;  // Only applies when the default font is not used.
 }
