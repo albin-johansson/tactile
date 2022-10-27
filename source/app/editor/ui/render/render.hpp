@@ -83,4 +83,23 @@ void draw_shadowed_ellipse(const Float2& center,
                            const cen::color& color,
                            float thickness = 1.0f);
 
+/// Renders a region of a texture.
+///
+/// \details
+/// To render the full texture, you could use uv_min = (0, 0) and uv_max = (1, 1). That
+/// is, just omit the UV parameters.
+///
+/// \param texture the source texture.
+/// \param position the position of the rendered texture.
+/// \param size the size of the rendered texture.
+/// \param uv_min the normalized top-left corner of the texture region to render.
+/// \param uv_max the normalized bottom-right corner of the texture region to render.
+/// \param opacity the opacity of the rendered texture, in the interval [0, 255].
+void render_image(uint texture,
+                  const Float2& position,
+                  const Float2& size,
+                  const Float2& uv_min = {0, 0},
+                  const Float2& uv_max = {1, 1},
+                  uint8 opacity = 255);
+
 }  // namespace tactile::ui

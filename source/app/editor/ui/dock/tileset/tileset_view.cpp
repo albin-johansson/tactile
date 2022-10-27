@@ -74,10 +74,7 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
   }
 }
 
-void render_selection(Graphics& graphics,
-                      const Region& selection,
-                      const ImVec2& min,
-                      const ImVec2& tile_size)
+void render_selection(const Region& selection, const ImVec2& min, const ImVec2& tile_size)
 {
   const auto diff = selection.end - selection.begin;
 
@@ -116,11 +113,11 @@ void update_tileset_view(const DocumentModel& model,
   graphics.push_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
-  graphics.render_image(tileset.texture_id(), position, from_vec(tileset.texture_size()));
+  render_image(tileset.texture_id(), to_vec(position), tileset.texture_size());
 
   const auto& selection = tileset_ref.get_selection();
   if (selection.has_value()) {
-    render_selection(graphics, *selection, position, tile_size);
+    render_selection(*selection, position, tile_size);
   }
 
   const auto& prefs = io::get_preferences();

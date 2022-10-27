@@ -185,4 +185,24 @@ void draw_shadowed_ellipse(const Float2& center,
   draw_shadowed_ellipse(from_vec(center), from_vec(radius), to_u32(color), thickness);
 }
 
+void render_image(const uint texture,
+                  const Float2& position,
+                  const Float2& size,
+                  const Float2& uv_min,
+                  const Float2& uv_max,
+                  const uint8 opacity)
+{
+  auto* list = ImGui::GetWindowDrawList();
+
+  const auto min = from_vec(position);
+  const auto max = min + from_vec(size);
+
+  list->AddImage(to_texture_id(texture),
+                 min,
+                 max,
+                 from_vec(uv_min),
+                 from_vec(uv_max),
+                 IM_COL32(0xFF, 0xFF, 0xFF, opacity));
+}
+
 }  // namespace tactile::ui

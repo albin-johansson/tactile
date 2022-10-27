@@ -78,15 +78,6 @@ class Graphics final {
                                            float thickness = 1.0f);
 
   void render_image(uint texture,
-                    const Float2& pos,
-                    const Float2& size,
-                    const Float2& uv_min,
-                    const Float2& uv_max,
-                    uint8 opacity);
-
-  void render_image(uint texture, const ImVec2& position, const ImVec2& size);
-
-  void render_image(uint texture,
                     const ImVec4& source,
                     const ImVec2& position,
                     const ImVec2& uv,

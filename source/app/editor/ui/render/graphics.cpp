@@ -133,34 +133,6 @@ void Graphics::draw_translated_ellipse_with_shadow(const ImVec2& center,
 }
 
 void Graphics::render_image(const uint texture,
-                            const ImVec2& position,
-                            const ImVec2& size)
-{
-  auto* list = ImGui::GetWindowDrawList();
-  list->AddImage(to_texture_id(texture), position, position + size);
-}
-
-void Graphics::render_image(const uint texture,
-                            const Float2& pos,
-                            const Float2& size,
-                            const Float2& uv_min,
-                            const Float2& uv_max,
-                            const uint8 opacity)
-{
-  auto* list = ImGui::GetWindowDrawList();
-
-  const auto im_min = from_vec(pos);
-  const auto im_max = im_min + from_vec(size);
-
-  list->AddImage(to_texture_id(texture),
-                 im_min,
-                 im_max,
-                 from_vec(uv_min),
-                 from_vec(uv_max),
-                 IM_COL32(0xFF, 0xFF, 0xFF, opacity));
-}
-
-void Graphics::render_image(const uint texture,
                             const ImVec4& source,
                             const ImVec2& position,
                             const ImVec2& uv,
