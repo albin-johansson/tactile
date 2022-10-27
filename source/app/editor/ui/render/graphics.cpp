@@ -19,8 +19,6 @@
 
 #include "graphics.hpp"
 
-#include <cmath>  // sin, cos
-
 #include <imgui_internal.h>
 
 #include "core/region.hpp"
@@ -39,43 +37,6 @@ namespace {
   const auto pos = info.origin + (from_pos(info.bounds.begin) * info.grid_size);
   const auto size = from_pos(info.bounds.end - info.bounds.begin) * info.grid_size;
   return {pos.x, pos.y, size.x, size.y};
-}
-
-void path_elliptical_arc_to(ImDrawList* self,
-                            const ImVec2& center,
-                            const ImVec2& radius,
-                            const float arc_min,
-                            const float arc_max,
-                            const int n_segments = 10)
-{
-  for (int i = 0; i <= n_segments; ++i) {
-    const auto diff = arc_max - arc_min;
-    const float a =
-        arc_min + (static_cast<float>(i) / static_cast<float>(n_segments)) * diff;
-
-    const ImVec2 pos {center.x + std::cos(a) * radius.x,
-                      center.y + std::sin(a) * radius.y};
-    self->PathLineTo(pos);
-  }
-}
-
-void add_ellipse(ImDrawList* self,
-                 const ImVec2& center,
-                 const ImVec2& radius,
-                 const ImU32 color,
-                 const int n_segments = 12,
-                 const float thickness = 1.0f)
-{
-  if ((color & IM_COL32_A_MASK) == 0 || n_segments <= 2) {
-    return;
-  }
-
-  // Because we are filling a closed shape we remove 1 from the count of segments/points
-  const float arcMax = IM_PI * 2.0f * (static_cast<float>(n_segments) - 1.0f) /
-                       static_cast<float>(n_segments);
-  path_elliptical_arc_to(self, center, radius, 0.0f, arcMax, n_segments - 1);
-
-  self->PathStroke(color, true, thickness);
 }
 
 }  // namespace
@@ -101,17 +62,6 @@ void Graphics::pop_clip()
 void Graphics::clear(const uint32 color)
 {
   ui::fill_rect(mInfo.canvas_tl, mInfo.canvas_br - mInfo.canvas_tl, color);
-}
-
-void Graphics::draw_ellipse(const Float2& center,
-                            const Float2& radius,
-                            const uint32 color,
-                            const float thickness)
-{
-  const auto im_center = from_vec(center);
-  const auto im_radius = from_vec(radius);
-
-  draw_translated_ellipse_with_shadow(im_center, im_radius, color, thickness);
 }
 
 void Graphics::draw_translated_rect(const ImVec2& position,
@@ -158,44 +108,20 @@ void Graphics::draw_translated_rect_with_shadow(const ImVec2& position,
   draw_rect_with_shadow(translate(position), size, color, thickness);
 }
 
-void Graphics::draw_circle_with_shadow(const ImVec2& center,
-                                       const float radius,
-                                       const uint32 color,
-                                       const float thickness)
-{
-  auto* list = ImGui::GetWindowDrawList();
-  list->AddCircle(center + ImVec2 {0, thickness}, radius, IM_COL32_BLACK, 0, thickness);
-  list->AddCircle(center, radius, color, 0, thickness);
-}
-
 void Graphics::draw_translated_circle_with_shadow(const ImVec2& center,
                                                   const float radius,
                                                   const uint32 color,
                                                   const float thickness)
 {
-  draw_circle_with_shadow(translate(center), radius, color, thickness);
+  ui::draw_shadowed_circle(translate(center), radius, color, thickness);
 }
 
-void Graphics::draw_ellipse_with_shadow(const ImVec2& center,
-                                        const ImVec2& radius,
-                                        const uint32 color,
-                                        const float thickness)
+void Graphics::draw_translated_shadowed_ellipse(const Float2& center,
+                                                const Float2& radius,
+                                                const cen::color& color,
+                                                float thickness)
 {
-  constexpr int n_segments = 50;
-
-  if (radius.x == radius.y) {
-    draw_circle_with_shadow(center, radius.x, color, thickness);
-  }
-  else {
-    auto* list = ImGui::GetWindowDrawList();
-    add_ellipse(list,
-                center + ImVec2 {0, thickness},
-                radius,
-                IM_COL32_BLACK,
-                n_segments,
-                thickness);
-    add_ellipse(list, center, radius, color, n_segments, thickness);
-  }
+  ui::draw_shadowed_ellipse(translate(center), radius, color, thickness);
 }
 
 void Graphics::draw_translated_ellipse_with_shadow(const ImVec2& center,
@@ -203,7 +129,7 @@ void Graphics::draw_translated_ellipse_with_shadow(const ImVec2& center,
                                                    const uint32 color,
                                                    const float thickness)
 {
-  draw_ellipse_with_shadow(translate(center), radius, color, thickness);
+  ui::draw_shadowed_ellipse(translate(center), radius, color, thickness);
 }
 
 void Graphics::render_image(const uint texture,
@@ -351,6 +277,11 @@ auto Graphics::is_within_translated_bounds(const ImVec2& position) const -> bool
 {
   const auto translated = translate(position);
   return mBoundsRect.contains({translated.x, translated.y});
+}
+
+auto Graphics::translate(const Float2& position) const -> Float2
+{
+  return to_vec(mInfo.origin) + position;
 }
 
 auto Graphics::translate(const ImVec2& position) const -> ImVec2

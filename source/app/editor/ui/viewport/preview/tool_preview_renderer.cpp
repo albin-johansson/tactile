@@ -122,13 +122,11 @@ void ToolPreviewRenderer::visit(const EllipseTool& tool)
 {
   const auto& stroke = tool.get_stroke();
   if (stroke.has_value()) {
-    auto& graphics = mGraphics.get();
-
     const auto radius = stroke->current - stroke->start;
     const auto center = stroke->start + radius;
 
-    graphics.draw_ellipse(center + Float2 {1, 1}, radius, IM_COL32_BLACK, 1.0f);
-    graphics.draw_ellipse(center, radius, IM_COL32(0xFF, 0xFF, 0, 0xFF), 1.0f);
+    auto& graphics = mGraphics.get();
+    graphics.draw_translated_shadowed_ellipse(center, radius, cen::colors::yellow);
   }
 }
 

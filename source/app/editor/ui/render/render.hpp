@@ -43,4 +43,44 @@ void fill_rect(const ImVec2& position, const ImVec2& size, uint32 color);
 
 void fill_rect(const Float2& position, const Float2& size, const cen::color& color);
 
+void draw_circle(const ImVec2& center,
+                 float radius,
+                 uint32 color,
+                 float thickness = 1.0f);
+
+void draw_circle(const Float2& center,
+                 float radius,
+                 const cen::color& color,
+                 float thickness = 1.0f);
+
+void draw_shadowed_circle(const ImVec2& center,
+                          float radius,
+                          uint32 color,
+                          float thickness = 1.0f);
+
+void draw_shadowed_circle(const Float2& center,
+                          float radius,
+                          const cen::color& color,
+                          float thickness = 1.0f);
+
+void draw_ellipse(const ImVec2& center,
+                  const ImVec2& radius,
+                  uint32 color,
+                  float thickness = 1.0f);
+
+void draw_ellipse(const Float2& center,
+                  const Float2& radius,
+                  const cen::color& color,
+                  float thickness = 1.0f);
+
+void draw_shadowed_ellipse(const ImVec2& center,
+                           const ImVec2& radius,
+                           uint32 color,
+                           float thickness = 1.0f);
+
+void draw_shadowed_ellipse(const Float2& center,
+                           const Float2& radius,
+                           const cen::color& color,
+                           float thickness = 1.0f);
+
 }  // namespace tactile::ui

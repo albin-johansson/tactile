@@ -40,11 +40,6 @@ class Graphics final {
 
   void clear(uint32 color = IM_COL32_BLACK);
 
-  void draw_ellipse(const Float2& center,
-                    const Float2& radius,
-                    uint32 color,
-                    float thickness = 1.0f);
-
   void draw_translated_rect(const ImVec2& position,
                             const ImVec2& size,
                             uint32 color,
@@ -67,20 +62,15 @@ class Graphics final {
                                         uint32 color,
                                         float thickness = 1.0f);
 
-  void draw_circle_with_shadow(const ImVec2& center,
-                               float radius,
-                               uint32 color,
-                               float thickness = 1.0f);
-
   void draw_translated_circle_with_shadow(const ImVec2& center,
                                           float radius,
                                           uint32 color,
                                           float thickness = 1.0f);
 
-  void draw_ellipse_with_shadow(const ImVec2& center,
-                                const ImVec2& radius,
-                                uint32 color,
-                                float thickness = 1.0f);
+  void draw_translated_shadowed_ellipse(const Float2& center,
+                                        const Float2& radius,
+                                        const cen::color& color,
+                                        float thickness = 1.0f);
 
   void draw_translated_ellipse_with_shadow(const ImVec2& center,
                                            const ImVec2& radius,
@@ -128,6 +118,7 @@ class Graphics final {
 
   [[nodiscard]] auto is_within_translated_bounds(const ImVec2& position) const -> bool;
 
+  [[nodiscard]] auto translate(const Float2& position) const -> Float2;
   [[nodiscard]] auto translate(const ImVec2& position) const -> ImVec2;
 
   [[nodiscard]] auto info() const -> const RenderInfo& { return mInfo; }
