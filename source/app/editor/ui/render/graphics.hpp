@@ -62,6 +62,11 @@ class Graphics final {
                             uint32 color,
                             float thickness = 1.0f);
 
+  void draw_translated_rect(const ImVec2& position,
+                            const ImVec2& size,
+                            const cen::color& color,
+                            float thickness = 1.0f);
+
   void fill_translated_rect(const ImVec2& position, const ImVec2& size, uint32 color);
 
   void draw_rect_with_shadow(const ImVec2& position,
@@ -122,6 +127,11 @@ class Graphics final {
   void render_centered_text(const char* text, const ImVec2& center, uint32 color);
 
   void render_translated_grid(uint32 color);
+  void render_translated_grid(const cen::color& color);
+
+  void render_infinite_grid(const cen::color& color);
+
+  void outline_contents(const cen::color& color);
 
   [[nodiscard]] auto from_matrix_to_absolute(int32 row, int32 column) const -> ImVec2;
 

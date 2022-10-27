@@ -45,9 +45,13 @@ void render_tileset(Graphics& graphics, const TilesetDocument& document)
     graphics.render_translated_image(tileset.texture_id(), source, position, uv);
   });
 
-  if (io::get_preferences().show_grid) {
-    graphics.render_translated_grid(IM_COL32(0xFF, 0xFF, 0xFF, 20));
+  const auto& prefs = io::get_preferences();
+  if (prefs.show_grid) {
+    graphics.render_infinite_grid(prefs.grid_color);
   }
+
+  const auto& color = ImGui::GetStyle().Colors[ImGuiCol_HeaderActive];
+  graphics.outline_contents(cen::color::from_norm(color.x, color.y, color.z, color.w));
 }
 
 }  // namespace tactile::ui

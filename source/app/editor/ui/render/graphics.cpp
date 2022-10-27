@@ -156,6 +156,15 @@ void Graphics::draw_translated_rect(const ImVec2& position,
   draw_rect(translate(position), size, color, thickness);
 }
 
+void Graphics::draw_translated_rect(const ImVec2& position,
+                                    const ImVec2& size,
+                                    const cen::color& color,
+                                    const float thickness)
+{
+  const auto col32 = IM_COL32(color.red(), color.green(), color.blue(), color.alpha());
+  draw_translated_rect(position, size, col32, thickness);
+}
+
 void Graphics::fill_translated_rect(const ImVec2& position,
                                     const ImVec2& size,
                                     const uint32 color)
@@ -325,6 +334,37 @@ void Graphics::render_translated_grid(const uint32 color)
       draw_translated_rect(from_matrix_to_absolute(row, col), mViewportTileSize, color);
     }
   }
+}
+
+void Graphics::render_translated_grid(const cen::color& color)
+{
+  const auto col32 = IM_COL32(color.red(), color.green(), color.blue(), color.alpha());
+  render_translated_grid(col32);
+}
+
+void Graphics::render_infinite_grid(const cen::color& color)
+{
+  const auto origin_tile_pos = ImFloor(mInfo.origin / mInfo.grid_size);
+  const auto col_offset = static_cast<int32>(origin_tile_pos.x);
+  const auto row_offset = static_cast<int32>(origin_tile_pos.y);
+
+  const auto begin_row = -(row_offset + 1);
+  const auto begin_col = -(col_offset + 1);
+  const auto end_row = (mInfo.tiles_in_viewport_y - row_offset) + 3;  // A little extra
+  const auto end_col = (mInfo.tiles_in_viewport_x - col_offset) + 1;
+
+  for (auto row = begin_row; row < end_row; ++row) {
+    for (auto col = begin_col; col < end_col; ++col) {
+      const auto pos = from_matrix_to_absolute(row, col);
+      draw_translated_rect(pos, mViewportTileSize, color);
+    }
+  }
+}
+
+void Graphics::outline_contents(const cen::color& color)
+{
+  const auto col32 = IM_COL32(color.red(), color.green(), color.blue(), color.alpha());
+  draw_rect(mInfo.origin, mInfo.contents_size, col32);
 }
 
 auto Graphics::from_matrix_to_absolute(const int32 row, const int32 column) const

@@ -40,7 +40,6 @@ namespace tactile::ui {
 namespace {
 
 constexpr uint32 rubber_band_color = IM_COL32(0, 0x44, 0xCC, 100);
-constexpr uint32 grid_color = IM_COL32(200, 200, 200, 40);
 
 void update_viewport_offset(const TilesetRef& tileset_ref,
                             const ImVec2& viewport_size,
@@ -66,7 +65,7 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
                              ImGuiButtonFlags_MouseButtonMiddle |
                              ImGuiButtonFlags_MouseButtonRight);
 
-  /* This has no effect when users use touchpads, but that is handled separately */
+  // This has no effect when users use touchpads, but that is handled separately
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto& io = ImGui::GetIO();
     const Float2 delta {io.MouseDelta.x, io.MouseDelta.y};
@@ -123,7 +122,9 @@ void update_tileset_view(const DocumentModel& model,
     render_selection(graphics, *selection, position, tile_size);
   }
 
-  graphics.render_translated_grid(grid_color);
+  const auto& prefs = io::get_preferences();
+  graphics.render_translated_grid(prefs.grid_color);
+
   graphics.pop_clip();
 }
 

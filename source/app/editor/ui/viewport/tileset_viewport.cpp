@@ -37,11 +37,11 @@ void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& di
   const auto& tileset = document.view_tileset();
   const auto& viewport = document.get_viewport();
 
-  const auto renderInfo = get_render_info(viewport, tileset);
-  update_document_viewport_offset(renderInfo.canvas_br - renderInfo.canvas_tl,
+  const auto render_info = get_render_info(viewport, tileset);
+  update_document_viewport_offset(render_info.canvas_br - render_info.canvas_tl,
                                   dispatcher);
 
-  Graphics graphics {renderInfo};
+  Graphics graphics {render_info};
 
   graphics.clear(color_to_u32(io::get_preferences().viewport_background));
 

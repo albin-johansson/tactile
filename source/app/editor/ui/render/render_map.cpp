@@ -35,17 +35,6 @@ namespace tactile::ui {
 namespace {
 
 inline constexpr uint32 active_object_color = IM_COL32(0xFF, 0xFF, 0x00, 0xFF);
-inline constexpr uint32 grid_color = IM_COL32(0xFF, 0xFF, 0xFF, 0x05);
-
-void render_map_outline(Graphics& graphics)
-{
-  const auto& info = graphics.info();
-  const auto& color = ImGui::GetStyle().Colors[ImGuiCol_HeaderActive];
-  graphics.draw_rect(
-      info.origin,
-      info.contents_size,
-      IM_COL32(color.x * 255.0f, color.y * 255.0f, color.z * 255.0f, 0xFF));
-}
 
 void highlight_active_object(Graphics& graphics,
                              const Map& map,
@@ -66,20 +55,16 @@ void render_layer(Graphics& graphics,
 {
   TACTILE_ASSERT(layer);
 
-  switch (layer->type()) {
-    case LayerType::TileLayer:
-      if (const auto* tile_layer = dynamic_cast<const TileLayer*>(layer)) {
-        render_tile_layer(graphics, map, *tile_layer, parent_opacity);
-      }
-      break;
-    case LayerType::ObjectLayer:
-      if (const auto* object_layer = dynamic_cast<const ObjectLayer*>(layer)) {
-        render_object_layer(graphics, *object_layer, parent_opacity);
-      }
-      break;
-
-    default:
-      break;
+  const auto type = layer->type();
+  if (type == LayerType::TileLayer) {
+    if (const auto* tile_layer = dynamic_cast<const TileLayer*>(layer)) {
+      render_tile_layer(graphics, map, *tile_layer, parent_opacity);
+    }
+  }
+  else if (type == LayerType::ObjectLayer) {
+    if (const auto* object_layer = dynamic_cast<const ObjectLayer*>(layer)) {
+      render_object_layer(graphics, *object_layer, parent_opacity);
+    }
   }
 }
 
@@ -111,27 +96,6 @@ void render_layers(Graphics& graphics, const Map& map)
   });
 }
 
-void render_grid(Graphics& graphics)
-{
-  const auto& info = graphics.info();
-
-  const auto origin_tile_pos = ImFloor(info.origin / info.grid_size);
-  const auto col_offset = static_cast<int32>(origin_tile_pos.x);
-  const auto row_offset = static_cast<int32>(origin_tile_pos.y);
-
-  const auto begin_row = -(row_offset + 1);
-  const auto begin_col = -(col_offset + 1);
-  const auto end_row = (info.tiles_in_viewport_y - row_offset) + 3;  // A little extra
-  const auto end_col = (info.tiles_in_viewport_x - col_offset) + 1;
-
-  for (auto row = begin_row; row < end_row; ++row) {
-    for (auto col = begin_col; col < end_col; ++col) {
-      const auto pos = graphics.from_matrix_to_absolute(row, col);
-      graphics.draw_translated_rect(pos, graphics.viewport_tile_size(), grid_color);
-    }
-  }
-}
-
 }  // namespace
 
 void render_map(Graphics& graphics, const MapDocument& document)
@@ -146,10 +110,11 @@ void render_map(Graphics& graphics, const MapDocument& document)
   }
 
   if (prefs.show_grid) {
-    render_grid(graphics);
+    graphics.render_infinite_grid(prefs.grid_color);
   }
 
-  render_map_outline(graphics);
+  const auto& color = ImGui::GetStyle().Colors[ImGuiCol_HeaderActive];
+  graphics.outline_contents(cen::color::from_norm(color.x, color.y, color.z, color.w));
 }
 
 }  // namespace tactile::ui
