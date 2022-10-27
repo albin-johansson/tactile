@@ -25,6 +25,7 @@
 #include <centurion/color.hpp>
 #include <imgui_internal.h>
 
+#include "core/texture.hpp"
 #include "editor/ui/conversions.hpp"
 #include "editor/ui/textures.hpp"
 
@@ -185,7 +186,7 @@ void draw_shadowed_ellipse(const Float2& center,
   draw_shadowed_ellipse(from_vec(center), from_vec(radius), to_u32(color), thickness);
 }
 
-void render_image(const uint texture,
+void render_image(const Texture& texture,
                   const Float2& position,
                   const Float2& size,
                   const Float2& uv_min,
@@ -197,7 +198,7 @@ void render_image(const uint texture,
   const auto min = from_vec(position);
   const auto max = min + from_vec(size);
 
-  list->AddImage(to_texture_id(texture),
+  list->AddImage(to_texture_id(texture.id()),
                  min,
                  max,
                  from_vec(uv_min),

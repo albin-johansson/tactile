@@ -27,6 +27,8 @@
 #include "core/type/math.hpp"
 #include "core/vocabulary.hpp"
 
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Texture)
+
 namespace tactile::ui {
 
 void draw_rect(const ImVec2& position,
@@ -95,7 +97,7 @@ void draw_shadowed_ellipse(const Float2& center,
 /// \param uv_min the normalized top-left corner of the texture region to render.
 /// \param uv_max the normalized bottom-right corner of the texture region to render.
 /// \param opacity the opacity of the rendered texture, in the interval [0, 255].
-void render_image(uint texture,
+void render_image(const Texture& texture,
                   const Float2& position,
                   const Float2& size,
                   const Float2& uv_min = {0, 0},

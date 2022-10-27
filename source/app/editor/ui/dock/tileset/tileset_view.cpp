@@ -114,7 +114,7 @@ void update_tileset_view(const DocumentModel& model,
   graphics.push_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
-  render_image(texture.id(), to_vec(position), texture.size());
+  render_image(texture, to_vec(position), texture.size());
 
   const auto& selection = tileset_ref.get_selection();
   if (selection.has_value()) {

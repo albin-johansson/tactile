@@ -99,7 +99,7 @@ void ToolPreviewRenderer::render_stamp_normal(const Map& map,
       const auto uv_max = uv_min + uv;
 
       constexpr uint8 opacity = 150;
-      render_image(texture.id(), real_pos, grid_size, uv_min, uv_max, opacity);
+      render_image(texture, real_pos, grid_size, uv_min, uv_max, opacity);
     }
   });
 }
