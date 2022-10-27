@@ -88,7 +88,11 @@ void SettingsDialog::show()
   mSnapshot = io::get_preferences();
   mUiSettings = mSnapshot;
 
-  set_title(get_current_language().window.settings_dialog);
+  const auto& lang = get_current_language();
+  set_title(lang.window.settings_dialog);
+  set_accept_button_label(lang.misc.ok);
+  set_close_button_label(lang.misc.cancel);
+
   make_visible();
 }
 
@@ -103,7 +107,7 @@ void SettingsDialog::on_update(const DocumentModel&, entt::dispatcher&)
 
 void SettingsDialog::on_cancel()
 {
-  /* Reset any changes we made for preview purposes */
+  // Reset any changes we made for preview purposes
   update_preview_settings(io::get_preferences());
 }
 
@@ -229,7 +233,7 @@ void SettingsDialog::update_appearance_tab()
     right_align_next_item();
     if (Combo combo {"##Theme", human_readable_name(mUiSettings.theme).data()};
         combo.is_open()) {
-      const auto showThemes = [this](auto& themes) {
+      const auto show_themes = [this](auto& themes) {
         for (const auto theme: themes) {
           if (ImGui::Selectable(human_readable_name(theme).data())) {
             mUiSettings.theme = theme;
@@ -238,9 +242,9 @@ void SettingsDialog::update_appearance_tab()
         }
       };
 
-      showThemes(light_themes);
+      show_themes(light_themes);
       ImGui::Separator();
-      showThemes(dark_themes);
+      show_themes(dark_themes);
     }
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
@@ -269,7 +273,7 @@ void SettingsDialog::update_appearance_tab()
              lang.tooltip.use_default_font.c_str());
 
     {
-      Disable disableIf {mUiSettings.use_default_font};
+      Disable disable_if {mUiSettings.use_default_font};
 
       ImGui::AlignTextToFramePadding();
       ImGui::TextUnformatted(lang.setting.font_size.c_str());
