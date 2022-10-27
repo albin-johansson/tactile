@@ -56,7 +56,7 @@ template <>
 auto make_context<Tileset>() -> Tileset
 {
   return Tileset {TilesetInfo {
-      .texture = load_texture("resources/terrain.png"),
+      .texture = io::load_texture("resources/terrain.png"),
       .tile_size = {16, 32},
   }};
 }

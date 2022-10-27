@@ -34,7 +34,7 @@ inline Shared<Texture> tactile_icon;
 
 void load_icons()
 {
-  tactile_icon = load_texture(io::find_resource("assets/icon.png"));
+  tactile_icon = io::load_texture(io::find_resource("assets/icon.png"));
 }
 
 void unload_icons() noexcept

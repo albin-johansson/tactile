@@ -228,7 +228,7 @@ void restore_tileset(DocumentModel& model,
   // loaded multiple times
 
   TilesetInfo info {
-      .texture = load_texture(tileset_data.image_path),
+      .texture = io::load_texture(tileset_data.image_path),
       .tile_size = tileset_data.tile_size,
   };
 

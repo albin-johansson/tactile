@@ -50,7 +50,7 @@ void on_show_new_tileset_dialog()
 
 void on_load_tileset(const LoadTilesetEvent& event)
 {
-  if (auto texture = load_texture(event.path)) {
+  if (auto texture = io::load_texture(event.path)) {
     auto& model = get_model();
     model.add_tileset(TilesetInfo {
         .texture = std::move(texture),

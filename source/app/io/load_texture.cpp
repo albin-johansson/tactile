@@ -24,7 +24,7 @@
 #include <GL/glew.h>
 #include <stb_image.h>
 
-namespace tactile {
+namespace tactile::io {
 namespace {
 
 struct TextureDataDeleter final {
@@ -75,4 +75,4 @@ auto load_texture(const Path& path) -> Shared<Texture>
   return std::make_shared<Texture>(id, size, path);
 }
 
-}  // namespace tactile
+}  // namespace tactile::io
