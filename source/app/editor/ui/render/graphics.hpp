@@ -40,22 +40,10 @@ class Graphics final {
 
   void clear(uint32 color = IM_COL32_BLACK);
 
-  void draw_rect(const Float2& pos,
-                 const Float2& size,
-                 uint32 color,
-                 float thickness = 1.0f);
-
   void draw_ellipse(const Float2& center,
                     const Float2& radius,
                     uint32 color,
                     float thickness = 1.0f);
-
-  void draw_rect(const ImVec2& position,
-                 const ImVec2& size,
-                 uint32 color,
-                 float thickness = 1.0f);
-
-  void fill_rect(const ImVec2& position, const ImVec2& size, uint32 color);
 
   void draw_translated_rect(const ImVec2& position,
                             const ImVec2& size,

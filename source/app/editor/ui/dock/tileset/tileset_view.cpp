@@ -26,6 +26,7 @@
 
 #include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"
+#include "editor/ui/render/render.hpp"
 #include "editor/ui/render/render_info.hpp"
 #include "editor/ui/style/colors.hpp"
 #include "editor/ui/widget/rubber_band.hpp"
@@ -83,7 +84,7 @@ void render_selection(Graphics& graphics,
   const auto origin = from_pos(selection.begin) * tile_size;
   const auto size = from_pos(diff) * tile_size;
 
-  graphics.fill_rect(min + origin, size, rubber_band_color);
+  fill_rect(min + origin, size, rubber_band_color);
 }
 
 }  // namespace

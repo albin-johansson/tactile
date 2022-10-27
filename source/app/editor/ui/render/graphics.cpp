@@ -25,6 +25,7 @@
 
 #include "core/region.hpp"
 #include "editor/ui/conversions.hpp"
+#include "editor/ui/render/render.hpp"
 #include "editor/ui/style/colors.hpp"
 #include "editor/ui/textures.hpp"
 #include "misc/assert.hpp"
@@ -99,35 +100,7 @@ void Graphics::pop_clip()
 
 void Graphics::clear(const uint32 color)
 {
-  fill_rect(mInfo.canvas_tl, mInfo.canvas_br - mInfo.canvas_tl, color);
-}
-
-void Graphics::draw_rect(const ImVec2& position,
-                         const ImVec2& size,
-                         const uint32 color,
-                         const float thickness)
-{
-  auto* list = ImGui::GetWindowDrawList();
-  list->AddRect(position, position + size, color, 0, 0, thickness);
-}
-
-void Graphics::draw_rect(const Float2& pos,
-                         const Float2& size,
-                         const uint32 color,
-                         const float thickness)
-{
-  auto* list = ImGui::GetWindowDrawList();
-
-  const auto im_min = from_vec(pos);
-  const auto im_max = im_min + from_vec(size);
-
-  list->AddRect(im_min, im_max, color, 0.0f, 0, thickness);
-}
-
-void Graphics::fill_rect(const ImVec2& position, const ImVec2& size, const uint32 color)
-{
-  auto* list = ImGui::GetWindowDrawList();
-  list->AddRectFilled(position, position + size, color);
+  ui::fill_rect(mInfo.canvas_tl, mInfo.canvas_br - mInfo.canvas_tl, color);
 }
 
 void Graphics::draw_ellipse(const Float2& center,
@@ -146,7 +119,7 @@ void Graphics::draw_translated_rect(const ImVec2& position,
                                     const uint32 color,
                                     const float thickness)
 {
-  draw_rect(translate(position), size, color, thickness);
+  ui::draw_rect(translate(position), size, color, thickness);
 }
 
 void Graphics::draw_translated_rect(const ImVec2& position,
@@ -357,7 +330,7 @@ void Graphics::render_infinite_grid(const cen::color& color)
 void Graphics::outline_contents(const cen::color& color)
 {
   const auto col32 = IM_COL32(color.red(), color.green(), color.blue(), color.alpha());
-  draw_rect(mInfo.origin, mInfo.contents_size, col32);
+  ui::draw_rect(mInfo.origin, mInfo.contents_size, col32);
 }
 
 auto Graphics::from_matrix_to_absolute(const int32 row, const int32 column) const

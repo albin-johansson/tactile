@@ -23,6 +23,7 @@
 #include "core/util/functional.hpp"
 #include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"
+#include "editor/ui/render/render.hpp"
 #include "misc/assert.hpp"
 #include "model/document/map_document.hpp"
 #include "model/model.hpp"
@@ -112,8 +113,8 @@ void ToolPreviewRenderer::visit(const RectangleTool& tool)
     const auto pos = to_vec(graphics.info().origin) + stroke->start;
     const auto size = stroke->current - stroke->start;
 
-    graphics.draw_rect(pos + Float2 {1, 1}, size, IM_COL32_BLACK, 1.0f);
-    graphics.draw_rect(pos, size, IM_COL32(0xFF, 0xFF, 0, 0xFF), 1.0f);
+    draw_rect(pos + Float2 {1, 1}, size, cen::colors::black);
+    draw_rect(pos, size, cen::colors::yellow);
   }
 }
 
