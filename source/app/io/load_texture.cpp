@@ -17,17 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "textures.hpp"
-
-#include "core/type/vec.hpp"
+#include "load_texture.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
 
 #include <GL/glew.h>
-#include <spdlog/spdlog.h>
 #include <stb_image.h>
-
-#include "core/type/ptr.hpp"
 
 namespace tactile {
 namespace {
@@ -36,27 +31,23 @@ struct TextureDataDeleter final {
   void operator()(uchar* data) noexcept { stbi_image_free(data); }
 };
 
-using TextureDataPtr = Unique<uchar, TextureDataDeleter>;
-
-inline Vec<uint> textures;
+using TextureData = Unique<uchar, TextureDataDeleter>;
 
 }  // namespace
 
-auto load_texture(const Path& path) -> Maybe<TextureInfo>
+auto load_texture(const Path& path) -> Shared<Texture>
 {
-  TextureInfo texture;
-  texture.path = path;
+  Int2 size {};
+  TextureData data {stbi_load(path.string().c_str(), &size.x, &size.y, nullptr, 4)};
 
-  // Load from file
-  TextureDataPtr data {
-      stbi_load(path.string().c_str(), &texture.size.x, &texture.size.y, nullptr, 4)};
   if (!data) {
-    return nothing;
+    return nullptr;
   }
 
   // Create a OpenGL texture identifier
-  glGenTextures(1, &texture.id);
-  glBindTexture(GL_TEXTURE_2D, texture.id);
+  uint id {};
+  glGenTextures(1, &id);
+  glBindTexture(GL_TEXTURE_2D, id);
 
   // Setup filtering parameters for display
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -74,27 +65,14 @@ auto load_texture(const Path& path) -> Maybe<TextureInfo>
   glTexImage2D(GL_TEXTURE_2D,
                0,
                GL_RGBA,
-               texture.size.x,
-               texture.size.y,
+               size.x,
+               size.y,
                0,
                GL_RGBA,
                GL_UNSIGNED_BYTE,
                data.get());
 
-  spdlog::trace("Loaded texture with ID {}", texture.id);
-  textures.push_back(texture.id);
-
-  return texture;
-}
-
-void free_textures()
-{
-  for (const auto texture: textures) {
-    spdlog::trace("Deleting texture {}", texture);
-    glDeleteTextures(1, &texture);
-  }
-
-  textures.clear();
+  return std::make_shared<Texture>(id, size, path);
 }
 
 }  // namespace tactile

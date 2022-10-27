@@ -19,7 +19,8 @@
 
 #include "icons.hpp"
 
-#include "core/type/maybe.hpp"
+#include "core/texture.hpp"
+#include "core/type/ptr.hpp"
 #include "io/directories.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
@@ -27,13 +28,18 @@
 namespace tactile::ui {
 namespace {
 
-constinit Maybe<uint> tactile_icon;
+inline Shared<Texture> tactile_icon;
 
 }  // namespace
 
 void load_icons()
 {
-  tactile_icon = load_texture(io::find_resource("assets/icon.png")).value().id;
+  tactile_icon = load_texture(io::find_resource("assets/icon.png"));
+}
+
+void unload_icons() noexcept
+{
+  tactile_icon.reset();
 }
 
 auto get_icon(const LayerType type) -> const char*
@@ -72,8 +78,8 @@ auto get_icon(const ObjectType type) -> const char*
 
 auto get_tactile_icon() -> uint
 {
-  TACTILE_ASSERT(tactile_icon.has_value());
-  return tactile_icon.value();
+  TACTILE_ASSERT(tactile_icon != nullptr);
+  return tactile_icon->id();
 }
 
 }  // namespace tactile::ui

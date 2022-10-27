@@ -17,20 +17,49 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "texture.hpp"
 
-#include "core/texture.hpp"
-#include "core/type/math.hpp"
-#include "core/type/path.hpp"
-#include "core/type/ptr.hpp"
-#include "core/vocabulary.hpp"
+#include <utility>   // move
+
+#include <GL/glew.h>
 
 namespace tactile {
 
-/// Provides information necessary to construct tilesets.
-struct TilesetInfo final {
-  Shared<Texture> texture;  /// The associated texture.
-  Int2 tile_size {};        /// Logical tile size.
-};
+Texture::Texture(const uint id, const Int2 size, Path path)
+    : mId {id},
+      mSize {size},
+      mPath {std::move(path)}
+{
+}
+
+Texture::~Texture() noexcept
+{
+  glDeleteTextures(1, &mId);
+}
+
+auto Texture::id() const -> uint
+{
+  return mId;
+}
+
+auto Texture::size() const -> const Int2&
+{
+  return mSize;
+}
+
+auto Texture::width() const -> int32
+{
+  return mSize.x;
+}
+
+auto Texture::height() const -> int32
+{
+  return mSize.y;
+}
+
+auto Texture::path() const -> const Path&
+{
+  return mPath;
+}
 
 }  // namespace tactile

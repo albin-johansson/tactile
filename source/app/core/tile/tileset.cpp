@@ -31,15 +31,13 @@ namespace tactile {
 
 struct Tileset::Data final {
   ContextInfo context;
-  uint texture_id {};
-  Int2 texture_size {};
+  Shared<Texture> texture;
   Int2 tile_size {};
   int32 row_count {};
   int32 column_count {};
   Float2 uv_size {};
   HashMap<TileIndex, UUID> identifiers;
   HashMap<UUID, Shared<Tile>> tiles;
-  Path texture_path;
 
   /// Optimization to avoid iterating all tiles in the update function.
   // TODO Vec<UUID> mAnimatedTiles;
@@ -49,13 +47,11 @@ struct Tileset::Data final {
 
   Data(TilesetInfo info, const UUID& id)
       : context {id},
-        texture_id {info.texture_id},
-        texture_size {info.texture_size},
+        texture {std::move(info.texture)},
         tile_size {info.tile_size},
-        row_count {texture_size.y / tile_size.y},
-        column_count {texture_size.x / tile_size.x},
-        uv_size {Float2 {tile_size} / Float2 {texture_size}},
-        texture_path {std::move(info.texture_path)}
+        row_count {texture->height() / tile_size.y},
+        column_count {texture->width() / tile_size.x},
+        uv_size {Float2 {tile_size} / Float2 {texture->size()}}
   {
   }
 };
@@ -175,19 +171,24 @@ auto Tileset::uuid() const -> const UUID&
   return ctx().uuid();
 }
 
+auto Tileset::texture() const -> const Texture&
+{
+  return *mData->texture;
+}
+
 auto Tileset::texture_id() const noexcept -> uint
 {
-  return mData->texture_id;
+  return mData->texture->id();
 }
 
 auto Tileset::texture_path() const -> const Path&
 {
-  return mData->texture_path;
+  return mData->texture->path();
 }
 
 auto Tileset::texture_size() const noexcept -> const Int2&
 {
-  return mData->texture_size;
+  return mData->texture->size();
 }
 
 auto Tileset::tile_size() const noexcept -> const Int2&

@@ -23,23 +23,21 @@
 
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset_info.hpp"
+#include "io/load_texture.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::test {
 namespace {
 
-constexpr const char* default_texture_path = "foo/bar.png";
-constexpr uint default_texture_id = 7;
-constexpr Int2 default_texture_size = {1024, 768};
-constexpr Int2 default_tile_size = {28, 42};
+constexpr const char* texture_path = "resources/terrain.png";
+constexpr Int2 expected_texture_size = {1024, 1024};
+constexpr Int2 expected_tile_size = {32, 32};
 
 [[nodiscard]] auto make_tileset() -> Tileset
 {
-  return Tileset {{
-      .texture_path = default_texture_path,
-      .texture_id = default_texture_id,
-      .texture_size = default_texture_size,
-      .tile_size = default_tile_size,
+  return Tileset {TilesetInfo {
+      .texture = load_texture(texture_path),
+      .tile_size = expected_tile_size,
   }};
 }
 
@@ -48,10 +46,9 @@ constexpr Int2 default_tile_size = {28, 42};
 TEST(Tileset, Defaults)
 {
   const auto tileset = make_tileset();
-  ASSERT_EQ(default_texture_path, tileset.texture_path());
-  ASSERT_EQ(default_texture_id, tileset.texture_id());
-  ASSERT_EQ(default_tile_size, tileset.tile_size());
-  ASSERT_EQ(default_texture_size, tileset.texture_size());
+  ASSERT_EQ(expected_tile_size, tileset.tile_size());
+  ASSERT_EQ(expected_texture_size, tileset.texture().size());
+  ASSERT_EQ(texture_path, tileset.texture().path());
 }
 
 TEST(Tileset, SubscriptOperator)
@@ -69,8 +66,8 @@ TEST(Tileset, IndexOf)
 {
   auto tileset = make_tileset();
 
-  ASSERT_THROW(tileset.index_of({-1, -1}), TactileError);
-  ASSERT_THROW(tileset.index_of({tileset.row_count(), tileset.column_count()}),
+  ASSERT_THROW((void) tileset.index_of({-1, -1}), TactileError);
+  ASSERT_THROW((void) tileset.index_of({tileset.row_count(), tileset.column_count()}),
                TactileError);
 
   ASSERT_EQ(0, tileset.index_of({0, 0}));

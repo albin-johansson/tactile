@@ -26,7 +26,7 @@
 
 #include "editor/app_context.hpp"
 #include "editor/ui/menu/map_menu.hpp"
-#include "io/textures.hpp"
+#include "io/load_texture.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
 #include "model/event/tileset_events.hpp"
@@ -52,10 +52,10 @@ void on_load_tileset(const LoadTilesetEvent& event)
 {
   if (auto texture = load_texture(event.path)) {
     auto& model = get_model();
-    model.add_tileset({.texture_path = std::move(texture->path),
-                       .texture_id = texture->id,
-                       .texture_size = texture->size,
-                       .tile_size = event.tile_size});
+    model.add_tileset(TilesetInfo {
+        .texture = std::move(texture),
+        .tile_size = event.tile_size,
+    });
   }
   else {
     spdlog::error("Failed to load tileset texture!");

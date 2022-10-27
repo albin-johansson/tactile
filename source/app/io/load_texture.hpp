@@ -20,17 +20,11 @@
 #pragma once
 
 #include "core/texture.hpp"
-#include "core/type/math.hpp"
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
-#include "core/vocabulary.hpp"
 
 namespace tactile {
 
-/// Provides information necessary to construct tilesets.
-struct TilesetInfo final {
-  Shared<Texture> texture;  /// The associated texture.
-  Int2 tile_size {};        /// Logical tile size.
-};
+[[nodiscard]] auto load_texture(const Path& path) -> Shared<Texture>;
 
 }  // namespace tactile

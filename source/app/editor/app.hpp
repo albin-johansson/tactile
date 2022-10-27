@@ -30,7 +30,7 @@ class App final : EventLoop {
  public:
   App();
 
-  ~App();
+  ~App() noexcept override;
 
   using EventLoop::start;
 

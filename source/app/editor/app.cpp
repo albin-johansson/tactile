@@ -45,10 +45,10 @@
 #include "editor/ui/style/icons.hpp"
 #include "editor/ui/ui.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
+#include "io/load_texture.hpp"
 #include "io/proto/history.hpp"
 #include "io/proto/preferences.hpp"
 #include "io/proto/session.hpp"
-#include "io/textures.hpp"
 #include "model/cmd/commands.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
@@ -66,9 +66,9 @@ App::App()
   ui::load_icons();
 }
 
-App::~App()
+App::~App() noexcept
 {
-  free_textures();  // TODO store texture instances in tile sets instead?
+  ui::unload_icons();
 }
 
 void App::on_startup()

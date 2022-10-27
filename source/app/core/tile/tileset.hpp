@@ -71,14 +71,17 @@ class Tileset final : public Context {
 
   [[nodiscard]] auto uuid() const -> const UUID& override;
 
+  /// Returns the associated texture.
+  [[nodiscard]] auto texture() const -> const Texture&;
+
   /// Returns the identifier for the associated texture.
-  [[nodiscard]] auto texture_id() const noexcept -> uint;
+  [[nodiscard, deprecated]] auto texture_id() const noexcept -> uint;
 
   /// Returns the source path of the associated texture.
-  [[nodiscard]] auto texture_path() const -> const Path&;
+  [[nodiscard, deprecated]] auto texture_path() const -> const Path&;
 
   /// Returns the size of the associated texture.
-  [[nodiscard]] auto texture_size() const noexcept -> const Int2&;
+  [[nodiscard, deprecated]] auto texture_size() const noexcept -> const Int2&;
 
   /// Returns the size of each tile.
   [[nodiscard]] auto tile_size() const noexcept -> const Int2&;

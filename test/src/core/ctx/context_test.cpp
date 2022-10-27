@@ -29,6 +29,7 @@
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset.hpp"
 #include "core/tile/tileset_info.hpp"
+#include "io/load_texture.hpp"
 
 namespace tactile::test {
 
@@ -54,10 +55,10 @@ auto make_context() -> T
 template <>
 auto make_context<Tileset>() -> Tileset
 {
-  return Tileset {{.texture_path = "foo.png",
-                   .texture_id = 8,
-                   .texture_size = {1024, 768},
-                   .tile_size = {16, 32}}};
+  return Tileset {TilesetInfo {
+      .texture = load_texture("resources/terrain.png"),
+      .tile_size = {16, 32},
+  }};
 }
 
 template <>

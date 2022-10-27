@@ -34,9 +34,9 @@
 #include "core/type/maybe.hpp"
 #include "core/util/functional.hpp"
 #include "core/uuid.hpp"
+#include "io/load_texture.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/parse_result.hpp"
-#include "io/textures.hpp"
 #include "misc/assert.hpp"
 #include "model/cmd/command_stack.hpp"
 #include "model/document/document.hpp"
@@ -227,13 +227,10 @@ void restore_tileset(DocumentModel& model,
   // TODO compare tileset document absolute paths to recognize the same tileset being
   // loaded multiple times
 
-  const auto texture = load_texture(tileset_data.image_path).value();
-
-  TilesetInfo info;
-  info.texture_id = texture.id;
-  info.texture_size = texture.size;
-  info.texture_path = texture.path;
-  info.tile_size = tileset_data.tile_size;
+  TilesetInfo info {
+      .texture = load_texture(tileset_data.image_path),
+      .tile_size = tileset_data.tile_size,
+  };
 
   // This will automatically attach the tileset to the active map
   const auto tileset_id = model.restore_tileset(tileset_data.first_tile, info);

@@ -20,11 +20,12 @@
 #pragma once
 
 #include "core/tile/tileset.hpp"
+#include "core/tile/tileset_info.hpp"
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"
-#include "document.hpp"
-#include "document_delegate.hpp"
+#include "model/document/document.hpp"
+#include "model/document/document_delegate.hpp"
 
 namespace tactile {
 
@@ -35,7 +36,7 @@ namespace tactile {
 /// external.
 class TilesetDocument final : public Document {
  public:
-  explicit TilesetDocument(const TilesetInfo& info, const UUID& id = make_uuid());
+  explicit TilesetDocument(TilesetInfo info, const UUID& id = make_uuid());
 
   void update() override;
 
