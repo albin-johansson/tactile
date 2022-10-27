@@ -44,23 +44,15 @@ auto load_texture(const Path& path) -> Shared<Texture>
     return nullptr;
   }
 
-  // Create a OpenGL texture identifier
   uint id {};
   glGenTextures(1, &id);
   glBindTexture(GL_TEXTURE_2D, id);
 
-  // Setup filtering parameters for display
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-  // This is required on WebGL for non power-of-two textures
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-  // Upload pixels into texture
-#if defined(GL_UNPACK_ROW_LENGTH) && !defined(__EMSCRIPTEN__)
-  glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-#endif
 
   glTexImage2D(GL_TEXTURE_2D,
                0,
