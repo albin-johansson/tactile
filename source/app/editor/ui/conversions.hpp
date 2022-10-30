@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include <centurion/color.hpp>
 #include <imgui.h>
 
 #include "core/tile_pos.hpp"
@@ -26,9 +27,9 @@
 
 namespace tactile::ui {
 
-[[nodiscard]] inline auto from_pos(const TilePos& pos) noexcept -> ImVec2
+[[nodiscard]] constexpr auto to_u32(const cen::color& color) noexcept -> uint32
 {
-  return {static_cast<float>(pos.col()), static_cast<float>(pos.row())};
+  return IM_COL32(color.red(), color.green(), color.blue(), color.alpha());
 }
 
 [[nodiscard]] inline auto from_vec(const Float2& vec) noexcept -> ImVec2
@@ -57,6 +58,11 @@ namespace tactile::ui {
 [[nodiscard]] inline auto to_vec(const ImVec2& vec) noexcept -> Float2
 {
   return {vec.x, vec.y};
+}
+
+[[nodiscard]] inline auto from_pos(const TilePos& pos) noexcept -> ImVec2
+{
+  return from_vec(pos.as_vec2f());
 }
 
 }  // namespace tactile::ui
