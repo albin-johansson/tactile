@@ -20,10 +20,11 @@
 #include "render_tileset.hpp"
 
 #include <imgui.h>
+#include <imgui_internal.h>
 
-#include "core/util/functional.hpp"
 #include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"
+#include "editor/ui/render/render.hpp"
 #include "io/proto/preferences.hpp"
 #include "model/document/tileset_document.hpp"
 
@@ -34,25 +35,18 @@ void render_tileset(Graphics& graphics, const TilesetDocument& document)
   const auto& tileset = document.view_tileset();
   const auto& texture = tileset.texture();
 
-  const Float2 tile_size = tileset.tile_size();
-  const auto uv = from_vec(tileset.uv_size());
+  const auto rendered_position = graphics.translate(ImVec2 {0, 0});
+  const auto rendered_size = from_vec(texture.size()) * graphics.info().ratio;
 
-  invoke_mn(tileset.row_count(), tileset.column_count(), [&](int32 row, int32 col) {
-    const ImVec4 source {static_cast<float>(col * tileset.tile_size().x),
-                         static_cast<float>(row * tileset.tile_size().y),
-                         tile_size.x,
-                         tile_size.y};
-    const auto position = graphics.from_matrix_to_absolute(row, col);
-    graphics.render_translated_image(texture.id(), source, position, uv);
-  });
+  render_image(texture, rendered_position, rendered_size);
 
   const auto& prefs = io::get_preferences();
   if (prefs.show_grid) {
-    graphics.render_infinite_grid(prefs.grid_color);
+    graphics.render_infinite_grid(to_u32(prefs.grid_color));
   }
 
-  const auto& color = ImGui::GetStyle().Colors[ImGuiCol_HeaderActive];
-  graphics.outline_contents(cen::color::from_norm(color.x, color.y, color.z, color.w));
+  const auto& color = to_color(ImGui::GetStyle().Colors[ImGuiCol_HeaderActive]);
+  graphics.outline_contents(to_u32(color));
 }
 
 }  // namespace tactile::ui

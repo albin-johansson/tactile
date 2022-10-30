@@ -24,6 +24,7 @@
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
+#include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"
 #include "editor/ui/render/render_object_layer.hpp"
 #include "editor/ui/render/render_tile_layer.hpp"
@@ -110,11 +111,11 @@ void render_map(Graphics& graphics, const MapDocument& document)
   }
 
   if (prefs.show_grid) {
-    graphics.render_infinite_grid(prefs.grid_color);
+    graphics.render_infinite_grid(to_u32(prefs.grid_color));
   }
 
-  const auto& color = ImGui::GetStyle().Colors[ImGuiCol_HeaderActive];
-  graphics.outline_contents(cen::color::from_norm(color.x, color.y, color.z, color.w));
+  const auto& color = to_color(ImGui::GetStyle().Colors[ImGuiCol_HeaderActive]);
+  graphics.outline_contents(to_u32(color));
 }
 
 }  // namespace tactile::ui

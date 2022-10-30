@@ -32,6 +32,11 @@
 #include "model/tool/stamp_tool.hpp"
 
 namespace tactile::ui {
+namespace {
+
+inline constexpr uint8 stamp_preview_opacity = 150;
+
+}  // namespace
 
 ToolPreviewRenderer::ToolPreviewRenderer(const DocumentModel& model,
                                          Graphics& graphics,
@@ -70,8 +75,6 @@ void ToolPreviewRenderer::visit(const StampTool& tool)
 void ToolPreviewRenderer::render_stamp_normal(const Map& map,
                                               const TilesetRef& tileset_ref)
 {
-  auto& graphics = mGraphics.get();
-
   TACTILE_ASSERT(map.is_active_layer(LayerType::TileLayer));
   const auto layer_id = map.active_layer_id().value();
   const auto& layer = map.invisible_root().tile_layer(layer_id);
@@ -81,25 +84,21 @@ void ToolPreviewRenderer::render_stamp_normal(const Map& map,
   const auto offset = selection_size / TilePos {2, 2};
 
   const auto& tileset = tileset_ref.view_tileset();
-  const auto& texture = tileset.texture();
-  const auto& uv = tileset.uv_size();
 
-  const auto& info = graphics.info();
-  const auto origin = to_vec(info.origin);
-  const auto grid_size = to_vec(info.grid_size);
+  auto& graphics = mGraphics.get();
+  const auto origin = to_vec(graphics.info().origin);
+  const auto grid_size = to_vec(graphics.info().grid_size);
 
   invoke_mn(selection_size.row(), selection_size.col(), [&, this](int32 row, int32 col) {
     const TilePos index {row, col};
     const auto preview_pos = mMouseInfo.position_in_viewport + index - offset;
 
     if (layer.is_valid(preview_pos)) {
-      const auto real_pos = origin + preview_pos.as_vec2f() * grid_size;
-
-      const auto uv_min = (selection.begin + index).as_vec2f() * uv;
-      const auto uv_max = uv_min + uv;
-
-      constexpr uint8 opacity = 150;
-      render_image(texture, real_pos, grid_size, uv_min, uv_max, opacity);
+      const auto rendered_position = origin + preview_pos.as_vec2f() * grid_size;
+      graphics.render_tile(tileset,
+                           selection.begin + index,
+                           from_vec(rendered_position),
+                           stamp_preview_opacity);
     }
   });
 }
@@ -110,11 +109,10 @@ void ToolPreviewRenderer::visit(const RectangleTool& tool)
   if (stroke.has_value()) {
     auto& graphics = mGraphics.get();
 
-    const auto pos = to_vec(graphics.info().origin) + stroke->start;
-    const auto size = stroke->current - stroke->start;
+    const auto pos = graphics.info().origin + from_vec(stroke->start);
+    const auto size = from_vec(stroke->current - stroke->start);
 
-    draw_rect(pos + Float2 {1, 1}, size, cen::colors::black);
-    draw_rect(pos, size, cen::colors::yellow);
+    draw_shadowed_rect(pos, size, to_u32(cen::colors::yellow));
   }
 }
 
@@ -126,7 +124,9 @@ void ToolPreviewRenderer::visit(const EllipseTool& tool)
     const auto center = stroke->start + radius;
 
     auto& graphics = mGraphics.get();
-    graphics.draw_translated_shadowed_ellipse(center, radius, cen::colors::yellow);
+    graphics.draw_translated_shadowed_ellipse(from_vec(center),
+                                              from_vec(radius),
+                                              to_u32(cen::colors::yellow));
   }
 }
 

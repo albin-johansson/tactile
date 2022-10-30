@@ -21,11 +21,11 @@
 
 #pragma once
 
-#include <centurion/fwd.hpp>
 #include <imgui.h>
+#include <imgui_internal.h>
 
-#include "core/type/math.hpp"
 #include "core/vocabulary.hpp"
+#include "editor/ui/conversions.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, Texture)
 
@@ -36,53 +36,39 @@ void draw_rect(const ImVec2& position,
                uint32 color,
                float thickness = 1.0f);
 
-void draw_rect(const Float2& position,
-               const Float2& size,
-               const cen::color& color,
-               float thickness = 1.0f);
+inline void draw_shadowed_rect(const ImVec2& position,
+                               const ImVec2& size,
+                               const uint32 color,
+                               const float thickness = 1.0f)
+{
+  draw_rect(position + ImVec2 {thickness, thickness}, size, IM_COL32_BLACK, thickness);
+  draw_rect(position, size, color, thickness);
+}
 
 void fill_rect(const ImVec2& position, const ImVec2& size, uint32 color);
-
-void fill_rect(const Float2& position, const Float2& size, const cen::color& color);
 
 void draw_circle(const ImVec2& center,
                  float radius,
                  uint32 color,
                  float thickness = 1.0f);
 
-void draw_circle(const Float2& center,
-                 float radius,
-                 const cen::color& color,
-                 float thickness = 1.0f);
-
-void draw_shadowed_circle(const ImVec2& center,
-                          float radius,
-                          uint32 color,
-                          float thickness = 1.0f);
-
-void draw_shadowed_circle(const Float2& center,
-                          float radius,
-                          const cen::color& color,
-                          float thickness = 1.0f);
+inline void draw_shadowed_circle(const ImVec2& center,
+                                 const float radius,
+                                 const uint32 color,
+                                 const float thickness = 1.0f)
+{
+  draw_circle(center + ImVec2 {0, thickness}, radius, IM_COL32_BLACK, thickness);
+  draw_circle(center, radius, color, thickness);
+}
 
 void draw_ellipse(const ImVec2& center,
                   const ImVec2& radius,
                   uint32 color,
                   float thickness = 1.0f);
 
-void draw_ellipse(const Float2& center,
-                  const Float2& radius,
-                  const cen::color& color,
-                  float thickness = 1.0f);
-
 void draw_shadowed_ellipse(const ImVec2& center,
                            const ImVec2& radius,
                            uint32 color,
-                           float thickness = 1.0f);
-
-void draw_shadowed_ellipse(const Float2& center,
-                           const Float2& radius,
-                           const cen::color& color,
                            float thickness = 1.0f);
 
 /// Renders a region of a texture.
@@ -98,10 +84,12 @@ void draw_shadowed_ellipse(const Float2& center,
 /// \param uv_max the normalized bottom-right corner of the texture region to render.
 /// \param opacity the opacity of the rendered texture, in the interval [0, 255].
 void render_image(const Texture& texture,
-                  const Float2& position,
-                  const Float2& size,
-                  const Float2& uv_min = {0, 0},
-                  const Float2& uv_max = {1, 1},
+                  const ImVec2& position,
+                  const ImVec2& size,
+                  const ImVec2& uv_min = {0, 0},
+                  const ImVec2& uv_max = {1, 1},
                   uint8 opacity = 255);
+
+void render_text(const char* text, const ImVec2& position, uint32 color);
 
 }  // namespace tactile::ui

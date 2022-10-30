@@ -22,22 +22,14 @@
 #include <cmath>    // sin, cos
 #include <numbers>  // pi_v
 
-#include <centurion/color.hpp>
-#include <imgui_internal.h>
-
 #include "core/texture.hpp"
-#include "editor/ui/conversions.hpp"
 #include "editor/ui/textures.hpp"
+#include "misc/assert.hpp"
 
 namespace tactile::ui {
 namespace {
 
 inline constexpr int ellipse_segments = 50;
-
-[[nodiscard]] constexpr auto to_u32(const cen::color& color) -> uint32
-{
-  return IM_COL32(color.red(), color.green(), color.blue(), color.alpha());
-}
 
 void path_elliptical_arc_to(ImDrawList* self,
                             const ImVec2& center,
@@ -86,27 +78,12 @@ void draw_rect(const ImVec2& position,
                const uint32 color,
                const float thickness)
 {
-  auto* list = ImGui::GetWindowDrawList();
-  list->AddRect(position, position + size, color, 0, 0, thickness);
-}
-
-void draw_rect(const Float2& position,
-               const Float2& size,
-               const cen::color& color,
-               const float thickness)
-{
-  draw_rect(from_vec(position), from_vec(size), to_u32(color), thickness);
+  ImGui::GetWindowDrawList()->AddRect(position, position + size, color, 0, 0, thickness);
 }
 
 void fill_rect(const ImVec2& position, const ImVec2& size, const uint32 color)
 {
-  auto* list = ImGui::GetWindowDrawList();
-  list->AddRectFilled(position, position + size, color);
-}
-
-void fill_rect(const Float2& position, const Float2& size, const cen::color& color)
-{
-  fill_rect(from_vec(position), from_vec(size), to_u32(color));
+  ImGui::GetWindowDrawList()->AddRectFilled(position, position + size, color);
 }
 
 void draw_circle(const ImVec2& center,
@@ -114,33 +91,7 @@ void draw_circle(const ImVec2& center,
                  const uint32 color,
                  const float thickness)
 {
-  auto* list = ImGui::GetWindowDrawList();
-  list->AddCircle(center, radius, color, 0, thickness);
-}
-
-void draw_circle(const Float2& center,
-                 const float radius,
-                 const cen::color& color,
-                 const float thickness)
-{
-  draw_circle(from_vec(center), radius, to_u32(color), thickness);
-}
-
-void draw_shadowed_circle(const ImVec2& center,
-                          const float radius,
-                          const uint32 color,
-                          const float thickness)
-{
-  draw_circle(center + ImVec2 {0, thickness}, radius, IM_COL32_BLACK, thickness);
-  draw_circle(center, radius, color, thickness);
-}
-
-void draw_shadowed_circle(const Float2& center,
-                          const float radius,
-                          const cen::color& color,
-                          const float thickness)
-{
-  draw_shadowed_circle(from_vec(center), radius, to_u32(color), thickness);
+  ImGui::GetWindowDrawList()->AddCircle(center, radius, color, 0, thickness);
 }
 
 void draw_ellipse(const ImVec2& center,
@@ -154,14 +105,6 @@ void draw_ellipse(const ImVec2& center,
               color,
               ellipse_segments,
               thickness);
-}
-
-void draw_ellipse(const Float2& center,
-                  const Float2& radius,
-                  const cen::color& color,
-                  const float thickness)
-{
-  draw_ellipse(from_vec(center), from_vec(radius), to_u32(color), thickness);
 }
 
 void draw_shadowed_ellipse(const ImVec2& center,
@@ -178,32 +121,25 @@ void draw_shadowed_ellipse(const ImVec2& center,
   }
 }
 
-void draw_shadowed_ellipse(const Float2& center,
-                           const Float2& radius,
-                           const cen::color& color,
-                           const float thickness)
-{
-  draw_shadowed_ellipse(from_vec(center), from_vec(radius), to_u32(color), thickness);
-}
-
 void render_image(const Texture& texture,
-                  const Float2& position,
-                  const Float2& size,
-                  const Float2& uv_min,
-                  const Float2& uv_max,
+                  const ImVec2& position,
+                  const ImVec2& size,
+                  const ImVec2& uv_min,
+                  const ImVec2& uv_max,
                   const uint8 opacity)
 {
-  auto* list = ImGui::GetWindowDrawList();
+  ImGui::GetWindowDrawList()->AddImage(to_texture_id(texture.id()),
+                                       position,
+                                       position + size,
+                                       uv_min,
+                                       uv_max,
+                                       IM_COL32(0xFF, 0xFF, 0xFF, opacity));
+}
 
-  const auto min = from_vec(position);
-  const auto max = min + from_vec(size);
-
-  list->AddImage(to_texture_id(texture.id()),
-                 min,
-                 max,
-                 from_vec(uv_min),
-                 from_vec(uv_max),
-                 IM_COL32(0xFF, 0xFF, 0xFF, opacity));
+void render_text(const char* text, const ImVec2& position, const uint32 color)
+{
+  TACTILE_ASSERT(text);
+  ImGui::GetWindowDrawList()->AddText(position, color, text);
 }
 
 }  // namespace tactile::ui

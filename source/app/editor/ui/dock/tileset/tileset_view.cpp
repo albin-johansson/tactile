@@ -28,7 +28,6 @@
 #include "editor/ui/render/graphics.hpp"
 #include "editor/ui/render/render.hpp"
 #include "editor/ui/render/render_info.hpp"
-#include "editor/ui/style/colors.hpp"
 #include "editor/ui/widget/rubber_band.hpp"
 #include "io/proto/preferences.hpp"
 #include "model/document/map_document.hpp"
@@ -40,7 +39,7 @@
 namespace tactile::ui {
 namespace {
 
-constexpr uint32 rubber_band_color = IM_COL32(0, 0x44, 0xCC, 100);
+constexpr uint32 rubber_band_color = to_u32(cen::color {0, 0x44, 0xCC, 100});
 
 void update_viewport_offset(const TilesetRef& tileset_ref,
                             const ImVec2& viewport_size,
@@ -102,7 +101,7 @@ void update_tileset_view(const DocumentModel& model,
   update_viewport_offset(tileset_ref, info.canvas_br - info.canvas_tl, dispatcher);
 
   Graphics graphics {info};
-  graphics.clear(color_to_u32(io::get_preferences().viewport_background));
+  graphics.clear(to_u32(io::get_preferences().viewport_background));
 
   const auto offset = from_vec(viewport.get_offset());
   const auto tile_size = from_vec(tileset.tile_size());
@@ -111,10 +110,10 @@ void update_tileset_view(const DocumentModel& model,
     dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);
   }
 
-  graphics.push_clip();
+  graphics.push_canvas_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
-  render_image(texture, to_vec(position), texture.size());
+  render_image(texture, position, from_vec(texture.size()));
 
   const auto& selection = tileset_ref.get_selection();
   if (selection.has_value()) {
@@ -122,7 +121,7 @@ void update_tileset_view(const DocumentModel& model,
   }
 
   const auto& prefs = io::get_preferences();
-  graphics.render_translated_grid(prefs.grid_color);
+  graphics.render_translated_grid(to_u32(prefs.grid_color));
 
   graphics.pop_clip();
 }

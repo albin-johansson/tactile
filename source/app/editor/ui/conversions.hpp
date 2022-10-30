@@ -32,12 +32,17 @@ namespace tactile::ui {
   return IM_COL32(color.red(), color.green(), color.blue(), color.alpha());
 }
 
-[[nodiscard]] constexpr auto from_vec(const Float2& vec) noexcept -> ImVec2
+[[nodiscard]] inline auto to_color(const ImVec4& vec) -> cen::color
+{
+  return cen::color::from_norm(vec.x, vec.y, vec.z, vec.w);
+}
+
+[[nodiscard]] constexpr auto from_vec(const Float2 vec) noexcept -> ImVec2
 {
   return {vec.x, vec.y};
 }
 
-[[nodiscard]] constexpr auto from_vec(const Int2& vec) noexcept -> ImVec2
+[[nodiscard]] constexpr auto from_vec(const Int2 vec) noexcept -> ImVec2
 {
   return {static_cast<float>(vec.x), static_cast<float>(vec.y)};
 }
@@ -55,18 +60,18 @@ namespace tactile::ui {
           static_cast<float>(vec.w)};
 }
 
-[[nodiscard]] constexpr auto to_vec(const ImVec2& vec) noexcept -> Float2
+[[nodiscard]] constexpr auto to_vec(const ImVec2 vec) noexcept -> Float2
 {
   return {vec.x, vec.y};
 }
 
-[[nodiscard]] constexpr auto from_pos(const TilePos& pos) noexcept -> ImVec2
+[[nodiscard]] constexpr auto from_pos(const TilePos pos) noexcept -> ImVec2
 {
   return from_vec(pos.as_vec2f());
 }
 
 /// Converts a normalized opacity value to a value in the interval [0, 255].
-[[nodiscard]] constexpr auto opacity_cast(const float opacity) -> uint8
+[[nodiscard]] constexpr auto opacity_cast(const float opacity) noexcept -> uint8
 {
   TACTILE_ASSERT(opacity >= 0.0f);
   TACTILE_ASSERT(opacity <= 1.0f);

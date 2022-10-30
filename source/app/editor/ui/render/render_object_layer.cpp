@@ -44,7 +44,7 @@ void render_point_object(Graphics& graphics,
   const float radius = std::min(info.grid_size.x / 4.0f, 6.0f);
 
   if (graphics.is_within_translated_bounds(position)) {
-    graphics.draw_translated_circle_with_shadow(position, radius, color, 2.0f);
+    graphics.draw_translated_shadowed_circle(position, radius, color, 2.0f);
 
     const auto& name = object.ctx().name();
     if (!name.empty()) {
@@ -72,7 +72,7 @@ void render_ellipse_object(Graphics& graphics,
   const auto radius = ImVec2 {0.5f, 0.5f} * size * info.ratio;
   const auto center = position + radius;
 
-  graphics.draw_translated_ellipse_with_shadow(center, radius, color, 2.0f);
+  graphics.draw_translated_shadowed_ellipse(center, radius, color, 2.0f);
 
   const auto& name = object.ctx().name();
   if (!name.empty()) {
@@ -97,7 +97,7 @@ void render_rectangle_object(Graphics& graphics,
   const auto size = from_vec(object.size()) * info.ratio;
 
   if (graphics.is_intersecting_bounds(position, size)) {
-    graphics.draw_translated_rect_with_shadow(position, size, color, 2.0f);
+    graphics.draw_translated_shadowed_rect(position, size, color, 2.0f);
 
     const auto& name = object.ctx().name();
     if (!name.empty()) {

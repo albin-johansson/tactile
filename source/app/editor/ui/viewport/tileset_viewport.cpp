@@ -19,14 +19,13 @@
 
 #include "tileset_viewport.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui_internal.h>
 
 #include "document_viewport_offset_handler.hpp"
+#include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"
 #include "editor/ui/render/render_info.hpp"
 #include "editor/ui/render/render_tileset.hpp"
-#include "editor/ui/style/colors.hpp"
 #include "io/proto/preferences.hpp"
 #include "model/document/tileset_document.hpp"
 
@@ -42,10 +41,9 @@ void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& di
                                   dispatcher);
 
   Graphics graphics {render_info};
+  graphics.clear(to_u32(io::get_preferences().viewport_background));
 
-  graphics.clear(color_to_u32(io::get_preferences().viewport_background));
-
-  graphics.push_clip();
+  graphics.push_canvas_clip();
   render_tileset(graphics, document);
   graphics.pop_clip();
 }
