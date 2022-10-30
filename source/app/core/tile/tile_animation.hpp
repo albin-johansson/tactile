@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <chrono>  // system_clock, milliseconds
-
+#include "core/type/chrono.hpp"
 #include "core/type/vec.hpp"
 #include "core/vocabulary.hpp"
 
@@ -29,13 +28,9 @@ namespace tactile {
 /// Linear animation for single tile, represented as a sequence of tile indices.
 class TileAnimation final {
  public:
-  using Millis = std::chrono::milliseconds;
-  using Clock = std::chrono::system_clock;
-  using TimePoint = Clock::time_point;
-
   struct Frame final {
     TileIndex tile {};
-    Millis duration {};
+    ms_t duration {};
   };
 
   /// Updates the animation
@@ -45,7 +40,7 @@ class TileAnimation final {
   void reserve_frames(usize n);
 
   /// Adds a new frame to the animation sequence.
-  void add_frame(TileIndex tile, Millis duration);
+  void add_frame(TileIndex tile, ms_t duration);
 
   /// Returns the frame at a specific index.
   [[nodiscard]] auto operator[](usize index) const -> const Frame&;

@@ -19,19 +19,15 @@
 
 #include "tooltips.hpp"
 
-#include <chrono>  // system_clock
-
 #include <imgui.h>
 
+#include "core/type/chrono.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/maybe.hpp"
 #include "core/util/assoc.hpp"
 #include "misc/assert.hpp"
 
 using namespace std::chrono_literals;
-
-using Clock = std::chrono::system_clock;
-using TimePoint = Clock::time_point;
 
 namespace tactile::ui {
 
