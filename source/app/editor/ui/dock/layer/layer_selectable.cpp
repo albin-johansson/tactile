@@ -119,7 +119,7 @@ void show_object_selectable(const ObjectLayer& layer,
     name = fmt::format("{} {}", icon, object.ctx().name());
   }
 
-  if (ImGui::Selectable(name.c_str(), layer.active_object_id() == object_id)) {
+  if (Selectable {name.c_str(), layer.active_object_id() == object_id}) {
     dispatcher.enqueue<SelectObjectEvent>(layer.uuid(), object_id);
   }
 
@@ -235,7 +235,7 @@ void layer_selectable(const MapDocument& document,
 
   switch (layer.type()) {
     case LayerType::TileLayer: {
-      if (ImGui::Selectable(name.data(), is_active_layer)) {
+      if (Selectable {name.data(), is_active_layer}) {
         dispatcher.enqueue<SelectLayerEvent>(layer.uuid());
       }
 

@@ -74,7 +74,7 @@ void property_type_combo_impl(AttributeType& out, Maybe<AttributeType> previous_
       Disable disable_if {previous_type == type};
 
       const auto selected = current_name == name;
-      if (ImGui::Selectable(name.data(), selected)) {
+      if (Selectable {name.data(), selected}) {
         out = type;
       }
 

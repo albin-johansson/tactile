@@ -32,6 +32,11 @@ namespace tactile::ui {
   return IM_COL32(color.red(), color.green(), color.blue(), color.alpha());
 }
 
+[[nodiscard]] constexpr auto to_vec(const cen::color& color) -> ImVec4
+{
+  return {color.norm_red(), color.norm_green(), color.norm_blue(), color.norm_alpha()};
+}
+
 [[nodiscard]] inline auto to_color(const ImVec4& vec) -> cen::color
 {
   return cen::color::from_norm(vec.x, vec.y, vec.z, vec.w);

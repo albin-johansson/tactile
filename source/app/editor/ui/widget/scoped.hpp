@@ -165,6 +165,7 @@ class TabItem final {
   [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
+  StyleColor mTextColor;
   bool mOpen {};
 };
 
@@ -221,6 +222,23 @@ class ListBox final {
   bool mOpen {};
 };
 
+class Selectable final {
+ public:
+  TACTILE_DELETE_COPY(Selectable);
+  TACTILE_DELETE_MOVE(Selectable);
+
+  explicit Selectable(const char* label,
+                      bool selected = false,
+                      ImGuiSelectableFlags flags = 0,
+                      const ImVec2& size = {0, 0});
+
+  [[nodiscard]] explicit operator bool() const noexcept { return mActivated; }
+
+ private:
+  StyleColor mTextColor;
+  bool mActivated {};
+};
+
 class Menu final {
  public:
   TACTILE_DELETE_COPY(Menu);
@@ -251,12 +269,15 @@ class Modal final {
   bool mOpen {};
 };
 
-class Window final {
-  struct WindowData final {
-    bool was_hovered : 1 {};
-    bool is_hovered  : 1 {};
-  };
+struct WindowData final {
+  bool has_focus   : 1 {};
+  bool was_hovered : 1 {};
+  bool is_hovered  : 1 {};
+  bool is_docked   : 1 {};
+  bool is_open     : 1 {};
+};
 
+class Window final {
   inline static HashMap<const char*, WindowData> window_data;
 
  public:
@@ -280,6 +301,7 @@ class Window final {
   [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
+  StyleColor mTextColor;
   const char* mLabel {};
   bool mOpen {};
 };

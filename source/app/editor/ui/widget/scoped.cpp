@@ -19,9 +19,53 @@
 
 #include "scoped.hpp"
 
+#include "editor/ui/conversions.hpp"
+#include "editor/ui/style/colors.hpp"
+#include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::ui {
+namespace {
+
+inline constexpr ImVec4 white {0xFF, 0xFF, 0xFF, 0xFF};
+inline constexpr ImVec4 black {0x00, 0x00, 0x00, 0xFF};
+
+[[nodiscard]] auto get_text_fg(const ImGuiCol bg) -> ImVec4
+{
+  TACTILE_ASSERT(bg >= 0);
+  TACTILE_ASSERT(bg < ImGuiCol_COUNT);
+  const auto& style = ImGui::GetStyle();
+  return is_dark(to_color(style.Colors[bg])) ? white : black;
+}
+
+[[nodiscard]] auto get_tab_item_text_color(const ImGuiTabItemFlags flags) -> ImVec4
+{
+  return get_text_fg((flags & ImGuiTabItemFlags_SetSelected) ? ImGuiCol_TabActive
+                                                             : ImGuiCol_Tab);
+}
+
+[[nodiscard]] auto get_selectable_text_color(const bool selected) -> ImVec4
+{
+  return get_text_fg(selected ? ImGuiCol_Header : ImGuiCol_FrameBg);
+}
+
+[[nodiscard]] auto get_window_label_text_color(const WindowData& data) -> ImVec4
+{
+  if (data.is_docked) {
+    if (data.has_focus) {
+      return get_text_fg(data.is_open ? ImGuiCol_TabActive : ImGuiCol_Tab);
+    }
+    else {
+      return get_text_fg(data.is_open ? ImGuiCol_TabUnfocusedActive
+                                      : ImGuiCol_TabUnfocused);
+    }
+  }
+  else {
+    return get_text_fg(data.has_focus ? ImGuiCol_TitleBgActive : ImGuiCol_TitleBg);
+  }
+}
+
+}  // namespace
 
 Scope::Scope(const void* ptr)
 {
@@ -172,8 +216,10 @@ TabBar::~TabBar()
 }
 
 TabItem::TabItem(const char* name, bool* open, const ImGuiTabItemFlags flags)
-    : mOpen {ImGui::BeginTabItem(name, open, flags)}
+    : mTextColor {ImGuiCol_Text, get_tab_item_text_color(flags)},
+      mOpen {ImGui::BeginTabItem(name, open, flags)}
 {
+  mTextColor.pop();
 }
 
 TabItem::~TabItem()
@@ -234,6 +280,16 @@ ListBox::~ListBox()
   }
 }
 
+Selectable::Selectable(const char* label,
+                       const bool selected,
+                       const ImGuiSelectableFlags flags,
+                       const ImVec2& size)
+    : mTextColor {ImGuiCol_Text, get_selectable_text_color(selected)},
+      mActivated {ImGui::Selectable(label, selected, flags, size)}
+{
+  mTextColor.pop();
+}
+
 Menu::Menu(const char* name, const bool enabled)
     : mOpen {ImGui::BeginMenu(name, enabled)}
 {
@@ -259,16 +315,22 @@ Modal::~Modal()
 }
 
 Window::Window(const char* label, const ImGuiWindowFlags flags, bool* open)
-    : mLabel {label},
+    : mTextColor {ImGuiCol_Text, get_window_label_text_color(window_data[label])},
+      mLabel {label},
       mOpen {ImGui::Begin(label, open, flags)}
 {
   if (!label) {
     throw TactileError {"Invalid null window label!"};
   }
 
+  mTextColor.pop();
+
   auto& data = window_data[label];
+  data.has_focus = has_focus(ImGuiFocusedFlags_RootAndChildWindows);
   data.was_hovered = data.is_hovered;
   data.is_hovered = is_hovered();
+  data.is_docked = ImGui::IsWindowDocked();
+  data.is_open = mOpen;
 }
 
 Window::~Window()

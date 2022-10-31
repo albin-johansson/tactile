@@ -236,7 +236,7 @@ void SettingsDialog::update_appearance_tab()
         combo.is_open()) {
       const auto show_themes = [this](auto& themes) {
         for (const auto theme: themes) {
-          if (ImGui::Selectable(human_readable_name(theme).data())) {
+          if (Selectable {human_readable_name(theme).data()}) {
             mUiSettings.theme = theme;
             apply_theme(ImGui::GetStyle(), theme);
           }
