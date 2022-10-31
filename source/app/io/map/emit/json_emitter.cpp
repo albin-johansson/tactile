@@ -261,8 +261,8 @@ void emit_object_layer(JSON& json, const ir::LayerData& layer)
 {
   auto json = JSON::array();
 
-  for (const auto& [id, tileData]: tileset.fancy_tiles) {
-    json += emit_fancy_tile(id, tileData);
+  for (const auto& [id, tile_data]: tileset.fancy_tiles) {
+    json += emit_fancy_tile(id, tile_data);
   }
 
   return json;

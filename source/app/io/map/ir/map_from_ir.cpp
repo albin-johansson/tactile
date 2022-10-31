@@ -54,8 +54,8 @@ void restore_context_no_register(Document& document,
   auto& properties = context->ctx().props();
   auto& components = context->ctx().comps();
 
-  for (const auto& [propertyName, propertyValue]: source.properties) {
-    properties.add(propertyName, propertyValue);
+  for (const auto& [property_name, property_value]: source.properties) {
+    properties.add(property_name, property_value);
   }
 
   if (auto index = document.get_component_index()) {
@@ -63,8 +63,8 @@ void restore_context_no_register(Document& document,
       const auto& definition = index->with_name(type);
 
       auto component = definition.instantiate();
-      for (const auto& [attrName, attrValue]: attributes) {
-        component.update(attrName, attrValue);
+      for (const auto& [attr_name, attr_value]: attributes) {
+        component.update(attr_name, attr_value);
       }
 
       components.add(std::move(component));
@@ -201,19 +201,19 @@ void restore_fancy_tile_objects(TilesetDocument& document,
 void restore_fancy_tiles(TilesetDocument& document, const ir::TilesetData& tileset_data)
 {
   auto& tileset = document.view_tileset();
-  for (const auto& [index, tileData]: tileset_data.fancy_tiles) {
+  for (const auto& [index, tile_data]: tileset_data.fancy_tiles) {
     auto tile = tileset.get_tile_ptr(index);
     TACTILE_ASSERT(tile->index() == index);
 
-    if (!tileData.frames.empty()) {
-      restore_tile_animation(*tile, tileData);
+    if (!tile_data.frames.empty()) {
+      restore_tile_animation(*tile, tile_data);
     }
 
-    if (!tileData.objects.empty()) {
-      restore_fancy_tile_objects(document, *tile, tileData);
+    if (!tile_data.objects.empty()) {
+      restore_fancy_tile_objects(document, *tile, tile_data);
     }
 
-    restore_context(document, tile, tileData.context);
+    restore_context(document, tile, tile_data.context);
   }
 }
 

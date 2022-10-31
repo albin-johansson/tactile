@@ -403,8 +403,8 @@ void emit_component_definitions(YAML::Emitter& emitter, const EmitInfo& info)
     if (!attributes.empty()) {
       emitter << YAML::Key << "attributes" << YAML::BeginSeq;
 
-      for (const auto& [attrName, attrValue]: attributes) {
-        emit_component_definition_attribute(emitter, attrName, attrValue);
+      for (const auto& [attr_name, attr_value]: attributes) {
+        emit_component_definition_attribute(emitter, attr_name, attr_value);
       }
 
       emitter << YAML::EndSeq;
