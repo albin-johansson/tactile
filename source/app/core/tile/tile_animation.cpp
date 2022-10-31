@@ -40,7 +40,7 @@ void TileAnimation::reserve_frames(const usize n)
   mFrames.reserve(n);
 }
 
-void TileAnimation::add_frame(const TileIndex tile, const Millis duration)
+void TileAnimation::add_frame(const TileIndex tile, const ms_t duration)
 {
   mFrames.push_back({tile, duration});
 }
@@ -55,7 +55,7 @@ auto TileAnimation::operator[](const usize index) const -> const Frame&
   }
 }
 
-auto TileAnimation::current_frame() const -> const TileAnimation::Frame&
+auto TileAnimation::current_frame() const -> const Frame&
 {
   TACTILE_ASSERT(mIndex < mFrames.size());
   return mFrames.at(mIndex);

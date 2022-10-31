@@ -21,11 +21,12 @@
 
 #include <gtest/gtest.h>
 
+#include "core/type/chrono.hpp"
 #include "misc/panic.hpp"
 
-namespace tactile::test {
+using namespace std::chrono_literals;
 
-using Millis = TileAnimation::Millis;
+namespace tactile::test {
 
 TEST(TileAnimation, Defaults)
 {
@@ -47,12 +48,12 @@ TEST(TileAnimation, AddFrame)
 {
   TileAnimation animation;
 
-  animation.add_frame(42, Millis {14});
+  animation.add_frame(42, 14ms);
   ASSERT_EQ(1, animation.size());
 
   const auto& frame = animation[0];
   ASSERT_EQ(42, frame.tile);
-  ASSERT_EQ(Millis {14}, frame.duration);
+  ASSERT_EQ(14ms, frame.duration);
 
   ASSERT_THROW(animation[1], TactileError);
 }

@@ -19,21 +19,21 @@
 
 #pragma once
 
-#include <chrono>  // steady_clock, duration_cast, milliseconds
+#include <chrono>  // duration_cast
 
 #include <fmt/chrono.h>
 #include <spdlog/spdlog.h>
 
+#include "core/type/chrono.hpp"
 #include "meta/build.hpp"
 
-#define TACTILE_PROFILE_START \
-  const auto tactile_profile_start = std::chrono::steady_clock::now();
+#define TACTILE_PROFILE_START const auto tactile_profile_start = tactile::Clock::now();
 
-#define TACTILE_PROFILE_END(Msg)                                                   \
-  const auto tactile_profile_end = std::chrono::steady_clock::now();               \
-  const auto tactile_profile_diff = tactile_profile_end - tactile_profile_start;   \
-  const auto tactile_profile_ms =                                                  \
-      std::chrono::duration_cast<std::chrono::milliseconds>(tactile_profile_diff); \
+#define TACTILE_PROFILE_END(Msg)                                                 \
+  const auto tactile_profile_end = tactile::Clock::now();                        \
+  const auto tactile_profile_diff = tactile_profile_end - tactile_profile_start; \
+  const auto tactile_profile_ms =                                                \
+      std::chrono::duration_cast<tactile::ms_t>(tactile_profile_diff);           \
   spdlog::debug(Msg " in {}", tactile_profile_ms);
 
 #if TACTILE_DEBUG

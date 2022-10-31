@@ -23,9 +23,9 @@
 
 #include <gtest/gtest.h>
 
-namespace tactile::test {
+using namespace std::chrono_literals;
 
-using Millis = TileAnimation::Millis;
+namespace tactile::test {
 
 TEST(Tile, Defaults)
 {
@@ -62,8 +62,8 @@ TEST(Tile, SetAnimation)
 
   {
     TileAnimation animation;
-    animation.add_frame(7, Millis {42});
-    animation.add_frame(8, Millis {37});
+    animation.add_frame(7, 42ms);
+    animation.add_frame(8, 37ms);
     tile.set_animation(std::move(animation));
   }
 
@@ -73,10 +73,10 @@ TEST(Tile, SetAnimation)
   ASSERT_EQ(2, animation.size());
 
   ASSERT_EQ(7, animation[0].tile);
-  ASSERT_EQ(Millis {42}, animation[0].duration);
+  ASSERT_EQ(42ms, animation[0].duration);
 
   ASSERT_EQ(8, animation[1].tile);
-  ASSERT_EQ(Millis {37}, animation[1].duration);
+  ASSERT_EQ(37ms, animation[1].duration);
 }
 
 }  // namespace tactile::test
