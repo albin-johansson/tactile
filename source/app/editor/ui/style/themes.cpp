@@ -83,7 +83,7 @@ void apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
   set(ImGuiCol_PopupBg, cfg.window);
   set(ImGuiCol_ChildBg, with_alpha(cfg.child, 0.10f));
 
-  set(ImGuiCol_FrameBg, with_alpha(cfg.child, 0.70f));
+  set(ImGuiCol_FrameBg, with_alpha(cfg.accent, 0.25f));
   set(ImGuiCol_FrameBgHovered, with_alpha(cfg.accent, 0.70f));
   set(ImGuiCol_FrameBgActive, with_alpha(cfg.accent, 0.70f));
 
@@ -119,7 +119,7 @@ void apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
 
   set(ImGuiCol_TableHeaderBg, cfg.child);
   set(ImGuiCol_TableRowBg, cfg.window);
-  set(ImGuiCol_TableRowBgAlt, with_alpha(cfg.child, 0.15f));
+  set(ImGuiCol_TableRowBgAlt, with_alpha(cfg.accent, 0.15f));
   set(ImGuiCol_TableBorderStrong, with_alpha(cfg.text, 0.20f));
   set(ImGuiCol_TableBorderLight, with_alpha(cfg.text, 0.10f));
 
