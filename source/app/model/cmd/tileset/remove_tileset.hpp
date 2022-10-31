@@ -25,10 +25,8 @@
 #include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 
-namespace tactile {
-class DocumentModel;
-class TilesetDocument;
-}  // namespace tactile
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetDocument)
 
 namespace tactile::cmd {
 

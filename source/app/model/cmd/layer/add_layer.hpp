@@ -23,12 +23,13 @@
 #include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"
+#include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 
 namespace tactile {
 
-class MapDocument;
-class Layer;
+TACTILE_FWD_DECLARE_CLASS(MapDocument)
+TACTILE_FWD_DECLARE_CLASS(Layer)
 
 namespace cmd {
 

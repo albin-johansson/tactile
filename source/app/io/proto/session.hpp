@@ -19,9 +19,9 @@
 
 #pragma once
 
-namespace tactile {
-class DocumentModel;
-}  // namespace tactile
+#include "core/vocabulary.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 
 namespace tactile::io {
 

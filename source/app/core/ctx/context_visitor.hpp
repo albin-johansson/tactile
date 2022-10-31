@@ -19,15 +19,17 @@
 
 #pragma once
 
+#include "core/vocabulary.hpp"
+
 namespace tactile {
 
-class Map;
-class TileLayer;
-class ObjectLayer;
-class GroupLayer;
-class Object;
-class Tileset;
-class Tile;
+TACTILE_FWD_DECLARE_CLASS(Map)
+TACTILE_FWD_DECLARE_CLASS(TileLayer)
+TACTILE_FWD_DECLARE_CLASS(ObjectLayer)
+TACTILE_FWD_DECLARE_CLASS(GroupLayer)
+TACTILE_FWD_DECLARE_CLASS(Object)
+TACTILE_FWD_DECLARE_CLASS(Tileset)
+TACTILE_FWD_DECLARE_CLASS(Tile)
 
 /// An interface for visiting specific context implementations.
 class ContextVisitor {

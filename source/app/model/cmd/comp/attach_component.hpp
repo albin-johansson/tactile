@@ -21,12 +21,11 @@
 
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"
+#include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 
-namespace tactile {
-class Context;
-class ComponentIndex;
-}  // namespace tactile
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Context)
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, ComponentIndex)
 
 namespace tactile::cmd {
 

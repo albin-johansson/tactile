@@ -23,10 +23,9 @@
 
 #include "core/type/string.hpp"
 #include "core/uuid.hpp"
+#include "core/vocabulary.hpp"
 
-namespace tactile {
-class Component;
-}  // namespace tactile
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Component)
 
 namespace tactile::ui {
 

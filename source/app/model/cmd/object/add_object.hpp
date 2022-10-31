@@ -24,12 +24,11 @@
 #include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"
+#include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 
-namespace tactile {
-class MapDocument;
-class Object;
-}  // namespace tactile
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, MapDocument)
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Object)
 
 namespace tactile::cmd {
 

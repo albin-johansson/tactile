@@ -22,11 +22,10 @@
 #include "core/comp/component_definition.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
+#include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 
-namespace tactile {
-class ComponentIndex;
-}  // namespace tactile
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, ComponentIndex)
 
 namespace tactile::cmd {
 

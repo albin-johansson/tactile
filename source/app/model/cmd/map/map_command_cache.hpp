@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-class Map;
+TACTILE_FWD_DECLARE_CLASS(Map)
 
 class MapCommandCache final {
   friend struct SaveTilesVisitor;
