@@ -22,6 +22,7 @@
 #include <imgui.h>
 
 #include "meta/build.hpp"
+#include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::ui {
@@ -35,18 +36,41 @@ struct ThemeCfg final {
   ImVec4 text {};
 };
 
-[[nodiscard]] auto dark_theme_from_hue(const uint8 hue) -> ThemeCfg
+[[nodiscard]] auto dark_theme_from_hue(const uint16 hue) -> ThemeCfg
 {
+  TACTILE_ASSERT(hue < 360);
+
   ThemeCfg cfg;
 
-  const auto h = static_cast<float>(hue) / 255.0f;
-  cfg.window = ImColor::HSV(h, 0.20f, 0.08f);
+  const auto h = static_cast<float>(hue) / 360.0f;
+  cfg.window = ImColor::HSV(h, 0.20f, 0.05f);
   cfg.child = cfg.window;
 
   cfg.accent = ImColor::HSV(h, 0.70f, 0.60f);
   cfg.accent_active = ImColor::HSV(h, 0.70f, 0.80f);
 
-  cfg.text = ImColor::HSV(h, 0.10f, 1.00f);
+  cfg.text = ImColor::HSV(0, 0, 1.0f);
+
+  return cfg;
+}
+
+[[nodiscard]] auto light_theme_from_hue(const uint16 hue) -> ThemeCfg
+{
+  TACTILE_ASSERT(hue < 360);
+
+  ThemeCfg cfg;
+
+  const auto h = static_cast<float>(hue) / 360.0f;
+  constexpr auto s = static_cast<float>(10) / 100.0f;
+  constexpr auto v = static_cast<float>(100) / 100.0f;
+
+  cfg.window = ImColor::HSV(h, s, v);
+  cfg.child = cfg.window;
+
+  cfg.accent = ImColor::HSV(h, 0.60f, 0.60f);
+  cfg.accent_active = ImColor::HSV(h, 0.60f, 0.80f);
+
+  cfg.text = ImColor::HSV(0, 0, 0);
 
   return cfg;
 }
@@ -185,8 +209,23 @@ auto human_readable_name(const EditorTheme theme) -> StringView
     case EditorTheme::Vanilla:
       return "Vanilla";
 
+    case EditorTheme::Gasoline:
+      return "Gasoline";
+
+    case EditorTheme::Bumblebee:
+      return "Bumblebee";
+
+    case EditorTheme::Lavender:
+      return "Lavender";
+
+    case EditorTheme::Frost:
+      return "Frost";
+
+    case EditorTheme::Rose:
+      return "Rose";
+
     default:
-      throw TactileError("Invalid theme enumerator!");
+      throw TactileError {"Invalid theme enumerator!"};
   }
 }
 
@@ -228,6 +267,8 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
       ImGui::StyleColorsDark(&style);
       break;
 
+    case EditorTheme::Vanilla:
+      [[fallthrough]];
     case EditorTheme::DearLight:
       ImGui::StyleColorsLight(&style);
       break;
@@ -237,31 +278,39 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
       break;
 
     case EditorTheme::Emerald:
-      apply_theme_from_config(style, dark_theme_from_hue(100));
+      apply_theme_from_config(style, dark_theme_from_hue(141));
       break;
 
     case EditorTheme::Diamond:
-      apply_theme_from_config(style, dark_theme_from_hue(120));
+      apply_theme_from_config(style, dark_theme_from_hue(169));
       break;
 
     case EditorTheme::Sapphire:
-      apply_theme_from_config(style, dark_theme_from_hue(150));
+      apply_theme_from_config(style, dark_theme_from_hue(211));
       break;
 
     case EditorTheme::Joker:
-      apply_theme_from_config(style, dark_theme_from_hue(190));
+      apply_theme_from_config(style, dark_theme_from_hue(268));
       break;
 
     case EditorTheme::Amethyst:
-      apply_theme_from_config(style, dark_theme_from_hue(225));
+      apply_theme_from_config(style, dark_theme_from_hue(318));
       break;
 
     case EditorTheme::Raspberry:
-      apply_theme_from_config(style, dark_theme_from_hue(245));
+      apply_theme_from_config(style, dark_theme_from_hue(346));
       break;
 
     case EditorTheme::Amber:
-      apply_theme_from_config(style, dark_theme_from_hue(16));
+      apply_theme_from_config(style, dark_theme_from_hue(23));
+      break;
+
+    case EditorTheme::Gasoline:
+      apply_theme_from_config(style, dark_theme_from_hue(82));
+      break;
+
+    case EditorTheme::Bumblebee:
+      apply_theme_from_config(style, dark_theme_from_hue(56));
       break;
 
     case EditorTheme::Nocturnal:
@@ -278,7 +327,7 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
                               {.accent = {0.4f, 0.4f, 0.4f, 1.0f},
                                .accent_active = {0.5f, 0.5f, 0.5f, 1.0f},
                                .window = {0.0f, 0.0f, 0.0f, 1.0f},
-                               .child = {0.1f, 0.1f, 0.1f, 1.0f},
+                               .child = {0.0f, 0.0f, 0.0f, 1.0f},
                                .text = {1.0f, 1.0f, 1.0f, 1.0f}});
       break;
 
@@ -288,20 +337,21 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
                                   .accent = {0.20f, 0.20f, 0.20f, 1.0f},
                                   .accent_active = {0.25f, 0.25f, 0.25f, 1},
                                   .window = {0.00f, 0.00f, 0.00f, 1},
-                                  .child = {0.08f, 0.08f, 0.08f, 1},
+                                  .child = {0.00f, 0.00f, 0.00f, 1},
                                   .text = {1.0f, 1.0f, 1.0f, 1},
                               });
       break;
 
-    case EditorTheme::Vanilla:
-      apply_theme_from_config(style,
-                              ThemeCfg {
-                                  .accent = {0.84f, 0.82f, 0.67f, 1},
-                                  .accent_active = {0.94f, 0.92f, 0.77f, 1},
-                                  .window = {0.90f, 0.88f, 0.73f, 1},
-                                  .child = {0.80f, 0.78f, 0.64f, 1},
-                                  .text = {0.10f, 0.10f, 0.10f, 1},
-                              });
+    case EditorTheme::Lavender:
+      apply_theme_from_config(style, light_theme_from_hue(275));
+      break;
+
+    case EditorTheme::Frost:
+      apply_theme_from_config(style, light_theme_from_hue(180));
+      break;
+
+    case EditorTheme::Rose:
+      apply_theme_from_config(style, light_theme_from_hue(0));
       break;
   }
 }
