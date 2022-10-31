@@ -19,6 +19,7 @@ enum Lang {
 
 // Remember to keep these values synced with tactile::io::EditorTheme!
 enum Theme {
+  reserved 9;  // THEME_DIAMOND
   reserved 13; // THEME_VANILLA
 
   THEME_DEAR_DARK = 0;
@@ -30,7 +31,6 @@ enum Theme {
   THEME_AMBER = 6;
   THEME_NOCTURNAL = 7;
   THEME_ASH = 8;
-  THEME_DIAMOND = 9;
   THEME_JOKER = 10;
   THEME_RASPBERRY = 11;
   THEME_STEALTH = 12;

@@ -267,8 +267,6 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
       ImGui::StyleColorsDark(&style);
       break;
 
-    case EditorTheme::Vanilla:
-      [[fallthrough]];
     case EditorTheme::DearLight:
       ImGui::StyleColorsLight(&style);
       break;
@@ -279,10 +277,6 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
 
     case EditorTheme::Emerald:
       apply_theme_from_config(style, dark_theme_from_hue(141));
-      break;
-
-    case EditorTheme::Diamond:
-      apply_theme_from_config(style, dark_theme_from_hue(169));
       break;
 
     case EditorTheme::Sapphire:
@@ -313,13 +307,10 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
       apply_theme_from_config(style, dark_theme_from_hue(56));
       break;
 
+    case EditorTheme::Diamond:
+      [[fallthrough]];
     case EditorTheme::Nocturnal:
-      apply_theme_from_config(style,
-                              {.accent = {0.0f, 0.5f, 0.5f, 1.0f},
-                               .accent_active = {0.0f, 0.6f, 0.6f, 1.0f},
-                               .window = {0.04f, 0.04f, 0.04f, 1.0f},
-                               .child = {0.1f, 0.1f, 0.1f, 1.0f},
-                               .text = {1.0f, 1.0f, 1.0f, 1.0f}});
+      apply_theme_from_config(style, dark_theme_from_hue(180));
       break;
 
     case EditorTheme::Ash:
@@ -346,6 +337,8 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
       apply_theme_from_config(style, light_theme_from_hue(275));
       break;
 
+    case EditorTheme::Vanilla:
+      [[fallthrough]];
     case EditorTheme::Frost:
       apply_theme_from_config(style, light_theme_from_hue(180));
       break;

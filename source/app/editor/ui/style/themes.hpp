@@ -38,7 +38,7 @@ enum class EditorTheme {
   Amber = 6,
   Nocturnal = 7,
   Ash = 8,
-  Diamond = 9,
+  Diamond = 9,  // Unused
   Joker = 10,
   Raspberry = 11,
   Stealth = 12,
@@ -57,14 +57,13 @@ inline constexpr Array<EditorTheme, 4> light_themes [[maybe_unused]] = {
     EditorTheme::Rose,
 };
 
-inline constexpr Array<EditorTheme, 14> dark_themes [[maybe_unused]] = {
+inline constexpr Array<EditorTheme, 13> dark_themes [[maybe_unused]] = {
     EditorTheme::DearDark,
     EditorTheme::Ruby,
     EditorTheme::Sapphire,
     EditorTheme::Emerald,
     EditorTheme::Amethyst,
     EditorTheme::Amber,
-    EditorTheme::Diamond,
     EditorTheme::Joker,
     EditorTheme::Raspberry,
     EditorTheme::Nocturnal,
