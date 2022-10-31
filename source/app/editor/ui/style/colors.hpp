@@ -20,7 +20,6 @@
 #pragma once
 
 #include <centurion/color.hpp>
-#include <imgui.h>
 
 #include "core/type/array.hpp"
 #include "core/vocabulary.hpp"
@@ -39,18 +38,20 @@ namespace tactile::ui {
   return {r, g, b, a};
 }
 
-[[nodiscard]] constexpr auto color_to_u32(const cen::color& color) -> uint32
-{
-  return IM_COL32(color.red(), color.green(), color.blue(), color.alpha());
-}
+/// Computes the relative luminance of a color.
+///
+/// \details
+/// This function is useful when determining appropriate text color for a background
+/// of a certain color.
+///
+/// \see
+/// https://en.wikipedia.org/wiki/Relative_luminance
+///
+/// \param color the color to compute the luminance for.
+/// \return the color luminance, in the interval [0, 1].
+[[nodiscard]] auto luminance(const cen::color& color) -> float;
 
-[[nodiscard]] inline auto darker(const cen::color& color) -> cen::color
-{
-  constexpr float factor = 0.8f;
-  return cen::color::from_norm(factor * color.norm_red(),
-                               factor * color.norm_green(),
-                               factor * color.norm_blue(),
-                               1.0f);
-}
+/// Provides a heuristic indication for whether a color is dark or bright.
+[[nodiscard]] auto is_dark(const cen::color& color) -> bool;
 
 }  // namespace tactile::ui

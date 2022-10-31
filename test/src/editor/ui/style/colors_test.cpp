@@ -33,4 +33,18 @@ TEST(ColorUtils, ColorToArray)
   ASSERT_EQ(color.norm_alpha(), array.at(3));
 }
 
+TEST(ColorUtils, Luminance)
+{
+  ASSERT_EQ(1.0f, ui::luminance(cen::colors::white));
+  ASSERT_EQ(0.0f, ui::luminance(cen::colors::black));
+
+  // Based on https://planetcalc.com/7778/
+  ASSERT_FLOAT_EQ(0.4457104f, ui::luminance(cen::colors::lime_green));
+  ASSERT_FLOAT_EQ(0.0186408f, ui::luminance(cen::colors::dark_blue));
+  ASSERT_FLOAT_EQ(0.3465843f, ui::luminance(cen::colors::hot_pink));
+
+  ASSERT_FALSE(ui::is_dark(cen::colors::white));
+  ASSERT_TRUE(ui::is_dark(cen::colors::black));
+}
+
 }  // namespace tactile::test
