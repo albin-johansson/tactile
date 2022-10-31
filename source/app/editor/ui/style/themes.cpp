@@ -35,18 +35,18 @@ struct ThemeCfg final {
   ImVec4 text {};
 };
 
-[[nodiscard]] auto theme_from_hue(const float hue) -> ThemeCfg
+[[nodiscard]] auto dark_theme_from_hue(const uint8 hue) -> ThemeCfg
 {
   ThemeCfg cfg;
 
-  const auto h = hue / 255.0f;
-  cfg.window = ImColor::HSV(h, 0.20f, 0.08f, 1.00f);
-  cfg.child = ImColor::HSV(h, 0.60f, 0.40f, 1.00f);
+  const auto h = static_cast<float>(hue) / 255.0f;
+  cfg.window = ImColor::HSV(h, 0.20f, 0.08f);
+  cfg.child = cfg.window;
 
-  cfg.accent = ImColor::HSV(h, 0.70f, 0.60f, 1.00f);
-  cfg.accent_active = ImColor::HSV(h, 0.70f, 0.80f, 1.00f);
+  cfg.accent = ImColor::HSV(h, 0.70f, 0.60f);
+  cfg.accent_active = ImColor::HSV(h, 0.70f, 0.80f);
 
-  cfg.text = ImColor::HSV(h, 0.10f, 1.00f, 1.00f);
+  cfg.text = ImColor::HSV(h, 0.10f, 1.00f);
 
   return cfg;
 }
@@ -233,35 +233,35 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
       break;
 
     case EditorTheme::Ruby:
-      apply_theme_from_config(style, theme_from_hue(0));
+      apply_theme_from_config(style, dark_theme_from_hue(0));
       break;
 
     case EditorTheme::Emerald:
-      apply_theme_from_config(style, theme_from_hue(100));
+      apply_theme_from_config(style, dark_theme_from_hue(100));
       break;
 
     case EditorTheme::Diamond:
-      apply_theme_from_config(style, theme_from_hue(120));
+      apply_theme_from_config(style, dark_theme_from_hue(120));
       break;
 
     case EditorTheme::Sapphire:
-      apply_theme_from_config(style, theme_from_hue(150));
+      apply_theme_from_config(style, dark_theme_from_hue(150));
       break;
 
     case EditorTheme::Joker:
-      apply_theme_from_config(style, theme_from_hue(190));
+      apply_theme_from_config(style, dark_theme_from_hue(190));
       break;
 
     case EditorTheme::Amethyst:
-      apply_theme_from_config(style, theme_from_hue(225));
+      apply_theme_from_config(style, dark_theme_from_hue(225));
       break;
 
     case EditorTheme::Raspberry:
-      apply_theme_from_config(style, theme_from_hue(245));
+      apply_theme_from_config(style, dark_theme_from_hue(245));
       break;
 
     case EditorTheme::Amber:
-      apply_theme_from_config(style, theme_from_hue(272));
+      apply_theme_from_config(style, dark_theme_from_hue(16));
       break;
 
     case EditorTheme::Nocturnal:
