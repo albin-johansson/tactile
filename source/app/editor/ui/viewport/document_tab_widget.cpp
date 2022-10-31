@@ -34,16 +34,16 @@ namespace tactile::ui {
 void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (TabBar bar {"##DocumentTabs", ImGuiTabBarFlags_Reorderable}; bar.is_open()) {
-    model.each([&](const UUID& documentId) {
-      const Scope scope {static_cast<int>(hash(documentId))};
+    model.each([&](const UUID& document_id) {
+      const Scope scope {static_cast<int>(hash(document_id))};
 
-      const auto isActive = model.active_document_id() == documentId;
+      const auto is_active = model.active_document_id() == document_id;
 
-      const auto& document = model.view_document(documentId);
+      const auto& document = model.view_document(document_id);
       const auto& name = document.get_name();
 
       ImGuiTabItemFlags flags = 0;
-      if (isActive) {
+      if (is_active) {
         flags |= ImGuiTabItemFlags_SetSelected;
 
         if (!document.get_history().is_clean()) {
@@ -53,21 +53,21 @@ void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatch
 
       bool opened = true;
       if (TabItem item {name.c_str(), &opened, flags}; item.is_open()) {
-        if (isActive) {
-          if (model.is_map(documentId)) {
-            show_map_viewport(model, model.view_map(documentId), dispatcher);
+        if (is_active) {
+          if (model.is_map(document_id)) {
+            show_map_viewport(model, model.view_map(document_id), dispatcher);
           }
-          if (model.is_tileset(documentId)) {
-            show_tileset_viewport(model.view_tileset(documentId), dispatcher);
+          if (model.is_tileset(document_id)) {
+            show_tileset_viewport(model.view_tileset(document_id), dispatcher);
           }
         }
       }
 
       if (!opened) {
-        dispatcher.enqueue<CloseDocumentEvent>(documentId);
+        dispatcher.enqueue<CloseDocumentEvent>(document_id);
       }
       else if (ImGui::IsItemActivated()) {
-        dispatcher.enqueue<SelectDocumentEvent>(documentId);
+        dispatcher.enqueue<SelectDocumentEvent>(document_id);
       }
     });
   }
