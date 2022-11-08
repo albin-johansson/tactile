@@ -22,6 +22,7 @@
 #include <algorithm>  // any_of
 #include <utility>    // move
 
+#include "core/tile/tileset_bundle.hpp"
 #include "core/util/assoc.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"

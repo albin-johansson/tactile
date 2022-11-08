@@ -24,6 +24,7 @@
 #include <imgui_internal.h>
 
 #include "core/layer/object_layer.hpp"
+#include "core/tile/tileset_bundle.hpp"
 #include "editor/app_context.hpp"
 #include "editor/handler/command_event_handler.hpp"
 #include "editor/handler/component_event_handler.hpp"

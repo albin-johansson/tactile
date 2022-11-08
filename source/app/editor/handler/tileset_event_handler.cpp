@@ -24,6 +24,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <spdlog/spdlog.h>
 
+#include "core/tile/tileset_bundle.hpp"
 #include "editor/app_context.hpp"
 #include "editor/ui/menu/map_menu.hpp"
 #include "io/load_texture.hpp"

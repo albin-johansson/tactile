@@ -23,6 +23,7 @@
 
 #include "core/ctx/context_manager.hpp"
 #include "core/layer/layer_type.hpp"
+#include "core/layer/tile_format.hpp"
 #include "core/map.hpp"
 #include "core/type/math.hpp"
 #include "core/type/maybe.hpp"

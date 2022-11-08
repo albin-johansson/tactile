@@ -23,6 +23,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/tile/tileset_bundle.hpp"
 #include "core/viewport.hpp"
 #include "editor/ui/dock/tileset/tileset_tabs.hpp"
 #include "editor/ui/style/alignment.hpp"

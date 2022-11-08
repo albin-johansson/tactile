@@ -19,7 +19,9 @@
 
 #include "tool_preview_renderer.hpp"
 
+#include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
+#include "core/tile/tileset_bundle.hpp"
 #include "core/util/functional.hpp"
 #include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"

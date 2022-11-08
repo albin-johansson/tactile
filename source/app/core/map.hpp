@@ -20,9 +20,7 @@
 #pragma once
 
 #include "core/ctx/context.hpp"
-#include "core/layer/group_layer.hpp"
-#include "core/layer/tile_format.hpp"
-#include "core/tile/tileset_bundle.hpp"
+#include "core/layer/layer_type.hpp"
 #include "core/tile_pos.hpp"
 #include "core/type/fn.hpp"
 #include "core/type/hash_map.hpp"
@@ -34,20 +32,22 @@
 
 namespace tactile {
 
+TACTILE_FWD_DECLARE_CLASS(Layer)
+TACTILE_FWD_DECLARE_CLASS(GroupLayer)
+TACTILE_FWD_DECLARE_CLASS(TilesetBundle)
+TACTILE_FWD_DECLARE_CLASS(TileFormat)
+
 /// Represents a tile map.
 ///
-/// <p>
 /// Maps a built from multiple layers stacked on top of each other. An invisible group
 /// layer (the "root" layer) manages the layers in every map. This root layer is always
 /// present, even in empty maps. However, this root layer is never included in save files,
 /// it is merely an implementation detail to simplify the map code.
 ///
-/// <p>
 /// Each map has a collection of associated tilesets, providing the tiles to be used in
 /// tile layers. Tilesets may be shared with other maps in the case of external tilesets.
 /// See the Tileset class for more information.
 ///
-/// <p>
 /// Every map uses its own tile format specification, which can be used to control aspects
 /// such as whether tile layer data is compressed. By default, maps do not use any
 /// compression along with plain text encoding.
@@ -59,8 +59,13 @@ class Map final : public Context {
   /// Maps previous invalid tile identifiers in a collection of layers.
   using FixTilesResult = HashMap<UUID, HashMap<TilePos, TileID>>;
 
+  TACTILE_DELETE_COPY(Map);
+  TACTILE_DEFAULT_MOVE(Map);
+
   /// Creates an empty map.
   Map();
+
+  ~Map() noexcept;
 
   void accept(ContextVisitor& visitor) const override;
 
@@ -154,19 +159,8 @@ class Map final : public Context {
   [[nodiscard]] auto uuid() const -> const UUID& override;
 
  private:
-  ContextInfo mContext;          ///< Map context information.
-  usize mRowCount {5};           ///< Amount of rows.
-  usize mColCount {5};           ///< Amount of columns.
-  Int2 mTileSize {32, 32};       ///< Logical size of all tiles.
-  GroupLayer mRootLayer;         ///< Invisible root layer.
-  Maybe<UUID> mActiveLayer;      ///< The selected layer.
-  TilesetBundle mTilesets;       ///< The associated tilesets.
-  int32 mNextObjectId {1};       ///< Next available object identifier.
-  int32 mNextLayerId {1};        ///< Next available layer identifier.
-  int32 mTileLayerSuffix {1};    ///< Next tile layer suffix for naming purposes.
-  int32 mObjectLayerSuffix {1};  ///< Next object layer suffix for naming purposes.
-  int32 mGroupLayerSuffix {1};   ///< Next group layer suffix for naming purposes.
-  TileFormat mTileFormat;        ///< The tile format used by the map in save files.
+  struct MapData;
+  Unique<MapData> mData;
 
   void each_tile_layer(const TileLayerVisitorFunc& func);
 };

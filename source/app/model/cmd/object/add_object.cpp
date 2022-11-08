@@ -21,6 +21,7 @@
 
 #include <utility>  // move
 
+#include "core/layer/group_layer.hpp"
 #include "core/layer/object.hpp"
 #include "core/layer/object_layer.hpp"
 #include "lang/language.hpp"

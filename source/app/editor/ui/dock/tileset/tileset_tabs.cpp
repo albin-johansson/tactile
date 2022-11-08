@@ -22,6 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/tile/tileset_bundle.hpp"
 #include "editor/ui/dock/tileset/tileset_view.hpp"
 #include "editor/ui/style/icons.hpp"
 #include "editor/ui/widget/scoped.hpp"

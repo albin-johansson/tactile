@@ -22,6 +22,7 @@
 #include <gtest/gtest.h>
 
 #include "core/tile/tileset.hpp"
+#include "core/tile/tileset_bundle.hpp"
 #include "io/load_texture.hpp"
 #include "misc/panic.hpp"
 #include "model/document/map_document.hpp"

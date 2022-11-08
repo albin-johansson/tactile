@@ -22,6 +22,7 @@
 #include <gtest/gtest.h>
 
 #include "core/helpers/map_builder.hpp"
+#include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "misc/panic.hpp"
 

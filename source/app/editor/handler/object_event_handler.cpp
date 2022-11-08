@@ -21,6 +21,7 @@
 
 #include <entt/signal/dispatcher.hpp>
 
+#include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "editor/app_context.hpp"
 #include "editor/ui/viewport/map_viewport.hpp"

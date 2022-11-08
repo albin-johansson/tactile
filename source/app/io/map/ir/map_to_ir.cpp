@@ -20,10 +20,12 @@
 #include "map_to_ir.hpp"
 
 #include "core/comp/component_index.hpp"
+#include "core/layer/group_layer.hpp"
 #include "core/layer/object.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/tile/tile.hpp"
+#include "core/tile/tileset_bundle.hpp"
 #include "meta/profile.hpp"
 #include "misc/assert.hpp"
 #include "model/document/map_document.hpp"

@@ -21,6 +21,7 @@
 
 #include <utility>  // move
 
+#include "core/layer/tile_format.hpp"
 #include "core/map.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

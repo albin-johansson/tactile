@@ -24,6 +24,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "core/tile/tileset_bundle.hpp"
+#include "core/tile/tileset_ref.hpp"
 #include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"
 #include "editor/ui/render/render.hpp"

@@ -22,6 +22,7 @@
 #include <centurion/mouse.hpp>
 #include <entt/signal/dispatcher.hpp>
 
+#include "core/tile/tileset_bundle.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
 #include "model/event/tool_events.hpp"

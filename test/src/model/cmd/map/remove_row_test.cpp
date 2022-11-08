@@ -23,6 +23,7 @@
 
 #include "core/helpers/map_builder.hpp"
 #include "core/helpers/map_test_helpers.hpp"
+#include "core/layer/group_layer.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::test {

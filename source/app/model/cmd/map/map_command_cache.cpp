@@ -19,6 +19,7 @@
 
 #include "map_command_cache.hpp"
 
+#include "core/layer/group_layer.hpp"
 #include "core/layer/layer_visitor.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/map.hpp"

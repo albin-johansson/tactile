@@ -22,9 +22,11 @@
 #include <utility>  // move
 
 #include "core/comp/component_index.hpp"
+#include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/tile/tileset.hpp"
+#include "core/tile/tileset_bundle.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "core/util/functional.hpp"
 #include "io/load_texture.hpp"

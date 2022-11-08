@@ -19,6 +19,7 @@
 
 #include "duplicate_layer.hpp"
 
+#include "core/layer/group_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
