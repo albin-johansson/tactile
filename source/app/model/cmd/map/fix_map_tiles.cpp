@@ -39,8 +39,8 @@ FixMapTiles::FixMapTiles(Shared<Map> map)
 void FixMapTiles::undo()
 {
   auto& root = mMap->invisible_root();
-  for (const auto& [layerId, previous]: mResult) {
-    auto& layer = root.tile_layer(layerId);
+  for (const auto& [layer_id, previous]: mResult) {
+    auto& layer = root.tile_layer(layer_id);
 
     for (const auto& [pos, tile]: previous) {
       layer.set_tile(pos, tile);

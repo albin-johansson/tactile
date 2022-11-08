@@ -32,15 +32,15 @@ struct SaveTilesVisitor final : ConstLayerVisitor {
 
   void visit(const TileLayer& layer) override
   {
-    auto& tileCache = self->mCache[layer.uuid()];
+    auto& tile_cache = self->mCache[layer.uuid()];
 
-    const auto endRow = end.row();
-    const auto endCol = end.col();
-    for (auto row = begin.row(); row < endRow; ++row) {
-      for (auto col = begin.col(); col < endCol; ++col) {
+    const auto end_row = end.row();
+    const auto end_col = end.col();
+    for (auto row = begin.row(); row < end_row; ++row) {
+      for (auto col = begin.col(); col < end_col; ++col) {
         const TilePos position {row, col};
         const auto tile = layer.tile_at(position);
-        tileCache.try_emplace(position, tile);
+        tile_cache.try_emplace(position, tile);
       }
     }
   }
@@ -54,11 +54,11 @@ void MapCommandCache::clear() noexcept
 void MapCommandCache::restore_tiles(Map& map)
 {
   auto& root = map.invisible_root();
-  for (const auto& [layerId, tileCache]: mCache) {
-    auto& layer = root.tile_layer(layerId);
+  for (const auto& [layer_id, tile_cache]: mCache) {
+    auto& layer = root.tile_layer(layer_id);
 
-    for (const auto& [position, tileId]: tileCache) {
-      layer.set_tile(position, tileId);
+    for (const auto& [position, tile_id]: tile_cache) {
+      layer.set_tile(position, tile_id);
     }
   }
 }
@@ -74,10 +74,10 @@ void MapCommandCache::save_tiles(const Map& map, const TilePos& begin, const Til
 
 void MapCommandCache::merge_with(const MapCommandCache& other)
 {
-  for (const auto& [otherLayer, otherTileCache]: other.mCache) {
-    auto& tileCache = mCache[otherLayer];
-    for (const auto& [otherPos, otherTile]: otherTileCache) {
-      tileCache.try_emplace(otherPos, otherTile);
+  for (const auto& [other_layer, other_tile_cache]: other.mCache) {
+    auto& tile_cache = mCache[other_layer];
+    for (const auto& [other_pos, other_tile]: other_tile_cache) {
+      tile_cache.try_emplace(other_pos, other_tile);
     }
   }
 }
