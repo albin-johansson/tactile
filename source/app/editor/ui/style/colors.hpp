@@ -27,6 +27,10 @@
 
 namespace tactile::ui {
 
+/// Updates the cache of color data associated with the current theme.
+/// This is used to limit relatively expensive color luminance computations.
+void update_dynamic_color_cache();
+
 /// Converts a color into an array of normalized color components.
 /// The array values are stored in the order red/green/blue/alpha.
 [[nodiscard]] constexpr auto color_to_array(const cen::color& color) noexcept
@@ -64,6 +68,11 @@ namespace tactile::ui {
 /// \param color the color to compute the luminance for.
 /// \return the color luminance, in the interval [0, 1].
 [[nodiscard]] auto luminance(const cen::color& color) -> float;
+
+/// Indicates whether a style color is dark.
+/// Note, this function references an internal color cache, which must be updated
+/// with the update_dynamic_color_cache function.
+[[nodiscard]] auto is_dark(ImGuiCol color) -> bool;
 
 /// Provides a heuristic indication for whether a color is dark or bright.
 [[nodiscard]] auto is_dark(const cen::color& color) -> bool;

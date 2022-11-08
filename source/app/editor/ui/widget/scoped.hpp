@@ -224,19 +224,19 @@ class ListBox final {
 
 class Selectable final {
  public:
+  Selectable() = delete;
   TACTILE_DELETE_COPY(Selectable);
   TACTILE_DELETE_MOVE(Selectable);
 
-  explicit Selectable(const char* label,
-                      bool selected = false,
-                      ImGuiSelectableFlags flags = 0,
-                      const ImVec2& size = {0, 0});
+  static auto ListItem(const char* label,
+                       bool selected = false,
+                       ImGuiSelectableFlags flags = 0,
+                       const ImVec2& size = {0, 0}) -> bool;
 
-  [[nodiscard]] explicit operator bool() const noexcept { return mActivated; }
-
- private:
-  StyleColor mTextColor;
-  bool mActivated {};
+  static auto Property(const char* label,
+                       bool selected = false,
+                       ImGuiSelectableFlags flags = 0,
+                       const ImVec2& size = {0, 0}) -> bool;
 };
 
 class Menu final {
@@ -313,20 +313,14 @@ class TreeNode final {
 
   explicit TreeNode(const char* id, ImGuiTreeNodeFlags flags = 0);
 
-  template <typename... Args>
-  TreeNode(const char* id,
-           const ImGuiTreeNodeFlags flags,
-           const char* fmt,
-           Args&&... args)
-      : mOpen {ImGui::TreeNodeEx(id, flags, fmt, std::forward<Args>(args)...)}
-  {
-  }
+  TreeNode(const char* id, ImGuiTreeNodeFlags flags, const char* label);
 
   ~TreeNode();
 
   [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
+  StyleColor mTextColor;
   bool mOpen {};
 };
 

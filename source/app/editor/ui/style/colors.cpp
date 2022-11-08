@@ -20,6 +20,7 @@
 #include "colors.hpp"
 
 #include <algorithm>  // find, min, max
+#include <array>      // array
 #include <cmath>      // pow
 
 #include "editor/ui/conversions.hpp"
@@ -40,7 +41,20 @@ namespace {
   }
 }
 
+inline std::array<bool, ImGuiCol_COUNT> current_colors;
+
 }  // namespace
+
+void update_dynamic_color_cache()
+{
+  const auto& style = ImGui::GetStyle();
+
+  usize index = 0;
+  for (const auto& color: style.Colors) {
+    current_colors.at(index) = is_dark(to_color(color));
+    ++index;
+  }
+}
 
 auto make_brighter(const ImVec4& color, const float exp) -> ImVec4
 {
@@ -66,6 +80,11 @@ auto luminance(const cen::color& color) -> float
   const auto g_lin = to_linear(color.norm_green());
   const auto b_lin = to_linear(color.norm_blue());
   return (0.2126f * r_lin) + (0.7152f * g_lin) + (0.0722f * b_lin);
+}
+
+auto is_dark(const ImGuiCol color) -> bool
+{
+  return current_colors.at(static_cast<usize>(color));
 }
 
 auto is_dark(const cen::color& color) -> bool

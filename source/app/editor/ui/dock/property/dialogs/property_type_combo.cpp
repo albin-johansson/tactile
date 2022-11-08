@@ -74,7 +74,7 @@ void property_type_combo_impl(AttributeType& out, Maybe<AttributeType> previous_
       Disable disable_if {previous_type == type};
 
       const auto selected = current_name == name;
-      if (Selectable {name.data(), selected}) {
+      if (Selectable::Property(name.data(), selected)) {
         out = type;
       }
 

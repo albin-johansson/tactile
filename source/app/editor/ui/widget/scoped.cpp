@@ -32,10 +32,7 @@ inline constexpr ImVec4 black {0x00, 0x00, 0x00, 0xFF};
 
 [[nodiscard]] auto get_text_fg(const ImGuiCol bg) -> ImVec4
 {
-  TACTILE_ASSERT(bg >= 0);
-  TACTILE_ASSERT(bg < ImGuiCol_COUNT);
-  const auto& style = ImGui::GetStyle();
-  return is_dark(to_color(style.Colors[bg])) ? white : black;
+  return is_dark(bg) ? white : black;
 }
 
 [[nodiscard]] auto get_tab_item_text_color(const ImGuiTabItemFlags flags) -> ImVec4
@@ -44,9 +41,14 @@ inline constexpr ImVec4 black {0x00, 0x00, 0x00, 0xFF};
                                                              : ImGuiCol_Tab);
 }
 
-[[nodiscard]] auto get_selectable_text_color(const bool selected) -> ImVec4
+[[nodiscard]] auto get_selectable_list_item_text_color(const bool selected) -> ImVec4
 {
-  return get_text_fg(selected ? ImGuiCol_Header : ImGuiCol_FrameBg);
+  return get_text_fg(selected ? ImGuiCol_HeaderActive : ImGuiCol_FrameBg);
+}
+
+[[nodiscard]] auto get_selectable_property_text_color(const bool selected) -> ImVec4
+{
+  return get_text_fg(selected ? ImGuiCol_ChildBg : ImGuiCol_WindowBg);
 }
 
 [[nodiscard]] auto get_window_label_text_color(const WindowData& data) -> ImVec4
@@ -280,14 +282,30 @@ ListBox::~ListBox()
   }
 }
 
-Selectable::Selectable(const char* label,
-                       const bool selected,
-                       const ImGuiSelectableFlags flags,
-                       const ImVec2& size)
-    : mTextColor {ImGuiCol_Text, get_selectable_text_color(selected)},
-      mActivated {ImGui::Selectable(label, selected, flags, size)}
+auto Selectable::ListItem(const char* label,
+                          const bool selected,
+                          const ImGuiSelectableFlags flags,
+                          const ImVec2& size) -> bool
 {
-  mTextColor.pop();
+  StyleColor text_color {ImGuiCol_Text, get_selectable_list_item_text_color(selected)};
+
+  const auto activated = ImGui::Selectable(label, selected, flags, size);
+  text_color.pop();
+
+  return activated;
+}
+
+auto Selectable::Property(const char* label,
+                          const bool selected,
+                          const ImGuiSelectableFlags flags,
+                          const ImVec2& size) -> bool
+{
+  StyleColor text_color {ImGuiCol_Text, get_selectable_property_text_color(selected)};
+
+  const auto activated = ImGui::Selectable(label, selected, flags, size);
+  text_color.pop();
+
+  return activated;
 }
 
 Menu::Menu(const char* name, const bool enabled)
@@ -369,8 +387,22 @@ auto Window::is_hovered() const -> bool
 }
 
 TreeNode::TreeNode(const char* id, const ImGuiTreeNodeFlags flags)
-    : mOpen {ImGui::TreeNodeEx(id, flags)}
+    : mTextColor {ImGuiCol_Text,
+                  get_selectable_list_item_text_color(flags &
+                                                      ImGuiTreeNodeFlags_Selected)},
+      mOpen {ImGui::TreeNodeEx(id, flags)}
 {
+  mTextColor.pop();
+}
+
+TreeNode::TreeNode(const char* id, ImGuiTreeNodeFlags flags, const char* label)
+
+    : mTextColor {ImGuiCol_Text,
+                  get_selectable_list_item_text_color(flags &
+                                                      ImGuiTreeNodeFlags_Selected)},
+      mOpen {ImGui::TreeNodeEx(id, flags, "%s", label)}
+{
+  mTextColor.pop();
 }
 
 TreeNode::~TreeNode()
