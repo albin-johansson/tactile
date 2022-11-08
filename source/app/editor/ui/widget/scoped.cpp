@@ -41,6 +41,11 @@ inline constexpr ImVec4 black {0x00, 0x00, 0x00, 0xFF};
                                                              : ImGuiCol_Tab);
 }
 
+[[nodiscard]] auto get_tree_node_text_color() -> ImVec4
+{
+  return get_text_fg(ImGuiCol_WindowBg);
+}
+
 [[nodiscard]] auto get_selectable_list_item_text_color(const bool selected) -> ImVec4
 {
   return get_text_fg(selected ? ImGuiCol_HeaderActive : ImGuiCol_FrameBg);
@@ -387,9 +392,7 @@ auto Window::is_hovered() const -> bool
 }
 
 TreeNode::TreeNode(const char* id, const ImGuiTreeNodeFlags flags)
-    : mTextColor {ImGuiCol_Text,
-                  get_selectable_list_item_text_color(flags &
-                                                      ImGuiTreeNodeFlags_Selected)},
+    : mTextColor {ImGuiCol_Text, get_tree_node_text_color()},
       mOpen {ImGui::TreeNodeEx(id, flags)}
 {
   mTextColor.pop();
@@ -397,9 +400,7 @@ TreeNode::TreeNode(const char* id, const ImGuiTreeNodeFlags flags)
 
 TreeNode::TreeNode(const char* id, ImGuiTreeNodeFlags flags, const char* label)
 
-    : mTextColor {ImGuiCol_Text,
-                  get_selectable_list_item_text_color(flags &
-                                                      ImGuiTreeNodeFlags_Selected)},
+    : mTextColor {ImGuiCol_Text, get_tree_node_text_color()},
       mOpen {ImGui::TreeNodeEx(id, flags, "%s", label)}
 {
   mTextColor.pop();

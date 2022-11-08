@@ -103,8 +103,7 @@ void component_view(const UUID& context_id,
                     entt::dispatcher& dispatcher)
 {
   const Scope scope {name.c_str()};
-
-  if (ImGui::CollapsingHeader(name.c_str(), header_flags)) {
+  if (TreeNode header {name.c_str(), header_flags}; header.is_open()) {
     ImGui::SameLine();
     if (update_trailing_button()) {
       ImGui::OpenPopup("##ComponentPopup");
