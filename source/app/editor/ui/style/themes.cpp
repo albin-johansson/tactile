@@ -21,6 +21,7 @@
 
 #include <imgui.h>
 
+#include "editor/ui/style/colors.hpp"
 #include "meta/build.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
@@ -46,8 +47,8 @@ struct ThemeCfg final {
   cfg.window = ImColor::HSV(h, 0.20f, 0.05f);
   cfg.child = cfg.window;
 
-  cfg.accent = ImColor::HSV(h, 0.70f, 0.60f);
-  cfg.accent_active = ImColor::HSV(h, 0.70f, 0.80f);
+  cfg.accent = ImColor::HSV(h, 0.60f, 0.30f);
+  cfg.accent_active = ImColor::HSV(h, 0.60f, 0.70f);
 
   cfg.text = ImColor::HSV(0, 0, 1.0f);
 
@@ -75,11 +76,6 @@ struct ThemeCfg final {
   return cfg;
 }
 
-[[nodiscard]] auto with_alpha(const ImVec4& color, const float alpha) -> ImVec4
-{
-  return {color.x, color.y, color.z, alpha};
-}
-
 void apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
 {
   const auto set = [&style](const ImGuiCol_ index, const ImVec4& color) {
@@ -88,28 +84,28 @@ void apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
 
   const ImVec4 transparent {0, 0, 0, 0};
 
-  const auto component = with_alpha(cfg.accent, 0.60f);
+  const auto component = cfg.accent;
   const auto component_active = cfg.accent_active;
-  const auto component_hovered = with_alpha(component_active, 0.70f);
+  const auto component_hovered = make_darker(component_active);
 
   set(ImGuiCol_Text, cfg.text);
-  set(ImGuiCol_TextDisabled, with_alpha(cfg.text, 0.60f));
+  set(ImGuiCol_TextDisabled, {150, 150, 150, 0xFF});
   set(ImGuiCol_TextSelectedBg, with_alpha(cfg.accent, 0.40f));
 
-  set(ImGuiCol_Border, with_alpha(cfg.accent, 0.80f));
+  set(ImGuiCol_Border, make_darker(cfg.accent));
   set(ImGuiCol_BorderShadow, transparent);
 
-  set(ImGuiCol_Separator, with_alpha(component, 0.20f));
+  set(ImGuiCol_Separator, make_darker(component, 3));
   set(ImGuiCol_SeparatorHovered, component);
   set(ImGuiCol_SeparatorActive, component);
 
   set(ImGuiCol_WindowBg, cfg.window);
   set(ImGuiCol_PopupBg, cfg.window);
-  set(ImGuiCol_ChildBg, with_alpha(cfg.child, 0.10f));
+  set(ImGuiCol_ChildBg, cfg.child);
 
-  set(ImGuiCol_FrameBg, with_alpha(cfg.accent, 0.25f));
-  set(ImGuiCol_FrameBgHovered, with_alpha(cfg.accent, 0.70f));
-  set(ImGuiCol_FrameBgActive, with_alpha(cfg.accent, 0.70f));
+  set(ImGuiCol_FrameBg, component);
+  set(ImGuiCol_FrameBgHovered, component_hovered);
+  set(ImGuiCol_FrameBgActive, component_active);
 
   set(ImGuiCol_TitleBg, cfg.child);
   set(ImGuiCol_TitleBgActive, cfg.child);
@@ -119,14 +115,14 @@ void apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
   set(ImGuiCol_ButtonHovered, component_hovered);
   set(ImGuiCol_ButtonActive, component_active);
 
-  set(ImGuiCol_MenuBarBg, with_alpha(cfg.child, 0.57f));
+  set(ImGuiCol_MenuBarBg, make_darker(cfg.child));
 
   set(ImGuiCol_ScrollbarBg, cfg.child);
   set(ImGuiCol_ScrollbarGrab, component);
   set(ImGuiCol_ScrollbarGrabHovered, component_hovered);
   set(ImGuiCol_ScrollbarGrabActive, component_active);
 
-  set(ImGuiCol_CheckMark, cfg.accent);
+  set(ImGuiCol_CheckMark, component_active);
 
   set(ImGuiCol_SliderGrab, component);
   set(ImGuiCol_SliderGrabActive, component_active);
@@ -136,16 +132,17 @@ void apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
   set(ImGuiCol_HeaderActive, component_active);
 
   set(ImGuiCol_TabActive, component_active);
-  set(ImGuiCol_TabUnfocusedActive, with_alpha(component_active, 0.80f));
-  set(ImGuiCol_Tab, with_alpha(component, 0.25f));
-  set(ImGuiCol_TabUnfocused, with_alpha(component, 0.25f));
+  set(ImGuiCol_TabUnfocusedActive, make_darker(component_active));
+  set(ImGuiCol_Tab, make_darker(component));
+  set(ImGuiCol_TabUnfocused, make_darker(component, 2));
   set(ImGuiCol_TabHovered, component_hovered);
 
   set(ImGuiCol_TableHeaderBg, cfg.child);
   set(ImGuiCol_TableRowBg, cfg.window);
-  set(ImGuiCol_TableRowBgAlt, with_alpha(cfg.accent, 0.15f));
-  set(ImGuiCol_TableBorderStrong, with_alpha(cfg.text, 0.20f));
-  set(ImGuiCol_TableBorderLight, with_alpha(cfg.text, 0.10f));
+  set(ImGuiCol_TableRowBgAlt, make_darker(cfg.window, 1));
+
+  set(ImGuiCol_TableBorderStrong, cfg.accent);
+  set(ImGuiCol_TableBorderLight, make_brighter(cfg.accent));
 
   set(ImGuiCol_DockingPreview, with_alpha(cfg.accent, 0.80f));
   set(ImGuiCol_DockingEmptyBg, with_alpha(cfg.accent, 0.80f));

@@ -19,8 +19,11 @@
 
 #include "colors.hpp"
 
-#include <cmath>  // pow
+#include <algorithm>  // find, min, max
+#include <cmath>      // pow
 
+#include "editor/ui/conversions.hpp"
+#include "editor/ui/style/themes.hpp"
 #include "meta/build.hpp"
 
 namespace tactile::ui {
@@ -39,6 +42,24 @@ namespace {
 
 }  // namespace
 
+auto make_brighter(const ImVec4& color, const float exp) -> ImVec4
+{
+  const auto factor = std::pow(1.20f, exp);
+  return {std::min(1.0f, color.x * factor),
+          std::min(1.0f, color.y * factor),
+          std::min(1.0f, color.z * factor),
+          1.0f};
+}
+
+auto make_darker(const ImVec4& color, const float exp) -> ImVec4
+{
+  const auto factor = std::pow(0.80f, exp);
+  return {std::max(0.0f, color.x * factor),
+          std::max(0.0f, color.y * factor),
+          std::max(0.0f, color.z * factor),
+          1.0f};
+}
+
 auto luminance(const cen::color& color) -> float
 {
   const auto r_lin = to_linear(color.norm_red());
@@ -49,7 +70,7 @@ auto luminance(const cen::color& color) -> float
 
 auto is_dark(const cen::color& color) -> bool
 {
-  return luminance(color) < 0.40f;
+  return luminance(color) < 0.3f;
 }
 
 }  // namespace tactile::ui

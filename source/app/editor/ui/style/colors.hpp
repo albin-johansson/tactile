@@ -20,6 +20,7 @@
 #pragma once
 
 #include <centurion/color.hpp>
+#include <imgui.h>
 
 #include "core/type/array.hpp"
 #include "core/vocabulary.hpp"
@@ -37,6 +38,19 @@ namespace tactile::ui {
   const auto a = color.norm_alpha();
   return {r, g, b, a};
 }
+
+/// Copies a given color, using a different alpha component.
+[[nodiscard]] constexpr auto with_alpha(const ImVec4& color, const float alpha) noexcept
+    -> ImVec4
+{
+  return {color.x, color.y, color.z, alpha};
+}
+
+/// Makes a given color brighter increasing all component values.
+[[nodiscard]] auto make_brighter(const ImVec4& color, float exp = 1.0) -> ImVec4;
+
+/// Makes a given color darker by decreasing all component values.
+[[nodiscard]] auto make_darker(const ImVec4& color, float exp = 1.0) -> ImVec4;
 
 /// Computes the relative luminance of a color.
 ///
