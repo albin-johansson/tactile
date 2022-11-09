@@ -27,6 +27,7 @@
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/style/themes.hpp"
 #include "lang/language.hpp"
+#include "meta/build.hpp"
 
 namespace tactile::io {
 
@@ -63,6 +64,7 @@ inline constexpr bool def_restore_last_session = true;
 inline constexpr bool def_show_viewport_overlay_fps = true;
 inline constexpr bool def_highlight_active_layer = false;
 inline constexpr bool def_use_default_font = true;
+inline constexpr bool def_use_native_menus = on_macos;
 
 /// Contains all persistent settings.
 /// Note, the boolean members cannot be bitfields because we take the address of them.
@@ -91,6 +93,7 @@ struct PreferenceState final {
   bool show_viewport_overlay_fps {def_show_viewport_overlay_fps};
   bool highlight_active_layer {def_highlight_active_layer};
   bool use_default_font {def_use_default_font};
+  bool use_native_menus {def_use_native_menus};
 };
 
 /// Loads any existing persistent preferences, or assumes the default ones.

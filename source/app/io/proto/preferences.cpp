@@ -124,6 +124,10 @@ void to_proto(const cen::color& color, proto::Color* out)
       result.fold_tile_data = cfg.fold_tile_data();
     }
 
+    if (cfg.has_use_native_menus()) {
+      result.use_native_menus = cfg.use_native_menus();
+    }
+
     if (cfg.has_show_tileset_dock()) {
       result.show_tileset_dock = cfg.show_tileset_dock();
     }
@@ -208,6 +212,7 @@ void save_preferences()
   cfg.set_embed_tilesets(current_settings.embed_tilesets);
   cfg.set_indent_output(current_settings.indent_output);
   cfg.set_fold_tile_data(current_settings.fold_tile_data);
+  cfg.set_use_default_font(current_settings.use_native_menus);
 
   cfg.set_show_tileset_dock(current_settings.show_tileset_dock);
   cfg.set_show_layer_dock(current_settings.show_layer_dock);
@@ -254,6 +259,7 @@ void print_preferences()
   spdlog::debug("Embed tilesets... {}", current_settings.embed_tilesets);
   spdlog::debug("Indent output... {}", current_settings.indent_output);
   spdlog::debug("Fold tile data... {}", current_settings.fold_tile_data);
+  spdlog::debug("Use native menus... {}", current_settings.use_native_menus);
 
   spdlog::debug("Show grid... {}", current_settings.show_grid);
   spdlog::debug("Highlight active layer... {}", current_settings.highlight_active_layer);
