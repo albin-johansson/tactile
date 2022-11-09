@@ -125,45 +125,7 @@ add_dependencies(${TACTILE_EXE} ${TACTILE_LIB})
 tactile_set_compile_options(${TACTILE_LIB})
 tactile_set_compile_options(${TACTILE_EXE})
 
-target_precompile_headers(${TACTILE_LIB} PRIVATE
-                          <algorithm>
-                          <array>
-                          <charconv>
-                          <chrono>
-                          <concepts>
-                          <cstddef>
-                          <cstdint>
-                          <cstring>
-                          <cstdlib>
-                          <ctime>
-                          <cmath>
-                          <deque>
-                          <exception>
-                          <filesystem>
-                          <fstream>
-                          <functional>
-                          <iterator>
-                          <limits>
-                          <locale>
-                          <map>
-                          <memory>
-                          <numbers>
-                          <optional>
-                          <ostream>
-                          <queue>
-                          <random>
-                          <span>
-                          <sstream>
-                          <string>
-                          <string_view>
-                          <system_error>
-                          <type_traits>
-                          <unordered_map>
-                          <utility>
-                          <variant>
-                          <vector>
-                          )
-
+target_precompile_headers(${TACTILE_LIB} PRIVATE ${TACTILE_STD_HEADERS})
 target_precompile_headers(${TACTILE_EXE} REUSE_FROM ${TACTILE_LIB})
 
 target_link_libraries(${TACTILE_EXE}
