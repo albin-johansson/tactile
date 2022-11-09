@@ -37,7 +37,7 @@
 namespace tactile::ui {
 namespace {
 
-void _update_widgets_menu(const DocumentModel& model)
+void update_widgets_menu(const DocumentModel& model)
 {
   const auto& lang = get_current_language();
 
@@ -58,7 +58,7 @@ void _update_widgets_menu(const DocumentModel& model)
     }
 
     {
-      Disable disableIf {!model.is_map_active()};
+      Disable disable_if {!model.is_map_active()};
       if (ImGui::MenuItem(lang.window.layer_dock.c_str(),
                           nullptr,
                           prefs.show_layer_dock)) {
@@ -93,35 +93,35 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
   if (Menu menu {lang.menu.view.c_str()}; menu.is_open()) {
     auto& prefs = io::get_preferences();
     const auto* document = model.active_document();
-    const auto hasActiveDocument = model.has_active_document();
+    const auto has_active_document = model.has_active_document();
 
-    _update_widgets_menu(model);
+    update_widgets_menu(model);
 
     ImGui::Separator();
 
-    if (Menu themeMenu {lang.action.quick_theme.c_str()}; themeMenu.is_open()) {
-      auto themeItem = [&](const EditorTheme theme) {
-        const auto isCurrent = prefs.theme == theme;
-        if (ImGui::MenuItem(human_readable_name(theme).data(), nullptr, isCurrent)) {
+    if (Menu theme_menu {lang.action.quick_theme.c_str()}; theme_menu.is_open()) {
+      auto theme_item = [&](const EditorTheme theme) {
+        const auto is_current = prefs.theme == theme;
+        if (ImGui::MenuItem(human_readable_name(theme).data(), nullptr, is_current)) {
           prefs.theme = theme;
           apply_theme(ImGui::GetStyle(), theme);
         }
       };
 
       for (const auto theme: light_themes) {
-        themeItem(theme);
+        theme_item(theme);
       }
 
       ImGui::Separator();
 
       for (const auto theme: dark_themes) {
-        themeItem(theme);
+        theme_item(theme);
       }
     }
 
     ImGui::Separator();
 
-    if (Menu langMenu {lang.action.quick_language.c_str()}; langMenu.is_open()) {
+    if (Menu lang_menu {lang.action.quick_language.c_str()}; lang_menu.is_open()) {
       if (ImGui::MenuItem("English (US)")) {
         prefs.language = Lang::EN;
       }
@@ -140,7 +140,7 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(lang.action.center_viewport.c_str(),
                         "Shift+Space",
                         false,
-                        hasActiveDocument)) {
+                        has_active_document)) {
       dispatcher.enqueue<CenterViewportEvent>();
     }
 
@@ -155,7 +155,7 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(lang.action.increase_zoom.c_str(),
                         TACTILE_PRIMARY_MOD "+Plus",
                         false,
-                        hasActiveDocument)) {
+                        has_active_document)) {
       dispatcher.enqueue<IncreaseZoomEvent>();
     }
 
@@ -169,7 +169,7 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(lang.action.reset_zoom.c_str(),
                         nullptr,
                         false,
-                        hasActiveDocument)) {
+                        has_active_document)) {
       dispatcher.enqueue<ResetZoomEvent>();
     }
 
@@ -201,28 +201,28 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(lang.action.pan_up.c_str(),
                         TACTILE_PRIMARY_MOD "+Shift+Up",
                         false,
-                        hasActiveDocument)) {
+                        has_active_document)) {
       dispatcher.enqueue<PanUpEvent>();
     }
 
     if (ImGui::MenuItem(lang.action.pan_down.c_str(),
                         TACTILE_PRIMARY_MOD "+Shift+Down",
                         false,
-                        hasActiveDocument)) {
+                        has_active_document)) {
       dispatcher.enqueue<PanDownEvent>();
     }
 
     if (ImGui::MenuItem(lang.action.pan_right.c_str(),
                         TACTILE_PRIMARY_MOD "+Shift+Right",
                         false,
-                        hasActiveDocument)) {
+                        has_active_document)) {
       dispatcher.enqueue<PanRightEvent>();
     }
 
     if (ImGui::MenuItem(lang.action.pan_left.c_str(),
                         TACTILE_PRIMARY_MOD "+Shift+Left",
                         false,
-                        hasActiveDocument)) {
+                        has_active_document)) {
       dispatcher.enqueue<PanLeftEvent>();
     }
 
@@ -235,7 +235,10 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.toggle_ui.c_str(), "Tab", false, hasActiveDocument)) {
+    if (ImGui::MenuItem(lang.action.toggle_ui.c_str(),
+                        "Tab",
+                        false,
+                        has_active_document)) {
       dispatcher.enqueue<ToggleUiEvent>();
     }
   }
