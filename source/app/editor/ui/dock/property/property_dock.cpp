@@ -170,11 +170,11 @@ void show_native_map_properties(const Map& map, entt::dispatcher& dispatcher)
                              ? lang.misc.plain_encoding.c_str()
                              : "Base64";
   if (Combo combo {"##TileEncoding", encoding}; combo.is_open()) {
-    if (ImGui::Selectable(lang.misc.plain_encoding.c_str())) {
+    if (Selectable::Property(lang.misc.plain_encoding.c_str())) {
       dispatcher.enqueue<SetTileFormatEncodingEvent>(TileEncoding::Plain);
     }
 
-    if (ImGui::Selectable("Base64")) {
+    if (Selectable::Property("Base64")) {
       dispatcher.enqueue<SetTileFormatEncodingEvent>(TileEncoding::Base64);
     }
   }
@@ -194,15 +194,15 @@ void show_native_map_properties(const Map& map, entt::dispatcher& dispatcher)
     }
 
     if (Combo combo {"##TileCompression", compression.c_str()}; combo.is_open()) {
-      if (ImGui::Selectable(lang.misc.none.c_str())) {
+      if (Selectable::Property(lang.misc.none.c_str())) {
         dispatcher.enqueue<SetTileFormatCompressionEvent>(TileCompression::None);
       }
 
-      if (ImGui::Selectable("Zlib")) {
+      if (Selectable::Property("Zlib")) {
         dispatcher.enqueue<SetTileFormatCompressionEvent>(TileCompression::Zlib);
       }
 
-      if (ImGui::Selectable("Zstd")) {
+      if (Selectable::Property("Zstd")) {
         dispatcher.enqueue<SetTileFormatCompressionEvent>(TileCompression::Zstd);
       }
     }
@@ -346,7 +346,7 @@ void show_custom_properties(const Context& context,
     }
 
     ImGui::AlignTextToFramePadding();
-    ImGui::Selectable(name.c_str());
+    Selectable::Property(name.c_str());
 
     if (!is_item_context_open) {
       is_item_context_open =

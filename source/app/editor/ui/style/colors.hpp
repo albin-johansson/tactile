@@ -27,6 +27,10 @@
 
 namespace tactile::ui {
 
+/// Updates the cache of color data associated with the current theme.
+/// This is used to limit relatively expensive color luminance computations.
+void update_dynamic_color_cache();
+
 /// Converts a color into an array of normalized color components.
 /// The array values are stored in the order red/green/blue/alpha.
 [[nodiscard]] constexpr auto color_to_array(const cen::color& color) noexcept
@@ -39,18 +43,38 @@ namespace tactile::ui {
   return {r, g, b, a};
 }
 
-[[nodiscard]] constexpr auto color_to_u32(const cen::color& color) -> uint32
+/// Copies a given color, using a different alpha component.
+[[nodiscard]] constexpr auto with_alpha(const ImVec4& color, const float alpha) noexcept
+    -> ImVec4
 {
-  return IM_COL32(color.red(), color.green(), color.blue(), color.alpha());
+  return {color.x, color.y, color.z, alpha};
 }
 
-[[nodiscard]] inline auto darker(const cen::color& color) -> cen::color
-{
-  constexpr float factor = 0.8f;
-  return cen::color::from_norm(factor * color.norm_red(),
-                               factor * color.norm_green(),
-                               factor * color.norm_blue(),
-                               1.0f);
-}
+/// Makes a given color brighter increasing all component values.
+[[nodiscard]] auto make_brighter(const ImVec4& color, float exp = 1.0) -> ImVec4;
+
+/// Makes a given color darker by decreasing all component values.
+[[nodiscard]] auto make_darker(const ImVec4& color, float exp = 1.0) -> ImVec4;
+
+/// Computes the relative luminance of a color.
+///
+/// \details
+/// This function is useful when determining appropriate text color for a background
+/// of a certain color.
+///
+/// \see
+/// https://en.wikipedia.org/wiki/Relative_luminance
+///
+/// \param color the color to compute the luminance for.
+/// \return the color luminance, in the interval [0, 1].
+[[nodiscard]] auto luminance(const cen::color& color) -> float;
+
+/// Indicates whether a style color is dark.
+/// Note, this function references an internal color cache, which must be updated
+/// with the update_dynamic_color_cache function.
+[[nodiscard]] auto is_dark(ImGuiCol color) -> bool;
+
+/// Provides a heuristic indication for whether a color is dark or bright.
+[[nodiscard]] auto is_dark(const cen::color& color) -> bool;
 
 }  // namespace tactile::ui

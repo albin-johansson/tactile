@@ -37,6 +37,7 @@ TEST(Preferences, Defaults)
   ASSERT_EQ(def_preferred_format, state.preferred_format);
   ASSERT_EQ(def_theme, state.theme);
   ASSERT_EQ(def_viewport_bg, state.viewport_background);
+  ASSERT_EQ(def_grid_color, state.grid_color);
   ASSERT_EQ(def_command_capacity, state.command_capacity);
   ASSERT_EQ(def_preferred_tile_size, state.preferred_tile_size);
   ASSERT_EQ(def_font_size, state.font_size);
@@ -69,9 +70,14 @@ TEST(Preferences, EnsureThemeEnumsMatch)
   ASSERT_EQ(proto::THEME_AMBER, std::to_underlying(EditorTheme::Amber));
   ASSERT_EQ(proto::THEME_NOCTURNAL, std::to_underlying(EditorTheme::Nocturnal));
   ASSERT_EQ(proto::THEME_ASH, std::to_underlying(EditorTheme::Ash));
-  ASSERT_EQ(proto::THEME_DIAMOND, std::to_underlying(EditorTheme::Diamond));
   ASSERT_EQ(proto::THEME_JOKER, std::to_underlying(EditorTheme::Joker));
   ASSERT_EQ(proto::THEME_RASPBERRY, std::to_underlying(EditorTheme::Raspberry));
+  ASSERT_EQ(proto::THEME_STEALTH, std::to_underlying(EditorTheme::Stealth));
+  ASSERT_EQ(proto::THEME_GASOLINE, std::to_underlying(EditorTheme::Gasoline));
+  ASSERT_EQ(proto::THEME_BUMBLEBEE, std::to_underlying(EditorTheme::Bumblebee));
+  ASSERT_EQ(proto::THEME_LAVENDER, std::to_underlying(EditorTheme::Lavender));
+  ASSERT_EQ(proto::THEME_FROST, std::to_underlying(EditorTheme::Frost));
+  ASSERT_EQ(proto::THEME_ROSE, std::to_underlying(EditorTheme::Rose));
 }
 
 TEST(Preferences, EnsureOverlayPosEnumsMatch)

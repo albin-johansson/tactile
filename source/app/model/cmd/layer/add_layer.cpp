@@ -19,6 +19,7 @@
 
 #include "add_layer.hpp"
 
+#include "core/layer/group_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
@@ -51,22 +52,22 @@ void AddLayer::redo()
     map.add_layer(mLayer, mLayer->parent());
   }
   else {
-    const auto activeLayerId = map.is_active_layer(LayerType::GroupLayer)
-                                   ? map.active_layer_id()  //
-                                   : nothing;
+    const auto active_layer_id = map.is_active_layer(LayerType::GroupLayer)
+                                     ? map.active_layer_id()  //
+                                     : nothing;
 
     Maybe<UUID> id;
     switch (mLayerType) {
       case LayerType::TileLayer: {
-        id = map.add_tile_layer(activeLayerId);
+        id = map.add_tile_layer(active_layer_id);
         break;
       }
       case LayerType::ObjectLayer: {
-        id = map.add_object_layer(activeLayerId);
+        id = map.add_object_layer(active_layer_id);
         break;
       }
       case LayerType::GroupLayer: {
-        id = map.add_group_layer(activeLayerId);
+        id = map.add_group_layer(active_layer_id);
         break;
       }
       default:

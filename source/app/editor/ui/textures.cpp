@@ -21,12 +21,14 @@
 
 #include <cstdint>  // uintptr_t
 
+#include "core/util/bit.hpp"
+
 namespace tactile::ui {
 
 auto to_texture_id(const uint texture) noexcept -> ImTextureID
 {
   const auto value = static_cast<std::uintptr_t>(texture);
-  return reinterpret_cast<ImTextureID>(value);  // NOLINT
+  return bitcast<ImTextureID>(value);
 }
 
 }  // namespace tactile::ui

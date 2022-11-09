@@ -19,12 +19,10 @@
 
 #pragma once
 
+#include <algorithm>    // min
 #include <sstream>      // stringstream
 #include <string_view>  // string_view
 
-#include <EASTL/algorithm.h>
-#include <EASTL/string.h>
-#include <EASTL/string_view.h>
 #include <boost/uuid/uuid_io.hpp>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
@@ -32,31 +30,12 @@
 #include "core/type/array.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
-#include "core/util/str.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "meta/build.hpp"
 #include "misc/stacktrace.hpp"
 
 namespace fmt {
-
-template <>
-struct formatter<eastl::string_view> : formatter<std::string_view> {
-  auto format(eastl::string_view str, auto& ctx) const
-  {
-    const auto view = tactile::to_std_view(str);
-    return formatter<std::string_view>::format(view, ctx);
-  }
-};
-
-template <>
-struct formatter<eastl::string> : formatter<std::string_view> {
-  auto format(const eastl::string& str, auto& ctx) const
-  {
-    const auto view = tactile::to_std_view(str);
-    return formatter<std::string_view>::format(view, ctx);
-  }
-};
 
 template <>
 struct formatter<tactile::Path> : formatter<std::string_view> {
@@ -103,12 +82,10 @@ class FmtString final {
   template <typename... Args>
   explicit FmtString(StringView fmt, const Args&... args)
   {
-    const auto result = fmt::format_to_n(mBuffer.begin(),
-                                         Capacity,
-                                         fmt::runtime(to_std_view(fmt)),
-                                         args...);
+    const auto result =
+        fmt::format_to_n(mBuffer.begin(), Capacity, fmt::runtime(fmt), args...);
     *result.out = '\0';  // Ensure null-terminator
-    mSize = (eastl::min)(result.size, Capacity);
+    mSize = std::min(result.size, Capacity);
   }
 
   [[nodiscard]] auto data() const noexcept -> const char* { return mBuffer.data(); }
@@ -126,16 +103,5 @@ class FmtString final {
   Array<char, Capacity + 1> mBuffer;  // NOLINT
   usize mSize {};
 };
-
-[[nodiscard]] auto format_str(StringView fmt, const auto&... args) -> String
-{
-  const auto real_fmt = fmt::runtime(to_std_view(fmt));
-
-  String out;
-  out.reserve(fmt::formatted_size(real_fmt, args...));
-
-  fmt::format_to(std::back_inserter(out), real_fmt, args...);
-  return out;
-}
 
 }  // namespace tactile

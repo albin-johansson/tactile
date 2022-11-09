@@ -22,6 +22,8 @@
 #include <gtest/gtest.h>
 
 #include "core/tile/tileset.hpp"
+#include "core/tile/tileset_bundle.hpp"
+#include "io/load_texture.hpp"
 #include "misc/panic.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
@@ -37,9 +39,7 @@ namespace {
 [[nodiscard]] auto make_tileset() -> Shared<TilesetDocument>
 {
   return std::make_shared<TilesetDocument>(TilesetInfo {
-      .texture_path = "foo.png",
-      .texture_id = 1,
-      .texture_size = {1024, 1024},
+      .texture = io::load_texture("resources/terrain.png"),
       .tile_size = {32, 32},
   });
 }

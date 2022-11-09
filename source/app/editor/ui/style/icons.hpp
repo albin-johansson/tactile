@@ -24,7 +24,7 @@
 #include "core/layer/layer_type.hpp"
 #include "core/layer/object_type.hpp"
 #include "core/vocabulary.hpp"
-#include "io/textures.hpp"
+#include "io/load_texture.hpp"
 
 #define TAC_ICON_UNDO ICON_FA_ROTATE_LEFT
 #define TAC_ICON_REDO ICON_FA_ROTATE_RIGHT
@@ -98,6 +98,8 @@ namespace tactile::ui {
 
 /// Loads icons to be used in the UI.
 void load_icons();
+
+void unload_icons() noexcept;
 
 [[nodiscard]] auto get_icon(LayerType type) -> const char*;
 [[nodiscard]] auto get_icon(ObjectType type) -> const char*;

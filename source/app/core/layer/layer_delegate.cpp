@@ -19,13 +19,13 @@
 
 #include "layer_delegate.hpp"
 
-#include <EASTL/algorithm.h>
+#include <algorithm> // clamp
 
 namespace tactile {
 
 void LayerDelegate::set_opacity(const float opacity)
 {
-  mOpacity = eastl::clamp(opacity, 0.0f, 1.0f);
+  mOpacity = std::clamp(opacity, 0.0f, 1.0f);
 }
 
 void LayerDelegate::set_visible(const bool visible)

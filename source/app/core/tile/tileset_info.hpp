@@ -19,18 +19,18 @@
 
 #pragma once
 
+#include "core/texture.hpp"
 #include "core/type/math.hpp"
 #include "core/type/path.hpp"
+#include "core/type/ptr.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
 
 /// Provides information necessary to construct tilesets.
 struct TilesetInfo final {
-  Path texture_path;     /// Path to associated texture.
-  uint texture_id {};    /// The associated OpenGL texture identifier.
-  Int2 texture_size {};  /// The size of the texture.
-  Int2 tile_size {};     /// Logical tile size.
+  Shared<Texture> texture;  /// The associated texture.
+  Int2 tile_size {};        /// Logical tile size.
 };
 
 }  // namespace tactile

@@ -165,6 +165,7 @@ class TabItem final {
   [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
+  StyleColor mTextColor;
   bool mOpen {};
 };
 
@@ -221,6 +222,23 @@ class ListBox final {
   bool mOpen {};
 };
 
+class Selectable final {
+ public:
+  Selectable() = delete;
+  TACTILE_DELETE_COPY(Selectable);
+  TACTILE_DELETE_MOVE(Selectable);
+
+  static auto ListItem(const char* label,
+                       bool selected = false,
+                       ImGuiSelectableFlags flags = 0,
+                       const ImVec2& size = {0, 0}) -> bool;
+
+  static auto Property(const char* label,
+                       bool selected = false,
+                       ImGuiSelectableFlags flags = 0,
+                       const ImVec2& size = {0, 0}) -> bool;
+};
+
 class Menu final {
  public:
   TACTILE_DELETE_COPY(Menu);
@@ -251,12 +269,15 @@ class Modal final {
   bool mOpen {};
 };
 
-class Window final {
-  struct WindowData final {
-    bool was_hovered : 1 {};
-    bool is_hovered  : 1 {};
-  };
+struct WindowData final {
+  bool has_focus   : 1 {};
+  bool was_hovered : 1 {};
+  bool is_hovered  : 1 {};
+  bool is_docked   : 1 {};
+  bool is_open     : 1 {};
+};
 
+class Window final {
   inline static HashMap<const char*, WindowData> window_data;
 
  public:
@@ -280,6 +301,7 @@ class Window final {
   [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
+  StyleColor mTextColor;
   const char* mLabel {};
   bool mOpen {};
 };
@@ -291,20 +313,14 @@ class TreeNode final {
 
   explicit TreeNode(const char* id, ImGuiTreeNodeFlags flags = 0);
 
-  template <typename... Args>
-  TreeNode(const char* id,
-           const ImGuiTreeNodeFlags flags,
-           const char* fmt,
-           Args&&... args)
-      : mOpen {ImGui::TreeNodeEx(id, flags, fmt, std::forward<Args>(args)...)}
-  {
-  }
+  TreeNode(const char* id, ImGuiTreeNodeFlags flags, const char* label);
 
   ~TreeNode();
 
   [[nodiscard]] auto is_open() const noexcept -> bool { return mOpen; }
 
  private:
+  StyleColor mTextColor;
   bool mOpen {};
 };
 

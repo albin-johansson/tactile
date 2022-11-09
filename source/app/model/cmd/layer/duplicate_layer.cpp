@@ -19,6 +19,7 @@
 
 #include "duplicate_layer.hpp"
 
+#include "core/layer/group_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"
@@ -47,15 +48,14 @@ void DuplicateLayer::undo()
 void DuplicateLayer::redo()
 {
   auto& map = mDocument->get_map();
-  auto& root = map.invisible_root();
 
   if (mNewLayer) {
     map.add_layer(mNewLayer, mNewLayer->parent());
-    root.set_index(mNewLayer->uuid(), mNewIndex.value());
+    map.invisible_root().set_index(mNewLayer->uuid(), mNewIndex.value());
   }
   else {
     mNewLayer = map.duplicate_layer(mLayerId);
-    mNewIndex = root.local_index(mNewLayer->uuid());
+    mNewIndex = map.invisible_root().local_index(mNewLayer->uuid());
   }
 
   mDocument->get_contexts().add_context(mNewLayer);

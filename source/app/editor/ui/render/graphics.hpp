@@ -25,145 +25,102 @@
 
 #include "core/region.hpp"
 #include "core/vocabulary.hpp"
+#include "editor/ui/render/render.hpp"
+#include "editor/ui/render/render_info.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Tileset)
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Texture)
 
 namespace tactile::ui {
 
-struct RenderInfo;
-
-/// Provides a common simplified rendering API.
+/// Represents a graphics context associated with a canvas.
 class Graphics final {
  public:
   explicit Graphics(const RenderInfo& info);
 
-  void push_clip();
+  /// Enables clipping for the visible canvas area.
+  void push_canvas_clip() const;
 
-  void pop_clip();
+  /// Disables clipping.
+  void pop_clip() const;
 
-  void clear(uint32 color = IM_COL32_BLACK);
+  void clear(uint32 color = IM_COL32_BLACK) const;
 
-  void draw_rect(const Float2& pos,
-                 const Float2& size,
-                 uint32 color,
-                 float thickness = 1.0f);
-
-  void draw_ellipse(const Float2& center,
-                    const Float2& radius,
-                    uint32 color,
-                    float thickness = 1.0f);
-
-  void draw_rect(const ImVec2& position,
-                 const ImVec2& size,
-                 uint32 color,
-                 float thickness = 1.0f);
-
-  void fill_rect(const ImVec2& position, const ImVec2& size, uint32 color);
-
-  void draw_translated_rect(const ImVec2& position,
-                            const ImVec2& size,
-                            uint32 color,
-                            float thickness = 1.0f);
-
-  void fill_translated_rect(const ImVec2& position, const ImVec2& size, uint32 color);
-
-  void draw_rect_with_shadow(const ImVec2& position,
-                             const ImVec2& size,
-                             uint32 color,
-                             float thickness = 1.0f);
-
-  void draw_translated_rect_with_shadow(const ImVec2& position,
-                                        const ImVec2& size,
-                                        uint32 color,
-                                        float thickness = 1.0f);
-
-  void draw_circle_with_shadow(const ImVec2& center,
-                               float radius,
-                               uint32 color,
-                               float thickness = 1.0f);
-
-  void draw_translated_circle_with_shadow(const ImVec2& center,
-                                          float radius,
-                                          uint32 color,
-                                          float thickness = 1.0f);
-
-  void draw_ellipse_with_shadow(const ImVec2& center,
-                                const ImVec2& radius,
-                                uint32 color,
-                                float thickness = 1.0f);
-
-  void draw_translated_ellipse_with_shadow(const ImVec2& center,
-                                           const ImVec2& radius,
-                                           uint32 color,
-                                           float thickness = 1.0f);
-
-  void render_image(uint texture,
-                    const Float2& pos,
-                    const Float2& size,
-                    const Float2& uv_min,
-                    const Float2& uv_max,
-                    uint8 opacity);
-
-  void render_image(uint texture, const ImVec2& position, const ImVec2& size);
-
-  void render_image(uint texture,
-                    const ImVec4& source,
-                    const ImVec2& position,
-                    const ImVec2& uv,
-                    float opacity = 1.0f);
-
-  void render_translated_image(uint texture,
-                               const ImVec4& source,
-                               const ImVec2& position,
-                               const ImVec2& uv,
-                               float opacity = 1.0f);
-
-  void render_text(const char* text, const ImVec2& position, uint32 color);
-
-  void render_translated_text(const char* text, const ImVec2& position, uint32 color);
-
-  void render_centered_text(const char* text, const ImVec2& center, uint32 color);
+  /// Renders an outline of the content region.
+  void outline_contents(uint32 color) const;
 
   void render_translated_grid(uint32 color);
 
-  [[nodiscard]] auto from_matrix_to_absolute(int32 row, int32 column) const -> ImVec2;
+  /// Renders a seemingly infinite grid, aligned with the content tiles.
+  /// \param color the color of the rendered grid.
+  void render_infinite_grid(uint32 color);
 
-  [[nodiscard]] auto is_intersecting_bounds(const ImVec2& position,
-                                            const ImVec2& size) const -> bool;
+  /// Renders a single tile from a tileset.
+  ///
+  /// \param tileset the source tileset.
+  /// \param tile_position the position of the tile in the tileset.
+  /// \param position the rendered position of the tile.
+  /// \param opacity the opacity of the tile, in the interval [0, 255].
+  void render_tile(const Tileset& tileset,
+                   const TilePos& tile_position,
+                   const ImVec2& position,
+                   uint8 opacity = 255) const;
 
-  [[nodiscard]] auto is_within_translated_bounds(const ImVec2& position) const -> bool;
-
-  [[nodiscard]] auto translate(const ImVec2& position) const -> ImVec2;
-
-  [[nodiscard]] auto origin() const -> const ImVec2& { return mOrigin; }
-
-  [[nodiscard]] auto get_origin() const -> Float2 { return {mOrigin.x, mOrigin.y}; }
-
-  [[nodiscard]] auto get_grid_size() const -> Float2
+  void draw_translated_rect(const ImVec2& position,
+                            const ImVec2& size,
+                            const uint32 color,
+                            const float thickness = 1.0f) const
   {
-    return {mViewportTileSize.x, mViewportTileSize.y};
+    draw_rect(translate(position), size, color, thickness);
   }
 
-  [[nodiscard]] auto viewport_tile_size() const -> const ImVec2&
+  void draw_translated_shadowed_rect(const ImVec2& position,
+                                     const ImVec2& size,
+                                     const uint32 color,
+                                     const float thickness = 1.0f) const
   {
-    return mViewportTileSize;
+    draw_shadowed_rect(translate(position), size, color, thickness);
   }
 
-  [[nodiscard]] auto logical_tile_size() const -> const ImVec2&
+  void draw_translated_shadowed_circle(const ImVec2& center,
+                                       const float radius,
+                                       const uint32 color,
+                                       const float thickness = 1.0f) const
   {
-    return mLogicalTileSize;
+    draw_shadowed_circle(translate(center), radius, color, thickness);
   }
 
-  [[nodiscard]] auto tile_size_ratio() const -> const ImVec2& { return mTileSizeRatio; }
+  void draw_translated_shadowed_ellipse(const ImVec2& center,
+                                        const ImVec2& radius,
+                                        const uint32 color,
+                                        const float thickness = 1.0f) const
+  {
+    draw_shadowed_ellipse(translate(center), radius, color, thickness);
+  }
 
-  [[nodiscard]] auto bounds() const -> const Region& { return mBounds; }
+  void render_translated_text(const char* text,
+                              const ImVec2& position,
+                              const uint32 color) const
+  {
+    render_text(text, translate(position), color);
+  }
+
+  /// Translates a tile position to an absolute position on the canvas.
+  [[nodiscard]] auto from_matrix_to_absolute(TilePos pos) const -> ImVec2;
+
+  [[nodiscard]] auto is_intersecting_bounds(ImVec2 position, ImVec2 size) const -> bool;
+
+  [[nodiscard]] auto is_within_translated_bounds(ImVec2 position) const -> bool;
+
+  [[nodiscard]] auto translate(const ImVec2 position) const -> ImVec2
+  {
+    return mInfo.origin + position;
+  }
+
+  [[nodiscard]] auto info() const noexcept -> const RenderInfo& { return mInfo; }
 
  private:
-  ImVec2 mCanvasTL;
-  ImVec2 mCanvasBR;
-  ImVec2 mOrigin {0, 0};
-  ImVec2 mViewportTileSize {32, 32};
-  ImVec2 mLogicalTileSize {32, 32};
-  ImVec2 mTileSizeRatio {1, 1};
-  Region mBounds;
+  RenderInfo mInfo;
   cen::frect mBoundsRect;
 };
 

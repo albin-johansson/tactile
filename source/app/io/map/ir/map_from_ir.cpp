@@ -28,16 +28,16 @@
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/tile/tile.hpp"
+#include "core/tile/tileset_bundle.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "core/tile_pos.hpp"
 #include "core/type/math.hpp"
 #include "core/type/maybe.hpp"
 #include "core/util/functional.hpp"
-#include "core/util/str.hpp"
 #include "core/uuid.hpp"
+#include "io/load_texture.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/parse_result.hpp"
-#include "io/textures.hpp"
 #include "misc/assert.hpp"
 #include "model/cmd/command_stack.hpp"
 #include "model/document/document.hpp"
@@ -55,8 +55,8 @@ void restore_context_no_register(Document& document,
   auto& properties = context->ctx().props();
   auto& components = context->ctx().comps();
 
-  for (const auto& [propertyName, propertyValue]: source.properties) {
-    properties.add(propertyName, propertyValue);
+  for (const auto& [property_name, property_value]: source.properties) {
+    properties.add(property_name, property_value);
   }
 
   if (auto index = document.get_component_index()) {
@@ -64,8 +64,8 @@ void restore_context_no_register(Document& document,
       const auto& definition = index->with_name(type);
 
       auto component = definition.instantiate();
-      for (const auto& [attrName, attrValue]: attributes) {
-        component.update(attrName, attrValue);
+      for (const auto& [attr_name, attr_value]: attributes) {
+        component.update(attr_name, attr_value);
       }
 
       components.add(std::move(component));
@@ -182,8 +182,7 @@ void restore_tile_animation(Tile& tile, const ir::MetaTileData& tile_data)
   animation.reserve_frames(tile_data.frames.size());
 
   for (const auto& frame_data: tile_data.frames) {
-    animation.add_frame(frame_data.tile_index,
-                        TileAnimation::Millis {frame_data.duration_ms});
+    animation.add_frame(frame_data.tile_index, ms_t {frame_data.duration_ms});
   }
 
   tile.set_animation(std::move(animation));
@@ -203,19 +202,19 @@ void restore_fancy_tile_objects(TilesetDocument& document,
 void restore_fancy_tiles(TilesetDocument& document, const ir::TilesetData& tileset_data)
 {
   auto& tileset = document.view_tileset();
-  for (const auto& [index, tileData]: tileset_data.fancy_tiles) {
+  for (const auto& [index, tile_data]: tileset_data.fancy_tiles) {
     auto tile = tileset.get_tile_ptr(index);
     TACTILE_ASSERT(tile->index() == index);
 
-    if (!tileData.frames.empty()) {
-      restore_tile_animation(*tile, tileData);
+    if (!tile_data.frames.empty()) {
+      restore_tile_animation(*tile, tile_data);
     }
 
-    if (!tileData.objects.empty()) {
-      restore_fancy_tile_objects(document, *tile, tileData);
+    if (!tile_data.objects.empty()) {
+      restore_fancy_tile_objects(document, *tile, tile_data);
     }
 
-    restore_context(document, tile, tileData.context);
+    restore_context(document, tile, tile_data.context);
   }
 }
 
@@ -228,13 +227,10 @@ void restore_tileset(DocumentModel& model,
   // TODO compare tileset document absolute paths to recognize the same tileset being
   // loaded multiple times
 
-  const auto texture = load_texture(tileset_data.image_path).value();
-
-  TilesetInfo info;
-  info.texture_id = texture.id;
-  info.texture_size = texture.size;
-  info.texture_path = texture.path;
-  info.tile_size = tileset_data.tile_size;
+  TilesetInfo info {
+      .texture = io::load_texture(tileset_data.image_path),
+      .tile_size = tileset_data.tile_size,
+  };
 
   // This will automatically attach the tileset to the active map
   const auto tileset_id = model.restore_tileset(tileset_data.first_tile, info);
@@ -311,7 +307,7 @@ void map_from_ir(const ParseResult& result, DocumentModel& model)
 
   const auto path = fs::absolute(result.path());
   document->set_path(path);
-  document->set_name(from_std(path.filename().string()));
+  document->set_name(path.filename().string());
 
   map.set_tile_size(map_data.tile_size);
   map.set_next_layer_id(map_data.next_layer_id);

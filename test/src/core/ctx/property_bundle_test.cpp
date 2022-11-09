@@ -23,7 +23,7 @@
 
 #include "misc/panic.hpp"
 
-using namespace eastl::string_literals;
+using namespace std::string_literals;
 
 namespace tactile::test {
 
@@ -73,6 +73,41 @@ TEST(PropertyBundle, Update)
 
   bundle.update("qwerty", "str"s);
   ASSERT_EQ("str"s, bundle.at("qwerty"));
+}
+
+TEST(PropertyBundle, Remove)
+{
+  PropertyBundle bundle;
+
+  ASSERT_FALSE(bundle.remove("foo"));
+  bundle.add("foo", 123);
+
+  ASSERT_FALSE(bundle.remove("bar"));
+  ASSERT_FALSE(bundle.empty());
+
+  ASSERT_TRUE(bundle.remove("foo"));
+  ASSERT_TRUE(bundle.empty());
+}
+
+TEST(PropertyBundle, Rename)
+{
+  PropertyBundle bundle;
+
+  ASSERT_FALSE(bundle.rename("A", "B"));
+  bundle.add("A", cen::colors::aqua);
+
+  // Cannot request used name, even when the target property doesn't exist
+  ASSERT_THROW(bundle.rename("C", "A"), TactileError);
+
+  ASSERT_FALSE(bundle.rename("C", "B"));
+  ASSERT_TRUE(bundle.contains("A"));
+  ASSERT_FALSE(bundle.contains("B"));
+
+  ASSERT_TRUE(bundle.rename("A", "B"));
+  ASSERT_FALSE(bundle.contains("A"));
+  ASSERT_TRUE(bundle.contains("B"));
+
+  ASSERT_EQ(1, bundle.size());
 }
 
 TEST(PropertyBundle, ChangeType)

@@ -22,6 +22,7 @@
 #include <gtest/gtest.h>
 
 #include "core/tile/tileset_info.hpp"
+#include "io/load_texture.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::test {
@@ -29,10 +30,9 @@ namespace {
 
 [[nodiscard]] auto make_tileset() -> Shared<Tileset>
 {
-  return std::make_shared<Tileset>(TilesetInfo {.texture_path = "foo.png",
-                                                .texture_id = 42,
-                                                .texture_size = {1024, 1024},
-                                                .tile_size = {32, 32}});
+  return std::make_shared<Tileset>(
+      TilesetInfo {.texture = io::load_texture("resources/terrain.png"),
+                   .tile_size = {32, 32}});
 }
 
 }  // namespace

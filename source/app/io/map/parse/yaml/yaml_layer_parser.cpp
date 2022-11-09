@@ -17,9 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <utility>  // move
-
-#include <EASTL/algorithm.h>
+#include <algorithm>  // replace
+#include <utility>    // move
 
 #include "core/tile_matrix.hpp"
 #include "core/type/expected.hpp"
@@ -30,7 +29,7 @@
 #include "io/util/base64_tiles.hpp"
 #include "io/util/yaml.hpp"
 
-using namespace eastl::string_literals;
+using namespace std::string_literals;
 
 namespace tactile::io {
 namespace {
@@ -77,7 +76,7 @@ namespace {
   }
 
   if (map.tile_format.encoding == TileEncoding::Plain) {
-    eastl::replace(str_data.begin(), str_data.end(), '\n', ' ');
+    std::replace(str_data.begin(), str_data.end(), '\n', ' ');
     if (auto matrix = parse_plain_tile_layer_data(str_data, rows, columns)) {
       tile_layer.tiles = std::move(*matrix);
     }

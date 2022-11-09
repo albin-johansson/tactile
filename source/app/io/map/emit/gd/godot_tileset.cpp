@@ -21,9 +21,9 @@
 
 #include <utility>  // move
 
+#include <fmt/format.h>
+
 #include "core/util/filesystem.hpp"
-#include "core/util/fmt.hpp"
-#include "core/util/str.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::io {
@@ -31,9 +31,9 @@ namespace tactile::io {
 auto GodotTileset::add_texture(const Path& dest, Path source) -> GdExtRes
 {
   const auto id =
-      add_ext_resource(format_str("res://{}", convert_to_forward_slashes(dest)),
+      add_ext_resource(fmt::format("res://{}", convert_to_forward_slashes(dest)),
                        "Texture");
-  mSourceTexturePaths.emplace_back(std::move(source), from_std(dest.filename().string()));
+  mSourceTexturePaths.emplace_back(std::move(source), dest.filename().string());
   return id;
 }
 

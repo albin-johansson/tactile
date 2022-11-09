@@ -21,7 +21,7 @@
 
 #include "core/attribute.hpp"
 #include "core/type/string.hpp"
-#include "core/type/tree_map.hpp"
+#include "core/type/string_map.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
 
@@ -30,7 +30,7 @@ namespace tactile {
 /// Provides the common API for component definitions and instances.
 class ComponentBase {
  public:
-  using AttributeMap = TreeMap<String, Attribute>;
+  using AttributeMap = StringMap<Attribute>;
 
   explicit ComponentBase(const UUID& type);
 

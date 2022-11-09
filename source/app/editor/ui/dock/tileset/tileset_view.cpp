@@ -24,10 +24,12 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "core/tile/tileset_bundle.hpp"
+#include "core/tile/tileset_ref.hpp"
 #include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"
+#include "editor/ui/render/render.hpp"
 #include "editor/ui/render/render_info.hpp"
-#include "editor/ui/style/colors.hpp"
 #include "editor/ui/widget/rubber_band.hpp"
 #include "io/proto/preferences.hpp"
 #include "model/document/map_document.hpp"
@@ -39,15 +41,14 @@
 namespace tactile::ui {
 namespace {
 
-constexpr uint32 rubber_band_color = IM_COL32(0, 0x44, 0xCC, 100);
-constexpr uint32 grid_color = IM_COL32(200, 200, 200, 40);
+constexpr uint32 rubber_band_color = to_u32(cen::color {0, 0x44, 0xCC, 100});
 
 void update_viewport_offset(const TilesetRef& tileset_ref,
                             const ImVec2& viewport_size,
                             entt::dispatcher& dispatcher)
 {
   const auto& tileset = tileset_ref.view_tileset();
-  const Float2 texture_size = tileset.texture_size();
+  const Float2 texture_size = tileset.texture().size();
 
   const Float2 min_offset {viewport_size.x - texture_size.x,
                            viewport_size.y - texture_size.y};
@@ -66,7 +67,7 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
                              ImGuiButtonFlags_MouseButtonMiddle |
                              ImGuiButtonFlags_MouseButtonRight);
 
-  /* This has no effect when users use touchpads, but that is handled separately */
+  // This has no effect when users use touchpads, but that is handled separately
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto& io = ImGui::GetIO();
     const Float2 delta {io.MouseDelta.x, io.MouseDelta.y};
@@ -74,17 +75,14 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
   }
 }
 
-void render_selection(Graphics& graphics,
-                      const Region& selection,
-                      const ImVec2& min,
-                      const ImVec2& tile_size)
+void render_selection(const Region& selection, const ImVec2& min, const ImVec2& tile_size)
 {
   const auto diff = selection.end - selection.begin;
 
   const auto origin = from_pos(selection.begin) * tile_size;
   const auto size = from_pos(diff) * tile_size;
 
-  graphics.fill_rect(min + origin, size, rubber_band_color);
+  fill_rect(min + origin, size, rubber_band_color);
 }
 
 }  // namespace
@@ -98,13 +96,14 @@ void update_tileset_view(const DocumentModel& model,
 
   const auto& tileset_ref = map.tileset_bundle().get_ref(tileset_id);
   const auto& tileset = tileset_ref.view_tileset();
+  const auto& texture = tileset.texture();
   const auto& viewport = tileset_ref.get_viewport();
 
   const auto info = get_render_info(viewport, tileset);
   update_viewport_offset(tileset_ref, info.canvas_br - info.canvas_tl, dispatcher);
 
   Graphics graphics {info};
-  graphics.clear(color_to_u32(io::get_preferences().viewport_background));
+  graphics.clear(to_u32(io::get_preferences().viewport_background));
 
   const auto offset = from_vec(viewport.get_offset());
   const auto tile_size = from_vec(tileset.tile_size());
@@ -113,17 +112,19 @@ void update_tileset_view(const DocumentModel& model,
     dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);
   }
 
-  graphics.push_clip();
+  graphics.push_canvas_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
-  graphics.render_image(tileset.texture_id(), position, from_vec(tileset.texture_size()));
+  render_image(texture, position, from_vec(texture.size()));
 
   const auto& selection = tileset_ref.get_selection();
   if (selection.has_value()) {
-    render_selection(graphics, *selection, position, tile_size);
+    render_selection(*selection, position, tile_size);
   }
 
-  graphics.render_translated_grid(grid_color);
+  const auto& prefs = io::get_preferences();
+  graphics.render_translated_grid(to_u32(prefs.grid_color));
+
   graphics.pop_clip();
 }
 

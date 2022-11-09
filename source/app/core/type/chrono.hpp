@@ -19,30 +19,17 @@
 
 #pragma once
 
-#include "core/type/path.hpp"
+#include <chrono>  // system_clock, nanoseconds, milliseconds, seconds
 
 namespace tactile {
 
-struct QuitEvent final {};
+namespace chrono = std::chrono;
 
-struct ToggleUiEvent final {};
+using Clock = chrono::system_clock;
+using TimePoint = Clock::time_point;
 
-struct ShowSettingsEvent final {};
-
-struct SaveEvent final {};
-
-struct SaveAsEvent final {
-  Path path;
-};
-
-struct OpenSaveAsDialogEvent final {};
-
-struct ReloadFontsEvent final {};
-
-struct ResetFontSizeEvent final {};
-
-struct IncreaseFontSizeEvent final {};
-
-struct DecreaseFontSizeEvent final {};
+using ns_t = chrono::nanoseconds;
+using ms_t = chrono::milliseconds;
+using sec_t = chrono::seconds;
 
 }  // namespace tactile

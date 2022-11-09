@@ -137,6 +137,7 @@
     "language": "Språk",
     "theme": "Tema",
     "viewport-bg-color": "Viewportbakgrundsfärg",
+    "grid-color": "Rutnätsfärg",
     "window-border": "Fönsterkanter",
     "restore-layout": "Återställ layout",
     "use-default-font": "Använd standardfont",

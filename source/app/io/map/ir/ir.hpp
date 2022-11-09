@@ -20,6 +20,7 @@
 #pragma once
 
 #include <concepts>  // invocable
+#include <variant>   // get
 
 #include "core/attribute.hpp"
 #include "core/layer/layer_type.hpp"
@@ -31,7 +32,7 @@
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"
-#include "core/type/tree_map.hpp"
+#include "core/type/string_map.hpp"
 #include "core/type/variant.hpp"
 #include "core/type/vec.hpp"
 #include "core/util/algorithm.hpp"
@@ -40,8 +41,8 @@
 
 namespace tactile::ir {
 
-using AttributeMap = TreeMap<String, Attribute>;
-using ComponentMap = TreeMap<String, AttributeMap>;
+using AttributeMap = StringMap<Attribute>;
+using ComponentMap = StringMap<AttributeMap>;
 
 struct ContextData final {
   AttributeMap properties;
@@ -96,17 +97,17 @@ struct LayerData final {
 
   [[nodiscard]] auto as_tile_layer() const -> const TileLayerData&
   {
-    return eastl::get<TileLayerData>(data);
+    return std::get<TileLayerData>(data);
   }
 
   [[nodiscard]] auto as_object_layer() const -> const ObjectLayerData&
   {
-    return eastl::get<ObjectLayerData>(data);
+    return std::get<ObjectLayerData>(data);
   }
 
   [[nodiscard]] auto as_group_layer() const -> const GroupLayerData&
   {
-    return eastl::get<GroupLayerData>(data);
+    return std::get<GroupLayerData>(data);
   }
 };
 

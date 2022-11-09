@@ -19,14 +19,13 @@
 
 #pragma once
 
-#include <EASTL/array.h>
+#include <array>  // array
 
-#include "core/type/eastl_new.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
 
 template <typename T, usize N>
-using Array = eastl::array<T, N>;
+using Array = std::array<T, N>;
 
 }  // namespace tactile

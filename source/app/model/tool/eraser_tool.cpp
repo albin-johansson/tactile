@@ -24,6 +24,7 @@
 #include <centurion/mouse.hpp>
 #include <entt/signal/dispatcher.hpp>
 
+#include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/mouse_info.hpp"
 #include "model/document/map_document.hpp"

@@ -22,11 +22,10 @@
 #include "core/attribute.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"
+#include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 
-namespace tactile {
-class Context;
-}  // namespace tactile
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Context)
 
 namespace tactile::cmd {
 

@@ -22,6 +22,7 @@
 #include <centurion/mouse.hpp>
 #include <entt/signal/dispatcher.hpp>
 
+#include "core/tile/tileset_bundle.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
 #include "model/event/tool_events.hpp"
@@ -44,15 +45,15 @@ void BucketTool::on_pressed(DocumentModel& model,
     const auto& map = document.get_map();
     const auto& tilesets = map.tileset_bundle();
 
-    const auto tilesetId = tilesets.active_tileset_id().value();
-    const auto& tilesetRef = tilesets.get_ref(tilesetId);
-    const auto& tileset = tilesetRef.view_tileset();
+    const auto tileset_id = tilesets.active_tileset_id().value();
+    const auto& tileset_ref = tilesets.get_ref(tileset_id);
+    const auto& tileset = tileset_ref.view_tileset();
 
-    const auto selectedPos = tilesetRef.get_selection()->begin;
-    const auto replacement = tilesetRef.first_tile() + tileset.index_of(selectedPos);
+    const auto selected_pos = tileset_ref.get_selection()->begin;
+    const auto replacement = tileset_ref.first_tile() + tileset.index_of(selected_pos);
 
-    const auto layerId = map.active_layer_id().value();
-    dispatcher.enqueue<FloodEvent>(layerId, mouse.position_in_viewport, replacement);
+    const auto layer_id = map.active_layer_id().value();
+    dispatcher.enqueue<FloodEvent>(layer_id, mouse.position_in_viewport, replacement);
   }
 }
 
@@ -62,10 +63,10 @@ auto BucketTool::is_available(const DocumentModel& model) const -> bool
   const auto& map = document.get_map();
 
   const auto& tilesets = map.tileset_bundle();
-  const auto tilesetId = tilesets.active_tileset_id();
+  const auto tileset_id = tilesets.active_tileset_id();
 
   return map.is_active_layer(LayerType::TileLayer) &&  //
-         tilesetId && tilesets.get_ref(*tilesetId).is_single_tile_selected();
+         tileset_id && tilesets.get_ref(*tileset_id).is_single_tile_selected();
 }
 
 }  // namespace tactile

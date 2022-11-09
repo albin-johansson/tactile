@@ -19,15 +19,13 @@
 
 #pragma once
 
-#include <EASTL/variant.h>
-
-#include "core/type/eastl_new.hpp"
+#include <variant>  // variant, monostate
 
 namespace tactile {
 
 template <typename... Types>
-using Variant = eastl::variant<Types...>;
+using Variant = std::variant<Types...>;
 
-using Monostate = eastl::monostate;
+using Monostate = std::monostate;
 
 }  // namespace tactile

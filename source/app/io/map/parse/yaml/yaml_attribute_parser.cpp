@@ -17,14 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <string>   // string
 #include <utility>  // move
 
 #include <centurion/color.hpp>
 
 #include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
-#include "core/util/str.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"
@@ -37,7 +35,7 @@ namespace {
 {
   switch (type) {
     case AttributeType::String:
-      return from_std(value.as<std::string>());
+      return value.as<String>();
 
     case AttributeType::Int:
       return value.as<int32>();
@@ -49,11 +47,11 @@ namespace {
       return value.as<bool>();
 
     case AttributeType::Path: {
-      const Path file = value.as<std::string>();
+      const Path file = value.as<String>();
       return file;
     }
     case AttributeType::Color: {
-      const auto hex = value.as<std::string>();
+      const auto hex = value.as<String>();
       if (const auto color = cen::color::from_rgba(hex)) {
         return *color;
       }
@@ -96,7 +94,7 @@ namespace {
   if (auto default_value = node["default"]) {
     switch (type) {
       case AttributeType::String:
-        value = from_std(default_value.as<std::string>());
+        value = default_value.as<String>();
         break;
 
       case AttributeType::Int:
@@ -112,12 +110,12 @@ namespace {
         break;
 
       case AttributeType::Path: {
-        Path path = default_value.as<std::string>();
+        Path path = default_value.as<String>();
         value = std::move(path);
         break;
       }
       case AttributeType::Color: {
-        if (auto color = cen::color::from_rgba(default_value.as<std::string>())) {
+        if (auto color = cen::color::from_rgba(default_value.as<String>())) {
           value = *color;
         }
         else {

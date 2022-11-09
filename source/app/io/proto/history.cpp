@@ -19,15 +19,14 @@
 
 #include "history.hpp"
 
-#include <utility>  // move
+#include <algorithm>  // find
+#include <utility>    // move
 
-#include <EASTL/algorithm.h>
 #include <spdlog/spdlog.h>
 
 #include "core/type/maybe.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/fmt.hpp"
-#include "core/util/str.hpp"
 #include "core/vocabulary.hpp"
 #include "io/directories.hpp"
 #include "io/file.hpp"
@@ -61,13 +60,13 @@ void load_file_history()
   proto::History h;
   if (h.ParseFromIstream(&stream)) {
     if (h.has_last_opened_file()) {
-      history_last_closed_file = from_std(h.last_opened_file());
+      history_last_closed_file = h.last_opened_file();
     }
 
     for (const auto& file: h.files()) {
       if (fs::exists(file)) {
         spdlog::debug("Loaded '{}' from file history", file);
-        history_entries.push_back(from_std(file));
+        history_entries.push_back(file);
       }
     }
   }
@@ -81,12 +80,12 @@ void save_file_history()
   proto::History h;
 
   if (history_last_closed_file) {
-    h.set_last_opened_file(to_std(*history_last_closed_file));
+    h.set_last_opened_file(*history_last_closed_file);
   }
 
   for (const auto& path: history_entries) {
     spdlog::debug("Saving '{}' to file history", path);
-    h.add_files(to_std(path));
+    h.add_files(path);
   }
 
   auto stream = write_file(get_file_path(), FileType::Binary);
@@ -104,7 +103,7 @@ void clear_file_history()
 void add_file_to_history(const Path& path)
 {
   auto converted = convert_to_forward_slashes(path);
-  if (eastl::find(history_entries.begin(), history_entries.end(), converted) ==
+  if (std::find(history_entries.begin(), history_entries.end(), converted) ==
       history_entries.end()) {
     spdlog::debug("Adding '{}' to history...", converted);
     history_entries.push_back(std::move(converted));

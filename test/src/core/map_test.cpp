@@ -22,10 +22,12 @@
 #include <gtest/gtest.h>
 
 #include "core/helpers/map_builder.hpp"
+#include "core/layer/group_layer.hpp"
 #include "core/layer/layer_visitor.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/tile/tileset.hpp"
+#include "core/tile/tileset_bundle.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "core/util/assoc.hpp"
 #include "core/util/functional.hpp"

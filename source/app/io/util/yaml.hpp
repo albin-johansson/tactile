@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include <string>   // string
 #include <utility>  // move
 
 #include <yaml-cpp/yaml.h>
@@ -28,7 +27,6 @@
 #include "core/layer/tile_format.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
-#include "core/util/str.hpp"
 
 namespace tactile::io {
 
@@ -50,7 +48,7 @@ inline auto read_attribute(const YAML::Node& node, const char* name, String& res
     -> bool
 {
   if (auto attr = node[name]) {
-    result = from_std(attr.as<std::string>());
+    result = attr.as<String>();
     return true;
   }
   else {
@@ -77,7 +75,7 @@ inline void read_attribute(const YAML::Node& node,
                            String fallback)
 {
   if (auto attr = node[name]) {
-    result = from_std(attr.as<std::string>());
+    result = attr.as<String>();
   }
   else {
     result = std::move(fallback);
@@ -104,7 +102,7 @@ inline void read_attribute(const YAML::Node& node,
                            String fallback)
 {
   if (auto attr = node[name]) {
-    result = from_std(attr.as<std::string>());
+    result = attr.as<String>();
   }
   else {
     result = std::move(fallback);

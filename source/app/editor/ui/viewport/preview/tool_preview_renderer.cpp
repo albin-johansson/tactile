@@ -19,9 +19,13 @@
 
 #include "tool_preview_renderer.hpp"
 
+#include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
+#include "core/tile/tileset_bundle.hpp"
 #include "core/util/functional.hpp"
+#include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"
+#include "editor/ui/render/render.hpp"
 #include "misc/assert.hpp"
 #include "model/document/map_document.hpp"
 #include "model/model.hpp"
@@ -30,6 +34,11 @@
 #include "model/tool/stamp_tool.hpp"
 
 namespace tactile::ui {
+namespace {
+
+inline constexpr uint8 stamp_preview_opacity = 150;
+
+}  // namespace
 
 ToolPreviewRenderer::ToolPreviewRenderer(const DocumentModel& model,
                                          Graphics& graphics,
@@ -68,8 +77,6 @@ void ToolPreviewRenderer::visit(const StampTool& tool)
 void ToolPreviewRenderer::render_stamp_normal(const Map& map,
                                               const TilesetRef& tileset_ref)
 {
-  auto& graphics = mGraphics.get();
-
   TACTILE_ASSERT(map.is_active_layer(LayerType::TileLayer));
   const auto layer_id = map.active_layer_id().value();
   const auto& layer = map.invisible_root().tile_layer(layer_id);
@@ -79,24 +86,21 @@ void ToolPreviewRenderer::render_stamp_normal(const Map& map,
   const auto offset = selection_size / TilePos {2, 2};
 
   const auto& tileset = tileset_ref.view_tileset();
-  const auto texture_id = tileset.texture_id();
-  const auto& uv = tileset.uv_size();
 
-  const auto origin = graphics.get_origin();
-  const auto grid_size = graphics.get_grid_size();
+  auto& graphics = mGraphics.get();
+  const auto origin = to_vec(graphics.info().origin);
+  const auto grid_size = to_vec(graphics.info().grid_size);
 
   invoke_mn(selection_size.row(), selection_size.col(), [&, this](int32 row, int32 col) {
     const TilePos index {row, col};
     const auto preview_pos = mMouseInfo.position_in_viewport + index - offset;
 
     if (layer.is_valid(preview_pos)) {
-      const auto real_pos = origin + preview_pos.as_vec2f() * grid_size;
-
-      const auto uv_min = (selection.begin + index).as_vec2f() * uv;
-      const auto uv_max = uv_min + uv;
-
-      constexpr uint8 opacity = 150;
-      graphics.render_image(texture_id, real_pos, grid_size, uv_min, uv_max, opacity);
+      const auto rendered_position = origin + preview_pos.as_vec2f() * grid_size;
+      graphics.render_tile(tileset,
+                           selection.begin + index,
+                           from_vec(rendered_position),
+                           stamp_preview_opacity);
     }
   });
 }
@@ -107,11 +111,10 @@ void ToolPreviewRenderer::visit(const RectangleTool& tool)
   if (stroke.has_value()) {
     auto& graphics = mGraphics.get();
 
-    const auto pos = graphics.get_origin() + stroke->start;
-    const auto size = stroke->current - stroke->start;
+    const auto pos = graphics.info().origin + from_vec(stroke->start);
+    const auto size = from_vec(stroke->current - stroke->start);
 
-    graphics.draw_rect(pos + Float2 {1, 1}, size, IM_COL32_BLACK, 1.0f);
-    graphics.draw_rect(pos, size, IM_COL32(0xFF, 0xFF, 0, 0xFF), 1.0f);
+    draw_shadowed_rect(pos, size, to_u32(cen::colors::yellow));
   }
 }
 
@@ -119,13 +122,13 @@ void ToolPreviewRenderer::visit(const EllipseTool& tool)
 {
   const auto& stroke = tool.get_stroke();
   if (stroke.has_value()) {
-    auto& graphics = mGraphics.get();
-
     const auto radius = stroke->current - stroke->start;
     const auto center = stroke->start + radius;
 
-    graphics.draw_ellipse(center + Float2 {1, 1}, radius, IM_COL32_BLACK, 1.0f);
-    graphics.draw_ellipse(center, radius, IM_COL32(0xFF, 0xFF, 0, 0xFF), 1.0f);
+    auto& graphics = mGraphics.get();
+    graphics.draw_translated_shadowed_ellipse(from_vec(center),
+                                              from_vec(radius),
+                                              to_u32(cen::colors::yellow));
   }
 }
 

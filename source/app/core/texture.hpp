@@ -26,15 +26,32 @@
 
 namespace tactile {
 
-struct TextureInfo final {
-  uint id {};
-  Int2 size {};
-  Path path;
+TACTILE_FWD_DECLARE_STRUCT(TextureHandle)
+
+/// Represents an OpenGL texture.
+class Texture final {
+ public:
+  TACTILE_DELETE_COPY(Texture);
+  TACTILE_DEFAULT_MOVE(Texture);
+
+  Texture(uint id, Int2 size, Path path);
+
+  ~Texture() noexcept;
+
+  [[nodiscard]] auto id() const -> uint;
+
+  [[nodiscard]] auto size() const -> const Int2&;
+
+  [[nodiscard]] auto width() const -> int32;
+
+  [[nodiscard]] auto height() const -> int32;
+
+  [[nodiscard]] auto path() const -> const Path&;
+
+ private:
+  uint mId;
+  Int2 mSize;
+  Path mPath;
 };
-
-[[nodiscard]] auto load_texture(const Path& path) -> Maybe<TextureInfo>;
-
-/// Destroys all previously loaded textures.
-void free_textures();
 
 }  // namespace tactile

@@ -47,7 +47,7 @@ struct SelectLayerEvent final {
 
 /// Event for moving a layer up in the render order.
 struct MoveLayerUpEvent final {
-  UUID id {};
+  UUID layer_id {};
 };
 
 /// Event for moving a layer down in the render order.

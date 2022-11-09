@@ -31,6 +31,7 @@
 #include "editor/ui/dock/property/property_dock.hpp"
 #include "editor/ui/dock/tileset/tileset_dock.hpp"
 #include "editor/ui/menu/menu_bar.hpp"
+#include "editor/ui/style/colors.hpp"
 #include "editor/ui/viewport/map_viewport_toolbar.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
 #include "io/directories.hpp"
@@ -55,6 +56,8 @@ void check_for_missing_ini_file()
 
 void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
+  update_dynamic_color_cache();
+
   update_menu_bar(model, dispatcher);
   update_dock_space();
 

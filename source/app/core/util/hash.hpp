@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <EASTL/functional.h>
+#include <functional>  // hash
 
 #include "core/vocabulary.hpp"
 
@@ -29,7 +29,7 @@ template <typename T>
 void hash_combine(usize& seed, const T& val)
 {
   // https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0814r0.pdf
-  seed ^= eastl::hash<T> {}(val) + 0x9E3779B9 + (seed << 6) + (seed >> 2);
+  seed ^= std::hash<T> {}(val) + 0x9E3779B9 + (seed << 6) + (seed >> 2);
 }
 
 [[nodiscard]] auto hash_combine(const auto&... args) -> usize
@@ -43,7 +43,7 @@ void hash_combine(usize& seed, const T& val)
 
 #define TACTILE_IMPLEMENT_HASH(Type, ...)                                \
   template <>                                                            \
-  struct eastl::hash<Type> final {                                       \
+  struct std::hash<Type> final {                                         \
     [[nodiscard]] auto operator()(const Type& t) const -> tactile::usize \
     {                                                                    \
       return tactile::hash_combine(__VA_ARGS__);                         \

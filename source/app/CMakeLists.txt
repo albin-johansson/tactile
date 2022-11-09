@@ -12,10 +12,13 @@ file(GLOB_RECURSE SOURCE_FILES
 
 add_library(${TACTILE_LIB} ${SOURCE_FILES})
 
-set_target_properties(${TACTILE_LIB} PROPERTIES
-                      PREFIX "lib"
-                      OUTPUT_NAME "tactile"
-                      )
+if (NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  # Can't do this on MSVC for some reason, it causes issues with the precompiled headers
+  set_target_properties(${TACTILE_LIB} PROPERTIES
+                        PREFIX "lib"
+                        OUTPUT_NAME "tactile"
+                        )
+endif ()
 
 add_dependencies(${TACTILE_LIB} ${TACTILE_PROTO})
 
@@ -39,7 +42,6 @@ target_link_libraries(${TACTILE_LIB}
                       SDL2::SDL2-static
                       SDL2::SDL2_image
                       imgui::imgui
-                      EASTL
                       EnTT::EnTT
                       magic_enum::magic_enum
                       fmt::fmt
@@ -123,62 +125,7 @@ add_dependencies(${TACTILE_EXE} ${TACTILE_LIB})
 tactile_set_compile_options(${TACTILE_LIB})
 tactile_set_compile_options(${TACTILE_EXE})
 
-target_precompile_headers(${TACTILE_LIB} PRIVATE
-                          <algorithm>
-                          <array>
-                          <charconv>
-                          <chrono>
-                          <concepts>
-                          <cstddef>
-                          <cstdint>
-                          <cstring>
-                          <cstdlib>
-                          <ctime>
-                          <cmath>
-                          <deque>
-                          <exception>
-                          <filesystem>
-                          <fstream>
-                          <functional>
-                          <iterator>
-                          <limits>
-                          <locale>
-                          <map>
-                          <memory>
-                          <numbers>
-                          <optional>
-                          <ostream>
-                          <queue>
-                          <random>
-                          <span>
-                          <sstream>
-                          <string>
-                          <string_view>
-                          <system_error>
-                          <type_traits>
-                          <unordered_map>
-                          <utility>
-                          <variant>
-                          <vector>
-
-                          <EASTL/algorithm.h>
-                          <EASTL/array.h>
-                          <EASTL/deque.h>
-                          <EASTL/functional.h>
-                          <EASTL/hash_map.h>
-                          <EASTL/optional.h>
-                          <EASTL/utility.h>
-                          <EASTL/queue.h>
-                          <EASTL/set.h>
-                          <EASTL/span.h>
-                          <EASTL/string.h>
-                          <EASTL/string_view.h>
-                          <EASTL/map.h>
-                          <EASTL/variant.h>
-                          <EASTL/vector.h>
-                          <EASTL/vector_map.h>
-                          )
-
+target_precompile_headers(${TACTILE_LIB} PRIVATE ${TACTILE_STD_HEADERS})
 target_precompile_headers(${TACTILE_EXE} REUSE_FROM ${TACTILE_LIB})
 
 target_link_libraries(${TACTILE_EXE}

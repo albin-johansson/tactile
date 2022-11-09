@@ -25,12 +25,14 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "document_viewport_offset_handler.hpp"
+#include "editor/ui/conversions.hpp"
 #include "editor/ui/render/graphics.hpp"
+#include "editor/ui/render/render.hpp"
 #include "editor/ui/render/render_info.hpp"
 #include "editor/ui/render/render_map.hpp"
-#include "editor/ui/style/colors.hpp"
 #include "editor/ui/viewport/map_viewport_overlay.hpp"
 #include "editor/ui/viewport/map_viewport_toolbar.hpp"
 #include "editor/ui/viewport/preview/tool_preview_renderer.hpp"
@@ -117,10 +119,10 @@ void draw_cursor_gizmos(Graphics& graphics,
   const auto& map = document.get_map();
 
   if (cursor.is_within_map && map.is_active_layer(LayerType::TileLayer)) {
-    graphics.draw_rect_with_shadow(cursor.clamped_position,
-                                   info.grid_size,
-                                   IM_COL32(0, 0xFF, 0, 200),
-                                   2.0f);
+    draw_shadowed_rect(cursor.clamped_position,
+                       info.grid_size,
+                       IM_COL32(0, 0xFF, 0, 200),
+                       2.0f);
   }
 
   ToolPreviewRenderer preview_renderer {model, graphics, make_mouse_info(cursor)};
@@ -239,8 +241,8 @@ void show_map_viewport(const DocumentModel& model,
 
   Graphics graphics {info};
 
-  graphics.clear(color_to_u32(io::get_preferences().viewport_background));
-  graphics.push_clip();
+  graphics.clear(to_u32(io::get_preferences().viewport_background));
+  graphics.push_canvas_clip();
 
   // TODO viewport should be centered by default
   if (viewport_will_be_centered) {

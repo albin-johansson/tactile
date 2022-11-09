@@ -36,11 +36,12 @@ set(TACTILE_TEST TactileTests)
 
 set(Boost_NO_WARN_NEW_VERSIONS ON)
 
+include(cmake/tactile.cmake)
+
 # Not acquired using vcpkg
 find_package(OpenGL REQUIRED)
 find_package(Boost REQUIRED)
 
-find_package(EASTL CONFIG REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(GLEW CONFIG REQUIRED)
@@ -65,43 +66,8 @@ find_path(STB_INCLUDE_DIRS "stb_c_lexer.h")
 option(TACTILE_BUILD_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)
 option(TACTILE_BUILD_WITH_ASAN "Build with AddressSanitizer" OFF)
 
-function(copy_directory_post_build target from to)
-  add_custom_command(TARGET ${target} POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_directory
-                     ${from}
-                     ${to})
-endfunction()
-
-function(tactile_set_compile_options target)
-  if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    target_compile_options(${target}
-                           PRIVATE
-                           /EHsc
-                           /MP
-                           /W4
-                           /bigobj
-                           /permissive-
-                           /Zc:preprocessor
-                           /Zc:__cplusplus
-                           /Zc:alignedNew
-                           )
-
-  elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang|GNU")
-    target_compile_options(${target}
-                           PRIVATE
-                           -Wall
-                           -Wextra
-                           -Wpedantic
-                           -Wconversion
-                           -Wsign-conversion
-                           )
-  endif ()
-endfunction()
-
 if (TACTILE_BUILD_WITH_ASAN MATCHES ON)
-  message(INFO "Building with AddressSanitizer")
-  add_compile_options(-fno-omit-frame-pointer -fsanitize=address)
-  add_link_options(-fno-omit-frame-pointer -fsanitize=address)
+  tactile_enable_address_sanitizer()
 endif ()
 
 add_subdirectory(source/proto)

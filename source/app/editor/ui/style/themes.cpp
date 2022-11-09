@@ -21,7 +21,9 @@
 
 #include <imgui.h>
 
+#include "editor/ui/style/colors.hpp"
 #include "meta/build.hpp"
+#include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::ui {
@@ -35,25 +37,43 @@ struct ThemeCfg final {
   ImVec4 text {};
 };
 
-[[nodiscard]] auto theme_from_hue(const float hue) -> ThemeCfg
+[[nodiscard]] auto dark_theme_from_hue(const uint16 hue) -> ThemeCfg
 {
+  TACTILE_ASSERT(hue < 360);
+
   ThemeCfg cfg;
 
-  const auto h = hue / 255.0f;
-  cfg.window = ImColor::HSV(h, 0.20f, 0.08f, 1.00f);
-  cfg.child = ImColor::HSV(h, 0.60f, 0.40f, 1.00f);
+  const auto h = static_cast<float>(hue) / 360.0f;
+  cfg.window = ImColor::HSV(h, 0.20f, 0.05f);
+  cfg.child = cfg.window;
 
-  cfg.accent = ImColor::HSV(h, 0.70f, 0.60f, 1.00f);
-  cfg.accent_active = ImColor::HSV(h, 0.70f, 0.80f, 1.00f);
+  cfg.accent = ImColor::HSV(h, 0.60f, 0.30f);
+  cfg.accent_active = ImColor::HSV(h, 0.60f, 0.70f);
 
-  cfg.text = ImColor::HSV(h, 0.10f, 1.00f, 1.00f);
+  cfg.text = ImColor::HSV(0, 0, 1.0f);
 
   return cfg;
 }
 
-[[nodiscard]] auto with_alpha(const ImVec4& color, const float alpha) -> ImVec4
+[[nodiscard]] auto light_theme_from_hue(const uint16 hue) -> ThemeCfg
 {
-  return {color.x, color.y, color.z, alpha};
+  TACTILE_ASSERT(hue < 360);
+
+  ThemeCfg cfg;
+
+  const auto h = static_cast<float>(hue) / 360.0f;
+  constexpr auto s = static_cast<float>(10) / 100.0f;
+  constexpr auto v = static_cast<float>(100) / 100.0f;
+
+  cfg.window = ImColor::HSV(h, s, v);
+  cfg.child = cfg.window;
+
+  cfg.accent = ImColor::HSV(h, 0.60f, 0.60f);
+  cfg.accent_active = ImColor::HSV(h, 0.60f, 0.80f);
+
+  cfg.text = ImColor::HSV(0, 0, 0);
+
+  return cfg;
 }
 
 void apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
@@ -64,28 +84,28 @@ void apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
 
   const ImVec4 transparent {0, 0, 0, 0};
 
-  const auto component = with_alpha(cfg.accent, 0.60f);
+  const auto component = cfg.accent;
   const auto component_active = cfg.accent_active;
-  const auto component_hovered = with_alpha(component_active, 0.70f);
+  const auto component_hovered = make_darker(component_active);
 
   set(ImGuiCol_Text, cfg.text);
-  set(ImGuiCol_TextDisabled, with_alpha(cfg.text, 0.60f));
+  set(ImGuiCol_TextDisabled, {150, 150, 150, 0xFF});
   set(ImGuiCol_TextSelectedBg, with_alpha(cfg.accent, 0.40f));
 
-  set(ImGuiCol_Border, with_alpha(cfg.accent, 0.80f));
+  set(ImGuiCol_Border, make_darker(cfg.accent));
   set(ImGuiCol_BorderShadow, transparent);
 
-  set(ImGuiCol_Separator, with_alpha(component, 0.20f));
+  set(ImGuiCol_Separator, make_darker(component, 3));
   set(ImGuiCol_SeparatorHovered, component);
   set(ImGuiCol_SeparatorActive, component);
 
   set(ImGuiCol_WindowBg, cfg.window);
   set(ImGuiCol_PopupBg, cfg.window);
-  set(ImGuiCol_ChildBg, with_alpha(cfg.child, 0.10f));
+  set(ImGuiCol_ChildBg, cfg.child);
 
-  set(ImGuiCol_FrameBg, with_alpha(cfg.child, 0.70f));
-  set(ImGuiCol_FrameBgHovered, with_alpha(cfg.accent, 0.70f));
-  set(ImGuiCol_FrameBgActive, with_alpha(cfg.accent, 0.70f));
+  set(ImGuiCol_FrameBg, component);
+  set(ImGuiCol_FrameBgHovered, component_hovered);
+  set(ImGuiCol_FrameBgActive, component_active);
 
   set(ImGuiCol_TitleBg, cfg.child);
   set(ImGuiCol_TitleBgActive, cfg.child);
@@ -95,14 +115,14 @@ void apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
   set(ImGuiCol_ButtonHovered, component_hovered);
   set(ImGuiCol_ButtonActive, component_active);
 
-  set(ImGuiCol_MenuBarBg, with_alpha(cfg.child, 0.57f));
+  set(ImGuiCol_MenuBarBg, make_darker(cfg.child));
 
   set(ImGuiCol_ScrollbarBg, cfg.child);
   set(ImGuiCol_ScrollbarGrab, component);
   set(ImGuiCol_ScrollbarGrabHovered, component_hovered);
   set(ImGuiCol_ScrollbarGrabActive, component_active);
 
-  set(ImGuiCol_CheckMark, cfg.accent);
+  set(ImGuiCol_CheckMark, component_active);
 
   set(ImGuiCol_SliderGrab, component);
   set(ImGuiCol_SliderGrabActive, component_active);
@@ -112,16 +132,17 @@ void apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
   set(ImGuiCol_HeaderActive, component_active);
 
   set(ImGuiCol_TabActive, component_active);
-  set(ImGuiCol_TabUnfocusedActive, with_alpha(component_active, 0.80f));
-  set(ImGuiCol_Tab, with_alpha(component, 0.25f));
-  set(ImGuiCol_TabUnfocused, with_alpha(component, 0.25f));
+  set(ImGuiCol_TabUnfocusedActive, make_darker(component_active));
+  set(ImGuiCol_Tab, make_darker(component));
+  set(ImGuiCol_TabUnfocused, make_darker(component, 2));
   set(ImGuiCol_TabHovered, component_hovered);
 
   set(ImGuiCol_TableHeaderBg, cfg.child);
   set(ImGuiCol_TableRowBg, cfg.window);
-  set(ImGuiCol_TableRowBgAlt, with_alpha(cfg.child, 0.15f));
-  set(ImGuiCol_TableBorderStrong, with_alpha(cfg.text, 0.20f));
-  set(ImGuiCol_TableBorderLight, with_alpha(cfg.text, 0.10f));
+  set(ImGuiCol_TableRowBgAlt, make_darker(cfg.window, 1));
+
+  set(ImGuiCol_TableBorderStrong, cfg.accent);
+  set(ImGuiCol_TableBorderLight, make_brighter(cfg.accent));
 
   set(ImGuiCol_DockingPreview, with_alpha(cfg.accent, 0.80f));
   set(ImGuiCol_DockingEmptyBg, with_alpha(cfg.accent, 0.80f));
@@ -185,8 +206,23 @@ auto human_readable_name(const EditorTheme theme) -> StringView
     case EditorTheme::Vanilla:
       return "Vanilla";
 
+    case EditorTheme::Gasoline:
+      return "Gasoline";
+
+    case EditorTheme::Bumblebee:
+      return "Bumblebee";
+
+    case EditorTheme::Lavender:
+      return "Lavender";
+
+    case EditorTheme::Frost:
+      return "Frost";
+
+    case EditorTheme::Rose:
+      return "Rose";
+
     default:
-      throw TactileError("Invalid theme enumerator!");
+      throw TactileError {"Invalid theme enumerator!"};
   }
 }
 
@@ -233,44 +269,45 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
       break;
 
     case EditorTheme::Ruby:
-      apply_theme_from_config(style, theme_from_hue(0));
+      apply_theme_from_config(style, dark_theme_from_hue(0));
       break;
 
     case EditorTheme::Emerald:
-      apply_theme_from_config(style, theme_from_hue(100));
-      break;
-
-    case EditorTheme::Diamond:
-      apply_theme_from_config(style, theme_from_hue(120));
+      apply_theme_from_config(style, dark_theme_from_hue(141));
       break;
 
     case EditorTheme::Sapphire:
-      apply_theme_from_config(style, theme_from_hue(150));
+      apply_theme_from_config(style, dark_theme_from_hue(211));
       break;
 
     case EditorTheme::Joker:
-      apply_theme_from_config(style, theme_from_hue(190));
+      apply_theme_from_config(style, dark_theme_from_hue(268));
       break;
 
     case EditorTheme::Amethyst:
-      apply_theme_from_config(style, theme_from_hue(225));
+      apply_theme_from_config(style, dark_theme_from_hue(318));
       break;
 
     case EditorTheme::Raspberry:
-      apply_theme_from_config(style, theme_from_hue(245));
+      apply_theme_from_config(style, dark_theme_from_hue(346));
       break;
 
     case EditorTheme::Amber:
-      apply_theme_from_config(style, theme_from_hue(272));
+      apply_theme_from_config(style, dark_theme_from_hue(23));
       break;
 
+    case EditorTheme::Gasoline:
+      apply_theme_from_config(style, dark_theme_from_hue(82));
+      break;
+
+    case EditorTheme::Bumblebee:
+      apply_theme_from_config(style, dark_theme_from_hue(56));
+      break;
+
+    case EditorTheme::Diamond:
+      [[fallthrough]];
     case EditorTheme::Nocturnal:
-      apply_theme_from_config(style,
-                              {.accent = {0.0f, 0.5f, 0.5f, 1.0f},
-                               .accent_active = {0.0f, 0.6f, 0.6f, 1.0f},
-                               .window = {0.04f, 0.04f, 0.04f, 1.0f},
-                               .child = {0.1f, 0.1f, 0.1f, 1.0f},
-                               .text = {1.0f, 1.0f, 1.0f, 1.0f}});
+      apply_theme_from_config(style, dark_theme_from_hue(180));
       break;
 
     case EditorTheme::Ash:
@@ -278,7 +315,7 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
                               {.accent = {0.4f, 0.4f, 0.4f, 1.0f},
                                .accent_active = {0.5f, 0.5f, 0.5f, 1.0f},
                                .window = {0.0f, 0.0f, 0.0f, 1.0f},
-                               .child = {0.1f, 0.1f, 0.1f, 1.0f},
+                               .child = {0.0f, 0.0f, 0.0f, 1.0f},
                                .text = {1.0f, 1.0f, 1.0f, 1.0f}});
       break;
 
@@ -288,20 +325,23 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
                                   .accent = {0.20f, 0.20f, 0.20f, 1.0f},
                                   .accent_active = {0.25f, 0.25f, 0.25f, 1},
                                   .window = {0.00f, 0.00f, 0.00f, 1},
-                                  .child = {0.08f, 0.08f, 0.08f, 1},
+                                  .child = {0.00f, 0.00f, 0.00f, 1},
                                   .text = {1.0f, 1.0f, 1.0f, 1},
                               });
       break;
 
+    case EditorTheme::Lavender:
+      apply_theme_from_config(style, light_theme_from_hue(275));
+      break;
+
     case EditorTheme::Vanilla:
-      apply_theme_from_config(style,
-                              ThemeCfg {
-                                  .accent = {0.84f, 0.82f, 0.67f, 1},
-                                  .accent_active = {0.94f, 0.92f, 0.77f, 1},
-                                  .window = {0.90f, 0.88f, 0.73f, 1},
-                                  .child = {0.80f, 0.78f, 0.64f, 1},
-                                  .text = {0.10f, 0.10f, 0.10f, 1},
-                              });
+      [[fallthrough]];
+    case EditorTheme::Frost:
+      apply_theme_from_config(style, light_theme_from_hue(180));
+      break;
+
+    case EditorTheme::Rose:
+      apply_theme_from_config(style, light_theme_from_hue(0));
       break;
   }
 }

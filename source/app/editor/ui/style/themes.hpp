@@ -38,31 +38,39 @@ enum class EditorTheme {
   Amber = 6,
   Nocturnal = 7,
   Ash = 8,
-  Diamond = 9,
+  Diamond = 9,  // Unused
   Joker = 10,
   Raspberry = 11,
   Stealth = 12,
-  Vanilla = 13
+  Vanilla = 13,  // Unused
+  Gasoline = 14,
+  Bumblebee = 15,
+  Lavender = 16,
+  Frost = 17,
+  Rose = 18,
 };
 
-inline constexpr Array<EditorTheme, 2> light_themes [[maybe_unused]] = {
+inline constexpr Array<EditorTheme, 4> light_themes [[maybe_unused]] = {
     EditorTheme::DearLight,
-    EditorTheme::Vanilla,
+    EditorTheme::Lavender,
+    EditorTheme::Frost,
+    EditorTheme::Rose,
 };
 
-inline constexpr Array<EditorTheme, 12> dark_themes [[maybe_unused]] = {
+inline constexpr Array<EditorTheme, 13> dark_themes [[maybe_unused]] = {
     EditorTheme::DearDark,
     EditorTheme::Ruby,
     EditorTheme::Sapphire,
     EditorTheme::Emerald,
     EditorTheme::Amethyst,
     EditorTheme::Amber,
-    EditorTheme::Diamond,
     EditorTheme::Joker,
     EditorTheme::Raspberry,
     EditorTheme::Nocturnal,
     EditorTheme::Ash,
     EditorTheme::Stealth,
+    EditorTheme::Gasoline,
+    EditorTheme::Bumblebee,
 };
 
 [[nodiscard]] auto human_readable_name(EditorTheme theme) -> StringView;

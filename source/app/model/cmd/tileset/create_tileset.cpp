@@ -22,6 +22,7 @@
 #include <memory>   // make_shared
 #include <utility>  // move
 
+#include "core/tile/tileset_bundle.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/assert.hpp"

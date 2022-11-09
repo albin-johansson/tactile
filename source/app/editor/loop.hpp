@@ -31,11 +31,6 @@ class AppCfg;
 /// Handles the core event loop logic.
 class EventLoop {
  public:
-  TACTILE_DEFAULT_COPY(EventLoop);
-  TACTILE_DEFAULT_MOVE(EventLoop);
-
-  explicit EventLoop(AppCfg* cfg);
-
   virtual ~EventLoop() noexcept = default;
 
   /// Starts running the event loop.
@@ -69,9 +64,8 @@ class EventLoop {
   virtual void on_event(const cen::event_handler& handler) = 0;
 
  private:
-  AppCfg* mCfg {}; /* Non-owning */
   cen::keyboard mKeyboard;
-  bool mRunning {};
+  bool mRunning : 1 {};
 
   void poll_events();
 };

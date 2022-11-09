@@ -23,7 +23,6 @@
 #include <imgui.h>
 
 #include "core/util/buffers.hpp"
-#include "core/util/str.hpp"
 #include "editor/ui/widget/buttons.hpp"
 #include "io/file_dialog.hpp"
 #include "io/proto/preferences.hpp"
@@ -93,10 +92,10 @@ void CreateTilesetDialog::show_image_file_dialog()
   }
 
   mFullImagePath = dialog.path();
-  const auto path_str = from_std(mFullImagePath.string());
+  const auto path_str = mFullImagePath.string();
 
   if (path_str.size() > mPathPreviewBuffer.size()) {
-    const auto name = from_std(mFullImagePath.filename().string());
+    const auto name = mFullImagePath.filename().string();
     copy_string_into_buffer(mPathPreviewBuffer, name);
   }
   else {

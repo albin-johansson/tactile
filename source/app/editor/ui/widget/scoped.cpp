@@ -19,9 +19,60 @@
 
 #include "scoped.hpp"
 
+#include "editor/ui/conversions.hpp"
+#include "editor/ui/style/colors.hpp"
+#include "misc/assert.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::ui {
+namespace {
+
+inline constexpr ImVec4 white {0xFF, 0xFF, 0xFF, 0xFF};
+inline constexpr ImVec4 black {0x00, 0x00, 0x00, 0xFF};
+
+[[nodiscard]] auto get_text_fg(const ImGuiCol bg) -> ImVec4
+{
+  return is_dark(bg) ? white : black;
+}
+
+[[nodiscard]] auto get_tab_item_text_color(const ImGuiTabItemFlags flags) -> ImVec4
+{
+  return get_text_fg((flags & ImGuiTabItemFlags_SetSelected) ? ImGuiCol_TabActive
+                                                             : ImGuiCol_Tab);
+}
+
+[[nodiscard]] auto get_tree_node_text_color() -> ImVec4
+{
+  return get_text_fg(ImGuiCol_WindowBg);
+}
+
+[[nodiscard]] auto get_selectable_list_item_text_color(const bool selected) -> ImVec4
+{
+  return get_text_fg(selected ? ImGuiCol_HeaderActive : ImGuiCol_FrameBg);
+}
+
+[[nodiscard]] auto get_selectable_property_text_color(const bool selected) -> ImVec4
+{
+  return get_text_fg(selected ? ImGuiCol_ChildBg : ImGuiCol_WindowBg);
+}
+
+[[nodiscard]] auto get_window_label_text_color(const WindowData& data) -> ImVec4
+{
+  if (data.is_docked) {
+    if (data.has_focus) {
+      return get_text_fg(data.is_open ? ImGuiCol_TabActive : ImGuiCol_Tab);
+    }
+    else {
+      return get_text_fg(data.is_open ? ImGuiCol_TabUnfocusedActive
+                                      : ImGuiCol_TabUnfocused);
+    }
+  }
+  else {
+    return get_text_fg(data.has_focus ? ImGuiCol_TitleBgActive : ImGuiCol_TitleBg);
+  }
+}
+
+}  // namespace
 
 Scope::Scope(const void* ptr)
 {
@@ -172,8 +223,10 @@ TabBar::~TabBar()
 }
 
 TabItem::TabItem(const char* name, bool* open, const ImGuiTabItemFlags flags)
-    : mOpen {ImGui::BeginTabItem(name, open, flags)}
+    : mTextColor {ImGuiCol_Text, get_tab_item_text_color(flags)},
+      mOpen {ImGui::BeginTabItem(name, open, flags)}
 {
+  mTextColor.pop();
 }
 
 TabItem::~TabItem()
@@ -234,6 +287,32 @@ ListBox::~ListBox()
   }
 }
 
+auto Selectable::ListItem(const char* label,
+                          const bool selected,
+                          const ImGuiSelectableFlags flags,
+                          const ImVec2& size) -> bool
+{
+  StyleColor text_color {ImGuiCol_Text, get_selectable_list_item_text_color(selected)};
+
+  const auto activated = ImGui::Selectable(label, selected, flags, size);
+  text_color.pop();
+
+  return activated;
+}
+
+auto Selectable::Property(const char* label,
+                          const bool selected,
+                          const ImGuiSelectableFlags flags,
+                          const ImVec2& size) -> bool
+{
+  StyleColor text_color {ImGuiCol_Text, get_selectable_property_text_color(selected)};
+
+  const auto activated = ImGui::Selectable(label, selected, flags, size);
+  text_color.pop();
+
+  return activated;
+}
+
 Menu::Menu(const char* name, const bool enabled)
     : mOpen {ImGui::BeginMenu(name, enabled)}
 {
@@ -259,16 +338,22 @@ Modal::~Modal()
 }
 
 Window::Window(const char* label, const ImGuiWindowFlags flags, bool* open)
-    : mLabel {label},
+    : mTextColor {ImGuiCol_Text, get_window_label_text_color(window_data[label])},
+      mLabel {label},
       mOpen {ImGui::Begin(label, open, flags)}
 {
   if (!label) {
     throw TactileError {"Invalid null window label!"};
   }
 
+  mTextColor.pop();
+
   auto& data = window_data[label];
+  data.has_focus = has_focus(ImGuiFocusedFlags_RootAndChildWindows);
   data.was_hovered = data.is_hovered;
   data.is_hovered = is_hovered();
+  data.is_docked = ImGui::IsWindowDocked();
+  data.is_open = mOpen;
 }
 
 Window::~Window()
@@ -307,8 +392,18 @@ auto Window::is_hovered() const -> bool
 }
 
 TreeNode::TreeNode(const char* id, const ImGuiTreeNodeFlags flags)
-    : mOpen {ImGui::TreeNodeEx(id, flags)}
+    : mTextColor {ImGuiCol_Text, get_tree_node_text_color()},
+      mOpen {ImGui::TreeNodeEx(id, flags)}
 {
+  mTextColor.pop();
+}
+
+TreeNode::TreeNode(const char* id, ImGuiTreeNodeFlags flags, const char* label)
+
+    : mTextColor {ImGuiCol_Text, get_tree_node_text_color()},
+      mOpen {ImGui::TreeNodeEx(id, flags, "%s", label)}
+{
+  mTextColor.pop();
 }
 
 TreeNode::~TreeNode()

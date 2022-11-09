@@ -22,7 +22,7 @@
 #include <charconv>      // from_chars
 #include <concepts>      // integral
 #include <sstream>       // stringstream
-#include <string>        // string, getline
+#include <string>        // getline
 #include <system_error>  // errc
 #include <utility>       // move
 
@@ -47,32 +47,19 @@ template <std::integral T>
   }
 }
 
-template <typename To>
-[[nodiscard]] auto convert_str(const auto& from) -> To
-{
-  To res;
-  res.reserve(from.size());
-
-  for (const auto ch: from) {
-    res.push_back(ch);
-  }
-
-  return res;
-}
-
 }  // namespace
 
 auto split(StringView str, const char sep) -> Vec<String>
 {
   std::stringstream stream;
-  stream << to_std_view(str);
+  stream << str;
 
   Vec<String> tokens;
 
-  std::string token;
+  String token;
   while (std::getline(stream, token, sep)) {
     std::erase(token, '\n');
-    tokens.push_back(from_std(token));
+    tokens.push_back(std::move(token));
     token.clear();
   }
 
@@ -82,21 +69,6 @@ auto split(StringView str, const char sep) -> Vec<String>
 auto parse_i32(StringView str, const int base) -> Maybe<int32>
 {
   return parse<int32>(str.data(), str.data() + str.size(), base);
-}
-
-auto to_std(StringView str) -> std::string
-{
-  return convert_str<std::string>(str);
-}
-
-auto to_std_view(StringView str) -> std::string_view
-{
-  return {str.data(), str.size()};
-}
-
-auto from_std(std::string_view str) -> String
-{
-  return convert_str<String>(str);
 }
 
 }  // namespace tactile

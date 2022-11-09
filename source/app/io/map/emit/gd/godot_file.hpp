@@ -20,10 +20,10 @@
 #pragma once
 
 #include "core/attribute.hpp"
-#include "core/type/hash_map.hpp"
 #include "core/type/math.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
+#include "core/type/string_map.hpp"
 #include "core/type/tree_map.hpp"
 #include "core/type/vec.hpp"
 #include "core/vocabulary.hpp"
@@ -33,11 +33,11 @@ namespace tactile::io {
 using GdExtRes = int32;  ///< External resource identifier.
 using GdSubRes = int32;  ///< Subresource identifier.
 
-using GdAttributes = HashMap<String, Attribute>;
+using GdAttributes = StringMap<Attribute>;
 
 struct GdMetaData final {
   GdAttributes props;
-  HashMap<String, GdAttributes> comps;
+  StringMap<GdAttributes> comps;
 };
 
 struct GdExtResource final {

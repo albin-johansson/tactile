@@ -19,14 +19,12 @@
 
 #pragma once
 
-#include <EASTL/map.h>
-
-#include "core/type/eastl_ext.hpp"
-#include "core/type/eastl_new.hpp"
+#include <functional>  // less
+#include <map>         // map
 
 namespace tactile {
 
 template <typename K, typename V>
-using TreeMap = eastl::map<K, V>;
+using TreeMap = std::map<K, V, std::less<>>;
 
 }  // namespace tactile

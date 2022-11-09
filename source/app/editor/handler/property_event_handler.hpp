@@ -19,23 +19,8 @@
 
 #pragma once
 
-#include <EASTL/string.h>
-#include <EASTL/string_view.h>
+namespace tactile {
 
-namespace eastl {
+void install_property_event_handler();
 
-template <typename T, typename Allocator>
-inline auto operator<(const basic_string<T, Allocator>& a, const basic_string_view<T>& b)
-    -> bool
-{
-  return basic_string<T, Allocator>::compare(a.begin(), a.end(), b.begin(), b.end()) < 0;
-}
-
-template <typename T, typename Allocator>
-inline auto operator<(const basic_string_view<T>& a, const basic_string<T, Allocator>& b)
-    -> bool
-{
-  return basic_string_view<T>::compare(a.begin(), a.end(), b.begin(), b.end()) < 0;
-}
-
-}  // namespace eastl
+}  // namespace tactile

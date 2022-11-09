@@ -19,13 +19,11 @@
 
 #pragma once
 
-#include <EASTL/queue.h>
-
-#include "core/type/eastl_new.hpp"
+#include <queue>  // queue
 
 namespace tactile {
 
 template <typename T>
-using Queue = eastl::queue<T>;
+using Queue = std::queue<T>;
 
 }  // namespace tactile

@@ -83,6 +83,10 @@ void ObjectLayer::add_object(Shared<Object> object)
 void ObjectLayer::remove_object(const UUID& id)
 {
   mObjects.erase(id);
+
+  if (mActiveObject == id) {
+    mActiveObject.reset();
+  }
 }
 
 void ObjectLayer::reserve_objects(const usize n)

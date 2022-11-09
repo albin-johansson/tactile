@@ -19,7 +19,8 @@
 
 #include "render_object_layer.hpp"
 
-#include <EASTL/algorithm.h>
+#include <algorithm>  // min
+
 #include <imgui.h>
 #include <imgui_internal.h>
 
@@ -39,15 +40,16 @@ void render_point_object(Graphics& graphics,
 {
   TACTILE_ASSERT(object.is_point());
 
-  const float radius = (eastl::min)(graphics.viewport_tile_size().x / 4.0f, 6.0f);
+  const auto& info = graphics.info();
+  const float radius = std::min(info.grid_size.x / 4.0f, 6.0f);
 
   if (graphics.is_within_translated_bounds(position)) {
-    graphics.draw_translated_circle_with_shadow(position, radius, color, 2.0f);
+    graphics.draw_translated_shadowed_circle(position, radius, color, 2.0f);
 
     const auto& name = object.ctx().name();
     if (!name.empty()) {
       const auto text_size = ImGui::CalcTextSize(name.c_str());
-      if (text_size.x <= graphics.viewport_tile_size().x) {
+      if (text_size.x <= info.grid_size.x) {
         const auto text_x = position.x - (text_size.x / 2.0f);
         const auto text_y = position.y + radius + 4.0f;
 
@@ -64,12 +66,13 @@ void render_ellipse_object(Graphics& graphics,
 {
   TACTILE_ASSERT(object.is_ellipse());
 
+  const auto& info = graphics.info();
   const auto size = from_vec(object.size());
 
-  const auto radius = ImVec2 {0.5f, 0.5f} * size * graphics.tile_size_ratio();
+  const auto radius = ImVec2 {0.5f, 0.5f} * size * info.ratio;
   const auto center = position + radius;
 
-  graphics.draw_translated_ellipse_with_shadow(center, radius, color, 2.0f);
+  graphics.draw_translated_shadowed_ellipse(center, radius, color, 2.0f);
 
   const auto& name = object.ctx().name();
   if (!name.empty()) {
@@ -90,10 +93,11 @@ void render_rectangle_object(Graphics& graphics,
 {
   TACTILE_ASSERT(object.is_rect());
 
-  const auto size = from_vec(object.size()) * graphics.tile_size_ratio();
+  const auto& info = graphics.info();
+  const auto size = from_vec(object.size()) * info.ratio;
 
   if (graphics.is_intersecting_bounds(position, size)) {
-    graphics.draw_translated_rect_with_shadow(position, size, color, 2.0f);
+    graphics.draw_translated_shadowed_rect(position, size, color, 2.0f);
 
     const auto& name = object.ctx().name();
     if (!name.empty()) {
@@ -117,7 +121,8 @@ void render_object(Graphics& graphics, const Object& object, const uint32 color)
     return;
   }
 
-  const auto position = from_vec(object.pos()) * graphics.tile_size_ratio();
+  const auto& info = graphics.info();
+  const auto position = from_vec(object.pos()) * info.ratio;
 
   switch (object.type()) {
     case ObjectType::Point:

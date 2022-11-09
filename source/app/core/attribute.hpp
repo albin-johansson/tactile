@@ -204,13 +204,13 @@ class Attribute final {
   template <AnAttributeType T>
   [[nodiscard]] auto holds() const noexcept -> bool
   {
-    return eastl::holds_alternative<T>(mValue);
+    return std::holds_alternative<T>(mValue);
   }
 
   template <AnAttributeType T>
   [[nodiscard]] auto get_if() const noexcept -> const T*
   {
-    return eastl::get_if<T>(&mValue);
+    return std::get_if<T>(&mValue);
   }
 };
 

@@ -35,7 +35,7 @@
 #include "io/map/emit/emitter.hpp"
 #include "io/map/parse/parse_map.hpp"
 
-using namespace eastl::string_literals;
+using namespace std::string_literals;
 
 namespace tactile::test {
 namespace {

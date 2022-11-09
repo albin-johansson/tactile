@@ -19,11 +19,13 @@
 
 #pragma once
 
-#include <concepts>  // integral, invocable
+#include <algorithm>    // reverse
+#include <bit>          // bit_cast
+#include <concepts>     // integral, invocable
+#include <cstring>      // memcpy
+#include <type_traits>  // has_unique_object_representations_v, is_trivially_copyable_v, is_trivially_constructible_v
+#include <version>
 
-#include <EASTL/algorithm.h>
-#include <EASTL/bit.h>
-#include <EASTL/type_traits.h>
 #include <SDL.h>
 
 #include "core/type/array.hpp"
@@ -41,19 +43,35 @@ namespace tactile {
   return SDL_SwapLE32(value);
 }
 
+template <typename To, typename From>
+  requires(sizeof(To) == sizeof(From) &&          //
+           std::is_trivially_copyable_v<From> &&  //
+           std::is_trivially_copyable_v<To> &&    //
+           std::is_trivially_constructible_v<To>)
+[[nodiscard]] auto bitcast(const From& src) noexcept -> To
+{
+#if __cpp_lib_bit_cast >= 201806L
+  return std::bit_cast<To>(src);
+#else
+  To dst;
+  std::memcpy(&dst, &src, sizeof(To));
+  return dst;
+#endif  // __cpp_lib_bit_cast >= 201806L
+}
+
 template <std::integral T>
 [[nodiscard]] constexpr auto byteswap(T value) noexcept -> T
 {
   // Based on example implementation: https://en.cppreference.com/w/cpp/numeric/byteswap
-  static_assert(eastl::has_unique_object_representations_v<T>,
+  static_assert(std::has_unique_object_representations_v<T>,
                 "T may not have padding bits");
 
   using Bytes = Array<uint8, sizeof(value)>;
 
-  auto bytes = eastl::bit_cast<Bytes>(value);
-  eastl::reverse(eastl::begin(bytes), eastl::end(bytes));
+  auto bytes = bitcast<Bytes>(value);
+  std::reverse(std::begin(bytes), std::end(bytes));
 
-  return eastl::bit_cast<T>(bytes);
+  return bitcast<T>(bytes);
 }
 
 template <std::integral Int, std::invocable<uint8> T>

@@ -46,35 +46,4 @@ TEST(Str, ParseI32)
   ASSERT_EQ(0xF1, parse_i32("F1", 16));
 }
 
-TEST(Str, ToStd)
-{
-  const String source = "foo";
-  const auto conv_str = to_std(source);
-  const auto conv_view = to_std(source);
-
-  ASSERT_EQ(source.size(), conv_str.size());
-  ASSERT_EQ(source.size(), conv_view.size());
-
-  usize index = 0;
-  for (const auto ch: source) {
-    ASSERT_EQ(ch, conv_str.at(index));
-    ASSERT_EQ(ch, conv_view.at(index));
-    ++index;
-  }
-}
-
-TEST(Str, FromStd)
-{
-  const std::string source = "test";
-  const auto conv = from_std(source);
-
-  ASSERT_EQ(source.size(), conv.size());
-
-  usize index = 0;
-  for (const auto ch: source) {
-    ASSERT_EQ(ch, conv.at(index));
-    ++index;
-  }
-}
-
 }  // namespace tactile::test

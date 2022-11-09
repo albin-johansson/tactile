@@ -21,8 +21,9 @@
 
 #include <utility>  // move
 
+#include <fmt/format.h>
+
 #include "core/util/assoc.hpp"
-#include "core/util/fmt.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -60,7 +61,7 @@ void ComponentBase::update(StringView key, Attribute value)
 
 auto ComponentBase::remove(StringView key) -> bool
 {
-  if (const auto iter = find_in(mAttributes, key); iter != mAttributes.end()) {
+  if (const auto iter = mAttributes.find(key); iter != mAttributes.end()) {
     mAttributes.erase(iter);
     return true;
   }
@@ -75,7 +76,7 @@ auto ComponentBase::rename(StringView current, String updated) -> bool
     throw TactileError {"Attribute name must be unique!"};
   }
 
-  if (const auto iter = find_in(mAttributes, current); iter != mAttributes.end()) {
+  if (const auto iter = mAttributes.find(current); iter != mAttributes.end()) {
     auto value = iter->second;
     mAttributes.erase(iter);
     mAttributes[std::move(updated)] = std::move(value);
@@ -93,7 +94,7 @@ auto ComponentBase::duplicate(StringView key) -> String
   int suffix = 1;
   String new_key;
   do {
-    new_key = format_str("{} ({})", key, suffix);
+    new_key = fmt::format("{} ({})", key, suffix);
     ++suffix;
   } while (has_key(mAttributes, new_key));
 

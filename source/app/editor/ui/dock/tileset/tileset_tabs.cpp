@@ -22,6 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/tile/tileset_bundle.hpp"
 #include "editor/ui/dock/tileset/tileset_view.hpp"
 #include "editor/ui/style/icons.hpp"
 #include "editor/ui/widget/scoped.hpp"
@@ -90,28 +91,28 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
     const auto& map = map_document.get_map();
     const auto& tilesets = map.tileset_bundle();
 
-    for (const auto& [tilesetId, ref]: tilesets) {
-      const Scope scope {tilesetId};
+    for (const auto& [tileset_id, ref]: tilesets) {
+      const Scope scope {tileset_id};
 
       const auto& name = ref.view_tileset().ctx().name();
-      const auto is_active = tilesets.active_tileset_id() == tilesetId;
+      const auto is_active = tilesets.active_tileset_id() == tileset_id;
 
       bool opened = true;
       if (TabItem item {name.c_str(),
                         &opened,
                         is_active ? ImGuiTabItemFlags_SetSelected : 0};
           item.is_open()) {
-        update_tileset_view(model, tilesetId, dispatcher);
+        update_tileset_view(model, tileset_id, dispatcher);
       }
 
       if (!opened) {
-        dispatcher.enqueue<RemoveTilesetEvent>(tilesetId);
+        dispatcher.enqueue<RemoveTilesetEvent>(tileset_id);
       }
       else if (ImGui::IsItemActivated()) {
-        dispatcher.enqueue<SelectTilesetEvent>(tilesetId);
+        dispatcher.enqueue<SelectTilesetEvent>(tileset_id);
       }
       else {
-        update_context_menu(model, tilesetId, dispatcher);
+        update_context_menu(model, tileset_id, dispatcher);
       }
     }
   }

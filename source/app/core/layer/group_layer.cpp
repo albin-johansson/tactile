@@ -19,9 +19,9 @@
 
 #include "group_layer.hpp"
 
-#include <EASTL/algorithm.h>
-#include <EASTL/iterator.h>
-#include <EASTL/utility.h>
+#include <algorithm>  // find_if, iter_swap
+#include <iterator>   // distance
+#include <utility>    // move
 
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
@@ -43,7 +43,7 @@ class LayerMutatorVisitor : public LayerVisitor {
  public:
   explicit LayerMutatorVisitor(const UUID& target, VisitorFunc func)
       : mTarget {target},
-        mFunc {eastl::move(func)}
+        mFunc {std::move(func)}
   {
   }
 
@@ -51,10 +51,10 @@ class LayerMutatorVisitor : public LayerVisitor {
   {
     auto& storage = layer.storage();
 
-    auto iter = eastl::find_if(
-        storage.begin(),
-        storage.end(),
-        [this](const Shared<Layer>& layer) { return layer->uuid() == mTarget; });
+    auto iter =
+        std::find_if(storage.begin(), storage.end(), [this](const Shared<Layer>& layer) {
+          return layer->uuid() == mTarget;
+        });
 
     if (iter != storage.end()) {
       mFunc(storage, iter);
@@ -72,7 +72,7 @@ class LayerQueryVisitor : public ConstLayerVisitor {
  public:
   explicit LayerQueryVisitor(const UUID& target, ConstVisitorFunc func)
       : mTarget {target},
-        mFunc {eastl::move(func)}
+        mFunc {std::move(func)}
   {
   }
 
@@ -80,10 +80,10 @@ class LayerQueryVisitor : public ConstLayerVisitor {
   {
     const auto& storage = layer.storage();
 
-    auto iter = eastl::find_if(
-        storage.begin(),
-        storage.end(),
-        [this](const Shared<Layer>& layer) { return layer->uuid() == mTarget; });
+    auto iter =
+        std::find_if(storage.begin(), storage.end(), [this](const Shared<Layer>& layer) {
+          return layer->uuid() == mTarget;
+        });
 
     if (iter != storage.end()) {
       mFunc(storage, iter);
@@ -322,7 +322,7 @@ void GroupLayer::add(Shared<Layer> layer)
 {
   if (layer) [[likely]] {
     layer->set_parent(nothing);
-    mLayers.push_back(eastl::move(layer));
+    mLayers.push_back(std::move(layer));
   }
   else {
     throw TactileError {"Invalid null layer!"};
@@ -374,10 +374,10 @@ void GroupLayer::move_up(const UUID& id)
   bool valid = false;
 
   auto op = [&](LayerStorage& storage, LayerStorage::iterator iter) {
-    const auto index = eastl::distance(storage.begin(), iter);
+    const auto index = std::distance(storage.begin(), iter);
 
     if (index != 0) {
-      eastl::iter_swap(iter, iter - 1);
+      std::iter_swap(iter, iter - 1);
       valid = true;
     }
   };
@@ -395,10 +395,10 @@ void GroupLayer::move_down(const UUID& id)
   bool valid = false;
 
   auto op = [&](LayerStorage& storage, LayerStorage::iterator iter) {
-    const auto index = eastl::distance(storage.begin(), iter);
+    const auto index = std::distance(storage.begin(), iter);
 
     if (static_cast<usize>(index) != storage.size() - 1) {
-      eastl::iter_swap(iter, iter + 1);
+      std::iter_swap(iter, iter + 1);
       valid = true;
     }
   };
@@ -477,7 +477,7 @@ auto GroupLayer::local_index(const UUID& id) const -> usize
 {
   Maybe<usize> index;
   auto op = [&](const LayerStorage& storage, LayerStorage::const_iterator iter) {
-    index = static_cast<usize>(eastl::distance(storage.begin(), iter));
+    index = static_cast<usize>(std::distance(storage.begin(), iter));
   };
 
   LayerQueryVisitor query {id, op};

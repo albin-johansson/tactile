@@ -23,14 +23,13 @@
 #include <utility>  // move
 
 #include <fmt/chrono.h>
+#include <fmt/format.h>
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
 #include "core/type/deque.hpp"
 #include "core/type/ptr.hpp"
-#include "core/util/fmt.hpp"
-#include "core/util/str.hpp"
 #include "io/directories.hpp"
 #include "meta/build.hpp"
 #include "misc/panic.hpp"
@@ -49,7 +48,7 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
   void sink_it_(const spdlog::details::log_msg& msg) override
   {
     const auto time = fmt::localtime(msg.time);
-    auto processed = format_str("{:%H:%M:%S} > {}", time, msg.payload);
+    auto processed = fmt::format("{:%H:%M:%S} > {}", time, msg.payload);
     mHistory.push_back({msg.level, std::move(processed)});
   }
 

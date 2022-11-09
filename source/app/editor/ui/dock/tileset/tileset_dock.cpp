@@ -23,6 +23,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/tile/tileset_bundle.hpp"
 #include "core/viewport.hpp"
 #include "editor/ui/dock/tileset/tileset_tabs.hpp"
 #include "editor/ui/style/alignment.hpp"
@@ -59,7 +60,7 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
                ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
                &prefs.show_tileset_dock};
 
-  /* We intentionally do not use the window is_hovered function here */
+  // We intentionally do not use the window is_hovered function here
   dock_has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
   dock_has_hover = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
 

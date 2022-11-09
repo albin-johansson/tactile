@@ -25,8 +25,6 @@
 #include <spdlog/spdlog.h>
 
 #include "core/type/path.hpp"
-#include "core/util/fmt.hpp"
-#include "core/util/str.hpp"
 #include "io/directories.hpp"
 #include "io/file.hpp"
 #include "io/proto/proto.hpp"
@@ -40,6 +38,23 @@ inline PreferenceState current_settings;
 {
   static const auto path = persistent_file_dir() / "settings.bin";
   return path;
+}
+
+[[nodiscard]] auto from_proto(const proto::Color& color) -> cen::color
+{
+  const auto r = static_cast<uint8>(color.red());
+  const auto g = static_cast<uint8>(color.green());
+  const auto b = static_cast<uint8>(color.blue());
+  const auto a = static_cast<uint8>(color.alpha());
+  return cen::color {r, g, b, a};
+}
+
+void to_proto(const cen::color& color, proto::Color* out)
+{
+  out->set_red(color.red());
+  out->set_green(color.green());
+  out->set_blue(color.blue());
+  out->set_alpha(color.alpha());
 }
 
 [[nodiscard]] auto parse_preferences(const Path& path) -> PreferenceState
@@ -58,11 +73,11 @@ inline PreferenceState current_settings;
     }
 
     if (cfg.has_viewport_background()) {
-      const auto& color = cfg.viewport_background();
-      result.viewport_background.set_red(static_cast<uint8>(color.red()));
-      result.viewport_background.set_green(static_cast<uint8>(color.green()));
-      result.viewport_background.set_blue(static_cast<uint8>(color.blue()));
-      result.viewport_background.set_alpha(static_cast<uint8>(color.alpha()));
+      result.viewport_background = from_proto(cfg.viewport_background());
+    }
+
+    if (cfg.has_grid_color()) {
+      result.grid_color = from_proto(cfg.grid_color());
     }
 
     if (cfg.has_show_grid()) {
@@ -94,7 +109,7 @@ inline PreferenceState current_settings;
     }
 
     if (cfg.has_preferred_format()) {
-      result.preferred_format = from_std(cfg.preferred_format());
+      result.preferred_format = cfg.preferred_format();
     }
 
     if (cfg.has_embed_tilesets()) {
@@ -181,20 +196,15 @@ void save_preferences()
   cfg.set_highlight_active_layer(current_settings.highlight_active_layer);
   cfg.set_window_border(current_settings.window_border);
 
-  {
-    auto* background = cfg.mutable_viewport_background();
-    background->set_red(current_settings.viewport_background.red());
-    background->set_green(current_settings.viewport_background.green());
-    background->set_blue(current_settings.viewport_background.blue());
-    background->set_alpha(current_settings.viewport_background.alpha());
-  }
+  to_proto(current_settings.viewport_background, cfg.mutable_viewport_background());
+  to_proto(current_settings.grid_color, cfg.mutable_grid_color());
 
   cfg.set_command_capacity(current_settings.command_capacity);
   cfg.set_restore_last_session(current_settings.restore_last_session);
   cfg.set_preferred_tile_width(current_settings.preferred_tile_size.x);
   cfg.set_preferred_tile_height(current_settings.preferred_tile_size.y);
 
-  cfg.set_preferred_format(to_std(current_settings.preferred_format));
+  cfg.set_preferred_format(current_settings.preferred_format);
   cfg.set_embed_tilesets(current_settings.embed_tilesets);
   cfg.set_indent_output(current_settings.indent_output);
   cfg.set_fold_tile_data(current_settings.fold_tile_data);
@@ -226,6 +236,7 @@ void print_preferences()
   spdlog::debug("Theme... {}", magic_enum::enum_name(current_settings.theme));
   spdlog::debug("Viewport background... {}",
                 current_settings.viewport_background.as_rgb());
+  spdlog::debug("Grid color... {}", current_settings.grid_color.as_rgba());
 
   spdlog::debug("Command capacity... {}", current_settings.command_capacity);
   spdlog::debug("Preferred tile width... {}", current_settings.preferred_tile_size.x);

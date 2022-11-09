@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "core/type/path.hpp"
 #include "core/uuid.hpp"
 
 namespace tactile {
@@ -35,5 +36,13 @@ struct CloseDocumentEvent final {
 struct SelectDocumentEvent final {
   UUID id {};
 };
+
+struct SaveEvent final {};
+
+struct SaveAsEvent final {
+  Path path;
+};
+
+struct OpenSaveAsDialogEvent final {};
 
 }  // namespace tactile

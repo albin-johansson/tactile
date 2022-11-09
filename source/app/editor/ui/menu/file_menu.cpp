@@ -34,7 +34,7 @@
 #include "model/cmd/command_stack.hpp"
 #include "model/event/document_events.hpp"
 #include "model/event/map_events.hpp"
-#include "model/event/misc_events.hpp"
+#include "model/event/view_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {

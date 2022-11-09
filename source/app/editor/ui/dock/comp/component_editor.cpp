@@ -111,7 +111,7 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
     const auto& name = definition.name();
     if (Combo combo {"##ComponentEditorCombo", name.c_str()}; combo.is_open()) {
       for (const auto& [componentId, component]: *index) {
-        if (ImGui::Selectable(component.name().c_str())) {
+        if (Selectable::Property(component.name().c_str())) {
           data.active_component = component.uuid();
         }
       }

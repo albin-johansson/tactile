@@ -21,6 +21,8 @@
 
 #include <utility>  // move
 
+#include "core/layer/group_layer.hpp"
+#include "core/layer/object.hpp"
 #include "core/layer/object_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
@@ -52,7 +54,6 @@ void AddObject::undo()
 
   const auto object_id = mObjectId.value();
   layer.remove_object(object_id);
-
   mDocument->get_contexts().erase(object_id);
 }
 
@@ -61,16 +62,18 @@ void AddObject::redo()
   auto& map = mDocument->get_map();
   auto& layer = map.invisible_root().object_layer(mLayerId);
 
-  auto object = std::make_shared<Object>();
-  object->set_type(mObjectType);
-  object->set_pos(mPos);
-  object->set_size(mSize);
-  object->set_meta_id(map.fetch_and_increment_next_object_id());
+  if (!mObject) {
+    mObject = std::make_shared<Object>();
+    mObjectId = mObject->uuid();
+  }
 
-  mObjectId = object->uuid();
-  layer.add_object(object);
+  mObject->set_type(mObjectType);
+  mObject->set_pos(mPos);
+  mObject->set_size(mSize);
+  mObject->set_meta_id(map.fetch_and_increment_next_object_id());
 
-  mDocument->get_contexts().add_context(std::move(object));
+  layer.add_object(mObject);
+  mDocument->get_contexts().add_context(mObject);
 }
 
 auto AddObject::get_name() const -> String

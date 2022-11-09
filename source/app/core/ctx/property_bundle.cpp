@@ -28,53 +28,55 @@ namespace tactile {
 
 void PropertyBundle::add(String name, AttributeType type)
 {
-  if (!contains(name)) {
-    mProps[std::move(name)].reset_to_default(type);
+  if (contains(name)) [[unlikely]] {
+    throw TactileError {"Property name already in use"};
   }
-  else {
-    throw TactileError {"Invalid property name!"};
-  }
+
+  mProps[std::move(name)].reset_to_default(type);
 }
 
 void PropertyBundle::add(String name, Attribute value)
 {
-  if (!contains(name)) {
-    mProps[std::move(name)] = std::move(value);
+  if (contains(name)) [[unlikely]] {
+    throw TactileError {"Property name already in use"};
   }
-  else {
-    throw TactileError {"Invalid property name!"};
-  }
+
+  mProps[std::move(name)] = std::move(value);
 }
 
 void PropertyBundle::update(StringView name, Attribute value)
 {
   auto& property = at(name);
-  property = value;
+  property = std::move(value);
 }
 
-void PropertyBundle::remove(StringView name)
+auto PropertyBundle::remove(StringView name) -> bool
 {
-  if (const auto iter = find_in(mProps, name); iter != mProps.end()) {
+  if (const auto iter = mProps.find(name); iter != mProps.end()) {
     mProps.erase(iter);
+    return true;
   }
   else {
-    throw TactileError {"Invalid property name!"};
+    return false;
   }
 }
 
-void PropertyBundle::rename(StringView current, String updated)
+auto PropertyBundle::rename(StringView current, String updated) -> bool
 {
-  if (contains(updated)) {
-    throw TactileError {"Duplicated property name!"};
+  if (contains(updated)) [[unlikely]] {
+    throw TactileError {"Attempted to rename property to name already in use"};
   }
 
-  if (const auto iter = find_in(mProps, current); iter != mProps.end()) {
+  if (const auto iter = mProps.find(current); iter != mProps.end()) {
     auto value = iter->second;
+
     mProps.erase(iter);
     mProps[std::move(updated)] = value;
+
+    return true;
   }
   else {
-    throw TactileError {"Invalid property name!"};
+    return false;
   }
 }
 
@@ -90,7 +92,7 @@ auto PropertyBundle::change_type(StringView name, const AttributeType type) -> A
 
 auto PropertyBundle::find(StringView name) -> Attribute*
 {
-  if (const auto iter = find_in(mProps, name); iter != mProps.end()) {
+  if (const auto iter = mProps.find(name); iter != mProps.end()) {
     return &iter->second;
   }
   else {
@@ -100,7 +102,7 @@ auto PropertyBundle::find(StringView name) -> Attribute*
 
 auto PropertyBundle::find(StringView name) const -> const Attribute*
 {
-  if (const auto iter = find_in(mProps, name); iter != mProps.end()) {
+  if (const auto iter = mProps.find(name); iter != mProps.end()) {
     return &iter->second;
   }
   else {
@@ -130,7 +132,7 @@ auto PropertyBundle::at(StringView name) const -> const Attribute&
 
 auto PropertyBundle::contains(StringView name) const -> bool
 {
-  return find(name) != nullptr;
+  return has_key(mProps, name);
 }
 
 auto PropertyBundle::size() const -> usize

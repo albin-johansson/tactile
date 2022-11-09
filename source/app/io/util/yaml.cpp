@@ -20,7 +20,6 @@
 #include "yaml.hpp"
 
 #include "core/util/filesystem.hpp"
-#include "core/util/str.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile::io {
@@ -29,7 +28,7 @@ auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter
 {
   switch (value.type()) {
     case AttributeType::String:
-      return emitter << to_std(value.as_string());
+      return emitter << value.as_string();
 
     case AttributeType::Int:
       emitter << value.as_int();

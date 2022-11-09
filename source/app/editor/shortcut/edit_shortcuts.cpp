@@ -29,9 +29,9 @@
 #include "model/event/command_events.hpp"
 #include "model/event/component_events.hpp"
 #include "model/event/map_events.hpp"
-#include "model/event/misc_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/tool_events.hpp"
+#include "model/event/view_events.hpp"
 #include "model/model.hpp"
 #include "model/tool/tool_manager.hpp"
 

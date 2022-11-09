@@ -19,7 +19,8 @@
 
 #include "render_info.hpp"
 
-#include <EASTL/algorithm.h>
+#include <algorithm>  // min, max
+
 #include <imgui_internal.h>
 
 #include "core/map.hpp"
@@ -40,11 +41,11 @@ namespace {
   const auto begin = (tl - origin) / grid_size;
   const auto end = (br - origin) / grid_size;
 
-  const auto begin_row = (eastl::max)(0, static_cast<int32>(begin.y));
-  const auto begin_col = (eastl::max)(0, static_cast<int32>(begin.x));
+  const auto begin_row = std::max(0, static_cast<int32>(begin.y));
+  const auto begin_col = std::max(0, static_cast<int32>(begin.x));
 
-  const auto end_row = static_cast<int32>((eastl::min)(rows, end.y + 1));
-  const auto end_col = static_cast<int32>((eastl::min)(cols, end.x + 1));
+  const auto end_row = static_cast<int32>(std::min(rows, end.y + 1));
+  const auto end_col = static_cast<int32>(std::min(cols, end.x + 1));
 
   Region bounds;
 
@@ -70,8 +71,15 @@ namespace {
   info.grid_size = from_vec(viewport.tile_size());
   info.ratio = info.grid_size / info.tile_size;
 
+  const auto viewport_size = info.canvas_br - info.canvas_tl;
+  const auto tiles_in_viewport = viewport_size / info.grid_size;
+  info.tiles_in_viewport_x = static_cast<int32>(tiles_in_viewport.x) + 1;
+  info.tiles_in_viewport_y = static_cast<int32>(tiles_in_viewport.y) + 1;
+
   info.row_count = static_cast<float>(rows);
   info.col_count = static_cast<float>(columns);
+
+  info.contents_size = ImVec2 {info.col_count, info.row_count} * info.grid_size;
 
   info.bounds = get_render_bounds(info.canvas_tl,
                                   info.canvas_br,

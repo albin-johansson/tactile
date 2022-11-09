@@ -23,9 +23,10 @@
 #include <centurion/message_box.hpp>
 #include <spdlog/spdlog.h>
 
-#include "app.hpp"
 #include "cfg/configuration.hpp"
 #include "core/util/fmt.hpp"
+#include "editor/app.hpp"
+#include "editor/app_context.hpp"
 #include "io/directories.hpp"
 #include "misc/logging.hpp"
 #include "misc/panic.hpp"
@@ -54,7 +55,9 @@ auto main(int argc, char* argv[]) -> int
                  tactile::io::persistent_file_dir());
 
     tactile::AppCfg cfg {argc, argv};
-    tactile::App app {&cfg};
+    tactile::init_app_context(&cfg);
+
+    tactile::App app;
     app.start();
 
     return EXIT_SUCCESS;

@@ -19,12 +19,10 @@
 
 #include "language_parser.hpp"
 
-#include <string>  // string
-
+#include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "core/util/fmt.hpp"
-#include "core/util/str.hpp"
+#include "core/type/string.hpp"
 #include "editor/ui/style/icons.hpp"
 #include "io/directories.hpp"
 #include "io/util/json.hpp"
@@ -37,7 +35,7 @@ namespace {
 void load(const JSON& json, String& string, const char* key)
 {
   if (const auto* value = try_get(json, key)) {
-    string = from_std(value->get<std::string>());
+    string = value->get<String>();
   }
 
   if (string.empty()) {
@@ -51,7 +49,7 @@ void load(const JSON& json, String& string, const char* key)
 void load(const JSON& json, String& string, const char* key, const char* icon)
 {
   if (const auto* value = try_get(json, key)) {
-    string = format_str("{} {}", icon, *value);
+    string = fmt::format("{} {}", icon, *value);
   }
 
   if (string.empty()) {
@@ -234,6 +232,7 @@ void load_setting_strings(const JSON& json, SettingStrings& setting)
   load(json, setting.language, "language");
   load(json, setting.theme, "theme");
   load(json, setting.viewport_bg_color, "viewport-bg-color");
+  load(json, setting.grid_color, "grid-color");
   load(json, setting.window_border, "window-border");
   load(json, setting.restore_layout, "restore-layout");
   load(json, setting.use_default_font, "use-default-font");

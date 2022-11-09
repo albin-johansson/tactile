@@ -22,11 +22,14 @@
 #include <utility>  // move
 
 #include "core/comp/component_index.hpp"
+#include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/tile/tileset.hpp"
+#include "core/tile/tileset_bundle.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "core/util/functional.hpp"
+#include "io/load_texture.hpp"
 
 namespace tactile::test {
 
@@ -123,9 +126,7 @@ auto MapBuilder::with_object(const ObjectType type,
 auto MapBuilder::with_tileset(UUID* id) -> MapBuilder&
 {
   auto tileset = std::make_shared<Tileset>(TilesetInfo {
-      .texture_path = "foo.png",
-      .texture_id = 9,
-      .texture_size = {1024, 1024},
+      .texture = io::load_texture("resources/terrain.png"),
       .tile_size = {32, 32},
   });
 
