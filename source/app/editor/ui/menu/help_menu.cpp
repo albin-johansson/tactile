@@ -33,29 +33,20 @@
 namespace tactile::ui {
 namespace {
 
-struct HelpMenuState final {
-  bool show_about_imgui {};
-};
-
-[[nodiscard]] auto _get_state() -> HelpMenuState&
-{
-  static HelpMenuState state;
-  return state;
-}
+constinit bool menu_show_about_imgui = false;
 
 }  // namespace
 
 void update_help_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
-  auto& state = _get_state();
 
   if (Menu menu {lang.menu.help.c_str()}; menu.is_open()) {
     if (ImGui::MenuItem(lang.action.show_about.c_str())) {
       get_dialogs().about.show();
     }
 
-    state.show_about_imgui = ImGui::MenuItem(lang.action.about_dear_imgui.c_str());
+    menu_show_about_imgui = ImGui::MenuItem(lang.action.about_dear_imgui.c_str());
 
     ImGui::Separator();
     if (ImGui::MenuItem(lang.action.report_issue.c_str())) {
@@ -72,9 +63,9 @@ void update_help_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
   dialogs.about.update(model, dispatcher);
   dialogs.credits.update(model, dispatcher);
 
-  if (state.show_about_imgui) {
+  if (menu_show_about_imgui) {
     center_next_window_on_appearance();
-    ImGui::ShowAboutWindow(&state.show_about_imgui);
+    ImGui::ShowAboutWindow(&menu_show_about_imgui);
   }
 }
 
