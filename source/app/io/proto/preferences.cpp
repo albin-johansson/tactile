@@ -183,7 +183,7 @@ void load_preferences()
     current_settings = parse_preferences(path);
   }
   else {
-    spdlog::info("Did not find a preferences file, assuming defaults");
+    spdlog::info("Did not find previous settings, assuming defaults");
     save_preferences();
   }
 
@@ -231,7 +231,7 @@ void save_preferences()
   auto stream = write_file(path, FileType::Binary);
 
   if (!cfg.SerializeToOstream(&stream)) {
-    spdlog::error("Failed to save preferences!");
+    spdlog::error("Failed to save settings!");
   }
 }
 
