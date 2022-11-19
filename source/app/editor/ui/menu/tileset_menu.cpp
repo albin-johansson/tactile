@@ -19,26 +19,23 @@
 
 #include "tileset_menu.hpp"
 
-#include <entt/signal/dispatcher.hpp>
-#include <imgui.h>
-
+#include "editor/app_context.hpp"
+#include "editor/ui/widget/menu_item.hpp"
 #include "editor/ui/widget/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 
-void update_tileset_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_tileset_menu()
 {
+  const auto& model = get_model();
   const auto& lang = get_current_language();
 
   Disable disable {!model.is_tileset_active()};
   if (Menu menu {lang.menu.tileset.c_str()}; menu.is_open()) {
-    if (ImGui::MenuItem(lang.action.inspect_tileset.c_str())) {
-      dispatcher.enqueue<InspectTilesetEvent>();
-    }
+    menu_item(MenuAction::InspectTileset);
   }
 }
 

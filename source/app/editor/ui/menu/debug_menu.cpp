@@ -22,7 +22,6 @@
 #include <imgui.h>
 
 #include "editor/ui/style/alignment.hpp"
-#include "editor/ui/style/icons.hpp"
 #include "editor/ui/widget/scoped.hpp"
 #include "io/directories.hpp"
 #include "lang/language.hpp"

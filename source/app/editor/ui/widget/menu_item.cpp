@@ -17,33 +17,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "menu_bar.hpp"
+#include "menu_item.hpp"
 
 #include <imgui.h>
 
-#include "editor/ui/menu/debug_menu.hpp"
-#include "editor/ui/menu/edit_menu.hpp"
-#include "editor/ui/menu/file_menu.hpp"
-#include "editor/ui/menu/help_menu.hpp"
-#include "editor/ui/menu/map_menu.hpp"
-#include "editor/ui/menu/tileset_menu.hpp"
-#include "editor/ui/menu/view_menu.hpp"
-#include "model/model.hpp"
+#include "editor/handler/menu_event_handler.hpp"
 
 namespace tactile::ui {
 
-void update_menu_bar(const DocumentModel& model, entt::dispatcher& dispatcher)
+void menu_item(const MenuAction action, const char* shortcut)
 {
-  if (ImGui::BeginMainMenuBar()) {
-    update_file_menu(model, dispatcher);
-    update_edit_menu();
-    update_view_menu();
-    update_map_menu();
-    update_tileset_menu();
-    update_help_menu();
-    update_debug_menu();
-
-    ImGui::EndMainMenuBar();
+  const auto& item = get_menu_item(action);
+  if (ImGui::MenuItem(item.text.c_str(), shortcut, item.selected, item.enabled)) {
+    dispatch_menu_action(action);
   }
 }
 

@@ -17,34 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "menu_bar.hpp"
+#pragma once
 
-#include <imgui.h>
+#include "editor/menu/menu.hpp"
 
-#include "editor/ui/menu/debug_menu.hpp"
-#include "editor/ui/menu/edit_menu.hpp"
-#include "editor/ui/menu/file_menu.hpp"
-#include "editor/ui/menu/help_menu.hpp"
-#include "editor/ui/menu/map_menu.hpp"
-#include "editor/ui/menu/tileset_menu.hpp"
-#include "editor/ui/menu/view_menu.hpp"
-#include "model/model.hpp"
+namespace tactile {
 
-namespace tactile::ui {
+/// Invoked whenever a menu action is triggered, i.e. a menu item is pressed.
+void dispatch_menu_action(MenuAction action);
 
-void update_menu_bar(const DocumentModel& model, entt::dispatcher& dispatcher)
-{
-  if (ImGui::BeginMainMenuBar()) {
-    update_file_menu(model, dispatcher);
-    update_edit_menu();
-    update_view_menu();
-    update_map_menu();
-    update_tileset_menu();
-    update_help_menu();
-    update_debug_menu();
-
-    ImGui::EndMainMenuBar();
-  }
-}
-
-}  // namespace tactile::ui
+}  // namespace tactile

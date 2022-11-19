@@ -19,19 +19,17 @@
 
 #include "view_menu.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/viewport.hpp"
+#include "editor/app_context.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/ui/dock/dock_space.hpp"
-#include "editor/ui/fonts.hpp"
+#include "editor/ui/widget/menu_item.hpp"
 #include "editor/ui/widget/scoped.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/event/view_events.hpp"
-#include "model/event/viewport_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
@@ -86,20 +84,19 @@ void update_widgets_menu(const DocumentModel& model)
 
 }  // namespace
 
-void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_view_menu()
 {
+  const auto& model = get_model();
   const auto& lang = get_current_language();
 
   if (Menu menu {lang.menu.view.c_str()}; menu.is_open()) {
-    auto& prefs = io::get_preferences();
-    const auto* document = model.active_document();
-    const auto has_active_document = model.has_active_document();
-
     update_widgets_menu(model);
 
     ImGui::Separator();
 
     if (Menu theme_menu {lang.action.quick_theme.c_str()}; theme_menu.is_open()) {
+      auto& prefs = io::get_preferences();
+
       auto theme_item = [&](const EditorTheme theme) {
         const auto is_current = prefs.theme == theme;
         if (ImGui::MenuItem(human_readable_name(theme).data(), nullptr, is_current)) {
@@ -122,125 +119,57 @@ void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (Menu lang_menu {lang.action.quick_language.c_str()}; lang_menu.is_open()) {
+      auto& prefs = io::get_preferences();
       if (ImGui::MenuItem("English (US)")) {
         prefs.language = Lang::EN;
+        reset_layout();
       }
 
       if (ImGui::MenuItem("English (GB)")) {
         prefs.language = Lang::EN_GB;
+        reset_layout();
       }
 
       if (ImGui::MenuItem("Svenska")) {
         prefs.language = Lang::SV;
+        reset_layout();
       }
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.center_viewport.c_str(),
-                        "Shift+Space",
-                        false,
-                        has_active_document)) {
-      dispatcher.enqueue<CenterViewportEvent>();
-    }
+    menu_item(MenuAction::CenterViewport, "Shift+Space");
 
     ImGui::Separator();
 
-    ImGui::MenuItem(lang.action.toggle_grid.c_str(),
-                    TACTILE_PRIMARY_MOD "+G",
-                    &prefs.show_grid);
+    menu_item(MenuAction::ToggleGrid, TACTILE_PRIMARY_MOD "+G");
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.increase_zoom.c_str(),
-                        TACTILE_PRIMARY_MOD "+Plus",
-                        false,
-                        has_active_document)) {
-      dispatcher.enqueue<IncreaseZoomEvent>();
-    }
-
-    if (ImGui::MenuItem(lang.action.decrease_zoom.c_str(),
-                        TACTILE_PRIMARY_MOD "+Minus",
-                        false,
-                        document && document->get_viewport().can_zoom_out())) {
-      dispatcher.enqueue<DecreaseZoomEvent>();
-    }
-
-    if (ImGui::MenuItem(lang.action.reset_zoom.c_str(),
-                        nullptr,
-                        false,
-                        has_active_document)) {
-      dispatcher.enqueue<ResetZoomEvent>();
-    }
+    menu_item(MenuAction::IncreaseZoom, TACTILE_PRIMARY_MOD "+Plus");
+    menu_item(MenuAction::DecreaseZoom, TACTILE_PRIMARY_MOD "+Minus");
+    menu_item(MenuAction::ResetZoom);
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.increase_font_size.c_str(),
-                        TACTILE_PRIMARY_MOD "+Shift+Plus",
-                        false,
-                        can_increase_font_size())) {
-      dispatcher.enqueue<IncreaseFontSizeEvent>();
-    }
-
-    if (ImGui::MenuItem(lang.action.decrease_font_size.c_str(),
-                        TACTILE_PRIMARY_MOD "+Shift+Minus",
-                        false,
-                        can_decrease_font_size())) {
-      dispatcher.enqueue<DecreaseFontSizeEvent>();
-    }
-
-    if (ImGui::MenuItem(lang.action.reset_font_size.c_str(),
-                        nullptr,
-                        false,
-                        !prefs.use_default_font)) {
-      dispatcher.enqueue<ResetFontSizeEvent>();
-    }
+    menu_item(MenuAction::IncreaseFontSize, TACTILE_PRIMARY_MOD "+Shift+Plus");
+    menu_item(MenuAction::DecreaseFontSize, TACTILE_PRIMARY_MOD "+Shift+Minus");
+    menu_item(MenuAction::ResetFontSize);
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.pan_up.c_str(),
-                        TACTILE_PRIMARY_MOD "+Shift+Up",
-                        false,
-                        has_active_document)) {
-      dispatcher.enqueue<PanUpEvent>();
-    }
-
-    if (ImGui::MenuItem(lang.action.pan_down.c_str(),
-                        TACTILE_PRIMARY_MOD "+Shift+Down",
-                        false,
-                        has_active_document)) {
-      dispatcher.enqueue<PanDownEvent>();
-    }
-
-    if (ImGui::MenuItem(lang.action.pan_right.c_str(),
-                        TACTILE_PRIMARY_MOD "+Shift+Right",
-                        false,
-                        has_active_document)) {
-      dispatcher.enqueue<PanRightEvent>();
-    }
-
-    if (ImGui::MenuItem(lang.action.pan_left.c_str(),
-                        TACTILE_PRIMARY_MOD "+Shift+Left",
-                        false,
-                        has_active_document)) {
-      dispatcher.enqueue<PanLeftEvent>();
-    }
+    menu_item(MenuAction::PanUp, TACTILE_PRIMARY_MOD "+Shift+Up");
+    menu_item(MenuAction::PanDown, TACTILE_PRIMARY_MOD "+Shift+Down");
+    menu_item(MenuAction::PanRight, TACTILE_PRIMARY_MOD "+Shift+Right");
+    menu_item(MenuAction::PanLeft, TACTILE_PRIMARY_MOD "+Shift+Left");
 
     ImGui::Separator();
 
-    ImGui::MenuItem(lang.action.highlight_layer.c_str(),
-                    "H",
-                    &prefs.highlight_active_layer,
-                    model.is_map_active());
+    menu_item(MenuAction::HighlightLayer, "H");
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.toggle_ui.c_str(),
-                        "Tab",
-                        false,
-                        has_active_document)) {
-      dispatcher.enqueue<ToggleUiEvent>();
-    }
+    menu_item(MenuAction::ToggleUi, "Tab");
   }
 }
 

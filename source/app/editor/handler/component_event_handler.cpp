@@ -22,7 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "editor/app_context.hpp"
-#include "editor/ui/menu/edit_menu.hpp"
+#include "editor/ui/ui.hpp"
 #include "model/document/document.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
@@ -32,7 +32,7 @@ namespace {
 
 void on_show_component_editor()
 {
-  ui::show_component_editor(get_model());
+  ui::show_component_editor();
 }
 
 void on_define_component(const DefineComponentEvent& event)

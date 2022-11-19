@@ -23,6 +23,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "editor/menu/menu.hpp"
 #include "editor/ui/dock/dock_space.hpp"
 #include "editor/ui/fonts.hpp"
 #include "editor/ui/style/alignment.hpp"
@@ -130,6 +131,7 @@ void SettingsDialog::apply_settings(entt::dispatcher& dispatcher)
 
   if (mUiSettings.language != mSnapshot.language) {
     reset_layout();
+    menu_translate(get_current_language());
   }
 
   if (mUiSettings.command_capacity != mSnapshot.command_capacity) {

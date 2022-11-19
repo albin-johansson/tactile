@@ -19,18 +19,8 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
-namespace tactile {
-class DocumentModel;
-}  // namespace tactile
-
 namespace tactile::ui {
 
-void update_edit_menu(const DocumentModel& model, entt::dispatcher& dispatcher);
-
-void show_settings_dialog();
-
-void show_component_editor(const DocumentModel& model);
+void update_edit_menu();
 
 }  // namespace tactile::ui

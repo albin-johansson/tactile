@@ -19,85 +19,57 @@
 
 #include "map_menu.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "editor/app_context.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "editor/ui/dialog/dialog_state.hpp"
 #include "editor/ui/dialog/dialogs.hpp"
 #include "editor/ui/dialog/godot_export_dialog.hpp"
 #include "editor/ui/dock/tileset/dialogs/create_tileset_dialog.hpp"
-#include "editor/ui/style/icons.hpp"
+#include "editor/ui/widget/menu_item.hpp"
 #include "editor/ui/widget/scoped.hpp"
-#include "editor/ui/widget/tooltips.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/event/map_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 
-void update_map_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_map_menu()
 {
+  const auto& model = get_model();
   const auto& lang = get_current_language();
 
   Disable disable {!model.is_map_active()};
   if (Menu menu {lang.menu.map.c_str()}; menu.is_open()) {
-    if (ImGui::MenuItem(lang.action.inspect_map.c_str())) {
-      dispatcher.enqueue<InspectMapEvent>();
-    }
+    menu_item(MenuAction::InspectMap);
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.add_tileset.c_str(), TACTILE_PRIMARY_MOD "+T")) {
-      show_tileset_creation_dialog();
-    }
+    menu_item(MenuAction::AddTileset, TACTILE_PRIMARY_MOD "+T");
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.add_row.c_str(), TACTILE_SECONDARY_MOD "+R")) {
-      dispatcher.enqueue<AddRowEvent>();
-    }
-
-    if (ImGui::MenuItem(lang.action.add_column.c_str(), TACTILE_SECONDARY_MOD "+C")) {
-      dispatcher.enqueue<AddColumnEvent>();
-    }
-
-    if (ImGui::MenuItem(lang.action.remove_row.c_str(),
-                        TACTILE_SECONDARY_MOD "+Shift+R")) {
-      dispatcher.enqueue<RemoveRowEvent>();
-    }
-
-    if (ImGui::MenuItem(lang.action.remove_column.c_str(),
-                        TACTILE_SECONDARY_MOD "+Shift+C")) {
-      dispatcher.enqueue<RemoveColumnEvent>();
-    }
+    menu_item(MenuAction::AddRow, TACTILE_SECONDARY_MOD "+R");
+    menu_item(MenuAction::AddColumn, TACTILE_SECONDARY_MOD "+C");
+    menu_item(MenuAction::RemoveRow, TACTILE_SECONDARY_MOD "+Shift+R");
+    menu_item(MenuAction::RemoveColumn, TACTILE_SECONDARY_MOD "+Shift+C");
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.fix_invalid_tiles.c_str())) {
-      dispatcher.enqueue<FixTilesInMapEvent>();
-    }
-
-    lazy_tooltip("##FixInvalidTilesTooltip", lang.tooltip.fix_invalid_tiles.c_str());
+    menu_item(MenuAction::FixInvalidTiles);
+    // lazy_tooltip("##FixInvalidTilesTooltip", lang.tooltip.fix_invalid_tiles.c_str());
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.resize_map.c_str())) {
-      dispatcher.enqueue<OpenResizeMapDialogEvent>();
-    }
+    menu_item(MenuAction::ResizeMap);
 
     ImGui::Separator();
 
     if (Menu export_menu {lang.menu.export_as.c_str()}; export_menu.is_open()) {
-      if (ImGui::MenuItem(lang.action.export_as_godot_scene.c_str())) {
-        get_dialogs().godot_export.open();
-      }
+      menu_item(MenuAction::ExportGodotScene);
     }
   }
-
-  get_dialogs().create_tileset.update(model, dispatcher);
-  get_dialogs().godot_export.update(model, dispatcher);
 }
 
 void show_tileset_creation_dialog()

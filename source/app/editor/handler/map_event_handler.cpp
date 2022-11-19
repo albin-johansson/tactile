@@ -26,6 +26,7 @@
 #include "editor/ui/dialog/dialog_state.hpp"
 #include "editor/ui/dialog/dialogs.hpp"
 #include "editor/ui/menu/file_menu.hpp"
+#include "editor/ui/ui.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/ir/map_from_ir.hpp"

@@ -31,12 +31,14 @@
 #include "editor/handler/document_event_handler.hpp"
 #include "editor/handler/layer_event_handler.hpp"
 #include "editor/handler/map_event_handler.hpp"
+#include "editor/handler/menu_event_handler.hpp"
 #include "editor/handler/object_event_handler.hpp"
 #include "editor/handler/property_event_handler.hpp"
 #include "editor/handler/tileset_event_handler.hpp"
 #include "editor/handler/tool_event_handler.hpp"
 #include "editor/handler/view_event_handler.hpp"
 #include "editor/handler/viewport_event_handler.hpp"
+#include "editor/menu/menu.hpp"
 #include "editor/shortcut/shortcuts.hpp"
 #include "editor/ui/dialog/dialogs.hpp"
 #include "editor/ui/dock/layer/layer_dock.hpp"
@@ -106,11 +108,17 @@ void App::on_update()
 {
   get_dispatcher().update();
   get_model().update();
+  update_menus();
   ui::update_widgets(get_model(), get_dispatcher());
 }
 
 void App::on_event(const cen::event_handler& handler)
 {
+  if (const auto type = handler.raw_type(); type > SDL_USEREVENT) {
+    dispatch_menu_action(static_cast<MenuAction>(*type));
+    return;
+  }
+
   switch (handler.type().value()) {
     case cen::event_type::key_up:
       [[fallthrough]];
