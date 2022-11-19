@@ -19,15 +19,9 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
-namespace tactile {
-class DocumentModel;
-}  // namespace tactile
-
 namespace tactile::ui {
 
-void update_map_menu(const DocumentModel& model, entt::dispatcher& dispatcher);
+void update_map_menu();
 
 void show_tileset_creation_dialog();
 

@@ -29,6 +29,7 @@
 #include "cfg/platform_specific.hpp"
 #include "core/type/path.hpp"
 #include "core/util/fmt.hpp"
+#include "editor/menu/menu.hpp"
 #include "io/directories.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
@@ -140,6 +141,8 @@ AppCfg::AppCfg(int, char*[])
 
   TACTILE_ASSERT(mOpenGL.has_value());
   mImGui.emplace(*mWindow, *mOpenGL);
+
+  init_menus();
 
   mWindow->maximize();
 }

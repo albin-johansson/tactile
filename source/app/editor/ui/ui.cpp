@@ -19,9 +19,12 @@
 
 #include "ui.hpp"
 
+#include <editor/ui/style/alignment.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <spdlog/spdlog.h>
 
 #include "core/type/path.hpp"
+#include "editor/app_context.hpp"
 #include "editor/ui/dialog/dialog_state.hpp"
 #include "editor/ui/dialog/dialogs.hpp"
 #include "editor/ui/dock/comp/component_dock.hpp"
@@ -35,10 +38,16 @@
 #include "editor/ui/viewport/map_viewport_toolbar.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
 #include "io/directories.hpp"
+#include "io/file_dialog.hpp"
+#include "meta/build.hpp"
+#include "model/event/map_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 namespace {
+
+inline constinit bool ui_show_map_selector = false;
+inline constinit bool ui_show_about_imgui = false;
 
 void check_for_missing_ini_file()
 {
@@ -50,6 +59,17 @@ void check_for_missing_ini_file()
     const auto str = ini.string();
     ImGui::SaveIniSettingsToDisk(str.c_str());
   }
+}
+
+void update_map_file_dialog(entt::dispatcher& dispatcher)
+{
+  auto dialog = io::FileDialog::open_map();
+
+  if (dialog.is_okay()) {
+    dispatcher.enqueue<OpenMapEvent>(dialog.path());
+  }
+
+  ui_show_map_selector = false;
 }
 
 }  // namespace
@@ -77,10 +97,52 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
   update_viewport_widget(model, dispatcher);
 
   auto& dialogs = get_dialogs();
+  dialogs.settings.update(model, dispatcher);
+  dialogs.component_editor.update(model, dispatcher);
+  dialogs.create_map.update(model, dispatcher);
   dialogs.resize_map.update(model, dispatcher);
   dialogs.map_parse_error.update(model, dispatcher);
+  dialogs.about.update(model, dispatcher);
+  dialogs.credits.update(model, dispatcher);
+  dialogs.create_tileset.update(model, dispatcher);
+  dialogs.godot_export.update(model, dispatcher);
+
+  if (ui_show_map_selector) {
+    update_map_file_dialog(dispatcher);
+  }
+
+  if (ui_show_about_imgui) {
+    center_next_window_on_appearance();
+    ImGui::ShowAboutWindow(&ui_show_about_imgui);
+  }
 
   check_for_missing_ini_file();
+}
+
+void show_map_creation_dialog()
+{
+  get_dialogs().create_map.show();
+}
+
+void show_map_selector_dialog()
+{
+  ui_show_map_selector = true;
+}
+
+void show_about_dear_imgui_dialog()
+{
+  ui_show_about_imgui = true;
+}
+
+void show_settings_dialog()
+{
+  get_dialogs().settings.show();
+}
+
+void show_component_editor()
+{
+  const auto& model = get_model();
+  get_dialogs().component_editor.show(model);
 }
 
 auto is_editor_focused() -> bool

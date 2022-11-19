@@ -19,53 +19,29 @@
 
 #include "help_menu.hpp"
 
-#include <centurion/system.hpp>
 #include <imgui.h>
 
-#include "editor/ui/dialog/dialog_state.hpp"
-#include "editor/ui/dialog/dialogs.hpp"
-#include "editor/ui/style/alignment.hpp"
-#include "editor/ui/style/icons.hpp"
+#include "editor/handler/menu_event_handler.hpp"
+#include "editor/ui/widget/menu_item.hpp"
 #include "editor/ui/widget/scoped.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 
 namespace tactile::ui {
-namespace {
 
-constinit bool menu_show_about_imgui = false;
-
-}  // namespace
-
-void update_help_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_help_menu()
 {
   const auto& lang = get_current_language();
 
   if (Menu menu {lang.menu.help.c_str()}; menu.is_open()) {
-    if (ImGui::MenuItem(lang.action.show_about.c_str())) {
-      get_dialogs().about.show();
-    }
-
-    menu_show_about_imgui = ImGui::MenuItem(lang.action.about_dear_imgui.c_str());
+    menu_item(MenuAction::AboutTactile);
+    menu_item(MenuAction::AboutDearImGui);
 
     ImGui::Separator();
-    if (ImGui::MenuItem(lang.action.report_issue.c_str())) {
-      cen::open_url("https://github.com/albin-johansson/tactile/issues/new");
-    }
+    menu_item(MenuAction::ReportIssue);
 
     ImGui::Separator();
-    if (ImGui::MenuItem(lang.action.show_credits.c_str())) {
-      get_dialogs().credits.show();
-    }
-  }
-
-  auto& dialogs = get_dialogs();
-  dialogs.about.update(model, dispatcher);
-  dialogs.credits.update(model, dispatcher);
-
-  if (menu_show_about_imgui) {
-    center_next_window_on_appearance();
-    ImGui::ShowAboutWindow(&menu_show_about_imgui);
+    menu_item(MenuAction::Credits);
   }
 }
 
