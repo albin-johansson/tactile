@@ -39,8 +39,8 @@ target_link_libraries(${TACTILE_LIB}
                       PUBLIC
                       ${TACTILE_PROTO}
                       ${Boost_LIBRARIES}
-                      SDL2::SDL2-static
-                      SDL2::SDL2_image
+                      $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
+                      $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
                       imgui::imgui
                       EnTT::EnTT
                       magic_enum::magic_enum
