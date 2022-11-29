@@ -25,8 +25,8 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
 endif ()
 
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-set(LIBRARY_DIR ${ROOT_DIR}/lib)
-set(RESOURCE_DIR ${ROOT_DIR}/assets)
+set(LIBRARY_DIR "${ROOT_DIR}/vendor")
+set(RESOURCE_DIR "${ROOT_DIR}/assets")
 
 # Target names
 set(TACTILE_PROTO TactileProto)
