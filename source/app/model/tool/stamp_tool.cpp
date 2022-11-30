@@ -25,8 +25,8 @@
 
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "core/tile/tileset_bundle.hpp"
-#include "core/tile_pos.hpp"
 #include "core/type/math.hpp"
 #include "core/util/functional.hpp"
 #include "core/util/random.hpp"

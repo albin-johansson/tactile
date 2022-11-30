@@ -25,7 +25,7 @@
 
 #include <fmt/format.h>
 
-#include "core/tile_pos.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "core/type/ostream.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/vocabulary.hpp"

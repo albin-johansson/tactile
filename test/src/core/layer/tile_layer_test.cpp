@@ -23,7 +23,7 @@
 
 #include <gtest/gtest.h>
 
-#include "core/tile_pos.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "core/util/functional.hpp"
 #include "misc/panic.hpp"
 

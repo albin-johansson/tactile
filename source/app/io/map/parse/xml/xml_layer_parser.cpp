@@ -22,7 +22,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/tile_matrix.hpp"
+#include "core/tile/tile_matrix.hpp"
 #include "core/type/string.hpp"
 #include "core/type/vec.hpp"
 #include "core/util/str.hpp"

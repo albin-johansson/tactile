@@ -20,7 +20,7 @@
 #include <algorithm>  // replace
 #include <utility>    // move
 
-#include "core/tile_matrix.hpp"
+#include "core/tile/tile_matrix.hpp"
 #include "core/type/expected.hpp"
 #include "core/type/string.hpp"
 #include "core/util/str.hpp"

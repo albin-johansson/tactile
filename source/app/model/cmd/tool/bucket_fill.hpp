@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/map.hpp"
-#include "core/tile_pos.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/vec.hpp"

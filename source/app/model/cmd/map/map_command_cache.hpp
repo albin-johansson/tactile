@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/tile_pos.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "core/type/tree_map.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"

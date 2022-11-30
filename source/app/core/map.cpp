@@ -28,8 +28,8 @@
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_format.hpp"
 #include "core/layer/tile_layer.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "core/tile/tileset_bundle.hpp"
-#include "core/tile_pos.hpp"
 #include "core/util/functional.hpp"
 #include "misc/panic.hpp"
 

@@ -23,9 +23,9 @@
 
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset_info.hpp"
-#include "core/tile_matrix.hpp"
 #include "core/util/assoc.hpp"
 #include "misc/panic.hpp"
+#include "tile_matrix.hpp"
 
 namespace tactile {
 

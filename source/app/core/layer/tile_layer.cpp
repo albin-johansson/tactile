@@ -19,8 +19,8 @@
 
 #include "tile_layer.hpp"
 
-#include "core/tile_matrix.hpp"
-#include "core/tile_pos.hpp"
+#include "core/tile/tile_matrix.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "core/type/math.hpp"
 #include "core/type/queue.hpp"
 #include "core/util/functional.hpp"

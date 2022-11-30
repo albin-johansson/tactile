@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/tile_pos.hpp"
+#include "core/tile/tile_pos.hpp"
 
 namespace tactile {
 

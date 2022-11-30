@@ -25,7 +25,7 @@
 
 #include <cppcodec/base64_rfc4648.hpp>
 
-#include "core/tile_matrix.hpp"
+#include "core/tile/tile_matrix.hpp"
 #include "core/util/bit.hpp"
 #include "core/util/functional.hpp"
 #include "io/compression.hpp"

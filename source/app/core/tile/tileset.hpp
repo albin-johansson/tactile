@@ -22,12 +22,12 @@
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_info.hpp"
 #include "core/tile/tileset_info.hpp"
-#include "core/tile_pos.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/math.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
+#include "tile_pos.hpp"
 
 namespace tactile {
 

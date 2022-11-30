@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/mouse_info.hpp"
-#include "core/tile_pos.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "core/type/math.hpp"
 #include "core/type/tile_cache.hpp"
 #include "core/uuid.hpp"

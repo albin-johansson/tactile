@@ -20,7 +20,7 @@
 #include <spdlog/spdlog.h>
 
 #include "core/layer/tile_format.hpp"
-#include "core/tile_matrix.hpp"
+#include "core/tile/tile_matrix.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 #include "io/util/base64_tiles.hpp"

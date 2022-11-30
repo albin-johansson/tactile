@@ -26,7 +26,7 @@
 
 #include <fmt/format.h>
 
-#include "core/tile_pos.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "core/type/string.hpp"
 #include "core/type/vec.hpp"
 #include "core/util/assoc.hpp"
