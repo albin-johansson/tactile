@@ -84,7 +84,7 @@ void load_window_icon(cen::window& window)
       icon_path = io::find_resource("Tactile.icns");
     }
     else {
-      icon_path = io::find_resource(on_macos ? "assets/Tactile.icns" : "assets/icon.png");
+      icon_path = io::find_resource("assets/icon.png");
     }
 
     window.set_icon(cen::surface {icon_path.string()});
