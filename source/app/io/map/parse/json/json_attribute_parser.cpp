@@ -64,8 +64,8 @@ namespace {
         value.reset_to_default(AttributeType::Color);
       }
       else {
-        if (const auto color = (hex.size() == 9) ? cen::color::from_argb(hex)
-                                                 : cen::color::from_rgb(hex)) {
+        if (const auto color =
+                (hex.size() == 9) ? Color::from_argb(hex) : Color::from_rgb(hex)) {
           value = *color;
         }
         else {

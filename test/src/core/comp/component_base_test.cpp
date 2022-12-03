@@ -89,8 +89,8 @@ TEST(ComponentBase, Remove)
   ComponentBase component {make_uuid()};
   ASSERT_FALSE(component.remove("foo"));
 
-  component.add("foo", cen::colors::red);
-  ASSERT_EQ(cen::colors::red, component.at("foo"));
+  component.add("foo", Color {0xFF, 0, 0});
+  ASSERT_EQ((Color {0xFF, 0, 0}), component.at("foo"));
   ASSERT_FALSE(component.empty());
 
   ASSERT_TRUE(component.remove("foo"));

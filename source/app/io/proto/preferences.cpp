@@ -40,21 +40,21 @@ inline PreferenceState current_settings;
   return path;
 }
 
-[[nodiscard]] auto from_proto(const proto::Color& color) -> cen::color
+[[nodiscard]] auto from_proto(const proto::Color& color) -> Color
 {
   const auto r = static_cast<uint8>(color.red());
   const auto g = static_cast<uint8>(color.green());
   const auto b = static_cast<uint8>(color.blue());
   const auto a = static_cast<uint8>(color.alpha());
-  return cen::color {r, g, b, a};
+  return Color {r, g, b, a};
 }
 
-void to_proto(const cen::color& color, proto::Color* out)
+void to_proto(const Color& color, proto::Color* out)
 {
-  out->set_red(color.red());
-  out->set_green(color.green());
-  out->set_blue(color.blue());
-  out->set_alpha(color.alpha());
+  out->set_red(color.red);
+  out->set_green(color.green);
+  out->set_blue(color.blue);
+  out->set_alpha(color.alpha);
 }
 
 [[nodiscard]] auto parse_preferences(const Path& path) -> PreferenceState

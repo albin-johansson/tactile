@@ -20,28 +20,17 @@
 #include "colors.hpp"
 
 #include <algorithm>  // find, min, max
-#include <array>      // array
 #include <cmath>      // pow
 
 #include "editor/ui/conversions.hpp"
 #include "editor/ui/style/themes.hpp"
 #include "meta/build.hpp"
+#include "core/type/array.hpp"
 
 namespace tactile::ui {
 namespace {
 
-// https://en.wikipedia.org/wiki/SRGB#From_sRGB_to_CIE_XYZ
-[[nodiscard]] auto to_linear(const float channel) noexcept(TACTILE_COMPILER_MSVC) -> float
-{
-  if (channel <= 0.04045f) {
-    return channel / 12.92f;
-  }
-  else {
-    return std::pow(((channel + 0.055f) / 1.055f), 2.4f);
-  }
-}
-
-inline std::array<bool, ImGuiCol_COUNT> current_colors;
+inline Array<bool, ImGuiCol_COUNT> current_colors;
 
 }  // namespace
 
@@ -51,7 +40,7 @@ void update_dynamic_color_cache()
 
   usize index = 0;
   for (const auto& color: style.Colors) {
-    current_colors.at(index) = is_dark(to_color(color));
+    current_colors.at(index) = to_color(color).is_dark();
     ++index;
   }
 }
@@ -74,22 +63,9 @@ auto make_darker(const ImVec4& color, const float exp) -> ImVec4
           1.0f};
 }
 
-auto luminance(const cen::color& color) -> float
-{
-  const auto r_lin = to_linear(color.norm_red());
-  const auto g_lin = to_linear(color.norm_green());
-  const auto b_lin = to_linear(color.norm_blue());
-  return (0.2126f * r_lin) + (0.7152f * g_lin) + (0.0722f * b_lin);
-}
-
 auto is_dark(const ImGuiCol color) -> bool
 {
   return current_colors.at(static_cast<usize>(color));
-}
-
-auto is_dark(const cen::color& color) -> bool
-{
-  return luminance(color) < 0.3f;
 }
 
 }  // namespace tactile::ui

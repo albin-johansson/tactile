@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include <centurion/color.hpp>
 #include <imgui.h>
 
+#include "core/color.hpp"
 #include "core/type/array.hpp"
 #include "core/vocabulary.hpp"
 
@@ -30,18 +30,6 @@ namespace tactile::ui {
 /// Updates the cache of color data associated with the current theme.
 /// This is used to limit relatively expensive color luminance computations.
 void update_dynamic_color_cache();
-
-/// Converts a color into an array of normalized color components.
-/// The array values are stored in the order red/green/blue/alpha.
-[[nodiscard]] constexpr auto color_to_array(const cen::color& color) noexcept
-    -> Array<float, 4>
-{
-  const auto r = color.norm_red();
-  const auto g = color.norm_green();
-  const auto b = color.norm_blue();
-  const auto a = color.norm_alpha();
-  return {r, g, b, a};
-}
 
 /// Copies a given color, using a different alpha component.
 [[nodiscard]] constexpr auto with_alpha(const ImVec4& color, const float alpha) noexcept
@@ -56,25 +44,9 @@ void update_dynamic_color_cache();
 /// Makes a given color darker by decreasing all component values.
 [[nodiscard]] auto make_darker(const ImVec4& color, float exp = 1.0) -> ImVec4;
 
-/// Computes the relative luminance of a color.
-///
-/// \details
-/// This function is useful when determining appropriate text color for a background
-/// of a certain color.
-///
-/// \see
-/// https://en.wikipedia.org/wiki/Relative_luminance
-///
-/// \param color the color to compute the luminance for.
-/// \return the color luminance, in the interval [0, 1].
-[[nodiscard]] auto luminance(const cen::color& color) -> float;
-
 /// Indicates whether a style color is dark.
 /// Note, this function references an internal color cache, which must be updated
 /// with the update_dynamic_color_cache function.
 [[nodiscard]] auto is_dark(ImGuiCol color) -> bool;
-
-/// Provides a heuristic indication for whether a color is dark or bright.
-[[nodiscard]] auto is_dark(const cen::color& color) -> bool;
 
 }  // namespace tactile::ui

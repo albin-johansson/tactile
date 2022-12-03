@@ -19,8 +19,6 @@
 
 #include <utility>  // move
 
-#include <centurion/color.hpp>
-
 #include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
 #include "io/map/ir/ir.hpp"
@@ -52,7 +50,7 @@ namespace {
     }
     case AttributeType::Color: {
       const auto hex = value.as<String>();
-      if (const auto color = cen::color::from_rgba(hex)) {
+      if (const auto color = Color::from_rgba(hex)) {
         return *color;
       }
       else {
@@ -115,7 +113,7 @@ namespace {
         break;
       }
       case AttributeType::Color: {
-        if (auto color = cen::color::from_rgba(default_value.as<String>())) {
+        if (auto color = Color::from_rgba(default_value.as<String>())) {
           value = *color;
         }
         else {

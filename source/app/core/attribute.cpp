@@ -105,7 +105,7 @@ void Attribute::reset_to_default(const AttributeType type)
       break;
 
     case AttributeType::Color:
-      set_value<color_type>(cen::colors::black);
+      set_value<color_type>(black);
       break;
 
     case AttributeType::Object:
@@ -138,7 +138,7 @@ auto Attribute::has_default_value() const -> bool
     return *obj == object_t {};
   }
   else if (const auto* color = std::get_if<color_type>(&mValue)) {
-    return *color == cen::colors::black;
+    return *color == black;
   }
   else {
     throw TactileError {"Invalid property type!"};

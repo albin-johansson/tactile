@@ -20,8 +20,6 @@
 #include <cstring>  // strcmp
 #include <utility>  // move
 
-#include <centurion/color.hpp>
-
 #include "core/type/string.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
@@ -72,8 +70,8 @@ namespace {
         value.reset_to_default(AttributeType::Color);
       }
       else {
-        if (const auto color = (hex.size() == 9) ? cen::color::from_argb(hex)
-                                                 : cen::color::from_rgb(hex)) {
+        if (const auto color =
+                (hex.size() == 9) ? Color::from_argb(hex) : Color::from_rgb(hex)) {
           value = *color;
         }
         else {

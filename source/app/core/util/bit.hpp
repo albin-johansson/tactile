@@ -20,28 +20,16 @@
 #pragma once
 
 #include <algorithm>    // reverse
-#include <bit>          // bit_cast
+#include <bit>          // bit_cast, endian
 #include <concepts>     // integral, invocable
 #include <cstring>      // memcpy
 #include <type_traits>  // has_unique_object_representations_v, is_trivially_copyable_v, is_trivially_constructible_v
-#include <version>
-
-#include <SDL.h>
+#include <version>      // __cpp_lib_bit_cast
 
 #include "core/type/array.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
-
-[[nodiscard]] inline auto to_little_endian(const uint32 value) noexcept -> uint32
-{
-  return SDL_SwapLE32(value);
-}
-
-[[nodiscard]] inline auto to_little_endian(const int32 value) noexcept -> int32
-{
-  return SDL_SwapLE32(value);
-}
 
 template <typename To, typename From>
   requires(sizeof(To) == sizeof(From) &&          //
@@ -81,6 +69,16 @@ void each_byte(const Int value, T&& callable)
   for (usize idx = 0; idx < sizeof(Int); ++idx) {
     callable(bytes[idx]);
   }
+}
+
+[[nodiscard]] constexpr auto to_little_endian(const uint32 value) noexcept -> uint32
+{
+  return (std::endian::native == std::endian::little) ? value : byteswap(value);
+}
+
+[[nodiscard]] constexpr auto to_little_endian(const int32 value) noexcept -> int32
+{
+  return (std::endian::native == std::endian::little) ? value : byteswap(value);
 }
 
 }  // namespace tactile

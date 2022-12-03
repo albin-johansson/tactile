@@ -94,7 +94,7 @@ TEST(PropertyBundle, Rename)
   PropertyBundle bundle;
 
   ASSERT_FALSE(bundle.rename("A", "B"));
-  bundle.add("A", cen::colors::aqua);
+  bundle.add("A", Color {0, 0xFF, 0xFF});
 
   // Cannot request used name, even when the target property doesn't exist
   ASSERT_THROW(bundle.rename("C", "A"), TactileError);

@@ -19,7 +19,6 @@
 
 #include "tileset_view.hpp"
 
-#include <centurion/color.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -41,7 +40,7 @@
 namespace tactile::ui {
 namespace {
 
-constexpr uint32 rubber_band_color = to_u32(cen::color {0, 0x44, 0xCC, 100});
+constexpr uint32 rubber_band_color = to_u32(Color {0, 0x44, 0xCC, 100});
 
 void update_viewport_offset(const TilesetRef& tileset_ref,
                             const ImVec2& viewport_size,

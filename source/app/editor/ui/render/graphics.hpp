@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include <centurion/color.hpp>
 #include <centurion/math.hpp>
 #include <imgui.h>
 

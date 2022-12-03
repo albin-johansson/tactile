@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include <centurion/color.hpp>
 #include <imgui.h>
 
 #include "core/attribute.hpp"
+#include "core/color.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
@@ -55,7 +55,7 @@ namespace tactile::ui {
 
 [[nodiscard]] auto input_object(const char* id, object_t value) -> Maybe<object_t>;
 
-[[nodiscard]] auto input_color(const char* id, cen::color value) -> Maybe<cen::color>;
+[[nodiscard]] auto input_color(const char* id, Color value) -> Maybe<Color>;
 
 [[nodiscard]] auto input_file(const char* id, const Path& value) -> Maybe<Path>;
 

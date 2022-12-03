@@ -22,8 +22,7 @@
 #include <concepts>  // same_as
 #include <utility>   // move
 
-#include <centurion/color.hpp>
-
+#include "core/color.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/ostream.hpp"
 #include "core/type/path.hpp"
@@ -58,12 +57,12 @@ enum object_t : int32 {
 };
 
 template <typename T>
-concept AnAttributeType = std::same_as<T, String> ||      //
-                          std::same_as<T, int32> ||       //
-                          std::same_as<T, float> ||       //
-                          std::same_as<T, bool> ||        //
-                          std::same_as<T, cen::color> ||  //
-                          std::same_as<T, Path> ||        //
+concept AnAttributeType = std::same_as<T, String> ||  //
+                          std::same_as<T, int32> ||   //
+                          std::same_as<T, float> ||   //
+                          std::same_as<T, bool> ||    //
+                          std::same_as<T, Color> ||   //
+                          std::same_as<T, Path> ||    //
                           std::same_as<T, object_t>;
 
 /// Represents an "attribute" value, used by both property and component facilities.
@@ -72,7 +71,7 @@ class Attribute final {
   using string_type = String;
   using integer_type = int32;
   using float_type = float;
-  using color_type = cen::color;
+  using color_type = Color;
   using path_type = Path;
 
   using value_type = Variant<string_type,

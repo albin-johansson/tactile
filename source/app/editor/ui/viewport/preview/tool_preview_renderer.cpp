@@ -114,7 +114,7 @@ void ToolPreviewRenderer::visit(const RectangleTool& tool)
     const auto pos = graphics.info().origin + from_vec(stroke->start);
     const auto size = from_vec(stroke->current - stroke->start);
 
-    draw_shadowed_rect(pos, size, to_u32(cen::colors::yellow));
+    draw_shadowed_rect(pos, size, to_u32(yellow));
   }
 }
 
@@ -128,7 +128,7 @@ void ToolPreviewRenderer::visit(const EllipseTool& tool)
     auto& graphics = mGraphics.get();
     graphics.draw_translated_shadowed_ellipse(from_vec(center),
                                               from_vec(radius),
-                                              to_u32(cen::colors::yellow));
+                                              to_u32(yellow));
   }
 }
 

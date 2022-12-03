@@ -71,4 +71,9 @@ auto parse_i32(StringView str, const int base) -> Maybe<int32>
   return parse<int32>(str.data(), str.data() + str.size(), base);
 }
 
+auto parse_u32(StringView str, const int base) -> Maybe<uint32>
+{
+  return parse<uint32>(str.data(), str.data() + str.size(), base);
+}
+
 }  // namespace tactile

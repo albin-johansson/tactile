@@ -37,20 +37,20 @@ TEST(RenameProperty, RedoUndo)
   auto map = document->get_map_ptr();
 
   auto& props = map->ctx().props();
-  props.add("foo", cen::colors::red);
+  props.add("foo", Color {0xFF, 0, 0});
 
   cmd::RenameProperty cmd {map, "foo", "bar"};
   cmd.redo();
 
   ASSERT_FALSE(props.contains("foo"));
   ASSERT_TRUE(props.contains("bar"));
-  ASSERT_EQ(cen::colors::red, props.at("bar"));
+  ASSERT_EQ((Color {0xFF, 0, 0}), props.at("bar"));
 
   cmd.undo();
 
   ASSERT_TRUE(props.contains("foo"));
   ASSERT_FALSE(props.contains("bar"));
-  ASSERT_EQ(cen::colors::red, props.at("foo"));
+  ASSERT_EQ((Color {0xFF, 0, 0}), props.at("foo"));
 }
 
 }  // namespace tactile::test

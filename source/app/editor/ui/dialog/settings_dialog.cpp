@@ -252,21 +252,20 @@ void SettingsDialog::update_appearance_tab()
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    if (auto arr = color_to_array(mUiSettings.viewport_background);
+    if (auto rgba = mUiSettings.viewport_background.as_float_array();
         ImGui::ColorEdit3(lang.setting.viewport_bg_color.c_str(),
-                          arr.data(),
+                          rgba.data(),
                           ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoAlpha)) {
-      const auto color = cen::color::from_norm(arr.at(0), arr.at(1), arr.at(2));
+      const auto color = Color::from_norm(rgba.at(0), rgba.at(1), rgba.at(2));
       mUiSettings.viewport_background = color;
     }
 
-    if (auto arr = color_to_array(mUiSettings.grid_color);
+    if (auto rgba = mUiSettings.grid_color.as_float_array();
         ImGui::ColorEdit4(lang.setting.grid_color.c_str(),
-                          arr.data(),
+                          rgba.data(),
                           ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar |
                               ImGuiColorEditFlags_AlphaPreviewHalf)) {
-      const auto color =
-          cen::color::from_norm(arr.at(0), arr.at(1), arr.at(2), arr.at(3));
+      const auto color = Color::from_norm(rgba.at(0), rgba.at(1), rgba.at(2), rgba.at(3));
       mUiSettings.grid_color = color;
     }
 

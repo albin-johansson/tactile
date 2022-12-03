@@ -42,7 +42,7 @@ TEST(ComponentDefinition, Instantiate)
   definition.add("i", 42);
   definition.add("f", 1.8f);
   definition.add("s", "foo"s);
-  definition.add("c", cen::colors::gold);
+  definition.add("c", Color {0xFF, 0xD7, 0});
 
   const auto instance = definition.instantiate();
   ASSERT_EQ(definition.uuid(), instance.definition_id());

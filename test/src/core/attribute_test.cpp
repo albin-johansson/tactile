@@ -146,7 +146,7 @@ TEST(Attribute, ObjectAttribute)
 
 TEST(Attribute, ColorAttribute)
 {
-  const Attribute value {cen::colors::red};
+  const Attribute value {Color {0xFF, 0, 0}};
 
   ASSERT_TRUE(value.is_color());
   ASSERT_TRUE(value.try_as_color());

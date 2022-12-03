@@ -19,27 +19,27 @@
 
 #pragma once
 
-#include <centurion/color.hpp>
 #include <imgui.h>
 
+#include "core/color.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "core/type/math.hpp"
 
 namespace tactile::ui {
 
-[[nodiscard]] constexpr auto to_u32(const cen::color& color) noexcept -> uint32
+[[nodiscard]] constexpr auto to_u32(const Color& color) noexcept -> uint32
 {
-  return IM_COL32(color.red(), color.green(), color.blue(), color.alpha());
+  return IM_COL32(color.red, color.green, color.blue, color.alpha);
 }
 
-[[nodiscard]] constexpr auto to_vec(const cen::color& color) -> ImVec4
+[[nodiscard]] constexpr auto to_vec(const Color& color) -> ImVec4
 {
   return {color.norm_red(), color.norm_green(), color.norm_blue(), color.norm_alpha()};
 }
 
-[[nodiscard]] inline auto to_color(const ImVec4& vec) -> cen::color
+[[nodiscard]] inline auto to_color(const ImVec4& vec) -> Color
 {
-  return cen::color::from_norm(vec.x, vec.y, vec.z, vec.w);
+  return Color::from_norm(vec.x, vec.y, vec.z, vec.w);
 }
 
 [[nodiscard]] constexpr auto from_vec(const Float2 vec) noexcept -> ImVec2

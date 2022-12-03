@@ -19,6 +19,7 @@
 
 #include "model/cmd/property/update_property.hpp"
 
+#include <centurion/color.hpp>
 #include <gtest/gtest.h>
 
 #include "core/helpers/map_builder.hpp"
@@ -53,21 +54,26 @@ TEST(UpdateProperty, MergeSupport)
   auto document = MapBuilder::build().result();
   auto map = document->get_map_ptr();
 
-  auto& props = map->ctx().props();
-  props.add("color", cen::colors::cyan);
+  const Color cyan {0, 0xFF, 0xFF};
+  const Color azure {0xF0, 0xFF, 0xFF};
+  const Color gold {0xFF, 0xD7, 0};
+  const Color violet {0xEE, 0x82, 0xEE};
 
-  cmd::UpdateProperty a {map, "color", cen::colors::azure};
-  const cmd::UpdateProperty b {map, "color", cen::colors::gold};
-  const cmd::UpdateProperty c {map, "color", cen::colors::violet};
+  auto& props = map->ctx().props();
+  props.add("color", cyan);
+
+  cmd::UpdateProperty a {map, "color", azure};
+  const cmd::UpdateProperty b {map, "color", gold};
+  const cmd::UpdateProperty c {map, "color", violet};
 
   ASSERT_TRUE(a.merge_with(&b));
   ASSERT_TRUE(a.merge_with(&c));
 
   a.redo();
-  ASSERT_EQ(cen::colors::violet, props.at("color").as_color());
+  ASSERT_EQ(violet, props.at("color").as_color());
 
   a.undo();
-  ASSERT_EQ(cen::colors::cyan, props.at("color").as_color());
+  ASSERT_EQ(cyan, props.at("color").as_color());
 }
 
 }  // namespace tactile::test

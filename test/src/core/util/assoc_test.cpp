@@ -66,13 +66,13 @@ TEST(Assoc, LookupInTreeMap)
 {
   TreeMap<int, Attribute> map;
   map[10] = "hello"s;
-  map[11] = cen::colors::red;
+  map[11] = Color {0xFF, 0, 0};
 
   ASSERT_THROW((void) lookup_in(map, 9), TactileError);
   ASSERT_THROW((void) lookup_in(map, 12), TactileError);
 
   ASSERT_EQ("hello"s, lookup_in(map, 10));
-  ASSERT_EQ(cen::colors::red, lookup_in(map, 11));
+  ASSERT_EQ((Color {0xFF, 0, 0}), lookup_in(map, 11));
 }
 
 TEST(Assoc, HashMapHasKey)

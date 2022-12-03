@@ -252,7 +252,7 @@ constexpr usize col_count = 13;
   data.opacity = 1.0f;
   data.visible = false;
 
-  data.context.properties["tint"] = cen::color::from_rgba("#1DBC748F").value();
+  data.context.properties["tint"] = Color::from_rgba("#1DBC748F").value();
 
   auto& group = data.data.emplace<ir::GroupLayerData>();
 
@@ -339,7 +339,7 @@ constexpr usize col_count = 13;
   rect.visible = true;
 
   rect.context.properties["rect-int"] = 3'347;
-  rect.context.properties["rect-color"] = cen::colors::hot_pink;
+  rect.context.properties["rect-color"] = Color {0xEE, 0x93, 0xB7};
 
   if (use_components) {
     rect.context.components["short-component"]["integer"] = 83;
@@ -437,8 +437,8 @@ constexpr usize col_count = 13;
     data.component_definitions["long-component"]["path"] = fs::path {};
     data.component_definitions["long-component"]["path-v"] = fs::path {"../foo.txt"};
 
-    data.component_definitions["long-component"]["col"] = cen::colors::black;
-    data.component_definitions["long-component"]["col-v"] = cen::colors::indigo;
+    data.component_definitions["long-component"]["col"] = black;
+    data.component_definitions["long-component"]["col-v"] = Color {0x12, 0xF3, 0xCA};
   }
 
   data.tilesets.push_back(create_source_tileset(use_components));
@@ -452,7 +452,7 @@ constexpr usize col_count = 13;
   data.context.properties["map-bool"] = false;
   data.context.properties["map-string"] = "foobar"s;
   data.context.properties["map-file"] = fs::path {"foo/bar.txt"};
-  data.context.properties["map-color"] = cen::colors::sea_green;
+  data.context.properties["map-color"] = Color {0x9F, 0x1E, 0xCE};
   data.context.properties["map-object"] = object_t {42};
 
   if (use_components) {

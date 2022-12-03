@@ -234,16 +234,16 @@ auto input_object(const char* id, object_t value) -> Maybe<object_t>
   return nothing;
 }
 
-auto input_color(const char* id, const cen::color value) -> Maybe<cen::color>
+auto input_color(const char* id, const Color value) -> Maybe<Color>
 {
   constexpr auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
                          ImGuiColorEditFlags_AlphaBar;
 
   const Scope scope {id};
 
-  auto arr = color_to_array(value);
-  if (ImGui::ColorEdit4("##Color", arr.data(), flags)) {
-    return cen::color::from_norm(arr.at(0), arr.at(1), arr.at(2), arr.at(3));
+  auto rgba = value.as_float_array();
+  if (ImGui::ColorEdit4("##Color", rgba.data(), flags)) {
+    return Color::from_norm(rgba.at(0), rgba.at(1), rgba.at(2), rgba.at(3));
   }
 
   return nothing;
