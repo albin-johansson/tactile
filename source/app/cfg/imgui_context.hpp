@@ -33,6 +33,13 @@ class ImGuiContext final {
 
   ~ImGuiContext();
 
+  /// Reloads the main and icon fonts.
+  ///
+  /// This is meant to be called every time the application has reason to believe
+  /// that the fonts need to be reloaded, e.g. when the reported display framebuffer size
+  /// changes.
+  static void reload_fonts();
+
   TACTILE_DEFAULT_COPY(ImGuiContext);
   TACTILE_DEFAULT_MOVE(ImGuiContext);
 

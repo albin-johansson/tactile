@@ -23,6 +23,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "cfg/imgui_context.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "editor/app_context.hpp"
@@ -43,8 +44,6 @@
 #include "editor/ui/dialog/dialogs.hpp"
 #include "editor/ui/dock/layer/layer_dock.hpp"
 #include "editor/ui/dock/tileset/tileset_dock.hpp"
-#include "editor/ui/fonts.hpp"
-#include "editor/ui/menu/edit_menu.hpp"
 #include "editor/ui/style/icons.hpp"
 #include "editor/ui/ui.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
@@ -99,7 +98,7 @@ void App::on_shutdown()
 void App::on_pre_update()
 {
   if (is_font_reload_scheduled()) {
-    ui::reload_fonts();
+    ImGuiContext::reload_fonts();
     handled_font_reload();
   }
 }

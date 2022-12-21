@@ -24,9 +24,8 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl.h>
 
-#include "cfg/configuration.hpp"
+#include "cfg/imgui_context.hpp"
 #include "editor/app_context.hpp"
-#include "editor/ui/fonts.hpp"
 #include "misc/panic.hpp"
 
 namespace tactile {
@@ -47,7 +46,7 @@ void EventLoop::start()
     // we know that we will load the fonts at least once.
     if (const auto& scale = io.DisplayFramebufferScale; prev_scale.x != scale.x) {
       prev_scale = scale;
-      ui::reload_fonts();
+      ImGuiContext::reload_fonts();
     }
 
     on_pre_update();

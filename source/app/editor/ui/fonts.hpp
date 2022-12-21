@@ -27,13 +27,6 @@ inline constexpr int32 min_font_size = 8;   ///< The smallest available font siz
 inline constexpr int32 max_font_size = 32;  ///< The largest available font size.
 inline constexpr int32 def_font_size = 14;  ///< The default font size.
 
-/// Reloads the main and icon fonts.
-///
-/// This is meant to be called every time the application has reason to believe
-/// that the fonts need to be reloaded, e.g. when the reported display framebuffer size
-/// changes.
-void reload_fonts();
-
 /// Indicates whether it's possible to increase the font size.
 [[nodiscard]] auto can_increase_font_size() -> bool;
 
