@@ -23,9 +23,9 @@
 #include <centurion/opengl.hpp>
 #include <centurion/window.hpp>
 
-#include "cfg/imgui_context.hpp"
 #include "cfg/protobuf_context.hpp"
 #include "core/type/maybe.hpp"
+#include "editor/ui/imgui_context.hpp"
 
 namespace tactile {
 

@@ -23,7 +23,6 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "cfg/imgui_context.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "editor/app_context.hpp"
@@ -44,6 +43,7 @@
 #include "editor/ui/dialog/dialogs.hpp"
 #include "editor/ui/dock/layer/layer_dock.hpp"
 #include "editor/ui/dock/tileset/tileset_dock.hpp"
+#include "editor/ui/imgui_context.hpp"
 #include "editor/ui/style/icons.hpp"
 #include "editor/ui/ui.hpp"
 #include "editor/ui/viewport/viewport_widget.hpp"
