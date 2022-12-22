@@ -77,10 +77,4 @@ set(TACTILE_STD_HEADERS
     <vector>
     )
 
-set(TACTILE_PRECOMPILED_HEADERS
-    ${TACTILE_STD_HEADERS}
-    <imgui.h>
-    <entt/signal/dispatcher.hpp>
-    <spdlog/spdlog.h>
-    <fmt/format.h>
-    )
+set(TACTILE_PRECOMPILED_HEADERS ${TACTILE_STD_HEADERS})
