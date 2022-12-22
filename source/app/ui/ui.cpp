@@ -24,10 +24,10 @@
 #include <ui/style/alignment.hpp>
 
 #include "app_context.hpp"
+#include "core/predef.hpp"
 #include "core/type/path.hpp"
 #include "io/directories.hpp"
 #include "io/file_dialog.hpp"
-#include "meta/build.hpp"
 #include "model/event/map_events.hpp"
 #include "model/model.hpp"
 #include "ui/dialog/dialog_state.hpp"

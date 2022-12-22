@@ -21,8 +21,8 @@
 
 #include <gtest/gtest.h>
 
+#include "core/predef.hpp"
 #include "core/util/env.hpp"
-#include "meta/build.hpp"
 
 namespace tactile::test {
 

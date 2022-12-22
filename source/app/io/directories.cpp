@@ -25,7 +25,7 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "meta/build.hpp"
+#include "core/predef.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 

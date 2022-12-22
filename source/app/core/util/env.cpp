@@ -21,7 +21,7 @@
 
 #include <cstdlib>  // getenv, _dupenv_s, free
 
-#include "meta/build.hpp"
+#include "core/predef.hpp"
 
 namespace tactile {
 

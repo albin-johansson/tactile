@@ -27,13 +27,13 @@
 #include <spdlog/spdlog.h>
 
 #include "cfg/platform_specific.hpp"
+#include "core/predef.hpp"
 #include "core/type/path.hpp"
 #include "core/util/fmt.hpp"
 #include "editor/menu/menu.hpp"
 #include "io/directories.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
-#include "meta/build.hpp"
 #include "misc/assert.hpp"
 #include "misc/panic.hpp"
 #include "misc/stacktrace.hpp"

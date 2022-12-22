@@ -26,8 +26,8 @@
 #include <zlib.h>
 #include <zstd.h>
 
+#include "core/predef.hpp"
 #include "core/type/ptr.hpp"
-#include "meta/build.hpp"
 #include "misc/assert.hpp"
 
 namespace tactile::io {

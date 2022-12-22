@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "meta/build.hpp"
+#include "core/predef.hpp"
 
 #if TACTILE_COMPILER_MSVC
 

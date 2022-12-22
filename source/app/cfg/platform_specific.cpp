@@ -19,7 +19,7 @@
 
 #include "platform_specific.hpp"
 
-#include "meta/build.hpp"
+#include "core/predef.hpp"
 
 #if TACTILE_OS_WINDOWS
 

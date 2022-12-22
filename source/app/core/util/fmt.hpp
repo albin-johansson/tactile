@@ -27,12 +27,12 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
+#include "core/predef.hpp"
 #include "core/type/array.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
-#include "meta/build.hpp"
 #include "misc/stacktrace.hpp"
 
 namespace fmt {

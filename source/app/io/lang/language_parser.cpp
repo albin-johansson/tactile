@@ -22,10 +22,10 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
+#include "core/predef.hpp"
 #include "core/type/string.hpp"
 #include "io/directories.hpp"
 #include "io/util/json.hpp"
-#include "meta/build.hpp"
 #include "misc/panic.hpp"
 #include "ui/style/icons.hpp"
 

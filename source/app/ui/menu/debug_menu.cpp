@@ -21,10 +21,10 @@
 
 #include <imgui.h>
 
+#include "core/predef.hpp"
 #include "io/directories.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "meta/build.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"
 

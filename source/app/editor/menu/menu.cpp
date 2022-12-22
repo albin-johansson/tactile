@@ -23,6 +23,7 @@
 
 #include <fmt/format.h>
 
+#include "core/predef.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/type/chrono.hpp"
 #include "core/type/hash_map.hpp"
@@ -33,7 +34,6 @@
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "meta/build.hpp"
 #include "meta/profile.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
