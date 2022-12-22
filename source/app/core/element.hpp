@@ -29,7 +29,7 @@ class Element {
   virtual ~Element() noexcept = default;
 
   /// Returns the unique identifier associated with the element.
-  [[nodiscard]] virtual auto uuid() const -> const UUID& = 0;
+  [[nodiscard]] virtual auto get_uuid() const -> const UUID& = 0;
 };
 
 }  // namespace tactile

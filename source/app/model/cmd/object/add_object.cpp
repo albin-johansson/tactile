@@ -64,7 +64,7 @@ void AddObject::redo()
 
   if (!mObject) {
     mObject = std::make_shared<Object>();
-    mObjectId = mObject->uuid();
+    mObjectId = mObject->get_uuid();
   }
 
   mObject->set_type(mObjectType);

@@ -58,7 +58,7 @@ TEST(DocumentManager, AddMap)
   ASSERT_THROW(manager.add_map(nullptr), TactileError);
 
   auto document = make_map();
-  const auto id = document->get_map().uuid();
+  const auto id = document->get_map().get_uuid();
 
   manager.add_map(document);
   ASSERT_EQ(id, manager.current());
@@ -86,7 +86,7 @@ TEST(DocumentManager, AddTileset)
   ASSERT_THROW(manager.add_tileset(nullptr), TactileError);
 
   auto document = make_tileset();
-  const auto id = document->get_tileset()->uuid();
+  const auto id = document->get_tileset()->get_uuid();
 
   manager.add_tileset(document);
   ASSERT_FALSE(manager.current().has_value());
@@ -113,7 +113,7 @@ TEST(DocumentManager, RemoveMap)
   DocumentManager manager;
 
   auto document = make_map();
-  const auto id = document->get_map().uuid();
+  const auto id = document->get_map().get_uuid();
 
   ASSERT_EQ(nullptr, manager.remove_map(id));
 
@@ -141,7 +141,7 @@ TEST(DocumentManager, RemoveTileset)
   DocumentManager manager;
 
   auto document = make_tileset();
-  const auto id = document->get_tileset()->uuid();
+  const auto id = document->get_tileset()->get_uuid();
 
   ASSERT_EQ(nullptr, manager.remove_tileset(id));
 
@@ -169,7 +169,7 @@ TEST(DocumentManager, Select)
   DocumentManager manager;
 
   auto document = make_tileset();
-  const auto id = document->get_tileset()->uuid();
+  const auto id = document->get_tileset()->get_uuid();
 
   manager.add_tileset(document);
   ASSERT_FALSE(manager.current().has_value());
@@ -183,7 +183,7 @@ TEST(DocumentManager, Open)
   DocumentManager manager;
 
   auto document = make_tileset();
-  const auto id = document->get_tileset()->uuid();
+  const auto id = document->get_tileset()->get_uuid();
 
   manager.add_tileset(document);
   ASSERT_TRUE(manager.is_document(id));
@@ -203,10 +203,10 @@ TEST(DocumentManager, Close)
   DocumentManager manager;
 
   auto map = make_map();
-  const auto map_id = map->get_map().uuid();
+  const auto map_id = map->get_map().get_uuid();
 
   auto tileset = make_tileset();
-  const auto tileset_id = tileset->get_tileset()->uuid();
+  const auto tileset_id = tileset->get_tileset()->get_uuid();
 
   map->get_map().tileset_bundle().attach_tileset(tileset->get_tileset(), false);
 
@@ -242,16 +242,16 @@ TEST(DocumentManager, RemoveUnusedTilesets)
   auto map1 = make_map();
   auto map2 = make_map();
 
-  const auto map1_id = map1->get_map().uuid();
-  const auto map2_id = map2->get_map().uuid();
+  const auto map1_id = map1->get_map().get_uuid();
+  const auto map2_id = map2->get_map().get_uuid();
 
   auto ts1 = make_tileset();
   auto ts2 = make_tileset();
   auto ts3 = make_tileset();
 
-  const auto ts1_id = ts1->get_tileset()->uuid();
-  const auto ts2_id = ts2->get_tileset()->uuid();
-  const auto ts3_id = ts3->get_tileset()->uuid();
+  const auto ts1_id = ts1->get_tileset()->get_uuid();
+  const auto ts2_id = ts2->get_tileset()->get_uuid();
+  const auto ts3_id = ts3->get_tileset()->get_uuid();
 
   // First map uses TS1 and TS2
   map1->get_map().tileset_bundle().attach_tileset(ts1->get_tileset(), false);
@@ -305,7 +305,7 @@ TEST(DocumentManager, FirstMatch)
   auto map = make_map();
   map->set_name("foo");
 
-  const auto id = map->get_map().uuid();
+  const auto id = map->get_map().get_uuid();
   manager.add_map(map);
 
   ASSERT_EQ(id, manager.first_match([](const Document& document) {

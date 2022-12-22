@@ -68,7 +68,7 @@ class Tileset final : public Context {
   [[nodiscard]] auto ctx() -> ContextInfo& override;
   [[nodiscard]] auto ctx() const -> const ContextInfo& override;
 
-  [[nodiscard]] auto uuid() const -> const UUID& override;
+  [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
   /// Returns the associated texture.
   [[nodiscard]] auto texture() const -> const Texture&;

@@ -45,7 +45,7 @@ TEST(ComponentDefinition, Instantiate)
   definition.add("c", Color {0xFF, 0xD7, 0});
 
   const auto instance = definition.instantiate();
-  ASSERT_EQ(definition.uuid(), instance.definition_id());
+  ASSERT_EQ(definition.get_uuid(), instance.definition_id());
   ASSERT_EQ(definition.size(), instance.size());
 
   for (const auto& [key, value]: instance) {

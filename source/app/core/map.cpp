@@ -148,7 +148,7 @@ auto Map::fix_tiles() -> FixTilesResult
       }
     });
 
-    result[layer.uuid()] = std::move(previous);
+    result[layer.get_uuid()] = std::move(previous);
   });
 
   return result;
@@ -156,7 +156,7 @@ auto Map::fix_tiles() -> FixTilesResult
 
 void Map::add_layer(Shared<Layer> layer, const Maybe<UUID>& parent_id)
 {
-  const auto id = layer->uuid();
+  const auto id = layer->get_uuid();
 
   if (parent_id) {
     invisible_root().add(*parent_id, layer);
@@ -179,7 +179,7 @@ auto Map::add_tile_layer(const Maybe<UUID>& parent_id) -> UUID
   layer->ctx().set_name(fmt::format("Tile Layer {}", mData->tile_layer_suffix));
   ++mData->tile_layer_suffix;
 
-  const auto id = layer->ctx().uuid();
+  const auto id = layer->ctx().get_uuid();
   add_layer(std::move(layer), parent_id);
 
   return id;
@@ -193,7 +193,7 @@ auto Map::add_object_layer(const Maybe<UUID>& parent_id) -> UUID
   layer->ctx().set_name(fmt::format("Object Layer {}", mData->object_layer_suffix));
   ++mData->object_layer_suffix;
 
-  const auto id = layer->ctx().uuid();
+  const auto id = layer->ctx().get_uuid();
   add_layer(std::move(layer), parent_id);
 
   return id;
@@ -207,7 +207,7 @@ auto Map::add_group_layer(const Maybe<UUID>& parent_id) -> UUID
   layer->ctx().set_name(fmt::format("Group Layer {}", mData->group_layer_suffix));
   ++mData->group_layer_suffix;
 
-  const auto id = layer->ctx().uuid();
+  const auto id = layer->ctx().get_uuid();
   add_layer(std::move(layer), parent_id);
 
   return id;
@@ -329,9 +329,9 @@ auto Map::ctx() const -> const ContextInfo&
   return mData->context;
 }
 
-auto Map::uuid() const -> const UUID&
+auto Map::get_uuid() const -> const UUID&
 {
-  return ctx().uuid();
+  return ctx().get_uuid();
 }
 
 auto Map::fetch_and_increment_next_object_id() -> int32

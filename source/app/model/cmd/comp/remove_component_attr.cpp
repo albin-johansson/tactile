@@ -54,7 +54,7 @@ void RemoveComponentAttr::undo()
   definition.add(mAttributeName, value);
 
   auto& contexts = mDocument->get_contexts();
-  contexts.on_new_component_attr(definition.uuid(), mAttributeName, value);
+  contexts.on_new_component_attr(definition.get_uuid(), mAttributeName, value);
 
   mPreviousValue.reset();
 }
@@ -68,7 +68,7 @@ void RemoveComponentAttr::redo()
   definition.remove(mAttributeName);
 
   auto& contexts = mDocument->get_contexts();
-  contexts.on_removed_component_attr(definition.uuid(), mAttributeName);
+  contexts.on_removed_component_attr(definition.get_uuid(), mAttributeName);
 }
 
 auto RemoveComponentAttr::get_name() const -> String

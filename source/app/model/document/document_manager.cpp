@@ -51,7 +51,7 @@ void DocumentManager::add_map(Shared<MapDocument> document)
     throw TactileError {"Cannot store null map document!"};
   }
 
-  const auto id = document->get_map().uuid();
+  const auto id = document->get_map().get_uuid();
 
   mDocuments[id] = document;
   mMaps[id] = std::move(document);
@@ -66,7 +66,7 @@ void DocumentManager::add_tileset(Shared<TilesetDocument> document)
     throw TactileError {"Cannot store null tileset document!"};
   }
 
-  const auto id = document->get_tileset()->uuid();
+  const auto id = document->get_tileset()->get_uuid();
 
   mDocuments[id] = document;
   mTilesets[id] = std::move(document);

@@ -38,7 +38,7 @@ auto ComponentDefinition::name() const -> const String&
   return mName;
 }
 
-auto ComponentDefinition::uuid() const -> const UUID&
+auto ComponentDefinition::get_uuid() const -> const UUID&
 {
   return mTypeId;
 }

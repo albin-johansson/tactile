@@ -56,7 +56,7 @@ void SetComponentAttrType::undo()
   auto& contexts = mDocument->get_contexts();
   for (const auto& [contextId, attribute]: mPrevAttributes) {
     auto& context = contexts.at(contextId);
-    auto& comp = context.ctx().comps().at(definition.uuid());
+    auto& comp = context.ctx().comps().at(definition.get_uuid());
 
     comp.remove(mAttributeName);
     comp.add(mAttributeName, attribute);
@@ -76,7 +76,7 @@ void SetComponentAttrType::redo()
   definition.add(mAttributeName, mNewType);
 
   auto& contexts = mDocument->get_contexts();
-  mPrevAttributes = contexts.on_changed_component_attr_type(definition.uuid(),
+  mPrevAttributes = contexts.on_changed_component_attr_type(definition.get_uuid(),
                                                             mAttributeName,
                                                             mNewType);
 }

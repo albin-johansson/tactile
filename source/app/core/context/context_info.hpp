@@ -40,7 +40,7 @@ class ContextInfo final {
 
   [[nodiscard]] auto clone() const -> ContextInfo;
 
-  [[nodiscard]] auto uuid() const -> const UUID& { return mId; }
+  [[nodiscard]] auto get_uuid() const -> const UUID& { return mId; }
 
   [[nodiscard]] auto name() const -> const String& { return mName; }
 

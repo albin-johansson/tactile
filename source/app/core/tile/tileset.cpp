@@ -73,7 +73,7 @@ void Tileset::load_tiles()
     const auto [row, col] = to_matrix_coords(index, data.column_count);
 
     auto tile = std::make_shared<Tile>(index);
-    const auto tile_id = tile->uuid();
+    const auto tile_id = tile->get_uuid();
 
     const Int2 pos {col * data.tile_size.x, row * data.tile_size.y};
     tile->set_source({pos, data.tile_size});
@@ -166,9 +166,9 @@ auto Tileset::ctx() const -> const ContextInfo&
   return mData->context;
 }
 
-auto Tileset::uuid() const -> const UUID&
+auto Tileset::get_uuid() const -> const UUID&
 {
-  return ctx().uuid();
+  return ctx().get_uuid();
 }
 
 auto Tileset::texture() const -> const Texture&

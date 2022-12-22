@@ -76,7 +76,7 @@ void ObjectLayer::set_meta_id(const int32 id)
 
 void ObjectLayer::add_object(Shared<Object> object)
 {
-  const auto id = object->uuid();
+  const auto id = object->get_uuid();
   mObjects[id] = std::move(object);
 }
 
@@ -179,9 +179,9 @@ auto ObjectLayer::ctx() const -> const ContextInfo&
   return mDelegate.ctx();
 }
 
-auto ObjectLayer::uuid() const -> const UUID&
+auto ObjectLayer::get_uuid() const -> const UUID&
 {
-  return mDelegate.ctx().uuid();
+  return mDelegate.ctx().get_uuid();
 }
 
 auto ObjectLayer::parent() const -> Maybe<UUID>

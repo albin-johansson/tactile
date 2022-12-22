@@ -249,9 +249,9 @@ auto TileLayer::ctx() const -> const ContextInfo&
   return mDelegate.ctx();
 }
 
-auto TileLayer::uuid() const -> const UUID&
+auto TileLayer::get_uuid() const -> const UUID&
 {
-  return mDelegate.ctx().uuid();
+  return mDelegate.ctx().get_uuid();
 }
 
 auto TileLayer::parent() const -> Maybe<UUID>

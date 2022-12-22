@@ -39,7 +39,7 @@ TEST(ComponentIndex, Define)
 
   const auto& def = index.at(id);
   ASSERT_EQ("position", def.name());
-  ASSERT_EQ(id, def.uuid());
+  ASSERT_EQ(id, def.get_uuid());
   ASSERT_TRUE(def.empty());
 
   ASSERT_TRUE(index.contains("position"));

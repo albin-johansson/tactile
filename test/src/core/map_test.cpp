@@ -262,22 +262,22 @@ TEST(Map, AddLayer)
 
   map.add_layer(t1);
   ASSERT_EQ(1u, root.size());
-  ASSERT_NE(nullptr, root.as_tile_layer(t1->uuid()));
-  ASSERT_EQ(nullptr, root.as_object_layer(o1->uuid()));
+  ASSERT_NE(nullptr, root.as_tile_layer(t1->get_uuid()));
+  ASSERT_EQ(nullptr, root.as_object_layer(o1->get_uuid()));
   ASSERT_FALSE(t1->parent().has_value());
 
   map.add_layer(o1);
   map.add_layer(g1);
-  map.add_layer(t2, g1->uuid());
+  map.add_layer(t2, g1->get_uuid());
 
   ASSERT_EQ(4u, root.size());
 
-  ASSERT_NE(nullptr, root.as_tile_layer(t1->uuid()));
-  ASSERT_NE(nullptr, root.as_tile_layer(t2->uuid()));
-  ASSERT_NE(nullptr, root.as_object_layer(o1->uuid()));
-  ASSERT_NE(nullptr, root.as_group_layer(g1->uuid()));
+  ASSERT_NE(nullptr, root.as_tile_layer(t1->get_uuid()));
+  ASSERT_NE(nullptr, root.as_tile_layer(t2->get_uuid()));
+  ASSERT_NE(nullptr, root.as_object_layer(o1->get_uuid()));
+  ASSERT_NE(nullptr, root.as_group_layer(g1->get_uuid()));
 
-  ASSERT_EQ(g1->uuid(), t2->parent());
+  ASSERT_EQ(g1->get_uuid(), t2->parent());
   ASSERT_EQ(nothing, t1->parent());
   ASSERT_EQ(nothing, o1->parent());
   ASSERT_EQ(nothing, g1->parent());
@@ -377,7 +377,7 @@ TEST(Map, DuplicateLayer)
   ASSERT_EQ(10u, root.size());
   ASSERT_EQ(8u, root.as_group_layer(preset.b)->size());
   ASSERT_EQ(2u, root.as_group_layer(preset.d)->size());
-  ASSERT_EQ(2u, root.as_group_layer(layer->uuid())->size());
+  ASSERT_EQ(2u, root.as_group_layer(layer->get_uuid())->size());
 }
 
 TEST(Map, SelectLayer)

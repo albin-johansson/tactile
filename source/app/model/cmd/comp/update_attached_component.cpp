@@ -65,7 +65,7 @@ void UpdateAttachedComponent::redo()
 auto UpdateAttachedComponent::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const UpdateAttachedComponent*>(cmd)) {
-    const bool can_merge = mContext->uuid() == other->mContext->uuid() &&
+    const bool can_merge = mContext->get_uuid() == other->mContext->get_uuid() &&
                            mComponentId == other->mComponentId &&
                            mAttributeName == other->mAttributeName;
     if (can_merge) {

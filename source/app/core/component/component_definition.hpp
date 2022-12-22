@@ -39,7 +39,7 @@ class ComponentDefinition final : public ComponentBase, public Element {
   /// Returns the (unique) name of the component type.
   [[nodiscard]] auto name() const -> const String&;
 
-  [[nodiscard]] auto uuid() const -> const UUID& override;
+  [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
   /// Creates a new component using the component definition as a template.
   [[nodiscard]] auto instantiate() const -> Component;

@@ -36,7 +36,7 @@ TYPED_TEST(LayerTest, Defaults)
 {
   const TypeParam layer;
   ASSERT_TRUE(layer.visible());
-  ASSERT_FALSE(layer.uuid().is_nil());
+  ASSERT_FALSE(layer.get_uuid().is_nil());
   ASSERT_FALSE(layer.parent().has_value());
   ASSERT_FALSE(layer.meta_id().has_value());
   ASSERT_EQ(1.0f, layer.opacity());
@@ -75,7 +75,7 @@ TYPED_TEST(LayerTest, Clone)
   source.set_visible(false);
 
   const auto clone = source.clone();
-  ASSERT_NE(source.uuid(), clone->uuid());
+  ASSERT_NE(source.get_uuid(), clone->get_uuid());
 
   ASSERT_EQ(source.opacity(), clone->opacity());
   ASSERT_EQ(source.parent(), clone->parent());

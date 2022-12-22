@@ -33,7 +33,7 @@ struct SaveTilesVisitor final : ConstLayerVisitor {
 
   void visit(const TileLayer& layer) override
   {
-    auto& tile_cache = self->mCache[layer.uuid()];
+    auto& tile_cache = self->mCache[layer.get_uuid()];
 
     const auto end_row = end.row();
     const auto end_col = end.col();

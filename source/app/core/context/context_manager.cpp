@@ -34,7 +34,7 @@ ContextManager::ContextManager(const UUID& root_context_id)
 
 void ContextManager::add_context(Shared<Context> context)
 {
-  const auto id = context->uuid();
+  const auto id = context->get_uuid();
   mContexts[id] = std::move(context);
 }
 

@@ -152,7 +152,7 @@ void on_inspect_map()
 {
   if (auto* document = get_model().active_map()) {
     const auto& map = document->get_map();
-    document->get_contexts().select(map.uuid());
+    document->get_contexts().select(map.get_uuid());
   }
 }
 

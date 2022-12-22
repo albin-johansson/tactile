@@ -40,7 +40,7 @@ TEST(AddLayer, RedoUndo)
   auto& contexts = document->get_contexts();
 
   ASSERT_EQ(1u, contexts.size());
-  ASSERT_TRUE(contexts.contains(map.uuid()));
+  ASSERT_TRUE(contexts.contains(map.get_uuid()));
 
   cmd::AddLayer cmd {document.get(), LayerType::TileLayer};
 

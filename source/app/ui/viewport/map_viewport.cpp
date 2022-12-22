@@ -168,7 +168,7 @@ void update_viewport_context_menu(const Map& map, entt::dispatcher& dispatcher)
     const auto& lang = get_current_language();
 
     if (ImGui::MenuItem(lang.action.inspect_map.c_str())) {
-      dispatcher.enqueue<InspectContextEvent>(map.uuid());
+      dispatcher.enqueue<InspectContextEvent>(map.get_uuid());
     }
 
     ImGui::Separator();

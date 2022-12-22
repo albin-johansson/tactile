@@ -52,7 +52,7 @@ void RenameTileset::redo()
 auto RenameTileset::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const RenameTileset*>(cmd)) {
-    if (mTileset->uuid() == other->mTileset->uuid()) {
+    if (mTileset->get_uuid() == other->mTileset->get_uuid()) {
       mNewName = other->mNewName;
       return true;
     }

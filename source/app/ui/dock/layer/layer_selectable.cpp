@@ -50,34 +50,34 @@ void update_layer_popup(const Map& map, const Layer& layer, entt::dispatcher& di
 
   if (auto popup = Popup::for_item("##LayerPopup"); popup.is_open()) {
     if (ImGui::MenuItem(lang.action.inspect_layer.c_str())) {
-      dispatcher.enqueue<InspectContextEvent>(layer.uuid());
+      dispatcher.enqueue<InspectContextEvent>(layer.get_uuid());
     }
 
     ImGui::Separator();
     if (ImGui::MenuItem(lang.action.rename_layer.c_str())) {
-      dispatcher.enqueue<OpenRenameLayerDialogEvent>(layer.uuid());
+      dispatcher.enqueue<OpenRenameLayerDialogEvent>(layer.get_uuid());
     }
 
     ImGui::Separator();
     if (ImGui::MenuItem(lang.action.duplicate_layer.c_str())) {
-      dispatcher.enqueue<DuplicateLayerEvent>(layer.uuid());
+      dispatcher.enqueue<DuplicateLayerEvent>(layer.get_uuid());
     }
 
     ImGui::Separator();
     if (ImGui::MenuItem(lang.action.remove_layer.c_str())) {
-      dispatcher.enqueue<RemoveLayerEvent>(layer.uuid());
+      dispatcher.enqueue<RemoveLayerEvent>(layer.get_uuid());
     }
 
     ImGui::Separator();
     if (ImGui::MenuItem(lang.action.toggle_layer_visible.c_str(),
                         nullptr,
                         layer.visible())) {
-      dispatcher.enqueue<SetLayerVisibleEvent>(layer.uuid(), !layer.visible());
+      dispatcher.enqueue<SetLayerVisibleEvent>(layer.get_uuid(), !layer.visible());
     }
 
     if (auto opacity = layer.opacity();
         ImGui::SliderFloat(lang.misc.opacity.c_str(), &opacity, 0, 1.0f)) {
-      dispatcher.enqueue<SetLayerOpacityEvent>(layer.uuid(), opacity);
+      dispatcher.enqueue<SetLayerOpacityEvent>(layer.get_uuid(), opacity);
     }
 
     const auto& root = map.invisible_root();
@@ -86,15 +86,15 @@ void update_layer_popup(const Map& map, const Layer& layer, entt::dispatcher& di
     if (ImGui::MenuItem(lang.action.move_layer_up.c_str(),
                         nullptr,
                         false,
-                        root.can_move_up(layer.uuid()))) {
-      dispatcher.enqueue<MoveLayerUpEvent>(layer.uuid());
+                        root.can_move_up(layer.get_uuid()))) {
+      dispatcher.enqueue<MoveLayerUpEvent>(layer.get_uuid());
     }
 
     if (ImGui::MenuItem(lang.action.move_layer_down.c_str(),
                         nullptr,
                         false,
-                        root.can_move_down(layer.uuid()))) {
-      dispatcher.enqueue<MoveLayerDownEvent>(layer.uuid());
+                        root.can_move_down(layer.get_uuid()))) {
+      dispatcher.enqueue<MoveLayerDownEvent>(layer.get_uuid());
     }
   }
 }
@@ -103,7 +103,7 @@ void show_object_selectable(const ObjectLayer& layer,
                             const Object& object,
                             entt::dispatcher& dispatcher)
 {
-  const auto object_id = object.uuid();
+  const auto object_id = object.get_uuid();
   const auto object_type = object.type();
 
   const Scope scope {object_id};
@@ -121,12 +121,12 @@ void show_object_selectable(const ObjectLayer& layer,
   }
 
   if (Selectable::ListItem(name.c_str(), layer.active_object_id() == object_id)) {
-    dispatcher.enqueue<SelectObjectEvent>(layer.uuid(), object_id);
+    dispatcher.enqueue<SelectObjectEvent>(layer.get_uuid(), object_id);
   }
 
   if (ImGui::IsItemActivated() ||
       (ImGui::IsItemHovered() && ImGui::IsItemClicked(ImGuiMouseButton_Right))) {
-    dispatcher.enqueue<SelectObjectEvent>(layer.uuid(), object_id);
+    dispatcher.enqueue<SelectObjectEvent>(layer.get_uuid(), object_id);
   }
 
   if (auto popup = Popup::for_item("##ObjectPopup"); popup.is_open()) {
@@ -159,7 +159,7 @@ void show_object_layer_selectable(const Map& map,
 
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.uuid());
+      dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
     }
 
     update_layer_popup(map, layer, dispatcher);
@@ -172,7 +172,7 @@ void show_object_layer_selectable(const Map& map,
   else {
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.uuid());
+      dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
     }
 
     update_layer_popup(map, layer, dispatcher);
@@ -193,7 +193,7 @@ void show_group_layer_selectable(const MapDocument& document,
 
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.uuid());
+      dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
     }
 
     update_layer_popup(map, layer, dispatcher);
@@ -206,7 +206,7 @@ void show_group_layer_selectable(const MapDocument& document,
   else {
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.uuid());
+      dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
     }
 
     update_layer_popup(map, layer, dispatcher);
@@ -221,9 +221,9 @@ void layer_selectable(const MapDocument& document,
 {
   const auto& map = document.get_map();
 
-  const Scope scope {layer.uuid()};
+  const Scope scope {layer.get_uuid()};
 
-  const auto is_active_layer = map.active_layer_id() == layer.uuid();
+  const auto is_active_layer = map.active_layer_id() == layer.get_uuid();
   const auto flags =
       is_active_layer ? (base_node_flags | ImGuiTreeNodeFlags_Selected) : base_node_flags;
 
@@ -232,12 +232,12 @@ void layer_selectable(const MapDocument& document,
   switch (layer.type()) {
     case LayerType::TileLayer: {
       if (Selectable::ListItem(name.data(), is_active_layer)) {
-        dispatcher.enqueue<SelectLayerEvent>(layer.uuid());
+        dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
       }
 
       // Make sure to select the layer item when right-clicked as well
       if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
-        dispatcher.enqueue<SelectLayerEvent>(layer.uuid());
+        dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
       }
 
       update_layer_popup(map, layer, dispatcher);

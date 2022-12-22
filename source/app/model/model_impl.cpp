@@ -60,7 +60,7 @@ auto DocumentModel::Impl::add_map(const Int2& tile_size,
   auto map_document = std::make_shared<MapDocument>(tile_size, rows, columns);
   map_document->set_component_index(std::make_shared<ComponentIndex>());
 
-  const auto id = map_document->get_map().uuid();
+  const auto id = map_document->get_map().get_uuid();
   mDocuments.add_map(std::move(map_document));
 
   return id;
@@ -73,7 +73,7 @@ auto DocumentModel::Impl::add_tileset(const TilesetInfo& info) -> UUID
     const auto tileset_id = make_uuid();
 
     auto& commands = document->get_history();
-    commands.push<cmd::CreateTileset>(mParent, map.uuid(), tileset_id, info);
+    commands.push<cmd::CreateTileset>(mParent, map.get_uuid(), tileset_id, info);
 
     return tileset_id;
   }
@@ -104,7 +104,7 @@ auto DocumentModel::Impl::restore_tileset(TileID first_tile_id, const TilesetInf
     mDocuments.add_tileset(tileset_document);
 
     auto tileset = tileset_document->get_tileset();
-    const auto tileset_id = tileset->uuid();
+    const auto tileset_id = tileset->get_uuid();
 
     auto& tilesets = map_document->get_map().tileset_bundle();
     tilesets.attach_tileset(tileset, first_tile_id, false);  // TODO embedded option

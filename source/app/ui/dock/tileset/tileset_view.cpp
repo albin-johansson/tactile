@@ -55,7 +55,7 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
 
   const auto& limits = tileset_ref.get_viewport().limits();
   if (!limits.has_value() || min_offset != limits->min_offset) {
-    dispatcher.enqueue<UpdateTilesetViewportLimitsEvent>(tileset.uuid(),
+    dispatcher.enqueue<UpdateTilesetViewportLimitsEvent>(tileset.get_uuid(),
                                                          min_offset,
                                                          max_offset);
   }
@@ -70,7 +70,7 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto& io = ImGui::GetIO();
     const Float2 delta {io.MouseDelta.x, io.MouseDelta.y};
-    dispatcher.enqueue<OffsetTilesetViewportEvent>(tileset.uuid(), delta);
+    dispatcher.enqueue<OffsetTilesetViewportEvent>(tileset.get_uuid(), delta);
   }
 }
 

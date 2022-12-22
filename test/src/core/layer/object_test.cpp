@@ -138,7 +138,7 @@ TEST(Object, Clone)
   object.set_visible(false);
 
   const auto clone = object.clone();
-  ASSERT_NE(object.uuid(), clone->uuid());
+  ASSERT_NE(object.get_uuid(), clone->get_uuid());
 
   ASSERT_EQ(object.type(), clone->type());
   ASSERT_EQ(object.pos(), clone->pos());

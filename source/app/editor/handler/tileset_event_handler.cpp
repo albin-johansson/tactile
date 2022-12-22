@@ -40,7 +40,7 @@ void on_inspect_tileset()
 {
   auto& model = get_model();
   if (auto* document = model.active_tileset()) {
-    document->get_contexts().select(document->view_tileset().uuid());
+    document->get_contexts().select(document->view_tileset().get_uuid());
   }
 }
 

@@ -39,7 +39,7 @@ DuplicateLayer::DuplicateLayer(MapDocument* document, const UUID& layer_id)
 void DuplicateLayer::undo()
 {
   auto& map = mDocument->get_map();
-  const auto id = mNewLayer->uuid();
+  const auto id = mNewLayer->get_uuid();
 
   map.remove_layer(id);
   mDocument->get_contexts().erase(id);
@@ -51,11 +51,11 @@ void DuplicateLayer::redo()
 
   if (mNewLayer) {
     map.add_layer(mNewLayer, mNewLayer->parent());
-    map.invisible_root().set_index(mNewLayer->uuid(), mNewIndex.value());
+    map.invisible_root().set_index(mNewLayer->get_uuid(), mNewIndex.value());
   }
   else {
     mNewLayer = map.duplicate_layer(mLayerId);
-    mNewIndex = map.invisible_root().local_index(mNewLayer->uuid());
+    mNewIndex = map.invisible_root().local_index(mNewLayer->get_uuid());
   }
 
   mDocument->get_contexts().add_context(mNewLayer);
