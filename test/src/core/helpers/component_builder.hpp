@@ -23,7 +23,7 @@
 #include "core/component/component_index.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 
 namespace tactile::test {
 

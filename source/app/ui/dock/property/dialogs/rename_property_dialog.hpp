@@ -21,7 +21,7 @@
 
 #include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "ui/dialog/string_input_dialog.hpp"
 

@@ -21,7 +21,7 @@
 
 #include "core/layer/layer_type.hpp"
 #include "core/type/string.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 
 namespace tactile {
 

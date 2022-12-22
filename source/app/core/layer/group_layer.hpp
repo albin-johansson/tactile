@@ -23,8 +23,8 @@
 #include "core/layer/layer_delegate.hpp"
 #include "core/type/fn.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/uuid.hpp"
 #include "core/type/vec.hpp"
-#include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

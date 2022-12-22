@@ -22,7 +22,7 @@
 #include "core/map.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/tile_cache.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 

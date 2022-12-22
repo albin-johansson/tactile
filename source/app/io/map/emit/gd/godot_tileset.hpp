@@ -23,9 +23,9 @@
 #include "core/type/pair.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
+#include "core/type/uuid.hpp"
 #include "core/type/vec.hpp"
 #include "core/util/assoc.hpp"
-#include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "io/map/emit/gd/godot_file.hpp"
 

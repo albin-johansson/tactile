@@ -23,7 +23,7 @@
 #include "core/tile/tileset.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 #include "core/viewport.hpp"
 #include "core/vocabulary.hpp"
 

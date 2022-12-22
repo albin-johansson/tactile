@@ -21,7 +21,7 @@
 
 #include "core/attribute.hpp"
 #include "core/type/maybe.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 

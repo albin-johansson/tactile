@@ -23,7 +23,7 @@
 
 #include "core/attribute.hpp"
 #include "core/type/string.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 
 namespace tactile {
 

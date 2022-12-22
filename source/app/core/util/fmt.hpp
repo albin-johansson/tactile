@@ -31,7 +31,7 @@
 #include "core/type/array.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "debug/stacktrace.hpp"
 

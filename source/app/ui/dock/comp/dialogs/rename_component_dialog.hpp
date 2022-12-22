@@ -22,7 +22,7 @@
 #include "component_name_dialog.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 
 namespace tactile::ui {
 

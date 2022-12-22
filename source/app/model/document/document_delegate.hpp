@@ -24,7 +24,7 @@
 #include "core/type/maybe.hpp"
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 #include "core/viewport.hpp"
 #include "model/cmd/command_stack.hpp"
 

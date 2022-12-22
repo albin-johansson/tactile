@@ -24,7 +24,7 @@
 #include "core/component/component_definition.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/string.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

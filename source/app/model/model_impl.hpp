@@ -22,7 +22,7 @@
 #include "core/type/math.hpp"
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "model/document/document_manager.hpp"
 #include "model/model.hpp"

@@ -28,7 +28,7 @@
 #include "core/component/component_index.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 #include "debug/assert.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

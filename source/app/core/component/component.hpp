@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/component/component_base.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

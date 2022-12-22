@@ -33,10 +33,10 @@
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"
 #include "core/type/string_map.hpp"
+#include "core/type/uuid.hpp"
 #include "core/type/variant.hpp"
 #include "core/type/vec.hpp"
 #include "core/util/algorithm.hpp"
-#include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile::ir {

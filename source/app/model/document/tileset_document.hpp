@@ -23,7 +23,7 @@
 #include "core/tile/tileset_info.hpp"
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 #include "model/document/document.hpp"
 #include "model/document/document_delegate.hpp"
 

@@ -22,7 +22,7 @@
 #include "core/tile/tileset_info.hpp"
 #include "core/type/math.hpp"
 #include "core/type/ptr.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 

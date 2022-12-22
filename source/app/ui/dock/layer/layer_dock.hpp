@@ -21,7 +21,7 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 
 namespace tactile {
 class DocumentModel;

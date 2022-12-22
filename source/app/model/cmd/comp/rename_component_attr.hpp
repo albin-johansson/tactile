@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 

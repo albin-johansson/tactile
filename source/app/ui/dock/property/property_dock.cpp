@@ -31,7 +31,7 @@
 #include "core/map.hpp"
 #include "core/tile/tileset.hpp"
 #include "core/type/maybe.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

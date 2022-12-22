@@ -22,7 +22,7 @@
 #include <entt/entity/entity.hpp>
 
 #include "core/type/math.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 
 namespace tactile {
 

@@ -25,7 +25,7 @@
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/set.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

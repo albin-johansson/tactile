@@ -22,7 +22,7 @@
 #include <entt/fwd.hpp>
 
 #include "core/type/ptr.hpp"
-#include "core/uuid.hpp"
+#include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "ui/dialog/dialog.hpp"
 
