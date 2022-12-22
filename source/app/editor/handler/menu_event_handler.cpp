@@ -43,7 +43,6 @@ void dispatch_menu_action(const MenuAction action)
   auto& dispatcher = get_dispatcher();
   auto& prefs = io::get_preferences();
 
-  spdlog::debug("dispatch_menu_action {}", magic_enum::enum_name(action));
   switch (action) {
     case MenuAction::NewMap:
       dispatcher.enqueue<ShowNewMapDialogEvent>();
