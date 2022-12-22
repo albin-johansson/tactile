@@ -35,7 +35,7 @@ namespace {
 void on_select_object(const SelectObjectEvent& event)
 {
   if (auto* document = get_model().active_map()) {
-    auto& layer = document->get_map().invisible_root().object_layer(event.layer_id);
+    auto& layer = document->get_map().invisible_root().get_object_layer(event.layer_id);
     layer.select_object(event.object_id);
   }
 }

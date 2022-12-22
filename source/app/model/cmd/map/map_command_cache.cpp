@@ -56,7 +56,7 @@ void MapCommandCache::restore_tiles(Map& map)
 {
   auto& root = map.invisible_root();
   for (const auto& [layer_id, tile_cache]: mCache) {
-    auto& layer = root.tile_layer(layer_id);
+    auto& layer = root.get_tile_layer(layer_id);
 
     for (const auto& [position, tile_id]: tile_cache) {
       layer.set_tile(position, tile_id);

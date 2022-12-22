@@ -93,31 +93,31 @@ class GroupLayer final : public Layer {
   /// Indicates whether a layer can be moved down.
   [[nodiscard]] auto can_move_down(const UUID& id) const -> bool;
 
-  [[nodiscard]] auto ptr(const UUID& id) -> Shared<Layer>;
+  [[nodiscard]] auto get_layer_ptr(const UUID& id) -> Shared<Layer>;
 
-  [[nodiscard]] auto at(const UUID& id) -> Layer&;
-  [[nodiscard]] auto at(const UUID& id) const -> const Layer&;
+  [[nodiscard]] auto get_layer(const UUID& id) -> Layer&;
+  [[nodiscard]] auto get_layer(const UUID& id) const -> const Layer&;
 
-  [[nodiscard]] auto tile_layer(const UUID& id) -> TileLayer&;
-  [[nodiscard]] auto tile_layer(const UUID& id) const -> const TileLayer&;
+  [[nodiscard]] auto get_tile_layer(const UUID& id) -> TileLayer&;
+  [[nodiscard]] auto get_tile_layer(const UUID& id) const -> const TileLayer&;
 
-  [[nodiscard]] auto object_layer(const UUID& id) -> ObjectLayer&;
-  [[nodiscard]] auto object_layer(const UUID& id) const -> const ObjectLayer&;
+  [[nodiscard]] auto get_object_layer(const UUID& id) -> ObjectLayer&;
+  [[nodiscard]] auto get_object_layer(const UUID& id) const -> const ObjectLayer&;
 
-  [[nodiscard]] auto group_layer(const UUID& id) -> GroupLayer&;
-  [[nodiscard]] auto group_layer(const UUID& id) const -> const GroupLayer&;
+  [[nodiscard]] auto get_group_layer(const UUID& id) -> GroupLayer&;
+  [[nodiscard]] auto get_group_layer(const UUID& id) const -> const GroupLayer&;
 
-  [[nodiscard]] auto find(const UUID& id) -> Layer*;
-  [[nodiscard]] auto find(const UUID& id) const -> const Layer*;
+  [[nodiscard]] auto find_layer(const UUID& id) -> Layer*;
+  [[nodiscard]] auto find_layer(const UUID& id) const -> const Layer*;
 
-  [[nodiscard]] auto as_tile_layer(const UUID& id) -> TileLayer*;
-  [[nodiscard]] auto as_tile_layer(const UUID& id) const -> const TileLayer*;
+  [[nodiscard]] auto find_tile_layer(const UUID& id) -> TileLayer*;
+  [[nodiscard]] auto find_tile_layer(const UUID& id) const -> const TileLayer*;
 
-  [[nodiscard]] auto as_object_layer(const UUID& id) -> ObjectLayer*;
-  [[nodiscard]] auto as_object_layer(const UUID& id) const -> const ObjectLayer*;
+  [[nodiscard]] auto find_object_layer(const UUID& id) -> ObjectLayer*;
+  [[nodiscard]] auto find_object_layer(const UUID& id) const -> const ObjectLayer*;
 
-  [[nodiscard]] auto as_group_layer(const UUID& id) -> GroupLayer*;
-  [[nodiscard]] auto as_group_layer(const UUID& id) const -> const GroupLayer*;
+  [[nodiscard]] auto find_group_layer(const UUID& id) -> GroupLayer*;
+  [[nodiscard]] auto find_group_layer(const UUID& id) const -> const GroupLayer*;
 
   [[nodiscard]] auto opacity() const -> float override;
 

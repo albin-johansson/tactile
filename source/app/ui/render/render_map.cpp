@@ -41,7 +41,8 @@ void highlight_active_object(Graphics& graphics,
                              const Map& map,
                              const UUID& active_layer_id)
 {
-  if (const auto* object_layer = map.invisible_root().as_object_layer(active_layer_id)) {
+  if (const auto* object_layer =
+          map.invisible_root().find_object_layer(active_layer_id)) {
     if (const auto object_id = object_layer->active_object_id()) {
       const auto& object = object_layer->get_object(*object_id);
       render_object(graphics, object, active_object_color);
@@ -81,7 +82,7 @@ void render_layers(Graphics& graphics, const Map& map)
     }
 
     const auto parent_id = layer->parent();
-    const auto* parent_layer = parent_id ? root.as_group_layer(*parent_id) : nullptr;
+    const auto* parent_layer = parent_id ? root.find_group_layer(*parent_id) : nullptr;
 
     if (parent_layer && !parent_layer->visible()) {
       return;

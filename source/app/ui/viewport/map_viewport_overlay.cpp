@@ -78,7 +78,7 @@ void show_mouse_tile_labels(const Map& map, const ViewportCursorInfo& cursor)
 
   const auto& lang = get_current_language();
 
-  if (const auto* layer = map.invisible_root().as_tile_layer(*layer_id)) {
+  if (const auto* layer = map.invisible_root().find_tile_layer(*layer_id)) {
     const auto tile_id = layer->tile_at(cursor.map_position);
 
     if (cursor.is_within_map && tile_id != empty_tile) {

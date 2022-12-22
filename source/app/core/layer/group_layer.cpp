@@ -309,7 +309,7 @@ void GroupLayer::each(const SimpleVisitor& visitor) const
 
 void GroupLayer::add(const UUID& parent, const Shared<Layer>& layer)
 {
-  if (auto* group = as_group_layer(parent)) {
+  if (auto* group = find_group_layer(parent)) {
     group->add(layer);
     layer->set_parent(parent);
   }
@@ -514,7 +514,7 @@ auto GroupLayer::can_move_down(const UUID& id) const -> bool
   return local_index(id) < sibling_count(id);
 }
 
-auto GroupLayer::ptr(const UUID& id) -> Shared<Layer>
+auto GroupLayer::get_layer_ptr(const UUID& id) -> Shared<Layer>
 {
   Shared<Layer> layer;
   auto op = [&](const LayerStorage&, LayerStorage::const_iterator iter) {
@@ -532,9 +532,9 @@ auto GroupLayer::ptr(const UUID& id) -> Shared<Layer>
   }
 }
 
-auto GroupLayer::at(const UUID& id) -> Layer&
+auto GroupLayer::get_layer(const UUID& id) -> Layer&
 {
-  if (auto* layer = find(id)) {
+  if (auto* layer = find_layer(id)) {
     return *layer;
   }
   else {
@@ -542,9 +542,9 @@ auto GroupLayer::at(const UUID& id) -> Layer&
   }
 }
 
-auto GroupLayer::at(const UUID& id) const -> const Layer&
+auto GroupLayer::get_layer(const UUID& id) const -> const Layer&
 {
-  if (const auto* layer = find(id)) {
+  if (const auto* layer = find_layer(id)) {
     return *layer;
   }
   else {
@@ -552,9 +552,9 @@ auto GroupLayer::at(const UUID& id) const -> const Layer&
   }
 }
 
-auto GroupLayer::tile_layer(const UUID& id) -> TileLayer&
+auto GroupLayer::get_tile_layer(const UUID& id) -> TileLayer&
 {
-  if (auto* layer = as_tile_layer(id)) {
+  if (auto* layer = find_tile_layer(id)) {
     return *layer;
   }
   else {
@@ -562,9 +562,9 @@ auto GroupLayer::tile_layer(const UUID& id) -> TileLayer&
   }
 }
 
-auto GroupLayer::tile_layer(const UUID& id) const -> const TileLayer&
+auto GroupLayer::get_tile_layer(const UUID& id) const -> const TileLayer&
 {
-  if (const auto* layer = as_tile_layer(id)) {
+  if (const auto* layer = find_tile_layer(id)) {
     return *layer;
   }
   else {
@@ -572,9 +572,9 @@ auto GroupLayer::tile_layer(const UUID& id) const -> const TileLayer&
   }
 }
 
-auto GroupLayer::object_layer(const UUID& id) -> ObjectLayer&
+auto GroupLayer::get_object_layer(const UUID& id) -> ObjectLayer&
 {
-  if (auto* layer = as_object_layer(id)) {
+  if (auto* layer = find_object_layer(id)) {
     return *layer;
   }
   else {
@@ -582,9 +582,9 @@ auto GroupLayer::object_layer(const UUID& id) -> ObjectLayer&
   }
 }
 
-auto GroupLayer::object_layer(const UUID& id) const -> const ObjectLayer&
+auto GroupLayer::get_object_layer(const UUID& id) const -> const ObjectLayer&
 {
-  if (const auto* layer = as_object_layer(id)) {
+  if (const auto* layer = find_object_layer(id)) {
     return *layer;
   }
   else {
@@ -592,9 +592,9 @@ auto GroupLayer::object_layer(const UUID& id) const -> const ObjectLayer&
   }
 }
 
-auto GroupLayer::group_layer(const UUID& id) -> GroupLayer&
+auto GroupLayer::get_group_layer(const UUID& id) -> GroupLayer&
 {
-  if (auto* layer = as_group_layer(id)) {
+  if (auto* layer = find_group_layer(id)) {
     return *layer;
   }
   else {
@@ -602,9 +602,9 @@ auto GroupLayer::group_layer(const UUID& id) -> GroupLayer&
   }
 }
 
-auto GroupLayer::group_layer(const UUID& id) const -> const GroupLayer&
+auto GroupLayer::get_group_layer(const UUID& id) const -> const GroupLayer&
 {
-  if (const auto* layer = as_group_layer(id)) {
+  if (const auto* layer = find_group_layer(id)) {
     return *layer;
   }
   else {
@@ -612,56 +612,56 @@ auto GroupLayer::group_layer(const UUID& id) const -> const GroupLayer&
   }
 }
 
-auto GroupLayer::find(const UUID& id) -> Layer*
+auto GroupLayer::find_layer(const UUID& id) -> Layer*
 {
   FindLayerVisitor visitor {id};
   each(visitor);
   return visitor.found_layer();
 }
 
-auto GroupLayer::find(const UUID& id) const -> const Layer*
+auto GroupLayer::find_layer(const UUID& id) const -> const Layer*
 {
   FindConstLayerVisitor visitor {id};
   each(visitor);
   return visitor.found_layer();
 }
 
-auto GroupLayer::as_tile_layer(const UUID& id) -> TileLayer*
+auto GroupLayer::find_tile_layer(const UUID& id) -> TileLayer*
 {
   FindTileLayerVisitor visitor {id};
   each(visitor);
   return visitor.found_layer();
 }
 
-auto GroupLayer::as_tile_layer(const UUID& id) const -> const TileLayer*
+auto GroupLayer::find_tile_layer(const UUID& id) const -> const TileLayer*
 {
   ConstFindTileLayerVisitor visitor {id};
   each(visitor);
   return visitor.found_layer();
 }
 
-auto GroupLayer::as_object_layer(const UUID& id) -> ObjectLayer*
+auto GroupLayer::find_object_layer(const UUID& id) -> ObjectLayer*
 {
   FindObjectLayerVisitor visitor {id};
   each(visitor);
   return visitor.found_layer();
 }
 
-auto GroupLayer::as_object_layer(const UUID& id) const -> const ObjectLayer*
+auto GroupLayer::find_object_layer(const UUID& id) const -> const ObjectLayer*
 {
   ConstFindObjectLayerVisitor visitor {id};
   each(visitor);
   return visitor.found_layer();
 }
 
-auto GroupLayer::as_group_layer(const UUID& id) -> GroupLayer*
+auto GroupLayer::find_group_layer(const UUID& id) -> GroupLayer*
 {
   FindGroupLayerVisitor visitor {id};
   each(visitor);
   return visitor.found_layer();
 }
 
-auto GroupLayer::as_group_layer(const UUID& id) const -> const GroupLayer*
+auto GroupLayer::find_group_layer(const UUID& id) const -> const GroupLayer*
 {
   ConstFindGroupLayerVisitor visitor {id};
   each(visitor);

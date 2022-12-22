@@ -34,7 +34,7 @@ RemoveLayer::RemoveLayer(MapDocument* document, const UUID& layer_id)
     throw TactileError {"Invalid null map document!"};
   }
 
-  mLayer = mDocument->get_map().invisible_root().ptr(layer_id);
+  mLayer = mDocument->get_map().invisible_root().get_layer_ptr(layer_id);
 }
 
 void RemoveLayer::undo()

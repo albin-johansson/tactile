@@ -74,7 +74,7 @@ void AddLayer::redo()
         throw TactileError {"Invalid layer type!"};
     }
 
-    mLayer = map.invisible_root().ptr(id.value());
+    mLayer = map.invisible_root().get_layer_ptr(id.value());
   }
 
   mDocument->get_contexts().add_context(mLayer);

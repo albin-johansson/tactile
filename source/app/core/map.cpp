@@ -231,7 +231,7 @@ auto Map::duplicate_layer(const UUID& id) -> Shared<Layer>
 
 void Map::select_layer(const UUID& id)
 {
-  if (invisible_root().find(id)) {
+  if (invisible_root().find_layer(id)) {
     mData->active_layer = id;
   }
   else {
@@ -242,7 +242,7 @@ void Map::select_layer(const UUID& id)
 auto Map::is_active_layer(const LayerType type) const -> bool
 {
   if (const auto id = active_layer_id()) {
-    return invisible_root().at(*id).type() == type;
+    return invisible_root().get_layer(*id).type() == type;
   }
   else {
     return false;

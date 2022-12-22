@@ -101,7 +101,7 @@ void update_rename_dialog(const DocumentModel& model, entt::dispatcher& dispatch
 
     const auto& document = model.require_active_map();
     const auto& map = document.get_map();
-    const auto& layer = map.invisible_root().at(target_layer_id);
+    const auto& layer = map.invisible_root().get_layer(target_layer_id);
 
     dialogs.rename_layer.show(target_layer_id, layer.get_ctx().name());
     rename_target_id.reset();

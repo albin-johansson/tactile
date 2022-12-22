@@ -116,7 +116,7 @@ void StampTool::update_sequence(DocumentModel& model, const TilePos& cursor)
   auto& map = map_document.get_map();
 
   const auto active_layer_id = map.active_layer_id().value();
-  auto& layer = map.invisible_root().tile_layer(active_layer_id);
+  auto& layer = map.invisible_root().get_tile_layer(active_layer_id);
 
   const auto& tilesets = map.tileset_bundle();
   const auto tileset_id = tilesets.active_tileset_id().value();

@@ -52,7 +52,7 @@ void ObjectSelectionTool::on_pressed(DocumentModel& model,
     const auto& viewport = document.get_viewport();
 
     const auto layer_id = map.active_layer_id().value();
-    auto& layer = map.invisible_root().object_layer(layer_id);
+    auto& layer = map.invisible_root().get_object_layer(layer_id);
 
     const auto ratio = viewport.scaling_ratio(map.tile_size());
     const auto object_id = layer.object_at(mouse.pos / ratio, map.tile_size());
@@ -95,7 +95,7 @@ void ObjectSelectionTool::on_dragged(DocumentModel& model,
     auto& map = document.get_map();
 
     const auto layer_id = map.active_layer_id().value();
-    auto& layer = map.invisible_root().object_layer(layer_id);
+    auto& layer = map.invisible_root().get_object_layer(layer_id);
 
     if (const auto object_id = layer.active_object_id()) {
       auto& object = layer.get_object(*object_id);
@@ -140,7 +140,7 @@ void ObjectSelectionTool::maybe_emit_event(DocumentModel& model,
 
   if (mDragInfo) {
     if (const auto layer_id = map.active_layer_id()) {
-      const auto& layer = map.invisible_root().object_layer(*layer_id);
+      const auto& layer = map.invisible_root().get_object_layer(*layer_id);
 
       if (const auto object_id = layer.active_object_id()) {
         const auto& object = layer.get_object(*object_id);

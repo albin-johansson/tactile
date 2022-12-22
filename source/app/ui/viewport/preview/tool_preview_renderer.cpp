@@ -79,7 +79,7 @@ void ToolPreviewRenderer::render_stamp_normal(const Map& map,
 {
   TACTILE_ASSERT(map.is_active_layer(LayerType::TileLayer));
   const auto layer_id = map.active_layer_id().value();
-  const auto& layer = map.invisible_root().tile_layer(layer_id);
+  const auto& layer = map.invisible_root().get_tile_layer(layer_id);
 
   const auto& selection = tileset_ref.get_selection().value();
   const auto selection_size = selection.end - selection.begin;
