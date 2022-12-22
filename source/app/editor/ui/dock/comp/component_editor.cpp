@@ -21,7 +21,6 @@
 
 #include <utility>  // move
 
-#include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
