@@ -26,10 +26,10 @@
 
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
-#include "core/mouse_info.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/model.hpp"
+#include "model/mouse_info.hpp"
 
 namespace tactile {
 

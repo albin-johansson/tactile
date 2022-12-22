@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/mouse_info.hpp"
 #include "core/type/ref.hpp"
+#include "model/mouse_info.hpp"
 #include "model/tool/tool_visitor.hpp"
 
 namespace tactile {
