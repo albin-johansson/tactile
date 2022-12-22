@@ -23,7 +23,7 @@
 
 #include <imgui_internal.h>
 
-#include "ui/render/render_info.hpp"
+#include "graphics/render_info.hpp"
 
 namespace tactile::ui {
 

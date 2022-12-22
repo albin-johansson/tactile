@@ -23,7 +23,7 @@
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "debug/assert.hpp"
-#include "graphics.hpp"
+#include "graphics/graphics.hpp"
 #include "ui/conversions.hpp"
 
 namespace tactile::ui {

@@ -25,11 +25,11 @@
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "debug/assert.hpp"
-#include "graphics.hpp"
+#include "graphics/graphics.hpp"
+#include "graphics/render_object_layer.hpp"
+#include "graphics/render_tile_layer.hpp"
 #include "io/proto/preferences.hpp"
 #include "model/document/map_document.hpp"
-#include "render_object_layer.hpp"
-#include "render_tile_layer.hpp"
 #include "ui/conversions.hpp"
 
 namespace tactile::ui {

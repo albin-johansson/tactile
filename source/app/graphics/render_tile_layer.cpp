@@ -21,8 +21,8 @@
 
 #include "core/layer/tile_layer.hpp"
 #include "core/region.hpp"
-#include "graphics.hpp"
-#include "render_tile.hpp"
+#include "graphics/graphics.hpp"
+#include "graphics/render_tile.hpp"
 
 namespace tactile::ui {
 

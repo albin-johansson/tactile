@@ -25,6 +25,9 @@
 
 #include "core/tile/tileset_bundle.hpp"
 #include "core/tile/tileset_ref.hpp"
+#include "graphics/graphics.hpp"
+#include "graphics/render.hpp"
+#include "graphics/render_info.hpp"
 #include "io/proto/preferences.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
@@ -32,9 +35,6 @@
 #include "model/event/viewport_events.hpp"
 #include "model/model.hpp"
 #include "ui/conversions.hpp"
-#include "ui/render/graphics.hpp"
-#include "ui/render/render.hpp"
-#include "ui/render/render_info.hpp"
 #include "ui/widget/rubber_band.hpp"
 
 namespace tactile::ui {

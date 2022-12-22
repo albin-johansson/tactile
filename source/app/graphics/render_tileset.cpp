@@ -22,10 +22,10 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "graphics.hpp"
+#include "graphics/graphics.hpp"
+#include "graphics/render.hpp"
 #include "io/proto/preferences.hpp"
 #include "model/document/tileset_document.hpp"
-#include "render.hpp"
 #include "ui/conversions.hpp"
 
 namespace tactile::ui {

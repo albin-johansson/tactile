@@ -24,8 +24,8 @@
 
 #include "core/region.hpp"
 #include "core/vocabulary.hpp"
-#include "render.hpp"
-#include "render_info.hpp"
+#include "graphics/render.hpp"
+#include "graphics/render_info.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, Tileset)
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, Texture)

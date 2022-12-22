@@ -22,12 +22,12 @@
 #include <imgui_internal.h>
 
 #include "document_viewport_offset_handler.hpp"
+#include "graphics/graphics.hpp"
+#include "graphics/render_info.hpp"
+#include "graphics/render_tileset.hpp"
 #include "io/proto/preferences.hpp"
 #include "model/document/tileset_document.hpp"
 #include "ui/conversions.hpp"
-#include "ui/render/graphics.hpp"
-#include "ui/render/render_info.hpp"
-#include "ui/render/render_tileset.hpp"
 
 namespace tactile::ui {
 

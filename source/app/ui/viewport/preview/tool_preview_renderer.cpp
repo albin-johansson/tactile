@@ -24,14 +24,14 @@
 #include "core/tile/tileset_bundle.hpp"
 #include "core/util/functional.hpp"
 #include "debug/assert.hpp"
+#include "graphics/graphics.hpp"
+#include "graphics/render.hpp"
 #include "model/document/map_document.hpp"
 #include "model/model.hpp"
 #include "model/tool/ellipse_tool.hpp"
 #include "model/tool/rectangle_tool.hpp"
 #include "model/tool/stamp_tool.hpp"
 #include "ui/conversions.hpp"
-#include "ui/render/graphics.hpp"
-#include "ui/render/render.hpp"
 
 namespace tactile::ui {
 namespace {
