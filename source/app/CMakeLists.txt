@@ -125,10 +125,7 @@ add_dependencies(${TACTILE_EXE} ${TACTILE_LIB})
 tactile_set_compile_options(${TACTILE_LIB})
 tactile_set_compile_options(${TACTILE_EXE})
 
-target_precompile_headers(${TACTILE_LIB} PRIVATE
-                          ${TACTILE_STD_HEADERS}
-                          <imgui.h>
-                          )
+target_precompile_headers(${TACTILE_LIB} PRIVATE ${TACTILE_PRECOMPILED_HEADERS})
 target_precompile_headers(${TACTILE_EXE} REUSE_FROM ${TACTILE_LIB})
 
 target_link_libraries(${TACTILE_EXE}

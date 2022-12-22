@@ -42,6 +42,7 @@ set(TACTILE_STD_HEADERS
     <array>
     <charconv>
     <chrono>
+    <codecvt>
     <concepts>
     <cstddef>
     <cstdint>
@@ -74,4 +75,12 @@ set(TACTILE_STD_HEADERS
     <utility>
     <variant>
     <vector>
+    )
+
+set(TACTILE_PRECOMPILED_HEADERS
+    ${TACTILE_STD_HEADERS}
+    <imgui.h>
+    <entt/signal/dispatcher.hpp>
+    <spdlog/spdlog.h>
+    <fmt/format.h>
     )
