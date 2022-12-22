@@ -23,11 +23,11 @@
 
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
-#include "editor/app_context.hpp"
-#include "editor/ui/viewport/map_viewport.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/object_events.hpp"
 #include "model/model.hpp"
+#include "ui/app_context.hpp"
+#include "ui/viewport/map_viewport.hpp"
 
 namespace tactile {
 namespace {

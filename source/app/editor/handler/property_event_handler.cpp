@@ -22,12 +22,12 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/ctx/context_manager.hpp"
-#include "editor/app_context.hpp"
-#include "editor/ui/dialog/dialog_state.hpp"
-#include "editor/ui/dialog/dialogs.hpp"
 #include "model/document/document.hpp"
 #include "model/event/property_events.hpp"
 #include "model/model.hpp"
+#include "ui/app_context.hpp"
+#include "ui/dialog/dialog_state.hpp"
+#include "ui/dialog/dialogs.hpp"
 
 namespace tactile {
 namespace {

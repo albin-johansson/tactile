@@ -29,8 +29,6 @@
 #include "core/type/string.hpp"
 #include "core/util/assoc.hpp"
 #include "core/vocabulary.hpp"
-#include "editor/app_context.hpp"
-#include "editor/ui/fonts.hpp"
 #include "io/proto/history.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
@@ -40,6 +38,8 @@
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
 #include "model/model.hpp"
+#include "ui/app_context.hpp"
+#include "ui/fonts.hpp"
 
 namespace tactile {
 namespace {

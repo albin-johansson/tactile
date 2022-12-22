@@ -23,14 +23,14 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "editor/app_context.hpp"
-#include "editor/ui/fonts.hpp"
-#include "editor/widget_show_state.hpp"
 #include "io/proto/preferences.hpp"
 #include "misc/assert.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/view_events.hpp"
 #include "model/model.hpp"
+#include "ui/app_context.hpp"
+#include "ui/fonts.hpp"
+#include "ui/widget_show_state.hpp"
 
 namespace tactile {
 namespace {

@@ -20,8 +20,8 @@
 #include <gtest/gtest.h>
 
 #include "cfg/configuration.hpp"
-#include "editor/app_context.hpp"
 #include "misc/logging.hpp"
+#include "ui/app_context.hpp"
 
 auto main(int argc, char* argv[]) -> int
 {

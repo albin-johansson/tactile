@@ -22,8 +22,6 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "editor/shortcut/mappings.hpp"
-#include "editor/ui/menu/map_menu.hpp"
-#include "editor/ui/ui.hpp"
 #include "model/cmd/command_stack.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/command_events.hpp"
@@ -34,6 +32,8 @@
 #include "model/event/view_events.hpp"
 #include "model/model.hpp"
 #include "model/tool/tool_manager.hpp"
+#include "ui/menu/map_menu.hpp"
+#include "ui/ui.hpp"
 
 namespace tactile {
 

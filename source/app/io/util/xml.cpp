@@ -22,8 +22,8 @@
 #include <algorithm>  // any_of
 #include <cstring>    // strcmp
 
-#include "editor/constants.hpp"
 #include "misc/assert.hpp"
+#include "ui/constants.hpp"
 
 namespace tactile::io {
 

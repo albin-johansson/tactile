@@ -25,11 +25,11 @@
 
 #include "cfg/configuration.hpp"
 #include "core/util/fmt.hpp"
-#include "editor/app.hpp"
-#include "editor/app_context.hpp"
 #include "io/directories.hpp"
 #include "misc/logging.hpp"
 #include "misc/panic.hpp"
+#include "ui/app.hpp"
+#include "ui/app_context.hpp"
 
 namespace {
 

@@ -23,11 +23,11 @@
 #include <spdlog/spdlog.h>
 
 #include "core/type/string.hpp"
-#include "editor/ui/style/icons.hpp"
 #include "io/directories.hpp"
 #include "io/util/json.hpp"
 #include "meta/build.hpp"
 #include "misc/panic.hpp"
+#include "ui/style/icons.hpp"
 
 namespace tactile::io {
 namespace {

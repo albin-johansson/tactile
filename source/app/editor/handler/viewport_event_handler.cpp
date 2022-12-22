@@ -25,12 +25,12 @@
 #include "core/tile/tileset_bundle.hpp"
 #include "core/type/math.hpp"
 #include "core/viewport.hpp"
-#include "editor/app_context.hpp"
-#include "editor/ui/conversions.hpp"
-#include "editor/ui/viewport/map_viewport.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/model.hpp"
+#include "ui/app_context.hpp"
+#include "ui/conversions.hpp"
+#include "ui/viewport/map_viewport.hpp"
 
 namespace tactile {
 namespace {

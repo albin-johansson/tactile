@@ -25,7 +25,7 @@
 
 #include "cfg/protobuf_context.hpp"
 #include "core/type/maybe.hpp"
-#include "editor/ui/imgui_context.hpp"
+#include "ui/imgui_context.hpp"
 
 namespace tactile {
 

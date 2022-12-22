@@ -23,10 +23,10 @@
 #include "core/type/math.hpp"
 #include "core/type/string.hpp"
 #include "core/vocabulary.hpp"
-#include "editor/ui/fonts.hpp"
-#include "editor/ui/style/themes.hpp"
 #include "lang/language.hpp"
 #include "meta/build.hpp"
+#include "ui/fonts.hpp"
+#include "ui/style/themes.hpp"
 
 namespace tactile::io {
 

@@ -22,11 +22,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <spdlog/spdlog.h>
 
-#include "editor/app_context.hpp"
-#include "editor/ui/dialog/dialog_state.hpp"
-#include "editor/ui/dialog/dialogs.hpp"
-#include "editor/ui/menu/file_menu.hpp"
-#include "editor/ui/ui.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/ir/map_from_ir.hpp"
@@ -36,6 +31,11 @@
 #include "model/document/map_document.hpp"
 #include "model/event/map_events.hpp"
 #include "model/model.hpp"
+#include "ui/app_context.hpp"
+#include "ui/dialog/dialog_state.hpp"
+#include "ui/dialog/dialogs.hpp"
+#include "ui/menu/file_menu.hpp"
+#include "ui/ui.hpp"
 
 namespace tactile {
 namespace {
