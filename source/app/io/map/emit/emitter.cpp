@@ -27,8 +27,8 @@
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/emit/gd/godot_writer.hpp"
 #include "io/map/ir/map_to_ir.hpp"
-#include "meta/profile.hpp"
 #include "misc/assert.hpp"
+#include "misc/profile.hpp"
 #include "model/document/map_document.hpp"
 
 namespace tactile::io {
