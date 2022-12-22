@@ -23,14 +23,12 @@
 
 #include "core/vocabulary.hpp"
 
-namespace tactile {
-class ObjectLayer;
-class Object;
-}  // namespace tactile
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, ObjectLayer)
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Object)
 
 namespace tactile::ui {
 
-class Graphics;
+TACTILE_FWD_DECLARE_CLASS(Graphics)
 
 void render_object(Graphics& graphics, const Object& object, uint32 color);
 

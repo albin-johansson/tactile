@@ -19,18 +19,18 @@
 
 #pragma once
 
-namespace tactile {
-class Map;
-class TileLayer;
-}  // namespace tactile
+#include "core/vocabulary.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Map)
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, TileLayer)
 
 namespace tactile::ui {
 
-class Graphics;
+TACTILE_FWD_DECLARE_CLASS(Graphics)
 
 void render_tile_layer(Graphics& graphics,
                        const Map& map,
                        const TileLayer& layer,
-                       float parentOpacity);
+                       float parent_opacity);
 
 }  // namespace tactile::ui

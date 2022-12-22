@@ -23,14 +23,12 @@
 
 struct ImVec2;
 
-namespace tactile {
-class Map;
-class TilePos;
-}  // namespace tactile
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Map)
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilePos)
 
 namespace tactile::ui {
 
-class Graphics;
+TACTILE_FWD_DECLARE_CLASS(Graphics)
 
 void render_tile(Graphics& graphics,
                  const Map& map,

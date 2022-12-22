@@ -22,12 +22,11 @@
 #include <imgui.h>
 
 #include "core/region.hpp"
+#include "core/vocabulary.hpp"
 
-namespace tactile {
-class Map;
-class Tileset;
-class Viewport;
-}  // namespace tactile
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Map)
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Tileset)
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Viewport)
 
 namespace tactile::ui {
 

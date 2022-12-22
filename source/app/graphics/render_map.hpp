@@ -19,13 +19,13 @@
 
 #pragma once
 
-namespace tactile {
-class MapDocument;
-}  // namespace tactile
+#include "core/vocabulary.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, MapDocument)
 
 namespace tactile::ui {
 
-class Graphics;
+TACTILE_FWD_DECLARE_CLASS(Graphics)
 
 void render_map(Graphics& graphics, const MapDocument& document);
 

@@ -19,13 +19,13 @@
 
 #pragma once
 
-namespace tactile {
-class TilesetDocument;
-}  // namespace tactile
+#include "core/vocabulary.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetDocument)
 
 namespace tactile::ui {
 
-class Graphics;
+TACTILE_FWD_DECLARE_CLASS(Graphics)
 
 void render_tileset(Graphics& graphics, const TilesetDocument& document);
 
