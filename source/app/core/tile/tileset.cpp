@@ -147,7 +147,7 @@ auto Tileset::appearance_of(const TileIndex index) const -> TileIndex
     const auto& tile = lookup_in(data.tiles, id);
 
     if (tile->is_animated()) {
-      const auto appearance = tile->animation().current_frame().tile;
+      const auto appearance = tile->get_animation().current_frame().tile;
       data.appearance_cache[index] = appearance;
       return appearance;
     }

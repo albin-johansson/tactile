@@ -59,7 +59,7 @@ TEST(Tileset, SubscriptOperator)
   ASSERT_THROW(tileset[tileset.tile_count()], TactileError);
 
   const auto& tile = tileset[42];
-  ASSERT_EQ(42, tile.index());
+  ASSERT_EQ(42, tile.get_index());
 }
 
 TEST(Tileset, IndexOf)

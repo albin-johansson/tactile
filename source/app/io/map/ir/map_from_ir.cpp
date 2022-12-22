@@ -204,7 +204,7 @@ void restore_fancy_tiles(TilesetDocument& document, const ir::TilesetData& tiles
   auto& tileset = document.view_tileset();
   for (const auto& [index, tile_data]: tileset_data.fancy_tiles) {
     auto tile = tileset.get_tile_ptr(index);
-    TACTILE_ASSERT(tile->index() == index);
+    TACTILE_ASSERT(tile->get_index() == index);
 
     if (!tile_data.frames.empty()) {
       restore_tile_animation(*tile, tile_data);

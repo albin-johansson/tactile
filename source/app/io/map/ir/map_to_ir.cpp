@@ -189,10 +189,10 @@ void convert_fancy_tiles(const Tileset& tileset,
     const auto has_comps = !tile->ctx().comps().empty();
 
     if (is_animated || has_objects || has_props || has_comps) {
-      auto& tile_data = data.fancy_tiles[tile->index()];
+      auto& tile_data = data.fancy_tiles[tile->get_index()];
 
       if (is_animated) {
-        convert_fancy_tile_animation(tile->animation(), tile_data);
+        convert_fancy_tile_animation(tile->get_animation(), tile_data);
       }
 
       if (has_props || has_comps) {

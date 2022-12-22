@@ -30,8 +30,9 @@ namespace tactile::test {
 TEST(Tile, Defaults)
 {
   const Tile tile {7};
-  ASSERT_EQ(7, tile.index());
+  ASSERT_EQ(7, tile.get_index());
   ASSERT_EQ(0u, tile.object_count());
+  ASSERT_EQ(Int4 {}, tile.get_source());
   ASSERT_FALSE(tile.is_animated());
 }
 
@@ -68,7 +69,7 @@ TEST(Tile, SetAnimation)
   }
 
   ASSERT_TRUE(tile.is_animated());
-  const auto& animation = tile.animation();
+  const auto& animation = tile.get_animation();
 
   ASSERT_EQ(2u, animation.size());
 
@@ -77,6 +78,16 @@ TEST(Tile, SetAnimation)
 
   ASSERT_EQ(8, animation[1].tile);
   ASSERT_EQ(37ms, animation[1].duration);
+}
+
+TEST(Tile, SetSource)
+{
+  Tile tile {100};
+
+  const Int4 source {27, 82, 45, 32};
+  tile.set_source(source);
+
+  ASSERT_EQ(source, tile.get_source());
 }
 
 }  // namespace tactile::test
