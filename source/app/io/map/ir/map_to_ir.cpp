@@ -60,16 +60,16 @@ void convert_object(const Object& object,
                     const ComponentIndex* components,
                     ir::ObjectData& data)
 {
-  TACTILE_ASSERT(object.meta_id().has_value());
+  TACTILE_ASSERT(object.get_meta_id().has_value());
 
-  data.id = object.meta_id().value();
-  data.type = object.type();
+  data.id = object.get_meta_id().value();
+  data.type = object.get_type();
 
-  data.pos = object.pos();
-  data.size = object.size();
+  data.pos = object.get_pos();
+  data.size = object.get_size();
 
-  data.tag = object.tag();
-  data.visible = object.visible();
+  data.tag = object.get_tag();
+  data.visible = object.is_visible();
 
   data.name = object.get_ctx().name();
   convert_context(object, components, data.context);

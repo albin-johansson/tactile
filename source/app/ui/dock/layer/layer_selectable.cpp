@@ -104,7 +104,7 @@ void show_object_selectable(const ObjectLayer& layer,
                             entt::dispatcher& dispatcher)
 {
   const auto object_id = object.get_uuid();
-  const auto object_type = object.type();
+  const auto object_type = object.get_type();
 
   const Scope scope {object_id};
 
@@ -113,8 +113,8 @@ void show_object_selectable(const ObjectLayer& layer,
 
   String name;
   if (object.get_ctx().name().empty()) {
-    TACTILE_ASSERT(object.meta_id().has_value());
-    name = fmt::format("{} Object {}", icon, object.meta_id().value());
+    TACTILE_ASSERT(object.get_meta_id().has_value());
+    name = fmt::format("{} Object {}", icon, object.get_meta_id().value());
   }
   else {
     name = fmt::format("{} {}", icon, object.get_ctx().name());
@@ -137,7 +137,7 @@ void show_object_selectable(const ObjectLayer& layer,
     ImGui::Separator();
 
     if (ImGui::MenuItem(lang.action.toggle_object_visibility.c_str())) {
-      dispatcher.enqueue<SetObjectVisibleEvent>(object_id, !object.visible());
+      dispatcher.enqueue<SetObjectVisibleEvent>(object_id, !object.is_visible());
     }
 
     ImGui::Separator();

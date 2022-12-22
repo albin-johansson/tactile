@@ -287,7 +287,7 @@ void show_native_object_properties(const Object& object, entt::dispatcher& dispa
 {
   const auto& lang = get_current_language();
 
-  switch (object.type()) {
+  switch (object.get_type()) {
     case ObjectType::Rect:
       native_read_only_row(lang.misc.type.c_str(), lang.misc.rectangle.c_str());
       break;
@@ -305,26 +305,26 @@ void show_native_object_properties(const Object& object, entt::dispatcher& dispa
     dispatcher.enqueue<SetObjectNameEvent>(object.get_uuid(), *updated_name);
   }
 
-  const auto& pos = object.pos();
+  const auto& pos = object.get_pos();
   native_read_only_row("X", pos.x);
   native_read_only_row("Y", pos.y);
 
-  if (object.type() != ObjectType::Point) {
-    const auto& size = object.size();
+  if (object.get_type() != ObjectType::Point) {
+    const auto& size = object.get_size();
     native_read_only_row(lang.misc.width.c_str(), size.x);
     native_read_only_row(lang.misc.height.c_str(), size.y);
   }
 
   prepare_table_row(lang.misc.visible.c_str());
   ImGui::TableNextColumn();
-  if (const auto visible = input_bool("##Visible", object.visible())) {
+  if (const auto visible = input_bool("##Visible", object.is_visible())) {
     dispatcher.enqueue<SetObjectVisibleEvent>(object.get_uuid(), *visible);
   }
 
   prepare_table_row(lang.misc.tag.c_str());
 
   ImGui::TableNextColumn();
-  if (const auto tag = input_string("##Tag", object.tag())) {
+  if (const auto tag = input_string("##Tag", object.get_tag())) {
     dispatcher.enqueue<SetObjectTagEvent>(object.get_uuid(), *tag);
   }
 }

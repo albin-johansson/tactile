@@ -46,10 +46,10 @@ TEST(MoveObject, RedoUndo)
   cmd::MoveObject cmd {object, initial_pos, new_pos};
 
   cmd.redo();
-  ASSERT_EQ(new_pos, object->pos());
+  ASSERT_EQ(new_pos, object->get_pos());
 
   cmd.undo();
-  ASSERT_EQ(initial_pos, object->pos());
+  ASSERT_EQ(initial_pos, object->get_pos());
 }
 
 }  // namespace tactile::test

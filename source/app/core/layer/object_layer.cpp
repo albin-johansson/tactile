@@ -30,10 +30,10 @@ namespace {
 [[nodiscard]] auto get_bounds(const Object& object, const Float2& tile_size) -> Float4
 {
   if (object.is_point()) {
-    return {object.pos() - (tile_size * 0.25f), tile_size * 0.5f};
+    return {object.get_pos() - (tile_size * 0.25f), tile_size * 0.5f};
   }
   else {
-    return {object.pos(), object.size()};
+    return {object.get_pos(), object.get_size()};
   }
 }
 

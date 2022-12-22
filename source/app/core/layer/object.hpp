@@ -69,22 +69,22 @@ class Object final : public Context {
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
-  [[nodiscard]] auto type() const -> ObjectType;
+  [[nodiscard]] auto get_type() const -> ObjectType;
 
   [[nodiscard]] auto is_rect() const -> bool;
   [[nodiscard]] auto is_ellipse() const -> bool;
   [[nodiscard]] auto is_point() const -> bool;
 
-  [[nodiscard]] auto pos() const -> const Float2&;
+  [[nodiscard]] auto get_pos() const -> const Float2&;
 
-  [[nodiscard]] auto size() const -> const Float2&;
+  [[nodiscard]] auto get_size() const -> const Float2&;
 
-  [[nodiscard]] auto tag() const -> const String&;
+  [[nodiscard]] auto get_tag() const -> const String&;
 
   /// Returns the associated meta identifier, if there is one.
-  [[nodiscard]] auto meta_id() const -> Maybe<int32>;
+  [[nodiscard]] auto get_meta_id() const -> Maybe<int32>;
 
-  [[nodiscard]] auto visible() const -> bool;
+  [[nodiscard]] auto is_visible() const -> bool;
 
   /// Creates a copy of the object, with a new UUID.
   [[nodiscard]] auto clone() const -> Shared<Object>;

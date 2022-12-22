@@ -77,7 +77,7 @@ void RemoveObject::redo()
 auto RemoveObject::get_name() const -> String
 {
   const auto& lang = get_current_language();
-  switch (mObject->type()) {
+  switch (mObject->get_type()) {
     case ObjectType::Point:
       return lang.cmd.remove_point_object;
 

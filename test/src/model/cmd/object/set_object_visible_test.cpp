@@ -42,10 +42,10 @@ TEST(SetObjectVisible, RedoUndo)
   cmd::SetObjectVisible cmd {object, false};
 
   cmd.redo();
-  ASSERT_FALSE(object->visible());
+  ASSERT_FALSE(object->is_visible());
 
   cmd.undo();
-  ASSERT_TRUE(object->visible());
+  ASSERT_TRUE(object->is_visible());
 }
 
 }  // namespace tactile::test

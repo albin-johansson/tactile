@@ -44,10 +44,10 @@ TEST(SetObjectTag, RedoUndo)
   cmd::SetObjectTag cmd {object, "new-tag"};
 
   cmd.redo();
-  ASSERT_EQ("new-tag", object->tag());
+  ASSERT_EQ("new-tag", object->get_tag());
 
   cmd.undo();
-  ASSERT_EQ("old-tag", object->tag());
+  ASSERT_EQ("old-tag", object->get_tag());
 }
 
 TEST(SetObjectTag, MergeSupport)
@@ -66,10 +66,10 @@ TEST(SetObjectTag, MergeSupport)
   ASSERT_TRUE(a.merge_with(&b));
 
   a.redo();
-  ASSERT_EQ("b", object->tag());
+  ASSERT_EQ("b", object->get_tag());
 
   a.undo();
-  ASSERT_EQ("x", object->tag());
+  ASSERT_EQ("x", object->get_tag());
 }
 
 }  // namespace tactile::test
