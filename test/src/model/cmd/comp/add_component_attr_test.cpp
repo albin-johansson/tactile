@@ -51,7 +51,7 @@ TEST(AddComponentAttr, RedoUndo)
   cmd::AddComponentAttr cmd {document.get(), comp_id, "attr"};
 
   cmd.redo();
-  ASSERT_EQ(1, definition.size());
+  ASSERT_EQ(1u, definition.size());
   ASSERT_TRUE(definition.has("attr"));
   ASSERT_EQ(definition.at("attr"), bundle.at(comp_id).at("attr"));
 

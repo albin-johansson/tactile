@@ -33,8 +33,8 @@ TEST(TileLayer, Defaults)
 {
   const TileLayer layer;
 
-  ASSERT_EQ(5, layer.row_count());
-  ASSERT_EQ(5, layer.column_count());
+  ASSERT_EQ(5u, layer.row_count());
+  ASSERT_EQ(5u, layer.column_count());
 
   invoke_mn(layer.row_count(), layer.column_count(), [&](usize row, usize col) {
     ASSERT_EQ(empty_tile, layer.tile_at(TilePos::from(row, col)));
@@ -159,7 +159,7 @@ TEST(TileLayer, SetTile)
 
 TEST(TileLayer, TileAtWithInvalidPositions)
 {
-  TileLayer layer;
+  const TileLayer layer;
 
   ASSERT_THROW(layer.tile_at({-1, 0}), TactileError);
   ASSERT_THROW(layer.tile_at({0, -1}), TactileError);
@@ -172,71 +172,71 @@ TEST(TileLayer, AddRow)
 {
   TileLayer layer {3, 4};
 
-  ASSERT_EQ(3, layer.row_count());
-  ASSERT_EQ(4, layer.column_count());
+  ASSERT_EQ(3u, layer.row_count());
+  ASSERT_EQ(4u, layer.column_count());
 
   layer.add_row();
 
-  ASSERT_EQ(4, layer.row_count());
-  ASSERT_EQ(4, layer.column_count());
+  ASSERT_EQ(4u, layer.row_count());
+  ASSERT_EQ(4u, layer.column_count());
 
   layer.add_row();
 
-  ASSERT_EQ(5, layer.row_count());
-  ASSERT_EQ(4, layer.column_count());
+  ASSERT_EQ(5u, layer.row_count());
+  ASSERT_EQ(4u, layer.column_count());
 }
 
 TEST(TileLayer, AddColumn)
 {
   TileLayer layer {3, 4};
 
-  ASSERT_EQ(3, layer.row_count());
-  ASSERT_EQ(4, layer.column_count());
+  ASSERT_EQ(3u, layer.row_count());
+  ASSERT_EQ(4u, layer.column_count());
 
   layer.add_column();
 
-  ASSERT_EQ(3, layer.row_count());
-  ASSERT_EQ(5, layer.column_count());
+  ASSERT_EQ(3u, layer.row_count());
+  ASSERT_EQ(5u, layer.column_count());
 }
 
 TEST(TileLayer, RemoveRow)
 {
   TileLayer layer {3, 4};
 
-  ASSERT_EQ(3, layer.row_count());
-  ASSERT_EQ(4, layer.column_count());
+  ASSERT_EQ(3u, layer.row_count());
+  ASSERT_EQ(4u, layer.column_count());
 
   layer.remove_row();
 
-  ASSERT_EQ(2, layer.row_count());
-  ASSERT_EQ(4, layer.column_count());
+  ASSERT_EQ(2u, layer.row_count());
+  ASSERT_EQ(4u, layer.column_count());
 }
 
 TEST(TileLayer, RemoveColumn)
 {
   TileLayer layer {6, 8};
 
-  ASSERT_EQ(6, layer.row_count());
-  ASSERT_EQ(8, layer.column_count());
+  ASSERT_EQ(6u, layer.row_count());
+  ASSERT_EQ(8u, layer.column_count());
 
   layer.remove_column();
 
-  ASSERT_EQ(6, layer.row_count());
-  ASSERT_EQ(7, layer.column_count());
+  ASSERT_EQ(6u, layer.row_count());
+  ASSERT_EQ(7u, layer.column_count());
 }
 
 TEST(TileLayer, Resize)
 {
   TileLayer layer {6, 5};
 
-  ASSERT_EQ(6, layer.row_count());
-  ASSERT_EQ(5, layer.column_count());
+  ASSERT_EQ(6u, layer.row_count());
+  ASSERT_EQ(5u, layer.column_count());
   ASSERT_FALSE(layer.is_valid({2, 8}));
 
   layer.resize(3, 9);
 
-  ASSERT_EQ(3, layer.row_count());
-  ASSERT_EQ(9, layer.column_count());
+  ASSERT_EQ(3u, layer.row_count());
+  ASSERT_EQ(9u, layer.column_count());
   ASSERT_TRUE(layer.is_valid({2, 8}));
 }
 

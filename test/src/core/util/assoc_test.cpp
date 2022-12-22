@@ -82,7 +82,7 @@ TEST(Assoc, HashMapHasKey)
   map["bar"] = 20;
   map["abc"] = 30;
 
-  ASSERT_EQ(3, map.size());
+  ASSERT_EQ(3u, map.size());
 
   ASSERT_TRUE(has_key(map, "foo"));
   ASSERT_TRUE(has_key(map, "bar"));
@@ -101,7 +101,7 @@ TEST(Assoc, TreeMapHasKey)
   map["A"] = 1.0f;
   map["B"] = 42.0f;
 
-  ASSERT_EQ(2, map.size());
+  ASSERT_EQ(2u, map.size());
 
   ASSERT_TRUE(has_key(map, "A"));
   ASSERT_TRUE(has_key(map, "A"s));

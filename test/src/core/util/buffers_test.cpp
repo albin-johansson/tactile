@@ -80,7 +80,7 @@ TEST(BufferUtils, CreateStringViewFromBuffer)
   const Array<char, 7> buffer = {'a', 'b', 'c', 'd', 'e', 'f', '\0'};
   const auto str = create_string_view_from_buffer(buffer);
 
-  ASSERT_EQ(6, str.size());
+  ASSERT_EQ(6u, str.size());
   ASSERT_EQ("abcdef", str);
 }
 

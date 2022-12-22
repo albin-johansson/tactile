@@ -29,7 +29,7 @@ namespace tactile::test {
 TEST(ComponentIndex, Defaults)
 {
   const ComponentIndex index;
-  ASSERT_EQ(0, index.size());
+  ASSERT_EQ(0u, index.size());
 }
 
 TEST(ComponentIndex, Define)
@@ -43,7 +43,7 @@ TEST(ComponentIndex, Define)
   ASSERT_TRUE(def.empty());
 
   ASSERT_TRUE(index.contains("position"));
-  ASSERT_EQ(1, index.size());
+  ASSERT_EQ(1u, index.size());
 
   ASSERT_THROW(index.define("position"), TactileError);
 }
@@ -54,12 +54,12 @@ TEST(ComponentIndex, Remove)
   ASSERT_THROW(index.remove(make_uuid()), TactileError);
 
   const auto id = index.define("foo");
-  ASSERT_EQ(1, index.size());
+  ASSERT_EQ(1u, index.size());
   ASSERT_TRUE(index.contains("foo"));
 
   index.remove(id);
 
-  ASSERT_EQ(0, index.size());
+  ASSERT_EQ(0u, index.size());
   ASSERT_FALSE(index.contains("foo"));
 }
 

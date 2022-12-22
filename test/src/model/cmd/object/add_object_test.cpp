@@ -42,14 +42,14 @@ TEST(AddObject, RedoUndo)
   cmd::AddObject cmd {document.get(), layer_id, ObjectType::Point, {0, 0}};
 
   cmd.redo();
-  ASSERT_EQ(1, layer.object_count());
+  ASSERT_EQ(1u, layer.object_count());
 
   auto object = layer.begin()->second;
   const auto object_id = object->uuid();
   ASSERT_TRUE(document->get_contexts().contains(object_id));
 
   cmd.undo();
-  ASSERT_EQ(0, layer.object_count());
+  ASSERT_EQ(0u, layer.object_count());
   ASSERT_FALSE(document->get_contexts().contains(object_id));
 }
 

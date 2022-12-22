@@ -47,7 +47,7 @@ struct BarCmd : Command {
 TEST(CommandStack, Defaults)
 {
   const CommandStack stack;
-  ASSERT_EQ(0, stack.size());
+  ASSERT_EQ(0u, stack.size());
   ASSERT_EQ(io::get_preferences().command_capacity, stack.capacity());
   ASSERT_FALSE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
@@ -60,21 +60,21 @@ TEST(CommandStack, Usage)
 
   // ^[ ] -> [ ^FooCmd ]
   stack.push<FooCmd>();
-  ASSERT_EQ(1, stack.size());
+  ASSERT_EQ(1u, stack.size());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
   ASSERT_EQ("FooCmd", stack.get_undo_text());
 
   // [ ^FooCmd ] -> [ FooCmd, ^BarCmd ]
   stack.push<BarCmd>();
-  ASSERT_EQ(2, stack.size());
+  ASSERT_EQ(2u, stack.size());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
   ASSERT_EQ("BarCmd", stack.get_undo_text());
 
   // [ FooCmd, ^BarCmd ] -> [ ^FooCmd, BarCmd ]
   stack.undo();
-  ASSERT_EQ(2, stack.size());
+  ASSERT_EQ(2u, stack.size());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_TRUE(stack.can_redo());
   ASSERT_EQ("FooCmd", stack.get_undo_text());
@@ -82,14 +82,14 @@ TEST(CommandStack, Usage)
 
   // [ ^FooCmd, BarCmd ] -> ^[ FooCmd, BarCmd ]
   stack.undo();
-  ASSERT_EQ(2, stack.size());
+  ASSERT_EQ(2u, stack.size());
   ASSERT_FALSE(stack.can_undo());
   ASSERT_TRUE(stack.can_redo());
   ASSERT_EQ("FooCmd", stack.get_redo_text());
 
   // ^[ FooCmd, BarCmd ] -> [ ^FooCmd, BarCmd ]
   stack.redo();
-  ASSERT_EQ(2, stack.size());
+  ASSERT_EQ(2u, stack.size());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_TRUE(stack.can_redo());
   ASSERT_EQ("FooCmd", stack.get_undo_text());
@@ -97,14 +97,14 @@ TEST(CommandStack, Usage)
 
   // [ ^FooCmd, BarCmd ] -> [ FooCmd, ^BarCmd ]
   stack.redo();
-  ASSERT_EQ(2, stack.size());
+  ASSERT_EQ(2u, stack.size());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
   ASSERT_EQ("BarCmd", stack.get_undo_text());
 
   // [ FooCmd, ^BarCmd ] -> [ ^FooCmd, BarCmd ]
   stack.undo();
-  ASSERT_EQ(2, stack.size());
+  ASSERT_EQ(2u, stack.size());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_TRUE(stack.can_redo());
   ASSERT_EQ("FooCmd", stack.get_undo_text());
@@ -112,7 +112,7 @@ TEST(CommandStack, Usage)
 
   // [ ^FooCmd, BarCmd ] -> [ FooCmd, ^FooCmd ]
   stack.push<FooCmd>();
-  ASSERT_EQ(2, stack.size());
+  ASSERT_EQ(2u, stack.size());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
   ASSERT_EQ("FooCmd", stack.get_undo_text());
@@ -120,12 +120,12 @@ TEST(CommandStack, Usage)
   // [ FooCmd, ^FooCmd ] -> ^[ FooCmd, FooCmd ]
   stack.undo();
   stack.undo();
-  ASSERT_EQ(2, stack.size());
+  ASSERT_EQ(2u, stack.size());
   ASSERT_EQ("FooCmd", stack.get_redo_text());
 
   // ^[ FooCmd, FooCmd ] -> [ ^BarCmd ]
   stack.push<BarCmd>();
-  ASSERT_EQ(1, stack.size());
+  ASSERT_EQ(1u, stack.size());
   ASSERT_TRUE(stack.can_undo());
   ASSERT_FALSE(stack.can_redo());
   ASSERT_EQ("BarCmd", stack.get_undo_text());
@@ -197,7 +197,7 @@ TEST(CommandStack, OverflowWithCleanIndex)
   CommandStack stack;
 
   stack.set_capacity(4);
-  ASSERT_EQ(4, stack.capacity());
+  ASSERT_EQ(4u, stack.capacity());
 
   stack.push<FooCmd>();
 
@@ -208,21 +208,21 @@ TEST(CommandStack, OverflowWithCleanIndex)
   stack.push<BarCmd>();
 
   //  ^[ ] -> [ FooCmd, _Bar_, BarCmd, ^BarCmd ]
-  ASSERT_EQ(4, stack.size());
+  ASSERT_EQ(4u, stack.size());
   ASSERT_EQ(3, stack.index());
   ASSERT_EQ(1, stack.clean_index());
   ASSERT_EQ("BarCmd", stack.get_undo_text());
 
   // [ FooCmd, _Bar_, BarCmd, ^BarCmd ] -> [ _Bar_, BarCmd, BarCmd, ^FooCmd ]
   stack.push<FooCmd>();
-  ASSERT_EQ(4, stack.size());
+  ASSERT_EQ(4u, stack.size());
   ASSERT_EQ(3, stack.index());
   ASSERT_EQ(0, stack.clean_index());
   ASSERT_EQ("FooCmd", stack.get_undo_text());
 
   // [ _Bar_, BarCmd, BarCmd, ^FooCmd ] -> [ BarCmd, BarCmd, FooCmd, ^BarCmd ]
   stack.push<BarCmd>();
-  ASSERT_EQ(4, stack.size());
+  ASSERT_EQ(4u, stack.size());
   ASSERT_EQ(3, stack.index());
   ASSERT_FALSE(stack.clean_index());
   ASSERT_EQ("BarCmd", stack.get_undo_text());
@@ -233,7 +233,7 @@ TEST(CommandStack, Overflow)
   CommandStack stack;
   stack.push<FooCmd>();
 
-  ASSERT_EQ(1, stack.size());
+  ASSERT_EQ(1u, stack.size());
   ASSERT_EQ(0, stack.index());
   ASSERT_EQ("FooCmd", stack.get_undo_text());
 
@@ -255,31 +255,31 @@ TEST(CommandStack, SetCapacity)
   CommandStack stack;
 
   stack.set_capacity(5);
-  ASSERT_EQ(5, stack.capacity());
+  ASSERT_EQ(5u, stack.capacity());
 
   for (auto index = 0u; index < 5; ++index) {
     stack.push<FooCmd>();
   }
-  ASSERT_EQ(5, stack.size());
+  ASSERT_EQ(5u, stack.size());
   ASSERT_EQ("FooCmd", stack.get_undo_text());
 
   // [ FooCmd, FooCmd, FooCmd, FooCmd, ^FooCmd ] -> [ FooCmd, FooCmd, FooCmd, FooCmd,
   // ^BarCmd ]
   stack.push<BarCmd>();
-  ASSERT_EQ(5, stack.size());
+  ASSERT_EQ(5u, stack.size());
   ASSERT_EQ(4, stack.index());
   ASSERT_EQ("BarCmd", stack.get_undo_text());
 
   // [ FooCmd, FooCmd, FooCmd, FooCmd, ^BarCmd ] -> [ FooCmd, FooCmd, ^BarCmd ]
   stack.set_capacity(3);
-  ASSERT_EQ(3, stack.capacity());
-  ASSERT_EQ(3, stack.size());
+  ASSERT_EQ(3u, stack.capacity());
+  ASSERT_EQ(3u, stack.size());
   ASSERT_EQ(2, stack.index());
   ASSERT_EQ("BarCmd", stack.get_undo_text());
 
   stack.set_capacity(10);
-  ASSERT_EQ(10, stack.capacity());
-  ASSERT_EQ(3, stack.size());
+  ASSERT_EQ(10u, stack.capacity());
+  ASSERT_EQ(3u, stack.size());
   ASSERT_EQ(2, stack.index());
   ASSERT_EQ("BarCmd", stack.get_undo_text());
 }

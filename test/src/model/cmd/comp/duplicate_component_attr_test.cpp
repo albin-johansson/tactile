@@ -52,12 +52,12 @@ TEST(DuplicateComponentAttr, RedoUndo)
     const auto& def = index->at(comp_id);
     const auto& comp = bundle.at(comp_id);
 
-    ASSERT_EQ(2, def.size());
+    ASSERT_EQ(2u, def.size());
     ASSERT_TRUE(def.has("Attr"));
     ASSERT_TRUE(def.has("Attr (1)"));
     ASSERT_EQ(def.at("Attr"), def.at("Attr (1)"));
 
-    ASSERT_EQ(2, comp.size());
+    ASSERT_EQ(2u, comp.size());
     ASSERT_TRUE(comp.has("Attr"));
     ASSERT_TRUE(comp.has("Attr (1)"));
     ASSERT_EQ(comp.at("Attr"), comp.at("Attr (1)"));
@@ -69,11 +69,11 @@ TEST(DuplicateComponentAttr, RedoUndo)
     const auto& def = index->at(comp_id);
     const auto& comp = bundle.at(comp_id);
 
-    ASSERT_EQ(1, def.size());
+    ASSERT_EQ(1u, def.size());
     ASSERT_TRUE(def.has("Attr"));
     ASSERT_FALSE(def.has("Attr (1)"));
 
-    ASSERT_EQ(1, comp.size());
+    ASSERT_EQ(1u, comp.size());
     ASSERT_TRUE(comp.has("Attr"));
     ASSERT_FALSE(comp.has("Attr (1)"));
   }

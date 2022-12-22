@@ -60,7 +60,7 @@ TEST(GroupLayer, SimpleEach)
   root.add(g1);
   root.add(g1->uuid(), o1);
 
-  ASSERT_EQ(3, root.size());
+  ASSERT_EQ(3u, root.size());
 
   ASSERT_EQ(nothing, t1->parent());
   ASSERT_EQ(nothing, g1->parent());
@@ -74,17 +74,17 @@ TEST(GroupLayer, SimpleEach)
     switch (layer->type()) {
       case LayerType::TileLayer:
         ASSERT_FALSE(layer->parent().has_value());
-        ASSERT_EQ(0, root.global_index(layer->uuid()));
+        ASSERT_EQ(0u, root.global_index(layer->uuid()));
         break;
 
       case LayerType::ObjectLayer:
         ASSERT_EQ(g1->uuid(), layer->parent());
-        ASSERT_EQ(2, root.global_index(layer->uuid()));
+        ASSERT_EQ(2u, root.global_index(layer->uuid()));
         break;
 
       case LayerType::GroupLayer:
         ASSERT_FALSE(layer->parent().has_value());
-        ASSERT_EQ(1, root.global_index(layer->uuid()));
+        ASSERT_EQ(1u, root.global_index(layer->uuid()));
         break;
     }
   });
@@ -160,7 +160,7 @@ TEST(GroupLayer, Remove)
   ASSERT_EQ(g1, root.remove(g1->uuid()));
   ASSERT_EQ(t2, root.remove(t2->uuid()));
 
-  ASSERT_EQ(0, root.size());
+  ASSERT_EQ(0u, root.size());
 }
 
 TEST(GroupLayer, MoveUp)
@@ -189,19 +189,19 @@ TEST(GroupLayer, MoveUp)
   root.add(g1->uuid(), t3);
   root.add(o1);
 
-  ASSERT_EQ(0, root.global_index(g1->uuid()));
-  ASSERT_EQ(1, root.global_index(g2->uuid()));
-  ASSERT_EQ(2, root.global_index(t1->uuid()));
-  ASSERT_EQ(3, root.global_index(t2->uuid()));
-  ASSERT_EQ(4, root.global_index(t3->uuid()));
-  ASSERT_EQ(5, root.global_index(o1->uuid()));
+  ASSERT_EQ(0u, root.global_index(g1->uuid()));
+  ASSERT_EQ(1u, root.global_index(g2->uuid()));
+  ASSERT_EQ(2u, root.global_index(t1->uuid()));
+  ASSERT_EQ(3u, root.global_index(t2->uuid()));
+  ASSERT_EQ(4u, root.global_index(t3->uuid()));
+  ASSERT_EQ(5u, root.global_index(o1->uuid()));
 
-  ASSERT_EQ(0, root.local_index(g1->uuid()));
-  ASSERT_EQ(0, root.local_index(g2->uuid()));
-  ASSERT_EQ(0, root.local_index(t1->uuid()));
-  ASSERT_EQ(1, root.local_index(t2->uuid()));
-  ASSERT_EQ(1, root.local_index(t3->uuid()));
-  ASSERT_EQ(1, root.local_index(o1->uuid()));
+  ASSERT_EQ(0u, root.local_index(g1->uuid()));
+  ASSERT_EQ(0u, root.local_index(g2->uuid()));
+  ASSERT_EQ(0u, root.local_index(t1->uuid()));
+  ASSERT_EQ(1u, root.local_index(t2->uuid()));
+  ASSERT_EQ(1u, root.local_index(t3->uuid()));
+  ASSERT_EQ(1u, root.local_index(o1->uuid()));
 
   // root
   // -- g1
@@ -212,17 +212,17 @@ TEST(GroupLayer, MoveUp)
   // -- o1
   root.move_up(t2->uuid());
 
-  ASSERT_EQ(0, root.global_index(g1->uuid()));
-  ASSERT_EQ(1, root.global_index(g2->uuid()));
-  ASSERT_EQ(2, root.global_index(t2->uuid()));
-  ASSERT_EQ(3, root.global_index(t1->uuid()));
-  ASSERT_EQ(4, root.global_index(t3->uuid()));
+  ASSERT_EQ(0u, root.global_index(g1->uuid()));
+  ASSERT_EQ(1u, root.global_index(g2->uuid()));
+  ASSERT_EQ(2u, root.global_index(t2->uuid()));
+  ASSERT_EQ(3u, root.global_index(t1->uuid()));
+  ASSERT_EQ(4u, root.global_index(t3->uuid()));
 
-  ASSERT_EQ(0, root.local_index(g1->uuid()));
-  ASSERT_EQ(0, root.local_index(g2->uuid()));
-  ASSERT_EQ(0, root.local_index(t2->uuid()));
-  ASSERT_EQ(1, root.local_index(t1->uuid()));
-  ASSERT_EQ(1, root.local_index(t3->uuid()));
+  ASSERT_EQ(0u, root.local_index(g1->uuid()));
+  ASSERT_EQ(0u, root.local_index(g2->uuid()));
+  ASSERT_EQ(0u, root.local_index(t2->uuid()));
+  ASSERT_EQ(1u, root.local_index(t1->uuid()));
+  ASSERT_EQ(1u, root.local_index(t3->uuid()));
 
   // root
   // -- g1
@@ -233,17 +233,17 @@ TEST(GroupLayer, MoveUp)
   // -- o1
   root.move_up(t3->uuid());
 
-  ASSERT_EQ(0, root.global_index(g1->uuid()));
-  ASSERT_EQ(1, root.global_index(t3->uuid()));
-  ASSERT_EQ(2, root.global_index(g2->uuid()));
-  ASSERT_EQ(3, root.global_index(t2->uuid()));
-  ASSERT_EQ(4, root.global_index(t1->uuid()));
+  ASSERT_EQ(0u, root.global_index(g1->uuid()));
+  ASSERT_EQ(1u, root.global_index(t3->uuid()));
+  ASSERT_EQ(2u, root.global_index(g2->uuid()));
+  ASSERT_EQ(3u, root.global_index(t2->uuid()));
+  ASSERT_EQ(4u, root.global_index(t1->uuid()));
 
-  ASSERT_EQ(0, root.local_index(g1->uuid()));
-  ASSERT_EQ(0, root.local_index(t3->uuid()));
-  ASSERT_EQ(1, root.local_index(g2->uuid()));
-  ASSERT_EQ(0, root.local_index(t2->uuid()));
-  ASSERT_EQ(1, root.local_index(t1->uuid()));
+  ASSERT_EQ(0u, root.local_index(g1->uuid()));
+  ASSERT_EQ(0u, root.local_index(t3->uuid()));
+  ASSERT_EQ(1u, root.local_index(g2->uuid()));
+  ASSERT_EQ(0u, root.local_index(t2->uuid()));
+  ASSERT_EQ(1u, root.local_index(t1->uuid()));
 
   // root
   // -- o1
@@ -254,19 +254,19 @@ TEST(GroupLayer, MoveUp)
   // ------ t1
   root.move_up(o1->uuid());
 
-  ASSERT_EQ(0, root.global_index(o1->uuid()));
-  ASSERT_EQ(1, root.global_index(g1->uuid()));
-  ASSERT_EQ(2, root.global_index(t3->uuid()));
-  ASSERT_EQ(3, root.global_index(g2->uuid()));
-  ASSERT_EQ(4, root.global_index(t2->uuid()));
-  ASSERT_EQ(5, root.global_index(t1->uuid()));
+  ASSERT_EQ(0u, root.global_index(o1->uuid()));
+  ASSERT_EQ(1u, root.global_index(g1->uuid()));
+  ASSERT_EQ(2u, root.global_index(t3->uuid()));
+  ASSERT_EQ(3u, root.global_index(g2->uuid()));
+  ASSERT_EQ(4u, root.global_index(t2->uuid()));
+  ASSERT_EQ(5u, root.global_index(t1->uuid()));
 
-  ASSERT_EQ(0, root.local_index(o1->uuid()));
-  ASSERT_EQ(1, root.local_index(g1->uuid()));
-  ASSERT_EQ(0, root.local_index(t3->uuid()));
-  ASSERT_EQ(1, root.local_index(g2->uuid()));
-  ASSERT_EQ(0, root.local_index(t2->uuid()));
-  ASSERT_EQ(1, root.local_index(t1->uuid()));
+  ASSERT_EQ(0u, root.local_index(o1->uuid()));
+  ASSERT_EQ(1u, root.local_index(g1->uuid()));
+  ASSERT_EQ(0u, root.local_index(t3->uuid()));
+  ASSERT_EQ(1u, root.local_index(g2->uuid()));
+  ASSERT_EQ(0u, root.local_index(t2->uuid()));
+  ASSERT_EQ(1u, root.local_index(t1->uuid()));
 }
 
 TEST(GroupLayer, MoveDown)
@@ -295,19 +295,19 @@ TEST(GroupLayer, MoveDown)
   root.add(g1->uuid(), t3);
   root.add(t4);
 
-  ASSERT_EQ(0, root.global_index(g1->uuid()));
-  ASSERT_EQ(1, root.global_index(t1->uuid()));
-  ASSERT_EQ(2, root.global_index(g2->uuid()));
-  ASSERT_EQ(3, root.global_index(t2->uuid()));
-  ASSERT_EQ(4, root.global_index(t3->uuid()));
-  ASSERT_EQ(5, root.global_index(t4->uuid()));
+  ASSERT_EQ(0u, root.global_index(g1->uuid()));
+  ASSERT_EQ(1u, root.global_index(t1->uuid()));
+  ASSERT_EQ(2u, root.global_index(g2->uuid()));
+  ASSERT_EQ(3u, root.global_index(t2->uuid()));
+  ASSERT_EQ(4u, root.global_index(t3->uuid()));
+  ASSERT_EQ(5u, root.global_index(t4->uuid()));
 
-  ASSERT_EQ(0, root.local_index(g1->uuid()));
-  ASSERT_EQ(0, root.local_index(t1->uuid()));
-  ASSERT_EQ(1, root.local_index(g2->uuid()));
-  ASSERT_EQ(0, root.local_index(t2->uuid()));
-  ASSERT_EQ(2, root.local_index(t3->uuid()));
-  ASSERT_EQ(1, root.local_index(t4->uuid()));
+  ASSERT_EQ(0u, root.local_index(g1->uuid()));
+  ASSERT_EQ(0u, root.local_index(t1->uuid()));
+  ASSERT_EQ(1u, root.local_index(g2->uuid()));
+  ASSERT_EQ(0u, root.local_index(t2->uuid()));
+  ASSERT_EQ(2u, root.local_index(t3->uuid()));
+  ASSERT_EQ(1u, root.local_index(t4->uuid()));
 
   // root
   // -- g1
@@ -318,19 +318,19 @@ TEST(GroupLayer, MoveDown)
   // -- t4
   root.move_down(g2->uuid());
 
-  ASSERT_EQ(0, root.global_index(g1->uuid()));
-  ASSERT_EQ(1, root.global_index(t1->uuid()));
-  ASSERT_EQ(2, root.global_index(t3->uuid()));
-  ASSERT_EQ(3, root.global_index(g2->uuid()));
-  ASSERT_EQ(4, root.global_index(t2->uuid()));
-  ASSERT_EQ(5, root.global_index(t4->uuid()));
+  ASSERT_EQ(0u, root.global_index(g1->uuid()));
+  ASSERT_EQ(1u, root.global_index(t1->uuid()));
+  ASSERT_EQ(2u, root.global_index(t3->uuid()));
+  ASSERT_EQ(3u, root.global_index(g2->uuid()));
+  ASSERT_EQ(4u, root.global_index(t2->uuid()));
+  ASSERT_EQ(5u, root.global_index(t4->uuid()));
 
-  ASSERT_EQ(0, root.local_index(g1->uuid()));
-  ASSERT_EQ(0, root.local_index(t1->uuid()));
-  ASSERT_EQ(1, root.local_index(t3->uuid()));
-  ASSERT_EQ(2, root.local_index(g2->uuid()));
-  ASSERT_EQ(0, root.local_index(t2->uuid()));
-  ASSERT_EQ(1, root.local_index(t4->uuid()));
+  ASSERT_EQ(0u, root.local_index(g1->uuid()));
+  ASSERT_EQ(0u, root.local_index(t1->uuid()));
+  ASSERT_EQ(1u, root.local_index(t3->uuid()));
+  ASSERT_EQ(2u, root.local_index(g2->uuid()));
+  ASSERT_EQ(0u, root.local_index(t2->uuid()));
+  ASSERT_EQ(1u, root.local_index(t4->uuid()));
 
   // root
   // -- t4
@@ -341,19 +341,19 @@ TEST(GroupLayer, MoveDown)
   // ------ t2
   root.move_down(g1->uuid());
 
-  ASSERT_EQ(0, root.global_index(t4->uuid()));
-  ASSERT_EQ(1, root.global_index(g1->uuid()));
-  ASSERT_EQ(2, root.global_index(t1->uuid()));
-  ASSERT_EQ(3, root.global_index(t3->uuid()));
-  ASSERT_EQ(4, root.global_index(g2->uuid()));
-  ASSERT_EQ(5, root.global_index(t2->uuid()));
+  ASSERT_EQ(0u, root.global_index(t4->uuid()));
+  ASSERT_EQ(1u, root.global_index(g1->uuid()));
+  ASSERT_EQ(2u, root.global_index(t1->uuid()));
+  ASSERT_EQ(3u, root.global_index(t3->uuid()));
+  ASSERT_EQ(4u, root.global_index(g2->uuid()));
+  ASSERT_EQ(5u, root.global_index(t2->uuid()));
 
-  ASSERT_EQ(0, root.local_index(t4->uuid()));
-  ASSERT_EQ(1, root.local_index(g1->uuid()));
-  ASSERT_EQ(0, root.local_index(t1->uuid()));
-  ASSERT_EQ(1, root.local_index(t3->uuid()));
-  ASSERT_EQ(2, root.local_index(g2->uuid()));
-  ASSERT_EQ(0, root.local_index(t2->uuid()));
+  ASSERT_EQ(0u, root.local_index(t4->uuid()));
+  ASSERT_EQ(1u, root.local_index(g1->uuid()));
+  ASSERT_EQ(0u, root.local_index(t1->uuid()));
+  ASSERT_EQ(1u, root.local_index(t3->uuid()));
+  ASSERT_EQ(2u, root.local_index(g2->uuid()));
+  ASSERT_EQ(0u, root.local_index(t2->uuid()));
 }
 
 TEST(GroupLayer, SiblingCount)
@@ -375,14 +375,14 @@ TEST(GroupLayer, SiblingCount)
   root.add(g2->uuid(), o1);
   root.add(t3);
 
-  ASSERT_EQ(2, root.sibling_count(g1->uuid()));
-  ASSERT_EQ(2, root.sibling_count(g2->uuid()));
-  ASSERT_EQ(2, root.sibling_count(t3->uuid()));
+  ASSERT_EQ(2u, root.sibling_count(g1->uuid()));
+  ASSERT_EQ(2u, root.sibling_count(g2->uuid()));
+  ASSERT_EQ(2u, root.sibling_count(t3->uuid()));
 
-  ASSERT_EQ(1, root.sibling_count(t1->uuid()));
-  ASSERT_EQ(1, root.sibling_count(t2->uuid()));
+  ASSERT_EQ(1u, root.sibling_count(t1->uuid()));
+  ASSERT_EQ(1u, root.sibling_count(t2->uuid()));
 
-  ASSERT_EQ(0, root.sibling_count(o1->uuid()));
+  ASSERT_EQ(0u, root.sibling_count(o1->uuid()));
 }
 
 TEST(GroupLayer, LocalIndex)

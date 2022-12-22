@@ -50,7 +50,7 @@ TEST(RenameComponent, RedoUndo)
   ASSERT_FALSE(index->contains("Foo"));
   ASSERT_TRUE(index->contains("Bar"));
 
-  ASSERT_EQ(1, bundle.size());
+  ASSERT_EQ(1u, bundle.size());
   ASSERT_TRUE(bundle.contains(comp_id));
 
   cmd.undo();
@@ -59,7 +59,7 @@ TEST(RenameComponent, RedoUndo)
   ASSERT_TRUE(index->contains("Foo"));
   ASSERT_FALSE(index->contains("Bar"));
 
-  ASSERT_EQ(1, bundle.size());
+  ASSERT_EQ(1u, bundle.size());
   ASSERT_TRUE(bundle.contains(comp_id));
 }
 

@@ -31,7 +31,7 @@ TEST(Tile, Defaults)
 {
   const Tile tile {7};
   ASSERT_EQ(7, tile.index());
-  ASSERT_EQ(0, tile.object_count());
+  ASSERT_EQ(0u, tile.object_count());
   ASSERT_FALSE(tile.is_animated());
 }
 
@@ -42,7 +42,7 @@ TEST(Tile, AddObject)
   auto object = std::make_shared<Object>();
   tile.add_object(object);
 
-  ASSERT_EQ(1, tile.object_count());
+  ASSERT_EQ(1u, tile.object_count());
 }
 
 TEST(Tile, ClearAnimation)
@@ -70,7 +70,7 @@ TEST(Tile, SetAnimation)
   ASSERT_TRUE(tile.is_animated());
   const auto& animation = tile.animation();
 
-  ASSERT_EQ(2, animation.size());
+  ASSERT_EQ(2u, animation.size());
 
   ASSERT_EQ(7, animation[0].tile);
   ASSERT_EQ(42ms, animation[0].duration);

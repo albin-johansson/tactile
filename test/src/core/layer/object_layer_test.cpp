@@ -27,7 +27,7 @@ TEST(ObjectLayer, Defaults)
 {
   const ObjectLayer layer;
   ASSERT_EQ(LayerType::ObjectLayer, layer.type());
-  ASSERT_EQ(0, layer.object_count());
+  ASSERT_EQ(0u, layer.object_count());
   ASSERT_FALSE(layer.meta_id().has_value());
 }
 
@@ -36,12 +36,12 @@ TEST(ObjectLayer, AddObject)
   ObjectLayer layer;
   auto object = std::make_shared<Object>();
 
-  ASSERT_EQ(0, layer.object_count());
+  ASSERT_EQ(0u, layer.object_count());
   ASSERT_FALSE(layer.has_object(object->uuid()));
 
   layer.add_object(object);
 
-  ASSERT_EQ(1, layer.object_count());
+  ASSERT_EQ(1u, layer.object_count());
   ASSERT_TRUE(layer.has_object(object->uuid()));
 }
 

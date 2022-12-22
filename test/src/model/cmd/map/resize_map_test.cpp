@@ -39,13 +39,13 @@ TEST(ResizeMap, RedoUndo)
   cmd::ResizeMap cmd {map, 3, 9};
   cmd.redo();
 
-  ASSERT_EQ(3, map->row_count());
-  ASSERT_EQ(9, map->column_count());
+  ASSERT_EQ(3u, map->row_count());
+  ASSERT_EQ(9u, map->column_count());
 
   cmd.undo();
 
-  ASSERT_EQ(5, map->row_count());
-  ASSERT_EQ(7, map->column_count());
+  ASSERT_EQ(5u, map->row_count());
+  ASSERT_EQ(7u, map->column_count());
 }
 
 }  // namespace tactile::test

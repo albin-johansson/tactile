@@ -27,7 +27,7 @@ TEST(Str, Split)
 {
   const auto tokens = split("foo,bar,,x", ',');
 
-  ASSERT_EQ(4, tokens.size());
+  ASSERT_EQ(4u, tokens.size());
   ASSERT_EQ("foo", tokens.at(0));
   ASSERT_EQ("bar", tokens.at(1));
   ASSERT_EQ("", tokens.at(2));

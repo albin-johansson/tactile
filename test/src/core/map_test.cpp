@@ -74,10 +74,10 @@ TEST(Map, Defaults)
 
   ASSERT_EQ("Map", map.ctx().name());
 
-  ASSERT_EQ(5, map.row_count());
-  ASSERT_EQ(5, map.column_count());
+  ASSERT_EQ(5u, map.row_count());
+  ASSERT_EQ(5u, map.column_count());
 
-  ASSERT_EQ(0, root.size());
+  ASSERT_EQ(0u, root.size());
   ASSERT_FALSE(map.active_layer_id().has_value());
 
   ASSERT_EQ(1, map.next_tile_layer_suffix());
@@ -96,14 +96,14 @@ TEST(Map, AddRow)
   auto& root = map.invisible_root();
 
   map.add_row();
-  ASSERT_EQ(6, map.row_count());
-  ASSERT_EQ(5, map.column_count());
+  ASSERT_EQ(6u, map.row_count());
+  ASSERT_EQ(5u, map.column_count());
 
   const auto id = map.add_tile_layer();
   const auto& layer = root.tile_layer(id);
 
-  ASSERT_EQ(6, layer.row_count());
-  ASSERT_EQ(5, layer.column_count());
+  ASSERT_EQ(6u, layer.row_count());
+  ASSERT_EQ(5u, layer.column_count());
 }
 
 TEST(Map, AddColumn)
@@ -115,11 +115,11 @@ TEST(Map, AddColumn)
   const auto& layer = root.tile_layer(id);
 
   map.add_column();
-  ASSERT_EQ(5, map.row_count());
-  ASSERT_EQ(6, map.column_count());
+  ASSERT_EQ(5u, map.row_count());
+  ASSERT_EQ(6u, map.column_count());
 
-  ASSERT_EQ(5, layer.row_count());
-  ASSERT_EQ(6, layer.column_count());
+  ASSERT_EQ(5u, layer.row_count());
+  ASSERT_EQ(6u, layer.column_count());
 }
 
 TEST(Map, RemoveRow)
@@ -127,15 +127,15 @@ TEST(Map, RemoveRow)
   Map map;
   map.remove_row();
 
-  ASSERT_EQ(4, map.row_count());
-  ASSERT_EQ(5, map.column_count());
+  ASSERT_EQ(4u, map.row_count());
+  ASSERT_EQ(5u, map.column_count());
 
   map.remove_row();
   map.remove_row();
   map.remove_row();
 
-  ASSERT_EQ(1, map.row_count());
-  ASSERT_EQ(5, map.column_count());
+  ASSERT_EQ(1u, map.row_count());
+  ASSERT_EQ(5u, map.column_count());
 
   ASSERT_THROW(map.remove_row(), TactileError);
 }
@@ -145,15 +145,15 @@ TEST(Map, RemoveColumn)
   Map map;
   map.remove_column();
 
-  ASSERT_EQ(5, map.row_count());
-  ASSERT_EQ(4, map.column_count());
+  ASSERT_EQ(5u, map.row_count());
+  ASSERT_EQ(4u, map.column_count());
 
   map.remove_column();
   map.remove_column();
   map.remove_column();
 
-  ASSERT_EQ(5, map.row_count());
-  ASSERT_EQ(1, map.column_count());
+  ASSERT_EQ(5u, map.row_count());
+  ASSERT_EQ(1u, map.column_count());
 
   ASSERT_THROW(map.remove_column(), TactileError);
 }
@@ -164,21 +164,21 @@ TEST(Map, Resize)
 
   preset.map.resize(8, 3);
 
-  ASSERT_EQ(8, preset.map.row_count());
-  ASSERT_EQ(3, preset.map.column_count());
+  ASSERT_EQ(8u, preset.map.row_count());
+  ASSERT_EQ(3u, preset.map.column_count());
 
   auto& root = preset.map.invisible_root();
   auto& layer = root.tile_layer(preset.f);
-  ASSERT_EQ(8, layer.row_count());
-  ASSERT_EQ(3, layer.column_count());
+  ASSERT_EQ(8u, layer.row_count());
+  ASSERT_EQ(3u, layer.column_count());
 
   preset.map.resize(1, 1);
 
-  ASSERT_EQ(1, preset.map.row_count());
-  ASSERT_EQ(1, preset.map.column_count());
+  ASSERT_EQ(1u, preset.map.row_count());
+  ASSERT_EQ(1u, preset.map.column_count());
 
-  ASSERT_EQ(1, layer.row_count());
-  ASSERT_EQ(1, layer.column_count());
+  ASSERT_EQ(1u, layer.row_count());
+  ASSERT_EQ(1u, layer.column_count());
 
   ASSERT_THROW(preset.map.resize(0, 1), TactileError);
   ASSERT_THROW(preset.map.resize(1, 0), TactileError);
@@ -270,7 +270,7 @@ TEST(Map, AddLayer)
   map.add_layer(g1);
   map.add_layer(t2, g1->uuid());
 
-  ASSERT_EQ(4, root.size());
+  ASSERT_EQ(4u, root.size());
 
   ASSERT_NE(nullptr, root.as_tile_layer(t1->uuid()));
   ASSERT_NE(nullptr, root.as_tile_layer(t2->uuid()));
@@ -294,7 +294,7 @@ TEST(Map, AddTileLayer)
   ASSERT_NE(nullptr, layer);
   ASSERT_EQ(nullptr, root.as_object_layer(id));
   ASSERT_EQ(nullptr, root.as_group_layer(id));
-  ASSERT_EQ(1, root.size());
+  ASSERT_EQ(1u, root.size());
 
   ASSERT_EQ(map.row_count(), layer->row_count());
   ASSERT_EQ(map.column_count(), layer->column_count());
@@ -312,7 +312,7 @@ TEST(Map, AddObjectLayer)
 
   ASSERT_EQ(nullptr, root.as_tile_layer(id));
   ASSERT_EQ(nullptr, root.as_group_layer(id));
-  ASSERT_EQ(2, root.size());
+  ASSERT_EQ(2u, root.size());
 
   ASSERT_EQ(parent, layer.parent());
 }
@@ -327,9 +327,9 @@ TEST(Map, AddGroupLayer)
 
   ASSERT_EQ(nullptr, root.as_tile_layer(id));
   ASSERT_EQ(nullptr, root.as_object_layer(id));
-  ASSERT_EQ(1, root.size());
+  ASSERT_EQ(1u, root.size());
 
-  ASSERT_EQ(0, layer.size());
+  ASSERT_EQ(0u, layer.size());
 }
 
 TEST(Map, RemoveLayer)
@@ -340,21 +340,21 @@ TEST(Map, RemoveLayer)
   ASSERT_THROW(preset.map.remove_layer(make_uuid()), TactileError);
 
   ASSERT_NE(nullptr, root.as_object_layer(preset.a));
-  ASSERT_EQ(7, root.size());
+  ASSERT_EQ(7u, root.size());
 
   preset.map.remove_layer(preset.a);
 
-  ASSERT_EQ(6, root.size());
+  ASSERT_EQ(6u, root.size());
   ASSERT_EQ(nullptr, root.as_object_layer(preset.a));
 
   auto group = std::dynamic_pointer_cast<GroupLayer>(preset.map.remove_layer(preset.d));
 
-  ASSERT_EQ(3, root.size());
+  ASSERT_EQ(3u, root.size());
   ASSERT_EQ(nullptr, root.as_group_layer(preset.d));
   ASSERT_EQ(nullptr, root.as_object_layer(preset.e));
   ASSERT_EQ(nullptr, root.as_tile_layer(preset.f));
 
-  ASSERT_EQ(2, group->size());
+  ASSERT_EQ(2u, group->size());
   ASSERT_NE(nullptr, group->as_object_layer(preset.e));
   ASSERT_NE(nullptr, group->as_tile_layer(preset.f));
 
@@ -368,16 +368,16 @@ TEST(Map, DuplicateLayer)
 
   ASSERT_THROW(preset.map.duplicate_layer(make_uuid()), TactileError);
 
-  ASSERT_EQ(7, root.size());
-  ASSERT_EQ(5, root.as_group_layer(preset.b)->size());
-  ASSERT_EQ(2, root.as_group_layer(preset.d)->size());
+  ASSERT_EQ(7u, root.size());
+  ASSERT_EQ(5u, root.as_group_layer(preset.b)->size());
+  ASSERT_EQ(2u, root.as_group_layer(preset.d)->size());
 
   const auto layer = preset.map.duplicate_layer(preset.d);
 
-  ASSERT_EQ(10, root.size());
-  ASSERT_EQ(8, root.as_group_layer(preset.b)->size());
-  ASSERT_EQ(2, root.as_group_layer(preset.d)->size());
-  ASSERT_EQ(2, root.as_group_layer(layer->uuid())->size());
+  ASSERT_EQ(10u, root.size());
+  ASSERT_EQ(8u, root.as_group_layer(preset.b)->size());
+  ASSERT_EQ(2u, root.as_group_layer(preset.d)->size());
+  ASSERT_EQ(2u, root.as_group_layer(layer->uuid())->size());
 }
 
 TEST(Map, SelectLayer)

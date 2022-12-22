@@ -46,7 +46,7 @@ TEST(PropertyBundle, AddWithType)
   bundle.add("bar", AttributeType::Float);
   ASSERT_EQ(0.0f, bundle.at("bar").as_float());
 
-  ASSERT_EQ(2, bundle.size());
+  ASSERT_EQ(2u, bundle.size());
 }
 
 TEST(PropertyBundle, AddWithValue)
@@ -107,7 +107,7 @@ TEST(PropertyBundle, Rename)
   ASSERT_FALSE(bundle.contains("A"));
   ASSERT_TRUE(bundle.contains("B"));
 
-  ASSERT_EQ(1, bundle.size());
+  ASSERT_EQ(1u, bundle.size());
 }
 
 TEST(PropertyBundle, ChangeType)

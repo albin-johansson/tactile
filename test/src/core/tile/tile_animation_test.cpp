@@ -31,8 +31,8 @@ namespace tactile::test {
 TEST(TileAnimation, Defaults)
 {
   const TileAnimation animation;
-  ASSERT_EQ(0, animation.size());
-  ASSERT_EQ(0, animation.capacity());
+  ASSERT_EQ(0u, animation.size());
+  ASSERT_EQ(0u, animation.capacity());
 }
 
 TEST(TileAnimation, ReserveFrames)
@@ -40,8 +40,8 @@ TEST(TileAnimation, ReserveFrames)
   TileAnimation animation;
 
   animation.reserve_frames(3);
-  ASSERT_EQ(3, animation.capacity());
-  ASSERT_EQ(0, animation.size());
+  ASSERT_EQ(3u, animation.capacity());
+  ASSERT_EQ(0u, animation.size());
 }
 
 TEST(TileAnimation, AddFrame)
@@ -49,7 +49,7 @@ TEST(TileAnimation, AddFrame)
   TileAnimation animation;
 
   animation.add_frame(42, 14ms);
-  ASSERT_EQ(1, animation.size());
+  ASSERT_EQ(1u, animation.size());
 
   const auto& frame = animation[0];
   ASSERT_EQ(42, frame.tile);

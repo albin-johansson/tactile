@@ -31,14 +31,14 @@ TEST(ComponentBase, Defaults)
 {
   const ComponentBase component {make_uuid()};
   ASSERT_TRUE(component.empty());
-  ASSERT_EQ(0, component.size());
+  ASSERT_EQ(0u, component.size());
 
   usize count = 0;
   for (const auto& x [[maybe_unused]]: component) {
     ++count;
   }
 
-  ASSERT_EQ(0, count);
+  ASSERT_EQ(0u, count);
 }
 
 TEST(ComponentBase, AddWithType)
@@ -65,7 +65,7 @@ TEST(ComponentBase, AddWithValue)
   ASSERT_TRUE(component.has("A"));
   ASSERT_FALSE(component.has("a"));
 
-  ASSERT_EQ(1, component.size());
+  ASSERT_EQ(1u, component.size());
 
   ASSERT_THROW(component.add("A"), TactileError);
 }
@@ -77,11 +77,11 @@ TEST(ComponentBase, Update)
 
   component.add("foo");
   ASSERT_EQ(""s, component.at("foo"));
-  ASSERT_EQ(1, component.size());
+  ASSERT_EQ(1u, component.size());
 
   component.update("foo", "bar"s);
   ASSERT_EQ("bar"s, component.at("foo"));
-  ASSERT_EQ(1, component.size());
+  ASSERT_EQ(1u, component.size());
 }
 
 TEST(ComponentBase, Remove)
@@ -116,13 +116,13 @@ TEST(ComponentBase, Duplicate)
 
   component.add("abc", 3.5f);
   ASSERT_TRUE(component.has("abc"));
-  ASSERT_EQ(1, component.size());
+  ASSERT_EQ(1u, component.size());
 
   const auto new_name = component.duplicate("abc");
   ASSERT_TRUE(component.has("abc"));
   ASSERT_TRUE(component.has(new_name));
   ASSERT_EQ(3.5f, component.at(new_name));
-  ASSERT_EQ(2, component.size());
+  ASSERT_EQ(2u, component.size());
 }
 
 }  // namespace tactile::test

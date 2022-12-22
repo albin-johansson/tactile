@@ -41,7 +41,7 @@ TEST(TilesetBundle, Defaults)
 {
   const TilesetBundle bundle;
   ASSERT_EQ(1, bundle.next_tile_id());
-  ASSERT_EQ(0, bundle.size());
+  ASSERT_EQ(0u, bundle.size());
   ASSERT_TRUE(bundle.empty());
   ASSERT_FALSE(bundle.active_tileset_id().has_value());
 }
@@ -55,7 +55,7 @@ TEST(TilesetBundle, AttachTilesetWithExplicitFirstTileId)
   auto tileset = make_tileset();
   bundle.attach_tileset(tileset, first_tile, false);
 
-  ASSERT_EQ(1, bundle.size());
+  ASSERT_EQ(1u, bundle.size());
   ASSERT_EQ(1, bundle.next_tile_id());
   ASSERT_FALSE(bundle.empty());
 
@@ -81,7 +81,7 @@ TEST(TilesetBundle, AttachTileset)
   auto tileset = make_tileset();
   bundle.attach_tileset(tileset, false);
 
-  ASSERT_EQ(1, bundle.size());
+  ASSERT_EQ(1u, bundle.size());
   ASSERT_EQ(first_tile + tileset->tile_count() + 1, bundle.next_tile_id());
   ASSERT_FALSE(bundle.empty());
 
@@ -107,7 +107,7 @@ TEST(TilesetBundle, DetachTileset)
 
   bundle.attach_tileset(tileset, false);
 
-  ASSERT_EQ(1, bundle.size());
+  ASSERT_EQ(1u, bundle.size());
   ASSERT_TRUE(bundle.has_tileset(tileset_id));
 
   ASSERT_TRUE(bundle.is_valid_tile(1));
@@ -115,7 +115,7 @@ TEST(TilesetBundle, DetachTileset)
 
   bundle.detach_tileset(tileset_id);
 
-  ASSERT_EQ(0, bundle.size());
+  ASSERT_EQ(0u, bundle.size());
   ASSERT_FALSE(bundle.has_tileset(tileset_id));
 
   ASSERT_FALSE(bundle.is_valid_tile(1));

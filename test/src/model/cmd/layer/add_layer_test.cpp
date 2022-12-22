@@ -39,22 +39,22 @@ TEST(AddLayer, RedoUndo)
   auto& root = map.invisible_root();
   auto& contexts = document->get_contexts();
 
-  ASSERT_EQ(1, contexts.size());
+  ASSERT_EQ(1u, contexts.size());
   ASSERT_TRUE(contexts.contains(map.uuid()));
 
   cmd::AddLayer cmd {document.get(), LayerType::TileLayer};
 
   cmd.redo();
-  ASSERT_EQ(1, root.size());
-  ASSERT_EQ(2, contexts.size());
+  ASSERT_EQ(1u, root.size());
+  ASSERT_EQ(2u, contexts.size());
   ASSERT_TRUE(map.active_layer_id().has_value());
 
   const auto layer_id = map.active_layer_id().value();
   ASSERT_TRUE(contexts.contains(layer_id));
 
   cmd.undo();
-  ASSERT_EQ(0, root.size());
-  ASSERT_EQ(1, contexts.size());
+  ASSERT_EQ(0u, root.size());
+  ASSERT_EQ(1u, contexts.size());
   ASSERT_FALSE(map.active_layer_id().has_value());
   ASSERT_FALSE(contexts.contains(layer_id));
 }
