@@ -17,25 +17,16 @@ jobs:
       - uses: actions/checkout@v3
       - uses: lukka/get-cmake@latest
 
-      - name: Update packages
+      - name: Install system dependencies
         shell: bash
-        run: sudo apt update
-
-      - name: Install graphics drivers
-        shell: bash
-        run: sudo apt-get install libegl1-mesa-dev libgles2-mesa-dev libasound2-dev libpulse-dev libxmu-dev libxi-dev libgl-dev
-
-      - name: Install GCC
-        shell: bash
-        run: sudo apt install gcc-11 g++-11
-
-      - name: Install xvfb
-        shell: bash
-        run: sudo apt install xvfb
-
-      - name: Install X11 stuff
-        shell: bash
-        run: sudo apt install libx11-dev
+        run: |
+          sudo apt update
+          sudo apt install libegl1-mesa-dev libgles2-mesa-dev libgl-dev
+          sudo apt install libasound2-dev
+          sudo apt install libpulse-dev
+          sudo apt install libx11-dev libxmu-dev libxi-dev
+          sudo apt install gcc-11 g++-11
+          sudo apt install xvfb
 
       - name: Emulate video device
         shell: bash
@@ -47,9 +38,9 @@ jobs:
 
       - name: Install Boost
         id: install-boost
-        uses: MarkusJx/install-boost@v2.3.1
+        uses: MarkusJx/install-boost@v2.4.3
         with:
-          boost_version: 1.79.0
+          boost_version: 1.80.0
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts

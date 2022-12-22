@@ -15,23 +15,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install CMake
+      - name: Install system dependencies
         shell: bash
-        run: brew install cmake
-
-      - name: Install Ninja
-        shell: bash
-        run: brew install ninja
-
-      - name: Install GLFW
-        shell: bash
-        run: brew install glfw
+        run: |
+          brew update
+          brew install cmake
+          brew install ninja
 
       - name: Install Boost
         id: install-boost
-        uses: MarkusJx/install-boost@v2.3.1
+        uses: MarkusJx/install-boost@v2.4.3
         with:
-          boost_version: 1.79.0
+          boost_version: 1.80.0
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
