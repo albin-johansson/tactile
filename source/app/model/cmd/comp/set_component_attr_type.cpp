@@ -56,7 +56,7 @@ void SetComponentAttrType::undo()
   auto& contexts = mDocument->get_contexts();
   for (const auto& [contextId, attribute]: mPrevAttributes) {
     auto& context = contexts.at(contextId);
-    auto& comp = context.ctx().comps().at(definition.get_uuid());
+    auto& comp = context.get_ctx().comps().at(definition.get_uuid());
 
     comp.remove(mAttributeName);
     comp.add(mAttributeName, attribute);

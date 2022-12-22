@@ -36,7 +36,7 @@ TEST(ChangePropertyType, RedoUndo)
   auto document = MapBuilder::build().result();
   auto map = document->get_map_ptr();
 
-  auto& props = map->ctx().props();
+  auto& props = map->get_ctx().props();
   props.add("property", 123);
 
   cmd::ChangePropertyType cmd {map, "property", AttributeType::Bool};

@@ -51,7 +51,7 @@ void UndefComponent::undo()
   auto& contexts = mDocument->get_contexts();
   for (auto [contextId, component]: mRemovedComponents) {
     auto& context = contexts.at(contextId);
-    context.ctx().comps().add(std::move(component));
+    context.get_ctx().comps().add(std::move(component));
   }
 
   mRemovedComponents.clear();

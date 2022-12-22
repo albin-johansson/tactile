@@ -153,8 +153,8 @@ class Map final : public Context {
   [[nodiscard]] auto tileset_bundle() -> TilesetBundle&;
   [[nodiscard]] auto tileset_bundle() const -> const TilesetBundle&;
 
-  [[nodiscard]] auto ctx() -> ContextInfo& override;
-  [[nodiscard]] auto ctx() const -> const ContextInfo& override;
+  [[nodiscard]] auto get_ctx() -> ContextInfo& override;
+  [[nodiscard]] auto get_ctx() const -> const ContextInfo& override;
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 

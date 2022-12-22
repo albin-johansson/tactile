@@ -58,7 +58,7 @@ void show_add_component_button_popup_content(const Document& document,
     ImGui::TextUnformatted(lang.misc.no_available_components.c_str());
   }
   else {
-    const auto& comps = context.ctx().comps();
+    const auto& comps = context.get_ctx().comps();
     for (const auto& [definition_id, definition]: *index) {
       Disable disable_if {comps.contains(definition_id)};
 
@@ -79,11 +79,11 @@ void show_contents(const Document& document, entt::dispatcher& dispatcher)
   const auto& lang = get_current_language();
   const auto& context = document.get_contexts().active_context();
 
-  const FmtString indicator {"{}: {}", lang.misc.context, context.ctx().name()};
+  const FmtString indicator {"{}: {}", lang.misc.context, context.get_ctx().name()};
   ImGui::TextUnformatted(indicator.data());
 
   if (Child pane {"##ComponentsChild"}; pane.is_open()) {
-    const auto& comps = context.ctx().comps();
+    const auto& comps = context.get_ctx().comps();
     if (comps.empty()) {
       prepare_vertical_alignment_center(2);
       centered_label(lang.misc.context_has_no_components.c_str());

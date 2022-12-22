@@ -63,12 +63,12 @@ auto LayerDelegate::get_meta_id() const -> const Maybe<int32>&
   return mMetaId;
 }
 
-auto LayerDelegate::ctx() -> ContextInfo&
+auto LayerDelegate::get_ctx() -> ContextInfo&
 {
   return mContext;
 }
 
-auto LayerDelegate::ctx() const -> const ContextInfo&
+auto LayerDelegate::get_ctx() const -> const ContextInfo&
 {
   return mContext;
 }

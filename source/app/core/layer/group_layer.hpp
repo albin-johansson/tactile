@@ -125,8 +125,8 @@ class GroupLayer final : public Layer {
 
   [[nodiscard]] auto clone() const -> Shared<Layer> override;
 
-  [[nodiscard]] auto ctx() -> ContextInfo& override;
-  [[nodiscard]] auto ctx() const -> const ContextInfo& override;
+  [[nodiscard]] auto get_ctx() -> ContextInfo& override;
+  [[nodiscard]] auto get_ctx() const -> const ContextInfo& override;
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 

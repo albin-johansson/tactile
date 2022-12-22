@@ -156,19 +156,19 @@ auto Tileset::appearance_of(const TileIndex index) const -> TileIndex
   return index;
 }
 
-auto Tileset::ctx() -> ContextInfo&
+auto Tileset::get_ctx() -> ContextInfo&
 {
   return mData->context;
 }
 
-auto Tileset::ctx() const -> const ContextInfo&
+auto Tileset::get_ctx() const -> const ContextInfo&
 {
   return mData->context;
 }
 
 auto Tileset::get_uuid() const -> const UUID&
 {
-  return ctx().get_uuid();
+  return get_ctx().get_uuid();
 }
 
 auto Tileset::texture() const -> const Texture&

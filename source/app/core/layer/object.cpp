@@ -67,12 +67,12 @@ void Object::set_visible(const bool visible)
   mVisible = visible;
 }
 
-auto Object::ctx() -> ContextInfo&
+auto Object::get_ctx() -> ContextInfo&
 {
   return mContext;
 }
 
-auto Object::ctx() const -> const ContextInfo&
+auto Object::get_ctx() const -> const ContextInfo&
 {
   return mContext;
 }

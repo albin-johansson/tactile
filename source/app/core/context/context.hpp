@@ -32,8 +32,8 @@ class Context : public Element {
  public:
   virtual void accept(ContextVisitor& visitor) const = 0;
 
-  [[nodiscard]] virtual auto ctx() -> ContextInfo& = 0;
-  [[nodiscard]] virtual auto ctx() const -> const ContextInfo& = 0;
+  [[nodiscard]] virtual auto get_ctx() -> ContextInfo& = 0;
+  [[nodiscard]] virtual auto get_ctx() const -> const ContextInfo& = 0;
 };
 
 }  // namespace tactile

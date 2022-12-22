@@ -42,7 +42,7 @@ TEST(AddComponentAttr, RedoUndo)
   ASSERT_TRUE(definition.empty());
 
   auto& map = document->get_map();
-  auto& bundle = map.ctx().comps();
+  auto& bundle = map.get_ctx().comps();
 
   bundle.add(definition.instantiate());
   ASSERT_TRUE(bundle.contains(comp_id));

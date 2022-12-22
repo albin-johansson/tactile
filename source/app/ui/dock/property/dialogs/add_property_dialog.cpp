@@ -76,7 +76,7 @@ auto AddPropertyDialog::is_current_input_valid(const DocumentModel& model) const
   const auto& document = model.require_active_document();
   const auto& context = document.get_contexts().active_context();
   const auto name = create_string_view_from_buffer(mNameBuffer);
-  return !name.empty() && !context.ctx().props().contains(name);
+  return !name.empty() && !context.get_ctx().props().contains(name);
 }
 
 }  // namespace tactile::ui

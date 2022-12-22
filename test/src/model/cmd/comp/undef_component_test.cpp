@@ -45,7 +45,7 @@ TEST(UndefComponent, RedoUndo)
                            .result();
 
   auto& map = document->get_map();
-  auto& bundle = map.ctx().comps();
+  auto& bundle = map.get_ctx().comps();
 
   bundle.add(index->at(comp_id).instantiate());
   bundle.at(comp_id).update("foo", "abc"s);

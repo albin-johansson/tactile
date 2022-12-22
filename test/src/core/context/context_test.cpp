@@ -76,16 +76,16 @@ TYPED_TEST(ContextTest, Defaults)
   const auto context = make_context<TypeParam>();
   ASSERT_FALSE(context.get_uuid().is_nil());
 
-  ASSERT_TRUE(context.ctx().comps().empty());
-  ASSERT_TRUE(context.ctx().props().empty());
+  ASSERT_TRUE(context.get_ctx().comps().empty());
+  ASSERT_TRUE(context.get_ctx().props().empty());
 }
 
 TYPED_TEST(ContextTest, SetName)
 {
   auto context = make_context<TypeParam>();
 
-  context.ctx().set_name("foobar");
-  ASSERT_EQ("foobar", context.ctx().name());
+  context.get_ctx().set_name("foobar");
+  ASSERT_EQ("foobar", context.get_ctx().name());
 }
 
 }  // namespace tactile::test

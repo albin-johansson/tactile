@@ -153,7 +153,7 @@ void show_native_map_properties(const Map& map, entt::dispatcher& dispatcher)
   const auto& lang = get_current_language();
 
   native_read_only_row(lang.misc.type.c_str(), lang.misc.map.c_str());
-  native_read_only_row(lang.misc.name.c_str(), map.ctx().name().c_str());
+  native_read_only_row(lang.misc.name.c_str(), map.get_ctx().name().c_str());
 
   native_read_only_row(lang.misc.tile_width.c_str(), map.tile_size().x);
   native_read_only_row(lang.misc.tile_height.c_str(), map.tile_size().y);
@@ -240,7 +240,7 @@ void show_native_tileset_properties(const Tileset& tileset, entt::dispatcher& di
 
   native_read_only_row(lang.misc.type.c_str(), lang.misc.tileset.c_str());
 
-  if (const auto updated_name = native_name_row(tileset.ctx().name(), true);
+  if (const auto updated_name = native_name_row(tileset.get_ctx().name(), true);
       updated_name && !updated_name->empty()) {
     dispatcher.enqueue<RenameTilesetEvent>(tileset.get_uuid(), *updated_name);
   }
@@ -301,7 +301,7 @@ void show_native_object_properties(const Object& object, entt::dispatcher& dispa
       break;
   }
 
-  if (const auto updated_name = native_name_row(object.ctx().name())) {
+  if (const auto updated_name = native_name_row(object.get_ctx().name())) {
     dispatcher.enqueue<SetObjectNameEvent>(object.get_uuid(), *updated_name);
   }
 
@@ -335,7 +335,7 @@ void show_custom_properties(const Context& context,
 {
   bool first = true;
 
-  for (const auto& [name, value]: context.ctx().props()) {
+  for (const auto& [name, value]: context.get_ctx().props()) {
     const Scope scope {name.c_str()};
 
     ImGui::TableNextRow();
@@ -455,7 +455,7 @@ void update_property_table(const DocumentModel& model, entt::dispatcher& dispatc
 
   if (context_state.show_change_type_dialog) {
     const auto& target_name = change_type_target.value();
-    const auto type = context.ctx().props().at(target_name).type();
+    const auto type = context.get_ctx().props().at(target_name).type();
     dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(target_name, type);
     change_type_target.reset();
     context_state.show_change_type_dialog = false;

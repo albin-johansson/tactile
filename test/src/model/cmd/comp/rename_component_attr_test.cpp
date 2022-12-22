@@ -42,7 +42,7 @@ TEST(RenameComponentAttr, RedoUndo)
                            .result();
 
   auto& map = document->get_map();
-  auto& bundle = map.ctx().comps();
+  auto& bundle = map.get_ctx().comps();
   bundle.add(index->at(comp_id).instantiate());
 
   cmd::RenameComponentAttr cmd {document.get(), comp_id, "Foo", "Bar"};

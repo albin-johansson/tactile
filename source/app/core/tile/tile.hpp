@@ -80,8 +80,8 @@ class Tile final : public Context {
   /// Returns the tile region in the associated tile set.
   [[nodiscard]] auto get_source() const noexcept -> const Int4& { return mSource; }
 
-  [[nodiscard]] auto ctx() -> ContextInfo& override;
-  [[nodiscard]] auto ctx() const -> const ContextInfo& override;
+  [[nodiscard]] auto get_ctx() -> ContextInfo& override;
+  [[nodiscard]] auto get_ctx() const -> const ContextInfo& override;
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 

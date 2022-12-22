@@ -38,14 +38,14 @@ RenameObject::RenameObject(Shared<Object> object, String name)
 
 void RenameObject::undo()
 {
-  mObject->ctx().set_name(mOldName.value());
+  mObject->get_ctx().set_name(mOldName.value());
   mOldName.reset();
 }
 
 void RenameObject::redo()
 {
-  mOldName = mObject->ctx().name();
-  mObject->ctx().set_name(mNewName);
+  mOldName = mObject->get_ctx().name();
+  mObject->get_ctx().set_name(mNewName);
 }
 
 auto RenameObject::merge_with(const Command* cmd) -> bool

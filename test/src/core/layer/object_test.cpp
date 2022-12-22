@@ -33,7 +33,7 @@ TEST(Object, Defaults)
   ASSERT_EQ(Float2 {}, object.pos());
   ASSERT_EQ(Float2 {}, object.size());
 
-  ASSERT_EQ("", object.ctx().name());
+  ASSERT_EQ("", object.get_ctx().name());
   ASSERT_EQ("", object.tag());
 
   ASSERT_FALSE(object.meta_id());

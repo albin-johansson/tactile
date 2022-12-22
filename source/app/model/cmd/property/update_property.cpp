@@ -41,14 +41,14 @@ UpdateProperty::UpdateProperty(Shared<Context> context, String name, Attribute v
 
 void UpdateProperty::undo()
 {
-  auto& props = mContext->ctx().props();
+  auto& props = mContext->get_ctx().props();
   props.update(mName, mOldValue.value());
   mOldValue.reset();
 }
 
 void UpdateProperty::redo()
 {
-  auto& props = mContext->ctx().props();
+  auto& props = mContext->get_ctx().props();
   mOldValue = props.at(mName);
   props.update(mName, mNewValue);
 }

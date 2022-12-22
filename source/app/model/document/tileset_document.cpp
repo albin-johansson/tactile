@@ -55,7 +55,7 @@ void TilesetDocument::set_component_index(Shared<ComponentIndex> index)
 
 void TilesetDocument::set_name(String name)
 {
-  mTileset->ctx().set_name(std::move(name));
+  mTileset->get_ctx().set_name(std::move(name));
 }
 
 void TilesetDocument::set_path(Path path)
@@ -110,7 +110,7 @@ auto TilesetDocument::get_viewport() const -> const Viewport&
 
 auto TilesetDocument::get_name() const -> const String&
 {
-  return mTileset->ctx().name();
+  return mTileset->get_ctx().name();
 }
 
 auto TilesetDocument::get_path() const -> const Path&

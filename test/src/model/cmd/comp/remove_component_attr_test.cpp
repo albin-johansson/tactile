@@ -41,7 +41,7 @@ TEST(RemoveComponentAttr, RedoUndo)
 
   auto& definition = index->at(comp_id);
   auto& map = document->get_map();
-  auto& bundle = map.ctx().comps();
+  auto& bundle = map.get_ctx().comps();
 
   bundle.add(definition.instantiate());
   ASSERT_TRUE(bundle.contains(comp_id));

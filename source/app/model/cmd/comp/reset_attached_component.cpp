@@ -47,7 +47,7 @@ ResetAttachedComponent::ResetAttachedComponent(Shared<ComponentIndex> index,
 
 void ResetAttachedComponent::undo()
 {
-  auto& comps = mContext->ctx().comps();
+  auto& comps = mContext->get_ctx().comps();
 
   comps.erase(mComponentId);
   comps.add(mComponent.value());
@@ -57,7 +57,7 @@ void ResetAttachedComponent::undo()
 
 void ResetAttachedComponent::redo()
 {
-  auto& comps = mContext->ctx().comps();
+  auto& comps = mContext->get_ctx().comps();
   const auto& definition = mIndex->at(mComponentId);
 
   mComponent = comps.at(mComponentId);

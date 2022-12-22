@@ -46,7 +46,7 @@ void render_point_object(Graphics& graphics,
   if (graphics.is_within_translated_bounds(position)) {
     graphics.draw_translated_shadowed_circle(position, radius, color, 2.0f);
 
-    const auto& name = object.ctx().name();
+    const auto& name = object.get_ctx().name();
     if (!name.empty()) {
       const auto text_size = ImGui::CalcTextSize(name.c_str());
       if (text_size.x <= info.grid_size.x) {
@@ -74,7 +74,7 @@ void render_ellipse_object(Graphics& graphics,
 
   graphics.draw_translated_shadowed_ellipse(center, radius, color, 2.0f);
 
-  const auto& name = object.ctx().name();
+  const auto& name = object.get_ctx().name();
   if (!name.empty()) {
     const auto text_size = ImGui::CalcTextSize(name.c_str());
     if (text_size.x <= radius.x) {
@@ -99,7 +99,7 @@ void render_rectangle_object(Graphics& graphics,
   if (graphics.is_intersecting_bounds(position, size)) {
     graphics.draw_translated_shadowed_rect(position, size, color, 2.0f);
 
-    const auto& name = object.ctx().name();
+    const auto& name = object.get_ctx().name();
     if (!name.empty()) {
       const auto text_size = ImGui::CalcTextSize(name.c_str());
       if (text_size.x <= size.x) {

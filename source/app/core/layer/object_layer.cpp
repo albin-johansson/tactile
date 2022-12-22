@@ -169,19 +169,19 @@ auto ObjectLayer::clone() const -> Shared<Layer>
   return copy;
 }
 
-auto ObjectLayer::ctx() -> ContextInfo&
+auto ObjectLayer::get_ctx() -> ContextInfo&
 {
-  return mDelegate.ctx();
+  return mDelegate.get_ctx();
 }
 
-auto ObjectLayer::ctx() const -> const ContextInfo&
+auto ObjectLayer::get_ctx() const -> const ContextInfo&
 {
-  return mDelegate.ctx();
+  return mDelegate.get_ctx();
 }
 
 auto ObjectLayer::get_uuid() const -> const UUID&
 {
-  return mDelegate.ctx().get_uuid();
+  return mDelegate.get_ctx().get_uuid();
 }
 
 auto ObjectLayer::parent() const -> Maybe<UUID>

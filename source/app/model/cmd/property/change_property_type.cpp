@@ -43,7 +43,7 @@ ChangePropertyType::ChangePropertyType(Shared<Context> context,
 
 void ChangePropertyType::undo()
 {
-  auto& props = mContext->ctx().props();
+  auto& props = mContext->get_ctx().props();
 
   const auto& value = mPreviousValue.value();
   const auto type = value.type();
@@ -56,7 +56,7 @@ void ChangePropertyType::undo()
 
 void ChangePropertyType::redo()
 {
-  auto& props = mContext->ctx().props();
+  auto& props = mContext->get_ctx().props();
 
   mPreviousValue = props.at(mName);
   props.change_type(mName, mPropertyType);

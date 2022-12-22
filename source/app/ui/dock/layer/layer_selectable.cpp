@@ -112,12 +112,12 @@ void show_object_selectable(const ObjectLayer& layer,
   const auto* icon = get_icon(object_type);
 
   String name;
-  if (object.ctx().name().empty()) {
+  if (object.get_ctx().name().empty()) {
     TACTILE_ASSERT(object.meta_id().has_value());
     name = fmt::format("{} Object {}", icon, object.meta_id().value());
   }
   else {
-    name = fmt::format("{} {}", icon, object.ctx().name());
+    name = fmt::format("{} {}", icon, object.get_ctx().name());
   }
 
   if (Selectable::ListItem(name.c_str(), layer.active_object_id() == object_id)) {
@@ -153,7 +153,7 @@ void show_object_layer_selectable(const Map& map,
                                   const ImGuiTreeNodeFlags flags,
                                   entt::dispatcher& dispatcher)
 {
-  const FmtString<256> name {"{} {}", TAC_ICON_OBJECT_LAYER, layer.ctx().name()};
+  const FmtString<256> name {"{} {}", TAC_ICON_OBJECT_LAYER, layer.get_ctx().name()};
   if (TreeNode tree_node {"##ObjectLayerTree", flags, name.data()}; tree_node.is_open()) {
     Indent indent;
 
@@ -186,7 +186,7 @@ void show_group_layer_selectable(const MapDocument& document,
 {
   const auto& map = document.get_map();
 
-  const FmtString<256> name {"{} {}", TAC_ICON_GROUP_LAYER, layer.ctx().name()};
+  const FmtString<256> name {"{} {}", TAC_ICON_GROUP_LAYER, layer.get_ctx().name()};
   if (TreeNode tree_node {"##GroupLayerTreeNode", flags, name.data()};
       tree_node.is_open()) {
     Indent indent;
@@ -227,7 +227,7 @@ void layer_selectable(const MapDocument& document,
   const auto flags =
       is_active_layer ? (base_node_flags | ImGuiTreeNodeFlags_Selected) : base_node_flags;
 
-  const FmtString name {"{} {}", get_icon(layer.type()), layer.ctx().name()};
+  const FmtString name {"{} {}", get_icon(layer.type()), layer.get_ctx().name()};
 
   switch (layer.type()) {
     case LayerType::TileLayer: {

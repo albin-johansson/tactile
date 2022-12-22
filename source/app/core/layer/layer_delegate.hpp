@@ -47,8 +47,8 @@ class LayerDelegate final {
 
   [[nodiscard]] auto get_meta_id() const -> const Maybe<int32>&;
 
-  [[nodiscard]] auto ctx() -> ContextInfo&;
-  [[nodiscard]] auto ctx() const -> const ContextInfo&;
+  [[nodiscard]] auto get_ctx() -> ContextInfo&;
+  [[nodiscard]] auto get_ctx() const -> const ContextInfo&;
 
   /// Clones the layer delegate, but the meta identifier is not copied.
   [[nodiscard]] auto clone() const -> LayerDelegate;

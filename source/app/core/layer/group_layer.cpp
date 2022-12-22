@@ -690,19 +690,19 @@ auto GroupLayer::clone() const -> Shared<Layer>
   return result;
 }
 
-auto GroupLayer::ctx() -> ContextInfo&
+auto GroupLayer::get_ctx() -> ContextInfo&
 {
-  return mDelegate.ctx();
+  return mDelegate.get_ctx();
 }
 
-auto GroupLayer::ctx() const -> const ContextInfo&
+auto GroupLayer::get_ctx() const -> const ContextInfo&
 {
-  return mDelegate.ctx();
+  return mDelegate.get_ctx();
 }
 
 auto GroupLayer::get_uuid() const -> const UUID&
 {
-  return mDelegate.ctx().get_uuid();
+  return mDelegate.get_ctx().get_uuid();
 }
 
 auto GroupLayer::parent() const -> Maybe<UUID>

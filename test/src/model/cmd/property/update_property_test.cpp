@@ -37,7 +37,7 @@ TEST(UpdateProperty, RedoUndo)
   auto document = MapBuilder::build().result();
   auto map = document->get_map_ptr();
 
-  auto& props = map->ctx().props();
+  auto& props = map->get_ctx().props();
   props.add("int", 10);
 
   cmd::UpdateProperty cmd {map, "int", 20};
@@ -59,7 +59,7 @@ TEST(UpdateProperty, MergeSupport)
   const Color gold {0xFF, 0xD7, 0};
   const Color violet {0xEE, 0x82, 0xEE};
 
-  auto& props = map->ctx().props();
+  auto& props = map->get_ctx().props();
   props.add("color", cyan);
 
   cmd::UpdateProperty a {map, "color", azure};

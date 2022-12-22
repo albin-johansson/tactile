@@ -72,7 +72,7 @@ TEST(Map, Defaults)
   const Map map;
   const auto& root = map.invisible_root();
 
-  ASSERT_EQ("Map", map.ctx().name());
+  ASSERT_EQ("Map", map.get_ctx().name());
 
   ASSERT_EQ(5u, map.row_count());
   ASSERT_EQ(5u, map.column_count());

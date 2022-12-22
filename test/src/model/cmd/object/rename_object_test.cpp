@@ -39,15 +39,15 @@ TEST(RenameObject, RedoUndo)
                       .with_object(ObjectType::Rect, &object)
                       .result();
 
-  object->ctx().set_name("foo");
+  object->get_ctx().set_name("foo");
 
   cmd::RenameObject cmd {object, "bar"};
 
   cmd.redo();
-  ASSERT_EQ("bar", object->ctx().name());
+  ASSERT_EQ("bar", object->get_ctx().name());
 
   cmd.undo();
-  ASSERT_EQ("foo", object->ctx().name());
+  ASSERT_EQ("foo", object->get_ctx().name());
 }
 
 TEST(RenameObject, MergeSupport)
@@ -58,7 +58,7 @@ TEST(RenameObject, MergeSupport)
                  .with_object(ObjectType::Ellipse, &object)
                  .result();
 
-  object->ctx().set_name("start");
+  object->get_ctx().set_name("start");
 
   cmd::RenameObject a {object, "a"};
   const cmd::RenameObject b {object, "b"};
@@ -68,10 +68,10 @@ TEST(RenameObject, MergeSupport)
   ASSERT_TRUE(a.merge_with(&c));
 
   a.redo();
-  ASSERT_EQ("c", object->ctx().name());
+  ASSERT_EQ("c", object->get_ctx().name());
 
   a.undo();
-  ASSERT_EQ("start", object->ctx().name());
+  ASSERT_EQ("start", object->get_ctx().name());
 }
 
 }  // namespace tactile::test

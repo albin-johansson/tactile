@@ -40,15 +40,15 @@ TEST(RenameLayer, RedoUndo)
   auto map = document->get_map_ptr();
 
   auto layer = map->invisible_root().ptr(layer_id);
-  layer->ctx().set_name("barfoo");
+  layer->get_ctx().set_name("barfoo");
 
   cmd::RenameLayer cmd {map, layer_id, "foobar"};
 
   cmd.redo();
-  ASSERT_EQ("foobar", layer->ctx().name());
+  ASSERT_EQ("foobar", layer->get_ctx().name());
 
   cmd.undo();
-  ASSERT_EQ("barfoo", layer->ctx().name());
+  ASSERT_EQ("barfoo", layer->get_ctx().name());
 }
 
 }  // namespace tactile::test

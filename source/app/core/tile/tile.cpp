@@ -96,12 +96,12 @@ auto Tile::get_animation() const -> const TileAnimation&
   }
 }
 
-auto Tile::ctx() -> ContextInfo&
+auto Tile::get_ctx() -> ContextInfo&
 {
   return mContext;
 }
 
-auto Tile::ctx() const -> const ContextInfo&
+auto Tile::get_ctx() const -> const ContextInfo&
 {
   return mContext;
 }

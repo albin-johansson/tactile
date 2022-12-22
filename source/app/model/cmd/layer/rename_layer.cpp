@@ -42,14 +42,14 @@ void RenameLayer::undo()
 {
   auto& layer = mMap->invisible_root().at(mLayerId);
 
-  layer.ctx().set_name(mOldName.value());
+  layer.get_ctx().set_name(mOldName.value());
   mOldName.reset();
 }
 
 void RenameLayer::redo()
 {
   auto& layer = mMap->invisible_root().at(mLayerId);
-  auto& layer_ctx = layer.ctx();
+  auto& layer_ctx = layer.get_ctx();
 
   mOldName = layer_ctx.name();
   layer_ctx.set_name(mNewName);

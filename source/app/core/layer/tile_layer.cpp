@@ -239,19 +239,19 @@ auto TileLayer::clone() const -> Shared<Layer>
   return layer;
 }
 
-auto TileLayer::ctx() -> ContextInfo&
+auto TileLayer::get_ctx() -> ContextInfo&
 {
-  return mDelegate.ctx();
+  return mDelegate.get_ctx();
 }
 
-auto TileLayer::ctx() const -> const ContextInfo&
+auto TileLayer::get_ctx() const -> const ContextInfo&
 {
-  return mDelegate.ctx();
+  return mDelegate.get_ctx();
 }
 
 auto TileLayer::get_uuid() const -> const UUID&
 {
-  return mDelegate.ctx().get_uuid();
+  return mDelegate.get_ctx().get_uuid();
 }
 
 auto TileLayer::parent() const -> Maybe<UUID>

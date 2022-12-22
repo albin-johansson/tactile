@@ -39,14 +39,14 @@ RenameTileset::RenameTileset(Shared<Tileset> tileset, String name)
 
 void RenameTileset::undo()
 {
-  mTileset->ctx().set_name(mOldName.value());
+  mTileset->get_ctx().set_name(mOldName.value());
   mOldName.reset();
 }
 
 void RenameTileset::redo()
 {
-  mOldName = mTileset->ctx().name();
-  mTileset->ctx().set_name(mNewName);
+  mOldName = mTileset->get_ctx().name();
+  mTileset->get_ctx().set_name(mNewName);
 }
 
 auto RenameTileset::merge_with(const Command* cmd) -> bool

@@ -101,7 +101,7 @@ auto ContextManager::on_undef_comp(const UUID& component_id) -> HashMap<UUID, Co
   HashMap<UUID, Component> removed;
 
   for (auto& [contextId, context]: mContexts) {
-    auto& comps = context->ctx().comps();
+    auto& comps = context->get_ctx().comps();
     if (comps.contains(component_id)) {
       removed.try_emplace(contextId, comps.erase(component_id));
     }
@@ -141,7 +141,7 @@ auto ContextManager::on_changed_component_attr_type(const UUID& component_id,
   HashMap<UUID, Attribute> attributes;
 
   for (auto& [contextId, context]: mContexts) {
-    auto& comps = context->ctx().comps();
+    auto& comps = context->get_ctx().comps();
     if (comps.contains(component_id)) {
       auto& comp = comps.at(component_id);
       attributes[contextId] = comp.at(name);
@@ -158,7 +158,7 @@ void ContextManager::on_component_update(const UUID& component_id,
                                          const ComponentFunc& func)
 {
   for (auto& [contextId, context]: mContexts) {
-    auto& comps = context->ctx().comps();
+    auto& comps = context->get_ctx().comps();
     if (auto* component = comps.try_get(component_id)) {
       func(*component);
     }

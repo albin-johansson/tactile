@@ -65,8 +65,8 @@ class Tileset final : public Context {
   /// Indicates whether the tile set has a tile at a specific position.
   [[nodiscard]] auto is_valid(const TilePos& pos) const -> bool;
 
-  [[nodiscard]] auto ctx() -> ContextInfo& override;
-  [[nodiscard]] auto ctx() const -> const ContextInfo& override;
+  [[nodiscard]] auto get_ctx() -> ContextInfo& override;
+  [[nodiscard]] auto get_ctx() const -> const ContextInfo& override;
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 

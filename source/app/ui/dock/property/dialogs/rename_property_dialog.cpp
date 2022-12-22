@@ -62,7 +62,7 @@ auto RenamePropertyDialog::validate(const DocumentModel& model, StringView input
 {
   const auto& document = model.require_active_document();
   const auto& context = document.get_contexts().active_context();
-  return !input.empty() && !context.ctx().props().contains(input);
+  return !input.empty() && !context.get_ctx().props().contains(input);
 }
 
 }  // namespace tactile::ui

@@ -40,14 +40,14 @@ RemoveProperty::RemoveProperty(Shared<Context> context, String name)
 
 void RemoveProperty::undo()
 {
-  auto& props = mContext->ctx().props();
+  auto& props = mContext->get_ctx().props();
   props.add(mName, mPreviousValue.value());
   mPreviousValue.reset();
 }
 
 void RemoveProperty::redo()
 {
-  auto& props = mContext->ctx().props();
+  auto& props = mContext->get_ctx().props();
   mPreviousValue = props.at(mName);
   props.remove(mName);
 }

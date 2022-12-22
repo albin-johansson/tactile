@@ -39,12 +39,12 @@ void convert_context(const Context& context,
                      const ComponentIndex* components,
                      ir::ContextData& data)
 {
-  for (const auto& [name, property]: context.ctx().props()) {
+  for (const auto& [name, property]: context.get_ctx().props()) {
     data.properties[name] = property;
   }
 
   if (components) {
-    for (const auto& [component_id, component]: context.ctx().comps()) {
+    for (const auto& [component_id, component]: context.get_ctx().comps()) {
       const auto& definition = components->at(component.definition_id());
       const auto& name = definition.name();
 
@@ -71,7 +71,7 @@ void convert_object(const Object& object,
   data.tag = object.tag();
   data.visible = object.visible();
 
-  data.name = object.ctx().name();
+  data.name = object.get_ctx().name();
   convert_context(object, components, data.context);
 }
 
@@ -120,7 +120,7 @@ void convert_layer(const Layer& layer,
   layer_data.opacity = layer.opacity();
   layer_data.visible = layer.visible();
 
-  layer_data.name = layer.ctx().name();
+  layer_data.name = layer.get_ctx().name();
 
   switch (layer.type()) {
     case LayerType::TileLayer: {
@@ -185,8 +185,8 @@ void convert_fancy_tiles(const Tileset& tileset,
   for (const auto& [id, tile]: tileset) {
     const auto is_animated = tile->is_animated();
     const auto has_objects = tile->object_count() != 0;
-    const auto has_props = !tile->ctx().props().empty();
-    const auto has_comps = !tile->ctx().comps().empty();
+    const auto has_props = !tile->get_ctx().props().empty();
+    const auto has_comps = !tile->get_ctx().comps().empty();
 
     if (is_animated || has_objects || has_props || has_comps) {
       auto& tile_data = data.fancy_tiles[tile->get_index()];
@@ -218,7 +218,7 @@ void convert_tilesets(const MapDocument& document,
     const auto& tileset = tileset_ref.view_tileset();
 
     auto& tileset_data = data.tilesets.emplace_back();
-    tileset_data.name = tileset.ctx().name();
+    tileset_data.name = tileset.get_ctx().name();
 
     tileset_data.first_tile = tileset_ref.first_tile();
     tileset_data.tile_size = tileset.tile_size();

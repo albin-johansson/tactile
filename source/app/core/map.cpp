@@ -77,7 +77,7 @@ struct Map::MapData final {
 Map::Map()
     : mData {std::make_unique<MapData>()}
 {
-  ctx().set_name("Map");
+  get_ctx().set_name("Map");
 }
 
 Map::~Map() noexcept = default;
@@ -176,10 +176,10 @@ auto Map::add_tile_layer(const Maybe<UUID>& parent_id) -> UUID
   auto layer = std::make_shared<TileLayer>(row_count(), column_count());
 
   layer->set_meta_id(fetch_and_increment_next_layer_id());
-  layer->ctx().set_name(fmt::format("Tile Layer {}", mData->tile_layer_suffix));
+  layer->get_ctx().set_name(fmt::format("Tile Layer {}", mData->tile_layer_suffix));
   ++mData->tile_layer_suffix;
 
-  const auto id = layer->ctx().get_uuid();
+  const auto id = layer->get_ctx().get_uuid();
   add_layer(std::move(layer), parent_id);
 
   return id;
@@ -190,10 +190,10 @@ auto Map::add_object_layer(const Maybe<UUID>& parent_id) -> UUID
   auto layer = std::make_shared<ObjectLayer>();
 
   layer->set_meta_id(fetch_and_increment_next_layer_id());
-  layer->ctx().set_name(fmt::format("Object Layer {}", mData->object_layer_suffix));
+  layer->get_ctx().set_name(fmt::format("Object Layer {}", mData->object_layer_suffix));
   ++mData->object_layer_suffix;
 
-  const auto id = layer->ctx().get_uuid();
+  const auto id = layer->get_ctx().get_uuid();
   add_layer(std::move(layer), parent_id);
 
   return id;
@@ -204,10 +204,10 @@ auto Map::add_group_layer(const Maybe<UUID>& parent_id) -> UUID
   auto layer = std::make_shared<GroupLayer>();
 
   layer->set_meta_id(fetch_and_increment_next_layer_id());
-  layer->ctx().set_name(fmt::format("Group Layer {}", mData->group_layer_suffix));
+  layer->get_ctx().set_name(fmt::format("Group Layer {}", mData->group_layer_suffix));
   ++mData->group_layer_suffix;
 
-  const auto id = layer->ctx().get_uuid();
+  const auto id = layer->get_ctx().get_uuid();
   add_layer(std::move(layer), parent_id);
 
   return id;
@@ -319,19 +319,19 @@ auto Map::is_stamp_randomizer_possible() const -> bool
   }
 }
 
-auto Map::ctx() -> ContextInfo&
+auto Map::get_ctx() -> ContextInfo&
 {
   return mData->context;
 }
 
-auto Map::ctx() const -> const ContextInfo&
+auto Map::get_ctx() const -> const ContextInfo&
 {
   return mData->context;
 }
 
 auto Map::get_uuid() const -> const UUID&
 {
-  return ctx().get_uuid();
+  return get_ctx().get_uuid();
 }
 
 auto Map::fetch_and_increment_next_object_id() -> int32
