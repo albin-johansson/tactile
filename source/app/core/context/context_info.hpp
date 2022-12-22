@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/component/component_bundle.hpp"
-#include "core/ctx/property_bundle.hpp"
+#include "core/context/property_bundle.hpp"
 #include "core/type/string.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"

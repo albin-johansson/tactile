@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/ctx/context_manager.hpp"
+#include "core/context/context_manager.hpp"
 #include "model/cmd/command_stack.hpp"
 #include "model/cmd/comp/all.hpp"
 #include "model/cmd/property/all.hpp"

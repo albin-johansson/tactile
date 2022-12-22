@@ -24,7 +24,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/ctx/context_visitor.hpp"
+#include "core/context/context_visitor.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"

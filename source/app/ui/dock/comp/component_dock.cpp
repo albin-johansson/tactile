@@ -24,9 +24,9 @@
 
 #include "component_view.hpp"
 #include "core/component/component_index.hpp"
-#include "core/ctx/context.hpp"
-#include "core/ctx/context_info.hpp"
-#include "core/ctx/context_manager.hpp"
+#include "core/context/context.hpp"
+#include "core/context/context_info.hpp"
+#include "core/context/context_manager.hpp"
 #include "core/util/fmt.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"

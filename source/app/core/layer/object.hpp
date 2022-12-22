@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/ctx/context.hpp"
-#include "core/ctx/context_info.hpp"
+#include "core/context/context.hpp"
+#include "core/context/context_info.hpp"
 #include "core/layer/object_type.hpp"
 #include "core/type/math.hpp"
 #include "core/type/maybe.hpp"

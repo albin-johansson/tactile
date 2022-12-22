@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/ctx/context.hpp"
+#include "core/context/context.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/layer_visitor.hpp"
 #include "core/type/maybe.hpp"

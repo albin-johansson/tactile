@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/ctx/context.hpp"
-#include "core/ctx/context_info.hpp"
+#include "core/context/context.hpp"
+#include "core/context/context_info.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/math.hpp"

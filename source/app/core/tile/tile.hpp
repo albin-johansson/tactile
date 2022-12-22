@@ -21,8 +21,8 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/ctx/context.hpp"
-#include "core/ctx/context_info.hpp"
+#include "core/context/context.hpp"
+#include "core/context/context_info.hpp"
 #include "core/layer/object.hpp"
 #include "core/tile/tile_animation.hpp"
 #include "core/type/hash_map.hpp"

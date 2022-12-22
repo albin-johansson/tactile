@@ -21,7 +21,7 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/ctx/context_manager.hpp"
+#include "core/context/context_manager.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/tile_format.hpp"
 #include "core/map.hpp"

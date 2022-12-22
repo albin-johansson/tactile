@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/ctx/context_info.hpp"
+#include "core/context/context_info.hpp"
 #include "core/util/assoc.hpp"
 #include "misc/panic.hpp"
 

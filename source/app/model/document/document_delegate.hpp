@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/component/component_index.hpp"
-#include "core/ctx/context_manager.hpp"
+#include "core/context/context_manager.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/ctx/context_visitor.hpp"
+#include "core/context/context_visitor.hpp"
 #include "core/element.hpp"
 
 namespace tactile {

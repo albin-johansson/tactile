@@ -22,8 +22,8 @@
 #include <utility>  // move
 
 #include "core/component/component.hpp"
-#include "core/ctx/context.hpp"
-#include "core/ctx/context_info.hpp"
+#include "core/context/context.hpp"
+#include "core/context/context_info.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"

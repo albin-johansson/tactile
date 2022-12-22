@@ -22,9 +22,9 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/ctx/context.hpp"
-#include "core/ctx/context_info.hpp"
-#include "core/ctx/context_manager.hpp"
+#include "core/context/context.hpp"
+#include "core/context/context_info.hpp"
+#include "core/context/context_manager.hpp"
 #include "core/util/buffers.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

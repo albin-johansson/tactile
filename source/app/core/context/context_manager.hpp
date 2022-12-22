@@ -21,7 +21,7 @@
 
 #include "core/attribute.hpp"
 #include "core/component/component.hpp"
-#include "core/ctx/context.hpp"
+#include "core/context/context.hpp"
 #include "core/type/fn.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/ptr.hpp"

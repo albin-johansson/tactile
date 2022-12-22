@@ -20,8 +20,8 @@
 #include "attach_component.hpp"
 
 #include "core/component/component_index.hpp"
-#include "core/ctx/context.hpp"
-#include "core/ctx/context_info.hpp"
+#include "core/context/context.hpp"
+#include "core/context/context_info.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "misc/panic.hpp"

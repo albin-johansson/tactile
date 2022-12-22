@@ -23,9 +23,9 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/ctx/context.hpp"
-#include "core/ctx/context_info.hpp"
-#include "core/ctx/context_manager.hpp"
+#include "core/context/context.hpp"
+#include "core/context/context_info.hpp"
+#include "core/context/context_manager.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/property_events.hpp"
