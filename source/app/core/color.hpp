@@ -48,7 +48,6 @@ class Color final {
   /// \see
   /// https://en.wikipedia.org/wiki/Relative_luminance
   ///
-  /// \param color the color to compute the luminance for.
   /// \return the color luminance, in the interval [0, 1].
   [[nodiscard]] auto get_luminance() const -> float;
 
