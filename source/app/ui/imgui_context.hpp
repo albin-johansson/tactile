@@ -29,6 +29,9 @@ namespace tactile {
 /// Handles the configuration of the Dear ImGui context.
 class ImGuiContext final {
  public:
+  TACTILE_DEFAULT_COPY(ImGuiContext);
+  TACTILE_DEFAULT_MOVE(ImGuiContext);
+
   ImGuiContext(cen::window& window, cen::gl_context& context);
 
   ~ImGuiContext();
@@ -39,9 +42,6 @@ class ImGuiContext final {
   /// that the fonts need to be reloaded, e.g. when the reported display framebuffer size
   /// changes.
   static void reload_fonts();
-
-  TACTILE_DEFAULT_COPY(ImGuiContext);
-  TACTILE_DEFAULT_MOVE(ImGuiContext);
 
  private:
   /// This is used as a workaround to annoying unit test issues for Windows CI builds
