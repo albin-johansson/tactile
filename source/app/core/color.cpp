@@ -21,9 +21,8 @@
 
 #include <algorithm>  // clamp
 #include <cmath>      // round, pow
-#include <iomanip>    // setw, setfill
-#include <ios>        // hex, uppercase
-#include <sstream>    // stringstream
+
+#include <fmt/format.h>
 
 #include "core/util/str.hpp"
 #include "meta/build.hpp"
@@ -161,43 +160,17 @@ auto Color::is_dark() const -> bool
 
 auto Color::as_rgb() const -> String
 {
-  std::stringstream stream;
-  stream << std::setfill('0') << std::hex << std::uppercase;
-
-  stream << '#';
-  stream << std::setw(2) << +red;
-  stream << std::setw(2) << +green;
-  stream << std::setw(2) << +blue;
-
-  return stream.str();
+  return fmt::format("#{:02X}{:02X}{:02X}", +red, +green, +blue);
 }
 
 auto Color::as_rgba() const -> String
 {
-  std::stringstream stream;
-  stream << std::setfill('0') << std::hex << std::uppercase;
-
-  stream << '#';
-  stream << std::setw(2) << +red;
-  stream << std::setw(2) << +green;
-  stream << std::setw(2) << +blue;
-  stream << std::setw(2) << +alpha;
-
-  return stream.str();
+  return fmt::format("#{:02X}{:02X}{:02X}{:02X}", +red, +green, +blue, +alpha);
 }
 
 auto Color::as_argb() const -> String
 {
-  std::stringstream stream;
-  stream << std::setfill('0') << std::hex << std::uppercase;
-
-  stream << '#';
-  stream << std::setw(2) << +alpha;
-  stream << std::setw(2) << +red;
-  stream << std::setw(2) << +green;
-  stream << std::setw(2) << +blue;
-
-  return stream.str();
+  return fmt::format("#{:02X}{:02X}{:02X}{:02X}", +alpha, +red, +green, +blue);
 }
 
 auto Color::as_float_array() const -> Array<float, 4>
