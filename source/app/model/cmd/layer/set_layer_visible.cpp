@@ -52,7 +52,7 @@ void SetLayerVisible::redo()
 {
   auto& layer = mMap->invisible_root().get_layer(mLayerId);
 
-  mOldVisibility = layer.visible();
+  mOldVisibility = layer.is_visible();
   layer.set_visible(mNewVisibility);
 }
 

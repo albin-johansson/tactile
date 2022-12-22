@@ -256,7 +256,7 @@ void show_native_layer_properties(const Layer& layer, entt::dispatcher& dispatch
 {
   const auto& lang = get_current_language();
 
-  switch (layer.type()) {
+  switch (layer.get_type()) {
     case LayerType::TileLayer:
       native_read_only_row(lang.misc.type.c_str(), lang.misc.tile_layer.c_str());
       break;
@@ -272,13 +272,13 @@ void show_native_layer_properties(const Layer& layer, entt::dispatcher& dispatch
 
   prepare_table_row(lang.misc.opacity.c_str());
   ImGui::TableNextColumn();
-  if (const auto value = input_float("##Opacity", layer.opacity(), 0.0f, 1.0f)) {
+  if (const auto value = input_float("##Opacity", layer.get_opacity(), 0.0f, 1.0f)) {
     dispatcher.enqueue<SetLayerOpacityEvent>(layer.get_uuid(), *value);
   }
 
   prepare_table_row(lang.misc.visible.c_str());
   ImGui::TableNextColumn();
-  if (const auto value = input_bool("##Visible", layer.visible())) {
+  if (const auto value = input_bool("##Visible", layer.is_visible())) {
     dispatcher.enqueue<SetLayerVisibleEvent>(layer.get_uuid(), *value);
   }
 }

@@ -31,7 +31,7 @@ void render_tile_layer(Graphics& graphics,
                        const TileLayer& layer,
                        const float parent_opacity)
 {
-  const auto tile_opacity = parent_opacity * layer.opacity();
+  const auto tile_opacity = parent_opacity * layer.get_opacity();
 
   const auto& info = graphics.info();
   const auto end_row = info.bounds.end.row();

@@ -62,28 +62,28 @@ TEST(GroupLayer, SimpleEach)
 
   ASSERT_EQ(3u, root.size());
 
-  ASSERT_EQ(nothing, t1->parent());
-  ASSERT_EQ(nothing, g1->parent());
-  ASSERT_EQ(g1->get_uuid(), o1->parent());
+  ASSERT_EQ(nothing, t1->get_parent());
+  ASSERT_EQ(nothing, g1->get_parent());
+  ASSERT_EQ(g1->get_uuid(), o1->get_parent());
 
   usize count = 0;
   root.each([&](const Layer* layer) {
     ASSERT_TRUE(layer != nullptr);
     ++count;
 
-    switch (layer->type()) {
+    switch (layer->get_type()) {
       case LayerType::TileLayer:
-        ASSERT_FALSE(layer->parent().has_value());
+        ASSERT_FALSE(layer->get_parent().has_value());
         ASSERT_EQ(0u, root.global_index(layer->get_uuid()));
         break;
 
       case LayerType::ObjectLayer:
-        ASSERT_EQ(g1->get_uuid(), layer->parent());
+        ASSERT_EQ(g1->get_uuid(), layer->get_parent());
         ASSERT_EQ(2u, root.global_index(layer->get_uuid()));
         break;
 
       case LayerType::GroupLayer:
-        ASSERT_FALSE(layer->parent().has_value());
+        ASSERT_FALSE(layer->get_parent().has_value());
         ASSERT_EQ(1u, root.global_index(layer->get_uuid()));
         break;
     }
@@ -103,7 +103,7 @@ TEST(GroupLayer, Add)
   ASSERT_EQ(1u, root.size());
   ASSERT_EQ(0u, root.local_index(t1->get_uuid()));
   ASSERT_EQ(0u, root.global_index(t1->get_uuid()));
-  ASSERT_EQ(nothing, t1->parent());
+  ASSERT_EQ(nothing, t1->get_parent());
 
   auto t2 = std::make_shared<TileLayer>();
   root.add(t2);
@@ -113,7 +113,7 @@ TEST(GroupLayer, Add)
   ASSERT_EQ(1u, root.local_index(t2->get_uuid()));
   ASSERT_EQ(0u, root.global_index(t1->get_uuid()));
   ASSERT_EQ(1u, root.global_index(t2->get_uuid()));
-  ASSERT_EQ(nothing, t2->parent());
+  ASSERT_EQ(nothing, t2->get_parent());
 
   auto g1 = std::make_shared<GroupLayer>();
   auto t3 = std::make_shared<TileLayer>();
@@ -133,8 +133,8 @@ TEST(GroupLayer, Add)
   ASSERT_EQ(2u, root.global_index(g1->get_uuid()));
   ASSERT_EQ(3u, root.global_index(t3->get_uuid()));
 
-  ASSERT_EQ(nothing, g1->parent());
-  ASSERT_EQ(g1->get_uuid(), t3->parent());
+  ASSERT_EQ(nothing, g1->get_parent());
+  ASSERT_EQ(g1->get_uuid(), t3->get_parent());
 }
 
 TEST(GroupLayer, AddToParent)

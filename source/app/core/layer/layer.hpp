@@ -49,22 +49,22 @@ class Layer : public Context {
   virtual void set_meta_id(int32 id) = 0;
 
   /// Returns the layer opacity, in the range [0, 1].
-  [[nodiscard]] virtual auto opacity() const -> float = 0;
+  [[nodiscard]] virtual auto get_opacity() const -> float = 0;
 
   /// Indicates whether the layer is rendered.
-  [[nodiscard]] virtual auto visible() const -> bool = 0;
+  [[nodiscard]] virtual auto is_visible() const -> bool = 0;
 
   /// Clones the layer (with a different UUID).
   [[nodiscard]] virtual auto clone() const -> Shared<Layer> = 0;
 
   /// Returns the type tag of the layer instance.
-  [[nodiscard]] virtual auto type() const -> LayerType = 0;
+  [[nodiscard]] virtual auto get_type() const -> LayerType = 0;
 
   /// Returns the parent group layer ID, if there is one.
-  [[nodiscard]] virtual auto parent() const -> Maybe<UUID> = 0;
+  [[nodiscard]] virtual auto get_parent() const -> Maybe<UUID> = 0;
 
   /// Returns a human-readable identifier, if there is one.
-  [[nodiscard]] virtual auto meta_id() const -> Maybe<int32> = 0;
+  [[nodiscard]] virtual auto get_meta_id() const -> Maybe<int32> = 0;
 };
 
 }  // namespace tactile

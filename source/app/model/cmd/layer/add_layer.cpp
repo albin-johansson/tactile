@@ -49,7 +49,7 @@ void AddLayer::redo()
   auto& map = mDocument->get_map();
 
   if (mLayer) {
-    map.add_layer(mLayer, mLayer->parent());
+    map.add_layer(mLayer, mLayer->get_parent());
   }
   else {
     const auto active_layer_id = map.is_active_layer(LayerType::GroupLayer)

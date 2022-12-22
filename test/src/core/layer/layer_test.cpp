@@ -35,11 +35,11 @@ TYPED_TEST_SUITE(LayerTest, LayerTypes);
 TYPED_TEST(LayerTest, Defaults)
 {
   const TypeParam layer;
-  ASSERT_TRUE(layer.visible());
+  ASSERT_TRUE(layer.is_visible());
   ASSERT_FALSE(layer.get_uuid().is_nil());
-  ASSERT_FALSE(layer.parent().has_value());
-  ASSERT_FALSE(layer.meta_id().has_value());
-  ASSERT_EQ(1.0f, layer.opacity());
+  ASSERT_FALSE(layer.get_parent().has_value());
+  ASSERT_FALSE(layer.get_meta_id().has_value());
+  ASSERT_EQ(1.0f, layer.get_opacity());
 }
 
 TYPED_TEST(LayerTest, SetOpacity)
@@ -47,13 +47,13 @@ TYPED_TEST(LayerTest, SetOpacity)
   TypeParam layer;
 
   layer.set_opacity(0.4f);
-  ASSERT_EQ(0.4f, layer.opacity());
+  ASSERT_EQ(0.4f, layer.get_opacity());
 
   layer.set_opacity(-0.2f);
-  ASSERT_EQ(0.0f, layer.opacity());
+  ASSERT_EQ(0.0f, layer.get_opacity());
 
   layer.set_opacity(1.1f);
-  ASSERT_EQ(1.0f, layer.opacity());
+  ASSERT_EQ(1.0f, layer.get_opacity());
 }
 
 TYPED_TEST(LayerTest, SetVisible)
@@ -61,10 +61,10 @@ TYPED_TEST(LayerTest, SetVisible)
   TypeParam layer;
 
   layer.set_visible(false);
-  ASSERT_FALSE(layer.visible());
+  ASSERT_FALSE(layer.is_visible());
 
   layer.set_visible(true);
-  ASSERT_TRUE(layer.visible());
+  ASSERT_TRUE(layer.is_visible());
 }
 
 TYPED_TEST(LayerTest, Clone)
@@ -77,9 +77,9 @@ TYPED_TEST(LayerTest, Clone)
   const auto clone = source.clone();
   ASSERT_NE(source.get_uuid(), clone->get_uuid());
 
-  ASSERT_EQ(source.opacity(), clone->opacity());
-  ASSERT_EQ(source.parent(), clone->parent());
-  ASSERT_EQ(source.visible(), clone->visible());
+  ASSERT_EQ(source.get_opacity(), clone->get_opacity());
+  ASSERT_EQ(source.get_parent(), clone->get_parent());
+  ASSERT_EQ(source.is_visible(), clone->is_visible());
 }
 
 }  // namespace tactile::test

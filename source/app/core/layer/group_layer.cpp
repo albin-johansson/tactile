@@ -668,12 +668,12 @@ auto GroupLayer::find_group_layer(const UUID& id) const -> const GroupLayer*
   return visitor.found_layer();
 }
 
-auto GroupLayer::opacity() const -> float
+auto GroupLayer::get_opacity() const -> float
 {
   return mDelegate.get_opacity();
 }
 
-auto GroupLayer::visible() const -> bool
+auto GroupLayer::is_visible() const -> bool
 {
   return mDelegate.is_visible();
 }
@@ -705,12 +705,12 @@ auto GroupLayer::get_uuid() const -> const UUID&
   return mDelegate.get_ctx().get_uuid();
 }
 
-auto GroupLayer::parent() const -> Maybe<UUID>
+auto GroupLayer::get_parent() const -> Maybe<UUID>
 {
   return mDelegate.get_parent();
 }
 
-auto GroupLayer::meta_id() const -> Maybe<int32>
+auto GroupLayer::get_meta_id() const -> Maybe<int32>
 {
   return mDelegate.get_meta_id();
 }

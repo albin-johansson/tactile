@@ -149,12 +149,12 @@ auto ObjectLayer::object_at(const Float2& pos, const Float2& tile_size) const
   return nothing;
 }
 
-auto ObjectLayer::opacity() const -> float
+auto ObjectLayer::get_opacity() const -> float
 {
   return mDelegate.get_opacity();
 }
 
-auto ObjectLayer::visible() const -> bool
+auto ObjectLayer::is_visible() const -> bool
 {
   return mDelegate.is_visible();
 }
@@ -184,17 +184,17 @@ auto ObjectLayer::get_uuid() const -> const UUID&
   return mDelegate.get_ctx().get_uuid();
 }
 
-auto ObjectLayer::parent() const -> Maybe<UUID>
+auto ObjectLayer::get_parent() const -> Maybe<UUID>
 {
   return mDelegate.get_parent();
 }
 
-auto ObjectLayer::meta_id() const -> Maybe<int32>
+auto ObjectLayer::get_meta_id() const -> Maybe<int32>
 {
   return mDelegate.get_meta_id();
 }
 
-auto ObjectLayer::type() const -> LayerType
+auto ObjectLayer::get_type() const -> LayerType
 {
   return LayerType::ObjectLayer;
 }

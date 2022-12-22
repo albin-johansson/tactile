@@ -50,7 +50,7 @@ void DuplicateLayer::redo()
   auto& map = mDocument->get_map();
 
   if (mNewLayer) {
-    map.add_layer(mNewLayer, mNewLayer->parent());
+    map.add_layer(mNewLayer, mNewLayer->get_parent());
     map.invisible_root().set_index(mNewLayer->get_uuid(), mNewIndex.value());
   }
   else {

@@ -119,9 +119,9 @@ class GroupLayer final : public Layer {
   [[nodiscard]] auto find_group_layer(const UUID& id) -> GroupLayer*;
   [[nodiscard]] auto find_group_layer(const UUID& id) const -> const GroupLayer*;
 
-  [[nodiscard]] auto opacity() const -> float override;
+  [[nodiscard]] auto get_opacity() const -> float override;
 
-  [[nodiscard]] auto visible() const -> bool override;
+  [[nodiscard]] auto is_visible() const -> bool override;
 
   [[nodiscard]] auto clone() const -> Shared<Layer> override;
 
@@ -130,14 +130,17 @@ class GroupLayer final : public Layer {
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 
-  [[nodiscard]] auto parent() const -> Maybe<UUID> override;
+  [[nodiscard]] auto get_parent() const -> Maybe<UUID> override;
 
-  [[nodiscard]] auto meta_id() const -> Maybe<int32> override;
+  [[nodiscard]] auto get_meta_id() const -> Maybe<int32> override;
 
   [[nodiscard]] auto storage() -> LayerStorage& { return mLayers; }
   [[nodiscard]] auto storage() const -> const LayerStorage& { return mLayers; }
 
-  [[nodiscard]] auto type() const -> LayerType override { return LayerType::GroupLayer; }
+  [[nodiscard]] auto get_type() const -> LayerType override
+  {
+    return LayerType::GroupLayer;
+  }
 
  private:
   LayerDelegate mDelegate;

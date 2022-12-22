@@ -34,15 +34,15 @@ TEST(SetLayerOpacity, Constructor)
 TEST(SetLayerOpacity, RedoUndo)
 {
   auto layer = std::make_shared<TileLayer>();
-  ASSERT_EQ(1.0f, layer->opacity());
+  ASSERT_EQ(1.0f, layer->get_opacity());
 
   cmd::SetLayerOpacity cmd {layer, 0.8f};
 
   cmd.redo();
-  ASSERT_EQ(0.8f, layer->opacity());
+  ASSERT_EQ(0.8f, layer->get_opacity());
 
   cmd.undo();
-  ASSERT_EQ(1.0f, layer->opacity());
+  ASSERT_EQ(1.0f, layer->get_opacity());
 }
 
 TEST(SetLayerOpacity, MergeSupport)
@@ -57,10 +57,10 @@ TEST(SetLayerOpacity, MergeSupport)
   ASSERT_TRUE(a.merge_with(&c));
 
   a.redo();
-  ASSERT_EQ(0.4f, layer->opacity());
+  ASSERT_EQ(0.4f, layer->get_opacity());
 
   a.undo();
-  ASSERT_EQ(1.0f, layer->opacity());
+  ASSERT_EQ(1.0f, layer->get_opacity());
 }
 
 }  // namespace tactile::test
