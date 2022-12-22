@@ -19,33 +19,38 @@
 
 #pragma once
 
-#include "core/comp/component.hpp"
-#include "core/comp/component_base.hpp"
-#include "core/element.hpp"
-#include "core/type/string.hpp"
+#include <boost/uuid/uuid_hash.hpp>
+
+#include "core/component/component.hpp"
+#include "core/type/hash_map.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
 
-/// Represents the structure of a component type, providing attributes and default values.
-class ComponentDefinition final : public ComponentBase, public Element {
+/// Manages a set of components attached to a context.
+class ComponentBundle final {
  public:
-  explicit ComponentDefinition(const UUID& id = make_uuid());
+  void add(Component component);
 
-  /// Sets the unique name of the component definition.
-  void set_name(String name);
+  auto erase(const UUID& comp_id) -> Component;
 
-  /// Returns the (unique) name of the component type.
-  [[nodiscard]] auto name() const -> const String&;
+  [[nodiscard]] auto at(const UUID& comp_id) -> Component&;
+  [[nodiscard]] auto at(const UUID& comp_id) const -> const Component&;
 
-  [[nodiscard]] auto uuid() const -> const UUID& override;
+  [[nodiscard]] auto try_get(const UUID& comp_id) -> Component*;
 
-  /// Creates a new component using the component definition as a template.
-  [[nodiscard]] auto instantiate() const -> Component;
+  [[nodiscard]] auto contains(const UUID& comp_id) const -> bool;
+
+  [[nodiscard]] auto size() const -> usize;
+
+  [[nodiscard]] auto empty() const -> bool;
+
+  [[nodiscard]] auto begin() const noexcept { return mComps.begin(); }
+  [[nodiscard]] auto end() const noexcept { return mComps.end(); }
 
  private:
-  String mName;
+  HashMap<UUID, Component> mComps;
 };
 
 }  // namespace tactile

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/comp/component_base.hpp"
+#include "core/component/component_base.hpp"
 
 #include <gtest/gtest.h>
 

@@ -19,7 +19,7 @@
 
 #include "map_to_ir.hpp"
 
-#include "core/comp/component_index.hpp"
+#include "core/component/component_index.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object.hpp"
 #include "core/layer/object_layer.hpp"

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/comp/component.hpp"
+#include "core/component/component.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
 #include "core/uuid.hpp"

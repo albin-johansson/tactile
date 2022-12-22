@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/comp/component_bundle.hpp"
+#include "core/component/component_bundle.hpp"
 #include "core/ctx/property_bundle.hpp"
 #include "core/type/string.hpp"
 #include "core/uuid.hpp"

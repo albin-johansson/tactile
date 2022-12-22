@@ -19,23 +19,33 @@
 
 #pragma once
 
-#include "core/comp/component_base.hpp"
+#include "core/component/component.hpp"
+#include "core/component/component_base.hpp"
+#include "core/element.hpp"
+#include "core/type/string.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
 
-/// Represents an instance of a component definition.
-class Component final : public ComponentBase {
+/// Represents the structure of a component type, providing attributes and default values.
+class ComponentDefinition final : public ComponentBase, public Element {
  public:
-  /// Creates a component.
-  ///
-  /// \param definition_id the ID of a component definition.
-  /// \param attributes the default attribute values.
-  Component(const UUID& definition_id, AttributeMap attributes);
+  explicit ComponentDefinition(const UUID& id = make_uuid());
 
-  /// Returns the ID of the associated component definition type.
-  [[nodiscard]] auto definition_id() const -> const UUID&;
+  /// Sets the unique name of the component definition.
+  void set_name(String name);
+
+  /// Returns the (unique) name of the component type.
+  [[nodiscard]] auto name() const -> const String&;
+
+  [[nodiscard]] auto uuid() const -> const UUID& override;
+
+  /// Creates a new component using the component definition as a template.
+  [[nodiscard]] auto instantiate() const -> Component;
+
+ private:
+  String mName;
 };
 
 }  // namespace tactile

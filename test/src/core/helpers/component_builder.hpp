@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/attribute.hpp"
-#include "core/comp/component_index.hpp"
+#include "core/component/component_index.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/string.hpp"
 #include "core/uuid.hpp"

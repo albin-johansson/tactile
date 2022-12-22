@@ -21,8 +21,8 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/comp/component.hpp"
-#include "core/comp/component_definition.hpp"
+#include "core/component/component.hpp"
+#include "core/component/component_definition.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"

@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/comp/component_index.hpp"
+#include "core/component/component_index.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"

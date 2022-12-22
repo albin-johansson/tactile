@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/comp/component_definition.hpp"
+#include "core/component/component_definition.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
 #include "core/vocabulary.hpp"

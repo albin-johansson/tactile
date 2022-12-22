@@ -21,7 +21,7 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/comp/component_index.hpp"
+#include "core/component/component_index.hpp"
 #include "core/type/string.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

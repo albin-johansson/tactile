@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/comp/component_index.hpp"
+#include "core/component/component_index.hpp"
 #include "core/ctx/context_manager.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

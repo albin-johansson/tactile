@@ -19,38 +19,23 @@
 
 #pragma once
 
-#include <boost/uuid/uuid_hash.hpp>
-
-#include "core/comp/component.hpp"
-#include "core/type/hash_map.hpp"
+#include "core/component/component_base.hpp"
 #include "core/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
 
-/// Manages a set of components attached to a context.
-class ComponentBundle final {
+/// Represents an instance of a component definition.
+class Component final : public ComponentBase {
  public:
-  void add(Component component);
+  /// Creates a component.
+  ///
+  /// \param definition_id the ID of a component definition.
+  /// \param attributes the default attribute values.
+  Component(const UUID& definition_id, AttributeMap attributes);
 
-  auto erase(const UUID& comp_id) -> Component;
-
-  [[nodiscard]] auto at(const UUID& comp_id) -> Component&;
-  [[nodiscard]] auto at(const UUID& comp_id) const -> const Component&;
-
-  [[nodiscard]] auto try_get(const UUID& comp_id) -> Component*;
-
-  [[nodiscard]] auto contains(const UUID& comp_id) const -> bool;
-
-  [[nodiscard]] auto size() const -> usize;
-
-  [[nodiscard]] auto empty() const -> bool;
-
-  [[nodiscard]] auto begin() const noexcept { return mComps.begin(); }
-  [[nodiscard]] auto end() const noexcept { return mComps.end(); }
-
- private:
-  HashMap<UUID, Component> mComps;
+  /// Returns the ID of the associated component definition type.
+  [[nodiscard]] auto definition_id() const -> const UUID&;
 };
 
 }  // namespace tactile

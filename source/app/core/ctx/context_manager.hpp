@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/attribute.hpp"
-#include "core/comp/component.hpp"
+#include "core/component/component.hpp"
 #include "core/ctx/context.hpp"
 #include "core/type/fn.hpp"
 #include "core/type/hash_map.hpp"

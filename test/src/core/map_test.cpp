@@ -213,7 +213,7 @@ TEST(Map, FixTiles)
   const auto result = map->fix_tiles();
   const auto& previous = lookup_in(result, layer_id);
 
-  ASSERT_EQ(4, previous.size());
+  ASSERT_EQ(4u, previous.size());
   ASSERT_EQ(lookup_in(previous, TilePos {0, 0}), -1);
   ASSERT_EQ(lookup_in(previous, TilePos {2, 1}), tileset_ref.last_tile() + 1);
   ASSERT_EQ(lookup_in(previous, TilePos {3, 2}), tileset_ref.last_tile() + 934);
@@ -261,7 +261,7 @@ TEST(Map, AddLayer)
   auto g1 = std::make_shared<GroupLayer>();
 
   map.add_layer(t1);
-  ASSERT_EQ(1, root.size());
+  ASSERT_EQ(1u, root.size());
   ASSERT_NE(nullptr, root.as_tile_layer(t1->uuid()));
   ASSERT_EQ(nullptr, root.as_object_layer(o1->uuid()));
   ASSERT_FALSE(t1->parent().has_value());

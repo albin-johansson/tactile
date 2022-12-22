@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/comp/component_index.hpp"
+#include "core/component/component_index.hpp"
 #include "core/ctx/context_manager.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/path.hpp"

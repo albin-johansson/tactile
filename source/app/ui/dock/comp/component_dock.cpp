@@ -23,7 +23,7 @@
 #include <imgui.h>
 
 #include "component_view.hpp"
-#include "core/comp/component_index.hpp"
+#include "core/component/component_index.hpp"
 #include "core/ctx/context.hpp"
 #include "core/ctx/context_info.hpp"
 #include "core/ctx/context_manager.hpp"
