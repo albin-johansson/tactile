@@ -67,7 +67,7 @@ auto parse_map(const Path& path) -> ParseResult
     result.set_error(ParseError::Unknown);
     spdlog::error("Parser threw unhandled exception with message: '{}'\n{}",
                   e.what(),
-                  e.trace());
+                  e.get_trace());
   }
   catch (const std::exception& e) {
     result.set_error(ParseError::Unknown);
