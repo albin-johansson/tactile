@@ -23,7 +23,6 @@
 
 namespace tactile {
 
-/// Invoked whenever a menu action is triggered, i.e. a menu item is pressed.
-void dispatch_menu_action(MenuAction action);
+void install_menu_event_handler();
 
 }  // namespace tactile

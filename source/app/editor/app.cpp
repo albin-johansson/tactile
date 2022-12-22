@@ -54,6 +54,7 @@
 #include "model/cmd/commands.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
+#include "model/event/menu_events.hpp"
 #include "model/event/view_events.hpp"
 #include "model/model.hpp"
 
@@ -114,7 +115,7 @@ void App::on_update()
 void App::on_event(const cen::event_handler& handler)
 {
   if (const auto type = handler.raw_type(); type > SDL_USEREVENT) {
-    dispatch_menu_action(static_cast<MenuAction>(*type));
+    get_dispatcher().trigger(MenuItemEvent {static_cast<MenuAction>(*type)});
     return;
   }
 
@@ -136,6 +137,7 @@ void App::on_event(const cen::event_handler& handler)
 
 void App::subscribe_to_events()
 {
+  install_menu_event_handler();
   install_command_event_handler();
   install_document_event_handler();
   install_map_event_handler();

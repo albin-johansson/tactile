@@ -19,9 +19,11 @@
 
 #include "menu_item.hpp"
 
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "editor/handler/menu_event_handler.hpp"
+#include "editor/app_context.hpp"
+#include "model/event/menu_events.hpp"
 
 namespace tactile::ui {
 
@@ -29,7 +31,7 @@ void menu_item(const MenuAction action, const char* shortcut)
 {
   const auto& item = get_menu_item(action);
   if (ImGui::MenuItem(item.text.c_str(), shortcut, item.selected, item.enabled)) {
-    dispatch_menu_action(action);
+    get_dispatcher().enqueue<MenuItemEvent>(action);
   }
 }
 

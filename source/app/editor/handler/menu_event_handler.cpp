@@ -34,8 +34,9 @@
 #include "model/model.hpp"
 
 namespace tactile {
+namespace {
 
-void dispatch_menu_action(MenuAction action)
+void dispatch_menu_action(const MenuAction action)
 {
   const auto& model = get_model();
   auto& dispatcher = get_dispatcher();
@@ -238,6 +239,19 @@ void dispatch_menu_action(MenuAction action)
       ui::get_dialogs().credits.show();
       break;
   }
+}
+
+void on_menu_item_event(const MenuItemEvent event)
+{
+  dispatch_menu_action(event.action);
+}
+
+}  // namespace
+
+void install_menu_event_handler()
+{
+  auto& dispatcher = get_dispatcher();
+  dispatcher.sink<MenuItemEvent>().connect<&on_menu_item_event>();
 }
 
 }  // namespace tactile
