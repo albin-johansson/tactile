@@ -48,7 +48,7 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
   void sink_it_(const spdlog::details::log_msg& msg) override
   {
     const auto time = fmt::localtime(msg.time);
-    auto processed = fmt::format("{:%H:%M:%S} > {}", time, msg.payload);
+    auto processed = fmt::format("[{:%H:%M:%S}] {}", time, msg.payload);
     mHistory.push_back({msg.level, std::move(processed)});
   }
 
@@ -94,7 +94,7 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
   Deque<LogEntry> mHistory;
 };
 
-inline Shared<HistorySink> _history_sink;
+inline Shared<HistorySink> history_sink;
 
 }  // namespace
 
@@ -104,8 +104,9 @@ void init_logger()
 
   auto cs = std::make_shared<spdlog::sinks::stdout_color_sink_st>();
   auto fs = std::make_shared<spdlog::sinks::basic_file_sink_st>(path.string(), true);
-  _history_sink = std::make_shared<HistorySink>();
-  spdlog::sinks_init_list sinks {cs, fs, _history_sink};
+  history_sink = std::make_shared<HistorySink>();
+
+  const spdlog::sinks_init_list sinks {cs, fs, history_sink};
 
   auto logger = std::make_shared<spdlog::logger>("tactile", sinks);
   logger->set_pattern("%^[%L][%T.%f]%$ %v");
@@ -122,18 +123,18 @@ void init_logger()
 
 void clear_log_history()
 {
-  _history_sink->clear();
+  history_sink->clear();
 }
 
 auto get_log_entry(const LogLevel filter, const usize index)
     -> Pair<LogLevel, const String&>
 {
-  return _history_sink->get_entry(filter, index);
+  return history_sink->get_entry(filter, index);
 }
 
 auto log_size(const LogLevel filter) -> usize
 {
-  return _history_sink->count(filter);
+  return history_sink->count(filter);
 }
 
 }  // namespace tactile
