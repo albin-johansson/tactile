@@ -5,6 +5,7 @@ Checks: "-*,
 
          bugprone-*,
          -bugprone-easily-swappable-parameters,
+         -bugprone-narrowing-conversions,
 
          readability-*,
          readability-identifier-naming,
@@ -36,6 +37,7 @@ Checks: "-*,
          -cppcoreguidelines-avoid-goto,
          -cppcoreguidelines-avoid-c-arrays,
          -cppcoreguidelines-special-member-functions,
+         -cppcoreguidelines-narrowing-conversions,
 
          google-*,
          -google-build-using-namespace,
