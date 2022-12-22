@@ -41,6 +41,7 @@ Checks: "-*,
 
          google-*,
          -google-build-using-namespace,
+         -google-runtime-int,
 
          boost-*,
          darwin-*
