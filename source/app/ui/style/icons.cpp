@@ -79,7 +79,7 @@ auto get_icon(const ObjectType type) -> const char*
 auto get_tactile_icon() -> uint
 {
   TACTILE_ASSERT(tactile_icon != nullptr);
-  return tactile_icon->id();
+  return tactile_icon->get_id();
 }
 
 }  // namespace tactile::ui

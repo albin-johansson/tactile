@@ -128,7 +128,7 @@ void render_image(const Texture& texture,
                   const ImVec2& uv_max,
                   const uint8 opacity)
 {
-  ImGui::GetWindowDrawList()->AddImage(to_texture_id(texture.id()),
+  ImGui::GetWindowDrawList()->AddImage(to_texture_id(texture.get_id()),
                                        position,
                                        position + size,
                                        uv_min,

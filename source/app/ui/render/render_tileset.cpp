@@ -36,7 +36,7 @@ void render_tileset(Graphics& graphics, const TilesetDocument& document)
   const auto& texture = tileset.texture();
 
   const auto rendered_position = graphics.translate(ImVec2 {0, 0});
-  const auto rendered_size = from_vec(texture.size()) * graphics.info().ratio;
+  const auto rendered_size = from_vec(texture.get_size()) * graphics.info().ratio;
 
   render_image(texture, rendered_position, rendered_size);
 

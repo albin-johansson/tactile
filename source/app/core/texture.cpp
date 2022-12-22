@@ -34,32 +34,37 @@ Texture::Texture(const uint id, const Int2 size, Path path)
 
 Texture::~Texture() noexcept
 {
-  glDeleteTextures(1, &mId);
+  destroy();
 }
 
-auto Texture::id() const -> uint
+void Texture::destroy() noexcept
 {
-  return mId;
+  if (mId != 0) {
+    glDeleteTextures(1, &mId);
+  }
 }
 
-auto Texture::size() const -> const Int2&
+Texture::Texture(Texture&& other) noexcept
+    : mId {other.mId},
+      mSize {other.mSize},
+      mPath {std::move(other.mPath)}
 {
-  return mSize;
+  other.mId = 0;
 }
 
-auto Texture::width() const -> int32
+auto Texture::operator=(Texture&& other) noexcept -> Texture&
 {
-  return mSize.x;
-}
+  if (this != &other) {
+    destroy();
 
-auto Texture::height() const -> int32
-{
-  return mSize.y;
-}
+    mId = other.mId;
+    mSize = other.mSize;
+    mPath = std::move(other.mPath);
 
-auto Texture::path() const -> const Path&
-{
-  return mPath;
+    other.mId = 0;
+  }
+
+  return *this;
 }
 
 }  // namespace tactile

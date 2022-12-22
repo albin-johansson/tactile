@@ -49,9 +49,9 @@ struct Tileset::Data final {
       : context {id},
         texture {std::move(info.texture)},
         tile_size {info.tile_size},
-        row_count {texture->height() / tile_size.y},
-        column_count {texture->width() / tile_size.x},
-        uv_size {Float2 {tile_size} / Float2 {texture->size()}}
+        row_count {texture->get_size().y / tile_size.y},
+        column_count {texture->get_size().x / tile_size.x},
+        uv_size {Float2 {tile_size} / Float2 {texture->get_size()}}
   {
   }
 };

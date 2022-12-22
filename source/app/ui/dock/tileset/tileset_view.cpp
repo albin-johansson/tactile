@@ -47,7 +47,7 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
                             entt::dispatcher& dispatcher)
 {
   const auto& tileset = tileset_ref.view_tileset();
-  const Float2 texture_size = tileset.texture().size();
+  const Float2 texture_size = tileset.texture().get_size();
 
   const Float2 min_offset {viewport_size.x - texture_size.x,
                            viewport_size.y - texture_size.y};
@@ -114,7 +114,7 @@ void update_tileset_view(const DocumentModel& model,
   graphics.push_canvas_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
-  render_image(texture, position, from_vec(texture.size()));
+  render_image(texture, position, from_vec(texture.get_size()));
 
   const auto& selection = tileset_ref.get_selection();
   if (selection.has_value()) {

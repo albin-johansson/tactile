@@ -47,8 +47,8 @@ TEST(Tileset, Defaults)
 {
   const auto tileset = make_tileset();
   ASSERT_EQ(expected_tile_size, tileset.tile_size());
-  ASSERT_EQ(expected_texture_size, tileset.texture().size());
-  ASSERT_EQ(texture_path, tileset.texture().path());
+  ASSERT_EQ(expected_texture_size, tileset.texture().get_size());
+  ASSERT_EQ(texture_path, tileset.texture().get_path());
 }
 
 TEST(Tileset, SubscriptOperator)

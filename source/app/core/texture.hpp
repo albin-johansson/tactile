@@ -32,26 +32,27 @@ TACTILE_FWD_DECLARE_STRUCT(TextureHandle)
 class Texture final {
  public:
   TACTILE_DELETE_COPY(Texture);
-  TACTILE_DEFAULT_MOVE(Texture);
 
   Texture(uint id, Int2 size, Path path);
 
   ~Texture() noexcept;
 
-  [[nodiscard]] auto id() const -> uint;
+  Texture(Texture&& other) noexcept;
 
-  [[nodiscard]] auto size() const -> const Int2&;
+  auto operator=(Texture&& other) noexcept -> Texture&;
 
-  [[nodiscard]] auto width() const -> int32;
+  [[nodiscard]] auto get_id() const -> uint { return mId; }
 
-  [[nodiscard]] auto height() const -> int32;
+  [[nodiscard]] auto get_size() const -> Int2 { return mSize; }
 
-  [[nodiscard]] auto path() const -> const Path&;
+  [[nodiscard]] auto get_path() const -> const Path& { return mPath; }
 
  private:
-  uint mId;
-  Int2 mSize;
+  uint mId {};
+  Int2 mSize {};
   Path mPath;
+
+  void destroy() noexcept;
 };
 
 }  // namespace tactile
