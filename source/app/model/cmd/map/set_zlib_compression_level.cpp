@@ -23,9 +23,9 @@
 
 #include "core/layer/tile_format.hpp"
 #include "core/map.hpp"
+#include "debug/panic.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "misc/panic.hpp"
 
 namespace tactile::cmd {
 

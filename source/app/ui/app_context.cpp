@@ -22,7 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "cfg/configuration.hpp"
-#include "misc/panic.hpp"
+#include "debug/panic.hpp"
 #include "model/model.hpp"
 #include "widget_show_state.hpp"
 

@@ -26,7 +26,7 @@
 #include "core/layer/layer_visitor.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
-#include "misc/panic.hpp"
+#include "debug/panic.hpp"
 
 namespace tactile::test {
 

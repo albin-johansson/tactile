@@ -20,8 +20,8 @@
 #include "command_stack.hpp"
 
 #include "core/util/functional.hpp"
+#include "debug/assert.hpp"
 #include "io/proto/preferences.hpp"
-#include "misc/assert.hpp"
 
 namespace tactile {
 

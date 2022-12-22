@@ -25,10 +25,10 @@
 
 #include "core/type/hash_map.hpp"
 #include "core/util/assoc.hpp"
+#include "debug/panic.hpp"
 #include "io/lang/language_parser.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/strings.hpp"
-#include "misc/panic.hpp"
 
 namespace tactile {
 namespace {

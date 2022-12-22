@@ -25,8 +25,8 @@
 #include <imgui_impl_sdl.h>
 
 #include "app_context.hpp"
+#include "debug/panic.hpp"
 #include "imgui_context.hpp"
-#include "misc/panic.hpp"
 
 namespace tactile {
 

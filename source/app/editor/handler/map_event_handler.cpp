@@ -22,12 +22,12 @@
 #include <entt/signal/dispatcher.hpp>
 #include <spdlog/spdlog.h>
 
+#include "debug/assert.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/ir/map_from_ir.hpp"
 #include "io/map/parse/parse_map.hpp"
 #include "io/proto/history.hpp"
-#include "misc/assert.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/map_events.hpp"
 #include "model/model.hpp"

@@ -24,7 +24,7 @@
 #include <iterator>   // distance
 
 #include "core/vocabulary.hpp"
-#include "misc/panic.hpp"
+#include "debug/panic.hpp"
 
 namespace tactile {
 

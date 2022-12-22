@@ -24,7 +24,7 @@
 #include <fmt/format.h>
 
 #include "core/util/filesystem.hpp"
-#include "misc/panic.hpp"
+#include "debug/panic.hpp"
 
 namespace tactile::io {
 

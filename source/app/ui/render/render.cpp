@@ -23,7 +23,7 @@
 #include <numbers>  // pi_v
 
 #include "core/texture.hpp"
-#include "misc/assert.hpp"
+#include "debug/assert.hpp"
 #include "ui/textures.hpp"
 
 namespace tactile::ui {

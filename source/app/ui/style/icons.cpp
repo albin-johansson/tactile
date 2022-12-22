@@ -21,9 +21,9 @@
 
 #include "core/texture.hpp"
 #include "core/type/ptr.hpp"
+#include "debug/assert.hpp"
+#include "debug/panic.hpp"
 #include "io/directories.hpp"
-#include "misc/assert.hpp"
-#include "misc/panic.hpp"
 
 namespace tactile::ui {
 namespace {

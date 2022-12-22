@@ -25,7 +25,7 @@
 #include "core/type/hash_map.hpp"
 #include "core/type/maybe.hpp"
 #include "core/util/assoc.hpp"
-#include "misc/assert.hpp"
+#include "debug/assert.hpp"
 
 using namespace std::chrono_literals;
 

@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "misc/assert.hpp"
+#include "debug/assert.hpp"
 #include "scoped.hpp"
 #include "tooltips.hpp"
 #include "ui/style/alignment.hpp"

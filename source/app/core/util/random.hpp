@@ -24,7 +24,7 @@
 #include <type_traits>  // is_floating_point_v
 
 #include "core/vocabulary.hpp"
-#include "misc/assert.hpp"
+#include "debug/assert.hpp"
 
 namespace tactile {
 

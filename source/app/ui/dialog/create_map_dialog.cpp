@@ -22,10 +22,10 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "debug/assert.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "misc/assert.hpp"
 #include "model/event/map_events.hpp"
 #include "ui/style/alignment.hpp"
 

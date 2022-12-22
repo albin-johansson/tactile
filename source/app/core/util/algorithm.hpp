@@ -24,7 +24,7 @@
 #include <utility>    // forward
 
 #include "core/type/vec.hpp"
-#include "misc/panic.hpp"
+#include "debug/panic.hpp"
 
 namespace tactile {
 

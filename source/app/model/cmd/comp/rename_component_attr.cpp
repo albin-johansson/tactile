@@ -23,9 +23,9 @@
 
 #include "core/component/component_index.hpp"
 #include "core/context/context_manager.hpp"
+#include "debug/panic.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "misc/panic.hpp"
 #include "model/document/document.hpp"
 
 namespace tactile::cmd {

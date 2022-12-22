@@ -22,11 +22,11 @@
 #include <imgui.h>
 
 #include "core/type/maybe.hpp"
+#include "debug/logging.hpp"
+#include "debug/panic.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "misc/logging.hpp"
-#include "misc/panic.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/labels.hpp"
 #include "ui/widget/scoped.hpp"

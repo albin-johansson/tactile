@@ -22,13 +22,13 @@
 #include <spdlog/spdlog.h>
 
 #include "core/util/fmt.hpp"
+#include "debug/assert.hpp"
+#include "debug/profile.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/gd/godot_converter.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/emit/gd/godot_writer.hpp"
 #include "io/map/ir/map_to_ir.hpp"
-#include "misc/assert.hpp"
-#include "misc/profile.hpp"
 #include "model/document/map_document.hpp"
 
 namespace tactile::io {

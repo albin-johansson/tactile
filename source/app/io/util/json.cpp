@@ -22,9 +22,9 @@
 #include <iomanip>  // setw
 
 #include "core/util/filesystem.hpp"
+#include "debug/panic.hpp"
 #include "io/file.hpp"
 #include "io/proto/preferences.hpp"
-#include "misc/panic.hpp"
 
 namespace tactile {
 namespace {

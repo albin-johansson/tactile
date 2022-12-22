@@ -24,6 +24,7 @@
 
 #include "core/util/filesystem.hpp"
 #include "core/util/functional.hpp"
+#include "debug/panic.hpp"
 #include "io/file.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
@@ -31,7 +32,6 @@
 #include "io/proto/preferences.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/xml.hpp"
-#include "misc/panic.hpp"
 
 namespace tactile::io {
 namespace {

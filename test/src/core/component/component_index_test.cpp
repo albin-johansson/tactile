@@ -22,7 +22,7 @@
 #include <gtest/gtest.h>
 
 #include "core/component/component_definition.hpp"
-#include "misc/panic.hpp"
+#include "debug/panic.hpp"
 
 namespace tactile::test {
 

@@ -24,9 +24,9 @@
 
 #include "core/predef.hpp"
 #include "core/type/string.hpp"
+#include "debug/panic.hpp"
 #include "io/directories.hpp"
 #include "io/util/json.hpp"
-#include "misc/panic.hpp"
 #include "ui/style/icons.hpp"
 
 namespace tactile::io {

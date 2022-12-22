@@ -23,7 +23,7 @@
 #include "core/layer/tile_layer.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/util/functional.hpp"
-#include "misc/assert.hpp"
+#include "debug/assert.hpp"
 #include "model/document/map_document.hpp"
 #include "model/model.hpp"
 #include "model/tool/ellipse_tool.hpp"

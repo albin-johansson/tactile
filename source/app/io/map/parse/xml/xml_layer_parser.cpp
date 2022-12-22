@@ -26,11 +26,11 @@
 #include "core/type/string.hpp"
 #include "core/type/vec.hpp"
 #include "core/util/str.hpp"
+#include "debug/panic.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/xml.hpp"
-#include "misc/panic.hpp"
 
 namespace tactile::io {
 namespace {

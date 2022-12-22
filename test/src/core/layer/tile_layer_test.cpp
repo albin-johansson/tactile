@@ -25,7 +25,7 @@
 
 #include "core/tile/tile_pos.hpp"
 #include "core/util/functional.hpp"
-#include "misc/panic.hpp"
+#include "debug/panic.hpp"
 
 namespace tactile::test {
 

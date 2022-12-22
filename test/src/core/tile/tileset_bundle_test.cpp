@@ -22,8 +22,8 @@
 #include <gtest/gtest.h>
 
 #include "core/tile/tileset_info.hpp"
+#include "debug/panic.hpp"
 #include "io/load_texture.hpp"
-#include "misc/panic.hpp"
 
 namespace tactile::test {
 namespace {

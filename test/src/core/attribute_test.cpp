@@ -21,7 +21,7 @@
 
 #include <gtest/gtest.h>
 
-#include "misc/panic.hpp"
+#include "debug/panic.hpp"
 
 using namespace std::string_literals;
 

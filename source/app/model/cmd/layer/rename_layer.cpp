@@ -22,9 +22,9 @@
 #include <utility>  // move
 
 #include "core/layer/group_layer.hpp"
+#include "debug/panic.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "misc/panic.hpp"
 
 namespace tactile::cmd {
 

@@ -23,7 +23,7 @@
 #include <glm/common.hpp>
 
 #include "core/type/math.hpp"
-#include "misc/assert.hpp"
+#include "debug/assert.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/model.hpp"

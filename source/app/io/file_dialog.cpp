@@ -21,7 +21,7 @@
 
 #include <tinyfiledialogs.h>
 
-#include "misc/assert.hpp"
+#include "debug/assert.hpp"
 
 namespace tactile::io {
 namespace {

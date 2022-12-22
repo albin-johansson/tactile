@@ -19,7 +19,7 @@
 
 #include "dock_widget.hpp"
 
-#include "misc/panic.hpp"
+#include "debug/panic.hpp"
 #include "model/model.hpp"
 #include "ui/widget/scoped.hpp"
 

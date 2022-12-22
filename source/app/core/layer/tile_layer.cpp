@@ -25,8 +25,8 @@
 #include "core/type/queue.hpp"
 #include "core/util/functional.hpp"
 #include "core/util/numeric.hpp"
-#include "misc/assert.hpp"
-#include "misc/panic.hpp"
+#include "debug/assert.hpp"
+#include "debug/panic.hpp"
 
 namespace tactile {
 

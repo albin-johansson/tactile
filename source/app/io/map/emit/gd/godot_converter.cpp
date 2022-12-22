@@ -31,8 +31,8 @@
 #include "core/type/vec.hpp"
 #include "core/util/assoc.hpp"
 #include "core/util/functional.hpp"
+#include "debug/assert.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
-#include "misc/assert.hpp"
 
 namespace tactile::io {
 namespace {

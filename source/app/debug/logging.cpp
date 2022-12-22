@@ -31,8 +31,8 @@
 #include "core/predef.hpp"
 #include "core/type/deque.hpp"
 #include "core/type/ptr.hpp"
+#include "debug/panic.hpp"
 #include "io/directories.hpp"
-#include "misc/panic.hpp"
 
 namespace tactile {
 namespace {

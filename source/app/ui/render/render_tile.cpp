@@ -22,8 +22,8 @@
 #include "core/map.hpp"
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset_bundle.hpp"
+#include "debug/assert.hpp"
 #include "graphics.hpp"
-#include "misc/assert.hpp"
 #include "ui/conversions.hpp"
 
 namespace tactile::ui {

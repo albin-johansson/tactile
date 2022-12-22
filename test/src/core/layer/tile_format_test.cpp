@@ -23,7 +23,7 @@
 #include <zlib.h>
 #include <zstd.h>
 
-#include "misc/panic.hpp"
+#include "debug/panic.hpp"
 
 namespace tactile::test {
 

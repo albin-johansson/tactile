@@ -24,11 +24,11 @@
 #include <spdlog/spdlog.h>
 
 #include "core/util/fmt.hpp"
+#include "debug/panic.hpp"
+#include "debug/profile.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
-#include "misc/panic.hpp"
-#include "misc/profile.hpp"
 
 namespace tactile::io {
 

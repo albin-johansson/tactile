@@ -24,8 +24,8 @@
 
 #include "core/component/component_definition.hpp"
 #include "core/util/assoc.hpp"
-#include "misc/assert.hpp"
-#include "misc/panic.hpp"
+#include "debug/assert.hpp"
+#include "debug/panic.hpp"
 
 namespace tactile {
 

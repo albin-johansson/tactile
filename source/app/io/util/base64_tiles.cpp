@@ -28,8 +28,8 @@
 #include "core/tile/tile_matrix.hpp"
 #include "core/util/bit.hpp"
 #include "core/util/functional.hpp"
+#include "debug/panic.hpp"
 #include "io/compression.hpp"
-#include "misc/panic.hpp"
 
 using Base64 = cppcodec::base64_rfc4648;
 

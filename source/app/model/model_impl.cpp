@@ -22,8 +22,8 @@
 #include <utility>  // move
 
 #include "core/tile/tileset_bundle.hpp"
-#include "misc/assert.hpp"
-#include "misc/panic.hpp"
+#include "debug/assert.hpp"
+#include "debug/panic.hpp"
 #include "model/cmd/command_stack.hpp"
 #include "model/cmd/tileset/all.hpp"
 #include "model/document/map_document.hpp"
