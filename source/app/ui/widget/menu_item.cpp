@@ -22,8 +22,8 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "editor/app_context.hpp"
 #include "model/event/menu_events.hpp"
-#include "ui/app_context.hpp"
 
 namespace tactile::ui {
 

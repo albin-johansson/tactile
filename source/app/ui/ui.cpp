@@ -23,9 +23,9 @@
 #include <spdlog/spdlog.h>
 #include <ui/style/alignment.hpp>
 
-#include "app_context.hpp"
 #include "core/predef.hpp"
 #include "core/type/path.hpp"
+#include "editor/app_context.hpp"
 #include "io/directories.hpp"
 #include "io/file_dialog.hpp"
 #include "model/event/map_events.hpp"

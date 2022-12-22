@@ -27,9 +27,9 @@
 #include "core/util/fmt.hpp"
 #include "debug/logging.hpp"
 #include "debug/panic.hpp"
+#include "editor/app.hpp"
+#include "editor/app_context.hpp"
 #include "io/directories.hpp"
-#include "ui/app.hpp"
-#include "ui/app_context.hpp"
 
 namespace {
 

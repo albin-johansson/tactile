@@ -21,7 +21,7 @@
 
 #include <centurion/event.hpp>
 
-#include "loop.hpp"
+#include "editor/loop.hpp"
 
 namespace tactile {
 

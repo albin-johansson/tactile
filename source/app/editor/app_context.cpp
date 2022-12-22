@@ -24,7 +24,7 @@
 #include "cfg/configuration.hpp"
 #include "debug/panic.hpp"
 #include "model/model.hpp"
-#include "widget_show_state.hpp"
+#include "ui/widget_show_state.hpp"
 
 namespace tactile {
 namespace {

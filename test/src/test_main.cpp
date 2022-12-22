@@ -21,7 +21,7 @@
 
 #include "cfg/configuration.hpp"
 #include "debug/logging.hpp"
-#include "ui/app_context.hpp"
+#include "editor/app_context.hpp"
 
 auto main(int argc, char* argv[]) -> int
 {

@@ -21,10 +21,10 @@
 
 #include <entt/signal/dispatcher.hpp>
 
+#include "editor/app_context.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/model.hpp"
-#include "ui/app_context.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
 
 namespace tactile {

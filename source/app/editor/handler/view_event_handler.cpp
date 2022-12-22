@@ -24,11 +24,11 @@
 #include <imgui_internal.h>
 
 #include "debug/assert.hpp"
+#include "editor/app_context.hpp"
 #include "io/proto/preferences.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/view_events.hpp"
 #include "model/model.hpp"
-#include "ui/app_context.hpp"
 #include "ui/fonts.hpp"
 #include "ui/widget_show_state.hpp"
 

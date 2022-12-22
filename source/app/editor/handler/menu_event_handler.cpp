@@ -25,11 +25,11 @@
 #include <spdlog/spdlog.h>
 
 #include "core/util/filesystem.hpp"
+#include "editor/app_context.hpp"
 #include "editor/menu/menu.hpp"
 #include "io/proto/history.hpp"
 #include "model/event/all.hpp"
 #include "model/model.hpp"
-#include "ui/app_context.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
 #include "ui/ui.hpp"

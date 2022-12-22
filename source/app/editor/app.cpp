@@ -23,9 +23,9 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "app_context.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/tile/tileset_bundle.hpp"
+#include "editor/app_context.hpp"
 #include "editor/handler/command_event_handler.hpp"
 #include "editor/handler/component_event_handler.hpp"
 #include "editor/handler/document_event_handler.hpp"
@@ -40,7 +40,6 @@
 #include "editor/handler/viewport_event_handler.hpp"
 #include "editor/menu/menu.hpp"
 #include "editor/shortcut/shortcuts.hpp"
-#include "imgui_context.hpp"
 #include "io/load_texture.hpp"
 #include "io/proto/history.hpp"
 #include "io/proto/preferences.hpp"
@@ -51,11 +50,12 @@
 #include "model/event/menu_events.hpp"
 #include "model/event/view_events.hpp"
 #include "model/model.hpp"
-#include "ui.hpp"
 #include "ui/dialog/dialogs.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
+#include "ui/imgui_context.hpp"
 #include "ui/style/icons.hpp"
+#include "ui/ui.hpp"
 #include "ui/viewport/viewport_widget.hpp"
 
 namespace tactile {

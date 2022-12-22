@@ -21,11 +21,11 @@
 
 #include <imgui.h>
 
+#include "editor/app_context.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/model.hpp"
-#include "ui/app_context.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"

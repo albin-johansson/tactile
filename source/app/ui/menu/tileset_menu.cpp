@@ -19,10 +19,10 @@
 
 #include "tileset_menu.hpp"
 
+#include "editor/app_context.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/model.hpp"
-#include "ui/app_context.hpp"
 #include "ui/widget/menu_item.hpp"
 #include "ui/widget/scoped.hpp"
 

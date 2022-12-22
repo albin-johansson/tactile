@@ -25,12 +25,12 @@
 #include <spdlog/spdlog.h>
 
 #include "core/tile/tileset_bundle.hpp"
+#include "editor/app_context.hpp"
 #include "io/load_texture.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
-#include "ui/app_context.hpp"
 #include "ui/menu/map_menu.hpp"
 
 namespace tactile {

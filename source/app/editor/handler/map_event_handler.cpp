@@ -23,6 +23,7 @@
 #include <spdlog/spdlog.h>
 
 #include "debug/assert.hpp"
+#include "editor/app_context.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/ir/map_from_ir.hpp"
@@ -31,7 +32,6 @@
 #include "model/document/map_document.hpp"
 #include "model/event/map_events.hpp"
 #include "model/model.hpp"
-#include "ui/app_context.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
 #include "ui/menu/file_menu.hpp"

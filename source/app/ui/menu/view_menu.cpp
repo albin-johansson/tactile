@@ -22,12 +22,12 @@
 #include <imgui.h>
 
 #include "core/viewport.hpp"
+#include "editor/app_context.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/model.hpp"
-#include "ui/app_context.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/widget/menu_item.hpp"
 #include "ui/widget/scoped.hpp"

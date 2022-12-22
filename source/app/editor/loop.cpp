@@ -24,9 +24,9 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl.h>
 
-#include "app_context.hpp"
 #include "debug/panic.hpp"
-#include "imgui_context.hpp"
+#include "editor/app_context.hpp"
+#include "ui/imgui_context.hpp"
 
 namespace tactile {
 

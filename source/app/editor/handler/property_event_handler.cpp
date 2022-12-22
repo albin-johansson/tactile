@@ -22,10 +22,10 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "core/context/context_manager.hpp"
+#include "editor/app_context.hpp"
 #include "model/document/document.hpp"
 #include "model/event/property_events.hpp"
 #include "model/model.hpp"
-#include "ui/app_context.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
 
