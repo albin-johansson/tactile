@@ -26,6 +26,7 @@
 
 #include "core/util/filesystem.hpp"
 #include "editor/app_context.hpp"
+#include "editor/menu/menu.hpp"
 #include "editor/ui/dialog/dialog_state.hpp"
 #include "editor/ui/dialog/dialogs.hpp"
 #include "editor/ui/ui.hpp"
