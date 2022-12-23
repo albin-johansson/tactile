@@ -23,7 +23,6 @@
 #include <spdlog/spdlog.h>
 #include <ui/style/alignment.hpp>
 
-#include "core/predef.hpp"
 #include "core/type/path.hpp"
 #include "editor/app_context.hpp"
 #include "io/directories.hpp"
@@ -33,6 +32,7 @@
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
+#include "ui/dialog/godot_export_dialog.hpp"
 #include "ui/dock/comp/component_dock.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
@@ -105,8 +105,8 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
   dialogs.map_parse_error.update(model, dispatcher);
   dialogs.credits.update(model, dispatcher);
   dialogs.create_tileset.update(model, dispatcher);
-  dialogs.godot_export.update(model, dispatcher);
 
+  update_godot_export_dialog(dispatcher);
   update_about_dialog();
 
   if (ui_show_map_selector) {

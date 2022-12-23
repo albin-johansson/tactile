@@ -33,6 +33,7 @@
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
+#include "ui/dialog/godot_export_dialog.hpp"
 #include "ui/ui.hpp"
 
 namespace tactile {
@@ -211,7 +212,7 @@ void dispatch_menu_action(const MenuAction action)
       break;
 
     case MenuAction::ExportGodotScene:
-      ui::get_dialogs().godot_export.open();
+      ui::open_godot_export_dialog();
       break;
 
     case MenuAction::InspectTileset:

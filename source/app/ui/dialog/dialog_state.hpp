@@ -21,7 +21,6 @@
 
 #include "create_map_dialog.hpp"
 #include "credits_dialog.hpp"
-#include "godot_export_dialog.hpp"
 #include "map_parse_error_dialog.hpp"
 #include "resize_map_dialog.hpp"
 #include "settings_dialog.hpp"
@@ -47,7 +46,6 @@ struct DialogState final {
   CreateMapDialog create_map;
   ResizeMapDialog resize_map;
   MapParseErrorDialog map_parse_error;
-  GodotExportDialog godot_export;
 
   /* Layers */
   RenameLayerDialog rename_layer;

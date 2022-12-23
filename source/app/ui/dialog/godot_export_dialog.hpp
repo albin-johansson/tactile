@@ -19,32 +19,11 @@
 
 #pragma once
 
-#include "core/type/path.hpp"
-#include "core/type/string.hpp"
-#include "dialog.hpp"
+#include <entt/signal/fwd.hpp>
 
 namespace tactile::ui {
 
-class GodotExportDialog final : public Dialog {
- public:
-  GodotExportDialog();
-
-  void open();
-
- protected:
-  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
-
-  void on_accept(entt::dispatcher& dispatcher) override;
-
-  [[nodiscard]] auto is_current_input_valid(const DocumentModel& model) const
-      -> bool override;
-
- private:
-  Path mRootDir;
-  Path mMapDir;
-  Path mImageDir;
-  Path mTilesetDir;
-  int mPolygonPointCount {};
-};
+void open_godot_export_dialog();
+void update_godot_export_dialog(entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

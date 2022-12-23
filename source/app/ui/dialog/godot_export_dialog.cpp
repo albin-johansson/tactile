@@ -24,41 +24,32 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/type/path.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/map_events.hpp"
+#include "ui/dialog/dialog.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/input_widgets.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/tooltips.hpp"
 
 namespace tactile::ui {
+namespace {
 
-GodotExportDialog::GodotExportDialog()
-    : Dialog {"Export As Godot Scene"}
+inline constexpr int polygon_approx_count_default = 16;
+inline constexpr int polygon_approx_count_min = 4;
+inline constexpr int polygon_approx_count_max = 64;
+
+inline Path dialog_root_dir;
+inline Path dialog_map_dir;
+inline Path dialog_image_dir;
+inline Path dialog_tileset_dir;
+inline int dialog_polygon_point_count {};
+inline constinit bool show_dialog = false;
+
+void show_dialog_contents(const Strings& lang)
 {
-}
-
-void GodotExportDialog::open()
-{
-  mRootDir.clear();
-  mMapDir.clear();
-  mImageDir.clear();
-  mTilesetDir.clear();
-  mPolygonPointCount = 16;
-
-  const auto& lang = get_current_language();
-  set_title(lang.window.export_as_godot_scene);
-  set_accept_button_label(lang.misc.export_);
-  set_close_button_label(lang.misc.close);
-
-  make_visible();
-}
-
-void GodotExportDialog::on_update(const DocumentModel&, entt::dispatcher&)
-{
-  const auto& lang = get_current_language();
-
   const auto& root_label = lang.misc.godot_project_folder_label;
   const auto& map_label = lang.misc.godot_map_folder_label;
   const auto& image_label = lang.misc.godot_image_folder_label;
@@ -74,25 +65,25 @@ void GodotExportDialog::on_update(const DocumentModel&, entt::dispatcher&)
   lazy_tooltip("##RootDirTooltip", lang.tooltip.godot_project_folder.c_str());
 
   ImGui::SameLine(offset);
-  if (auto root_path = input_folder("##RootDir", mRootDir)) {
-    mRootDir = std::move(*root_path);
-    mMapDir = ".";
-    mImageDir = ".";
-    mTilesetDir = ".";
+  if (auto root_path = input_folder("##RootDir", dialog_root_dir)) {
+    dialog_root_dir = std::move(*root_path);
+    dialog_map_dir = ".";
+    dialog_image_dir = ".";
+    dialog_tileset_dir = ".";
   }
 
   ImGui::Separator();
 
   {
-    Disable when_root_is_unset {mRootDir.empty()};
+    const Disable when_root_is_unset {dialog_root_dir.empty()};
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(map_label.c_str());
     lazy_tooltip("##MapDirTooltip", lang.tooltip.godot_map_folder.c_str());
 
     ImGui::SameLine(offset);
-    if (const auto map_dir = input_folder("##MapDir", mMapDir)) {
-      mMapDir = fs::relative(*map_dir, mRootDir);
+    if (const auto map_dir = input_folder("##MapDir", dialog_map_dir)) {
+      dialog_map_dir = fs::relative(*map_dir, dialog_root_dir);
     }
 
     ImGui::AlignTextToFramePadding();
@@ -100,8 +91,8 @@ void GodotExportDialog::on_update(const DocumentModel&, entt::dispatcher&)
     lazy_tooltip("##ImageDirTooltip", lang.tooltip.godot_image_folder.c_str());
 
     ImGui::SameLine(offset);
-    if (const auto image_dir = input_folder("##ImageDir", mImageDir)) {
-      mImageDir = fs::relative(*image_dir, mRootDir);
+    if (const auto image_dir = input_folder("##ImageDir", dialog_image_dir)) {
+      dialog_image_dir = fs::relative(*image_dir, dialog_root_dir);
     }
 
     ImGui::AlignTextToFramePadding();
@@ -109,8 +100,8 @@ void GodotExportDialog::on_update(const DocumentModel&, entt::dispatcher&)
     lazy_tooltip("##TilesetPathTooltip", lang.tooltip.godot_tileset_folder.c_str());
 
     ImGui::SameLine(offset);
-    if (auto tileset_dir = input_folder("##TilesetPath", mTilesetDir)) {
-      mTilesetDir = fs::relative(*tileset_dir, mRootDir);
+    if (auto tileset_dir = input_folder("##TilesetPath", dialog_tileset_dir)) {
+      dialog_tileset_dir = fs::relative(*tileset_dir, dialog_root_dir);
     }
   }
 
@@ -121,24 +112,64 @@ void GodotExportDialog::on_update(const DocumentModel&, entt::dispatcher&)
   lazy_tooltip("##PolygonPointsTooltip", lang.tooltip.godot_polygon_points.c_str());
 
   ImGui::SameLine();
-  ImGui::SliderInt("##PolygonPoints", &mPolygonPointCount, 4, 64);
+  ImGui::SliderInt("##PolygonPoints",
+                   &dialog_polygon_point_count,
+                   polygon_approx_count_min,
+                   polygon_approx_count_max);
 }
 
-auto GodotExportDialog::is_current_input_valid(const DocumentModel&) const -> bool
-{
-  return !mRootDir.empty();
-}
-
-void GodotExportDialog::on_accept(entt::dispatcher& dispatcher)
+void on_dialog_accept(entt::dispatcher& dispatcher)
 {
   ExportAsGodotSceneEvent event {
-      .root_dir = std::move(mRootDir),
-      .map_dir = std::move(mMapDir),
-      .image_dir = std::move(mImageDir),
-      .tileset_dir = std::move(mTilesetDir),
-      .polygon_points = static_cast<usize>(mPolygonPointCount),
+      .root_dir = std::move(dialog_root_dir),
+      .map_dir = std::move(dialog_map_dir),
+      .image_dir = std::move(dialog_image_dir),
+      .tileset_dir = std::move(dialog_tileset_dir),
+      .polygon_points = static_cast<usize>(dialog_polygon_point_count),
   };
   dispatcher.enqueue<ExportAsGodotSceneEvent>(std::move(event));
+}
+
+}  // namespace
+
+void open_godot_export_dialog()
+{
+  dialog_root_dir.clear();
+  dialog_map_dir.clear();
+  dialog_image_dir.clear();
+  dialog_tileset_dir.clear();
+  dialog_polygon_point_count = polygon_approx_count_default;
+  show_dialog = true;
+}
+
+void update_godot_export_dialog(entt::dispatcher& dispatcher)
+{
+  const auto& lang = get_current_language();
+
+  DialogOptions options {
+      .title = lang.window.export_as_godot_scene.c_str(),
+      .close_label = lang.misc.close.c_str(),
+      .accept_label = lang.misc.export_.c_str(),
+  };
+
+  const bool is_input_valid = !dialog_root_dir.empty();
+  if (is_input_valid) {
+    options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
+  }
+
+  if (show_dialog) {
+    options.flags |= UI_DIALOG_FLAG_OPEN;
+    show_dialog = false;
+  }
+
+  DialogAction action {DialogAction::None};
+  if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
+    show_dialog_contents(lang);
+  }
+
+  if (action == DialogAction::Accept) {
+    on_dialog_accept(dispatcher);
+  }
 }
 
 }  // namespace tactile::ui
