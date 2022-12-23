@@ -13,7 +13,7 @@ namespace {
   bytes.reserve(42'000);
 
   for (usize i = 0, capacity = bytes.capacity(); i < capacity; ++i) {
-    bytes.push_back(static_cast<uint8>(next_random(+'a', +'z')));
+    bytes.push_back(static_cast<uint8>(next_random_u32(+'a', +'z')));
   }
 
   return bytes;

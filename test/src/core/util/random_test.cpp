@@ -19,7 +19,7 @@
 
 #include "core/util/random.hpp"
 
-#include <algorithm>  // generate_n, count
+#include <algorithm>  // generate, count
 
 #include <gtest/gtest.h>
 #include <spdlog/spdlog.h>
@@ -30,34 +30,34 @@ namespace tactile::test {
 
 TEST(Random, NextRandomInt)
 {
-  ASSERT_EQ(0, next_random(0, 0));
-  ASSERT_EQ(1, next_random(1, 1));
-  ASSERT_EQ(-1, next_random(-1, -1));
+  ASSERT_EQ(0, next_random_i32(0, 0));
+  ASSERT_EQ(1, next_random_i32(1, 1));
+  ASSERT_EQ(-1, next_random_i32(-1, -1));
 
-  const auto value = next_random(0, 100);
-  ASSERT_GE(value, 0);
-  ASSERT_LE(value, 100);
+  const auto value = next_random_u32(0u, 100u);
+  ASSERT_GE(value, 0u);
+  ASSERT_LE(value, 100u);
 }
 
 TEST(Random, NextRandomFloat)
 {
-  const auto value = next_random(0.0f, 1.0f);
+  const auto value = next_random_f32(0.0f, 1.0f);
   ASSERT_GE(value, 0.0f);
   ASSERT_LE(value, 1.0f);
 }
 
 TEST(Random, NextBool)
 {
-  Array<bool, 1'000> values {};
-  std::generate_n(values.begin(), 1'000, next_bool);
+  Array<bool, 1'000> values;
+  std::generate(values.begin(), values.end(), next_bool);
 
-  const auto n_true = std::count(values.begin(), values.end(), true);
-  const auto n_false = static_cast<diff_t>(values.size()) - n_true;
+  const auto true_count = std::count(values.begin(), values.end(), true);
+  const auto false_count = static_cast<diff_t>(values.size()) - true_count;
 
   spdlog::debug("[Random] {} next_bool invocations: {} true, {} false",
                 values.size(),
-                n_true,
-                n_false);
+                true_count,
+                false_count);
 }
 
 TEST(Random, NextFloat)
