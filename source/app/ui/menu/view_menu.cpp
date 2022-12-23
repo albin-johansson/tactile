@@ -23,6 +23,7 @@
 
 #include "core/viewport.hpp"
 #include "editor/app_context.hpp"
+#include "editor/menu/menu.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
@@ -82,6 +83,55 @@ void update_widgets_menu(const DocumentModel& model)
   }
 }
 
+void update_quick_theme_menu(const Strings& lang)
+{
+  if (const Menu theme_menu {lang.action.quick_theme.c_str()}; theme_menu.is_open()) {
+    auto& prefs = io::get_preferences();
+
+    auto theme_item = [&](const EditorTheme theme) {
+      const auto is_current = prefs.theme == theme;
+      if (ImGui::MenuItem(human_readable_name(theme).data(), nullptr, is_current)) {
+        prefs.theme = theme;
+        apply_theme(ImGui::GetStyle(), theme);
+      }
+    };
+
+    for (const auto theme: light_themes) {
+      theme_item(theme);
+    }
+
+    ImGui::Separator();
+
+    for (const auto theme: dark_themes) {
+      theme_item(theme);
+    }
+  }
+}
+
+void update_quick_lang_menu(const Strings& lang)
+{
+  if (Menu lang_menu {lang.action.quick_language.c_str()}; lang_menu.is_open()) {
+    auto& prefs = io::get_preferences();
+    if (ImGui::MenuItem("English (US)")) {
+      prefs.language = Lang::EN;
+      reset_layout();
+      menu_translate(get_current_language());
+    }
+
+    if (ImGui::MenuItem("English (GB)")) {
+      prefs.language = Lang::EN_GB;
+      reset_layout();
+      menu_translate(get_current_language());
+    }
+
+    if (ImGui::MenuItem("Svenska")) {
+      prefs.language = Lang::SV;
+      reset_layout();
+      menu_translate(get_current_language());
+    }
+  }
+}
+
 }  // namespace
 
 void update_view_menu()
@@ -93,82 +143,37 @@ void update_view_menu()
     update_widgets_menu(model);
 
     ImGui::Separator();
-
-    if (Menu theme_menu {lang.action.quick_theme.c_str()}; theme_menu.is_open()) {
-      auto& prefs = io::get_preferences();
-
-      auto theme_item = [&](const EditorTheme theme) {
-        const auto is_current = prefs.theme == theme;
-        if (ImGui::MenuItem(human_readable_name(theme).data(), nullptr, is_current)) {
-          prefs.theme = theme;
-          apply_theme(ImGui::GetStyle(), theme);
-        }
-      };
-
-      for (const auto theme: light_themes) {
-        theme_item(theme);
-      }
-
-      ImGui::Separator();
-
-      for (const auto theme: dark_themes) {
-        theme_item(theme);
-      }
-    }
+    update_quick_theme_menu(lang);
 
     ImGui::Separator();
-
-    if (Menu lang_menu {lang.action.quick_language.c_str()}; lang_menu.is_open()) {
-      auto& prefs = io::get_preferences();
-      if (ImGui::MenuItem("English (US)")) {
-        prefs.language = Lang::EN;
-        reset_layout();
-      }
-
-      if (ImGui::MenuItem("English (GB)")) {
-        prefs.language = Lang::EN_GB;
-        reset_layout();
-      }
-
-      if (ImGui::MenuItem("Svenska")) {
-        prefs.language = Lang::SV;
-        reset_layout();
-      }
-    }
+    update_quick_lang_menu(lang);
 
     ImGui::Separator();
-
     menu_item(MenuAction::CenterViewport, "Shift+Space");
 
     ImGui::Separator();
-
     menu_item(MenuAction::ToggleGrid, TACTILE_PRIMARY_MOD "+G");
 
     ImGui::Separator();
-
     menu_item(MenuAction::IncreaseZoom, TACTILE_PRIMARY_MOD "+Plus");
     menu_item(MenuAction::DecreaseZoom, TACTILE_PRIMARY_MOD "+Minus");
     menu_item(MenuAction::ResetZoom);
 
     ImGui::Separator();
-
     menu_item(MenuAction::IncreaseFontSize, TACTILE_PRIMARY_MOD "+Shift+Plus");
     menu_item(MenuAction::DecreaseFontSize, TACTILE_PRIMARY_MOD "+Shift+Minus");
     menu_item(MenuAction::ResetFontSize);
 
     ImGui::Separator();
-
     menu_item(MenuAction::PanUp, TACTILE_PRIMARY_MOD "+Shift+Up");
     menu_item(MenuAction::PanDown, TACTILE_PRIMARY_MOD "+Shift+Down");
     menu_item(MenuAction::PanRight, TACTILE_PRIMARY_MOD "+Shift+Right");
     menu_item(MenuAction::PanLeft, TACTILE_PRIMARY_MOD "+Shift+Left");
 
     ImGui::Separator();
-
     menu_item(MenuAction::HighlightLayer, "H");
 
     ImGui::Separator();
-
     menu_item(MenuAction::ToggleUi, "Tab");
   }
 }
