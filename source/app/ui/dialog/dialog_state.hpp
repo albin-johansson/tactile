@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "ui/dialog/create_map_dialog.hpp"
 #include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/comp/component_editor.hpp"
 #include "ui/dock/comp/dialogs/add_component_attr_dialog.hpp"
@@ -37,9 +36,6 @@ namespace tactile::ui {
 
 struct [[deprecated]] DialogState final {
   SettingsDialog settings;
-
-  // Maps
-  CreateMapDialog create_map;
 
   // Layers
   RenameLayerDialog rename_layer;

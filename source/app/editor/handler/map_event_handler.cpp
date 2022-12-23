@@ -32,6 +32,7 @@
 #include "model/document/map_document.hpp"
 #include "model/event/map_events.hpp"
 #include "model/model.hpp"
+#include "ui/dialog/create_map_dialog.hpp"
 #include "ui/dialog/map_parse_error_dialog.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"
 #include "ui/ui.hpp"
@@ -41,7 +42,7 @@ namespace {
 
 void on_show_new_map_dialog()
 {
-  ui::show_map_creation_dialog();
+  ui::open_create_map_dialog();
 }
 
 void on_show_open_map_dialog()

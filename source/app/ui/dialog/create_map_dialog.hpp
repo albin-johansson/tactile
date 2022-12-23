@@ -19,30 +19,11 @@
 
 #pragma once
 
-#include "core/type/math.hpp"
-#include "dialog.hpp"
+#include <entt/signal/fwd.hpp>
 
 namespace tactile::ui {
 
-/// Used to create new tilemaps.
-class CreateMapDialog final : public Dialog {
- public:
-  CreateMapDialog();
-
-  void show();
-
- protected:
-  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
-
-  void on_accept(entt::dispatcher& dispatcher) override;
-
-  [[nodiscard]] auto is_current_input_valid(const DocumentModel& model) const
-      -> bool override;
-
- private:
-  Int2 mTileSize {};
-  int mRows {};
-  int mColumns {};
-};
+void open_create_map_dialog();
+void update_create_map_dialog(entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

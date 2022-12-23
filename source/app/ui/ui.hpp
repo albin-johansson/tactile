@@ -33,8 +33,6 @@ namespace tactile::ui {
 /// Updates the state of the GUI.
 void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-void show_map_creation_dialog();
-
 void show_map_selector_dialog();
 
 void show_about_dear_imgui_dialog();

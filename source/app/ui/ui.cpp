@@ -30,6 +30,7 @@
 #include "model/event/map_events.hpp"
 #include "model/model.hpp"
 #include "ui/dialog/about_dialog.hpp"
+#include "ui/dialog/create_map_dialog.hpp"
 #include "ui/dialog/credits_dialog.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
@@ -103,9 +104,9 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
   auto& dialogs = get_dialogs();
   dialogs.settings.update(model, dispatcher);
   dialogs.component_editor.update(model, dispatcher);
-  dialogs.create_map.update(model, dispatcher);
   dialogs.create_tileset.update(model, dispatcher);
 
+  update_create_map_dialog(dispatcher);
   update_resize_map_dialog(dispatcher);
   update_godot_export_dialog(dispatcher);
   update_map_parse_error_dialog();
@@ -122,11 +123,6 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
   }
 
   check_for_missing_ini_file();
-}
-
-void show_map_creation_dialog()
-{
-  get_dialogs().create_map.show();
 }
 
 void show_map_selector_dialog()
