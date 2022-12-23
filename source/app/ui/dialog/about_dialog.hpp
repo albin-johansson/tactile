@@ -19,19 +19,9 @@
 
 #pragma once
 
-#include "dialog.hpp"
-
 namespace tactile::ui {
 
-/// Provides information about the application.
-class AboutDialog final : public Dialog {
- public:
-  AboutDialog();
-
-  void show();
-
- protected:
-  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
-};
+void open_about_dialog();
+void update_about_dialog();
 
 }  // namespace tactile::ui

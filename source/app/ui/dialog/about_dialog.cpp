@@ -25,48 +25,56 @@
 #include "core/predef.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "ui/dialog/dialog.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/buttons.hpp"
 
 namespace tactile::ui {
+namespace {
 
-AboutDialog::AboutDialog()
-    : Dialog {"About Tactile"}
+inline constinit bool show_dialog = false;
+
+}  // namespace
+
+void open_about_dialog()
 {
-  set_accept_button_label(nothing);
+  show_dialog = true;
 }
 
-void AboutDialog::show()
-{
-  const auto& lang = get_current_language();
-  set_title(lang.window.about_tactile);
-  set_close_button_label(lang.misc.close);
-  make_visible();
-}
-
-void AboutDialog::on_update(const DocumentModel&, entt::dispatcher&)
+void update_about_dialog()
 {
   const auto& lang = get_current_language();
 
-  ImGui::TextUnformatted("Tactile " TACTILE_VERSION_STRING
-                         " (C) Albin Johansson 2020-2022");
-  ImGui::Separator();
+  DialogOptions options {
+      .title = lang.window.about_tactile.c_str(),
+      .accept_label = lang.misc.close.c_str(),
+      .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
+  };
 
-  ImGui::TextUnformatted(lang.misc.license_info.c_str());
-
-  ImGui::Spacing();
-
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(lang.misc.repository_link.c_str());
-
-  ImGui::SameLine();
-  if (button(TAC_ICON_LINK, lang.tooltip.repository_link.c_str())) {
-    cen::open_url("https://www.github.com/albin-johansson/tactile");
+  if (show_dialog) {
+    options.flags |= UI_DIALOG_FLAG_OPEN;
+    show_dialog = false;
   }
 
-  ImGui::Spacing();
+  if (const ScopedDialog dialog {options}; dialog.was_opened()) {
+    ImGui::TextUnformatted("Tactile " TACTILE_VERSION_STRING
+                           " (C) Albin Johansson 2020-2022");
 
-  ImGui::TextUnformatted(lang.misc.font_awesome_credit.c_str());
+    ImGui::Separator();
+    ImGui::TextUnformatted(lang.misc.license_info.c_str());
+
+    ImGui::Spacing();
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted(lang.misc.repository_link.c_str());
+
+    ImGui::SameLine();
+    if (button(TAC_ICON_LINK, lang.tooltip.repository_link.c_str())) {
+      cen::open_url("https://www.github.com/albin-johansson/tactile");
+    }
+
+    ImGui::Spacing();
+    ImGui::TextUnformatted(lang.misc.font_awesome_credit.c_str());
+  }
 }
 
 }  // namespace tactile::ui

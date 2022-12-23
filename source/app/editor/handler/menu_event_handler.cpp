@@ -30,6 +30,7 @@
 #include "io/proto/history.hpp"
 #include "model/event/all.hpp"
 #include "model/model.hpp"
+#include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
 #include "ui/ui.hpp"
@@ -224,7 +225,7 @@ void dispatch_menu_action(const MenuAction action)
       break;
 
     case MenuAction::AboutTactile:
-      ui::get_dialogs().about.show();
+      ui::open_about_dialog();
       break;
 
     case MenuAction::AboutDearImGui:

@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "about_dialog.hpp"
 #include "create_map_dialog.hpp"
 #include "credits_dialog.hpp"
 #include "godot_export_dialog.hpp"
@@ -42,7 +41,6 @@ namespace tactile::ui {
 
 struct DialogState final {
   SettingsDialog settings;
-  AboutDialog about;
   CreditsDialog credits;
 
   /* Maps */

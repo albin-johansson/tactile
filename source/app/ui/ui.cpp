@@ -30,6 +30,7 @@
 #include "io/file_dialog.hpp"
 #include "model/event/map_events.hpp"
 #include "model/model.hpp"
+#include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
 #include "ui/dock/comp/component_dock.hpp"
@@ -53,7 +54,7 @@ void check_for_missing_ini_file()
 {
   const auto& ini = io::widget_ini_path();
   if (!fs::exists(ini)) {
-    spdlog::info("Resetting layout because imgui.ini file was missing...");
+    spdlog::warn("Resetting layout because 'imgui.ini' is missing...");
     reset_layout();
 
     const auto str = ini.string();
@@ -102,10 +103,11 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
   dialogs.create_map.update(model, dispatcher);
   dialogs.resize_map.update(model, dispatcher);
   dialogs.map_parse_error.update(model, dispatcher);
-  dialogs.about.update(model, dispatcher);
   dialogs.credits.update(model, dispatcher);
   dialogs.create_tileset.update(model, dispatcher);
   dialogs.godot_export.update(model, dispatcher);
+
+  update_about_dialog();
 
   if (ui_show_map_selector) {
     update_map_file_dialog(dispatcher);
