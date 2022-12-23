@@ -23,17 +23,15 @@
 
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "ui/dialog/dialog.hpp"
 #include "ui/widget/scoped.hpp"
 
 namespace tactile::ui {
 namespace {
 
-constexpr auto table_flags = ImGuiTableFlags_RowBg |      //
-                             ImGuiTableFlags_Borders |    //
-                             ImGuiTableFlags_Resizable |  //
-                             ImGuiTableFlags_SizingStretchProp;
+inline constinit bool show_dialog = false;
 
-void row(const char* lib, const char* license)
+void ui_dependency_row(const char* lib, const char* license)
 {
   ImGui::TableNextRow();
 
@@ -46,57 +44,64 @@ void row(const char* lib, const char* license)
 
 }  // namespace
 
-CreditsDialog::CreditsDialog()
-    : Dialog {"Credits"}
+void open_credits_dialog()
 {
-  set_accept_button_label(nothing);
+  show_dialog = true;
 }
 
-void CreditsDialog::show()
+void update_credits_dialog()
 {
   const auto& lang = get_current_language();
 
-  set_title(lang.window.credits);
-  set_close_button_label(lang.misc.close);
+  DialogOptions options {
+      .title = lang.window.credits.c_str(),
+      .close_label = lang.misc.close.c_str(),
+      .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
+  };
 
-  make_visible();
-}
+  if (show_dialog) {
+    options.flags |= UI_DIALOG_FLAG_OPEN;
+    show_dialog = false;
+  }
 
-void CreditsDialog::on_update(const DocumentModel&, entt::dispatcher&)
-{
-  const auto& lang = get_current_language();
+  if (const ScopedDialog dialog {options}; dialog.was_opened()) {
+    ImGui::TextUnformatted(lang.misc.credits_info.c_str());
+    ImGui::Spacing();
 
-  ImGui::TextUnformatted(lang.misc.credits_info.c_str());
-  ImGui::Spacing();
+    constexpr auto table_flags = ImGuiTableFlags_RowBg |      //
+                                 ImGuiTableFlags_Borders |    //
+                                 ImGuiTableFlags_Resizable |  //
+                                 ImGuiTableFlags_SizingStretchProp;
 
-  if (Table table {"##CreditsTable", 2, table_flags}; table.is_open()) {
-    ImGui::TableSetupColumn(lang.misc.library.c_str());
-    ImGui::TableSetupColumn(lang.misc.license.c_str());
-    ImGui::TableHeadersRow();
+    if (const Table table {"##CreditsTable", 2, table_flags}; table.is_open()) {
+      ImGui::TableSetupColumn(lang.misc.library.c_str());
+      ImGui::TableSetupColumn(lang.misc.license.c_str());
+      ImGui::TableHeadersRow();
 
-    row("Boost", "BSL-1.0");
-    row("Centurion", "MIT");
-    row("cppcodec", "MIT");
-    row("Dear ImGui", "MIT");
-    row("EnTT", "MIT");
-    row("fmt", "MIT");
-    row("GLEW", "BSD/MIT");
-    row("glm", "Happy Bunny/MIT");  // Yes, there is a Happy Bunny license
-    row("IconFontCppHeaders", "Zlib");
-    row("JSON for Modern C++", "MIT");
-    row("Magic Enum C++", "MIT");
-    row("Protocol Buffers", "BSD");
-    row("pugixml", "MIT");
-    row("SDL2", "Zlib");
-    row("SDL2_image", "Zlib");
-    row("spdlog", "MIT");
-    row("stb_image", "MIT");
-    row("tinyfiledialogs", "Zlib");
-    row("tl-expected", "CC0-1.0");
-    row("yaml-cpp", "MIT");
-    row("Zlib", "Zlib");
-    row("zstd", "BSD/GPLv2");
-    row("googletest", "BSD");
+      ui_dependency_row("Boost", "BSL-1.0");
+      ui_dependency_row("Centurion", "MIT");
+      ui_dependency_row("cppcodec", "MIT");
+      ui_dependency_row("Dear ImGui", "MIT");
+      ui_dependency_row("EnTT", "MIT");
+      ui_dependency_row("fmt", "MIT");
+      ui_dependency_row("GLEW", "BSD/MIT");
+      ui_dependency_row("glm", "Happy Bunny/MIT");  // Yes, there is a Happy Bunny license
+      ui_dependency_row("IconFontCppHeaders", "Zlib");
+      ui_dependency_row("JSON for Modern C++", "MIT");
+      ui_dependency_row("Magic Enum C++", "MIT");
+      ui_dependency_row("Protocol Buffers", "BSD");
+      ui_dependency_row("pugixml", "MIT");
+      ui_dependency_row("SDL2", "Zlib");
+      ui_dependency_row("SDL2_image", "Zlib");
+      ui_dependency_row("spdlog", "MIT");
+      ui_dependency_row("stb_image", "MIT");
+      ui_dependency_row("tinyfiledialogs", "Zlib");
+      ui_dependency_row("tl-expected", "CC0-1.0");
+      ui_dependency_row("yaml-cpp", "MIT");
+      ui_dependency_row("Zlib", "Zlib");
+      ui_dependency_row("zstd", "BSD/GPLv2");
+      ui_dependency_row("googletest", "BSD");
+    }
   }
 }
 

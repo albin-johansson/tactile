@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include "create_map_dialog.hpp"
-#include "credits_dialog.hpp"
-#include "map_parse_error_dialog.hpp"
-#include "resize_map_dialog.hpp"
-#include "settings_dialog.hpp"
+#include "ui/dialog/create_map_dialog.hpp"
+#include "ui/dialog/map_parse_error_dialog.hpp"
+#include "ui/dialog/resize_map_dialog.hpp"
+#include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/comp/component_editor.hpp"
 #include "ui/dock/comp/dialogs/add_component_attr_dialog.hpp"
 #include "ui/dock/comp/dialogs/define_component_dialog.hpp"
@@ -38,29 +37,28 @@
 
 namespace tactile::ui {
 
-struct DialogState final {
+struct [[deprecated]] DialogState final {
   SettingsDialog settings;
-  CreditsDialog credits;
 
-  /* Maps */
+  // Maps
   CreateMapDialog create_map;
   ResizeMapDialog resize_map;
   MapParseErrorDialog map_parse_error;
 
-  /* Layers */
+  // Layers
   RenameLayerDialog rename_layer;
 
-  /* Tilesets */
+  // Tilesets
   CreateTilesetDialog create_tileset;
 
-  /* Components */
+  // Components
   ComponentEditor component_editor;
   DefineComponentDialog define_component;
   AddComponentAttrDialog add_component_attr;
   RenameComponentDialog rename_component;
   RenameComponentAttributeDialog rename_component_attr;
 
-  /* Properties */
+  // Properties
   AddPropertyDialog add_property;
   RenamePropertyDialog rename_property;
   ChangePropertyTypeDialog change_property_type;

@@ -21,8 +21,6 @@
 
 #include <centurion/system.hpp>
 #include <entt/signal/dispatcher.hpp>
-#include <magic_enum.hpp>
-#include <spdlog/spdlog.h>
 
 #include "core/util/filesystem.hpp"
 #include "editor/app_context.hpp"
@@ -31,6 +29,7 @@
 #include "model/event/all.hpp"
 #include "model/model.hpp"
 #include "ui/dialog/about_dialog.hpp"
+#include "ui/dialog/credits_dialog.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
@@ -238,7 +237,7 @@ void dispatch_menu_action(const MenuAction action)
       break;
 
     case MenuAction::Credits:
-      ui::get_dialogs().credits.show();
+      ui::open_credits_dialog();
       break;
   }
 }

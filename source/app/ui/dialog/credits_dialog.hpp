@@ -19,19 +19,9 @@
 
 #pragma once
 
-#include "dialog.hpp"
-
 namespace tactile::ui {
 
-/// Provides information about third-party dependencies.
-class CreditsDialog final : public Dialog {
- public:
-  CreditsDialog();
-
-  void show();
-
- protected:
-  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
-};
+void open_credits_dialog();
+void update_credits_dialog();
 
 }  // namespace tactile::ui

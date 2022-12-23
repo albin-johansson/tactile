@@ -30,6 +30,7 @@
 #include "model/event/map_events.hpp"
 #include "model/model.hpp"
 #include "ui/dialog/about_dialog.hpp"
+#include "ui/dialog/credits_dialog.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
@@ -103,10 +104,10 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
   dialogs.create_map.update(model, dispatcher);
   dialogs.resize_map.update(model, dispatcher);
   dialogs.map_parse_error.update(model, dispatcher);
-  dialogs.credits.update(model, dispatcher);
   dialogs.create_tileset.update(model, dispatcher);
 
   update_godot_export_dialog(dispatcher);
+  update_credits_dialog();
   update_about_dialog();
 
   if (ui_show_map_selector) {
