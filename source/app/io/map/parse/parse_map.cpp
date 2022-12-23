@@ -21,11 +21,12 @@
 
 #include <exception>  // exception
 
+#include <fmt/chrono.h>
+#include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "core/util/fmt.hpp"
+#include "core/type/chrono.hpp"
 #include "debug/panic.hpp"
-#include "debug/profile.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
@@ -34,11 +35,11 @@ namespace tactile::io {
 
 auto parse_map(const Path& path) -> ParseResult
 {
-  spdlog::info("Parsing map {}", path);
+  spdlog::debug("Parsing map {}", path);
   ParseResult result;
 
   try {
-    TACTILE_PROFILE_START
+    const auto parse_start = Clock::now();
 
     if (!fs::exists(path)) {
       result.set_error(ParseError::MapDoesNotExist);
@@ -61,7 +62,10 @@ auto parse_map(const Path& path) -> ParseResult
       return result;
     }
 
-    TACTILE_PROFILE_END("Parsed map")
+    const auto parse_end = Clock::now();
+    const auto parse_duration = chrono::duration_cast<ms_t>(parse_end - parse_start);
+
+    spdlog::info("Parsed '{}' in {}", path.filename(), parse_duration);
   }
   catch (const TactileError& e) {
     result.set_error(ParseError::Unknown);

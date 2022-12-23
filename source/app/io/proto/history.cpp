@@ -65,7 +65,7 @@ void load_file_history()
 
     for (const auto& file: h.files()) {
       if (fs::exists(file)) {
-        spdlog::debug("Loaded '{}' from file history", file);
+        spdlog::trace("Loaded '{}' from file history", file);
         history_entries.push_back(file);
       }
     }
@@ -84,7 +84,7 @@ void save_file_history()
   }
 
   for (const auto& path: history_entries) {
-    spdlog::debug("Saving '{}' to file history", path);
+    spdlog::trace("Saving '{}' to file history", path);
     h.add_files(path);
   }
 

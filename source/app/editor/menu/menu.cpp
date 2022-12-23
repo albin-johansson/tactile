@@ -180,6 +180,8 @@ void update_menus()
 
 void menu_translate(const Strings& strings)
 {
+  spdlog::debug("Translating menus...");
+
   // File
   set_label(MenuAction::NewMap, strings.action.create_map);
   set_label(MenuAction::OpenMap, strings.action.open_map);

@@ -39,7 +39,7 @@ inline HashMap<Lang, Strings> languages;
 
 void load_languages()
 {
-  spdlog::info("Loading languages...");
+  spdlog::debug("Loading languages...");
 
   auto en = io::parse_language("assets/lang/en.json");
 
