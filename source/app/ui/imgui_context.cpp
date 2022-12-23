@@ -80,7 +80,7 @@ void ImGuiContext::reload_fonts()
   static const auto roboto = io::find_resource(font_roboto_path).string();
   static const auto fa = io::find_resource(font_fa_path).string();
 
-  spdlog::debug("[ImGuiContext] Reloading fonts...");
+  spdlog::debug("Reloading fonts...");
 
   auto& io = ImGui::GetIO();
   const auto scale = io.DisplayFramebufferScale;

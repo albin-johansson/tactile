@@ -105,7 +105,7 @@ void add_file_to_history(const Path& path)
   auto converted = convert_to_forward_slashes(path);
   if (std::find(history_entries.begin(), history_entries.end(), converted) ==
       history_entries.end()) {
-    spdlog::debug("Adding '{}' to history...", converted);
+    spdlog::trace("Adding '{}' to history...", converted);
     history_entries.push_back(std::move(converted));
 
     if (history_entries.size() > history_max_size) {
@@ -113,7 +113,7 @@ void add_file_to_history(const Path& path)
     }
   }
   else {
-    spdlog::debug("Did not add existing entry '{}' to file history", converted);
+    spdlog::trace("Did not add existing entry '{}' to file history", converted);
   }
 }
 
