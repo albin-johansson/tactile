@@ -19,43 +19,25 @@
 
 #pragma once
 
-#include <concepts>     // same_as
-#include <random>       // mt19937, uniform_real_distribution, uniform_int_distribution
-#include <type_traits>  // is_floating_point_v
-
 #include "core/vocabulary.hpp"
-#include "debug/assert.hpp"
 
 namespace tactile {
 
-using RandomEngine = std::mt19937;
+[[nodiscard]] auto next_random_u32(uint32 min, uint32 max) -> uint32;
+[[nodiscard]] auto next_random_u64(uint64 min, uint64 max) -> uint64;
 
-/// Creates a seeded pseudo-random number generation engine.
-[[nodiscard]] auto make_random_engine() -> RandomEngine;
+[[nodiscard]] auto next_random_i32(int32 min, int32 max) -> int32;
+[[nodiscard]] auto next_random_i64(int64 min, int64 max) -> int64;
 
-/// Returns a random value in the range [min, max].
-template <typename T>
-[[nodiscard]] auto next_random(const T min, const T max) -> T
-{
-  static_assert(!std::same_as<T, bool>);
-  static_assert(!std::same_as<T, char>);
-  static_assert(!std::same_as<T, uchar>);
-
-  TACTILE_ASSERT(min <= max);
-  thread_local static auto engine = make_random_engine();
-
-  if constexpr (std::is_floating_point_v<T>) {
-    return std::uniform_real_distribution<T> {min, max}(engine);
-  }
-  else {
-    return std::uniform_int_distribution<T> {min, max}(engine);
-  }
-}
+[[nodiscard]] auto next_random_f32(float32 min, float32 max) -> float32;
 
 /// Returns a random boolean value.
 [[nodiscard]] auto next_bool() -> bool;
 
 /// Returns a random float in the interval [0, 1].
-[[nodiscard]] auto next_float() -> float;
+[[nodiscard]] inline auto next_float() -> float
+{
+  return next_random_f32(0.0f, 1.0f);
+}
 
 }  // namespace tactile

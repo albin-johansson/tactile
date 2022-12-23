@@ -166,7 +166,8 @@ void StampTool::update_sequence_random(TileLayer& layer,
   const auto selection_size = selection.end - selection.begin;
 
   if (mLastChangedPos != cursor) {
-    const auto index = next_random(0, (selection_size.row() * selection_size.col()) - 1);
+    const auto index =
+        next_random_i32(0, (selection_size.row() * selection_size.col()) - 1);
     const auto selection_pos =
         selection.begin + TilePos::from_index(index, selection_size.col());
 
