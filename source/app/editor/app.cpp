@@ -51,6 +51,7 @@
 #include "model/event/view_events.hpp"
 #include "model/model.hpp"
 #include "ui/dialog/dialogs.hpp"
+#include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
 #include "ui/imgui_context.hpp"
@@ -150,7 +151,7 @@ void App::subscribe_to_events()
   install_component_event_handler();
   install_view_event_handler();
 
-  get_dispatcher().sink<ShowSettingsEvent>().connect<&ui::show_settings_dialog>();
+  get_dispatcher().sink<ShowSettingsEvent>().connect<&ui::open_settings_dialog>();
   get_dispatcher().sink<QuitEvent>().connect<&App::on_quit>(this);
 }
 

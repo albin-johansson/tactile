@@ -24,22 +24,18 @@
 #include "core/vocabulary.hpp"
 #include "io/map/parse/parse_error.hpp"
 
-namespace tactile {
-class DocumentModel;
-}  // namespace tactile
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 
 namespace tactile::ui {
 
 /// Updates the state of the GUI.
 void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-void show_map_selector_dialog();
+[[deprecated]] void show_map_selector_dialog();
 
 void show_about_dear_imgui_dialog();
 
-void show_settings_dialog();
-
-void show_component_editor();
+[[deprecated]] void show_component_editor();
 
 [[nodiscard]] auto is_editor_focused() -> bool;
 

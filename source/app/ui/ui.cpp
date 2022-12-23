@@ -37,6 +37,7 @@
 #include "ui/dialog/godot_export_dialog.hpp"
 #include "ui/dialog/map_parse_error_dialog.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"
+#include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/comp/component_dock.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
@@ -102,10 +103,10 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
   update_viewport_widget(model, dispatcher);
 
   auto& dialogs = get_dialogs();
-  dialogs.settings.update(model, dispatcher);
   dialogs.component_editor.update(model, dispatcher);
   dialogs.create_tileset.update(model, dispatcher);
 
+  update_settings_dialog(dispatcher);
   update_create_map_dialog(dispatcher);
   update_resize_map_dialog(dispatcher);
   update_godot_export_dialog(dispatcher);
@@ -133,11 +134,6 @@ void show_map_selector_dialog()
 void show_about_dear_imgui_dialog()
 {
   ui_show_about_imgui = true;
-}
-
-void show_settings_dialog()
-{
-  get_dialogs().settings.show();
 }
 
 void show_component_editor()

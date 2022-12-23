@@ -26,6 +26,7 @@
 #include "editor/app_context.hpp"
 #include "editor/menu/menu.hpp"
 #include "io/proto/history.hpp"
+#include "io/proto/preferences.hpp"
 #include "model/event/all.hpp"
 #include "model/model.hpp"
 #include "ui/dialog/about_dialog.hpp"
@@ -33,6 +34,7 @@
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
+#include "ui/dialog/settings_dialog.hpp"
 #include "ui/ui.hpp"
 
 namespace tactile {
@@ -119,7 +121,7 @@ void dispatch_menu_action(const MenuAction action)
       break;
 
     case MenuAction::OpenSettings:
-      ui::get_dialogs().settings.show();
+      ui::open_settings_dialog();
       break;
 
     case MenuAction::CenterViewport:

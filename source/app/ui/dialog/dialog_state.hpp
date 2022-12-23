@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/comp/component_editor.hpp"
 #include "ui/dock/comp/dialogs/add_component_attr_dialog.hpp"
 #include "ui/dock/comp/dialogs/define_component_dialog.hpp"
@@ -35,8 +34,6 @@
 namespace tactile::ui {
 
 struct [[deprecated]] DialogState final {
-  SettingsDialog settings;
-
   // Layers
   RenameLayerDialog rename_layer;
 

@@ -19,44 +19,11 @@
 
 #pragma once
 
-#include "core/vocabulary.hpp"
-#include "dialog.hpp"
-#include "io/proto/preferences.hpp"
+#include <entt/signal/fwd.hpp>
 
 namespace tactile::ui {
 
-/// Provides the interface for all available persistent settings.
-class SettingsDialog final : public Dialog {
- public:
-  TACTILE_DEFAULT_COPY(SettingsDialog);
-  TACTILE_DEFAULT_MOVE(SettingsDialog);
-
-  SettingsDialog();
-
-  ~SettingsDialog() override = default;
-
-  void show();
-
- protected:
-  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
-
-  void on_cancel() override;
-
-  void on_accept(entt::dispatcher& dispatcher) override;
-
-  void on_apply(entt::dispatcher& dispatcher) override;
-
- private:
-  io::PreferenceState mSnapshot;    /// Initial settings when the dialog was opened.
-  io::PreferenceState mUiSettings;  /// State of settings in the UI.
-
-  void apply_settings(entt::dispatcher& dispatcher);
-
-  void update_behavior_tab();
-
-  void update_appearance_tab();
-
-  void update_export_tab();
-};
+void open_settings_dialog();
+void update_settings_dialog(entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui
