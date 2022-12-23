@@ -124,8 +124,8 @@ void apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
 
   set(ImGuiCol_CheckMark, component_active);
 
-  set(ImGuiCol_SliderGrab, component);
-  set(ImGuiCol_SliderGrabActive, component_active);
+  set(ImGuiCol_SliderGrab, cfg.window);
+  set(ImGuiCol_SliderGrabActive, cfg.window);
 
   set(ImGuiCol_Header, component_active);
   set(ImGuiCol_HeaderHovered, component_hovered);
