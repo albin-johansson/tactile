@@ -34,6 +34,7 @@
 #include "model/model.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
+#include "ui/dialog/map_parse_error_dialog.hpp"
 #include "ui/menu/file_menu.hpp"
 #include "ui/ui.hpp"
 
@@ -79,7 +80,7 @@ void on_open_map(const OpenMapEvent& event)
       io::add_file_to_history(event.path);
     }
     else {
-      ui::get_dialogs().map_parse_error.show(result.error());
+      ui::open_map_parse_error_dialog(result.error());
     }
   }
 }

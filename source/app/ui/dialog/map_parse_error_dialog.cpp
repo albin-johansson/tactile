@@ -22,35 +22,45 @@
 #include <fmt/format.h>
 #include <imgui.h>
 
+#include "core/type/string.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
+namespace {
 
-MapParseErrorDialog::MapParseErrorDialog()
-    : Dialog {"Map Parse Error"}
+inline String dialog_cause;
+inline constinit bool show_dialog = false;
+
+}  // namespace
+
+void open_map_parse_error_dialog(const io::ParseError error)
 {
-  set_close_button_label(nothing);
+  const auto& lang = get_current_language();
+  dialog_cause = fmt::format("{}: {}", lang.misc.cause, io::to_cause(error));
+  show_dialog = true;
 }
 
-void MapParseErrorDialog::show(const io::ParseError error)
+void update_map_parse_error_dialog()
 {
   const auto& lang = get_current_language();
 
-  mError = error;
-  mCause = fmt::format("{}: {}", lang.misc.cause, io::to_cause(mError.value()));
+  DialogOptions options {
+      .title = lang.window.map_parse_error.c_str(),
+      .close_label = lang.misc.close.c_str(),
+      .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
+  };
 
-  set_title(lang.window.map_parse_error);
+  if (show_dialog) {
+    options.flags |= UI_DIALOG_FLAG_OPEN;
+    show_dialog = false;
+  }
 
-  make_visible();
-}
-
-void MapParseErrorDialog::on_update(const DocumentModel&, entt::dispatcher&)
-{
-  const auto& lang = get_current_language();
-
-  ImGui::TextUnformatted(lang.misc.map_parse_error.c_str());
-  ImGui::TextUnformatted(mCause.c_str());
+  if (const ScopedDialog dialog {options}; dialog.was_opened()) {
+    ImGui::TextUnformatted(lang.misc.map_parse_error.c_str());
+    ImGui::TextUnformatted(dialog_cause.c_str());
+  }
 }
 
 }  // namespace tactile::ui

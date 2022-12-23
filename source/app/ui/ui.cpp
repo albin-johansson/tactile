@@ -34,6 +34,7 @@
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
+#include "ui/dialog/map_parse_error_dialog.hpp"
 #include "ui/dock/comp/component_dock.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
@@ -103,10 +104,10 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
   dialogs.component_editor.update(model, dispatcher);
   dialogs.create_map.update(model, dispatcher);
   dialogs.resize_map.update(model, dispatcher);
-  dialogs.map_parse_error.update(model, dispatcher);
   dialogs.create_tileset.update(model, dispatcher);
 
   update_godot_export_dialog(dispatcher);
+  update_map_parse_error_dialog();
   update_credits_dialog();
   update_about_dialog();
 

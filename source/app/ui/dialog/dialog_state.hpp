@@ -20,7 +20,6 @@
 #pragma once
 
 #include "ui/dialog/create_map_dialog.hpp"
-#include "ui/dialog/map_parse_error_dialog.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"
 #include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/comp/component_editor.hpp"
@@ -43,7 +42,6 @@ struct [[deprecated]] DialogState final {
   // Maps
   CreateMapDialog create_map;
   ResizeMapDialog resize_map;
-  MapParseErrorDialog map_parse_error;
 
   // Layers
   RenameLayerDialog rename_layer;

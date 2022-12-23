@@ -19,26 +19,11 @@
 
 #pragma once
 
-#include "core/type/maybe.hpp"
-#include "core/type/string.hpp"
-#include "dialog.hpp"
 #include "io/map/parse/parse_error.hpp"
 
 namespace tactile::ui {
 
-/// Provides information about a failed attempt to parse a map.
-class MapParseErrorDialog final : public Dialog {
- public:
-  MapParseErrorDialog();
-
-  void show(io::ParseError error);
-
- protected:
-  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
-
- private:
-  Maybe<io::ParseError> mError;
-  String mCause;
-};
+void open_map_parse_error_dialog(io::ParseError error);
+void update_map_parse_error_dialog();
 
 }  // namespace tactile::ui
