@@ -32,10 +32,8 @@
 #include "model/document/map_document.hpp"
 #include "model/event/map_events.hpp"
 #include "model/model.hpp"
-#include "ui/dialog/dialog_state.hpp"
-#include "ui/dialog/dialogs.hpp"
 #include "ui/dialog/map_parse_error_dialog.hpp"
-#include "ui/menu/file_menu.hpp"
+#include "ui/dialog/resize_map_dialog.hpp"
 #include "ui/ui.hpp"
 
 namespace tactile {
@@ -89,7 +87,7 @@ void on_show_resize_map_dialog()
 {
   if (auto* document = get_model().active_map()) {
     const auto& map = document->get_map();
-    ui::get_dialogs().resize_map.show(map.row_count(), map.column_count());
+    ui::open_resize_map_dialog(map.row_count(), map.column_count());
   }
 }
 

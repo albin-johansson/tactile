@@ -19,31 +19,13 @@
 
 #pragma once
 
+#include <entt/signal/fwd.hpp>
+
 #include "core/vocabulary.hpp"
-#include "dialog.hpp"
 
 namespace tactile::ui {
 
-/// Used to change the dimensions of a tilemap.
-class ResizeMapDialog final : public Dialog {
- public:
-  TACTILE_DEFAULT_COPY(ResizeMapDialog);
-  TACTILE_DEFAULT_MOVE(ResizeMapDialog);
-
-  ResizeMapDialog();
-
-  ~ResizeMapDialog() override = default;
-
-  void show(usize nCurrentRows, usize nCurrentColumns);
-
- protected:
-  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
-
-  void on_accept(entt::dispatcher& dispatcher) override;
-
- private:
-  usize mRows {};
-  usize mColumns {};
-};
+void open_resize_map_dialog(usize current_row_count, usize current_column_count);
+void update_resize_map_dialog(entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

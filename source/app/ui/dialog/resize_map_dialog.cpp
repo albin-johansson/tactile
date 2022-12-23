@@ -26,52 +26,64 @@
 #include "lang/strings.hpp"
 #include "model/event/map_events.hpp"
 #include "ui/constants.hpp"
+#include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
+namespace {
 
-ResizeMapDialog::ResizeMapDialog()
-    : Dialog {"Resize Map"}
+inline constinit usize dialog_row_count = 0;
+inline constinit usize dialog_column_count = 0;
+inline constinit bool show_dialog = false;
+
+}  // namespace
+
+void open_resize_map_dialog(const usize current_row_count,
+                            const usize current_column_count)
 {
+  dialog_row_count = current_row_count;
+  dialog_column_count = current_column_count;
+  show_dialog = true;
 }
 
-void ResizeMapDialog::show(usize nCurrentRows, usize nCurrentColumns)
+void update_resize_map_dialog(entt::dispatcher& dispatcher)
 {
-  mRows = nCurrentRows;
-  mColumns = nCurrentColumns;
-
   const auto& lang = get_current_language();
-  set_title(lang.window.resize_map);
 
-  make_visible();
-}
+  DialogOptions options {
+      .title = lang.window.resize_map.c_str(),
+      .close_label = lang.misc.close.c_str(),
+      .accept_label = lang.misc.ok.c_str(),
+      .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
+  };
 
-void ResizeMapDialog::on_update(const DocumentModel&, entt::dispatcher&)
-{
-  const auto& lang = get_current_language();
+  if (show_dialog) {
+    options.flags |= UI_DIALOG_FLAG_OPEN;
+    show_dialog = false;
+  }
 
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(lang.misc.rows.c_str());
+  DialogAction action {DialogAction::None};
+  if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
+    auto rows = static_cast<int>(dialog_row_count);
+    auto cols = static_cast<int>(dialog_column_count);
 
-  ImGui::SameLine();
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted(lang.misc.rows.c_str());
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(-min_float);
+    ImGui::DragInt("##Rows", &rows, 1.0f, 1, 10'000);
 
-  auto rows = static_cast<int>(mRows);
-  ImGui::SetNextItemWidth(-min_float);
-  ImGui::DragInt("##Rows", &rows, 1.0f, 1, 10'000);
-  mRows = static_cast<usize>(rows);
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted(lang.misc.columns.c_str());
+    ImGui::SameLine();
+    ImGui::DragInt("##Columns", &cols, 1.0f, 1, 10'000);
 
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(lang.misc.columns.c_str());
+    dialog_row_count = static_cast<usize>(rows);
+    dialog_column_count = static_cast<usize>(cols);
+  }
 
-  ImGui::SameLine();
-
-  auto cols = static_cast<int>(mColumns);
-  ImGui::DragInt("##Columns", &cols, 1.0f, 1, 10'000);
-  mColumns = static_cast<usize>(cols);
-}
-
-void ResizeMapDialog::on_accept(entt::dispatcher& dispatcher)
-{
-  dispatcher.enqueue<ResizeMapEvent>(mRows, mColumns);
+  if (action == DialogAction::Accept) {
+    dispatcher.enqueue<ResizeMapEvent>(dialog_row_count, dialog_column_count);
+  }
 }
 
 }  // namespace tactile::ui
