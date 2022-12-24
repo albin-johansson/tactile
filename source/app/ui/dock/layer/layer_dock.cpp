@@ -34,8 +34,7 @@
 #include "model/event/layer_events.hpp"
 #include "model/model.hpp"
 #include "ui/constants.hpp"
-#include "ui/dialog/dialog_state.hpp"
-#include "ui/dialog/dialogs.hpp"
+#include "ui/dock/layer/dialogs/rename_layer_dialog.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/buttons.hpp"
@@ -59,7 +58,7 @@ void update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatche
   const auto active_layer_id = map.active_layer_id();
   const auto has_active_layer = active_layer_id.has_value();
 
-  Group group;
+  const Group group;
 
   if (ui_icon_button(TAC_ICON_ADD, lang.tooltip.add_new_layer.c_str())) {
     add_layer_context_menu.show();
@@ -96,20 +95,17 @@ void update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatche
 
 void update_rename_dialog(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  auto& dialogs = get_dialogs();
-
   if (rename_target_id.has_value()) {
     const auto target_layer_id = *rename_target_id;
 
-    const auto& document = model.require_active_map();
-    const auto& map = document.get_map();
+    const auto& map = model.require_active_map().get_map();
     const auto& layer = map.invisible_root().get_layer(target_layer_id);
 
-    dialogs.rename_layer.show(target_layer_id, layer.get_ctx().name());
+    open_rename_layer_dialog(target_layer_id, layer.get_ctx().name());
     rename_target_id.reset();
   }
 
-  dialogs.rename_layer.update(model, dispatcher);
+  update_rename_layer_dialog(dispatcher);
 }
 
 void update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
@@ -117,7 +113,7 @@ void update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
   update_side_buttons(model, dispatcher);
 
   ImGui::SameLine();
-  Group group;
+  const Group group;
 
   const auto& document = model.require_active_map();
   const auto& root = document.get_map().invisible_root();
@@ -130,7 +126,7 @@ void update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
   }
   else {
     const ImVec2 size {-min_float, -min_float};
-    if (ListBox list {"##LayerTreeNode", size}; list.is_open()) {
+    if (const ListBox list {"##LayerTreeNode", size}; list.is_open()) {
       root.each([&](const Layer* layer) {
         if (!layer->get_parent().has_value()) {
           layer_selectable(document, *layer, dispatcher);
@@ -156,9 +152,9 @@ void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 
   const auto& lang = get_current_language();
 
-  Window dock {lang.window.layer_dock.c_str(),
-               ImGuiWindowFlags_NoCollapse,
-               &prefs.show_layer_dock};
+  const Window dock {lang.window.layer_dock.c_str(),
+                     ImGuiWindowFlags_NoCollapse,
+                     &prefs.show_layer_dock};
   is_focused = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {

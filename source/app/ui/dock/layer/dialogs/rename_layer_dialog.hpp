@@ -19,28 +19,14 @@
 
 #pragma once
 
-#include "core/type/maybe.hpp"
+#include <entt/signal/fwd.hpp>
+
 #include "core/type/uuid.hpp"
-#include "ui/dialog/string_input_dialog.hpp"
+#include "core/type/string.hpp"
 
 namespace tactile::ui {
 
-/// Used to change the name of an existing layer.
-class RenameLayerDialog final : public StringInputDialog {
- public:
-  RenameLayerDialog();
-
-  void show(const UUID& layerId, String oldName);
-
- protected:
-  void on_accept(entt::dispatcher& dispatcher) override;
-
-  [[nodiscard]] auto validate(const DocumentModel& model, StringView input) const
-      -> bool override;
-
- private:
-  Maybe<UUID> mTargetId;
-  Maybe<String> mOldName;
-};
+void open_rename_layer_dialog(const UUID& layer_id, String current_name);
+void update_rename_layer_dialog(entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

@@ -22,38 +22,70 @@
 #include <utility>  // move
 
 #include <entt/signal/dispatcher.hpp>
+#include <imgui.h>
 
+#include "core/type/maybe.hpp"
+#include "core/util/string_buffer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/layer_events.hpp"
+#include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
+namespace {
 
-RenameLayerDialog::RenameLayerDialog()
-    : StringInputDialog {"Rename Layer"}
+inline Maybe<UUID> dialog_layer_id;
+inline String dialog_old_name;
+inline StringBuffer dialog_name_buffer;
+inline constinit bool open_dialog = false;
+
+}  // namespace
+
+void open_rename_layer_dialog(const UUID& layer_id, String current_name)
 {
+  dialog_layer_id = layer_id;
+  dialog_old_name = std::move(current_name);
+  dialog_name_buffer = dialog_old_name;
+  open_dialog = true;
 }
 
-void RenameLayerDialog::show(const UUID& layerId, String oldName)
+void update_rename_layer_dialog(entt::dispatcher& dispatcher)
 {
-  mTargetId = layerId;
-  mOldName = std::move(oldName);
-
   const auto& lang = get_current_language();
-  set_title(lang.window.rename_layer);
-  set_accept_button_label(lang.misc.rename);
 
-  StringInputDialog::show(*mOldName);
-}
+  DialogOptions options {
+      .title = lang.window.rename_layer.c_str(),
+      .close_label = lang.misc.close.c_str(),
+      .accept_label = lang.misc.rename.c_str(),
+  };
 
-void RenameLayerDialog::on_accept(entt::dispatcher& dispatcher)
-{
-  dispatcher.enqueue<RenameLayerEvent>(mTargetId.value(), String {current_input()});
-}
+  const bool should_acquire_focus = open_dialog;
 
-auto RenameLayerDialog::validate(const DocumentModel&, StringView input) const -> bool
-{
-  return !input.empty() && mOldName != input;
+  if (open_dialog) {
+    options.flags |= UI_DIALOG_FLAG_OPEN;
+    open_dialog = false;
+  }
+
+  if (auto new_name = dialog_name_buffer.as_string_view();
+      !new_name.empty() && new_name != dialog_old_name) {
+    options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
+  }
+
+  DialogAction action {DialogAction::None};
+  if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
+    if (should_acquire_focus) {
+      ImGui::SetKeyboardFocusHere();
+    }
+    ImGui::InputTextWithHint("##Input",
+                             "",
+                             dialog_name_buffer.data(),
+                             sizeof dialog_name_buffer);
+  }
+
+  if (action == DialogAction::Accept) {
+    dispatcher.enqueue<RenameLayerEvent>(dialog_layer_id.value(),
+                                         dialog_name_buffer.as_string());
+  }
 }
 
 }  // namespace tactile::ui
