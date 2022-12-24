@@ -39,10 +39,9 @@
 #include "ui/dialog/dialogs.hpp"
 #include "ui/dock/property/dialogs/property_type_combo.hpp"
 #include "ui/style/icons.hpp"
-#include "ui/widget/buttons.hpp"
 #include "ui/widget/input_widgets.hpp"
-#include "ui/widget/labels.hpp"
 #include "ui/widget/scoped.hpp"
+#include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
 

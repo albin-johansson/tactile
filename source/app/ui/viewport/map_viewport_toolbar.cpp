@@ -34,8 +34,8 @@
 #include "model/model.hpp"
 #include "model/tool/tool_manager.hpp"
 #include "ui/style/icons.hpp"
-#include "ui/widget/buttons.hpp"
 #include "ui/widget/scoped.hpp"
+#include "ui/widget/widgets.hpp"
 #include "ui/widget/windows.hpp"
 
 namespace tactile::ui {

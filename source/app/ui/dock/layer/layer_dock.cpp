@@ -37,9 +37,8 @@
 #include "ui/dock/layer/dialogs/rename_layer_dialog.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
-#include "ui/widget/buttons.hpp"
-#include "ui/widget/labels.hpp"
 #include "ui/widget/scoped.hpp"
+#include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
 namespace {

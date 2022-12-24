@@ -255,7 +255,6 @@ void menu_set_enabled(const MenuAction action, const bool enabled)
 void menu_set_selected(const MenuAction action, const bool selected)
 {
   items[action].selected = selected;
-
 }
 
 auto get_menu_item(const MenuAction action) -> const MenuItem&

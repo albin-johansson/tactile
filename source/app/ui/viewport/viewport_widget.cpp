@@ -37,8 +37,8 @@
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/textures.hpp"
-#include "ui/widget/buttons.hpp"
 #include "ui/widget/scoped.hpp"
+#include "ui/widget/widgets.hpp"
 #include "ui/widget/windows.hpp"
 
 namespace tactile::ui {

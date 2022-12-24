@@ -19,7 +19,7 @@
 
 #include "layer_delegate.hpp"
 
-#include <algorithm> // clamp
+#include <algorithm>  // clamp
 
 namespace tactile {
 

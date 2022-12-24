@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include "editor/menu/menu.hpp"
+
 namespace tactile::ui {
 
 /// Shows a button.
@@ -42,5 +44,18 @@ auto ui_icon_button(const char* icon, const char* tooltip = nullptr, bool enable
 
 /// Shows a button that is horizontally centered in the parent item.
 auto ui_centered_button(const char* label, const char* tooltip = nullptr) -> bool;
+
+auto ui_checkbox(const char* label, bool* value, const char* tooltip = nullptr) -> bool;
+
+/// Shows a tooltip after the last item has been hovered for a while.
+void ui_lazy_tooltip(const char* id, const char* tooltip);
+
+/// Shows a label that is horizontally centered in the parent item.
+void ui_centered_label(const char* text);
+
+/// Displays a menu item for a specific action.
+/// The menu item label and state is automatically determined from the menu action.
+/// The shortcut parameter is the shortcut hint displayed next to the item.
+void ui_menu_item(MenuAction action, const char* shortcut = nullptr);
 
 }  // namespace tactile::ui

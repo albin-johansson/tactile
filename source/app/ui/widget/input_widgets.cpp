@@ -22,7 +22,6 @@
 #include <concepts>  // invocable
 #include <utility>   // move
 
-#include "buttons.hpp"
 #include "core/type/array.hpp"
 #include "core/util/buffers.hpp"
 #include "core/util/filesystem.hpp"
@@ -30,10 +29,10 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "scoped.hpp"
-#include "tooltips.hpp"
 #include "ui/constants.hpp"
 #include "ui/style/colors.hpp"
 #include "ui/style/icons.hpp"
+#include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
 namespace {

@@ -23,9 +23,7 @@
 
 #include "core/vocabulary.hpp"
 
-namespace tactile {
-class DocumentModel;
-}  // namespace tactile
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 
 namespace tactile::ui {
 

@@ -28,8 +28,8 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "ui/style/icons.hpp"
-#include "ui/widget/labels.hpp"
 #include "ui/widget/scoped.hpp"
+#include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
 namespace {

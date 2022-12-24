@@ -17,14 +17,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "buttons.hpp"
+#include "widgets.hpp"
 
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
+#include <imgui_internal.h>
 
+#include "core/type/chrono.hpp"
+#include "core/type/hash_map.hpp"
+#include "core/type/maybe.hpp"
 #include "debug/assert.hpp"
-#include "scoped.hpp"
-#include "tooltips.hpp"
+#include "editor/app_context.hpp"
+#include "model/event/menu_events.hpp"
 #include "ui/style/alignment.hpp"
+#include "ui/widget/scoped.hpp"
 
 namespace tactile::ui {
 
@@ -67,6 +73,65 @@ auto ui_centered_button(const char* text, const char* tooltip) -> bool
   center_next_item_horizontally(width);
 
   return ui_button(text, tooltip);
+}
+
+auto ui_checkbox(const char* label, bool* value, const char* tooltip) -> bool
+{
+  TACTILE_ASSERT(label);
+  TACTILE_ASSERT(value);
+  const auto changed = ImGui::Checkbox(label, value);
+
+  if (tooltip) {
+    ui_lazy_tooltip(label, tooltip);
+  }
+
+  return changed;
+}
+
+void ui_lazy_tooltip(const char* id, const char* tooltip)
+{
+  TACTILE_ASSERT(id);
+  TACTILE_ASSERT(tooltip);
+
+  static HashMap<ImGuiID, Maybe<TimePoint>> state;
+
+  const auto hashed_id = ImGui::GetID(id);
+  auto& last_hover = state[hashed_id];
+
+  if (ImGui::IsItemHovered()) {
+    if (!last_hover) {
+      last_hover = Clock::now();
+    }
+
+    using namespace std::chrono_literals;
+    if (Clock::now() - last_hover.value() > 1s) {
+      ImGui::SetTooltip("%s", tooltip);
+    }
+  }
+  else {
+    last_hover.reset();
+  }
+}
+
+void ui_centered_label(const char* text)
+{
+  TACTILE_ASSERT(text);
+  const auto text_size = ImGui::CalcTextSize(text);
+
+  const auto region = ImGui::GetContentRegionAvail();
+  const auto half_region = region * ImVec2 {0.5f, 0.5f};
+
+  const auto cursor_pos = ImGui::GetCursorPos();
+  ImGui::SetCursorPos(cursor_pos + ImVec2 {half_region.x - (text_size.x * 0.5f), 0});
+  ImGui::TextUnformatted(text);
+}
+
+void ui_menu_item(const MenuAction action, const char* shortcut)
+{
+  const auto& item = get_menu_item(action);
+  if (ImGui::MenuItem(item.text.c_str(), shortcut, item.selected, item.enabled)) {
+    get_dispatcher().enqueue<MenuItemEvent>(action);
+  }
 }
 
 }  // namespace tactile::ui

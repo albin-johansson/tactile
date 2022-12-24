@@ -30,8 +30,8 @@
 #include "lang/strings.hpp"
 #include "model/model.hpp"
 #include "ui/dock/dock_space.hpp"
-#include "ui/widget/menu_item.hpp"
 #include "ui/widget/scoped.hpp"
+#include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
 namespace {

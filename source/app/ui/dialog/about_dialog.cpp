@@ -27,7 +27,7 @@
 #include "lang/strings.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/icons.hpp"
-#include "ui/widget/buttons.hpp"
+#include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
 namespace {

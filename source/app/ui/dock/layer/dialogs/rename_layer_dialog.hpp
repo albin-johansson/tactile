@@ -21,8 +21,8 @@
 
 #include <entt/signal/fwd.hpp>
 
-#include "core/type/uuid.hpp"
 #include "core/type/string.hpp"
+#include "core/type/uuid.hpp"
 
 namespace tactile::ui {
 

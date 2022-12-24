@@ -24,8 +24,8 @@
 #include "editor/handler/menu_event_handler.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "ui/widget/menu_item.hpp"
 #include "ui/widget/scoped.hpp"
+#include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
 

@@ -30,8 +30,8 @@
 #include "ui/dialog/dialogs.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
 #include "ui/dock/tileset/dialogs/create_tileset_dialog.hpp"
-#include "ui/widget/menu_item.hpp"
 #include "ui/widget/scoped.hpp"
+#include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
 
@@ -58,7 +58,8 @@ void update_map_menu()
     ImGui::Separator();
 
     ui_menu_item(MenuAction::FixInvalidTiles);
-    // ui_lazy_tooltip("##FixInvalidTilesTooltip", lang.tooltip.fix_invalid_tiles.c_str());
+    // ui_lazy_tooltip("##FixInvalidTilesTooltip",
+    // lang.tooltip.fix_invalid_tiles.c_str());
 
     ImGui::Separator();
 

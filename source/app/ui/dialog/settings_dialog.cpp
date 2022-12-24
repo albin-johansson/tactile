@@ -36,10 +36,8 @@
 #include "ui/style/alignment.hpp"
 #include "ui/style/colors.hpp"
 #include "ui/style/themes.hpp"
-#include "ui/widget/buttons.hpp"
-#include "ui/widget/checkboxes.hpp"
 #include "ui/widget/scoped.hpp"
-#include "ui/widget/tooltips.hpp"
+#include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
 namespace {

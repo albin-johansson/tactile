@@ -19,7 +19,7 @@
 
 #include "texture.hpp"
 
-#include <utility>   // move
+#include <utility>  // move
 
 #include <GL/glew.h>
 

@@ -37,10 +37,10 @@ struct RenderInfo final {
 
   Region bounds;  ///< The region of the map that that should be rendered.
 
-  ImVec2 origin {};     ///< Origin screen position.
-  ImVec2 grid_size {};  ///< Graphical tile size.
-  ImVec2 tile_size {};  ///< Logical tile size.
-  ImVec2 ratio {};      ///< Graphical tile size divided by logical tile size.
+  ImVec2 origin {};         ///< Origin screen position.
+  ImVec2 grid_size {};      ///< Graphical tile size.
+  ImVec2 tile_size {};      ///< Logical tile size.
+  ImVec2 ratio {};          ///< Graphical tile size divided by logical tile size.
   ImVec2 contents_size {};  ///< Graphical size of the map or tileset.
 
   int32 tiles_in_viewport_x {};  ///< Amount of visible tiles in the viewport, x-axis.
