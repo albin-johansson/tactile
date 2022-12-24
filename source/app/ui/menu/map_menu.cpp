@@ -42,32 +42,32 @@ void update_map_menu()
 
   Disable disable {!model.is_map_active()};
   if (Menu menu {lang.menu.map.c_str()}; menu.is_open()) {
-    menu_item(MenuAction::InspectMap);
+    ui_menu_item(MenuAction::InspectMap);
 
     ImGui::Separator();
 
-    menu_item(MenuAction::AddTileset, TACTILE_PRIMARY_MOD "+T");
+    ui_menu_item(MenuAction::AddTileset, TACTILE_PRIMARY_MOD "+T");
 
     ImGui::Separator();
 
-    menu_item(MenuAction::AddRow, TACTILE_SECONDARY_MOD "+R");
-    menu_item(MenuAction::AddColumn, TACTILE_SECONDARY_MOD "+C");
-    menu_item(MenuAction::RemoveRow, TACTILE_SECONDARY_MOD "+Shift+R");
-    menu_item(MenuAction::RemoveColumn, TACTILE_SECONDARY_MOD "+Shift+C");
+    ui_menu_item(MenuAction::AddRow, TACTILE_SECONDARY_MOD "+R");
+    ui_menu_item(MenuAction::AddColumn, TACTILE_SECONDARY_MOD "+C");
+    ui_menu_item(MenuAction::RemoveRow, TACTILE_SECONDARY_MOD "+Shift+R");
+    ui_menu_item(MenuAction::RemoveColumn, TACTILE_SECONDARY_MOD "+Shift+C");
 
     ImGui::Separator();
 
-    menu_item(MenuAction::FixInvalidTiles);
-    // lazy_tooltip("##FixInvalidTilesTooltip", lang.tooltip.fix_invalid_tiles.c_str());
+    ui_menu_item(MenuAction::FixInvalidTiles);
+    // ui_lazy_tooltip("##FixInvalidTilesTooltip", lang.tooltip.fix_invalid_tiles.c_str());
 
     ImGui::Separator();
 
-    menu_item(MenuAction::ResizeMap);
+    ui_menu_item(MenuAction::ResizeMap);
 
     ImGui::Separator();
 
     if (Menu export_menu {lang.menu.export_as.c_str()}; export_menu.is_open()) {
-      menu_item(MenuAction::ExportGodotScene);
+      ui_menu_item(MenuAction::ExportGodotScene);
     }
   }
 }

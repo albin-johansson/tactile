@@ -70,11 +70,11 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
 
     if (map.tileset_bundle().empty()) {
       prepare_vertical_alignment_center(2);
-      centered_label(lang.misc.map_has_no_tilesets.c_str());
+      ui_centered_label(lang.misc.map_has_no_tilesets.c_str());
 
       ImGui::Spacing();
 
-      if (centered_button(lang.action.add_tileset.c_str())) {
+      if (ui_centered_button(lang.action.add_tileset.c_str())) {
         dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
       }
     }

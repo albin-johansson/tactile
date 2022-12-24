@@ -22,6 +22,6 @@
 namespace tactile::ui {
 
 /// Shows a label that is horizontally centered in the parent item.
-void centered_label(const char* text);
+void ui_centered_label(const char* text);
 
 }  // namespace tactile::ui

@@ -32,7 +32,7 @@ namespace tactile::ui {
 /// \param tile_size the logical tile size.
 ///
 /// \return the current selection; an empty optional if there is none.
-[[nodiscard]] auto rubber_band(const ImVec2& scroll_offset, const ImVec2& tile_size)
+[[nodiscard]] auto ui_rubber_band(const ImVec2& scroll_offset, const ImVec2& tile_size)
     -> Maybe<Region>;
 
 }  // namespace tactile::ui

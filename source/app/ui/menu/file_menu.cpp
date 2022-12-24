@@ -42,7 +42,7 @@ void update_recent_files_menu(entt::dispatcher& dispatcher)
   const auto& lang = get_current_language();
 
   if (Menu menu {lang.menu.recent_files.c_str()}; menu.is_open()) {
-    menu_item(MenuAction::ReopenLastClosedFile);
+    ui_menu_item(MenuAction::ReopenLastClosedFile);
 
     const auto& history = io::file_history();
     if (!history.empty()) {
@@ -58,7 +58,7 @@ void update_recent_files_menu(entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    menu_item(MenuAction::ClearFileHistory);
+    ui_menu_item(MenuAction::ClearFileHistory);
   }
 }
 
@@ -69,23 +69,23 @@ void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
   const auto& lang = get_current_language();
 
   if (Menu menu {lang.menu.file.c_str()}; menu.is_open()) {
-    menu_item(MenuAction::NewMap, TACTILE_PRIMARY_MOD "+N");
-    menu_item(MenuAction::OpenMap, TACTILE_PRIMARY_MOD "+O");
+    ui_menu_item(MenuAction::NewMap, TACTILE_PRIMARY_MOD "+N");
+    ui_menu_item(MenuAction::OpenMap, TACTILE_PRIMARY_MOD "+O");
 
     update_recent_files_menu(dispatcher);
 
     ImGui::Separator();
 
-    menu_item(MenuAction::Save, TACTILE_PRIMARY_MOD "+S");
-    menu_item(MenuAction::SaveAs, TACTILE_PRIMARY_MOD "+Shift+S");
+    ui_menu_item(MenuAction::Save, TACTILE_PRIMARY_MOD "+S");
+    ui_menu_item(MenuAction::SaveAs, TACTILE_PRIMARY_MOD "+Shift+S");
 
     ImGui::Separator();
 
-    menu_item(MenuAction::CloseDocument);
+    ui_menu_item(MenuAction::CloseDocument);
 
     ImGui::Separator();
 
-    menu_item(MenuAction::Quit);
+    ui_menu_item(MenuAction::Quit);
   }
 }
 

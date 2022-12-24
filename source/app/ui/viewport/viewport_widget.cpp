@@ -61,12 +61,12 @@ void update_start_page(entt::dispatcher& dispatcher)
 
   const auto& lang = get_current_language();
 
-  if (centered_button(lang.action.create_map.c_str())) {
+  if (ui_centered_button(lang.action.create_map.c_str())) {
     dispatcher.enqueue<ShowNewMapDialogEvent>();
   }
 
   ImGui::Spacing();
-  if (centered_button(lang.action.open_map.c_str())) {
+  if (ui_centered_button(lang.action.open_map.c_str())) {
     dispatcher.enqueue<ShowOpenMapDialogEvent>();
   }
 }

@@ -61,33 +61,35 @@ void update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatche
 
   Group group;
 
-  if (icon_button(TAC_ICON_ADD, lang.tooltip.add_new_layer.c_str())) {
+  if (ui_icon_button(TAC_ICON_ADD, lang.tooltip.add_new_layer.c_str())) {
     add_layer_context_menu.show();
   }
 
   add_layer_context_menu.update(model, dispatcher);
 
-  if (icon_button(TAC_ICON_REMOVE, lang.tooltip.remove_layer.c_str(), has_active_layer)) {
+  if (ui_icon_button(TAC_ICON_REMOVE,
+                     lang.tooltip.remove_layer.c_str(),
+                     has_active_layer)) {
     dispatcher.enqueue<RemoveLayerEvent>(active_layer_id.value());
   }
 
-  if (icon_button(TAC_ICON_DUPLICATE,
-                  lang.tooltip.duplicate_layer.c_str(),
-                  has_active_layer)) {
+  if (ui_icon_button(TAC_ICON_DUPLICATE,
+                     lang.tooltip.duplicate_layer.c_str(),
+                     has_active_layer)) {
     dispatcher.enqueue<DuplicateLayerEvent>(active_layer_id.value());
   }
 
   const auto& root = map.invisible_root();
 
-  if (icon_button(TAC_ICON_MOVE_UP,
-                  lang.tooltip.move_layer_up.c_str(),
-                  has_active_layer && root.can_move_up(*active_layer_id))) {
+  if (ui_icon_button(TAC_ICON_MOVE_UP,
+                     lang.tooltip.move_layer_up.c_str(),
+                     has_active_layer && root.can_move_up(*active_layer_id))) {
     dispatcher.enqueue<MoveLayerUpEvent>(active_layer_id.value());
   }
 
-  if (icon_button(TAC_ICON_MOVE_DOWN,
-                  lang.tooltip.move_layer_down.c_str(),
-                  has_active_layer && root.can_move_down(*active_layer_id))) {
+  if (ui_icon_button(TAC_ICON_MOVE_DOWN,
+                     lang.tooltip.move_layer_down.c_str(),
+                     has_active_layer && root.can_move_down(*active_layer_id))) {
     dispatcher.enqueue<MoveLayerDownEvent>(active_layer_id.value());
   }
 }
@@ -124,7 +126,7 @@ void update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
     const auto& lang = get_current_language();
 
     prepare_vertical_alignment_center(1);
-    centered_label(lang.misc.map_has_no_layers.c_str());
+    ui_centered_label(lang.misc.map_has_no_layers.c_str());
   }
   else {
     const ImVec2 size {-min_float, -min_float};

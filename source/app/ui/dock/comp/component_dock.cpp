@@ -86,7 +86,7 @@ void show_contents(const Document& document, entt::dispatcher& dispatcher)
     const auto& comps = context.get_ctx().comps();
     if (comps.empty()) {
       prepare_vertical_alignment_center(2);
-      centered_label(lang.misc.context_has_no_components.c_str());
+      ui_centered_label(lang.misc.context_has_no_components.c_str());
     }
     else {
       const auto* index = document.view_component_index();
@@ -102,7 +102,7 @@ void show_contents(const Document& document, entt::dispatcher& dispatcher)
       ImGui::Separator();
     }
 
-    if (centered_button(TAC_ICON_ADD, lang.tooltip.add_component.c_str())) {
+    if (ui_centered_button(TAC_ICON_ADD, lang.tooltip.add_component.c_str())) {
       ImGui::OpenPopup(add_component_popup_id);
     }
 

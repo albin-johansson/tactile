@@ -34,26 +34,26 @@ void update_edit_menu()
   const auto& lang = get_current_language();
 
   if (Menu menu {lang.menu.edit.c_str()}; menu.is_open()) {
-    menu_item(MenuAction::Undo, TACTILE_PRIMARY_MOD "+Z");
-    menu_item(MenuAction::Redo, TACTILE_PRIMARY_MOD "+Y");
+    ui_menu_item(MenuAction::Undo, TACTILE_PRIMARY_MOD "+Z");
+    ui_menu_item(MenuAction::Redo, TACTILE_PRIMARY_MOD "+Y");
 
     ImGui::Separator();
 
-    menu_item(MenuAction::StampTool, "S");
-    menu_item(MenuAction::BucketTool, "B");
-    menu_item(MenuAction::EraserTool, "E");
-    menu_item(MenuAction::ObjectSelectionTool, "Q");
-    menu_item(MenuAction::RectangleTool, "R");
-    menu_item(MenuAction::EllipseTool, "T");
-    menu_item(MenuAction::PointTool, "Y");
+    ui_menu_item(MenuAction::StampTool, "S");
+    ui_menu_item(MenuAction::BucketTool, "B");
+    ui_menu_item(MenuAction::EraserTool, "E");
+    ui_menu_item(MenuAction::ObjectSelectionTool, "Q");
+    ui_menu_item(MenuAction::RectangleTool, "R");
+    ui_menu_item(MenuAction::EllipseTool, "T");
+    ui_menu_item(MenuAction::PointTool, "Y");
 
     ImGui::Separator();
 
-    menu_item(MenuAction::ComponentEditor, TACTILE_PRIMARY_MOD "+Shift+C");
+    ui_menu_item(MenuAction::ComponentEditor, TACTILE_PRIMARY_MOD "+Shift+C");
 
     ImGui::Separator();
 
-    menu_item(MenuAction::OpenSettings, TACTILE_PRIMARY_MOD "+,");
+    ui_menu_item(MenuAction::OpenSettings, TACTILE_PRIMARY_MOD "+,");
   }
 }
 

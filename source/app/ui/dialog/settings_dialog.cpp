@@ -110,15 +110,15 @@ void update_behavior_tab(const Strings& lang)
   if (const TabItem tab {lang.setting.behavior_tab.c_str()}; tab.is_open()) {
     ImGui::Spacing();
 
-    if (button(lang.setting.restore_defaults.c_str())) {
+    if (ui_button(lang.setting.restore_defaults.c_str())) {
       reset_behavior_preferences(dialog_ui_settings);
       update_preview_settings(dialog_ui_settings);
     }
 
     ImGui::Spacing();
 
-    checkbox(lang.setting.restore_last_session.c_str(),
-             &dialog_ui_settings.restore_last_session);
+    ui_checkbox(lang.setting.restore_last_session.c_str(),
+                &dialog_ui_settings.restore_last_session);
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.setting.pref_tile_width.c_str());
@@ -128,7 +128,7 @@ void update_behavior_tab(const Strings& lang)
                    1.0f,
                    1,
                    10'000);
-    lazy_tooltip("##PreferredTileWidthToolTip", lang.tooltip.pref_tile_width.c_str());
+    ui_lazy_tooltip("##PreferredTileWidthToolTip", lang.tooltip.pref_tile_width.c_str());
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.setting.pref_tile_height.c_str());
@@ -138,7 +138,8 @@ void update_behavior_tab(const Strings& lang)
                    1.0f,
                    1,
                    10'000);
-    lazy_tooltip("##PreferredTileHeightToolTip", lang.tooltip.pref_tile_height.c_str());
+    ui_lazy_tooltip("##PreferredTileHeightToolTip",
+                    lang.tooltip.pref_tile_height.c_str());
 
     // TODO "RMB with stamp tool works as eraser"
 
@@ -150,7 +151,7 @@ void update_behavior_tab(const Strings& lang)
       dialog_ui_settings.command_capacity = static_cast<usize>(capacity);
     }
 
-    lazy_tooltip("##CommandCapacityTooltip", lang.tooltip.command_capacity.c_str());
+    ui_lazy_tooltip("##CommandCapacityTooltip", lang.tooltip.command_capacity.c_str());
   }
 }
 
@@ -159,7 +160,7 @@ void update_appearance_tab(const Strings& lang)
   if (const TabItem tab {lang.setting.appearance_tab.c_str()}; tab.is_open()) {
     ImGui::Spacing();
 
-    if (button(lang.setting.restore_defaults.c_str())) {
+    if (ui_button(lang.setting.restore_defaults.c_str())) {
       reset_appearance_preferences(dialog_ui_settings);
       update_preview_settings(dialog_ui_settings);
     }
@@ -230,16 +231,16 @@ void update_appearance_tab(const Strings& lang)
       ImGui::GetStyle().WindowBorderSize = dialog_ui_settings.window_border ? 1.0f : 0.0f;
     }
 
-    checkbox(lang.setting.restore_layout.c_str(),
-             &dialog_ui_settings.restore_layout,
-             lang.tooltip.restore_layout.c_str());
+    ui_checkbox(lang.setting.restore_layout.c_str(),
+                &dialog_ui_settings.restore_layout,
+                lang.tooltip.restore_layout.c_str());
 
     ImGui::Spacing();
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    checkbox(lang.setting.use_default_font.c_str(),
-             &dialog_ui_settings.use_default_font,
-             lang.tooltip.use_default_font.c_str());
+    ui_checkbox(lang.setting.use_default_font.c_str(),
+                &dialog_ui_settings.use_default_font,
+                lang.tooltip.use_default_font.c_str());
 
     {
       const Disable when_using_default_font {dialog_ui_settings.use_default_font};
@@ -267,7 +268,7 @@ void update_export_tab(const Strings& lang)
   if (const TabItem tab {lang.setting.export_tab.c_str()}; tab.is_open()) {
     ImGui::Spacing();
 
-    if (button(lang.setting.restore_defaults.c_str())) {
+    if (ui_button(lang.setting.restore_defaults.c_str())) {
       reset_export_preferences(dialog_ui_settings);
       update_preview_settings(dialog_ui_settings);
     }
@@ -278,7 +279,8 @@ void update_export_tab(const Strings& lang)
     ImGui::TextUnformatted(lang.setting.pref_format.c_str());
     ImGui::SameLine();
     right_align_next_item();
-    if (Combo format("##PreferredFormat", dialog_ui_settings.preferred_format.c_str());
+    if (const Combo format("##PreferredFormat",
+                           dialog_ui_settings.preferred_format.c_str());
         format.is_open()) {
       if (ImGui::MenuItem("YAML")) {
         dialog_ui_settings.preferred_format = "YAML";
@@ -293,19 +295,19 @@ void update_export_tab(const Strings& lang)
       }
     }
 
-    lazy_tooltip("##PreferredFormatTooltip", lang.tooltip.pref_format.c_str());
+    ui_lazy_tooltip("##PreferredFormatTooltip", lang.tooltip.pref_format.c_str());
 
-    checkbox(lang.setting.embed_tilesets.c_str(),
-             &dialog_ui_settings.embed_tilesets,
-             lang.tooltip.embed_tilesets.c_str());
+    ui_checkbox(lang.setting.embed_tilesets.c_str(),
+                &dialog_ui_settings.embed_tilesets,
+                lang.tooltip.embed_tilesets.c_str());
 
-    checkbox(lang.setting.indent_output.c_str(),
-             &dialog_ui_settings.indent_output,
-             lang.tooltip.indent_output.c_str());
+    ui_checkbox(lang.setting.indent_output.c_str(),
+                &dialog_ui_settings.indent_output,
+                lang.tooltip.indent_output.c_str());
 
-    checkbox(lang.setting.fold_tile_data.c_str(),
-             &dialog_ui_settings.fold_tile_data,
-             lang.tooltip.fold_tile_data.c_str());
+    ui_checkbox(lang.setting.fold_tile_data.c_str(),
+                &dialog_ui_settings.fold_tile_data,
+                lang.tooltip.fold_tile_data.c_str());
   }
 }
 

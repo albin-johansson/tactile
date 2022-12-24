@@ -211,7 +211,7 @@ void update_log_dock()
       update_log_contents(log_filter);
     }
     else {
-      centered_label(lang.misc.log_no_messages_match_filter.c_str());
+      ui_centered_label(lang.misc.log_no_messages_match_filter.c_str());
     }
 
     if (auto popup = Popup::for_window("##LogDockPopup"); popup.is_open()) {

@@ -92,7 +92,7 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
   if (index->empty()) {
     ImGui::TextUnformatted(lang.misc.map_has_no_components.c_str());
 
-    if (centered_button(TAC_ICON_ADD, lang.tooltip.create_component.c_str())) {
+    if (ui_centered_button(TAC_ICON_ADD, lang.tooltip.create_component.c_str())) {
       get_dialogs().define_component.show();
     }
   }
@@ -118,13 +118,13 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
 
     ImGui::SameLine();
 
-    if (button(TAC_ICON_ADD, lang.tooltip.create_component.c_str())) {
+    if (ui_button(TAC_ICON_ADD, lang.tooltip.create_component.c_str())) {
       get_dialogs().define_component.show();
     }
 
     ImGui::SameLine();
 
-    if (button(TAC_ICON_THREE_DOTS, lang.tooltip.show_component_actions.c_str())) {
+    if (ui_button(TAC_ICON_THREE_DOTS, lang.tooltip.show_component_actions.c_str())) {
       ImGui::OpenPopup("##ComponentEditorPopup");
     }
 
@@ -178,7 +178,7 @@ void ComponentEditor::show_component_attributes(const ComponentDefinition& defin
   const auto& lang = get_current_language();
 
   if (definition.empty()) {
-    centered_label(lang.misc.empty_component.c_str());
+    ui_centered_label(lang.misc.empty_component.c_str());
   }
   else {
     constexpr auto table_flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_Resizable;
@@ -195,7 +195,7 @@ void ComponentEditor::show_component_attributes(const ComponentDefinition& defin
     }
   }
 
-  if (centered_button(lang.action.create_attribute.c_str())) {
+  if (ui_centered_button(lang.action.create_attribute.c_str())) {
     get_dialogs().add_component_attr.show(*data.active_component);
   }
 }

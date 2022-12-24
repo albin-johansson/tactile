@@ -27,7 +27,7 @@
 
 namespace tactile::ui {
 
-void menu_item(const MenuAction action, const char* shortcut)
+void ui_menu_item(const MenuAction action, const char* shortcut)
 {
   const auto& item = get_menu_item(action);
   if (ImGui::MenuItem(item.text.c_str(), shortcut, item.selected, item.enabled)) {

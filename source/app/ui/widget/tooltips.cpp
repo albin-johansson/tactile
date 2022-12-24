@@ -31,7 +31,7 @@ using namespace std::chrono_literals;
 
 namespace tactile::ui {
 
-void lazy_tooltip(const char* id, const char* tooltip)
+void ui_lazy_tooltip(const char* id, const char* tooltip)
 {
   TACTILE_ASSERT(id);
   TACTILE_ASSERT(tooltip);

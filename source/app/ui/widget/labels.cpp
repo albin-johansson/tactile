@@ -26,7 +26,7 @@
 
 namespace tactile::ui {
 
-void centered_label(const char* text)
+void ui_centered_label(const char* text)
 {
   TACTILE_ASSERT(text);
   const auto textSize = ImGui::CalcTextSize(text);

@@ -68,7 +68,7 @@ void update_about_dialog()
     ImGui::TextUnformatted(lang.misc.repository_link.c_str());
 
     ImGui::SameLine();
-    if (button(TAC_ICON_LINK, lang.tooltip.repository_link.c_str())) {
+    if (ui_button(TAC_ICON_LINK, lang.tooltip.repository_link.c_str())) {
       cen::open_url("https://www.github.com/albin-johansson/tactile");
     }
 

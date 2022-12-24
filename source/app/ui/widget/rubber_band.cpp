@@ -28,7 +28,7 @@
 
 namespace tactile::ui {
 
-auto rubber_band(const ImVec2& scroll_offset, const ImVec2& tile_size) -> Maybe<Region>
+auto ui_rubber_band(const ImVec2& scroll_offset, const ImVec2& tile_size) -> Maybe<Region>
 {
   const auto to_row = [=](const float y) {
     const auto mod = y - std::fmod(y, tile_size.y);

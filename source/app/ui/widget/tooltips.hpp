@@ -22,6 +22,6 @@
 namespace tactile::ui {
 
 /// Shows a tooltip after the last item has been hovered for a while.
-void lazy_tooltip(const char* id, const char* tooltip);
+void ui_lazy_tooltip(const char* id, const char* tooltip);
 
 }  // namespace tactile::ui

@@ -77,7 +77,7 @@ void tool_button(const DocumentModel& model,
     ImGui::PushStyleColor(ImGuiCol_Button, toolbar_highlight_color);
   }
 
-  if (icon_button(icon, tooltip, tools.is_available(model, tool))) {
+  if (ui_icon_button(icon, tooltip, tools.is_available(model, tool))) {
     dispatcher.enqueue<SelectToolEvent>(tool);
   }
 
@@ -123,17 +123,17 @@ void update_map_viewport_toolbar(const DocumentModel& model, entt::dispatcher& d
 
     const auto& commands = document.get_history();
 
-    if (icon_button(TAC_ICON_UNDO, lang.misc.undo.c_str(), commands.can_undo())) {
+    if (ui_icon_button(TAC_ICON_UNDO, lang.misc.undo.c_str(), commands.can_undo())) {
       dispatcher.enqueue<UndoEvent>();
     }
 
-    if (icon_button(TAC_ICON_REDO, lang.misc.redo.c_str(), commands.can_redo())) {
+    if (ui_icon_button(TAC_ICON_REDO, lang.misc.redo.c_str(), commands.can_redo())) {
       dispatcher.enqueue<RedoEvent>();
     }
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    if (icon_button(TAC_ICON_TILESET, lang.tooltip.create_tileset.c_str())) {
+    if (ui_icon_button(TAC_ICON_TILESET, lang.tooltip.create_tileset.c_str())) {
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
 
@@ -204,9 +204,9 @@ void update_map_viewport_toolbar(const DocumentModel& model, entt::dispatcher& d
       }
 
       const auto& map = document.get_map();
-      if (icon_button(TAC_ICON_STAMP_RANDOMIZER,
-                      lang.tooltip.stamp_random_tile.c_str(),
-                      map.is_stamp_randomizer_possible())) {
+      if (ui_icon_button(TAC_ICON_STAMP_RANDOMIZER,
+                         lang.tooltip.stamp_random_tile.c_str(),
+                         map.is_stamp_randomizer_possible())) {
         dispatcher.enqueue<SetStampRandomizerEvent>(!selected);
       }
 

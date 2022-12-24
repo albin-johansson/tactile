@@ -54,7 +54,7 @@ namespace {
 
   auto action = DialogAction::None;
 
-  if (close_label && button(close_label)) {
+  if (close_label && ui_button(close_label)) {
     action = DialogAction::Cancel;
     ImGui::CloseCurrentPopup();
   }
@@ -66,7 +66,7 @@ namespace {
       ImGui::SameLine();
     }
 
-    if (button(accept_label, nullptr, is_input_valid)) {
+    if (ui_button(accept_label, nullptr, is_input_valid)) {
       action = DialogAction::Accept;
       ImGui::CloseCurrentPopup();
     }
@@ -77,7 +77,7 @@ namespace {
       ImGui::SameLine();
     }
 
-    if (button(apply_label, nullptr, is_input_valid)) {
+    if (ui_button(apply_label, nullptr, is_input_valid)) {
       action = DialogAction::Apply;
     }
   }
@@ -110,7 +110,7 @@ void Dialog::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 
     ImGui::Spacing();
 
-    if (mCloseButtonLabel && button(mCloseButtonLabel->c_str())) {
+    if (mCloseButtonLabel && ui_button(mCloseButtonLabel->c_str())) {
       on_cancel();
       ImGui::CloseCurrentPopup();
     }
@@ -122,7 +122,7 @@ void Dialog::update(const DocumentModel& model, entt::dispatcher& dispatcher)
         ImGui::SameLine();
       }
 
-      if (button(mAcceptButtonLabel->c_str(), nullptr, valid)) {
+      if (ui_button(mAcceptButtonLabel->c_str(), nullptr, valid)) {
         on_accept(dispatcher);
         ImGui::CloseCurrentPopup();
       }
@@ -132,7 +132,7 @@ void Dialog::update(const DocumentModel& model, entt::dispatcher& dispatcher)
       if (mCloseButtonLabel || mAcceptButtonLabel) {
         ImGui::SameLine();
       }
-      if (button(get_current_language().misc.apply.c_str(), nullptr, valid)) {
+      if (ui_button(get_current_language().misc.apply.c_str(), nullptr, valid)) {
         on_apply(dispatcher);
       }
     }

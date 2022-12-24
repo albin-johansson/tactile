@@ -26,14 +26,14 @@
 
 namespace tactile::ui {
 
-auto checkbox(const char* label, bool* value, const char* tooltip) -> bool
+auto ui_checkbox(const char* label, bool* value, const char* tooltip) -> bool
 {
   TACTILE_ASSERT(label);
   TACTILE_ASSERT(value);
   const auto changed = ImGui::Checkbox(label, value);
 
   if (tooltip) {
-    lazy_tooltip(label, tooltip);
+    ui_lazy_tooltip(label, tooltip);
   }
 
   return changed;

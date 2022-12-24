@@ -59,7 +59,7 @@ void CreateTilesetDialog::on_update(const DocumentModel&, entt::dispatcher&)
   ImGui::TextUnformatted(lang.misc.create_tileset_instruction.c_str());
   ImGui::Spacing();
 
-  if (button(lang.misc.select_image.c_str())) {
+  if (ui_button(lang.misc.select_image.c_str())) {
     show_image_file_dialog();
   }
 

@@ -30,17 +30,17 @@ namespace tactile::ui {
 /// \param height the height of the button; 0 for automatic height.
 ///
 /// \return true if the button was pressed; false otherwise.
-auto button(const char* text,
-            const char* tooltip = nullptr,
-            bool enabled = true,
-            float width = 0,
-            float height = 0) -> bool;
+auto ui_button(const char* text,
+               const char* tooltip = nullptr,
+               bool enabled = true,
+               float width = 0,
+               float height = 0) -> bool;
 
 /// Shows a square button, intended to be used with icon characters.
-auto icon_button(const char* icon, const char* tooltip = nullptr, bool enabled = true)
+auto ui_icon_button(const char* icon, const char* tooltip = nullptr, bool enabled = true)
     -> bool;
 
 /// Shows a button that is horizontally centered in the parent item.
-auto centered_button(const char* label, const char* tooltip = nullptr) -> bool;
+auto ui_centered_button(const char* label, const char* tooltip = nullptr) -> bool;
 
 }  // namespace tactile::ui

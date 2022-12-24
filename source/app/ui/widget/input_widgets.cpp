@@ -44,7 +44,7 @@ template <std::invocable T>
 {
   const Scope scope {id};
 
-  if (button(TAC_ICON_THREE_DOTS)) {
+  if (ui_button(TAC_ICON_THREE_DOTS)) {
     if (auto result = callback()) {
       return std::move(*result);
     }
@@ -63,7 +63,7 @@ template <std::invocable T>
                            sizeof buffer,
                            ImGuiInputTextFlags_ReadOnly);
 
-  lazy_tooltip("##PathTooltip", lang.misc.type_path.c_str());
+  ui_lazy_tooltip("##PathTooltip", lang.misc.type_path.c_str());
 
   return nothing;
 }
@@ -132,7 +132,7 @@ auto input_int(const char* id, int value) -> Maybe<int>
   }
 
   const auto& lang = get_current_language();
-  lazy_tooltip("##IntTooltip", lang.misc.type_int.c_str());
+  ui_lazy_tooltip("##IntTooltip", lang.misc.type_int.c_str());
 
   return nothing;
 }
@@ -156,7 +156,7 @@ auto input_float(const char* id, float value, const float min, const float max)
   }
 
   const auto& lang = get_current_language();
-  lazy_tooltip("##FloatTooltip", lang.misc.type_float.c_str());
+  ui_lazy_tooltip("##FloatTooltip", lang.misc.type_float.c_str());
 
   return nothing;
 }
@@ -193,7 +193,7 @@ auto input_string_with_hint(const char* id,
   }
 
   const auto& lang = get_current_language();
-  lazy_tooltip("##StringTooltip", lang.misc.type_string.c_str());
+  ui_lazy_tooltip("##StringTooltip", lang.misc.type_string.c_str());
 
   return nothing;
 }
@@ -216,7 +216,7 @@ auto input_bool(const char* id, bool value) -> Maybe<bool>
   }
 
   const auto& lang = get_current_language();
-  lazy_tooltip("##BoolTooltip", lang.misc.type_bool.c_str());
+  ui_lazy_tooltip("##BoolTooltip", lang.misc.type_bool.c_str());
 
   return nothing;
 }
@@ -229,7 +229,7 @@ auto input_object(const char* id, object_t value) -> Maybe<object_t>
   ImGui::Text("%i", value);
 
   const auto& lang = get_current_language();
-  lazy_tooltip("##ObjectTooltip", lang.misc.type_object.c_str());
+  ui_lazy_tooltip("##ObjectTooltip", lang.misc.type_object.c_str());
 
   return nothing;
 }

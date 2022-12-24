@@ -149,32 +149,32 @@ void update_view_menu()
     update_quick_lang_menu(lang);
 
     ImGui::Separator();
-    menu_item(MenuAction::CenterViewport, "Shift+Space");
+    ui_menu_item(MenuAction::CenterViewport, "Shift+Space");
 
     ImGui::Separator();
-    menu_item(MenuAction::ToggleGrid, TACTILE_PRIMARY_MOD "+G");
+    ui_menu_item(MenuAction::ToggleGrid, TACTILE_PRIMARY_MOD "+G");
 
     ImGui::Separator();
-    menu_item(MenuAction::IncreaseZoom, TACTILE_PRIMARY_MOD "+Plus");
-    menu_item(MenuAction::DecreaseZoom, TACTILE_PRIMARY_MOD "+Minus");
-    menu_item(MenuAction::ResetZoom);
+    ui_menu_item(MenuAction::IncreaseZoom, TACTILE_PRIMARY_MOD "+Plus");
+    ui_menu_item(MenuAction::DecreaseZoom, TACTILE_PRIMARY_MOD "+Minus");
+    ui_menu_item(MenuAction::ResetZoom);
 
     ImGui::Separator();
-    menu_item(MenuAction::IncreaseFontSize, TACTILE_PRIMARY_MOD "+Shift+Plus");
-    menu_item(MenuAction::DecreaseFontSize, TACTILE_PRIMARY_MOD "+Shift+Minus");
-    menu_item(MenuAction::ResetFontSize);
+    ui_menu_item(MenuAction::IncreaseFontSize, TACTILE_PRIMARY_MOD "+Shift+Plus");
+    ui_menu_item(MenuAction::DecreaseFontSize, TACTILE_PRIMARY_MOD "+Shift+Minus");
+    ui_menu_item(MenuAction::ResetFontSize);
 
     ImGui::Separator();
-    menu_item(MenuAction::PanUp, TACTILE_PRIMARY_MOD "+Shift+Up");
-    menu_item(MenuAction::PanDown, TACTILE_PRIMARY_MOD "+Shift+Down");
-    menu_item(MenuAction::PanRight, TACTILE_PRIMARY_MOD "+Shift+Right");
-    menu_item(MenuAction::PanLeft, TACTILE_PRIMARY_MOD "+Shift+Left");
+    ui_menu_item(MenuAction::PanUp, TACTILE_PRIMARY_MOD "+Shift+Up");
+    ui_menu_item(MenuAction::PanDown, TACTILE_PRIMARY_MOD "+Shift+Down");
+    ui_menu_item(MenuAction::PanRight, TACTILE_PRIMARY_MOD "+Shift+Right");
+    ui_menu_item(MenuAction::PanLeft, TACTILE_PRIMARY_MOD "+Shift+Left");
 
     ImGui::Separator();
-    menu_item(MenuAction::HighlightLayer, "H");
+    ui_menu_item(MenuAction::HighlightLayer, "H");
 
     ImGui::Separator();
-    menu_item(MenuAction::ToggleUi, "Tab");
+    ui_menu_item(MenuAction::ToggleUi, "Tab");
   }
 }
 

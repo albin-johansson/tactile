@@ -35,7 +35,7 @@ void update_tileset_menu()
 
   Disable disable {!model.is_tileset_active()};
   if (Menu menu {lang.menu.tileset.c_str()}; menu.is_open()) {
-    menu_item(MenuAction::InspectTileset);
+    ui_menu_item(MenuAction::InspectTileset);
   }
 }
 

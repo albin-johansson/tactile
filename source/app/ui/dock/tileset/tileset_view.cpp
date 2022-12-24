@@ -107,7 +107,7 @@ void update_tileset_view(const DocumentModel& model,
   const auto offset = from_vec(viewport.get_offset());
   const auto tile_size = from_vec(tileset.tile_size());
 
-  if (const auto selection = rubber_band(offset, tile_size)) {
+  if (const auto selection = ui_rubber_band(offset, tile_size)) {
     dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);
   }
 

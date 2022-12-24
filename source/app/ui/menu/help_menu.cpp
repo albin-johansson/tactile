@@ -34,14 +34,14 @@ void update_help_menu()
   const auto& lang = get_current_language();
 
   if (Menu menu {lang.menu.help.c_str()}; menu.is_open()) {
-    menu_item(MenuAction::AboutTactile);
-    menu_item(MenuAction::AboutDearImGui);
+    ui_menu_item(MenuAction::AboutTactile);
+    ui_menu_item(MenuAction::AboutDearImGui);
 
     ImGui::Separator();
-    menu_item(MenuAction::ReportIssue);
+    ui_menu_item(MenuAction::ReportIssue);
 
     ImGui::Separator();
-    menu_item(MenuAction::Credits);
+    ui_menu_item(MenuAction::Credits);
   }
 }
 
