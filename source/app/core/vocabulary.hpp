@@ -82,7 +82,7 @@ using uchar = unsigned char;
 using uint = unsigned int;
 using ulonglong = unsigned long long int;
 using usize = std::size_t;
-using diff_t = std::ptrdiff_t;
+using ssize = std::ptrdiff_t;
 
 using uint8 = std::uint8_t;
 using uint16 = std::uint16_t;

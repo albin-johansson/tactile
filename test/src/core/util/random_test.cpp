@@ -52,7 +52,7 @@ TEST(Random, NextBool)
   std::generate(values.begin(), values.end(), next_bool);
 
   const auto true_count = std::count(values.begin(), values.end(), true);
-  const auto false_count = static_cast<diff_t>(values.size()) - true_count;
+  const auto false_count = std::ssize(values) - true_count;
 
   spdlog::debug("[Random] {} next_bool invocations: {} true, {} false",
                 values.size(),
