@@ -30,7 +30,7 @@ TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 namespace tactile::ui {
 
 /// The base class of all modal dialogs.
-class Dialog {
+class [[deprecated]] Dialog {
  public:
   TACTILE_DEFAULT_COPY(Dialog);
   TACTILE_DEFAULT_MOVE(Dialog);

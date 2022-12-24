@@ -29,7 +29,7 @@
 namespace tactile::ui {
 
 /// Abstract class representing dialogs which provide a string input field.
-class StringInputDialog : public Dialog {
+class [[deprecated]] StringInputDialog : public Dialog {
  public:
   explicit StringInputDialog(String title);
 
