@@ -48,6 +48,62 @@ inline io::PreferenceState dialog_old_settings;
 inline io::PreferenceState dialog_ui_settings;
 inline constinit bool open_dialog = false;
 
+void ui_lang_combo()
+{
+  if (const Combo combo {"##Lang", get_language_name(dialog_ui_settings.language)};
+      combo.is_open()) {
+    if (ImGui::MenuItem(get_language_name(Lang::EN))) {
+      dialog_ui_settings.language = Lang::EN;
+    }
+
+    if (ImGui::MenuItem(get_language_name(Lang::EN_GB))) {
+      dialog_ui_settings.language = Lang::EN_GB;
+    }
+
+    if (ImGui::MenuItem(get_language_name(Lang::SV))) {
+      dialog_ui_settings.language = Lang::SV;
+    }
+  }
+}
+
+void ui_theme_combo()
+{
+  auto show_themes = [](auto& themes) {
+    for (const auto theme: themes) {
+      if (Selectable::Property(human_readable_name(theme).data())) {
+        dialog_ui_settings.theme = theme;
+        apply_theme(ImGui::GetStyle(), theme);
+      }
+    }
+  };
+
+  const auto current_theme = human_readable_name(dialog_ui_settings.theme);
+  if (const Combo combo {"##Theme", current_theme.data()}; combo.is_open()) {
+    show_themes(light_themes);
+    ImGui::Separator();
+    show_themes(dark_themes);
+  }
+}
+
+void ui_map_format_combo()
+{
+  if (const Combo format("##PreferredFormat",
+                         dialog_ui_settings.preferred_format.c_str());
+      format.is_open()) {
+    if (ImGui::MenuItem("YAML")) {
+      dialog_ui_settings.preferred_format = "YAML";
+    }
+
+    if (ImGui::MenuItem("JSON")) {
+      dialog_ui_settings.preferred_format = "JSON";
+    }
+
+    if (ImGui::MenuItem("XML (TMX)")) {
+      dialog_ui_settings.preferred_format = "XML";
+    }
+  }
+}
+
 void reset_appearance_preferences(io::PreferenceState& prefs)
 {
   prefs.language = io::def_language;
@@ -171,41 +227,13 @@ void update_appearance_tab(const Strings& lang)
     ImGui::TextUnformatted(lang.setting.language.c_str());
     ImGui::SameLine();
     right_align_next_item();
-    if (const Combo combo {"##Lang", get_language_name(dialog_ui_settings.language)};
-        combo.is_open()) {
-      if (ImGui::MenuItem(get_language_name(Lang::EN))) {
-        dialog_ui_settings.language = Lang::EN;
-      }
-
-      if (ImGui::MenuItem(get_language_name(Lang::EN_GB))) {
-        dialog_ui_settings.language = Lang::EN_GB;
-      }
-
-      if (ImGui::MenuItem(get_language_name(Lang::SV))) {
-        dialog_ui_settings.language = Lang::SV;
-      }
-    }
+    ui_lang_combo();
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.setting.theme.c_str());
     ImGui::SameLine();
     right_align_next_item();
-    if (const Combo combo {"##Theme",
-                           human_readable_name(dialog_ui_settings.theme).data()};
-        combo.is_open()) {
-      const auto show_themes = [](auto& themes) {
-        for (const auto theme: themes) {
-          if (Selectable::Property(human_readable_name(theme).data())) {
-            dialog_ui_settings.theme = theme;
-            apply_theme(ImGui::GetStyle(), theme);
-          }
-        }
-      };
-
-      show_themes(light_themes);
-      ImGui::Separator();
-      show_themes(dark_themes);
-    }
+    ui_theme_combo();
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
@@ -279,22 +307,7 @@ void update_export_tab(const Strings& lang)
     ImGui::TextUnformatted(lang.setting.pref_format.c_str());
     ImGui::SameLine();
     right_align_next_item();
-    if (const Combo format("##PreferredFormat",
-                           dialog_ui_settings.preferred_format.c_str());
-        format.is_open()) {
-      if (ImGui::MenuItem("YAML")) {
-        dialog_ui_settings.preferred_format = "YAML";
-      }
-
-      if (ImGui::MenuItem("JSON")) {
-        dialog_ui_settings.preferred_format = "JSON";
-      }
-
-      if (ImGui::MenuItem("XML (TMX)")) {
-        dialog_ui_settings.preferred_format = "XML";
-      }
-    }
-
+    ui_map_format_combo();
     ui_lazy_tooltip("##PreferredFormatTooltip", lang.tooltip.pref_format.c_str());
 
     ui_checkbox(lang.setting.embed_tilesets.c_str(),
