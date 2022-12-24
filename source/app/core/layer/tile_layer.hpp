@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include "core/layer/layer.hpp"
-#include "core/layer/layer_delegate.hpp"
+#include "core/layer/abstract_layer.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "core/type/vec.hpp"
 #include "core/vocabulary.hpp"
@@ -28,7 +27,7 @@
 namespace tactile {
 
 /// A layer variant consisting of a matrix of tile identifiers.
-class TileLayer final : public Layer {
+class TileLayer final : public AbstractLayer {
  public:
   TileLayer();
 
@@ -69,14 +68,6 @@ class TileLayer final : public Layer {
   /// Note, layers must have at least 1 row and 1 column.
   void resize(usize rows, usize columns);
 
-  void set_opacity(float opacity) override;
-
-  void set_visible(bool visible) override;
-
-  void set_parent(const Maybe<UUID>& parent_id) override;
-
-  void set_meta_id(int32 id) override;
-
   /// Sets the tile identifier at the specified position.
   /// This function throws for invalid positions.
   void set_tile(const TilePos& pos, TileID id);
@@ -97,20 +88,7 @@ class TileLayer final : public Layer {
   /// Returns the associated tile matrix.
   [[nodiscard]] auto get_tiles() const -> const TileMatrix&;
 
-  [[nodiscard]] auto get_opacity() const -> float override;
-
-  [[nodiscard]] auto is_visible() const -> bool override;
-
   [[nodiscard]] auto clone() const -> Shared<Layer> override;
-
-  [[nodiscard]] auto get_ctx() -> ContextInfo& override;
-  [[nodiscard]] auto get_ctx() const -> const ContextInfo& override;
-
-  [[nodiscard]] auto get_uuid() const -> const UUID& override;
-
-  [[nodiscard]] auto get_parent() const -> Maybe<UUID> override;
-
-  [[nodiscard]] auto get_meta_id() const -> Maybe<int32> override;
 
   [[nodiscard]] auto get_type() const -> LayerType override
   {
@@ -118,7 +96,6 @@ class TileLayer final : public Layer {
   }
 
  private:
-  LayerDelegate mDelegate;
   TileMatrix mTiles;
 };
 

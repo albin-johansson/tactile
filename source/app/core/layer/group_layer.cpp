@@ -411,26 +411,6 @@ void GroupLayer::move_down(const UUID& id)
   }
 }
 
-void GroupLayer::set_opacity(const float opacity)
-{
-  mDelegate.set_opacity(opacity);
-}
-
-void GroupLayer::set_visible(const bool visible)
-{
-  mDelegate.set_visible(visible);
-}
-
-void GroupLayer::set_parent(const Maybe<UUID>& parent_id)
-{
-  mDelegate.set_parent(parent_id);
-}
-
-void GroupLayer::set_meta_id(const int32 id)
-{
-  mDelegate.set_meta_id(id);
-}
-
 void GroupLayer::set_index(const UUID& id, usize index)
 {
   const auto current_index = local_index(id);
@@ -668,16 +648,6 @@ auto GroupLayer::find_group_layer(const UUID& id) const -> const GroupLayer*
   return visitor.found_layer();
 }
 
-auto GroupLayer::get_opacity() const -> float
-{
-  return mDelegate.get_opacity();
-}
-
-auto GroupLayer::is_visible() const -> bool
-{
-  return mDelegate.is_visible();
-}
-
 auto GroupLayer::clone() const -> Shared<Layer>
 {
   auto result = std::make_shared<GroupLayer>();
@@ -688,31 +658,6 @@ auto GroupLayer::clone() const -> Shared<Layer>
   }
 
   return result;
-}
-
-auto GroupLayer::get_ctx() -> ContextInfo&
-{
-  return mDelegate.get_ctx();
-}
-
-auto GroupLayer::get_ctx() const -> const ContextInfo&
-{
-  return mDelegate.get_ctx();
-}
-
-auto GroupLayer::get_uuid() const -> const UUID&
-{
-  return mDelegate.get_ctx().get_uuid();
-}
-
-auto GroupLayer::get_parent() const -> Maybe<UUID>
-{
-  return mDelegate.get_parent();
-}
-
-auto GroupLayer::get_meta_id() const -> Maybe<int32>
-{
-  return mDelegate.get_meta_id();
 }
 
 }  // namespace tactile

@@ -152,26 +152,6 @@ void TileLayer::resize(const usize rows, const usize columns)
   }
 }
 
-void TileLayer::set_opacity(const float opacity)
-{
-  mDelegate.set_opacity(opacity);
-}
-
-void TileLayer::set_visible(const bool visible)
-{
-  mDelegate.set_visible(visible);
-}
-
-void TileLayer::set_parent(const Maybe<UUID>& parent_id)
-{
-  mDelegate.set_parent(parent_id);
-}
-
-void TileLayer::set_meta_id(const int32 id)
-{
-  mDelegate.set_meta_id(id);
-}
-
 void TileLayer::accept(ContextVisitor& visitor) const
 {
   visitor.visit(*this);
@@ -221,47 +201,12 @@ auto TileLayer::get_tiles() const -> const TileMatrix&
   return mTiles;
 }
 
-auto TileLayer::get_opacity() const -> float
-{
-  return mDelegate.get_opacity();
-}
-
-auto TileLayer::is_visible() const -> bool
-{
-  return mDelegate.is_visible();
-}
-
 auto TileLayer::clone() const -> Shared<Layer>
 {
   auto layer = std::make_shared<TileLayer>();
   layer->mDelegate = mDelegate.clone();
   layer->mTiles = mTiles;
   return layer;
-}
-
-auto TileLayer::get_ctx() -> ContextInfo&
-{
-  return mDelegate.get_ctx();
-}
-
-auto TileLayer::get_ctx() const -> const ContextInfo&
-{
-  return mDelegate.get_ctx();
-}
-
-auto TileLayer::get_uuid() const -> const UUID&
-{
-  return mDelegate.get_ctx().get_uuid();
-}
-
-auto TileLayer::get_parent() const -> Maybe<UUID>
-{
-  return mDelegate.get_parent();
-}
-
-auto TileLayer::get_meta_id() const -> Maybe<int32>
-{
-  return mDelegate.get_meta_id();
 }
 
 }  // namespace tactile

@@ -21,8 +21,8 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
+#include "core/layer/abstract_layer.hpp"
 #include "core/layer/layer.hpp"
-#include "core/layer/layer_delegate.hpp"
 #include "core/layer/object.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/maybe.hpp"
@@ -33,19 +33,11 @@
 namespace tactile {
 
 /// Represents a collection of map objects, such as rectangles and points.
-class ObjectLayer final : public Layer {
+class ObjectLayer final : public AbstractLayer {
  public:
   void accept(ContextVisitor& visitor) const override;
   void accept(LayerVisitor& visitor) override;
   void accept(ConstLayerVisitor& visitor) const override;
-
-  void set_opacity(float opacity) override;
-
-  void set_visible(bool visible) override;
-
-  void set_parent(const Maybe<UUID>& parent_id) override;
-
-  void set_meta_id(int32 id) override;
 
   void add_object(Shared<Object> object);
 
@@ -69,22 +61,12 @@ class ObjectLayer final : public Layer {
   [[nodiscard]] auto object_at(const Float2& pos, const Float2& tile_size) const
       -> Maybe<UUID>;
 
-  [[nodiscard]] auto get_opacity() const -> float override;
-
-  [[nodiscard]] auto is_visible() const -> bool override;
-
   [[nodiscard]] auto clone() const -> Shared<Layer> override;
 
-  [[nodiscard]] auto get_ctx() -> ContextInfo& override;
-  [[nodiscard]] auto get_ctx() const -> const ContextInfo& override;
-
-  [[nodiscard]] auto get_uuid() const -> const UUID& override;
-
-  [[nodiscard]] auto get_parent() const -> Maybe<UUID> override;
-
-  [[nodiscard]] auto get_meta_id() const -> Maybe<int32> override;
-
-  [[nodiscard]] auto get_type() const -> LayerType override;
+  [[nodiscard]] auto get_type() const -> LayerType override
+  {
+    return LayerType::ObjectLayer;
+  }
 
   [[nodiscard]] auto begin() const noexcept { return mObjects.begin(); }
   [[nodiscard]] auto end() const noexcept { return mObjects.end(); }

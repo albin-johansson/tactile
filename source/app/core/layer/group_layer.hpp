@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include "core/layer/layer.hpp"
-#include "core/layer/layer_delegate.hpp"
+#include "core/layer/abstract_layer.hpp"
 #include "core/type/fn.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/uuid.hpp"
@@ -31,7 +30,7 @@ namespace tactile {
 
 /// A layer variant that serves as a container for other layers.
 /// Group layers are recursive, and can store an unlimited amount of child layers.
-class GroupLayer final : public Layer {
+class GroupLayer final : public AbstractLayer {
  public:
   using LayerStorage = Vec<Shared<Layer>>;
   using SimpleVisitor = Fn<void(const Layer*)>;
@@ -63,14 +62,6 @@ class GroupLayer final : public Layer {
 
   /// Moves a layer down relative to its siblings (it will be rendered later).
   void move_down(const UUID& id);
-
-  void set_opacity(float opacity) override;
-
-  void set_visible(bool visible) override;
-
-  void set_parent(const Maybe<UUID>& parent_id) override;
-
-  void set_meta_id(int32 id) override;
 
   /// Moves a layer to a specific index, relative to its siblings.
   void set_index(const UUID& id, usize index);
@@ -119,20 +110,7 @@ class GroupLayer final : public Layer {
   [[nodiscard]] auto find_group_layer(const UUID& id) -> GroupLayer*;
   [[nodiscard]] auto find_group_layer(const UUID& id) const -> const GroupLayer*;
 
-  [[nodiscard]] auto get_opacity() const -> float override;
-
-  [[nodiscard]] auto is_visible() const -> bool override;
-
   [[nodiscard]] auto clone() const -> Shared<Layer> override;
-
-  [[nodiscard]] auto get_ctx() -> ContextInfo& override;
-  [[nodiscard]] auto get_ctx() const -> const ContextInfo& override;
-
-  [[nodiscard]] auto get_uuid() const -> const UUID& override;
-
-  [[nodiscard]] auto get_parent() const -> Maybe<UUID> override;
-
-  [[nodiscard]] auto get_meta_id() const -> Maybe<int32> override;
 
   [[nodiscard]] auto storage() -> LayerStorage& { return mLayers; }
   [[nodiscard]] auto storage() const -> const LayerStorage& { return mLayers; }
@@ -143,7 +121,6 @@ class GroupLayer final : public Layer {
   }
 
  private:
-  LayerDelegate mDelegate;
   LayerStorage mLayers;
 };
 

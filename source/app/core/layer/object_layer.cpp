@@ -54,26 +54,6 @@ void ObjectLayer::accept(ConstLayerVisitor& visitor) const
   visitor.visit(*this);
 }
 
-void ObjectLayer::set_opacity(const float opacity)
-{
-  mDelegate.set_opacity(opacity);
-}
-
-void ObjectLayer::set_visible(const bool visible)
-{
-  mDelegate.set_visible(visible);
-}
-
-void ObjectLayer::set_parent(const Maybe<UUID>& parent_id)
-{
-  mDelegate.set_parent(parent_id);
-}
-
-void ObjectLayer::set_meta_id(const int32 id)
-{
-  mDelegate.set_meta_id(id);
-}
-
 void ObjectLayer::add_object(Shared<Object> object)
 {
   const auto id = object->get_uuid();
@@ -149,16 +129,6 @@ auto ObjectLayer::object_at(const Float2& pos, const Float2& tile_size) const
   return nothing;
 }
 
-auto ObjectLayer::get_opacity() const -> float
-{
-  return mDelegate.get_opacity();
-}
-
-auto ObjectLayer::is_visible() const -> bool
-{
-  return mDelegate.is_visible();
-}
-
 auto ObjectLayer::clone() const -> Shared<Layer>
 {
   auto copy = std::make_shared<ObjectLayer>();
@@ -167,36 +137,6 @@ auto ObjectLayer::clone() const -> Shared<Layer>
   // FIXME clone objects
 
   return copy;
-}
-
-auto ObjectLayer::get_ctx() -> ContextInfo&
-{
-  return mDelegate.get_ctx();
-}
-
-auto ObjectLayer::get_ctx() const -> const ContextInfo&
-{
-  return mDelegate.get_ctx();
-}
-
-auto ObjectLayer::get_uuid() const -> const UUID&
-{
-  return mDelegate.get_ctx().get_uuid();
-}
-
-auto ObjectLayer::get_parent() const -> Maybe<UUID>
-{
-  return mDelegate.get_parent();
-}
-
-auto ObjectLayer::get_meta_id() const -> Maybe<int32>
-{
-  return mDelegate.get_meta_id();
-}
-
-auto ObjectLayer::get_type() const -> LayerType
-{
-  return LayerType::ObjectLayer;
 }
 
 }  // namespace tactile
