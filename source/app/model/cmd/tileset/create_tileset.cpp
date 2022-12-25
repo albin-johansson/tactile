@@ -69,6 +69,7 @@ void CreateTileset::redo()
   // We only need to create and register the document once
   if (!mTileset) {
     mTileset = std::make_shared<TilesetDocument>(mTilesetInfo, mTilesetId);
+    mTileset->set_name(mTilesetInfo.texture->get_path().stem().string());
     mModel->register_tileset(mTileset);
   }
 
