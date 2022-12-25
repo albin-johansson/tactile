@@ -21,7 +21,6 @@
 
 #include <imgui.h>
 
-#include "app/event/menu_event_handler.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "ui/widget/scoped.hpp"

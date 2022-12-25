@@ -17,11 +17,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "object_event_handler.hpp"
-
 #include <entt/signal/dispatcher.hpp>
 
 #include "app/app_context.hpp"
+#include "app/event/event_handlers.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "model/document/map_document.hpp"

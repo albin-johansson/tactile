@@ -17,13 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "view_event_handler.hpp"
-
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
 #include "app/app_context.hpp"
+#include "app/event/event_handlers.hpp"
 #include "debug/assert.hpp"
 #include "io/proto/preferences.hpp"
 #include "model/document/map_document.hpp"

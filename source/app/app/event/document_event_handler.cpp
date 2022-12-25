@@ -17,11 +17,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "document_event_handler.hpp"
-
 #include <entt/signal/dispatcher.hpp>
 
 #include "app/app_context.hpp"
+#include "app/event/event_handlers.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/proto/history.hpp"
 #include "model/document/map_document.hpp"

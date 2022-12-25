@@ -22,7 +22,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "app/event/menu_event_handler.hpp"
 #include "core/util/filesystem.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "io/proto/history.hpp"

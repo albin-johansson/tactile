@@ -17,12 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "menu_event_handler.hpp"
-
 #include <centurion/system.hpp>
 #include <entt/signal/dispatcher.hpp>
 
 #include "app/app_context.hpp"
+#include "app/event/event_handlers.hpp"
 #include "core/util/filesystem.hpp"
 #include "editor/menu/menu.hpp"
 #include "io/proto/history.hpp"

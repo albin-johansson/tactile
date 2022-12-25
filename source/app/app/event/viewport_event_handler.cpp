@@ -17,12 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "viewport_event_handler.hpp"
-
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "app/app_context.hpp"
+#include "app/event/event_handlers.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/type/math.hpp"
 #include "core/viewport.hpp"

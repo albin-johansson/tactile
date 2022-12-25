@@ -17,12 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "map_event_handler.hpp"
-
 #include <entt/signal/dispatcher.hpp>
 #include <spdlog/spdlog.h>
 
 #include "app/app_context.hpp"
+#include "app/event/event_handlers.hpp"
 #include "debug/assert.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
