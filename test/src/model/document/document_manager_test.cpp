@@ -23,7 +23,7 @@
 
 #include "core/tile/tileset.hpp"
 #include "core/tile/tileset_bundle.hpp"
-#include "debug/panic.hpp"
+#include "core/debug/panic.hpp"
 #include "io/load_texture.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"

@@ -22,7 +22,7 @@
 
 #include "app/app_context.hpp"
 #include "app/event/event_handlers.hpp"
-#include "debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/ir/map_from_ir.hpp"

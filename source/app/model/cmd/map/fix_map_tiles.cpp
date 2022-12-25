@@ -23,7 +23,7 @@
 
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
-#include "debug/panic.hpp"
+#include "core/debug/panic.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 

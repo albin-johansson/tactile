@@ -31,7 +31,7 @@
 #include "core/type/string.hpp"
 #include "core/util/assoc.hpp"
 #include "core/vocabulary.hpp"
-#include "debug/profile.hpp"
+#include "core/debug/profile.hpp"
 #include "io/proto/history.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"

@@ -24,7 +24,7 @@
 #include "core/component/component_index.hpp"
 #include "core/context/context_info.hpp"
 #include "core/context/context_manager.hpp"
-#include "debug/panic.hpp"
+#include "core/debug/panic.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/document.hpp"

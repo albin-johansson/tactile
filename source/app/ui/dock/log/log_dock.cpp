@@ -22,8 +22,8 @@
 #include <imgui.h>
 
 #include "core/type/maybe.hpp"
-#include "debug/logging.hpp"
-#include "debug/panic.hpp"
+#include "core/debug/logging.hpp"
+#include "core/debug/panic.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

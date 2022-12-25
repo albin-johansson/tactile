@@ -24,8 +24,8 @@
 
 #include "core/tile/tileset_bundle.hpp"
 #include "core/util/assoc.hpp"
-#include "debug/assert.hpp"
-#include "debug/panic.hpp"
+#include "core/debug/assert.hpp"
+#include "core/debug/panic.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
 

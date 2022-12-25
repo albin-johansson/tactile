@@ -26,7 +26,7 @@
 
 #include "core/layer/object.hpp"
 #include "core/layer/object_layer.hpp"
-#include "debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "graphics/graphics.hpp"
 #include "ui/conversions.hpp"
 

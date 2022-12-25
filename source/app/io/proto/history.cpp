@@ -28,7 +28,7 @@
 #include "core/util/filesystem.hpp"
 #include "core/util/fmt.hpp"
 #include "core/vocabulary.hpp"
-#include "debug/panic.hpp"
+#include "core/debug/panic.hpp"
 #include "io/directories.hpp"
 #include "io/file.hpp"
 #include "io/proto/proto.hpp"

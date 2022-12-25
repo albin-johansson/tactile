@@ -28,7 +28,7 @@
 #include "core/context/context_info.hpp"
 #include "core/context/context_manager.hpp"
 #include "core/util/fmt.hpp"
-#include "debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

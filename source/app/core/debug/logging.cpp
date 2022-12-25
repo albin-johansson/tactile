@@ -28,10 +28,10 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
+#include "core/debug/panic.hpp"
 #include "core/predef.hpp"
 #include "core/type/deque.hpp"
 #include "core/type/ptr.hpp"
-#include "debug/panic.hpp"
 #include "io/directories.hpp"
 
 namespace tactile {

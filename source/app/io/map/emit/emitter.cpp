@@ -22,8 +22,8 @@
 #include <spdlog/spdlog.h>
 
 #include "core/util/fmt.hpp"
-#include "debug/assert.hpp"
-#include "debug/profile.hpp"
+#include "core/debug/assert.hpp"
+#include "core/debug/profile.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/gd/godot_converter.hpp"
 #include "io/map/emit/gd/godot_options.hpp"

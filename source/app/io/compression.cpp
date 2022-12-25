@@ -28,7 +28,7 @@
 
 #include "core/predef.hpp"
 #include "core/type/ptr.hpp"
-#include "debug/assert.hpp"
+#include "core/debug/assert.hpp"
 
 namespace tactile::io {
 namespace {

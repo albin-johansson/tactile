@@ -28,7 +28,7 @@
 #include "core/type/maybe.hpp"
 #include "core/util/functional.hpp"
 #include "core/util/numeric.hpp"
-#include "debug/panic.hpp"
+#include "core/debug/panic.hpp"
 
 namespace tactile {
 

@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "debug/panic.hpp"
+#include "core/debug/panic.hpp"
 #include "dialog_state.hpp"
 
 namespace tactile::ui {

@@ -35,7 +35,7 @@
 #include "core/type/maybe.hpp"
 #include "core/type/uuid.hpp"
 #include "core/util/functional.hpp"
-#include "debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "io/load_texture.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/parse_result.hpp"

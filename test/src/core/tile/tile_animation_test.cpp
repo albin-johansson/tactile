@@ -22,7 +22,7 @@
 #include <gtest/gtest.h>
 
 #include "core/type/chrono.hpp"
-#include "debug/panic.hpp"
+#include "core/debug/panic.hpp"
 
 using namespace std::chrono_literals;
 

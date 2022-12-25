@@ -19,7 +19,7 @@
 
 #include "set_layer_opacity.hpp"
 
-#include "debug/panic.hpp"
+#include "core/debug/panic.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 

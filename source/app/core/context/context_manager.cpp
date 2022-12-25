@@ -23,7 +23,7 @@
 
 #include "core/context/context_info.hpp"
 #include "core/util/assoc.hpp"
-#include "debug/panic.hpp"
+#include "core/debug/panic.hpp"
 
 namespace tactile {
 

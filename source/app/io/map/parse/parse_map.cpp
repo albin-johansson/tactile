@@ -26,7 +26,7 @@
 #include <spdlog/spdlog.h>
 
 #include "core/type/chrono.hpp"
-#include "debug/panic.hpp"
+#include "core/debug/panic.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"

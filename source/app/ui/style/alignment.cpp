@@ -21,7 +21,7 @@
 
 #include <imgui_internal.h>
 
-#include "debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "ui/constants.hpp"
 
 namespace tactile::ui {

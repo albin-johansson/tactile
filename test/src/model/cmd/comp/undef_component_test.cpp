@@ -23,7 +23,7 @@
 
 #include "core/helpers/component_builder.hpp"
 #include "core/helpers/map_builder.hpp"
-#include "debug/panic.hpp"
+#include "core/debug/panic.hpp"
 
 using namespace std::string_literals;
 

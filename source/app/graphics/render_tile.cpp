@@ -22,7 +22,7 @@
 #include "core/map.hpp"
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset_bundle.hpp"
-#include "debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "graphics/graphics.hpp"
 #include "ui/conversions.hpp"
 

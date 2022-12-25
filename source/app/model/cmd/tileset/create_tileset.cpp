@@ -23,8 +23,8 @@
 #include <utility>  // move
 
 #include "core/tile/tileset_bundle.hpp"
-#include "debug/assert.hpp"
-#include "debug/panic.hpp"
+#include "core/debug/assert.hpp"
+#include "core/debug/panic.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"

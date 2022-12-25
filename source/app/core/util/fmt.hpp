@@ -33,7 +33,7 @@
 #include "core/type/string.hpp"
 #include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
-#include "debug/stacktrace.hpp"
+#include "core/debug/stacktrace.hpp"
 
 namespace fmt {
 

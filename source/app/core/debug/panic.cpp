@@ -21,7 +21,7 @@
 
 #include <sstream>  // stringstream
 
-#include "debug/stacktrace.hpp"
+#include "core/debug/stacktrace.hpp"
 
 namespace tactile {
 

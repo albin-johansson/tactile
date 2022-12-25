@@ -21,7 +21,7 @@
 
 #include <glm/common.hpp>
 
-#include "debug/assert.hpp"
+#include "core/debug/assert.hpp"
 
 namespace tactile {
 namespace {

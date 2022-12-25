@@ -21,7 +21,7 @@
 
 #include <zlib.h>
 
-#include "debug/panic.hpp"
+#include "core/debug/panic.hpp"
 
 namespace tactile {
 

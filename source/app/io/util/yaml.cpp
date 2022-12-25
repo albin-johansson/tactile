@@ -20,7 +20,7 @@
 #include "yaml.hpp"
 
 #include "core/util/filesystem.hpp"
-#include "debug/panic.hpp"
+#include "core/debug/panic.hpp"
 
 namespace tactile::io {
 

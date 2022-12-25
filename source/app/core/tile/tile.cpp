@@ -23,7 +23,7 @@
 
 #include <fmt/format.h>
 
-#include "debug/panic.hpp"
+#include "core/debug/panic.hpp"
 
 namespace tactile {
 

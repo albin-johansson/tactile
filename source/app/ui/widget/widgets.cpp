@@ -27,7 +27,7 @@
 #include "core/type/chrono.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/maybe.hpp"
-#include "debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "model/event/menu_events.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"

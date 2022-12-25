@@ -24,7 +24,7 @@
 
 #include "core/type/math.hpp"
 #include "core/vocabulary.hpp"
-#include "debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

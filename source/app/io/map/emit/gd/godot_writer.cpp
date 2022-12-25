@@ -29,7 +29,7 @@
 #include "core/type/ostream.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/vocabulary.hpp"
-#include "debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "io/file.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/emit/gd/godot_scene.hpp"
