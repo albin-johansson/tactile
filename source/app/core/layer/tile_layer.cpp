@@ -19,14 +19,14 @@
 
 #include "tile_layer.hpp"
 
+#include "core/debug/assert.hpp"
+#include "core/debug/panic.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "core/type/math.hpp"
 #include "core/type/queue.hpp"
 #include "core/util/functional.hpp"
 #include "core/util/numeric.hpp"
-#include "core/debug/assert.hpp"
-#include "core/debug/panic.hpp"
 
 namespace tactile {
 

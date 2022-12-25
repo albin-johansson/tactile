@@ -25,9 +25,9 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "core/predef.hpp"
 #include "core/debug/assert.hpp"
 #include "core/debug/panic.hpp"
+#include "core/predef.hpp"
 
 namespace tactile::io {
 

@@ -19,8 +19,8 @@
 
 #include "add_layer.hpp"
 
-#include "core/layer/group_layer.hpp"
 #include "core/debug/panic.hpp"
+#include "core/layer/group_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"

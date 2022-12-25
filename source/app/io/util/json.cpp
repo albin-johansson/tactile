@@ -21,8 +21,8 @@
 
 #include <iomanip>  // setw
 
-#include "core/util/filesystem.hpp"
 #include "core/debug/panic.hpp"
+#include "core/util/filesystem.hpp"
 #include "io/file.hpp"
 #include "io/proto/preferences.hpp"
 

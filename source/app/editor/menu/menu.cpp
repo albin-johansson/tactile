@@ -24,6 +24,7 @@
 #include <fmt/format.h>
 
 #include "app/app_context.hpp"
+#include "core/debug/profile.hpp"
 #include "core/predef.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/type/chrono.hpp"
@@ -31,7 +32,6 @@
 #include "core/type/string.hpp"
 #include "core/util/assoc.hpp"
 #include "core/vocabulary.hpp"
-#include "core/debug/profile.hpp"
 #include "io/proto/history.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"

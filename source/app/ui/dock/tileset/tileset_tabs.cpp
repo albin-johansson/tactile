@@ -22,8 +22,8 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/tile/tileset_bundle.hpp"
 #include "core/debug/assert.hpp"
+#include "core/tile/tileset_bundle.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"
@@ -81,7 +81,7 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
 {
   TACTILE_ASSERT(model.is_map_active());
 
-  if (TabBar bar {"##TilesetTabBar", tab_bar_flags}; bar.is_open()) {
+  if (const TabBar bar {"##TilesetTabBar", tab_bar_flags}; bar.is_open()) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
                              ImGuiTabItemFlags_Trailing)) {
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
@@ -98,9 +98,9 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
       const auto is_active = tilesets.active_tileset_id() == tileset_id;
 
       bool opened = true;
-      if (TabItem item {name.c_str(),
-                        &opened,
-                        is_active ? ImGuiTabItemFlags_SetSelected : 0};
+      if (const TabItem item {name.c_str(),
+                              &opened,
+                              is_active ? ImGuiTabItemFlags_SetSelected : 0};
           item.is_open()) {
         update_tileset_view(model, tileset_id, dispatcher);
       }

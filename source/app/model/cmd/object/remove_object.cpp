@@ -19,11 +19,11 @@
 
 #include "remove_object.hpp"
 
+#include "core/debug/assert.hpp"
+#include "core/debug/panic.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object.hpp"
 #include "core/layer/object_layer.hpp"
-#include "core/debug/assert.hpp"
-#include "core/debug/panic.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"

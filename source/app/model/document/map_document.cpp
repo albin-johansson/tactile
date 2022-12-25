@@ -21,9 +21,9 @@
 
 #include <utility>  // move
 
+#include "core/debug/panic.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/tile/tileset_bundle.hpp"
-#include "core/debug/panic.hpp"
 #include "model/cmd/command_stack.hpp"
 #include "model/cmd/layer/all.hpp"
 #include "model/cmd/map/all.hpp"

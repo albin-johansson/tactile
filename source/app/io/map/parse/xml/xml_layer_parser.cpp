@@ -22,11 +22,11 @@
 
 #include <spdlog/spdlog.h>
 
+#include "core/debug/panic.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "core/type/string.hpp"
 #include "core/type/vec.hpp"
 #include "core/util/str.hpp"
-#include "core/debug/panic.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/util/base64_tiles.hpp"

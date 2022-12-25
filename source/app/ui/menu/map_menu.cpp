@@ -38,8 +38,8 @@ void update_map_menu()
   const auto& model = get_model();
   const auto& lang = get_current_language();
 
-  Disable disable {!model.is_map_active()};
-  if (Menu menu {lang.menu.map.c_str()}; menu.is_open()) {
+  const Disable disable {!model.is_map_active()};
+  if (const Menu menu {lang.menu.map.c_str()}; menu.is_open()) {
     ui_menu_item(MenuAction::InspectMap);
 
     ImGui::Separator();
@@ -65,7 +65,7 @@ void update_map_menu()
 
     ImGui::Separator();
 
-    if (Menu export_menu {lang.menu.export_as.c_str()}; export_menu.is_open()) {
+    if (const Menu export_menu {lang.menu.export_as.c_str()}; export_menu.is_open()) {
       ui_menu_item(MenuAction::ExportGodotScene);
     }
   }

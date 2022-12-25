@@ -21,10 +21,10 @@
 
 #include <imgui_internal.h>
 
+#include "core/debug/assert.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
-#include "core/debug/assert.hpp"
 #include "graphics/graphics.hpp"
 #include "graphics/render_object_layer.hpp"
 #include "graphics/render_tile_layer.hpp"

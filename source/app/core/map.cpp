@@ -23,6 +23,7 @@
 
 #include <fmt/format.h>
 
+#include "core/debug/panic.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/layer_visitor.hpp"
 #include "core/layer/object_layer.hpp"
@@ -31,7 +32,6 @@
 #include "core/tile/tile_pos.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/util/functional.hpp"
-#include "core/debug/panic.hpp"
 
 namespace tactile {
 namespace {

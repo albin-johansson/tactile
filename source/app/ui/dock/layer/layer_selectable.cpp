@@ -23,11 +23,11 @@
 #include <fmt/format.h>
 #include <imgui.h>
 
+#include "core/debug/assert.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/type/string.hpp"
 #include "core/util/fmt.hpp"
-#include "core/debug/assert.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"

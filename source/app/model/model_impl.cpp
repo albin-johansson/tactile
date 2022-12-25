@@ -21,9 +21,9 @@
 
 #include <utility>  // move
 
-#include "core/tile/tileset_bundle.hpp"
 #include "core/debug/assert.hpp"
 #include "core/debug/panic.hpp"
+#include "core/tile/tileset_bundle.hpp"
 #include "model/cmd/command_stack.hpp"
 #include "model/cmd/tileset/all.hpp"
 #include "model/document/map_document.hpp"
@@ -96,8 +96,8 @@ void DocumentModel::Impl::remove_tileset(const UUID& id)
   }
 }
 
-auto DocumentModel::Impl::restore_tileset(TileID first_tile_id, const TilesetInfo& info)
-    -> UUID
+auto DocumentModel::Impl::restore_tileset(const TileID first_tile_id,
+                                          const TilesetInfo& info) -> UUID
 {
   if (auto* map_document = mDocuments.current_map()) {
     auto tileset_document = std::make_shared<TilesetDocument>(info);

@@ -83,10 +83,9 @@ void update_rename_component_dialog(const DocumentModel& model,
     if (should_acquire_focus) {
       ImGui::SetKeyboardFocusHere();
     }
-    ImGui::InputTextWithHint("##Input",
-                             "",
-                             dialog_component_name_buffer.data(),
-                             sizeof dialog_component_name_buffer);
+    ImGui::InputText("##Input",
+                     dialog_component_name_buffer.data(),
+                     sizeof dialog_component_name_buffer);
   }
 
   if (action == DialogAction::Accept) {

@@ -25,10 +25,10 @@
 
 #include <cppcodec/base64_rfc4648.hpp>
 
+#include "core/debug/panic.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "core/util/bit.hpp"
 #include "core/util/functional.hpp"
-#include "core/debug/panic.hpp"
 #include "io/compression.hpp"
 
 using Base64 = cppcodec::base64_rfc4648;

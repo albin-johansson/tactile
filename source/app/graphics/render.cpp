@@ -22,8 +22,8 @@
 #include <cmath>    // sin, cos
 #include <numbers>  // pi_v
 
-#include "core/texture.hpp"
 #include "core/debug/assert.hpp"
+#include "core/texture.hpp"
 #include "ui/textures.hpp"
 
 namespace tactile::ui {

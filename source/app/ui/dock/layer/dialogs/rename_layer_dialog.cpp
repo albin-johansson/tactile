@@ -76,10 +76,7 @@ void update_rename_layer_dialog(entt::dispatcher& dispatcher)
     if (should_acquire_focus) {
       ImGui::SetKeyboardFocusHere();
     }
-    ImGui::InputTextWithHint("##Input",
-                             "",
-                             dialog_name_buffer.data(),
-                             sizeof dialog_name_buffer);
+    ImGui::InputText("##Input", dialog_name_buffer.data(), sizeof dialog_name_buffer);
   }
 
   if (action == DialogAction::Accept) {

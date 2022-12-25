@@ -24,11 +24,11 @@
 
 #include <spdlog/spdlog.h>
 
+#include "core/debug/panic.hpp"
 #include "core/type/maybe.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/fmt.hpp"
 #include "core/vocabulary.hpp"
-#include "core/debug/panic.hpp"
 #include "io/directories.hpp"
 #include "io/file.hpp"
 #include "io/proto/proto.hpp"
