@@ -39,6 +39,7 @@
 #include "ui/dialog/dialogs.hpp"
 #include "ui/dock/comp/dialogs/add_component_attr_dialog.hpp"
 #include "ui/dock/comp/dialogs/define_component_dialog.hpp"
+#include "ui/dock/comp/dialogs/rename_component_attribute_dialog.hpp"
 #include "ui/dock/comp/dialogs/rename_component_dialog.hpp"
 #include "ui/dock/property/dialogs/property_type_combo.hpp"
 #include "ui/style/icons.hpp"
@@ -140,12 +141,10 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
     show_component_attributes(definition, dispatcher);
   }
 
-  auto& dialogs = get_dialogs();
-  dialogs.rename_component_attr.update(model, dispatcher);
-
   update_define_component_dialog(model, dispatcher);
   update_rename_component_dialog(model, dispatcher);
   update_create_component_attribute_dialog(model, dispatcher);
+  update_rename_component_attribute_dialog(model, dispatcher);
 
   ImGui::Spacing();
   ImGui::Separator();
@@ -206,36 +205,37 @@ void ComponentEditor::show_component_attributes(const ComponentDefinition& defin
 }
 
 void ComponentEditor::show_component_attribute(const UUID& component_id,
-                                               const String& name,
+                                               const String& attribute_name,
                                                const Attribute& value,
                                                entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
   auto& data = *mData;
 
-  const Scope scope {name.c_str()};
+  const Scope scope {attribute_name.c_str()};
 
   ImGui::TableNextRow();
   ImGui::TableNextColumn();
 
   ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(name.c_str());
+  ImGui::TextUnformatted(attribute_name.c_str());
 
   if (auto popup = Popup::for_item("##ComponentAttributeNameContext"); popup.is_open()) {
     if (ImGui::MenuItem(lang.action.rename_attribute.c_str())) {
-      get_dialogs().rename_component_attr.show(name, data.active_component.value());
+      open_rename_component_attribute_dialog(data.active_component.value(),
+                                             attribute_name);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(lang.action.duplicate_attribute.c_str())) {
-      dispatcher.enqueue<DuplicateComponentAttrEvent>(component_id, name);
+      dispatcher.enqueue<DuplicateComponentAttrEvent>(component_id, attribute_name);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(lang.action.remove_attribute.c_str())) {
-      dispatcher.enqueue<RemoveComponentAttrEvent>(component_id, name);
+      dispatcher.enqueue<RemoveComponentAttrEvent>(component_id, attribute_name);
     }
   }
 
@@ -246,13 +246,15 @@ void ComponentEditor::show_component_attribute(const UUID& component_id,
   AttributeType new_type = type;
   show_property_type_combo(type, new_type);
   if (new_type != type) {
-    dispatcher.enqueue<SetComponentAttrTypeEvent>(component_id, name, new_type);
+    dispatcher.enqueue<SetComponentAttrTypeEvent>(component_id, attribute_name, new_type);
   }
 
   ImGui::TableNextColumn();
 
   if (auto updated = input_attribute("##DefaultValue", value)) {
-    dispatcher.enqueue<UpdateComponentEvent>(component_id, name, std::move(*updated));
+    dispatcher.enqueue<UpdateComponentEvent>(component_id,
+                                             attribute_name,
+                                             std::move(*updated));
   }
 }
 

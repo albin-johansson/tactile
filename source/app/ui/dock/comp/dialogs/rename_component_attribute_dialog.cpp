@@ -22,45 +22,75 @@
 #include <utility>  // move
 
 #include <entt/signal/dispatcher.hpp>
+#include <imgui.h>
 
 #include "core/component/component_index.hpp"
+#include "core/type/maybe.hpp"
+#include "core/util/string_buffer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
+#include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
+namespace {
 
-RenameComponentAttributeDialog::RenameComponentAttributeDialog()
-    : StringInputDialog {"Rename Component Attribute"}
+inline Maybe<UUID> dialog_component_id;
+inline String dialog_attribute_name;
+inline StringBuffer dialog_attribute_name_buffer;
+inline constinit bool open_dialog = false;
+
+}  // namespace
+
+void open_rename_component_attribute_dialog(const UUID& component_id,
+                                            String attribute_name)
 {
+  dialog_component_id = component_id;
+  dialog_attribute_name = std::move(attribute_name);
+  dialog_attribute_name_buffer.clear();
+  open_dialog = true;
 }
 
-void RenameComponentAttributeDialog::show(String previous_name, const UUID& component_id)
+void update_rename_component_attribute_dialog(const DocumentModel& model,
+                                              entt::dispatcher& dispatcher)
 {
-  mComponentId = component_id;
-
   const auto& lang = get_current_language();
-  set_title(lang.window.rename_component_attribute);
-  set_accept_button_label(lang.misc.rename);
-  set_input_hint(lang.misc.attribute_name_hint);
 
-  StringInputDialog::show(std::move(previous_name));
-}
+  DialogOptions options {
+      .title = lang.window.rename_component_attribute.c_str(),
+      .close_label = lang.misc.cancel.c_str(),
+      .accept_label = lang.misc.rename.c_str(),
+  };
 
-void RenameComponentAttributeDialog::on_accept(entt::dispatcher& dispatcher)
-{
-  dispatcher.enqueue<RenameComponentAttrEvent>(mComponentId.value(),
-                                               previous_input(),
-                                               String {current_input()});
-}
+  if (open_dialog) {
+    options.flags |= UI_DIALOG_FLAG_OPEN;
+    open_dialog = false;
+  }
 
-auto RenameComponentAttributeDialog::validate(const DocumentModel& model,
-                                              StringView input) const -> bool
-{
-  const auto& document = model.require_active_document();
-  const auto* index = document.view_component_index();
-  return !input.empty() && index && !index->at(mComponentId.value()).has(input);
+  const auto current_name = dialog_attribute_name_buffer.as_string_view();
+  const auto* component_index = model.require_active_document().view_component_index();
+
+  if (!current_name.empty() &&  //
+      component_index != nullptr &&
+      !component_index->at(dialog_component_id.value()).has(current_name)) {
+    options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
+  }
+
+  DialogAction action {DialogAction::None};
+  if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
+    ImGui::InputTextWithHint("##Name",
+                             lang.misc.attribute_name_hint.c_str(),
+                             dialog_attribute_name_buffer.data(),
+                             sizeof dialog_attribute_name_buffer);
+  }
+
+  if (action == DialogAction::Accept) {
+    dispatcher.enqueue<RenameComponentAttrEvent>(
+        dialog_component_id.value(),
+        dialog_attribute_name,
+        dialog_attribute_name_buffer.as_string());
+  }
 }
 
 }  // namespace tactile::ui

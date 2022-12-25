@@ -19,28 +19,21 @@
 
 #pragma once
 
-#include "core/type/maybe.hpp"
+#include <entt/signal/fwd.hpp>
+
+#include "core/vocabulary.hpp"
+
 #include "core/type/string.hpp"
 #include "core/type/uuid.hpp"
-#include "ui/dialog/string_input_dialog.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 
 namespace tactile::ui {
 
-/// Used to rename an attribute in a component definition.
-class RenameComponentAttributeDialog final : public StringInputDialog {
- public:
-  RenameComponentAttributeDialog();
+void open_rename_component_attribute_dialog(const UUID& component_id,
+                                            String attribute_name);
 
-  void show(String previousName, const UUID& componentId);
-
- protected:
-  void on_accept(entt::dispatcher& dispatcher) override;
-
-  [[nodiscard]] auto validate(const DocumentModel& model, StringView input) const
-      -> bool override;
-
- private:
-  Maybe<UUID> mComponentId;
-};
+void update_rename_component_attribute_dialog(const DocumentModel& model,
+                                              entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui
