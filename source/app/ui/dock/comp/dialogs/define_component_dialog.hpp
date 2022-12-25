@@ -19,19 +19,17 @@
 
 #pragma once
 
-#include "component_name_dialog.hpp"
+#include <entt/signal/fwd.hpp>
+
+#include "core/vocabulary.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 
 namespace tactile::ui {
 
-/// Used to create new component definitions.
-class DefineComponentDialog final : public ComponentNameDialog {
- public:
-  DefineComponentDialog();
+void open_define_component_dialog();
 
-  void show();
-
- protected:
-  void on_accept(entt::dispatcher& dispatcher) override;
-};
+void update_define_component_dialog(const DocumentModel& model,
+                                    entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

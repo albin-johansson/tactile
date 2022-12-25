@@ -37,6 +37,7 @@
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
+#include "ui/dock/comp/dialogs/define_component_dialog.hpp"
 #include "ui/dock/comp/dialogs/rename_component_dialog.hpp"
 #include "ui/dock/property/dialogs/property_type_combo.hpp"
 #include "ui/style/icons.hpp"
@@ -93,7 +94,7 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
     ImGui::TextUnformatted(lang.misc.map_has_no_components.c_str());
 
     if (ui_centered_button(TAC_ICON_ADD, lang.tooltip.create_component.c_str())) {
-      get_dialogs().define_component.show();
+      open_define_component_dialog();
     }
   }
   else {
@@ -119,7 +120,7 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
     ImGui::SameLine();
 
     if (ui_button(TAC_ICON_ADD, lang.tooltip.create_component.c_str())) {
-      get_dialogs().define_component.show();
+      open_define_component_dialog();
     }
 
     ImGui::SameLine();
@@ -139,10 +140,10 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
   }
 
   auto& dialogs = get_dialogs();
-  dialogs.define_component.update(model, dispatcher);
   dialogs.add_component_attr.update(model, dispatcher);
   dialogs.rename_component_attr.update(model, dispatcher);
 
+  update_define_component_dialog(model, dispatcher);
   update_rename_component_dialog(model, dispatcher);
 
   ImGui::Spacing();
