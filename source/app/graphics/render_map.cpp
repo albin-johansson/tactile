@@ -52,21 +52,17 @@ void highlight_active_object(Graphics& graphics,
 
 void render_layer(Graphics& graphics,
                   const Map& map,
-                  const Layer* layer,
+                  const Layer& layer,
                   const float parent_opacity)
 {
-  TACTILE_ASSERT(layer);
-
-  const auto type = layer->get_type();
+  const auto type = layer.get_type();
   if (type == LayerType::TileLayer) {
-    if (const auto* tile_layer = dynamic_cast<const TileLayer*>(layer)) {
-      render_tile_layer(graphics, map, *tile_layer, parent_opacity);
-    }
+    const auto& tile_layer = dynamic_cast<const TileLayer&>(layer);
+    render_tile_layer(graphics, map, tile_layer, parent_opacity);
   }
   else if (type == LayerType::ObjectLayer) {
-    if (const auto* object_layer = dynamic_cast<const ObjectLayer*>(layer)) {
-      render_object_layer(graphics, *object_layer, parent_opacity);
-    }
+    const auto& object_layer = dynamic_cast<const ObjectLayer&>(layer);
+    render_object_layer(graphics, object_layer, parent_opacity);
   }
 }
 
@@ -76,12 +72,12 @@ void render_layers(Graphics& graphics, const Map& map)
   const auto& root = map.invisible_root();
   const auto active_layer_id = map.active_layer_id();
 
-  root.each([&](const Layer* layer) {
-    if (!layer->is_visible()) {
+  root.each([&](const Layer& layer) {
+    if (!layer.is_visible()) {
       return;
     }
 
-    const auto parent_id = layer->get_parent();
+    const auto parent_id = layer.get_parent();
     const auto* parent_layer = parent_id ? root.find_group_layer(*parent_id) : nullptr;
 
     if (parent_layer && !parent_layer->is_visible()) {
@@ -93,10 +89,10 @@ void render_layers(Graphics& graphics, const Map& map)
       render_layer(graphics,
                    map,
                    layer,
-                   active_layer_id == layer->get_uuid() ? 1.0f : 0.5f);
+                   active_layer_id == layer.get_uuid() ? 1.0f : 0.5f);
     }
     else {
-      render_layer(graphics, map, layer, parent_opacity * layer->get_opacity());
+      render_layer(graphics, map, layer, parent_opacity * layer.get_opacity());
     }
   });
 }

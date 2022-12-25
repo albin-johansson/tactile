@@ -68,9 +68,9 @@ void GroupLayer::each(const UnaryLayerFunc& func) const
   struct Visitor final : ConstLayerVisitor {
     const UnaryLayerFunc* func {};  // Pointer to avoid copying the function object
 
-    void visit(const TileLayer& layer) override { (*func)(&layer); }
-    void visit(const ObjectLayer& layer) override { (*func)(&layer); }
-    void visit(const GroupLayer& layer) override { (*func)(&layer); }
+    void visit(const TileLayer& layer) override { (*func)(layer); }
+    void visit(const ObjectLayer& layer) override { (*func)(layer); }
+    void visit(const GroupLayer& layer) override { (*func)(layer); }
   };
 
   Visitor v;

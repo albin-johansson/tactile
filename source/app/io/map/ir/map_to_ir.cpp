@@ -157,11 +157,11 @@ void convert_layers(const MapDocument& document,
   usize index = 0;
 
   const auto& root = document.get_map().invisible_root();
-  root.each([&](const Layer* layer) {
+  root.each([&](const Layer& layer) {
     // Only iterate top-level layers, and convert them recursively
-    if (!layer->get_parent()) {
+    if (!layer.get_parent()) {
       auto& layer_data = data.layers.emplace_back();
-      convert_layer(*layer, index, components, layer_data);
+      convert_layer(layer, index, components, layer_data);
       ++index;
     }
   });

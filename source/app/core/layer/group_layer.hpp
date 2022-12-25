@@ -35,7 +35,7 @@ namespace tactile {
 class GroupLayer final : public AbstractLayer {
  public:
   using LayerStorage = Vec<Shared<Layer>>;
-  using UnaryLayerFunc = Fn<void(const Layer*)>;
+  using UnaryLayerFunc = Fn<void(const Layer&)>;
 
   void accept(ContextVisitor& visitor) const override;
   void accept(LayerVisitor& visitor) override;

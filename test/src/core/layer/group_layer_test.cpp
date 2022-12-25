@@ -67,24 +67,23 @@ TEST(GroupLayer, SimpleEach)
   ASSERT_EQ(g1->get_uuid(), o1->get_parent());
 
   usize count = 0;
-  root.each([&](const Layer* layer) {
-    ASSERT_TRUE(layer != nullptr);
+  root.each([&](const Layer& layer) {
     ++count;
 
-    switch (layer->get_type()) {
+    switch (layer.get_type()) {
       case LayerType::TileLayer:
-        ASSERT_FALSE(layer->get_parent().has_value());
-        ASSERT_EQ(0u, root.global_layer_index(layer->get_uuid()));
+        ASSERT_FALSE(layer.get_parent().has_value());
+        ASSERT_EQ(0u, root.global_layer_index(layer.get_uuid()));
         break;
 
       case LayerType::ObjectLayer:
-        ASSERT_EQ(g1->get_uuid(), layer->get_parent());
-        ASSERT_EQ(2u, root.global_layer_index(layer->get_uuid()));
+        ASSERT_EQ(g1->get_uuid(), layer.get_parent());
+        ASSERT_EQ(2u, root.global_layer_index(layer.get_uuid()));
         break;
 
       case LayerType::GroupLayer:
-        ASSERT_FALSE(layer->get_parent().has_value());
-        ASSERT_EQ(1u, root.global_layer_index(layer->get_uuid()));
+        ASSERT_FALSE(layer.get_parent().has_value());
+        ASSERT_EQ(1u, root.global_layer_index(layer.get_uuid()));
         break;
     }
   });
