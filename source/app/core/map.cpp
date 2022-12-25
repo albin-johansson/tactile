@@ -159,10 +159,10 @@ void Map::add_layer(Shared<Layer> layer, const Maybe<UUID>& parent_id)
   const auto id = layer->get_uuid();
 
   if (parent_id) {
-    invisible_root().add(*parent_id, layer);
+    invisible_root().add_layer(*parent_id, layer);
   }
   else {
-    invisible_root().add(std::move(layer));
+    invisible_root().add_layer(std::move(layer));
   }
 
   // Select the layer if it's the first one to be added
@@ -219,12 +219,12 @@ auto Map::remove_layer(const UUID& id) -> Shared<Layer>
     mData->active_layer.reset();
   }
 
-  return invisible_root().remove(id);
+  return invisible_root().remove_layer(id);
 }
 
 auto Map::duplicate_layer(const UUID& id) -> Shared<Layer>
 {
-  auto layer = invisible_root().duplicate(id);
+  auto layer = invisible_root().duplicate_layer(id);
   layer->set_meta_id(fetch_and_increment_next_layer_id());
   return layer;
 }

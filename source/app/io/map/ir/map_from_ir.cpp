@@ -164,7 +164,7 @@ auto restore_layer(MapDocument& document,
   layer.set_visible(layer_data.visible);
   layer.set_meta_id(layer_data.id);
 
-  restore_context(document, root.get_layer_ptr(layer_id), layer_data.context);
+  restore_context(document, root.find_shared_layer(layer_id), layer_data.context);
 
   return layer_id;
 }

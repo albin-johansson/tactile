@@ -62,7 +62,7 @@ auto MapBuilder::with_tile_layer(UUID* id, Maybe<TileID> initial_value) -> MapBu
   auto& root = map.invisible_root();
 
   const auto layer_id = map.add_tile_layer();
-  mDocument->get_contexts().add_context(root.get_layer_ptr(layer_id));
+  mDocument->get_contexts().add_context(root.find_shared_layer(layer_id));
 
   if (id) {
     *id = layer_id;
@@ -83,7 +83,7 @@ auto MapBuilder::with_object_layer(UUID* id) -> MapBuilder&
   auto& map = mDocument->get_map();
 
   const auto layer_id = map.add_object_layer();
-  mDocument->get_contexts().add_context(map.invisible_root().get_layer_ptr(layer_id));
+  mDocument->get_contexts().add_context(map.invisible_root().find_shared_layer(layer_id));
 
   if (id) {
     *id = layer_id;
@@ -101,7 +101,7 @@ auto MapBuilder::with_object(const ObjectType type,
 
   if (!mDedicatedObjectLayer) {
     mDedicatedObjectLayer = map.add_object_layer();
-    mDocument->get_contexts().add_context(root.get_layer_ptr(*mDedicatedObjectLayer));
+    mDocument->get_contexts().add_context(root.find_shared_layer(*mDedicatedObjectLayer));
   }
 
   auto object = std::make_shared<Object>();

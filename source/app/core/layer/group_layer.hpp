@@ -20,8 +20,10 @@
 #pragma once
 
 #include "core/layer/abstract_layer.hpp"
+#include "core/layer/visitors.hpp"
 #include "core/type/fn.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/result.hpp"
 #include "core/type/uuid.hpp"
 #include "core/type/vec.hpp"
 #include "core/vocabulary.hpp"
@@ -33,7 +35,7 @@ namespace tactile {
 class GroupLayer final : public AbstractLayer {
  public:
   using LayerStorage = Vec<Shared<Layer>>;
-  using SimpleVisitor = Fn<void(const Layer*)>;
+  using UnaryLayerFunc = Fn<void(const Layer*)>;
 
   void accept(ContextVisitor& visitor) const override;
   void accept(LayerVisitor& visitor) override;
@@ -42,78 +44,105 @@ class GroupLayer final : public AbstractLayer {
   /// Behaves the same as accept(), except for not including itself (the root)
   void each(LayerVisitor& visitor);
   void each(ConstLayerVisitor& visitor) const;
-  void each(const SimpleVisitor& visitor) const;
-
-  /// Adds a layer to the hierarchy, with the specified group layer as the parent.
-  void add(const UUID& parent, const Shared<Layer>& layer);
+  void each(const UnaryLayerFunc& func) const;
 
   /// Adds a layer as an immediate child of the group layer.
-  void add(Shared<Layer> layer);
+  ///
+  /// \param layer the layer that will be added.
+  /// \return success if the layer was added; failure otherwise.
+  auto add_layer(Shared<Layer> layer) -> Result;
 
-  /// Removes a child layer.
-  auto remove(const UUID& id) -> Shared<Layer>;
+  /// Adds a layer to the hierarchy, with the specified group layer as the parent.
+  ///
+  /// \details
+  /// This function does nothing if there is no group layer with the specified ID.
+  ///
+  /// \param parent_id the ID of a group layer to add the layer to.
+  /// \param layer the layer that will be added, cannot be null.
+  /// \return success if the layer was added; failure otherwise.
+  auto add_layer(const UUID& parent_id, const Shared<Layer>& layer) -> Result;
+
+  /// Attempts to remove a layer.
+  ///
+  /// \param layer_id the ID of the layer that will be removed.
+  /// \return the removed layer, or null if no layer was removed.
+  auto remove_layer(const UUID& layer_id) -> Shared<Layer>;
 
   /// Duplicates an existing layer in the hierarchy.
-  /// The new layer is inserted below the target layer (rendered above it).
-  auto duplicate(const UUID& id) -> Shared<Layer>;
+  ///
+  /// \details
+  /// The new layer is placed after the source layer in the hierarchy, so that it is
+  /// visited after the source layer.
+  ///
+  /// \param layer_id the ID of the layer that will be duplicated.
+  /// \return the new layer.
+  auto duplicate_layer(const UUID& layer_id) -> Shared<Layer>;
 
-  /// Moves a layer up relative to its siblings (it will be rendered earlier).
-  void move_up(const UUID& id);
+  /// Moves a layer up relative to its siblings (it will be visited earlier).
+  void move_layer_up(const UUID& layer_id);
 
-  /// Moves a layer down relative to its siblings (it will be rendered later).
-  void move_down(const UUID& id);
+  /// Moves a layer down relative to its siblings (it will be visited later).
+  void move_layer_down(const UUID& layer_id);
 
-  /// Moves a layer to a specific index, relative to its siblings.
-  void set_index(const UUID& id, usize index);
+  /// Attempts to move a layer so that its local index matches the specified index.
+  ///
+  /// \details
+  /// There is no guarantee that the target layer will end up at the requested location.
+  /// For example, if the index refers to an invalid location, the layer will be moved
+  /// to the last valid location.
+  ///
+  /// \param layer_id the ID of the layer that will be moved.
+  /// \param index the target local layer index.
+  void set_layer_index(const UUID& layer_id, usize index);
 
   /// Returns the total number of layers in the hierarchy.
   [[nodiscard]] auto size() const -> usize;
 
   /// Returns the amount of siblings for a specific layer.
-  [[nodiscard]] auto sibling_count(const UUID& id) const -> usize;
+  [[nodiscard]] auto layer_sibling_count(const UUID& layer_id) const -> usize;
 
   /// Returns the index of a layer in relation to its siblings.
-  [[nodiscard]] auto local_index(const UUID& id) const -> usize;
+  [[nodiscard]] auto local_layer_index(const UUID& layer_id) const -> usize;
 
   /// Returns the index of a layer when the hierarchy is iterated.
-  [[nodiscard]] auto global_index(const UUID& id) const -> usize;
+  [[nodiscard]] auto global_layer_index(const UUID& layer_id) const -> usize;
 
   /// Indicates whether a layer can be moved up.
-  [[nodiscard]] auto can_move_up(const UUID& id) const -> bool;
+  [[nodiscard]] auto can_move_layer_up(const UUID& layer_id) const -> bool;
 
   /// Indicates whether a layer can be moved down.
-  [[nodiscard]] auto can_move_down(const UUID& id) const -> bool;
+  [[nodiscard]] auto can_move_layer_down(const UUID& layer_id) const -> bool;
 
-  [[nodiscard]] auto get_layer_ptr(const UUID& id) -> Shared<Layer>;
+  [[nodiscard]] auto find_shared_layer(const UUID& layer_id) -> Shared<Layer>;
 
-  [[nodiscard]] auto get_layer(const UUID& id) -> Layer&;
-  [[nodiscard]] auto get_layer(const UUID& id) const -> const Layer&;
+  [[nodiscard]] auto find_layer(const UUID& layer_id) -> Layer*;
+  [[nodiscard]] auto find_layer(const UUID& layer_id) const -> const Layer*;
 
-  [[nodiscard]] auto get_tile_layer(const UUID& id) -> TileLayer&;
-  [[nodiscard]] auto get_tile_layer(const UUID& id) const -> const TileLayer&;
+  [[nodiscard]] auto find_tile_layer(const UUID& layer_id) -> TileLayer*;
+  [[nodiscard]] auto find_tile_layer(const UUID& layer_id) const -> const TileLayer*;
 
-  [[nodiscard]] auto get_object_layer(const UUID& id) -> ObjectLayer&;
-  [[nodiscard]] auto get_object_layer(const UUID& id) const -> const ObjectLayer&;
+  [[nodiscard]] auto find_object_layer(const UUID& layer_id) -> ObjectLayer*;
+  [[nodiscard]] auto find_object_layer(const UUID& layer_id) const -> const ObjectLayer*;
 
-  [[nodiscard]] auto get_group_layer(const UUID& id) -> GroupLayer&;
-  [[nodiscard]] auto get_group_layer(const UUID& id) const -> const GroupLayer&;
+  [[nodiscard]] auto find_group_layer(const UUID& layer_id) -> GroupLayer*;
+  [[nodiscard]] auto find_group_layer(const UUID& layer_id) const -> const GroupLayer*;
 
-  [[nodiscard]] auto find_layer(const UUID& id) -> Layer*;
-  [[nodiscard]] auto find_layer(const UUID& id) const -> const Layer*;
+  [[nodiscard]] auto get_layer(const UUID& layer_id) -> Layer&;
+  [[nodiscard]] auto get_layer(const UUID& layer_id) const -> const Layer&;
 
-  [[nodiscard]] auto find_tile_layer(const UUID& id) -> TileLayer*;
-  [[nodiscard]] auto find_tile_layer(const UUID& id) const -> const TileLayer*;
+  [[nodiscard]] auto get_tile_layer(const UUID& layer_id) -> TileLayer&;
+  [[nodiscard]] auto get_tile_layer(const UUID& layer_id) const -> const TileLayer&;
 
-  [[nodiscard]] auto find_object_layer(const UUID& id) -> ObjectLayer*;
-  [[nodiscard]] auto find_object_layer(const UUID& id) const -> const ObjectLayer*;
+  [[nodiscard]] auto get_object_layer(const UUID& layer_id) -> ObjectLayer&;
+  [[nodiscard]] auto get_object_layer(const UUID& layer_id) const -> const ObjectLayer&;
 
-  [[nodiscard]] auto find_group_layer(const UUID& id) -> GroupLayer*;
-  [[nodiscard]] auto find_group_layer(const UUID& id) const -> const GroupLayer*;
+  [[nodiscard]] auto get_group_layer(const UUID& layer_id) -> GroupLayer&;
+  [[nodiscard]] auto get_group_layer(const UUID& layer_id) const -> const GroupLayer&;
 
   [[nodiscard]] auto clone() const -> Shared<Layer> override;
 
-  [[nodiscard]] auto storage() -> LayerStorage& { return mLayers; }
-  [[nodiscard]] auto storage() const -> const LayerStorage& { return mLayers; }
+  [[nodiscard]] auto get_storage() -> LayerStorage& { return mLayers; }
+  [[nodiscard]] auto get_storage() const -> const LayerStorage& { return mLayers; }
 
   [[nodiscard]] auto get_type() const -> LayerType override
   {
@@ -122,6 +151,9 @@ class GroupLayer final : public AbstractLayer {
 
  private:
   LayerStorage mLayers;
+
+  void mutate_layer(const UUID& layer_id, const LayerMutatorFn& op);
+  void query_layer(const UUID& layer_id, const LayerQueryFn& op) const;
 };
 
 }  // namespace tactile

@@ -51,11 +51,11 @@ void DuplicateLayer::redo()
 
   if (mNewLayer) {
     map.add_layer(mNewLayer, mNewLayer->get_parent());
-    map.invisible_root().set_index(mNewLayer->get_uuid(), mNewIndex.value());
+    map.invisible_root().set_layer_index(mNewLayer->get_uuid(), mNewIndex.value());
   }
   else {
     mNewLayer = map.duplicate_layer(mLayerId);
-    mNewIndex = map.invisible_root().local_index(mNewLayer->get_uuid());
+    mNewIndex = map.invisible_root().local_layer_index(mNewLayer->get_uuid());
   }
 
   mDocument->get_contexts().add_context(mNewLayer);

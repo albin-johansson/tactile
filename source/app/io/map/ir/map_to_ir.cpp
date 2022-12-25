@@ -95,10 +95,10 @@ void convert_group_layer(const GroupLayer& layer,
                          const ComponentIndex* components,
                          ir::GroupLayerData& data)
 {
-  data.children.reserve(layer.storage().size());
+  data.children.reserve(layer.get_storage().size());
 
   usize index {0};
-  for (const auto& immediate_child: layer.storage()) {
+  for (const auto& immediate_child: layer.get_storage()) {
     TACTILE_ASSERT(immediate_child->get_parent() == layer.get_uuid());
 
     auto& layer_data = data.children.emplace_back(std::make_unique<ir::LayerData>());

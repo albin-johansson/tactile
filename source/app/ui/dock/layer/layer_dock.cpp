@@ -81,13 +81,13 @@ void update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatche
 
   if (ui_icon_button(TAC_ICON_MOVE_UP,
                      lang.tooltip.move_layer_up.c_str(),
-                     has_active_layer && root.can_move_up(*active_layer_id))) {
+                     has_active_layer && root.can_move_layer_up(*active_layer_id))) {
     dispatcher.enqueue<MoveLayerUpEvent>(active_layer_id.value());
   }
 
   if (ui_icon_button(TAC_ICON_MOVE_DOWN,
                      lang.tooltip.move_layer_down.c_str(),
-                     has_active_layer && root.can_move_down(*active_layer_id))) {
+                     has_active_layer && root.can_move_layer_down(*active_layer_id))) {
     dispatcher.enqueue<MoveLayerDownEvent>(active_layer_id.value());
   }
 }

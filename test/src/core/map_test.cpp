@@ -337,7 +337,7 @@ TEST(Map, RemoveLayer)
   MapLayerPreset preset;
   auto& root = preset.map.invisible_root();
 
-  ASSERT_THROW(preset.map.remove_layer(make_uuid()), TactileError);
+  ASSERT_NO_THROW(preset.map.remove_layer(make_uuid()));
 
   ASSERT_NE(nullptr, root.find_object_layer(preset.a));
   ASSERT_EQ(7u, root.size());
