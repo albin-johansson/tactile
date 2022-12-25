@@ -81,7 +81,7 @@ void App::on_startup()
 
   if (io::get_preferences().restore_last_session) {
     auto& model = get_model();
-    io::restore_last_session(model);
+    io::session_restore_previous(model);
   }
 
   get_window().show();
@@ -91,7 +91,7 @@ void App::on_shutdown()
 {
   save_current_files_to_history();
   io::save_preferences();
-  io::save_session(get_model());
+  io::session_save(get_model());
   io::save_file_history();
 
   get_window().hide();

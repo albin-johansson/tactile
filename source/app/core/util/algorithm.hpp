@@ -28,6 +28,7 @@
 
 namespace tactile {
 
+/// Returns the first element in a vector that satisfies the given predicate.
 template <typename T, std::predicate<const T&> P>
 [[nodiscard]] auto first_in(Vec<T>& vec, P&& pred) -> T&
 {
@@ -40,6 +41,7 @@ template <typename T, std::predicate<const T&> P>
   }
 }
 
+/// Returns the first element in a vector that satisfies the given predicate.
 template <typename T, std::predicate<const T&> P>
 [[nodiscard]] auto first_in(const Vec<T>& vec, P&& pred) -> const T&
 {

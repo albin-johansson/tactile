@@ -43,7 +43,7 @@ constexpr int session_format_version [[maybe_unused]] = 1;
 
 }  // namespace
 
-void restore_last_session(DocumentModel& model)
+void session_restore_previous(DocumentModel& model)
 {
   proto::Session session;
 
@@ -64,14 +64,14 @@ void restore_last_session(DocumentModel& model)
   }
 }
 
-void save_session(const DocumentModel& model)
+void session_save(const DocumentModel& model)
 {
   proto::Session session;
-  model.each([&](const UUID& id) {
-    if (model.is_map(id)) {
-      const auto& map = model.view_map(id);
-      if (map.has_path()) {
-        const auto document_path = fs::absolute(map.get_path());
+  model.each([&](const UUID& document_id) {
+    if (model.is_map(document_id)) {
+      const auto& map_doc = model.view_map(document_id);
+      if (map_doc.has_path()) {
+        const auto document_path = fs::absolute(map_doc.get_path());
         session.add_files(convert_to_forward_slashes(document_path));
       }
     }
