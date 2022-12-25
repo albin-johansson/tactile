@@ -19,25 +19,18 @@
 
 #pragma once
 
+#include <entt/signal/fwd.hpp>
+
 #include "core/type/uuid.hpp"
-#include "ui/dialog/string_input_dialog.hpp"
+#include "core/vocabulary.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 
 namespace tactile::ui {
 
-class AddComponentAttrDialog final : public StringInputDialog {
- public:
-  AddComponentAttrDialog();
+void open_create_component_attribute_dialog(const UUID& component_id);
 
-  void show(const UUID& componentId);
-
- protected:
-  [[nodiscard]] auto validate(const DocumentModel& model, StringView input) const
-      -> bool override;
-
-  void on_accept(entt::dispatcher& dispatcher) override;
-
- private:
-  UUID mComponentId {};
-};
+void update_create_component_attribute_dialog(const DocumentModel& model,
+                                              entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

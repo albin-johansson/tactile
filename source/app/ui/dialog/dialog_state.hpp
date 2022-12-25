@@ -20,7 +20,6 @@
 #pragma once
 
 #include "ui/dock/comp/component_editor.hpp"
-#include "ui/dock/comp/dialogs/add_component_attr_dialog.hpp"
 #include "ui/dock/comp/dialogs/rename_component_attribute_dialog.hpp"
 #include "ui/dock/layer/add_layer_context_menu.hpp"
 #include "ui/dock/property/dialogs/add_property_dialog.hpp"
@@ -32,7 +31,6 @@ namespace tactile::ui {
 struct [[deprecated]] DialogState final {
   // Components
   ComponentEditor component_editor;
-  AddComponentAttrDialog add_component_attr;
   RenameComponentAttributeDialog rename_component_attr;
 
   // Properties

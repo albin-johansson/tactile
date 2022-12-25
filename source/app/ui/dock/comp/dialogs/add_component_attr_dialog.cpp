@@ -20,44 +20,69 @@
 #include "add_component_attr_dialog.hpp"
 
 #include <entt/signal/dispatcher.hpp>
+#include <imgui.h>
 
 #include "core/component/component_index.hpp"
-#include "core/type/string.hpp"
+#include "core/util/string_buffer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
+#include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
+namespace {
 
-AddComponentAttrDialog::AddComponentAttrDialog()
-    : StringInputDialog {"Create Attribute"}
+inline Maybe<UUID> dialog_component_id;
+inline StringBuffer dialog_attribute_name_buffer;
+inline constinit bool open_dialog = false;
+
+}  // namespace
+
+void open_create_component_attribute_dialog(const UUID& component_id)
 {
+  dialog_component_id = component_id;
+  dialog_attribute_name_buffer.clear();
+  open_dialog = true;
 }
 
-void AddComponentAttrDialog::show(const UUID& component_id)
+void update_create_component_attribute_dialog(const DocumentModel& model,
+                                              entt::dispatcher& dispatcher)
 {
-  mComponentId = component_id;
-
   const auto& lang = get_current_language();
-  set_title(lang.window.create_attribute);
-  set_input_hint(lang.misc.attribute_name_hint);
-  set_accept_button_label(lang.misc.create);
 
-  StringInputDialog::show("");
-}
+  DialogOptions options {
+      .title = lang.window.create_attribute.c_str(),
+      .close_label = lang.misc.cancel.c_str(),
+      .accept_label = lang.misc.create.c_str(),
+  };
 
-auto AddComponentAttrDialog::validate(const DocumentModel& model, StringView input) const
-    -> bool
-{
-  const auto& document = model.require_active_document();
-  const auto* index = document.view_component_index();
-  return !input.empty() && index && !index->at(mComponentId).has(input);
-}
+  if (open_dialog) {
+    options.flags |= UI_DIALOG_FLAG_OPEN;
+    open_dialog = false;
+  }
 
-void AddComponentAttrDialog::on_accept(entt::dispatcher& dispatcher)
-{
-  dispatcher.enqueue<AddComponentAttrEvent>(mComponentId, String {current_input()});
+  const auto* component_index = model.require_active_document().view_component_index();
+  const auto current_name = dialog_attribute_name_buffer.as_string_view();
+
+  if (!current_name.empty() &&  //
+      component_index != nullptr &&
+      !component_index->at(dialog_component_id.value()).has(current_name)) {
+    options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
+  }
+
+  DialogAction action {DialogAction::None};
+  if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
+    ImGui::InputTextWithHint("##Name",
+                             lang.misc.attribute_name_hint.c_str(),
+                             dialog_attribute_name_buffer.data(),
+                             sizeof dialog_attribute_name_buffer);
+  }
+
+  if (action == DialogAction::Accept) {
+    dispatcher.enqueue<AddComponentAttrEvent>(dialog_component_id.value(),
+                                              dialog_attribute_name_buffer.as_string());
+  }
 }
 
 }  // namespace tactile::ui

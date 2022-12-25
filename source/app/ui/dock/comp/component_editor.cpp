@@ -37,6 +37,7 @@
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
+#include "ui/dock/comp/dialogs/add_component_attr_dialog.hpp"
 #include "ui/dock/comp/dialogs/define_component_dialog.hpp"
 #include "ui/dock/comp/dialogs/rename_component_dialog.hpp"
 #include "ui/dock/property/dialogs/property_type_combo.hpp"
@@ -140,11 +141,11 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
   }
 
   auto& dialogs = get_dialogs();
-  dialogs.add_component_attr.update(model, dispatcher);
   dialogs.rename_component_attr.update(model, dispatcher);
 
   update_define_component_dialog(model, dispatcher);
   update_rename_component_dialog(model, dispatcher);
+  update_create_component_attribute_dialog(model, dispatcher);
 
   ImGui::Spacing();
   ImGui::Separator();
@@ -185,7 +186,8 @@ void ComponentEditor::show_component_attributes(const ComponentDefinition& defin
   }
   else {
     constexpr auto table_flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_Resizable;
-    if (Table table {"##ComponentAttributeTable", 3, table_flags}; table.is_open()) {
+    if (const Table table {"##ComponentAttributeTable", 3, table_flags};
+        table.is_open()) {
       ImGui::TableSetupColumn(lang.misc.name.c_str(), ImGuiTableColumnFlags_WidthStretch);
       ImGui::TableSetupColumn(lang.misc.type.c_str(), ImGuiTableColumnFlags_WidthStretch);
       ImGui::TableSetupColumn(lang.misc.default_value.c_str(),
@@ -199,7 +201,7 @@ void ComponentEditor::show_component_attributes(const ComponentDefinition& defin
   }
 
   if (ui_centered_button(lang.action.create_attribute.c_str())) {
-    get_dialogs().add_component_attr.show(*data.active_component);
+    open_create_component_attribute_dialog(data.active_component.value());
   }
 }
 
