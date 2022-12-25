@@ -43,6 +43,7 @@
 #include "ui/dock/layer/layer_dock.hpp"
 #include "ui/dock/log/log_dock.hpp"
 #include "ui/dock/property/property_dock.hpp"
+#include "ui/dock/tileset/dialogs/create_tileset_dialog.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
 #include "ui/menu/menu_bar.hpp"
 #include "ui/style/colors.hpp"
@@ -104,12 +105,12 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
 
   auto& dialogs = get_dialogs();
   dialogs.component_editor.update(model, dispatcher);
-  dialogs.create_tileset.update(model, dispatcher);
 
-  update_settings_dialog(dispatcher);
   update_create_map_dialog(dispatcher);
+  update_create_tileset_dialog(dispatcher);
   update_resize_map_dialog(dispatcher);
   update_godot_export_dialog(dispatcher);
+  update_settings_dialog(dispatcher);
   update_map_parse_error_dialog();
   update_credits_dialog();
   update_about_dialog();

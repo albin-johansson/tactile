@@ -19,33 +19,11 @@
 
 #pragma once
 
-#include "core/type/array.hpp"
-#include "core/type/math.hpp"
-#include "core/type/path.hpp"
-#include "ui/dialog/dialog.hpp"
+#include <entt/signal/fwd.hpp>
 
 namespace tactile::ui {
 
-class CreateTilesetDialog final : public Dialog {
- public:
-  CreateTilesetDialog();
-
-  void open();
-
- protected:
-  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
-
-  void on_accept(entt::dispatcher& dispatcher) override;
-
-  [[nodiscard]] auto is_current_input_valid(const DocumentModel& model) const
-      -> bool override;
-
- private:
-  Path mFullImagePath;
-  Array<char, 100> mPathPreviewBuffer {};
-  Int2 mTileSize {32, 32};
-
-  void show_image_file_dialog();
-};
+void open_create_tileset_dialog();
+void update_create_tileset_dialog(entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

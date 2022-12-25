@@ -23,6 +23,4 @@ namespace tactile::ui {
 
 void update_map_menu();
 
-void show_tileset_creation_dialog();
-
 }  // namespace tactile::ui

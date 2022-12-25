@@ -30,7 +30,7 @@
 #include "model/document/tileset_document.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
-#include "ui/menu/map_menu.hpp"
+#include "ui/dock/tileset/dialogs/create_tileset_dialog.hpp"
 
 namespace tactile {
 namespace {
@@ -45,7 +45,7 @@ void on_inspect_tileset()
 
 void on_show_new_tileset_dialog()
 {
-  ui::show_tileset_creation_dialog();
+  ui::open_create_tileset_dialog();
 }
 
 void on_load_tileset(const LoadTilesetEvent& event)

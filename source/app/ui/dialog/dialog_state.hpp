@@ -27,14 +27,10 @@
 #include "ui/dock/property/dialogs/add_property_dialog.hpp"
 #include "ui/dock/property/dialogs/change_property_type_dialog.hpp"
 #include "ui/dock/property/dialogs/rename_property_dialog.hpp"
-#include "ui/dock/tileset/dialogs/create_tileset_dialog.hpp"
 
 namespace tactile::ui {
 
 struct [[deprecated]] DialogState final {
-  // Tilesets
-  CreateTilesetDialog create_tileset;
-
   // Components
   ComponentEditor component_editor;
   DefineComponentDialog define_component;
