@@ -72,7 +72,6 @@ class ObjectLayer final : public AbstractLayer {
   [[nodiscard]] auto end() const noexcept { return mObjects.end(); }
 
  private:
-  LayerDelegate mDelegate;
   HashMap<UUID, Shared<Object>> mObjects;
   Maybe<UUID> mActiveObject;
 };
