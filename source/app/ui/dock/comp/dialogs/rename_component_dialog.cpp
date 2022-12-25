@@ -56,6 +56,16 @@ void update_rename_component_dialog(const DocumentModel& model,
 {
   const auto& lang = get_current_language();
 
+  const auto& document = model.require_active_document();
+  const auto* component_index = document.view_component_index();
+
+  if (dialog_component_id.has_value() &&  //
+      component_index != nullptr && !component_index->contains(*dialog_component_id)) {
+    dialog_component_id.reset();
+    open_dialog = false;
+    return;
+  }
+
   DialogOptions options {
       .title = lang.window.rename_component.c_str(),
       .close_label = lang.misc.cancel.c_str(),
@@ -69,10 +79,7 @@ void update_rename_component_dialog(const DocumentModel& model,
     open_dialog = false;
   }
 
-  const auto& document = model.require_active_document();
-  const auto* component_index = document.view_component_index();
   const auto current_name = dialog_component_name_buffer.as_string_view();
-
   if (!current_name.empty() &&  //
       component_index != nullptr && !component_index->contains(current_name)) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;

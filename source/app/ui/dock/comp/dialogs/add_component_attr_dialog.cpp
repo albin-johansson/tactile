@@ -50,6 +50,14 @@ void update_create_component_attribute_dialog(const DocumentModel& model,
                                               entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
+  const auto* component_index = model.require_active_document().view_component_index();
+
+  if (dialog_component_id.has_value() &&  //
+      component_index != nullptr && !component_index->contains(*dialog_component_id)) {
+    dialog_component_id.reset();
+    open_dialog = false;
+    return;
+  }
 
   DialogOptions options {
       .title = lang.window.create_attribute.c_str(),
@@ -62,7 +70,6 @@ void update_create_component_attribute_dialog(const DocumentModel& model,
     open_dialog = false;
   }
 
-  const auto* component_index = model.require_active_document().view_component_index();
   const auto current_name = dialog_attribute_name_buffer.as_string_view();
 
   if (!current_name.empty() &&  //
