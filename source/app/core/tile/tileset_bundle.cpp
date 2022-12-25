@@ -21,9 +21,9 @@
 
 #include <utility>  // move
 
-#include "core/util/assoc.hpp"
 #include "core/debug/assert.hpp"
 #include "core/debug/panic.hpp"
+#include "core/util/assoc.hpp"
 
 namespace tactile {
 
@@ -82,6 +82,11 @@ void TilesetBundle::select_tileset(const UUID& id)
   else {
     throw TactileError {"Invalid tileset identifier!"};
   }
+}
+
+void TilesetBundle::set_next_tile_id(const TileID next_id)
+{
+  mNextTileId = next_id;
 }
 
 auto TilesetBundle::has_tileset(const UUID& id) const -> bool

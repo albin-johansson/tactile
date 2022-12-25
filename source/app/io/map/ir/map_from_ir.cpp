@@ -19,11 +19,13 @@
 
 #include "map_from_ir.hpp"
 
-#include <utility>  // move
+#include <algorithm>  // max
+#include <utility>    // move
 
 #include <entt/entity/registry.hpp>
 
 #include "core/component/component_index.hpp"
+#include "core/debug/assert.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
@@ -35,7 +37,6 @@
 #include "core/type/maybe.hpp"
 #include "core/type/uuid.hpp"
 #include "core/util/functional.hpp"
-#include "core/debug/assert.hpp"
 #include "io/load_texture.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/parse_result.hpp"
@@ -253,12 +254,18 @@ void restore_tilesets(DocumentModel& model,
     restore_tileset(model, index, tileset_data);
   }
 
-  auto& document = model.require_active_map();
-  auto& map = document.get_map();
-  auto& tilesets = map.tileset_bundle();
+  auto& map = model.require_active_map().get_map();
+  auto& tileset_bundle = map.tileset_bundle();
 
-  if (!tilesets.empty()) {
-    map.tileset_bundle().select_tileset(tilesets.begin()->first);
+  // Determine the next available tile identifier
+  TileID next_tile_id {1};
+  for (const auto& [tileset_id, tileset_ref]: tileset_bundle) {
+    next_tile_id = std::max(next_tile_id, tileset_ref.last_tile() + 1);
+  }
+  tileset_bundle.set_next_tile_id(next_tile_id);
+
+  if (!tileset_bundle.empty()) {
+    tileset_bundle.select_tileset(tileset_bundle.begin()->first);
   }
 }
 

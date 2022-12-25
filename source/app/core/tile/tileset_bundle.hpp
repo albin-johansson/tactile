@@ -44,6 +44,8 @@ class TilesetBundle final {
 
   void select_tileset(const UUID& id);
 
+  void set_next_tile_id(TileID next_id);
+
   [[nodiscard]] auto has_tileset(const UUID& id) const -> bool;
 
   /// Indicates whether there is a tileset with the specified tile identifier.
