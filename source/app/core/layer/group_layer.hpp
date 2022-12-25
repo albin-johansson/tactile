@@ -41,7 +41,7 @@ class GroupLayer final : public AbstractLayer {
   void accept(LayerVisitor& visitor) override;
   void accept(ConstLayerVisitor& visitor) const override;
 
-  /// Behaves the same as accept(), except for not including itself (the root)
+  /// Behaves the same as accept, except for not including itself (the root)
   void each(LayerVisitor& visitor);
   void each(ConstLayerVisitor& visitor) const;
   void each(const UnaryLayerFunc& func) const;
@@ -96,7 +96,7 @@ class GroupLayer final : public AbstractLayer {
   void set_layer_index(const UUID& layer_id, usize index);
 
   /// Returns the total number of layers in the hierarchy.
-  [[nodiscard]] auto size() const -> usize;
+  [[nodiscard]] auto layer_count() const -> usize;
 
   /// Returns the amount of siblings for a specific layer.
   [[nodiscard]] auto layer_sibling_count(const UUID& layer_id) const -> usize;

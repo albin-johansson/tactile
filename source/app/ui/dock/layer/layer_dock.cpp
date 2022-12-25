@@ -117,7 +117,7 @@ void update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
   const auto& document = model.require_active_map();
   const auto& root = document.get_map().invisible_root();
 
-  if (root.size() == 0) {
+  if (root.layer_count() == 0) {
     const auto& lang = get_current_language();
 
     prepare_vertical_alignment_center(1);

@@ -156,7 +156,7 @@ auto Map::fix_tiles() -> FixTilesResult
 
 void Map::add_layer(Shared<Layer> layer, const Maybe<UUID>& parent_id)
 {
-  const auto id = layer->get_uuid();
+  const auto layer_id = layer->get_uuid();
 
   if (parent_id) {
     invisible_root().add_layer(*parent_id, layer);
@@ -165,9 +165,9 @@ void Map::add_layer(Shared<Layer> layer, const Maybe<UUID>& parent_id)
     invisible_root().add_layer(std::move(layer));
   }
 
-  // Select the layer if it's the first one to be added
-  if (invisible_root().size() == 1) {
-    mData->active_layer = id;
+  // Select the layer if was the first one to be added
+  if (invisible_root().layer_count() == 1) {
+    mData->active_layer = layer_id;
   }
 }
 

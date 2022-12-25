@@ -163,7 +163,7 @@ void GroupLayer::set_layer_index(const UUID& layer_id, const usize index)
   }
 }
 
-auto GroupLayer::size() const -> usize
+auto GroupLayer::layer_count() const -> usize
 {
   LayerCounter counter;
   each(counter);
@@ -258,7 +258,7 @@ auto GroupLayer::find_tile_layer(const UUID& layer_id) -> TileLayer*
 
 auto GroupLayer::find_tile_layer(const UUID& layer_id) const -> const TileLayer*
 {
-  GenericLayerFinder<TileLayer> finder {layer_id};
+  GenericConstLayerFinder<TileLayer> finder {layer_id};
   each(finder);
   return finder.get_found_layer();
 }
@@ -272,7 +272,7 @@ auto GroupLayer::find_object_layer(const UUID& layer_id) -> ObjectLayer*
 
 auto GroupLayer::find_object_layer(const UUID& layer_id) const -> const ObjectLayer*
 {
-  GenericLayerFinder<ObjectLayer> finder {layer_id};
+  GenericConstLayerFinder<ObjectLayer> finder {layer_id};
   each(finder);
   return finder.get_found_layer();
 }
@@ -286,7 +286,7 @@ auto GroupLayer::find_group_layer(const UUID& layer_id) -> GroupLayer*
 
 auto GroupLayer::find_group_layer(const UUID& layer_id) const -> const GroupLayer*
 {
-  GenericLayerFinder<GroupLayer> finder {layer_id};
+  GenericConstLayerFinder<GroupLayer> finder {layer_id};
   each(finder);
   return finder.get_found_layer();
 }

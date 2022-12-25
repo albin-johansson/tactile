@@ -45,7 +45,7 @@ TEST(AddLayer, RedoUndo)
   cmd::AddLayer cmd {document.get(), LayerType::TileLayer};
 
   cmd.redo();
-  ASSERT_EQ(1u, root.size());
+  ASSERT_EQ(1u, root.layer_count());
   ASSERT_EQ(2u, contexts.size());
   ASSERT_TRUE(map.active_layer_id().has_value());
 
@@ -53,7 +53,7 @@ TEST(AddLayer, RedoUndo)
   ASSERT_TRUE(contexts.contains(layer_id));
 
   cmd.undo();
-  ASSERT_EQ(0u, root.size());
+  ASSERT_EQ(0u, root.layer_count());
   ASSERT_EQ(1u, contexts.size());
   ASSERT_FALSE(map.active_layer_id().has_value());
   ASSERT_FALSE(contexts.contains(layer_id));

@@ -49,11 +49,11 @@ TEST(RemoveLayer, RedoUndo)
   cmd::RemoveLayer cmd {document.get(), layer_id};
 
   cmd.redo();
-  ASSERT_EQ(0u, root.size());
+  ASSERT_EQ(0u, root.layer_count());
   ASSERT_FALSE(contexts.contains(layer_id));
 
   cmd.undo();
-  ASSERT_EQ(1u, root.size());
+  ASSERT_EQ(1u, root.layer_count());
   ASSERT_TRUE(contexts.contains(layer_id));
 }
 

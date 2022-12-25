@@ -33,7 +33,7 @@ namespace tactile::test {
 TEST(GroupLayer, Defaults)
 {
   GroupLayer root;
-  ASSERT_EQ(0u, root.size());
+  ASSERT_EQ(0u, root.layer_count());
 
   struct Counter final : ConstLayerVisitor {
     usize count {};
@@ -60,7 +60,7 @@ TEST(GroupLayer, SimpleEach)
   root.add_layer(g1);
   root.add_layer(g1->get_uuid(), o1);
 
-  ASSERT_EQ(3u, root.size());
+  ASSERT_EQ(3u, root.layer_count());
 
   ASSERT_EQ(nothing, t1->get_parent());
   ASSERT_EQ(nothing, g1->get_parent());
@@ -98,7 +98,7 @@ TEST(GroupLayer, AddLayer)
   auto t1 = std::make_shared<TileLayer>();
   root.add_layer(t1);
 
-  ASSERT_EQ(1u, root.size());
+  ASSERT_EQ(1u, root.layer_count());
   ASSERT_EQ(0u, root.local_layer_index(t1->get_uuid()));
   ASSERT_EQ(0u, root.global_layer_index(t1->get_uuid()));
   ASSERT_EQ(nothing, t1->get_parent());
@@ -106,7 +106,7 @@ TEST(GroupLayer, AddLayer)
   auto t2 = std::make_shared<TileLayer>();
   root.add_layer(t2);
 
-  ASSERT_EQ(2u, root.size());
+  ASSERT_EQ(2u, root.layer_count());
   ASSERT_EQ(0u, root.local_layer_index(t1->get_uuid()));
   ASSERT_EQ(1u, root.local_layer_index(t2->get_uuid()));
   ASSERT_EQ(0u, root.global_layer_index(t1->get_uuid()));
@@ -119,7 +119,7 @@ TEST(GroupLayer, AddLayer)
   root.add_layer(g1);
   root.add_layer(g1->get_uuid(), t3);
 
-  ASSERT_EQ(4u, root.size());
+  ASSERT_EQ(4u, root.layer_count());
 
   ASSERT_EQ(0u, root.local_layer_index(t1->get_uuid()));
   ASSERT_EQ(1u, root.local_layer_index(t2->get_uuid()));
@@ -142,10 +142,10 @@ TEST(GroupLayer, AddLayerToParent)
   auto group = std::make_shared<GroupLayer>();
   root.add_layer(group);
   root.add_layer(group->get_uuid(), std::make_shared<TileLayer>());
-  ASSERT_EQ(2u, root.size());
+  ASSERT_EQ(2u, root.layer_count());
 
   ASSERT_NO_THROW(root.add_layer(make_uuid(), std::make_shared<ObjectLayer>()));
-  ASSERT_EQ(2u, root.size());
+  ASSERT_EQ(2u, root.layer_count());
 }
 
 TEST(GroupLayer, RemoveLayer)
@@ -165,7 +165,7 @@ TEST(GroupLayer, RemoveLayer)
   ASSERT_EQ(g1, root.remove_layer(g1->get_uuid()));
   ASSERT_EQ(t2, root.remove_layer(t2->get_uuid()));
 
-  ASSERT_EQ(0u, root.size());
+  ASSERT_EQ(0u, root.layer_count());
 }
 
 TEST(GroupLayer, MoveLayerUp)

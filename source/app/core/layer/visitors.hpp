@@ -127,7 +127,7 @@ class ConstLayerFinder final : public ConstLayerVisitor {
 };
 
 template <typename T>
-class GenericLayerFinder final : public LayerVisitor, public ConstLayerVisitor {
+class GenericLayerFinder final : public LayerVisitor {
  public:
   explicit GenericLayerFinder(const UUID& layer_id)
       : mLayerId {layer_id}
@@ -141,20 +141,33 @@ class GenericLayerFinder final : public LayerVisitor, public ConstLayerVisitor {
     }
   }
 
-  void visit(const T& layer) override
-  {
-    if (mLayerId == layer.get_uuid()) {
-      mConstLayer = &layer;
-    }
-  }
-
   [[nodiscard]] auto get_found_layer() -> T* { return mLayer; }
-  [[nodiscard]] auto get_found_layer() const -> const T* { return mConstLayer; }
 
  private:
   UUID mLayerId;
   T* mLayer {};
-  const T* mConstLayer {};
+};
+
+template <typename T>
+class GenericConstLayerFinder final : public ConstLayerVisitor {
+ public:
+  explicit GenericConstLayerFinder(const UUID& layer_id)
+      : mLayerId {layer_id}
+  {
+  }
+
+  void visit(const T& layer) override
+  {
+    if (mLayerId == layer.get_uuid()) {
+      mLayer = &layer;
+    }
+  }
+
+  [[nodiscard]] auto get_found_layer() const -> const T* { return mLayer; }
+
+ private:
+  UUID mLayerId;
+  const T* mLayer {};
 };
 
 }  // namespace tactile
