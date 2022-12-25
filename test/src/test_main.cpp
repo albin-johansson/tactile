@@ -19,9 +19,9 @@
 
 #include <gtest/gtest.h>
 
+#include "app/app_context.hpp"
 #include "cfg/configuration.hpp"
 #include "debug/logging.hpp"
-#include "editor/app_context.hpp"
 
 auto main(int argc, char* argv[]) -> int
 {

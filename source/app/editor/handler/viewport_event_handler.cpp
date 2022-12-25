@@ -22,10 +22,10 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "app/app_context.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/type/math.hpp"
 #include "core/viewport.hpp"
-#include "editor/app_context.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/model.hpp"

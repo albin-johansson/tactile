@@ -24,8 +24,8 @@
 #include <entt/signal/dispatcher.hpp>
 #include <spdlog/spdlog.h>
 
+#include "app/app_context.hpp"
 #include "core/tile/tileset_bundle.hpp"
-#include "editor/app_context.hpp"
 #include "io/load_texture.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"

@@ -21,7 +21,7 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "editor/app_context.hpp"
+#include "app/app_context.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/proto/history.hpp"
 #include "model/document/map_document.hpp"

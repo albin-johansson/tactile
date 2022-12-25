@@ -22,8 +22,8 @@
 #include <entt/signal/dispatcher.hpp>
 #include <spdlog/spdlog.h>
 
+#include "app/app_context.hpp"
 #include "debug/assert.hpp"
-#include "editor/app_context.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/ir/map_from_ir.hpp"

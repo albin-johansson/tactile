@@ -19,7 +19,7 @@
 
 #include "tileset_menu.hpp"
 
-#include "editor/app_context.hpp"
+#include "app/app_context.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/model.hpp"

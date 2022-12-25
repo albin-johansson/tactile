@@ -113,9 +113,9 @@ class ConstLayerFinder final : public ConstLayerVisitor {
  public:
   explicit ConstLayerFinder(const UUID& layer_id);
 
-  void visit(const TileLayer& layer) override ;
-  void visit(const ObjectLayer& layer) override ;
-  void visit(const GroupLayer& layer) override ;
+  void visit(const TileLayer& layer) override;
+  void visit(const ObjectLayer& layer) override;
+  void visit(const GroupLayer& layer) override;
 
   [[nodiscard]] auto found_layer() -> const Layer* { return mLayer; }
 

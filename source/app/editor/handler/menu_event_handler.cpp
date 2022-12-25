@@ -22,8 +22,8 @@
 #include <centurion/system.hpp>
 #include <entt/signal/dispatcher.hpp>
 
+#include "app/app_context.hpp"
 #include "core/util/filesystem.hpp"
-#include "editor/app_context.hpp"
 #include "editor/menu/menu.hpp"
 #include "io/proto/history.hpp"
 #include "io/proto/preferences.hpp"

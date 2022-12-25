@@ -23,11 +23,11 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "app/app_context.hpp"
 #include "core/type/chrono.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/maybe.hpp"
 #include "debug/assert.hpp"
-#include "editor/app_context.hpp"
 #include "model/event/menu_events.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"

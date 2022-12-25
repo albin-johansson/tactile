@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "editor/app_context.hpp"
+#include "app/app_context.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

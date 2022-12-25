@@ -21,7 +21,7 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "editor/app_context.hpp"
+#include "app/app_context.hpp"
 #include "model/document/document.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"

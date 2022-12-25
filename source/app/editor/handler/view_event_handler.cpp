@@ -23,8 +23,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "app/app_context.hpp"
 #include "debug/assert.hpp"
-#include "editor/app_context.hpp"
 #include "io/proto/preferences.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/view_events.hpp"

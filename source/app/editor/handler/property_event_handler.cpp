@@ -21,8 +21,8 @@
 
 #include <entt/signal/dispatcher.hpp>
 
+#include "app/app_context.hpp"
 #include "core/context/context_manager.hpp"
-#include "editor/app_context.hpp"
 #include "model/document/document.hpp"
 #include "model/event/property_events.hpp"
 #include "model/model.hpp"
