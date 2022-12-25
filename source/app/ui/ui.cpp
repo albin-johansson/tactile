@@ -39,6 +39,7 @@
 #include "ui/dialog/resize_map_dialog.hpp"
 #include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/comp/component_dock.hpp"
+#include "ui/dock/comp/component_editor.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
 #include "ui/dock/log/log_dock.hpp"
@@ -103,9 +104,7 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
 
   update_viewport_widget(model, dispatcher);
 
-  auto& dialogs = get_dialogs();
-  dialogs.component_editor.update(model, dispatcher);
-
+  update_component_editor_dialog(model, dispatcher);
   update_create_map_dialog(dispatcher);
   update_create_tileset_dialog(dispatcher);
   update_resize_map_dialog(dispatcher);
@@ -135,12 +134,6 @@ void show_map_selector_dialog()
 void show_about_dear_imgui_dialog()
 {
   ui_show_about_imgui = true;
-}
-
-void show_component_editor()
-{
-  const auto& model = get_model();
-  get_dialogs().component_editor.show(model);
 }
 
 auto is_editor_focused() -> bool

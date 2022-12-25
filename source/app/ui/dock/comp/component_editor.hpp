@@ -19,49 +19,17 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
+#include <entt/signal/fwd.hpp>
 
-#include "core/type/ptr.hpp"
-#include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
-#include "ui/dialog/dialog.hpp"
 
-namespace tactile {
-class Document;
-class Attribute;
-class ComponentDefinition;
-}  // namespace tactile
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 
 namespace tactile::ui {
 
-/// Used to manage the available component definitions.
-class ComponentEditor final : public Dialog {
- public:
-  TACTILE_DELETE_COPY(ComponentEditor);
-  TACTILE_DEFAULT_MOVE(ComponentEditor);
+void open_component_editor_dialog(const DocumentModel& model);
 
-  ComponentEditor();
-
-  ~ComponentEditor() noexcept override;
-
-  void show(const DocumentModel& model);
-
- protected:
-  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
-
- private:
-  struct Data;
-  Unique<Data> mData;
-
-  void show_component_combo_popup(const Document& document, entt::dispatcher& dispatcher);
-
-  void show_component_attributes(const ComponentDefinition& definition,
-                                 entt::dispatcher& dispatcher);
-
-  void show_component_attribute(const UUID& component_id,
-                                const String& name,
-                                const Attribute& value,
-                                entt::dispatcher& dispatcher);
-};
+void update_component_editor_dialog(const DocumentModel& model,
+                                    entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

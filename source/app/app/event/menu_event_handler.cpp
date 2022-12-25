@@ -34,6 +34,7 @@
 #include "ui/dialog/dialogs.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
 #include "ui/dialog/settings_dialog.hpp"
+#include "ui/dock/comp/component_editor.hpp"
 #include "ui/ui.hpp"
 
 namespace tactile {
@@ -116,7 +117,7 @@ void dispatch_menu_action(const MenuAction action)
       break;
 
     case MenuAction::ComponentEditor:
-      ui::get_dialogs().component_editor.show(model);
+      ui::open_component_editor_dialog(model);
       break;
 
     case MenuAction::OpenSettings:

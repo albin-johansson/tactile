@@ -35,8 +35,6 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 void show_about_dear_imgui_dialog();
 
-[[deprecated]] void show_component_editor();
-
 [[nodiscard]] auto is_editor_focused() -> bool;
 
 }  // namespace tactile::ui

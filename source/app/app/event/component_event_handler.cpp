@@ -24,14 +24,14 @@
 #include "model/document/document.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
-#include "ui/ui.hpp"
+#include "ui/dock/comp/component_editor.hpp"
 
 namespace tactile {
 namespace {
 
 void on_show_component_editor()
 {
-  ui::show_component_editor();
+  ui::open_component_editor_dialog(get_model());
 }
 
 void on_define_component(const DefineComponentEvent& event)

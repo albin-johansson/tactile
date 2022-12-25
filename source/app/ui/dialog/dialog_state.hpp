@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "ui/dock/comp/component_editor.hpp"
 #include "ui/dock/layer/add_layer_context_menu.hpp"
 #include "ui/dock/property/dialogs/add_property_dialog.hpp"
 #include "ui/dock/property/dialogs/change_property_type_dialog.hpp"
@@ -28,10 +27,6 @@
 namespace tactile::ui {
 
 struct [[deprecated]] DialogState final {
-  // Components
-  ComponentEditor component_editor;
-
-  // Properties
   AddPropertyDialog add_property;
   RenamePropertyDialog rename_property;
   ChangePropertyTypeDialog change_property_type;
