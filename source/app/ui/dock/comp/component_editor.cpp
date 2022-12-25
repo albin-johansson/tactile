@@ -26,10 +26,10 @@
 
 #include "core/attribute.hpp"
 #include "core/component/component_index.hpp"
+#include "core/debug/assert.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/string.hpp"
 #include "core/type/uuid.hpp"
-#include "core/debug/assert.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/component_events.hpp"
@@ -37,6 +37,7 @@
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
+#include "ui/dock/comp/dialogs/rename_component_dialog.hpp"
 #include "ui/dock/property/dialogs/property_type_combo.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/input_widgets.hpp"
@@ -83,7 +84,7 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
   auto& data = *mData;
   const auto& lang = get_current_language();
 
-  /* Ensure that the active component ID hasn't been invalidated */
+  // Ensure that the active component ID hasn't been invalidated
   if (data.active_component && !index->contains(*data.active_component)) {
     data.active_component.reset();
   }
@@ -140,8 +141,9 @@ void ComponentEditor::on_update(const DocumentModel& model, entt::dispatcher& di
   auto& dialogs = get_dialogs();
   dialogs.define_component.update(model, dispatcher);
   dialogs.add_component_attr.update(model, dispatcher);
-  dialogs.rename_component.update(model, dispatcher);
   dialogs.rename_component_attr.update(model, dispatcher);
+
+  update_rename_component_dialog(model, dispatcher);
 
   ImGui::Spacing();
   ImGui::Separator();
@@ -151,14 +153,15 @@ void ComponentEditor::show_component_combo_popup(const Document& document,
                                                  entt::dispatcher& dispatcher)
 {
   auto& data = *mData;
-  const auto& lang = get_current_language();
 
-  if (Popup popup {"##ComponentEditorPopup"}; popup.is_open()) {
+  if (const Popup popup {"##ComponentEditorPopup"}; popup.is_open()) {
+    const auto& lang = get_current_language();
+
     if (ImGui::MenuItem(lang.action.rename_component.c_str())) {
-      const auto id = data.active_component.value();
-      const auto* index = document.view_component_index();
-      const auto& name = index->at(id).name();
-      get_dialogs().rename_component.show(name, id);
+      const auto component_id = data.active_component.value();
+      const auto* component_index = document.view_component_index();
+      const auto& component_name = component_index->at(component_id).name();
+      open_rename_component_dialog(component_id, component_name);
     }
 
     ImGui::Separator();

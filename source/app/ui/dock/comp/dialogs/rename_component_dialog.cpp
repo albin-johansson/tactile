@@ -22,33 +22,77 @@
 #include <utility>  // move
 
 #include <entt/signal/dispatcher.hpp>
+#include <imgui.h>
 
+#include "core/component/component_index.hpp"
+#include "core/util/string_buffer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/component_events.hpp"
+#include "model/model.hpp"
+#include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
+namespace {
 
-RenameComponentDialog::RenameComponentDialog()
-    : ComponentNameDialog {"Rename Component"}
+inline Maybe<UUID> dialog_component_id;
+inline String dialog_old_component_name;
+inline StringBuffer dialog_component_name_buffer;
+inline constinit bool open_dialog = false;
+
+}  // namespace
+
+void open_rename_component_dialog(const UUID& component_id, String current_name)
 {
+  dialog_component_id = component_id;
+  dialog_component_name_buffer = current_name;
+  dialog_old_component_name = std::move(current_name);
+
+  open_dialog = true;
 }
 
-void RenameComponentDialog::show(String previous_name, const UUID& component_id)
+void update_rename_component_dialog(const DocumentModel& model,
+                                    entt::dispatcher& dispatcher)
 {
-  mComponentId = component_id;
-
   const auto& lang = get_current_language();
-  set_title(lang.window.rename_component);
-  set_accept_button_label(lang.misc.rename);
 
-  ComponentNameDialog::show(std::move(previous_name));
-}
+  DialogOptions options {
+      .title = lang.window.rename_component.c_str(),
+      .close_label = lang.misc.cancel.c_str(),
+      .accept_label = lang.misc.rename.c_str(),
+  };
 
-void RenameComponentDialog::on_accept(entt::dispatcher& dispatcher)
-{
-  dispatcher.enqueue<RenameComponentEvent>(mComponentId.value(),
-                                           String {current_input()});
+  const bool should_acquire_focus = open_dialog;
+
+  if (open_dialog) {
+    options.flags |= UI_DIALOG_FLAG_OPEN;
+    open_dialog = false;
+  }
+
+  const auto& document = model.require_active_document();
+  const auto* component_index = document.view_component_index();
+  const auto current_name = dialog_component_name_buffer.as_string_view();
+
+  if (!current_name.empty() &&  //
+      component_index != nullptr && !component_index->contains(current_name)) {
+    options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
+  }
+
+  DialogAction action {DialogAction::None};
+  if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
+    if (should_acquire_focus) {
+      ImGui::SetKeyboardFocusHere();
+    }
+    ImGui::InputTextWithHint("##Input",
+                             "",
+                             dialog_component_name_buffer.data(),
+                             sizeof dialog_component_name_buffer);
+  }
+
+  if (action == DialogAction::Accept) {
+    dispatcher.enqueue<RenameComponentEvent>(dialog_component_id.value(),
+                                             dialog_component_name_buffer.as_string());
+  }
 }
 
 }  // namespace tactile::ui

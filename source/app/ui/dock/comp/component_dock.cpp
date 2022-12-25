@@ -53,13 +53,13 @@ void show_add_component_button_popup_content(const Document& document,
   TACTILE_ASSERT(index != nullptr);
 
   if (index->empty()) {
-    Disable disable;
+    const Disable disable;
     ImGui::TextUnformatted(lang.misc.no_available_components.c_str());
   }
   else {
     const auto& comps = context.get_ctx().comps();
     for (const auto& [definition_id, definition]: *index) {
-      Disable disable_if {comps.contains(definition_id)};
+      const Disable disable_if {comps.contains(definition_id)};
 
       if (ImGui::MenuItem(definition.name().c_str())) {
         dispatcher.enqueue<AttachComponentEvent>(context.get_uuid(), definition_id);
@@ -81,7 +81,7 @@ void show_contents(const Document& document, entt::dispatcher& dispatcher)
   const FmtString indicator {"{}: {}", lang.misc.context, context.get_ctx().name()};
   ImGui::TextUnformatted(indicator.data());
 
-  if (Child pane {"##ComponentsChild"}; pane.is_open()) {
+  if (const Child pane {"##ComponentsChild"}; pane.is_open()) {
     const auto& comps = context.get_ctx().comps();
     if (comps.empty()) {
       prepare_vertical_alignment_center(2);
@@ -105,7 +105,7 @@ void show_contents(const Document& document, entt::dispatcher& dispatcher)
       ImGui::OpenPopup(add_component_popup_id);
     }
 
-    if (Popup popup {add_component_popup_id}; popup.is_open()) {
+    if (const Popup popup {add_component_popup_id}; popup.is_open()) {
       show_add_component_button_popup_content(document, context, dispatcher);
     }
   }
@@ -123,9 +123,9 @@ void update_component_dock(const DocumentModel& model, entt::dispatcher& dispatc
 
   const auto& lang = get_current_language();
 
-  Window dock {lang.window.component_dock.c_str(),
-               ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
-               &prefs.show_component_dock};
+  const Window dock {lang.window.component_dock.c_str(),
+                     ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
+                     &prefs.show_component_dock};
 
   if (dock.is_open()) {
     const auto& document = model.require_active_document();

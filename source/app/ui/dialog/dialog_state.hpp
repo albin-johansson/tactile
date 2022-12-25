@@ -23,7 +23,6 @@
 #include "ui/dock/comp/dialogs/add_component_attr_dialog.hpp"
 #include "ui/dock/comp/dialogs/define_component_dialog.hpp"
 #include "ui/dock/comp/dialogs/rename_component_attribute_dialog.hpp"
-#include "ui/dock/comp/dialogs/rename_component_dialog.hpp"
 #include "ui/dock/layer/add_layer_context_menu.hpp"
 #include "ui/dock/property/dialogs/add_property_dialog.hpp"
 #include "ui/dock/property/dialogs/change_property_type_dialog.hpp"
@@ -40,7 +39,6 @@ struct [[deprecated]] DialogState final {
   ComponentEditor component_editor;
   DefineComponentDialog define_component;
   AddComponentAttrDialog add_component_attr;
-  RenameComponentDialog rename_component;
   RenameComponentAttributeDialog rename_component_attr;
 
   // Properties

@@ -19,25 +19,18 @@
 
 #pragma once
 
-#include "component_name_dialog.hpp"
-#include "core/type/maybe.hpp"
+#include <entt/signal/fwd.hpp>
+
 #include "core/type/string.hpp"
 #include "core/type/uuid.hpp"
+#include "core/vocabulary.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 
 namespace tactile::ui {
 
-/// Used to change the name of a component definition.
-class RenameComponentDialog final : public ComponentNameDialog {
- public:
-  RenameComponentDialog();
-
-  void show(String previous_name, const UUID& component_id);
-
- protected:
-  void on_accept(entt::dispatcher& dispatcher) override;
-
- private:
-  Maybe<UUID> mComponentId;
-};
+void open_rename_component_dialog(const UUID& component_id, String current_name);
+void update_rename_component_dialog(const DocumentModel& model,
+                                    entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui
