@@ -89,8 +89,10 @@ void apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
   const auto component_hovered = make_darker(component_active);
 
   set(ImGuiCol_Text, cfg.text);
-  set(ImGuiCol_TextDisabled, {150, 150, 150, 0xFF});
   set(ImGuiCol_TextSelectedBg, with_alpha(cfg.accent, 0.40f));
+
+  // This causes weird issues, so skip for now
+  // set(ImGuiCol_TextDisabled, ImVec4 {0xCC, 0xCC, 0xCC, 0xFF});
 
   set(ImGuiCol_Border, make_darker(cfg.accent));
   set(ImGuiCol_BorderShadow, transparent);
