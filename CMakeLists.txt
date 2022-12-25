@@ -38,10 +38,11 @@ set(Boost_NO_WARN_NEW_VERSIONS ON)
 
 include(cmake/tactile.cmake)
 
-# Not acquired using vcpkg
+# System dependencies
 find_package(OpenGL REQUIRED)
 find_package(Boost REQUIRED)
 
+# Vcpkg dependencies
 find_package(EnTT CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(GLEW CONFIG REQUIRED)

@@ -1,8 +1,9 @@
 # Tactile YAML Format
 
-In addition to the Tiled JSON and XML formats, Tactile supports its own custom YAML map format. If you're familiar with
-the Tiled JSON format, you'll notice many similarities. However, one of the key differences is that the Tactile YAML
-format doesn't support embedded tilesets. All identifiers use `kebab-case`.
+In addition to the Tiled JSON and XML formats, Tactile supports its own custom YAML map format.
+If you're familiar with the Tiled JSON format, you'll notice many similarities.
+However, one of the key differences is that the Tactile YAML format doesn't support embedded tilesets.
+All identifiers use `kebab-case`.
 
 All attributes that aren't specified as required may be omitted from save files.
 
@@ -10,8 +11,7 @@ All attributes that aren't specified as required may be omitted from save files.
 
 The root node in the Tactile YAML format provides general information about the tilemap.
 
-Required attributes: `version`, `row-count`, `column-count`, `tile-width`, `tile-height`, `next-layer-id`
-, `next-object-id`.
+Required attributes: `version`, `row-count`, `column-count`, `tile-width`, `tile-height`, `next-layer-id`, `next-object-id`.
 
 |               Attribute |       Type       | Description                           |
 |------------------------:|:----------------:|:--------------------------------------|
@@ -35,19 +35,17 @@ Required attributes: `version`, `row-count`, `column-count`, `tile-width`, `tile
 
 Provides information about the representation of tile layer data.
 
-Using a `encoding` other than `plain` leads to tile layer data being encoded as a one-dimensional array of 32-bit
-integers. The tiles are arranged by appending each row after another, starting at the row at index zero (the top
-row in the editor). Compressed tile identifiers are always stored using little endian byte ordering.
+Using a `encoding` other than `plain` leads to tile layer data being encoded as a one-dimensional array of 32-bit integers.
+The tiles are arranged by appending each row after another, starting at the row at index zero (the top row in the editor).
+Compressed tile identifiers are always stored using little endian byte ordering.
 
-The emitter works by first compressing the tile data (unless `compression` is set to `none`), and then encoding the
-possibly compressed data. Omitting `encoding` or setting it to `plain` leads to tile layer data to be simply stored as a
-string of integers separated by spaces (potentially formatted with newlines).
+The emitter works by first compressing the tile data (unless `compression` is set to `none`), and then encoding the possibly compressed data.
+Omitting `encoding` or setting it to `plain` leads to tile layer data to be simply stored as a string of integers separated by spaces (potentially formatted with newlines).
 
 Note, it's not possible to specify a compression strategy whilst using `plain` encoding!
 
-The `zlib-compression-level` attribute directly corresponds to Zlib constants such as `Z_DEFAULT_COMPRESSION` (which
-is `-1`), `Z_BEST_SPEED` (which is `1`), and `Z_BEST_COMPRESSION` (which is `9`). You can use other values in the
-interval `[1, 9]` to request an intermediate compression mode, depending on the tradeoff you want to make.
+The `zlib-compression-level` attribute directly corresponds to Zlib constants such as `Z_DEFAULT_COMPRESSION` (which is `-1`), `Z_BEST_SPEED` (which is `1`), and `Z_BEST_COMPRESSION` (which is `9`).
+You can use other values in the interval `[1, 9]` to request an intermediate compression mode, depending on the tradeoff you want to make.
 
 Required attributes: N/A.
 
@@ -101,8 +99,7 @@ type: tile-layer
 data: 1 2 3 4 5 6 7 8
 ```
 
-In addition to the layer attributes listed above, each of the three different kinds of layers have additional
-attributes.
+In addition to the layer attributes listed above, each of the three different kinds of layers have additional attributes.
 
 ### `TileLayer`
 
@@ -162,8 +159,7 @@ y: 456
 
 ## `TilesetRef`
 
-The `TilesetRef` node provides information about an external tileset definition, and are always stored in the main
-tilemap file.
+The `TilesetRef` node provides information about an external tileset definition, and are always stored in the main tilemap file.
 
 TODO v2: change `first-global-id` to `first-tile`.
 
@@ -185,12 +181,11 @@ path: foo/bar/tileset.yaml
 
 ## `Tileset`
 
-The `Tileset` node is always defined in an external YAML file, since embedded tilesets are not supported by the Tactile
-YAML format. By default, a tileset that is added to a map in the Tactile editor will be stored next to the main map
-file. Note, the `tiles` node only contains tiles that feature additional data, such as properties and animations.
+The `Tileset` node is always defined in an external YAML file, since embedded tilesets are not supported by the Tactile YAML format.
+By default, a tileset that is added to a map in the Tactile editor will be stored next to the main map file.
+Note, the `tiles` node only contains tiles that feature additional data, such as properties and animations.
 
-Required attributes: `version`, `name`, `tile-count`, `tile-width`, `tile-height`, `column-count`, `image-path`
-, `image-width`, `image-height`.
+Required attributes: `version`, `name`, `tile-count`, `tile-width`, `tile-height`, `column-count`, `image-path`, `image-width`, `image-height`.
 
 |      Attribute |     Type     | Description                                |
 |---------------:|:------------:|:-------------------------------------------|

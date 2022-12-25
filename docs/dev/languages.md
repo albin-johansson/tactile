@@ -4,9 +4,12 @@ This document explains how internationalization is implemented in Tactile, and h
 
 ## Overview
 
-In order to support multiple languages, strings are not hardcoded in the application. Instead, all user-facing strings are loaded at application startup, and stored in structs. Use the `get_current_language` function to obtain a reference to the set of strings for the currently selected language.
+In order to support multiple languages, strings are not hardcoded in the application.
+Instead, all user-facing strings are loaded at application startup, and stored in structs.
+Use the `get_current_language` function to obtain a reference to the set of strings for the currently selected language.
 
-It's not necessary to translate all strings when adding a new language (see the `en_GB.json` file for an example), the language parser will use a fallback if a translation is missing. When adding a new language in the code, use English as the fallback language.
+It's not necessary to translate all strings when adding a new language (see the `en_GB.json` file for an example), the language parser will use a fallback if a translation is missing.
+When adding a new language in the code, use English as the fallback language.
 
 ```C++
 void some_widget()
@@ -26,7 +29,8 @@ void some_widget()
 
 ## Adding a new language
 
-The process of adding a new supported language in the code is the easy part. The basic procedure consist of the following steps.
+The process of adding a new supported language in the code is the easy part.
+The basic procedure consist of the following steps.
 
 * Add a JSON file with the translated strings to `assets/lang/`
   * The filename should at least be the ISO 639-1 code for the language, e.g. `sv.json` for Swedish. Translations for a specific region or country, such as British English, use the format `en_GB.json`.
