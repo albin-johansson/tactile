@@ -45,13 +45,23 @@ void TileAnimation::add_frame(const TileIndex tile, const ms_t duration)
   mFrames.push_back({tile, duration});
 }
 
+auto TileAnimation::operator[](const usize index) -> Frame&
+{
+  if (index < mFrames.size()) {
+    return mFrames[index];
+  }
+  else {
+    throw TactileError {"Invalid frame index"};
+  }
+}
+
 auto TileAnimation::operator[](const usize index) const -> const Frame&
 {
   if (index < mFrames.size()) {
     return mFrames[index];
   }
   else {
-    throw TactileError {"Invalid frame index!"};
+    throw TactileError {"Invalid frame index"};
   }
 }
 

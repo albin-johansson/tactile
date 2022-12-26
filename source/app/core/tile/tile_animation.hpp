@@ -43,6 +43,7 @@ class TileAnimation final {
   void add_frame(TileIndex tile, ms_t duration);
 
   /// Returns the frame at a specific index.
+  [[nodiscard]] auto operator[](usize index) -> Frame&;
   [[nodiscard]] auto operator[](usize index) const -> const Frame&;
 
   /// Returns the current frame.
