@@ -28,6 +28,7 @@
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
 #include "ui/dock/property/dialogs/add_property_dialog.hpp"
+#include "ui/dock/property/dialogs/rename_property_dialog.hpp"
 
 namespace tactile {
 namespace {
@@ -44,7 +45,7 @@ void on_show_rename_property_dialog(const ShowRenamePropertyDialogEvent& event)
 {
   if (const auto* document = get_model().active_document()) {
     const auto& context_id = document->get_contexts().active_context_id();
-    ui::get_dialogs().rename_property.open(context_id, event.current_name);
+    ui::open_rename_property_dialog(context_id, event.current_name);
   }
 }
 

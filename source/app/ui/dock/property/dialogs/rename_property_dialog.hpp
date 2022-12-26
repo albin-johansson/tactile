@@ -19,35 +19,19 @@
 
 #pragma once
 
-#include "core/type/maybe.hpp"
+#include <entt/signal/fwd.hpp>
+
 #include "core/type/string.hpp"
 #include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
-#include "ui/dialog/string_input_dialog.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 
 namespace tactile::ui {
 
-class RenamePropertyDialog final : public StringInputDialog {
- public:
-  TACTILE_DEFAULT_COPY(RenamePropertyDialog);
-  TACTILE_DEFAULT_MOVE(RenamePropertyDialog);
+void open_rename_property_dialog(const UUID& context_id, String previous_name);
 
-  RenamePropertyDialog();
-
-  ~RenamePropertyDialog() override = default;
-
-  void open(const UUID& context_id, String previous_name);
-
- protected:
-  using StringInputDialog::show;
-
-  void on_accept(entt::dispatcher& dispatcher) override;
-
-  [[nodiscard]] auto validate(const DocumentModel& model, StringView input) const
-      -> bool override;
-
- private:
-  Maybe<UUID> mContextId;
-};
+void update_rename_property_dialog(const DocumentModel& model,
+                                   entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui
