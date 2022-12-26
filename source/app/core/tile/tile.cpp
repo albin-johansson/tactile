@@ -86,13 +86,23 @@ auto Tile::is_animated() const -> bool
   return mAnimation.has_value();
 }
 
+auto Tile::get_animation() -> TileAnimation&
+{
+  if (mAnimation) {
+    return *mAnimation;
+  }
+  else {
+    throw TactileError {"No animation associated with tile"};
+  }
+}
+
 auto Tile::get_animation() const -> const TileAnimation&
 {
   if (mAnimation) {
     return *mAnimation;
   }
   else {
-    throw TactileError {"Tile is not animated!"};
+    throw TactileError {"No animation associated with tile"};
   }
 }
 

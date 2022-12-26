@@ -72,6 +72,7 @@ class Tile final : public Context {
   [[nodiscard]] auto is_animated() const -> bool;
 
   /// Returns the associated animation, if there is one.
+  [[nodiscard]] auto get_animation() -> TileAnimation&;
   [[nodiscard]] auto get_animation() const -> const TileAnimation&;
 
   /// Returns the index of the tile in the associated tile set.
