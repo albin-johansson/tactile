@@ -31,8 +31,8 @@
 namespace tactile::ui {
 namespace {
 
-inline constinit usize dialog_row_count = 0;
-inline constinit usize dialog_column_count = 0;
+inline constinit uint64 dialog_row_count = 0;
+inline constinit uint64 dialog_column_count = 0;
 inline constinit bool show_dialog = false;
 
 }  // namespace
@@ -63,22 +63,29 @@ void update_resize_map_dialog(entt::dispatcher& dispatcher)
 
   DialogAction action {DialogAction::None};
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
-    auto rows = static_cast<int>(dialog_row_count);
-    auto cols = static_cast<int>(dialog_column_count);
+    const uint64 min_value = 1;
+    const uint64 max_value = 10'000;
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.misc.rows.c_str());
     ImGui::SameLine();
     ImGui::SetNextItemWidth(-min_float);
-    ImGui::DragInt("##Rows", &rows, 1.0f, 1, 10'000);
+    ImGui::DragScalar("##Rows",
+                      ImGuiDataType_U64,
+                      &dialog_row_count,
+                      1.0f,
+                      &min_value,
+                      &max_value);
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.misc.columns.c_str());
     ImGui::SameLine();
-    ImGui::DragInt("##Columns", &cols, 1.0f, 1, 10'000);
-
-    dialog_row_count = static_cast<usize>(rows);
-    dialog_column_count = static_cast<usize>(cols);
+    ImGui::DragScalar("##Columns",
+                      ImGuiDataType_U64,
+                      &dialog_column_count,
+                      1.0f,
+                      &min_value,
+                      &max_value);
   }
 
   if (action == DialogAction::Accept) {

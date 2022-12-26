@@ -19,6 +19,8 @@
 
 #include "settings_dialog.hpp"
 
+#include <concepts>  // same_as
+
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -200,10 +202,16 @@ void update_behavior_tab(const Strings& lang)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.setting.command_capacity.c_str());
     ImGui::SameLine();
-    if (auto capacity = static_cast<int>(dialog_ui_settings.command_capacity);
-        ImGui::DragInt("##CommandCapacity", &capacity, 1.0f, 10, 1'000)) {
-      dialog_ui_settings.command_capacity = static_cast<usize>(capacity);
-    }
+
+    static_assert(std::same_as<usize, uint64>);
+    const uint64 min_cmd_capacity = 10;
+    const uint64 max_cmd_capacity = 1'000;
+    ImGui::DragScalar("##CommandCapacity",
+                      ImGuiDataType_U64,
+                      &dialog_ui_settings.command_capacity,
+                      1.0f,
+                      &min_cmd_capacity,
+                      &max_cmd_capacity);
 
     ui_lazy_tooltip("##CommandCapacityTooltip", lang.tooltip.command_capacity.c_str());
   }
