@@ -57,6 +57,7 @@ inline constexpr bool def_show_tileset_dock = true;
 inline constexpr bool def_show_property_dock = true;
 inline constexpr bool def_show_component_dock = true;
 inline constexpr bool def_show_log_dock = false;
+inline constexpr bool def_show_animation_dock = true;
 inline constexpr bool def_window_border = false;
 inline constexpr bool def_restore_layout = true;
 inline constexpr bool def_restore_last_session = true;
@@ -85,6 +86,7 @@ struct PreferenceState final {
   bool show_property_dock {def_show_property_dock};
   bool show_component_dock {def_show_component_dock};
   bool show_log_dock {def_show_log_dock};
+  bool show_animation_dock {def_show_animation_dock};
   bool window_border {def_window_border};
   bool restore_layout {def_restore_layout};
   bool restore_last_session {def_restore_last_session};

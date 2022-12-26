@@ -140,6 +140,10 @@ void to_proto(const Color& color, proto::Color* out)
       result.show_log_dock = cfg.show_log_dock();
     }
 
+    if (cfg.has_show_animation_dock()) {
+      result.show_animation_dock = cfg.show_animation_dock();
+    }
+
     if (cfg.has_show_component_dock()) {
       result.show_component_dock = cfg.show_component_dock();
     }
@@ -214,8 +218,9 @@ void save_preferences()
   cfg.set_show_tileset_dock(current_settings.show_tileset_dock);
   cfg.set_show_layer_dock(current_settings.show_layer_dock);
   cfg.set_show_property_dock(current_settings.show_property_dock);
-  cfg.set_show_log_dock(current_settings.show_log_dock);
   cfg.set_show_component_dock(current_settings.show_component_dock);
+  cfg.set_show_log_dock(current_settings.show_log_dock);
+  cfg.set_show_animation_dock(current_settings.show_animation_dock);
   cfg.set_restore_layout(current_settings.restore_layout);
   cfg.set_viewport_overlay_pos(
       static_cast<proto::OverlayPos>(current_settings.viewport_overlay_pos));
@@ -264,6 +269,7 @@ void print_preferences()
   spdlog::trace("Show tileset dock... {}", current_settings.show_tileset_dock);
   spdlog::trace("Show property dock... {}", current_settings.show_property_dock);
   spdlog::trace("Show component dock... {}", current_settings.show_component_dock);
+  spdlog::trace("Show animation dock... {}", current_settings.show_animation_dock);
 
   spdlog::trace("Window border... {}", current_settings.window_border);
   spdlog::trace("Restore layout... {}", current_settings.restore_layout);

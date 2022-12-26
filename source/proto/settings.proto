@@ -72,6 +72,7 @@ message Settings {
   optional bool show_tileset_dock = 24;
   optional bool show_log_dock = 30;
   optional bool show_component_dock = 31;
+  optional bool show_animation_dock = 32;
 
   optional bool embed_tilesets = 25;
   optional bool indent_output = 26;
