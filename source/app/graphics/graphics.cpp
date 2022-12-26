@@ -107,30 +107,31 @@ void Graphics::render_translated_grid(const uint32 color)
 
 void Graphics::render_infinite_grid(const uint32 color)
 {
-  // Don't render when zoomed out too far, to prevent a major performance bottleneck.
-  if (mInfo.grid_size.x < 8) {
-    return;
-  }
-
   const auto origin_tile_pos = ImFloor(mInfo.canvas_tl / mInfo.grid_size);
   const auto origin_col = static_cast<int32>(origin_tile_pos.x);
   const auto origin_row = static_cast<int32>(origin_tile_pos.y);
-
-  // This offset ensures that the rendered grid is aligned over the underlying grid
-  const ImVec2 offset {std::fmod(mInfo.origin.x, mInfo.grid_size.x),
-                       std::fmod(mInfo.origin.y, mInfo.grid_size.y)};
 
   const auto begin_row = origin_row - 1;
   const auto begin_col = origin_col - 1;
   const auto end_row = origin_row + mInfo.tiles_in_viewport_y + 1;
   const auto end_col = origin_col + mInfo.tiles_in_viewport_x + 1;
 
-  // TODO PERFORMANCE: try rendering lines instead
+  // This offset ensures that the rendered grid is aligned over the underlying grid
+  const ImVec2 offset {std::fmod(mInfo.origin.x, mInfo.grid_size.x),
+                       std::fmod(mInfo.origin.y, mInfo.grid_size.y)};
+
+  const auto end_x = (static_cast<float>(end_col) * mInfo.grid_size.x) + offset.x;
+  const auto end_y = (static_cast<float>(end_row) * mInfo.grid_size.y) + offset.y;
+
+  auto* list = ImGui::GetWindowDrawList();
   for (auto row = begin_row; row < end_row; ++row) {
-    for (auto col = begin_col; col < end_col; ++col) {
-      const auto position = from_pos(TilePos {row, col}) * mInfo.grid_size;
-      draw_rect(position + offset, mInfo.grid_size, color);
-    }
+    const auto row_y = (static_cast<float>(row) * mInfo.grid_size.y) + offset.y;
+    list->AddLine(ImVec2 {0, row_y}, ImVec2 {end_x, row_y}, color);
+  }
+
+  for (auto col = begin_col; col < end_col; ++col) {
+    const auto col_x = (static_cast<float>(col) * mInfo.grid_size.x) + offset.x;
+    list->AddLine(ImVec2 {col_x, 0}, ImVec2 {col_x, end_y}, color);
   }
 }
 
