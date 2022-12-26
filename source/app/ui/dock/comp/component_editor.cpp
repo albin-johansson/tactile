@@ -49,19 +49,20 @@
 namespace tactile::ui {
 namespace {
 
+inline constexpr const char* component_action_popup_id = "##ComponentActionPopup";
+
 inline Maybe<UUID> dialog_active_component;
 inline constinit bool open_dialog = false;
 
-void show_component_combo_popup(const Document& document, entt::dispatcher& dispatcher)
+void ui_component_action_popup(const Strings& lang,
+                               const ComponentIndex* component_index,
+                               entt::dispatcher& dispatcher)
 {
-  if (const Popup popup {"##ComponentEditorPopup"}; popup.is_open()) {
-    const auto& lang = get_current_language();
-
+  if (const Popup popup {component_action_popup_id}; popup.is_open()) {
     if (ImGui::MenuItem(lang.action.rename_component.c_str())) {
-      const auto component_id = dialog_active_component.value();
-      const auto* component_index = document.view_component_index();
-      const auto& component_name = component_index->at(component_id).name();
-      open_rename_component_dialog(component_id, component_name);
+      const auto active_component_id = dialog_active_component.value();
+      const auto& active_component_def = component_index->at(active_component_id);
+      open_rename_component_dialog(active_component_id, active_component_def.name());
     }
 
     ImGui::Separator();
@@ -73,22 +74,55 @@ void show_component_combo_popup(const Document& document, entt::dispatcher& disp
   }
 }
 
-void show_component_attribute(const UUID& component_id,
-                              const String& attribute_name,
-                              const Attribute& value,
-                              entt::dispatcher& dispatcher)
+void ui_component_combo(const ComponentIndex* component_index)
 {
-  const auto& lang = get_current_language();
+  if (!dialog_active_component) {
+    dialog_active_component = component_index->begin()->first;
+  }
 
-  const Scope scope {attribute_name.c_str()};
+  const auto& active_component_def = component_index->at(dialog_active_component.value());
+  const auto& active_component_name = active_component_def.name();
 
-  ImGui::TableNextRow();
-  ImGui::TableNextColumn();
+  if (const Combo combo {"##ComponentCombo", active_component_name.c_str()};
+      combo.is_open()) {
+    for (const auto& [component_id, component_def]: *component_index) {
+      const auto& component_name = component_def.name();
+      if (Selectable::Property(component_name.c_str())) {
+        dialog_active_component = component_def.get_uuid();
+      }
+    }
+  }
+}
 
+void ui_component_selector_row(const Strings& lang,
+                               const ComponentIndex* component_index,
+                               entt::dispatcher& dispatcher)
+{
   ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(attribute_name.c_str());
+  ImGui::TextUnformatted(lang.misc.component.c_str());
+  ImGui::SameLine();
 
-  if (auto popup = Popup::for_item("##ComponentAttributeNameContext"); popup.is_open()) {
+  ui_component_combo(component_index);
+
+  ImGui::SameLine();
+  if (ui_button(TAC_ICON_ADD, lang.tooltip.create_component.c_str())) {
+    open_define_component_dialog();
+  }
+
+  ImGui::SameLine();
+  if (ui_button(TAC_ICON_THREE_DOTS, lang.tooltip.show_component_actions.c_str())) {
+    ImGui::OpenPopup(component_action_popup_id);
+  }
+
+  ui_component_action_popup(lang, component_index, dispatcher);
+}
+
+void ui_component_attribute_row_name_popup(const Strings& lang,
+                                           const UUID& component_id,
+                                           const String& attribute_name,
+                                           entt::dispatcher& dispatcher)
+{
+  if (auto popup = Popup::for_item("##ComponentAttributeNamePopup"); popup.is_open()) {
     if (ImGui::MenuItem(lang.action.rename_attribute.c_str())) {
       open_rename_component_attribute_dialog(dialog_active_component.value(),
                                              attribute_name);
@@ -106,32 +140,51 @@ void show_component_attribute(const UUID& component_id,
       dispatcher.enqueue<RemoveComponentAttrEvent>(component_id, attribute_name);
     }
   }
+}
+
+void ui_component_attribute_row(const Strings& lang,
+                                const UUID& component_id,
+                                const String& attribute_name,
+                                const Attribute& attribute,
+                                entt::dispatcher& dispatcher)
+{
+  const Scope scope {attribute_name.c_str()};
+
+  ImGui::TableNextRow();
+  ImGui::TableNextColumn();
+
+  ImGui::AlignTextToFramePadding();
+  ImGui::TextUnformatted(attribute_name.c_str());
+
+  ui_component_attribute_row_name_popup(lang, component_id, attribute_name, dispatcher);
 
   ImGui::TableNextColumn();
   ImGui::SetNextItemWidth(-min_float);
 
-  const auto type = value.type();
-  AttributeType new_type = type;
-  show_property_type_combo(type, new_type);
-  if (new_type != type) {
-    dispatcher.enqueue<SetComponentAttrTypeEvent>(component_id, attribute_name, new_type);
+  const auto attribute_type = attribute.type();
+  AttributeType new_attribute_type = attribute_type;
+  show_property_type_combo(attribute_type, new_attribute_type);
+
+  if (new_attribute_type != attribute_type) {
+    dispatcher.enqueue<SetComponentAttrTypeEvent>(component_id,
+                                                  attribute_name,
+                                                  new_attribute_type);
   }
 
   ImGui::TableNextColumn();
 
-  if (auto updated = input_attribute("##DefaultValue", value)) {
+  if (auto updated_attribute = input_attribute("##Value", attribute)) {
     dispatcher.enqueue<UpdateComponentEvent>(component_id,
                                              attribute_name,
-                                             std::move(*updated));
+                                             std::move(*updated_attribute));
   }
 }
 
-void show_component_attributes(const ComponentDefinition& definition,
-                               entt::dispatcher& dispatcher)
+void ui_component_attribute_table(const Strings& lang,
+                                  const ComponentDefinition& component_def,
+                                  entt::dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
-
-  if (definition.empty()) {
+  if (component_def.empty()) {
     ui_centered_label(lang.misc.empty_component.c_str());
   }
   else {
@@ -142,10 +195,15 @@ void show_component_attributes(const ComponentDefinition& definition,
       ImGui::TableSetupColumn(lang.misc.type.c_str(), ImGuiTableColumnFlags_WidthStretch);
       ImGui::TableSetupColumn(lang.misc.default_value.c_str(),
                               ImGuiTableColumnFlags_WidthStretch);
+
       ImGui::TableHeadersRow();
 
-      for (const auto& [name, attr]: definition) {
-        show_component_attribute(definition.get_uuid(), name, attr, dispatcher);
+      for (const auto& [attribute_name, attribute]: component_def) {
+        ui_component_attribute_row(lang,
+                                   component_def.get_uuid(),
+                                   attribute_name,
+                                   attribute,
+                                   dispatcher);
       }
     }
   }
@@ -201,44 +259,14 @@ void update_component_editor_dialog(const DocumentModel& model,
       }
     }
     else {
-      ImGui::AlignTextToFramePadding();
-      ImGui::TextUnformatted(lang.misc.component.c_str());
-      ImGui::SameLine();
-
-      if (!dialog_active_component) {
-        dialog_active_component = component_index->begin()->first;
-      }
-
-      const auto& definition = component_index->at(dialog_active_component.value());
-      const auto& name = definition.name();
-      if (const Combo combo {"##ComponentEditorCombo", name.c_str()}; combo.is_open()) {
-        for (const auto& [componentId, component]: *component_index) {
-          if (Selectable::Property(component.name().c_str())) {
-            dialog_active_component = component.get_uuid();
-          }
-        }
-      }
-
-      ImGui::SameLine();
-
-      if (ui_button(TAC_ICON_ADD, lang.tooltip.create_component.c_str())) {
-        open_define_component_dialog();
-      }
-
-      ImGui::SameLine();
-
-      if (ui_button(TAC_ICON_THREE_DOTS, lang.tooltip.show_component_actions.c_str())) {
-        ImGui::OpenPopup("##ComponentEditorPopup");
-      }
-
-      show_component_combo_popup(document, dispatcher);
+      ui_component_selector_row(lang, component_index, dispatcher);
 
       ImGui::Separator();
-    }
 
-    if (dialog_active_component) {
-      const auto& definition = component_index->at(*dialog_active_component);
-      show_component_attributes(definition, dispatcher);
+      if (dialog_active_component) {
+        const auto& active_component_def = component_index->at(*dialog_active_component);
+        ui_component_attribute_table(lang, active_component_def, dispatcher);
+      }
     }
 
     update_define_component_dialog(model, dispatcher);
