@@ -19,12 +19,7 @@
 
 #include "dialog.hpp"
 
-#include <utility>  // move
-
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "ui/style/alignment.hpp"
-#include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
@@ -87,82 +82,6 @@ namespace {
 }
 
 }  // namespace
-
-Dialog::Dialog(String title)
-    : mTitle {std::move(title)},
-      mAcceptButtonLabel {get_current_language().misc.ok},
-      mCloseButtonLabel {get_current_language().misc.cancel}
-{
-}
-
-void Dialog::update(const DocumentModel& model, entt::dispatcher& dispatcher)
-{
-  if (mShow) {
-    ImGui::OpenPopup(mTitle.c_str());
-    mShow = false;
-  }
-
-  center_next_window_on_appearance();
-
-  constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
-  if (const Modal modal {mTitle.c_str(), flags}; modal.is_open()) {
-    on_update(model, dispatcher);
-
-    ImGui::Spacing();
-
-    if (mCloseButtonLabel && ui_button(mCloseButtonLabel->c_str())) {
-      on_cancel();
-      ImGui::CloseCurrentPopup();
-    }
-
-    const auto valid = is_current_input_valid(model);
-
-    if (mAcceptButtonLabel) {
-      if (mCloseButtonLabel) {
-        ImGui::SameLine();
-      }
-
-      if (ui_button(mAcceptButtonLabel->c_str(), nullptr, valid)) {
-        on_accept(dispatcher);
-        ImGui::CloseCurrentPopup();
-      }
-    }
-
-    if (mUseApplyButton) {
-      if (mCloseButtonLabel || mAcceptButtonLabel) {
-        ImGui::SameLine();
-      }
-      if (ui_button(get_current_language().misc.apply.c_str(), nullptr, valid)) {
-        on_apply(dispatcher);
-      }
-    }
-  }
-}
-
-void Dialog::make_visible()
-{
-  mShow = true;
-}
-
-void Dialog::use_apply_button()
-{
-  mUseApplyButton = true;
-}
-
-void Dialog::set_title(String title)
-{
-  mTitle = std::move(title);
-}
-
-void Dialog::set_accept_button_label(Maybe<String> label)
-{
-  mAcceptButtonLabel = std::move(label);
-}
-
-void Dialog::set_close_button_label(Maybe<String> label)
-{
-  mCloseButtonLabel = std::move(label);
-}
 
 ScopedDialog::ScopedDialog(const DialogOptions& options, DialogAction* action)
     : mOptions {options},

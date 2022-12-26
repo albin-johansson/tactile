@@ -19,86 +19,9 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
-#include "core/type/maybe.hpp"
-#include "core/type/string.hpp"
 #include "core/vocabulary.hpp"
 
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
-
 namespace tactile::ui {
-
-/// The base class of all modal dialogs.
-class [[deprecated]] Dialog {
- public:
-  TACTILE_DEFAULT_COPY(Dialog);
-  TACTILE_DEFAULT_MOVE(Dialog);
-
-  explicit Dialog(String title);
-
-  virtual ~Dialog() noexcept = default;
-
-  /// Updates the state of the dialog.
-  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
-
- protected:
-  /// Updates dialog specific components.
-  /// Do not provide widgets such as accept and close buttons in this function.
-  virtual void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) = 0;
-
-  /// Invoked when the "Cancel" button is pressed.
-  virtual void on_cancel() {}
-
-  /// Invoked when the "OK" (accept) button is pressed.
-  virtual void on_accept([[maybe_unused]] entt::dispatcher& dispatcher) {}
-
-  /// Invoked when the "Apply" (secondary accept) button is pressed.
-  virtual void on_apply([[maybe_unused]] entt::dispatcher& dispatcher) {}
-
-  /// Indicates whether the current input state is considered acceptable.
-  [[nodiscard]] virtual auto is_current_input_valid(
-      [[maybe_unused]] const DocumentModel& model) const -> bool
-  {
-    return true;
-  }
-
-  /// Makes the dialog visible.
-  ///
-  /// This is meant to be used by derived classes to actually display the dialog.
-  /// This function is protected since not all dialogs supports being shown with no
-  /// initial arguments.
-  void make_visible();
-
-  /// Includes an "Apply" button.
-  /// By default, the apply button is not shown.
-  void use_apply_button();
-
-  /// Sets the title of the dialog, this must be set before the dialog is updated.
-  void set_title(String title);
-
-  /// Sets the label of the "accept" button.
-  ///
-  /// By default, the accept button uses "OK" as its label. However, it is often
-  /// more intuitive to use more descriptive verbs as the label.
-  ///
-  /// \param label the label text, use an empty optional to hide the button.
-  void set_accept_button_label(Maybe<String> label);
-
-  /// Sets the label of the "close" button.
-  ///
-  /// By default, the accept button uses "Cancel" as its label.
-  ///
-  /// \param label the label text, use an empty optional to hide the button.
-  void set_close_button_label(Maybe<String> label);
-
- private:
-  String mTitle;
-  Maybe<String> mAcceptButtonLabel;
-  Maybe<String> mCloseButtonLabel;
-  bool mUseApplyButton : 1 {};
-  bool mShow           : 1 {};
-};
 
 enum DialogFlags : uint32 {
   UI_DIALOG_FLAG_NONE = 0,
