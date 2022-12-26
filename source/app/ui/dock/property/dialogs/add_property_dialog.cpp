@@ -33,7 +33,7 @@
 #include "model/event/property_events.hpp"
 #include "model/model.hpp"
 #include "ui/dialog/dialog.hpp"
-#include "ui/widget/input_widgets.hpp"
+#include "ui/widget/attribute_widgets.hpp"
 
 namespace tactile::ui {
 namespace {

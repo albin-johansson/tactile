@@ -47,7 +47,7 @@
 #include "ui/dock/property/dialogs/change_property_type_dialog.hpp"
 #include "ui/dock/property/dialogs/rename_property_dialog.hpp"
 #include "ui/filename_filter.hpp"
-#include "ui/widget/input_widgets.hpp"
+#include "ui/widget/attribute_widgets.hpp"
 #include "ui/widget/scoped.hpp"
 
 namespace tactile::ui {
@@ -110,10 +110,10 @@ void prepare_table_row(const char* label)
   auto flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
   if (validate_as_file_name) {
     flags |= ImGuiInputTextFlags_CallbackCharFilter;
-    return input_string("##NativeNameRowInput", name, nullptr, flags, filename_filter);
+    return ui_string_input("##NativeNameRowInput", name, nullptr, flags, filename_filter);
   }
   else {
-    return input_string("##NativeNameRowInput", name, nullptr, flags);
+    return ui_string_input("##NativeNameRowInput", name, nullptr, flags);
   }
 }
 
@@ -273,13 +273,13 @@ void show_native_layer_properties(const Layer& layer, entt::dispatcher& dispatch
 
   prepare_table_row(lang.misc.opacity.c_str());
   ImGui::TableNextColumn();
-  if (const auto value = input_float("##Opacity", layer.get_opacity(), 0.0f, 1.0f)) {
+  if (const auto value = ui_float_input("##Opacity", layer.get_opacity(), 0.0f, 1.0f)) {
     dispatcher.enqueue<SetLayerOpacityEvent>(layer.get_uuid(), *value);
   }
 
   prepare_table_row(lang.misc.visible.c_str());
   ImGui::TableNextColumn();
-  if (const auto value = input_bool("##Visible", layer.is_visible())) {
+  if (const auto value = ui_bool_input("##Visible", layer.is_visible())) {
     dispatcher.enqueue<SetLayerVisibleEvent>(layer.get_uuid(), *value);
   }
 }
@@ -318,14 +318,14 @@ void show_native_object_properties(const Object& object, entt::dispatcher& dispa
 
   prepare_table_row(lang.misc.visible.c_str());
   ImGui::TableNextColumn();
-  if (const auto visible = input_bool("##Visible", object.is_visible())) {
+  if (const auto visible = ui_bool_input("##Visible", object.is_visible())) {
     dispatcher.enqueue<SetObjectVisibleEvent>(object.get_uuid(), *visible);
   }
 
   prepare_table_row(lang.misc.tag.c_str());
 
   ImGui::TableNextColumn();
-  if (const auto tag = input_string("##Tag", object.get_tag())) {
+  if (const auto tag = ui_string_input("##Tag", object.get_tag())) {
     dispatcher.enqueue<SetObjectTagEvent>(object.get_uuid(), *tag);
   }
 }
@@ -368,7 +368,7 @@ void show_custom_properties(const Context& context,
       ImGui::Separator();
     }
 
-    if (auto updated = input_attribute("##CustomPropertyInput", value)) {
+    if (auto updated = ui_attribute_input("##CustomPropertyInput", value)) {
       dispatcher.enqueue<UpdatePropertyEvent>(context.get_uuid(),
                                               name,
                                               std::move(*updated));

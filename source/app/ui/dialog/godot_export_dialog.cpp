@@ -30,7 +30,7 @@
 #include "model/event/map_events.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/alignment.hpp"
-#include "ui/widget/input_widgets.hpp"
+#include "ui/widget/attribute_widgets.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -65,7 +65,7 @@ void show_dialog_contents(const Strings& lang)
   ui_lazy_tooltip("##RootDirTooltip", lang.tooltip.godot_project_folder.c_str());
 
   ImGui::SameLine(offset);
-  if (auto root_path = input_folder("##RootDir", dialog_root_dir)) {
+  if (auto root_path = ui_directory_path_input("##RootDir", dialog_root_dir)) {
     dialog_root_dir = std::move(*root_path);
     dialog_map_dir = ".";
     dialog_image_dir = ".";
@@ -82,7 +82,7 @@ void show_dialog_contents(const Strings& lang)
     ui_lazy_tooltip("##MapDirTooltip", lang.tooltip.godot_map_folder.c_str());
 
     ImGui::SameLine(offset);
-    if (const auto map_dir = input_folder("##MapDir", dialog_map_dir)) {
+    if (const auto map_dir = ui_directory_path_input("##MapDir", dialog_map_dir)) {
       dialog_map_dir = fs::relative(*map_dir, dialog_root_dir);
     }
 
@@ -91,7 +91,7 @@ void show_dialog_contents(const Strings& lang)
     ui_lazy_tooltip("##ImageDirTooltip", lang.tooltip.godot_image_folder.c_str());
 
     ImGui::SameLine(offset);
-    if (const auto image_dir = input_folder("##ImageDir", dialog_image_dir)) {
+    if (const auto image_dir = ui_directory_path_input("##ImageDir", dialog_image_dir)) {
       dialog_image_dir = fs::relative(*image_dir, dialog_root_dir);
     }
 
@@ -100,7 +100,7 @@ void show_dialog_contents(const Strings& lang)
     ui_lazy_tooltip("##TilesetPathTooltip", lang.tooltip.godot_tileset_folder.c_str());
 
     ImGui::SameLine(offset);
-    if (auto tileset_dir = input_folder("##TilesetPath", dialog_tileset_dir)) {
+    if (auto tileset_dir = ui_directory_path_input("##TilesetPath", dialog_tileset_dir)) {
       dialog_tileset_dir = fs::relative(*tileset_dir, dialog_root_dir);
     }
   }

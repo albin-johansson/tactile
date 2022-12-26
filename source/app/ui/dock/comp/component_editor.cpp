@@ -41,7 +41,7 @@
 #include "ui/dock/comp/dialogs/rename_component_attribute_dialog.hpp"
 #include "ui/dock/comp/dialogs/rename_component_dialog.hpp"
 #include "ui/style/icons.hpp"
-#include "ui/widget/input_widgets.hpp"
+#include "ui/widget/attribute_widgets.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -168,7 +168,7 @@ void ui_component_attribute_row(const Strings& lang,
 
   ImGui::TableNextColumn();
 
-  if (auto updated_attribute = input_attribute("##Value", attribute)) {
+  if (auto updated_attribute = ui_attribute_input("##Value", attribute)) {
     dispatcher.enqueue<UpdateComponentEvent>(component_id,
                                              attribute_name,
                                              std::move(*updated_attribute));

@@ -29,7 +29,7 @@
 #include "model/event/component_events.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
-#include "ui/widget/input_widgets.hpp"
+#include "ui/widget/attribute_widgets.hpp"
 #include "ui/widget/scoped.hpp"
 
 namespace tactile::ui {
@@ -55,7 +55,7 @@ void update_attribute_table(const UUID& context_id,
       ImGui::TextUnformatted(attr_name.c_str());
 
       ImGui::TableNextColumn();
-      if (auto value = input_attribute("##TableAttribute", attr_value)) {
+      if (auto value = ui_attribute_input("##TableAttribute", attr_value)) {
         dispatcher.enqueue<UpdateAttachedComponentEvent>(context_id,
                                                          component.definition_id(),
                                                          attr_name,
