@@ -19,6 +19,8 @@
 
 #include "graphics.hpp"
 
+#include <cmath>  // fmod
+
 #include <imgui_internal.h>
 
 #include "core/region.hpp"
@@ -110,20 +112,24 @@ void Graphics::render_infinite_grid(const uint32 color)
     return;
   }
 
-  const auto origin_tile_pos = ImFloor(mInfo.origin / mInfo.grid_size);
-  const auto col_offset = static_cast<int32>(origin_tile_pos.x);
-  const auto row_offset = static_cast<int32>(origin_tile_pos.y);
+  const auto origin_tile_pos = ImFloor(mInfo.canvas_tl / mInfo.grid_size);
+  const auto origin_col = static_cast<int32>(origin_tile_pos.x);
+  const auto origin_row = static_cast<int32>(origin_tile_pos.y);
 
-  const auto begin_row = -(row_offset + 1);
-  const auto begin_col = -(col_offset + 1);
-  const auto end_row = (mInfo.tiles_in_viewport_y - row_offset) + 3;  // A little extra
-  const auto end_col = (mInfo.tiles_in_viewport_x - col_offset) + 1;
+  // This offset ensures that the rendered grid is aligned over the underlying grid
+  const ImVec2 offset {std::fmod(mInfo.origin.x, mInfo.grid_size.x),
+                       std::fmod(mInfo.origin.y, mInfo.grid_size.y)};
+
+  const auto begin_row = origin_row - 1;
+  const auto begin_col = origin_col - 1;
+  const auto end_row = origin_row + mInfo.tiles_in_viewport_y + 1;
+  const auto end_col = origin_col + mInfo.tiles_in_viewport_x + 1;
 
   // TODO PERFORMANCE: try rendering lines instead
   for (auto row = begin_row; row < end_row; ++row) {
     for (auto col = begin_col; col < end_col; ++col) {
-      const auto pos = from_matrix_to_absolute(TilePos {row, col});
-      draw_translated_rect(pos, mInfo.grid_size, color);
+      const auto position = from_pos(TilePos {row, col}) * mInfo.grid_size;
+      draw_rect(position + offset, mInfo.grid_size, color);
     }
   }
 }
