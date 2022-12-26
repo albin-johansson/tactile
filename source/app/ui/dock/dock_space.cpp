@@ -41,6 +41,7 @@ void reset_dock_visibilities()
   prefs.show_property_dock = io::def_show_property_dock;
   prefs.show_component_dock = io::def_show_component_dock;
   prefs.show_log_dock = io::def_show_log_dock;
+  prefs.show_animation_dock = io::def_show_animation_dock;
 }
 
 }  // namespace
