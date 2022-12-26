@@ -99,7 +99,7 @@ void update_tileset_view(const DocumentModel& model,
   const auto& viewport = tileset_ref.get_viewport();
 
   const auto info = get_render_info(viewport, tileset);
-  update_viewport_offset(tileset_ref, info.canvas_br - info.canvas_tl, dispatcher);
+  update_viewport_offset(tileset_ref, info.canvas_size, dispatcher);
 
   Graphics graphics {info};
   graphics.clear(to_u32(io::get_preferences().viewport_background));

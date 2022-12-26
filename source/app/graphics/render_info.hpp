@@ -34,6 +34,7 @@ namespace tactile::ui {
 struct RenderInfo final {
   ImVec2 canvas_tl {};  ///< Top-left point of the canvas.
   ImVec2 canvas_br {};  ///< Bottom-right point of the canvas.
+  ImVec2 canvas_size {};
 
   Region bounds;  ///< The region of the map that that should be rendered.
 

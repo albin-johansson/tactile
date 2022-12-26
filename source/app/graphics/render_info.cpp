@@ -64,6 +64,7 @@ namespace {
 
   info.canvas_tl = ImGui::GetCursorScreenPos();
   info.canvas_br = info.canvas_tl + ImGui::GetContentRegionAvail();
+  info.canvas_size = info.canvas_br - info.canvas_tl;
 
   info.origin = info.canvas_tl + from_vec(viewport.get_offset());
 
@@ -71,8 +72,7 @@ namespace {
   info.grid_size = from_vec(viewport.tile_size());
   info.ratio = info.grid_size / info.tile_size;
 
-  const auto viewport_size = info.canvas_br - info.canvas_tl;
-  const auto tiles_in_viewport = viewport_size / info.grid_size;
+  const auto tiles_in_viewport = info.canvas_size / info.grid_size;
   info.tiles_in_viewport_x = static_cast<int32>(tiles_in_viewport.x) + 1;
   info.tiles_in_viewport_y = static_cast<int32>(tiles_in_viewport.y) + 1;
 

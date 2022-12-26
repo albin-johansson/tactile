@@ -248,7 +248,7 @@ void show_map_viewport(const DocumentModel& model,
   // TODO viewport should be centered by default
   if (viewport_will_be_centered) {
     center_viewport(viewport,
-                    info.canvas_br - info.canvas_tl,
+                    info.canvas_size,
                     info.row_count,
                     info.col_count,
                     dispatcher);

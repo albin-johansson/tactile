@@ -62,7 +62,7 @@ void Graphics::pop_clip() const
 
 void Graphics::clear(const uint32 color) const
 {
-  fill_rect(mInfo.canvas_tl, mInfo.canvas_br - mInfo.canvas_tl, color);
+  fill_rect(mInfo.canvas_tl, mInfo.canvas_size, color);
 }
 
 void Graphics::render_tile(const Tileset& tileset,
