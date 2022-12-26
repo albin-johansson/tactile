@@ -65,7 +65,7 @@ void load_file_history()
 
     for (const auto& file: h.files()) {
       if (fs::exists(file)) {
-        spdlog::trace("Loaded '{}' from file history", file);
+        spdlog::debug("Loaded '{}' from file history", file);
         history_entries.push_back(file);
       }
     }
@@ -84,7 +84,7 @@ void save_file_history()
   }
 
   for (const auto& path: history_entries) {
-    spdlog::trace("Saving '{}' to file history", path);
+    spdlog::debug("Saving '{}' to file history", path);
     h.add_files(path);
   }
 
@@ -105,7 +105,7 @@ void add_file_to_history(const Path& path)
   auto converted = convert_to_forward_slashes(path);
   if (std::find(history_entries.begin(), history_entries.end(), converted) ==
       history_entries.end()) {
-    spdlog::trace("Adding '{}' to history...", converted);
+    spdlog::debug("Adding '{}' to history...", converted);
     history_entries.push_back(std::move(converted));
 
     if (history_entries.size() > history_max_size) {
@@ -113,14 +113,14 @@ void add_file_to_history(const Path& path)
     }
   }
   else {
-    spdlog::trace("Did not add existing entry '{}' to file history", converted);
+    spdlog::debug("Did not add existing entry '{}' to file history", converted);
   }
 }
 
 void set_last_closed_file(const Path& path)
 {
   history_last_closed_file = convert_to_forward_slashes(path);
-  spdlog::trace("Last closed file is now '{}'", *history_last_closed_file);
+  spdlog::debug("Last closed file is now '{}'", *history_last_closed_file);
 
   add_file_to_history(path);
 }

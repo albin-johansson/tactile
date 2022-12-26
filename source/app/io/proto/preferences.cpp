@@ -239,41 +239,41 @@ void save_preferences()
 
 void print_preferences()
 {
-  spdlog::trace("Language... {}", magic_enum::enum_name(current_settings.language));
-  spdlog::trace("Theme... {}", magic_enum::enum_name(current_settings.theme));
-  spdlog::trace("Viewport background... {}",
+  spdlog::debug("Language... {}", magic_enum::enum_name(current_settings.language));
+  spdlog::debug("Theme... {}", magic_enum::enum_name(current_settings.theme));
+  spdlog::debug("Viewport background... {}",
                 current_settings.viewport_background.as_rgb());
-  spdlog::trace("Grid color... {}", current_settings.grid_color.as_rgba());
+  spdlog::debug("Grid color... {}", current_settings.grid_color.as_rgba());
 
-  spdlog::trace("Command capacity... {}", current_settings.command_capacity);
-  spdlog::trace("Preferred tile width... {}", current_settings.preferred_tile_size.x);
-  spdlog::trace("Preferred tile height... {}", current_settings.preferred_tile_size.y);
+  spdlog::debug("Command capacity... {}", current_settings.command_capacity);
+  spdlog::debug("Preferred tile width... {}", current_settings.preferred_tile_size.x);
+  spdlog::debug("Preferred tile height... {}", current_settings.preferred_tile_size.y);
 
-  spdlog::trace("Preferred format... {}", current_settings.preferred_format);
-  spdlog::trace("Viewport overlay pos... {}",
+  spdlog::debug("Preferred format... {}", current_settings.preferred_format);
+  spdlog::debug("Viewport overlay pos... {}",
                 magic_enum::enum_name(current_settings.viewport_overlay_pos));
-  spdlog::trace("Show FPS in viewport overlay... {}",
+  spdlog::debug("Show FPS in viewport overlay... {}",
                 current_settings.show_viewport_overlay_fps);
 
-  spdlog::trace("Font size... {}", current_settings.font_size);
-  spdlog::trace("Use default font... {}", current_settings.use_default_font);
+  spdlog::debug("Font size... {}", current_settings.font_size);
+  spdlog::debug("Use default font... {}", current_settings.use_default_font);
 
-  spdlog::trace("Embed tilesets... {}", current_settings.embed_tilesets);
-  spdlog::trace("Indent output... {}", current_settings.indent_output);
-  spdlog::trace("Fold tile data... {}", current_settings.fold_tile_data);
+  spdlog::debug("Embed tilesets... {}", current_settings.embed_tilesets);
+  spdlog::debug("Indent output... {}", current_settings.indent_output);
+  spdlog::debug("Fold tile data... {}", current_settings.fold_tile_data);
 
-  spdlog::trace("Show grid... {}", current_settings.show_grid);
-  spdlog::trace("Highlight active layer... {}", current_settings.highlight_active_layer);
-  spdlog::trace("Show layer dock... {}", current_settings.show_layer_dock);
-  spdlog::trace("Show log dock... {}", current_settings.show_log_dock);
-  spdlog::trace("Show tileset dock... {}", current_settings.show_tileset_dock);
-  spdlog::trace("Show property dock... {}", current_settings.show_property_dock);
-  spdlog::trace("Show component dock... {}", current_settings.show_component_dock);
-  spdlog::trace("Show animation dock... {}", current_settings.show_animation_dock);
+  spdlog::debug("Show grid... {}", current_settings.show_grid);
+  spdlog::debug("Highlight active layer... {}", current_settings.highlight_active_layer);
+  spdlog::debug("Show layer dock... {}", current_settings.show_layer_dock);
+  spdlog::debug("Show log dock... {}", current_settings.show_log_dock);
+  spdlog::debug("Show tileset dock... {}", current_settings.show_tileset_dock);
+  spdlog::debug("Show property dock... {}", current_settings.show_property_dock);
+  spdlog::debug("Show component dock... {}", current_settings.show_component_dock);
+  spdlog::debug("Show animation dock... {}", current_settings.show_animation_dock);
 
-  spdlog::trace("Window border... {}", current_settings.window_border);
-  spdlog::trace("Restore layout... {}", current_settings.restore_layout);
-  spdlog::trace("Restore last session... {}", current_settings.restore_last_session);
+  spdlog::debug("Window border... {}", current_settings.window_border);
+  spdlog::debug("Restore layout... {}", current_settings.restore_layout);
+  spdlog::debug("Restore last session... {}", current_settings.restore_last_session);
 }
 
 void set_preferences(PreferenceState prefs)
