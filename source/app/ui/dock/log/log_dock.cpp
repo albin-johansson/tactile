@@ -86,7 +86,7 @@ constinit bool is_dock_focused = false;
   }
 
   ImGui::SetNextItemWidth(combo_width);
-  if (Combo filter_combo {"##LogFilterCombo", filter}; filter_combo.is_open()) {
+  if (const Combo filter_combo {"##LogFilterCombo", filter}; filter_combo.is_open()) {
     if (ImGui::MenuItem(lang.misc.log_trace_filter.c_str())) {
       return LogLevel::trace;
     }
@@ -146,8 +146,8 @@ void update_color_legend_hint()
   ImGui::TextDisabled("(?)");
 
   if (ImGui::IsItemHovered()) {
-    StyleColor bg {ImGuiCol_PopupBg, {0.1f, 0.1f, 0.1f, 0.75f}};
-    Tooltip tooltip;
+    const StyleColor bg {ImGuiCol_PopupBg, {0.1f, 0.1f, 0.1f, 0.75f}};
+    const Tooltip tooltip;
 
     constexpr auto verbose_color = color_for_level(LogLevel::trace);
     constexpr auto debug_color = color_for_level(LogLevel::debug);
@@ -168,9 +168,9 @@ void update_color_legend_hint()
 
 void update_log_contents(const LogLevel filter)
 {
-  StyleColor child_bg {ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
+  const StyleColor child_bg {ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 
-  if (Child pane {"##LogPane", {}, true, child_flags}; pane.is_open()) {
+  if (const Child pane {"##LogPane", {}, true, child_flags}; pane.is_open()) {
     ImGuiListClipper clipper;
     clipper.Begin(static_cast<int>(log_size(filter)));
 
@@ -180,6 +180,11 @@ void update_log_contents(const LogLevel filter)
         const auto color = color_for_level(level);
         ImGui::TextColored(color, "%s", str.c_str());
       }
+    }
+
+    // Makes the log follow new messages, unless the user explicitly scrolls up
+    if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY()) {
+      ImGui::SetScrollHereY(1.0f);
     }
   }
 }
@@ -196,7 +201,7 @@ void update_log_dock()
 
   const auto& lang = get_current_language();
 
-  Window dock {lang.window.log_dock.c_str(), window_flags, &prefs.show_log_dock};
+  const Window dock {lang.window.log_dock.c_str(), window_flags, &prefs.show_log_dock};
   is_dock_focused = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
