@@ -30,8 +30,6 @@
 #include "model/model.hpp"
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/credits_dialog.hpp"
-#include "ui/dialog/dialog_state.hpp"
-#include "ui/dialog/dialogs.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
 #include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/comp/component_editor.hpp"

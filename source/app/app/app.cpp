@@ -39,7 +39,6 @@
 #include "model/event/menu_events.hpp"
 #include "model/event/view_events.hpp"
 #include "model/model.hpp"
-#include "ui/dialog/dialogs.hpp"
 #include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
@@ -54,8 +53,6 @@ App::App()
 {
   subscribe_to_events();
   load_default_shortcuts();
-
-  ui::init_dialogs();
   ui::load_icons();
 }
 

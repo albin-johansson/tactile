@@ -32,8 +32,6 @@
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/create_map_dialog.hpp"
 #include "ui/dialog/credits_dialog.hpp"
-#include "ui/dialog/dialog_state.hpp"
-#include "ui/dialog/dialogs.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
 #include "ui/dialog/map_parse_error_dialog.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"

@@ -43,9 +43,8 @@
 #include "model/event/property_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
-#include "ui/dialog/dialog_state.hpp"
-#include "ui/dialog/dialogs.hpp"
 #include "ui/dock/property/dialogs/add_property_dialog.hpp"
+#include "ui/dock/property/dialogs/change_property_type_dialog.hpp"
 #include "ui/dock/property/dialogs/rename_property_dialog.hpp"
 #include "ui/filename_filter.hpp"
 #include "ui/widget/input_widgets.hpp"
@@ -484,11 +483,9 @@ void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatch
   if (window.is_open()) {
     update_property_table(model, dispatcher);
 
-    auto& dialogs = get_dialogs();
-    dialogs.change_property_type.update(model, dispatcher);
-
     update_add_property_dialog(model, dispatcher);
     update_rename_property_dialog(model, dispatcher);
+    update_change_property_type_dialog(model, dispatcher);
   }
 }
 

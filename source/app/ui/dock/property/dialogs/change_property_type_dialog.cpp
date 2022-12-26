@@ -24,56 +24,81 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "core/context/context_manager.hpp"
+#include "core/type/maybe.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/property_events.hpp"
+#include "model/model.hpp"
 #include "property_type_combo.hpp"
+#include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
+namespace {
 
-ChangePropertyTypeDialog::ChangePropertyTypeDialog()
-    : Dialog {"Change Property Type"}
+inline Maybe<UUID> dialog_context_id;
+inline AttributeType dialog_current_type {AttributeType::String};
+inline Maybe<String> dialog_property_name;
+inline Maybe<AttributeType> dialog_previous_type;
+inline constinit bool open_dialog = false;
+
+}  // namespace
+
+void open_change_property_type_dialog(const UUID& context_id,
+                                      String property_name,
+                                      const AttributeType property_type)
 {
+  dialog_context_id = context_id;
+  dialog_property_name = std::move(property_name);
+  dialog_previous_type = property_type;
+  dialog_current_type = property_type;
+  open_dialog = true;
 }
 
-void ChangePropertyTypeDialog::show(const UUID& context_id,
-                                    String name,
-                                    const AttributeType type)
+void update_change_property_type_dialog(const DocumentModel& model,
+                                        entt::dispatcher& dispatcher)
 {
-  mContextId = context_id;
-  mPropertyName = std::move(name);
-  mCurrentType = type;
-  mPreviousType = type;
-
   const auto& lang = get_current_language();
-  set_title(lang.window.change_property_type);
-  set_accept_button_label(lang.misc.change);
 
-  make_visible();
-}
+  const auto& document = model.require_active_document();
+  const auto& active_context = document.get_contexts().active_context();
 
-void ChangePropertyTypeDialog::on_update(const DocumentModel&, entt::dispatcher&)
-{
-  const auto& lang = get_current_language();
+  if (active_context.get_uuid() != dialog_context_id) {
+    dialog_context_id.reset();
+    open_dialog = false;
+    return;
+  }
 
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(lang.misc.type.c_str());
+  DialogOptions options {
+      .title = lang.window.change_property_type.c_str(),
+      .close_label = lang.misc.cancel.c_str(),
+      .accept_label = lang.misc.change.c_str(),
+  };
 
-  ImGui::SameLine();
-  show_property_type_combo(mPreviousType.value(), mCurrentType);
-}
+  if (open_dialog) {
+    options.flags |= UI_DIALOG_FLAG_OPEN;
+    open_dialog = false;
+  }
 
-void ChangePropertyTypeDialog::on_accept(entt::dispatcher& dispatcher)
-{
-  dispatcher.enqueue<ChangePropertyTypeEvent>(mContextId.value(),
-                                              mPropertyName.value(),
-                                              mCurrentType);
-  mContextId.reset();
-}
+  if (dialog_current_type != dialog_previous_type.value()) {
+    options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
+  }
 
-auto ChangePropertyTypeDialog::is_current_input_valid(const DocumentModel&) const -> bool
-{
-  return mCurrentType != mPreviousType.value();
+  DialogAction action {DialogAction::None};
+  if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted(lang.misc.type.c_str());
+
+    ImGui::SameLine();
+    show_property_type_combo(dialog_previous_type.value(), dialog_current_type);
+  }
+
+  if (action == DialogAction::Accept) {
+    dispatcher.enqueue<ChangePropertyTypeEvent>(dialog_context_id.value(),
+                                                dialog_property_name.value(),
+                                                dialog_current_type);
+    dialog_context_id.reset();
+  }
 }
 
 }  // namespace tactile::ui

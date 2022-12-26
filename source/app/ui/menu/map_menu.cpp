@@ -26,8 +26,6 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/model.hpp"
-#include "ui/dialog/dialog_state.hpp"
-#include "ui/dialog/dialogs.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -56,8 +54,7 @@ void update_map_menu()
     ImGui::Separator();
 
     ui_menu_item(MenuAction::FixInvalidTiles);
-    // ui_lazy_tooltip("##FixInvalidTilesTooltip",
-    // lang.tooltip.fix_invalid_tiles.c_str());
+    // ui_lazy_tooltip("##FixInvalidTilesTooltip", lang.tooltip.fix_invalid_tiles.c_str());
 
     ImGui::Separator();
 

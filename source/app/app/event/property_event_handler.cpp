@@ -25,9 +25,8 @@
 #include "model/document/document.hpp"
 #include "model/event/property_events.hpp"
 #include "model/model.hpp"
-#include "ui/dialog/dialog_state.hpp"
-#include "ui/dialog/dialogs.hpp"
 #include "ui/dock/property/dialogs/add_property_dialog.hpp"
+#include "ui/dock/property/dialogs/change_property_type_dialog.hpp"
 #include "ui/dock/property/dialogs/rename_property_dialog.hpp"
 
 namespace tactile {
@@ -53,9 +52,7 @@ void on_show_change_property_type_dialog(const ShowChangePropertyTypeDialogEvent
 {
   if (const auto* document = get_model().active_document()) {
     const auto& context_id = document->get_contexts().active_context_id();
-    ui::get_dialogs().change_property_type.show(context_id,
-                                                event.name,
-                                                event.current_type);
+    ui::open_change_property_type_dialog(context_id, event.name, event.current_type);
   }
 }
 
