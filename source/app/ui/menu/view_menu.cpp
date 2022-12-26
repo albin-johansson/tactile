@@ -40,7 +40,7 @@ void update_widgets_menu(const DocumentModel& model)
 {
   const auto& lang = get_current_language();
 
-  if (Menu menu {lang.menu.widgets.c_str(), model.has_active_document()};
+  if (const Menu menu {lang.menu.widgets.c_str(), model.has_active_document()};
       menu.is_open()) {
     if (ImGui::MenuItem(lang.action.reset_layout.c_str())) {
       reset_layout();
@@ -57,7 +57,7 @@ void update_widgets_menu(const DocumentModel& model)
     }
 
     {
-      Disable disable_if {!model.is_map_active()};
+      const Disable disable_unless_map {!model.is_map_active()};
       if (ImGui::MenuItem(lang.window.layer_dock.c_str(),
                           nullptr,
                           prefs.show_layer_dock)) {
@@ -79,6 +79,15 @@ void update_widgets_menu(const DocumentModel& model)
                         nullptr,
                         prefs.show_component_dock)) {
       prefs.show_component_dock = !prefs.show_component_dock;
+    }
+
+    {
+      const Disable disable_unless_tileset {!model.is_tileset_active()};
+      if (ImGui::MenuItem(lang.window.animation_dock.c_str(),
+                          nullptr,
+                          prefs.show_animation_dock)) {
+        prefs.show_animation_dock = !prefs.show_animation_dock;
+      }
     }
   }
 }

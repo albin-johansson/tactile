@@ -42,6 +42,7 @@ struct WindowStrings final {
   String property_dock;
   String component_dock;
   String log_dock;
+  String animation_dock;
   String component_editor;
   String settings_dialog;
   String about_tactile;

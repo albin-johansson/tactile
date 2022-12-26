@@ -82,6 +82,7 @@ void load_default_layout(ImGuiID id, const bool reset_visibility)
   ImGui::DockBuilderDockWindow(lang.window.tileset_dock.c_str(), right);
   ImGui::DockBuilderDockWindow(lang.window.property_dock.c_str(), right);
   ImGui::DockBuilderDockWindow(lang.window.component_dock.c_str(), right);
+  ImGui::DockBuilderDockWindow(lang.window.animation_dock.c_str(), right_bottom);
   ImGui::DockBuilderDockWindow(lang.window.layer_dock.c_str(), right_bottom);
   ImGui::DockBuilderDockWindow(lang.window.log_dock.c_str(), bottom);
 

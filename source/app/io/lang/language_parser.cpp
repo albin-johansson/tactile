@@ -78,6 +78,7 @@ void load_window_strings(const JSON& json, WindowStrings& window)
   load(json, window.property_dock, "property-dock");
   load(json, window.component_dock, "component-dock");
   load(json, window.log_dock, "log-dock");
+  load(json, window.animation_dock, "animation-dock");
   load(json, window.component_editor, "component-editor");
   load(json, window.settings_dialog, "settings-dialog");
   load(json, window.about_tactile, "about-tactile");
