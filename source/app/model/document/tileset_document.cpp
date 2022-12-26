@@ -38,9 +38,7 @@ TilesetDocument::TilesetDocument(TilesetInfo info, const UUID& id)
 
 void TilesetDocument::update()
 {
-  // TODO ?
-  //  get_cache().display_tiles.clear();
-  //  sys::update_animations(mRegistry);
+  mTileset->update();
 }
 
 void TilesetDocument::rename_tileset(String name)
