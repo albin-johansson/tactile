@@ -21,9 +21,9 @@
 
 #include <gtest/gtest.h>
 
+#include "core/debug/panic.hpp"
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset_info.hpp"
-#include "core/debug/panic.hpp"
 #include "io/load_texture.hpp"
 
 namespace tactile::test {
@@ -60,6 +60,20 @@ TEST(Tileset, SubscriptOperator)
 
   const auto& tile = tileset[42];
   ASSERT_EQ(42, tile.get_index());
+}
+
+TEST(Tileset, SelectTile)
+{
+  auto tileset = make_tileset();
+
+  ASSERT_FALSE(tileset.get_selected_tile().has_value());
+
+  tileset.select_tile(42);
+  ASSERT_EQ(42, tileset.get_selected_tile());
+
+  ASSERT_THROW(tileset.select_tile(-1), TactileError);
+  ASSERT_THROW(tileset.select_tile(tileset.tile_count()), TactileError);
+  ASSERT_NO_THROW(tileset.select_tile(tileset.tile_count() - 1));
 }
 
 TEST(Tileset, IndexOf)

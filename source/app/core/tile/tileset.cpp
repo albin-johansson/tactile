@@ -21,6 +21,7 @@
 
 #include <utility>  // move
 
+#include "core/debug/assert.hpp"
 #include "core/debug/panic.hpp"
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset_info.hpp"
@@ -38,6 +39,7 @@ struct Tileset::Data final {
   Float2 uv_size {};
   HashMap<TileIndex, UUID> identifiers;
   HashMap<UUID, Shared<Tile>> tiles;
+  Maybe<TileIndex> selected_tile;
 
   /// Optimization to avoid iterating all tiles in the update function.
   // TODO Vec<UUID> mAnimatedTiles;
@@ -114,6 +116,21 @@ auto Tileset::operator[](const TileIndex index) const -> const Tile&
   auto& data = *mData;
   const auto id = lookup_in(data.identifiers, index);
   return *lookup_in(data.tiles, id);
+}
+
+void Tileset::select_tile(const TileIndex index)
+{
+  if (index >= 0 && index < tile_count()) {
+    mData->selected_tile = index;
+  }
+  else {
+    throw TactileError {"Tried to select tileset tile with invalid index"};
+  }
+}
+
+auto Tileset::get_selected_tile() const -> Maybe<TileIndex>
+{
+  return mData->selected_tile;
 }
 
 auto Tileset::get_tile_ptr(const TileIndex index) -> const Shared<Tile>&

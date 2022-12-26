@@ -24,6 +24,7 @@
 #include "core/tile/tileset_info.hpp"
 #include "core/type/hash_map.hpp"
 #include "core/type/math.hpp"
+#include "core/type/maybe.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
@@ -51,6 +52,12 @@ class Tileset final : public Context {
   /// Returns the tile at a specific index.
   [[nodiscard]] auto operator[](TileIndex index) -> Tile&;
   [[nodiscard]] auto operator[](TileIndex index) const -> const Tile&;
+
+  /// Marks a tile, denoted by index, as selected.
+  void select_tile(TileIndex index);
+
+  /// Returns the currently selected tile, if there is one.
+  [[nodiscard]] auto get_selected_tile() const -> Maybe<TileIndex>;
 
   /// Returns a shared pointer to the tile at a specific index.
   /// Prefer use of the subscript operator if you only need to view the tile.
