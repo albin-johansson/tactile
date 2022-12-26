@@ -27,6 +27,7 @@
 #include "model/model.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
+#include "ui/dock/property/dialogs/add_property_dialog.hpp"
 
 namespace tactile {
 namespace {
@@ -35,7 +36,7 @@ void on_show_new_property_dialog()
 {
   if (auto* document = get_model().active_document()) {
     const auto& context_id = document->get_contexts().active_context_id();
-    ui::get_dialogs().add_property.open(context_id);
+    ui::open_add_property_dialog(context_id);
   }
 }
 

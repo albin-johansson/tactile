@@ -45,6 +45,7 @@
 #include "model/model.hpp"
 #include "ui/dialog/dialog_state.hpp"
 #include "ui/dialog/dialogs.hpp"
+#include "ui/dock/property/dialogs/add_property_dialog.hpp"
 #include "ui/filename_filter.hpp"
 #include "ui/widget/input_widgets.hpp"
 #include "ui/widget/scoped.hpp"
@@ -474,18 +475,19 @@ void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatch
 
   const auto& lang = get_current_language();
 
-  Window window {lang.window.property_dock.c_str(),
-                 ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
-                 &prefs.show_property_dock};
+  const Window window {lang.window.property_dock.c_str(),
+                       ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
+                       &prefs.show_property_dock};
   is_focused = window.has_focus();
 
   if (window.is_open()) {
     update_property_table(model, dispatcher);
 
     auto& dialogs = get_dialogs();
-    dialogs.add_property.update(model, dispatcher);
     dialogs.rename_property.update(model, dispatcher);
     dialogs.change_property_type.update(model, dispatcher);
+
+    update_add_property_dialog(model, dispatcher);
   }
 }
 

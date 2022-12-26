@@ -19,38 +19,17 @@
 
 #pragma once
 
-#include "core/attribute.hpp"
-#include "core/type/array.hpp"
-#include "core/type/maybe.hpp"
+#include <entt/signal/fwd.hpp>
+
 #include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
-#include "ui/dialog/dialog.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 
 namespace tactile::ui {
 
-class AddPropertyDialog final : public Dialog {
- public:
-  TACTILE_DEFAULT_COPY(AddPropertyDialog);
-  TACTILE_DEFAULT_MOVE(AddPropertyDialog);
+void open_add_property_dialog(const UUID& context_id);
 
-  AddPropertyDialog();
-
-  ~AddPropertyDialog() override = default;
-
-  void open(const UUID& contextId);
-
- protected:
-  void on_update(const DocumentModel& model, entt::dispatcher& dispatcher) override;
-
-  void on_accept(entt::dispatcher& dispatcher) override;
-
-  [[nodiscard]] auto is_current_input_valid(const DocumentModel& model) const
-      -> bool override;
-
- private:
-  Maybe<UUID> mContextId;
-  Array<char, 128> mNameBuffer {};
-  AttributeType mPropertyType {AttributeType::String};
-};
+void update_add_property_dialog(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

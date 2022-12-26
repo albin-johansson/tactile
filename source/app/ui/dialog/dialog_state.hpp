@@ -20,14 +20,12 @@
 #pragma once
 
 #include "ui/dock/layer/add_layer_context_menu.hpp"
-#include "ui/dock/property/dialogs/add_property_dialog.hpp"
 #include "ui/dock/property/dialogs/change_property_type_dialog.hpp"
 #include "ui/dock/property/dialogs/rename_property_dialog.hpp"
 
 namespace tactile::ui {
 
 struct [[deprecated]] DialogState final {
-  AddPropertyDialog add_property;
   RenamePropertyDialog rename_property;
   ChangePropertyTypeDialog change_property_type;
 };
