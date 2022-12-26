@@ -26,16 +26,14 @@
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "core/context/context_manager.hpp"
-#include "core/type/array.hpp"
 #include "core/type/maybe.hpp"
-#include "core/util/buffers.hpp"
 #include "core/util/string_buffer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/property_events.hpp"
 #include "model/model.hpp"
-#include "property_type_combo.hpp"
 #include "ui/dialog/dialog.hpp"
+#include "ui/widget/input_widgets.hpp"
 
 namespace tactile::ui {
 namespace {
@@ -90,7 +88,9 @@ void update_add_property_dialog(const DocumentModel& model, entt::dispatcher& di
                              lang.misc.property_name_hint.c_str(),
                              dialog_name_buffer.data(),
                              sizeof dialog_name_buffer);
-    show_property_type_combo(dialog_property_type);
+    if (const auto new_type = ui_attribute_type_combo(dialog_property_type)) {
+      dialog_property_type = *new_type;
+    }
   }
 
   if (action == DialogAction::Accept) {

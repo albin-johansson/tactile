@@ -20,7 +20,7 @@
 #include "input_widgets.hpp"
 
 #include <concepts>  // invocable
-#include <utility>   // move
+#include <utility>   // move, to_underlying
 
 #include "core/type/array.hpp"
 #include "core/util/buffers.hpp"
@@ -28,10 +28,10 @@
 #include "io/file_dialog.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "scoped.hpp"
 #include "ui/constants.hpp"
 #include "ui/style/colors.hpp"
 #include "ui/style/icons.hpp"
+#include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
@@ -264,6 +264,56 @@ auto input_folder(const char* id, const Path& value) -> Maybe<Path>
                            auto dialog = io::FileDialog::open_folder();
                            return dialog.is_okay() ? dialog.path() : Maybe<Path> {};
                          });
+}
+
+auto ui_attribute_type_combo(const AttributeType current_type,
+                             const Maybe<AttributeType> excluded_type)
+    -> Maybe<AttributeType>
+{
+  const auto& lang = get_current_language();
+
+  Array<StringView, 7> type_names;
+  type_names[std::to_underlying(AttributeType::String)] = lang.misc.type_string.c_str();
+  type_names[std::to_underlying(AttributeType::Int)] = lang.misc.type_int.c_str();
+  type_names[std::to_underlying(AttributeType::Float)] = lang.misc.type_float.c_str();
+  type_names[std::to_underlying(AttributeType::Bool)] = lang.misc.type_bool.c_str();
+  type_names[std::to_underlying(AttributeType::Color)] = lang.misc.type_color.c_str();
+  type_names[std::to_underlying(AttributeType::Object)] = lang.misc.type_object.c_str();
+  type_names[std::to_underlying(AttributeType::Path)] = lang.misc.type_path.c_str();
+
+  const auto all_types = {AttributeType::String,
+                          AttributeType::Int,
+                          AttributeType::Float,
+                          AttributeType::Bool,
+                          AttributeType::Color,
+                          AttributeType::Object,
+                          AttributeType::Path};
+
+  const auto current_type_index = static_cast<usize>(std::to_underlying(current_type));
+  const auto& current_type_name = type_names.at(current_type_index);
+
+  Maybe<AttributeType> result;
+
+  if (const Combo combo {"##AttributeTypeCombo", current_type_name.data()};
+      combo.is_open()) {
+    for (const auto type: all_types) {
+      const Disable disable_if_excluded {type == excluded_type};
+
+      const auto type_index = static_cast<usize>(std::to_underlying(type));
+      const auto& type_name = type_names.at(type_index);
+
+      const auto selected = current_type_name == type_name;
+      if (Selectable::Property(type_name.data(), selected)) {
+        result = type;
+      }
+
+      if (selected) {
+        ImGui::SetItemDefaultFocus();
+      }
+    }
+  }
+
+  return result;
 }
 
 }  // namespace tactile::ui

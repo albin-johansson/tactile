@@ -40,7 +40,6 @@
 #include "ui/dock/comp/dialogs/define_component_dialog.hpp"
 #include "ui/dock/comp/dialogs/rename_component_attribute_dialog.hpp"
 #include "ui/dock/comp/dialogs/rename_component_dialog.hpp"
-#include "ui/dock/property/dialogs/property_type_combo.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/input_widgets.hpp"
 #include "ui/widget/scoped.hpp"
@@ -161,14 +160,10 @@ void ui_component_attribute_row(const Strings& lang,
   ImGui::TableNextColumn();
   ImGui::SetNextItemWidth(-min_float);
 
-  const auto attribute_type = attribute.type();
-  AttributeType new_attribute_type = attribute_type;
-  show_property_type_combo(attribute_type, new_attribute_type);
-
-  if (new_attribute_type != attribute_type) {
+  if (const auto new_attribute_type = ui_attribute_type_combo(attribute.type())) {
     dispatcher.enqueue<SetComponentAttrTypeEvent>(component_id,
                                                   attribute_name,
-                                                  new_attribute_type);
+                                                  *new_attribute_type);
   }
 
   ImGui::TableNextColumn();

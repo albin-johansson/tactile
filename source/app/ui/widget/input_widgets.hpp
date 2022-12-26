@@ -61,4 +61,8 @@ namespace tactile::ui {
 
 [[nodiscard]] auto input_folder(const char* id, const Path& value) -> Maybe<Path>;
 
+[[nodiscard]] auto ui_attribute_type_combo(AttributeType current_type,
+                                           Maybe<AttributeType> excluded_type = nothing)
+    -> Maybe<AttributeType>;
+
 }  // namespace tactile::ui

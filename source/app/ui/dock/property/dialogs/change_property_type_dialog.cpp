@@ -30,8 +30,8 @@
 #include "lang/strings.hpp"
 #include "model/event/property_events.hpp"
 #include "model/model.hpp"
-#include "property_type_combo.hpp"
 #include "ui/dialog/dialog.hpp"
+#include "ui/widget/input_widgets.hpp"
 
 namespace tactile::ui {
 namespace {
@@ -90,7 +90,10 @@ void update_change_property_type_dialog(const DocumentModel& model,
     ImGui::TextUnformatted(lang.misc.type.c_str());
 
     ImGui::SameLine();
-    show_property_type_combo(dialog_previous_type.value(), dialog_current_type);
+    if (const auto new_type =
+            ui_attribute_type_combo(dialog_current_type, dialog_previous_type.value())) {
+      dialog_current_type = *new_type;
+    }
   }
 
   if (action == DialogAction::Accept) {
