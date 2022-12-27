@@ -19,6 +19,7 @@
 
 #include "emitter.hpp"
 
+#include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
 #include "core/debug/assert.hpp"

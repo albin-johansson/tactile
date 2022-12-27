@@ -20,6 +20,7 @@
 #include <sstream>  // stringstream
 
 #include <fmt/format.h>
+#include <fmt/std.h>
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 

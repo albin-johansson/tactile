@@ -35,4 +35,12 @@ using Float2 = glm::vec2;
 using Float3 = glm::vec3;
 using Float4 = glm::vec4;
 
+using Vec2i = Int2;
+using Vec3i = Int3;
+using Vec4i = Int4;
+
+using Vec2 = Float2;
+using Vec3 = Float3;
+using Vec4 = Float4;
+
 }  // namespace tactile

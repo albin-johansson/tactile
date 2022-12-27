@@ -22,6 +22,7 @@
 #include <utility>  // move
 
 #include <entt/signal/dispatcher.hpp>
+#include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
 #include "core/util/fmt.hpp"

@@ -19,6 +19,7 @@
 
 #include <filesystem>  // path
 
+#include <fmt/std.h>
 #include <gtest/gtest.h>
 
 #include "core/util/fmt.hpp"

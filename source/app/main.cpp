@@ -21,6 +21,7 @@
 #include <exception>  // exception
 
 #include <centurion/message_box.hpp>
+#include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
 #include "app/app.hpp"

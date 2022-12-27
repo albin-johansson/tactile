@@ -29,25 +29,14 @@
 
 #include "core/debug/stacktrace.hpp"
 #include "core/predef.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "core/type/array.hpp"
-#include "core/type/path.hpp"
+#include "core/type/math.hpp"
 #include "core/type/string.hpp"
 #include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 namespace fmt {
-
-template <>
-struct formatter<tactile::Path> : formatter<std::string_view> {
-  auto format(const tactile::Path& path, auto& ctx) const
-  {
-#if TACTILE_OS_WINDOWS
-    return formatter<std::string_view>::format(path.string(), ctx);
-#else
-    return formatter<std::string_view>::format(path.c_str(), ctx);
-#endif  // TACTILE_OS_WINDOWS
-  }
-};
 
 template <>
 struct formatter<boost::stacktrace::stacktrace> : formatter<std::string_view> {
@@ -69,7 +58,33 @@ struct formatter<tactile::UUID> : formatter<std::string_view> {
   }
 };
 
-static_assert(is_formattable<tactile::Path, char>::value);
+template <>
+struct formatter<tactile::TilePos> : formatter<std::string_view> {
+  auto format(const tactile::TilePos& pos, auto& ctx) const
+  {
+    return fmt::format_to(ctx.out(), "{{{}, {}}}", pos.row(), pos.col());
+  }
+};
+
+template <>
+struct formatter<tactile::Vec2> : formatter<std::string_view> {
+  auto format(const tactile::Vec2& vec, auto& ctx) const
+  {
+    return fmt::format_to(ctx.out(), "{{{}, {}}}", vec.x, vec.y);
+  }
+};
+
+template <>
+struct formatter<tactile::Vec2i> : formatter<std::string_view> {
+  auto format(const tactile::Vec2i& vec, auto& ctx) const
+  {
+    return fmt::format_to(ctx.out(), "{{{}, {}}}", vec.x, vec.y);
+  }
+};
+
+static_assert(is_formattable<tactile::Int2, char>::value);
+static_assert(is_formattable<tactile::Float2, char>::value);
+static_assert(is_formattable<tactile::TilePos, char>::value);
 static_assert(is_formattable<boost::stacktrace::stacktrace, char>::value);
 
 }  // namespace fmt
