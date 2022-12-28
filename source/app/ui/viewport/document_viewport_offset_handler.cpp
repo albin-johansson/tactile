@@ -26,26 +26,25 @@
 #include "model/event/viewport_events.hpp"
 
 namespace tactile::ui {
-namespace {
 
-constexpr auto _button_flags = ImGuiButtonFlags_MouseButtonLeft |
-                               ImGuiButtonFlags_MouseButtonMiddle |
-                               ImGuiButtonFlags_MouseButtonRight;
-
-}  // namespace
-
-void update_document_viewport_offset(const ImVec2& viewportSize,
+void update_document_viewport_offset(const ImVec2& viewport_size,
                                      entt::dispatcher& dispatcher)
 {
   if (ImGui::GetTopMostPopupModal() != nullptr) {
     return;
   }
 
-  ImGui::InvisibleButton("update_document_viewport_offset", viewportSize, _button_flags);
+  ImGui::InvisibleButton("update_document_viewport_offset",
+                         viewport_size,
+                         ImGuiButtonFlags_MouseButtonLeft |
+                             ImGuiButtonFlags_MouseButtonMiddle |
+                             ImGuiButtonFlags_MouseButtonRight);
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto& io = ImGui::GetIO();
     const Float2 delta {io.MouseDelta.x, io.MouseDelta.y};
-    dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
+    if (delta != Float2 {0, 0}) {
+      dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
+    }
   }
 }
 

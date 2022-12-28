@@ -149,7 +149,8 @@ void poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
     });
 
     check_for<ToolDraggedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
-      return ImGui::IsMouseDragging(button);
+      const auto& io = ImGui::GetIO();
+      return ImGui::IsMouseDragging(button) && to_vec(io.MouseDelta) != Vec2 {0, 0};
     });
 
     check_for<ToolReleasedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
