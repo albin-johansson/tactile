@@ -32,6 +32,7 @@
 #include "core/predef.hpp"
 #include "core/type/deque.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/set.hpp"
 #include "io/directories.hpp"
 
 namespace tactile {
@@ -41,6 +42,39 @@ struct LogEntry final {
   spdlog::level::level_enum level {};
   String msg;
 };
+
+using LogFilterSet = Set<LogLevel>;
+
+[[nodiscard]] auto to_filter_set(const LogFilter& filter) -> LogFilterSet
+{
+  LogFilterSet filter_set;
+
+  if (filter.trace) {
+    filter_set.emplace(LogLevel::trace);
+  }
+
+  if (filter.debug) {
+    filter_set.emplace(LogLevel::debug);
+  }
+
+  if (filter.info) {
+    filter_set.emplace(LogLevel::info);
+  }
+
+  if (filter.warn) {
+    filter_set.emplace(LogLevel::warn);
+  }
+
+  if (filter.error) {
+    filter_set.emplace(LogLevel::err);
+  }
+
+  if (filter.critical) {
+    filter_set.emplace(LogLevel::critical);
+  }
+
+  return filter_set;
+}
 
 /// Records logged messages, intended to be displayed in the log dock.
 class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_mutex> {
@@ -59,35 +93,36 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
 
   void clear() { mHistory.clear(); }
 
-  [[nodiscard]] auto get_entry(const LogLevel filter, usize index)
-      -> Pair<LogLevel, const String&>
-  {
-    usize i = 0;
-
-    for (const auto& [level, str]: mHistory) {
-      if (level >= filter) {
-        if (i == index) {
-          return {level, str};
-        }
-
-        ++i;
-      }
-    }
-
-    throw TactileError("Invalid index for filtered log entry!");
-  }
-
-  [[nodiscard]] auto count(const LogLevel filter) const -> usize
+  [[nodiscard]] auto count(const LogFilterSet& set) const -> usize
   {
     usize count = 0;
 
     for (const auto& [level, str]: mHistory) {
-      if (level >= filter) {
+      if (set.contains(level)) {
         ++count;
       }
     }
 
     return count;
+  }
+
+  void visit_logged_message_range(const LogFilterSet& set,
+                                  const usize filtered_begin_index,
+                                  const usize filtered_end_index,
+                                  const LoggedMessageVisitorFn& fn) const
+  {
+    const auto message_count = mHistory.size();
+    usize filtered_message_index = filtered_begin_index;
+
+    for (usize index = filtered_begin_index;
+         index < message_count && filtered_message_index < filtered_end_index;
+         ++index) {
+      const auto& entry = mHistory.at(index);
+      if (set.contains(entry.level)) {
+        fn(entry.level, entry.msg);
+        ++filtered_message_index;
+      }
+    }
   }
 
  private:
@@ -128,15 +163,19 @@ void clear_log_history()
   history_sink->clear();
 }
 
-auto get_log_entry(const LogLevel filter, const usize index)
-    -> Pair<LogLevel, const String&>
+auto count_matching_log_entries(const LogFilter& filter) -> usize
 {
-  return history_sink->get_entry(filter, index);
+  const auto filter_set = to_filter_set(filter);
+  return history_sink->count(filter_set);
 }
 
-auto log_size(const LogLevel filter) -> usize
+void visit_logged_message_range(const LogFilter& filter,
+                                const usize begin_index,
+                                const usize end_index,
+                                const LoggedMessageVisitorFn& fn)
 {
-  return history_sink->count(filter);
+  const auto filter_set = to_filter_set(filter);
+  history_sink->visit_logged_message_range(filter_set, begin_index, end_index, fn);
 }
 
 }  // namespace tactile

@@ -21,13 +21,24 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/type/pair.hpp"
+#include "core/predef.hpp"
+#include "core/type/fn.hpp"
 #include "core/type/string.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
 
+struct LogFilter final {
+  bool trace    : 1 {TACTILE_DEBUG};
+  bool debug    : 1 {TACTILE_DEBUG};
+  bool info     : 1 {true};
+  bool warn     : 1 {true};
+  bool error    : 1 {true};
+  bool critical : 1 {true};
+};
+
 using LogLevel = spdlog::level::level_enum;
+using LoggedMessageVisitorFn = Fn<void(LogLevel, const String&)>;
 
 /// Initializes the logger, this must be called before any logging takes place.
 void init_logger();
@@ -35,20 +46,13 @@ void init_logger();
 /// Clears the entire log history.
 void clear_log_history();
 
-/// Returns the log entry at a specific index amongst entries that satisfy a filter.
-///
-/// \param filter the log level filter to apply before querying log entries.
-/// \param index the index of the desired log entry among those that satisfy the filter.
-///
-/// \return a pair of the found log level and logged message.
-[[nodiscard]] auto get_log_entry(LogLevel filter, usize index)
-    -> Pair<LogLevel, const String&>;
+/// Returns the amount of logged messages that satisfy the provided filter.
+[[nodiscard]] auto count_matching_log_entries(const LogFilter& filter) -> usize;
 
-/// Returns the amount of log entries that satisfy a filter.
-///
-/// \param filter the filter that will be used.
-///
-/// \return the amount of log entries that weren't filtered out.
-[[nodiscard]] auto log_size(LogLevel filter) -> usize;
+/// Invokes a callback for a range of logged messages matching the provided filter.
+void visit_logged_message_range(const LogFilter& filter,
+                                usize begin_index,
+                                usize end_index,
+                                const LoggedMessageVisitorFn& fn);
 
 }  // namespace tactile

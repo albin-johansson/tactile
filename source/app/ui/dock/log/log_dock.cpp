@@ -27,6 +27,7 @@
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "ui/constants.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
@@ -39,81 +40,8 @@ constexpr auto child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
                              ImGuiWindowFlags_HorizontalScrollbar |
                              ImGuiWindowFlags_AlwaysAutoResize;
 
-constinit LogLevel log_filter = LogLevel::debug;
+constinit LogFilter log_filter;
 constinit bool is_dock_focused = false;
-
-[[nodiscard]] auto show_log_level_filter_combo(const LogLevel current_level)
-    -> Maybe<LogLevel>
-{
-  const auto& lang = get_current_language();
-
-  static const auto combo_width =
-      ImGui::CalcTextSize(lang.misc.log_info_filter.c_str()).x * 2.0f;
-
-  ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(lang.misc.filter.c_str());
-
-  ImGui::SameLine();
-
-  const char* filter = lang.misc.log_trace_filter.c_str();
-  switch (current_level) {
-    case LogLevel::trace:
-      filter = lang.misc.log_trace_filter.c_str();
-      break;
-
-    case LogLevel::debug:
-      filter = lang.misc.log_debug_filter.c_str();
-      break;
-
-    case LogLevel::info:
-      filter = lang.misc.log_info_filter.c_str();
-      break;
-
-    case LogLevel::warn:
-      filter = lang.misc.log_warn_filter.c_str();
-      break;
-
-    case LogLevel::err:
-      filter = lang.misc.log_error_filter.c_str();
-      break;
-
-    case LogLevel::critical:
-      filter = lang.misc.log_critical_filter.c_str();
-      break;
-
-    default:
-      break;
-  }
-
-  ImGui::SetNextItemWidth(combo_width);
-  if (const Combo filter_combo {"##LogFilterCombo", filter}; filter_combo.is_open()) {
-    if (ImGui::MenuItem(lang.misc.log_trace_filter.c_str())) {
-      return LogLevel::trace;
-    }
-
-    if (ImGui::MenuItem(lang.misc.log_debug_filter.c_str())) {
-      return LogLevel::debug;
-    }
-
-    if (ImGui::MenuItem(lang.misc.log_info_filter.c_str())) {
-      return LogLevel::info;
-    }
-
-    if (ImGui::MenuItem(lang.misc.log_warn_filter.c_str())) {
-      return LogLevel::warn;
-    }
-
-    if (ImGui::MenuItem(lang.misc.log_error_filter.c_str())) {
-      return LogLevel::err;
-    }
-
-    if (ImGui::MenuItem(lang.misc.log_critical_filter.c_str())) {
-      return LogLevel::critical;
-    }
-  }
-
-  return nothing;
-}
 
 [[nodiscard]] constexpr auto color_for_level(const LogLevel level) -> ImVec4
 {
@@ -141,7 +69,44 @@ constinit bool is_dock_focused = false;
   }
 }
 
-void update_color_legend_hint()
+void ui_message_filter_selector()
+{
+  const auto& lang = get_current_language();
+
+  if (ImGui::Button(lang.misc.filter.c_str())) {
+    ImGui::OpenPopup("##FilterPopup");
+  }
+
+  if (const Popup popup {"##FilterPopup"}; popup.is_open()) {
+    if (ImGui::MenuItem(lang.misc.log_trace_filter.c_str(), nullptr, log_filter.trace)) {
+      log_filter.trace = !log_filter.trace;
+    }
+
+    if (ImGui::MenuItem(lang.misc.log_debug_filter.c_str(), nullptr, log_filter.debug)) {
+      log_filter.debug = !log_filter.debug;
+    }
+
+    if (ImGui::MenuItem(lang.misc.log_info_filter.c_str(), nullptr, log_filter.info)) {
+      log_filter.info = !log_filter.info;
+    }
+
+    if (ImGui::MenuItem(lang.misc.log_warn_filter.c_str(), nullptr, log_filter.warn)) {
+      log_filter.warn = !log_filter.warn;
+    }
+
+    if (ImGui::MenuItem(lang.misc.log_error_filter.c_str(), nullptr, log_filter.error)) {
+      log_filter.error = !log_filter.error;
+    }
+
+    if (ImGui::MenuItem(lang.misc.log_critical_filter.c_str(),
+                        nullptr,
+                        log_filter.critical)) {
+      log_filter.critical = !log_filter.critical;
+    }
+  }
+}
+
+void ui_logged_message_color_legend()
 {
   ImGui::TextDisabled("(?)");
 
@@ -166,20 +131,22 @@ void update_color_legend_hint()
   }
 }
 
-void update_log_contents(const LogLevel filter)
+void ui_logged_message_view(const usize message_count)
 {
   const StyleColor child_bg {ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 
   if (const Child pane {"##LogPane", {}, true, child_flags}; pane.is_open()) {
     ImGuiListClipper clipper;
-    clipper.Begin(static_cast<int>(log_size(filter)));
+    clipper.Begin(static_cast<int>(message_count));
 
     while (clipper.Step()) {
-      for (auto i = clipper.DisplayStart; i < clipper.DisplayEnd; i++) {
-        const auto& [level, str] = get_log_entry(filter, static_cast<usize>(i));
-        const auto color = color_for_level(level);
-        ImGui::TextColored(color, "%s", str.c_str());
-      }
+      visit_logged_message_range(log_filter,
+                                 clipper.DisplayStart,
+                                 clipper.DisplayEnd,
+                                 [](const LogLevel level, const String& msg) {
+                                   const auto color = color_for_level(level);
+                                   ImGui::TextColored(color, "%s", msg.c_str());
+                                 });
     }
 
     // Makes the log follow new messages, unless the user explicitly scrolls up
@@ -205,15 +172,15 @@ void update_log_dock()
   is_dock_focused = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
-    if (const auto level = show_log_level_filter_combo(log_filter)) {
-      log_filter = *level;
-    }
+    ui_message_filter_selector();
+
 
     ImGui::SameLine();
-    update_color_legend_hint();
+    ui_logged_message_color_legend();
 
-    if (log_size(log_filter) != 0u) {
-      update_log_contents(log_filter);
+    const auto message_count = count_matching_log_entries(log_filter);
+    if (message_count != 0u) {
+      ui_logged_message_view(message_count);
     }
     else {
       ui_centered_label(lang.misc.log_no_messages_match_filter.c_str());

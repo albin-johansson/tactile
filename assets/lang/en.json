@@ -249,7 +249,7 @@
     "map-has-no-layers": "This map has no layers.",
     "log-no-messages-match-filter": "No messages match the current filter.",
     "filter": "Filter",
-    "log-trace-filter": "Everything",
+    "log-trace-filter": "Trace",
     "log-debug-filter": "Debug",
     "log-info-filter": "Information",
     "log-warn-filter": "Warnings",

@@ -247,7 +247,7 @@
     "map-parse-error": "Oops, något gick fel när kartan lästes in!",
     "map-has-no-layers": "Denna karta har inga lager.",
     "log-no-messages-match-filter": "Inga meddelanden matchar det valda filtret.",
-    "log-trace-filter": "Allt",
+    "log-trace-filter": "Spårning",
     "log-debug-filter": "Debug",
     "log-info-filter": "Information",
     "log-warn-filter": "Varningar",
