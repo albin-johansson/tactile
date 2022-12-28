@@ -20,9 +20,12 @@
 #include <utility>  // move
 
 #include <entt/signal/dispatcher.hpp>
+#include <magic_enum.hpp>
+#include <spdlog/spdlog.h>
 
 #include "app/app_context.hpp"
 #include "app/event/event_handlers.hpp"
+#include "core/util/fmt.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/model.hpp"
@@ -32,6 +35,8 @@ namespace {
 
 void on_tool_pressed(const ToolPressedEvent& event)
 {
+  spdlog::trace("ToolPressedEvent(...)");
+
   auto& model = get_model();
   if (auto* document = model.active_map()) {
     auto& tools = document->get_tools();
@@ -41,6 +46,8 @@ void on_tool_pressed(const ToolPressedEvent& event)
 
 void on_tool_dragged(const ToolDraggedEvent& event)
 {
+  spdlog::trace("ToolDraggedEvent(...)");
+
   auto& model = get_model();
   if (auto* document = model.active_map()) {
     auto& tools = document->get_tools();
@@ -50,6 +57,8 @@ void on_tool_dragged(const ToolDraggedEvent& event)
 
 void on_tool_released(const ToolReleasedEvent& event)
 {
+  spdlog::trace("ToolReleasedEvent(...)");
+
   auto& model = get_model();
   if (auto* document = model.active_map()) {
     auto& tools = document->get_tools();
@@ -57,8 +66,10 @@ void on_tool_released(const ToolReleasedEvent& event)
   }
 }
 
-void on_tool_entered()
+void on_tool_entered(const ToolEnteredEvent&)
 {
+  spdlog::trace("ToolEnteredEvent(...)");
+
   auto& model = get_model();
   if (auto* document = model.active_map()) {
     auto& tools = document->get_tools();
@@ -66,8 +77,10 @@ void on_tool_entered()
   }
 }
 
-void on_tool_exited()
+void on_tool_exited(const ToolExitedEvent&)
 {
+  spdlog::trace("ToolExitedEvent(...)");
+
   auto& model = get_model();
   if (auto* document = model.active_map()) {
     auto& tools = document->get_tools();
@@ -77,6 +90,8 @@ void on_tool_exited()
 
 void on_select_tool(const SelectToolEvent& event)
 {
+  spdlog::trace("SelectToolEvent(type: {})", magic_enum::enum_name(event.type));
+
   auto& model = get_model();
   if (auto* document = model.active_map()) {
     auto& tools = document->get_tools();
@@ -86,6 +101,8 @@ void on_select_tool(const SelectToolEvent& event)
 
 void on_stamp_sequence(StampSequenceEvent event)
 {
+  spdlog::trace("StampSequenceEvent(layer_id: {})", event.layer_id);
+
   auto& model = get_model();
   if (auto* document = model.active_map()) {
     document->register_stamp_sequence(event.layer_id,
@@ -96,6 +113,8 @@ void on_stamp_sequence(StampSequenceEvent event)
 
 void on_eraser_sequence(EraserSequenceEvent event)
 {
+  spdlog::trace("EraserSequenceEvent(layer_id: {})", event.layer_id);
+
   auto& model = get_model();
   if (auto* document = model.active_map()) {
     document->register_eraser_sequence(event.layer_id, std::move(event.old_state));
@@ -104,6 +123,11 @@ void on_eraser_sequence(EraserSequenceEvent event)
 
 void on_flood(const FloodEvent& event)
 {
+  spdlog::trace("FloodEvent(layer_id: {}, origin: {}, replacement: {})",
+                event.layer_id,
+                event.origin,
+                event.replacement);
+
   auto& model = get_model();
   if (auto* document = model.active_map()) {
     document->flood(event.layer_id, event.origin, event.replacement);
@@ -112,6 +136,11 @@ void on_flood(const FloodEvent& event)
 
 void on_add_rectangle(const AddRectangleEvent& event)
 {
+  spdlog::trace("AddRectangleEvent(layer_id: {}, pos: {}, size: {})",
+                event.layer_id,
+                event.pos,
+                event.size);
+
   auto& model = get_model();
   if (auto* document = model.active_map()) {
     document->add_rectangle(event.layer_id, event.pos, event.size);
@@ -120,6 +149,11 @@ void on_add_rectangle(const AddRectangleEvent& event)
 
 void on_add_ellipse(const AddEllipseEvent& event)
 {
+  spdlog::trace("AddEllipseEvent(layer_id: {}, pos: {}, size: {})",
+                event.layer_id,
+                event.pos,
+                event.size);
+
   auto& model = get_model();
   if (auto* document = model.active_map()) {
     document->add_ellipse(event.layer_id, event.pos, event.size);

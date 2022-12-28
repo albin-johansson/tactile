@@ -18,11 +18,14 @@
  */
 
 #include <entt/signal/dispatcher.hpp>
+#include <fmt/ostream.h>
+#include <spdlog/spdlog.h>
 
 #include "app/app_context.hpp"
 #include "app/event/event_handlers.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
+#include "core/util/fmt.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/object_events.hpp"
 #include "model/model.hpp"
@@ -33,6 +36,10 @@ namespace {
 
 void on_select_object(const SelectObjectEvent& event)
 {
+  spdlog::trace("SelectObjectEvent(layer_id: {}, object_id: {})",
+                event.layer_id,
+                event.object_id);
+
   if (auto* document = get_model().active_map()) {
     auto& layer = document->get_map().invisible_root().get_object_layer(event.layer_id);
     layer.select_object(event.object_id);
@@ -41,6 +48,8 @@ void on_select_object(const SelectObjectEvent& event)
 
 void on_remove_object(const RemoveObjectEvent& event)
 {
+  spdlog::trace("RemoveObjectEvent(object_id: {})", event.object_id);
+
   if (auto* document = get_model().active_map()) {
     document->remove_object(event.object_id);
   }
@@ -48,6 +57,11 @@ void on_remove_object(const RemoveObjectEvent& event)
 
 void on_move_object(const MoveObjectEvent& event)
 {
+  spdlog::trace("MoveObjectEvent(object_id: {}, previous: {}, updated: {})",
+                event.object_id,
+                event.previous,
+                event.updated);
+
   if (auto* map = get_model().active_map()) {
     map->move_object(event.object_id, event.previous, event.updated);
   }

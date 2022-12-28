@@ -18,6 +18,7 @@
  */
 
 #include <entt/signal/dispatcher.hpp>
+#include <spdlog/spdlog.h>
 
 #include "app/app_context.hpp"
 #include "app/event/event_handlers.hpp"
@@ -28,16 +29,20 @@
 namespace tactile {
 namespace {
 
-void on_undo()
+void on_undo(const UndoEvent&)
 {
+  spdlog::trace("UndoEvent");
+
   if (auto* document = get_model().active_document()) {
     auto& commands = document->get_history();
     commands.undo();
   }
 }
 
-void on_redo()
+void on_redo(const RedoEvent&)
 {
+  spdlog::trace("RedoEvent");
+
   if (auto* document = get_model().active_document()) {
     auto& commands = document->get_history();
     commands.redo();
@@ -46,6 +51,7 @@ void on_redo()
 
 void on_set_command_capacity(const SetCommandCapacityEvent event)
 {
+  spdlog::trace("SetCommandCapacityEvent(capacity: {})", event.capacity);
   get_model().set_command_capacity(event.capacity);
 }
 

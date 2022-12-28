@@ -18,9 +18,12 @@
  */
 
 #include <entt/signal/dispatcher.hpp>
+#include <fmt/std.h>
+#include <spdlog/spdlog.h>
 
 #include "app/app_context.hpp"
 #include "app/event/event_handlers.hpp"
+#include "core/util/fmt.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/proto/history.hpp"
 #include "model/document/map_document.hpp"
@@ -33,35 +36,42 @@ namespace {
 
 void on_open_document(const OpenDocumentEvent& event)
 {
+  spdlog::trace("OpenDocumentEvent(document_id: {})", event.document_id);
   get_model().open_document(event.document_id);
 }
 
 void on_close_document(const CloseDocumentEvent& event)
 {
+  spdlog::trace("CloseDocumentEvent(document_id: {})", event.document_id);
+
   auto& model = get_model();
-  const auto document = model.get_document(event.id);
+  const auto document = model.get_document(event.document_id);
 
   if (document->is_map() && document->has_path()) {
     io::set_last_closed_file(document->get_path());
   }
 
-  model.close_document(event.id);
+  model.close_document(event.document_id);
 }
 
 void on_select_document(const SelectDocumentEvent& event)
 {
-  get_model().select_document(event.id);
+  spdlog::trace("SelectDocumentEvent(document_id: {})", event.document_id);
+  get_model().select_document(event.document_id);
 }
 
-void on_open_save_as_dialog()
+void on_open_save_as_dialog(const OpenSaveAsDialogEvent&)
 {
+  spdlog::trace("OpenSaveAsDialogEvent");
   if (get_model().has_active_document()) {
     ui::show_save_as_dialog(get_dispatcher());
   }
 }
 
-void on_save()
+void on_save(const SaveEvent&)
 {
+  spdlog::trace("SaveEvent");
+
   // TODO ability to save tileset documents
   if (auto* document = get_model().active_map()) {
     if (document->has_path()) {
@@ -71,16 +81,18 @@ void on_save()
       document->set_name(document->get_path().filename().string());
     }
     else {
-      on_open_save_as_dialog();
+      on_open_save_as_dialog(OpenSaveAsDialogEvent {});
     }
   }
 }
 
 void on_save_as(const SaveAsEvent& event)
 {
+  spdlog::trace("SaveAsEvent(path: {})", event.path);
+
   if (auto* document = get_model().active_document()) {
     document->set_path(event.path);
-    on_save();
+    on_save(SaveEvent {});
   }
 }
 

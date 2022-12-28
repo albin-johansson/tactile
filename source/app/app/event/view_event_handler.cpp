@@ -20,6 +20,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
+#include <spdlog/spdlog.h>
 
 #include "app/app_context.hpp"
 #include "app/event/event_handlers.hpp"
@@ -34,8 +35,10 @@
 namespace tactile {
 namespace {
 
-void on_toggle_ui()
+void on_toggle_ui(const ToggleUiEvent&)
 {
+  spdlog::trace("ToggleUiEvent");
+
   if (ImGui::GetTopMostPopupModal() != nullptr) {
     return;
   }
@@ -70,14 +73,17 @@ void on_toggle_ui()
   show = !show;
 }
 
-void on_reset_font_size()
+void on_reset_font_size(const ResetFontSizeEvent&)
 {
+  spdlog::trace("ResetFontSizeEvent");
+
   io::get_preferences().font_size = ui::def_font_size;
   request_font_reload();
 }
 
-void on_increase_font_size()
+void on_increase_font_size(const IncreaseFontSizeEvent&)
 {
+  spdlog::trace("IncreaseFontSizeEvent");
   auto& prefs = io::get_preferences();
 
   TACTILE_ASSERT(prefs.font_size + 2 <= ui::max_font_size);
@@ -86,8 +92,9 @@ void on_increase_font_size()
   request_font_reload();
 }
 
-void on_decrease_font_size()
+void on_decrease_font_size(const DecreaseFontSizeEvent&)
 {
+  spdlog::trace("DecreaseFontSizeEvent");
   auto& prefs = io::get_preferences();
 
   TACTILE_ASSERT(prefs.font_size - 2 >= ui::min_font_size);
@@ -96,8 +103,9 @@ void on_decrease_font_size()
   request_font_reload();
 }
 
-void on_reload_fonts()
+void on_reload_fonts(const ReloadFontsEvent&)
 {
+  spdlog::trace("ReloadFontsEvent");
   request_font_reload();
 }
 

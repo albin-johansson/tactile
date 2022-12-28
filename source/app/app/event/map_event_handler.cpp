@@ -18,11 +18,14 @@
  */
 
 #include <entt/signal/dispatcher.hpp>
+#include <fmt/std.h>
+#include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
 #include "app/app_context.hpp"
 #include "app/event/event_handlers.hpp"
 #include "core/debug/assert.hpp"
+#include "core/util/fmt.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/ir/map_from_ir.hpp"
@@ -39,18 +42,25 @@
 namespace tactile {
 namespace {
 
-void on_show_new_map_dialog()
+void on_show_new_map_dialog(const ShowNewMapDialogEvent&)
 {
+  spdlog::trace("ShowNewMapDialogEvent");
   ui::open_create_map_dialog();
 }
 
-void on_show_open_map_dialog()
+void on_show_open_map_dialog(const ShowOpenMapDialogEvent&)
 {
+  spdlog::trace("ShowOpenMapDialogEvent");
   ui::show_map_selector_dialog();
 }
 
 void on_create_map(const CreateMapEvent& event)
 {
+  spdlog::trace("CreateMapEvent(tile_size: {}, row_count: {}, column_count: {})",
+                event.tile_size,
+                event.row_count,
+                event.column_count);
+
   auto& model = get_model();
   const auto id = model.add_map(event.tile_size, event.row_count, event.column_count);
   TACTILE_ASSERT(model.active_document_id() == id);
@@ -59,6 +69,8 @@ void on_create_map(const CreateMapEvent& event)
 // TODO consider renaming event (when standalone tileset documents can be parsed)
 void on_open_map(const OpenMapEvent& event)
 {
+  spdlog::trace("OpenMapEvent(path: {})", event.path);
+
   auto& model = get_model();
   if (model.has_document_with_path(event.path)) {
     const auto id = model.get_id_for_path(event.path);
@@ -83,8 +95,10 @@ void on_open_map(const OpenMapEvent& event)
   }
 }
 
-void on_show_resize_map_dialog()
+void on_show_resize_map_dialog(const OpenResizeMapDialogEvent&)
 {
+  spdlog::trace("OpenResizeMapDialogEvent");
+
   if (auto* document = get_model().active_map()) {
     const auto& map = document->get_map();
     ui::open_resize_map_dialog(map.row_count(), map.column_count());
@@ -93,41 +107,55 @@ void on_show_resize_map_dialog()
 
 void on_resize_map(const ResizeMapEvent& event)
 {
+  spdlog::trace("ResizeMapEvent(row_count: {}, col_count: {})",
+                event.row_count,
+                event.col_count);
+
   if (auto* map = get_model().active_map()) {
     map->resize(event.row_count, event.col_count);
   }
 }
 
-void on_add_row()
+void on_add_row(const AddRowEvent&)
 {
+  spdlog::trace("AddRowEvent");
+
   if (auto* map = get_model().active_map()) {
     map->add_row();
   }
 }
 
-void on_add_column()
+void on_add_column(const AddColumnEvent&)
 {
+  spdlog::trace("AddColumnEvent");
+
   if (auto* map = get_model().active_map()) {
     map->add_column();
   }
 }
 
-void on_remove_row()
+void on_remove_row(const RemoveRowEvent&)
 {
+  spdlog::trace("RemoveRowEvent");
+
   if (auto* map = get_model().active_map()) {
     map->remove_row();
   }
 }
 
-void on_remove_column()
+void on_remove_column(const RemoveColumnEvent&)
 {
+  spdlog::trace("RemoveColumnEvent");
+
   if (auto* map = get_model().active_map()) {
     map->remove_column();
   }
 }
 
-void on_fix_tiles()
+void on_fix_tiles(const FixTilesInMapEvent&)
 {
+  spdlog::trace("FixTilesInMapEvent");
+
   if (auto* map = get_model().active_map()) {
     map->fix_tiles();
   }
@@ -135,6 +163,15 @@ void on_fix_tiles()
 
 void on_export_as_godot_scene(const ExportAsGodotSceneEvent& event)
 {
+  spdlog::trace(
+      "ExportAsGodotSceneEvent"
+      "(root_dir: {}, map_dir: {}, image_dir: {}, tileset_dir: {}, polygon_points: {})",
+      event.root_dir,
+      event.map_dir,
+      event.image_dir,
+      event.tileset_dir,
+      event.polygon_points);
+
   if (auto* document = get_model().active_map()) {
     const io::GodotEmitOptions options {
         .root_dir = event.root_dir,
@@ -147,8 +184,10 @@ void on_export_as_godot_scene(const ExportAsGodotSceneEvent& event)
   }
 }
 
-void on_inspect_map()
+void on_inspect_map(const InspectMapEvent&)
 {
+  spdlog::trace("InspectMapEvent");
+
   if (auto* document = get_model().active_map()) {
     const auto& map = document->get_map();
     document->get_contexts().select(map.get_uuid());
@@ -157,6 +196,9 @@ void on_inspect_map()
 
 void on_set_tile_format_encoding(SetTileFormatEncodingEvent event)
 {
+  spdlog::trace("SetTileFormatEncodingEvent(encoding: {})",
+                magic_enum::enum_name(event.encoding));
+
   if (auto* document = get_model().active_map()) {
     document->set_tile_format_encoding(event.encoding);
   }
@@ -164,6 +206,9 @@ void on_set_tile_format_encoding(SetTileFormatEncodingEvent event)
 
 void on_set_tile_format_compression(SetTileFormatCompressionEvent event)
 {
+  spdlog::trace("SetTileFormatCompressionEvent(compression: {})",
+                magic_enum::enum_name(event.compression));
+
   if (auto* document = get_model().active_map()) {
     document->set_tile_format_compression(event.compression);
   }
@@ -171,6 +216,8 @@ void on_set_tile_format_compression(SetTileFormatCompressionEvent event)
 
 void on_set_zlib_compression_level(SetZlibCompressionLevelEvent event)
 {
+  spdlog::trace("SetZlibCompressionLevelEvent(level: {})", event.level);
+
   if (auto* document = get_model().active_map()) {
     document->set_zlib_compression_level(event.level);
   }
@@ -178,6 +225,8 @@ void on_set_zlib_compression_level(SetZlibCompressionLevelEvent event)
 
 void on_set_zstd_compression_level(SetZstdCompressionLevelEvent event)
 {
+  spdlog::trace("SetZstdCompressionLevelEvent(level: {})", event.level);
+
   if (auto* document = get_model().active_map()) {
     document->set_zstd_compression_level(event.level);
   }

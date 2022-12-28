@@ -30,11 +30,11 @@ struct OpenDocumentEvent final {
 };
 
 struct CloseDocumentEvent final {
-  UUID id {};
+  UUID document_id {};
 };
 
 struct SelectDocumentEvent final {
-  UUID id {};
+  UUID document_id {};
 };
 
 struct SaveEvent final {};
