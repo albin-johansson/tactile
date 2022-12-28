@@ -44,7 +44,7 @@ void show_save_as_dialog(entt::dispatcher& dispatcher)
 
     if (!has_valid_extension) {
       const auto& format = io::get_preferences().preferred_format;
-      spdlog::warn("Invalid file extension '{}', assuming '{}'", ext, format);
+      spdlog::warn("Invalid file extension {}, assuming '{}'", ext, format);
 
       if (format == "YAML") {
         path += ".yaml";

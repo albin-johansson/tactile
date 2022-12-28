@@ -65,7 +65,7 @@ auto parse_map(const Path& path) -> ParseResult
     const auto parse_end = Clock::now();
     const auto parse_duration = chrono::duration_cast<ms_t>(parse_end - parse_start);
 
-    spdlog::info("Parsed '{}' in {}", path.filename(), parse_duration);
+    spdlog::info("Parsed {} in {}", path.filename(), parse_duration);
   }
   catch (const TactileError& e) {
     result.set_error(ParseError::Unknown);
