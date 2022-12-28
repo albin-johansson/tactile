@@ -20,18 +20,18 @@
 #pragma once
 
 #include <centurion/fwd.hpp>
-#include <entt/fwd.hpp>
+#include <entt/signal/fwd.hpp>
 
-namespace tactile {
-class DocumentModel;
-class TilesetRef;
-}  // namespace tactile
+#include "core/vocabulary.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetRef)
 
 namespace tactile::ui {
 
 void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-void tileset_dock_mouse_wheel_event_handler(const TilesetRef& tilesetRef,
+void tileset_dock_mouse_wheel_event_handler(const TilesetRef& tileset_ref,
                                             const cen::mouse_wheel_event& event,
                                             entt::dispatcher& dispatcher);
 
