@@ -73,7 +73,7 @@ struct PreferenceState final {
   ui::EditorTheme theme {def_theme};
   Color viewport_background {def_viewport_bg};
   Color grid_color {def_grid_color};
-  usize command_capacity {def_command_capacity};
+  uint64 command_capacity {def_command_capacity};
   Int2 preferred_tile_size {def_preferred_tile_size};
   int32 font_size {ui::def_font_size};
   OverlayPos viewport_overlay_pos {def_viewport_overlay_pos};

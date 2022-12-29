@@ -19,8 +19,6 @@
 
 #include "settings_dialog.hpp"
 
-#include <concepts>  // same_as
-
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -203,7 +201,6 @@ void update_behavior_tab(const Strings& lang)
     ImGui::TextUnformatted(lang.setting.command_capacity.c_str());
     ImGui::SameLine();
 
-    static_assert(std::same_as<usize, uint64>);
     const uint64 min_cmd_capacity = 10;
     const uint64 max_cmd_capacity = 1'000;
     ImGui::DragScalar("##CommandCapacity",
