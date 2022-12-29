@@ -20,6 +20,7 @@
 #pragma once
 
 #include "core/region.hpp"
+#include "core/type/chrono.hpp"
 #include "core/type/math.hpp"
 #include "core/type/path.hpp"
 #include "core/type/string.hpp"
@@ -53,6 +54,18 @@ struct SetTilesetSelectionEvent final {
 struct RenameTilesetEvent final {
   UUID tileset_id {};  /// Target tileset.
   String name;         /// New tileset name.
+};
+
+/// Event for selecting a tile in an open tileset document.
+struct SelectTilesetTileEvent final {
+  TileIndex tile_index {};
+};
+
+/// Event for changing the duration of a frame in a tile animation.
+struct SetTileAnimationFrameDurationEvent final {
+  TileIndex tile_index {};  ///< Tile index of the tile that features the animation.
+  usize frame_index {};     ///< Index of frame that will be modified.
+  ms_t duration {};         ///< New duration of the frame.
 };
 
 }  // namespace tactile
