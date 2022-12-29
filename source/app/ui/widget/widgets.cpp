@@ -98,7 +98,7 @@ void ui_lazy_tooltip(const char* id, const char* tooltip)
   const auto hashed_id = ImGui::GetID(id);
   auto& last_hover = state[hashed_id];
 
-  if (ImGui::IsItemHovered()) {
+  if (ImGui::IsItemActive() || ImGui::IsItemHovered()) {
     if (!last_hover) {
       last_hover = Clock::now();
     }
