@@ -43,6 +43,14 @@ class TileAnimation final {
   /// Adds a new frame to the animation sequence.
   void add_frame(TileIndex tile, ms_t duration);
 
+  /// Inserts a new frame at a specific index in the animation sequence.
+  ///
+  /// \param index the index of the frame in the animation.
+  /// \param tile_index the index of the tile shown during the frame.
+  /// \param duration the duration of the added frame.
+  /// \return success if a frame was added; failure otherwise.
+  auto insert_frame(usize index, TileIndex tile_index, ms_t duration) -> Result;
+
   /// Removes the frame at the specified index.
   ///
   /// \details

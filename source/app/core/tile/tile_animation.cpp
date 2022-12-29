@@ -45,6 +45,23 @@ void TileAnimation::add_frame(const TileIndex tile, const ms_t duration)
   mFrames.push_back({tile, duration});
 }
 
+auto TileAnimation::insert_frame(const usize index,
+                                 const TileIndex tile_index,
+                                 const ms_t duration) -> Result
+{
+  if (index == mFrames.size()) {
+    add_frame(tile_index, duration);
+    return success;
+  }
+  else if (index < mFrames.size()) {
+    mFrames.insert(mFrames.begin() + index, Frame {tile_index, duration});
+    return success;
+  }
+  else {
+    return failure;
+  }
+}
+
 auto TileAnimation::remove_frame(const usize frame_index) -> Result
 {
   if (frame_index < mFrames.size()) {

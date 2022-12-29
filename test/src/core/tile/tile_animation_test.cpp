@@ -58,6 +58,23 @@ TEST(TileAnimation, AddFrame)
   ASSERT_THROW(animation[1], TactileError);
 }
 
+TEST(TileAnimation, InsertFrame)
+{
+  TileAnimation animation;
+
+  ASSERT_EQ(success, animation.insert_frame(0, 5, 100ms));
+  ASSERT_EQ(1u, animation.size());
+
+  ASSERT_EQ(success, animation.insert_frame(0, 20, 100ms));
+  ASSERT_EQ(2u, animation.size());
+
+  ASSERT_EQ(success, animation.insert_frame(animation.size(), 30, 100ms));
+  ASSERT_EQ(3u, animation.size());
+
+  ASSERT_EQ(failure, animation.insert_frame(animation.size() + 1, 40, 100ms));
+  ASSERT_EQ(3u, animation.size());
+}
+
 TEST(TileAnimation, RemoveFrame)
 {
   TileAnimation animation;
