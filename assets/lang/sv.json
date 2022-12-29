@@ -204,6 +204,7 @@
     "default-value": "Startvärde",
     "component": "Komponent",
     "cause": "Orsak",
+    "preview": "Förhandsvisning",
     "license-info": "Källkoden för detta program är fritt tillgänglig, enligt GPL v3.0.",
     "repository-link": "Källkod: https://www.github.com/albin-johansson/tactile",
     "font-awesome-credit": "Ikoner från Font Awesome.",
@@ -237,6 +238,7 @@
     "point-tool": "Punktverktyg",
     "width": "Bredd",
     "height": "Höjd",
+    "size": "Storlek",
     "tag": "Tagg",
     "create-tileset-instruction": "Välj en bild som innehåller alla tiles arrangerade enligt ett rutnät.",
     "select-image": "Välj bild...",
@@ -403,5 +405,18 @@
     "bad-zlib-compression-level": "Kartan använder en kompressionsnivå för Zlib som inte stöds, giltiga värden är -1 och [1, 9]",
     "bad-zstd-compression-level": "Kartan använder en kompressionsnivå för Zstd som inte stöds",
     "plain-encoding-with-compression": "Kartan använder oformaterad kodning för tiledata samtidigt som tiledatan är komprimerad"
+  },
+  "animation-dock": {
+    "title": "Animation",
+    "frames": "Steg",
+    "duration": "Tidslängd",
+    "tile-has-no-animation": "Denna tile har ingen animation",
+    "no-selected-tile-hint": "Välj en tile för att se dess animation här",
+    "move-frame-forwards": "Flytta Steg Framåt",
+    "move-frame-backwards": "Flytta Steg Bakåt",
+    "select-referenced-tile": "Välj Refererad Tile",
+    "remove-frame": "Ta Bort Steg",
+    "delete-animation": "Radera Animation",
+    "new-animation-frame-selection-hint": "Välj en tile i tilesamlingen för att lägga till den i animationen"
   }
 }

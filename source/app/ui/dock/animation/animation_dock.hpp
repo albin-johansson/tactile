@@ -23,12 +23,10 @@
 
 #include "core/vocabulary.hpp"
 
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetDocument)
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 
 namespace tactile::ui {
 
-void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& dispatcher);
-
-void enable_tile_animation_frame_selection_mode();
+void ui_animation_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

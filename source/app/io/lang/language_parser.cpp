@@ -312,6 +312,7 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.component, "component");
 
   load(json, misc.cause, "cause");
+  load(json, misc.preview, "preview");
 
   load(json, misc.license_info, "license-info");
   load(json, misc.repository_link, "repository-link");
@@ -352,6 +353,7 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
 
   load(json, misc.width, "width");
   load(json, misc.height, "height");
+  load(json, misc.size, "size");
 
   load(json, misc.tag, "tag");
 
@@ -555,6 +557,24 @@ void load_parse_error_strings(const JSON& json, ParseErrorStrings& err)
   load(json, err.plain_encoding_with_compression, "plain-encoding-with-compression");
 }
 
+void load_animation_dock_strings(const JSON& json, AnimationDockStrings& dock)
+{
+  load(json, dock.title, "title");
+  load(json, dock.frames, "frames");
+  load(json, dock.duration, "duration", TAC_ICON_DURATION);
+  load(json, dock.tile_has_no_animation, "tile-has-no-animation");
+  load(json, dock.no_selected_tile_hint, "no-selected-tile-hint");
+  load(json, dock.move_frame_forwards, "move-frame-forwards", TAC_ICON_MOVE_LEFT);
+  load(json, dock.move_frame_backwards, "move-frame-backwards", TAC_ICON_MOVE_RIGHT);
+  load(json, dock.select_referenced_tile, "select-referenced-tile", TAC_ICON_LOCATE);
+  load(json, dock.remove_frame, "remove-frame", TAC_ICON_REMOVE);
+  load(json, dock.delete_animation, "delete-animation", TAC_ICON_DELETE);
+
+  // clang-format off
+  load(json, dock.new_animation_frame_selection_hint, "new-animation-frame-selection-hint");
+  // clang-format on
+}
+
 }  // namespace
 
 auto parse_language(const char* path, const Strings& fallback) -> Strings
@@ -594,6 +614,10 @@ auto parse_language(const char* path, const Strings& fallback) -> Strings
 
   if (const auto* err = try_get(json, "parse-errors")) {
     load_parse_error_strings(*err, strings.parse_error);
+  }
+
+  if (const auto* dock = try_get(json, "animation-dock")) {
+    load_animation_dock_strings(*dock, strings.animation_dock);
   }
 
   return strings;

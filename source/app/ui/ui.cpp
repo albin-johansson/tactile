@@ -36,6 +36,7 @@
 #include "ui/dialog/map_parse_error_dialog.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"
 #include "ui/dialog/settings_dialog.hpp"
+#include "ui/dock/animation/animation_dock.hpp"
 #include "ui/dock/comp/component_dock.hpp"
 #include "ui/dock/comp/component_editor.hpp"
 #include "ui/dock/dock_space.hpp"
@@ -93,6 +94,9 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
     if (document->is_map()) {
       update_layer_dock(model, dispatcher);
       update_tileset_dock(model, dispatcher);
+    }
+    else if (document->is_tileset()) {
+      ui_animation_dock(model, dispatcher);
     }
 
     update_property_dock(model, dispatcher);

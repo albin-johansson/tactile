@@ -268,6 +268,7 @@ struct MiscStrings final {
   String component;
 
   String cause;
+  String preview;
 
   String license_info;
   String repository_link;
@@ -308,6 +309,7 @@ struct MiscStrings final {
 
   String width;
   String height;
+  String size;
 
   String tag;
 
@@ -509,6 +511,20 @@ struct ParseErrorStrings final {
   String plain_encoding_with_compression;
 };
 
+struct AnimationDockStrings final {
+  String title;
+  String frames;
+  String duration;
+  String tile_has_no_animation;
+  String no_selected_tile_hint;
+  String move_frame_forwards;
+  String move_frame_backwards;
+  String select_referenced_tile;
+  String remove_frame;
+  String delete_animation;
+  String new_animation_frame_selection_hint;
+};
+
 /// Provides translated strings for a single language.
 struct Strings final {
   MenuStrings menu;
@@ -519,6 +535,7 @@ struct Strings final {
   MiscStrings misc;
   CommandStrings cmd;
   ParseErrorStrings parse_error;
+  AnimationDockStrings animation_dock;
 };
 
 }  // namespace tactile

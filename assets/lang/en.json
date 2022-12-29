@@ -205,6 +205,7 @@
     "default-value": "Default",
     "component": "Component",
     "cause": "Cause",
+    "preview": "Preview",
     "license-info": "This tool is open-source software, using the GPL v3.0 license.",
     "repository-link": "Source code: https://www.github.com/albin-johansson/tactile",
     "font-awesome-credit": "Icons by Font Awesome.",
@@ -238,6 +239,7 @@
     "point-tool": "Point tool",
     "width": "Width",
     "height": "Height",
+    "size": "Size",
     "tag": "Tag",
     "create-tileset-instruction": "Select an image which contains the tiles aligned in a grid.",
     "select-image": "Select image...",
@@ -405,5 +407,18 @@
     "bad-zlib-compression-level": "The map uses an invalid Zlib compression level, valid values are -1 and [1, 9]",
     "bad-zstd-compression-level": "The map uses an invalid Zstd compression level",
     "plain-encoding-with-compression": "Use of unsupported plain tile encoding along with compressed tile data"
+  },
+  "animation-dock": {
+    "title": "Animation",
+    "frames": "Frames",
+    "duration": "Duration",
+    "tile-has-no-animation": "This tile has no animation",
+    "no-selected-tile-hint": "Select a tile to see its animation here",
+    "move-frame-forwards": "Move Frame Forwards",
+    "move-frame-backwards": "Move Frame Backwards",
+    "select-referenced-tile": "Select Referenced Tile",
+    "remove-frame": "Remove Frame",
+    "delete-animation": "Delete Animation",
+    "new-animation-frame-selection-hint": "Select a tile in the tileset to add it to the animation"
   }
 }
