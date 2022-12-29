@@ -68,4 +68,21 @@ struct SetTileAnimationFrameDurationEvent final {
   ms_t duration {};         ///< New duration of the frame.
 };
 
+/// Event for enabling animation frame selection mode, where the next selected tile in the
+/// tileset is added to the animation of the previously selected tile.
+struct EnableAnimationFrameSelectionMode final {};
+
+/// Event for adding an animation frame to the selected tileset tile.
+struct AddTileAnimationFrameEvent final {
+  TileIndex tile_index {};  ///< Tile that will be added as a frame to the animation.
+};
+
+/// Event for removing an animation frame from the selected tileset tile.
+struct RemoveTileAnimationFrameEvent final {
+  usize frame_index {};  ///< Index of frame that will be removed from the animation.
+};
+
+/// Event for deleting the tile animation associated with the selected tileset tile.
+struct DeleteTileAnimationEvent final {};
+
 }  // namespace tactile

@@ -35,6 +35,7 @@
 #include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
 #include "ui/dock/tileset/dialogs/create_tileset_dialog.hpp"
+#include "ui/viewport/tileset_viewport.hpp"
 
 namespace tactile {
 namespace {
@@ -43,9 +44,9 @@ void on_inspect_tileset(const InspectTilesetEvent&)
 {
   spdlog::trace("InspectTilesetEvent");
 
-  auto& model = get_model();
-  if (auto* document = model.active_tileset()) {
-    document->get_contexts().select(document->view_tileset().get_uuid());
+  if (auto* tileset_document = get_model().active_tileset()) {
+    const auto& tileset = tileset_document->view_tileset();
+    tileset_document->get_contexts().select(tileset.get_uuid());
   }
 }
 
@@ -60,8 +61,7 @@ void on_load_tileset(const LoadTilesetEvent& event)
   spdlog::trace("LoadTilesetEvent(path: {}, tile_size: {})", event.path, event.tile_size);
 
   if (auto texture = io::load_texture(event.path)) {
-    auto& model = get_model();
-    model.add_tileset(TilesetInfo {
+    get_model().add_tileset(TilesetInfo {
         .texture = std::move(texture),
         .tile_size = event.tile_size,
     });
@@ -75,18 +75,16 @@ void on_remove_tileset(const RemoveTilesetEvent& event)
 {
   spdlog::trace("RemoveTilesetEvent(tileset_id: {})", event.tileset_id);
 
-  auto& model = get_model();
-  model.remove_tileset(event.tileset_id);
+  get_model().remove_tileset(event.tileset_id);
 }
 
 void on_select_tileset(const SelectTilesetEvent& event)
 {
   spdlog::trace("SelectTilesetEvent(tileset_id: {})", event.tileset_id);
 
-  auto& model = get_model();
-  if (auto* document = model.active_map()) {
-    auto& tilesets = document->get_map().tileset_bundle();
-    tilesets.select_tileset(event.tileset_id);
+  if (auto* map_document = get_model().active_map()) {
+    auto& tileset_bundle = map_document->get_map().tileset_bundle();
+    tileset_bundle.select_tileset(event.tileset_id);
   }
 }
 
@@ -96,9 +94,8 @@ void on_rename_tileset(const RenameTilesetEvent& event)
                 event.tileset_id,
                 event.name);
 
-  auto& model = get_model();
-  auto document = model.get_tileset(event.tileset_id);
-  document->rename_tileset(event.name);
+  auto tileset_document = get_model().get_tileset(event.tileset_id);
+  tileset_document->rename_tileset(event.name);
 }
 
 void on_set_tileset_selection(const SetTilesetSelectionEvent& event)
@@ -107,12 +104,11 @@ void on_set_tileset_selection(const SetTilesetSelectionEvent& event)
                 event.selection.begin,
                 event.selection.end);
 
-  auto& model = get_model();
-  if (auto* document = model.active_map()) {
-    auto& tilesets = document->get_map().tileset_bundle();
+  if (auto* map_document = get_model().active_map()) {
+    auto& tileset_bundle = map_document->get_map().tileset_bundle();
 
-    const auto tileset_id = tilesets.active_tileset_id().value();
-    auto& tileset_ref = tilesets.get_ref(tileset_id);
+    const auto tileset_id = tileset_bundle.active_tileset_id().value();
+    auto& tileset_ref = tileset_bundle.get_ref(tileset_id);
 
     tileset_ref.set_selection(event.selection);
   }
@@ -122,10 +118,12 @@ void on_select_tileset_tile(const SelectTilesetTileEvent& event)
 {
   spdlog::trace("SelectTilesetTileEvent(tile_index: {})", event.tile_index);
 
-  auto& model = get_model();
-  if (auto* document = model.active_tileset()) {
-    auto& tileset = document->view_tileset();
+  if (auto* tileset_document = get_model().active_tileset()) {
+    auto& tileset = tileset_document->view_tileset();
     tileset.select_tile(event.tile_index);
+
+    const auto& tile_id = tileset[event.tile_index].get_uuid();
+    tileset_document->get_contexts().select(tile_id);
   }
 }
 
@@ -137,14 +135,54 @@ void on_set_tile_animation_frame_duration(const SetTileAnimationFrameDurationEve
       event.frame_index,
       event.duration);
 
-  auto& model = get_model();
-  if (auto* document = model.active_tileset()) {
-    auto& tileset = document->view_tileset();
+  if (auto* tileset_document = get_model().active_tileset()) {
+    tileset_document->set_animation_frame_duration(event.tile_index,
+                                                   event.frame_index,
+                                                   event.duration);
+  }
+}
 
-    // TODO command
-    auto& tile = tileset[event.tile_index];
-    auto& animation = tile.get_animation();
-    animation[event.frame_index].duration = event.duration;
+void on_enable_animation_frame_selection_mode(const EnableAnimationFrameSelectionMode&)
+{
+  spdlog::trace("EnableAnimationFrameSelectionMode");
+  ui::enable_tile_animation_frame_selection_mode();
+}
+
+void on_add_tile_animation_frame(const AddTileAnimationFrameEvent& event)
+{
+  spdlog::trace("AddTileAnimationFrameEvent(tile_index: {})", event.tile_index);
+
+  if (auto* tileset_document = get_model().active_tileset()) {
+    const auto& tileset = tileset_document->view_tileset();
+    if (const auto selected_tile_index = tileset.get_selected_tile()) {
+      tileset_document->add_animation_frame(*selected_tile_index,
+                                            event.tile_index,
+                                            ms_t {1'000});
+    }
+  }
+}
+
+void on_remove_tile_animation_frame(const RemoveTileAnimationFrameEvent& event)
+{
+  spdlog::trace("RemoveTileAnimationFrameEvent(frame_index: {})", event.frame_index);
+
+  if (auto* tileset_document = get_model().active_tileset()) {
+    const auto& tileset = tileset_document->view_tileset();
+    if (const auto selected_tile_index = tileset.get_selected_tile()) {
+      tileset_document->remove_animation_frame(*selected_tile_index, event.frame_index);
+    }
+  }
+}
+
+void on_delete_tile_animation(const DeleteTileAnimationEvent&)
+{
+  spdlog::trace("DeleteTileAnimationEvent");
+
+  if (auto* tileset_document = get_model().active_tileset()) {
+    const auto& tileset = tileset_document->view_tileset();
+    if (const auto selected_tile_index = tileset.get_selected_tile()) {
+      tileset_document->delete_animation(*selected_tile_index);
+    }
   }
 }
 
@@ -166,6 +204,10 @@ void install_tileset_event_handler()
   dispatcher.sink<SetTilesetSelectionEvent>().connect<&on_set_tileset_selection>();
   dispatcher.sink<SelectTilesetTileEvent>().connect<&on_select_tileset_tile>();
   dispatcher.sink<SetTileAnimationFrameDurationEvent>().connect<&on_set_tile_animation_frame_duration>();
+  dispatcher.sink<EnableAnimationFrameSelectionMode>().connect<&on_enable_animation_frame_selection_mode>();
+  dispatcher.sink<AddTileAnimationFrameEvent>().connect<&on_add_tile_animation_frame>();
+  dispatcher.sink<RemoveTileAnimationFrameEvent>().connect<&on_remove_tile_animation_frame>();
+  dispatcher.sink<DeleteTileAnimationEvent>().connect<&on_delete_tile_animation>();
   // clang-format on
 }
 
