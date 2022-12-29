@@ -19,7 +19,10 @@
 
 #include "json.hpp"
 
-#include <iomanip>  // setw
+#include <exception>  // exception
+#include <iomanip>    // setw
+
+#include <spdlog/spdlog.h>
 
 #include "core/debug/panic.hpp"
 #include "core/util/filesystem.hpp"
@@ -121,6 +124,10 @@ auto read_json(const Path& path) -> Maybe<JSON>
     stream >> json;
 
     return json;
+  }
+  catch (const std::exception& e) {
+    spdlog::error("JSON parse error: {}", e.what());
+    return nothing;
   }
   catch (...) {
     return nothing;
