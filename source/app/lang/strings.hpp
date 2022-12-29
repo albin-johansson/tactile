@@ -424,6 +424,11 @@ struct CommandStrings final {
   String remove_tileset;
   String rename_tileset;
 
+  String delete_animation;
+  String add_animation_frame;
+  String remove_animation_frame;
+  String set_animation_frame_duration;
+
   String stamp_tool;
   String eraser_tool;
   String bucket_tool;

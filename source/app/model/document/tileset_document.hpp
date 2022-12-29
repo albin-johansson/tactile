@@ -21,9 +21,11 @@
 
 #include "core/tile/tileset.hpp"
 #include "core/tile/tileset_info.hpp"
+#include "core/type/chrono.hpp"
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
 #include "core/type/uuid.hpp"
+#include "core/vocabulary.hpp"
 #include "model/document/document.hpp"
 #include "model/document/document_delegate.hpp"
 
@@ -47,6 +49,18 @@ class TilesetDocument final : public Document {
   void set_name(String name) override;
 
   void set_path(Path path) override;
+
+  void delete_animation(TileIndex tile_index);
+
+  void add_animation_frame(TileIndex animated_tile_index,
+                           TileIndex frame_tile_index,
+                           ms_t frame_duration);
+
+  void remove_animation_frame(TileIndex tile_index, usize frame_index);
+
+  void set_animation_frame_duration(TileIndex tile_index,
+                                    usize frame_index,
+                                    ms_t frame_duration);
 
   [[nodiscard]] auto has_path() const -> bool override;
 

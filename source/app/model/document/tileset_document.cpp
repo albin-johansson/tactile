@@ -24,6 +24,7 @@
 #include "core/tile/tile.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "core/tile/tileset_info.hpp"
+#include "model/cmd/tile/all.hpp"
 #include "model/cmd/tileset/all.hpp"
 
 namespace tactile {
@@ -64,6 +65,37 @@ void TilesetDocument::set_name(String name)
 void TilesetDocument::set_path(Path path)
 {
   mDelegate.set_path(std::move(path));
+}
+
+void TilesetDocument::delete_animation(const TileIndex tile_index)
+{
+  get_history().push<cmd::DeleteAnimation>(this, tile_index);
+}
+
+void TilesetDocument::add_animation_frame(const TileIndex animated_tile_index,
+                                          const TileIndex frame_tile_index,
+                                          const ms_t frame_duration)
+{
+  get_history().push<cmd::AddAnimationFrame>(this,
+                                             animated_tile_index,
+                                             frame_tile_index,
+                                             frame_duration);
+}
+
+void TilesetDocument::remove_animation_frame(const TileIndex tile_index,
+                                             const usize frame_index)
+{
+  get_history().push<cmd::RemoveAnimationFrame>(this, tile_index, frame_index);
+}
+
+void TilesetDocument::set_animation_frame_duration(const TileIndex tile_index,
+                                                   const usize frame_index,
+                                                   const ms_t frame_duration)
+{
+  get_history().push<cmd::SetAnimationFrameDuration>(this,
+                                                     tile_index,
+                                                     frame_index,
+                                                     frame_duration);
 }
 
 auto TilesetDocument::has_path() const -> bool

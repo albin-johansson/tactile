@@ -469,6 +469,11 @@ void load_command_strings(const JSON& json, CommandStrings& cmd)
   load(json, cmd.remove_tileset, "remove-tileset");
   load(json, cmd.rename_tileset, "rename-tileset");
 
+  load(json, cmd.delete_animation, "delete-tileset");
+  load(json, cmd.add_animation_frame, "add-animation-frame");
+  load(json, cmd.remove_animation_frame, "remove-animation-frame");
+  load(json, cmd.set_animation_frame_duration, "set-animation-frame-duration");
+
   load(json, cmd.stamp_tool, "stamp-tool");
   load(json, cmd.eraser_tool, "eraser-tool");
   load(json, cmd.bucket_tool, "bucket-tool");
