@@ -78,6 +78,7 @@ void update_credits_dialog()
       ImGui::TableSetupColumn(lang.misc.license.c_str());
       ImGui::TableHeadersRow();
 
+      ui_dependency_row("argparse", "MIT");
       ui_dependency_row("Boost", "BSL-1.0");
       ui_dependency_row("Centurion", "MIT");
       ui_dependency_row("cppcodec", "MIT");

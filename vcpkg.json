@@ -8,6 +8,7 @@
   ],
   "builtin-baseline": "44b540607036e0587f6564c91f93663b0212ab98",
   "dependencies": [
+    "argparse",
     "entt",
     "cppcodec",
     "fmt",

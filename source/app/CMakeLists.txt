@@ -39,6 +39,7 @@ target_link_libraries(${TACTILE_LIB}
                       PUBLIC
                       ${TACTILE_PROTO}
                       ${Boost_LIBRARIES}
+                      argparse::argparse
                       $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
                       $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
                       imgui::imgui

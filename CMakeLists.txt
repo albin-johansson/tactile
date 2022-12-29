@@ -43,6 +43,7 @@ find_package(OpenGL REQUIRED)
 find_package(Boost REQUIRED)
 
 # Vcpkg dependencies
+find_package(argparse CONFIG REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(GLEW CONFIG REQUIRED)
