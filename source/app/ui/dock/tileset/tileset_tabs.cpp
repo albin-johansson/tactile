@@ -39,9 +39,6 @@
 namespace tactile::ui {
 namespace {
 
-constexpr auto tab_bar_flags =
-    ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
-
 void update_context_menu(const DocumentModel& model,
                          const UUID& tileset_id,
                          entt::dispatcher& dispatcher)
@@ -81,6 +78,9 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
 {
   TACTILE_ASSERT(model.is_map_active());
 
+  constexpr ImGuiTabBarFlags tab_bar_flags =
+      ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
+
   if (const TabBar bar {"##TilesetTabBar", tab_bar_flags}; bar.is_open()) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
                              ImGuiTabItemFlags_Trailing)) {
@@ -97,18 +97,15 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
       const auto& name = ref.view_tileset().get_ctx().name();
       const auto is_active = tilesets.active_tileset_id() == tileset_id;
 
-      bool opened = true;
       if (const TabItem item {name.c_str(),
-                              &opened,
+                              nullptr,
                               is_active ? ImGuiTabItemFlags_SetSelected : 0};
           item.is_open()) {
         update_tileset_view(model, tileset_id, dispatcher);
       }
 
-      if (!opened) {
-        dispatcher.enqueue<RemoveTilesetEvent>(tileset_id);
-      }
-      else if (ImGui::IsItemActivated()) {
+      if (ImGui::IsItemClicked(ImGuiMouseButton_Left) ||
+          ImGui::IsItemClicked(ImGuiMouseButton_Right) || ImGui::IsItemActivated()) {
         dispatcher.enqueue<SelectTilesetEvent>(tileset_id);
       }
       else {
