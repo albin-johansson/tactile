@@ -54,6 +54,7 @@ void on_toggle_ui(const ToggleUiEvent&)
     state.prev_show_property_dock = prefs.show_property_dock;
     state.prev_show_log_dock = prefs.show_log_dock;
     state.prev_show_component_dock = prefs.show_component_dock;
+    state.prev_show_animation_dock = prefs.show_animation_dock;
   }
 
   prefs.show_layer_dock = show;
@@ -61,6 +62,7 @@ void on_toggle_ui(const ToggleUiEvent&)
   prefs.show_property_dock = show;
   prefs.show_component_dock = show;
   prefs.show_log_dock = show;
+  prefs.show_animation_dock = show;
 
   if (show) {
     prefs.show_layer_dock = state.prev_show_layer_dock;
@@ -68,6 +70,7 @@ void on_toggle_ui(const ToggleUiEvent&)
     prefs.show_property_dock = state.prev_show_property_dock;
     prefs.show_log_dock = state.prev_show_log_dock;
     prefs.show_component_dock = state.prev_show_component_dock;
+    prefs.show_animation_dock = state.prev_show_component_dock;
   }
 
   show = !show;

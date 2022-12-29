@@ -28,6 +28,7 @@ struct WidgetShowState final {
   bool prev_show_property_dock  : 1 {};
   bool prev_show_log_dock       : 1 {};
   bool prev_show_component_dock : 1 {};
+  bool prev_show_animation_dock : 1 {};
 };
 
 }  // namespace tactile
