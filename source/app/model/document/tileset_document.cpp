@@ -21,6 +21,7 @@
 
 #include <utility>  // move
 
+#include "core/tile/tile.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "model/cmd/tileset/all.hpp"
@@ -34,6 +35,10 @@ TilesetDocument::TilesetDocument(TilesetInfo info, const UUID& id)
   auto& contexts = get_contexts();
   contexts.add_context(mTileset);
   contexts.select(mTileset->get_uuid());
+
+  for (const auto& [tile_id, tile]: *mTileset) {
+    contexts.add_context(tile);
+  }
 }
 
 void TilesetDocument::update()
