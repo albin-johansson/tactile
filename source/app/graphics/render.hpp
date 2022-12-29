@@ -92,4 +92,13 @@ void render_image(const Texture& texture,
 
 void render_text(const char* text, const ImVec2& position, uint32 color);
 
+inline void render_shadowed_text(const char* text,
+                                 const ImVec2& position,
+                                 const uint32 color,
+                                 const float shadow_offset = 1.0f)
+{
+  render_text(text, position + ImVec2 {shadow_offset, shadow_offset}, IM_COL32_BLACK);
+  render_text(text, position, color);
+}
+
 }  // namespace tactile::ui
