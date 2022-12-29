@@ -46,55 +46,100 @@ const HashMap<LogLevel, ImVec4> log_level_colors = {
     {LogLevel::critical, ImVec4 {1.00f, 0.00f, 0.00f, 1.00f}},
 };
 
-void ui_message_filter_selector()
+void ui_message_filter_checkboxes()
 {
   const auto& lang = get_current_language();
 
-  if (ImGui::Button(lang.misc.filter.c_str())) {
-    ImGui::OpenPopup("##FilterPopup");
+  {
+    bool value = log_filter.trace;
+    ImGui::Checkbox(lang.misc.log_trace_filter.c_str(), &value);
+    log_filter.trace = value;
   }
 
-  if (const Popup popup {"##FilterPopup"}; popup.is_open()) {
-    if (const StyleColor text {ImGuiCol_Text,
-                               lookup_in(log_level_colors, LogLevel::trace)};
-        ImGui::MenuItem(lang.misc.log_trace_filter.c_str(), nullptr, log_filter.trace)) {
-      log_filter.trace = !log_filter.trace;
-    }
+  ImGui::SameLine();
 
-    if (const StyleColor text {ImGuiCol_Text,
-                               lookup_in(log_level_colors, LogLevel::debug)};
-        ImGui::MenuItem(lang.misc.log_debug_filter.c_str(), nullptr, log_filter.debug)) {
-      log_filter.debug = !log_filter.debug;
-    }
+  {
+    bool value = log_filter.debug;
+    ImGui::Checkbox(lang.misc.log_debug_filter.c_str(), &value);
+    log_filter.debug = value;
+  }
 
-    if (const StyleColor text {ImGuiCol_Text,
-                               lookup_in(log_level_colors, LogLevel::info)};
-        ImGui::MenuItem(lang.misc.log_info_filter.c_str(), nullptr, log_filter.info)) {
-      log_filter.info = !log_filter.info;
-    }
+  ImGui::SameLine();
 
-    if (const StyleColor text {ImGuiCol_Text,
-                               lookup_in(log_level_colors, LogLevel::warn)};
-        ImGui::MenuItem(lang.misc.log_warn_filter.c_str(), nullptr, log_filter.warn)) {
-      log_filter.warn = !log_filter.warn;
-    }
+  {
+    bool value = log_filter.info;
+    ImGui::Checkbox(lang.misc.log_info_filter.c_str(), &value);
+    log_filter.info = value;
+  }
 
-    if (const StyleColor text {ImGuiCol_Text, lookup_in(log_level_colors, LogLevel::err)};
-        ImGui::MenuItem(lang.misc.log_error_filter.c_str(), nullptr, log_filter.error)) {
-      log_filter.error = !log_filter.error;
-    }
+  ImGui::SameLine();
 
-    if (const StyleColor text {ImGuiCol_Text,
-                               lookup_in(log_level_colors, LogLevel::critical)};
-        ImGui::MenuItem(lang.misc.log_critical_filter.c_str(),
-                        nullptr,
-                        log_filter.critical)) {
-      log_filter.critical = !log_filter.critical;
-    }
+  {
+    bool value = log_filter.warn;
+    ImGui::Checkbox(lang.misc.log_warn_filter.c_str(), &value);
+    log_filter.warn = value;
+  }
+
+  ImGui::SameLine();
+
+  {
+    bool value = log_filter.error;
+    ImGui::Checkbox(lang.misc.log_error_filter.c_str(), &value);
+    log_filter.error = value;
+  }
+
+  ImGui::SameLine();
+
+  {
+    bool value = log_filter.critical;
+    ImGui::Checkbox(lang.misc.log_critical_filter.c_str(), &value);
+    log_filter.critical = value;
   }
 }
 
-void ui_logged_message_view(const usize message_count)
+void ui_logged_message_legend_overlay(const Strings& lang)
+{
+  constexpr float overlay_opacity = 0.35f;
+  constexpr ImGuiWindowFlags overlay_window_flags =
+      ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking |
+      ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings |
+      ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav |
+      ImGuiWindowFlags_NoMove;
+
+  const auto& style = ImGui::GetStyle();
+  const auto window_pos = ImGui::GetWindowPos();
+  const auto window_size = ImGui::GetWindowSize();
+
+  const ImVec2 overlay_pos {window_pos.x + window_size.x - style.ScrollbarSize - 6,
+                            window_pos.y + 6};
+  const ImVec2 overlay_pivot {1.0f, 0.0f};
+
+  ImGui::SetNextWindowPos(overlay_pos, ImGuiCond_Always, overlay_pivot);
+  ImGui::SetNextWindowBgAlpha(overlay_opacity);
+
+  if (const Window overlay {"##LegendOverlay", overlay_window_flags}; overlay.is_open()) {
+    ImGui::TextColored(lookup_in(log_level_colors, LogLevel::trace),
+                       "%s",
+                       lang.misc.log_trace_filter.c_str());
+    ImGui::TextColored(lookup_in(log_level_colors, LogLevel::debug),
+                       "%s",
+                       lang.misc.log_debug_filter.c_str());
+    ImGui::TextColored(lookup_in(log_level_colors, LogLevel::info),
+                       "%s",
+                       lang.misc.log_info_filter.c_str());
+    ImGui::TextColored(lookup_in(log_level_colors, LogLevel::warn),
+                       "%s",
+                       lang.misc.log_warn_filter.c_str());
+    ImGui::TextColored(lookup_in(log_level_colors, LogLevel::err),
+                       "%s",
+                       lang.misc.log_error_filter.c_str());
+    ImGui::TextColored(lookup_in(log_level_colors, LogLevel::critical),
+                       "%s",
+                       lang.misc.log_critical_filter.c_str());
+  }
+}
+
+void ui_logged_message_view(const Strings& lang, const usize message_count)
 {
   const StyleColor child_bg {ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 
@@ -120,6 +165,8 @@ void ui_logged_message_view(const usize message_count)
     if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY()) {
       ImGui::SetScrollHereY(1.0f);
     }
+
+    ui_logged_message_legend_overlay(lang);
   }
 }
 
@@ -141,11 +188,11 @@ void update_log_dock()
   is_dock_focused = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
-    ui_message_filter_selector();
+    ui_message_filter_checkboxes();
 
     const auto message_count = count_matching_log_entries(log_filter);
     if (message_count != 0u) {
-      ui_logged_message_view(message_count);
+      ui_logged_message_view(lang, message_count);
     }
     else {
       ui_centered_label(lang.misc.log_no_messages_match_filter.c_str());
