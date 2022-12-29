@@ -106,21 +106,23 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
     return count;
   }
 
+  /// Complexity: O(NlogN)
   void visit_logged_message_range(const LogFilterSet& set,
                                   const usize filtered_begin_index,
                                   const usize filtered_end_index,
                                   const LoggedMessageVisitorFn& fn) const
   {
-    const auto message_count = mHistory.size();
-    usize filtered_message_index = filtered_begin_index;
+    usize filtered_index = 0;
+    for (const auto& [level, msg]: mHistory) {
+      if (filtered_index >= filtered_end_index) {
+        break;
+      }
 
-    for (usize index = filtered_begin_index;
-         index < message_count && filtered_message_index < filtered_end_index;
-         ++index) {
-      const auto& entry = mHistory.at(index);
-      if (set.contains(entry.level)) {
-        fn(entry.level, entry.msg);
-        ++filtered_message_index;
+      if (set.contains(level)) {
+        if (filtered_index >= filtered_begin_index) {
+          fn(level, msg);
+        }
+        ++filtered_index;
       }
     }
   }
