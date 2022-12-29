@@ -21,6 +21,7 @@
 
 #include "core/type/chrono.hpp"
 #include "core/type/vec.hpp"
+#include "core/type/result.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
@@ -41,6 +42,15 @@ class TileAnimation final {
 
   /// Adds a new frame to the animation sequence.
   void add_frame(TileIndex tile, ms_t duration);
+
+  /// Removes the frame at the specified index.
+  ///
+  /// \details
+  /// The animation is reset to the first frame if the current frame is
+  ///   1) the removed frame,
+  ///   2) or one after the removed frame.
+  /// \return success if a frame was removed; failure otherwise.
+  auto remove_frame(usize frame_index) -> Result;
 
   /// Returns the frame at a specific index.
   [[nodiscard]] auto operator[](usize index) -> Frame&;

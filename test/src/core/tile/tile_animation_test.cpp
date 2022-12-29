@@ -21,8 +21,8 @@
 
 #include <gtest/gtest.h>
 
-#include "core/type/chrono.hpp"
 #include "core/debug/panic.hpp"
+#include "core/type/chrono.hpp"
 
 using namespace std::chrono_literals;
 
@@ -56,6 +56,22 @@ TEST(TileAnimation, AddFrame)
   ASSERT_EQ(14ms, frame.duration);
 
   ASSERT_THROW(animation[1], TactileError);
+}
+
+TEST(TileAnimation, RemoveFrame)
+{
+  TileAnimation animation;
+  ASSERT_EQ(failure, animation.remove_frame(0));
+
+  animation.add_frame(12, 42ms);
+  ASSERT_EQ(1u, animation.size());
+
+  ASSERT_EQ(failure, animation.remove_frame(1));
+  ASSERT_EQ(1u, animation.size());
+
+  ASSERT_EQ(success, animation.remove_frame(0));
+  ASSERT_EQ(failure, animation.remove_frame(0));
+  ASSERT_EQ(0u, animation.size());
 }
 
 }  // namespace tactile::test

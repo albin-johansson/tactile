@@ -45,6 +45,24 @@ void TileAnimation::add_frame(const TileIndex tile, const ms_t duration)
   mFrames.push_back({tile, duration});
 }
 
+auto TileAnimation::remove_frame(const usize frame_index) -> Result
+{
+  if (frame_index < mFrames.size()) {
+    const auto iter = mFrames.begin() + frame_index;
+    mFrames.erase(iter);
+
+    if (frame_index <= mIndex) {
+      mIndex = 0;
+      mLastUpdate = Clock::now();
+    }
+
+    return success;
+  }
+  else {
+    return failure;
+  }
+}
+
 auto TileAnimation::operator[](const usize index) -> Frame&
 {
   if (index < mFrames.size()) {
