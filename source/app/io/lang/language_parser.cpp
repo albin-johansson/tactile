@@ -473,6 +473,8 @@ void load_command_strings(const JSON& json, CommandStrings& cmd)
   load(json, cmd.add_animation_frame, "add-animation-frame");
   load(json, cmd.remove_animation_frame, "remove-animation-frame");
   load(json, cmd.set_animation_frame_duration, "set-animation-frame-duration");
+  load(json, cmd.move_animation_frame_forwards, "move-animation-frame-forwards");
+  load(json, cmd.move_animation_frame_backwards, "move-animation-frame-backwards");
 
   load(json, cmd.stamp_tool, "stamp-tool");
   load(json, cmd.eraser_tool, "eraser-tool");

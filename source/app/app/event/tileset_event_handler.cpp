@@ -174,6 +174,32 @@ void on_remove_tile_animation_frame(const RemoveTileAnimationFrameEvent& event)
   }
 }
 
+void on_move_animation_frame_forwards(const MoveAnimationFrameForwardsEvent& event)
+{
+  spdlog::trace("MoveAnimationFrameForwardsEvent(frame_index: {})", event.frame_index);
+
+  if (auto* tileset_document = get_model().active_tileset()) {
+    const auto& tileset = tileset_document->view_tileset();
+    if (const auto selected_tile_index = tileset.get_selected_tile()) {
+      tileset_document->move_animation_frame_forwards(*selected_tile_index,
+                                                      event.frame_index);
+    }
+  }
+}
+
+void on_move_animation_frame_backwards(const MoveAnimationFrameBackwardsEvent& event)
+{
+  spdlog::trace("MoveAnimationFrameBackwardsEvent(frame_index: {})", event.frame_index);
+
+  if (auto* tileset_document = get_model().active_tileset()) {
+    const auto& tileset = tileset_document->view_tileset();
+    if (const auto selected_tile_index = tileset.get_selected_tile()) {
+      tileset_document->move_animation_frame_backwards(*selected_tile_index,
+                                                       event.frame_index);
+    }
+  }
+}
+
 void on_delete_tile_animation(const DeleteTileAnimationEvent&)
 {
   spdlog::trace("DeleteTileAnimationEvent");
@@ -207,6 +233,8 @@ void install_tileset_event_handler()
   dispatcher.sink<EnableAnimationFrameSelectionMode>().connect<&on_enable_animation_frame_selection_mode>();
   dispatcher.sink<AddTileAnimationFrameEvent>().connect<&on_add_tile_animation_frame>();
   dispatcher.sink<RemoveTileAnimationFrameEvent>().connect<&on_remove_tile_animation_frame>();
+  dispatcher.sink<MoveAnimationFrameForwardsEvent>().connect<&on_move_animation_frame_forwards>();
+  dispatcher.sink<MoveAnimationFrameBackwardsEvent>().connect<&on_move_animation_frame_backwards>();
   dispatcher.sink<DeleteTileAnimationEvent>().connect<&on_delete_tile_animation>();
   // clang-format on
 }

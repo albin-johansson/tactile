@@ -336,6 +336,8 @@
     "add-animation-frame": "Lägg Till Animationssteg",
     "remove-animation-frame": "Ta Bort Animationssteg",
     "set-animation-frame-duration": "Ändra Animationsstegslängd",
+    "move-animation-frame-forwards": "Flytta Animationssteg Framåt",
+    "move-animation-frame-backwards": "Flytta Animationssteg Bakåt",
     "stamp-tool": "Stämpelsekvens",
     "eraser-tool": "Suddsekvens",
     "bucket-tool": "Hinkapplicering",

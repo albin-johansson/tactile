@@ -19,9 +19,30 @@
 
 #pragma once
 
-#include "model/cmd/tile/add_animation_frame.hpp"
-#include "model/cmd/tile/delete_animation.hpp"
-#include "model/cmd/tile/move_animation_frame_backwards.hpp"
-#include "model/cmd/tile/move_animation_frame_forwards.hpp"
-#include "model/cmd/tile/remove_animation_frame.hpp"
-#include "model/cmd/tile/set_animation_frame_duration.hpp"
+#include "core/type/maybe.hpp"
+#include "core/vocabulary.hpp"
+#include "model/cmd/command.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetDocument)
+
+namespace tactile::cmd {
+
+class MoveAnimationFrameForwards final : public Command {
+ public:
+  MoveAnimationFrameForwards(TilesetDocument* document,
+                             TileIndex tile_index,
+                             usize frame_index);
+
+  void undo() override;
+
+  void redo() override;
+
+  [[nodiscard]] auto get_name() const -> String override;
+
+ private:
+  TilesetDocument* mDocument {};
+  TileIndex mTileIndex {};
+  usize mFrameIndex {};
+};
+
+}  // namespace tactile::cmd

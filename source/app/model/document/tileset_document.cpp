@@ -88,6 +88,18 @@ void TilesetDocument::remove_animation_frame(const TileIndex tile_index,
   get_history().push<cmd::RemoveAnimationFrame>(this, tile_index, frame_index);
 }
 
+void TilesetDocument::move_animation_frame_forwards(const TileIndex tile_index,
+                                                    const usize frame_index)
+{
+  get_history().push<cmd::MoveAnimationFrameForwards>(this, tile_index, frame_index);
+}
+
+void TilesetDocument::move_animation_frame_backwards(const TileIndex tile_index,
+                                                     const usize frame_index)
+{
+  get_history().push<cmd::MoveAnimationFrameBackwards>(this, tile_index, frame_index);
+}
+
 void TilesetDocument::set_animation_frame_duration(const TileIndex tile_index,
                                                    const usize frame_index,
                                                    const ms_t frame_duration)

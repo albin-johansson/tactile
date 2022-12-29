@@ -58,6 +58,10 @@ class TilesetDocument final : public Document {
 
   void remove_animation_frame(TileIndex tile_index, usize frame_index);
 
+  void move_animation_frame_forwards(TileIndex tile_index, usize frame_index);
+
+  void move_animation_frame_backwards(TileIndex tile_index, usize frame_index);
+
   void set_animation_frame_duration(TileIndex tile_index,
                                     usize frame_index,
                                     ms_t frame_duration);

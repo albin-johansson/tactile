@@ -82,6 +82,16 @@ struct RemoveTileAnimationFrameEvent final {
   usize frame_index {};  ///< Index of frame that will be removed from the animation.
 };
 
+/// Event for moving a frame earlier in the animation sequence.
+struct MoveAnimationFrameForwardsEvent final {
+  usize frame_index {};
+};
+
+/// Event for moving a frame later in the animation sequence.
+struct MoveAnimationFrameBackwardsEvent final {
+  usize frame_index {};
+};
+
 /// Event for deleting the tile animation associated with the selected tileset tile.
 struct DeleteTileAnimationEvent final {};
 
