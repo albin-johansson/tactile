@@ -21,7 +21,7 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "cfg/configuration.hpp"
+#include "core/debug/assert.hpp"
 #include "core/debug/panic.hpp"
 #include "model/model.hpp"
 #include "ui/widget_show_state.hpp"
@@ -29,7 +29,7 @@
 namespace tactile {
 namespace {
 
-inline AppCfg* app_cfg {};
+inline cen::window* app_window {};
 inline entt::dispatcher app_dispatcher;
 inline DocumentModel app_model;
 inline WidgetShowState app_widget_show_state;
@@ -37,13 +37,9 @@ inline constinit bool app_font_reload_scheduled = false;
 
 }  // namespace
 
-void init_app_context(AppCfg* cfg)
+void init_app_context(cen::window& window)
 {
-  if (!cfg) {
-    throw TactileError {"Invalid application configuration!"};
-  }
-
-  app_cfg = cfg;
+  app_window = &window;
 }
 
 void request_font_reload()
@@ -58,7 +54,8 @@ void handled_font_reload()
 
 auto get_window() -> cen::window&
 {
-  return app_cfg->window();
+  TACTILE_ASSERT(app_window != nullptr);
+  return *app_window;
 }
 
 auto get_dispatcher() -> entt::dispatcher&

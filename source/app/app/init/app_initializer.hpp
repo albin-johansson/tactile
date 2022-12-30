@@ -19,19 +19,27 @@
 
 #pragma once
 
+#include "core/type/maybe.hpp"
 #include "core/vocabulary.hpp"
+#include "protobuf_context.hpp"
+#include "sdl_context.hpp"
+#include "ui/imgui_context.hpp"
 
 namespace tactile {
 
-/// Handles the loading and unloading of the Protobuf library.
-class ProtobufContext final {
+class AppInitializer final {
  public:
-  TACTILE_DELETE_COPY(ProtobufContext);
-  TACTILE_DELETE_MOVE(ProtobufContext);
+  TACTILE_DELETE_COPY(AppInitializer);
+  TACTILE_DELETE_MOVE(AppInitializer);
 
-  ProtobufContext();
+  [[nodiscard]] AppInitializer();
 
-  ~ProtobufContext();
+ private:
+  Maybe<ProtobufContext> mProtobuf;
+  Maybe<SDLContext> mSDL;
+  Maybe<ImGuiContext> mImGui;
 };
+
+void on_terminate();
 
 }  // namespace tactile

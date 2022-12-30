@@ -54,6 +54,7 @@ App::App()
   subscribe_to_events();
   load_default_shortcuts();
   ui::load_icons();
+  get_window().maximize();
 }
 
 App::~App() noexcept

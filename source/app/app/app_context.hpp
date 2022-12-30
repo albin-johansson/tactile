@@ -30,7 +30,7 @@ TACTILE_FWD_DECLARE_CLASS(AppCfg)
 TACTILE_FWD_DECLARE_CLASS(DocumentModel)
 TACTILE_FWD_DECLARE_STRUCT(WidgetShowState)
 
-void init_app_context(AppCfg* cfg);
+void init_app_context(cen::window& window);
 
 void request_font_reload();
 void handled_font_reload();

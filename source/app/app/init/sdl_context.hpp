@@ -23,28 +23,26 @@
 #include <centurion/opengl.hpp>
 #include <centurion/window.hpp>
 
-#include "cfg/protobuf_context.hpp"
 #include "core/type/maybe.hpp"
-#include "ui/imgui_context.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 
-/// Handles the configuration of the application window, OpenGL context, etc.
-class AppCfg final {
+class SDLContext final {
  public:
-  AppCfg(int argc, char* argv[]);
+  TACTILE_DELETE_COPY(SDLContext);
+  TACTILE_DELETE_MOVE(SDLContext);
 
-  [[nodiscard]] auto window() -> cen::window&;
+  [[nodiscard]] SDLContext();
+
+  [[nodiscard]] auto get_window() -> cen::window&;
+  [[nodiscard]] auto get_gl_context() -> cen::gl_context&;
 
  private:
-  ProtobufContext mProtobuf;
   cen::sdl mSDL;
   cen::img mIMG;
-
-  /// Initialization of these members needs to be deferred
   Maybe<cen::window> mWindow;
-  Maybe<cen::gl_context> mOpenGL;
-  Maybe<ImGuiContext> mImGui;
+  Maybe<cen::gl_context> mGL;
 };
 
 }  // namespace tactile

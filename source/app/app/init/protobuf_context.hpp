@@ -17,36 +17,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "platform_specific.hpp"
+#pragma once
 
-#include "core/predef.hpp"
-
-#if TACTILE_OS_WINDOWS
-
-#include <SDL_syswm.h>
-#include <centurion/system.hpp>
-#include <dwmapi.h>
-
-#endif  // TACTILE_OS_WINDOWS
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 
-void use_immersive_dark_mode([[maybe_unused]] cen::window& window)
-{
-#if TACTILE_OS_WINDOWS
-  SDL_SysWMinfo wm {};
-  SDL_VERSION(&wm.version);
-  if (SDL_GetWindowWMInfo(window.get(), &wm)) {
-    cen::shared_object dwmapi {"dwmapi.dll"};
+/// Handles the loading and unloading of the Protobuf library.
+class ProtobufContext final {
+ public:
+  TACTILE_DELETE_COPY(ProtobufContext);
+  TACTILE_DELETE_MOVE(ProtobufContext);
 
-    using Signature = HRESULT(HWND, DWORD, LPCVOID, DWORD);
-    if (auto* setAttribute = dwmapi.load_function<Signature>("DwmSetWindowAttribute")) {
-      HWND hwnd = wm.info.win.window;
-      BOOL mode = 1;
-      setAttribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE, &mode, sizeof mode);
-    }
-  }
-#endif  // TACTILE_OS_WINDOWS
-}
+  [[nodiscard]] ProtobufContext();
+
+  ~ProtobufContext();
+};
 
 }  // namespace tactile

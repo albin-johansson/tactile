@@ -21,16 +21,14 @@
 #include <exception>  // exception
 
 #include <centurion/message_box.hpp>
+#include <fmt/format.h>
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
 #include "app/app.hpp"
-#include "app/app_context.hpp"
-#include "cfg/configuration.hpp"
-#include "core/debug/logging.hpp"
+#include "app/init/app_initializer.hpp"
 #include "core/debug/panic.hpp"
 #include "core/util/fmt.hpp"
-#include "io/directories.hpp"
 
 namespace {
 
@@ -47,16 +45,10 @@ void show_crash_message_box(const char* error_msg)
 
 }  // namespace
 
-auto main(int argc, char* argv[]) -> int
+auto main(int, char*[]) -> int
 {
-  tactile::init_logger();
-
   try {
-    spdlog::info("Using persistent file directory {}",
-                 tactile::io::persistent_file_dir());
-
-    tactile::AppCfg cfg {argc, argv};
-    tactile::init_app_context(&cfg);
+    const tactile::AppInitializer initializer;
 
     tactile::App app;
     app.start();

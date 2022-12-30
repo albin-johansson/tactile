@@ -20,17 +20,12 @@
 #include <gtest/gtest.h>
 
 #include "app/app_context.hpp"
-#include "cfg/configuration.hpp"
-#include "core/debug/logging.hpp"
+#include "app/init/app_initializer.hpp"
 
 auto main(int argc, char* argv[]) -> int
 {
-  tactile::init_logger();
-
-  tactile::AppCfg cfg {argc, argv};
-  tactile::init_app_context(&cfg);
-
-  cfg.window().show();
+  const tactile::AppInitializer initializer;
+  tactile::get_window().show();
 
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
