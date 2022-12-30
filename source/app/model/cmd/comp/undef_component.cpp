@@ -42,7 +42,7 @@ UndefComponent::UndefComponent(Document* document, const UUID& component_id)
 
 void UndefComponent::undo()
 {
-  auto index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index_ptr();
 
   index->restore(std::move(mPreviousDef.value()));
   mPreviousDef.reset();
@@ -59,7 +59,7 @@ void UndefComponent::undo()
 
 void UndefComponent::redo()
 {
-  auto index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index_ptr();
 
   mPreviousDef = index->at(mComponentId);
   index->remove(mComponentId);

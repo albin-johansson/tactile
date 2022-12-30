@@ -104,7 +104,7 @@ auto StampTool::behaves_as_if_random(const Map& map) const -> bool
 
 auto StampTool::is_available(const DocumentModel& model) const -> bool
 {
-  const auto& document = model.require_active_map();
+  const auto& document = model.require_active_map_document();
   return document.get_map().is_active_layer(LayerType::TileLayer);
 }
 
@@ -112,7 +112,7 @@ void StampTool::update_sequence(DocumentModel& model, const TilePos& cursor)
 {
   TACTILE_ASSERT(is_usable(model));
 
-  auto& map_document = model.require_active_map();
+  auto& map_document = model.require_active_map_document();
   auto& map = map_document.get_map();
 
   const auto active_layer_id = map.active_layer_id().value();
@@ -188,7 +188,7 @@ void StampTool::update_sequence_random(TileLayer& layer,
 void StampTool::maybe_emit_event(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (!mPrevious.empty() && !mCurrent.empty()) {
-    const auto& document = model.require_active_map();
+    const auto& document = model.require_active_map_document();
     const auto& map = document.get_map();
     const auto layer_id = map.active_layer_id().value();
 
@@ -205,7 +205,7 @@ void StampTool::maybe_emit_event(const DocumentModel& model, entt::dispatcher& d
 
 auto StampTool::is_usable(const DocumentModel& model) const -> bool
 {
-  const auto& document = model.require_active_map();
+  const auto& document = model.require_active_map_document();
   const auto& map = document.get_map();
   const auto& tilesets = map.tileset_bundle();
 

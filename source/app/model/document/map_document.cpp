@@ -244,12 +244,12 @@ auto MapDocument::has_path() const -> bool
   return mDelegate.has_path();
 }
 
-auto MapDocument::get_component_index() -> Shared<ComponentIndex>
+auto MapDocument::get_component_index_ptr() -> Shared<ComponentIndex>
 {
   return mDelegate.get_component_index();
 }
 
-auto MapDocument::view_component_index() const -> const ComponentIndex*
+auto MapDocument::find_component_index() const -> const ComponentIndex*
 {
   return mDelegate.view_component_index();
 }

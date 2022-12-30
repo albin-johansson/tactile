@@ -64,7 +64,7 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
   dock_has_hover = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
-    const auto& document = model.require_active_map();
+    const auto& document = model.require_active_map_document();
     const auto& map = document.get_map();
 
     if (map.tileset_bundle().empty()) {

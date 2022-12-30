@@ -42,7 +42,7 @@ MoveAnimationFrameBackwards::MoveAnimationFrameBackwards(TilesetDocument* docume
 
 void MoveAnimationFrameBackwards::undo()
 {
-  auto& tileset = mDocument->view_tileset();
+  auto& tileset = mDocument->get_tileset();
   auto& tile = tileset[mTileIndex];
   auto& animation = tile.get_animation();
 
@@ -57,7 +57,7 @@ void MoveAnimationFrameBackwards::undo()
 
 void MoveAnimationFrameBackwards::redo()
 {
-  auto& tileset = mDocument->view_tileset();
+  auto& tileset = mDocument->get_tileset();
   auto& tile = tileset[mTileIndex];
   auto& animation = tile.get_animation();
 

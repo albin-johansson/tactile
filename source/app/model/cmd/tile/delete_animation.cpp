@@ -38,7 +38,7 @@ DeleteAnimation::DeleteAnimation(TilesetDocument* document, const TileIndex tile
 
 void DeleteAnimation::undo()
 {
-  auto& tileset = mDocument->view_tileset();
+  auto& tileset = mDocument->get_tileset();
 
   auto& tile = tileset[mTileIndex];
   tile.set_animation(mRemovedAnimation.value());
@@ -48,7 +48,7 @@ void DeleteAnimation::undo()
 
 void DeleteAnimation::redo()
 {
-  auto& tileset = mDocument->view_tileset();
+  auto& tileset = mDocument->get_tileset();
   auto& tile = tileset[mTileIndex];
 
   mRemovedAnimation = tile.get_animation();

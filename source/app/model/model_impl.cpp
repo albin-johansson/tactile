@@ -103,7 +103,7 @@ auto DocumentModel::Impl::restore_tileset(const TileID first_tile_id,
     auto tileset_document = std::make_shared<TilesetDocument>(info);
     mDocuments.add_tileset(tileset_document);
 
-    auto tileset = tileset_document->get_tileset();
+    auto tileset = tileset_document->get_tileset_ptr();
     const auto tileset_id = tileset->get_uuid();
 
     auto& tilesets = map_document->get_map().tileset_bundle();

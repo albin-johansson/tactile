@@ -80,7 +80,7 @@ void EllipseTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispa
   TACTILE_ASSERT(is_available(model));
 
   if (mStroke) {
-    const auto& document = model.require_active_map();
+    const auto& document = model.require_active_map_document();
     const auto& map = document.get_map();
     const auto& viewport = document.get_viewport();
 
@@ -109,7 +109,7 @@ void EllipseTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispa
 
 auto EllipseTool::is_available(const DocumentModel& model) const -> bool
 {
-  const auto& document = model.require_active_map();
+  const auto& document = model.require_active_map_document();
   const auto& map = document.get_map();
   return map.is_active_layer(LayerType::ObjectLayer);
 }

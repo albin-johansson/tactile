@@ -56,7 +56,7 @@ class DocumentModel final {
   void each(const VisitorFunc& func) const;
 
   /// Creates an empty map document with the specified attributes.
-  auto add_map(const Int2& tile_size, usize rows, usize columns) -> UUID;
+  auto create_map_document(const Int2& tile_size, usize rows, usize columns) -> UUID;
 
   /// Creates a tileset document and adds it to the active map document.
   auto add_tileset(const TilesetInfo& info) -> UUID;
@@ -84,7 +84,7 @@ class DocumentModel final {
   /// Indicates whether any of the loaded documents are located at the specific path.
   [[nodiscard]] auto has_document_with_path(const Path& path) const -> bool;
 
-  /// Returns the document ID of the loaded document with the specified path.
+  /// Returns the ID of the loaded document with the specified path.
   [[nodiscard]] auto get_id_for_path(const Path& path) const -> UUID;
 
   /// Indicates whether there is an active document, of any type.
@@ -100,19 +100,19 @@ class DocumentModel final {
   [[nodiscard]] auto active_document() -> Document*;
   [[nodiscard]] auto active_document() const -> const Document*;
 
-  [[nodiscard]] auto active_map() -> MapDocument*;
-  [[nodiscard]] auto active_map() const -> const MapDocument*;
+  [[nodiscard]] auto active_map_document() -> MapDocument*;
+  [[nodiscard]] auto active_map_document() const -> const MapDocument*;
 
-  [[nodiscard]] auto active_tileset() -> TilesetDocument*;
-  [[nodiscard]] auto active_tileset() const -> const TilesetDocument*;
+  [[nodiscard]] auto active_tileset_document() -> TilesetDocument*;
+  [[nodiscard]] auto active_tileset_document() const -> const TilesetDocument*;
 
   [[nodiscard]] auto require_active_document() const -> const Document&;
 
-  [[nodiscard]] auto require_active_map() -> MapDocument&;
-  [[nodiscard]] auto require_active_map() const -> const MapDocument&;
+  [[nodiscard]] auto require_active_map_document() -> MapDocument&;
+  [[nodiscard]] auto require_active_map_document() const -> const MapDocument&;
 
-  [[nodiscard]] auto require_active_tileset() -> TilesetDocument&;
-  [[nodiscard]] auto require_active_tileset() const -> const TilesetDocument&;
+  [[nodiscard]] auto require_active_tileset_document() -> TilesetDocument&;
+  [[nodiscard]] auto require_active_tileset_document() const -> const TilesetDocument&;
 
   /// Indicates whether a document is open.
   [[nodiscard]] auto is_open(const UUID& id) const -> bool;
@@ -123,16 +123,16 @@ class DocumentModel final {
   /// Indicates whether a document represents a tileset.
   [[nodiscard]] auto is_tileset(const UUID& id) const -> bool;
 
-  [[nodiscard]] auto get_document(const UUID& id) -> Shared<Document>;
-  [[nodiscard]] auto get_map(const UUID& id) -> Shared<MapDocument>;
-  [[nodiscard]] auto get_tileset(const UUID& id) -> Shared<TilesetDocument>;
+  [[nodiscard]] auto get_document_ptr(const UUID& id) -> Shared<Document>;
+  [[nodiscard]] auto get_map_document_ptr(const UUID& id) -> Shared<MapDocument>;
+  [[nodiscard]] auto get_tileset_document_ptr(const UUID& id) -> Shared<TilesetDocument>;
 
   /// Getters that do not require a copy of shared pointers, which can be expensive
-  [[nodiscard]] auto view_document(const UUID& id) const -> const Document&;
-  [[nodiscard]] auto view_map(const UUID& id) const -> const MapDocument&;
-  [[nodiscard]] auto view_tileset(const UUID& id) const -> const TilesetDocument&;
+  [[nodiscard]] auto get_document(const UUID& id) const -> const Document&;
+  [[nodiscard]] auto get_map(const UUID& id) const -> const MapDocument&;
+  [[nodiscard]] auto get_tileset(const UUID& id) const -> const TilesetDocument&;
 
-  [[nodiscard]] auto active_document_id() const -> Maybe<UUID>;
+  [[nodiscard]] auto get_active_document_id() const -> Maybe<UUID>;
 
  private:
   class Impl;

@@ -117,8 +117,8 @@ class MapDocument final : public Document {
 
   [[nodiscard]] auto has_path() const -> bool override;
 
-  [[nodiscard]] auto get_component_index() -> Shared<ComponentIndex> override;
-  [[nodiscard]] auto view_component_index() const -> const ComponentIndex* override;
+  [[nodiscard]] auto get_component_index_ptr() -> Shared<ComponentIndex> override;
+  [[nodiscard]] auto find_component_index() const -> const ComponentIndex* override;
 
   [[nodiscard]] auto get_tools() -> ToolManager&;
   [[nodiscard]] auto get_tools() const -> const ToolManager&;
@@ -141,7 +141,6 @@ class MapDocument final : public Document {
   [[nodiscard]] auto get_map_ptr() -> const Shared<Map>& { return mMap; }
 
   [[nodiscard]] auto get_map() -> Map& { return *mMap; }
-
   [[nodiscard]] auto get_map() const -> const Map& { return *mMap; }
 
  private:

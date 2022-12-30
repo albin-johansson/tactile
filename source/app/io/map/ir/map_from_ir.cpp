@@ -60,7 +60,7 @@ void restore_context_no_register(Document& document,
     properties.add(property_name, property_value);
   }
 
-  if (auto index = document.get_component_index()) {
+  if (auto index = document.get_component_index_ptr()) {
     for (const auto& [type, attributes]: source.components) {
       const auto& definition = index->with_name(type);
 
@@ -202,7 +202,7 @@ void restore_fancy_tile_objects(TilesetDocument& document,
 
 void restore_fancy_tiles(TilesetDocument& document, const ir::TilesetData& tileset_data)
 {
-  auto& tileset = document.view_tileset();
+  auto& tileset = document.get_tileset();
   for (const auto& [index, tile_data]: tileset_data.fancy_tiles) {
     auto tile = tileset.get_tile_ptr(index);
     TACTILE_ASSERT(tile->get_index() == index);
@@ -223,7 +223,7 @@ void restore_tileset(DocumentModel& model,
                      const Shared<ComponentIndex>& index,
                      const ir::TilesetData& tileset_data)
 {
-  TACTILE_ASSERT(model.active_document_id().has_value());
+  TACTILE_ASSERT(model.get_active_document_id().has_value());
 
   // TODO compare tileset document absolute paths to recognize the same tileset being
   // loaded multiple times
@@ -236,13 +236,13 @@ void restore_tileset(DocumentModel& model,
   // This will automatically attach the tileset to the active map
   const auto tileset_id = model.restore_tileset(tileset_data.first_tile, info);
 
-  auto tileset_document = model.get_tileset(tileset_id);
+  auto tileset_document = model.get_tileset_document_ptr(tileset_id);
   tileset_document->set_name(tileset_data.name);
   tileset_document->set_component_index(index);
 
   restore_fancy_tiles(*tileset_document, tileset_data);
   restore_context_no_register(*tileset_document,
-                              tileset_document->get_tileset(),
+                              tileset_document->get_tileset_ptr(),
                               tileset_data.context);
 }
 
@@ -254,7 +254,7 @@ void restore_tilesets(DocumentModel& model,
     restore_tileset(model, index, tileset_data);
   }
 
-  auto& map = model.require_active_map().get_map();
+  auto& map = model.require_active_map_document().get_map();
   auto& tileset_bundle = map.tileset_bundle();
 
   // Determine the next available tile identifier
@@ -271,7 +271,7 @@ void restore_tilesets(DocumentModel& model,
 
 void restore_component_definitions(MapDocument& document, const ir::MapData& map_data)
 {
-  auto index = document.get_component_index();
+  auto index = document.get_component_index_ptr();
   for (const auto& [name, attributes]: map_data.component_definitions) {
     const auto id = index->define(name);
     auto& def = index->at(id);
@@ -301,13 +301,14 @@ void map_from_ir(const ParseResult& result, DocumentModel& model)
 {
   const auto& map_data = result.data();
 
-  const auto map_id =
-      model.add_map(map_data.tile_size, map_data.row_count, map_data.col_count);
+  const auto map_id = model.create_map_document(map_data.tile_size,
+                                                map_data.row_count,
+                                                map_data.col_count);
   model.select_document(map_id);
 
   auto components = std::make_shared<ComponentIndex>();
 
-  auto document = model.get_map(map_id);
+  auto document = model.get_map_document_ptr(map_id);
   document->set_component_index(components);
 
   auto& map = document->get_map();
@@ -323,7 +324,7 @@ void map_from_ir(const ParseResult& result, DocumentModel& model)
 
   restore_tile_format(map.tile_format(), map_data.tile_format);
   restore_component_definitions(*document, map_data);
-  restore_tilesets(model, document->get_component_index(), map_data);
+  restore_tilesets(model, document->get_component_index_ptr(), map_data);
   restore_layers(*document, map_data);
 
   restore_context_no_register(*document, document->get_map_ptr(), map_data.context);

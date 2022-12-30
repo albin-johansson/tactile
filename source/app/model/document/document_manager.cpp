@@ -66,7 +66,7 @@ void DocumentManager::add_tileset(Shared<TilesetDocument> document)
     throw TactileError {"Cannot store null tileset document!"};
   }
 
-  const auto id = document->get_tileset()->get_uuid();
+  const auto id = document->get_tileset_ptr()->get_uuid();
 
   mDocuments[id] = document;
   mTilesets[id] = std::move(document);

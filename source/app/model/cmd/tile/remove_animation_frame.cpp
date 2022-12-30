@@ -21,9 +21,9 @@
 
 #include "core/debug/panic.hpp"
 #include "core/tile/tile.hpp"
-#include "model/document/tileset_document.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/document/tileset_document.hpp"
 
 namespace tactile::cmd {
 
@@ -41,7 +41,7 @@ RemoveAnimationFrame::RemoveAnimationFrame(TilesetDocument* document,
 
 void RemoveAnimationFrame::undo()
 {
-  auto& tileset = mDocument->view_tileset();
+  auto& tileset = mDocument->get_tileset();
   auto& tile = tileset[mTileIndex];
 
   if (mRemovedAnimation.has_value()) {
@@ -57,7 +57,7 @@ void RemoveAnimationFrame::undo()
 
 void RemoveAnimationFrame::redo()
 {
-  auto& tileset = mDocument->view_tileset();
+  auto& tileset = mDocument->get_tileset();
   auto& tile = tileset[mTileIndex];
   auto& animation = tile.get_animation();
 

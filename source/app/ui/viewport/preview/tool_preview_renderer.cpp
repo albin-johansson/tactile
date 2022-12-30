@@ -53,7 +53,7 @@ void ToolPreviewRenderer::visit(const StampTool& tool)
 {
   const auto& model = mModel.get();
 
-  const auto& document = model.require_active_map();
+  const auto& document = model.require_active_map_document();
   const auto& map = document.get_map();
   const auto& tilesets = map.tileset_bundle();
 

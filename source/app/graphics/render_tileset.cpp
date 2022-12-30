@@ -32,7 +32,7 @@ namespace tactile::ui {
 
 void render_tileset(Graphics& graphics, const TilesetDocument& document)
 {
-  const auto& tileset = document.view_tileset();
+  const auto& tileset = document.get_tileset();
   const auto& texture = tileset.texture();
 
   const auto rendered_position = graphics.translate(ImVec2 {0, 0});

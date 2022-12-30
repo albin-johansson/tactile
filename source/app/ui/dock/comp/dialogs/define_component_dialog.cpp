@@ -61,7 +61,7 @@ void update_define_component_dialog(const DocumentModel& model,
   }
 
   const auto current_name = dialog_component_name_buffer.as_string_view();
-  const auto* component_index = model.require_active_document().view_component_index();
+  const auto* component_index = model.require_active_document().find_component_index();
 
   if (!current_name.empty() &&  //
       component_index != nullptr && !component_index->contains(current_name)) {

@@ -35,7 +35,7 @@ TEST(RemoveComponentAttr, Constructor)
 TEST(RemoveComponentAttr, RedoUndo)
 {
   auto document = MapBuilder::build().result();
-  auto index = document->get_component_index();
+  auto index = document->get_component_index_ptr();
 
   const auto comp_id = ComponentBuilder {index, "Demo"}.with_attr("attr", 42).result();
 

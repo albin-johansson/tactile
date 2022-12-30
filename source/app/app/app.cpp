@@ -144,7 +144,7 @@ void App::subscribe_to_events()
 void App::save_current_files_to_history()
 {
   get_model().each([](const UUID& id) {
-    const auto document = get_model().get_document(id);
+    const auto document = get_model().get_document_ptr(id);
     if (document->is_map() && document->has_path()) {
       io::add_file_to_history(document->get_path());
     }
@@ -175,7 +175,7 @@ void App::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
                                                     event);
     }
     else if (document->is_map() && ui::is_tileset_dock_hovered()) {
-      const auto& map_document = get_model().require_active_map();
+      const auto& map_document = get_model().require_active_map_document();
 
       const auto& map = map_document.get_map();
       const auto& tilesets = map.tileset_bundle();

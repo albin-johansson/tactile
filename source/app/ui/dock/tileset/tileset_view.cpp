@@ -90,7 +90,7 @@ void update_tileset_view(const DocumentModel& model,
                          const UUID& tileset_id,
                          entt::dispatcher& dispatcher)
 {
-  const auto& document = model.require_active_map();
+  const auto& document = model.require_active_map_document();
   const auto& map = document.get_map();
 
   const auto& tileset_ref = map.tileset_bundle().get_ref(tileset_id);

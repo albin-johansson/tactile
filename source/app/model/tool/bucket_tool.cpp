@@ -41,7 +41,7 @@ void BucketTool::on_pressed(DocumentModel& model,
 {
   if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
       is_available(model)) {
-    const auto& document = model.require_active_map();
+    const auto& document = model.require_active_map_document();
     const auto& map = document.get_map();
     const auto& tilesets = map.tileset_bundle();
 
@@ -59,7 +59,7 @@ void BucketTool::on_pressed(DocumentModel& model,
 
 auto BucketTool::is_available(const DocumentModel& model) const -> bool
 {
-  const auto& document = model.require_active_map();
+  const auto& document = model.require_active_map_document();
   const auto& map = document.get_map();
 
   const auto& tilesets = map.tileset_bundle();

@@ -38,7 +38,7 @@ void on_tool_pressed(const ToolPressedEvent& event)
   spdlog::trace("ToolPressedEvent(...)");
 
   auto& model = get_model();
-  if (auto* document = model.active_map()) {
+  if (auto* document = model.active_map_document()) {
     auto& tools = document->get_tools();
     tools.on_pressed(model, get_dispatcher(), event.info);
   }
@@ -49,7 +49,7 @@ void on_tool_dragged(const ToolDraggedEvent& event)
   spdlog::trace("ToolDraggedEvent(...)");
 
   auto& model = get_model();
-  if (auto* document = model.active_map()) {
+  if (auto* document = model.active_map_document()) {
     auto& tools = document->get_tools();
     tools.on_dragged(model, get_dispatcher(), event.info);
   }
@@ -60,7 +60,7 @@ void on_tool_released(const ToolReleasedEvent& event)
   spdlog::trace("ToolReleasedEvent(...)");
 
   auto& model = get_model();
-  if (auto* document = model.active_map()) {
+  if (auto* document = model.active_map_document()) {
     auto& tools = document->get_tools();
     tools.on_released(model, get_dispatcher(), event.info);
   }
@@ -71,7 +71,7 @@ void on_tool_entered(const ToolEnteredEvent&)
   spdlog::trace("ToolEnteredEvent(...)");
 
   auto& model = get_model();
-  if (auto* document = model.active_map()) {
+  if (auto* document = model.active_map_document()) {
     auto& tools = document->get_tools();
     tools.on_entered(model, get_dispatcher());
   }
@@ -82,7 +82,7 @@ void on_tool_exited(const ToolExitedEvent&)
   spdlog::trace("ToolExitedEvent(...)");
 
   auto& model = get_model();
-  if (auto* document = model.active_map()) {
+  if (auto* document = model.active_map_document()) {
     auto& tools = document->get_tools();
     tools.on_exited(model, get_dispatcher());
   }
@@ -93,7 +93,7 @@ void on_select_tool(const SelectToolEvent& event)
   spdlog::trace("SelectToolEvent(type: {})", magic_enum::enum_name(event.type));
 
   auto& model = get_model();
-  if (auto* document = model.active_map()) {
+  if (auto* document = model.active_map_document()) {
     auto& tools = document->get_tools();
     tools.select_tool(event.type, model, get_dispatcher());
   }
@@ -104,7 +104,7 @@ void on_stamp_sequence(StampSequenceEvent event)
   spdlog::trace("StampSequenceEvent(layer_id: {})", event.layer_id);
 
   auto& model = get_model();
-  if (auto* document = model.active_map()) {
+  if (auto* document = model.active_map_document()) {
     document->register_stamp_sequence(event.layer_id,
                                       std::move(event.old_state),
                                       std::move(event.sequence));
@@ -116,7 +116,7 @@ void on_eraser_sequence(EraserSequenceEvent event)
   spdlog::trace("EraserSequenceEvent(layer_id: {})", event.layer_id);
 
   auto& model = get_model();
-  if (auto* document = model.active_map()) {
+  if (auto* document = model.active_map_document()) {
     document->register_eraser_sequence(event.layer_id, std::move(event.old_state));
   }
 }
@@ -129,7 +129,7 @@ void on_flood(const FloodEvent& event)
                 event.replacement);
 
   auto& model = get_model();
-  if (auto* document = model.active_map()) {
+  if (auto* document = model.active_map_document()) {
     document->flood(event.layer_id, event.origin, event.replacement);
   }
 }
@@ -142,7 +142,7 @@ void on_add_rectangle(const AddRectangleEvent& event)
                 event.size);
 
   auto& model = get_model();
-  if (auto* document = model.active_map()) {
+  if (auto* document = model.active_map_document()) {
     document->add_rectangle(event.layer_id, event.pos, event.size);
   }
 }
@@ -155,7 +155,7 @@ void on_add_ellipse(const AddEllipseEvent& event)
                 event.size);
 
   auto& model = get_model();
-  if (auto* document = model.active_map()) {
+  if (auto* document = model.active_map_document()) {
     document->add_ellipse(event.layer_id, event.pos, event.size);
   }
 }
@@ -163,7 +163,7 @@ void on_add_ellipse(const AddEllipseEvent& event)
 void on_add_point(const AddPointEvent& event)
 {
   auto& model = get_model();
-  if (auto* document = model.active_map()) {
+  if (auto* document = model.active_map_document()) {
     document->add_point(event.layer_id, event.pos);
   }
 }
@@ -171,7 +171,7 @@ void on_add_point(const AddPointEvent& event)
 void on_set_stamp_randomizer(const SetStampRandomizerEvent event)
 {
   auto& model = get_model();
-  if (auto* document = model.active_map()) {
+  if (auto* document = model.active_map_document()) {
     auto& tools = document->get_tools();
     tools.set_stamp_random_mode(event.enabled);
   }

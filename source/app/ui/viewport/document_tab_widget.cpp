@@ -39,14 +39,14 @@ void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatch
     model.each([&](const UUID& document_id) {
       const Scope scope {document_id};
 
-      const auto& document = model.view_document(document_id);
+      const auto& document = model.get_document(document_id);
       const auto& document_name = document.get_name();
       const char* document_icon = document.is_map() ? TAC_ICON_MAP : TAC_ICON_TILESET;
       const FmtString<256> name_with_icon {"{} {}", document_icon, document_name};
 
       ImGuiTabItemFlags flags = 0;
 
-      const auto is_active = model.active_document_id() == document_id;
+      const auto is_active = model.get_active_document_id() == document_id;
       if (is_active) {
         flags |= ImGuiTabItemFlags_SetSelected;
 
@@ -59,10 +59,10 @@ void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatch
       if (const TabItem item {name_with_icon.data(), &opened, flags}; item.is_open()) {
         if (is_active) {
           if (model.is_map(document_id)) {
-            show_map_viewport(model, model.view_map(document_id), dispatcher);
+            show_map_viewport(model, model.get_map(document_id), dispatcher);
           }
           if (model.is_tileset(document_id)) {
-            show_tileset_viewport(model.view_tileset(document_id), dispatcher);
+            show_tileset_viewport(model.get_tileset(document_id), dispatcher);
           }
         }
       }

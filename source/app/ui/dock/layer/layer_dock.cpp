@@ -51,7 +51,7 @@ void update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatche
 {
   const auto& lang = get_current_language();
 
-  const auto& document = model.require_active_map();
+  const auto& document = model.require_active_map_document();
   const auto& map = document.get_map();
 
   const auto active_layer_id = map.active_layer_id();
@@ -97,7 +97,7 @@ void update_rename_dialog(const DocumentModel& model, entt::dispatcher& dispatch
   if (rename_target_id.has_value()) {
     const auto target_layer_id = *rename_target_id;
 
-    const auto& map = model.require_active_map().get_map();
+    const auto& map = model.require_active_map_document().get_map();
     const auto& layer = map.invisible_root().get_layer(target_layer_id);
 
     open_rename_layer_dialog(target_layer_id, layer.get_ctx().name());
@@ -114,7 +114,7 @@ void update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
   ImGui::SameLine();
   const Group group;
 
-  const auto& document = model.require_active_map();
+  const auto& document = model.require_active_map_document();
   const auto& root = document.get_map().invisible_root();
 
   if (root.layer_count() == 0) {

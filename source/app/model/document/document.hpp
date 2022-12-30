@@ -109,8 +109,8 @@ class Document {
   /// Returns the name of the root document context.
   [[nodiscard]] virtual auto get_name() const -> const String& = 0;
 
-  [[nodiscard]] virtual auto get_component_index() -> Shared<ComponentIndex> = 0;
-  [[nodiscard]] virtual auto view_component_index() const -> const ComponentIndex* = 0;
+  [[nodiscard]] virtual auto get_component_index_ptr() -> Shared<ComponentIndex> = 0;
+  [[nodiscard]] virtual auto find_component_index() const -> const ComponentIndex* = 0;
 
   [[nodiscard]] virtual auto get_contexts() -> ContextManager& = 0;
   [[nodiscard]] virtual auto get_contexts() const -> const ContextManager& = 0;

@@ -44,7 +44,7 @@ AddComponentAttr::AddComponentAttr(Document* document,
 
 void AddComponentAttr::undo()
 {
-  auto index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index_ptr();
   auto& definition = index->at(mComponentId);
   definition.remove(mName);
 
@@ -54,7 +54,7 @@ void AddComponentAttr::undo()
 
 void AddComponentAttr::redo()
 {
-  auto index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index_ptr();
   auto& definition = index->at(mComponentId);
 
   definition.add(mName);

@@ -45,7 +45,7 @@ void on_close_document(const CloseDocumentEvent& event)
   spdlog::trace("CloseDocumentEvent(document_id: {})", event.document_id);
 
   auto& model = get_model();
-  const auto document = model.get_document(event.document_id);
+  const auto document = model.get_document_ptr(event.document_id);
 
   if (document->is_map() && document->has_path()) {
     io::set_last_closed_file(document->get_path());
@@ -73,7 +73,7 @@ void on_save(const SaveEvent&)
   spdlog::trace("SaveEvent");
 
   // TODO ability to save tileset documents
-  if (auto* document = get_model().active_map()) {
+  if (auto* document = get_model().active_map_document()) {
     if (document->has_path()) {
       io::emit_map(*document);
 

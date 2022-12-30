@@ -40,7 +40,7 @@ void DocumentModel::each(const VisitorFunc& func) const
   mImpl->each(func);
 }
 
-auto DocumentModel::add_map(const Int2& tile_size, const usize rows, const usize columns)
+auto DocumentModel::create_map_document(const Int2& tile_size, usize rows, usize columns)
     -> UUID
 {
   return mImpl->add_map(tile_size, rows, columns);
@@ -92,12 +92,12 @@ auto DocumentModel::get_id_for_path(const Path& path) const -> UUID
   return mImpl->get_id_for_path(path);
 }
 
-auto DocumentModel::get_document(const UUID& id) -> Shared<Document>
+auto DocumentModel::get_document_ptr(const UUID& id) -> Shared<Document>
 {
   return mImpl->documents().get_document(id);
 }
 
-auto DocumentModel::active_document_id() const -> Maybe<UUID>
+auto DocumentModel::get_active_document_id() const -> Maybe<UUID>
 {
   return mImpl->documents().current();
 }
@@ -127,22 +127,22 @@ auto DocumentModel::active_document() const -> const Document*
   return mImpl->documents().current_document();
 }
 
-auto DocumentModel::active_map() -> MapDocument*
+auto DocumentModel::active_map_document() -> MapDocument*
 {
   return mImpl->documents().current_map();
 }
 
-auto DocumentModel::active_map() const -> const MapDocument*
+auto DocumentModel::active_map_document() const -> const MapDocument*
 {
   return mImpl->documents().current_map();
 }
 
-auto DocumentModel::active_tileset() -> TilesetDocument*
+auto DocumentModel::active_tileset_document() -> TilesetDocument*
 {
   return mImpl->documents().current_tileset();
 }
 
-auto DocumentModel::active_tileset() const -> const TilesetDocument*
+auto DocumentModel::active_tileset_document() const -> const TilesetDocument*
 {
   return mImpl->documents().current_tileset();
 }
@@ -152,22 +152,22 @@ auto DocumentModel::require_active_document() const -> const Document&
   return mImpl->require_active_document();
 }
 
-auto DocumentModel::require_active_map() -> MapDocument&
+auto DocumentModel::require_active_map_document() -> MapDocument&
 {
   return mImpl->require_active_map();
 }
 
-auto DocumentModel::require_active_map() const -> const MapDocument&
+auto DocumentModel::require_active_map_document() const -> const MapDocument&
 {
   return mImpl->require_active_map();
 }
 
-auto DocumentModel::require_active_tileset() -> TilesetDocument&
+auto DocumentModel::require_active_tileset_document() -> TilesetDocument&
 {
   return mImpl->require_active_tileset();
 }
 
-auto DocumentModel::require_active_tileset() const -> const TilesetDocument&
+auto DocumentModel::require_active_tileset_document() const -> const TilesetDocument&
 {
   return mImpl->require_active_tileset();
 }
@@ -192,27 +192,27 @@ auto DocumentModel::is_tileset(const UUID& id) const -> bool
   return mImpl->documents().is_tileset(id);
 }
 
-auto DocumentModel::get_map(const UUID& id) -> Shared<MapDocument>
+auto DocumentModel::get_map_document_ptr(const UUID& id) -> Shared<MapDocument>
 {
   return mImpl->documents().get_map(id);
 }
 
-auto DocumentModel::get_tileset(const UUID& id) -> Shared<TilesetDocument>
+auto DocumentModel::get_tileset_document_ptr(const UUID& id) -> Shared<TilesetDocument>
 {
   return mImpl->documents().get_tileset(id);
 }
 
-auto DocumentModel::view_document(const UUID& id) const -> const Document&
+auto DocumentModel::get_document(const UUID& id) const -> const Document&
 {
   return mImpl->documents().view_document(id);
 }
 
-auto DocumentModel::view_map(const UUID& id) const -> const MapDocument&
+auto DocumentModel::get_map(const UUID& id) const -> const MapDocument&
 {
   return mImpl->documents().view_map(id);
 }
 
-auto DocumentModel::view_tileset(const UUID& id) const -> const TilesetDocument&
+auto DocumentModel::get_tileset(const UUID& id) const -> const TilesetDocument&
 {
   return mImpl->documents().view_tileset(id);
 }

@@ -44,7 +44,7 @@ DuplicateComponentAttr::DuplicateComponentAttr(Document* document,
 
 void DuplicateComponentAttr::undo()
 {
-  auto index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index_ptr();
 
   auto& definition = index->at(mComponentId);
   definition.remove(mDuplicatedName.value());
@@ -57,7 +57,7 @@ void DuplicateComponentAttr::undo()
 
 void DuplicateComponentAttr::redo()
 {
-  auto index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index_ptr();
 
   auto& definition = index->at(mComponentId);
   mDuplicatedName = definition.duplicate(mAttributeName);

@@ -57,7 +57,7 @@ void update_rename_component_dialog(const DocumentModel& model,
   const auto& lang = get_current_language();
 
   const auto& document = model.require_active_document();
-  const auto* component_index = document.view_component_index();
+  const auto* component_index = document.find_component_index();
 
   if (dialog_component_id.has_value() &&  //
       component_index != nullptr && !component_index->contains(*dialog_component_id)) {

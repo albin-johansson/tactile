@@ -56,7 +56,7 @@ void CreateTileset::undo()
   TACTILE_ASSERT(!mModel->is_open(mTilesetId));
   TACTILE_ASSERT(mModel->is_tileset(mTilesetId));
 
-  auto document = mModel->get_map(mMapId);
+  auto document = mModel->get_map_document_ptr(mMapId);
 
   auto& tilesets = document->get_map().tileset_bundle();
   tilesets.detach_tileset(mTilesetId);
@@ -76,10 +76,10 @@ void CreateTileset::redo()
   TACTILE_ASSERT(mModel->is_tileset(mTilesetId));
   TACTILE_ASSERT(mModel->is_map(mMapId));
 
-  auto document = mModel->get_map(mMapId);
+  auto document = mModel->get_map_document_ptr(mMapId);
   auto& map = document->get_map();
 
-  auto tileset = mTileset->get_tileset();
+  auto tileset = mTileset->get_tileset_ptr();
   map.tileset_bundle().attach_tileset(tileset, false);
 
   document->get_contexts().add_context(tileset);

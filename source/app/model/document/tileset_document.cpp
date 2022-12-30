@@ -120,12 +120,12 @@ auto TilesetDocument::has_path() const -> bool
   return mDelegate.has_path();
 }
 
-auto TilesetDocument::get_component_index() -> Shared<ComponentIndex>
+auto TilesetDocument::get_component_index_ptr() -> Shared<ComponentIndex>
 {
   return mDelegate.get_component_index();
 }
 
-auto TilesetDocument::view_component_index() const -> const ComponentIndex*
+auto TilesetDocument::find_component_index() const -> const ComponentIndex*
 {
   return mDelegate.view_component_index();
 }

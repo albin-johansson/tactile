@@ -80,14 +80,14 @@ void EraserTool::on_released(DocumentModel& model,
 
 auto EraserTool::is_available(const DocumentModel& model) const -> bool
 {
-  const auto& document = model.require_active_map();
+  const auto& document = model.require_active_map_document();
   const auto& map = document.get_map();
   return map.is_active_layer(LayerType::TileLayer);
 }
 
 void EraserTool::update_sequence(DocumentModel& model, const TilePos& cursor)
 {
-  auto& document = model.require_active_map();
+  auto& document = model.require_active_map_document();
   auto& map = document.get_map();
 
   const auto layer_id = map.active_layer_id().value();
@@ -104,7 +104,7 @@ void EraserTool::maybe_emit_event(const DocumentModel& model,
                                   entt::dispatcher& dispatcher)
 {
   if (!mPrevState.empty()) {
-    const auto& document = model.require_active_map();
+    const auto& document = model.require_active_map_document();
     const auto& map = document.get_map();
     const auto layer_id = map.active_layer_id().value();
 

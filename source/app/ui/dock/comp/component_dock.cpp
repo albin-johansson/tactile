@@ -49,7 +49,7 @@ void show_add_component_button_popup_content(const Document& document,
                                              entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
-  const auto* index = document.view_component_index();
+  const auto* index = document.find_component_index();
   TACTILE_ASSERT(index != nullptr);
 
   if (index->empty()) {
@@ -88,7 +88,7 @@ void show_contents(const Document& document, entt::dispatcher& dispatcher)
       ui_centered_label(lang.misc.context_has_no_components.c_str());
     }
     else {
-      const auto* index = document.view_component_index();
+      const auto* index = document.find_component_index();
       TACTILE_ASSERT(index != nullptr);
 
       for (const auto& [component_id, component]: comps) {

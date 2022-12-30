@@ -47,7 +47,7 @@ void ObjectSelectionTool::on_pressed(DocumentModel& model,
   if ((mouse.button == cen::mouse_button::left ||
        mouse.button == cen::mouse_button::right) &&
       is_available(model)) {
-    auto& document = model.require_active_map();
+    auto& document = model.require_active_map_document();
     auto& map = document.get_map();
     const auto& viewport = document.get_viewport();
 
@@ -91,7 +91,7 @@ void ObjectSelectionTool::on_dragged(DocumentModel& model,
                                      const MouseInfo& mouse)
 {
   if (mDragInfo && mouse.button == cen::mouse_button::left && is_available(model)) {
-    auto& document = model.require_active_map();
+    auto& document = model.require_active_map_document();
     auto& map = document.get_map();
 
     const auto layer_id = map.active_layer_id().value();
@@ -128,14 +128,14 @@ void ObjectSelectionTool::on_released(DocumentModel& model,
 
 auto ObjectSelectionTool::is_available(const DocumentModel& model) const -> bool
 {
-  const auto& document = model.require_active_map();
+  const auto& document = model.require_active_map_document();
   return document.get_map().is_active_layer(LayerType::ObjectLayer);
 }
 
 void ObjectSelectionTool::maybe_emit_event(DocumentModel& model,
                                            entt::dispatcher& dispatcher)
 {
-  const auto& document = model.require_active_map();
+  const auto& document = model.require_active_map_document();
   const auto& map = document.get_map();
 
   if (mDragInfo) {

@@ -212,7 +212,7 @@ void ui_component_attribute_table(const Strings& lang,
 
 void open_component_editor_dialog(const DocumentModel& model)
 {
-  const auto* component_index = model.require_active_document().view_component_index();
+  const auto* component_index = model.require_active_document().find_component_index();
   TACTILE_ASSERT(component_index != nullptr);
 
   dialog_active_component =
@@ -238,7 +238,7 @@ void update_component_editor_dialog(const DocumentModel& model,
 
   if (const ScopedDialog dialog {options}; dialog.was_opened()) {
     const auto& document = model.require_active_document();
-    const auto* component_index = document.view_component_index();
+    const auto* component_index = document.find_component_index();
     TACTILE_ASSERT(component_index != nullptr);
 
     // Ensure that the active component ID hasn't been invalidated

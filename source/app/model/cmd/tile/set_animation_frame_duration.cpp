@@ -43,7 +43,7 @@ SetAnimationFrameDuration::SetAnimationFrameDuration(TilesetDocument* document,
 
 void SetAnimationFrameDuration::undo()
 {
-  auto& tileset = mDocument->view_tileset();
+  auto& tileset = mDocument->get_tileset();
   auto& tile = tileset[mTileIndex];
 
   auto& animation = tile.get_animation();
@@ -55,7 +55,7 @@ void SetAnimationFrameDuration::undo()
 
 void SetAnimationFrameDuration::redo()
 {
-  auto& tileset = mDocument->view_tileset();
+  auto& tileset = mDocument->get_tileset();
   auto& tile = tileset[mTileIndex];
 
   auto& animation = tile.get_animation();

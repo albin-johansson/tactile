@@ -86,7 +86,7 @@ TEST(DocumentManager, AddTileset)
   ASSERT_THROW(manager.add_tileset(nullptr), TactileError);
 
   auto document = make_tileset();
-  const auto id = document->get_tileset()->get_uuid();
+  const auto id = document->get_tileset_ptr()->get_uuid();
 
   manager.add_tileset(document);
   ASSERT_FALSE(manager.current().has_value());
@@ -141,7 +141,7 @@ TEST(DocumentManager, RemoveTileset)
   DocumentManager manager;
 
   auto document = make_tileset();
-  const auto id = document->get_tileset()->get_uuid();
+  const auto id = document->get_tileset_ptr()->get_uuid();
 
   ASSERT_EQ(nullptr, manager.remove_tileset(id));
 
@@ -169,7 +169,7 @@ TEST(DocumentManager, Select)
   DocumentManager manager;
 
   auto document = make_tileset();
-  const auto id = document->get_tileset()->get_uuid();
+  const auto id = document->get_tileset_ptr()->get_uuid();
 
   manager.add_tileset(document);
   ASSERT_FALSE(manager.current().has_value());
@@ -183,7 +183,7 @@ TEST(DocumentManager, Open)
   DocumentManager manager;
 
   auto document = make_tileset();
-  const auto id = document->get_tileset()->get_uuid();
+  const auto id = document->get_tileset_ptr()->get_uuid();
 
   manager.add_tileset(document);
   ASSERT_TRUE(manager.is_document(id));
@@ -206,9 +206,9 @@ TEST(DocumentManager, Close)
   const auto map_id = map->get_map().get_uuid();
 
   auto tileset = make_tileset();
-  const auto tileset_id = tileset->get_tileset()->get_uuid();
+  const auto tileset_id = tileset->get_tileset_ptr()->get_uuid();
 
-  map->get_map().tileset_bundle().attach_tileset(tileset->get_tileset(), false);
+  map->get_map().tileset_bundle().attach_tileset(tileset->get_tileset_ptr(), false);
 
   manager.add_map(map);
   manager.add_tileset(tileset);
@@ -249,17 +249,17 @@ TEST(DocumentManager, RemoveUnusedTilesets)
   auto ts2 = make_tileset();
   auto ts3 = make_tileset();
 
-  const auto ts1_id = ts1->get_tileset()->get_uuid();
-  const auto ts2_id = ts2->get_tileset()->get_uuid();
-  const auto ts3_id = ts3->get_tileset()->get_uuid();
+  const auto ts1_id = ts1->get_tileset_ptr()->get_uuid();
+  const auto ts2_id = ts2->get_tileset_ptr()->get_uuid();
+  const auto ts3_id = ts3->get_tileset_ptr()->get_uuid();
 
   // First map uses TS1 and TS2
-  map1->get_map().tileset_bundle().attach_tileset(ts1->get_tileset(), false);
-  map1->get_map().tileset_bundle().attach_tileset(ts2->get_tileset(), false);
+  map1->get_map().tileset_bundle().attach_tileset(ts1->get_tileset_ptr(), false);
+  map1->get_map().tileset_bundle().attach_tileset(ts2->get_tileset_ptr(), false);
 
   // Second map uses TS2 and TS3
-  map2->get_map().tileset_bundle().attach_tileset(ts2->get_tileset(), false);
-  map2->get_map().tileset_bundle().attach_tileset(ts3->get_tileset(), false);
+  map2->get_map().tileset_bundle().attach_tileset(ts2->get_tileset_ptr(), false);
+  map2->get_map().tileset_bundle().attach_tileset(ts3->get_tileset_ptr(), false);
 
   manager.add_map(map1);
   manager.add_map(map2);

@@ -281,14 +281,14 @@ void ui_animation_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
   }
 
   const auto& lang = get_current_language();
-  const auto& document = model.require_active_tileset();
+  const auto& document = model.require_active_tileset_document();
 
   const Window dock {lang.window.animation_dock.c_str(),
                      ImGuiWindowFlags_NoCollapse,
                      &prefs.show_animation_dock};
 
   if (dock.is_open()) {
-    const auto& tileset = document.view_tileset();
+    const auto& tileset = document.get_tileset();
 
     if (const auto selected_tile_index = tileset.get_selected_tile()) {
       ui_selected_tile_contents(lang, tileset, *selected_tile_index, dispatcher);

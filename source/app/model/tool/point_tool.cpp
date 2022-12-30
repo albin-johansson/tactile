@@ -39,7 +39,7 @@ void PointTool::on_pressed(DocumentModel& model,
 {
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
       is_available(model)) {
-    const auto& document = model.require_active_map();
+    const auto& document = model.require_active_map_document();
     const auto& map = document.get_map();
     const auto& viewport = document.get_viewport();
 
@@ -53,7 +53,7 @@ void PointTool::on_pressed(DocumentModel& model,
 
 auto PointTool::is_available(const DocumentModel& model) const -> bool
 {
-  const auto& document = model.require_active_map();
+  const auto& document = model.require_active_map_document();
   const auto& map = document.get_map();
   return map.is_active_layer(LayerType::ObjectLayer);
 }

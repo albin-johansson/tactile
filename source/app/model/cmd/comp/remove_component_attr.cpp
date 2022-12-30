@@ -40,14 +40,14 @@ RemoveComponentAttr::RemoveComponentAttr(Document* document,
   if (!mDocument) {
     throw TactileError {"Invalid null document!"};
   }
-  else if (!mDocument->get_component_index()) {
+  else if (!mDocument->get_component_index_ptr()) {
     throw TactileError {"Invalid null component index!"};
   }
 }
 
 void RemoveComponentAttr::undo()
 {
-  auto index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index_ptr();
   auto& definition = index->at(mComponentId);
 
   auto value = mPreviousValue.value();
@@ -61,7 +61,7 @@ void RemoveComponentAttr::undo()
 
 void RemoveComponentAttr::redo()
 {
-  auto index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index_ptr();
   auto& definition = index->at(mComponentId);
 
   mPreviousValue = definition.at(mAttributeName);

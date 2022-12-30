@@ -35,7 +35,7 @@ namespace {
 void on_add_layer(const AddLayerEvent& event)
 {
   spdlog::trace("AddLayerEvent(type: {})", magic_enum::enum_name(event.type));
-  if (auto* document = get_model().active_map()) {
+  if (auto* document = get_model().active_map_document()) {
     document->add_layer(event.type);
   }
 }
@@ -43,7 +43,7 @@ void on_add_layer(const AddLayerEvent& event)
 void on_remove_layer(const RemoveLayerEvent& event)
 {
   spdlog::trace("RemoveLayerEvent(layer_id: {})", event.layer_id);
-  if (auto* document = get_model().active_map()) {
+  if (auto* document = get_model().active_map_document()) {
     document->remove_layer(event.layer_id);
   }
 }
@@ -51,7 +51,7 @@ void on_remove_layer(const RemoveLayerEvent& event)
 void on_duplicate_layer(const DuplicateLayerEvent& event)
 {
   spdlog::trace("DuplicateLayerEvent(layer_id: {})", event.layer_id);
-  if (auto* document = get_model().active_map()) {
+  if (auto* document = get_model().active_map_document()) {
     document->duplicate_layer(event.layer_id);
   }
 }
@@ -59,7 +59,7 @@ void on_duplicate_layer(const DuplicateLayerEvent& event)
 void on_select_layer(const SelectLayerEvent& event)
 {
   spdlog::trace("SelectLayerEvent(layer_id: {})", event.layer_id);
-  if (auto* document = get_model().active_map()) {
+  if (auto* document = get_model().active_map_document()) {
     auto& map = document->get_map();
     map.select_layer(event.layer_id);
   }
@@ -68,7 +68,7 @@ void on_select_layer(const SelectLayerEvent& event)
 void on_move_layer_up(const MoveLayerUpEvent& event)
 {
   spdlog::trace("MoveLayerUpEvent(layer_id: {})", event.layer_id);
-  if (auto* document = get_model().active_map()) {
+  if (auto* document = get_model().active_map_document()) {
     document->move_layer_up(event.layer_id);
   }
 }
@@ -76,7 +76,7 @@ void on_move_layer_up(const MoveLayerUpEvent& event)
 void on_move_layer_down(const MoveLayerDownEvent& event)
 {
   spdlog::trace("MoveLayerDownEvent(layer_id: {})", event.layer_id);
-  if (auto* document = get_model().active_map()) {
+  if (auto* document = get_model().active_map_document()) {
     document->move_layer_down(event.layer_id);
   }
 }
@@ -86,7 +86,7 @@ void on_set_layer_opacity(const SetLayerOpacityEvent& event)
   spdlog::trace("SetLayerOpacityEvent(layer_id: {}, opacity: {})",
                 event.layer_id,
                 event.opacity);
-  if (auto* document = get_model().active_map()) {
+  if (auto* document = get_model().active_map_document()) {
     document->set_layer_opacity(event.layer_id, event.opacity);
   }
 }
@@ -96,7 +96,7 @@ void on_set_layer_visible(const SetLayerVisibleEvent& event)
   spdlog::trace("SetLayerVisibleEvent(layer_id: {}, visible: {})",
                 event.layer_id,
                 event.visible);
-  if (auto* document = get_model().active_map()) {
+  if (auto* document = get_model().active_map_document()) {
     document->set_layer_visible(event.layer_id, event.visible);
   }
 }
@@ -110,7 +110,7 @@ void on_open_rename_layer_dialog(const OpenRenameLayerDialogEvent& event)
 void on_rename_layer(const RenameLayerEvent& event)
 {
   spdlog::trace("RenameLayerEvent(layer_id: {}, name: {})", event.layer_id, event.name);
-  if (auto* document = get_model().active_map()) {
+  if (auto* document = get_model().active_map_document()) {
     document->rename_layer(event.layer_id, event.name);
   }
 }

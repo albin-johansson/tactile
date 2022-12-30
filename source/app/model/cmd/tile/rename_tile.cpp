@@ -41,7 +41,7 @@ RenameTile::RenameTile(TilesetDocument* document, const TileIndex tile_index, St
 
 void RenameTile::undo()
 {
-  auto& tileset = mDocument->view_tileset();
+  auto& tileset = mDocument->get_tileset();
   auto& tile = tileset[mTileIndex];
   auto& tile_ctx = tile.get_ctx();
 
@@ -51,7 +51,7 @@ void RenameTile::undo()
 
 void RenameTile::redo()
 {
-  auto& tileset = mDocument->view_tileset();
+  auto& tileset = mDocument->get_tileset();
   auto& tile = tileset[mTileIndex];
   auto& tile_ctx = tile.get_ctx();
 

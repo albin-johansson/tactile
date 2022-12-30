@@ -37,7 +37,7 @@ TEST(UndefComponent, Constructor)
 TEST(UndefComponent, RedoUndo)
 {
   auto document = MapBuilder::build().result();
-  auto index = document->get_component_index();
+  auto index = document->get_component_index_ptr();
 
   const auto comp_id = ComponentBuilder {index, "Demo"}  //
                            .with_attr("foo", "bar"s)

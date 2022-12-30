@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/type/chrono.hpp"
-#include "core/type/vec.hpp"
 #include "core/type/result.hpp"
+#include "core/type/vec.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

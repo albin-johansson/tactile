@@ -71,8 +71,8 @@ class TilesetDocument final : public Document {
 
   [[nodiscard]] auto has_path() const -> bool override;
 
-  [[nodiscard]] auto get_component_index() -> Shared<ComponentIndex> override;
-  [[nodiscard]] auto view_component_index() const -> const ComponentIndex* override;
+  [[nodiscard]] auto get_component_index_ptr() -> Shared<ComponentIndex> override;
+  [[nodiscard]] auto find_component_index() const -> const ComponentIndex* override;
 
   [[nodiscard]] auto get_contexts() -> ContextManager& override;
   [[nodiscard]] auto get_contexts() const -> const ContextManager& override;
@@ -89,10 +89,10 @@ class TilesetDocument final : public Document {
 
   [[nodiscard]] auto get_type() const -> DocumentType override;
 
-  [[nodiscard]] auto get_tileset() -> Shared<Tileset> { return mTileset; }
+  [[nodiscard]] auto get_tileset_ptr() -> Shared<Tileset> { return mTileset; }
 
-  [[nodiscard]] auto view_tileset() -> Tileset& { return *mTileset; }
-  [[nodiscard]] auto view_tileset() const -> const Tileset& { return *mTileset; }
+  [[nodiscard]] auto get_tileset() -> Tileset& { return *mTileset; }
+  [[nodiscard]] auto get_tileset() const -> const Tileset& { return *mTileset; }
 
  private:
   Shared<Tileset> mTileset;

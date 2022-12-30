@@ -76,7 +76,7 @@ void RectangleTool::on_released(DocumentModel& model,
 
 auto RectangleTool::is_available(const DocumentModel& model) const -> bool
 {
-  const auto& document = model.require_active_map();
+  const auto& document = model.require_active_map_document();
   const auto& map = document.get_map();
   return map.is_active_layer(LayerType::ObjectLayer);
 }
@@ -89,7 +89,7 @@ auto RectangleTool::get_stroke() const -> const Maybe<CurrentRectangleStroke>&
 void RectangleTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (mStroke) {
-    const auto& document = model.require_active_map();
+    const auto& document = model.require_active_map_document();
     const auto& map = document.get_map();
     const auto& viewport = document.get_viewport();
 

@@ -30,7 +30,7 @@ namespace tactile {
 
 void Document::define_component(String name)
 {
-  get_history().push<cmd::DefineComponent>(get_component_index(), std::move(name));
+  get_history().push<cmd::DefineComponent>(get_component_index_ptr(), std::move(name));
 }
 
 void Document::undef_component(const UUID& component_id)
@@ -40,7 +40,7 @@ void Document::undef_component(const UUID& component_id)
 
 void Document::rename_component(const UUID& component_id, String name)
 {
-  get_history().push<cmd::RenameComponent>(get_component_index(),
+  get_history().push<cmd::RenameComponent>(get_component_index_ptr(),
                                            component_id,
                                            std::move(name));
 }
@@ -82,7 +82,7 @@ void Document::set_component_attribute_type(const UUID& component_id,
 
 void Document::update_component(const UUID& component_id, String name, Attribute value)
 {
-  get_history().push<cmd::UpdateComponent>(get_component_index(),
+  get_history().push<cmd::UpdateComponent>(get_component_index_ptr(),
                                            component_id,
                                            std::move(name),
                                            std::move(value));
@@ -91,7 +91,7 @@ void Document::update_component(const UUID& component_id, String name, Attribute
 void Document::attach_component(const UUID& context_id, const UUID& component_id)
 {
   auto context = get_contexts().get_context(context_id);
-  get_history().push<cmd::AttachComponent>(get_component_index(),
+  get_history().push<cmd::AttachComponent>(get_component_index_ptr(),
                                            std::move(context),
                                            component_id);
 }
@@ -117,7 +117,7 @@ void Document::update_attached_component(const UUID& context_id,
 void Document::reset_attached_component(const UUID& context_id, const UUID& component_id)
 {
   auto context = get_contexts().get_context(context_id);
-  get_history().push<cmd::ResetAttachedComponent>(get_component_index(),
+  get_history().push<cmd::ResetAttachedComponent>(get_component_index_ptr(),
                                                   std::move(context),
                                                   component_id);
 }

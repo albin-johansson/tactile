@@ -40,19 +40,19 @@ RemoveTileset::RemoveTileset(DocumentModel* model, const UUID& tileset_id)
     throw TactileError {"Invalid null model!"};
   }
 
-  TACTILE_ASSERT(mModel->active_document_id().has_value());
-  mMapId = mModel->active_document_id().value();
+  TACTILE_ASSERT(mModel->get_active_document_id().has_value());
+  mMapId = mModel->get_active_document_id().value();
 }
 
 void RemoveTileset::undo()
 {
   TACTILE_ASSERT(mTilesetDocument != nullptr);
-  TACTILE_ASSERT(mModel->active_document_id() == mMapId);
+  TACTILE_ASSERT(mModel->get_active_document_id() == mMapId);
 
-  auto map_document = mModel->get_map(mMapId);
+  auto map_document = mModel->get_map_document_ptr(mMapId);
   auto& map = map_document->get_map();
 
-  auto tileset = mTilesetDocument->get_tileset();
+  auto tileset = mTilesetDocument->get_tileset_ptr();
   const auto tileset_id = tileset->get_uuid();
 
   auto& tilesets = map.tileset_bundle();
@@ -64,10 +64,10 @@ void RemoveTileset::undo()
 
 void RemoveTileset::redo()
 {
-  TACTILE_ASSERT(mModel->active_document_id() == mMapId);
-  mTilesetDocument = mModel->get_tileset(mTilesetId);
+  TACTILE_ASSERT(mModel->get_active_document_id() == mMapId);
+  mTilesetDocument = mModel->get_tileset_document_ptr(mTilesetId);
 
-  auto map_document = mModel->get_map(mMapId);
+  auto map_document = mModel->get_map_document_ptr(mMapId);
   auto& map = map_document->get_map();
 
   auto& tilesets = map.tileset_bundle();

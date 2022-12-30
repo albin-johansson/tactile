@@ -62,7 +62,7 @@ void dispatch_menu_action(const MenuAction action)
       break;
 
     case MenuAction::CloseDocument:
-      dispatcher.enqueue<CloseDocumentEvent>(model.active_document_id().value());
+      dispatcher.enqueue<CloseDocumentEvent>(model.get_active_document_id().value());
       break;
 
     case MenuAction::Quit:

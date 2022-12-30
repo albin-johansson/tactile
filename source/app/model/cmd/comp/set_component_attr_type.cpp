@@ -47,7 +47,7 @@ SetComponentAttrType::SetComponentAttrType(Document* document,
 
 void SetComponentAttrType::undo()
 {
-  auto index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index_ptr();
   auto& definition = index->at(mComponentId);
 
   definition.remove(mAttributeName);
@@ -67,7 +67,7 @@ void SetComponentAttrType::undo()
 
 void SetComponentAttrType::redo()
 {
-  auto index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index_ptr();
   auto& definition = index->at(mComponentId);
 
   mSnapshot = definition.at(mAttributeName);

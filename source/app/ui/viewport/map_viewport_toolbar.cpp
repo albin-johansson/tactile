@@ -112,7 +112,7 @@ void update_map_viewport_toolbar(const DocumentModel& model, entt::dispatcher& d
   StyleVar padding {ImGuiStyleVar_WindowPadding, {6, 6}};
 
   const auto& lang = get_current_language();
-  const auto& document = model.view_map(model.active_document_id().value());
+  const auto& document = model.get_map(model.get_active_document_id().value());
   const auto& tools = document.get_tools();
 
   if (Window window {"##ToolbarWindow", toolbar_window_flags}; window.is_open()) {

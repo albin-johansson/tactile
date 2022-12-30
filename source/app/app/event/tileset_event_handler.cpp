@@ -44,8 +44,8 @@ void on_inspect_tileset(const InspectTilesetEvent&)
 {
   spdlog::trace("InspectTilesetEvent");
 
-  if (auto* tileset_document = get_model().active_tileset()) {
-    const auto& tileset = tileset_document->view_tileset();
+  if (auto* tileset_document = get_model().active_tileset_document()) {
+    const auto& tileset = tileset_document->get_tileset();
     tileset_document->get_contexts().select(tileset.get_uuid());
   }
 }
@@ -82,7 +82,7 @@ void on_select_tileset(const SelectTilesetEvent& event)
 {
   spdlog::trace("SelectTilesetEvent(tileset_id: {})", event.tileset_id);
 
-  if (auto* map_document = get_model().active_map()) {
+  if (auto* map_document = get_model().active_map_document()) {
     auto& tileset_bundle = map_document->get_map().tileset_bundle();
     tileset_bundle.select_tileset(event.tileset_id);
   }
@@ -94,7 +94,7 @@ void on_rename_tileset(const RenameTilesetEvent& event)
                 event.tileset_id,
                 event.name);
 
-  auto tileset_document = get_model().get_tileset(event.tileset_id);
+  auto tileset_document = get_model().get_tileset_document_ptr(event.tileset_id);
   tileset_document->rename_tileset(event.name);
 }
 
@@ -104,7 +104,7 @@ void on_set_tileset_selection(const SetTilesetSelectionEvent& event)
                 event.selection.begin,
                 event.selection.end);
 
-  if (auto* map_document = get_model().active_map()) {
+  if (auto* map_document = get_model().active_map_document()) {
     auto& tileset_bundle = map_document->get_map().tileset_bundle();
 
     const auto tileset_id = tileset_bundle.active_tileset_id().value();
@@ -118,8 +118,8 @@ void on_select_tileset_tile(const SelectTilesetTileEvent& event)
 {
   spdlog::trace("SelectTilesetTileEvent(tile_index: {})", event.tile_index);
 
-  if (auto* tileset_document = get_model().active_tileset()) {
-    auto& tileset = tileset_document->view_tileset();
+  if (auto* tileset_document = get_model().active_tileset_document()) {
+    auto& tileset = tileset_document->get_tileset();
     tileset.select_tile(event.tile_index);
 
     const auto& tile_id = tileset[event.tile_index].get_uuid();
@@ -135,7 +135,7 @@ void on_set_tile_animation_frame_duration(const SetTileAnimationFrameDurationEve
       event.frame_index,
       event.duration);
 
-  if (auto* tileset_document = get_model().active_tileset()) {
+  if (auto* tileset_document = get_model().active_tileset_document()) {
     tileset_document->set_animation_frame_duration(event.tile_index,
                                                    event.frame_index,
                                                    event.duration);
@@ -152,8 +152,8 @@ void on_add_tile_animation_frame(const AddTileAnimationFrameEvent& event)
 {
   spdlog::trace("AddTileAnimationFrameEvent(tile_index: {})", event.tile_index);
 
-  if (auto* tileset_document = get_model().active_tileset()) {
-    const auto& tileset = tileset_document->view_tileset();
+  if (auto* tileset_document = get_model().active_tileset_document()) {
+    const auto& tileset = tileset_document->get_tileset();
     if (const auto selected_tile_index = tileset.get_selected_tile()) {
       tileset_document->add_animation_frame(*selected_tile_index,
                                             event.tile_index,
@@ -166,8 +166,8 @@ void on_remove_tile_animation_frame(const RemoveTileAnimationFrameEvent& event)
 {
   spdlog::trace("RemoveTileAnimationFrameEvent(frame_index: {})", event.frame_index);
 
-  if (auto* tileset_document = get_model().active_tileset()) {
-    const auto& tileset = tileset_document->view_tileset();
+  if (auto* tileset_document = get_model().active_tileset_document()) {
+    const auto& tileset = tileset_document->get_tileset();
     if (const auto selected_tile_index = tileset.get_selected_tile()) {
       tileset_document->remove_animation_frame(*selected_tile_index, event.frame_index);
     }
@@ -178,8 +178,8 @@ void on_move_animation_frame_forwards(const MoveAnimationFrameForwardsEvent& eve
 {
   spdlog::trace("MoveAnimationFrameForwardsEvent(frame_index: {})", event.frame_index);
 
-  if (auto* tileset_document = get_model().active_tileset()) {
-    const auto& tileset = tileset_document->view_tileset();
+  if (auto* tileset_document = get_model().active_tileset_document()) {
+    const auto& tileset = tileset_document->get_tileset();
     if (const auto selected_tile_index = tileset.get_selected_tile()) {
       tileset_document->move_animation_frame_forwards(*selected_tile_index,
                                                       event.frame_index);
@@ -191,8 +191,8 @@ void on_move_animation_frame_backwards(const MoveAnimationFrameBackwardsEvent& e
 {
   spdlog::trace("MoveAnimationFrameBackwardsEvent(frame_index: {})", event.frame_index);
 
-  if (auto* tileset_document = get_model().active_tileset()) {
-    const auto& tileset = tileset_document->view_tileset();
+  if (auto* tileset_document = get_model().active_tileset_document()) {
+    const auto& tileset = tileset_document->get_tileset();
     if (const auto selected_tile_index = tileset.get_selected_tile()) {
       tileset_document->move_animation_frame_backwards(*selected_tile_index,
                                                        event.frame_index);
@@ -204,8 +204,8 @@ void on_delete_tile_animation(const DeleteTileAnimationEvent&)
 {
   spdlog::trace("DeleteTileAnimationEvent");
 
-  if (auto* tileset_document = get_model().active_tileset()) {
-    const auto& tileset = tileset_document->view_tileset();
+  if (auto* tileset_document = get_model().active_tileset_document()) {
+    const auto& tileset = tileset_document->get_tileset();
     if (const auto selected_tile_index = tileset.get_selected_tile()) {
       tileset_document->delete_animation(*selected_tile_index);
     }
@@ -218,7 +218,7 @@ void on_rename_tile(const RenameTileEvent& event)
                 event.tile_index,
                 event.name);
 
-  if (auto* tileset_document = get_model().active_tileset()) {
+  if (auto* tileset_document = get_model().active_tileset_document()) {
     tileset_document->rename_tile(event.tile_index, event.name);
   }
 }

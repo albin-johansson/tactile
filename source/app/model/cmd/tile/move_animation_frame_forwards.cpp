@@ -44,7 +44,7 @@ void MoveAnimationFrameForwards::undo()
 {
   TACTILE_ASSERT(mFrameIndex - 1 >= 0);
 
-  auto& tileset = mDocument->view_tileset();
+  auto& tileset = mDocument->get_tileset();
   auto& tile = tileset[mTileIndex];
   auto& animation = tile.get_animation();
 
@@ -59,7 +59,7 @@ void MoveAnimationFrameForwards::redo()
 {
   TACTILE_ASSERT(mFrameIndex - 1 >= 0);
 
-  auto& tileset = mDocument->view_tileset();
+  auto& tileset = mDocument->get_tileset();
   auto& tile = tileset[mTileIndex];
   auto& animation = tile.get_animation();
 

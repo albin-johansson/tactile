@@ -46,7 +46,7 @@ RenameComponentAttr::RenameComponentAttr(Document* document,
 
 void RenameComponentAttr::undo()
 {
-  auto index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index_ptr();
 
   auto& definition = index->at(mComponentId);
   definition.rename(mUpdatedName, mPreviousName);
@@ -57,7 +57,7 @@ void RenameComponentAttr::undo()
 
 void RenameComponentAttr::redo()
 {
-  auto index = mDocument->get_component_index();
+  auto index = mDocument->get_component_index_ptr();
 
   auto& definition = index->at(mComponentId);
   definition.rename(mPreviousName, mUpdatedName);

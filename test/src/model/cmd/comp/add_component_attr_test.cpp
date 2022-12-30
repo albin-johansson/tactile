@@ -35,7 +35,7 @@ TEST(AddComponentAttr, Constructor)
 TEST(AddComponentAttr, RedoUndo)
 {
   auto document = MapBuilder::build().result();
-  auto index = document->get_component_index();
+  auto index = document->get_component_index_ptr();
 
   const auto comp_id = ComponentBuilder {index, "Demo"}.result();
   auto& definition = index->at(comp_id);

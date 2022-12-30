@@ -113,7 +113,7 @@ void ui_poll_mouse(const Tileset& tileset,
 void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
-  const auto& tileset = document.view_tileset();
+  const auto& tileset = document.get_tileset();
   const auto& viewport = document.get_viewport();
 
   // Reset some previous state when changing displayed tileset

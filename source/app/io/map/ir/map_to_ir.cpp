@@ -268,7 +268,7 @@ auto map_to_ir(const MapDocument& document) -> ir::MapData
 
   convert_tile_format(map.tile_format(), data.tile_format);
 
-  const auto* components = document.view_component_index();
+  const auto* components = document.find_component_index();
 
   if (components) {
     convert_component_definitions(*components, data);

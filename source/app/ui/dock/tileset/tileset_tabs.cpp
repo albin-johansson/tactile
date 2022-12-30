@@ -87,7 +87,7 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
 
-    const auto& map_document = model.require_active_map();
+    const auto& map_document = model.require_active_map_document();
     const auto& map = map_document.get_map();
     const auto& tilesets = map.tileset_bundle();
 

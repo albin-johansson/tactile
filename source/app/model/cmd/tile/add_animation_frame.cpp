@@ -43,7 +43,7 @@ AddAnimationFrame::AddAnimationFrame(TilesetDocument* document,
 
 void AddAnimationFrame::undo()
 {
-  auto& tileset = mDocument->view_tileset();
+  auto& tileset = mDocument->get_tileset();
   auto& tile = tileset[mAnimatedTileIndex];
 
   auto& animation = tile.get_animation();
@@ -58,7 +58,7 @@ void AddAnimationFrame::undo()
 
 void AddAnimationFrame::redo()
 {
-  auto& tileset = mDocument->view_tileset();
+  auto& tileset = mDocument->get_tileset();
   auto& tile = tileset[mAnimatedTileIndex];
 
   mTileWasAnimatedBefore = tile.is_animated();

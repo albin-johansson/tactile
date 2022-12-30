@@ -50,7 +50,7 @@ void update_create_component_attribute_dialog(const DocumentModel& model,
                                               entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
-  const auto* component_index = model.require_active_document().view_component_index();
+  const auto* component_index = model.require_active_document().find_component_index();
 
   if (dialog_component_id.has_value() &&  //
       component_index != nullptr && !component_index->contains(*dialog_component_id)) {
