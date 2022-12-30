@@ -61,14 +61,14 @@ auto DocumentModel::Impl::add_map(const Int2& tile_size,
   map_document->set_component_index(std::make_shared<ComponentIndex>());
 
   const auto id = map_document->get_map().get_uuid();
-  mDocuments.add_map(std::move(map_document));
+  mDocuments.add_map_document(std::move(map_document));
 
   return id;
 }
 
 auto DocumentModel::Impl::add_tileset(const TilesetInfo& info) -> UUID
 {
-  if (auto* document = mDocuments.current_map()) {
+  if (auto* document = mDocuments.current_map_document()) {
     auto& map = document->get_map();
     const auto tileset_id = make_uuid();
 
@@ -88,7 +88,7 @@ void DocumentModel::Impl::remove_tileset(const UUID& id)
     throw TactileError {"Document is not a tileset!"};
   }
 
-  if (auto* document = mDocuments.current_map()) {
+  if (auto* document = mDocuments.current_map_document()) {
     document->get_history().push<cmd::RemoveTileset>(mParent, id);
   }
   else {
@@ -99,9 +99,9 @@ void DocumentModel::Impl::remove_tileset(const UUID& id)
 auto DocumentModel::Impl::restore_tileset(const TileID first_tile_id,
                                           const TilesetInfo& info) -> UUID
 {
-  if (auto* map_document = mDocuments.current_map()) {
+  if (auto* map_document = mDocuments.current_map_document()) {
     auto tileset_document = std::make_shared<TilesetDocument>(info);
-    mDocuments.add_tileset(tileset_document);
+    mDocuments.add_tileset_document(tileset_document);
 
     auto tileset = tileset_document->get_tileset_ptr();
     const auto tileset_id = tileset->get_uuid();
@@ -133,7 +133,7 @@ auto DocumentModel::Impl::has_document(const UUID& id) const -> bool
 
 auto DocumentModel::Impl::has_document_with_path(const Path& path) const -> bool
 {
-  return mDocuments.has_with_path(path);
+  return mDocuments.has_document_with_path(path);
 }
 
 auto DocumentModel::Impl::get_id_for_path(const Path& path) const -> UUID
@@ -162,7 +162,7 @@ auto DocumentModel::Impl::require_active_document() const -> const Document&
 
 auto DocumentModel::Impl::require_active_map() -> MapDocument&
 {
-  if (auto* document = mDocuments.current_map()) {
+  if (auto* document = mDocuments.current_map_document()) {
     return *document;
   }
   else {
@@ -172,7 +172,7 @@ auto DocumentModel::Impl::require_active_map() -> MapDocument&
 
 auto DocumentModel::Impl::require_active_map() const -> const MapDocument&
 {
-  if (const auto* document = mDocuments.current_map()) {
+  if (const auto* document = mDocuments.current_map_document()) {
     return *document;
   }
   else {
@@ -182,7 +182,7 @@ auto DocumentModel::Impl::require_active_map() const -> const MapDocument&
 
 auto DocumentModel::Impl::require_active_tileset() -> TilesetDocument&
 {
-  if (auto* document = mDocuments.current_tileset()) {
+  if (auto* document = mDocuments.current_tileset_document()) {
     return *document;
   }
   else {
@@ -192,7 +192,7 @@ auto DocumentModel::Impl::require_active_tileset() -> TilesetDocument&
 
 auto DocumentModel::Impl::require_active_tileset() const -> const TilesetDocument&
 {
-  if (const auto* document = mDocuments.current_tileset()) {
+  if (const auto* document = mDocuments.current_tileset_document()) {
     return *document;
   }
   else {

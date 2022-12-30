@@ -45,7 +45,7 @@ void DocumentManager::each_open(const IdVisitorFn& op) const
   }
 }
 
-void DocumentManager::add_map(Shared<MapDocument> document)
+void DocumentManager::add_map_document(Shared<MapDocument> document)
 {
   if (!document) {
     throw TactileError {"Cannot store null map document!"};
@@ -60,7 +60,7 @@ void DocumentManager::add_map(Shared<MapDocument> document)
   mActiveDocument = id;
 }
 
-void DocumentManager::add_tileset(Shared<TilesetDocument> document)
+void DocumentManager::add_tileset_document(Shared<TilesetDocument> document)
 {
   if (!document) {
     throw TactileError {"Cannot store null tileset document!"};
@@ -72,10 +72,10 @@ void DocumentManager::add_tileset(Shared<TilesetDocument> document)
   mTilesets[id] = std::move(document);
 }
 
-auto DocumentManager::remove_map(const UUID& id) -> Shared<MapDocument>
+auto DocumentManager::remove_map_document(const UUID& id) -> Shared<MapDocument>
 {
   if (auto iter = mMaps.find(id); iter != mMaps.end()) {
-    auto document = iter->second;
+    auto map_document = iter->second;
 
     mMaps.erase(iter);
     mDocuments.erase(id);
@@ -85,16 +85,16 @@ auto DocumentManager::remove_map(const UUID& id) -> Shared<MapDocument>
       select_another_document();
     }
 
-    remove_unused_tilesets_from(document->get_map().tileset_bundle());
+    remove_unused_tilesets_from(map_document->get_map().tileset_bundle());
     TACTILE_ASSERT(!mActiveDocument || is_document(*mActiveDocument));
 
-    return document;
+    return map_document;
   }
 
   return nullptr;
 }
 
-auto DocumentManager::remove_tileset(const UUID& id) -> Shared<TilesetDocument>
+auto DocumentManager::remove_tileset_document(const UUID& id) -> Shared<TilesetDocument>
 {
   if (auto iter = mTilesets.find(id); iter != mTilesets.end()) {
     auto document = iter->second;
@@ -122,7 +122,7 @@ void DocumentManager::select_another_document()
   }
 }
 
-void DocumentManager::select(const UUID& id)
+void DocumentManager::select_document(const UUID& id)
 {
   if (is_document(id)) [[likely]] {
     mActiveDocument = id;
@@ -132,7 +132,7 @@ void DocumentManager::select(const UUID& id)
   }
 }
 
-void DocumentManager::open(const UUID& id)
+void DocumentManager::open_document(const UUID& id)
 {
   if (!has_key(mDocuments, id)) [[unlikely]] {
     throw TactileError {"Tried to open invalid document!"};
@@ -145,13 +145,13 @@ void DocumentManager::open(const UUID& id)
   }
 }
 
-void DocumentManager::close(const UUID& id)
+void DocumentManager::close_document(const UUID& id)
 {
   mOpenDocuments.erase(id);
 
   // Maps are removed when closed, unlike tilesets
   if (has_key(mMaps, id)) {
-    remove_map(id);
+    remove_map_document(id);
   }
 
   if (mActiveDocument == id) {
@@ -163,12 +163,12 @@ void DocumentManager::remove_unused_tilesets_from(const TilesetBundle& bundle)
 {
   for (const auto& [id, tileset]: bundle) {
     if (!is_tileset_used(id)) {
-      remove_tileset(id);
+      remove_tileset_document(id);
     }
   }
 }
 
-auto DocumentManager::current() const -> const Maybe<UUID>&
+auto DocumentManager::current_document_id() const -> const Maybe<UUID>&
 {
   return mActiveDocument;
 }
@@ -183,7 +183,7 @@ auto DocumentManager::current_document() const -> const Document*
   return mActiveDocument ? lookup_in(mDocuments, *mActiveDocument).get() : nullptr;
 }
 
-auto DocumentManager::current_map() -> MapDocument*
+auto DocumentManager::current_map_document() -> MapDocument*
 {
   if (mActiveDocument) {
     if (auto iter = mMaps.find(*mActiveDocument); iter != mMaps.end()) {
@@ -194,7 +194,7 @@ auto DocumentManager::current_map() -> MapDocument*
   return nullptr;
 }
 
-auto DocumentManager::current_map() const -> const MapDocument*
+auto DocumentManager::current_map_document() const -> const MapDocument*
 {
   if (mActiveDocument) {
     if (auto iter = mMaps.find(*mActiveDocument); iter != mMaps.end()) {
@@ -205,7 +205,7 @@ auto DocumentManager::current_map() const -> const MapDocument*
   return nullptr;
 }
 
-auto DocumentManager::current_tileset() -> TilesetDocument*
+auto DocumentManager::current_tileset_document() -> TilesetDocument*
 {
   if (mActiveDocument) {
     if (auto iter = mTilesets.find(*mActiveDocument); iter != mTilesets.end()) {
@@ -216,7 +216,7 @@ auto DocumentManager::current_tileset() -> TilesetDocument*
   return nullptr;
 }
 
-auto DocumentManager::current_tileset() const -> const TilesetDocument*
+auto DocumentManager::current_tileset_document() const -> const TilesetDocument*
 {
   if (mActiveDocument) {
     if (auto iter = mTilesets.find(*mActiveDocument); iter != mTilesets.end()) {
@@ -227,7 +227,7 @@ auto DocumentManager::current_tileset() const -> const TilesetDocument*
   return nullptr;
 }
 
-auto DocumentManager::is_open(const UUID& id) const -> bool
+auto DocumentManager::is_document_open(const UUID& id) const -> bool
 {
   return mOpenDocuments.find(id) != mOpenDocuments.end();
 }
@@ -265,7 +265,7 @@ auto DocumentManager::is_tileset_used(const UUID& id) const -> bool
   });
 }
 
-auto DocumentManager::has_with_path(const Path& path) const -> bool
+auto DocumentManager::has_document_with_path(const Path& path) const -> bool
 {
   return std::any_of(mDocuments.begin(), mDocuments.end(), [&](const auto& pair) {
     const auto& document = pair.second;
@@ -273,32 +273,32 @@ auto DocumentManager::has_with_path(const Path& path) const -> bool
   });
 }
 
-auto DocumentManager::get_document(const UUID& id) -> Shared<Document>
+auto DocumentManager::get_document_ptr(const UUID& id) -> Shared<Document>
 {
   return lookup_in(mDocuments, id);
 }
 
-auto DocumentManager::get_map(const UUID& id) -> Shared<MapDocument>
+auto DocumentManager::get_map_document_ptr(const UUID& id) -> Shared<MapDocument>
 {
   return lookup_in(mMaps, id);
 }
 
-auto DocumentManager::get_tileset(const UUID& id) -> Shared<TilesetDocument>
+auto DocumentManager::get_tileset_document_ptr(const UUID& id) -> Shared<TilesetDocument>
 {
   return lookup_in(mTilesets, id);
 }
 
-auto DocumentManager::view_document(const UUID& id) const -> const Document&
+auto DocumentManager::get_document(const UUID& id) const -> const Document&
 {
   return *lookup_in(mDocuments, id);
 }
 
-auto DocumentManager::view_map(const UUID& id) const -> const MapDocument&
+auto DocumentManager::get_map_document(const UUID& id) const -> const MapDocument&
 {
   return *lookup_in(mMaps, id);
 }
 
-auto DocumentManager::view_tileset(const UUID& id) const -> const TilesetDocument&
+auto DocumentManager::get_tileset_document(const UUID& id) const -> const TilesetDocument&
 {
   return *lookup_in(mTilesets, id);
 }
