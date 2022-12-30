@@ -260,7 +260,7 @@ void restore_tilesets(DocumentModel& model,
   // Determine the next available tile identifier
   TileID next_tile_id {1};
   for (const auto& [tileset_id, tileset_ref]: tileset_bundle) {
-    next_tile_id = std::max(next_tile_id, tileset_ref.last_tile() + 1);
+    next_tile_id = std::max(next_tile_id, tileset_ref.get_last_tile() + 1);
   }
   tileset_bundle.set_next_tile_id(next_tile_id);
 

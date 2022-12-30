@@ -50,16 +50,14 @@ class TilesetRef final {
 
   [[nodiscard]] auto get_selection() const -> const Maybe<Region>&;
 
-  [[nodiscard]] auto get_tileset() -> const Shared<Tileset>&;
+  [[nodiscard]] auto get_tileset_ptr() -> const Shared<Tileset>&;
 
-  [[nodiscard]] auto view_tileset() const -> const Tileset&;
+  [[nodiscard]] auto get_tileset() const -> const Tileset&;
 
-  [[nodiscard]] auto first_tile() const noexcept -> TileID { return mFirstTile; }
-
-  [[nodiscard]] auto last_tile() const noexcept -> TileID { return mLastTile; }
+  [[nodiscard]] auto get_first_tile() const noexcept -> TileID { return mFirstTile; }
+  [[nodiscard]] auto get_last_tile() const noexcept -> TileID { return mLastTile; }
 
   [[nodiscard]] auto get_viewport() -> Viewport& { return mViewport; }
-
   [[nodiscard]] auto get_viewport() const -> const Viewport& { return mViewport; }
 
   [[nodiscard]] auto is_embedded() const noexcept -> bool { return mEmbedded; }

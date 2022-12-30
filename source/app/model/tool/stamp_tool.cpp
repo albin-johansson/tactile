@@ -134,7 +134,7 @@ void StampTool::update_sequence_normal(TileLayer& layer,
                                        const TilesetRef& tileset_ref,
                                        const TilePos& cursor)
 {
-  const auto& tileset = tileset_ref.view_tileset();
+  const auto& tileset = tileset_ref.get_tileset();
   const auto& selection = tileset_ref.get_selection().value();
   const auto selection_size = selection.end - selection.begin;
   const auto preview_offset = selection_size / TilePos {2, 2};
@@ -143,7 +143,7 @@ void StampTool::update_sequence_normal(TileLayer& layer,
     const TilePos index {row, col};
     const auto selection_pos = selection.begin + index;
 
-    const auto tile = tileset_ref.first_tile() + tileset.index_of(selection_pos);
+    const auto tile = tileset_ref.get_first_tile() + tileset.index_of(selection_pos);
     if (tile != empty_tile) {
       const auto pos = cursor + index - preview_offset;
 
@@ -171,8 +171,8 @@ void StampTool::update_sequence_random(TileLayer& layer,
     const auto selection_pos =
         selection.begin + TilePos::from_index(index, selection_size.col());
 
-    const auto& tileset = tileset_ref.view_tileset();
-    const auto tile = tileset_ref.first_tile() + tileset.index_of(selection_pos);
+    const auto& tileset = tileset_ref.get_tileset();
+    const auto tile = tileset_ref.get_first_tile() + tileset.index_of(selection_pos);
 
     if (mPrevious.find(cursor) == mPrevious.end()) {
       mPrevious.emplace(cursor, layer.tile_at(cursor));

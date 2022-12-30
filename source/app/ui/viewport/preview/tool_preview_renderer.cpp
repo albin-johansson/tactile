@@ -85,7 +85,7 @@ void ToolPreviewRenderer::render_stamp_normal(const Map& map,
   const auto selection_size = selection.end - selection.begin;
   const auto offset = selection_size / TilePos {2, 2};
 
-  const auto& tileset = tileset_ref.view_tileset();
+  const auto& tileset = tileset_ref.get_tileset();
 
   auto& graphics = mGraphics.get();
   const auto origin = to_vec(graphics.info().origin);

@@ -49,25 +49,25 @@ TEST(FixMapTiles, RedoUndo)
   const auto& tileset_ref = map->tileset_bundle().get_ref(tileset_id);
 
   auto& layer = map->invisible_root().get_tile_layer(layer_id);
-  layer.set_tile({2, 4}, tileset_ref.first_tile() - 10);
-  layer.set_tile({0, 0}, tileset_ref.last_tile() + 1);
-  layer.set_tile({0, 1}, tileset_ref.last_tile());
-  layer.set_tile({5, 7}, tileset_ref.first_tile());
+  layer.set_tile({2, 4}, tileset_ref.get_first_tile() - 10);
+  layer.set_tile({0, 0}, tileset_ref.get_last_tile() + 1);
+  layer.set_tile({0, 1}, tileset_ref.get_last_tile());
+  layer.set_tile({5, 7}, tileset_ref.get_first_tile());
 
   cmd::FixMapTiles cmd {map};
   cmd.redo();
 
   ASSERT_EQ(empty_tile, layer.tile_at({2, 4}));
   ASSERT_EQ(empty_tile, layer.tile_at({0, 0}));
-  ASSERT_EQ(tileset_ref.last_tile(), layer.tile_at({0, 1}));
-  ASSERT_EQ(tileset_ref.first_tile(), layer.tile_at({5, 7}));
+  ASSERT_EQ(tileset_ref.get_last_tile(), layer.tile_at({0, 1}));
+  ASSERT_EQ(tileset_ref.get_first_tile(), layer.tile_at({5, 7}));
 
   cmd.undo();
 
-  ASSERT_EQ(tileset_ref.first_tile() - 10, layer.tile_at({2, 4}));
-  ASSERT_EQ(tileset_ref.last_tile() + 1, layer.tile_at({0, 0}));
-  ASSERT_EQ(tileset_ref.last_tile(), layer.tile_at({0, 1}));
-  ASSERT_EQ(tileset_ref.first_tile(), layer.tile_at({5, 7}));
+  ASSERT_EQ(tileset_ref.get_first_tile() - 10, layer.tile_at({2, 4}));
+  ASSERT_EQ(tileset_ref.get_last_tile() + 1, layer.tile_at({0, 0}));
+  ASSERT_EQ(tileset_ref.get_last_tile(), layer.tile_at({0, 1}));
+  ASSERT_EQ(tileset_ref.get_first_tile(), layer.tile_at({5, 7}));
 }
 
 }  // namespace tactile::test

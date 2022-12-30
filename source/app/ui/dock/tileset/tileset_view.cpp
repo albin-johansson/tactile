@@ -46,7 +46,7 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
                             const ImVec2& viewport_size,
                             entt::dispatcher& dispatcher)
 {
-  const auto& tileset = tileset_ref.view_tileset();
+  const auto& tileset = tileset_ref.get_tileset();
   const Float2 texture_size = tileset.texture().get_size();
 
   const Float2 min_offset {viewport_size.x - texture_size.x,
@@ -94,7 +94,7 @@ void update_tileset_view(const DocumentModel& model,
   const auto& map = document.get_map();
 
   const auto& tileset_ref = map.tileset_bundle().get_ref(tileset_id);
-  const auto& tileset = tileset_ref.view_tileset();
+  const auto& tileset = tileset_ref.get_tileset();
   const auto& texture = tileset.texture();
   const auto& viewport = tileset_ref.get_viewport();
 

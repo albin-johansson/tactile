@@ -56,12 +56,12 @@ auto TilesetRef::get_selection() const -> const Maybe<Region>&
   return mSelection;
 }
 
-auto TilesetRef::get_tileset() -> const Shared<Tileset>&
+auto TilesetRef::get_tileset_ptr() -> const Shared<Tileset>&
 {
   return mTileset;
 }
 
-auto TilesetRef::view_tileset() const -> const Tileset&
+auto TilesetRef::get_tileset() const -> const Tileset&
 {
   return *mTileset;
 }

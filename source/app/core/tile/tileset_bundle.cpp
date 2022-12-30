@@ -38,7 +38,7 @@ void TilesetBundle::attach_tileset(Shared<Tileset> tileset,
   auto& ref = lookup_in(mRefs, id);
   ref.set_embedded(embedded);
 
-  for (auto tile_id = ref.first_tile(); tile_id <= ref.last_tile(); ++tile_id) {
+  for (auto tile_id = ref.get_first_tile(); tile_id <= ref.get_last_tile(); ++tile_id) {
     mTileCache[tile_id] = id;
   }
 }

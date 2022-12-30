@@ -39,7 +39,7 @@ void render_tile(Graphics& graphics,
 
   if (const auto tileset_id = tilesets.find_tileset(tile_id)) {
     const auto& tileset_ref = tilesets.get_ref(*tileset_id);
-    const auto& tileset = tileset_ref.view_tileset();
+    const auto& tileset = tileset_ref.get_tileset();
 
     const auto tile_index = tileset.appearance_of(tileset_ref.to_index(tile_id));
     const auto tileset_pos = TilePos::from_index(tile_index, tileset.column_count());

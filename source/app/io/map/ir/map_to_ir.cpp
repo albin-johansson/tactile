@@ -215,12 +215,12 @@ void convert_tilesets(const MapDocument& document,
 {
   const auto& map = document.get_map();
   for (const auto& [tileset_id, tileset_ref]: map.tileset_bundle()) {
-    const auto& tileset = tileset_ref.view_tileset();
+    const auto& tileset = tileset_ref.get_tileset();
 
     auto& tileset_data = data.tilesets.emplace_back();
     tileset_data.name = tileset.get_ctx().name();
 
-    tileset_data.first_tile = tileset_ref.first_tile();
+    tileset_data.first_tile = tileset_ref.get_first_tile();
     tileset_data.tile_size = tileset.tile_size();
     tileset_data.column_count = tileset.column_count();
     tileset_data.tile_count = tileset.tile_count();
