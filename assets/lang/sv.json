@@ -340,6 +340,7 @@
     "set-animation-frame-duration": "Ändra Animationsstegslängd",
     "move-animation-frame-forwards": "Flytta Animationssteg Framåt",
     "move-animation-frame-backwards": "Flytta Animationssteg Bakåt",
+    "rename-tile": "Ändra Tilenamn",
     "stamp-tool": "Stämpelsekvens",
     "eraser-tool": "Suddsekvens",
     "bucket-tool": "Hinkapplicering",

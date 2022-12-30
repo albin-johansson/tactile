@@ -19,10 +19,30 @@
 
 #pragma once
 
-#include "model/cmd/tile/add_animation_frame.hpp"
-#include "model/cmd/tile/delete_animation.hpp"
-#include "model/cmd/tile/move_animation_frame_backwards.hpp"
-#include "model/cmd/tile/move_animation_frame_forwards.hpp"
-#include "model/cmd/tile/remove_animation_frame.hpp"
-#include "model/cmd/tile/rename_tile.hpp"
-#include "model/cmd/tile/set_animation_frame_duration.hpp"
+#include "core/type/maybe.hpp"
+#include "core/type/string.hpp"
+#include "core/vocabulary.hpp"
+#include "model/cmd/command.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetDocument)
+
+namespace tactile::cmd {
+
+class RenameTile final : public Command {
+ public:
+  RenameTile(TilesetDocument* document, TileIndex tile_index, String name);
+
+  void undo() override;
+
+  void redo() override;
+
+  [[nodiscard]] auto get_name() const -> String override;
+
+ private:
+  TilesetDocument* mDocument {};
+  TileIndex mTileIndex {};
+  String mNewName;
+  Maybe<String> mOldName;
+};
+
+}  // namespace tactile::cmd

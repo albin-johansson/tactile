@@ -24,6 +24,7 @@
 #include "core/type/chrono.hpp"
 #include "core/type/path.hpp"
 #include "core/type/ptr.hpp"
+#include "core/type/string.hpp"
 #include "core/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "model/document/document.hpp"
@@ -65,6 +66,8 @@ class TilesetDocument final : public Document {
   void set_animation_frame_duration(TileIndex tile_index,
                                     usize frame_index,
                                     ms_t frame_duration);
+
+  void rename_tile(TileIndex tile_index, String name);
 
   [[nodiscard]] auto has_path() const -> bool override;
 

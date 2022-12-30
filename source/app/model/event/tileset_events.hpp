@@ -92,6 +92,12 @@ struct MoveAnimationFrameBackwardsEvent final {
   usize frame_index {};
 };
 
+/// Event for changing the name of a tile in a tileset.
+struct RenameTileEvent final {
+  TileIndex tile_index {};
+  String name;
+};
+
 /// Event for deleting the tile animation associated with the selected tileset tile.
 struct DeleteTileAnimationEvent final {};
 

@@ -342,6 +342,7 @@
     "set-animation-frame-duration": "Set Animation Frame Duration",
     "move-animation-frame-forwards": "Move Animation Frame Forwards",
     "move-animation-frame-backwards": "Move Animation Frame Backwards",
+    "rename-tile": "Rename Tile",
     "stamp-tool": "Stamp Sequence",
     "eraser-tool": "Eraser Sequence",
     "bucket-tool": "Bucket Fill",

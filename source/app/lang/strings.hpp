@@ -432,6 +432,7 @@ struct CommandStrings final {
   String set_animation_frame_duration;
   String move_animation_frame_forwards;
   String move_animation_frame_backwards;
+  String rename_tile;
 
   String stamp_tool;
   String eraser_tool;

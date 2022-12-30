@@ -110,6 +110,11 @@ void TilesetDocument::set_animation_frame_duration(const TileIndex tile_index,
                                                      frame_duration);
 }
 
+void TilesetDocument::rename_tile(const TileIndex tile_index, String name)
+{
+  get_history().push<cmd::RenameTile>(this, tile_index, std::move(name));
+}
+
 auto TilesetDocument::has_path() const -> bool
 {
   return mDelegate.has_path();

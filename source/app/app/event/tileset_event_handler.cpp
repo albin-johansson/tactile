@@ -212,6 +212,17 @@ void on_delete_tile_animation(const DeleteTileAnimationEvent&)
   }
 }
 
+void on_rename_tile(const RenameTileEvent& event)
+{
+  spdlog::trace("RenameTileEvent(tile_index: {}, name: {})",
+                event.tile_index,
+                event.name);
+
+  if (auto* tileset_document = get_model().active_tileset()) {
+    tileset_document->rename_tile(event.tile_index, event.name);
+  }
+}
+
 }  // namespace
 
 void install_tileset_event_handler()
@@ -236,6 +247,7 @@ void install_tileset_event_handler()
   dispatcher.sink<MoveAnimationFrameForwardsEvent>().connect<&on_move_animation_frame_forwards>();
   dispatcher.sink<MoveAnimationFrameBackwardsEvent>().connect<&on_move_animation_frame_backwards>();
   dispatcher.sink<DeleteTileAnimationEvent>().connect<&on_delete_tile_animation>();
+  dispatcher.sink<RenameTileEvent>().connect<&on_rename_tile>();
   // clang-format on
 }
 
