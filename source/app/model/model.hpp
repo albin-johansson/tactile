@@ -129,8 +129,8 @@ class DocumentModel final {
 
   /// Getters that do not require a copy of shared pointers, which can be expensive
   [[nodiscard]] auto get_document(const UUID& id) const -> const Document&;
-  [[nodiscard]] auto get_map(const UUID& id) const -> const MapDocument&;
-  [[nodiscard]] auto get_tileset(const UUID& id) const -> const TilesetDocument&;
+  [[nodiscard]] auto get_map_document(const UUID& id) const -> const MapDocument&;
+  [[nodiscard]] auto get_tileset_document(const UUID& id) const -> const TilesetDocument&;
 
   [[nodiscard]] auto get_active_document_id() const -> Maybe<UUID>;
 

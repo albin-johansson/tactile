@@ -100,8 +100,8 @@ void on_show_resize_map_dialog(const OpenResizeMapDialogEvent&)
 {
   spdlog::trace("OpenResizeMapDialogEvent");
 
-  if (auto* document = get_model().active_map_document()) {
-    const auto& map = document->get_map();
+  if (auto* map_document = get_model().active_map_document()) {
+    const auto& map = map_document->get_map();
     ui::open_resize_map_dialog(map.row_count(), map.column_count());
   }
 }
@@ -112,8 +112,8 @@ void on_resize_map(const ResizeMapEvent& event)
                 event.row_count,
                 event.col_count);
 
-  if (auto* map = get_model().active_map_document()) {
-    map->resize(event.row_count, event.col_count);
+  if (auto* map_document = get_model().active_map_document()) {
+    map_document->resize(event.row_count, event.col_count);
   }
 }
 
@@ -121,8 +121,8 @@ void on_add_row(const AddRowEvent&)
 {
   spdlog::trace("AddRowEvent");
 
-  if (auto* map = get_model().active_map_document()) {
-    map->add_row();
+  if (auto* map_document = get_model().active_map_document()) {
+    map_document->add_row();
   }
 }
 
@@ -130,8 +130,8 @@ void on_add_column(const AddColumnEvent&)
 {
   spdlog::trace("AddColumnEvent");
 
-  if (auto* map = get_model().active_map_document()) {
-    map->add_column();
+  if (auto* map_document = get_model().active_map_document()) {
+    map_document->add_column();
   }
 }
 
@@ -139,8 +139,8 @@ void on_remove_row(const RemoveRowEvent&)
 {
   spdlog::trace("RemoveRowEvent");
 
-  if (auto* map = get_model().active_map_document()) {
-    map->remove_row();
+  if (auto* map_document = get_model().active_map_document()) {
+    map_document->remove_row();
   }
 }
 
@@ -148,8 +148,8 @@ void on_remove_column(const RemoveColumnEvent&)
 {
   spdlog::trace("RemoveColumnEvent");
 
-  if (auto* map = get_model().active_map_document()) {
-    map->remove_column();
+  if (auto* map_document = get_model().active_map_document()) {
+    map_document->remove_column();
   }
 }
 
@@ -157,8 +157,8 @@ void on_fix_tiles(const FixTilesInMapEvent&)
 {
   spdlog::trace("FixTilesInMapEvent");
 
-  if (auto* map = get_model().active_map_document()) {
-    map->fix_tiles();
+  if (auto* map_document = get_model().active_map_document()) {
+    map_document->fix_tiles();
   }
 }
 
@@ -173,7 +173,7 @@ void on_export_as_godot_scene(const ExportAsGodotSceneEvent& event)
       event.tileset_dir,
       event.polygon_points);
 
-  if (auto* document = get_model().active_map_document()) {
+  if (auto* map_document = get_model().active_map_document()) {
     const io::GodotEmitOptions options {
         .root_dir = event.root_dir,
         .project_map_dir = event.map_dir,
@@ -181,7 +181,7 @@ void on_export_as_godot_scene(const ExportAsGodotSceneEvent& event)
         .project_tileset_dir = event.tileset_dir,
         .ellipse_polygon_point_count = event.polygon_points,
     };
-    io::emit_map_as_godot_scene(*document, options);
+    io::emit_map_as_godot_scene(*map_document, options);
   }
 }
 
@@ -189,9 +189,9 @@ void on_inspect_map(const InspectMapEvent&)
 {
   spdlog::trace("InspectMapEvent");
 
-  if (auto* document = get_model().active_map_document()) {
-    const auto& map = document->get_map();
-    document->get_contexts().select(map.get_uuid());
+  if (auto* map_document = get_model().active_map_document()) {
+    const auto& map = map_document->get_map();
+    map_document->get_contexts().select(map.get_uuid());
   }
 }
 
@@ -200,8 +200,8 @@ void on_set_tile_format_encoding(SetTileFormatEncodingEvent event)
   spdlog::trace("SetTileFormatEncodingEvent(encoding: {})",
                 magic_enum::enum_name(event.encoding));
 
-  if (auto* document = get_model().active_map_document()) {
-    document->set_tile_format_encoding(event.encoding);
+  if (auto* map_document = get_model().active_map_document()) {
+    map_document->set_tile_format_encoding(event.encoding);
   }
 }
 
@@ -210,8 +210,8 @@ void on_set_tile_format_compression(SetTileFormatCompressionEvent event)
   spdlog::trace("SetTileFormatCompressionEvent(compression: {})",
                 magic_enum::enum_name(event.compression));
 
-  if (auto* document = get_model().active_map_document()) {
-    document->set_tile_format_compression(event.compression);
+  if (auto* map_document = get_model().active_map_document()) {
+    map_document->set_tile_format_compression(event.compression);
   }
 }
 
@@ -219,8 +219,8 @@ void on_set_zlib_compression_level(SetZlibCompressionLevelEvent event)
 {
   spdlog::trace("SetZlibCompressionLevelEvent(level: {})", event.level);
 
-  if (auto* document = get_model().active_map_document()) {
-    document->set_zlib_compression_level(event.level);
+  if (auto* map_document = get_model().active_map_document()) {
+    map_document->set_zlib_compression_level(event.level);
   }
 }
 
@@ -228,8 +228,8 @@ void on_set_zstd_compression_level(SetZstdCompressionLevelEvent event)
 {
   spdlog::trace("SetZstdCompressionLevelEvent(level: {})", event.level);
 
-  if (auto* document = get_model().active_map_document()) {
-    document->set_zstd_compression_level(event.level);
+  if (auto* map_document = get_model().active_map_document()) {
+    map_document->set_zstd_compression_level(event.level);
   }
 }
 

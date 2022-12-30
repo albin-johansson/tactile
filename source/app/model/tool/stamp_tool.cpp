@@ -188,8 +188,8 @@ void StampTool::update_sequence_random(TileLayer& layer,
 void StampTool::maybe_emit_event(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (!mPrevious.empty() && !mCurrent.empty()) {
-    const auto& document = model.require_active_map_document();
-    const auto& map = document.get_map();
+    const auto& map_document = model.require_active_map_document();
+    const auto& map = map_document.get_map();
     const auto layer_id = map.active_layer_id().value();
 
     dispatcher.enqueue<StampSequenceEvent>(layer_id,
@@ -205,8 +205,8 @@ void StampTool::maybe_emit_event(const DocumentModel& model, entt::dispatcher& d
 
 auto StampTool::is_usable(const DocumentModel& model) const -> bool
 {
-  const auto& document = model.require_active_map_document();
-  const auto& map = document.get_map();
+  const auto& map_document = model.require_active_map_document();
+  const auto& map = map_document.get_map();
   const auto& tilesets = map.tileset_bundle();
 
   if (const auto tileset_id = tilesets.get_active_tileset_id()) {

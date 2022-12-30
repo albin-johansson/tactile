@@ -40,8 +40,9 @@ void on_select_object(const SelectObjectEvent& event)
                 event.layer_id,
                 event.object_id);
 
-  if (auto* document = get_model().active_map_document()) {
-    auto& layer = document->get_map().invisible_root().get_object_layer(event.layer_id);
+  if (auto* map_document = get_model().active_map_document()) {
+    auto& root = map_document->get_map().invisible_root();
+    auto& layer = root.get_object_layer(event.layer_id);
     layer.select_object(event.object_id);
   }
 }
@@ -50,8 +51,8 @@ void on_remove_object(const RemoveObjectEvent& event)
 {
   spdlog::trace("RemoveObjectEvent(object_id: {})", event.object_id);
 
-  if (auto* document = get_model().active_map_document()) {
-    document->remove_object(event.object_id);
+  if (auto* map_document = get_model().active_map_document()) {
+    map_document->remove_object(event.object_id);
   }
 }
 
@@ -62,29 +63,29 @@ void on_move_object(const MoveObjectEvent& event)
                 event.previous,
                 event.updated);
 
-  if (auto* map = get_model().active_map_document()) {
-    map->move_object(event.object_id, event.previous, event.updated);
+  if (auto* map_document = get_model().active_map_document()) {
+    map_document->move_object(event.object_id, event.previous, event.updated);
   }
 }
 
 void on_set_object_name(const SetObjectNameEvent& event)
 {
-  if (auto* map = get_model().active_map_document()) {
-    map->set_object_name(event.object_id, event.name);
+  if (auto* map_document = get_model().active_map_document()) {
+    map_document->set_object_name(event.object_id, event.name);
   }
 }
 
 void on_set_object_tag(const SetObjectTagEvent& event)
 {
-  if (auto* document = get_model().active_map_document()) {
-    document->set_object_tag(event.object_id, event.tag);
+  if (auto* map_document = get_model().active_map_document()) {
+    map_document->set_object_tag(event.object_id, event.tag);
   }
 }
 
 void on_set_object_visible(const SetObjectVisibleEvent& event)
 {
-  if (auto* document = get_model().active_map_document()) {
-    document->set_object_visible(event.object_id, event.visible);
+  if (auto* map_document = get_model().active_map_document()) {
+    map_document->set_object_visible(event.object_id, event.visible);
   }
 }
 

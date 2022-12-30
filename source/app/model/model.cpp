@@ -207,12 +207,12 @@ auto DocumentModel::get_document(const UUID& id) const -> const Document&
   return mImpl->documents().get_document(id);
 }
 
-auto DocumentModel::get_map(const UUID& id) const -> const MapDocument&
+auto DocumentModel::get_map_document(const UUID& id) const -> const MapDocument&
 {
   return mImpl->documents().get_map_document(id);
 }
 
-auto DocumentModel::get_tileset(const UUID& id) const -> const TilesetDocument&
+auto DocumentModel::get_tileset_document(const UUID& id) const -> const TilesetDocument&
 {
   return mImpl->documents().get_tileset_document(id);
 }

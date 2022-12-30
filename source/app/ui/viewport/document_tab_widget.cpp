@@ -59,10 +59,10 @@ void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatch
       if (const TabItem item {name_with_icon.data(), &opened, flags}; item.is_open()) {
         if (is_active) {
           if (model.is_map(document_id)) {
-            show_map_viewport(model, model.get_map(document_id), dispatcher);
+            show_map_viewport(model, model.get_map_document(document_id), dispatcher);
           }
           if (model.is_tileset(document_id)) {
-            show_tileset_viewport(model.get_tileset(document_id), dispatcher);
+            show_tileset_viewport(model.get_tileset_document(document_id), dispatcher);
           }
         }
       }

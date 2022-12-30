@@ -122,7 +122,7 @@ auto RemoveRowShortcut::is_enabled(const DocumentModel& model) const -> bool
   if (model.has_active_document()) {
     const auto id = model.get_active_document_id().value();
     if (model.is_map(id)) {
-      return model.get_map(id).get_map().row_count() > 1;
+      return model.get_map_document(id).get_map().row_count() > 1;
     }
   }
 
@@ -146,7 +146,7 @@ auto RemoveColumnShortcut::is_enabled(const DocumentModel& model) const -> bool
   if (model.has_active_document()) {
     const auto id = model.get_active_document_id().value();
     if (model.is_map(id)) {
-      return model.get_map(id).get_map().column_count() > 1;
+      return model.get_map_document(id).get_map().column_count() > 1;
     }
   }
 
@@ -187,8 +187,8 @@ auto EnableBucketShortcut::is_enabled(const DocumentModel& model) const -> bool
   if (ui::is_editor_focused() && model.has_active_document()) {
     const auto id = model.get_active_document_id().value();
     if (model.is_map(id)) {
-      const auto& map = model.get_map(id);
-      return map.get_tools().is_available(model, ToolType::Bucket);
+      const auto& map_document = model.get_map_document(id);
+      return map_document.get_tools().is_available(model, ToolType::Bucket);
     }
   }
 
@@ -212,8 +212,8 @@ auto EnableEraserShortcut::is_enabled(const DocumentModel& model) const -> bool
   if (ui::is_editor_focused() && model.has_active_document()) {
     const auto id = model.get_active_document_id().value();
     if (model.is_map(id)) {
-      const auto& map = model.get_map(id);
-      return map.get_tools().is_available(model, ToolType::Eraser);
+      const auto& map_document = model.get_map_document(id);
+      return map_document.get_tools().is_available(model, ToolType::Eraser);
     }
   }
 
@@ -237,8 +237,8 @@ auto EnableStampShortcut::is_enabled(const DocumentModel& model) const -> bool
   if (ui::is_editor_focused() && model.has_active_document()) {
     const auto id = model.get_active_document_id().value();
     if (model.is_map(id)) {
-      const auto& map = model.get_map(id);
-      return map.get_tools().is_available(model, ToolType::Stamp);
+      const auto& map_document = model.get_map_document(id);
+      return map_document.get_tools().is_available(model, ToolType::Stamp);
     }
   }
 
@@ -262,8 +262,8 @@ auto EnableObjectSelectionShortcut::is_enabled(const DocumentModel& model) const
   if (ui::is_editor_focused() && model.has_active_document()) {
     const auto id = model.get_active_document_id().value();
     if (model.is_map(id)) {
-      const auto& map = model.get_map(id);
-      return map.get_tools().is_available(model, ToolType::ObjectSelection);
+      const auto& map_document = model.get_map_document(id);
+      return map_document.get_tools().is_available(model, ToolType::ObjectSelection);
     }
   }
 
@@ -287,8 +287,8 @@ auto EnableRectangleToolShortcut::is_enabled(const DocumentModel& model) const -
   if (ui::is_editor_focused() && model.has_active_document()) {
     const auto id = model.get_active_document_id().value();
     if (model.is_map(id)) {
-      const auto& map = model.get_map(id);
-      return map.get_tools().is_available(model, ToolType::Rectangle);
+      const auto& map_document = model.get_map_document(id);
+      return map_document.get_tools().is_available(model, ToolType::Rectangle);
     }
   }
 
@@ -312,8 +312,8 @@ auto EnableEllipseToolShortcut::is_enabled(const DocumentModel& model) const -> 
   if (ui::is_editor_focused() && model.has_active_document()) {
     const auto id = model.get_active_document_id().value();
     if (model.is_map(id)) {
-      const auto& map = model.get_map(id);
-      return map.get_tools().is_available(model, ToolType::Ellipse);
+      const auto& map_document = model.get_map_document(id);
+      return map_document.get_tools().is_available(model, ToolType::Ellipse);
     }
   }
 
@@ -337,8 +337,8 @@ auto EnablePointToolShortcut::is_enabled(const DocumentModel& model) const -> bo
   if (ui::is_editor_focused() && model.has_active_document()) {
     const auto id = model.get_active_document_id().value();
     if (model.is_map(id)) {
-      const auto& map = model.get_map(id);
-      return map.get_tools().is_available(model, ToolType::Point);
+      const auto& map_document = model.get_map_document(id);
+      return map_document.get_tools().is_available(model, ToolType::Point);
     }
   }
 

@@ -91,7 +91,8 @@ void show_extra_toolbar(std::invocable auto callable)
   const auto& style = ImGui::GetStyle();
   prepare_window_position({toolbar_width + style.ItemInnerSpacing.x, 0});
 
-  if (Window extra {"##ToolbarWindowExtra", toolbar_window_flags}; extra.is_open()) {
+  if (const Window extra {"##ToolbarWindowExtra", toolbar_window_flags};
+      extra.is_open()) {
     // Prevent other mouse events in the viewport by treating both toolbars as one
     if (!toolbar_hovered) {
       toolbar_hovered = ImGui::IsWindowHovered();
@@ -109,19 +110,20 @@ void update_map_viewport_toolbar(const DocumentModel& model, entt::dispatcher& d
   prepare_window_position();
   ImGui::SetNextWindowBgAlpha(0.75f);
 
-  StyleVar padding {ImGuiStyleVar_WindowPadding, {6, 6}};
+  const StyleVar padding {ImGuiStyleVar_WindowPadding, {6, 6}};
 
   const auto& lang = get_current_language();
-  const auto& document = model.get_map(model.get_active_document_id().value());
-  const auto& tools = document.get_tools();
+  const auto& map_document =
+      model.get_map_document(model.get_active_document_id().value());
+  const auto& tools = map_document.get_tools();
 
-  if (Window window {"##ToolbarWindow", toolbar_window_flags}; window.is_open()) {
+  if (const Window window {"##ToolbarWindow", toolbar_window_flags}; window.is_open()) {
     toolbar_visible = true;
     toolbar_hovered = ImGui::IsWindowHovered();
     toolbar_focused = window.has_focus();
     toolbar_width = ImGui::GetWindowSize().x;
 
-    const auto& commands = document.get_history();
+    const auto& commands = map_document.get_history();
 
     if (ui_icon_button(TAC_ICON_UNDO, lang.misc.undo.c_str(), commands.can_undo())) {
       dispatcher.enqueue<UndoEvent>();
@@ -196,14 +198,14 @@ void update_map_viewport_toolbar(const DocumentModel& model, entt::dispatcher& d
 
   if (toolbar_visible && tools.is_enabled(ToolType::Stamp)) {
     show_extra_toolbar([&] {
-      const auto& tools = document.get_tools();
+      const auto& tools = map_document.get_tools();
       const auto selected = tools.is_stamp_random();
 
       if (selected) {
         ImGui::PushStyleColor(ImGuiCol_Button, toolbar_highlight_color);
       }
 
-      const auto& map = document.get_map();
+      const auto& map = map_document.get_map();
       if (ui_icon_button(TAC_ICON_STAMP_RANDOMIZER,
                          lang.tooltip.stamp_random_tile.c_str(),
                          map.is_stamp_randomizer_possible())) {
