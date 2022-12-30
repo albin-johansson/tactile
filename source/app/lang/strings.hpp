@@ -282,6 +282,7 @@ struct MiscStrings final {
   String tile_height;
   String tile_count;
   String tileset;
+  String tile;
   String row_count;
   String column_count;
   String first_tile_id;
@@ -312,6 +313,8 @@ struct MiscStrings final {
   String size;
 
   String tag;
+  String index;
+  String animated;
 
   String select_image;
   String create_tileset_instruction;

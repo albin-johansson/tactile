@@ -328,6 +328,7 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.row_count, "row-count");
   load(json, misc.column_count, "column-count");
   load(json, misc.tileset, "tileset");
+  load(json, misc.tile, "tile");
   load(json, misc.first_tile_id, "first-tile-id");
   load(json, misc.last_tile_id, "last-tile-id");
   load(json, misc.embedded, "embedded");
@@ -356,6 +357,8 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
   load(json, misc.size, "size");
 
   load(json, misc.tag, "tag");
+  load(json, misc.index, "index");
+  load(json, misc.animated, "animated");
 
   load(json, misc.select_image, "select-image");
   load(json, misc.create_tileset_instruction, "create-tileset-instruction");

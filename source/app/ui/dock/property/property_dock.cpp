@@ -29,6 +29,7 @@
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/map.hpp"
+#include "core/tile/tile.hpp"
 #include "core/tile/tileset.hpp"
 #include "core/type/maybe.hpp"
 #include "core/type/uuid.hpp"
@@ -146,7 +147,18 @@ void native_read_only_row(const char* label, const usize value)
   prepare_table_row(label);
 
   ImGui::TableNextColumn();
-  ImGui::Text("%llu", static_cast<ulonglong>(value)); /* Cast to avoid format warnings */
+  ImGui::Text("%llu", static_cast<ulonglong>(value));  // Cast to avoid format warnings
+}
+
+void native_read_only_row(const char* label, const bool value)
+{
+  prepare_table_row(label);
+
+  ImGui::TableNextColumn();
+
+  const Disable disable;
+  bool v = value;
+  ImGui::Checkbox("##Bool", &v);
 }
 
 void show_native_map_properties(const Map& map, entt::dispatcher& dispatcher)
@@ -170,7 +182,7 @@ void show_native_map_properties(const Map& map, entt::dispatcher& dispatcher)
   const auto* encoding = format.encoding() == TileEncoding::Plain
                              ? lang.misc.plain_encoding.c_str()
                              : "Base64";
-  if (Combo combo {"##TileEncoding", encoding}; combo.is_open()) {
+  if (const Combo combo {"##TileEncoding", encoding}; combo.is_open()) {
     if (Selectable::Property(lang.misc.plain_encoding.c_str())) {
       dispatcher.enqueue<SetTileFormatEncodingEvent>(TileEncoding::Plain);
     }
@@ -184,7 +196,7 @@ void show_native_map_properties(const Map& map, entt::dispatcher& dispatcher)
   ImGui::TableNextColumn();
 
   {
-    Disable disable_if_cannot_compress {!format.supports_any_compression()};
+    const Disable disable_if_cannot_compress {!format.supports_any_compression()};
 
     auto compression = lang.misc.none;
     if (format.compression() == TileCompression::Zlib) {
@@ -194,7 +206,7 @@ void show_native_map_properties(const Map& map, entt::dispatcher& dispatcher)
       compression = "Zstd";
     }
 
-    if (Combo combo {"##TileCompression", compression.c_str()}; combo.is_open()) {
+    if (const Combo combo {"##TileCompression", compression.c_str()}; combo.is_open()) {
       if (Selectable::Property(lang.misc.none.c_str())) {
         dispatcher.enqueue<SetTileFormatCompressionEvent>(TileCompression::None);
       }
@@ -251,6 +263,20 @@ void show_native_tileset_properties(const Tileset& tileset, entt::dispatcher& di
 
   native_read_only_row(lang.misc.tile_width.c_str(), tileset.tile_size().x);
   native_read_only_row(lang.misc.tile_height.c_str(), tileset.tile_size().y);
+}
+
+void ui_native_tile_properties(const Tile& tile, entt::dispatcher& dispatcher)
+{
+  const auto& lang = get_current_language();
+  native_read_only_row(lang.misc.type.c_str(), lang.misc.tile.c_str());
+
+  if (const auto updated_name = native_name_row(tile.get_ctx().name());
+      updated_name && !updated_name->empty()) {
+    dispatcher.enqueue<RenameTileEvent>(tile.get_index(), *updated_name);
+  }
+
+  native_read_only_row(lang.misc.index.c_str(), tile.get_index());
+  native_read_only_row(lang.misc.animated.c_str(), tile.is_animated());
 }
 
 void show_native_layer_properties(const Layer& layer, entt::dispatcher& dispatcher)
@@ -413,10 +439,7 @@ struct ContextPropertyVisitor final : ContextVisitor {
     show_native_tileset_properties(tileset, *dispatcher);
   }
 
-  void visit(const Tile&) override
-  {
-    // TODO
-  }
+  void visit(const Tile& tile) override { ui_native_tile_properties(tile, *dispatcher); }
 };
 
 void update_property_table(const DocumentModel& model, entt::dispatcher& dispatcher)
@@ -428,7 +451,7 @@ void update_property_table(const DocumentModel& model, entt::dispatcher& dispatc
   const auto& document = model.require_active_document();
   const auto& context = document.get_contexts().active_context();
 
-  if (Table table {"##PropertyTable", 2, flags}; table.is_open()) {
+  if (const Table table {"##PropertyTable", 2, flags}; table.is_open()) {
     ContextPropertyVisitor visitor {dispatcher};
     context.accept(visitor);
 
