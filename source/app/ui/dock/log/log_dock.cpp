@@ -153,8 +153,8 @@ void ui_logged_message_view(const Strings& lang, const usize message_count)
 
     while (clipper.Step()) {
       visit_logged_message_range(log_filter,
-                                 clipper.DisplayStart,
-                                 clipper.DisplayEnd,
+                                 static_cast<usize>(clipper.DisplayStart),
+                                 static_cast<usize>(clipper.DisplayEnd),
                                  [](const LogLevel level, const String& msg) {
                                    const auto& color = lookup_in(log_level_colors, level);
                                    ImGui::TextColored(color, "%s", msg.c_str());

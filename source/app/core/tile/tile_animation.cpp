@@ -54,7 +54,8 @@ auto TileAnimation::insert_frame(const usize index,
     return success;
   }
   else if (index < mFrames.size()) {
-    mFrames.insert(mFrames.begin() + index, Frame {tile_index, duration});
+    mFrames.insert(mFrames.begin() + static_cast<ssize>(index),
+                   Frame {tile_index, duration});
     return success;
   }
   else {
@@ -65,7 +66,7 @@ auto TileAnimation::insert_frame(const usize index,
 auto TileAnimation::remove_frame(const usize frame_index) -> Result
 {
   if (frame_index < mFrames.size()) {
-    const auto iter = mFrames.begin() + frame_index;
+    const auto iter = mFrames.begin() + static_cast<ssize>(frame_index);
     mFrames.erase(iter);
 
     if (frame_index <= mIndex) {
