@@ -21,7 +21,6 @@
 
 #include <imgui.h>
 
-#include "app/app_context.hpp"
 #include "editor/shortcut/mappings.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
@@ -31,9 +30,8 @@
 
 namespace tactile::ui {
 
-void update_map_menu()
+void update_map_menu(const DocumentModel& model)
 {
-  const auto& model = get_model();
   const auto& lang = get_current_language();
 
   const Disable disable {!model.is_map_active()};

@@ -21,14 +21,14 @@
 
 #include <imgui.h>
 
-#include "debug_menu.hpp"
-#include "edit_menu.hpp"
-#include "file_menu.hpp"
-#include "help_menu.hpp"
-#include "map_menu.hpp"
 #include "model/model.hpp"
-#include "tileset_menu.hpp"
-#include "view_menu.hpp"
+#include "ui/menu/debug_menu.hpp"
+#include "ui/menu/edit_menu.hpp"
+#include "ui/menu/file_menu.hpp"
+#include "ui/menu/help_menu.hpp"
+#include "ui/menu/map_menu.hpp"
+#include "ui/menu/tileset_menu.hpp"
+#include "ui/menu/view_menu.hpp"
 
 namespace tactile::ui {
 
@@ -37,9 +37,9 @@ void update_menu_bar(const DocumentModel& model, entt::dispatcher& dispatcher)
   if (ImGui::BeginMainMenuBar()) {
     update_file_menu(model, dispatcher);
     update_edit_menu();
-    update_view_menu();
-    update_map_menu();
-    update_tileset_menu();
+    update_view_menu(model);
+    update_map_menu(model);
+    update_tileset_menu(model);
     update_help_menu();
     update_debug_menu();
 

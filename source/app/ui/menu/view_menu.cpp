@@ -21,7 +21,6 @@
 
 #include <imgui.h>
 
-#include "app/app_context.hpp"
 #include "core/viewport.hpp"
 #include "editor/menu/menu.hpp"
 #include "editor/shortcut/mappings.hpp"
@@ -143,12 +142,11 @@ void update_quick_lang_menu(const Strings& lang)
 
 }  // namespace
 
-void update_view_menu()
+void update_view_menu(const DocumentModel& model)
 {
-  const auto& model = get_model();
   const auto& lang = get_current_language();
 
-  if (Menu menu {lang.menu.view.c_str()}; menu.is_open()) {
+  if (const Menu menu {lang.menu.view.c_str()}; menu.is_open()) {
     update_widgets_menu(model);
 
     ImGui::Separator();

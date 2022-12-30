@@ -94,10 +94,13 @@ void App::on_pre_update()
 
 void App::on_update()
 {
-  get_dispatcher().update();
-  get_model().update();
-  update_menus();
-  ui::update_widgets(get_model(), get_dispatcher());
+  auto& model = get_model();
+  auto& dispatcher = get_dispatcher();
+
+  dispatcher.update();
+  model.update();
+  update_menus(model);
+  ui::update_widgets(model, dispatcher);
 }
 
 void App::on_event(const cen::event_handler& handler)

@@ -23,15 +23,12 @@
 
 #include <fmt/format.h>
 
-#include "app/app_context.hpp"
 #include "core/debug/profile.hpp"
 #include "core/predef.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/type/chrono.hpp"
 #include "core/type/hash_map.hpp"
-#include "core/type/string.hpp"
 #include "core/util/assoc.hpp"
-#include "core/vocabulary.hpp"
 #include "io/proto/history.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
@@ -121,7 +118,9 @@ void update_tool_menu_items(const DocumentModel& model, const MapDocument* map_d
   update_tool(MenuAction::PointTool, ToolType::Point);
 }
 
-void update_edit_menu(const Document* document, const MapDocument* map_document)
+void update_edit_menu(const DocumentModel& model,
+                      const Document* document,
+                      const MapDocument* map_document)
 {
   const auto& lang = get_current_language();
 
@@ -140,7 +139,7 @@ void update_edit_menu(const Document* document, const MapDocument* map_document)
                                lang.action.redo,
                                can_redo ? document->get_history().get_redo_text() : "");
 
-  update_tool_menu_items(get_model(), map_document);
+  update_tool_menu_items(model, map_document);
 
   menu_set_enabled(MenuAction::ComponentEditor, map_document != nullptr);
 }
@@ -165,14 +164,13 @@ void init_menus()
   menu_translate(get_current_language());
 }
 
-void update_menus()
+void update_menus(const DocumentModel& model)
 {
-  const auto& model = get_model();
   const auto* document = model.active_document();
   const auto* map_document = dynamic_cast<const MapDocument*>(document);
   const auto* tileset_document = dynamic_cast<const TilesetDocument*>(document);
   update_file_menu(document);
-  update_edit_menu(document, map_document);
+  update_edit_menu(model, document, map_document);
   update_view_menu(document, map_document);
   update_map_menu(map_document);
   update_tileset_menu(tileset_document);

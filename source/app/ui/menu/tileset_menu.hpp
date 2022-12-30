@@ -19,8 +19,12 @@
 
 #pragma once
 
+#include "core/vocabulary.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
+
 namespace tactile::ui {
 
-void update_tileset_menu();
+void update_tileset_menu(const DocumentModel& model);
 
 }  // namespace tactile::ui
