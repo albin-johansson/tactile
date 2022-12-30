@@ -20,13 +20,14 @@
 #include "panic.hpp"
 
 #include <sstream>  // stringstream
+#include <utility>  // move
 
 #include "core/debug/stacktrace.hpp"
 
 namespace tactile {
 
-TactileError::TactileError(const char* what)
-    : mWhat {what ? what : "N/A"}
+TactileError::TactileError(String what)
+    : mWhat {std::move(what)}
 {
   // To avoid odd behavior whilst passing around stacktrace objects, we simply convert
   // the trace into a string, and log it later.
