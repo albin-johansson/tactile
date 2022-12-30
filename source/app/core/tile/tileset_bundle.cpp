@@ -109,17 +109,17 @@ auto TilesetBundle::find_tileset(const TileID tile) const -> Maybe<UUID>
   }
 }
 
-auto TilesetBundle::get_ref(const UUID& id) -> TilesetRef&
+auto TilesetBundle::get_tileset_ref(const UUID& id) -> TilesetRef&
 {
   return lookup_in(mRefs, id);
 }
 
-auto TilesetBundle::get_ref(const UUID& id) const -> const TilesetRef&
+auto TilesetBundle::get_tileset_ref(const UUID& id) const -> const TilesetRef&
 {
   return lookup_in(mRefs, id);
 }
 
-auto TilesetBundle::find_ref(const UUID& id) -> TilesetRef*
+auto TilesetBundle::find_tileset_ref(const UUID& id) -> TilesetRef*
 {
   if (const auto iter = mRefs.find(id); iter != mRefs.end()) {
     return &iter->second;
@@ -129,7 +129,7 @@ auto TilesetBundle::find_ref(const UUID& id) -> TilesetRef*
   }
 }
 
-auto TilesetBundle::find_ref(const UUID& id) const -> const TilesetRef*
+auto TilesetBundle::find_tileset_ref(const UUID& id) const -> const TilesetRef*
 {
   if (const auto iter = mRefs.find(id); iter != mRefs.end()) {
     return &iter->second;
@@ -142,7 +142,7 @@ auto TilesetBundle::find_ref(const UUID& id) const -> const TilesetRef*
 auto TilesetBundle::to_tile_index(const TileID id) const -> TileIndex
 {
   if (const auto tileset_id = find_tileset(id)) {
-    const auto& ref = get_ref(*tileset_id);
+    const auto& ref = get_tileset_ref(*tileset_id);
     return ref.to_index(id);
   }
   else {
@@ -160,7 +160,7 @@ auto TilesetBundle::empty() const -> bool
   return mRefs.empty();
 }
 
-auto TilesetBundle::active_tileset_id() const -> const Maybe<UUID>&
+auto TilesetBundle::get_active_tileset_id() const -> const Maybe<UUID>&
 {
   return mActiveTileset;
 }

@@ -310,8 +310,8 @@ auto Map::tile_size() const -> const Int2&
 auto Map::is_stamp_randomizer_possible() const -> bool
 {
   const auto& tilesets = tileset_bundle();
-  if (const auto tileset_id = tilesets.active_tileset_id()) {
-    const auto& ref = tilesets.get_ref(*tileset_id);
+  if (const auto tileset_id = tilesets.get_active_tileset_id()) {
+    const auto& ref = tilesets.get_tileset_ref(*tileset_id);
     return !ref.is_single_tile_selected();
   }
   else {

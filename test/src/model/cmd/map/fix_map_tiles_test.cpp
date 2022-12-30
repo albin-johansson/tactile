@@ -46,7 +46,7 @@ TEST(FixMapTiles, RedoUndo)
                       .result();
   auto map = document->get_map_ptr();
 
-  const auto& tileset_ref = map->tileset_bundle().get_ref(tileset_id);
+  const auto& tileset_ref = map->tileset_bundle().get_tileset_ref(tileset_id);
 
   auto& layer = map->invisible_root().get_tile_layer(layer_id);
   layer.set_tile({2, 4}, tileset_ref.get_first_tile() - 10);

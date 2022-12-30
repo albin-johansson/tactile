@@ -196,7 +196,7 @@ TEST(Map, FixTiles)
   auto map = document->get_map_ptr();
   auto& root = map->invisible_root();
 
-  const auto& tileset_ref = map->tileset_bundle().get_ref(tileset_id);
+  const auto& tileset_ref = map->tileset_bundle().get_tileset_ref(tileset_id);
   auto& layer = root.get_tile_layer(layer_id);
 
   // Valid

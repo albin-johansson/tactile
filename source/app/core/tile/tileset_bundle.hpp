@@ -55,11 +55,11 @@ class TilesetBundle final {
   /// \complexity O(1)
   [[nodiscard]] auto find_tileset(TileID tile) const -> Maybe<UUID>;
 
-  [[nodiscard]] auto get_ref(const UUID& id) -> TilesetRef&;
-  [[nodiscard]] auto get_ref(const UUID& id) const -> const TilesetRef&;
+  [[nodiscard]] auto get_tileset_ref(const UUID& id) -> TilesetRef&;
+  [[nodiscard]] auto get_tileset_ref(const UUID& id) const -> const TilesetRef&;
 
-  [[nodiscard]] auto find_ref(const UUID& id) -> TilesetRef*;
-  [[nodiscard]] auto find_ref(const UUID& id) const -> const TilesetRef*;
+  [[nodiscard]] auto find_tileset_ref(const UUID& id) -> TilesetRef*;
+  [[nodiscard]] auto find_tileset_ref(const UUID& id) const -> const TilesetRef*;
 
   [[nodiscard]] auto to_tile_index(TileID id) const -> TileIndex;
 
@@ -67,9 +67,9 @@ class TilesetBundle final {
 
   [[nodiscard]] auto empty() const -> bool;
 
-  [[nodiscard]] auto active_tileset_id() const -> const Maybe<UUID>&;
+  [[nodiscard]] auto get_active_tileset_id() const -> const Maybe<UUID>&;
 
-  [[nodiscard]] auto next_tile_id() const noexcept -> TileID { return mNextTileId; }
+  [[nodiscard]] auto get_next_tile_id() const noexcept -> TileID { return mNextTileId; }
 
   [[nodiscard]] auto begin() noexcept { return mRefs.begin(); }
   [[nodiscard]] auto begin() const noexcept { return mRefs.begin(); }

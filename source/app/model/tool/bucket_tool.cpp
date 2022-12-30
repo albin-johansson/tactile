@@ -45,8 +45,8 @@ void BucketTool::on_pressed(DocumentModel& model,
     const auto& map = document.get_map();
     const auto& tilesets = map.tileset_bundle();
 
-    const auto tileset_id = tilesets.active_tileset_id().value();
-    const auto& tileset_ref = tilesets.get_ref(tileset_id);
+    const auto tileset_id = tilesets.get_active_tileset_id().value();
+    const auto& tileset_ref = tilesets.get_tileset_ref(tileset_id);
     const auto& tileset = tileset_ref.get_tileset();
 
     const auto selected_pos = tileset_ref.get_selection()->begin;
@@ -64,10 +64,10 @@ auto BucketTool::is_available(const DocumentModel& model) const -> bool
   const auto& map = document.get_map();
 
   const auto& tilesets = map.tileset_bundle();
-  const auto tileset_id = tilesets.active_tileset_id();
+  const auto tileset_id = tilesets.get_active_tileset_id();
 
   return map.is_active_layer(LayerType::TileLayer) &&  //
-         tileset_id && tilesets.get_ref(*tileset_id).is_single_tile_selected();
+         tileset_id && tilesets.get_tileset_ref(*tileset_id).is_single_tile_selected();
 }
 
 }  // namespace tactile

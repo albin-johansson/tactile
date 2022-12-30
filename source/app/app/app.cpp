@@ -180,8 +180,8 @@ void App::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
       const auto& map = map_document.get_map();
       const auto& tilesets = map.tileset_bundle();
 
-      if (const auto tileset_id = tilesets.active_tileset_id()) {
-        const auto& tileset_ref = tilesets.get_ref(*tileset_id);
+      if (const auto tileset_id = tilesets.get_active_tileset_id()) {
+        const auto& tileset_ref = tilesets.get_tileset_ref(*tileset_id);
         ui::tileset_dock_mouse_wheel_event_handler(tileset_ref, event, get_dispatcher());
       }
     }

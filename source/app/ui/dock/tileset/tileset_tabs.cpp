@@ -95,7 +95,7 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
       const Scope scope {tileset_id};
 
       const auto& name = ref.get_tileset().get_ctx().name();
-      const auto is_active = tilesets.active_tileset_id() == tileset_id;
+      const auto is_active = tilesets.get_active_tileset_id() == tileset_id;
 
       if (const TabItem item {name.c_str(),
                               nullptr,

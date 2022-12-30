@@ -71,7 +71,7 @@ void RemoveTileset::redo()
   auto& map = map_document->get_map();
 
   auto& tilesets = map.tileset_bundle();
-  const auto& tileset_ref = tilesets.get_ref(mTilesetId);
+  const auto& tileset_ref = tilesets.get_tileset_ref(mTilesetId);
   mFirstTile = tileset_ref.get_first_tile();
 
   if (tileset_ref.is_embedded()) {

@@ -61,8 +61,8 @@ void ToolPreviewRenderer::visit(const StampTool& tool)
     return;
   }
 
-  const auto tileset_id = tilesets.active_tileset_id().value();
-  const auto& tileset_ref = tilesets.get_ref(tileset_id);
+  const auto tileset_id = tilesets.get_active_tileset_id().value();
+  const auto& tileset_ref = tilesets.get_tileset_ref(tileset_id);
 
   if (!mMouseInfo.is_within_contents || !tileset_ref.get_selection()) {
     return;

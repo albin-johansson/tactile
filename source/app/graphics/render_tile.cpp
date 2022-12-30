@@ -38,7 +38,7 @@ void render_tile(Graphics& graphics,
   const auto& tilesets = map.tileset_bundle();
 
   if (const auto tileset_id = tilesets.find_tileset(tile_id)) {
-    const auto& tileset_ref = tilesets.get_ref(*tileset_id);
+    const auto& tileset_ref = tilesets.get_tileset_ref(*tileset_id);
     const auto& tileset = tileset_ref.get_tileset();
 
     const auto tile_index = tileset.appearance_of(tileset_ref.to_index(tile_id));

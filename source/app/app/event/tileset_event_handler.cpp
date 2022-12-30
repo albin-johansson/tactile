@@ -107,8 +107,8 @@ void on_set_tileset_selection(const SetTilesetSelectionEvent& event)
   if (auto* map_document = get_model().active_map_document()) {
     auto& tileset_bundle = map_document->get_map().tileset_bundle();
 
-    const auto tileset_id = tileset_bundle.active_tileset_id().value();
-    auto& tileset_ref = tileset_bundle.get_ref(tileset_id);
+    const auto tileset_id = tileset_bundle.get_active_tileset_id().value();
+    auto& tileset_ref = tileset_bundle.get_tileset_ref(tileset_id);
 
     tileset_ref.set_selection(event.selection);
   }
