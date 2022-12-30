@@ -19,8 +19,10 @@
 
 #pragma once
 
+#include <entt/signal/fwd.hpp>
+
 namespace tactile::ui {
 
-void update_help_menu();
+void update_help_menu(entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

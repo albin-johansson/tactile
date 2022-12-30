@@ -19,6 +19,7 @@
 
 #include "help_menu.hpp"
 
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "lang/language.hpp"
@@ -28,19 +29,19 @@
 
 namespace tactile::ui {
 
-void update_help_menu()
+void update_help_menu(entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
-  if (Menu menu {lang.menu.help.c_str()}; menu.is_open()) {
-    ui_menu_item(MenuAction::AboutTactile);
-    ui_menu_item(MenuAction::AboutDearImGui);
+  if (const Menu menu {lang.menu.help.c_str()}; menu.is_open()) {
+    ui_menu_item(dispatcher, MenuAction::AboutTactile);
+    ui_menu_item(dispatcher, MenuAction::AboutDearImGui);
 
     ImGui::Separator();
-    ui_menu_item(MenuAction::ReportIssue);
+    ui_menu_item(dispatcher, MenuAction::ReportIssue);
 
     ImGui::Separator();
-    ui_menu_item(MenuAction::Credits);
+    ui_menu_item(dispatcher, MenuAction::Credits);
   }
 }
 

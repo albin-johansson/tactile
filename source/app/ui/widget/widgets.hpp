@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <entt/signal/fwd.hpp>
+
 #include "editor/menu/menu.hpp"
 
 namespace tactile::ui {
@@ -56,6 +58,8 @@ void ui_centered_label(const char* text);
 /// Displays a menu item for a specific action.
 /// The menu item label and state is automatically determined from the menu action.
 /// The shortcut parameter is the shortcut hint displayed next to the item.
-void ui_menu_item(MenuAction action, const char* shortcut = nullptr);
+void ui_menu_item(entt::dispatcher& dispatcher,
+                  MenuAction action,
+                  const char* shortcut = nullptr);
 
 }  // namespace tactile::ui

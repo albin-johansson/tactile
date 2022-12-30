@@ -27,21 +27,17 @@
 #include "io/proto/history.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/cmd/command_stack.hpp"
 #include "model/event/map_events.hpp"
-#include "model/model.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
 namespace {
 
-void update_recent_files_menu(entt::dispatcher& dispatcher)
+void update_recent_files_menu(const Strings& lang, entt::dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
-
-  if (Menu menu {lang.menu.recent_files.c_str()}; menu.is_open()) {
-    ui_menu_item(MenuAction::ReopenLastClosedFile);
+  if (const Menu menu {lang.menu.recent_files.c_str()}; menu.is_open()) {
+    ui_menu_item(dispatcher, MenuAction::ReopenLastClosedFile);
 
     const auto& history = io::file_history();
     if (!history.empty()) {
@@ -57,34 +53,34 @@ void update_recent_files_menu(entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    ui_menu_item(MenuAction::ClearFileHistory);
+    ui_menu_item(dispatcher, MenuAction::ClearFileHistory);
   }
 }
 
 }  // namespace
 
-void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_file_menu(entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
-  if (Menu menu {lang.menu.file.c_str()}; menu.is_open()) {
-    ui_menu_item(MenuAction::NewMap, TACTILE_PRIMARY_MOD "+N");
-    ui_menu_item(MenuAction::OpenMap, TACTILE_PRIMARY_MOD "+O");
+  if (const Menu menu {lang.menu.file.c_str()}; menu.is_open()) {
+    ui_menu_item(dispatcher, MenuAction::NewMap, TACTILE_PRIMARY_MOD "+N");
+    ui_menu_item(dispatcher, MenuAction::OpenMap, TACTILE_PRIMARY_MOD "+O");
 
-    update_recent_files_menu(dispatcher);
-
-    ImGui::Separator();
-
-    ui_menu_item(MenuAction::Save, TACTILE_PRIMARY_MOD "+S");
-    ui_menu_item(MenuAction::SaveAs, TACTILE_PRIMARY_MOD "+Shift+S");
+    update_recent_files_menu(lang, dispatcher);
 
     ImGui::Separator();
 
-    ui_menu_item(MenuAction::CloseDocument);
+    ui_menu_item(dispatcher, MenuAction::Save, TACTILE_PRIMARY_MOD "+S");
+    ui_menu_item(dispatcher, MenuAction::SaveAs, TACTILE_PRIMARY_MOD "+Shift+S");
 
     ImGui::Separator();
 
-    ui_menu_item(MenuAction::Quit);
+    ui_menu_item(dispatcher, MenuAction::CloseDocument);
+
+    ImGui::Separator();
+
+    ui_menu_item(dispatcher, MenuAction::Quit);
   }
 }
 

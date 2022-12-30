@@ -27,13 +27,13 @@
 
 namespace tactile::ui {
 
-void update_tileset_menu(const DocumentModel& model)
+void update_tileset_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
   const Disable disable {!model.is_tileset_active()};
   if (const Menu menu {lang.menu.tileset.c_str()}; menu.is_open()) {
-    ui_menu_item(MenuAction::InspectTileset);
+    ui_menu_item(dispatcher, MenuAction::InspectTileset);
   }
 }
 

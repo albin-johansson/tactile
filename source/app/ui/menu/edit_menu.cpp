@@ -29,31 +29,31 @@
 
 namespace tactile::ui {
 
-void update_edit_menu()
+void update_edit_menu(entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
-  if (Menu menu {lang.menu.edit.c_str()}; menu.is_open()) {
-    ui_menu_item(MenuAction::Undo, TACTILE_PRIMARY_MOD "+Z");
-    ui_menu_item(MenuAction::Redo, TACTILE_PRIMARY_MOD "+Y");
+  if (const Menu menu {lang.menu.edit.c_str()}; menu.is_open()) {
+    ui_menu_item(dispatcher, MenuAction::Undo, TACTILE_PRIMARY_MOD "+Z");
+    ui_menu_item(dispatcher, MenuAction::Redo, TACTILE_PRIMARY_MOD "+Y");
 
     ImGui::Separator();
 
-    ui_menu_item(MenuAction::StampTool, "S");
-    ui_menu_item(MenuAction::BucketTool, "B");
-    ui_menu_item(MenuAction::EraserTool, "E");
-    ui_menu_item(MenuAction::ObjectSelectionTool, "Q");
-    ui_menu_item(MenuAction::RectangleTool, "R");
-    ui_menu_item(MenuAction::EllipseTool, "T");
-    ui_menu_item(MenuAction::PointTool, "Y");
+    ui_menu_item(dispatcher, MenuAction::StampTool, "S");
+    ui_menu_item(dispatcher, MenuAction::BucketTool, "B");
+    ui_menu_item(dispatcher, MenuAction::EraserTool, "E");
+    ui_menu_item(dispatcher, MenuAction::ObjectSelectionTool, "Q");
+    ui_menu_item(dispatcher, MenuAction::RectangleTool, "R");
+    ui_menu_item(dispatcher, MenuAction::EllipseTool, "T");
+    ui_menu_item(dispatcher, MenuAction::PointTool, "Y");
 
     ImGui::Separator();
 
-    ui_menu_item(MenuAction::ComponentEditor, TACTILE_PRIMARY_MOD "+Shift+C");
+    ui_menu_item(dispatcher, MenuAction::ComponentEditor, TACTILE_PRIMARY_MOD "+Shift+C");
 
     ImGui::Separator();
 
-    ui_menu_item(MenuAction::OpenSettings, TACTILE_PRIMARY_MOD "+,");
+    ui_menu_item(dispatcher, MenuAction::OpenSettings, TACTILE_PRIMARY_MOD "+,");
   }
 }
 

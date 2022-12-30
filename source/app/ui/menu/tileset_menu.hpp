@@ -19,12 +19,14 @@
 
 #pragma once
 
+#include <entt/signal/fwd.hpp>
+
 #include "core/vocabulary.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 
 namespace tactile::ui {
 
-void update_tileset_menu(const DocumentModel& model);
+void update_tileset_menu(const DocumentModel& model, entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

@@ -23,7 +23,6 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "app/app_context.hpp"
 #include "core/debug/assert.hpp"
 #include "core/type/chrono.hpp"
 #include "core/type/hash_map.hpp"
@@ -126,11 +125,13 @@ void ui_centered_label(const char* text)
   ImGui::TextUnformatted(text);
 }
 
-void ui_menu_item(const MenuAction action, const char* shortcut)
+void ui_menu_item(entt::dispatcher& dispatcher,
+                  const MenuAction action,
+                  const char* shortcut)
 {
   const auto& item = get_menu_item(action);
   if (ImGui::MenuItem(item.text.c_str(), shortcut, item.selected, item.enabled)) {
-    get_dispatcher().enqueue<MenuItemEvent>(action);
+    dispatcher.enqueue<MenuItemEvent>(action);
   }
 }
 

@@ -19,14 +19,12 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
+#include <entt/signal/fwd.hpp>
 
-namespace tactile {
-class DocumentModel;
-}  // namespace tactile
+#include "core/vocabulary.hpp"
 
 namespace tactile::ui {
 
-void update_file_menu(const DocumentModel& model, entt::dispatcher& dispatcher);
+void update_file_menu(entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

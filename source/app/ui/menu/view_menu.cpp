@@ -19,6 +19,7 @@
 
 #include "view_menu.hpp"
 
+#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "core/viewport.hpp"
@@ -118,7 +119,7 @@ void update_quick_theme_menu(const Strings& lang)
 
 void update_quick_lang_menu(const Strings& lang)
 {
-  if (Menu lang_menu {lang.action.quick_language.c_str()}; lang_menu.is_open()) {
+  if (const Menu lang_menu {lang.action.quick_language.c_str()}; lang_menu.is_open()) {
     auto& prefs = io::get_preferences();
     if (ImGui::MenuItem("English (US)")) {
       prefs.language = Lang::EN;
@@ -142,7 +143,7 @@ void update_quick_lang_menu(const Strings& lang)
 
 }  // namespace
 
-void update_view_menu(const DocumentModel& model)
+void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
@@ -156,32 +157,36 @@ void update_view_menu(const DocumentModel& model)
     update_quick_lang_menu(lang);
 
     ImGui::Separator();
-    ui_menu_item(MenuAction::CenterViewport, "Shift+Space");
+    ui_menu_item(dispatcher, MenuAction::CenterViewport, "Shift+Space");
 
     ImGui::Separator();
-    ui_menu_item(MenuAction::ToggleGrid, TACTILE_PRIMARY_MOD "+G");
+    ui_menu_item(dispatcher, MenuAction::ToggleGrid, TACTILE_PRIMARY_MOD "+G");
 
     ImGui::Separator();
-    ui_menu_item(MenuAction::IncreaseZoom, TACTILE_PRIMARY_MOD "+Plus");
-    ui_menu_item(MenuAction::DecreaseZoom, TACTILE_PRIMARY_MOD "+Minus");
-    ui_menu_item(MenuAction::ResetZoom);
+    ui_menu_item(dispatcher, MenuAction::IncreaseZoom, TACTILE_PRIMARY_MOD "+Plus");
+    ui_menu_item(dispatcher, MenuAction::DecreaseZoom, TACTILE_PRIMARY_MOD "+Minus");
+    ui_menu_item(dispatcher, MenuAction::ResetZoom);
 
     ImGui::Separator();
-    ui_menu_item(MenuAction::IncreaseFontSize, TACTILE_PRIMARY_MOD "+Shift+Plus");
-    ui_menu_item(MenuAction::DecreaseFontSize, TACTILE_PRIMARY_MOD "+Shift+Minus");
-    ui_menu_item(MenuAction::ResetFontSize);
+    ui_menu_item(dispatcher,
+                 MenuAction::IncreaseFontSize,
+                 TACTILE_PRIMARY_MOD "+Shift+Plus");
+    ui_menu_item(dispatcher,
+                 MenuAction::DecreaseFontSize,
+                 TACTILE_PRIMARY_MOD "+Shift+Minus");
+    ui_menu_item(dispatcher, MenuAction::ResetFontSize);
 
     ImGui::Separator();
-    ui_menu_item(MenuAction::PanUp, TACTILE_PRIMARY_MOD "+Shift+Up");
-    ui_menu_item(MenuAction::PanDown, TACTILE_PRIMARY_MOD "+Shift+Down");
-    ui_menu_item(MenuAction::PanRight, TACTILE_PRIMARY_MOD "+Shift+Right");
-    ui_menu_item(MenuAction::PanLeft, TACTILE_PRIMARY_MOD "+Shift+Left");
+    ui_menu_item(dispatcher, MenuAction::PanUp, TACTILE_PRIMARY_MOD "+Shift+Up");
+    ui_menu_item(dispatcher, MenuAction::PanDown, TACTILE_PRIMARY_MOD "+Shift+Down");
+    ui_menu_item(dispatcher, MenuAction::PanRight, TACTILE_PRIMARY_MOD "+Shift+Right");
+    ui_menu_item(dispatcher, MenuAction::PanLeft, TACTILE_PRIMARY_MOD "+Shift+Left");
 
     ImGui::Separator();
-    ui_menu_item(MenuAction::HighlightLayer, "H");
+    ui_menu_item(dispatcher, MenuAction::HighlightLayer, "H");
 
     ImGui::Separator();
-    ui_menu_item(MenuAction::ToggleUi, "Tab");
+    ui_menu_item(dispatcher, MenuAction::ToggleUi, "Tab");
   }
 }
 
