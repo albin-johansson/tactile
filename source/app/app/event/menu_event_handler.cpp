@@ -23,7 +23,6 @@
 #include "app/app_context.hpp"
 #include "app/event/event_handlers.hpp"
 #include "core/util/filesystem.hpp"
-#include "editor/menu/menu.hpp"
 #include "io/proto/history.hpp"
 #include "io/proto/preferences.hpp"
 #include "model/event/all.hpp"
@@ -33,6 +32,7 @@
 #include "ui/dialog/godot_export_dialog.hpp"
 #include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/comp/component_editor.hpp"
+#include "ui/menu/menu.hpp"
 #include "ui/ui.hpp"
 
 namespace tactile {

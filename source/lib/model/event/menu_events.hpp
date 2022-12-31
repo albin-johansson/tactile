@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "editor/menu/menu.hpp"
+#include "ui/menu/menu.hpp"
 
 namespace tactile {
 

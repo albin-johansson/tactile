@@ -21,7 +21,7 @@
 
 #include <entt/signal/fwd.hpp>
 
-#include "editor/menu/menu.hpp"
+#include "ui/menu/menu.hpp"
 
 namespace tactile::ui {
 

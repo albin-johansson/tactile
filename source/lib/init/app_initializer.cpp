@@ -29,11 +29,11 @@
 #include "core/debug/stacktrace.hpp"
 #include "core/type/path.hpp"
 #include "core/util/fmt.hpp"
-#include "editor/menu/menu.hpp"
 #include "io/directories.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "system/win32.hpp"
+#include "ui/menu/menu.hpp"
 
 namespace tactile {
 namespace {

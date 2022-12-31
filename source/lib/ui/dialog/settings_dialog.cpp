@@ -24,7 +24,6 @@
 #include <imgui_internal.h>
 
 #include "core/vocabulary.hpp"
-#include "editor/menu/menu.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
@@ -33,6 +32,7 @@
 #include "ui/dialog/dialog.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/fonts.hpp"
+#include "ui/menu/menu.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/colors.hpp"
 #include "ui/style/themes.hpp"
