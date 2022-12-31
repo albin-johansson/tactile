@@ -32,7 +32,10 @@ class TactileError : public std::exception {
  public:
   TACTILE_NOINLINE explicit TactileError(String what);
 
-  [[nodiscard]] auto what() const noexcept -> const char* override { return mWhat.c_str(); }
+  [[nodiscard]] auto what() const noexcept -> const char* override
+  {
+    return mWhat.c_str();
+  }
 
   [[nodiscard]] auto get_trace() const -> const String& { return mTrace; }
 
