@@ -20,14 +20,15 @@
 #include "filesystem.hpp"
 
 #include <algorithm>  // replace
+#include <concepts>   // same_as
 
 #include "common/util/env.hpp"
+#include "core/debug/assert.hpp"
 #include "core/predef.hpp"
 
 #if TACTILE_OS_WINDOWS
 
-#include <codecvt>  // codecvt_utf8
-#include <locale>   // wstring_convert
+#include <windows.h>
 
 #endif  // TACTILE_OS_WINDOWS
 
@@ -55,7 +56,7 @@ auto convert_to_forward_slashes(const Path& path) -> String
 auto has_home_prefix(const Path& path) -> bool
 {
   const auto& prefix = get_home_prefix();
-  OsStringView view {path.c_str()};
+  const OsStringView view {path.c_str()};
   return view.starts_with(prefix);
 }
 
@@ -81,13 +82,31 @@ auto to_os_string(const char* str) -> Maybe<OsString>
     return nothing;
   }
 
-  // Windows is the only platform that we support that uses wchar_t filesystem paths
 #if TACTILE_OS_WINDOWS
-  using convert_type = std::codecvt_utf8<wchar_t>;
-  std::wstring_convert<convert_type, wchar_t> converter;
-  return converter.from_bytes(str);
+  // Windows is the only platform that we support that uses wchar_t filesystem paths
+  static_assert(std::same_as<OsStrChar, wchar_t>);
+
+  // Figure out the required size of the converted string
+  const auto wide_char_count = MultiByteToWideChar(CP_UTF8, 0, str, -1, nullptr, 0);
+
+  // Create string of appropriate size
+  OsString wide_str;
+  wide_str.resize(wide_char_count);
+
+  // Finally convert the input string
+  if (MultiByteToWideChar(CP_UTF8, 0, str, -1, wide_str.data(), wide_char_count) != 0) {
+    // The conversion was successful, but the string features an additional
+    // null-terminator which we need to get rid of.
+    TACTILE_ASSERT(!wide_str.empty());
+    TACTILE_ASSERT(wide_str.back() == '\0');
+    wide_str.pop_back();
+    return wide_str;
+  }
+  else {
+    return nothing;
+  }
 #else
-  return str;
+  return OsString {str};
 #endif  // TACTILE_OS_WINDOWS
 }
 

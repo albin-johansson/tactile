@@ -52,10 +52,10 @@ TEST(Filesystem, ToCanonical)
 {
   const auto home = env_var(on_windows ? "USERPROFILE" : "HOME").value();
 
-  ASSERT_EQ("~", to_canonical(to_path(home)).value());
-  ASSERT_EQ("~/", to_canonical(to_path(home + '/')).value());
-  ASSERT_EQ("~/foo/", to_canonical(to_path(home + "/foo/")).value());
-  ASSERT_EQ("~/foo/bar.txt", to_canonical(to_path(home + "/foo/bar.txt")).value());
+  ASSERT_EQ("~", to_canonical(to_path(home)));
+  ASSERT_EQ("~/", to_canonical(to_path(home + '/')));
+  ASSERT_EQ("~/foo/", to_canonical(to_path(home + "/foo/")));
+  ASSERT_EQ("~/foo/bar.txt", to_canonical(to_path(home + "/foo/bar.txt")));
 
   ASSERT_FALSE(to_canonical("some/random/path").has_value());
   ASSERT_FALSE(to_canonical("file.txt").has_value());
@@ -65,12 +65,22 @@ TEST(Filesystem, ToOsString)
 {
   ASSERT_FALSE(to_os_string(nullptr).has_value());
 
-  const auto str = to_os_string("foo/bar.txt").value();
-
 #if TACTILE_OS_WINDOWS
-  ASSERT_EQ(L"foo/bar.txt", str);
+  ASSERT_EQ(L"", to_os_string(""));
+  ASSERT_EQ(L"1", to_os_string("1"));
+  ASSERT_EQ(L"foo", to_os_string("foo"));
+  ASSERT_EQ(L"bar.txt", to_os_string("bar.txt"));
+  ASSERT_EQ(L"foo/bar", to_os_string("foo/bar"));
+  ASSERT_EQ(L"foo/bar.txt", to_os_string("foo/bar.txt"));
+  ASSERT_EQ(L"\0", to_os_string("\0"));
 #else
-  ASSERT_EQ("foo/bar.txt", str);
+  ASSERT_EQ("", to_os_string(""));
+  ASSERT_EQ("1", to_os_string("1"));
+  ASSERT_EQ("foo", to_os_string("foo"));
+  ASSERT_EQ("bar.txt", to_os_string("bar.txt"));
+  ASSERT_EQ("foo/bar", to_os_string("foo/bar"));
+  ASSERT_EQ("foo/bar.txt", to_os_string("foo/bar.txt"));
+  ASSERT_EQ("\0", to_os_string("\0"));
 #endif  // TACTILE_OS_WINDOWS
 }
 
