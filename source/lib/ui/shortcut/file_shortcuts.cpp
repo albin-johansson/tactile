@@ -21,12 +21,12 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "editor/shortcut/mappings.hpp"
 #include "model/cmd/command_stack.hpp"
 #include "model/event/document_events.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/view_events.hpp"
 #include "model/model.hpp"
+#include "ui/shortcut/mappings.hpp"
 #include "ui/ui.hpp"
 
 namespace tactile {

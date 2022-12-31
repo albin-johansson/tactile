@@ -20,7 +20,7 @@
 #pragma once
 
 #include <centurion/fwd.hpp>
-#include <entt/fwd.hpp>
+#include <entt/signal/fwd.hpp>
 
 namespace tactile {
 

@@ -22,10 +22,10 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "editor/shortcut/mappings.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/model.hpp"
+#include "ui/shortcut/mappings.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 

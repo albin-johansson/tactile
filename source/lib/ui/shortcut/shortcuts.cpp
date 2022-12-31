@@ -24,9 +24,9 @@
 
 #include "core/type/ptr.hpp"
 #include "core/type/vec.hpp"
-#include "editor/shortcut/edit_shortcuts.hpp"
-#include "editor/shortcut/file_shortcuts.hpp"
-#include "editor/shortcut/view_shortcuts.hpp"
+#include "ui/shortcut/edit_shortcuts.hpp"
+#include "ui/shortcut/file_shortcuts.hpp"
+#include "ui/shortcut/view_shortcuts.hpp"
 
 namespace tactile {
 namespace {
