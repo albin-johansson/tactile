@@ -24,7 +24,7 @@
 #include <gtest/gtest.h>
 #include <spdlog/spdlog.h>
 
-#include "core/type/array.hpp"
+#include "common/type/array.hpp"
 
 namespace tactile::test {
 

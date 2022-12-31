@@ -19,11 +19,11 @@
 
 #pragma once
 
+#include "common/type/ptr.hpp"
+#include "common/type/string.hpp"
+#include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "core/component/component_index.hpp"
-#include "core/type/ptr.hpp"
-#include "core/type/string.hpp"
-#include "core/type/uuid.hpp"
 
 namespace tactile::test {
 

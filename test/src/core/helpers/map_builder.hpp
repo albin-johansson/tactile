@@ -19,11 +19,11 @@
 
 #pragma once
 
+#include "common/type/math.hpp"
+#include "common/type/maybe.hpp"
+#include "common/type/ptr.hpp"
 #include "core/layer/object.hpp"
 #include "core/map.hpp"
-#include "core/type/math.hpp"
-#include "core/type/maybe.hpp"
-#include "core/type/ptr.hpp"
 #include "core/vocabulary.hpp"
 #include "model/document/map_document.hpp"
 

@@ -21,8 +21,8 @@
 
 #include <gtest/gtest.h>
 
+#include "common/type/chrono.hpp"
 #include "core/debug/panic.hpp"
-#include "core/type/chrono.hpp"
 
 using namespace std::chrono_literals;
 

@@ -21,11 +21,11 @@
 
 #include <gtest/gtest.h>
 
+#include "common/type/hash_map.hpp"
+#include "common/type/string.hpp"
+#include "common/type/string_map.hpp"
+#include "common/type/tree_map.hpp"
 #include "core/attribute.hpp"
-#include "core/type/hash_map.hpp"
-#include "core/type/string.hpp"
-#include "core/type/string_map.hpp"
-#include "core/type/tree_map.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;

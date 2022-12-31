@@ -21,7 +21,7 @@
 
 #include <gtest/gtest.h>
 
-#include "core/type/array.hpp"
+#include "common/type/array.hpp"
 
 namespace tactile::test {
 
