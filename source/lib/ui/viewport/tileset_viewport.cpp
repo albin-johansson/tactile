@@ -19,6 +19,8 @@
 
 #include "tileset_viewport.hpp"
 
+#include <cmath>  // round
+
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -32,6 +34,7 @@
 #include "lang/strings.hpp"
 #include "model/document/tileset_document.hpp"
 #include "model/event/tileset_events.hpp"
+#include "model/event/viewport_events.hpp"
 #include "ui/conversions.hpp"
 #include "ui/viewport/document_viewport_offset_handler.hpp"
 #include "ui/viewport/viewport_cursor_info.hpp"
@@ -46,6 +49,7 @@ inline constexpr uint32 animation_frame_selection_color = IM_COL32(0xFF, 0x45, 0
 
 struct DockState final {
   UUID tileset_id {};
+  bool center_viewport                : 1 {false};
   bool animation_frame_selection_mode : 1 {false};
 };
 
@@ -83,6 +87,16 @@ void ui_highlight_animation_frame_selection_mode(const Strings& lang,
 
     render_shadowed_text(label, {label_x, label_y}, IM_COL32_WHITE, 2.0f);
   }
+}
+
+void center_viewport(const RenderInfo& render_info,
+                     const Viewport& viewport,
+                     entt::dispatcher& dispatcher)
+{
+  const auto raw_delta = ((render_info.canvas_size - render_info.contents_size) / 2.0f) -
+                         from_vec(viewport.get_offset());
+  const Float2 delta {std::round(raw_delta.x), std::round(raw_delta.y)};
+  dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
 }
 
 void ui_poll_mouse(const Tileset& tileset,
@@ -130,6 +144,12 @@ void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& di
   graphics.clear(to_u32(io::get_preferences().viewport_background));
 
   graphics.push_canvas_clip();
+
+  if (dock_state.center_viewport) {
+    center_viewport(render_info, viewport, dispatcher);
+    dock_state.center_viewport = false;
+  }
+
   render_tileset(graphics, document);
 
   if (Window::contains_mouse()) {
@@ -140,6 +160,11 @@ void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& di
   ui_highlight_animation_frame_selection_mode(lang, render_info);
 
   graphics.pop_clip();
+}
+
+void center_tileset_viewport()
+{
+  dock_state.center_viewport = true;
 }
 
 void enable_tile_animation_frame_selection_mode()

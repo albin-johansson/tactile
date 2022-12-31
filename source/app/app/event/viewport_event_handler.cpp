@@ -25,6 +25,7 @@
 #include "app/event/event_handlers.hpp"
 #include "common/type/math.hpp"
 #include "common/util/fmt.hpp"
+#include "core/debug/assert.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/viewport.hpp"
 #include "model/document/map_document.hpp"
@@ -32,6 +33,7 @@
 #include "model/model.hpp"
 #include "ui/conversions.hpp"
 #include "ui/viewport/map_viewport.hpp"
+#include "ui/viewport/tileset_viewport.hpp"
 
 namespace tactile {
 namespace {
@@ -118,7 +120,15 @@ void on_decrease_zoom(const DecreaseZoomEvent&)
 void on_center_viewport(const CenterViewportEvent&)
 {
   spdlog::trace("CenterViewportEvent");
-  ui::center_map_viewport();
+
+  TACTILE_ASSERT(get_model().is_map_active() || get_model().is_tileset_active());
+
+  if (get_model().is_map_active()) {
+    ui::center_map_viewport();
+  }
+  else {
+    ui::center_tileset_viewport();
+  }
 }
 
 void on_offset_document_viewport(const OffsetDocumentViewportEvent& event)
