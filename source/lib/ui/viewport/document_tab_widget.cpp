@@ -22,7 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/util/fmt.hpp"
+#include "common/util/fmt.hpp"
 #include "model/cmd/command_stack.hpp"
 #include "model/event/document_events.hpp"
 #include "model/model.hpp"

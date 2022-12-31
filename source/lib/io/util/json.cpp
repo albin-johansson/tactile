@@ -24,8 +24,8 @@
 
 #include <spdlog/spdlog.h>
 
+#include "common/util/filesystem.hpp"
 #include "core/debug/panic.hpp"
-#include "core/util/filesystem.hpp"
 #include "io/file.hpp"
 #include "io/proto/preferences.hpp"
 

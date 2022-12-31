@@ -23,12 +23,12 @@
 #include <iterator>   // distance
 #include <utility>    // move
 
+#include "common/type/maybe.hpp"
+#include "common/util/functional.hpp"
+#include "common/util/numeric.hpp"
 #include "core/debug/panic.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
-#include "common/type/maybe.hpp"
-#include "core/util/functional.hpp"
-#include "core/util/numeric.hpp"
 
 namespace tactile {
 

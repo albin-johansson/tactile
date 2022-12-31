@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/util/str.hpp"
+#include "common/util/str.hpp"
 
 #include <gtest/gtest.h>
 

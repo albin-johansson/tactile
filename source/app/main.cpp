@@ -26,8 +26,8 @@
 #include <spdlog/spdlog.h>
 
 #include "app/app.hpp"
+#include "common/util/fmt.hpp"
 #include "core/debug/panic.hpp"
-#include "core/util/fmt.hpp"
 #include "init/app_initializer.hpp"
 
 namespace {

@@ -22,13 +22,13 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "common/util/fmt.hpp"
 #include "component_view.hpp"
 #include "core/component/component_index.hpp"
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "core/context/context_manager.hpp"
 #include "core/debug/assert.hpp"
-#include "core/util/fmt.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

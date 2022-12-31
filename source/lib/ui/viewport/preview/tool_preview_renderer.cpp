@@ -19,11 +19,11 @@
 
 #include "tool_preview_renderer.hpp"
 
+#include "common/util/functional.hpp"
 #include "core/debug/assert.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/tile/tileset_bundle.hpp"
-#include "core/util/functional.hpp"
 #include "graphics/graphics.hpp"
 #include "graphics/render.hpp"
 #include "model/document/map_document.hpp"

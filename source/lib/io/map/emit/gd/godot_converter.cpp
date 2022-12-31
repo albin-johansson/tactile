@@ -26,12 +26,12 @@
 
 #include <fmt/format.h>
 
-#include "core/debug/assert.hpp"
-#include "core/tile/tile_pos.hpp"
 #include "common/type/string.hpp"
 #include "common/type/vec.hpp"
-#include "core/util/assoc.hpp"
-#include "core/util/functional.hpp"
+#include "common/util/assoc.hpp"
+#include "common/util/functional.hpp"
+#include "core/debug/assert.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 
 namespace tactile::io {

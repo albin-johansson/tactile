@@ -25,7 +25,7 @@
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
 #include "common/type/vec.hpp"
-#include "core/util/assoc.hpp"
+#include "common/util/assoc.hpp"
 #include "core/vocabulary.hpp"
 #include "io/map/emit/gd/godot_file.hpp"
 

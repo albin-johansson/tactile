@@ -23,7 +23,7 @@
 
 #include <fmt/format.h>
 
-#include "core/util/filesystem.hpp"
+#include "common/util/filesystem.hpp"
 
 namespace tactile::io {
 

@@ -24,10 +24,10 @@
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
-#include "core/attribute.hpp"
 #include "common/type/string.hpp"
-#include "core/util/filesystem.hpp"
-#include "core/util/fmt.hpp"
+#include "common/util/filesystem.hpp"
+#include "common/util/fmt.hpp"
+#include "core/attribute.hpp"
 #include "core/vocabulary.hpp"
 #include "io/compression.hpp"
 #include "io/file.hpp"

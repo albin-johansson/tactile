@@ -22,8 +22,8 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "core/util/filesystem.hpp"
-#include "core/util/functional.hpp"
+#include "common/util/filesystem.hpp"
+#include "common/util/functional.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/tiled_info.hpp"

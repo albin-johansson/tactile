@@ -21,11 +21,11 @@
 
 #include <utility>  // move
 
+#include "common/util/assoc.hpp"
 #include "core/debug/assert.hpp"
 #include "core/debug/panic.hpp"
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset_info.hpp"
-#include "core/util/assoc.hpp"
 #include "tile_matrix.hpp"
 
 namespace tactile {

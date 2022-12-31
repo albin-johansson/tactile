@@ -25,7 +25,7 @@
 
 #include "app/app_context.hpp"
 #include "app/event/event_handlers.hpp"
-#include "core/util/fmt.hpp"
+#include "common/util/fmt.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/model.hpp"

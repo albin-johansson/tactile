@@ -23,14 +23,14 @@
 
 #include <entt/signal/dispatcher.hpp>
 
+#include "common/type/math.hpp"
+#include "common/util/functional.hpp"
+#include "common/util/random.hpp"
 #include "core/debug/assert.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "core/tile/tileset_bundle.hpp"
-#include "common/type/math.hpp"
-#include "core/util/functional.hpp"
-#include "core/util/random.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
 #include "model/event/tool_events.hpp"

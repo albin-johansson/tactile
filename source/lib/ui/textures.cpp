@@ -21,7 +21,7 @@
 
 #include <cstdint>  // uintptr_t
 
-#include "core/util/bit.hpp"
+#include "common/util/bit.hpp"
 
 namespace tactile::ui {
 

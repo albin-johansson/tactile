@@ -26,9 +26,9 @@
 
 #include "app/app_context.hpp"
 #include "app/event/event_handlers.hpp"
+#include "common/util/fmt.hpp"
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset_bundle.hpp"
-#include "core/util/fmt.hpp"
 #include "io/load_texture.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"

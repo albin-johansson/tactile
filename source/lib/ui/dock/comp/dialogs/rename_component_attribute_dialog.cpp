@@ -24,9 +24,9 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/component/component_index.hpp"
 #include "common/type/maybe.hpp"
-#include "core/util/string_buffer.hpp"
+#include "common/util/string_buffer.hpp"
+#include "core/component/component_index.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/component_events.hpp"

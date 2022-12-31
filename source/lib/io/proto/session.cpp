@@ -21,7 +21,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/util/filesystem.hpp"
+#include "common/util/filesystem.hpp"
 #include "io/directories.hpp"
 #include "io/file.hpp"
 #include "io/map/ir/map_from_ir.hpp"

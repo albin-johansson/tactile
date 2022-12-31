@@ -21,6 +21,8 @@
 
 #include <gtest/gtest.h>
 
+#include "common/util/assoc.hpp"
+#include "common/util/functional.hpp"
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 #include "core/layer/group_layer.hpp"
@@ -30,8 +32,6 @@
 #include "core/tile/tileset.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/tile/tileset_info.hpp"
-#include "core/util/assoc.hpp"
-#include "core/util/functional.hpp"
 
 namespace tactile::test {
 namespace {

@@ -24,9 +24,9 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/tile/tile.hpp"
 #include "common/type/maybe.hpp"
-#include "core/util/fmt.hpp"
+#include "common/util/fmt.hpp"
+#include "core/tile/tile.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

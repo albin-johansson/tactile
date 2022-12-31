@@ -20,10 +20,10 @@
 #include <algorithm>  // replace
 #include <utility>    // move
 
-#include "core/tile/tile_matrix.hpp"
 #include "common/type/expected.hpp"
 #include "common/type/string.hpp"
-#include "core/util/str.hpp"
+#include "common/util/str.hpp"
+#include "core/tile/tile_matrix.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/base64_tiles.hpp"

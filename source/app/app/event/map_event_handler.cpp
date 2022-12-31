@@ -24,8 +24,8 @@
 
 #include "app/app_context.hpp"
 #include "app/event/event_handlers.hpp"
+#include "common/util/fmt.hpp"
 #include "core/debug/assert.hpp"
-#include "core/util/fmt.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/ir/map_from_ir.hpp"

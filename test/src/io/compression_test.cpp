@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-#include "core/util/random.hpp"
+#include "common/util/random.hpp"
 
 namespace tactile::test {
 namespace {

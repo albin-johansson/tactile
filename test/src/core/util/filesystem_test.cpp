@@ -17,12 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/util/filesystem.hpp"
+#include "common/util/filesystem.hpp"
 
 #include <gtest/gtest.h>
 
+#include "common/util/env.hpp"
 #include "core/predef.hpp"
-#include "core/util/env.hpp"
 
 namespace tactile::test {
 

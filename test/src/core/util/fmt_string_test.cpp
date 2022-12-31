@@ -22,7 +22,7 @@
 #include <fmt/std.h>
 #include <gtest/gtest.h>
 
-#include "core/util/fmt.hpp"
+#include "common/util/fmt.hpp"
 
 namespace tactile::test {
 

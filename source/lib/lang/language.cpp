@@ -23,9 +23,9 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/debug/panic.hpp"
 #include "common/type/hash_map.hpp"
-#include "core/util/assoc.hpp"
+#include "common/util/assoc.hpp"
+#include "core/debug/panic.hpp"
 #include "io/lang/language_parser.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/strings.hpp"

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/util/assoc.hpp"
+#include "common/util/assoc.hpp"
 
 #include <gtest/gtest.h>
 

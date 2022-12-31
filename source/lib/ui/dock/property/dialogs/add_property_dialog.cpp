@@ -22,12 +22,12 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "common/type/maybe.hpp"
+#include "common/util/string_buffer.hpp"
 #include "core/attribute.hpp"
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "core/context/context_manager.hpp"
-#include "common/type/maybe.hpp"
-#include "core/util/string_buffer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/property_events.hpp"

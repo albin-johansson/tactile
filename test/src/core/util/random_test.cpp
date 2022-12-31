@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/util/random.hpp"
+#include "common/util/random.hpp"
 
 #include <algorithm>  // generate, count
 

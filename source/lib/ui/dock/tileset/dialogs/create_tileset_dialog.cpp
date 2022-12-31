@@ -24,7 +24,7 @@
 
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
-#include "core/util/string_buffer.hpp"
+#include "common/util/string_buffer.hpp"
 #include "io/file_dialog.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"

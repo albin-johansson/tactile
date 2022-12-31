@@ -21,9 +21,9 @@
 
 #include <compare>  // <=>
 
-#include "core/debug/assert.hpp"
 #include "common/type/math.hpp"
-#include "core/util/hash.hpp"
+#include "common/util/hash.hpp"
+#include "core/debug/assert.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

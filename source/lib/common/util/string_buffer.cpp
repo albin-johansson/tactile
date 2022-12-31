@@ -19,7 +19,7 @@
 
 #include "string_buffer.hpp"
 
-#include "core/util/buffers.hpp"
+#include "common/util/buffers.hpp"
 
 namespace tactile {
 

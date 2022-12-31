@@ -23,8 +23,8 @@
 
 #include <fmt/format.h>
 
+#include "common/util/filesystem.hpp"
 #include "core/debug/panic.hpp"
-#include "core/util/filesystem.hpp"
 
 namespace tactile::io {
 

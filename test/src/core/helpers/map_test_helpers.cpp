@@ -21,10 +21,10 @@
 
 #include <gtest/gtest.h>
 
+#include "common/util/functional.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/map.hpp"
 #include "core/tile/tile_pos.hpp"
-#include "core/util/functional.hpp"
 
 namespace tactile::test {
 

@@ -25,10 +25,10 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
+#include "common/type/path.hpp"
+#include "common/util/fmt.hpp"
 #include "core/debug/logging.hpp"
 #include "core/debug/stacktrace.hpp"
-#include "common/type/path.hpp"
-#include "core/util/fmt.hpp"
 #include "io/directories.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"

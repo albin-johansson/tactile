@@ -22,7 +22,7 @@
 
 #include "app/app_context.hpp"
 #include "app/event/event_handlers.hpp"
-#include "core/util/filesystem.hpp"
+#include "common/util/filesystem.hpp"
 #include "io/proto/history.hpp"
 #include "io/proto/preferences.hpp"
 #include "model/event/all.hpp"

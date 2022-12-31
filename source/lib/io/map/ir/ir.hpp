@@ -22,10 +22,6 @@
 #include <concepts>  // invocable
 #include <variant>   // get
 
-#include "core/attribute.hpp"
-#include "core/layer/layer_type.hpp"
-#include "core/layer/object_type.hpp"
-#include "core/layer/tile_format.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
@@ -36,7 +32,11 @@
 #include "common/type/uuid.hpp"
 #include "common/type/variant.hpp"
 #include "common/type/vec.hpp"
-#include "core/util/algorithm.hpp"
+#include "common/util/algorithm.hpp"
+#include "core/attribute.hpp"
+#include "core/layer/layer_type.hpp"
+#include "core/layer/object_type.hpp"
+#include "core/layer/tile_format.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile::ir {

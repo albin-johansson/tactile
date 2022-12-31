@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/util/numeric.hpp"
+#include "common/util/numeric.hpp"
 
 #include <limits>  // numeric_limits
 

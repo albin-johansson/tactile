@@ -23,8 +23,8 @@
 #include <utility>   // move, to_underlying
 
 #include "common/type/array.hpp"
-#include "core/util/filesystem.hpp"
-#include "core/util/string_buffer.hpp"
+#include "common/util/filesystem.hpp"
+#include "common/util/string_buffer.hpp"
 #include "io/file_dialog.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

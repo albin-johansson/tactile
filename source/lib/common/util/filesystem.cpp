@@ -21,8 +21,8 @@
 
 #include <algorithm>  // replace
 
+#include "common/util/env.hpp"
 #include "core/predef.hpp"
-#include "core/util/env.hpp"
 
 #if TACTILE_OS_WINDOWS
 

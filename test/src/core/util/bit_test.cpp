@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/util/bit.hpp"
+#include "common/util/bit.hpp"
 
 #include <gtest/gtest.h>
 

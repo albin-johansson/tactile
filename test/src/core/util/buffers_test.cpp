@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/util/buffers.hpp"
+#include "common/util/buffers.hpp"
 
 #include <gtest/gtest.h>
 
