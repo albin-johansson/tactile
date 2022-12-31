@@ -20,6 +20,7 @@
 #pragma once
 
 #include <centurion/event.hpp>
+#include <centurion/window.hpp>
 
 #include "app/loop.hpp"
 
@@ -28,7 +29,7 @@ namespace tactile {
 /// The heart of the Tactile map editor.
 class App final : EventLoop {
  public:
-  App();
+  explicit App(cen::window& window);
 
   ~App() noexcept override;
 

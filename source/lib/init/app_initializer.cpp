@@ -25,7 +25,6 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "app/app_context.hpp"
 #include "core/debug/logging.hpp"
 #include "core/debug/stacktrace.hpp"
 #include "core/type/path.hpp"
@@ -77,9 +76,13 @@ AppInitializer::AppInitializer()
   // Initialize Dear ImGui and other UI-related state
   mImGui.emplace(window, sdl.get_gl_context());
   init_menus();
-  init_app_context(sdl.get_window());
 
   spdlog::debug("Using persistent file directory {}", tactile::io::persistent_file_dir());
+}
+
+auto AppInitializer::get_window() -> cen::window&
+{
+  return mSDL.value().get_window();
 }
 
 void on_terminate()

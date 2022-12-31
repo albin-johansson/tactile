@@ -30,7 +30,10 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang|GNU")
                          )
 endif ()
 
-target_include_directories(${TACTILE_TEST} PRIVATE src)
+target_include_directories(${TACTILE_TEST} PRIVATE
+                           src
+                           ${TACTILE_APP_DIR}
+                           )
 
 target_link_libraries(${TACTILE_TEST}
                       PRIVATE

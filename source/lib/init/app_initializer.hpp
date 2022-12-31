@@ -19,10 +19,12 @@
 
 #pragma once
 
+#include <centurion/window.hpp>
+
 #include "core/type/maybe.hpp"
 #include "core/vocabulary.hpp"
-#include "protobuf_context.hpp"
-#include "sdl_context.hpp"
+#include "init/protobuf_context.hpp"
+#include "init/sdl_context.hpp"
 #include "ui/imgui_context.hpp"
 
 namespace tactile {
@@ -33,6 +35,8 @@ class AppInitializer final {
   TACTILE_DELETE_MOVE(AppInitializer);
 
   [[nodiscard]] AppInitializer();
+
+  [[nodiscard]] auto get_window() -> cen::window&;
 
  private:
   Maybe<ProtobufContext> mProtobuf;

@@ -20,12 +20,12 @@
 #include <gtest/gtest.h>
 
 #include "app/app_context.hpp"
-#include "app/init/app_initializer.hpp"
+#include "init/app_initializer.hpp"
 
 auto main(int argc, char* argv[]) -> int
 {
-  const tactile::AppInitializer initializer;
-  tactile::get_window().show();
+  tactile::AppInitializer initializer;
+  initializer.get_window().show();
 
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

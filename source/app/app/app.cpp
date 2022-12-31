@@ -49,12 +49,15 @@
 
 namespace tactile {
 
-App::App()
+App::App(cen::window& window)
 {
+  init_app_context(window);
+
   subscribe_to_events();
   load_default_shortcuts();
   ui::load_icons();
-  get_window().maximize();
+
+  window.maximize();
 }
 
 App::~App() noexcept

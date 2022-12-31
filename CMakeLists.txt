@@ -28,6 +28,9 @@ set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(LIBRARY_DIR "${ROOT_DIR}/vendor")
 set(RESOURCE_DIR "${ROOT_DIR}/assets")
 
+set(TACTILE_APP_DIR "${PROJECT_SOURCE_DIR}/source/app")
+set(TACTILE_LIB_DIR "${PROJECT_SOURCE_DIR}/source/lib")
+
 # Target names
 set(TACTILE_PROTO TactileProto)
 set(TACTILE_LIB TactileLib)
@@ -73,5 +76,6 @@ if (TACTILE_BUILD_WITH_ASAN MATCHES ON)
 endif ()
 
 add_subdirectory(source/proto)
+add_subdirectory(source/lib)
 add_subdirectory(source/app)
 add_subdirectory(test)

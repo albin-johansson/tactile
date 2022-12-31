@@ -26,9 +26,9 @@
 #include <spdlog/spdlog.h>
 
 #include "app/app.hpp"
-#include "app/init/app_initializer.hpp"
 #include "core/debug/panic.hpp"
 #include "core/util/fmt.hpp"
+#include "init/app_initializer.hpp"
 
 namespace {
 
@@ -48,9 +48,9 @@ void show_crash_message_box(const char* error_msg)
 auto main(int, char*[]) -> int
 {
   try {
-    const tactile::AppInitializer initializer;
+    tactile::AppInitializer initializer;
 
-    tactile::App app;
+    tactile::App app {initializer.get_window()};
     app.start();
 
     return EXIT_SUCCESS;
