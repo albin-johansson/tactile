@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "core/type/fn.hpp"
-#include "core/type/hash_map.hpp"
-#include "core/type/maybe.hpp"
-#include "core/type/path.hpp"
-#include "core/type/ptr.hpp"
-#include "core/type/set.hpp"
-#include "core/type/uuid.hpp"
+#include "common/type/fn.hpp"
+#include "common/type/hash_map.hpp"
+#include "common/type/maybe.hpp"
+#include "common/type/path.hpp"
+#include "common/type/ptr.hpp"
+#include "common/type/set.hpp"
+#include "common/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

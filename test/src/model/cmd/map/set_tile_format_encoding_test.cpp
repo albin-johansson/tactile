@@ -21,8 +21,8 @@
 
 #include <gtest/gtest.h>
 
-#include "core/helpers/map_builder.hpp"
 #include "core/debug/panic.hpp"
+#include "core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 

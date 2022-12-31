@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/type/maybe.hpp"
+#include "common/type/maybe.hpp"
 #include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 

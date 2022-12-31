@@ -24,7 +24,7 @@
 #include "app/app_context.hpp"
 #include "app/event/event_handlers.hpp"
 #include "core/tile/tileset_bundle.hpp"
-#include "core/type/math.hpp"
+#include "common/type/math.hpp"
 #include "core/util/fmt.hpp"
 #include "core/viewport.hpp"
 #include "model/document/map_document.hpp"

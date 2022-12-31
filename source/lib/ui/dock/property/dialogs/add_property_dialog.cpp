@@ -26,7 +26,7 @@
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "core/context/context_manager.hpp"
-#include "core/type/maybe.hpp"
+#include "common/type/maybe.hpp"
 #include "core/util/string_buffer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

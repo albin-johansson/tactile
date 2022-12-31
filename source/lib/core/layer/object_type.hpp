@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/type/ostream.hpp"
+#include "common/type/ostream.hpp"
 
 namespace tactile {
 

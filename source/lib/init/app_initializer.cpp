@@ -27,7 +27,7 @@
 
 #include "core/debug/logging.hpp"
 #include "core/debug/stacktrace.hpp"
-#include "core/type/path.hpp"
+#include "common/type/path.hpp"
 #include "core/util/fmt.hpp"
 #include "io/directories.hpp"
 #include "io/proto/preferences.hpp"

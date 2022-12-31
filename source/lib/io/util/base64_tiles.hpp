@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/layer/tile_format.hpp"
-#include "core/type/string.hpp"
-#include "core/type/vec.hpp"
+#include "common/type/string.hpp"
+#include "common/type/vec.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile::io {

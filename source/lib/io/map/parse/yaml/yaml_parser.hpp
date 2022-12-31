@@ -21,9 +21,9 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "core/type/expected.hpp"
-#include "core/type/path.hpp"
-#include "core/type/vec.hpp"
+#include "common/type/expected.hpp"
+#include "common/type/path.hpp"
+#include "common/type/vec.hpp"
 #include "io/map/parse/parse_error.hpp"
 #include "io/map/parse/parse_result.hpp"
 

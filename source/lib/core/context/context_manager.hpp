@@ -22,11 +22,11 @@
 #include "core/attribute.hpp"
 #include "core/component/component.hpp"
 #include "core/context/context.hpp"
-#include "core/type/fn.hpp"
-#include "core/type/hash_map.hpp"
-#include "core/type/ptr.hpp"
-#include "core/type/string.hpp"
-#include "core/type/uuid.hpp"
+#include "common/type/fn.hpp"
+#include "common/type/hash_map.hpp"
+#include "common/type/ptr.hpp"
+#include "common/type/string.hpp"
+#include "common/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

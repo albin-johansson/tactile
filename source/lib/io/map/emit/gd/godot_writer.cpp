@@ -27,7 +27,7 @@
 
 #include "core/debug/assert.hpp"
 #include "core/tile/tile_pos.hpp"
-#include "core/type/ostream.hpp"
+#include "common/type/ostream.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/vocabulary.hpp"
 #include "io/file.hpp"

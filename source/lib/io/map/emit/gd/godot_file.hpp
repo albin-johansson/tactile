@@ -20,12 +20,12 @@
 #pragma once
 
 #include "core/attribute.hpp"
-#include "core/type/math.hpp"
-#include "core/type/maybe.hpp"
-#include "core/type/string.hpp"
-#include "core/type/string_map.hpp"
-#include "core/type/tree_map.hpp"
-#include "core/type/vec.hpp"
+#include "common/type/math.hpp"
+#include "common/type/maybe.hpp"
+#include "common/type/string.hpp"
+#include "common/type/string_map.hpp"
+#include "common/type/tree_map.hpp"
+#include "common/type/vec.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile::io {

@@ -24,7 +24,7 @@
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
-#include "core/type/path.hpp"
+#include "common/type/path.hpp"
 #include "io/directories.hpp"
 #include "io/file.hpp"
 #include "io/proto/proto.hpp"

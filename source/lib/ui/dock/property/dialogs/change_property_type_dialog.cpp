@@ -25,7 +25,7 @@
 #include <imgui.h>
 
 #include "core/context/context_manager.hpp"
-#include "core/type/maybe.hpp"
+#include "common/type/maybe.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/property_events.hpp"

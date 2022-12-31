@@ -22,7 +22,7 @@
 #include "core/debug/assert.hpp"
 #include "core/debug/panic.hpp"
 #include "core/texture.hpp"
-#include "core/type/ptr.hpp"
+#include "common/type/ptr.hpp"
 #include "io/directories.hpp"
 
 namespace tactile::ui {

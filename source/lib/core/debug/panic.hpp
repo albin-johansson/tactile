@@ -22,7 +22,7 @@
 #include <exception>  // exception
 
 #include "core/predef.hpp"
-#include "core/type/string.hpp"
+#include "common/type/string.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

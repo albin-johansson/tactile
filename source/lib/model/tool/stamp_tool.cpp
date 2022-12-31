@@ -28,7 +28,7 @@
 #include "core/layer/tile_layer.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "core/tile/tileset_bundle.hpp"
-#include "core/type/math.hpp"
+#include "common/type/math.hpp"
 #include "core/util/functional.hpp"
 #include "core/util/random.hpp"
 #include "model/document/map_document.hpp"

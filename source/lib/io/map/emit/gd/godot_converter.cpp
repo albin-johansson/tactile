@@ -28,8 +28,8 @@
 
 #include "core/debug/assert.hpp"
 #include "core/tile/tile_pos.hpp"
-#include "core/type/string.hpp"
-#include "core/type/vec.hpp"
+#include "common/type/string.hpp"
+#include "common/type/vec.hpp"
 #include "core/util/assoc.hpp"
 #include "core/util/functional.hpp"
 #include "io/map/emit/gd/godot_options.hpp"

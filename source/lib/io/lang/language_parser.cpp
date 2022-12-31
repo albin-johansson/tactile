@@ -24,7 +24,7 @@
 
 #include "core/debug/panic.hpp"
 #include "core/predef.hpp"
-#include "core/type/string.hpp"
+#include "common/type/string.hpp"
 #include "io/directories.hpp"
 #include "io/util/json.hpp"
 #include "ui/style/icons.hpp"

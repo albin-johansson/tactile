@@ -23,7 +23,7 @@
 
 #include "core/debug/logging.hpp"
 #include "core/debug/panic.hpp"
-#include "core/type/hash_map.hpp"
+#include "common/type/hash_map.hpp"
 #include "core/util/assoc.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"

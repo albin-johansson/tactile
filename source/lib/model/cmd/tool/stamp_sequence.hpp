@@ -20,9 +20,9 @@
 #pragma once
 
 #include "core/map.hpp"
-#include "core/type/ptr.hpp"
-#include "core/type/tile_cache.hpp"
-#include "core/type/uuid.hpp"
+#include "common/type/ptr.hpp"
+#include "common/type/tile_cache.hpp"
+#include "common/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 

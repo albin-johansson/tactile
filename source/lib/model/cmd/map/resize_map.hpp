@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/map.hpp"
-#include "core/type/maybe.hpp"
-#include "core/type/ptr.hpp"
+#include "common/type/maybe.hpp"
+#include "common/type/ptr.hpp"
 #include "core/vocabulary.hpp"
 #include "map_command_cache.hpp"
 #include "model/cmd/command.hpp"

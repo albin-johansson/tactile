@@ -21,11 +21,11 @@
 
 #include <gtest/gtest.h>
 
+#include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/tile/tileset_bundle.hpp"
-#include "core/debug/panic.hpp"
 
 namespace tactile::test {
 

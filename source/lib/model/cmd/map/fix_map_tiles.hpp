@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/map.hpp"
-#include "core/type/ptr.hpp"
+#include "common/type/ptr.hpp"
 #include "model/cmd/command.hpp"
 
 namespace tactile::cmd {

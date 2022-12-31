@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/layer/layer_type.hpp"
-#include "core/type/string.hpp"
-#include "core/type/uuid.hpp"
+#include "common/type/string.hpp"
+#include "common/type/uuid.hpp"
 
 namespace tactile {
 

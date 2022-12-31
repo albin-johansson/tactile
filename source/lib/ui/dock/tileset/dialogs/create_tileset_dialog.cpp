@@ -22,8 +22,8 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/type/math.hpp"
-#include "core/type/path.hpp"
+#include "common/type/math.hpp"
+#include "common/type/path.hpp"
 #include "core/util/string_buffer.hpp"
 #include "io/file_dialog.hpp"
 #include "io/proto/preferences.hpp"

@@ -25,7 +25,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "core/attribute.hpp"
-#include "core/type/string.hpp"
+#include "common/type/string.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/fmt.hpp"
 #include "core/vocabulary.hpp"

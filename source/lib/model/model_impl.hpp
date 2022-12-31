@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "core/type/math.hpp"
-#include "core/type/path.hpp"
-#include "core/type/ptr.hpp"
-#include "core/type/uuid.hpp"
+#include "common/type/math.hpp"
+#include "common/type/path.hpp"
+#include "common/type/ptr.hpp"
+#include "common/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "model/document/document_manager.hpp"
 #include "model/model.hpp"

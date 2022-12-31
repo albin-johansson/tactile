@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/type/ostream.hpp"
-#include "core/type/string.hpp"
+#include "common/type/ostream.hpp"
+#include "common/type/string.hpp"
 
 namespace tactile::io {
 

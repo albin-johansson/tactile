@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/type/span.hpp"
-#include "core/type/string.hpp"
+#include "common/type/span.hpp"
+#include "common/type/string.hpp"
 
 namespace tactile {
 

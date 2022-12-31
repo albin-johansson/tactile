@@ -21,8 +21,8 @@
 
 #include "core/color.hpp"
 #include "core/predef.hpp"
-#include "core/type/math.hpp"
-#include "core/type/string.hpp"
+#include "common/type/math.hpp"
+#include "common/type/string.hpp"
 #include "core/vocabulary.hpp"
 #include "lang/language.hpp"
 #include "ui/fonts.hpp"

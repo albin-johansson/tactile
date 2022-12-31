@@ -21,9 +21,9 @@
 
 #include <gtest/gtest.h>
 
+#include "core/debug/panic.hpp"
 #include "core/helpers/component_builder.hpp"
 #include "core/helpers/map_builder.hpp"
-#include "core/debug/panic.hpp"
 
 using namespace std::string_literals;
 

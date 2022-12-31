@@ -21,11 +21,11 @@
 
 #include "core/layer/abstract_layer.hpp"
 #include "core/layer/visitors.hpp"
-#include "core/type/fn.hpp"
-#include "core/type/ptr.hpp"
-#include "core/type/result.hpp"
-#include "core/type/uuid.hpp"
-#include "core/type/vec.hpp"
+#include "common/type/fn.hpp"
+#include "common/type/ptr.hpp"
+#include "common/type/result.hpp"
+#include "common/type/uuid.hpp"
+#include "common/type/vec.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

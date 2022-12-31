@@ -19,12 +19,21 @@
 
 #pragma once
 
-#include "core/tile/tile_pos.hpp"
-#include "core/type/vector_map.hpp"
-#include "core/vocabulary.hpp"
+#include <string>       // basic_string, string
+#include <string_view>  // basic_string_view, string_view, wstring_view
+
+#include "path.hpp"
 
 namespace tactile {
 
-using TileCache = VectorMap<TilePos, TileID>;
+using String = std::string;
+using StringView = std::string_view;
+
+using WString = std::wstring;
+using WStringView = std::wstring_view;
+
+using OsStrChar = Path::value_type;
+using OsString = std::basic_string<OsStrChar>;
+using OsStringView = std::basic_string_view<OsStrChar>;
 
 }  // namespace tactile

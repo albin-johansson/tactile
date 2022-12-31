@@ -22,9 +22,9 @@
 #include "core/context/context.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/layer_visitor.hpp"
-#include "core/type/maybe.hpp"
-#include "core/type/ptr.hpp"
-#include "core/type/uuid.hpp"
+#include "common/type/maybe.hpp"
+#include "common/type/ptr.hpp"
+#include "common/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

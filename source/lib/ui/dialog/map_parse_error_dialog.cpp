@@ -22,7 +22,7 @@
 #include <fmt/format.h>
 #include <imgui.h>
 
-#include "core/type/string.hpp"
+#include "common/type/string.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "ui/dialog/dialog.hpp"

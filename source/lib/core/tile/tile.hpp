@@ -25,11 +25,11 @@
 #include "core/context/context_info.hpp"
 #include "core/layer/object.hpp"
 #include "core/tile/tile_animation.hpp"
-#include "core/type/hash_map.hpp"
-#include "core/type/math.hpp"
-#include "core/type/maybe.hpp"
-#include "core/type/ptr.hpp"
-#include "core/type/uuid.hpp"
+#include "common/type/hash_map.hpp"
+#include "common/type/math.hpp"
+#include "common/type/maybe.hpp"
+#include "common/type/ptr.hpp"
+#include "common/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/type/expected.hpp"
-#include "core/type/path.hpp"
+#include "common/type/expected.hpp"
+#include "common/type/path.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/parse_error.hpp"
 #include "io/map/parse/parse_result.hpp"

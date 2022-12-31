@@ -25,7 +25,7 @@
 #include <imgui.h>
 
 #include "core/component/component_index.hpp"
-#include "core/type/maybe.hpp"
+#include "common/type/maybe.hpp"
 #include "core/util/string_buffer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

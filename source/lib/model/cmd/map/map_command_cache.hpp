@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/tile/tile_pos.hpp"
-#include "core/type/tree_map.hpp"
-#include "core/type/uuid.hpp"
+#include "common/type/tree_map.hpp"
+#include "common/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

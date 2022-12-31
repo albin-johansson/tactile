@@ -25,7 +25,7 @@
 #include <imgui.h>
 
 #include "core/tile/tile.hpp"
-#include "core/type/maybe.hpp"
+#include "common/type/maybe.hpp"
 #include "core/util/fmt.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"

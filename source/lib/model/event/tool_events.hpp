@@ -20,9 +20,9 @@
 #pragma once
 
 #include "core/tile/tile_pos.hpp"
-#include "core/type/math.hpp"
-#include "core/type/tile_cache.hpp"
-#include "core/type/uuid.hpp"
+#include "common/type/math.hpp"
+#include "common/type/tile_cache.hpp"
+#include "common/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "model/mouse_info.hpp"
 #include "model/tool/tool_type.hpp"

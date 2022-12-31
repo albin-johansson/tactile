@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/texture.hpp"
-#include "core/type/path.hpp"
-#include "core/type/ptr.hpp"
+#include "common/type/path.hpp"
+#include "common/type/ptr.hpp"
 
 namespace tactile::io {
 

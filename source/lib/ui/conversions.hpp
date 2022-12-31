@@ -23,7 +23,7 @@
 
 #include "core/color.hpp"
 #include "core/tile/tile_pos.hpp"
-#include "core/type/math.hpp"
+#include "common/type/math.hpp"
 
 namespace tactile::ui {
 

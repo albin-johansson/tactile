@@ -25,7 +25,7 @@
 #include <spdlog/spdlog.h>
 
 #include "core/predef.hpp"
-#include "core/type/chrono.hpp"
+#include "common/type/chrono.hpp"
 
 #define TACTILE_PROFILE_START const auto tactile_profile_start = tactile::Clock::now();
 

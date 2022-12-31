@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/type/ref.hpp"
+#include "common/type/ref.hpp"
 #include "model/mouse_info.hpp"
 #include "model/tool/tool_visitor.hpp"
 

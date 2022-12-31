@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/attribute.hpp"
-#include "core/type/ptr.hpp"
-#include "core/type/uuid.hpp"
+#include "common/type/ptr.hpp"
+#include "common/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 

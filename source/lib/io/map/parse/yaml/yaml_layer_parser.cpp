@@ -21,8 +21,8 @@
 #include <utility>    // move
 
 #include "core/tile/tile_matrix.hpp"
-#include "core/type/expected.hpp"
-#include "core/type/string.hpp"
+#include "common/type/expected.hpp"
+#include "common/type/string.hpp"
 #include "core/util/str.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"

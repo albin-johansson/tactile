@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/layer/object.hpp"
-#include "core/type/math.hpp"
-#include "core/type/ptr.hpp"
+#include "common/type/math.hpp"
+#include "common/type/ptr.hpp"
 #include "model/cmd/command.hpp"
 
 namespace tactile::cmd {

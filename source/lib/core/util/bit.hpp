@@ -26,7 +26,7 @@
 #include <type_traits>  // has_unique_object_representations_v, is_trivially_copyable_v, is_trivially_constructible_v
 #include <version>      // __cpp_lib_bit_cast
 
-#include "core/type/array.hpp"
+#include "common/type/array.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

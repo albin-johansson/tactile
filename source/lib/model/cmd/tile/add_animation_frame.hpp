@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/type/chrono.hpp"
-#include "core/type/maybe.hpp"
+#include "common/type/chrono.hpp"
+#include "common/type/maybe.hpp"
 #include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 

@@ -21,8 +21,8 @@
 
 #include "core/component/component_bundle.hpp"
 #include "core/context/property_bundle.hpp"
-#include "core/type/string.hpp"
-#include "core/type/uuid.hpp"
+#include "common/type/string.hpp"
+#include "common/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

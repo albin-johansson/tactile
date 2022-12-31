@@ -22,8 +22,8 @@
 #include <centurion/event.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/type/ptr.hpp"
-#include "core/type/vec.hpp"
+#include "common/type/ptr.hpp"
+#include "common/type/vec.hpp"
 #include "ui/shortcut/edit_shortcuts.hpp"
 #include "ui/shortcut/file_shortcuts.hpp"
 #include "ui/shortcut/view_shortcuts.hpp"

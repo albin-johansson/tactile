@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "core/type/maybe.hpp"
-#include "core/type/span.hpp"
-#include "core/type/vec.hpp"
+#include "common/type/maybe.hpp"
+#include "common/type/span.hpp"
+#include "common/type/vec.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile::io {

@@ -22,7 +22,7 @@
 #include <compare>  // <=>
 
 #include "core/debug/assert.hpp"
-#include "core/type/math.hpp"
+#include "common/type/math.hpp"
 #include "core/util/hash.hpp"
 #include "core/vocabulary.hpp"
 

@@ -22,7 +22,7 @@
 #include <imgui.h>
 
 #include "core/color.hpp"
-#include "core/type/array.hpp"
+#include "common/type/array.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile::ui {

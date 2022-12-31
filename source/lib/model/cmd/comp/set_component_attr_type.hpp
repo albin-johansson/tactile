@@ -22,9 +22,9 @@
 #include <boost/uuid/uuid_hash.hpp>
 
 #include "core/attribute.hpp"
-#include "core/type/hash_map.hpp"
-#include "core/type/maybe.hpp"
-#include "core/type/uuid.hpp"
+#include "common/type/hash_map.hpp"
+#include "common/type/maybe.hpp"
+#include "common/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 

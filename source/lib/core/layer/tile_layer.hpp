@@ -21,7 +21,7 @@
 
 #include "core/layer/abstract_layer.hpp"
 #include "core/tile/tile_pos.hpp"
-#include "core/type/vec.hpp"
+#include "common/type/vec.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

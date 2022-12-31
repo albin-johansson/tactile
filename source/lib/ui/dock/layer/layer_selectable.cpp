@@ -26,7 +26,7 @@
 #include "core/debug/assert.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
-#include "core/type/string.hpp"
+#include "common/type/string.hpp"
 #include "core/util/fmt.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

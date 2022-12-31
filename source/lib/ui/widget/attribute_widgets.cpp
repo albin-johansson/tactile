@@ -22,7 +22,7 @@
 #include <concepts>  // invocable
 #include <utility>   // move, to_underlying
 
-#include "core/type/array.hpp"
+#include "common/type/array.hpp"
 #include "core/util/filesystem.hpp"
 #include "core/util/string_buffer.hpp"
 #include "io/file_dialog.hpp"

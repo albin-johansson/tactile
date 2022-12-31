@@ -22,10 +22,10 @@
 #include <concepts>  // derived_from
 #include <utility>   // move
 
-#include "core/type/deque.hpp"
-#include "core/type/maybe.hpp"
-#include "core/type/ptr.hpp"
-#include "core/type/string.hpp"
+#include "common/type/deque.hpp"
+#include "common/type/maybe.hpp"
+#include "common/type/ptr.hpp"
+#include "common/type/string.hpp"
 #include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 

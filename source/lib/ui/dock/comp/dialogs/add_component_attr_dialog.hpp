@@ -21,7 +21,7 @@
 
 #include <entt/signal/fwd.hpp>
 
-#include "core/type/uuid.hpp"
+#include "common/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)

@@ -20,9 +20,9 @@
 #pragma once
 
 #include "core/tile/tileset_info.hpp"
-#include "core/type/math.hpp"
-#include "core/type/ptr.hpp"
-#include "core/type/uuid.hpp"
+#include "common/type/math.hpp"
+#include "common/type/ptr.hpp"
+#include "common/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 

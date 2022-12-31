@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "core/type/chrono.hpp"
-#include "core/type/result.hpp"
-#include "core/type/vec.hpp"
+#include "common/type/chrono.hpp"
+#include "common/type/result.hpp"
+#include "common/type/vec.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

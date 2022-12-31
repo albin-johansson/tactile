@@ -20,9 +20,9 @@
 #pragma once
 
 #include "core/layer/layer_type.hpp"
-#include "core/type/maybe.hpp"
-#include "core/type/ptr.hpp"
-#include "core/type/uuid.hpp"
+#include "common/type/maybe.hpp"
+#include "common/type/ptr.hpp"
+#include "common/type/uuid.hpp"
 #include "core/vocabulary.hpp"
 #include "model/cmd/command.hpp"
 
