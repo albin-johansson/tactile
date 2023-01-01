@@ -11,6 +11,7 @@
     "argparse",
     "entt",
     "cppcodec",
+    "doctest",
     "fmt",
     "glew",
     "glm",

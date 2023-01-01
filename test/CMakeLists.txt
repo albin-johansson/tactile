@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.16)
 
 project(tactile-test CXX)
 
+find_package(GTest CONFIG REQUIRED)
+find_package(doctest CONFIG REQUIRED)
+
 enable_testing()
 
 file(GLOB_RECURSE TEST_FILES
@@ -40,6 +43,7 @@ target_link_libraries(${TACTILE_TEST}
                       ${TACTILE_LIB}
                       SDL2::SDL2main
                       GTest::gtest
+                      doctest::doctest
                       )
 
 target_precompile_headers(${TACTILE_TEST} REUSE_FROM ${TACTILE_LIB})
