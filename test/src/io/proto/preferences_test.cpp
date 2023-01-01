@@ -21,7 +21,7 @@
 
 #include <utility>  // to_underlying
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "settings.pb.h"
 
@@ -30,62 +30,66 @@ using namespace tactile::ui;
 
 namespace tactile::test {
 
-TEST(Preferences, Defaults)
+TEST_SUITE("Settings")
 {
-  const PreferenceState state;
+  TEST_CASE("Defaults")
+  {
+    const PreferenceState state;
 
-  ASSERT_EQ(def_preferred_format, state.preferred_format);
-  ASSERT_EQ(def_theme, state.theme);
-  ASSERT_EQ(def_viewport_bg, state.viewport_background);
-  ASSERT_EQ(def_grid_color, state.grid_color);
-  ASSERT_EQ(def_command_capacity, state.command_capacity);
-  ASSERT_EQ(def_preferred_tile_size, state.preferred_tile_size);
-  ASSERT_EQ(def_font_size, state.font_size);
-  ASSERT_EQ(def_viewport_overlay_pos, state.viewport_overlay_pos);
-  ASSERT_EQ(def_embed_tilesets, state.embed_tilesets);
-  ASSERT_EQ(def_indent_output, state.indent_output);
-  ASSERT_EQ(def_fold_tile_data, state.fold_tile_data);
-  ASSERT_EQ(def_show_grid, state.show_grid);
-  ASSERT_EQ(def_show_layer_dock, state.show_layer_dock);
-  ASSERT_EQ(def_show_tileset_dock, state.show_tileset_dock);
-  ASSERT_EQ(def_show_property_dock, state.show_property_dock);
-  ASSERT_EQ(def_show_component_dock, state.show_component_dock);
-  ASSERT_EQ(def_show_log_dock, state.show_log_dock);
-  ASSERT_EQ(def_window_border, state.window_border);
-  ASSERT_EQ(def_restore_layout, state.restore_layout);
-  ASSERT_EQ(def_restore_last_session, state.restore_last_session);
-  ASSERT_EQ(def_show_viewport_overlay_fps, state.show_viewport_overlay_fps);
-  ASSERT_EQ(def_highlight_active_layer, state.highlight_active_layer);
-  ASSERT_EQ(def_use_default_font, state.use_default_font);
-}
+    REQUIRE(def_preferred_format == state.preferred_format);
+    REQUIRE(def_theme == state.theme);
+    REQUIRE(def_viewport_bg == state.viewport_background);
+    REQUIRE(def_grid_color == state.grid_color);
+    REQUIRE(def_command_capacity == state.command_capacity);
+    REQUIRE(def_preferred_tile_size == state.preferred_tile_size);
+    REQUIRE(def_font_size == state.font_size);
+    REQUIRE(def_viewport_overlay_pos == state.viewport_overlay_pos);
+    REQUIRE(def_embed_tilesets == state.embed_tilesets);
+    REQUIRE(def_indent_output == state.indent_output);
+    REQUIRE(def_fold_tile_data == state.fold_tile_data);
+    REQUIRE(def_show_grid == state.show_grid);
+    REQUIRE(def_show_layer_dock == state.show_layer_dock);
+    REQUIRE(def_show_tileset_dock == state.show_tileset_dock);
+    REQUIRE(def_show_property_dock == state.show_property_dock);
+    REQUIRE(def_show_component_dock == state.show_component_dock);
+    REQUIRE(def_show_log_dock == state.show_log_dock);
+    REQUIRE(def_window_border == state.window_border);
+    REQUIRE(def_restore_layout == state.restore_layout);
+    REQUIRE(def_restore_last_session == state.restore_last_session);
+    REQUIRE(def_show_viewport_overlay_fps == state.show_viewport_overlay_fps);
+    REQUIRE(def_highlight_active_layer == state.highlight_active_layer);
+    REQUIRE(def_use_default_font == state.use_default_font);
+  }
 
-TEST(Preferences, EnsureThemeEnumsMatch)
-{
-  ASSERT_EQ(proto::THEME_DEAR_DARK, std::to_underlying(EditorTheme::DearDark));
-  ASSERT_EQ(proto::THEME_DEAR_LIGHT, std::to_underlying(EditorTheme::DearLight));
-  ASSERT_EQ(proto::THEME_RUBY, std::to_underlying(EditorTheme::Ruby));
-  ASSERT_EQ(proto::THEME_SAPPHIRE, std::to_underlying(EditorTheme::Sapphire));
-  ASSERT_EQ(proto::THEME_EMERALD, std::to_underlying(EditorTheme::Emerald));
-  ASSERT_EQ(proto::THEME_AMETHYST, std::to_underlying(EditorTheme::Amethyst));
-  ASSERT_EQ(proto::THEME_AMBER, std::to_underlying(EditorTheme::Amber));
-  ASSERT_EQ(proto::THEME_NOCTURNAL, std::to_underlying(EditorTheme::Nocturnal));
-  ASSERT_EQ(proto::THEME_ASH, std::to_underlying(EditorTheme::Ash));
-  ASSERT_EQ(proto::THEME_JOKER, std::to_underlying(EditorTheme::Joker));
-  ASSERT_EQ(proto::THEME_RASPBERRY, std::to_underlying(EditorTheme::Raspberry));
-  ASSERT_EQ(proto::THEME_STEALTH, std::to_underlying(EditorTheme::Stealth));
-  ASSERT_EQ(proto::THEME_GASOLINE, std::to_underlying(EditorTheme::Gasoline));
-  ASSERT_EQ(proto::THEME_BUMBLEBEE, std::to_underlying(EditorTheme::Bumblebee));
-  ASSERT_EQ(proto::THEME_LAVENDER, std::to_underlying(EditorTheme::Lavender));
-  ASSERT_EQ(proto::THEME_FROST, std::to_underlying(EditorTheme::Frost));
-  ASSERT_EQ(proto::THEME_ROSE, std::to_underlying(EditorTheme::Rose));
-}
+  TEST_CASE("Ensure theme enums match")
+  {
+    REQUIRE(proto::THEME_DEAR_DARK == std::to_underlying(EditorTheme::DearDark));
+    REQUIRE(proto::THEME_DEAR_LIGHT == std::to_underlying(EditorTheme::DearLight));
+    REQUIRE(proto::THEME_RUBY == std::to_underlying(EditorTheme::Ruby));
+    REQUIRE(proto::THEME_SAPPHIRE == std::to_underlying(EditorTheme::Sapphire));
+    REQUIRE(proto::THEME_EMERALD == std::to_underlying(EditorTheme::Emerald));
+    REQUIRE(proto::THEME_AMETHYST == std::to_underlying(EditorTheme::Amethyst));
+    REQUIRE(proto::THEME_AMBER == std::to_underlying(EditorTheme::Amber));
+    REQUIRE(proto::THEME_NOCTURNAL == std::to_underlying(EditorTheme::Nocturnal));
+    REQUIRE(proto::THEME_ASH == std::to_underlying(EditorTheme::Ash));
+    REQUIRE(proto::THEME_JOKER == std::to_underlying(EditorTheme::Joker));
+    REQUIRE(proto::THEME_RASPBERRY == std::to_underlying(EditorTheme::Raspberry));
+    REQUIRE(proto::THEME_STEALTH == std::to_underlying(EditorTheme::Stealth));
+    REQUIRE(proto::THEME_GASOLINE == std::to_underlying(EditorTheme::Gasoline));
+    REQUIRE(proto::THEME_BUMBLEBEE == std::to_underlying(EditorTheme::Bumblebee));
+    REQUIRE(proto::THEME_LAVENDER == std::to_underlying(EditorTheme::Lavender));
+    REQUIRE(proto::THEME_FROST == std::to_underlying(EditorTheme::Frost));
+    REQUIRE(proto::THEME_ROSE == std::to_underlying(EditorTheme::Rose));
+  }
 
-TEST(Preferences, EnsureOverlayPosEnumsMatch)
-{
-  ASSERT_EQ(proto::OVERLAY_POS_TOP_LEFT, std::to_underlying(OverlayPos::TopLeft));
-  ASSERT_EQ(proto::OVERLAY_POS_TOP_RIGHT, std::to_underlying(OverlayPos::TopRight));
-  ASSERT_EQ(proto::OVERLAY_POS_BOTTOM_RIGHT, std::to_underlying(OverlayPos::BottomRight));
-  ASSERT_EQ(proto::OVERLAY_POS_BOTTOM_LEFT, std::to_underlying(OverlayPos::BottomLeft));
+  TEST_CASE("Ensure overlay position enums match")
+  {
+    REQUIRE(proto::OVERLAY_POS_TOP_LEFT == std::to_underlying(OverlayPos::TopLeft));
+    REQUIRE(proto::OVERLAY_POS_TOP_RIGHT == std::to_underlying(OverlayPos::TopRight));
+    REQUIRE(proto::OVERLAY_POS_BOTTOM_RIGHT ==
+            std::to_underlying(OverlayPos::BottomRight));
+    REQUIRE(proto::OVERLAY_POS_BOTTOM_LEFT == std::to_underlying(OverlayPos::BottomLeft));
+  }
 }
 
 }  // namespace tactile::test

@@ -17,43 +17,49 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <string_view>  // string_view
-
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "io/map/parse/parse_map.hpp"
 
 namespace tactile::test {
+namespace {
 
 using io::ParseError;
 
-const auto cases =
-    testing::Values("resources/json/properties.tmj", "resources/xml/properties.tmx");
-
-struct PropertySpecialCaseTest : testing::TestWithParam<std::string_view> {};
-
-TEST_P(PropertySpecialCaseTest, Parsing)
+void check_parsed_properties(const char* path)
 {
-  const auto path = GetParam();
   const auto result = io::parse_map(path);
-  ASSERT_EQ(ParseError::None, result.error());
+  REQUIRE(ParseError::None == result.error());
 
   const auto& data = result.data();
-  ASSERT_EQ(3u, data.context.properties.size());
+  REQUIRE(3u == data.context.properties.size());
 
   const auto& color = data.context.properties.at("empty-color");
-  ASSERT_TRUE(color.is_color());
-  ASSERT_TRUE(color.has_default_value());
+  REQUIRE(color.is_color());
+  REQUIRE(color.has_default_value());
 
   const auto& file = data.context.properties.at("empty-file");
-  ASSERT_TRUE(file.is_path());
-  ASSERT_TRUE(file.has_default_value());
+  REQUIRE(file.is_path());
+  REQUIRE(file.has_default_value());
 
   const auto& obj = data.context.properties.at("empty-object");
-  ASSERT_TRUE(obj.is_object());
-  ASSERT_TRUE(obj.has_default_value());
+  REQUIRE(obj.is_object());
+  REQUIRE(obj.has_default_value());
 }
 
-INSTANTIATE_TEST_SUITE_P(PropertySpecialCaseTests, PropertySpecialCaseTest, cases);
+}  // namespace
+
+TEST_SUITE("Tiled format property special cases")
+{
+  TEST_CASE("Tiled JSON")
+  {
+    check_parsed_properties("resources/json/properties.tmj");
+  }
+
+  TEST_CASE("Tiled XML")
+  {
+    check_parsed_properties("resources/xml/properties.tmx");
+  }
+}
 
 }  // namespace tactile::test
