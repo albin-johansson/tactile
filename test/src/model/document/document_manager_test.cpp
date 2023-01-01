@@ -19,7 +19,7 @@
 
 #include "model/document/document_manager.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/tile/tileset.hpp"
@@ -46,274 +46,277 @@ namespace {
 
 }  // namespace
 
-TEST(DocumentManager, Defaults)
+TEST_SUITE("DocumentManager")
 {
-  const DocumentManager manager;
-  ASSERT_FALSE(manager.current_document_id().has_value());
-}
+  TEST_CASE("Defaults")
+  {
+    const DocumentManager manager;
+    REQUIRE(!manager.current_document_id().has_value());
+  }
 
-TEST(DocumentManager, AddMap)
-{
-  DocumentManager manager;
-  ASSERT_THROW(manager.add_map_document(nullptr), TactileError);
+  TEST_CASE("add_map_document")
+  {
+    DocumentManager manager;
+    REQUIRE_THROWS_AS(manager.add_map_document(nullptr), TactileError);
 
-  auto document = make_map();
-  const auto id = document->get_map().get_uuid();
+    auto document = make_map();
+    const auto id = document->get_map().get_uuid();
 
-  manager.add_map_document(document);
-  ASSERT_EQ(id, manager.current_document_id());
+    manager.add_map_document(document);
+    REQUIRE(id == manager.current_document_id());
 
-  ASSERT_EQ(document.get(), manager.current_document());
-  ASSERT_EQ(document.get(), manager.current_map_document());
-  ASSERT_EQ(nullptr, manager.current_tileset_document());
+    REQUIRE(document.get() == manager.current_document());
+    REQUIRE(document.get() == manager.current_map_document());
+    REQUIRE(nullptr == manager.current_tileset_document());
 
-  ASSERT_EQ(document, manager.get_document_ptr(id));
-  ASSERT_EQ(document, manager.get_map_document_ptr(id));
+    REQUIRE(document == manager.get_document_ptr(id));
+    REQUIRE(document == manager.get_map_document_ptr(id));
 
-  ASSERT_TRUE(manager.is_document_open(id));
+    REQUIRE(manager.is_document_open(id));
 
-  ASSERT_TRUE(manager.is_document(id));
-  ASSERT_TRUE(manager.is_map(id));
-  ASSERT_FALSE(manager.is_tileset(id));
+    REQUIRE(manager.is_document(id));
+    REQUIRE(manager.is_map(id));
+    REQUIRE(!manager.is_tileset(id));
 
-  ASSERT_TRUE(manager.is_map_active());
-  ASSERT_FALSE(manager.is_tileset_active());
-}
+    REQUIRE(manager.is_map_active());
+    REQUIRE(!manager.is_tileset_active());
+  }
 
-TEST(DocumentManager, AddTileset)
-{
-  DocumentManager manager;
-  ASSERT_THROW(manager.add_tileset_document(nullptr), TactileError);
+  TEST_CASE("add_tileset_document")
+  {
+    DocumentManager manager;
+    REQUIRE_THROWS_AS(manager.add_tileset_document(nullptr), TactileError);
 
-  auto document = make_tileset();
-  const auto id = document->get_tileset_ptr()->get_uuid();
+    auto document = make_tileset();
+    const auto id = document->get_tileset_ptr()->get_uuid();
 
-  manager.add_tileset_document(document);
-  ASSERT_FALSE(manager.current_document_id().has_value());
+    manager.add_tileset_document(document);
+    REQUIRE(!manager.current_document_id().has_value());
 
-  ASSERT_EQ(nullptr, manager.current_document());
-  ASSERT_EQ(nullptr, manager.current_map_document());
-  ASSERT_EQ(nullptr, manager.current_tileset_document());
+    REQUIRE(nullptr == manager.current_document());
+    REQUIRE(nullptr == manager.current_map_document());
+    REQUIRE(nullptr == manager.current_tileset_document());
 
-  ASSERT_EQ(document, manager.get_document_ptr(id));
-  ASSERT_EQ(document, manager.get_tileset_document_ptr(id));
+    REQUIRE(document == manager.get_document_ptr(id));
+    REQUIRE(document == manager.get_tileset_document_ptr(id));
 
-  ASSERT_FALSE(manager.is_document_open(id));
+    REQUIRE(!manager.is_document_open(id));
 
-  ASSERT_TRUE(manager.is_document(id));
-  ASSERT_FALSE(manager.is_map(id));
-  ASSERT_TRUE(manager.is_tileset(id));
+    REQUIRE(manager.is_document(id));
+    REQUIRE(!manager.is_map(id));
+    REQUIRE(manager.is_tileset(id));
 
-  ASSERT_FALSE(manager.is_map_active());
-  ASSERT_FALSE(manager.is_tileset_active());
-}
+    REQUIRE(!manager.is_map_active());
+    REQUIRE(!manager.is_tileset_active());
+  }
 
-TEST(DocumentManager, RemoveMap)
-{
-  DocumentManager manager;
+  TEST_CASE("remove_map_document")
+  {
+    DocumentManager manager;
 
-  auto document = make_map();
-  const auto id = document->get_map().get_uuid();
+    auto document = make_map();
+    const auto id = document->get_map().get_uuid();
 
-  ASSERT_EQ(nullptr, manager.remove_map_document(id));
+    REQUIRE(nullptr == manager.remove_map_document(id));
 
-  manager.add_map_document(document);
-  ASSERT_EQ(document, manager.remove_map_document(id));
+    manager.add_map_document(document);
+    REQUIRE(document == manager.remove_map_document(id));
 
-  ASSERT_FALSE(manager.current_document_id().has_value());
+    REQUIRE(!manager.current_document_id().has_value());
 
-  ASSERT_EQ(nullptr, manager.current_document());
-  ASSERT_EQ(nullptr, manager.current_map_document());
-  ASSERT_EQ(nullptr, manager.current_tileset_document());
+    REQUIRE(nullptr == manager.current_document());
+    REQUIRE(nullptr == manager.current_map_document());
+    REQUIRE(nullptr == manager.current_tileset_document());
 
-  ASSERT_FALSE(manager.is_document_open(id));
+    REQUIRE(!manager.is_document_open(id));
 
-  ASSERT_FALSE(manager.is_document(id));
-  ASSERT_FALSE(manager.is_map(id));
-  ASSERT_FALSE(manager.is_tileset(id));
+    REQUIRE(!manager.is_document(id));
+    REQUIRE(!manager.is_map(id));
+    REQUIRE(!manager.is_tileset(id));
 
-  ASSERT_FALSE(manager.is_map_active());
-  ASSERT_FALSE(manager.is_tileset_active());
-}
+    REQUIRE(!manager.is_map_active());
+    REQUIRE(!manager.is_tileset_active());
+  }
 
-TEST(DocumentManager, RemoveTileset)
-{
-  DocumentManager manager;
+  TEST_CASE("remove_tileset_tileset")
+  {
+    DocumentManager manager;
 
-  auto document = make_tileset();
-  const auto id = document->get_tileset_ptr()->get_uuid();
+    auto document = make_tileset();
+    const auto id = document->get_tileset_ptr()->get_uuid();
 
-  ASSERT_EQ(nullptr, manager.remove_tileset_document(id));
+    REQUIRE(nullptr == manager.remove_tileset_document(id));
 
-  manager.add_tileset_document(document);
-  ASSERT_EQ(document, manager.remove_tileset_document(id));
+    manager.add_tileset_document(document);
+    REQUIRE(document == manager.remove_tileset_document(id));
 
-  ASSERT_FALSE(manager.current_document_id().has_value());
+    REQUIRE(!manager.current_document_id().has_value());
 
-  ASSERT_EQ(nullptr, manager.current_document());
-  ASSERT_EQ(nullptr, manager.current_map_document());
-  ASSERT_EQ(nullptr, manager.current_tileset_document());
+    REQUIRE(nullptr == manager.current_document());
+    REQUIRE(nullptr == manager.current_map_document());
+    REQUIRE(nullptr == manager.current_tileset_document());
 
-  ASSERT_FALSE(manager.is_document_open(id));
+    REQUIRE(!manager.is_document_open(id));
 
-  ASSERT_FALSE(manager.is_document(id));
-  ASSERT_FALSE(manager.is_map(id));
-  ASSERT_FALSE(manager.is_tileset(id));
+    REQUIRE(!manager.is_document(id));
+    REQUIRE(!manager.is_map(id));
+    REQUIRE(!manager.is_tileset(id));
 
-  ASSERT_FALSE(manager.is_map_active());
-  ASSERT_FALSE(manager.is_tileset_active());
-}
+    REQUIRE(!manager.is_map_active());
+    REQUIRE(!manager.is_tileset_active());
+  }
 
-TEST(DocumentManager, Select)
-{
-  DocumentManager manager;
+  TEST_CASE("select_document")
+  {
+    DocumentManager manager;
 
-  auto document = make_tileset();
-  const auto id = document->get_tileset_ptr()->get_uuid();
+    auto document = make_tileset();
+    const auto id = document->get_tileset_ptr()->get_uuid();
 
-  manager.add_tileset_document(document);
-  ASSERT_FALSE(manager.current_document_id().has_value());
+    manager.add_tileset_document(document);
+    REQUIRE(!manager.current_document_id().has_value());
 
-  manager.select_document(id);
-  ASSERT_EQ(id, manager.current_document_id());
-}
+    manager.select_document(id);
+    REQUIRE(id == manager.current_document_id());
+  }
 
-TEST(DocumentManager, Open)
-{
-  DocumentManager manager;
+  TEST_CASE("open_document")
+  {
+    DocumentManager manager;
 
-  auto document = make_tileset();
-  const auto id = document->get_tileset_ptr()->get_uuid();
+    auto document = make_tileset();
+    const auto id = document->get_tileset_ptr()->get_uuid();
 
-  manager.add_tileset_document(document);
-  ASSERT_TRUE(manager.is_document(id));
-  ASSERT_FALSE(manager.is_document_open(id));
+    manager.add_tileset_document(document);
+    REQUIRE(manager.is_document(id));
+    REQUIRE(!manager.is_document_open(id));
 
-  manager.open_document(id);
-  ASSERT_TRUE(manager.is_document(id));
-  ASSERT_TRUE(manager.is_document_open(id));
+    manager.open_document(id);
+    REQUIRE(manager.is_document(id));
+    REQUIRE(manager.is_document_open(id));
 
-  manager.close_document(id);
-  ASSERT_TRUE(manager.is_document(id));
-  ASSERT_FALSE(manager.is_document_open(id));
-}
+    manager.close_document(id);
+    REQUIRE(manager.is_document(id));
+    REQUIRE(!manager.is_document_open(id));
+  }
 
-TEST(DocumentManager, Close)
-{
-  DocumentManager manager;
+  TEST_CASE("close_document")
+  {
+    DocumentManager manager;
 
-  auto map = make_map();
-  const auto map_id = map->get_map().get_uuid();
+    auto map = make_map();
+    const auto map_id = map->get_map().get_uuid();
 
-  auto tileset = make_tileset();
-  const auto tileset_id = tileset->get_tileset_ptr()->get_uuid();
+    auto tileset = make_tileset();
+    const auto tileset_id = tileset->get_tileset_ptr()->get_uuid();
 
-  map->get_map().tileset_bundle().attach_tileset(tileset->get_tileset_ptr(), false);
+    map->get_map().tileset_bundle().attach_tileset(tileset->get_tileset_ptr(), false);
 
-  manager.add_map_document(map);
-  manager.add_tileset_document(tileset);
+    manager.add_map_document(map);
+    manager.add_tileset_document(tileset);
 
-  ASSERT_TRUE(manager.is_document(map_id));
-  ASSERT_TRUE(manager.is_document(tileset_id));
+    REQUIRE(manager.is_document(map_id));
+    REQUIRE(manager.is_document(tileset_id));
 
-  ASSERT_TRUE(manager.is_document_open(map_id));
-  ASSERT_FALSE(manager.is_document_open(tileset_id));
+    REQUIRE(manager.is_document_open(map_id));
+    REQUIRE(!manager.is_document_open(tileset_id));
 
-  manager.open_document(tileset_id);
-  ASSERT_TRUE(manager.is_document_open(map_id));
-  ASSERT_TRUE(manager.is_document_open(tileset_id));
+    manager.open_document(tileset_id);
+    REQUIRE(manager.is_document_open(map_id));
+    REQUIRE(manager.is_document_open(tileset_id));
 
-  manager.close_document(tileset_id);
-  ASSERT_TRUE(manager.is_document_open(map_id));
-  ASSERT_FALSE(manager.is_document_open(tileset_id));
+    manager.close_document(tileset_id);
+    REQUIRE(manager.is_document_open(map_id));
+    REQUIRE(!manager.is_document_open(tileset_id));
 
-  ASSERT_TRUE(manager.is_document(map_id));
-  ASSERT_TRUE(manager.is_document(tileset_id));
+    REQUIRE(manager.is_document(map_id));
+    REQUIRE(manager.is_document(tileset_id));
 
-  manager.close_document(map_id);
-  ASSERT_FALSE(manager.is_document(map_id));
-  ASSERT_FALSE(manager.is_document(tileset_id));
-}
+    manager.close_document(map_id);
+    REQUIRE(!manager.is_document(map_id));
+    REQUIRE(!manager.is_document(tileset_id));
+  }
 
-TEST(DocumentManager, RemoveUnusedTilesets)
-{
-  DocumentManager manager;
+  TEST_CASE("remove_map_document should remove associated tilesets that are unused")
+  {
+    DocumentManager manager;
 
-  auto map1 = make_map();
-  auto map2 = make_map();
+    auto map1 = make_map();
+    auto map2 = make_map();
 
-  const auto map1_id = map1->get_map().get_uuid();
-  const auto map2_id = map2->get_map().get_uuid();
+    const auto map1_id = map1->get_map().get_uuid();
+    const auto map2_id = map2->get_map().get_uuid();
 
-  auto ts1 = make_tileset();
-  auto ts2 = make_tileset();
-  auto ts3 = make_tileset();
+    auto ts1 = make_tileset();
+    auto ts2 = make_tileset();
+    auto ts3 = make_tileset();
 
-  const auto ts1_id = ts1->get_tileset_ptr()->get_uuid();
-  const auto ts2_id = ts2->get_tileset_ptr()->get_uuid();
-  const auto ts3_id = ts3->get_tileset_ptr()->get_uuid();
+    const auto ts1_id = ts1->get_tileset_ptr()->get_uuid();
+    const auto ts2_id = ts2->get_tileset_ptr()->get_uuid();
+    const auto ts3_id = ts3->get_tileset_ptr()->get_uuid();
 
-  // First map uses TS1 and TS2
-  map1->get_map().tileset_bundle().attach_tileset(ts1->get_tileset_ptr(), false);
-  map1->get_map().tileset_bundle().attach_tileset(ts2->get_tileset_ptr(), false);
+    // First map uses TS1 and TS2
+    map1->get_map().tileset_bundle().attach_tileset(ts1->get_tileset_ptr(), false);
+    map1->get_map().tileset_bundle().attach_tileset(ts2->get_tileset_ptr(), false);
 
-  // Second map uses TS2 and TS3
-  map2->get_map().tileset_bundle().attach_tileset(ts2->get_tileset_ptr(), false);
-  map2->get_map().tileset_bundle().attach_tileset(ts3->get_tileset_ptr(), false);
+    // Second map uses TS2 and TS3
+    map2->get_map().tileset_bundle().attach_tileset(ts2->get_tileset_ptr(), false);
+    map2->get_map().tileset_bundle().attach_tileset(ts3->get_tileset_ptr(), false);
 
-  manager.add_map_document(map1);
-  manager.add_map_document(map2);
-  manager.add_tileset_document(ts1);
-  manager.add_tileset_document(ts2);
-  manager.add_tileset_document(ts3);
+    manager.add_map_document(map1);
+    manager.add_map_document(map2);
+    manager.add_tileset_document(ts1);
+    manager.add_tileset_document(ts2);
+    manager.add_tileset_document(ts3);
 
-  ASSERT_TRUE(manager.is_map(map1_id));
-  ASSERT_TRUE(manager.is_map(map2_id));
-  ASSERT_TRUE(manager.is_tileset(ts1_id));
-  ASSERT_TRUE(manager.is_tileset(ts2_id));
-  ASSERT_TRUE(manager.is_tileset(ts3_id));
+    REQUIRE(manager.is_map(map1_id));
+    REQUIRE(manager.is_map(map2_id));
+    REQUIRE(manager.is_tileset(ts1_id));
+    REQUIRE(manager.is_tileset(ts2_id));
+    REQUIRE(manager.is_tileset(ts3_id));
 
-  // This should lead to TS3 being removed, but not TS1 since that is still used
-  manager.remove_map_document(map2_id);
+    // This should lead to TS3 being removed, but not TS1 since that is still used
+    manager.remove_map_document(map2_id);
 
-  ASSERT_TRUE(manager.is_tileset(ts1_id));
-  ASSERT_FALSE(manager.is_tileset(ts3_id));
+    REQUIRE(manager.is_tileset(ts1_id));
+    REQUIRE(!manager.is_tileset(ts3_id));
 
-  ASSERT_TRUE(manager.is_document(map1_id));
-  ASSERT_FALSE(manager.is_document(map2_id));
-  ASSERT_TRUE(manager.is_document(ts1_id));
-  ASSERT_TRUE(manager.is_document(ts2_id));
-  ASSERT_FALSE(manager.is_document(ts3_id));
+    REQUIRE(manager.is_document(map1_id));
+    REQUIRE(!manager.is_document(map2_id));
+    REQUIRE(manager.is_document(ts1_id));
+    REQUIRE(manager.is_document(ts2_id));
+    REQUIRE(!manager.is_document(ts3_id));
 
-  manager.remove_map_document(map1_id);
+    manager.remove_map_document(map1_id);
 
-  ASSERT_FALSE(manager.is_tileset(ts1_id));
-  ASSERT_FALSE(manager.is_tileset(ts2_id));
-  ASSERT_FALSE(manager.is_tileset(ts3_id));
+    REQUIRE(!manager.is_tileset(ts1_id));
+    REQUIRE(!manager.is_tileset(ts2_id));
+    REQUIRE(!manager.is_tileset(ts3_id));
 
-  ASSERT_FALSE(manager.is_document(map1_id));
-  ASSERT_FALSE(manager.is_document(map2_id));
-  ASSERT_FALSE(manager.is_document(ts1_id));
-  ASSERT_FALSE(manager.is_document(ts2_id));
-  ASSERT_FALSE(manager.is_document(ts3_id));
-}
+    REQUIRE(!manager.is_document(map1_id));
+    REQUIRE(!manager.is_document(map2_id));
+    REQUIRE(!manager.is_document(ts1_id));
+    REQUIRE(!manager.is_document(ts2_id));
+    REQUIRE(!manager.is_document(ts3_id));
+  }
 
-TEST(DocumentManager, FirstMatch)
-{
-  DocumentManager manager;
+  TEST_CASE("first_match")
+  {
+    DocumentManager manager;
 
-  auto map = make_map();
-  map->set_name("foo");
+    auto map = make_map();
+    map->set_name("foo");
 
-  const auto id = map->get_map().get_uuid();
-  manager.add_map_document(map);
+    const auto id = map->get_map().get_uuid();
+    manager.add_map_document(map);
 
-  ASSERT_EQ(id, manager.first_match([](const Document& document) {
-    return document.get_name() == "foo";
-  }));
+    REQUIRE(id == manager.first_match([](const Document& document) {
+      return document.get_name() == "foo";
+    }));
 
-  ASSERT_FALSE(manager.first_match(
-      [](const Document& document) { return document.get_name() == "bar"; }));
+    REQUIRE(!manager.first_match(
+        [](const Document& document) { return document.get_name() == "bar"; }));
+  }
 }
 
 }  // namespace tactile::test

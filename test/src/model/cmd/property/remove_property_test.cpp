@@ -19,35 +19,40 @@
 
 #include "model/cmd/property/remove_property.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(RemoveProperty, Constructor)
+TEST_SUITE("cmd::RemoveProperty")
 {
-  ASSERT_THROW(cmd::RemoveProperty(nullptr, ""), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::RemoveProperty(nullptr, ""), TactileError);
+  }
 
-TEST(RemoveProperty, RedoUndo)
-{
-  auto document = MapBuilder::build().result();
-  auto map = document->get_map_ptr();
+  TEST_CASE("redo/undo")
+  {
+    auto map_document = MapBuilder::build().result();
+    auto map = map_document->get_map_ptr();
+    auto& map_properties = map->get_ctx().props();
 
-  auto& props = map->get_ctx().props();
-  props.add("id", 42);
+    const String property_name {"id"};
+    const int property_value = 42;
+    map_properties.add(property_name, property_value);
 
-  cmd::RemoveProperty cmd {map, "id"};
-  cmd.redo();
+    cmd::RemoveProperty cmd {map, property_name};
 
-  ASSERT_FALSE(props.contains("id"));
+    cmd.redo();
+    REQUIRE(!map_properties.contains(property_name));
+    REQUIRE(map_properties.empty());
 
-  cmd.undo();
-
-  ASSERT_TRUE(props.contains("id"));
-  ASSERT_EQ(42, props.at("id").as_int());
+    cmd.undo();
+    REQUIRE(map_properties.contains(property_name));
+    REQUIRE(property_value == map_properties.at(property_name).as_int());
+  }
 }
 
 }  // namespace tactile::test

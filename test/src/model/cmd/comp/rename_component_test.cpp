@@ -19,7 +19,7 @@
 
 #include "model/cmd/comp/rename_component.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/component_builder.hpp"
@@ -27,40 +27,44 @@
 
 namespace tactile::test {
 
-TEST(RenameComponent, Constructor)
+TEST_SUITE("cmd::RenameComponent")
 {
-  ASSERT_THROW(cmd::RenameComponent(nullptr, make_uuid(), ""), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::RenameComponent(nullptr, make_uuid(), ""), TactileError);
+  }
 
-TEST(RenameComponent, RedoUndo)
-{
-  auto document = MapBuilder::build().result();
-  auto index = document->get_component_index_ptr();
+  TEST_CASE("redo/undo")
+  {
+    auto map_document = MapBuilder::build().result();
+    auto component_index = map_document->get_component_index_ptr();
 
-  const auto comp_id = ComponentBuilder {index, "Foo"}.result();
+    const String old_component_name {"A"};
+    const String new_component_name {"B"};
 
-  auto& map = document->get_map();
-  auto& bundle = map.get_ctx().comps();
-  bundle.add(index->at(comp_id).instantiate());
+    const auto component_id =
+        ComponentBuilder {component_index, old_component_name}.result();
 
-  cmd::RenameComponent cmd {index, comp_id, "Bar"};
-  cmd.redo();
+    auto& map = map_document->get_map();
+    auto& component_bundle = map.get_ctx().comps();
+    component_bundle.add(component_index->at(component_id).instantiate());
 
-  ASSERT_TRUE(index->contains(comp_id));
-  ASSERT_FALSE(index->contains("Foo"));
-  ASSERT_TRUE(index->contains("Bar"));
+    cmd::RenameComponent cmd {component_index, component_id, new_component_name};
 
-  ASSERT_EQ(1u, bundle.size());
-  ASSERT_TRUE(bundle.contains(comp_id));
+    cmd.redo();
+    REQUIRE(component_index->contains(component_id));
+    REQUIRE(!component_index->contains(old_component_name));
+    REQUIRE(component_index->contains(new_component_name));
+    REQUIRE(component_bundle.size() == 1u);
+    REQUIRE(component_bundle.contains(component_id));
 
-  cmd.undo();
-
-  ASSERT_TRUE(index->contains(comp_id));
-  ASSERT_TRUE(index->contains("Foo"));
-  ASSERT_FALSE(index->contains("Bar"));
-
-  ASSERT_EQ(1u, bundle.size());
-  ASSERT_TRUE(bundle.contains(comp_id));
+    cmd.undo();
+    REQUIRE(component_index->contains(component_id));
+    REQUIRE(component_index->contains(old_component_name));
+    REQUIRE(!component_index->contains(new_component_name));
+    REQUIRE(component_bundle.size() == 1u);
+    REQUIRE(component_bundle.contains(component_id));
+  }
 }
 
 }  // namespace tactile::test

@@ -19,38 +19,47 @@
 
 #include "model/cmd/map/set_tile_format_compression.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(SetTileFormatCompression, Constructor)
+TEST_SUITE("cmd::SetTileFormatCompression")
 {
-  ASSERT_THROW(SetTileFormatCompression(nullptr, TileCompression::None), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(SetTileFormatCompression(nullptr, TileCompression::None),
+                      TactileError);
+  }
 
-TEST(SetTileFormatCompression, RedoUndo)
-{
-  auto document = MapBuilder::build().result();
-  auto map = document->get_map_ptr();
+  TEST_CASE("redo/undo")
+  {
+    auto map_document = MapBuilder::build().result();
+    auto map = map_document->get_map_ptr();
 
-  auto& format = map->tile_format();
-  format.set_encoding(TileEncoding::Base64);
+    const auto encoding = TileEncoding::Base64;
+    const auto old_compression = TileCompression::None;
+    const auto new_compression = TileCompression::Zlib;
 
-  ASSERT_EQ(TileEncoding::Base64, format.encoding());
-  ASSERT_EQ(TileCompression::None, format.compression());
+    auto& format = map->tile_format();
+    format.set_encoding(encoding);
+    format.set_compression(old_compression);
 
-  SetTileFormatCompression cmd {map, TileCompression::Zlib};
+    REQUIRE(format.encoding() == encoding);
+    REQUIRE(format.compression() == old_compression);
 
-  cmd.redo();
-  ASSERT_EQ(TileCompression::Zlib, format.compression());
-  ASSERT_EQ(TileEncoding::Base64, format.encoding());
+    SetTileFormatCompression cmd {map, new_compression};
 
-  cmd.undo();
-  ASSERT_EQ(TileCompression::None, format.compression());
-  ASSERT_EQ(TileEncoding::Base64, format.encoding());
+    cmd.redo();
+    REQUIRE(format.compression() == new_compression);
+    REQUIRE(format.encoding() == encoding);
+
+    cmd.undo();
+    REQUIRE(format.compression() == old_compression);
+    REQUIRE(format.encoding() == encoding);
+  }
 }
 
 }  // namespace tactile::test

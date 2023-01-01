@@ -19,59 +19,64 @@
 
 #include "model/cmd/object/rename_object.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(RenameObject, Constructor)
+TEST_SUITE("cmd::RenameObject")
 {
-  ASSERT_THROW(cmd::RenameObject(nullptr, ""), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::RenameObject(nullptr, ""), TactileError);
+  }
 
-TEST(RenameObject, RedoUndo)
-{
-  Shared<Object> object;
+  TEST_CASE("redo/undo")
+  {
+    Shared<Object> object;
+    const auto map_document [[maybe_unused]] = test::MapBuilder::build()  //
+                                                   .with_object(ObjectType::Rect, &object)
+                                                   .result();
 
-  auto document = test::MapBuilder::build()  //
-                      .with_object(ObjectType::Rect, &object)
-                      .result();
+    const String old_name {"foo"};
+    const String new_name {"bar"};
 
-  object->get_ctx().set_name("foo");
+    object->get_ctx().set_name(old_name);
+    cmd::RenameObject cmd {object, new_name};
 
-  cmd::RenameObject cmd {object, "bar"};
+    cmd.redo();
+    REQUIRE(new_name == object->get_ctx().name());
 
-  cmd.redo();
-  ASSERT_EQ("bar", object->get_ctx().name());
+    cmd.undo();
+    REQUIRE(old_name == object->get_ctx().name());
+  }
 
-  cmd.undo();
-  ASSERT_EQ("foo", object->get_ctx().name());
-}
+  TEST_CASE("merge_with")
+  {
+    Shared<Object> object;
+    const auto map_document [[maybe_unused]] =
+        test::MapBuilder::build()  //
+            .with_object(ObjectType::Ellipse, &object)
+            .result();
 
-TEST(RenameObject, MergeSupport)
-{
-  Shared<Object> object;
+    const String initial_name {"initial"};
+    object->get_ctx().set_name(initial_name);
 
-  auto map = test::MapBuilder::build()  //
-                 .with_object(ObjectType::Ellipse, &object)
-                 .result();
+    cmd::RenameObject a {object, "a"};
+    const cmd::RenameObject b {object, "b"};
+    const cmd::RenameObject c {object, "c"};
 
-  object->get_ctx().set_name("start");
+    REQUIRE(a.merge_with(&b));
+    REQUIRE(a.merge_with(&c));
 
-  cmd::RenameObject a {object, "a"};
-  const cmd::RenameObject b {object, "b"};
-  const cmd::RenameObject c {object, "c"};
+    a.redo();
+    REQUIRE("c" == object->get_ctx().name());
 
-  ASSERT_TRUE(a.merge_with(&b));
-  ASSERT_TRUE(a.merge_with(&c));
-
-  a.redo();
-  ASSERT_EQ("c", object->get_ctx().name());
-
-  a.undo();
-  ASSERT_EQ("start", object->get_ctx().name());
+    a.undo();
+    REQUIRE(initial_name == object->get_ctx().name());
+  }
 }
 
 }  // namespace tactile::test

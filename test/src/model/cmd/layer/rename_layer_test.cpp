@@ -19,7 +19,7 @@
 
 #include "model/cmd/layer/rename_layer.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
@@ -27,28 +27,31 @@
 
 namespace tactile::test {
 
-TEST(RenameLayer, Constructor)
+TEST_SUITE("cmd::RenameLayer")
 {
-  ASSERT_THROW(cmd::RenameLayer(nullptr, make_uuid(), ""), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::RenameLayer(nullptr, make_uuid(), ""), TactileError);
+  }
 
-TEST(RenameLayer, RedoUndo)
-{
-  UUID layer_id;
+  TEST_CASE("redo/undo")
+  {
+    UUID layer_id;
 
-  auto document = MapBuilder::build().with_tile_layer(&layer_id).result();
-  auto map = document->get_map_ptr();
+    auto map_document = MapBuilder::build().with_tile_layer(&layer_id).result();
+    auto map = map_document->get_map_ptr();
 
-  auto layer = map->invisible_root().find_shared_layer(layer_id);
-  layer->get_ctx().set_name("barfoo");
+    auto layer = map->invisible_root().find_shared_layer(layer_id);
+    layer->get_ctx().set_name("barfoo");
 
-  cmd::RenameLayer cmd {map, layer_id, "foobar"};
+    cmd::RenameLayer cmd {map, layer_id, "foobar"};
 
-  cmd.redo();
-  ASSERT_EQ("foobar", layer->get_ctx().name());
+    cmd.redo();
+    REQUIRE("foobar" == layer->get_ctx().name());
 
-  cmd.undo();
-  ASSERT_EQ("barfoo", layer->get_ctx().name());
+    cmd.undo();
+    REQUIRE("barfoo" == layer->get_ctx().name());
+  }
 }
 
 }  // namespace tactile::test

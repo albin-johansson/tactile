@@ -19,7 +19,7 @@
 
 #include "model/cmd/object/add_object.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
@@ -28,29 +28,34 @@
 
 namespace tactile::test {
 
-TEST(AddObject, Constructor)
+TEST_SUITE("cmd::AddObject")
 {
-  ASSERT_THROW(cmd::AddObject(nullptr, make_uuid(), ObjectType::Rect, {}), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::AddObject(nullptr, make_uuid(), ObjectType::Rect, {}),
+                      TactileError);
+  }
 
-TEST(AddObject, RedoUndo)
-{
-  UUID layer_id;
-  auto document = test::MapBuilder::build().with_object_layer(&layer_id).result();
-  auto& layer = document->get_map().invisible_root().get_object_layer(layer_id);
+  TEST_CASE("redo/undo")
+  {
+    UUID layer_id;
+    auto map_document = test::MapBuilder::build().with_object_layer(&layer_id).result();
 
-  cmd::AddObject cmd {document.get(), layer_id, ObjectType::Point, {0, 0}};
+    auto& layer = map_document->get_map().invisible_root().get_object_layer(layer_id);
+    auto& context_manager = map_document->get_contexts();
 
-  cmd.redo();
-  ASSERT_EQ(1u, layer.object_count());
+    cmd::AddObject cmd {map_document.get(), layer_id, ObjectType::Point, {0, 0}};
+    cmd.redo();
+    REQUIRE(1u == layer.object_count());
 
-  auto object = layer.begin()->second;
-  const auto object_id = object->get_uuid();
-  ASSERT_TRUE(document->get_contexts().contains(object_id));
+    auto object = layer.begin()->second;
+    const auto object_id = object->get_uuid();
+    REQUIRE(context_manager.contains(object_id));
 
-  cmd.undo();
-  ASSERT_EQ(0u, layer.object_count());
-  ASSERT_FALSE(document->get_contexts().contains(object_id));
+    cmd.undo();
+    REQUIRE(0u == layer.object_count());
+    REQUIRE(!context_manager.contains(object_id));
+  }
 }
 
 }  // namespace tactile::test

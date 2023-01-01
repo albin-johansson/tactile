@@ -19,33 +19,39 @@
 
 #include "model/cmd/map/set_tile_format_encoding.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(SetTileFormatEncoding, Constructor)
+TEST_SUITE("cmd::SetTileFormatEncoding")
 {
-  ASSERT_THROW(SetTileFormatEncoding(nullptr, TileEncoding::Plain), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(SetTileFormatEncoding(nullptr, TileEncoding::Plain), TactileError);
+  }
 
-TEST(SetTileFormatEncoding, RedoUndo)
-{
-  auto document = MapBuilder::build().result();
-  auto map = document->get_map_ptr();
+  TEST_CASE("redo/undo")
+  {
+    auto map_document = MapBuilder::build().result();
+    auto map = map_document->get_map_ptr();
 
-  auto& format = map->tile_format();
-  ASSERT_EQ(TileEncoding::Plain, format.encoding());
+    auto& format = map->tile_format();
 
-  SetTileFormatEncoding cmd {map, TileEncoding::Base64};
+    const auto old_encoding = TileEncoding::Plain;
+    const auto new_encoding = TileEncoding::Base64;
+    REQUIRE(format.encoding() == old_encoding);
 
-  cmd.redo();
-  ASSERT_EQ(TileEncoding::Base64, format.encoding());
+    SetTileFormatEncoding cmd {map, new_encoding};
 
-  cmd.undo();
-  ASSERT_EQ(TileEncoding::Plain, format.encoding());
+    cmd.redo();
+    REQUIRE(format.encoding() == new_encoding);
+
+    cmd.undo();
+    REQUIRE(format.encoding() == old_encoding);
+  }
 }
 
 }  // namespace tactile::test

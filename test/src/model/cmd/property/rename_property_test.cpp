@@ -19,38 +19,43 @@
 
 #include "model/cmd/property/rename_property.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(RenameProperty, Constructor)
+TEST_SUITE("cmd::RenameProperty")
 {
-  ASSERT_THROW(cmd::RenameProperty(nullptr, "", ""), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::RenameProperty(nullptr, "", ""), TactileError);
+  }
 
-TEST(RenameProperty, RedoUndo)
-{
-  auto document = MapBuilder::build().result();
-  auto map = document->get_map_ptr();
+  TEST_CASE("redo/undo")
+  {
+    auto map_document = MapBuilder::build().result();
+    auto map = map_document->get_map_ptr();
+    auto& map_properties = map->get_ctx().props();
 
-  auto& props = map->get_ctx().props();
-  props.add("foo", Color {0xFF, 0, 0});
+    const String old_property_name {"old_name"};
+    const String new_property_name {"new_name"};
+    const Color property_value {0xFF, 0, 0};
+    map_properties.add(old_property_name, property_value);
 
-  cmd::RenameProperty cmd {map, "foo", "bar"};
-  cmd.redo();
+    cmd::RenameProperty cmd {map, old_property_name, new_property_name};
 
-  ASSERT_FALSE(props.contains("foo"));
-  ASSERT_TRUE(props.contains("bar"));
-  ASSERT_EQ((Color {0xFF, 0, 0}), props.at("bar"));
+    cmd.redo();
+    REQUIRE(!map_properties.contains(old_property_name));
+    REQUIRE(map_properties.contains(new_property_name));
+    REQUIRE(property_value == map_properties.at(new_property_name));
 
-  cmd.undo();
-
-  ASSERT_TRUE(props.contains("foo"));
-  ASSERT_FALSE(props.contains("bar"));
-  ASSERT_EQ((Color {0xFF, 0, 0}), props.at("foo"));
+    cmd.undo();
+    REQUIRE(map_properties.contains(old_property_name));
+    REQUIRE(!map_properties.contains(new_property_name));
+    REQUIRE(property_value == map_properties.at(old_property_name));
+  }
 }
 
 }  // namespace tactile::test

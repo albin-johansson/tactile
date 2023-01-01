@@ -19,7 +19,7 @@
 
 #include "model/cmd/comp/duplicate_component_attr.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/component_builder.hpp"
@@ -27,55 +27,62 @@
 
 namespace tactile::test {
 
-TEST(DuplicateComponentAttr, Constructor)
+TEST_SUITE("cmd::DuplicateComponentAttr")
 {
-  ASSERT_THROW(cmd::DuplicateComponentAttr(nullptr, make_uuid(), ""), TactileError);
-}
-
-TEST(DuplicateComponentAttr, RedoUndo)
-{
-  auto document = MapBuilder::build().result();
-  auto index = document->get_component_index_ptr();
-
-  const auto comp_id = ComponentBuilder {index, "Demo"}  //
-                           .with_attr("Attr", 42)
-                           .result();
-
-  auto& map = document->get_map();
-  auto& bundle = map.get_ctx().comps();
-  bundle.add(index->at(comp_id).instantiate());
-
-  cmd::DuplicateComponentAttr cmd {document.get(), comp_id, "Attr"};
-  cmd.redo();
-
+  TEST_CASE("constructor")
   {
-    const auto& def = index->at(comp_id);
-    const auto& comp = bundle.at(comp_id);
-
-    ASSERT_EQ(2u, def.size());
-    ASSERT_TRUE(def.has("Attr"));
-    ASSERT_TRUE(def.has("Attr (1)"));
-    ASSERT_EQ(def.at("Attr"), def.at("Attr (1)"));
-
-    ASSERT_EQ(2u, comp.size());
-    ASSERT_TRUE(comp.has("Attr"));
-    ASSERT_TRUE(comp.has("Attr (1)"));
-    ASSERT_EQ(comp.at("Attr"), comp.at("Attr (1)"));
+    REQUIRE_THROWS_AS(cmd::DuplicateComponentAttr(nullptr, make_uuid(), ""),
+                      TactileError);
   }
 
-  cmd.undo();
-
+  TEST_CASE("redo/undo")
   {
-    const auto& def = index->at(comp_id);
-    const auto& comp = bundle.at(comp_id);
+    auto map_document = MapBuilder::build().result();
+    auto component_index = map_document->get_component_index_ptr();
 
-    ASSERT_EQ(1u, def.size());
-    ASSERT_TRUE(def.has("Attr"));
-    ASSERT_FALSE(def.has("Attr (1)"));
+    const auto component_id = ComponentBuilder {component_index, "Demo"}  //
+                                  .with_attr("Attr", 42)
+                                  .result();
 
-    ASSERT_EQ(1u, comp.size());
-    ASSERT_TRUE(comp.has("Attr"));
-    ASSERT_FALSE(comp.has("Attr (1)"));
+    auto& map = map_document->get_map();
+    auto& component_bundle = map.get_ctx().comps();
+    component_bundle.add(component_index->at(component_id).instantiate());
+
+    const String attr_name {"Attr"};
+    const String duplicated_attr_name {"Attr (1)"};
+
+    cmd::DuplicateComponentAttr cmd {map_document.get(), component_id, attr_name};
+    cmd.redo();
+
+    {
+      const auto& component_def = component_index->at(component_id);
+      const auto& component = component_bundle.at(component_id);
+
+      REQUIRE(component_def.size() == 2u);
+      REQUIRE(component_def.has(attr_name));
+      REQUIRE(component_def.has(duplicated_attr_name));
+      REQUIRE(component_def.at(attr_name) == component_def.at(duplicated_attr_name));
+
+      REQUIRE(component.size() == 2u);
+      REQUIRE(component.has(attr_name));
+      REQUIRE(component.has(duplicated_attr_name));
+      REQUIRE(component.at(attr_name) == component.at(duplicated_attr_name));
+    }
+
+    cmd.undo();
+
+    {
+      const auto& component_def = component_index->at(component_id);
+      const auto& component = component_bundle.at(component_id);
+
+      REQUIRE(component_def.size() == 1u);
+      REQUIRE(component_def.has(attr_name));
+      REQUIRE(!component_def.has(duplicated_attr_name));
+
+      REQUIRE(component.size() == 1u);
+      REQUIRE(component.has(attr_name));
+      REQUIRE(!component.has(duplicated_attr_name));
+    }
   }
 }
 

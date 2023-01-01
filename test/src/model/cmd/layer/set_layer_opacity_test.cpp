@@ -19,48 +19,54 @@
 
 #include "model/cmd/layer/set_layer_opacity.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/layer/tile_layer.hpp"
 
 namespace tactile::test {
 
-TEST(SetLayerOpacity, Constructor)
+TEST_SUITE("cmd::SetLayerOpacity")
 {
-  ASSERT_THROW(cmd::SetLayerOpacity(nullptr, 1.0f), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::SetLayerOpacity(nullptr, 1.0f), TactileError);
+  }
 
-TEST(SetLayerOpacity, RedoUndo)
-{
-  auto layer = std::make_shared<TileLayer>();
-  ASSERT_EQ(1.0f, layer->get_opacity());
+  TEST_CASE("redo/undo")
+  {
+    const float old_opacity = 0.4f;
+    const float new_opacity = 0.8f;
 
-  cmd::SetLayerOpacity cmd {layer, 0.8f};
+    auto layer = std::make_shared<TileLayer>();
+    layer->set_opacity(old_opacity);
 
-  cmd.redo();
-  ASSERT_EQ(0.8f, layer->get_opacity());
+    cmd::SetLayerOpacity cmd {layer, new_opacity};
 
-  cmd.undo();
-  ASSERT_EQ(1.0f, layer->get_opacity());
-}
+    cmd.redo();
+    REQUIRE(new_opacity == layer->get_opacity());
 
-TEST(SetLayerOpacity, MergeSupport)
-{
-  auto layer = std::make_shared<TileLayer>();
+    cmd.undo();
+    REQUIRE(old_opacity == layer->get_opacity());
+  }
 
-  cmd::SetLayerOpacity a {layer, 0.8f};
-  const cmd::SetLayerOpacity b {layer, 0.6f};
-  const cmd::SetLayerOpacity c {layer, 0.4f};
+  TEST_CASE("merge_with")
+  {
+    auto layer = std::make_shared<TileLayer>();
 
-  ASSERT_TRUE(a.merge_with(&b));
-  ASSERT_TRUE(a.merge_with(&c));
+    cmd::SetLayerOpacity a {layer, 0.8f};
+    const cmd::SetLayerOpacity b {layer, 0.6f};
+    const cmd::SetLayerOpacity c {layer, 0.4f};
 
-  a.redo();
-  ASSERT_EQ(0.4f, layer->get_opacity());
+    REQUIRE(a.merge_with(&b));
+    REQUIRE(a.merge_with(&c));
 
-  a.undo();
-  ASSERT_EQ(1.0f, layer->get_opacity());
+    a.redo();
+    REQUIRE(0.4f == layer->get_opacity());
+
+    a.undo();
+    REQUIRE(1.0f == layer->get_opacity());
+  }
 }
 
 }  // namespace tactile::test

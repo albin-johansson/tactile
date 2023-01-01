@@ -19,7 +19,7 @@
 
 #include "model/cmd/object/remove_object.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
@@ -28,34 +28,36 @@
 
 namespace tactile::test {
 
-TEST(RemoveObject, Constructor)
+TEST_SUITE("cmd::RemoveObject")
 {
-  ASSERT_THROW(cmd::RemoveObject(nullptr, make_uuid(), make_uuid()), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::RemoveObject(nullptr, make_uuid(), make_uuid()), TactileError);
+  }
 
-TEST(RemoveObject, RedoUndo)
-{
-  UUID layer_id;
-  Shared<Object> object;
+  TEST_CASE("redo/undo")
+  {
+    UUID layer_id;
+    Shared<Object> object;
 
-  auto document = MapBuilder::build()  //
-                      .with_object(ObjectType::Rect, &object, &layer_id)
-                      .result();
+    auto map_document = MapBuilder::build()  //
+                            .with_object(ObjectType::Rect, &object, &layer_id)
+                            .result();
 
-  auto map = document->get_map_ptr();
-  auto& contexts = document->get_contexts();
+    auto map = map_document->get_map_ptr();
+    auto& context_manager = map_document->get_contexts();
 
-  auto& layer = map->invisible_root().get_object_layer(layer_id);
+    auto& layer = map->invisible_root().get_object_layer(layer_id);
+    cmd::RemoveObject cmd {map_document.get(), layer_id, object->get_uuid()};
 
-  cmd::RemoveObject cmd {document.get(), layer_id, object->get_uuid()};
+    cmd.redo();
+    REQUIRE(!context_manager.contains(object->get_uuid()));
+    REQUIRE(!layer.has_object(object->get_uuid()));
 
-  cmd.redo();
-  ASSERT_FALSE(contexts.contains(object->get_uuid()));
-  ASSERT_FALSE(layer.has_object(object->get_uuid()));
-
-  cmd.undo();
-  ASSERT_TRUE(contexts.contains(object->get_uuid()));
-  ASSERT_TRUE(layer.has_object(object->get_uuid()));
+    cmd.undo();
+    REQUIRE(context_manager.contains(object->get_uuid()));
+    REQUIRE(layer.has_object(object->get_uuid()));
+  }
 }
 
 }  // namespace tactile::test

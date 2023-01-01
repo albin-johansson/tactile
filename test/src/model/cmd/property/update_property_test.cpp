@@ -19,61 +19,64 @@
 
 #include "model/cmd/property/update_property.hpp"
 
-#include <centurion/color.hpp>
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(UpdateProperty, Constructor)
+TEST_SUITE("cmd::UpdateProperty")
 {
-  ASSERT_THROW(cmd::UpdateProperty(nullptr, "", 0), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::UpdateProperty(nullptr, "", 0), TactileError);
+  }
 
-TEST(UpdateProperty, RedoUndo)
-{
-  auto document = MapBuilder::build().result();
-  auto map = document->get_map_ptr();
+  TEST_CASE("redo/undo")
+  {
+    auto map_document = MapBuilder::build().result();
+    auto map = map_document->get_map_ptr();
+    auto& map_properties = map->get_ctx().props();
 
-  auto& props = map->get_ctx().props();
-  props.add("int", 10);
+    const String property_name {"wow"};
+    const int old_property_value = 10;
+    const int new_property_value = 20;
+    map_properties.add(property_name, old_property_value);
 
-  cmd::UpdateProperty cmd {map, "int", 20};
+    cmd::UpdateProperty cmd {map, property_name, new_property_value};
 
-  cmd.redo();
-  ASSERT_EQ(20, props.at("int"));
+    cmd.redo();
+    REQUIRE(new_property_value == map_properties.at(property_name));
 
-  cmd.undo();
-  ASSERT_EQ(10, props.at("int"));
-}
+    cmd.undo();
+    REQUIRE(old_property_value == map_properties.at(property_name));
+  }
 
-TEST(UpdateProperty, MergeSupport)
-{
-  auto document = MapBuilder::build().result();
-  auto map = document->get_map_ptr();
+  TEST_CASE("merge_with")
+  {
+    auto map_document = MapBuilder::build().result();
+    auto map = map_document->get_map_ptr();
 
-  const Color cyan {0, 0xFF, 0xFF};
-  const Color azure {0xF0, 0xFF, 0xFF};
-  const Color gold {0xFF, 0xD7, 0};
-  const Color violet {0xEE, 0x82, 0xEE};
+    const String property_name {"cool-color"};
+    const float initial_property_value = 10;
 
-  auto& props = map->get_ctx().props();
-  props.add("color", cyan);
+    auto& map_properties = map->get_ctx().props();
+    map_properties.add(property_name, initial_property_value);
 
-  cmd::UpdateProperty a {map, "color", azure};
-  const cmd::UpdateProperty b {map, "color", gold};
-  const cmd::UpdateProperty c {map, "color", violet};
+    cmd::UpdateProperty a {map, property_name, initial_property_value + 1.0f};
+    const cmd::UpdateProperty b {map, property_name, initial_property_value + 2.0f};
+    const cmd::UpdateProperty c {map, property_name, initial_property_value + 3.0f};
 
-  ASSERT_TRUE(a.merge_with(&b));
-  ASSERT_TRUE(a.merge_with(&c));
+    REQUIRE(a.merge_with(&b));
+    REQUIRE(a.merge_with(&c));
 
-  a.redo();
-  ASSERT_EQ(violet, props.at("color").as_color());
+    a.redo();
+    REQUIRE(initial_property_value + 3.0f == map_properties.at(property_name));
 
-  a.undo();
-  ASSERT_EQ(cyan, props.at("color").as_color());
+    a.undo();
+    REQUIRE(initial_property_value == map_properties.at(property_name));
+  }
 }
 
 }  // namespace tactile::test

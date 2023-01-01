@@ -19,7 +19,7 @@
 
 #include "model/cmd/comp/set_component_attr_type.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/component_builder.hpp"
@@ -27,52 +27,66 @@
 
 namespace tactile::test {
 
-TEST(SetComponentAttrType, Constructor)
+TEST_SUITE("cmd::SetComponentAttrType")
 {
-  ASSERT_THROW(cmd::SetComponentAttrType(nullptr, make_uuid(), "", AttributeType::String),
-               TactileError);
-}
-
-TEST(SetComponentAttrType, RedoUndo)
-{
-  auto document = MapBuilder::build().result();
-  auto index = document->get_component_index_ptr();
-
-  const auto comp_id = ComponentBuilder {index, "Demo"}  //
-                           .with_attr("Attr", true)
-                           .with_attr("Attr2", 938)
-                           .with_attr("Attr3", 94.3f)
-                           .result();
-
-  auto& map = document->get_map();
-  auto& bundle = map.get_ctx().comps();
-  bundle.add(index->at(comp_id).instantiate());
-
-  cmd::SetComponentAttrType cmd {document.get(), comp_id, "Attr", AttributeType::Int};
-  cmd.redo();
-
+  TEST_CASE("constructor")
   {
-    const auto& def = index->at(comp_id);
-    const auto& comp = bundle.at(comp_id);
-
-    ASSERT_EQ(AttributeType::Int, def.at("Attr").type());
-    ASSERT_EQ(AttributeType::Int, comp.at("Attr").type());
-
-    ASSERT_EQ(0, def.at("Attr").as_int());
-    ASSERT_EQ(0, comp.at("Attr").as_int());
+    REQUIRE_THROWS_AS(
+        cmd::SetComponentAttrType(nullptr, make_uuid(), "", AttributeType::Int),
+        TactileError);
   }
 
-  cmd.undo();
-
+  TEST_CASE("redo/undo")
   {
-    const auto& def = index->at(comp_id);
-    const auto& comp = bundle.at(comp_id);
+    auto map_document = MapBuilder::build().result();
+    auto component_index = map_document->get_component_index_ptr();
 
-    ASSERT_EQ(AttributeType::Bool, def.at("Attr").type());
-    ASSERT_EQ(AttributeType::Bool, comp.at("Attr").type());
+    const String attr_name {"Attr1"};
+    const bool old_attr_value = true;
 
-    ASSERT_TRUE(def.at("Attr").as_bool());
-    ASSERT_TRUE(comp.at("Attr").as_bool());
+    const auto old_attr_type = AttributeType::Bool;
+    const auto new_attr_type = AttributeType::Int;
+
+    const auto component_id = ComponentBuilder {component_index, "Demo"}  //
+                                  .with_attr(attr_name, old_attr_value)
+                                  .with_attr("Attr2", 938)
+                                  .with_attr("Attr3", 94.3f)
+                                  .result();
+
+    auto& map = map_document->get_map();
+    auto& component_bundle = map.get_ctx().comps();
+    component_bundle.add(component_index->at(component_id).instantiate());
+
+    cmd::SetComponentAttrType cmd {map_document.get(),
+                                   component_id,
+                                   attr_name,
+                                   new_attr_type};
+
+    {
+      cmd.redo();
+
+      const auto& component_def = component_index->at(component_id);
+      const auto& component = component_bundle.at(component_id);
+
+      REQUIRE(component_def.at(attr_name).type() == new_attr_type);
+      REQUIRE(component.at(attr_name).type() == new_attr_type);
+
+      REQUIRE(component_def.at(attr_name).as_int() == Attribute {new_attr_type});
+      REQUIRE(component.at(attr_name).as_int() == Attribute {new_attr_type});
+    }
+
+    {
+      cmd.undo();
+
+      const auto& component_def = component_index->at(component_id);
+      const auto& component = component_bundle.at(component_id);
+
+      REQUIRE(component_def.at(attr_name).type() == old_attr_type);
+      REQUIRE(component.at(attr_name).type() == old_attr_type);
+
+      REQUIRE(component_def.at(attr_name) == old_attr_value);
+      REQUIRE(component.at(attr_name) == old_attr_value);
+    }
   }
 }
 

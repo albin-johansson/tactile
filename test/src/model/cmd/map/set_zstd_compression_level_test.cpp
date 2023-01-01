@@ -19,51 +19,55 @@
 
 #include "model/cmd/map/set_zstd_compression_level.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(SetZstdCompressionLevel, Constructor)
+TEST_SUITE("cmd::SetZstdCompressionLevel")
 {
-  ASSERT_THROW(cmd::SetZstdCompressionLevel(nullptr, 0), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::SetZstdCompressionLevel(nullptr, 0), TactileError);
+  }
 
-TEST(SetZstdCompressionLevel, RedoUndo)
-{
-  auto document = MapBuilder::build().result();
-  auto map = document->get_map_ptr();
+  TEST_CASE("redo/undo")
+  {
+    auto map_document = MapBuilder::build().result();
+    auto map = map_document->get_map_ptr();
 
-  cmd::SetZstdCompressionLevel cmd {map, 16};
+    cmd::SetZstdCompressionLevel cmd {map, 16};
 
-  cmd.redo();
-  ASSERT_EQ(16, map->tile_format().zstd_compression_level());
+    cmd.redo();
+    REQUIRE(map->tile_format().zstd_compression_level() == 16);
 
-  cmd.undo();
-  ASSERT_EQ(3, map->tile_format().zstd_compression_level());
-}
+    cmd.undo();
+    REQUIRE(map->tile_format().zstd_compression_level() == 3);
+  }
 
-TEST(SetZstdCompressionLevel, MergeSupport)
-{
-  auto document = MapBuilder::build().result();
-  auto map = document->get_map_ptr();
+  TEST_CASE("merge_with")
+  {
+    auto map_document = MapBuilder::build().result();
+    auto map = map_document->get_map_ptr();
 
-  map->tile_format().set_zstd_compression_level(8);
+    auto& format = map->tile_format();
+    format.set_zstd_compression_level(8);
 
-  cmd::SetZstdCompressionLevel a {map, 5};
-  const cmd::SetZstdCompressionLevel b {map, 12};
-  const cmd::SetZstdCompressionLevel c {map, 18};
+    cmd::SetZstdCompressionLevel a {map, 5};
+    const cmd::SetZstdCompressionLevel b {map, 12};
+    const cmd::SetZstdCompressionLevel c {map, 18};
 
-  ASSERT_TRUE(a.merge_with(&b));
-  ASSERT_TRUE(a.merge_with(&c));
+    REQUIRE(a.merge_with(&b));
+    REQUIRE(a.merge_with(&c));
 
-  a.redo();
-  ASSERT_EQ(18, map->tile_format().zstd_compression_level());
+    a.redo();
+    REQUIRE(format.zstd_compression_level() == 18);
 
-  a.undo();
-  ASSERT_EQ(8, map->tile_format().zstd_compression_level());
+    a.undo();
+    REQUIRE(format.zstd_compression_level() == 8);
+  }
 }
 
 }  // namespace tactile::test
