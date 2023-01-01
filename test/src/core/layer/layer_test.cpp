@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
@@ -25,61 +25,57 @@
 
 namespace tactile::test {
 
-using LayerTypes = testing::Types<TileLayer, ObjectLayer, GroupLayer>;
-
-template <typename T>
-struct LayerTest : testing::Test {};
-
-TYPED_TEST_SUITE(LayerTest, LayerTypes);
-
-TYPED_TEST(LayerTest, Defaults)
+TEST_SUITE("Layer")
 {
-  const TypeParam layer;
-  ASSERT_TRUE(layer.is_visible());
-  ASSERT_FALSE(layer.get_uuid().is_nil());
-  ASSERT_FALSE(layer.get_parent().has_value());
-  ASSERT_FALSE(layer.get_meta_id().has_value());
-  ASSERT_EQ(1.0f, layer.get_opacity());
-}
+  TEST_CASE_TEMPLATE("Defaults", T, TileLayer, ObjectLayer, GroupLayer)
+  {
+    const T layer;
+    REQUIRE(layer.is_visible());
+    REQUIRE(!layer.get_uuid().is_nil());
+    REQUIRE(!layer.get_parent().has_value());
+    REQUIRE(!layer.get_meta_id().has_value());
+    REQUIRE(1.0f == layer.get_opacity());
+  }
 
-TYPED_TEST(LayerTest, SetOpacity)
-{
-  TypeParam layer;
+  TEST_CASE_TEMPLATE("set_opacity", T, TileLayer, ObjectLayer, GroupLayer)
+  {
+    T layer;
 
-  layer.set_opacity(0.4f);
-  ASSERT_EQ(0.4f, layer.get_opacity());
+    layer.set_opacity(0.4f);
+    REQUIRE(0.4f == layer.get_opacity());
 
-  layer.set_opacity(-0.2f);
-  ASSERT_EQ(0.0f, layer.get_opacity());
+    layer.set_opacity(-0.2f);
+    REQUIRE(0.0f == layer.get_opacity());
 
-  layer.set_opacity(1.1f);
-  ASSERT_EQ(1.0f, layer.get_opacity());
-}
+    layer.set_opacity(1.1f);
+    REQUIRE(1.0f == layer.get_opacity());
+  }
 
-TYPED_TEST(LayerTest, SetVisible)
-{
-  TypeParam layer;
+  TEST_CASE_TEMPLATE("set_visible", T, TileLayer, ObjectLayer, GroupLayer)
+  {
+    T layer;
 
-  layer.set_visible(false);
-  ASSERT_FALSE(layer.is_visible());
+    layer.set_visible(false);
+    REQUIRE(!layer.is_visible());
 
-  layer.set_visible(true);
-  ASSERT_TRUE(layer.is_visible());
-}
+    layer.set_visible(true);
+    REQUIRE(layer.is_visible());
+  }
 
-TYPED_TEST(LayerTest, Clone)
-{
-  TypeParam source;
-  source.set_opacity(0.7f);
-  source.set_parent(make_uuid());
-  source.set_visible(false);
+  TEST_CASE_TEMPLATE("clone", T, TileLayer, ObjectLayer, GroupLayer)
+  {
+    T source;
+    source.set_opacity(0.7f);
+    source.set_parent(make_uuid());
+    source.set_visible(false);
 
-  const auto clone = source.clone();
-  ASSERT_NE(source.get_uuid(), clone->get_uuid());
+    const auto clone = source.clone();
+    REQUIRE(source.get_uuid() != clone->get_uuid());
 
-  ASSERT_EQ(source.get_opacity(), clone->get_opacity());
-  ASSERT_EQ(source.get_parent(), clone->get_parent());
-  ASSERT_EQ(source.is_visible(), clone->is_visible());
+    REQUIRE(source.get_opacity() == clone->get_opacity());
+    REQUIRE(source.get_parent() == clone->get_parent());
+    REQUIRE(source.is_visible() == clone->is_visible());
+  }
 }
 
 }  // namespace tactile::test

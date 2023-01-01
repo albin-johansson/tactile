@@ -19,12 +19,14 @@
 
 #include "common/util/bit.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "common/type/array.hpp"
 
 namespace tactile::test {
 namespace {
+
+using ByteArray = Array<uint8, sizeof(uint32)>;
 
 template <std::integral T>
 [[nodiscard]] auto nth_byte(const T value, const usize n) -> uint8
@@ -35,41 +37,43 @@ template <std::integral T>
 
 }  // namespace
 
-TEST(Bit, Byteswap)
+TEST_SUITE("Bit utilities")
 {
-  const uint32 original = 0xDEADBEEF;
-  const auto swapped = byteswap(original);
+  TEST_CASE("byteswap")
+  {
+    const uint32 original = 0xDEADBEEF;
+    const auto swapped = byteswap(original);
 
-  using ByteArray = Array<uint8, sizeof(uint32)>;
-  const auto original_bytes = bitcast<ByteArray>(original);
-  const auto swapped_bytes = bitcast<ByteArray>(swapped);
+    const auto original_bytes = bitcast<ByteArray>(original);
+    const auto swapped_bytes = bitcast<ByteArray>(swapped);
 
-  ASSERT_EQ(original_bytes.at(0), swapped_bytes.at(3));
-  ASSERT_EQ(original_bytes.at(1), swapped_bytes.at(2));
-  ASSERT_EQ(original_bytes.at(2), swapped_bytes.at(1));
-  ASSERT_EQ(original_bytes.at(3), swapped_bytes.at(0));
-}
+    REQUIRE(original_bytes.at(0) == swapped_bytes.at(3));
+    REQUIRE(original_bytes.at(1) == swapped_bytes.at(2));
+    REQUIRE(original_bytes.at(2) == swapped_bytes.at(1));
+    REQUIRE(original_bytes.at(3) == swapped_bytes.at(0));
+  }
 
-TEST(Bit, ToLittleEndianUint32)
-{
-  const uint32 original = 0xFF'EE'22'11;
-  const auto little = to_little_endian(original);
+  TEST_CASE("to_little_endian[uint32]")
+  {
+    const uint32 original = 0xFF'EE'22'11u;
+    const auto little = to_little_endian(original);
 
-  ASSERT_EQ(0x11, nth_byte(little, 0));
-  ASSERT_EQ(0x22, nth_byte(little, 1));
-  ASSERT_EQ(0xEE, nth_byte(little, 2));
-  ASSERT_EQ(0xFF, nth_byte(little, 3));
-}
+    REQUIRE(0x11 == nth_byte(little, 0));
+    REQUIRE(0x22 == nth_byte(little, 1));
+    REQUIRE(0xEE == nth_byte(little, 2));
+    REQUIRE(0xFF == nth_byte(little, 3));
+  }
 
-TEST(Bit, ToLittleEndianInt32)
-{
-  const int32 original = 0x11'22'33'44;
-  const auto little = to_little_endian(original);
+  TEST_CASE("to_little_endian[int32]")
+  {
+    const int32 original = 0x11'22'33'44;
+    const auto little = to_little_endian(original);
 
-  ASSERT_EQ(0x44, nth_byte(little, 0));
-  ASSERT_EQ(0x33, nth_byte(little, 1));
-  ASSERT_EQ(0x22, nth_byte(little, 2));
-  ASSERT_EQ(0x11, nth_byte(little, 3));
+    REQUIRE(0x44 == nth_byte(little, 0));
+    REQUIRE(0x33 == nth_byte(little, 1));
+    REQUIRE(0x22 == nth_byte(little, 2));
+    REQUIRE(0x11 == nth_byte(little, 3));
+  }
 }
 
 }  // namespace tactile::test

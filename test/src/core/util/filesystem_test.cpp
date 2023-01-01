@@ -19,69 +19,72 @@
 
 #include "common/util/filesystem.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "common/util/env.hpp"
 #include "core/predef.hpp"
 
 namespace tactile::test {
 
-TEST(Filesystem, ConvertToForwardSlashes)
+TEST_SUITE("Filesystem")
 {
-  const fs::path source = R"(C:\foo\bar\abc.yaml)";
-  ASSERT_EQ("C:/foo/bar/abc.yaml", convert_to_forward_slashes(source));
-}
+  TEST_CASE("convert_to_forward_slashes")
+  {
+    const fs::path source = R"(C:\foo\bar\abc.yaml)";
+    REQUIRE("C:/foo/bar/abc.yaml" == convert_to_forward_slashes(source));
+  }
 
-TEST(Filesystem, HasHomePrefix)
-{
-  const auto home = env_var(on_windows ? "USERPROFILE" : "HOME").value();
+  TEST_CASE("has_home_prefix")
+  {
+    const auto home = env_var(on_windows ? "USERPROFILE" : "HOME").value();
 
-  ASSERT_FALSE(has_home_prefix(""));
-  ASSERT_FALSE(has_home_prefix("foo.cpp"));
-  ASSERT_FALSE(has_home_prefix("foo/bar.yaml"));
-  ASSERT_FALSE(has_home_prefix("some/random/path"));
+    REQUIRE(!has_home_prefix(""));
+    REQUIRE(!has_home_prefix("foo.cpp"));
+    REQUIRE(!has_home_prefix("foo/bar.yaml"));
+    REQUIRE(!has_home_prefix("some/random/path"));
 
-  ASSERT_TRUE(has_home_prefix(to_path(home)));
-  ASSERT_TRUE(has_home_prefix(to_path(home + "/")));
-  ASSERT_TRUE(has_home_prefix(to_path(home + "/foo")));
-  ASSERT_TRUE(has_home_prefix(to_path(home + "/foo.txt")));
-  ASSERT_TRUE(has_home_prefix(to_path(home + "/foo/bar.txt")));
-}
+    REQUIRE(has_home_prefix(to_path(home)));
+    REQUIRE(has_home_prefix(to_path(home + "/")));
+    REQUIRE(has_home_prefix(to_path(home + "/foo")));
+    REQUIRE(has_home_prefix(to_path(home + "/foo.txt")));
+    REQUIRE(has_home_prefix(to_path(home + "/foo/bar.txt")));
+  }
 
-TEST(Filesystem, ToCanonical)
-{
-  const auto home = env_var(on_windows ? "USERPROFILE" : "HOME").value();
+  TEST_CASE("to_canonical")
+  {
+    const auto home = env_var(on_windows ? "USERPROFILE" : "HOME").value();
 
-  ASSERT_EQ("~", to_canonical(to_path(home)));
-  ASSERT_EQ("~/", to_canonical(to_path(home + '/')));
-  ASSERT_EQ("~/foo/", to_canonical(to_path(home + "/foo/")));
-  ASSERT_EQ("~/foo/bar.txt", to_canonical(to_path(home + "/foo/bar.txt")));
+    REQUIRE("~" == to_canonical(to_path(home)));
+    REQUIRE("~/" == to_canonical(to_path(home + '/')));
+    REQUIRE("~/foo/" == to_canonical(to_path(home + "/foo/")));
+    REQUIRE("~/foo/bar.txt" == to_canonical(to_path(home + "/foo/bar.txt")));
 
-  ASSERT_FALSE(to_canonical("some/random/path").has_value());
-  ASSERT_FALSE(to_canonical("file.txt").has_value());
-}
+    REQUIRE(!to_canonical("some/random/path").has_value());
+    REQUIRE(!to_canonical("file.txt").has_value());
+  }
 
-TEST(Filesystem, ToOsString)
-{
-  ASSERT_FALSE(to_os_string(nullptr).has_value());
+  TEST_CASE("to_os_string")
+  {
+    REQUIRE(!to_os_string(nullptr).has_value());
 
 #if TACTILE_OS_WINDOWS
-  ASSERT_EQ(L"", to_os_string(""));
-  ASSERT_EQ(L"1", to_os_string("1"));
-  ASSERT_EQ(L"foo", to_os_string("foo"));
-  ASSERT_EQ(L"bar.txt", to_os_string("bar.txt"));
-  ASSERT_EQ(L"foo/bar", to_os_string("foo/bar"));
-  ASSERT_EQ(L"foo/bar.txt", to_os_string("foo/bar.txt"));
-  ASSERT_EQ(L"\0", to_os_string("\0"));
+    REQUIRE(L"" == to_os_string(""));
+    REQUIRE(L"1" == to_os_string("1"));
+    REQUIRE(L"foo" == to_os_string("foo"));
+    REQUIRE(L"bar.txt" == to_os_string("bar.txt"));
+    REQUIRE(L"foo/bar" == to_os_string("foo/bar"));
+    REQUIRE(L"foo/bar.txt" == to_os_string("foo/bar.txt"));
+    REQUIRE(L"\0" == to_os_string("\0"));
 #else
-  ASSERT_EQ("", to_os_string(""));
-  ASSERT_EQ("1", to_os_string("1"));
-  ASSERT_EQ("foo", to_os_string("foo"));
-  ASSERT_EQ("bar.txt", to_os_string("bar.txt"));
-  ASSERT_EQ("foo/bar", to_os_string("foo/bar"));
-  ASSERT_EQ("foo/bar.txt", to_os_string("foo/bar.txt"));
-  ASSERT_EQ("\0", to_os_string("\0"));
+    REQUIRE("" == to_os_string(""));
+    REQUIRE("1" == to_os_string("1"));
+    REQUIRE("foo" == to_os_string("foo"));
+    REQUIRE("bar.txt" == to_os_string("bar.txt"));
+    REQUIRE("foo/bar" == to_os_string("foo/bar"));
+    REQUIRE("foo/bar.txt" == to_os_string("foo/bar.txt"));
+    REQUIRE("\0" == to_os_string("\0"));
 #endif  // TACTILE_OS_WINDOWS
+  }
 }
 
 }  // namespace tactile::test

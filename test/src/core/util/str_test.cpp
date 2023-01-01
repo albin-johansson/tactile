@@ -19,31 +19,34 @@
 
 #include "common/util/str.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 namespace tactile::test {
 
-TEST(Str, Split)
+TEST_SUITE("Str")
 {
-  const auto tokens = split("foo,bar,,x", ',');
+  TEST_CASE("split")
+  {
+    const auto tokens = split("foo,bar,,x", ',');
 
-  ASSERT_EQ(4u, tokens.size());
-  ASSERT_EQ("foo", tokens.at(0));
-  ASSERT_EQ("bar", tokens.at(1));
-  ASSERT_EQ("", tokens.at(2));
-  ASSERT_EQ("x", tokens.at(3));
-}
+    REQUIRE(4u == tokens.size());
+    REQUIRE("foo" == tokens.at(0));
+    REQUIRE("bar" == tokens.at(1));
+    REQUIRE("" == tokens.at(2));
+    REQUIRE("x" == tokens.at(3));
+  }
 
-TEST(Str, ParseI32)
-{
-  ASSERT_FALSE(parse_i32("ABC"));
+  TEST_CASE("parse_i32")
+  {
+    REQUIRE(!parse_i32("ABC"));
 
-  ASSERT_EQ(-42, parse_i32("-42"));
-  ASSERT_EQ(123, parse_i32("123"));
-  ASSERT_EQ(745, parse_i32("745"));
+    REQUIRE(-42 == parse_i32("-42"));
+    REQUIRE(123 == parse_i32("123"));
+    REQUIRE(745 == parse_i32("745"));
 
-  ASSERT_FALSE(parse_i32("F1"));
-  ASSERT_EQ(0xF1, parse_i32("F1", 16));
+    REQUIRE(!parse_i32("F1"));
+    REQUIRE(0xF1 == parse_i32("F1", 16));
+  }
 }
 
 }  // namespace tactile::test

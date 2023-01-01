@@ -19,7 +19,7 @@
 
 #include "core/tile/tile_animation.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "common/type/chrono.hpp"
 #include "core/debug/panic.hpp"
@@ -28,67 +28,70 @@ using namespace std::chrono_literals;
 
 namespace tactile::test {
 
-TEST(TileAnimation, Defaults)
+TEST_SUITE("TileAnimation")
 {
-  const TileAnimation animation;
-  ASSERT_EQ(0u, animation.size());
-  ASSERT_EQ(0u, animation.capacity());
-}
+  TEST_CASE("Defaults")
+  {
+    const TileAnimation animation;
+    REQUIRE(0u == animation.size());
+    REQUIRE(0u == animation.capacity());
+  }
 
-TEST(TileAnimation, ReserveFrames)
-{
-  TileAnimation animation;
+  TEST_CASE("reserve_frames")
+  {
+    TileAnimation animation;
 
-  animation.reserve_frames(3);
-  ASSERT_EQ(3u, animation.capacity());
-  ASSERT_EQ(0u, animation.size());
-}
+    animation.reserve_frames(3);
+    REQUIRE(3u == animation.capacity());
+    REQUIRE(0u == animation.size());
+  }
 
-TEST(TileAnimation, AddFrame)
-{
-  TileAnimation animation;
+  TEST_CASE("add_frame")
+  {
+    TileAnimation animation;
 
-  animation.add_frame(42, 14ms);
-  ASSERT_EQ(1u, animation.size());
+    animation.add_frame(42, 14ms);
+    REQUIRE(1u == animation.size());
 
-  const auto& frame = animation[0];
-  ASSERT_EQ(42, frame.tile);
-  ASSERT_EQ(14ms, frame.duration);
+    const auto& frame = animation[0];
+    REQUIRE(42 == frame.tile);
+    REQUIRE(14ms == frame.duration);
 
-  ASSERT_THROW(animation[1], TactileError);
-}
+    REQUIRE_THROWS_AS(animation[1], TactileError);
+  }
 
-TEST(TileAnimation, InsertFrame)
-{
-  TileAnimation animation;
+  TEST_CASE("insert_frame")
+  {
+    TileAnimation animation;
 
-  ASSERT_EQ(success, animation.insert_frame(0, 5, 100ms));
-  ASSERT_EQ(1u, animation.size());
+    REQUIRE(success == animation.insert_frame(0, 5, 100ms));
+    REQUIRE(1u == animation.size());
 
-  ASSERT_EQ(success, animation.insert_frame(0, 20, 100ms));
-  ASSERT_EQ(2u, animation.size());
+    REQUIRE(success == animation.insert_frame(0, 20, 100ms));
+    REQUIRE(2u == animation.size());
 
-  ASSERT_EQ(success, animation.insert_frame(animation.size(), 30, 100ms));
-  ASSERT_EQ(3u, animation.size());
+    REQUIRE(success == animation.insert_frame(animation.size(), 30, 100ms));
+    REQUIRE(3u == animation.size());
 
-  ASSERT_EQ(failure, animation.insert_frame(animation.size() + 1, 40, 100ms));
-  ASSERT_EQ(3u, animation.size());
-}
+    REQUIRE(failure == animation.insert_frame(animation.size() + 1, 40, 100ms));
+    REQUIRE(3u == animation.size());
+  }
 
-TEST(TileAnimation, RemoveFrame)
-{
-  TileAnimation animation;
-  ASSERT_EQ(failure, animation.remove_frame(0));
+  TEST_CASE("remove_frame")
+  {
+    TileAnimation animation;
+    REQUIRE(failure == animation.remove_frame(0));
 
-  animation.add_frame(12, 42ms);
-  ASSERT_EQ(1u, animation.size());
+    animation.add_frame(12, 42ms);
+    REQUIRE(1u == animation.size());
 
-  ASSERT_EQ(failure, animation.remove_frame(1));
-  ASSERT_EQ(1u, animation.size());
+    REQUIRE(failure == animation.remove_frame(1));
+    REQUIRE(1u == animation.size());
 
-  ASSERT_EQ(success, animation.remove_frame(0));
-  ASSERT_EQ(failure, animation.remove_frame(0));
-  ASSERT_EQ(0u, animation.size());
+    REQUIRE(success == animation.remove_frame(0));
+    REQUIRE(failure == animation.remove_frame(0));
+    REQUIRE(0u == animation.size());
+  }
 }
 
 }  // namespace tactile::test

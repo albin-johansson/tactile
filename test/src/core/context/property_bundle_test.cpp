@@ -19,7 +19,7 @@
 
 #include "core/context/property_bundle.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 
@@ -27,135 +27,138 @@ using namespace std::string_literals;
 
 namespace tactile::test {
 
-TEST(PropertyBundle, Defaults)
+TEST_SUITE("PropertyBundle")
 {
-  const PropertyBundle bundle;
-  ASSERT_EQ(0u, bundle.size());
-  ASSERT_TRUE(bundle.empty());
-}
+  TEST_CASE("Defaults")
+  {
+    const PropertyBundle bundle;
+    REQUIRE(0u == bundle.size());
+    REQUIRE(bundle.empty());
+  }
 
-TEST(PropertyBundle, AddWithType)
-{
-  PropertyBundle bundle;
+  TEST_CASE("add[type]")
+  {
+    PropertyBundle bundle;
 
-  bundle.add("foo", AttributeType::Int);
-  ASSERT_EQ(0, bundle.at("foo").as_int());
+    bundle.add("foo", AttributeType::Int);
+    REQUIRE(0 == bundle.at("foo").as_int());
 
-  ASSERT_THROW(bundle.add("foo", AttributeType::Float), TactileError);
+    REQUIRE_THROWS_AS(bundle.add("foo", AttributeType::Float), TactileError);
 
-  bundle.add("bar", AttributeType::Float);
-  ASSERT_EQ(0.0f, bundle.at("bar").as_float());
+    bundle.add("bar", AttributeType::Float);
+    REQUIRE(0.0f == bundle.at("bar").as_float());
 
-  ASSERT_EQ(2u, bundle.size());
-}
+    REQUIRE(2u == bundle.size());
+  }
 
-TEST(PropertyBundle, AddWithValue)
-{
-  PropertyBundle bundle;
+  TEST_CASE("add[value]")
+  {
+    PropertyBundle bundle;
 
-  bundle.add("foo", "bar"s);
-  ASSERT_TRUE(bundle.contains("foo"));
+    bundle.add("foo", "bar"s);
+    REQUIRE(bundle.contains("foo"));
 
-  ASSERT_EQ("bar", bundle.at("foo").as_string());
-  ASSERT_THROW(bundle.add("foo", 42), TactileError);
-}
+    REQUIRE("bar" == bundle.at("foo").as_string());
+    REQUIRE_THROWS_AS(bundle.add("foo", 42), TactileError);
+  }
 
-TEST(PropertyBundle, Update)
-{
-  PropertyBundle bundle;
-  ASSERT_THROW(bundle.update("abc", 10), TactileError);
+  TEST_CASE("update")
+  {
+    PropertyBundle bundle;
+    REQUIRE_THROWS_AS(bundle.update("abc", 10), TactileError);
 
-  bundle.add("qwerty", AttributeType::Int);
-  ASSERT_EQ(0, bundle.at("qwerty"));
+    bundle.add("qwerty", AttributeType::Int);
+    REQUIRE(0 == bundle.at("qwerty"));
 
-  bundle.update("qwerty", 42);
-  ASSERT_EQ(42, bundle.at("qwerty"));
+    bundle.update("qwerty", 42);
+    REQUIRE(42 == bundle.at("qwerty"));
 
-  bundle.update("qwerty", "str"s);
-  ASSERT_EQ("str"s, bundle.at("qwerty"));
-}
+    bundle.update("qwerty", "str"s);
+    REQUIRE("str"s == bundle.at("qwerty"));
+  }
 
-TEST(PropertyBundle, Remove)
-{
-  PropertyBundle bundle;
+  TEST_CASE("remove")
+  {
+    PropertyBundle bundle;
 
-  ASSERT_FALSE(bundle.remove("foo"));
-  bundle.add("foo", 123);
+    REQUIRE(!bundle.remove("foo"));
+    bundle.add("foo", 123);
 
-  ASSERT_FALSE(bundle.remove("bar"));
-  ASSERT_FALSE(bundle.empty());
+    REQUIRE(!bundle.remove("bar"));
+    REQUIRE(!bundle.empty());
 
-  ASSERT_TRUE(bundle.remove("foo"));
-  ASSERT_TRUE(bundle.empty());
-}
+    REQUIRE(bundle.remove("foo"));
+    REQUIRE(bundle.empty());
+  }
 
-TEST(PropertyBundle, Rename)
-{
-  PropertyBundle bundle;
+  TEST_CASE("rename")
+  {
+    PropertyBundle bundle;
 
-  ASSERT_FALSE(bundle.rename("A", "B"));
-  bundle.add("A", Color {0, 0xFF, 0xFF});
+    REQUIRE(!bundle.rename("A", "B"));
+    bundle.add("A", Color {0, 0xFF, 0xFF});
 
-  // Cannot request used name, even when the target property doesn't exist
-  ASSERT_THROW(bundle.rename("C", "A"), TactileError);
+    // Cannot request used name, even when the target property doesn't exist
+    REQUIRE_THROWS_AS(bundle.rename("C", "A"), TactileError);
 
-  ASSERT_FALSE(bundle.rename("C", "B"));
-  ASSERT_TRUE(bundle.contains("A"));
-  ASSERT_FALSE(bundle.contains("B"));
+    REQUIRE(!bundle.rename("C", "B"));
+    REQUIRE(bundle.contains("A"));
+    REQUIRE(!bundle.contains("B"));
 
-  ASSERT_TRUE(bundle.rename("A", "B"));
-  ASSERT_FALSE(bundle.contains("A"));
-  ASSERT_TRUE(bundle.contains("B"));
+    REQUIRE(bundle.rename("A", "B"));
+    REQUIRE(!bundle.contains("A"));
+    REQUIRE(bundle.contains("B"));
 
-  ASSERT_EQ(1u, bundle.size());
-}
+    REQUIRE(1u == bundle.size());
+  }
 
-TEST(PropertyBundle, ChangeType)
-{
-  PropertyBundle bundle;
-  bundle.add("abc", AttributeType::Int);
-  ASSERT_EQ(0, bundle.at("abc").as_int());
+  TEST_CASE("change_type")
+  {
+    PropertyBundle bundle;
+    bundle.add("abc", AttributeType::Int);
+    REQUIRE(0 == bundle.at("abc").as_int());
 
-  ASSERT_EQ(0, bundle.change_type("abc", AttributeType::Bool));
-  ASSERT_FALSE(bundle.at("abc").as_bool());
-}
+    REQUIRE(0 == bundle.change_type("abc", AttributeType::Bool));
+    REQUIRE(!bundle.at("abc").as_bool());
+  }
 
-TEST(PropertyBundle, Find)
-{
-  PropertyBundle bundle;
-  const auto& ref = bundle;
+  TEST_CASE("find")
+  {
+    PropertyBundle bundle;
+    const auto& ref = bundle;
 
-  ASSERT_FALSE(bundle.find("foo"));
-  ASSERT_FALSE(ref.find("foo"));
+    REQUIRE(!bundle.find("foo"));
+    REQUIRE(!ref.find("foo"));
 
-  bundle.add("foo", 123);
+    bundle.add("foo", 123);
 
-  ASSERT_EQ(123, bundle.find("foo")->as_int());
-  ASSERT_EQ(123, ref.find("foo")->as_int());
-}
+    REQUIRE(123 == bundle.find("foo")->as_int());
+    REQUIRE(123 == ref.find("foo")->as_int());
+  }
 
-TEST(PropertyBundle, At)
-{
-  PropertyBundle bundle;
-  const auto& ref = bundle;
+  TEST_CASE("at")
+  {
+    PropertyBundle bundle;
+    const auto& ref = bundle;
 
-  ASSERT_THROW(bundle.at("foo"), TactileError);
-  ASSERT_THROW(ref.at("foo"), TactileError);
+    REQUIRE_THROWS_AS(bundle.at("foo"), TactileError);
+    REQUIRE_THROWS_AS(ref.at("foo"), TactileError);
 
-  bundle.add("foo", true);
+    bundle.add("foo", true);
 
-  ASSERT_TRUE(bundle.at("foo").as_bool());
-  ASSERT_TRUE(ref.at("foo").as_bool());
-}
+    REQUIRE(bundle.at("foo").as_bool());
+    REQUIRE(ref.at("foo").as_bool());
+  }
 
-TEST(PropertyBundle, Contains)
-{
-  PropertyBundle bundle;
-  ASSERT_FALSE(bundle.contains("xyz"));
+  TEST_CASE("contains")
+  {
+    PropertyBundle bundle;
+    REQUIRE(!bundle.contains("xyz"));
 
-  bundle.add("xyz", 4.5f);
-  ASSERT_TRUE(bundle.contains("xyz"));
-  ASSERT_FALSE(bundle.contains("XYZ"));
+    bundle.add("xyz", 4.5f);
+    REQUIRE(bundle.contains("xyz"));
+    REQUIRE(!bundle.contains("XYZ"));
+  }
 }
 
 }  // namespace tactile::test

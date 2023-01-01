@@ -19,133 +19,136 @@
 
 #include "core/layer/object.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 namespace tactile::test {
 
-TEST(Object, Defaults)
+TEST_SUITE("Object")
 {
-  const Object object;
+  TEST_CASE("Defaults")
+  {
+    const Object object;
 
-  ASSERT_EQ(ObjectType::Rect, object.get_type());
-  ASSERT_TRUE(object.is_rect());
+    REQUIRE(ObjectType::Rect == object.get_type());
+    REQUIRE(object.is_rect());
 
-  ASSERT_EQ(Float2 {}, object.get_pos());
-  ASSERT_EQ(Float2 {}, object.get_size());
+    REQUIRE(Float2 {} == object.get_pos());
+    REQUIRE(Float2 {} == object.get_size());
 
-  ASSERT_EQ("", object.get_ctx().name());
-  ASSERT_EQ("", object.get_tag());
+    REQUIRE("" == object.get_ctx().name());
+    REQUIRE("" == object.get_tag());
 
-  ASSERT_FALSE(object.get_meta_id());
-  ASSERT_TRUE(object.is_visible());
-}
+    REQUIRE(!object.get_meta_id());
+    REQUIRE(object.is_visible());
+  }
 
-TEST(Object, SetPos)
-{
-  Object object;
+  TEST_CASE("Seset_postPos")
+  {
+    Object object;
 
-  object.set_pos({12, 83});
-  ASSERT_EQ(12, object.get_pos().x);
-  ASSERT_EQ(83, object.get_pos().y);
+    object.set_pos({12, 83});
+    REQUIRE(12 == object.get_pos().x);
+    REQUIRE(83 == object.get_pos().y);
 
-  object.set_pos({-23, -254});
-  ASSERT_EQ(-23, object.get_pos().x);
-  ASSERT_EQ(-254, object.get_pos().y);
-}
+    object.set_pos({-23, -254});
+    REQUIRE(-23 == object.get_pos().x);
+    REQUIRE(-254 == object.get_pos().y);
+  }
 
-TEST(Object, SetSize)
-{
-  Object object;
+  TEST_CASE("set_size")
+  {
+    Object object;
 
-  object.set_size({391, 34});
-  ASSERT_EQ(391, object.get_size().x);
-  ASSERT_EQ(34, object.get_size().y);
+    object.set_size({391, 34});
+    REQUIRE(391 == object.get_size().x);
+    REQUIRE(34 == object.get_size().y);
 
-  ASSERT_NO_THROW(object.set_size({-54, -78}));
-}
+    REQUIRE_NOTHROW(object.set_size({-54, -78}));
+  }
 
-TEST(Object, SetType)
-{
-  Object object;
+  TEST_CASE("set_type")
+  {
+    Object object;
 
-  object.set_type(ObjectType::Ellipse);
-  ASSERT_EQ(ObjectType::Ellipse, object.get_type());
+    object.set_type(ObjectType::Ellipse);
+    REQUIRE(ObjectType::Ellipse == object.get_type());
 
-  ASSERT_TRUE(object.is_ellipse());
-  ASSERT_FALSE(object.is_rect());
-  ASSERT_FALSE(object.is_point());
+    REQUIRE(object.is_ellipse());
+    REQUIRE(!object.is_rect());
+    REQUIRE(!object.is_point());
 
-  object.set_type(ObjectType::Point);
-  ASSERT_EQ(ObjectType::Point, object.get_type());
+    object.set_type(ObjectType::Point);
+    REQUIRE(ObjectType::Point == object.get_type());
 
-  ASSERT_TRUE(object.is_point());
-  ASSERT_FALSE(object.is_ellipse());
-  ASSERT_FALSE(object.is_rect());
+    REQUIRE(object.is_point());
+    REQUIRE(!object.is_ellipse());
+    REQUIRE(!object.is_rect());
 
-  object.set_type(ObjectType::Rect);
-  ASSERT_EQ(ObjectType::Rect, object.get_type());
+    object.set_type(ObjectType::Rect);
+    REQUIRE(ObjectType::Rect == object.get_type());
 
-  ASSERT_TRUE(object.is_rect());
-  ASSERT_FALSE(object.is_point());
-  ASSERT_FALSE(object.is_ellipse());
-}
+    REQUIRE(object.is_rect());
+    REQUIRE(!object.is_point());
+    REQUIRE(!object.is_ellipse());
+  }
 
-TEST(Object, SetTypeToPoint)
-{
-  Object object;
-  object.set_size({123, 456});
+  TEST_CASE("set_type (point special case)")
+  {
+    Object object;
+    object.set_size({123, 456});
 
-  object.set_type(ObjectType::Point);
-  ASSERT_EQ(0, object.get_size().x);
-  ASSERT_EQ(0, object.get_size().y);
-}
+    object.set_type(ObjectType::Point);
+    REQUIRE(0 == object.get_size().x);
+    REQUIRE(0 == object.get_size().y);
+  }
 
-TEST(Object, SetMetaId)
-{
-  Object object;
+  TEST_CASE("set_meta_id")
+  {
+    Object object;
 
-  object.set_meta_id(42);
-  ASSERT_EQ(42, object.get_meta_id());
-}
+    object.set_meta_id(42);
+    REQUIRE(42 == object.get_meta_id());
+  }
 
-TEST(Object, SetVisible)
-{
-  Object object;
+  TEST_CASE("set_visible")
+  {
+    Object object;
 
-  object.set_visible(false);
-  ASSERT_FALSE(object.is_visible());
+    object.set_visible(false);
+    REQUIRE(!object.is_visible());
 
-  object.set_visible(true);
-  ASSERT_TRUE(object.is_visible());
-}
+    object.set_visible(true);
+    REQUIRE(object.is_visible());
+  }
 
-TEST(Object, SetTag)
-{
-  Object object;
+  TEST_CASE("set_tag")
+  {
+    Object object;
 
-  object.set_tag("foo");
-  ASSERT_EQ("foo", object.get_tag());
-}
+    object.set_tag("foo");
+    REQUIRE("foo" == object.get_tag());
+  }
 
-TEST(Object, Clone)
-{
-  Object object;
-  object.set_type(ObjectType::Ellipse);
-  object.set_pos({921, 832});
-  object.set_size({43, 83});
-  object.set_meta_id(7);
-  object.set_tag("foo");
-  object.set_visible(false);
+  TEST_CASE("clone")
+  {
+    Object object;
+    object.set_type(ObjectType::Ellipse);
+    object.set_pos({921, 832});
+    object.set_size({43, 83});
+    object.set_meta_id(7);
+    object.set_tag("foo");
+    object.set_visible(false);
 
-  const auto clone = object.clone();
-  ASSERT_NE(object.get_uuid(), clone->get_uuid());
+    const auto clone = object.clone();
+    REQUIRE(object.get_uuid() != clone->get_uuid());
 
-  ASSERT_EQ(object.get_type(), clone->get_type());
-  ASSERT_EQ(object.get_pos(), clone->get_pos());
-  ASSERT_EQ(object.get_size(), clone->get_size());
-  ASSERT_EQ(object.get_meta_id(), clone->get_meta_id());
-  ASSERT_EQ(object.get_tag(), clone->get_tag());
-  ASSERT_EQ(object.is_visible(), clone->is_visible());
+    REQUIRE(object.get_type() == clone->get_type());
+    REQUIRE(object.get_pos() == clone->get_pos());
+    REQUIRE(object.get_size() == clone->get_size());
+    REQUIRE(object.get_meta_id() == clone->get_meta_id());
+    REQUIRE(object.get_tag() == clone->get_tag());
+    REQUIRE(object.is_visible() == clone->is_visible());
+  }
 }
 
 }  // namespace tactile::test

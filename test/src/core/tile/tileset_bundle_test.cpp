@@ -19,7 +19,7 @@
 
 #include "core/tile/tileset_bundle.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/tile/tileset_info.hpp"
@@ -37,182 +37,185 @@ namespace {
 
 }  // namespace
 
-TEST(TilesetBundle, Defaults)
+TEST_SUITE("TilesetBundle")
 {
-  const TilesetBundle bundle;
-  ASSERT_EQ(1, bundle.get_next_tile_id());
-  ASSERT_EQ(0u, bundle.size());
-  ASSERT_TRUE(bundle.empty());
-  ASSERT_FALSE(bundle.get_active_tileset_id().has_value());
-}
+  TEST_CASE("Defaults")
+  {
+    const TilesetBundle bundle;
+    REQUIRE(1 == bundle.get_next_tile_id());
+    REQUIRE(0u == bundle.size());
+    REQUIRE(bundle.empty());
+    REQUIRE(!bundle.get_active_tileset_id().has_value());
+  }
 
-TEST(TilesetBundle, AttachTilesetWithExplicitFirstTileId)
-{
-  const TileID first_tile = 123;
+  TEST_CASE("attach_tileset (with explicit first tile ID)")
+  {
+    const TileID first_tile = 123;
 
-  TilesetBundle bundle;
+    TilesetBundle bundle;
 
-  auto tileset = make_tileset();
-  bundle.attach_tileset(tileset, first_tile, false);
+    auto tileset = make_tileset();
+    bundle.attach_tileset(tileset, first_tile, false);
 
-  ASSERT_EQ(1u, bundle.size());
-  ASSERT_EQ(1, bundle.get_next_tile_id());
-  ASSERT_FALSE(bundle.empty());
+    REQUIRE(1u == bundle.size());
+    REQUIRE(1 == bundle.get_next_tile_id());
+    REQUIRE(!bundle.empty());
 
-  ASSERT_TRUE(bundle.is_valid_tile(first_tile));
-  ASSERT_TRUE(bundle.is_valid_tile(first_tile + 42));
-  ASSERT_TRUE(bundle.is_valid_tile(first_tile + tileset->tile_count()));
+    REQUIRE(bundle.is_valid_tile(first_tile));
+    REQUIRE(bundle.is_valid_tile(first_tile + 42));
+    REQUIRE(bundle.is_valid_tile(first_tile + tileset->tile_count()));
 
-  ASSERT_FALSE(bundle.is_valid_tile(first_tile - 1));
-  ASSERT_FALSE(bundle.is_valid_tile(first_tile + tileset->tile_count() + 1));
+    REQUIRE(!bundle.is_valid_tile(first_tile - 1));
+    REQUIRE(!bundle.is_valid_tile(first_tile + tileset->tile_count() + 1));
 
-  const auto& ref = bundle.get_tileset_ref(tileset->get_uuid());
-  ASSERT_EQ(tileset->tile_count(), ref.get_last_tile() - ref.get_first_tile());
-  ASSERT_EQ(first_tile, ref.get_first_tile());
-  ASSERT_EQ(first_tile + tileset->tile_count(), ref.get_last_tile());
-}
+    const auto& ref = bundle.get_tileset_ref(tileset->get_uuid());
+    REQUIRE(tileset->tile_count() == ref.get_last_tile() - ref.get_first_tile());
+    REQUIRE(first_tile == ref.get_first_tile());
+    REQUIRE(first_tile + tileset->tile_count() == ref.get_last_tile());
+  }
 
-TEST(TilesetBundle, AttachTileset)
-{
-  TilesetBundle bundle;
+  TEST_CASE("attach_tileset")
+  {
+    TilesetBundle bundle;
 
-  const auto first_tile = bundle.get_next_tile_id();
+    const auto first_tile = bundle.get_next_tile_id();
 
-  auto tileset = make_tileset();
-  bundle.attach_tileset(tileset, false);
+    auto tileset = make_tileset();
+    bundle.attach_tileset(tileset, false);
 
-  ASSERT_EQ(1u, bundle.size());
-  ASSERT_EQ(first_tile + tileset->tile_count() + 1, bundle.get_next_tile_id());
-  ASSERT_FALSE(bundle.empty());
+    REQUIRE(1u == bundle.size());
+    REQUIRE(first_tile + tileset->tile_count() + 1 == bundle.get_next_tile_id());
+    REQUIRE(!bundle.empty());
 
-  ASSERT_TRUE(bundle.is_valid_tile(first_tile));
-  ASSERT_TRUE(bundle.is_valid_tile(first_tile + 39));
-  ASSERT_TRUE(bundle.is_valid_tile(first_tile + tileset->tile_count()));
+    REQUIRE(bundle.is_valid_tile(first_tile));
+    REQUIRE(bundle.is_valid_tile(first_tile + 39));
+    REQUIRE(bundle.is_valid_tile(first_tile + tileset->tile_count()));
 
-  ASSERT_FALSE(bundle.is_valid_tile(first_tile - 1));
-  ASSERT_FALSE(bundle.is_valid_tile(first_tile + tileset->tile_count() + 1));
+    REQUIRE(!bundle.is_valid_tile(first_tile - 1));
+    REQUIRE(!bundle.is_valid_tile(first_tile + tileset->tile_count() + 1));
 
-  const auto& ref = bundle.get_tileset_ref(tileset->get_uuid());
-  ASSERT_EQ(tileset->tile_count(), ref.get_last_tile() - ref.get_first_tile());
-  ASSERT_EQ(first_tile, ref.get_first_tile());
-  ASSERT_EQ(first_tile + tileset->tile_count(), ref.get_last_tile());
-}
+    const auto& ref = bundle.get_tileset_ref(tileset->get_uuid());
+    REQUIRE(tileset->tile_count() == ref.get_last_tile() - ref.get_first_tile());
+    REQUIRE(first_tile == ref.get_first_tile());
+    REQUIRE(first_tile + tileset->tile_count() == ref.get_last_tile());
+  }
 
-TEST(TilesetBundle, DetachTileset)
-{
-  TilesetBundle bundle;
+  TEST_CASE("detach_tileset")
+  {
+    TilesetBundle bundle;
 
-  auto tileset = make_tileset();
-  const auto tileset_id = tileset->get_uuid();
+    auto tileset = make_tileset();
+    const auto tileset_id = tileset->get_uuid();
 
-  bundle.attach_tileset(tileset, false);
+    bundle.attach_tileset(tileset, false);
 
-  ASSERT_EQ(1u, bundle.size());
-  ASSERT_TRUE(bundle.has_tileset(tileset_id));
+    REQUIRE(1u == bundle.size());
+    REQUIRE(bundle.has_tileset(tileset_id));
 
-  ASSERT_TRUE(bundle.is_valid_tile(1));
-  ASSERT_TRUE(bundle.is_valid_tile(42));
+    REQUIRE(bundle.is_valid_tile(1));
+    REQUIRE(bundle.is_valid_tile(42));
 
-  bundle.detach_tileset(tileset_id);
+    bundle.detach_tileset(tileset_id);
 
-  ASSERT_EQ(0u, bundle.size());
-  ASSERT_FALSE(bundle.has_tileset(tileset_id));
+    REQUIRE(0u == bundle.size());
+    REQUIRE(!bundle.has_tileset(tileset_id));
 
-  ASSERT_FALSE(bundle.is_valid_tile(1));
-  ASSERT_FALSE(bundle.is_valid_tile(42));
+    REQUIRE(!bundle.is_valid_tile(1));
+    REQUIRE(!bundle.is_valid_tile(42));
 
-  ASSERT_THROW(bundle.detach_tileset(tileset_id), TactileError);
-}
+    REQUIRE_THROWS_AS(bundle.detach_tileset(tileset_id), TactileError);
+  }
 
-TEST(TilesetBundle, SelectTileset)
-{
-  TilesetBundle bundle;
+  TEST_CASE("select_tileset")
+  {
+    TilesetBundle bundle;
 
-  const auto a = make_tileset();
-  const auto b = make_tileset();
+    const auto a = make_tileset();
+    const auto b = make_tileset();
 
-  bundle.attach_tileset(a, false);
-  bundle.attach_tileset(b, false);
+    bundle.attach_tileset(a, false);
+    bundle.attach_tileset(b, false);
 
-  ASSERT_FALSE(bundle.get_active_tileset_id().has_value());
+    REQUIRE(!bundle.get_active_tileset_id().has_value());
 
-  bundle.select_tileset(a->get_uuid());
-  ASSERT_EQ(a->get_uuid(), bundle.get_active_tileset_id());
+    bundle.select_tileset(a->get_uuid());
+    REQUIRE(a->get_uuid() == bundle.get_active_tileset_id());
 
-  bundle.select_tileset(b->get_uuid());
-  ASSERT_EQ(b->get_uuid(), bundle.get_active_tileset_id());
+    bundle.select_tileset(b->get_uuid());
+    REQUIRE(b->get_uuid() == bundle.get_active_tileset_id());
 
-  bundle.detach_tileset(b->get_uuid());
-  ASSERT_EQ(a->get_uuid(), bundle.get_active_tileset_id());
+    bundle.detach_tileset(b->get_uuid());
+    REQUIRE(a->get_uuid() == bundle.get_active_tileset_id());
 
-  bundle.detach_tileset(a->get_uuid());
-  ASSERT_FALSE(bundle.get_active_tileset_id());
-}
+    bundle.detach_tileset(a->get_uuid());
+    REQUIRE(!bundle.get_active_tileset_id());
+  }
 
-TEST(TilesetBundle, HasTileset)
-{
-  TilesetBundle bundle;
+  TEST_CASE("has_tileset")
+  {
+    TilesetBundle bundle;
 
-  const auto tileset = make_tileset();
-  ASSERT_FALSE(bundle.has_tileset(tileset->get_uuid()));
+    const auto tileset = make_tileset();
+    REQUIRE(!bundle.has_tileset(tileset->get_uuid()));
 
-  bundle.attach_tileset(tileset, true);
-  ASSERT_TRUE(bundle.has_tileset(tileset->get_uuid()));
-}
+    bundle.attach_tileset(tileset, true);
+    REQUIRE(bundle.has_tileset(tileset->get_uuid()));
+  }
 
-TEST(TilesetBundle, GetRef)
-{
-  TilesetBundle bundle;
+  TEST_CASE("get_tileset_ref")
+  {
+    TilesetBundle bundle;
 
-  const auto a = make_tileset();
-  const auto b = make_tileset();
+    const auto a = make_tileset();
+    const auto b = make_tileset();
 
-  bundle.attach_tileset(a, false);
-  bundle.attach_tileset(b, true);
+    bundle.attach_tileset(a, false);
+    bundle.attach_tileset(b, true);
 
-  const auto& aa = bundle.get_tileset_ref(a->get_uuid());
-  const auto& bb = bundle.get_tileset_ref(b->get_uuid());
+    const auto& aa = bundle.get_tileset_ref(a->get_uuid());
+    const auto& bb = bundle.get_tileset_ref(b->get_uuid());
 
-  ASSERT_EQ(1, aa.get_first_tile());
-  ASSERT_EQ(aa.get_last_tile() + 1, bb.get_first_tile());
+    REQUIRE(1 == aa.get_first_tile());
+    REQUIRE(aa.get_last_tile() + 1 == bb.get_first_tile());
 
-  ASSERT_EQ(a->get_uuid(), aa.get_tileset().get_uuid());
-  ASSERT_EQ(b->get_uuid(), bb.get_tileset().get_uuid());
+    REQUIRE(a->get_uuid() == aa.get_tileset().get_uuid());
+    REQUIRE(b->get_uuid() == bb.get_tileset().get_uuid());
 
-  ASSERT_FALSE(aa.get_selection().has_value());
-  ASSERT_FALSE(bb.get_selection().has_value());
+    REQUIRE(!aa.get_selection().has_value());
+    REQUIRE(!bb.get_selection().has_value());
 
-  ASSERT_FALSE(aa.is_embedded());
-  ASSERT_TRUE(bb.is_embedded());
-}
+    REQUIRE(!aa.is_embedded());
+    REQUIRE(bb.is_embedded());
+  }
 
-TEST(TilesetBundle, ToLocalIndex)
-{
-  TilesetBundle bundle;
+  TEST_CASE("to_local_index")
+  {
+    TilesetBundle bundle;
 
-  const auto a = make_tileset();
-  const auto b = make_tileset();
+    const auto a = make_tileset();
+    const auto b = make_tileset();
 
-  bundle.attach_tileset(a, false);
-  bundle.attach_tileset(b, false);
+    bundle.attach_tileset(a, false);
+    bundle.attach_tileset(b, false);
 
-  auto& ref_a = bundle.get_tileset_ref(a->get_uuid());
-  auto& ref_b = bundle.get_tileset_ref(b->get_uuid());
+    auto& ref_a = bundle.get_tileset_ref(a->get_uuid());
+    auto& ref_b = bundle.get_tileset_ref(b->get_uuid());
 
-  ASSERT_EQ(1, ref_a.get_first_tile());
-  ASSERT_EQ(1 + a->tile_count(), ref_a.get_last_tile());
+    REQUIRE(1 == ref_a.get_first_tile());
+    REQUIRE(1 + a->tile_count() == ref_a.get_last_tile());
 
-  ASSERT_EQ(ref_a.get_last_tile() + 1, ref_b.get_first_tile());
-  ASSERT_EQ(ref_b.get_first_tile() + b->tile_count(), ref_b.get_last_tile());
+    REQUIRE(ref_a.get_last_tile() + 1 == ref_b.get_first_tile());
+    REQUIRE(ref_b.get_first_tile() + b->tile_count() == ref_b.get_last_tile());
 
-  ASSERT_EQ(0, bundle.to_tile_index(ref_a.get_first_tile()));
-  ASSERT_EQ(a->tile_count(), bundle.to_tile_index(ref_a.get_last_tile()));
+    REQUIRE(0 == bundle.to_tile_index(ref_a.get_first_tile()));
+    REQUIRE(a->tile_count() == bundle.to_tile_index(ref_a.get_last_tile()));
 
-  ASSERT_EQ(0, bundle.to_tile_index(ref_b.get_first_tile()));
-  ASSERT_EQ(b->tile_count(), bundle.to_tile_index(ref_b.get_last_tile()));
+    REQUIRE(0 == bundle.to_tile_index(ref_b.get_first_tile()));
+    REQUIRE(b->tile_count() == bundle.to_tile_index(ref_b.get_last_tile()));
 
-  ASSERT_THROW(bundle.to_tile_index(ref_a.get_first_tile() - 1), TactileError);
-  ASSERT_THROW(bundle.to_tile_index(ref_b.get_last_tile() + 1), TactileError);
+    REQUIRE_THROWS_AS(bundle.to_tile_index(ref_a.get_first_tile() - 1), TactileError);
+    REQUIRE_THROWS_AS(bundle.to_tile_index(ref_b.get_last_tile() + 1), TactileError);
+  }
 }
 
 }  // namespace tactile::test

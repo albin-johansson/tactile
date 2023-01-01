@@ -19,45 +19,48 @@
 
 #include "core/tile/tile_matrix.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 namespace tactile::test {
 
-TEST(TileUtils, ToMatrixCoords)
+TEST_SUITE("TileMatrix")
 {
-  ASSERT_EQ(0, to_matrix_coords(0, 3).row);
-  ASSERT_EQ(0, to_matrix_coords(0, 3).col);
+  TEST_CASE("to_matrix_coords")
+  {
+    REQUIRE(0 == to_matrix_coords(0, 3).row);
+    REQUIRE(0 == to_matrix_coords(0, 3).col);
 
-  ASSERT_EQ(0, to_matrix_coords(1, 3).row);
-  ASSERT_EQ(1, to_matrix_coords(1, 3).col);
+    REQUIRE(0 == to_matrix_coords(1, 3).row);
+    REQUIRE(1 == to_matrix_coords(1, 3).col);
 
-  ASSERT_EQ(0, to_matrix_coords(2, 3).row);
-  ASSERT_EQ(2, to_matrix_coords(2, 3).col);
+    REQUIRE(0 == to_matrix_coords(2, 3).row);
+    REQUIRE(2 == to_matrix_coords(2, 3).col);
 
-  ASSERT_EQ(1, to_matrix_coords(3, 3).row);
-  ASSERT_EQ(0, to_matrix_coords(3, 3).col);
+    REQUIRE(1 == to_matrix_coords(3, 3).row);
+    REQUIRE(0 == to_matrix_coords(3, 3).col);
 
-  ASSERT_EQ(1, to_matrix_coords(4, 3).row);
-  ASSERT_EQ(1, to_matrix_coords(4, 3).col);
+    REQUIRE(1 == to_matrix_coords(4, 3).row);
+    REQUIRE(1 == to_matrix_coords(4, 3).col);
 
-  ASSERT_EQ(1, to_matrix_coords(5, 3).row);
-  ASSERT_EQ(2, to_matrix_coords(5, 3).col);
-}
+    REQUIRE(1 == to_matrix_coords(5, 3).row);
+    REQUIRE(2 == to_matrix_coords(5, 3).col);
+  }
 
-TEST(TileUtils, MakeTileRow)
-{
-  const auto row = make_tile_row(10);
-  ASSERT_EQ(10u, row.capacity());
-  ASSERT_EQ(10u, row.size());
-}
+  TEST_CASE("make_tile_row")
+  {
+    const auto row = make_tile_row(10);
+    REQUIRE(10u == row.capacity());
+    REQUIRE(10u == row.size());
+  }
 
-TEST(TileUtils, MakeTileMatrix)
-{
-  const auto matrix = make_tile_matrix(5, 7);
-  ASSERT_EQ(5u, matrix.capacity());
-  ASSERT_EQ(5u, matrix.size());
-  ASSERT_EQ(7u, matrix.at(0).capacity());
-  ASSERT_EQ(7u, matrix.at(0).size());
+  TEST_CASE("make_tile_matrix")
+  {
+    const auto matrix = make_tile_matrix(5, 7);
+    REQUIRE(5u == matrix.capacity());
+    REQUIRE(5u == matrix.size());
+    REQUIRE(7u == matrix.at(0).capacity());
+    REQUIRE(7u == matrix.at(0).size());
+  }
 }
 
 }  // namespace tactile::test

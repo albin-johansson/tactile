@@ -19,7 +19,7 @@
 
 #include "core/component/component_base.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 
@@ -27,102 +27,105 @@ using namespace std::string_literals;
 
 namespace tactile::test {
 
-TEST(ComponentBase, Defaults)
+TEST_SUITE("ComponentBase")
 {
-  const ComponentBase component {make_uuid()};
-  ASSERT_TRUE(component.empty());
-  ASSERT_EQ(0u, component.size());
+  TEST_CASE("Defaults")
+  {
+    const ComponentBase component {make_uuid()};
+    REQUIRE(component.empty());
+    REQUIRE(0u == component.size());
 
-  usize count = 0;
-  for (const auto& x [[maybe_unused]]: component) {
-    ++count;
+    usize count = 0;
+    for (const auto& x [[maybe_unused]]: component) {
+      ++count;
+    }
+
+    REQUIRE(0u == count);
   }
 
-  ASSERT_EQ(0u, count);
-}
+  TEST_CASE("add[type]")
+  {
+    ComponentBase component {make_uuid()};
 
-TEST(ComponentBase, AddWithType)
-{
-  ComponentBase component {make_uuid()};
+    component.add("str");
+    REQUIRE(""s == component.at("str"));
 
-  component.add("str");
-  ASSERT_EQ(""s, component.at("str"));
+    component.add("int", AttributeType::Int);
+    REQUIRE(0 == component.at("int"));
 
-  component.add("int", AttributeType::Int);
-  ASSERT_EQ(0, component.at("int"));
+    component.add("bool", AttributeType::Bool);
+    REQUIRE(false == component.at("bool"));
+  }
 
-  component.add("bool", AttributeType::Bool);
-  ASSERT_EQ(false, component.at("bool"));
-}
+  TEST_CASE("add[value]")
+  {
+    ComponentBase component {make_uuid()};
 
-TEST(ComponentBase, AddWithValue)
-{
-  ComponentBase component {make_uuid()};
+    component.add("A", 10);
+    REQUIRE(10 == component.at("A"));
 
-  component.add("A", 10);
-  ASSERT_EQ(10, component.at("A"));
+    REQUIRE(component.has("A"));
+    REQUIRE(!component.has("a"));
 
-  ASSERT_TRUE(component.has("A"));
-  ASSERT_FALSE(component.has("a"));
+    REQUIRE(1u == component.size());
 
-  ASSERT_EQ(1u, component.size());
+    REQUIRE_THROWS_AS(component.add("A"), TactileError);
+  }
 
-  ASSERT_THROW(component.add("A"), TactileError);
-}
+  TEST_CASE("update")
+  {
+    ComponentBase component {make_uuid()};
+    REQUIRE_THROWS_AS(component.update("foo", 10), TactileError);
 
-TEST(ComponentBase, Update)
-{
-  ComponentBase component {make_uuid()};
-  ASSERT_THROW(component.update("foo", 10), TactileError);
+    component.add("foo");
+    REQUIRE(""s == component.at("foo"));
+    REQUIRE(1u == component.size());
 
-  component.add("foo");
-  ASSERT_EQ(""s, component.at("foo"));
-  ASSERT_EQ(1u, component.size());
+    component.update("foo", "bar"s);
+    REQUIRE("bar"s == component.at("foo"));
+    REQUIRE(1u == component.size());
+  }
 
-  component.update("foo", "bar"s);
-  ASSERT_EQ("bar"s, component.at("foo"));
-  ASSERT_EQ(1u, component.size());
-}
+  TEST_CASE("remove")
+  {
+    ComponentBase component {make_uuid()};
+    REQUIRE(!component.remove("foo"));
 
-TEST(ComponentBase, Remove)
-{
-  ComponentBase component {make_uuid()};
-  ASSERT_FALSE(component.remove("foo"));
+    component.add("foo", Color {0xFF, 0, 0});
+    REQUIRE(Color {0xFF, 0, 0} == component.at("foo"));
+    REQUIRE(!component.empty());
 
-  component.add("foo", Color {0xFF, 0, 0});
-  ASSERT_EQ((Color {0xFF, 0, 0}), component.at("foo"));
-  ASSERT_FALSE(component.empty());
+    REQUIRE(component.remove("foo"));
+    REQUIRE(component.empty());
+  }
 
-  ASSERT_TRUE(component.remove("foo"));
-  ASSERT_TRUE(component.empty());
-}
+  TEST_CASE("rename")
+  {
+    ComponentBase component {make_uuid()};
+    REQUIRE(!component.rename("foo", "bar"));
 
-TEST(ComponentBase, Rename)
-{
-  ComponentBase component {make_uuid()};
-  ASSERT_FALSE(component.rename("foo", "bar"));
+    component.add("foo", 123);
+    REQUIRE(component.rename("foo", "bar"));
+    REQUIRE(!component.rename("abc", "def"));
 
-  component.add("foo", 123);
-  ASSERT_TRUE(component.rename("foo", "bar"));
-  ASSERT_FALSE(component.rename("abc", "def"));
+    REQUIRE_THROWS_AS(component.rename("", "bar"), TactileError);
+  }
 
-  ASSERT_THROW(component.rename("", "bar"), TactileError);
-}
+  TEST_CASE("duplicate")
+  {
+    ComponentBase component {make_uuid()};
+    REQUIRE_THROWS_AS(component.duplicate("abc"), TactileError);
 
-TEST(ComponentBase, Duplicate)
-{
-  ComponentBase component {make_uuid()};
-  ASSERT_THROW(component.duplicate("abc"), TactileError);
+    component.add("abc", 3.5f);
+    REQUIRE(component.has("abc"));
+    REQUIRE(1u == component.size());
 
-  component.add("abc", 3.5f);
-  ASSERT_TRUE(component.has("abc"));
-  ASSERT_EQ(1u, component.size());
-
-  const auto new_name = component.duplicate("abc");
-  ASSERT_TRUE(component.has("abc"));
-  ASSERT_TRUE(component.has(new_name));
-  ASSERT_EQ(3.5f, component.at(new_name));
-  ASSERT_EQ(2u, component.size());
+    const auto new_name = component.duplicate("abc");
+    REQUIRE(component.has("abc"));
+    REQUIRE(component.has(new_name));
+    REQUIRE(3.5f == component.at(new_name));
+    REQUIRE(2u == component.size());
+  }
 }
 
 }  // namespace tactile::test

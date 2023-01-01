@@ -19,79 +19,84 @@
 
 #include <filesystem>  // path
 
+#include <doctest/doctest.h>
 #include <fmt/std.h>
-#include <gtest/gtest.h>
 
 #include "common/util/fmt.hpp"
 
+using namespace std::string_view_literals;
+
 namespace tactile::test {
 
-TEST(FmtString, NoFormatting)
+TEST_SUITE("FmtString")
 {
-  const FmtString str {"foobar"};
+  TEST_CASE("No formatting")
+  {
+    const FmtString str {"foobar"};
 
-  ASSERT_STREQ("foobar", str.data());
-  ASSERT_EQ("foobar", str.view());
+    REQUIRE("foobar"sv == str.data());
+    REQUIRE("foobar" == str.view());
 
-  ASSERT_EQ(6u, str.size());
-  ASSERT_EQ(128u, str.capacity());
-}
+    REQUIRE(6u == str.size());
+    REQUIRE(128u == str.capacity());
+  }
 
-TEST(FmtString, SimpleFormatting)
-{
-  const FmtString str {"Hello, {}!", "World"};
-  ASSERT_EQ("Hello, World!", str.view());
-}
+  TEST_CASE("Simple formatting")
+  {
+    const FmtString str {"Hello, {}!", "World"};
+    REQUIRE("Hello, World!" == str.view());
+  }
 
-TEST(FmtString, AdvancedFormatting)
-{
-  const std::filesystem::path path = "foo/bar.txt";
-  const FmtString str {"The answer is {}, here's a path: {}", 42, path};
-  ASSERT_EQ("The answer is 42, here's a path: \"foo/bar.txt\"", str.view());
-}
+  TEST_CASE("Advanced formatting")
+  {
+    const std::filesystem::path path = "foo/bar.txt";
+    const FmtString str {"The answer is {}, here's a path: {}", 42, path};
+    REQUIRE("The answer is 42, here's a path: \"foo/bar.txt\"" == str.view());
+  }
 
-TEST(FmtString, SpareCapacity)
-{
-  const FmtString<16> str {"123"};
+  TEST_CASE("Spare capacity")
+  {
+    const FmtString<16> str {"123"};
 
-  ASSERT_EQ("123", str.view());
-  ASSERT_STREQ("123", str.data());
+    REQUIRE("123" == str.view());
+    REQUIRE("123"sv == str.data());
 
-  ASSERT_EQ(3u, str.size());
-  ASSERT_EQ(16u, str.capacity());
-}
+    REQUIRE(3u == str.size());
+    REQUIRE(16u == str.capacity());
+  }
 
-TEST(FmtString, ExactCapacity)
-{
-  const FmtString<5> str {"12345"};
+  TEST_CASE("Exact capacity")
+  {
+    const FmtString<5> str {"12345"};
 
-  ASSERT_EQ("12345", str.view());
-  ASSERT_STREQ("12345", str.data());
+    REQUIRE("12345" == str.view());
+    REQUIRE("12345"sv == str.data());
 
-  ASSERT_EQ(5u, str.size());
-  ASSERT_EQ(5u, str.capacity());
-}
+    REQUIRE(5u == str.size());
+    REQUIRE(5u == str.capacity());
+  }
 
-TEST(FmtString, NotEnoughCapacity)
-{
-  const FmtString<4> str {"12345"};
+  TEST_CASE("Not enough capacity")
+  {
+    const FmtString<4> str {"12345"};
 
-  ASSERT_EQ("1234", str.view());
-  ASSERT_STREQ("1234", str.data());
+    REQUIRE("1234" == str.view());
+    REQUIRE("1234"sv == str.data());
 
-  ASSERT_EQ(4u, str.size());
-  ASSERT_EQ(4u, str.capacity());
-}
+    REQUIRE(4u == str.size());
+    REQUIRE(4u == str.capacity());
+  }
 
-TEST(FmtString, FormatArgumentCapacityOverflow)
-{
-  const FmtString<6> str {"1234{}", "567"};
+  TEST_CASE("Format argument capacity overflow")
+  {
+    const FmtString<6> str {"1234{}", "567"};
 
-  ASSERT_EQ("123456", str.view());
-  ASSERT_STREQ("123456", str.data());
+    REQUIRE("123456" == str.view());
+    REQUIRE("123456"sv == str.data());
 
-  ASSERT_EQ(6u, str.size());
-  ASSERT_EQ(6u, str.capacity());
+    REQUIRE(6u == str.size());
+    REQUIRE(6u == str.capacity());
+  }
 }
 
 }  // namespace tactile::test

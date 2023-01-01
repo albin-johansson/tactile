@@ -19,37 +19,38 @@
 
 #include "core/component/component_definition.hpp"
 
-#include <gtest/gtest.h>
-
-#include "core/debug/panic.hpp"
+#include <doctest/doctest.h>
 
 using namespace std::string_literals;
 
 namespace tactile::test {
 
-TEST(ComponentDefinition, SetName)
+TEST_SUITE("ComponentDefinition")
 {
-  ComponentDefinition definition;
-  ASSERT_TRUE(definition.name().empty());
+  TEST_CASE("set_name")
+  {
+    ComponentDefinition definition;
+    REQUIRE(definition.name().empty());
 
-  definition.set_name("Qwerty");
-  ASSERT_EQ("Qwerty", definition.name());
-}
+    definition.set_name("Qwerty");
+    REQUIRE("Qwerty" == definition.name());
+  }
 
-TEST(ComponentDefinition, Instantiate)
-{
-  ComponentDefinition definition;
-  definition.add("i", 42);
-  definition.add("f", 1.8f);
-  definition.add("s", "foo"s);
-  definition.add("c", Color {0xFF, 0xD7, 0});
+  TEST_CASE("instantiate")
+  {
+    ComponentDefinition definition;
+    definition.add("i", 42);
+    definition.add("f", 1.8f);
+    definition.add("s", "foo"s);
+    definition.add("c", Color {0xFF, 0xD7, 0});
 
-  const auto instance = definition.instantiate();
-  ASSERT_EQ(definition.get_uuid(), instance.definition_id());
-  ASSERT_EQ(definition.size(), instance.size());
+    const auto instance = definition.instantiate();
+    REQUIRE(definition.get_uuid() == instance.definition_id());
+    REQUIRE(definition.size() == instance.size());
 
-  for (const auto& [key, value]: instance) {
-    ASSERT_EQ(definition.at(key), value);
+    for (const auto& [key, value]: instance) {
+      REQUIRE(definition.at(key) == value);
+    }
   }
 }
 

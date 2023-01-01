@@ -19,7 +19,7 @@
 
 #include "common/util/assoc.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "common/type/hash_map.hpp"
 #include "common/type/string.hpp"
@@ -32,90 +32,93 @@ using namespace std::string_view_literals;
 
 namespace tactile::test {
 
-TEST(Assoc, EmptyHashMap)
+TEST_SUITE("Assoc")
 {
-  const StringMap<int> map;
+  TEST_CASE("Empty HashMap")
+  {
+    const StringMap<int> map;
 
-  ASSERT_FALSE(has_key(map, "foo"));
-  ASSERT_THROW((void) lookup_in(map, "foo"), TactileError);
-}
+    REQUIRE(!has_key(map, "foo"));
+    REQUIRE_THROWS_AS((void) lookup_in(map, "foo"), TactileError);
+  }
 
-TEST(Assoc, EmptyTreeMap)
-{
-  const TreeMap<String, int> map;
+  TEST_CASE("Empty TreeMap")
+  {
+    const TreeMap<String, int> map;
 
-  ASSERT_FALSE(has_key(map, "foo"));
-  ASSERT_THROW((void) lookup_in(map, "foo"), TactileError);
-}
+    REQUIRE(!has_key(map, "foo"));
+    REQUIRE_THROWS_AS((void) lookup_in(map, "foo"), TactileError);
+  }
 
-TEST(Assoc, LookupInHashMap)
-{
-  StringMap<Attribute> map;
-  map["foo"] = 3.5f;
-  map["bar"] = true;
+  TEST_CASE("lookup_in[HashMap]")
+  {
+    StringMap<Attribute> map;
+    map["foo"] = 3.5f;
+    map["bar"] = true;
 
-  ASSERT_THROW((void) lookup_in(map, ""), TactileError);
-  ASSERT_THROW((void) lookup_in(map, "foO"), TactileError);
-  ASSERT_THROW((void) lookup_in(map, "BAR"), TactileError);
+    REQUIRE_THROWS_AS((void) lookup_in(map, ""), TactileError);
+    REQUIRE_THROWS_AS((void) lookup_in(map, "foO"), TactileError);
+    REQUIRE_THROWS_AS((void) lookup_in(map, "BAR"), TactileError);
 
-  ASSERT_EQ(3.5f, lookup_in(map, "foo"));
-  ASSERT_EQ(true, lookup_in(map, "bar"));
-}
+    REQUIRE(3.5f == lookup_in(map, "foo"));
+    REQUIRE(true == lookup_in(map, "bar"));
+  }
 
-TEST(Assoc, LookupInTreeMap)
-{
-  TreeMap<int, Attribute> map;
-  map[10] = "hello"s;
-  map[11] = Color {0xFF, 0, 0};
+  TEST_CASE("lookup_in[TreeMap]")
+  {
+    TreeMap<int, Attribute> map;
+    map[10] = "hello"s;
+    map[11] = Color {0xFF, 0, 0};
 
-  ASSERT_THROW((void) lookup_in(map, 9), TactileError);
-  ASSERT_THROW((void) lookup_in(map, 12), TactileError);
+    REQUIRE_THROWS_AS((void) lookup_in(map, 9), TactileError);
+    REQUIRE_THROWS_AS((void) lookup_in(map, 12), TactileError);
 
-  ASSERT_EQ("hello"s, lookup_in(map, 10));
-  ASSERT_EQ((Color {0xFF, 0, 0}), lookup_in(map, 11));
-}
+    REQUIRE("hello"s == lookup_in(map, 10));
+    REQUIRE(Color {0xFF, 0, 0} == lookup_in(map, 11));
+  }
 
-TEST(Assoc, HashMapHasKey)
-{
-  StringMap<int> map;
-  map["foo"] = 10;
-  map["bar"] = 20;
-  map["abc"] = 30;
+  TEST_CASE("has_key[HashMap]")
+  {
+    StringMap<int> map;
+    map["foo"] = 10;
+    map["bar"] = 20;
+    map["abc"] = 30;
 
-  ASSERT_EQ(3u, map.size());
+    REQUIRE(3u == map.size());
 
-  ASSERT_TRUE(has_key(map, "foo"));
-  ASSERT_TRUE(has_key(map, "bar"));
-  ASSERT_TRUE(has_key(map, "abc"));
+    REQUIRE(has_key(map, "foo"));
+    REQUIRE(has_key(map, "bar"));
+    REQUIRE(has_key(map, "abc"));
 
-  ASSERT_FALSE(has_key(map, ""));
-  ASSERT_FALSE(has_key(map, "fooo"));
-  ASSERT_FALSE(has_key(map, "foO"));
-  ASSERT_FALSE(has_key(map, "BAR"));
-  ASSERT_FALSE(has_key(map, "bar "));
-}
+    REQUIRE(!has_key(map, ""));
+    REQUIRE(!has_key(map, "fooo"));
+    REQUIRE(!has_key(map, "foO"));
+    REQUIRE(!has_key(map, "BAR"));
+    REQUIRE(!has_key(map, "bar "));
+  }
 
-TEST(Assoc, TreeMapHasKey)
-{
-  TreeMap<StringView, float> map;
-  map["A"] = 1.0f;
-  map["B"] = 42.0f;
+  TEST_CASE("has_key[TreeMap]")
+  {
+    TreeMap<StringView, float> map;
+    map["A"] = 1.0f;
+    map["B"] = 42.0f;
 
-  ASSERT_EQ(2u, map.size());
+    REQUIRE(2u == map.size());
 
-  ASSERT_TRUE(has_key(map, "A"));
-  ASSERT_TRUE(has_key(map, "A"s));
-  ASSERT_TRUE(has_key(map, "A"sv));
-  ASSERT_TRUE(has_key(map, "B"));
-  ASSERT_TRUE(has_key(map, "B"s));
-  ASSERT_TRUE(has_key(map, "B"sv));
+    REQUIRE(has_key(map, "A"));
+    REQUIRE(has_key(map, "A"s));
+    REQUIRE(has_key(map, "A"sv));
+    REQUIRE(has_key(map, "B"));
+    REQUIRE(has_key(map, "B"s));
+    REQUIRE(has_key(map, "B"sv));
 
-  ASSERT_FALSE(has_key(map, ""));
-  ASSERT_FALSE(has_key(map, "a"));
-  ASSERT_FALSE(has_key(map, "b"));
-  ASSERT_FALSE(has_key(map, "c"));
-  ASSERT_FALSE(has_key(map, "c"s));
-  ASSERT_FALSE(has_key(map, "c"sv));
+    REQUIRE(!has_key(map, ""));
+    REQUIRE(!has_key(map, "a"));
+    REQUIRE(!has_key(map, "b"));
+    REQUIRE(!has_key(map, "c"));
+    REQUIRE(!has_key(map, "c"s));
+    REQUIRE(!has_key(map, "c"sv));
+  }
 }
 
 }  // namespace tactile::test

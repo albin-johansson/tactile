@@ -19,38 +19,43 @@
 
 #include "core/layer/object_layer.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 namespace tactile::test {
 
-TEST(ObjectLayer, Defaults)
+// TODO improve this suite
+
+TEST_SUITE("ObjectLayer")
 {
-  const ObjectLayer layer;
-  ASSERT_EQ(LayerType::ObjectLayer, layer.get_type());
-  ASSERT_EQ(0u, layer.object_count());
-  ASSERT_FALSE(layer.get_meta_id().has_value());
-}
+  TEST_CASE("Defaults")
+  {
+    const ObjectLayer layer;
+    REQUIRE(LayerType::ObjectLayer == layer.get_type());
+    REQUIRE(0u == layer.object_count());
+    REQUIRE(!layer.get_meta_id().has_value());
+  }
 
-TEST(ObjectLayer, AddObject)
-{
-  ObjectLayer layer;
-  auto object = std::make_shared<Object>();
+  TEST_CASE("add_object")
+  {
+    ObjectLayer layer;
+    auto object = std::make_shared<Object>();
 
-  ASSERT_EQ(0u, layer.object_count());
-  ASSERT_FALSE(layer.has_object(object->get_uuid()));
+    REQUIRE(0u == layer.object_count());
+    REQUIRE(!layer.has_object(object->get_uuid()));
 
-  layer.add_object(object);
+    layer.add_object(object);
 
-  ASSERT_EQ(1u, layer.object_count());
-  ASSERT_TRUE(layer.has_object(object->get_uuid()));
-}
+    REQUIRE(1u == layer.object_count());
+    REQUIRE(layer.has_object(object->get_uuid()));
+  }
 
-TEST(ObjectLayer, RemoveObject)
-{
-  ObjectLayer layer;
-  auto object = std::make_shared<Object>();
+  TEST_CASE("remove_object")
+  {
+    ObjectLayer layer;
+    auto object = std::make_shared<Object>();
 
-  ASSERT_NO_THROW(layer.remove_object(object->get_uuid()));
+    REQUIRE_NOTHROW(layer.remove_object(object->get_uuid()));
+  }
 }
 
 }  // namespace tactile::test

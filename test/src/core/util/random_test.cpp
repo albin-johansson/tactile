@@ -21,50 +21,53 @@
 
 #include <algorithm>  // generate, count
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 #include <spdlog/spdlog.h>
 
 #include "common/type/array.hpp"
 
 namespace tactile::test {
 
-TEST(Random, NextRandomInt)
+TEST_SUITE("Random")
 {
-  ASSERT_EQ(0, next_random_i32(0, 0));
-  ASSERT_EQ(1, next_random_i32(1, 1));
-  ASSERT_EQ(-1, next_random_i32(-1, -1));
+  TEST_CASE("next_random_i32")
+  {
+    REQUIRE(0 == next_random_i32(0, 0));
+    REQUIRE(1 == next_random_i32(1, 1));
+    REQUIRE(-1 == next_random_i32(-1, -1));
 
-  const auto value = next_random_u32(0u, 100u);
-  ASSERT_GE(value, 0u);
-  ASSERT_LE(value, 100u);
-}
+    const auto value = next_random_u32(0u, 100u);
+    REQUIRE(value >= 0u);
+    REQUIRE(value <= 100u);
+  }
 
-TEST(Random, NextRandomFloat)
-{
-  const auto value = next_random_f32(0.0f, 1.0f);
-  ASSERT_GE(value, 0.0f);
-  ASSERT_LE(value, 1.0f);
-}
+  TEST_CASE("next_random_f32")
+  {
+    const auto value = next_random_f32(0.0f, 1.0f);
+    REQUIRE(value >= 0.0f);
+    REQUIRE(value <= 1.0f);
+  }
 
-TEST(Random, NextBool)
-{
-  Array<bool, 1'000> values;
-  std::generate(values.begin(), values.end(), next_bool);
+  TEST_CASE("next_bool")
+  {
+    Array<bool, 1'000> values;
+    std::generate(values.begin(), values.end(), next_bool);
 
-  const auto true_count = std::count(values.begin(), values.end(), true);
-  const auto false_count = std::ssize(values) - true_count;
+    const auto true_count = std::count(values.begin(), values.end(), true);
+    const auto false_count = std::ssize(values) - true_count;
 
-  spdlog::debug("[Random] {} next_bool invocations: {} true, {} false",
-                values.size(),
-                true_count,
-                false_count);
-}
+    spdlog::debug("[Random] {} next_bool invocations: {} true, {} false",
+                  values.size(),
+                  true_count,
+                  false_count);
+  }
 
-TEST(Random, NextFloat)
-{
-  const auto value = next_float();
-  ASSERT_GE(value, 0.0f);
-  ASSERT_LE(value, 1.0f);
+  TEST_CASE("next_float")
+  {
+    const auto value = next_float();
+    REQUIRE(value >= 0.0f);
+    REQUIRE(value <= 1.0f);
+  }
 }
 
 }  // namespace tactile::test

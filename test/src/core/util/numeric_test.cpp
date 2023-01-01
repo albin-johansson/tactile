@@ -21,7 +21,7 @@
 
 #include <limits>  // numeric_limits
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/vocabulary.hpp"
 
@@ -32,14 +32,17 @@ constexpr auto u32_max = std::numeric_limits<uint32>::max();
 
 }  // namespace
 
-TEST(Numeric, Udiff)
+TEST_SUITE("Numeric")
 {
-  ASSERT_EQ(1u, udiff(u32_max, u32_max - 1));
-  ASSERT_EQ(1u, udiff(u32_max - 1, u32_max));
+  TEST_CASE("udiff")
+  {
+    REQUIRE(1u == udiff(u32_max, u32_max - 1));
+    REQUIRE(1u == udiff(u32_max - 1, u32_max));
 
-  ASSERT_EQ(u32_max, udiff(0u, u32_max));
+    REQUIRE(u32_max == udiff(0u, u32_max));
 
-  ASSERT_EQ(46u, udiff(28u, 74u));
+    REQUIRE(46u == udiff(28u, 74u));
+  }
 }
 
 }  // namespace tactile::test
