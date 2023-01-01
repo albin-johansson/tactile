@@ -39,7 +39,7 @@ TEST_SUITE("Assoc")
     const StringMap<int> map;
 
     REQUIRE(!has_key(map, "foo"));
-    REQUIRE_THROWS_AS((void) lookup_in(map, "foo"), TactileError);
+    REQUIRE_THROWS_AS(lookup_in(map, "foo"), TactileError);
   }
 
   TEST_CASE("Empty TreeMap")
@@ -47,7 +47,7 @@ TEST_SUITE("Assoc")
     const TreeMap<String, int> map;
 
     REQUIRE(!has_key(map, "foo"));
-    REQUIRE_THROWS_AS((void) lookup_in(map, "foo"), TactileError);
+    REQUIRE_THROWS_AS(lookup_in(map, "foo"), TactileError);
   }
 
   TEST_CASE("lookup_in[HashMap]")
@@ -56,9 +56,9 @@ TEST_SUITE("Assoc")
     map["foo"] = 3.5f;
     map["bar"] = true;
 
-    REQUIRE_THROWS_AS((void) lookup_in(map, ""), TactileError);
-    REQUIRE_THROWS_AS((void) lookup_in(map, "foO"), TactileError);
-    REQUIRE_THROWS_AS((void) lookup_in(map, "BAR"), TactileError);
+    REQUIRE_THROWS_AS(lookup_in(map, ""), TactileError);
+    REQUIRE_THROWS_AS(lookup_in(map, "foO"), TactileError);
+    REQUIRE_THROWS_AS(lookup_in(map, "BAR"), TactileError);
 
     REQUIRE(3.5f == lookup_in(map, "foo"));
     REQUIRE(true == lookup_in(map, "bar"));
@@ -70,8 +70,8 @@ TEST_SUITE("Assoc")
     map[10] = "hello"s;
     map[11] = Color {0xFF, 0, 0};
 
-    REQUIRE_THROWS_AS((void) lookup_in(map, 9), TactileError);
-    REQUIRE_THROWS_AS((void) lookup_in(map, 12), TactileError);
+    REQUIRE_THROWS_AS(lookup_in(map, 9), TactileError);
+    REQUIRE_THROWS_AS(lookup_in(map, 12), TactileError);
 
     REQUIRE("hello"s == lookup_in(map, 10));
     REQUIRE(Color {0xFF, 0, 0} == lookup_in(map, 11));

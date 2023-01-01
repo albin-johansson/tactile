@@ -82,10 +82,9 @@ TEST_SUITE("Tileset")
   {
     auto tileset = make_tileset();
 
-    REQUIRE_THROWS_AS((void) tileset.index_of({-1, -1}), TactileError);
-    REQUIRE_THROWS_AS(
-        (void) tileset.index_of({tileset.row_count(), tileset.column_count()}),
-        TactileError);
+    REQUIRE_THROWS_AS(tileset.index_of({-1, -1}), TactileError);
+    REQUIRE_THROWS_AS(tileset.index_of({tileset.row_count(), tileset.column_count()}),
+                      TactileError);
 
     REQUIRE(0 == tileset.index_of({0, 0}));
     REQUIRE(tileset.tile_count() - 1 ==
