@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.16)
 
 project(tactile-test CXX)
 
-find_package(GTest CONFIG REQUIRED)
 find_package(doctest CONFIG REQUIRED)
 
 enable_testing()
@@ -42,7 +41,6 @@ target_link_libraries(${TACTILE_TEST}
                       PRIVATE
                       ${TACTILE_LIB}
                       SDL2::SDL2main
-                      GTest::gtest
                       doctest::doctest
                       )
 

@@ -83,6 +83,7 @@ void update_credits_dialog()
       ui_dependency_row("Centurion", "MIT");
       ui_dependency_row("cppcodec", "MIT");
       ui_dependency_row("Dear ImGui", "MIT");
+      ui_dependency_row("doctest", "MIT");
       ui_dependency_row("EnTT", "MIT");
       ui_dependency_row("fmt", "MIT");
       ui_dependency_row("GLEW", "BSD/MIT");
@@ -101,7 +102,6 @@ void update_credits_dialog()
       ui_dependency_row("yaml-cpp", "MIT");
       ui_dependency_row("Zlib", "Zlib");
       ui_dependency_row("zstd", "BSD/GPLv2");
-      ui_dependency_row("googletest", "BSD");
     }
   }
 }
