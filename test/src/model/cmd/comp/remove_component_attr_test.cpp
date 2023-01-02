@@ -48,25 +48,25 @@ TEST_SUITE("cmd::RemoveComponentAttr")
 
     auto& component_def = component_index->at(component_id);
     auto& map = map_document->get_map();
-    auto& component_bundle = map.get_ctx().comps();
+    auto& map_ctx = map.get_ctx();
 
-    component_bundle.add(component_def.instantiate());
-    REQUIRE(component_bundle.contains(component_id));
-    REQUIRE(component_bundle.at(component_id).at(attr_name) == attr_value);
+    map_ctx.attach_component(component_def.instantiate());
+    REQUIRE(map_ctx.has_component(component_id));
+    REQUIRE(map_ctx.get_component(component_id).at(attr_name) == attr_value);
 
     cmd::RemoveComponentAttr cmd {map_document.get(), component_id, attr_name};
 
     cmd.redo();
     REQUIRE(component_def.empty());
-    REQUIRE(component_bundle.at(component_id).empty());
+    REQUIRE(map_ctx.get_component(component_id).empty());
 
     cmd.undo();
     REQUIRE(component_def.has(attr_name));
     REQUIRE(component_def.at(attr_name) == attr_value);
 
-    REQUIRE(component_bundle.at(component_id).has(attr_name));
+    REQUIRE(map_ctx.get_component(component_id).has(attr_name));
     REQUIRE(component_def.at(attr_name) ==
-            component_bundle.at(component_id).at(attr_name));
+            map_ctx.get_component(component_id).at(attr_name));
   }
 }
 

@@ -53,23 +53,23 @@ void restore_context_no_register(Document& document,
                                  const Shared<Context>& context,
                                  const ir::ContextData& source)
 {
+  auto& ctx = context->get_ctx();
   auto& properties = context->get_ctx().props();
-  auto& components = context->get_ctx().comps();
 
   for (const auto& [property_name, property_value]: source.properties) {
     properties.add(property_name, property_value);
   }
 
-  if (auto index = document.get_component_index_ptr()) {
+  if (auto component_index = document.get_component_index_ptr()) {
     for (const auto& [type, attributes]: source.components) {
-      const auto& definition = index->with_name(type);
+      const auto& definition = component_index->with_name(type);
 
       auto component = definition.instantiate();
       for (const auto& [attr_name, attr_value]: attributes) {
         component.update(attr_name, attr_value);
       }
 
-      components.add(std::move(component));
+      ctx.attach_component(std::move(component));
     }
   }
 }

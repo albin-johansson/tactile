@@ -45,10 +45,10 @@ class ResetAttachedComponent final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Shared<ComponentIndex> mIndex;
+  Shared<ComponentIndex> mComponentIndex;
   Shared<Context> mContext;
   UUID mComponentId {};
-  Maybe<Component> mComponent;
+  Maybe<Component> mPreviousComponent;
 };
 
 }  // namespace tactile::cmd

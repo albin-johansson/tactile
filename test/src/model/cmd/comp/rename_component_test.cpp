@@ -46,8 +46,8 @@ TEST_SUITE("cmd::RenameComponent")
         ComponentBuilder {component_index, old_component_name}.result();
 
     auto& map = map_document->get_map();
-    auto& component_bundle = map.get_ctx().comps();
-    component_bundle.add(component_index->at(component_id).instantiate());
+    auto& map_ctx = map.get_ctx();
+    map_ctx.attach_component(component_index->at(component_id).instantiate());
 
     cmd::RenameComponent cmd {component_index, component_id, new_component_name};
 
@@ -55,15 +55,15 @@ TEST_SUITE("cmd::RenameComponent")
     REQUIRE(component_index->contains(component_id));
     REQUIRE(!component_index->contains(old_component_name));
     REQUIRE(component_index->contains(new_component_name));
-    REQUIRE(component_bundle.size() == 1u);
-    REQUIRE(component_bundle.contains(component_id));
+    REQUIRE(map_ctx.component_count() == 1u);
+    REQUIRE(map_ctx.has_component(component_id));
 
     cmd.undo();
     REQUIRE(component_index->contains(component_id));
     REQUIRE(component_index->contains(old_component_name));
     REQUIRE(!component_index->contains(new_component_name));
-    REQUIRE(component_bundle.size() == 1u);
-    REQUIRE(component_bundle.contains(component_id));
+    REQUIRE(map_ctx.component_count() == 1u);
+    REQUIRE(map_ctx.has_component(component_id));
   }
 }
 

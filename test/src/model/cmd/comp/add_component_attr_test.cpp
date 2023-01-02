@@ -40,28 +40,30 @@ TEST_SUITE("cmd::AddComponentAttr")
     auto component_index = map_document->get_component_index_ptr();
 
     const auto component_id = ComponentBuilder {component_index, "Demo"}.result();
-    auto& definition = component_index->at(component_id);
-    REQUIRE(definition.empty());
+    auto& component_def = component_index->at(component_id);
+    REQUIRE(component_def.empty());
 
     auto& map = map_document->get_map();
-    auto& component_bundle = map.get_ctx().comps();
+    auto& map_ctx = map.get_ctx();
 
-    component_bundle.add(definition.instantiate());
-    REQUIRE(component_bundle.contains(component_id));
-    REQUIRE(component_bundle.at(component_id).empty());
+    REQUIRE(map_ctx.attach_component(component_def.instantiate()).succeeded());
+    REQUIRE(map_ctx.has_component(component_id));
+    REQUIRE(map_ctx.get_component(component_id).empty());
 
     const String attr_name {"foo"};
     cmd::AddComponentAttr cmd {map_document.get(), component_id, attr_name};
 
     cmd.redo();
-    REQUIRE(definition.size() == 1u);
-    REQUIRE(definition.has(attr_name));
-    REQUIRE(definition.at(attr_name) == component_bundle.at(component_id).at(attr_name));
+    const auto& component = map_ctx.get_component(component_id);
+
+    REQUIRE(component_def.size() == 1u);
+    REQUIRE(component_def.has(attr_name));
+    REQUIRE(component_def.at(attr_name) == component.at(attr_name));
 
     cmd.undo();
-    REQUIRE(definition.empty());
-    REQUIRE(!definition.has(attr_name));
-    REQUIRE_THROWS_AS(component_bundle.at(component_id).at(attr_name), TactileError);
+    REQUIRE(component_def.empty());
+    REQUIRE(!component_def.has(attr_name));
+    REQUIRE_THROWS_AS(component.at(attr_name), TactileError);
   }
 }
 

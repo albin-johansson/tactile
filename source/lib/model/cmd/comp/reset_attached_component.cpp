@@ -33,11 +33,11 @@ namespace tactile::cmd {
 ResetAttachedComponent::ResetAttachedComponent(Shared<ComponentIndex> index,
                                                Shared<Context> context,
                                                const UUID& component_id)
-    : mIndex {std::move(index)},
+    : mComponentIndex {std::move(index)},
       mContext {std::move(context)},
       mComponentId {component_id}
 {
-  if (!mIndex) {
+  if (!mComponentIndex) {
     throw TactileError {"Invalid null component index!"};
   }
   else if (!mContext) {
@@ -47,23 +47,22 @@ ResetAttachedComponent::ResetAttachedComponent(Shared<ComponentIndex> index,
 
 void ResetAttachedComponent::undo()
 {
-  auto& comps = mContext->get_ctx().comps();
+  auto& ctx = mContext->get_ctx();
 
-  comps.erase(mComponentId);
-  comps.add(mComponent.value());
+  ctx.detach_component(mComponentId);
+  ctx.attach_component(mPreviousComponent.value());
 
-  mComponent.reset();
+  mPreviousComponent.reset();
 }
 
 void ResetAttachedComponent::redo()
 {
-  auto& comps = mContext->get_ctx().comps();
-  const auto& definition = mIndex->at(mComponentId);
+  auto& ctx = mContext->get_ctx();
+  mPreviousComponent = ctx.get_component(mComponentId);
 
-  mComponent = comps.at(mComponentId);
-
-  comps.erase(mComponentId);
-  comps.add(definition.instantiate());
+  const auto& component_def = mComponentIndex->at(mComponentId);
+  ctx.detach_component(mComponentId);
+  ctx.attach_component(component_def.instantiate());
 }
 
 auto ResetAttachedComponent::get_name() const -> String

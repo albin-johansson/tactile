@@ -47,19 +47,18 @@ SetComponentAttrType::SetComponentAttrType(Document* document,
 
 void SetComponentAttrType::undo()
 {
-  auto index = mDocument->get_component_index_ptr();
-  auto& definition = index->at(mComponentId);
+  auto component_index = mDocument->get_component_index_ptr();
 
-  definition.remove(mAttributeName);
-  definition.add(mAttributeName, mSnapshot.value());
+  auto& component_def = component_index->at(mComponentId);
+  component_def.remove(mAttributeName);
+  component_def.add(mAttributeName, mSnapshot.value());
 
-  auto& contexts = mDocument->get_contexts();
-  for (const auto& [contextId, attribute]: mPrevAttributes) {
-    auto& context = contexts.at(contextId);
-    auto& comp = context.get_ctx().comps().at(definition.get_uuid());
-
-    comp.remove(mAttributeName);
-    comp.add(mAttributeName, attribute);
+  auto& context_manager = mDocument->get_contexts();
+  for (const auto& [context_id, attribute_value]: mPrevAttributes) {
+    auto& context = context_manager.at(context_id);
+    auto& component = context.get_ctx().get_component(component_def.get_uuid());
+    component.remove(mAttributeName);
+    component.add(mAttributeName, attribute_value);
   }
 
   mSnapshot.reset();
@@ -67,16 +66,16 @@ void SetComponentAttrType::undo()
 
 void SetComponentAttrType::redo()
 {
-  auto index = mDocument->get_component_index_ptr();
-  auto& definition = index->at(mComponentId);
+  auto component_index = mDocument->get_component_index_ptr();
 
-  mSnapshot = definition.at(mAttributeName);
+  auto& component_def = component_index->at(mComponentId);
+  mSnapshot = component_def.at(mAttributeName);
 
-  definition.remove(mAttributeName);
-  definition.add(mAttributeName, mNewType);
+  component_def.remove(mAttributeName);
+  component_def.add(mAttributeName, mNewType);
 
   auto& contexts = mDocument->get_contexts();
-  mPrevAttributes = contexts.on_changed_component_attr_type(definition.get_uuid(),
+  mPrevAttributes = contexts.on_changed_component_attr_type(component_def.get_uuid(),
                                                             mAttributeName,
                                                             mNewType);
 }

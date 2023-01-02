@@ -19,16 +19,22 @@
 
 #pragma once
 
-#include "core/component/component_bundle.hpp"
-#include "core/context/property_bundle.hpp"
+#include "common/type/fn.hpp"
+#include "common/type/hash_map.hpp"
+#include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
+#include "common/type/result.hpp"
 #include "common/type/uuid.hpp"
+#include "core/component/component.hpp"
+#include "core/context/property_bundle.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
 
 class ContextInfo final {
  public:
+  using ComponentVisitor = Fn<void(const UUID&, const Component&)>;
+
   TACTILE_DEFAULT_COPY(ContextInfo);
   TACTILE_DEFAULT_MOVE(ContextInfo);
 
@@ -37,6 +43,25 @@ class ContextInfo final {
   explicit ContextInfo(const UUID& id);
 
   void set_name(String name);
+
+  void each_component(const ComponentVisitor& visitor) const;
+
+  /// Attaches a component to the context.
+  /// Has no effect if the context already has an attached component of the same type.
+  auto attach_component(Component component) -> Result;
+
+  /// Detaches a component from the context.
+  auto detach_component(const UUID& component_id) -> Maybe<Component>;
+
+  [[nodiscard]] auto get_component(const UUID& component_id) -> Component&;
+  [[nodiscard]] auto get_component(const UUID& component_id) const -> const Component&;
+
+  [[nodiscard]] auto find_component(const UUID& component_id) -> Component*;
+  [[nodiscard]] auto find_component(const UUID& component_id) const -> const Component*;
+
+  [[nodiscard]] auto has_component(const UUID& component_id) const -> bool;
+
+  [[nodiscard]] auto component_count() const -> usize;
 
   [[nodiscard]] auto clone() const -> ContextInfo;
 
@@ -47,14 +72,11 @@ class ContextInfo final {
   [[nodiscard]] auto props() -> PropertyBundle& { return mProps; }
   [[nodiscard]] auto props() const -> const PropertyBundle& { return mProps; }
 
-  [[nodiscard]] auto comps() -> ComponentBundle& { return mComps; }
-  [[nodiscard]] auto comps() const -> const ComponentBundle& { return mComps; }
-
  private:
   UUID mId {make_uuid()};
   String mName;
   PropertyBundle mProps;
-  ComponentBundle mComps;
+  HashMap<UUID, Component> mComponents;
 };
 
 }  // namespace tactile

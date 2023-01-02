@@ -40,16 +40,13 @@ DetachComponent::DetachComponent(Shared<Context> context, const UUID& component_
 
 void DetachComponent::undo()
 {
-  auto& comps = mContext->get_ctx().comps();
-
-  comps.add(mComponent.value());
+  mContext->get_ctx().attach_component(mComponent.value());
   mComponent.reset();
 }
 
 void DetachComponent::redo()
 {
-  auto& comps = mContext->get_ctx().comps();
-  mComponent = comps.erase(mComponentId);
+  mComponent = mContext->get_ctx().detach_component(mComponentId);
 }
 
 auto DetachComponent::get_name() const -> String

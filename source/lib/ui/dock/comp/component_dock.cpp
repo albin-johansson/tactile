@@ -49,20 +49,19 @@ void show_add_component_button_popup_content(const Document& document,
                                              entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
-  const auto* index = document.find_component_index();
-  TACTILE_ASSERT(index != nullptr);
+  const auto* component_index = document.find_component_index();
+  TACTILE_ASSERT(component_index != nullptr);
 
-  if (index->empty()) {
+  if (component_index->empty()) {
     const Disable disable;
     ImGui::TextUnformatted(lang.misc.no_available_components.c_str());
   }
   else {
-    const auto& comps = context.get_ctx().comps();
-    for (const auto& [definition_id, definition]: *index) {
-      const Disable disable_if {comps.contains(definition_id)};
-
-      if (ImGui::MenuItem(definition.name().c_str())) {
-        dispatcher.enqueue<AttachComponentEvent>(context.get_uuid(), definition_id);
+    const auto& ctx = context.get_ctx();
+    for (const auto& [component_id, component_def]: *component_index) {
+      const Disable disable_if {ctx.has_component(component_id)};
+      if (ImGui::MenuItem(component_def.name().c_str())) {
+        dispatcher.enqueue<AttachComponentEvent>(context.get_uuid(), component_id);
       }
     }
   }
@@ -82,21 +81,21 @@ void show_contents(const Document& document, entt::dispatcher& dispatcher)
   ImGui::TextUnformatted(indicator.data());
 
   if (const Child pane {"##ComponentsChild"}; pane.is_open()) {
-    const auto& comps = context.get_ctx().comps();
-    if (comps.empty()) {
+    const auto& ctx = context.get_ctx();
+    if (ctx.component_count() == 0) {
       prepare_vertical_alignment_center(2);
       ui_centered_label(lang.misc.context_has_no_components.c_str());
     }
     else {
-      const auto* index = document.find_component_index();
-      TACTILE_ASSERT(index != nullptr);
+      const auto* component_index = document.find_component_index();
+      TACTILE_ASSERT(component_index != nullptr);
 
-      for (const auto& [component_id, component]: comps) {
+      ctx.each_component([&](const UUID& component_id, const Component& component) {
         ImGui::Separator();
 
-        const auto& component_name = index->at(component_id).name();
+        const auto& component_name = component_index->at(component_id).name();
         component_view(context.get_uuid(), component, component_name, dispatcher);
-      }
+      });
 
       ImGui::Separator();
     }

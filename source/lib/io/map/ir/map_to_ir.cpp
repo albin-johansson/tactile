@@ -36,23 +36,25 @@ namespace tactile::io {
 namespace {
 
 void convert_context(const Context& context,
-                     const ComponentIndex* components,
-                     ir::ContextData& data)
+                     const ComponentIndex* component_index,
+                     ir::ContextData& context_data)
 {
-  for (const auto& [name, property]: context.get_ctx().props()) {
-    data.properties[name] = property;
+  const auto& ctx = context.get_ctx();
+
+  for (const auto& [name, property]: ctx.props()) {
+    context_data.properties[name] = property;
   }
 
-  if (components) {
-    for (const auto& [component_id, component]: context.get_ctx().comps()) {
-      const auto& definition = components->at(component.definition_id());
-      const auto& name = definition.name();
+  if (component_index) {
+    ctx.each_component([&](const UUID&, const Component& component) {
+      const auto& component_def = component_index->at(component.definition_id());
+      const auto& component_name = component_def.name();
 
-      auto& attributes = data.components[name];
+      auto& component_attributes = context_data.components[component_name];
       for (const auto& [attr_name, attr_value]: component) {
-        attributes[attr_name] = attr_value;
+        component_attributes[attr_name] = attr_value;
       }
-    }
+    });
   }
 }
 
@@ -185,8 +187,10 @@ void convert_fancy_tiles(const Tileset& tileset,
   for (const auto& [id, tile]: tileset) {
     const auto is_animated = tile->is_animated();
     const auto has_objects = tile->object_count() != 0;
+
+    const auto& tile_ctx = tile->get_ctx();
     const auto has_props = !tile->get_ctx().props().empty();
-    const auto has_comps = !tile->get_ctx().comps().empty();
+    const auto has_comps = tile_ctx.component_count() > 0;
 
     if (is_animated || has_objects || has_props || has_comps) {
       auto& tile_data = data.fancy_tiles[tile->get_index()];
