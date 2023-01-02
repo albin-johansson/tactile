@@ -6,7 +6,7 @@
   "maintainers": [
     "albin-johansson"
   ],
-  "builtin-baseline": "44b540607036e0587f6564c91f93663b0212ab98",
+  "builtin-baseline": "f9bea5d58186dc14e7e33132e43b52222147f51e",
   "dependencies": [
     "argparse",
     "entt",
