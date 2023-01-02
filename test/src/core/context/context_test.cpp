@@ -67,8 +67,8 @@ TEST_SUITE("Context")
     const auto context = make_context<T>();
     REQUIRE(!context.get_uuid().is_nil());
 
+    REQUIRE(context.get_ctx().property_count() == 0u);
     REQUIRE(context.get_ctx().component_count() == 0u);
-    REQUIRE(context.get_ctx().props().empty());
   }
 
   TEST_CASE_TEMPLATE("set_name", T, CONTEXT_TYPES)

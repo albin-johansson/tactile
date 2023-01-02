@@ -33,6 +33,7 @@ TEST_SUITE("ContextInfo")
     const ContextInfo ctx;
     REQUIRE(!ctx.get_uuid().is_nil());
     REQUIRE(ctx.name().empty());
+    REQUIRE(ctx.property_count() == 0u);
     REQUIRE(ctx.component_count() == 0u);
   }
 
@@ -48,6 +49,88 @@ TEST_SUITE("ContextInfo")
     ContextInfo ctx;
     ctx.set_name("foo");
     REQUIRE(ctx.name() == "foo");
+  }
+
+  TEST_CASE("add_property (with type)")
+  {
+    ContextInfo ctx;
+    const String property_name {"foo"};
+
+    REQUIRE(ctx.add_property(property_name, AttributeType::Int).succeeded());
+    REQUIRE(ctx.property_count() == 1u);
+    REQUIRE(ctx.has_property(property_name));
+    REQUIRE(ctx.get_property(property_name).as_int() == 0);
+
+    REQUIRE(ctx.add_property(property_name, AttributeType::Float).failed());
+    REQUIRE(ctx.property_count() == 1u);
+    REQUIRE(ctx.has_property(property_name));
+    REQUIRE(ctx.get_property(property_name).type() == AttributeType::Int);
+  }
+
+  TEST_CASE("add_property (with value)")
+  {
+    ContextInfo ctx;
+    const String property_name {"foo"};
+    const String property_value {"bar"};
+
+    REQUIRE(ctx.add_property(property_name, property_value).succeeded());
+    REQUIRE(ctx.has_property(property_name));
+    REQUIRE(ctx.get_property(property_name) == property_value);
+
+    REQUIRE(ctx.add_property(property_name, 42).failed());
+    REQUIRE(ctx.property_count() == 1u);
+  }
+
+  TEST_CASE("update_property")
+  {
+    ContextInfo ctx;
+    const String property_name {"A"};
+
+    REQUIRE(ctx.update_property(property_name, 10).failed());
+
+    REQUIRE(ctx.add_property(property_name, 10).succeeded());
+    REQUIRE(ctx.property_count() == 1u);
+
+    REQUIRE(ctx.update_property(property_name, true).succeeded());
+    REQUIRE(ctx.get_property(property_name) == true);
+    REQUIRE(ctx.property_count() == 1u);
+
+    REQUIRE(ctx.update_property(property_name, 4.5f).succeeded());
+    REQUIRE(ctx.get_property(property_name) == 4.5f);
+    REQUIRE(ctx.property_count() == 1u);
+  }
+
+  TEST_CASE("remove_property")
+  {
+    ContextInfo ctx;
+    const String property_name {"abc"};
+
+    REQUIRE(!ctx.remove_property(property_name).has_value());
+
+    REQUIRE(ctx.add_property(property_name, 123).succeeded());
+    REQUIRE(ctx.has_property(property_name));
+
+    REQUIRE(ctx.remove_property(property_name) == 123);
+    REQUIRE(!ctx.has_property(property_name));
+  }
+
+  TEST_CASE("rename_property")
+  {
+    ContextInfo ctx;
+    const String old_property_name {"foo"};
+    const String new_property_name {"bar"};
+
+    REQUIRE(ctx.rename_property(old_property_name, new_property_name).failed());
+
+    REQUIRE(ctx.add_property(old_property_name, 42).succeeded());
+    REQUIRE(ctx.has_property(old_property_name));
+    REQUIRE(!ctx.has_property(new_property_name));
+
+    REQUIRE(ctx.rename_property(old_property_name, new_property_name).succeeded());
+    REQUIRE(!ctx.has_property(old_property_name));
+    REQUIRE(ctx.has_property(new_property_name));
+
+    REQUIRE(ctx.property_count() == 1u);
   }
 
   TEST_CASE("attach_component")

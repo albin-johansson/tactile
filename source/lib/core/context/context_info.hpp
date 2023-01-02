@@ -22,11 +22,12 @@
 #include "common/type/fn.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/maybe.hpp"
-#include "common/type/string.hpp"
 #include "common/type/result.hpp"
+#include "common/type/string.hpp"
+#include "common/type/string_map.hpp"
 #include "common/type/uuid.hpp"
+#include "core/attribute.hpp"
 #include "core/component/component.hpp"
-#include "core/context/property_bundle.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
@@ -34,6 +35,7 @@ namespace tactile {
 class ContextInfo final {
  public:
   using ComponentVisitor = Fn<void(const UUID&, const Component&)>;
+  using PropertyVisitor = Fn<void(const String&, const Attribute&)>;
 
   TACTILE_DEFAULT_COPY(ContextInfo);
   TACTILE_DEFAULT_MOVE(ContextInfo);
@@ -44,6 +46,20 @@ class ContextInfo final {
 
   void set_name(String name);
 
+  /// Visits each property of the context.
+  void each_property(const PropertyVisitor& visitor) const;
+
+  auto add_property(String name, Attribute value) -> Result;
+
+  auto add_property(String name, AttributeType type) -> Result;
+
+  auto update_property(StringView name, Attribute value) -> Result;
+
+  auto remove_property(StringView name) -> Maybe<Attribute>;
+
+  auto rename_property(StringView current_name, String new_name) -> Result;
+
+  /// Visits each component attached to the context.
   void each_component(const ComponentVisitor& visitor) const;
 
   /// Attaches a component to the context.
@@ -53,14 +69,20 @@ class ContextInfo final {
   /// Detaches a component from the context.
   auto detach_component(const UUID& component_id) -> Maybe<Component>;
 
+  [[nodiscard]] auto get_property(StringView name) -> Attribute&;
+  [[nodiscard]] auto get_property(StringView name) const -> const Attribute&;
   [[nodiscard]] auto get_component(const UUID& component_id) -> Component&;
   [[nodiscard]] auto get_component(const UUID& component_id) const -> const Component&;
 
+  [[nodiscard]] auto find_property(StringView name) -> Attribute*;
+  [[nodiscard]] auto find_property(StringView name) const -> const Attribute*;
   [[nodiscard]] auto find_component(const UUID& component_id) -> Component*;
   [[nodiscard]] auto find_component(const UUID& component_id) const -> const Component*;
 
+  [[nodiscard]] auto has_property(StringView name) const -> bool;
   [[nodiscard]] auto has_component(const UUID& component_id) const -> bool;
 
+  [[nodiscard]] auto property_count() const -> usize;
   [[nodiscard]] auto component_count() const -> usize;
 
   [[nodiscard]] auto clone() const -> ContextInfo;
@@ -69,13 +91,10 @@ class ContextInfo final {
 
   [[nodiscard]] auto name() const -> const String& { return mName; }
 
-  [[nodiscard]] auto props() -> PropertyBundle& { return mProps; }
-  [[nodiscard]] auto props() const -> const PropertyBundle& { return mProps; }
-
  private:
   UUID mId {make_uuid()};
   String mName;
-  PropertyBundle mProps;
+  StringMap<Attribute> mProperties;
   HashMap<UUID, Component> mComponents;
 };
 

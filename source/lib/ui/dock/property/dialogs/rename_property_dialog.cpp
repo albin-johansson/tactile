@@ -78,7 +78,7 @@ void update_rename_property_dialog(const DocumentModel& model,
   }
 
   const auto current_name = dialog_name_buffer.as_string_view();
-  if (!current_name.empty() && !active_context.get_ctx().props().contains(current_name)) {
+  if (!current_name.empty() && !active_context.get_ctx().has_property(current_name)) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 

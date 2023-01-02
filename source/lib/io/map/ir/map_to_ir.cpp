@@ -41,9 +41,9 @@ void convert_context(const Context& context,
 {
   const auto& ctx = context.get_ctx();
 
-  for (const auto& [name, property]: ctx.props()) {
-    context_data.properties[name] = property;
-  }
+  ctx.each_property([&](const String& property_name, const Attribute& property_value) {
+    context_data.properties[property_name] = property_value;
+  });
 
   if (component_index) {
     ctx.each_component([&](const UUID&, const Component& component) {
@@ -189,7 +189,7 @@ void convert_fancy_tiles(const Tileset& tileset,
     const auto has_objects = tile->object_count() != 0;
 
     const auto& tile_ctx = tile->get_ctx();
-    const auto has_props = !tile->get_ctx().props().empty();
+    const auto has_props = tile_ctx.property_count() > 0;
     const auto has_comps = tile_ctx.component_count() > 0;
 
     if (is_animated || has_objects || has_props || has_comps) {

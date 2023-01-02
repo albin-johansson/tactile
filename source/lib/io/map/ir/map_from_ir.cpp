@@ -54,10 +54,9 @@ void restore_context_no_register(Document& document,
                                  const ir::ContextData& source)
 {
   auto& ctx = context->get_ctx();
-  auto& properties = context->get_ctx().props();
 
   for (const auto& [property_name, property_value]: source.properties) {
-    properties.add(property_name, property_value);
+    ctx.add_property(property_name, property_value);
   }
 
   if (auto component_index = document.get_component_index_ptr()) {

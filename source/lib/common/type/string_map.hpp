@@ -23,8 +23,8 @@
 #include <type_traits>    // true_type
 #include <unordered_map>  // unordered_map
 
+#include "common/type/string.hpp"
 #include "core/vocabulary.hpp"
-#include "string.hpp"
 
 namespace tactile {
 

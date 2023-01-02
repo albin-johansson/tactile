@@ -37,24 +37,24 @@ TEST_SUITE("cmd::RenameProperty")
   {
     auto map_document = MapBuilder::build().result();
     auto map = map_document->get_map_ptr();
-    auto& map_properties = map->get_ctx().props();
+    auto& map_ctx = map->get_ctx();
 
     const String old_property_name {"old_name"};
     const String new_property_name {"new_name"};
     const Color property_value {0xFF, 0, 0};
-    map_properties.add(old_property_name, property_value);
+    map_ctx.add_property(old_property_name, property_value);
 
     cmd::RenameProperty cmd {map, old_property_name, new_property_name};
 
     cmd.redo();
-    REQUIRE(!map_properties.contains(old_property_name));
-    REQUIRE(map_properties.contains(new_property_name));
-    REQUIRE(property_value == map_properties.at(new_property_name));
+    REQUIRE(!map_ctx.has_property(old_property_name));
+    REQUIRE(map_ctx.has_property(new_property_name));
+    REQUIRE(map_ctx.get_property(new_property_name) == property_value);
 
     cmd.undo();
-    REQUIRE(map_properties.contains(old_property_name));
-    REQUIRE(!map_properties.contains(new_property_name));
-    REQUIRE(property_value == map_properties.at(old_property_name));
+    REQUIRE(map_ctx.has_property(old_property_name));
+    REQUIRE(!map_ctx.has_property(new_property_name));
+    REQUIRE(map_ctx.get_property(old_property_name) == property_value);
   }
 }
 

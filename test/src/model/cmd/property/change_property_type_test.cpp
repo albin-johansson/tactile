@@ -38,22 +38,22 @@ TEST_SUITE("cmd::ChangePropertyType")
   {
     auto map_document = MapBuilder::build().result();
     auto map = map_document->get_map_ptr();
-    auto& map_properties = map->get_ctx().props();
+    auto& map_ctx = map->get_ctx();
 
     const String property_name {"foobar"};
-    map_properties.add(property_name, 123);
+    map_ctx.add_property(property_name, 123);
 
     cmd::ChangePropertyType cmd {map, property_name, AttributeType::Bool};
 
     cmd.redo();
-    REQUIRE(map_properties.contains(property_name));
-    REQUIRE(map_properties.at(property_name).is_bool());
-    REQUIRE(!map_properties.at(property_name).as_bool());
+    REQUIRE(map_ctx.has_property(property_name));
+    REQUIRE(map_ctx.get_property(property_name).is_bool());
+    REQUIRE(!map_ctx.get_property(property_name).as_bool());
 
     cmd.undo();
-    REQUIRE(map_properties.contains(property_name));
-    REQUIRE(map_properties.at(property_name).is_int());
-    REQUIRE(123 == map_properties.at(property_name).as_int());
+    REQUIRE(map_ctx.has_property(property_name));
+    REQUIRE(map_ctx.get_property(property_name).is_int());
+    REQUIRE(map_ctx.get_property(property_name).as_int() == 123);
   }
 }
 

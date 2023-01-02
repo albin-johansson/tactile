@@ -37,20 +37,20 @@ TEST_SUITE("cmd::UpdateProperty")
   {
     auto map_document = MapBuilder::build().result();
     auto map = map_document->get_map_ptr();
-    auto& map_properties = map->get_ctx().props();
+    auto& map_ctx = map->get_ctx();
 
     const String property_name {"wow"};
     const int old_property_value = 10;
     const int new_property_value = 20;
-    map_properties.add(property_name, old_property_value);
+    map_ctx.add_property(property_name, old_property_value);
 
     cmd::UpdateProperty cmd {map, property_name, new_property_value};
 
     cmd.redo();
-    REQUIRE(new_property_value == map_properties.at(property_name));
+    REQUIRE(map_ctx.get_property(property_name) == new_property_value);
 
     cmd.undo();
-    REQUIRE(old_property_value == map_properties.at(property_name));
+    REQUIRE(map_ctx.get_property(property_name) == old_property_value);
   }
 
   TEST_CASE("merge_with")
@@ -61,8 +61,8 @@ TEST_SUITE("cmd::UpdateProperty")
     const String property_name {"cool-color"};
     const float initial_property_value = 10;
 
-    auto& map_properties = map->get_ctx().props();
-    map_properties.add(property_name, initial_property_value);
+    auto& map_ctx = map->get_ctx();
+    map_ctx.add_property(property_name, initial_property_value);
 
     cmd::UpdateProperty a {map, property_name, initial_property_value + 1.0f};
     const cmd::UpdateProperty b {map, property_name, initial_property_value + 2.0f};
@@ -72,10 +72,10 @@ TEST_SUITE("cmd::UpdateProperty")
     REQUIRE(a.merge_with(&c));
 
     a.redo();
-    REQUIRE(initial_property_value + 3.0f == map_properties.at(property_name));
+    REQUIRE(map_ctx.get_property(property_name) == initial_property_value + 3.0f);
 
     a.undo();
-    REQUIRE(initial_property_value == map_properties.at(property_name));
+    REQUIRE(map_ctx.get_property(property_name) == initial_property_value);
   }
 }
 

@@ -37,21 +37,21 @@ TEST_SUITE("cmd::RemoveProperty")
   {
     auto map_document = MapBuilder::build().result();
     auto map = map_document->get_map_ptr();
-    auto& map_properties = map->get_ctx().props();
+    auto& map_ctx = map->get_ctx();
 
     const String property_name {"id"};
     const int property_value = 42;
-    map_properties.add(property_name, property_value);
+    map_ctx.add_property(property_name, property_value);
 
     cmd::RemoveProperty cmd {map, property_name};
 
     cmd.redo();
-    REQUIRE(!map_properties.contains(property_name));
-    REQUIRE(map_properties.empty());
+    REQUIRE(!map_ctx.has_property(property_name));
+    REQUIRE(map_ctx.property_count() == 0u);
 
     cmd.undo();
-    REQUIRE(map_properties.contains(property_name));
-    REQUIRE(property_value == map_properties.at(property_name).as_int());
+    REQUIRE(map_ctx.has_property(property_name));
+    REQUIRE(map_ctx.get_property(property_name).as_int() == property_value);
   }
 }
 

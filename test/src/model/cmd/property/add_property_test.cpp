@@ -37,20 +37,20 @@ TEST_SUITE("cmd::AddProperty")
   {
     auto map_document = MapBuilder::build().result();
     auto map = map_document->get_map_ptr();
-    auto& map_properties = map->get_ctx().props();
+    auto& map_ctx = map->get_ctx();
 
-    REQUIRE(map_properties.empty());
+    REQUIRE(map_ctx.property_count() == 0u);
 
     const String property_name {"Foo"};
     cmd::AddProperty cmd {map, property_name, AttributeType::Int};
 
     cmd.redo();
-    REQUIRE(map_properties.contains(property_name));
-    REQUIRE(0 == map_properties.at(property_name).as_int());
+    REQUIRE(map_ctx.has_property(property_name));
+    REQUIRE(0 == map_ctx.get_property(property_name).as_int());
 
     cmd.undo();
-    REQUIRE(!map_properties.contains(property_name));
-    REQUIRE(map_properties.empty());
+    REQUIRE(!map_ctx.has_property(property_name));
+    REQUIRE(map_ctx.property_count() == 0u);
   }
 }
 
