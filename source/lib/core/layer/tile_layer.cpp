@@ -23,8 +23,8 @@
 #include "common/debug/panic.hpp"
 #include "common/type/math.hpp"
 #include "common/type/queue.hpp"
+#include "common/util/algorithm.hpp"
 #include "common/util/functional.hpp"
-#include "common/util/numeric.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "core/tile/tile_pos.hpp"
 

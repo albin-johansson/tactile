@@ -20,13 +20,20 @@
 #pragma once
 
 #include <algorithm>  // find_if
-#include <concepts>   // predicate
+#include <concepts>   // unsigned_integral, predicate
 #include <utility>    // forward
 
 #include "common/debug/panic.hpp"
 #include "common/type/vec.hpp"
 
 namespace tactile {
+
+/// Returns the difference between two unsigned integers
+template <std::unsigned_integral T>
+[[nodiscard]] constexpr auto udiff(const T a, const T b) noexcept -> T
+{
+  return (a < b) ? (b - a) : (a - b);
+}
 
 /// Returns the first element in a vector that satisfies the given predicate.
 template <typename T, std::predicate<const T&> P>

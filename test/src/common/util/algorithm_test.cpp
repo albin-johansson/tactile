@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "common/util/numeric.hpp"
+#include "common/util/algorithm.hpp"
 
 #include <limits>  // numeric_limits
 
@@ -32,7 +32,7 @@ constexpr auto u32_max = std::numeric_limits<uint32>::max();
 
 }  // namespace
 
-TEST_SUITE("Numeric")
+TEST_SUITE("Algorithms")
 {
   TEST_CASE("udiff")
   {
