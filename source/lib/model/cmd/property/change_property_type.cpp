@@ -43,23 +43,16 @@ ChangePropertyType::ChangePropertyType(Shared<Context> context,
 
 void ChangePropertyType::undo()
 {
-  auto& props = mContext->get_ctx().props();
-
-  const auto& value = mPreviousValue.value();
-  const auto type = value.type();
-
-  props.change_type(mName, type);
-  props.update(mName, value);
-
+  mContext->get_ctx().update_property(mName, mPreviousValue.value());
   mPreviousValue.reset();
 }
 
 void ChangePropertyType::redo()
 {
-  auto& props = mContext->get_ctx().props();
+  auto& ctx = mContext->get_ctx();
 
-  mPreviousValue = props.at(mName);
-  props.change_type(mName, mPropertyType);
+  mPreviousValue = ctx.get_property(mName);
+  ctx.update_property(mName, Attribute {mPropertyType});
 }
 
 auto ChangePropertyType::get_name() const -> String

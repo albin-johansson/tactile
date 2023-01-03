@@ -19,7 +19,7 @@
 
 #include "model/cmd/map/remove_row.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
@@ -28,61 +28,62 @@
 
 namespace tactile::test {
 
-TEST(RemoveRow, Constructor)
+TEST_SUITE("cmd::RemoveRow")
 {
-  ASSERT_THROW(cmd::RemoveRow {nullptr}, TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::RemoveRow {nullptr}, TactileError);
+  }
 
-TEST(RemoveRow, RedoUndo)
-{
-  const usize initial_rows = 3;
-  const usize initial_cols = 5;
+  TEST_CASE("redo/undo")
+  {
+    const usize initial_rows = 3;
+    const usize initial_cols = 5;
 
-  auto document =
-      test::MapBuilder::build().with_size(initial_rows, initial_cols).result();
-  auto map = document->get_map_ptr();
+    auto map_document = test::MapBuilder::build()  //
+                            .with_size(initial_rows, initial_cols)
+                            .result();
+    auto map = map_document->get_map_ptr();
 
-  cmd::RemoveRow cmd {map};
-  cmd.redo();
+    cmd::RemoveRow cmd {map};
 
-  ASSERT_EQ(initial_rows - 1, map->row_count());
-  ASSERT_EQ(initial_cols, map->column_count());
+    cmd.redo();
+    REQUIRE(initial_rows - 1 == map->row_count());
+    REQUIRE(initial_cols == map->column_count());
 
-  cmd.undo();
+    cmd.undo();
+    REQUIRE(initial_rows == map->row_count());
+    REQUIRE(initial_cols == map->column_count());
+  }
 
-  ASSERT_EQ(initial_rows, map->row_count());
-  ASSERT_EQ(initial_cols, map->column_count());
-}
+  TEST_CASE("merge_with")
+  {
+    const usize initial_rows = 3;
+    const usize initial_cols = 6;
 
-TEST(RemoveRow, MergeSupport)
-{
-  const usize initial_rows = 3;
-  const usize initial_cols = 6;
+    UUID layer_id;
 
-  UUID layer_id;
+    auto map_document = test::MapBuilder::build()  //
+                            .with_size(initial_rows, initial_cols)
+                            .with_tile_layer(&layer_id, 42)
+                            .result();
+    auto map = map_document->get_map_ptr();
 
-  auto document = test::MapBuilder::build()  //
-                      .with_size(initial_rows, initial_cols)
-                      .with_tile_layer(&layer_id, 42)
-                      .result();
-  auto map = document->get_map_ptr();
+    cmd::RemoveRow a {map};
+    const cmd::RemoveRow b {map};
 
-  cmd::RemoveRow a {map};
-  const cmd::RemoveRow b {map};
+    REQUIRE(a.merge_with(&b));
 
-  ASSERT_TRUE(a.merge_with(&b));
+    a.redo();
+    REQUIRE(initial_rows - 2 == map->row_count());
+    REQUIRE(initial_cols == map->column_count());
 
-  a.redo();
+    a.undo();
+    REQUIRE(initial_rows == map->row_count());
+    REQUIRE(initial_cols == map->column_count());
 
-  ASSERT_EQ(initial_rows - 2, map->row_count());
-  ASSERT_EQ(initial_cols, map->column_count());
-
-  a.undo();
-
-  ASSERT_EQ(initial_rows, map->row_count());
-  ASSERT_EQ(initial_cols, map->column_count());
-
-  test::verify_all_tiles_matches(map->invisible_root().get_tile_layer(layer_id), 42);
+    test::verify_all_tiles_matches(map->invisible_root().get_tile_layer(layer_id), 42);
+  }
 }
 
 }  // namespace tactile::test

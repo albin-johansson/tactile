@@ -19,7 +19,7 @@
 
 #include "model/cmd/map/fix_map_tiles.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
@@ -29,45 +29,52 @@
 
 namespace tactile::test {
 
-TEST(FixMapTiles, Constructor)
+TEST_SUITE("cmd::FixMapTiles")
 {
-  ASSERT_THROW(cmd::FixMapTiles {nullptr}, TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::FixMapTiles {nullptr}, TactileError);
+  }
 
-TEST(FixMapTiles, RedoUndo)
-{
-  UUID layer_id;
-  UUID tileset_id;
+  TEST_CASE("redo/undo")
+  {
+    UUID layer_id;
+    UUID tileset_id;
 
-  auto document = test::MapBuilder::build()  //
-                      .with_size(10, 10)
-                      .with_tile_layer(&layer_id)
-                      .with_tileset(&tileset_id)
-                      .result();
-  auto map = document->get_map_ptr();
+    auto map_document = test::MapBuilder::build()  //
+                            .with_size(10, 10)
+                            .with_tile_layer(&layer_id)
+                            .with_tileset(&tileset_id)
+                            .result();
+    auto map = map_document->get_map_ptr();
 
-  const auto& tileset_ref = map->tileset_bundle().get_tileset_ref(tileset_id);
+    const auto& tileset_ref = map->tileset_bundle().get_tileset_ref(tileset_id);
 
-  auto& layer = map->invisible_root().get_tile_layer(layer_id);
-  layer.set_tile({2, 4}, tileset_ref.get_first_tile() - 10);
-  layer.set_tile({0, 0}, tileset_ref.get_last_tile() + 1);
-  layer.set_tile({0, 1}, tileset_ref.get_last_tile());
-  layer.set_tile({5, 7}, tileset_ref.get_first_tile());
+    const auto underflow_tile = tileset_ref.get_first_tile() - 1;
+    const auto overflow_tile = tileset_ref.get_last_tile() + 1;
+    const auto first_tile = tileset_ref.get_first_tile();
+    const auto last_tile = tileset_ref.get_last_tile();
 
-  cmd::FixMapTiles cmd {map};
-  cmd.redo();
+    auto& layer = map->invisible_root().get_tile_layer(layer_id);
+    layer.set_tile({2, 4}, underflow_tile);
+    layer.set_tile({0, 0}, overflow_tile);
+    layer.set_tile({5, 7}, first_tile);
+    layer.set_tile({0, 1}, last_tile);
 
-  ASSERT_EQ(empty_tile, layer.tile_at({2, 4}));
-  ASSERT_EQ(empty_tile, layer.tile_at({0, 0}));
-  ASSERT_EQ(tileset_ref.get_last_tile(), layer.tile_at({0, 1}));
-  ASSERT_EQ(tileset_ref.get_first_tile(), layer.tile_at({5, 7}));
+    cmd::FixMapTiles cmd {map};
 
-  cmd.undo();
+    cmd.redo();
+    REQUIRE(layer.tile_at({2, 4}) == empty_tile);
+    REQUIRE(layer.tile_at({0, 0}) == empty_tile);
+    REQUIRE(layer.tile_at({0, 1}) == tileset_ref.get_last_tile());
+    REQUIRE(layer.tile_at({5, 7}) == tileset_ref.get_first_tile());
 
-  ASSERT_EQ(tileset_ref.get_first_tile() - 10, layer.tile_at({2, 4}));
-  ASSERT_EQ(tileset_ref.get_last_tile() + 1, layer.tile_at({0, 0}));
-  ASSERT_EQ(tileset_ref.get_last_tile(), layer.tile_at({0, 1}));
-  ASSERT_EQ(tileset_ref.get_first_tile(), layer.tile_at({5, 7}));
+    cmd.undo();
+    REQUIRE(layer.tile_at({2, 4}) == underflow_tile);
+    REQUIRE(layer.tile_at({0, 0}) == overflow_tile);
+    REQUIRE(layer.tile_at({5, 7}) == first_tile);
+    REQUIRE(layer.tile_at({0, 1}) == last_tile);
+  }
 }
 
 }  // namespace tactile::test

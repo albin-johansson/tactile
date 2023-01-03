@@ -19,37 +19,40 @@
 
 #include "model/cmd/object/move_object.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(MoveObject, Constructor)
+TEST_SUITE("cmd::MoveObject")
 {
-  ASSERT_THROW(cmd::MoveObject(nullptr, {}, {}), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::MoveObject(nullptr, {}, {}), TactileError);
+  }
 
-TEST(MoveObject, RedoUndo)
-{
-  Shared<Object> object;
+  TEST_CASE("redo/undo")
+  {
+    Shared<Object> object;
 
-  auto document = test::MapBuilder::build()  //
-                      .with_object(ObjectType::Rect, &object)
-                      .result();
+    auto map_document = MapBuilder::build()  //
+                            .with_object(ObjectType::Rect, &object)
+                            .result();
 
-  const Float2 initial_pos {843, 317};
-  object->set_pos(initial_pos);
+    const Float2 old_pos {843, 317};
+    const Float2 new_pos {-835, 94};
 
-  const Float2 new_pos {-835, 94};
-  cmd::MoveObject cmd {object, initial_pos, new_pos};
+    object->set_pos(old_pos);
+    cmd::MoveObject cmd {object, old_pos, new_pos};
 
-  cmd.redo();
-  ASSERT_EQ(new_pos, object->get_pos());
+    cmd.redo();
+    REQUIRE(new_pos == object->get_pos());
 
-  cmd.undo();
-  ASSERT_EQ(initial_pos, object->get_pos());
+    cmd.undo();
+    REQUIRE(old_pos == object->get_pos());
+  }
 }
 
 }  // namespace tactile::test

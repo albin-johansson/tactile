@@ -21,7 +21,7 @@
 
 #include <memory>  // dynamic_pointer_cast
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "common/util/functional.hpp"
 #include "core/debug/panic.hpp"
@@ -29,235 +29,241 @@
 
 namespace tactile::test {
 
-TEST(TileLayer, Defaults)
+TEST_SUITE("TileLayer")
 {
-  const TileLayer layer;
+  TEST_CASE("Defaults")
+  {
+    const TileLayer layer;
 
-  ASSERT_EQ(5u, layer.row_count());
-  ASSERT_EQ(5u, layer.column_count());
+    REQUIRE(5u == layer.row_count());
+    REQUIRE(5u == layer.column_count());
 
-  invoke_mn(layer.row_count(), layer.column_count(), [&](usize row, usize col) {
-    ASSERT_EQ(empty_tile, layer.tile_at(TilePos::from(row, col)));
-  });
-}
+    invoke_mn(layer.row_count(), layer.column_count(), [&](usize row, usize col) {
+      REQUIRE(empty_tile == layer.tile_at(TilePos::from(row, col)));
+    });
+  }
 
-TEST(TileLayer, Flood)
-{
-  // 0  0  0  0  0
-  // 0  0  0  0  0
-  // 0  0  0  0  0
-  // 0  0  0  0  0
-  // 0  0  0  0  0
-  TileLayer layer {5, 5};
+  TEST_CASE("flood")
+  {
+    // 0  0  0  0  0
+    // 0  0  0  0  0
+    // 0  0  0  0  0
+    // 0  0  0  0  0
+    // 0  0  0  0  0
+    TileLayer layer {5, 5};
 
-  // 0  0  0  0  0
-  // 0  0  0  1  1
-  // 0  0  0  1  0
-  // 0  1  1  1  0
-  // 1  0  0  0  0
-  layer.set_tile({1, 3}, 1);
-  layer.set_tile({1, 4}, 1);
-  layer.set_tile({2, 3}, 1);
-  layer.set_tile({3, 1}, 1);
-  layer.set_tile({3, 2}, 1);
-  layer.set_tile({3, 3}, 1);
-  layer.set_tile({4, 0}, 1);
+    // 0  0  0  0  0
+    // 0  0  0  1  1
+    // 0  0  0  1  0
+    // 0  1  1  1  0
+    // 1  0  0  0  0
+    layer.set_tile({1, 3}, 1);
+    layer.set_tile({1, 4}, 1);
+    layer.set_tile({2, 3}, 1);
+    layer.set_tile({3, 1}, 1);
+    layer.set_tile({3, 2}, 1);
+    layer.set_tile({3, 3}, 1);
+    layer.set_tile({4, 0}, 1);
 
-  /* 0  0  0  0  0
-     0  0  0  1  1
-     0  0  0  1  2
-     0  1  1  1  2
-     1  2  2  2  2 */
-  layer.flood({4, 1}, 2);
+    // 0  0  0  0  0
+    // 0  0  0  1  1
+    // 0  0  0  1  2
+    // 0  1  1  1  2
+    // 1  2  2  2  2
+    layer.flood({4, 1}, 2);
 
-  ASSERT_EQ(0, layer.tile_at({0, 0}));
-  ASSERT_EQ(0, layer.tile_at({0, 1}));
-  ASSERT_EQ(0, layer.tile_at({0, 2}));
-  ASSERT_EQ(0, layer.tile_at({0, 3}));
-  ASSERT_EQ(0, layer.tile_at({0, 4}));
+    REQUIRE(0 == layer.tile_at({0, 0}));
+    REQUIRE(0 == layer.tile_at({0, 1}));
+    REQUIRE(0 == layer.tile_at({0, 2}));
+    REQUIRE(0 == layer.tile_at({0, 3}));
+    REQUIRE(0 == layer.tile_at({0, 4}));
 
-  ASSERT_EQ(0, layer.tile_at({1, 0}));
-  ASSERT_EQ(0, layer.tile_at({1, 1}));
-  ASSERT_EQ(0, layer.tile_at({1, 2}));
-  ASSERT_EQ(1, layer.tile_at({1, 3}));
-  ASSERT_EQ(1, layer.tile_at({1, 4}));
+    REQUIRE(0 == layer.tile_at({1, 0}));
+    REQUIRE(0 == layer.tile_at({1, 1}));
+    REQUIRE(0 == layer.tile_at({1, 2}));
+    REQUIRE(1 == layer.tile_at({1, 3}));
+    REQUIRE(1 == layer.tile_at({1, 4}));
 
-  ASSERT_EQ(0, layer.tile_at({2, 0}));
-  ASSERT_EQ(0, layer.tile_at({2, 1}));
-  ASSERT_EQ(0, layer.tile_at({2, 2}));
-  ASSERT_EQ(1, layer.tile_at({2, 3}));
-  ASSERT_EQ(2, layer.tile_at({2, 4}));
+    REQUIRE(0 == layer.tile_at({2, 0}));
+    REQUIRE(0 == layer.tile_at({2, 1}));
+    REQUIRE(0 == layer.tile_at({2, 2}));
+    REQUIRE(1 == layer.tile_at({2, 3}));
+    REQUIRE(2 == layer.tile_at({2, 4}));
 
-  ASSERT_EQ(0, layer.tile_at({3, 0}));
-  ASSERT_EQ(1, layer.tile_at({3, 1}));
-  ASSERT_EQ(1, layer.tile_at({3, 2}));
-  ASSERT_EQ(1, layer.tile_at({3, 3}));
-  ASSERT_EQ(2, layer.tile_at({3, 4}));
+    REQUIRE(0 == layer.tile_at({3, 0}));
+    REQUIRE(1 == layer.tile_at({3, 1}));
+    REQUIRE(1 == layer.tile_at({3, 2}));
+    REQUIRE(1 == layer.tile_at({3, 3}));
+    REQUIRE(2 == layer.tile_at({3, 4}));
 
-  ASSERT_EQ(1, layer.tile_at({4, 0}));
-  ASSERT_EQ(2, layer.tile_at({4, 1}));
-  ASSERT_EQ(2, layer.tile_at({4, 2}));
-  ASSERT_EQ(2, layer.tile_at({4, 3}));
-  ASSERT_EQ(2, layer.tile_at({4, 4}));
+    REQUIRE(1 == layer.tile_at({4, 0}));
+    REQUIRE(2 == layer.tile_at({4, 1}));
+    REQUIRE(2 == layer.tile_at({4, 2}));
+    REQUIRE(2 == layer.tile_at({4, 3}));
+    REQUIRE(2 == layer.tile_at({4, 4}));
 
-  /* 0  0  0  0  0
-     0  0  0  3  3
-     0  0  0  3  2
-     0  3  3  3  2
-     1  2  2  2  2 */
-  layer.flood({3, 1}, 3);
+    // 0  0  0  0  0
+    // 0  0  0  3  3
+    // 0  0  0  3  2
+    // 0  3  3  3  2
+    // 1  2  2  2  2
+    layer.flood({3, 1}, 3);
 
-  ASSERT_EQ(0, layer.tile_at({0, 0}));
-  ASSERT_EQ(0, layer.tile_at({0, 1}));
-  ASSERT_EQ(0, layer.tile_at({0, 2}));
-  ASSERT_EQ(0, layer.tile_at({0, 3}));
-  ASSERT_EQ(0, layer.tile_at({0, 4}));
+    REQUIRE(0 == layer.tile_at({0, 0}));
+    REQUIRE(0 == layer.tile_at({0, 1}));
+    REQUIRE(0 == layer.tile_at({0, 2}));
+    REQUIRE(0 == layer.tile_at({0, 3}));
+    REQUIRE(0 == layer.tile_at({0, 4}));
 
-  ASSERT_EQ(0, layer.tile_at({1, 0}));
-  ASSERT_EQ(0, layer.tile_at({1, 1}));
-  ASSERT_EQ(0, layer.tile_at({1, 2}));
-  ASSERT_EQ(3, layer.tile_at({1, 3}));
-  ASSERT_EQ(3, layer.tile_at({1, 4}));
+    REQUIRE(0 == layer.tile_at({1, 0}));
+    REQUIRE(0 == layer.tile_at({1, 1}));
+    REQUIRE(0 == layer.tile_at({1, 2}));
+    REQUIRE(3 == layer.tile_at({1, 3}));
+    REQUIRE(3 == layer.tile_at({1, 4}));
 
-  ASSERT_EQ(0, layer.tile_at({2, 0}));
-  ASSERT_EQ(0, layer.tile_at({2, 1}));
-  ASSERT_EQ(0, layer.tile_at({2, 2}));
-  ASSERT_EQ(3, layer.tile_at({2, 3}));
-  ASSERT_EQ(2, layer.tile_at({2, 4}));
+    REQUIRE(0 == layer.tile_at({2, 0}));
+    REQUIRE(0 == layer.tile_at({2, 1}));
+    REQUIRE(0 == layer.tile_at({2, 2}));
+    REQUIRE(3 == layer.tile_at({2, 3}));
+    REQUIRE(2 == layer.tile_at({2, 4}));
 
-  ASSERT_EQ(0, layer.tile_at({3, 0}));
-  ASSERT_EQ(3, layer.tile_at({3, 1}));
-  ASSERT_EQ(3, layer.tile_at({3, 2}));
-  ASSERT_EQ(3, layer.tile_at({3, 3}));
-  ASSERT_EQ(2, layer.tile_at({3, 4}));
+    REQUIRE(0 == layer.tile_at({3, 0}));
+    REQUIRE(3 == layer.tile_at({3, 1}));
+    REQUIRE(3 == layer.tile_at({3, 2}));
+    REQUIRE(3 == layer.tile_at({3, 3}));
+    REQUIRE(2 == layer.tile_at({3, 4}));
 
-  ASSERT_EQ(1, layer.tile_at({4, 0}));
-  ASSERT_EQ(2, layer.tile_at({4, 1}));
-  ASSERT_EQ(2, layer.tile_at({4, 2}));
-  ASSERT_EQ(2, layer.tile_at({4, 3}));
-  ASSERT_EQ(2, layer.tile_at({4, 4}));
-}
+    REQUIRE(1 == layer.tile_at({4, 0}));
+    REQUIRE(2 == layer.tile_at({4, 1}));
+    REQUIRE(2 == layer.tile_at({4, 2}));
+    REQUIRE(2 == layer.tile_at({4, 3}));
+    REQUIRE(2 == layer.tile_at({4, 4}));
+  }
 
-TEST(TileLayer, SetTile)
-{
-  TileLayer layer;
+  TEST_CASE("set_tile")
+  {
+    TileLayer layer;
 
-  ASSERT_THROW(layer.set_tile({0, -1}, 42), TactileError);
-  ASSERT_THROW(layer.set_tile({-1, 0}, 42), TactileError);
+    REQUIRE_THROWS_AS(layer.set_tile({0, -1}, 42), TactileError);
+    REQUIRE_THROWS_AS(layer.set_tile({-1, 0}, 42), TactileError);
 
-  ASSERT_THROW(layer.set_tile(TilePos::from(layer.row_count(), 0), 42), TactileError);
-  ASSERT_THROW(layer.set_tile(TilePos::from(0, layer.column_count()), 42), TactileError);
+    REQUIRE_THROWS_AS(layer.set_tile(TilePos::from(layer.row_count(), 0), 42),
+                      TactileError);
+    REQUIRE_THROWS_AS(layer.set_tile(TilePos::from(0, layer.column_count()), 42),
+                      TactileError);
 
-  layer.set_tile({1, 2}, 42);
-  ASSERT_EQ(42, layer.tile_at({1, 2}));
+    layer.set_tile({1, 2}, 42);
+    REQUIRE(42 == layer.tile_at({1, 2}));
 
-  const auto bottom_right =
-      TilePos::from(layer.row_count() - 1, layer.column_count() - 1);
-  layer.set_tile(bottom_right, 7);
-  ASSERT_EQ(7, layer.tile_at(bottom_right));
-}
+    const auto bottom_right =
+        TilePos::from(layer.row_count() - 1, layer.column_count() - 1);
+    layer.set_tile(bottom_right, 7);
+    REQUIRE(7 == layer.tile_at(bottom_right));
+  }
 
-TEST(TileLayer, TileAtWithInvalidPositions)
-{
-  const TileLayer layer;
+  TEST_CASE("tile_at (with invalid positions)")
+  {
+    const TileLayer layer;
 
-  ASSERT_THROW(layer.tile_at({-1, 0}), TactileError);
-  ASSERT_THROW(layer.tile_at({0, -1}), TactileError);
+    REQUIRE_THROWS_AS(layer.tile_at({-1, 0}), TactileError);
+    REQUIRE_THROWS_AS(layer.tile_at({0, -1}), TactileError);
 
-  ASSERT_THROW(layer.tile_at(TilePos::from(layer.row_count(), 0)), TactileError);
-  ASSERT_THROW(layer.tile_at(TilePos::from(0, layer.column_count())), TactileError);
-}
+    REQUIRE_THROWS_AS(layer.tile_at(TilePos::from(layer.row_count(), 0)), TactileError);
+    REQUIRE_THROWS_AS(layer.tile_at(TilePos::from(0, layer.column_count())),
+                      TactileError);
+  }
 
-TEST(TileLayer, AddRow)
-{
-  TileLayer layer {3, 4};
+  TEST_CASE("add_row")
+  {
+    TileLayer layer {3, 4};
 
-  ASSERT_EQ(3u, layer.row_count());
-  ASSERT_EQ(4u, layer.column_count());
+    REQUIRE(3u == layer.row_count());
+    REQUIRE(4u == layer.column_count());
 
-  layer.add_row();
+    layer.add_row();
 
-  ASSERT_EQ(4u, layer.row_count());
-  ASSERT_EQ(4u, layer.column_count());
+    REQUIRE(4u == layer.row_count());
+    REQUIRE(4u == layer.column_count());
 
-  layer.add_row();
+    layer.add_row();
 
-  ASSERT_EQ(5u, layer.row_count());
-  ASSERT_EQ(4u, layer.column_count());
-}
+    REQUIRE(5u == layer.row_count());
+    REQUIRE(4u == layer.column_count());
+  }
 
-TEST(TileLayer, AddColumn)
-{
-  TileLayer layer {3, 4};
+  TEST_CASE("add_column")
+  {
+    TileLayer layer {3, 4};
 
-  ASSERT_EQ(3u, layer.row_count());
-  ASSERT_EQ(4u, layer.column_count());
+    REQUIRE(3u == layer.row_count());
+    REQUIRE(4u == layer.column_count());
 
-  layer.add_column();
+    layer.add_column();
 
-  ASSERT_EQ(3u, layer.row_count());
-  ASSERT_EQ(5u, layer.column_count());
-}
+    REQUIRE(3u == layer.row_count());
+    REQUIRE(5u == layer.column_count());
+  }
 
-TEST(TileLayer, RemoveRow)
-{
-  TileLayer layer {3, 4};
+  TEST_CASE("remove_row")
+  {
+    TileLayer layer {3, 4};
 
-  ASSERT_EQ(3u, layer.row_count());
-  ASSERT_EQ(4u, layer.column_count());
+    REQUIRE(3u == layer.row_count());
+    REQUIRE(4u == layer.column_count());
 
-  layer.remove_row();
+    layer.remove_row();
 
-  ASSERT_EQ(2u, layer.row_count());
-  ASSERT_EQ(4u, layer.column_count());
-}
+    REQUIRE(2u == layer.row_count());
+    REQUIRE(4u == layer.column_count());
+  }
 
-TEST(TileLayer, RemoveColumn)
-{
-  TileLayer layer {6, 8};
+  TEST_CASE("remove_column")
+  {
+    TileLayer layer {6, 8};
 
-  ASSERT_EQ(6u, layer.row_count());
-  ASSERT_EQ(8u, layer.column_count());
+    REQUIRE(6u == layer.row_count());
+    REQUIRE(8u == layer.column_count());
 
-  layer.remove_column();
+    layer.remove_column();
 
-  ASSERT_EQ(6u, layer.row_count());
-  ASSERT_EQ(7u, layer.column_count());
-}
+    REQUIRE(6u == layer.row_count());
+    REQUIRE(7u == layer.column_count());
+  }
 
-TEST(TileLayer, Resize)
-{
-  TileLayer layer {6, 5};
+  TEST_CASE("resize")
+  {
+    TileLayer layer {6, 5};
 
-  ASSERT_EQ(6u, layer.row_count());
-  ASSERT_EQ(5u, layer.column_count());
-  ASSERT_FALSE(layer.is_valid({2, 8}));
+    REQUIRE(6u == layer.row_count());
+    REQUIRE(5u == layer.column_count());
+    REQUIRE(!layer.is_valid({2, 8}));
 
-  layer.resize(3, 9);
+    layer.resize(3, 9);
 
-  ASSERT_EQ(3u, layer.row_count());
-  ASSERT_EQ(9u, layer.column_count());
-  ASSERT_TRUE(layer.is_valid({2, 8}));
-}
+    REQUIRE(3u == layer.row_count());
+    REQUIRE(9u == layer.column_count());
+    REQUIRE(layer.is_valid({2, 8}));
+  }
 
-TEST(TileLayer, Clone)
-{
-  TileLayer source {4, 3};
+  TEST_CASE("clone")
+  {
+    TileLayer source {4, 3};
 
-  source.set_tile({0, 0}, 7);
-  source.set_tile({1, 2}, 8314);
-  source.set_tile({2, 1}, 934);
-  source.set_tile({3, 2}, 42);
+    source.set_tile({0, 0}, 7);
+    source.set_tile({1, 2}, 8314);
+    source.set_tile({2, 1}, 934);
+    source.set_tile({3, 2}, 42);
 
-  const auto copy = std::dynamic_pointer_cast<TileLayer>(source.clone());
+    const auto copy = std::dynamic_pointer_cast<TileLayer>(source.clone());
 
-  ASSERT_EQ(source.row_count(), copy->row_count());
-  ASSERT_EQ(source.column_count(), copy->column_count());
+    REQUIRE(source.row_count() == copy->row_count());
+    REQUIRE(source.column_count() == copy->column_count());
 
-  invoke_mn(source.row_count(), source.column_count(), [&](usize row, usize col) {
-    const auto pos = TilePos::from(row, col);
-    ASSERT_EQ(source.tile_at(pos), copy->tile_at(pos));
-  });
+    invoke_mn(source.row_count(), source.column_count(), [&](usize row, usize col) {
+      const auto pos = TilePos::from(row, col);
+      REQUIRE(source.tile_at(pos) == copy->tile_at(pos));
+    });
+  }
 }
 
 }  // namespace tactile::test

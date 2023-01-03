@@ -19,7 +19,7 @@
 
 #include "model/cmd/layer/add_layer.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
@@ -27,36 +27,39 @@
 
 namespace tactile::test {
 
-TEST(AddLayer, Constructor)
+TEST_SUITE("cmd::AddLayer")
 {
-  ASSERT_THROW(cmd::AddLayer(nullptr, LayerType::TileLayer), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::AddLayer(nullptr, LayerType::TileLayer), TactileError);
+  }
 
-TEST(AddLayer, RedoUndo)
-{
-  auto document = MapBuilder::build().result();
-  auto& map = document->get_map();
-  auto& root = map.invisible_root();
-  auto& contexts = document->get_contexts();
+  TEST_CASE("redo/undo")
+  {
+    auto map_document = MapBuilder::build().result();
+    auto& map = map_document->get_map();
+    auto& root = map.invisible_root();
+    auto& contexts = map_document->get_contexts();
 
-  ASSERT_EQ(1u, contexts.size());
-  ASSERT_TRUE(contexts.contains(map.get_uuid()));
+    REQUIRE(1u == contexts.size());
+    REQUIRE(contexts.contains(map.get_uuid()));
 
-  cmd::AddLayer cmd {document.get(), LayerType::TileLayer};
+    cmd::AddLayer cmd {map_document.get(), LayerType::TileLayer};
 
-  cmd.redo();
-  ASSERT_EQ(1u, root.layer_count());
-  ASSERT_EQ(2u, contexts.size());
-  ASSERT_TRUE(map.active_layer_id().has_value());
+    cmd.redo();
+    REQUIRE(1u == root.layer_count());
+    REQUIRE(2u == contexts.size());
+    REQUIRE(map.active_layer_id().has_value());
 
-  const auto layer_id = map.active_layer_id().value();
-  ASSERT_TRUE(contexts.contains(layer_id));
+    const auto layer_id = map.active_layer_id().value();
+    REQUIRE(contexts.contains(layer_id));
 
-  cmd.undo();
-  ASSERT_EQ(0u, root.layer_count());
-  ASSERT_EQ(1u, contexts.size());
-  ASSERT_FALSE(map.active_layer_id().has_value());
-  ASSERT_FALSE(contexts.contains(layer_id));
+    cmd.undo();
+    REQUIRE(0u == root.layer_count());
+    REQUIRE(1u == contexts.size());
+    REQUIRE(!map.active_layer_id().has_value());
+    REQUIRE(!contexts.contains(layer_id));
+  }
 }
 
 }  // namespace tactile::test

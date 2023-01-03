@@ -19,7 +19,7 @@
 
 #include "core/layer/tile_format.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 #include <zlib.h>
 #include <zstd.h>
 
@@ -27,85 +27,89 @@
 
 namespace tactile::test {
 
-TEST(TileFormat, Defaults)
+TEST_SUITE("TileFormat")
 {
-  const TileFormat format;
+  TEST_CASE("Defaults")
+  {
+    const TileFormat format;
 
-  ASSERT_EQ(TileEncoding::Plain, format.encoding());
-  ASSERT_EQ(TileCompression::None, format.compression());
+    REQUIRE(TileEncoding::Plain == format.encoding());
+    REQUIRE(TileCompression::None == format.compression());
 
-  ASSERT_EQ(-1, Z_DEFAULT_COMPRESSION);
-  ASSERT_EQ(-1, format.zlib_compression_level());
+    REQUIRE(-1 == Z_DEFAULT_COMPRESSION);
+    REQUIRE(-1 == format.zlib_compression_level());
 
-  ASSERT_EQ(3, ZSTD_defaultCLevel());
-  ASSERT_EQ(ZSTD_defaultCLevel(), format.zstd_compression_level());
-}
-
-TEST(TileFormat, SetZlibCompressionLevel)
-{
-  TileFormat format;
-
-  format.set_zlib_compression_level(7);
-  ASSERT_EQ(7, format.zlib_compression_level());
-
-  ASSERT_THROW(format.set_zlib_compression_level(-2), TactileError);
-  ASSERT_THROW(format.set_zlib_compression_level(0), TactileError);
-  ASSERT_THROW(format.set_zlib_compression_level(10), TactileError);
-}
-
-TEST(TileFormat, CanUseCompressionStrategyWithPlainEncoding)
-{
-  TileFormat format;
-  format.set_encoding(TileEncoding::Plain);
-
-  ASSERT_TRUE(format.can_use_compression_strategy(TileCompression::None));
-  ASSERT_FALSE(format.can_use_compression_strategy(TileCompression::Zlib));
-  ASSERT_FALSE(format.can_use_compression_strategy(TileCompression::Zstd));
-}
-
-TEST(TileFormat, CanUseCompressionStrategyWithBase64Encoding)
-{
-  TileFormat format;
-  format.set_encoding(TileEncoding::Base64);
-
-  ASSERT_TRUE(format.can_use_compression_strategy(TileCompression::None));
-  ASSERT_TRUE(format.can_use_compression_strategy(TileCompression::Zlib));
-  ASSERT_TRUE(format.can_use_compression_strategy(TileCompression::Zstd));
-}
-
-TEST(TileFormat, IsValidZlibCompressionLevel)
-{
-  // 0 is actually a valid level as far as Zlib is concerned (it indicates no compression)
-  // But it doesn't make much sense for us to support Zlib compression at level 0
-  ASSERT_FALSE(TileFormat::is_valid_zlib_compression_level(0));
-
-  ASSERT_FALSE(TileFormat::is_valid_zlib_compression_level(-2));
-  ASSERT_FALSE(TileFormat::is_valid_zlib_compression_level(10));
-
-  ASSERT_TRUE(TileFormat::is_valid_zlib_compression_level(-1));
-  ASSERT_TRUE(TileFormat::is_valid_zlib_compression_level(1));
-  ASSERT_TRUE(TileFormat::is_valid_zlib_compression_level(9));
-
-  ASSERT_TRUE(TileFormat::is_valid_zlib_compression_level(Z_DEFAULT_COMPRESSION));
-  ASSERT_TRUE(TileFormat::is_valid_zlib_compression_level(Z_BEST_SPEED));
-  ASSERT_TRUE(TileFormat::is_valid_zlib_compression_level(Z_BEST_COMPRESSION));
-
-  for (int level = 1; level <= 9; ++level) {
-    ASSERT_TRUE(TileFormat::is_valid_zlib_compression_level(level));
+    REQUIRE(3 == ZSTD_defaultCLevel());
+    REQUIRE(ZSTD_defaultCLevel() == format.zstd_compression_level());
   }
-}
 
-TEST(TileFormat, IsValidZstdCompressionLevel)
-{
-  ASSERT_FALSE(TileFormat::is_valid_zstd_compression_level(0));
-  ASSERT_FALSE(TileFormat::is_valid_zstd_compression_level(20));
+  TEST_CASE("set_zlib_compression_level")
+  {
+    TileFormat format;
 
-  ASSERT_TRUE(TileFormat::is_valid_zstd_compression_level(ZSTD_defaultCLevel()));
-  ASSERT_TRUE(TileFormat::is_valid_zstd_compression_level(1));
-  ASSERT_TRUE(TileFormat::is_valid_zstd_compression_level(19));
+    format.set_zlib_compression_level(7);
+    REQUIRE(7 == format.zlib_compression_level());
 
-  for (int level = 1; level <= 19; ++level) {
-    ASSERT_TRUE(TileFormat::is_valid_zstd_compression_level(level));
+    REQUIRE_THROWS_AS(format.set_zlib_compression_level(-2), TactileError);
+    REQUIRE_THROWS_AS(format.set_zlib_compression_level(0), TactileError);
+    REQUIRE_THROWS_AS(format.set_zlib_compression_level(10), TactileError);
+  }
+
+  TEST_CASE("can_use_compression_strategy (with plain encoding)")
+  {
+    TileFormat format;
+    format.set_encoding(TileEncoding::Plain);
+
+    REQUIRE(format.can_use_compression_strategy(TileCompression::None));
+    REQUIRE(!format.can_use_compression_strategy(TileCompression::Zlib));
+    REQUIRE(!format.can_use_compression_strategy(TileCompression::Zstd));
+  }
+
+  TEST_CASE("can_use_compression_strategy (ith Base64 encoding)")
+  {
+    TileFormat format;
+    format.set_encoding(TileEncoding::Base64);
+
+    REQUIRE(format.can_use_compression_strategy(TileCompression::None));
+    REQUIRE(format.can_use_compression_strategy(TileCompression::Zlib));
+    REQUIRE(format.can_use_compression_strategy(TileCompression::Zstd));
+  }
+
+  TEST_CASE("is_valid_zlib_compression_level")
+  {
+    // 0 is actually a valid level as far as Zlib is concerned (it indicates no
+    // compression) But it doesn't make much sense for us to support Zlib compression at
+    // level 0
+    REQUIRE(!TileFormat::is_valid_zlib_compression_level(0));
+
+    REQUIRE(!TileFormat::is_valid_zlib_compression_level(-2));
+    REQUIRE(!TileFormat::is_valid_zlib_compression_level(10));
+
+    REQUIRE(TileFormat::is_valid_zlib_compression_level(-1));
+    REQUIRE(TileFormat::is_valid_zlib_compression_level(1));
+    REQUIRE(TileFormat::is_valid_zlib_compression_level(9));
+
+    REQUIRE(TileFormat::is_valid_zlib_compression_level(Z_DEFAULT_COMPRESSION));
+    REQUIRE(TileFormat::is_valid_zlib_compression_level(Z_BEST_SPEED));
+    REQUIRE(TileFormat::is_valid_zlib_compression_level(Z_BEST_COMPRESSION));
+
+    for (int level = 1; level <= 9; ++level) {
+      REQUIRE(TileFormat::is_valid_zlib_compression_level(level));
+    }
+  }
+
+  TEST_CASE("is_valid_zstd_compression_level")
+  {
+    REQUIRE(!TileFormat::is_valid_zstd_compression_level(0));
+    REQUIRE(!TileFormat::is_valid_zstd_compression_level(20));
+
+    REQUIRE(TileFormat::is_valid_zstd_compression_level(ZSTD_defaultCLevel()));
+    REQUIRE(TileFormat::is_valid_zstd_compression_level(1));
+    REQUIRE(TileFormat::is_valid_zstd_compression_level(19));
+
+    for (int level = 1; level <= 19; ++level) {
+      REQUIRE(TileFormat::is_valid_zstd_compression_level(level));
+    }
   }
 }
 

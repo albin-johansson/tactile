@@ -26,7 +26,7 @@
  * and height, etc.
  */
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "common/type/string.hpp"
 #include "common/util/assoc.hpp"
@@ -44,29 +44,29 @@ inline String current_parser;
 
 void validate_contexts(const ir::ContextData& source, const ir::ContextData& restored)
 {
-  ASSERT_EQ(source.properties.size(), restored.properties.size());
-  ASSERT_EQ(source.components.size(), restored.components.size());
+  REQUIRE(source.properties.size() == restored.properties.size());
+  REQUIRE(source.components.size() == restored.components.size());
 
-  ASSERT_EQ(source.properties, restored.properties);
+  REQUIRE(source.properties == restored.properties);
 
   for (const auto& [name, attributes]: source.components) {
-    ASSERT_TRUE(has_key(restored.components, name));
-    ASSERT_EQ(attributes, restored.components.at(name));
+    REQUIRE(has_key(restored.components, name));
+    REQUIRE(attributes == restored.components.at(name));
   }
 }
 
 void validate_objects(const ir::ObjectData& source, const ir::ObjectData& restored)
 {
-  ASSERT_EQ(source.id, restored.id);
-  ASSERT_EQ(source.type, restored.type);
+  REQUIRE(source.id == restored.id);
+  REQUIRE(source.type == restored.type);
 
-  ASSERT_EQ(source.pos, restored.pos);
-  ASSERT_EQ(source.size, restored.size);
+  REQUIRE(source.pos == restored.pos);
+  REQUIRE(source.size == restored.size);
 
-  ASSERT_EQ(source.name, restored.name);
-  ASSERT_EQ(source.tag, restored.tag);
+  REQUIRE(source.name == restored.name);
+  REQUIRE(source.tag == restored.tag);
 
-  ASSERT_EQ(source.visible, restored.visible);
+  REQUIRE(source.visible == restored.visible);
 
   validate_contexts(source.context, restored.context);
 }
@@ -74,7 +74,7 @@ void validate_objects(const ir::ObjectData& source, const ir::ObjectData& restor
 void validate_object_layers(const ir::ObjectLayerData& source,
                             const ir::ObjectLayerData& restored)
 {
-  ASSERT_EQ(source.objects.size(), restored.objects.size());
+  REQUIRE(source.objects.size() == restored.objects.size());
   for (usize index = 0; index < source.objects.size(); ++index) {
     const auto& source_object = source.objects.at(index);
     const auto& restored_object = restored.objects.at(index);
@@ -85,22 +85,22 @@ void validate_object_layers(const ir::ObjectLayerData& source,
 void validate_layers(const ir::LayerData& source_layer,
                      const ir::LayerData& restored_layer)
 {
-  ASSERT_EQ(source_layer.name, restored_layer.name);
-  ASSERT_EQ(source_layer.type, restored_layer.type);
+  REQUIRE(source_layer.name == restored_layer.name);
+  REQUIRE(source_layer.type == restored_layer.type);
 
-  ASSERT_EQ(source_layer.id, restored_layer.id);
-  ASSERT_EQ(source_layer.index, restored_layer.index);
+  REQUIRE(source_layer.id == restored_layer.id);
+  REQUIRE(source_layer.index == restored_layer.index);
 
-  ASSERT_EQ(source_layer.opacity, restored_layer.opacity);
-  ASSERT_EQ(source_layer.visible, restored_layer.visible);
+  REQUIRE(source_layer.opacity == restored_layer.opacity);
+  REQUIRE(source_layer.visible == restored_layer.visible);
 
   if (source_layer.type == LayerType::TileLayer) {
     const auto& source_tile_data = source_layer.as_tile_layer();
     const auto& restored_tile_data = restored_layer.as_tile_layer();
 
-    ASSERT_EQ(source_tile_data.row_count, restored_tile_data.row_count);
-    ASSERT_EQ(source_tile_data.col_count, restored_tile_data.col_count);
-    ASSERT_EQ(source_tile_data.tiles, restored_tile_data.tiles);
+    REQUIRE(source_tile_data.row_count == restored_tile_data.row_count);
+    REQUIRE(source_tile_data.col_count == restored_tile_data.col_count);
+    REQUIRE(source_tile_data.tiles == restored_tile_data.tiles);
   }
   else if (source_layer.type == LayerType::ObjectLayer) {
     const auto& source_objects = source_layer.as_object_layer();
@@ -111,7 +111,7 @@ void validate_layers(const ir::LayerData& source_layer,
     const auto& source_group = source_layer.as_group_layer();
     const auto& restored_group = restored_layer.as_group_layer();
 
-    ASSERT_EQ(source_group.children.size(), restored_group.children.size());
+    REQUIRE(source_group.children.size() == restored_group.children.size());
     for (usize index = 0; index < source_group.children.size(); ++index) {
       const auto& source_child_layer = source_group.children.at(index);
       const auto& restored_child_layer = restored_group.children.at(index);
@@ -124,7 +124,7 @@ void validate_layers(const ir::LayerData& source_layer,
 
 void validate_layers(const ir::MapData& source, const ir::MapData& restored)
 {
-  ASSERT_EQ(source.layers.size(), restored.layers.size());
+  REQUIRE(source.layers.size() == restored.layers.size());
   for (usize index = 0; index < source.layers.size(); ++index) {
     const auto& source_layer = source.layers.at(index);
     const auto& restored_layer = restored.layers.at(index);
@@ -135,20 +135,20 @@ void validate_layers(const ir::MapData& source, const ir::MapData& restored)
 void validate_fancy_tiles(const ir::MetaTileData& source,
                           const ir::MetaTileData& restored)
 {
-  ASSERT_EQ(source.objects.size(), restored.objects.size());
+  REQUIRE(source.objects.size() == restored.objects.size());
   for (usize index = 0; index < source.objects.size(); ++index) {
     const auto& source_object = source.objects.at(index);
     const auto& restored_object = restored.objects.at(index);
     validate_objects(source_object, restored_object);
   }
 
-  ASSERT_EQ(source.frames.size(), restored.frames.size());
+  REQUIRE(source.frames.size() == restored.frames.size());
   for (usize index = 0; index < source.frames.size(); ++index) {
     const auto& source_frame = source.frames.at(index);
     const auto& restored_frame = restored.frames.at(index);
 
-    ASSERT_EQ(source_frame.tile_index, restored_frame.tile_index);
-    ASSERT_EQ(source_frame.duration_ms, restored_frame.duration_ms);
+    REQUIRE(source_frame.tile_index == restored_frame.tile_index);
+    REQUIRE(source_frame.duration_ms == restored_frame.duration_ms);
   }
 
   validate_contexts(source.context, restored.context);
@@ -156,24 +156,24 @@ void validate_fancy_tiles(const ir::MetaTileData& source,
 
 void validate_tilesets(const ir::MapData& source, const ir::MapData& restored)
 {
-  ASSERT_EQ(source.tilesets.size(), restored.tilesets.size());
+  REQUIRE(source.tilesets.size() == restored.tilesets.size());
 
   for (usize index = 0; index < source.tilesets.size(); ++index) {
     const auto& source_tileset = source.tilesets.at(index);
     const auto& restored_tileset = restored.tilesets.at(index);
 
-    ASSERT_EQ(source_tileset.name, restored_tileset.name);
-    ASSERT_EQ(source_tileset.first_tile, restored_tileset.first_tile);
+    REQUIRE(source_tileset.name == restored_tileset.name);
+    REQUIRE(source_tileset.first_tile == restored_tileset.first_tile);
 
-    ASSERT_EQ(source_tileset.tile_count, restored_tileset.tile_count);
-    ASSERT_EQ(source_tileset.column_count, restored_tileset.column_count);
+    REQUIRE(source_tileset.tile_count == restored_tileset.tile_count);
+    REQUIRE(source_tileset.column_count == restored_tileset.column_count);
 
-    ASSERT_EQ(source_tileset.tile_size, restored_tileset.tile_size);
+    REQUIRE(source_tileset.tile_size == restored_tileset.tile_size);
 
-    // ASSERT_EQ(sourceTileset.image_path, restoredTileset.image_path);
-    ASSERT_EQ(source_tileset.image_size, restored_tileset.image_size);
+    // REQUIRE(sourceTileset.image_path== restoredTileset.image_path);
+    REQUIRE(source_tileset.image_size == restored_tileset.image_size);
 
-    ASSERT_EQ(source_tileset.fancy_tiles.size(), restored_tileset.fancy_tiles.size());
+    REQUIRE(source_tileset.fancy_tiles.size() == restored_tileset.fancy_tiles.size());
     for (const auto& [id, sourceTile]: source_tileset.fancy_tiles) {
       const auto& restored_tile = restored_tileset.fancy_tiles.at(id);
       validate_fancy_tiles(sourceTile, restored_tile);
@@ -186,23 +186,23 @@ void validate_tilesets(const ir::MapData& source, const ir::MapData& restored)
 void validate_component_definitions(const ir::MapData& source,
                                     const ir::MapData& restored)
 {
-  ASSERT_EQ(source.component_definitions.size(), restored.component_definitions.size());
-  ASSERT_EQ(source.component_definitions, restored.component_definitions);
+  REQUIRE(source.component_definitions.size() == restored.component_definitions.size());
+  REQUIRE(source.component_definitions == restored.component_definitions);
 }
 
 void validate_basic_map_info(const ir::MapData& source, const ir::MapData& restored)
 {
-  ASSERT_EQ(source.row_count, restored.row_count);
-  ASSERT_EQ(source.col_count, restored.col_count);
+  REQUIRE(source.row_count == restored.row_count);
+  REQUIRE(source.col_count == restored.col_count);
 
-  ASSERT_EQ(source.tile_size, restored.tile_size);
+  REQUIRE(source.tile_size == restored.tile_size);
 
-  ASSERT_EQ(source.next_object_id, restored.next_object_id);
-  ASSERT_EQ(source.next_layer_id, restored.next_layer_id);
+  REQUIRE(source.next_object_id == restored.next_object_id);
+  REQUIRE(source.next_layer_id == restored.next_layer_id);
 
   if (current_parser == "YAML") {
-    ASSERT_EQ(source.tile_format.encoding, restored.tile_format.encoding);
-    ASSERT_EQ(source.tile_format.compression, restored.tile_format.compression);
+    REQUIRE(source.tile_format.encoding == restored.tile_format.encoding);
+    REQUIRE(source.tile_format.compression == restored.tile_format.compression);
   }
 }
 
@@ -466,61 +466,62 @@ constexpr usize col_count = 13;
 
 }  // namespace
 
-TEST(RoundTrip, YAML)
+TEST_SUITE("Parser round trip")
 {
-  current_parser = "YAML";
+  TEST_CASE("YAML")
+  {
+    current_parser = "YAML";
 
-  const io::EmitInfo emitter {fs::absolute("test_map.yaml"), create_source_data(true)};
-  io::emit_yaml_map(emitter);
+    const io::EmitInfo emitter {fs::absolute("test_map.yaml"), create_source_data(true)};
+    io::emit_yaml_map(emitter);
 
-  const auto result = io::parse_map("test_map.yaml");
-  ASSERT_EQ(io::ParseError::None, result.error());
+    const auto result = io::parse_map("test_map.yaml");
+    REQUIRE(io::ParseError::None == result.error());
 
-  const auto& source = emitter.data();
-  const auto& restored = result.data();
+    const auto& source = emitter.data();
+    const auto& restored = result.data();
 
-  validate_basic_map_info(source, restored);
-  validate_component_definitions(source, restored);
-  validate_tilesets(source, restored);
-  validate_layers(source, restored);
-}
+    validate_basic_map_info(source, restored);
+    validate_component_definitions(source, restored);
+    validate_tilesets(source, restored);
+    validate_layers(source, restored);
+  }
 
-TEST(RoundTrip, JSON)
-{
-  current_parser = "JSON";
+  TEST_CASE("JSON")
+  {
+    current_parser = "JSON";
 
-  const io::EmitInfo emitter {fs::absolute("test_map.json"), create_source_data(false)};
-  io::emit_json_map(emitter);
+    const io::EmitInfo emitter {fs::absolute("test_map.json"), create_source_data(false)};
+    io::emit_json_map(emitter);
 
-  const auto result = io::parse_map("test_map.json");
-  ASSERT_EQ(io::ParseError::None, result.error());
+    const auto result = io::parse_map("test_map.json");
+    REQUIRE(io::ParseError::None == result.error());
 
-  ASSERT_EQ(io::ParseError::None, result.error());
+    const auto& source = emitter.data();
+    const auto& restored = result.data();
 
-  const auto& source = emitter.data();
-  const auto& restored = result.data();
+    validate_basic_map_info(source, restored);
+    validate_tilesets(source, restored);
+    validate_layers(source, restored);
+  }
 
-  validate_basic_map_info(source, restored);
-  validate_tilesets(source, restored);
-  validate_layers(source, restored);
-}
+  TEST_CASE("XML")
+  {
+    current_parser = "XML";
 
-TEST(RoundTrip, XML)
-{
-  current_parser = "XML";
+    const io::EmitInfo emitter {fs::absolute("test_map.tmx"), create_source_data(false)};
+    io::emit_xml_map(emitter);
 
-  const io::EmitInfo emitter {fs::absolute("test_map.tmx"), create_source_data(false)};
-  io::emit_xml_map(emitter);
+    const auto result = io::parse_map("test_map.tmx");
+    REQUIRE(io::ParseError::None == result.error());
 
-  const auto result = io::parse_map("test_map.tmx");
-  ASSERT_EQ(io::ParseError::None, result.error());
+    const auto& source = emitter.data();
+    const auto& restored = result.data();
 
-  const auto& source = emitter.data();
-  const auto& restored = result.data();
-
-  validate_basic_map_info(source, restored);
-  validate_tilesets(source, restored);
-  validate_layers(source, restored);
+    validate_basic_map_info(source, restored);
+    validate_tilesets(source, restored);
+    validate_layers(source, restored);
+  }
 }
 
 }  // namespace tactile::test

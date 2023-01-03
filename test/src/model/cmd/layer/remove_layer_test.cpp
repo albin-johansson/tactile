@@ -19,7 +19,7 @@
 
 #include "model/cmd/layer/remove_layer.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
@@ -27,34 +27,37 @@
 
 namespace tactile::test {
 
-TEST(RemoveLayer, Constructor)
+TEST_SUITE("cmd::RemoveLayer")
 {
-  ASSERT_THROW(cmd::RemoveLayer(nullptr, make_uuid()), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::RemoveLayer(nullptr, make_uuid()), TactileError);
+  }
 
-TEST(RemoveLayer, RedoUndo)
-{
-  UUID layer_id;
+  TEST_CASE("redo/undo")
+  {
+    UUID layer_id;
 
-  auto document = MapBuilder::build()  //
-                      .with_object_layer(&layer_id)
-                      .result();
+    auto map_document = MapBuilder::build()  //
+                            .with_object_layer(&layer_id)
+                            .result();
 
-  auto& map = document->get_map();
-  auto& root = map.invisible_root();
-  auto& contexts = document->get_contexts();
+    auto& map = map_document->get_map();
+    auto& root = map.invisible_root();
+    auto& contexts = map_document->get_contexts();
 
-  ASSERT_TRUE(contexts.contains(layer_id));
+    REQUIRE(contexts.contains(layer_id));
 
-  cmd::RemoveLayer cmd {document.get(), layer_id};
+    cmd::RemoveLayer cmd {map_document.get(), layer_id};
 
-  cmd.redo();
-  ASSERT_EQ(0u, root.layer_count());
-  ASSERT_FALSE(contexts.contains(layer_id));
+    cmd.redo();
+    REQUIRE(0u == root.layer_count());
+    REQUIRE(!contexts.contains(layer_id));
 
-  cmd.undo();
-  ASSERT_EQ(1u, root.layer_count());
-  ASSERT_TRUE(contexts.contains(layer_id));
+    cmd.undo();
+    REQUIRE(1u == root.layer_count());
+    REQUIRE(contexts.contains(layer_id));
+  }
 }
 
 }  // namespace tactile::test

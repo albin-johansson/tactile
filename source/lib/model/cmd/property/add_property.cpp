@@ -41,14 +41,12 @@ AddProperty::AddProperty(Shared<Context> context, String name, const AttributeTy
 
 void AddProperty::undo()
 {
-  auto& props = mContext->get_ctx().props();
-  props.remove(mName);
+  mContext->get_ctx().remove_property(mName);
 }
 
 void AddProperty::redo()
 {
-  auto& props = mContext->get_ctx().props();
-  props.add(mName, mType);
+  mContext->get_ctx().add_property(mName, mType);
 }
 
 auto AddProperty::get_name() const -> String

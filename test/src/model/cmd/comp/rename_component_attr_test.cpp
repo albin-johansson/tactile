@@ -19,7 +19,7 @@
 
 #include "model/cmd/comp/rename_component_attr.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/component_builder.hpp"
@@ -27,55 +27,65 @@
 
 namespace tactile::test {
 
-TEST(RenameComponentAttr, Constructor)
+TEST_SUITE("cmd::RenameComponentAttr")
 {
-  ASSERT_THROW(cmd::RenameComponentAttr(nullptr, make_uuid(), "", ""), TactileError);
-}
-
-TEST(RenameComponentAttr, RedoUndo)
-{
-  auto document = MapBuilder::build().result();
-  auto index = document->get_component_index_ptr();
-
-  const auto comp_id = ComponentBuilder {index, "Demo"}  //
-                           .with_attr("Foo", 123)
-                           .result();
-
-  auto& map = document->get_map();
-  auto& bundle = map.get_ctx().comps();
-  bundle.add(index->at(comp_id).instantiate());
-
-  cmd::RenameComponentAttr cmd {document.get(), comp_id, "Foo", "Bar"};
-  cmd.redo();
-
+  TEST_CASE("constructor")
   {
-    const auto& def = index->at(comp_id);
-    const auto& comp = bundle.at(comp_id);
-
-    ASSERT_FALSE(def.has("Foo"));
-    ASSERT_FALSE(comp.has("Foo"));
-
-    ASSERT_TRUE(def.has("Bar"));
-    ASSERT_TRUE(comp.has("Bar"));
-
-    ASSERT_EQ(123, def.at("Bar"));
-    ASSERT_EQ(123, comp.at("Bar"));
+    REQUIRE_THROWS_AS(cmd::RenameComponentAttr(nullptr, make_uuid(), "", ""),
+                      TactileError);
   }
 
-  cmd.undo();
-
+  TEST_CASE("redo/undo")
   {
-    const auto& def = index->at(comp_id);
-    const auto& comp = bundle.at(comp_id);
+    auto map_document = MapBuilder::build().result();
+    auto component_index = map_document->get_component_index_ptr();
 
-    ASSERT_TRUE(def.has("Foo"));
-    ASSERT_TRUE(comp.has("Foo"));
+    const String old_attr_name {"Foo"};
+    const String new_attr_name {"Bar"};
+    const int attr_value = 123;
 
-    ASSERT_FALSE(def.has("Bar"));
-    ASSERT_FALSE(comp.has("Bar"));
+    const auto component_id = ComponentBuilder {component_index, "Demo"}  //
+                                  .with_attr(old_attr_name, attr_value)
+                                  .result();
 
-    ASSERT_EQ(123, def.at("Foo"));
-    ASSERT_EQ(123, comp.at("Foo"));
+    auto& map = map_document->get_map();
+    auto& map_ctx = map.get_ctx();
+    map_ctx.attach_component(component_index->at(component_id).instantiate());
+
+    cmd::RenameComponentAttr cmd {map_document.get(),
+                                  component_id,
+                                  old_attr_name,
+                                  new_attr_name};
+
+    {
+      cmd.redo();
+      const auto& component_def = component_index->at(component_id);
+      const auto& component = map_ctx.get_component(component_id);
+
+      REQUIRE(!component_def.has(old_attr_name));
+      REQUIRE(!component.has(old_attr_name));
+
+      REQUIRE(component_def.has(new_attr_name));
+      REQUIRE(component.has(new_attr_name));
+
+      REQUIRE(component_def.at(new_attr_name) == attr_value);
+      REQUIRE(component.at(new_attr_name) == attr_value);
+    }
+
+    {
+      cmd.undo();
+      const auto& component_def = component_index->at(component_id);
+      const auto& component = map_ctx.get_component(component_id);
+
+      REQUIRE(component_def.has(old_attr_name));
+      REQUIRE(component.has(old_attr_name));
+
+      REQUIRE(!component_def.has(new_attr_name));
+      REQUIRE(!component.has(new_attr_name));
+
+      REQUIRE(component_def.at(old_attr_name) == attr_value);
+      REQUIRE(component.at(old_attr_name) == attr_value);
+    }
   }
 }
 

@@ -19,7 +19,7 @@
 
 #include "model/cmd/comp/remove_component_attr.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/component_builder.hpp"
@@ -27,38 +27,47 @@
 
 namespace tactile::test {
 
-TEST(RemoveComponentAttr, Constructor)
+TEST_SUITE("cmd::RemoveComponentAttr")
 {
-  ASSERT_THROW(cmd::RemoveComponentAttr(nullptr, make_uuid(), ""), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::RemoveComponentAttr(nullptr, make_uuid(), ""), TactileError);
+  }
 
-TEST(RemoveComponentAttr, RedoUndo)
-{
-  auto document = MapBuilder::build().result();
-  auto index = document->get_component_index_ptr();
+  TEST_CASE("redo/undo")
+  {
+    auto map_document = MapBuilder::build().result();
+    auto component_index = map_document->get_component_index_ptr();
 
-  const auto comp_id = ComponentBuilder {index, "Demo"}.with_attr("attr", 42).result();
+    const String attr_name {"test"};
+    const int attr_value = 42;
 
-  auto& definition = index->at(comp_id);
-  auto& map = document->get_map();
-  auto& bundle = map.get_ctx().comps();
+    const auto component_id = ComponentBuilder {component_index, "Demo"}
+                                  .with_attr(attr_name, attr_value)
+                                  .result();
 
-  bundle.add(definition.instantiate());
-  ASSERT_TRUE(bundle.contains(comp_id));
-  ASSERT_EQ(42, bundle.at(comp_id).at("attr"));
+    auto& component_def = component_index->at(component_id);
+    auto& map = map_document->get_map();
+    auto& map_ctx = map.get_ctx();
 
-  cmd::RemoveComponentAttr cmd {document.get(), comp_id, "attr"};
+    map_ctx.attach_component(component_def.instantiate());
+    REQUIRE(map_ctx.has_component(component_id));
+    REQUIRE(map_ctx.get_component(component_id).at(attr_name) == attr_value);
 
-  cmd.redo();
-  ASSERT_TRUE(definition.empty());
-  ASSERT_TRUE(bundle.at(comp_id).empty());
+    cmd::RemoveComponentAttr cmd {map_document.get(), component_id, attr_name};
 
-  cmd.undo();
-  ASSERT_TRUE(definition.has("attr"));
-  ASSERT_EQ(42, definition.at("attr"));
+    cmd.redo();
+    REQUIRE(component_def.empty());
+    REQUIRE(map_ctx.get_component(component_id).empty());
 
-  ASSERT_TRUE(bundle.at(comp_id).has("attr"));
-  ASSERT_EQ(definition.at("attr"), bundle.at(comp_id).at("attr"));
+    cmd.undo();
+    REQUIRE(component_def.has(attr_name));
+    REQUIRE(component_def.at(attr_name) == attr_value);
+
+    REQUIRE(map_ctx.get_component(component_id).has(attr_name));
+    REQUIRE(component_def.at(attr_name) ==
+            map_ctx.get_component(component_id).at(attr_name));
+  }
 }
 
 }  // namespace tactile::test

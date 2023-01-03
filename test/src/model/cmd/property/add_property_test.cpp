@@ -19,36 +19,39 @@
 
 #include "model/cmd/property/add_property.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(AddProperty, Constructor)
+TEST_SUITE("cmd::AddProperty")
 {
-  ASSERT_THROW(cmd::AddProperty(nullptr, "", AttributeType::String), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::AddProperty(nullptr, "", AttributeType::String), TactileError);
+  }
 
-TEST(AddProperty, RedoUndo)
-{
-  auto document = MapBuilder::build().result();
-  auto map = document->get_map_ptr();
-  auto& props = map->get_ctx().props();
+  TEST_CASE("redo/undo")
+  {
+    auto map_document = MapBuilder::build().result();
+    auto map = map_document->get_map_ptr();
+    auto& map_ctx = map->get_ctx();
 
-  ASSERT_TRUE(props.empty());
+    REQUIRE(map_ctx.property_count() == 0u);
 
-  cmd::AddProperty cmd {map, "Foo", AttributeType::Int};
-  cmd.redo();
+    const String property_name {"Foo"};
+    cmd::AddProperty cmd {map, property_name, AttributeType::Int};
 
-  ASSERT_TRUE(props.contains("Foo"));
-  ASSERT_EQ(0, props.at("Foo").as_int());
+    cmd.redo();
+    REQUIRE(map_ctx.has_property(property_name));
+    REQUIRE(0 == map_ctx.get_property(property_name).as_int());
 
-  cmd.undo();
-
-  ASSERT_FALSE(props.contains("Foo"));
-  ASSERT_TRUE(props.empty());
+    cmd.undo();
+    REQUIRE(!map_ctx.has_property(property_name));
+    REQUIRE(map_ctx.property_count() == 0u);
+  }
 }
 
 }  // namespace tactile::test

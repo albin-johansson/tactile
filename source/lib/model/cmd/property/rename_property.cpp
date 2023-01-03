@@ -41,14 +41,12 @@ RenameProperty::RenameProperty(Shared<Context> context, String old_name, String 
 
 void RenameProperty::undo()
 {
-  auto& props = mContext->get_ctx().props();
-  props.rename(mNewName, mOldName);
+  mContext->get_ctx().rename_property(mNewName, mOldName);
 }
 
 void RenameProperty::redo()
 {
-  auto& props = mContext->get_ctx().props();
-  props.rename(mOldName, mNewName);
+  mContext->get_ctx().rename_property(mOldName, mNewName);
 }
 
 auto RenameProperty::get_name() const -> String

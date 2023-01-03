@@ -19,67 +19,71 @@
 
 #include "core/component/component_index.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/component/component_definition.hpp"
 #include "core/debug/panic.hpp"
 
 namespace tactile::test {
 
-TEST(ComponentIndex, Defaults)
+TEST_SUITE("ComponentIndex")
 {
-  const ComponentIndex index;
-  ASSERT_EQ(0u, index.size());
-}
+  TEST_CASE("Defaults")
+  {
+    const ComponentIndex index;
+    REQUIRE(0u == index.size());
+    REQUIRE(index.empty());
+  }
 
-TEST(ComponentIndex, Define)
-{
-  ComponentIndex index;
-  const auto id = index.define("position");
+  TEST_CASE("define")
+  {
+    ComponentIndex index;
+    const auto component_id = index.define("position");
 
-  const auto& def = index.at(id);
-  ASSERT_EQ("position", def.name());
-  ASSERT_EQ(id, def.get_uuid());
-  ASSERT_TRUE(def.empty());
+    const auto& component_def = index.at(component_id);
+    REQUIRE("position" == component_def.name());
+    REQUIRE(component_id == component_def.get_uuid());
+    REQUIRE(component_def.empty());
 
-  ASSERT_TRUE(index.contains("position"));
-  ASSERT_EQ(1u, index.size());
+    REQUIRE(index.contains("position"));
+    REQUIRE(1u == index.size());
 
-  ASSERT_THROW(index.define("position"), TactileError);
-}
+    REQUIRE_THROWS_AS(index.define("position"), TactileError);
+  }
 
-TEST(ComponentIndex, Remove)
-{
-  ComponentIndex index;
-  ASSERT_THROW(index.remove(make_uuid()), TactileError);
+  TEST_CASE("remove")
+  {
+    ComponentIndex index;
+    REQUIRE_THROWS_AS(index.remove(make_uuid()), TactileError);
 
-  const auto id = index.define("foo");
-  ASSERT_EQ(1u, index.size());
-  ASSERT_TRUE(index.contains("foo"));
+    const auto component_id = index.define("foo");
+    REQUIRE(1u == index.size());
+    REQUIRE(index.contains("foo"));
 
-  index.remove(id);
+    index.remove(component_id);
 
-  ASSERT_EQ(0u, index.size());
-  ASSERT_FALSE(index.contains("foo"));
-}
+    REQUIRE(0u == index.size());
+    REQUIRE(!index.contains("foo"));
+  }
 
-TEST(ComponentIndex, Rename)
-{
-  ComponentIndex index;
-  ASSERT_THROW(index.rename(make_uuid(), "foo"), TactileError);
+  TEST_CASE("rename")
+  {
+    ComponentIndex index;
+    REQUIRE_THROWS_AS(index.rename(make_uuid(), "foo"), TactileError);
 
-  const auto id = index.define("foo");
+    const auto id = index.define("foo");
 
-  ASSERT_TRUE(index.contains("foo"));
-  ASSERT_FALSE(index.contains("zoo"));
+    REQUIRE(index.contains("foo"));
+    REQUIRE(!index.contains("zoo"));
 
-  index.rename(id, "zoo");
+    index.rename(id, "zoo");
 
-  ASSERT_FALSE(index.contains("foo"));
-  ASSERT_TRUE(index.contains("zoo"));
+    REQUIRE(!index.contains("foo"));
+    REQUIRE(index.contains("zoo"));
 
-  index.define("woo");
-  ASSERT_THROW(index.rename(id, "woo"), TactileError);
+    index.define("woo");
+    REQUIRE_THROWS_AS(index.rename(id, "woo"), TactileError);
+  }
 }
 
 }  // namespace tactile::test

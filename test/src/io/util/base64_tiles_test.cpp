@@ -19,20 +19,21 @@
 
 #include "io/util/base64_tiles.hpp"
 
-#include <gtest/gtest.h>
-
-#include "io/map/parse/parse_map.hpp"
+#include <doctest/doctest.h>
 
 namespace tactile::test {
 
-TEST(TileFormatEncoding, EncodeDecodeRoundtrip)
+TEST_SUITE("Base64 tiles")
 {
-  const TileMatrix source {{1000, 2000, 3000}, {4000, 5000, 6000}, {7000, 8000, 9000}};
+  TEST_CASE("Encode/decode roundtrip")
+  {
+    const TileMatrix source {{1000, 2000, 3000}, {4000, 5000, 6000}, {7000, 8000, 9000}};
 
-  const auto encoded = io::base64_encode_tiles(source, 3, 3, TileCompression::Zlib);
-  const auto decoded = io::base64_decode_tiles(encoded, 3, 3, TileCompression::Zlib);
+    const auto encoded = io::base64_encode_tiles(source, 3, 3, TileCompression::Zlib);
+    const auto decoded = io::base64_decode_tiles(encoded, 3, 3, TileCompression::Zlib);
 
-  ASSERT_EQ(source, decoded);
+    REQUIRE(source == decoded);
+  }
 }
 
 }  // namespace tactile::test

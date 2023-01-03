@@ -19,7 +19,7 @@
 
 #include "core/viewport.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "common/util/functional.hpp"
 
@@ -27,123 +27,126 @@ namespace tactile::test {
 
 // TODO zoom_in, zoom_out
 
-TEST(Viewport, Defaults)
+TEST_SUITE("Viewport")
 {
-  const Viewport viewport;
-  ASSERT_FALSE(viewport.limits().has_value());
+  TEST_CASE("Defaults")
+  {
+    const Viewport viewport;
+    REQUIRE(!viewport.limits().has_value());
 
-  ASSERT_EQ(0, viewport.get_offset().x);
-  ASSERT_EQ(0, viewport.get_offset().y);
+    REQUIRE(0 == viewport.get_offset().x);
+    REQUIRE(0 == viewport.get_offset().y);
 
-  ASSERT_EQ(32, viewport.tile_size().x);
-  ASSERT_EQ(32, viewport.tile_size().y);
-}
+    REQUIRE(32 == viewport.tile_size().x);
+    REQUIRE(32 == viewport.tile_size().y);
+  }
 
-TEST(Viewport, ResetLimits)
-{
-  Viewport viewport;
+  TEST_CASE("reset_limits")
+  {
+    Viewport viewport;
 
-  viewport.set_limits({.min_offset = {23, 12}, .max_offset = {83, 123}});
-  ASSERT_TRUE(viewport.limits().has_value());
+    viewport.set_limits({.min_offset = {23, 12}, .max_offset = {83, 123}});
+    REQUIRE(viewport.limits().has_value());
 
-  viewport.reset_limits();
-  ASSERT_FALSE(viewport.limits().has_value());
-}
+    viewport.reset_limits();
+    REQUIRE(!viewport.limits().has_value());
+  }
 
-TEST(Viewport, Offset)
-{
-  Viewport viewport;
+  TEST_CASE("offset")
+  {
+    Viewport viewport;
 
-  viewport.offset({42, -12});
-  ASSERT_EQ(42, viewport.get_offset().x);
-  ASSERT_EQ(-12, viewport.get_offset().y);
-}
+    viewport.offset({42, -12});
+    REQUIRE(42 == viewport.get_offset().x);
+    REQUIRE(-12 == viewport.get_offset().y);
+  }
 
-TEST(Viewport, PanLeft)
-{
-  Viewport viewport;
+  TEST_CASE("pan_left")
+  {
+    Viewport viewport;
 
-  viewport.pan_left();
-  ASSERT_EQ(viewport.tile_size().x, viewport.get_offset().x);
-  ASSERT_EQ(0, viewport.get_offset().y);
-}
+    viewport.pan_left();
+    REQUIRE(viewport.tile_size().x == viewport.get_offset().x);
+    REQUIRE(0 == viewport.get_offset().y);
+  }
 
-TEST(Viewport, PanRight)
-{
-  Viewport viewport;
+  TEST_CASE("pan_right")
+  {
+    Viewport viewport;
 
-  viewport.pan_right();
-  ASSERT_EQ(-viewport.tile_size().x, viewport.get_offset().x);
-  ASSERT_EQ(0, viewport.get_offset().y);
-}
+    viewport.pan_right();
+    REQUIRE(-viewport.tile_size().x == viewport.get_offset().x);
+    REQUIRE(0 == viewport.get_offset().y);
+  }
 
-TEST(Viewport, PanUp)
-{
-  Viewport viewport;
+  TEST_CASE("pan_up")
+  {
+    Viewport viewport;
 
-  viewport.pan_up();
-  ASSERT_EQ(0, viewport.get_offset().x);
-  ASSERT_EQ(viewport.tile_size().y, viewport.get_offset().y);
-}
+    viewport.pan_up();
+    REQUIRE(0 == viewport.get_offset().x);
+    REQUIRE(viewport.tile_size().y == viewport.get_offset().y);
+  }
 
-TEST(Viewport, PanDown)
-{
-  Viewport viewport;
+  TEST_CASE("pan_down")
+  {
+    Viewport viewport;
 
-  viewport.pan_down();
-  ASSERT_EQ(0, viewport.get_offset().x);
-  ASSERT_EQ(-viewport.tile_size().y, viewport.get_offset().y);
-}
+    viewport.pan_down();
+    REQUIRE(0 == viewport.get_offset().x);
+    REQUIRE(-viewport.tile_size().y == viewport.get_offset().y);
+  }
 
-TEST(Viewport, PanningInOppositeDirectionsShouldCancel)
-{
-  Viewport viewport;
+  TEST_CASE("panning in opposite directions should cancel out")
+  {
+    Viewport viewport;
 
-  viewport.pan_left();
-  viewport.pan_right();
-  ASSERT_EQ(0, viewport.get_offset().x);
-  ASSERT_EQ(0, viewport.get_offset().y);
+    viewport.pan_left();
+    viewport.pan_right();
+    REQUIRE(0 == viewport.get_offset().x);
+    REQUIRE(0 == viewport.get_offset().y);
 
-  viewport.pan_up();
-  viewport.pan_down();
-  ASSERT_EQ(0, viewport.get_offset().x);
-  ASSERT_EQ(0, viewport.get_offset().y);
-}
+    viewport.pan_up();
+    viewport.pan_down();
+    REQUIRE(0 == viewport.get_offset().x);
+    REQUIRE(0 == viewport.get_offset().y);
+  }
 
-TEST(Viewport, SetTileSize)
-{
-  Viewport viewport;
+  TEST_CASE("set_tile_size")
+  {
+    Viewport viewport;
 
-  viewport.set_tile_size({93, 24});
-  ASSERT_EQ(93, viewport.tile_size().x);
-  ASSERT_EQ(24, viewport.tile_size().y);
-}
+    viewport.set_tile_size({93, 24});
+    REQUIRE(93 == viewport.tile_size().x);
+    REQUIRE(24 == viewport.tile_size().y);
+  }
 
-TEST(Viewport, SetLimits)
-{
-  const float minX = -32;
-  const float minY = -13;
-  const float maxX = 483;
-  const float maxY = 923;
+  TEST_CASE("set_limits")
+  {
+    const float min_x = -32;
+    const float min_y = -13;
+    const float max_x = 483;
+    const float max_y = 923;
 
-  Viewport viewport;
-  viewport.set_limits({.min_offset = {minX, minY}, .max_offset = {maxX, maxY}});
+    Viewport viewport;
+    viewport.set_limits({.min_offset = {min_x, min_y}, .max_offset = {max_x, max_y}});
 
-  viewport.offset({minX - 1, 0});
-  ASSERT_EQ(minX, viewport.get_offset().x);
-  ASSERT_EQ(0, viewport.get_offset().y);
+    viewport.offset({min_x - 1, 0});
+    REQUIRE(min_x == viewport.get_offset().x);
+    REQUIRE(0 == viewport.get_offset().y);
 
-  viewport.offset({0, minY - 1});
-  ASSERT_EQ(minX, viewport.get_offset().x);
-  ASSERT_EQ(minY, viewport.get_offset().y);
+    viewport.offset({0, min_y - 1});
+    REQUIRE(min_x == viewport.get_offset().x);
+    REQUIRE(min_y == viewport.get_offset().y);
 
-  viewport.offset({maxX + 100, 0});
-  ASSERT_EQ(maxX, viewport.get_offset().x);
-  ASSERT_EQ(minY, viewport.get_offset().y);
+    viewport.offset({max_x + 100, 0});
+    REQUIRE(max_x == viewport.get_offset().x);
+    REQUIRE(min_y == viewport.get_offset().y);
 
-  viewport.offset({0, maxY + 100});
-  ASSERT_EQ(maxX, viewport.get_offset().x);
-  ASSERT_EQ(maxY, viewport.get_offset().y);
+    viewport.offset({0, max_y + 100});
+    REQUIRE(max_x == viewport.get_offset().x);
+    REQUIRE(max_y == viewport.get_offset().y);
+  }
 }
 
 }  // namespace tactile::test

@@ -19,33 +19,42 @@
 
 #include "model/cmd/map/resize_map.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(ResizeMap, Constructor)
+TEST_SUITE("cmd::ResizeMap")
 {
-  ASSERT_THROW(cmd::ResizeMap(nullptr, 1, 1), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::ResizeMap(nullptr, 1, 1), TactileError);
+  }
 
-TEST(ResizeMap, RedoUndo)
-{
-  auto document = test::MapBuilder::build().with_size(5, 7).result();
-  auto map = document->get_map_ptr();
+  TEST_CASE("redo/undo")
+  {
+    const usize old_rows = 5;
+    const usize old_cols = 7;
 
-  cmd::ResizeMap cmd {map, 3, 9};
-  cmd.redo();
+    auto map_document = test::MapBuilder::build()  //
+                            .with_size(old_rows, old_cols)
+                            .result();
+    auto map = map_document->get_map_ptr();
 
-  ASSERT_EQ(3u, map->row_count());
-  ASSERT_EQ(9u, map->column_count());
+    const usize new_rows = 3;
+    const usize new_cols = 9;
+    cmd::ResizeMap cmd {map, new_rows, new_cols};
 
-  cmd.undo();
+    cmd.redo();
+    REQUIRE(new_rows == map->row_count());
+    REQUIRE(new_cols == map->column_count());
 
-  ASSERT_EQ(5u, map->row_count());
-  ASSERT_EQ(7u, map->column_count());
+    cmd.undo();
+    REQUIRE(old_rows == map->row_count());
+    REQUIRE(old_cols == map->column_count());
+  }
 }
 
 }  // namespace tactile::test

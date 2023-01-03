@@ -19,29 +19,35 @@
 
 #include "common/util/functional.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 namespace tactile::test {
 
-TEST(InvokeN, ZeroInvocations)
+TEST_SUITE("Functional")
 {
-  bool called = false;
-  invoke_n(0, [&] { called = true; });
-  ASSERT_FALSE(called);
-}
+  TEST_CASE("invoke_n")
+  {
+    SUBCASE("zero invocations")
+    {
+      bool called = false;
+      invoke_n(0, [&] { called = true; });
+      REQUIRE(!called);
+    }
 
-TEST(InvokeN, OneInvocation)
-{
-  int calls = 0;
-  invoke_n(1, [&] { ++calls; });
-  ASSERT_EQ(1, calls);
-}
+    SUBCASE("one invocation")
+    {
+      int calls = 0;
+      invoke_n(1, [&] { ++calls; });
+      REQUIRE(1 == calls);
+    }
 
-TEST(InvokeN, SeveralInvocations)
-{
-  int calls = 0;
-  invoke_n(42, [&] { ++calls; });
-  ASSERT_EQ(42, calls);
+    SUBCASE("several invocations")
+    {
+      int calls = 0;
+      invoke_n(42, [&] { ++calls; });
+      REQUIRE(42 == calls);
+    }
+  }
 }
 
 }  // namespace tactile::test

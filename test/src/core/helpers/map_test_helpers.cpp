@@ -19,7 +19,7 @@
 
 #include "map_test_helpers.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "common/util/functional.hpp"
 #include "core/layer/group_layer.hpp"
@@ -30,16 +30,20 @@ namespace tactile::test {
 
 void set_all_tiles(TileLayer& layer, const TileID tile)
 {
-  invoke_mn(layer.row_count(), layer.column_count(), [&](usize r, usize c) {
-    layer.set_tile(TilePos::from(r, c), tile);
-  });
+  invoke_mn(layer.row_count(),
+            layer.column_count(),
+            [&](const usize row, const usize col) {
+              layer.set_tile(TilePos::from(row, col), tile);
+            });
 }
 
 void verify_all_tiles_matches(const TileLayer& layer, const TileID tile)
 {
-  invoke_mn(layer.row_count(), layer.column_count(), [&](usize r, usize c) {
-    ASSERT_EQ(tile, layer.tile_at(TilePos::from(r, c)));
-  });
+  invoke_mn(layer.row_count(),
+            layer.column_count(),
+            [&](const usize row, const usize col) {
+              REQUIRE(layer.tile_at(TilePos::from(row, col)) == tile);
+            });
 }
 
 auto add_tile_layer(Map& map) -> TileLayer&

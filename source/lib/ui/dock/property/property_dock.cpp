@@ -24,6 +24,8 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "common/type/maybe.hpp"
+#include "common/type/uuid.hpp"
 #include "core/context/context_visitor.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
@@ -31,8 +33,6 @@
 #include "core/map.hpp"
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/uuid.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
@@ -362,8 +362,9 @@ void show_custom_properties(const Context& context,
 {
   bool first = true;
 
-  for (const auto& [name, value]: context.get_ctx().props()) {
-    const Scope scope {name.c_str()};
+  const auto& ctx = context.get_ctx();
+  ctx.each_property([&](const String& property_name, const Attribute& property_value) {
+    const Scope scope {property_name.c_str()};
 
     ImGui::TableNextRow();
     ImGui::TableNextColumn();
@@ -373,19 +374,21 @@ void show_custom_properties(const Context& context,
     }
 
     ImGui::AlignTextToFramePadding();
-    Selectable::Property(name.c_str());
+    Selectable::Property(property_name.c_str());
 
     if (!is_item_context_open) {
-      is_item_context_open =
-          property_item_context_menu(context.get_uuid(), dispatcher, name, context_state);
+      is_item_context_open = property_item_context_menu(context.get_uuid(),
+                                                        dispatcher,
+                                                        property_name,
+                                                        context_state);
     }
 
     if (context_state.show_rename_dialog && !rename_target) {
-      rename_target = name;
+      rename_target = property_name;
     }
 
     if (context_state.show_change_type_dialog && !change_type_target) {
-      change_type_target = name;
+      change_type_target = property_name;
     }
 
     ImGui::TableNextColumn();
@@ -394,14 +397,14 @@ void show_custom_properties(const Context& context,
       ImGui::Separator();
     }
 
-    if (auto updated = ui_attribute_input("##CustomPropertyInput", value)) {
+    if (auto updated = ui_attribute_input("##CustomPropertyInput", property_value)) {
       dispatcher.enqueue<UpdatePropertyEvent>(context.get_uuid(),
-                                              name,
+                                              property_name,
                                               std::move(*updated));
     }
 
     first = false;
-  }
+  });
 }
 
 struct ContextPropertyVisitor final : ContextVisitor {
@@ -479,7 +482,7 @@ void update_property_table(const DocumentModel& model, entt::dispatcher& dispatc
 
   if (context_state.show_change_type_dialog) {
     const auto& target_name = change_type_target.value();
-    const auto type = context.get_ctx().props().at(target_name).type();
+    const auto type = context.get_ctx().get_property(target_name).type();
     dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(target_name, type);
     change_type_target.reset();
     context_state.show_change_type_dialog = false;

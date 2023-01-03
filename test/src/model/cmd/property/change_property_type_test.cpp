@@ -19,36 +19,42 @@
 
 #include "model/cmd/property/change_property_type.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(ChangePropertyType, Constructor)
+TEST_SUITE("cmd::ChangePropertyType")
 {
-  ASSERT_THROW(cmd::ChangePropertyType(nullptr, "", AttributeType::Int), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::ChangePropertyType(nullptr, "", AttributeType::Int),
+                      TactileError);
+  }
 
-TEST(ChangePropertyType, RedoUndo)
-{
-  auto document = MapBuilder::build().result();
-  auto map = document->get_map_ptr();
+  TEST_CASE("redo/undo")
+  {
+    auto map_document = MapBuilder::build().result();
+    auto map = map_document->get_map_ptr();
+    auto& map_ctx = map->get_ctx();
 
-  auto& props = map->get_ctx().props();
-  props.add("property", 123);
+    const String property_name {"foobar"};
+    map_ctx.add_property(property_name, 123);
 
-  cmd::ChangePropertyType cmd {map, "property", AttributeType::Bool};
-  cmd.redo();
+    cmd::ChangePropertyType cmd {map, property_name, AttributeType::Bool};
 
-  ASSERT_TRUE(props.contains("property"));
-  ASSERT_FALSE(props.at("property").as_bool());
+    cmd.redo();
+    REQUIRE(map_ctx.has_property(property_name));
+    REQUIRE(map_ctx.get_property(property_name).is_bool());
+    REQUIRE(!map_ctx.get_property(property_name).as_bool());
 
-  cmd.undo();
-
-  ASSERT_TRUE(props.contains("property"));
-  ASSERT_EQ(123, props.at("property").as_int());
+    cmd.undo();
+    REQUIRE(map_ctx.has_property(property_name));
+    REQUIRE(map_ctx.get_property(property_name).is_int());
+    REQUIRE(map_ctx.get_property(property_name).as_int() == 123);
+  }
 }
 
 }  // namespace tactile::test

@@ -45,15 +45,13 @@ AttachComponent::AttachComponent(Shared<ComponentIndex> index,
 
 void AttachComponent::undo()
 {
-  auto& comps = mContext->get_ctx().comps();
-  comps.erase(mComponentId);
+  mContext->get_ctx().detach_component(mComponentId);
 }
 
 void AttachComponent::redo()
 {
-  const auto& definition = mIndex->at(mComponentId);
-  auto& comps = mContext->get_ctx().comps();
-  comps.add(definition.instantiate());
+  const auto& component_def = mIndex->at(mComponentId);
+  mContext->get_ctx().attach_component(component_def.instantiate());
 }
 
 auto AttachComponent::get_name() const -> String

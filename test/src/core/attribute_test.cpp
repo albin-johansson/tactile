@@ -19,7 +19,7 @@
 
 #include "core/attribute.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 
@@ -27,157 +27,160 @@ using namespace std::string_literals;
 
 namespace tactile::test {
 
-TEST(Attribute, Defaults)
+TEST_SUITE("Attribute")
 {
-  const Attribute value;
-  ASSERT_EQ(AttributeType::String, value.type());
+  TEST_CASE("Defaults")
+  {
+    const Attribute value;
+    REQUIRE(AttributeType::String == value.type());
 
-  ASSERT_TRUE(value.is_string());
-  ASSERT_FALSE(value.is_int());
-  ASSERT_FALSE(value.is_float());
-  ASSERT_FALSE(value.is_bool());
-  ASSERT_FALSE(value.is_color());
-  ASSERT_FALSE(value.is_path());
-  ASSERT_FALSE(value.is_object());
+    REQUIRE(value.is_string());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_float());
+    REQUIRE(!value.is_bool());
+    REQUIRE(!value.is_color());
+    REQUIRE(!value.is_path());
+    REQUIRE(!value.is_object());
 
-  ASSERT_EQ("", value.as_string());
-  ASSERT_THROW(value.as_int(), TactileError);
-  ASSERT_THROW(value.as_float(), TactileError);
-  ASSERT_THROW(value.as_bool(), TactileError);
-  ASSERT_THROW(value.as_color(), TactileError);
-  ASSERT_THROW(value.as_path(), TactileError);
-  ASSERT_THROW(value.as_object(), TactileError);
-}
+    REQUIRE("" == value.as_string());
+    REQUIRE_THROWS_AS(value.as_int(), TactileError);
+    REQUIRE_THROWS_AS(value.as_float(), TactileError);
+    REQUIRE_THROWS_AS(value.as_bool(), TactileError);
+    REQUIRE_THROWS_AS(value.as_color(), TactileError);
+    REQUIRE_THROWS_AS(value.as_path(), TactileError);
+    REQUIRE_THROWS_AS(value.as_object(), TactileError);
+  }
 
-TEST(Attribute, IntAttribute)
-{
-  const Attribute value {123};
-  ASSERT_EQ(123, value.as_int());
+  TEST_CASE("Int attribute")
+  {
+    const Attribute value {123};
+    REQUIRE(123 == value.as_int());
 
-  ASSERT_TRUE(value.is_int());
-  ASSERT_TRUE(value.try_as_int());
+    REQUIRE(value.is_int());
+    REQUIRE(value.try_as_int());
 
-  ASSERT_FALSE(value.is_string());
-  ASSERT_FALSE(value.is_float());
-  ASSERT_FALSE(value.is_bool());
-  ASSERT_FALSE(value.is_color());
-  ASSERT_FALSE(value.is_path());
-  ASSERT_FALSE(value.is_object());
-}
+    REQUIRE(!value.is_string());
+    REQUIRE(!value.is_float());
+    REQUIRE(!value.is_bool());
+    REQUIRE(!value.is_color());
+    REQUIRE(!value.is_path());
+    REQUIRE(!value.is_object());
+  }
 
-TEST(Attribute, FloatAttribute)
-{
-  const Attribute value {12.3f};
-  ASSERT_EQ(12.3f, value.as_float());
+  TEST_CASE("Float attribute")
+  {
+    const Attribute value {12.3f};
+    REQUIRE(12.3f == value.as_float());
 
-  ASSERT_TRUE(value.is_float());
-  ASSERT_TRUE(value.try_as_float());
+    REQUIRE(value.is_float());
+    REQUIRE(value.try_as_float());
 
-  ASSERT_FALSE(value.is_string());
-  ASSERT_FALSE(value.is_int());
-  ASSERT_FALSE(value.is_bool());
-  ASSERT_FALSE(value.is_color());
-  ASSERT_FALSE(value.is_path());
-  ASSERT_FALSE(value.is_object());
-}
+    REQUIRE(!value.is_string());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_bool());
+    REQUIRE(!value.is_color());
+    REQUIRE(!value.is_path());
+    REQUIRE(!value.is_object());
+  }
 
-TEST(Attribute, StringAttribute)
-{
-  const Attribute value {"foo"s};
-  ASSERT_EQ("foo", value.as_string());
+  TEST_CASE("String attribute")
+  {
+    const Attribute value {"foo"s};
+    REQUIRE("foo" == value.as_string());
 
-  ASSERT_TRUE(value.is_string());
-  ASSERT_TRUE(value.try_as_string());
+    REQUIRE(value.is_string());
+    REQUIRE(value.try_as_string());
 
-  ASSERT_FALSE(value.is_int());
-  ASSERT_FALSE(value.is_float());
-  ASSERT_FALSE(value.is_bool());
-  ASSERT_FALSE(value.is_color());
-  ASSERT_FALSE(value.is_path());
-  ASSERT_FALSE(value.is_object());
-}
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_float());
+    REQUIRE(!value.is_bool());
+    REQUIRE(!value.is_color());
+    REQUIRE(!value.is_path());
+    REQUIRE(!value.is_object());
+  }
 
-TEST(Attribute, BoolAttribute)
-{
-  const Attribute value {false};
-  ASSERT_FALSE(value.as_bool());
+  TEST_CASE("Bool attribute")
+  {
+    const Attribute value {false};
+    REQUIRE(!value.as_bool());
 
-  ASSERT_TRUE(value.is_bool());
-  ASSERT_TRUE(value.try_as_bool());
+    REQUIRE(value.is_bool());
+    REQUIRE(value.try_as_bool());
 
-  ASSERT_FALSE(value.is_string());
-  ASSERT_FALSE(value.is_int());
-  ASSERT_FALSE(value.is_float());
-  ASSERT_FALSE(value.is_color());
-  ASSERT_FALSE(value.is_path());
-  ASSERT_FALSE(value.is_object());
-}
+    REQUIRE(!value.is_string());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_float());
+    REQUIRE(!value.is_color());
+    REQUIRE(!value.is_path());
+    REQUIRE(!value.is_object());
+  }
 
-TEST(Attribute, FileAttribute)
-{
-  const std::filesystem::path file {"resources/foo.txt"};
-  const Attribute value {file};
+  TEST_CASE("File attribute")
+  {
+    const std::filesystem::path file {"resources/foo.txt"};
+    const Attribute value {file};
 
-  ASSERT_TRUE(value.is_path());
-  ASSERT_TRUE(value.try_as_path());
+    REQUIRE(value.is_path());
+    REQUIRE(value.try_as_path());
 
-  ASSERT_FALSE(value.is_string());
-  ASSERT_FALSE(value.is_int());
-  ASSERT_FALSE(value.is_float());
-  ASSERT_FALSE(value.is_bool());
-  ASSERT_FALSE(value.is_color());
-  ASSERT_FALSE(value.is_object());
-}
+    REQUIRE(!value.is_string());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_float());
+    REQUIRE(!value.is_bool());
+    REQUIRE(!value.is_color());
+    REQUIRE(!value.is_object());
+  }
 
-TEST(Attribute, ObjectAttribute)
-{
-  const Attribute value {object_t {7}};
+  TEST_CASE("Object attribute")
+  {
+    const Attribute value {object_t {7}};
 
-  ASSERT_TRUE(value.is_object());
-  ASSERT_TRUE(value.try_as_object());
+    REQUIRE(value.is_object());
+    REQUIRE(value.try_as_object());
 
-  ASSERT_FALSE(value.is_string());
-  ASSERT_FALSE(value.is_int());
-  ASSERT_FALSE(value.is_float());
-  ASSERT_FALSE(value.is_bool());
-  ASSERT_FALSE(value.is_color());
-  ASSERT_FALSE(value.is_path());
-}
+    REQUIRE(!value.is_string());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_float());
+    REQUIRE(!value.is_bool());
+    REQUIRE(!value.is_color());
+    REQUIRE(!value.is_path());
+  }
 
-TEST(Attribute, ColorAttribute)
-{
-  const Attribute value {Color {0xFF, 0, 0}};
+  TEST_CASE("Color attribute")
+  {
+    const Attribute value {Color {0xFF, 0, 0}};
 
-  ASSERT_TRUE(value.is_color());
-  ASSERT_TRUE(value.try_as_color());
+    REQUIRE(value.is_color());
+    REQUIRE(value.try_as_color());
 
-  ASSERT_FALSE(value.is_string());
-  ASSERT_FALSE(value.is_int());
-  ASSERT_FALSE(value.is_float());
-  ASSERT_FALSE(value.is_bool());
-  ASSERT_FALSE(value.is_path());
-  ASSERT_FALSE(value.is_object());
-}
+    REQUIRE(!value.is_string());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_float());
+    REQUIRE(!value.is_bool());
+    REQUIRE(!value.is_path());
+    REQUIRE(!value.is_object());
+  }
 
-TEST(Attribute, SetValue)
-{
-  Attribute value;
+  TEST_CASE("set_value")
+  {
+    Attribute value;
 
-  value.set_value(10);
-  ASSERT_TRUE(value.is_int());
-  ASSERT_EQ(10, value.as_int());
+    value.set_value(10);
+    REQUIRE(value.is_int());
+    REQUIRE(10 == value.as_int());
 
-  value.set_value(93.2f);
-  ASSERT_TRUE(value.is_float());
-  ASSERT_EQ(93.2f, value.as_float());
+    value.set_value(93.2f);
+    REQUIRE(value.is_float());
+    REQUIRE(93.2f == value.as_float());
 
-  value.set_value(true);
-  ASSERT_TRUE(value.is_bool());
-  ASSERT_TRUE(value.as_bool());
+    value.set_value(true);
+    REQUIRE(value.is_bool());
+    REQUIRE(value.as_bool());
 
-  value.set_value("foo"s);
-  ASSERT_TRUE(value.is_string());
-  ASSERT_EQ("foo", value.as_string());
+    value.set_value("foo"s);
+    REQUIRE(value.is_string());
+    REQUIRE("foo" == value.as_string());
+  }
 }
 
 }  // namespace tactile::test

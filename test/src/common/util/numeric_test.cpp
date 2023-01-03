@@ -17,33 +17,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "common/util/str.hpp"
+#include "common/util/numeric.hpp"
 
-#include <gtest/gtest.h>
+#include <limits>  // numeric_limits
+
+#include <doctest/doctest.h>
+
+#include "core/vocabulary.hpp"
 
 namespace tactile::test {
+namespace {
 
-TEST(Str, Split)
+constexpr auto u32_max = std::numeric_limits<uint32>::max();
+
+}  // namespace
+
+TEST_SUITE("Numeric")
 {
-  const auto tokens = split("foo,bar,,x", ',');
+  TEST_CASE("udiff")
+  {
+    REQUIRE(1u == udiff(u32_max, u32_max - 1));
+    REQUIRE(1u == udiff(u32_max - 1, u32_max));
 
-  ASSERT_EQ(4u, tokens.size());
-  ASSERT_EQ("foo", tokens.at(0));
-  ASSERT_EQ("bar", tokens.at(1));
-  ASSERT_EQ("", tokens.at(2));
-  ASSERT_EQ("x", tokens.at(3));
-}
+    REQUIRE(u32_max == udiff(0u, u32_max));
 
-TEST(Str, ParseI32)
-{
-  ASSERT_FALSE(parse_i32("ABC"));
-
-  ASSERT_EQ(-42, parse_i32("-42"));
-  ASSERT_EQ(123, parse_i32("123"));
-  ASSERT_EQ(745, parse_i32("745"));
-
-  ASSERT_FALSE(parse_i32("F1"));
-  ASSERT_EQ(0xF1, parse_i32("F1", 16));
+    REQUIRE(46u == udiff(28u, 74u));
+  }
 }
 
 }  // namespace tactile::test

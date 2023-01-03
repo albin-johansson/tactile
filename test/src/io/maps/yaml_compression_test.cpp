@@ -19,7 +19,7 @@
 
 #include <utility>  // pair, move
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/tile/tile_matrix.hpp"
 #include "core/vocabulary.hpp"
@@ -85,18 +85,8 @@ using TestData = std::pair<std::string_view, TileFormatFactory>;
   };
 }
 
-const auto cases =
-    testing::Values(TestData {"zlib_compression_test.yaml", create_zlib_tile_format},
-                    TestData {"zstd_compression_test.yaml", create_zstd_tile_format});
-
-}  // namespace
-
-struct CompressedYamlMapTest : testing::TestWithParam<TestData> {};
-
-TEST_P(CompressedYamlMapTest, EmitAndParseMap)
+void create_and_validate_yaml_map(const char* path, TileFormatFactory format_factory)
 {
-  const auto [path, format_factory] = GetParam();
-
   {
     auto test_map = create_test_map();
     test_map.tile_format = format_factory();
@@ -106,15 +96,28 @@ TEST_P(CompressedYamlMapTest, EmitAndParseMap)
   }
 
   const auto result = io::parse_map(path);
-  ASSERT_EQ(io::ParseError::None, result.error());
+  REQUIRE(io::ParseError::None == result.error());
 
   const auto& map = result.data();
   const auto& layer = map.layers.front();
   const auto& tile_layer = layer.as_tile_layer();
 
-  ASSERT_EQ(test_tiles, tile_layer.tiles);
+  REQUIRE(test_tiles == tile_layer.tiles);
 }
 
-INSTANTIATE_TEST_SUITE_P(CompressedYamlMapTests, CompressedYamlMapTest, cases);
+}  // namespace
+
+TEST_SUITE("Tactile YAML format tile compression")
+{
+  TEST_CASE("Zlib")
+  {
+    create_and_validate_yaml_map("zlib_compression_test.yaml", create_zlib_tile_format);
+  }
+
+  TEST_CASE("Zstd")
+  {
+    create_and_validate_yaml_map("zstd_compression_test.yaml", create_zstd_tile_format);
+  }
+}
 
 }  // namespace tactile::test

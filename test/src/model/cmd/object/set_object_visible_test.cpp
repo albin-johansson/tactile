@@ -19,33 +19,35 @@
 
 #include "model/cmd/object/set_object_visible.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(SetObjectVisible, Constructor)
+TEST_SUITE("cmd::SetObjectVisible")
 {
-  ASSERT_THROW(cmd::SetObjectVisible(nullptr, false), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::SetObjectVisible(nullptr, false), TactileError);
+  }
 
-TEST(SetObjectVisible, RedoUndo)
-{
-  Shared<Object> object;
+  TEST_CASE("redo/undo")
+  {
+    Shared<Object> object;
+    const auto map_document [[maybe_unused]] = test::MapBuilder::build()  //
+                                                   .with_object(ObjectType::Rect, &object)
+                                                   .result();
 
-  auto document = test::MapBuilder::build()  //
-                      .with_object(ObjectType::Rect, &object)
-                      .result();
+    cmd::SetObjectVisible cmd {object, false};
 
-  cmd::SetObjectVisible cmd {object, false};
+    cmd.redo();
+    REQUIRE(!object->is_visible());
 
-  cmd.redo();
-  ASSERT_FALSE(object->is_visible());
-
-  cmd.undo();
-  ASSERT_TRUE(object->is_visible());
+    cmd.undo();
+    REQUIRE(object->is_visible());
+  }
 }
 
 }  // namespace tactile::test

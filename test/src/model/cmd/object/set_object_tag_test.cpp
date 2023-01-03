@@ -19,57 +19,61 @@
 
 #include "model/cmd/object/set_object_tag.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(SetObjectTag, Constructor)
+TEST_SUITE("cmd::SetObjectTag")
 {
-  ASSERT_THROW(cmd::SetObjectTag(nullptr, ""), TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::SetObjectTag(nullptr, ""), TactileError);
+  }
 
-TEST(SetObjectTag, RedoUndo)
-{
-  Shared<Object> object;
+  TEST_CASE("redo/undo")
+  {
+    Shared<Object> object;
+    const auto map_document [[maybe_unused]] = test::MapBuilder::build()  //
+                                                   .with_object(ObjectType::Rect, &object)
+                                                   .result();
 
-  auto map = test::MapBuilder::build()  //
-                 .with_object(ObjectType::Rect, &object)
-                 .result();
+    const String old_tag {"tag1"};
+    const String new_tag {"tag2"};
 
-  object->set_tag("old-tag");
+    object->set_tag(old_tag);
+    cmd::SetObjectTag cmd {object, new_tag};
 
-  cmd::SetObjectTag cmd {object, "new-tag"};
+    cmd.redo();
+    REQUIRE(new_tag == object->get_tag());
 
-  cmd.redo();
-  ASSERT_EQ("new-tag", object->get_tag());
+    cmd.undo();
+    REQUIRE(old_tag == object->get_tag());
+  }
 
-  cmd.undo();
-  ASSERT_EQ("old-tag", object->get_tag());
-}
+  TEST_CASE("merge_with")
+  {
+    Shared<Object> object;
+    const auto map_document [[maybe_unused]] = test::MapBuilder::build()  //
+                                                   .with_object(ObjectType::Rect, &object)
+                                                   .result();
 
-TEST(SetObjectTag, MergeSupport)
-{
-  Shared<Object> object;
+    const String initial_tag {"abc"};
+    object->set_tag(initial_tag);
 
-  auto document = test::MapBuilder::build()  //
-                      .with_object(ObjectType::Rect, &object)
-                      .result();
+    cmd::SetObjectTag a {object, "a"};
+    const cmd::SetObjectTag b {object, "b"};
 
-  object->set_tag("x");
+    REQUIRE(a.merge_with(&b));
 
-  cmd::SetObjectTag a {object, "a"};
-  const cmd::SetObjectTag b {object, "b"};
+    a.redo();
+    REQUIRE("b" == object->get_tag());
 
-  ASSERT_TRUE(a.merge_with(&b));
-
-  a.redo();
-  ASSERT_EQ("b", object->get_tag());
-
-  a.undo();
-  ASSERT_EQ("x", object->get_tag());
+    a.undo();
+    REQUIRE(initial_tag == object->get_tag());
+  }
 }
 
 }  // namespace tactile::test

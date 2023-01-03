@@ -17,9 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <gtest/gtest.h>
+#define DOCTEST_CONFIG_IMPLEMENT
+#include <doctest/doctest.h>
 
-#include "app/app_context.hpp"
 #include "init/app_initializer.hpp"
 
 auto main(int argc, char* argv[]) -> int
@@ -27,6 +27,12 @@ auto main(int argc, char* argv[]) -> int
   tactile::AppInitializer initializer;
   initializer.get_window().show();
 
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+  doctest::Context context {argc, argv};
+  const auto res = context.run();
+
+  if (context.shouldExit()) {
+    return res;
+  }
+
+  return 0;
 }

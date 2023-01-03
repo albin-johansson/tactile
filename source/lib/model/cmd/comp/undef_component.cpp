@@ -42,16 +42,16 @@ UndefComponent::UndefComponent(Document* document, const UUID& component_id)
 
 void UndefComponent::undo()
 {
-  auto index = mDocument->get_component_index_ptr();
+  auto component_index = mDocument->get_component_index_ptr();
 
-  index->restore(std::move(mPreviousDef.value()));
+  component_index->restore(std::move(mPreviousDef.value()));
   mPreviousDef.reset();
 
   // Restores previously removed components
   auto& contexts = mDocument->get_contexts();
-  for (auto [contextId, component]: mRemovedComponents) {
-    auto& context = contexts.at(contextId);
-    context.get_ctx().comps().add(std::move(component));
+  for (auto [context_id, component]: mRemovedComponents) {
+    auto& context = contexts.at(context_id);
+    context.get_ctx().attach_component(std::move(component));
   }
 
   mRemovedComponents.clear();
@@ -59,10 +59,10 @@ void UndefComponent::undo()
 
 void UndefComponent::redo()
 {
-  auto index = mDocument->get_component_index_ptr();
+  auto component_index = mDocument->get_component_index_ptr();
 
-  mPreviousDef = index->at(mComponentId);
-  index->remove(mComponentId);
+  mPreviousDef = component_index->at(mComponentId);
+  component_index->remove(mComponentId);
 
   auto& contexts = mDocument->get_contexts();
   mRemovedComponents = contexts.on_undef_comp(mComponentId);

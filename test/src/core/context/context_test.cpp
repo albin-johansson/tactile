@@ -19,7 +19,7 @@
 
 #include "core/context/context.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object.hpp"
@@ -33,16 +33,7 @@
 
 namespace tactile::test {
 
-using Contexts = testing::Types<Map,  //
-                                TileLayer,
-                                ObjectLayer,
-                                GroupLayer,
-                                Object,
-                                Tileset,
-                                Tile>;
-
-template <typename T>
-struct ContextTest : testing::Test {};
+#define CONTEXT_TYPES Map, TileLayer, ObjectLayer, GroupLayer, Object, Tileset, Tile
 
 namespace {
 
@@ -69,23 +60,24 @@ auto make_context<Tile>() -> Tile
 
 }  // namespace
 
-TYPED_TEST_SUITE(ContextTest, Contexts);
-
-TYPED_TEST(ContextTest, Defaults)
+TEST_SUITE("Context")
 {
-  const auto context = make_context<TypeParam>();
-  ASSERT_FALSE(context.get_uuid().is_nil());
+  TEST_CASE_TEMPLATE("Defaults", T, CONTEXT_TYPES)
+  {
+    const auto context = make_context<T>();
+    REQUIRE(!context.get_uuid().is_nil());
 
-  ASSERT_TRUE(context.get_ctx().comps().empty());
-  ASSERT_TRUE(context.get_ctx().props().empty());
-}
+    REQUIRE(context.get_ctx().property_count() == 0u);
+    REQUIRE(context.get_ctx().component_count() == 0u);
+  }
 
-TYPED_TEST(ContextTest, SetName)
-{
-  auto context = make_context<TypeParam>();
+  TEST_CASE_TEMPLATE("set_name", T, CONTEXT_TYPES)
+  {
+    auto context = make_context<T>();
 
-  context.get_ctx().set_name("foobar");
-  ASSERT_EQ("foobar", context.get_ctx().name());
+    context.get_ctx().set_name("foobar");
+    REQUIRE("foobar" == context.get_ctx().name());
+  }
 }
 
 }  // namespace tactile::test

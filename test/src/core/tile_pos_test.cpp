@@ -20,203 +20,206 @@
 
 #include "core/tile/tile_pos.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 namespace tactile::test {
 
-TEST(TilePosition, Defaults)
+TEST_SUITE("TilePos")
 {
-  const TilePos position;
-  ASSERT_EQ(0, position.row());
-  ASSERT_EQ(0, position.col());
-}
+  TEST_CASE("Defaults")
+  {
+    const TilePos position;
+    REQUIRE(0 == position.row());
+    REQUIRE(0 == position.col());
+  }
 
-TEST(TilePosition, RowColConstructor)
-{
-  const TilePos a {123, 557};
-  ASSERT_EQ(123, a.row());
-  ASSERT_EQ(557, a.col());
+  TEST_CASE("row/column constructor")
+  {
+    const TilePos a {123, 557};
+    REQUIRE(123 == a.row());
+    REQUIRE(557 == a.col());
 
-  const TilePos b {-1, 0};
-  ASSERT_EQ(-1, b.row());
+    const TilePos b {-1, 0};
+    REQUIRE(-1 == b.row());
 
-  const TilePos c {0, -1};
-  ASSERT_EQ(-1, c.col());
-}
+    const TilePos c {0, -1};
+    REQUIRE(-1 == c.col());
+  }
 
-TEST(TilePosition, From)
-{
-  const auto position = TilePos::from(42u, 849u);
-  ASSERT_EQ(42, position.row());
-  ASSERT_EQ(849, position.col());
-}
+  TEST_CASE("from")
+  {
+    const auto position = TilePos::from(42u, 849u);
+    REQUIRE(42 == position.row());
+    REQUIRE(849 == position.col());
+  }
 
-TEST(TilePosition, SetRow)
-{
-  TilePos position;
+  TEST_CASE("set_row")
+  {
+    TilePos position;
 
-  const auto row = 892;
-  position.set_row(row);
+    const auto row = 892;
+    position.set_row(row);
 
-  ASSERT_EQ(row, position.row());
-}
+    REQUIRE(row == position.row());
+  }
 
-TEST(TilePosition, SetCol)
-{
-  TilePos position;
+  TEST_CASE("set_col")
+  {
+    TilePos position;
 
-  const auto column = 438'291;
-  position.set_col(column);
+    const auto column = 438'291;
+    position.set_col(column);
 
-  ASSERT_EQ(column, position.col());
-}
+    REQUIRE(column == position.col());
+  }
 
-TEST(TilePosition, OffsetBy)
-{
-  const TilePos position {3, 4};
-  const auto result = position.offset_by(4, 6);
-  ASSERT_EQ(7, result.row());
-  ASSERT_EQ(10, result.col());
-}
+  TEST_CASE("offset_by")
+  {
+    const TilePos position {3, 4};
+    const auto result = position.offset_by(4, 6);
+    REQUIRE(7 == result.row());
+    REQUIRE(10 == result.col());
+  }
 
-TEST(TilePosition, Row)
-{
-  const TilePos position {8'324, 0};
-  ASSERT_EQ(8'324, position.row());
-}
+  TEST_CASE("row")
+  {
+    const TilePos position {8'324, 0};
+    REQUIRE(8'324 == position.row());
+  }
 
-TEST(TilePosition, Col)
-{
-  const TilePos position {0, 493};
-  ASSERT_EQ(493, position.col());
-}
+  TEST_CASE("col")
+  {
+    const TilePos position {0, 493};
+    REQUIRE(493 == position.col());
+  }
 
-TEST(TilePosition, URow)
-{
-  const TilePos position {6'532, 0};
-  ASSERT_EQ(6'532u, position.urow());
-}
+  TEST_CASE("urow")
+  {
+    const TilePos position {6'532, 0};
+    REQUIRE(6'532u == position.urow());
+  }
 
-TEST(TilePosition, UCol)
-{
-  const TilePos position {0, 18'343};
-  ASSERT_EQ(18'343u, position.ucol());
-}
+  TEST_CASE("ucol")
+  {
+    const TilePos position {0, 18'343};
+    REQUIRE(18'343u == position.ucol());
+  }
 
-TEST(TilePosition, RowToY)
-{
-  const auto tile_size = 134;
-  const TilePos position {12, 34};
-  ASSERT_EQ(12 * tile_size, position.row_to_y(tile_size));
-}
+  TEST_CASE("row_to_y")
+  {
+    const auto tile_size = 134;
+    const TilePos position {12, 34};
+    REQUIRE(12 * tile_size == position.row_to_y(tile_size));
+  }
 
-TEST(TilePosition, ColToX)
-{
-  const auto tile_size = 68;
-  const TilePos position {12, 34};
-  ASSERT_EQ(34 * tile_size, position.col_to_x(tile_size));
-}
+  TEST_CASE("col_to_x")
+  {
+    const auto tile_size = 68;
+    const TilePos position {12, 34};
+    REQUIRE(34 * tile_size == position.col_to_x(tile_size));
+  }
 
-TEST(TilePosition, North)
-{
-  const TilePos source {7, 15};
-  const TilePos moved = source.north();
+  TEST_CASE("north")
+  {
+    const TilePos source {7, 15};
+    const TilePos moved = source.north();
 
-  ASSERT_EQ(source.row() - 1, moved.row());
-  ASSERT_EQ(source.col(), moved.col());
-}
+    REQUIRE(source.row() - 1 == moved.row());
+    REQUIRE(source.col() == moved.col());
+  }
 
-TEST(TilePosition, East)
-{
-  const TilePos source {52, 77};
-  const TilePos moved = source.east();
+  TEST_CASE("east")
+  {
+    const TilePos source {52, 77};
+    const TilePos moved = source.east();
 
-  ASSERT_EQ(source.row(), moved.row());
-  ASSERT_EQ(source.col() + 1, moved.col());
-}
+    REQUIRE(source.row() == moved.row());
+    REQUIRE(source.col() + 1 == moved.col());
+  }
 
-TEST(TilePosition, South)
-{
-  const TilePos source {33, 6};
-  const TilePos moved = source.south();
+  TEST_CASE("south")
+  {
+    const TilePos source {33, 6};
+    const TilePos moved = source.south();
 
-  ASSERT_EQ(source.row() + 1, moved.row());
-  ASSERT_EQ(source.col(), moved.col());
-}
+    REQUIRE(source.row() + 1 == moved.row());
+    REQUIRE(source.col() == moved.col());
+  }
 
-TEST(TilePosition, West)
-{
-  const TilePos source {62, 39};
-  const TilePos moved = source.west();
+  TEST_CASE("west")
+  {
+    const TilePos source {62, 39};
+    const TilePos moved = source.west();
 
-  ASSERT_EQ(source.row(), moved.row());
-  ASSERT_EQ(source.col() - 1, moved.col());
-}
+    REQUIRE(source.row() == moved.row());
+    REQUIRE(source.col() - 1 == moved.col());
+  }
 
-TEST(TilePosition, Addition)
-{
-  const TilePos a {2, 3};
-  const TilePos b {6, 4};
+  TEST_CASE("operator+")
+  {
+    const TilePos a {2, 3};
+    const TilePos b {6, 4};
 
-  const auto sum = a + b;
-  ASSERT_EQ(a.row() + b.row(), sum.row());
-  ASSERT_EQ(a.col() + b.col(), sum.col());
-}
+    const auto sum = a + b;
+    REQUIRE(a.row() + b.row() == sum.row());
+    REQUIRE(a.col() + b.col() == sum.col());
+  }
 
-TEST(TilePosition, Subtraction)
-{
-  const TilePos a {13, 7};
-  const TilePos b {4, 2};
+  TEST_CASE("operator-")
+  {
+    const TilePos a {13, 7};
+    const TilePos b {4, 2};
 
-  const auto diff = a - b;
-  ASSERT_EQ(a.row() - b.row(), diff.row());
-  ASSERT_EQ(a.col() - b.col(), diff.col());
-}
+    const auto diff = a - b;
+    REQUIRE(a.row() - b.row() == diff.row());
+    REQUIRE(a.col() - b.col() == diff.col());
+  }
 
-TEST(TilePosition, AsVec2)
-{
-  const TilePos pos {832, 234};
-  const auto vec = pos.as_vec2();
+  TEST_CASE("as_vec2")
+  {
+    const TilePos pos {832, 234};
+    const auto vec = pos.as_vec2();
 
-  ASSERT_EQ(pos.row(), vec.y);
-  ASSERT_EQ(pos.col(), vec.x);
-}
+    REQUIRE(pos.row() == vec.y);
+    REQUIRE(pos.col() == vec.x);
+  }
 
-TEST(TilePosition, AsVec2f)
-{
-  const TilePos pos {-325, 834};
-  const auto vec = pos.as_vec2f();
+  TEST_CASE("as_vec2f")
+  {
+    const TilePos pos {-325, 834};
+    const auto vec = pos.as_vec2f();
 
-  ASSERT_EQ(static_cast<float>(pos.row()), vec.y);
-  ASSERT_EQ(static_cast<float>(pos.col()), vec.x);
-}
+    REQUIRE(static_cast<float>(pos.row()) == vec.y);
+    REQUIRE(static_cast<float>(pos.col()) == vec.x);
+  }
 
-TEST(TilePosition, EqualityOperator)
-{
-  const TilePos pos {45, 23};
-  ASSERT_EQ(pos, pos);
+  TEST_CASE("operator==")
+  {
+    const TilePos pos {45, 23};
+    REQUIRE(pos == pos);
 
-  const TilePos copy {pos};
-  ASSERT_EQ(pos, copy);
-  ASSERT_EQ(copy, pos);
+    const TilePos copy {pos};
+    REQUIRE(pos == copy);
+    REQUIRE(copy == pos);
 
-  const TilePos diff {32, 93};
-  ASSERT_FALSE(pos == diff);
-  ASSERT_FALSE(diff == pos);
-}
+    const TilePos diff {32, 93};
+    REQUIRE_FALSE(pos == diff);
+    REQUIRE_FALSE(diff == pos);
+  }
 
-TEST(TilePosition, InequalityOperator)
-{
-  const TilePos pos {45, 23};
-  ASSERT_FALSE(pos != pos);
+  TEST_CASE("operator!=")
+  {
+    const TilePos pos {45, 23};
+    REQUIRE_FALSE(pos != pos);
 
-  const TilePos copy {pos};
-  ASSERT_FALSE(pos != copy);
-  ASSERT_FALSE(copy != pos);
+    const TilePos copy {pos};
+    REQUIRE_FALSE(pos != copy);
+    REQUIRE_FALSE(copy != pos);
 
-  const TilePos other {839, 54};
-  ASSERT_NE(pos, other);
-  ASSERT_NE(other, pos);
+    const TilePos other {839, 54};
+    REQUIRE(pos != other);
+    REQUIRE(other != pos);
+  }
 }
 
 }  // namespace tactile::test

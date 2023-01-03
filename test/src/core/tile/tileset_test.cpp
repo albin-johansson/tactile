@@ -19,7 +19,7 @@
 
 #include "core/tile/tileset.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/tile/tile.hpp"
@@ -43,56 +43,59 @@ constexpr Int2 expected_tile_size = {32, 32};
 
 }  // namespace
 
-TEST(Tileset, Defaults)
+TEST_SUITE("Tileset")
 {
-  const auto tileset = make_tileset();
-  ASSERT_EQ(expected_tile_size, tileset.tile_size());
-  ASSERT_EQ(expected_texture_size, tileset.texture().get_size());
-  ASSERT_EQ(texture_path, tileset.texture().get_path());
-}
+  TEST_CASE("Defaults")
+  {
+    const auto tileset = make_tileset();
+    REQUIRE(expected_tile_size == tileset.tile_size());
+    REQUIRE(expected_texture_size == tileset.texture().get_size());
+    REQUIRE(texture_path == tileset.texture().get_path());
+  }
 
-TEST(Tileset, SubscriptOperator)
-{
-  auto tileset = make_tileset();
+  TEST_CASE("operator[]")
+  {
+    auto tileset = make_tileset();
 
-  ASSERT_THROW(tileset[-1], TactileError);
-  ASSERT_THROW(tileset[tileset.tile_count()], TactileError);
+    REQUIRE_THROWS_AS(tileset[-1], TactileError);
+    REQUIRE_THROWS_AS(tileset[tileset.tile_count()], TactileError);
 
-  const auto& tile = tileset[42];
-  ASSERT_EQ(42, tile.get_index());
-}
+    const auto& tile = tileset[42];
+    REQUIRE(42 == tile.get_index());
+  }
 
-TEST(Tileset, SelectTile)
-{
-  auto tileset = make_tileset();
+  TEST_CASE("SelectTile")
+  {
+    auto tileset = make_tileset();
 
-  ASSERT_FALSE(tileset.get_selected_tile().has_value());
+    REQUIRE(!tileset.get_selected_tile().has_value());
 
-  tileset.select_tile(42);
-  ASSERT_EQ(42, tileset.get_selected_tile());
+    tileset.select_tile(42);
+    REQUIRE(42 == tileset.get_selected_tile());
 
-  ASSERT_THROW(tileset.select_tile(-1), TactileError);
-  ASSERT_THROW(tileset.select_tile(tileset.tile_count()), TactileError);
-  ASSERT_NO_THROW(tileset.select_tile(tileset.tile_count() - 1));
-}
+    REQUIRE_THROWS_AS(tileset.select_tile(-1), TactileError);
+    REQUIRE_THROWS_AS(tileset.select_tile(tileset.tile_count()), TactileError);
+    REQUIRE_NOTHROW(tileset.select_tile(tileset.tile_count() - 1));
+  }
 
-TEST(Tileset, IndexOf)
-{
-  auto tileset = make_tileset();
+  TEST_CASE("index_of")
+  {
+    auto tileset = make_tileset();
 
-  ASSERT_THROW((void) tileset.index_of({-1, -1}), TactileError);
-  ASSERT_THROW((void) tileset.index_of({tileset.row_count(), tileset.column_count()}),
-               TactileError);
+    REQUIRE_THROWS_AS(tileset.index_of({-1, -1}), TactileError);
+    REQUIRE_THROWS_AS(tileset.index_of({tileset.row_count(), tileset.column_count()}),
+                      TactileError);
 
-  ASSERT_EQ(0, tileset.index_of({0, 0}));
-  ASSERT_EQ(tileset.tile_count() - 1,
+    REQUIRE(0 == tileset.index_of({0, 0}));
+    REQUIRE(tileset.tile_count() - 1 ==
             tileset.index_of({tileset.row_count() - 1, tileset.column_count() - 1}));
-}
+  }
 
-TEST(Tileset, TileCount)
-{
-  const auto tileset = make_tileset();
-  ASSERT_EQ(tileset.row_count() * tileset.column_count(), tileset.tile_count());
+  TEST_CASE("tile_count")
+  {
+    const auto tileset = make_tileset();
+    REQUIRE(tileset.row_count() * tileset.column_count() == tileset.tile_count());
+  }
 }
 
 }  // namespace tactile::test

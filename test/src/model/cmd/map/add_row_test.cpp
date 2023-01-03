@@ -19,62 +19,64 @@
 
 #include "model/cmd/map/add_row.hpp"
 
-#include <gtest/gtest.h>
+#include <doctest/doctest.h>
 
 #include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 
 namespace tactile::test {
 
-TEST(AddRow, Constructor)
+TEST_SUITE("cmd::AddRow")
 {
-  ASSERT_THROW(cmd::AddRow {nullptr}, TactileError);
-}
+  TEST_CASE("constructor")
+  {
+    REQUIRE_THROWS_AS(cmd::AddRow {nullptr}, TactileError);
+  }
 
-TEST(AddRow, RedoUndo)
-{
-  const usize initial_rows = 10;
-  const usize initial_cols = 7;
+  TEST_CASE("redo/undo")
+  {
+    const usize initial_rows = 10;
+    const usize initial_cols = 7;
 
-  auto document =
-      test::MapBuilder::build().with_size(initial_rows, initial_cols).result();
-  auto map = document->get_map_ptr();
+    auto map_document = test::MapBuilder::build()  //
+                            .with_size(initial_rows, initial_cols)
+                            .result();
+    auto map = map_document->get_map_ptr();
 
-  cmd::AddRow cmd {map};
-  cmd.redo();
+    cmd::AddRow cmd {map};
 
-  ASSERT_EQ(initial_rows + 1, map->row_count());
-  ASSERT_EQ(initial_cols, map->column_count());
+    cmd.redo();
+    REQUIRE(initial_rows + 1 == map->row_count());
+    REQUIRE(initial_cols == map->column_count());
 
-  cmd.undo();
+    cmd.undo();
+    REQUIRE(initial_rows == map->row_count());
+    REQUIRE(initial_cols == map->column_count());
+  }
 
-  ASSERT_EQ(initial_rows, map->row_count());
-  ASSERT_EQ(initial_cols, map->column_count());
-}
+  TEST_CASE("merge_with")
+  {
+    const usize initial_rows = 6;
+    const usize initial_cols = 7;
 
-TEST(AddRow, MergeSupport)
-{
-  const usize initial_rows = 6;
-  const usize initial_cols = 7;
+    auto map_document = test::MapBuilder::build()  //
+                            .with_size(initial_rows, initial_cols)
+                            .result();
+    auto map = map_document->get_map_ptr();
 
-  auto document =
-      test::MapBuilder::build().with_size(initial_rows, initial_cols).result();
-  auto map = document->get_map_ptr();
+    cmd::AddRow a {map};
+    const cmd::AddRow b {map};
 
-  cmd::AddRow a {map};
-  const cmd::AddRow b {map};
+    REQUIRE(a.merge_with(&b));
 
-  ASSERT_TRUE(a.merge_with(&b));
+    a.redo();
+    REQUIRE(initial_rows + 2 == map->row_count());
+    REQUIRE(initial_cols == map->column_count());
 
-  a.redo();
-
-  ASSERT_EQ(initial_rows + 2, map->row_count());
-  ASSERT_EQ(initial_cols, map->column_count());
-
-  a.undo();
-
-  ASSERT_EQ(initial_rows, map->row_count());
-  ASSERT_EQ(initial_cols, map->column_count());
+    a.undo();
+    REQUIRE(initial_rows == map->row_count());
+    REQUIRE(initial_cols == map->column_count());
+  }
 }
 
 }  // namespace tactile::test
