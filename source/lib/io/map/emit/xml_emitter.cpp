@@ -22,9 +22,9 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
+#include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
 #include "common/util/functional.hpp"
-#include "core/debug/panic.hpp"
 #include "io/file.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"

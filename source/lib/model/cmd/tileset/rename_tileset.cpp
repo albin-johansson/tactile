@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/debug/panic.hpp"
+#include "common/debug/panic.hpp"
 #include "core/tile/tileset.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

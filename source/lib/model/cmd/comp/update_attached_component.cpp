@@ -21,10 +21,10 @@
 
 #include <utility>  // move
 
+#include "common/debug/panic.hpp"
 #include "core/component/component.hpp"
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
-#include "core/debug/panic.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 

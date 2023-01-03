@@ -22,9 +22,9 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
+#include "common/debug/assert.hpp"
+#include "common/debug/profile.hpp"
 #include "common/util/fmt.hpp"
-#include "core/debug/assert.hpp"
-#include "core/debug/profile.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/gd/godot_converter.hpp"
 #include "io/map/emit/gd/godot_options.hpp"

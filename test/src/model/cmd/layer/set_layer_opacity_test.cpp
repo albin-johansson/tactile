@@ -21,7 +21,7 @@
 
 #include <doctest/doctest.h>
 
-#include "core/debug/panic.hpp"
+#include "common/debug/panic.hpp"
 #include "core/layer/tile_layer.hpp"
 
 namespace tactile::test {

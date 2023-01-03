@@ -25,9 +25,9 @@
 
 #include <fmt/format.h>
 
+#include "common/debug/assert.hpp"
 #include "common/type/ostream.hpp"
 #include "common/util/filesystem.hpp"
-#include "core/debug/assert.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "core/vocabulary.hpp"
 #include "io/file.hpp"

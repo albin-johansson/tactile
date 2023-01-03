@@ -21,10 +21,10 @@
 
 #include <imgui.h>
 
+#include "common/debug/logging.hpp"
+#include "common/debug/panic.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/util/assoc.hpp"
-#include "core/debug/logging.hpp"
-#include "core/debug/panic.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

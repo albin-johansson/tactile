@@ -25,7 +25,7 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "core/debug/panic.hpp"
+#include "common/debug/panic.hpp"
 #include "common/type/chrono.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"

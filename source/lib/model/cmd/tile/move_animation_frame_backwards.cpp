@@ -19,8 +19,8 @@
 
 #include "move_animation_frame_backwards.hpp"
 
-#include "core/debug/assert.hpp"
-#include "core/debug/panic.hpp"
+#include "common/debug/assert.hpp"
+#include "common/debug/panic.hpp"
 #include "core/tile/tile.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

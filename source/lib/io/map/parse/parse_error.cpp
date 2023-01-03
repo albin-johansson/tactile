@@ -21,7 +21,7 @@
 
 #include <magic_enum.hpp>
 
-#include "core/debug/panic.hpp"
+#include "common/debug/panic.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 

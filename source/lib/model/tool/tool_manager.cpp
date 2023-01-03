@@ -19,7 +19,7 @@
 
 #include "tool_manager.hpp"
 
-#include "core/debug/panic.hpp"
+#include "common/debug/panic.hpp"
 #include "model/tool/bucket_tool.hpp"
 #include "model/tool/ellipse_tool.hpp"
 #include "model/tool/eraser_tool.hpp"

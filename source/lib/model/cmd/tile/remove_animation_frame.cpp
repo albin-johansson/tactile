@@ -19,7 +19,7 @@
 
 #include "remove_animation_frame.hpp"
 
-#include "core/debug/panic.hpp"
+#include "common/debug/panic.hpp"
 #include "core/tile/tile.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

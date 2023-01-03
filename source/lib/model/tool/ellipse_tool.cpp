@@ -22,7 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <glm/common.hpp>
 
-#include "core/debug/assert.hpp"
+#include "common/debug/assert.hpp"
 #include "common/type/math.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/tool_events.hpp"

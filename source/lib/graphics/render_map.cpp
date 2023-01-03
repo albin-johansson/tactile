@@ -21,7 +21,7 @@
 
 #include <imgui_internal.h>
 
-#include "core/debug/assert.hpp"
+#include "common/debug/assert.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"

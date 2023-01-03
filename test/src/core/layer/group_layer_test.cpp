@@ -23,7 +23,7 @@
 #include <fmt/ostream.h>
 #include <spdlog/spdlog.h>
 
-#include "core/debug/panic.hpp"
+#include "common/debug/panic.hpp"
 #include "core/layer/layer_visitor.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"

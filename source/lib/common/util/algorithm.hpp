@@ -23,7 +23,7 @@
 #include <concepts>   // predicate
 #include <utility>    // forward
 
-#include "core/debug/panic.hpp"
+#include "common/debug/panic.hpp"
 #include "common/type/vec.hpp"
 
 namespace tactile {

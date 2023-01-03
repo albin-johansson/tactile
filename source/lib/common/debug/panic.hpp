@@ -17,23 +17,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "panic.hpp"
+#pragma once
 
-#include <sstream>  // stringstream
-#include <utility>  // move
+#include <exception>  // exception
 
-#include "core/debug/stacktrace.hpp"
+#include "common/predef.hpp"
+#include "common/type/string.hpp"
+#include "core/vocabulary.hpp"
 
 namespace tactile {
 
-TactileError::TactileError(String what)
-    : mWhat {std::move(what)}
-{
-  // To avoid odd behavior whilst passing around stacktrace objects, we simply convert
-  // the trace into a string, and log it later.
-  std::stringstream stream;
-  stream << boost::stacktrace::stacktrace {};
-  mTrace = stream.str();
-}
+/// The exception type used for all exceptions thrown in the codebase.
+class TactileError : public std::exception {
+ public:
+  TACTILE_NOINLINE explicit TactileError(String what);
+
+  [[nodiscard]] auto what() const noexcept -> const char* override
+  {
+    return mWhat.c_str();
+  }
+
+  [[nodiscard]] auto get_trace() const -> const String& { return mTrace; }
+
+ private:
+  String mWhat {"N/A"};
+  String mTrace;
+};
 
 }  // namespace tactile

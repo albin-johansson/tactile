@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "core/predef.hpp"
+#include "common/predef.hpp"
 #include "io/directories.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

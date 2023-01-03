@@ -23,7 +23,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/debug/assert.hpp"
+#include "common/debug/assert.hpp"
 #include "common/type/chrono.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/maybe.hpp"

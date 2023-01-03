@@ -23,9 +23,9 @@
 
 #include "app/app_context.hpp"
 #include "app/event/event_handlers.hpp"
+#include "common/debug/assert.hpp"
 #include "common/type/math.hpp"
 #include "common/util/fmt.hpp"
-#include "core/debug/assert.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/viewport.hpp"
 #include "model/document/map_document.hpp"

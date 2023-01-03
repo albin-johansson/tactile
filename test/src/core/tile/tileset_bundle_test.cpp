@@ -21,7 +21,7 @@
 
 #include <doctest/doctest.h>
 
-#include "core/debug/panic.hpp"
+#include "common/debug/panic.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "io/load_texture.hpp"
 

@@ -22,7 +22,7 @@
 #include <concepts>  // equality_comparable_with
 #include <utility>   // forward
 
-#include "core/debug/panic.hpp"
+#include "common/debug/panic.hpp"
 
 namespace tactile {
 

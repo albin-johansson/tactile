@@ -24,12 +24,12 @@
 
 #include <entt/entity/registry.hpp>
 
+#include "common/debug/assert.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/uuid.hpp"
 #include "common/util/functional.hpp"
 #include "core/component/component_index.hpp"
-#include "core/debug/assert.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"

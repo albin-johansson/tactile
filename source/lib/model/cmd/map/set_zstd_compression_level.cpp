@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/debug/panic.hpp"
+#include "common/debug/panic.hpp"
 #include "core/layer/tile_format.hpp"
 #include "core/map.hpp"
 #include "lang/language.hpp"

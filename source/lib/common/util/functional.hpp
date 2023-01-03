@@ -22,7 +22,7 @@
 #include <concepts>     // integral, invocable, predicate
 #include <type_traits>  // is_invocable_r_v
 
-#include "core/debug/panic.hpp"
+#include "common/debug/panic.hpp"
 
 namespace tactile {
 

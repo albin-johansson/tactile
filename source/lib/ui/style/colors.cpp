@@ -22,7 +22,7 @@
 #include <algorithm>  // find, min, max
 #include <cmath>      // pow
 
-#include "core/predef.hpp"
+#include "common/predef.hpp"
 #include "common/type/array.hpp"
 #include "themes.hpp"
 #include "ui/conversions.hpp"

@@ -23,11 +23,11 @@
 
 #include <fmt/format.h>
 
+#include "common/debug/profile.hpp"
+#include "common/predef.hpp"
 #include "common/type/chrono.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/util/assoc.hpp"
-#include "core/debug/profile.hpp"
-#include "core/predef.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "io/proto/history.hpp"
 #include "io/proto/preferences.hpp"

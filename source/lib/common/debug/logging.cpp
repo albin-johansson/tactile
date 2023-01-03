@@ -28,8 +28,8 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
-#include "core/debug/panic.hpp"
-#include "core/predef.hpp"
+#include "common/debug/panic.hpp"
+#include "common/predef.hpp"
 #include "common/type/deque.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/set.hpp"

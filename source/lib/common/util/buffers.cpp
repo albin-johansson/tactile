@@ -23,7 +23,7 @@
 #include <cstring>    // memset
 #include <iterator>   // distance
 
-#include "core/debug/panic.hpp"
+#include "common/debug/panic.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {

@@ -19,10 +19,10 @@
 
 #include "attach_component.hpp"
 
+#include "common/debug/panic.hpp"
 #include "core/component/component_index.hpp"
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
-#include "core/debug/panic.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 

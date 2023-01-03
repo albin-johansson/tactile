@@ -27,13 +27,13 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
-#include "core/debug/stacktrace.hpp"
-#include "core/predef.hpp"
-#include "core/tile/tile_pos.hpp"
+#include "common/debug/stacktrace.hpp"
+#include "common/predef.hpp"
 #include "common/type/array.hpp"
 #include "common/type/math.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "core/vocabulary.hpp"
 
 namespace fmt {

@@ -24,7 +24,7 @@
 
 #include "app/app_context.hpp"
 #include "app/event/event_handlers.hpp"
-#include "core/debug/assert.hpp"
+#include "common/debug/assert.hpp"
 #include "io/proto/preferences.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/view_events.hpp"

@@ -23,9 +23,9 @@
 #include <fmt/format.h>
 #include <imgui.h>
 
+#include "common/debug/assert.hpp"
 #include "common/type/string.hpp"
 #include "common/util/fmt.hpp"
-#include "core/debug/assert.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "lang/language.hpp"

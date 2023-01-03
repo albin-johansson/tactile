@@ -19,7 +19,7 @@
 
 #include "render_tile.hpp"
 
-#include "core/debug/assert.hpp"
+#include "common/debug/assert.hpp"
 #include "core/map.hpp"
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset_bundle.hpp"

@@ -21,9 +21,9 @@
 
 #include <doctest/doctest.h>
 
+#include "common/debug/panic.hpp"
 #include "common/util/assoc.hpp"
 #include "common/util/functional.hpp"
-#include "core/debug/panic.hpp"
 #include "core/helpers/map_builder.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/layer_visitor.hpp"

@@ -19,7 +19,7 @@
 
 #include "win32.hpp"
 
-#include "core/predef.hpp"
+#include "common/predef.hpp"
 
 #if TACTILE_OS_WINDOWS
 

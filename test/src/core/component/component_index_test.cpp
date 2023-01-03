@@ -21,8 +21,8 @@
 
 #include <doctest/doctest.h>
 
+#include "common/debug/panic.hpp"
 #include "core/component/component_definition.hpp"
-#include "core/debug/panic.hpp"
 
 namespace tactile::test {
 

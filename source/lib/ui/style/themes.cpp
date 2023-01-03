@@ -22,9 +22,9 @@
 #include <imgui.h>
 
 #include "colors.hpp"
-#include "core/debug/assert.hpp"
-#include "core/debug/panic.hpp"
-#include "core/predef.hpp"
+#include "common/debug/assert.hpp"
+#include "common/debug/panic.hpp"
+#include "common/predef.hpp"
 
 namespace tactile::ui {
 namespace {

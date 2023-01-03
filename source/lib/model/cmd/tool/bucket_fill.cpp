@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/debug/panic.hpp"
+#include "common/debug/panic.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "lang/language.hpp"

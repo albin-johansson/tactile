@@ -22,7 +22,7 @@
 #include <cmath>    // sin, cos
 #include <numbers>  // pi_v
 
-#include "core/debug/assert.hpp"
+#include "common/debug/assert.hpp"
 #include "core/texture.hpp"
 #include "ui/textures.hpp"
 

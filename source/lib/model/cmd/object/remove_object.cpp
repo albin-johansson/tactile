@@ -19,8 +19,8 @@
 
 #include "remove_object.hpp"
 
-#include "core/debug/assert.hpp"
-#include "core/debug/panic.hpp"
+#include "common/debug/assert.hpp"
+#include "common/debug/panic.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object.hpp"
 #include "core/layer/object_layer.hpp"

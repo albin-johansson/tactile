@@ -21,7 +21,7 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/debug/panic.hpp"
+#include "common/debug/panic.hpp"
 #include "scoped.hpp"
 
 namespace tactile::ui {

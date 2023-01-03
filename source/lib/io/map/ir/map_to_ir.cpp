@@ -19,9 +19,9 @@
 
 #include "map_to_ir.hpp"
 
+#include "common/debug/assert.hpp"
+#include "common/debug/profile.hpp"
 #include "core/component/component_index.hpp"
-#include "core/debug/assert.hpp"
-#include "core/debug/profile.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object.hpp"
 #include "core/layer/object_layer.hpp"

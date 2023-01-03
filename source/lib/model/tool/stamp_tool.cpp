@@ -23,10 +23,10 @@
 
 #include <entt/signal/dispatcher.hpp>
 
+#include "common/debug/assert.hpp"
 #include "common/type/math.hpp"
 #include "common/util/functional.hpp"
 #include "common/util/random.hpp"
-#include "core/debug/assert.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/tile/tile_pos.hpp"

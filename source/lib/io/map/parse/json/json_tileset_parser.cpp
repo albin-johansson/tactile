@@ -22,7 +22,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/debug/assert.hpp"
+#include "common/debug/assert.hpp"
 #include "common/type/string.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/json/json_parser.hpp"

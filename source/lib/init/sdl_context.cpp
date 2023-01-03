@@ -25,8 +25,8 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "core/debug/panic.hpp"
-#include "core/predef.hpp"
+#include "common/debug/panic.hpp"
+#include "common/predef.hpp"
 
 namespace tactile {
 namespace {

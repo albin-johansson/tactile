@@ -22,7 +22,7 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/debug/assert.hpp"
+#include "common/debug/assert.hpp"
 #include "common/type/math.hpp"
 #include "core/vocabulary.hpp"
 #include "io/proto/preferences.hpp"

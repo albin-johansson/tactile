@@ -19,8 +19,8 @@
 
 #include "tool_preview_renderer.hpp"
 
+#include "common/debug/assert.hpp"
 #include "common/util/functional.hpp"
-#include "core/debug/assert.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "core/tile/tileset_bundle.hpp"

@@ -24,12 +24,12 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/attribute.hpp"
-#include "core/component/component_index.hpp"
-#include "core/debug/assert.hpp"
+#include "common/debug/assert.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
+#include "core/attribute.hpp"
+#include "core/component/component_index.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/component_events.hpp"

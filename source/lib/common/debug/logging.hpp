@@ -21,7 +21,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/predef.hpp"
+#include "common/predef.hpp"
 #include "common/type/fn.hpp"
 #include "common/type/string.hpp"
 #include "core/vocabulary.hpp"

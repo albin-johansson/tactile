@@ -21,9 +21,9 @@
 
 #include <utility>  // move
 
+#include "common/debug/assert.hpp"
+#include "common/debug/panic.hpp"
 #include "common/util/assoc.hpp"
-#include "core/debug/assert.hpp"
-#include "core/debug/panic.hpp"
 
 namespace tactile {
 

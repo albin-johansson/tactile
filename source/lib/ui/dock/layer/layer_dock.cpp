@@ -23,9 +23,9 @@
 #include <imgui.h>
 
 #include "add_layer_context_menu.hpp"
-#include "core/debug/assert.hpp"
-#include "core/layer/group_layer.hpp"
+#include "common/debug/assert.hpp"
 #include "common/type/maybe.hpp"
+#include "core/layer/group_layer.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

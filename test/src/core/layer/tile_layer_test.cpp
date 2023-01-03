@@ -23,8 +23,8 @@
 
 #include <doctest/doctest.h>
 
+#include "common/debug/panic.hpp"
 #include "common/util/functional.hpp"
-#include "core/debug/panic.hpp"
 #include "core/tile/tile_pos.hpp"
 
 namespace tactile::test {

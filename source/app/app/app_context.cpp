@@ -21,8 +21,8 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "core/debug/assert.hpp"
-#include "core/debug/panic.hpp"
+#include "common/debug/assert.hpp"
+#include "common/debug/panic.hpp"
 #include "model/model.hpp"
 #include "ui/widget_show_state.hpp"
 
