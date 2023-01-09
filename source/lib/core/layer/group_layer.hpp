@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "core/layer/abstract_layer.hpp"
-#include "core/layer/visitors.hpp"
-#include "common/type/fn.hpp"
+#include "common/type/func.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/result.hpp"
 #include "common/type/uuid.hpp"
 #include "common/type/vec.hpp"
+#include "core/layer/abstract_layer.hpp"
+#include "core/layer/visitors.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
@@ -35,7 +35,7 @@ namespace tactile {
 class GroupLayer final : public AbstractLayer {
  public:
   using LayerStorage = Vec<Shared<Layer>>;
-  using UnaryLayerFunc = Fn<void(const Layer&)>;
+  using UnaryLayerFunc = Func<void(const Layer&)>;
 
   void accept(ContextVisitor& visitor) const override;
   void accept(LayerVisitor& visitor) override;

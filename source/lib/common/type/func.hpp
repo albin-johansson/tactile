@@ -24,6 +24,6 @@
 namespace tactile {
 
 template <typename T>
-using Fn = std::function<T>;
+using Func = std::function<T>;
 
 }  // namespace tactile

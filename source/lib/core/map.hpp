@@ -19,15 +19,15 @@
 
 #pragma once
 
-#include "core/context/context.hpp"
-#include "core/layer/layer_type.hpp"
-#include "core/tile/tile_pos.hpp"
-#include "common/type/fn.hpp"
+#include "common/type/func.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
+#include "core/context/context.hpp"
+#include "core/layer/layer_type.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
@@ -53,8 +53,8 @@ TACTILE_FWD_DECLARE_CLASS(TileFormat)
 /// compression along with plain text encoding.
 class Map final : public Context {
  public:
-  using VisitorFunc = Fn<void(const Layer*)>;
-  using TileLayerVisitorFunc = Fn<void(TileLayer&)>;
+  using VisitorFunc = Func<void(const Layer*)>;
+  using TileLayerVisitorFunc = Func<void(TileLayer&)>;
 
   /// Maps previous invalid tile identifiers in a collection of layers.
   using FixTilesResult = HashMap<UUID, HashMap<TilePos, TileID>>;

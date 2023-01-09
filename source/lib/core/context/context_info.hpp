@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/fn.hpp"
+#include "common/type/func.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/result.hpp"
@@ -34,8 +34,8 @@ namespace tactile {
 
 class ContextInfo final {
  public:
-  using ComponentVisitor = Fn<void(const UUID&, const Component&)>;
-  using PropertyVisitor = Fn<void(const String&, const Attribute&)>;
+  using ComponentVisitor = Func<void(const UUID&, const Component&)>;
+  using PropertyVisitor = Func<void(const String&, const Attribute&)>;
 
   TACTILE_DEFAULT_COPY(ContextInfo);
   TACTILE_DEFAULT_MOVE(ContextInfo);

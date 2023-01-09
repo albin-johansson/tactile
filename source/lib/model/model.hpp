@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/fn.hpp"
+#include "common/type/func.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
@@ -44,7 +44,7 @@ class DocumentModel final {
   friend class cmd::RemoveTileset;
 
  public:
-  using VisitorFunc = Fn<void(const UUID&)>;
+  using VisitorFunc = Func<void(const UUID&)>;
 
   DocumentModel();
   ~DocumentModel() noexcept;

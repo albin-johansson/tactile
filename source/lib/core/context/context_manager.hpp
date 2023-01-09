@@ -19,14 +19,14 @@
 
 #pragma once
 
-#include "core/attribute.hpp"
-#include "core/component/component.hpp"
-#include "core/context/context.hpp"
-#include "common/type/fn.hpp"
+#include "common/type/func.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
+#include "core/attribute.hpp"
+#include "core/component/component.hpp"
+#include "core/context/context.hpp"
 #include "core/vocabulary.hpp"
 
 namespace tactile {
@@ -34,7 +34,7 @@ namespace tactile {
 /// Manages all of the contexts contained within a document.
 class ContextManager final {
   using ContextMap = HashMap<UUID, Shared<Context>>;
-  using ComponentFunc = Fn<void(Component&)>;
+  using ComponentFunc = Func<void(Component&)>;
 
  public:
   explicit ContextManager(const UUID& root_context_id);

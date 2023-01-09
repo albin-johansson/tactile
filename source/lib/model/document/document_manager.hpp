@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/fn.hpp"
+#include "common/type/func.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
@@ -38,9 +38,9 @@ TACTILE_FWD_DECLARE_CLASS(TilesetBundle)
 /// Responsible for the storage of documents.
 class DocumentManager final {
  public:
-  using DocVisitorFn = Fn<void(const Shared<Document>&)>;
-  using IdVisitorFn = Fn<void(const UUID&)>;
-  using PredicateFn = Fn<bool(const Document&)>;
+  using DocVisitorFn = Func<void(const Shared<Document>&)>;
+  using IdVisitorFn = Func<void(const UUID&)>;
+  using PredicateFn = Func<bool(const Document&)>;
 
   void each(const DocVisitorFn& op) const;
 
