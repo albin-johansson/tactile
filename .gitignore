@@ -43,6 +43,9 @@
 # JetBrains files
 .idea
 
+# JetBrains Fleet files
+.fleet
+
 # Generated Doxygen output
 doxygen-out
 
