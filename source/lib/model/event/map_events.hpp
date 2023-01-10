@@ -40,8 +40,8 @@ struct RemoveColumnEvent final {};
 
 struct CreateMapEvent final {
   Int2 tile_size {};
-  usize row_count {};
-  usize column_count {};
+  uint64 row_count {};
+  uint64 column_count {};
 };
 
 struct OpenMapEvent final {

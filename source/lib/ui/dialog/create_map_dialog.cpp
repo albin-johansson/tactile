@@ -36,8 +36,8 @@ namespace tactile::ui {
 namespace {
 
 inline constinit Int2 dialog_tile_size = {0, 0};
-inline constinit int dialog_row_count = 0;
-inline constinit int dialog_column_count = 0;
+inline constinit uint64 dialog_row_count = 0;
+inline constinit uint64 dialog_column_count = 0;
 inline constinit bool show_dialog = false;
 
 void show_dialog_contents(const Strings& lang)
@@ -51,12 +51,12 @@ void show_dialog_contents(const Strings& lang)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(rows_label.c_str());
     ImGui::SameLine(offset);
-    ImGui::InputInt("##Rows", &dialog_row_count);
+    ImGui::InputScalar("##Rows", ImGuiDataType_U64, &dialog_row_count);
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(columns_label.c_str());
     ImGui::SameLine(offset);
-    ImGui::InputInt("##Columns", &dialog_column_count);
+    ImGui::InputScalar("##Columns", ImGuiDataType_U64, &dialog_column_count);
   }
 
   ImGui::Separator();
@@ -83,11 +83,9 @@ void on_dialog_accept(entt::dispatcher& dispatcher)
 {
   TACTILE_ASSERT(dialog_tile_size.x > 0);
   TACTILE_ASSERT(dialog_tile_size.y > 0);
-  TACTILE_ASSERT(dialog_row_count > 0);
-  TACTILE_ASSERT(dialog_column_count > 0);
   dispatcher.enqueue<CreateMapEvent>(dialog_tile_size,
-                                     static_cast<usize>(dialog_row_count),
-                                     static_cast<usize>(dialog_column_count));
+                                     dialog_row_count,
+                                     dialog_column_count);
 }
 
 }  // namespace
@@ -118,8 +116,7 @@ void update_create_map_dialog(entt::dispatcher& dispatcher)
     show_dialog = false;
   }
 
-  const bool is_input_valid = (dialog_tile_size.x > 0) && (dialog_tile_size.y > 0) &&
-                              (dialog_row_count > 0) && (dialog_column_count > 0);
+  const bool is_input_valid = (dialog_tile_size.x > 0) && (dialog_tile_size.y > 0);
   if (is_input_valid) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
