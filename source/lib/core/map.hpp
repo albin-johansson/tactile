@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include "common/macros.hpp"
+#include "common/numeric.hpp"
 #include "common/type/func.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
@@ -28,7 +30,6 @@
 #include "core/context/context.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/tile/tile_pos.hpp"
-#include "core/vocabulary.hpp"
 
 namespace tactile {
 

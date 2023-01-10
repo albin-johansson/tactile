@@ -21,7 +21,7 @@
 
 #include <entt/signal/fwd.hpp>
 
-#include "core/vocabulary.hpp"
+#include "common/numeric.hpp"
 
 namespace tactile::ui {
 

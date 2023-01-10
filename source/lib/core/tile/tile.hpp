@@ -21,16 +21,16 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/context/context.hpp"
-#include "core/context/context_info.hpp"
-#include "core/layer/object.hpp"
-#include "core/tile/tile_animation.hpp"
+#include "common/numeric.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
-#include "core/vocabulary.hpp"
+#include "core/context/context.hpp"
+#include "core/context/context_info.hpp"
+#include "core/layer/object.hpp"
+#include "core/tile/tile_animation.hpp"
 
 namespace tactile {
 

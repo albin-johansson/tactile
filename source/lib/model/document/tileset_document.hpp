@@ -19,14 +19,14 @@
 
 #pragma once
 
-#include "core/tile/tileset.hpp"
-#include "core/tile/tileset_info.hpp"
+#include "common/numeric.hpp"
 #include "common/type/chrono.hpp"
 #include "common/type/path.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
-#include "core/vocabulary.hpp"
+#include "core/tile/tileset.hpp"
+#include "core/tile/tileset_info.hpp"
 #include "model/document/document.hpp"
 #include "model/document/document_delegate.hpp"
 

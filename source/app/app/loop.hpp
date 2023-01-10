@@ -22,11 +22,11 @@
 #include <centurion/event.hpp>
 #include <centurion/keyboard.hpp>
 
-#include "core/vocabulary.hpp"
+#include "common/macros.hpp"
 
 namespace tactile {
 
-class AppCfg;
+TACTILE_FWD_DECLARE_CLASS(AppCfg)
 
 /// Handles the core event loop logic.
 class EventLoop {

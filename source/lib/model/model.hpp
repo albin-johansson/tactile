@@ -19,13 +19,14 @@
 
 #pragma once
 
+#include "common/macros.hpp"
+#include "common/numeric.hpp"
 #include "common/type/func.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
-#include "core/vocabulary.hpp"
 #include "model/document/document.hpp"
 #include "model/tool/tool_type.hpp"
 

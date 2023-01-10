@@ -21,7 +21,7 @@
 
 #include <entt/fwd.hpp>
 
-#include "core/vocabulary.hpp"
+#include "common/macros.hpp"
 #include "io/map/parse/parse_error.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)

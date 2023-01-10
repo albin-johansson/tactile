@@ -25,10 +25,10 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
+#include "common/numeric.hpp"
 #include "common/type/maybe.hpp"
 #include "common/util/filesystem.hpp"
 #include "common/util/fmt.hpp"
-#include "core/vocabulary.hpp"
 #include "io/directories.hpp"
 #include "io/file.hpp"
 #include "io/proto/proto.hpp"

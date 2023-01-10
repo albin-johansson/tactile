@@ -26,10 +26,10 @@
 #include <fmt/format.h>
 
 #include "common/debug/assert.hpp"
+#include "common/numeric.hpp"
 #include "common/type/ostream.hpp"
 #include "common/util/filesystem.hpp"
 #include "core/tile/tile_pos.hpp"
-#include "core/vocabulary.hpp"
 #include "io/file.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/emit/gd/godot_scene.hpp"

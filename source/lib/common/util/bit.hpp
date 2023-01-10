@@ -26,8 +26,8 @@
 #include <type_traits>  // has_unique_object_representations_v, is_trivially_copyable_v, is_trivially_constructible_v
 #include <version>      // __cpp_lib_bit_cast
 
+#include "common/numeric.hpp"
 #include "common/type/array.hpp"
-#include "core/vocabulary.hpp"
 
 #if __cpp_lib_bit_cast >= 201806L
 #define TACTILE_HAS_STD_BITCAST 1

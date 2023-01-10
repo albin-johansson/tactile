@@ -25,7 +25,6 @@
 #include "common/type/hash_map.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
-#include "core/vocabulary.hpp"
 
 namespace tactile {
 

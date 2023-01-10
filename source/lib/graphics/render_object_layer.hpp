@@ -21,7 +21,8 @@
 
 #include <centurion/fwd.hpp>
 
-#include "core/vocabulary.hpp"
+#include "common/macros.hpp"
+#include "common/numeric.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, ObjectLayer)
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, Object)

@@ -19,8 +19,8 @@
 
 #include <utility>  // move
 
+#include "common/numeric.hpp"
 #include "common/type/string.hpp"
-#include "core/vocabulary.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"

@@ -21,8 +21,6 @@
 
 #include <entt/signal/fwd.hpp>
 
-#include "core/vocabulary.hpp"
-
 namespace tactile::ui {
 
 void update_file_menu(entt::dispatcher& dispatcher);

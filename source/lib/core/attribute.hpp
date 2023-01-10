@@ -22,13 +22,13 @@
 #include <concepts>  // same_as
 #include <utility>   // move
 
-#include "core/color.hpp"
+#include "common/numeric.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ostream.hpp"
 #include "common/type/path.hpp"
 #include "common/type/string.hpp"
 #include "common/type/variant.hpp"
-#include "core/vocabulary.hpp"
+#include "core/color.hpp"
 
 namespace tactile {
 

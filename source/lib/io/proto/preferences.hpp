@@ -19,11 +19,11 @@
 
 #pragma once
 
+#include "common/numeric.hpp"
 #include "common/predef.hpp"
 #include "common/type/math.hpp"
 #include "common/type/string.hpp"
 #include "core/color.hpp"
-#include "core/vocabulary.hpp"
 #include "lang/language.hpp"
 #include "ui/fonts.hpp"
 #include "ui/style/themes.hpp"

@@ -19,18 +19,18 @@
 
 #pragma once
 
-#include "core/map.hpp"
+#include "common/numeric.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
-#include "core/vocabulary.hpp"
-#include "map_command_cache.hpp"
+#include "core/map.hpp"
 #include "model/cmd/command.hpp"
+#include "model/cmd/map/map_command_cache.hpp"
 
 namespace tactile::cmd {
 
 class ResizeMap final : public Command {
  public:
-  ResizeMap(Shared<Map> map, usize nRows, usize nCols);
+  ResizeMap(Shared<Map> map, usize n_rows, usize n_cols);
 
   void undo() override;
 

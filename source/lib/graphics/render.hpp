@@ -24,7 +24,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/vocabulary.hpp"
+#include "common/macros.hpp"
+#include "common/numeric.hpp"
 #include "ui/conversions.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, Texture)

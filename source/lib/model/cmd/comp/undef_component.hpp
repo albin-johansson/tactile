@@ -21,13 +21,13 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/component/component.hpp"
-#include "core/component/component_definition.hpp"
+#include "common/macros.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
-#include "core/vocabulary.hpp"
+#include "core/component/component.hpp"
+#include "core/component/component_definition.hpp"
 #include "model/cmd/command.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, Document)

@@ -21,8 +21,9 @@
 
 #include <imgui.h>
 
+#include "common/macros.hpp"
+#include "common/numeric.hpp"
 #include "core/region.hpp"
-#include "core/vocabulary.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, Map)
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, Tileset)

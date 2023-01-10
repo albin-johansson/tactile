@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "core/tile/tile_pos.hpp"
+#include "common/numeric.hpp"
 #include "common/type/math.hpp"
 #include "common/type/tile_cache.hpp"
 #include "common/type/uuid.hpp"
-#include "core/vocabulary.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "model/mouse_info.hpp"
 #include "model/tool/tool_type.hpp"
 

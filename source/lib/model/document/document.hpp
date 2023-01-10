@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include "core/attribute.hpp"
+#include "common/macros.hpp"
 #include "common/type/path.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
-#include "core/vocabulary.hpp"
+#include "core/attribute.hpp"
 #include "model/document/document_type.hpp"
 
 namespace tactile {

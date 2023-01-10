@@ -24,7 +24,6 @@
 #include "core/element.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
-#include "core/vocabulary.hpp"
 
 namespace tactile {
 

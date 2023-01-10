@@ -19,10 +19,11 @@
 
 #pragma once
 
-#include "core/layer/abstract_layer.hpp"
-#include "core/tile/tile_pos.hpp"
+#include "common/numeric.hpp"
 #include "common/type/vec.hpp"
-#include "core/vocabulary.hpp"
+#include "core/layer/abstract_layer.hpp"
+#include "core/tile/tile_matrix.hpp"
+#include "core/tile/tile_pos.hpp"
 
 namespace tactile {
 

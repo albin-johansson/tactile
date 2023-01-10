@@ -23,7 +23,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/vocabulary.hpp"
+#include "common/numeric.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

@@ -23,7 +23,6 @@
 
 #include "core/color.hpp"
 #include "common/type/array.hpp"
-#include "core/vocabulary.hpp"
 
 namespace tactile::ui {
 

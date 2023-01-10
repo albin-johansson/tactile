@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "core/layer/tile_format.hpp"
+#include "common/numeric.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
-#include "core/vocabulary.hpp"
+#include "core/layer/tile_format.hpp"
 
 namespace tactile {
 

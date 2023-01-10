@@ -19,17 +19,15 @@
 
 #pragma once
 
+#include "common/macros.hpp"
 #include "common/type/string.hpp"
-#include "core/vocabulary.hpp"
 
-namespace tactile {
-class MapDocument;
-}  // namespace tactile
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, MapDocument)
 
 namespace tactile::io {
 
-class EmitInfo;
-struct GodotEmitOptions;
+TACTILE_FWD_DECLARE_STRUCT(GodotEmitOptions)
+TACTILE_FWD_DECLARE_CLASS(EmitInfo)
 
 /// Emits a map document, inferring the format from the path (or the preferred format)
 void emit_map(const MapDocument& document);

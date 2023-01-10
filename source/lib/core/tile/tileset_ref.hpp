@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "core/region.hpp"
-#include "core/tile/tileset.hpp"
+#include "common/numeric.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
+#include "core/region.hpp"
+#include "core/tile/tileset.hpp"
 #include "core/viewport.hpp"
-#include "core/vocabulary.hpp"
 
 namespace tactile {
 

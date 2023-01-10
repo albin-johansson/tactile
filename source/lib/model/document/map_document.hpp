@@ -21,10 +21,7 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/context/context_manager.hpp"
-#include "core/layer/layer_type.hpp"
-#include "core/layer/tile_format.hpp"
-#include "core/map.hpp"
+#include "common/numeric.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
@@ -33,10 +30,13 @@
 #include "common/type/tile_cache.hpp"
 #include "common/type/uuid.hpp"
 #include "common/type/vec.hpp"
+#include "core/context/context_manager.hpp"
+#include "core/layer/layer_type.hpp"
+#include "core/layer/tile_format.hpp"
+#include "core/map.hpp"
 #include "core/viewport.hpp"
-#include "core/vocabulary.hpp"
-#include "document.hpp"
-#include "document_delegate.hpp"
+#include "model/document/document.hpp"
+#include "model/document/document_delegate.hpp"
 #include "model/tool/tool_manager.hpp"
 #include "model/tool/tool_type.hpp"
 

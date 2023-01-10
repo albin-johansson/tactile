@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "common/numeric.hpp"
 #include "common/type/func.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/result.hpp"
@@ -26,7 +27,6 @@
 #include "common/type/vec.hpp"
 #include "core/layer/abstract_layer.hpp"
 #include "core/layer/visitors.hpp"
-#include "core/vocabulary.hpp"
 
 namespace tactile {
 

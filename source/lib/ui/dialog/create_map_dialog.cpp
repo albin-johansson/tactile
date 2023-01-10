@@ -23,8 +23,8 @@
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
+#include "common/numeric.hpp"
 #include "common/type/math.hpp"
-#include "core/vocabulary.hpp"
 #include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

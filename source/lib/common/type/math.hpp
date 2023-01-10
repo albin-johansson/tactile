@@ -23,7 +23,7 @@
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 
-#include "core/vocabulary.hpp"
+#include "common/numeric.hpp"
 
 namespace tactile {
 

@@ -21,8 +21,8 @@
 
 #include <concepts>  // integral
 
+#include "common/numeric.hpp"
 #include "common/type/vec.hpp"
-#include "core/vocabulary.hpp"
 
 namespace tactile {
 

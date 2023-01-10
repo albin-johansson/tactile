@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "common/numeric.hpp"
 #include "common/type/math.hpp"
 #include "common/type/pair.hpp"
 #include "common/type/path.hpp"
@@ -26,7 +27,6 @@
 #include "common/type/uuid.hpp"
 #include "common/type/vec.hpp"
 #include "common/util/assoc.hpp"
-#include "core/vocabulary.hpp"
 #include "io/map/emit/gd/godot_file.hpp"
 
 namespace tactile::io {

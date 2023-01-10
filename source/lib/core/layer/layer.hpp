@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "core/context/context.hpp"
-#include "core/layer/layer_type.hpp"
-#include "core/layer/layer_visitor.hpp"
+#include "common/numeric.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
-#include "core/vocabulary.hpp"
+#include "core/context/context.hpp"
+#include "core/layer/layer_type.hpp"
+#include "core/layer/layer_visitor.hpp"
 
 namespace tactile {
 

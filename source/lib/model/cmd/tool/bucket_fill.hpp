@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "core/map.hpp"
-#include "core/tile/tile_pos.hpp"
+#include "common/numeric.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "common/type/vec.hpp"
-#include "core/vocabulary.hpp"
+#include "core/map.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "model/cmd/command.hpp"
 
 namespace tactile::cmd {

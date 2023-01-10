@@ -26,6 +26,7 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
+#include "common/numeric.hpp"
 #include "common/predef.hpp"
 
 namespace tactile {

@@ -19,20 +19,21 @@
 
 #pragma once
 
+#include "common/macros.hpp"
+#include "common/numeric.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
-#include "core/vocabulary.hpp"
 #include "model/document/document_manager.hpp"
 #include "model/model.hpp"
 
 namespace tactile {
 
-class Document;
-class MapDocument;
-class TilesetDocument;
-struct TilesetInfo;
+TACTILE_FWD_DECLARE_CLASS(Document)
+TACTILE_FWD_DECLARE_CLASS(MapDocument)
+TACTILE_FWD_DECLARE_CLASS(TilesetDocument)
+TACTILE_FWD_DECLARE_STRUCT(TilesetInfo)
 
 /// Implementation used by the DocumentModel class, not to be used directly elsewhere.
 class DocumentModel::Impl {

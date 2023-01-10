@@ -22,7 +22,7 @@
 #include <centurion/opengl.hpp>
 #include <centurion/window.hpp>
 
-#include "core/vocabulary.hpp"
+#include "common/macros.hpp"
 
 namespace tactile {
 

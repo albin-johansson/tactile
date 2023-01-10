@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include "core/vocabulary.hpp"
+#include "common/macros.hpp"
+#include "common/numeric.hpp"
 
 struct ImVec2;
 

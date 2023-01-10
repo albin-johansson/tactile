@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "core/map.hpp"
+#include "common/numeric.hpp"
 #include "common/type/ptr.hpp"
-#include "core/vocabulary.hpp"
+#include "core/map.hpp"
 #include "map_command_cache.hpp"
 #include "model/cmd/command.hpp"
 

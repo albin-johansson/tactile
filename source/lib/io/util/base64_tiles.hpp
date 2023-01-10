@@ -19,10 +19,11 @@
 
 #pragma once
 
-#include "core/layer/tile_format.hpp"
+#include "common/numeric.hpp"
 #include "common/type/string.hpp"
 #include "common/type/vec.hpp"
-#include "core/vocabulary.hpp"
+#include "core/layer/tile_format.hpp"
+#include "core/tile/tile_matrix.hpp"
 
 namespace tactile::io {
 

@@ -22,8 +22,9 @@
 #include <centurion/math.hpp>
 #include <imgui.h>
 
+#include "common/macros.hpp"
+#include "common/numeric.hpp"
 #include "core/region.hpp"
-#include "core/vocabulary.hpp"
 #include "graphics/render.hpp"
 #include "graphics/render_info.hpp"
 

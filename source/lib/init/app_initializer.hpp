@@ -21,8 +21,8 @@
 
 #include <centurion/window.hpp>
 
+#include "common/macros.hpp"
 #include "common/type/maybe.hpp"
-#include "core/vocabulary.hpp"
 #include "init/protobuf_context.hpp"
 #include "init/sdl_context.hpp"
 #include "ui/imgui_context.hpp"

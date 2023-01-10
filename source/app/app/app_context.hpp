@@ -22,7 +22,7 @@
 #include <centurion/window.hpp>
 #include <entt/fwd.hpp>
 
-#include "core/vocabulary.hpp"
+#include "common/macros.hpp"
 
 namespace tactile {
 

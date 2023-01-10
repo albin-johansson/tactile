@@ -21,7 +21,7 @@
 
 #include <array>  // array
 
-#include "core/vocabulary.hpp"
+#include "common/numeric.hpp"
 
 namespace tactile {
 

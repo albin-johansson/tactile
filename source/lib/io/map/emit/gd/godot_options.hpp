@@ -19,8 +19,8 @@
 
 #pragma once
 
+#include "common/numeric.hpp"
 #include "common/type/path.hpp"
-#include "core/vocabulary.hpp"
 
 namespace tactile::io {
 
