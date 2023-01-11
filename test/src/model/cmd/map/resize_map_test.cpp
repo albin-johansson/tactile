@@ -30,30 +30,26 @@ TEST_SUITE("cmd::ResizeMap")
 {
   TEST_CASE("constructor")
   {
-    REQUIRE_THROWS_AS(cmd::ResizeMap(nullptr, 1, 1), TactileError);
+    REQUIRE_THROWS_AS(cmd::ResizeMap(nullptr, TileExtent {1, 1}), TactileError);
   }
 
   TEST_CASE("redo/undo")
   {
-    const usize old_rows = 5;
-    const usize old_cols = 7;
+    const TileExtent old_extent {5, 7};
+    const TileExtent new_extent {3, 9};
 
     auto map_document = test::MapBuilder::build()  //
-                            .with_size(old_rows, old_cols)
+                            .with_size(old_extent.rows, old_extent.cols)
                             .result();
     auto map = map_document->get_map_ptr();
 
-    const usize new_rows = 3;
-    const usize new_cols = 9;
-    cmd::ResizeMap cmd {map, new_rows, new_cols};
+    cmd::ResizeMap cmd {map, new_extent};
 
     cmd.redo();
-    REQUIRE(new_rows == map->row_count());
-    REQUIRE(new_cols == map->column_count());
+    REQUIRE(new_extent == map->map_size());
 
     cmd.undo();
-    REQUIRE(old_rows == map->row_count());
-    REQUIRE(old_cols == map->column_count());
+    REQUIRE(old_extent == map->map_size());
   }
 }
 

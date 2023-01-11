@@ -25,6 +25,7 @@
 #include "common/type/path.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
+#include "core/tile/tile_extent.hpp"
 #include "model/document/document_manager.hpp"
 #include "model/model.hpp"
 
@@ -44,7 +45,7 @@ class DocumentModel::Impl {
 
   void each(const VisitorFunc& func) const;
 
-  auto add_map(const Int2& tile_size, usize rows, usize columns) -> UUID;
+  auto add_map(const Int2& tile_size, TileExtent extent) -> UUID;
 
   auto add_tileset(const TilesetInfo& info) -> UUID;
 

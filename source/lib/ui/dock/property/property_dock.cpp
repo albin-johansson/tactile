@@ -171,8 +171,9 @@ void show_native_map_properties(const Map& map, entt::dispatcher& dispatcher)
   native_read_only_row(lang.misc.tile_width.c_str(), map.tile_size().x);
   native_read_only_row(lang.misc.tile_height.c_str(), map.tile_size().y);
 
-  native_read_only_row(lang.misc.row_count.c_str(), map.row_count());
-  native_read_only_row(lang.misc.column_count.c_str(), map.column_count());
+  const auto map_extent = map.map_size();
+  native_read_only_row(lang.misc.row_count.c_str(), map_extent.rows);
+  native_read_only_row(lang.misc.column_count.c_str(), map_extent.cols);
 
   prepare_table_row(lang.misc.tile_encoding.c_str());
   ImGui::TableNextColumn();

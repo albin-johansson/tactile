@@ -27,44 +27,43 @@
 
 namespace tactile::cmd {
 
-ResizeMap::ResizeMap(Shared<Map> map, const usize n_rows, const usize n_cols)
+ResizeMap::ResizeMap(Shared<Map> map, const TileExtent extent)
     : mMap {std::move(map)},
-      mRows {n_rows},
-      mCols {n_cols}
+      mNewExtent {extent}
 {
   if (!mMap) {
-    throw TactileError {"Invalid null map!"};
+    throw TactileError {"Invalid null map"};
   }
 }
 
 void ResizeMap::undo()
 {
-  mMap->resize(mPrevRows.value(), mPrevCols.value());
+  mMap->resize(mOldExtent.value());
 
-  if (lossy_resize()) {
+  if (is_lossy_resize()) {
     mCache.restore_tiles(*mMap);
   }
 }
 
 void ResizeMap::redo()
 {
-  mPrevRows = mMap->row_count();
-  mPrevCols = mMap->column_count();
+  mOldExtent = mMap->map_size();
 
-  if (lossy_resize()) {
-    const auto rows = mMap->row_count();
-    const auto cols = mMap->column_count();
+  if (is_lossy_resize()) {
+    const auto extent = mMap->map_size();
 
     mCache.clear();
-    mCache.save_tiles(*mMap,
-                      TilePos::from(rows - (mPrevRows.value() - mRows), 0u),
-                      TilePos::from(rows, cols));
-    mCache.save_tiles(*mMap,
-                      TilePos::from(0u, cols - (mPrevCols.value() - mCols)),
-                      TilePos::from(rows, cols));
+    mCache.save_tiles(
+        *mMap,
+        TilePos::from(extent.rows - (mOldExtent->rows - mNewExtent.rows), 0u),
+        TilePos::from(extent.rows, extent.cols));
+    mCache.save_tiles(
+        *mMap,
+        TilePos::from(0u, extent.cols - (mOldExtent->cols - mNewExtent.cols)),
+        TilePos::from(extent.rows, extent.cols));
   }
 
-  mMap->resize(mRows, mCols);
+  mMap->resize(mNewExtent);
 }
 
 auto ResizeMap::get_name() const -> String
@@ -73,9 +72,9 @@ auto ResizeMap::get_name() const -> String
   return lang.cmd.resize_map;
 }
 
-auto ResizeMap::lossy_resize() const -> bool
+auto ResizeMap::is_lossy_resize() const -> bool
 {
-  return mPrevRows > mRows || mPrevCols > mCols;
+  return mOldExtent->rows > mNewExtent.rows || mOldExtent->cols > mNewExtent.cols;
 }
 
 }  // namespace tactile::cmd

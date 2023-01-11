@@ -40,10 +40,10 @@ void DocumentModel::each(const VisitorFunc& func) const
   mImpl->each(func);
 }
 
-auto DocumentModel::create_map_document(const Int2& tile_size, usize rows, usize columns)
+auto DocumentModel::create_map_document(const Int2& tile_size, const TileExtent extent)
     -> UUID
 {
-  return mImpl->add_map(tile_size, rows, columns);
+  return mImpl->add_map(tile_size, extent);
 }
 
 auto DocumentModel::add_tileset(const TilesetInfo& info) -> UUID

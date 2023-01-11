@@ -39,6 +39,7 @@
 #include "core/layer/layer_type.hpp"
 #include "core/layer/object_type.hpp"
 #include "core/layer/tile_format.hpp"
+#include "core/tile/tile_extent.hpp"
 #include "core/tile/tile_matrix.hpp"
 
 namespace tactile::ir {
@@ -63,9 +64,8 @@ struct ObjectData final {
 };
 
 struct TileLayerData final {
-  // The sizes are provided for convenience, they should mirror the map dimensions.
-  usize row_count {};
-  usize col_count {};
+  // The extent is provided for convenience, it should mirror the map extent.
+  TileExtent extent;
   TileMatrix tiles;
 };
 
@@ -156,8 +156,7 @@ struct TileFormatData final {
 };
 
 struct MapData final {
-  usize row_count {};
-  usize col_count {};
+  TileExtent extent;
   Int2 tile_size {};
   int32 next_layer_id {};
   int32 next_object_id {};

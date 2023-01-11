@@ -155,16 +155,15 @@ void emit_object_layer_data(YAML::Emitter& emitter, const ir::ObjectLayerData& d
 
 void emit_plain_tile_layer_data(YAML::Emitter& emitter,
                                 const ir::TileLayerData& data,
-                                const usize rows,
-                                const usize columns)
+                                const TileExtent extent)
 {
   const auto& prefs = get_preferences();
 
   emitter << YAML::Key << "data";
 
   std::stringstream stream;
-  for (usize row = 0; row < rows; ++row) {
-    for (usize col = 0; col < columns; ++col) {
+  for (usize row = 0; row < extent.rows; ++row) {
+    for (usize col = 0; col < extent.cols; ++col) {
       if ((prefs.fold_tile_data && col != 0) ||
           (!prefs.fold_tile_data && (row != 0 || col != 0))) {
         stream << ' ';
@@ -173,7 +172,7 @@ void emit_plain_tile_layer_data(YAML::Emitter& emitter,
       stream << data.tiles[row][col];
     }
 
-    if (prefs.fold_tile_data && row < (rows - 1)) {
+    if (prefs.fold_tile_data && row < (extent.rows - 1)) {
       stream << '\n';
     }
   }
@@ -211,14 +210,13 @@ void emit_layer(YAML::Emitter& emitter,
       const auto& tile_layer = layer.as_tile_layer();
 
       if (map.tile_format.encoding == TileEncoding::Plain) {
-        emit_plain_tile_layer_data(emitter, tile_layer, map.row_count, map.col_count);
+        emit_plain_tile_layer_data(emitter, tile_layer, map.extent);
       }
       else {
         emitter << YAML::Key << "data";
         emitter << YAML::Value
                 << base64_encode_tiles(tile_layer.tiles,
-                                       tile_layer.row_count,
-                                       tile_layer.col_count,
+                                       tile_layer.extent,
                                        map.tile_format.compression);
       }
 
@@ -455,8 +453,8 @@ void emit_yaml_map(const EmitInfo& info)
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "version" << YAML::Value << 1;
 
-  emitter << YAML::Key << "row-count" << YAML::Value << map.row_count;
-  emitter << YAML::Key << "column-count" << YAML::Value << map.col_count;
+  emitter << YAML::Key << "row-count" << YAML::Value << map.extent.rows;
+  emitter << YAML::Key << "column-count" << YAML::Value << map.extent.cols;
 
   emitter << YAML::Key << "tile-width" << YAML::Value << map.tile_size.x;
   emitter << YAML::Key << "tile-height" << YAML::Value << map.tile_size.y;

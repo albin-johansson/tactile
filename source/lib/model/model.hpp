@@ -27,6 +27,7 @@
 #include "common/type/path.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
+#include "core/tile/tile_extent.hpp"
 #include "model/document/document.hpp"
 #include "model/tool/tool_type.hpp"
 
@@ -57,7 +58,7 @@ class DocumentModel final {
   void each(const VisitorFunc& func) const;
 
   /// Creates an empty map document with the specified attributes.
-  auto create_map_document(const Int2& tile_size, usize rows, usize columns) -> UUID;
+  auto create_map_document(const Int2& tile_size, TileExtent extent) -> UUID;
 
   /// Creates a tileset document and adds it to the active map document.
   auto add_tileset(const TilesetInfo& info) -> UUID;

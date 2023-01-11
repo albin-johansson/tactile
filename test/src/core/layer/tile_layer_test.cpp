@@ -50,7 +50,7 @@ TEST_SUITE("TileLayer")
     // 0  0  0  0  0
     // 0  0  0  0  0
     // 0  0  0  0  0
-    TileLayer layer {5, 5};
+    TileLayer layer {TileExtent {5, 5}};
 
     // 0  0  0  0  0
     // 0  0  0  1  1
@@ -175,7 +175,7 @@ TEST_SUITE("TileLayer")
 
   TEST_CASE("add_row")
   {
-    TileLayer layer {3, 4};
+    TileLayer layer {TileExtent {3, 4}};
 
     REQUIRE(3u == layer.row_count());
     REQUIRE(4u == layer.column_count());
@@ -193,7 +193,7 @@ TEST_SUITE("TileLayer")
 
   TEST_CASE("add_column")
   {
-    TileLayer layer {3, 4};
+    TileLayer layer {TileExtent {3, 4}};
 
     REQUIRE(3u == layer.row_count());
     REQUIRE(4u == layer.column_count());
@@ -206,7 +206,7 @@ TEST_SUITE("TileLayer")
 
   TEST_CASE("remove_row")
   {
-    TileLayer layer {3, 4};
+    TileLayer layer {TileExtent {3, 4}};
 
     REQUIRE(3u == layer.row_count());
     REQUIRE(4u == layer.column_count());
@@ -219,7 +219,7 @@ TEST_SUITE("TileLayer")
 
   TEST_CASE("remove_column")
   {
-    TileLayer layer {6, 8};
+    TileLayer layer {TileExtent {6, 8}};
 
     REQUIRE(6u == layer.row_count());
     REQUIRE(8u == layer.column_count());
@@ -232,13 +232,13 @@ TEST_SUITE("TileLayer")
 
   TEST_CASE("resize")
   {
-    TileLayer layer {6, 5};
+    TileLayer layer {TileExtent {6, 5}};
 
     REQUIRE(6u == layer.row_count());
     REQUIRE(5u == layer.column_count());
     REQUIRE(!layer.is_valid({2, 8}));
 
-    layer.resize(3, 9);
+    layer.resize(TileExtent {3, 9});
 
     REQUIRE(3u == layer.row_count());
     REQUIRE(9u == layer.column_count());
@@ -247,7 +247,7 @@ TEST_SUITE("TileLayer")
 
   TEST_CASE("clone")
   {
-    TileLayer source {4, 3};
+    TileLayer source {TileExtent {4, 3}};
 
     source.set_tile({0, 0}, 7);
     source.set_tile({1, 2}, 8314);

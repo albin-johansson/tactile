@@ -37,11 +37,10 @@ inline constinit bool show_dialog = false;
 
 }  // namespace
 
-void open_resize_map_dialog(const usize current_row_count,
-                            const usize current_column_count)
+void open_resize_map_dialog(const TileExtent current_extent)
 {
-  dialog_row_count = current_row_count;
-  dialog_column_count = current_column_count;
+  dialog_row_count = current_extent.rows;
+  dialog_column_count = current_extent.cols;
   show_dialog = true;
 }
 

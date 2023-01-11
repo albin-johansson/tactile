@@ -63,7 +63,8 @@ void on_create_map(const CreateMapEvent& event)
 
   auto& model = get_model();
   const auto id =
-      model.create_map_document(event.tile_size, event.row_count, event.column_count);
+      model.create_map_document(event.tile_size,
+                                TileExtent {event.row_count, event.column_count});
   TACTILE_ASSERT(model.get_active_document_id() == id);
 }
 
@@ -102,7 +103,7 @@ void on_show_resize_map_dialog(const OpenResizeMapDialogEvent&)
 
   if (auto* map_document = get_model().active_map_document()) {
     const auto& map = map_document->get_map();
-    ui::open_resize_map_dialog(map.row_count(), map.column_count());
+    ui::open_resize_map_dialog(map.map_size());
   }
 }
 
@@ -113,7 +114,7 @@ void on_resize_map(const ResizeMapEvent& event)
                 event.col_count);
 
   if (auto* map_document = get_model().active_map_document()) {
-    map_document->resize(event.row_count, event.col_count);
+    map_document->resize(TileExtent {event.row_count, event.col_count});
   }
 }
 

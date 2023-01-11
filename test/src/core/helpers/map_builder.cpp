@@ -34,7 +34,7 @@
 namespace tactile::test {
 
 MapBuilder::MapBuilder()
-    : mDocument {std::make_unique<MapDocument>(Float2 {32, 32}, 5, 5)}
+    : mDocument {std::make_unique<MapDocument>(Float2 {32, 32}, TileExtent {5, 5})}
 {
   mDocument->set_component_index(std::make_shared<ComponentIndex>());
 }
@@ -52,7 +52,7 @@ auto MapBuilder::with_tile_size(const Int2& size) -> MapBuilder&
 
 auto MapBuilder::with_size(const usize rows, const usize columns) -> MapBuilder&
 {
-  mDocument->get_map().resize(rows, columns);
+  mDocument->get_map().resize(TileExtent {rows, columns});
   return *this;
 }
 
@@ -70,9 +70,11 @@ auto MapBuilder::with_tile_layer(UUID* id, Maybe<TileID> initial_value) -> MapBu
 
   if (initial_value) {
     auto& layer = root.get_tile_layer(layer_id);
-    invoke_mn(map.row_count(), map.column_count(), [&](const usize r, const usize c) {
-      layer.set_tile(TilePos::from(r, c), *initial_value);
-    });
+    invoke_mn(map.map_size().rows,
+              map.map_size().cols,
+              [&](const usize row, const usize col) {
+                layer.set_tile(TilePos::from(row, col), *initial_value);
+              });
   }
 
   return *this;

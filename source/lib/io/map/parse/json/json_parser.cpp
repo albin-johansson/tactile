@@ -53,14 +53,14 @@ namespace {
   }
 
   if (const auto width = as_uint(*json, "width")) {
-    map_data.col_count = *width;
+    map_data.extent.cols = *width;
   }
   else {
     return ParseError::NoMapWidth;
   }
 
   if (const auto height = as_uint(*json, "height")) {
-    map_data.row_count = *height;
+    map_data.extent.rows = *height;
   }
   else {
     return ParseError::NoMapHeight;

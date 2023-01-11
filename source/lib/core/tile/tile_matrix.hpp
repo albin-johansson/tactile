@@ -23,6 +23,7 @@
 
 #include "common/numeric.hpp"
 #include "common/type/vec.hpp"
+#include "core/tile/tile_extent.hpp"
 
 namespace tactile {
 
@@ -51,14 +52,9 @@ template <std::integral T>
   return {index / n_columns, index % n_columns};
 }
 
-[[nodiscard]] auto make_tile_row(usize n_cols) -> TileRow;
+[[nodiscard]] auto make_tile_row(usize column_count) -> TileRow;
 
-/// Creates a tile matrix with the specified dimensions.
-///
-/// \param nRows the number or rows.
-/// \param nCols the number of columns.
-///
-/// \return a matrix with empty tile identifiers.
-[[nodiscard]] auto make_tile_matrix(usize n_rows, usize n_cols) -> TileMatrix;
+/// Creates a tile matrix of empty tile identifiers.
+[[nodiscard]] auto make_tile_matrix(TileExtent extent) -> TileMatrix;
 
 }  // namespace tactile

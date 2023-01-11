@@ -31,19 +31,24 @@
 namespace tactile {
 
 TileLayer::TileLayer()
-    : TileLayer {5, 5}
+    : TileLayer {TileExtent {5, 5}}
 {
 }
 
-TileLayer::TileLayer(const usize rows, const usize columns)
-    : mTiles {make_tile_matrix(rows, columns)}
+TileLayer::TileLayer(const TileExtent extent)
+    : mTiles {make_tile_matrix(extent)}
 {
-  if (rows == 0) {
-    throw TactileError {"Invalid row count!"};
+  if (extent.rows == 0) {
+    throw TactileError {"Invalid row count"};
   }
-  else if (columns == 0) {
-    throw TactileError {"Invalid column count!"};
+  else if (extent.cols == 0) {
+    throw TactileError {"Invalid column count"};
   }
+}
+
+void TileLayer::accept(ContextVisitor& visitor) const
+{
+  visitor.visit(*this);
 }
 
 void TileLayer::accept(LayerVisitor& visitor)
@@ -125,36 +130,31 @@ void TileLayer::remove_column()
   }
 }
 
-void TileLayer::resize(const usize rows, const usize columns)
+void TileLayer::resize(const TileExtent extent)
 {
-  if (rows == 0) {
-    throw TactileError {"Invalid row count!"};
+  if (extent.rows == 0) {
+    throw TactileError {"Invalid row count"};
   }
-  else if (columns == 0) {
-    throw TactileError {"Invalid column count!"};
+  else if (extent.cols == 0) {
+    throw TactileError {"Invalid column count"};
   }
 
   const auto current_rows = row_count();
   const auto current_cols = column_count();
 
-  if (const auto n = udiff(current_rows, rows); current_rows < rows) {
+  if (const auto n = udiff(current_rows, extent.rows); current_rows < extent.rows) {
     invoke_n(n, [this] { add_row(); });
   }
   else {
     invoke_n(n, [this] { remove_row(); });
   }
 
-  if (const auto n = udiff(current_cols, columns); current_cols < columns) {
+  if (const auto n = udiff(current_cols, extent.cols); current_cols < extent.cols) {
     invoke_n(n, [this] { add_column(); });
   }
   else {
     invoke_n(n, [this] { remove_column(); });
   }
-}
-
-void TileLayer::accept(ContextVisitor& visitor) const
-{
-  visitor.visit(*this);
 }
 
 void TileLayer::set_tile(const TilePos& pos, const TileID id)

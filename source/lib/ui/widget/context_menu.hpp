@@ -27,6 +27,7 @@ TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 
 namespace tactile::ui {
 
+// TODO deprecate
 class ContextMenu {
  public:
   TACTILE_DEFAULT_COPY(ContextMenu);

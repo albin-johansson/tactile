@@ -32,11 +32,11 @@
 
 namespace tactile {
 
-MapDocument::MapDocument(const Int2& tile_size, const usize rows, const usize columns)
+MapDocument::MapDocument(const Int2& tile_size, const TileExtent extent)
     : mMap {std::make_shared<Map>()},
       mDelegate {mMap->get_uuid()}
 {
-  mMap->resize(rows, columns);
+  mMap->resize(extent);
   mMap->set_tile_size(tile_size);
 
   auto& contexts = get_contexts();
@@ -71,9 +71,9 @@ void MapDocument::remove_column()
   get_history().push<cmd::RemoveColumn>(mMap);
 }
 
-void MapDocument::resize(const usize rows, const usize cols)
+void MapDocument::resize(const TileExtent extent)
 {
-  get_history().push<cmd::ResizeMap>(mMap, rows, cols);
+  get_history().push<cmd::ResizeMap>(mMap, extent);
 }
 
 void MapDocument::fix_tiles()

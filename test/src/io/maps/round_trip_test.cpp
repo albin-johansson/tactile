@@ -98,8 +98,8 @@ void validate_layers(const ir::LayerData& source_layer,
     const auto& source_tile_data = source_layer.as_tile_layer();
     const auto& restored_tile_data = restored_layer.as_tile_layer();
 
-    REQUIRE(source_tile_data.row_count == restored_tile_data.row_count);
-    REQUIRE(source_tile_data.col_count == restored_tile_data.col_count);
+    REQUIRE(source_tile_data.extent.rows == restored_tile_data.extent.rows);
+    REQUIRE(source_tile_data.extent.cols == restored_tile_data.extent.cols);
     REQUIRE(source_tile_data.tiles == restored_tile_data.tiles);
   }
   else if (source_layer.type == LayerType::ObjectLayer) {
@@ -192,8 +192,8 @@ void validate_component_definitions(const ir::MapData& source,
 
 void validate_basic_map_info(const ir::MapData& source, const ir::MapData& restored)
 {
-  REQUIRE(source.row_count == restored.row_count);
-  REQUIRE(source.col_count == restored.col_count);
+  REQUIRE(source.extent.rows == restored.extent.rows);
+  REQUIRE(source.extent.cols == restored.extent.cols);
 
   REQUIRE(source.tile_size == restored.tile_size);
 
@@ -223,10 +223,10 @@ constexpr usize col_count = 13;
   data.visible = true;
 
   auto& tile_data = data.data.emplace<ir::TileLayerData>();
-  tile_data.row_count = row_count;
-  tile_data.col_count = col_count;
+  tile_data.extent.rows = row_count;
+  tile_data.extent.cols = col_count;
 
-  tile_data.tiles = make_tile_matrix(row_count, col_count);
+  tile_data.tiles = make_tile_matrix(TileExtent {row_count, col_count});
   for (usize row = 0; row < row_count; ++row) {
     for (usize col = 0; col < col_count; ++col) {
       tile_data.tiles[row][col] = 7;
@@ -268,9 +268,9 @@ constexpr usize col_count = 13;
     child->visible = true;
 
     auto& tile_data = child->data.emplace<ir::TileLayerData>();
-    tile_data.row_count = row_count;
-    tile_data.col_count = col_count;
-    tile_data.tiles = make_tile_matrix(row_count, col_count);
+    tile_data.extent.rows = row_count;
+    tile_data.extent.cols = col_count;
+    tile_data.tiles = make_tile_matrix(TileExtent {row_count, col_count});
 
     child->context.properties["path"] = fs::path {"resources/exterior.png"};
   }
@@ -287,9 +287,9 @@ constexpr usize col_count = 13;
     child->visible = true;
 
     auto& tile_data = child->data.emplace<ir::TileLayerData>();
-    tile_data.row_count = row_count;
-    tile_data.col_count = col_count;
-    tile_data.tiles = make_tile_matrix(row_count, col_count);
+    tile_data.extent.rows = row_count;
+    tile_data.extent.cols = col_count;
+    tile_data.tiles = make_tile_matrix(TileExtent {row_count, col_count});
 
     if (use_components) {
       child->context.components["short-component"]["integer"] = 356;
@@ -410,8 +410,8 @@ constexpr usize col_count = 13;
   data.next_layer_id = 5;
   data.next_object_id = 8;
 
-  data.row_count = row_count;
-  data.col_count = col_count;
+  data.extent.rows = row_count;
+  data.extent.cols = col_count;
 
   data.tile_format.encoding = TileEncoding::Base64;
   data.tile_format.compression = TileCompression::Zlib;

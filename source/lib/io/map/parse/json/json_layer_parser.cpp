@@ -68,7 +68,7 @@ namespace {
   usize index = 0;
   for (const auto& [_, value]: json.items()) {
     if (value.is_number_integer()) {
-      const auto [row, col] = to_matrix_coords(index, tile_layer.col_count);
+      const auto [row, col] = to_matrix_coords(index, tile_layer.extent.cols);
       tile_layer.tiles[row][col] = value.get<TileID>();
       ++index;
     }
@@ -108,8 +108,7 @@ namespace {
 
     const auto data_str = data.get<std::string>();
     tile_layer.tiles = base64_decode_tiles(StringView {data_str.data(), data_str.size()},
-                                           tile_layer.row_count,
-                                           tile_layer.col_count,
+                                           tile_layer.extent,
                                            compression);
   }
   else {
@@ -126,34 +125,34 @@ namespace {
   auto& tile_layer = layer.data.emplace<ir::TileLayerData>();
 
   if (const auto width = as_uint(json, "width")) {
-    tile_layer.col_count = *width;
+    tile_layer.extent.cols = *width;
 
-    if (tile_layer.col_count != map.col_count) {
+    if (tile_layer.extent.cols != map.extent.cols) {
       spdlog::warn("JSON tile layer width does not match map width, '{}' vs '{}'",
-                   tile_layer.col_count,
-                   map.col_count);
+                   tile_layer.extent.cols,
+                   map.extent.cols);
     }
   }
   else {
     spdlog::warn("JSON tile layer has no width information, assuming map width...");
-    tile_layer.col_count = map.col_count;
+    tile_layer.extent.cols = map.extent.cols;
   }
 
   if (const auto height = as_uint(json, "height")) {
-    tile_layer.row_count = *height;
+    tile_layer.extent.rows = *height;
 
-    if (tile_layer.row_count != map.row_count) {
+    if (tile_layer.extent.rows != map.extent.rows) {
       spdlog::warn("JSON tile layer height does not match map height, '{}' vs '{}'",
-                   tile_layer.row_count,
-                   map.row_count);
+                   tile_layer.extent.rows,
+                   map.extent.rows);
     }
   }
   else {
     spdlog::warn("JSON tile layer has no height information, assuming map height...");
-    tile_layer.row_count = map.row_count;
+    tile_layer.extent.rows = map.extent.rows;
   }
 
-  tile_layer.tiles = make_tile_matrix(tile_layer.row_count, tile_layer.col_count);
+  tile_layer.tiles = make_tile_matrix(tile_layer.extent);
 
   if (const auto err = parse_tile_layer_data(json, map, tile_layer);
       err != ParseError::None) {

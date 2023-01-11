@@ -33,7 +33,7 @@ namespace {
 
 [[nodiscard]] auto make_map() -> Shared<MapDocument>
 {
-  return std::make_shared<MapDocument>(Int2 {32, 32}, 5, 5);
+  return std::make_shared<MapDocument>(Int2 {32, 32}, TileExtent {5, 5});
 }
 
 [[nodiscard]] auto make_tileset() -> Shared<TilesetDocument>

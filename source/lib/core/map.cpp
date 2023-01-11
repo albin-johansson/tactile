@@ -55,8 +55,7 @@ class TileLayerVisitor final : public LayerVisitor {
 
 struct Map::MapData final {
   ContextInfo context;      ///< Map context information.
-  usize row_count {5};      ///< Amount of rows.
-  usize col_count {5};      ///< Amount of columns.
+  TileExtent map_size {5, 5};
   Int2 tile_size {32, 32};  ///< Logical size of all tiles.
 
   GroupLayer root_layer;     ///< Invisible root layer.
@@ -90,20 +89,20 @@ void Map::each_tile_layer(const TileLayerVisitorFunc& func)
 
 void Map::add_row()
 {
-  ++mData->row_count;
+  ++mData->map_size.rows;
   each_tile_layer([](TileLayer& layer) { layer.add_row(); });
 }
 
 void Map::add_column()
 {
-  ++mData->col_count;
+  ++mData->map_size.cols;
   each_tile_layer([](TileLayer& layer) { layer.add_column(); });
 }
 
 void Map::remove_row()
 {
-  if (mData->row_count > 1) {
-    --mData->row_count;
+  if (mData->map_size.rows > 1) {
+    --mData->map_size.rows;
     each_tile_layer([](TileLayer& layer) { layer.remove_row(); });
   }
   else {
@@ -113,8 +112,8 @@ void Map::remove_row()
 
 void Map::remove_column()
 {
-  if (mData->col_count > 1) {
-    --mData->col_count;
+  if (mData->map_size.cols > 1) {
+    --mData->map_size.cols;
     each_tile_layer([](TileLayer& layer) { layer.remove_column(); });
   }
   else {
@@ -122,12 +121,12 @@ void Map::remove_column()
   }
 }
 
-void Map::resize(const usize rows, const usize columns)
+void Map::resize(const TileExtent extent)
 {
-  mData->row_count = require_that(rows, [](const usize x) { return x > 0; });
-  mData->col_count = require_that(columns, [](const usize x) { return x > 0; });
+  mData->map_size.rows = require_that(extent.rows, [](const usize x) { return x > 0; });
+  mData->map_size.cols = require_that(extent.cols, [](const usize x) { return x > 0; });
 
-  each_tile_layer([=](TileLayer& layer) { layer.resize(rows, columns); });
+  each_tile_layer([=](TileLayer& layer) { layer.resize(extent); });
 }
 
 auto Map::fix_tiles() -> FixTilesResult
@@ -136,13 +135,15 @@ auto Map::fix_tiles() -> FixTilesResult
 
   each_tile_layer([&, this](TileLayer& layer) {
     HashMap<TilePos, TileID> previous;
-    const auto& tilesets = tileset_bundle();
 
-    invoke_mn(row_count(), column_count(), [&](const usize row, const usize col) {
+    const auto extent = map_size();
+    const auto& tset_bundle = tileset_bundle();
+
+    invoke_mn(extent.rows, extent.cols, [&](const usize row, const usize col) {
       const auto pos = TilePos::from(row, col);
       const auto tile_id = layer.tile_at(pos);
 
-      if (tile_id != empty_tile && !tilesets.is_valid_tile(tile_id)) {
+      if (tile_id != empty_tile && !tset_bundle.is_valid_tile(tile_id)) {
         previous[pos] = tile_id;
         layer.set_tile(pos, empty_tile);
       }
@@ -173,7 +174,7 @@ void Map::add_layer(Shared<Layer> layer, const Maybe<UUID>& parent_id)
 
 auto Map::add_tile_layer(const Maybe<UUID>& parent_id) -> UUID
 {
-  auto layer = std::make_shared<TileLayer>(row_count(), column_count());
+  auto layer = std::make_shared<TileLayer>(map_size());
 
   layer->set_meta_id(fetch_and_increment_next_layer_id());
   layer->get_ctx().set_name(fmt::format("Tile Layer {}", mData->tile_layer_suffix));
@@ -286,20 +287,15 @@ void Map::accept(ContextVisitor& visitor) const
 
 auto Map::is_valid_position(const TilePos& pos) const -> bool
 {
-  return pos.row() >= 0 &&            //
-         pos.col() >= 0 &&            //
-         pos.urow() < row_count() &&  //
-         pos.ucol() < column_count();
+  return pos.row() >= 0 &&                //
+         pos.col() >= 0 &&                //
+         pos.urow() < map_size().rows &&  //
+         pos.ucol() < map_size().cols;
 }
 
-auto Map::row_count() const -> usize
+auto Map::map_size() const -> TileExtent
 {
-  return mData->row_count;
-}
-
-auto Map::column_count() const -> usize
-{
-  return mData->col_count;
+  return mData->map_size;
 }
 
 auto Map::tile_size() const -> const Int2&

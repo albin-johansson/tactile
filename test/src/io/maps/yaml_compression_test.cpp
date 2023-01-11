@@ -21,8 +21,8 @@
 
 #include <doctest/doctest.h>
 
+#include "common/numeric.hpp"
 #include "core/tile/tile_matrix.hpp"
-#include "core/vocabulary.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/ir/ir.hpp"
@@ -42,8 +42,8 @@ inline const TileMatrix test_tiles {
 [[nodiscard]] auto create_test_map() -> ir::MapData
 {
   ir::MapData map;
-  map.row_count = 5;
-  map.col_count = 5;
+  map.extent.rows = 5;
+  map.extent.cols = 5;
   map.tile_size = {32, 32};
 
   map.next_layer_id = 1;
@@ -57,8 +57,7 @@ inline const TileMatrix test_tiles {
   layer.visible = true;
 
   auto& tile_layer = layer.data.emplace<ir::TileLayerData>();
-  tile_layer.row_count = map.row_count;
-  tile_layer.col_count = map.col_count;
+  tile_layer.extent = map.extent;
   tile_layer.tiles = test_tiles;
 
   return map;

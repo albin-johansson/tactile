@@ -92,8 +92,8 @@ void emit_tile_layer(JSON& json, const ir::MapData& map, const ir::LayerData& la
   const auto& tile_layer = layer.as_tile_layer();
 
   json["type"] = "tilelayer";
-  json["width"] = map.col_count;
-  json["height"] = map.row_count;
+  json["width"] = map.extent.cols;
+  json["height"] = map.extent.rows;
 
   switch (map.tile_format.encoding) {
     case TileEncoding::Base64: {
@@ -120,15 +120,13 @@ void emit_tile_layer(JSON& json, const ir::MapData& map, const ir::LayerData& la
   }
 
   if (map.tile_format.encoding == TileEncoding::Base64) {
-    json["data"] = base64_encode_tiles(tile_layer.tiles,
-                                       map.row_count,
-                                       map.col_count,
-                                       map.tile_format.compression);
+    json["data"] =
+        base64_encode_tiles(tile_layer.tiles, map.extent, map.tile_format.compression);
   }
   else {
     auto tiles = JSON::array();
 
-    invoke_mn(map.row_count, map.col_count, [&](const usize row, const usize col) {
+    invoke_mn(map.extent.rows, map.extent.cols, [&](const usize row, const usize col) {
       tiles += tile_layer.tiles[row][col];
     });
 
@@ -370,8 +368,8 @@ void emit_json_map(const EmitInfo& info)
   }
 
   json["type"] = "map";
-  json["width"] = map.col_count;
-  json["height"] = map.row_count;
+  json["width"] = map.extent.cols;
+  json["height"] = map.extent.rows;
 
   json["tilewidth"] = map.tile_size.x;
   json["tileheight"] = map.tile_size.y;

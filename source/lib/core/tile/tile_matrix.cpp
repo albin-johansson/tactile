@@ -21,19 +21,19 @@
 
 namespace tactile {
 
-auto make_tile_row(const usize n_cols) -> TileRow
+auto make_tile_row(const usize column_count) -> TileRow
 {
   TileRow row;
-  row.reserve(n_cols);
-  row.assign(n_cols, 0);
+  row.reserve(column_count);
+  row.assign(column_count, 0);
   return row;
 }
 
-auto make_tile_matrix(const usize n_rows, const usize n_cols) -> TileMatrix
+auto make_tile_matrix(const TileExtent extent) -> TileMatrix
 {
   TileMatrix tiles;
-  tiles.reserve(n_rows);
-  tiles.assign(n_rows, make_tile_row(n_cols));
+  tiles.reserve(extent.rows);
+  tiles.assign(extent.rows, make_tile_row(extent.cols));
   return tiles;
 }
 

@@ -130,8 +130,8 @@ void convert_layer(const Layer& layer,
 
       auto& tile_layer_data = layer_data.data.emplace<ir::TileLayerData>();
       tile_layer_data.tiles = tile_layer.get_tiles();
-      tile_layer_data.row_count = tile_layer.row_count();
-      tile_layer_data.col_count = tile_layer.column_count();
+      tile_layer_data.extent.rows = tile_layer.row_count();
+      tile_layer_data.extent.cols = tile_layer.column_count();
 
       break;
     }
@@ -264,8 +264,7 @@ auto map_to_ir(const MapDocument& document) -> ir::MapData
   const auto& map = document.get_map();
 
   ir::MapData data;
-  data.row_count = map.row_count();
-  data.col_count = map.column_count();
+  data.extent = map.map_size();
   data.tile_size = map.tile_size();
   data.next_object_id = map.next_object_id();
   data.next_layer_id = map.next_layer_id();

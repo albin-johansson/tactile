@@ -22,6 +22,7 @@
 #include "common/numeric.hpp"
 #include "common/type/vec.hpp"
 #include "core/layer/abstract_layer.hpp"
+#include "core/tile/tile_extent.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "core/tile/tile_pos.hpp"
 
@@ -32,7 +33,7 @@ class TileLayer final : public AbstractLayer {
  public:
   TileLayer();
 
-  TileLayer(usize rows, usize columns);
+  explicit TileLayer(TileExtent extent);
 
   ~TileLayer() noexcept override = default;
 
@@ -67,7 +68,7 @@ class TileLayer final : public AbstractLayer {
 
   /// Changes the size of the layer.
   /// Note, layers must have at least 1 row and 1 column.
-  void resize(usize rows, usize columns);
+  void resize(TileExtent extent);
 
   /// Sets the tile identifier at the specified position.
   /// This function throws for invalid positions.

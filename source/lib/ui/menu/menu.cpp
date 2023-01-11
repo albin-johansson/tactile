@@ -63,9 +63,9 @@ void update_map_menu(const MapDocument* map_document)
   menu_set_enabled(MenuAction::AddRow, is_map_active);
   menu_set_enabled(MenuAction::AddColumn, is_map_active);
   menu_set_enabled(MenuAction::RemoveRow,
-                   is_map_active && map_document->get_map().row_count() > 1);
+                   is_map_active && map_document->get_map().map_size().rows > 1);
   menu_set_enabled(MenuAction::RemoveColumn,
-                   is_map_active && map_document->get_map().column_count() > 1);
+                   is_map_active && map_document->get_map().map_size().cols > 1);
 
   menu_set_enabled(MenuAction::ExportGodotScene, is_map_active);
 }

@@ -21,11 +21,11 @@
 
 #include <entt/signal/fwd.hpp>
 
-#include "common/numeric.hpp"
+#include "core/tile/tile_extent.hpp"
 
 namespace tactile::ui {
 
-void open_resize_map_dialog(usize current_row_count, usize current_column_count);
+void open_resize_map_dialog(TileExtent current_extent);
 void update_resize_map_dialog(entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

@@ -50,17 +50,15 @@ namespace {
   return nodes;
 }
 
-[[nodiscard]] auto parse_csv_tiles(const char* csv,
-                                   const usize row_count,
-                                   const usize col_count)
+[[nodiscard]] auto parse_csv_tiles(const char* csv, const TileExtent extent)
     -> Expected<TileMatrix, ParseError>
 {
-  auto tiles = make_tile_matrix(row_count, col_count);
+  auto tiles = make_tile_matrix(extent);
 
   usize index {};
   for (const auto& token: split(csv, ',')) {
     if (const auto id = parse_i32(token)) {
-      const auto [row, col] = to_matrix_coords(index, col_count);
+      const auto [row, col] = to_matrix_coords(index, extent.cols);
       tiles[row][col] = *id;
 
       ++index;
@@ -73,16 +71,14 @@ namespace {
   return tiles;
 }
 
-[[nodiscard]] auto parse_tile_nodes(XMLNode data_node,
-                                    const usize row_count,
-                                    const usize col_count)
+[[nodiscard]] auto parse_tile_nodes(XMLNode data_node, const TileExtent extent)
     -> Expected<TileMatrix, ParseError>
 {
-  auto tiles = make_tile_matrix(row_count, col_count);
+  auto tiles = make_tile_matrix(extent);
 
   usize index = 0;
   for (const auto tile_node: data_node.children("tile")) {
-    const auto [row, col] = to_matrix_coords(index, col_count);
+    const auto [row, col] = to_matrix_coords(index, extent.cols);
     tiles[row][col] = tile_node.attribute("gid").as_int(empty_tile);
 
     ++index;
@@ -106,7 +102,7 @@ namespace {
       map.tile_format.compression = TileCompression::None;
 
       const auto text = data.text();
-      if (auto tiles = parse_csv_tiles(text.get(), map.row_count, map.col_count)) {
+      if (auto tiles = parse_csv_tiles(text.get(), map.extent)) {
         return std::move(*tiles);
       }
       else {
@@ -128,8 +124,7 @@ namespace {
       }
 
       return base64_decode_tiles(data.text().get(),
-                                 map.row_count,
-                                 map.col_count,
+                                 map.extent,
                                  map.tile_format.compression);
     }
     else {
@@ -140,7 +135,7 @@ namespace {
     map.tile_format.encoding = TileEncoding::Plain;
     map.tile_format.compression = TileCompression::None;
 
-    if (auto tiles = parse_tile_nodes(data, map.row_count, map.col_count)) {
+    if (auto tiles = parse_tile_nodes(data, map.extent)) {
       return std::move(*tiles);
     }
     else {
@@ -155,31 +150,31 @@ namespace {
   ir::TileLayerData tile_layer;
 
   if (const auto width = as_uint(layer_node, "width")) {
-    tile_layer.col_count = *width;
+    tile_layer.extent.cols = *width;
 
-    if (tile_layer.col_count != map.col_count) {
+    if (tile_layer.extent.cols != map.extent.cols) {
       spdlog::warn("XML tile layer width does not match map width, '{}' vs '{}'",
-                   tile_layer.col_count,
-                   map.col_count);
+                   tile_layer.extent.cols,
+                   map.extent.cols);
     }
   }
   else {
     spdlog::warn("XML tile layer has no width information, assuming map width...");
-    tile_layer.col_count = map.col_count;
+    tile_layer.extent.cols = map.extent.cols;
   }
 
   if (const auto height = as_uint(layer_node, "height")) {
-    tile_layer.row_count = *height;
+    tile_layer.extent.rows = *height;
 
-    if (tile_layer.row_count != map.row_count) {
+    if (tile_layer.extent.rows != map.extent.rows) {
       spdlog::warn("XML tile layer height does not match map height, '{}' vs '{}'",
-                   tile_layer.row_count,
-                   map.row_count);
+                   tile_layer.extent.rows,
+                   map.extent.rows);
     }
   }
   else {
     spdlog::warn("XML tile layer has no height information, assuming map height...");
-    tile_layer.row_count = map.row_count;
+    tile_layer.extent.rows = map.extent.rows;
   }
 
   if (auto tiles = parse_tile_data(layer_node, map)) {

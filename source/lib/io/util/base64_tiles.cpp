@@ -40,13 +40,12 @@ namespace {
 static_assert(std::same_as<TileID, int32>);
 
 [[nodiscard]] auto convert_tile_matrix_to_sequence(const TileMatrix& matrix,
-                                                   const usize rows,
-                                                   const usize columns) -> ByteStream
+                                                   const TileExtent extent) -> ByteStream
 {
   ByteStream seq;
-  seq.reserve(rows * columns * sizeof(TileID));
+  seq.reserve(extent.rows * extent.cols * sizeof(TileID));
 
-  invoke_mn(rows, columns, [&](const usize row, const usize col) {
+  invoke_mn(extent.rows, extent.cols, [&](const usize row, const usize col) {
     // Always store tile identifiers as little endian values
     const auto tile_id = to_little_endian(matrix[row][col]);
     each_byte(tile_id, [&](const uint8 byte) { seq.push_back(byte); });
@@ -55,10 +54,9 @@ static_assert(std::same_as<TileID, int32>);
   return seq;
 }
 
-[[nodiscard]] auto restore_tiles(const auto& data, const usize rows, const usize columns)
-    -> TileMatrix
+[[nodiscard]] auto restore_tiles(const auto& data, const TileExtent extent) -> TileMatrix
 {
-  auto matrix = make_tile_matrix(rows, columns);
+  auto matrix = make_tile_matrix(extent);
 
   const auto count = data.size() / sizeof(int32);
   for (usize i = 0; i < count; ++i) {
@@ -71,14 +69,14 @@ static_assert(std::same_as<TileID, int32>);
       tile = byteswap(tile);
     }
 
-    const auto [row, col] = to_matrix_coords(i, columns);
+    const auto [row, col] = to_matrix_coords(i, extent.cols);
     matrix[row][col] = tile;
   }
 
   return matrix;
 }
 
-[[nodiscard]] auto encode(const ByteStream& stream) -> String
+[[nodiscard]] auto encode_bytes(const ByteStream& stream) -> String
 {
   return Base64::encode(stream.data(), stream.size());
 }
@@ -86,50 +84,48 @@ static_assert(std::same_as<TileID, int32>);
 }  // namespace
 
 auto base64_encode_tiles(const TileMatrix& tiles,
-                         const usize rows,
-                         const usize columns,
+                         const TileExtent extent,
                          const TileCompression compression) -> String
 {
-  const auto sequence = convert_tile_matrix_to_sequence(tiles, rows, columns);
+  const auto sequence = convert_tile_matrix_to_sequence(tiles, extent);
 
   switch (compression) {
     case TileCompression::None: {
-      return encode(sequence);
+      return encode_bytes(sequence);
     }
     case TileCompression::Zlib: {
       const auto compressed = zlib_compress(sequence).value();
-      return encode(compressed);
+      return encode_bytes(compressed);
     }
     case TileCompression::Zstd: {
       const auto compressed = zstd_compress(sequence).value();
-      return encode(compressed);
+      return encode_bytes(compressed);
     }
     default:
-      throw TactileError {"Invalid compression strategy!"};
+      throw TactileError {"Invalid compression strategy"};
   }
 }
 
 auto base64_decode_tiles(StringView tiles,
-                         const usize rows,
-                         const usize columns,
+                         const TileExtent extent,
                          const TileCompression compression) -> TileMatrix
 {
   const auto decoded = Base64::decode(tiles.data(), tiles.size());
 
   switch (compression) {
     case TileCompression::None:
-      return restore_tiles(decoded, rows, columns);
+      return restore_tiles(decoded, extent);
 
     case TileCompression::Zlib: {
       const auto decompressed = zlib_decompress(decoded.data(), decoded.size()).value();
-      return restore_tiles(decompressed, rows, columns);
+      return restore_tiles(decompressed, extent);
     }
     case TileCompression::Zstd: {
       const auto decompressed = zstd_decompress(decoded.data(), decoded.size()).value();
-      return restore_tiles(decompressed, rows, columns);
+      return restore_tiles(decompressed, extent);
     }
     default:
-      throw TactileError {"Invalid compression strategy!"};
+      throw TactileError {"Invalid compression strategy"};
   }
 }
 

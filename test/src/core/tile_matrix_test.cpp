@@ -55,7 +55,7 @@ TEST_SUITE("TileMatrix")
 
   TEST_CASE("make_tile_matrix")
   {
-    const auto matrix = make_tile_matrix(5, 7);
+    const auto matrix = make_tile_matrix(TileExtent {5, 7});
     REQUIRE(5u == matrix.capacity());
     REQUIRE(5u == matrix.size());
     REQUIRE(7u == matrix.at(0).capacity());

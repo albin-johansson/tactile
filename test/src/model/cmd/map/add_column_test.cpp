@@ -35,32 +35,29 @@ TEST_SUITE("cmd::AddColumn")
 
   TEST_CASE("redo/undo")
   {
-    const usize initial_rows = 5;
-    const usize initial_cols = 7;
+    const TileExtent initial_extent {5, 7};
 
     auto map_document = test::MapBuilder::build()  //
-                            .with_size(initial_rows, initial_cols)
+                            .with_size(initial_extent.rows, initial_extent.cols)
                             .result();
     auto map = map_document->get_map_ptr();
 
     cmd::AddColumn cmd {map};
 
     cmd.redo();
-    REQUIRE(initial_rows == map->row_count());
-    REQUIRE(initial_cols + 1 == map->column_count());
+    REQUIRE(initial_extent.rows == map->map_size().rows);
+    REQUIRE(initial_extent.cols + 1 == map->map_size().cols);
 
     cmd.undo();
-    REQUIRE(initial_rows == map->row_count());
-    REQUIRE(initial_cols == map->column_count());
+    REQUIRE(initial_extent == map->map_size());
   }
 
   TEST_CASE("merge_with")
   {
-    const usize initial_rows = 13;
-    const usize initial_cols = 5;
+    const TileExtent initial_extent {13, 5};
 
     auto map_document = test::MapBuilder::build()  //
-                            .with_size(initial_rows, initial_cols)
+                            .with_size(initial_extent.rows, initial_extent.cols)
                             .result();
     auto map = map_document->get_map_ptr();
 
@@ -72,12 +69,12 @@ TEST_SUITE("cmd::AddColumn")
     REQUIRE(a.merge_with(&c));
 
     a.redo();
-    REQUIRE(initial_rows == map->row_count());
-    REQUIRE(initial_cols + 3 == map->column_count());
+    REQUIRE(initial_extent.rows == map->map_size().rows);
+    REQUIRE(initial_extent.cols + 3 == map->map_size().cols);
 
     a.undo();
-    REQUIRE(initial_rows == map->row_count());
-    REQUIRE(initial_cols == map->column_count());
+    REQUIRE(initial_extent.rows == map->map_size().rows);
+    REQUIRE(initial_extent.cols == map->map_size().cols);
   }
 }
 

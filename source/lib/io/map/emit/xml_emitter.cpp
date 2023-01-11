@@ -157,10 +157,10 @@ void append_csv_tile_layer_data(XMLNode data_node,
   std::stringstream stream;
 
   const auto& prefs = get_preferences();
-  const auto tile_count = map.row_count * map.col_count;
+  const auto tile_count = map.extent.rows * map.extent.cols;
 
-  invoke_mn(map.row_count,
-            map.col_count,
+  invoke_mn(map.extent.rows,
+            map.extent.cols,
             [&, index = 0ull](const usize row, const usize col) mutable {
               if (prefs.fold_tile_data && index == 0) {
                 stream << '\n';
@@ -171,7 +171,7 @@ void append_csv_tile_layer_data(XMLNode data_node,
                 stream << ',';
               }
 
-              if (prefs.fold_tile_data && (index + 1) % tile_layer.col_count == 0) {
+              if (prefs.fold_tile_data && (index + 1) % tile_layer.extent.cols == 0) {
                 stream << '\n';
               }
 
@@ -205,8 +205,7 @@ void append_base64_tile_layer_data(XMLNode data_node,
   }
 
   const auto tile_data = base64_encode_tiles(tile_layer.tiles,
-                                             tile_layer.row_count,
-                                             tile_layer.col_count,
+                                             tile_layer.extent,
                                              map.tile_format.compression);
   data_node.text().set(tile_data.c_str());
 }
@@ -218,8 +217,8 @@ void append_tile_layer(XMLNode root, const ir::MapData& map, const ir::LayerData
   auto node = root.append_child("layer");
   append_common_layer_attributes(node, layer);
 
-  node.append_attribute("width").set_value(map.col_count);
-  node.append_attribute("height").set_value(map.row_count);
+  node.append_attribute("width").set_value(map.extent.cols);
+  node.append_attribute("height").set_value(map.extent.rows);
 
   append_properties(node, layer.context);
 
@@ -399,8 +398,8 @@ void append_root(pugi::xml_document& document, const EmitInfo& info)
   root.append_attribute("tilewidth").set_value(map.tile_size.x);
   root.append_attribute("tileheight").set_value(map.tile_size.y);
 
-  root.append_attribute("width").set_value(map.col_count);
-  root.append_attribute("height").set_value(map.row_count);
+  root.append_attribute("width").set_value(map.extent.cols);
+  root.append_attribute("height").set_value(map.extent.rows);
 
   root.append_attribute("nextlayerid").set_value(map.next_layer_id);
   root.append_attribute("nextobjectid").set_value(map.next_object_id);

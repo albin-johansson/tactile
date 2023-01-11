@@ -34,6 +34,7 @@
 #include "core/layer/layer_type.hpp"
 #include "core/layer/tile_format.hpp"
 #include "core/map.hpp"
+#include "core/tile/tile_extent.hpp"
 #include "core/viewport.hpp"
 #include "model/document/document.hpp"
 #include "model/document/document_delegate.hpp"
@@ -45,7 +46,7 @@ namespace tactile {
 /// Represents a loaded map.
 class MapDocument final : public Document {
  public:
-  MapDocument(const Int2& tile_size, usize rows, usize columns);
+  MapDocument(const Int2& tile_size, TileExtent extent);
 
   void update() override;
 
@@ -57,7 +58,7 @@ class MapDocument final : public Document {
 
   void remove_column();
 
-  void resize(usize rows, usize cols);
+  void resize(TileExtent extent);
 
   void fix_tiles();
 

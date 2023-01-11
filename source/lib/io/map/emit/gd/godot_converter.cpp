@@ -258,10 +258,10 @@ void add_tile_layer(const ir::MapData& map,
 
   auto& gd_tile_layer = gd_layer.value.emplace<GdTileLayer>();
   gd_tile_layer.cell_size = map.tile_size;
-  gd_tile_layer.data.reserve(3 * map.row_count * map.col_count);
+  gd_tile_layer.data.reserve(3 * map.extent.rows * map.extent.cols);
 
-  const auto rows = tile_layer.row_count;
-  const auto cols = tile_layer.col_count;
+  const auto rows = tile_layer.extent.rows;
+  const auto cols = tile_layer.extent.cols;
   invoke_mn(rows, cols, [&](const usize row, const usize col) {
     const auto tile_id = tile_layer.tiles[row][col];
     if (tile_id != empty_tile) {

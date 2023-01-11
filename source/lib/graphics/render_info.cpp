@@ -57,8 +57,7 @@ namespace {
 
 [[nodiscard]] auto get_render_info(const Viewport& viewport,
                                    const ImVec2& logical_tile_size,
-                                   const int32 rows,
-                                   const int32 columns) -> RenderInfo
+                                   const TileExtent extent) -> RenderInfo
 {
   RenderInfo info;
 
@@ -76,8 +75,8 @@ namespace {
   info.tiles_in_viewport_x = static_cast<int32>(tiles_in_viewport.x) + 1;
   info.tiles_in_viewport_y = static_cast<int32>(tiles_in_viewport.y) + 1;
 
-  info.row_count = static_cast<float>(rows);
-  info.col_count = static_cast<float>(columns);
+  info.row_count = static_cast<float>(extent.rows);
+  info.col_count = static_cast<float>(extent.cols);
 
   info.contents_size = ImVec2 {info.col_count, info.row_count} * info.grid_size;
 
@@ -95,18 +94,14 @@ namespace {
 
 auto get_render_info(const Viewport& viewport, const Map& map) -> RenderInfo
 {
-  return get_render_info(viewport,
-                         from_vec(map.tile_size()),
-                         static_cast<int32>(map.row_count()),
-                         static_cast<int32>(map.column_count()));
+  return get_render_info(viewport, from_vec(map.tile_size()), map.map_size());
 }
 
 auto get_render_info(const Viewport& viewport, const Tileset& tileset) -> RenderInfo
 {
-  return get_render_info(viewport,
-                         from_vec(tileset.tile_size()),
-                         tileset.row_count(),
-                         tileset.column_count());
+  const TileExtent extent {static_cast<usize>(tileset.row_count()),
+                           static_cast<usize>(tileset.column_count())};
+  return get_render_info(viewport, from_vec(tileset.tile_size()), extent);
 }
 
 }  // namespace tactile::ui

@@ -44,8 +44,10 @@ void RemoveRow::undo()
 
 void RemoveRow::redo()
 {
-  const auto begin = TilePos::from(mMap->row_count() - mRows - 1u, 0u);
-  const auto end = TilePos::from(mMap->row_count(), mMap->column_count());
+  const auto map_extent = mMap->map_size();
+
+  const auto begin = TilePos::from(map_extent.rows - mRows - 1u, 0u);
+  const auto end = TilePos::from(map_extent.rows, map_extent.cols);
 
   mCache.clear();
   mCache.save_tiles(*mMap, begin, end);

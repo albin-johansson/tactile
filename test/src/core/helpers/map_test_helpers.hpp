@@ -19,8 +19,8 @@
 
 #pragma once
 
+#include "common/numeric.hpp"
 #include "core/layer/tile_layer.hpp"
-#include "core/vocabulary.hpp"
 
 namespace tactile::test {
 

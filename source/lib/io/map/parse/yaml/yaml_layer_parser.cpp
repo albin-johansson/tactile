@@ -39,16 +39,15 @@ namespace {
                                usize index) -> Expected<ir::LayerData, ParseError>;
 
 [[nodiscard]] auto parse_plain_tile_layer_data(const String& tile_data,
-                                               const usize rows,
-                                               const usize columns)
+                                               const TileExtent extent)
     -> Expected<TileMatrix, ParseError>
 {
-  auto tiles = make_tile_matrix(rows, columns);
+  auto tiles = make_tile_matrix(extent);
 
   usize index = 0;
   for (const auto& token: split(tile_data, ' ')) {
     if (const auto id = parse_i32(token)) {
-      const auto [row, col] = to_matrix_coords(index, columns);
+      const auto [row, col] = to_matrix_coords(index, extent.cols);
       tiles[row][col] = *id;
       ++index;
     }
@@ -62,13 +61,11 @@ namespace {
 
 [[nodiscard]] auto parse_tile_layer(const YAML::Node& node,
                                     const ir::MapData& map,
-                                    const usize rows,
-                                    const usize columns)
+                                    const TileExtent extent)
     -> Expected<ir::TileLayerData, ParseError>
 {
   ir::TileLayerData tile_layer;
-  tile_layer.row_count = rows;
-  tile_layer.col_count = columns;
+  tile_layer.extent = extent;
 
   String str_data;
   if (!read_attribute(node, "data", str_data)) {
@@ -77,7 +74,7 @@ namespace {
 
   if (map.tile_format.encoding == TileEncoding::Plain) {
     std::replace(str_data.begin(), str_data.end(), '\n', ' ');
-    if (auto matrix = parse_plain_tile_layer_data(str_data, rows, columns)) {
+    if (auto matrix = parse_plain_tile_layer_data(str_data, extent)) {
       tile_layer.tiles = std::move(*matrix);
     }
     else {
@@ -85,8 +82,7 @@ namespace {
     }
   }
   else if (map.tile_format.encoding == TileEncoding::Base64) {
-    tile_layer.tiles =
-        base64_decode_tiles(str_data, rows, columns, map.tile_format.compression);
+    tile_layer.tiles = base64_decode_tiles(str_data, extent, map.tile_format.compression);
   }
   else {
     return error(ParseError::UnsupportedTileLayerEncoding);
@@ -162,7 +158,7 @@ namespace {
 
   if (type == "tile-layer") {
     layer.type = LayerType::TileLayer;
-    if (auto tile_layer = parse_tile_layer(node, map, map.row_count, map.col_count)) {
+    if (auto tile_layer = parse_tile_layer(node, map, map.extent)) {
       layer.data.emplace<ir::TileLayerData>(std::move(*tile_layer));
     }
     else {

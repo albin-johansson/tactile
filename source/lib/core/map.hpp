@@ -29,6 +29,7 @@
 #include "common/type/uuid.hpp"
 #include "core/context/context.hpp"
 #include "core/layer/layer_type.hpp"
+#include "core/tile/tile_extent.hpp"
 #include "core/tile/tile_pos.hpp"
 
 namespace tactile {
@@ -66,7 +67,7 @@ class Map final : public Context {
   /// Creates an empty map.
   Map();
 
-  ~Map() noexcept;
+  ~Map() noexcept override;
 
   void accept(ContextVisitor& visitor) const override;
 
@@ -86,7 +87,7 @@ class Map final : public Context {
 
   /// Changes the size of all tile layers.
   /// The dimensions must be larger than zero.
-  void resize(usize rows, usize columns);
+  void resize(TileExtent extent);
 
   /// Fixes invalid tile identifiers in all tile layers.
   auto fix_tiles() -> FixTilesResult;
@@ -140,8 +141,7 @@ class Map final : public Context {
   [[nodiscard]] auto next_object_layer_suffix() const -> int32;
   [[nodiscard]] auto next_group_layer_suffix() const -> int32;
 
-  [[nodiscard]] auto row_count() const -> usize;
-  [[nodiscard]] auto column_count() const -> usize;
+  [[nodiscard]] auto map_size() const -> TileExtent;
 
   [[nodiscard]] auto tile_size() const -> const Int2&;
 

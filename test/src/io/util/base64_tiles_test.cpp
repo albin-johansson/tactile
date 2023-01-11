@@ -27,10 +27,11 @@ TEST_SUITE("Base64 tiles")
 {
   TEST_CASE("Encode/decode roundtrip")
   {
+    const TileExtent extent {3, 3};
     const TileMatrix source {{1000, 2000, 3000}, {4000, 5000, 6000}, {7000, 8000, 9000}};
 
-    const auto encoded = io::base64_encode_tiles(source, 3, 3, TileCompression::Zlib);
-    const auto decoded = io::base64_decode_tiles(encoded, 3, 3, TileCompression::Zlib);
+    const auto encoded = io::base64_encode_tiles(source, extent, TileCompression::Zlib);
+    const auto decoded = io::base64_decode_tiles(encoded, extent, TileCompression::Zlib);
 
     REQUIRE(source == decoded);
   }

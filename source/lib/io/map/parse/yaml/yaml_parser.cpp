@@ -98,11 +98,11 @@ namespace {
     return ParseError::CouldNotReadFile;
   }
 
-  if (!read_attribute(node, "row-count", map.row_count)) {
+  if (!read_attribute(node, "row-count", map.extent.rows)) {
     return ParseError::NoMapHeight;
   }
 
-  if (!read_attribute(node, "column-count", map.col_count)) {
+  if (!read_attribute(node, "column-count", map.extent.cols)) {
     return ParseError::NoMapWidth;
   }
 

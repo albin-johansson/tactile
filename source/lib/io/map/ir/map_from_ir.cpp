@@ -131,10 +131,10 @@ auto restore_layer(MapDocument& document,
       auto& layer = root.get_tile_layer(layer_id);
       const auto& tile_data = layer_data.as_tile_layer();
 
-      invoke_mn(tile_data.row_count,
-                tile_data.col_count,
-                [&](const usize r, const usize c) {
-                  layer.set_tile(TilePos::from(r, c), tile_data.tiles[r][c]);
+      invoke_mn(tile_data.extent.rows,
+                tile_data.extent.cols,
+                [&](const usize row, const usize col) {
+                  layer.set_tile(TilePos::from(row, col), tile_data.tiles[row][col]);
                 });
 
       break;
@@ -300,35 +300,35 @@ void map_from_ir(const ParseResult& result, DocumentModel& model)
 {
   const auto& map_data = result.data();
 
-  const auto map_id = model.create_map_document(map_data.tile_size,
-                                                map_data.row_count,
-                                                map_data.col_count);
+  const auto map_id = model.create_map_document(map_data.tile_size, map_data.extent);
   model.select_document(map_id);
 
-  auto components = std::make_shared<ComponentIndex>();
+  auto component_index = std::make_shared<ComponentIndex>();
 
-  auto document = model.get_map_document_ptr(map_id);
-  document->set_component_index(components);
+  auto map_document = model.get_map_document_ptr(map_id);
+  map_document->set_component_index(component_index);
 
-  auto& map = document->get_map();
+  auto& map = map_document->get_map();
 
   const auto path = fs::absolute(result.path());
-  document->set_path(path);
-  document->set_name(path.filename().string());
+  map_document->set_path(path);
+  map_document->set_name(path.filename().string());
 
   map.set_tile_size(map_data.tile_size);
   map.set_next_layer_id(map_data.next_layer_id);
   map.set_next_object_id(map_data.next_object_id);
-  map.resize(map_data.row_count, map_data.col_count);
+  map.resize(map_data.extent);
 
   restore_tile_format(map.tile_format(), map_data.tile_format);
-  restore_component_definitions(*document, map_data);
-  restore_tilesets(model, document->get_component_index_ptr(), map_data);
-  restore_layers(*document, map_data);
+  restore_component_definitions(*map_document, map_data);
+  restore_tilesets(model, map_document->get_component_index_ptr(), map_data);
+  restore_layers(*map_document, map_data);
 
-  restore_context_no_register(*document, document->get_map_ptr(), map_data.context);
+  restore_context_no_register(*map_document,
+                              map_document->get_map_ptr(),
+                              map_data.context);
 
-  document->get_history().clear();
+  map_document->get_history().clear();
 }
 
 }  // namespace tactile::io

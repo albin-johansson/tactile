@@ -76,8 +76,8 @@ TEST_SUITE("Map")
 
     REQUIRE("Map" == map.get_ctx().name());
 
-    REQUIRE(5u == map.row_count());
-    REQUIRE(5u == map.column_count());
+    REQUIRE(5u == map.map_size().rows);
+    REQUIRE(5u == map.map_size().cols);
 
     REQUIRE(0u == root.layer_count());
     REQUIRE(!map.active_layer_id().has_value());
@@ -98,8 +98,8 @@ TEST_SUITE("Map")
     auto& root = map.invisible_root();
 
     map.add_row();
-    REQUIRE(6u == map.row_count());
-    REQUIRE(5u == map.column_count());
+    REQUIRE(6u == map.map_size().rows);
+    REQUIRE(5u == map.map_size().cols);
 
     const auto id = map.add_tile_layer();
     const auto& layer = root.get_tile_layer(id);
@@ -117,8 +117,8 @@ TEST_SUITE("Map")
     const auto& layer = root.get_tile_layer(id);
 
     map.add_column();
-    REQUIRE(5u == map.row_count());
-    REQUIRE(6u == map.column_count());
+    REQUIRE(5u == map.map_size().rows);
+    REQUIRE(6u == map.map_size().cols);
 
     REQUIRE(5u == layer.row_count());
     REQUIRE(6u == layer.column_count());
@@ -129,15 +129,15 @@ TEST_SUITE("Map")
     Map map;
     map.remove_row();
 
-    REQUIRE(4u == map.row_count());
-    REQUIRE(5u == map.column_count());
+    REQUIRE(4u == map.map_size().rows);
+    REQUIRE(5u == map.map_size().cols);
 
     map.remove_row();
     map.remove_row();
     map.remove_row();
 
-    REQUIRE(1u == map.row_count());
-    REQUIRE(5u == map.column_count());
+    REQUIRE(1u == map.map_size().rows);
+    REQUIRE(5u == map.map_size().cols);
 
     REQUIRE_THROWS_AS(map.remove_row(), TactileError);
   }
@@ -147,15 +147,15 @@ TEST_SUITE("Map")
     Map map;
     map.remove_column();
 
-    REQUIRE(5u == map.row_count());
-    REQUIRE(4u == map.column_count());
+    REQUIRE(5u == map.map_size().rows);
+    REQUIRE(4u == map.map_size().cols);
 
     map.remove_column();
     map.remove_column();
     map.remove_column();
 
-    REQUIRE(5u == map.row_count());
-    REQUIRE(1u == map.column_count());
+    REQUIRE(5u == map.map_size().rows);
+    REQUIRE(1u == map.map_size().cols);
 
     REQUIRE_THROWS_AS(map.remove_column(), TactileError);
   }
@@ -164,26 +164,26 @@ TEST_SUITE("Map")
   {
     MapLayerPreset preset;
 
-    preset.map.resize(8, 3);
+    preset.map.resize(TileExtent {8, 3});
 
-    REQUIRE(8u == preset.map.row_count());
-    REQUIRE(3u == preset.map.column_count());
+    REQUIRE(8u == preset.map.map_size().rows);
+    REQUIRE(3u == preset.map.map_size().cols);
 
     auto& root = preset.map.invisible_root();
     auto& layer = root.get_tile_layer(preset.f);
     REQUIRE(8u == layer.row_count());
     REQUIRE(3u == layer.column_count());
 
-    preset.map.resize(1, 1);
+    preset.map.resize(TileExtent {1, 1});
 
-    REQUIRE(1u == preset.map.row_count());
-    REQUIRE(1u == preset.map.column_count());
+    REQUIRE(1u == preset.map.map_size().rows);
+    REQUIRE(1u == preset.map.map_size().cols);
 
     REQUIRE(1u == layer.row_count());
     REQUIRE(1u == layer.column_count());
 
-    REQUIRE_THROWS_AS(preset.map.resize(0, 1), TactileError);
-    REQUIRE_THROWS_AS(preset.map.resize(1, 0), TactileError);
+    REQUIRE_THROWS_AS(preset.map.resize(TileExtent {0, 1}), TactileError);
+    REQUIRE_THROWS_AS(preset.map.resize(TileExtent {1, 0}), TactileError);
   }
 
   TEST_CASE("fix_tiles")
@@ -242,7 +242,7 @@ TEST_SUITE("Map")
   TEST_CASE("is_valid_position")
   {
     const Map map;
-    const auto end = TilePos::from(map.row_count(), map.column_count());
+    const auto end = TilePos::from(map.map_size().rows, map.map_size().cols);
 
     REQUIRE(!map.is_valid_position({-1, 0}));
     REQUIRE(!map.is_valid_position({0, -1}));
@@ -298,8 +298,8 @@ TEST_SUITE("Map")
     REQUIRE(nullptr == root.find_group_layer(id));
     REQUIRE(1u == root.layer_count());
 
-    REQUIRE(map.row_count() == layer->row_count());
-    REQUIRE(map.column_count() == layer->column_count());
+    REQUIRE(map.map_size().rows == layer->row_count());
+    REQUIRE(map.map_size().cols == layer->column_count());
   }
 
   TEST_CASE("add_object_layer")
