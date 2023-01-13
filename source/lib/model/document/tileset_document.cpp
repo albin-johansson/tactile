@@ -52,21 +52,6 @@ void TilesetDocument::rename_tileset(String name)
   get_history().push<cmd::RenameTileset>(mTileset, std::move(name));
 }
 
-void TilesetDocument::set_component_index(Shared<ComponentIndex> index)
-{
-  mDelegate.set_component_index(std::move(index));
-}
-
-void TilesetDocument::set_name(String name)
-{
-  mTileset->get_ctx().set_name(std::move(name));
-}
-
-void TilesetDocument::set_path(Path path)
-{
-  mDelegate.set_path(std::move(path));
-}
-
 void TilesetDocument::delete_animation(const TileIndex tile_index)
 {
   get_history().push<cmd::DeleteAnimation>(this, tile_index);
@@ -113,6 +98,21 @@ void TilesetDocument::set_animation_frame_duration(const TileIndex tile_index,
 void TilesetDocument::rename_tile(const TileIndex tile_index, String name)
 {
   get_history().push<cmd::RenameTile>(this, tile_index, std::move(name));
+}
+
+void TilesetDocument::set_component_index(Shared<ComponentIndex> index)
+{
+  mDelegate.set_component_index(std::move(index));
+}
+
+void TilesetDocument::set_name(String name)
+{
+  mTileset->get_ctx().set_name(std::move(name));
+}
+
+void TilesetDocument::set_path(Path path)
+{
+  mDelegate.set_path(std::move(path));
 }
 
 auto TilesetDocument::has_path() const -> bool

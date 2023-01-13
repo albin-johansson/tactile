@@ -43,31 +43,39 @@ class TilesetDocument final : public Document {
 
   void update() override;
 
+  /// Executes a command that renames the tileset.
   void rename_tileset(String name);
+
+  /// Executes a command that removes a tile animation in the tileset.
+  void delete_animation(TileIndex tile_index);
+
+  /// Executes a command that adds a frame to an animation in the tileset.
+  void add_animation_frame(TileIndex animated_tile_index,
+                           TileIndex frame_tile_index,
+                           ms_t frame_duration);
+
+  /// Executes a command that removes an animation frame in the tileset.
+  void remove_animation_frame(TileIndex tile_index, usize frame_index);
+
+  /// Executes a command that shifts an animation frame forwards in the tileset.
+  void move_animation_frame_forwards(TileIndex tile_index, usize frame_index);
+
+  /// Executes a command that shifts an animation frame backwards in the tileset.
+  void move_animation_frame_backwards(TileIndex tile_index, usize frame_index);
+
+  /// Executes a command that sets the duration of an animation frame in the tileset.
+  void set_animation_frame_duration(TileIndex tile_index,
+                                    usize frame_index,
+                                    ms_t frame_duration);
+
+  /// Executes a command that renames a tile in the tileset.
+  void rename_tile(TileIndex tile_index, String name);
 
   void set_component_index(Shared<ComponentIndex> index) override;
 
   void set_name(String name) override;
 
   void set_path(Path path) override;
-
-  void delete_animation(TileIndex tile_index);
-
-  void add_animation_frame(TileIndex animated_tile_index,
-                           TileIndex frame_tile_index,
-                           ms_t frame_duration);
-
-  void remove_animation_frame(TileIndex tile_index, usize frame_index);
-
-  void move_animation_frame_forwards(TileIndex tile_index, usize frame_index);
-
-  void move_animation_frame_backwards(TileIndex tile_index, usize frame_index);
-
-  void set_animation_frame_duration(TileIndex tile_index,
-                                    usize frame_index,
-                                    ms_t frame_duration);
-
-  void rename_tile(TileIndex tile_index, String name);
 
   [[nodiscard]] auto has_path() const -> bool override;
 
