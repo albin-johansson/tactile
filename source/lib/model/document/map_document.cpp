@@ -200,7 +200,7 @@ auto MapDocument::get_object(const UUID& object_id) -> Shared<Object>
     return ptr;
   }
   else {
-    throw TactileError {"Did not find object!"};
+    throw TactileError {"UUID did not reference an object"};
   }
 }
 

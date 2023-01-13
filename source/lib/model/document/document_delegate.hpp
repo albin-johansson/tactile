@@ -32,7 +32,7 @@ namespace tactile {
 
 class DocumentDelegate final {
  public:
-  explicit DocumentDelegate(const UUID& rootContext);
+  explicit DocumentDelegate(const UUID& root_context);
 
   void set_component_index(Shared<ComponentIndex> index);
 
