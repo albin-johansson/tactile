@@ -56,13 +56,13 @@ void Document::remove_component_attribute(const UUID& component_id, String name)
 }
 
 void Document::rename_component_attribute(const UUID& component_id,
-                                          String current,
-                                          String updated)
+                                          String old_name,
+                                          String new_name)
 {
   get_history().push<cmd::RenameComponentAttr>(this,
                                                component_id,
-                                               std::move(current),
-                                               std::move(updated));
+                                               std::move(old_name),
+                                               std::move(new_name));
 }
 
 void Document::duplicate_component_attribute(const UUID& component_id, String name)

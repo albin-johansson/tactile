@@ -40,47 +40,65 @@ class Document {
  public:
   virtual ~Document() noexcept = default;
 
+  /// Executes a command that creates a new component definition.
   void define_component(String name);
 
+  /// Executes a command that removes a component definition.
   void undef_component(const UUID& component_id);
 
+  /// Executes a command that renames a component definition.
   void rename_component(const UUID& component_id, String name);
 
+  /// Executes a command that adds an attribute to a component definition.
   void add_component_attribute(const UUID& component_id, String name);
 
+  /// Executes a command that removes an attribute from a component definition.
   void remove_component_attribute(const UUID& component_id, String name);
 
+  /// Executes a command that renames an attribute in a component definition.
   void rename_component_attribute(const UUID& component_id,
-                                  String current,
-                                  String updated);
+                                  String old_name,
+                                  String new_name);
 
+  /// Executes a command that duplicates an attribute in a component definition.
   void duplicate_component_attribute(const UUID& component_id, String name);
 
+  /// Executes a command that sets the type of an attribute in a component definition.
   void set_component_attribute_type(const UUID& component_id,
                                     String name,
                                     AttributeType type);
 
+  /// Executes a command that updates an attribute in a component definition.
   void update_component(const UUID& component_id, String name, Attribute value);
 
+  /// Executes a command that attaches a component to a context.
   void attach_component(const UUID& context_id, const UUID& component_id);
 
+  /// Executes a command that detaches a component from a context.
   void detach_component(const UUID& context_id, const UUID& component_id);
 
+  /// Executes a command that updates an attribute in an attached component.
   void update_attached_component(const UUID& context_id,
                                  const UUID& component_id,
                                  String name,
                                  Attribute value);
 
+  /// Executes a command that resets all attributes in an attached component.
   void reset_attached_component(const UUID& context_id, const UUID& component_id);
 
+  /// Executes a command that adds a property to a context.
   void add_property(const UUID& context_id, String name, AttributeType type);
 
+  /// Executes a command that removes a property from a context.
   void remove_property(const UUID& context_id, String name);
 
+  /// Executes a command that renames a property in a context.
   void rename_property(const UUID& context_id, String current, String updated);
 
+  /// Executes a command that updates the value of a property in a context.
   void update_property(const UUID& context_id, String name, Attribute value);
 
+  /// Executes a command that changes the type of a property in a context.
   void change_property_type(const UUID& context_id, String name, AttributeType type);
 
   /// Indicates whether the document represents a map.
