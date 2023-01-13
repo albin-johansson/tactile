@@ -49,6 +49,9 @@ BreakBeforeBinaryOperators: None
 BreakBeforeTernaryOperators: true
 BreakBeforeConceptDeclarations: true
 
+RequiresClausePosition: OwnLine
+IndentRequiresClause: true
+
 BreakStringLiterals: true
 BreakInheritanceList: AfterColon
 BreakConstructorInitializers: BeforeColon
