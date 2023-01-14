@@ -48,12 +48,12 @@ TEST_SUITE("cmd::RemoveRow")
     cmd::RemoveRow cmd {map};
 
     cmd.redo();
-    REQUIRE(initial_rows - 1 == map->map_size().rows);
-    REQUIRE(initial_cols == map->map_size().cols);
+    REQUIRE(initial_rows - 1 == map->get_extent().rows);
+    REQUIRE(initial_cols == map->get_extent().cols);
 
     cmd.undo();
-    REQUIRE(initial_rows == map->map_size().rows);
-    REQUIRE(initial_cols == map->map_size().cols);
+    REQUIRE(initial_rows == map->get_extent().rows);
+    REQUIRE(initial_cols == map->get_extent().cols);
   }
 
   TEST_CASE("merge_with")
@@ -75,14 +75,15 @@ TEST_SUITE("cmd::RemoveRow")
     REQUIRE(a.merge_with(&b));
 
     a.redo();
-    REQUIRE(initial_rows - 2 == map->map_size().rows);
-    REQUIRE(initial_cols == map->map_size().cols);
+    REQUIRE(initial_rows - 2 == map->get_extent().rows);
+    REQUIRE(initial_cols == map->get_extent().cols);
 
     a.undo();
-    REQUIRE(initial_rows == map->map_size().rows);
-    REQUIRE(initial_cols == map->map_size().cols);
+    REQUIRE(initial_rows == map->get_extent().rows);
+    REQUIRE(initial_cols == map->get_extent().cols);
 
-    test::verify_all_tiles_matches(map->invisible_root().get_tile_layer(layer_id), 42);
+    test::verify_all_tiles_matches(map->get_invisible_root().get_tile_layer(layer_id),
+                                   42);
   }
 }
 

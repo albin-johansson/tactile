@@ -51,11 +51,11 @@ void ObjectSelectionTool::on_pressed(DocumentModel& model,
     auto& map = document.get_map();
     const auto& viewport = document.get_viewport();
 
-    const auto layer_id = map.active_layer_id().value();
-    auto& layer = map.invisible_root().get_object_layer(layer_id);
+    const auto layer_id = map.get_active_layer_id().value();
+    auto& layer = map.get_invisible_root().get_object_layer(layer_id);
 
-    const auto ratio = viewport.scaling_ratio(map.tile_size());
-    const auto object_id = layer.object_at(mouse.pos / ratio, map.tile_size());
+    const auto ratio = viewport.scaling_ratio(map.get_tile_size());
+    const auto object_id = layer.object_at(mouse.pos / ratio, map.get_tile_size());
 
     switch (mouse.button) {
       case cen::mouse_button::left: {
@@ -94,8 +94,8 @@ void ObjectSelectionTool::on_dragged(DocumentModel& model,
     auto& document = model.require_active_map_document();
     auto& map = document.get_map();
 
-    const auto layer_id = map.active_layer_id().value();
-    auto& layer = map.invisible_root().get_object_layer(layer_id);
+    const auto layer_id = map.get_active_layer_id().value();
+    auto& layer = map.get_invisible_root().get_object_layer(layer_id);
 
     if (const auto object_id = layer.active_object_id()) {
       auto& object = layer.get_object(*object_id);
@@ -103,7 +103,7 @@ void ObjectSelectionTool::on_dragged(DocumentModel& model,
       if (mouse.is_within_contents) {
         const auto& viewport = document.get_viewport();
 
-        const auto ratio = viewport.scaling_ratio(map.tile_size());
+        const auto ratio = viewport.scaling_ratio(map.get_tile_size());
         const auto delta = (mouse.pos - mDragInfo->last_mouse_pos) / ratio;
 
         object.set_pos(object.get_pos() + delta);
@@ -128,19 +128,19 @@ void ObjectSelectionTool::on_released(DocumentModel& model,
 
 auto ObjectSelectionTool::is_available(const DocumentModel& model) const -> bool
 {
-  const auto& document = model.require_active_map_document();
-  return document.get_map().is_active_layer(LayerType::ObjectLayer);
+  const auto& map_document = model.require_active_map_document();
+  return map_document.get_map().is_active_layer(LayerType::ObjectLayer);
 }
 
 void ObjectSelectionTool::maybe_emit_event(DocumentModel& model,
                                            entt::dispatcher& dispatcher)
 {
-  const auto& document = model.require_active_map_document();
-  const auto& map = document.get_map();
+  const auto& map_document = model.require_active_map_document();
+  const auto& map = map_document.get_map();
 
   if (mDragInfo) {
-    if (const auto layer_id = map.active_layer_id()) {
-      const auto& layer = map.invisible_root().get_object_layer(*layer_id);
+    if (const auto layer_id = map.get_active_layer_id()) {
+      const auto& layer = map.get_invisible_root().get_object_layer(*layer_id);
 
       if (const auto object_id = layer.active_object_id()) {
         const auto& object = layer.get_object(*object_id);

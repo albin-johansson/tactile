@@ -39,7 +39,7 @@ SetTileFormatCompression::SetTileFormatCompression(Shared<Map> map,
 
 void SetTileFormatCompression::undo()
 {
-  auto& format = mMap->tile_format();
+  auto& format = mMap->get_tile_format();
   format.set_compression(mOldCompression.value());
 
   mOldCompression.reset();
@@ -47,7 +47,7 @@ void SetTileFormatCompression::undo()
 
 void SetTileFormatCompression::redo()
 {
-  auto& format = mMap->tile_format();
+  auto& format = mMap->get_tile_format();
 
   mOldCompression = format.compression();
   format.set_compression(mNewCompression);

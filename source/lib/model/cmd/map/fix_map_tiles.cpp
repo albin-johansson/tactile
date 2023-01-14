@@ -39,7 +39,7 @@ FixMapTiles::FixMapTiles(Shared<Map> map)
 
 void FixMapTiles::undo()
 {
-  auto& root = mMap->invisible_root();
+  auto& root = mMap->get_invisible_root();
   for (const auto& [layer_id, previous]: mResult) {
     auto& layer = root.get_tile_layer(layer_id);
 

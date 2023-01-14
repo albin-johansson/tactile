@@ -158,7 +158,7 @@ void convert_layers(const MapDocument& document,
 {
   usize index = 0;
 
-  const auto& root = document.get_map().invisible_root();
+  const auto& root = document.get_map().get_invisible_root();
   root.each([&](const Layer& layer) {
     // Only iterate top-level layers, and convert them recursively
     if (!layer.get_parent()) {
@@ -218,7 +218,7 @@ void convert_tilesets(const MapDocument& document,
                       ir::MapData& data)
 {
   const auto& map = document.get_map();
-  for (const auto& [tileset_id, tileset_ref]: map.tileset_bundle()) {
+  for (const auto& [tileset_id, tileset_ref]: map.get_tileset_bundle()) {
     const auto& tileset = tileset_ref.get_tileset();
 
     auto& tileset_data = data.tilesets.emplace_back();
@@ -264,12 +264,12 @@ auto map_to_ir(const MapDocument& document) -> ir::MapData
   const auto& map = document.get_map();
 
   ir::MapData data;
-  data.extent = map.map_size();
-  data.tile_size = map.tile_size();
+  data.extent = map.get_extent();
+  data.tile_size = map.get_tile_size();
   data.next_object_id = map.next_object_id();
   data.next_layer_id = map.next_layer_id();
 
-  convert_tile_format(map.tile_format(), data.tile_format);
+  convert_tile_format(map.get_tile_format(), data.tile_format);
 
   const auto* components = document.find_component_index();
 

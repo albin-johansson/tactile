@@ -48,14 +48,14 @@ TEST_SUITE("cmd::FixMapTiles")
                             .result();
     auto map = map_document->get_map_ptr();
 
-    const auto& tileset_ref = map->tileset_bundle().get_tileset_ref(tileset_id);
+    const auto& tileset_ref = map->get_tileset_bundle().get_tileset_ref(tileset_id);
 
     const auto underflow_tile = tileset_ref.get_first_tile() - 1;
     const auto overflow_tile = tileset_ref.get_last_tile() + 1;
     const auto first_tile = tileset_ref.get_first_tile();
     const auto last_tile = tileset_ref.get_last_tile();
 
-    auto& layer = map->invisible_root().get_tile_layer(layer_id);
+    auto& layer = map->get_invisible_root().get_tile_layer(layer_id);
     layer.set_tile({2, 4}, underflow_tile);
     layer.set_tile({0, 0}, overflow_tile);
     layer.set_tile({5, 7}, first_tile);

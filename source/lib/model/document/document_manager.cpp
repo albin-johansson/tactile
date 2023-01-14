@@ -85,7 +85,7 @@ auto DocumentManager::remove_map_document(const UUID& id) -> Shared<MapDocument>
       select_another_document();
     }
 
-    remove_unused_tilesets_from(map_document->get_map().tileset_bundle());
+    remove_unused_tilesets_from(map_document->get_map().get_tileset_bundle());
     TACTILE_ASSERT(!mActiveDocument || is_document(*mActiveDocument));
 
     return map_document;
@@ -261,7 +261,7 @@ auto DocumentManager::is_tileset_used(const UUID& id) const -> bool
 {
   return std::any_of(mMaps.begin(), mMaps.end(), [&](const auto& pair) {
     const auto& map = pair.second->get_map();
-    return map.tileset_bundle().has_tileset(id);
+    return map.get_tileset_bundle().has_tileset(id);
   });
 }
 

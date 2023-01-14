@@ -67,7 +67,7 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
     const auto& document = model.require_active_map_document();
     const auto& map = document.get_map();
 
-    if (map.tileset_bundle().empty()) {
+    if (map.get_tileset_bundle().empty()) {
       prepare_vertical_alignment_center(2);
       ui_centered_label(lang.misc.map_has_no_tilesets.c_str());
 

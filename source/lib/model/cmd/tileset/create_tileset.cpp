@@ -58,7 +58,7 @@ void CreateTileset::undo()
 
   auto document = mModel->get_map_document_ptr(mMapId);
 
-  auto& tilesets = document->get_map().tileset_bundle();
+  auto& tilesets = document->get_map().get_tileset_bundle();
   tilesets.detach_tileset(mTilesetId);
 
   document->get_contexts().erase(mTilesetId);
@@ -80,7 +80,7 @@ void CreateTileset::redo()
   auto& map = document->get_map();
 
   auto tileset = mTileset->get_tileset_ptr();
-  map.tileset_bundle().attach_tileset(tileset, false);
+  map.get_tileset_bundle().attach_tileset(tileset, false);
 
   document->get_contexts().add_context(tileset);
 }

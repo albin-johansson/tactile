@@ -107,7 +107,7 @@ void restore_object_layer(MapDocument& document,
 {
   auto& map = document.get_map();
 
-  auto& layer = map.invisible_root().get_object_layer(layer_id);
+  auto& layer = map.get_invisible_root().get_object_layer(layer_id);
   layer.reserve_objects(object_layer_data.objects.size());
 
   for (const auto& object_data: object_layer_data.objects) {
@@ -120,7 +120,7 @@ auto restore_layer(MapDocument& document,
                    const Maybe<UUID>& parent = nothing) -> UUID
 {
   auto& map = document.get_map();
-  auto& root = map.invisible_root();
+  auto& root = map.get_invisible_root();
   // TODO respect layerData.index?
 
   UUID layer_id;
@@ -254,7 +254,7 @@ void restore_tilesets(DocumentModel& model,
   }
 
   auto& map = model.require_active_map_document().get_map();
-  auto& tileset_bundle = map.tileset_bundle();
+  auto& tileset_bundle = map.get_tileset_bundle();
 
   // Determine the next available tile identifier
   TileID next_tile_id {1};
@@ -319,7 +319,7 @@ void map_from_ir(const ParseResult& result, DocumentModel& model)
   map.set_next_object_id(map_data.next_object_id);
   map.resize(map_data.extent);
 
-  restore_tile_format(map.tile_format(), map_data.tile_format);
+  restore_tile_format(map.get_tile_format(), map_data.tile_format);
   restore_component_definitions(*map_document, map_data);
   restore_tilesets(model, map_document->get_component_index_ptr(), map_data);
   restore_layers(*map_document, map_data);

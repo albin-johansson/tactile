@@ -38,7 +38,7 @@ SetTileFormatEncoding::SetTileFormatEncoding(Shared<Map> map, const TileEncoding
 
 void SetTileFormatEncoding::undo()
 {
-  auto& format = mMap->tile_format();
+  auto& format = mMap->get_tile_format();
 
   format.set_encoding(mOldEncoding.value());
   format.set_compression(mOldCompression.value());
@@ -49,7 +49,7 @@ void SetTileFormatEncoding::undo()
 
 void SetTileFormatEncoding::redo()
 {
-  auto& format = mMap->tile_format();
+  auto& format = mMap->get_tile_format();
 
   mOldEncoding = format.encoding();
   mOldCompression = format.compression();

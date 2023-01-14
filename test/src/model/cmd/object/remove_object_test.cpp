@@ -47,7 +47,7 @@ TEST_SUITE("cmd::RemoveObject")
     auto map = map_document->get_map_ptr();
     auto& context_manager = map_document->get_contexts();
 
-    auto& layer = map->invisible_root().get_object_layer(layer_id);
+    auto& layer = map->get_invisible_root().get_object_layer(layer_id);
     cmd::RemoveObject cmd {map_document.get(), layer_id, object->get_uuid()};
 
     cmd.redo();

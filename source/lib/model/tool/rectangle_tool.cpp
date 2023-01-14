@@ -76,8 +76,8 @@ void RectangleTool::on_released(DocumentModel& model,
 
 auto RectangleTool::is_available(const DocumentModel& model) const -> bool
 {
-  const auto& document = model.require_active_map_document();
-  const auto& map = document.get_map();
+  const auto& map_document = model.require_active_map_document();
+  const auto& map = map_document.get_map();
   return map.is_active_layer(LayerType::ObjectLayer);
 }
 
@@ -89,17 +89,17 @@ auto RectangleTool::get_stroke() const -> const Maybe<CurrentRectangleStroke>&
 void RectangleTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher)
 {
   if (mStroke) {
-    const auto& document = model.require_active_map_document();
-    const auto& map = document.get_map();
-    const auto& viewport = document.get_viewport();
+    const auto& map_document = model.require_active_map_document();
+    const auto& map = map_document.get_map();
+    const auto& viewport = map_document.get_viewport();
 
-    const auto ratio = viewport.scaling_ratio(map.tile_size());
+    const auto ratio = viewport.scaling_ratio(map.get_tile_size());
     const auto pos = (glm::min)(mStroke->start, mStroke->current) / ratio;
     const auto size = glm::abs(mStroke->current - mStroke->start) / ratio;
 
     if (size.x != 0 && size.y != 0) {
-      const auto layerId = map.active_layer_id().value();
-      dispatcher.enqueue<AddRectangleEvent>(layerId, pos, size);
+      const auto layer_id = map.get_active_layer_id().value();
+      dispatcher.enqueue<AddRectangleEvent>(layer_id, pos, size);
     }
 
     mStroke.reset();

@@ -80,11 +80,11 @@ void EllipseTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispa
   TACTILE_ASSERT(is_available(model));
 
   if (mStroke) {
-    const auto& document = model.require_active_map_document();
-    const auto& map = document.get_map();
-    const auto& viewport = document.get_viewport();
+    const auto& map_document = model.require_active_map_document();
+    const auto& map = map_document.get_map();
+    const auto& viewport = map_document.get_viewport();
 
-    const auto ratio = viewport.scaling_ratio(map.tile_size());
+    const auto ratio = viewport.scaling_ratio(map.get_tile_size());
 
     const auto radius = (mStroke->current - mStroke->start) / ratio;
     auto pos = mStroke->start / ratio;
@@ -98,9 +98,9 @@ void EllipseTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispa
     }
 
     if (radius.x != 0 && radius.y != 0) {
-      const auto layerId = map.active_layer_id().value();
+      const auto layer_id = map.get_active_layer_id().value();
       const auto diameter = glm::abs(radius) * 2.0f;
-      dispatcher.enqueue<AddEllipseEvent>(layerId, pos, diameter);
+      dispatcher.enqueue<AddEllipseEvent>(layer_id, pos, diameter);
     }
 
     mStroke.reset();
@@ -109,8 +109,8 @@ void EllipseTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispa
 
 auto EllipseTool::is_available(const DocumentModel& model) const -> bool
 {
-  const auto& document = model.require_active_map_document();
-  const auto& map = document.get_map();
+  const auto& map_document = model.require_active_map_document();
+  const auto& map = map_document.get_map();
   return map.is_active_layer(LayerType::ObjectLayer);
 }
 

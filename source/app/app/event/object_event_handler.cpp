@@ -41,7 +41,7 @@ void on_select_object(const SelectObjectEvent& event)
                 event.object_id);
 
   if (auto* map_document = get_model().active_map_document()) {
-    auto& root = map_document->get_map().invisible_root();
+    auto& root = map_document->get_map().get_invisible_root();
     auto& layer = root.get_object_layer(event.layer_id);
     layer.select_object(event.object_id);
   }

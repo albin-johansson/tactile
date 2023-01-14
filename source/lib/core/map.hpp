@@ -55,7 +55,6 @@ TACTILE_FWD_DECLARE_CLASS(TileFormat)
 /// compression along with plain text encoding.
 class Map final : public Context {
  public:
-  using VisitorFunc = Func<void(const Layer*)>;
   using TileLayerVisitorFunc = Func<void(TileLayer&)>;
 
   /// Maps previous invalid tile identifiers in a collection of layers.
@@ -126,8 +125,6 @@ class Map final : public Context {
   /// Indicates whether the active layer is of the specified type.
   [[nodiscard]] auto is_active_layer(LayerType type) const -> bool;
 
-  [[nodiscard]] auto active_layer_id() const -> Maybe<UUID>;
-
   /// Indicates whether the stamp tool randomizer mode is available.
   [[nodiscard]] auto is_stamp_randomizer_possible() const -> bool;
 
@@ -141,18 +138,20 @@ class Map final : public Context {
   [[nodiscard]] auto next_object_layer_suffix() const -> int32;
   [[nodiscard]] auto next_group_layer_suffix() const -> int32;
 
-  [[nodiscard]] auto map_size() const -> TileExtent;
+  [[nodiscard]] auto get_active_layer_id() const -> Maybe<UUID>;
 
-  [[nodiscard]] auto tile_size() const -> const Int2&;
+  [[nodiscard]] auto get_extent() const -> TileExtent;
 
-  [[nodiscard]] auto tile_format() -> TileFormat&;
-  [[nodiscard]] auto tile_format() const -> const TileFormat&;
+  [[nodiscard]] auto get_tile_size() const -> const Int2&;
 
-  [[nodiscard]] auto invisible_root() -> GroupLayer&;
-  [[nodiscard]] auto invisible_root() const -> const GroupLayer&;
+  [[nodiscard]] auto get_tile_format() -> TileFormat&;
+  [[nodiscard]] auto get_tile_format() const -> const TileFormat&;
 
-  [[nodiscard]] auto tileset_bundle() -> TilesetBundle&;
-  [[nodiscard]] auto tileset_bundle() const -> const TilesetBundle&;
+  [[nodiscard]] auto get_invisible_root() -> GroupLayer&;
+  [[nodiscard]] auto get_invisible_root() const -> const GroupLayer&;
+
+  [[nodiscard]] auto get_tileset_bundle() -> TilesetBundle&;
+  [[nodiscard]] auto get_tileset_bundle() const -> const TilesetBundle&;
 
   [[nodiscard]] auto get_ctx() -> ContextInfo& override;
   [[nodiscard]] auto get_ctx() const -> const ContextInfo& override;

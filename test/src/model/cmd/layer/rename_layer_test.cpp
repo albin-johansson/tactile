@@ -41,7 +41,7 @@ TEST_SUITE("cmd::RenameLayer")
     auto map_document = MapBuilder::build().with_tile_layer(&layer_id).result();
     auto map = map_document->get_map_ptr();
 
-    auto layer = map->invisible_root().find_shared_layer(layer_id);
+    auto layer = map->get_invisible_root().find_shared_layer(layer_id);
     layer->get_ctx().set_name("barfoo");
 
     cmd::RenameLayer cmd {map, layer_id, "foobar"};

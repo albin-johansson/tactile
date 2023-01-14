@@ -188,10 +188,10 @@ void update_viewport_context_menu(const Map& map, entt::dispatcher& dispatcher)
 
 void update_object_context_menu(const Map& map, entt::dispatcher& dispatcher)
 {
-  if (Popup popup {viewport_object_context_menu_id}; popup.is_open()) {
+  if (const Popup popup {viewport_object_context_menu_id}; popup.is_open()) {
     const auto& lang = get_current_language();
     const auto& layer =
-        map.invisible_root().get_object_layer(map.active_layer_id().value());
+        map.get_invisible_root().get_object_layer(map.get_active_layer_id().value());
 
     const auto object_id = layer.active_object_id().value();
     const auto& object = layer.get_object(object_id);
@@ -211,7 +211,7 @@ void update_object_context_menu(const Map& map, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (Disable disable; ImGui::MenuItem(lang.action.duplicate_object.c_str())) {
+    if (const Disable disable; ImGui::MenuItem(lang.action.duplicate_object.c_str())) {
       // dispatcher.enqueue<DuplicateObjectEvent>(objectId);
     }
 

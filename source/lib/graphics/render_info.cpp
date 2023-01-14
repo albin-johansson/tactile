@@ -94,7 +94,7 @@ namespace {
 
 auto get_render_info(const Viewport& viewport, const Map& map) -> RenderInfo
 {
-  return get_render_info(viewport, from_vec(map.tile_size()), map.map_size());
+  return get_render_info(viewport, from_vec(map.get_tile_size()), map.get_extent());
 }
 
 auto get_render_info(const Viewport& viewport, const Tileset& tileset) -> RenderInfo

@@ -39,22 +39,22 @@ void PointTool::on_pressed(DocumentModel& model,
 {
   if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
       is_available(model)) {
-    const auto& document = model.require_active_map_document();
-    const auto& map = document.get_map();
-    const auto& viewport = document.get_viewport();
+    const auto& map_document = model.require_active_map_document();
+    const auto& map = map_document.get_map();
+    const auto& viewport = map_document.get_viewport();
 
-    const auto ratio = viewport.scaling_ratio(map.tile_size());
+    const auto ratio = viewport.scaling_ratio(map.get_tile_size());
     const auto pos = mouse.pos / ratio;
 
-    const auto layerId = map.active_layer_id().value();
-    dispatcher.enqueue<AddPointEvent>(layerId, pos);
+    const auto layer_id = map.get_active_layer_id().value();
+    dispatcher.enqueue<AddPointEvent>(layer_id, pos);
   }
 }
 
 auto PointTool::is_available(const DocumentModel& model) const -> bool
 {
-  const auto& document = model.require_active_map_document();
-  const auto& map = document.get_map();
+  const auto& map_document = model.require_active_map_document();
+  const auto& map = map_document.get_map();
   return map.is_active_layer(LayerType::ObjectLayer);
 }
 

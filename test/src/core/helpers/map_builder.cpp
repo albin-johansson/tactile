@@ -59,7 +59,7 @@ auto MapBuilder::with_size(const usize rows, const usize columns) -> MapBuilder&
 auto MapBuilder::with_tile_layer(UUID* id, Maybe<TileID> initial_value) -> MapBuilder&
 {
   auto& map = mDocument->get_map();
-  auto& root = map.invisible_root();
+  auto& root = map.get_invisible_root();
 
   const auto layer_id = map.add_tile_layer();
   mDocument->get_contexts().add_context(root.find_shared_layer(layer_id));
@@ -70,8 +70,8 @@ auto MapBuilder::with_tile_layer(UUID* id, Maybe<TileID> initial_value) -> MapBu
 
   if (initial_value) {
     auto& layer = root.get_tile_layer(layer_id);
-    invoke_mn(map.map_size().rows,
-              map.map_size().cols,
+    invoke_mn(map.get_extent().rows,
+              map.get_extent().cols,
               [&](const usize row, const usize col) {
                 layer.set_tile(TilePos::from(row, col), *initial_value);
               });
@@ -85,7 +85,8 @@ auto MapBuilder::with_object_layer(UUID* id) -> MapBuilder&
   auto& map = mDocument->get_map();
 
   const auto layer_id = map.add_object_layer();
-  mDocument->get_contexts().add_context(map.invisible_root().find_shared_layer(layer_id));
+  mDocument->get_contexts().add_context(
+      map.get_invisible_root().find_shared_layer(layer_id));
 
   if (id) {
     *id = layer_id;
@@ -99,7 +100,7 @@ auto MapBuilder::with_object(const ObjectType type,
                              UUID* out_layer) -> MapBuilder&
 {
   auto& map = mDocument->get_map();
-  auto& root = map.invisible_root();
+  auto& root = map.get_invisible_root();
 
   if (!mDedicatedObjectLayer) {
     mDedicatedObjectLayer = map.add_object_layer();
@@ -139,7 +140,7 @@ auto MapBuilder::with_tileset(UUID* id) -> MapBuilder&
   mDocument->get_contexts().add_context(tileset);
 
   auto& map = mDocument->get_map();
-  map.tileset_bundle().attach_tileset(std::move(tileset), false);
+  map.get_tileset_bundle().attach_tileset(std::move(tileset), false);
 
   return *this;
 }

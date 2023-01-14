@@ -46,12 +46,12 @@ TEST_SUITE("cmd::AddRow")
     cmd::AddRow cmd {map};
 
     cmd.redo();
-    REQUIRE(initial_rows + 1 == map->map_size().rows);
-    REQUIRE(initial_cols == map->map_size().cols);
+    REQUIRE(initial_rows + 1 == map->get_extent().rows);
+    REQUIRE(initial_cols == map->get_extent().cols);
 
     cmd.undo();
-    REQUIRE(initial_rows == map->map_size().rows);
-    REQUIRE(initial_cols == map->map_size().cols);
+    REQUIRE(initial_rows == map->get_extent().rows);
+    REQUIRE(initial_cols == map->get_extent().cols);
   }
 
   TEST_CASE("merge_with")
@@ -70,12 +70,12 @@ TEST_SUITE("cmd::AddRow")
     REQUIRE(a.merge_with(&b));
 
     a.redo();
-    REQUIRE(initial_rows + 2 == map->map_size().rows);
-    REQUIRE(initial_cols == map->map_size().cols);
+    REQUIRE(initial_rows + 2 == map->get_extent().rows);
+    REQUIRE(initial_cols == map->get_extent().cols);
 
     a.undo();
-    REQUIRE(initial_rows == map->map_size().rows);
-    REQUIRE(initial_cols == map->map_size().cols);
+    REQUIRE(initial_rows == map->get_extent().rows);
+    REQUIRE(initial_cols == map->get_extent().cols);
   }
 }
 

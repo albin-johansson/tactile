@@ -122,7 +122,7 @@ auto RemoveRowShortcut::is_enabled(const DocumentModel& model) const -> bool
   if (model.has_active_document()) {
     const auto id = model.get_active_document_id().value();
     if (model.is_map(id)) {
-      return model.get_map_document(id).get_map().map_size().rows > 1;
+      return model.get_map_document(id).get_map().get_extent().rows > 1;
     }
   }
 
@@ -146,7 +146,7 @@ auto RemoveColumnShortcut::is_enabled(const DocumentModel& model) const -> bool
   if (model.has_active_document()) {
     const auto id = model.get_active_document_id().value();
     if (model.is_map(id)) {
-      return model.get_map_document(id).get_map().map_size().cols > 1;
+      return model.get_map_document(id).get_map().get_extent().cols > 1;
     }
   }
 

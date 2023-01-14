@@ -152,7 +152,7 @@ void on_offset_tileset_viewport(const OffsetTilesetViewportEvent& event)
   auto& model = get_model();
   if (auto* document = model.active_map_document()) {
     auto& tileset_ref =
-        document->get_map().tileset_bundle().get_tileset_ref(event.tileset_id);
+        document->get_map().get_tileset_bundle().get_tileset_ref(event.tileset_id);
     auto& viewport = tileset_ref.get_viewport();
     viewport.offset(event.delta);
   }
@@ -169,7 +169,7 @@ void on_update_tileset_viewport_limits(const UpdateTilesetViewportLimitsEvent& e
   auto& model = get_model();
   if (auto* document = model.active_map_document()) {
     auto& tileset_ref =
-        document->get_map().tileset_bundle().get_tileset_ref(event.tileset_id);
+        document->get_map().get_tileset_bundle().get_tileset_ref(event.tileset_id);
     auto& viewport = tileset_ref.get_viewport();
     viewport.set_limits({event.min_offset, event.max_offset});
   }

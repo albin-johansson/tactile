@@ -71,20 +71,20 @@ void prepare_position_and_pivot()
 
 void show_mouse_tile_labels(const Map& map, const ViewportCursorInfo& cursor)
 {
-  const auto layer_id = map.active_layer_id();
+  const auto layer_id = map.get_active_layer_id();
   if (!layer_id) {
     return;
   }
 
   const auto& lang = get_current_language();
 
-  if (const auto* layer = map.invisible_root().find_tile_layer(*layer_id)) {
+  if (const auto* layer = map.get_invisible_root().find_tile_layer(*layer_id)) {
     const auto tile_id = layer->tile_at(cursor.map_position);
 
     if (cursor.is_within_map && tile_id.has_value() && tile_id != empty_tile) {
       ImGui::Text("%s: %i", lang.misc.global_id.c_str(), *tile_id);
 
-      const auto& tilesets = map.tileset_bundle();
+      const auto& tilesets = map.get_tileset_bundle();
       if (tilesets.is_valid_tile(*tile_id)) {
         const auto tile_index = tilesets.to_tile_index(*tile_id);
         ImGui::Text("%s: %i", lang.misc.local_id.c_str(), tile_index);

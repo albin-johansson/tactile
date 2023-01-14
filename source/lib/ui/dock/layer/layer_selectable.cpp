@@ -80,7 +80,7 @@ void update_layer_popup(const Map& map, const Layer& layer, entt::dispatcher& di
       dispatcher.enqueue<SetLayerOpacityEvent>(layer.get_uuid(), opacity);
     }
 
-    const auto& root = map.invisible_root();
+    const auto& root = map.get_invisible_root();
 
     ImGui::Separator();
     if (ImGui::MenuItem(lang.action.move_layer_up.c_str(),
@@ -223,7 +223,7 @@ void layer_selectable(const MapDocument& document,
 
   const Scope scope {layer.get_uuid()};
 
-  const auto is_active_layer = map.active_layer_id() == layer.get_uuid();
+  const auto is_active_layer = map.get_active_layer_id() == layer.get_uuid();
   const auto flags =
       is_active_layer ? (base_node_flags | ImGuiTreeNodeFlags_Selected) : base_node_flags;
 

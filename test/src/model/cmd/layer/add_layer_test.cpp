@@ -38,7 +38,7 @@ TEST_SUITE("cmd::AddLayer")
   {
     auto map_document = MapBuilder::build().result();
     auto& map = map_document->get_map();
-    auto& root = map.invisible_root();
+    auto& root = map.get_invisible_root();
     auto& contexts = map_document->get_contexts();
 
     REQUIRE(1u == contexts.size());
@@ -49,15 +49,15 @@ TEST_SUITE("cmd::AddLayer")
     cmd.redo();
     REQUIRE(1u == root.layer_count());
     REQUIRE(2u == contexts.size());
-    REQUIRE(map.active_layer_id().has_value());
+    REQUIRE(map.get_active_layer_id().has_value());
 
-    const auto layer_id = map.active_layer_id().value();
+    const auto layer_id = map.get_active_layer_id().value();
     REQUIRE(contexts.contains(layer_id));
 
     cmd.undo();
     REQUIRE(0u == root.layer_count());
     REQUIRE(1u == contexts.size());
-    REQUIRE(!map.active_layer_id().has_value());
+    REQUIRE(!map.get_active_layer_id().has_value());
     REQUIRE(!contexts.contains(layer_id));
   }
 }

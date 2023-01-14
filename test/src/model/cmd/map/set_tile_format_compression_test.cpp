@@ -43,7 +43,7 @@ TEST_SUITE("cmd::SetTileFormatCompression")
     const auto old_compression = TileCompression::None;
     const auto new_compression = TileCompression::Zlib;
 
-    auto& format = map->tile_format();
+    auto& format = map->get_tile_format();
     format.set_encoding(encoding);
     format.set_compression(old_compression);
 

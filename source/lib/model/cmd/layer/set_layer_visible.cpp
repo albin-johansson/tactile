@@ -42,7 +42,7 @@ SetLayerVisible::SetLayerVisible(Shared<Map> map,
 
 void SetLayerVisible::undo()
 {
-  auto& layer = mMap->invisible_root().get_layer(mLayerId);
+  auto& layer = mMap->get_invisible_root().get_layer(mLayerId);
 
   layer.set_visible(mOldVisibility.value());
   mOldVisibility.reset();
@@ -50,7 +50,7 @@ void SetLayerVisible::undo()
 
 void SetLayerVisible::redo()
 {
-  auto& layer = mMap->invisible_root().get_layer(mLayerId);
+  auto& layer = mMap->get_invisible_root().get_layer(mLayerId);
 
   mOldVisibility = layer.is_visible();
   layer.set_visible(mNewVisibility);

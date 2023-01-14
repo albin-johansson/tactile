@@ -41,10 +41,10 @@ TEST_SUITE("cmd::SetZstdCompressionLevel")
     cmd::SetZstdCompressionLevel cmd {map, 16};
 
     cmd.redo();
-    REQUIRE(map->tile_format().zstd_compression_level() == 16);
+    REQUIRE(map->get_tile_format().zstd_compression_level() == 16);
 
     cmd.undo();
-    REQUIRE(map->tile_format().zstd_compression_level() == 3);
+    REQUIRE(map->get_tile_format().zstd_compression_level() == 3);
   }
 
   TEST_CASE("merge_with")
@@ -52,7 +52,7 @@ TEST_SUITE("cmd::SetZstdCompressionLevel")
     auto map_document = MapBuilder::build().result();
     auto map = map_document->get_map_ptr();
 
-    auto& format = map->tile_format();
+    auto& format = map->get_tile_format();
     format.set_zstd_compression_level(8);
 
     cmd::SetZstdCompressionLevel a {map, 5};

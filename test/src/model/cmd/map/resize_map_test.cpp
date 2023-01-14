@@ -46,10 +46,10 @@ TEST_SUITE("cmd::ResizeMap")
     cmd::ResizeMap cmd {map, new_extent};
 
     cmd.redo();
-    REQUIRE(new_extent == map->map_size());
+    REQUIRE(new_extent == map->get_extent());
 
     cmd.undo();
-    REQUIRE(old_extent == map->map_size());
+    REQUIRE(old_extent == map->get_extent());
   }
 }
 

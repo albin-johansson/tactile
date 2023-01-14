@@ -168,17 +168,17 @@ void show_native_map_properties(const Map& map, entt::dispatcher& dispatcher)
   native_read_only_row(lang.misc.type.c_str(), lang.misc.map.c_str());
   native_read_only_row(lang.misc.name.c_str(), map.get_ctx().name().c_str());
 
-  native_read_only_row(lang.misc.tile_width.c_str(), map.tile_size().x);
-  native_read_only_row(lang.misc.tile_height.c_str(), map.tile_size().y);
+  native_read_only_row(lang.misc.tile_width.c_str(), map.get_tile_size().x);
+  native_read_only_row(lang.misc.tile_height.c_str(), map.get_tile_size().y);
 
-  const auto map_extent = map.map_size();
+  const auto map_extent = map.get_extent();
   native_read_only_row(lang.misc.row_count.c_str(), map_extent.rows);
   native_read_only_row(lang.misc.column_count.c_str(), map_extent.cols);
 
   prepare_table_row(lang.misc.tile_encoding.c_str());
   ImGui::TableNextColumn();
 
-  const auto& format = map.tile_format();
+  const auto& format = map.get_tile_format();
 
   const auto* encoding = format.encoding() == TileEncoding::Plain
                              ? lang.misc.plain_encoding.c_str()

@@ -84,7 +84,7 @@ Map::~Map() noexcept = default;
 void Map::each_tile_layer(const TileLayerVisitorFunc& func)
 {
   TileLayerVisitor visitor {func};
-  invisible_root().each(visitor);
+  get_invisible_root().each(visitor);
 }
 
 void Map::add_row()
@@ -136,15 +136,15 @@ auto Map::fix_tiles() -> FixTilesResult
   each_tile_layer([&, this](TileLayer& layer) {
     HashMap<TilePos, TileID> previous;
 
-    const auto extent = map_size();
-    const auto& tset_bundle = tileset_bundle();
+    const auto extent = get_extent();
+    const auto& tileset_bundle = get_tileset_bundle();
 
     invoke_mn(extent.rows, extent.cols, [&](const usize row, const usize col) {
       const auto pos = TilePos::from(row, col);
       const auto tile_id = layer.tile_at(pos);
 
       if (tile_id.has_value() && tile_id != empty_tile &&
-          !tset_bundle.is_valid_tile(*tile_id)) {
+          !tileset_bundle.is_valid_tile(*tile_id)) {
         previous[pos] = *tile_id;
         layer.set_tile(pos, empty_tile);
       }
@@ -159,23 +159,24 @@ auto Map::fix_tiles() -> FixTilesResult
 void Map::add_layer(Shared<Layer> layer, const Maybe<UUID>& parent_id)
 {
   const auto layer_id = layer->get_uuid();
+  auto& root_layer = get_invisible_root();
 
   if (parent_id) {
-    invisible_root().add_layer(*parent_id, layer);
+    root_layer.add_layer(*parent_id, layer);
   }
   else {
-    invisible_root().add_layer(std::move(layer));
+    root_layer.add_layer(std::move(layer));
   }
 
   // Select the layer if was the first one to be added
-  if (invisible_root().layer_count() == 1) {
+  if (root_layer.layer_count() == 1) {
     mData->active_layer = layer_id;
   }
 }
 
 auto Map::add_tile_layer(const Maybe<UUID>& parent_id) -> UUID
 {
-  auto layer = std::make_shared<TileLayer>(map_size());
+  auto layer = std::make_shared<TileLayer>(get_extent());
 
   layer->set_meta_id(fetch_and_increment_next_layer_id());
   layer->get_ctx().set_name(fmt::format("Tile Layer {}", mData->tile_layer_suffix));
@@ -221,19 +222,19 @@ auto Map::remove_layer(const UUID& id) -> Shared<Layer>
     mData->active_layer.reset();
   }
 
-  return invisible_root().remove_layer(id);
+  return get_invisible_root().remove_layer(id);
 }
 
 auto Map::duplicate_layer(const UUID& id) -> Shared<Layer>
 {
-  auto layer = invisible_root().duplicate_layer(id);
-  layer->set_meta_id(fetch_and_increment_next_layer_id());
-  return layer;
+  auto new_layer = get_invisible_root().duplicate_layer(id);
+  new_layer->set_meta_id(fetch_and_increment_next_layer_id());
+  return new_layer;
 }
 
 void Map::select_layer(const UUID& id)
 {
-  if (invisible_root().find_layer(id)) {
+  if (get_invisible_root().find_layer(id)) {
     mData->active_layer = id;
   }
   else {
@@ -243,37 +244,12 @@ void Map::select_layer(const UUID& id)
 
 auto Map::is_active_layer(const LayerType type) const -> bool
 {
-  if (const auto id = active_layer_id()) {
-    return invisible_root().get_layer(*id).get_type() == type;
+  if (const auto layer_id = get_active_layer_id()) {
+    return get_invisible_root().get_layer(*layer_id).get_type() == type;
   }
   else {
     return false;
   }
-}
-
-auto Map::active_layer_id() const -> Maybe<UUID>
-{
-  return mData->active_layer;
-}
-
-auto Map::invisible_root() -> GroupLayer&
-{
-  return mData->root_layer;
-}
-
-auto Map::invisible_root() const -> const GroupLayer&
-{
-  return mData->root_layer;
-}
-
-auto Map::tileset_bundle() -> TilesetBundle&
-{
-  return mData->tilesets;
-}
-
-auto Map::tileset_bundle() const -> const TilesetBundle&
-{
-  return mData->tilesets;
 }
 
 void Map::set_tile_size(const Int2& size)
@@ -290,45 +266,20 @@ auto Map::is_valid_position(const TilePos& pos) const -> bool
 {
   return pos.row() >= 0 &&  //
          pos.col() >= 0 &&  //
-         std::cmp_less(pos.row(), map_size().rows) &&
-         std::cmp_less(pos.col(), map_size().cols);
-}
-
-auto Map::map_size() const -> TileExtent
-{
-  return mData->map_size;
-}
-
-auto Map::tile_size() const -> const Int2&
-{
-  return mData->tile_size;
+         std::cmp_less(pos.row(), get_extent().rows) &&
+         std::cmp_less(pos.col(), get_extent().cols);
 }
 
 auto Map::is_stamp_randomizer_possible() const -> bool
 {
-  const auto& tilesets = tileset_bundle();
-  if (const auto tileset_id = tilesets.get_active_tileset_id()) {
-    const auto& ref = tilesets.get_tileset_ref(*tileset_id);
-    return !ref.is_single_tile_selected();
+  const auto& tileset_bundle = get_tileset_bundle();
+  if (const auto tileset_id = tileset_bundle.get_active_tileset_id()) {
+    const auto& tileset_ref = tileset_bundle.get_tileset_ref(*tileset_id);
+    return !tileset_ref.is_single_tile_selected();
   }
   else {
     return false;
   }
-}
-
-auto Map::get_ctx() -> ContextInfo&
-{
-  return mData->context;
-}
-
-auto Map::get_ctx() const -> const ContextInfo&
-{
-  return mData->context;
-}
-
-auto Map::get_uuid() const -> const UUID&
-{
-  return get_ctx().get_uuid();
 }
 
 auto Map::fetch_and_increment_next_object_id() -> int32
@@ -376,14 +327,64 @@ auto Map::next_group_layer_suffix() const -> int32
   return mData->group_layer_suffix;
 }
 
-auto Map::tile_format() -> TileFormat&
+auto Map::get_active_layer_id() const -> Maybe<UUID>
+{
+  return mData->active_layer;
+}
+
+auto Map::get_extent() const -> TileExtent
+{
+  return mData->map_size;
+}
+
+auto Map::get_tile_size() const -> const Int2&
+{
+  return mData->tile_size;
+}
+
+auto Map::get_tile_format() -> TileFormat&
 {
   return mData->tile_format;
 }
 
-auto Map::tile_format() const -> const TileFormat&
+auto Map::get_tile_format() const -> const TileFormat&
 {
   return mData->tile_format;
+}
+
+auto Map::get_invisible_root() -> GroupLayer&
+{
+  return mData->root_layer;
+}
+
+auto Map::get_invisible_root() const -> const GroupLayer&
+{
+  return mData->root_layer;
+}
+
+auto Map::get_tileset_bundle() -> TilesetBundle&
+{
+  return mData->tilesets;
+}
+
+auto Map::get_tileset_bundle() const -> const TilesetBundle&
+{
+  return mData->tilesets;
+}
+
+auto Map::get_ctx() -> ContextInfo&
+{
+  return mData->context;
+}
+
+auto Map::get_ctx() const -> const ContextInfo&
+{
+  return mData->context;
+}
+
+auto Map::get_uuid() const -> const UUID&
+{
+  return get_ctx().get_uuid();
 }
 
 }  // namespace tactile

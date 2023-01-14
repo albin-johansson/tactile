@@ -115,10 +115,10 @@ void StampTool::update_sequence(DocumentModel& model, const TilePos& cursor)
   auto& map_document = model.require_active_map_document();
   auto& map = map_document.get_map();
 
-  const auto active_layer_id = map.active_layer_id().value();
-  auto& layer = map.invisible_root().get_tile_layer(active_layer_id);
+  const auto active_layer_id = map.get_active_layer_id().value();
+  auto& layer = map.get_invisible_root().get_tile_layer(active_layer_id);
 
-  const auto& tilesets = map.tileset_bundle();
+  const auto& tilesets = map.get_tileset_bundle();
   const auto tileset_id = tilesets.get_active_tileset_id().value();
   const auto& tileset_ref = tilesets.get_tileset_ref(tileset_id);
 
@@ -190,7 +190,7 @@ void StampTool::maybe_emit_event(const DocumentModel& model, entt::dispatcher& d
   if (!mPrevious.empty() && !mCurrent.empty()) {
     const auto& map_document = model.require_active_map_document();
     const auto& map = map_document.get_map();
-    const auto layer_id = map.active_layer_id().value();
+    const auto layer_id = map.get_active_layer_id().value();
 
     dispatcher.enqueue<StampSequenceEvent>(layer_id,
                                            std::move(mPrevious),
@@ -207,7 +207,7 @@ auto StampTool::is_usable(const DocumentModel& model) const -> bool
 {
   const auto& map_document = model.require_active_map_document();
   const auto& map = map_document.get_map();
-  const auto& tilesets = map.tileset_bundle();
+  const auto& tilesets = map.get_tileset_bundle();
 
   if (const auto tileset_id = tilesets.get_active_tileset_id()) {
     return map.is_active_layer(LayerType::TileLayer) &&

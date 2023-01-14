@@ -47,10 +47,10 @@ void ResizeMap::undo()
 
 void ResizeMap::redo()
 {
-  mOldExtent = mMap->map_size();
+  mOldExtent = mMap->get_extent();
 
   if (is_lossy_resize()) {
-    const auto extent = mMap->map_size();
+    const auto extent = mMap->get_extent();
 
     mCache.clear();
     mCache.save_tiles(

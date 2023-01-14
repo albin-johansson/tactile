@@ -34,7 +34,7 @@ RemoveLayer::RemoveLayer(MapDocument* document, const UUID& layer_id)
     throw TactileError {"Invalid null map document!"};
   }
 
-  mLayer = mDocument->get_map().invisible_root().find_shared_layer(layer_id);
+  mLayer = mDocument->get_map().get_invisible_root().find_shared_layer(layer_id);
 }
 
 void RemoveLayer::undo()
@@ -42,7 +42,7 @@ void RemoveLayer::undo()
   auto& map = mDocument->get_map();
 
   map.add_layer(mLayer, mLayer->get_parent());
-  map.invisible_root().set_layer_index(mLayer->get_uuid(), mIndex.value());
+  map.get_invisible_root().set_layer_index(mLayer->get_uuid(), mIndex.value());
 
   mDocument->get_contexts().add_context(mLayer);
   mIndex.reset();
@@ -53,7 +53,7 @@ void RemoveLayer::redo()
   auto& map = mDocument->get_map();
   const auto id = mLayer->get_uuid();
 
-  mIndex = map.invisible_root().local_layer_index(id);
+  mIndex = map.get_invisible_root().local_layer_index(id);
   map.remove_layer(id);
 
   mDocument->get_contexts().erase(id);

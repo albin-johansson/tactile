@@ -40,7 +40,7 @@ SetZstdCompressionLevel::SetZstdCompressionLevel(Shared<Map> map, const int leve
 
 void SetZstdCompressionLevel::undo()
 {
-  auto& format = mMap->tile_format();
+  auto& format = mMap->get_tile_format();
 
   format.set_zstd_compression_level(mOldLevel.value());
   mOldLevel.reset();
@@ -48,7 +48,7 @@ void SetZstdCompressionLevel::undo()
 
 void SetZstdCompressionLevel::redo()
 {
-  auto& format = mMap->tile_format();
+  auto& format = mMap->get_tile_format();
 
   mOldLevel = format.zstd_compression_level();
   format.set_zstd_compression_level(mNewLevel);

@@ -46,8 +46,8 @@ MapDocument::MapDocument(const Int2& tile_size, const TileExtent extent)
 
 void MapDocument::update()
 {
-  for (auto& [id, ref]: mMap->tileset_bundle()) {
-    ref.update();
+  for (auto& [tileset_id, tileset_ref]: mMap->get_tileset_bundle()) {
+    tileset_ref.update();
   }
 }
 
@@ -113,7 +113,7 @@ void MapDocument::move_layer_down(const UUID& layer_id)
 
 void MapDocument::set_layer_opacity(const UUID& layer_id, const float opacity)
 {
-  auto layer = mMap->invisible_root().find_shared_layer(layer_id);
+  auto layer = mMap->get_invisible_root().find_shared_layer(layer_id);
   get_history().push<cmd::SetLayerOpacity>(std::move(layer), opacity);
 }
 
@@ -163,7 +163,7 @@ void MapDocument::add_point(const UUID& layer_id, const Float2& pos)
 
 void MapDocument::remove_object(const UUID& object_id)
 {
-  const auto layer_id = mMap->active_layer_id().value();
+  const auto layer_id = mMap->get_active_layer_id().value();
   get_history().push<cmd::RemoveObject>(this, layer_id, object_id);
 }
 

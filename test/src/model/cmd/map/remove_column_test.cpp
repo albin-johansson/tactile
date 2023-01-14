@@ -51,14 +51,14 @@ TEST_SUITE("cmd::RemoveColumn")
     cmd::RemoveColumn cmd {map};
 
     cmd.redo();
-    REQUIRE(initial_rows == map->map_size().rows);
-    REQUIRE(initial_cols - 1 == map->map_size().cols);
+    REQUIRE(initial_rows == map->get_extent().rows);
+    REQUIRE(initial_cols - 1 == map->get_extent().cols);
 
     cmd.undo();
-    REQUIRE(initial_rows == map->map_size().rows);
-    REQUIRE(initial_cols == map->map_size().cols);
+    REQUIRE(initial_rows == map->get_extent().rows);
+    REQUIRE(initial_cols == map->get_extent().cols);
 
-    const auto& layer = map->invisible_root().get_tile_layer(layer_id);
+    const auto& layer = map->get_invisible_root().get_tile_layer(layer_id);
     test::verify_all_tiles_matches(layer, 42);
   }
 
@@ -79,12 +79,12 @@ TEST_SUITE("cmd::RemoveColumn")
     REQUIRE(a.merge_with(&b));
 
     a.redo();
-    REQUIRE(initial_rows == map->map_size().rows);
-    REQUIRE(initial_cols - 2 == map->map_size().cols);
+    REQUIRE(initial_rows == map->get_extent().rows);
+    REQUIRE(initial_cols - 2 == map->get_extent().cols);
 
     a.undo();
-    REQUIRE(initial_rows == map->map_size().rows);
-    REQUIRE(initial_cols == map->map_size().cols);
+    REQUIRE(initial_rows == map->get_extent().rows);
+    REQUIRE(initial_cols == map->get_extent().cols);
   }
 }
 

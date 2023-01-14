@@ -43,7 +43,7 @@ TEST_SUITE("cmd::RemoveLayer")
                             .result();
 
     auto& map = map_document->get_map();
-    auto& root = map.invisible_root();
+    auto& root = map.get_invisible_root();
     auto& contexts = map_document->get_contexts();
 
     REQUIRE(contexts.contains(layer_id));

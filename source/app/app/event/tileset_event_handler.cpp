@@ -83,7 +83,7 @@ void on_select_tileset(const SelectTilesetEvent& event)
   spdlog::trace("SelectTilesetEvent(tileset_id: {})", event.tileset_id);
 
   if (auto* map_document = get_model().active_map_document()) {
-    auto& tileset_bundle = map_document->get_map().tileset_bundle();
+    auto& tileset_bundle = map_document->get_map().get_tileset_bundle();
     tileset_bundle.select_tileset(event.tileset_id);
   }
 }
@@ -105,7 +105,7 @@ void on_set_tileset_selection(const SetTilesetSelectionEvent& event)
                 event.selection.end);
 
   if (auto* map_document = get_model().active_map_document()) {
-    auto& tileset_bundle = map_document->get_map().tileset_bundle();
+    auto& tileset_bundle = map_document->get_map().get_tileset_bundle();
 
     const auto tileset_id = tileset_bundle.get_active_tileset_id().value();
     auto& tileset_ref = tileset_bundle.get_tileset_ref(tileset_id);

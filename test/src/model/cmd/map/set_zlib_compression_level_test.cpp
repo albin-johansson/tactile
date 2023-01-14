@@ -37,7 +37,7 @@ TEST_SUITE("cmd::SetZlibCompressionLevel")
   {
     auto map_document = MapBuilder::build().result();
     auto map = map_document->get_map_ptr();
-    auto& format = map->tile_format();
+    auto& format = map->get_tile_format();
 
     const int old_level = format.zlib_compression_level();
     const int new_level = 4;
@@ -55,8 +55,8 @@ TEST_SUITE("cmd::SetZlibCompressionLevel")
   {
     auto map_document = MapBuilder::build().result();
     auto map = map_document->get_map_ptr();
-    auto& format = map->tile_format();
 
+    auto& format = map->get_tile_format();
     format.set_zlib_compression_level(7);
 
     cmd::SetZlibCompressionLevel a {map, 6};

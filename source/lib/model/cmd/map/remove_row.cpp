@@ -44,7 +44,7 @@ void RemoveRow::undo()
 
 void RemoveRow::redo()
 {
-  const auto map_extent = mMap->map_size();
+  const auto map_extent = mMap->get_extent();
 
   const auto begin = TilePos::from(map_extent.rows - mRows - 1u, 0u);
   const auto end = TilePos::from(map_extent.rows, map_extent.cols);

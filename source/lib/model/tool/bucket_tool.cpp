@@ -43,17 +43,17 @@ void BucketTool::on_pressed(DocumentModel& model,
       is_available(model)) {
     const auto& document = model.require_active_map_document();
     const auto& map = document.get_map();
-    const auto& tilesets = map.tileset_bundle();
+    const auto& tileset_bundle = map.get_tileset_bundle();
 
-    const auto tileset_id = tilesets.get_active_tileset_id().value();
-    const auto& tileset_ref = tilesets.get_tileset_ref(tileset_id);
+    const auto tileset_id = tileset_bundle.get_active_tileset_id().value();
+    const auto& tileset_ref = tileset_bundle.get_tileset_ref(tileset_id);
     const auto& tileset = tileset_ref.get_tileset();
 
     const auto selected_pos = tileset_ref.get_selection()->begin;
     const auto replacement =
         tileset_ref.get_first_tile() + tileset.index_of(selected_pos);
 
-    const auto layer_id = map.active_layer_id().value();
+    const auto layer_id = map.get_active_layer_id().value();
     dispatcher.enqueue<FloodEvent>(layer_id, mouse.position_in_viewport, replacement);
   }
 }
@@ -63,7 +63,7 @@ auto BucketTool::is_available(const DocumentModel& model) const -> bool
   const auto& document = model.require_active_map_document();
   const auto& map = document.get_map();
 
-  const auto& tilesets = map.tileset_bundle();
+  const auto& tilesets = map.get_tileset_bundle();
   const auto tileset_id = tilesets.get_active_tileset_id();
 
   return map.is_active_layer(LayerType::TileLayer) &&  //

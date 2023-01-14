@@ -103,7 +103,7 @@ void on_show_resize_map_dialog(const OpenResizeMapDialogEvent&)
 
   if (auto* map_document = get_model().active_map_document()) {
     const auto& map = map_document->get_map();
-    ui::open_resize_map_dialog(map.map_size());
+    ui::open_resize_map_dialog(map.get_extent());
   }
 }
 

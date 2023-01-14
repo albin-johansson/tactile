@@ -40,7 +40,7 @@ SetZlibCompressionLevel::SetZlibCompressionLevel(Shared<Map> map, const int leve
 
 void SetZlibCompressionLevel::undo()
 {
-  auto& format = mMap->tile_format();
+  auto& format = mMap->get_tile_format();
 
   format.set_zlib_compression_level(mOldLevel.value());
   mOldLevel.reset();
@@ -48,7 +48,7 @@ void SetZlibCompressionLevel::undo()
 
 void SetZlibCompressionLevel::redo()
 {
-  auto& format = mMap->tile_format();
+  auto& format = mMap->get_tile_format();
 
   mOldLevel = format.zlib_compression_level();
   format.set_zlib_compression_level(mNewLevel);

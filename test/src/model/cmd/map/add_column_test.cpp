@@ -45,11 +45,11 @@ TEST_SUITE("cmd::AddColumn")
     cmd::AddColumn cmd {map};
 
     cmd.redo();
-    REQUIRE(initial_extent.rows == map->map_size().rows);
-    REQUIRE(initial_extent.cols + 1 == map->map_size().cols);
+    REQUIRE(initial_extent.rows == map->get_extent().rows);
+    REQUIRE(initial_extent.cols + 1 == map->get_extent().cols);
 
     cmd.undo();
-    REQUIRE(initial_extent == map->map_size());
+    REQUIRE(initial_extent == map->get_extent());
   }
 
   TEST_CASE("merge_with")
@@ -69,12 +69,12 @@ TEST_SUITE("cmd::AddColumn")
     REQUIRE(a.merge_with(&c));
 
     a.redo();
-    REQUIRE(initial_extent.rows == map->map_size().rows);
-    REQUIRE(initial_extent.cols + 3 == map->map_size().cols);
+    REQUIRE(initial_extent.rows == map->get_extent().rows);
+    REQUIRE(initial_extent.cols + 3 == map->get_extent().cols);
 
     a.undo();
-    REQUIRE(initial_extent.rows == map->map_size().rows);
-    REQUIRE(initial_extent.cols == map->map_size().cols);
+    REQUIRE(initial_extent.rows == map->get_extent().rows);
+    REQUIRE(initial_extent.cols == map->get_extent().cols);
   }
 }
 

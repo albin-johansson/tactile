@@ -53,7 +53,7 @@ void AddLayer::redo()
   }
   else {
     const auto active_layer_id = map.is_active_layer(LayerType::GroupLayer)
-                                     ? map.active_layer_id()  //
+                                     ? map.get_active_layer_id()  //
                                      : nothing;
 
     Maybe<UUID> id;
@@ -74,7 +74,7 @@ void AddLayer::redo()
         throw TactileError {"Invalid layer type!"};
     }
 
-    mLayer = map.invisible_root().find_shared_layer(id.value());
+    mLayer = map.get_invisible_root().find_shared_layer(id.value());
   }
 
   mDocument->get_contexts().add_context(mLayer);

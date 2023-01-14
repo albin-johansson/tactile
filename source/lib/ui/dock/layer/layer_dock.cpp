@@ -54,7 +54,7 @@ void update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatche
   const auto& document = model.require_active_map_document();
   const auto& map = document.get_map();
 
-  const auto active_layer_id = map.active_layer_id();
+  const auto active_layer_id = map.get_active_layer_id();
   const auto has_active_layer = active_layer_id.has_value();
 
   const Group group;
@@ -77,7 +77,7 @@ void update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatche
     dispatcher.enqueue<DuplicateLayerEvent>(active_layer_id.value());
   }
 
-  const auto& root = map.invisible_root();
+  const auto& root = map.get_invisible_root();
 
   if (ui_icon_button(TAC_ICON_MOVE_UP,
                      lang.tooltip.move_layer_up.c_str(),
@@ -98,7 +98,7 @@ void update_rename_dialog(const DocumentModel& model, entt::dispatcher& dispatch
     const auto target_layer_id = *rename_target_id;
 
     const auto& map = model.require_active_map_document().get_map();
-    const auto& layer = map.invisible_root().get_layer(target_layer_id);
+    const auto& layer = map.get_invisible_root().get_layer(target_layer_id);
 
     open_rename_layer_dialog(target_layer_id, layer.get_ctx().name());
     rename_target_id.reset();
@@ -115,7 +115,7 @@ void update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
   const Group group;
 
   const auto& document = model.require_active_map_document();
-  const auto& root = document.get_map().invisible_root();
+  const auto& root = document.get_map().get_invisible_root();
 
   if (root.layer_count() == 0) {
     const auto& lang = get_current_language();

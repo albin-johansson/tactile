@@ -210,7 +210,7 @@ TEST_SUITE("DocumentManager")
     auto tileset = make_tileset();
     const auto tileset_id = tileset->get_tileset_ptr()->get_uuid();
 
-    map->get_map().tileset_bundle().attach_tileset(tileset->get_tileset_ptr(), false);
+    map->get_map().get_tileset_bundle().attach_tileset(tileset->get_tileset_ptr(), false);
 
     manager.add_map_document(map);
     manager.add_tileset_document(tileset);
@@ -256,12 +256,12 @@ TEST_SUITE("DocumentManager")
     const auto ts3_id = ts3->get_tileset_ptr()->get_uuid();
 
     // First map uses TS1 and TS2
-    map1->get_map().tileset_bundle().attach_tileset(ts1->get_tileset_ptr(), false);
-    map1->get_map().tileset_bundle().attach_tileset(ts2->get_tileset_ptr(), false);
+    map1->get_map().get_tileset_bundle().attach_tileset(ts1->get_tileset_ptr(), false);
+    map1->get_map().get_tileset_bundle().attach_tileset(ts2->get_tileset_ptr(), false);
 
     // Second map uses TS2 and TS3
-    map2->get_map().tileset_bundle().attach_tileset(ts2->get_tileset_ptr(), false);
-    map2->get_map().tileset_bundle().attach_tileset(ts3->get_tileset_ptr(), false);
+    map2->get_map().get_tileset_bundle().attach_tileset(ts2->get_tileset_ptr(), false);
+    map2->get_map().get_tileset_bundle().attach_tileset(ts3->get_tileset_ptr(), false);
 
     manager.add_map_document(map1);
     manager.add_map_document(map2);

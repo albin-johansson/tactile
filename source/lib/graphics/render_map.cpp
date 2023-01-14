@@ -42,7 +42,7 @@ void highlight_active_object(Graphics& graphics,
                              const UUID& active_layer_id)
 {
   if (const auto* object_layer =
-          map.invisible_root().find_object_layer(active_layer_id)) {
+          map.get_invisible_root().find_object_layer(active_layer_id)) {
     if (const auto object_id = object_layer->active_object_id()) {
       const auto& object = object_layer->get_object(*object_id);
       render_object(graphics, object, active_object_color);
@@ -69,8 +69,8 @@ void render_layer(Graphics& graphics,
 void render_layers(Graphics& graphics, const Map& map)
 {
   const auto& prefs = io::get_preferences();
-  const auto& root = map.invisible_root();
-  const auto active_layer_id = map.active_layer_id();
+  const auto& root = map.get_invisible_root();
+  const auto active_layer_id = map.get_active_layer_id();
 
   root.each([&](const Layer& layer) {
     if (!layer.is_visible()) {
@@ -106,7 +106,7 @@ void render_map(Graphics& graphics, const MapDocument& document)
 
   render_layers(graphics, map);
 
-  if (const auto active_layer_id = map.active_layer_id()) {
+  if (const auto active_layer_id = map.get_active_layer_id()) {
     highlight_active_object(graphics, map, *active_layer_id);
   }
 

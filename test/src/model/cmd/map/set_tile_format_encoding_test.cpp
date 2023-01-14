@@ -38,7 +38,7 @@ TEST_SUITE("cmd::SetTileFormatEncoding")
     auto map_document = MapBuilder::build().result();
     auto map = map_document->get_map_ptr();
 
-    auto& format = map->tile_format();
+    auto& format = map->get_tile_format();
 
     const auto old_encoding = TileEncoding::Plain;
     const auto new_encoding = TileEncoding::Base64;

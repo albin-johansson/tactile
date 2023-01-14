@@ -72,34 +72,34 @@ TEST_SUITE("Map")
   TEST_CASE("Defaults")
   {
     const Map map;
-    const auto& root = map.invisible_root();
+    const auto& root = map.get_invisible_root();
 
     REQUIRE("Map" == map.get_ctx().name());
 
-    REQUIRE(5u == map.map_size().rows);
-    REQUIRE(5u == map.map_size().cols);
+    REQUIRE(5u == map.get_extent().rows);
+    REQUIRE(5u == map.get_extent().cols);
 
     REQUIRE(0u == root.layer_count());
-    REQUIRE(!map.active_layer_id().has_value());
+    REQUIRE(!map.get_active_layer_id().has_value());
 
     REQUIRE(1 == map.next_tile_layer_suffix());
     REQUIRE(1 == map.next_object_layer_suffix());
     REQUIRE(1 == map.next_group_layer_suffix());
 
-    REQUIRE(32 == map.tile_size().x);
-    REQUIRE(32 == map.tile_size().y);
+    REQUIRE(32 == map.get_tile_size().x);
+    REQUIRE(32 == map.get_tile_size().y);
 
-    REQUIRE(map.tileset_bundle().empty());
+    REQUIRE(map.get_tileset_bundle().empty());
   }
 
   TEST_CASE("add_row")
   {
     Map map;
-    auto& root = map.invisible_root();
+    auto& root = map.get_invisible_root();
 
     map.add_row();
-    REQUIRE(6u == map.map_size().rows);
-    REQUIRE(5u == map.map_size().cols);
+    REQUIRE(6u == map.get_extent().rows);
+    REQUIRE(5u == map.get_extent().cols);
 
     const auto id = map.add_tile_layer();
     const auto& layer = root.get_tile_layer(id);
@@ -111,14 +111,14 @@ TEST_SUITE("Map")
   TEST_CASE("add_column")
   {
     Map map;
-    auto& root = map.invisible_root();
+    auto& root = map.get_invisible_root();
 
     const auto id = map.add_tile_layer();
     const auto& layer = root.get_tile_layer(id);
 
     map.add_column();
-    REQUIRE(5u == map.map_size().rows);
-    REQUIRE(6u == map.map_size().cols);
+    REQUIRE(5u == map.get_extent().rows);
+    REQUIRE(6u == map.get_extent().cols);
 
     REQUIRE(5u == layer.row_count());
     REQUIRE(6u == layer.column_count());
@@ -129,15 +129,15 @@ TEST_SUITE("Map")
     Map map;
     map.remove_row();
 
-    REQUIRE(4u == map.map_size().rows);
-    REQUIRE(5u == map.map_size().cols);
+    REQUIRE(4u == map.get_extent().rows);
+    REQUIRE(5u == map.get_extent().cols);
 
     map.remove_row();
     map.remove_row();
     map.remove_row();
 
-    REQUIRE(1u == map.map_size().rows);
-    REQUIRE(5u == map.map_size().cols);
+    REQUIRE(1u == map.get_extent().rows);
+    REQUIRE(5u == map.get_extent().cols);
 
     REQUIRE_THROWS_AS(map.remove_row(), TactileError);
   }
@@ -147,15 +147,15 @@ TEST_SUITE("Map")
     Map map;
     map.remove_column();
 
-    REQUIRE(5u == map.map_size().rows);
-    REQUIRE(4u == map.map_size().cols);
+    REQUIRE(5u == map.get_extent().rows);
+    REQUIRE(4u == map.get_extent().cols);
 
     map.remove_column();
     map.remove_column();
     map.remove_column();
 
-    REQUIRE(5u == map.map_size().rows);
-    REQUIRE(1u == map.map_size().cols);
+    REQUIRE(5u == map.get_extent().rows);
+    REQUIRE(1u == map.get_extent().cols);
 
     REQUIRE_THROWS_AS(map.remove_column(), TactileError);
   }
@@ -166,18 +166,18 @@ TEST_SUITE("Map")
 
     preset.map.resize(TileExtent {8, 3});
 
-    REQUIRE(8u == preset.map.map_size().rows);
-    REQUIRE(3u == preset.map.map_size().cols);
+    REQUIRE(8u == preset.map.get_extent().rows);
+    REQUIRE(3u == preset.map.get_extent().cols);
 
-    auto& root = preset.map.invisible_root();
+    auto& root = preset.map.get_invisible_root();
     auto& layer = root.get_tile_layer(preset.f);
     REQUIRE(8u == layer.row_count());
     REQUIRE(3u == layer.column_count());
 
     preset.map.resize(TileExtent {1, 1});
 
-    REQUIRE(1u == preset.map.map_size().rows);
-    REQUIRE(1u == preset.map.map_size().cols);
+    REQUIRE(1u == preset.map.get_extent().rows);
+    REQUIRE(1u == preset.map.get_extent().cols);
 
     REQUIRE(1u == layer.row_count());
     REQUIRE(1u == layer.column_count());
@@ -196,9 +196,9 @@ TEST_SUITE("Map")
                         .with_tileset(&tileset_id)
                         .result();
     auto map = document->get_map_ptr();
-    auto& root = map->invisible_root();
+    auto& root = map->get_invisible_root();
 
-    const auto& tileset_ref = map->tileset_bundle().get_tileset_ref(tileset_id);
+    const auto& tileset_ref = map->get_tileset_bundle().get_tileset_ref(tileset_id);
     auto& layer = root.get_tile_layer(layer_id);
 
     // Valid
@@ -235,14 +235,14 @@ TEST_SUITE("Map")
   {
     Map map;
     map.set_tile_size({28, 45});
-    REQUIRE(28 == map.tile_size().x);
-    REQUIRE(45 == map.tile_size().y);
+    REQUIRE(28 == map.get_tile_size().x);
+    REQUIRE(45 == map.get_tile_size().y);
   }
 
   TEST_CASE("is_valid_position")
   {
     const Map map;
-    const auto end = TilePos::from(map.map_size().rows, map.map_size().cols);
+    const auto end = TilePos::from(map.get_extent().rows, map.get_extent().cols);
 
     REQUIRE(!map.is_valid_position({-1, 0}));
     REQUIRE(!map.is_valid_position({0, -1}));
@@ -255,7 +255,7 @@ TEST_SUITE("Map")
   TEST_CASE("add_layer")
   {
     Map map;
-    auto& root = map.invisible_root();
+    auto& root = map.get_invisible_root();
 
     auto t1 = std::make_shared<TileLayer>();
     auto t2 = std::make_shared<TileLayer>();
@@ -288,7 +288,7 @@ TEST_SUITE("Map")
   TEST_CASE("add_tile_layer")
   {
     Map map;
-    auto& root = map.invisible_root();
+    auto& root = map.get_invisible_root();
 
     const auto id = map.add_tile_layer();
     const auto* layer = root.find_tile_layer(id);
@@ -298,14 +298,14 @@ TEST_SUITE("Map")
     REQUIRE(nullptr == root.find_group_layer(id));
     REQUIRE(1u == root.layer_count());
 
-    REQUIRE(map.map_size().rows == layer->row_count());
-    REQUIRE(map.map_size().cols == layer->column_count());
+    REQUIRE(map.get_extent().rows == layer->row_count());
+    REQUIRE(map.get_extent().cols == layer->column_count());
   }
 
   TEST_CASE("add_object_layer")
   {
     Map map;
-    auto& root = map.invisible_root();
+    auto& root = map.get_invisible_root();
 
     const auto parent = map.add_group_layer();
 
@@ -322,7 +322,7 @@ TEST_SUITE("Map")
   TEST_CASE("add_group_layer")
   {
     Map map;
-    auto& root = map.invisible_root();
+    auto& root = map.get_invisible_root();
 
     const auto id = map.add_group_layer();
     const auto& layer = root.get_group_layer(id);
@@ -337,7 +337,7 @@ TEST_SUITE("Map")
   TEST_CASE("remove_layer")
   {
     MapLayerPreset preset;
-    auto& root = preset.map.invisible_root();
+    auto& root = preset.map.get_invisible_root();
 
     REQUIRE_NOTHROW(preset.map.remove_layer(make_uuid()));
 
@@ -366,7 +366,7 @@ TEST_SUITE("Map")
   TEST_CASE("duplicate_layer")
   {
     MapLayerPreset preset;
-    auto& root = preset.map.invisible_root();
+    auto& root = preset.map.get_invisible_root();
 
     REQUIRE_THROWS_AS(preset.map.duplicate_layer(make_uuid()), TactileError);
 
@@ -385,23 +385,23 @@ TEST_SUITE("Map")
   TEST_CASE("select_layer")
   {
     MapLayerPreset preset;
-    REQUIRE(preset.map.active_layer_id().has_value());
+    REQUIRE(preset.map.get_active_layer_id().has_value());
     REQUIRE_THROWS_AS(preset.map.select_layer(make_uuid()), TactileError);
 
     preset.map.select_layer(preset.e);
-    REQUIRE(preset.e == preset.map.active_layer_id());
+    REQUIRE(preset.e == preset.map.get_active_layer_id());
     REQUIRE(preset.map.is_active_layer(LayerType::ObjectLayer));
     REQUIRE(!preset.map.is_active_layer(LayerType::TileLayer));
     REQUIRE(!preset.map.is_active_layer(LayerType::GroupLayer));
 
     preset.map.select_layer(preset.b);
-    REQUIRE(preset.b == preset.map.active_layer_id());
+    REQUIRE(preset.b == preset.map.get_active_layer_id());
     REQUIRE(preset.map.is_active_layer(LayerType::GroupLayer));
     REQUIRE(!preset.map.is_active_layer(LayerType::TileLayer));
     REQUIRE(!preset.map.is_active_layer(LayerType::ObjectLayer));
 
     preset.map.select_layer(preset.f);
-    REQUIRE(preset.f == preset.map.active_layer_id());
+    REQUIRE(preset.f == preset.map.get_active_layer_id());
     REQUIRE(preset.map.is_active_layer(LayerType::TileLayer));
     REQUIRE(!preset.map.is_active_layer(LayerType::ObjectLayer));
     REQUIRE(!preset.map.is_active_layer(LayerType::GroupLayer));

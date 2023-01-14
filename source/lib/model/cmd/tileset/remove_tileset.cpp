@@ -55,7 +55,7 @@ void RemoveTileset::undo()
   auto tileset = mTilesetDocument->get_tileset_ptr();
   const auto tileset_id = tileset->get_uuid();
 
-  auto& tilesets = map.tileset_bundle();
+  auto& tilesets = map.get_tileset_bundle();
   tilesets.attach_tileset(tileset, mFirstTile.value(), false);  // TODO
   tilesets.select_tileset(tileset_id);
 
@@ -70,7 +70,7 @@ void RemoveTileset::redo()
   auto map_document = mModel->get_map_document_ptr(mMapId);
   auto& map = map_document->get_map();
 
-  auto& tilesets = map.tileset_bundle();
+  auto& tilesets = map.get_tileset_bundle();
   const auto& tileset_ref = tilesets.get_tileset_ref(mTilesetId);
   mFirstTile = tileset_ref.get_first_tile();
 

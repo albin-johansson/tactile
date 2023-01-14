@@ -55,7 +55,7 @@ void ToolPreviewRenderer::visit(const StampTool& tool)
 
   const auto& map_document = model.require_active_map_document();
   const auto& map = map_document.get_map();
-  const auto& tilesets = map.tileset_bundle();
+  const auto& tilesets = map.get_tileset_bundle();
 
   if (!map.is_active_layer(LayerType::TileLayer)) {
     return;
@@ -78,8 +78,8 @@ void ToolPreviewRenderer::render_stamp_normal(const Map& map,
                                               const TilesetRef& tileset_ref)
 {
   TACTILE_ASSERT(map.is_active_layer(LayerType::TileLayer));
-  const auto layer_id = map.active_layer_id().value();
-  const auto& layer = map.invisible_root().get_tile_layer(layer_id);
+  const auto layer_id = map.get_active_layer_id().value();
+  const auto& layer = map.get_invisible_root().get_tile_layer(layer_id);
 
   const auto& selection = tileset_ref.get_selection().value();
   const auto selection_size = selection.end - selection.begin;

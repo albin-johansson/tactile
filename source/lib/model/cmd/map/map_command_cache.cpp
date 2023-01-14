@@ -54,7 +54,7 @@ void MapCommandCache::clear() noexcept
 
 void MapCommandCache::restore_tiles(Map& map)
 {
-  auto& root = map.invisible_root();
+  auto& root = map.get_invisible_root();
   for (const auto& [layer_id, tile_cache]: mCache) {
     auto& layer = root.get_tile_layer(layer_id);
 
@@ -70,7 +70,7 @@ void MapCommandCache::save_tiles(const Map& map, const TilePos& begin, const Til
   visitor.self = this;
   visitor.begin = begin;
   visitor.end = end;
-  map.invisible_root().each(visitor);
+  map.get_invisible_root().each(visitor);
 }
 
 void MapCommandCache::merge_with(const MapCommandCache& other)

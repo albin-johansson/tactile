@@ -40,7 +40,7 @@ RenameLayer::RenameLayer(Shared<Map> map, const UUID& layer_id, String name)
 
 void RenameLayer::undo()
 {
-  auto& layer = mMap->invisible_root().get_layer(mLayerId);
+  auto& layer = mMap->get_invisible_root().get_layer(mLayerId);
 
   layer.get_ctx().set_name(mOldName.value());
   mOldName.reset();
@@ -48,7 +48,7 @@ void RenameLayer::undo()
 
 void RenameLayer::redo()
 {
-  auto& layer = mMap->invisible_root().get_layer(mLayerId);
+  auto& layer = mMap->get_invisible_root().get_layer(mLayerId);
   auto& layer_ctx = layer.get_ctx();
 
   mOldName = layer_ctx.name();
