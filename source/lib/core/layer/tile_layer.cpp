@@ -19,6 +19,8 @@
 
 #include "tile_layer.hpp"
 
+#include <utility>  // cmp_less
+
 #include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
 #include "common/type/math.hpp"
@@ -160,7 +162,7 @@ void TileLayer::resize(const TileExtent extent)
 void TileLayer::set_tile(const TilePos& pos, const TileID id)
 {
   if (is_valid(pos)) [[likely]] {
-    mTiles[pos.urow()][pos.ucol()] = id;
+    mTiles[static_cast<usize>(pos.row())][static_cast<usize>(pos.col())] = id;
   }
   else {
     throw TactileError {"Invalid position!"};
@@ -170,7 +172,7 @@ void TileLayer::set_tile(const TilePos& pos, const TileID id)
 auto TileLayer::tile_at(const TilePos& pos) const -> TileID
 {
   if (is_valid(pos)) [[likely]] {
-    return mTiles[pos.urow()][pos.ucol()];
+    return mTiles[static_cast<usize>(pos.row())][static_cast<usize>(pos.col())];
   }
   else {
     throw TactileError {"Invalid position!"};
@@ -179,10 +181,10 @@ auto TileLayer::tile_at(const TilePos& pos) const -> TileID
 
 auto TileLayer::is_valid(const TilePos& pos) const -> bool
 {
-  return pos.row() >= 0 &&            //
-         pos.col() >= 0 &&            //
-         pos.urow() < row_count() &&  //
-         pos.ucol() < column_count();
+  return pos.row() >= 0 &&  //
+         pos.col() >= 0 &&  //
+         std::cmp_less(pos.row(), row_count()) &&
+         std::cmp_less(pos.col(), column_count());
 }
 
 auto TileLayer::row_count() const -> usize

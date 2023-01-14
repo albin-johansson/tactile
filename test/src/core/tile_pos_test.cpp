@@ -93,18 +93,6 @@ TEST_SUITE("TilePos")
     REQUIRE(493 == position.col());
   }
 
-  TEST_CASE("urow")
-  {
-    const TilePos position {6'532, 0};
-    REQUIRE(6'532u == position.urow());
-  }
-
-  TEST_CASE("ucol")
-  {
-    const TilePos position {0, 18'343};
-    REQUIRE(18'343u == position.ucol());
-  }
-
   TEST_CASE("row_to_y")
   {
     const auto tile_size = 134;

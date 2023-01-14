@@ -51,9 +51,9 @@ class TilePos final {
 
   /// Creates a position based on an index and the total number of columns.
   [[nodiscard]] constexpr static auto from_index(const int32 index,
-                                                 const int32 nCols) noexcept -> TilePos
+                                                 const int32 n_cols) noexcept -> TilePos
   {
-    return TilePos {index / nCols, index % nCols};
+    return TilePos {index / n_cols, index % n_cols};
   }
 
   /// Sets the row index associated with the position.
@@ -99,38 +99,16 @@ class TilePos final {
   /// Returns the column index of the tile position.
   [[nodiscard]] constexpr auto col() const noexcept -> int32 { return mCol; }
 
-  /// Returns the raw row index associated with the tile position.
-  ///
-  /// This function is meant to be used when indexing vectors, etc.
-  ///
-  /// \return an unsigned row index.
-  [[nodiscard]] constexpr auto urow() const noexcept -> usize
-  {
-    TACTILE_ASSERT(mRow >= 0);
-    return static_cast<usize>(mRow);
-  }
-
-  /// Returns the column index associated with the tile position.
-  ///
-  /// This function is meant to be used when indexing vectors, etc.
-  ///
-  /// \return an unsigned column index.
-  [[nodiscard]] constexpr auto ucol() const noexcept -> usize
-  {
-    TACTILE_ASSERT(mCol >= 0);
-    return static_cast<usize>(mCol);
-  }
-
   /// Returns the row index converted to a y-coordinate.
-  [[nodiscard]] constexpr auto row_to_y(const int32 tileHeight) const noexcept -> int32
+  [[nodiscard]] constexpr auto row_to_y(const int32 tile_height) const noexcept -> int32
   {
-    return mRow * tileHeight;
+    return mRow * tile_height;
   }
 
   /// Returns the col index converted to an x-coordinate.
-  [[nodiscard]] constexpr auto col_to_x(const int32 tileWidth) const noexcept -> int32
+  [[nodiscard]] constexpr auto col_to_x(const int32 tile_width) const noexcept -> int32
   {
-    return mCol * tileWidth;
+    return mCol * tile_width;
   }
 
   [[nodiscard]] constexpr auto as_vec2() const noexcept -> Int2 { return {mCol, mRow}; }

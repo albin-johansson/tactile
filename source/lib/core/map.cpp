@@ -19,7 +19,7 @@
 
 #include "map.hpp"
 
-#include <utility>  // move
+#include <utility>  // move, cmp_less
 
 #include <fmt/format.h>
 
@@ -287,10 +287,10 @@ void Map::accept(ContextVisitor& visitor) const
 
 auto Map::is_valid_position(const TilePos& pos) const -> bool
 {
-  return pos.row() >= 0 &&                //
-         pos.col() >= 0 &&                //
-         pos.urow() < map_size().rows &&  //
-         pos.ucol() < map_size().cols;
+  return pos.row() >= 0 &&  //
+         pos.col() >= 0 &&  //
+         std::cmp_less(pos.row(), map_size().rows) &&
+         std::cmp_less(pos.col(), map_size().cols);
 }
 
 auto Map::map_size() const -> TileExtent
