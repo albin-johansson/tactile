@@ -144,20 +144,18 @@ TEST_SUITE("TileLayer")
   {
     TileLayer layer;
 
-    REQUIRE_THROWS_AS(layer.set_tile({0, -1}, 42), TactileError);
-    REQUIRE_THROWS_AS(layer.set_tile({-1, 0}, 42), TactileError);
+    REQUIRE(layer.set_tile({0, -1}, 42).failed());
+    REQUIRE(layer.set_tile({-1, 0}, 42).failed());
 
-    REQUIRE_THROWS_AS(layer.set_tile(TilePos::from(layer.row_count(), 0), 42),
-                      TactileError);
-    REQUIRE_THROWS_AS(layer.set_tile(TilePos::from(0, layer.column_count()), 42),
-                      TactileError);
+    REQUIRE(layer.set_tile(TilePos::from(layer.row_count(), 0), 42).failed());
+    REQUIRE(layer.set_tile(TilePos::from(0, layer.column_count()), 42).failed());
 
-    layer.set_tile({1, 2}, 42);
+    REQUIRE(layer.set_tile({1, 2}, 42).succeeded());
     REQUIRE(42 == layer.tile_at({1, 2}));
 
     const auto bottom_right =
         TilePos::from(layer.row_count() - 1, layer.column_count() - 1);
-    layer.set_tile(bottom_right, 7);
+    REQUIRE(layer.set_tile(bottom_right, 7).succeeded());
     REQUIRE(7 == layer.tile_at(bottom_right));
   }
 
@@ -165,12 +163,11 @@ TEST_SUITE("TileLayer")
   {
     const TileLayer layer;
 
-    REQUIRE_THROWS_AS(layer.tile_at({-1, 0}), TactileError);
-    REQUIRE_THROWS_AS(layer.tile_at({0, -1}), TactileError);
+    REQUIRE(!layer.tile_at({-1, 0}).has_value());
+    REQUIRE(!layer.tile_at({0, -1}).has_value());
 
-    REQUIRE_THROWS_AS(layer.tile_at(TilePos::from(layer.row_count(), 0)), TactileError);
-    REQUIRE_THROWS_AS(layer.tile_at(TilePos::from(0, layer.column_count())),
-                      TactileError);
+    REQUIRE(!layer.tile_at(TilePos::from(layer.row_count(), 0)).has_value());
+    REQUIRE(!layer.tile_at(TilePos::from(0, layer.column_count())).has_value());
   }
 
   TEST_CASE("add_row")
@@ -211,7 +208,7 @@ TEST_SUITE("TileLayer")
     REQUIRE(3u == layer.row_count());
     REQUIRE(4u == layer.column_count());
 
-    layer.remove_row();
+    REQUIRE(layer.remove_row().succeeded());
 
     REQUIRE(2u == layer.row_count());
     REQUIRE(4u == layer.column_count());
@@ -224,7 +221,7 @@ TEST_SUITE("TileLayer")
     REQUIRE(6u == layer.row_count());
     REQUIRE(8u == layer.column_count());
 
-    layer.remove_column();
+    REQUIRE(layer.remove_column().succeeded());
 
     REQUIRE(6u == layer.row_count());
     REQUIRE(7u == layer.column_count());

@@ -118,18 +118,31 @@ void TileLayer::add_column()
   }
 }
 
-void TileLayer::remove_row()
+auto TileLayer::remove_row() -> Result
 {
-  TACTILE_ASSERT(row_count() > 1);
-  mTiles.pop_back();
+  if (!mTiles.empty()) {
+    mTiles.pop_back();
+    return success;
+  }
+  else {
+    return failure;
+  }
 }
 
-void TileLayer::remove_column()
+auto TileLayer::remove_column() -> Result
 {
+  Result result = success;
+
   for (auto& row: mTiles) {
-    TACTILE_ASSERT(row.size() > 1);
-    row.pop_back();
+    if (!row.empty()) {
+      row.pop_back();
+    }
+    else {
+      result = failure;
+    }
   }
+
+  return result;
 }
 
 void TileLayer::resize(const TileExtent extent)
@@ -159,23 +172,24 @@ void TileLayer::resize(const TileExtent extent)
   }
 }
 
-void TileLayer::set_tile(const TilePos& pos, const TileID id)
+auto TileLayer::set_tile(const TilePos& pos, const TileID id) -> Result
 {
   if (is_valid(pos)) [[likely]] {
     mTiles[static_cast<usize>(pos.row())][static_cast<usize>(pos.col())] = id;
+    return success;
   }
   else {
-    throw TactileError {"Invalid position!"};
+    return failure;
   }
 }
 
-auto TileLayer::tile_at(const TilePos& pos) const -> TileID
+auto TileLayer::tile_at(const TilePos& pos) const -> Maybe<TileID>
 {
   if (is_valid(pos)) [[likely]] {
     return mTiles[static_cast<usize>(pos.row())][static_cast<usize>(pos.col())];
   }
   else {
-    throw TactileError {"Invalid position!"};
+    return nothing;
   }
 }
 

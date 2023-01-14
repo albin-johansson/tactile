@@ -40,8 +40,8 @@ struct SaveTilesVisitor final : ConstLayerVisitor {
     for (auto row = begin.row(); row < end_row; ++row) {
       for (auto col = begin.col(); col < end_col; ++col) {
         const TilePos position {row, col};
-        const auto tile = layer.tile_at(position);
-        tile_cache.try_emplace(position, tile);
+        const auto tile_id = layer.tile_at(position).value();
+        tile_cache.try_emplace(position, tile_id);
       }
     }
   }

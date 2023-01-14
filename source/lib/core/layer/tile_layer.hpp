@@ -20,6 +20,8 @@
 #pragma once
 
 #include "common/numeric.hpp"
+#include "common/type/maybe.hpp"
+#include "common/type/result.hpp"
 #include "common/type/vec.hpp"
 #include "core/layer/abstract_layer.hpp"
 #include "core/tile/tile_extent.hpp"
@@ -60,23 +62,21 @@ class TileLayer final : public AbstractLayer {
 
   /// Removes a single row from the layer.
   /// There must be more than one row in the layer when this function is called.
-  void remove_row();
+  auto remove_row() -> Result;
 
   /// Removes a single column from the layer.
   /// There must be more than one column in the layer when this function is called.
-  void remove_column();
+  auto remove_column() -> Result;
 
   /// Changes the size of the layer.
   /// Note, layers must have at least 1 row and 1 column.
   void resize(TileExtent extent);
 
   /// Sets the tile identifier at the specified position.
-  /// This function throws for invalid positions.
-  void set_tile(const TilePos& pos, TileID id);
+  auto set_tile(const TilePos& pos, TileID id) -> Result;
 
   /// Returns the tile identifier at a specific position.
-  /// This function throws for invalid positions.
-  [[nodiscard]] auto tile_at(const TilePos& pos) const -> TileID;
+  [[nodiscard]] auto tile_at(const TilePos& pos) const -> Maybe<TileID>;
 
   /// Indicates whether a tile position refers to a valid tile in the layer.
   [[nodiscard]] auto is_valid(const TilePos& pos) const -> bool;

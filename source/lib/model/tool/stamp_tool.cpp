@@ -149,7 +149,7 @@ void StampTool::update_sequence_normal(TileLayer& layer,
 
       if (layer.is_valid(pos)) {
         if (mPrevious.find(pos) == mPrevious.end()) {
-          mPrevious.emplace(pos, layer.tile_at(pos));
+          mPrevious.emplace(pos, layer.tile_at(pos).value());
         }
         mCurrent[pos] = tile;
         layer.set_tile(pos, tile);
@@ -175,7 +175,7 @@ void StampTool::update_sequence_random(TileLayer& layer,
     const auto tile = tileset_ref.get_first_tile() + tileset.index_of(selection_pos);
 
     if (mPrevious.find(cursor) == mPrevious.end()) {
-      mPrevious.emplace(cursor, layer.tile_at(cursor));
+      mPrevious.emplace(cursor, layer.tile_at(cursor).value());
     }
 
     mCurrent[cursor] = tile;

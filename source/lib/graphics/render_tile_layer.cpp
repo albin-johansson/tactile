@@ -40,9 +40,9 @@ void render_tile_layer(Graphics& graphics,
   for (auto row = info.bounds.begin.row(); row < end_row; ++row) {
     for (auto col = info.bounds.begin.col(); col < end_col; ++col) {
       const TilePos pos {row, col};
-      const auto tile = layer.tile_at(pos);
-      if (tile != empty_tile) {
-        render_tile(graphics, map, tile, pos, tile_opacity);
+      const auto tile_id = layer.tile_at(pos);
+      if (tile_id.has_value() && tile_id != empty_tile) {
+        render_tile(graphics, map, *tile_id, pos, tile_opacity);
       }
     }
   }

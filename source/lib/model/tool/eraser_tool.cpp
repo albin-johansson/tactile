@@ -87,14 +87,14 @@ auto EraserTool::is_available(const DocumentModel& model) const -> bool
 
 void EraserTool::update_sequence(DocumentModel& model, const TilePos& cursor)
 {
-  auto& document = model.require_active_map_document();
-  auto& map = document.get_map();
+  auto& map_document = model.require_active_map_document();
+  auto& map = map_document.get_map();
 
   const auto layer_id = map.active_layer_id().value();
   auto& layer = map.invisible_root().get_tile_layer(layer_id);
 
   if (mPrevState.find(cursor) == mPrevState.end()) {
-    mPrevState[cursor] = layer.tile_at(cursor);
+    mPrevState[cursor] = layer.tile_at(cursor).value();
   }
 
   layer.set_tile(cursor, empty_tile);
