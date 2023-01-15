@@ -21,8 +21,8 @@
 
 namespace tactile::io {
 
-inline constexpr auto tiled_version = "1.8.2";
-inline constexpr auto tiled_json_format_version = "1.8";
-inline constexpr auto tiled_xml_format_version = "1.8";
+inline constexpr auto tiled_version = "1.9.2";
+inline constexpr auto tiled_json_format_version = "1.7";
+inline constexpr auto tiled_xml_format_version = "1.7";
 
 }  // namespace tactile::io
