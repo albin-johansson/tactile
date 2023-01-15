@@ -21,12 +21,12 @@
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
-#include "app/app_context.hpp"
-#include "app/event/event_handlers.hpp"
 #include "common/util/fmt.hpp"
+#include "handlers/event_handlers.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/model.hpp"
+#include "runtime/app_context.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
 
 namespace tactile {

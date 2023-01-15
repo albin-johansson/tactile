@@ -23,10 +23,9 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "app/app_context.hpp"
-#include "app/event/event_handlers.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/tile/tileset_bundle.hpp"
+#include "handlers/event_handlers.hpp"
 #include "io/load_texture.hpp"
 #include "io/proto/history.hpp"
 #include "io/proto/session.hpp"
@@ -38,6 +37,7 @@
 #include "model/event/view_events.hpp"
 #include "model/model.hpp"
 #include "model/settings.hpp"
+#include "runtime/app_context.hpp"
 #include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"

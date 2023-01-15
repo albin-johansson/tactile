@@ -20,11 +20,11 @@
 #include <entt/signal/dispatcher.hpp>
 #include <spdlog/spdlog.h>
 
-#include "app/app_context.hpp"
-#include "app/event/event_handlers.hpp"
+#include "handlers/event_handlers.hpp"
 #include "model/cmd/command_stack.hpp"
 #include "model/event/command_events.hpp"
 #include "model/model.hpp"
+#include "runtime/app_context.hpp"
 
 namespace tactile {
 namespace {

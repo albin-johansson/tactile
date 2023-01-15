@@ -22,10 +22,9 @@
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
-#include "app/app_context.hpp"
-#include "app/event/event_handlers.hpp"
 #include "common/debug/assert.hpp"
 #include "common/util/fmt.hpp"
+#include "handlers/event_handlers.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/ir/map_from_ir.hpp"
@@ -34,6 +33,7 @@
 #include "model/document/map_document.hpp"
 #include "model/event/map_events.hpp"
 #include "model/model.hpp"
+#include "runtime/app_context.hpp"
 #include "ui/dialog/create_map_dialog.hpp"
 #include "ui/dialog/map_parse_error_dialog.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"

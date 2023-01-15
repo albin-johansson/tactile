@@ -19,12 +19,12 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "app/app_context.hpp"
-#include "app/event/event_handlers.hpp"
 #include "core/context/context_manager.hpp"
+#include "handlers/event_handlers.hpp"
 #include "model/document/document.hpp"
 #include "model/event/property_events.hpp"
 #include "model/model.hpp"
+#include "runtime/app_context.hpp"
 #include "ui/dock/property/dialogs/add_property_dialog.hpp"
 #include "ui/dock/property/dialogs/change_property_type_dialog.hpp"
 #include "ui/dock/property/dialogs/rename_property_dialog.hpp"

@@ -6,13 +6,11 @@ file(GLOB_RECURSE SOURCE_FILES
      CONFIGURE_DEPENDS
      **/*.cpp
      **/*.hpp
-     *.cpp
-     *.hpp
      )
 
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
   message("[Tactile]: Building executable as WIN32 (non-console) executable...")
-  add_executable(${TACTILE_EXE} WIN32 ${SOURCE_FILES} main.cpp)
+  add_executable(${TACTILE_EXE} WIN32 ${SOURCE_FILES} runtime/main.cpp)
 elseif (CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin" AND TACTILE_BUILD_APP_BUNDLE MATCHES ON)
   message("[Tactile]: Building executable as application bundle...")
 
@@ -28,7 +26,7 @@ elseif (CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin" AND TACTILE_BUILD_APP_BUNDLE MA
   # The app icon needs to be in the root Resources folder
   set_property(SOURCE "${RESOURCE_DIR}/Tactile.icns" PROPERTY MACOSX_PACKAGE_LOCATION "Resources/")
 
-  add_executable(${TACTILE_EXE} MACOSX_BUNDLE ${SOURCE_FILES} main.cpp ${TACTILE_BUNDLE_RESOURCES})
+  add_executable(${TACTILE_EXE} MACOSX_BUNDLE ${SOURCE_FILES} runtime/main.cpp ${TACTILE_BUNDLE_RESOURCES})
 
   set_target_properties(${TACTILE_EXE} PROPERTIES
                         MACOSX_BUNDLE TRUE
@@ -41,7 +39,7 @@ elseif (CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin" AND TACTILE_BUILD_APP_BUNDLE MA
                         MACOSX_BUNDLE_ICON_FILE "Tactile"
                         )
 else ()
-  add_executable(${TACTILE_EXE} ${SOURCE_FILES} main.cpp)
+  add_executable(${TACTILE_EXE} ${SOURCE_FILES} runtime/main.cpp)
 endif ()
 
 add_dependencies(${TACTILE_EXE} ${TACTILE_LIB})

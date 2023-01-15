@@ -21,14 +21,14 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "app/app_context.hpp"
-#include "app/event/event_handlers.hpp"
 #include "common/util/fmt.hpp"
+#include "handlers/event_handlers.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/proto/history.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/document_events.hpp"
 #include "model/model.hpp"
+#include "runtime/app_context.hpp"
 #include "ui/dialog/save_as_dialog.hpp"
 
 namespace tactile {

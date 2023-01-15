@@ -24,16 +24,16 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "app/app_context.hpp"
-#include "app/event/event_handlers.hpp"
 #include "common/util/fmt.hpp"
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset_bundle.hpp"
+#include "handlers/event_handlers.hpp"
 #include "io/load_texture.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
+#include "runtime/app_context.hpp"
 #include "ui/dock/tileset/dialogs/create_tileset_dialog.hpp"
 #include "ui/viewport/tileset_viewport.hpp"
 

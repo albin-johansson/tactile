@@ -21,16 +21,16 @@
 #include <imgui.h>
 #include <spdlog/spdlog.h>
 
-#include "app/app_context.hpp"
-#include "app/event/event_handlers.hpp"
 #include "common/debug/assert.hpp"
 #include "common/type/math.hpp"
 #include "common/util/fmt.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/viewport.hpp"
+#include "handlers/event_handlers.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/model.hpp"
+#include "runtime/app_context.hpp"
 #include "ui/conversions.hpp"
 #include "ui/viewport/map_viewport.hpp"
 #include "ui/viewport/tileset_viewport.hpp"
