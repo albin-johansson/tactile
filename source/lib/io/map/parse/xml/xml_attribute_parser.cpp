@@ -85,6 +85,14 @@ namespace {
       value = ObjectRef {as_int(node, "value").value()};
       break;
     }
+    case AttributeType::Float2:
+    case AttributeType::Float3:
+    case AttributeType::Float4:
+    case AttributeType::Int2:
+    case AttributeType::Int3:
+      [[fallthrough]];
+    case AttributeType::Int4:
+      return error(ParseError::UnsupportedPropertyType);
   }
 
   return value;
