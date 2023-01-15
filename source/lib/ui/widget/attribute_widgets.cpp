@@ -22,6 +22,8 @@
 #include <concepts>  // invocable
 #include <utility>   // move, to_underlying
 
+#include <glm/gtc/type_ptr.hpp>
+
 #include "common/type/array.hpp"
 #include "common/util/filesystem.hpp"
 #include "common/util/string_buffer.hpp"
@@ -84,6 +86,51 @@ auto ui_int_input(const char* id, int value) -> Maybe<int>
   return nothing;
 }
 
+auto ui_int2_input(const char* id, Int2 value) -> Maybe<Int2>
+{
+  const Scope scope {id};
+
+  ImGui::SetNextItemWidth(-min_float);
+  if (ImGui::DragInt2("##Int2", glm::value_ptr(value))) {
+    return value;
+  }
+
+  const auto& lang = get_current_language();
+  ui_lazy_tooltip("##Int2Tooltip", lang.misc.type_int2.c_str());
+
+  return nothing;
+}
+
+auto ui_int3_input(const char* id, Int3 value) -> Maybe<Int3>
+{
+  const Scope scope {id};
+
+  ImGui::SetNextItemWidth(-min_float);
+  if (ImGui::DragInt3("##Int3", glm::value_ptr(value))) {
+    return value;
+  }
+
+  const auto& lang = get_current_language();
+  ui_lazy_tooltip("##Int3Tooltip", lang.misc.type_int3.c_str());
+
+  return nothing;
+}
+
+auto ui_int4_input(const char* id, Int4 value) -> Maybe<Int4>
+{
+  const Scope scope {id};
+
+  ImGui::SetNextItemWidth(-min_float);
+  if (ImGui::DragInt4("##Int4", glm::value_ptr(value))) {
+    return value;
+  }
+
+  const auto& lang = get_current_language();
+  ui_lazy_tooltip("##Int4Tooltip", lang.misc.type_int4.c_str());
+
+  return nothing;
+}
+
 auto ui_float_input(const char* id, float value, const float min, const float max)
     -> Maybe<float>
 {
@@ -104,6 +151,78 @@ auto ui_float_input(const char* id, float value, const float min, const float ma
 
   const auto& lang = get_current_language();
   ui_lazy_tooltip("##FloatTooltip", lang.misc.type_float.c_str());
+
+  return nothing;
+}
+
+auto ui_float2_input(const char* id, Float2 value, const float min, const float max)
+    -> Maybe<Float2>
+{
+  const Scope scope {id};
+
+  ImGui::SetNextItemWidth(-min_float);
+
+  if (min != 0 || max != 0) {
+    if (ImGui::SliderFloat2("##Float2", glm::value_ptr(value), min, max)) {
+      return value;
+    }
+  }
+  else {
+    if (ImGui::DragFloat2("##Float2", glm::value_ptr(value))) {
+      return value;
+    }
+  }
+
+  const auto& lang = get_current_language();
+  ui_lazy_tooltip("##Float2Tooltip", lang.misc.type_float2.c_str());
+
+  return nothing;
+}
+
+auto ui_float3_input(const char* id, Float3 value, const float min, const float max)
+    -> Maybe<Float3>
+{
+  const Scope scope {id};
+
+  ImGui::SetNextItemWidth(-min_float);
+
+  if (min != 0 || max != 0) {
+    if (ImGui::SliderFloat3("##Float3", glm::value_ptr(value), min, max)) {
+      return value;
+    }
+  }
+  else {
+    if (ImGui::DragFloat3("##Float3", glm::value_ptr(value))) {
+      return value;
+    }
+  }
+
+  const auto& lang = get_current_language();
+  ui_lazy_tooltip("##Float3Tooltip", lang.misc.type_float3.c_str());
+
+  return nothing;
+}
+
+auto ui_float4_input(const char* id, Float4 value, const float min, const float max)
+    -> Maybe<Float4>
+{
+  const Scope scope {id};
+
+  ImGui::SetNextItemWidth(-min_float);
+
+  if (min != 0 || max != 0) {
+    if (ImGui::SliderFloat4("##Float4", glm::value_ptr(value), min, max)) {
+      return value;
+    }
+  }
+  else {
+    if (ImGui::DragFloat4("##Float4", glm::value_ptr(value))) {
+      return value;
+    }
+  }
+
+  const auto& lang = get_current_language();
+  ui_lazy_tooltip("##Float4Tooltip", lang.misc.type_float4.c_str());
 
   return nothing;
 }
@@ -231,8 +350,44 @@ auto ui_attribute_input(const char* id, const Attribute& value) -> Maybe<Attribu
       }
       break;
     }
+    case AttributeType::Int2: {
+      if (const auto updated = ui_int2_input(id, value.as_int2())) {
+        return updated;
+      }
+      break;
+    }
+    case AttributeType::Int3: {
+      if (const auto updated = ui_int3_input(id, value.as_int3())) {
+        return updated;
+      }
+      break;
+    }
+    case AttributeType::Int4: {
+      if (const auto updated = ui_int4_input(id, value.as_int4())) {
+        return updated;
+      }
+      break;
+    }
     case AttributeType::Float: {
       if (const auto updated = ui_float_input(id, value.as_float())) {
+        return updated;
+      }
+      break;
+    }
+    case AttributeType::Float2: {
+      if (const auto updated = ui_float2_input(id, value.as_float2())) {
+        return updated;
+      }
+      break;
+    }
+    case AttributeType::Float3: {
+      if (const auto updated = ui_float3_input(id, value.as_float3())) {
+        return updated;
+      }
+      break;
+    }
+    case AttributeType::Float4: {
+      if (const auto updated = ui_float4_input(id, value.as_float4())) {
         return updated;
       }
       break;
@@ -272,10 +427,16 @@ auto ui_attribute_type_combo(const AttributeType current_type,
 {
   const auto& lang = get_current_language();
 
-  Array<StringView, 7> type_names;
+  Array<StringView, 13> type_names;
   type_names[std::to_underlying(AttributeType::String)] = lang.misc.type_string.c_str();
   type_names[std::to_underlying(AttributeType::Int)] = lang.misc.type_int.c_str();
+  type_names[std::to_underlying(AttributeType::Int2)] = lang.misc.type_int2.c_str();
+  type_names[std::to_underlying(AttributeType::Int3)] = lang.misc.type_int3.c_str();
+  type_names[std::to_underlying(AttributeType::Int4)] = lang.misc.type_int4.c_str();
   type_names[std::to_underlying(AttributeType::Float)] = lang.misc.type_float.c_str();
+  type_names[std::to_underlying(AttributeType::Float2)] = lang.misc.type_float2.c_str();
+  type_names[std::to_underlying(AttributeType::Float3)] = lang.misc.type_float3.c_str();
+  type_names[std::to_underlying(AttributeType::Float4)] = lang.misc.type_float4.c_str();
   type_names[std::to_underlying(AttributeType::Bool)] = lang.misc.type_bool.c_str();
   type_names[std::to_underlying(AttributeType::Color)] = lang.misc.type_color.c_str();
   type_names[std::to_underlying(AttributeType::Object)] = lang.misc.type_object.c_str();
@@ -283,7 +444,13 @@ auto ui_attribute_type_combo(const AttributeType current_type,
 
   const auto all_types = {AttributeType::String,
                           AttributeType::Int,
+                          AttributeType::Int2,
+                          AttributeType::Int3,
+                          AttributeType::Int4,
                           AttributeType::Float,
+                          AttributeType::Float2,
+                          AttributeType::Float3,
+                          AttributeType::Float4,
                           AttributeType::Bool,
                           AttributeType::Color,
                           AttributeType::Object,

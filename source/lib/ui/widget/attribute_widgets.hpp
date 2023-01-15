@@ -30,11 +30,29 @@
 namespace tactile::ui {
 
 [[nodiscard]] auto ui_int_input(const char* id, int value) -> Maybe<int>;
+[[nodiscard]] auto ui_int2_input(const char* id, Int2 value) -> Maybe<Int2>;
+[[nodiscard]] auto ui_int3_input(const char* id, Int3 value) -> Maybe<Int3>;
+[[nodiscard]] auto ui_int4_input(const char* id, Int4 value) -> Maybe<Int4>;
 
 [[nodiscard]] auto ui_float_input(const char* id,
                                   float value,
                                   float min = 0,
                                   float max = 0) -> Maybe<float>;
+
+[[nodiscard]] auto ui_float2_input(const char* id,
+                                   Float2 value,
+                                   float min = 0,
+                                   float max = 0) -> Maybe<Float2>;
+
+[[nodiscard]] auto ui_float3_input(const char* id,
+                                   Float3 value,
+                                   float min = 0,
+                                   float max = 0) -> Maybe<Float3>;
+
+[[nodiscard]] auto ui_float4_input(const char* id,
+                                   Float4 value,
+                                   float min = 0,
+                                   float max = 0) -> Maybe<Float4>;
 
 [[nodiscard]] auto ui_string_input_with_hint(const char* id,
                                              const char* hint,
