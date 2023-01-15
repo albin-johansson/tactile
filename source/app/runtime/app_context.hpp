@@ -26,7 +26,6 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(AppCfg)
 TACTILE_FWD_DECLARE_CLASS(DocumentModel)
 TACTILE_FWD_DECLARE_STRUCT(WidgetShowState)
 

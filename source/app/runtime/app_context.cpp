@@ -22,60 +22,63 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "common/debug/assert.hpp"
-#include "common/debug/panic.hpp"
 #include "model/model.hpp"
 #include "ui/widget_show_state.hpp"
 
 namespace tactile {
 namespace {
 
-inline cen::window* app_window {};
-inline entt::dispatcher app_dispatcher;
-inline DocumentModel app_model;
-inline WidgetShowState app_widget_show_state;
-inline constinit bool app_font_reload_scheduled = false;
+struct AppState final {
+  cen::window* window {};
+  entt::dispatcher dispatcher;
+  DocumentModel model;
+  WidgetShowState widget_show_state;
+  bool font_reload_scheduled : 1 {};
+};
+
+inline AppState app_state;
 
 }  // namespace
 
 void init_app_context(cen::window& window)
 {
-  app_window = &window;
+  app_state.window = &window;
 }
 
 void request_font_reload()
 {
-  app_font_reload_scheduled = true;
+  app_state.font_reload_scheduled = true;
 }
 
 void handled_font_reload()
 {
-  app_font_reload_scheduled = false;
+  app_state.font_reload_scheduled = false;
 }
 
 auto get_window() -> cen::window&
 {
-  TACTILE_ASSERT(app_window != nullptr);
-  return *app_window;
+  TACTILE_ASSERT(app_state.window != nullptr);
+  return *app_state.window;
 }
 
 auto get_dispatcher() -> entt::dispatcher&
 {
-  return app_dispatcher;
+  return app_state.dispatcher;
 }
 
 auto get_model() -> DocumentModel&
 {
-  return app_model;
+  return app_state.model;
 }
 
 auto get_widget_show_state() -> WidgetShowState&
 {
-  return app_widget_show_state;
+  return app_state.widget_show_state;
 }
 
 auto is_font_reload_scheduled() -> bool
 {
-  return app_font_reload_scheduled;
+  return app_state.font_reload_scheduled;
 }
 
 }  // namespace tactile
