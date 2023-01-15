@@ -136,8 +136,7 @@ void on_offset_document_viewport(const OffsetDocumentViewportEvent& event)
   spdlog::trace("OffsetDocumentViewportEvent(delta: {})", event.delta);
 
   // FIXME possible crash if tileset is removed when offsetting viewport
-  auto& model = get_model();
-  if (auto* document = model.active_document()) {
+  if (auto* document = get_model().active_document()) {
     auto& viewport = document->get_viewport();
     viewport.offset(event.delta);
   }

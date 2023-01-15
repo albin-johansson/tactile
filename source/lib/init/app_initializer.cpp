@@ -30,7 +30,7 @@
 #include "common/type/path.hpp"
 #include "common/util/fmt.hpp"
 #include "io/directories.hpp"
-#include "io/proto/preferences.hpp"
+#include "io/proto/settings.hpp"
 #include "lang/language.hpp"
 #include "system/win32.hpp"
 #include "ui/menu/menu.hpp"
@@ -70,7 +70,9 @@ AppInitializer::AppInitializer()
   load_window_icon(window);
 
   // Configure settings and load the language files
-  io::load_preferences();
+  get_settings().copy_values_from(io::load_settings_from_disk());
+  get_settings().print();
+
   load_languages();
 
   // Initialize Dear ImGui and other UI-related state

@@ -27,7 +27,7 @@
 #include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
 #include "io/file.hpp"
-#include "io/proto/preferences.hpp"
+#include "model/settings.hpp"
 
 namespace tactile {
 namespace {
@@ -98,7 +98,7 @@ void write_json(const JSON& json, const Path& path)
 {
   auto stream = write_file(path, FileType::Text);
 
-  if (io::get_preferences().indent_output) {
+  if (get_settings().test_flag(SETTINGS_INDENT_OUTPUT_BIT)) {
     stream << std::setw(2);
   }
 

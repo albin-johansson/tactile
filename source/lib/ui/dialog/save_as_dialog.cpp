@@ -27,8 +27,8 @@
 
 #include "common/util/fmt.hpp"
 #include "io/file_dialog.hpp"
-#include "io/proto/preferences.hpp"
 #include "model/event/document_events.hpp"
+#include "model/settings.hpp"
 
 namespace tactile::ui {
 
@@ -43,7 +43,7 @@ void show_save_as_dialog(entt::dispatcher& dispatcher)
                                      ext == ".tmj" || ext == ".tmx" || ext == ".xml";
 
     if (!has_valid_extension) {
-      const auto& format = io::get_preferences().preferred_format;
+      const auto& format = get_settings().get_preferred_format();
       spdlog::warn("Invalid file extension {}, assuming '{}'", ext, format);
 
       if (format == "YAML") {

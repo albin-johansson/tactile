@@ -24,8 +24,8 @@
 
 #include "graphics/graphics.hpp"
 #include "graphics/render.hpp"
-#include "io/proto/preferences.hpp"
 #include "model/document/tileset_document.hpp"
+#include "model/settings.hpp"
 #include "ui/conversions.hpp"
 
 namespace tactile::ui {
@@ -40,9 +40,9 @@ void render_tileset(Graphics& graphics, const TilesetDocument& document)
 
   render_image(texture, rendered_position, rendered_size);
 
-  const auto& prefs = io::get_preferences();
-  if (prefs.show_grid) {
-    graphics.render_infinite_grid(to_u32(prefs.grid_color));
+  const auto& settings = get_settings();
+  if (settings.test_flag(SETTINGS_SHOW_GRID_BIT)) {
+    graphics.render_infinite_grid(to_u32(settings.get_grid_color()));
   }
 
   const auto& color = to_color(ImGui::GetStyle().Colors[ImGuiCol_HeaderActive]);

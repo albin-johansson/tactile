@@ -21,7 +21,7 @@
 
 #include <doctest/doctest.h>
 
-#include "io/proto/preferences.hpp"
+#include "model/settings.hpp"
 
 namespace tactile::test {
 namespace {
@@ -50,7 +50,7 @@ TEST_SUITE("CommandStack")
   {
     const CommandStack stack;
     REQUIRE(stack.size() == 0u);
-    REQUIRE(io::get_preferences().command_capacity == stack.capacity());
+    REQUIRE(stack.capacity() == get_settings().get_command_capacity());
     REQUIRE(!stack.can_undo());
     REQUIRE(!stack.can_redo());
     REQUIRE(stack.is_clean());

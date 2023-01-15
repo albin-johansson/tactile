@@ -25,9 +25,9 @@
 #include "common/debug/panic.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/util/assoc.hpp"
-#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/settings.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -174,17 +174,20 @@ void ui_logged_message_view(const Strings& lang, const usize message_count)
 
 void update_log_dock()
 {
-  auto& prefs = io::get_preferences();
+  auto& settings = get_settings();
 
-  if (!prefs.show_log_dock) {
+  if (!settings.test_flag(SETTINGS_SHOW_LOG_DOCK_BIT)) {
     return;
   }
 
   const auto& lang = get_current_language();
 
+  bool show_log_dock = true;
   const Window dock {lang.window.log_dock.c_str(),
                      ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
-                     &prefs.show_log_dock};
+                     &show_log_dock};
+  settings.set_flag(SETTINGS_SHOW_LOG_DOCK_BIT, show_log_dock);
+
   is_dock_focused = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {

@@ -29,11 +29,11 @@
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "core/context/context_manager.hpp"
-#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
+#include "model/settings.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"
@@ -114,17 +114,19 @@ void show_contents(const Document& document, entt::dispatcher& dispatcher)
 
 void update_component_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  auto& prefs = io::get_preferences();
+  auto& settings = get_settings();
 
-  if (!prefs.show_component_dock) {
+  if (!settings.test_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT)) {
     return;
   }
 
   const auto& lang = get_current_language();
 
+  bool show_component_dock = true;
   const Window dock {lang.window.component_dock.c_str(),
                      ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
-                     &prefs.show_component_dock};
+                     &show_component_dock};
+  settings.set_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT, show_component_dock);
 
   if (dock.is_open()) {
     const auto& document = model.require_active_document();

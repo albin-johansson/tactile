@@ -24,25 +24,14 @@
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "io/directories.hpp"
-#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/settings.hpp"
 
 namespace tactile::ui {
 namespace {
 
 constinit Maybe<ImGuiID> dock_root_id;
-
-void reset_dock_visibilities()
-{
-  auto& prefs = io::get_preferences();
-  prefs.show_layer_dock = io::def_show_layer_dock;
-  prefs.show_tileset_dock = io::def_show_tileset_dock;
-  prefs.show_property_dock = io::def_show_property_dock;
-  prefs.show_component_dock = io::def_show_component_dock;
-  prefs.show_log_dock = io::def_show_log_dock;
-  prefs.show_animation_dock = io::def_show_animation_dock;
-}
 
 }  // namespace
 
@@ -54,9 +43,10 @@ void update_dock_space()
   if (!initialized) {
     const auto size = ImGui::GetMainViewport()->Size;
     if (size.x > 0 && size.y > 0) {
-      const auto& prefs = io::get_preferences();
+      const auto& settings = get_settings();
 
-      if (!prefs.restore_layout || !fs::exists(io::widget_ini_path())) {
+      if (!settings.test_flag(SETTINGS_RESTORE_LAYOUT_BIT) ||
+          !fs::exists(io::widget_ini_path())) {
         load_default_layout(dock_root_id.value(), false);
       }
 
@@ -89,7 +79,7 @@ void load_default_layout(ImGuiID id, const bool reset_visibility)
   ImGui::DockBuilderFinish(id);
 
   if (reset_visibility) {
-    reset_dock_visibilities();
+    get_settings().reset_dock_visibilities();
   }
 }
 

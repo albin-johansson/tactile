@@ -32,7 +32,6 @@
 #include "graphics/render.hpp"
 #include "graphics/render_info.hpp"
 #include "graphics/render_map.hpp"
-#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "map_viewport_overlay.hpp"
@@ -43,6 +42,7 @@
 #include "model/event/tool_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/model.hpp"
+#include "model/settings.hpp"
 #include "ui/conversions.hpp"
 #include "ui/viewport/preview/tool_preview_renderer.hpp"
 #include "ui/widget/scoped.hpp"
@@ -243,7 +243,7 @@ void show_map_viewport(const DocumentModel& model,
 
   Graphics graphics {info};
 
-  graphics.clear(to_u32(io::get_preferences().viewport_background));
+  graphics.clear(to_u32(get_settings().get_viewport_bg_color()));
   graphics.push_canvas_clip();
 
   // TODO viewport should be centered by default

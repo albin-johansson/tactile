@@ -32,9 +32,9 @@
 #include "io/file.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
-#include "io/proto/preferences.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/yaml.hpp"
+#include "model/settings.hpp"
 
 namespace tactile::io {
 namespace {
@@ -157,27 +157,27 @@ void emit_plain_tile_layer_data(YAML::Emitter& emitter,
                                 const ir::TileLayerData& data,
                                 const TileExtent extent)
 {
-  const auto& prefs = get_preferences();
+  const auto& settings = get_settings();
+  const bool fold_tile_data = settings.test_flag(SETTINGS_FOLD_TILE_DATA_BIT);
 
   emitter << YAML::Key << "data";
 
   std::stringstream stream;
   for (usize row = 0; row < extent.rows; ++row) {
     for (usize col = 0; col < extent.cols; ++col) {
-      if ((prefs.fold_tile_data && col != 0) ||
-          (!prefs.fold_tile_data && (row != 0 || col != 0))) {
+      if ((fold_tile_data && col != 0) || (!fold_tile_data && (row != 0 || col != 0))) {
         stream << ' ';
       }
 
       stream << data.tiles[row][col];
     }
 
-    if (prefs.fold_tile_data && row < (extent.rows - 1)) {
+    if (fold_tile_data && row < (extent.rows - 1)) {
       stream << '\n';
     }
   }
 
-  if (prefs.fold_tile_data) {
+  if (fold_tile_data) {
     emitter << YAML::Literal << stream.str();
   }
   else {

@@ -25,13 +25,13 @@
 
 #include "core/tile/tileset_bundle.hpp"
 #include "core/viewport.hpp"
-#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/model.hpp"
+#include "model/settings.hpp"
 #include "tileset_tabs.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"
@@ -47,25 +47,28 @@ constinit bool dock_has_hover = false;
 
 void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  auto& prefs = io::get_preferences();
+  auto& settings = get_settings();
 
-  if (!prefs.show_tileset_dock) {
+  if (!settings.test_flag(SETTINGS_SHOW_TILESET_DOCK_BIT)) {
     return;
   }
 
   const auto& lang = get_current_language();
 
+  bool show_tileset_dock = true;
   const Window dock {lang.window.tileset_dock.c_str(),
                      ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
-                     &prefs.show_tileset_dock};
+                     &show_tileset_dock};
+
+  settings.set_flag(SETTINGS_SHOW_TILESET_DOCK_BIT, show_tileset_dock);
 
   // We intentionally do not use the window is_hovered function here
   dock_has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
   dock_has_hover = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
-    const auto& document = model.require_active_map_document();
-    const auto& map = document.get_map();
+    const auto& map_document = model.require_active_map_document();
+    const auto& map = map_document.get_map();
 
     if (map.get_tileset_bundle().empty()) {
       prepare_vertical_alignment_center(2);

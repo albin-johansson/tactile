@@ -23,10 +23,10 @@
 #include <imgui_internal.h>
 
 #include "core/viewport.hpp"
-#include "io/proto/preferences.hpp"
 #include "model/event/view_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/model.hpp"
+#include "model/settings.hpp"
 #include "ui/fonts.hpp"
 #include "ui/shortcut/mappings.hpp"
 #include "ui/ui.hpp"
@@ -196,8 +196,7 @@ ToggleGridShortcut::ToggleGridShortcut()
 
 void ToggleGridShortcut::activate(entt::dispatcher&)
 {
-  auto& prefs = io::get_preferences();
-  prefs.show_grid = !prefs.show_grid;
+  get_settings().negate_flag(SETTINGS_SHOW_GRID_BIT);
 }
 
 /* ------------------------------------------------------------------------------------ */
@@ -209,8 +208,7 @@ ToggleLayerHighlightShortcut::ToggleLayerHighlightShortcut()
 
 void ToggleLayerHighlightShortcut::activate(entt::dispatcher&)
 {
-  auto& prefs = io::get_preferences();
-  prefs.highlight_active_layer = !prefs.highlight_active_layer;
+  get_settings().negate_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT);
 }
 
 auto ToggleLayerHighlightShortcut::is_enabled(const DocumentModel& model) const -> bool

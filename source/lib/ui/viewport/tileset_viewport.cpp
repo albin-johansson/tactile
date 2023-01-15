@@ -29,12 +29,12 @@
 #include "graphics/graphics.hpp"
 #include "graphics/render_info.hpp"
 #include "graphics/render_tileset.hpp"
-#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/tileset_document.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
+#include "model/settings.hpp"
 #include "ui/conversions.hpp"
 #include "ui/viewport/document_viewport_offset_handler.hpp"
 #include "ui/viewport/viewport_cursor_info.hpp"
@@ -141,7 +141,7 @@ void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& di
   update_document_viewport_offset(render_info.canvas_size, dispatcher);
 
   Graphics graphics {render_info};
-  graphics.clear(to_u32(io::get_preferences().viewport_background));
+  graphics.clear(to_u32(get_settings().get_viewport_bg_color()));
 
   graphics.push_canvas_clip();
 

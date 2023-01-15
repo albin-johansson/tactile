@@ -29,14 +29,15 @@
 #include "core/tile/tileset_bundle.hpp"
 #include "io/load_texture.hpp"
 #include "io/proto/history.hpp"
-#include "io/proto/preferences.hpp"
 #include "io/proto/session.hpp"
+#include "io/proto/settings.hpp"
 #include "model/cmd/commands.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/event/view_events.hpp"
 #include "model/model.hpp"
+#include "model/settings.hpp"
 #include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
@@ -69,7 +70,7 @@ void App::on_startup()
 {
   io::load_file_history();
 
-  if (io::get_preferences().restore_last_session) {
+  if (get_settings().test_flag(SETTINGS_RESTORE_LAST_SESSION_BIT)) {
     auto& model = get_model();
     io::session_restore_previous(model);
   }
@@ -80,7 +81,7 @@ void App::on_startup()
 void App::on_shutdown()
 {
   save_current_files_to_history();
-  io::save_preferences();
+  io::save_settings_to_disk(get_settings());
   io::session_save(get_model());
   io::save_file_history();
 

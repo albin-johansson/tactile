@@ -30,12 +30,12 @@
 #include "common/util/assoc.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "io/proto/history.hpp"
-#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
 #include "model/model.hpp"
+#include "model/settings.hpp"
 #include "ui/fonts.hpp"
 
 namespace tactile {
@@ -72,7 +72,7 @@ void update_map_menu(const MapDocument* map_document)
 
 void update_view_menu(const Document* document, const MapDocument* map_document)
 {
-  const auto& prefs = io::get_preferences();
+  const auto& settings = get_settings();
   const auto is_document_open = document != nullptr;
   const auto is_map_active = map_document != nullptr;
 
@@ -85,7 +85,8 @@ void update_view_menu(const Document* document, const MapDocument* map_document)
 
   menu_set_enabled(MenuAction::IncreaseFontSize, ui::can_increase_font_size());
   menu_set_enabled(MenuAction::DecreaseFontSize, ui::can_decrease_font_size());
-  menu_set_enabled(MenuAction::ResetFontSize, !prefs.use_default_font);
+  menu_set_enabled(MenuAction::ResetFontSize,
+                   !settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT));
 
   menu_set_enabled(MenuAction::PanUp, is_document_open);
   menu_set_enabled(MenuAction::PanDown, is_document_open);

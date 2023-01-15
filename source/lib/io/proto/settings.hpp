@@ -17,24 +17,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "fonts.hpp"
+#pragma once
 
+#include "common/macros.hpp"
+#include "common/type/maybe.hpp"
 #include "model/settings.hpp"
 
-namespace tactile::ui {
+namespace tactile::io {
 
-auto can_increase_font_size() -> bool
-{
-  const auto& settings = get_settings();
-  return !settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) &&
-         settings.get_font_size() < max_font_size;
-}
+/// Parses the persistent settings, or returns the default ones if there are none.
+[[nodiscard]] auto load_settings_from_disk() -> Settings;
 
-auto can_decrease_font_size() -> bool
-{
-  const auto& settings = get_settings();
-  return !settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) &&
-         settings.get_font_size() > min_font_size;
-}
+/// Saves settings to the persistent file directory.
+void save_settings_to_disk(const Settings& settings);
 
-}  // namespace tactile::ui
+}  // namespace tactile::io

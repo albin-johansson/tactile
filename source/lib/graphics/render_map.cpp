@@ -28,8 +28,8 @@
 #include "graphics/graphics.hpp"
 #include "graphics/render_object_layer.hpp"
 #include "graphics/render_tile_layer.hpp"
-#include "io/proto/preferences.hpp"
 #include "model/document/map_document.hpp"
+#include "model/settings.hpp"
 #include "ui/conversions.hpp"
 
 namespace tactile::ui {
@@ -68,7 +68,7 @@ void render_layer(Graphics& graphics,
 
 void render_layers(Graphics& graphics, const Map& map)
 {
-  const auto& prefs = io::get_preferences();
+  const auto& settings = get_settings();
   const auto& root = map.get_invisible_root();
   const auto active_layer_id = map.get_active_layer_id();
 
@@ -85,7 +85,7 @@ void render_layers(Graphics& graphics, const Map& map)
     }
 
     const auto parent_opacity = parent_layer ? parent_layer->get_opacity() : 1.0f;
-    if (prefs.highlight_active_layer) {
+    if (settings.test_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT)) {
       render_layer(graphics,
                    map,
                    layer,
@@ -101,7 +101,7 @@ void render_layers(Graphics& graphics, const Map& map)
 
 void render_map(Graphics& graphics, const MapDocument& document)
 {
-  const auto& prefs = io::get_preferences();
+  const auto& settings = get_settings();
   const auto& map = document.get_map();
 
   render_layers(graphics, map);
@@ -110,8 +110,8 @@ void render_map(Graphics& graphics, const MapDocument& document)
     highlight_active_object(graphics, map, *active_layer_id);
   }
 
-  if (prefs.show_grid) {
-    graphics.render_infinite_grid(to_u32(prefs.grid_color));
+  if (settings.test_flag(SETTINGS_SHOW_GRID_BIT)) {
+    graphics.render_infinite_grid(to_u32(settings.get_grid_color()));
   }
 
   const auto& color = to_color(ImGui::GetStyle().Colors[ImGuiCol_HeaderActive]);

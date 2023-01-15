@@ -28,7 +28,7 @@
 #include "graphics/graphics.hpp"
 #include "graphics/render.hpp"
 #include "graphics/render_info.hpp"
-#include "io/proto/preferences.hpp"
+#include "io/proto/settings.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
 #include "model/event/tileset_events.hpp"
@@ -102,7 +102,7 @@ void update_tileset_view(const DocumentModel& model,
   update_viewport_offset(tileset_ref, info.canvas_size, dispatcher);
 
   Graphics graphics {info};
-  graphics.clear(to_u32(io::get_preferences().viewport_background));
+  graphics.clear(to_u32(get_settings().get_viewport_bg_color()));
 
   const auto offset = from_vec(viewport.get_offset());
   const auto tile_size = from_vec(tileset.tile_size());
@@ -121,9 +121,7 @@ void update_tileset_view(const DocumentModel& model,
     render_selection(*selection, position, tile_size);
   }
 
-  const auto& prefs = io::get_preferences();
-  graphics.render_translated_grid(to_u32(prefs.grid_color));
-
+  graphics.render_translated_grid(to_u32(get_settings().get_grid_color()));
   graphics.pop_clip();
 }
 

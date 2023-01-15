@@ -33,7 +33,6 @@
 #include "core/map.hpp"
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset.hpp"
-#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/tileset_document.hpp"
@@ -44,6 +43,7 @@
 #include "model/event/property_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
+#include "model/settings.hpp"
 #include "ui/dock/property/dialogs/add_property_dialog.hpp"
 #include "ui/dock/property/dialogs/change_property_type_dialog.hpp"
 #include "ui/dock/property/dialogs/rename_property_dialog.hpp"
@@ -494,17 +494,20 @@ void update_property_table(const DocumentModel& model, entt::dispatcher& dispatc
 
 void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  auto& prefs = io::get_preferences();
+  auto& settings = get_settings();
 
-  if (!prefs.show_property_dock) {
+  if (!settings.test_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT)) {
     return;
   }
 
   const auto& lang = get_current_language();
 
+  bool show_property_dock = true;
   const Window window {lang.window.property_dock.c_str(),
                        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
-                       &prefs.show_property_dock};
+                       &show_property_dock};
+
+  settings.set_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT, show_property_dock);
   is_focused = window.has_focus();
 
   if (window.is_open()) {

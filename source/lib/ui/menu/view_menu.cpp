@@ -23,11 +23,11 @@
 #include <imgui.h>
 
 #include "core/viewport.hpp"
-#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "menu.hpp"
 #include "model/model.hpp"
+#include "model/settings.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/shortcut/mappings.hpp"
 #include "ui/widget/scoped.hpp"
@@ -48,45 +48,47 @@ void update_widgets_menu(const DocumentModel& model)
 
     ImGui::Separator();
 
-    auto& prefs = io::get_preferences();
+    auto& settings = get_settings();
 
     if (ImGui::MenuItem(lang.window.property_dock.c_str(),
                         nullptr,
-                        prefs.show_property_dock)) {
-      prefs.show_property_dock = !prefs.show_property_dock;
+                        settings.test_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT))) {
+      settings.negate_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT);
     }
 
     {
       const Disable disable_unless_map {!model.is_map_active()};
       if (ImGui::MenuItem(lang.window.layer_dock.c_str(),
                           nullptr,
-                          prefs.show_layer_dock)) {
-        prefs.show_layer_dock = !prefs.show_layer_dock;
+                          settings.test_flag(SETTINGS_SHOW_LAYER_DOCK_BIT))) {
+        settings.negate_flag(SETTINGS_SHOW_LAYER_DOCK_BIT);
       }
 
       if (ImGui::MenuItem(lang.window.tileset_dock.c_str(),
                           nullptr,
-                          prefs.show_tileset_dock)) {
-        prefs.show_tileset_dock = !prefs.show_tileset_dock;
+                          settings.test_flag(SETTINGS_SHOW_TILESET_DOCK_BIT))) {
+        settings.negate_flag(SETTINGS_SHOW_TILESET_DOCK_BIT);
       }
     }
 
-    if (ImGui::MenuItem(lang.window.log_dock.c_str(), nullptr, prefs.show_log_dock)) {
-      prefs.show_log_dock = !prefs.show_log_dock;
+    if (ImGui::MenuItem(lang.window.log_dock.c_str(),
+                        nullptr,
+                        settings.test_flag(SETTINGS_SHOW_LOG_DOCK_BIT))) {
+      settings.negate_flag(SETTINGS_SHOW_LOG_DOCK_BIT);
     }
 
     if (ImGui::MenuItem(lang.window.component_dock.c_str(),
                         nullptr,
-                        prefs.show_component_dock)) {
-      prefs.show_component_dock = !prefs.show_component_dock;
+                        settings.test_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT))) {
+      settings.negate_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT);
     }
 
     {
       const Disable disable_unless_tileset {!model.is_tileset_active()};
       if (ImGui::MenuItem(lang.window.animation_dock.c_str(),
                           nullptr,
-                          prefs.show_animation_dock)) {
-        prefs.show_animation_dock = !prefs.show_animation_dock;
+                          settings.test_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT))) {
+        settings.negate_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT);
       }
     }
   }
@@ -95,12 +97,12 @@ void update_widgets_menu(const DocumentModel& model)
 void update_quick_theme_menu(const Strings& lang)
 {
   if (const Menu theme_menu {lang.action.quick_theme.c_str()}; theme_menu.is_open()) {
-    auto& prefs = io::get_preferences();
+    auto& settings = get_settings();
 
     auto theme_item = [&](const EditorTheme theme) {
-      const auto is_current = prefs.theme == theme;
+      const auto is_current = settings.get_theme() == theme;
       if (ImGui::MenuItem(human_readable_name(theme).data(), nullptr, is_current)) {
-        prefs.theme = theme;
+        settings.set_theme(theme);
         apply_theme(ImGui::GetStyle(), theme);
       }
     };
@@ -120,21 +122,21 @@ void update_quick_theme_menu(const Strings& lang)
 void update_quick_lang_menu(const Strings& lang)
 {
   if (const Menu lang_menu {lang.action.quick_language.c_str()}; lang_menu.is_open()) {
-    auto& prefs = io::get_preferences();
+    auto& settings = get_settings();
     if (ImGui::MenuItem("English (US)")) {
-      prefs.language = Lang::EN;
+      settings.set_language(Lang::EN);
       reset_layout();
       menu_translate(get_current_language());
     }
 
     if (ImGui::MenuItem("English (GB)")) {
-      prefs.language = Lang::EN_GB;
+      settings.set_language(Lang::EN_GB);
       reset_layout();
       menu_translate(get_current_language());
     }
 
     if (ImGui::MenuItem("Svenska")) {
-      prefs.language = Lang::SV;
+      settings.set_language(Lang::SV);
       reset_layout();
       menu_translate(get_current_language());
     }

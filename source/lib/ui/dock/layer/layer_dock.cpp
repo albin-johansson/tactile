@@ -26,13 +26,13 @@
 #include "common/debug/assert.hpp"
 #include "common/type/maybe.hpp"
 #include "core/layer/group_layer.hpp"
-#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "layer_selectable.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/model.hpp"
+#include "model/settings.hpp"
 #include "ui/constants.hpp"
 #include "ui/dock/layer/dialogs/rename_layer_dialog.hpp"
 #include "ui/style/alignment.hpp"
@@ -143,17 +143,20 @@ void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
   TACTILE_ASSERT(model.has_active_document());
 
-  auto& prefs = io::get_preferences();
+  auto& settings = get_settings();
 
-  if (!prefs.show_layer_dock) {
+  if (!settings.test_flag(SETTINGS_SHOW_LAYER_DOCK_BIT)) {
     return;
   }
 
   const auto& lang = get_current_language();
 
+  bool show_layer_dock = true;
   const Window dock {lang.window.layer_dock.c_str(),
                      ImGuiWindowFlags_NoCollapse,
-                     &prefs.show_layer_dock};
+                     &show_layer_dock};
+  settings.set_flag(SETTINGS_SHOW_LAYER_DOCK_BIT, show_layer_dock);
+
   is_focused = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {

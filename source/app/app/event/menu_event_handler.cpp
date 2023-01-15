@@ -24,9 +24,9 @@
 #include "app/event/event_handlers.hpp"
 #include "common/util/filesystem.hpp"
 #include "io/proto/history.hpp"
-#include "io/proto/preferences.hpp"
 #include "model/event/all.hpp"
 #include "model/model.hpp"
+#include "model/settings.hpp"
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/credits_dialog.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
@@ -42,7 +42,7 @@ void dispatch_menu_action(const MenuAction action)
 {
   const auto& model = get_model();
   auto& dispatcher = get_dispatcher();
-  auto& prefs = io::get_preferences();
+  auto& settings = get_settings();
 
   switch (action) {
     case MenuAction::NewMap:
@@ -127,7 +127,7 @@ void dispatch_menu_action(const MenuAction action)
       break;
 
     case MenuAction::ToggleGrid:
-      prefs.show_grid = !prefs.show_grid;
+      settings.negate_flag(SETTINGS_SHOW_GRID_BIT);
       break;
 
     case MenuAction::IncreaseZoom:
@@ -171,7 +171,7 @@ void dispatch_menu_action(const MenuAction action)
       break;
 
     case MenuAction::HighlightLayer:
-      prefs.highlight_active_layer = !prefs.highlight_active_layer;
+      settings.negate_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT);
       break;
 
     case MenuAction::ToggleUi:

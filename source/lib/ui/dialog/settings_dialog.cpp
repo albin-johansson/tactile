@@ -24,11 +24,11 @@
 #include <imgui_internal.h>
 
 #include "common/numeric.hpp"
-#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/command_events.hpp"
 #include "model/event/view_events.hpp"
+#include "model/settings.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/fonts.hpp"
@@ -42,24 +42,33 @@
 namespace tactile::ui {
 namespace {
 
-inline io::PreferenceState dialog_old_settings;
-inline io::PreferenceState dialog_ui_settings;
+inline Settings dialog_old_settings;
+inline Settings dialog_ui_settings;
 inline constinit bool open_dialog = false;
+
+void ui_flag_checkbox(const SettingsFlagBits flag,
+                      const char* label,
+                      const char* tooltip = nullptr)
+{
+  bool value = dialog_ui_settings.test_flag(flag);
+  ui_checkbox(label, &value, tooltip);
+  dialog_ui_settings.set_flag(flag, value);
+}
 
 void ui_lang_combo()
 {
-  if (const Combo combo {"##Lang", get_language_name(dialog_ui_settings.language)};
+  if (const Combo combo {"##Lang", get_language_name(dialog_ui_settings.get_language())};
       combo.is_open()) {
     if (ImGui::MenuItem(get_language_name(Lang::EN))) {
-      dialog_ui_settings.language = Lang::EN;
+      dialog_ui_settings.set_language(Lang::EN);
     }
 
     if (ImGui::MenuItem(get_language_name(Lang::EN_GB))) {
-      dialog_ui_settings.language = Lang::EN_GB;
+      dialog_ui_settings.set_language(Lang::EN_GB);
     }
 
     if (ImGui::MenuItem(get_language_name(Lang::SV))) {
-      dialog_ui_settings.language = Lang::SV;
+      dialog_ui_settings.set_language(Lang::SV);
     }
   }
 }
@@ -69,13 +78,13 @@ void ui_theme_combo()
   auto show_themes = [](auto& themes) {
     for (const auto theme: themes) {
       if (Selectable::Property(human_readable_name(theme).data())) {
-        dialog_ui_settings.theme = theme;
+        dialog_ui_settings.set_theme(theme);
         apply_theme(ImGui::GetStyle(), theme);
       }
     }
   };
 
-  const auto current_theme = human_readable_name(dialog_ui_settings.theme);
+  const auto current_theme = human_readable_name(dialog_ui_settings.get_theme());
   if (const Combo combo {"##Theme", current_theme.data()}; combo.is_open()) {
     show_themes(light_themes);
     ImGui::Separator();
@@ -86,77 +95,51 @@ void ui_theme_combo()
 void ui_map_format_combo()
 {
   if (const Combo format("##PreferredFormat",
-                         dialog_ui_settings.preferred_format.c_str());
+                         dialog_ui_settings.get_preferred_format().c_str());
       format.is_open()) {
     if (ImGui::MenuItem("YAML")) {
-      dialog_ui_settings.preferred_format = "YAML";
+      dialog_ui_settings.set_preferred_format("YAML");
     }
 
     if (ImGui::MenuItem("JSON")) {
-      dialog_ui_settings.preferred_format = "JSON";
+      dialog_ui_settings.set_preferred_format("JSON");
     }
 
     if (ImGui::MenuItem("XML (TMX)")) {
-      dialog_ui_settings.preferred_format = "XML";
+      dialog_ui_settings.set_preferred_format("XML");
     }
   }
 }
 
-void reset_appearance_preferences(io::PreferenceState& prefs)
+void update_preview_settings(const Settings& settings)
 {
-  prefs.language = io::def_language;
-  prefs.theme = io::def_theme;
-  prefs.viewport_background = io::def_viewport_bg;
-  prefs.grid_color = io::def_grid_color;
-
-  prefs.window_border = io::def_window_border;
-  prefs.show_grid = io::def_show_grid;
-
-  prefs.restore_layout = io::def_restore_layout;
-  prefs.use_default_font = io::def_use_default_font;
-  prefs.font_size = ui::def_font_size;
-}
-
-void reset_behavior_preferences(io::PreferenceState& prefs)
-{
-  prefs.command_capacity = io::def_command_capacity;
-  prefs.preferred_tile_size = io::def_preferred_tile_size;
-  prefs.restore_last_session = io::def_restore_last_session;
-}
-
-void reset_export_preferences(io::PreferenceState& prefs)
-{
-  prefs.preferred_format = io::def_preferred_format;
-  prefs.embed_tilesets = io::def_embed_tilesets;
-  prefs.indent_output = io::def_indent_output;
-  prefs.fold_tile_data = io::def_fold_tile_data;
-}
-
-void update_preview_settings(const io::PreferenceState& prefs)
-{
-  apply_theme(ImGui::GetStyle(), prefs.theme);
-  ImGui::GetStyle().WindowBorderSize = prefs.window_border ? 1.0f : 0.0f;
+  apply_theme(ImGui::GetStyle(), settings.get_theme());
+  ImGui::GetStyle().WindowBorderSize =
+      settings.test_flag(SETTINGS_WINDOW_BORDER_BIT) ? 1.0f : 0.0f;
 }
 
 void apply_current_settings(entt::dispatcher& dispatcher)
 {
-  io::set_preferences(dialog_ui_settings);
+  get_settings().copy_values_from(dialog_ui_settings);
 
-  if (dialog_ui_settings.language != dialog_old_settings.language) {
+  if (dialog_ui_settings.get_language() != dialog_old_settings.get_language()) {
     reset_layout();
     menu_translate(get_current_language());
   }
 
-  if (dialog_ui_settings.command_capacity != dialog_old_settings.command_capacity) {
-    dispatcher.enqueue<SetCommandCapacityEvent>(dialog_ui_settings.command_capacity);
+  if (dialog_ui_settings.get_command_capacity() !=
+      dialog_old_settings.get_command_capacity()) {
+    dispatcher.enqueue<SetCommandCapacityEvent>(
+        dialog_ui_settings.get_command_capacity());
   }
 
-  if (dialog_ui_settings.use_default_font != dialog_old_settings.use_default_font ||
-      dialog_ui_settings.font_size != dialog_old_settings.font_size) {
+  if (dialog_ui_settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) !=
+          dialog_old_settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) ||
+      dialog_ui_settings.get_font_size() != dialog_old_settings.get_font_size()) {
     dispatcher.enqueue<ReloadFontsEvent>();
   }
 
-  dialog_old_settings = dialog_ui_settings;
+  dialog_old_settings.copy_values_from(dialog_ui_settings);
 }
 
 void update_behavior_tab(const Strings& lang)
@@ -165,35 +148,31 @@ void update_behavior_tab(const Strings& lang)
     ImGui::Spacing();
 
     if (ui_button(lang.setting.restore_defaults.c_str())) {
-      reset_behavior_preferences(dialog_ui_settings);
+      dialog_ui_settings.reset_behavior_values();
       update_preview_settings(dialog_ui_settings);
     }
 
     ImGui::Spacing();
 
-    ui_checkbox(lang.setting.restore_last_session.c_str(),
-                &dialog_ui_settings.restore_last_session);
+    ui_flag_checkbox(SETTINGS_RESTORE_LAST_SESSION_BIT,
+                     lang.setting.restore_last_session.c_str());
+
+    auto preferred_tile_size = dialog_ui_settings.get_preferred_tile_size();
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.setting.pref_tile_width.c_str());
     ImGui::SameLine();
-    ImGui::DragInt("##PreferredTileWidth",
-                   &dialog_ui_settings.preferred_tile_size.x,
-                   1.0f,
-                   1,
-                   10'000);
+    ImGui::DragInt("##PreferredTileWidth", &preferred_tile_size.x, 1.0f, 1, 10'000);
     ui_lazy_tooltip("##PreferredTileWidthToolTip", lang.tooltip.pref_tile_width.c_str());
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.setting.pref_tile_height.c_str());
     ImGui::SameLine();
-    ImGui::DragInt("##PreferredTileHeight",
-                   &dialog_ui_settings.preferred_tile_size.y,
-                   1.0f,
-                   1,
-                   10'000);
+    ImGui::DragInt("##PreferredTileHeight", &preferred_tile_size.y, 1.0f, 1, 10'000);
     ui_lazy_tooltip("##PreferredTileHeightToolTip",
                     lang.tooltip.pref_tile_height.c_str());
+
+    dialog_ui_settings.set_preferred_tile_size(preferred_tile_size);
 
     // TODO "RMB with stamp tool works as eraser"
 
@@ -201,16 +180,18 @@ void update_behavior_tab(const Strings& lang)
     ImGui::TextUnformatted(lang.setting.command_capacity.c_str());
     ImGui::SameLine();
 
+    uint64 command_capacity = dialog_ui_settings.get_command_capacity();
     const uint64 min_cmd_capacity = 10;
     const uint64 max_cmd_capacity = 1'000;
     ImGui::DragScalar("##CommandCapacity",
                       ImGuiDataType_U64,
-                      &dialog_ui_settings.command_capacity,
+                      &command_capacity,
                       1.0f,
                       &min_cmd_capacity,
                       &max_cmd_capacity);
-
     ui_lazy_tooltip("##CommandCapacityTooltip", lang.tooltip.command_capacity.c_str());
+
+    dialog_ui_settings.set_command_capacity(command_capacity);
   }
 }
 
@@ -220,7 +201,7 @@ void update_appearance_tab(const Strings& lang)
     ImGui::Spacing();
 
     if (ui_button(lang.setting.restore_defaults.c_str())) {
-      reset_appearance_preferences(dialog_ui_settings);
+      dialog_ui_settings.reset_appearance_values();
       update_preview_settings(dialog_ui_settings);
     }
 
@@ -240,55 +221,58 @@ void update_appearance_tab(const Strings& lang)
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    if (auto rgba = dialog_ui_settings.viewport_background.as_float_array();
+    if (auto rgba = dialog_ui_settings.get_viewport_bg_color().as_float_array();
         ImGui::ColorEdit3(lang.setting.viewport_bg_color.c_str(),
                           rgba.data(),
                           ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoAlpha)) {
       const auto color = Color::from_norm(rgba.at(0), rgba.at(1), rgba.at(2));
-      dialog_ui_settings.viewport_background = color;
+      dialog_ui_settings.set_viewport_bg_color(color);
     }
 
-    if (auto rgba = dialog_ui_settings.grid_color.as_float_array();
+    if (auto rgba = dialog_ui_settings.get_grid_color().as_float_array();
         ImGui::ColorEdit4(lang.setting.grid_color.c_str(),
                           rgba.data(),
                           ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar |
                               ImGuiColorEditFlags_AlphaPreviewHalf)) {
       const auto color = Color::from_norm(rgba.at(0), rgba.at(1), rgba.at(2), rgba.at(3));
-      dialog_ui_settings.grid_color = color;
+      dialog_ui_settings.set_grid_color(color);
     }
 
-    if (ImGui::Checkbox(lang.setting.window_border.c_str(),
-                        &dialog_ui_settings.window_border)) {
-      ImGui::GetStyle().WindowBorderSize = dialog_ui_settings.window_border ? 1.0f : 0.0f;
+    bool use_window_border = dialog_ui_settings.test_flag(SETTINGS_WINDOW_BORDER_BIT);
+    if (ImGui::Checkbox(lang.setting.window_border.c_str(), &use_window_border)) {
+      dialog_ui_settings.set_flag(SETTINGS_WINDOW_BORDER_BIT, use_window_border);
+      ImGui::GetStyle().WindowBorderSize = use_window_border ? 1.0f : 0.0f;
     }
 
-    ui_checkbox(lang.setting.restore_layout.c_str(),
-                &dialog_ui_settings.restore_layout,
-                lang.tooltip.restore_layout.c_str());
+    ui_flag_checkbox(SETTINGS_RESTORE_LAYOUT_BIT,
+                     lang.setting.restore_layout.c_str(),
+                     lang.tooltip.restore_layout.c_str());
 
     ImGui::Spacing();
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    ui_checkbox(lang.setting.use_default_font.c_str(),
-                &dialog_ui_settings.use_default_font,
-                lang.tooltip.use_default_font.c_str());
+    ui_flag_checkbox(SETTINGS_USE_DEFAULT_FONT_BIT,
+                     lang.setting.use_default_font.c_str(),
+                     lang.tooltip.use_default_font.c_str());
 
     {
-      const Disable when_using_default_font {dialog_ui_settings.use_default_font};
+      const Disable when_using_default_font {
+          dialog_ui_settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT)};
+
+      int32 font_size = dialog_ui_settings.get_font_size();
 
       ImGui::AlignTextToFramePadding();
       ImGui::TextUnformatted(lang.setting.font_size.c_str());
-
       ImGui::SameLine();
-      if (ImGui::DragInt("##FontSize",
-                         &dialog_ui_settings.font_size,
-                         1.0f,
-                         min_font_size,
-                         max_font_size)) {
+      if (ImGui::DragScalar("##FontSize",
+                            ImGuiDataType_S32,
+                            &font_size,
+                            1.0f,
+                            &min_font_size,
+                            &max_font_size)) {
         // TODO fix issue when set to non power of two, and then increased/decrease with
         // shortcuts (which causes crash due to assertions)
-        dialog_ui_settings.font_size =
-            dialog_ui_settings.font_size - dialog_ui_settings.font_size % 2;
+        dialog_ui_settings.set_font_size(font_size - font_size % 2);
       }
     }
   }
@@ -300,7 +284,7 @@ void update_export_tab(const Strings& lang)
     ImGui::Spacing();
 
     if (ui_button(lang.setting.restore_defaults.c_str())) {
-      reset_export_preferences(dialog_ui_settings);
+      dialog_ui_settings.reset_export_values();
       update_preview_settings(dialog_ui_settings);
     }
 
@@ -313,17 +297,17 @@ void update_export_tab(const Strings& lang)
     ui_map_format_combo();
     ui_lazy_tooltip("##PreferredFormatTooltip", lang.tooltip.pref_format.c_str());
 
-    ui_checkbox(lang.setting.embed_tilesets.c_str(),
-                &dialog_ui_settings.embed_tilesets,
-                lang.tooltip.embed_tilesets.c_str());
+    ui_flag_checkbox(SETTINGS_EMBED_TILESETS_BIT,
+                     lang.setting.embed_tilesets.c_str(),
+                     lang.tooltip.embed_tilesets.c_str());
 
-    ui_checkbox(lang.setting.indent_output.c_str(),
-                &dialog_ui_settings.indent_output,
-                lang.tooltip.indent_output.c_str());
+    ui_flag_checkbox(SETTINGS_INDENT_OUTPUT_BIT,
+                     lang.setting.indent_output.c_str(),
+                     lang.tooltip.indent_output.c_str());
 
-    ui_checkbox(lang.setting.fold_tile_data.c_str(),
-                &dialog_ui_settings.fold_tile_data,
-                lang.tooltip.fold_tile_data.c_str());
+    ui_flag_checkbox(SETTINGS_FOLD_TILE_DATA_BIT,
+                     lang.setting.fold_tile_data.c_str(),
+                     lang.tooltip.fold_tile_data.c_str());
   }
 }
 
@@ -331,8 +315,8 @@ void update_export_tab(const Strings& lang)
 
 void open_settings_dialog()
 {
-  dialog_old_settings = io::get_preferences();
-  dialog_ui_settings = dialog_old_settings;
+  dialog_old_settings.copy_values_from(get_settings());
+  dialog_ui_settings.copy_values_from(dialog_old_settings);
 
   open_dialog = true;
 }
@@ -365,11 +349,11 @@ void update_settings_dialog(entt::dispatcher& dispatcher)
 
   if (action == DialogAction::Apply || action == DialogAction::Accept) {
     apply_current_settings(dispatcher);
-    update_preview_settings(io::get_preferences());
+    update_preview_settings(get_settings());
   }
   else if (action == DialogAction::Cancel) {
     // Reset any changes we made for preview purposes
-    update_preview_settings(io::get_preferences());
+    update_preview_settings(get_settings());
   }
 }
 

@@ -25,10 +25,10 @@
 #include "common/debug/assert.hpp"
 #include "common/numeric.hpp"
 #include "common/type/math.hpp"
-#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/map_events.hpp"
+#include "model/settings.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/alignment.hpp"
 
@@ -92,9 +92,9 @@ void on_dialog_accept(entt::dispatcher& dispatcher)
 
 void open_create_map_dialog()
 {
-  const auto& prefs = io::get_preferences();
+  const auto& settings = get_settings();
 
-  dialog_tile_size = prefs.preferred_tile_size;
+  dialog_tile_size = settings.get_preferred_tile_size();
   dialog_row_count = 5;
   dialog_column_count = 5;
 

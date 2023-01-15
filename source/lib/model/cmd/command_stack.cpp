@@ -21,12 +21,12 @@
 
 #include "common/debug/assert.hpp"
 #include "common/util/functional.hpp"
-#include "io/proto/preferences.hpp"
+#include "model/settings.hpp"
 
 namespace tactile {
 
 CommandStack::CommandStack()
-    : mCapacity {io::get_preferences().command_capacity}
+    : mCapacity {get_settings().get_command_capacity()}
 {
 }
 

@@ -27,7 +27,7 @@
 #include "common/type/maybe.hpp"
 #include "common/util/fmt.hpp"
 #include "core/tile/tile.hpp"
-#include "io/proto/preferences.hpp"
+#include "io/proto/settings.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/tileset_document.hpp"
@@ -274,18 +274,20 @@ void ui_selected_tile_contents(const Strings& lang,
 
 void ui_animation_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  auto& prefs = io::get_preferences();
+  auto& settings = get_settings();
 
-  if (!prefs.show_animation_dock) {
+  if (!settings.test_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT)) {
     return;
   }
 
   const auto& lang = get_current_language();
   const auto& document = model.require_active_tileset_document();
 
+  bool show_animation_dock = true;
   const Window dock {lang.window.animation_dock.c_str(),
                      ImGuiWindowFlags_NoCollapse,
-                     &prefs.show_animation_dock};
+                     &show_animation_dock};
+  settings.set_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT, show_animation_dock);
 
   if (dock.is_open()) {
     const auto& tileset = document.get_tileset();

@@ -27,9 +27,9 @@
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/tiled_info.hpp"
-#include "io/proto/preferences.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/json.hpp"
+#include "model/settings.hpp"
 
 namespace tactile::io {
 namespace {
@@ -334,7 +334,7 @@ void create_external_tileset_file(const EmitInfo& info, const ir::TilesetData& t
 [[nodiscard]] auto emit_tileset(const EmitInfo& info, const ir::TilesetData& tileset)
     -> JSON
 {
-  if (get_preferences().embed_tilesets) {
+  if (get_settings().test_flag(SETTINGS_EMBED_TILESETS_BIT)) {
     return emit_embedded_tileset(info, tileset);
   }
   else {

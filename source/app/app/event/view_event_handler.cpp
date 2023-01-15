@@ -25,10 +25,10 @@
 #include "app/app_context.hpp"
 #include "app/event/event_handlers.hpp"
 #include "common/debug/assert.hpp"
-#include "io/proto/preferences.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/view_events.hpp"
 #include "model/model.hpp"
+#include "model/settings.hpp"
 #include "ui/fonts.hpp"
 #include "ui/widget_show_state.hpp"
 
@@ -45,32 +45,32 @@ void on_toggle_ui(const ToggleUiEvent&)
 
   static bool show = false;
 
-  auto& prefs = io::get_preferences();
+  auto& settings = get_settings();
   auto& state = get_widget_show_state();
 
   if (!show) {
-    state.prev_show_layer_dock = prefs.show_layer_dock;
-    state.prev_show_tileset_dock = prefs.show_tileset_dock;
-    state.prev_show_property_dock = prefs.show_property_dock;
-    state.prev_show_log_dock = prefs.show_log_dock;
-    state.prev_show_component_dock = prefs.show_component_dock;
-    state.prev_show_animation_dock = prefs.show_animation_dock;
+    state.prev_show_layer_dock = settings.test_flag(SETTINGS_SHOW_LAYER_DOCK_BIT);
+    state.prev_show_tileset_dock = settings.test_flag(SETTINGS_SHOW_TILESET_DOCK_BIT);
+    state.prev_show_property_dock = settings.test_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT);
+    state.prev_show_log_dock = settings.test_flag(SETTINGS_SHOW_LOG_DOCK_BIT);
+    state.prev_show_component_dock = settings.test_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT);
+    state.prev_show_animation_dock = settings.test_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT);
   }
 
-  prefs.show_layer_dock = show;
-  prefs.show_tileset_dock = show;
-  prefs.show_property_dock = show;
-  prefs.show_component_dock = show;
-  prefs.show_log_dock = show;
-  prefs.show_animation_dock = show;
+  settings.set_flag(SETTINGS_SHOW_LAYER_DOCK_BIT, show);
+  settings.set_flag(SETTINGS_SHOW_TILESET_DOCK_BIT, show);
+  settings.set_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT, show);
+  settings.set_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT, show);
+  settings.set_flag(SETTINGS_SHOW_LOG_DOCK_BIT, show);
+  settings.set_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT, show);
 
   if (show) {
-    prefs.show_layer_dock = state.prev_show_layer_dock;
-    prefs.show_tileset_dock = state.prev_show_tileset_dock;
-    prefs.show_property_dock = state.prev_show_property_dock;
-    prefs.show_log_dock = state.prev_show_log_dock;
-    prefs.show_component_dock = state.prev_show_component_dock;
-    prefs.show_animation_dock = state.prev_show_component_dock;
+    settings.set_flag(SETTINGS_SHOW_LAYER_DOCK_BIT, state.prev_show_layer_dock);
+    settings.set_flag(SETTINGS_SHOW_TILESET_DOCK_BIT, state.prev_show_tileset_dock);
+    settings.set_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT, state.prev_show_property_dock);
+    settings.set_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT, state.prev_show_component_dock);
+    settings.set_flag(SETTINGS_SHOW_LOG_DOCK_BIT, state.prev_show_log_dock);
+    settings.set_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT, state.prev_show_animation_dock);
   }
 
   show = !show;
@@ -80,17 +80,17 @@ void on_reset_font_size(const ResetFontSizeEvent&)
 {
   spdlog::trace("ResetFontSizeEvent");
 
-  io::get_preferences().font_size = ui::def_font_size;
+  get_settings().set_font_size(ui::def_font_size);
   request_font_reload();
 }
 
 void on_increase_font_size(const IncreaseFontSizeEvent&)
 {
   spdlog::trace("IncreaseFontSizeEvent");
-  auto& prefs = io::get_preferences();
+  auto& settings = get_settings();
 
-  TACTILE_ASSERT(prefs.font_size + 2 <= ui::max_font_size);
-  prefs.font_size += 2;
+  TACTILE_ASSERT(settings.get_font_size() + 2 <= ui::max_font_size);
+  settings.set_font_size(settings.get_font_size() + 2);
 
   request_font_reload();
 }
@@ -98,10 +98,10 @@ void on_increase_font_size(const IncreaseFontSizeEvent&)
 void on_decrease_font_size(const DecreaseFontSizeEvent&)
 {
   spdlog::trace("DecreaseFontSizeEvent");
-  auto& prefs = io::get_preferences();
+  auto& settings = get_settings();
 
-  TACTILE_ASSERT(prefs.font_size - 2 >= ui::min_font_size);
-  prefs.font_size -= 2;
+  TACTILE_ASSERT(settings.get_font_size() - 2 >= ui::min_font_size);
+  settings.set_font_size(settings.get_font_size() - 2);
 
   request_font_reload();
 }

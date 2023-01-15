@@ -29,9 +29,9 @@
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/tiled_info.hpp"
-#include "io/proto/preferences.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/xml.hpp"
+#include "model/settings.hpp"
 
 namespace tactile::io {
 namespace {
@@ -156,13 +156,15 @@ void append_csv_tile_layer_data(XMLNode data_node,
 
   std::stringstream stream;
 
-  const auto& prefs = get_preferences();
   const auto tile_count = map.extent.rows * map.extent.cols;
+
+  const auto& settings = get_settings();
+  const bool fold_tile_data = settings.test_flag(SETTINGS_FOLD_TILE_DATA_BIT);
 
   invoke_mn(map.extent.rows,
             map.extent.cols,
             [&, index = 0ull](const usize row, const usize col) mutable {
-              if (prefs.fold_tile_data && index == 0) {
+              if (fold_tile_data && index == 0) {
                 stream << '\n';
               }
 
@@ -171,7 +173,7 @@ void append_csv_tile_layer_data(XMLNode data_node,
                 stream << ',';
               }
 
-              if (prefs.fold_tile_data && (index + 1) % tile_layer.extent.cols == 0) {
+              if (fold_tile_data && (index + 1) % tile_layer.extent.cols == 0) {
                 stream << '\n';
               }
 
@@ -371,8 +373,8 @@ void emit_external_tileset_file(const Path& path,
 
 void append_tileset(XMLNode root, const ir::TilesetData& tileset, const Path& dir)
 {
-  const auto& prefs = get_preferences();
-  if (prefs.embed_tilesets) {
+  const auto& settings = get_settings();
+  if (settings.test_flag(SETTINGS_EMBED_TILESETS_BIT)) {
     append_embedded_tileset(root, tileset, dir);
   }
   else {

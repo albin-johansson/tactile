@@ -26,10 +26,10 @@
 #include "common/type/path.hpp"
 #include "common/util/string_buffer.hpp"
 #include "io/file_dialog.hpp"
-#include "io/proto/preferences.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/tileset_events.hpp"
+#include "model/settings.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -65,7 +65,7 @@ void open_create_tileset_dialog()
 {
   dialog_image_path_preview_buffer.clear();
   dialog_image_path.clear();
-  dialog_tile_size = io::get_preferences().preferred_tile_size;
+  dialog_tile_size = get_settings().get_preferred_tile_size();
 
   open_dialog = true;
 }

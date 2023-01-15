@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "io/proto/preferences.hpp"
+#include "model/settings.hpp"
 
 #include <utility>  // to_underlying
 
@@ -25,42 +25,12 @@
 
 #include "settings.pb.h"
 
-using namespace tactile::io;
-using namespace tactile::ui;
+using tactile::ui::EditorTheme;
 
 namespace tactile::test {
 
 TEST_SUITE("Settings")
 {
-  TEST_CASE("Defaults")
-  {
-    const PreferenceState state;
-
-    REQUIRE(def_preferred_format == state.preferred_format);
-    REQUIRE(def_theme == state.theme);
-    REQUIRE(def_viewport_bg == state.viewport_background);
-    REQUIRE(def_grid_color == state.grid_color);
-    REQUIRE(def_command_capacity == state.command_capacity);
-    REQUIRE(def_preferred_tile_size == state.preferred_tile_size);
-    REQUIRE(def_font_size == state.font_size);
-    REQUIRE(def_viewport_overlay_pos == state.viewport_overlay_pos);
-    REQUIRE(def_embed_tilesets == state.embed_tilesets);
-    REQUIRE(def_indent_output == state.indent_output);
-    REQUIRE(def_fold_tile_data == state.fold_tile_data);
-    REQUIRE(def_show_grid == state.show_grid);
-    REQUIRE(def_show_layer_dock == state.show_layer_dock);
-    REQUIRE(def_show_tileset_dock == state.show_tileset_dock);
-    REQUIRE(def_show_property_dock == state.show_property_dock);
-    REQUIRE(def_show_component_dock == state.show_component_dock);
-    REQUIRE(def_show_log_dock == state.show_log_dock);
-    REQUIRE(def_window_border == state.window_border);
-    REQUIRE(def_restore_layout == state.restore_layout);
-    REQUIRE(def_restore_last_session == state.restore_last_session);
-    REQUIRE(def_show_viewport_overlay_fps == state.show_viewport_overlay_fps);
-    REQUIRE(def_highlight_active_layer == state.highlight_active_layer);
-    REQUIRE(def_use_default_font == state.use_default_font);
-  }
-
   TEST_CASE("Ensure theme enums match")
   {
     REQUIRE(proto::THEME_DEAR_DARK == std::to_underlying(EditorTheme::DearDark));

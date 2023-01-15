@@ -26,7 +26,7 @@
 #include <spdlog/spdlog.h>
 
 #include "io/directories.hpp"
-#include "io/proto/preferences.hpp"
+#include "model/settings.hpp"
 #include "ui/style/themes.hpp"
 
 namespace tactile {
@@ -55,13 +55,13 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
 
   ImGui::StyleColorsDark();
 
-  const auto& prefs = io::get_preferences();
+  const auto& settings = get_settings();
   auto& style = ImGui::GetStyle();
 
   ui::apply_style(style);
-  apply_theme(style, prefs.theme);
+  apply_theme(style, settings.get_theme());
 
-  style.WindowBorderSize = prefs.window_border ? 1.0f : 0.0f;
+  style.WindowBorderSize = settings.test_flag(SETTINGS_WINDOW_BORDER_BIT) ? 1.0f : 0.0f;
 
   spdlog::debug("Initialized renderer backend... {}", mInitializedBackend ? "yes" : "no");
 }
@@ -87,10 +87,12 @@ void ImGuiContext::reload_fonts()
 
   io.Fonts->Clear();
 
-  const auto& prefs = io::get_preferences();
-  const auto size = prefs.use_default_font ? 13.0f : static_cast<float>(prefs.font_size);
+  const auto& settings = get_settings();
+  const auto size = settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT)
+                        ? 13.0f
+                        : static_cast<float>(settings.get_font_size());
 
-  if (prefs.use_default_font) {
+  if (settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT)) {
     ImFontConfig config {};
     config.SizePixels = size * scale.x;
     io.Fonts->AddFontDefault(&config);
