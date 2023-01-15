@@ -19,12 +19,14 @@
 
 #include "themes.hpp"
 
+#include <algorithm>  // clamp
+
 #include <imgui.h>
 
-#include "colors.hpp"
 #include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
 #include "common/predef.hpp"
+#include "ui/style/colors.hpp"
 
 namespace tactile::ui {
 namespace {
@@ -37,39 +39,43 @@ struct ThemeCfg final {
   ImVec4 text {};
 };
 
-[[nodiscard]] auto dark_theme_from_hue(const uint16 hue) -> ThemeCfg
+[[nodiscard]] auto create_dark_theme(const uint16 hue, const int32 saturation) -> ThemeCfg
 {
   TACTILE_ASSERT(hue < 360);
+  TACTILE_ASSERT(saturation <= 100);
 
   ThemeCfg cfg;
 
   const auto h = static_cast<float>(hue) / 360.0f;
+  const auto s = static_cast<float>(saturation) / 100.0f;
+
   cfg.window = ImColor::HSV(h, 0.20f, 0.05f);
   cfg.child = cfg.window;
 
-  cfg.accent = ImColor::HSV(h, 0.60f, 0.30f);
-  cfg.accent_active = ImColor::HSV(h, 0.60f, 0.70f);
+  cfg.accent = ImColor::HSV(h, s, 0.30f);
+  cfg.accent_active = ImColor::HSV(h, s, 0.70f);
 
   cfg.text = ImColor::HSV(0, 0, 1.0f);
 
   return cfg;
 }
 
-[[nodiscard]] auto light_theme_from_hue(const uint16 hue) -> ThemeCfg
+[[nodiscard]] auto create_light_theme(const uint16 hue, const int32 saturation)
+    -> ThemeCfg
 {
   TACTILE_ASSERT(hue < 360);
+  TACTILE_ASSERT(saturation <= 100);
 
   ThemeCfg cfg;
 
   const auto h = static_cast<float>(hue) / 360.0f;
-  constexpr auto s = static_cast<float>(10) / 100.0f;
-  constexpr auto v = static_cast<float>(100) / 100.0f;
+  const auto s = static_cast<float>(saturation) / 100.0f;
 
-  cfg.window = ImColor::HSV(h, s, v);
+  cfg.window = ImColor::HSV(h, 0.1f, 1.0f);
   cfg.child = cfg.window;
 
-  cfg.accent = ImColor::HSV(h, 0.60f, 0.60f);
-  cfg.accent_active = ImColor::HSV(h, 0.60f, 0.80f);
+  cfg.accent = ImColor::HSV(h, s, 0.60f);
+  cfg.accent_active = ImColor::HSV(h, s, 0.80f);
 
   cfg.text = ImColor::HSV(0, 0, 0);
 
@@ -259,8 +265,10 @@ void apply_style(ImGuiStyle& style)
   style.TabRounding = rounding;
 }
 
-void apply_theme(ImGuiStyle& style, const EditorTheme theme)
+void apply_theme(ImGuiStyle& style, const EditorTheme theme, int32 saturation)
 {
+  saturation = std::clamp(saturation, 0, 100);
+
   switch (theme) {
     case EditorTheme::DearDark:
       ImGui::StyleColorsDark(&style);
@@ -271,45 +279,45 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
       break;
 
     case EditorTheme::Ruby:
-      apply_theme_from_config(style, dark_theme_from_hue(0));
+      apply_theme_from_config(style, create_dark_theme(0, saturation));
       break;
 
     case EditorTheme::Emerald:
-      apply_theme_from_config(style, dark_theme_from_hue(141));
+      apply_theme_from_config(style, create_dark_theme(141, saturation));
       break;
 
     case EditorTheme::Sapphire:
-      apply_theme_from_config(style, dark_theme_from_hue(211));
+      apply_theme_from_config(style, create_dark_theme(211, saturation));
       break;
 
     case EditorTheme::Joker:
-      apply_theme_from_config(style, dark_theme_from_hue(268));
+      apply_theme_from_config(style, create_dark_theme(268, saturation));
       break;
 
     case EditorTheme::Amethyst:
-      apply_theme_from_config(style, dark_theme_from_hue(318));
+      apply_theme_from_config(style, create_dark_theme(318, saturation));
       break;
 
     case EditorTheme::Raspberry:
-      apply_theme_from_config(style, dark_theme_from_hue(346));
+      apply_theme_from_config(style, create_dark_theme(346, saturation));
       break;
 
     case EditorTheme::Amber:
-      apply_theme_from_config(style, dark_theme_from_hue(23));
+      apply_theme_from_config(style, create_dark_theme(23, saturation));
       break;
 
     case EditorTheme::Gasoline:
-      apply_theme_from_config(style, dark_theme_from_hue(82));
+      apply_theme_from_config(style, create_dark_theme(82, saturation));
       break;
 
     case EditorTheme::Bumblebee:
-      apply_theme_from_config(style, dark_theme_from_hue(56));
+      apply_theme_from_config(style, create_dark_theme(56, saturation));
       break;
 
     case EditorTheme::Diamond:
       [[fallthrough]];
     case EditorTheme::Nocturnal:
-      apply_theme_from_config(style, dark_theme_from_hue(180));
+      apply_theme_from_config(style, create_dark_theme(180, saturation));
       break;
 
     case EditorTheme::Ash:
@@ -333,17 +341,17 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme)
       break;
 
     case EditorTheme::Lavender:
-      apply_theme_from_config(style, light_theme_from_hue(275));
+      apply_theme_from_config(style, create_light_theme(275, saturation));
       break;
 
     case EditorTheme::Vanilla:
       [[fallthrough]];
     case EditorTheme::Frost:
-      apply_theme_from_config(style, light_theme_from_hue(180));
+      apply_theme_from_config(style, create_light_theme(180, saturation));
       break;
 
     case EditorTheme::Rose:
-      apply_theme_from_config(style, light_theme_from_hue(0));
+      apply_theme_from_config(style, create_light_theme(0, saturation));
       break;
   }
 }

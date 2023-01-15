@@ -79,7 +79,7 @@ void ui_theme_combo()
     for (const auto theme: themes) {
       if (Selectable::Property(human_readable_name(theme).data())) {
         dialog_ui_settings.set_theme(theme);
-        apply_theme(ImGui::GetStyle(), theme);
+        apply_theme(ImGui::GetStyle(), theme, dialog_ui_settings.get_theme_saturation());
       }
     }
   };
@@ -113,7 +113,7 @@ void ui_map_format_combo()
 
 void update_preview_settings(const Settings& settings)
 {
-  apply_theme(ImGui::GetStyle(), settings.get_theme());
+  apply_theme(ImGui::GetStyle(), settings.get_theme(), settings.get_theme_saturation());
   ImGui::GetStyle().WindowBorderSize =
       settings.test_flag(SETTINGS_WINDOW_BORDER_BIT) ? 1.0f : 0.0f;
 }
@@ -213,11 +213,29 @@ void update_appearance_tab(const Strings& lang)
     right_align_next_item();
     ui_lang_combo();
 
+    ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
+
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.setting.theme.c_str());
     ImGui::SameLine();
     right_align_next_item();
     ui_theme_combo();
+
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted(lang.setting.saturation.c_str());
+    ImGui::SameLine();
+
+    int32 saturation = dialog_ui_settings.get_theme_saturation();
+    const int32 min_saturation = 0;
+    const int32 max_saturation = 100;
+    if (ImGui::SliderScalar("##Saturation",
+                            ImGuiDataType_S32,
+                            &saturation,
+                            &min_saturation,
+                            &max_saturation)) {
+      dialog_ui_settings.set_theme_saturation(saturation);
+      update_preview_settings(dialog_ui_settings);
+    }
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 

@@ -50,6 +50,8 @@ message Color {
 
 message Settings {
   optional Theme theme = 1;
+  optional int32 theme_saturation = 10;
+
   optional Lang language = 8;
 
   optional int32 preferred_tile_width = 2;

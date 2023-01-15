@@ -103,7 +103,7 @@ void update_quick_theme_menu(const Strings& lang)
       const auto is_current = settings.get_theme() == theme;
       if (ImGui::MenuItem(human_readable_name(theme).data(), nullptr, is_current)) {
         settings.set_theme(theme);
-        apply_theme(ImGui::GetStyle(), theme);
+        apply_theme(ImGui::GetStyle(), theme, settings.get_theme_saturation());
       }
     };
 

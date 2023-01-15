@@ -190,6 +190,7 @@ struct SettingStrings final {
 
   String language;
   String theme;
+  String saturation;
   String viewport_bg_color;
   String grid_color;
   String window_border;

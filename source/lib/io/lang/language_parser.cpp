@@ -232,6 +232,7 @@ void load_setting_strings(const JSON& json, SettingStrings& setting)
 
   load(json, setting.language, "language");
   load(json, setting.theme, "theme");
+  load(json, setting.saturation, "saturation");
   load(json, setting.viewport_bg_color, "viewport-bg-color");
   load(json, setting.grid_color, "grid-color");
   load(json, setting.window_border, "window-border");

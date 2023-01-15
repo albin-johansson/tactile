@@ -137,6 +137,7 @@
     "command-capacity": "Command capacity",
     "language": "Language",
     "theme": "Theme",
+    "saturation": "Saturation",
     "viewport-bg-color": "Viewport background color",
     "grid-color": "Grid color",
     "window-border": "Window border",

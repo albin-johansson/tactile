@@ -38,6 +38,7 @@ struct SettingsState final {
   usize command_capacity {100};
   Int2 preferred_tile_size {32, 32};
   int32 font_size {ui::def_font_size};
+  int32 theme_saturation {60};
 
   Color viewport_bg {0x3C, 0x3C, 0x3C};
   Color grid_color {0xFF, 0xFF, 0xFF, 0x05};
@@ -125,6 +126,7 @@ void Settings::reset_appearance_values()
 {
   mState->language = default_settings.language;
   mState->theme = default_settings.theme;
+  mState->theme_saturation = default_settings.theme_saturation;
   mState->viewport_bg = default_settings.viewport_bg;
   mState->grid_color = default_settings.grid_color;
   mState->font_size = default_settings.font_size;
@@ -162,6 +164,11 @@ void Settings::set_language(const Lang lang)
 void Settings::set_theme(const ui::EditorTheme theme)
 {
   mState->theme = theme;
+}
+
+void Settings::set_theme_saturation(const int32 saturation)
+{
+  mState->theme_saturation = saturation;
 }
 
 void Settings::set_viewport_overlay_pos(const OverlayPos pos)
@@ -212,6 +219,11 @@ auto Settings::get_language() const -> Lang
 auto Settings::get_theme() const -> ui::EditorTheme
 {
   return mState->theme;
+}
+
+auto Settings::get_theme_saturation() const -> int32
+{
+  return mState->theme_saturation;
 }
 
 auto Settings::get_viewport_overlay_pos() const -> OverlayPos

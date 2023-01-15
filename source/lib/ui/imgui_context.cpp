@@ -59,7 +59,7 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   auto& style = ImGui::GetStyle();
 
   ui::apply_style(style);
-  apply_theme(style, settings.get_theme());
+  apply_theme(style, settings.get_theme(), settings.get_theme_saturation());
 
   style.WindowBorderSize = settings.test_flag(SETTINGS_WINDOW_BORDER_BIT) ? 1.0f : 0.0f;
 

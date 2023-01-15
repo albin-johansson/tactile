@@ -86,6 +86,7 @@ class Settings final {
 
   void set_language(Lang lang);
   void set_theme(ui::EditorTheme theme);
+  void set_theme_saturation(int32 saturation);
   void set_viewport_overlay_pos(OverlayPos pos);
   void set_command_capacity(usize capacity);
   void set_preferred_tile_size(Int2 tile_size);
@@ -100,6 +101,7 @@ class Settings final {
 
   [[nodiscard]] auto get_language() const -> Lang;
   [[nodiscard]] auto get_theme() const -> ui::EditorTheme;
+  [[nodiscard]] auto get_theme_saturation() const -> int32;
   [[nodiscard]] auto get_viewport_overlay_pos() const -> OverlayPos;
   [[nodiscard]] auto get_command_capacity() const -> usize;
   [[nodiscard]] auto get_preferred_tile_size() const -> Int2;

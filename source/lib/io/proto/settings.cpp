@@ -74,6 +74,10 @@ void to_proto(const Color& color, proto::Color* out)
       settings.set_theme(static_cast<ui::EditorTheme>(cfg.theme()));
     }
 
+    if (cfg.has_theme_saturation()) {
+      settings.set_theme_saturation(cfg.theme_saturation());
+    }
+
     if (cfg.has_viewport_background()) {
       settings.set_viewport_bg_color(from_proto(cfg.viewport_background()));
     }
@@ -210,6 +214,7 @@ void save_settings_to_disk(const Settings& settings)
 
   cfg.set_language(static_cast<proto::Lang>(settings.get_language()));
   cfg.set_theme(static_cast<proto::Theme>(settings.get_theme()));
+  cfg.set_theme_saturation(settings.get_theme_saturation());
   cfg.set_show_grid(settings.test_flag(SETTINGS_SHOW_GRID_BIT));
   cfg.set_highlight_active_layer(settings.test_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT));
   cfg.set_window_border(settings.test_flag(SETTINGS_WINDOW_BORDER_BIT));

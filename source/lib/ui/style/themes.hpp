@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "common/numeric.hpp"
 #include "common/type/array.hpp"
 #include "common/type/string.hpp"
 
@@ -86,6 +87,7 @@ void apply_style(ImGuiStyle& style);
 ///
 /// \param style the style that will be affected.
 /// \param theme the theme that will be applied to the style.
-void apply_theme(ImGuiStyle& style, EditorTheme theme);
+/// \param saturation the accent color saturation, clamped to [0, 100].
+void apply_theme(ImGuiStyle& style, EditorTheme theme, int32 saturation);
 
 }  // namespace tactile::ui
