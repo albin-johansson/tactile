@@ -329,11 +329,11 @@ Required attributes: `name`, `type`, `value`.
 
 Note, color properties are always stored using RGBA encoding, with a `#` prefix, e.g. `"#11223344"`.
 
-| Attribute |   Type    | Description                                                    |
-|----------:|:---------:|:---------------------------------------------------------------|
-|    `name` | `string`  | Name that is unique in the scope of sibling properties.        |
-|    `type` | `string`  | `string`, `int`, `float`, `bool`, `color`, `file`, or `object` | 
-|   `value` | `variant` |                                                                |
+| Attribute |   Type    | Description                                                                                                          |
+|----------:|:---------:|:---------------------------------------------------------------------------------------------------------------------|
+|    `name` | `string`  | Name that is unique in the scope of sibling properties.                                                              |
+|    `type` | `string`  | `string`, `int`, `int2`, `int3`, `int4`, `float`, `float2`, `float3`, `float4`, `bool`, `color`, `file`, or `object` | 
+|   `value` | `variant` |                                                                                                                      |
 
 Examples:
 
@@ -341,6 +341,18 @@ Examples:
 name: Scale
 type: float
 value: 0.7
+```
+
+```YAML
+name: Position
+type: float2
+value: 0.7;0.4
+```
+
+```YAML
+name: Position
+type: int3
+value: 1;2;3
 ```
 
 ```YAML
