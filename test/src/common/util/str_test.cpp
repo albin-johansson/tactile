@@ -47,6 +47,25 @@ TEST_SUITE("Str")
     REQUIRE(!parse_i32("F1"));
     REQUIRE(0xF1 == parse_i32("F1", 16));
   }
+
+  TEST_CASE("parse_f32")
+  {
+    REQUIRE(!parse_f32("ABC"));
+
+    REQUIRE(-42.0f == parse_f32("-42"));
+    REQUIRE(123.0f == parse_f32("123"));
+    REQUIRE(1.0f == parse_f32("1.0"));
+    REQUIRE(12.5f == parse_f32("12.5"));
+    REQUIRE(12.5f == parse_f32("12.5f"));
+
+    SUBCASE("Ensure function respects string view range")
+    {
+      const String str {"1234"};
+      const StringView full_view {str};
+      REQUIRE(12.0f == parse_f32(full_view.substr(0, 2)));
+      REQUIRE(34.0f == parse_f32(full_view.substr(2, 2)));
+    }
+  }
 }
 
 }  // namespace tactile::test

@@ -76,4 +76,20 @@ auto parse_u32(StringView str, const int base) -> Maybe<uint32>
   return parse<uint32>(str.data(), str.data() + str.size(), base);
 }
 
+auto parse_f32(StringView str) -> Maybe<float32>
+{
+  std::stringstream stream;
+  stream << str;
+
+  float32 f {};
+  stream >> f;
+
+  if (!stream.fail()) {
+    return f;
+  }
+  else {
+    return nothing;
+  }
+}
+
 }  // namespace tactile

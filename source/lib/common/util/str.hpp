@@ -35,4 +35,7 @@ namespace tactile {
 /// Converts a string into a 32-bit unsigned integer.
 [[nodiscard]] auto parse_u32(StringView str, int base = 10) -> Maybe<uint32>;
 
+/// Converts a string into a 32-bit float.
+[[nodiscard]] auto parse_f32(StringView str) -> Maybe<float32>;
+
 }  // namespace tactile
