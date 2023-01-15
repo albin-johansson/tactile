@@ -20,6 +20,7 @@
 #include <sstream>  // stringstream
 
 #include <fmt/format.h>
+#include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
@@ -85,6 +86,11 @@ void append_properties(XMLNode node, const ir::ContextData& context)
 
       case AttributeType::Object:
         value_attr.set_value(property_value.as_object());
+        break;
+
+      default:
+        spdlog::warn("Cannot store '{}' property in an XML file",
+                     magic_enum::enum_name(type));
         break;
     }
   }
