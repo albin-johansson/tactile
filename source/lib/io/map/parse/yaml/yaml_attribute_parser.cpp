@@ -17,16 +17,55 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <utility>  // move
+#include <concepts>  // same_as
+#include <utility>   // move
 
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
+#include "common/util/str.hpp"
 #include "io/map/ir/ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"
 
 namespace tactile::io {
 namespace {
+
+template <typename T>
+[[nodiscard]] auto parse_vector(const YAML::Node& value) -> Maybe<T>
+{
+  using ScalarType = typename T::value_type;
+
+  const auto raw_value = value.as<String>();
+  const auto components = split(raw_value, ';');
+
+  T vec {};
+  if (components.size() != vec.length()) {
+    return nothing;
+  }
+
+  int index = 0;
+  for (const auto& component_str: components) {
+    Maybe<ScalarType> component_value;
+
+    if constexpr (std::same_as<ScalarType, float>) {
+      component_value = parse_f32(component_str);
+    }
+    else {
+      component_value = parse_i32(component_str);
+    }
+
+    if (component_value.has_value()) {
+      vec[index] = *component_value;
+    }
+    else {
+      return nothing;
+    }
+
+    ++index;
+  }
+
+  return vec;
+}
 
 [[nodiscard]] auto parse_attribute_value(const YAML::Node& value,
                                          const AttributeType type) -> Maybe<Attribute>
@@ -38,16 +77,33 @@ namespace {
     case AttributeType::Int:
       return value.as<int32>();
 
+    case AttributeType::Int2:
+      return parse_vector<Int2>(value);
+
+    case AttributeType::Int3:
+      return parse_vector<Int3>(value);
+
+    case AttributeType::Int4:
+      return parse_vector<Int4>(value);
+
     case AttributeType::Float:
       return value.as<float>();
+
+    case AttributeType::Float2:
+      return parse_vector<Float2>(value);
+
+    case AttributeType::Float3:
+      return parse_vector<Float3>(value);
+
+    case AttributeType::Float4:
+      return parse_vector<Float4>(value);
 
     case AttributeType::Bool:
       return value.as<bool>();
 
-    case AttributeType::Path: {
-      const Path file = value.as<String>();
-      return file;
-    }
+    case AttributeType::Path:
+      return Path {value.as<String>()};
+
     case AttributeType::Color: {
       const auto hex = value.as<String>();
       if (const auto color = Color::from_rgba(hex)) {
@@ -99,8 +155,62 @@ namespace {
         value = default_value.as<int32>();
         break;
 
+      case AttributeType::Int2:
+        if (const auto vec = parse_vector<Int2>(default_value)) {
+          value = *vec;
+        }
+        else {
+          return error(ParseError::CorruptPropertyValue);
+        }
+        break;
+
+      case AttributeType::Int3:
+        if (const auto vec = parse_vector<Int3>(default_value)) {
+          value = *vec;
+        }
+        else {
+          return error(ParseError::CorruptPropertyValue);
+        }
+        break;
+
+      case AttributeType::Int4:
+        if (const auto vec = parse_vector<Int4>(default_value)) {
+          value = *vec;
+        }
+        else {
+          return error(ParseError::CorruptPropertyValue);
+        }
+        break;
+
       case AttributeType::Float:
         value = default_value.as<float>();
+        break;
+
+      case AttributeType::Float2:
+        if (const auto vec = parse_vector<Float2>(default_value)) {
+          value = *vec;
+        }
+        else {
+          return error(ParseError::CorruptPropertyValue);
+        }
+        break;
+
+      case AttributeType::Float3:
+        if (const auto vec = parse_vector<Float3>(default_value)) {
+          value = *vec;
+        }
+        else {
+          return error(ParseError::CorruptPropertyValue);
+        }
+        break;
+
+      case AttributeType::Float4:
+        if (const auto vec = parse_vector<Float4>(default_value)) {
+          value = *vec;
+        }
+        else {
+          return error(ParseError::CorruptPropertyValue);
+        }
         break;
 
       case AttributeType::Bool:
@@ -113,7 +223,7 @@ namespace {
         break;
       }
       case AttributeType::Color: {
-        if (auto color = Color::from_rgba(default_value.as<String>())) {
+        if (const auto color = Color::from_rgba(default_value.as<String>())) {
           value = *color;
         }
         else {
