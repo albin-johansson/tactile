@@ -19,6 +19,8 @@
 
 #include "yaml.hpp"
 
+#include <fmt/format.h>
+
 #include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
 
@@ -34,10 +36,40 @@ auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter
       emitter << value.as_int();
       break;
 
+    case AttributeType::Int2: {
+      const auto& vec = value.as_int2();
+      emitter << fmt::format("{};{}", vec.x, vec.y);
+      break;
+    }
+    case AttributeType::Int3: {
+      const auto& vec = value.as_int3();
+      emitter << fmt::format("{};{};{}", vec.x, vec.y, vec.z);
+      break;
+    }
+    case AttributeType::Int4: {
+      const auto& vec = value.as_int4();
+      emitter << fmt::format("{};{};{};{}", vec.x, vec.y, vec.z, vec.w);
+      break;
+    }
     case AttributeType::Float:
       emitter << value.as_float();
       break;
 
+    case AttributeType::Float2: {
+      const auto& vec = value.as_float2();
+      emitter << fmt::format("{};{}", vec.x, vec.y);
+      break;
+    }
+    case AttributeType::Float3: {
+      const auto& vec = value.as_float3();
+      emitter << fmt::format("{};{};{}", vec.x, vec.y, vec.z);
+      break;
+    }
+    case AttributeType::Float4: {
+      const auto& vec = value.as_float4();
+      emitter << fmt::format("{};{};{};{}", vec.x, vec.y, vec.z, vec.w);
+      break;
+    }
     case AttributeType::Bool:
       emitter << value.as_bool();
       break;
