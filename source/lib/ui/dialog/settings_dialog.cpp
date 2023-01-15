@@ -221,20 +221,26 @@ void update_appearance_tab(const Strings& lang)
     right_align_next_item();
     ui_theme_combo();
 
-    ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted(lang.setting.saturation.c_str());
-    ImGui::SameLine();
+    {
+      const Disable no_saturation_for_default_themes {
+          dialog_ui_settings.get_theme() == EditorTheme::DearDark ||
+          dialog_ui_settings.get_theme() == EditorTheme::DearLight};
 
-    int32 saturation = dialog_ui_settings.get_theme_saturation();
-    const int32 min_saturation = 0;
-    const int32 max_saturation = 100;
-    if (ImGui::SliderScalar("##Saturation",
-                            ImGuiDataType_S32,
-                            &saturation,
-                            &min_saturation,
-                            &max_saturation)) {
-      dialog_ui_settings.set_theme_saturation(saturation);
-      update_preview_settings(dialog_ui_settings);
+      ImGui::AlignTextToFramePadding();
+      ImGui::TextUnformatted(lang.setting.saturation.c_str());
+      ImGui::SameLine();
+
+      int32 saturation = dialog_ui_settings.get_theme_saturation();
+      const int32 min_saturation = 0;
+      const int32 max_saturation = 100;
+      if (ImGui::SliderScalar("##Saturation",
+                              ImGuiDataType_S32,
+                              &saturation,
+                              &min_saturation,
+                              &max_saturation)) {
+        dialog_ui_settings.set_theme_saturation(saturation);
+        update_preview_settings(dialog_ui_settings);
+      }
     }
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);

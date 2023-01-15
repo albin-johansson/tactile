@@ -69,6 +69,7 @@ void Settings::print() const
 {
   spdlog::debug("Language: {}", magic_enum::enum_name(get_language()));
   spdlog::debug("Theme: {}", magic_enum::enum_name(get_theme()));
+  spdlog::debug("Theme saturation: {}", get_theme_saturation());
   spdlog::debug("Viewport background: {}", get_viewport_bg_color().as_rgb());
   spdlog::debug("Grid color: {}", get_grid_color().as_rgba());
 
