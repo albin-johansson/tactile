@@ -53,7 +53,7 @@ namespace tactile::ui {
 
 [[nodiscard]] auto ui_bool_input(const char* id, bool value) -> Maybe<bool>;
 
-[[nodiscard]] auto ui_object_input(const char* id, object_t value) -> Maybe<object_t>;
+[[nodiscard]] auto ui_object_input(const char* id, ObjectRef value) -> Maybe<ObjectRef>;
 
 [[nodiscard]] auto ui_color_input(const char* id, Color value) -> Maybe<Color>;
 

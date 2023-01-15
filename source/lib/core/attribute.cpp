@@ -169,7 +169,7 @@ void Attribute::reset_to_default(const AttributeType type)
       break;
 
     case AttributeType::Object:
-      set_value<object_t>(object_t {});
+      set_value<ObjectRef>(ObjectRef {});
       break;
 
     default:
@@ -212,8 +212,8 @@ auto Attribute::has_default_value() const -> bool
   else if (const auto* path = try_as_path()) {
     return path->empty();
   }
-  else if (const auto* obj = std::get_if<object_t>(&mValue)) {
-    return *obj == object_t {};
+  else if (const auto* obj = try_as_object()) {
+    return *obj == ObjectRef {};
   }
   else if (const auto* color = try_as_color()) {
     return *color == black;
@@ -254,7 +254,7 @@ auto Attribute::type() const noexcept -> AttributeType
   else if (holds<bool>()) {
     return AttributeType::Bool;
   }
-  else if (holds<object_t>()) {
+  else if (holds<ObjectRef>()) {
     return AttributeType::Object;
   }
   else if (holds<color_type>()) {
@@ -444,9 +444,9 @@ auto Attribute::as_path() const -> const path_type&
   }
 }
 
-auto Attribute::as_object() const -> object_t
+auto Attribute::as_object() const -> ObjectRef
 {
-  if (const auto* obj = get_if<object_t>()) {
+  if (const auto* obj = get_if<ObjectRef>()) {
     return *obj;
   }
   else {

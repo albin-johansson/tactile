@@ -82,7 +82,7 @@ namespace {
       break;
     }
     case AttributeType::Object: {
-      value = object_t {as_int(node, "value").value()};
+      value = ObjectRef {as_int(node, "value").value()};
       break;
     }
   }

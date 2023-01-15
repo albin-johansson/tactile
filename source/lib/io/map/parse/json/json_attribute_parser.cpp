@@ -76,7 +76,7 @@ namespace {
       break;
     }
     case AttributeType::Object: {
-      value = object_t {as_int(json, "value").value()};
+      value = ObjectRef {as_int(json, "value").value()};
       break;
     }
   }

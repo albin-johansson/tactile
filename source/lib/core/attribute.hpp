@@ -60,7 +60,7 @@ enum class AttributeType {
 auto operator<<(OStream& stream, AttributeType type) -> OStream&;
 
 /// Strong type that represents object references.
-enum object_t : int32 {
+enum ObjectRef : int32 {
 };
 
 template <typename T>
@@ -76,7 +76,7 @@ concept AnAttributeType = std::same_as<T, String> ||  //
                           std::same_as<T, bool> ||    //
                           std::same_as<T, Color> ||   //
                           std::same_as<T, Path> ||    //
-                          std::same_as<T, object_t>;
+                          std::same_as<T, ObjectRef>;
 
 /// Represents an "attribute" value, used by both property and component facilities.
 class Attribute final {
@@ -105,7 +105,7 @@ class Attribute final {
                              bool,
                              color_type,
                              path_type,
-                             object_t>;
+                             ObjectRef>;
 
   /// Creates an empty string attribute.
   Attribute() = default;
@@ -242,9 +242,9 @@ class Attribute final {
   }
 
   /// Attempts to return the attribute value as an object reference.
-  [[nodiscard]] auto try_as_object() const noexcept -> const object_t*
+  [[nodiscard]] auto try_as_object() const noexcept -> const ObjectRef*
   {
-    return get_if<object_t>();
+    return get_if<ObjectRef>();
   }
 
   /// Attempts to return the attribute value as a color.
@@ -287,7 +287,7 @@ class Attribute final {
   [[nodiscard]] auto as_path() const -> const path_type&;
 
   /// Returns the attribute's object reference value.
-  [[nodiscard]] auto as_object() const -> object_t;
+  [[nodiscard]] auto as_object() const -> ObjectRef;
 
   /// Returns the attribute's color value.
   [[nodiscard]] auto as_color() const -> const color_type&;

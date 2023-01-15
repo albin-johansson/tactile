@@ -168,7 +168,7 @@ auto ui_bool_input(const char* id, bool value) -> Maybe<bool>
   return nothing;
 }
 
-auto ui_object_input(const char* id, object_t value) -> Maybe<object_t>
+auto ui_object_input(const char* id, ObjectRef value) -> Maybe<ObjectRef>
 {
   const Scope scope {id};
 

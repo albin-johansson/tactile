@@ -58,7 +58,7 @@ namespace {
       }
     }
     case AttributeType::Object:
-      return object_t {value.as<int32>()};
+      return ObjectRef {value.as<int32>()};
 
     default:
       return nothing;
@@ -122,7 +122,7 @@ namespace {
         break;
       }
       case AttributeType::Object:
-        value = object_t {default_value.as<int32>()};
+        value = ObjectRef {default_value.as<int32>()};
         break;
     }
   }

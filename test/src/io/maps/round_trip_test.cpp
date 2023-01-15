@@ -453,7 +453,7 @@ constexpr usize col_count = 13;
   data.context.properties["map-string"] = "foobar"s;
   data.context.properties["map-file"] = fs::path {"foo/bar.txt"};
   data.context.properties["map-color"] = Color {0x9F, 0x1E, 0xCE};
-  data.context.properties["map-object"] = object_t {42};
+  data.context.properties["map-object"] = ObjectRef {42};
 
   if (use_components) {
     data.context.components["empty-component"];
