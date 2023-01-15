@@ -29,9 +29,9 @@
 #include "common/util/filesystem.hpp"
 #include "core/attribute.hpp"
 #include "io/compression.hpp"
-#include "io/file.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
+#include "io/stream.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/yaml.hpp"
 #include "model/settings.hpp"
@@ -342,7 +342,7 @@ void emit_tileset_file(const EmitInfo& info,
   const auto path = info.destination_dir() / filename;
   spdlog::debug("Saving external tileset to {}", path);
 
-  auto stream = write_file(path, FileType::Text);
+  auto stream = open_output_stream(path, FileType::Text).value();
   stream << emitter.c_str();
 }
 
@@ -472,7 +472,7 @@ void emit_yaml_map(const EmitInfo& info)
 
   emitter << YAML::EndMap;
 
-  auto stream = write_file(info.destination_file(), FileType::Text);
+  auto stream = open_output_stream(info.destination_file(), FileType::Text).value();
   stream << emitter.c_str();
 }
 

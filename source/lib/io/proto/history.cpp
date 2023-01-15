@@ -30,8 +30,8 @@
 #include "common/util/filesystem.hpp"
 #include "common/util/fmt.hpp"
 #include "io/directories.hpp"
-#include "io/file.hpp"
 #include "io/proto/proto.hpp"
+#include "io/stream.hpp"
 
 namespace tactile::io {
 namespace {
@@ -55,10 +55,15 @@ inline Deque<String> history_entries;
 void load_file_history()
 {
   spdlog::debug("Loading file history...");
-  auto stream = read_file(get_file_path(), FileType::Binary);
+
+  auto stream = open_input_stream(get_file_path(), FileType::Binary);
+  if (!stream) {
+    spdlog::error("Could not open file history file");
+    return;
+  }
 
   proto::History h;
-  if (h.ParseFromIstream(&stream)) {
+  if (h.ParseFromIstream(&stream.value())) {
     if (h.has_last_opened_file()) {
       history_last_closed_file = h.last_opened_file();
     }
@@ -88,9 +93,14 @@ void save_file_history()
     h.add_files(path);
   }
 
-  auto stream = write_file(get_file_path(), FileType::Binary);
-  if (!h.SerializeToOstream(&stream)) {
-    spdlog::error("Failed to save file history!");
+  auto stream = open_output_stream(get_file_path(), FileType::Binary);
+  if (!stream) {
+    spdlog::error("Could not open file history file for writing");
+    return;
+  }
+
+  if (!h.SerializeToOstream(&stream.value())) {
+    spdlog::error("Failed to save file history");
   }
 }
 

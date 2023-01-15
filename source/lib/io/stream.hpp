@@ -20,6 +20,7 @@
 #pragma once
 
 #include "common/type/fstream.hpp"
+#include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 
 namespace tactile {
@@ -29,10 +30,10 @@ enum class FileType {
   Binary
 };
 
-[[nodiscard]] auto read_file(const char* path, FileType type) -> IfStream;
-[[nodiscard]] auto read_file(const Path& path, FileType type) -> IfStream;
+[[nodiscard]] auto open_input_stream(const char* path, FileType type) -> Maybe<IfStream>;
+[[nodiscard]] auto open_input_stream(const Path& path, FileType type) -> Maybe<IfStream>;
 
-[[nodiscard]] auto write_file(const char* path, FileType type) -> OfStream;
-[[nodiscard]] auto write_file(const Path& path, FileType type) -> OfStream;
+[[nodiscard]] auto open_output_stream(const char* path, FileType type) -> Maybe<OfStream>;
+[[nodiscard]] auto open_output_stream(const Path& path, FileType type) -> Maybe<OfStream>;
 
 }  // namespace tactile

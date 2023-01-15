@@ -25,8 +25,8 @@
 
 #include "common/type/path.hpp"
 #include "io/directories.hpp"
-#include "io/file.hpp"
 #include "io/proto/proto.hpp"
+#include "io/stream.hpp"
 
 namespace tactile::io {
 namespace {
@@ -56,10 +56,14 @@ void to_proto(const Color& color, proto::Color* out)
 
 [[nodiscard]] auto parse_settings_from_file(const Path& path) -> Maybe<Settings>
 {
-  auto stream = read_file(path, FileType::Binary);
+  auto stream = open_input_stream(path, FileType::Binary);
+  if (!stream) {
+    spdlog::error("Failed to open settings file");
+    return nothing;
+  }
 
   proto::Settings cfg;
-  if (cfg.ParseFromIstream(&stream)) {
+  if (cfg.ParseFromIstream(&stream.value())) {
     Settings settings;
 
     if (cfg.has_language()) {
@@ -239,10 +243,15 @@ void save_settings_to_disk(const Settings& settings)
   cfg.set_font_size(settings.get_font_size());
 
   const auto& path = get_settings_file_path();
-  auto stream = write_file(path, FileType::Binary);
+  auto stream = open_output_stream(path, FileType::Binary);
 
-  if (!cfg.SerializeToOstream(&stream)) {
-    spdlog::error("Failed to save settings!");
+  if (!stream) {
+    spdlog::error("Could not open settings file for writing, no settings were saved");
+    return;
+  }
+
+  if (!cfg.SerializeToOstream(&stream.value())) {
+    spdlog::error("Failed to save settings");
   }
 }
 

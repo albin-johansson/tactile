@@ -23,10 +23,10 @@
 
 #include "common/util/filesystem.hpp"
 #include "io/directories.hpp"
-#include "io/file.hpp"
 #include "io/map/ir/map_from_ir.hpp"
 #include "io/map/parse/parse_map.hpp"
 #include "io/proto/proto.hpp"
+#include "io/stream.hpp"
 #include "model/document/map_document.hpp"
 #include "model/model.hpp"
 
@@ -47,8 +47,13 @@ void session_restore_previous(DocumentModel& model)
 {
   proto::Session session;
 
-  auto stream = read_file(get_file_path(), FileType::Binary);
-  if (session.ParseFromIstream(&stream)) {
+  auto stream = open_input_stream(get_file_path(), FileType::Binary);
+  if (!stream) {
+    spdlog::error("Could not open session file");
+    return;
+  }
+
+  if (session.ParseFromIstream(&stream.value())) {
     for (const auto& file: session.files()) {
       const auto ir = parse_map(file);
       if (ir.error() == ParseError::None) {
@@ -77,9 +82,14 @@ void session_save(const DocumentModel& model)
     }
   });
 
-  auto stream = write_file(get_file_path(), FileType::Binary);
-  if (!session.SerializeToOstream(&stream)) {
-    spdlog::error("Failed to save session file!");
+  auto stream = open_output_stream(get_file_path(), FileType::Binary);
+  if (stream.has_value()) {
+    if (!session.SerializeToOstream(&stream.value())) {
+      spdlog::error("Failed to save session file");
+    }
+  }
+  else {
+    spdlog::error("Failed to open session file for writing");
   }
 }
 

@@ -26,7 +26,7 @@
 
 #include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
-#include "io/file.hpp"
+#include "io/stream.hpp"
 #include "model/settings.hpp"
 
 namespace tactile {
@@ -96,7 +96,7 @@ void to_json(JSON& json, const Attribute& value)
 
 void write_json(const JSON& json, const Path& path)
 {
-  auto stream = write_file(path, FileType::Text);
+  auto stream = open_output_stream(path, FileType::Text).value();
 
   if (get_settings().test_flag(SETTINGS_INDENT_OUTPUT_BIT)) {
     stream << std::setw(2);
@@ -118,7 +118,7 @@ auto try_get(const JSON& json, const char* key) -> const JSON*
 auto read_json(const Path& path) -> Maybe<JSON>
 {
   try {
-    auto stream = read_file(path, FileType::Text);
+    auto stream = open_input_stream(path, FileType::Text).value();
 
     JSON json;
     stream >> json;

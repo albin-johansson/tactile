@@ -25,10 +25,10 @@
 #include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
 #include "common/util/functional.hpp"
-#include "io/file.hpp"
 #include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/tiled_info.hpp"
+#include "io/stream.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/xml.hpp"
 #include "model/settings.hpp"
@@ -367,7 +367,7 @@ void emit_external_tileset_file(const Path& path,
 
   append_common_tileset_attributes(root, tileset, dir);
 
-  auto stream = write_file(path, FileType::Text);
+  auto stream = open_output_stream(path, FileType::Text).value();
   document.save(stream, " ");
 }
 
@@ -428,7 +428,7 @@ void emit_xml_map(const EmitInfo& info)
   pugi::xml_document document;
   append_root(document, info);
 
-  auto stream = write_file(info.destination_file(), FileType::Text);
+  auto stream = open_output_stream(info.destination_file(), FileType::Text).value();
   document.save(stream, " ");
 }
 

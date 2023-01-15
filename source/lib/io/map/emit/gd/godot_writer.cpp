@@ -30,9 +30,9 @@
 #include "common/type/ostream.hpp"
 #include "common/util/filesystem.hpp"
 #include "core/tile/tile_pos.hpp"
-#include "io/file.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/emit/gd/godot_scene.hpp"
+#include "io/stream.hpp"
 
 namespace tactile::io {
 namespace {
@@ -164,7 +164,7 @@ void write_ext_resources(OStream& stream, const GodotFile::ExtResources& resourc
 void write_tileset_file(const GodotTileset& tileset, const GodotEmitOptions& options)
 {
   const auto path = options.root_dir / options.project_tileset_dir / "tileset.tres";
-  auto stream = write_file(path, FileType::Text);
+  auto stream = open_output_stream(path, FileType::Text).value();
 
   stream << fmt::format("[gd_resource type=\"TileSet\" load_steps={} format=2]\n",
                         tileset.get_load_steps());
@@ -460,7 +460,7 @@ void write_godot_scene(const GodotScene& scene, const GodotEmitOptions& options)
   write_tileset_file(tileset, options);
 
   const auto path = options.root_dir / options.project_map_dir / "map.tscn";
-  auto stream = write_file(path, FileType::Text);
+  auto stream = open_output_stream(path, FileType::Text).value();
 
   stream << fmt::format("[gd_scene load_steps={} format=2]\n", scene.get_load_steps());
 
