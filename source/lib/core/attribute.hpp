@@ -23,6 +23,7 @@
 #include <utility>   // move
 
 #include "common/numeric.hpp"
+#include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ostream.hpp"
 #include "common/type/path.hpp"
@@ -34,13 +35,19 @@ namespace tactile {
 
 /// Represents the different possible attributes types.
 enum class AttributeType {
-  String,  /// A string property.
-  Int,     /// An integer property.
-  Float,   /// A floating-point property.
-  Bool,    /// A boolean property.
-  Path,    /// A file path property.
-  Color,   /// A color property.
-  Object   /// An integer ID property, that refers to a map object.
+  String,  ///< Arbitrary string.
+  Int,     ///< Plain int.
+  Int2,    ///< 2D int vector.
+  Int3,    ///< 3D int vector.
+  Int4,    ///< 4D int vector.
+  Float,   ///< Plain float.
+  Float2,  ///< 2D float vector.
+  Float3,  ///< 3D float vector.
+  Float4,  ///< 4D float vector.
+  Bool,    ///< Boolean value.
+  Path,    ///< File path.
+  Color,   ///< Color value.
+  Object,  ///< Integer object ID, references some map object.
 };
 
 /// Returns the name of an attribute type for use in save files.
@@ -59,7 +66,13 @@ enum object_t : int32 {
 template <typename T>
 concept AnAttributeType = std::same_as<T, String> ||  //
                           std::same_as<T, int32> ||   //
+                          std::same_as<T, Int2> ||    //
+                          std::same_as<T, Int3> ||    //
+                          std::same_as<T, Int4> ||    //
                           std::same_as<T, float> ||   //
+                          std::same_as<T, Float2> ||  //
+                          std::same_as<T, Float3> ||  //
+                          std::same_as<T, Float4> ||  //
                           std::same_as<T, bool> ||    //
                           std::same_as<T, Color> ||   //
                           std::same_as<T, Path> ||    //
@@ -70,13 +83,25 @@ class Attribute final {
  public:
   using string_type = String;
   using integer_type = int32;
+  using int2_type = Int2;
+  using int3_type = Int3;
+  using int4_type = Int4;
   using float_type = float;
+  using float2_type = Float2;
+  using float3_type = Float3;
+  using float4_type = Float4;
   using color_type = Color;
   using path_type = Path;
 
   using value_type = Variant<string_type,
                              integer_type,
+                             int2_type,
+                             int3_type,
+                             int4_type,
                              float_type,
+                             float2_type,
+                             float3_type,
+                             float4_type,
                              bool,
                              color_type,
                              path_type,
@@ -117,8 +142,26 @@ class Attribute final {
   /// Indicates whether the attribute holds an integer value.
   [[nodiscard]] auto is_int() const noexcept -> bool;
 
+  /// Indicates whether the attribute holds a 2D int vector.
+  [[nodiscard]] auto is_int2() const noexcept -> bool;
+
+  /// Indicates whether the attribute holds a 3D int vector.
+  [[nodiscard]] auto is_int3() const noexcept -> bool;
+
+  /// Indicates whether the attribute holds a 4D int vector.
+  [[nodiscard]] auto is_int4() const noexcept -> bool;
+
   /// Indicates whether the attribute holds a float value.
   [[nodiscard]] auto is_float() const noexcept -> bool;
+
+  /// Indicates whether the attribute holds a 2D float vector.
+  [[nodiscard]] auto is_float2() const noexcept -> bool;
+
+  /// Indicates whether the attribute holds a 3D float vector.
+  [[nodiscard]] auto is_float3() const noexcept -> bool;
+
+  /// Indicates whether the attribute holds a 4D float vector.
+  [[nodiscard]] auto is_float4() const noexcept -> bool;
 
   /// Indicates whether the attribute holds a boolean value.
   [[nodiscard]] auto is_bool() const noexcept -> bool;
@@ -144,10 +187,46 @@ class Attribute final {
     return get_if<integer_type>();
   }
 
+  /// Attempts to return the attribute value as a 2D int vector.
+  [[nodiscard]] auto try_as_int2() const noexcept -> const int2_type*
+  {
+    return get_if<int2_type>();
+  }
+
+  /// Attempts to return the attribute value as a 3D int vector.
+  [[nodiscard]] auto try_as_int3() const noexcept -> const int3_type*
+  {
+    return get_if<int3_type>();
+  }
+
+  /// Attempts to return the attribute value as a 4D int vector.
+  [[nodiscard]] auto try_as_int4() const noexcept -> const int4_type*
+  {
+    return get_if<int4_type>();
+  }
+
   /// Attempts to return the attribute value as a float.
   [[nodiscard]] auto try_as_float() const noexcept -> const float_type*
   {
     return get_if<float_type>();
+  }
+
+  /// Attempts to return the attribute value as a 2D float vector.
+  [[nodiscard]] auto try_as_float2() const noexcept -> const float2_type*
+  {
+    return get_if<float2_type>();
+  }
+
+  /// Attempts to return the attribute value as a 3D float vector.
+  [[nodiscard]] auto try_as_float3() const noexcept -> const float3_type*
+  {
+    return get_if<float3_type>();
+  }
+
+  /// Attempts to return the attribute value as a 4D float vector.
+  [[nodiscard]] auto try_as_float4() const noexcept -> const float4_type*
+  {
+    return get_if<float4_type>();
   }
 
   /// Attempts to return the attribute value as a boolean.
@@ -180,8 +259,26 @@ class Attribute final {
   /// Returns the attribute's integer value.
   [[nodiscard]] auto as_int() const -> integer_type;
 
+  /// Returns the attribute's 2D int vector value.
+  [[nodiscard]] auto as_int2() const -> int2_type;
+
+  /// Returns the attribute's 3D int vector value.
+  [[nodiscard]] auto as_int3() const -> int3_type;
+
+  /// Returns the attribute's 4D int vector value.
+  [[nodiscard]] auto as_int4() const -> int4_type;
+
   /// Returns the attribute's float value.
   [[nodiscard]] auto as_float() const -> float_type;
+
+  /// Returns the attribute's 2D float vector value.
+  [[nodiscard]] auto as_float2() const -> float2_type;
+
+  /// Returns the attribute's 3D float vector value.
+  [[nodiscard]] auto as_float3() const -> float3_type;
+
+  /// Returns the attribute's 4D float vector value.
+  [[nodiscard]] auto as_float4() const -> float4_type;
 
   /// Returns the attribute's boolean value.
   [[nodiscard]] auto as_bool() const -> bool;

@@ -36,7 +36,13 @@ TEST_SUITE("Attribute")
 
     REQUIRE(value.is_string());
     REQUIRE(!value.is_int());
+    REQUIRE(!value.is_int2());
+    REQUIRE(!value.is_int3());
+    REQUIRE(!value.is_int4());
     REQUIRE(!value.is_float());
+    REQUIRE(!value.is_float2());
+    REQUIRE(!value.is_float3());
+    REQUIRE(!value.is_float4());
     REQUIRE(!value.is_bool());
     REQUIRE(!value.is_color());
     REQUIRE(!value.is_path());
@@ -44,7 +50,13 @@ TEST_SUITE("Attribute")
 
     REQUIRE("" == value.as_string());
     REQUIRE_THROWS_AS(value.as_int(), TactileError);
+    REQUIRE_THROWS_AS(value.as_int2(), TactileError);
+    REQUIRE_THROWS_AS(value.as_int3(), TactileError);
+    REQUIRE_THROWS_AS(value.as_int4(), TactileError);
     REQUIRE_THROWS_AS(value.as_float(), TactileError);
+    REQUIRE_THROWS_AS(value.as_float2(), TactileError);
+    REQUIRE_THROWS_AS(value.as_float3(), TactileError);
+    REQUIRE_THROWS_AS(value.as_float4(), TactileError);
     REQUIRE_THROWS_AS(value.as_bool(), TactileError);
     REQUIRE_THROWS_AS(value.as_color(), TactileError);
     REQUIRE_THROWS_AS(value.as_path(), TactileError);
@@ -61,6 +73,78 @@ TEST_SUITE("Attribute")
 
     REQUIRE(!value.is_string());
     REQUIRE(!value.is_float());
+    REQUIRE(!value.is_float2());
+    REQUIRE(!value.is_float3());
+    REQUIRE(!value.is_float4());
+    REQUIRE(!value.is_int2());
+    REQUIRE(!value.is_int3());
+    REQUIRE(!value.is_int4());
+    REQUIRE(!value.is_bool());
+    REQUIRE(!value.is_color());
+    REQUIRE(!value.is_path());
+    REQUIRE(!value.is_object());
+  }
+
+  TEST_CASE("Int2 attribute")
+  {
+    const Attribute value {Int2 {1, 2}};
+    REQUIRE(Int2 {1, 2} == value.as_int2());
+
+    REQUIRE(value.is_int2());
+    REQUIRE(value.try_as_int2());
+
+    REQUIRE(!value.is_string());
+    REQUIRE(!value.is_float());
+    REQUIRE(!value.is_float2());
+    REQUIRE(!value.is_float3());
+    REQUIRE(!value.is_float4());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_int3());
+    REQUIRE(!value.is_int4());
+    REQUIRE(!value.is_bool());
+    REQUIRE(!value.is_color());
+    REQUIRE(!value.is_path());
+    REQUIRE(!value.is_object());
+  }
+
+  TEST_CASE("Int3 attribute")
+  {
+    const Attribute value {Int3 {1, 2, 3}};
+    REQUIRE(Int3 {1, 2, 3} == value.as_int3());
+
+    REQUIRE(value.is_int3());
+    REQUIRE(value.try_as_int3());
+
+    REQUIRE(!value.is_string());
+    REQUIRE(!value.is_float());
+    REQUIRE(!value.is_float2());
+    REQUIRE(!value.is_float3());
+    REQUIRE(!value.is_float4());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_int2());
+    REQUIRE(!value.is_int4());
+    REQUIRE(!value.is_bool());
+    REQUIRE(!value.is_color());
+    REQUIRE(!value.is_path());
+    REQUIRE(!value.is_object());
+  }
+
+  TEST_CASE("Int4 attribute")
+  {
+    const Attribute value {Int4 {1, 2, 3, 4}};
+    REQUIRE(Int4 {1, 2, 3, 4} == value.as_int4());
+
+    REQUIRE(value.is_int4());
+    REQUIRE(value.try_as_int4());
+
+    REQUIRE(!value.is_string());
+    REQUIRE(!value.is_float());
+    REQUIRE(!value.is_float2());
+    REQUIRE(!value.is_float3());
+    REQUIRE(!value.is_float4());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_int2());
+    REQUIRE(!value.is_int3());
     REQUIRE(!value.is_bool());
     REQUIRE(!value.is_color());
     REQUIRE(!value.is_path());
@@ -76,7 +160,79 @@ TEST_SUITE("Attribute")
     REQUIRE(value.try_as_float());
 
     REQUIRE(!value.is_string());
+    REQUIRE(!value.is_float2());
+    REQUIRE(!value.is_float3());
+    REQUIRE(!value.is_float4());
     REQUIRE(!value.is_int());
+    REQUIRE(!value.is_int2());
+    REQUIRE(!value.is_int3());
+    REQUIRE(!value.is_int4());
+    REQUIRE(!value.is_bool());
+    REQUIRE(!value.is_color());
+    REQUIRE(!value.is_path());
+    REQUIRE(!value.is_object());
+  }
+
+  TEST_CASE("Float2 attribute")
+  {
+    const Attribute value {Float2 {24, 48}};
+    REQUIRE(Float2 {24, 48} == value.as_float2());
+
+    REQUIRE(value.is_float2());
+    REQUIRE(value.try_as_float2());
+
+    REQUIRE(!value.is_string());
+    REQUIRE(!value.is_float());
+    REQUIRE(!value.is_float3());
+    REQUIRE(!value.is_float4());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_int2());
+    REQUIRE(!value.is_int3());
+    REQUIRE(!value.is_int4());
+    REQUIRE(!value.is_bool());
+    REQUIRE(!value.is_color());
+    REQUIRE(!value.is_path());
+    REQUIRE(!value.is_object());
+  }
+
+  TEST_CASE("Float3 attribute")
+  {
+    const Attribute value {Float3 {24, 48, 64}};
+    REQUIRE(Float3 {24, 48, 64} == value.as_float3());
+
+    REQUIRE(value.is_float3());
+    REQUIRE(value.try_as_float3());
+
+    REQUIRE(!value.is_string());
+    REQUIRE(!value.is_float());
+    REQUIRE(!value.is_float2());
+    REQUIRE(!value.is_float4());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_int2());
+    REQUIRE(!value.is_int3());
+    REQUIRE(!value.is_int4());
+    REQUIRE(!value.is_bool());
+    REQUIRE(!value.is_color());
+    REQUIRE(!value.is_path());
+    REQUIRE(!value.is_object());
+  }
+
+  TEST_CASE("Float4 attribute")
+  {
+    const Attribute value {Float4 {24, 48, 64, 96}};
+    REQUIRE(Float4 {24, 48, 64, 96} == value.as_float4());
+
+    REQUIRE(value.is_float4());
+    REQUIRE(value.try_as_float4());
+
+    REQUIRE(!value.is_string());
+    REQUIRE(!value.is_float());
+    REQUIRE(!value.is_float2());
+    REQUIRE(!value.is_float3());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_int2());
+    REQUIRE(!value.is_int3());
+    REQUIRE(!value.is_int4());
     REQUIRE(!value.is_bool());
     REQUIRE(!value.is_color());
     REQUIRE(!value.is_path());
@@ -91,8 +247,14 @@ TEST_SUITE("Attribute")
     REQUIRE(value.is_string());
     REQUIRE(value.try_as_string());
 
-    REQUIRE(!value.is_int());
     REQUIRE(!value.is_float());
+    REQUIRE(!value.is_float2());
+    REQUIRE(!value.is_float3());
+    REQUIRE(!value.is_float4());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_int2());
+    REQUIRE(!value.is_int3());
+    REQUIRE(!value.is_int4());
     REQUIRE(!value.is_bool());
     REQUIRE(!value.is_color());
     REQUIRE(!value.is_path());
@@ -108,8 +270,14 @@ TEST_SUITE("Attribute")
     REQUIRE(value.try_as_bool());
 
     REQUIRE(!value.is_string());
-    REQUIRE(!value.is_int());
     REQUIRE(!value.is_float());
+    REQUIRE(!value.is_float2());
+    REQUIRE(!value.is_float3());
+    REQUIRE(!value.is_float4());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_int2());
+    REQUIRE(!value.is_int3());
+    REQUIRE(!value.is_int4());
     REQUIRE(!value.is_color());
     REQUIRE(!value.is_path());
     REQUIRE(!value.is_object());
@@ -124,8 +292,14 @@ TEST_SUITE("Attribute")
     REQUIRE(value.try_as_path());
 
     REQUIRE(!value.is_string());
-    REQUIRE(!value.is_int());
     REQUIRE(!value.is_float());
+    REQUIRE(!value.is_float2());
+    REQUIRE(!value.is_float3());
+    REQUIRE(!value.is_float4());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_int2());
+    REQUIRE(!value.is_int3());
+    REQUIRE(!value.is_int4());
     REQUIRE(!value.is_bool());
     REQUIRE(!value.is_color());
     REQUIRE(!value.is_object());
@@ -133,14 +307,20 @@ TEST_SUITE("Attribute")
 
   TEST_CASE("Object attribute")
   {
-    const Attribute value {object_t {7}};
+    const Attribute value {ObjectRef {7}};
 
     REQUIRE(value.is_object());
     REQUIRE(value.try_as_object());
 
     REQUIRE(!value.is_string());
-    REQUIRE(!value.is_int());
     REQUIRE(!value.is_float());
+    REQUIRE(!value.is_float2());
+    REQUIRE(!value.is_float3());
+    REQUIRE(!value.is_float4());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_int2());
+    REQUIRE(!value.is_int3());
+    REQUIRE(!value.is_int4());
     REQUIRE(!value.is_bool());
     REQUIRE(!value.is_color());
     REQUIRE(!value.is_path());
@@ -154,8 +334,14 @@ TEST_SUITE("Attribute")
     REQUIRE(value.try_as_color());
 
     REQUIRE(!value.is_string());
-    REQUIRE(!value.is_int());
     REQUIRE(!value.is_float());
+    REQUIRE(!value.is_float2());
+    REQUIRE(!value.is_float3());
+    REQUIRE(!value.is_float4());
+    REQUIRE(!value.is_int());
+    REQUIRE(!value.is_int2());
+    REQUIRE(!value.is_int3());
+    REQUIRE(!value.is_int4());
     REQUIRE(!value.is_bool());
     REQUIRE(!value.is_path());
     REQUIRE(!value.is_object());
