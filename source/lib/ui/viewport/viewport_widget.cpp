@@ -30,7 +30,6 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/map_events.hpp"
-#include "model/event/tool_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/model.hpp"
 #include "ui/shortcut/mappings.hpp"
@@ -90,11 +89,11 @@ void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispat
 
       if (model.is_map_active()) {
         if (window.mouse_entered()) {
-          dispatcher.enqueue<ToolEnteredEvent>();
+          dispatcher.enqueue<ViewportMouseEnteredEvent>();
         }
 
         if (window.mouse_exited()) {
-          dispatcher.enqueue<ToolExitedEvent>();
+          dispatcher.enqueue<ViewportMouseExitedEvent>();
         }
       }
     }

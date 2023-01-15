@@ -29,25 +29,6 @@
 
 namespace tactile {
 
-/// Emitted when a mouse tool is pressed.
-struct ToolPressedEvent final {
-  MouseInfo info;
-};
-
-/// Emitted when a mouse tool is dragged.
-struct ToolDraggedEvent final {
-  MouseInfo info;
-};
-
-/// Emitted when a mouse tool is released.
-struct ToolReleasedEvent final {
-  MouseInfo info;
-};
-
-struct ToolEnteredEvent final {};
-
-struct ToolExitedEvent final {};
-
 struct SelectToolEvent final {
   ToolType type {};
 };

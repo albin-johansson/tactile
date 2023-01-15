@@ -23,8 +23,25 @@
 
 #include "common/type/math.hpp"
 #include "common/type/uuid.hpp"
+#include "model/mouse_info.hpp"
 
 namespace tactile {
+
+struct ViewportMousePressedEvent final {
+  MouseInfo info;
+};
+
+struct ViewportMouseDraggedEvent final {
+  MouseInfo info;
+};
+
+struct ViewportMouseReleasedEvent final {
+  MouseInfo info;
+};
+
+struct ViewportMouseEnteredEvent final {};
+
+struct ViewportMouseExitedEvent final {};
 
 struct CenterViewportEvent final {};
 

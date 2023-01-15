@@ -33,61 +33,6 @@
 namespace tactile {
 namespace {
 
-void on_tool_pressed(const ToolPressedEvent& event)
-{
-  spdlog::trace("ToolPressedEvent(...)");
-
-  auto& model = get_model();
-  if (auto* document = model.active_map_document()) {
-    auto& tools = document->get_tools();
-    tools.on_pressed(model, get_dispatcher(), event.info);
-  }
-}
-
-void on_tool_dragged(const ToolDraggedEvent& event)
-{
-  spdlog::trace("ToolDraggedEvent(...)");
-
-  auto& model = get_model();
-  if (auto* document = model.active_map_document()) {
-    auto& tools = document->get_tools();
-    tools.on_dragged(model, get_dispatcher(), event.info);
-  }
-}
-
-void on_tool_released(const ToolReleasedEvent& event)
-{
-  spdlog::trace("ToolReleasedEvent(...)");
-
-  auto& model = get_model();
-  if (auto* document = model.active_map_document()) {
-    auto& tools = document->get_tools();
-    tools.on_released(model, get_dispatcher(), event.info);
-  }
-}
-
-void on_tool_entered(const ToolEnteredEvent&)
-{
-  spdlog::trace("ToolEnteredEvent(...)");
-
-  auto& model = get_model();
-  if (auto* document = model.active_map_document()) {
-    auto& tools = document->get_tools();
-    tools.on_entered(model, get_dispatcher());
-  }
-}
-
-void on_tool_exited(const ToolExitedEvent&)
-{
-  spdlog::trace("ToolExitedEvent(...)");
-
-  auto& model = get_model();
-  if (auto* document = model.active_map_document()) {
-    auto& tools = document->get_tools();
-    tools.on_exited(model, get_dispatcher());
-  }
-}
-
 void on_select_tool(const SelectToolEvent& event)
 {
   spdlog::trace("SelectToolEvent(type: {})", magic_enum::enum_name(event.type));
@@ -182,12 +127,6 @@ void on_set_stamp_randomizer(const SetStampRandomizerEvent event)
 void install_tool_event_handler()
 {
   auto& dispatcher = get_dispatcher();
-
-  dispatcher.sink<ToolPressedEvent>().connect<&on_tool_pressed>();
-  dispatcher.sink<ToolDraggedEvent>().connect<&on_tool_dragged>();
-  dispatcher.sink<ToolReleasedEvent>().connect<&on_tool_released>();
-  dispatcher.sink<ToolEnteredEvent>().connect<&on_tool_entered>();
-  dispatcher.sink<ToolExitedEvent>().connect<&on_tool_exited>();
 
   dispatcher.sink<SelectToolEvent>().connect<&on_select_tool>();
 

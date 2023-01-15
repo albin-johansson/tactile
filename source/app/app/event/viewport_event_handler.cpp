@@ -40,6 +40,61 @@ namespace {
 
 inline constexpr Float2 viewport_default_tile_size = {64, 64};
 
+void on_viewport_mouse_pressed(const ViewportMousePressedEvent& event)
+{
+  spdlog::trace("ViewportMousePressedEvent(...)");
+
+  auto& model = get_model();
+  if (auto* map_document = model.active_map_document()) {
+    auto& tool_manager = map_document->get_tools();
+    tool_manager.on_pressed(model, get_dispatcher(), event.info);
+  }
+}
+
+void on_viewport_mouse_dragged(const ViewportMouseDraggedEvent& event)
+{
+  spdlog::trace("ViewportMouseDraggedEvent(...)");
+
+  auto& model = get_model();
+  if (auto* map_document = model.active_map_document()) {
+    auto& tool_manager = map_document->get_tools();
+    tool_manager.on_dragged(model, get_dispatcher(), event.info);
+  }
+}
+
+void on_viewport_mouse_released(const ViewportMouseReleasedEvent& event)
+{
+  spdlog::trace("ViewportMouseReleasedEvent(...)");
+
+  auto& model = get_model();
+  if (auto* map_document = model.active_map_document()) {
+    auto& tool_manager = map_document->get_tools();
+    tool_manager.on_released(model, get_dispatcher(), event.info);
+  }
+}
+
+void on_viewport_mouse_entered(const ViewportMouseEnteredEvent&)
+{
+  spdlog::trace("ViewportMouseEnteredEvent(...)");
+
+  auto& model = get_model();
+  if (auto* map_document = model.active_map_document()) {
+    auto& tool_manager = map_document->get_tools();
+    tool_manager.on_entered(model, get_dispatcher());
+  }
+}
+
+void on_viewport_mouse_exited(const ViewportMouseExitedEvent&)
+{
+  spdlog::trace("ViewportMouseExitedEvent(...)");
+
+  auto& model = get_model();
+  if (auto* map_document = model.active_map_document()) {
+    auto& tool_manager = map_document->get_tools();
+    tool_manager.on_exited(model, get_dispatcher());
+  }
+}
+
 void on_pan_left(const PanLeftEvent&)
 {
   spdlog::trace("PanLeftEvent");
@@ -179,6 +234,12 @@ void on_update_tileset_viewport_limits(const UpdateTilesetViewportLimitsEvent& e
 void install_viewport_event_handler()
 {
   auto& dispatcher = get_dispatcher();
+
+  dispatcher.sink<ViewportMousePressedEvent>().connect<&on_viewport_mouse_pressed>();
+  dispatcher.sink<ViewportMouseDraggedEvent>().connect<&on_viewport_mouse_dragged>();
+  dispatcher.sink<ViewportMouseReleasedEvent>().connect<&on_viewport_mouse_released>();
+  dispatcher.sink<ViewportMouseEnteredEvent>().connect<&on_viewport_mouse_entered>();
+  dispatcher.sink<ViewportMouseExitedEvent>().connect<&on_viewport_mouse_exited>();
 
   dispatcher.sink<PanLeftEvent>().connect<&on_pan_left>();
   dispatcher.sink<PanRightEvent>().connect<&on_pan_right>();
