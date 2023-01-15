@@ -339,7 +339,13 @@ struct MiscStrings final {
 
   String property_name_hint;
   String type_int;
+  String type_int2;
+  String type_int3;
+  String type_int4;
   String type_float;
+  String type_float2;
+  String type_float3;
+  String type_float4;
   String type_bool;
   String type_string;
   String type_color;

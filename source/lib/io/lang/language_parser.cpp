@@ -383,7 +383,13 @@ void load_misc_strings(const JSON& json, MiscStrings& misc)
 
   load(json, misc.property_name_hint, "property-name-hint");
   load(json, misc.type_int, "type-int");
+  load(json, misc.type_int2, "type-int2");
+  load(json, misc.type_int3, "type-int3");
+  load(json, misc.type_int4, "type-int4");
   load(json, misc.type_float, "type-float");
+  load(json, misc.type_float2, "type-float2");
+  load(json, misc.type_float3, "type-float3");
+  load(json, misc.type_float4, "type-float4");
   load(json, misc.type_bool, "type-bool");
   load(json, misc.type_string, "type-string");
   load(json, misc.type_color, "type-color");
