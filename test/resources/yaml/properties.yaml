@@ -10,8 +10,20 @@ component-definitions:
     attributes:
       - name: threshold
         type: int
+      - name: i2
+        type: int2
+      - name: i3
+        type: int3
+      - name: i4
+        type: int4
       - name: scale
         type: float
+      - name: f2
+        type: float2
+      - name: f3
+        type: float3
+      - name: f4
+        type: float4
       - name: hidden
         type: bool
       - name: tag
@@ -31,8 +43,20 @@ components:
     values:
       - name: threshold
         value: 123
+      - name: i2
+        value: 1;2
+      - name: i3
+        value: 1;2;3
+      - name: i4
+        value: 1;2;3;4
       - name: scale
         value: 1.0
+      - name: f2
+        value: 1.0;2.0
+      - name: f3
+        value: 1.0;2;3.0
+      - name: f4
+        value: 1.0;2.0;3.0;4.0
       - name: hidden
         value: false
       - name: tag
@@ -51,9 +75,27 @@ properties:
   - name: foo-int
     type: int
     value: 42
+  - name: foo-int2
+    type: int2
+    value: 63;84
+  - name: foo-int3
+    type: int3
+    value: 63;84;11
+  - name: foo-int4
+    type: int4
+    value: 63;84;11;-72
   - name: foo-float
     type: float
     value: 1.5
+  - name: foo-float2
+    type: float2
+    value: 1.3;3.4
+  - name: foo-float3
+    type: float3
+    value: 1.3;3.4;9.1
+  - name: foo-float4
+    type: float4
+    value: 1.3;3.4;9.1;8.5
   - name: foo-bool
     type: bool
     value: true
