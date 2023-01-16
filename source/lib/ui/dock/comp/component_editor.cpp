@@ -160,7 +160,7 @@ void ui_component_attribute_row(const Strings& lang,
   ImGui::TableNextColumn();
   ImGui::SetNextItemWidth(-min_float);
 
-  if (const auto new_attribute_type = ui_attribute_type_combo(attribute.type())) {
+  if (const auto new_attribute_type = ui_attribute_type_combo(attribute.get_type())) {
     dispatcher.enqueue<SetComponentAttrTypeEvent>(component_id,
                                                   attribute_name,
                                                   *new_attribute_type);

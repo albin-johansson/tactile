@@ -64,7 +64,7 @@ TEST_SUITE("ContextInfo")
     REQUIRE(ctx.add_property(property_name, AttributeType::Float).failed());
     REQUIRE(ctx.property_count() == 1u);
     REQUIRE(ctx.has_property(property_name));
-    REQUIRE(ctx.get_property(property_name).type() == AttributeType::Int);
+    REQUIRE(ctx.get_property(property_name).get_type() == AttributeType::Int);
   }
 
   TEST_CASE("add_property (with value)")

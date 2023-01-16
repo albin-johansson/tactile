@@ -49,7 +49,7 @@ void emit_properties(YAML::Emitter& emitter, const ir::ContextData& context)
     for (const auto& [name, value]: context.properties) {
       emitter << YAML::BeginMap;
       emitter << YAML::Key << "name" << YAML::Value << name;
-      emitter << YAML::Key << "type" << YAML::Value << value.type();
+      emitter << YAML::Key << "type" << YAML::Value << value.get_type();
       emitter << YAML::Key << "value" << YAML::Value << value;
       emitter << YAML::EndMap;
     }
@@ -375,7 +375,7 @@ void emit_component_definition_attribute(YAML::Emitter& emitter,
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "name" << YAML::Value << name;
-  emitter << YAML::Key << "type" << YAML::Value << value.type();
+  emitter << YAML::Key << "type" << YAML::Value << value.get_type();
 
   if (!value.has_default_value()) {
     emitter << YAML::Key << "default" << YAML::Value << value;

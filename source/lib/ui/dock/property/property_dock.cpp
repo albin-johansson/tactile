@@ -483,7 +483,7 @@ void update_property_table(const DocumentModel& model, entt::dispatcher& dispatc
 
   if (context_state.show_change_type_dialog) {
     const auto& target_name = change_type_target.value();
-    const auto type = context.get_ctx().get_property(target_name).type();
+    const auto type = context.get_ctx().get_property(target_name).get_type();
     dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(target_name, type);
     change_type_target.reset();
     context_state.show_change_type_dialog = false;

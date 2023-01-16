@@ -64,25 +64,40 @@ enum ObjectRef : int32 {
 };
 
 template <typename T>
-concept AnAttributeType = std::same_as<T, String> ||  //
-                          std::same_as<T, int32> ||   //
-                          std::same_as<T, Int2> ||    //
-                          std::same_as<T, Int3> ||    //
-                          std::same_as<T, Int4> ||    //
-                          std::same_as<T, float> ||   //
-                          std::same_as<T, Float2> ||  //
-                          std::same_as<T, Float3> ||  //
-                          std::same_as<T, Float4> ||  //
-                          std::same_as<T, bool> ||    //
-                          std::same_as<T, Color> ||   //
-                          std::same_as<T, Path> ||    //
-                          std::same_as<T, ObjectRef>;
+concept SomeAttributeType = std::same_as<T, String> ||  //
+                            std::same_as<T, int32> ||   //
+                            std::same_as<T, Int2> ||    //
+                            std::same_as<T, Int3> ||    //
+                            std::same_as<T, Int4> ||    //
+                            std::same_as<T, float> ||   //
+                            std::same_as<T, Float2> ||  //
+                            std::same_as<T, Float3> ||  //
+                            std::same_as<T, Float4> ||  //
+                            std::same_as<T, bool> ||    //
+                            std::same_as<T, Color> ||   //
+                            std::same_as<T, Path> ||    //
+                            std::same_as<T, ObjectRef>;
 
 /// Represents an "attribute" value, used by both property and component facilities.
 class Attribute final {
+  // These are indices into the value type variant types
+  inline constexpr static usize string_type_index = 0;
+  inline constexpr static usize int_type_index = 1;
+  inline constexpr static usize int2_type_index = 2;
+  inline constexpr static usize int3_type_index = 3;
+  inline constexpr static usize int4_type_index = 4;
+  inline constexpr static usize float_type_index = 5;
+  inline constexpr static usize float2_type_index = 6;
+  inline constexpr static usize float3_type_index = 7;
+  inline constexpr static usize float4_type_index = 8;
+  inline constexpr static usize bool_type_index = 9;
+  inline constexpr static usize color_type_index = 10;
+  inline constexpr static usize path_type_index = 11;
+  inline constexpr static usize obj_ref_type_index = 12;
+
  public:
   using string_type = String;
-  using integer_type = int32;
+  using int_type = int32;
   using int2_type = Int2;
   using int3_type = Int3;
   using int4_type = Int4;
@@ -93,8 +108,9 @@ class Attribute final {
   using color_type = Color;
   using path_type = Path;
 
+  // Remember to update the type indices if the order of the type arguments change here.
   using value_type = Variant<string_type,
-                             integer_type,
+                             int_type,
                              int2_type,
                              int3_type,
                              int4_type,
@@ -113,14 +129,14 @@ class Attribute final {
   explicit Attribute(const AttributeType type) { reset_to_default(type); }
 
   /// Creates an attribute with an initial value.
-  template <AnAttributeType T>
+  template <SomeAttributeType T>
   /* implicit */ Attribute(T value)
   {
     mValue.emplace<T>(std::move(value));
   }
 
   /// Updates the stored value of the attribute.
-  template <AnAttributeType T>
+  template <SomeAttributeType T>
   void set_value(T value)
   {
     mValue.emplace<T>(std::move(value));
@@ -134,46 +150,46 @@ class Attribute final {
   [[nodiscard]] auto has_default_value() const -> bool;
 
   /// Returns the type of the attribute's stored value.
-  [[nodiscard]] auto type() const noexcept -> AttributeType;
+  [[nodiscard]] auto get_type() const -> AttributeType;
 
   /// Indicates whether the attribute holds a string value.
-  [[nodiscard]] auto is_string() const noexcept -> bool;
+  [[nodiscard]] auto is_string() const -> bool;
 
   /// Indicates whether the attribute holds an integer value.
-  [[nodiscard]] auto is_int() const noexcept -> bool;
+  [[nodiscard]] auto is_int() const -> bool;
 
   /// Indicates whether the attribute holds a 2D int vector.
-  [[nodiscard]] auto is_int2() const noexcept -> bool;
+  [[nodiscard]] auto is_int2() const -> bool;
 
   /// Indicates whether the attribute holds a 3D int vector.
-  [[nodiscard]] auto is_int3() const noexcept -> bool;
+  [[nodiscard]] auto is_int3() const -> bool;
 
   /// Indicates whether the attribute holds a 4D int vector.
-  [[nodiscard]] auto is_int4() const noexcept -> bool;
+  [[nodiscard]] auto is_int4() const -> bool;
 
   /// Indicates whether the attribute holds a float value.
-  [[nodiscard]] auto is_float() const noexcept -> bool;
+  [[nodiscard]] auto is_float() const -> bool;
 
   /// Indicates whether the attribute holds a 2D float vector.
-  [[nodiscard]] auto is_float2() const noexcept -> bool;
+  [[nodiscard]] auto is_float2() const -> bool;
 
   /// Indicates whether the attribute holds a 3D float vector.
-  [[nodiscard]] auto is_float3() const noexcept -> bool;
+  [[nodiscard]] auto is_float3() const -> bool;
 
   /// Indicates whether the attribute holds a 4D float vector.
-  [[nodiscard]] auto is_float4() const noexcept -> bool;
+  [[nodiscard]] auto is_float4() const -> bool;
 
   /// Indicates whether the attribute holds a boolean value.
-  [[nodiscard]] auto is_bool() const noexcept -> bool;
+  [[nodiscard]] auto is_bool() const -> bool;
 
   /// Indicates whether the attribute holds a file path value.
-  [[nodiscard]] auto is_path() const noexcept -> bool;
+  [[nodiscard]] auto is_path() const -> bool;
 
   /// Indicates whether the attribute holds an object reference value.
-  [[nodiscard]] auto is_object() const noexcept -> bool;
+  [[nodiscard]] auto is_object() const -> bool;
 
   /// Indicates whether the attribute holds a color value.
-  [[nodiscard]] auto is_color() const noexcept -> bool;
+  [[nodiscard]] auto is_color() const -> bool;
 
   /// Attempts to return the attribute value as a string.
   [[nodiscard]] auto try_as_string() const noexcept -> const string_type*
@@ -182,9 +198,9 @@ class Attribute final {
   }
 
   /// Attempts to return the attribute value as an integer.
-  [[nodiscard]] auto try_as_int() const noexcept -> const integer_type*
+  [[nodiscard]] auto try_as_int() const noexcept -> const int_type*
   {
-    return get_if<integer_type>();
+    return get_if<int_type>();
   }
 
   /// Attempts to return the attribute value as a 2D int vector.
@@ -257,28 +273,28 @@ class Attribute final {
   [[nodiscard]] auto as_string() const -> const string_type&;
 
   /// Returns the attribute's integer value.
-  [[nodiscard]] auto as_int() const -> integer_type;
+  [[nodiscard]] auto as_int() const -> int_type;
 
   /// Returns the attribute's 2D int vector value.
-  [[nodiscard]] auto as_int2() const -> int2_type;
+  [[nodiscard]] auto as_int2() const -> const int2_type&;
 
   /// Returns the attribute's 3D int vector value.
-  [[nodiscard]] auto as_int3() const -> int3_type;
+  [[nodiscard]] auto as_int3() const -> const int3_type&;
 
   /// Returns the attribute's 4D int vector value.
-  [[nodiscard]] auto as_int4() const -> int4_type;
+  [[nodiscard]] auto as_int4() const -> const int4_type&;
 
   /// Returns the attribute's float value.
   [[nodiscard]] auto as_float() const -> float_type;
 
   /// Returns the attribute's 2D float vector value.
-  [[nodiscard]] auto as_float2() const -> float2_type;
+  [[nodiscard]] auto as_float2() const -> const float2_type&;
 
   /// Returns the attribute's 3D float vector value.
-  [[nodiscard]] auto as_float3() const -> float3_type;
+  [[nodiscard]] auto as_float3() const -> const float3_type&;
 
   /// Returns the attribute's 4D float vector value.
-  [[nodiscard]] auto as_float4() const -> float4_type;
+  [[nodiscard]] auto as_float4() const -> const float4_type&;
 
   /// Returns the attribute's boolean value.
   [[nodiscard]] auto as_bool() const -> bool;
@@ -297,13 +313,13 @@ class Attribute final {
  private:
   value_type mValue;
 
-  template <AnAttributeType T>
+  template <SomeAttributeType T>
   [[nodiscard]] auto holds() const noexcept -> bool
   {
     return std::holds_alternative<T>(mValue);
   }
 
-  template <AnAttributeType T>
+  template <SomeAttributeType T>
   [[nodiscard]] auto get_if() const noexcept -> const T*
   {
     return std::get_if<T>(&mValue);

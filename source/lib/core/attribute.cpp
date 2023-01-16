@@ -19,8 +19,8 @@
 
 #include "attribute.hpp"
 
-#include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
+#include "common/util/fmt.hpp"
 
 namespace tactile {
 
@@ -125,7 +125,7 @@ void Attribute::reset_to_default(const AttributeType type)
       break;
 
     case AttributeType::Int:
-      set_value<integer_type>(0);
+      set_value<int_type>(0);
       break;
 
     case AttributeType::Int2:
@@ -186,25 +186,25 @@ auto Attribute::has_default_value() const -> bool
     return *i == 0;
   }
   else if (const auto* i2 = try_as_int2()) {
-    return *i2 == int2_type {0, 0};
+    return *i2 == int2_type {};
   }
   else if (const auto* i3 = try_as_int3()) {
-    return *i3 == int3_type {0, 0, 0};
+    return *i3 == int3_type {};
   }
   else if (const auto* i4 = try_as_int4()) {
-    return *i4 == int4_type {0, 0, 0, 0};
+    return *i4 == int4_type {};
   }
   else if (const auto* f = try_as_float()) {
     return *f == 0;
   }
   else if (const auto* f2 = try_as_float2()) {
-    return *f2 == float2_type {0, 0};
+    return *f2 == float2_type {};
   }
   else if (const auto* f3 = try_as_float3()) {
-    return *f3 == float3_type {0, 0, 0};
+    return *f3 == float3_type {};
   }
   else if (const auto* f4 = try_as_float4()) {
-    return *f4 == float4_type {0, 0, 0, 0};
+    return *f4 == float4_type {};
   }
   else if (const auto* b = try_as_bool()) {
     return !*b;
@@ -223,115 +223,116 @@ auto Attribute::has_default_value() const -> bool
   }
 }
 
-auto Attribute::type() const noexcept -> AttributeType
+auto Attribute::get_type() const -> AttributeType
 {
-  // TODO use index function instead
+  switch (mValue.index()) {
+    case string_type_index:
+      return AttributeType::String;
 
-  if (holds<integer_type>()) {
-    return AttributeType::Int;
-  }
-  else if (holds<int2_type>()) {
-    return AttributeType::Int2;
-  }
-  else if (holds<int3_type>()) {
-    return AttributeType::Int3;
-  }
-  else if (holds<int4_type>()) {
-    return AttributeType::Int4;
-  }
-  else if (holds<float_type>()) {
-    return AttributeType::Float;
-  }
-  else if (holds<float2_type>()) {
-    return AttributeType::Float2;
-  }
-  else if (holds<float3_type>()) {
-    return AttributeType::Float3;
-  }
-  else if (holds<float4_type>()) {
-    return AttributeType::Float4;
-  }
-  else if (holds<bool>()) {
-    return AttributeType::Bool;
-  }
-  else if (holds<ObjectRef>()) {
-    return AttributeType::Object;
-  }
-  else if (holds<color_type>()) {
-    return AttributeType::Color;
-  }
-  else if (holds<path_type>()) {
-    return AttributeType::Path;
-  }
-  else {
-    TACTILE_ASSERT(holds<string_type>());
-    return AttributeType::String;
+    case int_type_index:
+      return AttributeType::Int;
+
+    case int2_type_index:
+      return AttributeType::Int2;
+
+    case int3_type_index:
+      return AttributeType::Int3;
+
+    case int4_type_index:
+      return AttributeType::Int4;
+
+    case float_type_index:
+      return AttributeType::Float;
+
+    case float2_type_index:
+      return AttributeType::Float2;
+
+    case float3_type_index:
+      return AttributeType::Float3;
+
+    case float4_type_index:
+      return AttributeType::Float4;
+
+    case bool_type_index:
+      return AttributeType::Bool;
+
+    case color_type_index:
+      return AttributeType::Color;
+
+    case path_type_index:
+      return AttributeType::Path;
+
+    case obj_ref_type_index:
+      return AttributeType::Object;
+
+    default:
+      throw TactileError {"Invalid attribute type"};
   }
 }
 
-auto Attribute::is_string() const noexcept -> bool
+auto Attribute::is_string() const -> bool
 {
-  return type() == AttributeType::String;
+  return get_type() == AttributeType::String;
 }
 
-auto Attribute::is_int() const noexcept -> bool
+auto Attribute::is_int() const -> bool
 {
-  return type() == AttributeType::Int;
+  return get_type() == AttributeType::Int;
 }
 
-auto Attribute::is_int2() const noexcept -> bool
+auto Attribute::is_int2() const -> bool
 {
-  return type() == AttributeType::Int2;
+  return get_type() == AttributeType::Int2;
 }
 
-auto Attribute::is_int3() const noexcept -> bool
+auto Attribute::is_int3() const -> bool
 {
-  return type() == AttributeType::Int3;
+  return get_type() == AttributeType::Int3;
 }
 
-auto Attribute::is_int4() const noexcept -> bool
+auto Attribute::is_int4() const -> bool
 {
-  return type() == AttributeType::Int4;
+  return get_type() == AttributeType::Int4;
 }
 
-auto Attribute::is_float() const noexcept -> bool
+auto Attribute::is_float() const -> bool
 {
-  return type() == AttributeType::Float;
+  return get_type() == AttributeType::Float;
 }
 
-auto Attribute::is_float2() const noexcept -> bool
+auto Attribute::is_float2() const -> bool
 {
-  return type() == AttributeType::Float2;
+  return get_type() == AttributeType::Float2;
 }
 
-auto Attribute::is_float3() const noexcept -> bool
+auto Attribute::is_float3() const -> bool
 {
-  return type() == AttributeType::Float3;
+  return get_type() == AttributeType::Float3;
 }
 
-auto Attribute::is_float4() const noexcept -> bool
+auto Attribute::is_float4() const -> bool
 {
-  return type() == AttributeType::Float4;
+  return get_type() == AttributeType::Float4;
 }
 
-auto Attribute::is_bool() const noexcept -> bool
+auto Attribute::is_bool() const -> bool
 {
-  return type() == AttributeType::Bool;
+  return get_type() == AttributeType::Bool;
 }
 
-auto Attribute::is_path() const noexcept -> bool
+auto Attribute::is_path() const -> bool
 {
-  return type() == AttributeType::Path;
+  return get_type() == AttributeType::Path;
 }
 
-auto Attribute::is_object() const noexcept -> bool
+auto Attribute::is_object() const -> bool
 {
-  return type() == AttributeType::Object;
+  return get_type() == AttributeType::Object;
 }
 
-auto Attribute::is_color() const noexcept -> bool
+auto Attribute::is_color() const -> bool
 {
-  return type() == AttributeType::Color;
+  return get_type() == AttributeType::Color;
 }
 
 auto Attribute::as_string() const -> const string_type&
@@ -340,21 +341,21 @@ auto Attribute::as_string() const -> const string_type&
     return *str;
   }
   else {
-    throw TactileError {"Attribute was not a string!"};
+    throw TactileError {"Attribute was not a string"};
   }
 }
 
-auto Attribute::as_int() const -> integer_type
+auto Attribute::as_int() const -> int_type
 {
-  if (const auto* i = get_if<integer_type>()) {
+  if (const auto* i = get_if<int_type>()) {
     return *i;
   }
   else {
-    throw TactileError {"Attribute was not an integer!"};
+    throw TactileError {"Attribute was not an int"};
   }
 }
 
-auto Attribute::as_int2() const -> int2_type
+auto Attribute::as_int2() const -> const int2_type&
 {
   if (const auto* i2 = get_if<int2_type>()) {
     return *i2;
@@ -364,7 +365,7 @@ auto Attribute::as_int2() const -> int2_type
   }
 }
 
-auto Attribute::as_int3() const -> int3_type
+auto Attribute::as_int3() const -> const int3_type&
 {
   if (const auto* i3 = get_if<int3_type>()) {
     return *i3;
@@ -374,7 +375,7 @@ auto Attribute::as_int3() const -> int3_type
   }
 }
 
-auto Attribute::as_int4() const -> int4_type
+auto Attribute::as_int4() const -> const int4_type&
 {
   if (const auto* i4 = get_if<int4_type>()) {
     return *i4;
@@ -390,11 +391,11 @@ auto Attribute::as_float() const -> float_type
     return *f;
   }
   else {
-    throw TactileError {"Attribute was not a float!"};
+    throw TactileError {"Attribute was not a float"};
   }
 }
 
-auto Attribute::as_float2() const -> float2_type
+auto Attribute::as_float2() const -> const float2_type&
 {
   if (const auto* f2 = get_if<float2_type>()) {
     return *f2;
@@ -404,7 +405,7 @@ auto Attribute::as_float2() const -> float2_type
   }
 }
 
-auto Attribute::as_float3() const -> float3_type
+auto Attribute::as_float3() const -> const float3_type&
 {
   if (const auto* f3 = get_if<float3_type>()) {
     return *f3;
@@ -414,7 +415,7 @@ auto Attribute::as_float3() const -> float3_type
   }
 }
 
-auto Attribute::as_float4() const -> float4_type
+auto Attribute::as_float4() const -> const float4_type&
 {
   if (const auto* f4 = get_if<float4_type>()) {
     return *f4;
@@ -430,7 +431,7 @@ auto Attribute::as_bool() const -> bool
     return *b;
   }
   else {
-    throw TactileError {"Attribute was not a boolean!"};
+    throw TactileError {"Attribute was not a bool"};
   }
 }
 
@@ -440,7 +441,7 @@ auto Attribute::as_path() const -> const path_type&
     return *file;
   }
   else {
-    throw TactileError {"Attribute was not a file!"};
+    throw TactileError {"Attribute was not a path"};
   }
 }
 
@@ -450,7 +451,7 @@ auto Attribute::as_object() const -> ObjectRef
     return *obj;
   }
   else {
-    throw TactileError {"Attribute was not an object reference!"};
+    throw TactileError {"Attribute was not an object reference"};
   }
 }
 
@@ -460,7 +461,7 @@ auto Attribute::as_color() const -> const color_type&
     return *color;
   }
   else {
-    throw TactileError {"Attribute was not a color!"};
+    throw TactileError {"Attribute was not a color"};
   }
 }
 
@@ -471,7 +472,7 @@ auto operator<<(OStream& stream, const AttributeType type) -> OStream&
 
 auto operator<<(OStream& stream, const Attribute& value) -> OStream&
 {
-  switch (value.type()) {
+  switch (value.get_type()) {
     case AttributeType::String:
       return stream << value.as_string();
 
@@ -512,7 +513,7 @@ auto operator<<(OStream& stream, const Attribute& value) -> OStream&
       return stream << "object '" << value.as_object() << "'";
 
     default:
-      throw TactileError {"Invalid attribute type!"};
+      throw TactileError {"Invalid attribute type"};
   }
 }
 

@@ -28,7 +28,7 @@ namespace tactile::io {
 
 auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter&
 {
-  switch (value.type()) {
+  switch (value.get_type()) {
     case AttributeType::String:
       return emitter << value.as_string();
 

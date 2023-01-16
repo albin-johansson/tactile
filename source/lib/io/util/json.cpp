@@ -60,7 +60,7 @@ template <>
 
 void to_json(JSON& json, const Attribute& value)
 {
-  switch (value.type()) {
+  switch (value.get_type()) {
     case AttributeType::String:
       json = value.as_string();
       break;

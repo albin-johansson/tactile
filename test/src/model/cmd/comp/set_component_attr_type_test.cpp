@@ -68,8 +68,8 @@ TEST_SUITE("cmd::SetComponentAttrType")
       const auto& component_def = component_index->at(component_id);
       const auto& component = map_ctx.get_component(component_id);
 
-      REQUIRE(component_def.at(attr_name).type() == new_attr_type);
-      REQUIRE(component.at(attr_name).type() == new_attr_type);
+      REQUIRE(component_def.at(attr_name).get_type() == new_attr_type);
+      REQUIRE(component.at(attr_name).get_type() == new_attr_type);
 
       REQUIRE(component_def.at(attr_name).as_int() == Attribute {new_attr_type});
       REQUIRE(component.at(attr_name).as_int() == Attribute {new_attr_type});
@@ -81,8 +81,8 @@ TEST_SUITE("cmd::SetComponentAttrType")
       const auto& component_def = component_index->at(component_id);
       const auto& component = map_ctx.get_component(component_id);
 
-      REQUIRE(component_def.at(attr_name).type() == old_attr_type);
-      REQUIRE(component.at(attr_name).type() == old_attr_type);
+      REQUIRE(component_def.at(attr_name).get_type() == old_attr_type);
+      REQUIRE(component.at(attr_name).get_type() == old_attr_type);
 
       REQUIRE(component_def.at(attr_name) == old_attr_value);
       REQUIRE(component.at(attr_name) == old_attr_value);

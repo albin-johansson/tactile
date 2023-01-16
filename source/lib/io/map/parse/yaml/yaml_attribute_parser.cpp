@@ -281,7 +281,7 @@ template <typename T>
       }
 
       if (auto value = value_node["value"]) {
-        const auto attr_type = prototype.at(attr_name).type();
+        const auto attr_type = prototype.at(attr_name).get_type();
         if (auto attribute_value = parse_attribute_value(value, attr_type)) {
           comp[attr_name] = std::move(*attribute_value);
         }

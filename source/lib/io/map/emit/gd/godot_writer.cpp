@@ -39,7 +39,7 @@ namespace {
 
 [[nodiscard]] auto write_attribute(StringView name, const Attribute& value) -> String
 {
-  switch (value.type()) {
+  switch (value.get_type()) {
     case AttributeType::String:
       return fmt::format(R"("{}": "{}")", name, value.as_string());
 

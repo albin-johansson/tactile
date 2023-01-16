@@ -32,7 +32,7 @@ TEST_SUITE("Attribute")
   TEST_CASE("Defaults")
   {
     const Attribute value;
-    REQUIRE(AttributeType::String == value.type());
+    REQUIRE(AttributeType::String == value.get_type());
 
     REQUIRE(value.is_string());
     REQUIRE(!value.is_int());

@@ -42,7 +42,7 @@ namespace {
     auto json = JSON::object();
 
     json["name"] = name;
-    json["type"] = value.type();
+    json["type"] = value.get_type();
     json["value"] = value;
 
     array += json;

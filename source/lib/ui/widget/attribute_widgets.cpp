@@ -335,7 +335,7 @@ auto ui_directory_path_input(const char* id, const Path& value) -> Maybe<Path>
 
 auto ui_attribute_input(const char* id, const Attribute& value) -> Maybe<Attribute>
 {
-  switch (value.type()) {
+  switch (value.get_type()) {
     case AttributeType::String: {
       const auto& lang = get_current_language();
       if (auto updated =

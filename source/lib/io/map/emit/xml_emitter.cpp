@@ -49,7 +49,7 @@ void append_properties(XMLNode node, const ir::ContextData& context)
     auto property_node = collection.append_child("property");
     property_node.append_attribute("name").set_value(property_name.c_str());
 
-    const auto type = property_value.type();
+    const auto type = property_value.get_type();
 
     // Properties with no type attribute are assumed to be string properties
     if (type != AttributeType::String) {
