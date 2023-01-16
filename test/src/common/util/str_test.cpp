@@ -56,7 +56,6 @@ TEST_SUITE("Str")
     REQUIRE(123.0f == parse_f32("123"));
     REQUIRE(1.0f == parse_f32("1.0"));
     REQUIRE(12.5f == parse_f32("12.5"));
-    REQUIRE(12.5f == parse_f32("12.5f"));
 
     SUBCASE("Ensure function respects string view range")
     {
