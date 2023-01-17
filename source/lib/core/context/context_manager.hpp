@@ -78,7 +78,7 @@ class ContextManager final {
  private:
   ContextMap mContexts;
   UUID mRootContextId;
-  UUID mActiveContextId;
+  UUID mActiveContextId {};
   // TODO PERFORMANCE: maybe use HashMap<UUID, Vec<Shared<IContext>>>?
 
   void on_component_update(const UUID& component_id, const ComponentFunc& func);

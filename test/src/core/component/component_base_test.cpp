@@ -33,7 +33,7 @@ TEST_SUITE("ComponentBase")
   {
     const ComponentBase component {make_uuid()};
     REQUIRE(component.empty());
-    REQUIRE(0u == component.size());
+    REQUIRE(0u == component.attr_count());
 
     usize count = 0;
     for (const auto& x [[maybe_unused]]: component) {
@@ -43,88 +43,88 @@ TEST_SUITE("ComponentBase")
     REQUIRE(0u == count);
   }
 
-  TEST_CASE("add[type]")
+  TEST_CASE("add_attr[type]")
   {
     ComponentBase component {make_uuid()};
 
-    component.add("str");
-    REQUIRE(""s == component.at("str"));
+    component.add_attr("str");
+    REQUIRE(""s == component.get_attr("str"));
 
-    component.add("int", AttributeType::Int);
-    REQUIRE(0 == component.at("int"));
+    component.add_attr("int", AttributeType::Int);
+    REQUIRE(0 == component.get_attr("int"));
 
-    component.add("bool", AttributeType::Bool);
-    REQUIRE(false == component.at("bool"));
+    component.add_attr("bool", AttributeType::Bool);
+    REQUIRE(false == component.get_attr("bool"));
   }
 
-  TEST_CASE("add[value]")
+  TEST_CASE("add_attr[value]")
   {
     ComponentBase component {make_uuid()};
 
-    component.add("A", 10);
-    REQUIRE(10 == component.at("A"));
+    component.add_attr("A", 10);
+    REQUIRE(10 == component.get_attr("A"));
 
-    REQUIRE(component.has("A"));
-    REQUIRE(!component.has("a"));
+    REQUIRE(component.has_attr("A"));
+    REQUIRE(!component.has_attr("a"));
 
-    REQUIRE(1u == component.size());
+    REQUIRE(1u == component.attr_count());
 
-    REQUIRE_THROWS_AS(component.add("A"), TactileError);
+    REQUIRE_THROWS_AS(component.add_attr("A"), TactileError);
   }
 
-  TEST_CASE("update")
+  TEST_CASE("update_attr")
   {
     ComponentBase component {make_uuid()};
-    REQUIRE_THROWS_AS(component.update("foo", 10), TactileError);
+    REQUIRE_THROWS_AS(component.update_attr("foo", 10), TactileError);
 
-    component.add("foo");
-    REQUIRE(""s == component.at("foo"));
-    REQUIRE(1u == component.size());
+    component.add_attr("foo");
+    REQUIRE(""s == component.get_attr("foo"));
+    REQUIRE(1u == component.attr_count());
 
-    component.update("foo", "bar"s);
-    REQUIRE("bar"s == component.at("foo"));
-    REQUIRE(1u == component.size());
+    component.update_attr("foo", "bar"s);
+    REQUIRE("bar"s == component.get_attr("foo"));
+    REQUIRE(1u == component.attr_count());
   }
 
-  TEST_CASE("remove")
+  TEST_CASE("remove_attr")
   {
     ComponentBase component {make_uuid()};
-    REQUIRE(!component.remove("foo"));
+    REQUIRE(component.remove_attr("foo").failed());
 
-    component.add("foo", Color {0xFF, 0, 0});
-    REQUIRE(Color {0xFF, 0, 0} == component.at("foo"));
+    component.add_attr("foo", Color {0xFF, 0, 0});
+    REQUIRE(Color {0xFF, 0, 0} == component.get_attr("foo"));
     REQUIRE(!component.empty());
 
-    REQUIRE(component.remove("foo"));
+    REQUIRE(component.remove_attr("foo").succeeded());
     REQUIRE(component.empty());
   }
 
-  TEST_CASE("rename")
+  TEST_CASE("rename_attr")
   {
     ComponentBase component {make_uuid()};
-    REQUIRE(!component.rename("foo", "bar"));
+    REQUIRE(component.rename_attr("foo", "bar").failed());
 
-    component.add("foo", 123);
-    REQUIRE(component.rename("foo", "bar"));
-    REQUIRE(!component.rename("abc", "def"));
+    component.add_attr("foo", 123);
+    REQUIRE(component.rename_attr("foo", "bar").succeeded());
+    REQUIRE(component.rename_attr("abc", "def").failed());
 
-    REQUIRE_THROWS_AS(component.rename("", "bar"), TactileError);
+    REQUIRE(component.rename_attr("", "bar").failed());
   }
 
-  TEST_CASE("duplicate")
+  TEST_CASE("duplicate_attr")
   {
     ComponentBase component {make_uuid()};
-    REQUIRE_THROWS_AS(component.duplicate("abc"), TactileError);
+    REQUIRE_THROWS_AS(component.duplicate_attr("abc"), TactileError);
 
-    component.add("abc", 3.5f);
-    REQUIRE(component.has("abc"));
-    REQUIRE(1u == component.size());
+    component.add_attr("abc", 3.5f);
+    REQUIRE(component.has_attr("abc"));
+    REQUIRE(1u == component.attr_count());
 
-    const auto new_name = component.duplicate("abc");
-    REQUIRE(component.has("abc"));
-    REQUIRE(component.has(new_name));
-    REQUIRE(3.5f == component.at(new_name));
-    REQUIRE(2u == component.size());
+    const auto new_name = component.duplicate_attr("abc");
+    REQUIRE(component.has_attr("abc"));
+    REQUIRE(component.has_attr(new_name));
+    REQUIRE(3.5f == component.get_attr(new_name));
+    REQUIRE(2u == component.attr_count());
   }
 }
 

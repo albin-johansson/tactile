@@ -47,28 +47,28 @@ RemoveComponentAttr::RemoveComponentAttr(Document* document,
 
 void RemoveComponentAttr::undo()
 {
-  auto index = mDocument->get_component_index_ptr();
-  auto& definition = index->at(mComponentId);
+  auto component_index = mDocument->get_component_index_ptr();
+  auto& component_def = component_index->at(mComponentId);
 
   auto value = mPreviousValue.value();
-  definition.add(mAttributeName, value);
+  component_def.add_attr(mAttributeName, value);
 
-  auto& contexts = mDocument->get_contexts();
-  contexts.on_new_component_attr(definition.get_uuid(), mAttributeName, value);
+  auto& context_manager = mDocument->get_contexts();
+  context_manager.on_new_component_attr(component_def.get_uuid(), mAttributeName, value);
 
   mPreviousValue.reset();
 }
 
 void RemoveComponentAttr::redo()
 {
-  auto index = mDocument->get_component_index_ptr();
-  auto& definition = index->at(mComponentId);
+  auto component_index = mDocument->get_component_index_ptr();
+  auto& component_def = component_index->at(mComponentId);
 
-  mPreviousValue = definition.at(mAttributeName);
-  definition.remove(mAttributeName);
+  mPreviousValue = component_def.get_attr(mAttributeName);
+  component_def.remove_attr(mAttributeName);
 
-  auto& contexts = mDocument->get_contexts();
-  contexts.on_removed_component_attr(definition.get_uuid(), mAttributeName);
+  auto& context_manager = mDocument->get_contexts();
+  context_manager.on_removed_component_attr(component_def.get_uuid(), mAttributeName);
 }
 
 auto RemoveComponentAttr::get_name() const -> String

@@ -148,8 +148,8 @@ TEST_SUITE("ContextInfo")
     ContextInfo ctx;
 
     ComponentDefinition component_def;
-    component_def.add("A", 1);
-    component_def.add("B", 2);
+    component_def.add_attr("A", 1);
+    component_def.add_attr("B", 2);
 
     const auto component_id = component_def.get_uuid();
     REQUIRE(ctx.attach_component(component_def.instantiate()).succeeded());

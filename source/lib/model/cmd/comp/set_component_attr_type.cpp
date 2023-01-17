@@ -50,15 +50,15 @@ void SetComponentAttrType::undo()
   auto component_index = mDocument->get_component_index_ptr();
 
   auto& component_def = component_index->at(mComponentId);
-  component_def.remove(mAttributeName);
-  component_def.add(mAttributeName, mSnapshot.value());
+  component_def.remove_attr(mAttributeName);
+  component_def.add_attr(mAttributeName, mSnapshot.value());
 
   auto& context_manager = mDocument->get_contexts();
   for (const auto& [context_id, attribute_value]: mPrevAttributes) {
     auto& context = context_manager.at(context_id);
     auto& component = context.get_ctx().get_component(component_def.get_uuid());
-    component.remove(mAttributeName);
-    component.add(mAttributeName, attribute_value);
+    component.remove_attr(mAttributeName);
+    component.add_attr(mAttributeName, attribute_value);
   }
 
   mSnapshot.reset();
@@ -69,15 +69,16 @@ void SetComponentAttrType::redo()
   auto component_index = mDocument->get_component_index_ptr();
 
   auto& component_def = component_index->at(mComponentId);
-  mSnapshot = component_def.at(mAttributeName);
+  mSnapshot = component_def.get_attr(mAttributeName);
 
-  component_def.remove(mAttributeName);
-  component_def.add(mAttributeName, mNewType);
+  component_def.remove_attr(mAttributeName);
+  component_def.add_attr(mAttributeName, mNewType);
 
-  auto& contexts = mDocument->get_contexts();
-  mPrevAttributes = contexts.on_changed_component_attr_type(component_def.get_uuid(),
-                                                            mAttributeName,
-                                                            mNewType);
+  auto& context_manager = mDocument->get_contexts();
+  mPrevAttributes =
+      context_manager.on_changed_component_attr_type(component_def.get_uuid(),
+                                                     mAttributeName,
+                                                     mNewType);
 }
 
 auto SetComponentAttrType::get_name() const -> String

@@ -33,7 +33,7 @@ ComponentBase::ComponentBase(const UUID& type)
 {
 }
 
-void ComponentBase::add(String key, AttributeType type)
+void ComponentBase::add_attr(String key, AttributeType type)
 {
   if (!has_key(mAttributes, key)) {
     mAttributes[std::move(key)].reset_to_default(type);
@@ -43,7 +43,7 @@ void ComponentBase::add(String key, AttributeType type)
   }
 }
 
-void ComponentBase::add(String key, Attribute value)
+void ComponentBase::add_attr(String key, Attribute value)
 {
   if (!has_key(mAttributes, key)) {
     mAttributes[std::move(key)] = std::move(value);
@@ -53,41 +53,41 @@ void ComponentBase::add(String key, Attribute value)
   }
 }
 
-void ComponentBase::update(StringView key, Attribute value)
+void ComponentBase::update_attr(StringView key, Attribute value)
 {
   auto& attribute = lookup_in(mAttributes, key);
   attribute = std::move(value);
 }
 
-auto ComponentBase::remove(StringView key) -> bool
+auto ComponentBase::remove_attr(StringView key) -> Result
 {
   if (const auto iter = mAttributes.find(key); iter != mAttributes.end()) {
     mAttributes.erase(iter);
-    return true;
+    return success;
   }
   else {
-    return false;
+    return failure;
   }
 }
 
-auto ComponentBase::rename(StringView current, String updated) -> bool
+auto ComponentBase::rename_attr(StringView old_key, String new_key) -> Result
 {
-  if (has_key(mAttributes, updated)) {
-    throw TactileError {"Attribute name must be unique!"};
+  if (has_key(mAttributes, new_key)) {
+    return failure;
   }
 
-  if (const auto iter = mAttributes.find(current); iter != mAttributes.end()) {
+  if (const auto iter = mAttributes.find(old_key); iter != mAttributes.end()) {
     auto value = iter->second;
     mAttributes.erase(iter);
-    mAttributes[std::move(updated)] = std::move(value);
-    return true;
+    mAttributes[std::move(new_key)] = std::move(value);
+    return success;
   }
   else {
-    return false;
+    return failure;
   }
 }
 
-auto ComponentBase::duplicate(StringView key) -> String
+auto ComponentBase::duplicate_attr(StringView key) -> String
 {
   auto value = lookup_in(mAttributes, key);
 
@@ -102,17 +102,17 @@ auto ComponentBase::duplicate(StringView key) -> String
   return new_key;
 }
 
-auto ComponentBase::at(StringView key) const -> const Attribute&
+auto ComponentBase::get_attr(StringView key) const -> const Attribute&
 {
   return lookup_in(mAttributes, key);
 }
 
-auto ComponentBase::has(StringView key) const -> bool
+auto ComponentBase::has_attr(StringView key) const -> bool
 {
   return has_key(mAttributes, key);
 }
 
-auto ComponentBase::size() const -> usize
+auto ComponentBase::attr_count() const -> usize
 {
   return mAttributes.size();
 }

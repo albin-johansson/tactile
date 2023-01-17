@@ -39,17 +39,17 @@ TEST_SUITE("ComponentDefinition")
   TEST_CASE("instantiate")
   {
     ComponentDefinition definition;
-    definition.add("i", 42);
-    definition.add("f", 1.8f);
-    definition.add("s", "foo"s);
-    definition.add("c", Color {0xFF, 0xD7, 0});
+    definition.add_attr("i", 42);
+    definition.add_attr("f", 1.8f);
+    definition.add_attr("s", "foo"s);
+    definition.add_attr("c", Color {0xFF, 0xD7, 0});
 
     const auto instance = definition.instantiate();
     REQUIRE(definition.get_uuid() == instance.definition_id());
-    REQUIRE(definition.size() == instance.size());
+    REQUIRE(definition.attr_count() == instance.attr_count());
 
     for (const auto& [key, value]: instance) {
-      REQUIRE(definition.at(key) == value);
+      REQUIRE(definition.get_attr(key) == value);
     }
   }
 }

@@ -65,7 +65,7 @@ void restore_context_no_register(Document& document,
 
       auto component = definition.instantiate();
       for (const auto& [attr_name, attr_value]: attributes) {
-        component.update(attr_name, attr_value);
+        component.update_attr(attr_name, attr_value);
       }
 
       ctx.attach_component(std::move(component));
@@ -275,7 +275,7 @@ void restore_component_definitions(MapDocument& document, const ir::MapData& map
     const auto id = index->define(name);
     auto& def = index->at(id);
     for (const auto& [attr_name, attr_value]: attributes) {
-      def.add(attr_name, attr_value);
+      def.add_attr(attr_name, attr_value);
     }
   }
 }

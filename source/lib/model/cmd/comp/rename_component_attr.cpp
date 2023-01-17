@@ -46,24 +46,28 @@ RenameComponentAttr::RenameComponentAttr(Document* document,
 
 void RenameComponentAttr::undo()
 {
-  auto index = mDocument->get_component_index_ptr();
+  auto component_index = mDocument->get_component_index_ptr();
 
-  auto& definition = index->at(mComponentId);
-  definition.rename(mUpdatedName, mPreviousName);
+  auto& component_def = component_index->at(mComponentId);
+  component_def.rename_attr(mUpdatedName, mPreviousName);
 
-  auto& contexts = mDocument->get_contexts();
-  contexts.on_renamed_component_attr(definition.get_uuid(), mUpdatedName, mPreviousName);
+  auto& context_manager = mDocument->get_contexts();
+  context_manager.on_renamed_component_attr(component_def.get_uuid(),
+                                            mUpdatedName,
+                                            mPreviousName);
 }
 
 void RenameComponentAttr::redo()
 {
-  auto index = mDocument->get_component_index_ptr();
+  auto component_index = mDocument->get_component_index_ptr();
 
-  auto& definition = index->at(mComponentId);
-  definition.rename(mPreviousName, mUpdatedName);
+  auto& component_def = component_index->at(mComponentId);
+  component_def.rename_attr(mPreviousName, mUpdatedName);
 
-  auto& contexts = mDocument->get_contexts();
-  contexts.on_renamed_component_attr(definition.get_uuid(), mPreviousName, mUpdatedName);
+  auto& context_manager = mDocument->get_contexts();
+  context_manager.on_renamed_component_attr(component_def.get_uuid(),
+                                            mPreviousName,
+                                            mUpdatedName);
 }
 
 auto RenameComponentAttr::get_name() const -> String

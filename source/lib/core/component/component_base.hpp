@@ -20,6 +20,7 @@
 #pragma once
 
 #include "common/numeric.hpp"
+#include "common/type/result.hpp"
 #include "common/type/string.hpp"
 #include "common/type/string_map.hpp"
 #include "common/type/uuid.hpp"
@@ -27,7 +28,7 @@
 
 namespace tactile {
 
-/// Provides the common API for component definitions and instances.
+/// Provides the common API for component definitions and their instances.
 class ComponentBase {
  public:
   using AttributeMap = StringMap<Attribute>;
@@ -38,48 +39,50 @@ class ComponentBase {
   ///
   /// \param key the key to associate with the attribute.
   /// \param type the initial type of the attribute.
-  void add(String key, AttributeType type = AttributeType::String);
+  void add_attr(String key, AttributeType type = AttributeType::String);
 
   /// Creates a new attribute.
   ///
   /// \param key the key to associate with the attribute.
   /// \param value the initial value of the attribute.
-  void add(String key, Attribute value);
+  void add_attr(String key, Attribute value);
 
   /// Updates the value of an existing attribute.
   ///
-  /// The new value does not have to be of the same type that the attribute currently has.
+  /// \details
+  /// The new value does not have to be of the same type as the old value.
   ///
   /// \param key the key associated with the attribute.
   /// \param value the new attribute value.
-  void update(StringView key, Attribute value);
+  void update_attr(StringView key, Attribute value);
 
-  /// Removes an existing attribute (returning true if an attribute was removed).
+  /// Removes an existing attribute.
   ///
   /// \param key the key associated with the attribute.
-  auto remove(StringView key) -> bool;
+  /// \return success if an attribute was removed; failure otherwise.
+  auto remove_attr(StringView key) -> Result;
 
   /// Changes the name (key) of an existing attribute.
   ///
-  /// The new attribute name must be unique.
-  ///
-  /// \param current the current attribute key.
-  /// \param updated the new attribute key.
-  ///
-  /// \return true if an attribute was renamed; false otherwise.
-  auto rename(StringView current, String updated) -> bool;
+  /// \param old_key the current attribute key.
+  /// \param new_key the new attribute key.
+  /// \return success if an attribute was renamed; failure otherwise.
+  auto rename_attr(StringView old_key, String new_key) -> Result;
 
   /// Duplicates an existing attribute.
-  auto duplicate(StringView key) -> String;
+  ///
+  /// \param key the name of the attribute to duplicate.
+  /// \return the key associated with the new attribute.
+  auto duplicate_attr(StringView key) -> String;
 
-  /// Returns the value of the attribute for a specific key.
-  [[nodiscard]] auto at(StringView key) const -> const Attribute&;
+  /// Returns the value of an attribute for a specific key.
+  [[nodiscard]] auto get_attr(StringView key) const -> const Attribute&;
 
   /// Indicates whether there is an attribute for a specific key.
-  [[nodiscard]] auto has(StringView key) const -> bool;
+  [[nodiscard]] auto has_attr(StringView key) const -> bool;
 
   /// Returns the amount of attributes in the component.
-  [[nodiscard]] auto size() const -> usize;
+  [[nodiscard]] auto attr_count() const -> usize;
 
   /// Indicates whether the component has no attributes.
   [[nodiscard]] auto empty() const -> bool;

@@ -74,7 +74,7 @@ void update_create_component_attribute_dialog(const DocumentModel& model,
 
   if (!current_name.empty() &&  //
       component_index != nullptr &&
-      !component_index->at(dialog_component_id.value()).has(current_name)) {
+      !component_index->at(dialog_component_id.value()).has_attr(current_name)) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 

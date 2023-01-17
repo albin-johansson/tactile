@@ -47,7 +47,7 @@ UpdateAttachedComponent::UpdateAttachedComponent(Shared<Context> context,
 void UpdateAttachedComponent::undo()
 {
   auto& component = mContext->get_ctx().get_component(mComponentId);
-  component.update(mAttributeName, mPreviousValue.value());
+  component.update_attr(mAttributeName, mPreviousValue.value());
 
   mPreviousValue.reset();
 }
@@ -56,8 +56,8 @@ void UpdateAttachedComponent::redo()
 {
   auto& component = mContext->get_ctx().get_component(mComponentId);
 
-  mPreviousValue = component.at(mAttributeName);
-  component.update(mAttributeName, mUpdatedValue);
+  mPreviousValue = component.get_attr(mAttributeName);
+  component.update_attr(mAttributeName, mUpdatedValue);
 }
 
 auto UpdateAttachedComponent::merge_with(const Command* cmd) -> bool

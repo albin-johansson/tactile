@@ -79,7 +79,7 @@ void update_rename_component_attribute_dialog(const DocumentModel& model,
   const auto current_name = dialog_attribute_name_buffer.as_string_view();
   if (!current_name.empty() &&  //
       component_index != nullptr &&
-      !component_index->at(dialog_component_id.value()).has(current_name)) {
+      !component_index->at(dialog_component_id.value()).has_attr(current_name)) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
