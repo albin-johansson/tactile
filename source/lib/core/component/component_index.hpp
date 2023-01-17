@@ -19,12 +19,11 @@
 
 #pragma once
 
-#include <boost/uuid/uuid_hash.hpp>
-
-#include "core/component/component_definition.hpp"
 #include "common/type/hash_map.hpp"
+#include "common/type/result.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
+#include "core/component/component_definition.hpp"
 
 namespace tactile {
 
@@ -33,40 +32,44 @@ class ComponentIndex final {
  public:
   /// Creates a new component definition.
   ///
-  /// \param name a unique name.
-  ///
-  /// \return the identifier associated with the definition.
-  auto define(String name) -> UUID;
+  /// \param name a unique component name.
+  /// \return the identifier assigned the new component definition.
+  auto define_comp(String name) -> UUID;
 
-  /// Restores a previously removed component definition.
-  void restore(ComponentDefinition def);
+  /// Restores a component definition that was previously removed.
+  ///
+  /// \param component_def a valid but unmanaged component definition.
+  void restore_comp(ComponentDefinition component_def);
 
   /// Removes an existing component definition.
   ///
-  /// \param id the ID associated with the definition to remove.
-  void remove(const UUID& id);
+  /// \param component_id the ID of the component to remove.
+  /// \return success if a component was removed; failure otherwise.
+  auto remove_comp(const UUID& component_id) -> Result;
 
   /// Changes the name of an existing component.
   ///
-  /// \param id the ID for the component that will be renamed.
-  /// \param name the new component name.
-  void rename(const UUID& id, String name);
+  /// \param component_id the ID of the component that will be renamed.
+  /// \param name the new component name, must not be used by another component.
+  /// \return success if the name was unique and the ID was valid; failure otherwise.
+  auto rename_comp(const UUID& component_id, String name) -> Result;
 
-  /// Returns the component definition for a specific ID.
-  [[nodiscard]] auto at(const UUID& id) -> ComponentDefinition&;
-  [[nodiscard]] auto at(const UUID& id) const -> const ComponentDefinition&;
+  /// Returns the component definition with the given ID.
+  [[nodiscard]] auto get_comp(const UUID& component_id) -> ComponentDefinition&;
+  [[nodiscard]] auto get_comp(const UUID& component_id) const
+      -> const ComponentDefinition&;
 
   /// Returns the component definition with a specific name.
-  [[nodiscard]] auto with_name(StringView name) -> ComponentDefinition&;
+  [[nodiscard]] auto get_comp(StringView name) -> ComponentDefinition&;
 
   /// Indicates whether there is a component definition with a specific ID.
-  [[nodiscard]] auto contains(const UUID& id) const -> bool;
+  [[nodiscard]] auto has_comp(const UUID& component_id) const -> bool;
 
   /// Indicates whether there is a component with a specific name.
-  [[nodiscard]] auto contains(StringView name) const -> bool;
+  [[nodiscard]] auto has_comp(StringView name) const -> bool;
 
   /// Returns the amount of component definition.
-  [[nodiscard]] auto size() const -> usize;
+  [[nodiscard]] auto comp_count() const -> usize;
 
   [[nodiscard]] auto empty() const -> bool;
 

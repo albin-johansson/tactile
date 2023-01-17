@@ -46,7 +46,7 @@ TEST_SUITE("cmd::DuplicateComponentAttr")
 
     auto& map = map_document->get_map();
     auto& map_ctx = map.get_ctx();
-    map_ctx.attach_component(component_index->at(component_id).instantiate());
+    map_ctx.attach_component(component_index->get_comp(component_id).instantiate());
 
     const String attr_name {"Attr"};
     const String duplicated_attr_name {"Attr (1)"};
@@ -55,7 +55,7 @@ TEST_SUITE("cmd::DuplicateComponentAttr")
     cmd.redo();
 
     {
-      const auto& component_def = component_index->at(component_id);
+      const auto& component_def = component_index->get_comp(component_id);
       const auto& component = map_ctx.get_component(component_id);
 
       REQUIRE(component_def.attr_count() == 2u);
@@ -73,7 +73,7 @@ TEST_SUITE("cmd::DuplicateComponentAttr")
     cmd.undo();
 
     {
-      const auto& component_def = component_index->at(component_id);
+      const auto& component_def = component_index->get_comp(component_id);
       const auto& component = map_ctx.get_component(component_id);
 
       REQUIRE(component_def.attr_count() == 1u);

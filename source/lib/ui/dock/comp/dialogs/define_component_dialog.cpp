@@ -64,7 +64,7 @@ void update_define_component_dialog(const DocumentModel& model,
   const auto* component_index = model.require_active_document().find_component_index();
 
   if (!current_name.empty() &&  //
-      component_index != nullptr && !component_index->contains(current_name)) {
+      component_index != nullptr && !component_index->has_comp(current_name)) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 

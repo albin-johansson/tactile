@@ -47,7 +47,7 @@ void convert_context(const Context& context,
 
   if (component_index) {
     ctx.each_component([&](const UUID&, const Component& component) {
-      const auto& component_def = component_index->at(component.definition_id());
+      const auto& component_def = component_index->get_comp(component.definition_id());
       const auto& component_name = component_def.get_name();
 
       auto& component_attributes = context_data.components[component_name];

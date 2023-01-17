@@ -61,9 +61,9 @@ void restore_context_no_register(Document& document,
 
   if (auto component_index = document.get_component_index_ptr()) {
     for (const auto& [type, attributes]: source.components) {
-      const auto& definition = component_index->with_name(type);
+      const auto& component_def = component_index->get_comp(type);
 
-      auto component = definition.instantiate();
+      auto component = component_def.instantiate();
       for (const auto& [attr_name, attr_value]: attributes) {
         component.update_attr(attr_name, attr_value);
       }
@@ -270,12 +270,12 @@ void restore_tilesets(DocumentModel& model,
 
 void restore_component_definitions(MapDocument& document, const ir::MapData& map_data)
 {
-  auto index = document.get_component_index_ptr();
+  auto component_index = document.get_component_index_ptr();
   for (const auto& [name, attributes]: map_data.component_definitions) {
-    const auto id = index->define(name);
-    auto& def = index->at(id);
+    const auto component_id = component_index->define_comp(name);
+    auto& component_def = component_index->get_comp(component_id);
     for (const auto& [attr_name, attr_value]: attributes) {
-      def.add_attr(attr_name, attr_value);
+      component_def.add_attr(attr_name, attr_value);
     }
   }
 }

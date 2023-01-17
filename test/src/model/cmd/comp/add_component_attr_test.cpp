@@ -40,7 +40,7 @@ TEST_SUITE("cmd::AddComponentAttr")
     auto component_index = map_document->get_component_index_ptr();
 
     const auto component_id = ComponentBuilder {component_index, "Demo"}.result();
-    auto& component_def = component_index->at(component_id);
+    auto& component_def = component_index->get_comp(component_id);
     REQUIRE(component_def.empty());
 
     auto& map = map_document->get_map();

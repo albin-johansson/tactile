@@ -48,7 +48,7 @@ void RenameComponentAttr::undo()
 {
   auto component_index = mDocument->get_component_index_ptr();
 
-  auto& component_def = component_index->at(mComponentId);
+  auto& component_def = component_index->get_comp(mComponentId);
   component_def.rename_attr(mUpdatedName, mPreviousName);
 
   auto& context_manager = mDocument->get_contexts();
@@ -61,7 +61,7 @@ void RenameComponentAttr::redo()
 {
   auto component_index = mDocument->get_component_index_ptr();
 
-  auto& component_def = component_index->at(mComponentId);
+  auto& component_def = component_index->get_comp(mComponentId);
   component_def.rename_attr(mPreviousName, mUpdatedName);
 
   auto& context_manager = mDocument->get_contexts();

@@ -46,7 +46,7 @@ void DuplicateComponentAttr::undo()
 {
   auto component_index = mDocument->get_component_index_ptr();
 
-  auto& component_def = component_index->at(mComponentId);
+  auto& component_def = component_index->get_comp(mComponentId);
   component_def.remove_attr(mDuplicatedName.value());
 
   auto& context_manager = mDocument->get_contexts();
@@ -60,7 +60,7 @@ void DuplicateComponentAttr::redo()
 {
   auto component_index = mDocument->get_component_index_ptr();
 
-  auto& component_def = component_index->at(mComponentId);
+  auto& component_def = component_index->get_comp(mComponentId);
   mDuplicatedName = component_def.duplicate_attr(mAttributeName);
 
   auto& context_manager = mDocument->get_contexts();

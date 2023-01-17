@@ -44,13 +44,13 @@ void UndefComponent::undo()
 {
   auto component_index = mDocument->get_component_index_ptr();
 
-  component_index->restore(std::move(mPreviousDef.value()));
+  component_index->restore_comp(std::move(mPreviousDef.value()));
   mPreviousDef.reset();
 
   // Restores previously removed components
-  auto& contexts = mDocument->get_contexts();
+  auto& context_manager = mDocument->get_contexts();
   for (auto [context_id, component]: mRemovedComponents) {
-    auto& context = contexts.at(context_id);
+    auto& context = context_manager.at(context_id);
     context.get_ctx().attach_component(std::move(component));
   }
 
@@ -61,11 +61,11 @@ void UndefComponent::redo()
 {
   auto component_index = mDocument->get_component_index_ptr();
 
-  mPreviousDef = component_index->at(mComponentId);
-  component_index->remove(mComponentId);
+  mPreviousDef = component_index->get_comp(mComponentId);
+  component_index->remove_comp(mComponentId);
 
-  auto& contexts = mDocument->get_contexts();
-  mRemovedComponents = contexts.on_undef_comp(mComponentId);
+  auto& context_manager = mDocument->get_contexts();
+  mRemovedComponents = context_manager.on_undef_comp(mComponentId);
 }
 
 auto UndefComponent::get_name() const -> String

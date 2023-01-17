@@ -55,7 +55,7 @@ TEST_SUITE("cmd::SetComponentAttrType")
 
     auto& map = map_document->get_map();
     auto& map_ctx = map.get_ctx();
-    map_ctx.attach_component(component_index->at(component_id).instantiate());
+    map_ctx.attach_component(component_index->get_comp(component_id).instantiate());
 
     cmd::SetComponentAttrType cmd {map_document.get(),
                                    component_id,
@@ -65,7 +65,7 @@ TEST_SUITE("cmd::SetComponentAttrType")
     {
       cmd.redo();
 
-      const auto& component_def = component_index->at(component_id);
+      const auto& component_def = component_index->get_comp(component_id);
       const auto& component = map_ctx.get_component(component_id);
 
       REQUIRE(component_def.get_attr(attr_name).get_type() == new_attr_type);
@@ -78,7 +78,7 @@ TEST_SUITE("cmd::SetComponentAttrType")
     {
       cmd.undo();
 
-      const auto& component_def = component_index->at(component_id);
+      const auto& component_def = component_index->get_comp(component_id);
       const auto& component = map_ctx.get_component(component_id);
 
       REQUIRE(component_def.get_attr(attr_name).get_type() == old_attr_type);

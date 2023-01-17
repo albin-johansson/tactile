@@ -59,7 +59,7 @@ void update_rename_component_attribute_dialog(const DocumentModel& model,
   const auto* component_index = model.require_active_document().find_component_index();
 
   if (dialog_component_id.has_value() &&  //
-      component_index != nullptr && !component_index->contains(*dialog_component_id)) {
+      component_index != nullptr && !component_index->has_comp(*dialog_component_id)) {
     dialog_component_id.reset();
     open_dialog = false;
     return;
@@ -79,7 +79,7 @@ void update_rename_component_attribute_dialog(const DocumentModel& model,
   const auto current_name = dialog_attribute_name_buffer.as_string_view();
   if (!current_name.empty() &&  //
       component_index != nullptr &&
-      !component_index->at(dialog_component_id.value()).has_attr(current_name)) {
+      !component_index->get_comp(dialog_component_id.value()).has_attr(current_name)) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 

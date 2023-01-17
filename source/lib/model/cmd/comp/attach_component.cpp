@@ -50,7 +50,7 @@ void AttachComponent::undo()
 
 void AttachComponent::redo()
 {
-  const auto& component_def = mIndex->at(mComponentId);
+  const auto& component_def = mIndex->get_comp(mComponentId);
   mContext->get_ctx().attach_component(component_def.instantiate());
 }
 

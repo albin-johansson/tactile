@@ -44,7 +44,7 @@ UpdateComponent::UpdateComponent(Shared<ComponentIndex> index,
 
 void UpdateComponent::undo()
 {
-  auto& component_def = mIndex->at(mComponentId);
+  auto& component_def = mIndex->get_comp(mComponentId);
   component_def.update_attr(mAttributeName, mPreviousValue.value());
 
   mPreviousValue.reset();
@@ -52,7 +52,7 @@ void UpdateComponent::undo()
 
 void UpdateComponent::redo()
 {
-  auto& component_def = mIndex->at(mComponentId);
+  auto& component_def = mIndex->get_comp(mComponentId);
 
   mPreviousValue = component_def.get_attr(mAttributeName);
   component_def.update_attr(mAttributeName, mUpdatedValue);

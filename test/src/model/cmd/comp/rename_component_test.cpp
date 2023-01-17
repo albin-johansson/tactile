@@ -47,21 +47,21 @@ TEST_SUITE("cmd::RenameComponent")
 
     auto& map = map_document->get_map();
     auto& map_ctx = map.get_ctx();
-    map_ctx.attach_component(component_index->at(component_id).instantiate());
+    map_ctx.attach_component(component_index->get_comp(component_id).instantiate());
 
     cmd::RenameComponent cmd {component_index, component_id, new_component_name};
 
     cmd.redo();
-    REQUIRE(component_index->contains(component_id));
-    REQUIRE(!component_index->contains(old_component_name));
-    REQUIRE(component_index->contains(new_component_name));
+    REQUIRE(component_index->has_comp(component_id));
+    REQUIRE(!component_index->has_comp(old_component_name));
+    REQUIRE(component_index->has_comp(new_component_name));
     REQUIRE(map_ctx.component_count() == 1u);
     REQUIRE(map_ctx.has_component(component_id));
 
     cmd.undo();
-    REQUIRE(component_index->contains(component_id));
-    REQUIRE(component_index->contains(old_component_name));
-    REQUIRE(!component_index->contains(new_component_name));
+    REQUIRE(component_index->has_comp(component_id));
+    REQUIRE(component_index->has_comp(old_component_name));
+    REQUIRE(!component_index->has_comp(new_component_name));
     REQUIRE(map_ctx.component_count() == 1u);
     REQUIRE(map_ctx.has_component(component_id));
   }

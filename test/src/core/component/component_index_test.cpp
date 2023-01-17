@@ -31,58 +31,58 @@ TEST_SUITE("ComponentIndex")
   TEST_CASE("Defaults")
   {
     const ComponentIndex index;
-    REQUIRE(0u == index.size());
+    REQUIRE(index.comp_count() == 0u);
     REQUIRE(index.empty());
   }
 
   TEST_CASE("define")
   {
     ComponentIndex index;
-    const auto component_id = index.define("position");
+    const auto component_id = index.define_comp("position");
 
-    const auto& component_def = index.at(component_id);
-    REQUIRE("position" == component_def.get_name());
-    REQUIRE(component_id == component_def.get_uuid());
+    const auto& component_def = index.get_comp(component_id);
+    REQUIRE(component_def.get_name() == "position");
+    REQUIRE(component_def.get_uuid() == component_id);
     REQUIRE(component_def.empty());
 
-    REQUIRE(index.contains("position"));
-    REQUIRE(1u == index.size());
+    REQUIRE(index.has_comp("position"));
+    REQUIRE(index.comp_count() == 1u);
 
-    REQUIRE_THROWS_AS(index.define("position"), TactileError);
+    REQUIRE_THROWS_AS(index.define_comp("position"), TactileError);
   }
 
   TEST_CASE("remove")
   {
     ComponentIndex index;
-    REQUIRE_THROWS_AS(index.remove(make_uuid()), TactileError);
+    REQUIRE(index.remove_comp(make_uuid()).failed());
 
-    const auto component_id = index.define("foo");
-    REQUIRE(1u == index.size());
-    REQUIRE(index.contains("foo"));
+    const auto component_id = index.define_comp("foo");
+    REQUIRE(index.comp_count() == 1u);
+    REQUIRE(index.has_comp("foo"));
 
-    index.remove(component_id);
+    REQUIRE(index.remove_comp(component_id).succeeded());
 
-    REQUIRE(0u == index.size());
-    REQUIRE(!index.contains("foo"));
+    REQUIRE(0u == index.comp_count());
+    REQUIRE(!index.has_comp("foo"));
   }
 
   TEST_CASE("rename")
   {
     ComponentIndex index;
-    REQUIRE_THROWS_AS(index.rename(make_uuid(), "foo"), TactileError);
+    REQUIRE(index.rename_comp(make_uuid(), "foo").failed());
 
-    const auto id = index.define("foo");
+    const auto component_id = index.define_comp("foo");
 
-    REQUIRE(index.contains("foo"));
-    REQUIRE(!index.contains("zoo"));
+    REQUIRE(index.has_comp("foo"));
+    REQUIRE(!index.has_comp("zoo"));
 
-    index.rename(id, "zoo");
+    index.rename_comp(component_id, "zoo");
 
-    REQUIRE(!index.contains("foo"));
-    REQUIRE(index.contains("zoo"));
+    REQUIRE(!index.has_comp("foo"));
+    REQUIRE(index.has_comp("zoo"));
 
-    index.define("woo");
-    REQUIRE_THROWS_AS(index.rename(id, "woo"), TactileError);
+    index.define_comp("woo");
+    REQUIRE(index.rename_comp(component_id, "woo").failed());
   }
 }
 

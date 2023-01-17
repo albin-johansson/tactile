@@ -61,25 +61,25 @@ TEST_SUITE("cmd::UndefComponent")
     const float new_attr2_value = 8.9f;
 
     // Update the attributes in the attached component
-    map_ctx.attach_component(component_index->at(component_id).instantiate());
+    map_ctx.attach_component(component_index->get_comp(component_id).instantiate());
     map_ctx.get_component(component_id).update_attr(attr1_name, new_attr1_value);
     map_ctx.get_component(component_id).update_attr(attr2_name, new_attr2_value);
 
     cmd::UndefComponent cmd {map_document.get(), component_id};
 
     cmd.redo();
-    REQUIRE(!component_index->contains(component_name));
-    REQUIRE(!component_index->contains(component_id));
+    REQUIRE(!component_index->has_comp(component_name));
+    REQUIRE(!component_index->has_comp(component_id));
     REQUIRE(!map_ctx.has_component(component_id));
     REQUIRE(map_ctx.component_count() == 0u);
 
     cmd.undo();
-    REQUIRE(component_index->contains(component_name));
-    REQUIRE(component_index->contains(component_id));
+    REQUIRE(component_index->has_comp(component_name));
+    REQUIRE(component_index->has_comp(component_id));
 
-    REQUIRE(component_index->at(component_id).get_attr(attr1_name).as_string() ==
+    REQUIRE(component_index->get_comp(component_id).get_attr(attr1_name).as_string() ==
             attr1_value);
-    REQUIRE(component_index->at(component_id).get_attr(attr2_name).as_float() ==
+    REQUIRE(component_index->get_comp(component_id).get_attr(attr2_name).as_float() ==
             attr2_value);
 
     // Make sure the attached component is restored with correct attribute values

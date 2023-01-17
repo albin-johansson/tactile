@@ -46,7 +46,7 @@ TEST_SUITE("cmd::RemoveComponentAttr")
                                   .with_attr(attr_name, attr_value)
                                   .result();
 
-    auto& component_def = component_index->at(component_id);
+    auto& component_def = component_index->get_comp(component_id);
     auto& map = map_document->get_map();
     auto& map_ctx = map.get_ctx();
 

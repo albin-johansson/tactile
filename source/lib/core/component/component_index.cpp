@@ -22,95 +22,94 @@
 #include <algorithm>  // any_of
 #include <utility>    // move
 
-#include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
 #include "common/util/assoc.hpp"
-#include "core/component/component_definition.hpp"
 
 namespace tactile {
 
-auto ComponentIndex::define(String name) -> UUID
+auto ComponentIndex::define_comp(String name) -> UUID
 {
-  if (contains(name)) {
-    throw TactileError {"Component definition name is not unique!"};
+  if (has_comp(name)) {
+    throw TactileError {"Component definition name is not unique"};
   }
 
-  const auto id = make_uuid();
+  const auto component_id = make_uuid();
 
-  ComponentDefinition def {id};
+  ComponentDefinition def {component_id};
   def.set_name(std::move(name));
 
-  mDefs[id] = std::move(def);
-
-  return id;
+  mDefs[component_id] = std::move(def);
+  return component_id;
 }
 
-void ComponentIndex::restore(ComponentDefinition def)
+void ComponentIndex::restore_comp(ComponentDefinition component_def)
 {
-  if (contains(def.get_name())) {
-    throw TactileError {"Component definition name is not unique!"};
+  if (has_comp(component_def.get_name())) {
+    throw TactileError {"Component definition name is not unique"};
   }
 
-  const auto id = def.get_uuid();
-  TACTILE_ASSERT(!contains(id));
-
-  mDefs[id] = std::move(def);
+  const auto component_id = component_def.get_uuid();
+  mDefs[component_id] = std::move(component_def);
 }
 
-void ComponentIndex::remove(const UUID& id)
+auto ComponentIndex::remove_comp(const UUID& component_id) -> Result
 {
-  if (const auto iter = mDefs.find(id); iter != mDefs.end()) {
+  if (const auto iter = mDefs.find(component_id); iter != mDefs.end()) {
     mDefs.erase(iter);
+    return success;
   }
   else {
-    throw TactileError {"Tried to remove non-existent component definition!"};
+    return failure;
   }
 }
 
-void ComponentIndex::rename(const UUID& id, String name)
+auto ComponentIndex::rename_comp(const UUID& component_id, String name) -> Result
 {
-  if (contains(name)) {
-    throw TactileError {"New component name was not unique!"};
+  if (!has_key(mDefs, component_id) || has_comp(name)) {
+    return failure;
   }
 
-  auto& def = lookup_in(mDefs, id);
-  def.set_name(std::move(name));
+  auto& component_def = lookup_in(mDefs, component_id);
+  component_def.set_name(std::move(name));
+
+  return success;
 }
 
-auto ComponentIndex::at(const UUID& id) -> ComponentDefinition&
+auto ComponentIndex::get_comp(const UUID& component_id) -> ComponentDefinition&
 {
-  return lookup_in(mDefs, id);
+  return lookup_in(mDefs, component_id);
 }
 
-auto ComponentIndex::at(const UUID& id) const -> const ComponentDefinition&
+auto ComponentIndex::get_comp(const UUID& component_id) const
+    -> const ComponentDefinition&
 {
-  return lookup_in(mDefs, id);
+  return lookup_in(mDefs, component_id);
 }
 
-auto ComponentIndex::with_name(StringView name) -> ComponentDefinition&
+auto ComponentIndex::get_comp(StringView name) -> ComponentDefinition&
 {
-  for (auto& [id, def]: mDefs) {
-    if (def.get_name() == name) {
-      return def;
+  for (auto& [id, component_def]: mDefs) {
+    if (component_def.get_name() == name) {
+      return component_def;
     }
   }
 
-  throw TactileError {"Invalid component name!"};
+  throw TactileError {"Invalid component name"};
 }
 
-auto ComponentIndex::contains(const UUID& id) const -> bool
+auto ComponentIndex::has_comp(const UUID& component_id) const -> bool
 {
-  return mDefs.find(id) != mDefs.end();
+  return mDefs.find(component_id) != mDefs.end();
 }
 
-auto ComponentIndex::contains(StringView name) const -> bool
+auto ComponentIndex::has_comp(StringView name) const -> bool
 {
   return std::any_of(mDefs.begin(), mDefs.end(), [name](const auto& pair) {
     return pair.second.get_name() == name;
   });
 }
 
-auto ComponentIndex::size() const -> usize
+auto ComponentIndex::comp_count() const -> usize
 {
   return mDefs.size();
 }

@@ -42,14 +42,14 @@ RenameComponent::RenameComponent(Shared<ComponentIndex> index,
 
 void RenameComponent::undo()
 {
-  mComponentIndex->rename(mComponentId, mOldName.value());
+  mComponentIndex->rename_comp(mComponentId, mOldName.value());
   mOldName.reset();
 }
 
 void RenameComponent::redo()
 {
-  mOldName = mComponentIndex->at(mComponentId).get_name();
-  mComponentIndex->rename(mComponentId, mNewName);
+  mOldName = mComponentIndex->get_comp(mComponentId).get_name();
+  mComponentIndex->rename_comp(mComponentId, mNewName);
 }
 
 auto RenameComponent::get_name() const -> String

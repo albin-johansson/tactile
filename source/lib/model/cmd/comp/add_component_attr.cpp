@@ -44,24 +44,24 @@ AddComponentAttr::AddComponentAttr(Document* document,
 
 void AddComponentAttr::undo()
 {
-  auto index = mDocument->get_component_index_ptr();
-  auto& definition = index->at(mComponentId);
-  definition.remove_attr(mName);
+  auto component_index = mDocument->get_component_index_ptr();
+  auto& component_def = component_index->get_comp(mComponentId);
+  component_def.remove_attr(mName);
 
-  auto& contexts = mDocument->get_contexts();
-  contexts.on_removed_component_attr(definition.get_uuid(), mName);
+  auto& context_manager = mDocument->get_contexts();
+  context_manager.on_removed_component_attr(component_def.get_uuid(), mName);
 }
 
 void AddComponentAttr::redo()
 {
-  auto index = mDocument->get_component_index_ptr();
-  auto& definition = index->at(mComponentId);
+  auto component_index = mDocument->get_component_index_ptr();
+  auto& component_def = component_index->get_comp(mComponentId);
 
-  definition.add_attr(mName);
-  const auto& value = definition.get_attr(mName);
+  component_def.add_attr(mName);
+  const auto& value = component_def.get_attr(mName);
 
-  auto& contexts = mDocument->get_contexts();
-  contexts.on_new_component_attr(definition.get_uuid(), mName, value);
+  auto& context_manager = mDocument->get_contexts();
+  context_manager.on_new_component_attr(component_def.get_uuid(), mName, value);
 }
 
 auto AddComponentAttr::get_name() const -> String

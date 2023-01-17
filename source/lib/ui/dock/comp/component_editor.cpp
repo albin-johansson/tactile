@@ -60,7 +60,7 @@ void ui_component_action_popup(const Strings& lang,
   if (const Popup popup {component_action_popup_id}; popup.is_open()) {
     if (ImGui::MenuItem(lang.action.rename_component.c_str())) {
       const auto active_component_id = dialog_active_component.value();
-      const auto& active_component_def = component_index->at(active_component_id);
+      const auto& active_component_def = component_index->get_comp(active_component_id);
       open_rename_component_dialog(active_component_id, active_component_def.get_name());
     }
 
@@ -79,7 +79,8 @@ void ui_component_combo(const ComponentIndex* component_index)
     dialog_active_component = component_index->begin()->first;
   }
 
-  const auto& active_component_def = component_index->at(dialog_active_component.value());
+  const auto& active_component_def =
+      component_index->get_comp(dialog_active_component.value());
   const auto& active_component_name = active_component_def.get_name();
 
   if (const Combo combo {"##ComponentCombo", active_component_name.c_str()};
@@ -242,7 +243,7 @@ void update_component_editor_dialog(const DocumentModel& model,
     TACTILE_ASSERT(component_index != nullptr);
 
     // Ensure that the active component ID hasn't been invalidated
-    if (dialog_active_component && !component_index->contains(*dialog_active_component)) {
+    if (dialog_active_component && !component_index->has_comp(*dialog_active_component)) {
       dialog_active_component.reset();
     }
 
@@ -259,7 +260,8 @@ void update_component_editor_dialog(const DocumentModel& model,
       ImGui::Separator();
 
       if (dialog_active_component) {
-        const auto& active_component_def = component_index->at(*dialog_active_component);
+        const auto& active_component_def =
+            component_index->get_comp(*dialog_active_component);
         ui_component_attribute_table(lang, active_component_def, dispatcher);
       }
     }

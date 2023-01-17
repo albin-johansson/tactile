@@ -50,7 +50,7 @@ TEST_SUITE("cmd::RenameComponentAttr")
 
     auto& map = map_document->get_map();
     auto& map_ctx = map.get_ctx();
-    map_ctx.attach_component(component_index->at(component_id).instantiate());
+    map_ctx.attach_component(component_index->get_comp(component_id).instantiate());
 
     cmd::RenameComponentAttr cmd {map_document.get(),
                                   component_id,
@@ -59,7 +59,7 @@ TEST_SUITE("cmd::RenameComponentAttr")
 
     {
       cmd.redo();
-      const auto& component_def = component_index->at(component_id);
+      const auto& component_def = component_index->get_comp(component_id);
       const auto& component = map_ctx.get_component(component_id);
 
       REQUIRE(!component_def.has_attr(old_attr_name));
@@ -74,7 +74,7 @@ TEST_SUITE("cmd::RenameComponentAttr")
 
     {
       cmd.undo();
-      const auto& component_def = component_index->at(component_id);
+      const auto& component_def = component_index->get_comp(component_id);
       const auto& component = map_ctx.get_component(component_id);
 
       REQUIRE(component_def.has_attr(old_attr_name));

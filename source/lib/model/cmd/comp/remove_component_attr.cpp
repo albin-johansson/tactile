@@ -48,7 +48,7 @@ RemoveComponentAttr::RemoveComponentAttr(Document* document,
 void RemoveComponentAttr::undo()
 {
   auto component_index = mDocument->get_component_index_ptr();
-  auto& component_def = component_index->at(mComponentId);
+  auto& component_def = component_index->get_comp(mComponentId);
 
   auto value = mPreviousValue.value();
   component_def.add_attr(mAttributeName, value);
@@ -62,7 +62,7 @@ void RemoveComponentAttr::undo()
 void RemoveComponentAttr::redo()
 {
   auto component_index = mDocument->get_component_index_ptr();
-  auto& component_def = component_index->at(mComponentId);
+  auto& component_def = component_index->get_comp(mComponentId);
 
   mPreviousValue = component_def.get_attr(mAttributeName);
   component_def.remove_attr(mAttributeName);

@@ -93,7 +93,7 @@ void show_contents(const Document& document, entt::dispatcher& dispatcher)
       ctx.each_component([&](const UUID& component_id, const Component& component) {
         ImGui::Separator();
 
-        const auto& component_name = component_index->at(component_id).get_name();
+        const auto& component_name = component_index->get_comp(component_id).get_name();
         component_view(context.get_uuid(), component, component_name, dispatcher);
       });
 

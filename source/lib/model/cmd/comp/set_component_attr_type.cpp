@@ -49,7 +49,7 @@ void SetComponentAttrType::undo()
 {
   auto component_index = mDocument->get_component_index_ptr();
 
-  auto& component_def = component_index->at(mComponentId);
+  auto& component_def = component_index->get_comp(mComponentId);
   component_def.remove_attr(mAttributeName);
   component_def.add_attr(mAttributeName, mSnapshot.value());
 
@@ -68,7 +68,7 @@ void SetComponentAttrType::redo()
 {
   auto component_index = mDocument->get_component_index_ptr();
 
-  auto& component_def = component_index->at(mComponentId);
+  auto& component_def = component_index->get_comp(mComponentId);
   mSnapshot = component_def.get_attr(mAttributeName);
 
   component_def.remove_attr(mAttributeName);

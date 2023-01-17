@@ -60,7 +60,7 @@ void ResetAttachedComponent::redo()
   auto& ctx = mContext->get_ctx();
   mPreviousComponent = ctx.get_component(mComponentId);
 
-  const auto& component_def = mComponentIndex->at(mComponentId);
+  const auto& component_def = mComponentIndex->get_comp(mComponentId);
   ctx.detach_component(mComponentId);
   ctx.attach_component(component_def.instantiate());
 }
