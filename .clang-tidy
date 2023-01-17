@@ -38,6 +38,7 @@ Checks: "-*,
          -cppcoreguidelines-avoid-c-arrays,
          -cppcoreguidelines-special-member-functions,
          -cppcoreguidelines-narrowing-conversions,
+         -cppcoreguidelines-non-private-member-variables-in-classes,
 
          google-*,
          -google-build-using-namespace,
