@@ -58,15 +58,16 @@ TEST_SUITE("cmd::DuplicateComponentAttr")
       const auto& component_def = component_index->at(component_id);
       const auto& component = map_ctx.get_component(component_id);
 
-      REQUIRE(component_def.size() == 2u);
-      REQUIRE(component_def.has(attr_name));
-      REQUIRE(component_def.has(duplicated_attr_name));
-      REQUIRE(component_def.at(attr_name) == component_def.at(duplicated_attr_name));
+      REQUIRE(component_def.attr_count() == 2u);
+      REQUIRE(component_def.has_attr(attr_name));
+      REQUIRE(component_def.has_attr(duplicated_attr_name));
+      REQUIRE(component_def.get_attr(attr_name) ==
+              component_def.get_attr(duplicated_attr_name));
 
-      REQUIRE(component.size() == 2u);
-      REQUIRE(component.has(attr_name));
-      REQUIRE(component.has(duplicated_attr_name));
-      REQUIRE(component.at(attr_name) == component.at(duplicated_attr_name));
+      REQUIRE(component.attr_count() == 2u);
+      REQUIRE(component.has_attr(attr_name));
+      REQUIRE(component.has_attr(duplicated_attr_name));
+      REQUIRE(component.get_attr(attr_name) == component.get_attr(duplicated_attr_name));
     }
 
     cmd.undo();
@@ -75,13 +76,13 @@ TEST_SUITE("cmd::DuplicateComponentAttr")
       const auto& component_def = component_index->at(component_id);
       const auto& component = map_ctx.get_component(component_id);
 
-      REQUIRE(component_def.size() == 1u);
-      REQUIRE(component_def.has(attr_name));
-      REQUIRE(!component_def.has(duplicated_attr_name));
+      REQUIRE(component_def.attr_count() == 1u);
+      REQUIRE(component_def.has_attr(attr_name));
+      REQUIRE(!component_def.has_attr(duplicated_attr_name));
 
-      REQUIRE(component.size() == 1u);
-      REQUIRE(component.has(attr_name));
-      REQUIRE(!component.has(duplicated_attr_name));
+      REQUIRE(component.attr_count() == 1u);
+      REQUIRE(component.has_attr(attr_name));
+      REQUIRE(!component.has_attr(duplicated_attr_name));
     }
   }
 }

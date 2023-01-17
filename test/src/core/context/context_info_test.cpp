@@ -160,7 +160,7 @@ TEST_SUITE("ContextInfo")
     REQUIRE(!ctx.has_component(component_id));
     REQUIRE(ctx.component_count() == 0u);
 
-    REQUIRE(removed_component->size() == component_def.size());
+    REQUIRE(removed_component->attr_count() == component_def.attr_count());
     REQUIRE(removed_component->definition_id() == component_def.get_uuid());
   }
 

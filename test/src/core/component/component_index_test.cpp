@@ -41,7 +41,7 @@ TEST_SUITE("ComponentIndex")
     const auto component_id = index.define("position");
 
     const auto& component_def = index.at(component_id);
-    REQUIRE("position" == component_def.name());
+    REQUIRE("position" == component_def.get_name());
     REQUIRE(component_id == component_def.get_uuid());
     REQUIRE(component_def.empty());
 

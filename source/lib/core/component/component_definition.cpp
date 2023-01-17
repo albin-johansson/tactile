@@ -33,7 +33,7 @@ void ComponentDefinition::set_name(String name)
   mName = std::move(name);
 }
 
-auto ComponentDefinition::name() const -> const String&
+auto ComponentDefinition::get_name() const -> const String&
 {
   return mName;
 }

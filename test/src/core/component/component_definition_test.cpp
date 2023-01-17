@@ -30,10 +30,10 @@ TEST_SUITE("ComponentDefinition")
   TEST_CASE("set_name")
   {
     ComponentDefinition definition;
-    REQUIRE(definition.name().empty());
+    REQUIRE(definition.get_name().empty());
 
     definition.set_name("Qwerty");
-    REQUIRE("Qwerty" == definition.name());
+    REQUIRE("Qwerty" == definition.get_name());
   }
 
   TEST_CASE("instantiate")

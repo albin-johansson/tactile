@@ -77,13 +77,15 @@ TEST_SUITE("cmd::UndefComponent")
     REQUIRE(component_index->contains(component_name));
     REQUIRE(component_index->contains(component_id));
 
-    REQUIRE(component_index->at(component_id).at(attr1_name).as_string() == attr1_value);
-    REQUIRE(component_index->at(component_id).at(attr2_name).as_float() == attr2_value);
+    REQUIRE(component_index->at(component_id).get_attr(attr1_name).as_string() ==
+            attr1_value);
+    REQUIRE(component_index->at(component_id).get_attr(attr2_name).as_float() ==
+            attr2_value);
 
     // Make sure the attached component is restored with correct attribute values
-    REQUIRE(map_ctx.get_component(component_id).at(attr1_name).as_string() ==
+    REQUIRE(map_ctx.get_component(component_id).get_attr(attr1_name).as_string() ==
             new_attr1_value);
-    REQUIRE(map_ctx.get_component(component_id).at(attr2_name).as_float() ==
+    REQUIRE(map_ctx.get_component(component_id).get_attr(attr2_name).as_float() ==
             new_attr2_value);
   }
 }

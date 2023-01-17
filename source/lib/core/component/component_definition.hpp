@@ -36,7 +36,7 @@ class ComponentDefinition final : public ComponentBase, public Element {
   void set_name(String name);
 
   /// Returns the (unique) name of the component type.
-  [[nodiscard]] auto name() const -> const String&;
+  [[nodiscard]] auto get_name() const -> const String&;
 
   [[nodiscard]] auto get_uuid() const -> const UUID& override;
 

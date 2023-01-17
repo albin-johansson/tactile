@@ -52,7 +52,7 @@ TEST_SUITE("cmd::RemoveComponentAttr")
 
     map_ctx.attach_component(component_def.instantiate());
     REQUIRE(map_ctx.has_component(component_id));
-    REQUIRE(map_ctx.get_component(component_id).at(attr_name) == attr_value);
+    REQUIRE(map_ctx.get_component(component_id).get_attr(attr_name) == attr_value);
 
     cmd::RemoveComponentAttr cmd {map_document.get(), component_id, attr_name};
 
@@ -61,12 +61,12 @@ TEST_SUITE("cmd::RemoveComponentAttr")
     REQUIRE(map_ctx.get_component(component_id).empty());
 
     cmd.undo();
-    REQUIRE(component_def.has(attr_name));
-    REQUIRE(component_def.at(attr_name) == attr_value);
+    REQUIRE(component_def.has_attr(attr_name));
+    REQUIRE(component_def.get_attr(attr_name) == attr_value);
 
-    REQUIRE(map_ctx.get_component(component_id).has(attr_name));
-    REQUIRE(component_def.at(attr_name) ==
-            map_ctx.get_component(component_id).at(attr_name));
+    REQUIRE(map_ctx.get_component(component_id).has_attr(attr_name));
+    REQUIRE(component_def.get_attr(attr_name) ==
+            map_ctx.get_component(component_id).get_attr(attr_name));
   }
 }
 

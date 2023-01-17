@@ -61,7 +61,7 @@ void ui_component_action_popup(const Strings& lang,
     if (ImGui::MenuItem(lang.action.rename_component.c_str())) {
       const auto active_component_id = dialog_active_component.value();
       const auto& active_component_def = component_index->at(active_component_id);
-      open_rename_component_dialog(active_component_id, active_component_def.name());
+      open_rename_component_dialog(active_component_id, active_component_def.get_name());
     }
 
     ImGui::Separator();
@@ -80,12 +80,12 @@ void ui_component_combo(const ComponentIndex* component_index)
   }
 
   const auto& active_component_def = component_index->at(dialog_active_component.value());
-  const auto& active_component_name = active_component_def.name();
+  const auto& active_component_name = active_component_def.get_name();
 
   if (const Combo combo {"##ComponentCombo", active_component_name.c_str()};
       combo.is_open()) {
     for (const auto& [component_id, component_def]: *component_index) {
-      const auto& component_name = component_def.name();
+      const auto& component_name = component_def.get_name();
       if (Selectable::Property(component_name.c_str())) {
         dialog_active_component = component_def.get_uuid();
       }

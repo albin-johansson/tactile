@@ -41,10 +41,10 @@ class RenameComponent final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Shared<ComponentIndex> mIndex;
+  Shared<ComponentIndex> mComponentIndex;
   UUID mComponentId {};
-  String mUpdatedName;
-  Maybe<String> mPreviousName;
+  String mNewName;
+  Maybe<String> mOldName;
 };
 
 }  // namespace tactile::cmd

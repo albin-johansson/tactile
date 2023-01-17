@@ -31,26 +31,25 @@ namespace tactile::cmd {
 RenameComponent::RenameComponent(Shared<ComponentIndex> index,
                                  const UUID& component_id,
                                  String name)
-    : mIndex {std::move(index)},
+    : mComponentIndex {std::move(index)},
       mComponentId {component_id},
-      mUpdatedName {std::move(name)}
+      mNewName {std::move(name)}
 {
-  if (!mIndex) {
+  if (!mComponentIndex) {
     throw TactileError {"Invalid null component index!"};
   }
 }
 
 void RenameComponent::undo()
 {
-  mIndex->rename(mComponentId, mPreviousName.value());
-  mPreviousName.reset();
+  mComponentIndex->rename(mComponentId, mOldName.value());
+  mOldName.reset();
 }
 
 void RenameComponent::redo()
 {
-  const auto& definition = mIndex->at(mComponentId);
-  mPreviousName = definition.name();
-  mIndex->rename(mComponentId, mUpdatedName);
+  mOldName = mComponentIndex->at(mComponentId).get_name();
+  mComponentIndex->rename(mComponentId, mNewName);
 }
 
 auto RenameComponent::get_name() const -> String

@@ -62,14 +62,14 @@ TEST_SUITE("cmd::RenameComponentAttr")
       const auto& component_def = component_index->at(component_id);
       const auto& component = map_ctx.get_component(component_id);
 
-      REQUIRE(!component_def.has(old_attr_name));
-      REQUIRE(!component.has(old_attr_name));
+      REQUIRE(!component_def.has_attr(old_attr_name));
+      REQUIRE(!component.has_attr(old_attr_name));
 
-      REQUIRE(component_def.has(new_attr_name));
-      REQUIRE(component.has(new_attr_name));
+      REQUIRE(component_def.has_attr(new_attr_name));
+      REQUIRE(component.has_attr(new_attr_name));
 
-      REQUIRE(component_def.at(new_attr_name) == attr_value);
-      REQUIRE(component.at(new_attr_name) == attr_value);
+      REQUIRE(component_def.get_attr(new_attr_name) == attr_value);
+      REQUIRE(component.get_attr(new_attr_name) == attr_value);
     }
 
     {
@@ -77,14 +77,14 @@ TEST_SUITE("cmd::RenameComponentAttr")
       const auto& component_def = component_index->at(component_id);
       const auto& component = map_ctx.get_component(component_id);
 
-      REQUIRE(component_def.has(old_attr_name));
-      REQUIRE(component.has(old_attr_name));
+      REQUIRE(component_def.has_attr(old_attr_name));
+      REQUIRE(component.has_attr(old_attr_name));
 
-      REQUIRE(!component_def.has(new_attr_name));
-      REQUIRE(!component.has(new_attr_name));
+      REQUIRE(!component_def.has_attr(new_attr_name));
+      REQUIRE(!component.has_attr(new_attr_name));
 
-      REQUIRE(component_def.at(old_attr_name) == attr_value);
-      REQUIRE(component.at(old_attr_name) == attr_value);
+      REQUIRE(component_def.get_attr(old_attr_name) == attr_value);
+      REQUIRE(component.get_attr(old_attr_name) == attr_value);
     }
   }
 }
