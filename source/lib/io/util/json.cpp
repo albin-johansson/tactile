@@ -90,7 +90,7 @@ void to_json(JSON& json, const Attribute& value)
       break;
 
     default:
-      throw TactileError("Invalid attribute type!");
+      throw TactileError {"Invalid attribute type"};
   }
 }
 

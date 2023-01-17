@@ -46,9 +46,25 @@ namespace {
     case AttributeType::Int:
       return fmt::format(R"("{}": {})", name, value.as_int());
 
+    case AttributeType::Int2: {
+      const auto& vec = value.as_int2();
+      return fmt::format(R"("{}": Vector2( {}, {} ))", name, vec.x, vec.y);
+    }
+    case AttributeType::Int3: {
+      const auto& vec = value.as_int3();
+      return fmt::format(R"("{}": Vector3( {}, {}, {} ))", name, vec.x, vec.y, vec.z);
+    }
     case AttributeType::Float:
       return fmt::format(R"("{}": {})", name, value.as_float());
 
+    case AttributeType::Float2: {
+      const auto& vec = value.as_float2();
+      return fmt::format(R"("{}": Vector2( {}, {} ))", name, vec.x, vec.y);
+    }
+    case AttributeType::Float3: {
+      const auto& vec = value.as_float3();
+      return fmt::format(R"("{}": Vector3( {}, {}, {} ))", name, vec.x, vec.y, vec.z);
+    }
     case AttributeType::Bool:
       return fmt::format(R"("{}": {})", name, value.as_bool() ? "true" : "false");
 
@@ -70,7 +86,7 @@ namespace {
       return fmt::format(R"("{}": {})", name, static_cast<int32>(value.as_object()));
 
     default:
-      throw TactileError {"Invalid attribute type!"};
+      throw TactileError {"Invalid attribute type"};
   }
 }
 
