@@ -27,71 +27,75 @@
 
 namespace tactile {
 
-ContextManager::ContextManager(const UUID& root_context_id)
-    : mRootContextId {root_context_id}
+ContextManager::ContextManager(const UUID& root_ctx_id)
+    : mRootContextId {root_ctx_id}
 {
 }
 
 void ContextManager::add_context(Shared<Context> context)
 {
-  const auto id = context->get_uuid();
-  mContexts[id] = std::move(context);
+  const auto ctx_id = context->get_uuid();
+  mContexts[ctx_id] = std::move(context);
 }
 
-void ContextManager::erase(const UUID& context_id)
+auto ContextManager::remove_context(const UUID& ctx_id) -> Result
 {
-  if (const auto iter = mContexts.find(context_id); iter != mContexts.end()) [[likely]] {
+  if (const auto iter = mContexts.find(ctx_id); iter != mContexts.end()) [[likely]] {
     mContexts.erase(iter);
-    if (context_id == mActiveContextId) {
+
+    if (ctx_id == mActiveContextId) {
       mActiveContextId = mRootContextId;
     }
+
+    return success;
   }
   else {
-    throw TactileError {"Tried to remove non-existent context!"};
+    return failure;
   }
 }
 
-void ContextManager::select(const UUID& context_id)
+auto ContextManager::select_context(const UUID& ctx_id) -> Result
 {
-  if (contains(context_id)) [[likely]] {
-    mActiveContextId = context_id;
+  if (has_context(ctx_id)) [[likely]] {
+    mActiveContextId = ctx_id;
+    return success;
   }
   else {
-    throw TactileError {"Tried to select non-existent context!"};
+    return failure;
   }
 }
 
-auto ContextManager::get_context(const UUID& context_id) -> const Shared<Context>&
+auto ContextManager::get_context_ptr(const UUID& ctx_id) -> const Shared<Context>&
 {
-  return lookup_in(mContexts, context_id);
+  return lookup_in(mContexts, ctx_id);
 }
 
-auto ContextManager::at(const UUID& context_id) -> Context&
+auto ContextManager::get_context(const UUID& ctx_id) -> Context&
 {
-  return *lookup_in(mContexts, context_id);
+  return *lookup_in(mContexts, ctx_id);
 }
 
-auto ContextManager::at(const UUID& context_id) const -> const Context&
+auto ContextManager::get_context(const UUID& ctx_id) const -> const Context&
 {
-  return *lookup_in(mContexts, context_id);
+  return *lookup_in(mContexts, ctx_id);
 }
 
-auto ContextManager::contains(const UUID& context_id) const -> bool
+auto ContextManager::has_context(const UUID& ctx_id) const -> bool
 {
-  return mContexts.find(context_id) != mContexts.end();
+  return mContexts.find(ctx_id) != mContexts.end();
 }
 
-auto ContextManager::size() const -> usize
+auto ContextManager::context_count() const -> usize
 {
   return mContexts.size();
 }
 
-auto ContextManager::active_context() -> Context&
+auto ContextManager::get_active_context() -> Context&
 {
   return *lookup_in(mContexts, mActiveContextId);
 }
 
-auto ContextManager::active_context() const -> const Context&
+auto ContextManager::get_active_context() const -> const Context&
 {
   return *lookup_in(mContexts, mActiveContextId);
 }
@@ -100,10 +104,10 @@ auto ContextManager::on_undef_comp(const UUID& component_id) -> HashMap<UUID, Co
 {
   HashMap<UUID, Component> removed;
 
-  for (auto& [context_id, context]: mContexts) {
+  for (auto& [ctx_id, context]: mContexts) {
     auto& ctx = context->get_ctx();
     if (ctx.has_component(component_id)) {
-      removed.try_emplace(context_id, ctx.detach_component(component_id).value());
+      removed.try_emplace(ctx_id, ctx.detach_component(component_id).value());
     }
   }
 
@@ -140,9 +144,9 @@ auto ContextManager::on_changed_component_attr_type(const UUID& component_id,
 {
   HashMap<UUID, Attribute> attributes;
 
-  for (auto& [context_id, context]: mContexts) {
+  for (auto& [ctx_id, context]: mContexts) {
     if (auto* component = context->get_ctx().find_component(component_id)) {
-      attributes[context_id] = component->get_attr(name);
+      attributes[ctx_id] = component->get_attr(name);
 
       component->remove_attr(name);
       component->add_attr(String {name}, Attribute {type});

@@ -131,7 +131,7 @@ void on_inspect_context(const InspectContextEvent& event)
   spdlog::trace("InspectContextEvent(context_id: {})", event.context_id);
 
   if (auto* document = get_model().active_document()) {
-    document->get_contexts().select(event.context_id);
+    document->get_contexts().select_context(event.context_id);
   }
 }
 

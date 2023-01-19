@@ -23,6 +23,7 @@
 #include "common/type/func.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/ptr.hpp"
+#include "common/type/result.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
@@ -32,30 +33,31 @@
 namespace tactile {
 
 /// Manages all of the contexts contained within a document.
+/// FIXME bad method names
 class ContextManager final {
   using ContextMap = HashMap<UUID, Shared<Context>>;
   using ComponentFunc = Func<void(Component&)>;
 
  public:
-  explicit ContextManager(const UUID& root_context_id);
+  explicit ContextManager(const UUID& root_ctx_id);
 
   void add_context(Shared<Context> context);
 
-  void erase(const UUID& context_id);
+  auto remove_context(const UUID& ctx_id) -> Result;
 
-  void select(const UUID& context_id);
+  auto select_context(const UUID& ctx_id) -> Result;
 
-  [[nodiscard]] auto get_context(const UUID& id) -> const Shared<Context>&;
+  [[nodiscard]] auto get_context_ptr(const UUID& ctx_id) -> const Shared<Context>&;
 
-  [[nodiscard]] auto at(const UUID& context_id) -> Context&;
-  [[nodiscard]] auto at(const UUID& context_id) const -> const Context&;
+  [[nodiscard]] auto get_context(const UUID& ctx_id) -> Context&;
+  [[nodiscard]] auto get_context(const UUID& ctx_id) const -> const Context&;
 
-  [[nodiscard]] auto contains(const UUID& context_id) const -> bool;
+  [[nodiscard]] auto has_context(const UUID& ctx_id) const -> bool;
 
-  [[nodiscard]] auto size() const -> usize;
+  [[nodiscard]] auto context_count() const -> usize;
 
-  [[nodiscard]] auto active_context() -> Context&;
-  [[nodiscard]] auto active_context() const -> const Context&;
+  [[nodiscard]] auto get_active_context() -> Context&;
+  [[nodiscard]] auto get_active_context() const -> const Context&;
 
   auto on_undef_comp(const UUID& component_id) -> HashMap<UUID, Component>;
 

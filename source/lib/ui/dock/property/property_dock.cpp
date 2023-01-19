@@ -453,7 +453,7 @@ void update_property_table(const DocumentModel& model, entt::dispatcher& dispatc
 
   const auto& lang = get_current_language();
   const auto& document = model.require_active_document();
-  const auto& context = document.get_contexts().active_context();
+  const auto& context = document.get_contexts().get_active_context();
 
   if (const Table table {"##PropertyTable", 2, flags}; table.is_open()) {
     ContextPropertyVisitor visitor {dispatcher};

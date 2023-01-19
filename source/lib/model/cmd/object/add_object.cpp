@@ -54,7 +54,7 @@ void AddObject::undo()
 
   const auto object_id = mObjectId.value();
   layer.remove_object(object_id);
-  mDocument->get_contexts().erase(object_id);
+  mDocument->get_contexts().remove_context(object_id);
 }
 
 void AddObject::redo()

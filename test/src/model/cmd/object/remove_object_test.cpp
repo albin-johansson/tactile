@@ -51,11 +51,11 @@ TEST_SUITE("cmd::RemoveObject")
     cmd::RemoveObject cmd {map_document.get(), layer_id, object->get_uuid()};
 
     cmd.redo();
-    REQUIRE(!context_manager.contains(object->get_uuid()));
+    REQUIRE(!context_manager.has_context(object->get_uuid()));
     REQUIRE(!layer.has_object(object->get_uuid()));
 
     cmd.undo();
-    REQUIRE(context_manager.contains(object->get_uuid()));
+    REQUIRE(context_manager.has_context(object->get_uuid()));
     REQUIRE(layer.has_object(object->get_uuid()));
   }
 }

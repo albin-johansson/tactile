@@ -43,20 +43,20 @@ TEST_SUITE("cmd::RemoveLayer")
                             .result();
 
     auto& map = map_document->get_map();
-    auto& root = map.get_invisible_root();
-    auto& contexts = map_document->get_contexts();
+    auto& root_layer = map.get_invisible_root();
+    auto& context_manager = map_document->get_contexts();
 
-    REQUIRE(contexts.contains(layer_id));
+    REQUIRE(context_manager.has_context(layer_id));
 
     cmd::RemoveLayer cmd {map_document.get(), layer_id};
 
     cmd.redo();
-    REQUIRE(0u == root.layer_count());
-    REQUIRE(!contexts.contains(layer_id));
+    REQUIRE(0u == root_layer.layer_count());
+    REQUIRE(!context_manager.has_context(layer_id));
 
     cmd.undo();
-    REQUIRE(1u == root.layer_count());
-    REQUIRE(contexts.contains(layer_id));
+    REQUIRE(1u == root_layer.layer_count());
+    REQUIRE(context_manager.has_context(layer_id));
   }
 }
 

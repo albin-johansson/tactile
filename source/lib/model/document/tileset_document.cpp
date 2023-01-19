@@ -33,12 +33,12 @@ TilesetDocument::TilesetDocument(TilesetInfo info, const UUID& id)
     : mTileset {std::make_shared<Tileset>(std::move(info), id)},
       mDelegate {mTileset->get_uuid()}
 {
-  auto& contexts = get_contexts();
-  contexts.add_context(mTileset);
-  contexts.select(mTileset->get_uuid());
+  auto& context_manager = get_contexts();
+  context_manager.add_context(mTileset);
+  context_manager.select_context(mTileset->get_uuid());
 
   for (const auto& [tile_id, tile]: *mTileset) {
-    contexts.add_context(tile);
+    context_manager.add_context(tile);
   }
 }
 

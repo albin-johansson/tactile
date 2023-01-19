@@ -58,7 +58,7 @@ void update_add_property_dialog(const DocumentModel& model, entt::dispatcher& di
   const auto& lang = get_current_language();
 
   const auto& document = model.require_active_document();
-  const auto& active_context = document.get_contexts().active_context();
+  const auto& active_context = document.get_contexts().get_active_context();
 
   if (active_context.get_uuid() != dialog_context_id) {
     dialog_context_id.reset();

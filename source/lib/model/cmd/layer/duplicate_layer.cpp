@@ -42,7 +42,7 @@ void DuplicateLayer::undo()
   const auto id = mNewLayer->get_uuid();
 
   map.remove_layer(id);
-  mDocument->get_contexts().erase(id);
+  mDocument->get_contexts().remove_context(id);
 }
 
 void DuplicateLayer::redo()

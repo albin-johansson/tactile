@@ -71,7 +71,7 @@ void RemoveObject::redo()
   }
 
   layer.remove_object(id);
-  mDocument->get_contexts().erase(id);
+  mDocument->get_contexts().remove_context(id);
 }
 
 auto RemoveObject::get_name() const -> String

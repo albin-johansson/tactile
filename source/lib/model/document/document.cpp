@@ -90,7 +90,7 @@ void Document::update_component(const UUID& component_id, String name, Attribute
 
 void Document::attach_component(const UUID& context_id, const UUID& component_id)
 {
-  auto context = get_contexts().get_context(context_id);
+  auto context = get_contexts().get_context_ptr(context_id);
   get_history().push<cmd::AttachComponent>(get_component_index_ptr(),
                                            std::move(context),
                                            component_id);
@@ -98,7 +98,7 @@ void Document::attach_component(const UUID& context_id, const UUID& component_id
 
 void Document::detach_component(const UUID& context_id, const UUID& component_id)
 {
-  auto context = get_contexts().get_context(context_id);
+  auto context = get_contexts().get_context_ptr(context_id);
   get_history().push<cmd::DetachComponent>(std::move(context), component_id);
 }
 
@@ -107,7 +107,7 @@ void Document::update_attached_component(const UUID& context_id,
                                          String name,
                                          Attribute value)
 {
-  auto context = get_contexts().get_context(context_id);
+  auto context = get_contexts().get_context_ptr(context_id);
   get_history().push<cmd::UpdateAttachedComponent>(std::move(context),
                                                    component_id,
                                                    std::move(name),
@@ -116,7 +116,7 @@ void Document::update_attached_component(const UUID& context_id,
 
 void Document::reset_attached_component(const UUID& context_id, const UUID& component_id)
 {
-  auto context = get_contexts().get_context(context_id);
+  auto context = get_contexts().get_context_ptr(context_id);
   get_history().push<cmd::ResetAttachedComponent>(get_component_index_ptr(),
                                                   std::move(context),
                                                   component_id);
@@ -124,19 +124,19 @@ void Document::reset_attached_component(const UUID& context_id, const UUID& comp
 
 void Document::add_property(const UUID& context_id, String name, const AttributeType type)
 {
-  auto context = get_contexts().get_context(context_id);
+  auto context = get_contexts().get_context_ptr(context_id);
   get_history().push<cmd::AddProperty>(std::move(context), std::move(name), type);
 }
 
 void Document::remove_property(const UUID& context_id, String name)
 {
-  auto context = get_contexts().get_context(context_id);
+  auto context = get_contexts().get_context_ptr(context_id);
   get_history().push<cmd::RemoveProperty>(std::move(context), std::move(name));
 }
 
 void Document::rename_property(const UUID& context_id, String current, String updated)
 {
-  auto context = get_contexts().get_context(context_id);
+  auto context = get_contexts().get_context_ptr(context_id);
   get_history().push<cmd::RenameProperty>(std::move(context),
                                           std::move(current),
                                           std::move(updated));
@@ -144,7 +144,7 @@ void Document::rename_property(const UUID& context_id, String current, String up
 
 void Document::update_property(const UUID& context_id, String name, Attribute value)
 {
-  auto context = get_contexts().get_context(context_id);
+  auto context = get_contexts().get_context_ptr(context_id);
   get_history().push<cmd::UpdateProperty>(std::move(context),
                                           std::move(name),
                                           std::move(value));
@@ -154,7 +154,7 @@ void Document::change_property_type(const UUID& context_id,
                                     String name,
                                     const AttributeType type)
 {
-  auto context = get_contexts().get_context(context_id);
+  auto context = get_contexts().get_context_ptr(context_id);
   get_history().push<cmd::ChangePropertyType>(std::move(context), std::move(name), type);
 }
 

@@ -41,7 +41,7 @@ void AddLayer::undo()
   auto& map = mDocument->get_map();
   const auto id = mLayer->get_uuid();
   map.remove_layer(id);
-  mDocument->get_contexts().erase(id);
+  mDocument->get_contexts().remove_context(id);
 }
 
 void AddLayer::redo()

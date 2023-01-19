@@ -75,7 +75,7 @@ void show_add_component_button_popup_content(const Document& document,
 void show_contents(const Document& document, entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
-  const auto& context = document.get_contexts().active_context();
+  const auto& context = document.get_contexts().get_active_context();
 
   const FmtString indicator {"{}: {}", lang.misc.context, context.get_ctx().name()};
   ImGui::TextUnformatted(indicator.data());

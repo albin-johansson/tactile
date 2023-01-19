@@ -56,7 +56,7 @@ void RemoveLayer::redo()
   mIndex = map.get_invisible_root().local_layer_index(id);
   map.remove_layer(id);
 
-  mDocument->get_contexts().erase(id);
+  mDocument->get_contexts().remove_context(id);
 }
 
 auto RemoveLayer::get_name() const -> String

@@ -38,27 +38,27 @@ TEST_SUITE("cmd::AddLayer")
   {
     auto map_document = MapBuilder::build().result();
     auto& map = map_document->get_map();
-    auto& root = map.get_invisible_root();
-    auto& contexts = map_document->get_contexts();
+    auto& root_layer = map.get_invisible_root();
+    auto& context_manager = map_document->get_contexts();
 
-    REQUIRE(1u == contexts.size());
-    REQUIRE(contexts.contains(map.get_uuid()));
+    REQUIRE(1u == context_manager.context_count());
+    REQUIRE(context_manager.has_context(map.get_uuid()));
 
     cmd::AddLayer cmd {map_document.get(), LayerType::TileLayer};
 
     cmd.redo();
-    REQUIRE(1u == root.layer_count());
-    REQUIRE(2u == contexts.size());
+    REQUIRE(1u == root_layer.layer_count());
+    REQUIRE(2u == context_manager.context_count());
     REQUIRE(map.get_active_layer_id().has_value());
 
     const auto layer_id = map.get_active_layer_id().value();
-    REQUIRE(contexts.contains(layer_id));
+    REQUIRE(context_manager.has_context(layer_id));
 
     cmd.undo();
-    REQUIRE(0u == root.layer_count());
-    REQUIRE(1u == contexts.size());
+    REQUIRE(0u == root_layer.layer_count());
+    REQUIRE(1u == context_manager.context_count());
     REQUIRE(!map.get_active_layer_id().has_value());
-    REQUIRE(!contexts.contains(layer_id));
+    REQUIRE(!context_manager.has_context(layer_id));
   }
 }
 

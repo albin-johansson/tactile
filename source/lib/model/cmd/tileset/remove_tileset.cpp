@@ -79,7 +79,7 @@ void RemoveTileset::redo()
   }
 
   tilesets.detach_tileset(mTilesetId);
-  map_document->get_contexts().erase(mTilesetId);
+  map_document->get_contexts().remove_context(mTilesetId);
 }
 
 auto RemoveTileset::get_name() const -> String

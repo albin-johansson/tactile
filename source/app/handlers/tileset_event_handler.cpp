@@ -46,7 +46,7 @@ void on_inspect_tileset(const InspectTilesetEvent&)
 
   if (auto* tileset_document = get_model().active_tileset_document()) {
     const auto& tileset = tileset_document->get_tileset();
-    tileset_document->get_contexts().select(tileset.get_uuid());
+    tileset_document->get_contexts().select_context(tileset.get_uuid());
   }
 }
 
@@ -123,7 +123,7 @@ void on_select_tileset_tile(const SelectTilesetTileEvent& event)
     tileset.select_tile(event.tile_index);
 
     const auto& tile_id = tileset[event.tile_index].get_uuid();
-    tileset_document->get_contexts().select(tile_id);
+    tileset_document->get_contexts().select_context(tile_id);
   }
 }
 

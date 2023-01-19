@@ -61,7 +61,7 @@ void CreateTileset::undo()
   auto& tilesets = document->get_map().get_tileset_bundle();
   tilesets.detach_tileset(mTilesetId);
 
-  document->get_contexts().erase(mTilesetId);
+  document->get_contexts().remove_context(mTilesetId);
 }
 
 void CreateTileset::redo()

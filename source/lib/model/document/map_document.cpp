@@ -39,9 +39,9 @@ MapDocument::MapDocument(const Int2& tile_size, const TileExtent extent)
   mMap->resize(extent);
   mMap->set_tile_size(tile_size);
 
-  auto& contexts = get_contexts();
-  contexts.add_context(mMap);
-  contexts.select(mMap->get_uuid());
+  auto& context_manager = get_contexts();
+  context_manager.add_context(mMap);
+  context_manager.select_context(mMap->get_uuid());
 }
 
 void MapDocument::update()
@@ -195,9 +195,11 @@ void MapDocument::set_object_tag(const UUID& object_id, String tag)
 
 auto MapDocument::get_object(const UUID& object_id) -> Shared<Object>
 {
-  auto& contexts = get_contexts();
-  if (auto ptr = std::dynamic_pointer_cast<Object>(contexts.get_context(object_id))) {
-    return ptr;
+  auto& context_manager = get_contexts();
+  const auto& context = context_manager.get_context_ptr(object_id);
+
+  if (auto object = std::dynamic_pointer_cast<Object>(context)) {
+    return object;
   }
   else {
     throw TactileError {"UUID did not reference an object"};

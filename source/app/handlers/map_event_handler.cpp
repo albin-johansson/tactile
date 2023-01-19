@@ -192,7 +192,7 @@ void on_inspect_map(const InspectMapEvent&)
 
   if (auto* map_document = get_model().active_map_document()) {
     const auto& map = map_document->get_map();
-    map_document->get_contexts().select(map.get_uuid());
+    map_document->get_contexts().select_context(map.get_uuid());
   }
 }
 

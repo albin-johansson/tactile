@@ -41,7 +41,8 @@ TEST_SUITE("cmd::AddObject")
     UUID layer_id;
     auto map_document = test::MapBuilder::build().with_object_layer(&layer_id).result();
 
-    auto& layer = map_document->get_map().get_invisible_root().get_object_layer(layer_id);
+    auto& root_layer = map_document->get_map().get_invisible_root();
+    auto& layer = root_layer.get_object_layer(layer_id);
     auto& context_manager = map_document->get_contexts();
 
     cmd::AddObject cmd {map_document.get(), layer_id, ObjectType::Point, {0, 0}};
@@ -50,11 +51,11 @@ TEST_SUITE("cmd::AddObject")
 
     auto object = layer.begin()->second;
     const auto object_id = object->get_uuid();
-    REQUIRE(context_manager.contains(object_id));
+    REQUIRE(context_manager.has_context(object_id));
 
     cmd.undo();
     REQUIRE(0u == layer.object_count());
-    REQUIRE(!context_manager.contains(object_id));
+    REQUIRE(!context_manager.has_context(object_id));
   }
 }
 

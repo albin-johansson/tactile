@@ -50,7 +50,7 @@ void UndefComponent::undo()
   // Restores previously removed components
   auto& context_manager = mDocument->get_contexts();
   for (auto [context_id, component]: mRemovedComponents) {
-    auto& context = context_manager.at(context_id);
+    auto& context = context_manager.get_context(context_id);
     context.get_ctx().attach_component(std::move(component));
   }
 
