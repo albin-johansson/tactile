@@ -510,7 +510,7 @@ auto operator<<(OStream& stream, const Attribute& value) -> OStream&
       return stream << value.as_color().as_rgba();
 
     case AttributeType::Object:
-      return stream << "object '" << value.as_object() << "'";
+      return stream << "object/" << value.as_object();
 
     default:
       throw TactileError {"Invalid attribute type"};
