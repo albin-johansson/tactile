@@ -54,6 +54,10 @@ namespace {
       const auto& vec = value.as_int3();
       return fmt::format(R"("{}": Vector3( {}, {}, {} ))", name, vec.x, vec.y, vec.z);
     }
+    case AttributeType::Int4: {
+      const auto& vec = value.as_int4();
+      return fmt::format(R"("{}": [ {}, {}, {}, {} ])", name, vec.x, vec.y, vec.z, vec.w);
+    }
     case AttributeType::Float:
       return fmt::format(R"("{}": {})", name, value.as_float());
 
@@ -64,6 +68,15 @@ namespace {
     case AttributeType::Float3: {
       const auto& vec = value.as_float3();
       return fmt::format(R"("{}": Vector3( {}, {}, {} ))", name, vec.x, vec.y, vec.z);
+    }
+    case AttributeType::Float4: {
+      const auto& vec = value.as_float4();
+      return fmt::format(R"("{}": [ {}, {}, {}, {} ]))",
+                         name,
+                         vec.x,
+                         vec.y,
+                         vec.z,
+                         vec.w);
     }
     case AttributeType::Bool:
       return fmt::format(R"("{}": {})", name, value.as_bool() ? "true" : "false");
