@@ -26,6 +26,7 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
+#include <magic_enum.hpp>
 
 #include "common/debug/stacktrace.hpp"
 #include "common/numeric.hpp"
@@ -34,6 +35,7 @@
 #include "common/type/math.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
+#include "core/attribute.hpp"
 #include "core/tile/tile_pos.hpp"
 
 namespace fmt {
@@ -114,14 +116,32 @@ struct formatter<tactile::Vec4i> : formatter<std::string_view> {
   }
 };
 
+template <>
+struct formatter<tactile::AttributeType> : formatter<std::string_view> {
+  auto format(const tactile::AttributeType& type, auto& ctx) const
+  {
+    return fmt::format_to(ctx.out(), "{}", magic_enum::enum_name(type));
+  }
+};
+
+template <>
+struct formatter<tactile::Attribute> : formatter<std::string_view> {
+  auto format(const tactile::Attribute& attr, auto& ctx) const
+  {
+    return fmt::format_to(ctx.out(), "{}", attr);
+  }
+};
+
+static_assert(is_formattable<boost::stacktrace::stacktrace, char>::value);
 static_assert(is_formattable<tactile::Vec2i, char>::value);
 static_assert(is_formattable<tactile::Vec3i, char>::value);
 static_assert(is_formattable<tactile::Vec4i, char>::value);
 static_assert(is_formattable<tactile::Vec2, char>::value);
 static_assert(is_formattable<tactile::Vec3, char>::value);
 static_assert(is_formattable<tactile::Vec4, char>::value);
+static_assert(is_formattable<tactile::AttributeType, char>::value);
+static_assert(is_formattable<tactile::Attribute, char>::value);
 static_assert(is_formattable<tactile::TilePos, char>::value);
-static_assert(is_formattable<boost::stacktrace::stacktrace, char>::value);
 
 }  // namespace fmt
 
