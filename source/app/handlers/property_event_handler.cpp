@@ -105,8 +105,7 @@ void install_property_event_handler()
   auto& dispatcher = get_dispatcher();
 
   // clang-format off
-  // TODO rename event
-  dispatcher.sink<ShowAddPropertyDialogEvent>().connect<&on_show_new_property_dialog>();
+  dispatcher.sink<ShowNewPropertyDialogEvent>().connect<&on_show_new_property_dialog>();
   dispatcher.sink<ShowRenamePropertyDialogEvent>().connect<&on_show_rename_property_dialog>();
   dispatcher.sink<ShowChangePropertyTypeDialogEvent>().connect<&on_show_change_property_type_dialog>();
   // clang-format on

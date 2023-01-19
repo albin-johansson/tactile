@@ -27,7 +27,7 @@
 
 namespace tactile {
 
-struct ShowAddPropertyDialogEvent final {};
+struct ShowNewPropertyDialogEvent final {};
 
 struct ShowChangePropertyTypeDialogEvent final {
   String name;

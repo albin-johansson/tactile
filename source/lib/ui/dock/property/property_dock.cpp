@@ -471,7 +471,7 @@ void update_property_table(const DocumentModel& model, entt::dispatcher& dispatc
   }
 
   if (context_state.show_add_dialog) {
-    dispatcher.enqueue<ShowAddPropertyDialogEvent>();
+    dispatcher.enqueue<ShowNewPropertyDialogEvent>();
     context_state.show_add_dialog = false;
   }
 
