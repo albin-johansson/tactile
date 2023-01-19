@@ -44,9 +44,7 @@ template <>
 struct formatter<boost::stacktrace::stacktrace> : formatter<std::string_view> {
   auto format(const boost::stacktrace::stacktrace& trace, auto& ctx) const
   {
-    std::stringstream stream;
-    stream << trace;
-    return formatter<std::string_view>::format(stream.str(), ctx);
+    return fmt::format_to(ctx.out(), "{}", trace);
   }
 };
 
