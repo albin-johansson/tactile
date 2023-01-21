@@ -53,7 +53,8 @@ void append_properties(XMLNode node, const ir::ContextData& context)
 
     // Properties with no type attribute are assumed to be string properties
     if (type != AttributeType::String) {
-      property_node.append_attribute("type").set_value(stringify(type));
+      property_node.append_attribute("type").set_value(
+          serialize_to_save_format(type).data());
     }
 
     auto value_attr = property_node.append_attribute("value");

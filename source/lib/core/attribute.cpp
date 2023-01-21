@@ -19,103 +19,12 @@
 
 #include "attribute.hpp"
 
+#include <fmt/format.h>
+
 #include "common/debug/panic.hpp"
 #include "common/util/fmt.hpp"
 
 namespace tactile {
-
-auto stringify(const AttributeType type) -> const char*
-{
-  switch (type) {
-    case AttributeType::String:
-      return "string";
-
-    case AttributeType::Int:
-      return "int";
-
-    case AttributeType::Int2:
-      return "int2";
-
-    case AttributeType::Int3:
-      return "int3";
-
-    case AttributeType::Int4:
-      return "int4";
-
-    case AttributeType::Float:
-      return "float";
-
-    case AttributeType::Float2:
-      return "float2";
-
-    case AttributeType::Float3:
-      return "float3";
-
-    case AttributeType::Float4:
-      return "float4";
-
-    case AttributeType::Bool:
-      return "bool";
-
-    case AttributeType::Path:
-      return "file";
-
-    case AttributeType::Color:
-      return "color";
-
-    case AttributeType::Object:
-      return "object";
-
-    default:
-      throw TactileError {"Invalid attribute type!"};
-  }
-}
-
-auto parse_attr_type(StringView name) -> Maybe<AttributeType>
-{
-  if (name == "string") {
-    return AttributeType::String;
-  }
-  else if (name == "int") {
-    return AttributeType::Int;
-  }
-  else if (name == "int2") {
-    return AttributeType::Int2;
-  }
-  else if (name == "int3") {
-    return AttributeType::Int3;
-  }
-  else if (name == "int4") {
-    return AttributeType::Int4;
-  }
-  else if (name == "float") {
-    return AttributeType::Float;
-  }
-  else if (name == "float2") {
-    return AttributeType::Float2;
-  }
-  else if (name == "float3") {
-    return AttributeType::Float3;
-  }
-  else if (name == "float4") {
-    return AttributeType::Float4;
-  }
-  else if (name == "bool") {
-    return AttributeType::Bool;
-  }
-  else if (name == "file" || name == "path") {
-    return AttributeType::Path;
-  }
-  else if (name == "color") {
-    return AttributeType::Color;
-  }
-  else if (name == "object") {
-    return AttributeType::Object;
-  }
-  else {
-    return nothing;
-  }
-}
 
 void Attribute::reset_to_default(const AttributeType type)
 {
@@ -465,9 +374,132 @@ auto Attribute::as_color() const -> const color_type&
   }
 }
 
+auto parse_attr_type(StringView name) -> Maybe<AttributeType>
+{
+  if (name == "string") {
+    return AttributeType::String;
+  }
+  else if (name == "int") {
+    return AttributeType::Int;
+  }
+  else if (name == "int2") {
+    return AttributeType::Int2;
+  }
+  else if (name == "int3") {
+    return AttributeType::Int3;
+  }
+  else if (name == "int4") {
+    return AttributeType::Int4;
+  }
+  else if (name == "float") {
+    return AttributeType::Float;
+  }
+  else if (name == "float2") {
+    return AttributeType::Float2;
+  }
+  else if (name == "float3") {
+    return AttributeType::Float3;
+  }
+  else if (name == "float4") {
+    return AttributeType::Float4;
+  }
+  else if (name == "bool") {
+    return AttributeType::Bool;
+  }
+  else if (name == "file" || name == "path") {
+    return AttributeType::Path;
+  }
+  else if (name == "color") {
+    return AttributeType::Color;
+  }
+  else if (name == "object") {
+    return AttributeType::Object;
+  }
+  else {
+    return nothing;
+  }
+}
+
+auto serialize_to_save_format(const AttributeType type) -> StringView
+{
+  switch (type) {
+    case AttributeType::String:
+      return "string";
+
+    case AttributeType::Int:
+      return "int";
+
+    case AttributeType::Int2:
+      return "int2";
+
+    case AttributeType::Int3:
+      return "int3";
+
+    case AttributeType::Int4:
+      return "int4";
+
+    case AttributeType::Float:
+      return "float";
+
+    case AttributeType::Float2:
+      return "float2";
+
+    case AttributeType::Float3:
+      return "float3";
+
+    case AttributeType::Float4:
+      return "float4";
+
+    case AttributeType::Bool:
+      return "bool";
+
+    case AttributeType::Path:
+      return "file";
+
+    case AttributeType::Color:
+      return "color";
+
+    case AttributeType::Object:
+      return "object";
+
+    default:
+      throw TactileError {"Invalid attribute type"};
+  }
+}
+
+auto serialize_to_save_format(const Int2& vec) -> String
+{
+  return fmt::format("{};{}", vec.x, vec.y);
+}
+
+auto serialize_to_save_format(const Float2& vec) -> String
+{
+  return fmt::format("{};{}", vec.x, vec.y);
+}
+
+auto serialize_to_save_format(const Int3& vec) -> String
+{
+  return fmt::format("{};{};{}", vec.x, vec.y, vec.z);
+}
+
+auto serialize_to_save_format(const Float3& vec) -> String
+{
+  return fmt::format("{};{};{}", vec.x, vec.y, vec.z);
+}
+
+auto serialize_to_save_format(const Int4& vec) -> String
+{
+  return fmt::format("{};{};{};{}", vec.x, vec.y, vec.z, vec.w);
+}
+
+auto serialize_to_save_format(const Float4& vec) -> String
+{
+  return fmt::format("{};{};{};{}", vec.x, vec.y, vec.z, vec.w);
+}
+
 auto operator<<(OStream& stream, const AttributeType type) -> OStream&
 {
-  return stream << stringify(type);
+  return stream << serialize_to_save_format(type);
 }
 
 auto operator<<(OStream& stream, const Attribute& value) -> OStream&

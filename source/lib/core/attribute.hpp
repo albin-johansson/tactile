@@ -33,6 +33,10 @@
 
 namespace tactile {
 
+/// Strong type that represents object references.
+enum ObjectRef : int32 {
+};
+
 /// Represents the different possible attributes types.
 enum class AttributeType {
   String,  ///< Arbitrary string.
@@ -50,26 +54,13 @@ enum class AttributeType {
   Object,  ///< Integer object ID, references some map object.
 };
 
-/// Returns the name of an attribute type for use in save files.
-[[nodiscard]] auto stringify(AttributeType type) -> const char*;
-
-/// Parses an attribute type from a type name used in save files.
-[[nodiscard]] auto parse_attr_type(StringView name) -> Maybe<AttributeType>;
-
-/// Outputs the result of calling `stringify` with the type to a stream.
-auto operator<<(OStream& stream, AttributeType type) -> OStream&;
-
-/// Strong type that represents object references.
-enum ObjectRef : int32 {
-};
-
 template <typename T>
 concept SomeAttributeType = std::same_as<T, String> ||  //
                             std::same_as<T, int32> ||   //
                             std::same_as<T, Int2> ||    //
                             std::same_as<T, Int3> ||    //
                             std::same_as<T, Int4> ||    //
-                            std::same_as<T, float> ||   //
+                            std::same_as<T, float32> ||   //
                             std::same_as<T, Float2> ||  //
                             std::same_as<T, Float3> ||  //
                             std::same_as<T, Float4> ||  //
@@ -101,7 +92,7 @@ class Attribute final {
   using int2_type = Int2;
   using int3_type = Int3;
   using int4_type = Int4;
-  using float_type = float;
+  using float_type = float32;
   using float2_type = Float2;
   using float3_type = Float3;
   using float4_type = Float4;
@@ -325,6 +316,24 @@ class Attribute final {
     return std::get_if<T>(&mValue);
   }
 };
+
+/// Parses an attribute type from a type name used in save files.
+[[nodiscard]] auto parse_attr_type(StringView name) -> Maybe<AttributeType>;
+
+/// Returns the name of an attribute type for use in save files.
+[[nodiscard]] auto serialize_to_save_format(AttributeType type) -> StringView;
+
+[[nodiscard]] auto serialize_to_save_format(const Int2& vec) -> String;
+[[nodiscard]] auto serialize_to_save_format(const Float2& vec) -> String;
+
+[[nodiscard]] auto serialize_to_save_format(const Int3& vec) -> String;
+[[nodiscard]] auto serialize_to_save_format(const Float3& vec) -> String;
+
+[[nodiscard]] auto serialize_to_save_format(const Int4& vec) -> String;
+[[nodiscard]] auto serialize_to_save_format(const Float4& vec) -> String;
+
+/// Outputs the result of calling `stringify` with the type to a stream.
+auto operator<<(OStream& stream, AttributeType type) -> OStream&;
 
 /// Outputs an attribute to a stream for debugging purposes.
 auto operator<<(OStream& stream, const Attribute& value) -> OStream&;

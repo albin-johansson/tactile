@@ -36,40 +36,34 @@ auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter
       emitter << value.as_int();
       break;
 
-    case AttributeType::Int2: {
-      const auto& vec = value.as_int2();
-      emitter << fmt::format("{};{}", vec.x, vec.y);
+    case AttributeType::Int2:
+      emitter << serialize_to_save_format(value.as_int2());
       break;
-    }
-    case AttributeType::Int3: {
-      const auto& vec = value.as_int3();
-      emitter << fmt::format("{};{};{}", vec.x, vec.y, vec.z);
+
+    case AttributeType::Int3:
+      emitter << serialize_to_save_format(value.as_int3());
       break;
-    }
-    case AttributeType::Int4: {
-      const auto& vec = value.as_int4();
-      emitter << fmt::format("{};{};{};{}", vec.x, vec.y, vec.z, vec.w);
+
+    case AttributeType::Int4:
+      emitter << serialize_to_save_format(value.as_int4());
       break;
-    }
+
     case AttributeType::Float:
       emitter << value.as_float();
       break;
 
-    case AttributeType::Float2: {
-      const auto& vec = value.as_float2();
-      emitter << fmt::format("{};{}", vec.x, vec.y);
+    case AttributeType::Float2:
+      emitter << serialize_to_save_format(value.as_float2());
       break;
-    }
-    case AttributeType::Float3: {
-      const auto& vec = value.as_float3();
-      emitter << fmt::format("{};{};{}", vec.x, vec.y, vec.z);
+
+    case AttributeType::Float3:
+      emitter << serialize_to_save_format(value.as_float3());
       break;
-    }
-    case AttributeType::Float4: {
-      const auto& vec = value.as_float4();
-      emitter << fmt::format("{};{};{};{}", vec.x, vec.y, vec.z, vec.w);
+
+    case AttributeType::Float4:
+      emitter << serialize_to_save_format(value.as_float4());
       break;
-    }
+
     case AttributeType::Bool:
       emitter << value.as_bool();
       break;
@@ -87,7 +81,7 @@ auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter
       break;
 
     default:
-      throw TactileError {"Invalid attribute type!"};
+      throw TactileError {"Invalid attribute type"};
   }
 
   return emitter;
@@ -95,7 +89,7 @@ auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter
 
 auto operator<<(YAML::Emitter& emitter, const AttributeType type) -> YAML::Emitter&
 {
-  return emitter << stringify(type);
+  return emitter << serialize_to_save_format(type).data();
 }
 
 auto operator<<(YAML::Emitter& emitter, const TileEncoding encoding) -> YAML::Emitter&
