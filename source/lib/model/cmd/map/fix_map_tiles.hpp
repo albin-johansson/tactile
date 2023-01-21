@@ -37,7 +37,7 @@ class FixMapTiles final : public Command {
 
  private:
   Shared<Map> mMap;
-  Map::FixTilesResult mResult;
+  Map::FixTilesResult mInvalidLayerTiles;
 };
 
 }  // namespace tactile::cmd

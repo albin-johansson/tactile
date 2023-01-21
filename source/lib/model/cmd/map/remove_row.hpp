@@ -42,7 +42,7 @@ class RemoveRow final : public Command {
  private:
   Shared<Map> mMap;
   MapCommandCache mCache;
-  usize mRows {1};
+  usize mRowCount {1};
 };
 
 }  // namespace tactile::cmd

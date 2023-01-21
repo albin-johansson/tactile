@@ -32,24 +32,24 @@ AddColumn::AddColumn(Shared<Map> map)
     : mMap {std::move(map)}
 {
   if (!mMap) {
-    throw TactileError {"Invalid null map!"};
+    throw TactileError {"Invalid null map"};
   }
 }
 
 void AddColumn::undo()
 {
-  invoke_n(mColumns, [this] { mMap->remove_column(); });
+  invoke_n(mColumnCount, [this] { mMap->remove_column(); });
 }
 
 void AddColumn::redo()
 {
-  invoke_n(mColumns, [this] { mMap->add_column(); });
+  invoke_n(mColumnCount, [this] { mMap->add_column(); });
 }
 
 auto AddColumn::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const AddColumn*>(cmd)) {
-    mColumns += other->mColumns;
+    mColumnCount += other->mColumnCount;
     return true;
   }
 
@@ -59,7 +59,7 @@ auto AddColumn::merge_with(const Command* cmd) -> bool
 auto AddColumn::get_name() const -> String
 {
   const auto& lang = get_current_language();
-  return mColumns == 1 ? lang.cmd.add_column : lang.cmd.add_columns;
+  return mColumnCount == 1 ? lang.cmd.add_column : lang.cmd.add_columns;
 }
 
 }  // namespace tactile::cmd

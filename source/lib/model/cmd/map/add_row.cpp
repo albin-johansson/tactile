@@ -32,24 +32,24 @@ AddRow::AddRow(Shared<Map> map)
     : mMap {std::move(map)}
 {
   if (!mMap) {
-    throw TactileError {"Invalid null map!"};
+    throw TactileError {"Invalid null map"};
   }
 }
 
 void AddRow::undo()
 {
-  invoke_n(mRows, [this] { mMap->remove_row(); });
+  invoke_n(mRowCount, [this] { mMap->remove_row(); });
 }
 
 void AddRow::redo()
 {
-  invoke_n(mRows, [this] { mMap->add_row(); });
+  invoke_n(mRowCount, [this] { mMap->add_row(); });
 }
 
 auto AddRow::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const AddRow*>(cmd)) {
-    mRows += other->mRows;
+    mRowCount += other->mRowCount;
     return true;
   }
 
@@ -59,7 +59,7 @@ auto AddRow::merge_with(const Command* cmd) -> bool
 auto AddRow::get_name() const -> String
 {
   const auto& lang = get_current_language();
-  return mRows == 1 ? lang.cmd.add_row : lang.cmd.add_rows;
+  return mRowCount == 1 ? lang.cmd.add_row : lang.cmd.add_rows;
 }
 
 }  // namespace tactile::cmd

@@ -32,13 +32,13 @@ RemoveRow::RemoveRow(Shared<Map> map)
     : mMap {std::move(map)}
 {
   if (!mMap) {
-    throw TactileError {"Invalid null map!"};
+    throw TactileError {"Invalid null map"};
   }
 }
 
 void RemoveRow::undo()
 {
-  invoke_n(mRows, [this] { mMap->add_row(); });
+  invoke_n(mRowCount, [this] { mMap->add_row(); });
   mCache.restore_tiles(*mMap);
 }
 
@@ -46,19 +46,19 @@ void RemoveRow::redo()
 {
   const auto map_extent = mMap->get_extent();
 
-  const auto begin = TilePos::from(map_extent.rows - mRows - 1u, 0u);
+  const auto begin = TilePos::from(map_extent.rows - mRowCount - 1u, 0u);
   const auto end = TilePos::from(map_extent.rows, map_extent.cols);
 
   mCache.clear();
   mCache.save_tiles(*mMap, begin, end);
 
-  invoke_n(mRows, [this] { mMap->remove_row(); });
+  invoke_n(mRowCount, [this] { mMap->remove_row(); });
 }
 
 auto RemoveRow::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const RemoveRow*>(cmd)) {
-    mRows += other->mRows;
+    mRowCount += other->mRowCount;
     mCache.merge_with(other->mCache);
     return true;
   }
@@ -69,7 +69,7 @@ auto RemoveRow::merge_with(const Command* cmd) -> bool
 auto RemoveRow::get_name() const -> String
 {
   const auto& lang = get_current_language();
-  return mRows == 1 ? lang.cmd.remove_row : lang.cmd.remove_rows;
+  return mRowCount == 1 ? lang.cmd.remove_row : lang.cmd.remove_rows;
 }
 
 }  // namespace tactile::cmd

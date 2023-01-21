@@ -40,7 +40,7 @@ class AddColumn final : public Command {
 
  private:
   Shared<Map> mMap;
-  usize mColumns {1};
+  usize mColumnCount {1};
 };
 
 }  // namespace tactile::cmd

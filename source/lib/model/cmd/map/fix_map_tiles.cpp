@@ -33,27 +33,28 @@ FixMapTiles::FixMapTiles(Shared<Map> map)
     : mMap {std::move(map)}
 {
   if (!mMap) {
-    throw TactileError {"Invalid null map!"};
+    throw TactileError {"Invalid null map"};
   }
 }
 
 void FixMapTiles::undo()
 {
-  auto& root = mMap->get_invisible_root();
-  for (const auto& [layer_id, previous]: mResult) {
-    auto& layer = root.get_tile_layer(layer_id);
+  auto& root_layer = mMap->get_invisible_root();
 
-    for (const auto& [pos, tile]: previous) {
-      layer.set_tile(pos, tile);
+  for (const auto& [layer_id, invalid_positions]: mInvalidLayerTiles) {
+    auto& layer = root_layer.get_tile_layer(layer_id);
+
+    for (const auto& [position, tile_id]: invalid_positions) {
+      layer.set_tile(position, tile_id);
     }
   }
 
-  mResult.clear();
+  mInvalidLayerTiles.clear();
 }
 
 void FixMapTiles::redo()
 {
-  mResult = mMap->fix_tiles();
+  mInvalidLayerTiles = mMap->fix_tiles();
 }
 
 auto FixMapTiles::get_name() const -> String

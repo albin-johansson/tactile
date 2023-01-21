@@ -30,7 +30,7 @@ SetLayerOpacity::SetLayerOpacity(Shared<Layer> layer, const float opacity)
       mNewOpacity {opacity}
 {
   if (!mLayer) {
-    throw TactileError {"Invalid null layer!"};
+    throw TactileError {"Invalid null layer"};
   }
 }
 
