@@ -39,42 +39,25 @@ AddLayer::AddLayer(MapDocument* document, const LayerType type)
 void AddLayer::undo()
 {
   auto& map = mDocument->get_map();
-  const auto id = mLayer->get_uuid();
-  map.remove_layer(id);
-  mDocument->get_contexts().remove_context(id);
+  const auto layer_id = mLayer->get_uuid();
+
+  map.remove_layer(layer_id);
+  mDocument->get_contexts().remove_context(layer_id);
 }
 
 void AddLayer::redo()
 {
   auto& map = mDocument->get_map();
 
-  if (mLayer) {
-    map.add_layer(mLayer, mLayer->get_parent());
-  }
-  else {
+  if (!mLayer) {
     const auto active_layer_id = map.is_active_layer(LayerType::GroupLayer)
                                      ? map.get_active_layer_id()  //
                                      : nothing;
-
-    Maybe<UUID> id;
-    switch (mLayerType) {
-      case LayerType::TileLayer: {
-        id = map.add_tile_layer(active_layer_id);
-        break;
-      }
-      case LayerType::ObjectLayer: {
-        id = map.add_object_layer(active_layer_id);
-        break;
-      }
-      case LayerType::GroupLayer: {
-        id = map.add_group_layer(active_layer_id);
-        break;
-      }
-      default:
-        throw TactileError {"Invalid layer type!"};
-    }
-
-    mLayer = map.get_invisible_root().find_shared_layer(id.value());
+    const auto layer_id = map.add_layer(mLayerType, active_layer_id);
+    mLayer = map.get_invisible_root().find_shared_layer(layer_id);
+  }
+  else {
+    map.add_layer(mLayer, mLayer->get_parent());
   }
 
   mDocument->get_contexts().add_context(mLayer);

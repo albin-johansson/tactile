@@ -40,9 +40,7 @@ RemoveLayer::RemoveLayer(MapDocument* document, const UUID& layer_id)
 void RemoveLayer::undo()
 {
   auto& map = mDocument->get_map();
-
-  map.add_layer(mLayer, mLayer->get_parent());
-  map.get_invisible_root().set_layer_index(mLayer->get_uuid(), mIndex.value());
+  map.insert_layer(mLayer, mIndex.value());
 
   mDocument->get_contexts().add_context(mLayer);
   mIndex.reset();
@@ -51,12 +49,12 @@ void RemoveLayer::undo()
 void RemoveLayer::redo()
 {
   auto& map = mDocument->get_map();
-  const auto id = mLayer->get_uuid();
+  const auto layer_id = mLayer->get_uuid();
 
-  mIndex = map.get_invisible_root().local_layer_index(id);
-  map.remove_layer(id);
+  mIndex = map.get_invisible_root().local_layer_index(layer_id);
+  map.remove_layer(layer_id);
 
-  mDocument->get_contexts().remove_context(id);
+  mDocument->get_contexts().remove_context(layer_id);
 }
 
 auto RemoveLayer::get_name() const -> String

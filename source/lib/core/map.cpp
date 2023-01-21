@@ -174,6 +174,23 @@ void Map::add_layer(Shared<Layer> layer, const Maybe<UUID>& parent_id)
   }
 }
 
+auto Map::add_layer(const LayerType type, const Maybe<UUID>& parent_id) -> UUID
+{
+  switch (type) {
+    case LayerType::TileLayer:
+      return add_tile_layer(parent_id);
+
+    case LayerType::ObjectLayer:
+      return add_object_layer(parent_id);
+
+    case LayerType::GroupLayer:
+      return add_group_layer(parent_id);
+
+    default:
+      throw TactileError {"Invalid layer type"};
+  }
+}
+
 auto Map::add_tile_layer(const Maybe<UUID>& parent_id) -> UUID
 {
   auto layer = std::make_shared<TileLayer>(get_extent());
@@ -214,6 +231,14 @@ auto Map::add_group_layer(const Maybe<UUID>& parent_id) -> UUID
   add_layer(std::move(layer), parent_id);
 
   return id;
+}
+
+void Map::insert_layer(Shared<Layer> layer, const usize local_index)
+{
+  const auto layer_id = layer->get_uuid();
+  const auto parent_id = layer->get_parent();
+  add_layer(std::move(layer), parent_id);
+  get_invisible_root().set_layer_index(layer_id, local_index);
 }
 
 auto Map::remove_layer(const UUID& id) -> Shared<Layer>

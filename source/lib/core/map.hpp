@@ -95,6 +95,9 @@ class Map final : public Context {
   /// The parent parameter can be used to attach a layer to a group layer.
   void add_layer(Shared<Layer> layer, const Maybe<UUID>& parent_id = nothing);
 
+  /// Adds a new layer to the map of a specific type.
+  auto add_layer(LayerType type, const Maybe<UUID>& parent_id = nothing) -> UUID;
+
   /// Adds a new tile layer to the map, returning the layer ID.
   auto add_tile_layer(const Maybe<UUID>& parent_id = nothing) -> UUID;
 
@@ -103,6 +106,10 @@ class Map final : public Context {
 
   /// Adds a new group layer to the map, returning the layer ID.
   auto add_group_layer(const Maybe<UUID>& parent_id = nothing) -> UUID;
+
+  /// Inserts a layer into the map, attaching it to its reported parent layer.
+  /// This function is particularly useful for re-inserting previously removed layers.
+  void insert_layer(Shared<Layer> layer, usize local_index);
 
   /// Removes an existing layer from the map and returns it.
   auto remove_layer(const UUID& id) -> Shared<Layer>;

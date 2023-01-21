@@ -32,26 +32,25 @@ DuplicateLayer::DuplicateLayer(MapDocument* document, const UUID& layer_id)
       mLayerId {layer_id}
 {
   if (!mDocument) {
-    throw TactileError {"Invalid null map document!"};
+    throw TactileError {"Invalid null map document"};
   }
 }
 
 void DuplicateLayer::undo()
 {
   auto& map = mDocument->get_map();
-  const auto id = mNewLayer->get_uuid();
+  const auto layer_id = mNewLayer->get_uuid();
 
-  map.remove_layer(id);
-  mDocument->get_contexts().remove_context(id);
+  map.remove_layer(layer_id);
+  mDocument->get_contexts().remove_context(layer_id);
 }
 
 void DuplicateLayer::redo()
 {
   auto& map = mDocument->get_map();
 
-  if (mNewLayer) {
-    map.add_layer(mNewLayer, mNewLayer->get_parent());
-    map.get_invisible_root().set_layer_index(mNewLayer->get_uuid(), mNewIndex.value());
+  if (mNewLayer != nullptr) {
+    map.insert_layer(mNewLayer, mNewIndex.value());
   }
   else {
     mNewLayer = map.duplicate_layer(mLayerId);
