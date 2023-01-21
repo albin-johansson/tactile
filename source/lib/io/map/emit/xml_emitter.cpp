@@ -52,7 +52,7 @@ void append_properties(XMLNode node, const ir::ContextData& context)
     const auto type = property_value.get_type();
 
     // Properties with no type attribute are assumed to be string properties
-    if (type != AttributeType::String) {
+    if (type != AttributeType::String && !property_value.is_any_vector()) {
       property_node.append_attribute("type").set_value(
           serialize_to_save_format(type).data());
     }
@@ -68,10 +68,40 @@ void append_properties(XMLNode node, const ir::ContextData& context)
         value_attr.set_value(property_value.as_int());
         break;
 
+      case AttributeType::Int2: {
+        const auto str = serialize_to_save_format(property_value.as_int2());
+        value_attr.set_value(str.c_str());
+        break;
+      }
+      case AttributeType::Int3: {
+        const auto str = serialize_to_save_format(property_value.as_int3());
+        value_attr.set_value(str.c_str());
+        break;
+      }
+      case AttributeType::Int4: {
+        const auto str = serialize_to_save_format(property_value.as_int4());
+        value_attr.set_value(str.c_str());
+        break;
+      }
       case AttributeType::Float:
         value_attr.set_value(property_value.as_float());
         break;
 
+      case AttributeType::Float2: {
+        const auto str = serialize_to_save_format(property_value.as_float2());
+        value_attr.set_value(str.c_str());
+        break;
+      }
+      case AttributeType::Float3: {
+        const auto str = serialize_to_save_format(property_value.as_float3());
+        value_attr.set_value(str.c_str());
+        break;
+      }
+      case AttributeType::Float4: {
+        const auto str = serialize_to_save_format(property_value.as_float4());
+        value_attr.set_value(str.c_str());
+        break;
+      }
       case AttributeType::Bool:
         value_attr.set_value(property_value.as_bool());
         break;

@@ -367,6 +367,37 @@ TEST_SUITE("Attribute")
     REQUIRE(value.is_string());
     REQUIRE("foo" == value.as_string());
   }
+
+  TEST_CASE("is_any_vector")
+  {
+    const Attribute i {42};
+    const Attribute i2 = Int2 {1, 2};
+    const Attribute i3 = Int3 {1, 2, 3};
+    const Attribute i4 = Int4 {1, 2, 3, 4};
+    const Attribute f {1.0f};
+    const Attribute f2 = Float2 {1.0f, 2.0f};
+    const Attribute f3 = Float3 {1.0f, 2.0f, 3.0f};
+    const Attribute f4 = Float4 {1.0f, 2.0f, 3.0f, 4.0f};
+    const Attribute b {true};
+    const Attribute c {white};
+    const Attribute p = Path {"foo.txt"};
+    const Attribute o = ObjectRef {10};
+
+    REQUIRE(!i.is_any_vector());
+    REQUIRE(!f.is_any_vector());
+    REQUIRE(!b.is_any_vector());
+    REQUIRE(!c.is_any_vector());
+    REQUIRE(!p.is_any_vector());
+    REQUIRE(!o.is_any_vector());
+
+    REQUIRE(i2.is_any_vector());
+    REQUIRE(i3.is_any_vector());
+    REQUIRE(i4.is_any_vector());
+
+    REQUIRE(f2.is_any_vector());
+    REQUIRE(f3.is_any_vector());
+    REQUIRE(f4.is_any_vector());
+  }
 }
 
 }  // namespace tactile::test

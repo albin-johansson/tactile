@@ -182,6 +182,9 @@ class Attribute final {
   /// Indicates whether the attribute holds a color value.
   [[nodiscard]] auto is_color() const -> bool;
 
+  /// Indicates whether the attribute holds any kind of 2D, 3D, or 4D vector value.
+  [[nodiscard]] auto is_any_vector() const -> bool;
+
   /// Attempts to return the attribute value as a string.
   [[nodiscard]] auto try_as_string() const noexcept -> const string_type*
   {
@@ -332,7 +335,7 @@ class Attribute final {
 [[nodiscard]] auto serialize_to_save_format(const Int4& vec) -> String;
 [[nodiscard]] auto serialize_to_save_format(const Float4& vec) -> String;
 
-/// Outputs the result of calling `stringify` with the type to a stream.
+/// Outputs the result of calling `serialize_to_save_format` with the type to a stream.
 auto operator<<(OStream& stream, AttributeType type) -> OStream&;
 
 /// Outputs an attribute to a stream for debugging purposes.

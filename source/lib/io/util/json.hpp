@@ -31,18 +31,10 @@ namespace tactile {
 
 using JSON = nlohmann::json;
 
-NLOHMANN_JSON_SERIALIZE_ENUM(AttributeType,
-                             {
-                                 {AttributeType::String, "string"},
-                                 {AttributeType::Int, "int"},
-                                 {AttributeType::Float, "float"},
-                                 {AttributeType::Bool, "bool"},
-                                 {AttributeType::Object, "object"},
-                                 {AttributeType::Color, "color"},
-                                 {AttributeType::Path, "file"},
-                             })
-
+void to_json(JSON& json, AttributeType type);
 void to_json(JSON& json, const Attribute& value);
+
+void from_json(const JSON& json, AttributeType& type);
 
 void write_json(const JSON& json, const Path& path);
 

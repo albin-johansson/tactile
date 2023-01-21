@@ -244,6 +244,22 @@ auto Attribute::is_color() const -> bool
   return get_type() == AttributeType::Color;
 }
 
+auto Attribute::is_any_vector() const -> bool
+{
+  switch (get_type()) {
+    case AttributeType::Int2:
+    case AttributeType::Int3:
+    case AttributeType::Int4:
+    case AttributeType::Float2:
+    case AttributeType::Float3:
+    case AttributeType::Float4:
+      return true;
+
+    default:
+      return false;
+  }
+}
+
 auto Attribute::as_string() const -> const string_type&
 {
   if (const auto* str = get_if<string_type>()) {

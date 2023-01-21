@@ -58,6 +58,46 @@ template <>
 
 }  // namespace
 
+void to_json(JSON& json, const AttributeType type)
+{
+  switch (type) {
+    case AttributeType::String:
+    case AttributeType::Int2:
+    case AttributeType::Int3:
+    case AttributeType::Int4:
+    case AttributeType::Float2:
+    case AttributeType::Float3:
+    case AttributeType::Float4:
+      // We store vector properties as strings, instead of just ignoring them.
+      json = "string";
+      break;
+
+    case AttributeType::Int:
+      json = "int";
+      break;
+
+    case AttributeType::Float:
+      json = "float";
+      break;
+
+    case AttributeType::Bool:
+      json = "bool";
+      break;
+
+    case AttributeType::Path:
+      json = "file";
+      break;
+
+    case AttributeType::Color:
+      json = "color";
+      break;
+
+    case AttributeType::Object:
+      json = "object";
+      break;
+  }
+}
+
 void to_json(JSON& json, const Attribute& value)
 {
   switch (value.get_type()) {
@@ -69,8 +109,32 @@ void to_json(JSON& json, const Attribute& value)
       json = value.as_int();
       break;
 
+    case AttributeType::Int2:
+      json = serialize_to_save_format(value.as_int2());
+      break;
+
+    case AttributeType::Int3:
+      json = serialize_to_save_format(value.as_int3());
+      break;
+
+    case AttributeType::Int4:
+      json = serialize_to_save_format(value.as_int4());
+      break;
+
     case AttributeType::Float:
       json = value.as_float();
+      break;
+
+    case AttributeType::Float2:
+      json = serialize_to_save_format(value.as_float2());
+      break;
+
+    case AttributeType::Float3:
+      json = serialize_to_save_format(value.as_float3());
+      break;
+
+    case AttributeType::Float4:
+      json = serialize_to_save_format(value.as_float4());
       break;
 
     case AttributeType::Bool:
@@ -91,6 +155,34 @@ void to_json(JSON& json, const Attribute& value)
 
     default:
       throw TactileError {"Invalid attribute type"};
+  }
+}
+
+void from_json(const JSON& json, AttributeType& type)
+{
+  if (json == "string") {
+    type = AttributeType::String;
+  }
+  else if (json == "int") {
+    type = AttributeType::Int;
+  }
+  else if (json == "float") {
+    type = AttributeType::Float;
+  }
+  else if (json == "bool") {
+    type = AttributeType::Bool;
+  }
+  else if (json == "color") {
+    type = AttributeType::Color;
+  }
+  else if (json == "file") {
+    type = AttributeType::Path;
+  }
+  else if (json == "object") {
+    type = AttributeType::Object;
+  }
+  else {
+    throw TactileError {"Not a valid JSON property type"};
   }
 }
 
