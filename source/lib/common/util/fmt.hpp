@@ -20,13 +20,11 @@
 #pragma once
 
 #include <algorithm>    // min
-#include <sstream>      // stringstream
 #include <string_view>  // string_view
 
 #include <boost/uuid/uuid_io.hpp>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
-#include <magic_enum.hpp>
 
 #include "common/debug/stacktrace.hpp"
 #include "common/numeric.hpp"
@@ -44,7 +42,7 @@ template <>
 struct formatter<boost::stacktrace::stacktrace> : formatter<std::string_view> {
   auto format(const boost::stacktrace::stacktrace& trace, auto& ctx) const
   {
-    return fmt::format_to(ctx.out(), "{}", trace);
+    return fmt::format_to(ctx.out(), "{}", fmt::streamed(trace));
   }
 };
 
@@ -52,9 +50,7 @@ template <>
 struct formatter<tactile::UUID> : formatter<std::string_view> {
   auto format(const tactile::UUID& uuid, auto& ctx) const
   {
-    std::stringstream stream;
-    stream << uuid;
-    return formatter<std::string_view>::format(stream.str(), ctx);
+    return fmt::format_to(ctx.out(), "{}", fmt::streamed(uuid));
   }
 };
 
@@ -118,7 +114,7 @@ template <>
 struct formatter<tactile::AttributeType> : formatter<std::string_view> {
   auto format(const tactile::AttributeType& type, auto& ctx) const
   {
-    return fmt::format_to(ctx.out(), "{}", magic_enum::enum_name(type));
+    return fmt::format_to(ctx.out(), "{}", fmt::streamed(type));
   }
 };
 
@@ -126,7 +122,7 @@ template <>
 struct formatter<tactile::Attribute> : formatter<std::string_view> {
   auto format(const tactile::Attribute& attr, auto& ctx) const
   {
-    return fmt::format_to(ctx.out(), "{}", attr);
+    return fmt::format_to(ctx.out(), "{}", fmt::streamed(attr));
   }
 };
 
