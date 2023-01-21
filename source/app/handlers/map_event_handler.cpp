@@ -51,7 +51,7 @@ void on_show_new_map_dialog(const ShowNewMapDialogEvent&)
 void on_show_open_map_dialog(const ShowOpenMapDialogEvent&)
 {
   spdlog::trace("ShowOpenMapDialogEvent");
-  ui::show_map_selector_dialog();
+  ui::open_map_file_dialog();
 }
 
 void on_create_map(const CreateMapEvent& event)

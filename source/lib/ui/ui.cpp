@@ -127,12 +127,12 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
   check_for_missing_ini_file();
 }
 
-void show_map_selector_dialog()
+void open_map_file_dialog()
 {
   ui_show_map_selector = true;
 }
 
-void show_about_dear_imgui_dialog()
+void open_about_dear_imgui_dialog()
 {
   ui_show_about_imgui = true;
 }

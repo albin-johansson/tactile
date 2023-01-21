@@ -31,9 +31,9 @@ namespace tactile::ui {
 /// Updates the state of the GUI.
 void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher);
 
-[[deprecated]] void show_map_selector_dialog();
+void open_map_file_dialog();
 
-void show_about_dear_imgui_dialog();
+void open_about_dear_imgui_dialog();
 
 [[nodiscard]] auto is_editor_focused() -> bool;
 

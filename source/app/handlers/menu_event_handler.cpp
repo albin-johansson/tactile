@@ -229,7 +229,7 @@ void dispatch_menu_action(const MenuAction action)
       break;
 
     case MenuAction::AboutDearImGui:
-      ui::show_about_dear_imgui_dialog();
+      ui::open_about_dear_imgui_dialog();
       break;
 
     case MenuAction::ReportIssue:
