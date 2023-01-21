@@ -278,7 +278,7 @@ void add_common_tileset_attributes(JSON& json,
   json["tilecount"] = tileset.tile_count;
 
   const auto image_path = fs::relative(tileset.image_path, info.destination_dir());
-  json["image"] = convert_to_forward_slashes(image_path);
+  json["image"] = use_forward_slashes(image_path);
 
   json["imagewidth"] = tileset.image_size.x;
   json["imageheight"] = tileset.image_size.y;

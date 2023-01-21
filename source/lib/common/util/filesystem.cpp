@@ -40,13 +40,13 @@ namespace {
   // On Unix platforms, HOME is something like '/Users/username'
   // On Windows, USERPROFILE is something like 'C:\Users\username'
   static const auto home_env = env_var(on_windows ? "USERPROFILE" : "HOME").value();
-  static const auto home_str = to_os_string(home_env.c_str()).value();
+  static const auto home_str = make_native_string(home_env.c_str()).value();
   return home_str;
 }
 
 }  // namespace
 
-auto convert_to_forward_slashes(const Path& path) -> String
+auto use_forward_slashes(const Path& path) -> String
 {
   auto str = path.string();
   std::replace(str.begin(), str.end(), '\\', '/');
@@ -60,12 +60,7 @@ auto has_home_prefix(const Path& path) -> bool
   return view.starts_with(prefix);
 }
 
-auto to_path(StringView str) -> Path
-{
-  return {str};
-}
-
-auto to_canonical(const Path& path) -> Maybe<String>
+auto use_short_home_prefix(const Path& path) -> Maybe<String>
 {
   if (has_home_prefix(path)) {
     const auto& prefix = get_home_prefix();
@@ -76,7 +71,7 @@ auto to_canonical(const Path& path) -> Maybe<String>
   }
 }
 
-auto to_os_string(const char* str) -> Maybe<OsString>
+auto make_native_string(const char* str) -> Maybe<OsString>
 {
   if (!str) {
     return nothing;

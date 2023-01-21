@@ -77,7 +77,7 @@ void session_save(const DocumentModel& model)
       const auto& map_doc = model.get_map_document(document_id);
       if (map_doc.has_path()) {
         const auto document_path = fs::absolute(map_doc.get_path());
-        session.add_files(convert_to_forward_slashes(document_path));
+        session.add_files(use_forward_slashes(document_path));
       }
     }
   });

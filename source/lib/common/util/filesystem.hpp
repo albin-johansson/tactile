@@ -32,20 +32,16 @@ namespace tactile {
 /// prefer backslashes (e.g. Windows).
 ///
 /// \param path the file path that will be converted.
-///
 /// \return a version of the path with forward slashes instead of backslashes.
-[[nodiscard]] auto convert_to_forward_slashes(const Path& path) -> String;
+[[nodiscard]] auto use_forward_slashes(const Path& path) -> String;
 
 /// Indicates whether a file path starts with the home directory.
 [[nodiscard]] auto has_home_prefix(const Path& path) -> bool;
 
-/// Converts a string into a file path.
-[[nodiscard]] auto to_path(StringView str) -> Path;
-
 /// Converts file paths to use a '~' prefix (if possible).
-[[nodiscard]] auto to_canonical(const Path& path) -> Maybe<String>;
+[[nodiscard]] auto use_short_home_prefix(const Path& path) -> Maybe<String>;
 
 /// Creates a string using the native filesystem character type.
-[[nodiscard]] auto to_os_string(const char* str) -> Maybe<OsString>;
+[[nodiscard]] auto make_native_string(const char* str) -> Maybe<OsString>;
 
 }  // namespace tactile

@@ -31,8 +31,7 @@ namespace tactile::io {
 auto GodotTileset::add_texture(const Path& dest, Path source) -> GdExtRes
 {
   const auto id =
-      add_ext_resource(fmt::format("res://{}", convert_to_forward_slashes(dest)),
-                       "Texture");
+      add_ext_resource(fmt::format("res://{}", use_forward_slashes(dest)), "Texture");
   mSourceTexturePaths.emplace_back(std::move(source), dest.filename().string());
   return id;
 }

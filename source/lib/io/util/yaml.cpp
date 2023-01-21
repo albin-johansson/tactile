@@ -75,7 +75,7 @@ auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter
       break;
 
     case AttributeType::Path:
-      emitter << convert_to_forward_slashes(value.as_path());
+      emitter << use_forward_slashes(value.as_path());
       break;
 
     case AttributeType::Color:

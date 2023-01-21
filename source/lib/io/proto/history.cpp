@@ -112,7 +112,7 @@ void clear_file_history()
 
 void add_file_to_history(const Path& path)
 {
-  auto converted = convert_to_forward_slashes(path);
+  auto converted = use_forward_slashes(path);
   if (std::find(history_entries.begin(), history_entries.end(), converted) ==
       history_entries.end()) {
     spdlog::debug("Adding '{}' to history...", converted);
@@ -129,7 +129,7 @@ void add_file_to_history(const Path& path)
 
 void set_last_closed_file(const Path& path)
 {
-  history_last_closed_file = convert_to_forward_slashes(path);
+  history_last_closed_file = use_forward_slashes(path);
   spdlog::debug("Last closed file is now '{}'", *history_last_closed_file);
 
   add_file_to_history(path);

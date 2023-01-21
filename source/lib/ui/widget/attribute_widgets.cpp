@@ -326,7 +326,7 @@ auto ui_file_path_input(const char* id, const Path& value) -> Maybe<Path>
 auto ui_directory_path_input(const char* id, const Path& value) -> Maybe<Path>
 {
   return input_file_path(id,
-                         to_canonical(value).value_or(value.string()),
+                         use_short_home_prefix(value).value_or(value.string()),
                          []() -> Maybe<Path> {
                            auto dialog = io::FileDialog::open_folder();
                            return dialog.is_okay() ? dialog.path() : Maybe<Path> {};

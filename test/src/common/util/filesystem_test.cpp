@@ -28,10 +28,10 @@ namespace tactile::test {
 
 TEST_SUITE("Filesystem")
 {
-  TEST_CASE("convert_to_forward_slashes")
+  TEST_CASE("use_forward_slashes")
   {
     const fs::path source = R"(C:\foo\bar\abc.yaml)";
-    REQUIRE("C:/foo/bar/abc.yaml" == convert_to_forward_slashes(source));
+    REQUIRE("C:/foo/bar/abc.yaml" == use_forward_slashes(source));
   }
 
   TEST_CASE("has_home_prefix")
@@ -43,46 +43,46 @@ TEST_SUITE("Filesystem")
     REQUIRE(!has_home_prefix("foo/bar.yaml"));
     REQUIRE(!has_home_prefix("some/random/path"));
 
-    REQUIRE(has_home_prefix(to_path(home)));
-    REQUIRE(has_home_prefix(to_path(home + "/")));
-    REQUIRE(has_home_prefix(to_path(home + "/foo")));
-    REQUIRE(has_home_prefix(to_path(home + "/foo.txt")));
-    REQUIRE(has_home_prefix(to_path(home + "/foo/bar.txt")));
+    REQUIRE(has_home_prefix(Path {home}));
+    REQUIRE(has_home_prefix(Path {home + "/"}));
+    REQUIRE(has_home_prefix(Path {home + "/foo"}));
+    REQUIRE(has_home_prefix(Path {home + "/foo.txt"}));
+    REQUIRE(has_home_prefix(Path {home + "/foo/bar.txt"}));
   }
 
-  TEST_CASE("to_canonical")
+  TEST_CASE("use_short_home_prefix")
   {
     const auto home = env_var(on_windows ? "USERPROFILE" : "HOME").value();
 
-    REQUIRE("~" == to_canonical(to_path(home)));
-    REQUIRE("~/" == to_canonical(to_path(home + '/')));
-    REQUIRE("~/foo/" == to_canonical(to_path(home + "/foo/")));
-    REQUIRE("~/foo/bar.txt" == to_canonical(to_path(home + "/foo/bar.txt")));
+    REQUIRE("~" == use_short_home_prefix(Path {home}));
+    REQUIRE("~/" == use_short_home_prefix(Path {home + '/'}));
+    REQUIRE("~/foo/" == use_short_home_prefix(Path {home + "/foo/"}));
+    REQUIRE("~/foo/bar.txt" == use_short_home_prefix(Path {home + "/foo/bar.txt"}));
 
-    REQUIRE(!to_canonical("some/random/path").has_value());
-    REQUIRE(!to_canonical("file.txt").has_value());
+    REQUIRE(!use_short_home_prefix("some/random/path").has_value());
+    REQUIRE(!use_short_home_prefix("file.txt").has_value());
   }
 
-  TEST_CASE("to_os_string")
+  TEST_CASE("make_native_string")
   {
-    REQUIRE(!to_os_string(nullptr).has_value());
+    REQUIRE(!make_native_string(nullptr).has_value());
 
 #if TACTILE_OS_WINDOWS
-    REQUIRE(L"" == to_os_string(""));
-    REQUIRE(L"1" == to_os_string("1"));
-    REQUIRE(L"foo" == to_os_string("foo"));
-    REQUIRE(L"bar.txt" == to_os_string("bar.txt"));
-    REQUIRE(L"foo/bar" == to_os_string("foo/bar"));
-    REQUIRE(L"foo/bar.txt" == to_os_string("foo/bar.txt"));
-    REQUIRE(L"\0" == to_os_string("\0"));
+    REQUIRE(L"" == make_native_string(""));
+    REQUIRE(L"1" == make_native_string("1"));
+    REQUIRE(L"foo" == make_native_string("foo"));
+    REQUIRE(L"bar.txt" == make_native_string("bar.txt"));
+    REQUIRE(L"foo/bar" == make_native_string("foo/bar"));
+    REQUIRE(L"foo/bar.txt" == make_native_string("foo/bar.txt"));
+    REQUIRE(L"\0" == make_native_string("\0"));
 #else
-    REQUIRE("" == to_os_string(""));
-    REQUIRE("1" == to_os_string("1"));
-    REQUIRE("foo" == to_os_string("foo"));
-    REQUIRE("bar.txt" == to_os_string("bar.txt"));
-    REQUIRE("foo/bar" == to_os_string("foo/bar"));
-    REQUIRE("foo/bar.txt" == to_os_string("foo/bar.txt"));
-    REQUIRE("\0" == to_os_string("\0"));
+    REQUIRE("" == make_native_string(""));
+    REQUIRE("1" == make_native_string("1"));
+    REQUIRE("foo" == make_native_string("foo"));
+    REQUIRE("bar.txt" == make_native_string("bar.txt"));
+    REQUIRE("foo/bar" == make_native_string("foo/bar"));
+    REQUIRE("foo/bar.txt" == make_native_string("foo/bar.txt"));
+    REQUIRE("\0" == make_native_string("\0"));
 #endif  // TACTILE_OS_WINDOWS
   }
 }

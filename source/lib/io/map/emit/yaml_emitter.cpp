@@ -325,8 +325,7 @@ void emit_tileset_file(const EmitInfo& info,
   emitter << YAML::Key << "column-count" << YAML::Value << tileset.column_count;
 
   const auto image_path = fs::relative(tileset.image_path, info.destination_dir());
-  emitter << YAML::Key << "image-path" << YAML::Value
-          << convert_to_forward_slashes(image_path);
+  emitter << YAML::Key << "image-path" << YAML::Value << use_forward_slashes(image_path);
   emitter << YAML::Key << "image-width" << YAML::Value << tileset.image_size.x;
   emitter << YAML::Key << "image-height" << YAML::Value << tileset.image_size.y;
 
