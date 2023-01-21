@@ -6,7 +6,7 @@ env:
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
   VCPKG_TARGET_TRIPLET: x64-osx
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
-  VCPKG_CACHE_EDITION: 1
+  VCPKG_CACHE_EDITION: 2
 
 jobs:
   macos-latest-test:
@@ -19,6 +19,7 @@ jobs:
         shell: bash
         run: |
           brew update
+          brew upgrade
           brew install cmake
           brew install ninja
 
