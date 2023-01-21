@@ -142,7 +142,7 @@ auto file_history() -> const Deque<String>&
 
 auto is_last_closed_file_valid() -> bool
 {
-  return history_last_closed_file && fs::exists(to_path(*history_last_closed_file));
+  return history_last_closed_file && fs::exists(Path {*history_last_closed_file});
 }
 
 auto last_closed_file() -> const String&

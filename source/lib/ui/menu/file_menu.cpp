@@ -47,7 +47,7 @@ void update_recent_files_menu(const Strings& lang, entt::dispatcher& dispatcher)
     for (const auto& path: history) {
       if (ImGui::MenuItem(path.c_str())) {
         // It's fine if the file doesn't exist anymore, the parser handles that.
-        dispatcher.enqueue<OpenMapEvent>(to_path(path));
+        dispatcher.enqueue<OpenMapEvent>(Path {path});
       }
     }
 
