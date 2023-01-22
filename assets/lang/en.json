@@ -210,7 +210,7 @@
     "license-info": "This tool is open-source software, using the GPL v3.0 license.",
     "repository-link": "Source code: https://www.github.com/albin-johansson/tactile",
     "font-awesome-credit": "Icons by Font Awesome.",
-    "credits-info": "Tactile is developed using the following open-source libraries.",
+    "credits-info": "Tactile is developed using the following open-source projects.",
     "license": "License",
     "library": "Library",
     "tile-width": "Tile width",

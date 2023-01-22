@@ -209,7 +209,7 @@
     "license-info": "Källkoden för detta program är fritt tillgänglig, enligt GPL v3.0.",
     "repository-link": "Källkod: https://www.github.com/albin-johansson/tactile",
     "font-awesome-credit": "Ikoner från Font Awesome.",
-    "credits-info": "Tactile utvecklas med hjälp av följande open-source bibliotek.",
+    "credits-info": "Tactile utvecklas med hjälp av följande open-source-projekt.",
     "license": "Licens",
     "library": "Bibliotek",
     "tile-width": "Tilebredd",
