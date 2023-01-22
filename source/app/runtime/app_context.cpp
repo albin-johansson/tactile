@@ -36,49 +36,49 @@ struct AppState final {
   bool font_reload_scheduled : 1 {};
 };
 
-inline AppState app_state;
+inline AppState gAppState;
 
 }  // namespace
 
 void init_app_context(cen::window& window)
 {
-  app_state.window = &window;
+  gAppState.window = &window;
 }
 
 void request_font_reload()
 {
-  app_state.font_reload_scheduled = true;
+  gAppState.font_reload_scheduled = true;
 }
 
 void handled_font_reload()
 {
-  app_state.font_reload_scheduled = false;
+  gAppState.font_reload_scheduled = false;
 }
 
 auto get_window() -> cen::window&
 {
-  TACTILE_ASSERT(app_state.window != nullptr);
-  return *app_state.window;
+  TACTILE_ASSERT(gAppState.window != nullptr);
+  return *gAppState.window;
 }
 
 auto get_dispatcher() -> entt::dispatcher&
 {
-  return app_state.dispatcher;
+  return gAppState.dispatcher;
 }
 
 auto get_model() -> DocumentModel&
 {
-  return app_state.model;
+  return gAppState.model;
 }
 
 auto get_widget_show_state() -> WidgetShowState&
 {
-  return app_state.widget_show_state;
+  return gAppState.widget_show_state;
 }
 
 auto is_font_reload_scheduled() -> bool
 {
-  return app_state.font_reload_scheduled;
+  return gAppState.font_reload_scheduled;
 }
 
 }  // namespace tactile

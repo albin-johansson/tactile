@@ -28,18 +28,18 @@
 namespace tactile::ui {
 namespace {
 
-inline Shared<Texture> tactile_icon;
+inline Shared<Texture> gTactileIcon;
 
 }  // namespace
 
 void load_icons()
 {
-  tactile_icon = io::load_texture(io::find_resource("assets/icon.png"));
+  gTactileIcon = io::load_texture(io::find_resource("assets/icon.png"));
 }
 
 void unload_icons() noexcept
 {
-  tactile_icon.reset();
+  gTactileIcon.reset();
 }
 
 auto get_icon(const LayerType type) -> const char*
@@ -78,8 +78,8 @@ auto get_icon(const ObjectType type) -> const char*
 
 auto get_tactile_icon() -> uint
 {
-  TACTILE_ASSERT(tactile_icon != nullptr);
-  return tactile_icon->get_id();
+  TACTILE_ASSERT(gTactileIcon != nullptr);
+  return gTactileIcon->get_id();
 }
 
 }  // namespace tactile::ui

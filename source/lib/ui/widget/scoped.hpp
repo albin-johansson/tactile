@@ -279,7 +279,7 @@ struct WindowData final {
 };
 
 class Window final {
-  inline static HashMap<const char*, WindowData> window_data;
+  inline static HashMap<const char*, WindowData> mWindowData;
 
  public:
   TACTILE_DELETE_COPY(Window);

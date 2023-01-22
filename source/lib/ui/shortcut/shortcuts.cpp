@@ -31,12 +31,12 @@
 namespace tactile {
 namespace {
 
-inline Vec<Unique<Shortcut>> _shortcuts;
+inline Vec<Unique<Shortcut>> gShortcuts;
 
 template <typename T>
-void _load_shortcut()
+void load_shortcut()
 {
-  _shortcuts.push_back(std::make_unique<T>());
+  gShortcuts.push_back(std::make_unique<T>());
 }
 
 }  // namespace
@@ -44,57 +44,57 @@ void _load_shortcut()
 void load_default_shortcuts()
 {
   // File
-  _load_shortcut<NewMapShortcut>();
-  _load_shortcut<OpenMapShortcut>();
-  _load_shortcut<SaveShortcut>();
-  _load_shortcut<SaveAsShortcut>();
+  load_shortcut<NewMapShortcut>();
+  load_shortcut<OpenMapShortcut>();
+  load_shortcut<SaveShortcut>();
+  load_shortcut<SaveAsShortcut>();
 
   // Edit
-  _load_shortcut<UndoShortcut>();
-  _load_shortcut<RedoShortcut>();
+  load_shortcut<UndoShortcut>();
+  load_shortcut<RedoShortcut>();
 
-  _load_shortcut<EnableStampShortcut>();
-  _load_shortcut<EnableEraserShortcut>();
-  _load_shortcut<EnableBucketShortcut>();
-  _load_shortcut<EnableObjectSelectionShortcut>();
-  _load_shortcut<EnableRectangleToolShortcut>();
-  _load_shortcut<EnableEllipseToolShortcut>();
-  _load_shortcut<EnablePointToolShortcut>();
+  load_shortcut<EnableStampShortcut>();
+  load_shortcut<EnableEraserShortcut>();
+  load_shortcut<EnableBucketShortcut>();
+  load_shortcut<EnableObjectSelectionShortcut>();
+  load_shortcut<EnableRectangleToolShortcut>();
+  load_shortcut<EnableEllipseToolShortcut>();
+  load_shortcut<EnablePointToolShortcut>();
 
-  _load_shortcut<OpenComponentEditorShortcut>();
-  _load_shortcut<OpenSettingsShortcut>();
+  load_shortcut<OpenComponentEditorShortcut>();
+  load_shortcut<OpenSettingsShortcut>();
 
   // View
-  _load_shortcut<CenterViewportShortcut>();
-  _load_shortcut<IncreaseViewportZoomShortcut>();
-  _load_shortcut<DecreaseViewportZoomShortcut>();
+  load_shortcut<CenterViewportShortcut>();
+  load_shortcut<IncreaseViewportZoomShortcut>();
+  load_shortcut<DecreaseViewportZoomShortcut>();
 
-  _load_shortcut<IncreaseFontSizeShortcut>();
-  _load_shortcut<DecreaseFontSizeShortcut>();
+  load_shortcut<IncreaseFontSizeShortcut>();
+  load_shortcut<DecreaseFontSizeShortcut>();
 
-  _load_shortcut<ToggleGridShortcut>();
-  _load_shortcut<ToggleLayerHighlightShortcut>();
-  _load_shortcut<ToggleUiShortcut>();
+  load_shortcut<ToggleGridShortcut>();
+  load_shortcut<ToggleLayerHighlightShortcut>();
+  load_shortcut<ToggleUiShortcut>();
 
-  _load_shortcut<PanRightShortcut>();
-  _load_shortcut<PanLeftShortcut>();
-  _load_shortcut<PanUpShortcut>();
-  _load_shortcut<PanDownShortcut>();
+  load_shortcut<PanRightShortcut>();
+  load_shortcut<PanLeftShortcut>();
+  load_shortcut<PanUpShortcut>();
+  load_shortcut<PanDownShortcut>();
 
   // Map
-  _load_shortcut<AddTilesetShortcut>();
+  load_shortcut<AddTilesetShortcut>();
 
-  _load_shortcut<AddRowShortcut>();
-  _load_shortcut<AddColumnShortcut>();
-  _load_shortcut<RemoveRowShortcut>();
-  _load_shortcut<RemoveColumnShortcut>();
+  load_shortcut<AddRowShortcut>();
+  load_shortcut<AddColumnShortcut>();
+  load_shortcut<RemoveRowShortcut>();
+  load_shortcut<RemoveColumnShortcut>();
 }
 
 void update_shortcuts(const DocumentModel& model,
                       const cen::keyboard_event& event,
                       entt::dispatcher& dispatcher)
 {
-  for (const auto& shortcut: _shortcuts) {
+  for (const auto& shortcut: gShortcuts) {
     shortcut->poll(model, event, dispatcher);
   }
 }

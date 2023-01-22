@@ -338,7 +338,7 @@ Modal::~Modal()
 }
 
 Window::Window(const char* label, const ImGuiWindowFlags flags, bool* open)
-    : mTextColor {ImGuiCol_Text, get_window_label_text_color(window_data[label])},
+    : mTextColor {ImGuiCol_Text, get_window_label_text_color(mWindowData[label])},
       mLabel {label},
       mOpen {ImGui::Begin(label, open, flags)}
 {
@@ -348,7 +348,7 @@ Window::Window(const char* label, const ImGuiWindowFlags flags, bool* open)
 
   mTextColor.pop();
 
-  auto& data = window_data[label];
+  auto& data = mWindowData[label];
   data.has_focus = has_focus(ImGuiFocusedFlags_RootAndChildWindows);
   data.was_hovered = data.is_hovered;
   data.is_hovered = is_hovered();
@@ -368,13 +368,13 @@ auto Window::has_focus(const ImGuiFocusedFlags flags) const -> bool
 
 auto Window::mouse_entered() const -> bool
 {
-  const auto& data = window_data.at(mLabel);
+  const auto& data = mWindowData.at(mLabel);
   return !data.was_hovered && data.is_hovered;
 }
 
 auto Window::mouse_exited() const -> bool
 {
-  const auto& data = window_data.at(mLabel);
+  const auto& data = mWindowData.at(mLabel);
   return data.was_hovered && !data.is_hovered;
 }
 

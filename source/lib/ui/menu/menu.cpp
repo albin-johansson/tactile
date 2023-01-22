@@ -41,11 +41,11 @@
 namespace tactile {
 namespace {
 
-inline HashMap<MenuAction, MenuItem> items;
+inline HashMap<MenuAction, MenuItem> gItems;
 
 void set_label(const MenuAction action, String label)
 {
-  items[action].text = std::move(label);
+  gItems[action].text = std::move(label);
 }
 
 void update_tileset_menu(const TilesetDocument* tileset_document)
@@ -128,13 +128,13 @@ void update_edit_menu(const DocumentModel& model,
   const auto can_undo = document && document->get_history().can_undo();
   const auto can_redo = document && document->get_history().can_redo();
 
-  auto& undo_item = lookup_in(items, MenuAction::Undo);
+  auto& undo_item = lookup_in(gItems, MenuAction::Undo);
   undo_item.enabled = can_undo;
   undo_item.text = fmt::format("{} {}",
                                lang.action.undo,
                                can_undo ? document->get_history().get_undo_text() : "");
 
-  auto& redo_item = lookup_in(items, MenuAction::Redo);
+  auto& redo_item = lookup_in(gItems, MenuAction::Redo);
   redo_item.enabled = can_redo;
   redo_item.text = fmt::format("{} {}",
                                lang.action.redo,
@@ -248,17 +248,17 @@ void menu_translate(const Strings& strings)
 
 void menu_set_enabled(const MenuAction action, const bool enabled)
 {
-  items[action].enabled = enabled;
+  gItems[action].enabled = enabled;
 }
 
 void menu_set_selected(const MenuAction action, const bool selected)
 {
-  items[action].selected = selected;
+  gItems[action].selected = selected;
 }
 
 auto get_menu_item(const MenuAction action) -> const MenuItem&
 {
-  return lookup_in(items, action);
+  return lookup_in(gItems, action);
 }
 
 }  // namespace tactile
