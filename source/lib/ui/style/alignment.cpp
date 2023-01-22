@@ -61,7 +61,7 @@ void prepare_vertical_alignment_center(const float count)
 
 void right_align_next_item()
 {
-  ImGui::SetNextItemWidth(-min_float);
+  ImGui::SetNextItemWidth(-kMinFloat);
 }
 
 auto right_align_next_item(const float width) -> float

@@ -178,7 +178,7 @@ void ui_animation_frame_list(const Strings& lang,
                              entt::dispatcher& dispatcher)
 {
   const auto& style = ImGui::GetStyle();
-  const ImVec2 child_size {-min_float,
+  const ImVec2 child_size {-kMinFloat,
                            frame_image_size.y + style.FramePadding.y * 2 +
                                style.ItemInnerSpacing.y + style.ScrollbarSize};
 

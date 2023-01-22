@@ -124,7 +124,7 @@ void update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
     ui_centered_label(lang.misc.map_has_no_layers.c_str());
   }
   else {
-    const ImVec2 size {-min_float, -min_float};
+    const ImVec2 size {-kMinFloat, -kMinFloat};
     if (const ListBox list {"##LayerTreeNode", size}; list.is_open()) {
       root.each([&](const Layer& layer) {
         if (!layer.get_parent().has_value()) {

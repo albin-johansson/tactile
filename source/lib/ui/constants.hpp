@@ -23,12 +23,12 @@
 
 namespace tactile {
 
-inline constexpr auto min_float = (std::numeric_limits<float>::min)();
-inline constexpr auto max_float = (std::numeric_limits<float>::max)();
+inline constexpr auto kMinFloat = (std::numeric_limits<float>::min)();
+inline constexpr auto kMaxFloat = (std::numeric_limits<float>::max)();
 
-inline constexpr auto min_int = (std::numeric_limits<int>::min)();
-inline constexpr auto max_int = (std::numeric_limits<int>::max)();
+inline constexpr auto kMinInt = (std::numeric_limits<int>::min)();
+inline constexpr auto kMaxInt = (std::numeric_limits<int>::max)();
 
-inline constexpr auto max_uint = (std::numeric_limits<unsigned>::max)();
+inline constexpr auto kMaxUint = (std::numeric_limits<unsigned>::max)();
 
 }  // namespace tactile

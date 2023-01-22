@@ -75,7 +75,7 @@ auto ui_int_input(const char* id, int value) -> Maybe<int>
 {
   const Scope scope {id};
 
-  ImGui::SetNextItemWidth(-min_float);
+  ImGui::SetNextItemWidth(-kMinFloat);
   if (ImGui::DragInt("##Int", &value)) {
     return value;
   }
@@ -90,7 +90,7 @@ auto ui_int2_input(const char* id, Int2 value) -> Maybe<Int2>
 {
   const Scope scope {id};
 
-  ImGui::SetNextItemWidth(-min_float);
+  ImGui::SetNextItemWidth(-kMinFloat);
   if (ImGui::DragInt2("##Int2", glm::value_ptr(value))) {
     return value;
   }
@@ -105,7 +105,7 @@ auto ui_int3_input(const char* id, Int3 value) -> Maybe<Int3>
 {
   const Scope scope {id};
 
-  ImGui::SetNextItemWidth(-min_float);
+  ImGui::SetNextItemWidth(-kMinFloat);
   if (ImGui::DragInt3("##Int3", glm::value_ptr(value))) {
     return value;
   }
@@ -120,7 +120,7 @@ auto ui_int4_input(const char* id, Int4 value) -> Maybe<Int4>
 {
   const Scope scope {id};
 
-  ImGui::SetNextItemWidth(-min_float);
+  ImGui::SetNextItemWidth(-kMinFloat);
   if (ImGui::DragInt4("##Int4", glm::value_ptr(value))) {
     return value;
   }
@@ -136,7 +136,7 @@ auto ui_float_input(const char* id, float value, const float min, const float ma
 {
   const Scope scope {id};
 
-  ImGui::SetNextItemWidth(-min_float);
+  ImGui::SetNextItemWidth(-kMinFloat);
 
   if (min != 0 || max != 0) {
     if (ImGui::SliderFloat("##Float", &value, min, max)) {
@@ -160,7 +160,7 @@ auto ui_float2_input(const char* id, Float2 value, const float min, const float 
 {
   const Scope scope {id};
 
-  ImGui::SetNextItemWidth(-min_float);
+  ImGui::SetNextItemWidth(-kMinFloat);
 
   if (min != 0 || max != 0) {
     if (ImGui::SliderFloat2("##Float2", glm::value_ptr(value), min, max)) {
@@ -184,7 +184,7 @@ auto ui_float3_input(const char* id, Float3 value, const float min, const float 
 {
   const Scope scope {id};
 
-  ImGui::SetNextItemWidth(-min_float);
+  ImGui::SetNextItemWidth(-kMinFloat);
 
   if (min != 0 || max != 0) {
     if (ImGui::SliderFloat3("##Float3", glm::value_ptr(value), min, max)) {
@@ -208,7 +208,7 @@ auto ui_float4_input(const char* id, Float4 value, const float min, const float 
 {
   const Scope scope {id};
 
-  ImGui::SetNextItemWidth(-min_float);
+  ImGui::SetNextItemWidth(-kMinFloat);
 
   if (min != 0 || max != 0) {
     if (ImGui::SliderFloat4("##Float4", glm::value_ptr(value), min, max)) {
@@ -246,7 +246,7 @@ auto ui_string_input_with_hint(const char* id,
     ImGui::SameLine();
   }
   else {
-    ImGui::SetNextItemWidth(-min_float);
+    ImGui::SetNextItemWidth(-kMinFloat);
   }
 
   if (ImGui::InputTextWithHint("##String",

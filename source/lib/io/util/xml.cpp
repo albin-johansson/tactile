@@ -56,9 +56,9 @@ auto as_int(XMLNode node, const char* attr_name) -> Maybe<int32>
   TACTILE_ASSERT(attr_name);
 
   const auto attribute = node.attribute(attr_name);
-  const auto value = attribute.as_int(max_int);
+  const auto value = attribute.as_int(kMaxInt);
 
-  if (!attribute.empty() && value != max_int) {
+  if (!attribute.empty() && value != kMaxInt) {
     return value;
   }
   else {
@@ -71,9 +71,9 @@ auto as_uint(XMLNode node, const char* attr_name) -> Maybe<uint32>
   TACTILE_ASSERT(attr_name);
 
   const auto attribute = node.attribute(attr_name);
-  const auto value = attribute.as_uint(max_uint);
+  const auto value = attribute.as_uint(kMaxUint);
 
-  if (!attribute.empty() && value != max_uint) {
+  if (!attribute.empty() && value != kMaxUint) {
     return value;
   }
   else {
@@ -86,9 +86,9 @@ auto as_float(XMLNode node, const char* attr_name) -> Maybe<float>
   TACTILE_ASSERT(attr_name);
 
   const auto attribute = node.attribute(attr_name);
-  const auto value = attribute.as_float(max_float);
+  const auto value = attribute.as_float(kMaxFloat);
 
-  if (!attribute.empty() && value != max_float) {
+  if (!attribute.empty() && value != kMaxFloat) {
     return value;
   }
   else {

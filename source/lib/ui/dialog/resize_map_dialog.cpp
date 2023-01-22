@@ -72,7 +72,7 @@ void update_resize_map_dialog(entt::dispatcher& dispatcher)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.misc.rows.c_str());
     ImGui::SameLine();
-    ImGui::SetNextItemWidth(-min_float);
+    ImGui::SetNextItemWidth(-kMinFloat);
     ImGui::DragScalar("##Rows",
                       ImGuiDataType_U64,
                       &gDialogState.row_count,

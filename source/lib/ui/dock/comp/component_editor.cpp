@@ -159,7 +159,7 @@ void ui_component_attribute_row(const Strings& lang,
   ui_component_attribute_row_name_popup(lang, component_id, attribute_name, dispatcher);
 
   ImGui::TableNextColumn();
-  ImGui::SetNextItemWidth(-min_float);
+  ImGui::SetNextItemWidth(-kMinFloat);
 
   if (const auto new_attribute_type = ui_attribute_type_combo(attribute.get_type())) {
     dispatcher.enqueue<SetComponentAttrTypeEvent>(component_id,
