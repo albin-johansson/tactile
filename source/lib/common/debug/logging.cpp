@@ -38,12 +38,12 @@
 namespace tactile {
 namespace {
 
+using LogFilterSet = Set<LogLevel>;
+
 struct LogEntry final {
   spdlog::level::level_enum level {};
   String msg;
 };
-
-using LogFilterSet = Set<LogLevel>;
 
 [[nodiscard]] auto to_filter_set(const LogFilter& filter) -> LogFilterSet
 {
@@ -131,7 +131,7 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
   Deque<LogEntry> mHistory;
 };
 
-inline Shared<HistorySink> history_sink;
+inline Shared<HistorySink> gHistorySink;
 
 }  // namespace
 
@@ -141,9 +141,9 @@ void init_logger()
 
   auto cs = std::make_shared<spdlog::sinks::stdout_color_sink_st>();
   auto fs = std::make_shared<spdlog::sinks::basic_file_sink_st>(path.string(), true);
-  history_sink = std::make_shared<HistorySink>();
+  gHistorySink = std::make_shared<HistorySink>();
 
-  const spdlog::sinks_init_list sinks {cs, fs, history_sink};
+  const spdlog::sinks_init_list sinks {cs, fs, gHistorySink};
 
   auto logger = std::make_shared<spdlog::logger>("tactile", sinks);
   logger->set_pattern("%^[%L][%T.%f]%$ %v");
@@ -162,13 +162,13 @@ void init_logger()
 
 void clear_log_history()
 {
-  history_sink->clear();
+  gHistorySink->clear();
 }
 
 auto count_matching_log_entries(const LogFilter& filter) -> usize
 {
   const auto filter_set = to_filter_set(filter);
-  return history_sink->count(filter_set);
+  return gHistorySink->count(filter_set);
 }
 
 void visit_logged_message_range(const LogFilter& filter,
@@ -177,7 +177,7 @@ void visit_logged_message_range(const LogFilter& filter,
                                 const LoggedMessageVisitorFn& fn)
 {
   const auto filter_set = to_filter_set(filter);
-  history_sink->visit_logged_message_range(filter_set, begin_index, end_index, fn);
+  gHistorySink->visit_logged_message_range(filter_set, begin_index, end_index, fn);
 }
 
 }  // namespace tactile
