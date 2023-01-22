@@ -64,8 +64,8 @@ TEST_SUITE("cmd::FixMapTiles")
     cmd::FixMapTiles cmd {map};
 
     cmd.redo();
-    REQUIRE(layer.tile_at({2, 4}) == empty_tile);
-    REQUIRE(layer.tile_at({0, 0}) == empty_tile);
+    REQUIRE(layer.tile_at({2, 4}) == kEmptyTile);
+    REQUIRE(layer.tile_at({0, 0}) == kEmptyTile);
     REQUIRE(layer.tile_at({0, 1}) == tileset_ref.get_last_tile());
     REQUIRE(layer.tile_at({5, 7}) == tileset_ref.get_first_tile());
 

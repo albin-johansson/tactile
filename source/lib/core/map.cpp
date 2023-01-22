@@ -143,10 +143,10 @@ auto Map::fix_tiles() -> FixTilesResult
       const auto pos = TilePos::from(row, col);
       const auto tile_id = layer.tile_at(pos);
 
-      if (tile_id.has_value() && tile_id != empty_tile &&
+      if (tile_id.has_value() && tile_id != kEmptyTile &&
           !tileset_bundle.is_valid_tile(*tile_id)) {
         previous[pos] = *tile_id;
-        layer.set_tile(pos, empty_tile);
+        layer.set_tile(pos, kEmptyTile);
       }
     });
 

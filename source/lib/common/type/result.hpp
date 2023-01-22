@@ -50,7 +50,7 @@ class Result final {
   }
 };
 
-inline constexpr Result success = Result::make_success();
-inline constexpr Result failure = Result::make_failure();
+inline constexpr Result success = Result::make_success();  // NOLINT
+inline constexpr Result failure = Result::make_failure();  // NOLINT
 
 }  // namespace tactile

@@ -79,7 +79,7 @@ namespace {
   usize index = 0;
   for (const auto tile_node: data_node.children("tile")) {
     const auto [row, col] = to_matrix_coords(index, extent.cols);
-    tiles[row][col] = tile_node.attribute("gid").as_int(empty_tile);
+    tiles[row][col] = tile_node.attribute("gid").as_int(kEmptyTile);
 
     ++index;
   }

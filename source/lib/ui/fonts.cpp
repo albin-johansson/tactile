@@ -27,14 +27,14 @@ auto can_increase_font_size() -> bool
 {
   const auto& settings = get_settings();
   return !settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) &&
-         settings.get_font_size() < max_font_size;
+         settings.get_font_size() < kMaxFontSize;
 }
 
 auto can_decrease_font_size() -> bool
 {
   const auto& settings = get_settings();
   return !settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) &&
-         settings.get_font_size() > min_font_size;
+         settings.get_font_size() > kMinFontSize;
 }
 
 }  // namespace tactile::ui

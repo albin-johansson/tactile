@@ -437,7 +437,7 @@ constexpr usize col_count = 13;
     data.component_definitions["long-component"]["path"] = fs::path {};
     data.component_definitions["long-component"]["path-v"] = fs::path {"../foo.txt"};
 
-    data.component_definitions["long-component"]["col"] = black;
+    data.component_definitions["long-component"]["col"] = kBlack;
     data.component_definitions["long-component"]["col-v"] = Color {0x12, 0xF3, 0xCA};
   }
 

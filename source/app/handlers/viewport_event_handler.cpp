@@ -38,7 +38,7 @@
 namespace tactile {
 namespace {
 
-inline constexpr Float2 viewport_default_tile_size = {64, 64};
+inline constexpr Float2 kViewportDefaultTileSize = {64, 64};
 
 void on_viewport_mouse_pressed(const ViewportMousePressedEvent& event)
 {
@@ -146,7 +146,7 @@ void on_reset_zoom(const ResetZoomEvent&)
   auto& model = get_model();
   if (auto* document = model.active_document()) {
     auto& viewport = document->get_viewport();
-    viewport.set_tile_size(viewport_default_tile_size);
+    viewport.set_tile_size(kViewportDefaultTileSize);
   }
 }
 

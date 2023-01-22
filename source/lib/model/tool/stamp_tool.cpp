@@ -144,7 +144,7 @@ void StampTool::update_sequence_normal(TileLayer& layer,
     const auto selection_pos = selection.begin + index;
 
     const auto tile = tileset_ref.get_first_tile() + tileset.index_of(selection_pos);
-    if (tile != empty_tile) {
+    if (tile != kEmptyTile) {
       const auto pos = cursor + index - preview_offset;
 
       if (layer.is_valid(pos)) {

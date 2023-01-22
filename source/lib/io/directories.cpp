@@ -35,15 +35,15 @@ void open_directory(const Path& dir)
 {
   if (fs::is_directory(dir)) {
     static const auto path = persistent_file_dir().string();
-    if constexpr (on_macos) {
+    if constexpr (kOnMacos) {
       static const auto cmd = fmt::format("open \"{}\"", path);
       std::system(cmd.c_str());
     }
-    else if constexpr (on_windows) {
+    else if constexpr (kOnWindows) {
       static const auto cmd = fmt::format("explorer \"{}\"", path);
       std::system(cmd.c_str());
     }
-    else if constexpr (on_linux) {
+    else if constexpr (kOnLinux) {
       static const auto cmd = fmt::format("xdg-open \"{}\"", path);
       std::system(cmd.c_str());
     }

@@ -34,7 +34,7 @@ void render_tile(Graphics& graphics,
                  const TilePos& pos,
                  const float opacity)
 {
-  TACTILE_ASSERT(tile_id != empty_tile);
+  TACTILE_ASSERT(tile_id != kEmptyTile);
   const auto& tilesets = map.get_tileset_bundle();
 
   if (const auto tileset_id = tilesets.find_tileset(tile_id)) {

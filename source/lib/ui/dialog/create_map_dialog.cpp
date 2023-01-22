@@ -35,10 +35,14 @@
 namespace tactile::ui {
 namespace {
 
-inline constinit Int2 dialog_tile_size = {0, 0};
-inline constinit uint64 dialog_row_count = 0;
-inline constinit uint64 dialog_column_count = 0;
-inline constinit bool show_dialog = false;
+struct CreateMapDialogState final {
+  Int2 tile_size {};
+  uint64 row_count {};
+  uint64 column_count {};
+  bool open_dialog {};
+};
+
+inline constinit CreateMapDialogState gDialogState;
 
 void show_dialog_contents(const Strings& lang)
 {
@@ -51,12 +55,12 @@ void show_dialog_contents(const Strings& lang)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(rows_label.c_str());
     ImGui::SameLine(offset);
-    ImGui::InputScalar("##Rows", ImGuiDataType_U64, &dialog_row_count);
+    ImGui::InputScalar("##Rows", ImGuiDataType_U64, &gDialogState.row_count);
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(columns_label.c_str());
     ImGui::SameLine(offset);
-    ImGui::InputScalar("##Columns", ImGuiDataType_U64, &dialog_column_count);
+    ImGui::InputScalar("##Columns", ImGuiDataType_U64, &gDialogState.column_count);
   }
 
   ImGui::Separator();
@@ -70,22 +74,22 @@ void show_dialog_contents(const Strings& lang)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(tile_width_label.c_str());
     ImGui::SameLine(offset);
-    ImGui::InputInt("##TileWidth", &dialog_tile_size.x);
+    ImGui::InputInt("##TileWidth", &gDialogState.tile_size.x);
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(tile_height_label.c_str());
     ImGui::SameLine(offset);
-    ImGui::InputInt("##TileHeight", &dialog_tile_size.y);
+    ImGui::InputInt("##TileHeight", &gDialogState.tile_size.y);
   }
 }
 
 void on_dialog_accept(entt::dispatcher& dispatcher)
 {
-  TACTILE_ASSERT(dialog_tile_size.x > 0);
-  TACTILE_ASSERT(dialog_tile_size.y > 0);
-  dispatcher.enqueue<CreateMapEvent>(dialog_tile_size,
-                                     dialog_row_count,
-                                     dialog_column_count);
+  TACTILE_ASSERT(gDialogState.tile_size.x > 0);
+  TACTILE_ASSERT(gDialogState.tile_size.y > 0);
+  dispatcher.enqueue<CreateMapEvent>(gDialogState.tile_size,
+                                     gDialogState.row_count,
+                                     gDialogState.column_count);
 }
 
 }  // namespace
@@ -94,11 +98,10 @@ void open_create_map_dialog()
 {
   const auto& settings = get_settings();
 
-  dialog_tile_size = settings.get_preferred_tile_size();
-  dialog_row_count = 5;
-  dialog_column_count = 5;
-
-  show_dialog = true;
+  gDialogState.tile_size = settings.get_preferred_tile_size();
+  gDialogState.row_count = 5;
+  gDialogState.column_count = 5;
+  gDialogState.open_dialog = true;
 }
 
 void update_create_map_dialog(entt::dispatcher& dispatcher)
@@ -111,12 +114,13 @@ void update_create_map_dialog(entt::dispatcher& dispatcher)
       .accept_label = lang.misc.create.c_str(),
   };
 
-  if (show_dialog) {
+  if (gDialogState.open_dialog) {
     options.flags |= UI_DIALOG_FLAG_OPEN;
-    show_dialog = false;
+    gDialogState.open_dialog = false;
   }
 
-  const bool is_input_valid = (dialog_tile_size.x > 0) && (dialog_tile_size.y > 0);
+  const bool is_input_valid =
+      (gDialogState.tile_size.x > 0) && (gDialogState.tile_size.y > 0);
   if (is_input_valid) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }

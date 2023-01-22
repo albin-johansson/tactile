@@ -127,8 +127,8 @@ TEST_SUITE("Color")
 
   TEST_CASE("get_luminance")
   {
-    REQUIRE(1.0f == white.get_luminance());
-    REQUIRE(0.0f == black.get_luminance());
+    REQUIRE(1.0f == kWhite.get_luminance());
+    REQUIRE(0.0f == kBlack.get_luminance());
 
     // Based on https://planetcalc.com/7778/
     REQUIRE(0.4457104f == doctest::Approx {lime_green.get_luminance()});
@@ -138,8 +138,8 @@ TEST_SUITE("Color")
 
   TEST_CASE("is_dark")
   {
-    REQUIRE(!white.is_dark());
-    REQUIRE(black.is_dark());
+    REQUIRE(!kWhite.is_dark());
+    REQUIRE(kBlack.is_dark());
   }
 
   TEST_CASE("as_rgb")

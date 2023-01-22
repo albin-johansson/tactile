@@ -52,6 +52,6 @@ using ObjectID = int32;
 using TileIndex = int32;  ///< For local tile identifiers.
 using TileID = int32;     ///< For global tile identifiers.
 
-inline constexpr TileID empty_tile = 0;
+inline constexpr TileID kEmptyTile = 0;
 
 }  // namespace tactile

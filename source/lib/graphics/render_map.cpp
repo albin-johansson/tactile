@@ -35,7 +35,7 @@
 namespace tactile::ui {
 namespace {
 
-inline constexpr uint32 active_object_color = IM_COL32(0xFF, 0xFF, 0x00, 0xFF);
+inline constexpr uint32 kActiveObjectColor = IM_COL32(0xFF, 0xFF, 0x00, 0xFF);
 
 void highlight_active_object(Graphics& graphics,
                              const Map& map,
@@ -45,7 +45,7 @@ void highlight_active_object(Graphics& graphics,
           map.get_invisible_root().find_object_layer(active_layer_id)) {
     if (const auto object_id = object_layer->active_object_id()) {
       const auto& object = object_layer->get_object(*object_id);
-      render_object(graphics, object, active_object_color);
+      render_object(graphics, object, kActiveObjectColor);
     }
   }
 }

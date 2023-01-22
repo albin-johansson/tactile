@@ -39,7 +39,7 @@ TEST_SUITE("TileLayer")
     REQUIRE(5u == layer.column_count());
 
     invoke_mn(layer.row_count(), layer.column_count(), [&](usize row, usize col) {
-      REQUIRE(empty_tile == layer.tile_at(TilePos::from(row, col)));
+      REQUIRE(kEmptyTile == layer.tile_at(TilePos::from(row, col)));
     });
   }
 

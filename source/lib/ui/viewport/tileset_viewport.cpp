@@ -43,9 +43,9 @@
 namespace tactile::ui {
 namespace {
 
-inline constexpr uint32 tile_hover_color = IM_COL32(0, 0xFF, 0, 200);
-inline constexpr uint32 selected_tile_color = IM_COL32(0, 0xEE, 0xEE, 0xFF);
-inline constexpr uint32 animation_frame_selection_color = IM_COL32(0xFF, 0x45, 0x00, 200);
+inline constexpr uint32 kTileHoverColor = IM_COL32(0, 0xFF, 0, 200);
+inline constexpr uint32 kSelectedTileColor = IM_COL32(0, 0xEE, 0xEE, 0xFF);
+inline constexpr uint32 kAnimationFrameSelectionColor = IM_COL32(0xFF, 0x45, 0x00, 200);
 
 struct DockState final {
   UUID tileset_id {};
@@ -53,13 +53,13 @@ struct DockState final {
   bool animation_frame_selection_mode : 1 {false};
 };
 
-inline constinit DockState dock_state;
+inline constinit DockState gDockState;
 
 void ui_cursor_gizmos(const ViewportCursorInfo& cursor, const RenderInfo& render_info)
 {
-  const auto color = dock_state.animation_frame_selection_mode
-                         ? animation_frame_selection_color
-                         : tile_hover_color;
+  const auto color = gDockState.animation_frame_selection_mode
+                         ? kAnimationFrameSelectionColor
+                         : kTileHoverColor;
   draw_shadowed_rect(cursor.clamped_position, render_info.grid_size, color, 2.0f);
 }
 
@@ -69,15 +69,15 @@ void ui_highlight_selected_tile(const RenderInfo& info, const Tileset& tileset)
     const auto tile_pos = TilePos::from_index(*tile_index, tileset.column_count());
     const auto translated_tile_pos = info.origin + from_pos(tile_pos) * info.grid_size;
 
-    draw_shadowed_rect(translated_tile_pos, info.grid_size, selected_tile_color, 2.0f);
+    draw_shadowed_rect(translated_tile_pos, info.grid_size, kSelectedTileColor, 2.0f);
   }
 }
 
 void ui_highlight_animation_frame_selection_mode(const Strings& lang,
                                                  const RenderInfo& info)
 {
-  if (dock_state.animation_frame_selection_mode) {
-    draw_rect(info.canvas_tl, info.canvas_size, animation_frame_selection_color, 6.0f);
+  if (gDockState.animation_frame_selection_mode) {
+    draw_rect(info.canvas_tl, info.canvas_size, kAnimationFrameSelectionColor, 6.0f);
 
     const char* label = lang.animation_dock.new_animation_frame_selection_hint.c_str();
     const auto label_size = ImGui::CalcTextSize(label);
@@ -109,9 +109,9 @@ void ui_poll_mouse(const Tileset& tileset,
       const TileIndex index = cursor.map_position.col() +
                               (cursor.map_position.row() * tileset.column_count());
 
-      if (dock_state.animation_frame_selection_mode) {
+      if (gDockState.animation_frame_selection_mode) {
         dispatcher.enqueue<AddTileAnimationFrameEvent>(index);
-        dock_state.animation_frame_selection_mode = false;
+        gDockState.animation_frame_selection_mode = false;
       }
       else {
         dispatcher.enqueue<SelectTilesetTileEvent>(index);
@@ -131,10 +131,10 @@ void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& di
   const auto& viewport = document.get_viewport();
 
   // Reset some previous state when changing displayed tileset
-  if (dock_state.tileset_id != tileset.get_uuid()) {
-    dock_state.animation_frame_selection_mode = false;
+  if (gDockState.tileset_id != tileset.get_uuid()) {
+    gDockState.animation_frame_selection_mode = false;
 
-    dock_state.tileset_id = tileset.get_uuid();
+    gDockState.tileset_id = tileset.get_uuid();
   }
 
   const auto render_info = get_render_info(viewport, tileset);
@@ -145,9 +145,9 @@ void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& di
 
   graphics.push_canvas_clip();
 
-  if (dock_state.center_viewport) {
+  if (gDockState.center_viewport) {
     center_viewport(render_info, viewport, dispatcher);
-    dock_state.center_viewport = false;
+    gDockState.center_viewport = false;
   }
 
   render_tileset(graphics, document);
@@ -164,12 +164,12 @@ void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& di
 
 void center_tileset_viewport()
 {
-  dock_state.center_viewport = true;
+  gDockState.center_viewport = true;
 }
 
 void enable_tile_animation_frame_selection_mode()
 {
-  dock_state.animation_frame_selection_mode = true;
+  gDockState.animation_frame_selection_mode = true;
 }
 
 }  // namespace tactile::ui

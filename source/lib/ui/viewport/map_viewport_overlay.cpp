@@ -81,7 +81,7 @@ void show_mouse_tile_labels(const Map& map, const ViewportCursorInfo& cursor)
   if (const auto* layer = map.get_invisible_root().find_tile_layer(*layer_id)) {
     const auto tile_id = layer->tile_at(cursor.map_position);
 
-    if (cursor.is_within_map && tile_id.has_value() && tile_id != empty_tile) {
+    if (cursor.is_within_map && tile_id.has_value() && tile_id != kEmptyTile) {
       ImGui::Text("%s: %i", lang.misc.global_id.c_str(), *tile_id);
 
       const auto& tilesets = map.get_tileset_bundle();

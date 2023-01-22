@@ -36,7 +36,7 @@
 namespace tactile::ui {
 namespace {
 
-inline constexpr uint8 stamp_preview_opacity = 150;
+inline constexpr uint8 kStampPreviewOpacity = 150;
 
 }  // namespace
 
@@ -100,7 +100,7 @@ void ToolPreviewRenderer::render_stamp_normal(const Map& map,
       graphics.render_tile(tileset,
                            selection.begin + index,
                            from_vec(rendered_position),
-                           stamp_preview_opacity);
+                           kStampPreviewOpacity);
     }
   });
 }
@@ -114,7 +114,7 @@ void ToolPreviewRenderer::visit(const RectangleTool& tool)
     const auto pos = graphics.info().origin + from_vec(stroke->start);
     const auto size = from_vec(stroke->current - stroke->start);
 
-    draw_shadowed_rect(pos, size, to_u32(yellow));
+    draw_shadowed_rect(pos, size, to_u32(kYellow));
   }
 }
 
@@ -128,7 +128,7 @@ void ToolPreviewRenderer::visit(const EllipseTool& tool)
     auto& graphics = mGraphics.get();
     graphics.draw_translated_shadowed_ellipse(from_vec(center),
                                               from_vec(radius),
-                                              to_u32(yellow));
+                                              to_u32(kYellow));
   }
 }
 

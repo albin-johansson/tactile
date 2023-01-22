@@ -114,7 +114,7 @@ void TileLayer::add_row()
 void TileLayer::add_column()
 {
   for (auto& row: mTiles) {
-    row.push_back(empty_tile);
+    row.push_back(kEmptyTile);
   }
 }
 

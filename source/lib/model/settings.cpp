@@ -37,7 +37,7 @@ struct SettingsState final {
 
   usize command_capacity {100};
   Int2 preferred_tile_size {32, 32};
-  int32 font_size {ui::def_font_size};
+  int32 font_size {ui::kDefFontSize};
   int32 theme_saturation {60};
 
   Color viewport_bg {0x3C, 0x3C, 0x3C};
@@ -54,7 +54,7 @@ struct SettingsState final {
 };
 
 // Used to be able to easily reset settings.
-inline static const SettingsState default_settings = SettingsState {};
+inline static const SettingsState kDefaultSettings = SettingsState {};
 
 Settings::Settings()
     : mState {std::make_unique<SettingsState>()}
@@ -112,25 +112,25 @@ void Settings::copy_values_from(const Settings& settings)
 
 void Settings::reset_values()
 {
-  *mState = default_settings;
+  *mState = kDefaultSettings;
 }
 
 void Settings::reset_behavior_values()
 {
-  mState->command_capacity = default_settings.command_capacity;
-  mState->preferred_tile_size = default_settings.preferred_tile_size;
+  mState->command_capacity = kDefaultSettings.command_capacity;
+  mState->preferred_tile_size = kDefaultSettings.preferred_tile_size;
 
   reset_flag(SETTINGS_RESTORE_LAST_SESSION_BIT);
 }
 
 void Settings::reset_appearance_values()
 {
-  mState->language = default_settings.language;
-  mState->theme = default_settings.theme;
-  mState->theme_saturation = default_settings.theme_saturation;
-  mState->viewport_bg = default_settings.viewport_bg;
-  mState->grid_color = default_settings.grid_color;
-  mState->font_size = default_settings.font_size;
+  mState->language = kDefaultSettings.language;
+  mState->theme = kDefaultSettings.theme;
+  mState->theme_saturation = kDefaultSettings.theme_saturation;
+  mState->viewport_bg = kDefaultSettings.viewport_bg;
+  mState->grid_color = kDefaultSettings.grid_color;
+  mState->font_size = kDefaultSettings.font_size;
 
   reset_flag(SETTINGS_WINDOW_BORDER_BIT);
   reset_flag(SETTINGS_SHOW_GRID_BIT);
@@ -140,7 +140,7 @@ void Settings::reset_appearance_values()
 
 void Settings::reset_export_values()
 {
-  mState->preferred_format = default_settings.preferred_format;
+  mState->preferred_format = kDefaultSettings.preferred_format;
 
   reset_flag(SETTINGS_EMBED_TILESETS_BIT);
   reset_flag(SETTINGS_INDENT_OUTPUT_BIT);
@@ -269,7 +269,7 @@ auto Settings::get_flags() const -> SettingsFlagBits
 
 void Settings::reset_flag(const SettingsFlagBits flag)
 {
-  set_flag(flag, default_settings.flags & flag);
+  set_flag(flag, kDefaultSettings.flags & flag);
 }
 
 void Settings::set_flag(const SettingsFlagBits flag, const bool value)

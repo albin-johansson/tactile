@@ -97,7 +97,7 @@ void EraserTool::update_sequence(DocumentModel& model, const TilePos& cursor)
     mPrevState[cursor] = layer.tile_at(cursor).value();
   }
 
-  layer.set_tile(cursor, empty_tile);
+  layer.set_tile(cursor, kEmptyTile);
 }
 
 void EraserTool::maybe_emit_event(const DocumentModel& model,

@@ -51,7 +51,7 @@ auto CenterViewportShortcut::is_enabled(const DocumentModel& model) const -> boo
 /* ------------------------------------------------------------------------------------ */
 
 DecreaseViewportZoomShortcut::DecreaseViewportZoomShortcut()
-    : Shortcut {cen::scan_code {SDLK_MINUS}, primary_modifier}
+    : Shortcut {cen::scan_code {SDLK_MINUS}, kPrimaryModifier}
 {
 }
 
@@ -69,7 +69,7 @@ auto DecreaseViewportZoomShortcut::is_enabled(const DocumentModel& model) const 
 /* ------------------------------------------------------------------------------------ */
 
 IncreaseViewportZoomShortcut::IncreaseViewportZoomShortcut()
-    : Shortcut {cen::scan_code {SDLK_PLUS}, primary_modifier}
+    : Shortcut {cen::scan_code {SDLK_PLUS}, kPrimaryModifier}
 {
 }
 
@@ -86,7 +86,7 @@ auto IncreaseViewportZoomShortcut::is_enabled(const DocumentModel& model) const 
 /* ------------------------------------------------------------------------------------ */
 
 IncreaseFontSizeShortcut::IncreaseFontSizeShortcut()
-    : Shortcut {cen::scan_code {SDLK_PLUS}, primary_modifier | cen::key_mod::lshift}
+    : Shortcut {cen::scan_code {SDLK_PLUS}, kPrimaryModifier | cen::key_mod::lshift}
 {
 }
 
@@ -104,7 +104,7 @@ auto IncreaseFontSizeShortcut::is_enabled(const DocumentModel&) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 DecreaseFontSizeShortcut::DecreaseFontSizeShortcut()
-    : Shortcut {cen::scan_code {SDLK_MINUS}, primary_modifier | cen::key_mod::lshift}
+    : Shortcut {cen::scan_code {SDLK_MINUS}, kPrimaryModifier | cen::key_mod::lshift}
 {
 }
 
@@ -122,7 +122,7 @@ auto DecreaseFontSizeShortcut::is_enabled(const DocumentModel&) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 PanUpShortcut::PanUpShortcut()
-    : Shortcut {cen::scancodes::up, primary_modifier | cen::key_mod::lshift}
+    : Shortcut {cen::scancodes::up, kPrimaryModifier | cen::key_mod::lshift}
 {
 }
 
@@ -139,7 +139,7 @@ auto PanUpShortcut::is_enabled(const DocumentModel& model) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 PanDownShortcut::PanDownShortcut()
-    : Shortcut {cen::scancodes::down, primary_modifier | cen::key_mod::lshift}
+    : Shortcut {cen::scancodes::down, kPrimaryModifier | cen::key_mod::lshift}
 {
 }
 
@@ -156,7 +156,7 @@ auto PanDownShortcut::is_enabled(const DocumentModel& model) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 PanLeftShortcut::PanLeftShortcut()
-    : Shortcut {cen::scancodes::left, primary_modifier | cen::key_mod::lshift}
+    : Shortcut {cen::scancodes::left, kPrimaryModifier | cen::key_mod::lshift}
 {
 }
 
@@ -173,7 +173,7 @@ auto PanLeftShortcut::is_enabled(const DocumentModel& model) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 PanRightShortcut::PanRightShortcut()
-    : Shortcut {cen::scancodes::right, primary_modifier | cen::key_mod::lshift}
+    : Shortcut {cen::scancodes::right, kPrimaryModifier | cen::key_mod::lshift}
 {
 }
 
@@ -190,7 +190,7 @@ auto PanRightShortcut::is_enabled(const DocumentModel& model) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 ToggleGridShortcut::ToggleGridShortcut()
-    : Shortcut {cen::scancodes::g, primary_modifier}
+    : Shortcut {cen::scancodes::g, kPrimaryModifier}
 {
 }
 

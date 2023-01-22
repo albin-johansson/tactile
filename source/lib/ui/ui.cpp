@@ -52,8 +52,8 @@
 namespace tactile::ui {
 namespace {
 
-inline constinit bool ui_show_map_selector = false;
-inline constinit bool ui_show_about_imgui = false;
+inline constinit bool gOpenMapFileDialog = false;
+inline constinit bool gOpenAboutImGuiDialog = false;
 
 void check_for_missing_ini_file()
 {
@@ -75,7 +75,7 @@ void update_map_file_dialog(entt::dispatcher& dispatcher)
     dispatcher.enqueue<OpenMapEvent>(dialog.path());
   }
 
-  ui_show_map_selector = false;
+  gOpenMapFileDialog = false;
 }
 
 }  // namespace
@@ -115,13 +115,13 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
   update_credits_dialog();
   update_about_dialog();
 
-  if (ui_show_map_selector) {
+  if (gOpenMapFileDialog) {
     update_map_file_dialog(dispatcher);
   }
 
-  if (ui_show_about_imgui) {
+  if (gOpenAboutImGuiDialog) {
     center_next_window_on_appearance();
-    ImGui::ShowAboutWindow(&ui_show_about_imgui);
+    ImGui::ShowAboutWindow(&gOpenAboutImGuiDialog);
   }
 
   check_for_missing_ini_file();
@@ -129,12 +129,12 @@ void update_widgets(const DocumentModel& model, entt::dispatcher& dispatcher)
 
 void open_map_file_dialog()
 {
-  ui_show_map_selector = true;
+  gOpenMapFileDialog = true;
 }
 
 void open_about_dear_imgui_dialog()
 {
-  ui_show_about_imgui = true;
+  gOpenAboutImGuiDialog = true;
 }
 
 auto is_editor_focused() -> bool

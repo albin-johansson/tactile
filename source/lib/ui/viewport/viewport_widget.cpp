@@ -109,7 +109,7 @@ void viewport_widget_mouse_wheel_event_handler(const Viewport& viewport,
 {
   constexpr float scaling = 4.0f;
 
-  if (cen::is_active(primary_modifier)) {
+  if (cen::is_active(kPrimaryModifier)) {
     const auto y = event.precise_y();
     if (y > 0) {
       dispatcher.enqueue<IncreaseZoomEvent>();

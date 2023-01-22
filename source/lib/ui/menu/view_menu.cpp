@@ -107,13 +107,13 @@ void update_quick_theme_menu(const Strings& lang)
       }
     };
 
-    for (const auto theme: light_themes) {
+    for (const auto theme: kLightThemes) {
       theme_item(theme);
     }
 
     ImGui::Separator();
 
-    for (const auto theme: dark_themes) {
+    for (const auto theme: kDarkThemes) {
       theme_item(theme);
     }
   }

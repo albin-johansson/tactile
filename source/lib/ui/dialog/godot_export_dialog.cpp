@@ -37,16 +37,20 @@
 namespace tactile::ui {
 namespace {
 
-inline constexpr int polygon_approx_count_default = 16;
-inline constexpr int polygon_approx_count_min = 4;
-inline constexpr int polygon_approx_count_max = 64;
+inline constexpr int kPolygonApproxCountDefault = 16;
+inline constexpr int kPolygonApproxCountMin = 4;
+inline constexpr int kPolygonApproxCountMax = 64;
 
-inline Path dialog_root_dir;
-inline Path dialog_map_dir;
-inline Path dialog_image_dir;
-inline Path dialog_tileset_dir;
-inline int dialog_polygon_point_count {};
-inline constinit bool show_dialog = false;
+struct GodotExportDialogState final {
+  Path root_dir;
+  Path map_dir;
+  Path image_dir;
+  Path tileset_dir;
+  int polygon_point_count {};
+  bool open_dialog {};
+};
+
+inline GodotExportDialogState gDialogState;
 
 void show_dialog_contents(const Strings& lang)
 {
@@ -65,25 +69,25 @@ void show_dialog_contents(const Strings& lang)
   ui_lazy_tooltip("##RootDirTooltip", lang.tooltip.godot_project_folder.c_str());
 
   ImGui::SameLine(offset);
-  if (auto root_path = ui_directory_path_input("##RootDir", dialog_root_dir)) {
-    dialog_root_dir = std::move(*root_path);
-    dialog_map_dir = ".";
-    dialog_image_dir = ".";
-    dialog_tileset_dir = ".";
+  if (auto root_path = ui_directory_path_input("##RootDir", gDialogState.root_dir)) {
+    gDialogState.root_dir = std::move(*root_path);
+    gDialogState.map_dir = ".";
+    gDialogState.image_dir = ".";
+    gDialogState.tileset_dir = ".";
   }
 
   ImGui::Separator();
 
   {
-    const Disable when_root_is_unset {dialog_root_dir.empty()};
+    const Disable when_root_is_unset {gDialogState.root_dir.empty()};
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(map_label.c_str());
     ui_lazy_tooltip("##MapDirTooltip", lang.tooltip.godot_map_folder.c_str());
 
     ImGui::SameLine(offset);
-    if (const auto map_dir = ui_directory_path_input("##MapDir", dialog_map_dir)) {
-      dialog_map_dir = fs::relative(*map_dir, dialog_root_dir);
+    if (const auto map_dir = ui_directory_path_input("##MapDir", gDialogState.map_dir)) {
+      gDialogState.map_dir = fs::relative(*map_dir, gDialogState.root_dir);
     }
 
     ImGui::AlignTextToFramePadding();
@@ -91,8 +95,9 @@ void show_dialog_contents(const Strings& lang)
     ui_lazy_tooltip("##ImageDirTooltip", lang.tooltip.godot_image_folder.c_str());
 
     ImGui::SameLine(offset);
-    if (const auto image_dir = ui_directory_path_input("##ImageDir", dialog_image_dir)) {
-      dialog_image_dir = fs::relative(*image_dir, dialog_root_dir);
+    if (const auto image_dir =
+            ui_directory_path_input("##ImageDir", gDialogState.image_dir)) {
+      gDialogState.image_dir = fs::relative(*image_dir, gDialogState.root_dir);
     }
 
     ImGui::AlignTextToFramePadding();
@@ -100,8 +105,9 @@ void show_dialog_contents(const Strings& lang)
     ui_lazy_tooltip("##TilesetPathTooltip", lang.tooltip.godot_tileset_folder.c_str());
 
     ImGui::SameLine(offset);
-    if (auto tileset_dir = ui_directory_path_input("##TilesetPath", dialog_tileset_dir)) {
-      dialog_tileset_dir = fs::relative(*tileset_dir, dialog_root_dir);
+    if (auto tileset_dir =
+            ui_directory_path_input("##TilesetPath", gDialogState.tileset_dir)) {
+      gDialogState.tileset_dir = fs::relative(*tileset_dir, gDialogState.root_dir);
     }
   }
 
@@ -113,19 +119,19 @@ void show_dialog_contents(const Strings& lang)
 
   ImGui::SameLine();
   ImGui::SliderInt("##PolygonPoints",
-                   &dialog_polygon_point_count,
-                   polygon_approx_count_min,
-                   polygon_approx_count_max);
+                   &gDialogState.polygon_point_count,
+                   kPolygonApproxCountMin,
+                   kPolygonApproxCountMax);
 }
 
 void on_dialog_accept(entt::dispatcher& dispatcher)
 {
   ExportAsGodotSceneEvent event {
-      .root_dir = std::move(dialog_root_dir),
-      .map_dir = std::move(dialog_map_dir),
-      .image_dir = std::move(dialog_image_dir),
-      .tileset_dir = std::move(dialog_tileset_dir),
-      .polygon_points = static_cast<usize>(dialog_polygon_point_count),
+      .root_dir = std::move(gDialogState.root_dir),
+      .map_dir = std::move(gDialogState.map_dir),
+      .image_dir = std::move(gDialogState.image_dir),
+      .tileset_dir = std::move(gDialogState.tileset_dir),
+      .polygon_points = static_cast<usize>(gDialogState.polygon_point_count),
   };
   dispatcher.enqueue<ExportAsGodotSceneEvent>(std::move(event));
 }
@@ -134,12 +140,12 @@ void on_dialog_accept(entt::dispatcher& dispatcher)
 
 void open_godot_export_dialog()
 {
-  dialog_root_dir.clear();
-  dialog_map_dir.clear();
-  dialog_image_dir.clear();
-  dialog_tileset_dir.clear();
-  dialog_polygon_point_count = polygon_approx_count_default;
-  show_dialog = true;
+  gDialogState.root_dir.clear();
+  gDialogState.map_dir.clear();
+  gDialogState.image_dir.clear();
+  gDialogState.tileset_dir.clear();
+  gDialogState.polygon_point_count = kPolygonApproxCountDefault;
+  gDialogState.open_dialog = true;
 }
 
 void update_godot_export_dialog(entt::dispatcher& dispatcher)
@@ -152,14 +158,14 @@ void update_godot_export_dialog(entt::dispatcher& dispatcher)
       .accept_label = lang.misc.export_.c_str(),
   };
 
-  const bool is_input_valid = !dialog_root_dir.empty();
+  const bool is_input_valid = !gDialogState.root_dir.empty();
   if (is_input_valid) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
-  if (show_dialog) {
+  if (gDialogState.open_dialog) {
     options.flags |= UI_DIALOG_FLAG_OPEN;
-    show_dialog = false;
+    gDialogState.open_dialog = false;
   }
 
   DialogAction action {DialogAction::None};

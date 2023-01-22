@@ -322,8 +322,8 @@ void create_external_tileset_file(const EmitInfo& info, const ir::TilesetData& t
   add_common_tileset_attributes(json, info, tileset);
 
   json["type"] = "tileset";
-  json["tiledversion"] = tiled_version;
-  json["version"] = tiled_json_format_version;
+  json["tiledversion"] = kTiledVersion;
+  json["version"] = kTiledJsonFormatVersion;
 
   const auto name = fmt::format("{}.json", tileset.name);
   const auto path = info.destination_dir() / name;
@@ -391,8 +391,8 @@ void emit_json_map(const EmitInfo& info)
     json["compressionlevel"] = -1;
   }
 
-  json["tiledversion"] = tiled_version;
-  json["version"] = tiled_json_format_version;
+  json["tiledversion"] = kTiledVersion;
+  json["version"] = kTiledJsonFormatVersion;
 
   json["tilesets"] = emit_tilesets(info);
   json["layers"] = emit_layers(map);

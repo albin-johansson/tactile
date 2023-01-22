@@ -84,8 +84,8 @@ class Color final {
   [[nodiscard]] constexpr bool operator==(const Color&) const noexcept = default;
 };
 
-inline constexpr Color white = {0xFF, 0xFF, 0xFF};
-inline constexpr Color black = {0, 0, 0};
-inline constexpr Color yellow = {0xFF, 0xFF, 0};
+inline constexpr Color kWhite = {0xFF, 0xFF, 0xFF};
+inline constexpr Color kBlack = {0, 0, 0};
+inline constexpr Color kYellow = {0xFF, 0xFF, 0};
 
 }  // namespace tactile

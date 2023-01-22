@@ -38,7 +38,7 @@
 namespace tactile {
 
 UndoShortcut::UndoShortcut()
-    : Shortcut {cen::scancodes::z, primary_modifier}
+    : Shortcut {cen::scancodes::z, kPrimaryModifier}
 {
 }
 
@@ -56,7 +56,7 @@ auto UndoShortcut::is_enabled(const DocumentModel& model) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 RedoShortcut::RedoShortcut()
-    : Shortcut {cen::scancodes::y, primary_modifier}
+    : Shortcut {cen::scancodes::y, kPrimaryModifier}
 {
 }
 
@@ -74,7 +74,7 @@ auto RedoShortcut::is_enabled(const DocumentModel& model) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 AddRowShortcut::AddRowShortcut()
-    : Shortcut {cen::scancodes::r, secondary_modifier}
+    : Shortcut {cen::scancodes::r, kSecondaryModifier}
 {
 }
 
@@ -91,7 +91,7 @@ auto AddRowShortcut::is_enabled(const DocumentModel& model) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 AddColumnShortcut::AddColumnShortcut()
-    : Shortcut {cen::scancodes::c, secondary_modifier}
+    : Shortcut {cen::scancodes::c, kSecondaryModifier}
 {
 }
 
@@ -108,7 +108,7 @@ auto AddColumnShortcut::is_enabled(const DocumentModel& model) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 RemoveRowShortcut::RemoveRowShortcut()
-    : Shortcut {cen::scancodes::r, secondary_modifier | cen::key_mod::lshift}
+    : Shortcut {cen::scancodes::r, kSecondaryModifier | cen::key_mod::lshift}
 {
 }
 
@@ -132,7 +132,7 @@ auto RemoveRowShortcut::is_enabled(const DocumentModel& model) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 RemoveColumnShortcut::RemoveColumnShortcut()
-    : Shortcut {cen::scancodes::c, secondary_modifier | cen::key_mod::lshift}
+    : Shortcut {cen::scancodes::c, kSecondaryModifier | cen::key_mod::lshift}
 {
 }
 
@@ -156,7 +156,7 @@ auto RemoveColumnShortcut::is_enabled(const DocumentModel& model) const -> bool
 /* ------------------------------------------------------------------------------------ */
 
 AddTilesetShortcut::AddTilesetShortcut()
-    : Shortcut {cen::scancodes::t, primary_modifier}
+    : Shortcut {cen::scancodes::t, kPrimaryModifier}
 {
 }
 
@@ -348,7 +348,7 @@ auto EnablePointToolShortcut::is_enabled(const DocumentModel& model) const -> bo
 /* ------------------------------------------------------------------------------------ */
 
 OpenSettingsShortcut::OpenSettingsShortcut()
-    : Shortcut {SDL_SCANCODE_COMMA, primary_modifier}
+    : Shortcut {SDL_SCANCODE_COMMA, kPrimaryModifier}
 {
 }
 
@@ -360,7 +360,7 @@ void OpenSettingsShortcut::activate(entt::dispatcher& dispatcher)
 /* ------------------------------------------------------------------------------------ */
 
 OpenComponentEditorShortcut::OpenComponentEditorShortcut()
-    : Shortcut {cen::scancodes::c, primary_modifier | cen::key_mod::lshift}
+    : Shortcut {cen::scancodes::c, kPrimaryModifier | cen::key_mod::lshift}
 {
 }
 

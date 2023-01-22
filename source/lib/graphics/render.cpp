@@ -29,7 +29,7 @@
 namespace tactile::ui {
 namespace {
 
-inline constexpr int ellipse_segments = 50;
+inline constexpr int kEllipseSegments = 50;
 
 void path_elliptical_arc_to(ImDrawList* self,
                             const ImVec2& center,
@@ -103,7 +103,7 @@ void draw_ellipse(const ImVec2& center,
               center,
               radius,
               color,
-              ellipse_segments,
+              kEllipseSegments,
               thickness);
 }
 

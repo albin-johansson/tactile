@@ -30,7 +30,7 @@
 namespace tactile {
 namespace {
 
-inline constexpr float is_dark_threshold = 0.3f;
+inline constexpr float kIsDarkThreshold = 0.3f;
 
 // https://en.wikipedia.org/wiki/SRGB#From_sRGB_to_CIE_XYZ
 [[nodiscard]] auto to_linear(const float channel) noexcept(TACTILE_COMPILER_MSVC) -> float
@@ -155,7 +155,7 @@ auto Color::get_luminance() const -> float
 
 auto Color::is_dark() const -> bool
 {
-  return get_luminance() < is_dark_threshold;
+  return get_luminance() < kIsDarkThreshold;
 }
 
 auto Color::as_rgb() const -> String

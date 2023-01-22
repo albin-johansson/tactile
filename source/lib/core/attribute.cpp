@@ -74,7 +74,7 @@ void Attribute::reset_to_default(const AttributeType type)
       break;
 
     case AttributeType::Color:
-      set_value<color_type>(black);
+      set_value<color_type>(kBlack);
       break;
 
     case AttributeType::Object:
@@ -125,7 +125,7 @@ auto Attribute::has_default_value() const -> bool
     return *obj == ObjectRef {};
   }
   else if (const auto* color = try_as_color()) {
-    return *color == black;
+    return *color == kBlack;
   }
   else {
     throw TactileError {"Invalid property type"};
@@ -135,43 +135,43 @@ auto Attribute::has_default_value() const -> bool
 auto Attribute::get_type() const -> AttributeType
 {
   switch (mValue.index()) {
-    case string_type_index:
+    case kStringTypeIndex:
       return AttributeType::String;
 
-    case int_type_index:
+    case kIntTypeIndex:
       return AttributeType::Int;
 
-    case int2_type_index:
+    case kInt2TypeIndex:
       return AttributeType::Int2;
 
-    case int3_type_index:
+    case kInt3TypeIndex:
       return AttributeType::Int3;
 
-    case int4_type_index:
+    case kInt4TypeIndex:
       return AttributeType::Int4;
 
-    case float_type_index:
+    case kFloatTypeIndex:
       return AttributeType::Float;
 
-    case float2_type_index:
+    case kFloat2TypeIndex:
       return AttributeType::Float2;
 
-    case float3_type_index:
+    case kFloat3TypeIndex:
       return AttributeType::Float3;
 
-    case float4_type_index:
+    case kFloat4TypeIndex:
       return AttributeType::Float4;
 
-    case bool_type_index:
+    case kBoolTypeIndex:
       return AttributeType::Bool;
 
-    case color_type_index:
+    case kColorTypeIndex:
       return AttributeType::Color;
 
-    case path_type_index:
+    case kPathTypeIndex:
       return AttributeType::Path;
 
-    case obj_ref_type_index:
+    case kObjRefTypeIndex:
       return AttributeType::Object;
 
     default:

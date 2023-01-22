@@ -29,7 +29,7 @@
 namespace tactile::ui {
 namespace {
 
-inline constinit bool show_dialog = false;
+inline constinit bool gOpenDialog = false;
 
 void ui_dependency_row(const char* lib, const char* license)
 {
@@ -46,7 +46,7 @@ void ui_dependency_row(const char* lib, const char* license)
 
 void open_credits_dialog()
 {
-  show_dialog = true;
+  gOpenDialog = true;
 }
 
 void update_credits_dialog()
@@ -59,9 +59,9 @@ void update_credits_dialog()
       .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
-  if (show_dialog) {
+  if (gOpenDialog) {
     options.flags |= UI_DIALOG_FLAG_OPEN;
-    show_dialog = false;
+    gOpenDialog = false;
   }
 
   if (const ScopedDialog dialog {options}; dialog.was_opened()) {

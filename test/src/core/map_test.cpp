@@ -225,10 +225,10 @@ TEST_SUITE("Map")
     REQUIRE(tileset_ref.get_first_tile() == layer.tile_at({0, 1}));
     REQUIRE(tileset_ref.get_last_tile() == layer.tile_at({1, 3}));
 
-    REQUIRE(empty_tile == layer.tile_at({0, 0}));
-    REQUIRE(empty_tile == layer.tile_at({2, 1}));
-    REQUIRE(empty_tile == layer.tile_at({3, 2}));
-    REQUIRE(empty_tile == layer.tile_at({4, 4}));
+    REQUIRE(kEmptyTile == layer.tile_at({0, 0}));
+    REQUIRE(kEmptyTile == layer.tile_at({2, 1}));
+    REQUIRE(kEmptyTile == layer.tile_at({3, 2}));
+    REQUIRE(kEmptyTile == layer.tile_at({4, 4}));
   }
 
   TEST_CASE("set_tile_size")

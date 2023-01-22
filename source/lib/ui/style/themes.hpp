@@ -51,14 +51,14 @@ enum class EditorTheme {
   Rose = 18,
 };
 
-inline constexpr Array<EditorTheme, 4> light_themes [[maybe_unused]] = {
+inline constexpr Array<EditorTheme, 4> kLightThemes [[maybe_unused]] = {
     EditorTheme::DearLight,
     EditorTheme::Lavender,
     EditorTheme::Frost,
     EditorTheme::Rose,
 };
 
-inline constexpr Array<EditorTheme, 13> dark_themes [[maybe_unused]] = {
+inline constexpr Array<EditorTheme, 13> kDarkThemes [[maybe_unused]] = {
     EditorTheme::DearDark,
     EditorTheme::Ruby,
     EditorTheme::Sapphire,

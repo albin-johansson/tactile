@@ -27,12 +27,12 @@
 namespace tactile::ui {
 namespace {
 
-inline constexpr ImVec4 white {0xFF, 0xFF, 0xFF, 0xFF};
-inline constexpr ImVec4 black {0x00, 0x00, 0x00, 0xFF};
+inline constexpr ImVec4 kWhiteVec4 {0xFF, 0xFF, 0xFF, 0xFF};
+inline constexpr ImVec4 kBlackVec4 {0x00, 0x00, 0x00, 0xFF};
 
 [[nodiscard]] auto get_text_fg(const ImGuiCol bg) -> ImVec4
 {
-  return is_dark(bg) ? white : black;
+  return is_dark(bg) ? kWhiteVec4 : kBlackVec4;
 }
 
 [[nodiscard]] auto get_tab_item_text_color(const ImGuiTabItemFlags flags) -> ImVec4

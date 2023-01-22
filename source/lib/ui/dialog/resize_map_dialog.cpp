@@ -31,17 +31,21 @@
 namespace tactile::ui {
 namespace {
 
-inline constinit uint64 dialog_row_count = 0;
-inline constinit uint64 dialog_column_count = 0;
-inline constinit bool show_dialog = false;
+struct ResizeMapDialogState final {
+  uint64 row_count {};
+  uint64 column_count {};
+  bool open_dialog {};
+};
+
+inline constinit ResizeMapDialogState gDialogState;
 
 }  // namespace
 
 void open_resize_map_dialog(const TileExtent current_extent)
 {
-  dialog_row_count = current_extent.rows;
-  dialog_column_count = current_extent.cols;
-  show_dialog = true;
+  gDialogState.row_count = current_extent.rows;
+  gDialogState.column_count = current_extent.cols;
+  gDialogState.open_dialog = true;
 }
 
 void update_resize_map_dialog(entt::dispatcher& dispatcher)
@@ -55,9 +59,9 @@ void update_resize_map_dialog(entt::dispatcher& dispatcher)
       .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
-  if (show_dialog) {
+  if (gDialogState.open_dialog) {
     options.flags |= UI_DIALOG_FLAG_OPEN;
-    show_dialog = false;
+    gDialogState.open_dialog = false;
   }
 
   DialogAction action {DialogAction::None};
@@ -71,7 +75,7 @@ void update_resize_map_dialog(entt::dispatcher& dispatcher)
     ImGui::SetNextItemWidth(-min_float);
     ImGui::DragScalar("##Rows",
                       ImGuiDataType_U64,
-                      &dialog_row_count,
+                      &gDialogState.row_count,
                       1.0f,
                       &min_value,
                       &max_value);
@@ -81,14 +85,14 @@ void update_resize_map_dialog(entt::dispatcher& dispatcher)
     ImGui::SameLine();
     ImGui::DragScalar("##Columns",
                       ImGuiDataType_U64,
-                      &dialog_column_count,
+                      &gDialogState.column_count,
                       1.0f,
                       &min_value,
                       &max_value);
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<ResizeMapEvent>(dialog_row_count, dialog_column_count);
+    dispatcher.enqueue<ResizeMapEvent>(gDialogState.row_count, gDialogState.column_count);
   }
 }
 

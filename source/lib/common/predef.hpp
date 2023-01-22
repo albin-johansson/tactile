@@ -51,35 +51,35 @@
 namespace tactile {
 
 #if TACTILE_DEBUG
-inline constexpr bool is_debug_build = true;
-inline constexpr bool is_release_build = false;
+inline constexpr bool kIsDebugBuild = true;
+inline constexpr bool kIsReleaseBuild = false;
 #else
-inline constexpr bool is_debug_build = false;
-inline constexpr bool is_release_build = true;
+inline constexpr bool kIsDebugBuild = false;
+inline constexpr bool kIsReleaseBuild = true;
 #endif  // TACTILE_DEBUG
 
 #if TACTILE_OS_WINDOWS
-inline constexpr bool on_windows = true;
+inline constexpr bool kOnWindows = true;
 #else
-inline constexpr bool on_windows = false;
+inline constexpr bool kOnWindows = false;
 #endif  // TACTILE_OS_WINDOWS
 
 #if TACTILE_OS_MACOS
-inline constexpr bool on_macos = true;
+inline constexpr bool kOnMacos = true;
 #else
-inline constexpr bool on_macos = false;
+inline constexpr bool kOnMacos = false;
 #endif  // TACTILE_OS_MACOS
 
 #if TACTILE_OS_LINUX
-inline constexpr bool on_linux = true;
+inline constexpr bool kOnLinux = true;
 #else
-inline constexpr bool on_linux = false;
+inline constexpr bool kOnLinux = false;
 #endif  // TACTILE_OS_LINUX
 
 #ifdef TACTILE_BUILD_APP_BUNDLE
-inline constexpr bool is_app_bundle = true;
+inline constexpr bool kIsAppBundle = true;
 #else
-inline constexpr bool is_app_bundle = false;
+inline constexpr bool kIsAppBundle = false;
 #endif  // TACTILE_BUILD_APP_BUNDLE
 
 }  // namespace tactile

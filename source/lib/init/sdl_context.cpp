@@ -32,7 +32,7 @@
 namespace tactile {
 namespace {
 
-inline constexpr uint32 window_flags = cen::window::hidden | cen::window::resizable |
+inline constexpr uint32 kWindowFlags = cen::window::hidden | cen::window::resizable |
                                        cen::window::opengl | cen::window::allow_high_dpi;
 
 void init_sdl_attributes()
@@ -46,7 +46,7 @@ void init_sdl_attributes()
   // Make sure we use OpenGL
   SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 
-  if constexpr (on_macos) {
+  if constexpr (kOnMacos) {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
   }
 
@@ -64,7 +64,7 @@ SDLContext::SDLContext()
 {
   init_sdl_attributes();
 
-  auto& window = mWindow.emplace("Tactile", cen::window::default_size(), window_flags);
+  auto& window = mWindow.emplace("Tactile", cen::window::default_size(), kWindowFlags);
   auto& gl = mGL.emplace(window);
   gl.make_current(window);
 

@@ -86,9 +86,9 @@ void ui_theme_combo()
 
   const auto current_theme = human_readable_name(dialog_ui_settings.get_theme());
   if (const Combo combo {"##Theme", current_theme.data()}; combo.is_open()) {
-    show_themes(light_themes);
+    show_themes(kLightThemes);
     ImGui::Separator();
-    show_themes(dark_themes);
+    show_themes(kDarkThemes);
   }
 }
 
@@ -292,8 +292,8 @@ void update_appearance_tab(const Strings& lang)
                             ImGuiDataType_S32,
                             &font_size,
                             1.0f,
-                            &min_font_size,
-                            &max_font_size)) {
+                            &kMinFontSize,
+                            &kMaxFontSize)) {
         // TODO fix issue when set to non power of two, and then increased/decrease with
         // shortcuts (which causes crash due to assertions)
         dialog_ui_settings.set_font_size(font_size - font_size % 2);

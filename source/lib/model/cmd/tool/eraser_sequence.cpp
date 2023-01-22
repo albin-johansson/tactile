@@ -53,7 +53,7 @@ void EraserSequence::redo()
   auto& layer = mMap->get_invisible_root().get_tile_layer(mLayerId);
 
   for (const auto& [position, _]: mOldState) {
-    layer.set_tile(position, empty_tile);
+    layer.set_tile(position, kEmptyTile);
   }
 }
 

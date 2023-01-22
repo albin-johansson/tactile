@@ -36,7 +36,7 @@ TEST_SUITE("Filesystem")
 
   TEST_CASE("has_home_prefix")
   {
-    const auto home = env_var(on_windows ? "USERPROFILE" : "HOME").value();
+    const auto home = env_var(kOnWindows ? "USERPROFILE" : "HOME").value();
 
     REQUIRE(!has_home_prefix(""));
     REQUIRE(!has_home_prefix("foo.cpp"));
@@ -52,7 +52,7 @@ TEST_SUITE("Filesystem")
 
   TEST_CASE("use_short_home_prefix")
   {
-    const auto home = env_var(on_windows ? "USERPROFILE" : "HOME").value();
+    const auto home = env_var(kOnWindows ? "USERPROFILE" : "HOME").value();
 
     REQUIRE("~" == use_short_home_prefix(Path {home}));
     REQUIRE("~/" == use_short_home_prefix(Path {home + '/'}));

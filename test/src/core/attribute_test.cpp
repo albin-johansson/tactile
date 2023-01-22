@@ -379,7 +379,7 @@ TEST_SUITE("Attribute")
     const Attribute f3 = Float3 {1.0f, 2.0f, 3.0f};
     const Attribute f4 = Float4 {1.0f, 2.0f, 3.0f, 4.0f};
     const Attribute b {true};
-    const Attribute c {white};
+    const Attribute c {kWhite};
     const Attribute p = Path {"foo.txt"};
     const Attribute o = ObjectRef {10};
 

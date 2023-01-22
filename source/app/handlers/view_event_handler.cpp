@@ -80,7 +80,7 @@ void on_reset_font_size(const ResetFontSizeEvent&)
 {
   spdlog::trace("ResetFontSizeEvent");
 
-  get_settings().set_font_size(ui::def_font_size);
+  get_settings().set_font_size(ui::kDefFontSize);
   request_font_reload();
 }
 
@@ -89,7 +89,7 @@ void on_increase_font_size(const IncreaseFontSizeEvent&)
   spdlog::trace("IncreaseFontSizeEvent");
   auto& settings = get_settings();
 
-  TACTILE_ASSERT(settings.get_font_size() + 2 <= ui::max_font_size);
+  TACTILE_ASSERT(settings.get_font_size() + 2 <= ui::kMaxFontSize);
   settings.set_font_size(settings.get_font_size() + 2);
 
   request_font_reload();
@@ -100,7 +100,7 @@ void on_decrease_font_size(const DecreaseFontSizeEvent&)
   spdlog::trace("DecreaseFontSizeEvent");
   auto& settings = get_settings();
 
-  TACTILE_ASSERT(settings.get_font_size() - 2 >= ui::min_font_size);
+  TACTILE_ASSERT(settings.get_font_size() - 2 >= ui::kMinFontSize);
   settings.set_font_size(settings.get_font_size() - 2);
 
   request_font_reload();

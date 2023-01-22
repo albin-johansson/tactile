@@ -264,7 +264,7 @@ void add_tile_layer(const ir::MapData& map,
   const auto cols = tile_layer.extent.cols;
   invoke_mn(rows, cols, [&](const usize row, const usize col) {
     const auto tile_id = tile_layer.tiles[row][col];
-    if (tile_id != empty_tile) {
+    if (tile_id != kEmptyTile) {
       const auto& tileset = map.find_tileset_with_tile(tile_id);
 
       constexpr int32 tile_offset = 65'536;

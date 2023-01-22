@@ -72,19 +72,19 @@ concept SomeAttributeType = std::same_as<T, String> ||  //
 /// Represents an "attribute" value, used by both property and component facilities.
 class Attribute final {
   // These are indices into the value type variant types
-  inline constexpr static usize string_type_index = 0;
-  inline constexpr static usize int_type_index = 1;
-  inline constexpr static usize int2_type_index = 2;
-  inline constexpr static usize int3_type_index = 3;
-  inline constexpr static usize int4_type_index = 4;
-  inline constexpr static usize float_type_index = 5;
-  inline constexpr static usize float2_type_index = 6;
-  inline constexpr static usize float3_type_index = 7;
-  inline constexpr static usize float4_type_index = 8;
-  inline constexpr static usize bool_type_index = 9;
-  inline constexpr static usize color_type_index = 10;
-  inline constexpr static usize path_type_index = 11;
-  inline constexpr static usize obj_ref_type_index = 12;
+  inline constexpr static usize kStringTypeIndex = 0;
+  inline constexpr static usize kIntTypeIndex = 1;
+  inline constexpr static usize kInt2TypeIndex = 2;
+  inline constexpr static usize kInt3TypeIndex = 3;
+  inline constexpr static usize kInt4TypeIndex = 4;
+  inline constexpr static usize kFloatTypeIndex = 5;
+  inline constexpr static usize kFloat2TypeIndex = 6;
+  inline constexpr static usize kFloat3TypeIndex = 7;
+  inline constexpr static usize kFloat4TypeIndex = 8;
+  inline constexpr static usize kBoolTypeIndex = 9;
+  inline constexpr static usize kColorTypeIndex = 10;
+  inline constexpr static usize kPathTypeIndex = 11;
+  inline constexpr static usize kObjRefTypeIndex = 12;
 
  public:
   using string_type = String;

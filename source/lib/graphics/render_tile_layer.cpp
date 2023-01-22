@@ -41,7 +41,7 @@ void render_tile_layer(Graphics& graphics,
     for (auto col = info.bounds.begin.col(); col < end_col; ++col) {
       const TilePos pos {row, col};
       const auto tile_id = layer.tile_at(pos);
-      if (tile_id.has_value() && tile_id != empty_tile) {
+      if (tile_id.has_value() && tile_id != kEmptyTile) {
         render_tile(graphics, map, *tile_id, pos, tile_opacity);
       }
     }

@@ -399,8 +399,8 @@ void emit_external_tileset_file(const Path& path,
   pugi::xml_document document;
 
   auto root = document.append_child("tileset");
-  root.append_attribute("version").set_value(tiled_xml_format_version);
-  root.append_attribute("tiledversion").set_value(tiled_version);
+  root.append_attribute("version").set_value(kTiledXmlFormatVersion);
+  root.append_attribute("tiledversion").set_value(kTiledVersion);
 
   append_common_tileset_attributes(root, tileset, dir);
 
@@ -427,8 +427,8 @@ void append_root(pugi::xml_document& document, const EmitInfo& info)
   const auto& map = info.data();
   auto root = document.append_child("map");
 
-  root.append_attribute("version").set_value(tiled_xml_format_version);
-  root.append_attribute("tiledversion").set_value(tiled_version);
+  root.append_attribute("version").set_value(kTiledXmlFormatVersion);
+  root.append_attribute("tiledversion").set_value(kTiledVersion);
 
   root.append_attribute("orientation").set_value("orthogonal");
   root.append_attribute("renderorder").set_value("right-down");
