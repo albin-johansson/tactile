@@ -34,19 +34,23 @@
 namespace tactile::ui {
 namespace {
 
-inline Maybe<UUID> dialog_layer_id;
-inline String dialog_old_name;
-inline StringBuffer dialog_name_buffer;
-inline constinit bool open_dialog = false;
+struct RenameLayerDialogState final {
+  Maybe<UUID> layer_id;
+  String old_name;
+  StringBuffer name_buffer {};
+  bool open_dialog {};
+};
+
+inline RenameLayerDialogState gDialogState;
 
 }  // namespace
 
 void open_rename_layer_dialog(const UUID& layer_id, String current_name)
 {
-  dialog_layer_id = layer_id;
-  dialog_old_name = std::move(current_name);
-  dialog_name_buffer = dialog_old_name;
-  open_dialog = true;
+  gDialogState.layer_id = layer_id;
+  gDialogState.old_name = std::move(current_name);
+  gDialogState.name_buffer = gDialogState.old_name;
+  gDialogState.open_dialog = true;
 }
 
 void update_rename_layer_dialog(entt::dispatcher& dispatcher)
@@ -59,15 +63,15 @@ void update_rename_layer_dialog(entt::dispatcher& dispatcher)
       .accept_label = lang.misc.rename.c_str(),
   };
 
-  const bool should_acquire_focus = open_dialog;
+  const bool should_acquire_focus = gDialogState.open_dialog;
 
-  if (open_dialog) {
+  if (gDialogState.open_dialog) {
     options.flags |= UI_DIALOG_FLAG_OPEN;
-    open_dialog = false;
+    gDialogState.open_dialog = false;
   }
 
-  if (auto new_name = dialog_name_buffer.as_string_view();
-      !new_name.empty() && new_name != dialog_old_name) {
+  if (auto new_name = gDialogState.name_buffer.as_string_view();
+      !new_name.empty() && new_name != gDialogState.old_name) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
@@ -76,12 +80,14 @@ void update_rename_layer_dialog(entt::dispatcher& dispatcher)
     if (should_acquire_focus) {
       ImGui::SetKeyboardFocusHere();
     }
-    ImGui::InputText("##Input", dialog_name_buffer.data(), sizeof dialog_name_buffer);
+    ImGui::InputText("##Input",
+                     gDialogState.name_buffer.data(),
+                     sizeof gDialogState.name_buffer);
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<RenameLayerEvent>(dialog_layer_id.value(),
-                                         dialog_name_buffer.as_string());
+    dispatcher.enqueue<RenameLayerEvent>(gDialogState.layer_id.value(),
+                                         gDialogState.name_buffer.as_string());
   }
 }
 

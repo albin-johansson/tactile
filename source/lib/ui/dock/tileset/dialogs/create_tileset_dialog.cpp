@@ -36,10 +36,14 @@
 namespace tactile::ui {
 namespace {
 
-inline Path dialog_image_path;
-inline StringBuffer dialog_image_path_preview_buffer;
-inline Int2 dialog_tile_size {32, 32};
-inline constinit bool open_dialog = false;
+struct CreateTilesetDialogState final {
+  Path image_path;
+  StringBuffer image_path_preview_buffer {};
+  Int2 tile_size {32, 32};
+  bool open_dialog {};
+};
+
+inline CreateTilesetDialogState gDialogState;
 
 void select_image_file()
 {
@@ -48,14 +52,14 @@ void select_image_file()
     return;
   }
 
-  dialog_image_path = dialog.path();
-  const auto image_path_str = dialog_image_path.string();
+  gDialogState.image_path = dialog.path();
+  const auto image_path_str = gDialogState.image_path.string();
 
-  if (image_path_str.size() > dialog_image_path_preview_buffer.size()) {
-    dialog_image_path_preview_buffer = dialog_image_path.filename().string();
+  if (image_path_str.size() > gDialogState.image_path_preview_buffer.size()) {
+    gDialogState.image_path_preview_buffer = gDialogState.image_path.filename().string();
   }
   else {
-    dialog_image_path_preview_buffer = image_path_str;
+    gDialogState.image_path_preview_buffer = image_path_str;
   }
 }
 
@@ -63,11 +67,10 @@ void select_image_file()
 
 void open_create_tileset_dialog()
 {
-  dialog_image_path_preview_buffer.clear();
-  dialog_image_path.clear();
-  dialog_tile_size = get_settings().get_preferred_tile_size();
-
-  open_dialog = true;
+  gDialogState.image_path_preview_buffer.clear();
+  gDialogState.image_path.clear();
+  gDialogState.tile_size = get_settings().get_preferred_tile_size();
+  gDialogState.open_dialog = true;
 }
 
 void update_create_tileset_dialog(entt::dispatcher& dispatcher)
@@ -80,12 +83,13 @@ void update_create_tileset_dialog(entt::dispatcher& dispatcher)
       .accept_label = lang.misc.create.c_str(),
   };
 
-  if (open_dialog) {
+  if (gDialogState.open_dialog) {
     options.flags |= UI_DIALOG_FLAG_OPEN;
-    open_dialog = false;
+    gDialogState.open_dialog = false;
   }
 
-  if (!dialog_image_path.empty() && dialog_tile_size.x > 0 && dialog_tile_size.y > 0) {
+  if (!gDialogState.image_path.empty() &&  //
+      gDialogState.tile_size.x > 0 && gDialogState.tile_size.y > 0) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
@@ -101,16 +105,24 @@ void update_create_tileset_dialog(entt::dispatcher& dispatcher)
     ImGui::SameLine();
     ImGui::InputTextWithHint("##Source",
                              lang.misc.tileset_image_input_hint.c_str(),
-                             dialog_image_path_preview_buffer.data(),
-                             sizeof dialog_image_path_preview_buffer,
+                             gDialogState.image_path_preview_buffer.data(),
+                             sizeof gDialogState.image_path_preview_buffer,
                              ImGuiInputTextFlags_ReadOnly);
 
-    ImGui::DragInt(lang.misc.tile_width.c_str(), &dialog_tile_size.x, 1.0f, 1, 10'000);
-    ImGui::DragInt(lang.misc.tile_height.c_str(), &dialog_tile_size.y, 1.0f, 1, 10'000);
+    ImGui::DragInt(lang.misc.tile_width.c_str(),
+                   &gDialogState.tile_size.x,
+                   1.0f,
+                   1,
+                   10'000);
+    ImGui::DragInt(lang.misc.tile_height.c_str(),
+                   &gDialogState.tile_size.y,
+                   1.0f,
+                   1,
+                   10'000);
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<LoadTilesetEvent>(dialog_image_path, dialog_tile_size);
+    dispatcher.enqueue<LoadTilesetEvent>(gDialogState.image_path, gDialogState.tile_size);
   }
 }
 

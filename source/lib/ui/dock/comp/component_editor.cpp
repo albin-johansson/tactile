@@ -48,18 +48,22 @@
 namespace tactile::ui {
 namespace {
 
-inline constexpr const char* component_action_popup_id = "##ComponentActionPopup";
+inline constexpr const char* kComponentActionPopupId = "##ComponentActionPopup";
 
-inline Maybe<UUID> dialog_active_component;
-inline constinit bool open_dialog = false;
+struct ComponentEditorState final {
+  Maybe<UUID> active_component_id;
+  bool open_dialog {};
+};
+
+inline ComponentEditorState gEditorState;
 
 void ui_component_action_popup(const Strings& lang,
                                const ComponentIndex* component_index,
                                entt::dispatcher& dispatcher)
 {
-  if (const Popup popup {component_action_popup_id}; popup.is_open()) {
+  if (const Popup popup {kComponentActionPopupId}; popup.is_open()) {
     if (ImGui::MenuItem(lang.action.rename_component.c_str())) {
-      const auto active_component_id = dialog_active_component.value();
+      const auto active_component_id = gEditorState.active_component_id.value();
       const auto& active_component_def = component_index->get_comp(active_component_id);
       open_rename_component_dialog(active_component_id, active_component_def.get_name());
     }
@@ -67,20 +71,20 @@ void ui_component_action_popup(const Strings& lang,
     ImGui::Separator();
 
     if (ImGui::MenuItem(lang.action.remove_component.c_str())) {
-      dispatcher.enqueue<UndefComponentEvent>(dialog_active_component.value());
-      dialog_active_component.reset();
+      dispatcher.enqueue<UndefComponentEvent>(gEditorState.active_component_id.value());
+      gEditorState.active_component_id.reset();
     }
   }
 }
 
 void ui_component_combo(const ComponentIndex* component_index)
 {
-  if (!dialog_active_component) {
-    dialog_active_component = component_index->begin()->first;
+  if (!gEditorState.active_component_id) {
+    gEditorState.active_component_id = component_index->begin()->first;
   }
 
   const auto& active_component_def =
-      component_index->get_comp(dialog_active_component.value());
+      component_index->get_comp(gEditorState.active_component_id.value());
   const auto& active_component_name = active_component_def.get_name();
 
   if (const Combo combo {"##ComponentCombo", active_component_name.c_str()};
@@ -88,7 +92,7 @@ void ui_component_combo(const ComponentIndex* component_index)
     for (const auto& [component_id, component_def]: *component_index) {
       const auto& component_name = component_def.get_name();
       if (Selectable::Property(component_name.c_str())) {
-        dialog_active_component = component_def.get_uuid();
+        gEditorState.active_component_id = component_def.get_uuid();
       }
     }
   }
@@ -111,7 +115,7 @@ void ui_component_selector_row(const Strings& lang,
 
   ImGui::SameLine();
   if (ui_button(TAC_ICON_THREE_DOTS, lang.tooltip.show_component_actions.c_str())) {
-    ImGui::OpenPopup(component_action_popup_id);
+    ImGui::OpenPopup(kComponentActionPopupId);
   }
 
   ui_component_action_popup(lang, component_index, dispatcher);
@@ -124,7 +128,7 @@ void ui_component_attribute_row_name_popup(const Strings& lang,
 {
   if (auto popup = Popup::for_item("##ComponentAttributeNamePopup"); popup.is_open()) {
     if (ImGui::MenuItem(lang.action.rename_attribute.c_str())) {
-      open_rename_component_attribute_dialog(dialog_active_component.value(),
+      open_rename_component_attribute_dialog(gEditorState.active_component_id.value(),
                                              attribute_name);
     }
 
@@ -184,7 +188,7 @@ void ui_component_attribute_table(const Strings& lang,
     ui_centered_label(lang.misc.empty_component.c_str());
   }
   else {
-    constexpr auto table_flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_Resizable;
+    const auto table_flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_Resizable;
     if (const Table table {"##ComponentAttributeTable", 3, table_flags};
         table.is_open()) {
       ImGui::TableSetupColumn(lang.misc.name.c_str(), ImGuiTableColumnFlags_WidthStretch);
@@ -205,7 +209,7 @@ void ui_component_attribute_table(const Strings& lang,
   }
 
   if (ui_centered_button(lang.action.create_attribute.c_str())) {
-    open_create_component_attribute_dialog(dialog_active_component.value());
+    open_create_component_attribute_dialog(gEditorState.active_component_id.value());
   }
 }
 
@@ -216,9 +220,9 @@ void open_component_editor_dialog(const DocumentModel& model)
   const auto* component_index = model.require_active_document().find_component_index();
   TACTILE_ASSERT(component_index != nullptr);
 
-  dialog_active_component =
+  gEditorState.active_component_id =
       !component_index->empty() ? Maybe<UUID> {component_index->begin()->first} : nothing;
-  open_dialog = true;
+  gEditorState.open_dialog = true;
 }
 
 void update_component_editor_dialog(const DocumentModel& model,
@@ -232,9 +236,9 @@ void update_component_editor_dialog(const DocumentModel& model,
       .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
-  if (open_dialog) {
+  if (gEditorState.open_dialog) {
     options.flags |= UI_DIALOG_FLAG_OPEN;
-    open_dialog = false;
+    gEditorState.open_dialog = false;
   }
 
   if (const ScopedDialog dialog {options}; dialog.was_opened()) {
@@ -243,8 +247,9 @@ void update_component_editor_dialog(const DocumentModel& model,
     TACTILE_ASSERT(component_index != nullptr);
 
     // Ensure that the active component ID hasn't been invalidated
-    if (dialog_active_component && !component_index->has_comp(*dialog_active_component)) {
-      dialog_active_component.reset();
+    if (gEditorState.active_component_id &&
+        !component_index->has_comp(*gEditorState.active_component_id)) {
+      gEditorState.active_component_id.reset();
     }
 
     if (component_index->empty()) {
@@ -259,9 +264,9 @@ void update_component_editor_dialog(const DocumentModel& model,
 
       ImGui::Separator();
 
-      if (dialog_active_component) {
+      if (gEditorState.active_component_id) {
         const auto& active_component_def =
-            component_index->get_comp(*dialog_active_component);
+            component_index->get_comp(*gEditorState.active_component_id);
         ui_component_attribute_table(lang, active_component_def, dispatcher);
       }
     }

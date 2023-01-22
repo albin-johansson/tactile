@@ -33,15 +33,19 @@
 namespace tactile::ui {
 namespace {
 
-inline StringBuffer dialog_component_name_buffer;
-inline constinit bool open_dialog = false;
+struct DefineComponentDialogState final {
+  StringBuffer component_name_buffer {};
+  bool open_dialog {};
+};
+
+inline DefineComponentDialogState gDialogState;
 
 }  // namespace
 
 void open_define_component_dialog()
 {
-  dialog_component_name_buffer.clear();
-  open_dialog = true;
+  gDialogState.component_name_buffer.clear();
+  gDialogState.open_dialog = true;
 }
 
 void update_define_component_dialog(const DocumentModel& model,
@@ -55,12 +59,12 @@ void update_define_component_dialog(const DocumentModel& model,
       .accept_label = lang.misc.create.c_str(),
   };
 
-  if (open_dialog) {
+  if (gDialogState.open_dialog) {
     options.flags |= UI_DIALOG_FLAG_OPEN;
-    open_dialog = false;
+    gDialogState.open_dialog = false;
   }
 
-  const auto current_name = dialog_component_name_buffer.as_string_view();
+  const auto current_name = gDialogState.component_name_buffer.as_string_view();
   const auto* component_index = model.require_active_document().find_component_index();
 
   if (!current_name.empty() &&  //
@@ -72,12 +76,13 @@ void update_define_component_dialog(const DocumentModel& model,
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
     ImGui::InputTextWithHint("##Name",
                              lang.misc.component_name_hint.c_str(),
-                             dialog_component_name_buffer.data(),
-                             sizeof dialog_component_name_buffer);
+                             gDialogState.component_name_buffer.data(),
+                             sizeof gDialogState.component_name_buffer);
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<DefineComponentEvent>(dialog_component_name_buffer.as_string());
+    dispatcher.enqueue<DefineComponentEvent>(
+        gDialogState.component_name_buffer.as_string());
   }
 }
 

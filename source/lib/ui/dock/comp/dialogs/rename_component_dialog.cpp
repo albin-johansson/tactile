@@ -35,20 +35,23 @@
 namespace tactile::ui {
 namespace {
 
-inline Maybe<UUID> dialog_component_id;
-inline String dialog_old_component_name;
-inline StringBuffer dialog_component_name_buffer;
-inline constinit bool open_dialog = false;
+struct RenameComponentDialogState final {
+  Maybe<UUID> component_id;
+  String old_component_name;
+  StringBuffer component_name_buffer;
+  bool open_dialog {};
+};
+
+inline RenameComponentDialogState gDialogState;
 
 }  // namespace
 
 void open_rename_component_dialog(const UUID& component_id, String current_name)
 {
-  dialog_component_id = component_id;
-  dialog_component_name_buffer = current_name;
-  dialog_old_component_name = std::move(current_name);
-
-  open_dialog = true;
+  gDialogState.component_id = component_id;
+  gDialogState.component_name_buffer = current_name;
+  gDialogState.old_component_name = std::move(current_name);
+  gDialogState.open_dialog = true;
 }
 
 void update_rename_component_dialog(const DocumentModel& model,
@@ -59,10 +62,11 @@ void update_rename_component_dialog(const DocumentModel& model,
   const auto& document = model.require_active_document();
   const auto* component_index = document.find_component_index();
 
-  if (dialog_component_id.has_value() &&  //
-      component_index != nullptr && !component_index->has_comp(*dialog_component_id)) {
-    dialog_component_id.reset();
-    open_dialog = false;
+  if (gDialogState.component_id.has_value() &&  //
+      component_index != nullptr &&
+      !component_index->has_comp(*gDialogState.component_id)) {
+    gDialogState.component_id.reset();
+    gDialogState.open_dialog = false;
     return;
   }
 
@@ -72,14 +76,14 @@ void update_rename_component_dialog(const DocumentModel& model,
       .accept_label = lang.misc.rename.c_str(),
   };
 
-  const bool should_acquire_focus = open_dialog;
+  const bool should_acquire_focus = gDialogState.open_dialog;
 
-  if (open_dialog) {
+  if (gDialogState.open_dialog) {
     options.flags |= UI_DIALOG_FLAG_OPEN;
-    open_dialog = false;
+    gDialogState.open_dialog = false;
   }
 
-  const auto current_name = dialog_component_name_buffer.as_string_view();
+  const auto current_name = gDialogState.component_name_buffer.as_string_view();
   if (!current_name.empty() &&  //
       component_index != nullptr && !component_index->has_comp(current_name)) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
@@ -91,13 +95,14 @@ void update_rename_component_dialog(const DocumentModel& model,
       ImGui::SetKeyboardFocusHere();
     }
     ImGui::InputText("##Input",
-                     dialog_component_name_buffer.data(),
-                     sizeof dialog_component_name_buffer);
+                     gDialogState.component_name_buffer.data(),
+                     sizeof gDialogState.component_name_buffer);
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<RenameComponentEvent>(dialog_component_id.value(),
-                                             dialog_component_name_buffer.as_string());
+    dispatcher.enqueue<RenameComponentEvent>(
+        gDialogState.component_id.value(),
+        gDialogState.component_name_buffer.as_string());
   }
 }
 

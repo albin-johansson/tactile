@@ -30,16 +30,20 @@
 namespace tactile::ui {
 namespace {
 
-inline String dialog_cause;
-inline constinit bool show_dialog = false;
+struct MapParseErrorDialogState final {
+  String cause;
+  bool open_dialog {};
+};
+
+inline MapParseErrorDialogState gDialogState;
 
 }  // namespace
 
 void open_map_parse_error_dialog(const io::ParseError error)
 {
   const auto& lang = get_current_language();
-  dialog_cause = fmt::format("{}: {}", lang.misc.cause, io::to_cause(error));
-  show_dialog = true;
+  gDialogState.cause = fmt::format("{}: {}", lang.misc.cause, io::to_cause(error));
+  gDialogState.open_dialog = true;
 }
 
 void update_map_parse_error_dialog()
@@ -52,14 +56,14 @@ void update_map_parse_error_dialog()
       .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
-  if (show_dialog) {
+  if (gDialogState.open_dialog) {
     options.flags |= UI_DIALOG_FLAG_OPEN;
-    show_dialog = false;
+    gDialogState.open_dialog = false;
   }
 
   if (const ScopedDialog dialog {options}; dialog.was_opened()) {
     ImGui::TextUnformatted(lang.misc.map_parse_error.c_str());
-    ImGui::TextUnformatted(dialog_cause.c_str());
+    ImGui::TextUnformatted(gDialogState.cause.c_str());
   }
 }
 
