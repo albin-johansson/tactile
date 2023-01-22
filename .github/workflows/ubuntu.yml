@@ -16,31 +16,25 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: lukka/get-cmake@latest
-
       - name: Install system dependencies
-        shell: bash
         run: |
           sudo apt update
-          sudo apt install libegl1-mesa-dev libgles2-mesa-dev libgl-dev
-          sudo apt install libasound2-dev
-          sudo apt install libpulse-dev
-          sudo apt install libx11-dev libxmu-dev libxi-dev
-          sudo apt install gcc-11 g++-11
-          sudo apt install xvfb
-
-      - name: Emulate video device
-        shell: bash
-        run: /sbin/start-stop-daemon --start --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 800x600x24 -ac +extension GLX;
-
-      - name: Wait a bit for video device
-        shell: bash
-        run: sleep 3
+          sudo apt install ninja-build \
+                           libegl1-mesa-dev \
+                           libgles2-mesa-dev \
+                           libgl-dev \
+                           libasound2-dev \
+                           libpulse-dev \
+                           libx11-dev \
+                           libxmu-dev \
+                           libxi-dev \
+                           xvfb
 
       - name: Install Boost
         id: install-boost
         uses: MarkusJx/install-boost@v2.4.3
         with:
-          boost_version: 1.80.0
+          boost_version: 1.81.0
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
@@ -56,7 +50,6 @@ jobs:
 
       - name: Install Vcpkg
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
-        shell: bash
         run: |
           git clone https://github.com/microsoft/vcpkg
           ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
@@ -64,31 +57,30 @@ jobs:
 
       - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
-        shell: bash
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
+      - name: Emulate video device
+        run: |
+          /sbin/start-stop-daemon --start \
+                                  --pidfile /tmp/custom_xvfb_99.pid \
+                                  --make-pidfile \
+                                  --background \
+                                  --exec /usr/bin/Xvfb -- :99 -screen 0 800x600x24 -ac +extension GLX;
+          sleep 3
+
       - name: Create build directory
-        shell: bash
         run: mkdir -p build
 
       - name: Generate build files
-        working-directory: ./build
-        shell: bash
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
         env:
-          CC: gcc-11
-          CXX: g++-11
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
+        run: |
+          mkdir build && cd build
+          cmake .. -GNinja -DCMAKE_BUILD_TYPE=Debug
 
       - name: Build
-        working-directory: ./build
-        shell: bash
-        env:
-          CC: gcc-11
-          CXX: g++-11
-        run: ninja
+        run: ninja -C build
 
       - name: Run tests
         working-directory: ./build/test
-        shell: bash
         run: ./TactileTests

@@ -22,7 +22,7 @@ jobs:
         id: install-boost
         uses: MarkusJx/install-boost@v2.4.3
         with:
-          boost_version: 1.80.0
+          boost_version: 1.81.0
           toolset: msvc
 
       - name: Cache Vcpkg
@@ -39,7 +39,6 @@ jobs:
 
       - name: Install Vcpkg
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
-        shell: cmd
         run: |
           git clone https://github.com/microsoft/vcpkg
           .\vcpkg\bootstrap-vcpkg.bat -disableMetrics
@@ -47,26 +46,18 @@ jobs:
 
       - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
-        shell: powershell
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
-      - name: Create build directory
-        shell: cmd
-        run: mkdir build
-
       - name: Generate build files
-        working-directory: ./build
-        shell: cmd
-        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} -GNinja
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
+        run: |
+          mkdir build && cd build
+          cmake .. -GNinja -DCMAKE_BUILD_TYPE=Debug -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}}
 
       - name: Build
-        working-directory: ./build
-        shell: cmd
-        run: ninja
+        run: ninja -C build
 
       - name: Run tests
         working-directory: ./build/test
-        shell: cmd
         run: TactileTests.exe
