@@ -19,7 +19,6 @@
 
 #include "help_menu.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "lang/language.hpp"

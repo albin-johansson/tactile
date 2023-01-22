@@ -112,8 +112,6 @@ void viewport_widget_mouse_wheel_event_handler(const Viewport& viewport,
                                                entt::dispatcher& dispatcher,
                                                const cen::mouse_wheel_event& event)
 {
-  constexpr float scaling = 4.0f;
-
   if (cen::is_active(kPrimaryModifier)) {
     const auto y = event.precise_y();
     if (y > 0) {
@@ -126,6 +124,7 @@ void viewport_widget_mouse_wheel_event_handler(const Viewport& viewport,
   else {
     const Float2 precise {event.precise_x(), event.precise_y()};
 
+    const float scaling = 4.0f;
     auto delta = precise * (viewport.tile_size() / scaling);
     delta.x = -delta.x;
 

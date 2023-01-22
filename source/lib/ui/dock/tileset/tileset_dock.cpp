@@ -94,7 +94,7 @@ void tileset_dock_mouse_wheel_event_handler(const TilesetRef& tileset_ref,
                                             const cen::mouse_wheel_event& event,
                                             entt::dispatcher& dispatcher)
 {
-  constexpr Float2 scaling {4, 4};
+  const Float2 scaling {4, 4};
 
   const auto& viewport = tileset_ref.get_viewport();
   const Float2 precise {event.precise_x(), event.precise_y()};

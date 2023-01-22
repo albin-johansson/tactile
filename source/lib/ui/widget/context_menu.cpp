@@ -19,10 +19,8 @@
 
 #include "context_menu.hpp"
 
-#include <entt/signal/dispatcher.hpp>
-
 #include "common/debug/panic.hpp"
-#include "scoped.hpp"
+#include "ui/widget/scoped.hpp"
 
 namespace tactile::ui {
 
@@ -36,7 +34,7 @@ ContextMenu::ContextMenu(const char* name)
 
 void ContextMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (Popup popup {mName}; popup.is_open()) {
+  if (const Popup popup {mName}; popup.is_open()) {
     on_update(model, dispatcher);
   }
 
