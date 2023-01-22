@@ -34,10 +34,7 @@
 namespace tactile::ui {
 namespace {
 
-constinit LogFilter log_filter;
-constinit bool is_dock_focused = false;
-
-const HashMap<LogLevel, ImVec4> log_level_colors = {
+const HashMap<LogLevel, ImVec4> kLogLevelColors = {
     {LogLevel::trace, ImVec4 {0.93f, 0.51f, 0.93f, 1.00f}},
     {LogLevel::debug, ImVec4 {0.50f, 1.00f, 0.70f, 1.00f}},
     {LogLevel::info, ImVec4 {1.00f, 1.00f, 1.00f, 1.00f}},
@@ -46,54 +43,61 @@ const HashMap<LogLevel, ImVec4> log_level_colors = {
     {LogLevel::critical, ImVec4 {1.00f, 0.00f, 0.00f, 1.00f}},
 };
 
+struct LogDockState final {
+  LogFilter log_filter;
+  bool has_focus {};
+};
+
+inline LogDockState gDockState;
+
 void ui_message_filter_checkboxes()
 {
   const auto& lang = get_current_language();
 
   {
-    bool value = log_filter.trace;
+    bool value = gDockState.log_filter.trace;
     ImGui::Checkbox(lang.misc.log_trace_filter.c_str(), &value);
-    log_filter.trace = value;
+    gDockState.log_filter.trace = value;
   }
 
   ImGui::SameLine();
 
   {
-    bool value = log_filter.debug;
+    bool value = gDockState.log_filter.debug;
     ImGui::Checkbox(lang.misc.log_debug_filter.c_str(), &value);
-    log_filter.debug = value;
+    gDockState.log_filter.debug = value;
   }
 
   ImGui::SameLine();
 
   {
-    bool value = log_filter.info;
+    bool value = gDockState.log_filter.info;
     ImGui::Checkbox(lang.misc.log_info_filter.c_str(), &value);
-    log_filter.info = value;
+    gDockState.log_filter.info = value;
   }
 
   ImGui::SameLine();
 
   {
-    bool value = log_filter.warn;
+    bool value = gDockState.log_filter.warn;
     ImGui::Checkbox(lang.misc.log_warn_filter.c_str(), &value);
-    log_filter.warn = value;
+    gDockState.log_filter.warn = value;
   }
 
   ImGui::SameLine();
 
   {
-    bool value = log_filter.error;
+    bool value = gDockState.log_filter.error;
     ImGui::Checkbox(lang.misc.log_error_filter.c_str(), &value);
-    log_filter.error = value;
+    gDockState.log_filter.error = value;
   }
 
   ImGui::SameLine();
 
   {
-    bool value = log_filter.critical;
+    bool value = gDockState.log_filter.critical;
     ImGui::Checkbox(lang.misc.log_critical_filter.c_str(), &value);
-    log_filter.critical = value;
+    gDockState.log_filter.critical = value;
   }
 }
 
@@ -118,22 +122,22 @@ void ui_logged_message_legend_overlay(const Strings& lang)
   ImGui::SetNextWindowBgAlpha(overlay_opacity);
 
   if (const Window overlay {"##LegendOverlay", overlay_window_flags}; overlay.is_open()) {
-    ImGui::TextColored(lookup_in(log_level_colors, LogLevel::trace),
+    ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::trace),
                        "%s",
                        lang.misc.log_trace_filter.c_str());
-    ImGui::TextColored(lookup_in(log_level_colors, LogLevel::debug),
+    ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::debug),
                        "%s",
                        lang.misc.log_debug_filter.c_str());
-    ImGui::TextColored(lookup_in(log_level_colors, LogLevel::info),
+    ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::info),
                        "%s",
                        lang.misc.log_info_filter.c_str());
-    ImGui::TextColored(lookup_in(log_level_colors, LogLevel::warn),
+    ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::warn),
                        "%s",
                        lang.misc.log_warn_filter.c_str());
-    ImGui::TextColored(lookup_in(log_level_colors, LogLevel::err),
+    ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::err),
                        "%s",
                        lang.misc.log_error_filter.c_str());
-    ImGui::TextColored(lookup_in(log_level_colors, LogLevel::critical),
+    ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::critical),
                        "%s",
                        lang.misc.log_critical_filter.c_str());
   }
@@ -143,20 +147,20 @@ void ui_logged_message_view(const Strings& lang, const usize message_count)
 {
   const StyleColor child_bg {ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 
-  constexpr auto child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
-                               ImGuiWindowFlags_HorizontalScrollbar |
-                               ImGuiWindowFlags_AlwaysAutoResize;
+  const auto child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
+                           ImGuiWindowFlags_HorizontalScrollbar |
+                           ImGuiWindowFlags_AlwaysAutoResize;
 
   if (const Child pane {"##LogPane", {}, true, child_flags}; pane.is_open()) {
     ImGuiListClipper clipper;
     clipper.Begin(static_cast<int>(message_count));
 
     while (clipper.Step()) {
-      visit_logged_message_range(log_filter,
+      visit_logged_message_range(gDockState.log_filter,
                                  static_cast<usize>(clipper.DisplayStart),
                                  static_cast<usize>(clipper.DisplayEnd),
                                  [](const LogLevel level, const String& msg) {
-                                   const auto& color = lookup_in(log_level_colors, level);
+                                   const auto& color = lookup_in(kLogLevelColors, level);
                                    ImGui::TextColored(color, "%s", msg.c_str());
                                  });
     }
@@ -188,12 +192,12 @@ void update_log_dock()
                      &show_log_dock};
   settings.set_flag(SETTINGS_SHOW_LOG_DOCK_BIT, show_log_dock);
 
-  is_dock_focused = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
+  gDockState.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
     ui_message_filter_checkboxes();
 
-    const auto message_count = count_matching_log_entries(log_filter);
+    const auto message_count = count_matching_log_entries(gDockState.log_filter);
     if (message_count != 0u) {
       ui_logged_message_view(lang, message_count);
     }
@@ -211,7 +215,7 @@ void update_log_dock()
 
 auto is_log_dock_focused() -> bool
 {
-  return is_dock_focused;
+  return gDockState.has_focus;
 }
 
 }  // namespace tactile::ui

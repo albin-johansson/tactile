@@ -42,7 +42,7 @@
 namespace tactile::ui {
 namespace {
 
-constexpr auto add_component_popup_id = "##AddComponentButtonPopup";
+inline constexpr auto kAddComponentPopupId = "##AddComponentButtonPopup";
 
 void show_add_component_button_popup_content(const Document& document,
                                              const Context& context,
@@ -101,10 +101,10 @@ void show_contents(const Document& document, entt::dispatcher& dispatcher)
     }
 
     if (ui_centered_button(TAC_ICON_ADD, lang.tooltip.add_component.c_str())) {
-      ImGui::OpenPopup(add_component_popup_id);
+      ImGui::OpenPopup(kAddComponentPopupId);
     }
 
-    if (const Popup popup {add_component_popup_id}; popup.is_open()) {
+    if (const Popup popup {kAddComponentPopupId}; popup.is_open()) {
       show_add_component_button_popup_content(document, context, dispatcher);
     }
   }

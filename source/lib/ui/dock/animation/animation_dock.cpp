@@ -44,11 +44,15 @@
 namespace tactile::ui {
 namespace {
 
-inline constexpr ImVec2 frame_image_size {32, 32};
-inline constexpr int64 min_frame_duration_ms = 1;
-inline constexpr int64 max_frame_duration_ms = 100'000;
+inline constexpr ImVec2 kFrameImageSize {32, 32};
+inline constexpr int64 kMinFrameDurationMs = 1;
+inline constexpr int64 kMaxFrameDurationMs = 100'000;
 
-inline constinit float dock_preview_animation_size = 0.4f;
+struct AnimationDockState final {
+  float preview_animation_size {0.4f};
+};
+
+inline constinit AnimationDockState gDockState;
 
 void ui_tileset_tile_image(const Tileset& tileset,
                            const TileIndex tile_index,
@@ -83,8 +87,8 @@ void ui_tileset_tile_image(const Tileset& tileset,
   if (ImGui::SliderScalar("##Duration",
                           ImGuiDataType_S64,
                           &duration_raw,
-                          &min_frame_duration_ms,
-                          &max_frame_duration_ms,
+                          &kMinFrameDurationMs,
+                          &kMaxFrameDurationMs,
                           "%lli ms",
                           ImGuiSliderFlags_Logarithmic | ImGuiSliderFlags_AlwaysClamp)) {
     return ms_t {duration_raw};
@@ -163,7 +167,7 @@ void ui_animation_frame(const Strings& lang,
 {
   const Scope frame_scope {&frame};
 
-  ui_tileset_tile_image(tileset, frame.tile, frame_image_size, tint);
+  ui_tileset_tile_image(tileset, frame.tile, kFrameImageSize, tint);
 
   if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
     ImGui::OpenPopup("##FramePopup");
@@ -179,7 +183,7 @@ void ui_animation_frame_list(const Strings& lang,
 {
   const auto& style = ImGui::GetStyle();
   const ImVec2 child_size {-kMinFloat,
-                           frame_image_size.y + style.FramePadding.y * 2 +
+                           kFrameImageSize.y + style.FramePadding.y * 2 +
                                style.ItemInnerSpacing.y + style.ScrollbarSize};
 
   if (ui_button(TAC_ICON_ADD, nullptr, true, 32, child_size.y)) {
@@ -238,7 +242,7 @@ void ui_tile_animation_preview_section(const Strings& lang,
 {
   ImGui::VSliderFloat("##Size",
                       {32, ImGui::GetContentRegionAvail().y},
-                      &dock_preview_animation_size,
+                      &gDockState.preview_animation_size,
                       0.1f,
                       1.0f,
                       "");
@@ -251,7 +255,7 @@ void ui_tile_animation_preview_section(const Strings& lang,
 
     const Vec2 texture_size = tileset.texture().get_size();
 
-    const auto image_width = ImGui::GetWindowSize().x * dock_preview_animation_size;
+    const auto image_width = ImGui::GetWindowSize().x * gDockState.preview_animation_size;
     const auto image_height = image_width * (texture_size.y / texture_size.x);
     const ImVec2 image_size {image_width, image_height};
 

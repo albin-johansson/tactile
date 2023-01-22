@@ -43,9 +43,13 @@
 namespace tactile::ui {
 namespace {
 
-inline AddLayerContextMenu add_layer_context_menu;
-inline Maybe<UUID> rename_target_id;
-constinit bool is_focused = false;
+struct LayerDockState final {
+  AddLayerContextMenu add_layer_context_menu;
+  Maybe<UUID> rename_target_id;
+  bool has_focus {};
+};
+
+inline LayerDockState gDockState;
 
 void update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
@@ -60,10 +64,10 @@ void update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatche
   const Group group;
 
   if (ui_icon_button(TAC_ICON_ADD, lang.tooltip.add_new_layer.c_str())) {
-    add_layer_context_menu.show();
+    gDockState.add_layer_context_menu.show();
   }
 
-  add_layer_context_menu.update(model, dispatcher);
+  gDockState.add_layer_context_menu.update(model, dispatcher);
 
   if (ui_icon_button(TAC_ICON_REMOVE,
                      lang.tooltip.remove_layer.c_str(),
@@ -94,14 +98,14 @@ void update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatche
 
 void update_rename_dialog(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  if (rename_target_id.has_value()) {
-    const auto target_layer_id = *rename_target_id;
+  if (gDockState.rename_target_id.has_value()) {
+    const auto target_layer_id = *gDockState.rename_target_id;
 
     const auto& map = model.require_active_map_document().get_map();
     const auto& layer = map.get_invisible_root().get_layer(target_layer_id);
 
     open_rename_layer_dialog(target_layer_id, layer.get_ctx().name());
-    rename_target_id.reset();
+    gDockState.rename_target_id.reset();
   }
 
   update_rename_layer_dialog(dispatcher);
@@ -157,7 +161,7 @@ void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
                      &show_layer_dock};
   settings.set_flag(SETTINGS_SHOW_LAYER_DOCK_BIT, show_layer_dock);
 
-  is_focused = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
+  gDockState.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
     update_contents(model, dispatcher);
@@ -166,12 +170,12 @@ void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
 
 void show_rename_layer_dialog(const UUID& layer_id)
 {
-  rename_target_id = layer_id;
+  gDockState.rename_target_id = layer_id;
 }
 
 auto is_layer_dock_focused() -> bool
 {
-  return is_focused;
+  return gDockState.has_focus;
 }
 
 }  // namespace tactile::ui

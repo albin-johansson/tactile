@@ -31,7 +31,7 @@
 namespace tactile::ui {
 namespace {
 
-constinit Maybe<ImGuiID> dock_root_id;
+inline constinit Maybe<ImGuiID> gDockRootId;
 
 }  // namespace
 
@@ -39,7 +39,7 @@ void update_dock_space()
 {
   static bool initialized = false;
 
-  dock_root_id = ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+  gDockRootId = ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
   if (!initialized) {
     const auto size = ImGui::GetMainViewport()->Size;
     if (size.x > 0 && size.y > 0) {
@@ -47,7 +47,7 @@ void update_dock_space()
 
       if (!settings.test_flag(SETTINGS_RESTORE_LAYOUT_BIT) ||
           !fs::exists(io::widget_ini_path())) {
-        load_default_layout(dock_root_id.value(), false);
+        load_default_layout(gDockRootId.value(), false);
       }
 
       initialized = true;
@@ -85,7 +85,7 @@ void load_default_layout(ImGuiID id, const bool reset_visibility)
 
 void reset_layout()
 {
-  load_default_layout(dock_root_id.value(), true);
+  load_default_layout(gDockRootId.value(), true);
 }
 
 }  // namespace tactile::ui

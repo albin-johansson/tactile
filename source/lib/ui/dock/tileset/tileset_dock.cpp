@@ -40,8 +40,12 @@
 namespace tactile::ui {
 namespace {
 
-constinit bool dock_has_focus = false;
-constinit bool dock_has_hover = false;
+struct TilesetDockState final {
+  bool has_focus {};
+  bool has_hover {};
+};
+
+inline constinit TilesetDockState gDockState;
 
 }  // namespace
 
@@ -63,8 +67,8 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
   settings.set_flag(SETTINGS_SHOW_TILESET_DOCK_BIT, show_tileset_dock);
 
   // We intentionally do not use the window is_hovered function here
-  dock_has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
-  dock_has_hover = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
+  gDockState.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
+  gDockState.has_hover = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
     const auto& map_document = model.require_active_map_document();
@@ -104,12 +108,12 @@ void tileset_dock_mouse_wheel_event_handler(const TilesetRef& tileset_ref,
 
 auto is_tileset_dock_focused() -> bool
 {
-  return dock_has_focus;
+  return gDockState.has_focus;
 }
 
 auto is_tileset_dock_hovered() -> bool
 {
-  return dock_has_hover;
+  return gDockState.has_hover;
 }
 
 }  // namespace tactile::ui
