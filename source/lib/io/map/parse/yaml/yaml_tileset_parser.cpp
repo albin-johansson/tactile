@@ -28,7 +28,7 @@
 namespace tactile::io {
 namespace {
 
-constexpr int32 tileset_format_version = 1;
+constexpr int32 kTilesetFormatVersion = 1;
 
 [[nodiscard]] auto parse_animation_frame(const YAML::Node& node)
     -> Expected<ir::AnimationFrameData, ParseError>
@@ -135,7 +135,7 @@ constexpr int32 tileset_format_version = 1;
       return error(ParseError::NoTilesetVersion);
     }
 
-    if (version != tileset_format_version) {
+    if (version != kTilesetFormatVersion) {
       return error(ParseError::UnsupportedTilesetVersion);
     }
 

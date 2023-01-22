@@ -33,7 +33,7 @@
 namespace tactile::io {
 namespace {
 
-constexpr int session_format_version [[maybe_unused]] = 1;
+constexpr int kSessionFormatVersion [[maybe_unused]] = 1;
 
 [[nodiscard]] auto get_file_path() -> const Path&
 {

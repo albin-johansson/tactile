@@ -39,7 +39,7 @@
 namespace tactile::io {
 namespace {
 
-constexpr int tileset_node_version = 1;
+constexpr int kTilesetNodeVersion = 1;
 
 void emit_properties(YAML::Emitter& emitter, const ir::ContextData& context)
 {
@@ -315,7 +315,7 @@ void emit_tileset_file(const EmitInfo& info,
   emitter.SetIndent(2);
   emitter << YAML::BeginMap;
 
-  emitter << YAML::Key << "version" << YAML::Value << tileset_node_version;
+  emitter << YAML::Key << "version" << YAML::Value << kTilesetNodeVersion;
   emitter << YAML::Key << "name" << YAML::Value << tileset.name;
 
   emitter << YAML::Key << "tile-width" << YAML::Value << tileset.tile_size.x;

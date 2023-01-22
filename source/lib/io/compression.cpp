@@ -35,7 +35,7 @@ namespace {
 
 using ZlibProcessFun = int (*)(z_stream*, int);
 
-constexpr usize buffer_size = 32'768;  // About 32 KB for our temporary buffers
+constexpr usize kBufferSize = 32'768;  // About 32 KB for our temporary buffers
 
 [[nodiscard]] auto process_zlib_chunks(z_stream& stream,
                                        ZlibProcessFun process,
@@ -43,7 +43,7 @@ constexpr usize buffer_size = 32'768;  // About 32 KB for our temporary buffers
                                        ByteStream& result) -> int
 {
   const auto copy_written_bytes_in_buffer_to_dest = [&] {
-    const auto written_bytes = buffer_size - stream.avail_out;
+    const auto written_bytes = kBufferSize - stream.avail_out;
     result.insert(result.end(), out_buffer, out_buffer + written_bytes);
   };
 
@@ -56,7 +56,7 @@ constexpr usize buffer_size = 32'768;  // About 32 KB for our temporary buffers
         // We ran out of space in the output buffer, so reuse it!
         copy_written_bytes_in_buffer_to_dest();
         stream.next_out = out_buffer;
-        stream.avail_out = buffer_size;
+        stream.avail_out = kBufferSize;
         break;
       }
       case Z_STREAM_END: {
@@ -84,7 +84,7 @@ auto zlib_compress(const void* source, const usize source_bytes, int level)
     level = std::clamp(level, Z_BEST_SPEED, Z_BEST_COMPRESSION);
   }
 
-  Bytef out_buffer[buffer_size];
+  Bytef out_buffer[kBufferSize];
 
   z_stream stream {};
   stream.next_in = (Bytef*) source;
@@ -129,7 +129,7 @@ auto zlib_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
     return nothing;
   }
 
-  Bytef out_buffer[buffer_size];
+  Bytef out_buffer[kBufferSize];
 
   z_stream stream {};
   stream.next_in = (Bytef*) source;

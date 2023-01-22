@@ -32,9 +32,9 @@
 namespace tactile {
 namespace {
 
-constexpr auto font_roboto_path = "assets/fonts/roboto/Roboto-Regular.ttf";
-constexpr auto font_fa_path = "assets/fonts/fa/fa-solid-900.otf";
-constexpr ImWchar font_icon_range[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
+constexpr auto kFontRobotoPath = "assets/fonts/roboto/Roboto-Regular.ttf";
+constexpr auto kFontFaPath = "assets/fonts/fa/fa-solid-900.otf";
+constexpr ImWchar kFontIconRange[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
 
 }  // namespace
 
@@ -77,8 +77,8 @@ ImGuiContext::~ImGuiContext()
 
 void ImGuiContext::reload_fonts()
 {
-  static const auto roboto = io::find_resource(font_roboto_path).string();
-  static const auto fa = io::find_resource(font_fa_path).string();
+  static const auto roboto = io::find_resource(kFontRobotoPath).string();
+  static const auto fa = io::find_resource(kFontFaPath).string();
 
   spdlog::debug("Reloading fonts...");
 
@@ -109,7 +109,7 @@ void ImGuiContext::reload_fonts()
   config.GlyphMinAdvanceX = size * scale.x;
   config.GlyphMaxAdvanceX = config.GlyphMinAdvanceX;
   config.GlyphOffset = {0, 2};
-  io.Fonts->AddFontFromFileTTF(fa.c_str(), size * scale.x, &config, font_icon_range);
+  io.Fonts->AddFontFromFileTTF(fa.c_str(), size * scale.x, &config, kFontIconRange);
 
   io.Fonts->Build();
 

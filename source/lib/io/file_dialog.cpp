@@ -22,22 +22,21 @@
 #include <tinyfiledialogs.h>
 
 #include "common/debug/assert.hpp"
+#include "common/type/array.hpp"
 
 namespace tactile::io {
 namespace {
 
-constexpr int num_map_patterns = 6;
-constexpr const char* map_patterns[] = {"*.yaml",  //
-                                        "*.yml",
-                                        "*.json",
-                                        "*.tmj",
-                                        "*.tmx",
-                                        "*.xml"};
-constexpr const char* map_pattern_descriptor = "Map files";
+constexpr const char* kMapPatternDescriptor = "Map files";
+constexpr const char* kImagePatternDescriptor = "Image files";
 
-constexpr int num_image_patterns = 3;
-constexpr const char* image_patterns[] = {"*.png", "*.jpg", "*.jpeg"};
-constexpr const char* image_pattern_descriptor = "Image files";
+constexpr Array<const char*, 6> kMapPatterns {"*.yaml",
+                                              "*.yml",
+                                              "*.json",
+                                              "*.tmj",
+                                              "*.tmx",
+                                              "*.xml"};
+constexpr Array<const char*, 3> kImagePatterns {"*.png", "*.jpg", "*.jpeg"};
 
 }  // namespace
 
@@ -71,9 +70,9 @@ auto FileDialog::open_map() -> FileDialog
 {
   return {tinyfd_openFileDialog("Open Map",
                                 nullptr,
-                                num_map_patterns,
-                                map_patterns,
-                                map_pattern_descriptor,
+                                std::ssize(kMapPatterns),
+                                kMapPatterns.data(),
+                                kMapPatternDescriptor,
                                 0)};
 }
 
@@ -81,9 +80,9 @@ auto FileDialog::open_image() -> FileDialog
 {
   return {tinyfd_openFileDialog("Open Image",
                                 nullptr,
-                                num_image_patterns,
-                                image_patterns,
-                                image_pattern_descriptor,
+                                std::ssize(kImagePatterns),
+                                kImagePatterns.data(),
+                                kImagePatternDescriptor,
                                 0)};
 }
 
@@ -91,18 +90,18 @@ auto FileDialog::save_map() -> FileDialog
 {
   return {tinyfd_saveFileDialog("Save Map",
                                 nullptr,
-                                num_map_patterns,
-                                map_patterns,
-                                map_pattern_descriptor)};
+                                std::ssize(kMapPatterns),
+                                kMapPatterns.data(),
+                                kMapPatternDescriptor)};
 }
 
 auto FileDialog::save_image() -> FileDialog
 {
   return {tinyfd_saveFileDialog("Save Image",
                                 nullptr,
-                                num_image_patterns,
-                                image_patterns,
-                                image_pattern_descriptor)};
+                                std::ssize(kImagePatterns),
+                                kImagePatterns.data(),
+                                kImagePatternDescriptor)};
 }
 
 }  // namespace tactile::io

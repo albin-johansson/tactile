@@ -39,6 +39,9 @@ namespace {
 
 using TilesetTextures = HashMap<UUID, GdExtRes>;
 
+inline constexpr auto kTau = std::numbers::pi * 2.0;
+inline constexpr int32 kTileOffset = 65'536;
+
 [[nodiscard]] auto to_godot_name(StringView name) -> String
 {
   String copy {name};
@@ -162,9 +165,8 @@ void add_animations(const ir::MapData& map,
   const auto n = static_cast<double>(point_count);
   const auto radius = object.size / 2.0f;
 
-  constexpr auto tau = std::numbers::pi * 2.0;
   for (usize i = 0; i < point_count; ++i) {
-    const auto theta = static_cast<double>(i) / n * tau;
+    const auto theta = static_cast<double>(i) / n * kTau;
     const auto x = radius.x * std::cos(theta);
     const auto y = radius.y * std::sin(theta);
     points.emplace_back(x, y);
@@ -267,7 +269,6 @@ void add_tile_layer(const ir::MapData& map,
     if (tile_id != kEmptyTile) {
       const auto& tileset = map.find_tileset_with_tile(tile_id);
 
-      constexpr int32 tile_offset = 65'536;
       const auto tile_index = tile_id - tileset.first_tile;
 
       auto& encoded = gd_tile_layer.data.emplace_back();
@@ -276,11 +277,11 @@ void add_tile_layer(const ir::MapData& map,
       if (encoded.tile_index >= tileset.column_count) {
         const auto tileset_pos =
             TilePos::from_index(encoded.tile_index, tileset.column_count);
-        encoded.tile_index = tileset_pos.col() + (tileset_pos.row() * tile_offset);
+        encoded.tile_index = tileset_pos.col() + (tileset_pos.row() * kTileOffset);
       }
 
       encoded.position =
-          static_cast<int32>(col) + (static_cast<int32>(row) * tile_offset);
+          static_cast<int32>(col) + (static_cast<int32>(row) * kTileOffset);
 
       encoded.tileset = scene.tileset().index_of(tileset.uuid) + 1;
 

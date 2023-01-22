@@ -26,7 +26,7 @@
 namespace tactile {
 namespace {
 
-constexpr float viewport_min_tile_height = 4;
+constexpr float kViewportMinTileHeight = 4;
 
 [[nodiscard]] auto viewport_offset_delta(const float tile_width, const float ratio)
     -> Float2
@@ -91,7 +91,7 @@ void Viewport::zoom_out(const Float2& anchor)
     const auto ratio = mTileSize.x / mTileSize.y;
     mTileSize -= viewport_offset_delta(mTileSize.x, ratio);
 
-    const Float2 minimum {viewport_min_tile_height * ratio, viewport_min_tile_height};
+    const Float2 minimum {kViewportMinTileHeight * ratio, kViewportMinTileHeight};
     mTileSize = (glm::max)(minimum, mTileSize);
   }
 
@@ -112,7 +112,7 @@ void Viewport::set_limits(const ViewportLimits& limits)
 
 auto Viewport::can_zoom_out() const -> bool
 {
-  return mTileSize.y > viewport_min_tile_height;
+  return mTileSize.y > kViewportMinTileHeight;
 }
 
 auto Viewport::scaling_ratio(const Float2& tileSize) const -> Float2
