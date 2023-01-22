@@ -41,17 +41,22 @@
 namespace tactile::ui {
 namespace {
 
-constexpr auto toolbar_window_flags =
+inline constexpr auto kToolbarWindowFlags =
     ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking |
     ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings |
     ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav |
     ImGuiWindowFlags_NoMove;
 
-constexpr uint32 toolbar_highlight_color = IM_COL32(0, 180, 0, 255);
-constinit bool toolbar_visible = false;
-constinit bool toolbar_hovered = false;
-constinit bool toolbar_focused = false;
-constinit float toolbar_width = 0;
+inline constexpr uint32 kToolbarHighlightColor = IM_COL32(0, 180, 0, 255);
+
+struct MapViewportToolbarState final {
+  float width {};
+  bool visible {};
+  bool has_hover {};
+  bool has_focus {};
+};
+
+inline constinit MapViewportToolbarState gToolbarState;
 
 void prepare_window_position(const ImVec2& offset = {})
 {
@@ -74,7 +79,7 @@ void tool_button(const DocumentModel& model,
   const auto selected = tools.is_enabled(tool);
 
   if (selected) {
-    ImGui::PushStyleColor(ImGuiCol_Button, toolbar_highlight_color);
+    ImGui::PushStyleColor(ImGuiCol_Button, kToolbarHighlightColor);
   }
 
   if (ui_icon_button(icon, tooltip, tools.is_available(model, tool))) {
@@ -89,13 +94,12 @@ void tool_button(const DocumentModel& model,
 void show_extra_toolbar(std::invocable auto callable)
 {
   const auto& style = ImGui::GetStyle();
-  prepare_window_position({toolbar_width + style.ItemInnerSpacing.x, 0});
+  prepare_window_position({gToolbarState.width + style.ItemInnerSpacing.x, 0});
 
-  if (const Window extra {"##ToolbarWindowExtra", toolbar_window_flags};
-      extra.is_open()) {
+  if (const Window extra {"##ToolbarWindowExtra", kToolbarWindowFlags}; extra.is_open()) {
     // Prevent other mouse events in the viewport by treating both toolbars as one
-    if (!toolbar_hovered) {
-      toolbar_hovered = ImGui::IsWindowHovered();
+    if (!gToolbarState.has_hover) {
+      gToolbarState.has_hover = ImGui::IsWindowHovered();
     }
     callable();
   }
@@ -117,11 +121,11 @@ void update_map_viewport_toolbar(const DocumentModel& model, entt::dispatcher& d
       model.get_map_document(model.get_active_document_id().value());
   const auto& tools = map_document.get_tools();
 
-  if (const Window window {"##ToolbarWindow", toolbar_window_flags}; window.is_open()) {
-    toolbar_visible = true;
-    toolbar_hovered = ImGui::IsWindowHovered();
-    toolbar_focused = window.has_focus();
-    toolbar_width = ImGui::GetWindowSize().x;
+  if (const Window window {"##ToolbarWindow", kToolbarWindowFlags}; window.is_open()) {
+    gToolbarState.visible = true;
+    gToolbarState.has_hover = ImGui::IsWindowHovered();
+    gToolbarState.has_focus = window.has_focus();
+    gToolbarState.width = ImGui::GetWindowSize().x;
 
     const auto& commands = map_document.get_history();
 
@@ -191,18 +195,18 @@ void update_map_viewport_toolbar(const DocumentModel& model, entt::dispatcher& d
                 ToolType::Point);
   }
   else {
-    toolbar_visible = false;
-    toolbar_hovered = false;
-    toolbar_focused = false;
+    gToolbarState.visible = false;
+    gToolbarState.has_hover = false;
+    gToolbarState.has_focus = false;
   }
 
-  if (toolbar_visible && tools.is_enabled(ToolType::Stamp)) {
+  if (gToolbarState.visible && tools.is_enabled(ToolType::Stamp)) {
     show_extra_toolbar([&] {
       const auto& tools = map_document.get_tools();
       const auto selected = tools.is_stamp_random();
 
       if (selected) {
-        ImGui::PushStyleColor(ImGuiCol_Button, toolbar_highlight_color);
+        ImGui::PushStyleColor(ImGuiCol_Button, kToolbarHighlightColor);
       }
 
       const auto& map = map_document.get_map();
@@ -221,17 +225,17 @@ void update_map_viewport_toolbar(const DocumentModel& model, entt::dispatcher& d
 
 auto is_map_toolbar_visible() -> bool
 {
-  return toolbar_visible;
+  return gToolbarState.visible;
 }
 
 auto is_map_toolbar_hovered() -> bool
 {
-  return toolbar_hovered;
+  return gToolbarState.has_hover;
 }
 
 auto is_map_toolbar_focused() -> bool
 {
-  return toolbar_focused;
+  return gToolbarState.has_focus;
 }
 
 }  // namespace tactile::ui

@@ -43,8 +43,12 @@
 namespace tactile::ui {
 namespace {
 
-constinit bool viewport_has_focus = false;
-constinit bool viewport_contains_mouse = false;
+struct ViewportWidgetState final {
+  bool has_focus = false;
+  bool has_hover = false;
+};
+
+inline constinit ViewportWidgetState gWidgetState;
 
 void update_start_page(entt::dispatcher& dispatcher)
 {
@@ -77,9 +81,10 @@ void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispat
   StyleVar padding {ImGuiStyleVar_WindowPadding, {4, 4}};
   remove_tab_bar_from_next_window();
 
-  Window window {"Viewport", ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse};
-  viewport_has_focus = window.has_focus();
-  viewport_contains_mouse = window.is_hovered();
+  const Window window {"Viewport",
+                       ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse};
+  gWidgetState.has_focus = window.has_focus();
+  gWidgetState.has_hover = window.is_hovered();
 
   if (window.is_open()) {
     padding.pop();
@@ -130,12 +135,12 @@ void viewport_widget_mouse_wheel_event_handler(const Viewport& viewport,
 
 auto is_viewport_focused() noexcept -> bool
 {
-  return viewport_has_focus;
+  return gWidgetState.has_focus;
 }
 
 auto is_mouse_within_viewport() noexcept -> bool
 {
-  return viewport_contains_mouse;
+  return gWidgetState.has_hover;
 }
 
 }  // namespace tactile::ui

@@ -51,9 +51,14 @@
 namespace tactile::ui {
 namespace {
 
-constexpr auto viewport_object_context_menu_id = "##MapViewObjectContextMenu";
-constinit bool viewport_will_be_centered = false;
-constinit bool viewport_will_open_object_context_menu = false;
+inline constexpr auto kViewportObjectContextMenuId = "##MapViewObjectContextMenu";
+
+struct MapViewportState final {
+  bool will_be_centered {};
+  bool will_open_object_context_menu {};
+};
+
+inline constinit MapViewportState gViewportState;
 
 /// Creates a mouse info struct, but does not set the button member.
 [[nodiscard]] auto make_mouse_info(const ViewportCursorInfo& cursor) -> MouseInfo
@@ -133,7 +138,7 @@ void draw_cursor_gizmos(Graphics& graphics,
 
 void poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
 {
-  if (ImGui::IsPopupOpen(viewport_object_context_menu_id, ImGuiPopupFlags_AnyPopup)) {
+  if (ImGui::IsPopupOpen(kViewportObjectContextMenuId, ImGuiPopupFlags_AnyPopup)) {
     return;
   }
 
@@ -153,9 +158,10 @@ void poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
       return ImGui::IsMouseDragging(button) && to_vec(io.MouseDelta) != Vec2 {0, 0};
     });
 
-    check_for<ViewportMouseReleasedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
-      return ImGui::IsMouseReleased(button);
-    });
+    check_for<ViewportMouseReleasedEvent>(
+        cursor,
+        dispatcher,
+        [](ImGuiMouseButton button) { return ImGui::IsMouseReleased(button); });
   }
 }
 
@@ -188,7 +194,7 @@ void update_viewport_context_menu(const Map& map, entt::dispatcher& dispatcher)
 
 void update_object_context_menu(const Map& map, entt::dispatcher& dispatcher)
 {
-  if (const Popup popup {viewport_object_context_menu_id}; popup.is_open()) {
+  if (const Popup popup {kViewportObjectContextMenuId}; popup.is_open()) {
     const auto& lang = get_current_language();
     const auto& layer =
         map.get_invisible_root().get_object_layer(map.get_active_layer_id().value());
@@ -222,10 +228,10 @@ void update_object_context_menu(const Map& map, entt::dispatcher& dispatcher)
     }
   }
 
-  if (viewport_will_open_object_context_menu) {
-    ImGui::OpenPopup(viewport_object_context_menu_id,
+  if (gViewportState.will_open_object_context_menu) {
+    ImGui::OpenPopup(kViewportObjectContextMenuId,
                      ImGuiPopupFlags_AnyPopup | ImGuiPopupFlags_MouseButtonRight);
-    viewport_will_open_object_context_menu = false;
+    gViewportState.will_open_object_context_menu = false;
   }
 }
 
@@ -247,13 +253,13 @@ void show_map_viewport(const DocumentModel& model,
   graphics.push_canvas_clip();
 
   // TODO viewport should be centered by default
-  if (viewport_will_be_centered) {
+  if (gViewportState.will_be_centered) {
     center_viewport(viewport,
                     info.canvas_size,
                     info.row_count,
                     info.col_count,
                     dispatcher);
-    viewport_will_be_centered = false;
+    gViewportState.will_be_centered = false;
   }
 
   render_map(graphics, document);
@@ -276,12 +282,12 @@ void show_map_viewport(const DocumentModel& model,
 
 void center_map_viewport()
 {
-  viewport_will_be_centered = true;
+  gViewportState.will_be_centered = true;
 }
 
 void open_object_context_menu()
 {
-  viewport_will_open_object_context_menu = true;
+  gViewportState.will_open_object_context_menu = true;
 }
 
 }  // namespace tactile::ui
