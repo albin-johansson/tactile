@@ -38,19 +38,23 @@
 namespace tactile::ui {
 namespace {
 
-inline Maybe<UUID> dialog_context_id;
-inline StringBuffer dialog_name_buffer {};
-inline AttributeType dialog_property_type {AttributeType::String};
-inline constinit bool open_dialog = false;
+struct AddPropertyDialogState final {
+  Maybe<UUID> context_id;
+  StringBuffer name_buffer {};
+  AttributeType property_type {AttributeType::String};
+  bool open_dialog {};
+};
+
+inline AddPropertyDialogState gDialogState;
 
 }  // namespace
 
 void open_add_property_dialog(const UUID& context_id)
 {
-  dialog_context_id = context_id;
-  dialog_name_buffer.clear();
-  dialog_property_type = AttributeType::String;
-  open_dialog = true;
+  gDialogState.context_id = context_id;
+  gDialogState.name_buffer.clear();
+  gDialogState.property_type = AttributeType::String;
+  gDialogState.open_dialog = true;
 }
 
 void update_add_property_dialog(const DocumentModel& model, entt::dispatcher& dispatcher)
@@ -60,9 +64,9 @@ void update_add_property_dialog(const DocumentModel& model, entt::dispatcher& di
   const auto& document = model.require_active_document();
   const auto& active_context = document.get_contexts().get_active_context();
 
-  if (active_context.get_uuid() != dialog_context_id) {
-    dialog_context_id.reset();
-    open_dialog = false;
+  if (active_context.get_uuid() != gDialogState.context_id) {
+    gDialogState.context_id.reset();
+    gDialogState.open_dialog = false;
     return;
   }
 
@@ -72,12 +76,12 @@ void update_add_property_dialog(const DocumentModel& model, entt::dispatcher& di
       .accept_label = lang.misc.add.c_str(),
   };
 
-  if (open_dialog) {
+  if (gDialogState.open_dialog) {
     options.flags |= UI_DIALOG_FLAG_OPEN;
-    open_dialog = false;
+    gDialogState.open_dialog = false;
   }
 
-  const auto current_name = dialog_name_buffer.as_string_view();
+  const auto current_name = gDialogState.name_buffer.as_string_view();
   if (!current_name.empty() && !active_context.get_ctx().has_property(current_name)) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
@@ -86,18 +90,18 @@ void update_add_property_dialog(const DocumentModel& model, entt::dispatcher& di
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
     ImGui::InputTextWithHint("##Name",
                              lang.misc.property_name_hint.c_str(),
-                             dialog_name_buffer.data(),
-                             sizeof dialog_name_buffer);
-    if (const auto new_type = ui_attribute_type_combo(dialog_property_type)) {
-      dialog_property_type = *new_type;
+                             gDialogState.name_buffer.data(),
+                             sizeof gDialogState.name_buffer);
+    if (const auto new_type = ui_attribute_type_combo(gDialogState.property_type)) {
+      gDialogState.property_type = *new_type;
     }
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<AddPropertyEvent>(dialog_context_id.value(),
-                                         dialog_name_buffer.as_string(),
-                                         dialog_property_type);
-    dialog_context_id.reset();
+    dispatcher.enqueue<AddPropertyEvent>(gDialogState.context_id.value(),
+                                         gDialogState.name_buffer.as_string(),
+                                         gDialogState.property_type);
+    gDialogState.context_id.reset();
   }
 }
 

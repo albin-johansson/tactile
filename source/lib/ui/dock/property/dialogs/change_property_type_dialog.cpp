@@ -24,8 +24,8 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/context/context_manager.hpp"
 #include "common/type/maybe.hpp"
+#include "core/context/context_manager.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/property_events.hpp"
@@ -36,11 +36,15 @@
 namespace tactile::ui {
 namespace {
 
-inline Maybe<UUID> dialog_context_id;
-inline AttributeType dialog_current_type {AttributeType::String};
-inline Maybe<String> dialog_property_name;
-inline Maybe<AttributeType> dialog_previous_type;
-inline constinit bool open_dialog = false;
+struct ChangePropertyTypeDialogState final {
+  Maybe<UUID> context_id;
+  AttributeType current_type {AttributeType::String};
+  Maybe<String> property_name;
+  Maybe<AttributeType> previous_type;
+  bool open_dialog {};
+};
+
+inline ChangePropertyTypeDialogState gDialogState;
 
 }  // namespace
 
@@ -48,11 +52,11 @@ void open_change_property_type_dialog(const UUID& context_id,
                                       String property_name,
                                       const AttributeType property_type)
 {
-  dialog_context_id = context_id;
-  dialog_property_name = std::move(property_name);
-  dialog_previous_type = property_type;
-  dialog_current_type = property_type;
-  open_dialog = true;
+  gDialogState.context_id = context_id;
+  gDialogState.property_name = std::move(property_name);
+  gDialogState.previous_type = property_type;
+  gDialogState.current_type = property_type;
+  gDialogState.open_dialog = true;
 }
 
 void update_change_property_type_dialog(const DocumentModel& model,
@@ -63,9 +67,9 @@ void update_change_property_type_dialog(const DocumentModel& model,
   const auto& document = model.require_active_document();
   const auto& active_context = document.get_contexts().get_active_context();
 
-  if (active_context.get_uuid() != dialog_context_id) {
-    dialog_context_id.reset();
-    open_dialog = false;
+  if (active_context.get_uuid() != gDialogState.context_id) {
+    gDialogState.context_id.reset();
+    gDialogState.open_dialog = false;
     return;
   }
 
@@ -75,12 +79,12 @@ void update_change_property_type_dialog(const DocumentModel& model,
       .accept_label = lang.misc.change.c_str(),
   };
 
-  if (open_dialog) {
+  if (gDialogState.open_dialog) {
     options.flags |= UI_DIALOG_FLAG_OPEN;
-    open_dialog = false;
+    gDialogState.open_dialog = false;
   }
 
-  if (dialog_current_type != dialog_previous_type.value()) {
+  if (gDialogState.current_type != gDialogState.previous_type.value()) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
@@ -91,16 +95,17 @@ void update_change_property_type_dialog(const DocumentModel& model,
 
     ImGui::SameLine();
     if (const auto new_type =
-            ui_attribute_type_combo(dialog_current_type, dialog_previous_type.value())) {
-      dialog_current_type = *new_type;
+            ui_attribute_type_combo(gDialogState.current_type,
+                                    gDialogState.previous_type.value())) {
+      gDialogState.current_type = *new_type;
     }
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<ChangePropertyTypeEvent>(dialog_context_id.value(),
-                                                dialog_property_name.value(),
-                                                dialog_current_type);
-    dialog_context_id.reset();
+    dispatcher.enqueue<ChangePropertyTypeEvent>(gDialogState.context_id.value(),
+                                                gDialogState.property_name.value(),
+                                                gDialogState.current_type);
+    gDialogState.context_id.reset();
   }
 }
 

@@ -60,10 +60,14 @@ struct PropertyItemContextMenuState final {
   bool show_change_type_dialog : 1 {};
 };
 
-inline PropertyItemContextMenuState context_state;
-inline Maybe<String> rename_target;
-inline Maybe<String> change_type_target;
-constinit bool is_focused = false;
+struct PropertyDockState final {
+  Maybe<String> rename_target;
+  Maybe<String> change_type_target;
+  PropertyItemContextMenuState context_state;
+  bool has_focus : 1 {};
+};
+
+inline PropertyDockState gDockState;
 
 [[nodiscard]] auto property_item_context_menu(const UUID& context_id,
                                               entt::dispatcher& dispatcher,
@@ -381,15 +385,16 @@ void show_custom_properties(const Context& context,
       is_item_context_open = property_item_context_menu(context.get_uuid(),
                                                         dispatcher,
                                                         property_name,
-                                                        context_state);
+                                                        gDockState.context_state);
     }
 
-    if (context_state.show_rename_dialog && !rename_target) {
-      rename_target = property_name;
+    if (gDockState.context_state.show_rename_dialog && !gDockState.rename_target) {
+      gDockState.rename_target = property_name;
     }
 
-    if (context_state.show_change_type_dialog && !change_type_target) {
-      change_type_target = property_name;
+    if (gDockState.context_state.show_change_type_dialog &&
+        !gDockState.change_type_target) {
+      gDockState.change_type_target = property_name;
     }
 
     ImGui::TableNextColumn();
@@ -448,8 +453,8 @@ struct ContextPropertyVisitor final : ContextVisitor {
 
 void update_property_table(const DocumentModel& model, entt::dispatcher& dispatcher)
 {
-  constexpr auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
-                         ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
+  const auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
+                     ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
 
   const auto& lang = get_current_language();
   const auto& document = model.require_active_document();
@@ -464,29 +469,29 @@ void update_property_table(const DocumentModel& model, entt::dispatcher& dispatc
 
     if (!is_item_context_open) {
       if (auto popup = Popup::for_window("##PropertyTablePopup"); popup.is_open()) {
-        context_state.show_add_dialog =
+        gDockState.context_state.show_add_dialog =
             ImGui::MenuItem(lang.action.create_property.c_str());
       }
     }
   }
 
-  if (context_state.show_add_dialog) {
+  if (gDockState.context_state.show_add_dialog) {
     dispatcher.enqueue<ShowNewPropertyDialogEvent>();
-    context_state.show_add_dialog = false;
+    gDockState.context_state.show_add_dialog = false;
   }
 
-  if (context_state.show_rename_dialog) {
-    dispatcher.enqueue<ShowRenamePropertyDialogEvent>(rename_target.value());
-    rename_target.reset();
-    context_state.show_rename_dialog = false;
+  if (gDockState.context_state.show_rename_dialog) {
+    dispatcher.enqueue<ShowRenamePropertyDialogEvent>(gDockState.rename_target.value());
+    gDockState.rename_target.reset();
+    gDockState.context_state.show_rename_dialog = false;
   }
 
-  if (context_state.show_change_type_dialog) {
-    const auto& target_name = change_type_target.value();
+  if (gDockState.context_state.show_change_type_dialog) {
+    const auto& target_name = gDockState.change_type_target.value();
     const auto type = context.get_ctx().get_property(target_name).get_type();
     dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(target_name, type);
-    change_type_target.reset();
-    context_state.show_change_type_dialog = false;
+    gDockState.change_type_target.reset();
+    gDockState.context_state.show_change_type_dialog = false;
   }
 }
 
@@ -508,7 +513,7 @@ void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatch
                        &show_property_dock};
 
   settings.set_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT, show_property_dock);
-  is_focused = window.has_focus();
+  gDockState.has_focus = window.has_focus();
 
   if (window.is_open()) {
     update_property_table(model, dispatcher);
@@ -521,7 +526,7 @@ void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatch
 
 auto is_property_dock_focused() -> bool
 {
-  return is_focused;
+  return gDockState.has_focus;
 }
 
 }  // namespace tactile::ui

@@ -37,19 +37,23 @@
 namespace tactile::ui {
 namespace {
 
-inline Maybe<UUID> dialog_context_id;
-inline String dialog_previous_name;
-inline StringBuffer dialog_name_buffer;
-inline constinit bool open_dialog = false;
+struct RenamePropertyDialogState final {
+  Maybe<UUID> context_id;
+  String previous_name;
+  StringBuffer name_buffer {};
+  bool open_dialog {};
+};
+
+inline RenamePropertyDialogState gDialogState;
 
 }  // namespace
 
 void open_rename_property_dialog(const UUID& context_id, String previous_name)
 {
-  dialog_context_id = context_id;
-  dialog_previous_name = std::move(previous_name);
-  dialog_name_buffer.clear();
-  open_dialog = true;
+  gDialogState.context_id = context_id;
+  gDialogState.previous_name = std::move(previous_name);
+  gDialogState.name_buffer.clear();
+  gDialogState.open_dialog = true;
 }
 
 void update_rename_property_dialog(const DocumentModel& model,
@@ -60,9 +64,9 @@ void update_rename_property_dialog(const DocumentModel& model,
   const auto& document = model.require_active_document();
   const auto& active_context = document.get_contexts().get_active_context();
 
-  if (active_context.get_uuid() != dialog_context_id) {
-    dialog_context_id.reset();
-    open_dialog = false;
+  if (active_context.get_uuid() != gDialogState.context_id) {
+    gDialogState.context_id.reset();
+    gDialogState.open_dialog = false;
     return;
   }
 
@@ -72,12 +76,12 @@ void update_rename_property_dialog(const DocumentModel& model,
       .accept_label = lang.misc.rename.c_str(),
   };
 
-  if (open_dialog) {
+  if (gDialogState.open_dialog) {
     options.flags |= UI_DIALOG_FLAG_OPEN;
-    open_dialog = false;
+    gDialogState.open_dialog = false;
   }
 
-  const auto current_name = dialog_name_buffer.as_string_view();
+  const auto current_name = gDialogState.name_buffer.as_string_view();
   if (!current_name.empty() && !active_context.get_ctx().has_property(current_name)) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
@@ -86,15 +90,15 @@ void update_rename_property_dialog(const DocumentModel& model,
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
     ImGui::InputTextWithHint("##Name",
                              lang.misc.property_name_hint.c_str(),
-                             dialog_name_buffer.data(),
-                             sizeof dialog_name_buffer);
+                             gDialogState.name_buffer.data(),
+                             sizeof gDialogState.name_buffer);
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<RenamePropertyEvent>(dialog_context_id.value(),
-                                            dialog_previous_name,
-                                            dialog_name_buffer.as_string());
-    dialog_context_id.reset();
+    dispatcher.enqueue<RenamePropertyEvent>(gDialogState.context_id.value(),
+                                            gDialogState.previous_name,
+                                            gDialogState.name_buffer.as_string());
+    gDialogState.context_id.reset();
   }
 }
 
