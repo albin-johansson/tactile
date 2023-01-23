@@ -21,7 +21,7 @@
 
 #include "common/type/path.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 /// Opens a directory in the OS file explorer
 void open_directory(const Path& dir);
@@ -37,9 +37,9 @@ void open_directory(const Path& dir);
 [[nodiscard]] auto find_resource(const char* resource) -> Path;
 
 /// Returns the file path to the associated `imgui.ini` file.
-[[nodiscard]] auto widget_ini_path() -> const Path&;
+[[nodiscard]] auto get_widget_ini_path() -> const Path&;
 
 /// Returns the path to the persistent file directory.
-[[nodiscard]] auto persistent_file_dir() -> const Path&;
+[[nodiscard]] auto get_persistent_file_dir() -> const Path&;
 
-}  // namespace tactile::io
+}  // namespace tactile

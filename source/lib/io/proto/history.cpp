@@ -50,7 +50,7 @@ inline HistoryState gHistory;
 
 [[nodiscard]] auto get_file_path() -> const Path&
 {
-  static const auto path = persistent_file_dir() / "history.bin";
+  static const auto path = get_persistent_file_dir() / "history.bin";
   return path;
 }
 

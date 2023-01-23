@@ -29,12 +29,12 @@
 #include "common/debug/panic.hpp"
 #include "common/predef.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 void open_directory(const Path& dir)
 {
   if (fs::is_directory(dir)) {
-    static const auto path = persistent_file_dir().string();
+    static const auto path = get_persistent_file_dir().string();
     if constexpr (kOnMacos) {
       static const auto cmd = fmt::format("open \"{}\"", path);
       std::system(cmd.c_str());
@@ -63,16 +63,16 @@ auto find_resource(const char* resource) -> Path
   return dir / resource;
 }
 
-auto widget_ini_path() -> const Path&
+auto get_widget_ini_path() -> const Path&
 {
   static const auto ini = fs::absolute(find_resource("imgui.ini"));
   return ini;
 }
 
-auto persistent_file_dir() -> const Path&
+auto get_persistent_file_dir() -> const Path&
 {
   static const Path path {cen::preferred_path("albin-johansson", "tactile").copy()};
   return path;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

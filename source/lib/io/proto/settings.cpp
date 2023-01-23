@@ -33,7 +33,7 @@ namespace {
 
 [[nodiscard]] auto get_settings_file_path() -> const Path&
 {
-  static const auto path = persistent_file_dir() / "settings.bin";
+  static const auto path = get_persistent_file_dir() / "settings.bin";
   return path;
 }
 

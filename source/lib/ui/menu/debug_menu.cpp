@@ -57,7 +57,7 @@ void update_debug_menu()
     ImGui::Separator();
 
     if (ImGui::MenuItem(lang.action.open_persistent_file_dir.c_str())) {
-      io::open_directory(io::persistent_file_dir());
+      open_directory(get_persistent_file_dir());
     }
   }
 

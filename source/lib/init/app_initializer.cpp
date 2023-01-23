@@ -42,8 +42,8 @@ void load_window_icon(cen::window& window)
 {
   try {
     // This is necessary to allow macOS builds in different flavours
-    const auto icon_path = io::find_resource(kIsAppBundle ? "Tactile.icns"  //
-                                                          : "assets/icon.png");
+    const auto icon_path = find_resource(kIsAppBundle ? "Tactile.icns"  //
+                                                      : "assets/icon.png");
     window.set_icon(cen::surface {icon_path.string()});
   }
   catch (const std::exception& e) {
@@ -79,7 +79,7 @@ AppInitializer::AppInitializer()
   mImGui.emplace(window, sdl.get_gl_context());
   init_menus();
 
-  spdlog::debug("Using persistent file directory {}", tactile::io::persistent_file_dir());
+  spdlog::debug("Using persistent file directory {}", tactile::get_persistent_file_dir());
 }
 
 auto AppInitializer::get_window() -> cen::window&

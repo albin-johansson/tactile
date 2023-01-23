@@ -46,7 +46,7 @@ void update_dock_space()
       const auto& settings = get_settings();
 
       if (!settings.test_flag(SETTINGS_RESTORE_LAYOUT_BIT) ||
-          !fs::exists(io::widget_ini_path())) {
+          !fs::exists(get_widget_ini_path())) {
         load_default_layout(gDockRootId.value(), false);
       }
 

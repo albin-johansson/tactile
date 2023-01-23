@@ -57,7 +57,7 @@ inline constinit bool gOpenAboutImGuiDialog = false;
 
 void check_for_missing_ini_file()
 {
-  const auto& ini = io::widget_ini_path();
+  const auto& ini = get_widget_ini_path();
   if (!fs::exists(ini)) {
     spdlog::warn("Resetting layout because 'imgui.ini' is missing...");
     reset_layout();

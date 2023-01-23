@@ -47,7 +47,7 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   io.ConfigFlags |= static_cast<ImGuiConfigFlags>(ImGuiConfigFlags_DockingEnable);
   io.WantCaptureKeyboard = true;
 
-  static const auto ini = io::widget_ini_path().string();
+  static const auto ini = get_widget_ini_path().string();
   io.IniFilename = ini.c_str();
 
   ImGui_ImplSDL2_InitForOpenGL(window.get(), context.get());
@@ -77,8 +77,8 @@ ImGuiContext::~ImGuiContext()
 
 void ImGuiContext::reload_fonts()
 {
-  static const auto roboto = io::find_resource(kFontRobotoPath).string();
-  static const auto fa = io::find_resource(kFontFaPath).string();
+  static const auto roboto = find_resource(kFontRobotoPath).string();
+  static const auto fa = find_resource(kFontFaPath).string();
 
   spdlog::debug("Reloading fonts...");
 
