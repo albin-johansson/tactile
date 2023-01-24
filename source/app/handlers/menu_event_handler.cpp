@@ -71,11 +71,11 @@ void dispatch_menu_action(const MenuAction action)
 
     case MenuAction::ReopenLastClosedFile:
       // TODO this will need to be tweaked if tileset documents viewing will be supported
-      dispatcher.enqueue<OpenMapEvent>(Path {io::last_closed_file()});
+      dispatcher.enqueue<OpenMapEvent>(Path {get_last_closed_file()});
       break;
 
     case MenuAction::ClearFileHistory:
-      io::clear_file_history();
+      clear_file_history();
       break;
 
     case MenuAction::Undo:

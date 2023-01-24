@@ -48,7 +48,7 @@ void on_close_document(const CloseDocumentEvent& event)
   const auto document = model.get_document_ptr(event.document_id);
 
   if (document->is_map() && document->has_path()) {
-    io::set_last_closed_file(document->get_path());
+    set_last_closed_file(document->get_path());
   }
 
   model.close_document(event.document_id);

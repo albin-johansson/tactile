@@ -39,7 +39,7 @@ void update_recent_files_menu(const Strings& lang, entt::dispatcher& dispatcher)
   if (const Menu menu {lang.menu.recent_files.c_str()}; menu.is_open()) {
     ui_menu_item(dispatcher, MenuAction::ReopenLastClosedFile);
 
-    const auto& history = io::file_history();
+    const auto& history = get_file_history();
     if (!history.empty()) {
       ImGui::Separator();
     }

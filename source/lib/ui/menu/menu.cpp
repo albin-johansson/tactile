@@ -154,8 +154,8 @@ void update_file_menu(const Document* document)
 
   menu_set_enabled(MenuAction::CloseDocument, is_document_open);
 
-  menu_set_enabled(MenuAction::ReopenLastClosedFile, io::is_last_closed_file_valid());
-  menu_set_enabled(MenuAction::ClearFileHistory, document && !io::file_history().empty());
+  menu_set_enabled(MenuAction::ReopenLastClosedFile, is_last_closed_file_valid());
+  menu_set_enabled(MenuAction::ClearFileHistory, document && !get_file_history().empty());
 }
 
 }  // namespace

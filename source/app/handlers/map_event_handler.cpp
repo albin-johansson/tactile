@@ -89,7 +89,7 @@ void on_open_map(const OpenMapEvent& event)
     const auto result = io::parse_map(event.path);
     if (result.error() == io::ParseError::None) {
       io::map_from_ir(result, model);
-      io::add_file_to_history(event.path);
+      add_to_file_history(event.path);
     }
     else {
       ui::open_map_parse_error_dialog(result.error());

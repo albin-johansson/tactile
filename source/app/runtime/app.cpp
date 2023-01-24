@@ -68,7 +68,7 @@ App::~App() noexcept
 
 void App::on_startup()
 {
-  io::load_file_history();
+  load_file_history_from_disk();
 
   if (get_settings().test_flag(SETTINGS_RESTORE_LAST_SESSION_BIT)) {
     auto& model = get_model();
@@ -83,7 +83,7 @@ void App::on_shutdown()
   save_current_files_to_history();
   save_settings_to_disk(get_settings());
   io::session_save(get_model());
-  io::save_file_history();
+  save_file_history_to_disk();
 
   get_window().hide();
 }
@@ -154,7 +154,7 @@ void App::save_current_files_to_history()
   get_model().each([](const UUID& id) {
     const auto document = get_model().get_document_ptr(id);
     if (document->is_map() && document->has_path()) {
-      io::add_file_to_history(document->get_path());
+      add_to_file_history(document->get_path());
     }
   });
 }

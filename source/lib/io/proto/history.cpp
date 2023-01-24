@@ -33,7 +33,7 @@
 #include "io/proto/proto.hpp"
 #include "io/stream.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 constexpr int kHistoryFormatVersion [[maybe_unused]] = 1;
@@ -56,7 +56,7 @@ inline HistoryState gHistory;
 
 }  // namespace
 
-void load_file_history()
+void load_file_history_from_disk()
 {
   spdlog::debug("Loading file history...");
 
@@ -84,7 +84,7 @@ void load_file_history()
   }
 }
 
-void save_file_history()
+void save_file_history_to_disk()
 {
   proto::History h;
 
@@ -114,7 +114,7 @@ void clear_file_history()
   gHistory.entries.clear();
 }
 
-void add_file_to_history(const Path& path)
+void add_to_file_history(const Path& path)
 {
   auto converted = use_forward_slashes(path);
   if (std::find(gHistory.entries.begin(), gHistory.entries.end(), converted) ==
@@ -136,20 +136,15 @@ void set_last_closed_file(const Path& path)
   gHistory.last_closed_file = use_forward_slashes(path);
   spdlog::debug("Last closed file is now '{}'", *gHistory.last_closed_file);
 
-  add_file_to_history(path);
+  add_to_file_history(path);
 }
 
-auto file_history() -> const Deque<String>&
+auto get_file_history() -> const Deque<String>&
 {
   return gHistory.entries;
 }
 
-auto is_last_closed_file_valid() -> bool
-{
-  return gHistory.last_closed_file && fs::exists(Path {*gHistory.last_closed_file});
-}
-
-auto last_closed_file() -> const String&
+auto get_last_closed_file() -> const String&
 {
   if (is_last_closed_file_valid()) {
     return gHistory.last_closed_file.value();
@@ -159,4 +154,9 @@ auto last_closed_file() -> const String&
   }
 }
 
-}  // namespace tactile::io
+auto is_last_closed_file_valid() -> bool
+{
+  return gHistory.last_closed_file && fs::exists(Path {*gHistory.last_closed_file});
+}
+
+}  // namespace tactile
