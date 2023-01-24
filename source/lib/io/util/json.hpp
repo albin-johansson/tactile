@@ -42,8 +42,6 @@ void write_json(const JSON& json, const Path& path);
 
 [[nodiscard]] auto read_json(const Path& path) -> Maybe<JSON>;
 
-namespace io {
-
 [[nodiscard]] auto as_string(const JSON& json, StringView name) -> Maybe<String>;
 
 [[nodiscard]] auto as_int(const JSON& json, StringView name) -> Maybe<int32>;
@@ -54,5 +52,4 @@ namespace io {
 
 [[nodiscard]] auto as_bool(const JSON& json, StringView name) -> Maybe<bool>;
 
-}  // namespace io
 }  // namespace tactile

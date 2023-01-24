@@ -25,9 +25,7 @@
 #include "common/debug/assert.hpp"
 #include "ui/constants.hpp"
 
-namespace tactile::io {
-
-using XMLAttr = pugi::xml_attribute;
+namespace tactile {
 
 auto has_attr(XMLNode node, const char* attr_name) -> bool
 {
@@ -109,4 +107,4 @@ auto as_bool(XMLNode node, const char* attr_name) -> Maybe<bool>
   }
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

@@ -25,9 +25,10 @@
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 using XMLNode = pugi::xml_node;
+using XMLAttr = pugi::xml_attribute;
 
 [[nodiscard]] auto has_attr(XMLNode node, const char* attr_name) -> bool;
 
@@ -41,4 +42,4 @@ using XMLNode = pugi::xml_node;
 
 [[nodiscard]] auto as_bool(XMLNode node, const char* attr_name) -> Maybe<bool>;
 
-}  // namespace tactile::io
+}  // namespace tactile

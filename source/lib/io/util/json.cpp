@@ -226,8 +226,6 @@ auto read_json(const Path& path) -> Maybe<JSON>
   }
 }
 
-namespace io {
-
 auto as_string(const JSON& json, StringView name) -> Maybe<String>
 {
   return as<String>(json, name);
@@ -253,5 +251,4 @@ auto as_bool(const JSON& json, StringView name) -> Maybe<bool>
   return as<bool>(json, name);
 }
 
-}  // namespace io
 }  // namespace tactile

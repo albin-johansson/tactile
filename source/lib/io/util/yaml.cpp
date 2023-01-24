@@ -24,7 +24,7 @@
 #include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter&
 {
@@ -124,4 +124,4 @@ auto operator<<(YAML::Emitter& emitter, const TileCompression compression)
   }
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

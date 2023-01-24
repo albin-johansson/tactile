@@ -33,7 +33,7 @@
 
 using Base64 = cppcodec::base64_rfc4648;
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 // Update documentation if the representation of TileID changes
@@ -94,12 +94,12 @@ auto base64_encode_tiles(const TileMatrix& tiles,
       return encode_bytes(byte_stream);
     }
     case TileCompression::Zlib: {
-      const auto compressed = zlib_compress(ByteSpan {byte_stream}).value();
-      return encode_bytes(compressed);
+      const auto compressed_bytes = zlib_compress(ByteSpan {byte_stream}).value();
+      return encode_bytes(compressed_bytes);
     }
     case TileCompression::Zstd: {
-      const auto compressed = zstd_compress(ByteSpan {byte_stream}).value();
-      return encode_bytes(compressed);
+      const auto compressed_bytes = zstd_compress(ByteSpan {byte_stream}).value();
+      return encode_bytes(compressed_bytes);
     }
     default:
       throw TactileError {"Invalid compression strategy"};
@@ -110,23 +110,23 @@ auto base64_decode_tiles(StringView tiles,
                          const TileExtent extent,
                          const TileCompression compression) -> TileMatrix
 {
-  const auto decoded = Base64::decode(tiles.data(), tiles.size());
+  const auto decoded_bytes = Base64::decode(tiles.data(), tiles.size());
 
   switch (compression) {
     case TileCompression::None:
-      return restore_tiles(decoded, extent);
+      return restore_tiles(decoded_bytes, extent);
 
     case TileCompression::Zlib: {
-      const auto decompressed = zlib_decompress(decoded.data(), decoded.size()).value();
-      return restore_tiles(decompressed, extent);
+      const auto decompressed_bytes = zlib_decompress(ByteSpan {decoded_bytes}).value();
+      return restore_tiles(decompressed_bytes, extent);
     }
     case TileCompression::Zstd: {
-      const auto decompressed = zstd_decompress(decoded.data(), decoded.size()).value();
-      return restore_tiles(decompressed, extent);
+      const auto decompressed_bytes = zstd_decompress(ByteSpan {decoded_bytes}).value();
+      return restore_tiles(decompressed_bytes, extent);
     }
     default:
       throw TactileError {"Invalid compression strategy"};
   }
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

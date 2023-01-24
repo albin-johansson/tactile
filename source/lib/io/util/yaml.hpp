@@ -23,12 +23,12 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "core/attribute.hpp"
-#include "core/layer/tile_format.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
+#include "core/attribute.hpp"
+#include "core/layer/tile_format.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 /// Reads an attribute to a destination variable, returns false on failure.
 template <typename T>
@@ -109,12 +109,9 @@ inline void read_attribute(const YAML::Node& node,
   }
 }
 
+auto operator<<(YAML::Emitter& emitter, TileEncoding encoding) -> YAML::Emitter&;
+auto operator<<(YAML::Emitter& emitter, TileCompression compression) -> YAML::Emitter&;
+auto operator<<(YAML::Emitter& emitter, AttributeType type) -> YAML::Emitter&;
 auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter&;
 
-auto operator<<(YAML::Emitter& emitter, AttributeType type) -> YAML::Emitter&;
-
-auto operator<<(YAML::Emitter& emitter, TileEncoding encoding) -> YAML::Emitter&;
-
-auto operator<<(YAML::Emitter& emitter, TileCompression compression) -> YAML::Emitter&;
-
-}  // namespace tactile::io
+}  // namespace tactile

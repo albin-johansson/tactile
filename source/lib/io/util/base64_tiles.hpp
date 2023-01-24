@@ -26,7 +26,7 @@
 #include "core/tile/tile_extent.hpp"
 #include "core/tile/tile_matrix.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 /// Encodes a tile matrix using Base64.
 ///
@@ -56,4 +56,4 @@ namespace tactile::io {
                                        TileExtent extent,
                                        TileCompression compression) -> TileMatrix;
 
-}  // namespace tactile::io
+}  // namespace tactile
