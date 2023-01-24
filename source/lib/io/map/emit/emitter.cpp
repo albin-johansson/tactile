@@ -42,7 +42,7 @@ void emit_map(const MapDocument& document)
   const auto path = fs::absolute(document.get_path());
   spdlog::info("Trying to save map to {}", path);
 
-  EmitInfo info {path, map_to_ir(document)};
+  EmitInfo info {path, convert_map_document_to_ir(document)};
 
   const auto ext = path.extension();
   if (ext == ".yaml" || ext == ".yml") {
@@ -73,7 +73,7 @@ void emit_map_as_godot_scene(const MapDocument& document, const GodotEmitOptions
   spdlog::debug("Trying to save map as Godot scene at {}", path);
 
   // FIXME path
-  EmitInfo info {path, map_to_ir(document)};
+  EmitInfo info {path, convert_map_document_to_ir(document)};
 
   const auto& map = info.data();
   const auto scene = convert_to_godot(map, options);

@@ -57,7 +57,7 @@ void load_session_from_disk(DocumentModel& model)
     for (const auto& file: session.files()) {
       const auto ir = io::parse_map(file);
       if (ir.error() == io::ParseError::None) {
-        map_from_ir(ir, model);
+        create_map_document_from_ir(ir, model);
       }
       else {
         spdlog::warn("Failed to restore map from last session!");

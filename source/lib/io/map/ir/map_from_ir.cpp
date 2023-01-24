@@ -46,7 +46,7 @@
 #include "model/document/tileset_document.hpp"
 #include "model/model.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 void restore_context_no_register(Document& document,
@@ -296,7 +296,7 @@ void restore_tile_format(TileFormat& format, const ir::TileFormatData& data)
 
 }  // namespace
 
-void map_from_ir(const ParseResult& result, DocumentModel& model)
+void create_map_document_from_ir(const io::ParseResult& result, DocumentModel& model)
 {
   const auto& map_data = result.data();
 
@@ -331,4 +331,4 @@ void map_from_ir(const ParseResult& result, DocumentModel& model)
   map_document->get_history().clear();
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

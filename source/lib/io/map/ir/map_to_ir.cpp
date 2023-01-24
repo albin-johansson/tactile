@@ -32,7 +32,7 @@
 #include "model/document/tileset_document.hpp"
 #include "model/model.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 void convert_context(const Context& context,
@@ -258,7 +258,7 @@ void convert_tile_format(const TileFormat& format, ir::TileFormatData& data)
 
 }  // namespace
 
-auto map_to_ir(const MapDocument& document) -> ir::MapData
+auto convert_map_document_to_ir(const MapDocument& document) -> ir::MapData
 {
   TACTILE_DEBUG_PROFILE_START
   const auto& map = document.get_map();
@@ -285,4 +285,4 @@ auto map_to_ir(const MapDocument& document) -> ir::MapData
   return data;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

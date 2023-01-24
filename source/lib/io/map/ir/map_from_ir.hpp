@@ -19,19 +19,17 @@
 
 #pragma once
 
+#include "common/macros.hpp"
+
 namespace tactile {
 
-class DocumentModel;
-
-namespace io {
-
-class ParseResult;
+TACTILE_FWD_DECLARE_CLASS(DocumentModel)
+TACTILE_FWD_DECLARE_CLASS_NS(io, ParseResult)
 
 /// Restores a map document from an intermediate map representation.
 ///
 /// \param result the intermediate representation of the map data.
 /// \param model the target document model.
-void map_from_ir(const ParseResult& result, DocumentModel& model);
+void create_map_document_from_ir(const io::ParseResult& result, DocumentModel& model);
 
-}  // namespace io
 }  // namespace tactile

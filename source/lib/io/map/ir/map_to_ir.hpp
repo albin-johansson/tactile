@@ -19,14 +19,13 @@
 
 #pragma once
 
+#include "common/macros.hpp"
 #include "io/map/ir/ir.hpp"
 
 namespace tactile {
-class MapDocument;
+
+TACTILE_FWD_DECLARE_CLASS(MapDocument)
+
+[[nodiscard]] auto convert_map_document_to_ir(const MapDocument& document) -> ir::MapData;
+
 }  // namespace tactile
-
-namespace tactile::io {
-
-[[nodiscard]] auto map_to_ir(const MapDocument& document) -> ir::MapData;
-
-}  // namespace tactile::io
