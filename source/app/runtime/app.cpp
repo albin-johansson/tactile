@@ -72,7 +72,7 @@ void App::on_startup()
 
   if (get_settings().test_flag(SETTINGS_RESTORE_LAST_SESSION_BIT)) {
     auto& model = get_model();
-    io::session_restore_previous(model);
+    load_session_from_disk(model);
   }
 
   get_window().show();
@@ -80,9 +80,10 @@ void App::on_startup()
 
 void App::on_shutdown()
 {
-  save_current_files_to_history();
+  add_open_documents_to_file_history();
+
   save_settings_to_disk(get_settings());
-  io::session_save(get_model());
+  save_session_to_disk(get_model());
   save_file_history_to_disk();
 
   get_window().hide();
@@ -149,7 +150,7 @@ void App::subscribe_to_events()
   get_dispatcher().sink<QuitEvent>().connect<&App::on_quit>(this);
 }
 
-void App::save_current_files_to_history()
+void App::add_open_documents_to_file_history()
 {
   get_model().each([](const UUID& id) {
     const auto document = get_model().get_document_ptr(id);

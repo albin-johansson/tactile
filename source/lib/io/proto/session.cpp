@@ -30,7 +30,7 @@
 #include "model/document/map_document.hpp"
 #include "model/model.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 constexpr int kSessionFormatVersion [[maybe_unused]] = 1;
@@ -43,7 +43,7 @@ constexpr int kSessionFormatVersion [[maybe_unused]] = 1;
 
 }  // namespace
 
-void session_restore_previous(DocumentModel& model)
+void load_session_from_disk(DocumentModel& model)
 {
   proto::Session session;
 
@@ -55,8 +55,8 @@ void session_restore_previous(DocumentModel& model)
 
   if (session.ParseFromIstream(&stream.value())) {
     for (const auto& file: session.files()) {
-      const auto ir = parse_map(file);
-      if (ir.error() == ParseError::None) {
+      const auto ir = io::parse_map(file);
+      if (ir.error() == io::ParseError::None) {
         map_from_ir(ir, model);
       }
       else {
@@ -69,7 +69,7 @@ void session_restore_previous(DocumentModel& model)
   }
 }
 
-void session_save(const DocumentModel& model)
+void save_session_to_disk(const DocumentModel& model)
 {
   proto::Session session;
   model.each([&](const UUID& document_id) {
@@ -93,4 +93,4 @@ void session_save(const DocumentModel& model)
   }
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

@@ -49,7 +49,7 @@ class App final : EventLoop {
  private:
   void subscribe_to_events();
 
-  void save_current_files_to_history();
+  void add_open_documents_to_file_history();
 
   void on_keyboard_event(cen::keyboard_event event);
 

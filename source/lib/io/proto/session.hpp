@@ -23,12 +23,12 @@
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 
-namespace tactile::io {
+namespace tactile {
 
 /// Restores the open documents from the last session.
-void session_restore_previous(DocumentModel& model);
+void load_session_from_disk(DocumentModel& model);
 
 /// Saves the current session, i.e. the paths of the currently open documents.
-void session_save(const DocumentModel& model);
+void save_session_to_disk(const DocumentModel& model);
 
-}  // namespace tactile::io
+}  // namespace tactile
