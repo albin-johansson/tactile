@@ -28,7 +28,7 @@
 #include "io/proto/proto.hpp"
 #include "io/stream.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto get_settings_file_path() -> const Path&
@@ -260,4 +260,4 @@ void save_settings_to_disk(const Settings& settings)
   }
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

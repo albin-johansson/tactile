@@ -81,7 +81,7 @@ void App::on_startup()
 void App::on_shutdown()
 {
   save_current_files_to_history();
-  io::save_settings_to_disk(get_settings());
+  save_settings_to_disk(get_settings());
   io::session_save(get_model());
   io::save_file_history();
 

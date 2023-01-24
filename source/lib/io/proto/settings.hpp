@@ -23,7 +23,7 @@
 #include "common/type/maybe.hpp"
 #include "model/settings.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 /// Parses the persistent settings, or returns the default ones if there are none.
 [[nodiscard]] auto load_settings_from_disk() -> Settings;
@@ -31,4 +31,4 @@ namespace tactile::io {
 /// Saves settings to the persistent file directory.
 void save_settings_to_disk(const Settings& settings);
 
-}  // namespace tactile::io
+}  // namespace tactile

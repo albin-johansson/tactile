@@ -70,7 +70,7 @@ AppInitializer::AppInitializer()
   load_window_icon(window);
 
   // Configure settings and load the language files
-  get_settings().copy_values_from(io::load_settings_from_disk());
+  get_settings().copy_values_from(load_settings_from_disk());
   get_settings().print();
 
   load_languages();
