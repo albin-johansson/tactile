@@ -21,10 +21,10 @@
 
 #include "lang/strings.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 /// Parses a language translation JSON file.
 [[nodiscard]] auto parse_language(const char* path, const Strings& fallback = {})
     -> Strings;
 
-}  // namespace tactile::io
+}  // namespace tactile

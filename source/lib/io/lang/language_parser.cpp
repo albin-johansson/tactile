@@ -29,7 +29,7 @@
 #include "io/util/json.hpp"
 #include "ui/style/icons.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 void load(const JSON& json, String& string, const char* key)
@@ -634,4 +634,4 @@ auto parse_language(const char* path, const Strings& fallback) -> Strings
   return strings;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

@@ -41,10 +41,10 @@ void load_languages()
 {
   spdlog::debug("Loading languages...");
 
-  auto en = io::parse_language("assets/lang/en.json");
+  auto en = parse_language("assets/lang/en.json");
 
-  languages[Lang::SV] = io::parse_language("assets/lang/sv.json", en);
-  languages[Lang::EN_GB] = io::parse_language("assets/lang/en_GB.json", en);
+  languages[Lang::SV] = parse_language("assets/lang/sv.json", en);
+  languages[Lang::EN_GB] = parse_language("assets/lang/en_GB.json", en);
 
   languages[Lang::EN] = std::move(en);
 }
