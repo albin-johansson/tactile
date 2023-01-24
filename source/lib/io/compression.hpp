@@ -24,37 +24,44 @@
 #include "common/type/span.hpp"
 #include "common/type/vec.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 using ByteStream = Vec<uint8>;
+using ByteSpan = Span<const uint8>;
 
 [[nodiscard]] auto zlib_compress(const void* source, usize source_bytes, int level = -1)
     -> Maybe<ByteStream>;
-
-template <typename T>
-[[nodiscard]] auto zlib_compress(const Vec<T>& vec, const int level = -1)
-    -> Maybe<ByteStream>
-{
-  return zlib_compress(vec.data(), vec.size() * sizeof(T), level);
-}
-
-[[nodiscard]] auto zlib_decompress(const void* source, usize source_bytes)
-    -> Maybe<ByteStream>;
-
-[[nodiscard]] auto zlib_decompress(Span<const uint8> span) -> Maybe<ByteStream>;
-
 [[nodiscard]] auto zstd_compress(const void* source, usize source_bytes)
     -> Maybe<ByteStream>;
 
-template <typename T>
-[[nodiscard]] auto zstd_compress(const Vec<T>& vec) -> Maybe<ByteStream>
-{
-  return zstd_compress(vec.data(), vec.size() * sizeof(T));
-}
-
+[[nodiscard]] auto zlib_decompress(const void* source, usize source_bytes)
+    -> Maybe<ByteStream>;
 [[nodiscard]] auto zstd_decompress(const void* source, usize source_bytes)
     -> Maybe<ByteStream>;
 
-[[nodiscard]] auto zstd_decompress(Span<const uint8> span) -> Maybe<ByteStream>;
+template <typename T>
+[[nodiscard]] auto zlib_compress(Span<const T> span, const int level = -1)
+    -> Maybe<ByteStream>
+{
+  return zlib_compress(span.data(), span.size_bytes(), level);
+}
 
-}  // namespace tactile::io
+template <typename T>
+[[nodiscard]] auto zstd_compress(Span<const T> span) -> Maybe<ByteStream>
+{
+  return zstd_compress(span.data(), span.size_bytes());
+}
+
+template <typename T>
+[[nodiscard]] auto zlib_decompress(Span<const T> span) -> Maybe<ByteStream>
+{
+  return zlib_decompress(span.data(), span.size_bytes());
+}
+
+template <typename T>
+[[nodiscard]] auto zstd_decompress(Span<const T> span) -> Maybe<ByteStream>
+{
+  return zstd_decompress(span.data(), span.size_bytes());
+}
+
+}  // namespace tactile

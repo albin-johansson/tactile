@@ -87,18 +87,18 @@ auto base64_encode_tiles(const TileMatrix& tiles,
                          const TileExtent extent,
                          const TileCompression compression) -> String
 {
-  const auto sequence = convert_tile_matrix_to_sequence(tiles, extent);
+  const auto byte_stream = convert_tile_matrix_to_sequence(tiles, extent);
 
   switch (compression) {
     case TileCompression::None: {
-      return encode_bytes(sequence);
+      return encode_bytes(byte_stream);
     }
     case TileCompression::Zlib: {
-      const auto compressed = zlib_compress(sequence).value();
+      const auto compressed = zlib_compress(ByteSpan {byte_stream}).value();
       return encode_bytes(compressed);
     }
     case TileCompression::Zstd: {
-      const auto compressed = zstd_compress(sequence).value();
+      const auto compressed = zstd_compress(ByteSpan {byte_stream}).value();
       return encode_bytes(compressed);
     }
     default:

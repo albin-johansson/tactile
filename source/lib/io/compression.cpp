@@ -30,7 +30,7 @@
 #include "common/predef.hpp"
 #include "common/type/ptr.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 using ZlibProcessFun = int (*)(z_stream*, int);
@@ -159,11 +159,6 @@ auto zlib_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
   return dest;
 }
 
-auto zlib_decompress(Span<const uint8> span) -> Maybe<ByteStream>
-{
-  return zlib_decompress(span.data(), span.size_bytes());
-}
-
 auto zstd_compress(const void* source, const usize source_bytes) -> Maybe<ByteStream>
 {
   if (!source || source_bytes == 0) {
@@ -251,9 +246,4 @@ auto zstd_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
   return result;
 }
 
-auto zstd_decompress(Span<const uint8> span) -> Maybe<ByteStream>
-{
-  return zstd_decompress(span.data(), span.size_bytes());
-}
-
-}  // namespace tactile::io
+}  // namespace tactile
