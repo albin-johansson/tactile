@@ -42,28 +42,28 @@ namespace {
   Attribute value;
   switch (*attr_type) {
     case AttributeType::String: {
-      value = as_string(node, "value").value();
+      value = get_string_attr(node, "value").value();
       break;
     }
     case AttributeType::Int: {
-      value = as_int(node, "value").value();
+      value = get_int_attr(node, "value").value();
       break;
     }
     case AttributeType::Float: {
-      value = as_float(node, "value").value();
+      value = get_float_attr(node, "value").value();
       break;
     }
     case AttributeType::Bool: {
-      value = as_bool(node, "value").value();
+      value = get_bool_attr(node, "value").value();
       break;
     }
     case AttributeType::Path: {
-      Path path = as_string(node, "value").value();
+      Path path = get_string_attr(node, "value").value();
       value = std::move(path);
       break;
     }
     case AttributeType::Color: {
-      const auto hex = as_string(node, "value").value();
+      const auto hex = get_string_attr(node, "value").value();
 
       // Empty color properties are not supported, so just assume the default color value
       if (hex.empty()) {
@@ -82,7 +82,7 @@ namespace {
       break;
     }
     case AttributeType::Object: {
-      value = ObjectRef {as_int(node, "value").value()};
+      value = ObjectRef {get_int_attr(node, "value").value()};
       break;
     }
     case AttributeType::Float2:
@@ -119,7 +119,7 @@ auto parse_properties(XmlNode node) -> Expected<ir::AttributeMap, ParseError>
 
   for (const auto property_node: node.child("properties").children("property")) {
     String property_name;
-    if (auto name = as_string(property_node, "name")) {
+    if (auto name = get_string_attr(property_node, "name")) {
       property_name = std::move(*name);
     }
     else {

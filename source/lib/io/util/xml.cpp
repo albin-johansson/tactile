@@ -37,7 +37,7 @@ auto has_attr(XmlNode node, const char* attr_name) -> bool
                      });
 }
 
-auto as_string(XmlNode node, const char* attr_name) -> Maybe<String>
+auto get_string_attr(XmlNode node, const char* attr_name) -> Maybe<String>
 {
   TACTILE_ASSERT(attr_name);
 
@@ -49,7 +49,7 @@ auto as_string(XmlNode node, const char* attr_name) -> Maybe<String>
   }
 }
 
-auto as_int(XmlNode node, const char* attr_name) -> Maybe<int32>
+auto get_int_attr(XmlNode node, const char* attr_name) -> Maybe<int32>
 {
   TACTILE_ASSERT(attr_name);
 
@@ -64,7 +64,7 @@ auto as_int(XmlNode node, const char* attr_name) -> Maybe<int32>
   }
 }
 
-auto as_uint(XmlNode node, const char* attr_name) -> Maybe<uint32>
+auto get_uint_attr(XmlNode node, const char* attr_name) -> Maybe<uint32>
 {
   TACTILE_ASSERT(attr_name);
 
@@ -79,7 +79,7 @@ auto as_uint(XmlNode node, const char* attr_name) -> Maybe<uint32>
   }
 }
 
-auto as_float(XmlNode node, const char* attr_name) -> Maybe<float>
+auto get_float_attr(XmlNode node, const char* attr_name) -> Maybe<float>
 {
   TACTILE_ASSERT(attr_name);
 
@@ -94,7 +94,7 @@ auto as_float(XmlNode node, const char* attr_name) -> Maybe<float>
   }
 }
 
-auto as_bool(XmlNode node, const char* attr_name) -> Maybe<bool>
+auto get_bool_attr(XmlNode node, const char* attr_name) -> Maybe<bool>
 {
   TACTILE_ASSERT(attr_name);
 

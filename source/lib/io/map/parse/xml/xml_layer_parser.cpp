@@ -149,7 +149,7 @@ namespace {
 {
   ir::TileLayerData tile_layer;
 
-  if (const auto width = as_uint(layer_node, "width")) {
+  if (const auto width = get_uint_attr(layer_node, "width")) {
     tile_layer.extent.cols = *width;
 
     if (tile_layer.extent.cols != map.extent.cols) {
@@ -163,7 +163,7 @@ namespace {
     tile_layer.extent.cols = map.extent.cols;
   }
 
-  if (const auto height = as_uint(layer_node, "height")) {
+  if (const auto height = get_uint_attr(layer_node, "height")) {
     tile_layer.extent.rows = *height;
 
     if (tile_layer.extent.rows != map.extent.rows) {
@@ -210,7 +210,7 @@ namespace {
   ir::LayerData layer;
   layer.index = index;
 
-  if (const auto id = as_int(layer_node, "id")) {
+  if (const auto id = get_int_attr(layer_node, "id")) {
     layer.id = *id;
   }
   else {
@@ -279,7 +279,7 @@ auto parse_object(XmlNode object_node) -> Expected<ir::ObjectData, ParseError>
 {
   ir::ObjectData object;
 
-  if (const auto id = as_int(object_node, "id")) {
+  if (const auto id = get_int_attr(object_node, "id")) {
     object.id = *id;
   }
   else {

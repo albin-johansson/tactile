@@ -32,14 +32,14 @@ using XmlAttr = pugi::xml_attribute;
 
 [[nodiscard]] auto has_attr(XmlNode node, const char* attr_name) -> bool;
 
-[[nodiscard]] auto as_string(XmlNode node, const char* attr_name) -> Maybe<String>;
+[[nodiscard]] auto get_string_attr(XmlNode node, const char* attr_name) -> Maybe<String>;
 
-[[nodiscard]] auto as_int(XmlNode node, const char* attr_name) -> Maybe<int32>;
+[[nodiscard]] auto get_int_attr(XmlNode node, const char* attr_name) -> Maybe<int32>;
 
-[[nodiscard]] auto as_uint(XmlNode node, const char* attr_name) -> Maybe<uint32>;
+[[nodiscard]] auto get_uint_attr(XmlNode node, const char* attr_name) -> Maybe<uint32>;
 
-[[nodiscard]] auto as_float(XmlNode node, const char* attr_name) -> Maybe<float>;
+[[nodiscard]] auto get_float_attr(XmlNode node, const char* attr_name) -> Maybe<float>;
 
-[[nodiscard]] auto as_bool(XmlNode node, const char* attr_name) -> Maybe<bool>;
+[[nodiscard]] auto get_bool_attr(XmlNode node, const char* attr_name) -> Maybe<bool>;
 
 }  // namespace tactile
