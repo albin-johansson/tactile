@@ -68,15 +68,13 @@ jobs:
                                   --exec /usr/bin/Xvfb -- :99 -screen 0 800x600x24 -ac +extension GLX;
           sleep 3
 
-      - name: Create build directory
-        run: mkdir -p build
-
       - name: Generate build files
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
         run: |
           mkdir build && cd build
-          cmake .. -GNinja -DCMAKE_BUILD_TYPE=Debug
+          cmake .. -GNinja \
+                   -DCMAKE_BUILD_TYPE=Debug
 
       - name: Build
         run: ninja -C build
