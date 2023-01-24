@@ -152,10 +152,10 @@ void App::subscribe_to_events()
 
 void App::add_open_documents_to_file_history()
 {
-  get_model().each([](const UUID& id) {
-    const auto document = get_model().get_document_ptr(id);
-    if (document->is_map() && document->has_path()) {
-      add_to_file_history(document->get_path());
+  get_model().each([](const UUID& document_id) {
+    const auto& document = get_model().get_document(document_id);
+    if (document.is_map() && document.has_path()) {
+      add_to_file_history(document.get_path());
     }
   });
 }
