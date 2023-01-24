@@ -26,7 +26,7 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto validate_map(XMLNode map_node) -> ParseError
+[[nodiscard]] auto validate_map(XmlNode map_node) -> ParseError
 {
   if (as_string(map_node, "orientation") != "orthogonal") {
     return ParseError::UnsupportedMapOrientation;

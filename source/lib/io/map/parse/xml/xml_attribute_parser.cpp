@@ -29,7 +29,7 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto parse_value(XMLNode node, const char* type)
+[[nodiscard]] auto parse_value(XmlNode node, const char* type)
     -> Expected<Attribute, ParseError>
 {
   TACTILE_ASSERT(type);
@@ -98,7 +98,7 @@ namespace {
   return value;
 }
 
-[[nodiscard]] auto parse_property(XMLNode node) -> Expected<Attribute, ParseError>
+[[nodiscard]] auto parse_property(XmlNode node) -> Expected<Attribute, ParseError>
 {
   // String properties may exclude the type attribute
   const char* type = node.attribute("type").as_string("string");
@@ -113,7 +113,7 @@ namespace {
 
 }  // namespace
 
-auto parse_properties(XMLNode node) -> Expected<ir::AttributeMap, ParseError>
+auto parse_properties(XmlNode node) -> Expected<ir::AttributeMap, ParseError>
 {
   ir::AttributeMap props;
 
@@ -137,7 +137,7 @@ auto parse_properties(XMLNode node) -> Expected<ir::AttributeMap, ParseError>
   return props;
 }
 
-auto parse_context(XMLNode node) -> Expected<ir::ContextData, ParseError>
+auto parse_context(XmlNode node) -> Expected<ir::ContextData, ParseError>
 {
   ir::ContextData context;
 

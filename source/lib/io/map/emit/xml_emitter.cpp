@@ -37,7 +37,7 @@
 namespace tactile::io {
 namespace {
 
-void append_properties(XMLNode node, const ir::ContextData& context)
+void append_properties(XmlNode node, const ir::ContextData& context)
 {
   if (context.properties.empty()) {
     return;
@@ -127,7 +127,7 @@ void append_properties(XMLNode node, const ir::ContextData& context)
   }
 }
 
-void append_object(XMLNode node, const ir::ObjectData& object)
+void append_object(XmlNode node, const ir::ObjectData& object)
 {
   auto object_node = node.append_child("object");
   object_node.append_attribute("id").set_value(object.id);
@@ -171,7 +171,7 @@ void append_object(XMLNode node, const ir::ObjectData& object)
   append_properties(object_node, object.context);
 }
 
-void append_common_layer_attributes(XMLNode node, const ir::LayerData& layer)
+void append_common_layer_attributes(XmlNode node, const ir::LayerData& layer)
 {
   node.append_attribute("id").set_value(layer.id);
   node.append_attribute("name").set_value(layer.name.c_str());
@@ -185,7 +185,7 @@ void append_common_layer_attributes(XMLNode node, const ir::LayerData& layer)
   }
 }
 
-void append_csv_tile_layer_data(XMLNode data_node,
+void append_csv_tile_layer_data(XmlNode data_node,
                                 const ir::MapData& map,
                                 const ir::TileLayerData& tile_layer)
 {
@@ -220,7 +220,7 @@ void append_csv_tile_layer_data(XMLNode data_node,
   data_node.text().set(stream.str().c_str());
 }
 
-void append_base64_tile_layer_data(XMLNode data_node,
+void append_base64_tile_layer_data(XmlNode data_node,
                                    const ir::MapData& map,
                                    const ir::TileLayerData& tile_layer)
 {
@@ -249,7 +249,7 @@ void append_base64_tile_layer_data(XMLNode data_node,
   data_node.text().set(tile_data.c_str());
 }
 
-void append_tile_layer(XMLNode root, const ir::MapData& map, const ir::LayerData& layer)
+void append_tile_layer(XmlNode root, const ir::MapData& map, const ir::LayerData& layer)
 {
   const auto& tile_layer = layer.as_tile_layer();
 
@@ -276,7 +276,7 @@ void append_tile_layer(XMLNode root, const ir::MapData& map, const ir::LayerData
   }
 }
 
-void append_object_layer(XMLNode root, const ir::LayerData& layer)
+void append_object_layer(XmlNode root, const ir::LayerData& layer)
 {
   const auto& object_layer = layer.as_object_layer();
 
@@ -289,7 +289,7 @@ void append_object_layer(XMLNode root, const ir::LayerData& layer)
   }
 }
 
-void append_layer(XMLNode root, const ir::MapData& map, const ir::LayerData& layer)
+void append_layer(XmlNode root, const ir::MapData& map, const ir::LayerData& layer)
 {
   switch (layer.type) {
     case LayerType::TileLayer:
@@ -318,7 +318,7 @@ void append_layer(XMLNode root, const ir::MapData& map, const ir::LayerData& lay
   }
 }
 
-void append_fancy_tiles(XMLNode node, const ir::TilesetData& tileset)
+void append_fancy_tiles(XmlNode node, const ir::TilesetData& tileset)
 {
   for (const auto& [id, tile]: tileset.fancy_tiles) {
     auto tile_node = node.append_child("tile");
@@ -347,7 +347,7 @@ void append_fancy_tiles(XMLNode node, const ir::TilesetData& tileset)
   }
 }
 
-void append_common_tileset_attributes(XMLNode node,
+void append_common_tileset_attributes(XmlNode node,
                                       const ir::TilesetData& tileset,
                                       const Path& dir)
 {
@@ -373,7 +373,7 @@ void append_common_tileset_attributes(XMLNode node,
   append_properties(node, tileset.context);
 }
 
-void append_embedded_tileset(XMLNode root,
+void append_embedded_tileset(XmlNode root,
                              const ir::TilesetData& tileset,
                              const Path& dir)
 {
@@ -383,7 +383,7 @@ void append_embedded_tileset(XMLNode root,
   append_common_tileset_attributes(node, tileset, dir);
 }
 
-void append_external_tileset(XMLNode root,
+void append_external_tileset(XmlNode root,
                              const ir::TilesetData& tileset,
                              const String& filename)
 {
@@ -408,7 +408,7 @@ void emit_external_tileset_file(const Path& path,
   document.save(stream, " ");
 }
 
-void append_tileset(XMLNode root, const ir::TilesetData& tileset, const Path& dir)
+void append_tileset(XmlNode root, const ir::TilesetData& tileset, const Path& dir)
 {
   const auto& settings = get_settings();
   if (settings.test_flag(SETTINGS_EMBED_TILESETS_BIT)) {

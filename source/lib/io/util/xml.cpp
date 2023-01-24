@@ -27,17 +27,17 @@
 
 namespace tactile {
 
-auto has_attr(XMLNode node, const char* attr_name) -> bool
+auto has_attr(XmlNode node, const char* attr_name) -> bool
 {
   TACTILE_ASSERT(attr_name != nullptr);
   return std::any_of(node.attributes_begin(),
                      node.attributes_end(),
-                     [attr_name](const XMLAttr attribute) {
+                     [attr_name](const XmlAttr attribute) {
                        return std::strcmp(attribute.name(), attr_name) == 0;
                      });
 }
 
-auto as_string(XMLNode node, const char* attr_name) -> Maybe<String>
+auto as_string(XmlNode node, const char* attr_name) -> Maybe<String>
 {
   TACTILE_ASSERT(attr_name);
 
@@ -49,7 +49,7 @@ auto as_string(XMLNode node, const char* attr_name) -> Maybe<String>
   }
 }
 
-auto as_int(XMLNode node, const char* attr_name) -> Maybe<int32>
+auto as_int(XmlNode node, const char* attr_name) -> Maybe<int32>
 {
   TACTILE_ASSERT(attr_name);
 
@@ -64,7 +64,7 @@ auto as_int(XMLNode node, const char* attr_name) -> Maybe<int32>
   }
 }
 
-auto as_uint(XMLNode node, const char* attr_name) -> Maybe<uint32>
+auto as_uint(XmlNode node, const char* attr_name) -> Maybe<uint32>
 {
   TACTILE_ASSERT(attr_name);
 
@@ -79,7 +79,7 @@ auto as_uint(XMLNode node, const char* attr_name) -> Maybe<uint32>
   }
 }
 
-auto as_float(XMLNode node, const char* attr_name) -> Maybe<float>
+auto as_float(XmlNode node, const char* attr_name) -> Maybe<float>
 {
   TACTILE_ASSERT(attr_name);
 
@@ -94,7 +94,7 @@ auto as_float(XMLNode node, const char* attr_name) -> Maybe<float>
   }
 }
 
-auto as_bool(XMLNode node, const char* attr_name) -> Maybe<bool>
+auto as_bool(XmlNode node, const char* attr_name) -> Maybe<bool>
 {
   TACTILE_ASSERT(attr_name);
 

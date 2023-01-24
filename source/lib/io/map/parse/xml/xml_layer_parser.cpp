@@ -35,9 +35,9 @@
 namespace tactile::io {
 namespace {
 
-[[nodiscard]] auto collect_layer_nodes(XMLNode map_node) -> Vec<XMLNode>
+[[nodiscard]] auto collect_layer_nodes(XmlNode map_node) -> Vec<XmlNode>
 {
-  Vec<XMLNode> nodes;
+  Vec<XmlNode> nodes;
 
   for (auto node: map_node.children()) {
     if (std::strcmp(node.name(), "layer") == 0 ||
@@ -71,7 +71,7 @@ namespace {
   return tiles;
 }
 
-[[nodiscard]] auto parse_tile_nodes(XMLNode data_node, const TileExtent extent)
+[[nodiscard]] auto parse_tile_nodes(XmlNode data_node, const TileExtent extent)
     -> Expected<TileMatrix, ParseError>
 {
   auto tiles = make_tile_matrix(extent);
@@ -87,7 +87,7 @@ namespace {
   return tiles;
 }
 
-[[nodiscard]] auto parse_tile_data(XMLNode layer_node, ir::MapData& map)
+[[nodiscard]] auto parse_tile_data(XmlNode layer_node, ir::MapData& map)
     -> Expected<TileMatrix, ParseError>
 {
   const auto data = layer_node.child("data");
@@ -144,7 +144,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto parse_tile_layer(XMLNode layer_node, ir::MapData& map)
+[[nodiscard]] auto parse_tile_layer(XmlNode layer_node, ir::MapData& map)
     -> Expected<ir::TileLayerData, ParseError>
 {
   ir::TileLayerData tile_layer;
@@ -187,7 +187,7 @@ namespace {
   return tile_layer;
 }
 
-[[nodiscard]] auto parse_object_layer(XMLNode layer_node)
+[[nodiscard]] auto parse_object_layer(XmlNode layer_node)
     -> Expected<ir::ObjectLayerData, ParseError>
 {
   ir::ObjectLayerData object_layer;
@@ -204,7 +204,7 @@ namespace {
   return object_layer;
 }
 
-[[nodiscard]] auto parse_layer(XMLNode layer_node, ir::MapData& map, const usize index)
+[[nodiscard]] auto parse_layer(XmlNode layer_node, ir::MapData& map, const usize index)
     -> Expected<ir::LayerData, ParseError>
 {
   ir::LayerData layer;
@@ -275,7 +275,7 @@ namespace {
 
 }  // namespace
 
-auto parse_object(XMLNode object_node) -> Expected<ir::ObjectData, ParseError>
+auto parse_object(XmlNode object_node) -> Expected<ir::ObjectData, ParseError>
 {
   ir::ObjectData object;
 
@@ -316,7 +316,7 @@ auto parse_object(XMLNode object_node) -> Expected<ir::ObjectData, ParseError>
   return object;
 }
 
-auto parse_layers(XMLNode map_node, ir::MapData& map)
+auto parse_layers(XmlNode map_node, ir::MapData& map)
     -> Expected<Vec<ir::LayerData>, ParseError>
 {
   Vec<ir::LayerData> layers;

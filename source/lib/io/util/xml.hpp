@@ -27,19 +27,19 @@
 
 namespace tactile {
 
-using XMLNode = pugi::xml_node;
-using XMLAttr = pugi::xml_attribute;
+using XmlNode = pugi::xml_node;
+using XmlAttr = pugi::xml_attribute;
 
-[[nodiscard]] auto has_attr(XMLNode node, const char* attr_name) -> bool;
+[[nodiscard]] auto has_attr(XmlNode node, const char* attr_name) -> bool;
 
-[[nodiscard]] auto as_string(XMLNode node, const char* attr_name) -> Maybe<String>;
+[[nodiscard]] auto as_string(XmlNode node, const char* attr_name) -> Maybe<String>;
 
-[[nodiscard]] auto as_int(XMLNode node, const char* attr_name) -> Maybe<int32>;
+[[nodiscard]] auto as_int(XmlNode node, const char* attr_name) -> Maybe<int32>;
 
-[[nodiscard]] auto as_uint(XMLNode node, const char* attr_name) -> Maybe<uint32>;
+[[nodiscard]] auto as_uint(XmlNode node, const char* attr_name) -> Maybe<uint32>;
 
-[[nodiscard]] auto as_float(XMLNode node, const char* attr_name) -> Maybe<float>;
+[[nodiscard]] auto as_float(XmlNode node, const char* attr_name) -> Maybe<float>;
 
-[[nodiscard]] auto as_bool(XMLNode node, const char* attr_name) -> Maybe<bool>;
+[[nodiscard]] auto as_bool(XmlNode node, const char* attr_name) -> Maybe<bool>;
 
 }  // namespace tactile
