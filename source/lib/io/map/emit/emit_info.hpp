@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/path.hpp"
-#include "io/map/ir/ir.hpp"
+#include "io/ir/ir.hpp"
 
 namespace tactile::io {
 

@@ -19,8 +19,8 @@
 
 #pragma once
 
+#include "io/ir/ir.hpp"
 #include "io/map/emit/gd/godot_scene.hpp"
-#include "io/map/ir/ir.hpp"
 
 namespace tactile::io {
 

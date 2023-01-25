@@ -24,7 +24,7 @@
 #include "common/type/string.hpp"
 #include "common/util/str.hpp"
 #include "core/tile/tile_matrix.hpp"
-#include "io/map/ir/ir.hpp"
+#include "io/ir/ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/yaml.hpp"
