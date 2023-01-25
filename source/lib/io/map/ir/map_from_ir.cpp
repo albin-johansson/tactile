@@ -51,16 +51,16 @@ namespace {
 
 void restore_context_no_register(Document& document,
                                  const Shared<Context>& context,
-                                 const ir::ContextData& source)
+                                 const ir::ContextData& ir_context)
 {
   auto& ctx = context->get_ctx();
 
-  for (const auto& [property_name, property_value]: source.properties) {
+  for (const auto& [property_name, property_value]: ir_context.properties) {
     ctx.add_property(property_name, property_value);
   }
 
   if (auto component_index = document.get_component_index_ptr()) {
-    for (const auto& [type, attributes]: source.components) {
+    for (const auto& [type, attributes]: ir_context.components) {
       const auto& component_def = component_index->get_comp(type);
 
       auto component = component_def.instantiate();
@@ -75,81 +75,81 @@ void restore_context_no_register(Document& document,
 
 void restore_context(Document& document,
                      const Shared<Context>& context,
-                     const ir::ContextData& source)
+                     const ir::ContextData& ir_context)
 {
-  restore_context_no_register(document, context, source);
+  restore_context_no_register(document, context, ir_context);
   document.get_contexts().add_context(context);
 }
 
-auto restore_object(Document& document, const ir::ObjectData& object_data)
-    -> Shared<Object>
+auto restore_object(Document& document, const ir::ObjectData& ir_object) -> Shared<Object>
 {
   auto object = std::make_shared<Object>();
-  object->set_type(object_data.type);
+  object->set_type(ir_object.type);
 
-  object->set_pos(object_data.pos);
-  object->set_size(object_data.size);
+  object->set_pos(ir_object.pos);
+  object->set_size(ir_object.size);
 
-  object->set_tag(object_data.tag);
-  object->set_visible(object_data.visible);
+  object->set_tag(ir_object.tag);
+  object->set_visible(ir_object.visible);
 
-  object->get_ctx().set_name(object_data.name);
-  object->set_meta_id(object_data.id);
+  object->get_ctx().set_name(ir_object.name);
+  object->set_meta_id(ir_object.id);
 
-  restore_context(document, object, object_data.context);
+  restore_context(document, object, ir_object.context);
 
   return object;
 }
 
 void restore_object_layer(MapDocument& document,
                           const UUID& layer_id,
-                          const ir::ObjectLayerData& object_layer_data)
+                          const ir::ObjectLayerData& ir_object_layer)
 {
   auto& map = document.get_map();
 
   auto& layer = map.get_invisible_root().get_object_layer(layer_id);
-  layer.reserve_objects(object_layer_data.objects.size());
+  layer.reserve_objects(ir_object_layer.objects.size());
 
-  for (const auto& object_data: object_layer_data.objects) {
-    layer.add_object(restore_object(document, object_data));
+  for (const auto& ir_object: ir_object_layer.objects) {
+    layer.add_object(restore_object(document, ir_object));
   }
 }
 
 auto restore_layer(MapDocument& document,
-                   const ir::LayerData& layer_data,
+                   const ir::LayerData& ir_layer,
                    const Maybe<UUID>& parent = nothing) -> UUID
 {
   auto& map = document.get_map();
-  auto& root = map.get_invisible_root();
+  auto& root_layer = map.get_invisible_root();
+
   // TODO respect layerData.index?
 
   UUID layer_id;
-  switch (layer_data.type) {
+  switch (ir_layer.type) {
     case LayerType::TileLayer: {
       layer_id = map.add_tile_layer(parent);
 
-      auto& layer = root.get_tile_layer(layer_id);
-      const auto& tile_data = layer_data.as_tile_layer();
+      auto& layer = root_layer.get_tile_layer(layer_id);
+      const auto& ir_tile_layer = ir_layer.as_tile_layer();
 
-      invoke_mn(tile_data.extent.rows,
-                tile_data.extent.cols,
+      invoke_mn(ir_tile_layer.extent.rows,
+                ir_tile_layer.extent.cols,
                 [&](const usize row, const usize col) {
-                  layer.set_tile(TilePos::from(row, col), tile_data.tiles[row][col]);
+                  layer.set_tile(TilePos::from(row, col), ir_tile_layer.tiles[row][col]);
                 });
 
       break;
     }
     case LayerType::ObjectLayer: {
       layer_id = map.add_object_layer(parent);
-      restore_object_layer(document, layer_id, layer_data.as_object_layer());
+      restore_object_layer(document, layer_id, ir_layer.as_object_layer());
       break;
     }
     case LayerType::GroupLayer: {
       layer_id = map.add_group_layer(parent);
 
-      const auto& group = layer_data.as_group_layer();
-      for (const auto& child_layer_data: group.children) {
-        restore_layer(document, *child_layer_data, layer_id);
+      const auto& ir_group = ir_layer.as_group_layer();
+      for (const auto& ir_child_layer: ir_group.children) {
+        restore_layer(document, *ir_child_layer, layer_id);
       }
 
       break;
@@ -158,31 +158,31 @@ auto restore_layer(MapDocument& document,
       throw TactileError {"Invalid layer type!"};
   }
 
-  auto& layer = root.get_layer(layer_id);
-  layer.get_ctx().set_name(layer_data.name);
-  layer.set_opacity(layer_data.opacity);
-  layer.set_visible(layer_data.visible);
-  layer.set_meta_id(layer_data.id);
+  auto& layer = root_layer.get_layer(layer_id);
+  layer.get_ctx().set_name(ir_layer.name);
+  layer.set_opacity(ir_layer.opacity);
+  layer.set_visible(ir_layer.visible);
+  layer.set_meta_id(ir_layer.id);
 
-  restore_context(document, root.find_shared_layer(layer_id), layer_data.context);
+  restore_context(document, root_layer.find_shared_layer(layer_id), ir_layer.context);
 
   return layer_id;
 }
 
-void restore_layers(MapDocument& document, const ir::MapData& map_data)
+void restore_layers(MapDocument& document, const ir::MapData& ir_map)
 {
-  for (const auto& layer_data: map_data.layers) {
-    restore_layer(document, layer_data);
+  for (const auto& ir_layer: ir_map.layers) {
+    restore_layer(document, ir_layer);
   }
 }
 
-void restore_tile_animation(Tile& tile, const ir::MetaTileData& tile_data)
+void restore_tile_animation(Tile& tile, const ir::MetaTileData& ir_tile)
 {
   TileAnimation animation;
-  animation.reserve_frames(tile_data.frames.size());
+  animation.reserve_frames(ir_tile.frames.size());
 
-  for (const auto& frame_data: tile_data.frames) {
-    animation.add_frame(frame_data.tile_index, ms_t {frame_data.duration_ms});
+  for (const auto& ir_frame: ir_tile.frames) {
+    animation.add_frame(ir_frame.tile_index, ms_t {ir_frame.duration_ms});
   }
 
   tile.set_animation(std::move(animation));
@@ -190,67 +190,67 @@ void restore_tile_animation(Tile& tile, const ir::MetaTileData& tile_data)
 
 void restore_fancy_tile_objects(TilesetDocument& document,
                                 Tile& tile,
-                                const ir::MetaTileData& tile_data)
+                                const ir::MetaTileData& ir_tile)
 {
-  tile.reserve_objects(tile_data.objects.size());
+  tile.reserve_objects(ir_tile.objects.size());
 
-  for (const auto& object_data: tile_data.objects) {
-    tile.add_object(restore_object(document, object_data));
+  for (const auto& ir_object: ir_tile.objects) {
+    tile.add_object(restore_object(document, ir_object));
   }
 }
 
-void restore_fancy_tiles(TilesetDocument& document, const ir::TilesetData& tileset_data)
+void restore_fancy_tiles(TilesetDocument& document, const ir::TilesetData& ir_tileset)
 {
   auto& tileset = document.get_tileset();
-  for (const auto& [index, tile_data]: tileset_data.fancy_tiles) {
+  for (const auto& [index, ir_tile]: ir_tileset.fancy_tiles) {
     auto tile = tileset.get_tile_ptr(index);
     TACTILE_ASSERT(tile->get_index() == index);
 
-    if (!tile_data.frames.empty()) {
-      restore_tile_animation(*tile, tile_data);
+    if (!ir_tile.frames.empty()) {
+      restore_tile_animation(*tile, ir_tile);
     }
 
-    if (!tile_data.objects.empty()) {
-      restore_fancy_tile_objects(document, *tile, tile_data);
+    if (!ir_tile.objects.empty()) {
+      restore_fancy_tile_objects(document, *tile, ir_tile);
     }
 
-    restore_context(document, tile, tile_data.context);
+    restore_context(document, tile, ir_tile.context);
   }
 }
 
 void restore_tileset(DocumentModel& model,
-                     const Shared<ComponentIndex>& index,
-                     const ir::TilesetData& tileset_data)
+                     const Shared<ComponentIndex>& component_index,
+                     const ir::TilesetData& ir_tileset)
 {
   TACTILE_ASSERT(model.get_active_document_id().has_value());
 
   // TODO compare tileset document absolute paths to recognize the same tileset being
   // loaded multiple times
 
-  TilesetInfo info {
-      .texture = io::load_texture(tileset_data.image_path),
-      .tile_size = tileset_data.tile_size,
+  const TilesetInfo info {
+      .texture = io::load_texture(ir_tileset.image_path),
+      .tile_size = ir_tileset.tile_size,
   };
 
   // This will automatically attach the tileset to the active map
-  const auto tileset_id = model.restore_tileset(tileset_data.first_tile, info);
+  const auto tileset_id = model.restore_tileset(ir_tileset.first_tile, info);
 
   auto tileset_document = model.get_tileset_document_ptr(tileset_id);
-  tileset_document->set_name(tileset_data.name);
-  tileset_document->set_component_index(index);
+  tileset_document->set_name(ir_tileset.name);
+  tileset_document->set_component_index(component_index);
 
-  restore_fancy_tiles(*tileset_document, tileset_data);
+  restore_fancy_tiles(*tileset_document, ir_tileset);
   restore_context_no_register(*tileset_document,
                               tileset_document->get_tileset_ptr(),
-                              tileset_data.context);
+                              ir_tileset.context);
 }
 
 void restore_tilesets(DocumentModel& model,
-                      const Shared<ComponentIndex>& index,
-                      const ir::MapData& map_data)
+                      const Shared<ComponentIndex>& component_index,
+                      const ir::MapData& ir_map)
 {
-  for (const auto& tileset_data: map_data.tilesets) {
-    restore_tileset(model, index, tileset_data);
+  for (const auto& tileset_data: ir_map.tilesets) {
+    restore_tileset(model, component_index, tileset_data);
   }
 
   auto& map = model.require_active_map_document().get_map();
@@ -268,10 +268,10 @@ void restore_tilesets(DocumentModel& model,
   }
 }
 
-void restore_component_definitions(MapDocument& document, const ir::MapData& map_data)
+void restore_component_definitions(MapDocument& document, const ir::MapData& ir_map)
 {
   auto component_index = document.get_component_index_ptr();
-  for (const auto& [name, attributes]: map_data.component_definitions) {
+  for (const auto& [name, attributes]: ir_map.component_definitions) {
     const auto component_id = component_index->define_comp(name);
     auto& component_def = component_index->get_comp(component_id);
     for (const auto& [attr_name, attr_value]: attributes) {
@@ -280,17 +280,17 @@ void restore_component_definitions(MapDocument& document, const ir::MapData& map
   }
 }
 
-void restore_tile_format(TileFormat& format, const ir::TileFormatData& data)
+void restore_tile_format(TileFormat& format, const ir::TileFormatData& ir_format)
 {
-  format.set_encoding(data.encoding);
-  format.set_compression(data.compression);
+  format.set_encoding(ir_format.encoding);
+  format.set_compression(ir_format.compression);
 
-  if (data.zlib_compression_level) {
-    format.set_zlib_compression_level(*data.zlib_compression_level);
+  if (ir_format.zlib_compression_level) {
+    format.set_zlib_compression_level(*ir_format.zlib_compression_level);
   }
 
-  if (data.zstd_compression_level) {
-    format.set_zstd_compression_level(*data.zstd_compression_level);
+  if (ir_format.zstd_compression_level) {
+    format.set_zstd_compression_level(*ir_format.zstd_compression_level);
   }
 }
 
@@ -298,9 +298,9 @@ void restore_tile_format(TileFormat& format, const ir::TileFormatData& data)
 
 void create_map_document_from_ir(const io::ParseResult& result, DocumentModel& model)
 {
-  const auto& map_data = result.data();
+  const auto& ir_map = result.data();
 
-  const auto map_id = model.create_map_document(map_data.tile_size, map_data.extent);
+  const auto map_id = model.create_map_document(ir_map.tile_size, ir_map.extent);
   model.select_document(map_id);
 
   auto component_index = std::make_shared<ComponentIndex>();
@@ -310,23 +310,21 @@ void create_map_document_from_ir(const io::ParseResult& result, DocumentModel& m
 
   auto& map = map_document->get_map();
 
-  const auto path = fs::absolute(result.path());
-  map_document->set_path(path);
-  map_document->set_name(path.filename().string());
+  const auto document_path = fs::absolute(result.path());
+  map_document->set_path(document_path);
+  map_document->set_name(document_path.filename().string());
 
-  map.set_tile_size(map_data.tile_size);
-  map.set_next_layer_id(map_data.next_layer_id);
-  map.set_next_object_id(map_data.next_object_id);
-  map.resize(map_data.extent);
+  map.set_tile_size(ir_map.tile_size);
+  map.set_next_layer_id(ir_map.next_layer_id);
+  map.set_next_object_id(ir_map.next_object_id);
+  map.resize(ir_map.extent);
 
-  restore_tile_format(map.get_tile_format(), map_data.tile_format);
-  restore_component_definitions(*map_document, map_data);
-  restore_tilesets(model, map_document->get_component_index_ptr(), map_data);
-  restore_layers(*map_document, map_data);
+  restore_tile_format(map.get_tile_format(), ir_map.tile_format);
+  restore_component_definitions(*map_document, ir_map);
+  restore_tilesets(model, map_document->get_component_index_ptr(), ir_map);
+  restore_layers(*map_document, ir_map);
 
-  restore_context_no_register(*map_document,
-                              map_document->get_map_ptr(),
-                              map_data.context);
+  restore_context_no_register(*map_document, map_document->get_map_ptr(), ir_map.context);
 
   map_document->get_history().clear();
 }
