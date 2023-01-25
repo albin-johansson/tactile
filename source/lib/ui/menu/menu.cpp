@@ -29,11 +29,11 @@
 #include "common/type/hash_map.hpp"
 #include "common/util/assoc.hpp"
 #include "core/tile/tileset_bundle.hpp"
-#include "io/proto/history.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
+#include "model/file_history.hpp"
 #include "model/model.hpp"
 #include "model/settings.hpp"
 #include "ui/fonts.hpp"
@@ -155,7 +155,8 @@ void update_file_menu(const Document* document)
   menu_set_enabled(MenuAction::CloseDocument, is_document_open);
 
   menu_set_enabled(MenuAction::ReopenLastClosedFile, is_last_closed_file_valid());
-  menu_set_enabled(MenuAction::ClearFileHistory, document && !get_file_history().empty());
+  menu_set_enabled(MenuAction::ClearFileHistory,
+                   document && !get_file_history().entries.empty());
 }
 
 }  // namespace

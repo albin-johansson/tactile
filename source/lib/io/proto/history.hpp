@@ -19,34 +19,15 @@
 
 #pragma once
 
-#include "common/type/deque.hpp"
-#include "common/type/path.hpp"
-#include "common/type/string.hpp"
+#include "common/type/maybe.hpp"
+#include "model/file_history.hpp"
 
 namespace tactile {
 
 /// Loads the recent file history from the persistent file directory.
-void load_file_history_from_disk();
+[[nodiscard]] auto load_file_history_from_disk() -> Maybe<FileHistory>;
 
 /// Saves the in-memory file history to the persistent file directory.
-void save_file_history_to_disk();
-
-/// Clears the current in-memory recent file history.
-void clear_file_history();
-
-/// Adds a file path to the recent file history, if it doesn't already exist.
-void add_to_file_history(const Path& path);
-
-/// Sets the most recently closed file, and stores it in the file history.
-void set_last_closed_file(const Path& path);
-
-/// Returns the current in-memory recent file history.
-[[nodiscard]] auto get_file_history() -> const Deque<String>&;
-
-/// Returns the file path to the most recently closed file.
-[[nodiscard]] auto get_last_closed_file() -> const String&;
-
-/// Indicates whether there is a valid most recently closed file entry.
-[[nodiscard]] auto is_last_closed_file_valid() -> bool;
+void save_file_history_to_disk(const FileHistory& history);
 
 }  // namespace tactile

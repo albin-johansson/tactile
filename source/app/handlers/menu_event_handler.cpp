@@ -17,13 +17,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <utility>  // move
+
 #include <centurion/system.hpp>
 #include <entt/signal/dispatcher.hpp>
 
 #include "common/util/filesystem.hpp"
 #include "handlers/event_handlers.hpp"
-#include "io/proto/history.hpp"
 #include "model/event/all.hpp"
+#include "model/file_history.hpp"
 #include "model/model.hpp"
 #include "model/settings.hpp"
 #include "runtime/app_context.hpp"
@@ -69,11 +71,12 @@ void dispatch_menu_action(const MenuAction action)
       dispatcher.enqueue<QuitEvent>();
       break;
 
-    case MenuAction::ReopenLastClosedFile:
+    case MenuAction::ReopenLastClosedFile: {
       // TODO this will need to be tweaked if tileset documents viewing will be supported
-      dispatcher.enqueue<OpenMapEvent>(Path {get_last_closed_file()});
+      Path file_path {get_file_history().last_closed_file.value()};
+      dispatcher.enqueue<OpenMapEvent>(std::move(file_path));
       break;
-
+    }
     case MenuAction::ClearFileHistory:
       clear_file_history();
       break;

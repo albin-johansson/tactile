@@ -19,6 +19,8 @@
 
 #include "app.hpp"
 
+#include <utility>  // move
+
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -35,6 +37,7 @@
 #include "model/document/tileset_document.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/event/view_events.hpp"
+#include "model/file_history.hpp"
 #include "model/model.hpp"
 #include "model/settings.hpp"
 #include "runtime/app_context.hpp"
@@ -68,7 +71,9 @@ App::~App() noexcept
 
 void App::on_startup()
 {
-  load_file_history_from_disk();
+  if (auto history = load_file_history_from_disk()) {
+    set_file_history(std::move(*history));
+  }
 
   if (get_settings().test_flag(SETTINGS_RESTORE_LAST_SESSION_BIT)) {
     auto& model = get_model();
@@ -84,7 +89,7 @@ void App::on_shutdown()
 
   save_settings_to_disk(get_settings());
   save_session_to_disk(get_model());
-  save_file_history_to_disk();
+  save_file_history_to_disk(get_file_history());
 
   get_window().hide();
 }
