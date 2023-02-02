@@ -62,7 +62,7 @@ void on_create_map(const CreateMapEvent& event)
                 event.column_count);
 
   auto& model = get_model();
-  const auto id =
+  const auto id [[maybe_unused]] =
       model.create_map_document(event.tile_size,
                                 TileExtent {event.row_count, event.column_count});
   TACTILE_ASSERT(model.get_active_document_id() == id);
