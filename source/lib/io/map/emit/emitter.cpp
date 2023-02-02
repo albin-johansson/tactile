@@ -25,8 +25,8 @@
 #include "common/debug/assert.hpp"
 #include "common/debug/profile.hpp"
 #include "common/util/fmt.hpp"
+#include "io/ir/ir.hpp"
 #include "io/ir/map_to_ir.hpp"
-#include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/gd/godot_converter.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/emit/gd/godot_writer.hpp"
@@ -40,22 +40,21 @@ void emit_map(const MapDocument& document)
   TACTILE_ASSERT(document.has_path());
 
   const auto path = fs::absolute(document.get_path());
+  const auto ext = path.extension();
   spdlog::info("Trying to save map to {}", path);
 
-  EmitInfo info {path, convert_map_document_to_ir(document)};
-
-  const auto ext = path.extension();
   if (ext == ".yaml" || ext == ".yml") {
-    emit_yaml_map(info);
+    emit_yaml_map(path, convert_map_document_to_ir(document));
   }
   else if (ext == ".json" || ext == ".tmj") {
-    emit_json_map(info);
+    emit_json_map(path, convert_map_document_to_ir(document));
   }
   else if (ext == ".xml" || ext == ".tmx") {
-    emit_xml_map(info);
+    emit_xml_map(path, convert_map_document_to_ir(document));
   }
   else {
     spdlog::error("Unsupported file extension {}", ext);
+    return;
   }
 
   TACTILE_DEBUG_PROFILE_END("Saved map")
@@ -72,11 +71,8 @@ void emit_map_as_godot_scene(const MapDocument& document, const GodotEmitOptions
 
   spdlog::debug("Trying to save map as Godot scene at {}", path);
 
-  // FIXME path
-  EmitInfo info {path, convert_map_document_to_ir(document)};
-
-  const auto& map = info.data();
-  const auto scene = convert_to_godot(map, options);
+  const auto ir_map = convert_map_document_to_ir(document);
+  const auto scene = convert_to_godot(ir_map, options);
   write_godot_scene(scene, options);
 
   TACTILE_DEBUG_PROFILE_END("Saved map as Godot scene")

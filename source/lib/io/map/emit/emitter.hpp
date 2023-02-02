@@ -20,14 +20,15 @@
 #pragma once
 
 #include "common/macros.hpp"
+#include "common/type/path.hpp"
 #include "common/type/string.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, MapDocument)
+TACTILE_FWD_DECLARE_STRUCT_NS(tactile::ir, MapData)
 
 namespace tactile::io {
 
 TACTILE_FWD_DECLARE_STRUCT(GodotEmitOptions)
-TACTILE_FWD_DECLARE_CLASS(EmitInfo)
 
 /// Emits a map document, inferring the format from the path (or the preferred format)
 void emit_map(const MapDocument& document);
@@ -36,8 +37,8 @@ void emit_map(const MapDocument& document);
 void emit_map_as_godot_scene(const MapDocument& document,
                              const GodotEmitOptions& options);
 
-void emit_json_map(const EmitInfo& info);
-void emit_xml_map(const EmitInfo& info);
-void emit_yaml_map(const EmitInfo& info);
+void emit_json_map(const Path& destination, const ir::MapData& ir_map);
+void emit_xml_map(const Path& destination, const ir::MapData& ir_map);
+void emit_yaml_map(const Path& destination, const ir::MapData& ir_map);
 
 }  // namespace tactile::io

@@ -31,7 +31,6 @@
 #include "common/type/string.hpp"
 #include "common/util/assoc.hpp"
 #include "core/tile/tile_matrix.hpp"
-#include "io/map/emit/emit_info.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/parse/parse_map.hpp"
 
@@ -40,7 +39,10 @@ using namespace std::string_literals;
 namespace tactile::test {
 namespace {
 
-inline String current_parser;
+constexpr usize kRowCount = 15;
+constexpr usize kColCount = 13;
+
+inline String gCurrentParser;
 
 void validate_contexts(const ir::ContextData& source, const ir::ContextData& restored)
 {
@@ -200,14 +202,11 @@ void validate_basic_map_info(const ir::MapData& source, const ir::MapData& resto
   REQUIRE(source.next_object_id == restored.next_object_id);
   REQUIRE(source.next_layer_id == restored.next_layer_id);
 
-  if (current_parser == "YAML") {
+  if (gCurrentParser == "YAML") {
     REQUIRE(source.tile_format.encoding == restored.tile_format.encoding);
     REQUIRE(source.tile_format.compression == restored.tile_format.compression);
   }
 }
-
-constexpr usize row_count = 15;
-constexpr usize col_count = 13;
 
 [[nodiscard]] auto create_source_ground_layer() -> ir::LayerData
 {
@@ -223,12 +222,12 @@ constexpr usize col_count = 13;
   data.visible = true;
 
   auto& tile_data = data.data.emplace<ir::TileLayerData>();
-  tile_data.extent.rows = row_count;
-  tile_data.extent.cols = col_count;
+  tile_data.extent.rows = kRowCount;
+  tile_data.extent.cols = kColCount;
 
-  tile_data.tiles = make_tile_matrix(TileExtent {row_count, col_count});
-  for (usize row = 0; row < row_count; ++row) {
-    for (usize col = 0; col < col_count; ++col) {
+  tile_data.tiles = make_tile_matrix(TileExtent {kRowCount, kColCount});
+  for (usize row = 0; row < kRowCount; ++row) {
+    for (usize col = 0; col < kColCount; ++col) {
       tile_data.tiles[row][col] = 7;
     }
   }
@@ -268,9 +267,9 @@ constexpr usize col_count = 13;
     child->visible = true;
 
     auto& tile_data = child->data.emplace<ir::TileLayerData>();
-    tile_data.extent.rows = row_count;
-    tile_data.extent.cols = col_count;
-    tile_data.tiles = make_tile_matrix(TileExtent {row_count, col_count});
+    tile_data.extent.rows = kRowCount;
+    tile_data.extent.cols = kColCount;
+    tile_data.tiles = make_tile_matrix(TileExtent {kRowCount, kColCount});
 
     child->context.properties["path"] = fs::path {"resources/exterior.png"};
   }
@@ -287,9 +286,9 @@ constexpr usize col_count = 13;
     child->visible = true;
 
     auto& tile_data = child->data.emplace<ir::TileLayerData>();
-    tile_data.extent.rows = row_count;
-    tile_data.extent.cols = col_count;
-    tile_data.tiles = make_tile_matrix(TileExtent {row_count, col_count});
+    tile_data.extent.rows = kRowCount;
+    tile_data.extent.cols = kColCount;
+    tile_data.tiles = make_tile_matrix(TileExtent {kRowCount, kColCount});
 
     if (use_components) {
       child->context.components["short-component"]["integer"] = 356;
@@ -410,8 +409,8 @@ constexpr usize col_count = 13;
   data.next_layer_id = 5;
   data.next_object_id = 8;
 
-  data.extent.rows = row_count;
-  data.extent.cols = col_count;
+  data.extent.rows = kRowCount;
+  data.extent.cols = kColCount;
 
   data.tile_format.encoding = TileEncoding::Base64;
   data.tile_format.compression = TileCompression::Zlib;
@@ -470,15 +469,14 @@ TEST_SUITE("Parser round trip")
 {
   TEST_CASE("YAML")
   {
-    current_parser = "YAML";
+    gCurrentParser = "YAML";
 
-    const io::EmitInfo emitter {fs::absolute("test_map.yaml"), create_source_data(true)};
-    io::emit_yaml_map(emitter);
+    const auto source = create_source_data(true);
+    io::emit_yaml_map(fs::absolute("test_map.yaml"), source);
 
     const auto result = io::parse_map("test_map.yaml");
     REQUIRE(io::ParseError::None == result.error());
 
-    const auto& source = emitter.data();
     const auto& restored = result.data();
 
     validate_basic_map_info(source, restored);
@@ -489,15 +487,14 @@ TEST_SUITE("Parser round trip")
 
   TEST_CASE("JSON")
   {
-    current_parser = "JSON";
+    gCurrentParser = "JSON";
 
-    const io::EmitInfo emitter {fs::absolute("test_map.json"), create_source_data(false)};
-    io::emit_json_map(emitter);
+    const auto source = create_source_data(false);
+    io::emit_json_map(fs::absolute("test_map.json"), source);
 
     const auto result = io::parse_map("test_map.json");
     REQUIRE(io::ParseError::None == result.error());
 
-    const auto& source = emitter.data();
     const auto& restored = result.data();
 
     validate_basic_map_info(source, restored);
@@ -507,15 +504,14 @@ TEST_SUITE("Parser round trip")
 
   TEST_CASE("XML")
   {
-    current_parser = "XML";
+    gCurrentParser = "XML";
 
-    const io::EmitInfo emitter {fs::absolute("test_map.tmx"), create_source_data(false)};
-    io::emit_xml_map(emitter);
+    const auto source = create_source_data(false);
+    io::emit_xml_map(fs::absolute("test_map.tmx"), source);
 
     const auto result = io::parse_map("test_map.tmx");
     REQUIRE(io::ParseError::None == result.error());
 
-    const auto& source = emitter.data();
     const auto& restored = result.data();
 
     validate_basic_map_info(source, restored);

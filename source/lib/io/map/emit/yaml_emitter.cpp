@@ -29,7 +29,7 @@
 #include "common/util/filesystem.hpp"
 #include "core/attribute.hpp"
 #include "io/compression.hpp"
-#include "io/map/emit/emit_info.hpp"
+#include "io/ir/ir.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/stream.hpp"
 #include "io/util/base64_tiles.hpp"
@@ -307,7 +307,7 @@ void emit_tileset_tiles(YAML::Emitter& emitter, const ir::TilesetData& tileset)
   emitter << YAML::EndSeq;
 }
 
-void emit_tileset_file(const EmitInfo& info,
+void emit_tileset_file(const Path& dir,
                        const String& filename,
                        const ir::TilesetData& tileset)
 {
@@ -324,7 +324,7 @@ void emit_tileset_file(const EmitInfo& info,
   emitter << YAML::Key << "tile-count" << YAML::Value << tileset.tile_count;
   emitter << YAML::Key << "column-count" << YAML::Value << tileset.column_count;
 
-  const auto image_path = fs::relative(tileset.image_path, info.destination_dir());
+  const auto image_path = fs::relative(tileset.image_path, dir);
   emitter << YAML::Key << "image-path" << YAML::Value << use_forward_slashes(image_path);
   emitter << YAML::Key << "image-width" << YAML::Value << tileset.image_size.x;
   emitter << YAML::Key << "image-height" << YAML::Value << tileset.image_size.y;
@@ -338,29 +338,27 @@ void emit_tileset_file(const EmitInfo& info,
 
   emitter << YAML::EndMap;
 
-  const auto path = info.destination_dir() / filename;
+  const auto path = dir / filename;
   spdlog::debug("Saving external tileset to {}", path);
 
   auto stream = open_output_stream(path, FileType::Text).value();
   stream << emitter.c_str();
 }
 
-void emit_tilesets(YAML::Emitter& emitter, const EmitInfo& info)
+void emit_tilesets(YAML::Emitter& emitter, const Path& dir, const ir::MapData& ir_map)
 {
-  const auto& data = info.data();
-
-  if (data.tilesets.empty()) {
+  if (ir_map.tilesets.empty()) {
     return;
   }
 
   emitter << YAML::Key << "tilesets" << YAML::BeginSeq;
 
-  for (const auto& tileset: data.tilesets) {
-    const auto source = fmt::format("{}.yaml", tileset.name);
-    emit_tileset_file(info, source, tileset);
+  for (const auto& ir_tileset: ir_map.tilesets) {
+    const auto source = fmt::format("{}.yaml", ir_tileset.name);
+    emit_tileset_file(dir, source, ir_tileset);
 
     emitter << YAML::BeginMap;
-    emitter << YAML::Key << "first-global-id" << YAML::Value << tileset.first_tile;
+    emitter << YAML::Key << "first-global-id" << YAML::Value << ir_tileset.first_tile;
     emitter << YAML::Key << "path" << YAML::Value << source;
     emitter << YAML::EndMap;
   }
@@ -383,17 +381,15 @@ void emit_component_definition_attribute(YAML::Emitter& emitter,
   emitter << YAML::EndMap;
 }
 
-void emit_component_definitions(YAML::Emitter& emitter, const EmitInfo& info)
+void emit_component_definitions(YAML::Emitter& emitter, const ir::MapData& ir_map)
 {
-  const auto& data = info.data();
-
-  if (data.component_definitions.empty()) {
+  if (ir_map.component_definitions.empty()) {
     return;
   }
 
   emitter << YAML::Key << "component-definitions" << YAML::BeginSeq;
 
-  for (const auto& [name, attributes]: data.component_definitions) {
+  for (const auto& [name, attributes]: ir_map.component_definitions) {
     emitter << YAML::BeginMap;
     emitter << YAML::Key << "name" << YAML::Value << name;
 
@@ -442,36 +438,34 @@ void emit_tile_format(YAML::Emitter& emitter, const ir::TileFormatData& format)
 
 }  // namespace
 
-void emit_yaml_map(const EmitInfo& info)
+void emit_yaml_map(const Path& destination, const ir::MapData& ir_map)
 {
-  const auto& map = info.data();
-
   YAML::Emitter emitter;
   emitter.SetIndent(2);
 
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "version" << YAML::Value << 1;
 
-  emitter << YAML::Key << "row-count" << YAML::Value << map.extent.rows;
-  emitter << YAML::Key << "column-count" << YAML::Value << map.extent.cols;
+  emitter << YAML::Key << "row-count" << YAML::Value << ir_map.extent.rows;
+  emitter << YAML::Key << "column-count" << YAML::Value << ir_map.extent.cols;
 
-  emitter << YAML::Key << "tile-width" << YAML::Value << map.tile_size.x;
-  emitter << YAML::Key << "tile-height" << YAML::Value << map.tile_size.y;
+  emitter << YAML::Key << "tile-width" << YAML::Value << ir_map.tile_size.x;
+  emitter << YAML::Key << "tile-height" << YAML::Value << ir_map.tile_size.y;
 
-  emitter << YAML::Key << "next-layer-id" << YAML::Value << map.next_layer_id;
-  emitter << YAML::Key << "next-object-id" << YAML::Value << map.next_object_id;
+  emitter << YAML::Key << "next-layer-id" << YAML::Value << ir_map.next_layer_id;
+  emitter << YAML::Key << "next-object-id" << YAML::Value << ir_map.next_object_id;
 
-  emit_tile_format(emitter, map.tile_format);
-  emit_component_definitions(emitter, info);
-  emit_tilesets(emitter, info);
-  emit_layers(emitter, map);
+  emit_tile_format(emitter, ir_map.tile_format);
+  emit_component_definitions(emitter, ir_map);
+  emit_tilesets(emitter, destination.parent_path(), ir_map);
+  emit_layers(emitter, ir_map);
 
-  emit_properties(emitter, map.context);
-  emit_components(emitter, map.context);
+  emit_properties(emitter, ir_map.context);
+  emit_components(emitter, ir_map.context);
 
   emitter << YAML::EndMap;
 
-  auto stream = open_output_stream(info.destination_file(), FileType::Text).value();
+  auto stream = open_output_stream(destination, FileType::Text).value();
   stream << emitter.c_str();
 }
 

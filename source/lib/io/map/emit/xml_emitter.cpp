@@ -26,7 +26,7 @@
 #include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
 #include "common/util/functional.hpp"
-#include "io/map/emit/emit_info.hpp"
+#include "io/ir/ir.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/tiled_info.hpp"
 #include "io/stream.hpp"
@@ -408,7 +408,7 @@ void emit_external_tileset_file(const Path& path,
   document.save(stream, " ");
 }
 
-void append_tileset(XmlNode root, const ir::TilesetData& tileset, const Path& dir)
+void append_tileset(XmlNode root, const Path& dir, const ir::TilesetData& tileset)
 {
   const auto& settings = get_settings();
   if (settings.test_flag(SETTINGS_EMBED_TILESETS_BIT)) {
@@ -422,9 +422,8 @@ void append_tileset(XmlNode root, const ir::TilesetData& tileset, const Path& di
   }
 }
 
-void append_root(pugi::xml_document& document, const EmitInfo& info)
+void append_root(pugi::xml_document& document, const Path& dir, const ir::MapData& ir_map)
 {
-  const auto& map = info.data();
   auto root = document.append_child("map");
 
   root.append_attribute("version").set_value(kTiledXmlFormatVersion);
@@ -434,38 +433,38 @@ void append_root(pugi::xml_document& document, const EmitInfo& info)
   root.append_attribute("renderorder").set_value("right-down");
   root.append_attribute("infinite").set_value(0);
 
-  root.append_attribute("tilewidth").set_value(map.tile_size.x);
-  root.append_attribute("tileheight").set_value(map.tile_size.y);
+  root.append_attribute("tilewidth").set_value(ir_map.tile_size.x);
+  root.append_attribute("tileheight").set_value(ir_map.tile_size.y);
 
-  root.append_attribute("width").set_value(map.extent.cols);
-  root.append_attribute("height").set_value(map.extent.rows);
+  root.append_attribute("width").set_value(ir_map.extent.cols);
+  root.append_attribute("height").set_value(ir_map.extent.rows);
 
-  root.append_attribute("nextlayerid").set_value(map.next_layer_id);
-  root.append_attribute("nextobjectid").set_value(map.next_object_id);
+  root.append_attribute("nextlayerid").set_value(ir_map.next_layer_id);
+  root.append_attribute("nextobjectid").set_value(ir_map.next_object_id);
 
-  append_properties(root, map.context);
+  append_properties(root, ir_map.context);
 
-  for (const auto& tileset: map.tilesets) {
-    append_tileset(root, tileset, info.destination_dir());
+  for (const auto& ir_tileset: ir_map.tilesets) {
+    append_tileset(root, dir, ir_tileset);
   }
 
-  for (const auto& layer: map.layers) {
-    append_layer(root, map, layer);
+  for (const auto& layer: ir_map.layers) {
+    append_layer(root, ir_map, layer);
   }
 }
 
 }  // namespace
 
-void emit_xml_map(const EmitInfo& info)
+void emit_xml_map(const Path& destination, const ir::MapData& ir_map)
 {
-  if (!info.data().component_definitions.empty()) {
+  if (!ir_map.component_definitions.empty()) {
     spdlog::warn("Component data will be ignored when saving the map as XML!");
   }
 
   pugi::xml_document document;
-  append_root(document, info);
+  append_root(document, destination.parent_path(), ir_map);
 
-  auto stream = open_output_stream(info.destination_file(), FileType::Text).value();
+  auto stream = open_output_stream(destination, FileType::Text).value();
   document.save(stream, " ");
 }
 

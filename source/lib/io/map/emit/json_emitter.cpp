@@ -24,7 +24,7 @@
 
 #include "common/util/filesystem.hpp"
 #include "common/util/functional.hpp"
-#include "io/map/emit/emit_info.hpp"
+#include "io/ir/ir.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/tiled_info.hpp"
 #include "io/util/base64_tiles.hpp"
@@ -267,7 +267,7 @@ void emit_object_layer(JSON& json, const ir::LayerData& layer)
 }
 
 void add_common_tileset_attributes(JSON& json,
-                                   const EmitInfo& info,
+                                   const Path& dir,
                                    const ir::TilesetData& tileset)
 {
   json["name"] = tileset.name;
@@ -277,7 +277,7 @@ void add_common_tileset_attributes(JSON& json,
   json["tileheight"] = tileset.tile_size.y;
   json["tilecount"] = tileset.tile_count;
 
-  const auto image_path = fs::relative(tileset.image_path, info.destination_dir());
+  const auto image_path = fs::relative(tileset.image_path, dir);
   json["image"] = use_forward_slashes(image_path);
 
   json["imagewidth"] = tileset.image_size.x;
@@ -295,13 +295,13 @@ void add_common_tileset_attributes(JSON& json,
   }
 }
 
-[[nodiscard]] auto emit_embedded_tileset(const EmitInfo& info,
-                                         const ir::TilesetData& tileset) -> JSON
+[[nodiscard]] auto emit_embedded_tileset(const Path& dir, const ir::TilesetData& tileset)
+    -> JSON
 {
   auto json = JSON::object();
 
   json["firstgid"] = tileset.first_tile;
-  add_common_tileset_attributes(json, info, tileset);
+  add_common_tileset_attributes(json, dir, tileset);
 
   return json;
 }
@@ -316,40 +316,38 @@ void add_common_tileset_attributes(JSON& json,
   return json;
 }
 
-void create_external_tileset_file(const EmitInfo& info, const ir::TilesetData& tileset)
+void create_external_tileset_file(const Path& dir, const ir::TilesetData& tileset)
 {
   auto json = JSON::object();
-  add_common_tileset_attributes(json, info, tileset);
+  add_common_tileset_attributes(json, dir, tileset);
 
   json["type"] = "tileset";
   json["tiledversion"] = kTiledVersion;
   json["version"] = kTiledJsonFormatVersion;
 
   const auto name = fmt::format("{}.json", tileset.name);
-  const auto path = info.destination_dir() / name;
+  const auto path = dir / name;
 
   write_json(json, path);
 }
 
-[[nodiscard]] auto emit_tileset(const EmitInfo& info, const ir::TilesetData& tileset)
-    -> JSON
+[[nodiscard]] auto emit_tileset(const Path& dir, const ir::TilesetData& tileset) -> JSON
 {
   if (get_settings().test_flag(SETTINGS_EMBED_TILESETS_BIT)) {
-    return emit_embedded_tileset(info, tileset);
+    return emit_embedded_tileset(dir, tileset);
   }
   else {
-    create_external_tileset_file(info, tileset);
+    create_external_tileset_file(dir, tileset);
     return emit_external_tileset(tileset);
   }
 }
 
-[[nodiscard]] auto emit_tilesets(const EmitInfo& info) -> JSON
+[[nodiscard]] auto emit_tilesets(const Path& dir, const ir::MapData& ir_map) -> JSON
 {
   auto json = JSON::array();
 
-  const auto& data = info.data();
-  for (const auto& tileset: data.tilesets) {
-    json += emit_tileset(info, tileset);
+  for (const auto& ir_tileset: ir_map.tilesets) {
+    json += emit_tileset(dir, ir_tileset);
   }
 
   return json;
@@ -357,31 +355,29 @@ void create_external_tileset_file(const EmitInfo& info, const ir::TilesetData& t
 
 }  // namespace
 
-void emit_json_map(const EmitInfo& info)
+void emit_json_map(const Path& destination, const ir::MapData& ir_map)
 {
   auto json = JSON::object();
 
-  const auto& map = info.data();
-
-  if (!map.component_definitions.empty()) {
+  if (!ir_map.component_definitions.empty()) {
     spdlog::warn("Component data will be ignored when saving the map as JSON!");
   }
 
   json["type"] = "map";
-  json["width"] = map.extent.cols;
-  json["height"] = map.extent.rows;
+  json["width"] = ir_map.extent.cols;
+  json["height"] = ir_map.extent.rows;
 
-  json["tilewidth"] = map.tile_size.x;
-  json["tileheight"] = map.tile_size.y;
+  json["tilewidth"] = ir_map.tile_size.x;
+  json["tileheight"] = ir_map.tile_size.y;
 
-  json["nextlayerid"] = map.next_layer_id;
-  json["nextobjectid"] = map.next_object_id;
+  json["nextlayerid"] = ir_map.next_layer_id;
+  json["nextobjectid"] = ir_map.next_object_id;
 
   json["infinite"] = false;
   json["orientation"] = "orthogonal";
   json["renderorder"] = "right-down";
 
-  if (const auto& format = map.tile_format; format.zlib_compression_level) {
+  if (const auto& format = ir_map.tile_format; format.zlib_compression_level) {
     json["compressionlevel"] = *format.zlib_compression_level;
   }
   else if (format.zstd_compression_level) {
@@ -394,14 +390,14 @@ void emit_json_map(const EmitInfo& info)
   json["tiledversion"] = kTiledVersion;
   json["version"] = kTiledJsonFormatVersion;
 
-  json["tilesets"] = emit_tilesets(info);
-  json["layers"] = emit_layers(map);
+  json["tilesets"] = emit_tilesets(destination.parent_path(), ir_map);
+  json["layers"] = emit_layers(ir_map);
 
-  if (!map.context.properties.empty()) {
-    json["properties"] = emit_properties(map.context);
+  if (!ir_map.context.properties.empty()) {
+    json["properties"] = emit_properties(ir_map.context);
   }
 
-  write_json(json, info.destination_file());
+  write_json(json, destination);
 }
 
 }  // namespace tactile::io
