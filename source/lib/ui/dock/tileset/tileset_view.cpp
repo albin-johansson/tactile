@@ -25,9 +25,6 @@
 
 #include "core/tile/tileset_bundle.hpp"
 #include "core/tile/tileset_ref.hpp"
-#include "graphics/graphics.hpp"
-#include "graphics/render.hpp"
-#include "graphics/render_info.hpp"
 #include "io/proto/settings.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
@@ -35,22 +32,23 @@
 #include "model/event/viewport_events.hpp"
 #include "model/model.hpp"
 #include "ui/conversions.hpp"
+#include "ui/render/render.hpp"
+#include "ui/render/renderer.hpp"
 #include "ui/widget/rubber_band.hpp"
 
 namespace tactile::ui {
 namespace {
 
-constexpr uint32 rubber_band_color = to_u32(Color {0, 0x44, 0xCC, 100});
+inline constexpr uint32 kRubberBandColor = to_u32(Color {0, 0x44, 0xCC, 100});
 
 void update_viewport_offset(const TilesetRef& tileset_ref,
-                            const ImVec2& viewport_size,
+                            const Float2& viewport_size,
                             entt::dispatcher& dispatcher)
 {
   const auto& tileset = tileset_ref.get_tileset();
   const Float2 texture_size = tileset.texture().get_size();
 
-  const Float2 min_offset {viewport_size.x - texture_size.x,
-                           viewport_size.y - texture_size.y};
+  const Float2 min_offset = viewport_size - texture_size;
   const Float2 max_offset {};
 
   const auto& limits = tileset_ref.get_viewport().limits();
@@ -61,7 +59,7 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
   }
 
   ImGui::InvisibleButton("##TilesetViewInvisibleButton",
-                         viewport_size,
+                         from_vec(viewport_size),
                          ImGuiButtonFlags_MouseButtonLeft |
                              ImGuiButtonFlags_MouseButtonMiddle |
                              ImGuiButtonFlags_MouseButtonRight);
@@ -81,7 +79,7 @@ void render_selection(const Region& selection, const ImVec2& min, const ImVec2& 
   const auto origin = from_pos(selection.begin) * tile_size;
   const auto size = from_pos(diff) * tile_size;
 
-  fill_rect(min + origin, size, rubber_band_color);
+  fill_rect(min + origin, size, kRubberBandColor);
 }
 
 }  // namespace
@@ -98,11 +96,10 @@ void update_tileset_view(const DocumentModel& model,
   const auto& texture = tileset.texture();
   const auto& viewport = tileset_ref.get_viewport();
 
-  const auto info = get_render_info(viewport, tileset);
-  update_viewport_offset(tileset_ref, info.canvas_size, dispatcher);
+  const Renderer renderer {viewport, tileset};
+  update_viewport_offset(tileset_ref, renderer.get_canvas_info().canvas_size, dispatcher);
 
-  Graphics graphics {info};
-  graphics.clear(to_u32(get_settings().get_viewport_bg_color()));
+  renderer.clear(get_settings().get_viewport_bg_color());
 
   const auto offset = from_vec(viewport.get_offset());
   const auto tile_size = from_vec(tileset.tile_size());
@@ -111,7 +108,7 @@ void update_tileset_view(const DocumentModel& model,
     dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);
   }
 
-  graphics.push_canvas_clip();
+  renderer.push_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
   render_image(texture, position, from_vec(texture.get_size()));
@@ -121,8 +118,8 @@ void update_tileset_view(const DocumentModel& model,
     render_selection(*selection, position, tile_size);
   }
 
-  graphics.render_translated_grid(to_u32(get_settings().get_grid_color()));
-  graphics.pop_clip();
+  renderer.render_translated_grid(get_settings().get_grid_color());
+  renderer.pop_clip();
 }
 
 }  // namespace tactile::ui

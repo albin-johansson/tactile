@@ -28,10 +28,6 @@
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "document_viewport_offset_handler.hpp"
-#include "graphics/graphics.hpp"
-#include "graphics/render.hpp"
-#include "graphics/render_info.hpp"
-#include "graphics/render_map.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "map_viewport_overlay.hpp"
@@ -44,6 +40,8 @@
 #include "model/model.hpp"
 #include "model/settings.hpp"
 #include "ui/conversions.hpp"
+#include "ui/render/render.hpp"
+#include "ui/render/renderer.hpp"
 #include "ui/viewport/preview/tool_preview_renderer.hpp"
 #include "ui/widget/scoped.hpp"
 #include "viewport_cursor_info.hpp"
@@ -97,40 +95,37 @@ void check_for(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T
 }
 
 void center_viewport(const Viewport& viewport,
-                     const ImVec2& canvas_size,
-                     const float row_count,
-                     const float col_count,
+                     const CanvasInfo& canvas_info,
                      entt::dispatcher& dispatcher)
 {
   const auto& cell = viewport.tile_size();
   const auto& offset = viewport.get_offset();
 
-  const auto width = col_count * cell.x;
-  const auto height = row_count * cell.y;
+  const auto width = canvas_info.col_count * cell.x;
+  const auto height = canvas_info.row_count * cell.y;
 
-  const auto dx = std::round(((canvas_size.x - width) / 2.0f) - offset.x);
-  const auto dy = std::round(((canvas_size.y - height) / 2.0f) - offset.y);
+  const auto dx = std::round(((canvas_info.canvas_size.x - width) / 2.0f) - offset.x);
+  const auto dy = std::round(((canvas_info.canvas_size.y - height) / 2.0f) - offset.y);
   const Float2 delta {dx, dy};
 
   dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
 }
 
-void draw_cursor_gizmos(Graphics& graphics,
+void draw_cursor_gizmos(const Renderer& renderer,
                         const DocumentModel& model,
                         const MapDocument& document,
-                        const ViewportCursorInfo& cursor,
-                        const RenderInfo& info)
+                        const ViewportCursorInfo& cursor)
 {
   const auto& map = document.get_map();
 
   if (cursor.is_within_map && map.is_active_layer(LayerType::TileLayer)) {
     draw_shadowed_rect(cursor.clamped_position,
-                       info.grid_size,
+                       from_vec(renderer.get_canvas_info().grid_size),
                        IM_COL32(0, 0xFF, 0, 200),
                        2.0f);
   }
 
-  ToolPreviewRenderer preview_renderer {model, graphics, make_mouse_info(cursor)};
+  ToolPreviewRenderer preview_renderer {model, renderer, make_mouse_info(cursor)};
 
   const auto& tools = document.get_tools();
   tools.accept(preview_renderer);
@@ -244,34 +239,29 @@ void show_map_viewport(const DocumentModel& model,
   const auto& map = document.get_map();
   const auto& viewport = document.get_viewport();
 
-  const auto info = get_render_info(viewport, map);
-  update_document_viewport_offset(info.canvas_br - info.canvas_tl, dispatcher);
+  const Renderer renderer {viewport, map};
+  update_document_viewport_offset(from_vec(renderer.get_canvas_info().canvas_size),
+                                  dispatcher);
 
-  Graphics graphics {info};
-
-  graphics.clear(to_u32(get_settings().get_viewport_bg_color()));
-  graphics.push_canvas_clip();
+  renderer.clear(get_settings().get_viewport_bg_color());
+  renderer.push_clip();
 
   // TODO viewport should be centered by default
   if (gViewportState.will_be_centered) {
-    center_viewport(viewport,
-                    info.canvas_size,
-                    info.row_count,
-                    info.col_count,
-                    dispatcher);
+    center_viewport(viewport, renderer.get_canvas_info(), dispatcher);
     gViewportState.will_be_centered = false;
   }
 
-  render_map(graphics, document);
+  renderer.render_map(document.get_map());
 
-  const auto cursor = get_viewport_cursor_info(info);
+  const auto cursor = get_viewport_cursor_info(renderer.get_canvas_info());
   poll_mouse(dispatcher, cursor);
 
   if (Window::contains_mouse()) {
-    draw_cursor_gizmos(graphics, model, document, cursor, info);
+    draw_cursor_gizmos(renderer, model, document, cursor);
   }
 
-  graphics.pop_clip();
+  renderer.pop_clip();
 
   update_map_viewport_toolbar(model, dispatcher);
   update_map_viewport_overlay(map, cursor);

@@ -21,11 +21,12 @@
 
 #include <imgui.h>
 
+#include "common/macros.hpp"
 #include "core/tile/tile_pos.hpp"
 
-namespace tactile::ui {
+TACTILE_FWD_DECLARE_STRUCT_NS(tactile, CanvasInfo)
 
-struct RenderInfo;
+namespace tactile::ui {
 
 struct ViewportCursorInfo final {
   TilePos map_position;
@@ -35,6 +36,7 @@ struct ViewportCursorInfo final {
   bool is_within_map {};
 };
 
-[[nodiscard]] auto get_viewport_cursor_info(const RenderInfo& info) -> ViewportCursorInfo;
+[[nodiscard]] auto get_viewport_cursor_info(const CanvasInfo& canvas_info)
+    -> ViewportCursorInfo;
 
 }  // namespace tactile::ui

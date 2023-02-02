@@ -19,25 +19,23 @@
 
 #pragma once
 
+#include "common/macros.hpp"
 #include "common/type/ref.hpp"
 #include "model/mouse_info.hpp"
 #include "model/tool/tool_visitor.hpp"
 
-namespace tactile {
-class DocumentModel;
-class Map;
-class TilesetRef;
-}  // namespace tactile
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Map)
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetRef)
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Renderer)
 
 namespace tactile::ui {
-
-class Graphics;
 
 /// Handles the in-viewport previews for all relevant mouse tools.
 class ToolPreviewRenderer final : public ToolVisitor {
  public:
   explicit ToolPreviewRenderer(const DocumentModel& model,
-                               Graphics& graphics,
+                               const Renderer& renderer,
                                const MouseInfo& mouse);
 
   void visit(const StampTool& tool) override;
@@ -48,7 +46,7 @@ class ToolPreviewRenderer final : public ToolVisitor {
 
  private:
   Ref<const DocumentModel> mModel;
-  Ref<Graphics> mGraphics;
+  Ref<const Renderer> mRenderer;
   MouseInfo mMouseInfo;
 
   void render_stamp_normal(const Map& map, const TilesetRef& tileset_ref);
