@@ -81,15 +81,15 @@ void ui_highlight_animation_frame_selection_mode(const Strings& lang,
                                                  const CanvasInfo& canvas_info)
 {
   if (gDockState.animation_frame_selection_mode) {
-    draw_rect(canvas_info.canvas_tl,
-              canvas_info.canvas_size,
+    draw_rect(canvas_info.top_left,
+              canvas_info.size,
               kAnimationFrameSelectionColor,
               6.0f);
 
     const char* label = lang.animation_dock.new_animation_frame_selection_hint.c_str();
     const auto label_size = ImGui::CalcTextSize(label);
 
-    const float label_x = (canvas_info.canvas_size.x - label_size.x) * 0.5f;
+    const float label_x = (canvas_info.size.x - label_size.x) * 0.5f;
     const float label_y = 100;
 
     render_shadowed_text(label, Float2 {label_x, label_y}, kWhite, 2.0f);
@@ -100,8 +100,8 @@ void center_viewport(const CanvasInfo& canvas_info,
                      const Viewport& viewport,
                      entt::dispatcher& dispatcher)
 {
-  const auto raw_delta = ((canvas_info.canvas_size - canvas_info.contents_size) / 2.0f) -
-                         viewport.get_offset();
+  const auto raw_delta =
+      ((canvas_info.size - canvas_info.content_size) / 2.0f) - viewport.get_offset();
   const Float2 delta {std::round(raw_delta.x), std::round(raw_delta.y)};
   dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
 }
@@ -147,7 +147,7 @@ void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& di
   const Renderer renderer {viewport, tileset};
   const auto& canvas_info = renderer.get_canvas_info();
 
-  update_document_viewport_offset(from_vec(canvas_info.canvas_size), dispatcher);
+  update_document_viewport_offset(from_vec(canvas_info.size), dispatcher);
 
   renderer.clear(get_settings().get_viewport_bg_color());
   renderer.push_clip();

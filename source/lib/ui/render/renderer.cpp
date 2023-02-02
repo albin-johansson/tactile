@@ -79,26 +79,26 @@ inline constexpr Color kActiveObjectColor {0xFF, 0xFF, 0x00, 0xFF};
 {
   CanvasInfo canvas;
 
-  canvas.canvas_tl = ui::to_vec(ImGui::GetCursorScreenPos());
-  canvas.canvas_br = canvas.canvas_tl + ui::to_vec(ImGui::GetContentRegionAvail());
-  canvas.canvas_size = canvas.canvas_br - canvas.canvas_tl;
+  canvas.top_left = ui::to_vec(ImGui::GetCursorScreenPos());
+  canvas.bottom_right = canvas.top_left + ui::to_vec(ImGui::GetContentRegionAvail());
+  canvas.size = canvas.bottom_right - canvas.top_left;
 
-  canvas.origin = canvas.canvas_tl + viewport.get_offset();
+  canvas.origin = canvas.top_left + viewport.get_offset();
 
   canvas.tile_size = logical_tile_size;
   canvas.grid_size = viewport.tile_size();
   canvas.ratio = canvas.grid_size / canvas.tile_size;
 
-  const auto tiles_in_viewport = canvas.canvas_size / canvas.grid_size;
+  const auto tiles_in_viewport = canvas.size / canvas.grid_size;
   canvas.tiles_in_viewport_x = static_cast<int32>(tiles_in_viewport.x) + 1;
   canvas.tiles_in_viewport_y = static_cast<int32>(tiles_in_viewport.y) + 1;
 
   canvas.row_count = static_cast<float>(extent.rows);
   canvas.col_count = static_cast<float>(extent.cols);
-  canvas.contents_size = Float2 {canvas.col_count, canvas.row_count} * canvas.grid_size;
+  canvas.content_size = Float2 {canvas.col_count, canvas.row_count} * canvas.grid_size;
 
-  canvas.bounds = determine_canvas_render_bounds(canvas.canvas_tl,
-                                                 canvas.canvas_br,
+  canvas.bounds = determine_canvas_render_bounds(canvas.top_left,
+                                                 canvas.bottom_right,
                                                  canvas.origin,
                                                  canvas.grid_size,
                                                  canvas.row_count,
@@ -140,8 +140,8 @@ Renderer::Renderer(const Viewport& viewport, const Tileset& tileset)
 void Renderer::push_clip() const
 {
   auto* list = ImGui::GetWindowDrawList();
-  list->PushClipRect(ui::from_vec(mCanvas.canvas_tl),
-                     ui::from_vec(mCanvas.canvas_br),
+  list->PushClipRect(ui::from_vec(mCanvas.top_left),
+                     ui::from_vec(mCanvas.bottom_right),
                      true);
 }
 
@@ -153,12 +153,12 @@ void Renderer::pop_clip() const
 
 void Renderer::clear(const Color& color) const
 {
-  fill_rect(mCanvas.canvas_tl, mCanvas.canvas_size, color);
+  fill_rect(mCanvas.top_left, mCanvas.size, color);
 }
 
 void Renderer::render_infinite_grid(const Color& color) const
 {
-  const auto origin_tile_pos = glm::floor(mCanvas.canvas_tl / mCanvas.grid_size);
+  const auto origin_tile_pos = glm::floor(mCanvas.top_left / mCanvas.grid_size);
   const auto origin_col = static_cast<int32>(origin_tile_pos.x);
   const auto origin_row = static_cast<int32>(origin_tile_pos.y);
 
@@ -204,7 +204,7 @@ void Renderer::render_translated_grid(const Color& color) const
 
 void Renderer::render_outline(const Color& color) const
 {
-  draw_rect(mCanvas.origin, mCanvas.contents_size, color);
+  draw_rect(mCanvas.origin, mCanvas.content_size, color);
 }
 
 void Renderer::render_tile(const Tileset& tileset,

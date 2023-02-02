@@ -38,15 +38,15 @@ TACTILE_FWD_DECLARE_CLASS(Viewport)
 
 /// Provides useful information about a canvas for use by renderer instances.
 struct CanvasInfo final {
-  Float2 canvas_tl {};           ///< Top-left point of the canvas.
-  Float2 canvas_br {};           ///< Bottom-right point of the canvas.
-  Float2 canvas_size {};         ///< Total size of the canvas.
-  Region bounds;                 ///< The region of the map that that should be rendered.
-  Float2 origin {};              ///< Origin screen position.
-  Float2 grid_size {};           ///< Graphical tile size.
-  Float2 tile_size {};           ///< Logical tile size.
-  Float2 ratio {};               ///< Graphical tile size divided by logical tile size.
-  Float2 contents_size {};       ///< Graphical size of the map or tileset.
+  Float2 top_left {};      ///< Top-left point of the canvas.
+  Float2 bottom_right {};  ///< Bottom-right point of the canvas.
+  Float2 size {};          ///< Total size of the canvas.
+  Region bounds;           ///< The region of the content that that should be rendered.
+  Float2 origin {};        ///< Origin screen position.
+  Float2 grid_size {};     ///< Graphical tile size.
+  Float2 tile_size {};     ///< Logical tile size.
+  Float2 ratio {};         ///< Graphical tile size divided by logical tile size.
+  Float2 content_size {};  ///< Graphical size of the map or tileset.
   int32 tiles_in_viewport_x {};  ///< Amount of visible tiles in the viewport, x-axis.
   int32 tiles_in_viewport_y {};  ///< Amount of visible tiles in the viewport, y-axis.
   float row_count {};            ///< Total amount of rows.

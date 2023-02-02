@@ -105,8 +105,8 @@ void center_viewport(const Viewport& viewport,
   const auto width = canvas_info.col_count * cell.x;
   const auto height = canvas_info.row_count * cell.y;
 
-  const auto dx = std::round(((canvas_info.canvas_size.x - width) / 2.0f) - offset.x);
-  const auto dy = std::round(((canvas_info.canvas_size.y - height) / 2.0f) - offset.y);
+  const auto dx = std::round(((canvas_info.size.x - width) / 2.0f) - offset.x);
+  const auto dy = std::round(((canvas_info.size.y - height) / 2.0f) - offset.y);
   const Float2 delta {dx, dy};
 
   dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
@@ -241,8 +241,7 @@ void show_map_viewport(const DocumentModel& model,
   const auto& viewport = document.get_viewport();
 
   const Renderer renderer {viewport, map};
-  update_document_viewport_offset(from_vec(renderer.get_canvas_info().canvas_size),
-                                  dispatcher);
+  update_document_viewport_offset(from_vec(renderer.get_canvas_info().size), dispatcher);
 
   renderer.clear(get_settings().get_viewport_bg_color());
   renderer.push_clip();

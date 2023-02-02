@@ -98,7 +98,7 @@ void update_tileset_view(const DocumentModel& model,
   const auto& viewport = tileset_ref.get_viewport();
 
   const Renderer renderer {viewport, tileset};
-  update_viewport_offset(tileset_ref, renderer.get_canvas_info().canvas_size, dispatcher);
+  update_viewport_offset(tileset_ref, renderer.get_canvas_info().size, dispatcher);
 
   renderer.clear(get_settings().get_viewport_bg_color());
 
