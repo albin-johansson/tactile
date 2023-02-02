@@ -37,6 +37,7 @@ A tilemap editor that aims to be simple, fast and lightweight.
   * Point tool
 * Components (attachable bundles of attributes, as commonly found in game engines)
 * Properties that can be attached to almost anything: maps, layers, objects, tiles, etc.
+  * Vector properties, with support for 2D/3D/4D vectors of both integers and floats
 * Tile animations
 * Tile compression support, using Base64 encoding with either Zlib or Zstd
 * Helpful error messages when things go wrong, e.g. when parsing corrupted maps
