@@ -21,14 +21,16 @@
 
 #include <limits>  // numeric_limits
 
+#include "common/numeric.hpp"
+
 namespace tactile {
 
-inline constexpr auto kMinFloat = (std::numeric_limits<float>::min)();
-inline constexpr auto kMaxFloat = (std::numeric_limits<float>::max)();
+inline constexpr auto kMinFloat = std::numeric_limits<float>::min();
+inline constexpr auto kMaxFloat = std::numeric_limits<float>::max();
 
-inline constexpr auto kMinInt = (std::numeric_limits<int>::min)();
-inline constexpr auto kMaxInt = (std::numeric_limits<int>::max)();
+inline constexpr auto kMinInt = std::numeric_limits<int>::min();
+inline constexpr auto kMaxInt = std::numeric_limits<int>::max();
 
-inline constexpr auto kMaxUint = (std::numeric_limits<unsigned>::max)();
+inline constexpr auto kMaxUint = std::numeric_limits<uint>::max();
 
 }  // namespace tactile
