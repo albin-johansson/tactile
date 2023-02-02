@@ -23,6 +23,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "core/color.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/tile/tileset_ref.hpp"
 #include "io/proto/settings.hpp"
@@ -39,7 +40,7 @@
 namespace tactile::ui {
 namespace {
 
-inline constexpr uint32 kRubberBandColor = to_u32(Color {0, 0x44, 0xCC, 100});
+inline constexpr Color kRubberBandColor {0, 0x44, 0xCC, 100};
 
 void update_viewport_offset(const TilesetRef& tileset_ref,
                             const Float2& viewport_size,

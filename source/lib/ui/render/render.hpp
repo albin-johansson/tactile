@@ -24,59 +24,159 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "common/debug/assert.hpp"
 #include "common/macros.hpp"
 #include "common/numeric.hpp"
+#include "core/color.hpp"
+#include "core/texture.hpp"
 #include "ui/conversions.hpp"
+#include "ui/textures.hpp"
 
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, Texture)
+namespace tactile {
 
-namespace tactile::ui {
+inline void render_text(const char* text, const ImVec2& position, const Color& color)
+{
+  TACTILE_ASSERT(text);
+  ImGui::GetWindowDrawList()->AddText(position, ui::to_u32(color), text);
+}
 
-void draw_rect(const ImVec2& position,
-               const ImVec2& size,
-               uint32 color,
-               float thickness = 1.0f);
+inline void render_text(const char* text, const Float2& position, const Color& color)
+{
+  render_text(text, ui::from_vec(position), color);
+}
+
+inline void render_shadowed_text(const char* text,
+                                 const ImVec2& position,
+                                 const Color& color,
+                                 const float shadow_offset = 1.0f)
+{
+  render_text(text, position + ImVec2 {shadow_offset, shadow_offset}, kBlack);
+  render_text(text, position, color);
+}
+
+inline void render_shadowed_text(const char* text,
+                                 const Float2& position,
+                                 const Color& color,
+                                 const float shadow_offset = 1.0f)
+{
+  render_shadowed_text(text, ui::from_vec(position), color, shadow_offset);
+}
+
+inline void draw_rect(const ImVec2& position,
+                      const ImVec2& size,
+                      const Color& color,
+                      const float thickness = 1.0f)
+{
+  auto* draw_list = ImGui::GetWindowDrawList();
+  draw_list->AddRect(position, position + size, ui::to_u32(color), 0, 0, thickness);
+}
+
+inline void draw_rect(const Float2& position,
+                      const Float2& size,
+                      const Color& color,
+                      const float thickness = 1.0f)
+{
+  draw_rect(ui::from_vec(position), ui::from_vec(size), color, thickness);
+}
 
 inline void draw_shadowed_rect(const ImVec2& position,
                                const ImVec2& size,
-                               const uint32 color,
+                               const Color& color,
                                const float thickness = 1.0f)
 {
-  draw_rect(position + ImVec2 {thickness, thickness}, size, IM_COL32_BLACK, thickness);
+  draw_rect(position + ImVec2 {thickness, thickness}, size, kBlack, thickness);
   draw_rect(position, size, color, thickness);
 }
 
-void fill_rect(const ImVec2& position, const ImVec2& size, uint32 color);
+inline void draw_shadowed_rect(const Float2& position,
+                               const Float2& size,
+                               const Color& color,
+                               const float thickness = 1.0f)
+{
+  draw_rect(position + Float2 {thickness, thickness}, size, kBlack, thickness);
+  draw_rect(position, size, color, thickness);
+}
 
-void draw_circle(const ImVec2& center,
-                 float radius,
-                 uint32 color,
-                 float thickness = 1.0f);
+inline void fill_rect(const ImVec2& position, const ImVec2& size, const Color& color)
+{
+  ImGui::GetWindowDrawList()->AddRectFilled(position, position + size, ui::to_u32(color));
+}
+
+inline void fill_rect(const Float2& position, const Float2& size, const Color& color)
+{
+  fill_rect(ui::from_vec(position), ui::from_vec(size), color);
+}
+
+inline void draw_circle(const ImVec2& center,
+                        const float radius,
+                        const Color& color,
+                        const float thickness = 1.0f)
+{
+  ImGui::GetWindowDrawList()->AddCircle(center, radius, ui::to_u32(color), 0, thickness);
+}
+
+inline void draw_circle(const Float2& center,
+                        const float radius,
+                        const Color& color,
+                        const float thickness = 1.0f)
+{
+  draw_circle(ui::from_vec(center), radius, color, thickness);
+}
 
 inline void draw_shadowed_circle(const ImVec2& center,
                                  const float radius,
-                                 const uint32 color,
+                                 const Color& color,
                                  const float thickness = 1.0f)
 {
-  draw_circle(center + ImVec2 {0, thickness}, radius, IM_COL32_BLACK, thickness);
+  draw_circle(center + ImVec2 {0, thickness}, radius, kBlack, thickness);
+  draw_circle(center, radius, color, thickness);
+}
+
+inline void draw_shadowed_circle(const Float2& center,
+                                 const float radius,
+                                 const Color& color,
+                                 const float thickness = 1.0f)
+{
+  draw_circle(center + Float2 {0, thickness}, radius, kBlack, thickness);
   draw_circle(center, radius, color, thickness);
 }
 
 void draw_ellipse(const ImVec2& center,
                   const ImVec2& radius,
-                  uint32 color,
+                  const Color& color,
                   float thickness = 1.0f);
 
-void draw_shadowed_ellipse(const ImVec2& center,
-                           const ImVec2& radius,
-                           uint32 color,
-                           float thickness = 1.0f);
+inline void draw_ellipse(const Float2& center,
+                         const Float2& radius,
+                         const Color& color,
+                         const float thickness = 1.0f)
+{
+  draw_ellipse(ui::from_vec(center), ui::from_vec(radius), color, thickness);
+}
+
+inline void draw_shadowed_ellipse(const ImVec2& center,
+                                  const ImVec2& radius,
+                                  const Color& color,
+                                  const float thickness = 1.0f)
+{
+  if (radius.x == radius.y) {
+    draw_shadowed_circle(center, radius.x, color, thickness);
+  }
+  else {
+    draw_ellipse(center + ImVec2 {0, thickness}, radius, kBlack, thickness);
+    draw_ellipse(center, radius, color, thickness);
+  }
+}
+
+inline void draw_shadowed_ellipse(const Float2& center,
+                                  const Float2& radius,
+                                  const Color& color,
+                                  const float thickness = 1.0f)
+{
+  draw_shadowed_ellipse(ui::from_vec(center), ui::from_vec(radius), color, thickness);
+}
 
 /// Renders a region of a texture.
-///
-/// \details
-/// To render the full texture, you could use uv_min = (0, 0) and uv_max = (1, 1). That
-/// is, just omit the UV parameters.
 ///
 /// \param texture the source texture.
 /// \param position the position of the rendered texture.
@@ -84,22 +184,35 @@ void draw_shadowed_ellipse(const ImVec2& center,
 /// \param uv_min the normalized top-left corner of the texture region to render.
 /// \param uv_max the normalized bottom-right corner of the texture region to render.
 /// \param opacity the opacity of the rendered texture, in the interval [0, 255].
-void render_image(const Texture& texture,
-                  const ImVec2& position,
-                  const ImVec2& size,
-                  const ImVec2& uv_min = {0, 0},
-                  const ImVec2& uv_max = {1, 1},
-                  uint8 opacity = 255);
-
-void render_text(const char* text, const ImVec2& position, uint32 color);
-
-inline void render_shadowed_text(const char* text,
-                                 const ImVec2& position,
-                                 const uint32 color,
-                                 const float shadow_offset = 1.0f)
+inline void render_image(const Texture& texture,
+                         const ImVec2& position,
+                         const ImVec2& size,
+                         const ImVec2& uv_min = {0, 0},
+                         const ImVec2& uv_max = {1, 1},
+                         const uint8 opacity = 255)
 {
-  render_text(text, position + ImVec2 {shadow_offset, shadow_offset}, IM_COL32_BLACK);
-  render_text(text, position, color);
+  auto* draw_list = ImGui::GetWindowDrawList();
+  draw_list->AddImage(ui::to_texture_id(texture.get_id()),
+                      position,
+                      position + size,
+                      uv_min,
+                      uv_max,
+                      IM_COL32(0xFF, 0xFF, 0xFF, opacity));
 }
 
-}  // namespace tactile::ui
+inline void render_image(const Texture& texture,
+                         const Float2& position,
+                         const Float2& size,
+                         const Float2& uv_min = {0, 0},
+                         const Float2& uv_max = {1, 1},
+                         const uint8 opacity = 255)
+{
+  render_image(texture,
+               ui::from_vec(position),
+               ui::from_vec(size),
+               ui::from_vec(uv_min),
+               ui::from_vec(uv_max),
+               opacity);
+}
+
+}  // namespace tactile

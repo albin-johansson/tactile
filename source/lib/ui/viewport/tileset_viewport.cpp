@@ -25,6 +25,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "core/color.hpp"
 #include "core/tile/tile.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
@@ -42,9 +43,9 @@
 namespace tactile::ui {
 namespace {
 
-inline constexpr uint32 kTileHoverColor = IM_COL32(0, 0xFF, 0, 200);
-inline constexpr uint32 kSelectedTileColor = IM_COL32(0, 0xEE, 0xEE, 0xFF);
-inline constexpr uint32 kAnimationFrameSelectionColor = IM_COL32(0xFF, 0x45, 0x00, 200);
+inline constexpr Color kTileHoverColor {0, 0xFF, 0, 200};
+inline constexpr Color kSelectedTileColor {0, 0xEE, 0xEE, 0xFF};
+inline constexpr Color kAnimationFrameSelectionColor {0xFF, 0x45, 0x00, 200};
 
 struct DockState final {
   UUID tileset_id {};
@@ -59,10 +60,7 @@ void ui_cursor_gizmos(const ViewportCursorInfo& cursor, const CanvasInfo& canvas
   const auto color = gDockState.animation_frame_selection_mode
                          ? kAnimationFrameSelectionColor
                          : kTileHoverColor;
-  draw_shadowed_rect(cursor.clamped_position,
-                     from_vec(canvas_info.grid_size),
-                     color,
-                     2.0f);
+  draw_shadowed_rect(to_vec(cursor.clamped_position), canvas_info.grid_size, color, 2.0f);
 }
 
 void ui_highlight_selected_tile(const CanvasInfo& canvas_info, const Tileset& tileset)
@@ -72,8 +70,8 @@ void ui_highlight_selected_tile(const CanvasInfo& canvas_info, const Tileset& ti
     const auto translated_tile_pos =
         canvas_info.origin + tile_pos.as_vec2f() * canvas_info.grid_size;
 
-    draw_shadowed_rect(from_vec(translated_tile_pos),
-                       from_vec(canvas_info.grid_size),
+    draw_shadowed_rect(translated_tile_pos,
+                       canvas_info.grid_size,
                        kSelectedTileColor,
                        2.0f);
   }
@@ -83,8 +81,8 @@ void ui_highlight_animation_frame_selection_mode(const Strings& lang,
                                                  const CanvasInfo& canvas_info)
 {
   if (gDockState.animation_frame_selection_mode) {
-    draw_rect(from_vec(canvas_info.canvas_tl),
-              from_vec(canvas_info.canvas_size),
+    draw_rect(canvas_info.canvas_tl,
+              canvas_info.canvas_size,
               kAnimationFrameSelectionColor,
               6.0f);
 
@@ -94,7 +92,7 @@ void ui_highlight_animation_frame_selection_mode(const Strings& lang,
     const float label_x = (canvas_info.canvas_size.x - label_size.x) * 0.5f;
     const float label_y = 100;
 
-    render_shadowed_text(label, {label_x, label_y}, IM_COL32_WHITE, 2.0f);
+    render_shadowed_text(label, Float2 {label_x, label_y}, kWhite, 2.0f);
   }
 }
 

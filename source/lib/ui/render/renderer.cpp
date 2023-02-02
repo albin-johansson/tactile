@@ -22,7 +22,6 @@
 #include <algorithm>  // min, max
 #include <cmath>      // fmod
 
-#include <centurion/math.hpp>
 #include <glm/common.hpp>
 #include <imgui.h>
 
@@ -154,9 +153,7 @@ void Renderer::pop_clip() const
 
 void Renderer::clear(const Color& color) const
 {
-  ui::fill_rect(ui::from_vec(mCanvas.canvas_tl),
-                ui::from_vec(mCanvas.canvas_size),
-                ui::to_u32(color));
+  fill_rect(mCanvas.canvas_tl, mCanvas.canvas_size, color);
 }
 
 void Renderer::render_infinite_grid(const Color& color) const
@@ -198,18 +195,16 @@ void Renderer::render_translated_grid(const Color& color) const
 
   for (auto row = begin_row; row < end_row; ++row) {
     for (auto col = begin_col; col < end_col; ++col) {
-      ui::draw_rect(ui::from_vec(translate(from_matrix_to_absolute(TilePos {row, col}))),
-                    ui::from_vec(mCanvas.grid_size),
-                    ui::to_u32(color));
+      draw_rect(translate(from_matrix_to_absolute(TilePos {row, col})),
+                mCanvas.grid_size,
+                color);
     }
   }
 }
 
 void Renderer::render_outline(const Color& color) const
 {
-  ui::draw_rect(ui::from_vec(mCanvas.origin),
-                ui::from_vec(mCanvas.contents_size),
-                ui::to_u32(color));
+  draw_rect(mCanvas.origin, mCanvas.contents_size, color);
 }
 
 void Renderer::render_tile(const Tileset& tileset,
@@ -222,12 +217,12 @@ void Renderer::render_tile(const Tileset& tileset,
   const auto uv_min = tile_position.as_vec2f() * uv_size;
   const auto uv_max = uv_min + uv_size;
 
-  ui::render_image(tileset.texture(),
-                   ui::from_vec(position),
-                   ui::from_vec(mCanvas.grid_size),
-                   ui::from_vec(uv_min),
-                   ui::from_vec(uv_max),
-                   ui::opacity_cast(opacity));
+  render_image(tileset.texture(),
+               position,
+               mCanvas.grid_size,
+               uv_min,
+               uv_max,
+               ui::opacity_cast(opacity));
 }
 
 void Renderer::render_tile(const Tileset& tileset,
@@ -244,12 +239,12 @@ void Renderer::render_tile(const Tileset& tileset,
   const auto uv_min = tileset_pos.as_vec2f() * uv_size;
   const auto uv_max = uv_min + uv_size;
 
-  ui::render_image(tileset.texture(),
-                   ui::from_vec(rendered_position),
-                   ui::from_vec(mCanvas.grid_size),
-                   ui::from_vec(uv_min),
-                   ui::from_vec(uv_max),
-                   ui::opacity_cast(opacity));
+  render_image(tileset.texture(),
+               rendered_position,
+               mCanvas.grid_size,
+               uv_min,
+               uv_max,
+               ui::opacity_cast(opacity));
 }
 
 void Renderer::render_tile(const Map& map,
@@ -332,10 +327,7 @@ void Renderer::render_point_object(const Object& object,
   const float radius = std::min(mCanvas.grid_size.x / 4.0f, 6.0f);
 
   if (is_within_viewport(translated_position)) {
-    ui::draw_shadowed_circle(ui::from_vec(translated_position),
-                             radius,
-                             ui::to_u32(color),
-                             2.0f);
+    draw_shadowed_circle(translated_position, radius, color, 2.0f);
 
     const auto& name = object.get_ctx().name();
     if (!name.empty()) {
@@ -345,9 +337,7 @@ void Renderer::render_point_object(const Object& object,
         const auto text_x = position.x - (text_size.x / 2.0f);
         const auto text_y = position.y + radius + 4.0f;
 
-        ui::render_text(name.c_str(),
-                        ui::from_vec(translate(Float2 {text_x, text_y})),
-                        IM_COL32_WHITE);
+        render_text(name.c_str(), translate(Float2 {text_x, text_y}), kWhite);
       }
     }
   }
@@ -363,10 +353,7 @@ void Renderer::render_rectangle_object(const Object& object,
   const auto rendered_size = object.get_size() * mCanvas.ratio;
 
   if (is_intersecting_viewport(translated_position, rendered_size)) {
-    ui::draw_shadowed_rect(ui::from_vec(translated_position),
-                           ui::from_vec(rendered_size),
-                           ui::to_u32(color),
-                           2.0f);
+    draw_shadowed_rect(translated_position, rendered_size, color, 2.0f);
 
     const auto& name = object.get_ctx().name();
     if (!name.empty()) {
@@ -375,10 +362,9 @@ void Renderer::render_rectangle_object(const Object& object,
       if (text_size.x <= rendered_size.x) {
         const auto text_x = (rendered_size.x - text_size.x) / 2.0f;
 
-        ui::render_text(
-            name.c_str(),
-            ui::from_vec(translate(position + Float2 {text_x, rendered_size.y + 4.0f})),
-            IM_COL32_WHITE);
+        render_text(name.c_str(),
+                    translate(position + Float2 {text_x, rendered_size.y + 4.0f}),
+                    kWhite);
       }
     }
   }
@@ -395,10 +381,7 @@ void Renderer::render_ellipse_object(const Object& object,
   const auto radius = Float2 {0.5f, 0.5f} * rendered_size;
   const auto center = position + radius;
 
-  ui::draw_shadowed_ellipse(ui::from_vec(translate(center)),
-                            ui::from_vec(radius),
-                            ui::to_u32(color),
-                            2.0f);
+  draw_shadowed_ellipse(translate(center), radius, color, 2.0f);
 
   const auto& name = object.get_ctx().name();
   if (!name.empty()) {
@@ -408,9 +391,7 @@ void Renderer::render_ellipse_object(const Object& object,
       const auto text_x = center.x - (text_size.x / 2.0f);
       const auto text_y = center.y + (text_size.y / 2.0f) + (radius.y);
 
-      ui::render_text(name.c_str(),
-                      ui::from_vec(translate(Float2 {text_x, text_y})),
-                      IM_COL32_WHITE);
+      render_text(name.c_str(), translate(Float2 {text_x, text_y}), kWhite);
     }
   }
 }
@@ -490,7 +471,7 @@ void Renderer::render_tileset(const Tileset& tileset) const
   const auto rendered_position = translate(Float2 {0, 0});
   const auto rendered_size = Float2 {texture.get_size()} * mCanvas.ratio;
 
-  ui::render_image(texture, ui::from_vec(rendered_position), ui::from_vec(rendered_size));
+  render_image(texture, rendered_position, rendered_size);
 
   const auto& settings = get_settings();
   if (settings.test_flag(SETTINGS_SHOW_GRID_BIT)) {

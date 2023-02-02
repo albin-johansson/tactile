@@ -22,14 +22,11 @@
 #include <cmath>    // sin, cos
 #include <numbers>  // pi_v
 
-#include "common/debug/assert.hpp"
-#include "core/texture.hpp"
-#include "ui/textures.hpp"
-
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
 inline constexpr int kEllipseSegments = 50;
+inline constexpr float kTau = std::numbers::pi_v<float> * 2.0f;
 
 void path_elliptical_arc_to(ImDrawList* self,
                             const ImVec2& center,
@@ -60,12 +57,10 @@ void add_ellipse(ImDrawList* self,
     return;
   }
 
-  constexpr auto tau = std::numbers::pi_v<float> * 2.0f;
-
   const auto n_segments_f = static_cast<float>(n_segments);
 
   // Because we are filling a closed shape we remove 1 from the count of segments/points
-  const float arc_max = tau * (n_segments_f - 1.0f) / n_segments_f;
+  const float arc_max = kTau * (n_segments_f - 1.0f) / n_segments_f;
   path_elliptical_arc_to(self, center, radius, 0.0f, arc_max, n_segments - 1);
 
   self->PathStroke(color, true, thickness);
@@ -73,73 +68,17 @@ void add_ellipse(ImDrawList* self,
 
 }  // namespace
 
-void draw_rect(const ImVec2& position,
-               const ImVec2& size,
-               const uint32 color,
-               const float thickness)
-{
-  ImGui::GetWindowDrawList()->AddRect(position, position + size, color, 0, 0, thickness);
-}
-
-void fill_rect(const ImVec2& position, const ImVec2& size, const uint32 color)
-{
-  ImGui::GetWindowDrawList()->AddRectFilled(position, position + size, color);
-}
-
-void draw_circle(const ImVec2& center,
-                 const float radius,
-                 const uint32 color,
-                 const float thickness)
-{
-  ImGui::GetWindowDrawList()->AddCircle(center, radius, color, 0, thickness);
-}
-
 void draw_ellipse(const ImVec2& center,
                   const ImVec2& radius,
-                  const uint32 color,
+                  const Color& color,
                   const float thickness)
 {
   add_ellipse(ImGui::GetWindowDrawList(),
               center,
               radius,
-              color,
+              ui::to_u32(color),
               kEllipseSegments,
               thickness);
 }
 
-void draw_shadowed_ellipse(const ImVec2& center,
-                           const ImVec2& radius,
-                           const uint32 color,
-                           const float thickness)
-{
-  if (radius.x == radius.y) {
-    draw_shadowed_circle(center, radius.x, color, thickness);
-  }
-  else {
-    draw_ellipse(center + ImVec2 {0, thickness}, radius, IM_COL32_BLACK, thickness);
-    draw_ellipse(center, radius, color, thickness);
-  }
-}
-
-void render_image(const Texture& texture,
-                  const ImVec2& position,
-                  const ImVec2& size,
-                  const ImVec2& uv_min,
-                  const ImVec2& uv_max,
-                  const uint8 opacity)
-{
-  ImGui::GetWindowDrawList()->AddImage(to_texture_id(texture.get_id()),
-                                       position,
-                                       position + size,
-                                       uv_min,
-                                       uv_max,
-                                       IM_COL32(0xFF, 0xFF, 0xFF, opacity));
-}
-
-void render_text(const char* text, const ImVec2& position, const uint32 color)
-{
-  TACTILE_ASSERT(text);
-  ImGui::GetWindowDrawList()->AddText(position, color, text);
-}
-
-}  // namespace tactile::ui
+}  // namespace tactile

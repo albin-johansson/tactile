@@ -25,6 +25,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "core/color.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
 #include "document_viewport_offset_handler.hpp"
@@ -119,9 +120,9 @@ void draw_cursor_gizmos(const Renderer& renderer,
   const auto& map = document.get_map();
 
   if (cursor.is_within_map && map.is_active_layer(LayerType::TileLayer)) {
-    draw_shadowed_rect(cursor.clamped_position,
-                       from_vec(renderer.get_canvas_info().grid_size),
-                       IM_COL32(0, 0xFF, 0, 200),
+    draw_shadowed_rect(to_vec(cursor.clamped_position),
+                       renderer.get_canvas_info().grid_size,
+                       Color {0, 0xFF, 0, 200},
                        2.0f);
   }
 
