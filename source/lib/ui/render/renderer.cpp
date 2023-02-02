@@ -291,7 +291,7 @@ void Renderer::render_object_layer(const ObjectLayer& layer,
                                    const float parent_opacity) const
 {
   const auto opacity = parent_opacity * layer.get_opacity();
-  const Color object_color {0xFF, 0, 0, static_cast<uint8>(255 * opacity)};
+  const Color object_color {0xFF, 0, 0, ui::opacity_cast(opacity)};
 
   for (const auto& [id, object]: layer) {
     render_object(*object, object_color);
