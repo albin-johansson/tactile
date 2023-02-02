@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "render.hpp"
+#include "primitives.hpp"
 
 #include <cmath>    // sin, cos
 #include <numbers>  // pi_v

@@ -41,7 +41,7 @@
 #include "model/model.hpp"
 #include "model/settings.hpp"
 #include "ui/conversions.hpp"
-#include "ui/render/render.hpp"
+#include "ui/render/primitives.hpp"
 #include "ui/render/renderer.hpp"
 #include "ui/viewport/preview/tool_preview_renderer.hpp"
 #include "ui/widget/scoped.hpp"

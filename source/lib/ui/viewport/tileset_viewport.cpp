@@ -34,7 +34,7 @@
 #include "model/event/viewport_events.hpp"
 #include "model/settings.hpp"
 #include "ui/conversions.hpp"
-#include "ui/render/render.hpp"
+#include "ui/render/primitives.hpp"
 #include "ui/render/renderer.hpp"
 #include "ui/viewport/document_viewport_offset_handler.hpp"
 #include "ui/viewport/viewport_cursor_info.hpp"

@@ -34,7 +34,7 @@
 #include "core/tile/tileset_bundle.hpp"
 #include "model/settings.hpp"
 #include "ui/conversions.hpp"
-#include "ui/render/render.hpp"
+#include "ui/render/primitives.hpp"
 
 namespace tactile {
 namespace {

@@ -30,7 +30,7 @@
 #include "model/tool/rectangle_tool.hpp"
 #include "model/tool/stamp_tool.hpp"
 #include "ui/conversions.hpp"
-#include "ui/render/render.hpp"
+#include "ui/render/primitives.hpp"
 #include "ui/render/renderer.hpp"
 
 namespace tactile::ui {
