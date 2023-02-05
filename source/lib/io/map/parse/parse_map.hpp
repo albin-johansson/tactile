@@ -22,8 +22,8 @@
 #include "common/type/path.hpp"
 #include "io/map/parse/parse_result.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 [[nodiscard]] auto parse_map(const Path& path) -> ParseResult;
 
-}  // namespace tactile::io
+}  // namespace tactile

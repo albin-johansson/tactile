@@ -24,11 +24,9 @@
 namespace tactile::test {
 namespace {
 
-using io::ParseError;
-
 void check_parsed_properties(const char* path)
 {
-  const auto result = io::parse_map(path);
+  const auto result = parse_map(path);
   REQUIRE(ParseError::None == result.error());
 
   const auto& data = result.data();

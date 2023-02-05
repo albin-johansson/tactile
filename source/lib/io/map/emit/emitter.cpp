@@ -32,7 +32,7 @@
 #include "io/map/emit/gd/godot_writer.hpp"
 #include "model/document/map_document.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 void emit_map(const MapDocument& document)
 {
@@ -78,4 +78,4 @@ void emit_map_as_godot_scene(const MapDocument& document, const GodotEmitOptions
   TACTILE_DEBUG_PROFILE_END("Saved map as Godot scene")
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

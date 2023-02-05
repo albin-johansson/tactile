@@ -36,7 +36,7 @@ constexpr Int2 expected_tile_size = {32, 32};
 [[nodiscard]] auto make_tileset() -> Tileset
 {
   return Tileset {TilesetInfo {
-      .texture = io::load_texture(texture_path),
+      .texture = load_texture(texture_path),
       .tile_size = expected_tile_size,
   }};
 }

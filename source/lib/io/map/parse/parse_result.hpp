@@ -23,7 +23,7 @@
 #include "io/ir/ir.hpp"
 #include "io/map/parse/parse_error.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 class ParseResult final {
  public:
@@ -44,4 +44,4 @@ class ParseResult final {
   ParseError mError {ParseError::None};
 };
 
-}  // namespace tactile::io
+}  // namespace tactile

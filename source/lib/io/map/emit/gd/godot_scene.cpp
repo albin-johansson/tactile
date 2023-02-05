@@ -25,7 +25,7 @@
 
 #include "common/util/filesystem.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 void GodotScene::set_tileset(GodotTileset tileset, const Path& dest)
 {
@@ -54,4 +54,4 @@ auto GodotScene::layers() const -> const Vec<GdLayer>&
   return mLayers;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

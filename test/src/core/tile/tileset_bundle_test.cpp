@@ -31,7 +31,7 @@ namespace {
 [[nodiscard]] auto make_tileset() -> Shared<Tileset>
 {
   return std::make_shared<Tileset>(
-      TilesetInfo {.texture = io::load_texture("resources/terrain.png"),
+      TilesetInfo {.texture = load_texture("resources/terrain.png"),
                    .tile_size = {32, 32}});
 }
 

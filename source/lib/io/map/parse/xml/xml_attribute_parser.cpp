@@ -26,7 +26,7 @@
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/util/xml.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto parse_value(XmlNode node, const char* type)
@@ -151,4 +151,4 @@ auto parse_context(XmlNode node) -> Expected<ir::ContextData, ParseError>
   return context;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

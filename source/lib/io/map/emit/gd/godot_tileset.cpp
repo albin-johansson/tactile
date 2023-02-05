@@ -26,7 +26,7 @@
 #include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 auto GodotTileset::add_texture(const Path& dest, Path source) -> GdExtRes
 {
@@ -66,4 +66,4 @@ auto GodotTileset::tilesets() const -> const Vec<GdTilesetInfo>&
   return mTilesetInfos;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

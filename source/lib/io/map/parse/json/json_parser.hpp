@@ -24,7 +24,7 @@
 #include "io/map/parse/parse_result.hpp"
 #include "io/util/json.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 [[nodiscard]] auto parse_json_map(const Path& path) -> ParseResult;
 
@@ -38,4 +38,4 @@ namespace tactile::io {
 [[nodiscard]] auto parse_properties(const JSON& json, ir::ContextData& context)
     -> ParseError;
 
-}  // namespace tactile::io
+}  // namespace tactile

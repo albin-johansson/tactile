@@ -36,7 +36,7 @@ NLOHMANN_JSON_SERIALIZE_ENUM(TileCompression,
 
 }  // namespace tactile
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto parse_object_layer(const JSON& json, ir::LayerData& layer_data)
@@ -289,4 +289,4 @@ auto parse_layers(const JSON& json, ir::MapData& map) -> ParseError
   return ParseError::None;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

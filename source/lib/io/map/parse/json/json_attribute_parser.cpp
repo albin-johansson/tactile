@@ -23,7 +23,7 @@
 #include "io/ir/ir.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto parse_value(const JSON& json, StringView type, Attribute& value)
@@ -133,4 +133,4 @@ auto parse_properties(const JSON& json, ir::ContextData& context_data) -> ParseE
   return ParseError::None;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

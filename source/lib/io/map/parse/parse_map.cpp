@@ -31,7 +31,7 @@
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 auto parse_map(const Path& path) -> ParseResult
 {
@@ -85,4 +85,4 @@ auto parse_map(const Path& path) -> ParseResult
   return result;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

@@ -22,7 +22,7 @@
 #include "common/numeric.hpp"
 #include "common/type/path.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 /// Provides options for the Godot scene emitter.
 ///
@@ -43,4 +43,4 @@ struct GodotEmitOptions final {
   usize ellipse_polygon_point_count;  ///< Amount of points in ellipse approximations.
 };
 
-}  // namespace tactile::io
+}  // namespace tactile

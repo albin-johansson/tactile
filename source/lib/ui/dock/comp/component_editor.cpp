@@ -91,7 +91,7 @@ void ui_component_combo(const ComponentIndex* component_index)
       combo.is_open()) {
     for (const auto& [component_id, component_def]: *component_index) {
       const auto& component_name = component_def.get_name();
-      if (Selectable::Property(component_name.c_str())) {
+      if (Selectable::property(component_name.c_str())) {
         gEditorState.active_component_id = component_def.get_uuid();
       }
     }

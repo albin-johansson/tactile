@@ -25,7 +25,7 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 auto to_cause(const ParseError error) -> StringView
 {
@@ -215,4 +215,4 @@ auto operator<<(OStream& stream, const ParseError error) -> OStream&
   return stream << magic_enum::enum_name(error);
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

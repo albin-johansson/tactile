@@ -23,7 +23,7 @@
 
 namespace tactile::ui {
 
-void open_map_parse_error_dialog(io::ParseError error);
+void open_map_parse_error_dialog(ParseError error);
 void update_map_parse_error_dialog();
 
 }  // namespace tactile::ui

@@ -26,7 +26,7 @@
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, MapDocument)
 TACTILE_FWD_DECLARE_STRUCT_NS(tactile::ir, MapData)
 
-namespace tactile::io {
+namespace tactile {
 
 TACTILE_FWD_DECLARE_STRUCT(GodotEmitOptions)
 
@@ -41,4 +41,4 @@ void emit_json_map(const Path& destination, const ir::MapData& ir_map);
 void emit_xml_map(const Path& destination, const ir::MapData& ir_map);
 void emit_yaml_map(const Path& destination, const ir::MapData& ir_map);
 
-}  // namespace tactile::io
+}  // namespace tactile

@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-namespace tactile::io {
+namespace tactile {
 
 auto GodotFile::add_ext_resource(String path, String type) -> GdExtRes
 {
@@ -88,4 +88,4 @@ auto GodotFile::root_meta() const -> const GdMetaData&
   return mRootMeta;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

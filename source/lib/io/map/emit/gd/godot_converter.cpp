@@ -34,7 +34,7 @@
 #include "core/tile/tile_pos.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 using TilesetTextures = HashMap<UUID, GdExtRes>;
@@ -360,4 +360,4 @@ auto convert_to_godot(const ir::MapData& map, const GodotEmitOptions& options)
   return scene;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

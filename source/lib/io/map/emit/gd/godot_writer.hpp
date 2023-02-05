@@ -19,11 +19,11 @@
 
 #pragma once
 
-namespace tactile::io {
+namespace tactile {
 
 class GodotScene;
 struct GodotEmitOptions;
 
 void write_godot_scene(const GodotScene& scene, const GodotEmitOptions& options);
 
-}  // namespace tactile::io
+}  // namespace tactile

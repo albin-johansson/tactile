@@ -60,7 +60,7 @@ void on_load_tileset(const LoadTilesetEvent& event)
 {
   spdlog::trace("LoadTilesetEvent(path: {}, tile_size: {})", event.path, event.tile_size);
 
-  if (auto texture = io::load_texture(event.path)) {
+  if (auto texture = load_texture(event.path)) {
     get_model().add_tileset(TilesetInfo {
         .texture = std::move(texture),
         .tile_size = event.tile_size,

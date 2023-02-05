@@ -31,7 +31,7 @@
 #include "io/util/json.hpp"
 #include "model/settings.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto emit_properties(const ir::ContextData& context) -> JSON
@@ -400,4 +400,4 @@ void emit_json_map(const Path& destination, const ir::MapData& ir_map)
   write_json(json, destination);
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

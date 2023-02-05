@@ -82,7 +82,7 @@ void ui_theme_combo()
 {
   auto show_themes = [](auto& themes) {
     for (const auto theme: themes) {
-      if (Selectable::Property(human_readable_name(theme).data())) {
+      if (Selectable::property(human_readable_name(theme).data())) {
         gDialogState.ui_settings.set_theme(theme);
         apply_theme(ImGui::GetStyle(),
                     theme,

@@ -86,13 +86,13 @@ void on_open_map(const OpenMapEvent& event)
     }
   }
   else {
-    const auto result = io::parse_map(event.path);
-    if (result.error() == io::ParseError::None) {
-      create_map_document_from_ir(result, model);
+    const auto parse_result = parse_map(event.path);
+    if (parse_result.error() == ParseError::None) {
+      create_map_document_from_ir(parse_result, model);
       add_to_file_history(event.path);
     }
     else {
-      ui::open_map_parse_error_dialog(result.error());
+      ui::open_map_parse_error_dialog(parse_result.error());
     }
   }
 }
@@ -175,14 +175,14 @@ void on_export_as_godot_scene(const ExportAsGodotSceneEvent& event)
       event.polygon_points);
 
   if (auto* map_document = get_model().active_map_document()) {
-    const io::GodotEmitOptions options {
+    const GodotEmitOptions options {
         .root_dir = event.root_dir,
         .project_map_dir = event.map_dir,
         .project_image_dir = event.image_dir,
         .project_tileset_dir = event.tileset_dir,
         .ellipse_polygon_point_count = event.polygon_points,
     };
-    io::emit_map_as_godot_scene(*map_document, options);
+    emit_map_as_godot_scene(*map_document, options);
   }
 }
 

@@ -22,7 +22,7 @@
 #include "common/type/ostream.hpp"
 #include "common/type/string.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 /// Represents various possible errors related to map parsing.
 ///
@@ -103,4 +103,4 @@ enum class ParseError {
 
 auto operator<<(OStream& stream, ParseError error) -> OStream&;
 
-}  // namespace tactile::io
+}  // namespace tactile

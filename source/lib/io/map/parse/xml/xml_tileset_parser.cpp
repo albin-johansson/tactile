@@ -24,7 +24,7 @@
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/util/xml.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto parse_fancy_tiles(XmlNode tileset_node)
@@ -225,4 +225,4 @@ auto parse_tileset(XmlNode node, const Path& dir) -> Expected<ir::TilesetData, P
   }
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

@@ -34,7 +34,7 @@ namespace tactile::ui {
 
 void show_save_as_dialog(entt::dispatcher& dispatcher)
 {
-  auto dialog = io::FileDialog::save_map();
+  auto dialog = FileDialog::save_map();
   if (dialog.is_okay()) {
     auto path = dialog.path();
 

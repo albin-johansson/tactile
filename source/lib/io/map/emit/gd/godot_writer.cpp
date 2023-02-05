@@ -34,7 +34,7 @@
 #include "io/map/emit/gd/godot_scene.hpp"
 #include "io/stream.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto write_attribute(StringView name, const Attribute& value) -> String
@@ -507,4 +507,4 @@ void write_godot_scene(const GodotScene& scene, const GodotEmitOptions& options)
   write_layers(stream, scene);
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

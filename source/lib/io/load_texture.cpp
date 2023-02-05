@@ -24,7 +24,7 @@
 #include <GL/glew.h>
 #include <stb_image.h>
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 struct TextureDataDeleter final {
@@ -38,7 +38,8 @@ using TextureData = Unique<uchar, TextureDataDeleter>;
 auto load_texture(const Path& path) -> Shared<Texture>
 {
   Int2 size {};
-  TextureData data {stbi_load(path.string().c_str(), &size.x, &size.y, nullptr, 4)};
+  const TextureData data {
+      stbi_load(path.string().c_str(), &size.x, &size.y, nullptr, STBI_rgb_alpha)};
 
   if (!data) {
     return nullptr;
@@ -67,4 +68,4 @@ auto load_texture(const Path& path) -> Shared<Texture>
   return std::make_shared<Texture>(id, size, path);
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

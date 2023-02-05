@@ -47,7 +47,7 @@ inline CreateTilesetDialogState gDialogState;
 
 void select_image_file()
 {
-  auto dialog = io::FileDialog::open_image();
+  auto dialog = FileDialog::open_image();
   if (!dialog.is_okay()) {
     return;
   }

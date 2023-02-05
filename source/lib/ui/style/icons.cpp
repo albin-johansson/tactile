@@ -34,7 +34,7 @@ inline Shared<Texture> gTactileIcon;
 
 void load_icons()
 {
-  gTactileIcon = io::load_texture(find_resource("assets/icon.png"));
+  gTactileIcon = load_texture(find_resource("assets/icon.png"));
 }
 
 void unload_icons() noexcept

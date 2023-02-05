@@ -287,10 +287,10 @@ ListBox::~ListBox()
   }
 }
 
-auto Selectable::ListItem(const char* label,
-                          const bool selected,
-                          const ImGuiSelectableFlags flags,
-                          const ImVec2& size) -> bool
+auto Selectable::list_item(const char* label,
+                           const bool selected,
+                           const ImGuiSelectableFlags flags,
+                           const ImVec2& size) -> bool
 {
   StyleColor text_color {ImGuiCol_Text, get_selectable_list_item_text_color(selected)};
 
@@ -300,7 +300,7 @@ auto Selectable::ListItem(const char* label,
   return activated;
 }
 
-auto Selectable::Property(const char* label,
+auto Selectable::property(const char* label,
                           const bool selected,
                           const ImGuiSelectableFlags flags,
                           const ImVec2& size) -> bool

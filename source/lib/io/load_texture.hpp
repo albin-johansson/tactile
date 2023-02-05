@@ -23,8 +23,8 @@
 #include "common/type/ptr.hpp"
 #include "core/texture.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 [[nodiscard]] auto load_texture(const Path& path) -> Shared<Texture>;
 
-}  // namespace tactile::io
+}  // namespace tactile

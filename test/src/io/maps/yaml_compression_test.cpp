@@ -89,11 +89,11 @@ void create_and_validate_yaml_map(const char* path, TileFormatFactory format_fac
     auto test_map = create_test_map();
     test_map.tile_format = format_factory();
 
-    io::emit_yaml_map(path, test_map);
+    emit_yaml_map(path, test_map);
   }
 
-  const auto result = io::parse_map(path);
-  REQUIRE(io::ParseError::None == result.error());
+  const auto result = parse_map(path);
+  REQUIRE(ParseError::None == result.error());
 
   const auto& map = result.data();
   const auto& layer = map.layers.front();

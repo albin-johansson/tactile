@@ -36,7 +36,7 @@
 #include "io/util/yaml.hpp"
 #include "model/settings.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 constexpr int kTilesetNodeVersion = 1;
@@ -469,4 +469,4 @@ void emit_yaml_map(const Path& destination, const ir::MapData& ir_map)
   stream << emitter.c_str();
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

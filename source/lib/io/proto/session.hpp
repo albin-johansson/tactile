@@ -21,9 +21,9 @@
 
 #include "common/macros.hpp"
 
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
-
 namespace tactile {
+
+TACTILE_FWD_DECLARE_CLASS(DocumentModel)
 
 /// Restores the open documents from the last session.
 void load_session_from_disk(DocumentModel& model);

@@ -28,7 +28,7 @@
 #include "io/map/parse/json/json_parser.hpp"
 #include "io/util/json.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto parse_fancy_tile(const JSON& json, ir::TilesetData& tileset_data)
@@ -260,4 +260,4 @@ auto parse_tilesets(const JSON& json, ir::MapData& map_data, const Path& dir)
   return ParseError::None;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

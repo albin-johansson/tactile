@@ -22,11 +22,11 @@
 #include "io/ir/ir.hpp"
 #include "io/map/emit/gd/godot_scene.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 struct GodotEmitOptions;
 
 [[nodiscard]] auto convert_to_godot(const ir::MapData& map,
                                     const GodotEmitOptions& options) -> GodotScene;
 
-}  // namespace tactile::io
+}  // namespace tactile

@@ -27,7 +27,7 @@
 #include "io/map/parse/parse_error.hpp"
 #include "io/map/parse/parse_result.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 [[nodiscard]] auto parse_yaml_map(const Path& path) -> ParseResult;
 
@@ -54,4 +54,4 @@ namespace tactile::io {
 [[nodiscard]] auto parse_context(const YAML::Node& node, const ir::MapData& map)
     -> Expected<ir::ContextData, ParseError>;
 
-}  // namespace tactile::io
+}  // namespace tactile

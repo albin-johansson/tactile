@@ -129,7 +129,7 @@ auto MapBuilder::with_object(const ObjectType type,
 auto MapBuilder::with_tileset(UUID* id) -> MapBuilder&
 {
   auto tileset = std::make_shared<Tileset>(TilesetInfo {
-      .texture = io::load_texture("resources/terrain.png"),
+      .texture = load_texture("resources/terrain.png"),
       .tile_size = {32, 32},
   });
 

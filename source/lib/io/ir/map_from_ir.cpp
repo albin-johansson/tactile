@@ -228,7 +228,7 @@ void restore_tileset(DocumentModel& model,
   // loaded multiple times
 
   const TilesetInfo info {
-      .texture = io::load_texture(ir_tileset.image_path),
+      .texture = load_texture(ir_tileset.image_path),
       .tile_size = ir_tileset.tile_size,
   };
 
@@ -296,7 +296,7 @@ void restore_tile_format(TileFormat& format, const ir::TileFormatData& ir_format
 
 }  // namespace
 
-void create_map_document_from_ir(const io::ParseResult& result, DocumentModel& model)
+void create_map_document_from_ir(const ParseResult& result, DocumentModel& model)
 {
   const auto& ir_map = result.data();
 

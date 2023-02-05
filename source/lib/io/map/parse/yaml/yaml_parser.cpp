@@ -27,7 +27,7 @@
 #include "common/type/expected.hpp"
 #include "io/util/yaml.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto parse_tile_format(const YAML::Node& node)
@@ -180,4 +180,4 @@ auto parse_yaml_map(const Path& path) -> ParseResult
   return result;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

@@ -26,7 +26,7 @@
 #include "io/map/parse/parse_result.hpp"
 #include "io/util/xml.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 [[nodiscard]] auto parse_xml_map(const Path& path) -> ParseResult;
 
@@ -44,4 +44,4 @@ namespace tactile::io {
 
 [[nodiscard]] auto parse_context(XmlNode node) -> Expected<ir::ContextData, ParseError>;
 
-}  // namespace tactile::io
+}  // namespace tactile

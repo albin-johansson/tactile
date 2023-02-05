@@ -19,7 +19,7 @@
 
 #include "parse_result.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 void ParseResult::set_path(const Path& path)
 {
@@ -51,4 +51,4 @@ auto ParseResult::data() const -> const ir::MapData&
   return mData;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

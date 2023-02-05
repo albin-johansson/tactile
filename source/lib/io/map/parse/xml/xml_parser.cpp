@@ -23,7 +23,7 @@
 
 #include "io/util/xml.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto validate_map(XmlNode map_node) -> ParseError
@@ -135,4 +135,4 @@ auto parse_xml_map(const Path& path) -> ParseResult
   return result;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

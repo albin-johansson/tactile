@@ -28,7 +28,7 @@
 #include "common/type/vec.hpp"
 #include "core/attribute.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 using GdExtRes = int32;  ///< External resource identifier.
 using GdSubRes = int32;  ///< Subresource identifier.
@@ -103,4 +103,4 @@ class GodotFile {
   GdMetaData mRootMeta;
 };
 
-}  // namespace tactile::io
+}  // namespace tactile

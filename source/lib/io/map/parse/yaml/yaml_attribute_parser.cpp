@@ -27,7 +27,7 @@
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 template <typename T>
@@ -412,4 +412,4 @@ auto parse_context(const YAML::Node& node, const ir::MapData& map)
   return context;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

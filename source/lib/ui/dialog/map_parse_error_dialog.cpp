@@ -39,10 +39,10 @@ inline MapParseErrorDialogState gDialogState;
 
 }  // namespace
 
-void open_map_parse_error_dialog(const io::ParseError error)
+void open_map_parse_error_dialog(const ParseError error)
 {
   const auto& lang = get_current_language();
-  gDialogState.cause = fmt::format("{}: {}", lang.misc.cause, io::to_cause(error));
+  gDialogState.cause = fmt::format("{}: {}", lang.misc.cause, to_cause(error));
   gDialogState.open_dialog = true;
 }
 

@@ -24,7 +24,7 @@
 #include "common/type/string.hpp"
 #include "io/util/json.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto validate_map(const JSON& json) -> ParseError
@@ -127,4 +127,4 @@ auto parse_json_map(const Path& path) -> ParseResult
   return result;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

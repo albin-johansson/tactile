@@ -229,12 +229,12 @@ class Selectable final {
   TACTILE_DELETE_COPY(Selectable);
   TACTILE_DELETE_MOVE(Selectable);
 
-  static auto ListItem(const char* label,
-                       bool selected = false,
-                       ImGuiSelectableFlags flags = 0,
-                       const ImVec2& size = {0, 0}) -> bool;
+  static auto list_item(const char* label,
+                        bool selected = false,
+                        ImGuiSelectableFlags flags = 0,
+                        const ImVec2& size = {0, 0}) -> bool;
 
-  static auto Property(const char* label,
+  static auto property(const char* label,
                        bool selected = false,
                        ImGuiSelectableFlags flags = 0,
                        const ImVec2& size = {0, 0}) -> bool;

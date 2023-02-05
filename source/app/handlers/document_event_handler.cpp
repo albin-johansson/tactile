@@ -75,7 +75,7 @@ void on_save(const SaveEvent&)
   // TODO ability to save tileset documents
   if (auto* document = get_model().active_map_document()) {
     if (document->has_path()) {
-      io::emit_map(*document);
+      emit_map(*document);
 
       document->get_history().mark_as_clean();
       document->set_name(document->get_path().filename().string());

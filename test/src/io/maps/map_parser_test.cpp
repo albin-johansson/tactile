@@ -33,11 +33,11 @@
 namespace tactile::test {
 namespace {
 
-using PE = io::ParseError;
+using PE = ParseError;
 
-void parse_and_check_error(const char* path, const io::ParseError expected_error)
+void parse_and_check_error(const char* path, const ParseError expected_error)
 {
-  const auto parse_result = io::parse_map(path);
+  const auto parse_result = parse_map(path);
   CHECK(expected_error == parse_result.error());
 }
 

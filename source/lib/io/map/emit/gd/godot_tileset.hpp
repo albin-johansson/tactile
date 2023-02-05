@@ -29,7 +29,7 @@
 #include "common/util/assoc.hpp"
 #include "io/map/emit/gd/godot_file.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 /// Information about a tileset in the merged tileset collection.
 struct GdTilesetInfo final {
@@ -62,4 +62,4 @@ class GodotTileset final : public GodotFile {
   Vec<GdTilesetInfo> mTilesetInfos;
 };
 
-}  // namespace tactile::io
+}  // namespace tactile

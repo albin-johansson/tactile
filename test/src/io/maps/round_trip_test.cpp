@@ -472,10 +472,10 @@ TEST_SUITE("Parser round trip")
     gCurrentParser = "YAML";
 
     const auto source = create_source_data(true);
-    io::emit_yaml_map(fs::absolute("test_map.yaml"), source);
+    emit_yaml_map(fs::absolute("test_map.yaml"), source);
 
-    const auto result = io::parse_map("test_map.yaml");
-    REQUIRE(io::ParseError::None == result.error());
+    const auto result = parse_map("test_map.yaml");
+    REQUIRE(ParseError::None == result.error());
 
     const auto& restored = result.data();
 
@@ -490,10 +490,10 @@ TEST_SUITE("Parser round trip")
     gCurrentParser = "JSON";
 
     const auto source = create_source_data(false);
-    io::emit_json_map(fs::absolute("test_map.json"), source);
+    emit_json_map(fs::absolute("test_map.json"), source);
 
-    const auto result = io::parse_map("test_map.json");
-    REQUIRE(io::ParseError::None == result.error());
+    const auto result = parse_map("test_map.json");
+    REQUIRE(ParseError::None == result.error());
 
     const auto& restored = result.data();
 
@@ -507,10 +507,10 @@ TEST_SUITE("Parser round trip")
     gCurrentParser = "XML";
 
     const auto source = create_source_data(false);
-    io::emit_xml_map(fs::absolute("test_map.tmx"), source);
+    emit_xml_map(fs::absolute("test_map.tmx"), source);
 
-    const auto result = io::parse_map("test_map.tmx");
-    REQUIRE(io::ParseError::None == result.error());
+    const auto result = parse_map("test_map.tmx");
+    REQUIRE(ParseError::None == result.error());
 
     const auto& restored = result.data();
 

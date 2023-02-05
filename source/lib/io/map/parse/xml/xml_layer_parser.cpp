@@ -32,7 +32,7 @@
 #include "io/util/base64_tiles.hpp"
 #include "io/util/xml.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto collect_layer_nodes(XmlNode map_node) -> Vec<XmlNode>
@@ -336,4 +336,4 @@ auto parse_layers(XmlNode map_node, ir::MapData& map)
   return layers;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

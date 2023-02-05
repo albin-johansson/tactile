@@ -24,7 +24,7 @@
 #include "common/debug/assert.hpp"
 #include "common/type/array.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 constexpr const char* kMapPatternDescriptor = "Map files";
@@ -104,4 +104,4 @@ auto FileDialog::save_image() -> FileDialog
                                 kImagePatternDescriptor)};
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

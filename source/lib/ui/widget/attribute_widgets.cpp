@@ -318,7 +318,7 @@ auto ui_color_input(const char* id, const Color value) -> Maybe<Color>
 auto ui_file_path_input(const char* id, const Path& value) -> Maybe<Path>
 {
   return input_file_path(id, value.filename().string(), []() -> Maybe<Path> {
-    auto dialog = io::FileDialog::open_file();
+    auto dialog = FileDialog::open_file();
     return dialog.is_okay() ? dialog.path() : Maybe<Path> {};
   });
 }
@@ -328,7 +328,7 @@ auto ui_directory_path_input(const char* id, const Path& value) -> Maybe<Path>
   return input_file_path(id,
                          use_short_home_prefix(value).value_or(value.string()),
                          []() -> Maybe<Path> {
-                           auto dialog = io::FileDialog::open_folder();
+                           auto dialog = FileDialog::open_folder();
                            return dialog.is_okay() ? dialog.path() : Maybe<Path> {};
                          });
 }
@@ -470,7 +470,7 @@ auto ui_attribute_type_combo(const AttributeType current_type,
       const auto& type_name = type_names.at(type_index);
 
       const auto selected = current_type_name == type_name;
-      if (Selectable::Property(type_name.data(), selected)) {
+      if (Selectable::property(type_name.data(), selected)) {
         result = type;
       }
 

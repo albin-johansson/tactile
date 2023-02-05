@@ -28,7 +28,7 @@
 #include "io/map/emit/gd/godot_file.hpp"
 #include "io/map/emit/gd/godot_tileset.hpp"
 
-namespace tactile::io {
+namespace tactile {
 
 struct GdPoint final {};
 
@@ -103,4 +103,4 @@ class GodotScene final : public GodotFile {
   Vec<GdLayer> mLayers;
 };
 
-}  // namespace tactile::io
+}  // namespace tactile

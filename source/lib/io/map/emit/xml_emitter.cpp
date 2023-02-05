@@ -34,7 +34,7 @@
 #include "io/util/xml.hpp"
 #include "model/settings.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 void append_properties(XmlNode node, const ir::ContextData& context)
@@ -468,4 +468,4 @@ void emit_xml_map(const Path& destination, const ir::MapData& ir_map)
   document.save(stream, " ");
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

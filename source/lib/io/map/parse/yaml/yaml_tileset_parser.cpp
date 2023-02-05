@@ -25,7 +25,7 @@
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 constexpr int32 kTilesetFormatVersion = 1;
@@ -240,4 +240,4 @@ auto parse_tilesets(const YAML::Node& sequence, const ir::MapData& map, const Pa
   return tilesets;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile

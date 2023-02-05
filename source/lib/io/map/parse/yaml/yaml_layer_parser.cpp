@@ -31,7 +31,7 @@
 
 using namespace std::string_literals;
 
-namespace tactile::io {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto parse_layer(const YAML::Node& node,
@@ -267,4 +267,4 @@ auto parse_layers(const YAML::Node& sequence, const ir::MapData& map)
   return layers;
 }
 
-}  // namespace tactile::io
+}  // namespace tactile
