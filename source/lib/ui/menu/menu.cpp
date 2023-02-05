@@ -36,7 +36,7 @@
 #include "model/file_history.hpp"
 #include "model/model.hpp"
 #include "model/settings.hpp"
-#include "ui/fonts.hpp"
+#include "ui/constants.hpp"
 
 namespace tactile {
 namespace {
@@ -83,8 +83,11 @@ void update_view_menu(const Document* document, const MapDocument* map_document)
   menu_set_enabled(MenuAction::DecreaseZoom,
                    document && document->get_viewport().can_zoom_out());
 
-  menu_set_enabled(MenuAction::IncreaseFontSize, ui::can_increase_font_size());
-  menu_set_enabled(MenuAction::DecreaseFontSize, ui::can_decrease_font_size());
+  const auto using_default_font = settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT);
+  menu_set_enabled(MenuAction::IncreaseFontSize,
+                   !using_default_font && settings.get_font_size() < kMaxFontSize);
+  menu_set_enabled(MenuAction::DecreaseFontSize,
+                   !using_default_font && settings.get_font_size() > kMinFontSize);
   menu_set_enabled(MenuAction::ResetFontSize,
                    !settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT));
 
