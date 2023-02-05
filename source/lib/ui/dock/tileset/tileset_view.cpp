@@ -60,7 +60,7 @@ void update_viewport_offset(const TilesetRef& tileset_ref,
   }
 
   ImGui::InvisibleButton("##TilesetViewInvisibleButton",
-                         from_vec(viewport_size),
+                         as_imvec2(viewport_size),
                          ImGuiButtonFlags_MouseButtonLeft |
                              ImGuiButtonFlags_MouseButtonMiddle |
                              ImGuiButtonFlags_MouseButtonRight);
@@ -77,8 +77,8 @@ void render_selection(const Region& selection, const ImVec2& min, const ImVec2& 
 {
   const auto diff = selection.end - selection.begin;
 
-  const auto origin = from_pos(selection.begin) * tile_size;
-  const auto size = from_pos(diff) * tile_size;
+  const auto origin = as_imvec2(selection.begin.as_vec2f()) * tile_size;
+  const auto size = as_imvec2(diff.as_vec2f()) * tile_size;
 
   fill_rect(min + origin, size, kRubberBandColor);
 }
@@ -102,8 +102,8 @@ void update_tileset_view(const DocumentModel& model,
 
   renderer.clear(get_settings().get_viewport_bg_color());
 
-  const auto offset = from_vec(viewport.get_offset());
-  const auto tile_size = from_vec(tileset.tile_size());
+  const auto offset = as_imvec2(viewport.get_offset());
+  const auto tile_size = as_imvec2(tileset.tile_size());
 
   if (const auto selection = ui_rubber_band(offset, tile_size)) {
     dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);
@@ -112,7 +112,7 @@ void update_tileset_view(const DocumentModel& model,
   renderer.push_clip();
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
-  render_image(texture, position, from_vec(texture.get_size()));
+  render_image(texture, position, as_imvec2(texture.get_size()));
 
   const auto& selection = tileset_ref.get_selection();
   if (selection.has_value()) {

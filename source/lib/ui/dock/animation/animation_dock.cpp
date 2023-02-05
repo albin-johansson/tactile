@@ -71,8 +71,8 @@ void ui_tileset_tile_image(const Tileset& tileset,
 
   ImGui::Image(to_texture_id(texture.get_id()),
                image_size,
-               from_vec(uv_min),
-               from_vec(uv_max),
+               as_imvec2(uv_min),
+               as_imvec2(uv_max),
                tint);
 }
 

@@ -33,10 +33,10 @@ auto get_viewport_cursor_info(const CanvasInfo& canvas_info) -> ViewportCursorIn
   ViewportCursorInfo cursor;
 
   const auto mouse = ImGui::GetMousePos();
-  cursor.raw_position = mouse - from_vec(canvas_info.origin);
-  cursor.scaled_position = cursor.raw_position / from_vec(canvas_info.ratio);
+  cursor.raw_position = mouse - as_imvec2(canvas_info.origin);
+  cursor.scaled_position = cursor.raw_position / as_imvec2(canvas_info.ratio);
 
-  const auto index = cursor.raw_position / from_vec(canvas_info.grid_size);
+  const auto index = cursor.raw_position / as_imvec2(canvas_info.grid_size);
   const auto row = std::trunc(index.y);
   const auto col = std::trunc(index.x);
 

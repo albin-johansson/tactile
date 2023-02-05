@@ -37,12 +37,12 @@ namespace tactile {
 inline void render_text(const char* text, const ImVec2& position, const Color& color)
 {
   TACTILE_ASSERT(text);
-  ImGui::GetWindowDrawList()->AddText(position, ui::to_u32(color), text);
+  ImGui::GetWindowDrawList()->AddText(position, to_u32(color), text);
 }
 
 inline void render_text(const char* text, const Float2& position, const Color& color)
 {
-  render_text(text, ui::from_vec(position), color);
+  render_text(text, as_imvec2(position), color);
 }
 
 inline void render_shadowed_text(const char* text,
@@ -59,7 +59,7 @@ inline void render_shadowed_text(const char* text,
                                  const Color& color,
                                  const float shadow_offset = 1.0f)
 {
-  render_shadowed_text(text, ui::from_vec(position), color, shadow_offset);
+  render_shadowed_text(text, as_imvec2(position), color, shadow_offset);
 }
 
 inline void draw_rect(const ImVec2& position,
@@ -68,7 +68,7 @@ inline void draw_rect(const ImVec2& position,
                       const float thickness = 1.0f)
 {
   auto* draw_list = ImGui::GetWindowDrawList();
-  draw_list->AddRect(position, position + size, ui::to_u32(color), 0, 0, thickness);
+  draw_list->AddRect(position, position + size, to_u32(color), 0, 0, thickness);
 }
 
 inline void draw_rect(const Float2& position,
@@ -76,7 +76,7 @@ inline void draw_rect(const Float2& position,
                       const Color& color,
                       const float thickness = 1.0f)
 {
-  draw_rect(ui::from_vec(position), ui::from_vec(size), color, thickness);
+  draw_rect(as_imvec2(position), as_imvec2(size), color, thickness);
 }
 
 inline void draw_shadowed_rect(const ImVec2& position,
@@ -99,12 +99,12 @@ inline void draw_shadowed_rect(const Float2& position,
 
 inline void fill_rect(const ImVec2& position, const ImVec2& size, const Color& color)
 {
-  ImGui::GetWindowDrawList()->AddRectFilled(position, position + size, ui::to_u32(color));
+  ImGui::GetWindowDrawList()->AddRectFilled(position, position + size, to_u32(color));
 }
 
 inline void fill_rect(const Float2& position, const Float2& size, const Color& color)
 {
-  fill_rect(ui::from_vec(position), ui::from_vec(size), color);
+  fill_rect(as_imvec2(position), as_imvec2(size), color);
 }
 
 inline void draw_circle(const ImVec2& center,
@@ -112,7 +112,7 @@ inline void draw_circle(const ImVec2& center,
                         const Color& color,
                         const float thickness = 1.0f)
 {
-  ImGui::GetWindowDrawList()->AddCircle(center, radius, ui::to_u32(color), 0, thickness);
+  ImGui::GetWindowDrawList()->AddCircle(center, radius, to_u32(color), 0, thickness);
 }
 
 inline void draw_circle(const Float2& center,
@@ -120,7 +120,7 @@ inline void draw_circle(const Float2& center,
                         const Color& color,
                         const float thickness = 1.0f)
 {
-  draw_circle(ui::from_vec(center), radius, color, thickness);
+  draw_circle(as_imvec2(center), radius, color, thickness);
 }
 
 inline void draw_shadowed_circle(const ImVec2& center,
@@ -151,7 +151,7 @@ inline void draw_ellipse(const Float2& center,
                          const Color& color,
                          const float thickness = 1.0f)
 {
-  draw_ellipse(ui::from_vec(center), ui::from_vec(radius), color, thickness);
+  draw_ellipse(as_imvec2(center), as_imvec2(radius), color, thickness);
 }
 
 inline void draw_shadowed_ellipse(const ImVec2& center,
@@ -173,7 +173,7 @@ inline void draw_shadowed_ellipse(const Float2& center,
                                   const Color& color,
                                   const float thickness = 1.0f)
 {
-  draw_shadowed_ellipse(ui::from_vec(center), ui::from_vec(radius), color, thickness);
+  draw_shadowed_ellipse(as_imvec2(center), as_imvec2(radius), color, thickness);
 }
 
 /// Renders a region of a texture.
@@ -208,10 +208,10 @@ inline void render_image(const Texture& texture,
                          const uint8 opacity = 255)
 {
   render_image(texture,
-               ui::from_vec(position),
-               ui::from_vec(size),
-               ui::from_vec(uv_min),
-               ui::from_vec(uv_max),
+               as_imvec2(position),
+               as_imvec2(size),
+               as_imvec2(uv_min),
+               as_imvec2(uv_max),
                opacity);
 }
 

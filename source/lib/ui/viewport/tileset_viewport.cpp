@@ -60,7 +60,10 @@ void ui_cursor_gizmos(const ViewportCursorInfo& cursor, const CanvasInfo& canvas
   const auto color = gDockState.animation_frame_selection_mode
                          ? kAnimationFrameSelectionColor
                          : kTileHoverColor;
-  draw_shadowed_rect(to_vec(cursor.clamped_position), canvas_info.grid_size, color, 2.0f);
+  draw_shadowed_rect(as_float2(cursor.clamped_position),
+                     canvas_info.grid_size,
+                     color,
+                     2.0f);
 }
 
 void ui_highlight_selected_tile(const CanvasInfo& canvas_info, const Tileset& tileset)
@@ -147,7 +150,7 @@ void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& di
   const Renderer renderer {viewport, tileset};
   const auto& canvas_info = renderer.get_canvas_info();
 
-  update_document_viewport_offset(from_vec(canvas_info.size), dispatcher);
+  update_document_viewport_offset(as_imvec2(canvas_info.size), dispatcher);
 
   renderer.clear(get_settings().get_viewport_bg_color());
   renderer.push_clip();

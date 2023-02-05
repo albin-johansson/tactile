@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "core/layer/layer.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
+#include "core/layer/layer.hpp"
 #include "model/cmd/command.hpp"
 
 namespace tactile::cmd {

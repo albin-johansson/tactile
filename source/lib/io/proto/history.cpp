@@ -95,5 +95,4 @@ void save_file_history_to_disk(const FileHistory& history)
   }
 }
 
-
 }  // namespace tactile

@@ -76,7 +76,7 @@ void draw_ellipse(const ImVec2& center,
   add_ellipse(ImGui::GetWindowDrawList(),
               center,
               radius,
-              ui::to_u32(color),
+              to_u32(color),
               kEllipseSegments,
               thickness);
 }

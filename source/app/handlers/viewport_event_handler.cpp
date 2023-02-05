@@ -157,7 +157,7 @@ void on_increase_zoom(const IncreaseZoomEvent&)
   auto& model = get_model();
   if (auto* document = model.active_document()) {
     auto& viewport = document->get_viewport();
-    viewport.zoom_in(ui::to_vec(ImGui::GetIO().MousePos));
+    viewport.zoom_in(as_float2(ImGui::GetIO().MousePos));
   }
 }
 
@@ -168,7 +168,7 @@ void on_decrease_zoom(const DecreaseZoomEvent&)
   auto& model = get_model();
   if (auto* document = model.active_document()) {
     auto& viewport = document->get_viewport();
-    viewport.zoom_out(ui::to_vec(ImGui::GetIO().MousePos));
+    viewport.zoom_out(as_float2(ImGui::GetIO().MousePos));
   }
 }
 

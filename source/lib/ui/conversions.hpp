@@ -21,20 +21,17 @@
 
 #include <imgui.h>
 
+#include "common/debug/assert.hpp"
+#include "common/numeric.hpp"
+#include "common/type/math.hpp"
 #include "core/color.hpp"
 #include "core/tile/tile_pos.hpp"
-#include "common/type/math.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 [[nodiscard]] constexpr auto to_u32(const Color& color) noexcept -> uint32
 {
   return IM_COL32(color.red, color.green, color.blue, color.alpha);
-}
-
-[[nodiscard]] constexpr auto to_vec(const Color& color) -> ImVec4
-{
-  return {color.norm_red(), color.norm_green(), color.norm_blue(), color.norm_alpha()};
 }
 
 [[nodiscard]] inline auto to_color(const ImVec4& vec) -> Color
@@ -42,37 +39,19 @@ namespace tactile::ui {
   return Color::from_norm(vec.x, vec.y, vec.z, vec.w);
 }
 
-[[nodiscard]] constexpr auto from_vec(const Float2 vec) noexcept -> ImVec2
+[[nodiscard]] constexpr auto as_imvec2(const Float2 vec) noexcept -> ImVec2
 {
   return {vec.x, vec.y};
 }
 
-[[nodiscard]] constexpr auto from_vec(const Int2 vec) noexcept -> ImVec2
+[[nodiscard]] constexpr auto as_imvec2(const Int2 vec) noexcept -> ImVec2
 {
   return {static_cast<float>(vec.x), static_cast<float>(vec.y)};
 }
 
-[[nodiscard]] constexpr auto from_vec(const Float4& vec) noexcept -> ImVec4
-{
-  return {vec.x, vec.y, vec.z, vec.w};
-}
-
-[[nodiscard]] constexpr auto from_vec(const Int4& vec) noexcept -> ImVec4
-{
-  return {static_cast<float>(vec.x),
-          static_cast<float>(vec.y),
-          static_cast<float>(vec.z),
-          static_cast<float>(vec.w)};
-}
-
-[[nodiscard]] constexpr auto to_vec(const ImVec2 vec) noexcept -> Float2
+[[nodiscard]] constexpr auto as_float2(const ImVec2 vec) noexcept -> Float2
 {
   return {vec.x, vec.y};
-}
-
-[[nodiscard]] constexpr auto from_pos(const TilePos pos) noexcept -> ImVec2
-{
-  return from_vec(pos.as_vec2f());
 }
 
 /// Converts a normalized opacity value to a value in the interval [0, 255].
@@ -83,4 +62,4 @@ namespace tactile::ui {
   return static_cast<uint8>(255.0f * opacity);
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

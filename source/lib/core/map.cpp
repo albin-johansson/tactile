@@ -54,7 +54,7 @@ class TileLayerVisitor final : public LayerVisitor {
 }  // namespace
 
 struct Map::MapData final {
-  ContextInfo context;      ///< Map context information.
+  ContextInfo context;  ///< Map context information.
   TileExtent map_size {5, 5};
   Int2 tile_size {32, 32};  ///< Logical size of all tiles.
 

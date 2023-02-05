@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "core/layer/layer_type.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
+#include "core/layer/layer_type.hpp"
 
 namespace tactile {
 

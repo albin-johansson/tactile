@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "core/texture.hpp"
 #include "common/type/path.hpp"
 #include "common/type/ptr.hpp"
+#include "core/texture.hpp"
 
 namespace tactile::io {
 

@@ -120,7 +120,7 @@ void draw_cursor_gizmos(const Renderer& renderer,
   const auto& map = document.get_map();
 
   if (cursor.is_within_map && map.is_active_layer(LayerType::TileLayer)) {
-    draw_shadowed_rect(to_vec(cursor.clamped_position),
+    draw_shadowed_rect(as_float2(cursor.clamped_position),
                        renderer.get_canvas_info().grid_size,
                        Color {0, 0xFF, 0, 200},
                        2.0f);
@@ -151,7 +151,7 @@ void poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
 
     check_for<ViewportMouseDraggedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
       const auto& io = ImGui::GetIO();
-      return ImGui::IsMouseDragging(button) && to_vec(io.MouseDelta) != Vec2 {0, 0};
+      return ImGui::IsMouseDragging(button) && as_float2(io.MouseDelta) != Vec2 {0, 0};
     });
 
     check_for<ViewportMouseReleasedEvent>(
@@ -241,7 +241,7 @@ void show_map_viewport(const DocumentModel& model,
   const auto& viewport = document.get_viewport();
 
   const Renderer renderer {viewport, map};
-  update_document_viewport_offset(from_vec(renderer.get_canvas_info().size), dispatcher);
+  update_document_viewport_offset(as_imvec2(renderer.get_canvas_info().size), dispatcher);
 
   renderer.clear(get_settings().get_viewport_bg_color());
   renderer.push_clip();

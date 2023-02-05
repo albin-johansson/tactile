@@ -79,8 +79,8 @@ inline constexpr Color kActiveObjectColor {0xFF, 0xFF, 0x00, 0xFF};
 {
   CanvasInfo canvas;
 
-  canvas.top_left = ui::to_vec(ImGui::GetCursorScreenPos());
-  canvas.bottom_right = canvas.top_left + ui::to_vec(ImGui::GetContentRegionAvail());
+  canvas.top_left = as_float2(ImGui::GetCursorScreenPos());
+  canvas.bottom_right = canvas.top_left + as_float2(ImGui::GetContentRegionAvail());
   canvas.size = canvas.bottom_right - canvas.top_left;
 
   canvas.origin = canvas.top_left + viewport.get_offset();
@@ -140,9 +140,7 @@ Renderer::Renderer(const Viewport& viewport, const Tileset& tileset)
 void Renderer::push_clip() const
 {
   auto* list = ImGui::GetWindowDrawList();
-  list->PushClipRect(ui::from_vec(mCanvas.top_left),
-                     ui::from_vec(mCanvas.bottom_right),
-                     true);
+  list->PushClipRect(as_imvec2(mCanvas.top_left), as_imvec2(mCanvas.bottom_right), true);
 }
 
 void Renderer::pop_clip() const
@@ -177,12 +175,12 @@ void Renderer::render_infinite_grid(const Color& color) const
   auto* list = ImGui::GetWindowDrawList();
   for (auto row = begin_row; row < end_row; ++row) {
     const auto row_y = (static_cast<float>(row) * mCanvas.grid_size.y) + offset.y;
-    list->AddLine(ImVec2 {0, row_y}, ImVec2 {end_x, row_y}, ui::to_u32(color));
+    list->AddLine(ImVec2 {0, row_y}, ImVec2 {end_x, row_y}, to_u32(color));
   }
 
   for (auto col = begin_col; col < end_col; ++col) {
     const auto col_x = (static_cast<float>(col) * mCanvas.grid_size.x) + offset.x;
-    list->AddLine(ImVec2 {col_x, 0}, ImVec2 {col_x, end_y}, ui::to_u32(color));
+    list->AddLine(ImVec2 {col_x, 0}, ImVec2 {col_x, end_y}, to_u32(color));
   }
 }
 
@@ -222,7 +220,7 @@ void Renderer::render_tile(const Tileset& tileset,
                mCanvas.grid_size,
                uv_min,
                uv_max,
-               ui::opacity_cast(opacity));
+               opacity_cast(opacity));
 }
 
 void Renderer::render_tile(const Tileset& tileset,
@@ -244,7 +242,7 @@ void Renderer::render_tile(const Tileset& tileset,
                mCanvas.grid_size,
                uv_min,
                uv_max,
-               ui::opacity_cast(opacity));
+               opacity_cast(opacity));
 }
 
 void Renderer::render_tile(const Map& map,
@@ -291,7 +289,7 @@ void Renderer::render_object_layer(const ObjectLayer& layer,
                                    const float parent_opacity) const
 {
   const auto opacity = parent_opacity * layer.get_opacity();
-  const Color object_color {0xFF, 0, 0, ui::opacity_cast(opacity)};
+  const Color object_color {0xFF, 0, 0, opacity_cast(opacity)};
 
   for (const auto& [id, object]: layer) {
     render_object(*object, object_color);
@@ -417,7 +415,7 @@ void Renderer::render_map(const Map& map) const
     render_infinite_grid(settings.get_grid_color());
   }
 
-  render_outline(ui::to_color(ImGui::GetStyle().Colors[ImGuiCol_HeaderActive]));
+  render_outline(to_color(ImGui::GetStyle().Colors[ImGuiCol_HeaderActive]));
 }
 
 void Renderer::render_layers(const Map& map) const
@@ -478,7 +476,7 @@ void Renderer::render_tileset(const Tileset& tileset) const
     render_infinite_grid(settings.get_grid_color());
   }
 
-  render_outline(ui::to_color(ImGui::GetStyle().Colors[ImGuiCol_HeaderActive]));
+  render_outline(to_color(ImGui::GetStyle().Colors[ImGuiCol_HeaderActive]));
 }
 
 auto Renderer::from_matrix_to_absolute(const TilePos pos) const -> Float2
