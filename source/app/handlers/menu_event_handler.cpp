@@ -130,7 +130,7 @@ void dispatch_menu_action(const MenuAction action)
       break;
 
     case MenuAction::ToggleGrid:
-      settings.negate_flag(SETTINGS_SHOW_GRID_BIT);
+      dispatcher.enqueue<ToggleGridEvent>();
       break;
 
     case MenuAction::IncreaseZoom:

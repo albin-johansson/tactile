@@ -76,6 +76,18 @@ void on_toggle_ui(const ToggleUiEvent&)
   show = !show;
 }
 
+void on_toggle_grid(const ToggleGridEvent&)
+{
+  spdlog::trace("ToggleGridEvent");
+  get_settings().negate_flag(SETTINGS_SHOW_GRID_BIT);
+}
+
+void on_toggle_highlight_layer(const ToggleHighlightLayerEvent&)
+{
+  spdlog::trace("ToggleHighlightLayerEvent");
+  get_settings().negate_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT);
+}
+
 void on_reset_font_size(const ResetFontSizeEvent&)
 {
   spdlog::trace("ResetFontSizeEvent");
@@ -118,6 +130,8 @@ void install_view_event_handler()
 {
   auto& dispatcher = get_dispatcher();
   dispatcher.sink<ToggleUiEvent>().connect<&on_toggle_ui>();
+  dispatcher.sink<ToggleGridEvent>().connect<&on_toggle_grid>();
+  dispatcher.sink<ToggleHighlightLayerEvent>().connect<&on_toggle_highlight_layer>();
 
   dispatcher.sink<ResetFontSizeEvent>().connect<&on_reset_font_size>();
   dispatcher.sink<IncreaseFontSizeEvent>().connect<&on_increase_font_size>();

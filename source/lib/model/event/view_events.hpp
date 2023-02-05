@@ -25,6 +25,10 @@ struct QuitEvent final {};
 
 struct ToggleUiEvent final {};
 
+struct ToggleGridEvent final {};
+
+struct ToggleHighlightLayerEvent final {};
+
 struct ShowSettingsEvent final {};
 
 struct ReloadFontsEvent final {};
