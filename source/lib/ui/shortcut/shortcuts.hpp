@@ -24,12 +24,10 @@
 
 namespace tactile {
 
-class DocumentModel;
+/// Initializes the default shortcut bindings, this should be called once at startup.
+void init_default_shortcuts();
 
-void load_default_shortcuts();
-
-void update_shortcuts(const DocumentModel& model,
-                      const cen::keyboard_event& event,
-                      entt::dispatcher& dispatcher);
+/// Polls all shortcuts after a keyboard event.
+void update_shortcuts(const cen::keyboard_event& event, entt::dispatcher& dispatcher);
 
 }  // namespace tactile

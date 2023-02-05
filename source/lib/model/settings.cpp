@@ -24,7 +24,7 @@
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
-#include "ui/fonts.hpp"
+#include "ui/constants.hpp"
 
 namespace tactile {
 
@@ -37,7 +37,7 @@ struct SettingsState final {
 
   usize command_capacity {100};
   Int2 preferred_tile_size {32, 32};
-  int32 font_size {ui::kDefFontSize};
+  int32 font_size {kDefFontSize};
   int32 theme_saturation {60};
 
   Color viewport_bg {0x3C, 0x3C, 0x3C};

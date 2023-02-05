@@ -19,13 +19,7 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
-
 namespace tactile::ui {
-
-inline constexpr int32 kMinFontSize = 8;   ///< The smallest available font size.
-inline constexpr int32 kMaxFontSize = 32;  ///< The largest available font size.
-inline constexpr int32 kDefFontSize = 14;  ///< The default font size.
 
 /// Indicates whether it's possible to increase the font size.
 [[nodiscard]] auto can_increase_font_size() -> bool;

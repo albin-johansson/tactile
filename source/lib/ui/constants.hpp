@@ -33,4 +33,8 @@ inline constexpr auto kMaxInt = std::numeric_limits<int>::max();
 
 inline constexpr auto kMaxUint = std::numeric_limits<uint>::max();
 
+inline constexpr int32 kMinFontSize = 8;   ///< The smallest available font size.
+inline constexpr int32 kMaxFontSize = 32;  ///< The largest available font size.
+inline constexpr int32 kDefFontSize = 14;  ///< The default font size.
+
 }  // namespace tactile

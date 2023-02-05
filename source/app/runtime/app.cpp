@@ -58,7 +58,7 @@ App::App(cen::window& window)
   init_app_context(window);
 
   subscribe_to_events();
-  load_default_shortcuts();
+  init_default_shortcuts();
   ui::load_icons();
 
   window.maximize();
@@ -172,7 +172,7 @@ void App::on_keyboard_event(cen::keyboard_event event)
   event.set_modifier(cen::key_mod::num, false);
   event.set_modifier(cen::key_mod::mode, false);
 
-  update_shortcuts(get_model(), event, get_dispatcher());
+  update_shortcuts(event, get_dispatcher());
 }
 
 void App::on_mouse_wheel_event(const cen::mouse_wheel_event& event)

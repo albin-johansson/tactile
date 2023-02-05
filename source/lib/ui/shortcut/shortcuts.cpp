@@ -22,80 +22,155 @@
 #include <centurion/event.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-#include "common/type/ptr.hpp"
 #include "common/type/vec.hpp"
-#include "ui/shortcut/edit_shortcuts.hpp"
-#include "ui/shortcut/file_shortcuts.hpp"
-#include "ui/shortcut/view_shortcuts.hpp"
+#include "model/event/all.hpp"
+#include "ui/shortcut/mappings.hpp"
+#include "ui/shortcut/shortcut.hpp"
 
 namespace tactile {
 namespace {
 
-inline Vec<Unique<Shortcut>> gShortcuts;
+inline Vec<Shortcut> gShortcuts;
 
-template <typename T>
-void load_shortcut()
+template <typename Event>
+void init_shortcut(const MenuAction action,
+                   const cen::scan_code key,
+                   const cen::key_mod modifiers = cen::key_mod::none)
 {
-  gShortcuts.push_back(std::make_unique<T>());
+  gShortcuts.push_back(Shortcut {
+      .action = action,
+      .key = key,
+      .modifiers = modifiers,
+      .activate = [](entt::dispatcher& dispatcher) { dispatcher.enqueue<Event>(); },
+  });
+}
+
+void init_tool_shortcut(const ToolType tool,
+                        const MenuAction action,
+                        const cen::scan_code key)
+{
+  gShortcuts.push_back(Shortcut {.action = action,
+                                 .key = key,
+                                 .modifiers = cen::key_mod::none,
+                                 .activate = [=](entt::dispatcher& dispatcher) {
+                                   dispatcher.enqueue<SelectToolEvent>(tool);
+                                 }});
+}
+
+void init_default_file_shortcuts()
+{
+  init_shortcut<ShowNewMapDialogEvent>(MenuAction::NewMap,
+                                       cen::scancodes::n,
+                                       kPrimaryModifier);
+  init_shortcut<ShowOpenMapDialogEvent>(MenuAction::OpenMap,
+                                        cen::scancodes::o,
+                                        kPrimaryModifier);
+  init_shortcut<SaveEvent>(MenuAction::Save, cen::scancodes::s, kPrimaryModifier);
+  init_shortcut<OpenSaveAsDialogEvent>(MenuAction::SaveAs,
+                                       cen::scancodes::s,
+                                       kPrimaryModifierAndShift);
+}
+
+void init_default_edit_shortcuts()
+{
+  init_shortcut<UndoEvent>(MenuAction::Undo, cen::scancodes::z, kPrimaryModifier);
+  init_shortcut<RedoEvent>(MenuAction::Redo, cen::scancodes::y, kPrimaryModifier);
+
+  init_tool_shortcut(ToolType::Stamp, MenuAction::StampTool, cen::scancodes::s);
+  init_tool_shortcut(ToolType::Eraser, MenuAction::EraserTool, cen::scancodes::e);
+  init_tool_shortcut(ToolType::Bucket, MenuAction::BucketTool, cen::scancodes::b);
+  init_tool_shortcut(ToolType::ObjectSelection,
+                     MenuAction::ObjectSelectionTool,
+                     cen::scancodes::q);
+  init_tool_shortcut(ToolType::Rectangle, MenuAction::RectangleTool, cen::scancodes::r);
+  init_tool_shortcut(ToolType::Ellipse, MenuAction::EllipseTool, cen::scancodes::t);
+  init_tool_shortcut(ToolType::Point, MenuAction::PointTool, cen::scancodes::y);
+
+  init_shortcut<OpenComponentEditorEvent>(MenuAction::ComponentEditor,
+                                          cen::scancodes::c,
+                                          kPrimaryModifierAndShift);
+  init_shortcut<ShowSettingsEvent>(MenuAction::OpenSettings,
+                                   SDL_SCANCODE_COMMA,
+                                   kPrimaryModifier);
+}
+
+void init_default_view_shortcuts()
+{
+  const cen::scan_code plus {SDLK_PLUS};
+  const cen::scan_code minus {SDLK_MINUS};
+
+  init_shortcut<CenterViewportEvent>(MenuAction::CenterViewport,
+                                     cen::scancodes::space,
+                                     cen::key_mod::lshift);
+
+  init_shortcut<IncreaseZoomEvent>(MenuAction::IncreaseZoom, plus, kPrimaryModifier);
+  init_shortcut<DecreaseZoomEvent>(MenuAction::DecreaseZoom, minus, kPrimaryModifier);
+
+  init_shortcut<IncreaseFontSizeEvent>(MenuAction::IncreaseFontSize,
+                                       plus,
+                                       kPrimaryModifierAndShift);
+  init_shortcut<DecreaseFontSizeEvent>(MenuAction::DecreaseFontSize,
+                                       minus,
+                                       kPrimaryModifierAndShift);
+
+  init_shortcut<ToggleGridEvent>(MenuAction::ToggleGrid,
+                                 cen::scancodes::g,
+                                 kPrimaryModifier);
+  init_shortcut<ToggleHighlightLayerEvent>(MenuAction::HighlightLayer, cen::scancodes::h);
+  init_shortcut<ToggleUiEvent>(MenuAction::ToggleUi, cen::scancodes::tab);
+
+  init_shortcut<PanRightEvent>(MenuAction::PanRight,
+                               cen::scancodes::right,
+                               kPrimaryModifierAndShift);
+  init_shortcut<PanLeftEvent>(MenuAction::PanLeft,
+                              cen::scancodes::left,
+                              kPrimaryModifierAndShift);
+  init_shortcut<PanUpEvent>(MenuAction::PanUp,
+                            cen::scancodes::up,
+                            kPrimaryModifierAndShift);
+  init_shortcut<PanDownEvent>(MenuAction::PanDown,
+                              cen::scancodes::down,
+                              kPrimaryModifierAndShift);
+}
+
+void init_default_map_shortcuts()
+{
+  init_shortcut<ShowTilesetCreationDialogEvent>(MenuAction::AddTileset,
+                                                cen::scancodes::t,
+                                                kPrimaryModifier);
+
+  init_shortcut<AddRowEvent>(MenuAction::AddRow, cen::scancodes::r, kSecondaryModifier);
+  init_shortcut<AddColumnEvent>(MenuAction::AddColumn,
+                                cen::scancodes::c,
+                                kSecondaryModifier);
+
+  init_shortcut<RemoveRowEvent>(MenuAction::RemoveRow,
+                                cen::scancodes::r,
+                                kSecondaryModifierAndShift);
+  init_shortcut<RemoveColumnEvent>(MenuAction::RemoveColumn,
+                                   cen::scancodes::c,
+                                   kSecondaryModifierAndShift);
 }
 
 }  // namespace
 
-void load_default_shortcuts()
+void init_default_shortcuts()
 {
-  // File
-  load_shortcut<NewMapShortcut>();
-  load_shortcut<OpenMapShortcut>();
-  load_shortcut<SaveShortcut>();
-  load_shortcut<SaveAsShortcut>();
-
-  // Edit
-  load_shortcut<UndoShortcut>();
-  load_shortcut<RedoShortcut>();
-
-  load_shortcut<EnableStampShortcut>();
-  load_shortcut<EnableEraserShortcut>();
-  load_shortcut<EnableBucketShortcut>();
-  load_shortcut<EnableObjectSelectionShortcut>();
-  load_shortcut<EnableRectangleToolShortcut>();
-  load_shortcut<EnableEllipseToolShortcut>();
-  load_shortcut<EnablePointToolShortcut>();
-
-  load_shortcut<OpenComponentEditorShortcut>();
-  load_shortcut<OpenSettingsShortcut>();
-
-  // View
-  load_shortcut<CenterViewportShortcut>();
-  load_shortcut<IncreaseViewportZoomShortcut>();
-  load_shortcut<DecreaseViewportZoomShortcut>();
-
-  load_shortcut<IncreaseFontSizeShortcut>();
-  load_shortcut<DecreaseFontSizeShortcut>();
-
-  load_shortcut<ToggleGridShortcut>();
-  load_shortcut<ToggleLayerHighlightShortcut>();
-  load_shortcut<ToggleUiShortcut>();
-
-  load_shortcut<PanRightShortcut>();
-  load_shortcut<PanLeftShortcut>();
-  load_shortcut<PanUpShortcut>();
-  load_shortcut<PanDownShortcut>();
-
-  // Map
-  load_shortcut<AddTilesetShortcut>();
-
-  load_shortcut<AddRowShortcut>();
-  load_shortcut<AddColumnShortcut>();
-  load_shortcut<RemoveRowShortcut>();
-  load_shortcut<RemoveColumnShortcut>();
+  init_default_file_shortcuts();
+  init_default_edit_shortcuts();
+  init_default_view_shortcuts();
+  init_default_map_shortcuts();
 }
 
-void update_shortcuts(const DocumentModel& model,
-                      const cen::keyboard_event& event,
-                      entt::dispatcher& dispatcher)
+void update_shortcuts(const cen::keyboard_event& event, entt::dispatcher& dispatcher)
 {
   for (const auto& shortcut: gShortcuts) {
-    shortcut->poll(model, event, dispatcher);
+    if (get_menu_item(shortcut.action).enabled &&  //
+        event.pressed() &&                         //
+        event.scan() == shortcut.key &&            //
+        event.is_only_active(shortcut.modifiers)) {
+      shortcut.activate(dispatcher);
+    }
   }
 }
 

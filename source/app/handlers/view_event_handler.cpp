@@ -29,6 +29,7 @@
 #include "model/model.hpp"
 #include "model/settings.hpp"
 #include "runtime/app_context.hpp"
+#include "ui/constants.hpp"
 #include "ui/fonts.hpp"
 #include "ui/widget_show_state.hpp"
 
@@ -92,7 +93,7 @@ void on_reset_font_size(const ResetFontSizeEvent&)
 {
   spdlog::trace("ResetFontSizeEvent");
 
-  get_settings().set_font_size(ui::kDefFontSize);
+  get_settings().set_font_size(kDefFontSize);
   request_font_reload();
 }
 
@@ -101,7 +102,7 @@ void on_increase_font_size(const IncreaseFontSizeEvent&)
   spdlog::trace("IncreaseFontSizeEvent");
   auto& settings = get_settings();
 
-  TACTILE_ASSERT(settings.get_font_size() + 2 <= ui::kMaxFontSize);
+  TACTILE_ASSERT(settings.get_font_size() + 2 <= kMaxFontSize);
   settings.set_font_size(settings.get_font_size() + 2);
 
   request_font_reload();
@@ -112,7 +113,7 @@ void on_decrease_font_size(const DecreaseFontSizeEvent&)
   spdlog::trace("DecreaseFontSizeEvent");
   auto& settings = get_settings();
 
-  TACTILE_ASSERT(settings.get_font_size() - 2 >= ui::kMinFontSize);
+  TACTILE_ASSERT(settings.get_font_size() - 2 >= kMinFontSize);
   settings.set_font_size(settings.get_font_size() - 2);
 
   request_font_reload();

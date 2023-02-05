@@ -19,40 +19,19 @@
 
 #pragma once
 
-#include <centurion/event.hpp>
 #include <centurion/keyboard.hpp>
-#include <entt/fwd.hpp>
+#include <entt/signal/fwd.hpp>
+
+#include "common/type/func.hpp"
+#include "ui/menu/menu.hpp"
 
 namespace tactile {
 
-class DocumentModel;
-
-class Shortcut {
- public:
-  explicit Shortcut(const cen::scan_code key,
-                    const cen::key_mod modifiers = cen::key_mod::none)
-      : mKey {key},
-        mModifiers {modifiers}
-  {
-  }
-
-  virtual ~Shortcut() noexcept = default;
-
-  void poll(const DocumentModel& model,
-            const cen::keyboard_event& event,
-            entt::dispatcher& dispatcher);
-
-  virtual void activate(entt::dispatcher& dispatcher) = 0;
-
-  [[nodiscard]] virtual auto is_enabled([[maybe_unused]] const DocumentModel& model) const
-      -> bool
-  {
-    return true;
-  }
-
- private:
-  cen::scan_code mKey;
-  cen::key_mod mModifiers {cen::key_mod::none};
+struct Shortcut final {
+  MenuAction action;
+  cen::scan_code key;
+  cen::key_mod modifiers {cen::key_mod::none};
+  Func<void(entt::dispatcher&)> activate;
 };
 
 }  // namespace tactile

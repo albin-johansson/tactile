@@ -35,6 +35,11 @@ namespace tactile {
 
 inline constexpr cen::key_mod kPrimaryModifier = kOnMacos ? cen::key_mod::lgui  //
                                                           : cen::key_mod::lctrl;
+inline constexpr cen::key_mod kPrimaryModifierAndShift =
+    kPrimaryModifier | cen::key_mod::lshift;
+
 inline constexpr cen::key_mod kSecondaryModifier = cen::key_mod::lalt;
+inline constexpr cen::key_mod kSecondaryModifierAndShift =
+    kSecondaryModifier | cen::key_mod::lshift;
 
 }  // namespace tactile
