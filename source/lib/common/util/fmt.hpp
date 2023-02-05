@@ -63,48 +63,48 @@ struct formatter<tactile::TilePos> : formatter<std::string_view> {
 };
 
 template <>
-struct formatter<tactile::Vec2> : formatter<std::string_view> {
-  auto format(const tactile::Vec2& vec, auto& ctx) const
+struct formatter<tactile::Float2> : formatter<std::string_view> {
+  auto format(const tactile::Float2& vec, auto& ctx) const
   {
     return fmt::format_to(ctx.out(), "{{{}, {}}}", vec.x, vec.y);
   }
 };
 
 template <>
-struct formatter<tactile::Vec2i> : formatter<std::string_view> {
-  auto format(const tactile::Vec2i& vec, auto& ctx) const
+struct formatter<tactile::Int2> : formatter<std::string_view> {
+  auto format(const tactile::Int2& vec, auto& ctx) const
   {
     return fmt::format_to(ctx.out(), "{{{}, {}}}", vec.x, vec.y);
   }
 };
 
 template <>
-struct formatter<tactile::Vec3> : formatter<std::string_view> {
-  auto format(const tactile::Vec3& vec, auto& ctx) const
+struct formatter<tactile::Float3> : formatter<std::string_view> {
+  auto format(const tactile::Float3& vec, auto& ctx) const
   {
     return fmt::format_to(ctx.out(), "{{{}, {}, {}}}", vec.x, vec.y, vec.z);
   }
 };
 
 template <>
-struct formatter<tactile::Vec3i> : formatter<std::string_view> {
-  auto format(const tactile::Vec3i& vec, auto& ctx) const
+struct formatter<tactile::Int3> : formatter<std::string_view> {
+  auto format(const tactile::Int3& vec, auto& ctx) const
   {
     return fmt::format_to(ctx.out(), "{{{}, {}, {}}}", vec.x, vec.y, vec.z);
   }
 };
 
 template <>
-struct formatter<tactile::Vec4> : formatter<std::string_view> {
-  auto format(const tactile::Vec4& vec, auto& ctx) const
+struct formatter<tactile::Float4> : formatter<std::string_view> {
+  auto format(const tactile::Float4& vec, auto& ctx) const
   {
     return fmt::format_to(ctx.out(), "{{{}, {}, {}, {}}}", vec.x, vec.y, vec.z, vec.w);
   }
 };
 
 template <>
-struct formatter<tactile::Vec4i> : formatter<std::string_view> {
-  auto format(const tactile::Vec4i& vec, auto& ctx) const
+struct formatter<tactile::Int4> : formatter<std::string_view> {
+  auto format(const tactile::Int4& vec, auto& ctx) const
   {
     return fmt::format_to(ctx.out(), "{{{}, {}, {}, {}}}", vec.x, vec.y, vec.z, vec.w);
   }
@@ -127,12 +127,12 @@ struct formatter<tactile::Attribute> : formatter<std::string_view> {
 };
 
 static_assert(is_formattable<boost::stacktrace::stacktrace, char>::value);
-static_assert(is_formattable<tactile::Vec2i, char>::value);
-static_assert(is_formattable<tactile::Vec3i, char>::value);
-static_assert(is_formattable<tactile::Vec4i, char>::value);
-static_assert(is_formattable<tactile::Vec2, char>::value);
-static_assert(is_formattable<tactile::Vec3, char>::value);
-static_assert(is_formattable<tactile::Vec4, char>::value);
+static_assert(is_formattable<tactile::Int2, char>::value);
+static_assert(is_formattable<tactile::Int3, char>::value);
+static_assert(is_formattable<tactile::Int4, char>::value);
+static_assert(is_formattable<tactile::Float2, char>::value);
+static_assert(is_formattable<tactile::Float3, char>::value);
+static_assert(is_formattable<tactile::Float4, char>::value);
 static_assert(is_formattable<tactile::AttributeType, char>::value);
 static_assert(is_formattable<tactile::Attribute, char>::value);
 static_assert(is_formattable<tactile::TilePos, char>::value);
