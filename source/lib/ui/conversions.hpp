@@ -19,13 +19,15 @@
 
 #pragma once
 
+#include <cstdint>  // uintptr_t
+
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
 #include "common/numeric.hpp"
 #include "common/type/math.hpp"
+#include "common/util/bit.hpp"
 #include "core/color.hpp"
-#include "core/tile/tile_pos.hpp"
 
 namespace tactile {
 
@@ -60,6 +62,13 @@ namespace tactile {
   TACTILE_ASSERT(opacity >= 0.0f);
   TACTILE_ASSERT(opacity <= 1.0f);
   return static_cast<uint8>(255.0f * opacity);
+}
+
+/// Converts an OpenGL texture identifier to a Dear ImGui texture identifier.
+[[nodiscard]] inline auto to_imgui_texture_id(const uint texture_id) noexcept
+    -> ImTextureID
+{
+  return bitcast<ImTextureID>(static_cast<std::uintptr_t>(texture_id));
 }
 
 }  // namespace tactile

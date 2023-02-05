@@ -30,7 +30,6 @@
 #include "core/color.hpp"
 #include "core/texture.hpp"
 #include "ui/conversions.hpp"
-#include "ui/textures.hpp"
 
 namespace tactile {
 
@@ -192,7 +191,7 @@ inline void render_image(const Texture& texture,
                          const uint8 opacity = 255)
 {
   auto* draw_list = ImGui::GetWindowDrawList();
-  draw_list->AddImage(ui::to_texture_id(texture.get_id()),
+  draw_list->AddImage(to_imgui_texture_id(texture.get_id()),
                       position,
                       position + size,
                       uv_min,

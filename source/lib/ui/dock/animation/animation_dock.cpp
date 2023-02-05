@@ -37,7 +37,6 @@
 #include "ui/conversions.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
-#include "ui/textures.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -69,7 +68,7 @@ void ui_tileset_tile_image(const Tileset& tileset,
   const auto uv_min = (tile_pos.as_vec2f() * tile_size) / texture_size;
   const auto uv_max = uv_min + tileset.uv_size();
 
-  ImGui::Image(to_texture_id(texture.get_id()),
+  ImGui::Image(to_imgui_texture_id(texture.get_id()),
                image_size,
                as_imvec2(uv_min),
                as_imvec2(uv_max),

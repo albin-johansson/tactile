@@ -32,10 +32,10 @@
 #include "model/event/map_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/model.hpp"
+#include "ui/conversions.hpp"
 #include "ui/shortcut/mappings.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
-#include "ui/textures.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 #include "ui/widget/windows.hpp"
@@ -57,7 +57,7 @@ void update_start_page(entt::dispatcher& dispatcher)
   ImGui::SetCursorPos(ImGui::GetCursorPos() - ImVec2 {0, 64});
 
   center_next_item_horizontally(128);
-  ImGui::Image(to_texture_id(get_tactile_icon()), {128, 128});
+  ImGui::Image(to_imgui_texture_id(get_tactile_icon()), {128, 128});
 
   ImGui::Spacing();
   ImGui::Spacing();
