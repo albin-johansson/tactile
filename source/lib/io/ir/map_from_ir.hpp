@@ -20,16 +20,20 @@
 #pragma once
 
 #include "common/macros.hpp"
+#include "common/type/path.hpp"
 
 namespace tactile {
 
 TACTILE_FWD_DECLARE_CLASS(DocumentModel)
-TACTILE_FWD_DECLARE_CLASS(ParseResult)
+TACTILE_FWD_DECLARE_STRUCT_NS(ir, MapData)
 
 /// Restores a map document from an intermediate map representation.
 ///
-/// \param result the intermediate representation of the map data.
+/// \param ir_map the intermediate representation of the map data.
+/// \param document_path the path to the document.
 /// \param model the target document model.
-void create_map_document_from_ir(const ParseResult& result, DocumentModel& model);
+void create_map_document_from_ir(const ir::MapData& ir_map,
+                                 const Path& document_path,
+                                 DocumentModel& model);
 
 }  // namespace tactile

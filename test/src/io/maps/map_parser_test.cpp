@@ -38,7 +38,12 @@ using PE = ParseError;
 void parse_and_check_error(const char* path, const ParseError expected_error)
 {
   const auto parse_result = parse_map(path);
-  CHECK(expected_error == parse_result.error());
+  if (expected_error == ParseError::None) {
+    CHECK(parse_result.has_value());
+  }
+  else {
+    CHECK(parse_result.error() == expected_error);
+  }
 }
 
 }  // namespace

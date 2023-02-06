@@ -23,11 +23,11 @@
 #include "common/type/path.hpp"
 #include "common/type/string.hpp"
 
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, MapDocument)
 TACTILE_FWD_DECLARE_STRUCT_NS(tactile::ir, MapData)
 
 namespace tactile {
 
+TACTILE_FWD_DECLARE_CLASS(MapDocument)
 TACTILE_FWD_DECLARE_STRUCT(GodotEmitOptions)
 
 /// Emits a map document, inferring the format from the path (or the preferred format)

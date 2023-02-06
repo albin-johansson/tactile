@@ -126,13 +126,15 @@ namespace {
 
 auto parse_xml_map(const Path& path) -> ParseResult
 {
-  ParseResult result;
-  result.set_path(path);
+  ir::MapData ir_map;
+  const auto res = parse_map(path, ir_map);
 
-  const auto err = parse_map(path, result.data());
-  result.set_error(err);
-
-  return result;
+  if (res == ParseError::None) {
+    return ir_map;
+  }
+  else {
+    return error(res);
+  }
 }
 
 }  // namespace tactile

@@ -35,18 +35,17 @@ namespace tactile {
 
 auto parse_map(const Path& path) -> ParseResult
 {
-  spdlog::debug("Parsing map {}", path);
-  ParseResult result;
-
   try {
     const auto parse_start = Clock::now();
+    spdlog::debug("Parsing map {}", path);
 
     if (!fs::exists(path)) {
-      result.set_error(ParseError::MapDoesNotExist);
-      return result;
+      return error(ParseError::MapDoesNotExist);
     }
 
+    ParseResult result;
     const auto ext = path.extension();
+
     if (ext == ".yaml" || ext == ".yml") {
       result = parse_yaml_map(path);
     }
@@ -58,31 +57,30 @@ auto parse_map(const Path& path) -> ParseResult
     }
     else {
       spdlog::error("Unsupported save file extension: {}", ext);
-      result.set_error(ParseError::UnsupportedMapExtension);
-      return result;
+      return error(ParseError::UnsupportedMapExtension);
     }
 
     const auto parse_end = Clock::now();
     const auto parse_duration = chrono::duration_cast<ms_t>(parse_end - parse_start);
 
     spdlog::info("Parsed {} in {}", path.filename(), parse_duration);
+
+    return result;
   }
   catch (const TactileError& e) {
-    result.set_error(ParseError::Unknown);
     spdlog::error("Parser threw unhandled exception with message: '{}'\n{}",
                   e.what(),
                   e.get_trace());
+    return error(ParseError::Unknown);
   }
   catch (const std::exception& e) {
-    result.set_error(ParseError::Unknown);
     spdlog::error("Parser threw unhandled exception with message: '{}'\n", e.what());
+    return error(ParseError::Unknown);
   }
   catch (...) {
     spdlog::error("Parser threw non-exception value!");
-    result.set_error(ParseError::Unknown);
+    return error(ParseError::Unknown);
   }
-
-  return result;
 }
 
 }  // namespace tactile

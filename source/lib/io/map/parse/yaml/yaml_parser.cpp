@@ -171,13 +171,15 @@ namespace {
 
 auto parse_yaml_map(const Path& path) -> ParseResult
 {
-  ParseResult result;
-  result.set_path(path);
+  ir::MapData ir_map;
+  const auto res = parse_map(path, ir_map);
 
-  const auto error = parse_map(path, result.data());
-  result.set_error(error);
-
-  return result;
+  if (res == ParseError::None) {
+    return ir_map;
+  }
+  else {
+    return error(res);
+  }
 }
 
 }  // namespace tactile

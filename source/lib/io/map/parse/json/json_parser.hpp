@@ -20,6 +20,7 @@
 #pragma once
 
 #include "common/type/path.hpp"
+#include "io/ir/ir.hpp"
 #include "io/map/parse/parse_error.hpp"
 #include "io/map/parse/parse_result.hpp"
 #include "io/util/json.hpp"

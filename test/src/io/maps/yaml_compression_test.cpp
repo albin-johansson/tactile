@@ -93,9 +93,9 @@ void create_and_validate_yaml_map(const char* path, TileFormatFactory format_fac
   }
 
   const auto result = parse_map(path);
-  REQUIRE(ParseError::None == result.error());
+  REQUIRE(result.has_value());
 
-  const auto& map = result.data();
+  const auto& map = result.value();
   const auto& layer = map.layers.front();
   const auto& tile_layer = layer.as_tile_layer();
 

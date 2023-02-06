@@ -19,29 +19,12 @@
 
 #pragma once
 
-#include "common/type/path.hpp"
+#include "common/type/expected.hpp"
 #include "io/ir/ir.hpp"
 #include "io/map/parse/parse_error.hpp"
 
 namespace tactile {
 
-class ParseResult final {
- public:
-  void set_path(const Path& path);
-
-  void set_error(ParseError error);
-
-  [[nodiscard]] auto path() const -> const Path&;
-
-  [[nodiscard]] auto error() const -> ParseError;
-
-  [[nodiscard]] auto data() -> ir::MapData&;
-  [[nodiscard]] auto data() const -> const ir::MapData&;
-
- private:
-  Path mPath;
-  ir::MapData mData;
-  ParseError mError {ParseError::None};
-};
+using ParseResult = Expected<ir::MapData, ParseError>;
 
 }  // namespace tactile

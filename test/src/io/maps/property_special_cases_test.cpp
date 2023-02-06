@@ -27,20 +27,20 @@ namespace {
 void check_parsed_properties(const char* path)
 {
   const auto result = parse_map(path);
-  REQUIRE(ParseError::None == result.error());
+  REQUIRE(result.has_value());
 
-  const auto& data = result.data();
-  REQUIRE(3u == data.context.properties.size());
+  const auto& ir_map = result.value();
+  REQUIRE(3u == ir_map.context.properties.size());
 
-  const auto& color = data.context.properties.at("empty-color");
+  const auto& color = ir_map.context.properties.at("empty-color");
   REQUIRE(color.is_color());
   REQUIRE(color.has_default_value());
 
-  const auto& file = data.context.properties.at("empty-file");
+  const auto& file = ir_map.context.properties.at("empty-file");
   REQUIRE(file.is_path());
   REQUIRE(file.has_default_value());
 
-  const auto& obj = data.context.properties.at("empty-object");
+  const auto& obj = ir_map.context.properties.at("empty-object");
   REQUIRE(obj.is_object());
   REQUIRE(obj.has_default_value());
 }

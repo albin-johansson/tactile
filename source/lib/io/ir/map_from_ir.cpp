@@ -39,7 +39,6 @@
 #include "core/tile/tileset_info.hpp"
 #include "io/ir/ir.hpp"
 #include "io/load_texture.hpp"
-#include "io/map/parse/parse_result.hpp"
 #include "model/cmd/command_stack.hpp"
 #include "model/document/document.hpp"
 #include "model/document/map_document.hpp"
@@ -296,10 +295,10 @@ void restore_tile_format(TileFormat& format, const ir::TileFormatData& ir_format
 
 }  // namespace
 
-void create_map_document_from_ir(const ParseResult& result, DocumentModel& model)
+void create_map_document_from_ir(const ir::MapData& ir_map,
+                                 const Path& document_path,
+                                 DocumentModel& model)
 {
-  const auto& ir_map = result.data();
-
   const auto map_id = model.create_map_document(ir_map.tile_size, ir_map.extent);
   model.select_document(map_id);
 
@@ -310,9 +309,9 @@ void create_map_document_from_ir(const ParseResult& result, DocumentModel& model
 
   auto& map = map_document->get_map();
 
-  const auto document_path = fs::absolute(result.path());
-  map_document->set_path(document_path);
-  map_document->set_name(document_path.filename().string());
+  const auto absolute_document_path = fs::absolute(document_path);
+  map_document->set_path(absolute_document_path);
+  map_document->set_name(absolute_document_path.filename().string());
 
   map.set_tile_size(ir_map.tile_size);
   map.set_next_layer_id(ir_map.next_layer_id);

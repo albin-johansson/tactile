@@ -475,9 +475,9 @@ TEST_SUITE("Parser round trip")
     emit_yaml_map(fs::absolute("test_map.yaml"), source);
 
     const auto result = parse_map("test_map.yaml");
-    REQUIRE(ParseError::None == result.error());
+    REQUIRE(result.has_value());
 
-    const auto& restored = result.data();
+    const auto& restored = result.value();
 
     validate_basic_map_info(source, restored);
     validate_component_definitions(source, restored);
@@ -493,9 +493,9 @@ TEST_SUITE("Parser round trip")
     emit_json_map(fs::absolute("test_map.json"), source);
 
     const auto result = parse_map("test_map.json");
-    REQUIRE(ParseError::None == result.error());
+    REQUIRE(result.has_value());
 
-    const auto& restored = result.data();
+    const auto& restored = result.value();
 
     validate_basic_map_info(source, restored);
     validate_tilesets(source, restored);
@@ -510,9 +510,9 @@ TEST_SUITE("Parser round trip")
     emit_xml_map(fs::absolute("test_map.tmx"), source);
 
     const auto result = parse_map("test_map.tmx");
-    REQUIRE(ParseError::None == result.error());
+    REQUIRE(result.has_value());
 
-    const auto& restored = result.data();
+    const auto& restored = result.value();
 
     validate_basic_map_info(source, restored);
     validate_tilesets(source, restored);

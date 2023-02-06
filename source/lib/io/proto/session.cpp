@@ -54,10 +54,10 @@ void load_session_from_disk(DocumentModel& model)
   }
 
   if (session.ParseFromIstream(&stream.value())) {
-    for (const auto& file: session.files()) {
-      const auto ir_map = parse_map(file);
-      if (ir_map.error() == ParseError::None) {
-        create_map_document_from_ir(ir_map, model);
+    for (const auto& file_path: session.files()) {
+      const auto ir_map = parse_map(file_path);
+      if (ir_map.has_value()) {
+        create_map_document_from_ir(*ir_map, file_path, model);
       }
       else {
         spdlog::warn("Failed to restore map from last session!");

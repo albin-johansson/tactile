@@ -86,13 +86,14 @@ void on_open_map(const OpenMapEvent& event)
     }
   }
   else {
-    const auto parse_result = parse_map(event.path);
-    if (parse_result.error() == ParseError::None) {
-      create_map_document_from_ir(parse_result, model);
-      add_to_file_history(event.path);
+    const auto ir_map = parse_map(event.path);
+    if (ir_map.has_value()) {
+      const auto absolute_document_path = fs::absolute(event.path);
+      create_map_document_from_ir(*ir_map, absolute_document_path, model);
+      add_to_file_history(absolute_document_path);
     }
     else {
-      ui::open_map_parse_error_dialog(parse_result.error());
+      ui::open_map_parse_error_dialog(ir_map.error());
     }
   }
 }
