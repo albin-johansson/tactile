@@ -169,25 +169,25 @@ void to_json(JSON& json, const Attribute& value)
 
 void from_json(const JSON& json, AttributeType& type)
 {
-  if (json == kStringAttrName) {
+  if (json == kStringAttrName.data()) {
     type = AttributeType::String;
   }
-  else if (json == kIntAttrName) {
+  else if (json == kIntAttrName.data()) {
     type = AttributeType::Int;
   }
-  else if (json == kFloatAttrName) {
+  else if (json == kFloatAttrName.data()) {
     type = AttributeType::Float;
   }
-  else if (json == kBoolAttrName) {
+  else if (json == kBoolAttrName.data()) {
     type = AttributeType::Bool;
   }
-  else if (json == kColorAttrName) {
+  else if (json == kColorAttrName.data()) {
     type = AttributeType::Color;
   }
-  else if (json == kFileAttrName) {
+  else if (json == kFileAttrName.data()) {
     type = AttributeType::Path;
   }
-  else if (json == kObjectAttrName) {
+  else if (json == kObjectAttrName.data()) {
     type = AttributeType::Object;
   }
   else {
