@@ -41,12 +41,12 @@ namespace {
 
 [[nodiscard]] auto parse_map(const Path& path, ir::MapData& data) -> ParseError
 {
-  pugi::xml_document document;
-  if (!document.load_file(path.c_str(), pugi::parse_default | pugi::parse_trim_pcdata)) {
+  auto document = parse_xml_file(path);
+  if (!document) {
     return ParseError::CouldNotReadFile;
   }
 
-  auto map_node = document.child("map");
+  auto map_node = document->child("map");
 
   if (const auto err = validate_map(map_node); err != ParseError::None) {
     return err;

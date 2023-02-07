@@ -404,8 +404,9 @@ void emit_external_tileset_file(const Path& path,
 
   append_common_tileset_attributes(root, tileset, dir);
 
-  auto stream = open_output_stream(path, FileType::Text).value();
-  document.save(stream, " ");
+  if (save_xml_to_file(document, path).failed()) {
+    spdlog::error("Could not save XML tileset document");
+  }
 }
 
 void append_tileset(XmlNode root, const Path& dir, const ir::TilesetData& tileset)
@@ -464,8 +465,9 @@ void emit_xml_map(const Path& destination, const ir::MapData& ir_map)
   pugi::xml_document document;
   append_root(document, destination.parent_path(), ir_map);
 
-  auto stream = open_output_stream(destination, FileType::Text).value();
-  document.save(stream, " ");
+  if (save_xml_to_file(document, destination).failed()) {
+    spdlog::error("Could not save XML map document");
+  }
 }
 
 }  // namespace tactile

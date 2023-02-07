@@ -22,10 +22,40 @@
 #include <algorithm>  // any_of
 #include <cstring>    // strcmp
 
+#include <fmt/std.h>
+#include <spdlog/spdlog.h>
+
 #include "common/debug/assert.hpp"
+#include "io/stream.hpp"
 #include "ui/constants.hpp"
 
 namespace tactile {
+
+auto parse_xml_file(const Path& path) -> Maybe<XmlDocument>
+{
+  pugi::xml_document document;
+  const auto result =
+      document.load_file(path.c_str(), pugi::parse_default | pugi::parse_trim_pcdata);
+  if (result == pugi::status_ok) {
+    return document;
+  }
+  else {
+    return nothing;
+  }
+}
+
+auto save_xml_to_file(const XmlDocument& document, const Path& path) -> Result
+{
+  auto stream = open_output_stream(path, FileType::Text);
+  if (stream) {
+    document.save(*stream, " ");
+    return success;
+  }
+  else {
+    spdlog::error("Could not open XML file for writing: {}", path);
+    return failure;
+  }
+}
 
 auto has_attr(XmlNode node, const char* attr_name) -> bool
 {
