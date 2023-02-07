@@ -70,8 +70,8 @@ namespace {
     format.compression = TileCompression::None;
   }
 
-  read_attribute(node, "zlib-compression-level", format.zlib_compression_level, -1);
-  read_attribute(node, "zstd-compression-level", format.zstd_compression_level, 3);
+  read_attr_or(node, "zlib-compression-level", format.zlib_compression_level, -1);
+  read_attr_or(node, "zstd-compression-level", format.zstd_compression_level, 3);
 
   if (format.encoding == TileEncoding::Plain &&
       format.compression != TileCompression::None) {
@@ -98,27 +98,27 @@ namespace {
     return ParseError::CouldNotReadFile;
   }
 
-  if (!read_attribute(node, "row-count", map.extent.rows)) {
+  if (!read_attr(node, "row-count", map.extent.rows)) {
     return ParseError::NoMapHeight;
   }
 
-  if (!read_attribute(node, "column-count", map.extent.cols)) {
+  if (!read_attr(node, "column-count", map.extent.cols)) {
     return ParseError::NoMapWidth;
   }
 
-  if (!read_attribute(node, "tile-width", map.tile_size.x)) {
+  if (!read_attr(node, "tile-width", map.tile_size.x)) {
     return ParseError::NoMapTileWidth;
   }
 
-  if (!read_attribute(node, "tile-height", map.tile_size.y)) {
+  if (!read_attr(node, "tile-height", map.tile_size.y)) {
     return ParseError::NoMapTileHeight;
   }
 
-  if (!read_attribute(node, "next-layer-id", map.next_layer_id)) {
+  if (!read_attr(node, "next-layer-id", map.next_layer_id)) {
     return ParseError::NoMapNextLayerId;
   }
 
-  if (!read_attribute(node, "next-object-id", map.next_object_id)) {
+  if (!read_attr(node, "next-object-id", map.next_object_id)) {
     return ParseError::NoMapNextObjectId;
   }
 

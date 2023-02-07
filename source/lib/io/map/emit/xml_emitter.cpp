@@ -405,7 +405,7 @@ void emit_external_tileset_file(const Path& path,
   append_common_tileset_attributes(root, tileset, dir);
 
   if (save_xml_to_file(document, path).failed()) {
-    spdlog::error("Could not save XML tileset document");
+    spdlog::error("Could not save XML tileset file");
   }
 }
 
@@ -466,7 +466,7 @@ void emit_xml_map(const Path& destination, const ir::MapData& ir_map)
   append_root(document, destination.parent_path(), ir_map);
 
   if (save_xml_to_file(document, destination).failed()) {
-    spdlog::error("Could not save XML map document");
+    spdlog::error("Could not save XML map file");
   }
 }
 

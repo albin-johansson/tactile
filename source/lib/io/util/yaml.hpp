@@ -24,41 +24,44 @@
 #include <yaml-cpp/yaml.h>
 
 #include "common/type/maybe.hpp"
+#include "common/type/path.hpp"
+#include "common/type/result.hpp"
 #include "common/type/string.hpp"
 #include "core/attribute.hpp"
 #include "core/layer/tile_format.hpp"
 
 namespace tactile {
 
+auto save_yaml_to_file(const YAML::Emitter& emitter, const Path& path) -> Result;
+
 /// Reads an attribute to a destination variable, returns false on failure.
 template <typename T>
-auto read_attribute(const YAML::Node& node, const char* name, T& result) -> bool
+auto read_attr(const YAML::Node& node, const char* name, T& result) -> Result
 {
   if (auto attr = node[name]) {
     result = attr.as<T>();
-    return true;
+    return success;
   }
   else {
-    return false;
+    return failure;
   }
 }
 
 template <>
-inline auto read_attribute(const YAML::Node& node, const char* name, String& result)
-    -> bool
+inline auto read_attr(const YAML::Node& node, const char* name, String& result) -> Result
 {
   if (auto attr = node[name]) {
     result = attr.as<String>();
-    return true;
+    return success;
   }
   else {
-    return false;
+    return failure;
   }
 }
 
 /// Reads an attribute to a destination variable, uses the fallback value on failure.
 template <typename T>
-void read_attribute(const YAML::Node& node, const char* name, T& result, T fallback)
+void read_attr_or(const YAML::Node& node, const char* name, T& result, T fallback)
 {
   if (auto attr = node[name]) {
     result = attr.as<T>();
@@ -69,10 +72,10 @@ void read_attribute(const YAML::Node& node, const char* name, T& result, T fallb
 }
 
 template <>
-inline void read_attribute(const YAML::Node& node,
-                           const char* name,
-                           String& result,
-                           String fallback)
+inline void read_attr_or(const YAML::Node& node,
+                         const char* name,
+                         String& result,
+                         String fallback)
 {
   if (auto attr = node[name]) {
     result = attr.as<String>();
@@ -83,10 +86,7 @@ inline void read_attribute(const YAML::Node& node,
 }
 
 template <typename T>
-void read_attribute(const YAML::Node& node,
-                    const char* name,
-                    Maybe<T>& result,
-                    T fallback)
+void read_attr_or(const YAML::Node& node, const char* name, Maybe<T>& result, T fallback)
 {
   if (auto attr = node[name]) {
     result = attr.as<T>();
@@ -96,10 +96,10 @@ void read_attribute(const YAML::Node& node,
   }
 }
 template <>
-inline void read_attribute(const YAML::Node& node,
-                           const char* name,
-                           Maybe<String>& result,
-                           String fallback)
+inline void read_attr_or(const YAML::Node& node,
+                         const char* name,
+                         Maybe<String>& result,
+                         String fallback)
 {
   if (auto attr = node[name]) {
     result = attr.as<String>();

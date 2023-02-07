@@ -68,7 +68,7 @@ namespace {
   tile_layer.extent = extent;
 
   String str_data;
-  if (!read_attribute(node, "data", str_data)) {
+  if (!read_attr(node, "data", str_data)) {
     return error(ParseError::NoTileLayerData);
   }
 
@@ -143,16 +143,16 @@ namespace {
   ir::LayerData layer;
   layer.index = index;
 
-  if (!read_attribute(node, "id", layer.id)) {
+  if (!read_attr(node, "id", layer.id)) {
     return error(ParseError::NoLayerId);
   }
 
-  read_attribute(node, "opacity", layer.opacity, 1.0f);
-  read_attribute(node, "visible", layer.visible, true);
-  read_attribute(node, "name", layer.name, "Layer"s);
+  read_attr_or(node, "opacity", layer.opacity, 1.0f);
+  read_attr_or(node, "visible", layer.visible, true);
+  read_attr_or(node, "name", layer.name, "Layer"s);
 
   String type;
-  if (!read_attribute(node, "type", type)) {
+  if (!read_attr(node, "type", type)) {
     return error(ParseError::NoLayerType);
   }
 
@@ -204,12 +204,12 @@ auto parse_object(const YAML::Node& node, const ir::MapData& map)
 {
   ir::ObjectData object;
 
-  if (!read_attribute(node, "id", object.id)) {
+  if (!read_attr(node, "id", object.id)) {
     return error(ParseError::NoObjectId);
   }
 
   String type;
-  if (!read_attribute(node, "type", type)) {
+  if (!read_attr(node, "type", type)) {
     return error(ParseError::NoObjectType);
   }
 
@@ -226,15 +226,15 @@ auto parse_object(const YAML::Node& node, const ir::MapData& map)
     return error(ParseError::UnsupportedObjectType);
   }
 
-  read_attribute(node, "name", object.name);
-  read_attribute(node, "tag", object.tag);
+  read_attr(node, "name", object.name);
+  read_attr(node, "tag", object.tag);
 
-  read_attribute(node, "visible", object.visible, true);
+  read_attr_or(node, "visible", object.visible, true);
 
-  read_attribute(node, "x", object.pos.x, 0.0f);
-  read_attribute(node, "y", object.pos.y, 0.0f);
-  read_attribute(node, "width", object.size.x, 0.0f);
-  read_attribute(node, "height", object.size.y, 0.0f);
+  read_attr_or(node, "x", object.pos.x, 0.0f);
+  read_attr_or(node, "y", object.pos.y, 0.0f);
+  read_attr_or(node, "width", object.size.x, 0.0f);
+  read_attr_or(node, "height", object.size.y, 0.0f);
 
   if (auto context = parse_context(node, map)) {
     object.context = std::move(*context);

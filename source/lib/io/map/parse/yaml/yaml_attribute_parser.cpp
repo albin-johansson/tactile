@@ -125,12 +125,12 @@ template <typename T>
     -> Expected<Attribute, ParseError>
 {
   String name;
-  if (!read_attribute(node, "name", name)) {
+  if (!read_attr(node, "name", name)) {
     return error(ParseError::NoComponentDefAttributeName);
   }
 
   String type_name;
-  if (!read_attribute(node, "type", type_name)) {
+  if (!read_attr(node, "type", type_name)) {
     return error(ParseError::NoComponentDefAttributeType);
   }
 
@@ -248,7 +248,7 @@ template <typename T>
   if (auto attribute_seq = node["attributes"]) {
     for (auto attribute_node: attribute_seq) {
       String attribute_name;
-      if (!read_attribute(attribute_node, "name", attribute_name)) {
+      if (!read_attr(attribute_node, "name", attribute_name)) {
         return error(ParseError::NoComponentDefAttributeName);
       }
 
@@ -276,7 +276,7 @@ template <typename T>
   if (auto sequence = node["values"]) {
     for (const auto& value_node: sequence) {
       String attr_name;
-      if (!read_attribute(value_node, "name", attr_name)) {
+      if (!read_attr(value_node, "name", attr_name)) {
         return error(ParseError::NoComponentAttributeName);
       }
 
@@ -308,7 +308,7 @@ auto parse_component_definitions(const YAML::Node& node)
   if (auto sequence = node["component-definitions"]) {
     for (const auto& def_node: sequence) {
       String type;
-      if (!read_attribute(def_node, "name", type)) {
+      if (!read_attr(def_node, "name", type)) {
         return error(ParseError::NoComponentDefName);
       }
 
@@ -332,7 +332,7 @@ auto parse_components(const YAML::Node& node, const ir::MapData& map)
   if (auto sequence = node["components"]) {
     for (const auto& component_node: sequence) {
       String type;
-      if (!read_attribute(component_node, "type", type)) {
+      if (!read_attr(component_node, "type", type)) {
         return error(ParseError::NoComponentType);
       }
 
@@ -355,12 +355,12 @@ auto parse_properties(const YAML::Node& node) -> Expected<ir::AttributeMap, Pars
   if (auto sequence = node["properties"]) {
     for (const auto& property_node: sequence) {
       String property_name;
-      if (!read_attribute(property_node, "name", property_name)) {
+      if (!read_attr(property_node, "name", property_name)) {
         return error(ParseError::NoPropertyName);
       }
 
       String type;
-      if (!read_attribute(property_node, "type", type)) {
+      if (!read_attr(property_node, "type", type)) {
         return error(ParseError::NoPropertyType);
       }
 

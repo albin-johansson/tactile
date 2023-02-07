@@ -341,8 +341,9 @@ void emit_tileset_file(const Path& dir,
   const auto path = dir / filename;
   spdlog::debug("Saving external tileset to {}", path);
 
-  auto stream = open_output_stream(path, FileType::Text).value();
-  stream << emitter.c_str();
+  if (save_yaml_to_file(emitter, path).failed()) {
+    spdlog::error("Could not save YAML tileset file");
+  }
 }
 
 void emit_tilesets(YAML::Emitter& emitter, const Path& dir, const ir::MapData& ir_map)
@@ -465,8 +466,9 @@ void emit_yaml_map(const Path& destination, const ir::MapData& ir_map)
 
   emitter << YAML::EndMap;
 
-  auto stream = open_output_stream(destination, FileType::Text).value();
-  stream << emitter.c_str();
+  if (save_yaml_to_file(emitter, destination).failed()) {
+    spdlog::error("Could not save YAML map file");
+  }
 }
 
 }  // namespace tactile

@@ -19,12 +19,27 @@
 
 #include "yaml.hpp"
 
-#include <fmt/format.h>
+#include <fmt/std.h>
+#include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
+#include "io/stream.hpp"
 
 namespace tactile {
+
+auto save_yaml_to_file(const YAML::Emitter& emitter, const Path& path) -> Result
+{
+  auto stream = open_output_stream(path, FileType::Text);
+  if (stream.has_value()) {
+    *stream << emitter.c_str();
+    return success;
+  }
+  else {
+    spdlog::error("Could not open YAML file for writing: ", path);
+    return failure;
+  }
+}
 
 auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter&
 {

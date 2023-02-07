@@ -34,12 +34,12 @@ constexpr int32 kTilesetFormatVersion = 1;
     -> Expected<ir::AnimationFrameData, ParseError>
 {
   TileIndex tile_index {};
-  if (!read_attribute(node, "tile", tile_index)) {
+  if (!read_attr(node, "tile", tile_index)) {
     return error(ParseError::NoAnimationFrameTile);
   }
 
   uint64 duration {};
-  if (!read_attribute(node, "duration", duration)) {
+  if (!read_attr(node, "duration", duration)) {
     return error(ParseError::NoAnimationFrameDuration);
   }
 
@@ -99,7 +99,7 @@ constexpr int32 kTilesetFormatVersion = 1;
 
   for (const auto& node: sequence) {
     TileID id {};
-    if (!read_attribute(node, "id", id)) {
+    if (!read_attr(node, "id", id)) {
       return error(ParseError::NoFancyTileId);
     }
 
@@ -131,7 +131,7 @@ constexpr int32 kTilesetFormatVersion = 1;
     tileset.first_tile = first_tile_id;
 
     int32 version {};
-    if (!read_attribute(node, "version", version)) {
+    if (!read_attr(node, "version", version)) {
       return error(ParseError::NoTilesetVersion);
     }
 
@@ -139,28 +139,28 @@ constexpr int32 kTilesetFormatVersion = 1;
       return error(ParseError::UnsupportedTilesetVersion);
     }
 
-    if (!read_attribute(node, "name", tileset.name)) {
+    if (!read_attr(node, "name", tileset.name)) {
       return error(ParseError::NoTilesetName);
     }
 
-    if (!read_attribute(node, "tile-count", tileset.tile_count)) {
+    if (!read_attr(node, "tile-count", tileset.tile_count)) {
       return error(ParseError::NoTilesetTileCount);
     }
 
-    if (!read_attribute(node, "tile-width", tileset.tile_size.x)) {
+    if (!read_attr(node, "tile-width", tileset.tile_size.x)) {
       return error(ParseError::NoTilesetTileWidth);
     }
 
-    if (!read_attribute(node, "tile-height", tileset.tile_size.y)) {
+    if (!read_attr(node, "tile-height", tileset.tile_size.y)) {
       return error(ParseError::NoTilesetTileHeight);
     }
 
-    if (!read_attribute(node, "column-count", tileset.column_count)) {
+    if (!read_attr(node, "column-count", tileset.column_count)) {
       return error(ParseError::NoTilesetColumnCount);
     }
 
     String relative;
-    if (!read_attribute(node, "image-path", relative)) {
+    if (!read_attr(node, "image-path", relative)) {
       return error(ParseError::NoTilesetImagePath);
     }
 
@@ -172,11 +172,11 @@ constexpr int32 kTilesetFormatVersion = 1;
       return error(ParseError::TilesetImageDoesNotExist);
     }
 
-    if (!read_attribute(node, "image-width", tileset.image_size.x)) {
+    if (!read_attr(node, "image-width", tileset.image_size.x)) {
       return error(ParseError::NoTilesetImageWidth);
     }
 
-    if (!read_attribute(node, "image-height", tileset.image_size.y)) {
+    if (!read_attr(node, "image-height", tileset.image_size.y)) {
       return error(ParseError::NoTilesetImageHeight);
     }
 
@@ -213,12 +213,12 @@ auto parse_tilesets(const YAML::Node& sequence, const ir::MapData& map, const Pa
 
   for (const auto& node: sequence) {
     TileID first {};
-    if (!read_attribute(node, "first-global-id", first)) {
+    if (!read_attr(node, "first-global-id", first)) {
       return error(ParseError::NoTilesetFirstTileId);
     }
 
     String path;
-    if (!read_attribute(node, "path", path)) {
+    if (!read_attr(node, "path", path)) {
       return error(ParseError::NoExternalTilesetPath);
     }
 
