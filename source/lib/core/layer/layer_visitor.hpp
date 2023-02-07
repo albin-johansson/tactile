@@ -19,11 +19,13 @@
 
 #pragma once
 
+#include "common/macros.hpp"
+
 namespace tactile {
 
-class TileLayer;
-class ObjectLayer;
-class GroupLayer;
+TACTILE_FWD_DECLARE_CLASS(TileLayer)
+TACTILE_FWD_DECLARE_CLASS(ObjectLayer)
+TACTILE_FWD_DECLARE_CLASS(GroupLayer)
 
 /// Visitor for all layer types.
 class LayerVisitor {

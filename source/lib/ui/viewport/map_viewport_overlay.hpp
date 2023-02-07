@@ -19,13 +19,13 @@
 
 #pragma once
 
-namespace tactile {
-class Map;
-}  // namespace tactile
+#include "common/macros.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Map)
 
 namespace tactile::ui {
 
-struct ViewportCursorInfo;
+TACTILE_FWD_DECLARE_STRUCT(ViewportCursorInfo)
 
 void update_map_viewport_overlay(const Map& map, const ViewportCursorInfo& cursor);
 

@@ -19,11 +19,12 @@
 
 #pragma once
 
+#include "common/macros.hpp"
 #include "common/type/string.hpp"
 
 namespace tactile {
 
-struct Strings;
+TACTILE_FWD_DECLARE_STRUCT(Strings)
 
 /// All of the supported languages.
 enum class Lang {

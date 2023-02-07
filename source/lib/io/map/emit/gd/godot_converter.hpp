@@ -19,12 +19,13 @@
 
 #pragma once
 
+#include "common/macros.hpp"
 #include "io/ir/ir.hpp"
 #include "io/map/emit/gd/godot_scene.hpp"
 
 namespace tactile {
 
-struct GodotEmitOptions;
+TACTILE_FWD_DECLARE_STRUCT(GodotEmitOptions)
 
 [[nodiscard]] auto convert_to_godot(const ir::MapData& map,
                                     const GodotEmitOptions& options) -> GodotScene;

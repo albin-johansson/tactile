@@ -19,15 +19,14 @@
 
 #pragma once
 
+#include "common/macros.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "core/component/component.hpp"
 #include "model/cmd/command.hpp"
 
-namespace tactile {
-class Context;
-}  // namespace tactile
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, Context)
 
 namespace tactile::cmd {
 

@@ -19,12 +19,13 @@
 
 #pragma once
 
+#include "common/macros.hpp"
 #include "core/context/context_visitor.hpp"
 #include "core/element.hpp"
 
 namespace tactile {
 
-class ContextInfo;
+TACTILE_FWD_DECLARE_CLASS(ContextInfo)
 
 /// Interface for all objects that may feature properties and components.
 /// Remember to update the context visitor when adding a new context implementation.
