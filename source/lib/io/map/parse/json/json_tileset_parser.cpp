@@ -208,7 +208,7 @@ namespace {
     return ParseError::ExternalTilesetDoesNotExist;
   }
 
-  if (const auto external = read_json(source)) {
+  if (const auto external = parse_json_file(source)) {
     return parse_common_tileset_attributes(*external, tileset_data, dir);
   }
   else {

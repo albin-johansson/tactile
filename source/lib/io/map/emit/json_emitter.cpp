@@ -328,7 +328,9 @@ void create_external_tileset_file(const Path& dir, const ir::TilesetData& tilese
   const auto name = fmt::format("{}.json", tileset.name);
   const auto path = dir / name;
 
-  write_json(json, path);
+  if (save_json_to_file(json, path).failed()) {
+    spdlog::error("Could not save JSON tileset file");
+  }
 }
 
 [[nodiscard]] auto emit_tileset(const Path& dir, const ir::TilesetData& tileset) -> JSON
@@ -397,7 +399,9 @@ void emit_json_map(const Path& destination, const ir::MapData& ir_map)
     json["properties"] = emit_properties(ir_map.context);
   }
 
-  write_json(json, destination);
+  if (save_json_to_file(json, destination).failed()) {
+    spdlog::error("Could not save JSON map file");
+  }
 }
 
 }  // namespace tactile

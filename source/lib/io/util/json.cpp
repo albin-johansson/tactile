@@ -22,6 +22,7 @@
 #include <exception>  // exception
 #include <iomanip>    // setw
 
+#include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
@@ -31,6 +32,14 @@
 
 namespace tactile {
 namespace {
+
+inline constexpr StringView kStringAttrName = "string";
+inline constexpr StringView kIntAttrName = "int";
+inline constexpr StringView kFloatAttrName = "float";
+inline constexpr StringView kBoolAttrName = "bool";
+inline constexpr StringView kColorAttrName = "color";
+inline constexpr StringView kObjectAttrName = "object";
+inline constexpr StringView kFileAttrName = "file";
 
 template <typename T>
 [[nodiscard]] auto as(const JSON& json, StringView name) -> Maybe<T>
@@ -69,31 +78,31 @@ void to_json(JSON& json, const AttributeType type)
     case AttributeType::Float3:
     case AttributeType::Float4:
       // We store vector properties as strings, instead of just ignoring them.
-      json = "string";
+      json = kStringAttrName;
       break;
 
     case AttributeType::Int:
-      json = "int";
+      json = kIntAttrName;
       break;
 
     case AttributeType::Float:
-      json = "float";
+      json = kFloatAttrName;
       break;
 
     case AttributeType::Bool:
-      json = "bool";
+      json = kBoolAttrName;
       break;
 
     case AttributeType::Path:
-      json = "file";
+      json = kFileAttrName;
       break;
 
     case AttributeType::Color:
-      json = "color";
+      json = kColorAttrName;
       break;
 
     case AttributeType::Object:
-      json = "object";
+      json = kObjectAttrName;
       break;
   }
 }
@@ -160,25 +169,25 @@ void to_json(JSON& json, const Attribute& value)
 
 void from_json(const JSON& json, AttributeType& type)
 {
-  if (json == "string") {
+  if (json == kStringAttrName) {
     type = AttributeType::String;
   }
-  else if (json == "int") {
+  else if (json == kIntAttrName) {
     type = AttributeType::Int;
   }
-  else if (json == "float") {
+  else if (json == kFloatAttrName) {
     type = AttributeType::Float;
   }
-  else if (json == "bool") {
+  else if (json == kBoolAttrName) {
     type = AttributeType::Bool;
   }
-  else if (json == "color") {
+  else if (json == kColorAttrName) {
     type = AttributeType::Color;
   }
-  else if (json == "file") {
+  else if (json == kFileAttrName) {
     type = AttributeType::Path;
   }
-  else if (json == "object") {
+  else if (json == kObjectAttrName) {
     type = AttributeType::Object;
   }
   else {
@@ -186,34 +195,17 @@ void from_json(const JSON& json, AttributeType& type)
   }
 }
 
-void write_json(const JSON& json, const Path& path)
-{
-  auto stream = open_output_stream(path, FileType::Text).value();
-
-  if (get_settings().test_flag(SETTINGS_INDENT_OUTPUT_BIT)) {
-    stream << std::setw(2);
-  }
-
-  stream << json;
-}
-
-auto try_get(const JSON& json, const char* key) -> const JSON*
-{
-  if (const auto iter = json.find(key); iter != json.end()) {
-    return &iter.value();
-  }
-  else {
-    return nullptr;
-  }
-}
-
-auto read_json(const Path& path) -> Maybe<JSON>
+auto parse_json_file(const Path& path) -> Maybe<JSON>
 {
   try {
-    auto stream = open_input_stream(path, FileType::Text).value();
+    auto stream = open_input_stream(path, FileType::Text);
+    if (!stream) {
+      spdlog::error("Failed to open JSON file: {}", path);
+      return nothing;
+    }
 
     JSON json;
-    stream >> json;
+    *stream >> json;
 
     return json;
   }
@@ -223,6 +215,42 @@ auto read_json(const Path& path) -> Maybe<JSON>
   }
   catch (...) {
     return nothing;
+  }
+}
+
+auto save_json_to_file(const JSON& json, const Path& path) -> Result
+{
+  auto stream = open_output_stream(path, FileType::Text);
+  if (!stream) {
+    spdlog::error("Could not open JSON file for writing: {}", path);
+    return failure;
+  }
+
+  try {
+    if (get_settings().test_flag(SETTINGS_INDENT_OUTPUT_BIT)) {
+      *stream << std::setw(2);
+    }
+
+    *stream << json;
+    return success;
+  }
+  catch (const std::exception& e) {
+    spdlog::error("Could not save JSON: {}", e.what());
+    return failure;
+  }
+  catch (...) {
+    spdlog::error("Unknown error when saving JSON to {}", path);
+    return failure;
+  }
+}
+
+auto try_get(const JSON& json, const char* key) -> const JSON*
+{
+  if (const auto iter = json.find(key); iter != json.end()) {
+    return &iter.value();
+  }
+  else {
+    return nullptr;
   }
 }
 

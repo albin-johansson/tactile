@@ -43,7 +43,7 @@ namespace {
 
 [[nodiscard]] auto parse_map(const Path& path, ir::MapData& map_data) -> ParseError
 {
-  const auto json = read_json(path);
+  const auto json = parse_json_file(path);
   if (!json) {
     return ParseError::CouldNotReadFile;
   }

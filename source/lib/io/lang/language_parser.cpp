@@ -591,7 +591,7 @@ void load_animation_dock_strings(const JSON& json, AnimationDockStrings& dock)
 auto parse_language(const char* path, const Strings& fallback) -> Strings
 {
   const auto resource = find_resource(path);
-  const auto json = read_json(resource).value();
+  const auto json = parse_json_file(resource).value();
 
   auto strings = fallback;
 
