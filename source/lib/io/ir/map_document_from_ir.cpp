@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "map_from_ir.hpp"
+#include "map_document_from_ir.hpp"
 
 #include <algorithm>  // max
 #include <utility>    // move

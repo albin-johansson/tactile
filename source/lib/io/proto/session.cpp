@@ -23,7 +23,7 @@
 
 #include "common/util/filesystem.hpp"
 #include "io/directories.hpp"
-#include "io/ir/map_from_ir.hpp"
+#include "io/ir/map_document_from_ir.hpp"
 #include "io/map/parse/parse_map.hpp"
 #include "io/proto/proto.hpp"
 #include "io/stream.hpp"

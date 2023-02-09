@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "map_to_ir.hpp"
+#include "map_document_to_ir.hpp"
 
 #include "common/debug/assert.hpp"
 #include "common/debug/profile.hpp"
