@@ -44,7 +44,7 @@ namespace {
       format.encoding = TileEncoding::Base64;
     }
     else {
-      return error(ParseError::BadTileFormatEncoding);
+      return unexpected(ParseError::BadTileFormatEncoding);
     }
   }
   else {
@@ -63,7 +63,7 @@ namespace {
       format.compression = TileCompression::Zstd;
     }
     else {
-      return error(ParseError::BadTileFormatCompression);
+      return unexpected(ParseError::BadTileFormatCompression);
     }
   }
   else {
@@ -75,17 +75,17 @@ namespace {
 
   if (format.encoding == TileEncoding::Plain &&
       format.compression != TileCompression::None) {
-    return error(ParseError::PlainEncodingWithCompression);
+    return unexpected(ParseError::PlainEncodingWithCompression);
   }
 
   if (const auto level = format.zlib_compression_level;
       level && !TileFormat::is_valid_zlib_compression_level(*level)) {
-    return error(ParseError::BadZlibCompressionLevel);
+    return unexpected(ParseError::BadZlibCompressionLevel);
   }
 
   if (const auto level = format.zstd_compression_level;
       level && !TileFormat::is_valid_zstd_compression_level(*level)) {
-    return error(ParseError::BadZstdCompressionLevel);
+    return unexpected(ParseError::BadZstdCompressionLevel);
   }
 
   return format;
@@ -178,7 +178,7 @@ auto parse_yaml_map(const Path& path) -> ParseResult
     return ir_map;
   }
   else {
-    return error(res);
+    return unexpected(res);
   }
 }
 

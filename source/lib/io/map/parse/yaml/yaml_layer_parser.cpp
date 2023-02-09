@@ -52,7 +52,7 @@ namespace {
       ++index;
     }
     else {
-      return error(ParseError::CorruptTileLayerData);
+      return unexpected(ParseError::CorruptTileLayerData);
     }
   }
 
@@ -69,7 +69,7 @@ namespace {
 
   String str_data;
   if (!read_attr(node, "data", str_data)) {
-    return error(ParseError::NoTileLayerData);
+    return unexpected(ParseError::NoTileLayerData);
   }
 
   if (map.tile_format.encoding == TileEncoding::Plain) {
@@ -78,14 +78,14 @@ namespace {
       tile_layer.tiles = std::move(*matrix);
     }
     else {
-      return pass_on_error(matrix);
+      return propagate_unexpected(matrix);
     }
   }
   else if (map.tile_format.encoding == TileEncoding::Base64) {
     tile_layer.tiles = base64_decode_tiles(str_data, extent, map.tile_format.compression);
   }
   else {
-    return error(ParseError::UnsupportedTileLayerEncoding);
+    return unexpected(ParseError::UnsupportedTileLayerEncoding);
   }
 
   return tile_layer;
@@ -104,7 +104,7 @@ namespace {
         object_layer.objects.push_back(std::move(*object));
       }
       else {
-        return pass_on_error(object);
+        return propagate_unexpected(object);
       }
     }
   }
@@ -126,7 +126,7 @@ namespace {
         group.children.push_back(std::make_unique<ir::LayerData>(std::move(*child)));
       }
       else {
-        return pass_on_error(child);
+        return propagate_unexpected(child);
       }
 
       ++index;
@@ -144,7 +144,7 @@ namespace {
   layer.index = index;
 
   if (!read_attr(node, "id", layer.id)) {
-    return error(ParseError::NoLayerId);
+    return unexpected(ParseError::NoLayerId);
   }
 
   read_attr_or(node, "opacity", layer.opacity, 1.0f);
@@ -153,7 +153,7 @@ namespace {
 
   String type;
   if (!read_attr(node, "type", type)) {
-    return error(ParseError::NoLayerType);
+    return unexpected(ParseError::NoLayerType);
   }
 
   if (type == "tile-layer") {
@@ -162,7 +162,7 @@ namespace {
       layer.data.emplace<ir::TileLayerData>(std::move(*tile_layer));
     }
     else {
-      return pass_on_error(tile_layer);
+      return propagate_unexpected(tile_layer);
     }
   }
   else if (type == "object-layer") {
@@ -171,7 +171,7 @@ namespace {
       layer.data.emplace<ir::ObjectLayerData>(std::move(*object_layer));
     }
     else {
-      return pass_on_error(object_layer);
+      return propagate_unexpected(object_layer);
     }
   }
   else if (type == "group-layer") {
@@ -180,18 +180,18 @@ namespace {
       layer.data.emplace<ir::GroupLayerData>(std::move(*group));
     }
     else {
-      return pass_on_error(group);
+      return propagate_unexpected(group);
     }
   }
   else {
-    return error(ParseError::UnsupportedLayerType);
+    return unexpected(ParseError::UnsupportedLayerType);
   }
 
   if (auto context = parse_context(node, map)) {
     layer.context = std::move(*context);
   }
   else {
-    return pass_on_error(context);
+    return propagate_unexpected(context);
   }
 
   return layer;
@@ -205,12 +205,12 @@ auto parse_object(const YAML::Node& node, const ir::MapData& map)
   ir::ObjectData object;
 
   if (!read_attr(node, "id", object.id)) {
-    return error(ParseError::NoObjectId);
+    return unexpected(ParseError::NoObjectId);
   }
 
   String type;
   if (!read_attr(node, "type", type)) {
-    return error(ParseError::NoObjectType);
+    return unexpected(ParseError::NoObjectType);
   }
 
   if (type == "point") {
@@ -223,7 +223,7 @@ auto parse_object(const YAML::Node& node, const ir::MapData& map)
     object.type = ObjectType::Ellipse;
   }
   else {
-    return error(ParseError::UnsupportedObjectType);
+    return unexpected(ParseError::UnsupportedObjectType);
   }
 
   read_attr(node, "name", object.name);
@@ -240,7 +240,7 @@ auto parse_object(const YAML::Node& node, const ir::MapData& map)
     object.context = std::move(*context);
   }
   else {
-    return pass_on_error(context);
+    return propagate_unexpected(context);
   }
 
   return object;
@@ -258,7 +258,7 @@ auto parse_layers(const YAML::Node& sequence, const ir::MapData& map)
       layers.push_back(std::move(*layer));
     }
     else {
-      return pass_on_error(layer);
+      return propagate_unexpected(layer);
     }
 
     ++index;

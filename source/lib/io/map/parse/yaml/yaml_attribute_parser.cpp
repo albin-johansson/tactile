@@ -126,12 +126,12 @@ template <typename T>
 {
   String name;
   if (!read_attr(node, "name", name)) {
-    return error(ParseError::NoComponentDefAttributeName);
+    return unexpected(ParseError::NoComponentDefAttributeName);
   }
 
   String type_name;
   if (!read_attr(node, "type", type_name)) {
-    return error(ParseError::NoComponentDefAttributeType);
+    return unexpected(ParseError::NoComponentDefAttributeType);
   }
 
   AttributeType type {};
@@ -139,7 +139,7 @@ template <typename T>
     type = *parsed_type;
   }
   else {
-    return error(ParseError::UnsupportedComponentDefAttributeType);
+    return unexpected(ParseError::UnsupportedComponentDefAttributeType);
   }
 
   Attribute value;
@@ -160,7 +160,7 @@ template <typename T>
           value = *vec;
         }
         else {
-          return error(ParseError::CorruptPropertyValue);
+          return unexpected(ParseError::CorruptPropertyValue);
         }
         break;
 
@@ -169,7 +169,7 @@ template <typename T>
           value = *vec;
         }
         else {
-          return error(ParseError::CorruptPropertyValue);
+          return unexpected(ParseError::CorruptPropertyValue);
         }
         break;
 
@@ -178,7 +178,7 @@ template <typename T>
           value = *vec;
         }
         else {
-          return error(ParseError::CorruptPropertyValue);
+          return unexpected(ParseError::CorruptPropertyValue);
         }
         break;
 
@@ -191,7 +191,7 @@ template <typename T>
           value = *vec;
         }
         else {
-          return error(ParseError::CorruptPropertyValue);
+          return unexpected(ParseError::CorruptPropertyValue);
         }
         break;
 
@@ -200,7 +200,7 @@ template <typename T>
           value = *vec;
         }
         else {
-          return error(ParseError::CorruptPropertyValue);
+          return unexpected(ParseError::CorruptPropertyValue);
         }
         break;
 
@@ -209,7 +209,7 @@ template <typename T>
           value = *vec;
         }
         else {
-          return error(ParseError::CorruptPropertyValue);
+          return unexpected(ParseError::CorruptPropertyValue);
         }
         break;
 
@@ -227,7 +227,7 @@ template <typename T>
           value = *color;
         }
         else {
-          return error(ParseError::CorruptComponentDefAttributeValue);
+          return unexpected(ParseError::CorruptComponentDefAttributeValue);
         }
         break;
       }
@@ -249,14 +249,14 @@ template <typename T>
     for (auto attribute_node: attribute_seq) {
       String attribute_name;
       if (!read_attr(attribute_node, "name", attribute_name)) {
-        return error(ParseError::NoComponentDefAttributeName);
+        return unexpected(ParseError::NoComponentDefAttributeName);
       }
 
       if (auto attr = parse_component_definition_attribute(attribute_node)) {
         def[std::move(attribute_name)] = std::move(*attr);
       }
       else {
-        return pass_on_error(attr);
+        return propagate_unexpected(attr);
       }
     }
   }
@@ -277,7 +277,7 @@ template <typename T>
     for (const auto& value_node: sequence) {
       String attr_name;
       if (!read_attr(value_node, "name", attr_name)) {
-        return error(ParseError::NoComponentAttributeName);
+        return unexpected(ParseError::NoComponentAttributeName);
       }
 
       if (auto value = value_node["value"]) {
@@ -286,11 +286,11 @@ template <typename T>
           comp[attr_name] = std::move(*attribute_value);
         }
         else {
-          return error(ParseError::CorruptComponentAttributeValue);
+          return unexpected(ParseError::CorruptComponentAttributeValue);
         }
       }
       else {
-        return error(ParseError::NoComponentAttributeValue);
+        return unexpected(ParseError::NoComponentAttributeValue);
       }
     }
   }
@@ -309,14 +309,14 @@ auto parse_component_definitions(const YAML::Node& node)
     for (const auto& def_node: sequence) {
       String type;
       if (!read_attr(def_node, "name", type)) {
-        return error(ParseError::NoComponentDefName);
+        return unexpected(ParseError::NoComponentDefName);
       }
 
       if (auto def = parse_component_definition(def_node)) {
         defs[std::move(type)] = std::move(*def);
       }
       else {
-        return pass_on_error(def);
+        return propagate_unexpected(def);
       }
     }
   }
@@ -333,14 +333,14 @@ auto parse_components(const YAML::Node& node, const ir::MapData& map)
     for (const auto& component_node: sequence) {
       String type;
       if (!read_attr(component_node, "type", type)) {
-        return error(ParseError::NoComponentType);
+        return unexpected(ParseError::NoComponentType);
       }
 
       if (auto comp = parse_component(component_node, map, type)) {
         comps[std::move(type)] = std::move(*comp);
       }
       else {
-        return pass_on_error(comp);
+        return propagate_unexpected(comp);
       }
     }
   }
@@ -356,12 +356,12 @@ auto parse_properties(const YAML::Node& node) -> Expected<ir::AttributeMap, Pars
     for (const auto& property_node: sequence) {
       String property_name;
       if (!read_attr(property_node, "name", property_name)) {
-        return error(ParseError::NoPropertyName);
+        return unexpected(ParseError::NoPropertyName);
       }
 
       String type;
       if (!read_attr(property_node, "type", type)) {
-        return error(ParseError::NoPropertyType);
+        return unexpected(ParseError::NoPropertyType);
       }
 
       AttributeType property_type {};
@@ -369,7 +369,7 @@ auto parse_properties(const YAML::Node& node) -> Expected<ir::AttributeMap, Pars
         property_type = *parsed_type;
       }
       else {
-        return error(ParseError::UnsupportedPropertyType);
+        return unexpected(ParseError::UnsupportedPropertyType);
       }
 
       if (auto value_attr = property_node["value"]) {
@@ -377,12 +377,12 @@ auto parse_properties(const YAML::Node& node) -> Expected<ir::AttributeMap, Pars
           props[std::move(property_name)] = std::move(*value);
         }
         else {
-          return error(ParseError::CorruptPropertyValue);
+          return unexpected(ParseError::CorruptPropertyValue);
         }
       }
       else {
         // TODO make it so that values can be omitted if using default value?
-        return error(ParseError::CorruptPropertyValue);
+        return unexpected(ParseError::CorruptPropertyValue);
       }
     }
   }
@@ -399,14 +399,14 @@ auto parse_context(const YAML::Node& node, const ir::MapData& map)
     context.properties = std::move(*props);
   }
   else {
-    return pass_on_error(props);
+    return propagate_unexpected(props);
   }
 
   if (auto comps = parse_components(node, map)) {
     context.components = std::move(*comps);
   }
   else {
-    return pass_on_error(comps);
+    return propagate_unexpected(comps);
   }
 
   return context;

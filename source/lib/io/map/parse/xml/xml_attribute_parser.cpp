@@ -36,7 +36,7 @@ namespace {
 
   const auto attr_type = parse_attr_type(type);
   if (!attr_type) {
-    return error(ParseError::UnsupportedPropertyType);
+    return unexpected(ParseError::UnsupportedPropertyType);
   }
 
   Attribute value;
@@ -75,7 +75,7 @@ namespace {
           value = *color;
         }
         else {
-          return error(ParseError::CorruptPropertyValue);
+          return unexpected(ParseError::CorruptPropertyValue);
         }
       }
 
@@ -92,7 +92,7 @@ namespace {
     case AttributeType::Int3:
       [[fallthrough]];
     case AttributeType::Int4:
-      return error(ParseError::UnsupportedPropertyType);
+      return unexpected(ParseError::UnsupportedPropertyType);
   }
 
   return value;
@@ -107,7 +107,7 @@ namespace {
     return std::move(*value);
   }
   else {
-    return pass_on_error(value);
+    return propagate_unexpected(value);
   }
 }
 
@@ -123,14 +123,14 @@ auto parse_properties(XmlNode node) -> Expected<ir::AttributeMap, ParseError>
       property_name = std::move(*name);
     }
     else {
-      return error(ParseError::NoPropertyName);
+      return unexpected(ParseError::NoPropertyName);
     }
 
     if (auto value = parse_property(property_node)) {
       props[std::move(property_name)] = std::move(*value);
     }
     else {
-      return pass_on_error(value);
+      return propagate_unexpected(value);
     }
   }
 
@@ -145,7 +145,7 @@ auto parse_context(XmlNode node) -> Expected<ir::ContextData, ParseError>
     context.properties = std::move(*props);
   }
   else {
-    return pass_on_error(props);
+    return propagate_unexpected(props);
   }
 
   return context;

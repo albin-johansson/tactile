@@ -33,15 +33,15 @@ template <typename E>
 using Unexpected = tl::unexpected<E>;
 
 template <typename E>
-[[nodiscard]] auto error(E&& e) -> Unexpected<std::decay_t<E>>
+[[nodiscard]] auto unexpected(E&& e) -> Unexpected<std::decay_t<E>>
 {
   return tl::make_unexpected(std::forward<E>(e));
 }
 
 template <typename T, typename E>
-[[nodiscard]] auto pass_on_error(const Expected<T, E>& e) -> Unexpected<E>
+[[nodiscard]] auto propagate_unexpected(const Expected<T, E>& e) -> Unexpected<E>
 {
-  return error(e.error());
+  return unexpected(e.error());
 }
 
 }  // namespace tactile

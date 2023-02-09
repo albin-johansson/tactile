@@ -40,7 +40,7 @@ auto parse_map(const Path& path) -> ParseResult
     spdlog::debug("Parsing map {}", path);
 
     if (!fs::exists(path)) {
-      return error(ParseError::MapDoesNotExist);
+      return unexpected(ParseError::MapDoesNotExist);
     }
 
     ParseResult result;
@@ -57,7 +57,7 @@ auto parse_map(const Path& path) -> ParseResult
     }
     else {
       spdlog::error("Unsupported save file extension: {}", ext);
-      return error(ParseError::UnsupportedMapExtension);
+      return unexpected(ParseError::UnsupportedMapExtension);
     }
 
     const auto parse_end = Clock::now();
@@ -71,15 +71,15 @@ auto parse_map(const Path& path) -> ParseResult
     spdlog::error("Parser threw unhandled exception with message: '{}'\n{}",
                   e.what(),
                   e.get_trace());
-    return error(ParseError::Unknown);
+    return unexpected(ParseError::Unknown);
   }
   catch (const std::exception& e) {
     spdlog::error("Parser threw unhandled exception with message: '{}'\n", e.what());
-    return error(ParseError::Unknown);
+    return unexpected(ParseError::Unknown);
   }
   catch (...) {
     spdlog::error("Parser threw non-exception value!");
-    return error(ParseError::Unknown);
+    return unexpected(ParseError::Unknown);
   }
 }
 

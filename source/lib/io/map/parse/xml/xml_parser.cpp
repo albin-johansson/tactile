@@ -133,7 +133,7 @@ auto parse_xml_map(const Path& path) -> ParseResult
     return ir_map;
   }
   else {
-    return error(res);
+    return unexpected(res);
   }
 }
 

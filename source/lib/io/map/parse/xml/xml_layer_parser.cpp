@@ -64,7 +64,7 @@ namespace {
       ++index;
     }
     else {
-      return error(ParseError::CorruptTileLayerData);
+      return unexpected(ParseError::CorruptTileLayerData);
     }
   }
 
@@ -93,7 +93,7 @@ namespace {
   const auto data = layer_node.child("data");
 
   if (data.empty() || data.text().empty()) {
-    return error(ParseError::NoTileLayerData);
+    return unexpected(ParseError::NoTileLayerData);
   }
 
   if (const auto* encoding = data.attribute("encoding").as_string(nullptr)) {
@@ -106,7 +106,7 @@ namespace {
         return std::move(*tiles);
       }
       else {
-        return pass_on_error(tiles);
+        return propagate_unexpected(tiles);
       }
     }
     else if (std::strcmp(encoding, "base64") == 0) {
@@ -128,7 +128,7 @@ namespace {
                                  map.tile_format.compression);
     }
     else {
-      return error(ParseError::UnsupportedTileLayerEncoding);
+      return unexpected(ParseError::UnsupportedTileLayerEncoding);
     }
   }
   else {
@@ -139,7 +139,7 @@ namespace {
       return std::move(*tiles);
     }
     else {
-      return pass_on_error(tiles);
+      return propagate_unexpected(tiles);
     }
   }
 }
@@ -181,7 +181,7 @@ namespace {
     tile_layer.tiles = std::move(*tiles);
   }
   else {
-    return pass_on_error(tiles);
+    return propagate_unexpected(tiles);
   }
 
   return tile_layer;
@@ -197,7 +197,7 @@ namespace {
       object_layer.objects.push_back(std::move(*object));
     }
     else {
-      return pass_on_error(object);
+      return propagate_unexpected(object);
     }
   }
 
@@ -214,7 +214,7 @@ namespace {
     layer.id = *id;
   }
   else {
-    return error(ParseError::NoLayerId);
+    return unexpected(ParseError::NoLayerId);
   }
 
   layer.name = layer_node.attribute("name").as_string("Layer");
@@ -228,7 +228,7 @@ namespace {
       layer.data.emplace<ir::TileLayerData>(std::move(*tile_layer));
     }
     else {
-      return pass_on_error(tile_layer);
+      return propagate_unexpected(tile_layer);
     }
   }
   else if (std::strcmp(layer_node.name(), "objectgroup") == 0) {
@@ -238,7 +238,7 @@ namespace {
       layer.data.emplace<ir::ObjectLayerData>(std::move(*object_layer));
     }
     else {
-      return pass_on_error(object_layer);
+      return propagate_unexpected(object_layer);
     }
   }
   else if (std::strcmp(layer_node.name(), "group") == 0) {
@@ -252,7 +252,7 @@ namespace {
             std::make_unique<ir::LayerData>(std::move(*child_layer)));
       }
       else {
-        return pass_on_error(child_layer);
+        return propagate_unexpected(child_layer);
       }
 
       ++child_index;
@@ -267,7 +267,7 @@ namespace {
     layer.context.properties = std::move(*props);
   }
   else {
-    return pass_on_error(props);
+    return propagate_unexpected(props);
   }
 
   return layer;
@@ -283,7 +283,7 @@ auto parse_object(XmlNode object_node) -> Expected<ir::ObjectData, ParseError>
     object.id = *id;
   }
   else {
-    return error(ParseError::NoObjectId);
+    return unexpected(ParseError::NoObjectId);
   }
 
   object.name = object_node.attribute("name").as_string("");
@@ -310,7 +310,7 @@ auto parse_object(XmlNode object_node) -> Expected<ir::ObjectData, ParseError>
     object.context.properties = std::move(*props);
   }
   else {
-    return pass_on_error(props);
+    return propagate_unexpected(props);
   }
 
   return object;
@@ -327,7 +327,7 @@ auto parse_layers(XmlNode map_node, ir::MapData& map)
       layers.push_back(std::move(*layer));
     }
     else {
-      return pass_on_error(layer);
+      return propagate_unexpected(layer);
     }
 
     ++index;

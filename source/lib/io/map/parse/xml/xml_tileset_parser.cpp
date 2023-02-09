@@ -39,7 +39,7 @@ namespace {
       tile_id = *id;
     }
     else {
-      return error(ParseError::NoFancyTileId);
+      return unexpected(ParseError::NoFancyTileId);
     }
 
     auto& tile = tiles[tile_id];
@@ -51,14 +51,14 @@ namespace {
         frame.tile_index = *index;
       }
       else {
-        return error(ParseError::NoAnimationFrameTile);
+        return unexpected(ParseError::NoAnimationFrameTile);
       }
 
       if (const auto duration = get_uint_attr(frame_node, "duration")) {
         frame.duration_ms = *duration;
       }
       else {
-        return error(ParseError::NoAnimationFrameDuration);
+        return unexpected(ParseError::NoAnimationFrameDuration);
       }
     }
 
@@ -67,7 +67,7 @@ namespace {
         tile.objects.push_back(std::move(*object));
       }
       else {
-        return pass_on_error(object);
+        return propagate_unexpected(object);
       }
     }
 
@@ -75,7 +75,7 @@ namespace {
       tile.context.properties = std::move(*props);
     }
     else {
-      return pass_on_error(props);
+      return propagate_unexpected(props);
     }
   }
 
@@ -130,53 +130,53 @@ namespace {
     tileset.name = std::move(*name);
   }
   else {
-    return error(ParseError::NoTilesetName);
+    return unexpected(ParseError::NoTilesetName);
   }
 
   if (const auto tw = get_int_attr(node, "tilewidth")) {
     tileset.tile_size.x = *tw;
   }
   else {
-    return error(ParseError::NoTilesetTileWidth);
+    return unexpected(ParseError::NoTilesetTileWidth);
   }
 
   if (const auto th = get_int_attr(node, "tileheight")) {
     tileset.tile_size.y = *th;
   }
   else {
-    return error(ParseError::NoTilesetTileHeight);
+    return unexpected(ParseError::NoTilesetTileHeight);
   }
 
   if (const auto count = get_int_attr(node, "tilecount")) {
     tileset.tile_count = *count;
   }
   else {
-    return error(ParseError::NoTilesetTileCount);
+    return unexpected(ParseError::NoTilesetTileCount);
   }
 
   if (const auto columns = get_int_attr(node, "columns")) {
     tileset.column_count = *columns;
   }
   else {
-    return error(ParseError::NoTilesetColumnCount);
+    return unexpected(ParseError::NoTilesetColumnCount);
   }
 
   if (const auto ec = parse_image_info(node, tileset, dir); ec != ParseError::None) {
-    return error(ec);
+    return unexpected(ec);
   }
 
   if (auto tiles = parse_fancy_tiles(node)) {
     tileset.fancy_tiles = std::move(*tiles);
   }
   else {
-    return pass_on_error(tiles);
+    return propagate_unexpected(tiles);
   }
 
   if (auto props = parse_properties(node)) {
     tileset.context.properties = std::move(*props);
   }
   else {
-    return pass_on_error(props);
+    return propagate_unexpected(props);
   }
 
   return tileset;
@@ -193,13 +193,13 @@ namespace {
   const auto source_path = fs::weakly_canonical(dir / relative_path);
 
   if (!fs::exists(source_path)) {
-    return error(ParseError::ExternalTilesetDoesNotExist);
+    return unexpected(ParseError::ExternalTilesetDoesNotExist);
   }
 
   pugi::xml_document document;
   if (!document.load_file(source_path.c_str(),
                           pugi::parse_default | pugi::parse_trim_pcdata)) {
-    return error(ParseError::UnknownExternalTilesetError);
+    return unexpected(ParseError::UnknownExternalTilesetError);
   }
 
   return parse_common_attributes(document.child("tileset"), first_id, dir);
@@ -214,7 +214,7 @@ auto parse_tileset(XmlNode node, const Path& dir) -> Expected<ir::TilesetData, P
     first_id = *id;
   }
   else {
-    return error(ParseError::NoTilesetFirstTileId);
+    return unexpected(ParseError::NoTilesetFirstTileId);
   }
 
   if (has_attr(node, "source")) {

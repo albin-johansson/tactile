@@ -35,12 +35,12 @@ constexpr int32 kTilesetFormatVersion = 1;
 {
   TileIndex tile_index {};
   if (!read_attr(node, "tile", tile_index)) {
-    return error(ParseError::NoAnimationFrameTile);
+    return unexpected(ParseError::NoAnimationFrameTile);
   }
 
   uint64 duration {};
   if (!read_attr(node, "duration", duration)) {
-    return error(ParseError::NoAnimationFrameDuration);
+    return unexpected(ParseError::NoAnimationFrameDuration);
   }
 
   ir::AnimationFrameData frame;
@@ -63,7 +63,7 @@ constexpr int32 kTilesetFormatVersion = 1;
         tile.frames.push_back(*frame);
       }
       else {
-        return pass_on_error(frame);
+        return propagate_unexpected(frame);
       }
     }
   }
@@ -76,7 +76,7 @@ constexpr int32 kTilesetFormatVersion = 1;
         tile.objects.push_back(std::move(*object));
       }
       else {
-        return pass_on_error(object);
+        return propagate_unexpected(object);
       }
     }
   }
@@ -85,7 +85,7 @@ constexpr int32 kTilesetFormatVersion = 1;
     tile.context = std::move(*context);
   }
   else {
-    return pass_on_error(context);
+    return propagate_unexpected(context);
   }
 
   return tile;
@@ -100,14 +100,14 @@ constexpr int32 kTilesetFormatVersion = 1;
   for (const auto& node: sequence) {
     TileID id {};
     if (!read_attr(node, "id", id)) {
-      return error(ParseError::NoFancyTileId);
+      return unexpected(ParseError::NoFancyTileId);
     }
 
     if (auto tile = parse_fancy_tile(node, map)) {
       fancy_tiles[id] = std::move(*tile);
     }
     else {
-      return pass_on_error(tile);
+      return propagate_unexpected(tile);
     }
   }
 
@@ -122,7 +122,7 @@ constexpr int32 kTilesetFormatVersion = 1;
   try {
     const auto node = YAML::LoadFile(source.string());
     if (!node) {
-      return error(ParseError::UnknownExternalTilesetError);
+      return unexpected(ParseError::UnknownExternalTilesetError);
     }
 
     const auto dir = source.parent_path();
@@ -132,36 +132,36 @@ constexpr int32 kTilesetFormatVersion = 1;
 
     int32 version {};
     if (!read_attr(node, "version", version)) {
-      return error(ParseError::NoTilesetVersion);
+      return unexpected(ParseError::NoTilesetVersion);
     }
 
     if (version != kTilesetFormatVersion) {
-      return error(ParseError::UnsupportedTilesetVersion);
+      return unexpected(ParseError::UnsupportedTilesetVersion);
     }
 
     if (!read_attr(node, "name", tileset.name)) {
-      return error(ParseError::NoTilesetName);
+      return unexpected(ParseError::NoTilesetName);
     }
 
     if (!read_attr(node, "tile-count", tileset.tile_count)) {
-      return error(ParseError::NoTilesetTileCount);
+      return unexpected(ParseError::NoTilesetTileCount);
     }
 
     if (!read_attr(node, "tile-width", tileset.tile_size.x)) {
-      return error(ParseError::NoTilesetTileWidth);
+      return unexpected(ParseError::NoTilesetTileWidth);
     }
 
     if (!read_attr(node, "tile-height", tileset.tile_size.y)) {
-      return error(ParseError::NoTilesetTileHeight);
+      return unexpected(ParseError::NoTilesetTileHeight);
     }
 
     if (!read_attr(node, "column-count", tileset.column_count)) {
-      return error(ParseError::NoTilesetColumnCount);
+      return unexpected(ParseError::NoTilesetColumnCount);
     }
 
     String relative;
     if (!read_attr(node, "image-path", relative)) {
-      return error(ParseError::NoTilesetImagePath);
+      return unexpected(ParseError::NoTilesetImagePath);
     }
 
     auto absolute = fs::weakly_canonical(dir / relative);
@@ -169,15 +169,15 @@ constexpr int32 kTilesetFormatVersion = 1;
       tileset.image_path = std::move(absolute);
     }
     else {
-      return error(ParseError::TilesetImageDoesNotExist);
+      return unexpected(ParseError::TilesetImageDoesNotExist);
     }
 
     if (!read_attr(node, "image-width", tileset.image_size.x)) {
-      return error(ParseError::NoTilesetImageWidth);
+      return unexpected(ParseError::NoTilesetImageWidth);
     }
 
     if (!read_attr(node, "image-height", tileset.image_size.y)) {
-      return error(ParseError::NoTilesetImageHeight);
+      return unexpected(ParseError::NoTilesetImageHeight);
     }
 
     if (auto sequence = node["tiles"]) {
@@ -185,7 +185,7 @@ constexpr int32 kTilesetFormatVersion = 1;
         tileset.fancy_tiles = std::move(*meta_tiles);
       }
       else {
-        return pass_on_error(meta_tiles);
+        return propagate_unexpected(meta_tiles);
       }
     }
 
@@ -193,13 +193,13 @@ constexpr int32 kTilesetFormatVersion = 1;
       tileset.context = std::move(*context);
     }
     else {
-      return pass_on_error(context);
+      return propagate_unexpected(context);
     }
 
     return tileset;
   }
   catch (...) {
-    return error(ParseError::UnknownExternalTilesetError);
+    return unexpected(ParseError::UnknownExternalTilesetError);
   }
 }
 
@@ -214,12 +214,12 @@ auto parse_tilesets(const YAML::Node& sequence, const ir::MapData& map, const Pa
   for (const auto& node: sequence) {
     TileID first {};
     if (!read_attr(node, "first-global-id", first)) {
-      return error(ParseError::NoTilesetFirstTileId);
+      return unexpected(ParseError::NoTilesetFirstTileId);
     }
 
     String path;
     if (!read_attr(node, "path", path)) {
-      return error(ParseError::NoExternalTilesetPath);
+      return unexpected(ParseError::NoExternalTilesetPath);
     }
 
     const auto source = fs::weakly_canonical(dir / path);
@@ -229,11 +229,11 @@ auto parse_tilesets(const YAML::Node& sequence, const ir::MapData& map, const Pa
         tilesets.push_back(std::move(*tileset));
       }
       else {
-        return pass_on_error(tileset);
+        return propagate_unexpected(tileset);
       }
     }
     else {
-      return error(ParseError::ExternalTilesetDoesNotExist);
+      return unexpected(ParseError::ExternalTilesetDoesNotExist);
     }
   }
 
