@@ -22,38 +22,46 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/assert.hpp"
 #include "common/debug/profile.hpp"
 #include "common/util/fmt.hpp"
+#include "io/export/json_exporter.hpp"
+#include "io/export/xml_exporter.hpp"
+#include "io/export/yaml_exporter.hpp"
 #include "io/ir/ir.hpp"
 #include "io/ir/map_to_ir.hpp"
 #include "io/map/emit/gd/godot_converter.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
 #include "io/map/emit/gd/godot_writer.hpp"
+#include "io/util/json.hpp"
+#include "io/util/xml.hpp"
+#include "io/util/yaml.hpp"
 #include "model/document/map_document.hpp"
 
 namespace tactile {
 
-void emit_map(const MapDocument& document)
+void save_map_document_to_disk(const MapDocument& document)
 {
   TACTILE_DEBUG_PROFILE_START
-  TACTILE_ASSERT(document.has_path());
+
+  if (!document.has_path()) {
+    spdlog::error("Tried to save map document with no associated file path");
+    return;
+  }
 
   const auto path = fs::absolute(document.get_path());
-  const auto ext = path.extension();
   spdlog::info("Trying to save map to {}", path);
 
-  if (ext == ".yaml" || ext == ".yml") {
-    emit_yaml_map(path, convert_map_document_to_ir(document));
+  if (has_supported_tactile_yaml_extension(path)) {
+    save_map_as_tactile_yaml(path, convert_map_document_to_ir(document));
   }
-  else if (ext == ".json" || ext == ".tmj") {
-    emit_json_map(path, convert_map_document_to_ir(document));
+  else if (has_supported_tiled_json_extension(path)) {
+    save_map_as_tiled_json(path, convert_map_document_to_ir(document));
   }
-  else if (ext == ".xml" || ext == ".tmx") {
-    emit_xml_map(path, convert_map_document_to_ir(document));
+  else if (has_supported_tiled_xml_extension(path)) {
+    save_map_as_tiled_xml(path, convert_map_document_to_ir(document));
   }
   else {
-    spdlog::error("Unsupported file extension {}", ext);
+    spdlog::error("Unsupported file extension {}", path.extension());
     return;
   }
 

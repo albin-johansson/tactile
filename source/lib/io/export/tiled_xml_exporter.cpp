@@ -17,6 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "tiled_xml_exporter.hpp"
+
 #include <sstream>  // stringstream
 
 #include <fmt/format.h>
@@ -27,7 +29,6 @@
 #include "common/util/filesystem.hpp"
 #include "common/util/functional.hpp"
 #include "io/ir/ir.hpp"
-#include "io/map/emit/emitter.hpp"
 #include "io/map/tiled_info.hpp"
 #include "io/stream.hpp"
 #include "io/util/base64_tiles.hpp"
@@ -456,7 +457,7 @@ void append_root(pugi::xml_document& document, const Path& dir, const ir::MapDat
 
 }  // namespace
 
-void emit_xml_map(const Path& destination, const ir::MapData& ir_map)
+void save_map_as_tiled_xml(const Path& destination, const ir::MapData& ir_map)
 {
   if (!ir_map.component_definitions.empty()) {
     spdlog::warn("Component data will be ignored when saving the map as XML!");

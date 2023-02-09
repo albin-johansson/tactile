@@ -32,6 +32,9 @@ using XmlDocument = pugi::xml_document;
 using XmlNode = pugi::xml_node;
 using XmlAttr = pugi::xml_attribute;
 
+/// Indicates whether a file has one of the supported Tiled XML file extensions.
+[[nodiscard]] auto has_supported_tiled_xml_extension(const Path& path) -> bool;
+
 /// Parses the XML document at the specified path, returning nothing if an error occurs.
 [[nodiscard]] auto parse_xml_file(const Path& path) -> Maybe<XmlDocument>;
 

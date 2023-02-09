@@ -17,6 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "tactile_yaml_exporter.hpp"
+
 #include <sstream>  // stringstream
 
 #include <fmt/format.h>
@@ -30,7 +32,6 @@
 #include "core/attribute.hpp"
 #include "io/compression.hpp"
 #include "io/ir/ir.hpp"
-#include "io/map/emit/emitter.hpp"
 #include "io/stream.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/yaml.hpp"
@@ -439,7 +440,7 @@ void emit_tile_format(YAML::Emitter& emitter, const ir::TileFormatData& format)
 
 }  // namespace
 
-void emit_yaml_map(const Path& destination, const ir::MapData& ir_map)
+void save_map_as_tactile_yaml(const Path& destination, const ir::MapData& ir_map)
 {
   YAML::Emitter emitter;
   emitter.SetIndent(2);

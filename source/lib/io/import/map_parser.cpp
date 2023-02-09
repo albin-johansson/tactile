@@ -17,24 +17,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include "common/macros.hpp"
-#include "common/type/path.hpp"
-#include "common/type/string.hpp"
-
-TACTILE_FWD_DECLARE_STRUCT_NS(tactile::ir, MapData)
+#include "map_parser.hpp"
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(MapDocument)
-TACTILE_FWD_DECLARE_STRUCT(GodotEmitOptions)
+auto parse_map_with_yaml_format(const Path& path) -> ParseResult
+{
+  return error(ParseError::Unknown);
+}
 
-/// Saves a map document to disk, inferring the destination from the document path.
-void save_map_document_to_disk(const MapDocument& document);
+auto parse_map_with_tiled_tmj_format(const Path& path) -> ParseResult
+{
 
-/// Emits a map document as a Godot scene, see options struct for details.
-void emit_map_as_godot_scene(const MapDocument& document,
-                             const GodotEmitOptions& options);
+
+
+
+  return error(ParseError::Unknown);
+}
+
+auto parse_map_with_tiled_tmx_format(const Path& path) -> ParseResult
+{
+  return error(ParseError::Unknown);
+}
 
 }  // namespace tactile

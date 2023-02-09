@@ -21,20 +21,11 @@
 
 #include "common/macros.hpp"
 #include "common/type/path.hpp"
-#include "common/type/string.hpp"
 
 TACTILE_FWD_DECLARE_STRUCT_NS(tactile::ir, MapData)
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(MapDocument)
-TACTILE_FWD_DECLARE_STRUCT(GodotEmitOptions)
-
-/// Saves a map document to disk, inferring the destination from the document path.
-void save_map_document_to_disk(const MapDocument& document);
-
-/// Emits a map document as a Godot scene, see options struct for details.
-void emit_map_as_godot_scene(const MapDocument& document,
-                             const GodotEmitOptions& options);
+void save_map_as_tactile_yaml(const Path& destination, const ir::MapData& ir_map);
 
 }  // namespace tactile

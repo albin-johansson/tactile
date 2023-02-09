@@ -31,6 +31,9 @@
 #include "common/type/string.hpp"
 #include "common/util/assoc.hpp"
 #include "core/tile/tile_matrix.hpp"
+#include "io/export/tactile_yaml_exporter.hpp"
+#include "io/export/tiled_json_exporter.hpp"
+#include "io/export/tiled_xml_exporter.hpp"
 #include "io/map/emit/emitter.hpp"
 #include "io/map/parse/parse_map.hpp"
 
@@ -472,7 +475,7 @@ TEST_SUITE("Parser round trip")
     gCurrentParser = "YAML";
 
     const auto source = create_source_data(true);
-    emit_yaml_map(fs::absolute("test_map.yaml"), source);
+    save_map_as_tactile_yaml(fs::absolute("test_map.yaml"), source);
 
     const auto result = parse_map("test_map.yaml");
     REQUIRE(result.has_value());
@@ -490,7 +493,7 @@ TEST_SUITE("Parser round trip")
     gCurrentParser = "JSON";
 
     const auto source = create_source_data(false);
-    emit_json_map(fs::absolute("test_map.json"), source);
+    save_map_as_tiled_json(fs::absolute("test_map.json"), source);
 
     const auto result = parse_map("test_map.json");
     REQUIRE(result.has_value());
@@ -507,7 +510,7 @@ TEST_SUITE("Parser round trip")
     gCurrentParser = "XML";
 
     const auto source = create_source_data(false);
-    emit_xml_map(fs::absolute("test_map.tmx"), source);
+    save_map_as_tiled_xml(fs::absolute("test_map.tmx"), source);
 
     const auto result = parse_map("test_map.tmx");
     REQUIRE(result.has_value());

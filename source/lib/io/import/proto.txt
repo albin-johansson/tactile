@@ -1,0 +1,64 @@
+import std: Vector, Addable, Integral, FloatingPoint
+
+module geometry
+
+# FFI interface, using opaque types and functions
+extern type SDL_Window
+extern fun SDL_DestroyWindow(window: *SDL_Window)
+
+# Class declaration
+type Point {
+  x: float32 = 0
+  y: float32 = 0
+}
+
+# Member functions (or extension functions)
+def Point {
+  # Constructor
+  fun @init(f: float32) {
+    @x = f
+    @y = f
+  }
+
+  fun set_x(x: float32) {
+    @x = x
+  }
+
+  fun set_y(y: float32) {
+    @y = y
+  }
+
+  # Read-only function ("immutable" function)
+  imm fun get_sum() float32 {
+    return @x + @y 
+  }
+}
+
+# Type alias
+type Position = Point
+
+# Concepts, i.e. type predicates
+concept Number<T> = T is Integral or T is FloatingPoint
+
+# Generic function templates
+generic<T: Addable> fun do_something(x: T, y: T) T {
+  # Compile-time if statements
+  static if T is Integral {
+    return x + y
+  }
+  else {
+    return x + y + 10
+  }
+}
+
+# Program entry point
+fun main() {
+  imm const_point = Point(x: 1f, y: 1f)
+  var mutable_point = Point(10f)
+
+  # Ternary operator
+  var i = (const_point.x == 1f) ? 10 : 20
+
+  # Line comment
+  imm ints = Vector<int>()
+}

@@ -28,6 +28,12 @@
 
 namespace tactile {
 
+auto has_supported_tactile_yaml_extension(const Path& path) -> bool
+{
+  const auto ext = path.extension();
+  return ext == ".yml" || ext == ".yaml";
+}
+
 auto save_yaml_to_file(const YAML::Emitter& emitter, const Path& path) -> Result
 {
   auto stream = open_output_stream(path, FileType::Text);

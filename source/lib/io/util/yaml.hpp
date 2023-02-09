@@ -32,6 +32,9 @@
 
 namespace tactile {
 
+/// Indicates whether a file has one of the supported Tactile YAML file extensions.
+[[nodiscard]] auto has_supported_tactile_yaml_extension(const Path& path) -> bool;
+
 auto save_yaml_to_file(const YAML::Emitter& emitter, const Path& path) -> Result;
 
 /// Reads an attribute to a destination variable, returns false on failure.

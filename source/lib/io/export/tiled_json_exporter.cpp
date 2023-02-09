@@ -17,6 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "tiled_json_exporter.hpp"
+
 #include <utility>  // move
 
 #include <fmt/format.h>
@@ -25,7 +27,6 @@
 #include "common/util/filesystem.hpp"
 #include "common/util/functional.hpp"
 #include "io/ir/ir.hpp"
-#include "io/map/emit/emitter.hpp"
 #include "io/map/tiled_info.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/json.hpp"
@@ -357,7 +358,7 @@ void create_external_tileset_file(const Path& dir, const ir::TilesetData& tilese
 
 }  // namespace
 
-void emit_json_map(const Path& destination, const ir::MapData& ir_map)
+void save_map_as_tiled_json(const Path& destination, const ir::MapData& ir_map)
 {
   auto json = JSON::object();
 

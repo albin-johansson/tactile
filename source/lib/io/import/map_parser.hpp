@@ -19,22 +19,14 @@
 
 #pragma once
 
-#include "common/macros.hpp"
 #include "common/type/path.hpp"
-#include "common/type/string.hpp"
-
-TACTILE_FWD_DECLARE_STRUCT_NS(tactile::ir, MapData)
+#include "io/map/parse/parse_result.hpp"
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(MapDocument)
-TACTILE_FWD_DECLARE_STRUCT(GodotEmitOptions)
+[[nodiscard]] auto parse_map_with_yaml_format(const Path& path) -> ParseResult;
 
-/// Saves a map document to disk, inferring the destination from the document path.
-void save_map_document_to_disk(const MapDocument& document);
-
-/// Emits a map document as a Godot scene, see options struct for details.
-void emit_map_as_godot_scene(const MapDocument& document,
-                             const GodotEmitOptions& options);
+[[nodiscard]] auto parse_map_with_tiled_tmj_format(const Path& path) -> ParseResult;
+[[nodiscard]] auto parse_map_with_tiled_tmx_format(const Path& path) -> ParseResult;
 
 }  // namespace tactile

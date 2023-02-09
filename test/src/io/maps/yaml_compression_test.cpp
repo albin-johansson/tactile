@@ -23,8 +23,8 @@
 
 #include "common/numeric.hpp"
 #include "core/tile/tile_matrix.hpp"
+#include "io/export/tactile_yaml_exporter.hpp"
 #include "io/ir/ir.hpp"
-#include "io/map/emit/emitter.hpp"
 #include "io/map/parse/parse_map.hpp"
 
 namespace tactile::test {
@@ -89,7 +89,7 @@ void create_and_validate_yaml_map(const char* path, TileFormatFactory format_fac
     auto test_map = create_test_map();
     test_map.tile_format = format_factory();
 
-    emit_yaml_map(path, test_map);
+    save_map_as_tactile_yaml(path, test_map);
   }
 
   const auto result = parse_map(path);
