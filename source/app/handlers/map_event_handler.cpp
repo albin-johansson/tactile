@@ -25,9 +25,12 @@
 #include "common/debug/assert.hpp"
 #include "common/util/fmt.hpp"
 #include "handlers/event_handlers.hpp"
+#include "io/export/map_exporter.hpp"
 #include "io/ir/map_from_ir.hpp"
-#include "io/map/emit/emitter.hpp"
+#include "io/ir/map_to_ir.hpp"
+#include "io/map/emit/gd/godot_converter.hpp"
 #include "io/map/emit/gd/godot_options.hpp"
+#include "io/map/emit/gd/godot_writer.hpp"
 #include "io/map/parse/parse_map.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/map_events.hpp"
@@ -183,7 +186,10 @@ void on_export_as_godot_scene(const ExportAsGodotSceneEvent& event)
         .project_tileset_dir = event.tileset_dir,
         .ellipse_polygon_point_count = event.polygon_points,
     };
-    emit_map_as_godot_scene(*map_document, options);
+
+    const auto ir_map = convert_map_document_to_ir(*map_document);
+    const auto godot_scene = convert_to_godot(ir_map, options);
+    write_godot_scene(godot_scene, options);
   }
 }
 

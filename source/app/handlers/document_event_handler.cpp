@@ -23,7 +23,7 @@
 
 #include "common/util/fmt.hpp"
 #include "handlers/event_handlers.hpp"
-#include "io/map/emit/emitter.hpp"
+#include "io/export/map_exporter.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/document_events.hpp"
 #include "model/file_history.hpp"
