@@ -24,7 +24,7 @@
 #include "common/numeric.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "io/export/tactile_yaml_exporter.hpp"
-#include "io/ir/ir.hpp"
+#include "io/ir/map_ir.hpp"
 #include "io/map/parse/parse_map.hpp"
 
 namespace tactile::test {

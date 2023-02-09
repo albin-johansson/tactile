@@ -20,7 +20,7 @@
 #include <utility>  // move
 
 #include "common/type/string.hpp"
-#include "io/ir/ir.hpp"
+#include "io/ir/map_ir.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 
 namespace tactile {

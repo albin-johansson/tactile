@@ -27,7 +27,7 @@
 #include "common/type/vec.hpp"
 #include "common/util/str.hpp"
 #include "core/tile/tile_matrix.hpp"
-#include "io/ir/ir.hpp"
+#include "io/ir/map_ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/xml.hpp"

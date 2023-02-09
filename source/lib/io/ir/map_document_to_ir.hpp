@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/macros.hpp"
-#include "io/ir/ir.hpp"
+#include "io/ir/map_ir.hpp"
 
 namespace tactile {
 

@@ -23,7 +23,7 @@
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
 #include "common/util/str.hpp"
-#include "io/ir/ir.hpp"
+#include "io/ir/map_ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"
 
