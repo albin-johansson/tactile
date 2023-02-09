@@ -25,8 +25,8 @@
 #include "common/type/string.hpp"
 #include "common/type/variant.hpp"
 #include "common/type/vec.hpp"
-#include "io/map/emit/gd/godot_file.hpp"
-#include "io/map/emit/gd/godot_tileset.hpp"
+#include "io/ir/godot/godot_file.hpp"
+#include "io/ir/godot/godot_tileset.hpp"
 
 namespace tactile {
 

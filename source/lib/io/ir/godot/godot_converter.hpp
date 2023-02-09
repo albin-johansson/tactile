@@ -21,7 +21,7 @@
 
 #include "common/macros.hpp"
 #include "io/ir/ir.hpp"
-#include "io/map/emit/gd/godot_scene.hpp"
+#include "io/ir/godot/godot_scene.hpp"
 
 namespace tactile {
 

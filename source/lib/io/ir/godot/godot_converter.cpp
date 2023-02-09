@@ -32,7 +32,7 @@
 #include "common/util/assoc.hpp"
 #include "common/util/functional.hpp"
 #include "core/tile/tile_pos.hpp"
-#include "io/map/emit/gd/godot_options.hpp"
+#include "io/ir/godot/godot_options.hpp"
 
 namespace tactile {
 namespace {
@@ -339,6 +339,7 @@ void add_layer(const GodotEmitOptions& options,
 }  // namespace
 
 // TODO sibling nodes cannot have the same names, validate!
+// TODO validate directories
 auto convert_to_godot(const ir::MapData& map, const GodotEmitOptions& options)
     -> GodotScene
 {
