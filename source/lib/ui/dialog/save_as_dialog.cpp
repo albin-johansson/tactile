@@ -25,8 +25,10 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/util/fmt.hpp"
 #include "io/file_dialog.hpp"
+#include "io/util/json.hpp"
+#include "io/util/xml.hpp"
+#include "io/util/yaml.hpp"
 #include "model/event/document_events.hpp"
 #include "model/settings.hpp"
 
@@ -39,8 +41,9 @@ void show_save_as_dialog(entt::dispatcher& dispatcher)
     auto path = dialog.path();
 
     const auto ext = path.extension();
-    const auto has_valid_extension = ext == ".yaml" || ext == ".yml" || ext == ".json" ||
-                                     ext == ".tmj" || ext == ".tmx" || ext == ".xml";
+    const auto has_valid_extension = has_supported_tactile_yaml_extension(path) ||
+                                     has_supported_tiled_json_extension(path) ||
+                                     has_supported_tiled_xml_extension(path);
 
     if (!has_valid_extension) {
       const auto& format = get_settings().get_preferred_format();
