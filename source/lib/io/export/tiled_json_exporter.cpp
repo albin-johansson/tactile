@@ -26,7 +26,7 @@
 
 #include "common/util/filesystem.hpp"
 #include "common/util/functional.hpp"
-#include "io/ir/map_ir.hpp"
+#include "io/ir/map/map_ir.hpp"
 #include "io/map/tiled_info.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/json.hpp"

@@ -21,7 +21,7 @@
 
 #include "core/layer/tile_format.hpp"
 #include "core/tile/tile_matrix.hpp"
-#include "io/ir/map_ir.hpp"
+#include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 #include "io/util/base64_tiles.hpp"
 

@@ -37,7 +37,7 @@
 #include "core/tile/tile_pos.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/tile/tileset_info.hpp"
-#include "io/ir/map_ir.hpp"
+#include "io/ir/map/map_ir.hpp"
 #include "io/load_texture.hpp"
 #include "model/cmd/command_stack.hpp"
 #include "model/document/document.hpp"

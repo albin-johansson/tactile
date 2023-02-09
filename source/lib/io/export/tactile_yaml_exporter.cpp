@@ -31,7 +31,7 @@
 #include "common/util/filesystem.hpp"
 #include "core/attribute.hpp"
 #include "io/compression.hpp"
-#include "io/ir/map_ir.hpp"
+#include "io/ir/map/map_ir.hpp"
 #include "io/stream.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/yaml.hpp"
