@@ -20,6 +20,7 @@
 #pragma once
 
 #include <concepts>  // invocable
+#include <memory>    // addressof
 #include <variant>   // get
 
 #include "common/macros.hpp"
@@ -174,31 +175,17 @@ struct MapData final {
   }
 };
 
-template <std::invocable<const ObjectLayerData&> T>
-void each_object_layer(const GroupLayerData& root, T&& callable)
+template <typename T, std::invocable<const ObjectLayerData&> U>
+void each_object_layer(const T& root, U&& callable)
 {
   for (const auto& layer: root.children) {
-    if (layer->type == LayerType::GroupLayer) {
-      const auto& group = layer->as_group_layer();
-      each_object_layer(group, callable);
+    const auto* layer_ptr = std::addressof(layer);
+    if (layer_ptr->type == LayerType::GroupLayer) {
+      const auto& group_layer = layer_ptr->as_group_layer();
+      each_object_layer(group_layer, callable);
     }
-    else if (layer->type == LayerType::ObjectLayer) {
-      const auto& object_layer = layer->as_object_layer();
-      callable(object_layer);
-    }
-  }
-}
-
-template <std::invocable<const ObjectLayerData&> T>
-void each_object_layer(const MapData& map, T&& callable)
-{
-  for (const auto& layer: map.layers) {
-    if (layer.type == LayerType::GroupLayer) {
-      const auto& group = layer.as_group_layer();
-      each_object_layer(group, callable);
-    }
-    else if (layer.type == LayerType::ObjectLayer) {
-      const auto& object_layer = layer.as_object_layer();
+    else if (layer_ptr->type == LayerType::ObjectLayer) {
+      const auto& object_layer = layer_ptr->as_object_layer();
       callable(object_layer);
     }
   }
