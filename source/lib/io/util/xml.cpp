@@ -42,7 +42,7 @@ auto parse_xml_file(const Path& path) -> Maybe<XmlDocument>
   pugi::xml_document document;
   const auto result =
       document.load_file(path.c_str(), pugi::parse_default | pugi::parse_trim_pcdata);
-  if (result == pugi::status_ok) {
+  if (result.status == pugi::status_ok) {
     return document;
   }
   else {
