@@ -39,7 +39,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_map(const Path& path, ir::MapData& data) -> ParseError
+[[nodiscard]] auto parse_map(const Path& path, MapIR& data) -> ParseError
 {
   auto document = parse_xml_file(path);
   if (!document) {
@@ -126,7 +126,7 @@ namespace {
 
 auto parse_xml_map(const Path& path) -> ParseResult
 {
-  ir::MapData ir_map;
+  MapIR ir_map;
   const auto res = parse_map(path, ir_map);
 
   if (res == ParseError::None) {

@@ -22,10 +22,10 @@
 #include "common/macros.hpp"
 #include "common/type/path.hpp"
 
-TACTILE_FWD_DECLARE_STRUCT_NS(tactile::ir, MapData)
-
 namespace tactile {
 
-void save_map_as_tiled_xml(const Path& destination, const ir::MapData& ir_map);
+TACTILE_FWD_DECLARE_STRUCT(MapIR)
+
+void save_map_as_tiled_xml(const Path& destination, const MapIR& ir_map);
 
 }  // namespace tactile

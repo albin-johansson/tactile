@@ -41,7 +41,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_map(const Path& path, ir::MapData& map_data) -> ParseError
+[[nodiscard]] auto parse_map(const Path& path, MapIR& map_data) -> ParseError
 {
   const auto json = parse_json_file(path);
   if (!json) {
@@ -118,7 +118,7 @@ namespace {
 
 auto parse_json_map(const Path& path) -> ParseResult
 {
-  ir::MapData ir_map;
+  MapIR ir_map;
   const auto res = parse_map(path, ir_map);
 
   if (res == ParseError::None) {

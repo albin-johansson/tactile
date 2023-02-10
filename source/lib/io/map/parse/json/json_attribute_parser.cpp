@@ -92,8 +92,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_property(const JSON& json, ir::ContextData& context_data)
-    -> ParseError
+[[nodiscard]] auto parse_property(const JSON& json, ContextIR& context_data) -> ParseError
 {
   String property_name;
 
@@ -120,7 +119,7 @@ namespace {
 
 }  // namespace
 
-auto parse_properties(const JSON& json, ir::ContextData& context_data) -> ParseError
+auto parse_properties(const JSON& json, ContextIR& context_data) -> ParseError
 {
   if (const auto it = json.find("properties"); it != json.end()) {
     for (const auto& [_, value]: it->items()) {

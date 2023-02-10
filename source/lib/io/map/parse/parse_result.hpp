@@ -25,6 +25,6 @@
 
 namespace tactile {
 
-using ParseResult = Expected<ir::MapData, ParseError>;
+using ParseResult = Expected<MapIR, ParseError>;
 
 }  // namespace tactile

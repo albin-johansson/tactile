@@ -34,9 +34,8 @@ using namespace std::string_literals;
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto parse_layer(const YAML::Node& node,
-                               const ir::MapData& map,
-                               usize index) -> Expected<ir::LayerData, ParseError>;
+[[nodiscard]] auto parse_layer(const YAML::Node& node, const MapIR& map, usize index)
+    -> Expected<LayerIR, ParseError>;
 
 [[nodiscard]] auto parse_plain_tile_layer_data(const String& tile_data,
                                                const TileExtent extent)
@@ -60,11 +59,11 @@ namespace {
 }
 
 [[nodiscard]] auto parse_tile_layer(const YAML::Node& node,
-                                    const ir::MapData& map,
+                                    const MapIR& map,
                                     const TileExtent extent)
-    -> Expected<ir::TileLayerData, ParseError>
+    -> Expected<TileLayerIR, ParseError>
 {
-  ir::TileLayerData tile_layer;
+  TileLayerIR tile_layer;
   tile_layer.extent = extent;
 
   String str_data;
@@ -91,10 +90,10 @@ namespace {
   return tile_layer;
 }
 
-[[nodiscard]] auto parse_object_layer(const YAML::Node& node, const ir::MapData& map)
-    -> Expected<ir::ObjectLayerData, ParseError>
+[[nodiscard]] auto parse_object_layer(const YAML::Node& node, const MapIR& map)
+    -> Expected<ObjectLayerIR, ParseError>
 {
-  ir::ObjectLayerData object_layer;
+  ObjectLayerIR object_layer;
 
   if (auto sequence = node["objects"]) {
     object_layer.objects.reserve(sequence.size());
@@ -112,10 +111,10 @@ namespace {
   return object_layer;
 }
 
-[[nodiscard]] auto parse_group_layer(const YAML::Node& node, const ir::MapData& map)
-    -> Expected<ir::GroupLayerData, ParseError>
+[[nodiscard]] auto parse_group_layer(const YAML::Node& node, const MapIR& map)
+    -> Expected<GroupLayerIR, ParseError>
 {
-  ir::GroupLayerData group;
+  GroupLayerIR group;
 
   if (auto sequence = node["layers"]) {
     group.children.reserve(sequence.size());
@@ -123,7 +122,7 @@ namespace {
     usize index = 0;
     for (const auto& layer_node: sequence) {
       if (auto child = parse_layer(layer_node, map, index)) {
-        group.children.push_back(std::make_unique<ir::LayerData>(std::move(*child)));
+        group.children.push_back(std::make_unique<LayerIR>(std::move(*child)));
       }
       else {
         return propagate_unexpected(child);
@@ -137,10 +136,10 @@ namespace {
 }
 
 [[nodiscard]] auto parse_layer(const YAML::Node& node,
-                               const ir::MapData& map,
-                               const usize index) -> Expected<ir::LayerData, ParseError>
+                               const MapIR& map,
+                               const usize index) -> Expected<LayerIR, ParseError>
 {
-  ir::LayerData layer;
+  LayerIR layer;
   layer.index = index;
 
   if (!read_attr(node, "id", layer.id)) {
@@ -159,7 +158,7 @@ namespace {
   if (type == "tile-layer") {
     layer.type = LayerType::TileLayer;
     if (auto tile_layer = parse_tile_layer(node, map, map.extent)) {
-      layer.data.emplace<ir::TileLayerData>(std::move(*tile_layer));
+      layer.data.emplace<TileLayerIR>(std::move(*tile_layer));
     }
     else {
       return propagate_unexpected(tile_layer);
@@ -168,7 +167,7 @@ namespace {
   else if (type == "object-layer") {
     layer.type = LayerType::ObjectLayer;
     if (auto object_layer = parse_object_layer(node, map)) {
-      layer.data.emplace<ir::ObjectLayerData>(std::move(*object_layer));
+      layer.data.emplace<ObjectLayerIR>(std::move(*object_layer));
     }
     else {
       return propagate_unexpected(object_layer);
@@ -177,7 +176,7 @@ namespace {
   else if (type == "group-layer") {
     layer.type = LayerType::GroupLayer;
     if (auto group = parse_group_layer(node, map)) {
-      layer.data.emplace<ir::GroupLayerData>(std::move(*group));
+      layer.data.emplace<GroupLayerIR>(std::move(*group));
     }
     else {
       return propagate_unexpected(group);
@@ -199,10 +198,10 @@ namespace {
 
 }  // namespace
 
-auto parse_object(const YAML::Node& node, const ir::MapData& map)
-    -> Expected<ir::ObjectData, ParseError>
+auto parse_object(const YAML::Node& node, const MapIR& map)
+    -> Expected<ObjectIR, ParseError>
 {
-  ir::ObjectData object;
+  ObjectIR object;
 
   if (!read_attr(node, "id", object.id)) {
     return unexpected(ParseError::NoObjectId);
@@ -246,10 +245,10 @@ auto parse_object(const YAML::Node& node, const ir::MapData& map)
   return object;
 }
 
-auto parse_layers(const YAML::Node& sequence, const ir::MapData& map)
-    -> Expected<Vec<ir::LayerData>, ParseError>
+auto parse_layers(const YAML::Node& sequence, const MapIR& map)
+    -> Expected<Vec<LayerIR>, ParseError>
 {
-  Vec<ir::LayerData> layers;
+  Vec<LayerIR> layers;
   layers.reserve(sequence.size());
 
   usize index = 0;

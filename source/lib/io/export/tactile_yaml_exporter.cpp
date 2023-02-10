@@ -42,7 +42,7 @@ namespace {
 
 constexpr int kTilesetNodeVersion = 1;
 
-void emit_properties(YAML::Emitter& emitter, const ir::ContextData& context)
+void emit_properties(YAML::Emitter& emitter, const ContextIR& context)
 {
   if (!context.properties.empty()) {
     emitter << YAML::Key << "properties" << YAML::BeginSeq;
@@ -59,7 +59,7 @@ void emit_properties(YAML::Emitter& emitter, const ir::ContextData& context)
   }
 }
 
-void emit_components(YAML::Emitter& emitter, const ir::ContextData& context)
+void emit_components(YAML::Emitter& emitter, const ContextIR& context)
 {
   if (!context.components.empty()) {
     emitter << YAML::Key << "components" << YAML::BeginSeq;
@@ -85,7 +85,7 @@ void emit_components(YAML::Emitter& emitter, const ir::ContextData& context)
   }
 }
 
-void emit_object_data(YAML::Emitter& emitter, const ir::ObjectData& data)
+void emit_object_data(YAML::Emitter& emitter, const ObjectIR& data)
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "id" << YAML::Value << data.id;
@@ -139,7 +139,7 @@ void emit_object_data(YAML::Emitter& emitter, const ir::ObjectData& data)
   emitter << YAML::EndMap;
 }
 
-void emit_object_layer_data(YAML::Emitter& emitter, const ir::ObjectLayerData& data)
+void emit_object_layer_data(YAML::Emitter& emitter, const ObjectLayerIR& data)
 {
   if (data.objects.empty()) {
     return;
@@ -155,7 +155,7 @@ void emit_object_layer_data(YAML::Emitter& emitter, const ir::ObjectLayerData& d
 }
 
 void emit_plain_tile_layer_data(YAML::Emitter& emitter,
-                                const ir::TileLayerData& data,
+                                const TileLayerIR& data,
                                 const TileExtent extent)
 {
   const auto& settings = get_settings();
@@ -186,9 +186,7 @@ void emit_plain_tile_layer_data(YAML::Emitter& emitter,
   }
 }
 
-void emit_layer(YAML::Emitter& emitter,
-                const ir::MapData& map,
-                const ir::LayerData& layer)
+void emit_layer(YAML::Emitter& emitter, const MapIR& map, const LayerIR& layer)
 {
   emitter << YAML::BeginMap;
 
@@ -250,7 +248,7 @@ void emit_layer(YAML::Emitter& emitter,
   emitter << YAML::EndMap;
 }
 
-void emit_layers(YAML::Emitter& emitter, const ir::MapData& map)
+void emit_layers(YAML::Emitter& emitter, const MapIR& map)
 {
   if (map.layers.empty()) {
     return;
@@ -265,7 +263,7 @@ void emit_layers(YAML::Emitter& emitter, const ir::MapData& map)
   emitter << YAML::EndSeq;
 }
 
-void emit_tileset_tile_animation(YAML::Emitter& emitter, const ir::MetaTileData& data)
+void emit_tileset_tile_animation(YAML::Emitter& emitter, const TileIR& data)
 {
   emitter << YAML::Key << "animation" << YAML::BeginSeq;
 
@@ -279,7 +277,7 @@ void emit_tileset_tile_animation(YAML::Emitter& emitter, const ir::MetaTileData&
   emitter << YAML::EndSeq;
 }
 
-void emit_tileset_tiles(YAML::Emitter& emitter, const ir::TilesetData& tileset)
+void emit_tileset_tiles(YAML::Emitter& emitter, const TilesetIR& tileset)
 {
   emitter << YAML::Key << "tiles" << YAML::BeginSeq;
 
@@ -308,9 +306,7 @@ void emit_tileset_tiles(YAML::Emitter& emitter, const ir::TilesetData& tileset)
   emitter << YAML::EndSeq;
 }
 
-void emit_tileset_file(const Path& dir,
-                       const String& filename,
-                       const ir::TilesetData& tileset)
+void emit_tileset_file(const Path& dir, const String& filename, const TilesetIR& tileset)
 {
   YAML::Emitter emitter;
   emitter.SetIndent(2);
@@ -347,7 +343,7 @@ void emit_tileset_file(const Path& dir,
   }
 }
 
-void emit_tilesets(YAML::Emitter& emitter, const Path& dir, const ir::MapData& ir_map)
+void emit_tilesets(YAML::Emitter& emitter, const Path& dir, const MapIR& ir_map)
 {
   if (ir_map.tilesets.empty()) {
     return;
@@ -383,7 +379,7 @@ void emit_component_definition_attribute(YAML::Emitter& emitter,
   emitter << YAML::EndMap;
 }
 
-void emit_component_definitions(YAML::Emitter& emitter, const ir::MapData& ir_map)
+void emit_component_definitions(YAML::Emitter& emitter, const MapIR& ir_map)
 {
   if (ir_map.component_definitions.empty()) {
     return;
@@ -411,7 +407,7 @@ void emit_component_definitions(YAML::Emitter& emitter, const ir::MapData& ir_ma
   emitter << YAML::EndSeq;
 }
 
-void emit_tile_format(YAML::Emitter& emitter, const ir::TileFormatData& format)
+void emit_tile_format(YAML::Emitter& emitter, const TileFormatIR& format)
 {
   if (format.encoding != TileEncoding::Plain) {
     emitter << YAML::Key << "tile-format" << YAML::BeginMap;
@@ -440,7 +436,7 @@ void emit_tile_format(YAML::Emitter& emitter, const ir::TileFormatData& format)
 
 }  // namespace
 
-void save_map_as_tactile_yaml(const Path& destination, const ir::MapData& ir_map)
+void save_map_as_tactile_yaml(const Path& destination, const MapIR& ir_map)
 {
   YAML::Emitter emitter;
   emitter.SetIndent(2);

@@ -31,7 +31,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto parse_fancy_tile(const JSON& json, ir::TilesetData& tileset_data)
+[[nodiscard]] auto parse_fancy_tile(const JSON& json, TilesetIR& tileset_data)
     -> ParseError
 {
   TileID tile_id {};
@@ -89,7 +89,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_fancy_tiles(const JSON& json, ir::TilesetData& tileset_data)
+[[nodiscard]] auto parse_fancy_tiles(const JSON& json, TilesetIR& tileset_data)
     -> ParseError
 {
   if (json.contains("tiles")) {
@@ -105,7 +105,7 @@ namespace {
 }
 
 [[nodiscard]] auto parse_image_path(const JSON& json,
-                                    ir::TilesetData& tileset_data,
+                                    TilesetIR& tileset_data,
                                     const Path& dir) -> ParseError
 {
   const auto relative = json.find("image");
@@ -126,7 +126,7 @@ namespace {
 }
 
 [[nodiscard]] auto parse_common_tileset_attributes(const JSON& json,
-                                                   ir::TilesetData& tileset_data,
+                                                   TilesetIR& tileset_data,
                                                    const Path& dir) -> ParseError
 {
   if (auto name = as_string(json, "name")) {
@@ -196,7 +196,7 @@ namespace {
 }
 
 [[nodiscard]] auto parse_external_tileset(const JSON& json,
-                                          ir::TilesetData& tileset_data,
+                                          TilesetIR& tileset_data,
                                           const Path& dir) -> ParseError
 {
   TACTILE_ASSERT(json.contains("source"));
@@ -217,7 +217,7 @@ namespace {
 }
 
 [[nodiscard]] auto parse_tileset(const JSON& json,
-                                 ir::TilesetData& tileset_data,
+                                 TilesetIR& tileset_data,
                                  const Path& dir) -> ParseError
 {
   if (const auto first_tile = as_int(json, "firstgid")) {
@@ -237,8 +237,7 @@ namespace {
 
 }  // namespace
 
-auto parse_tilesets(const JSON& json, ir::MapData& map_data, const Path& dir)
-    -> ParseError
+auto parse_tilesets(const JSON& json, MapIR& map_data, const Path& dir) -> ParseError
 {
   const auto iter = json.find("tilesets");
 

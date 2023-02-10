@@ -26,6 +26,6 @@ namespace tactile {
 
 TACTILE_FWD_DECLARE_CLASS(MapDocument)
 
-[[nodiscard]] auto convert_map_document_to_ir(const MapDocument& document) -> ir::MapData;
+[[nodiscard]] auto convert_map_document_to_ir(const MapDocument& document) -> MapIR;
 
 }  // namespace tactile

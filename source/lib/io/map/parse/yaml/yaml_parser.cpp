@@ -31,9 +31,9 @@ namespace tactile {
 namespace {
 
 [[nodiscard]] auto parse_tile_format(const YAML::Node& node)
-    -> Expected<ir::TileFormatData, ParseError>
+    -> Expected<TileFormatIR, ParseError>
 {
-  ir::TileFormatData format;
+  TileFormatIR format;
 
   if (auto encoding = node["encoding"]) {
     const auto encoding_str = encoding.as<std::string>();
@@ -91,7 +91,7 @@ namespace {
   return format;
 }
 
-[[nodiscard]] auto parse_map(const Path& path, ir::MapData& map) -> ParseError
+[[nodiscard]] auto parse_map(const Path& path, MapIR& map) -> ParseError
 {
   const auto node = YAML::LoadFile(path.string());
   if (!node) {
@@ -171,7 +171,7 @@ namespace {
 
 auto parse_yaml_map(const Path& path) -> ParseResult
 {
-  ir::MapData ir_map;
+  MapIR ir_map;
   const auto res = parse_map(path, ir_map);
 
   if (res == ParseError::None) {

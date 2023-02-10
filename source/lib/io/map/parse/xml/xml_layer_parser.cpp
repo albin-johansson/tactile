@@ -87,7 +87,7 @@ namespace {
   return tiles;
 }
 
-[[nodiscard]] auto parse_tile_data(XmlNode layer_node, ir::MapData& map)
+[[nodiscard]] auto parse_tile_data(XmlNode layer_node, MapIR& map)
     -> Expected<TileMatrix, ParseError>
 {
   const auto data = layer_node.child("data");
@@ -144,10 +144,10 @@ namespace {
   }
 }
 
-[[nodiscard]] auto parse_tile_layer(XmlNode layer_node, ir::MapData& map)
-    -> Expected<ir::TileLayerData, ParseError>
+[[nodiscard]] auto parse_tile_layer(XmlNode layer_node, MapIR& map)
+    -> Expected<TileLayerIR, ParseError>
 {
-  ir::TileLayerData tile_layer;
+  TileLayerIR tile_layer;
 
   if (const auto width = get_uint_attr(layer_node, "width")) {
     tile_layer.extent.cols = *width;
@@ -188,9 +188,9 @@ namespace {
 }
 
 [[nodiscard]] auto parse_object_layer(XmlNode layer_node)
-    -> Expected<ir::ObjectLayerData, ParseError>
+    -> Expected<ObjectLayerIR, ParseError>
 {
-  ir::ObjectLayerData object_layer;
+  ObjectLayerIR object_layer;
 
   for (const auto object_node: layer_node.children("object")) {
     if (auto object = parse_object(object_node)) {
@@ -204,10 +204,10 @@ namespace {
   return object_layer;
 }
 
-[[nodiscard]] auto parse_layer(XmlNode layer_node, ir::MapData& map, const usize index)
-    -> Expected<ir::LayerData, ParseError>
+[[nodiscard]] auto parse_layer(XmlNode layer_node, MapIR& map, const usize index)
+    -> Expected<LayerIR, ParseError>
 {
-  ir::LayerData layer;
+  LayerIR layer;
   layer.index = index;
 
   if (const auto id = get_int_attr(layer_node, "id")) {
@@ -225,7 +225,7 @@ namespace {
     layer.type = LayerType::TileLayer;
 
     if (auto tile_layer = parse_tile_layer(layer_node, map)) {
-      layer.data.emplace<ir::TileLayerData>(std::move(*tile_layer));
+      layer.data.emplace<TileLayerIR>(std::move(*tile_layer));
     }
     else {
       return propagate_unexpected(tile_layer);
@@ -235,7 +235,7 @@ namespace {
     layer.type = LayerType::ObjectLayer;
 
     if (auto object_layer = parse_object_layer(layer_node)) {
-      layer.data.emplace<ir::ObjectLayerData>(std::move(*object_layer));
+      layer.data.emplace<ObjectLayerIR>(std::move(*object_layer));
     }
     else {
       return propagate_unexpected(object_layer);
@@ -243,13 +243,12 @@ namespace {
   }
   else if (std::strcmp(layer_node.name(), "group") == 0) {
     layer.type = LayerType::GroupLayer;
-    auto& group = layer.data.emplace<ir::GroupLayerData>();
+    auto& group = layer.data.emplace<GroupLayerIR>();
 
     usize child_index = 0;
     for (auto child_node: collect_layer_nodes(layer_node)) {
       if (auto child_layer = parse_layer(child_node, map, child_index)) {
-        group.children.push_back(
-            std::make_unique<ir::LayerData>(std::move(*child_layer)));
+        group.children.push_back(std::make_unique<LayerIR>(std::move(*child_layer)));
       }
       else {
         return propagate_unexpected(child_layer);
@@ -275,9 +274,9 @@ namespace {
 
 }  // namespace
 
-auto parse_object(XmlNode object_node) -> Expected<ir::ObjectData, ParseError>
+auto parse_object(XmlNode object_node) -> Expected<ObjectIR, ParseError>
 {
-  ir::ObjectData object;
+  ObjectIR object;
 
   if (const auto id = get_int_attr(object_node, "id")) {
     object.id = *id;
@@ -316,10 +315,9 @@ auto parse_object(XmlNode object_node) -> Expected<ir::ObjectData, ParseError>
   return object;
 }
 
-auto parse_layers(XmlNode map_node, ir::MapData& map)
-    -> Expected<Vec<ir::LayerData>, ParseError>
+auto parse_layers(XmlNode map_node, MapIR& map) -> Expected<Vec<LayerIR>, ParseError>
 {
-  Vec<ir::LayerData> layers;
+  Vec<LayerIR> layers;
 
   usize index = 0;
   for (const auto layer_node: collect_layer_nodes(map_node)) {

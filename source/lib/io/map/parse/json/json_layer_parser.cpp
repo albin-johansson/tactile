@@ -39,10 +39,9 @@ NLOHMANN_JSON_SERIALIZE_ENUM(TileCompression,
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto parse_object_layer(const JSON& json, ir::LayerData& layer_data)
-    -> ParseError
+[[nodiscard]] auto parse_object_layer(const JSON& json, LayerIR& layer_data) -> ParseError
 {
-  auto& object_layer_data = layer_data.data.emplace<ir::ObjectLayerData>();
+  auto& object_layer_data = layer_data.data.emplace<ObjectLayerIR>();
 
   if (const auto iter = json.find("objects"); iter != json.end()) {
     object_layer_data.objects.reserve(iter->size());
@@ -58,8 +57,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_tile_layer_csv_data(const JSON& json,
-                                             ir::TileLayerData& tile_layer) -> ParseError
+[[nodiscard]] auto parse_tile_layer_csv_data(const JSON& json, TileLayerIR& tile_layer)
+    -> ParseError
 {
   if (!json.is_array()) {
     return ParseError::CorruptTileLayerData;
@@ -81,8 +80,8 @@ namespace {
 }
 
 [[nodiscard]] auto parse_tile_layer_data(const JSON& json,
-                                         ir::MapData& map,
-                                         ir::TileLayerData& tile_layer) -> ParseError
+                                         MapIR& map,
+                                         TileLayerIR& tile_layer) -> ParseError
 {
   if (!json.contains("data")) {
     return ParseError::NoTileLayerData;
@@ -118,11 +117,10 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_tile_layer(const JSON& json,
-                                    ir::MapData& map,
-                                    ir::LayerData& layer) -> ParseError
+[[nodiscard]] auto parse_tile_layer(const JSON& json, MapIR& map, LayerIR& layer)
+    -> ParseError
 {
-  auto& tile_layer = layer.data.emplace<ir::TileLayerData>();
+  auto& tile_layer = layer.data.emplace<TileLayerIR>();
 
   if (const auto width = as_uint(json, "width")) {
     tile_layer.extent.cols = *width;
@@ -163,8 +161,8 @@ namespace {
 }
 
 [[nodiscard]] auto parse_layer(const JSON& json,
-                               ir::MapData& map,
-                               ir::LayerData& layer,
+                               MapIR& map,
+                               LayerIR& layer,
                                const usize index) -> ParseError
 {
   layer.index = index;
@@ -195,12 +193,12 @@ namespace {
     }
     else if (type == "group") {
       layer.type = LayerType::GroupLayer;
-      auto& group_layer = layer.data.emplace<ir::GroupLayerData>();
+      auto& group_layer = layer.data.emplace<GroupLayerIR>();
 
       usize child_index = 0;
       for (const auto& [_, value]: json.at("layers").items()) {
         auto& child_layer =
-            group_layer.children.emplace_back(std::make_unique<ir::LayerData>());
+            group_layer.children.emplace_back(std::make_unique<LayerIR>());
 
         if (const auto err = parse_layer(value, map, *child_layer, child_index);
             err != ParseError::None) {
@@ -227,7 +225,7 @@ namespace {
 
 }  // namespace
 
-auto parse_object(const JSON& json, ir::ObjectData& object) -> ParseError
+auto parse_object(const JSON& json, ObjectIR& object) -> ParseError
 {
   if (const auto id = as_int(json, "id")) {
     object.id = *id;
@@ -263,7 +261,7 @@ auto parse_object(const JSON& json, ir::ObjectData& object) -> ParseError
   return ParseError::None;
 }
 
-auto parse_layers(const JSON& json, ir::MapData& map) -> ParseError
+auto parse_layers(const JSON& json, MapIR& map) -> ParseError
 {
   const auto iter = json.find("layers");
 

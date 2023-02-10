@@ -49,7 +49,7 @@ inline constexpr int32 kTileOffset = 65'536;
   return copy;
 }
 
-[[nodiscard]] auto copy_meta(const ir::ContextData& context) -> GdMetaData
+[[nodiscard]] auto copy_meta(const ContextIR& context) -> GdMetaData
 {
   GdMetaData meta;
 
@@ -67,7 +67,7 @@ inline constexpr int32 kTileOffset = 65'536;
   return meta;
 }
 
-[[nodiscard]] auto join_tilesets(const ir::MapData& map, const GodotEmitOptions& options)
+[[nodiscard]] auto join_tilesets(const MapIR& map, const GodotEmitOptions& options)
     -> GodotTileset
 {
   GodotTileset result;
@@ -92,7 +92,7 @@ inline constexpr int32 kTileOffset = 65'536;
   return result;
 }
 
-void add_tileset_textures(const ir::MapData& map,
+void add_tileset_textures(const MapIR& map,
                           const GodotEmitOptions& options,
                           GodotFile& file,
                           HashMap<UUID, GdExtRes>& tileset_textures)
@@ -107,10 +107,10 @@ void add_tileset_textures(const ir::MapData& map,
   }
 }
 
-void add_animation(const ir::TilesetData& tileset,
+void add_animation(const TilesetIR& tileset,
                    const GdExtRes texture_id,
                    const TileIndex tile_index,
-                   const ir::MetaTileData& tile,
+                   const TileIR& tile,
                    GodotFile& file)
 {
   TACTILE_ASSERT(!tile.frames.empty());
@@ -140,7 +140,7 @@ void add_animation(const ir::TilesetData& tileset,
   file.add_animation(std::move(animation));
 }
 
-void add_animations(const ir::MapData& map,
+void add_animations(const MapIR& map,
                     const TilesetTextures& tileset_textures,
                     GodotFile& file)
 {
@@ -154,7 +154,7 @@ void add_animations(const ir::MapData& map,
   }
 }
 
-[[nodiscard]] auto approximate_ellipse_as_polygon(const ir::ObjectData& object,
+[[nodiscard]] auto approximate_ellipse_as_polygon(const ObjectIR& object,
                                                   const usize point_count) -> Vec<Float2>
 {
   TACTILE_ASSERT(object.type == ObjectType::Ellipse);
@@ -176,7 +176,7 @@ void add_animations(const ir::MapData& map,
 }
 
 [[nodiscard]] auto create_object(const GodotEmitOptions& options,
-                                 const ir::ObjectData& object,
+                                 const ObjectIR& object,
                                  String parent,
                                  GodotFile& file) -> GdObject
 {
@@ -216,7 +216,7 @@ void add_animations(const ir::MapData& map,
 }
 
 void add_object_layer(const GodotEmitOptions& options,
-                      const ir::LayerData& layer,
+                      const LayerIR& layer,
                       String parent,
                       GodotScene& scene)
 {
@@ -244,8 +244,8 @@ void add_object_layer(const GodotEmitOptions& options,
   scene.add_layer(std::move(gd_layer));
 }
 
-void add_tile_layer(const ir::MapData& map,
-                    const ir::LayerData& layer,
+void add_tile_layer(const MapIR& map,
+                    const LayerIR& layer,
                     String parent,
                     GodotScene& scene)
 {
@@ -299,8 +299,8 @@ void add_tile_layer(const ir::MapData& map,
 }
 
 void add_layer(const GodotEmitOptions& options,
-               const ir::MapData& map,
-               const ir::LayerData& layer,
+               const MapIR& map,
+               const LayerIR& layer,
                String parent,
                GodotScene& scene)
 {
@@ -340,8 +340,7 @@ void add_layer(const GodotEmitOptions& options,
 
 // TODO sibling nodes cannot have the same names, validate!
 // TODO validate directories
-auto convert_to_godot(const ir::MapData& map, const GodotEmitOptions& options)
-    -> GodotScene
+auto convert_to_godot(const MapIR& map, const GodotEmitOptions& options) -> GodotScene
 {
   GodotScene scene;
   scene.set_tileset(join_tilesets(map, options),

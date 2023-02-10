@@ -43,92 +43,92 @@
 #include "core/tile/tile_extent.hpp"
 #include "core/tile/tile_matrix.hpp"
 
-namespace tactile::ir {
+namespace tactile {
+
+TACTILE_FWD_DECLARE_STRUCT(LayerIR)
 
 using AttributeMap = StringMap<Attribute>;
 using ComponentMap = StringMap<AttributeMap>;
 
-struct ContextData final {
+struct ContextIR final {
   AttributeMap properties;
   ComponentMap components;
 };
 
-struct ObjectData final {
+struct ObjectIR final {
   ObjectID id {};
   ObjectType type {};
   Float2 pos {};
   Float2 size {};
   String name;
   String tag;
-  ContextData context;
+  ContextIR context;
   bool visible {};
 };
 
-struct TileLayerData final {
+struct TileLayerIR final {
   // The extent is provided for convenience, it should mirror the map extent.
   TileExtent extent;
   TileMatrix tiles;
 };
 
-struct ObjectLayerData final {
-  Vec<ObjectData> objects;
+struct ObjectLayerIR final {
+  Vec<ObjectIR> objects;
 };
 
-struct LayerData;
+struct GroupLayerIR final {
+  GroupLayerIR() = default;
+  ~GroupLayerIR() noexcept = default;
 
-struct GroupLayerData final {
-  GroupLayerData() = default;
-  ~GroupLayerData() noexcept = default;
+  TACTILE_DELETE_COPY(GroupLayerIR);
+  TACTILE_DEFAULT_MOVE(GroupLayerIR);
 
-  TACTILE_DELETE_COPY(GroupLayerData);
-  TACTILE_DEFAULT_MOVE(GroupLayerData);
-
-  Vec<Unique<LayerData>> children;
+  Vec<Unique<LayerIR>> children;
 };
 
-struct LayerData final {
-  using Data = Variant<TileLayerData, ObjectLayerData, GroupLayerData>;
+struct LayerIR final {
+  using Data = Variant<TileLayerIR, ObjectLayerIR, GroupLayerIR>;
 
   LayerID id {};
   LayerType type {};
   usize index {};  /// Local index.
   String name;
   Data data;
-  ContextData context;
+  ContextIR context;
   float opacity {};
   bool visible {};
 
-  [[nodiscard]] auto as_tile_layer() const -> const TileLayerData&
+  [[nodiscard]] auto as_tile_layer() const -> const TileLayerIR&
   {
-    return std::get<TileLayerData>(data);
+    return std::get<TileLayerIR>(data);
   }
 
-  [[nodiscard]] auto as_object_layer() const -> const ObjectLayerData&
+  [[nodiscard]] auto as_object_layer() const -> const ObjectLayerIR&
   {
-    return std::get<ObjectLayerData>(data);
+    return std::get<ObjectLayerIR>(data);
   }
 
-  [[nodiscard]] auto as_group_layer() const -> const GroupLayerData&
+  [[nodiscard]] auto as_group_layer() const -> const GroupLayerIR&
   {
-    return std::get<GroupLayerData>(data);
+    return std::get<GroupLayerIR>(data);
   }
 };
 
-struct AnimationFrameData final {
+struct AnimationFrameIR final {
   TileIndex tile_index {};
   uint64 duration_ms {};
 };
 
-struct MetaTileData final {
+struct TileIR final {
   UUID uuid {make_uuid()};  // This is not persistent! Only here for convenience.
 
-  Vec<ObjectData> objects;
-  Vec<AnimationFrameData> frames;
-  ContextData context;
+  Vec<ObjectIR> objects;
+  Vec<AnimationFrameIR> frames;
+  ContextIR context;
 };
 
-struct TilesetData final {
-  using MetaTiles = HashMap<TileIndex, MetaTileData>;
+struct TilesetIR final {
+  using MetaTiles = HashMap<TileIndex, TileIR>;
 
   UUID uuid {make_uuid()};  // This is not persistent! Only here for convenience.
 
@@ -140,7 +140,7 @@ struct TilesetData final {
   Path image_path;
   Int2 image_size {};
   MetaTiles fancy_tiles;
-  ContextData context;
+  ContextIR context;
 
   [[nodiscard]] auto is_animated(const TileIndex index) const -> bool
   {
@@ -149,33 +149,33 @@ struct TilesetData final {
   }
 };
 
-struct TileFormatData final {
+struct TileFormatIR final {
   TileEncoding encoding {TileEncoding::Plain};
   TileCompression compression {TileCompression::None};
   Maybe<int32> zlib_compression_level;
   Maybe<int32> zstd_compression_level;
 };
 
-struct MapData final {
+struct MapIR final {
   TileExtent extent;
   Int2 tile_size {};
   int32 next_layer_id {};
   int32 next_object_id {};
-  TileFormatData tile_format;
+  TileFormatIR tile_format;
   ComponentMap component_definitions;
-  Vec<TilesetData> tilesets;
-  Vec<LayerData> layers;
-  ContextData context;
+  Vec<TilesetIR> tilesets;
+  Vec<LayerIR> layers;
+  ContextIR context;
 
-  [[nodiscard]] auto find_tileset_with_tile(const TileID id) const -> const TilesetData&
+  [[nodiscard]] auto find_tileset_with_tile(const TileID id) const -> const TilesetIR&
   {
-    return first_in(tilesets, [id](const ir::TilesetData& ts) {
+    return first_in(tilesets, [id](const TilesetIR& ts) {
       return id >= ts.first_tile && id <= ts.first_tile + ts.tile_count;
     });
   }
 };
 
-template <typename T, std::invocable<const ObjectLayerData&> U>
+template <typename T, std::invocable<const ObjectLayerIR&> U>
 void each_object_layer(const T& root, U&& callable)
 {
   for (const auto& layer: root.children) {
@@ -191,4 +191,4 @@ void each_object_layer(const T& root, U&& callable)
   }
 }
 
-}  // namespace tactile::ir
+}  // namespace tactile

@@ -46,7 +46,7 @@ constexpr usize kColCount = 13;
 
 inline String gCurrentParser;
 
-void validate_contexts(const ir::ContextData& source, const ir::ContextData& restored)
+void validate_contexts(const ContextIR& source, const ContextIR& restored)
 {
   REQUIRE(source.properties.size() == restored.properties.size());
   REQUIRE(source.components.size() == restored.components.size());
@@ -59,7 +59,7 @@ void validate_contexts(const ir::ContextData& source, const ir::ContextData& res
   }
 }
 
-void validate_objects(const ir::ObjectData& source, const ir::ObjectData& restored)
+void validate_objects(const ObjectIR& source, const ObjectIR& restored)
 {
   REQUIRE(source.id == restored.id);
   REQUIRE(source.type == restored.type);
@@ -75,8 +75,7 @@ void validate_objects(const ir::ObjectData& source, const ir::ObjectData& restor
   validate_contexts(source.context, restored.context);
 }
 
-void validate_object_layers(const ir::ObjectLayerData& source,
-                            const ir::ObjectLayerData& restored)
+void validate_object_layers(const ObjectLayerIR& source, const ObjectLayerIR& restored)
 {
   REQUIRE(source.objects.size() == restored.objects.size());
   for (usize index = 0; index < source.objects.size(); ++index) {
@@ -86,8 +85,7 @@ void validate_object_layers(const ir::ObjectLayerData& source,
   }
 }
 
-void validate_layers(const ir::LayerData& source_layer,
-                     const ir::LayerData& restored_layer)
+void validate_layers(const LayerIR& source_layer, const LayerIR& restored_layer)
 {
   REQUIRE(source_layer.name == restored_layer.name);
   REQUIRE(source_layer.type == restored_layer.type);
@@ -126,7 +124,7 @@ void validate_layers(const ir::LayerData& source_layer,
   validate_contexts(source_layer.context, restored_layer.context);
 }
 
-void validate_layers(const ir::MapData& source, const ir::MapData& restored)
+void validate_layers(const MapIR& source, const MapIR& restored)
 {
   REQUIRE(source.layers.size() == restored.layers.size());
   for (usize index = 0; index < source.layers.size(); ++index) {
@@ -136,8 +134,7 @@ void validate_layers(const ir::MapData& source, const ir::MapData& restored)
   }
 }
 
-void validate_fancy_tiles(const ir::MetaTileData& source,
-                          const ir::MetaTileData& restored)
+void validate_fancy_tiles(const TileIR& source, const TileIR& restored)
 {
   REQUIRE(source.objects.size() == restored.objects.size());
   for (usize index = 0; index < source.objects.size(); ++index) {
@@ -158,7 +155,7 @@ void validate_fancy_tiles(const ir::MetaTileData& source,
   validate_contexts(source.context, restored.context);
 }
 
-void validate_tilesets(const ir::MapData& source, const ir::MapData& restored)
+void validate_tilesets(const MapIR& source, const MapIR& restored)
 {
   REQUIRE(source.tilesets.size() == restored.tilesets.size());
 
@@ -187,14 +184,13 @@ void validate_tilesets(const ir::MapData& source, const ir::MapData& restored)
   }
 }
 
-void validate_component_definitions(const ir::MapData& source,
-                                    const ir::MapData& restored)
+void validate_component_definitions(const MapIR& source, const MapIR& restored)
 {
   REQUIRE(source.component_definitions.size() == restored.component_definitions.size());
   REQUIRE(source.component_definitions == restored.component_definitions);
 }
 
-void validate_basic_map_info(const ir::MapData& source, const ir::MapData& restored)
+void validate_basic_map_info(const MapIR& source, const MapIR& restored)
 {
   REQUIRE(source.extent.rows == restored.extent.rows);
   REQUIRE(source.extent.cols == restored.extent.cols);
@@ -210,9 +206,9 @@ void validate_basic_map_info(const ir::MapData& source, const ir::MapData& resto
   }
 }
 
-[[nodiscard]] auto create_source_ground_layer() -> ir::LayerData
+[[nodiscard]] auto create_source_ground_layer() -> LayerIR
 {
-  ir::LayerData data;
+  LayerIR data;
 
   data.name = "Ground";
   data.type = LayerType::TileLayer;
@@ -223,7 +219,7 @@ void validate_basic_map_info(const ir::MapData& source, const ir::MapData& resto
   data.opacity = 0.8f;
   data.visible = true;
 
-  auto& tile_data = data.data.emplace<ir::TileLayerData>();
+  auto& tile_data = data.data.emplace<TileLayerIR>();
   tile_data.extent.rows = kRowCount;
   tile_data.extent.cols = kColCount;
 
@@ -240,9 +236,9 @@ void validate_basic_map_info(const ir::MapData& source, const ir::MapData& resto
   return data;
 }
 
-[[nodiscard]] auto create_source_group_layer(const bool use_components) -> ir::LayerData
+[[nodiscard]] auto create_source_group_layer(const bool use_components) -> LayerIR
 {
-  ir::LayerData data;
+  LayerIR data;
 
   data.name = "Tile Detail Layers";
   data.type = LayerType::GroupLayer;
@@ -255,10 +251,10 @@ void validate_basic_map_info(const ir::MapData& source, const ir::MapData& resto
 
   data.context.properties["tint"] = Color::from_rgba("#1DBC748F").value();
 
-  auto& group = data.data.emplace<ir::GroupLayerData>();
+  auto& group = data.data.emplace<GroupLayerIR>();
 
   {
-    auto& child = group.children.emplace_back(std::make_unique<ir::LayerData>());
+    auto& child = group.children.emplace_back(std::make_unique<LayerIR>());
     child->name = "Details 1";
     child->type = LayerType::TileLayer;
 
@@ -268,7 +264,7 @@ void validate_basic_map_info(const ir::MapData& source, const ir::MapData& resto
     child->opacity = 0.9f;
     child->visible = true;
 
-    auto& tile_data = child->data.emplace<ir::TileLayerData>();
+    auto& tile_data = child->data.emplace<TileLayerIR>();
     tile_data.extent.rows = kRowCount;
     tile_data.extent.cols = kColCount;
     tile_data.tiles = make_tile_matrix(TileExtent {kRowCount, kColCount});
@@ -277,7 +273,7 @@ void validate_basic_map_info(const ir::MapData& source, const ir::MapData& resto
   }
 
   {
-    auto& child = group.children.emplace_back(std::make_unique<ir::LayerData>());
+    auto& child = group.children.emplace_back(std::make_unique<LayerIR>());
     child->name = "Details 2";
     child->type = LayerType::TileLayer;
 
@@ -287,7 +283,7 @@ void validate_basic_map_info(const ir::MapData& source, const ir::MapData& resto
     child->opacity = 1.0f;
     child->visible = true;
 
-    auto& tile_data = child->data.emplace<ir::TileLayerData>();
+    auto& tile_data = child->data.emplace<TileLayerIR>();
     tile_data.extent.rows = kRowCount;
     tile_data.extent.cols = kColCount;
     tile_data.tiles = make_tile_matrix(TileExtent {kRowCount, kColCount});
@@ -300,9 +296,9 @@ void validate_basic_map_info(const ir::MapData& source, const ir::MapData& resto
   return data;
 }
 
-[[nodiscard]] auto create_source_object_layer(const bool use_components) -> ir::LayerData
+[[nodiscard]] auto create_source_object_layer(const bool use_components) -> LayerIR
 {
-  ir::LayerData data;
+  LayerIR data;
 
   data.name = "Objects";
   data.type = LayerType::ObjectLayer;
@@ -313,7 +309,7 @@ void validate_basic_map_info(const ir::MapData& source, const ir::MapData& resto
   data.opacity = 1.0f;
   data.visible = true;
 
-  auto& object_layer_data = data.data.emplace<ir::ObjectLayerData>();
+  auto& object_layer_data = data.data.emplace<ObjectLayerIR>();
 
   auto& point = object_layer_data.objects.emplace_back();
   point.name = "Point";
@@ -359,9 +355,9 @@ void validate_basic_map_info(const ir::MapData& source, const ir::MapData& resto
   return data;
 }
 
-[[nodiscard]] auto create_source_tileset(const bool use_components) -> ir::TilesetData
+[[nodiscard]] auto create_source_tileset(const bool use_components) -> TilesetIR
 {
-  ir::TilesetData data;
+  TilesetIR data;
 
   data.name = "test_tileset";
 
@@ -401,9 +397,9 @@ void validate_basic_map_info(const ir::MapData& source, const ir::MapData& resto
   return data;
 }
 
-[[nodiscard]] auto create_source_data(const bool use_components) -> ir::MapData
+[[nodiscard]] auto create_source_data(const bool use_components) -> MapIR
 {
-  ir::MapData data;
+  MapIR data;
 
   data.tile_size.x = 32;
   data.tile_size.y = 28;

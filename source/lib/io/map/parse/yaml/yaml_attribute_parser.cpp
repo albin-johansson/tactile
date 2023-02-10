@@ -241,9 +241,9 @@ template <typename T>
 }
 
 [[nodiscard]] auto parse_component_definition(const YAML::Node& node)
-    -> Expected<ir::AttributeMap, ParseError>
+    -> Expected<AttributeMap, ParseError>
 {
-  ir::AttributeMap def;
+  AttributeMap def;
 
   if (auto attribute_seq = node["attributes"]) {
     for (auto attribute_node: attribute_seq) {
@@ -265,13 +265,13 @@ template <typename T>
 }
 
 [[nodiscard]] auto parse_component(const YAML::Node& node,
-                                   const ir::MapData& map,
+                                   const MapIR& map,
                                    const String& type)
-    -> Expected<ir::AttributeMap, ParseError>
+    -> Expected<AttributeMap, ParseError>
 {
   // TODO invalid component type check, e.g. ParseError::InvalidComponentType
   const auto& prototype = map.component_definitions.at(type);
-  ir::AttributeMap comp;
+  AttributeMap comp;
 
   if (auto sequence = node["values"]) {
     for (const auto& value_node: sequence) {
@@ -301,9 +301,9 @@ template <typename T>
 }  // namespace
 
 auto parse_component_definitions(const YAML::Node& node)
-    -> Expected<ir::ComponentMap, ParseError>
+    -> Expected<ComponentMap, ParseError>
 {
-  ir::ComponentMap defs;
+  ComponentMap defs;
 
   if (auto sequence = node["component-definitions"]) {
     for (const auto& def_node: sequence) {
@@ -324,10 +324,10 @@ auto parse_component_definitions(const YAML::Node& node)
   return defs;
 }
 
-auto parse_components(const YAML::Node& node, const ir::MapData& map)
-    -> Expected<ir::ComponentMap, ParseError>
+auto parse_components(const YAML::Node& node, const MapIR& map)
+    -> Expected<ComponentMap, ParseError>
 {
-  ir::ComponentMap comps;
+  ComponentMap comps;
 
   if (auto sequence = node["components"]) {
     for (const auto& component_node: sequence) {
@@ -348,9 +348,9 @@ auto parse_components(const YAML::Node& node, const ir::MapData& map)
   return comps;
 }
 
-auto parse_properties(const YAML::Node& node) -> Expected<ir::AttributeMap, ParseError>
+auto parse_properties(const YAML::Node& node) -> Expected<AttributeMap, ParseError>
 {
-  ir::AttributeMap props;
+  AttributeMap props;
 
   if (auto sequence = node["properties"]) {
     for (const auto& property_node: sequence) {
@@ -390,10 +390,10 @@ auto parse_properties(const YAML::Node& node) -> Expected<ir::AttributeMap, Pars
   return props;
 }
 
-auto parse_context(const YAML::Node& node, const ir::MapData& map)
-    -> Expected<ir::ContextData, ParseError>
+auto parse_context(const YAML::Node& node, const MapIR& map)
+    -> Expected<ContextIR, ParseError>
 {
-  ir::ContextData context;
+  ContextIR context;
 
   if (auto props = parse_properties(node)) {
     context.properties = std::move(*props);

@@ -31,17 +31,15 @@ namespace tactile {
 [[nodiscard]] auto parse_xml_map(const Path& path) -> ParseResult;
 
 [[nodiscard]] auto parse_tileset(XmlNode node, const Path& dir)
-    -> Expected<ir::TilesetData, ParseError>;
+    -> Expected<TilesetIR, ParseError>;
 
-[[nodiscard]] auto parse_object(XmlNode object_node)
-    -> Expected<ir::ObjectData, ParseError>;
+[[nodiscard]] auto parse_object(XmlNode object_node) -> Expected<ObjectIR, ParseError>;
 
-[[nodiscard]] auto parse_layers(XmlNode map_node, ir::MapData& map)
-    -> Expected<Vec<ir::LayerData>, ParseError>;
+[[nodiscard]] auto parse_layers(XmlNode map_node, MapIR& map)
+    -> Expected<Vec<LayerIR>, ParseError>;
 
-[[nodiscard]] auto parse_properties(XmlNode node)
-    -> Expected<ir::AttributeMap, ParseError>;
+[[nodiscard]] auto parse_properties(XmlNode node) -> Expected<AttributeMap, ParseError>;
 
-[[nodiscard]] auto parse_context(XmlNode node) -> Expected<ir::ContextData, ParseError>;
+[[nodiscard]] auto parse_context(XmlNode node) -> Expected<ContextIR, ParseError>;
 
 }  // namespace tactile

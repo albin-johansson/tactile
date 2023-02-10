@@ -113,9 +113,9 @@ namespace {
 
 }  // namespace
 
-auto parse_properties(XmlNode node) -> Expected<ir::AttributeMap, ParseError>
+auto parse_properties(XmlNode node) -> Expected<AttributeMap, ParseError>
 {
-  ir::AttributeMap props;
+  AttributeMap props;
 
   for (const auto property_node: node.child("properties").children("property")) {
     String property_name;
@@ -137,9 +137,9 @@ auto parse_properties(XmlNode node) -> Expected<ir::AttributeMap, ParseError>
   return props;
 }
 
-auto parse_context(XmlNode node) -> Expected<ir::ContextData, ParseError>
+auto parse_context(XmlNode node) -> Expected<ContextIR, ParseError>
 {
-  ir::ContextData context;
+  ContextIR context;
 
   if (auto props = parse_properties(node)) {
     context.properties = std::move(*props);

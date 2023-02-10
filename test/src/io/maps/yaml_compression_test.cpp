@@ -38,9 +38,9 @@ inline const TileMatrix test_tiles {
     {57, 348, 118, 12, 136},
 };
 
-[[nodiscard]] auto create_test_map() -> ir::MapData
+[[nodiscard]] auto create_test_map() -> MapIR
 {
-  ir::MapData map;
+  MapIR map;
   map.extent.rows = 5;
   map.extent.cols = 5;
   map.tile_size = {32, 32};
@@ -55,17 +55,17 @@ inline const TileMatrix test_tiles {
   layer.opacity = 1.0f;
   layer.visible = true;
 
-  auto& tile_layer = layer.data.emplace<ir::TileLayerData>();
+  auto& tile_layer = layer.data.emplace<TileLayerIR>();
   tile_layer.extent = map.extent;
   tile_layer.tiles = test_tiles;
 
   return map;
 }
 
-using TileFormatFactory = ir::TileFormatData (*)();
+using TileFormatFactory = TileFormatIR (*)();
 using TestData = std::pair<std::string_view, TileFormatFactory>;
 
-[[nodiscard]] auto create_zlib_tile_format() -> ir::TileFormatData
+[[nodiscard]] auto create_zlib_tile_format() -> TileFormatIR
 {
   return {
       .encoding = TileEncoding::Base64,
@@ -74,7 +74,7 @@ using TestData = std::pair<std::string_view, TileFormatFactory>;
   };
 }
 
-[[nodiscard]] auto create_zstd_tile_format() -> ir::TileFormatData
+[[nodiscard]] auto create_zstd_tile_format() -> TileFormatIR
 {
   return {
       .encoding = TileEncoding::Base64,

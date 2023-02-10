@@ -28,9 +28,9 @@ namespace tactile {
 namespace {
 
 [[nodiscard]] auto parse_fancy_tiles(XmlNode tileset_node)
-    -> Expected<ir::TilesetData::MetaTiles, ParseError>
+    -> Expected<TilesetIR::MetaTiles, ParseError>
 {
-  ir::TilesetData::MetaTiles tiles;
+  TilesetIR::MetaTiles tiles;
 
   for (const auto tile_node: tileset_node.children("tile")) {
     TileID tile_id {};
@@ -83,7 +83,7 @@ namespace {
 }
 
 [[nodiscard]] auto parse_image_info(XmlNode tileset_node,
-                                    ir::TilesetData& tileset,
+                                    TilesetIR& tileset,
                                     const Path& dir) -> ParseError
 {
   const auto image_node = tileset_node.child("image");
@@ -121,9 +121,9 @@ namespace {
 [[nodiscard]] auto parse_common_attributes(XmlNode node,
                                            const TileID first_id,
                                            const Path& dir)
-    -> Expected<ir::TilesetData, ParseError>
+    -> Expected<TilesetIR, ParseError>
 {
-  ir::TilesetData tileset;
+  TilesetIR tileset;
   tileset.first_tile = first_id;
 
   if (auto name = get_string_attr(node, "name")) {
@@ -185,7 +185,7 @@ namespace {
 [[nodiscard]] auto parse_external_tileset(XmlNode node,
                                           const TileID first_id,
                                           const Path& dir)
-    -> Expected<ir::TilesetData, ParseError>
+    -> Expected<TilesetIR, ParseError>
 {
   TACTILE_ASSERT(has_attr(node, "source"));
 
@@ -207,7 +207,7 @@ namespace {
 
 }  // namespace
 
-auto parse_tileset(XmlNode node, const Path& dir) -> Expected<ir::TilesetData, ParseError>
+auto parse_tileset(XmlNode node, const Path& dir) -> Expected<TilesetIR, ParseError>
 {
   TileID first_id {};
   if (const auto id = get_int_attr(node, "firstgid")) {

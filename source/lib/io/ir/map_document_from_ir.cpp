@@ -50,7 +50,7 @@ namespace {
 
 void restore_context_no_register(Document& document,
                                  const Shared<Context>& context,
-                                 const ir::ContextData& ir_context)
+                                 const ContextIR& ir_context)
 {
   auto& ctx = context->get_ctx();
 
@@ -74,13 +74,13 @@ void restore_context_no_register(Document& document,
 
 void restore_context(Document& document,
                      const Shared<Context>& context,
-                     const ir::ContextData& ir_context)
+                     const ContextIR& ir_context)
 {
   restore_context_no_register(document, context, ir_context);
   document.get_contexts().add_context(context);
 }
 
-auto restore_object(Document& document, const ir::ObjectData& ir_object) -> Shared<Object>
+auto restore_object(Document& document, const ObjectIR& ir_object) -> Shared<Object>
 {
   auto object = std::make_shared<Object>();
   object->set_type(ir_object.type);
@@ -101,7 +101,7 @@ auto restore_object(Document& document, const ir::ObjectData& ir_object) -> Shar
 
 void restore_object_layer(MapDocument& document,
                           const UUID& layer_id,
-                          const ir::ObjectLayerData& ir_object_layer)
+                          const ObjectLayerIR& ir_object_layer)
 {
   auto& map = document.get_map();
 
@@ -114,7 +114,7 @@ void restore_object_layer(MapDocument& document,
 }
 
 auto restore_layer(MapDocument& document,
-                   const ir::LayerData& ir_layer,
+                   const LayerIR& ir_layer,
                    const Maybe<UUID>& parent = nothing) -> UUID
 {
   auto& map = document.get_map();
@@ -168,14 +168,14 @@ auto restore_layer(MapDocument& document,
   return layer_id;
 }
 
-void restore_layers(MapDocument& document, const ir::MapData& ir_map)
+void restore_layers(MapDocument& document, const MapIR& ir_map)
 {
   for (const auto& ir_layer: ir_map.layers) {
     restore_layer(document, ir_layer);
   }
 }
 
-void restore_tile_animation(Tile& tile, const ir::MetaTileData& ir_tile)
+void restore_tile_animation(Tile& tile, const TileIR& ir_tile)
 {
   TileAnimation animation;
   animation.reserve_frames(ir_tile.frames.size());
@@ -189,7 +189,7 @@ void restore_tile_animation(Tile& tile, const ir::MetaTileData& ir_tile)
 
 void restore_fancy_tile_objects(TilesetDocument& document,
                                 Tile& tile,
-                                const ir::MetaTileData& ir_tile)
+                                const TileIR& ir_tile)
 {
   tile.reserve_objects(ir_tile.objects.size());
 
@@ -198,7 +198,7 @@ void restore_fancy_tile_objects(TilesetDocument& document,
   }
 }
 
-void restore_fancy_tiles(TilesetDocument& document, const ir::TilesetData& ir_tileset)
+void restore_fancy_tiles(TilesetDocument& document, const TilesetIR& ir_tileset)
 {
   auto& tileset = document.get_tileset();
   for (const auto& [index, ir_tile]: ir_tileset.fancy_tiles) {
@@ -219,7 +219,7 @@ void restore_fancy_tiles(TilesetDocument& document, const ir::TilesetData& ir_ti
 
 void restore_tileset(DocumentModel& model,
                      const Shared<ComponentIndex>& component_index,
-                     const ir::TilesetData& ir_tileset)
+                     const TilesetIR& ir_tileset)
 {
   TACTILE_ASSERT(model.get_active_document_id().has_value());
 
@@ -246,7 +246,7 @@ void restore_tileset(DocumentModel& model,
 
 void restore_tilesets(DocumentModel& model,
                       const Shared<ComponentIndex>& component_index,
-                      const ir::MapData& ir_map)
+                      const MapIR& ir_map)
 {
   for (const auto& tileset_data: ir_map.tilesets) {
     restore_tileset(model, component_index, tileset_data);
@@ -267,7 +267,7 @@ void restore_tilesets(DocumentModel& model,
   }
 }
 
-void restore_component_definitions(MapDocument& document, const ir::MapData& ir_map)
+void restore_component_definitions(MapDocument& document, const MapIR& ir_map)
 {
   auto component_index = document.get_component_index_ptr();
   for (const auto& [name, attributes]: ir_map.component_definitions) {
@@ -279,7 +279,7 @@ void restore_component_definitions(MapDocument& document, const ir::MapData& ir_
   }
 }
 
-void restore_tile_format(TileFormat& format, const ir::TileFormatData& ir_format)
+void restore_tile_format(TileFormat& format, const TileFormatIR& ir_format)
 {
   format.set_encoding(ir_format.encoding);
   format.set_compression(ir_format.compression);
@@ -295,7 +295,7 @@ void restore_tile_format(TileFormat& format, const ir::TileFormatData& ir_format
 
 }  // namespace
 
-void create_map_document_from_ir(const ir::MapData& ir_map,
+void create_map_document_from_ir(const MapIR& ir_map,
                                  const Path& document_path,
                                  DocumentModel& model)
 {
