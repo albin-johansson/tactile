@@ -18,7 +18,6 @@ jobs:
       - name: Install system dependencies
         run: |
           brew update
-          brew upgrade
           brew install cmake
           brew install ninja
 
