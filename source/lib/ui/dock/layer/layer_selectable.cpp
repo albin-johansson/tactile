@@ -40,7 +40,7 @@
 namespace tactile::ui {
 namespace {
 
-constexpr int base_node_flags =
+constexpr int kBaseNodeFlags =
     ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick |
     ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_SpanFullWidth;
 
@@ -225,7 +225,7 @@ void layer_selectable(const MapDocument& document,
 
   const auto is_active_layer = map.get_active_layer_id() == layer.get_uuid();
   const auto flags =
-      is_active_layer ? (base_node_flags | ImGuiTreeNodeFlags_Selected) : base_node_flags;
+      is_active_layer ? (kBaseNodeFlags | ImGuiTreeNodeFlags_Selected) : kBaseNodeFlags;
 
   const FmtString name {"{} {}", get_icon(layer.get_type()), layer.get_ctx().name()};
 

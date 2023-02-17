@@ -35,13 +35,13 @@
 namespace tactile::ui {
 namespace {
 
-constexpr auto overlay_window_flags =
+constexpr auto kOverlayWindowFlags =
     ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking |
     ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings |
     ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav |
     ImGuiWindowFlags_NoMove;
 
-constexpr float overlay_opacity = 0.35f;
+constexpr float kOverlayOpacity = 0.35f;
 
 void prepare_position_and_pivot()
 {
@@ -148,8 +148,8 @@ void update_map_viewport_overlay(const Map& map, const ViewportCursorInfo& curso
 {
   prepare_position_and_pivot();
 
-  ImGui::SetNextWindowBgAlpha(overlay_opacity);
-  const Window window {"##ViewportOverlay", overlay_window_flags};
+  ImGui::SetNextWindowBgAlpha(kOverlayOpacity);
+  const Window window {"##ViewportOverlay", kOverlayWindowFlags};
 
   if (window.is_open()) {
     const auto& lang = get_current_language();

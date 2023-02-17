@@ -35,16 +35,16 @@
 namespace tactile::ui {
 namespace {
 
-constexpr auto header_flags =
+constexpr auto kHeaderFlags =
     ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
-constexpr auto table_flags =
+constexpr auto kTableFlags =
     ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX;
 
 void update_attribute_table(const UUID& context_id,
                             const Component& component,
                             entt::dispatcher& dispatcher)
 {
-  if (Table table {"##AttributeTable", 2, table_flags}; table.is_open()) {
+  if (Table table {"##AttributeTable", 2, kTableFlags}; table.is_open()) {
     for (const auto& [attr_name, attr_value]: component) {
       const Scope scope {attr_name.c_str()};
 
@@ -103,7 +103,7 @@ void component_view(const UUID& context_id,
                     entt::dispatcher& dispatcher)
 {
   const Scope scope {name.c_str()};
-  if (TreeNode header {name.c_str(), header_flags}; header.is_open()) {
+  if (TreeNode header {name.c_str(), kHeaderFlags}; header.is_open()) {
     ImGui::SameLine();
     if (update_trailing_button()) {
       ImGui::OpenPopup("##ComponentPopup");
