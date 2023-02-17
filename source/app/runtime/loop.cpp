@@ -22,7 +22,7 @@
 #include <GL/glew.h>
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
-#include <imgui_impl_sdl.h>
+#include <imgui_impl_sdl2.h>
 
 #include "common/debug/panic.hpp"
 #include "runtime/app_context.hpp"
