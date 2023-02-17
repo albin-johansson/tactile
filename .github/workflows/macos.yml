@@ -20,6 +20,7 @@ jobs:
           brew update
           brew install cmake
           brew install ninja
+          brew install pkg-config
 
       - name: Install Boost
         id: install-boost
