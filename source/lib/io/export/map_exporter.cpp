@@ -29,9 +29,7 @@
 #include "io/export/tiled_json_exporter.hpp"
 #include "io/export/tiled_xml_exporter.hpp"
 #include "io/ir/map_document_to_ir.hpp"
-#include "io/util/json.hpp"
-#include "io/util/xml.hpp"
-#include "io/util/yaml.hpp"
+#include "io/save_format.hpp"
 #include "model/document/map_document.hpp"
 
 namespace tactile {

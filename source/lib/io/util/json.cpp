@@ -218,12 +218,6 @@ auto parse_json_file(const Path& path) -> Maybe<JSON>
   }
 }
 
-auto has_supported_tiled_json_extension(const Path& path) -> bool
-{
-  const auto ext = path.extension();
-  return ext == ".json" || ext == ".tmj";
-}
-
 auto save_json_to_file(const JSON& json, const Path& path) -> Result
 {
   auto stream = open_output_stream(path, FileType::Text);

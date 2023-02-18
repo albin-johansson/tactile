@@ -57,4 +57,22 @@ auto get_file_extension(const SaveFormat format) -> String
   }
 }
 
+auto has_supported_tactile_yaml_extension(const Path& path) -> bool
+{
+  const auto ext = path.extension();
+  return ext == ".yml" || ext == ".yaml";
+}
+
+auto has_supported_tiled_json_extension(const Path& path) -> bool
+{
+  const auto ext = path.extension();
+  return ext == ".json" || ext == ".tmj";
+}
+
+auto has_supported_tiled_xml_extension(const Path& path) -> bool
+{
+  const auto ext = path.extension();
+  return ext == ".xml" || ext == ".tmx";
+}
+
 }  // namespace tactile

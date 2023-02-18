@@ -26,9 +26,7 @@
 #include <spdlog/spdlog.h>
 
 #include "io/file_dialog.hpp"
-#include "io/util/json.hpp"
-#include "io/util/xml.hpp"
-#include "io/util/yaml.hpp"
+#include "io/save_format.hpp"
 #include "model/event/document_events.hpp"
 #include "model/settings.hpp"
 
@@ -39,8 +37,6 @@ void show_save_as_dialog(entt::dispatcher& dispatcher)
   auto dialog = FileDialog::save_map();
   if (dialog.is_okay()) {
     auto path = dialog.path();
-
-    const auto ext = path.extension();
     const auto has_valid_extension = has_supported_tactile_yaml_extension(path) ||
                                      has_supported_tiled_json_extension(path) ||
                                      has_supported_tiled_xml_extension(path);
@@ -48,7 +44,7 @@ void show_save_as_dialog(entt::dispatcher& dispatcher)
     if (!has_valid_extension) {
       const auto& format = get_settings().get_preferred_format();
       spdlog::warn("Invalid file extension {}, assuming {} format",
-                   ext,
+                   path.extension(),
                    get_human_readable_name(format));
       path += get_file_extension(format);
     }

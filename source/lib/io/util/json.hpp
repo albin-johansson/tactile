@@ -40,9 +40,6 @@ void from_json(const JSON& json, AttributeType& type);
 /// Parses the JSON file at the specified path, returning nothing if something goes wrong.
 [[nodiscard]] auto parse_json_file(const Path& path) -> Maybe<JSON>;
 
-/// Indicates whether a file has one of the supported Tiled JSON file extensions.
-[[nodiscard]] auto has_supported_tiled_json_extension(const Path& path) -> bool;
-
 /// Saves a JSON file to the specified path, returning failure if an error occurs.
 auto save_json_to_file(const JSON& json, const Path& path) -> Result;
 

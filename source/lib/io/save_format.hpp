@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "common/type/path.hpp"
 #include "common/type/string.hpp"
 
 namespace tactile {
@@ -38,6 +39,13 @@ enum class SaveFormat {
 /// Note, several file extensions are valid for most formats, e.g. ".yml" and ".yaml".
 [[nodiscard]] auto get_file_extension(SaveFormat format) -> String;
 
-// TODO move file path extension validation functions here
+/// Indicates whether a file has one of the supported Tactile YAML file extensions.
+[[nodiscard]] auto has_supported_tactile_yaml_extension(const Path& path) -> bool;
+
+/// Indicates whether a file has one of the supported Tiled JSON file extensions.
+[[nodiscard]] auto has_supported_tiled_json_extension(const Path& path) -> bool;
+
+/// Indicates whether a file has one of the supported Tiled XML file extensions.
+[[nodiscard]] auto has_supported_tiled_xml_extension(const Path& path) -> bool;
 
 }  // namespace tactile

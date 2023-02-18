@@ -31,12 +31,6 @@
 
 namespace tactile {
 
-auto has_supported_tiled_xml_extension(const Path& path) -> bool
-{
-  const auto ext = path.extension();
-  return ext == ".xml" || ext == ".tmx";
-}
-
 auto parse_xml_file(const Path& path) -> Maybe<XmlDocument>
 {
   pugi::xml_document document;
