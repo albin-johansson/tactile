@@ -25,6 +25,7 @@
 #include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
 #include "core/color.hpp"
+#include "io/save_format.hpp"
 #include "lang/language.hpp"
 #include "ui/style/themes.hpp"
 
@@ -93,7 +94,7 @@ class Settings final {
   void set_font_size(int32 size);
   void set_viewport_bg_color(Color color);
   void set_grid_color(Color color);
-  void set_preferred_format(String format);
+  void set_preferred_format(SaveFormat format);
 
   void set_flags(SettingsFlagBits flags);
   void set_flag(SettingsFlagBits flag, bool value = true);
@@ -108,7 +109,7 @@ class Settings final {
   [[nodiscard]] auto get_font_size() const -> int32;
   [[nodiscard]] auto get_viewport_bg_color() const -> const Color&;
   [[nodiscard]] auto get_grid_color() const -> const Color&;
-  [[nodiscard]] auto get_preferred_format() const -> const String&;
+  [[nodiscard]] auto get_preferred_format() const -> const SaveFormat&;
 
   [[nodiscard]] auto get_flags() const -> SettingsFlagBits;
   [[nodiscard]] auto test_flag(SettingsFlagBits flag) const -> bool;

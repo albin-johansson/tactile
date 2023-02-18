@@ -101,19 +101,19 @@ void ui_theme_combo()
 
 void ui_map_format_combo()
 {
-  if (const Combo format("##PreferredFormat",
-                         gDialogState.ui_settings.get_preferred_format().c_str());
+  const auto preferred_format = gDialogState.ui_settings.get_preferred_format();
+  if (const Combo format("##PreferredFormat", get_human_readable_name(preferred_format));
       format.is_open()) {
-    if (ImGui::MenuItem("YAML")) {
-      gDialogState.ui_settings.set_preferred_format("YAML");
+    if (ImGui::MenuItem(get_human_readable_name(SaveFormat::TactileYaml))) {
+      gDialogState.ui_settings.set_preferred_format(SaveFormat::TactileYaml);
     }
 
-    if (ImGui::MenuItem("JSON")) {
-      gDialogState.ui_settings.set_preferred_format("JSON");
+    if (ImGui::MenuItem(get_human_readable_name(SaveFormat::TiledJson))) {
+      gDialogState.ui_settings.set_preferred_format(SaveFormat::TiledJson);
     }
 
-    if (ImGui::MenuItem("XML (TMX)")) {
-      gDialogState.ui_settings.set_preferred_format("XML");
+    if (ImGui::MenuItem(get_human_readable_name(SaveFormat::TiledXml))) {
+      gDialogState.ui_settings.set_preferred_format(SaveFormat::TiledXml);
     }
   }
 }

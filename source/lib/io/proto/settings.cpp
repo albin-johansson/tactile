@@ -120,7 +120,7 @@ void to_proto(const Color& color, proto::Color* out)
     }
 
     if (cfg.has_preferred_format()) {
-      settings.set_preferred_format(cfg.preferred_format());
+      settings.set_preferred_format(SaveFormat {cfg.preferred_format()});
     }
 
     if (cfg.has_embed_tilesets()) {
@@ -227,7 +227,8 @@ void save_settings_to_disk(const Settings& settings)
   cfg.set_preferred_tile_width(settings.get_preferred_tile_size().x);
   cfg.set_preferred_tile_height(settings.get_preferred_tile_size().y);
 
-  cfg.set_preferred_format(settings.get_preferred_format());
+  cfg.set_preferred_format(
+      static_cast<proto::SaveFormat>(settings.get_preferred_format()));
   cfg.set_embed_tilesets(settings.test_flag(SETTINGS_EMBED_TILESETS_BIT));
   cfg.set_indent_output(settings.test_flag(SETTINGS_INDENT_OUTPUT_BIT));
   cfg.set_fold_tile_data(settings.test_flag(SETTINGS_FOLD_TILE_DATA_BIT));

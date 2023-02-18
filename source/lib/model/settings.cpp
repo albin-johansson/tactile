@@ -43,7 +43,7 @@ struct SettingsState final {
   Color viewport_bg {0x3C, 0x3C, 0x3C};
   Color grid_color {0xFF, 0xFF, 0xFF, 0x05};
 
-  String preferred_format {"YAML"};
+  SaveFormat preferred_format {SaveFormat::TactileYaml};
 
   SettingsFlagBits flags {
       SETTINGS_INDENT_OUTPUT_BIT | SETTINGS_SHOW_GRID_BIT | SETTINGS_SHOW_LAYER_DOCK_BIT |
@@ -77,7 +77,7 @@ void Settings::print() const
   spdlog::debug("Preferred tile width: {}", get_preferred_tile_size().x);
   spdlog::debug("Preferred tile height: {}", get_preferred_tile_size().y);
 
-  spdlog::debug("Preferred format: {}", get_preferred_format());
+  spdlog::debug("Preferred format: {}", magic_enum::enum_name(get_preferred_format()));
   spdlog::debug("Viewport overlay pos: {}",
                 magic_enum::enum_name(get_viewport_overlay_pos()));
   spdlog::debug("Show FPS in viewport overlay: {}",
@@ -202,9 +202,9 @@ void Settings::set_grid_color(const Color color)
   mState->grid_color = color;
 }
 
-void Settings::set_preferred_format(String format)
+void Settings::set_preferred_format(const SaveFormat format)
 {
-  mState->preferred_format = std::move(format);
+  mState->preferred_format = format;
 }
 
 void Settings::set_flags(const SettingsFlagBits flags)
@@ -257,7 +257,7 @@ auto Settings::get_grid_color() const -> const Color&
   return mState->grid_color;
 }
 
-auto Settings::get_preferred_format() const -> const String&
+auto Settings::get_preferred_format() const -> const SaveFormat&
 {
   return mState->preferred_format;
 }

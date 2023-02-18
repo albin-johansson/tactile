@@ -47,21 +47,10 @@ void show_save_as_dialog(entt::dispatcher& dispatcher)
 
     if (!has_valid_extension) {
       const auto& format = get_settings().get_preferred_format();
-      spdlog::warn("Invalid file extension {}, assuming '{}'", ext, format);
-
-      if (format == "YAML") {
-        path += ".yaml";
-      }
-      else if (format == "JSON") {
-        path += ".json";
-      }
-      else if (format == "XML") {
-        path += ".tmx";
-      }
-      else {
-        spdlog::error("Could not amend requested file path with valid extension!");
-        return;
-      }
+      spdlog::warn("Invalid file extension {}, assuming {} format",
+                   ext,
+                   get_human_readable_name(format));
+      path += get_file_extension(format);
     }
 
     dispatcher.enqueue<SaveAsEvent>(std::move(path));

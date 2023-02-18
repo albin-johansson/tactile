@@ -41,6 +41,13 @@ enum Theme {
   THEME_ROSE = 18;
 }
 
+// Remember to keep these values synced with tactile::SaveFormat!
+enum SaveFormat {
+  SAVE_FORMAT_TACTILE_YAML = 0;
+  SAVE_FORMAT_TILED_JSON = 1;
+  SAVE_FORMAT_TILED_XML = 2;
+}
+
 message Color {
   optional uint32 red = 1;
   optional uint32 green = 2;
@@ -49,6 +56,8 @@ message Color {
 }
 
 message Settings {
+  reserved 16; // string preferred_format
+
   optional Theme theme = 1;
   optional int32 theme_saturation = 10;
 
@@ -60,7 +69,7 @@ message Settings {
   optional Color viewport_background = 4;
   optional Color grid_color = 9;
 
-  optional string preferred_format = 16;
+  optional SaveFormat preferred_format = 33;
   optional uint64 command_capacity = 17;
 
   optional bool show_grid = 18;
