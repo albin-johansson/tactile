@@ -236,33 +236,44 @@ auto human_readable_name(const EditorTheme theme) -> StringView
 
 void apply_style(ImGuiStyle& style)
 {
-  style.WindowMenuButtonPosition = ImGuiDir_Left;
-  style.WindowBorderSize = 0;
-
-  if constexpr (kOnMacos) {
-    style.WindowTitleAlign.x = 0.5f;
-  }
-
-  style.WindowPadding = ImVec2 {10, 10};
-  style.FramePadding = ImVec2 {5, 5};
+  // Main
+  style.WindowPadding = ImVec2 {8, 8};
+  style.FramePadding = ImVec2 {4, 4};
   style.CellPadding = ImVec2 {4, 4};
+  style.ItemSpacing = ImVec2 {8, 8};
+  style.ItemInnerSpacing = ImVec2 {8, 4};
+  style.IndentSpacing = 12;
+  style.ScrollbarSize = 12;
+  style.GrabMinSize = 12;
 
-  style.ItemSpacing = ImVec2 {12, 8};
-  style.ItemInnerSpacing = ImVec2 {4, 6};
-  style.IndentSpacing = 15;
+  // Borders
+  style.WindowBorderSize = 0;
+  style.ChildBorderSize = 0;
+  style.PopupBorderSize = 0;
+  style.FrameBorderSize = 0;
+  style.TabBorderSize = 0;
 
-  style.GrabMinSize = 6;
-  style.ScrollbarSize = 10;
+  // Rounding
+  style.ChildRounding = 6;
+  style.WindowRounding = 6;
+  style.FrameRounding = 6;
+  style.PopupRounding = 6;
+  style.ScrollbarRounding = 6;
+  style.GrabRounding = 6;
+  style.TabRounding = 6;
 
-  constexpr float rounding = 4;
-  style.ChildRounding = 2;
-  style.WindowRounding = rounding;
-  style.FrameRounding = rounding;
-  style.PopupRounding = rounding;
-  style.ScrollbarRounding = rounding;
-  style.GrabRounding = rounding;
-  style.LogSliderDeadzone = rounding;
-  style.TabRounding = rounding;
+  // Widgets
+  style.WindowTitleAlign = ImVec2 {0.5f, 0.5f};
+  style.WindowMenuButtonPosition = ImGuiDir_None;
+  style.ColorButtonPosition = ImGuiDir_Right;
+  style.ButtonTextAlign = ImVec2 {0.5f, 0.5f};
+  style.SelectableTextAlign = ImVec2 {0.0f, 0.5f};
+  style.SeparatorTextBorderSize = 1.0f;
+  style.SeparatorTextAlign = ImVec2 {0.5f, 0.5f};
+  style.SeparatorTextPadding = ImVec2 {20, 3};
+
+  // Rendering
+  style.DisabledAlpha = 0.4f;
 }
 
 void apply_theme(ImGuiStyle& style, const EditorTheme theme, int32 saturation)
