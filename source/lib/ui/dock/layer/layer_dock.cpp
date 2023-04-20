@@ -22,19 +22,19 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "add_layer_context_menu.hpp"
 #include "common/debug/assert.hpp"
 #include "common/type/maybe.hpp"
 #include "core/layer/group_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "layer_selectable.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/model.hpp"
 #include "model/settings.hpp"
 #include "ui/constants.hpp"
+#include "ui/dock/layer/add_layer_context_menu.hpp"
 #include "ui/dock/layer/dialogs/rename_layer_dialog.hpp"
+#include "ui/dock/layer/layer_selectable.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"

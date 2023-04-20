@@ -66,7 +66,7 @@ void ToolManager::select_tool(const ToolType type,
     tool->on_disabled(model, dispatcher);
   }
 
-  /* Selecting an already active tool disables it */
+  // Selecting an already active tool disables it
   if (mData->active_tool && mData->active_tool->get_type() == type) {
     mData->active_tool = nullptr;
   }

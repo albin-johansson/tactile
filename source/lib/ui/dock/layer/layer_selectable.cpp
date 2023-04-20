@@ -154,8 +154,9 @@ void show_object_layer_selectable(const Map& map,
                                   entt::dispatcher& dispatcher)
 {
   const FmtString<256> name {"{} {}", TAC_ICON_OBJECT_LAYER, layer.get_ctx().name()};
-  if (TreeNode tree_node {"##ObjectLayerTree", flags, name.data()}; tree_node.is_open()) {
-    Indent indent;
+  if (const TreeNode tree_node {"##ObjectLayerTree", flags, name.data()};
+      tree_node.is_open()) {
+    const Indent indent;
 
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
@@ -187,9 +188,9 @@ void show_group_layer_selectable(const MapDocument& document,
   const auto& map = document.get_map();
 
   const FmtString<256> name {"{} {}", TAC_ICON_GROUP_LAYER, layer.get_ctx().name()};
-  if (TreeNode tree_node {"##GroupLayerTreeNode", flags, name.data()};
+  if (const TreeNode tree_node {"##GroupLayerTreeNode", flags, name.data()};
       tree_node.is_open()) {
-    Indent indent;
+    const Indent indent;
 
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
