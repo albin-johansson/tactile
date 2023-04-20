@@ -57,7 +57,8 @@ void ToolPreviewRenderer::visit(const StampTool& tool)
   const auto& map = map_document.get_map();
   const auto& tilesets = map.get_tileset_bundle();
 
-  if (!map.is_active_layer(LayerType::TileLayer)) {
+  if (!map.is_active_layer(LayerType::TileLayer) ||
+      !tilesets.get_active_tileset_id().has_value()) {
     return;
   }
 
