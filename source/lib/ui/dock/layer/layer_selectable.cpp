@@ -40,9 +40,9 @@
 namespace tactile::ui {
 namespace {
 
-constexpr int kBaseNodeFlags =
-    ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick |
-    ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_SpanFullWidth;
+constexpr int kBaseNodeFlags = ImGuiTreeNodeFlags_OpenOnArrow |
+                               ImGuiTreeNodeFlags_OpenOnDoubleClick |
+                               ImGuiTreeNodeFlags_SpanAvailWidth;
 
 void update_layer_popup(const Map& map, const Layer& layer, entt::dispatcher& dispatcher)
 {
