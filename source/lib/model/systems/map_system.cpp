@@ -260,6 +260,10 @@ void remove_layer_from_map(Model& model,
   auto& map = model.get<Map>(map_entity);
   auto& root_layer = model.get<CGroupLayer>(map.root_layer);
 
+  if (map.active_layer == layer_entity) {
+    map.active_layer = kNullEntity;
+  }
+
   recurse_layers(model, map.root_layer, [&](const Entity child_layer_entity) {
     if (auto* child_layer_group = model.try_get<CGroupLayer>(child_layer_entity)) {
       std::erase(child_layer_group->children, layer_entity);
