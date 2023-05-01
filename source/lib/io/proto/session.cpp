@@ -23,11 +23,11 @@
 
 #include "common/util/filesystem.hpp"
 #include "io/directories.hpp"
-#include "io/ir/map_document_from_ir.hpp"
+#include "io/ir/ir_restoration.hpp"
 #include "io/map/parse/parse_map.hpp"
 #include "io/proto/proto.hpp"
 #include "io/stream.hpp"
-#include "model/document/map_document.hpp"
+#include "model/document.hpp"
 #include "model/model.hpp"
 
 namespace tactile {
@@ -35,7 +35,7 @@ namespace {
 
 constexpr int kSessionFormatVersion [[maybe_unused]] = 1;
 
-[[nodiscard]] auto get_file_path() -> const Path&
+[[nodiscard]] auto _get_file_path() -> const Path&
 {
   static const auto path = get_persistent_file_dir() / "session.bin";
   return path;
@@ -43,11 +43,11 @@ constexpr int kSessionFormatVersion [[maybe_unused]] = 1;
 
 }  // namespace
 
-void load_session_from_disk(DocumentModel& model)
+void load_session_from_disk(Model& model)
 {
   proto::Session session;
 
-  auto stream = open_input_stream(get_file_path(), FileType::Binary);
+  auto stream = open_input_stream(_get_file_path(), FileType::Binary);
   if (!stream) {
     spdlog::error("Could not open session file");
     return;
@@ -69,20 +69,18 @@ void load_session_from_disk(DocumentModel& model)
   }
 }
 
-void save_session_to_disk(const DocumentModel& model)
+void save_session_to_disk(const Model& model)
 {
   proto::Session session;
-  model.each([&](const UUID& document_id) {
-    if (model.is_map(document_id)) {
-      const auto& map_doc = model.get_map_document(document_id);
-      if (map_doc.has_path()) {
-        const auto document_path = fs::absolute(map_doc.get_path());
-        session.add_files(use_forward_slashes(document_path));
-      }
-    }
-  });
 
-  auto stream = open_output_stream(get_file_path(), FileType::Binary);
+  for (auto [document_entity, document]: model.each<Document>()) {
+    if (document.type == DocumentType::Map && document.path.has_value()) {
+      const auto document_path = fs::absolute(*document.path);
+      session.add_files(use_forward_slashes(document_path));
+    }
+  }
+
+  auto stream = open_output_stream(_get_file_path(), FileType::Binary);
   if (stream.has_value()) {
     if (!session.SerializeToOstream(&stream.value())) {
       spdlog::error("Failed to save session file");

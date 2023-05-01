@@ -19,16 +19,14 @@
 
 #pragma once
 
-#include "common/macros.hpp"
+#include "model/model.hpp"
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(DocumentModel)
-
 /// Restores the open documents from the last session.
-void load_session_from_disk(DocumentModel& model);
+void load_session_from_disk(Model& model);
 
 /// Saves the current session, i.e. the paths of the currently open documents.
-void save_session_to_disk(const DocumentModel& model);
+void save_session_to_disk(const Model& model);
 
 }  // namespace tactile
