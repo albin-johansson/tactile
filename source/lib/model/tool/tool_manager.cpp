@@ -58,9 +58,7 @@ void ToolManager::accept(ToolVisitor& visitor) const
   }
 }
 
-void ToolManager::select_tool(const ToolType type,
-                              DocumentModel& model,
-                              entt::dispatcher& dispatcher)
+void ToolManager::select_tool(const ToolType type, Model& model, Dispatcher& dispatcher)
 {
   if (auto* tool = mData->active_tool) {
     tool->on_disabled(model, dispatcher);
@@ -131,8 +129,7 @@ auto ToolManager::is_stamp_random() const -> bool
   return mData->stamp.is_random();
 }
 
-auto ToolManager::is_available(const DocumentModel& model, const ToolType type) const
-    -> bool
+auto ToolManager::is_available(const Model& model, const ToolType type) const -> bool
 {
   switch (type) {
     case ToolType::None:
@@ -164,54 +161,50 @@ auto ToolManager::is_available(const DocumentModel& model, const ToolType type) 
   }
 }
 
-void ToolManager::on_enabled(DocumentModel& model, entt::dispatcher& dispatcher)
+void ToolManager::on_enabled(Model& model, Dispatcher& dispatcher)
 {
   if (auto* tool = mData->active_tool) {
     tool->on_enabled(model, dispatcher);
   }
 }
 
-void ToolManager::on_disabled(DocumentModel& model, entt::dispatcher& dispatcher)
+void ToolManager::on_disabled(Model& model, Dispatcher& dispatcher)
 {
   if (auto* tool = mData->active_tool) {
     tool->on_disabled(model, dispatcher);
   }
 }
 
-void ToolManager::on_entered(DocumentModel& model, entt::dispatcher& dispatcher)
+void ToolManager::on_entered(Model& model, Dispatcher& dispatcher)
 {
   if (auto* tool = mData->active_tool) {
     tool->on_entered(model, dispatcher);
   }
 }
 
-void ToolManager::on_exited(DocumentModel& model, entt::dispatcher& dispatcher)
+void ToolManager::on_exited(Model& model, Dispatcher& dispatcher)
 {
   if (auto* tool = mData->active_tool) {
     tool->on_exited(model, dispatcher);
   }
 }
 
-void ToolManager::on_pressed(DocumentModel& model,
-                             entt::dispatcher& dispatcher,
-                             const MouseInfo& mouse)
+void ToolManager::on_pressed(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse)
 {
   if (auto* tool = mData->active_tool) {
     tool->on_pressed(model, dispatcher, mouse);
   }
 }
 
-void ToolManager::on_dragged(DocumentModel& model,
-                             entt::dispatcher& dispatcher,
-                             const MouseInfo& mouse)
+void ToolManager::on_dragged(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse)
 {
   if (auto* tool = mData->active_tool) {
     tool->on_dragged(model, dispatcher, mouse);
   }
 }
 
-void ToolManager::on_released(DocumentModel& model,
-                              entt::dispatcher& dispatcher,
+void ToolManager::on_released(Model& model,
+                              Dispatcher& dispatcher,
                               const MouseInfo& mouse)
 {
   if (auto* tool = mData->active_tool) {
@@ -224,7 +217,7 @@ auto ToolManager::get_type() const -> ToolType
   throw TactileError {"Invalid call!"};
 }
 
-auto ToolManager::is_available(const DocumentModel&) const -> bool
+auto ToolManager::is_available(const Model&) const -> bool
 {
   throw TactileError {"Invalid call!"};
 }

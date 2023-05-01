@@ -20,6 +20,7 @@
 #pragma once
 
 #include "common/macros.hpp"
+#include "common/type/dispatcher.hpp"
 #include "common/type/ptr.hpp"
 #include "model/tool/tool.hpp"
 #include "model/tool/tool_type.hpp"
@@ -39,7 +40,7 @@ class ToolManager final : private Tool {
 
   void accept(ToolVisitor& visitor) const override;
 
-  void select_tool(ToolType type, DocumentModel& model, entt::dispatcher& dispatcher);
+  void select_tool(ToolType type, Model& model, Dispatcher& dispatcher);
 
   void set_stamp_random_mode(bool random);
 
@@ -47,28 +48,21 @@ class ToolManager final : private Tool {
 
   [[nodiscard]] auto is_stamp_random() const -> bool;
 
-  [[nodiscard]] auto is_available(const DocumentModel& model, ToolType type) const
-      -> bool;
+  [[nodiscard]] auto is_available(const Model& model, ToolType type) const -> bool;
 
-  void on_enabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
+  void on_enabled(Model& model, Dispatcher& dispatcher) override;
 
-  void on_disabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
+  void on_disabled(Model& model, Dispatcher& dispatcher) override;
 
-  void on_entered(DocumentModel& model, entt::dispatcher& dispatcher) override;
+  void on_entered(Model& model, Dispatcher& dispatcher) override;
 
-  void on_exited(DocumentModel& model, entt::dispatcher& dispatcher) override;
+  void on_exited(Model& model, Dispatcher& dispatcher) override;
 
-  void on_pressed(DocumentModel& model,
-                  entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+  void on_pressed(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse) override;
 
-  void on_dragged(DocumentModel& model,
-                  entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+  void on_dragged(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse) override;
 
-  void on_released(DocumentModel& model,
-                   entt::dispatcher& dispatcher,
-                   const MouseInfo& mouse) override;
+  void on_released(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse) override;
 
  private:
   struct Data;
@@ -76,8 +70,8 @@ class ToolManager final : private Tool {
 
   // Do not call these functions, they will just raise exceptions
   [[nodiscard, deprecated]] auto get_type() const -> ToolType override;
-  [[nodiscard, deprecated]] auto is_available(const DocumentModel& model) const
-      -> bool override;
+
+  [[nodiscard, deprecated]] auto is_available(const Model& model) const -> bool override;
 };
 
 }  // namespace tactile
