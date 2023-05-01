@@ -19,16 +19,19 @@
 
 #pragma once
 
-#include "core/tile_pos.hpp"
+#include "common/type/ecs.hpp"
+#include "common/type/string.hpp"
+#include "common/type/string_map.hpp"
+#include "common/type/vec.hpp"
+#include "core/attribute.hpp"
 
 namespace tactile {
 
-/// Represents a region of a grid.
-struct Region final {
-  TilePos begin;  /// The top-left position.
-  TilePos end;    /// The bottom-right position.
-
-  [[nodiscard]] auto operator==(const Region&) const noexcept -> bool = default;
+// TODO just store component instances? not entities for separate component instances
+struct Context final {
+  String name;
+  StringMap<Attribute> props;  ///< Attached attribute values, i.e. "properties".
+  Vec<Entity> comps;           ///< Attached components.
 };
 
 }  // namespace tactile

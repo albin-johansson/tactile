@@ -17,18 +17,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include "core/tile_pos.hpp"
+#include "tile_matrix.hpp"
 
 namespace tactile {
 
-/// Represents a region of a grid.
-struct Region final {
-  TilePos begin;  /// The top-left position.
-  TilePos end;    /// The bottom-right position.
+auto make_tile_row(const usize column_count) -> TileRow
+{
+  TileRow row;
+  row.reserve(column_count);
+  row.assign(column_count, 0);
+  return row;
+}
 
-  [[nodiscard]] auto operator==(const Region&) const noexcept -> bool = default;
-};
+auto make_tile_matrix(const TileExtent extent) -> TileMatrix
+{
+  TileMatrix tiles;
+  tiles.reserve(extent.rows);
+  tiles.assign(extent.rows, make_tile_row(extent.cols));
+  return tiles;
+}
 
 }  // namespace tactile

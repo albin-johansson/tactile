@@ -20,35 +20,32 @@
 #pragma once
 
 #include "common/numeric.hpp"
-#include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "common/type/path.hpp"
-#include "common/type/tree_map.hpp"
+#include "common/type/maybe.hpp"
+#include "common/type/ostream.hpp"
+#include "common/type/string.hpp"
 
 namespace tactile {
 
-/// Context component that tracks loaded textures.
-struct TextureCache final {
-  TreeMap<Path, Entity> textures;
+/// Represents the available map object types.
+enum class ObjectType {
+  Point,
+  Rect,
+  Ellipse
 };
 
-/// Component describing a loaded texture.
-struct Texture final {
-  Int2 size {};  ///< The texture dimensions.
-  Path path;     ///< Path to the file from which the texture was created.
+/// Represents various map objects found in object layers.
+/// The current supported object types are rectangles, ellipses, and points.
+struct Object final {
+  Float2 position {};       ///< Object position.
+  Float2 size {};           ///< Object size (might be zero).
+  ObjectType type {};       ///< Specific object type.
+  String tag;               ///< Optional user-provided tag.
+  Maybe<int32> meta_id;     ///< Identifier used in save files.
+  bool visible : 1 {true};  ///< Is the object rendered?
 };
 
-/// Component featured by OpenGL texture entities.
-/// TODO consider using RAII type for OpenGL textures here
-struct OpenGLTexture final {
-  uint id {};  ///< Associated OpenGL texture ID.
-};
-
-/// Component featured by Vulkan texture entities.
-struct VulkanTexture final {
-  // TODO VkImage image {};
-  // TODO VkImageView view {};
-  // TODO VkDescriptorSet imgui_descriptor_set {};
-};
+/// Outputs an object type to a stream for debugging purposes.
+auto operator<<(OStream& stream, ObjectType type) -> OStream&;
 
 }  // namespace tactile

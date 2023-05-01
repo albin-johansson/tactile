@@ -20,35 +20,30 @@
 #pragma once
 
 #include "common/numeric.hpp"
+#include "common/type/chrono.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "common/type/path.hpp"
-#include "common/type/tree_map.hpp"
+#include "common/type/vec.hpp"
 
 namespace tactile {
 
-/// Context component that tracks loaded textures.
-struct TextureCache final {
-  TreeMap<Path, Entity> textures;
+/// Component that provides metadata about a tile in a tileset.
+struct Tile final {
+  TileIndex index;      ///< Index of the tile in the parent tileset.
+  Int4 source {};       ///< Region in the parent tileset associated with the tile.
+  Vec<Entity> objects;  ///< Objects embedded in the tile.
 };
 
-/// Component describing a loaded texture.
-struct Texture final {
-  Int2 size {};  ///< The texture dimensions.
-  Path path;     ///< Path to the file from which the texture was created.
+struct TileAnimationFrame final {
+  TileIndex tile_index {};  ///< Index of the shown tile during the frame.
+  ms_t duration {};         ///< The duration that the frame is shown.
 };
 
-/// Component featured by OpenGL texture entities.
-/// TODO consider using RAII type for OpenGL textures here
-struct OpenGLTexture final {
-  uint id {};  ///< Associated OpenGL texture ID.
-};
-
-/// Component featured by Vulkan texture entities.
-struct VulkanTexture final {
-  // TODO VkImage image {};
-  // TODO VkImageView view {};
-  // TODO VkDescriptorSet imgui_descriptor_set {};
+/// Component that describes an animation associated with a tile.
+struct TileAnimation final {
+  Vec<TileAnimationFrame> frames;  ///< The associated animation frames.
+  usize index {};                  ///< Current frame index.
+  TimePoint last_update {};        ///< Time of the last frame change.
 };
 
 }  // namespace tactile

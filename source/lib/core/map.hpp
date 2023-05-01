@@ -19,21 +19,15 @@
 
 #pragma once
 
-#include "common/macros.hpp"
 #include "common/numeric.hpp"
-#include "common/type/func.hpp"
-#include "common/type/hash_map.hpp"
+#include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/ptr.hpp"
-#include "common/type/uuid.hpp"
-#include "core/context/context.hpp"
-#include "core/layer/layer_type.hpp"
-#include "core/tile/tile_extent.hpp"
-#include "core/tile/tile_pos.hpp"
+#include "common/type/vec.hpp"
+#include "core/tile_extent.hpp"
 
 namespace tactile {
 
+/// Component representing a tile map.
 ///
 /// Maps a built from multiple layers stacked on top of each other. An invisible group
 /// layer (the "root" layer) manages the layers in every map. This root layer is always
@@ -47,5 +41,19 @@ namespace tactile {
 /// Every map uses its own tile format specification, which can be used to control aspects
 /// such as whether tile layer data is compressed. By default, maps do not use any
 /// compression along with plain text encoding.
+struct Map final {
+  TileExtent extent {5, 5};                   ///< Total size of the map, in tiles.
+  Int2 tile_size {32, 32};                    ///< Logical size of all tiles.
+  GroupLayerEntity root_layer {kNullEntity};  ///< Invisible root layer.
+  LayerEntity active_layer {kNullEntity};     ///< The selected layer.
+  AttachedTilesetEntity active_tileset {kNullEntity};  ///< The active attached tileset).
+  Vec<AttachedTilesetEntity> attached_tilesets;        ///< The associated tilesets.
+  TileID next_tile_id {1};                             ///< Next available global tile ID.
+  int32 next_object_id {1};       ///< Next available object identifier.
+  int32 next_layer_id {1};        ///< Next available layer identifier.
+  int32 tile_layer_suffix {1};    ///< Next tile layer suffix (for naming purposes).
+  int32 object_layer_suffix {1};  ///< Next object layer suffix (for naming purposes).
+  int32 group_layer_suffix {1};   ///< Next group layer suffix (for naming purposes).
+};
 
 }  // namespace tactile

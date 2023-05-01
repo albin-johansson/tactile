@@ -19,16 +19,15 @@
 
 #pragma once
 
-#include "core/tile_pos.hpp"
+#include "common/numeric.hpp"
 
 namespace tactile {
 
-/// Represents a region of a grid.
-struct Region final {
-  TilePos begin;  /// The top-left position.
-  TilePos end;    /// The bottom-right position.
+struct TileExtent final {
+  usize rows {};
+  usize cols {};
 
-  [[nodiscard]] auto operator==(const Region&) const noexcept -> bool = default;
+  [[nodiscard]] bool operator==(const TileExtent& other) const = default;
 };
 
 }  // namespace tactile

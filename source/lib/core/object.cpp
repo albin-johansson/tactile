@@ -17,18 +17,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "object.hpp"
 
-#include "core/tile_pos.hpp"
+#include <magic_enum.hpp>
 
 namespace tactile {
 
-/// Represents a region of a grid.
-struct Region final {
-  TilePos begin;  /// The top-left position.
-  TilePos end;    /// The bottom-right position.
-
-  [[nodiscard]] auto operator==(const Region&) const noexcept -> bool = default;
-};
+auto operator<<(OStream& stream, const ObjectType type) -> OStream&
+{
+  return stream << magic_enum::enum_name(type);
+}
 
 }  // namespace tactile

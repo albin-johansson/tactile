@@ -19,16 +19,25 @@
 
 #pragma once
 
-#include "core/tile_pos.hpp"
+#include "common/type/ecs.hpp"
+#include "common/type/string_map.hpp"
+#include "common/type/vec.hpp"
+#include "core/attribute.hpp"
 
 namespace tactile {
 
-/// Represents a region of a grid.
-struct Region final {
-  TilePos begin;  /// The top-left position.
-  TilePos end;    /// The bottom-right position.
+struct Component final {
+  ComponentDefinitionEntity definition {kNullEntity};
+  StringMap<Attribute> attributes;
+};
 
-  [[nodiscard]] auto operator==(const Region&) const noexcept -> bool = default;
+struct ComponentDefinition final {
+  String name;
+  StringMap<Attribute> attributes;
+};
+
+struct ComponentSet final {
+  Vec<ComponentDefinitionEntity> definitions;
 };
 
 }  // namespace tactile

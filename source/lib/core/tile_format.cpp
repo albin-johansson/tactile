@@ -17,18 +17,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "tile_format.hpp"
 
-#include "core/tile_pos.hpp"
+#include <zlib.h>
 
 namespace tactile {
 
-/// Represents a region of a grid.
-struct Region final {
-  TilePos begin;  /// The top-left position.
-  TilePos end;    /// The bottom-right position.
+auto is_valid_zlib_compression_level(const int level) -> bool
+{
+  return level == Z_DEFAULT_COMPRESSION ||
+         (level >= min_zlib_compression_level() && level <= max_zlib_compression_level());
+}
 
-  [[nodiscard]] auto operator==(const Region&) const noexcept -> bool = default;
-};
+auto is_valid_zstd_compression_level(const int level) -> bool
+{
+  return level >= min_zstd_compression_level() && level <= max_zstd_compression_level();
+}
+
+auto min_zlib_compression_level() -> int
+{
+  return Z_BEST_SPEED;
+}
+
+auto max_zlib_compression_level() -> int
+{
+  return Z_BEST_COMPRESSION;
+}
+
+auto min_zstd_compression_level() -> int
+{
+  return 1;
+}
+
+auto max_zstd_compression_level() -> int
+{
+  return 19;
+}
 
 }  // namespace tactile

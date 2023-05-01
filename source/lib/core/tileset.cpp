@@ -17,18 +17,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "tileset.hpp"
 
-#include "core/tile_pos.hpp"
+#include "common/debug/panic.hpp"
 
 namespace tactile {
 
-/// Represents a region of a grid.
-struct Region final {
-  TilePos begin;  /// The top-left position.
-  TilePos end;    /// The bottom-right position.
+auto Tileset::index_of(const TilePos pos) const -> TileIndex
+{
+  if (contains(pos)) {
+    return pos.row() * column_count + pos.col();
+  }
+  else {
+    throw TactileError {"Invalid tile position!"};
+  }
+}
 
-  [[nodiscard]] auto operator==(const Region&) const noexcept -> bool = default;
-};
+auto Tileset::contains(const TilePos pos) const -> bool
+{
+  const auto row = pos.row();
+  const auto col = pos.col();
+  return row >= 0 && col >= 0 && row < row_count && col < column_count;
+}
+
+auto AttachedTileset::is_single_tile_selected() const -> bool
+{
+  if (selection.has_value()) {
+    return (selection->end - selection->begin) == TilePos {1, 1};
+  }
+
+  return false;
+}
 
 }  // namespace tactile
