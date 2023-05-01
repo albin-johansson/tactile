@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <cstddef>  // size_t, ptrdiff_t
+#include <cstddef>  // size_t, ptrdiff_t, uintptr_t
 #include <cstdint>  // int{}_t, uint{}_t
 
 namespace tactile {
@@ -30,6 +30,7 @@ using ulonglong = unsigned long long int;
 
 using usize = std::size_t;
 using ssize = std::ptrdiff_t;
+using uintptr = std::uintptr_t;
 
 using uint8 = std::uint8_t;
 using uint16 = std::uint16_t;

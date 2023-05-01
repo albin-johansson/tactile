@@ -19,12 +19,42 @@
 
 #pragma once
 
+#include <algorithm>  // find
+#include <utility>    // move
+
+#include "common/debug/assert.hpp"
 #include "common/numeric.hpp"
-#include "common/type/vector_map.hpp"
-#include "core/tile_pos.hpp"
+#include "common/type/vec.hpp"
 
 namespace tactile {
 
-using TileCache = VectorMap<TilePos, TileID>;
+template <typename T>
+void insert_at(Vec<T>& vec, const usize index, T value)
+{
+  TACTILE_ASSERT(index <= vec.size());
+
+  if (index < vec.size()) {
+    vec.insert(vec.begin() + static_cast<ssize>(index), std::move(value));
+  }
+  else if (index == vec.size()) {
+    vec.push_back(std::move(value));
+  }
+}
+
+template <typename T>
+void erase_at(Vec<T>& vec, const usize index)
+{
+  TACTILE_ASSERT(index < vec.size());
+
+  if (index < vec.size()) {
+    vec.erase(vec.begin() + static_cast<ssize>(index));
+  }
+}
+
+template <typename T>
+[[nodiscard]] auto contains_value(const Vec<T>& vec, const T& value) -> bool
+{
+  return std::ranges::find(vec, value) != vec.end();
+}
 
 }  // namespace tactile

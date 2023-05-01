@@ -24,6 +24,7 @@
 #include <unordered_map>  // unordered_map
 
 #include "common/numeric.hpp"
+#include "common/type/result.hpp"
 #include "common/type/string.hpp"
 
 namespace tactile {
@@ -51,5 +52,16 @@ struct StringHash final {
 /// Variant of hash map optimized for string keys, using heterogeneous lookups.
 template <typename T>
 using StringMap = std::unordered_map<String, T, StringHash, std::equal_to<>>;
+
+template <typename T>
+auto erase_from(StringMap<T>& map, StringView key) -> Result
+{
+  if (const auto iter = map.find(key); iter != map.end()) {
+    map.erase(iter);
+    return success;
+  }
+
+  return failure;
+}
 
 }  // namespace tactile
