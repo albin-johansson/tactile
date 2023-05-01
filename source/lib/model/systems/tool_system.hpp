@@ -19,19 +19,12 @@
 
 #pragma once
 
-#include "model/tool/tool.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
 
-namespace tactile {
+namespace tactile::sys {
 
-class PointTool final : public Tool {
- public:
-  void accept(ToolVisitor& visitor) const override;
+[[nodiscard]] auto is_stamp_tool_randomizer_possible(const Model& model,
+                                                     Entity map_entity) -> bool;
 
-  void on_pressed(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse) override;
-
-  [[nodiscard]] auto is_available(const Model& model) const -> bool override;
-
-  [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Point; }
-};
-
-}  // namespace tactile
+}  // namespace tactile::sys

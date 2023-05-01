@@ -19,14 +19,15 @@
 
 #include "object_selection_tool.hpp"
 
-#include <entt/signal/dispatcher.hpp>
-
-#include "core/layer/group_layer.hpp"
-#include "core/layer/object_layer.hpp"
-#include "model/document/map_document.hpp"
+#include "core/layer.hpp"
+#include "core/object.hpp"
+#include "core/map.hpp"
+#include "core/viewport.hpp"
+#include "model/document.hpp"
 #include "model/event/object_events.hpp"
 #include "model/event/tool_events.hpp"
-#include "model/model.hpp"
+#include "model/systems/document_system.hpp"
+#include "model/systems/object_layer_system.hpp"
 
 namespace tactile {
 
@@ -35,78 +36,74 @@ void ObjectSelectionTool::accept(ToolVisitor& visitor) const
   visitor.visit(*this);
 }
 
-void ObjectSelectionTool::on_exited(DocumentModel& model, entt::dispatcher& dispatcher)
+void ObjectSelectionTool::on_exited(Model& model, Dispatcher& dispatcher)
 {
   maybe_emit_event(model, dispatcher);
 }
 
-void ObjectSelectionTool::on_pressed(DocumentModel& model,
-                                     entt::dispatcher& dispatcher,
+void ObjectSelectionTool::on_pressed(Model& model,
+                                     Dispatcher& dispatcher,
                                      const MouseInfo& mouse)
 {
   if ((mouse.button == cen::mouse_button::left ||
        mouse.button == cen::mouse_button::right) &&
       is_available(model)) {
-    auto& document = model.require_active_map_document();
-    auto& map = document.get_map();
-    const auto& viewport = document.get_viewport();
+    const auto document_entity = sys::get_active_document(model);
 
-    const auto layer_id = map.get_active_layer_id().value();
-    auto& layer = map.get_invisible_root().get_object_layer(layer_id);
+    const auto& map_document = model.get<MapDocument>(document_entity);
+    const auto& document_viewport = model.get<Viewport>(document_entity);
 
-    const auto ratio = viewport.scaling_ratio(map.get_tile_size());
-    const auto object_id = layer.object_at(mouse.pos / ratio, map.get_tile_size());
+    const auto& map = model.get<Map>(map_document.map);
+    auto& object_layer = model.get<ObjectLayer>(map.active_layer);
 
-    switch (mouse.button) {
-      case cen::mouse_button::left: {
-        layer.select_object(object_id);
+    const auto scaling_ratio = document_viewport.scaling_ratio(map.tile_size);
+    const auto object_entity = sys::find_object_at_position(model,
+                                                            object_layer.active_object,
+                                                            mouse.pos / scaling_ratio,
+                                                            map.tile_size);
 
-        if (object_id) {
-          const auto& object = layer.get_object(*object_id);
+    if (mouse.button == cen::mouse_button::left) {
+      object_layer.active_object = object_entity;
 
-          auto& drag = mDragInfo.emplace();
-          drag.origin_object_pos = object.get_pos();
-          drag.last_mouse_pos = mouse.pos;
-        }
+      if (object_entity != kNullEntity) {
+        const auto& object = model.get<Object>(object_entity);
 
-        break;
+        auto& drag = mDragInfo.emplace();
+        drag.origin_object_pos = object.position;
+        drag.last_mouse_pos = mouse.pos;
       }
-      case cen::mouse_button::right: {
-        layer.select_object(object_id);
+    }
+    else if (mouse.button == cen::mouse_button::right) {
+      object_layer.active_object = object_entity;
 
-        if (object_id) {
-          dispatcher.enqueue<SpawnObjectContextMenuEvent>(*object_id);
-        }
-
-        break;
+      if (object_entity != kNullEntity) {
+        dispatcher.enqueue<SpawnObjectContextMenuEvent>(object_entity);
       }
-      default:
-        break;
     }
   }
 }
 
-void ObjectSelectionTool::on_dragged(DocumentModel& model,
-                                     entt::dispatcher& dispatcher,
+void ObjectSelectionTool::on_dragged(Model& model,
+                                     Dispatcher& dispatcher,
                                      const MouseInfo& mouse)
 {
   if (mDragInfo && mouse.button == cen::mouse_button::left && is_available(model)) {
-    auto& document = model.require_active_map_document();
-    auto& map = document.get_map();
+    const auto document_entity = sys::get_active_document(model);
 
-    const auto layer_id = map.get_active_layer_id().value();
-    auto& layer = map.get_invisible_root().get_object_layer(layer_id);
+    const auto& map_document = model.get<MapDocument>(document_entity);
+    const auto& map = model.get<Map>(map_document.map);
+    const auto& object_layer = model.get<ObjectLayer>(map.active_layer);
 
-    if (const auto object_id = layer.active_object_id()) {
-      auto& object = layer.get_object(*object_id);
-
+    if (object_layer.active_object != kNullEntity) {
       if (mouse.is_within_contents) {
-        const auto& viewport = document.get_viewport();
+        const auto& document_viewport = model.get<Viewport>(document_entity);
 
-        const auto ratio = viewport.scaling_ratio(map.get_tile_size());
-        const auto delta = (mouse.pos - mDragInfo->last_mouse_pos) / ratio;
+        const auto scaling_ratio = document_viewport.scaling_ratio(map.tile_size);
+        const auto delta = (mouse.pos - mDragInfo->last_mouse_pos) / scaling_ratio;
 
-        object.set_pos(object.get_pos() + delta);
+        auto& object = model.get<Object>(object_layer.active_object);
+        object.position += delta;
+
         mDragInfo->last_mouse_pos = mouse.pos;
       }
       else {
@@ -117,8 +114,8 @@ void ObjectSelectionTool::on_dragged(DocumentModel& model,
   }
 }
 
-void ObjectSelectionTool::on_released(DocumentModel& model,
-                                      entt::dispatcher& dispatcher,
+void ObjectSelectionTool::on_released(Model& model,
+                                      Dispatcher& dispatcher,
                                       const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && is_available(model)) {
@@ -126,30 +123,35 @@ void ObjectSelectionTool::on_released(DocumentModel& model,
   }
 }
 
-auto ObjectSelectionTool::is_available(const DocumentModel& model) const -> bool
+auto ObjectSelectionTool::is_available(const Model& model) const -> bool
 {
-  const auto& map_document = model.require_active_map_document();
-  return map_document.get_map().is_active_layer(LayerType::ObjectLayer);
+  const auto document_entity = sys::get_active_document(model);
+
+  const auto& map_document = model.get<MapDocument>(document_entity);
+  const auto& map = model.get<Map>(map_document.map);
+
+  return map.active_layer != kNullEntity && model.has<ObjectLayer>(map.active_layer);
 }
 
-void ObjectSelectionTool::maybe_emit_event(DocumentModel& model,
-                                           entt::dispatcher& dispatcher)
+void ObjectSelectionTool::maybe_emit_event(Model& model, Dispatcher& dispatcher)
 {
-  const auto& map_document = model.require_active_map_document();
-  const auto& map = map_document.get_map();
+  const auto document_entity = sys::get_active_document(model);
 
-  if (mDragInfo) {
-    if (const auto layer_id = map.get_active_layer_id()) {
-      const auto& layer = map.get_invisible_root().get_object_layer(*layer_id);
+  const auto& map_document = model.get<MapDocument>(document_entity);
+  const auto& map = model.get<Map>(map_document.map);
 
-      if (const auto object_id = layer.active_object_id()) {
-        const auto& object = layer.get_object(*object_id);
+  if (mDragInfo.has_value()) {
+    if (map.active_layer != kNullEntity) {
+      const auto& object_layer = model.get<ObjectLayer>(map.active_layer);
+
+      if (object_layer.active_object != kNullEntity) {
+        const auto& object = model.get<Object>(object_layer.active_object);
 
         // Only emit an event if the object has been moved along any axis
-        if (mDragInfo->origin_object_pos != object.get_pos()) {
-          dispatcher.enqueue<MoveObjectEvent>(object.get_uuid(),
+        if (mDragInfo->origin_object_pos != object.position) {
+          dispatcher.enqueue<MoveObjectEvent>(object_layer.active_object,
                                               mDragInfo->origin_object_pos,
-                                              object.get_pos());
+                                              object.position);
         }
       }
     }

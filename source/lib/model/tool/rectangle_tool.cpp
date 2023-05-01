@@ -19,13 +19,16 @@
 
 #include "rectangle_tool.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <glm/common.hpp>
 
 #include "common/type/math.hpp"
-#include "model/document/map_document.hpp"
+#include "core/layer.hpp"
+#include "core/map.hpp"
+#include "core/viewport.hpp"
+#include "model/document.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/model.hpp"
+#include "model/systems/document_system.hpp"
 
 namespace tactile {
 
@@ -34,19 +37,17 @@ void RectangleTool::accept(ToolVisitor& visitor) const
   visitor.visit(*this);
 }
 
-void RectangleTool::on_disabled(DocumentModel& model, entt::dispatcher& dispatcher)
+void RectangleTool::on_disabled(Model& model, Dispatcher& dispatcher)
 {
   maybe_emit_event(model, dispatcher);
 }
 
-void RectangleTool::on_exited(DocumentModel& model, entt::dispatcher& dispatcher)
+void RectangleTool::on_exited(Model& model, Dispatcher& dispatcher)
 {
   maybe_emit_event(model, dispatcher);
 }
 
-void RectangleTool::on_pressed(DocumentModel& model,
-                               entt::dispatcher&,
-                               const MouseInfo& mouse)
+void RectangleTool::on_pressed(Model& model, Dispatcher&, const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
       is_available(model)) {
@@ -56,17 +57,15 @@ void RectangleTool::on_pressed(DocumentModel& model,
   }
 }
 
-void RectangleTool::on_dragged(DocumentModel& model,
-                               entt::dispatcher&,
-                               const MouseInfo& mouse)
+void RectangleTool::on_dragged(Model& model, Dispatcher&, const MouseInfo& mouse)
 {
   if (mStroke && mouse.button == cen::mouse_button::left && is_available(model)) {
     mStroke->current = mouse.pos;
   }
 }
 
-void RectangleTool::on_released(DocumentModel& model,
-                                entt::dispatcher& dispatcher,
+void RectangleTool::on_released(Model& model,
+                                Dispatcher& dispatcher,
                                 const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && is_available(model)) {
@@ -74,11 +73,14 @@ void RectangleTool::on_released(DocumentModel& model,
   }
 }
 
-auto RectangleTool::is_available(const DocumentModel& model) const -> bool
+auto RectangleTool::is_available(const Model& model) const -> bool
 {
-  const auto& map_document = model.require_active_map_document();
-  const auto& map = map_document.get_map();
-  return map.is_active_layer(LayerType::ObjectLayer);
+  const auto document_entity = sys::get_active_document(model);
+
+  const auto& map_document = model.get<MapDocument>(document_entity);
+  const auto& map = model.get<Map>(map_document.map);
+
+  return map.active_layer != kNullEntity && model.has<ObjectLayer>(map.active_layer);
 }
 
 auto RectangleTool::get_stroke() const -> const Maybe<CurrentRectangleStroke>&
@@ -86,20 +88,21 @@ auto RectangleTool::get_stroke() const -> const Maybe<CurrentRectangleStroke>&
   return mStroke;
 }
 
-void RectangleTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher)
+void RectangleTool::maybe_emit_event(Model& model, Dispatcher& dispatcher)
 {
   if (mStroke) {
-    const auto& map_document = model.require_active_map_document();
-    const auto& map = map_document.get_map();
-    const auto& viewport = map_document.get_viewport();
+    const auto document_entity = sys::get_active_document(model);
 
-    const auto ratio = viewport.scaling_ratio(map.get_tile_size());
-    const auto pos = (glm::min)(mStroke->start, mStroke->current) / ratio;
-    const auto size = glm::abs(mStroke->current - mStroke->start) / ratio;
+    const auto& map_document = model.get<MapDocument>(document_entity);
+    const auto& document_viewport = model.get<Viewport>(document_entity);
+    const auto& map = model.get<Map>(map_document.map);
+
+    const auto scaling_ratio = document_viewport.scaling_ratio(map.tile_size);
+    const auto position = glm::min(mStroke->start, mStroke->current) / scaling_ratio;
+    const auto size = glm::abs(mStroke->current - mStroke->start) / scaling_ratio;
 
     if (size.x != 0 && size.y != 0) {
-      const auto layer_id = map.get_active_layer_id().value();
-      dispatcher.enqueue<AddRectangleEvent>(layer_id, pos, size);
+      dispatcher.enqueue<AddRectangleEvent>(map.active_layer, position, size);
     }
 
     mStroke.reset();

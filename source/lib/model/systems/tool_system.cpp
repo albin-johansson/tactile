@@ -17,21 +17,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "tool_system.hpp"
 
-#include "model/tool/tool.hpp"
+#include "core/map.hpp"
+#include "core/tileset.hpp"
 
-namespace tactile {
+namespace tactile::sys {
 
-class PointTool final : public Tool {
- public:
-  void accept(ToolVisitor& visitor) const override;
+auto is_stamp_tool_randomizer_possible(const Model& model, const Entity map_entity)
+    -> bool
+{
+  const auto& map = model.get<Map>(map_entity);
 
-  void on_pressed(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse) override;
+  if (map.active_tileset != kNullEntity) {
+    const auto& attached_tileset = model.get<AttachedTileset>(map.active_tileset);
+    return attached_tileset.is_single_tile_selected();
+  }
 
-  [[nodiscard]] auto is_available(const Model& model) const -> bool override;
+  return false;
+}
 
-  [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Point; }
-};
-
-}  // namespace tactile
+}  // namespace tactile::sys

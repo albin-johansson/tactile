@@ -21,13 +21,11 @@
 
 #include "common/type/maybe.hpp"
 #include "common/type/tile_cache.hpp"
+#include "core/layer.hpp"
+#include "core/tileset.hpp"
 #include "model/tool/tool.hpp"
 
 namespace tactile {
-
-class Map;
-class TileLayer;
-class TilesetRef;
 
 /// A tool used to draw (or "stamp") selected tileset tiles to tile layers.
 ///
@@ -43,29 +41,24 @@ class StampTool final : public Tool {
  public:
   void accept(ToolVisitor& visitor) const override;
 
-  void on_disabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
+  void on_disabled(Model& model, Dispatcher& dispatcher) override;
 
-  void on_exited(DocumentModel& model, entt::dispatcher& dispatcher) override;
+  void on_exited(Model& model, Dispatcher& dispatcher) override;
 
-  void on_pressed(DocumentModel& model,
-                  entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+  void on_pressed(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse) override;
 
-  void on_dragged(DocumentModel& model,
-                  entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+  void on_dragged(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse) override;
 
-  void on_released(DocumentModel& model,
-                   entt::dispatcher& dispatcher,
-                   const MouseInfo& mouse) override;
+  void on_released(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse) override;
 
   void set_random(bool random);
 
   [[nodiscard]] auto is_random() const -> bool;
 
-  [[nodiscard]] auto behaves_as_if_random(const Map& map) const -> bool;
+  [[nodiscard]] auto behaves_as_if_random(const Model& model, Entity map_entity) const
+      -> bool;
 
-  [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
+  [[nodiscard]] auto is_available(const Model& model) const -> bool override;
 
   [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Stamp; }
 
@@ -75,19 +68,21 @@ class StampTool final : public Tool {
   Maybe<TilePos> mLastChangedPos;
   bool mRandomMode {};
 
-  void update_sequence(DocumentModel& model, const TilePos& cursor);
+  void update_sequence(Model& model, const TilePos& cursor);
 
-  void update_sequence_normal(TileLayer& layer,
-                              const TilesetRef& tileset_ref,
+  void update_sequence_normal(Model& model,
+                              TileLayer& tile_layer,
+                              const AttachedTileset& attached_tileset,
                               const TilePos& cursor);
 
-  void update_sequence_random(TileLayer& layer,
-                              const TilesetRef& tileset_ref,
+  void update_sequence_random(Model& model,
+                              TileLayer& tile_layer,
+                              const AttachedTileset& attached_tileset,
                               const TilePos& cursor);
 
-  void maybe_emit_event(const DocumentModel& model, entt::dispatcher& dispatcher);
+  void maybe_emit_event(const Model& model, Dispatcher& dispatcher);
 
-  [[nodiscard]] auto is_usable(const DocumentModel& model) const -> bool;
+  [[nodiscard]] auto is_usable(const Model& model) const -> bool;
 };
 
 }  // namespace tactile

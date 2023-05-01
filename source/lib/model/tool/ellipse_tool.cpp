@@ -24,9 +24,13 @@
 
 #include "common/debug/assert.hpp"
 #include "common/type/math.hpp"
-#include "model/document/map_document.hpp"
+#include "core/layer.hpp"
+#include "core/map.hpp"
+#include "core/viewport.hpp"
+#include "model/document.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/model.hpp"
+#include "model/systems/document_system.hpp"
 
 namespace tactile {
 
@@ -35,19 +39,17 @@ void EllipseTool::accept(ToolVisitor& visitor) const
   visitor.visit(*this);
 }
 
-void EllipseTool::on_disabled(DocumentModel& model, entt::dispatcher& dispatcher)
+void EllipseTool::on_disabled(Model& model, entt::dispatcher& dispatcher)
 {
   maybe_emit_event(model, dispatcher);
 }
 
-void EllipseTool::on_exited(DocumentModel& model, entt::dispatcher& dispatcher)
+void EllipseTool::on_exited(Model& model, entt::dispatcher& dispatcher)
 {
   maybe_emit_event(model, dispatcher);
 }
 
-void EllipseTool::on_pressed(DocumentModel& model,
-                             entt::dispatcher&,
-                             const MouseInfo& mouse)
+void EllipseTool::on_pressed(Model& model, entt::dispatcher&, const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
       is_available(model)) {
@@ -57,16 +59,14 @@ void EllipseTool::on_pressed(DocumentModel& model,
   }
 }
 
-void EllipseTool::on_dragged(DocumentModel& model,
-                             entt::dispatcher&,
-                             const MouseInfo& mouse)
+void EllipseTool::on_dragged(Model& model, entt::dispatcher&, const MouseInfo& mouse)
 {
   if (mStroke && mouse.button == cen::mouse_button::left && is_available(model)) {
     mStroke->current = mouse.pos;
   }
 }
 
-void EllipseTool::on_released(DocumentModel& model,
+void EllipseTool::on_released(Model& model,
                               entt::dispatcher& dispatcher,
                               const MouseInfo& mouse)
 {
@@ -75,19 +75,21 @@ void EllipseTool::on_released(DocumentModel& model,
   }
 }
 
-void EllipseTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher)
+void EllipseTool::maybe_emit_event(Model& model, entt::dispatcher& dispatcher)
 {
   TACTILE_ASSERT(is_available(model));
 
   if (mStroke) {
-    const auto& map_document = model.require_active_map_document();
-    const auto& map = map_document.get_map();
-    const auto& viewport = map_document.get_viewport();
+    const auto document_entity = sys::get_active_document(model);
 
-    const auto ratio = viewport.scaling_ratio(map.get_tile_size());
+    const auto& map_document = model.get<MapDocument>(document_entity);
+    const auto& map = model.get<Map>(map_document.map);
 
-    const auto radius = (mStroke->current - mStroke->start) / ratio;
-    auto pos = mStroke->start / ratio;
+    const auto& viewport = model.get<Viewport>(document_entity);
+    const auto scaling_ratio = viewport.tile_size / Float2 {map.tile_size};
+
+    const auto radius = (mStroke->current - mStroke->start) / scaling_ratio;
+    auto pos = mStroke->start / scaling_ratio;
 
     if (radius.x < 0) {
       pos.x += radius.x * 2.0f;
@@ -98,20 +100,28 @@ void EllipseTool::maybe_emit_event(DocumentModel& model, entt::dispatcher& dispa
     }
 
     if (radius.x != 0 && radius.y != 0) {
-      const auto layer_id = map.get_active_layer_id().value();
       const auto diameter = glm::abs(radius) * 2.0f;
-      dispatcher.enqueue<AddEllipseEvent>(layer_id, pos, diameter);
+      dispatcher.enqueue<AddEllipseEvent>(map.active_layer, pos, diameter);
     }
 
     mStroke.reset();
   }
 }
 
-auto EllipseTool::is_available(const DocumentModel& model) const -> bool
+auto EllipseTool::is_available(const Model& model) const -> bool
 {
-  const auto& map_document = model.require_active_map_document();
-  const auto& map = map_document.get_map();
-  return map.is_active_layer(LayerType::ObjectLayer);
+  const auto document_entity = sys::get_active_document(model);
+  if (document_entity == kNullEntity || !model.has<MapDocument>(document_entity)) {
+    return false;
+  }
+
+  const auto& map_document = model.get<MapDocument>(document_entity);
+  const auto& map = model.get<Map>(map_document.map);
+  if (map.active_layer != kNullEntity && model.has<ObjectLayer>(map.active_layer)) {
+    return true;
+  }
+
+  return false;
 }
 
 auto EllipseTool::get_stroke() const -> const Maybe<CurrentEllipseStroke>&

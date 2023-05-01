@@ -20,13 +20,14 @@
 #include "bucket_tool.hpp"
 
 #include <centurion/mouse.hpp>
-#include <entt/signal/dispatcher.hpp>
 
-#include "core/tile/tileset_bundle.hpp"
-#include "model/document/map_document.hpp"
-#include "model/document/tileset_document.hpp"
+#include "core/map.hpp"
+#include "core/tileset.hpp"
+#include "model/document.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/model.hpp"
+#include "model/systems/document_system.hpp"
+#include "model/systems/layer_system.hpp"
 
 namespace tactile {
 
@@ -35,39 +36,51 @@ void BucketTool::accept(ToolVisitor& visitor) const
   visitor.visit(*this);
 }
 
-void BucketTool::on_pressed(DocumentModel& model,
-                            entt::dispatcher& dispatcher,
-                            const MouseInfo& mouse)
+void BucketTool::on_pressed(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse)
 {
   if (mouse.button == cen::mouse_button::left && mouse.is_within_contents &&
       is_available(model)) {
-    const auto& document = model.require_active_map_document();
-    const auto& map = document.get_map();
-    const auto& tileset_bundle = map.get_tileset_bundle();
+    const auto document_entity = sys::get_active_document(model);
 
-    const auto tileset_id = tileset_bundle.get_active_tileset_id().value();
-    const auto& tileset_ref = tileset_bundle.get_tileset_ref(tileset_id);
-    const auto& tileset = tileset_ref.get_tileset();
+    const auto& map_document = model.get<MapDocument>(document_entity);
+    const auto& map = model.get<Map>(map_document.map);
 
-    const auto selected_pos = tileset_ref.get_selection()->begin;
-    const auto replacement =
-        tileset_ref.get_first_tile() + tileset.index_of(selected_pos);
+    const auto& attached_tileset = model.get<AttachedTileset>(map.active_tileset);
+    const auto& tileset = model.get<Tileset>(attached_tileset.tileset);
 
-    const auto layer_id = map.get_active_layer_id().value();
-    dispatcher.enqueue<FloodEvent>(layer_id, mouse.position_in_viewport, replacement);
+    const auto selected_pos = attached_tileset.selection.value().begin;
+    const auto replacement = attached_tileset.first_tile + tileset.index_of(selected_pos);
+
+    dispatcher.enqueue<FloodEvent>(map.active_layer,
+                                   mouse.position_in_viewport,
+                                   replacement);
   }
 }
 
-auto BucketTool::is_available(const DocumentModel& model) const -> bool
+auto BucketTool::is_available(const Model& model) const -> bool
 {
-  const auto& document = model.require_active_map_document();
-  const auto& map = document.get_map();
+  const auto document_entity = sys::get_active_document(model);
+  if (document_entity == kNullEntity || !model.has<MapDocument>(document_entity)) {
+    return false;
+  }
 
-  const auto& tilesets = map.get_tileset_bundle();
-  const auto tileset_id = tilesets.get_active_tileset_id();
+  const auto& map_document = model.get<MapDocument>(document_entity);
+  const auto& map = model.get<Map>(map_document.map);
 
-  return map.is_active_layer(LayerType::TileLayer) &&  //
-         tileset_id && tilesets.get_tileset_ref(*tileset_id).is_single_tile_selected();
+  if (map.active_layer == kNullEntity || !model.has<TileLayer>(map.active_layer)) {
+    return false;
+  }
+
+  if (map.active_tileset != kNullEntity) {
+    const auto& attached_tileset = model.get<AttachedTileset>(map.active_tileset);
+    if (attached_tileset.selection.has_value()) {
+      const auto selected_region =
+          attached_tileset.selection->end - attached_tileset.selection->begin;
+      return selected_region == TilePos {1, 1};
+    }
+  }
+
+  return false;
 }
 
 }  // namespace tactile

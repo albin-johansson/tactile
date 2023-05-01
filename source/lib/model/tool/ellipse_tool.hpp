@@ -34,23 +34,23 @@ class EllipseTool final : public Tool {
  public:
   void accept(ToolVisitor& visitor) const override;
 
-  void on_disabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
+  void on_disabled(Model& model, entt::dispatcher& dispatcher) override;
 
-  void on_exited(DocumentModel& model, entt::dispatcher& dispatcher) override;
+  void on_exited(Model& model, entt::dispatcher& dispatcher) override;
 
-  void on_pressed(DocumentModel& model,
+  void on_pressed(Model& model,
                   entt::dispatcher& dispatcher,
                   const MouseInfo& mouse) override;
 
-  void on_dragged(DocumentModel& model,
+  void on_dragged(Model& model,
                   entt::dispatcher& dispatcher,
                   const MouseInfo& mouse) override;
 
-  void on_released(DocumentModel& model,
+  void on_released(Model& model,
                    entt::dispatcher& dispatcher,
                    const MouseInfo& mouse) override;
 
-  [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
+  [[nodiscard]] auto is_available(const Model& model) const -> bool override;
 
   [[nodiscard]] auto get_stroke() const -> const Maybe<CurrentEllipseStroke>&;
 
@@ -59,7 +59,7 @@ class EllipseTool final : public Tool {
  private:
   Maybe<CurrentEllipseStroke> mStroke;
 
-  void maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher);
+  void maybe_emit_event(Model& model, entt::dispatcher& dispatcher);
 };
 
 }  // namespace tactile

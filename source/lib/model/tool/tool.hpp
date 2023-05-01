@@ -19,16 +19,13 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
-#include "common/macros.hpp"
+#include "common/type/dispatcher.hpp"
+#include "model/model.hpp"
+#include "model/mouse_info.hpp"
 #include "model/tool/tool_type.hpp"
 #include "model/tool/tool_visitor.hpp"
 
 namespace tactile {
-
-TACTILE_FWD_DECLARE_STRUCT(MouseInfo)
-TACTILE_FWD_DECLARE_CLASS(DocumentModel)
 
 class Tool {
  public:
@@ -36,27 +33,21 @@ class Tool {
 
   virtual void accept(ToolVisitor& visitor) const = 0;
 
-  virtual void on_enabled(DocumentModel& model, entt::dispatcher& dispatcher);
+  virtual void on_enabled(Model& model, Dispatcher& dispatcher);
 
-  virtual void on_disabled(DocumentModel& model, entt::dispatcher& dispatcher);
+  virtual void on_disabled(Model& model, Dispatcher& dispatcher);
 
-  virtual void on_entered(DocumentModel& model, entt::dispatcher& dispatcher);
+  virtual void on_entered(Model& model, Dispatcher& dispatcher);
 
-  virtual void on_exited(DocumentModel& model, entt::dispatcher& dispatcher);
+  virtual void on_exited(Model& model, Dispatcher& dispatcher);
 
-  virtual void on_pressed(DocumentModel& model,
-                          entt::dispatcher& dispatcher,
-                          const MouseInfo& mouse);
+  virtual void on_pressed(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse);
 
-  virtual void on_dragged(DocumentModel& model,
-                          entt::dispatcher& dispatcher,
-                          const MouseInfo& mouse);
+  virtual void on_dragged(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse);
 
-  virtual void on_released(DocumentModel& model,
-                           entt::dispatcher& dispatcher,
-                           const MouseInfo& mouse);
+  virtual void on_released(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse);
 
-  [[nodiscard]] virtual auto is_available(const DocumentModel& model) const -> bool = 0;
+  [[nodiscard]] virtual auto is_available(const Model& model) const -> bool = 0;
 
   [[nodiscard]] virtual auto get_type() const -> ToolType = 0;
 };

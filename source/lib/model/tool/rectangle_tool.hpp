@@ -34,23 +34,17 @@ class RectangleTool final : public Tool {
  public:
   void accept(ToolVisitor& visitor) const override;
 
-  void on_disabled(DocumentModel& model, entt::dispatcher& dispatcher) override;
+  void on_disabled(Model& model, Dispatcher& dispatcher) override;
 
-  void on_exited(DocumentModel& model, entt::dispatcher& dispatcher) override;
+  void on_exited(Model& model, Dispatcher& dispatcher) override;
 
-  void on_pressed(DocumentModel& model,
-                  entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+  void on_pressed(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse) override;
 
-  void on_dragged(DocumentModel& model,
-                  entt::dispatcher& dispatcher,
-                  const MouseInfo& mouse) override;
+  void on_dragged(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse) override;
 
-  void on_released(DocumentModel& model,
-                   entt::dispatcher& dispatcher,
-                   const MouseInfo& mouse) override;
+  void on_released(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse) override;
 
-  [[nodiscard]] auto is_available(const DocumentModel& model) const -> bool override;
+  [[nodiscard]] auto is_available(const Model& model) const -> bool override;
 
   [[nodiscard]] auto get_stroke() const -> const Maybe<CurrentRectangleStroke>&;
 
@@ -59,7 +53,7 @@ class RectangleTool final : public Tool {
  private:
   Maybe<CurrentRectangleStroke> mStroke;
 
-  void maybe_emit_event(DocumentModel& model, entt::dispatcher& dispatcher);
+  void maybe_emit_event(Model& model, Dispatcher& dispatcher);
 };
 
 }  // namespace tactile

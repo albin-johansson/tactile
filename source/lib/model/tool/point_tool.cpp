@@ -20,11 +20,14 @@
 #include "point_tool.hpp"
 
 #include <centurion/mouse.hpp>
-#include <entt/signal/dispatcher.hpp>
 
-#include "model/document/map_document.hpp"
+#include "core/layer.hpp"
+#include "core/map.hpp"
+#include "core/viewport.hpp"
+#include "model/document.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/model.hpp"
+#include "model/systems/document_system.hpp"
 
 namespace tactile {
 
@@ -33,29 +36,32 @@ void PointTool::accept(ToolVisitor& visitor) const
   visitor.visit(*this);
 }
 
-void PointTool::on_pressed(DocumentModel& model,
-                           entt::dispatcher& dispatcher,
-                           const MouseInfo& mouse)
+void PointTool::on_pressed(Model& model, Dispatcher& dispatcher, const MouseInfo& mouse)
 {
-  if (mouse.is_within_contents && mouse.button == cen::mouse_button::left &&
+  if (mouse.is_within_contents &&                 //
+      mouse.button == cen::mouse_button::left &&  //
       is_available(model)) {
-    const auto& map_document = model.require_active_map_document();
-    const auto& map = map_document.get_map();
-    const auto& viewport = map_document.get_viewport();
+    const auto document_entity = sys::get_active_document(model);
 
-    const auto ratio = viewport.scaling_ratio(map.get_tile_size());
-    const auto pos = mouse.pos / ratio;
+    const auto& map_document = model.get<MapDocument>(document_entity);
+    const auto& document_viewport = model.get<Viewport>(document_entity);
+    const auto& map = model.get<Map>(map_document.map);
 
-    const auto layer_id = map.get_active_layer_id().value();
-    dispatcher.enqueue<AddPointEvent>(layer_id, pos);
+    const auto scaling_ratio = document_viewport.scaling_ratio(map.tile_size);
+    const auto position = mouse.pos / scaling_ratio;
+
+    dispatcher.enqueue<AddPointEvent>(map.active_layer, position);
   }
 }
 
-auto PointTool::is_available(const DocumentModel& model) const -> bool
+auto PointTool::is_available(const Model& model) const -> bool
 {
-  const auto& map_document = model.require_active_map_document();
-  const auto& map = map_document.get_map();
-  return map.is_active_layer(LayerType::ObjectLayer);
+  const auto document_entity = sys::get_active_document(model);
+
+  const auto& map_document = model.get<MapDocument>(document_entity);
+  const auto& map = model.get<Map>(map_document.map);
+
+  return map.active_layer != kNullEntity && model.has<ObjectLayer>(map.active_layer);
 }
 
 }  // namespace tactile
