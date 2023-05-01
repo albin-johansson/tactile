@@ -29,7 +29,7 @@
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
-#include "core/component/component_index.hpp"
+#include "core/component.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/component_events.hpp"

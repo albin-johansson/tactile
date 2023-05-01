@@ -21,8 +21,8 @@
 
 #include "common/debug/assert.hpp"
 #include "common/util/functional.hpp"
-#include "core/layer/group_layer.hpp"
-#include "core/layer/tile_layer.hpp"
+#include "core/layer.hpp"
+#include "core/layer.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "model/document/map_document.hpp"
 #include "model/model.hpp"

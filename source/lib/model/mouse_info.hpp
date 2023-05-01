@@ -22,7 +22,7 @@
 #include <centurion/mouse.hpp>
 
 #include "common/type/math.hpp"
-#include "core/tile/tile_pos.hpp"
+#include "core/tile_pos.hpp"
 
 namespace tactile {
 

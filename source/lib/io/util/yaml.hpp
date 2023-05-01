@@ -28,7 +28,7 @@
 #include "common/type/result.hpp"
 #include "common/type/string.hpp"
 #include "core/attribute.hpp"
-#include "core/layer/tile_format.hpp"
+#include "core/tile_format.hpp"
 
 namespace tactile {
 

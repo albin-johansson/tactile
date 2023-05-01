@@ -29,7 +29,7 @@
 #include "common/numeric.hpp"
 #include "common/type/ostream.hpp"
 #include "common/util/filesystem.hpp"
-#include "core/tile/tile_pos.hpp"
+#include "core/tile_pos.hpp"
 #include "io/ir/godot/godot_options.hpp"
 #include "io/ir/godot/godot_scene.hpp"
 #include "io/stream.hpp"

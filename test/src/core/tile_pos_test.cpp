@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/tile/tile_pos.hpp"
+#include "core/tile_pos.hpp"
 
 #include <doctest/doctest.h>
 

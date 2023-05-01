@@ -25,7 +25,7 @@
 #include <spdlog/spdlog.h>
 
 #include "common/util/fmt.hpp"
-#include "core/tile/tile.hpp"
+#include "core/tile.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "handlers/event_handlers.hpp"
 #include "io/load_texture.hpp"

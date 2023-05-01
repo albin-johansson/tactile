@@ -26,7 +26,7 @@
 #include <imgui_internal.h>
 
 #include "core/color.hpp"
-#include "core/tile/tile.hpp"
+#include "core/tile.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/tileset_document.hpp"

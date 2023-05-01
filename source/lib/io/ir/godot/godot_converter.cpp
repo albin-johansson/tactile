@@ -31,7 +31,7 @@
 #include "common/type/vec.hpp"
 #include "common/util/assoc.hpp"
 #include "common/util/functional.hpp"
-#include "core/tile/tile_pos.hpp"
+#include "core/tile_pos.hpp"
 #include "io/ir/godot/godot_options.hpp"
 
 namespace tactile {

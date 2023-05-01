@@ -23,7 +23,7 @@
 
 #include <doctest/doctest.h>
 
-#include "settings.pb.h"
+#include <settings.pb.h>
 
 using tactile::ui::EditorTheme;
 

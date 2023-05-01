@@ -24,7 +24,8 @@
 
 #include "common/debug/assert.hpp"
 #include "common/type/maybe.hpp"
-#include "core/layer/group_layer.hpp"
+#include "core/context.hpp"
+#include "core/map.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"

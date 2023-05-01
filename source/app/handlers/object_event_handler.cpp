@@ -22,8 +22,8 @@
 #include <spdlog/spdlog.h>
 
 #include "common/util/fmt.hpp"
-#include "core/layer/group_layer.hpp"
-#include "core/layer/object_layer.hpp"
+#include "core/layer.hpp"
+#include "core/layer.hpp"
 #include "handlers/event_handlers.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/object_events.hpp"

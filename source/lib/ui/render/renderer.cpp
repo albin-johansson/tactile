@@ -25,12 +25,12 @@
 #include <glm/common.hpp>
 #include <imgui.h>
 
-#include "core/layer/group_layer.hpp"
-#include "core/layer/object.hpp"
-#include "core/layer/object_layer.hpp"
-#include "core/layer/tile_layer.hpp"
+#include "core/layer.hpp"
+#include "core/object.hpp"
+#include "core/layer.hpp"
+#include "core/layer.hpp"
 #include "core/map.hpp"
-#include "core/tile/tileset.hpp"
+#include "core/tileset.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "model/settings.hpp"
 #include "ui/conversions.hpp"
@@ -108,11 +108,13 @@ inline constexpr Color kActiveObjectColor {0xFF, 0xFF, 0x00, 0xFF};
 }
 
 [[nodiscard]] auto create_canvas_info(const Viewport& viewport, const Map& map)
+    -> CanvasInfo
 {
   return create_canvas_info(viewport, map.get_tile_size(), map.get_extent());
 }
 
 [[nodiscard]] auto create_canvas_info(const Viewport& viewport, const Tileset& tileset)
+    -> CanvasInfo
 {
   const TileExtent extent {static_cast<usize>(tileset.row_count()),
                            static_cast<usize>(tileset.column_count())};

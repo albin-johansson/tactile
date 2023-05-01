@@ -22,8 +22,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/layer/group_layer.hpp"
-#include "core/layer/tile_layer.hpp"
+#include "core/layer.hpp"
+#include "core/layer.hpp"
 #include "core/map.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "lang/language.hpp"

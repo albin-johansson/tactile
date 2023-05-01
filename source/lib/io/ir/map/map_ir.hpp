@@ -37,11 +37,11 @@
 #include "common/type/vec.hpp"
 #include "common/util/algorithm.hpp"
 #include "core/attribute.hpp"
-#include "core/layer/layer_type.hpp"
-#include "core/layer/object_type.hpp"
-#include "core/layer/tile_format.hpp"
-#include "core/tile/tile_extent.hpp"
-#include "core/tile/tile_matrix.hpp"
+#include "core/layer.hpp"
+#include "core/object.hpp"
+#include "core/tile_format.hpp"
+#include "core/tile_extent.hpp"
+#include "core/tile_matrix.hpp"
 
 namespace tactile {
 

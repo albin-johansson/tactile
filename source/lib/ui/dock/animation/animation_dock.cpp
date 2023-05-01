@@ -26,7 +26,9 @@
 
 #include "common/type/maybe.hpp"
 #include "common/util/fmt.hpp"
-#include "core/tile/tile.hpp"
+#include "core/texture.hpp"
+#include "core/tile.hpp"
+#include "core/tileset.hpp"
 #include "io/proto/settings.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

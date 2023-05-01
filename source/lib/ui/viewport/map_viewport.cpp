@@ -26,8 +26,8 @@
 #include <imgui_internal.h>
 
 #include "core/color.hpp"
-#include "core/layer/group_layer.hpp"
-#include "core/layer/object_layer.hpp"
+#include "core/layer.hpp"
+#include "core/layer.hpp"
 #include "document_viewport_offset_handler.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"

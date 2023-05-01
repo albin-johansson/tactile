@@ -22,7 +22,7 @@
 #include <imgui.h>
 
 #include "common/macros.hpp"
-#include "core/tile/tile_pos.hpp"
+#include "core/tile_pos.hpp"
 
 TACTILE_FWD_DECLARE_STRUCT_NS(tactile, CanvasInfo)
 
