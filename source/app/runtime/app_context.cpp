@@ -31,7 +31,6 @@ namespace {
 struct AppState final {
   cen::window* window {};
   entt::dispatcher dispatcher;
-  DocumentModel model;
   WidgetShowState widget_show_state;
   bool font_reload_scheduled : 1 {};
 };
@@ -64,11 +63,6 @@ auto get_window() -> cen::window&
 auto get_dispatcher() -> entt::dispatcher&
 {
   return gAppState.dispatcher;
-}
-
-auto get_model() -> DocumentModel&
-{
-  return gAppState.model;
 }
 
 auto get_widget_show_state() -> WidgetShowState&
