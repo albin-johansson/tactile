@@ -25,6 +25,7 @@
 
 #include "common/macros.hpp"
 #include "common/numeric.hpp"
+#include "common/type/ecs.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/uuid.hpp"
 
@@ -38,6 +39,7 @@ struct Scope final {
   explicit Scope(const char* str);
   explicit Scope(const UUID& id);
   explicit Scope(int id);
+  explicit Scope(Entity entity);
 
   ~Scope();
 };

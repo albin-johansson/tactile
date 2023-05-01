@@ -94,6 +94,11 @@ Scope::Scope(const int id)
   ImGui::PushID(id);
 }
 
+Scope::Scope(const Entity entity)
+{
+  ImGui::PushID(static_cast<int>(entity));
+}
+
 Scope::~Scope()
 {
   ImGui::PopID();
