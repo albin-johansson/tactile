@@ -29,7 +29,7 @@
 #include "core/tile/tileset.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "core/tile/tileset_info.hpp"
-#include "io/load_texture.hpp"
+#include "io/texture_loader.hpp"
 
 namespace tactile::test {
 
