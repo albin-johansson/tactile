@@ -36,7 +36,7 @@ SetZstdCompressionLevel::SetZstdCompressionLevel(const Entity map_entity, const 
 void SetZstdCompressionLevel::undo()
 {
   auto& model = get_model();
-  auto& format = model.get<CTileFormat>(mMapEntity);
+  auto& format = model.get<TileFormat>(mMapEntity);
 
   format.zstd_compression_level = mOldLevel.value();
   mOldLevel.reset();
@@ -45,7 +45,7 @@ void SetZstdCompressionLevel::undo()
 void SetZstdCompressionLevel::redo()
 {
   auto& model = get_model();
-  auto& format = model.get<CTileFormat>(mMapEntity);
+  auto& format = model.get<TileFormat>(mMapEntity);
 
   mOldLevel = format.zstd_compression_level;
   format.zstd_compression_level = mNewLevel;

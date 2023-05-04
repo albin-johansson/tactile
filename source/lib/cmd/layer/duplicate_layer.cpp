@@ -50,7 +50,7 @@ void DuplicateLayer::redo()
   auto& model = get_model();
 
   auto& map = model.get<Map>(mMapEntity);
-  const auto& root_layer = model.get<CGroupLayer>(map.root_layer);
+  const auto& root_layer = model.get<GroupLayer>(map.root_layer);
 
   mNewLayerParentEntity =
       sys::get_parent_layer(model, map.root_layer, mSourceLayerEntity);

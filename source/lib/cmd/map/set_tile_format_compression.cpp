@@ -36,7 +36,7 @@ SetTileFormatCompression::SetTileFormatCompression(const Entity map_entity,
 void SetTileFormatCompression::undo()
 {
   auto& model = get_model();
-  auto& format = model.get<CTileFormat>(mMapEntity);
+  auto& format = model.get<TileFormat>(mMapEntity);
 
   format.compression = mOldCompression.value();
   mOldCompression.reset();
@@ -45,7 +45,7 @@ void SetTileFormatCompression::undo()
 void SetTileFormatCompression::redo()
 {
   auto& model = get_model();
-  auto& format = model.get<CTileFormat>(mMapEntity);
+  auto& format = model.get<TileFormat>(mMapEntity);
 
   mOldCompression = format.compression;
   format.compression = mNewCompression;

@@ -68,7 +68,7 @@ struct ObjectLayer final {
 };
 
 /// Component for layer variant consisting of other layers (may be recursive).
-struct CGroupLayer final {
+struct GroupLayer final {
   Vec<Entity> children;  ///< Entity identifiers of all contained layers.
 
   /// Adds a layer to the group, asserting that the layer hasn't already been added.

@@ -36,7 +36,7 @@ SetZlibCompressionLevel::SetZlibCompressionLevel(const Entity map_entity, const 
 void SetZlibCompressionLevel::undo()
 {
   auto& model = get_model();
-  auto& format = model.get<CTileFormat>(mMapEntity);
+  auto& format = model.get<TileFormat>(mMapEntity);
 
   format.zlib_compression_level = mOldLevel.value();
   mOldLevel.reset();
@@ -45,7 +45,7 @@ void SetZlibCompressionLevel::undo()
 void SetZlibCompressionLevel::redo()
 {
   auto& model = get_model();
-  auto& format = model.get<CTileFormat>(mMapEntity);
+  auto& format = model.get<TileFormat>(mMapEntity);
 
   mOldLevel = format.zlib_compression_level;
   format.zlib_compression_level = mNewLevel;

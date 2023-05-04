@@ -35,7 +35,7 @@ SetTileFormatEncoding::SetTileFormatEncoding(const Entity map_entity,
 void SetTileFormatEncoding::undo()
 {
   auto& model = get_model();
-  auto& format = model.get<CTileFormat>(mMapEntity);
+  auto& format = model.get<TileFormat>(mMapEntity);
 
   format.encoding = mOldEncoding.value();
   format.compression = mOldCompression.value();
@@ -47,7 +47,7 @@ void SetTileFormatEncoding::undo()
 void SetTileFormatEncoding::redo()
 {
   auto& model = get_model();
-  auto& format = model.get<CTileFormat>(mMapEntity);
+  auto& format = model.get<TileFormat>(mMapEntity);
 
   mOldEncoding = format.encoding;
   mOldCompression = format.compression;
