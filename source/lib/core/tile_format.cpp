@@ -23,6 +23,11 @@
 
 namespace tactile {
 
+auto TileFormat::supports_compression() const -> bool
+{
+  return encoding != TileEncoding::Plain;
+}
+
 auto is_valid_zlib_compression_level(const int level) -> bool
 {
   return level == Z_DEFAULT_COMPRESSION ||

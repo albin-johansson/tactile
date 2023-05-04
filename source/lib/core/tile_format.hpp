@@ -36,11 +36,13 @@ enum class TileCompression {
 
 /// Component describing the tile layer data format used by a map.
 /// \see https://github.com/facebook/zstd/issues/3133 for Zstd compression levels.
-struct CTileFormat final {
+struct TileFormat final {
   TileEncoding encoding {TileEncoding::Plain};
   TileCompression compression {TileCompression::None};
   int zlib_compression_level {-1};
   int zstd_compression_level {3};
+
+  [[nodiscard]] auto supports_compression() const -> bool;
 };
 
 [[nodiscard]] auto is_valid_zlib_compression_level(int level) -> bool;
