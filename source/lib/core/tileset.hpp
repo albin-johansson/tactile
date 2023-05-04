@@ -42,6 +42,8 @@ struct Tileset final {
   Vec<Entity> tiles;                          ///< Tile definitions.
   Maybe<TileIndex> selected_tile_index;       ///< Local index of selected tile.
 
+  [[nodiscard]] auto tile_count() const -> int32 { return row_count * column_count; }
+
   [[nodiscard]] auto index_of(TilePos pos) const -> TileIndex;
 
   [[nodiscard]] auto contains(TilePos pos) const -> bool;
