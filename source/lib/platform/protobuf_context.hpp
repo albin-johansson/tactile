@@ -26,8 +26,8 @@ namespace tactile {
 /// Handles the loading and unloading of the Protobuf library.
 class ProtobufContext final {
  public:
-  TACTILE_DELETE_COPY(ProtobufContext);
-  TACTILE_DELETE_MOVE(ProtobufContext);
+  TACTILE_DEFAULT_COPY(ProtobufContext);
+  TACTILE_DEFAULT_MOVE(ProtobufContext);
 
   [[nodiscard]] ProtobufContext();
 
