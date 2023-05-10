@@ -19,40 +19,4 @@
 
 #pragma once
 
-#include <cstddef>  // size_t, ptrdiff_t, uintptr_t
-#include <cstdint>  // int{}_t, uint{}_t
-
-namespace tactile {
-
-using uchar = unsigned char;
-using uint = unsigned int;
-using ulonglong = unsigned long long int;
-
-using usize = std::size_t;
-using ssize = std::ptrdiff_t;
-using uintptr = std::uintptr_t;
-
-using uint8 = std::uint8_t;
-using uint16 = std::uint16_t;
-using uint32 = std::uint32_t;
-using uint64 = std::uint64_t;
-
-using int8 = std::int8_t;
-using int16 = std::int16_t;
-using int32 = std::int32_t;
-using int64 = std::int64_t;
-
-using float32 = float;
-using float64 = double;
-
-static_assert(sizeof(float32) == 4);
-static_assert(sizeof(float64) == 8);
-
-using LayerID = int32;
-using ObjectID = int32;
-using TileIndex = int32;  ///< For local tile identifiers.
-using TileID = int32;     ///< For global tile identifiers.
-
-inline constexpr TileID kEmptyTile = 0;
-
-}  // namespace tactile
+#include "primitives.hpp"
