@@ -19,11 +19,9 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
 #include "common/macros.hpp"
-
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
+#include "common/type/dispatcher.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
@@ -37,13 +35,13 @@ class ContextMenu {
 
   virtual ~ContextMenu() noexcept = default;
 
-  void update(const DocumentModel& model, entt::dispatcher& dispatcher);
+  void update(const Model& model, Dispatcher& dispatcher);
 
   void show();
 
  protected:
-  virtual void on_update([[maybe_unused]] const DocumentModel& model,
-                         [[maybe_unused]] entt::dispatcher& dispatcher)
+  virtual void on_update([[maybe_unused]] const Model& model,
+                         [[maybe_unused]] Dispatcher& dispatcher)
   {
   }
 

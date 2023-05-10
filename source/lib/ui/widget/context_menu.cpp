@@ -32,7 +32,7 @@ ContextMenu::ContextMenu(const char* name)
   }
 }
 
-void ContextMenu::update(const DocumentModel& model, entt::dispatcher& dispatcher)
+void ContextMenu::update(const Model& model, Dispatcher& dispatcher)
 {
   if (const Popup popup {mName}; popup.is_open()) {
     on_update(model, dispatcher);
