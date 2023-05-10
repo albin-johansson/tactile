@@ -60,6 +60,7 @@ struct AttachedTileset final {
   Maybe<Region> selection;       ///< Selected region.
   bool embedded : 1 {};          ///< Whether the tileset is embedded in the map.
 
+  [[nodiscard]] auto is_valid_tile(TileID tile_id) const -> bool;
   [[nodiscard]] auto is_single_tile_selected() const -> bool;
 };
 

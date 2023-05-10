@@ -40,6 +40,11 @@ auto Tileset::contains(const TilePos pos) const -> bool
   return row >= 0 && col >= 0 && row < row_count && col < column_count;
 }
 
+auto AttachedTileset::is_valid_tile(const TileID tile_id) const -> bool
+{
+  return tile_id >= first_tile && tile_id <= last_tile;
+}
+
 auto AttachedTileset::is_single_tile_selected() const -> bool
 {
   if (selection.has_value()) {
