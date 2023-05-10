@@ -19,20 +19,12 @@
 
 #include "model.hpp"
 
-#include "model/document.hpp"
-
 namespace tactile {
 namespace {
 
 inline Model gModel;
 
 }  // namespace
-
-Model::Model()
-{
-  auto& document_context = add<CDocumentContext>();
-  document_context.active_document = kNullEntity;
-}
 
 auto Model::create_entity() -> Entity
 {
@@ -65,6 +57,11 @@ auto Model::is_enabled(const Entity entity) const -> bool
 }
 
 auto get_model() -> Model&
+{
+  return gModel;
+}
+
+auto get_global_model() -> Model&
 {
   return gModel;
 }

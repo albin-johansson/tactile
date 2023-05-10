@@ -26,8 +26,6 @@ namespace tactile {
 
 class Model final {
  public:
-  Model();
-
   [[nodiscard]] auto create_entity() -> Entity;
 
   void destroy(Entity entity);
@@ -89,6 +87,18 @@ class Model final {
   }
 
   template <typename T>
+  [[nodiscard]] auto unchecked_try_get(const Entity entity) -> T*
+  {
+    return (entity != kNullEntity) ? mRegistry.try_get<T>(entity) : nullptr;
+  }
+
+  template <typename T>
+  [[nodiscard]] auto unchecked_try_get(const Entity entity) const -> const T*
+  {
+    return (entity != kNullEntity) ? mRegistry.try_get<T>(entity) : nullptr;
+  }
+
+  template <typename T>
   [[nodiscard]] auto get() -> T&
   {
     TACTILE_ASSERT(mRegistry.ctx().contains<T>());
@@ -129,5 +139,6 @@ class Model final {
 
 /// Returns the global model instance.
 [[nodiscard]] auto get_model() -> Model&;
+[[nodiscard]] auto get_global_model() -> Model&;
 
 }  // namespace tactile
