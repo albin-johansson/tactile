@@ -20,12 +20,20 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
 
-#include "init/app_initializer.hpp"
+#include "engine/engine.hpp"
+
+using namespace tactile;
+
+class DummyApp final : public AppDelegate {
+ public:
+  [[nodiscard]] auto should_stop() const -> bool override { return false; }
+};
 
 auto main(int argc, char* argv[]) -> int
 {
-  tactile::AppInitializer initializer;
-  initializer.get_window().show();
+  Engine engine {BackendAPI::OpenGL};
+  engine.set_app_delegate(std::make_unique<DummyApp>());
+  engine.get_window().show();
 
   doctest::Context context {argc, argv};
   const auto res = context.run();
