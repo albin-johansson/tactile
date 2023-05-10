@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "texture.hpp"
+#include "gl_texture.hpp"
 
 #include <GL/glew.h>
 
