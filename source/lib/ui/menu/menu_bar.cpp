@@ -32,7 +32,7 @@
 
 namespace tactile::ui {
 
-void update_menu_bar(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_menu_bar(const Model& model, entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginMainMenuBar()) {
     update_file_menu(dispatcher);

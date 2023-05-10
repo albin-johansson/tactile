@@ -19,15 +19,13 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
+#include <entt/signal/fwd.hpp>
 
-namespace tactile {
-class DocumentModel;
-}  // namespace tactile
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
 /// Updates the state of the main menu bar.
-void update_menu_bar(const DocumentModel& model, entt::dispatcher& dispatcher);
+void update_menu_bar(const Model& model, entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui
