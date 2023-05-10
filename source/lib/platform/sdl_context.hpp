@@ -23,19 +23,17 @@
 #include <centurion/opengl.hpp>
 #include <centurion/window.hpp>
 
-#include "common/macros.hpp"
 #include "common/type/maybe.hpp"
+#include "engine/backend/backend_api.hpp"
 
 namespace tactile {
 
 class SDLContext final {
  public:
-  TACTILE_DELETE_COPY(SDLContext);
-  TACTILE_DELETE_MOVE(SDLContext);
-
-  [[nodiscard]] SDLContext();
+  [[nodiscard]] explicit SDLContext(BackendAPI api);
 
   [[nodiscard]] auto get_window() -> cen::window&;
+
   [[nodiscard]] auto get_gl_context() -> cen::gl_context&;
 
  private:
