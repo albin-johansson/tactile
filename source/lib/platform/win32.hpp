@@ -23,7 +23,7 @@
 
 namespace tactile {
 
-/// Makes the window title bar dark.
+/// Makes a Windows window title bar dark (does nothing on other platforms).
 void win32_use_immersive_dark_mode(cen::window& window);
 
 }  // namespace tactile
