@@ -21,10 +21,8 @@
 
 #include <IconsFontAwesome6.h>
 
-#include "common/numeric.hpp"
 #include "core/layer.hpp"
 #include "core/object.hpp"
-#include "io/texture_loader.hpp"
 
 #define TAC_ICON_UNDO ICON_FA_ROTATE_LEFT
 #define TAC_ICON_REDO ICON_FA_ROTATE_RIGHT
@@ -101,16 +99,7 @@
 
 namespace tactile::ui {
 
-/// Loads icons to be used in the UI.
-void load_icons();
-
-void unload_icons() noexcept;
-
 [[nodiscard]] auto get_icon(LayerType type) -> const char*;
 [[nodiscard]] auto get_icon(ObjectType type) -> const char*;
-
-/// Returns the texture identifier for the Tactile icon.
-/// Note, load_icons() must have been called before.
-[[nodiscard]] auto get_tactile_icon() -> uint;
 
 }  // namespace tactile::ui

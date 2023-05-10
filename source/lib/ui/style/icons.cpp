@@ -19,28 +19,9 @@
 
 #include "icons.hpp"
 
-#include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
-#include "common/type/ptr.hpp"
-#include "core/texture.hpp"
-#include "io/directories.hpp"
 
 namespace tactile::ui {
-namespace {
-
-inline Shared<Texture> gTactileIcon;
-
-}  // namespace
-
-void load_icons()
-{
-  gTactileIcon = load_texture(find_resource("assets/icon.png"));
-}
-
-void unload_icons() noexcept
-{
-  gTactileIcon.reset();
-}
 
 auto get_icon(const LayerType type) -> const char*
 {
@@ -74,12 +55,6 @@ auto get_icon(const ObjectType type) -> const char*
     default:
       throw TactileError {"Invalid object type!"};
   }
-}
-
-auto get_tactile_icon() -> uint
-{
-  TACTILE_ASSERT(gTactileIcon != nullptr);
-  return gTactileIcon->get_id();
 }
 
 }  // namespace tactile::ui
