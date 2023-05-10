@@ -17,32 +17,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "component.hpp"
 
-#include "common/type/ecs.hpp"
-#include "common/type/string_map.hpp"
-#include "common/type/vec.hpp"
-#include "core/attribute.hpp"
+#include <algorithm>  // find
 
 namespace tactile {
 
-// TODO consider using UUID for component type reference, could make some systems simpler
-struct Component final {
-  ComponentDefinitionEntity definition {kNullEntity};
-  StringMap<Attribute> attributes;
-};
-
-// TODO think of shorter name: ComponentArchetype, ComponentTemplate, ComponentDef¨
-//  or maybe rename Component to AttachedComponent/ComponentInstance
-struct ComponentDefinition final {
-  String name;
-  StringMap<Attribute> attributes;
-};
-
-struct ComponentSet final {
-  Vec<ComponentDefinitionEntity> definitions;
-
-  [[nodiscard]] auto has_component(Entity definition_entity) const -> bool;
-};
+auto ComponentSet::has_component(const Entity definition_entity) const -> bool
+{
+  return std::ranges::find(definitions, definition_entity) != definitions.end();
+}
 
 }  // namespace tactile
