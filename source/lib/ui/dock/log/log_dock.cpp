@@ -22,7 +22,6 @@
 #include <imgui.h>
 
 #include "common/debug/logging.hpp"
-#include "common/debug/panic.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/util/assoc.hpp"
 #include "lang/language.hpp"
@@ -50,7 +49,7 @@ struct LogDockState final {
 
 inline LogDockState gDockState;
 
-void ui_message_filter_checkboxes()
+void _show_message_filter_checkboxes()
 {
   const auto& lang = get_current_language();
 
@@ -101,7 +100,7 @@ void ui_message_filter_checkboxes()
   }
 }
 
-void ui_logged_message_legend_overlay(const Strings& lang)
+void _show_logged_message_legend_overlay(const Strings& lang)
 {
   constexpr float overlay_opacity = 0.35f;
   constexpr ImGuiWindowFlags overlay_window_flags =
@@ -143,7 +142,7 @@ void ui_logged_message_legend_overlay(const Strings& lang)
   }
 }
 
-void ui_logged_message_view(const Strings& lang, const usize message_count)
+void _show_logged_message_view(const Strings& lang, const usize message_count)
 {
   const StyleColor child_bg {ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 
@@ -170,7 +169,7 @@ void ui_logged_message_view(const Strings& lang, const usize message_count)
       ImGui::SetScrollHereY(1.0f);
     }
 
-    ui_logged_message_legend_overlay(lang);
+    _show_logged_message_legend_overlay(lang);
   }
 }
 
@@ -195,11 +194,11 @@ void update_log_dock()
   gDockState.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
-    ui_message_filter_checkboxes();
+    _show_message_filter_checkboxes();
 
     const auto message_count = count_matching_log_entries(gDockState.log_filter);
     if (message_count != 0u) {
-      ui_logged_message_view(lang, message_count);
+      _show_logged_message_view(lang, message_count);
     }
     else {
       ui_centered_label(lang.misc.log_no_messages_match_filter.c_str());
