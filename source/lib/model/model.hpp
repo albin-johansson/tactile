@@ -37,7 +37,7 @@ class Model final {
   template <typename T>
   auto add() -> T&
   {
-    TACTILE_ASSERT(!mRegistry.ctx().contains<T>());
+//    TACTILE_ASSERT(!mRegistry.ctx().contains<T>());
     return mRegistry.ctx().emplace<T>();
   }
 
@@ -45,8 +45,8 @@ class Model final {
   auto add(const Entity entity) -> T&
   {
     TACTILE_ASSERT(is_enabled(entity));
-    TACTILE_ASSERT(!mRegistry.all_of<T>(entity));
-    return mRegistry.emplace<T>(entity);
+//    TACTILE_ASSERT(!mRegistry.all_of<T>(entity));
+    return mRegistry.emplace_or_replace<T>(entity);
   }
 
   template <typename T>
