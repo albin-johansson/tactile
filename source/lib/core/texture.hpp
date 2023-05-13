@@ -34,12 +34,12 @@ struct TextureCache final {
 
 /// Component describing a loaded texture.
 struct Texture final {
-  Int2 size {};  ///< The texture dimensions.
-  Path path;     ///< Path to the file from which the texture was created.
+  void* handle {};  ///< Opaque handle to the backend texture resource.
+  Int2 size {};     ///< The texture dimensions.
+  Path path;        ///< Path to the file from which the texture was created.
 };
 
 /// Component featured by OpenGL texture entities.
-/// TODO consider using RAII type for OpenGL textures here
 struct OpenGLTexture final {
   uint id {};  ///< Associated OpenGL texture ID.
 };

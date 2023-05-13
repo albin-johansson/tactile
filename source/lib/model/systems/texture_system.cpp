@@ -21,20 +21,15 @@
 
 #include <bit>  // bit_cast
 
-#include "backend/gl/texture.hpp"
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "core/texture.hpp"
+#include "engine/backend/gl/gl_texture.hpp"
 #include "io/texture_loader.hpp"
+#include "model/systems/validation.hpp"
 
 namespace tactile::sys {
 
 // TODO condition on selected backend to determine how to load texture
-
-auto is_texture_entity(const Model& model, const Entity entity) -> bool
-{
-  return entity != kNullEntity && model.has<Texture>(entity) &&
-         (model.has<OpenGLTexture>(entity) || model.has<VulkanTexture>(entity));
-}
 
 void destroy_loaded_texture_resources(Model& model)
 {
@@ -67,15 +62,9 @@ auto create_texture(Model& model, const Path& path) -> Entity
   auto& gl_texture = model.add<OpenGLTexture>(texture_entity);
   gl_texture.id = gl::create_texture(texture_data);
 
+  texture.handle = std::bit_cast<void*>(static_cast<uintptr>(gl_texture.id));
+
   return texture_entity;
-}
-
-auto get_texture_handle(const Model& model, const Entity texture_entity) -> void*
-{
-  TACTILE_ASSERT(is_texture_entity(model, texture_entity));
-
-  const auto& gl_texture = model.get<OpenGLTexture>(texture_entity);
-  return std::bit_cast<void*>(static_cast<uintptr>(gl_texture.id));
 }
 
 }  // namespace tactile::sys

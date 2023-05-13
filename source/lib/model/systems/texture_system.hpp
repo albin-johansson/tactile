@@ -25,14 +25,9 @@
 
 namespace tactile::sys {
 
-/// Indicates whether an entity is a valid texture entity.
-[[nodiscard]] auto is_texture_entity(const Model& model, Entity entity) -> bool;
-
-/// Destroys all loaded textures (this should be called once before shutdown).
+/// Destroys all loaded textures (this should only be called once, just before shutdown).
 void destroy_loaded_texture_resources(Model& model);
 
 [[nodiscard]] auto create_texture(Model& model, const Path& path) -> Entity;
-
-[[nodiscard]] auto get_texture_handle(const Model& model, Entity texture_entity) -> void*;
 
 }  // namespace tactile::sys
