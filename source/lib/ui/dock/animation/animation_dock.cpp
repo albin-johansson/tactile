@@ -21,10 +21,10 @@
 
 #include <algorithm>  // count_if
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "common/type/maybe.hpp"
+#include "common/util/assoc.hpp"
 #include "common/util/fmt.hpp"
 #include "core/texture.hpp"
 #include "core/tile.hpp"
@@ -32,9 +32,12 @@
 #include "io/proto/settings.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/document/tileset_document.hpp"
+#include "model/document.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
+#include "model/systems/document_system.hpp"
+#include "model/systems/texture_system.hpp"
+#include "model/systems/tileset_system.hpp"
 #include "ui/constants.hpp"
 #include "ui/conversions.hpp"
 #include "ui/style/alignment.hpp"
@@ -55,29 +58,30 @@ struct AnimationDockState final {
 
 inline constinit AnimationDockState gDockState;
 
-void ui_tileset_tile_image(const Tileset& tileset,
-                           const TileIndex tile_index,
-                           const ImVec2& image_size,
-                           const ImVec4& tint = ImVec4 {1, 1, 1, 1})
+void _show_animated_tile_cell_image(const Model& model,
+                                    const Tileset& tileset,
+                                    const TileIndex tile_index,
+                                    const ImVec2& cell_image_size,
+                                    const ImVec4& tint = ImVec4 {1, 1, 1, 1})
 {
-  const auto& texture = tileset.texture();
+  const auto& texture = model.get<Texture>(tileset.texture);
 
-  const Float2 tile_size = tileset.tile_size();
-  const Float2 texture_size = texture.get_size();
+  const Float2 tile_size = tileset.tile_size;
+  const Float2 texture_size = texture.size;
 
-  const auto tile_pos = TilePos::from_index(tile_index, tileset.column_count());
+  const auto tile_pos = TilePos::from_index(tile_index, tileset.column_count);
 
   const auto uv_min = (tile_pos.as_vec2f() * tile_size) / texture_size;
-  const auto uv_max = uv_min + tileset.uv_size();
+  const auto uv_max = uv_min + tileset.uv_size;
 
-  ImGui::Image(to_imgui_texture_id(texture.get_id()),
-               image_size,
+  ImGui::Image(texture.handle,
+               cell_image_size,
                as_imvec2(uv_min),
                as_imvec2(uv_max),
                tint);
 }
 
-[[nodiscard]] auto ui_frame_duration_slider(const Strings& lang, const ms_t duration)
+[[nodiscard]] auto _show_frame_duration_slider(const Strings& lang, const ms_t duration)
     -> Maybe<ms_t>
 {
   ImGui::AlignTextToFramePadding();
@@ -99,16 +103,20 @@ void ui_tileset_tile_image(const Tileset& tileset,
   }
 }
 
-void ui_frame_popup(const Strings& lang,
-                    const Tile& tile,
-                    const TileAnimation::Frame& frame,
-                    const usize frame_index,
-                    const ssize parent_tile_frame_count,
-                    entt::dispatcher& dispatcher)
+void _show_frame_popup(const Model& model,
+                       const Strings& lang,
+                       const Entity tile_entity,
+                       const usize frame_index,
+                       const ssize parent_tile_frame_count,
+                       Dispatcher& dispatcher)
 {
+  const auto& tile = model.get<Tile>(tile_entity);
+  const auto& tile_animation = model.get<TileAnimation>(tile_entity);
+  const auto& frame = tile_animation.frames.at(frame_index);
+
   if (const Popup popup {"##FramePopup"}; popup.is_open()) {
-    if (auto new_duration = ui_frame_duration_slider(lang, frame.duration)) {
-      dispatcher.enqueue<SetTileAnimationFrameDurationEvent>(tile.get_index(),
+    if (auto new_duration = _show_frame_duration_slider(lang, frame.duration)) {
+      dispatcher.enqueue<SetTileAnimationFrameDurationEvent>(tile.index,
                                                              frame_index,
                                                              *new_duration);
     }
@@ -123,7 +131,7 @@ void ui_frame_popup(const Strings& lang,
     }
 
     {
-      const auto frame_count = tile.get_animation().size();
+      const auto frame_count = tile_animation.frames.size();
       const Disable disable_if_last {frame_index == frame_count - 1};
       if (ImGui::MenuItem(lang.animation_dock.move_frame_backwards.c_str())) {
         dispatcher.enqueue<MoveAnimationFrameBackwardsEvent>(frame_index);
@@ -133,16 +141,16 @@ void ui_frame_popup(const Strings& lang,
     ImGui::Separator();
 
     {
-      const Disable disable_if_already_selected {tile.get_index() == frame.tile};
+      const Disable disable_if_already_selected {tile.index == frame.tile_index};
       if (ImGui::MenuItem(lang.animation_dock.select_referenced_tile.c_str())) {
-        dispatcher.enqueue<SelectTilesetTileEvent>(frame.tile);
+        dispatcher.enqueue<SelectTilesetTileEvent>(frame.tile_index);
       }
     }
 
     ImGui::Separator();
 
     {
-      const Disable disable_if_parent_frame {tile.get_index() == frame.tile &&
+      const Disable disable_if_parent_frame {tile.index == frame.tile_index &&
                                              parent_tile_frame_count < 2};
       if (ImGui::MenuItem(lang.animation_dock.remove_frame.c_str())) {
         dispatcher.enqueue<RemoveTileAnimationFrameEvent>(frame_index);
@@ -157,30 +165,11 @@ void ui_frame_popup(const Strings& lang,
   }
 }
 
-void ui_animation_frame(const Strings& lang,
-                        const Tileset& tileset,
-                        const Tile& tile,
-                        const TileAnimation::Frame& frame,
-                        const usize frame_index,
-                        const ImVec4& tint,
-                        const ssize parent_tile_frame_count,
-                        entt::dispatcher& dispatcher)
-{
-  const Scope frame_scope {&frame};
-
-  ui_tileset_tile_image(tileset, frame.tile, kFrameImageSize, tint);
-
-  if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
-    ImGui::OpenPopup("##FramePopup");
-  }
-
-  ui_frame_popup(lang, tile, frame, frame_index, parent_tile_frame_count, dispatcher);
-}
-
-void ui_animation_frame_list(const Strings& lang,
-                             const Tileset& tileset,
-                             const Tile& tile,
-                             entt::dispatcher& dispatcher)
+void _show_animation_frame_list(const Model& model,
+                                const Strings& lang,
+                                const Tileset& tileset,
+                                const Entity tile_entity,
+                                Dispatcher& dispatcher)
 {
   const auto& style = ImGui::GetStyle();
   const ImVec2 child_size {-kMinFloat,
@@ -198,35 +187,41 @@ void ui_animation_frame_list(const Strings& lang,
                               true,
                               ImGuiWindowFlags_AlwaysHorizontalScrollbar};
       list_child.is_open()) {
-    if (tile.is_animated()) {
-      const auto& animation = tile.get_animation();
-      const auto& current_frame = animation.current_frame();
+    if (model.has<TileAnimation>(tile_entity)) {
+      const auto& tile = model.get<Tile>(tile_entity);
+      const auto& animation = model.get<TileAnimation>(tile_entity);
 
       // Figure out how many frames in the animation reference the parent (animated) tile.
       const ssize parent_tile_frame_count =
-          std::count_if(animation.begin(),
-                        animation.end(),
-                        [&](const TileAnimation::Frame& frame) {
-                          return tile.get_index() == frame.tile;
-                        });
+          std::ranges::count_if(animation.frames, [&](const TileAnimationFrame& frame) {
+            return tile.index == frame.tile_index;
+          });
 
       usize frame_index = 0;
-      for (const auto& frame: animation) {
+      for (const auto& frame: animation.frames) {
+        const Scope frame_scope {&frame};
+
+        const auto frame_tint = (frame_index == animation.index)
+                                    ? ImVec4 {1, 1, 1, 1}
+                                    : ImVec4 {0.5, 0.5f, 0.5f, 1};
+
         ImGui::SameLine();
+        _show_animated_tile_cell_image(model,
+                                       tileset,
+                                       frame.tile_index,
+                                       kFrameImageSize,
+                                       frame_tint);
 
-        // We compare pointers to avoid highlighting several frames when more than
-        // one frame reference the same tile.
-        const auto frame_tint = &current_frame == &frame ? ImVec4 {1, 1, 1, 1}  //
-                                                         : ImVec4 {0.5, 0.5f, 0.5f, 1};
+        if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+          ImGui::OpenPopup("##FramePopup");
+        }
 
-        ui_animation_frame(lang,
-                           tileset,
-                           tile,
-                           frame,
-                           frame_index,
-                           frame_tint,
-                           parent_tile_frame_count,
-                           dispatcher);
+        _show_frame_popup(model,
+                          lang,
+                          tile_entity,
+                          frame_index,
+                          parent_tile_frame_count,
+                          dispatcher);
 
         ++frame_index;
       }
@@ -237,9 +232,10 @@ void ui_animation_frame_list(const Strings& lang,
   }
 }
 
-void ui_tile_animation_preview_section(const Strings& lang,
-                                       const Tileset& tileset,
-                                       const TileIndex tile_index)
+void _show_tile_animation_preview_section(const Model& model,
+                                          const Strings& lang,
+                                          const Tileset& tileset,
+                                          const TileIndex tile_index)
 {
   ImGui::VSliderFloat("##Size",
                       {32, ImGui::GetContentRegionAvail().y},
@@ -254,30 +250,21 @@ void ui_tile_animation_preview_section(const Strings& lang,
   if (const Child child {"##PreviewChild", {0, 0}, true}; child.is_open()) {
     ui_centered_label(lang.misc.preview.c_str());
 
-    const Float2 texture_size = tileset.texture().get_size();
+    const auto& texture = model.get<Texture>(tileset.texture);
+    const Float2 texture_size = texture.size;
 
     const auto image_width = ImGui::GetWindowSize().x * gDockState.preview_animation_size;
     const auto image_height = image_width * (texture_size.y / texture_size.x);
-    const ImVec2 image_size {image_width, image_height};
+    const ImVec2 cell_image_size {image_width, image_height};
 
     center_next_item_horizontally(image_width);
-    ui_tileset_tile_image(tileset, tile_index, image_size);
+    _show_animated_tile_cell_image(model, tileset, tile_index, cell_image_size);
   }
-}
-
-void ui_selected_tile_contents(const Strings& lang,
-                               const Tileset& tileset,
-                               const TileIndex tile_index,
-                               entt::dispatcher& dispatcher)
-{
-  const auto& tile = tileset[tile_index];
-  ui_animation_frame_list(lang, tileset, tile, dispatcher);
-  ui_tile_animation_preview_section(lang, tileset, tileset.appearance_of(tile_index));
 }
 
 }  // namespace
 
-void ui_animation_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
+void show_animation_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
   auto& settings = get_settings();
 
@@ -286,7 +273,10 @@ void ui_animation_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
   }
 
   const auto& lang = get_current_language();
-  const auto& document = model.require_active_tileset_document();
+
+  const auto document_entity = sys::get_active_document(model);
+  const auto& tileset_document = model.get<TilesetDocument>(document_entity);
+  const auto& tileset = model.get<Tileset>(tileset_document.tileset);
 
   bool show_animation_dock = true;
   const Window dock {lang.window.animation_dock.c_str(),
@@ -295,16 +285,28 @@ void ui_animation_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
   settings.set_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT, show_animation_dock);
 
   if (dock.is_open()) {
-    const auto& tileset = document.get_tileset();
+    if (tileset.selected_tile_index.has_value()) {
+      const auto selected_tile_entity =
+          lookup_in(tileset.tile_index_map, *tileset.selected_tile_index);
 
-    if (const auto selected_tile_index = tileset.get_selected_tile()) {
-      ui_selected_tile_contents(lang, tileset, *selected_tile_index, dispatcher);
+      const auto appearance_tile_index =
+          sys::get_tile_appearance(model,
+                                   tileset_document.tileset,
+                                   *tileset.selected_tile_index);
+
+      _show_animation_frame_list(model, lang, tileset, selected_tile_entity, dispatcher);
+      _show_tile_animation_preview_section(model, lang, tileset, appearance_tile_index);
     }
     else {
       prepare_vertical_alignment_center();
       ui_centered_label(lang.animation_dock.no_selected_tile_hint.c_str());
     }
   }
+}
+
+auto is_animation_dock_enabled(const Model& model) -> bool
+{
+  return sys::is_tileset_document_active(model);
 }
 
 }  // namespace tactile::ui

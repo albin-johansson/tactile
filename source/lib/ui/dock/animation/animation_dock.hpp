@@ -19,14 +19,16 @@
 
 #pragma once
 
-#include <entt/signal/fwd.hpp>
-
-#include "common/macros.hpp"
-
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
-void ui_animation_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
+void show_animation_dock(const Model& model,
+                         Entity widget_entity,
+                         Dispatcher& dispatcher);
+
+[[nodiscard]] auto is_animation_dock_enabled(const Model& model) -> bool;
 
 }  // namespace tactile::ui
