@@ -34,7 +34,7 @@ AddLayerContextMenu::AddLayerContextMenu()
 {
 }
 
-void AddLayerContextMenu::on_update(const DocumentModel&, entt::dispatcher& dispatcher)
+void AddLayerContextMenu::on_update(const Model&, entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
