@@ -33,7 +33,7 @@
 #include "engine/backend/gl/gl_backend.hpp"
 #include "io/directories.hpp"
 #include "model/settings.hpp"
-#include "model/systems/model/init.hpp"
+#include "model/systems/model/model_system.hpp"
 #include "platform/win32.hpp"
 #include "ui/style/fonts.hpp"
 
