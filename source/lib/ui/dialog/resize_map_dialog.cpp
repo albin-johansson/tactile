@@ -19,7 +19,6 @@
 
 #include "resize_map_dialog.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "lang/language.hpp"
@@ -48,7 +47,7 @@ void open_resize_map_dialog(const TileExtent current_extent)
   gDialogState.open_dialog = true;
 }
 
-void update_resize_map_dialog(entt::dispatcher& dispatcher)
+void update_resize_map_dialog(const Model& model, Entity, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 

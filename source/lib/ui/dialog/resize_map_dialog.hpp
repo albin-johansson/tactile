@@ -19,13 +19,17 @@
 
 #pragma once
 
-#include <entt/signal/fwd.hpp>
-
-#include "core/tile/tile_extent.hpp"
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
+#include "core/tile_extent.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
 void open_resize_map_dialog(TileExtent current_extent);
-void update_resize_map_dialog(entt::dispatcher& dispatcher);
+
+void show_resize_map_dialog(const Model& model,
+                            Entity widget_entity,
+                            Dispatcher& dispatcher);
 
 }  // namespace tactile::ui
