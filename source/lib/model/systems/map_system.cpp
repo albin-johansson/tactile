@@ -32,6 +32,7 @@
 #include "core/tileset.hpp"
 #include "model/systems/layer_system.hpp"
 #include "model/systems/tileset_system.hpp"
+#include "model/systems/validation.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -55,16 +56,16 @@ namespace {
 }
 
 [[nodiscard]] auto _determine_target_root_layer(Model& model, const Map& map)
-    -> CGroupLayer*
+    -> GroupLayer*
 {
-  CGroupLayer* target_group = nullptr;
+  GroupLayer* target_group = nullptr;
 
   if (map.active_layer != kNullEntity) {
-    target_group = model.try_get<CGroupLayer>(map.active_layer);
+    target_group = model.try_get<GroupLayer>(map.active_layer);
   }
 
   if (!target_group) {
-    target_group = model.try_get<CGroupLayer>(map.root_layer);
+    target_group = model.try_get<GroupLayer>(map.root_layer);
   }
 
   TACTILE_ASSERT(target_group != nullptr);
@@ -72,14 +73,6 @@ namespace {
 }
 
 }  // namespace
-
-auto is_map_entity(const Model& model, const Entity entity) -> bool
-{
-  return entity != kNullEntity &&       //
-         model.has<Context>(entity) &&  //
-         model.has<Map>(entity) &&      //
-         model.has<CTileFormat>(entity);
-}
 
 auto create_map(Model& model, const TileExtent& extent, const Int2& tile_size) -> Entity
 {
@@ -93,7 +86,7 @@ auto create_map(Model& model, const TileExtent& extent, const Int2& tile_size) -
   map.tile_size = tile_size;
   map.root_layer = create_group_layer(model, -1);
 
-  model.add<CTileFormat>(map_entity);
+  model.add<TileFormat>(map_entity);
 
   return map_entity;
 }
@@ -247,8 +240,8 @@ void attach_layer_to_map(Model& model,
 
   auto& map = model.get<Map>(map_entity);
   auto& root_layer = (root_layer_entity != kNullEntity)
-                         ? model.get<CGroupLayer>(root_layer_entity)
-                         : model.get<CGroupLayer>(map.root_layer);
+                         ? model.get<GroupLayer>(root_layer_entity)
+                         : model.get<GroupLayer>(map.root_layer);
 
   root_layer.append(layer_entity);
 }
@@ -258,14 +251,14 @@ void remove_layer_from_map(Model& model,
                            const Entity layer_entity)
 {
   auto& map = model.get<Map>(map_entity);
-  auto& root_layer = model.get<CGroupLayer>(map.root_layer);
+  auto& root_layer = model.get<GroupLayer>(map.root_layer);
 
   if (map.active_layer == layer_entity) {
     map.active_layer = kNullEntity;
   }
 
   recurse_layers(model, map.root_layer, [&](const Entity child_layer_entity) {
-    if (auto* child_layer_group = model.try_get<CGroupLayer>(child_layer_entity)) {
+    if (auto* child_layer_group = model.try_get<GroupLayer>(child_layer_entity)) {
       std::erase(child_layer_group->children, layer_entity);
     }
   });

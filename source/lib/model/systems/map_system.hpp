@@ -34,8 +34,6 @@ namespace tactile::sys {
 /// Maps layer entities to previously invalid tile identifiers.
 using FixTilesInMapResult = HashMap<LayerEntity, HashMap<TilePos, TileID>>;
 
-[[nodiscard]] auto is_map_entity(const Model& model, Entity entity) -> bool;
-
 auto create_map(Model& model, const TileExtent& extent, const Int2& tile_size) -> Entity;
 
 auto fix_tiles_in_map(Model& model, Entity map_entity) -> FixTilesInMapResult;
