@@ -26,8 +26,9 @@
 #include "core/context.hpp"
 #include "core/layer.hpp"
 #include "core/tile_matrix.hpp"
-#include "model/systems/context_system.hpp"
+#include "model/systems/context/context_system.hpp"
 #include "model/systems/object_system.hpp"
+#include "model/systems/validation.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -52,37 +53,6 @@ namespace {
 }
 
 }  // namespace
-
-auto is_layer_entity(const Model& model, const Entity entity) -> bool
-{
-  return is_tile_layer_entity(model, entity) ||    //
-         is_object_layer_entity(model, entity) ||  //
-         is_group_layer_entity(model, entity);
-}
-
-auto is_tile_layer_entity(const Model& model, const Entity entity) -> bool
-{
-  return entity != kNullEntity &&          //
-         model.has<TileLayer>(entity) &&  //
-         model.has<Layer>(entity) &&      //
-         model.has<Context>(entity);
-}
-
-auto is_object_layer_entity(const Model& model, const Entity entity) -> bool
-{
-  return entity != kNullEntity &&            //
-         model.has<ObjectLayer>(entity) &&  //
-         model.has<Layer>(entity) &&        //
-         model.has<Context>(entity);
-}
-
-auto is_group_layer_entity(const Model& model, const Entity entity) -> bool
-{
-  return entity != kNullEntity &&           //
-         model.has<CGroupLayer>(entity) &&  //
-         model.has<Layer>(entity) &&       //
-         model.has<Context>(entity);
-}
 
 auto create_tile_layer(Model& model, const int32 id, const TileExtent extent) -> Entity
 {
@@ -112,7 +82,7 @@ auto create_group_layer(Model& model, const int32 id) -> Entity
   const auto layer_entity =
       _create_layer_entity_base(model, LayerType::GroupLayer, "Group Layer", id);
 
-  model.add<CGroupLayer>(layer_entity);
+  model.add<GroupLayer>(layer_entity);
 
   TACTILE_ASSERT(is_group_layer_entity(model, layer_entity));
   return layer_entity;
@@ -131,11 +101,12 @@ auto duplicate_layer(Model& model,
       get_parent_layer(model, root_layer_entity, source_layer_entity);
 
   const auto& src_layer = model.get<Layer>(source_layer_entity);
+  const auto& src_context = model.get<Context>(source_layer_entity);
 
   const auto new_layer_entity = model.create_entity();
 
   auto& new_context = model.add<Context>(new_layer_entity);
-  new_context = copy_context_component_from(model, source_layer_entity);
+  new_context = copy_context(model, src_context);
 
   auto& new_layer = model.add<Layer>(new_layer_entity);
   new_layer = src_layer;
@@ -155,8 +126,8 @@ auto duplicate_layer(Model& model,
     }
   }
 
-  if (const auto* src_group_layer = model.try_get<CGroupLayer>(source_layer_entity)) {
-    auto& new_group_layer = model.add<CGroupLayer>(new_layer_entity);
+  if (const auto* src_group_layer = model.try_get<GroupLayer>(source_layer_entity)) {
+    auto& new_group_layer = model.add<GroupLayer>(new_layer_entity);
     new_group_layer.children.reserve(src_group_layer->children.size());
 
     for (const auto src_child_layer_entity: src_group_layer->children) {
@@ -178,10 +149,10 @@ void recurse_layers(const Model& model,
                     const EntityCallback& callback)
 {
   TACTILE_ASSERT(is_group_layer_entity(model, root_layer_entity));
-  const auto& root_layer = model.get<CGroupLayer>(root_layer_entity);
+  const auto& root_layer = model.get<GroupLayer>(root_layer_entity);
 
   for (const auto layer_entity: root_layer.children) {
-    if (model.try_get<CGroupLayer>(layer_entity) != nullptr) {
+    if (model.try_get<GroupLayer>(layer_entity) != nullptr) {
       recurse_layers(model, layer_entity, callback);
     }
 
@@ -218,13 +189,13 @@ auto get_parent_layer(const Model& model,
   TACTILE_ASSERT(is_group_layer_entity(model, root_layer_entity));
   TACTILE_ASSERT(is_layer_entity(model, target_layer_entity));
 
-  const auto& root_layer = model.get<CGroupLayer>(root_layer_entity);
+  const auto& root_layer = model.get<GroupLayer>(root_layer_entity);
 
   for (const auto layer_entity: root_layer.children) {
     if (layer_entity == target_layer_entity) {
       return root_layer_entity;
     }
-    else if (model.has<CGroupLayer>(layer_entity)) {
+    else if (model.has<GroupLayer>(layer_entity)) {
       const auto parent_entity =
           get_parent_layer(model, layer_entity, target_layer_entity);
 

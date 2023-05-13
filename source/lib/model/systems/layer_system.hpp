@@ -32,11 +32,6 @@ using EntityCallback = Func<void(Entity)>;
 using TileLayerCallback = Func<void(Entity, TileLayer&)>;
 using ConstTileLayerCallback = Func<void(Entity, const TileLayer&)>;
 
-[[nodiscard]] auto is_layer_entity(const Model& model, Entity entity) -> bool;
-[[nodiscard]] auto is_tile_layer_entity(const Model& model, Entity entity) -> bool;
-[[nodiscard]] auto is_object_layer_entity(const Model& model, Entity entity) -> bool;
-[[nodiscard]] auto is_group_layer_entity(const Model& model, Entity entity) -> bool;
-
 [[nodiscard]] auto create_tile_layer(Model& model, int32 id, TileExtent extent) -> Entity;
 
 [[nodiscard]] auto create_object_layer(Model& model, int32 id) -> Entity;
