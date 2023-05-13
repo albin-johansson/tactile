@@ -28,33 +28,39 @@
 #include "io/export/tactile_yaml_exporter.hpp"
 #include "io/export/tiled_json_exporter.hpp"
 #include "io/export/tiled_xml_exporter.hpp"
-#include "io/ir/map_document_to_ir.hpp"
+#include "io/ir/ir_generation.hpp"
 #include "io/save_format.hpp"
-#include "model/document/map_document.hpp"
+#include "model/document.hpp"
 
 namespace tactile {
 
-auto save_map_document_to_disk(const MapDocument& document) -> Result
+auto save_map_document_to_disk(const Model& model, const Entity map_document_entity)
+    -> Result
 {
   try {
     TACTILE_DEBUG_PROFILE_START
 
-    if (!document.has_path()) {
+    const auto& document = model.get<Document>(map_document_entity);
+    const auto& map_document = model.get<MapDocument>(map_document_entity);
+
+    if (!document.path.has_value()) {
       spdlog::error("Tried to save map document with no associated file path");
       return failure;
     }
 
-    const auto path = fs::absolute(document.get_path());
+    const auto path = fs::absolute(*document.path);
     spdlog::info("Trying to save map to {}", path);
 
     if (has_supported_tactile_yaml_extension(path)) {
-      save_map_as_tactile_yaml(path, convert_map_document_to_ir(document));
+      save_map_as_tactile_yaml(path,
+                               convert_map_document_to_ir(model, map_document_entity));
     }
     else if (has_supported_tiled_json_extension(path)) {
-      save_map_as_tiled_json(path, convert_map_document_to_ir(document));
+      save_map_as_tiled_json(path,
+                             convert_map_document_to_ir(model, map_document_entity));
     }
     else if (has_supported_tiled_xml_extension(path)) {
-      save_map_as_tiled_xml(path, convert_map_document_to_ir(document));
+      save_map_as_tiled_xml(path, convert_map_document_to_ir(model, map_document_entity));
     }
     else {
       spdlog::error("Unsupported file extension {}", path.extension());
