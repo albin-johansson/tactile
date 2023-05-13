@@ -298,4 +298,9 @@ auto get_settings() -> Settings&
   return settings;
 }
 
+auto get_global_settings() -> Settings&
+{
+  return get_settings();
+}
+
 }  // namespace tactile
