@@ -19,6 +19,9 @@
 
 #pragma once
 
+#include <concepts>  // predicate
+#include <utility>   // forward
+
 #include "common/debug/assert.hpp"
 #include "common/type/ecs.hpp"
 
@@ -26,29 +29,43 @@ namespace tactile {
 
 class Model final {
  public:
+  /// Creates a new entity with no attached components.
   [[nodiscard]] auto create_entity() -> Entity;
 
+  /// Destroys an entity.
+  /// \details This function does nothing if the null entity is provided.
   void destroy(Entity entity);
 
   void set_enabled(Entity entity, bool enabled);
 
   [[nodiscard]] auto is_enabled(Entity entity) const -> bool;
 
+  /// Sorts a component pool using a sorter predicate.
+  template <typename T, std::predicate<const T&, const T&> Predicate>
+  void sort(Predicate&& sorter)
+  {
+    mRegistry.sort<T>(std::forward<Predicate>(sorter));
+  }
+
+  /// Adds a context component to the model and returns a reference to it.
+  ///
+  /// \note The existing context component is returned if the model already has a context
+  /// component of the specified type.
   template <typename T>
   auto add() -> T&
   {
-//    TACTILE_ASSERT(!mRegistry.ctx().contains<T>());
     return mRegistry.ctx().emplace<T>();
   }
 
+  /// Adds (or replaces) a component to an entity.
   template <typename T>
   auto add(const Entity entity) -> T&
   {
     TACTILE_ASSERT(is_enabled(entity));
-//    TACTILE_ASSERT(!mRegistry.all_of<T>(entity));
     return mRegistry.emplace_or_replace<T>(entity);
   }
 
+  /// Removes a component from an entity.
   template <typename T>
   void remove(const Entity entity)
   {
@@ -56,6 +73,7 @@ class Model final {
     mRegistry.remove<T>(entity);
   }
 
+  /// Returns a component attached to an entity.
   template <typename T>
   [[nodiscard]] auto get(const Entity entity) -> T&
   {
@@ -64,6 +82,7 @@ class Model final {
     return mRegistry.get<T>(entity);
   }
 
+  /// Returns a component attached to an entity.
   template <typename T>
   [[nodiscard]] auto get(const Entity entity) const -> const T&
   {
@@ -72,6 +91,7 @@ class Model final {
     return mRegistry.get<T>(entity);
   }
 
+  /// Returns a component attached to an entity, or null if it doesn't exist.
   template <typename T>
   [[nodiscard]] auto try_get(const Entity entity) -> T*
   {
@@ -79,6 +99,7 @@ class Model final {
     return mRegistry.try_get<T>(entity);
   }
 
+  /// Returns a component attached to an entity, or null if it doesn't exist.
   template <typename T>
   [[nodiscard]] auto try_get(const Entity entity) const -> const T*
   {
@@ -86,18 +107,23 @@ class Model final {
     return mRegistry.try_get<T>(entity);
   }
 
+  /// Returns a component attached to a entity, or null if it doesn't exist.
+  /// \note This function can safely be used with invalid entity identifiers.
   template <typename T>
   [[nodiscard]] auto unchecked_try_get(const Entity entity) -> T*
   {
     return (entity != kNullEntity) ? mRegistry.try_get<T>(entity) : nullptr;
   }
 
+  /// Returns a component attached to a entity, or null if it doesn't exist.
+  /// \note This function can safely be used with invalid entity identifiers.
   template <typename T>
   [[nodiscard]] auto unchecked_try_get(const Entity entity) const -> const T*
   {
     return (entity != kNullEntity) ? mRegistry.try_get<T>(entity) : nullptr;
   }
 
+  /// Returns a context component.
   template <typename T>
   [[nodiscard]] auto get() -> T&
   {
@@ -105,6 +131,7 @@ class Model final {
     return mRegistry.ctx().get<T>();
   }
 
+  /// Returns a context component.
   template <typename T>
   [[nodiscard]] auto get() const -> const T&
   {
@@ -112,6 +139,7 @@ class Model final {
     return mRegistry.ctx().get<T>();
   }
 
+  /// Indicates whether an entity has a specific component.
   template <typename T>
   [[nodiscard]] auto has(const Entity entity) const -> bool
   {
@@ -119,17 +147,19 @@ class Model final {
     return mRegistry.all_of<T>(entity);
   }
 
+  /// Returns an iterable view of all entities featuring the specified components.
+  /// \note This function includes all entities, including disabled entities.
   template <typename... Components>
   [[nodiscard]] auto each()
   {
-    // return mRegistry.view<Components...>(entt::exclude<DisabledTag>).each();
     return mRegistry.view<Components...>().each();
   }
 
+  /// Returns an iterable view of all entities featuring the specified components.
+  /// \note This function includes all entities, including disabled entities.
   template <typename... Components>
   [[nodiscard]] auto each() const
   {
-    // return mRegistry.view<Components...>(entt::exclude<DisabledTag>).each();
     return mRegistry.view<Components...>().each();
   }
 
@@ -137,8 +167,9 @@ class Model final {
   Registry mRegistry;
 };
 
+[[nodiscard, deprecated]] auto get_model() -> Model&;
+
 /// Returns the global model instance.
-[[nodiscard]] auto get_model() -> Model&;
 [[nodiscard]] auto get_global_model() -> Model&;
 
 }  // namespace tactile
