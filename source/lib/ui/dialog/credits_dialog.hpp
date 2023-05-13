@@ -19,9 +19,16 @@
 
 #pragma once
 
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
+
 namespace tactile::ui {
 
 void open_credits_dialog();
-void update_credits_dialog();
+
+void show_credits_dialog(const Model& model,
+                         Entity widget_entity,
+                         Dispatcher& dispatcher);
 
 }  // namespace tactile::ui
