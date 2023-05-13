@@ -19,9 +19,13 @@
 
 #pragma once
 
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
+
 namespace tactile::ui {
 
-void update_log_dock();
+void show_log_dock(const Model& model, Entity widget_entity, Dispatcher& dispatcher);
 
 [[nodiscard]] auto is_log_dock_focused() -> bool;
 

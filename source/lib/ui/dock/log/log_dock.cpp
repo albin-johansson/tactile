@@ -175,7 +175,7 @@ void _show_logged_message_view(const Strings& lang, const usize message_count)
 
 }  // namespace
 
-void update_log_dock()
+void show_log_dock(const Model&, Entity, Dispatcher&)
 {
   auto& settings = get_settings();
 
