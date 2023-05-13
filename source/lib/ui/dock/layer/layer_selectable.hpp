@@ -19,18 +19,17 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
+#include <entt/signal/fwd.hpp>
 
-namespace tactile {
-class MapDocument;
-class Layer;
-}  // namespace tactile
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
 /// Shows a widget for a single layer in a map.
-void layer_selectable(const MapDocument& document,
-                      const Layer& layer,
+void layer_selectable(const Model& model,
+                      Entity map_entity,
+                      Entity layer_entity,
                       entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui

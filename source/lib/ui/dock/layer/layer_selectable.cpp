@@ -34,6 +34,7 @@
 #include "model/event/layer_events.hpp"
 #include "model/event/object_events.hpp"
 #include "model/event/property_events.hpp"
+#include "model/systems/group_layer_system.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"
 
@@ -44,216 +45,231 @@ constexpr int kBaseNodeFlags = ImGuiTreeNodeFlags_OpenOnArrow |
                                ImGuiTreeNodeFlags_OpenOnDoubleClick |
                                ImGuiTreeNodeFlags_SpanAvailWidth;
 
-void update_layer_popup(const Map& map, const Layer& layer, entt::dispatcher& dispatcher)
+void _update_layer_popup(const Model& model,
+                         const Entity map_entity,
+                         const Entity layer_entity,
+                         entt::dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
-
   if (auto popup = Popup::for_item("##LayerPopup"); popup.is_open()) {
+    const auto& layer = model.get<Layer>(layer_entity);
+    const auto& map = model.get<Map>(map_entity);
+    const auto& root_layer = model.get<GroupLayer>(map.root_layer);
+    const auto& lang = get_current_language();
+
     if (ImGui::MenuItem(lang.action.inspect_layer.c_str())) {
-      dispatcher.enqueue<InspectContextEvent>(layer.get_uuid());
+      dispatcher.enqueue<InspectContextEvent>(layer_entity);
     }
 
     ImGui::Separator();
     if (ImGui::MenuItem(lang.action.rename_layer.c_str())) {
-      dispatcher.enqueue<OpenRenameLayerDialogEvent>(layer.get_uuid());
+      dispatcher.enqueue<OpenRenameLayerDialogEvent>(layer_entity);
     }
 
     ImGui::Separator();
     if (ImGui::MenuItem(lang.action.duplicate_layer.c_str())) {
-      dispatcher.enqueue<DuplicateLayerEvent>(layer.get_uuid());
+      dispatcher.enqueue<DuplicateLayerEvent>(layer_entity);
     }
 
     ImGui::Separator();
     if (ImGui::MenuItem(lang.action.remove_layer.c_str())) {
-      dispatcher.enqueue<RemoveLayerEvent>(layer.get_uuid());
+      dispatcher.enqueue<RemoveLayerEvent>(layer_entity);
     }
 
     ImGui::Separator();
     if (ImGui::MenuItem(lang.action.toggle_layer_visible.c_str(),
                         nullptr,
-                        layer.is_visible())) {
-      dispatcher.enqueue<SetLayerVisibleEvent>(layer.get_uuid(), !layer.is_visible());
+                        layer.visible)) {
+      dispatcher.enqueue<SetLayerVisibleEvent>(layer_entity, !layer.visible);
     }
 
-    if (auto opacity = layer.get_opacity();
+    if (float opacity = layer.opacity;
         ImGui::SliderFloat(lang.misc.opacity.c_str(), &opacity, 0, 1.0f)) {
-      dispatcher.enqueue<SetLayerOpacityEvent>(layer.get_uuid(), opacity);
+      dispatcher.enqueue<SetLayerOpacityEvent>(layer_entity, opacity);
     }
-
-    const auto& root = map.get_invisible_root();
 
     ImGui::Separator();
     if (ImGui::MenuItem(lang.action.move_layer_up.c_str(),
                         nullptr,
                         false,
-                        root.can_move_layer_up(layer.get_uuid()))) {
-      dispatcher.enqueue<MoveLayerUpEvent>(layer.get_uuid());
+                        sys::can_move_layer_up(model, root_layer, layer_entity))) {
+      dispatcher.enqueue<MoveLayerUpEvent>(layer_entity);
     }
 
     if (ImGui::MenuItem(lang.action.move_layer_down.c_str(),
                         nullptr,
                         false,
-                        root.can_move_layer_down(layer.get_uuid()))) {
-      dispatcher.enqueue<MoveLayerDownEvent>(layer.get_uuid());
+                        sys::can_move_layer_down(model, root_layer, layer_entity))) {
+      dispatcher.enqueue<MoveLayerDownEvent>(layer_entity);
     }
   }
 }
 
-void show_object_selectable(const ObjectLayer& layer,
-                            const Object& object,
-                            entt::dispatcher& dispatcher)
+void _show_object_selectable(const Model& model,
+                             const Entity layer_entity,
+                             const Entity object_entity,
+                             entt::dispatcher& dispatcher)
 {
-  const auto object_id = object.get_uuid();
-  const auto object_type = object.get_type();
+  const auto& object_layer = model.get<ObjectLayer>(layer_entity);
 
-  const Scope scope {object_id};
+  const auto& object = model.get<Object>(object_entity);
+  const auto& object_context = model.get<Context>(object_entity);
+
+  const Scope scope {object_entity};
 
   const auto& lang = get_current_language();
-  const auto* icon = get_icon(object_type);
+  const auto* icon = get_icon(object.type);
 
   String name;
-  if (object.get_ctx().name().empty()) {
-    TACTILE_ASSERT(object.get_meta_id().has_value());
-    name = fmt::format("{} Object {}", icon, object.get_meta_id().value());
+  if (object_context.name.empty()) {
+    TACTILE_ASSERT(object.meta_id.has_value());
+    name = fmt::format("{} Object {}", icon, object.meta_id.value());
   }
   else {
-    name = fmt::format("{} {}", icon, object.get_ctx().name());
+    name = fmt::format("{} {}", icon, object_context.name);
   }
 
-  if (Selectable::list_item(name.c_str(), layer.active_object_id() == object_id)) {
-    dispatcher.enqueue<SelectObjectEvent>(layer.get_uuid(), object_id);
+  if (Selectable::list_item(name.c_str(), object_layer.active_object == object_entity)) {
+    dispatcher.enqueue<SelectObjectEvent>(layer_entity, object_entity);
   }
 
   if (ImGui::IsItemActivated() ||
       (ImGui::IsItemHovered() && ImGui::IsItemClicked(ImGuiMouseButton_Right))) {
-    dispatcher.enqueue<SelectObjectEvent>(layer.get_uuid(), object_id);
+    dispatcher.enqueue<SelectObjectEvent>(layer_entity, object_entity);
   }
 
   if (auto popup = Popup::for_item("##ObjectPopup"); popup.is_open()) {
     if (ImGui::MenuItem(lang.action.inspect_object.c_str())) {
-      dispatcher.enqueue<InspectContextEvent>(object_id);
+      dispatcher.enqueue<InspectContextEvent>(object_entity);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(lang.action.toggle_object_visibility.c_str())) {
-      dispatcher.enqueue<SetObjectVisibleEvent>(object_id, !object.is_visible());
+      dispatcher.enqueue<SetObjectVisibleEvent>(object_entity, !object.visible);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(lang.action.remove_object.c_str())) {
-      dispatcher.enqueue<RemoveObjectEvent>(object_id);
+      dispatcher.enqueue<RemoveObjectEvent>(object_entity);
     }
   }
 }
 
-void show_object_layer_selectable(const Map& map,
-                                  const ObjectLayer& layer,
-                                  const ImGuiTreeNodeFlags flags,
-                                  entt::dispatcher& dispatcher)
+void _show_object_layer_selectable(const Model& model,
+                                   const Entity map_entity,
+                                   const Entity layer_entity,
+                                   const ImGuiTreeNodeFlags flags,
+                                   entt::dispatcher& dispatcher)
 {
-  const FmtString<256> name {"{} {}", TAC_ICON_OBJECT_LAYER, layer.get_ctx().name()};
+  const auto& layer = model.get<Layer>(layer_entity);
+  const auto& layer_context = model.get<Context>(layer_entity);
+
+  const FmtString<256> name {"{} {}", TAC_ICON_OBJECT_LAYER, layer_context.name};
   if (const TreeNode tree_node {"##ObjectLayerTree", flags, name.data()};
       tree_node.is_open()) {
     const Indent indent;
 
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
+      dispatcher.enqueue<SelectLayerEvent>(layer_entity);
     }
 
-    update_layer_popup(map, layer, dispatcher);
+    _update_layer_popup(model, map_entity, layer_entity, dispatcher);
 
-    const auto& object_layer = dynamic_cast<const ObjectLayer&>(layer);
-    for (const auto& [object_id, object]: object_layer) {
-      show_object_selectable(object_layer, *object, dispatcher);
+    const auto& object_layer = model.get<ObjectLayer>(layer_entity);
+    for (const auto object_entity: object_layer.objects) {
+      _show_object_selectable(model, layer_entity, object_entity, dispatcher);
     }
   }
   else {
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
+      dispatcher.enqueue<SelectLayerEvent>(layer_entity);
     }
 
-    update_layer_popup(map, layer, dispatcher);
+    _update_layer_popup(model, map_entity, layer_entity, dispatcher);
   }
 }
 
-void show_group_layer_selectable(const MapDocument& document,
-                                 const Layer& layer,
-                                 const ImGuiTreeNodeFlags flags,
-                                 entt::dispatcher& dispatcher)
+void _show_group_layer_selectable(const Model& model,
+                                  const Entity map_entity,
+                                  const Entity layer_entity,
+                                  const ImGuiTreeNodeFlags flags,
+                                  entt::dispatcher& dispatcher)
 {
-  const auto& map = document.get_map();
+  const auto& layer_context = model.get<Context>(layer_entity);
 
-  const FmtString<256> name {"{} {}", TAC_ICON_GROUP_LAYER, layer.get_ctx().name()};
+  const FmtString<256> name {"{} {}", TAC_ICON_GROUP_LAYER, layer_context.name};
   if (const TreeNode tree_node {"##GroupLayerTreeNode", flags, name.data()};
       tree_node.is_open()) {
     const Indent indent;
 
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
+      dispatcher.enqueue<SelectLayerEvent>(layer_entity);
     }
 
-    update_layer_popup(map, layer, dispatcher);
+    _update_layer_popup(model, map_entity, layer_entity, dispatcher);
 
-    const auto& group = dynamic_cast<const GroupLayer&>(layer);
-    for (const auto& child: group.get_storage()) {
-      layer_selectable(document, *child, dispatcher);
+    const auto& group_layer = model.get<GroupLayer>(layer_entity);
+    for (const auto& child_layer_entity: group_layer.children) {
+      layer_selectable(model, map_entity, child_layer_entity, dispatcher);
     }
   }
   else {
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
-      dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
+      dispatcher.enqueue<SelectLayerEvent>(layer_entity);
     }
 
-    update_layer_popup(map, layer, dispatcher);
+    _update_layer_popup(model, map_entity, layer_entity, dispatcher);
   }
 }
 
 }  // namespace
 
-void layer_selectable(const MapDocument& document,
-                      const Layer& layer,
+void layer_selectable(const Model& model,
+                      const Entity map_entity,
+                      const Entity layer_entity,
                       entt::dispatcher& dispatcher)
 {
-  const auto& map = document.get_map();
+  const Scope scope {layer_entity};
 
-  const Scope scope {layer.get_uuid()};
+  const auto& map = model.get<Map>(map_entity);
+  const auto& layer = model.get<Layer>(layer_entity);
+  const auto& layer_context = model.get<Context>(layer_entity);
 
-  const auto is_active_layer = map.get_active_layer_id() == layer.get_uuid();
-  const auto flags =
-      is_active_layer ? (kBaseNodeFlags | ImGuiTreeNodeFlags_Selected) : kBaseNodeFlags;
+  const auto is_layer_active = map.active_layer == layer_entity;
+  const auto flags = is_layer_active ? (kBaseNodeFlags | ImGuiTreeNodeFlags_Selected)  //
+                                     : kBaseNodeFlags;
 
-  const FmtString name {"{} {}", get_icon(layer.get_type()), layer.get_ctx().name()};
+  const FmtString name {"{} {}", get_icon(layer.type), layer_context.name};
 
-  switch (layer.get_type()) {
+  switch (layer.type) {
     case LayerType::TileLayer: {
-      if (Selectable::list_item(name.data(), is_active_layer)) {
-        dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
+      if (Selectable::list_item(name.data(), is_layer_active)) {
+        dispatcher.enqueue<SelectLayerEvent>(layer_entity);
       }
 
       // Make sure to select the layer item when right-clicked as well
       if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
-        dispatcher.enqueue<SelectLayerEvent>(layer.get_uuid());
+        dispatcher.enqueue<SelectLayerEvent>(layer_entity);
       }
 
-      update_layer_popup(map, layer, dispatcher);
+      _update_layer_popup(model, map_entity, layer_entity, dispatcher);
       break;
     }
     case LayerType::ObjectLayer: {
-      const auto& object_layer = dynamic_cast<const ObjectLayer&>(layer);
-      show_object_layer_selectable(map, object_layer, flags, dispatcher);
+      _show_object_layer_selectable(model, map_entity, layer_entity, flags, dispatcher);
       break;
     }
     case LayerType::GroupLayer: {
-      show_group_layer_selectable(document,
-                                  layer,
-                                  ImGuiTreeNodeFlags_DefaultOpen | flags,
-                                  dispatcher);
+      _show_group_layer_selectable(model,
+                                   map_entity,
+                                   layer_entity,
+                                   ImGuiTreeNodeFlags_DefaultOpen | flags,
+                                   dispatcher);
       break;
     }
   }
