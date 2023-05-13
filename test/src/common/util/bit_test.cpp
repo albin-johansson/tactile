@@ -26,8 +26,6 @@
 namespace tactile::test {
 namespace {
 
-using ByteArray = Array<uint8, sizeof(uint32)>;
-
 template <std::integral T>
 [[nodiscard]] auto nth_byte(const T value, const usize n) -> uint8
 {
@@ -39,20 +37,6 @@ template <std::integral T>
 
 TEST_SUITE("Bit utilities")
 {
-  TEST_CASE("byteswap")
-  {
-    const uint32 original = 0xDEADBEEF;
-    const auto swapped = byteswap(original);
-
-    const auto original_bytes = bitcast<ByteArray>(original);
-    const auto swapped_bytes = bitcast<ByteArray>(swapped);
-
-    REQUIRE(original_bytes.at(0) == swapped_bytes.at(3));
-    REQUIRE(original_bytes.at(1) == swapped_bytes.at(2));
-    REQUIRE(original_bytes.at(2) == swapped_bytes.at(1));
-    REQUIRE(original_bytes.at(3) == swapped_bytes.at(0));
-  }
-
   TEST_CASE("to_little_endian[uint32]")
   {
     const uint32 original = 0xFF'EE'22'11u;
