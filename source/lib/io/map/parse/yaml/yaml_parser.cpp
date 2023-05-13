@@ -25,6 +25,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "common/type/expected.hpp"
+#include "core/tile_format.hpp"
 #include "io/util/yaml.hpp"
 
 namespace tactile {
@@ -79,12 +80,12 @@ namespace {
   }
 
   if (const auto level = format.zlib_compression_level;
-      level && !TileFormat::is_valid_zlib_compression_level(*level)) {
+      level && !is_valid_zlib_compression_level(*level)) {
     return unexpected(ParseError::BadZlibCompressionLevel);
   }
 
   if (const auto level = format.zstd_compression_level;
-      level && !TileFormat::is_valid_zstd_compression_level(*level)) {
+      level && !is_valid_zstd_compression_level(*level)) {
     return unexpected(ParseError::BadZstdCompressionLevel);
   }
 
