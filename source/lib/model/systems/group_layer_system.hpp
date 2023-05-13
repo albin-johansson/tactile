@@ -36,15 +36,15 @@ void set_layer_local_index(Model& model,
                            usize new_index);
 
 [[nodiscard]] auto can_move_layer_up(const Model& model,
-                                     const CGroupLayer& root,
+                                     const GroupLayer& root,
                                      Entity layer_entity) -> bool;
 
 [[nodiscard]] auto can_move_layer_down(const Model& model,
-                                       const CGroupLayer& root,
+                                       const GroupLayer& root,
                                        Entity layer_entity) -> bool;
 
 [[nodiscard]] auto get_local_layer_index(const Model& model,
-                                         const CGroupLayer& root,
+                                         const GroupLayer& root,
                                          Entity layer_entity) -> Maybe<usize>;
 
 }  // namespace tactile::sys

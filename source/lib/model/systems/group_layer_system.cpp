@@ -27,12 +27,13 @@
 #include "common/util/functional.hpp"
 #include "core/map.hpp"
 #include "model/systems/layer_system.hpp"
+#include "model/systems/validation.hpp"
 
 namespace tactile::sys {
 namespace {
 
 [[nodiscard]] auto _get_sibling_count(const Model& model,
-                                      const CGroupLayer& root,
+                                      const GroupLayer& root,
                                       const Entity target_layer_entity) -> Maybe<usize>
 {
   for (const auto child_layer_entity: root.children) {
@@ -40,7 +41,7 @@ namespace {
       return root.children.size() - 1;
     }
 
-    if (const auto* child_group = model.try_get<CGroupLayer>(child_layer_entity)) {
+    if (const auto* child_group = model.try_get<GroupLayer>(child_layer_entity)) {
       if (const auto count =
               _get_sibling_count(model, *child_group, target_layer_entity)) {
         return *count;
@@ -60,7 +61,7 @@ void _offset_layer(Model& model,
 
   const auto parent_layer_entity =
       get_parent_layer(model, root_layer_entity, layer_entity);
-  auto& parent_layer = model.get<CGroupLayer>(parent_layer_entity);
+  auto& parent_layer = model.get<GroupLayer>(parent_layer_entity);
 
   const auto begin = parent_layer.children.begin();
   const auto end = parent_layer.children.end();
@@ -77,7 +78,7 @@ void move_layer_up(Model& model,
                    const Entity layer_entity)
 {
   TACTILE_ASSERT(can_move_layer_up(model,  //
-                                   model.get<CGroupLayer>(root_layer_entity),
+                                   model.get<GroupLayer>(root_layer_entity),
                                    layer_entity));
   _offset_layer(model, root_layer_entity, layer_entity, -1);
 }
@@ -86,9 +87,8 @@ void move_layer_down(Model& model,
                      const Entity root_layer_entity,
                      const Entity layer_entity)
 {
-  TACTILE_ASSERT(can_move_layer_down(model,
-                                     model.get<CGroupLayer>(root_layer_entity),
-                                     layer_entity));
+  TACTILE_ASSERT(
+      can_move_layer_down(model, model.get<GroupLayer>(root_layer_entity), layer_entity));
   _offset_layer(model, root_layer_entity, layer_entity, 1);
 }
 
@@ -100,7 +100,7 @@ void set_layer_local_index(Model& model,
   TACTILE_ASSERT(is_group_layer_entity(model, root_layer_entity));
   TACTILE_ASSERT(is_layer_entity(model, layer_entity));
 
-  const auto& root = model.get<CGroupLayer>(root_layer_entity);
+  const auto& root = model.get<GroupLayer>(root_layer_entity);
 
   const auto current_local_index = get_local_layer_index(model, root, layer_entity);
   const auto steps = udiff(current_local_index.value(), new_index);
@@ -114,14 +114,14 @@ void set_layer_local_index(Model& model,
 }
 
 auto can_move_layer_up(const Model& model,
-                       const CGroupLayer& root,
+                       const GroupLayer& root,
                        const Entity layer_entity) -> bool
 {
   return get_local_layer_index(model, root, layer_entity) != 0;
 }
 
 auto can_move_layer_down(const Model& model,
-                         const CGroupLayer& root,
+                         const GroupLayer& root,
                          const Entity layer_entity) -> bool
 {
   const auto local_index = get_local_layer_index(model, root, layer_entity);
@@ -130,7 +130,7 @@ auto can_move_layer_down(const Model& model,
 }
 
 auto get_local_layer_index(const Model& model,
-                           const CGroupLayer& root,
+                           const GroupLayer& root,
                            const Entity layer_entity) -> Maybe<usize>
 {
   TACTILE_ASSERT(is_layer_entity(model, layer_entity));
@@ -141,7 +141,7 @@ auto get_local_layer_index(const Model& model,
       return local_index;
     }
 
-    if (const auto* child_group = model.try_get<CGroupLayer>(child_layer_entity)) {
+    if (const auto* child_group = model.try_get<GroupLayer>(child_layer_entity)) {
       if (const auto recursive_local_index =
               get_local_layer_index(model, *child_group, layer_entity)) {
         return *recursive_local_index;
