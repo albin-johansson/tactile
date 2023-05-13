@@ -24,7 +24,7 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/model.hpp"
-#include "model/systems/component_system.hpp"
+#include "model/systems/component/component_def.hpp"
 
 namespace tactile::cmd {
 

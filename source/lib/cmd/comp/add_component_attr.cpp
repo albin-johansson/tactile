@@ -24,7 +24,7 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/model.hpp"
-#include "model/systems/component_system.hpp"
+#include "model/systems/component/component_def.hpp"
 
 namespace tactile::cmd {
 
@@ -36,13 +36,13 @@ AddComponentAttr::AddComponentAttr(const Entity definition_entity, String name)
 
 void AddComponentAttr::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   sys::remove_component_attribute(model, mDefinitionEntity, mAttributeName);
 }
 
 void AddComponentAttr::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   sys::add_component_attribute(model,
                                mDefinitionEntity,
                                mAttributeName,

@@ -23,7 +23,7 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/model.hpp"
-#include "model/systems/component_system.hpp"
+#include "model/systems/context/components.hpp"
 
 namespace tactile::cmd {
 
@@ -37,10 +37,9 @@ DetachComponent::DetachComponent(const Entity context_entity,
 void DetachComponent::undo()
 {
   auto& model = get_model();
+  auto& context = model.get<Context>(mContextEntity);
 
-  const auto component_entity =
-      sys::attach_component(model, mContextEntity, mDefinitionEntity);
-
+  const auto component_entity = sys::attach_component(model, context, mDefinitionEntity);
   auto& component = model.get<Component>(component_entity);
   component.attributes = mPrevValues.value();
 
@@ -50,7 +49,8 @@ void DetachComponent::undo()
 void DetachComponent::redo()
 {
   auto& model = get_model();
-  mPrevValues = sys::detach_component(model, mContextEntity, mDefinitionEntity);
+  auto& context = model.get<Context>(mContextEntity);
+  mPrevValues = sys::detach_component(model, context, mDefinitionEntity);
 }
 
 auto DetachComponent::get_name() const -> String

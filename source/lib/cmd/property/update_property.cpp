@@ -40,7 +40,7 @@ UpdateProperty::UpdateProperty(const Entity context_entity,
 
 void UpdateProperty::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   auto& context = model.get<Context>(mContextEntity);
   context.props[mName] = mOldValue.value();
@@ -50,7 +50,7 @@ void UpdateProperty::undo()
 
 void UpdateProperty::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& context = model.get<Context>(mContextEntity);
 
   mOldValue = lookup_in(context.props, mName);

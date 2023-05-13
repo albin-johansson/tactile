@@ -25,7 +25,9 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/model.hpp"
-#include "model/systems/component_system.hpp"
+#include "model/systems/component/component_set.hpp"
+#include "model/systems/context/components.hpp"
+#include "model/systems/context/context_system.hpp"
 
 namespace tactile::cmd {
 
@@ -39,15 +41,17 @@ void UndefComponent::undo()
 {
   auto& model = get_model();
 
+  auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
   const auto definition_entity =
-      sys::create_component(model, mComponentSetEntity, mComponentName);
+      sys::create_component(model, component_set, mComponentName);
 
   auto& definition = model.get<ComponentDefinition>(definition_entity);
   definition.attributes = std::move(mPrevDefinitionValues.value());
 
   for (auto& [context_entity, attributes]: mRemovedComponentValues) {
+    auto& context = model.get<Context>(context_entity);
     const auto component_entity =
-        sys::attach_component(model, context_entity, definition_entity);
+        sys::attach_component(model, context, definition_entity);
 
     auto& component = model.get<Component>(component_entity);
     component.attributes = std::move(attributes);
@@ -60,8 +64,8 @@ void UndefComponent::undo()
 void UndefComponent::redo()
 {
   auto& model = get_model();
+  auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
 
-  const auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
   const auto definition_entity =
       sys::find_component_definition(model, component_set, mComponentName);
 
@@ -69,7 +73,7 @@ void UndefComponent::redo()
   mPrevDefinitionValues = definition.attributes;
 
   mRemovedComponentValues = sys::copy_component_values(model, definition_entity);
-  sys::remove_component(model, mComponentSetEntity, mComponentName);
+  sys::remove_component(model, component_set, mComponentName);
 }
 
 auto UndefComponent::get_name() const -> String

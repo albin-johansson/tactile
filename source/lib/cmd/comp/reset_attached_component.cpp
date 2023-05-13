@@ -24,7 +24,7 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/model.hpp"
-#include "model/systems/component_system.hpp"
+#include "model/systems/component/component.hpp"
 
 namespace tactile::cmd {
 
@@ -46,7 +46,8 @@ void ResetAttachedComponent::undo()
 void ResetAttachedComponent::redo()
 {
   auto& model = get_model();
-  mPreviousValues = sys::reset_component_values(model, mComponentEntity);
+  auto& component = model.get<Component>(mComponentEntity);
+  mPreviousValues = sys::reset_component_values(model, component);
 }
 
 auto ResetAttachedComponent::get_name() const -> String

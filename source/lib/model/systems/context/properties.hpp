@@ -26,24 +26,7 @@
 
 namespace tactile::sys {
 
-/// Indicates whether an entity is a valid context entity.
-[[nodiscard]] auto is_context_entity(const Model& model, Entity entity) -> bool;
-
 /// Renames an existing property in a context.
-///
-/// \pre `new_name` must not refer to a name of another property of the context.
-///
-/// \param model the associated model.
-/// \param context_entity the target context entity.
-/// \param current_name the current name of the property.
-/// \param new_name the new name of the property.
-void rename_property(Model& model,
-                     Entity context_entity,
-                     StringView current_name,
-                     String new_name);
-
-/// Creates a copy of the context component attached to a context entity.
-[[nodiscard]] auto copy_context_component_from(Model& model, Entity context_entity)
-    -> Context;
+void rename_property(Context& context, StringView current_name, String new_name);
 
 }  // namespace tactile::sys

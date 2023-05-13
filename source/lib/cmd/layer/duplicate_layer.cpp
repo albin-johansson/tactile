@@ -28,6 +28,7 @@
 #include "model/systems/group_layer_system.hpp"
 #include "model/systems/layer_system.hpp"
 #include "model/systems/map_system.hpp"
+#include "model/systems/validation.hpp"
 
 namespace tactile::cmd {
 
@@ -35,19 +36,19 @@ DuplicateLayer::DuplicateLayer(const Entity map_entity, const Entity layer_entit
     : mMapEntity {map_entity},
       mSourceLayerEntity {layer_entity}
 {
-  TACTILE_ASSERT(sys::is_map_entity(get_model(), map_entity));
+  TACTILE_ASSERT(sys::is_map_entity(get_global_model(), map_entity));
 }
 
 void DuplicateLayer::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   sys::remove_layer_from_map(model, mMapEntity, mNewLayerEntity);
   model.set_enabled(mNewLayerEntity, false);
 }
 
 void DuplicateLayer::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   auto& map = model.get<Map>(mMapEntity);
   const auto& root_layer = model.get<GroupLayer>(map.root_layer);

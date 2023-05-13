@@ -24,7 +24,7 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/model.hpp"
-#include "model/systems/context_system.hpp"
+#include "model/systems/context/properties.hpp"
 
 namespace tactile::cmd {
 
@@ -39,14 +39,14 @@ RenameProperty::RenameProperty(const Entity context_entity,
 
 void RenameProperty::undo()
 {
-  auto& model = get_model();
-  sys::rename_property(model, mContextEntity, mNewName, mOldName);
+  auto& context = get_global_model().get<Context>(mContextEntity);
+  sys::rename_property(context, mNewName, mOldName);
 }
 
 void RenameProperty::redo()
 {
-  auto& model = get_model();
-  sys::rename_property(model, mContextEntity, mOldName, mNewName);
+  auto& context = get_global_model().get<Context>(mContextEntity);
+  sys::rename_property(context, mOldName, mNewName);
 }
 
 auto RenameProperty::get_name() const -> String
