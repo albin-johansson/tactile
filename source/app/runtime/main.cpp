@@ -27,12 +27,14 @@
 
 #include "common/debug/panic.hpp"
 #include "common/util/fmt.hpp"
-#include "init/app_initializer.hpp"
+#include "engine/engine.hpp"
 #include "runtime/app.hpp"
+
+using namespace tactile;
 
 namespace {
 
-void show_crash_message_box(const char* error_msg)
+void _show_crash_message_box(const char* error_msg)
 {
   cen::message_box::show(
       "Tactile crashed :(",
@@ -48,26 +50,25 @@ void show_crash_message_box(const char* error_msg)
 auto main(int, char*[]) -> int
 {
   try {
-    tactile::AppInitializer initializer;
-
-    tactile::App app {initializer.get_window()};
-    app.start();
+    Engine engine {BackendAPI::OpenGL};
+    engine.set_app_delegate(std::make_unique<App>(engine.get_window()));
+    engine.start();
 
     return EXIT_SUCCESS;
   }
-  catch (const tactile::TactileError& e) {
-    show_crash_message_box(e.what());
-    spdlog::critical("Unhandled exception message: '{}'\n{}", e.what(), e.get_trace());
+  catch (const TactileError& e) {
+    _show_crash_message_box(e.what());
+    spdlog::critical("Unhandled exception: '{}'\n{}", e.what(), e.get_trace());
     return EXIT_FAILURE;
   }
   catch (const std::exception& e) {
-    show_crash_message_box(e.what());
-    spdlog::critical("Unhandled exception message: '{}'", e.what());
+    _show_crash_message_box(e.what());
+    spdlog::critical("Unhandled exception: '{}'", e.what());
     return EXIT_FAILURE;
   }
   catch (...) {
-    show_crash_message_box("N/A");
-    spdlog::critical("Unhandled value exception!");
+    _show_crash_message_box("N/A");
+    spdlog::critical("Unhandled exception");
     return EXIT_FAILURE;
   }
 }
