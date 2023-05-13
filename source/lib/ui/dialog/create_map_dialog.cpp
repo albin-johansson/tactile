@@ -19,7 +19,6 @@
 
 #include "create_map_dialog.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
@@ -44,7 +43,7 @@ struct CreateMapDialogState final {
 
 inline constinit CreateMapDialogState gDialogState;
 
-void show_dialog_contents(const Strings& lang)
+void _show_dialog_contents(const Strings& lang)
 {
   {
     const auto& rows_label = lang.misc.rows;
@@ -83,7 +82,7 @@ void show_dialog_contents(const Strings& lang)
   }
 }
 
-void on_dialog_accept(entt::dispatcher& dispatcher)
+void _on_dialog_accept(Dispatcher& dispatcher)
 {
   TACTILE_ASSERT(gDialogState.tile_size.x > 0);
   TACTILE_ASSERT(gDialogState.tile_size.y > 0);
@@ -104,7 +103,7 @@ void open_create_map_dialog()
   gDialogState.open_dialog = true;
 }
 
-void update_create_map_dialog(entt::dispatcher& dispatcher)
+void show_create_map_dialog(const Model&, Entity, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
@@ -127,11 +126,11 @@ void update_create_map_dialog(entt::dispatcher& dispatcher)
 
   DialogAction action {DialogAction::None};
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
-    show_dialog_contents(lang);
+    _show_dialog_contents(lang);
   }
 
   if (action == DialogAction::Accept) {
-    on_dialog_accept(dispatcher);
+    _on_dialog_accept(dispatcher);
   }
 }
 
