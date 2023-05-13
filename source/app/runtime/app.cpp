@@ -21,34 +21,45 @@
 
 #include <utility>  // move
 
-#include <entt/signal/dispatcher.hpp>
+#include <core/texture.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/layer/object_layer.hpp"
-#include "core/tile/tileset_bundle.hpp"
-#include "handlers/event_handlers.hpp"
-#include "io/load_texture.hpp"
+#include "cmd/commands.hpp"
+#include "core/map.hpp"
+#include "io/directories.hpp"
 #include "io/proto/history.hpp"
 #include "io/proto/session.hpp"
 #include "io/proto/settings.hpp"
-#include "model/cmd/commands.hpp"
-#include "model/document/map_document.hpp"
-#include "model/document/tileset_document.hpp"
+#include "model/document.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/event/view_events.hpp"
 #include "model/file_history.hpp"
 #include "model/model.hpp"
 #include "model/settings.hpp"
+#include "model/systems/texture_system.hpp"
+#include "model/systems/widget_system.hpp"
 #include "runtime/app_context.hpp"
+#include "ui/dialog/about_dialog.hpp"
+#include "ui/dialog/create_map_dialog.hpp"
+#include "ui/dialog/credits_dialog.hpp"
+#include "ui/dialog/godot_export_dialog.hpp"
+#include "ui/dialog/map_parse_error_dialog.hpp"
+#include "ui/dialog/resize_map_dialog.hpp"
 #include "ui/dialog/settings_dialog.hpp"
+#include "ui/dock/animation/animation_dock.hpp"
+#include "ui/dock/comp/component_dock.hpp"
+#include "ui/dock/comp/component_editor.hpp"
+#include "ui/dock/dock_space.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
+#include "ui/dock/log/log_dock.hpp"
+#include "ui/dock/property/property_dock.hpp"
+#include "ui/dock/tileset/dialogs/create_tileset_dialog.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
-#include "ui/imgui_context.hpp"
 #include "ui/menu/menu.hpp"
+#include "ui/menu/menu_bar.hpp"
 #include "ui/shortcut/shortcuts.hpp"
-#include "ui/style/icons.hpp"
-#include "ui/ui.hpp"
+#include "ui/style/colors.hpp"
 #include "ui/viewport/viewport_widget.hpp"
 
 namespace tactile {
@@ -59,58 +70,89 @@ App::App(cen::window& window)
 
   subscribe_to_events();
   init_default_shortcuts();
-  ui::load_icons();
 
   window.maximize();
 }
 
-App::~App() noexcept
-{
-  ui::unload_icons();
-}
-
 void App::on_startup()
 {
+  auto& model = get_global_model();
+
+  // Configure settings and load the language files
+  auto& settings = get_global_settings();
+  settings.copy_values_from(load_settings_from_disk());
+  settings.print();
+
+  load_languages();
+  init_menus();
+
   if (auto history = load_file_history_from_disk()) {
     set_file_history(std::move(*history));
   }
 
-  if (get_settings().test_flag(SETTINGS_RESTORE_LAST_SESSION_BIT)) {
-    auto& model = get_model();
+  if (settings.test_flag(SETTINGS_RESTORE_LAST_SESSION_BIT)) {
     load_session_from_disk(model);
   }
 
-  get_window().show();
+  auto& style = ImGui::GetStyle();
+  style.WindowBorderSize = settings.test_flag(SETTINGS_WINDOW_BORDER_BIT) ? 1.0f : 0.0f;
+  apply_theme(style, settings.get_theme(), settings.get_theme_saturation());
+
+  auto& icons = model.get<Icons>();
+  icons.tactile_icon = sys::create_texture(model, find_resource("assets/icon.png"));
+
+  uint32 idx = 0;
+  sys::add_widget(model, idx++, ui::show_menu_bar);
+
+  // Dock widgets
+  sys::add_widget(model, idx++, ui::show_layer_dock, ui::is_layer_dock_enabled);
+  sys::add_widget(model, idx++, ui::show_tileset_dock, ui::is_tileset_dock_enabled);
+  sys::add_widget(model, idx++, ui::show_animation_dock, ui::is_animation_dock_enabled);
+  sys::add_widget(model, idx++, ui::show_property_dock);
+  sys::add_widget(model, idx++, ui::show_component_dock);
+  sys::add_widget(model, idx++, ui::show_log_dock);
+  sys::add_widget(model, idx++, ui::show_viewport_dock);
+
+  // Dialogs
+  sys::add_widget(model, idx++, ui::show_component_editor_dialog);
+  sys::add_widget(model, idx++, ui::show_create_map_dialog);
+  sys::add_widget(model, idx++, ui::show_create_tileset_dialog);
+  sys::add_widget(model, idx++, ui::show_resize_map_dialog);
+  sys::add_widget(model, idx++, ui::show_godot_export_dialog);
+  sys::add_widget(model, idx++, ui::show_settings_dialog);
+  sys::add_widget(model, idx++, ui::show_map_parse_error_dialog);
+  sys::add_widget(model, idx++, ui::show_credits_dialog);
+  sys::add_widget(model, idx, ui::show_about_dialog);
+
+  sys::sort_widgets(model);
 }
 
 void App::on_shutdown()
 {
   add_open_documents_to_file_history();
-
-  save_settings_to_disk(get_settings());
-  save_session_to_disk(get_model());
+  save_settings_to_disk(get_global_settings());
+  save_session_to_disk(get_global_model());
   save_file_history_to_disk(get_file_history());
-
-  get_window().hide();
 }
 
 void App::on_pre_update()
 {
   if (is_font_reload_scheduled()) {
-    ImGuiContext::reload_fonts();
     handled_font_reload();
   }
 }
 
 void App::on_update()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& dispatcher = get_dispatcher();
 
   dispatcher.update();
-  model.update();
-  update_menus(model);
-  ui::update_widgets(model, dispatcher);
+
+  ui::update_dynamic_color_cache();
+  ui::update_dock_space();
+
+  sys::render_widgets(model, dispatcher);
 }
 
 void App::on_event(const cen::event_handler& handler)
@@ -138,18 +180,18 @@ void App::on_event(const cen::event_handler& handler)
 
 void App::subscribe_to_events()
 {
-  install_menu_event_handler();
-  install_command_event_handler();
-  install_document_event_handler();
-  install_map_event_handler();
-  install_tileset_event_handler();
-  install_layer_event_handler();
-  install_object_event_handler();
-  install_tool_event_handler();
-  install_viewport_event_handler();
-  install_property_event_handler();
-  install_component_event_handler();
-  install_view_event_handler();
+  //  install_menu_event_handler();
+  //  install_command_event_handler();
+  //  install_document_event_handler();
+  //  install_map_event_handler();
+  //  install_tileset_event_handler();
+  //  install_layer_event_handler();
+  //  install_object_event_handler();
+  //  install_tool_event_handler();
+  //  install_viewport_event_handler();
+  //  install_property_event_handler();
+  //  install_component_event_handler();
+  //  install_view_event_handler();
 
   get_dispatcher().sink<ShowSettingsEvent>().connect<&ui::open_settings_dialog>();
   get_dispatcher().sink<QuitEvent>().connect<&App::on_quit>(this);
@@ -157,12 +199,11 @@ void App::subscribe_to_events()
 
 void App::add_open_documents_to_file_history()
 {
-  get_model().each([](const UUID& document_id) {
-    const auto& document = get_model().get_document(document_id);
-    if (document.is_map() && document.has_path()) {
-      add_to_file_history(document.get_path());
+  for (auto [document_entity, document]: get_global_model().each<Document>()) {
+    if (document.type == DocumentType::Map && document.path.has_value()) {
+      add_to_file_history(*document.path);
     }
-  });
+  }
 }
 
 void App::on_keyboard_event(cen::keyboard_event event)
@@ -181,22 +222,30 @@ void App::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
   // ImGui APIs. Otherwise, it would be nicer to keep this code closer to the actual
   // widgets.
 
-  const auto* document = get_model().active_document();
-  if (document && !ImGui::GetTopMostPopupModal()) {
+  const auto& model = get_global_model();
+
+  const auto& document_context = model.get<CDocumentContext>();
+  const auto document_entity = document_context.active_document;
+
+  if (document_entity != kNullEntity && !ImGui::GetTopMostPopupModal()) {
+    const auto& document = model.get<Document>(document_entity);
+    const auto& document_viewport = model.get<Viewport>(document_entity);
+
     if (ui::is_mouse_within_viewport()) {
-      ui::viewport_widget_mouse_wheel_event_handler(document->get_viewport(),
+      ui::viewport_widget_mouse_wheel_event_handler(document_viewport,
                                                     get_dispatcher(),
                                                     event);
     }
-    else if (document->is_map() && ui::is_tileset_dock_hovered()) {
-      const auto& map_document = get_model().require_active_map_document();
+    else if (document.type == DocumentType::Map && ui::is_tileset_dock_hovered()) {
+      const auto& map_document = model.get<MapDocument>(document_entity);
+      const auto& map = model.get<Map>(map_document.map);
 
-      const auto& map = map_document.get_map();
-      const auto& tilesets = map.get_tileset_bundle();
+      if (map_document.active_tileset != kNullEntity) {
+        const auto& attached_tileset =
+            model.get<AttachedTileset>(map_document.active_tileset);
 
-      if (const auto tileset_id = tilesets.get_active_tileset_id()) {
-        const auto& tileset_ref = tilesets.get_tileset_ref(*tileset_id);
-        ui::tileset_dock_mouse_wheel_event_handler(tileset_ref, event, get_dispatcher());
+        // TODO ui::tileset_dock_mouse_wheel_event_handler(tileset_ref, event,
+        // get_dispatcher());
       }
     }
   }
@@ -204,7 +253,7 @@ void App::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 
 void App::on_quit()
 {
-  stop();
+  mShouldStop = true;
 }
 
 }  // namespace tactile

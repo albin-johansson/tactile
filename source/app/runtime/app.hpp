@@ -22,20 +22,15 @@
 #include <centurion/event.hpp>
 #include <centurion/window.hpp>
 
-#include "runtime/loop.hpp"
+#include "engine/app_delegate.hpp"
 
 namespace tactile {
 
 /// The heart of the Tactile map editor.
-class App final : EventLoop {
+class App final : public AppDelegate {
  public:
   explicit App(cen::window& window);
 
-  ~App() noexcept override;
-
-  using EventLoop::start;
-
- protected:
   void on_startup() override;
 
   void on_shutdown() override;
@@ -46,7 +41,11 @@ class App final : EventLoop {
 
   void on_event(const cen::event_handler& handler) override;
 
+  [[nodiscard]] auto should_stop() const -> bool override { return mShouldStop; }
+
  private:
+  bool mShouldStop {false};
+
   void subscribe_to_events();
 
   void add_open_documents_to_file_history();
