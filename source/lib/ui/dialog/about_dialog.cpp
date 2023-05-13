@@ -41,7 +41,7 @@ void open_about_dialog()
   gOpenDialog = true;
 }
 
-void update_about_dialog()
+void show_about_dialog(const Model&, Entity, Dispatcher&)
 {
   const auto& lang = get_current_language();
 

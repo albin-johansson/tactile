@@ -19,9 +19,14 @@
 
 #pragma once
 
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
+
 namespace tactile::ui {
 
 void open_about_dialog();
-void update_about_dialog();
+
+void show_about_dialog(const Model& model, Entity widget_entity, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui
