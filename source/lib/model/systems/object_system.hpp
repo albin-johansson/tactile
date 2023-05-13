@@ -26,8 +26,6 @@
 
 namespace tactile::sys {
 
-[[nodiscard]] auto is_object_entity(const Model& model, Entity entity) -> bool;
-
 [[nodiscard]] auto create_object(Model& model, ObjectType type) -> Entity;
 
 [[nodiscard]] auto duplicate_object(Model& model, Entity object_entity) -> Entity;

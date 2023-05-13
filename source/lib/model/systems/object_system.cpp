@@ -21,16 +21,10 @@
 
 #include "common/debug/assert.hpp"
 #include "core/context.hpp"
-#include "model/systems/context_system.hpp"
+#include "model/systems/context/context_system.hpp"
+#include "model/systems/validation.hpp"
 
 namespace tactile::sys {
-
-auto is_object_entity(const Model& model, const Entity entity) -> bool
-{
-  return entity != kNullEntity &&       //
-         model.has<Object>(entity) &&  //
-         model.has<Context>(entity);
-}
 
 auto create_object(Model& model, const ObjectType type) -> Entity
 {
@@ -49,6 +43,7 @@ auto create_object(Model& model, const ObjectType type) -> Entity
 auto duplicate_object(Model& model, const Entity object_entity) -> Entity
 {
   TACTILE_ASSERT(is_object_entity(model, object_entity));
+  const auto& src_context = model.get<Context>(object_entity);
   const auto& src_object = model.get<Object>(object_entity);
 
   const auto new_object_entity = model.create_entity();
@@ -58,7 +53,7 @@ auto duplicate_object(Model& model, const Entity object_entity) -> Entity
   new_object.meta_id.reset();
 
   auto& new_context = model.add<Context>(new_object_entity);
-  new_context = copy_context_component_from(model, object_entity);
+  new_context = copy_context(model, src_context);
 
   TACTILE_ASSERT(is_object_entity(model, new_object_entity));
   return new_object_entity;
