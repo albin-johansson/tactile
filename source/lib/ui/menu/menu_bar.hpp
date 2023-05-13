@@ -19,13 +19,14 @@
 
 #pragma once
 
-#include <entt/signal/fwd.hpp>
-
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 
-/// Updates the state of the main menu bar.
-void update_menu_bar(const Model& model, entt::dispatcher& dispatcher);
+void show_menu_bar(const Model& model,
+                   const Entity widget_entity,
+                   Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

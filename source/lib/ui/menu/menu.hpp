@@ -23,11 +23,11 @@
 
 #include "common/macros.hpp"
 #include "common/type/string.hpp"
+#include "model/model.hpp"
 
 namespace tactile {
 
 TACTILE_FWD_DECLARE_STRUCT(Strings)
-TACTILE_FWD_DECLARE_CLASS(DocumentModel)
 
 /// Encodes all possible menu actions, corresponding to various menu items.
 enum class MenuAction {
@@ -107,7 +107,7 @@ struct MenuItem final {
 void init_menus();
 
 /// Refreshes the state of all menu item entries.
-void update_menus(const DocumentModel& model);
+void update_menus(const Model& model);
 
 /// Translates all menu labels to another language.
 void menu_translate(const Strings& strings);

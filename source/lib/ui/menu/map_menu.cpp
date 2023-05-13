@@ -23,18 +23,18 @@
 
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/systems/document_system.hpp"
 #include "ui/shortcut/mappings.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
 
-void update_map_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_map_menu(const Model& model, entt::dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const Disable disable_if {!sys::is_map_document_active(model)};
 
-  const Disable disable {!model.is_map_active()};
+  const auto& lang = get_current_language();
   if (const Menu menu {lang.menu.map.c_str()}; menu.is_open()) {
     ui_menu_item(dispatcher, MenuAction::InspectMap);
 

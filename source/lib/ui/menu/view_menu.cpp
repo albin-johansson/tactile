@@ -25,8 +25,8 @@
 #include "core/viewport.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
 #include "model/settings.hpp"
+#include "model/systems/document_system.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/menu/menu.hpp"
 #include "ui/shortcut/mappings.hpp"
@@ -36,11 +36,11 @@
 namespace tactile::ui {
 namespace {
 
-void update_widgets_menu(const DocumentModel& model)
+void update_widgets_menu(const Model& model)
 {
   const auto& lang = get_current_language();
 
-  if (const Menu menu {lang.menu.widgets.c_str(), model.has_active_document()};
+  if (const Menu menu {lang.menu.widgets.c_str(), sys::has_active_document(model)};
       menu.is_open()) {
     if (ImGui::MenuItem(lang.action.reset_layout.c_str())) {
       reset_layout();
@@ -57,7 +57,7 @@ void update_widgets_menu(const DocumentModel& model)
     }
 
     {
-      const Disable disable_unless_map {!model.is_map_active()};
+      const Disable disable_if {!sys::is_map_document_active(model)};
       if (ImGui::MenuItem(lang.window.layer_dock.c_str(),
                           nullptr,
                           settings.test_flag(SETTINGS_SHOW_LAYER_DOCK_BIT))) {
@@ -84,7 +84,7 @@ void update_widgets_menu(const DocumentModel& model)
     }
 
     {
-      const Disable disable_unless_tileset {!model.is_tileset_active()};
+      const Disable disable_if {!sys::is_tileset_document_active(model)};
       if (ImGui::MenuItem(lang.window.animation_dock.c_str(),
                           nullptr,
                           settings.test_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT))) {
@@ -145,7 +145,7 @@ void update_quick_lang_menu(const Strings& lang)
 
 }  // namespace
 
-void update_view_menu(const DocumentModel& model, entt::dispatcher& dispatcher)
+void update_view_menu(const Model& model, entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 

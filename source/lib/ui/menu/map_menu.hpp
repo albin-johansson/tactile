@@ -21,12 +21,10 @@
 
 #include <entt/signal/fwd.hpp>
 
-#include "common/macros.hpp"
-
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
-void update_map_menu(const DocumentModel& model, entt::dispatcher& dispatcher);
+void update_map_menu(const Model& model, entt::dispatcher& dispatcher);
 
 }  // namespace tactile::ui
