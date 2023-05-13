@@ -35,6 +35,8 @@ struct Viewport final {
   Maybe<ViewportLimits> limits;
 
   [[nodiscard]] auto scaling_ratio(const Float2& logical_tile_size) const -> Float2;
+
+  [[nodiscard]] auto can_zoom_out() const -> bool;
 };
 
 }  // namespace tactile

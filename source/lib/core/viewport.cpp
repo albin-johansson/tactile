@@ -20,10 +20,20 @@
 #include "viewport.hpp"
 
 namespace tactile {
+namespace {
+
+inline constexpr float kViewportMinTileHeight = 4;
+
+}  // namespace
 
 auto Viewport::scaling_ratio(const Float2& logical_tile_size) const -> Float2
 {
   return tile_size / logical_tile_size;
+}
+
+auto Viewport::can_zoom_out() const -> bool
+{
+  return tile_size.y > kViewportMinTileHeight;
 }
 
 }  // namespace tactile
