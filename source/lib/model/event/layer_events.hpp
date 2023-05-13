@@ -19,9 +19,9 @@
 
 #pragma once
 
+#include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
-#include "common/type/uuid.hpp"
-#include "core/layer/layer_type.hpp"
+#include "core/layer.hpp"
 
 namespace tactile {
 
@@ -32,49 +32,49 @@ struct AddLayerEvent final {
 
 /// Event for removing a layer.
 struct RemoveLayerEvent final {
-  UUID layer_id {};
+  Entity layer {kNullEntity};
 };
 
 /// Event for duplicating an existing layer.
 struct DuplicateLayerEvent final {
-  UUID layer_id {};
+  Entity layer {kNullEntity};
 };
 
 /// Event for setting the active layer.
 struct SelectLayerEvent final {
-  UUID layer_id {};
+  Entity layer {kNullEntity};
 };
 
 /// Event for moving a layer up in the render order.
 struct MoveLayerUpEvent final {
-  UUID layer_id {};
+  Entity layer {kNullEntity};
 };
 
 /// Event for moving a layer down in the render order.
 struct MoveLayerDownEvent final {
-  UUID layer_id {};
+  Entity layer {kNullEntity};
 };
 
 /// Event for changing the opacity of a layer.
 struct SetLayerOpacityEvent final {
-  UUID layer_id {};
+  Entity layer {kNullEntity};
   float opacity {};
 };
 
 /// Event for changing the visibility of a layer.
 struct SetLayerVisibleEvent final {
-  UUID layer_id {};
+  Entity layer {kNullEntity};
   bool visible {};
 };
 
 /// Event for opening the dialog to change a layer name.
 struct OpenRenameLayerDialogEvent final {
-  UUID layer_id {};
+  Entity layer {kNullEntity};
 };
 
 /// Event for changing the name of a layer.
 struct RenameLayerEvent final {
-  UUID layer_id {};
+  Entity layer {kNullEntity};
   String name;
 };
 

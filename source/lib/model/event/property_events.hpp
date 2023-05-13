@@ -19,10 +19,8 @@
 
 #pragma once
 
-#include <entt/entity/entity.hpp>
-
+#include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
-#include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 
 namespace tactile {
@@ -39,36 +37,36 @@ struct ShowRenamePropertyDialogEvent final {
 };
 
 struct AddPropertyEvent final {
-  UUID context_id {};     /// Target context.
-  String name;            /// The property name.
-  AttributeType type {};  /// The property type.
+  Entity context {kNullEntity};  ///< Target context.
+  String name;                   ///< The property name.
+  AttributeType type {};         ///< The property type.
 };
 
 struct RemovePropertyEvent final {
-  UUID context_id {};  /// Target context.
-  String name;         ///< Name of the property in the current context.
+  Entity context {kNullEntity};  ///< Target context.
+  String name;                   ///< Name of the property in the current context.
 };
 
 struct RenamePropertyEvent final {
-  UUID context_id {};  /// Target context.
-  String old_name;     ///< Current property name.
-  String new_name;     ///< Requested new property name.
+  Entity context {kNullEntity};  ///< Target context.
+  String old_name;               ///< Current property name.
+  String new_name;               ///< Requested new property name.
 };
 
 struct UpdatePropertyEvent final {
-  UUID context_id {};  /// Target context.
-  String name;         ///< Name of property to modify.
-  Attribute value;     ///< Updated value of the property.
+  Entity context {kNullEntity};  ///< Target context.
+  String name;                   ///< Name of property to modify.
+  Attribute value;               ///< Updated value of the property.
 };
 
 struct ChangePropertyTypeEvent final {
-  UUID context_id {};     /// Target context.
-  String name;            ///< Name of property to modify.
-  AttributeType type {};  ///< Requested new property type.
+  Entity context {kNullEntity};  ///< Target context.
+  String name;                   ///< Name of property to modify.
+  AttributeType type {};         ///< Requested new property type.
 };
 
 struct InspectContextEvent final {
-  UUID context_id {};  /// Target context.
+  Entity context {kNullEntity};  ///< Target context.
 };
 
 }  // namespace tactile

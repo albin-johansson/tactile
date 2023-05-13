@@ -19,22 +19,22 @@
 
 #pragma once
 
+#include "common/type/ecs.hpp"
 #include "common/type/path.hpp"
-#include "common/type/uuid.hpp"
 
 namespace tactile {
 
 /// Event emitted when a loaded document should be opened in its own tab.
 struct OpenDocumentEvent final {
-  UUID document_id {};
+  Entity document {kNullEntity};
 };
 
 struct CloseDocumentEvent final {
-  UUID document_id {};
+  Entity document {kNullEntity};
 };
 
 struct SelectDocumentEvent final {
-  UUID document_id {};
+  Entity document {kNullEntity};
 };
 
 struct SaveEvent final {};

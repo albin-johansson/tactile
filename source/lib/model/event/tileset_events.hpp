@@ -21,13 +21,15 @@
 
 #include "common/numeric.hpp"
 #include "common/type/chrono.hpp"
+#include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "common/type/string.hpp"
-#include "common/type/uuid.hpp"
 #include "core/region.hpp"
 
 namespace tactile {
+
+// TODO clarify what kind of tileset entities are used in the events
 
 struct ShowTilesetCreationDialogEvent final {};
 
@@ -39,11 +41,11 @@ struct LoadTilesetEvent final {
 };
 
 struct RemoveTilesetEvent final {
-  UUID tileset_id {};
+  Entity tileset {kNullEntity};
 };
 
 struct SelectTilesetEvent final {
-  UUID tileset_id {};
+  Entity tileset {kNullEntity};
 };
 
 struct SetTilesetSelectionEvent final {
@@ -52,8 +54,8 @@ struct SetTilesetSelectionEvent final {
 
 /// Event for changing the name a tileset.
 struct RenameTilesetEvent final {
-  UUID tileset_id {};  /// Target tileset.
-  String name;         /// New tileset name.
+  Entity tileset {kNullEntity};  ///< Target tileset.
+  String name;                   ///< New tileset name.
 };
 
 /// Event for selecting a tile in an open tileset document.

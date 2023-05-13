@@ -20,10 +20,10 @@
 #pragma once
 
 #include "common/numeric.hpp"
+#include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "common/type/tile_cache.hpp"
-#include "common/type/uuid.hpp"
-#include "core/tile/tile_pos.hpp"
+#include "core/tile_pos.hpp"
 #include "model/mouse_info.hpp"
 #include "model/tool/tool_type.hpp"
 
@@ -34,43 +34,43 @@ struct SelectToolEvent final {
 };
 
 struct StampSequenceEvent final {
-  UUID layer_id {};
+  Entity layer {kNullEntity};
   TileCache old_state;
   TileCache sequence;
 };
 
 struct SetStampRandomizerEvent final {
-  bool enabled {};  /// Whether the randomizer mode is enabled.
+  bool enabled {};  ///< Whether the randomizer mode is enabled.
 };
 
 struct EraserSequenceEvent final {
-  UUID layer_id {};
+  Entity layer {kNullEntity};
   TileCache old_state;
 };
 
 struct FloodEvent final {
-  UUID layer_id {};
+  Entity layer {kNullEntity};
   TilePos origin;
   TileID replacement {};
 };
 
 /// Emitted when a rectangle should be added to an object layer.
 struct AddRectangleEvent final {
-  UUID layer_id {};
+  Entity layer {kNullEntity};
   Float2 pos {};
   Float2 size {};
 };
 
 /// Emitted when an ellipse should be added to an object layer.
 struct AddEllipseEvent final {
-  UUID layer_id {};
+  Entity layer {kNullEntity};
   Float2 pos {};
   Float2 size {};
 };
 
 /// Emitted when a point should be added to an object layer.
 struct AddPointEvent final {
-  UUID layer_id {};
+  Entity layer {kNullEntity};
   Float2 pos {};
 };
 

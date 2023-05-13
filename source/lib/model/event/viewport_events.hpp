@@ -19,10 +19,8 @@
 
 #pragma once
 
-#include <entt/entity/entity.hpp>
-
+#include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "common/type/uuid.hpp"
 #include "model/mouse_info.hpp"
 
 namespace tactile {
@@ -52,19 +50,19 @@ struct DecreaseZoomEvent final {};
 struct IncreaseZoomEvent final {};
 
 struct OffsetDocumentViewportEvent final {
-  Float2 delta {};  /// The offset to apply.
+  Float2 delta {};  ///< The offset to apply.
 };
 
 struct OffsetTilesetViewportEvent final {
-  UUID tileset_id {};  /// The target tileset.
-  Float2 delta {};     /// The offset to apply.
+  Entity tileset {kNullEntity};  ///< The target tileset.
+  Float2 delta {};               ///< The offset to apply.
 };
 
 /// Event used to update the limits of tilesets in the tileset dock widget.
 struct UpdateTilesetViewportLimitsEvent final {
-  UUID tileset_id {};    /// The target tileset.
-  Float2 min_offset {};  /// The minimum offset.
-  Float2 max_offset {};  /// The maximum offset.
+  Entity tileset {kNullEntity};  ///< The target tileset.
+  Float2 min_offset {};          ///< The minimum offset.
+  Float2 max_offset {};          ///< The maximum offset.
 };
 
 struct PanUpEvent final {};
