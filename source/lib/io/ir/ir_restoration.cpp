@@ -40,7 +40,8 @@
 #include "io/texture_loader.hpp"
 #include "model/document.hpp"
 #include "model/model.hpp"
-#include "model/systems/component_system.hpp"
+#include "model/systems/component/component_def.hpp"
+#include "model/systems/component/component_set.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/layer_system.hpp"
 
@@ -67,7 +68,7 @@ void restore_context(Model& model,
       TACTILE_ASSERT(component_definition_entity != kNullEntity);
 
       const auto component_entity =
-          sys::create_component(model, component_definition_entity);
+          sys::instantiate_component(model, component_definition_entity);
       context.comps.push_back(component_entity);
 
       auto& component = model.get<Component>(component_entity);
@@ -161,7 +162,7 @@ auto restore_layer(Model& model,
   }
 
   if (parent_layer_entity != kNullEntity) {
-    auto& parent_layer = model.get<CGroupLayer>(parent_layer_entity);
+    auto& parent_layer = model.get<GroupLayer>(parent_layer_entity);
     parent_layer.children.push_back(layer_entity);
   }
 
@@ -187,11 +188,9 @@ void restore_layers(Model& model,
   }
 }
 
-void restore_tile_animation(Model& model, Tile& tile, const TileIR& ir_tile)
+void restore_tile_animation(Model& model, const Entity tile_entity, const TileIR& ir_tile)
 {
-  tile.animation = model.create_entity();
-
-  auto& animation = model.add<TileAnimation>(tile.animation);
+  auto& animation = model.add<TileAnimation>(tile_entity);
   animation.frames.reserve(ir_tile.frames.size());
 
   for (const auto& ir_frame: ir_tile.frames) {
@@ -224,15 +223,13 @@ void restore_fancy_tiles(Model& model,
     const auto [row, col] = to_matrix_coords(index, ir_tileset.column_count);
     const auto tile_entity = model.create_entity();
 
-    auto& tile_context = model.add<Context>(tile_entity);
-
     auto& tile = model.add<Tile>(tile_entity);
     tile.index = index;
     tile.source = {Int2 {col * ir_tileset.tile_size.x, row * ir_tileset.tile_size.y},
                    ir_tileset.tile_size};
 
     if (!ir_tile.frames.empty()) {
-      restore_tile_animation(model, tile, ir_tile);
+      restore_tile_animation(model, tile_entity, ir_tile);
     }
 
     if (!ir_tile.objects.empty()) {
@@ -247,43 +244,26 @@ auto restore_tileset_document(Model& model,
                               const Entity component_set_entity,
                               const TilesetIR& ir_tileset) -> Entity
 {
-  //  TACTILE_ASSERT(model.get_active_document_id().has_value());
-
   // TODO compare tileset document absolute paths to recognize the same tileset being
   // loaded multiple times
 
-  const TilesetInfo info {
-      .texture = load_texture(ir_tileset.image_path),
-      .tile_size = ir_tileset.tile_size,
-  };
+  const auto document_entity =
+      sys::create_tileset_document(model, ir_tileset.tile_size, ir_tileset.image_path);
 
-  const auto document_entity = model.create_entity();
-
-  auto& document = model.add<Document>(document_entity);
-  document.type = DocumentType::Tileset;
+  auto& document = model.get<Document>(document_entity);
   document.component_set = component_set_entity;
 
-  auto& tileset_document = model.add<TilesetDocument>(document_entity);
-  tileset_document.tileset = model.create_entity();
+  const auto& tileset_document = model.get<TilesetDocument>(document_entity);
 
-  {
-    auto& tileset_context = model.add<Context>(tileset_document.tileset);
-    tileset_context.name = ir_tileset.name;
-
-    auto& tileset = model.add<Tileset>(tileset_document.tileset);
-    tileset.tile_size = ir_tileset.tile_size;
-    tileset.uv_size = Float2 {tileset.tile_size} / Float2 {ir_tileset.image_size};
-    tileset.row_count = ir_tileset.image_size.y / tileset.tile_size.y;
-    tileset.column_count = ir_tileset.column_count;
-    tileset.texture = kNullEntity;  // FIXME;
-  }
-
-  restore_fancy_tiles(model, component_set_entity, document_entity, ir_tileset);
+  restore_fancy_tiles(model, component_set_entity, tileset_document.tileset, ir_tileset);
 
   restore_context(model,
                   component_set_entity,
                   tileset_document.tileset,
                   ir_tileset.context);
+
+  auto& tileset_context = model.get<Context>(tileset_document.tileset);
+  tileset_context.name = ir_tileset.name;
 
   return document_entity;
 }
@@ -341,13 +321,15 @@ void restore_component_definitions(Model& model,
     component_set.definitions.push_back(component_def_entity);
 
     auto& component_def = model.add<ComponentDefinition>(component_def_entity);
+    component_def.name = name;
+
     for (const auto& [attr_name, attr_value]: attributes) {
       component_def.attributes[attr_name] = attr_value;
     }
   }
 }
 
-void restore_tile_format(CTileFormat& format, const TileFormatIR& ir_format)
+void restore_tile_format(TileFormat& format, const TileFormatIR& ir_format)
 {
   format.encoding = ir_format.encoding;
   format.compression = ir_format.compression;
@@ -372,6 +354,7 @@ void create_map_document_from_ir(const MapIR& ir_map,
   const auto document_entity =
       sys::create_map_document(model, ir_map.extent, ir_map.tile_size);
 
+  sys::open_document(model, document_entity);
   sys::select_document(model, document_entity);
 
   auto& document = model.get<Document>(document_entity);
@@ -391,7 +374,7 @@ void create_map_document_from_ir(const MapIR& ir_map,
   map.next_layer_id = ir_map.next_layer_id;
   map.next_object_id = ir_map.next_object_id;
 
-  auto& tile_format = model.get<CTileFormat>(map_document.map);
+  auto& tile_format = model.get<TileFormat>(map_document.map);
 
   restore_tile_format(tile_format, ir_map.tile_format);
   restore_component_definitions(model, component_set, ir_map);

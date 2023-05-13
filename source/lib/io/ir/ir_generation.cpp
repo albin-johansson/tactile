@@ -100,7 +100,7 @@ void convert_group_layer(const Model& model,
                          const Entity layer_entity,
                          GroupLayerIR& ir_group)
 {
-  const auto& group_layer = model.get<CGroupLayer>(layer_entity);
+  const auto& group_layer = model.get<GroupLayer>(layer_entity);
   ir_group.children.reserve(group_layer.children.size());
 
   usize index {0};
@@ -160,7 +160,7 @@ void convert_layers(const Model& model,
                     const Map& map,
                     MapIR& ir_map)
 {
-  const auto& root_layer = model.get<CGroupLayer>(map.root_layer);
+  const auto& root_layer = model.get<GroupLayer>(map.root_layer);
   usize index = 0;
 
   // Here we only iterate top-level layers, and convert them recursively
@@ -257,7 +257,7 @@ void convert_component_definitions(const Model& model,
   }
 }
 
-void convert_tile_format(const CTileFormat& format, TileFormatIR& ir_format)
+void convert_tile_format(const TileFormat& format, TileFormatIR& ir_format)
 {
   ir_format.compression = format.compression;
   ir_format.encoding = format.encoding;
@@ -275,7 +275,7 @@ auto convert_map_document_to_ir(const Model& model, const Entity map_document_en
   const auto& document = model.get<Document>(map_document_entity);
   const auto& map_document = model.get<MapDocument>(map_document_entity);
   const auto& map = model.get<Map>(map_document.map);
-  const auto& tile_format = model.get<CTileFormat>(map_document.map);
+  const auto& tile_format = model.get<TileFormat>(map_document.map);
 
   MapIR ir_map;
   ir_map.extent = map.extent;
