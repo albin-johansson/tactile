@@ -46,7 +46,7 @@ void open_map_parse_error_dialog(const ParseError error)
   gDialogState.open_dialog = true;
 }
 
-void update_map_parse_error_dialog()
+void show_map_parse_error_dialog(const Model&, Entity, Dispatcher&)
 {
   const auto& lang = get_current_language();
 
