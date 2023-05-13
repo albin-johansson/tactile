@@ -19,11 +19,16 @@
 
 #pragma once
 
-#include <entt/signal/fwd.hpp>
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
 void open_godot_export_dialog();
-void update_godot_export_dialog(entt::dispatcher& dispatcher);
+
+void show_godot_export_dialog(const Model& model,
+                              Entity widget_entity,
+                              Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

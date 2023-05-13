@@ -21,7 +21,6 @@
 
 #include <utility>  // move
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "common/type/path.hpp"
@@ -52,7 +51,7 @@ struct GodotExportDialogState final {
 
 inline GodotExportDialogState gDialogState;
 
-void show_dialog_contents(const Strings& lang)
+void _show_dialog_contents(const Strings& lang)
 {
   const auto& root_label = lang.misc.godot_project_folder_label;
   const auto& map_label = lang.misc.godot_map_folder_label;
@@ -124,7 +123,7 @@ void show_dialog_contents(const Strings& lang)
                    kPolygonApproxCountMax);
 }
 
-void on_dialog_accept(entt::dispatcher& dispatcher)
+void _on_dialog_accept(Dispatcher& dispatcher)
 {
   ExportAsGodotSceneEvent event {
       .root_dir = std::move(gDialogState.root_dir),
@@ -133,6 +132,7 @@ void on_dialog_accept(entt::dispatcher& dispatcher)
       .tileset_dir = std::move(gDialogState.tileset_dir),
       .polygon_points = static_cast<usize>(gDialogState.polygon_point_count),
   };
+
   dispatcher.enqueue<ExportAsGodotSceneEvent>(std::move(event));
 }
 
@@ -148,7 +148,7 @@ void open_godot_export_dialog()
   gDialogState.open_dialog = true;
 }
 
-void update_godot_export_dialog(entt::dispatcher& dispatcher)
+void show_godot_export_dialog(const Model&, Entity, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
@@ -170,11 +170,11 @@ void update_godot_export_dialog(entt::dispatcher& dispatcher)
 
   DialogAction action {DialogAction::None};
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
-    show_dialog_contents(lang);
+    _show_dialog_contents(lang);
   }
 
   if (action == DialogAction::Accept) {
-    on_dialog_accept(dispatcher);
+    _on_dialog_accept(dispatcher);
   }
 }
 
