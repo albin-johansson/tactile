@@ -19,20 +19,16 @@
 
 #pragma once
 
-#include <entt/signal/fwd.hpp>
-
-#include "common/macros.hpp"
-#include "common/type/string.hpp"
-#include "common/type/uuid.hpp"
-
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, Component)
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
-/// Shows a view of a single component, attached to a context.
-void component_view(const UUID& context_id,
-                    const Component& component,
-                    const String& name,
-                    entt::dispatcher& dispatcher);
+/// Shows a view of a single component attached to a context.
+void component_view(const Model& model,
+                    Entity context_entity,
+                    Entity component_entity,
+                    Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

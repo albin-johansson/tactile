@@ -19,17 +19,16 @@
 
 #pragma once
 
-#include <entt/signal/fwd.hpp>
-
-#include "common/macros.hpp"
-
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
-void open_component_editor_dialog(const DocumentModel& model);
+void open_component_editor_dialog(const Model& model);
 
-void update_component_editor_dialog(const DocumentModel& model,
-                                    entt::dispatcher& dispatcher);
+void show_component_editor_dialog(const Model& model,
+                                  Entity widget_entity,
+                                  Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

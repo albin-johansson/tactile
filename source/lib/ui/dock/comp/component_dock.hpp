@@ -19,14 +19,14 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
-namespace tactile {
-class DocumentModel;
-}  // namespace tactile
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
-void update_component_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
+void show_component_dock(const Model& model,
+                         Entity widget_entity,
+                         Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

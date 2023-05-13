@@ -21,22 +21,24 @@
 
 #include <utility>  // move
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "common/util/string_buffer.hpp"
-#include "core/component/component_index.hpp"
+#include "core/component.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/document.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
+#include "model/systems/component/component_set.hpp"
+#include "model/systems/document_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
 namespace {
 
 struct RenameComponentDialogState final {
-  Maybe<UUID> component_id;
+  Maybe<Entity> definition_entity;
   String old_component_name;
   StringBuffer component_name_buffer;
   bool open_dialog {};
@@ -46,26 +48,25 @@ inline RenameComponentDialogState gDialogState;
 
 }  // namespace
 
-void open_rename_component_dialog(const UUID& component_id, String current_name)
+void open_rename_component_dialog(const Entity definition_entity, String current_name)
 {
-  gDialogState.component_id = component_id;
+  gDialogState.definition_entity = definition_entity;
   gDialogState.component_name_buffer = current_name;
   gDialogState.old_component_name = std::move(current_name);
   gDialogState.open_dialog = true;
 }
 
-void update_rename_component_dialog(const DocumentModel& model,
-                                    entt::dispatcher& dispatcher)
+void update_rename_component_dialog(const Model& model, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
-  const auto& document = model.require_active_document();
-  const auto* component_index = document.find_component_index();
+  const auto document_entity = sys::get_active_document(model);
+  const auto& document = model.get<Document>(document_entity);
+  const auto& component_set = model.get<ComponentSet>(document.component_set);
 
-  if (gDialogState.component_id.has_value() &&  //
-      component_index != nullptr &&
-      !component_index->has_comp(*gDialogState.component_id)) {
-    gDialogState.component_id.reset();
+  if (gDialogState.definition_entity.has_value() &&
+      !component_set.has_component(*gDialogState.definition_entity)) {
+    gDialogState.definition_entity.reset();
     gDialogState.open_dialog = false;
     return;
   }
@@ -84,8 +85,8 @@ void update_rename_component_dialog(const DocumentModel& model,
   }
 
   const auto current_name = gDialogState.component_name_buffer.as_string_view();
-  if (!current_name.empty() &&  //
-      component_index != nullptr && !component_index->has_comp(current_name)) {
+  if (!current_name.empty() &&
+      sys::find_component_definition(model, component_set, current_name) == kNullEntity) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
@@ -101,7 +102,7 @@ void update_rename_component_dialog(const DocumentModel& model,
 
   if (action == DialogAction::Accept) {
     dispatcher.enqueue<RenameComponentEvent>(
-        gDialogState.component_id.value(),
+        gDialogState.definition_entity.value(),
         gDialogState.component_name_buffer.as_string());
   }
 }

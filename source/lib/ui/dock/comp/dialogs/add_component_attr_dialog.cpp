@@ -19,22 +19,24 @@
 
 #include "add_component_attr_dialog.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "common/util/string_buffer.hpp"
-#include "core/component/component_index.hpp"
+#include "common/util/vector.hpp"
+#include "core/component.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/document.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
+#include "model/systems/document_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
 namespace {
 
 struct AddComponentAttrDialogState final {
-  Maybe<UUID> component_id;
+  Maybe<ComponentDefinitionEntity> definition_entity;
   StringBuffer attribute_name_buffer {};
   bool open_dialog {};
 };
@@ -43,23 +45,24 @@ inline AddComponentAttrDialogState gDialogState;
 
 }  // namespace
 
-void open_create_component_attribute_dialog(const UUID& component_id)
+void open_create_component_attribute_dialog(const Entity component_definition_entity)
 {
-  gDialogState.component_id = component_id;
+  gDialogState.definition_entity = component_definition_entity;
   gDialogState.attribute_name_buffer.clear();
   gDialogState.open_dialog = true;
 }
 
-void update_create_component_attribute_dialog(const DocumentModel& model,
-                                              entt::dispatcher& dispatcher)
+void update_create_component_attribute_dialog(const Model& model, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
-  const auto* component_index = model.require_active_document().find_component_index();
 
-  if (gDialogState.component_id.has_value() &&  //
-      component_index != nullptr &&
-      !component_index->has_comp(*gDialogState.component_id)) {
-    gDialogState.component_id.reset();
+  const auto document_entity = sys::get_active_document(model);
+  const auto& document = model.get<Document>(document_entity);
+  const auto& component_set = model.get<ComponentSet>(document.component_set);
+
+  if (gDialogState.definition_entity.has_value() &&
+      !contains_value(component_set.definitions, *gDialogState.definition_entity)) {
+    gDialogState.definition_entity.reset();
     gDialogState.open_dialog = false;
     return;
   }
@@ -75,12 +78,11 @@ void update_create_component_attribute_dialog(const DocumentModel& model,
     gDialogState.open_dialog = false;
   }
 
+  const auto& component_def =
+      model.get<ComponentDefinition>(gDialogState.definition_entity.value());
   const auto current_name = gDialogState.attribute_name_buffer.as_string_view();
 
-  if (!current_name.empty() &&  //
-      component_index != nullptr &&
-      !component_index->get_comp(gDialogState.component_id.value())
-           .has_attr(current_name)) {
+  if (!current_name.empty() && !component_def.attributes.contains(current_name)) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
@@ -94,7 +96,7 @@ void update_create_component_attribute_dialog(const DocumentModel& model,
 
   if (action == DialogAction::Accept) {
     dispatcher.enqueue<AddComponentAttrEvent>(
-        gDialogState.component_id.value(),
+        gDialogState.definition_entity.value(),
         gDialogState.attribute_name_buffer.as_string());
   }
 }

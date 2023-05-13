@@ -19,21 +19,21 @@
 
 #include "component_dock.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
 #include "common/util/fmt.hpp"
 #include "component_view.hpp"
-#include "core/component/component_index.hpp"
-#include "core/context/context.hpp"
-#include "core/context/context_info.hpp"
-#include "core/context/context_manager.hpp"
+#include "core/component.hpp"
+#include "core/context.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/document.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
 #include "model/settings.hpp"
+#include "model/systems/context/components.hpp"
+#include "model/systems/document_system.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"
@@ -44,24 +44,31 @@ namespace {
 
 inline constexpr auto kAddComponentPopupId = "##AddComponentButtonPopup";
 
-void show_add_component_button_popup_content(const Document& document,
-                                             const Context& context,
-                                             entt::dispatcher& dispatcher)
+void _show_add_component_button_popup_content(const Model& model,
+                                              const Entity document_entity,
+                                              Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
-  const auto* component_index = document.find_component_index();
-  TACTILE_ASSERT(component_index != nullptr);
 
-  if (component_index->empty()) {
+  const auto& document = model.get<Document>(document_entity);
+  const auto& component_set = model.get<ComponentSet>(document.component_set);
+
+  if (component_set.definitions.empty()) {
     const Disable disable;
     ImGui::TextUnformatted(lang.misc.no_available_components.c_str());
   }
   else {
-    const auto& ctx = context.get_ctx();
-    for (const auto& [component_id, component_def]: *component_index) {
-      const Disable disable_if {ctx.has_component(component_id)};
-      if (ImGui::MenuItem(component_def.get_name().c_str())) {
-        dispatcher.enqueue<AttachComponentEvent>(context.get_uuid(), component_id);
+    const auto& active_context = model.get<Context>(document.active_context);
+
+    for (const auto definition_entity: component_set.definitions) {
+      const auto& definition = model.get<ComponentDefinition>(definition_entity);
+
+      const Disable disable_if {
+          sys::has_component(model, active_context, definition.name)};
+
+      if (ImGui::MenuItem(definition.name.c_str())) {
+        dispatcher.enqueue<AttachComponentEvent>(document.active_context,
+                                                 definition_entity);
       }
     }
   }
@@ -72,30 +79,29 @@ void show_add_component_button_popup_content(const Document& document,
   }
 }
 
-void show_contents(const Document& document, entt::dispatcher& dispatcher)
+void _show_dock_contents(const Model& model,
+                         const Entity document_entity,
+                         Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
-  const auto& context = document.get_contexts().get_active_context();
+  const auto& document = model.get<Document>(document_entity);
 
-  const FmtString indicator {"{}: {}", lang.misc.context, context.get_ctx().name()};
+  const auto active_context_entity = document.get_active_context();
+  const auto& active_context = model.get<Context>(active_context_entity);
+
+  const FmtString indicator {"{}: {}", lang.misc.context, active_context.name};
   ImGui::TextUnformatted(indicator.data());
 
   if (const Child pane {"##ComponentsChild"}; pane.is_open()) {
-    const auto& ctx = context.get_ctx();
-    if (ctx.component_count() == 0) {
+    if (active_context.comps.empty()) {
       prepare_vertical_alignment_center(2);
       ui_centered_label(lang.misc.context_has_no_components.c_str());
     }
     else {
-      const auto* component_index = document.find_component_index();
-      TACTILE_ASSERT(component_index != nullptr);
-
-      ctx.each_component([&](const UUID& component_id, const Component& component) {
+      for (const auto component_entity: active_context.comps) {
         ImGui::Separator();
-
-        const auto& component_name = component_index->get_comp(component_id).get_name();
-        component_view(context.get_uuid(), component, component_name, dispatcher);
-      });
+        component_view(model, active_context_entity, component_entity, dispatcher);
+      }
 
       ImGui::Separator();
     }
@@ -105,14 +111,14 @@ void show_contents(const Document& document, entt::dispatcher& dispatcher)
     }
 
     if (const Popup popup {kAddComponentPopupId}; popup.is_open()) {
-      show_add_component_button_popup_content(document, context, dispatcher);
+      _show_add_component_button_popup_content(model, document_entity, dispatcher);
     }
   }
 }
 
 }  // namespace
 
-void update_component_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
+void show_component_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
   auto& settings = get_settings();
 
@@ -129,8 +135,8 @@ void update_component_dock(const DocumentModel& model, entt::dispatcher& dispatc
   settings.set_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT, show_component_dock);
 
   if (dock.is_open()) {
-    const auto& document = model.require_active_document();
-    show_contents(document, dispatcher);
+    const auto document_entity = sys::get_active_document(model);
+    _show_dock_contents(model, document_entity, dispatcher);
   }
 }
 

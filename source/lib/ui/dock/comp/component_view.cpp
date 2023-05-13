@@ -21,8 +21,6 @@
 
 #include <utility>  // move
 
-#include <entt/signal/dispatcher.hpp>
-
 #include "core/component.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
@@ -40,12 +38,13 @@ constexpr auto kHeaderFlags =
 constexpr auto kTableFlags =
     ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX;
 
-void update_attribute_table(const UUID& context_id,
-                            const Component& component,
-                            entt::dispatcher& dispatcher)
+void _show_attribute_table(const Entity context_entity,
+                           const Entity definition_entity,
+                           const Component& component,
+                           Dispatcher& dispatcher)
 {
   if (Table table {"##AttributeTable", 2, kTableFlags}; table.is_open()) {
-    for (const auto& [attr_name, attr_value]: component) {
+    for (const auto& [attr_name, attr_value]: component.attributes) {
       const Scope scope {attr_name.c_str()};
 
       ImGui::TableNextRow();
@@ -56,8 +55,8 @@ void update_attribute_table(const UUID& context_id,
 
       ImGui::TableNextColumn();
       if (auto value = ui_attribute_input("##TableAttribute", attr_value)) {
-        dispatcher.enqueue<UpdateAttachedComponentEvent>(context_id,
-                                                         component.definition_id(),
+        dispatcher.enqueue<UpdateAttachedComponentEvent>(context_entity,
+                                                         definition_entity,
                                                          attr_name,
                                                          std::move(*value));
       }
@@ -65,25 +64,24 @@ void update_attribute_table(const UUID& context_id,
   }
 }
 
-void update_trailing_button_popup_content(const UUID& context_id,
-                                          const Component& component,
-                                          entt::dispatcher& dispatcher)
+void _show_trailing_button_popup_content(const Entity context_entity,
+                                         const Entity definition_entity,
+                                         Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
   if (ImGui::MenuItem(lang.action.reset_attached_component.c_str())) {
-    dispatcher.enqueue<ResetAttachedComponentEvent>(context_id,
-                                                    component.definition_id());
+    dispatcher.enqueue<ResetAttachedComponentEvent>(context_entity, definition_entity);
   }
 
   ImGui::Separator();
 
   if (ImGui::MenuItem(lang.action.detach_component.c_str())) {
-    dispatcher.enqueue<DetachComponentEvent>(context_id, component.definition_id());
+    dispatcher.enqueue<DetachComponentEvent>(context_entity, definition_entity);
   }
 }
 
-auto update_trailing_button() -> bool
+auto _show_trailing_button() -> bool
 {
   const StyleColor button {ImGuiCol_Button, IM_COL32_BLACK_TRANS};
   const StyleColor button_hovered {ImGuiCol_ButtonHovered, IM_COL32_BLACK_TRANS};
@@ -97,29 +95,34 @@ auto update_trailing_button() -> bool
 
 }  // namespace
 
-void component_view(const UUID& context_id,
-                    const Component& component,
-                    const String& name,
-                    entt::dispatcher& dispatcher)
+void component_view(const Model& model,
+                    const Entity context_entity,
+                    const Entity component_entity,
+                    Dispatcher& dispatcher)
 {
-  const Scope scope {name.c_str()};
-  if (TreeNode header {name.c_str(), kHeaderFlags}; header.is_open()) {
+  const auto& component = model.get<Component>(component_entity);
+  const auto& definition = model.get<ComponentDefinition>(component.definition);
+
+  const Scope scope {definition.name.c_str()};
+  if (TreeNode header {definition.name.c_str(), kHeaderFlags}; header.is_open()) {
     ImGui::SameLine();
-    if (update_trailing_button()) {
+    if (_show_trailing_button()) {
       ImGui::OpenPopup("##ComponentPopup");
     }
 
     if (auto popup = Popup::for_item("##ComponentPopup"); popup.is_open()) {
-      update_trailing_button_popup_content(context_id, component, dispatcher);
+      _show_trailing_button_popup_content(context_entity,
+                                          component.definition,
+                                          dispatcher);
     }
 
-    update_attribute_table(context_id, component, dispatcher);
+    _show_attribute_table(context_entity, component.definition, component, dispatcher);
   }
   else {
     // Show a disabled button when collapsed, to avoid having the button disappear
     Disable disable;
     ImGui::SameLine();
-    update_trailing_button();
+    _show_trailing_button();
   }
 }
 

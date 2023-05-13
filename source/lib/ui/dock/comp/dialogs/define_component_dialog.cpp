@@ -19,15 +19,15 @@
 
 #include "define_component_dialog.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "common/util/string_buffer.hpp"
-#include "core/component/component_index.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/document.hpp"
 #include "model/event/component_events.hpp"
-#include "model/model.hpp"
+#include "model/systems/component/component_set.hpp"
+#include "model/systems/document_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
@@ -48,8 +48,7 @@ void open_define_component_dialog()
   gDialogState.open_dialog = true;
 }
 
-void update_define_component_dialog(const DocumentModel& model,
-                                    entt::dispatcher& dispatcher)
+void update_define_component_dialog(const Model& model, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
@@ -64,11 +63,15 @@ void update_define_component_dialog(const DocumentModel& model,
     gDialogState.open_dialog = false;
   }
 
-  const auto current_name = gDialogState.component_name_buffer.as_string_view();
-  const auto* component_index = model.require_active_document().find_component_index();
+  const auto current_component_name = gDialogState.component_name_buffer.as_string_view();
 
-  if (!current_name.empty() &&  //
-      component_index != nullptr && !component_index->has_comp(current_name)) {
+  const auto document_entity = sys::get_active_document(model);
+  const auto& document = model.get<Document>(document_entity);
+
+  if (!current_component_name.empty() &&
+      sys::find_component_definition(model,
+                                     document.component_set,
+                                     current_component_name) != kNullEntity) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
