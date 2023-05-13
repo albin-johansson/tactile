@@ -19,15 +19,13 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
-#include "common/macros.hpp"
-
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
-void update_property_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
+void show_property_dock(const Model& model, Entity widget_entity, Dispatcher& dispatcher);
 
 [[nodiscard]] auto is_property_dock_focused() -> bool;
 

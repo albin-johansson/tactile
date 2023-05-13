@@ -21,15 +21,15 @@
 
 #include <utility>  // move
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "common/type/maybe.hpp"
-#include "core/context/context_manager.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/document.hpp"
 #include "model/event/property_events.hpp"
 #include "model/model.hpp"
+#include "model/systems/document_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/attribute_widgets.hpp"
 
@@ -37,7 +37,7 @@ namespace tactile::ui {
 namespace {
 
 struct ChangePropertyTypeDialogState final {
-  Maybe<UUID> context_id;
+  Maybe<Entity> context_entity;
   AttributeType current_type {AttributeType::String};
   Maybe<String> property_name;
   Maybe<AttributeType> previous_type;
@@ -48,27 +48,26 @@ inline ChangePropertyTypeDialogState gDialogState;
 
 }  // namespace
 
-void open_change_property_type_dialog(const UUID& context_id,
+void open_change_property_type_dialog(const Entity context_entity,
                                       String property_name,
                                       const AttributeType property_type)
 {
-  gDialogState.context_id = context_id;
+  gDialogState.context_entity = context_entity;
   gDialogState.property_name = std::move(property_name);
   gDialogState.previous_type = property_type;
   gDialogState.current_type = property_type;
   gDialogState.open_dialog = true;
 }
 
-void update_change_property_type_dialog(const DocumentModel& model,
-                                        entt::dispatcher& dispatcher)
+void update_change_property_type_dialog(const Model& model, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
-  const auto& document = model.require_active_document();
-  const auto& active_context = document.get_contexts().get_active_context();
+  const auto document_entity = sys::get_active_document(model);
+  const auto& document = model.get<Document>(document_entity);
 
-  if (active_context.get_uuid() != gDialogState.context_id) {
-    gDialogState.context_id.reset();
+  if (document.active_context != gDialogState.context_entity) {
+    gDialogState.context_entity.reset();
     gDialogState.open_dialog = false;
     return;
   }
@@ -102,10 +101,10 @@ void update_change_property_type_dialog(const DocumentModel& model,
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<ChangePropertyTypeEvent>(gDialogState.context_id.value(),
+    dispatcher.enqueue<ChangePropertyTypeEvent>(gDialogState.context_entity.value(),
                                                 gDialogState.property_name.value(),
                                                 gDialogState.current_type);
-    gDialogState.context_id.reset();
+    gDialogState.context_entity.reset();
   }
 }
 

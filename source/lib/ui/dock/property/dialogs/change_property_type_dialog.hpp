@@ -19,22 +19,18 @@
 
 #pragma once
 
-#include <entt/signal/fwd.hpp>
-
-#include "common/macros.hpp"
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
-#include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
-
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
-void open_change_property_type_dialog(const UUID& context_id,
+void open_change_property_type_dialog(Entity context_entity,
                                       String property_name,
                                       AttributeType property_type);
 
-void update_change_property_type_dialog(const DocumentModel& model,
-                                        entt::dispatcher& dispatcher);
+void update_change_property_type_dialog(const Model& model, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

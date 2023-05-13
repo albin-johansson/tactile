@@ -21,24 +21,22 @@
 
 #include <utility>  // move
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "common/util/string_buffer.hpp"
-#include "core/context/context.hpp"
-#include "core/context/context_info.hpp"
-#include "core/context/context_manager.hpp"
+#include "core/context.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/document.hpp"
 #include "model/event/property_events.hpp"
-#include "model/model.hpp"
+#include "model/systems/document_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
 namespace {
 
 struct RenamePropertyDialogState final {
-  Maybe<UUID> context_id;
+  Maybe<Entity> context_entity;
   String previous_name;
   StringBuffer name_buffer {};
   bool open_dialog {};
@@ -48,24 +46,23 @@ inline RenamePropertyDialogState gDialogState;
 
 }  // namespace
 
-void open_rename_property_dialog(const UUID& context_id, String previous_name)
+void open_rename_property_dialog(const Entity context_entity, String previous_name)
 {
-  gDialogState.context_id = context_id;
+  gDialogState.context_entity = context_entity;
   gDialogState.previous_name = std::move(previous_name);
   gDialogState.name_buffer.clear();
   gDialogState.open_dialog = true;
 }
 
-void update_rename_property_dialog(const DocumentModel& model,
-                                   entt::dispatcher& dispatcher)
+void update_rename_property_dialog(const Model& model, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
-  const auto& document = model.require_active_document();
-  const auto& active_context = document.get_contexts().get_active_context();
+  const auto document_entity = sys::get_active_document(model);
+  const auto& document = model.get<Document>(document_entity);
 
-  if (active_context.get_uuid() != gDialogState.context_id) {
-    gDialogState.context_id.reset();
+  if (document.active_context != gDialogState.context_entity) {
+    gDialogState.context_entity.reset();
     gDialogState.open_dialog = false;
     return;
   }
@@ -81,8 +78,10 @@ void update_rename_property_dialog(const DocumentModel& model,
     gDialogState.open_dialog = false;
   }
 
+  const auto& active_context = model.get<Context>(document.active_context);
+
   const auto current_name = gDialogState.name_buffer.as_string_view();
-  if (!current_name.empty() && !active_context.get_ctx().has_property(current_name)) {
+  if (!current_name.empty() && !active_context.props.contains(current_name)) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
@@ -95,10 +94,10 @@ void update_rename_property_dialog(const DocumentModel& model,
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<RenamePropertyEvent>(gDialogState.context_id.value(),
+    dispatcher.enqueue<RenamePropertyEvent>(gDialogState.context_entity.value(),
                                             gDialogState.previous_name,
                                             gDialogState.name_buffer.as_string());
-    gDialogState.context_id.reset();
+    gDialogState.context_entity.reset();
   }
 }
 
