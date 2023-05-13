@@ -19,7 +19,6 @@
 
 #include "create_tileset_dialog.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "common/type/math.hpp"
@@ -45,7 +44,7 @@ struct CreateTilesetDialogState final {
 
 inline CreateTilesetDialogState gDialogState;
 
-void select_image_file()
+void _select_image_file()
 {
   auto dialog = FileDialog::open_image();
   if (!dialog.is_okay()) {
@@ -73,7 +72,7 @@ void open_create_tileset_dialog()
   gDialogState.open_dialog = true;
 }
 
-void update_create_tileset_dialog(entt::dispatcher& dispatcher)
+void show_create_tileset_dialog(const Model& model, Entity, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
@@ -99,7 +98,7 @@ void update_create_tileset_dialog(entt::dispatcher& dispatcher)
     ImGui::Spacing();
 
     if (ui_button(lang.misc.select_image.c_str())) {
-      select_image_file();
+      _select_image_file();
     }
 
     ImGui::SameLine();
