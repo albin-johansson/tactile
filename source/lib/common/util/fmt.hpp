@@ -21,6 +21,7 @@
 
 #include <algorithm>    // min
 #include <string_view>  // string_view
+#include <utility>      // to_underlying
 
 #include <boost/uuid/uuid_io.hpp>
 #include <fmt/format.h>
@@ -30,6 +31,7 @@
 #include "common/numeric.hpp"
 #include "common/predef.hpp"
 #include "common/type/array.hpp"
+#include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
@@ -51,6 +53,14 @@ struct formatter<tactile::UUID> : formatter<std::string_view> {
   auto format(const tactile::UUID& uuid, auto& ctx) const
   {
     return fmt::format_to(ctx.out(), "{}", fmt::streamed(uuid));
+  }
+};
+
+template <>
+struct formatter<tactile::Entity> : formatter<std::string_view> {
+  auto format(const tactile::Entity entity, auto& ctx) const
+  {
+    return fmt::format_to(ctx.out(), "{:X}", std::to_underlying(entity));
   }
 };
 
