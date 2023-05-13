@@ -19,11 +19,15 @@
 
 #include "document_system.hpp"
 
+#include "cmd/command_stack.hpp"
+#include "common/debug/panic.hpp"
+#include "core/context.hpp"
 #include "core/map.hpp"
 #include "core/viewport.hpp"
 #include "model/document.hpp"
 #include "model/systems/map_system.hpp"
 #include "model/systems/tileset_system.hpp"
+#include "model/systems/validation.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -43,39 +47,19 @@ namespace {
 
 }  // namespace
 
-auto is_map_document_entity(const Model& model, const Entity entity) -> bool
-{
-  return entity != kNullEntity &&           //
-         model.has<MapDocument>(entity) &&  //
-         model.has<Document>(entity) &&     //
-         model.has<Viewport>(entity);
-}
-
-auto is_tileset_document_entity(const Model& model, const Entity entity) -> bool
-{
-  return entity != kNullEntity &&               //
-         model.has<TilesetDocument>(entity) &&  //
-         model.has<Document>(entity) &&         //
-         model.has<Viewport>(entity);
-}
-
-auto is_document_entity(const Model& model, const Entity entity) -> bool
-{
-  return is_map_document_entity(model, entity) ||
-         is_tileset_document_entity(model, entity);
-}
-
 auto create_map_document(Model& model, const TileExtent& extent, const Int2& tile_size)
     -> Entity
 {
   const auto document_entity = model.create_entity();
-
-  auto& document = model.add<Document>(document_entity);
-  document.type = DocumentType::Map;
+  model.add<CommandStack>(document_entity);
 
   auto& map_document = model.add<MapDocument>(document_entity);
   map_document.map = create_map(model, extent, tile_size);
   map_document.active_tileset = kNullEntity;
+
+  auto& document = model.add<Document>(document_entity);
+  document.type = DocumentType::Map;
+  document.default_context = map_document.map;
 
   auto& document_viewport = model.add<Viewport>(document_entity);
   document_viewport.offset = Float2 {0, 0};
@@ -88,16 +72,22 @@ auto create_map_document(Model& model, const TileExtent& extent, const Int2& til
 auto create_tileset_document(Model& model, const Int2& tile_size, const Path& image_path)
     -> Entity
 {
-  const auto tileset_document_entity = model.create_entity();
+  const auto document_entity = model.create_entity();
+  model.add<CommandStack>(document_entity);
 
-  auto& document = model.add<Document>(tileset_document_entity);
-  document.type = DocumentType::Tileset;
-
-  auto& tileset_document = model.add<TilesetDocument>(tileset_document_entity);
+  auto& tileset_document = model.add<TilesetDocument>(document_entity);
   tileset_document.tileset = create_tileset(model, tile_size, image_path);
 
-  TACTILE_ASSERT(is_tileset_document_entity(model, tileset_document_entity));
-  return tileset_document_entity;
+  auto& document = model.add<Document>(document_entity);
+  document.type = DocumentType::Tileset;
+  document.default_context = tileset_document.tileset;
+
+  auto& document_viewport = model.add<Viewport>(document_entity);
+  document_viewport.offset = Float2 {0, 0};
+  document_viewport.tile_size = tile_size;
+
+  TACTILE_ASSERT(is_tileset_document_entity(model, document_entity));
+  return document_entity;
 }
 
 void destroy_document(Model& model, const DocumentEntity document_entity)
@@ -139,6 +129,24 @@ void close_document(Model& model, const Entity document_entity)
 
   auto& document_context = model.get<CDocumentContext>();
   document_context.open_documents.erase(document_entity);
+}
+
+auto get_document_name(const Model& model, const Entity document_entity) -> String
+{
+  TACTILE_ASSERT(is_document_entity(model, document_entity));
+
+  if (const auto* map_document = model.try_get<MapDocument>(document_entity)) {
+    const auto& map_context = model.get<Context>(map_document->map);
+    return map_context.name;
+  }
+  else if (const auto* tileset_document =
+               model.try_get<TilesetDocument>(document_entity)) {
+    const auto& tileset_context = model.get<Context>(tileset_document->tileset);
+    return tileset_context.name;
+  }
+  else {
+    throw TactileError {"Invalid document type"};
+  }
 }
 
 auto get_active_document(const Model& model) -> Entity

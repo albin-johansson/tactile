@@ -37,11 +37,18 @@ struct CDocumentContext final {
   Set<Entity> open_documents;
 };
 
+// FIXME the active_context member is error-prone as it stands (might be null)
 struct Document final {
   DocumentType type {DocumentType::Unknown};
   Entity component_set {kNullEntity};
   Entity active_context {kNullEntity};
+  Entity default_context {kNullEntity};  ///< Default context entity (map or tileset).
   Maybe<Path> path;
+
+  [[nodiscard]] auto get_active_context() const -> Entity
+  {
+    return (active_context != kNullEntity) ? active_context : default_context;
+  }
 };
 
 struct MapDocument final {

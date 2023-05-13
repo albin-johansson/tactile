@@ -443,30 +443,29 @@ void _show_property_table(const Model& model, Dispatcher& dispatcher)
 
   const auto document_entity = sys::get_active_document(model);
   const auto& document = model.get<Document>(document_entity);
-  const auto& context = model.get<Context>(document.active_context);
+
+  const auto context_entity = document.get_active_context();
+  const auto& context = model.get<Context>(context_entity);
 
   if (const Table table {"##PropertyTable", 2, flags}; table.is_open()) {
-    if (model.has<Map>(document.active_context)) {
-      _show_native_map_properties(model, document.active_context, dispatcher);
+    if (model.has<Map>(context_entity)) {
+      _show_native_map_properties(model, context_entity, dispatcher);
     }
-    else if (model.has<Layer>(document.active_context)) {
-      _show_native_layer_properties(model, document.active_context, dispatcher);
+    else if (model.has<Layer>(context_entity)) {
+      _show_native_layer_properties(model, context_entity, dispatcher);
     }
-    else if (model.has<Object>(document.active_context)) {
-      _show_native_object_properties(model, document.active_context, dispatcher);
+    else if (model.has<Object>(context_entity)) {
+      _show_native_object_properties(model, context_entity, dispatcher);
     }
-    else if (model.has<Tileset>(document.active_context)) {
-      _show_native_tileset_properties(model, document.active_context, dispatcher);
+    else if (model.has<Tileset>(context_entity)) {
+      _show_native_tileset_properties(model, context_entity, dispatcher);
     }
-    else if (model.has<Tile>(document.active_context)) {
-      _show_native_tile_properties(model, document.active_context, dispatcher);
+    else if (model.has<Tile>(context_entity)) {
+      _show_native_tile_properties(model, context_entity, dispatcher);
     }
 
     bool is_item_context_open = false;
-    _show_custom_properties(document.active_context,
-                            context,
-                            dispatcher,
-                            is_item_context_open);
+    _show_custom_properties(context_entity, context, dispatcher, is_item_context_open);
 
     if (!is_item_context_open) {
       if (auto popup = Popup::for_window("##PropertyTablePopup"); popup.is_open()) {

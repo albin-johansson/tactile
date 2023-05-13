@@ -47,7 +47,7 @@ void open_resize_map_dialog(const TileExtent current_extent)
   gDialogState.open_dialog = true;
 }
 
-void update_resize_map_dialog(const Model& model, Entity, Dispatcher& dispatcher)
+void show_resize_map_dialog(const Model&, Entity, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 

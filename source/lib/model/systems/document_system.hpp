@@ -19,6 +19,9 @@
 
 #pragma once
 
+#include <utility>  // forward
+
+#include "cmd/command_stack.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
@@ -26,10 +29,6 @@
 #include "model/model.hpp"
 
 namespace tactile::sys {
-
-[[nodiscard]] auto is_map_document_entity(const Model& model, Entity entity) -> bool;
-[[nodiscard]] auto is_tileset_document_entity(const Model& model, Entity entity) -> bool;
-[[nodiscard]] auto is_document_entity(const Model& model, Entity entity) -> bool;
 
 [[nodiscard]] auto create_map_document(Model& model,
                                        const TileExtent& extent,
@@ -47,6 +46,9 @@ void open_document(Model& model, Entity document_entity);
 
 void close_document(Model& model, Entity document_entity);
 
+[[nodiscard]] auto get_document_name(const Model& model, Entity document_entity)
+    -> String;
+
 [[nodiscard]] auto get_active_document(const Model& model) -> Entity;
 
 [[nodiscard]] auto get_associated_tileset_document(const Model& model,
@@ -58,5 +60,15 @@ void close_document(Model& model, Entity document_entity);
 [[nodiscard]] auto is_tileset_document_active(const Model& model) -> bool;
 
 [[nodiscard]] auto is_document_open(const Model& model, Entity document_entity) -> bool;
+
+template <typename T, typename... Args>
+void try_execute(Model& model, Args&&... args)
+{
+  const auto document_entity = get_active_document(model);
+  if (document_entity != kNullEntity) {
+    auto& commands = model.get<CommandStack>(document_entity);
+    commands.push<T>(std::forward<Args>(args)...);
+  }
+}
 
 }  // namespace tactile::sys
