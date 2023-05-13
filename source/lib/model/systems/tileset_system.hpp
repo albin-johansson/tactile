@@ -22,14 +22,12 @@
 #include "common/numeric.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
+#include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
+#include "core/map.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {
-
-[[nodiscard]] auto is_tile_entity(const Model& model, Entity entity) -> bool;
-[[nodiscard]] auto is_tileset_entity(const Model& model, Entity entity) -> bool;
-[[nodiscard]] auto is_attached_tileset_entity(const Model& model, Entity entity) -> bool;
 
 [[nodiscard]] auto create_tileset(Model& model,
                                   const Int2& tile_size,
@@ -46,7 +44,15 @@ namespace tactile::sys {
 void make_tile_animated(Model& model, Entity tile_entity);
 
 [[nodiscard]] auto is_valid_tile_identifier(const Model& model,
-                                            Entity map_entity,
+                                            const Map& map,
                                             TileID tile_id) -> bool;
+
+[[nodiscard, deprecated]] auto is_valid_tile_identifier(const Model& model,
+                                                        Entity map_entity,
+                                                        TileID tile_id) -> bool;
+
+[[nodiscard]] auto convert_tile_id_to_index(const Model& model,
+                                            const Map& map,
+                                            TileID tile_id) -> Maybe<TileIndex>;
 
 }  // namespace tactile::sys

@@ -22,14 +22,13 @@
 #include "common/debug/assert.hpp"
 #include "common/util/assoc.hpp"
 #include "core/context.hpp"
-#include "core/map.hpp"
 #include "core/texture.hpp"
 #include "core/tile.hpp"
 #include "core/tile_matrix.hpp"
 #include "core/tileset.hpp"
 #include "core/viewport.hpp"
-#include "model/systems/map_system.hpp"
 #include "model/systems/texture_system.hpp"
+#include "model/systems/validation.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -56,26 +55,6 @@ namespace {
 }
 
 }  // namespace
-
-auto is_tile_entity(const Model& model, const Entity entity) -> bool
-{
-  return entity != kNullEntity && model.has<Context>(entity) && model.has<Tile>(entity);
-}
-
-auto is_tileset_entity(const Model& model, const Entity entity) -> bool
-{
-  return entity != kNullEntity &&                  //
-         model.has<Tileset>(entity) &&             //
-         model.has<TilesetRenderCache>(entity) &&  //
-         model.has<Context>(entity);
-}
-
-auto is_attached_tileset_entity(const Model& model, const Entity entity) -> bool
-{
-  return entity != kNullEntity &&               //
-         model.has<AttachedTileset>(entity) &&  //
-         model.has<Viewport>(entity);
-}
 
 auto create_tileset(Model& model, const Int2& tile_size, const Path& image_path) -> Entity
 {
@@ -171,17 +150,12 @@ void make_tile_animated(Model& model, const Entity tile_entity)
   animation.last_update = Clock::now();
 }
 
-auto is_valid_tile_identifier(const Model& model,
-                              const Entity map_entity,
-                              const TileID tile_id) -> bool
+auto is_valid_tile_identifier(const Model& model, const Map& map, const TileID tile_id)
+    -> bool
 {
-  TACTILE_ASSERT(is_map_entity(model, map_entity));
-
   if (tile_id == kEmptyTile) {
     return true;
   }
-
-  const auto& map = model.get<Map>(map_entity);
 
   for (const auto attached_tileset_entity: map.attached_tilesets) {
     const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
@@ -192,6 +166,29 @@ auto is_valid_tile_identifier(const Model& model,
   }
 
   return false;
+}
+
+auto is_valid_tile_identifier(const Model& model,
+                              const Entity map_entity,
+                              const TileID tile_id) -> bool
+{
+  TACTILE_ASSERT(is_map_entity(model, map_entity));
+  const auto& map = model.get<Map>(map_entity);
+  return is_valid_tile_identifier(model, map, tile_id);
+}
+
+auto convert_tile_id_to_index(const Model& model, const Map& map, const TileID tile_id)
+    -> Maybe<TileIndex>
+{
+  for (const auto attached_tileset_entity: map.attached_tilesets) {
+    const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
+
+    if (attached_tileset.is_valid_tile(tile_id)) {
+      return tile_id - attached_tileset.first_tile;
+    }
+  }
+
+  return nothing;
 }
 
 }  // namespace tactile::sys
