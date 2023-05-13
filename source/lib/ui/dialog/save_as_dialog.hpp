@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
+#include "common/type/dispatcher.hpp"
 
 namespace tactile::ui {
 
 /// Opens the blocking "Save As..." file dialog.
-void show_save_as_dialog(entt::dispatcher& dispatcher);
+void show_save_as_dialog(Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

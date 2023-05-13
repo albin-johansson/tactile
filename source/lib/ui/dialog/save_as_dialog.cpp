@@ -21,7 +21,6 @@
 
 #include <utility>  // move
 
-#include <entt/signal/dispatcher.hpp>
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
@@ -32,7 +31,7 @@
 
 namespace tactile::ui {
 
-void show_save_as_dialog(entt::dispatcher& dispatcher)
+void show_save_as_dialog(Dispatcher& dispatcher)
 {
   auto dialog = FileDialog::save_map();
   if (dialog.is_okay()) {
