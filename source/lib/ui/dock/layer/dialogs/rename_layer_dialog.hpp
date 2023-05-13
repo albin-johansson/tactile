@@ -19,14 +19,14 @@
 
 #pragma once
 
-#include <entt/signal/fwd.hpp>
-
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
-#include "common/type/uuid.hpp"
 
 namespace tactile::ui {
 
-void open_rename_layer_dialog(const UUID& layer_id, String current_name);
-void update_rename_layer_dialog(entt::dispatcher& dispatcher);
+void open_rename_layer_dialog(Entity layer_entity, String current_name);
+
+void update_rename_layer_dialog(Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

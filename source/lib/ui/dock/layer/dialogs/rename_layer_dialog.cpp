@@ -21,7 +21,6 @@
 
 #include <utility>  // move
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "common/type/maybe.hpp"
@@ -35,7 +34,7 @@ namespace tactile::ui {
 namespace {
 
 struct RenameLayerDialogState final {
-  Maybe<UUID> layer_id;
+  Maybe<Entity> layer_entity;
   String old_name;
   StringBuffer name_buffer {};
   bool open_dialog {};
@@ -45,15 +44,15 @@ inline RenameLayerDialogState gDialogState;
 
 }  // namespace
 
-void open_rename_layer_dialog(const UUID& layer_id, String current_name)
+void open_rename_layer_dialog(const Entity layer_entity, String current_name)
 {
-  gDialogState.layer_id = layer_id;
+  gDialogState.layer_entity = layer_entity;
   gDialogState.old_name = std::move(current_name);
   gDialogState.name_buffer = gDialogState.old_name;
   gDialogState.open_dialog = true;
 }
 
-void update_rename_layer_dialog(entt::dispatcher& dispatcher)
+void update_rename_layer_dialog(Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
@@ -86,7 +85,7 @@ void update_rename_layer_dialog(entt::dispatcher& dispatcher)
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<RenameLayerEvent>(gDialogState.layer_id.value(),
+    dispatcher.enqueue<RenameLayerEvent>(gDialogState.layer_entity.value(),
                                          gDialogState.name_buffer.as_string());
   }
 }
