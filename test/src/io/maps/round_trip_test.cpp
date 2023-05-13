@@ -30,7 +30,7 @@
 
 #include "common/type/string.hpp"
 #include "common/util/assoc.hpp"
-#include "core/tile/tile_matrix.hpp"
+#include "core/tile_matrix.hpp"
 #include "io/export/tactile_yaml_exporter.hpp"
 #include "io/export/tiled_json_exporter.hpp"
 #include "io/export/tiled_xml_exporter.hpp"
