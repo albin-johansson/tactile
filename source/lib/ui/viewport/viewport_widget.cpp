@@ -21,21 +21,21 @@
 
 #include <centurion/keyboard.hpp>
 #include <centurion/mouse_events.hpp>
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "core/texture.hpp"
 #include "core/viewport.hpp"
-#include "document_tab_widget.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/viewport_events.hpp"
-#include "model/model.hpp"
+#include "model/systems/document_system.hpp"
 #include "ui/conversions.hpp"
 #include "ui/shortcut/mappings.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
+#include "ui/viewport/document_tab_widget.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 #include "ui/widget/windows.hpp"
@@ -50,14 +50,17 @@ struct ViewportWidgetState final {
 
 inline constinit ViewportWidgetState gWidgetState;
 
-void update_start_page(entt::dispatcher& dispatcher)
+void _show_start_page(const Model& model, Dispatcher& dispatcher)
 {
   prepare_vertical_alignment_center(4);
 
   ImGui::SetCursorPos(ImGui::GetCursorPos() - ImVec2 {0, 64});
 
+  const auto& icons = model.get<Icons>();
+  const auto& icon_texture = model.get<Texture>(icons.tactile_icon);
+
   center_next_item_horizontally(128);
-  ImGui::Image(to_imgui_texture_id(get_tactile_icon()), {128, 128});
+  ImGui::Image(icon_texture.handle, {128, 128});
 
   ImGui::Spacing();
   ImGui::Spacing();
@@ -76,7 +79,7 @@ void update_start_page(entt::dispatcher& dispatcher)
 
 }  // namespace
 
-void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispatcher)
+void show_viewport_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
   StyleVar padding {ImGuiStyleVar_WindowPadding, {4, 4}};
   remove_tab_bar_from_next_window();
@@ -89,10 +92,10 @@ void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispat
   if (window.is_open()) {
     padding.pop();
 
-    if (model.has_active_document()) {
+    if (sys::has_active_document(model)) {
       update_document_tabs(model, dispatcher);
 
-      if (model.is_map_active()) {
+      if (sys::is_map_document_active(model)) {
         if (window.mouse_entered()) {
           dispatcher.enqueue<ViewportMouseEnteredEvent>();
         }
@@ -103,13 +106,13 @@ void update_viewport_widget(const DocumentModel& model, entt::dispatcher& dispat
       }
     }
     else {
-      update_start_page(dispatcher);
+      _show_start_page(model, dispatcher);
     }
   }
 }
 
 void viewport_widget_mouse_wheel_event_handler(const Viewport& viewport,
-                                               entt::dispatcher& dispatcher,
+                                               Dispatcher& dispatcher,
                                                const cen::mouse_wheel_event& event)
 {
   if (cen::is_active(kPrimaryModifier)) {
@@ -125,7 +128,7 @@ void viewport_widget_mouse_wheel_event_handler(const Viewport& viewport,
     const Float2 precise {event.precise_x(), event.precise_y()};
 
     const float scaling = 4.0f;
-    auto delta = precise * (viewport.tile_size() / scaling);
+    auto delta = precise * (viewport.tile_size / scaling);
     delta.x = -delta.x;
 
     dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);

@@ -51,4 +51,9 @@ struct VulkanTexture final {
   // TODO VkDescriptorSet imgui_descriptor_set {};
 };
 
+/// Context component tracking loaded icon textures.
+struct Icons final {
+  Entity tactile_icon {kNullEntity};
+};
+
 }  // namespace tactile
