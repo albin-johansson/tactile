@@ -19,26 +19,18 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
-#include "common/type/uuid.hpp"
-
-namespace tactile {
-class DocumentModel;
-}  // namespace tactile
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
-/// Updates the layer dock widget.
-///
-/// There must be an active map document when this function is called.
-///
-/// \param model the current document model.
-/// \param dispatcher the event dispatcher used.
-void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
+void show_layer_dock(const Model& model, Entity widget_entity, Dispatcher& dispatcher);
+
+[[nodiscard]] auto is_layer_dock_enabled(const Model& model) -> bool;
 
 /// Makes the dialog for renaming layers visible.
-void show_rename_layer_dialog(const UUID& layer_id);
+void show_rename_layer_dialog(Entity layer_entity);
 
 /// Indicates whether the layer dock widget has input focus.
 [[nodiscard]] auto is_layer_dock_focused() -> bool;

@@ -19,7 +19,6 @@
 
 #include "layer_dock.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
@@ -28,10 +27,12 @@
 #include "core/map.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/document/map_document.hpp"
+#include "model/document.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/model.hpp"
 #include "model/settings.hpp"
+#include "model/systems/document_system.hpp"
+#include "model/systems/group_layer_system.hpp"
 #include "ui/constants.hpp"
 #include "ui/dock/layer/add_layer_context_menu.hpp"
 #include "ui/dock/layer/dialogs/rename_layer_dialog.hpp"
@@ -46,22 +47,22 @@ namespace {
 
 struct LayerDockState final {
   AddLayerContextMenu add_layer_context_menu;
-  Maybe<UUID> rename_target_id;
+  Maybe<Entity> rename_target_layer_entity;
   bool has_focus {};
 };
 
 inline LayerDockState gDockState;
 
-void update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatcher)
+void _update_side_buttons(const Model& model, entt::dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
-  const auto& document = model.require_active_map_document();
-  const auto& map = document.get_map();
+  const auto& document_entity = sys::get_active_document(model);
+  const auto& map_document = model.get<MapDocument>(document_entity);
+  const auto& map = model.get<Map>(map_document.map);
+  const auto& root_layer = model.get<GroupLayer>(map.root_layer);
 
-  const auto active_layer_id = map.get_active_layer_id();
-  const auto has_active_layer = active_layer_id.has_value();
-
+  const auto has_active_layer = map.active_layer != kNullEntity;
   const Group group;
 
   if (ui_icon_button(TAC_ICON_ADD, lang.tooltip.add_new_layer.c_str())) {
@@ -73,56 +74,57 @@ void update_side_buttons(const DocumentModel& model, entt::dispatcher& dispatche
   if (ui_icon_button(TAC_ICON_REMOVE,
                      lang.tooltip.remove_layer.c_str(),
                      has_active_layer)) {
-    dispatcher.enqueue<RemoveLayerEvent>(active_layer_id.value());
+    dispatcher.enqueue<RemoveLayerEvent>(map.active_layer);
   }
 
   if (ui_icon_button(TAC_ICON_DUPLICATE,
                      lang.tooltip.duplicate_layer.c_str(),
                      has_active_layer)) {
-    dispatcher.enqueue<DuplicateLayerEvent>(active_layer_id.value());
+    dispatcher.enqueue<DuplicateLayerEvent>(map.active_layer);
   }
-
-  const auto& root = map.get_invisible_root();
 
   if (ui_icon_button(TAC_ICON_MOVE_UP,
                      lang.tooltip.move_layer_up.c_str(),
-                     has_active_layer && root.can_move_layer_up(*active_layer_id))) {
-    dispatcher.enqueue<MoveLayerUpEvent>(active_layer_id.value());
+                     has_active_layer &&
+                         sys::can_move_layer_up(model, root_layer, map.active_layer))) {
+    dispatcher.enqueue<MoveLayerUpEvent>(map.active_layer);
   }
 
   if (ui_icon_button(TAC_ICON_MOVE_DOWN,
                      lang.tooltip.move_layer_down.c_str(),
-                     has_active_layer && root.can_move_layer_down(*active_layer_id))) {
-    dispatcher.enqueue<MoveLayerDownEvent>(active_layer_id.value());
+                     has_active_layer &&
+                         sys::can_move_layer_down(model, root_layer, map.active_layer))) {
+    dispatcher.enqueue<MoveLayerDownEvent>(map.active_layer);
   }
 }
 
-void update_rename_dialog(const DocumentModel& model, entt::dispatcher& dispatcher)
+void _update_rename_dialog(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (gDockState.rename_target_id.has_value()) {
-    const auto target_layer_id = *gDockState.rename_target_id;
+  if (gDockState.rename_target_layer_entity.has_value()) {
+    const auto target_layer_entity = *gDockState.rename_target_layer_entity;
+    const auto& layer_context = model.get<Context>(target_layer_entity);
 
-    const auto& map = model.require_active_map_document().get_map();
-    const auto& layer = map.get_invisible_root().get_layer(target_layer_id);
-
-    open_rename_layer_dialog(target_layer_id, layer.get_ctx().name());
-    gDockState.rename_target_id.reset();
+    open_rename_layer_dialog(target_layer_entity, layer_context.name);
+    gDockState.rename_target_layer_entity.reset();
   }
 
   update_rename_layer_dialog(dispatcher);
 }
 
-void update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
+void _update_contents(const Model& model, entt::dispatcher& dispatcher)
 {
-  update_side_buttons(model, dispatcher);
+  _update_side_buttons(model, dispatcher);
 
   ImGui::SameLine();
   const Group group;
 
-  const auto& document = model.require_active_map_document();
-  const auto& root = document.get_map().get_invisible_root();
+  const auto document_entity = sys::get_active_document(model);
+  const auto& map_document = model.get<MapDocument>(document_entity);
 
-  if (root.layer_count() == 0) {
+  const auto& map = model.get<Map>(map_document.map);
+  const auto& root_layer = model.get<GroupLayer>(map.root_layer);
+
+  if (root_layer.children.empty()) {
     const auto& lang = get_current_language();
 
     prepare_vertical_alignment_center(1);
@@ -131,22 +133,20 @@ void update_contents(const DocumentModel& model, entt::dispatcher& dispatcher)
   else {
     const ImVec2 size {-kMinFloat, -kMinFloat};
     if (const ListBox list {"##LayerTreeNode", size}; list.is_open()) {
-      root.each([&](const Layer& layer) {
-        if (!layer.get_parent().has_value()) {
-          layer_selectable(document, layer, dispatcher);
-        }
-      });
+      for (const auto layer_entity: root_layer.children) {
+        layer_selectable(model, map_document.map, layer_entity, dispatcher);
+      }
     }
   }
 
-  update_rename_dialog(model, dispatcher);
+  _update_rename_dialog(model, dispatcher);
 }
 
 }  // namespace
 
-void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
+void show_layer_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
-  TACTILE_ASSERT(model.has_active_document());
+  TACTILE_ASSERT(sys::has_active_document(model));
 
   auto& settings = get_settings();
 
@@ -165,13 +165,18 @@ void update_layer_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
   gDockState.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
-    update_contents(model, dispatcher);
+    _update_contents(model, dispatcher);
   }
 }
 
-void show_rename_layer_dialog(const UUID& layer_id)
+auto is_layer_dock_enabled(const Model& model) -> bool
 {
-  gDockState.rename_target_id = layer_id;
+  return sys::is_map_document_active(model);
+}
+
+void show_rename_layer_dialog(const Entity layer_entity)
+{
+  gDockState.rename_target_layer_entity = layer_entity;
 }
 
 auto is_layer_dock_focused() -> bool
