@@ -54,6 +54,7 @@ auto create_texture(Model& model, const Path& path) -> Entity
   const auto texture_data = load_texture_data(path).value();
 
   const auto texture_entity = model.create_entity();
+  texture_cache.textures[path] = texture_entity;
 
   auto& texture = model.add<Texture>(texture_entity);
   texture.path = path;
