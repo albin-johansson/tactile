@@ -51,7 +51,8 @@ auto main(int, char*[]) -> int
 {
   try {
     Engine engine {BackendAPI::OpenGL};
-    engine.set_app_delegate(std::make_unique<App>(engine.get_window()));
+
+    engine.set_app_delegate(std::make_unique<App>());
     engine.start();
 
     return EXIT_SUCCESS;

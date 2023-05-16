@@ -17,9 +17,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "win32.hpp"
+#include "window.hpp"
+
+#include <exception>  // exception
+
+#include <spdlog/spdlog.h>
 
 #include "common/predef.hpp"
+#include "io/directories.hpp"
 
 #if TACTILE_OS_WINDOWS
 
@@ -30,6 +35,19 @@
 #endif  // TACTILE_OS_WINDOWS
 
 namespace tactile {
+
+void load_window_icon(cen::window& window)
+{
+  try {
+    // This is necessary to allow macOS builds in different flavours
+    const auto icon_path = find_resource(kIsAppBundle ? "Tactile.icns"  //
+                                                      : "assets/icon.png");
+    window.set_icon(cen::surface {icon_path.string()});
+  }
+  catch (const std::exception& e) {
+    spdlog::error("Failed to load window icon: {}", e.what() ? e.what() : "N/A");
+  }
+}
 
 void win32_use_immersive_dark_mode([[maybe_unused]] cen::window& window)
 {

@@ -19,6 +19,7 @@
 
 #include "engine.hpp"
 
+#include <cstdlib>    // abort
 #include <exception>  // set_terminate
 #include <utility>    // move
 
@@ -32,28 +33,12 @@
 #include "common/util/fmt.hpp"
 #include "engine/backend/gl/gl_backend.hpp"
 #include "io/directories.hpp"
-#include "model/settings.hpp"
+#include "model/context.hpp"
 #include "model/systems/model_system.hpp"
-#include "platform/win32.hpp"
+#include "platform/window.hpp"
 #include "ui/style/fonts.hpp"
 
 namespace tactile {
-namespace {
-
-void _load_window_icon(cen::window& window)
-{
-  try {
-    // This is necessary to allow macOS builds in different flavours
-    const auto icon_path = find_resource(kIsAppBundle ? "Tactile.icns"  //
-                                                      : "assets/icon.png");
-    window.set_icon(cen::surface {icon_path.string()});
-  }
-  catch (const std::exception& e) {
-    spdlog::error("Failed to load window icon: {}", e.what() ? e.what() : "N/A");
-  }
-}
-
-}  // namespace
 
 void on_terminate()
 {
@@ -75,17 +60,17 @@ Engine::Engine(const BackendAPI api)
 
   mProtobuf.emplace();
   auto& sdl = mSDL.emplace(api);
-  mImGui.emplace();
 
   auto& window = sdl.get_window();
+  win32_use_immersive_dark_mode(window);
+  load_window_icon(window);
+
+  mImGui.emplace();
 
   if (api == BackendAPI::OpenGL) {
     auto& gl_context = mSDL->get_gl_context();
     mBackend = std::make_unique<OpenGLBackend>(window.get(), gl_context.get());
   }
-
-  win32_use_immersive_dark_mode(window);
-  _load_window_icon(window);
 
   spdlog::debug("Persistent file directory: {}", get_persistent_file_dir());
 
@@ -97,18 +82,21 @@ void Engine::start()
   TACTILE_ASSERT(mBackend != nullptr);
   TACTILE_ASSERT(mApp != nullptr);
 
+  spdlog::debug("Starting core event loop");
+
   mRunning = true;
   ImVec2 fb_scale {};
 
   mApp->on_startup();
   mSDL->get_window().show();
+  mSDL->get_window().maximize();
 
   while (mRunning) {
     poll_events();
 
     mApp->on_pre_update();
 
-    if (mBackend->new_frame()) {
+    if (mBackend->new_frame().succeeded()) {
       mApp->on_update();
       mBackend->end_frame();
     }

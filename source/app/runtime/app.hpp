@@ -20,7 +20,6 @@
 #pragma once
 
 #include <centurion/event.hpp>
-#include <centurion/window.hpp>
 
 #include "engine/app_delegate.hpp"
 
@@ -29,7 +28,7 @@ namespace tactile {
 /// The heart of the Tactile map editor.
 class App final : public AppDelegate {
  public:
-  explicit App(cen::window& window);
+  App();
 
   void on_startup() override;
 

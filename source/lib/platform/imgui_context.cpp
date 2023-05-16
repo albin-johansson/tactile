@@ -20,14 +20,17 @@
 #include "imgui_context.hpp"
 
 #include <imgui.h>
+#include <spdlog/spdlog.h>
 
 #include "io/directories.hpp"
-#include "model/settings.hpp"
+#include "model/context.hpp"
 
 namespace tactile {
 
 ImGuiContext::ImGuiContext()
 {
+  spdlog::debug("Initializing ImGui context");
+
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
 

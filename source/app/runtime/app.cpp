@@ -24,6 +24,7 @@
 #include <core/texture.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
+#include <spdlog/spdlog.h>
 
 #include "cmd/commands.hpp"
 #include "core/map.hpp"
@@ -63,15 +64,26 @@
 #include "ui/viewport/viewport_widget.hpp"
 
 namespace tactile {
+namespace {
 
-App::App(cen::window& window)
+void _check_for_missing_layout_file()
 {
-  init_app_context(window);
+  const auto& ini = get_widget_ini_path();
+  if (!fs::exists(ini)) {
+    spdlog::warn("Resetting layout because 'imgui.ini' is missing...");
+    ui::reset_layout();
 
+    const auto str = ini.string();
+    ImGui::SaveIniSettingsToDisk(str.c_str());
+  }
+}
+
+}  // namespace
+
+App::App()
+{
   subscribe_to_events();
   init_default_shortcuts();
-
-  window.maximize();
 }
 
 void App::on_startup()
@@ -145,7 +157,7 @@ void App::on_pre_update()
 void App::on_update()
 {
   auto& model = get_global_model();
-  auto& dispatcher = get_dispatcher();
+  auto& dispatcher = get_global_dispatcher();
 
   dispatcher.update();
 
@@ -153,6 +165,8 @@ void App::on_update()
   ui::update_dock_space();
 
   sys::render_widgets(model, dispatcher);
+
+  _check_for_missing_layout_file();
 }
 
 void App::on_event(const cen::event_handler& handler)

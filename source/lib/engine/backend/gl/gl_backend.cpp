@@ -24,13 +24,17 @@
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl2.h>
+#include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
 
 namespace tactile {
 
 OpenGLBackend::OpenGLBackend(SDL_Window* window, SDL_GLContext context)
+    : mWindow {window}
 {
+  spdlog::debug("Initializing OpenGL backend");
+
   if (!ImGui_ImplSDL2_InitForOpenGL(window, context)) {
     throw TactileError {"Could not initialize ImGui SDL2 backend"};
   }
@@ -54,16 +58,9 @@ void OpenGLBackend::process_event(const SDL_Event* event)
 
 auto OpenGLBackend::new_frame() -> Result
 {
-  ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplSDL2_NewFrame();
+  ImGui_ImplOpenGL3_NewFrame();
   ImGui::NewFrame();
-
-  return success;
-}
-
-void OpenGLBackend::end_frame()
-{
-  ImGui::Render();
 
   const auto& io = ImGui::GetIO();
   glViewport(0,
@@ -71,9 +68,15 @@ void OpenGLBackend::end_frame()
              static_cast<int>(io.DisplaySize.x),
              static_cast<int>(io.DisplaySize.y));
 
-  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT);
+  glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  return success;
+}
+
+void OpenGLBackend::end_frame()
+{
+  ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
   SDL_GL_SwapWindow(mWindow);

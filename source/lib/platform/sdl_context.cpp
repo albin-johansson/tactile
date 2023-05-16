@@ -55,18 +55,46 @@ void _init_sdl_opengl_attributes()
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, SDL_TRUE);
 }
 
+[[nodiscard]] auto _create_gl_context(cen::window& window) -> cen::gl_context
+{
+  cen::gl_context gl {window};
+  gl.make_current(window);
+
+  cen::gl::set_swap_interval(cen::gl_swap_interval::synchronized);
+
+  if (const auto result = glewInit(); result != GLEW_OK) {
+    throw TactileError {
+        fmt::format("Failed to initialize GLEW: {}",
+                    reinterpret_cast<const char*>(glewGetString(result)))};
+  }
+
+  spdlog::debug("[OpenGL] Version: {}",
+                reinterpret_cast<const char*>(glGetString(GL_VERSION)));
+  spdlog::debug("[OpenGL] Renderer: {}",
+                reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
+
+  int num_binary_formats {};
+  glGetIntegerv(GL_NUM_SHADER_BINARY_FORMATS, &num_binary_formats);
+  spdlog::debug("[OpenGL] Number of binary shader formats: {}", num_binary_formats);
+
+  return gl;
+}
+
 }  // namespace
 
 SDLContext::SDLContext(const BackendAPI api)
 {
+  spdlog::debug("Initializing SDL context");
+
   SDL_SetHint(SDL_HINT_APP_NAME, "Tactile");
 
   // Enable multi-gesture events from touchpads
   SDL_SetHint(SDL_HINT_MOUSE_TOUCH_EVENTS, "1");
 
+  // Ensure nearest pixel sampling
+  SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
+
   if (api == BackendAPI::OpenGL) {
-    // Ensure nearest pixel sampling
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     _init_sdl_opengl_attributes();
   }
 
@@ -78,25 +106,8 @@ SDLContext::SDLContext(const BackendAPI api)
   auto& window = mWindow.emplace("Tactile", cen::window::default_size(), window_flags);
 
   if (api == BackendAPI::OpenGL) {
-    auto& gl = mGL.emplace(window);
-    gl.make_current(window);
-
-    cen::gl::set_swap_interval(cen::gl_swap_interval::synchronized);
-
-    if (const auto result = glewInit(); result != GLEW_OK) {
-      auto message = fmt::format("Failed to initialize GLEW: {}",
-                                 reinterpret_cast<const char*>(glewGetString(result)));
-      throw TactileError {std::move(message)};
-    }
-
-    spdlog::debug("[OpenGL] Version: {}",
-                  reinterpret_cast<const char*>(glGetString(GL_VERSION)));
-    spdlog::debug("[OpenGL] Renderer: {}",
-                  reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
-
-    // int num_binary_formats {};
-    // glGetIntegerv(GL_NUM_SHADER_BINARY_FORMATS, &num_binary_formats);
-    // spdlog::debug("[OpenGL] Number of binary shader formats: {}", num_binary_formats);
+    spdlog::debug("Initializing SDL OpenGL context");
+    mGL = _create_gl_context(window);
   }
 }
 
