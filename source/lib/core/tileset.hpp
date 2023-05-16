@@ -61,6 +61,7 @@ struct AttachedTileset final {
   bool embedded : 1 {};          ///< Whether the tileset is embedded in the map.
 
   [[nodiscard]] auto is_valid_tile(TileID tile_id) const -> bool;
+  [[nodiscard]] auto to_tile_index(TileID tile_id) const -> Maybe<TileIndex>;
   [[nodiscard]] auto is_single_tile_selected() const -> bool;
 };
 

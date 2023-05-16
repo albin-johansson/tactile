@@ -45,6 +45,15 @@ auto AttachedTileset::is_valid_tile(const TileID tile_id) const -> bool
   return tile_id >= first_tile && tile_id <= last_tile;
 }
 
+auto AttachedTileset::to_tile_index(const TileID tile_id) const -> Maybe<TileIndex>
+{
+  if (is_valid_tile(tile_id)) {
+    return tile_id - first_tile;
+  }
+
+  return nothing;
+}
+
 auto AttachedTileset::is_single_tile_selected() const -> bool
 {
   if (selection.has_value()) {
