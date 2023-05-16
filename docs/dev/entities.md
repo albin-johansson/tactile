@@ -7,6 +7,8 @@ This document provides an overview of the components featured by different kinds
 These components are globally accessible in the model.
 
 * `DocumentContext`
+* `TextureCache`
+* `Icons`
 * `LanguageContext` (TODO)
 * `ComponentDockState` (TODO)
 
