@@ -36,6 +36,7 @@
 #include "core/tileset.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/context.hpp"
 #include "model/document.hpp"
 #include "model/event/document_events.hpp"
 #include "model/event/layer_events.hpp"
@@ -44,7 +45,6 @@
 #include "model/event/property_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
-#include "model/settings.hpp"
 #include "model/systems/document_system.hpp"
 #include "ui/dock/property/dialogs/add_property_dialog.hpp"
 #include "ui/dock/property/dialogs/change_property_type_dialog.hpp"
@@ -500,7 +500,7 @@ void _show_property_table(const Model& model, Dispatcher& dispatcher)
 
 void show_property_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
-  auto& settings = get_settings();
+  auto& settings = get_global_settings();
 
   if (!settings.test_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT)) {
     return;

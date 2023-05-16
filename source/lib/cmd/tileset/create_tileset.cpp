@@ -25,8 +25,8 @@
 #include "core/map.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/context.hpp"
 #include "model/document.hpp"
-#include "model/model.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/map_system.hpp"
 
@@ -43,7 +43,7 @@ CreateTileset::CreateTileset(const MapEntity map_entity,
 
 void CreateTileset::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   const auto tileset_document_entity = mTilesetDocumentEntity.value();
   const auto attached_tileset_entity = mAttachedTilesetEntity.value();
@@ -63,7 +63,7 @@ void CreateTileset::redo()
     create_tileset_document();
   }
 
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   if (mAttachedTilesetEntity.has_value()) {
     auto& map = model.get<Map>(mMapEntity);
@@ -82,7 +82,7 @@ void CreateTileset::redo()
 void CreateTileset::dispose()
 {
   if (!mHasAttachedTileset) {
-    auto& model = get_model();
+    auto& model = get_global_model();
 
     model.destroy(mAttachedTilesetEntity.value());
     sys::destroy_document(model, mTilesetDocumentEntity.value());
@@ -91,7 +91,7 @@ void CreateTileset::dispose()
 
 void CreateTileset::create_tileset_document()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   mTilesetDocumentEntity = sys::create_tileset_document(model, mTileSize, mImagePath);
 
   const auto& tileset_document = model.get<TilesetDocument>(*mTilesetDocumentEntity);

@@ -22,7 +22,7 @@
 #include "core/tile.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -37,7 +37,7 @@ SetAnimationFrameDuration::SetAnimationFrameDuration(const Entity tile_entity,
 
 void SetAnimationFrameDuration::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& animation = model.get<TileAnimation>(mTileEntity);
 
   auto& frame = animation.frames.at(mFrameIndex);
@@ -48,7 +48,7 @@ void SetAnimationFrameDuration::undo()
 
 void SetAnimationFrameDuration::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   auto& animation = model.get<TileAnimation>(mTileEntity);
   auto& frame = animation.frames.at(mFrameIndex);

@@ -25,7 +25,7 @@
 #include "core/context.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -40,7 +40,7 @@ ChangePropertyType::ChangePropertyType(const Entity context_entity,
 
 void ChangePropertyType::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& context = model.get<Context>(mContextEntity);
 
   context.props[mName] = mPreviousValue.value();
@@ -49,7 +49,7 @@ void ChangePropertyType::undo()
 
 void ChangePropertyType::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& context = model.get<Context>(mContextEntity);
 
   mPreviousValue = lookup_in(context.props, mName);

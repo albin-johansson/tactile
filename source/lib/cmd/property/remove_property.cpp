@@ -25,7 +25,7 @@
 #include "core/context.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -37,7 +37,7 @@ RemoveProperty::RemoveProperty(const Entity context_entity, String name)
 
 void RemoveProperty::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   auto& context = model.get<Context>(mContextEntity);
   context.props[mName] = mPreviousValue.value();
@@ -47,7 +47,7 @@ void RemoveProperty::undo()
 
 void RemoveProperty::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& context = model.get<Context>(mContextEntity);
 
   mPreviousValue = lookup_in(context.props, mName);

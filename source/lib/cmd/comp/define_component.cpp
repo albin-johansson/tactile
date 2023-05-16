@@ -23,7 +23,7 @@
 
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 #include "model/systems/component/component_set.hpp"
 
 namespace tactile::cmd {
@@ -36,14 +36,14 @@ DefineComponent::DefineComponent(const Entity component_set_entity, String name)
 
 void DefineComponent::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
   sys::remove_component(model, component_set, mName);
 }
 
 void DefineComponent::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
   sys::create_component(model, component_set, mName);
 }

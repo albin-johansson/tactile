@@ -167,9 +167,4 @@ class Model final {
   Registry mRegistry;
 };
 
-[[nodiscard, deprecated]] auto get_model() -> Model&;
-
-/// Returns the global model instance.
-[[nodiscard]] auto get_global_model() -> Model&;
-
 }  // namespace tactile

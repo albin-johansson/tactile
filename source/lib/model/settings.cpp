@@ -292,15 +292,4 @@ auto Settings::test_flag(const SettingsFlagBits flag) const -> bool
   return mState->flags & flag;
 }
 
-auto get_settings() -> Settings&
-{
-  static Settings settings;
-  return settings;
-}
-
-auto get_global_settings() -> Settings&
-{
-  return get_settings();
-}
-
 }  // namespace tactile

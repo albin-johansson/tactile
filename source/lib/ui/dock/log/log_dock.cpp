@@ -26,7 +26,7 @@
 #include "common/util/assoc.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/settings.hpp"
+#include "model/context.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -177,7 +177,7 @@ void _show_logged_message_view(const Strings& lang, const usize message_count)
 
 void show_log_dock(const Model&, Entity, Dispatcher&)
 {
-  auto& settings = get_settings();
+  auto& settings = get_global_settings();
 
   if (!settings.test_flag(SETTINGS_SHOW_LOG_DOCK_BIT)) {
     return;

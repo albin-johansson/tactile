@@ -27,7 +27,7 @@
 #include "core/object.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -40,7 +40,7 @@ RemoveObject::RemoveObject(const ObjectLayerEntity layer_entity,
 
 void RemoveObject::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   auto& object_layer = model.get<ObjectLayer>(mLayerEntity);
   object_layer.objects.push_back(mObjectEntity);
@@ -51,7 +51,7 @@ void RemoveObject::undo()
 
 void RemoveObject::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& object_layer = model.get<ObjectLayer>(mLayerEntity);
 
   if (object_layer.active_object == mObjectEntity) {
@@ -69,7 +69,7 @@ void RemoveObject::dispose()
   if (mRemovedObject) {
     spdlog::trace("[CMD] Disposing removed object");
 
-    auto& model = get_model();
+    auto& model = get_global_model();
     model.destroy(mObjectEntity);
   }
 }
@@ -78,7 +78,7 @@ auto RemoveObject::get_name() const -> String
 {
   const auto& lang = get_current_language();
 
-  const auto& model = get_model();
+  const auto& model = get_global_model();
   const auto& object = model.get<Object>(mObjectEntity);
 
   switch (object.type) {

@@ -21,7 +21,7 @@
 
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -32,14 +32,14 @@ FixMapTiles::FixMapTiles(const Entity map_entity)
 
 void FixMapTiles::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   sys::restore_tiles_in_map(model, mInvalidLayerTiles);
   mInvalidLayerTiles.clear();
 }
 
 void FixMapTiles::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   mInvalidLayerTiles = sys::fix_tiles_in_map(model, mMapEntity);
 }
 

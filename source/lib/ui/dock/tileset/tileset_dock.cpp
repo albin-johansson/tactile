@@ -27,10 +27,10 @@
 #include "core/viewport.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/context.hpp"
 #include "model/document.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
-#include "model/settings.hpp"
 #include "model/systems/document_system.hpp"
 #include "ui/dock/tileset/tileset_tabs.hpp"
 #include "ui/style/alignment.hpp"
@@ -51,7 +51,7 @@ inline constinit TilesetDockState gDockState;
 
 void show_tileset_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
-  auto& settings = get_settings();
+  auto& settings = get_global_settings();
 
   if (!settings.test_flag(SETTINGS_SHOW_TILESET_DOCK_BIT)) {
     return;

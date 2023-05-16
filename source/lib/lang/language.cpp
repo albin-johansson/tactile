@@ -28,7 +28,7 @@
 #include "common/util/assoc.hpp"
 #include "io/lang/language_parser.hpp"
 #include "lang/strings.hpp"
-#include "model/settings.hpp"
+#include "model/context.hpp"
 
 namespace tactile {
 namespace {
@@ -56,7 +56,7 @@ auto get_language(const Lang lang) -> const Strings&
 
 auto get_current_language() -> const Strings&
 {
-  return lookup_in(gLanguages, get_settings().get_language());
+  return lookup_in(gLanguages, get_global_settings().get_language());
 }
 
 auto get_language_name(const Lang lang) -> const char*

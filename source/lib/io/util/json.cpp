@@ -28,7 +28,7 @@
 #include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
 #include "io/stream.hpp"
-#include "model/settings.hpp"
+#include "model/context.hpp"
 
 namespace tactile {
 namespace {
@@ -227,7 +227,7 @@ auto save_json_to_file(const JSON& json, const Path& path) -> Result
   }
 
   try {
-    if (get_settings().test_flag(SETTINGS_INDENT_OUTPUT_BIT)) {
+    if (get_global_settings().test_flag(SETTINGS_INDENT_OUTPUT_BIT)) {
       *stream << std::setw(2);
     }
 

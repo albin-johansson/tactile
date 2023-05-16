@@ -22,7 +22,7 @@
 #include "core/object.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -37,14 +37,14 @@ MoveObject::MoveObject(const ObjectEntity object_entity,
 
 void MoveObject::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& object = model.get<Object>(mObjectEntity);
   object.position = mOldPosition;
 }
 
 void MoveObject::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& object = model.get<Object>(mObjectEntity);
   object.position = mNewPosition;
 }

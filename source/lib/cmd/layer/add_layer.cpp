@@ -22,8 +22,8 @@
 #include "core/map.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/context.hpp"
 #include "model/document.hpp"
-#include "model/model.hpp"
 #include "model/systems/layer_system.hpp"
 #include "model/systems/map_system.hpp"
 
@@ -37,7 +37,7 @@ AddLayer::AddLayer(const Entity map_document_entity, const LayerType type)
 
 void AddLayer::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
   sys::remove_layer_from_map(model, map_document.map, mLayerEntity);
@@ -53,7 +53,7 @@ void AddLayer::undo()
 
 void AddLayer::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
 
   if (mLayerEntity == kNullEntity) {
@@ -71,7 +71,7 @@ void AddLayer::dispose()
 {
   // The layer entity can only be destroyed if we're sure it's not used elsewhere.
   if (!mLayerWasAdded) {
-    auto& model = get_model();
+    auto& model = get_global_model();
     model.destroy(mLayerEntity);
   }
 }

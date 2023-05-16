@@ -23,7 +23,7 @@
 #include "core/map.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 #include "model/systems/map_system.hpp"
 
 namespace tactile::cmd {
@@ -35,7 +35,7 @@ RemoveRow::RemoveRow(const Entity map_entity)
 
 void RemoveRow::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   invoke_n(mRowCount, [&, this] { sys::add_row_to_map(model, mMapEntity); });
   mCache.restore_tiles(model);
@@ -43,7 +43,7 @@ void RemoveRow::undo()
 
 void RemoveRow::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   const auto& map = model.get<Map>(mMapEntity);
 
   const auto begin = TilePos::from(map.extent.rows - mRowCount - 1u, 0u);

@@ -22,7 +22,7 @@
 #include "core/map.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 #include "model/systems/map_system.hpp"
 
 namespace tactile::cmd {
@@ -35,7 +35,7 @@ ResizeMap::ResizeMap(const Entity map_entity, const TileExtent extent)
 
 void ResizeMap::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   sys::resize_map(model, mMapEntity, mOldExtent.value());
 
   if (is_lossy_resize()) {
@@ -45,7 +45,7 @@ void ResizeMap::undo()
 
 void ResizeMap::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& map = model.get<Map>(mMapEntity);
 
   mOldExtent = map.extent;

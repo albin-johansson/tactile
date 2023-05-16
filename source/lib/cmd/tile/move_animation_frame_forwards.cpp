@@ -24,7 +24,7 @@
 #include "core/tile.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -39,7 +39,7 @@ void MoveAnimationFrameForwards::undo()
 {
   TACTILE_ASSERT(mFrameIndex - 1 >= 0);
 
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& animation = model.get<TileAnimation>(mTileEntity);
 
   const TileAnimationFrame frame {
@@ -55,7 +55,7 @@ void MoveAnimationFrameForwards::redo()
 {
   TACTILE_ASSERT(mFrameIndex - 1 >= 0);
 
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& animation = model.get<TileAnimation>(mTileEntity);
 
   const TileAnimationFrame frame {

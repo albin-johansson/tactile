@@ -26,8 +26,8 @@
 #include "common/type/math.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/context.hpp"
 #include "model/event/map_events.hpp"
-#include "model/settings.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/alignment.hpp"
 
@@ -95,7 +95,7 @@ void _on_dialog_accept(Dispatcher& dispatcher)
 
 void open_create_map_dialog()
 {
-  const auto& settings = get_settings();
+  const auto& settings = get_global_settings();
 
   gDialogState.tile_size = settings.get_preferred_tile_size();
   gDialogState.row_count = 5;

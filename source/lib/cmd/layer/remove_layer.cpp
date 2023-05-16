@@ -22,8 +22,8 @@
 #include "core/map.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/context.hpp"
 #include "model/document.hpp"
-#include "model/model.hpp"
 #include "model/systems/layer_system.hpp"
 #include "model/systems/map_system.hpp"
 
@@ -37,7 +37,7 @@ RemoveLayer::RemoveLayer(const Entity map_document_entity, const Entity layer_en
 
 void RemoveLayer::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
 
   sys::attach_layer_to_map(model, map_document.map, mLayerEntity, mParentLayerEntity);
@@ -48,7 +48,7 @@ void RemoveLayer::undo()
 
 void RemoveLayer::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
   const auto& map = model.get<Map>(map_document.map);
@@ -61,7 +61,7 @@ void RemoveLayer::redo()
 
 void RemoveLayer::dispose()
 {
-  //  auto& model = get_model();
+  //  auto& model = get_global_model();
   //  model.destroy(m)
 }
 

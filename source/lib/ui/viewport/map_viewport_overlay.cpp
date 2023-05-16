@@ -26,7 +26,7 @@
 #include "core/map.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/settings.hpp"
+#include "model/context.hpp"
 #include "model/systems/tileset_system.hpp"
 #include "ui/viewport/viewport_cursor_info.hpp"
 #include "ui/widget/scoped.hpp"
@@ -47,7 +47,7 @@ void _prepare_position_and_pivot()
   const auto pos = ImGui::GetWindowPos();
   const auto size = ImGui::GetWindowSize();
 
-  const auto corner = get_settings().get_viewport_overlay_pos();
+  const auto corner = get_global_settings().get_viewport_overlay_pos();
   const bool is_right =
       corner == OverlayPos::TopRight || corner == OverlayPos::BottomRight;
   const bool is_bottom =
@@ -155,7 +155,7 @@ void show_map_viewport_overlay(const Model& model,
   if (window.is_open()) {
     const auto& lang = get_current_language();
 
-    if (get_settings().test_flag(SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT)) {
+    if (get_global_settings().test_flag(SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT)) {
       const auto& io = ImGui::GetIO();
       ImGui::Text("%.2f ms (%.1f FPS)", 1'000.0f * io.DeltaTime, io.Framerate);
       ImGui::Separator();

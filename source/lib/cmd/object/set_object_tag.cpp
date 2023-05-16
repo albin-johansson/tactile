@@ -24,7 +24,7 @@
 #include "core/object.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -36,7 +36,7 @@ SetObjectTag::SetObjectTag(const ObjectEntity object_entity, String tag)
 
 void SetObjectTag::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& object = model.get<Object>(mObjectEntity);
 
   object.tag = mOldTag.value();
@@ -45,7 +45,7 @@ void SetObjectTag::undo()
 
 void SetObjectTag::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& object = model.get<Object>(mObjectEntity);
 
   mOldTag = object.tag;

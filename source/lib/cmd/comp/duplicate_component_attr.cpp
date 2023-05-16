@@ -23,7 +23,7 @@
 
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 #include "model/systems/component/component_def.hpp"
 
 namespace tactile::cmd {
@@ -37,7 +37,7 @@ DuplicateComponentAttr::DuplicateComponentAttr(const Entity definition_entity,
 
 void DuplicateComponentAttr::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   sys::remove_component_attribute(model,
                                   mComponentDefinitionEntity,
                                   mDuplicatedName.value());
@@ -46,7 +46,7 @@ void DuplicateComponentAttr::undo()
 
 void DuplicateComponentAttr::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   mDuplicatedName = sys::duplicate_component_attribute(model,
                                                        mComponentDefinitionEntity,
                                                        mAttributeName);

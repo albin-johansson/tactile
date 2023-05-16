@@ -266,7 +266,7 @@ void _show_tile_animation_preview_section(const Model& model,
 
 void show_animation_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
-  auto& settings = get_settings();
+  auto& settings = get_global_settings();
 
   if (!settings.test_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT)) {
     return;

@@ -21,7 +21,7 @@
 
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -34,7 +34,7 @@ RemoveAnimationFrame::RemoveAnimationFrame(const Entity tile_entity,
 
 void RemoveAnimationFrame::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   if (mRemovedAnimation.has_value()) {
     auto& animation = model.add<TileAnimation>(mTileEntity);
@@ -54,7 +54,7 @@ void RemoveAnimationFrame::undo()
 
 void RemoveAnimationFrame::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   const auto& tile = model.get<Tile>(mTileEntity);
   auto& animation = model.get<TileAnimation>(mTileEntity);

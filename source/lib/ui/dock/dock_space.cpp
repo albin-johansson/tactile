@@ -26,7 +26,7 @@
 #include "io/directories.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/settings.hpp"
+#include "model/context.hpp"
 
 namespace tactile::ui {
 namespace {
@@ -43,7 +43,7 @@ void update_dock_space()
   if (!initialized) {
     const auto size = ImGui::GetMainViewport()->Size;
     if (size.x > 0 && size.y > 0) {
-      const auto& settings = get_settings();
+      const auto& settings = get_global_settings();
 
       if (!settings.test_flag(SETTINGS_RESTORE_LAYOUT_BIT) ||
           !fs::exists(get_widget_ini_path())) {
@@ -79,7 +79,7 @@ void load_default_layout(ImGuiID id, const bool reset_visibility)
   ImGui::DockBuilderFinish(id);
 
   if (reset_visibility) {
-    get_settings().reset_dock_visibilities();
+    get_global_settings().reset_dock_visibilities();
   }
 }
 

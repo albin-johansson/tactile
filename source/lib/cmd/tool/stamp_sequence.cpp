@@ -24,7 +24,7 @@
 #include "core/layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -55,7 +55,7 @@ auto StampSequence::get_name() const -> String
 
 void StampSequence::apply_sequence(const TileCache& cache)
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
 
   for (const auto& [pos, tile]: cache) {

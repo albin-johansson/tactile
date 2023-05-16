@@ -21,7 +21,7 @@
 
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -32,7 +32,7 @@ DeleteAnimation::DeleteAnimation(const Entity tile_entity)
 
 void DeleteAnimation::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   auto& animation = model.add<TileAnimation>(mTileEntity);
   animation = mOldTileAnimation.value();
@@ -42,7 +42,7 @@ void DeleteAnimation::undo()
 
 void DeleteAnimation::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   mOldTileAnimation = model.get<TileAnimation>(mTileEntity);
   model.remove<TileAnimation>(mTileEntity);

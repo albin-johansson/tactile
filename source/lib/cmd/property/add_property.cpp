@@ -24,7 +24,7 @@
 #include "core/context.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -39,14 +39,14 @@ AddProperty::AddProperty(const Entity context_entity,
 
 void AddProperty::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& context = model.get<Context>(mContextEntity);
   erase_from(context.props, mName);
 }
 
 void AddProperty::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& context = model.get<Context>(mContextEntity);
   context.props[mName].reset_to_default(mType);
 }

@@ -23,7 +23,7 @@
 #include "core/tileset.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 #include "model/systems/document_system.hpp"
 
 namespace tactile::cmd {
@@ -37,7 +37,7 @@ RemoveTileset::RemoveTileset(const Entity map_entity,
 
 void RemoveTileset::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   auto& map = model.get<Map>(mMapEntity);
   map.attached_tilesets.push_back(mAttachedTilesetEntity);
@@ -49,7 +49,7 @@ void RemoveTileset::undo()
 
 void RemoveTileset::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   auto& map = model.get<Map>(mMapEntity);
   std::erase(map.attached_tilesets, mAttachedTilesetEntity);
@@ -68,7 +68,7 @@ void RemoveTileset::redo()
 void RemoveTileset::dispose()
 {
   if (mDidDetachTileset) {
-    auto& model = get_model();
+    auto& model = get_global_model();
     model.destroy(mAttachedTilesetEntity);
   }
 }

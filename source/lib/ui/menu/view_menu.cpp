@@ -25,7 +25,7 @@
 #include "core/viewport.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/settings.hpp"
+#include "model/context.hpp"
 #include "model/systems/document_system.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/menu/menu.hpp"
@@ -48,7 +48,7 @@ void update_widgets_menu(const Model& model)
 
     ImGui::Separator();
 
-    auto& settings = get_settings();
+    auto& settings = get_global_settings();
 
     if (ImGui::MenuItem(lang.window.property_dock.c_str(),
                         nullptr,
@@ -97,7 +97,7 @@ void update_widgets_menu(const Model& model)
 void update_quick_theme_menu(const Strings& lang)
 {
   if (const Menu theme_menu {lang.action.quick_theme.c_str()}; theme_menu.is_open()) {
-    auto& settings = get_settings();
+    auto& settings = get_global_settings();
 
     auto theme_item = [&](const EditorTheme theme) {
       const auto is_current = settings.get_theme() == theme;
@@ -122,7 +122,7 @@ void update_quick_theme_menu(const Strings& lang)
 void update_quick_lang_menu(const Strings& lang)
 {
   if (const Menu lang_menu {lang.action.quick_language.c_str()}; lang_menu.is_open()) {
-    auto& settings = get_settings();
+    auto& settings = get_global_settings();
     if (ImGui::MenuItem("English (US)")) {
       settings.set_language(Lang::EN);
       reset_layout();

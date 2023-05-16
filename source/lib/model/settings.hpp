@@ -120,7 +120,4 @@ class Settings final {
   void reset_flag(SettingsFlagBits flag);
 };
 
-[[nodiscard]] auto get_settings() -> Settings&;
-[[nodiscard]] auto get_global_settings() -> Settings&;
-
 }  // namespace tactile

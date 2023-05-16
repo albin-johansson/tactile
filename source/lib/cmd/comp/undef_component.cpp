@@ -24,7 +24,7 @@
 #include "core/component.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 #include "model/systems/component/component_set.hpp"
 #include "model/systems/context/components.hpp"
 #include "model/systems/context/context_system.hpp"
@@ -39,7 +39,7 @@ UndefComponent::UndefComponent(const Entity component_set_entity, String compone
 
 void UndefComponent::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
   const auto definition_entity =
@@ -63,7 +63,7 @@ void UndefComponent::undo()
 
 void UndefComponent::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
 
   const auto definition_entity =

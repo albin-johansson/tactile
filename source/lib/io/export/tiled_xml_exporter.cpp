@@ -33,7 +33,7 @@
 #include "io/stream.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/xml.hpp"
-#include "model/settings.hpp"
+#include "model/context.hpp"
 
 namespace tactile {
 namespace {
@@ -196,7 +196,7 @@ void append_csv_tile_layer_data(XmlNode data_node,
 
   const auto tile_count = map.extent.rows * map.extent.cols;
 
-  const auto& settings = get_settings();
+  const auto& settings = get_global_settings();
   const bool fold_tile_data = settings.test_flag(SETTINGS_FOLD_TILE_DATA_BIT);
 
   invoke_mn(map.extent.rows,
@@ -410,7 +410,7 @@ void emit_external_tileset_file(const Path& path,
 
 void append_tileset(XmlNode root, const Path& dir, const TilesetIR& tileset)
 {
-  const auto& settings = get_settings();
+  const auto& settings = get_global_settings();
   if (settings.test_flag(SETTINGS_EMBED_TILESETS_BIT)) {
     append_embedded_tileset(root, tileset, dir);
   }

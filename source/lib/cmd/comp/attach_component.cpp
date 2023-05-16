@@ -21,7 +21,7 @@
 
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 #include "model/systems/context/components.hpp"
 
 namespace tactile::cmd {
@@ -35,7 +35,7 @@ AttachComponent::AttachComponent(const Entity context_entity,
 
 void AttachComponent::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& context = model.get<Context>(mContextEntity);
   sys::detach_component(model, context, mDefinitionEntity);
 }

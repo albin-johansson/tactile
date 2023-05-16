@@ -27,10 +27,10 @@
 #include "core/map.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/context.hpp"
 #include "model/document.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/model.hpp"
-#include "model/settings.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/group_layer_system.hpp"
 #include "ui/constants.hpp"
@@ -148,7 +148,7 @@ void show_layer_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
   TACTILE_ASSERT(sys::has_active_document(model));
 
-  auto& settings = get_settings();
+  auto& settings = get_global_settings();
 
   if (!settings.test_flag(SETTINGS_SHOW_LAYER_DOCK_BIT)) {
     return;

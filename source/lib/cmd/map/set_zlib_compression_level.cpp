@@ -19,11 +19,11 @@
 
 #include "set_zlib_compression_level.hpp"
 
-#include "core/tile_format.hpp"
 #include "core/map.hpp"
+#include "core/tile_format.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -35,7 +35,7 @@ SetZlibCompressionLevel::SetZlibCompressionLevel(const Entity map_entity, const 
 
 void SetZlibCompressionLevel::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& format = model.get<TileFormat>(mMapEntity);
 
   format.zlib_compression_level = mOldLevel.value();
@@ -44,7 +44,7 @@ void SetZlibCompressionLevel::undo()
 
 void SetZlibCompressionLevel::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& format = model.get<TileFormat>(mMapEntity);
 
   mOldLevel = format.zlib_compression_level;

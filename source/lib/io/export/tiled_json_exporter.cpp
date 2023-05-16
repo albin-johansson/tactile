@@ -30,7 +30,7 @@
 #include "io/ir/map/map_ir.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/json.hpp"
-#include "model/settings.hpp"
+#include "model/context.hpp"
 
 namespace tactile {
 namespace {
@@ -334,7 +334,7 @@ void create_external_tileset_file(const Path& dir, const TilesetIR& tileset)
 
 [[nodiscard]] auto emit_tileset(const Path& dir, const TilesetIR& tileset) -> JSON
 {
-  if (get_settings().test_flag(SETTINGS_EMBED_TILESETS_BIT)) {
+  if (get_global_settings().test_flag(SETTINGS_EMBED_TILESETS_BIT)) {
     return emit_embedded_tileset(dir, tileset);
   }
   else {

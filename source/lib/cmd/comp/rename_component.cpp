@@ -24,7 +24,7 @@
 #include "core/component.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -36,7 +36,7 @@ RenameComponent::RenameComponent(const Entity definition_entity, String new_name
 
 void RenameComponent::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
   definition.name = mOldName.value();
@@ -46,7 +46,7 @@ void RenameComponent::undo()
 
 void RenameComponent::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
   mOldName = definition.name;

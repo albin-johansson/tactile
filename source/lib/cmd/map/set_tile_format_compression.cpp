@@ -22,7 +22,7 @@
 #include "core/map.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile {
 
@@ -35,7 +35,7 @@ SetTileFormatCompression::SetTileFormatCompression(const Entity map_entity,
 
 void SetTileFormatCompression::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& format = model.get<TileFormat>(mMapEntity);
 
   format.compression = mOldCompression.value();
@@ -44,7 +44,7 @@ void SetTileFormatCompression::undo()
 
 void SetTileFormatCompression::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& format = model.get<TileFormat>(mMapEntity);
 
   mOldCompression = format.compression;

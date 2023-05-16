@@ -21,7 +21,7 @@
 
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile {
 
@@ -34,7 +34,7 @@ SetTileFormatEncoding::SetTileFormatEncoding(const Entity map_entity,
 
 void SetTileFormatEncoding::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& format = model.get<TileFormat>(mMapEntity);
 
   format.encoding = mOldEncoding.value();
@@ -46,7 +46,7 @@ void SetTileFormatEncoding::undo()
 
 void SetTileFormatEncoding::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& format = model.get<TileFormat>(mMapEntity);
 
   mOldEncoding = format.encoding;

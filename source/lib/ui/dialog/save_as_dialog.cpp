@@ -26,8 +26,8 @@
 
 #include "io/file_dialog.hpp"
 #include "io/save_format.hpp"
+#include "model/context.hpp"
 #include "model/event/document_events.hpp"
-#include "model/settings.hpp"
 
 namespace tactile::ui {
 
@@ -41,7 +41,7 @@ void show_save_as_dialog(Dispatcher& dispatcher)
                                      has_supported_tiled_xml_extension(path);
 
     if (!has_valid_extension) {
-      const auto& format = get_settings().get_preferred_format();
+      const auto& format = get_global_settings().get_preferred_format();
       spdlog::warn("Invalid file extension {}, assuming {} format",
                    path.extension(),
                    get_human_readable_name(format));

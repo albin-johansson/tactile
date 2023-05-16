@@ -23,7 +23,7 @@
 #include "core/map.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 #include "model/systems/map_system.hpp"
 
 namespace tactile::cmd {
@@ -35,13 +35,13 @@ AddRow::AddRow(const Entity map_entity)
 
 void AddRow::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   invoke_n(mRowCount, [&, this] { sys::remove_row_from_map(model, mMapEntity); });
 }
 
 void AddRow::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   invoke_n(mRowCount, [&, this] { sys::add_row_to_map(model, mMapEntity); });
 }
 

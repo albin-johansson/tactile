@@ -24,7 +24,7 @@
 #include "core/map.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 #include "model/systems/object_system.hpp"
 
 namespace tactile::cmd {
@@ -44,7 +44,7 @@ AddObject::AddObject(const MapEntity map_entity,
 
 void AddObject::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& object_layer = model.get<ObjectLayer>(mLayerEntity);
 
   const auto object_entity = mObjectEntity.value();
@@ -56,7 +56,7 @@ void AddObject::undo()
 
 void AddObject::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   auto& map = model.get<Map>(mMapEntity);
   auto& object_layer = model.get<ObjectLayer>(mLayerEntity);
@@ -81,7 +81,7 @@ void AddObject::redo()
 void AddObject::dispose()
 {
   if (mObjectEntity.has_value() && !mDidAddObject) {
-    auto& model = get_model();
+    auto& model = get_global_model();
     model.destroy(*mObjectEntity);
   }
 }

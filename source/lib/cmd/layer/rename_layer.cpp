@@ -24,7 +24,7 @@
 #include "core/context.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -36,7 +36,7 @@ RenameLayer::RenameLayer(const Entity layer_entity, String name)
 
 void RenameLayer::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   auto& layer_context = model.get<Context>(mLayerEntity);
   layer_context.name = mOldName.value();
@@ -46,7 +46,7 @@ void RenameLayer::undo()
 
 void RenameLayer::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& layer_context = model.get<Context>(mLayerEntity);
 
   mOldName = layer_context.name;

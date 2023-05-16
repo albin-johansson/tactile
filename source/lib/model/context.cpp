@@ -17,38 +17,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "model.hpp"
+#include "context.hpp"
 
 namespace tactile {
+namespace {
 
-auto Model::create_entity() -> Entity
+inline Settings gSettings;
+inline Model gModel;
+inline Dispatcher gDispatcher;
+
+}  // namespace
+
+auto get_global_settings() -> Settings&
 {
-  return mRegistry.create();
+  return gSettings;
 }
 
-void Model::destroy(const Entity entity)
+auto get_global_model() -> Model&
 {
-  if (entity != kNullEntity) {
-    TACTILE_ASSERT(mRegistry.valid(entity));
-    mRegistry.destroy(entity);
-  }
+  return gModel;
 }
 
-void Model::set_enabled(const Entity entity, const bool enabled)
+auto get_global_dispatcher() -> Dispatcher&
 {
-  TACTILE_ASSERT(mRegistry.valid(entity));
-  if (enabled) {
-    mRegistry.remove<DisabledTag>(entity);
-  }
-  else {
-    mRegistry.emplace_or_replace<DisabledTag>(entity);
-  }
-}
-
-auto Model::is_enabled(const Entity entity) const -> bool
-{
-  TACTILE_ASSERT(mRegistry.valid(entity));
-  return !mRegistry.all_of<DisabledTag>(entity);
+  return gDispatcher;
 }
 
 }  // namespace tactile

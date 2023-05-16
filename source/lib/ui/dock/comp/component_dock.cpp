@@ -28,10 +28,10 @@
 #include "core/context.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/context.hpp"
 #include "model/document.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
-#include "model/settings.hpp"
 #include "model/systems/context/components.hpp"
 #include "model/systems/document_system.hpp"
 #include "ui/style/alignment.hpp"
@@ -120,7 +120,7 @@ void _show_dock_contents(const Model& model,
 
 void show_component_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
-  auto& settings = get_settings();
+  auto& settings = get_global_settings();
 
   if (!settings.test_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT)) {
     return;

@@ -25,9 +25,9 @@
 #include "common/numeric.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/context.hpp"
 #include "model/event/command_events.hpp"
 #include "model/event/view_events.hpp"
-#include "model/settings.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/dock/dock_space.hpp"
@@ -126,7 +126,7 @@ void _show_preview_settings(const Settings& settings)
 
 void _apply_current_settings(Dispatcher& dispatcher)
 {
-  get_settings().copy_values_from(gDialogState.ui_settings);
+  get_global_settings().copy_values_from(gDialogState.ui_settings);
 
   if (gDialogState.ui_settings.get_language() !=
       gDialogState.old_settings.get_language()) {
@@ -348,7 +348,7 @@ void _show_export_tab(const Strings& lang)
 
 void open_settings_dialog()
 {
-  gDialogState.old_settings.copy_values_from(get_settings());
+  gDialogState.old_settings.copy_values_from(get_global_settings());
   gDialogState.ui_settings.copy_values_from(gDialogState.old_settings);
 
   gDialogState.open_dialog = true;
@@ -382,11 +382,11 @@ void show_settings_dialog(const Model&, Entity, Dispatcher& dispatcher)
 
   if (action == DialogAction::Apply || action == DialogAction::Accept) {
     _apply_current_settings(dispatcher);
-    _show_preview_settings(get_settings());
+    _show_preview_settings(get_global_settings());
   }
   else if (action == DialogAction::Cancel) {
     // Reset any changes we made for preview purposes
-    _show_preview_settings(get_settings());
+    _show_preview_settings(get_global_settings());
   }
 }
 

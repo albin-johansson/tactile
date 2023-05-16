@@ -22,7 +22,7 @@
 #include "core/object.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -34,7 +34,7 @@ SetObjectVisible::SetObjectVisible(const ObjectEntity object_entity, const bool 
 
 void SetObjectVisible::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& object = model.get<Object>(mObjectEntity);
 
   object.visible = mOldVisibility.value();
@@ -43,7 +43,7 @@ void SetObjectVisible::undo()
 
 void SetObjectVisible::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& object = model.get<Object>(mObjectEntity);
 
   mOldVisibility = static_cast<bool>(object.visible);

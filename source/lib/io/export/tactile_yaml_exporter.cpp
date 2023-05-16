@@ -35,7 +35,7 @@
 #include "io/stream.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/yaml.hpp"
-#include "model/settings.hpp"
+#include "model/context.hpp"
 
 namespace tactile {
 namespace {
@@ -158,7 +158,7 @@ void emit_plain_tile_layer_data(YAML::Emitter& emitter,
                                 const TileLayerIR& data,
                                 const TileExtent extent)
 {
-  const auto& settings = get_settings();
+  const auto& settings = get_global_settings();
   const bool fold_tile_data = settings.test_flag(SETTINGS_FOLD_TILE_DATA_BIT);
 
   emitter << YAML::Key << "data";

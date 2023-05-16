@@ -25,7 +25,7 @@
 #include "core/component.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -40,7 +40,7 @@ UpdateAttachedComponent::UpdateAttachedComponent(const Entity component_entity,
 
 void UpdateAttachedComponent::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& component = model.get<Component>(mComponentEntity);
 
   component.attributes[mAttributeName] = mOldValue.value();
@@ -49,7 +49,7 @@ void UpdateAttachedComponent::undo()
 
 void UpdateAttachedComponent::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& component = model.get<Component>(mComponentEntity);
 
   mOldValue = lookup_in(component.attributes, mAttributeName);

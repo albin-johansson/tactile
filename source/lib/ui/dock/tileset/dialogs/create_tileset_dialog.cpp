@@ -27,8 +27,8 @@
 #include "io/file_dialog.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/context.hpp"
 #include "model/event/tileset_events.hpp"
-#include "model/settings.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -68,7 +68,7 @@ void open_create_tileset_dialog()
 {
   gDialogState.image_path_preview_buffer.clear();
   gDialogState.image_path.clear();
-  gDialogState.tile_size = get_settings().get_preferred_tile_size();
+  gDialogState.tile_size = get_global_settings().get_preferred_tile_size();
   gDialogState.open_dialog = true;
 }
 

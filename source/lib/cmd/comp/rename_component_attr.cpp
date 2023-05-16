@@ -23,7 +23,7 @@
 
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 #include "model/systems/component/component_def.hpp"
 
 namespace tactile::cmd {
@@ -39,13 +39,13 @@ RenameComponentAttr::RenameComponentAttr(const Entity definition_entity,
 
 void RenameComponentAttr::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   sys::rename_component_attribute(model, mComponentDefinitionEntity, mNewName, mOldName);
 }
 
 void RenameComponentAttr::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   sys::rename_component_attribute(model, mComponentDefinitionEntity, mOldName, mNewName);
 }
 

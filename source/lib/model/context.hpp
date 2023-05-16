@@ -17,38 +17,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "model.hpp"
+#pragma once
+
+#include "common/type/dispatcher.hpp"
+#include "model/model.hpp"
+#include "model/settings.hpp"
 
 namespace tactile {
 
-auto Model::create_entity() -> Entity
-{
-  return mRegistry.create();
-}
+/// Returns the global settings.
+[[nodiscard]] auto get_global_settings() -> Settings&;
 
-void Model::destroy(const Entity entity)
-{
-  if (entity != kNullEntity) {
-    TACTILE_ASSERT(mRegistry.valid(entity));
-    mRegistry.destroy(entity);
-  }
-}
+/// Returns the global model instance.
+[[nodiscard]] auto get_global_model() -> Model&;
 
-void Model::set_enabled(const Entity entity, const bool enabled)
-{
-  TACTILE_ASSERT(mRegistry.valid(entity));
-  if (enabled) {
-    mRegistry.remove<DisabledTag>(entity);
-  }
-  else {
-    mRegistry.emplace_or_replace<DisabledTag>(entity);
-  }
-}
-
-auto Model::is_enabled(const Entity entity) const -> bool
-{
-  TACTILE_ASSERT(mRegistry.valid(entity));
-  return !mRegistry.all_of<DisabledTag>(entity);
-}
+/// Returns the global dispatcher instance.
+[[nodiscard]] auto get_global_dispatcher() -> Dispatcher&;
 
 }  // namespace tactile

@@ -22,7 +22,7 @@
 #include "core/layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -34,7 +34,7 @@ SetLayerVisible::SetLayerVisible(const Entity layer_entity, const bool visible)
 
 void SetLayerVisible::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& layer = model.get<Layer>(mLayerEntity);
 
   layer.visible = mOldVisibility.value();
@@ -43,7 +43,7 @@ void SetLayerVisible::undo()
 
 void SetLayerVisible::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& layer = model.get<Layer>(mLayerEntity);
 
   mOldVisibility = static_cast<bool>(layer.visible);

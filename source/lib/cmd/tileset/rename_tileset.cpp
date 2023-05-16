@@ -24,7 +24,7 @@
 #include "core/context.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -36,7 +36,7 @@ RenameTileset::RenameTileset(Entity tileset_entity, String new_name)
 
 void RenameTileset::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   auto& tileset_context = model.get<Context>(mTilesetEntity);
   tileset_context.name = mOldName.value();
@@ -46,7 +46,7 @@ void RenameTileset::undo()
 
 void RenameTileset::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& tileset_context = model.get<Context>(mTilesetEntity);
 
   mOldName = tileset_context.name;

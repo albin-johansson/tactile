@@ -22,7 +22,7 @@
 #include "core/layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 #include "model/systems/tile_layer_system.hpp"
 
 namespace tactile::cmd {
@@ -38,7 +38,7 @@ BucketFill::BucketFill(const Entity tile_layer_entity,
 
 void BucketFill::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
 
   const auto target_tile_id = mTargetTileID.value();
@@ -52,7 +52,7 @@ void BucketFill::undo()
 
 void BucketFill::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
 
   mTargetTileID = tile_layer.tile_at(mOrigin);

@@ -23,7 +23,7 @@
 #include "core/tile.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 #include "model/systems/tileset_system.hpp"
 
 namespace tactile::cmd {
@@ -39,7 +39,7 @@ AddAnimationFrame::AddAnimationFrame(const Entity tile_entity,
 
 void AddAnimationFrame::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   auto& animation = model.get<TileAnimation>(mTileEntity);
   erase_at(animation.frames, mFrameIndex.value());
@@ -53,7 +53,7 @@ void AddAnimationFrame::undo()
 
 void AddAnimationFrame::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   mTileWasAnimatedBefore = model.has<TileAnimation>(mTileEntity);
 
   if (!mTileWasAnimatedBefore) {

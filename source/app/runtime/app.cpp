@@ -31,12 +31,12 @@
 #include "io/proto/history.hpp"
 #include "io/proto/session.hpp"
 #include "io/proto/settings.hpp"
+#include "model/context.hpp"
 #include "model/document.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/event/view_events.hpp"
 #include "model/file_history.hpp"
 #include "model/model.hpp"
-#include "model/settings.hpp"
 #include "model/systems/texture_system.hpp"
 #include "model/systems/widget_system.hpp"
 #include "runtime/app_context.hpp"
@@ -158,7 +158,7 @@ void App::on_update()
 void App::on_event(const cen::event_handler& handler)
 {
   if (const auto type = handler.raw_type(); type > SDL_USEREVENT) {
-    get_dispatcher().trigger(MenuItemEvent {static_cast<MenuAction>(*type)});
+    get_global_dispatcher().trigger(MenuItemEvent {static_cast<MenuAction>(*type)});
     return;
   }
 
@@ -193,8 +193,9 @@ void App::subscribe_to_events()
   //  install_component_event_handler();
   //  install_view_event_handler();
 
-  get_dispatcher().sink<ShowSettingsEvent>().connect<&ui::open_settings_dialog>();
-  get_dispatcher().sink<QuitEvent>().connect<&App::on_quit>(this);
+  auto& dispatcher = get_global_dispatcher();
+  dispatcher.sink<ShowSettingsEvent>().connect<&ui::open_settings_dialog>();
+  dispatcher.sink<QuitEvent>().connect<&App::on_quit>(this);
 }
 
 void App::add_open_documents_to_file_history()
@@ -213,7 +214,7 @@ void App::on_keyboard_event(cen::keyboard_event event)
   event.set_modifier(cen::key_mod::num, false);
   event.set_modifier(cen::key_mod::mode, false);
 
-  update_shortcuts(event, get_dispatcher());
+  update_shortcuts(event, get_global_dispatcher());
 }
 
 void App::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
@@ -233,7 +234,7 @@ void App::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 
     if (ui::is_mouse_within_viewport()) {
       ui::viewport_widget_mouse_wheel_event_handler(document_viewport,
-                                                    get_dispatcher(),
+                                                    get_global_dispatcher(),
                                                     event);
     }
     else if (document.type == DocumentType::Map && ui::is_tileset_dock_hovered()) {

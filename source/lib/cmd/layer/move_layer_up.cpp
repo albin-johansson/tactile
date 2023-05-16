@@ -21,7 +21,7 @@
 
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 #include "model/systems/group_layer_system.hpp"
 
 namespace tactile::cmd {
@@ -34,13 +34,13 @@ MoveLayerUp::MoveLayerUp(const Entity map_entity, const Entity layer_entity)
 
 void MoveLayerUp::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   sys::move_layer_down(model, mMapEntity, mLayerEntity);
 }
 
 void MoveLayerUp::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   sys::move_layer_up(model, mMapEntity, mLayerEntity);
 }
 

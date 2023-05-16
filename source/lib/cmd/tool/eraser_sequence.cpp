@@ -24,7 +24,7 @@
 #include "core/layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -36,7 +36,7 @@ EraserSequence::EraserSequence(const Entity tile_layer_entity, TileCache old_sta
 
 void EraserSequence::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
 
   for (const auto& [position, tile_id]: mOldState) {
@@ -46,7 +46,7 @@ void EraserSequence::undo()
 
 void EraserSequence::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
 
   for (const auto& [position, tile_id]: mOldState) {

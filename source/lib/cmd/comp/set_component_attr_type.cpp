@@ -25,7 +25,7 @@
 #include "core/component.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 #include "model/systems/component/component_def.hpp"
 #include "model/systems/context/context_system.hpp"
 
@@ -42,7 +42,7 @@ SetComponentAttrType::SetComponentAttrType(const Entity definition_entity,
 
 void SetComponentAttrType::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
   definition.attributes[mAttributeName] = mOldValue.value();
@@ -57,7 +57,7 @@ void SetComponentAttrType::undo()
 
 void SetComponentAttrType::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
 
   const auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
   mOldValue = lookup_in(definition.attributes, mAttributeName);

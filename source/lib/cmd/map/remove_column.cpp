@@ -23,7 +23,7 @@
 #include "core/map.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 #include "model/systems/map_system.hpp"
 
 namespace tactile::cmd {
@@ -35,14 +35,14 @@ RemoveColumn::RemoveColumn(const Entity map_entity)
 
 void RemoveColumn::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   invoke_n(mColumnCount, [&, this] { sys::remove_column_from_map(model, mMapEntity); });
   mCache.restore_tiles(model);
 }
 
 void RemoveColumn::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   const auto& map = model.get<Map>(mMapEntity);
 
   const auto begin = TilePos::from(0u, map.extent.cols - mColumnCount - 1u);

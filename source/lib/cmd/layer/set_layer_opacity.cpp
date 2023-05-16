@@ -22,7 +22,7 @@
 #include "core/layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/model.hpp"
+#include "model/context.hpp"
 
 namespace tactile::cmd {
 
@@ -34,7 +34,7 @@ SetLayerOpacity::SetLayerOpacity(const Entity layer_entity, const float opacity)
 
 void SetLayerOpacity::undo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& layer = model.get<Layer>(mLayerEntity);
 
   layer.opacity = mOldOpacity.value();
@@ -43,7 +43,7 @@ void SetLayerOpacity::undo()
 
 void SetLayerOpacity::redo()
 {
-  auto& model = get_model();
+  auto& model = get_global_model();
   auto& layer = model.get<Layer>(mLayerEntity);
 
   mOldOpacity = layer.opacity;

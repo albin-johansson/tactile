@@ -32,10 +32,10 @@
 #include "core/tileset.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/context.hpp"
 #include "model/document.hpp"
 #include "model/file_history.hpp"
 #include "model/model.hpp"
-#include "model/settings.hpp"
 #include "model/systems/document_system.hpp"
 #include "ui/constants.hpp"
 
