@@ -20,20 +20,22 @@
 #pragma once
 
 #include <centurion/fwd.hpp>
-#include <entt/signal/fwd.hpp>
 
-#include "common/macros.hpp"
-
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetRef)
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
+#include "core/tileset.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
-void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatcher);
+void show_tileset_dock(const Model& model, Entity widget_entity, Dispatcher& dispatcher);
 
-void tileset_dock_mouse_wheel_event_handler(const TilesetRef& tileset_ref,
+[[nodiscard]] auto is_tileset_dock_enabled(const Model& model) -> bool;
+
+void tileset_dock_mouse_wheel_event_handler(const Model& model,
+                                            Entity attached_tileset_entity,
                                             const cen::mouse_wheel_event& event,
-                                            entt::dispatcher& dispatcher);
+                                            Dispatcher& dispatcher);
 
 [[nodiscard]] auto is_tileset_dock_focused() -> bool;
 

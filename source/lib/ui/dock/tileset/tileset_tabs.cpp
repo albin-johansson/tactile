@@ -19,29 +19,30 @@
 
 #include "tileset_tabs.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
-#include "core/tile/tileset_bundle.hpp"
+#include "core/context.hpp"
+#include "core/map.hpp"
+#include "core/tileset.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/document/map_document.hpp"
-#include "model/document/tileset_document.hpp"
+#include "model/document.hpp"
 #include "model/event/document_events.hpp"
 #include "model/event/property_events.hpp"
 #include "model/event/tileset_events.hpp"
-#include "model/model.hpp"
-#include "tileset_view.hpp"
+#include "model/systems/document_system.hpp"
+#include "ui/dock/tileset/tileset_view.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"
 
 namespace tactile::ui {
 namespace {
 
-void update_context_menu(const DocumentModel& model,
-                         const UUID& tileset_id,
-                         entt::dispatcher& dispatcher)
+void _update_context_menu(const Model& model,
+                          const Entity tileset_document_entity,
+                          const Entity tileset_entity,
+                          Dispatcher& dispatcher)
 {
   if (auto popup = Popup::for_item("##TilesetTabContext"); popup.is_open()) {
     const auto& lang = get_current_language();
@@ -53,30 +54,30 @@ void update_context_menu(const DocumentModel& model,
     ImGui::Separator();
 
     if (ImGui::MenuItem(lang.action.inspect_tileset.c_str())) {
-      dispatcher.enqueue<InspectContextEvent>(tileset_id);
+      dispatcher.enqueue<InspectContextEvent>(tileset_entity);
     }
 
     ImGui::Separator();
 
-    if (Disable disable_if {model.is_open(tileset_id)};
+    if (Disable disable_if {sys::is_document_open(model, tileset_document_entity)};
         ImGui::MenuItem(lang.action.open_tileset.c_str())) {
-      dispatcher.enqueue<OpenDocumentEvent>(tileset_id);
-      dispatcher.enqueue<SelectDocumentEvent>(tileset_id);
+      dispatcher.enqueue<OpenDocumentEvent>(tileset_document_entity);
+      dispatcher.enqueue<SelectDocumentEvent>(tileset_document_entity);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(lang.action.remove_tileset.c_str())) {
-      dispatcher.enqueue<RemoveTilesetEvent>(tileset_id);
+      dispatcher.enqueue<RemoveTilesetEvent>(tileset_entity);
     }
   }
 }
 
 }  // namespace
 
-void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
+void show_tileset_tabs(const Model& model, Dispatcher& dispatcher)
 {
-  TACTILE_ASSERT(model.is_map_active());
+  TACTILE_ASSERT(sys::is_map_document_active(model));
 
   constexpr ImGuiTabBarFlags tab_bar_flags =
       ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
@@ -87,29 +88,35 @@ void update_tileset_tabs(const DocumentModel& model, entt::dispatcher& dispatche
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
 
-    const auto& map_document = model.require_active_map_document();
-    const auto& map = map_document.get_map();
-    const auto& tilesets = map.get_tileset_bundle();
+    const auto map_document_entity = sys::get_active_document(model);
+    const auto& map_document = model.get<MapDocument>(map_document_entity);
+    const auto& map = model.get<Map>(map_document.map);
 
-    for (const auto& [tileset_id, ref]: tilesets) {
-      const Scope scope {tileset_id};
+    for (const auto attached_tileset_entity: map.attached_tilesets) {
+      const Scope scope {attached_tileset_entity};
+      const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
 
-      const auto& name = ref.get_tileset().get_ctx().name();
-      const auto is_active = tilesets.get_active_tileset_id() == tileset_id;
+      const auto tileset_entity = attached_tileset.tileset;
+      const auto tileset_document_entity =
+          sys::get_associated_tileset_document(model, tileset_entity);
 
-      if (const TabItem item {name.c_str(),
+      const auto& tileset_context = model.get<Context>(tileset_entity);
+      const auto& tileset_name = tileset_context.name;
+      const auto is_tileset_active = map.active_tileset == attached_tileset_entity;
+
+      if (const TabItem item {tileset_name.c_str(),
                               nullptr,
-                              is_active ? ImGuiTabItemFlags_SetSelected : 0};
+                              is_tileset_active ? ImGuiTabItemFlags_SetSelected : 0};
           item.is_open()) {
-        update_tileset_view(model, tileset_id, dispatcher);
+        update_attached_tileset_view(model, attached_tileset_entity, dispatcher);
       }
 
       if (ImGui::IsItemClicked(ImGuiMouseButton_Left) ||
           ImGui::IsItemClicked(ImGuiMouseButton_Right) || ImGui::IsItemActivated()) {
-        dispatcher.enqueue<SelectTilesetEvent>(tileset_id);
+        dispatcher.enqueue<SelectTilesetEvent>(attached_tileset_entity);
       }
       else {
-        update_context_menu(model, tileset_id, dispatcher);
+        _update_context_menu(model, tileset_document_entity, tileset_entity, dispatcher);
       }
     }
   }

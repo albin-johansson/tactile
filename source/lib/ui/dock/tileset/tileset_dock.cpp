@@ -20,19 +20,19 @@
 #include "tileset_dock.hpp"
 
 #include <centurion/mouse_events.hpp>
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/tile/tileset_bundle.hpp"
+#include "core/map.hpp"
+#include "core/tileset.hpp"
 #include "core/viewport.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/document/map_document.hpp"
+#include "model/document.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
-#include "model/model.hpp"
 #include "model/settings.hpp"
-#include "tileset_tabs.hpp"
+#include "model/systems/document_system.hpp"
+#include "ui/dock/tileset/tileset_tabs.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
@@ -49,7 +49,7 @@ inline constinit TilesetDockState gDockState;
 
 }  // namespace
 
-void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatcher)
+void show_tileset_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
   auto& settings = get_settings();
 
@@ -71,10 +71,11 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
   gDockState.has_hover = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
-    const auto& map_document = model.require_active_map_document();
-    const auto& map = map_document.get_map();
+    const auto document_entity = sys::get_active_document(model);
+    const auto& map_document = model.get<MapDocument>(document_entity);
+    const auto& map = model.get<Map>(map_document.map);
 
-    if (map.get_tileset_bundle().empty()) {
+    if (map.attached_tilesets.empty()) {
       prepare_vertical_alignment_center(2);
       ui_centered_label(lang.misc.map_has_no_tilesets.c_str());
 
@@ -85,25 +86,31 @@ void update_tileset_dock(const DocumentModel& model, entt::dispatcher& dispatche
       }
     }
     else {
-      update_tileset_tabs(model, dispatcher);
+      show_tileset_tabs(model, dispatcher);
     }
   }
 }
 
-void tileset_dock_mouse_wheel_event_handler(const TilesetRef& tileset_ref,
-                                            const cen::mouse_wheel_event& event,
-                                            entt::dispatcher& dispatcher)
+auto is_tileset_dock_enabled(const Model& model) -> bool
 {
-  const Float2 scaling {4, 4};
+  return sys::is_map_document_active(model);
+}
 
-  const auto& viewport = tileset_ref.get_viewport();
+void tileset_dock_mouse_wheel_event_handler(const Model& model,
+                                            const Entity attached_tileset_entity,
+                                            const cen::mouse_wheel_event& event,
+                                            Dispatcher& dispatcher)
+{
+  const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
+  const auto& viewport = model.get<Viewport>(attached_tileset_entity);
+
+  const Float2 scaling {4, 4};
   const Float2 precise {event.precise_x(), event.precise_y()};
 
-  auto delta = precise * (viewport.tile_size() / scaling);
+  auto delta = precise * (viewport.tile_size / scaling);
   delta.x = -delta.x;
 
-  dispatcher.enqueue<OffsetTilesetViewportEvent>(tileset_ref.get_tileset().get_uuid(),
-                                                 delta);
+  dispatcher.enqueue<OffsetTilesetViewportEvent>(attached_tileset.tileset, delta);
 }
 
 auto is_tileset_dock_focused() -> bool

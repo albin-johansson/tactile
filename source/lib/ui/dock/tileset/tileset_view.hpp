@@ -19,17 +19,14 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
-#include "common/macros.hpp"
-#include "common/type/uuid.hpp"
-
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
-void update_tileset_view(const DocumentModel& model,
-                         const UUID& tileset_id,
-                         entt::dispatcher& dispatcher);
+void update_attached_tileset_view(const Model& model,
+                                  Entity attached_tileset_entity,
+                                  Dispatcher& dispatcher);
 
 }  // namespace tactile::ui
