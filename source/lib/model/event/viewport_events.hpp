@@ -54,15 +54,15 @@ struct OffsetDocumentViewportEvent final {
 };
 
 struct OffsetTilesetViewportEvent final {
-  Entity tileset {kNullEntity};  ///< The target tileset.
-  Float2 delta {};               ///< The offset to apply.
+  Entity attached_tileset {kNullEntity};  ///< The target attached tileset entity.
+  Float2 delta {};                        ///< The offset to apply.
 };
 
 /// Event used to update the limits of tilesets in the tileset dock widget.
 struct UpdateTilesetViewportLimitsEvent final {
-  Entity tileset {kNullEntity};  ///< The target tileset.
-  Float2 min_offset {};          ///< The minimum offset.
-  Float2 max_offset {};          ///< The maximum offset.
+  Entity attached_tileset {kNullEntity};  ///< The target attached tileset entity.
+  Float2 min_offset {};                   ///< The minimum offset.
+  Float2 max_offset {};                   ///< The maximum offset.
 };
 
 struct PanUpEvent final {};
