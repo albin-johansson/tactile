@@ -31,7 +31,7 @@
 #include "core/texture.hpp"
 #include "ui/conversions.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 inline void render_text(const char* text, const ImVec2& position, const Color& color)
 {
@@ -183,7 +183,7 @@ inline void draw_shadowed_ellipse(const Float2& center,
 /// \param uv_min the normalized top-left corner of the texture region to render.
 /// \param uv_max the normalized bottom-right corner of the texture region to render.
 /// \param opacity the opacity of the rendered texture, in the interval [0, 255].
-inline void render_image(const Texture& texture,
+inline void render_image(ImTextureID texture,
                          const ImVec2& position,
                          const ImVec2& size,
                          const ImVec2& uv_min = {0, 0},
@@ -191,7 +191,7 @@ inline void render_image(const Texture& texture,
                          const uint8 opacity = 255)
 {
   auto* draw_list = ImGui::GetWindowDrawList();
-  draw_list->AddImage(to_imgui_texture_id(texture.get_id()),
+  draw_list->AddImage(texture,
                       position,
                       position + size,
                       uv_min,
@@ -199,7 +199,7 @@ inline void render_image(const Texture& texture,
                       IM_COL32(0xFF, 0xFF, 0xFF, opacity));
 }
 
-inline void render_image(const Texture& texture,
+inline void render_image(ImTextureID texture,
                          const Float2& position,
                          const Float2& size,
                          const Float2& uv_min = {0, 0},

@@ -22,7 +22,7 @@
 #include <cmath>    // sin, cos
 #include <numbers>  // pi_v
 
-namespace tactile {
+namespace tactile::ui {
 namespace {
 
 inline constexpr int kEllipseSegments = 50;

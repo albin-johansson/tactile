@@ -157,15 +157,7 @@ auto is_valid_tile_identifier(const Model& model, const Map& map, const TileID t
     return true;
   }
 
-  for (const auto attached_tileset_entity: map.attached_tilesets) {
-    const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
-
-    if (tile_id >= attached_tileset.first_tile && tile_id <= attached_tileset.last_tile) {
-      return true;
-    }
-  }
-
-  return false;
+  return find_tileset_with_tile(model, map, tile_id) != kNullEntity;
 }
 
 auto is_valid_tile_identifier(const Model& model,
@@ -180,15 +172,28 @@ auto is_valid_tile_identifier(const Model& model,
 auto convert_tile_id_to_index(const Model& model, const Map& map, const TileID tile_id)
     -> Maybe<TileIndex>
 {
+  const auto attached_tileset_entity = find_tileset_with_tile(model, map, tile_id);
+
+  if (attached_tileset_entity != kNullEntity) {
+    const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
+    return attached_tileset.to_tile_index(tile_id).value();
+  }
+
+  return nothing;
+}
+
+auto find_tileset_with_tile(const Model& model, const Map& map, const TileID tile_id)
+    -> Entity
+{
   for (const auto attached_tileset_entity: map.attached_tilesets) {
     const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
 
     if (attached_tileset.is_valid_tile(tile_id)) {
-      return tile_id - attached_tileset.first_tile;
+      return attached_tileset_entity;
     }
   }
 
-  return nothing;
+  return kNullEntity;
 }
 
 }  // namespace tactile::sys

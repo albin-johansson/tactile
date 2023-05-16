@@ -55,4 +55,9 @@ void make_tile_animated(Model& model, Entity tile_entity);
                                             const Map& map,
                                             TileID tile_id) -> Maybe<TileIndex>;
 
+/// Returns the attached tileset entity associated with a global tile ID.
+[[nodiscard]] auto find_tileset_with_tile(const Model& model,
+                                          const Map& map,
+                                          TileID tile_id) -> Entity;
+
 }  // namespace tactile::sys
