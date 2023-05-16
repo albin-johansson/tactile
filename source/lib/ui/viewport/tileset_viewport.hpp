@@ -19,15 +19,15 @@
 
 #pragma once
 
-#include <entt/signal/fwd.hpp>
-
-#include "common/macros.hpp"
-
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetDocument)
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
-void show_tileset_viewport(const TilesetDocument& document, entt::dispatcher& dispatcher);
+void show_tileset_viewport(const Model& model,
+                           Entity tileset_document_entity,
+                           Dispatcher& dispatcher);
 
 void center_tileset_viewport();
 

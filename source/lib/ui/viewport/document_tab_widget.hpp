@@ -19,15 +19,12 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
-namespace tactile {
-class DocumentModel;
-}  // namespace tactile
+#include "common/type/dispatcher.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
-void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatcher);
+void update_document_tabs(const Model& model, Dispatcher& dispatcher);
 
 void center_map_viewport();
 

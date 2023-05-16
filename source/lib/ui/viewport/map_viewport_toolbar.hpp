@@ -19,16 +19,12 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
-namespace tactile {
-class DocumentModel;
-}  // namespace tactile
+#include "common/type/dispatcher.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
-void update_map_viewport_toolbar(const DocumentModel& model,
-                                 entt::dispatcher& dispatcher);
+void show_map_viewport_toolbar(const Model& model, Dispatcher& dispatcher);
 
 [[nodiscard]] auto is_map_toolbar_visible() -> bool;
 

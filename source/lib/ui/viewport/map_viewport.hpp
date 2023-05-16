@@ -19,18 +19,15 @@
 
 #pragma once
 
-#include <entt/fwd.hpp>
-
-namespace tactile {
-class DocumentModel;
-class MapDocument;
-}  // namespace tactile
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
-void show_map_viewport(const DocumentModel& model,
-                       const MapDocument& map,
-                       entt::dispatcher& dispatcher);
+void show_map_viewport(const Model& model,
+                       Entity map_document_entity,
+                       Dispatcher& dispatcher);
 
 void center_map_viewport();
 

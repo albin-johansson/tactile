@@ -19,14 +19,14 @@
 
 #pragma once
 
-#include "common/macros.hpp"
-
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, Map)
+#include "core/map.hpp"
+#include "model/model.hpp"
+#include "ui/viewport/viewport_cursor_info.hpp"
 
 namespace tactile::ui {
 
-TACTILE_FWD_DECLARE_STRUCT(ViewportCursorInfo)
-
-void update_map_viewport_overlay(const Map& map, const ViewportCursorInfo& cursor);
+void show_map_viewport_overlay(const Model& model,
+                               const Map& map,
+                               const ViewportCursorInfo& cursor);
 
 }  // namespace tactile::ui

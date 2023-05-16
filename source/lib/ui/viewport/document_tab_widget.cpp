@@ -19,61 +19,75 @@
 
 #include "document_tab_widget.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
+#include "cmd/command_stack.hpp"
 #include "common/util/fmt.hpp"
-#include "model/cmd/command_stack.hpp"
+#include "model/document.hpp"
 #include "model/event/document_events.hpp"
-#include "model/model.hpp"
-#include "tileset_viewport.hpp"
+#include "model/systems/document_system.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/viewport/map_viewport.hpp"
+#include "ui/viewport/tileset_viewport.hpp"
 #include "ui/widget/scoped.hpp"
 
 namespace tactile::ui {
+namespace {
 
-void update_document_tabs(const DocumentModel& model, entt::dispatcher& dispatcher)
+void _show_document_tab(const Model& model,
+                        const Entity document_entity,
+                        Dispatcher& dispatcher)
+{
+  const Scope scope {document_entity};
+
+  const auto& document = model.get<Document>(document_entity);
+  const auto& command_stack = model.get<CommandStack>(document_entity);
+
+  const char* document_icon =
+      (document.type == DocumentType::Map) ? TAC_ICON_MAP : TAC_ICON_TILESET;
+  const auto document_name = sys::get_document_name(model, document_entity);
+  const FmtString<256> name_with_icon {"{} {}", document_icon, document_name};
+
+  ImGuiTabItemFlags flags = 0;
+
+  const auto is_active = sys::get_active_document(model) == document_entity;
+  if (is_active) {
+    flags |= ImGuiTabItemFlags_SetSelected;
+
+    if (!command_stack.is_clean()) {
+      flags |= ImGuiTabItemFlags_UnsavedDocument;
+    }
+  }
+
+  bool opened = true;
+  if (const TabItem item {name_with_icon.data(), &opened, flags}; item.is_open()) {
+    if (is_active) {
+      if (model.has<MapDocument>(document_entity)) {
+        show_map_viewport(model, document_entity, dispatcher);
+      }
+
+      if (model.has<TilesetDocument>(document_entity)) {
+        show_tileset_viewport(model, document_entity, dispatcher);
+      }
+    }
+  }
+
+  if (!opened) {
+    dispatcher.enqueue<CloseDocumentEvent>(document_entity);
+  }
+  else if (ImGui::IsItemActivated()) {
+    dispatcher.enqueue<SelectDocumentEvent>(document_entity);
+  }
+}
+
+}  // namespace
+
+void update_document_tabs(const Model& model, Dispatcher& dispatcher)
 {
   if (const TabBar bar {"##DocumentTabs", ImGuiTabBarFlags_Reorderable}; bar.is_open()) {
-    model.each([&](const UUID& document_id) {
-      const Scope scope {document_id};
-
-      const auto& document = model.get_document(document_id);
-      const auto& document_name = document.get_name();
-      const char* document_icon = document.is_map() ? TAC_ICON_MAP : TAC_ICON_TILESET;
-      const FmtString<256> name_with_icon {"{} {}", document_icon, document_name};
-
-      ImGuiTabItemFlags flags = 0;
-
-      const auto is_active = model.get_active_document_id() == document_id;
-      if (is_active) {
-        flags |= ImGuiTabItemFlags_SetSelected;
-
-        if (!document.get_history().is_clean()) {
-          flags |= ImGuiTabItemFlags_UnsavedDocument;
-        }
-      }
-
-      bool opened = true;
-      if (const TabItem item {name_with_icon.data(), &opened, flags}; item.is_open()) {
-        if (is_active) {
-          if (model.is_map(document_id)) {
-            show_map_viewport(model, model.get_map_document(document_id), dispatcher);
-          }
-          if (model.is_tileset(document_id)) {
-            show_tileset_viewport(model.get_tileset_document(document_id), dispatcher);
-          }
-        }
-      }
-
-      if (!opened) {
-        dispatcher.enqueue<CloseDocumentEvent>(document_id);
-      }
-      else if (ImGui::IsItemActivated()) {
-        dispatcher.enqueue<SelectDocumentEvent>(document_id);
-      }
-    });
+    for (const auto& [document_entity, document]: model.each<Document>()) {
+      _show_document_tab(model, document_entity, dispatcher);
+    }
   }
 }
 

@@ -23,14 +23,13 @@
 #include <imgui_internal.h>
 
 #include "core/layer.hpp"
-#include "core/layer.hpp"
 #include "core/map.hpp"
-#include "core/tile/tileset_bundle.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/settings.hpp"
+#include "model/systems/tileset_system.hpp"
+#include "ui/viewport/viewport_cursor_info.hpp"
 #include "ui/widget/scoped.hpp"
-#include "viewport_cursor_info.hpp"
 
 namespace tactile::ui {
 namespace {
@@ -43,7 +42,7 @@ constexpr auto kOverlayWindowFlags =
 
 constexpr float kOverlayOpacity = 0.35f;
 
-void prepare_position_and_pivot()
+void _prepare_position_and_pivot()
 {
   const auto pos = ImGui::GetWindowPos();
   const auto size = ImGui::GetWindowSize();
@@ -69,25 +68,25 @@ void prepare_position_and_pivot()
   ImGui::SetNextWindowViewport(ImGui::GetWindowViewport()->ID);
 }
 
-void show_mouse_tile_labels(const Map& map, const ViewportCursorInfo& cursor)
+void _show_mouse_tile_labels(const Model& model,
+                             const Map& map,
+                             const ViewportCursorInfo& cursor)
 {
-  const auto layer_id = map.get_active_layer_id();
-  if (!layer_id) {
+  if (map.active_layer == kNullEntity) {
     return;
   }
 
   const auto& lang = get_current_language();
 
-  if (const auto* layer = map.get_invisible_root().find_tile_layer(*layer_id)) {
-    const auto tile_id = layer->tile_at(cursor.map_position);
+  if (const auto* tile_layer = model.try_get<TileLayer>(map.active_layer)) {
+    const auto tile_id = tile_layer->tile_at(cursor.map_position);
 
     if (cursor.is_within_map && tile_id.has_value() && tile_id != kEmptyTile) {
       ImGui::Text("%s: %i", lang.misc.global_id.c_str(), *tile_id);
 
-      const auto& tilesets = map.get_tileset_bundle();
-      if (tilesets.is_valid_tile(*tile_id)) {
-        const auto tile_index = tilesets.to_tile_index(*tile_id);
-        ImGui::Text("%s: %i", lang.misc.local_id.c_str(), tile_index);
+      if (sys::is_valid_tile_identifier(model, map, *tile_id)) {
+        const auto tile_index = sys::convert_tile_id_to_index(model, map, *tile_id);
+        ImGui::Text("%s: %i", lang.misc.local_id.c_str(), tile_index.value());
       }
       else {
         ImGui::Text("%s: -", lang.misc.local_id.c_str());
@@ -99,12 +98,12 @@ void show_mouse_tile_labels(const Map& map, const ViewportCursorInfo& cursor)
   }
 }
 
-void update_overlay_context_menu()
+void _show_overlay_context_menu()
 {
   if (auto popup = Popup::for_window("##ViewportOverlayPopup"); popup.is_open()) {
     const auto& lang = get_current_language();
 
-    auto& settings = get_settings();
+    auto& settings = get_global_settings();
     const auto corner = settings.get_viewport_overlay_pos();
 
     if (ImGui::MenuItem(lang.action.top_left.c_str(),
@@ -144,9 +143,11 @@ void update_overlay_context_menu()
 
 }  // namespace
 
-void update_map_viewport_overlay(const Map& map, const ViewportCursorInfo& cursor)
+void show_map_viewport_overlay(const Model& model,
+                               const Map& map,
+                               const ViewportCursorInfo& cursor)
 {
-  prepare_position_and_pivot();
+  _prepare_position_and_pivot();
 
   ImGui::SetNextWindowBgAlpha(kOverlayOpacity);
   const Window window {"##ViewportOverlay", kOverlayWindowFlags};
@@ -181,9 +182,9 @@ void update_map_viewport_overlay(const Map& map, const ViewportCursorInfo& curso
     }
 
     ImGui::Separator();
-    show_mouse_tile_labels(map, cursor);
+    _show_mouse_tile_labels(model, map, cursor);
 
-    update_overlay_context_menu();
+    _show_overlay_context_menu();
   }
 }
 
