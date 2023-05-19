@@ -196,4 +196,40 @@ auto is_document_open(const Model& model, const Entity document_entity) -> bool
   return document_context.open_documents.contains(document_entity);
 }
 
+auto is_save_possible(const Model& model) -> bool
+{
+  const auto document_entity = model.get<CDocumentContext>().active_document;
+
+  if (document_entity != kNullEntity) {
+    const auto& commands = model.get<CommandStack>(document_entity);
+    return !commands.is_clean();
+  }
+
+  return false;
+}
+
+auto is_undo_possible(const Model& model) -> bool
+{
+  const auto document_entity = model.get<CDocumentContext>().active_document;
+
+  if (document_entity != kNullEntity) {
+    const auto& commands = model.get<CommandStack>(document_entity);
+    return commands.can_undo();
+  }
+
+  return false;
+}
+
+auto is_redo_possible(const Model& model) -> bool
+{
+  const auto document_entity = model.get<CDocumentContext>().active_document;
+
+  if (document_entity != kNullEntity) {
+    const auto& commands = model.get<CommandStack>(document_entity);
+    return commands.can_redo();
+  }
+
+  return false;
+}
+
 }  // namespace tactile::sys

@@ -61,6 +61,10 @@ void close_document(Model& model, Entity document_entity);
 
 [[nodiscard]] auto is_document_open(const Model& model, Entity document_entity) -> bool;
 
+[[nodiscard]] auto is_save_possible(const Model& model) -> bool;
+[[nodiscard]] auto is_undo_possible(const Model& model) -> bool;
+[[nodiscard]] auto is_redo_possible(const Model& model) -> bool;
+
 template <typename T, typename... Args>
 void try_execute(Model& model, Args&&... args)
 {
