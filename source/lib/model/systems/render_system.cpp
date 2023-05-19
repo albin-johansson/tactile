@@ -237,7 +237,6 @@ void render_tile_layer(const Model& model,
                        const Entity tile_layer_entity,
                        const float opacity)
 {
-  const auto& layer = model.get<Layer>(tile_layer_entity);
   const auto& tile_layer = model.get<TileLayer>(tile_layer_entity);
 
   const auto begin_row = canvas.bounds.begin.row();
@@ -294,7 +293,6 @@ void render_object_layer(const Model& model,
                          const Entity object_layer_entity,
                          const float opacity)
 {
-  const auto& layer = model.get<Layer>(object_layer_entity);
   const auto& object_layer = model.get<ObjectLayer>(object_layer_entity);
 
   const Color object_color {0xFF, 0, 0, opacity_cast(opacity)};
