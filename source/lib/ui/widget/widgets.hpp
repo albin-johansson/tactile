@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include <entt/signal/fwd.hpp>
-
-#include "ui/menu/menu.hpp"
+#include "common/type/dispatcher.hpp"
+#include "core/menu.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
@@ -56,10 +56,6 @@ void ui_lazy_tooltip(const char* id, const char* tooltip);
 void ui_centered_label(const char* text);
 
 /// Displays a menu item for a specific action.
-/// The menu item label and state is automatically determined from the menu action.
-/// The shortcut parameter is the shortcut hint displayed next to the item.
-void ui_menu_item(entt::dispatcher& dispatcher,
-                  MenuAction action,
-                  const char* shortcut = nullptr);
+void show_menu_item(const Model& model, MenuAction action, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

@@ -17,22 +17,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "model_system.hpp"
+#pragma once
 
 #include "core/menu.hpp"
-#include "core/texture.hpp"
-#include "model/document.hpp"
+#include "lang/strings.hpp"
+#include "model/model.hpp"
 
 namespace tactile::sys {
 
-void init_model(Model& model)
-{
-  auto& document_context = model.add<CDocumentContext>();
-  document_context.active_document = kNullEntity;
+void init_menus(Model& model);
 
-  model.add<TextureCache>();
-  model.add<Icons>();
-  model.add<MenuItems>();
-}
+void update_menu_items(Model& model);
+
+void translate_menus(Model& model, const Strings& lang);
+
+[[nodiscard]] auto get_menu_item(const Model& model, MenuAction action)
+    -> const MenuItem&;
 
 }  // namespace tactile::sys

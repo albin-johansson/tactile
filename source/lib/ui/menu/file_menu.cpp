@@ -19,25 +19,26 @@
 
 #include "file_menu.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "common/util/filesystem.hpp"
+#include "common/type/path.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/map_events.hpp"
+#include "model/event/menu_events.hpp"
 #include "model/file_history.hpp"
-#include "ui/shortcut/mappings.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
 namespace {
 
-void update_recent_files_menu(const Strings& lang, entt::dispatcher& dispatcher)
+void _show_recent_files_menu(const Model& model,
+                             const Strings& lang,
+                             Dispatcher& dispatcher)
 {
   if (const Menu menu {lang.menu.recent_files.c_str()}; menu.is_open()) {
-    ui_menu_item(dispatcher, MenuAction::ReopenLastClosedFile);
+    show_menu_item(model, MenuAction::ReopenLastFile, dispatcher);
 
     const auto& history = get_file_history();
     if (!history.entries.empty()) {
@@ -53,34 +54,34 @@ void update_recent_files_menu(const Strings& lang, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    ui_menu_item(dispatcher, MenuAction::ClearFileHistory);
+    show_menu_item(model, MenuAction::ClearFileHistory, dispatcher);
   }
 }
 
 }  // namespace
 
-void update_file_menu(entt::dispatcher& dispatcher)
+void show_file_menu(const Model& model, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
   if (const Menu menu {lang.menu.file.c_str()}; menu.is_open()) {
-    ui_menu_item(dispatcher, MenuAction::NewMap, TACTILE_PRIMARY_MOD "+N");
-    ui_menu_item(dispatcher, MenuAction::OpenMap, TACTILE_PRIMARY_MOD "+O");
+    show_menu_item(model, MenuAction::NewMap, dispatcher);
+    show_menu_item(model, MenuAction::OpenMap, dispatcher);
 
-    update_recent_files_menu(lang, dispatcher);
-
-    ImGui::Separator();
-
-    ui_menu_item(dispatcher, MenuAction::Save, TACTILE_PRIMARY_MOD "+S");
-    ui_menu_item(dispatcher, MenuAction::SaveAs, TACTILE_PRIMARY_MOD "+Shift+S");
+    _show_recent_files_menu(model, lang, dispatcher);
 
     ImGui::Separator();
 
-    ui_menu_item(dispatcher, MenuAction::CloseDocument);
+    show_menu_item(model, MenuAction::Save, dispatcher);
+    show_menu_item(model, MenuAction::SaveAs, dispatcher);
 
     ImGui::Separator();
 
-    ui_menu_item(dispatcher, MenuAction::Quit);
+    show_menu_item(model, MenuAction::Close, dispatcher);
+
+    ImGui::Separator();
+
+    show_menu_item(model, MenuAction::Quit, dispatcher);
   }
 }
 

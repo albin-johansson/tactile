@@ -21,46 +21,45 @@
 
 #include <imgui.h>
 
+#include "core/menu.hpp"
 #include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/systems/document_system.hpp"
-#include "ui/shortcut/mappings.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
 
-void update_map_menu(const Model& model, entt::dispatcher& dispatcher)
+void show_map_menu(const Model& model, Dispatcher& dispatcher)
 {
   const Disable disable_if {!sys::is_map_document_active(model)};
 
   const auto& lang = get_current_language();
   if (const Menu menu {lang.menu.map.c_str()}; menu.is_open()) {
-    ui_menu_item(dispatcher, MenuAction::InspectMap);
+    show_menu_item(model, MenuAction::InspectMap, dispatcher);
 
     ImGui::Separator();
 
-    ui_menu_item(dispatcher, MenuAction::AddTileset, TACTILE_PRIMARY_MOD "+T");
+    show_menu_item(model, MenuAction::CreateTileset, dispatcher);
 
     ImGui::Separator();
 
-    ui_menu_item(dispatcher, MenuAction::AddRow, TACTILE_SECONDARY_MOD "+R");
-    ui_menu_item(dispatcher, MenuAction::AddColumn, TACTILE_SECONDARY_MOD "+C");
-    ui_menu_item(dispatcher, MenuAction::RemoveRow, TACTILE_SECONDARY_MOD "+Shift+R");
-    ui_menu_item(dispatcher, MenuAction::RemoveColumn, TACTILE_SECONDARY_MOD "+Shift+C");
+    show_menu_item(model, MenuAction::AddRow, dispatcher);
+    show_menu_item(model, MenuAction::AddColumn, dispatcher);
+    show_menu_item(model, MenuAction::RemoveRow, dispatcher);
+    show_menu_item(model, MenuAction::RemoveColumn, dispatcher);
 
     ImGui::Separator();
 
-    ui_menu_item(dispatcher, MenuAction::FixInvalidTiles);
+    show_menu_item(model, MenuAction::FixInvalidTiles, dispatcher);
 
     ImGui::Separator();
 
-    ui_menu_item(dispatcher, MenuAction::ResizeMap);
+    show_menu_item(model, MenuAction::ResizeMap, dispatcher);
 
     ImGui::Separator();
 
     if (const Menu export_menu {lang.menu.export_as.c_str()}; export_menu.is_open()) {
-      ui_menu_item(dispatcher, MenuAction::ExportGodotScene);
+      show_menu_item(model, MenuAction::ExportGodotScene, dispatcher);
     }
   }
 }

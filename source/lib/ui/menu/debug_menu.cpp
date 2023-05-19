@@ -24,7 +24,6 @@
 #include "common/predef.hpp"
 #include "io/directories.hpp"
 #include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"
 
@@ -41,7 +40,7 @@ inline constinit DebugMenuState gMenuState;
 
 }  // namespace
 
-void update_debug_menu()
+void show_debug_menu(const Model&, Dispatcher&)
 {
   const auto& lang = get_current_language();
 

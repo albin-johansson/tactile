@@ -19,24 +19,21 @@
 
 #include "view_menu.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "core/viewport.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/systems/document_system.hpp"
+#include "model/systems/menu_system.hpp"
 #include "ui/dock/dock_space.hpp"
-#include "ui/menu/menu.hpp"
-#include "ui/shortcut/mappings.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
 namespace {
 
-void update_widgets_menu(const Model& model)
+void _show_widgets_menu(const Model& model)
 {
   const auto& lang = get_current_language();
 
@@ -94,7 +91,7 @@ void update_widgets_menu(const Model& model)
   }
 }
 
-void update_quick_theme_menu(const Strings& lang)
+void _show_quick_theme_menu(const Strings& lang)
 {
   if (const Menu theme_menu {lang.action.quick_theme.c_str()}; theme_menu.is_open()) {
     auto& settings = get_global_settings();
@@ -119,76 +116,75 @@ void update_quick_theme_menu(const Strings& lang)
   }
 }
 
-void update_quick_lang_menu(const Strings& lang)
+void _show_quick_lang_menu(const Strings& lang)
 {
   if (const Menu lang_menu {lang.action.quick_language.c_str()}; lang_menu.is_open()) {
     auto& settings = get_global_settings();
     if (ImGui::MenuItem("English (US)")) {
-      settings.set_language(Lang::EN);
-      reset_layout();
-      menu_translate(get_current_language());
+      // TODO enqueue event
+      // settings.set_language(Lang::EN);
+      // reset_layout();
+      // menu_translate(get_current_language());
     }
 
     if (ImGui::MenuItem("English (GB)")) {
-      settings.set_language(Lang::EN_GB);
-      reset_layout();
-      menu_translate(get_current_language());
+      // TODO enqueue event
+      // settings.set_language(Lang::EN_GB);
+      // reset_layout();
+      // menu_translate(get_current_language());
     }
 
     if (ImGui::MenuItem("Svenska")) {
-      settings.set_language(Lang::SV);
-      reset_layout();
-      menu_translate(get_current_language());
+      // TODO enqueue event
+      // settings.set_language(Lang::SV);
+      // reset_layout();
+      // menu_translate(get_current_language());
     }
   }
 }
 
 }  // namespace
 
-void update_view_menu(const Model& model, entt::dispatcher& dispatcher)
+void show_view_menu(const Model& model, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
   if (const Menu menu {lang.menu.view.c_str()}; menu.is_open()) {
-    update_widgets_menu(model);
+    _show_widgets_menu(model);
 
     ImGui::Separator();
-    update_quick_theme_menu(lang);
+    _show_quick_theme_menu(lang);
 
     ImGui::Separator();
-    update_quick_lang_menu(lang);
+    _show_quick_lang_menu(lang);
 
     ImGui::Separator();
-    ui_menu_item(dispatcher, MenuAction::CenterViewport, "Shift+Space");
+    show_menu_item(model, MenuAction::CenterViewport, dispatcher);
 
     ImGui::Separator();
-    ui_menu_item(dispatcher, MenuAction::ToggleGrid, TACTILE_PRIMARY_MOD "+G");
+    show_menu_item(model, MenuAction::ToggleGrid, dispatcher);
 
     ImGui::Separator();
-    ui_menu_item(dispatcher, MenuAction::IncreaseZoom, TACTILE_PRIMARY_MOD "+Plus");
-    ui_menu_item(dispatcher, MenuAction::DecreaseZoom, TACTILE_PRIMARY_MOD "+Minus");
-    ui_menu_item(dispatcher, MenuAction::ResetZoom);
+    show_menu_item(model, MenuAction::IncreaseZoom, dispatcher);
+    show_menu_item(model, MenuAction::DecreaseZoom, dispatcher);
+    show_menu_item(model, MenuAction::ResetZoom, dispatcher);
 
     ImGui::Separator();
-    ui_menu_item(dispatcher,
-                 MenuAction::IncreaseFontSize,
-                 TACTILE_PRIMARY_MOD "+Shift+Plus");
-    ui_menu_item(dispatcher,
-                 MenuAction::DecreaseFontSize,
-                 TACTILE_PRIMARY_MOD "+Shift+Minus");
-    ui_menu_item(dispatcher, MenuAction::ResetFontSize);
+    show_menu_item(model, MenuAction::IncreaseFontSize, dispatcher);
+    show_menu_item(model, MenuAction::DecreaseFontSize, dispatcher);
+    show_menu_item(model, MenuAction::ResetFontSize, dispatcher);
 
     ImGui::Separator();
-    ui_menu_item(dispatcher, MenuAction::PanUp, TACTILE_PRIMARY_MOD "+Shift+Up");
-    ui_menu_item(dispatcher, MenuAction::PanDown, TACTILE_PRIMARY_MOD "+Shift+Down");
-    ui_menu_item(dispatcher, MenuAction::PanRight, TACTILE_PRIMARY_MOD "+Shift+Right");
-    ui_menu_item(dispatcher, MenuAction::PanLeft, TACTILE_PRIMARY_MOD "+Shift+Left");
+    show_menu_item(model, MenuAction::PanUp, dispatcher);
+    show_menu_item(model, MenuAction::PanDown, dispatcher);
+    show_menu_item(model, MenuAction::PanRight, dispatcher);
+    show_menu_item(model, MenuAction::PanLeft, dispatcher);
 
     ImGui::Separator();
-    ui_menu_item(dispatcher, MenuAction::HighlightLayer, "H");
+    show_menu_item(model, MenuAction::HighlightLayer, dispatcher);
 
     ImGui::Separator();
-    ui_menu_item(dispatcher, MenuAction::ToggleUi, "Tab");
+    show_menu_item(model, MenuAction::ToggleUi, dispatcher);
   }
 }
 

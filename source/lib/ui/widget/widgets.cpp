@@ -27,7 +27,9 @@
 #include "common/type/chrono.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/maybe.hpp"
+#include "lang/language.hpp"
 #include "model/event/menu_events.hpp"
+#include "model/systems/menu_system.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"
 
@@ -98,7 +100,7 @@ void ui_lazy_tooltip(const char* id, const char* tooltip)
   auto& last_hover = state[hashed_id];
 
   if (ImGui::IsItemActive() || ImGui::IsItemHovered()) {
-    if (!last_hover) {
+    if (!last_hover.has_value()) {
       last_hover = Clock::now();
     }
 
@@ -125,12 +127,13 @@ void ui_centered_label(const char* text)
   ImGui::TextUnformatted(text);
 }
 
-void ui_menu_item(entt::dispatcher& dispatcher,
-                  const MenuAction action,
-                  const char* shortcut)
+void show_menu_item(const Model& model, const MenuAction action, Dispatcher& dispatcher)
 {
-  const auto& item = get_menu_item(action);
-  if (ImGui::MenuItem(item.text.c_str(), shortcut, item.selected, item.enabled)) {
+  const auto& menu_item = sys::get_menu_item(model, action);
+  if (ImGui::MenuItem(menu_item.label.c_str(),
+                      !menu_item.shortcut.empty() ? menu_item.shortcut.c_str() : nullptr,
+                      menu_item.checked,
+                      menu_item.enabled)) {
     dispatcher.enqueue<MenuItemEvent>(action);
   }
 }

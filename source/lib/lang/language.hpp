@@ -21,10 +21,10 @@
 
 #include "common/macros.hpp"
 #include "common/type/string.hpp"
+#include "core/menu.hpp"
+#include "lang/strings.hpp"
 
 namespace tactile {
-
-TACTILE_FWD_DECLARE_STRUCT(Strings)
 
 /// All of the supported languages.
 enum class Lang {
@@ -41,5 +41,7 @@ void load_languages();
 [[nodiscard]] auto get_current_language() -> const Strings&;
 
 [[nodiscard]] auto get_language_name(Lang lang) -> const char*;
+
+[[nodiscard]] auto get_label(const Strings& lang, MenuAction action) -> String;
 
 }  // namespace tactile

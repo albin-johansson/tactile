@@ -38,6 +38,7 @@
 #include "model/event/view_events.hpp"
 #include "model/file_history.hpp"
 #include "model/model.hpp"
+#include "model/systems/menu_system.hpp"
 #include "model/systems/texture_system.hpp"
 #include "model/systems/widget_system.hpp"
 #include "runtime/app_context.hpp"
@@ -57,7 +58,6 @@
 #include "ui/dock/property/property_dock.hpp"
 #include "ui/dock/tileset/dialogs/create_tileset_dialog.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
-#include "ui/menu/menu.hpp"
 #include "ui/menu/menu_bar.hpp"
 #include "ui/shortcut/shortcuts.hpp"
 #include "ui/style/colors.hpp"
@@ -96,7 +96,6 @@ void App::on_startup()
   settings.print();
 
   load_languages();
-  init_menus();
 
   if (auto history = load_file_history_from_disk()) {
     set_file_history(std::move(*history));
@@ -112,6 +111,8 @@ void App::on_startup()
 
   auto& icons = model.get<Icons>();
   icons.tactile_icon = sys::create_texture(model, find_resource("assets/icon.png"));
+
+  sys::init_menus(model);
 
   uint32 idx = 0;
   sys::add_widget(model, idx++, ui::show_menu_bar);
@@ -160,6 +161,8 @@ void App::on_update()
   auto& dispatcher = get_global_dispatcher();
 
   dispatcher.update();
+
+  sys::update_menu_items(model);
 
   ui::update_dynamic_color_cache();
   ui::update_dock_space();

@@ -23,7 +23,6 @@
 #include <entt/signal/fwd.hpp>
 
 #include "common/type/func.hpp"
-#include "ui/menu/menu.hpp"
 
 namespace tactile {
 

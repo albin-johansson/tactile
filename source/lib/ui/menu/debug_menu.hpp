@@ -19,8 +19,11 @@
 
 #pragma once
 
+#include "common/type/dispatcher.hpp"
+#include "model/model.hpp"
+
 namespace tactile::ui {
 
-void update_debug_menu();
+void show_debug_menu(const Model& model, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

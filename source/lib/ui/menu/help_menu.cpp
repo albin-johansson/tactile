@@ -21,26 +21,26 @@
 
 #include <imgui.h>
 
+#include "core/menu.hpp"
 #include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
 
-void update_help_menu(entt::dispatcher& dispatcher)
+void show_help_menu(const Model& model, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
   if (const Menu menu {lang.menu.help.c_str()}; menu.is_open()) {
-    ui_menu_item(dispatcher, MenuAction::AboutTactile);
-    ui_menu_item(dispatcher, MenuAction::AboutDearImGui);
+    show_menu_item(model, MenuAction::ShowAbout, dispatcher);
+    show_menu_item(model, MenuAction::ShowAboutImGui, dispatcher);
 
     ImGui::Separator();
-    ui_menu_item(dispatcher, MenuAction::ReportIssue);
+    show_menu_item(model, MenuAction::ReportIssue, dispatcher);
 
     ImGui::Separator();
-    ui_menu_item(dispatcher, MenuAction::Credits);
+    show_menu_item(model, MenuAction::ShowCredits, dispatcher);
   }
 }
 

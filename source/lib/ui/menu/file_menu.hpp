@@ -19,10 +19,11 @@
 
 #pragma once
 
-#include <entt/signal/fwd.hpp>
+#include "common/type/dispatcher.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
-void update_file_menu(entt::dispatcher& dispatcher);
+void show_file_menu(const Model& model, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

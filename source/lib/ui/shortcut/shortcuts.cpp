@@ -76,17 +76,17 @@ void init_default_edit_shortcuts()
   init_shortcut<UndoEvent>(MenuAction::Undo, cen::scancodes::z, kPrimaryModifier);
   init_shortcut<RedoEvent>(MenuAction::Redo, cen::scancodes::y, kPrimaryModifier);
 
-  init_tool_shortcut(ToolType::Stamp, MenuAction::StampTool, cen::scancodes::s);
-  init_tool_shortcut(ToolType::Eraser, MenuAction::EraserTool, cen::scancodes::e);
-  init_tool_shortcut(ToolType::Bucket, MenuAction::BucketTool, cen::scancodes::b);
+  init_tool_shortcut(ToolType::Stamp, MenuAction::EnableStamp, cen::scancodes::s);
+  init_tool_shortcut(ToolType::Eraser, MenuAction::EnableEraser, cen::scancodes::e);
+  init_tool_shortcut(ToolType::Bucket, MenuAction::EnableBucket, cen::scancodes::b);
   init_tool_shortcut(ToolType::ObjectSelection,
-                     MenuAction::ObjectSelectionTool,
+                     MenuAction::EnableObjectSelector,
                      cen::scancodes::q);
-  init_tool_shortcut(ToolType::Rectangle, MenuAction::RectangleTool, cen::scancodes::r);
-  init_tool_shortcut(ToolType::Ellipse, MenuAction::EllipseTool, cen::scancodes::t);
-  init_tool_shortcut(ToolType::Point, MenuAction::PointTool, cen::scancodes::y);
+  init_tool_shortcut(ToolType::Rectangle, MenuAction::EnableRectangle, cen::scancodes::r);
+  init_tool_shortcut(ToolType::Ellipse, MenuAction::EnableEllipse, cen::scancodes::t);
+  init_tool_shortcut(ToolType::Point, MenuAction::EnablePoint, cen::scancodes::y);
 
-  init_shortcut<OpenComponentEditorEvent>(MenuAction::ComponentEditor,
+  init_shortcut<OpenComponentEditorEvent>(MenuAction::OpenComponentEditor,
                                           cen::scancodes::c,
                                           kPrimaryModifierAndShift);
   init_shortcut<ShowSettingsEvent>(MenuAction::OpenSettings,
@@ -135,7 +135,7 @@ void init_default_view_shortcuts()
 
 void init_default_map_shortcuts()
 {
-  init_shortcut<ShowTilesetCreationDialogEvent>(MenuAction::AddTileset,
+  init_shortcut<ShowTilesetCreationDialogEvent>(MenuAction::CreateTileset,
                                                 cen::scancodes::t,
                                                 kPrimaryModifier);
 
@@ -165,12 +165,13 @@ void init_default_shortcuts()
 void update_shortcuts(const cen::keyboard_event& event, entt::dispatcher& dispatcher)
 {
   for (const auto& shortcut: gShortcuts) {
-    if (get_menu_item(shortcut.action).enabled &&  //
-        event.pressed() &&                         //
-        event.scan() == shortcut.key &&            //
-        event.is_only_active(shortcut.modifiers)) {
-      shortcut.activate(dispatcher);
-    }
+    // TODO
+    //    if (get_menu_item(shortcut.action).enabled &&  //
+    //        event.pressed() &&                         //
+    //        event.scan() == shortcut.key &&            //
+    //        event.is_only_active(shortcut.modifiers)) {
+    //      shortcut.activate(dispatcher);
+    //    }
   }
 }
 

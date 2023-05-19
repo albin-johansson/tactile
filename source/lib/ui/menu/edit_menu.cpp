@@ -23,37 +23,38 @@
 
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "model/systems/menu_system.hpp"
 #include "ui/shortcut/mappings.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
 
-void update_edit_menu(entt::dispatcher& dispatcher)
+void show_edit_menu(const Model& model, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
   if (const Menu menu {lang.menu.edit.c_str()}; menu.is_open()) {
-    ui_menu_item(dispatcher, MenuAction::Undo, TACTILE_PRIMARY_MOD "+Z");
-    ui_menu_item(dispatcher, MenuAction::Redo, TACTILE_PRIMARY_MOD "+Y");
+    show_menu_item(model, MenuAction::Undo, dispatcher);
+    show_menu_item(model, MenuAction::Redo, dispatcher);
 
     ImGui::Separator();
 
-    ui_menu_item(dispatcher, MenuAction::StampTool, "S");
-    ui_menu_item(dispatcher, MenuAction::BucketTool, "B");
-    ui_menu_item(dispatcher, MenuAction::EraserTool, "E");
-    ui_menu_item(dispatcher, MenuAction::ObjectSelectionTool, "Q");
-    ui_menu_item(dispatcher, MenuAction::RectangleTool, "R");
-    ui_menu_item(dispatcher, MenuAction::EllipseTool, "T");
-    ui_menu_item(dispatcher, MenuAction::PointTool, "Y");
+    show_menu_item(model, MenuAction::EnableStamp, dispatcher);
+    show_menu_item(model, MenuAction::EnableBucket, dispatcher);
+    show_menu_item(model, MenuAction::EnableEraser, dispatcher);
+    show_menu_item(model, MenuAction::EnableObjectSelector, dispatcher);
+    show_menu_item(model, MenuAction::EnableRectangle, dispatcher);
+    show_menu_item(model, MenuAction::EnableEllipse, dispatcher);
+    show_menu_item(model, MenuAction::EnablePoint, dispatcher);
 
     ImGui::Separator();
 
-    ui_menu_item(dispatcher, MenuAction::ComponentEditor, TACTILE_PRIMARY_MOD "+Shift+C");
+    show_menu_item(model, MenuAction::OpenComponentEditor, dispatcher);
 
     ImGui::Separator();
 
-    ui_menu_item(dispatcher, MenuAction::OpenSettings, TACTILE_PRIMARY_MOD "+,");
+    show_menu_item(model, MenuAction::OpenSettings, dispatcher);
   }
 }
 
