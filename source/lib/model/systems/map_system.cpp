@@ -30,6 +30,8 @@
 #include "core/map.hpp"
 #include "core/tile_format.hpp"
 #include "core/tileset.hpp"
+#include "model/document.hpp"
+#include "model/systems/document_system.hpp"
 #include "model/systems/layer_system.hpp"
 #include "model/systems/tileset_system.hpp"
 #include "model/systems/validation.hpp"
@@ -281,6 +283,34 @@ auto attach_tileset_to_map(Model& model,
   map.next_tile_id += (tileset.row_count * tileset.column_count) + 1;
 
   return attached_tileset_entity;
+}
+
+auto can_tile_row_be_removed(const Model& model) -> bool
+{
+  if (sys::is_map_document_active(model)) {
+    const auto document_entity = sys::get_active_document(model);
+
+    const auto& map_document = model.get<MapDocument>(document_entity);
+    const auto& map = model.get<Map>(map_document.map);
+
+    return map.extent.rows > 1;
+  }
+
+  return false;
+}
+
+auto can_tile_column_be_removed(const Model& model) -> bool
+{
+  if (sys::is_map_document_active(model)) {
+    const auto document_entity = sys::get_active_document(model);
+
+    const auto& map_document = model.get<MapDocument>(document_entity);
+    const auto& map = model.get<Map>(map_document.map);
+
+    return map.extent.cols > 1;
+  }
+
+  return false;
 }
 
 }  // namespace tactile::sys

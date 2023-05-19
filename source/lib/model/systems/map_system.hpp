@@ -62,4 +62,7 @@ void remove_layer_from_map(Model& model, Entity map_entity, Entity layer_entity)
 auto attach_tileset_to_map(Model& model, Entity map_entity, Entity tileset_entity)
     -> AttachedTilesetEntity;
 
+[[nodiscard]] auto can_tile_row_be_removed(const Model& model) -> bool;
+[[nodiscard]] auto can_tile_column_be_removed(const Model& model) -> bool;
+
 }  // namespace tactile::sys
