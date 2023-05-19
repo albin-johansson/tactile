@@ -8,11 +8,12 @@ These components are globally accessible in the model.
 
 * `DocumentContext`
 * `TextureCache`
+* `MenuItems`
 * `Icons`
 * `LanguageContext` (TODO)
 * `ComponentDockState` (TODO)
 
-## Document entities
+## Documents
 
 * `Document`
 * `CommandStack`
@@ -20,23 +21,23 @@ These components are globally accessible in the model.
 * `MapDocument` (if map document)
 * `TilesetDocument` (if tileset document)
 
-## Tileset entities
+## Tilesets
 
 * `Context`
 * `Tileset`
 
-## Attached tileset entities
+## Attached tilesets
 
 * `AttachedTileset`
 * `Viewport`
 
-## Map entities
+## Maps
 
 * `Context`
 * `Map`
 * `TileFormat`
 
-## Layer entities
+## Layers
 
 * `Context`
 * `Layer`
@@ -44,14 +45,23 @@ These components are globally accessible in the model.
 * `ObjectLayer` (if object layer)
 * `GroupLayer` (if group layer)
 
-## Tile entities
+## Tiles
 
 * `Context`
 * `Tile`
 * `TileAnimation` (if animated)
 
-## Texture entities
+## Textures
 
 * `Texture`
 * `OpenGLTexture` (if OpenGL backend is used)
 * `VulkanTexture` (if Vulkan backend is used)
+
+## Widgets
+
+* `Widget`
+
+## Menu items
+
+* `MenuItem`
+* `MenuItemCallbacks`
