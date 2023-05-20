@@ -19,11 +19,14 @@
 
 #include "document_system.hpp"
 
+#include <spdlog/spdlog.h>
+
 #include "cmd/command_stack.hpp"
 #include "common/debug/panic.hpp"
 #include "core/context.hpp"
 #include "core/map.hpp"
 #include "core/viewport.hpp"
+#include "io/map/parse/parse_map.hpp"
 #include "model/document.hpp"
 #include "model/systems/map_system.hpp"
 #include "model/systems/tileset_system.hpp"
@@ -90,7 +93,7 @@ auto create_tileset_document(Model& model, const Int2& tile_size, const Path& im
   return document_entity;
 }
 
-void destroy_document(Model& model, const DocumentEntity document_entity)
+void destroy_document(Model& model, const Entity document_entity)
 {
   TACTILE_ASSERT(is_document_entity(model, document_entity));
   auto& document_context = model.get<CDocumentContext>();
@@ -128,6 +131,8 @@ void close_document(Model& model, const Entity document_entity)
   TACTILE_ASSERT(is_document_entity(model, document_entity));
 
   auto& document_context = model.get<CDocumentContext>();
+  TACTILE_ASSERT(document_context.open_documents.contains(document_entity));
+
   document_context.open_documents.erase(document_entity);
 }
 
@@ -166,6 +171,22 @@ auto get_associated_tileset_document(const Model& model, const Entity tileset_en
       if (tileset_document->tileset == tileset_entity) {
         return document_entity;
       }
+    }
+  }
+
+  return kNullEntity;
+}
+
+auto has_document_with_path(const Model& model, const Path& path) -> bool
+{
+  return get_document_with_path(model, path) != kNullEntity;
+}
+
+auto get_document_with_path(const Model& model, const Path& path) -> Entity
+{
+  for (const auto& [document_entity, document]: model.each<Document>()) {
+    if (document.path == path) {
+      return document_entity;
     }
   }
 
@@ -230,6 +251,14 @@ auto is_redo_possible(const Model& model) -> bool
   }
 
   return false;
+}
+
+void on_create_map(Model& model, const CreateMapEvent& event)
+{
+  const TileExtent extent {event.row_count, event.column_count};
+  const auto document_entity = create_map_document(model, extent, event.tile_size);
+  open_document(model, document_entity);
+  select_document(model, document_entity);
 }
 
 }  // namespace tactile::sys
