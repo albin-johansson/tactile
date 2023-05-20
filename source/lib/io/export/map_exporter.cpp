@@ -41,7 +41,6 @@ auto save_map_document_to_disk(const Model& model, const Entity map_document_ent
     TACTILE_DEBUG_PROFILE_START
 
     const auto& document = model.get<Document>(map_document_entity);
-    const auto& map_document = model.get<MapDocument>(map_document_entity);
 
     if (!document.path.has_value()) {
       spdlog::error("Tried to save map document with no associated file path");
