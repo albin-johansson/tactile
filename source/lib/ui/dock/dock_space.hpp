@@ -32,4 +32,7 @@ void load_default_layout(ImGuiID id, bool reset_visibility);
 /// Resets all dock space widgets to the default layout.
 void reset_layout();
 
+/// Resets the layout and regenerates the 'imgui.ini' file if it is missing.
+void check_for_missing_layout_file();
+
 }  // namespace tactile::ui

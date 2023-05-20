@@ -20,6 +20,7 @@
 #include "dock_space.hpp"
 
 #include <imgui_internal.h>
+#include <spdlog/spdlog.h>
 
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
@@ -86,6 +87,18 @@ void load_default_layout(ImGuiID id, const bool reset_visibility)
 void reset_layout()
 {
   load_default_layout(gDockRootId.value(), true);
+}
+
+void check_for_missing_layout_file()
+{
+  const auto& ini_path = get_widget_ini_path();
+  if (!fs::exists(ini_path)) {
+    spdlog::warn("Resetting layout because 'imgui.ini' file was missing");
+    ui::reset_layout();
+
+    const auto str = ini_path.string();
+    ImGui::SaveIniSettingsToDisk(str.c_str());
+  }
 }
 
 }  // namespace tactile::ui

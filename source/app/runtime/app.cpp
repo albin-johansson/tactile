@@ -64,21 +64,6 @@
 #include "ui/viewport/viewport_widget.hpp"
 
 namespace tactile {
-namespace {
-
-void _check_for_missing_layout_file()
-{
-  const auto& ini = get_widget_ini_path();
-  if (!fs::exists(ini)) {
-    spdlog::warn("Resetting layout because 'imgui.ini' is missing...");
-    ui::reset_layout();
-
-    const auto str = ini.string();
-    ImGui::SaveIniSettingsToDisk(str.c_str());
-  }
-}
-
-}  // namespace
 
 App::App()
 {
@@ -169,7 +154,7 @@ void App::on_update()
 
   sys::render_widgets(model, dispatcher);
 
-  _check_for_missing_layout_file();
+  ui::check_for_missing_layout_file();
 }
 
 void App::on_event(const cen::event_handler& handler)
