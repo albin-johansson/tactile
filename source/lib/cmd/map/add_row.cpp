@@ -36,13 +36,15 @@ AddRow::AddRow(const Entity map_entity)
 void AddRow::undo()
 {
   auto& model = get_global_model();
-  invoke_n(mRowCount, [&, this] { sys::remove_row_from_map(model, mMapEntity); });
+  auto& map = model.get<Map>(mMapEntity);
+  invoke_n(mRowCount, [&, this] { sys::remove_row_from_map(model, map); });
 }
 
 void AddRow::redo()
 {
   auto& model = get_global_model();
-  invoke_n(mRowCount, [&, this] { sys::add_row_to_map(model, mMapEntity); });
+  auto& map = model.get<Map>(mMapEntity);
+  invoke_n(mRowCount, [&, this] { sys::add_row_to_map(model, map); });
 }
 
 auto AddRow::merge_with(const Command* cmd) -> bool

@@ -36,7 +36,9 @@ ResizeMap::ResizeMap(const Entity map_entity, const TileExtent extent)
 void ResizeMap::undo()
 {
   auto& model = get_global_model();
-  sys::resize_map(model, mMapEntity, mOldExtent.value());
+
+  auto& map = model.get<Map>(mMapEntity);
+  sys::resize_map(model, map, mOldExtent.value());
 
   if (is_lossy_resize()) {
     mCache.restore_tiles(model);
@@ -64,7 +66,7 @@ void ResizeMap::redo()
     mCache.save_tiles(model, mMapEntity, begin_col, end_col);
   }
 
-  sys::resize_map(model, mMapEntity, mNewExtent);
+  sys::resize_map(model, map, mNewExtent);
 }
 
 auto ResizeMap::get_name() const -> String

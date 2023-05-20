@@ -37,14 +37,16 @@ void RemoveRow::undo()
 {
   auto& model = get_global_model();
 
-  invoke_n(mRowCount, [&, this] { sys::add_row_to_map(model, mMapEntity); });
+  auto& map = model.get<Map>(mMapEntity);
+  invoke_n(mRowCount, [&] { sys::add_row_to_map(model, map); });
+
   mCache.restore_tiles(model);
 }
 
 void RemoveRow::redo()
 {
   auto& model = get_global_model();
-  const auto& map = model.get<Map>(mMapEntity);
+  auto& map = model.get<Map>(mMapEntity);
 
   const auto begin = TilePos::from(map.extent.rows - mRowCount - 1u, 0u);
   const auto end = TilePos::from(map.extent.rows, map.extent.cols);
@@ -52,7 +54,7 @@ void RemoveRow::redo()
   mCache.clear();
   mCache.save_tiles(model, mMapEntity, begin, end);
 
-  invoke_n(mRowCount, [&, this] { sys::remove_row_from_map(model, mMapEntity); });
+  invoke_n(mRowCount, [&] { sys::remove_row_from_map(model, map); });
 }
 
 auto RemoveRow::merge_with(const Command* cmd) -> bool

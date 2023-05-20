@@ -42,7 +42,10 @@ DuplicateLayer::DuplicateLayer(const Entity map_entity, const Entity layer_entit
 void DuplicateLayer::undo()
 {
   auto& model = get_global_model();
-  sys::remove_layer_from_map(model, mMapEntity, mNewLayerEntity);
+
+  auto& map = model.get<Map>(mMapEntity);
+  sys::remove_layer_from_map(model, map, mNewLayerEntity);
+
   model.set_enabled(mNewLayerEntity, false);
 }
 
@@ -59,7 +62,7 @@ void DuplicateLayer::redo()
   if (mNewLayerEntity != kNullEntity) {
     model.set_enabled(mNewLayerEntity, true);
 
-    sys::attach_layer_to_map(model, mMapEntity, mNewLayerEntity, mNewLayerParentEntity);
+    sys::attach_layer_to_map(model, map, mNewLayerEntity, mNewLayerParentEntity);
     sys::set_layer_local_index(model, map.root_layer, mNewLayerEntity, mNewIndex.value());
   }
   else {

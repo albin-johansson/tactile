@@ -40,7 +40,9 @@ void AddLayer::undo()
   auto& model = get_global_model();
 
   const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
-  sys::remove_layer_from_map(model, map_document.map, mLayerEntity);
+  auto& map = model.get<Map>(map_document.map);
+
+  sys::remove_layer_from_map(model, map, mLayerEntity);
 
   auto& document = model.get<Document>(mMapDocumentEntity);
   if (document.active_context == mLayerEntity) {
@@ -54,13 +56,15 @@ void AddLayer::undo()
 void AddLayer::redo()
 {
   auto& model = get_global_model();
+
   const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
+  auto& map = model.get<Map>(map_document.map);
 
   if (mLayerEntity == kNullEntity) {
-    mLayerEntity = sys::add_new_layer_to_map(model, map_document.map, mLayerType);
+    mLayerEntity = sys::add_new_layer_to_map(model, map, mLayerType);
   }
   else {
-    sys::attach_layer_to_map(model, map_document.map, mLayerEntity, mParentLayerEntity);
+    sys::attach_layer_to_map(model, map, mLayerEntity, mParentLayerEntity);
   }
 
   model.set_enabled(mLayerEntity, true);

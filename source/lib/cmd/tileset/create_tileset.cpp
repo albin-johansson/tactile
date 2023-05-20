@@ -64,15 +64,15 @@ void CreateTileset::redo()
   }
 
   auto& model = get_global_model();
+  auto& map = model.get<Map>(mMapEntity);
 
   if (mAttachedTilesetEntity.has_value()) {
-    auto& map = model.get<Map>(mMapEntity);
     map.attached_tilesets.push_back(*mAttachedTilesetEntity);
   }
   else {
     const auto& tileset_document = model.get<TilesetDocument>(*mTilesetDocumentEntity);
     mAttachedTilesetEntity =
-        sys::attach_tileset_to_map(model, mMapEntity, tileset_document.tileset);
+        sys::attach_tileset_to_map(model, map, tileset_document.tileset);
   }
 
   model.set_enabled(mAttachedTilesetEntity.value(), true);

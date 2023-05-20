@@ -38,9 +38,11 @@ RemoveLayer::RemoveLayer(const Entity map_document_entity, const Entity layer_en
 void RemoveLayer::undo()
 {
   auto& model = get_global_model();
-  const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
 
-  sys::attach_layer_to_map(model, map_document.map, mLayerEntity, mParentLayerEntity);
+  const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
+  auto& map = model.get<Map>(map_document.map);
+
+  sys::attach_layer_to_map(model, map, mLayerEntity, mParentLayerEntity);
   // TODO sys::set_layer_index(model, map_document.map, mLayerEntity, mIndex.value());
 
   mIndex.reset();
@@ -51,12 +53,12 @@ void RemoveLayer::redo()
   auto& model = get_global_model();
 
   const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
-  const auto& map = model.get<Map>(map_document.map);
+  auto& map = model.get<Map>(map_document.map);
 
   mParentLayerEntity = sys::get_parent_layer(model, map.root_layer, mLayerEntity);
   // TODO mIndex = sys::get_layer_local_index(model, map.root_layer, mLayerEntity);
 
-  sys::remove_layer_from_map(model, map_document.map, mLayerEntity);
+  sys::remove_layer_from_map(model, map, mLayerEntity);
 }
 
 void RemoveLayer::dispose()

@@ -36,14 +36,17 @@ RemoveColumn::RemoveColumn(const Entity map_entity)
 void RemoveColumn::undo()
 {
   auto& model = get_global_model();
-  invoke_n(mColumnCount, [&, this] { sys::remove_column_from_map(model, mMapEntity); });
+
+  auto& map = model.get<Map>(mMapEntity);
+  invoke_n(mColumnCount, [&] { sys::remove_column_from_map(model, map); });
+
   mCache.restore_tiles(model);
 }
 
 void RemoveColumn::redo()
 {
   auto& model = get_global_model();
-  const auto& map = model.get<Map>(mMapEntity);
+  auto& map = model.get<Map>(mMapEntity);
 
   const auto begin = TilePos::from(0u, map.extent.cols - mColumnCount - 1u);
   const auto end = TilePos::from(map.extent.rows, map.extent.cols);
@@ -51,7 +54,7 @@ void RemoveColumn::redo()
   mCache.clear();
   mCache.save_tiles(model, mMapEntity, begin, end);
 
-  invoke_n(mColumnCount, [&, this] { sys::remove_column_from_map(model, mMapEntity); });
+  invoke_n(mColumnCount, [&] { sys::remove_column_from_map(model, map); });
 }
 
 auto RemoveColumn::merge_with(const Command* cmd) -> bool

@@ -19,15 +19,13 @@
 
 #include "map_system.hpp"
 
-#include <algorithm>  // find
-#include <utility>    // move
+#include <utility>  // move
 
 #include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
 #include "common/util/algorithm.hpp"
 #include "common/util/functional.hpp"
 #include "core/context.hpp"
-#include "core/map.hpp"
 #include "core/tile_format.hpp"
 #include "core/tileset.hpp"
 #include "model/document.hpp"
@@ -93,11 +91,10 @@ auto create_map(Model& model, const TileExtent& extent, const Int2& tile_size) -
   return map_entity;
 }
 
-auto fix_tiles_in_map(Model& model, const Entity map_entity) -> FixTilesInMapResult
+auto fix_tiles_in_map(Model& model, Map& map) -> FixTilesInMapResult
 {
   FixTilesInMapResult result;
 
-  const auto& map = model.get<Map>(map_entity);
   recurse_tile_layers(model, map.root_layer, [&](Entity layer_entity, TileLayer& layer) {
     HashMap<TilePos, TileID> previous_tile_ids;
 
@@ -106,7 +103,7 @@ auto fix_tiles_in_map(Model& model, const Entity map_entity) -> FixTilesInMapRes
       TACTILE_ASSERT(col < layer.tiles.at(row).size());
       const auto tile_id = layer.tiles[row][col];
 
-      if (!is_valid_tile_identifier(model, map_entity, tile_id)) {
+      if (!is_valid_tile_identifier(model, map, tile_id)) {
         previous_tile_ids[TilePos::from(row, col)] = tile_id;
         layer.tiles[row][col] = kEmptyTile;
       }
@@ -131,9 +128,8 @@ void restore_tiles_in_map(Model& model, const FixTilesInMapResult& invalid_tiles
   }
 }
 
-void add_row_to_map(Model& model, const Entity map_entity)
+void add_row_to_map(Model& model, Map& map)
 {
-  auto& map = model.get<Map>(map_entity);
   ++map.extent.rows;
 
   recurse_tile_layers(model, map.root_layer, [&](Entity, TileLayer& tile_layer) {
@@ -142,9 +138,8 @@ void add_row_to_map(Model& model, const Entity map_entity)
   });
 }
 
-void add_column_to_map(Model& model, const Entity map_entity)
+void add_column_to_map(Model& model, Map& map)
 {
-  auto& map = model.get<Map>(map_entity);
   ++map.extent.cols;
 
   recurse_tile_layers(model, map.root_layer, [&](Entity, TileLayer& tile_layer) {
@@ -154,10 +149,8 @@ void add_column_to_map(Model& model, const Entity map_entity)
   });
 }
 
-auto remove_row_from_map(Model& model, const Entity map_entity) -> Result
+auto remove_row_from_map(Model& model, Map& map) -> Result
 {
-  auto& map = model.get<Map>(map_entity);
-
   if (map.extent.rows == 1) {
     return failure;
   }
@@ -171,10 +164,8 @@ auto remove_row_from_map(Model& model, const Entity map_entity) -> Result
   return success;
 }
 
-auto remove_column_from_map(Model& model, const Entity map_entity) -> Result
+auto remove_column_from_map(Model& model, Map& map) -> Result
 {
-  auto& map = model.get<Map>(map_entity);
-
   if (map.extent.cols == 1) {
     return failure;
   }
@@ -191,13 +182,11 @@ auto remove_column_from_map(Model& model, const Entity map_entity) -> Result
   return success;
 }
 
-void resize_map(Model& model, const Entity map_entity, const TileExtent new_extent)
+auto resize_map(Model& model, Map& map, const TileExtent new_extent) -> Result
 {
   if (new_extent.rows < 1 || new_extent.cols < 1) {
-    return;
+    return failure;
   }
-
-  auto& map = model.get<Map>(map_entity);
 
   const auto old_extent = map.extent;
   map.extent = new_extent;
@@ -206,25 +195,24 @@ void resize_map(Model& model, const Entity map_entity, const TileExtent new_exte
   const auto col_diff = udiff(old_extent.cols, new_extent.cols);
 
   if (old_extent.cols < new_extent.cols) {
-    invoke_n(col_diff, [&] { sys::add_column_to_map(model, map_entity); });
+    invoke_n(col_diff, [&] { sys::add_column_to_map(model, map); });
   }
   else {
-    invoke_n(col_diff, [&] { sys::remove_column_from_map(model, map_entity); });
+    invoke_n(col_diff, [&] { sys::remove_column_from_map(model, map); });
   }
 
   if (old_extent.rows < new_extent.rows) {
-    invoke_n(row_diff, [&] { sys::add_row_to_map(model, map_entity); });
+    invoke_n(row_diff, [&] { sys::add_row_to_map(model, map); });
   }
   else {
-    invoke_n(row_diff, [&] { sys::remove_row_from_map(model, map_entity); });
+    invoke_n(row_diff, [&] { sys::remove_row_from_map(model, map); });
   }
+
+  return success;
 }
 
-auto add_new_layer_to_map(Model& model, const Entity map_entity, const LayerType type)
-    -> Entity
+auto add_new_layer_to_map(Model& model, Map& map, const LayerType type) -> Entity
 {
-  auto& map = model.get<Map>(map_entity);
-
   const auto layer_entity = _create_layer(model, map, type);
 
   auto* root_layer = _determine_target_root_layer(model, map);
@@ -234,13 +222,12 @@ auto add_new_layer_to_map(Model& model, const Entity map_entity, const LayerType
 }
 
 void attach_layer_to_map(Model& model,
-                         const Entity map_entity,
+                         Map& map,
                          const Entity layer_entity,
                          const Entity root_layer_entity)
 {
-  TACTILE_ASSERT(model.try_get<Layer>(layer_entity) != nullptr);
+  TACTILE_ASSERT(is_layer_entity(model, layer_entity));
 
-  auto& map = model.get<Map>(map_entity);
   auto& root_layer = (root_layer_entity != kNullEntity)
                          ? model.get<GroupLayer>(root_layer_entity)
                          : model.get<GroupLayer>(map.root_layer);
@@ -248,11 +235,8 @@ void attach_layer_to_map(Model& model,
   root_layer.append(layer_entity);
 }
 
-void remove_layer_from_map(Model& model,
-                           const Entity map_entity,
-                           const Entity layer_entity)
+void remove_layer_from_map(Model& model, Map& map, const Entity layer_entity)
 {
-  auto& map = model.get<Map>(map_entity);
   auto& root_layer = model.get<GroupLayer>(map.root_layer);
 
   if (map.active_layer == layer_entity) {
@@ -266,15 +250,12 @@ void remove_layer_from_map(Model& model,
   });
 }
 
-auto attach_tileset_to_map(Model& model,
-                           const Entity map_entity,
-                           const Entity tileset_entity) -> AttachedTilesetEntity
+auto attach_tileset_to_map(Model& model, Map& map, const Entity tileset_entity)
+    -> AttachedTilesetEntity
 {
-  TACTILE_ASSERT(is_map_entity(model, map_entity));
+  // TODO assert that the tileset isn't already attached
   TACTILE_ASSERT(is_tileset_entity(model, tileset_entity));
-
   const auto& tileset = model.get<Tileset>(tileset_entity);
-  auto& map = model.get<Map>(map_entity);
 
   const auto attached_tileset_entity =
       create_attached_tileset(model, tileset_entity, map.next_tile_id);

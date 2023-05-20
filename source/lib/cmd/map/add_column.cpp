@@ -36,13 +36,15 @@ AddColumn::AddColumn(const Entity map_entity)
 void AddColumn::undo()
 {
   auto& model = get_global_model();
-  invoke_n(mColumnCount, [&, this] { sys::remove_column_from_map(model, mMapEntity); });
+  auto& map = model.get<Map>(mMapEntity);
+  invoke_n(mColumnCount, [&, this] { sys::remove_column_from_map(model, map); });
 }
 
 void AddColumn::redo()
 {
   auto& model = get_global_model();
-  invoke_n(mColumnCount, [&, this] { sys::add_column_to_map(model, mMapEntity); });
+  auto& map = model.get<Map>(mMapEntity);
+  invoke_n(mColumnCount, [&, this] { sys::add_column_to_map(model, map); });
 }
 
 auto AddColumn::merge_with(const Command* cmd) -> bool

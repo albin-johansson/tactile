@@ -40,7 +40,8 @@ void FixMapTiles::undo()
 void FixMapTiles::redo()
 {
   auto& model = get_global_model();
-  mInvalidLayerTiles = sys::fix_tiles_in_map(model, mMapEntity);
+  auto& map = model.get<Map>(mMapEntity);
+  mInvalidLayerTiles = sys::fix_tiles_in_map(model, map);
 }
 
 auto FixMapTiles::get_name() const -> String
