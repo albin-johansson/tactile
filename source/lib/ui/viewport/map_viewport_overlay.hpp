@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "common/type/dispatcher.hpp"
 #include "core/map.hpp"
 #include "model/model.hpp"
 #include "ui/viewport/viewport_cursor_info.hpp"
@@ -27,6 +28,7 @@ namespace tactile::ui {
 
 void show_map_viewport_overlay(const Model& model,
                                const Map& map,
-                               const ViewportCursorInfo& cursor);
+                               const ViewportCursorInfo& cursor,
+                               Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

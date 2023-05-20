@@ -33,7 +33,6 @@
 #include "io/stream.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/xml.hpp"
-#include "model/context.hpp"
 
 namespace tactile {
 namespace {
@@ -188,15 +187,14 @@ void append_common_layer_attributes(XmlNode node, const LayerIR& layer)
 
 void append_csv_tile_layer_data(XmlNode data_node,
                                 const MapIR& map,
-                                const TileLayerIR& tile_layer)
+                                const TileLayerIR& tile_layer,
+                                const Settings& settings)
 {
   data_node.append_attribute("encoding").set_value("csv");
 
   std::stringstream stream;
 
   const auto tile_count = map.extent.rows * map.extent.cols;
-
-  const auto& settings = get_global_settings();
   const bool fold_tile_data = settings.test_flag(SETTINGS_FOLD_TILE_DATA_BIT);
 
   invoke_mn(map.extent.rows,
@@ -250,7 +248,10 @@ void append_base64_tile_layer_data(XmlNode data_node,
   data_node.text().set(tile_data.c_str());
 }
 
-void append_tile_layer(XmlNode root, const MapIR& map, const LayerIR& layer)
+void append_tile_layer(XmlNode root,
+                       const MapIR& map,
+                       const LayerIR& layer,
+                       const Settings& settings)
 {
   const auto& tile_layer = layer.as_tile_layer();
 
@@ -265,7 +266,7 @@ void append_tile_layer(XmlNode root, const MapIR& map, const LayerIR& layer)
   auto data_node = node.append_child("data");
   switch (map.tile_format.encoding) {
     case TileEncoding::Plain:
-      append_csv_tile_layer_data(data_node, map, tile_layer);
+      append_csv_tile_layer_data(data_node, map, tile_layer, settings);
       break;
 
     case TileEncoding::Base64:
@@ -290,11 +291,14 @@ void append_object_layer(XmlNode root, const LayerIR& layer)
   }
 }
 
-void append_layer(XmlNode root, const MapIR& map, const LayerIR& layer)
+void append_layer(XmlNode root,
+                  const MapIR& map,
+                  const LayerIR& layer,
+                  const Settings& settings)
 {
   switch (layer.type) {
     case LayerType::TileLayer:
-      append_tile_layer(root, map, layer);
+      append_tile_layer(root, map, layer, settings);
       break;
 
     case LayerType::ObjectLayer:
@@ -309,7 +313,7 @@ void append_layer(XmlNode root, const MapIR& map, const LayerIR& layer)
       append_properties(collection, layer.context);
 
       for (const auto& child_layer: group_layer.children) {
-        append_layer(collection, map, *child_layer);
+        append_layer(collection, map, *child_layer, settings);
       }
 
       break;
@@ -408,9 +412,11 @@ void emit_external_tileset_file(const Path& path,
   }
 }
 
-void append_tileset(XmlNode root, const Path& dir, const TilesetIR& tileset)
+void append_tileset(XmlNode root,
+                    const Path& dir,
+                    const TilesetIR& tileset,
+                    const Settings& settings)
 {
-  const auto& settings = get_global_settings();
   if (settings.test_flag(SETTINGS_EMBED_TILESETS_BIT)) {
     append_embedded_tileset(root, tileset, dir);
   }
@@ -422,7 +428,10 @@ void append_tileset(XmlNode root, const Path& dir, const TilesetIR& tileset)
   }
 }
 
-void append_root(pugi::xml_document& document, const Path& dir, const MapIR& ir_map)
+void append_root(pugi::xml_document& document,
+                 const Path& dir,
+                 const MapIR& ir_map,
+                 const Settings& settings)
 {
   auto root = document.append_child("map");
 
@@ -445,24 +454,26 @@ void append_root(pugi::xml_document& document, const Path& dir, const MapIR& ir_
   append_properties(root, ir_map.context);
 
   for (const auto& ir_tileset: ir_map.tilesets) {
-    append_tileset(root, dir, ir_tileset);
+    append_tileset(root, dir, ir_tileset, settings);
   }
 
   for (const auto& layer: ir_map.layers) {
-    append_layer(root, ir_map, layer);
+    append_layer(root, ir_map, layer, settings);
   }
 }
 
 }  // namespace
 
-void save_map_as_tiled_xml(const Path& destination, const MapIR& ir_map)
+void save_map_as_tiled_xml(const Path& destination,
+                           const MapIR& ir_map,
+                           const Settings& settings)
 {
   if (!ir_map.component_definitions.empty()) {
     spdlog::warn("Component data will be ignored when saving the map as XML!");
   }
 
   pugi::xml_document document;
-  append_root(document, destination.parent_path(), ir_map);
+  append_root(document, destination.parent_path(), ir_map, settings);
 
   if (save_xml_to_file(document, destination).failed()) {
     spdlog::error("Could not save XML map file");

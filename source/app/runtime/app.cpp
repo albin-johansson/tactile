@@ -95,7 +95,7 @@ void App::_init_persistent_settings()
 {
   auto& model = get_global_model();
 
-  auto& settings = get_global_settings();
+  auto& settings = model.get<Settings>();
   settings.copy_values_from(load_settings_from_disk());
   settings.print();
 
@@ -146,8 +146,10 @@ void App::_init_widgets()
 
 void App::on_shutdown()
 {
+  auto& model = get_global_model();
+
   _add_open_documents_to_file_history();
-  save_settings_to_disk(get_global_settings());
+  save_settings_to_disk(model.get<Settings>());
   save_session_to_disk(get_global_model());
   save_file_history_to_disk(get_file_history());
 }
@@ -279,7 +281,9 @@ void App::_on_quit()
 void App::_on_menu_action(const MenuActionEvent& event)
 {
   spdlog::trace("[MenuActionEvent] action: {}", magic_enum::enum_name(event.action));
-  const auto& model = get_global_model();
+
+  auto& model = get_global_model();
+  auto& settings = model.get<Settings>();
 
   switch (event.action) {
     case MenuAction::NewMap:
@@ -409,7 +413,7 @@ void App::_on_menu_action(const MenuActionEvent& event)
       break;
 
     case MenuAction::HighlightLayer:
-      get_global_settings().negate_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT);
+      settings.negate_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT);
       break;
 
     case MenuAction::ToggleUi:

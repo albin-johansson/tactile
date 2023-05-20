@@ -136,7 +136,8 @@ void Engine::poll_events()
 
 void Engine::reload_fonts()
 {
-  const auto& settings = get_global_settings();
+  const auto& model = get_global_model();
+  const auto& settings = model.get<Settings>();
 
   const auto font_size = settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT)
                              ? 13.0f

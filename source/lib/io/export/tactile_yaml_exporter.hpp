@@ -21,11 +21,14 @@
 
 #include "common/macros.hpp"
 #include "common/type/path.hpp"
+#include "model/settings.hpp"
 
 namespace tactile {
 
 TACTILE_FWD_DECLARE_STRUCT(MapIR)
 
-void save_map_as_tactile_yaml(const Path& destination, const MapIR& ir_map);
+void save_map_as_tactile_yaml(const Path& destination,
+                              const MapIR& ir_map,
+                              const Settings& settings);
 
 }  // namespace tactile

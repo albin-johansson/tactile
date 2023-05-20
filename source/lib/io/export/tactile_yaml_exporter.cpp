@@ -35,7 +35,6 @@
 #include "io/stream.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/yaml.hpp"
-#include "model/context.hpp"
 
 namespace tactile {
 namespace {
@@ -156,9 +155,9 @@ void emit_object_layer_data(YAML::Emitter& emitter, const ObjectLayerIR& data)
 
 void emit_plain_tile_layer_data(YAML::Emitter& emitter,
                                 const TileLayerIR& data,
-                                const TileExtent extent)
+                                const TileExtent extent,
+                                const Settings& settings)
 {
-  const auto& settings = get_global_settings();
   const bool fold_tile_data = settings.test_flag(SETTINGS_FOLD_TILE_DATA_BIT);
 
   emitter << YAML::Key << "data";
@@ -186,7 +185,10 @@ void emit_plain_tile_layer_data(YAML::Emitter& emitter,
   }
 }
 
-void emit_layer(YAML::Emitter& emitter, const MapIR& map, const LayerIR& layer)
+void emit_layer(YAML::Emitter& emitter,
+                const MapIR& map,
+                const LayerIR& layer,
+                const Settings& settings)
 {
   emitter << YAML::BeginMap;
 
@@ -209,7 +211,7 @@ void emit_layer(YAML::Emitter& emitter, const MapIR& map, const LayerIR& layer)
       const auto& tile_layer = layer.as_tile_layer();
 
       if (map.tile_format.encoding == TileEncoding::Plain) {
-        emit_plain_tile_layer_data(emitter, tile_layer, map.extent);
+        emit_plain_tile_layer_data(emitter, tile_layer, map.extent, settings);
       }
       else {
         emitter << YAML::Key << "data";
@@ -234,7 +236,7 @@ void emit_layer(YAML::Emitter& emitter, const MapIR& map, const LayerIR& layer)
 
       const auto& group_layer = layer.as_group_layer();
       for (const auto& child_layer_data: group_layer.children) {
-        emit_layer(emitter, map, *child_layer_data);
+        emit_layer(emitter, map, *child_layer_data, settings);
       }
 
       emitter << YAML::EndSeq;
@@ -248,7 +250,7 @@ void emit_layer(YAML::Emitter& emitter, const MapIR& map, const LayerIR& layer)
   emitter << YAML::EndMap;
 }
 
-void emit_layers(YAML::Emitter& emitter, const MapIR& map)
+void emit_layers(YAML::Emitter& emitter, const MapIR& map, const Settings& settings)
 {
   if (map.layers.empty()) {
     return;
@@ -257,7 +259,7 @@ void emit_layers(YAML::Emitter& emitter, const MapIR& map)
   emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
   for (const auto& layer_data: map.layers) {
-    emit_layer(emitter, map, layer_data);
+    emit_layer(emitter, map, layer_data, settings);
   }
 
   emitter << YAML::EndSeq;
@@ -436,7 +438,9 @@ void emit_tile_format(YAML::Emitter& emitter, const TileFormatIR& format)
 
 }  // namespace
 
-void save_map_as_tactile_yaml(const Path& destination, const MapIR& ir_map)
+void save_map_as_tactile_yaml(const Path& destination,
+                              const MapIR& ir_map,
+                              const Settings& settings)
 {
   YAML::Emitter emitter;
   emitter.SetIndent(2);
@@ -456,7 +460,7 @@ void save_map_as_tactile_yaml(const Path& destination, const MapIR& ir_map)
   emit_tile_format(emitter, ir_map.tile_format);
   emit_component_definitions(emitter, ir_map);
   emit_tilesets(emitter, destination.parent_path(), ir_map);
-  emit_layers(emitter, ir_map);
+  emit_layers(emitter, ir_map, settings);
 
   emit_properties(emitter, ir_map.context);
   emit_components(emitter, ir_map.context);

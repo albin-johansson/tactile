@@ -27,6 +27,7 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/context.hpp"
+#include "model/event/setting_events.hpp"
 #include "model/systems/tileset_system.hpp"
 #include "ui/viewport/viewport_cursor_info.hpp"
 #include "ui/widget/scoped.hpp"
@@ -42,12 +43,12 @@ constexpr auto kOverlayWindowFlags =
 
 constexpr float kOverlayOpacity = 0.35f;
 
-void _prepare_position_and_pivot()
+void _prepare_position_and_pivot(const Settings& settings)
 {
   const auto pos = ImGui::GetWindowPos();
   const auto size = ImGui::GetWindowSize();
 
-  const auto corner = get_global_settings().get_viewport_overlay_pos();
+  const auto corner = settings.get_viewport_overlay_pos();
   const bool is_right =
       corner == OverlayPos::TopRight || corner == OverlayPos::BottomRight;
   const bool is_bottom =
@@ -98,36 +99,35 @@ void _show_mouse_tile_labels(const Model& model,
   }
 }
 
-void _show_overlay_context_menu()
+void _show_overlay_context_menu(const Settings& settings, Dispatcher& dispatcher)
 {
   if (auto popup = Popup::for_window("##ViewportOverlayPopup"); popup.is_open()) {
     const auto& lang = get_current_language();
 
-    auto& settings = get_global_settings();
     const auto corner = settings.get_viewport_overlay_pos();
 
     if (ImGui::MenuItem(lang.action.top_left.c_str(),
                         nullptr,
                         corner == OverlayPos::TopLeft)) {
-      settings.set_viewport_overlay_pos(OverlayPos::TopLeft);
+      dispatcher.enqueue<SetViewportOverlayPosEvent>(OverlayPos::TopLeft);
     }
 
     if (ImGui::MenuItem(lang.action.top_right.c_str(),
                         nullptr,
                         corner == OverlayPos::TopRight)) {
-      settings.set_viewport_overlay_pos(OverlayPos::TopRight);
+      dispatcher.enqueue<SetViewportOverlayPosEvent>(OverlayPos::TopRight);
     }
 
     if (ImGui::MenuItem(lang.action.bottom_left.c_str(),
                         nullptr,
                         corner == OverlayPos::BottomLeft)) {
-      settings.set_viewport_overlay_pos(OverlayPos::BottomLeft);
+      dispatcher.enqueue<SetViewportOverlayPosEvent>(OverlayPos::BottomLeft);
     }
 
     if (ImGui::MenuItem(lang.action.bottom_right.c_str(),
                         nullptr,
                         corner == OverlayPos::BottomRight)) {
-      settings.set_viewport_overlay_pos(OverlayPos::BottomRight);
+      dispatcher.enqueue<SetViewportOverlayPosEvent>(OverlayPos::BottomRight);
     }
 
     ImGui::Separator();
@@ -136,7 +136,8 @@ void _show_overlay_context_menu()
     if (ImGui::MenuItem(lang.action.show_frame_rate.c_str(),
                         nullptr,
                         &show_overlay_fps)) {
-      settings.set_flag(SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT, show_overlay_fps);
+      dispatcher.enqueue<SetSettingFlagEvent>(SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT,
+                                              show_overlay_fps);
     }
   }
 }
@@ -145,9 +146,12 @@ void _show_overlay_context_menu()
 
 void show_map_viewport_overlay(const Model& model,
                                const Map& map,
-                               const ViewportCursorInfo& cursor)
+                               const ViewportCursorInfo& cursor,
+                               Dispatcher& dispatcher)
 {
-  _prepare_position_and_pivot();
+  const auto& settings = model.get<Settings>();
+
+  _prepare_position_and_pivot(settings);
 
   ImGui::SetNextWindowBgAlpha(kOverlayOpacity);
   const Window window {"##ViewportOverlay", kOverlayWindowFlags};
@@ -155,7 +159,7 @@ void show_map_viewport_overlay(const Model& model,
   if (window.is_open()) {
     const auto& lang = get_current_language();
 
-    if (get_global_settings().test_flag(SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT)) {
+    if (settings.test_flag(SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT)) {
       const auto& io = ImGui::GetIO();
       ImGui::Text("%.2f ms (%.1f FPS)", 1'000.0f * io.DeltaTime, io.Framerate);
       ImGui::Separator();
@@ -183,8 +187,7 @@ void show_map_viewport_overlay(const Model& model,
 
     ImGui::Separator();
     _show_mouse_tile_labels(model, map, cursor);
-
-    _show_overlay_context_menu();
+    _show_overlay_context_menu(settings, dispatcher);
   }
 }
 

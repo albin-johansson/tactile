@@ -140,7 +140,7 @@ void show_tileset_viewport(const Model& model,
                            const Entity tileset_document_entity,
                            Dispatcher& dispatcher)
 {
-  const auto& settings = get_global_settings();
+  const auto& settings = model.get<Settings>();
   const auto& lang = get_current_language();
 
   const auto& tileset_document = model.get<TilesetDocument>(tileset_document_entity);

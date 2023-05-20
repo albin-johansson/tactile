@@ -25,6 +25,7 @@
 
 namespace tactile {
 
+// FIXME migrate to explicit parameter here
 CommandStack::CommandStack()
     : mCapacity {get_global_settings().get_command_capacity()}
 {

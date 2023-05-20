@@ -29,6 +29,7 @@
 #include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/document.hpp"
+#include "model/event/setting_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/systems/document_system.hpp"
@@ -51,7 +52,7 @@ inline constinit TilesetDockState gDockState;
 
 void show_tileset_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
-  auto& settings = get_global_settings();
+  const auto& settings = model.get<Settings>();
 
   if (!settings.test_flag(SETTINGS_SHOW_TILESET_DOCK_BIT)) {
     return;
@@ -64,7 +65,10 @@ void show_tileset_dock(const Model& model, Entity, Dispatcher& dispatcher)
                      ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
                      &show_tileset_dock};
 
-  settings.set_flag(SETTINGS_SHOW_TILESET_DOCK_BIT, show_tileset_dock);
+  if (show_tileset_dock != settings.test_flag(SETTINGS_SHOW_TILESET_DOCK_BIT)) {
+    dispatcher.enqueue<SetSettingFlagEvent>(SETTINGS_SHOW_TILESET_DOCK_BIT,
+                                            show_tileset_dock);
+  }
 
   // We intentionally do not use the window is_hovered function here
   gDockState.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);

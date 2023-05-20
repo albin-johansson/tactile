@@ -30,6 +30,7 @@
 #include "model/context.hpp"
 #include "model/document.hpp"
 #include "model/event/layer_events.hpp"
+#include "model/event/setting_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/group_layer_system.hpp"
@@ -148,7 +149,7 @@ void show_layer_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
   TACTILE_ASSERT(sys::has_active_document(model));
 
-  auto& settings = get_global_settings();
+  const auto& settings = model.get<Settings>();
 
   if (!settings.test_flag(SETTINGS_SHOW_LAYER_DOCK_BIT)) {
     return;
@@ -160,7 +161,11 @@ void show_layer_dock(const Model& model, Entity, Dispatcher& dispatcher)
   const Window dock {lang.window.layer_dock.c_str(),
                      ImGuiWindowFlags_NoCollapse,
                      &show_layer_dock};
-  settings.set_flag(SETTINGS_SHOW_LAYER_DOCK_BIT, show_layer_dock);
+
+  if (show_layer_dock != settings.test_flag(SETTINGS_SHOW_LAYER_DOCK_BIT)) {
+    dispatcher.enqueue<SetSettingFlagEvent>(SETTINGS_SHOW_LAYER_DOCK_BIT,
+                                            show_layer_dock);
+  }
 
   gDockState.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 

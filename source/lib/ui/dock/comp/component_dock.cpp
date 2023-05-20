@@ -31,6 +31,7 @@
 #include "model/context.hpp"
 #include "model/document.hpp"
 #include "model/event/component_events.hpp"
+#include "model/event/setting_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/context/components.hpp"
 #include "model/systems/document_system.hpp"
@@ -120,7 +121,7 @@ void _show_dock_contents(const Model& model,
 
 void show_component_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
-  auto& settings = get_global_settings();
+  const auto& settings = model.get<Settings>();
 
   if (!settings.test_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT)) {
     return;
@@ -132,7 +133,11 @@ void show_component_dock(const Model& model, Entity, Dispatcher& dispatcher)
   const Window dock {lang.window.component_dock.c_str(),
                      ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
                      &show_component_dock};
-  settings.set_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT, show_component_dock);
+
+  if (show_component_dock != settings.test_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT)) {
+    dispatcher.enqueue<SetSettingFlagEvent>(SETTINGS_SHOW_COMPONENT_DOCK_BIT,
+                                            show_component_dock);
+  }
 
   if (dock.is_open()) {
     const auto document_entity = sys::get_active_document(model);

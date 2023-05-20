@@ -38,7 +38,7 @@ void load_languages();
 
 [[nodiscard]] auto get_language(Lang lang) -> const Strings&;
 
-[[nodiscard]] auto get_current_language() -> const Strings&;
+[[nodiscard, deprecated]] auto get_current_language() -> const Strings&;
 
 [[nodiscard]] auto get_language_name(Lang lang) -> const char*;
 

@@ -30,7 +30,6 @@
 #include "io/ir/map/map_ir.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/json.hpp"
-#include "model/context.hpp"
 
 namespace tactile {
 namespace {
@@ -332,9 +331,11 @@ void create_external_tileset_file(const Path& dir, const TilesetIR& tileset)
   }
 }
 
-[[nodiscard]] auto emit_tileset(const Path& dir, const TilesetIR& tileset) -> JSON
+[[nodiscard]] auto emit_tileset(const Path& dir,
+                                const TilesetIR& tileset,
+                                const Settings& settings) -> JSON
 {
-  if (get_global_settings().test_flag(SETTINGS_EMBED_TILESETS_BIT)) {
+  if (settings.test_flag(SETTINGS_EMBED_TILESETS_BIT)) {
     return emit_embedded_tileset(dir, tileset);
   }
   else {
@@ -343,12 +344,14 @@ void create_external_tileset_file(const Path& dir, const TilesetIR& tileset)
   }
 }
 
-[[nodiscard]] auto emit_tilesets(const Path& dir, const MapIR& ir_map) -> JSON
+[[nodiscard]] auto emit_tilesets(const Path& dir,
+                                 const MapIR& ir_map,
+                                 const Settings& settings) -> JSON
 {
   auto json = JSON::array();
 
   for (const auto& ir_tileset: ir_map.tilesets) {
-    json += emit_tileset(dir, ir_tileset);
+    json += emit_tileset(dir, ir_tileset, settings);
   }
 
   return json;
@@ -356,7 +359,9 @@ void create_external_tileset_file(const Path& dir, const TilesetIR& tileset)
 
 }  // namespace
 
-void save_map_as_tiled_json(const Path& destination, const MapIR& ir_map)
+void save_map_as_tiled_json(const Path& destination,
+                            const MapIR& ir_map,
+                            const Settings& settings)
 {
   auto json = JSON::object();
 
@@ -391,7 +396,7 @@ void save_map_as_tiled_json(const Path& destination, const MapIR& ir_map)
   json["tiledversion"] = kTiledVersion;
   json["version"] = kTiledJsonFormatVersion;
 
-  json["tilesets"] = emit_tilesets(destination.parent_path(), ir_map);
+  json["tilesets"] = emit_tilesets(destination.parent_path(), ir_map, settings);
   json["layers"] = emit_layers(ir_map);
 
   if (!ir_map.context.properties.empty()) {

@@ -43,6 +43,7 @@
 #include "model/event/map_events.hpp"
 #include "model/event/object_events.hpp"
 #include "model/event/property_events.hpp"
+#include "model/event/setting_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"
@@ -500,7 +501,7 @@ void _show_property_table(const Model& model, Dispatcher& dispatcher)
 
 void show_property_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
-  auto& settings = get_global_settings();
+  const auto& settings = model.get<Settings>();
 
   if (!settings.test_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT)) {
     return;
@@ -513,7 +514,11 @@ void show_property_dock(const Model& model, Entity, Dispatcher& dispatcher)
                        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
                        &show_property_dock};
 
-  settings.set_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT, show_property_dock);
+  if (show_property_dock != settings.test_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT)) {
+    dispatcher.enqueue<SetSettingFlagEvent>(SETTINGS_SHOW_PROPERTY_DOCK_BIT,
+                                            show_property_dock);
+  }
+
   gDockState.has_focus = window.has_focus();
 
   if (window.is_open()) {

@@ -27,6 +27,7 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/context.hpp"
+#include "model/event/setting_events.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -175,9 +176,9 @@ void _show_logged_message_view(const Strings& lang, const usize message_count)
 
 }  // namespace
 
-void show_log_dock(const Model&, Entity, Dispatcher&)
+void show_log_dock(const Model&, Entity, Dispatcher& dispatcher)
 {
-  auto& settings = get_global_settings();
+  const auto& settings = model.get<Settings>();
 
   if (!settings.test_flag(SETTINGS_SHOW_LOG_DOCK_BIT)) {
     return;
@@ -189,7 +190,10 @@ void show_log_dock(const Model&, Entity, Dispatcher&)
   const Window dock {lang.window.log_dock.c_str(),
                      ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
                      &show_log_dock};
-  settings.set_flag(SETTINGS_SHOW_LOG_DOCK_BIT, show_log_dock);
+
+  if (show_log_dock != settings.test_flag(SETTINGS_SHOW_LOG_DOCK_BIT)) {
+    dispatcher.enqueue<SetSettingFlagEvent>(SETTINGS_SHOW_LOG_DOCK_BIT, show_log_dock);
+  }
 
   gDockState.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 

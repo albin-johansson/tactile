@@ -33,6 +33,7 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document.hpp"
+#include "model/event/setting_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"
@@ -266,7 +267,7 @@ void _show_tile_animation_preview_section(const Model& model,
 
 void show_animation_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
-  auto& settings = get_global_settings();
+  const auto& settings = model.get<Settings>();
 
   if (!settings.test_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT)) {
     return;
@@ -282,7 +283,11 @@ void show_animation_dock(const Model& model, Entity, Dispatcher& dispatcher)
   const Window dock {lang.window.animation_dock.c_str(),
                      ImGuiWindowFlags_NoCollapse,
                      &show_animation_dock};
-  settings.set_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT, show_animation_dock);
+
+  if (show_animation_dock != settings.test_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT)) {
+    dispatcher.enqueue<SetSettingFlagEvent>(SETTINGS_SHOW_ANIMATION_DOCK_BIT,
+                                            show_animation_dock);
+  }
 
   if (dock.is_open()) {
     if (tileset.selected_tile_index.has_value()) {

@@ -89,7 +89,7 @@ void update_attached_tileset_view(const Model& model,
                                   const Entity attached_tileset_entity,
                                   Dispatcher& dispatcher)
 {
-  const auto& settings = get_global_settings();
+  const auto& settings = model.get<Settings>();
 
   const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
   const auto& tileset = model.get<Tileset>(attached_tileset.tileset);

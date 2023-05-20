@@ -238,7 +238,7 @@ void show_map_viewport(const Model& model,
                        const Entity map_document_entity,
                        Dispatcher& dispatcher)
 {
-  const auto& settings = get_global_settings();
+  const auto& settings = model.get<Settings>();
 
   const auto& map_document = model.get<MapDocument>(map_document_entity);
   const auto& viewport = model.get<Viewport>(map_document_entity);
@@ -268,7 +268,7 @@ void show_map_viewport(const Model& model,
   pop_scissor();
 
   show_map_viewport_toolbar(model, dispatcher);
-  show_map_viewport_overlay(model, map, cursor);
+  show_map_viewport_overlay(model, map, cursor, dispatcher);
 
   _update_viewport_context_menu(map_document.map, dispatcher);
   _update_object_context_menu(model, map, dispatcher);
