@@ -24,7 +24,6 @@ namespace {
 
 inline Settings gSettings;
 inline Model gModel;
-inline Dispatcher gDispatcher;
 
 }  // namespace
 
@@ -36,11 +35,6 @@ auto get_global_settings() -> Settings&
 auto get_global_model() -> Model&
 {
   return gModel;
-}
-
-auto get_global_dispatcher() -> Dispatcher&
-{
-  return gDispatcher;
 }
 
 }  // namespace tactile

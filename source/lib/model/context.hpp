@@ -19,19 +19,15 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
 #include "model/model.hpp"
 #include "model/settings.hpp"
 
 namespace tactile {
 
 /// Returns the global settings.
-[[nodiscard]] auto get_global_settings() -> Settings&;
+[[nodiscard, deprecated]] auto get_global_settings() -> Settings&;
 
 /// Returns the global model instance.
 [[nodiscard]] auto get_global_model() -> Model&;
-
-/// Returns the global dispatcher instance.
-[[nodiscard]] auto get_global_dispatcher() -> Dispatcher&;
 
 }  // namespace tactile
