@@ -22,6 +22,7 @@
 #include "core/menu.hpp"
 #include "core/texture.hpp"
 #include "model/document.hpp"
+#include "model/settings.hpp"
 
 namespace tactile::sys {
 
@@ -30,6 +31,7 @@ void init_model(Model& model)
   auto& document_context = model.add<CDocumentContext>();
   document_context.active_document = kNullEntity;
 
+  model.add<Settings>();
   model.add<TextureCache>();
   model.add<Icons>();
   model.add<MenuItems>();

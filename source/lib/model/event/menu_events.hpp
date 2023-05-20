@@ -23,7 +23,7 @@
 
 namespace tactile {
 
-struct MenuItemEvent final {
+struct MenuActionEvent final {
   MenuAction action {};
 };
 

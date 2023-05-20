@@ -21,7 +21,9 @@
 
 #include <centurion/event.hpp>
 
+#include "common/type/dispatcher.hpp"
 #include "engine/app_delegate.hpp"
+#include "model/event/menu_events.hpp"
 
 namespace tactile {
 
@@ -43,17 +45,24 @@ class App final : public AppDelegate {
   [[nodiscard]] auto should_stop() const -> bool override { return mShouldStop; }
 
  private:
+  Dispatcher mDispatcher;
   bool mShouldStop {false};
 
-  void subscribe_to_events();
+  void _subscribe_to_events();
 
-  void add_open_documents_to_file_history();
+  void _init_persistent_settings();
 
-  void on_keyboard_event(cen::keyboard_event event);
+  void _init_widgets();
 
-  void on_mouse_wheel_event(const cen::mouse_wheel_event& event);
+  void _add_open_documents_to_file_history();
 
-  void on_quit();
+  void _on_keyboard_event(cen::keyboard_event event);
+
+  void _on_mouse_wheel_event(const cen::mouse_wheel_event& event);
+
+  void _on_menu_action(const MenuActionEvent& event);
+
+  void _on_quit();
 };
 
 }  // namespace tactile

@@ -21,23 +21,29 @@
 
 #include <utility>  // move
 
-#include <core/texture.hpp>
+#include <centurion/system.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
+#include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
 #include "cmd/commands.hpp"
 #include "core/map.hpp"
+#include "core/texture.hpp"
 #include "io/directories.hpp"
 #include "io/proto/history.hpp"
 #include "io/proto/session.hpp"
 #include "io/proto/settings.hpp"
 #include "model/context.hpp"
+#include "model/delegates/command_delegate.hpp"
 #include "model/document.hpp"
+#include "model/event/all.hpp"
+#include "model/event/map_events.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/event/view_events.hpp"
 #include "model/file_history.hpp"
 #include "model/model.hpp"
+#include "model/systems/document_system.hpp"
 #include "model/systems/menu_system.hpp"
 #include "model/systems/texture_system.hpp"
 #include "model/systems/widget_system.hpp"
@@ -61,13 +67,14 @@
 #include "ui/menu/menu_bar.hpp"
 #include "ui/shortcut/shortcuts.hpp"
 #include "ui/style/colors.hpp"
+#include "ui/ui.hpp"
 #include "ui/viewport/viewport_widget.hpp"
 
 namespace tactile {
 
 App::App()
 {
-  subscribe_to_events();
+  _subscribe_to_events();
   init_default_shortcuts();
 }
 
@@ -75,7 +82,19 @@ void App::on_startup()
 {
   auto& model = get_global_model();
 
-  // Configure settings and load the language files
+  auto& icons = model.get<Icons>();
+  icons.tactile_icon = sys::create_texture(model, find_resource("assets/icon.png"));
+
+  _init_persistent_settings();
+
+  sys::init_menus(model);
+  _init_widgets();
+}
+
+void App::_init_persistent_settings()
+{
+  auto& model = get_global_model();
+
   auto& settings = get_global_settings();
   settings.copy_values_from(load_settings_from_disk());
   settings.print();
@@ -93,11 +112,11 @@ void App::on_startup()
   auto& style = ImGui::GetStyle();
   style.WindowBorderSize = settings.test_flag(SETTINGS_WINDOW_BORDER_BIT) ? 1.0f : 0.0f;
   apply_theme(style, settings.get_theme(), settings.get_theme_saturation());
+}
 
-  auto& icons = model.get<Icons>();
-  icons.tactile_icon = sys::create_texture(model, find_resource("assets/icon.png"));
-
-  sys::init_menus(model);
+void App::_init_widgets()
+{
+  auto& model = get_global_model();
 
   uint32 idx = 0;
   sys::add_widget(model, idx++, ui::show_menu_bar);
@@ -127,7 +146,7 @@ void App::on_startup()
 
 void App::on_shutdown()
 {
-  add_open_documents_to_file_history();
+  _add_open_documents_to_file_history();
   save_settings_to_disk(get_global_settings());
   save_session_to_disk(get_global_model());
   save_file_history_to_disk(get_file_history());
@@ -136,6 +155,7 @@ void App::on_shutdown()
 void App::on_pre_update()
 {
   if (is_font_reload_scheduled()) {
+    // TODO ImGuiContext::reload_fonts();
     handled_font_reload();
   }
 }
@@ -143,16 +163,17 @@ void App::on_pre_update()
 void App::on_update()
 {
   auto& model = get_global_model();
-  auto& dispatcher = get_global_dispatcher();
 
-  dispatcher.update();
+  mDispatcher.update();
+
+  // TODO update animated tiles
 
   sys::update_menu_items(model);
 
   ui::update_dynamic_color_cache();
   ui::update_dock_space();
 
-  sys::render_widgets(model, dispatcher);
+  sys::render_widgets(model, mDispatcher);
 
   ui::check_for_missing_layout_file();
 }
@@ -160,7 +181,7 @@ void App::on_update()
 void App::on_event(const cen::event_handler& handler)
 {
   if (const auto type = handler.raw_type(); type > SDL_USEREVENT) {
-    get_global_dispatcher().trigger(MenuItemEvent {static_cast<MenuAction>(*type)});
+    mDispatcher.trigger(MenuActionEvent {static_cast<MenuAction>(*type)});
     return;
   }
 
@@ -168,11 +189,11 @@ void App::on_event(const cen::event_handler& handler)
     case cen::event_type::key_up:
       [[fallthrough]];
     case cen::event_type::key_down:
-      on_keyboard_event(handler.get<cen::keyboard_event>());
+      _on_keyboard_event(handler.get<cen::keyboard_event>());
       break;
 
     case cen::event_type::mouse_wheel:
-      on_mouse_wheel_event(handler.get<cen::mouse_wheel_event>());
+      _on_mouse_wheel_event(handler.get<cen::mouse_wheel_event>());
       break;
 
     default:
@@ -180,10 +201,12 @@ void App::on_event(const cen::event_handler& handler)
   }
 }
 
-void App::subscribe_to_events()
+void App::_subscribe_to_events()
 {
-  //  install_menu_event_handler();
-  //  install_command_event_handler();
+  mDispatcher.sink<ShowSettingsEvent>().connect<&ui::open_settings_dialog>();
+  mDispatcher.sink<MenuActionEvent>().connect<&App::_on_menu_action>(this);
+  mDispatcher.sink<QuitEvent>().connect<&App::_on_quit>(this);
+
   //  install_document_event_handler();
   //  install_map_event_handler();
   //  install_tileset_event_handler();
@@ -194,13 +217,9 @@ void App::subscribe_to_events()
   //  install_property_event_handler();
   //  install_component_event_handler();
   //  install_view_event_handler();
-
-  auto& dispatcher = get_global_dispatcher();
-  dispatcher.sink<ShowSettingsEvent>().connect<&ui::open_settings_dialog>();
-  dispatcher.sink<QuitEvent>().connect<&App::on_quit>(this);
 }
 
-void App::add_open_documents_to_file_history()
+void App::_add_open_documents_to_file_history()
 {
   for (auto [document_entity, document]: get_global_model().each<Document>()) {
     if (document.type == DocumentType::Map && document.path.has_value()) {
@@ -209,26 +228,24 @@ void App::add_open_documents_to_file_history()
   }
 }
 
-void App::on_keyboard_event(cen::keyboard_event event)
+void App::_on_keyboard_event(cen::keyboard_event event)
 {
   // We don't care about these modifiers, they are just noise.
   event.set_modifier(cen::key_mod::caps, false);
   event.set_modifier(cen::key_mod::num, false);
   event.set_modifier(cen::key_mod::mode, false);
 
-  update_shortcuts(event, get_global_dispatcher());
+  update_shortcuts(event, mDispatcher);
 }
 
-void App::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
+void App::_on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 {
   // There doesn't seem to be a good way to handle mouse "wheel" events using the public
   // ImGui APIs. Otherwise, it would be nicer to keep this code closer to the actual
   // widgets.
 
   const auto& model = get_global_model();
-
-  const auto& document_context = model.get<CDocumentContext>();
-  const auto document_entity = document_context.active_document;
+  const auto document_entity = sys::get_active_document(model);
 
   if (document_entity != kNullEntity && !ImGui::GetTopMostPopupModal()) {
     const auto& document = model.get<Document>(document_entity);
@@ -236,7 +253,7 @@ void App::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
 
     if (ui::is_mouse_within_viewport()) {
       ui::viewport_widget_mouse_wheel_event_handler(document_viewport,
-                                                    get_global_dispatcher(),
+                                                    mDispatcher,
                                                     event);
     }
     else if (document.type == DocumentType::Map && ui::is_tileset_dock_hovered()) {
@@ -254,9 +271,213 @@ void App::on_mouse_wheel_event(const cen::mouse_wheel_event& event)
   }
 }
 
-void App::on_quit()
+void App::_on_quit()
 {
   mShouldStop = true;
+}
+
+void App::_on_menu_action(const MenuActionEvent& event)
+{
+  spdlog::trace("[MenuActionEvent] action: {}", magic_enum::enum_name(event.action));
+  const auto& model = get_global_model();
+
+  switch (event.action) {
+    case MenuAction::NewMap:
+      mDispatcher.enqueue<ShowNewMapDialogEvent>();
+      break;
+
+    case MenuAction::OpenMap:
+      mDispatcher.enqueue<ShowOpenMapDialogEvent>();
+      break;
+
+    case MenuAction::Save:
+      mDispatcher.enqueue<SaveEvent>();
+      break;
+
+    case MenuAction::SaveAs:
+      mDispatcher.enqueue<OpenSaveAsDialogEvent>();
+      break;
+
+    case MenuAction::Close:
+      mDispatcher.enqueue<CloseDocumentEvent>(sys::get_active_document(model));
+      break;
+
+    case MenuAction::Quit:
+      mDispatcher.enqueue<QuitEvent>();
+      break;
+
+    case MenuAction::ReopenLastFile: {
+      // TODO this will need to be tweaked if tileset documents viewing will be supported
+      Path file_path {get_file_history().last_closed_file.value()};
+      mDispatcher.enqueue<OpenMapEvent>(std::move(file_path));
+      break;
+    }
+    case MenuAction::ClearFileHistory:
+      clear_file_history();
+      break;
+
+    case MenuAction::Undo:
+      mDispatcher.enqueue<UndoEvent>();
+      break;
+
+    case MenuAction::Redo:
+      mDispatcher.enqueue<RedoEvent>();
+      break;
+
+    case MenuAction::EnableStamp:
+      mDispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
+      break;
+
+    case MenuAction::EnableEraser:
+      mDispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
+      break;
+
+    case MenuAction::EnableBucket:
+      mDispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
+      break;
+
+    case MenuAction::EnableObjectSelector:
+      mDispatcher.enqueue<SelectToolEvent>(ToolType::ObjectSelection);
+      break;
+
+    case MenuAction::EnableRectangle:
+      mDispatcher.enqueue<SelectToolEvent>(ToolType::Rectangle);
+      break;
+
+    case MenuAction::EnableEllipse:
+      mDispatcher.enqueue<SelectToolEvent>(ToolType::Ellipse);
+      break;
+
+    case MenuAction::EnablePoint:
+      mDispatcher.enqueue<SelectToolEvent>(ToolType::Point);
+      break;
+
+    case MenuAction::OpenComponentEditor:
+      ui::open_component_editor_dialog(model);
+      break;
+
+    case MenuAction::OpenSettings:
+      ui::open_settings_dialog();
+      break;
+
+    case MenuAction::CenterViewport:
+      mDispatcher.enqueue<CenterViewportEvent>();
+      break;
+
+    case MenuAction::ToggleGrid:
+      mDispatcher.enqueue<ToggleGridEvent>();
+      break;
+
+    case MenuAction::IncreaseZoom:
+      mDispatcher.enqueue<IncreaseZoomEvent>();
+      break;
+
+    case MenuAction::DecreaseZoom:
+      mDispatcher.enqueue<DecreaseZoomEvent>();
+      break;
+
+    case MenuAction::ResetZoom:
+      mDispatcher.enqueue<ResetZoomEvent>();
+      break;
+
+    case MenuAction::IncreaseFontSize:
+      mDispatcher.enqueue<IncreaseFontSizeEvent>();
+      break;
+
+    case MenuAction::DecreaseFontSize:
+      mDispatcher.enqueue<DecreaseFontSizeEvent>();
+      break;
+
+    case MenuAction::ResetFontSize:
+      mDispatcher.enqueue<ResetFontSizeEvent>();
+      break;
+
+    case MenuAction::PanUp:
+      mDispatcher.enqueue<PanUpEvent>();
+      break;
+
+    case MenuAction::PanDown:
+      mDispatcher.enqueue<PanDownEvent>();
+      break;
+
+    case MenuAction::PanRight:
+      mDispatcher.enqueue<PanRightEvent>();
+      break;
+
+    case MenuAction::PanLeft:
+      mDispatcher.enqueue<PanLeftEvent>();
+      break;
+
+    case MenuAction::HighlightLayer:
+      get_global_settings().negate_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT);
+      break;
+
+    case MenuAction::ToggleUi:
+      mDispatcher.enqueue<ToggleUiEvent>();
+      break;
+
+    case MenuAction::InspectMap:
+      mDispatcher.enqueue<InspectMapEvent>();
+      break;
+
+    case MenuAction::CreateTileset:
+      mDispatcher.enqueue<ShowTilesetCreationDialogEvent>();
+      break;
+
+    case MenuAction::AddRow:
+      mDispatcher.enqueue<AddRowEvent>();
+      break;
+
+    case MenuAction::AddColumn:
+      mDispatcher.enqueue<AddColumnEvent>();
+      break;
+
+    case MenuAction::RemoveRow:
+      mDispatcher.enqueue<RemoveRowEvent>();
+      break;
+
+    case MenuAction::RemoveColumn:
+      mDispatcher.enqueue<RemoveColumnEvent>();
+      break;
+
+    case MenuAction::FixInvalidTiles:
+      mDispatcher.enqueue<FixTilesInMapEvent>();
+      break;
+
+    case MenuAction::ResizeMap:
+      mDispatcher.enqueue<OpenResizeMapDialogEvent>();
+      break;
+
+    case MenuAction::ExportGodotScene:
+      ui::open_godot_export_dialog();
+      break;
+
+    case MenuAction::InspectTileset:
+      mDispatcher.enqueue<InspectTilesetEvent>();
+      break;
+
+    case MenuAction::OpenDemoWindow:
+      break;
+
+    case MenuAction::OpenStyleEditor:
+      break;
+
+    case MenuAction::ShowAbout:
+      ui::open_about_dialog();
+      break;
+
+    case MenuAction::ShowAboutImGui:
+      ui::open_about_dear_imgui_dialog();
+      break;
+
+    case MenuAction::ShowCredits:
+      ui::open_credits_dialog();
+      break;
+
+    case MenuAction::ReportIssue:
+      cen::open_url("https://github.com/albin-johansson/tactile/issues/new");
+      break;
+  }
 }
 
 }  // namespace tactile

@@ -134,7 +134,7 @@ void show_menu_item(const Model& model, const MenuAction action, Dispatcher& dis
                       !menu_item.shortcut.empty() ? menu_item.shortcut.c_str() : nullptr,
                       menu_item.checked,
                       menu_item.enabled)) {
-    dispatcher.enqueue<MenuItemEvent>(action);
+    dispatcher.enqueue<MenuActionEvent>(action);
   }
 }
 
