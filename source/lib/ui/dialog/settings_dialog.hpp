@@ -22,10 +22,11 @@
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "model/model.hpp"
+#include "model/settings.hpp"
 
 namespace tactile::ui {
 
-void open_settings_dialog();
+void open_settings_dialog(const Settings& settings);
 
 void show_settings_dialog(const Model& model,
                           Entity widget_entity,

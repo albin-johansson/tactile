@@ -96,7 +96,7 @@ void App::_init_persistent_settings()
   auto& model = get_global_model();
 
   auto& settings = model.get<Settings>();
-  settings.copy_values_from(load_settings_from_disk());
+  settings.copy_from(load_settings_from_disk());
   settings.print();
 
   load_languages();
@@ -205,7 +205,8 @@ void App::on_event(const cen::event_handler& handler)
 
 void App::_subscribe_to_events()
 {
-  mDispatcher.sink<ShowSettingsEvent>().connect<&ui::open_settings_dialog>();
+  mDispatcher.sink<ShowSettingsEvent>().connect<&App::_on_show_settings>(this);
+  mDispatcher.sink<SetSettingsEvent>().connect<&App::_on_set_settings>(this);
   mDispatcher.sink<MenuActionEvent>().connect<&App::_on_menu_action>(this);
   mDispatcher.sink<QuitEvent>().connect<&App::_on_quit>(this);
 
@@ -361,7 +362,7 @@ void App::_on_menu_action(const MenuActionEvent& event)
       break;
 
     case MenuAction::OpenSettings:
-      ui::open_settings_dialog();
+      ui::open_settings_dialog(settings);
       break;
 
     case MenuAction::CenterViewport:
@@ -481,6 +482,41 @@ void App::_on_menu_action(const MenuActionEvent& event)
     case MenuAction::ReportIssue:
       cen::open_url("https://github.com/albin-johansson/tactile/issues/new");
       break;
+  }
+}
+
+void App::_on_show_settings(const ShowSettingsEvent&)
+{
+  spdlog::trace("[ShowSettingsEvent]");
+
+  const auto& model = get_global_model();
+  const auto& settings = model.get<Settings>();
+  ui::open_settings_dialog(settings);
+}
+
+void App::_on_set_settings(const SetSettingsEvent& event)
+{
+  spdlog::trace("[SetSettingsEvent]");
+
+  auto& model = get_global_model();
+  auto& curr_settings = model.get<Settings>();
+
+  const auto prev_settings = curr_settings.copy();
+  curr_settings = event.settings.copy();
+
+  if (curr_settings.get_language() != prev_settings.get_language()) {
+    ui::reset_layout();
+    sys::translate_menus(model, get_current_language());
+  }
+
+  if (curr_settings.get_command_capacity() != prev_settings.get_command_capacity()) {
+    // TODO notify existing command stacks
+  }
+
+  if (curr_settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) !=
+          prev_settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) ||
+      curr_settings.get_font_size() != prev_settings.get_font_size()) {
+    mDispatcher.trigger(ReloadFontsEvent {});
   }
 }
 

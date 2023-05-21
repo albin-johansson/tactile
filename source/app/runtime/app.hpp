@@ -23,7 +23,7 @@
 
 #include "common/type/dispatcher.hpp"
 #include "engine/app_delegate.hpp"
-#include "model/event/menu_events.hpp"
+#include "model/event/all.hpp"
 
 namespace tactile {
 
@@ -61,6 +61,10 @@ class App final : public AppDelegate {
   void _on_mouse_wheel_event(const cen::mouse_wheel_event& event);
 
   void _on_menu_action(const MenuActionEvent& event);
+
+  void _on_show_settings(const ShowSettingsEvent& event);
+
+  void _on_set_settings(const SetSettingsEvent& event);
 
   void _on_quit();
 };

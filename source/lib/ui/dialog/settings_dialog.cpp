@@ -22,16 +22,15 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/context.hpp"
 #include "model/event/command_events.hpp"
+#include "model/event/setting_events.hpp"
 #include "model/event/view_events.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/dock/dock_space.hpp"
-#include "ui/menu/menu.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/colors.hpp"
 #include "ui/style/themes.hpp"
@@ -117,7 +116,7 @@ void _show_map_format_combo()
   }
 }
 
-void _show_preview_settings(const Settings& settings)
+void _apply_settings_preview(const Settings& settings)
 {
   apply_theme(ImGui::GetStyle(), settings.get_theme(), settings.get_theme_saturation());
   ImGui::GetStyle().WindowBorderSize =
@@ -126,28 +125,8 @@ void _show_preview_settings(const Settings& settings)
 
 void _apply_current_settings(Dispatcher& dispatcher)
 {
-  get_global_settings().copy_values_from(gDialogState.ui_settings);
-
-  if (gDialogState.ui_settings.get_language() !=
-      gDialogState.old_settings.get_language()) {
-    reset_layout();
-    menu_translate(get_current_language());
-  }
-
-  if (gDialogState.ui_settings.get_command_capacity() !=
-      gDialogState.old_settings.get_command_capacity()) {
-    dispatcher.enqueue<SetCommandCapacityEvent>(
-        gDialogState.ui_settings.get_command_capacity());
-  }
-
-  if (gDialogState.ui_settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) !=
-          gDialogState.old_settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) ||
-      gDialogState.ui_settings.get_font_size() !=
-          gDialogState.old_settings.get_font_size()) {
-    dispatcher.enqueue<ReloadFontsEvent>();
-  }
-
-  gDialogState.old_settings.copy_values_from(gDialogState.ui_settings);
+  dispatcher.enqueue<SetSettingsEvent>(gDialogState.ui_settings.copy());
+  gDialogState.old_settings.copy_from(gDialogState.ui_settings);
 }
 
 void _show_behavior_tab(const Strings& lang)
@@ -157,7 +136,7 @@ void _show_behavior_tab(const Strings& lang)
 
     if (ui_button(lang.setting.restore_defaults.c_str())) {
       gDialogState.ui_settings.reset_behavior_values();
-      _show_preview_settings(gDialogState.ui_settings);
+      _apply_settings_preview(gDialogState.ui_settings);
     }
 
     ImGui::Spacing();
@@ -210,7 +189,7 @@ void _show_appearance_tab(const Strings& lang)
 
     if (ui_button(lang.setting.restore_defaults.c_str())) {
       gDialogState.ui_settings.reset_appearance_values();
-      _show_preview_settings(gDialogState.ui_settings);
+      _apply_settings_preview(gDialogState.ui_settings);
     }
 
     ImGui::Spacing();
@@ -247,7 +226,7 @@ void _show_appearance_tab(const Strings& lang)
                               &min_saturation,
                               &max_saturation)) {
         gDialogState.ui_settings.set_theme_saturation(saturation);
-        _show_preview_settings(gDialogState.ui_settings);
+        _apply_settings_preview(gDialogState.ui_settings);
       }
     }
 
@@ -318,7 +297,7 @@ void _show_export_tab(const Strings& lang)
 
     if (ui_button(lang.setting.restore_defaults.c_str())) {
       gDialogState.ui_settings.reset_export_values();
-      _show_preview_settings(gDialogState.ui_settings);
+      _apply_settings_preview(gDialogState.ui_settings);
     }
 
     ImGui::Spacing();
@@ -346,15 +325,15 @@ void _show_export_tab(const Strings& lang)
 
 }  // namespace
 
-void open_settings_dialog()
+void open_settings_dialog(const Settings& settings)
 {
-  gDialogState.old_settings.copy_values_from(get_global_settings());
-  gDialogState.ui_settings.copy_values_from(gDialogState.old_settings);
+  gDialogState.old_settings.copy_from(settings);
+  gDialogState.ui_settings.copy_from(gDialogState.old_settings);
 
   gDialogState.open_dialog = true;
 }
 
-void show_settings_dialog(const Model&, Entity, Dispatcher& dispatcher)
+void show_settings_dialog(const Model& model, Entity, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
@@ -381,12 +360,12 @@ void show_settings_dialog(const Model&, Entity, Dispatcher& dispatcher)
   }
 
   if (action == DialogAction::Apply || action == DialogAction::Accept) {
+    _apply_settings_preview(gDialogState.ui_settings);
     _apply_current_settings(dispatcher);
-    _show_preview_settings(get_global_settings());
   }
   else if (action == DialogAction::Cancel) {
     // Reset any changes we made for preview purposes
-    _show_preview_settings(get_global_settings());
+    _apply_settings_preview(gDialogState.old_settings);
   }
 }
 

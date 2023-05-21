@@ -76,7 +76,9 @@ class Settings final {
 
   void print() const;
 
-  void copy_values_from(const Settings& settings);
+  [[nodiscard]] auto copy() const -> Settings;
+
+  void copy_from(const Settings& settings);
 
   void reset_values();
 

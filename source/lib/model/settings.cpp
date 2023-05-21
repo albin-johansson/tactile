@@ -105,7 +105,14 @@ void Settings::print() const
   spdlog::debug("Restore last session: {}", test_flag(SETTINGS_RESTORE_LAST_SESSION_BIT));
 }
 
-void Settings::copy_values_from(const Settings& settings)
+auto Settings::copy() const -> Settings
+{
+  Settings result;
+  result.copy_from(*this);
+  return result;
+}
+
+void Settings::copy_from(const Settings& settings)
 {
   *mState = *settings.mState;
 }
