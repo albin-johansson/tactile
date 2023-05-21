@@ -27,37 +27,67 @@
 
 namespace tactile {
 
+/// A wrapper around an entity registry.
 class Model final {
  public:
   /// Creates a new entity with no attached components.
   [[nodiscard]] auto create_entity() -> Entity;
 
-  /// Destroys an entity.
-  /// \details This function does nothing if the null entity is provided.
+  /**
+   * Destroys an entity.
+   *
+   * \details This function does nothing if the null entity is provided.
+   *
+   * \param entity a valid entity.
+   */
   void destroy(Entity entity);
 
+  /**
+   * Sets whether an entity is enabled.
+   *
+   * \param entity a valid entity.
+   * \param enabled true if the entity should be enabled; false otherwise.
+   */
   void set_enabled(Entity entity, bool enabled);
 
   [[nodiscard]] auto is_enabled(Entity entity) const -> bool;
 
-  /// Sorts a component pool using a sorter predicate.
+  /**
+   * Sorts a component pool using a sorter predicate.
+   *
+   * \tparam T a component type.
+   *
+   * \param sorter the function object used to sort components.
+   */
   template <typename T, std::predicate<const T&, const T&> Predicate>
   void sort(Predicate&& sorter)
   {
     mRegistry.sort<T>(std::forward<Predicate>(sorter));
   }
 
-  /// Adds a context component to the model and returns a reference to it.
-  ///
-  /// \note The existing context component is returned if the model already has a context
-  /// component of the specified type.
+  /**
+   * Adds a context component to the model and returns a reference to it.
+   *
+   * \note The existing context component is returned if the model already has a context
+   * component of the specified type.
+   *
+   * \tparam T a component type.
+   * \return
+   */
   template <typename T>
   auto add() -> T&
   {
     return mRegistry.ctx().emplace<T>();
   }
 
-  /// Adds (or replaces) a component to an entity.
+  /**
+   * Adds (or replaces) a component to an entity.
+   *
+   * \pre the entity must be enabled.
+   *
+   * \tparam T a component type.
+   * \param entity a valid entity.
+   */
   template <typename T>
   auto add(const Entity entity) -> T&
   {
@@ -65,7 +95,14 @@ class Model final {
     return mRegistry.emplace_or_replace<T>(entity);
   }
 
-  /// Removes a component from an entity.
+  /**
+   * Removes a component from an entity.
+   *
+   * \pre the entity must be enabled.
+   *
+   * \tparam T a component type.
+   * \param entity a valid entity.
+   */
   template <typename T>
   void remove(const Entity entity)
   {
@@ -73,7 +110,17 @@ class Model final {
     mRegistry.remove<T>(entity);
   }
 
-  /// Returns a component attached to an entity.
+  /**
+   * Returns a component attached to an entity.
+   *
+   * \pre the entity must be enabled.
+   * \pre the entity must feature the component.
+   *
+   * \tparam T a component type.
+   * \param entity a valid entity.
+   *
+   * \return a reference to the component.
+   */
   template <typename T>
   [[nodiscard]] auto get(const Entity entity) -> T&
   {
@@ -82,7 +129,6 @@ class Model final {
     return mRegistry.get<T>(entity);
   }
 
-  /// Returns a component attached to an entity.
   template <typename T>
   [[nodiscard]] auto get(const Entity entity) const -> const T&
   {
