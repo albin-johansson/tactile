@@ -23,7 +23,7 @@
 
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
-#include "model/context.hpp"
+#include "model/event/setting_events.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/menu_system.hpp"
 #include "ui/dock/dock_space.hpp"
@@ -33,7 +33,7 @@
 namespace tactile::ui {
 namespace {
 
-void _show_widgets_menu(const Model& model)
+void _show_widgets_menu(const Model& model, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
@@ -45,12 +45,12 @@ void _show_widgets_menu(const Model& model)
 
     ImGui::Separator();
 
-    auto& settings = get_global_settings();
+    const auto& settings = model.get<Settings>();
 
     if (ImGui::MenuItem(lang.window.property_dock.c_str(),
                         nullptr,
                         settings.test_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT))) {
-      settings.negate_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT);
+      dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_PROPERTY_DOCK_BIT);
     }
 
     {
@@ -58,26 +58,26 @@ void _show_widgets_menu(const Model& model)
       if (ImGui::MenuItem(lang.window.layer_dock.c_str(),
                           nullptr,
                           settings.test_flag(SETTINGS_SHOW_LAYER_DOCK_BIT))) {
-        settings.negate_flag(SETTINGS_SHOW_LAYER_DOCK_BIT);
+        dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_LAYER_DOCK_BIT);
       }
 
       if (ImGui::MenuItem(lang.window.tileset_dock.c_str(),
                           nullptr,
                           settings.test_flag(SETTINGS_SHOW_TILESET_DOCK_BIT))) {
-        settings.negate_flag(SETTINGS_SHOW_TILESET_DOCK_BIT);
+        dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_TILESET_DOCK_BIT);
       }
     }
 
     if (ImGui::MenuItem(lang.window.log_dock.c_str(),
                         nullptr,
                         settings.test_flag(SETTINGS_SHOW_LOG_DOCK_BIT))) {
-      settings.negate_flag(SETTINGS_SHOW_LOG_DOCK_BIT);
+      dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_LOG_DOCK_BIT);
     }
 
     if (ImGui::MenuItem(lang.window.component_dock.c_str(),
                         nullptr,
                         settings.test_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT))) {
-      settings.negate_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT);
+      dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_COMPONENT_DOCK_BIT);
     }
 
     {
@@ -85,22 +85,21 @@ void _show_widgets_menu(const Model& model)
       if (ImGui::MenuItem(lang.window.animation_dock.c_str(),
                           nullptr,
                           settings.test_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT))) {
-        settings.negate_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT);
+        dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_ANIMATION_DOCK_BIT);
       }
     }
   }
 }
 
-void _show_quick_theme_menu(const Strings& lang)
+void _show_quick_theme_menu(const Settings& settings,
+                            const Strings& lang,
+                            Dispatcher& dispatcher)
 {
   if (const Menu theme_menu {lang.action.quick_theme.c_str()}; theme_menu.is_open()) {
-    auto& settings = get_global_settings();
-
     auto theme_item = [&](const EditorTheme theme) {
       const auto is_current = settings.get_theme() == theme;
       if (ImGui::MenuItem(human_readable_name(theme).data(), nullptr, is_current)) {
-        settings.set_theme(theme);
-        apply_theme(ImGui::GetStyle(), theme, settings.get_theme_saturation());
+        dispatcher.enqueue<SetThemeEvent>(theme);
       }
     };
 
@@ -116,29 +115,19 @@ void _show_quick_theme_menu(const Strings& lang)
   }
 }
 
-void _show_quick_lang_menu(const Strings& lang)
+void _show_quick_lang_menu(const Strings& lang, Dispatcher& dispatcher)
 {
   if (const Menu lang_menu {lang.action.quick_language.c_str()}; lang_menu.is_open()) {
-    auto& settings = get_global_settings();
     if (ImGui::MenuItem("English (US)")) {
-      // TODO enqueue event
-      // settings.set_language(Lang::EN);
-      // reset_layout();
-      // menu_translate(get_current_language());
+      dispatcher.enqueue<SetLanguageEvent>(Lang::EN);
     }
 
     if (ImGui::MenuItem("English (GB)")) {
-      // TODO enqueue event
-      // settings.set_language(Lang::EN_GB);
-      // reset_layout();
-      // menu_translate(get_current_language());
+      dispatcher.enqueue<SetLanguageEvent>(Lang::EN_GB);
     }
 
     if (ImGui::MenuItem("Svenska")) {
-      // TODO enqueue event
-      // settings.set_language(Lang::SV);
-      // reset_layout();
-      // menu_translate(get_current_language());
+      dispatcher.enqueue<SetLanguageEvent>(Lang::SV);
     }
   }
 }
@@ -147,16 +136,17 @@ void _show_quick_lang_menu(const Strings& lang)
 
 void show_view_menu(const Model& model, Dispatcher& dispatcher)
 {
+  const auto& settings = model.get<Settings>();
   const auto& lang = get_current_language();
 
   if (const Menu menu {lang.menu.view.c_str()}; menu.is_open()) {
-    _show_widgets_menu(model);
+    _show_widgets_menu(model, dispatcher);
 
     ImGui::Separator();
-    _show_quick_theme_menu(lang);
+    _show_quick_theme_menu(settings, lang, dispatcher);
 
     ImGui::Separator();
-    _show_quick_lang_menu(lang);
+    _show_quick_lang_menu(lang, dispatcher);
 
     ImGui::Separator();
     show_menu_item(model, MenuAction::CenterViewport, dispatcher);

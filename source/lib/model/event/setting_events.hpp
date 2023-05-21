@@ -20,6 +20,7 @@
 #pragma once
 
 #include "model/settings.hpp"
+#include "ui/style/themes.hpp"
 
 namespace tactile {
 
@@ -38,6 +39,14 @@ struct NegateSettingFlagEvent final {
 
 struct SetViewportOverlayPosEvent final {
   OverlayPos pos {};
+};
+
+struct SetLanguageEvent final {
+  Lang language {};
+};
+
+struct SetThemeEvent final {
+  ui::EditorTheme theme {};
 };
 
 }  // namespace tactile

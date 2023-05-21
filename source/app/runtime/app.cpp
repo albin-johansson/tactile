@@ -207,6 +207,8 @@ void App::_subscribe_to_events()
 {
   mDispatcher.sink<ShowSettingsEvent>().connect<&App::_on_show_settings>(this);
   mDispatcher.sink<SetSettingsEvent>().connect<&App::_on_set_settings>(this);
+  mDispatcher.sink<SetLanguageEvent>().connect<&App::_on_set_language>(this);
+  mDispatcher.sink<SetThemeEvent>().connect<&App::_on_set_theme>(this);
   mDispatcher.sink<MenuActionEvent>().connect<&App::_on_menu_action>(this);
   mDispatcher.sink<QuitEvent>().connect<&App::_on_quit>(this);
 
@@ -518,6 +520,31 @@ void App::_on_set_settings(const SetSettingsEvent& event)
       curr_settings.get_font_size() != prev_settings.get_font_size()) {
     mDispatcher.trigger(ReloadFontsEvent {});
   }
+}
+
+void App::_on_set_language(const SetLanguageEvent& event)
+{
+  spdlog::trace("[SetLanguageEvent] language: {}", magic_enum::enum_name(event.language));
+
+  auto& model = get_global_model();
+
+  auto& settings = model.get<Settings>();
+  settings.set_language(event.language);
+
+  sys::translate_menus(model, get_language(event.language));
+  ui::reset_layout();
+}
+
+void App::_on_set_theme(const SetThemeEvent& event)
+{
+  auto& model = get_global_model();
+
+  auto& settings = model.get<Settings>();
+  settings.set_theme(event.theme);
+
+  ui::apply_theme(ImGui::GetStyle(),
+                  settings.get_theme(),
+                  settings.get_theme_saturation());
 }
 
 }  // namespace tactile
