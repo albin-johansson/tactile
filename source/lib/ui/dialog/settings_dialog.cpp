@@ -48,7 +48,7 @@ struct SettingsDialogState final {
 
 inline SettingsDialogState gDialogState;
 
-void _show_flag_checkbox(const SettingsFlagBits flag,
+void _push_flag_checkbox(const SettingsFlagBits flag,
                          const char* label,
                          const char* tooltip = nullptr)
 {
@@ -57,7 +57,7 @@ void _show_flag_checkbox(const SettingsFlagBits flag,
   gDialogState.ui_settings.set_flag(flag, value);
 }
 
-void _show_lang_combo()
+void _push_lang_combo()
 {
   if (const Combo combo {"##Lang",
                          get_language_name(gDialogState.ui_settings.get_language())};
@@ -76,7 +76,7 @@ void _show_lang_combo()
   }
 }
 
-void _show_theme_combo()
+void _push_theme_combo()
 {
   auto show_themes = [](auto& themes) {
     for (const auto theme: themes) {
@@ -97,7 +97,7 @@ void _show_theme_combo()
   }
 }
 
-void _show_map_format_combo()
+void _push_map_format_combo()
 {
   const auto preferred_format = gDialogState.ui_settings.get_preferred_format();
   if (const Combo format("##PreferredFormat", get_human_readable_name(preferred_format));
@@ -129,7 +129,7 @@ void _apply_current_settings(Dispatcher& dispatcher)
   gDialogState.old_settings.copy_from(gDialogState.ui_settings);
 }
 
-void _show_behavior_tab(const Strings& lang)
+void _push_behavior_tab(const Strings& lang)
 {
   if (const TabItem tab {lang.setting.behavior_tab.c_str()}; tab.is_open()) {
     ImGui::Spacing();
@@ -141,7 +141,7 @@ void _show_behavior_tab(const Strings& lang)
 
     ImGui::Spacing();
 
-    _show_flag_checkbox(SETTINGS_RESTORE_LAST_SESSION_BIT,
+    _push_flag_checkbox(SETTINGS_RESTORE_LAST_SESSION_BIT,
                         lang.setting.restore_last_session.c_str());
 
     auto preferred_tile_size = gDialogState.ui_settings.get_preferred_tile_size();
@@ -182,7 +182,7 @@ void _show_behavior_tab(const Strings& lang)
   }
 }
 
-void _show_appearance_tab(const Strings& lang)
+void _push_appearance_tab(const Strings& lang)
 {
   if (const TabItem tab {lang.setting.appearance_tab.c_str()}; tab.is_open()) {
     ImGui::Spacing();
@@ -198,7 +198,7 @@ void _show_appearance_tab(const Strings& lang)
     ImGui::TextUnformatted(lang.setting.language.c_str());
     ImGui::SameLine();
     right_align_next_item();
-    _show_lang_combo();
+    _push_lang_combo();
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
@@ -206,7 +206,7 @@ void _show_appearance_tab(const Strings& lang)
     ImGui::TextUnformatted(lang.setting.theme.c_str());
     ImGui::SameLine();
     right_align_next_item();
-    _show_theme_combo();
+    _push_theme_combo();
 
     {
       const Disable no_saturation_for_default_themes {
@@ -256,14 +256,14 @@ void _show_appearance_tab(const Strings& lang)
       ImGui::GetStyle().WindowBorderSize = use_window_border ? 1.0f : 0.0f;
     }
 
-    _show_flag_checkbox(SETTINGS_RESTORE_LAYOUT_BIT,
+    _push_flag_checkbox(SETTINGS_RESTORE_LAYOUT_BIT,
                         lang.setting.restore_layout.c_str(),
                         lang.tooltip.restore_layout.c_str());
 
     ImGui::Spacing();
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    _show_flag_checkbox(SETTINGS_USE_DEFAULT_FONT_BIT,
+    _push_flag_checkbox(SETTINGS_USE_DEFAULT_FONT_BIT,
                         lang.setting.use_default_font.c_str(),
                         lang.tooltip.use_default_font.c_str());
 
@@ -290,7 +290,7 @@ void _show_appearance_tab(const Strings& lang)
   }
 }
 
-void _show_export_tab(const Strings& lang)
+void _push_export_tab(const Strings& lang)
 {
   if (const TabItem tab {lang.setting.export_tab.c_str()}; tab.is_open()) {
     ImGui::Spacing();
@@ -306,18 +306,18 @@ void _show_export_tab(const Strings& lang)
     ImGui::TextUnformatted(lang.setting.pref_format.c_str());
     ImGui::SameLine();
     right_align_next_item();
-    _show_map_format_combo();
+    _push_map_format_combo();
     ui_lazy_tooltip("##PreferredFormatTooltip", lang.tooltip.pref_format.c_str());
 
-    _show_flag_checkbox(SETTINGS_EMBED_TILESETS_BIT,
+    _push_flag_checkbox(SETTINGS_EMBED_TILESETS_BIT,
                         lang.setting.embed_tilesets.c_str(),
                         lang.tooltip.embed_tilesets.c_str());
 
-    _show_flag_checkbox(SETTINGS_INDENT_OUTPUT_BIT,
+    _push_flag_checkbox(SETTINGS_INDENT_OUTPUT_BIT,
                         lang.setting.indent_output.c_str(),
                         lang.tooltip.indent_output.c_str());
 
-    _show_flag_checkbox(SETTINGS_FOLD_TILE_DATA_BIT,
+    _push_flag_checkbox(SETTINGS_FOLD_TILE_DATA_BIT,
                         lang.setting.fold_tile_data.c_str(),
                         lang.tooltip.fold_tile_data.c_str());
   }
@@ -333,7 +333,7 @@ void open_settings_dialog(const Settings& settings)
   gDialogState.open_dialog = true;
 }
 
-void show_settings_dialog(const Model& model, Entity, Dispatcher& dispatcher)
+void show_settings_dialog(const Model&, Entity, Dispatcher& dispatcher)
 {
   const auto& lang = get_current_language();
 
@@ -353,9 +353,9 @@ void show_settings_dialog(const Model& model, Entity, Dispatcher& dispatcher)
   DialogAction action {DialogAction::None};
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
     if (const TabBar bar {"##SettingsTabs"}; bar.is_open()) {
-      _show_behavior_tab(lang);
-      _show_appearance_tab(lang);
-      _show_export_tab(lang);
+      _push_behavior_tab(lang);
+      _push_appearance_tab(lang);
+      _push_export_tab(lang);
     }
   }
 
