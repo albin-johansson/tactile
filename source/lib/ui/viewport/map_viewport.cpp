@@ -29,8 +29,6 @@
 #include "core/map.hpp"
 #include "core/object.hpp"
 #include "core/viewport.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/document.hpp"
 #include "model/event/object_events.hpp"
@@ -38,6 +36,7 @@
 #include "model/event/tool_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/systems/render_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/conversions.hpp"
 #include "ui/render/canvas.hpp"
 #include "ui/render/canvas_renderer.hpp"
@@ -161,49 +160,48 @@ void _poll_mouse(Dispatcher& dispatcher, const ViewportCursorInfo& cursor)
   }
 }
 
-void _update_viewport_context_menu(const Entity map_entity, Dispatcher& dispatcher)
+void _push_viewport_context_menu(const Strings& strings,
+                                 const Entity map_entity,
+                                 Dispatcher& dispatcher)
 {
   constexpr auto flags =
       ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverExistingPopup;
 
   if (const auto popup = Popup::for_item("##MapViewContextMenu", flags);
       popup.is_open()) {
-    const auto& lang = get_current_language();
-
-    if (ImGui::MenuItem(lang.action.inspect_map.c_str())) {
+    if (ImGui::MenuItem(strings.action.inspect_map.c_str())) {
       dispatcher.enqueue<InspectContextEvent>(map_entity);
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.center_viewport.c_str())) {
+    if (ImGui::MenuItem(strings.action.center_viewport.c_str())) {
       dispatcher.enqueue<CenterViewportEvent>();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.reset_zoom.c_str())) {
+    if (ImGui::MenuItem(strings.action.reset_zoom.c_str())) {
       dispatcher.enqueue<ResetZoomEvent>();
     }
   }
 }
 
-void _update_object_context_menu(const Model& model,
-                                 const Map& map,
-                                 Dispatcher& dispatcher)
+void _push_object_context_menu(const Model& model,
+                               const Strings& strings,
+                               const Map& map,
+                               Dispatcher& dispatcher)
 {
   if (const Popup popup {kViewportObjectContextMenuId}; popup.is_open()) {
-    const auto& lang = get_current_language();
-
     const auto& object_layer = model.get<ObjectLayer>(map.active_layer);
     const auto& object = model.get<Object>(object_layer.active_object);
 
-    if (ImGui::MenuItem(lang.action.inspect_object.c_str())) {
+    if (ImGui::MenuItem(strings.action.inspect_object.c_str())) {
       dispatcher.enqueue<InspectContextEvent>(object_layer.active_object);
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(lang.action.toggle_object_visibility.c_str(),
+    if (ImGui::MenuItem(strings.action.toggle_object_visibility.c_str(),
                         nullptr,
                         object.visible)) {
       dispatcher.enqueue<SetObjectVisibleEvent>(object_layer.active_object,
@@ -214,13 +212,13 @@ void _update_object_context_menu(const Model& model,
 
     ImGui::Separator();
 
-    if (const Disable disable; ImGui::MenuItem(lang.action.duplicate_object.c_str())) {
+    if (const Disable disable; ImGui::MenuItem(strings.action.duplicate_object.c_str())) {
       dispatcher.enqueue<DuplicateObjectEvent>(object_layer.active_object);
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.remove_object.c_str())) {
+    if (ImGui::MenuItem(strings.action.remove_object.c_str())) {
       dispatcher.enqueue<RemoveObjectEvent>(object_layer.active_object);
     }
   }
@@ -238,6 +236,7 @@ void show_map_viewport(const Model& model,
                        const Entity map_document_entity,
                        Dispatcher& dispatcher)
 {
+  const auto& strings = sys::get_current_language_strings(model);
   const auto& settings = model.get<Settings>();
 
   const auto& map_document = model.get<MapDocument>(map_document_entity);
@@ -270,8 +269,8 @@ void show_map_viewport(const Model& model,
   show_map_viewport_toolbar(model, dispatcher);
   show_map_viewport_overlay(model, map, cursor, dispatcher);
 
-  _update_viewport_context_menu(map_document.map, dispatcher);
-  _update_object_context_menu(model, map, dispatcher);
+  _push_viewport_context_menu(strings, map_document.map, dispatcher);
+  _push_object_context_menu(model, strings, map, dispatcher);
 }
 
 void center_map_viewport()

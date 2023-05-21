@@ -21,10 +21,9 @@
 
 #include "common/util/vector.hpp"
 #include "core/tile.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/systems/tileset_system.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -71,8 +70,8 @@ void AddAnimationFrame::redo()
 
 auto AddAnimationFrame::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.add_animation_frame;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.add_animation_frame;
 }
 
 }  // namespace tactile::cmd

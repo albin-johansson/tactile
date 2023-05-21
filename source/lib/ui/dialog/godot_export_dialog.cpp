@@ -24,9 +24,8 @@
 #include <imgui.h>
 
 #include "common/type/path.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/event/map_events.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/attribute_widgets.hpp"
@@ -51,12 +50,12 @@ struct GodotExportDialogState final {
 
 inline GodotExportDialogState gDialogState;
 
-void _show_dialog_contents(const Strings& lang)
+void _push_dialog_contents(const Strings& strings)
 {
-  const auto& root_label = lang.misc.godot_project_folder_label;
-  const auto& map_label = lang.misc.godot_map_folder_label;
-  const auto& image_label = lang.misc.godot_image_folder_label;
-  const auto& tileset_label = lang.misc.godot_tileset_folder_label;
+  const auto& root_label = strings.misc.godot_project_folder_label;
+  const auto& map_label = strings.misc.godot_map_folder_label;
+  const auto& image_label = strings.misc.godot_image_folder_label;
+  const auto& tileset_label = strings.misc.godot_tileset_folder_label;
 
   const auto offset = minimum_offset_to_align(root_label.c_str(),  //
                                               map_label.c_str(),
@@ -65,10 +64,11 @@ void _show_dialog_contents(const Strings& lang)
 
   ImGui::AlignTextToFramePadding();
   ImGui::TextUnformatted(root_label.c_str());
-  ui_lazy_tooltip("##RootDirTooltip", lang.tooltip.godot_project_folder.c_str());
+  ui_lazy_tooltip("##RootDirTooltip", strings.tooltip.godot_project_folder.c_str());
 
   ImGui::SameLine(offset);
-  if (auto root_path = ui_directory_path_input("##RootDir", gDialogState.root_dir)) {
+  if (auto root_path =
+          push_directory_path_input(strings, "##RootDir", gDialogState.root_dir)) {
     gDialogState.root_dir = std::move(*root_path);
     gDialogState.map_dir = ".";
     gDialogState.image_dir = ".";
@@ -82,30 +82,32 @@ void _show_dialog_contents(const Strings& lang)
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(map_label.c_str());
-    ui_lazy_tooltip("##MapDirTooltip", lang.tooltip.godot_map_folder.c_str());
+    ui_lazy_tooltip("##MapDirTooltip", strings.tooltip.godot_map_folder.c_str());
 
     ImGui::SameLine(offset);
-    if (const auto map_dir = ui_directory_path_input("##MapDir", gDialogState.map_dir)) {
+    if (const auto map_dir =
+            push_directory_path_input(strings, "##MapDir", gDialogState.map_dir)) {
       gDialogState.map_dir = fs::relative(*map_dir, gDialogState.root_dir);
     }
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(image_label.c_str());
-    ui_lazy_tooltip("##ImageDirTooltip", lang.tooltip.godot_image_folder.c_str());
+    ui_lazy_tooltip("##ImageDirTooltip", strings.tooltip.godot_image_folder.c_str());
 
     ImGui::SameLine(offset);
     if (const auto image_dir =
-            ui_directory_path_input("##ImageDir", gDialogState.image_dir)) {
+            push_directory_path_input(strings, "##ImageDir", gDialogState.image_dir)) {
       gDialogState.image_dir = fs::relative(*image_dir, gDialogState.root_dir);
     }
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(tileset_label.c_str());
-    ui_lazy_tooltip("##TilesetPathTooltip", lang.tooltip.godot_tileset_folder.c_str());
+    ui_lazy_tooltip("##TilesetPathTooltip", strings.tooltip.godot_tileset_folder.c_str());
 
     ImGui::SameLine(offset);
-    if (auto tileset_dir =
-            ui_directory_path_input("##TilesetPath", gDialogState.tileset_dir)) {
+    if (auto tileset_dir = push_directory_path_input(strings,
+                                                     "##TilesetPath",
+                                                     gDialogState.tileset_dir)) {
       gDialogState.tileset_dir = fs::relative(*tileset_dir, gDialogState.root_dir);
     }
   }
@@ -113,8 +115,8 @@ void _show_dialog_contents(const Strings& lang)
   ImGui::Separator();
 
   ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(lang.misc.godot_polygon_points_label.c_str());
-  ui_lazy_tooltip("##PolygonPointsTooltip", lang.tooltip.godot_polygon_points.c_str());
+  ImGui::TextUnformatted(strings.misc.godot_polygon_points_label.c_str());
+  ui_lazy_tooltip("##PolygonPointsTooltip", strings.tooltip.godot_polygon_points.c_str());
 
   ImGui::SameLine();
   ImGui::SliderInt("##PolygonPoints",
@@ -148,14 +150,14 @@ void open_godot_export_dialog()
   gDialogState.open_dialog = true;
 }
 
-void show_godot_export_dialog(const Model&, Entity, Dispatcher& dispatcher)
+void show_godot_export_dialog(const Model& model, Entity, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   DialogOptions options {
-      .title = lang.window.export_as_godot_scene.c_str(),
-      .close_label = lang.misc.close.c_str(),
-      .accept_label = lang.misc.export_.c_str(),
+      .title = strings.window.export_as_godot_scene.c_str(),
+      .close_label = strings.misc.close.c_str(),
+      .accept_label = strings.misc.export_.c_str(),
   };
 
   const bool is_input_valid = !gDialogState.root_dir.empty();
@@ -170,7 +172,7 @@ void show_godot_export_dialog(const Model&, Entity, Dispatcher& dispatcher)
 
   DialogAction action {DialogAction::None};
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
-    _show_dialog_contents(lang);
+    _push_dialog_contents(strings);
   }
 
   if (action == DialogAction::Accept) {

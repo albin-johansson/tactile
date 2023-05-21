@@ -20,9 +20,8 @@
 #include "move_object.hpp"
 
 #include "core/object.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -51,8 +50,8 @@ void MoveObject::redo()
 
 auto MoveObject::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.move_object;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.move_object;
 }
 
 }  // namespace tactile::cmd

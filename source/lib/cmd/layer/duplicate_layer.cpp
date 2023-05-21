@@ -21,14 +21,13 @@
 
 #include "common/debug/assert.hpp"
 #include "core/map.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/document.hpp"
 #include "model/systems/group_layer_system.hpp"
 #include "model/systems/layer_system.hpp"
 #include "model/systems/map_system.hpp"
 #include "model/systems/validation.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -75,8 +74,8 @@ void DuplicateLayer::redo()
 
 auto DuplicateLayer::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.duplicate_layer;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.duplicate_layer;
 }
 
 }  // namespace tactile::cmd

@@ -24,11 +24,10 @@
 
 #include "core/layer.hpp"
 #include "core/map.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/systems/tileset_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/viewport/viewport_cursor_info.hpp"
 #include "ui/widget/scoped.hpp"
 
@@ -69,7 +68,8 @@ void _prepare_position_and_pivot(const Settings& settings)
   ImGui::SetNextWindowViewport(ImGui::GetWindowViewport()->ID);
 }
 
-void _show_mouse_tile_labels(const Model& model,
+void _push_mouse_tile_labels(const Model& model,
+                             const Strings& strings,
                              const Map& map,
                              const ViewportCursorInfo& cursor)
 {
@@ -77,54 +77,52 @@ void _show_mouse_tile_labels(const Model& model,
     return;
   }
 
-  const auto& lang = get_current_language();
-
   if (const auto* tile_layer = model.try_get<TileLayer>(map.active_layer)) {
     const auto tile_id = tile_layer->tile_at(cursor.map_position);
 
     if (cursor.is_within_map && tile_id.has_value() && tile_id != kEmptyTile) {
-      ImGui::Text("%s: %i", lang.misc.global_id.c_str(), *tile_id);
+      ImGui::Text("%s: %i", strings.misc.global_id.c_str(), *tile_id);
 
       if (sys::is_valid_tile_identifier(model, map, *tile_id)) {
         const auto tile_index = sys::convert_tile_id_to_index(model, map, *tile_id);
-        ImGui::Text("%s: %i", lang.misc.local_id.c_str(), tile_index.value());
+        ImGui::Text("%s: %i", strings.misc.local_id.c_str(), tile_index.value());
       }
       else {
-        ImGui::Text("%s: -", lang.misc.local_id.c_str());
+        ImGui::Text("%s: -", strings.misc.local_id.c_str());
       }
     }
     else {
-      ImGui::Text("%s: %s", lang.misc.global_id.c_str(), lang.misc.empty.c_str());
+      ImGui::Text("%s: %s", strings.misc.global_id.c_str(), strings.misc.empty.c_str());
     }
   }
 }
 
-void _show_overlay_context_menu(const Settings& settings, Dispatcher& dispatcher)
+void _push_overlay_context_menu(const Strings& strings,
+                                const Settings& settings,
+                                Dispatcher& dispatcher)
 {
   if (auto popup = Popup::for_window("##ViewportOverlayPopup"); popup.is_open()) {
-    const auto& lang = get_current_language();
-
     const auto corner = settings.get_viewport_overlay_pos();
 
-    if (ImGui::MenuItem(lang.action.top_left.c_str(),
+    if (ImGui::MenuItem(strings.action.top_left.c_str(),
                         nullptr,
                         corner == OverlayPos::TopLeft)) {
       dispatcher.enqueue<SetViewportOverlayPosEvent>(OverlayPos::TopLeft);
     }
 
-    if (ImGui::MenuItem(lang.action.top_right.c_str(),
+    if (ImGui::MenuItem(strings.action.top_right.c_str(),
                         nullptr,
                         corner == OverlayPos::TopRight)) {
       dispatcher.enqueue<SetViewportOverlayPosEvent>(OverlayPos::TopRight);
     }
 
-    if (ImGui::MenuItem(lang.action.bottom_left.c_str(),
+    if (ImGui::MenuItem(strings.action.bottom_left.c_str(),
                         nullptr,
                         corner == OverlayPos::BottomLeft)) {
       dispatcher.enqueue<SetViewportOverlayPosEvent>(OverlayPos::BottomLeft);
     }
 
-    if (ImGui::MenuItem(lang.action.bottom_right.c_str(),
+    if (ImGui::MenuItem(strings.action.bottom_right.c_str(),
                         nullptr,
                         corner == OverlayPos::BottomRight)) {
       dispatcher.enqueue<SetViewportOverlayPosEvent>(OverlayPos::BottomRight);
@@ -133,7 +131,7 @@ void _show_overlay_context_menu(const Settings& settings, Dispatcher& dispatcher
     ImGui::Separator();
 
     bool show_overlay_fps = settings.test_flag(SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT);
-    if (ImGui::MenuItem(lang.action.show_frame_rate.c_str(),
+    if (ImGui::MenuItem(strings.action.show_frame_rate.c_str(),
                         nullptr,
                         &show_overlay_fps)) {
       dispatcher.enqueue<SetSettingFlagEvent>(SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT,
@@ -149,6 +147,7 @@ void show_map_viewport_overlay(const Model& model,
                                const ViewportCursorInfo& cursor,
                                Dispatcher& dispatcher)
 {
+  const auto& strings = sys::get_current_language_strings(model);
   const auto& settings = model.get<Settings>();
 
   _prepare_position_and_pivot(settings);
@@ -157,8 +156,6 @@ void show_map_viewport_overlay(const Model& model,
   const Window window {"##ViewportOverlay", kOverlayWindowFlags};
 
   if (window.is_open()) {
-    const auto& lang = get_current_language();
-
     if (settings.test_flag(SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT)) {
       const auto& io = ImGui::GetIO();
       ImGui::Text("%.2f ms (%.1f FPS)", 1'000.0f * io.DeltaTime, io.Framerate);
@@ -176,18 +173,18 @@ void show_map_viewport_overlay(const Model& model,
 
     if (cursor.is_within_map) {
       ImGui::Text("%s/%s: (%i, %i)",
-                  lang.misc.row.c_str(),
-                  lang.misc.column.c_str(),
+                  strings.misc.row.c_str(),
+                  strings.misc.column.c_str(),
                   cursor.map_position.row(),
                   cursor.map_position.col());
     }
     else {
-      ImGui::Text("%s/%s: --", lang.misc.row.c_str(), lang.misc.column.c_str());
+      ImGui::Text("%s/%s: --", strings.misc.row.c_str(), strings.misc.column.c_str());
     }
 
     ImGui::Separator();
-    _show_mouse_tile_labels(model, map, cursor);
-    _show_overlay_context_menu(settings, dispatcher);
+    _push_mouse_tile_labels(model, strings, map, cursor);
+    _push_overlay_context_menu(strings, settings, dispatcher);
   }
 }
 

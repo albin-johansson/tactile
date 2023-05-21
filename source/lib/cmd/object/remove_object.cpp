@@ -25,9 +25,8 @@
 #include "core/layer.hpp"
 #include "core/map.hpp"
 #include "core/object.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -76,20 +75,20 @@ void RemoveObject::dispose()
 
 auto RemoveObject::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-
   const auto& model = get_global_model();
+
+  const auto& strings = sys::get_current_language_strings(model);
   const auto& object = model.get<Object>(mObjectEntity);
 
   switch (object.type) {
     case ObjectType::Point:
-      return lang.cmd.remove_point_object;
+      return strings.cmd.remove_point_object;
 
     case ObjectType::Rect:
-      return lang.cmd.remove_rectangle_object;
+      return strings.cmd.remove_rectangle_object;
 
     case ObjectType::Ellipse:
-      return lang.cmd.remove_ellipse_object;
+      return strings.cmd.remove_ellipse_object;
 
     default:
       throw TactileError {"Invalid object type!"};

@@ -25,8 +25,8 @@
 #include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
 #include "core/color.hpp"
+#include "core/language.hpp"
 #include "io/save_format.hpp"
-#include "lang/language.hpp"
 #include "ui/style/themes.hpp"
 
 namespace tactile {

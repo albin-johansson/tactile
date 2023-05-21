@@ -22,8 +22,8 @@
 #include <imgui.h>
 
 #include "core/menu.hpp"
-#include "lang/language.hpp"
 #include "model/systems/document_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -31,10 +31,10 @@ namespace tactile::ui {
 
 void show_map_menu(const Model& model, Dispatcher& dispatcher)
 {
-  const Disable disable_if {!sys::is_map_document_active(model)};
+  const auto& strings = sys::get_current_language_strings(model);
 
-  const auto& lang = get_current_language();
-  if (const Menu menu {lang.menu.map.c_str()}; menu.is_open()) {
+  const Disable disable_if {!sys::is_map_document_active(model)};
+  if (const Menu menu {strings.menu.map.c_str()}; menu.is_open()) {
     show_menu_item(model, MenuAction::InspectMap, dispatcher);
 
     ImGui::Separator();
@@ -58,7 +58,7 @@ void show_map_menu(const Model& model, Dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (const Menu export_menu {lang.menu.export_as.c_str()}; export_menu.is_open()) {
+    if (const Menu export_menu {strings.menu.export_as.c_str()}; export_menu.is_open()) {
       show_menu_item(model, MenuAction::ExportGodotScene, dispatcher);
     }
   }

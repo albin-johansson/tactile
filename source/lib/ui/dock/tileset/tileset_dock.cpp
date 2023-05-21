@@ -25,14 +25,13 @@
 #include "core/map.hpp"
 #include "core/tileset.hpp"
 #include "core/viewport.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/document.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/systems/document_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dock/tileset/tileset_tabs.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"
@@ -52,16 +51,15 @@ inline constinit TilesetDockState gDockState;
 
 void show_tileset_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
+  const auto& strings = sys::get_current_language_strings(model);
   const auto& settings = model.get<Settings>();
 
   if (!settings.test_flag(SETTINGS_SHOW_TILESET_DOCK_BIT)) {
     return;
   }
 
-  const auto& lang = get_current_language();
-
   bool show_tileset_dock = true;
-  const Window dock {lang.window.tileset_dock.c_str(),
+  const Window dock {strings.window.tileset_dock.c_str(),
                      ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
                      &show_tileset_dock};
 
@@ -81,11 +79,11 @@ void show_tileset_dock(const Model& model, Entity, Dispatcher& dispatcher)
 
     if (map.attached_tilesets.empty()) {
       prepare_vertical_alignment_center(2);
-      ui_centered_label(lang.misc.map_has_no_tilesets.c_str());
+      ui_centered_label(strings.misc.map_has_no_tilesets.c_str());
 
       ImGui::Spacing();
 
-      if (ui_centered_button(lang.action.add_tileset.c_str())) {
+      if (ui_centered_button(strings.action.add_tileset.c_str())) {
         dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
       }
     }

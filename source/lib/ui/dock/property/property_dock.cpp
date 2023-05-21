@@ -34,8 +34,6 @@
 #include "core/tile.hpp"
 #include "core/tile_format.hpp"
 #include "core/tileset.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/document.hpp"
 #include "model/event/document_events.hpp"
@@ -47,6 +45,7 @@
 #include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dock/property/dialogs/add_property_dialog.hpp"
 #include "ui/dock/property/dialogs/change_property_type_dialog.hpp"
 #include "ui/dock/property/dialogs/rename_property_dialog.hpp"
@@ -72,21 +71,20 @@ struct PropertyDockState final {
 
 inline PropertyDockState gDockState;
 
-[[nodiscard]] auto _update_property_item_context_menu(const Entity context_entity,
-                                                      const String& property_name,
-                                                      PropertyItemContextMenuState& state,
-                                                      Dispatcher& dispatcher) -> bool
+[[nodiscard]] auto _push_property_item_context_menu(const Strings& strings,
+                                                    const Entity context_entity,
+                                                    const String& property_name,
+                                                    PropertyItemContextMenuState& state,
+                                                    Dispatcher& dispatcher) -> bool
 {
-  const auto& lang = get_current_language();
-
   if (auto popup = Popup::for_item("##PropertyItemPopup"); popup.is_open()) {
-    state.show_rename_dialog = ImGui::MenuItem(lang.action.rename_property.c_str());
+    state.show_rename_dialog = ImGui::MenuItem(strings.action.rename_property.c_str());
     state.show_change_type_dialog =
-        ImGui::MenuItem(lang.action.change_property_type.c_str());
+        ImGui::MenuItem(strings.action.change_property_type.c_str());
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.remove_property.c_str())) {
+    if (ImGui::MenuItem(strings.action.remove_property.c_str())) {
       dispatcher.enqueue<RemovePropertyEvent>(context_entity, property_name);
     }
 
@@ -105,26 +103,31 @@ void _prepare_table_row(const char* label)
   ImGui::TextUnformatted(label);
 }
 
-[[nodiscard]] auto _show_native_name_row(const String& name,
+[[nodiscard]] auto _push_native_name_row(const Strings& strings,
+                                         const String& name,
                                          const bool validate_as_file_name = false)
     -> Maybe<String>
 {
-  const auto& lang = get_current_language();
-  _prepare_table_row(lang.misc.name.c_str());
+  _prepare_table_row(strings.misc.name.c_str());
 
   ImGui::TableNextColumn();
 
   auto flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
   if (validate_as_file_name) {
     flags |= ImGuiInputTextFlags_CallbackCharFilter;
-    return ui_string_input("##NativeNameRowInput", name, nullptr, flags, filename_filter);
+    return push_string_input(strings,
+                             "##NativeNameRowInput",
+                             name,
+                             nullptr,
+                             flags,
+                             filename_filter);
   }
   else {
-    return ui_string_input("##NativeNameRowInput", name, nullptr, flags);
+    return push_string_input(strings, "##NativeNameRowInput", name, nullptr, flags);
   }
 }
 
-void _show_native_read_only_row(const char* label, const char* value)
+void _push_native_read_only_row(const char* label, const char* value)
 {
   _prepare_table_row(label);
 
@@ -132,7 +135,7 @@ void _show_native_read_only_row(const char* label, const char* value)
   ImGui::TextUnformatted(value);
 }
 
-void _show_native_read_only_row(const char* label, const float value)
+void _push_native_read_only_row(const char* label, const float value)
 {
   _prepare_table_row(label);
 
@@ -140,7 +143,7 @@ void _show_native_read_only_row(const char* label, const float value)
   ImGui::Text("%.2f", value);
 }
 
-void _show_native_read_only_row(const char* label, const int32 value)
+void _push_native_read_only_row(const char* label, const int32 value)
 {
   _prepare_table_row(label);
 
@@ -148,7 +151,7 @@ void _show_native_read_only_row(const char* label, const int32 value)
   ImGui::Text("%d", value);
 }
 
-void _show_native_read_only_row(const char* label, const usize value)
+void _push_native_read_only_row(const char* label, const usize value)
 {
   _prepare_table_row(label);
 
@@ -156,7 +159,7 @@ void _show_native_read_only_row(const char* label, const usize value)
   ImGui::Text("%llu", static_cast<ulonglong>(value));  // Cast to avoid format warnings
 }
 
-void _show_native_read_only_row(const char* label, const bool value)
+void _push_native_read_only_row(const char* label, const bool value)
 {
   _prepare_table_row(label);
 
@@ -167,33 +170,32 @@ void _show_native_read_only_row(const char* label, const bool value)
   ImGui::Checkbox("##Bool", &v);
 }
 
-void _show_native_map_properties(const Model& model,
+void _push_native_map_properties(const Model& model,
+                                 const Strings& strings,
                                  const Entity map_entity,
                                  Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
-
   const auto& context = model.get<Context>(map_entity);
   const auto& map = model.get<Map>(map_entity);
   const auto& tile_format = model.get<TileFormat>(map_entity);
 
-  _show_native_read_only_row(lang.misc.type.c_str(), lang.misc.map.c_str());
-  _show_native_read_only_row(lang.misc.name.c_str(), context.name.c_str());
+  _push_native_read_only_row(strings.misc.type.c_str(), strings.misc.map.c_str());
+  _push_native_read_only_row(strings.misc.name.c_str(), context.name.c_str());
 
-  _show_native_read_only_row(lang.misc.tile_width.c_str(), map.tile_size.x);
-  _show_native_read_only_row(lang.misc.tile_height.c_str(), map.tile_size.y);
+  _push_native_read_only_row(strings.misc.tile_width.c_str(), map.tile_size.x);
+  _push_native_read_only_row(strings.misc.tile_height.c_str(), map.tile_size.y);
 
-  _show_native_read_only_row(lang.misc.row_count.c_str(), map.extent.rows);
-  _show_native_read_only_row(lang.misc.column_count.c_str(), map.extent.cols);
+  _push_native_read_only_row(strings.misc.row_count.c_str(), map.extent.rows);
+  _push_native_read_only_row(strings.misc.column_count.c_str(), map.extent.cols);
 
-  _prepare_table_row(lang.misc.tile_encoding.c_str());
+  _prepare_table_row(strings.misc.tile_encoding.c_str());
   ImGui::TableNextColumn();
 
   const char* encoding = (tile_format.encoding == TileEncoding::Plain)
-                             ? lang.misc.plain_encoding.c_str()
+                             ? strings.misc.plain_encoding.c_str()
                              : "Base64";
   if (const Combo combo {"##TileEncoding", encoding}; combo.is_open()) {
-    if (Selectable::property(lang.misc.plain_encoding.c_str())) {
+    if (Selectable::property(strings.misc.plain_encoding.c_str())) {
       dispatcher.enqueue<SetTileFormatEncodingEvent>(TileEncoding::Plain);
     }
 
@@ -202,13 +204,13 @@ void _show_native_map_properties(const Model& model,
     }
   }
 
-  _prepare_table_row(lang.misc.tile_compression.c_str());
+  _prepare_table_row(strings.misc.tile_compression.c_str());
   ImGui::TableNextColumn();
 
   {
     const Disable disable_if {!tile_format.supports_compression()};
 
-    auto compression = lang.misc.none;
+    auto compression = strings.misc.none;
     if (tile_format.compression == TileCompression::Zlib) {
       compression = "Zlib";
     }
@@ -217,7 +219,7 @@ void _show_native_map_properties(const Model& model,
     }
 
     if (const Combo combo {"##TileCompression", compression.c_str()}; combo.is_open()) {
-      if (Selectable::property(lang.misc.none.c_str())) {
+      if (Selectable::property(strings.misc.none.c_str())) {
         dispatcher.enqueue<SetTileFormatCompressionEvent>(TileCompression::None);
       }
 
@@ -231,7 +233,7 @@ void _show_native_map_properties(const Model& model,
     }
 
     if (tile_format.compression == TileCompression::Zlib) {
-      _prepare_table_row(lang.misc.compression_level.c_str());
+      _prepare_table_row(strings.misc.compression_level.c_str());
       ImGui::TableNextColumn();
 
       auto level = tile_format.zlib_compression_level;
@@ -243,7 +245,7 @@ void _show_native_map_properties(const Model& model,
       }
     }
     else if (tile_format.compression == TileCompression::Zstd) {
-      _prepare_table_row(lang.misc.compression_level.c_str());
+      _prepare_table_row(strings.misc.compression_level.c_str());
       ImGui::TableNextColumn();
 
       auto level = tile_format.zstd_compression_level;
@@ -257,135 +259,137 @@ void _show_native_map_properties(const Model& model,
   }
 }
 
-void _show_native_tileset_properties(const Model& model,
+void _push_native_tileset_properties(const Model& model,
+                                     const Strings& strings,
                                      const Entity tileset_entity,
                                      Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
-
   const auto& context = model.get<Context>(tileset_entity);
   const auto& tileset = model.get<Tileset>(tileset_entity);
 
-  _show_native_read_only_row(lang.misc.type.c_str(), lang.misc.tileset.c_str());
+  _push_native_read_only_row(strings.misc.type.c_str(), strings.misc.tileset.c_str());
 
-  if (const auto updated_name = _show_native_name_row(context.name, true);
+  if (const auto updated_name = _push_native_name_row(strings, context.name, true);
       updated_name && !updated_name->empty()) {
     dispatcher.enqueue<RenameTilesetEvent>(tileset_entity, *updated_name);
   }
 
-  _show_native_read_only_row(lang.misc.tile_count.c_str(), tileset.tile_count());
-  _show_native_read_only_row(lang.misc.column_count.c_str(), tileset.column_count);
+  _push_native_read_only_row(strings.misc.tile_count.c_str(), tileset.tile_count());
+  _push_native_read_only_row(strings.misc.column_count.c_str(), tileset.column_count);
 
-  _show_native_read_only_row(lang.misc.tile_width.c_str(), tileset.tile_size.x);
-  _show_native_read_only_row(lang.misc.tile_height.c_str(), tileset.tile_size.y);
+  _push_native_read_only_row(strings.misc.tile_width.c_str(), tileset.tile_size.x);
+  _push_native_read_only_row(strings.misc.tile_height.c_str(), tileset.tile_size.y);
 }
 
-void _show_native_tile_properties(const Model& model,
+void _push_native_tile_properties(const Model& model,
+                                  const Strings& strings,
                                   const Entity tile_entity,
                                   Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
-
   const auto& context = model.get<Context>(tile_entity);
   const auto& tile = model.get<Tile>(tile_entity);
 
-  _show_native_read_only_row(lang.misc.type.c_str(), lang.misc.tile.c_str());
+  _push_native_read_only_row(strings.misc.type.c_str(), strings.misc.tile.c_str());
 
-  if (const auto updated_name = _show_native_name_row(context.name);
+  if (const auto updated_name = _push_native_name_row(strings, context.name);
       updated_name && !updated_name->empty()) {
     dispatcher.enqueue<RenameTileEvent>(tile.index, *updated_name);
   }
 
-  _show_native_read_only_row(lang.misc.index.c_str(), tile.index);
-  _show_native_read_only_row(lang.misc.animated.c_str(),
+  _push_native_read_only_row(strings.misc.index.c_str(), tile.index);
+  _push_native_read_only_row(strings.misc.animated.c_str(),
                              model.has<TileAnimation>(tile_entity));
 }
 
-void _show_native_layer_properties(const Model& model,
+void _push_native_layer_properties(const Model& model,
+                                   const Strings& strings,
                                    const Entity layer_entity,
                                    Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
-
   const auto& layer = model.get<Layer>(layer_entity);
 
   switch (layer.type) {
     case LayerType::TileLayer:
-      _show_native_read_only_row(lang.misc.type.c_str(), lang.misc.tile_layer.c_str());
+      _push_native_read_only_row(strings.misc.type.c_str(),
+                                 strings.misc.tile_layer.c_str());
       break;
 
     case LayerType::ObjectLayer:
-      _show_native_read_only_row(lang.misc.type.c_str(), lang.misc.object_layer.c_str());
+      _push_native_read_only_row(strings.misc.type.c_str(),
+                                 strings.misc.object_layer.c_str());
       break;
 
     case LayerType::GroupLayer:
-      _show_native_read_only_row(lang.misc.type.c_str(), lang.misc.group_layer.c_str());
+      _push_native_read_only_row(strings.misc.type.c_str(),
+                                 strings.misc.group_layer.c_str());
       break;
   }
 
-  _prepare_table_row(lang.misc.opacity.c_str());
+  _prepare_table_row(strings.misc.opacity.c_str());
   ImGui::TableNextColumn();
-  if (const auto value = ui_float_input("##Opacity", layer.opacity, 0.0f, 1.0f)) {
+  if (const auto value =
+          push_float_input(strings, "##Opacity", layer.opacity, 0.0f, 1.0f)) {
     dispatcher.enqueue<SetLayerOpacityEvent>(layer_entity, *value);
   }
 
-  _prepare_table_row(lang.misc.visible.c_str());
+  _prepare_table_row(strings.misc.visible.c_str());
   ImGui::TableNextColumn();
-  if (const auto value = ui_bool_input("##Visible", layer.visible)) {
+  if (const auto value = push_bool_input(strings, "##Visible", layer.visible)) {
     dispatcher.enqueue<SetLayerVisibleEvent>(layer_entity, *value);
   }
 }
 
-void _show_native_object_properties(const Model& model,
+void _push_native_object_properties(const Model& model,
+                                    const Strings& strings,
                                     const Entity object_entity,
                                     Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
-
   const auto& context = model.get<Context>(object_entity);
   const auto& object = model.get<Object>(object_entity);
 
   switch (object.type) {
     case ObjectType::Rect:
-      _show_native_read_only_row(lang.misc.type.c_str(), lang.misc.rectangle.c_str());
+      _push_native_read_only_row(strings.misc.type.c_str(),
+                                 strings.misc.rectangle.c_str());
       break;
 
     case ObjectType::Ellipse:
-      _show_native_read_only_row(lang.misc.type.c_str(), lang.misc.ellipse.c_str());
+      _push_native_read_only_row(strings.misc.type.c_str(), strings.misc.ellipse.c_str());
       break;
 
     case ObjectType::Point:
-      _show_native_read_only_row(lang.misc.type.c_str(), lang.misc.point.c_str());
+      _push_native_read_only_row(strings.misc.type.c_str(), strings.misc.point.c_str());
       break;
   }
 
-  if (const auto name = _show_native_name_row(context.name)) {
+  if (const auto name = _push_native_name_row(strings, context.name)) {
     dispatcher.enqueue<SetObjectNameEvent>(object_entity, *name);
   }
 
-  _show_native_read_only_row("X", object.position.x);
-  _show_native_read_only_row("Y", object.position.y);
+  _push_native_read_only_row("X", object.position.x);
+  _push_native_read_only_row("Y", object.position.y);
 
   if (object.type != ObjectType::Point) {
-    _show_native_read_only_row(lang.misc.width.c_str(), object.size.x);
-    _show_native_read_only_row(lang.misc.height.c_str(), object.size.y);
+    _push_native_read_only_row(strings.misc.width.c_str(), object.size.x);
+    _push_native_read_only_row(strings.misc.height.c_str(), object.size.y);
   }
 
-  _prepare_table_row(lang.misc.visible.c_str());
+  _prepare_table_row(strings.misc.visible.c_str());
   ImGui::TableNextColumn();
-  if (const auto visible = ui_bool_input("##Visible", object.visible)) {
+  if (const auto visible = push_bool_input(strings, "##Visible", object.visible)) {
     dispatcher.enqueue<SetObjectVisibleEvent>(object_entity, *visible);
   }
 
-  _prepare_table_row(lang.misc.tag.c_str());
+  _prepare_table_row(strings.misc.tag.c_str());
 
   ImGui::TableNextColumn();
-  if (const auto tag = ui_string_input("##Tag", object.tag)) {
+  if (const auto tag = push_string_input(strings, "##Tag", object.tag)) {
     dispatcher.enqueue<SetObjectTagEvent>(object_entity, *tag);
   }
 }
 
-void _show_custom_properties(const Entity context_entity,
+void _push_custom_properties(const Strings& strings,
+                             const Entity context_entity,
                              const Context& context,
                              Dispatcher& dispatcher,
                              bool& is_item_context_open)
@@ -406,10 +410,11 @@ void _show_custom_properties(const Entity context_entity,
     Selectable::property(name.c_str());
 
     if (!is_item_context_open) {
-      is_item_context_open = _update_property_item_context_menu(context_entity,
-                                                                name,
-                                                                gDockState.context_state,
-                                                                dispatcher);
+      is_item_context_open = _push_property_item_context_menu(strings,
+                                                              context_entity,
+                                                              name,
+                                                              gDockState.context_state,
+                                                              dispatcher);
     }
 
     if (gDockState.context_state.show_rename_dialog && !gDockState.rename_target) {
@@ -427,7 +432,7 @@ void _show_custom_properties(const Entity context_entity,
       ImGui::Separator();
     }
 
-    if (auto updated = ui_attribute_input("##CustomPropertyInput", value)) {
+    if (auto updated = push_attribute_input(strings, "##CustomPropertyInput", value)) {
       dispatcher.enqueue<UpdatePropertyEvent>(context_entity, name, std::move(*updated));
     }
 
@@ -435,12 +440,12 @@ void _show_custom_properties(const Entity context_entity,
   }
 }
 
-void _show_property_table(const Model& model, Dispatcher& dispatcher)
+void _push_property_table(const Model& model,
+                          const Strings& strings,
+                          Dispatcher& dispatcher)
 {
   const auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
                      ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
-
-  const auto& lang = get_current_language();
 
   const auto document_entity = sys::get_active_document(model);
   const auto& document = model.get<Document>(document_entity);
@@ -450,28 +455,32 @@ void _show_property_table(const Model& model, Dispatcher& dispatcher)
 
   if (const Table table {"##PropertyTable", 2, flags}; table.is_open()) {
     if (model.has<Map>(context_entity)) {
-      _show_native_map_properties(model, context_entity, dispatcher);
+      _push_native_map_properties(model, strings, context_entity, dispatcher);
     }
     else if (model.has<Layer>(context_entity)) {
-      _show_native_layer_properties(model, context_entity, dispatcher);
+      _push_native_layer_properties(model, strings, context_entity, dispatcher);
     }
     else if (model.has<Object>(context_entity)) {
-      _show_native_object_properties(model, context_entity, dispatcher);
+      _push_native_object_properties(model, strings, context_entity, dispatcher);
     }
     else if (model.has<Tileset>(context_entity)) {
-      _show_native_tileset_properties(model, context_entity, dispatcher);
+      _push_native_tileset_properties(model, strings, context_entity, dispatcher);
     }
     else if (model.has<Tile>(context_entity)) {
-      _show_native_tile_properties(model, context_entity, dispatcher);
+      _push_native_tile_properties(model, strings, context_entity, dispatcher);
     }
 
     bool is_item_context_open = false;
-    _show_custom_properties(context_entity, context, dispatcher, is_item_context_open);
+    _push_custom_properties(strings,
+                            context_entity,
+                            context,
+                            dispatcher,
+                            is_item_context_open);
 
     if (!is_item_context_open) {
       if (auto popup = Popup::for_window("##PropertyTablePopup"); popup.is_open()) {
         gDockState.context_state.show_add_dialog =
-            ImGui::MenuItem(lang.action.create_property.c_str());
+            ImGui::MenuItem(strings.action.create_property.c_str());
       }
     }
   }
@@ -507,10 +516,10 @@ void show_property_dock(const Model& model, Entity, Dispatcher& dispatcher)
     return;
   }
 
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   bool show_property_dock = true;
-  const Window window {lang.window.property_dock.c_str(),
+  const Window window {strings.window.property_dock.c_str(),
                        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
                        &show_property_dock};
 
@@ -522,7 +531,7 @@ void show_property_dock(const Model& model, Entity, Dispatcher& dispatcher)
   gDockState.has_focus = window.has_focus();
 
   if (window.is_open()) {
-    _show_property_table(model, dispatcher);
+    _push_property_table(model, strings, dispatcher);
 
     update_add_property_dialog(model, dispatcher);
     update_rename_property_dialog(model, dispatcher);

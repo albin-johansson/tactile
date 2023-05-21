@@ -20,12 +20,11 @@
 #include "remove_layer.hpp"
 
 #include "core/map.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/document.hpp"
 #include "model/systems/layer_system.hpp"
 #include "model/systems/map_system.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -69,8 +68,8 @@ void RemoveLayer::dispose()
 
 auto RemoveLayer::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.remove_layer;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.remove_layer;
 }
 
 }  // namespace tactile::cmd

@@ -49,4 +49,6 @@ struct SetThemeEvent final {
   ui::EditorTheme theme {};
 };
 
+struct ResetDockVisibilitiesEvent final {};
+
 }  // namespace tactile

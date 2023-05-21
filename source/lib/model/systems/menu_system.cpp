@@ -25,12 +25,12 @@
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
 #include "common/util/assoc.hpp"
-#include "lang/language.hpp"
 #include "model/file_history.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/font_system.hpp"
 #include "model/systems/map_system.hpp"
 #include "model/systems/viewport_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/shortcut/mappings.hpp"
 
 namespace tactile::sys {
@@ -68,8 +68,12 @@ auto _add_menu_item(Model& model,
                     const MenuAction action,
                     Maybe<MenuItemEnabledFn> enabled_fn = nothing) -> Entity
 {
-  auto label = get_label(get_current_language(), action);
-  return _add_menu_item(model, action, std::move(label), nothing, std::move(enabled_fn));
+  const auto& strings = get_current_language_strings(model);
+  return _add_menu_item(model,
+                        action,
+                        get_string(strings, action),
+                        nothing,
+                        std::move(enabled_fn));
 }
 
 auto _add_menu_item(Model& model,
@@ -77,10 +81,10 @@ auto _add_menu_item(Model& model,
                     Maybe<String> shortcut,
                     Maybe<MenuItemEnabledFn> enabled_fn = nothing) -> Entity
 {
-  auto label = get_label(get_current_language(), action);
+  const auto& strings = get_current_language_strings(model);
   return _add_menu_item(model,
                         action,
-                        std::move(label),
+                        get_string(strings, action),
                         std::move(shortcut),
                         std::move(enabled_fn));
 }
@@ -241,14 +245,19 @@ void update_menu_items(Model& model)
   }
 }
 
-void translate_menus(Model& model, const Strings& lang)
+void translate_menus(Model& model, const Strings& strings)
 {
   auto& menu_items = model.get<MenuItems>();
 
   for (auto [menu_action, item_entity]: menu_items.items) {
     auto& menu_item = model.get<MenuItem>(item_entity);
-    menu_item.label = get_label(lang, menu_action);
+    menu_item.label = get_string(strings, menu_action);
   }
+}
+
+void retranslate_menus(Model& model)
+{
+  translate_menus(model, get_current_language_strings(model));
 }
 
 auto get_menu_item(const Model& model, const MenuAction action) -> const MenuItem&

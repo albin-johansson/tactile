@@ -23,11 +23,10 @@
 #include <imgui_internal.h>
 
 #include "common/primitives.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/event/command_events.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/event/view_events.hpp"
+#include "systems/language_system.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/dock/dock_space.hpp"
@@ -60,17 +59,17 @@ void _push_flag_checkbox(const SettingsFlagBits flag,
 void _push_lang_combo()
 {
   if (const Combo combo {"##Lang",
-                         get_language_name(gDialogState.ui_settings.get_language())};
+                         sys::get_language_name(gDialogState.ui_settings.get_language())};
       combo.is_open()) {
-    if (ImGui::MenuItem(get_language_name(Lang::EN))) {
+    if (ImGui::MenuItem(sys::get_language_name(Lang::EN))) {
       gDialogState.ui_settings.set_language(Lang::EN);
     }
 
-    if (ImGui::MenuItem(get_language_name(Lang::EN_GB))) {
+    if (ImGui::MenuItem(sys::get_language_name(Lang::EN_GB))) {
       gDialogState.ui_settings.set_language(Lang::EN_GB);
     }
 
-    if (ImGui::MenuItem(get_language_name(Lang::SV))) {
+    if (ImGui::MenuItem(sys::get_language_name(Lang::SV))) {
       gDialogState.ui_settings.set_language(Lang::SV);
     }
   }
@@ -333,15 +332,15 @@ void open_settings_dialog(const Settings& settings)
   gDialogState.open_dialog = true;
 }
 
-void show_settings_dialog(const Model&, Entity, Dispatcher& dispatcher)
+void show_settings_dialog(const Model& model, Entity, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   DialogOptions options {
-      .title = lang.window.settings_dialog.c_str(),
-      .close_label = lang.misc.cancel.c_str(),
-      .accept_label = lang.misc.ok.c_str(),
-      .apply_label = lang.misc.apply.c_str(),
+      .title = strings.window.settings_dialog.c_str(),
+      .close_label = strings.misc.cancel.c_str(),
+      .accept_label = strings.misc.ok.c_str(),
+      .apply_label = strings.misc.apply.c_str(),
       .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
@@ -353,9 +352,9 @@ void show_settings_dialog(const Model&, Entity, Dispatcher& dispatcher)
   DialogAction action {DialogAction::None};
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
     if (const TabBar bar {"##SettingsTabs"}; bar.is_open()) {
-      _push_behavior_tab(lang);
-      _push_appearance_tab(lang);
-      _push_export_tab(lang);
+      _push_behavior_tab(strings);
+      _push_appearance_tab(strings);
+      _push_export_tab(strings);
     }
   }
 

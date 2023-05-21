@@ -20,9 +20,8 @@
 #include "set_layer_opacity.hpp"
 
 #include "core/layer.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -64,8 +63,8 @@ auto SetLayerOpacity::merge_with(const Command* cmd) -> bool
 
 auto SetLayerOpacity::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.set_layer_opacity;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.set_layer_opacity;
 }
 
 }  // namespace tactile::cmd

@@ -22,11 +22,12 @@
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
+#include "model/model.hpp"
 
 namespace tactile::ui {
 
 void open_rename_layer_dialog(Entity layer_entity, String current_name);
 
-void update_rename_layer_dialog(Dispatcher& dispatcher);
+void update_rename_layer_dialog(const Model& model, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

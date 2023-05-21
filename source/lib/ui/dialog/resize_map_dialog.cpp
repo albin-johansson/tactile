@@ -21,9 +21,8 @@
 
 #include <imgui.h>
 
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/event/map_events.hpp"
+#include "systems/language_system.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"
 
@@ -47,14 +46,14 @@ void open_resize_map_dialog(const TileExtent current_extent)
   gDialogState.open_dialog = true;
 }
 
-void show_resize_map_dialog(const Model&, Entity, Dispatcher& dispatcher)
+void show_resize_map_dialog(const Model& model, Entity, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   DialogOptions options {
-      .title = lang.window.resize_map.c_str(),
-      .close_label = lang.misc.close.c_str(),
-      .accept_label = lang.misc.ok.c_str(),
+      .title = strings.window.resize_map.c_str(),
+      .close_label = strings.misc.close.c_str(),
+      .accept_label = strings.misc.ok.c_str(),
       .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
@@ -69,7 +68,7 @@ void show_resize_map_dialog(const Model&, Entity, Dispatcher& dispatcher)
     const uint64 max_value = 10'000;
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted(lang.misc.rows.c_str());
+    ImGui::TextUnformatted(strings.misc.rows.c_str());
     ImGui::SameLine();
     ImGui::SetNextItemWidth(-kMinFloat);
     ImGui::DragScalar("##Rows",
@@ -80,7 +79,7 @@ void show_resize_map_dialog(const Model&, Entity, Dispatcher& dispatcher)
                       &max_value);
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted(lang.misc.columns.c_str());
+    ImGui::TextUnformatted(strings.misc.columns.c_str());
     ImGui::SameLine();
     ImGui::DragScalar("##Columns",
                       ImGuiDataType_U64,

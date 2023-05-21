@@ -25,13 +25,12 @@
 #include "core/context.hpp"
 #include "core/map.hpp"
 #include "core/tileset.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/document.hpp"
 #include "model/event/document_events.hpp"
 #include "model/event/property_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/systems/document_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dock/tileset/tileset_view.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"
@@ -39,35 +38,34 @@
 namespace tactile::ui {
 namespace {
 
-void _update_context_menu(const Model& model,
-                          const Entity tileset_document_entity,
-                          const Entity tileset_entity,
-                          Dispatcher& dispatcher)
+void _push_context_menu(const Model& model,
+                        const Strings& strings,
+                        const Entity tileset_document_entity,
+                        const Entity tileset_entity,
+                        Dispatcher& dispatcher)
 {
   if (auto popup = Popup::for_item("##TilesetTabContext"); popup.is_open()) {
-    const auto& lang = get_current_language();
-
-    if (ImGui::MenuItem(lang.action.create_tileset.c_str())) {
+    if (ImGui::MenuItem(strings.action.create_tileset.c_str())) {
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.inspect_tileset.c_str())) {
+    if (ImGui::MenuItem(strings.action.inspect_tileset.c_str())) {
       dispatcher.enqueue<InspectContextEvent>(tileset_entity);
     }
 
     ImGui::Separator();
 
     if (Disable disable_if {sys::is_document_open(model, tileset_document_entity)};
-        ImGui::MenuItem(lang.action.open_tileset.c_str())) {
+        ImGui::MenuItem(strings.action.open_tileset.c_str())) {
       dispatcher.enqueue<OpenDocumentEvent>(tileset_document_entity);
       dispatcher.enqueue<SelectDocumentEvent>(tileset_document_entity);
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.remove_tileset.c_str())) {
+    if (ImGui::MenuItem(strings.action.remove_tileset.c_str())) {
       dispatcher.enqueue<RemoveTilesetEvent>(tileset_entity);
     }
   }
@@ -88,7 +86,9 @@ void show_tileset_tabs(const Model& model, Dispatcher& dispatcher)
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
 
+    const auto& strings = sys::get_current_language_strings(model);
     const auto map_document_entity = sys::get_active_document(model);
+
     const auto& map_document = model.get<MapDocument>(map_document_entity);
     const auto& map = model.get<Map>(map_document.map);
 
@@ -116,7 +116,11 @@ void show_tileset_tabs(const Model& model, Dispatcher& dispatcher)
         dispatcher.enqueue<SelectTilesetEvent>(attached_tileset_entity);
       }
       else {
-        _update_context_menu(model, tileset_document_entity, tileset_entity, dispatcher);
+        _push_context_menu(model,
+                           strings,
+                           tileset_document_entity,
+                           tileset_entity,
+                           dispatcher);
       }
     }
   }

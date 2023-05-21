@@ -22,9 +22,8 @@
 #include <utility>  // move
 
 #include "core/context.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -55,8 +54,8 @@ void RenameLayer::redo()
 
 auto RenameLayer::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.rename_layer;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.rename_layer;
 }
 
 }  // namespace tactile::cmd

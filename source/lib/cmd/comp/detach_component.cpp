@@ -20,10 +20,9 @@
 #include "detach_component.hpp"
 
 #include "core/component.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/systems/context/components.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -55,8 +54,8 @@ void DetachComponent::redo()
 
 auto DetachComponent::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.detach_comp;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.detach_comp;
 }
 
 }  // namespace tactile::cmd

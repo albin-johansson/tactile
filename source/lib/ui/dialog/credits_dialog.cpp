@@ -22,8 +22,7 @@
 #include <centurion/system.hpp>
 #include <imgui.h>
 
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/scoped.hpp"
 
@@ -58,13 +57,13 @@ void open_credits_dialog()
   gOpenDialog = true;
 }
 
-void show_credits_dialog(const Model&, Entity, Dispatcher&)
+void show_credits_dialog(const Model& model, Entity, Dispatcher&)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   DialogOptions options {
-      .title = lang.window.credits.c_str(),
-      .close_label = lang.misc.close.c_str(),
+      .title = strings.window.credits.c_str(),
+      .close_label = strings.misc.close.c_str(),
       .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
@@ -74,7 +73,7 @@ void show_credits_dialog(const Model&, Entity, Dispatcher&)
   }
 
   if (const ScopedDialog dialog {options}; dialog.was_opened()) {
-    ImGui::TextUnformatted(lang.misc.credits_info.c_str());
+    ImGui::TextUnformatted(strings.misc.credits_info.c_str());
     ImGui::Spacing();
 
     const auto table_flags = ImGuiTableFlags_RowBg |      //
@@ -83,8 +82,8 @@ void show_credits_dialog(const Model&, Entity, Dispatcher&)
                              ImGuiTableFlags_SizingStretchProp;
 
     if (const Table table {"##CreditsTable", 2, table_flags}; table.is_open()) {
-      ImGui::TableSetupColumn(lang.misc.library.c_str());
-      ImGui::TableSetupColumn(lang.misc.license.c_str());
+      ImGui::TableSetupColumn(strings.misc.library.c_str());
+      ImGui::TableSetupColumn(strings.misc.license.c_str());
       ImGui::TableHeadersRow();
 
       _show_dependency_row("argparse",

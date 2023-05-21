@@ -25,9 +25,8 @@
 
 #include "common/type/maybe.hpp"
 #include "common/util/string_buffer.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/event/layer_events.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
@@ -52,14 +51,14 @@ void open_rename_layer_dialog(const Entity layer_entity, String current_name)
   gDialogState.open_dialog = true;
 }
 
-void update_rename_layer_dialog(Dispatcher& dispatcher)
+void update_rename_layer_dialog(const Model& model, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   DialogOptions options {
-      .title = lang.window.rename_layer.c_str(),
-      .close_label = lang.misc.close.c_str(),
-      .accept_label = lang.misc.rename.c_str(),
+      .title = strings.window.rename_layer.c_str(),
+      .close_label = strings.misc.close.c_str(),
+      .accept_label = strings.misc.rename.c_str(),
   };
 
   const bool should_acquire_focus = gDialogState.open_dialog;

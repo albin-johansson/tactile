@@ -22,10 +22,9 @@
 #include "common/debug/panic.hpp"
 #include "core/layer.hpp"
 #include "core/map.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/systems/object_system.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -88,16 +87,16 @@ void AddObject::dispose()
 
 auto AddObject::get_name() const -> String
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(get_global_model());
   switch (mObjectType) {
     case ObjectType::Point:
-      return lang.cmd.add_point_object;
+      return strings.cmd.add_point_object;
 
     case ObjectType::Rect:
-      return lang.cmd.add_rectangle_object;
+      return strings.cmd.add_rectangle_object;
 
     case ObjectType::Ellipse:
-      return lang.cmd.add_ellipse_object;
+      return strings.cmd.add_ellipse_object;
 
     default:
       throw TactileError {"Invalid object type!"};

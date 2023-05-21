@@ -24,12 +24,11 @@
 #include "common/util/string_buffer.hpp"
 #include "common/util/vector.hpp"
 #include "core/component.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/document.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
@@ -54,7 +53,7 @@ void open_create_component_attribute_dialog(const Entity component_definition_en
 
 void update_create_component_attribute_dialog(const Model& model, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   const auto document_entity = sys::get_active_document(model);
   const auto& document = model.get<Document>(document_entity);
@@ -68,9 +67,9 @@ void update_create_component_attribute_dialog(const Model& model, Dispatcher& di
   }
 
   DialogOptions options {
-      .title = lang.window.create_attribute.c_str(),
-      .close_label = lang.misc.cancel.c_str(),
-      .accept_label = lang.misc.create.c_str(),
+      .title = strings.window.create_attribute.c_str(),
+      .close_label = strings.misc.cancel.c_str(),
+      .accept_label = strings.misc.create.c_str(),
   };
 
   if (gDialogState.open_dialog) {
@@ -89,7 +88,7 @@ void update_create_component_attribute_dialog(const Model& model, Dispatcher& di
   DialogAction action {DialogAction::None};
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
     ImGui::InputTextWithHint("##Name",
-                             lang.misc.attribute_name_hint.c_str(),
+                             strings.misc.attribute_name_hint.c_str(),
                              gDialogState.attribute_name_buffer.data(),
                              sizeof gDialogState.attribute_name_buffer);
   }

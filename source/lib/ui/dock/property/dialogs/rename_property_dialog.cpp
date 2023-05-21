@@ -25,11 +25,10 @@
 
 #include "common/util/string_buffer.hpp"
 #include "core/context.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/document.hpp"
 #include "model/event/property_events.hpp"
 #include "model/systems/document_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
@@ -56,7 +55,7 @@ void open_rename_property_dialog(const Entity context_entity, String previous_na
 
 void update_rename_property_dialog(const Model& model, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   const auto document_entity = sys::get_active_document(model);
   const auto& document = model.get<Document>(document_entity);
@@ -68,9 +67,9 @@ void update_rename_property_dialog(const Model& model, Dispatcher& dispatcher)
   }
 
   DialogOptions options {
-      .title = lang.window.rename_property.c_str(),
-      .close_label = lang.misc.cancel.c_str(),
-      .accept_label = lang.misc.rename.c_str(),
+      .title = strings.window.rename_property.c_str(),
+      .close_label = strings.misc.cancel.c_str(),
+      .accept_label = strings.misc.rename.c_str(),
   };
 
   if (gDialogState.open_dialog) {
@@ -88,7 +87,7 @@ void update_rename_property_dialog(const Model& model, Dispatcher& dispatcher)
   DialogAction action {DialogAction::None};
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
     ImGui::InputTextWithHint("##Name",
-                             lang.misc.property_name_hint.c_str(),
+                             strings.misc.property_name_hint.c_str(),
                              gDialogState.name_buffer.data(),
                              sizeof gDialogState.name_buffer);
   }

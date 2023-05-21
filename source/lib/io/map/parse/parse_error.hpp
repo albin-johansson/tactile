@@ -21,6 +21,7 @@
 
 #include "common/type/ostream.hpp"
 #include "common/type/string.hpp"
+#include "core/language.hpp"
 
 namespace tactile {
 
@@ -46,7 +47,7 @@ enum class ParseError {
 
   UnsupportedLayerType,  // YAML/JSON only
   NoLayerId,
-  NoLayerType,  // YAML/JSON only
+  NoLayerType,           // YAML/JSON only
   NoTileLayerData,
   CorruptTileLayerData,
   UnsupportedTileLayerEncoding,
@@ -62,8 +63,8 @@ enum class ParseError {
   NoTilesetImageHeight,
   NoTilesetTileCount,
   NoTilesetColumnCount,
-  NoTilesetVersion,       // Tactile YAML only
-  NoExternalTilesetPath,  // Tactile YAML only
+  NoTilesetVersion,           // Tactile YAML only
+  NoExternalTilesetPath,      // Tactile YAML only
   TilesetImageDoesNotExist,
   UnsupportedTilesetVersion,  // Tactile YAML only
 
@@ -78,10 +79,10 @@ enum class ParseError {
   UnsupportedComponentDefAttributeType,  // Tactile YAML only
   CorruptComponentDefAttributeValue,     // Tactile YAML only
 
-  NoComponentType,                 // Tactile YAML only
-  NoComponentAttributeName,        // Tactile YAML only
-  NoComponentAttributeValue,       // Tactile YAML only
-  CorruptComponentAttributeValue,  // Tactile YAML only
+  NoComponentType,                       // Tactile YAML only
+  NoComponentAttributeName,              // Tactile YAML only
+  NoComponentAttributeValue,             // Tactile YAML only
+  CorruptComponentAttributeValue,        // Tactile YAML only
 
   NoObjectId,
   NoObjectType,           // Tactile YAML only
@@ -99,7 +100,7 @@ enum class ParseError {
 };
 
 /// Returns a (translated) human-readable message with an explanation of an error.
-[[nodiscard]] auto to_cause(ParseError error) -> StringView;
+[[nodiscard]] auto to_cause(const Strings& strings, ParseError error) -> StringView;
 
 auto operator<<(OStream& stream, ParseError error) -> OStream&;
 

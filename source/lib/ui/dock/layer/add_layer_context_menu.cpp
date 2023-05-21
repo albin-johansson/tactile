@@ -19,13 +19,10 @@
 
 #include "add_layer_context_menu.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/event/layer_events.hpp"
-#include "ui/style/icons.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::ui {
 
@@ -34,19 +31,19 @@ AddLayerContextMenu::AddLayerContextMenu()
 {
 }
 
-void AddLayerContextMenu::on_update(const Model&, entt::dispatcher& dispatcher)
+void AddLayerContextMenu::on_update(const Model& model, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
-  if (ImGui::MenuItem(lang.action.tile_layer.c_str())) {
+  if (ImGui::MenuItem(strings.action.tile_layer.c_str())) {
     dispatcher.enqueue<AddLayerEvent>(LayerType::TileLayer);
   }
 
-  if (ImGui::MenuItem(lang.action.object_layer.c_str())) {
+  if (ImGui::MenuItem(strings.action.object_layer.c_str())) {
     dispatcher.enqueue<AddLayerEvent>(LayerType::ObjectLayer);
   }
 
-  if (ImGui::MenuItem(lang.action.group_layer.c_str())) {
+  if (ImGui::MenuItem(strings.action.group_layer.c_str())) {
     dispatcher.enqueue<AddLayerEvent>(LayerType::GroupLayer);
   }
 }

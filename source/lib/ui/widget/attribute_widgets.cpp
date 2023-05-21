@@ -28,8 +28,6 @@
 #include "common/util/filesystem.hpp"
 #include "common/util/string_buffer.hpp"
 #include "io/file_dialog.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "ui/constants.hpp"
 #include "ui/style/colors.hpp"
 #include "ui/style/icons.hpp"
@@ -40,8 +38,10 @@ namespace tactile::ui {
 namespace {
 
 template <std::invocable T>
-[[nodiscard]] auto input_file_path(const char* id, StringView text, T&& callback)
-    -> Maybe<Path>
+[[nodiscard]] auto _input_file_path(const Strings& strings,
+                                    const char* id,
+                                    StringView text,
+                                    T&& callback) -> Maybe<Path>
 {
   const Scope scope {id};
 
@@ -53,25 +53,23 @@ template <std::invocable T>
 
   ImGui::SameLine();
 
-  const auto& lang = get_current_language();
-
   StringBuffer buffer;
   buffer = text;
 
   ImGui::InputTextWithHint("##Path",
-                           lang.misc.empty.c_str(),
+                           strings.misc.empty.c_str(),
                            buffer.data(),
                            sizeof buffer,
                            ImGuiInputTextFlags_ReadOnly);
 
-  ui_lazy_tooltip("##PathTooltip", lang.misc.type_path.c_str());
+  ui_lazy_tooltip("##PathTooltip", strings.misc.type_path.c_str());
 
   return nothing;
 }
 
 }  // namespace
 
-auto ui_int_input(const char* id, int value) -> Maybe<int>
+auto push_int_input(const Strings& strings, const char* id, int value) -> Maybe<int>
 {
   const Scope scope {id};
 
@@ -80,13 +78,12 @@ auto ui_int_input(const char* id, int value) -> Maybe<int>
     return value;
   }
 
-  const auto& lang = get_current_language();
-  ui_lazy_tooltip("##IntTooltip", lang.misc.type_int.c_str());
+  ui_lazy_tooltip("##IntTooltip", strings.misc.type_int.c_str());
 
   return nothing;
 }
 
-auto ui_int2_input(const char* id, Int2 value) -> Maybe<Int2>
+auto push_int2_input(const Strings& strings, const char* id, Int2 value) -> Maybe<Int2>
 {
   const Scope scope {id};
 
@@ -95,13 +92,12 @@ auto ui_int2_input(const char* id, Int2 value) -> Maybe<Int2>
     return value;
   }
 
-  const auto& lang = get_current_language();
-  ui_lazy_tooltip("##Int2Tooltip", lang.misc.type_int2.c_str());
+  ui_lazy_tooltip("##Int2Tooltip", strings.misc.type_int2.c_str());
 
   return nothing;
 }
 
-auto ui_int3_input(const char* id, Int3 value) -> Maybe<Int3>
+auto push_int3_input(const Strings& strings, const char* id, Int3 value) -> Maybe<Int3>
 {
   const Scope scope {id};
 
@@ -110,13 +106,12 @@ auto ui_int3_input(const char* id, Int3 value) -> Maybe<Int3>
     return value;
   }
 
-  const auto& lang = get_current_language();
-  ui_lazy_tooltip("##Int3Tooltip", lang.misc.type_int3.c_str());
+  ui_lazy_tooltip("##Int3Tooltip", strings.misc.type_int3.c_str());
 
   return nothing;
 }
 
-auto ui_int4_input(const char* id, Int4 value) -> Maybe<Int4>
+auto push_int4_input(const Strings& strings, const char* id, Int4 value) -> Maybe<Int4>
 {
   const Scope scope {id};
 
@@ -125,14 +120,16 @@ auto ui_int4_input(const char* id, Int4 value) -> Maybe<Int4>
     return value;
   }
 
-  const auto& lang = get_current_language();
-  ui_lazy_tooltip("##Int4Tooltip", lang.misc.type_int4.c_str());
+  ui_lazy_tooltip("##Int4Tooltip", strings.misc.type_int4.c_str());
 
   return nothing;
 }
 
-auto ui_float_input(const char* id, float value, const float min, const float max)
-    -> Maybe<float>
+auto push_float_input(const Strings& strings,
+                      const char* id,
+                      float value,
+                      const float min,
+                      const float max) -> Maybe<float>
 {
   const Scope scope {id};
 
@@ -149,14 +146,16 @@ auto ui_float_input(const char* id, float value, const float min, const float ma
     }
   }
 
-  const auto& lang = get_current_language();
-  ui_lazy_tooltip("##FloatTooltip", lang.misc.type_float.c_str());
+  ui_lazy_tooltip("##FloatTooltip", strings.misc.type_float.c_str());
 
   return nothing;
 }
 
-auto ui_float2_input(const char* id, Float2 value, const float min, const float max)
-    -> Maybe<Float2>
+auto push_float2_input(const Strings& strings,
+                       const char* id,
+                       Float2 value,
+                       const float min,
+                       const float max) -> Maybe<Float2>
 {
   const Scope scope {id};
 
@@ -173,14 +172,16 @@ auto ui_float2_input(const char* id, Float2 value, const float min, const float 
     }
   }
 
-  const auto& lang = get_current_language();
-  ui_lazy_tooltip("##Float2Tooltip", lang.misc.type_float2.c_str());
+  ui_lazy_tooltip("##Float2Tooltip", strings.misc.type_float2.c_str());
 
   return nothing;
 }
 
-auto ui_float3_input(const char* id, Float3 value, const float min, const float max)
-    -> Maybe<Float3>
+auto push_float3_input(const Strings& strings,
+                       const char* id,
+                       Float3 value,
+                       const float min,
+                       const float max) -> Maybe<Float3>
 {
   const Scope scope {id};
 
@@ -197,14 +198,16 @@ auto ui_float3_input(const char* id, Float3 value, const float min, const float 
     }
   }
 
-  const auto& lang = get_current_language();
-  ui_lazy_tooltip("##Float3Tooltip", lang.misc.type_float3.c_str());
+  ui_lazy_tooltip("##Float3Tooltip", strings.misc.type_float3.c_str());
 
   return nothing;
 }
 
-auto ui_float4_input(const char* id, Float4 value, const float min, const float max)
-    -> Maybe<Float4>
+auto push_float4_input(const Strings& strings,
+                       const char* id,
+                       Float4 value,
+                       const float min,
+                       const float max) -> Maybe<Float4>
 {
   const Scope scope {id};
 
@@ -221,18 +224,18 @@ auto ui_float4_input(const char* id, Float4 value, const float min, const float 
     }
   }
 
-  const auto& lang = get_current_language();
-  ui_lazy_tooltip("##Float4Tooltip", lang.misc.type_float4.c_str());
+  ui_lazy_tooltip("##Float4Tooltip", strings.misc.type_float4.c_str());
 
   return nothing;
 }
 
-auto ui_string_input_with_hint(const char* id,
-                               const char* hint,
-                               const String& value,
-                               const char* label,
-                               const ImGuiInputTextFlags flags,
-                               const ImGuiInputTextCallback filter) -> Maybe<String>
+auto push_string_input_with_hint(const Strings& strings,
+                                 const char* id,
+                                 const char* hint,
+                                 const String& value,
+                                 const char* label,
+                                 const ImGuiInputTextFlags flags,
+                                 const ImGuiInputTextCallback filter) -> Maybe<String>
 {
   const Scope scope {id};
 
@@ -258,22 +261,22 @@ auto ui_string_input_with_hint(const char* id,
     return buffer.as_string();
   }
 
-  const auto& lang = get_current_language();
-  ui_lazy_tooltip("##StringTooltip", lang.misc.type_string.c_str());
+  ui_lazy_tooltip("##StringTooltip", strings.misc.type_string.c_str());
 
   return nothing;
 }
 
-auto ui_string_input(const char* id,
-                     const String& value,
-                     const char* label,
-                     const ImGuiInputTextFlags flags,
-                     const ImGuiInputTextCallback filter) -> Maybe<String>
+auto push_string_input(const Strings& strings,
+                       const char* id,
+                       const String& value,
+                       const char* label,
+                       const ImGuiInputTextFlags flags,
+                       const ImGuiInputTextCallback filter) -> Maybe<String>
 {
-  return ui_string_input_with_hint(id, nullptr, value, label, flags, filter);
+  return push_string_input_with_hint(strings, id, nullptr, value, label, flags, filter);
 }
 
-auto ui_bool_input(const char* id, bool value) -> Maybe<bool>
+auto push_bool_input(const Strings& strings, const char* id, bool value) -> Maybe<bool>
 {
   const Scope scope {id};
 
@@ -281,26 +284,26 @@ auto ui_bool_input(const char* id, bool value) -> Maybe<bool>
     return value;
   }
 
-  const auto& lang = get_current_language();
-  ui_lazy_tooltip("##BoolTooltip", lang.misc.type_bool.c_str());
+  ui_lazy_tooltip("##BoolTooltip", strings.misc.type_bool.c_str());
 
   return nothing;
 }
 
-auto ui_object_input(const char* id, ObjectRef value) -> Maybe<ObjectRef>
+auto push_object_input(const Strings& strings, const char* id, ObjectRef value)
+    -> Maybe<ObjectRef>
 {
   const Scope scope {id};
 
   // TODO
   ImGui::Text("%i", value);
 
-  const auto& lang = get_current_language();
-  ui_lazy_tooltip("##ObjectTooltip", lang.misc.type_object.c_str());
+  ui_lazy_tooltip("##ObjectTooltip", strings.misc.type_object.c_str());
 
   return nothing;
 }
 
-auto ui_color_input(const char* id, const Color value) -> Maybe<Color>
+auto push_color_input(const Strings& strings, const char* id, const Color value)
+    -> Maybe<Color>
 {
   constexpr auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
                          ImGuiColorEditFlags_AlphaBar;
@@ -315,103 +318,108 @@ auto ui_color_input(const char* id, const Color value) -> Maybe<Color>
   return nothing;
 }
 
-auto ui_file_path_input(const char* id, const Path& value) -> Maybe<Path>
+auto push_file_path_input(const Strings& strings, const char* id, const Path& value)
+    -> Maybe<Path>
 {
-  return input_file_path(id, value.filename().string(), []() -> Maybe<Path> {
+  return _input_file_path(strings, id, value.filename().string(), [] -> Maybe<Path> {
     auto dialog = FileDialog::open_file();
     return dialog.is_okay() ? dialog.path() : Maybe<Path> {};
   });
 }
 
-auto ui_directory_path_input(const char* id, const Path& value) -> Maybe<Path>
+auto push_directory_path_input(const Strings& strings, const char* id, const Path& value)
+    -> Maybe<Path>
 {
-  return input_file_path(id,
-                         use_short_home_prefix(value).value_or(value.string()),
-                         []() -> Maybe<Path> {
-                           auto dialog = FileDialog::open_folder();
-                           return dialog.is_okay() ? dialog.path() : Maybe<Path> {};
-                         });
+  return _input_file_path(strings,
+                          id,
+                          use_short_home_prefix(value).value_or(value.string()),
+                          [] -> Maybe<Path> {
+                            auto dialog = FileDialog::open_folder();
+                            return dialog.is_okay() ? dialog.path() : Maybe<Path> {};
+                          });
 }
 
-auto ui_attribute_input(const char* id, const Attribute& value) -> Maybe<Attribute>
+auto push_attribute_input(const Strings& strings, const char* id, const Attribute& value)
+    -> Maybe<Attribute>
 {
   switch (value.get_type()) {
     case AttributeType::String: {
-      const auto& lang = get_current_language();
-      if (auto updated =
-              ui_string_input_with_hint(id, lang.misc.empty.c_str(), value.as_string())) {
+      if (auto updated = push_string_input_with_hint(strings,
+                                                     id,
+                                                     strings.misc.empty.c_str(),
+                                                     value.as_string())) {
         return std::move(updated);
       }
       break;
     }
     case AttributeType::Int: {
-      if (const auto updated = ui_int_input(id, value.as_int())) {
+      if (const auto updated = push_int_input(strings, id, value.as_int())) {
         return updated;
       }
       break;
     }
     case AttributeType::Int2: {
-      if (const auto updated = ui_int2_input(id, value.as_int2())) {
+      if (const auto updated = push_int2_input(strings, id, value.as_int2())) {
         return updated;
       }
       break;
     }
     case AttributeType::Int3: {
-      if (const auto updated = ui_int3_input(id, value.as_int3())) {
+      if (const auto updated = push_int3_input(strings, id, value.as_int3())) {
         return updated;
       }
       break;
     }
     case AttributeType::Int4: {
-      if (const auto updated = ui_int4_input(id, value.as_int4())) {
+      if (const auto updated = push_int4_input(strings, id, value.as_int4())) {
         return updated;
       }
       break;
     }
     case AttributeType::Float: {
-      if (const auto updated = ui_float_input(id, value.as_float())) {
+      if (const auto updated = push_float_input(strings, id, value.as_float())) {
         return updated;
       }
       break;
     }
     case AttributeType::Float2: {
-      if (const auto updated = ui_float2_input(id, value.as_float2())) {
+      if (const auto updated = push_float2_input(strings, id, value.as_float2())) {
         return updated;
       }
       break;
     }
     case AttributeType::Float3: {
-      if (const auto updated = ui_float3_input(id, value.as_float3())) {
+      if (const auto updated = push_float3_input(strings, id, value.as_float3())) {
         return updated;
       }
       break;
     }
     case AttributeType::Float4: {
-      if (const auto updated = ui_float4_input(id, value.as_float4())) {
+      if (const auto updated = push_float4_input(strings, id, value.as_float4())) {
         return updated;
       }
       break;
     }
     case AttributeType::Bool: {
-      if (const auto updated = ui_bool_input(id, value.as_bool())) {
+      if (const auto updated = push_bool_input(strings, id, value.as_bool())) {
         return updated;
       }
       break;
     }
     case AttributeType::Path: {
-      if (auto updated = ui_file_path_input(id, value.as_path())) {
+      if (auto updated = push_file_path_input(strings, id, value.as_path())) {
         return std::move(updated);
       }
       break;
     }
     case AttributeType::Color: {
-      if (const auto updated = ui_color_input(id, value.as_color())) {
+      if (const auto updated = push_color_input(strings, id, value.as_color())) {
         return updated;
       }
       break;
     }
     case AttributeType::Object: {
-      if (const auto updated = ui_object_input(id, value.as_object())) {
+      if (const auto updated = push_object_input(strings, id, value.as_object())) {
         return updated;
       }
       break;
@@ -421,26 +429,30 @@ auto ui_attribute_input(const char* id, const Attribute& value) -> Maybe<Attribu
   return nothing;
 }
 
-auto ui_attribute_type_combo(const AttributeType current_type,
-                             const Maybe<AttributeType> excluded_type)
+auto push_attribute_type_combo(const Strings& strings,
+                               const AttributeType current_type,
+                               const Maybe<AttributeType> excluded_type)
     -> Maybe<AttributeType>
 {
-  const auto& lang = get_current_language();
-
   Array<StringView, 13> type_names;
-  type_names[std::to_underlying(AttributeType::String)] = lang.misc.type_string.c_str();
-  type_names[std::to_underlying(AttributeType::Int)] = lang.misc.type_int.c_str();
-  type_names[std::to_underlying(AttributeType::Int2)] = lang.misc.type_int2.c_str();
-  type_names[std::to_underlying(AttributeType::Int3)] = lang.misc.type_int3.c_str();
-  type_names[std::to_underlying(AttributeType::Int4)] = lang.misc.type_int4.c_str();
-  type_names[std::to_underlying(AttributeType::Float)] = lang.misc.type_float.c_str();
-  type_names[std::to_underlying(AttributeType::Float2)] = lang.misc.type_float2.c_str();
-  type_names[std::to_underlying(AttributeType::Float3)] = lang.misc.type_float3.c_str();
-  type_names[std::to_underlying(AttributeType::Float4)] = lang.misc.type_float4.c_str();
-  type_names[std::to_underlying(AttributeType::Bool)] = lang.misc.type_bool.c_str();
-  type_names[std::to_underlying(AttributeType::Color)] = lang.misc.type_color.c_str();
-  type_names[std::to_underlying(AttributeType::Object)] = lang.misc.type_object.c_str();
-  type_names[std::to_underlying(AttributeType::Path)] = lang.misc.type_path.c_str();
+  type_names[std::to_underlying(AttributeType::String)] =
+      strings.misc.type_string.c_str();
+  type_names[std::to_underlying(AttributeType::Int)] = strings.misc.type_int.c_str();
+  type_names[std::to_underlying(AttributeType::Int2)] = strings.misc.type_int2.c_str();
+  type_names[std::to_underlying(AttributeType::Int3)] = strings.misc.type_int3.c_str();
+  type_names[std::to_underlying(AttributeType::Int4)] = strings.misc.type_int4.c_str();
+  type_names[std::to_underlying(AttributeType::Float)] = strings.misc.type_float.c_str();
+  type_names[std::to_underlying(AttributeType::Float2)] =
+      strings.misc.type_float2.c_str();
+  type_names[std::to_underlying(AttributeType::Float3)] =
+      strings.misc.type_float3.c_str();
+  type_names[std::to_underlying(AttributeType::Float4)] =
+      strings.misc.type_float4.c_str();
+  type_names[std::to_underlying(AttributeType::Bool)] = strings.misc.type_bool.c_str();
+  type_names[std::to_underlying(AttributeType::Color)] = strings.misc.type_color.c_str();
+  type_names[std::to_underlying(AttributeType::Object)] =
+      strings.misc.type_object.c_str();
+  type_names[std::to_underlying(AttributeType::Path)] = strings.misc.type_path.c_str();
 
   const auto all_types = {AttributeType::String,
                           AttributeType::Int,

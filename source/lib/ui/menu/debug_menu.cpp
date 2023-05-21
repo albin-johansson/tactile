@@ -23,7 +23,7 @@
 
 #include "common/predef.hpp"
 #include "io/directories.hpp"
-#include "lang/language.hpp"
+#include "systems/language_system.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"
 
@@ -40,12 +40,12 @@ inline constinit DebugMenuState gMenuState;
 
 }  // namespace
 
-void show_debug_menu(const Model&, Dispatcher&)
+void show_debug_menu(const Model& model, Dispatcher&)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
-  if (const Menu menu {lang.menu.debug.c_str()}; menu.is_open()) {
-    gMenuState.show_metrics = ImGui::MenuItem(lang.action.show_metrics.c_str());
+  if (const Menu menu {strings.menu.debug.c_str()}; menu.is_open()) {
+    gMenuState.show_metrics = ImGui::MenuItem(strings.action.show_metrics.c_str());
 
     if constexpr (kIsDebugBuild) {
       ImGui::Separator();
@@ -55,7 +55,7 @@ void show_debug_menu(const Model&, Dispatcher&)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.open_persistent_file_dir.c_str())) {
+    if (ImGui::MenuItem(strings.action.open_persistent_file_dir.c_str())) {
       open_directory(get_persistent_file_dir());
     }
   }

@@ -24,14 +24,13 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/document.hpp"
 #include "model/event/command_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/tool/tool_manager.hpp"
+#include "systems/language_system.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
@@ -89,7 +88,7 @@ void _tool_button(const Model& model,
   //  }
 }
 
-void show_extra_toolbar(std::invocable auto callable)
+void _push_extra_toolbar(std::invocable auto callable)
 {
   const auto& style = ImGui::GetStyle();
   _prepare_window_position({gToolbarState.width + style.ItemInnerSpacing.x, 0});
@@ -107,14 +106,14 @@ void show_extra_toolbar(std::invocable auto callable)
 
 void show_map_viewport_toolbar(const Model& model, Dispatcher& dispatcher)
 {
+  const auto& strings = sys::get_current_language_strings(model);
+
   remove_tab_bar_from_next_window();
 
   _prepare_window_position();
   ImGui::SetNextWindowBgAlpha(0.75f);
 
   const StyleVar padding {ImGuiStyleVar_WindowPadding, {6, 6}};
-
-  const auto& lang = get_current_language();
 
   const auto document_entity = sys::get_active_document(model);
   const auto& map_document = model.get<MapDocument>(document_entity);
@@ -127,17 +126,21 @@ void show_map_viewport_toolbar(const Model& model, Dispatcher& dispatcher)
     gToolbarState.has_focus = window.has_focus();
     gToolbarState.width = ImGui::GetWindowSize().x;
 
-    if (ui_icon_button(TAC_ICON_UNDO, lang.misc.undo.c_str(), command_stack.can_undo())) {
+    if (ui_icon_button(TAC_ICON_UNDO,
+                       strings.misc.undo.c_str(),
+                       command_stack.can_undo())) {
       dispatcher.enqueue<UndoEvent>();
     }
 
-    if (ui_icon_button(TAC_ICON_REDO, lang.misc.redo.c_str(), command_stack.can_redo())) {
+    if (ui_icon_button(TAC_ICON_REDO,
+                       strings.misc.redo.c_str(),
+                       command_stack.can_redo())) {
       dispatcher.enqueue<RedoEvent>();
     }
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    if (ui_icon_button(TAC_ICON_TILESET, lang.tooltip.create_tileset.c_str())) {
+    if (ui_icon_button(TAC_ICON_TILESET, strings.tooltip.create_tileset.c_str())) {
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
 
@@ -146,43 +149,43 @@ void show_map_viewport_toolbar(const Model& model, Dispatcher& dispatcher)
     _tool_button(model,
                  ToolType::Stamp,
                  TAC_ICON_STAMP,
-                 lang.misc.stamp_tool.c_str(),
+                 strings.misc.stamp_tool.c_str(),
                  dispatcher);
 
     _tool_button(model,
                  ToolType::Eraser,
                  TAC_ICON_ERASER,
-                 lang.misc.eraser_tool.c_str(),
+                 strings.misc.eraser_tool.c_str(),
                  dispatcher);
 
     _tool_button(model,
                  ToolType::Bucket,
                  TAC_ICON_BUCKET,
-                 lang.misc.bucket_tool.c_str(),
+                 strings.misc.bucket_tool.c_str(),
                  dispatcher);
 
     _tool_button(model,
                  ToolType::ObjectSelection,
                  TAC_ICON_OBJECT_SELECTION,
-                 lang.misc.object_selection_tool.c_str(),
+                 strings.misc.object_selection_tool.c_str(),
                  dispatcher);
 
     _tool_button(model,
                  ToolType::Rectangle,
                  TAC_ICON_RECTANGLE,
-                 lang.misc.rectangle_tool.c_str(),
+                 strings.misc.rectangle_tool.c_str(),
                  dispatcher);
 
     _tool_button(model,
                  ToolType::Ellipse,
                  TAC_ICON_ELLIPSE,
-                 lang.misc.ellipse_tool.c_str(),
+                 strings.misc.ellipse_tool.c_str(),
                  dispatcher);
 
     _tool_button(model,
                  ToolType::Point,
                  TAC_ICON_POINT,
-                 lang.misc.point_tool.c_str(),
+                 strings.misc.point_tool.c_str(),
                  dispatcher);
   }
   else {
@@ -202,7 +205,7 @@ void show_map_viewport_toolbar(const Model& model, Dispatcher& dispatcher)
   //
   //      const auto& map = map_document.get_map();
   //      if (ui_icon_button(TAC_ICON_STAMP_RANDOMIZER,
-  //                         lang.tooltip.stamp_random_tile.c_str(),
+  //                         strings.tooltip.stamp_random_tile.c_str(),
   //                         map.is_stamp_randomizer_possible())) {
   //        dispatcher.enqueue<SetStampRandomizerEvent>(!selected);
   //      }

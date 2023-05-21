@@ -21,10 +21,9 @@
 
 #include "common/util/functional.hpp"
 #include "core/map.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/systems/map_system.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -59,8 +58,8 @@ auto AddRow::merge_with(const Command* cmd) -> bool
 
 auto AddRow::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return mRowCount == 1 ? lang.cmd.add_row : lang.cmd.add_rows;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return mRowCount == 1 ? strings.cmd.add_row : strings.cmd.add_rows;
 }
 
 }  // namespace tactile::cmd

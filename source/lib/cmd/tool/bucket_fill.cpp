@@ -20,10 +20,9 @@
 #include "bucket_fill.hpp"
 
 #include "core/layer.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/systems/tile_layer_system.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -61,8 +60,8 @@ void BucketFill::redo()
 
 auto BucketFill::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.bucket_tool;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.bucket_tool;
 }
 
 }  // namespace tactile::cmd

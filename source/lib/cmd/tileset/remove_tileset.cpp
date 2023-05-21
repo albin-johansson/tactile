@@ -21,10 +21,9 @@
 
 #include "core/map.hpp"
 #include "core/tileset.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/systems/document_system.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -75,8 +74,8 @@ void RemoveTileset::dispose()
 
 auto RemoveTileset::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.remove_tileset;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.remove_tileset;
 }
 
 }  // namespace tactile::cmd

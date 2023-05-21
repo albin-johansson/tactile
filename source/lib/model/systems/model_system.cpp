@@ -19,6 +19,7 @@
 
 #include "model_system.hpp"
 
+#include "core/language.hpp"
 #include "core/menu.hpp"
 #include "core/texture.hpp"
 #include "model/document.hpp"
@@ -32,6 +33,7 @@ void init_model(Model& model)
   document_context.active_document = kNullEntity;
 
   model.add<Settings>();
+  model.add<Languages>();
   model.add<TextureCache>();
   model.add<Icons>();
   model.add<MenuItems>();

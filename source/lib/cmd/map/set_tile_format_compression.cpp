@@ -20,9 +20,8 @@
 #include "set_tile_format_compression.hpp"
 
 #include "core/map.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile {
 
@@ -53,8 +52,8 @@ void SetTileFormatCompression::redo()
 
 auto SetTileFormatCompression::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.set_tile_format_compression;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.set_tile_format_compression;
 }
 
 }  // namespace tactile

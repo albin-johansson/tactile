@@ -21,18 +21,21 @@
 
 #include <imgui.h>
 
+#include "common/type/dispatcher.hpp"
+#include "model/model.hpp"
+
 namespace tactile::ui {
 
 /// Updates the root dock space, call this function once each frame.
-void update_dock_space();
+void update_dock_space(const Model& model);
 
 /// Loads the default layout for a dock space.
-void load_default_layout(ImGuiID id, bool reset_visibility);
+void load_default_layout(const Model& model, ImGuiID id);
 
 /// Resets all dock space widgets to the default layout.
-void reset_layout();
+void reset_layout(const Model& model, Dispatcher& dispatcher);
 
 /// Resets the layout and regenerates the 'imgui.ini' file if it is missing.
-void check_for_missing_layout_file();
+void check_for_missing_layout_file(const Model& model, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

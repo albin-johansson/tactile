@@ -22,9 +22,8 @@
 #include <utility>  // move
 
 #include "core/layer.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -49,8 +48,8 @@ void StampSequence::redo()
 
 auto StampSequence::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.stamp_tool;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.stamp_tool;
 }
 
 void StampSequence::apply_sequence(const TileCache& cache)

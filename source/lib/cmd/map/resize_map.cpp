@@ -20,10 +20,9 @@
 #include "resize_map.hpp"
 
 #include "core/map.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/systems/map_system.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -71,8 +70,8 @@ void ResizeMap::redo()
 
 auto ResizeMap::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.resize_map;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.resize_map;
 }
 
 auto ResizeMap::is_lossy_resize() const -> bool

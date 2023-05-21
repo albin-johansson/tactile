@@ -25,13 +25,12 @@
 
 #include "common/util/string_buffer.hpp"
 #include "core/component.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/document.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/component/component_set.hpp"
 #include "model/systems/document_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
@@ -58,7 +57,7 @@ void open_rename_component_dialog(const Entity definition_entity, String current
 
 void update_rename_component_dialog(const Model& model, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   const auto document_entity = sys::get_active_document(model);
   const auto& document = model.get<Document>(document_entity);
@@ -72,9 +71,9 @@ void update_rename_component_dialog(const Model& model, Dispatcher& dispatcher)
   }
 
   DialogOptions options {
-      .title = lang.window.rename_component.c_str(),
-      .close_label = lang.misc.cancel.c_str(),
-      .accept_label = lang.misc.rename.c_str(),
+      .title = strings.window.rename_component.c_str(),
+      .close_label = strings.misc.cancel.c_str(),
+      .accept_label = strings.misc.rename.c_str(),
   };
 
   const bool should_acquire_focus = gDialogState.open_dialog;

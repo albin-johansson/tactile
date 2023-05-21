@@ -25,12 +25,11 @@
 #include "common/util/string_buffer.hpp"
 #include "core/attribute.hpp"
 #include "core/context.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/document.hpp"
 #include "model/event/property_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/attribute_widgets.hpp"
 
@@ -58,7 +57,7 @@ void open_add_property_dialog(const Entity context_entity)
 
 void update_add_property_dialog(const Model& model, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   const auto document_entity = sys::get_active_document(model);
   const auto& document = model.get<Document>(document_entity);
@@ -70,9 +69,9 @@ void update_add_property_dialog(const Model& model, Dispatcher& dispatcher)
   }
 
   DialogOptions options {
-      .title = lang.window.add_property.c_str(),
-      .close_label = lang.misc.cancel.c_str(),
-      .accept_label = lang.misc.add.c_str(),
+      .title = strings.window.add_property.c_str(),
+      .close_label = strings.misc.cancel.c_str(),
+      .accept_label = strings.misc.add.c_str(),
   };
 
   if (gDialogState.open_dialog) {
@@ -90,10 +89,11 @@ void update_add_property_dialog(const Model& model, Dispatcher& dispatcher)
   DialogAction action {DialogAction::None};
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
     ImGui::InputTextWithHint("##Name",
-                             lang.misc.property_name_hint.c_str(),
+                             strings.misc.property_name_hint.c_str(),
                              gDialogState.name_buffer.data(),
                              sizeof gDialogState.name_buffer);
-    if (const auto new_type = ui_attribute_type_combo(gDialogState.property_type)) {
+    if (const auto new_type =
+            push_attribute_type_combo(strings, gDialogState.property_type)) {
       gDialogState.property_type = *new_type;
     }
   }

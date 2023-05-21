@@ -19,9 +19,8 @@
 
 #include "fix_map_tiles.hpp"
 
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -46,8 +45,8 @@ void FixMapTiles::redo()
 
 auto FixMapTiles::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.fix_map_tiles;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.fix_map_tiles;
 }
 
 }  // namespace tactile::cmd

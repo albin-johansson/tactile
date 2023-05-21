@@ -29,12 +29,11 @@
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "core/component.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/document.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/dock/comp/dialogs/add_component_attr_dialog.hpp"
@@ -58,7 +57,7 @@ struct ComponentEditorState final {
 
 inline ComponentEditorState gEditorState;
 
-void _show_component_action_popup(const Strings& lang,
+void _push_component_action_popup(const Strings& strings,
                                   const Model& model,
                                   Dispatcher& dispatcher)
 {
@@ -66,7 +65,7 @@ void _show_component_action_popup(const Strings& lang,
     const auto active_definition_entity =
         gEditorState.active_component_def_entity.value();
 
-    if (ImGui::MenuItem(lang.action.rename_component.c_str())) {
+    if (ImGui::MenuItem(strings.action.rename_component.c_str())) {
       const auto& active_definition =
           model.get<ComponentDefinition>(active_definition_entity);
 
@@ -75,14 +74,14 @@ void _show_component_action_popup(const Strings& lang,
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.remove_component.c_str())) {
+    if (ImGui::MenuItem(strings.action.remove_component.c_str())) {
       dispatcher.enqueue<UndefComponentEvent>(active_definition_entity);
       gEditorState.active_component_def_entity.reset();
     }
   }
 }
 
-void _show_component_selector_combo(const Model& model, const ComponentSet& component_set)
+void _push_component_selector_combo(const Model& model, const ComponentSet& component_set)
 {
   if (!gEditorState.active_component_def_entity.has_value()) {
     TACTILE_ASSERT(!component_set.definitions.empty());
@@ -104,37 +103,37 @@ void _show_component_selector_combo(const Model& model, const ComponentSet& comp
   }
 }
 
-void _show_component_selector_row(const Strings& lang,
+void _push_component_selector_row(const Strings& strings,
                                   const Model& model,
                                   const ComponentSet& component_set,
                                   Dispatcher& dispatcher)
 {
   ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(lang.misc.component.c_str());
+  ImGui::TextUnformatted(strings.misc.component.c_str());
   ImGui::SameLine();
 
-  _show_component_selector_combo(model, component_set);
+  _push_component_selector_combo(model, component_set);
 
   ImGui::SameLine();
-  if (ui_button(TAC_ICON_ADD, lang.tooltip.create_component.c_str())) {
+  if (ui_button(TAC_ICON_ADD, strings.tooltip.create_component.c_str())) {
     open_define_component_dialog();
   }
 
   ImGui::SameLine();
-  if (ui_button(TAC_ICON_THREE_DOTS, lang.tooltip.show_component_actions.c_str())) {
+  if (ui_button(TAC_ICON_THREE_DOTS, strings.tooltip.show_component_actions.c_str())) {
     ImGui::OpenPopup(kComponentActionPopupId);
   }
 
-  _show_component_action_popup(lang, model, dispatcher);
+  _push_component_action_popup(strings, model, dispatcher);
 }
 
-void _show_component_attribute_row_name_popup(const Strings& lang,
+void _push_component_attribute_row_name_popup(const Strings& strings,
                                               const Entity definition_entity,
                                               const String& attribute_name,
                                               Dispatcher& dispatcher)
 {
   if (auto popup = Popup::for_item("##ComponentAttributeNamePopup"); popup.is_open()) {
-    if (ImGui::MenuItem(lang.action.rename_attribute.c_str())) {
+    if (ImGui::MenuItem(strings.action.rename_attribute.c_str())) {
       open_rename_component_attribute_dialog(
           gEditorState.active_component_def_entity.value(),
           attribute_name);
@@ -142,19 +141,19 @@ void _show_component_attribute_row_name_popup(const Strings& lang,
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.duplicate_attribute.c_str())) {
+    if (ImGui::MenuItem(strings.action.duplicate_attribute.c_str())) {
       dispatcher.enqueue<DuplicateComponentAttrEvent>(definition_entity, attribute_name);
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.action.remove_attribute.c_str())) {
+    if (ImGui::MenuItem(strings.action.remove_attribute.c_str())) {
       dispatcher.enqueue<RemoveComponentAttrEvent>(definition_entity, attribute_name);
     }
   }
 }
 
-void _show_component_attribute_row(const Strings& lang,
+void _push_component_attribute_row(const Strings& strings,
                                    const Entity definition_entity,
                                    const String& attribute_name,
                                    const Attribute& attribute,
@@ -168,7 +167,7 @@ void _show_component_attribute_row(const Strings& lang,
   ImGui::AlignTextToFramePadding();
   ImGui::TextUnformatted(attribute_name.c_str());
 
-  _show_component_attribute_row_name_popup(lang,
+  _push_component_attribute_row_name_popup(strings,
                                            definition_entity,
                                            attribute_name,
                                            dispatcher);
@@ -176,7 +175,8 @@ void _show_component_attribute_row(const Strings& lang,
   ImGui::TableNextColumn();
   ImGui::SetNextItemWidth(-kMinFloat);
 
-  if (const auto new_attribute_type = ui_attribute_type_combo(attribute.get_type())) {
+  if (const auto new_attribute_type =
+          push_attribute_type_combo(strings, attribute.get_type())) {
     dispatcher.enqueue<SetComponentAttrTypeEvent>(definition_entity,
                                                   attribute_name,
                                                   *new_attribute_type);
@@ -184,34 +184,36 @@ void _show_component_attribute_row(const Strings& lang,
 
   ImGui::TableNextColumn();
 
-  if (auto updated_attribute = ui_attribute_input("##Value", attribute)) {
+  if (auto updated_attribute = push_attribute_input(strings, "##Value", attribute)) {
     dispatcher.enqueue<UpdateComponentEvent>(definition_entity,
                                              attribute_name,
                                              std::move(*updated_attribute));
   }
 }
 
-void _show_component_attribute_table(const Strings& lang,
+void _push_component_attribute_table(const Strings& strings,
                                      const Entity definition_entity,
                                      const ComponentDefinition& component_def,
                                      Dispatcher& dispatcher)
 {
   if (component_def.attributes.empty()) {
-    ui_centered_label(lang.misc.empty_component.c_str());
+    ui_centered_label(strings.misc.empty_component.c_str());
   }
   else {
     const auto table_flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_Resizable;
     if (const Table table {"##ComponentAttributeTable", 3, table_flags};
         table.is_open()) {
-      ImGui::TableSetupColumn(lang.misc.name.c_str(), ImGuiTableColumnFlags_WidthStretch);
-      ImGui::TableSetupColumn(lang.misc.type.c_str(), ImGuiTableColumnFlags_WidthStretch);
-      ImGui::TableSetupColumn(lang.misc.default_value.c_str(),
+      ImGui::TableSetupColumn(strings.misc.name.c_str(),
+                              ImGuiTableColumnFlags_WidthStretch);
+      ImGui::TableSetupColumn(strings.misc.type.c_str(),
+                              ImGuiTableColumnFlags_WidthStretch);
+      ImGui::TableSetupColumn(strings.misc.default_value.c_str(),
                               ImGuiTableColumnFlags_WidthStretch);
 
       ImGui::TableHeadersRow();
 
       for (const auto& [attr_name, attr_value]: component_def.attributes) {
-        _show_component_attribute_row(lang,
+        _push_component_attribute_row(strings,
                                       definition_entity,
                                       attr_name,
                                       attr_value,
@@ -220,7 +222,7 @@ void _show_component_attribute_table(const Strings& lang,
     }
   }
 
-  if (ui_centered_button(lang.action.create_attribute.c_str())) {
+  if (ui_centered_button(strings.action.create_attribute.c_str())) {
     open_create_component_attribute_dialog(
         gEditorState.active_component_def_entity.value());
   }
@@ -246,11 +248,11 @@ void open_component_editor_dialog(const Model& model)
 
 void show_component_editor_dialog(const Model& model, Entity, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   DialogOptions options {
-      .title = lang.window.component_editor.c_str(),
-      .close_label = lang.misc.close.c_str(),
+      .title = strings.window.component_editor.c_str(),
+      .close_label = strings.misc.close.c_str(),
       .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
@@ -271,21 +273,21 @@ void show_component_editor_dialog(const Model& model, Entity, Dispatcher& dispat
     }
 
     if (component_set.definitions.empty()) {
-      ImGui::TextUnformatted(lang.misc.map_has_no_components.c_str());
+      ImGui::TextUnformatted(strings.misc.map_has_no_components.c_str());
 
-      if (ui_centered_button(TAC_ICON_ADD, lang.tooltip.create_component.c_str())) {
+      if (ui_centered_button(TAC_ICON_ADD, strings.tooltip.create_component.c_str())) {
         open_define_component_dialog();
       }
     }
     else {
-      _show_component_selector_row(lang, model, component_set, dispatcher);
+      _push_component_selector_row(strings, model, component_set, dispatcher);
 
       ImGui::Separator();
 
       if (gEditorState.active_component_def_entity.has_value()) {
         const auto& active_component_def =
             model.get<ComponentDefinition>(*gEditorState.active_component_def_entity);
-        _show_component_attribute_table(lang,
+        _push_component_attribute_table(strings,
                                         *gEditorState.active_component_def_entity,
                                         active_component_def,
                                         dispatcher);

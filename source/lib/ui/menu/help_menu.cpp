@@ -22,7 +22,7 @@
 #include <imgui.h>
 
 #include "core/menu.hpp"
-#include "lang/language.hpp"
+#include "systems/language_system.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -30,9 +30,9 @@ namespace tactile::ui {
 
 void show_help_menu(const Model& model, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
-  if (const Menu menu {lang.menu.help.c_str()}; menu.is_open()) {
+  if (const Menu menu {strings.menu.help.c_str()}; menu.is_open()) {
     show_menu_item(model, MenuAction::ShowAbout, dispatcher);
     show_menu_item(model, MenuAction::ShowAboutImGui, dispatcher);
 

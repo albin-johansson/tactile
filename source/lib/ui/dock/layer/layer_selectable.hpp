@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <entt/signal/fwd.hpp>
-
+#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "model/model.hpp"
 
@@ -30,6 +29,6 @@ namespace tactile::ui {
 void layer_selectable(const Model& model,
                       Entity map_entity,
                       Entity layer_entity,
-                      entt::dispatcher& dispatcher);
+                      Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

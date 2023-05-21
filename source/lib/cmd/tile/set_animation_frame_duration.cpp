@@ -20,9 +20,8 @@
 #include "set_animation_frame_duration.hpp"
 
 #include "core/tile.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -71,8 +70,8 @@ auto SetAnimationFrameDuration::merge_with(const Command* cmd) -> bool
 
 auto SetAnimationFrameDuration::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.set_animation_frame_duration;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.set_animation_frame_duration;
 }
 
 }  // namespace tactile::cmd

@@ -24,10 +24,9 @@
 #include "common/debug/assert.hpp"
 #include "common/numeric.hpp"
 #include "common/type/math.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/event/map_events.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/alignment.hpp"
 
@@ -43,11 +42,11 @@ struct CreateMapDialogState final {
 
 inline constinit CreateMapDialogState gDialogState;
 
-void _show_dialog_contents(const Strings& lang)
+void _show_dialog_contents(const Strings& strings)
 {
   {
-    const auto& rows_label = lang.misc.rows;
-    const auto& columns_label = lang.misc.columns;
+    const auto& rows_label = strings.misc.rows;
+    const auto& columns_label = strings.misc.columns;
     const auto offset =
         minimum_offset_to_align(rows_label.c_str(), columns_label.c_str());
 
@@ -65,8 +64,8 @@ void _show_dialog_contents(const Strings& lang)
   ImGui::Separator();
 
   {
-    const auto& tile_width_label = lang.misc.tile_width;
-    const auto& tile_height_label = lang.misc.tile_height;
+    const auto& tile_width_label = strings.misc.tile_width;
+    const auto& tile_height_label = strings.misc.tile_height;
     const auto offset =
         minimum_offset_to_align(tile_width_label.c_str(), tile_height_label.c_str());
 
@@ -103,14 +102,14 @@ void open_create_map_dialog()
   gDialogState.open_dialog = true;
 }
 
-void show_create_map_dialog(const Model&, Entity, Dispatcher& dispatcher)
+void show_create_map_dialog(const Model& model, Entity, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   DialogOptions options {
-      .title = lang.window.create_new_map.c_str(),
-      .close_label = lang.misc.close.c_str(),
-      .accept_label = lang.misc.create.c_str(),
+      .title = strings.window.create_new_map.c_str(),
+      .close_label = strings.misc.close.c_str(),
+      .accept_label = strings.misc.create.c_str(),
   };
 
   if (gDialogState.open_dialog) {
@@ -126,7 +125,7 @@ void show_create_map_dialog(const Model&, Entity, Dispatcher& dispatcher)
 
   DialogAction action {DialogAction::None};
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
-    _show_dialog_contents(lang);
+    _show_dialog_contents(strings);
   }
 
   if (action == DialogAction::Accept) {

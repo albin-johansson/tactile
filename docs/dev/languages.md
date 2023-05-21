@@ -6,13 +6,13 @@ This document explains how internationalization is implemented in Tactile, and h
 
 In order to support multiple languages, strings are not hardcoded in the application.
 Instead, all user-facing strings are loaded at application startup, and stored in structs.
-Use the `get_current_language` function to obtain a reference to the set of strings for the currently selected language.
+Use the `get_current_language_strings` function to obtain a reference to the set of strings for the currently selected language.
 
 It's not necessary to translate all strings when adding a new language (see the `en_GB.json` file for an example), the language parser will use a fallback if a translation is missing.
 When adding a new language in the code, use English as the fallback language.
 
 ```C++
-void some_widget()
+void some_widget(const Model& model)
 {
   // BAD
   if (Menu menu {"Foo"}; menu.is_open()) {
@@ -20,8 +20,8 @@ void some_widget()
   }
 
   // GOOD
-  const auto& lang = get_current_language();
-  if (Menu menu {lang.menu.foo.c_str()}; menu.is_open()) {
+  const auto& strings = sys::get_current_language_strings(model);
+  if (Menu menu {strings.menu.foo.c_str()}; menu.is_open()) {
     // ...
   }
 }

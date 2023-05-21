@@ -26,65 +26,85 @@
 #include "common/type/string.hpp"
 #include "core/attribute.hpp"
 #include "core/color.hpp"
+#include "core/language.hpp"
 
 namespace tactile::ui {
 
-[[nodiscard]] auto ui_int_input(const char* id, int value) -> Maybe<int>;
-[[nodiscard]] auto ui_int2_input(const char* id, Int2 value) -> Maybe<Int2>;
-[[nodiscard]] auto ui_int3_input(const char* id, Int3 value) -> Maybe<Int3>;
-[[nodiscard]] auto ui_int4_input(const char* id, Int4 value) -> Maybe<Int4>;
+[[nodiscard]] auto push_int_input(const Strings& strings, const char* id, int value)
+    -> Maybe<int>;
+[[nodiscard]] auto push_int2_input(const Strings& strings, const char* id, Int2 value)
+    -> Maybe<Int2>;
+[[nodiscard]] auto push_int3_input(const Strings& strings, const char* id, Int3 value)
+    -> Maybe<Int3>;
+[[nodiscard]] auto push_int4_input(const Strings& strings, const char* id, Int4 value)
+    -> Maybe<Int4>;
 
-[[nodiscard]] auto ui_float_input(const char* id,
-                                  float value,
-                                  float min = 0,
-                                  float max = 0) -> Maybe<float>;
+[[nodiscard]] auto push_float_input(const Strings& strings,
+                                    const char* id,
+                                    float value,
+                                    float min = 0,
+                                    float max = 0) -> Maybe<float>;
 
-[[nodiscard]] auto ui_float2_input(const char* id,
-                                   Float2 value,
-                                   float min = 0,
-                                   float max = 0) -> Maybe<Float2>;
+[[nodiscard]] auto push_float2_input(const Strings& strings,
+                                     const char* id,
+                                     Float2 value,
+                                     float min = 0,
+                                     float max = 0) -> Maybe<Float2>;
 
-[[nodiscard]] auto ui_float3_input(const char* id,
-                                   Float3 value,
-                                   float min = 0,
-                                   float max = 0) -> Maybe<Float3>;
+[[nodiscard]] auto push_float3_input(const Strings& strings,
+                                     const char* id,
+                                     Float3 value,
+                                     float min = 0,
+                                     float max = 0) -> Maybe<Float3>;
 
-[[nodiscard]] auto ui_float4_input(const char* id,
-                                   Float4 value,
-                                   float min = 0,
-                                   float max = 0) -> Maybe<Float4>;
+[[nodiscard]] auto push_float4_input(const Strings& strings,
+                                     const char* id,
+                                     Float4 value,
+                                     float min = 0,
+                                     float max = 0) -> Maybe<Float4>;
 
-[[nodiscard]] auto ui_string_input_with_hint(const char* id,
-                                             const char* hint,
-                                             const String& value,
-                                             const char* label = nullptr,
-                                             ImGuiInputTextFlags flags = 0,
-                                             ImGuiInputTextCallback filter = nullptr)
+[[nodiscard]] auto push_string_input_with_hint(const Strings& strings,
+                                               const char* id,
+                                               const char* hint,
+                                               const String& value,
+                                               const char* label = nullptr,
+                                               ImGuiInputTextFlags flags = 0,
+                                               ImGuiInputTextCallback filter = nullptr)
     -> Maybe<String>;
 
-[[nodiscard]] auto ui_string_input(const char* id,
-                                   const String& value,
-                                   const char* label = nullptr,
-                                   ImGuiInputTextFlags flags = 0,
-                                   ImGuiInputTextCallback filter = nullptr)
+[[nodiscard]] auto push_string_input(const Strings& strings,
+                                     const char* id,
+                                     const String& value,
+                                     const char* label = nullptr,
+                                     ImGuiInputTextFlags flags = 0,
+                                     ImGuiInputTextCallback filter = nullptr)
     -> Maybe<String>;
 
-[[nodiscard]] auto ui_bool_input(const char* id, bool value) -> Maybe<bool>;
+[[nodiscard]] auto push_bool_input(const Strings& strings, const char* id, bool value)
+    -> Maybe<bool>;
 
-[[nodiscard]] auto ui_object_input(const char* id, ObjectRef value) -> Maybe<ObjectRef>;
+[[nodiscard]] auto push_object_input(const Strings& strings,
+                                     const char* id,
+                                     ObjectRef value) -> Maybe<ObjectRef>;
 
-[[nodiscard]] auto ui_color_input(const char* id, Color value) -> Maybe<Color>;
+[[nodiscard]] auto push_color_input(const Strings& strings, const char* id, Color value)
+    -> Maybe<Color>;
 
-[[nodiscard]] auto ui_file_path_input(const char* id, const Path& value) -> Maybe<Path>;
+[[nodiscard]] auto push_file_path_input(const Strings& strings,
+                                        const char* id,
+                                        const Path& value) -> Maybe<Path>;
 
-[[nodiscard]] auto ui_directory_path_input(const char* id, const Path& value)
-    -> Maybe<Path>;
+[[nodiscard]] auto push_directory_path_input(const Strings& strings,
+                                             const char* id,
+                                             const Path& value) -> Maybe<Path>;
 
-[[nodiscard]] auto ui_attribute_input(const char* id, const Attribute& value)
-    -> Maybe<Attribute>;
+[[nodiscard]] auto push_attribute_input(const Strings& strings,
+                                        const char* id,
+                                        const Attribute& value) -> Maybe<Attribute>;
 
-[[nodiscard]] auto ui_attribute_type_combo(AttributeType current_type,
-                                           Maybe<AttributeType> excluded_type = nothing)
+[[nodiscard]] auto push_attribute_type_combo(const Strings& strings,
+                                             AttributeType current_type,
+                                             Maybe<AttributeType> excluded_type = nothing)
     -> Maybe<AttributeType>;
 
 }  // namespace tactile::ui

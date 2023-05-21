@@ -20,9 +20,8 @@
 #include "set_object_visible.hpp"
 
 #include "core/object.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -52,8 +51,8 @@ void SetObjectVisible::redo()
 
 auto SetObjectVisible::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return mNewVisibility ? lang.cmd.show_object : lang.cmd.hide_object;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return mNewVisibility ? strings.cmd.show_object : strings.cmd.hide_object;
 }
 
 }  // namespace tactile::cmd

@@ -17,46 +17,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "language.hpp"
+#include "language_system.hpp"
 
 #include <utility>  // move
 
 #include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
-#include "common/type/hash_map.hpp"
 #include "common/util/assoc.hpp"
 #include "io/lang/language_parser.hpp"
-#include "lang/strings.hpp"
-#include "model/context.hpp"
+#include "model/settings.hpp"
 
-namespace tactile {
-namespace {
+namespace tactile::sys {
 
-inline HashMap<Lang, Strings> gLanguages;
-
-}  // namespace
-
-void load_languages()
+void load_languages(Model& model)
 {
-  spdlog::debug("Loading languages...");
+  spdlog::debug("Loading languages");
+
+  auto& languages = model.get<Languages>();
 
   auto en = parse_language("assets/lang/en.json");
 
-  gLanguages[Lang::SV] = parse_language("assets/lang/sv.json", en);
-  gLanguages[Lang::EN_GB] = parse_language("assets/lang/en_GB.json", en);
-
-  gLanguages[Lang::EN] = std::move(en);
+  languages.strings[Lang::SV] = parse_language("assets/lang/sv.json", en);
+  languages.strings[Lang::EN_GB] = parse_language("assets/lang/en_GB.json", en);
+  languages.strings[Lang::EN] = std::move(en);
 }
 
-auto get_language(const Lang lang) -> const Strings&
+auto get_current_language_strings(const Model& model) -> const Strings&
 {
-  return lookup_in(gLanguages, lang);
-}
-
-auto get_current_language() -> const Strings&
-{
-  return lookup_in(gLanguages, get_global_settings().get_language());
+  const auto& settings = model.get<Settings>();
+  const auto& languages = model.get<Languages>();
+  return lookup_in(languages.strings, settings.get_language());
 }
 
 auto get_language_name(const Lang lang) -> const char*
@@ -72,141 +63,141 @@ auto get_language_name(const Lang lang) -> const char*
       return "Svenska";
 
     default:
-      throw TactileError {"Invalid language!"};
+      throw TactileError {"Unknown language"};
   }
 }
 
-auto get_label(const Strings& lang, const MenuAction action) -> String
+auto get_string(const Strings& strings, const MenuAction action) -> String
 {
   switch (action) {
     case MenuAction::NewMap:
-      return lang.action.create_map;
+      return strings.action.create_map;
 
     case MenuAction::OpenMap:
-      return lang.action.open_map;
+      return strings.action.open_map;
 
     case MenuAction::Save:
-      return lang.action.save;
+      return strings.action.save;
 
     case MenuAction::SaveAs:
-      return lang.action.save_as;
+      return strings.action.save_as;
 
     case MenuAction::Close:
-      return lang.action.close_document;
+      return strings.action.close_document;
 
     case MenuAction::Quit:
-      return lang.action.exit;
+      return strings.action.exit;
 
     case MenuAction::ReopenLastFile:
-      return lang.action.reopen_last_closed_file;
+      return strings.action.reopen_last_closed_file;
 
     case MenuAction::ClearFileHistory:
-      return lang.action.clear_file_history;
+      return strings.action.clear_file_history;
 
     case MenuAction::Undo:
-      return lang.action.undo;
+      return strings.action.undo;
 
     case MenuAction::Redo:
-      return lang.action.redo;
+      return strings.action.redo;
 
     case MenuAction::EnableStamp:
-      return lang.action.stamp_tool;
+      return strings.action.stamp_tool;
 
     case MenuAction::EnableEraser:
-      return lang.action.eraser_tool;
+      return strings.action.eraser_tool;
 
     case MenuAction::EnableBucket:
-      return lang.action.bucket_tool;
+      return strings.action.bucket_tool;
 
     case MenuAction::EnableObjectSelector:
-      return lang.action.object_selection_tool;
+      return strings.action.object_selection_tool;
 
     case MenuAction::EnableRectangle:
-      return lang.action.rectangle_tool;
+      return strings.action.rectangle_tool;
 
     case MenuAction::EnableEllipse:
-      return lang.action.ellipse_tool;
+      return strings.action.ellipse_tool;
 
     case MenuAction::EnablePoint:
-      return lang.action.point_tool;
+      return strings.action.point_tool;
 
     case MenuAction::OpenComponentEditor:
-      return lang.action.component_editor;
+      return strings.action.component_editor;
 
     case MenuAction::OpenSettings:
-      return lang.action.show_settings;
+      return strings.action.show_settings;
 
     case MenuAction::CenterViewport:
-      return lang.action.center_viewport;
+      return strings.action.center_viewport;
 
     case MenuAction::ToggleGrid:
-      return lang.action.toggle_grid;
+      return strings.action.toggle_grid;
 
     case MenuAction::IncreaseZoom:
-      return lang.action.increase_zoom;
+      return strings.action.increase_zoom;
 
     case MenuAction::DecreaseZoom:
-      return lang.action.decrease_zoom;
+      return strings.action.decrease_zoom;
 
     case MenuAction::ResetZoom:
-      return lang.action.reset_zoom;
+      return strings.action.reset_zoom;
 
     case MenuAction::IncreaseFontSize:
-      return lang.action.increase_font_size;
+      return strings.action.increase_font_size;
 
     case MenuAction::DecreaseFontSize:
-      return lang.action.decrease_font_size;
+      return strings.action.decrease_font_size;
 
     case MenuAction::ResetFontSize:
-      return lang.action.reset_font_size;
+      return strings.action.reset_font_size;
 
     case MenuAction::PanUp:
-      return lang.action.pan_up;
+      return strings.action.pan_up;
 
     case MenuAction::PanDown:
-      return lang.action.pan_down;
+      return strings.action.pan_down;
 
     case MenuAction::PanRight:
-      return lang.action.pan_right;
+      return strings.action.pan_right;
 
     case MenuAction::PanLeft:
-      return lang.action.pan_left;
+      return strings.action.pan_left;
 
     case MenuAction::HighlightLayer:
-      return lang.action.highlight_layer;
+      return strings.action.highlight_layer;
 
     case MenuAction::ToggleUi:
-      return lang.action.toggle_ui;
+      return strings.action.toggle_ui;
 
     case MenuAction::InspectMap:
-      return lang.action.inspect_map;
+      return strings.action.inspect_map;
 
     case MenuAction::CreateTileset:
-      return lang.action.create_tileset;
+      return strings.action.create_tileset;
 
     case MenuAction::AddRow:
-      return lang.action.add_row;
+      return strings.action.add_row;
 
     case MenuAction::AddColumn:
-      return lang.action.add_column;
+      return strings.action.add_column;
 
     case MenuAction::RemoveRow:
-      return lang.action.remove_row;
+      return strings.action.remove_row;
 
     case MenuAction::RemoveColumn:
-      return lang.action.remove_column;
+      return strings.action.remove_column;
 
     case MenuAction::FixInvalidTiles:
-      return lang.action.fix_invalid_tiles;
+      return strings.action.fix_invalid_tiles;
 
     case MenuAction::ResizeMap:
-      return lang.action.resize_map;
+      return strings.action.resize_map;
 
     case MenuAction::ExportGodotScene:
-      return lang.action.export_as_godot_scene;
+      return strings.action.export_as_godot_scene;
 
     case MenuAction::InspectTileset:
-      return lang.action.inspect_tileset;
+      return strings.action.inspect_tileset;
 
     case MenuAction::OpenDemoWindow:
       return "Demo Window...";
@@ -215,20 +206,20 @@ auto get_label(const Strings& lang, const MenuAction action) -> String
       return "Style Editor...";
 
     case MenuAction::ShowAbout:
-      return lang.action.show_about;
+      return strings.action.show_about;
 
     case MenuAction::ShowAboutImGui:
-      return lang.action.about_dear_imgui;
+      return strings.action.about_dear_imgui;
 
     case MenuAction::ShowCredits:
-      return lang.action.show_credits;
+      return strings.action.show_credits;
 
     case MenuAction::ReportIssue:
-      return lang.action.report_issue;
+      return strings.action.report_issue;
 
     default:
       throw TactileError {"Missing menu action case"};
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::sys

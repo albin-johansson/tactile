@@ -23,9 +23,8 @@
 
 #include "common/util/assoc.hpp"
 #include "core/context.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -58,8 +57,8 @@ void ChangePropertyType::redo()
 
 auto ChangePropertyType::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.change_property_type;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.change_property_type;
 }
 
 }  // namespace tactile::cmd

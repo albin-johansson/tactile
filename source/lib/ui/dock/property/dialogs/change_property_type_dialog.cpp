@@ -24,12 +24,11 @@
 #include <imgui.h>
 
 #include "common/type/maybe.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/document.hpp"
 #include "model/event/property_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/attribute_widgets.hpp"
 
@@ -61,7 +60,7 @@ void open_change_property_type_dialog(const Entity context_entity,
 
 void update_change_property_type_dialog(const Model& model, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   const auto document_entity = sys::get_active_document(model);
   const auto& document = model.get<Document>(document_entity);
@@ -73,9 +72,9 @@ void update_change_property_type_dialog(const Model& model, Dispatcher& dispatch
   }
 
   DialogOptions options {
-      .title = lang.window.change_property_type.c_str(),
-      .close_label = lang.misc.cancel.c_str(),
-      .accept_label = lang.misc.change.c_str(),
+      .title = strings.window.change_property_type.c_str(),
+      .close_label = strings.misc.cancel.c_str(),
+      .accept_label = strings.misc.change.c_str(),
   };
 
   if (gDialogState.open_dialog) {
@@ -90,12 +89,13 @@ void update_change_property_type_dialog(const Model& model, Dispatcher& dispatch
   DialogAction action {DialogAction::None};
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted(lang.misc.type.c_str());
+    ImGui::TextUnformatted(strings.misc.type.c_str());
 
     ImGui::SameLine();
     if (const auto new_type =
-            ui_attribute_type_combo(gDialogState.current_type,
-                                    gDialogState.previous_type.value())) {
+            push_attribute_type_combo(strings,
+                                      gDialogState.current_type,
+                                      gDialogState.previous_type.value())) {
       gDialogState.current_type = *new_type;
     }
   }

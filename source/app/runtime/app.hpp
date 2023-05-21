@@ -70,6 +70,8 @@ class App final : public AppDelegate {
 
   void _on_set_theme(const SetThemeEvent& event);
 
+  void _on_reset_dock_visibilities(const ResetDockVisibilitiesEvent& event);
+
   void _on_quit();
 };
 

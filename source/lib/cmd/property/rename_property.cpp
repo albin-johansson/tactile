@@ -21,10 +21,9 @@
 
 #include <utility>  // move
 
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/systems/context/properties.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -51,8 +50,8 @@ void RenameProperty::redo()
 
 auto RenameProperty::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.rename_property;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.rename_property;
 }
 
 }  // namespace tactile::cmd

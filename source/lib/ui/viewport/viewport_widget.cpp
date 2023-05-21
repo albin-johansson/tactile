@@ -26,11 +26,10 @@
 
 #include "core/texture.hpp"
 #include "core/viewport.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/systems/document_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/conversions.hpp"
 #include "ui/shortcut/mappings.hpp"
 #include "ui/style/alignment.hpp"
@@ -50,7 +49,7 @@ struct ViewportWidgetState final {
 
 inline constinit ViewportWidgetState gWidgetState;
 
-void _show_start_page(const Model& model, Dispatcher& dispatcher)
+void _push_start_page(const Model& model, const Strings& strings, Dispatcher& dispatcher)
 {
   prepare_vertical_alignment_center(4);
 
@@ -65,14 +64,12 @@ void _show_start_page(const Model& model, Dispatcher& dispatcher)
   ImGui::Spacing();
   ImGui::Spacing();
 
-  const auto& lang = get_current_language();
-
-  if (ui_centered_button(lang.action.create_map.c_str())) {
+  if (ui_centered_button(strings.action.create_map.c_str())) {
     dispatcher.enqueue<ShowNewMapDialogEvent>();
   }
 
   ImGui::Spacing();
-  if (ui_centered_button(lang.action.open_map.c_str())) {
+  if (ui_centered_button(strings.action.open_map.c_str())) {
     dispatcher.enqueue<ShowOpenMapDialogEvent>();
   }
 }
@@ -81,6 +78,8 @@ void _show_start_page(const Model& model, Dispatcher& dispatcher)
 
 void show_viewport_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
+  const auto& strings = sys::get_current_language_strings(model);
+
   StyleVar padding {ImGuiStyleVar_WindowPadding, {4, 4}};
   remove_tab_bar_from_next_window();
 
@@ -106,7 +105,7 @@ void show_viewport_dock(const Model& model, Entity, Dispatcher& dispatcher)
       }
     }
     else {
-      _show_start_page(model, dispatcher);
+      _push_start_page(model, strings, dispatcher);
     }
   }
 }

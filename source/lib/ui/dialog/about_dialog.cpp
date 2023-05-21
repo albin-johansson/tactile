@@ -23,8 +23,7 @@
 #include <imgui.h>
 
 #include "common/predef.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/widgets.hpp"
@@ -41,13 +40,13 @@ void open_about_dialog()
   gOpenDialog = true;
 }
 
-void show_about_dialog(const Model&, Entity, Dispatcher&)
+void show_about_dialog(const Model& model, Entity, Dispatcher&)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   DialogOptions options {
-      .title = lang.window.about_tactile.c_str(),
-      .accept_label = lang.misc.close.c_str(),
+      .title = strings.window.about_tactile.c_str(),
+      .accept_label = strings.misc.close.c_str(),
       .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
@@ -61,19 +60,19 @@ void show_about_dialog(const Model&, Entity, Dispatcher&)
                            " (C) Albin Johansson 2020-2022");
 
     ImGui::Separator();
-    ImGui::TextUnformatted(lang.misc.license_info.c_str());
+    ImGui::TextUnformatted(strings.misc.license_info.c_str());
 
     ImGui::Spacing();
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted(lang.misc.repository_link.c_str());
+    ImGui::TextUnformatted(strings.misc.repository_link.c_str());
 
     ImGui::SameLine();
-    if (ui_button(TAC_ICON_LINK, lang.tooltip.repository_link.c_str())) {
+    if (ui_button(TAC_ICON_LINK, strings.tooltip.repository_link.c_str())) {
       cen::open_url("https://www.github.com/albin-johansson/tactile");
     }
 
     ImGui::Spacing();
-    ImGui::TextUnformatted(lang.misc.font_awesome_credit.c_str());
+    ImGui::TextUnformatted(strings.misc.font_awesome_credit.c_str());
   }
 }
 

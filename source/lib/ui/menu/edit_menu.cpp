@@ -21,9 +21,8 @@
 
 #include <imgui.h>
 
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/systems/menu_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/shortcut/mappings.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
@@ -32,9 +31,9 @@ namespace tactile::ui {
 
 void show_edit_menu(const Model& model, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
-  if (const Menu menu {lang.menu.edit.c_str()}; menu.is_open()) {
+  if (const Menu menu {strings.menu.edit.c_str()}; menu.is_open()) {
     show_menu_item(model, MenuAction::Undo, dispatcher);
     show_menu_item(model, MenuAction::Redo, dispatcher);
 

@@ -20,9 +20,8 @@
 #include "set_layer_visible.hpp"
 
 #include "core/layer.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -52,8 +51,8 @@ void SetLayerVisible::redo()
 
 auto SetLayerVisible::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return mNewVisibility ? lang.cmd.show_layer : lang.cmd.hide_layer;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return mNewVisibility ? strings.cmd.show_layer : strings.cmd.hide_layer;
 }
 
 }  // namespace tactile::cmd

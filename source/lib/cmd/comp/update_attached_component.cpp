@@ -23,9 +23,8 @@
 
 #include "common/util/assoc.hpp"
 #include "core/component.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -72,8 +71,8 @@ auto UpdateAttachedComponent::merge_with(const Command* cmd) -> bool
 
 auto UpdateAttachedComponent::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.update_comp_attr;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.update_comp_attr;
 }
 
 }  // namespace tactile::cmd

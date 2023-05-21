@@ -48,6 +48,7 @@
 #include "model/systems/texture_system.hpp"
 #include "model/systems/widget_system.hpp"
 #include "runtime/app_context.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/create_map_dialog.hpp"
 #include "ui/dialog/credits_dialog.hpp"
@@ -99,7 +100,7 @@ void App::_init_persistent_settings()
   settings.copy_from(load_settings_from_disk());
   settings.print();
 
-  load_languages();
+  sys::load_languages(model);
 
   if (auto history = load_file_history_from_disk()) {
     set_file_history(std::move(*history));
@@ -173,11 +174,11 @@ void App::on_update()
   sys::update_menu_items(model);
 
   ui::update_dynamic_color_cache();
-  ui::update_dock_space();
+  ui::update_dock_space(model);
 
   sys::render_widgets(model, mDispatcher);
 
-  ui::check_for_missing_layout_file();
+  ui::check_for_missing_layout_file(model, mDispatcher);
 }
 
 void App::on_event(const cen::event_handler& handler)
@@ -205,12 +206,15 @@ void App::on_event(const cen::event_handler& handler)
 
 void App::_subscribe_to_events()
 {
+  // clang-format off
   mDispatcher.sink<ShowSettingsEvent>().connect<&App::_on_show_settings>(this);
   mDispatcher.sink<SetSettingsEvent>().connect<&App::_on_set_settings>(this);
   mDispatcher.sink<SetLanguageEvent>().connect<&App::_on_set_language>(this);
   mDispatcher.sink<SetThemeEvent>().connect<&App::_on_set_theme>(this);
+  mDispatcher.sink<ResetDockVisibilitiesEvent>().connect<&App::_on_reset_dock_visibilities>(this);
   mDispatcher.sink<MenuActionEvent>().connect<&App::_on_menu_action>(this);
   mDispatcher.sink<QuitEvent>().connect<&App::_on_quit>(this);
+  // clang-format on
 
   //  install_document_event_handler();
   //  install_map_event_handler();
@@ -507,8 +511,8 @@ void App::_on_set_settings(const SetSettingsEvent& event)
   curr_settings = event.settings.copy();
 
   if (curr_settings.get_language() != prev_settings.get_language()) {
-    ui::reset_layout();
-    sys::translate_menus(model, get_current_language());
+    sys::retranslate_menus(model);
+    ui::reset_layout(model, mDispatcher);
   }
 
   if (curr_settings.get_command_capacity() != prev_settings.get_command_capacity()) {
@@ -531,8 +535,8 @@ void App::_on_set_language(const SetLanguageEvent& event)
   auto& settings = model.get<Settings>();
   settings.set_language(event.language);
 
-  sys::translate_menus(model, get_language(event.language));
-  ui::reset_layout();
+  sys::retranslate_menus(model);
+  ui::reset_layout(model, mDispatcher);
 }
 
 void App::_on_set_theme(const SetThemeEvent& event)
@@ -545,6 +549,14 @@ void App::_on_set_theme(const SetThemeEvent& event)
   ui::apply_theme(ImGui::GetStyle(),
                   settings.get_theme(),
                   settings.get_theme_saturation());
+}
+
+void App::_on_reset_dock_visibilities(const ResetDockVisibilitiesEvent&)
+{
+  auto& model = get_global_model();
+
+  auto& settings = model.get<Settings>();
+  settings.reset_dock_visibilities();
 }
 
 }  // namespace tactile

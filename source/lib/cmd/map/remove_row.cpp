@@ -21,10 +21,9 @@
 
 #include "common/util/functional.hpp"
 #include "core/map.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/systems/map_system.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -70,8 +69,8 @@ auto RemoveRow::merge_with(const Command* cmd) -> bool
 
 auto RemoveRow::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return mRowCount == 1 ? lang.cmd.remove_row : lang.cmd.remove_rows;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return mRowCount == 1 ? strings.cmd.remove_row : strings.cmd.remove_rows;
 }
 
 }  // namespace tactile::cmd

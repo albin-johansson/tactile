@@ -19,8 +19,8 @@
 
 #pragma once
 
+#include "core/language.hpp"
 #include "core/menu.hpp"
-#include "lang/strings.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {
@@ -29,7 +29,9 @@ void init_menus(Model& model);
 
 void update_menu_items(Model& model);
 
-void translate_menus(Model& model, const Strings& lang);
+void translate_menus(Model& model, const Strings& strings);
+
+void retranslate_menus(Model& model);
 
 [[nodiscard]] auto get_menu_item(const Model& model, MenuAction action)
     -> const MenuItem&;

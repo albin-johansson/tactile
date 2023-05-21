@@ -28,13 +28,12 @@
 #include "core/tile.hpp"
 #include "core/tileset.hpp"
 #include "core/viewport.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/document.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/systems/render_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/conversions.hpp"
 #include "ui/render/canvas.hpp"
 #include "ui/render/canvas_renderer.hpp"
@@ -84,13 +83,13 @@ void _highlight_selected_tile(const CanvasInfo& canvas, const Tileset& tileset)
   }
 }
 
-void _highlight_animation_frame_selection_mode(const Strings& lang,
+void _highlight_animation_frame_selection_mode(const Strings& strings,
                                                const CanvasInfo& canvas)
 {
   if (gDockState.animation_frame_selection_mode) {
     draw_rect(canvas.top_left, canvas.size, kAnimationFrameSelectionColor, 6.0f);
 
-    const char* label = lang.animation_dock.new_animation_frame_selection_hint.c_str();
+    const char* label = strings.animation_dock.new_animation_frame_selection_hint.c_str();
     const auto label_size = ImGui::CalcTextSize(label);
 
     ImVec2 label_pos;
@@ -140,8 +139,8 @@ void show_tileset_viewport(const Model& model,
                            const Entity tileset_document_entity,
                            Dispatcher& dispatcher)
 {
+  const auto& strings = sys::get_current_language_strings(model);
   const auto& settings = model.get<Settings>();
-  const auto& lang = get_current_language();
 
   const auto& tileset_document = model.get<TilesetDocument>(tileset_document_entity);
   const auto& viewport = model.get<Viewport>(tileset_document_entity);
@@ -174,7 +173,7 @@ void show_tileset_viewport(const Model& model,
   }
 
   _highlight_selected_tile(canvas, tileset);
-  _highlight_animation_frame_selection_mode(lang, canvas);
+  _highlight_animation_frame_selection_mode(strings, canvas);
 
   pop_scissor();
 }

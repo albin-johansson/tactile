@@ -19,10 +19,9 @@
 
 #include "move_layer_up.hpp"
 
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/systems/group_layer_system.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -46,8 +45,8 @@ void MoveLayerUp::redo()
 
 auto MoveLayerUp::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.move_layer_up;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.move_layer_up;
 }
 
 }  // namespace tactile::cmd

@@ -30,8 +30,6 @@
 #include "core/tile.hpp"
 #include "core/tileset.hpp"
 #include "io/proto/settings.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/document.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/event/tileset_events.hpp"
@@ -39,6 +37,7 @@
 #include "model/systems/document_system.hpp"
 #include "model/systems/texture_system.hpp"
 #include "model/systems/tileset_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/constants.hpp"
 #include "ui/conversions.hpp"
 #include "ui/style/alignment.hpp"
@@ -82,11 +81,11 @@ void _show_animated_tile_cell_image(const Model& model,
                tint);
 }
 
-[[nodiscard]] auto _show_frame_duration_slider(const Strings& lang, const ms_t duration)
-    -> Maybe<ms_t>
+[[nodiscard]] auto _show_frame_duration_slider(const Strings& strings,
+                                               const ms_t duration) -> Maybe<ms_t>
 {
   ImGui::AlignTextToFramePadding();
-  ImGui::TextUnformatted(lang.animation_dock.duration.c_str());
+  ImGui::TextUnformatted(strings.animation_dock.duration.c_str());
   ImGui::SameLine();
 
   int64 duration_raw = duration.count();
@@ -105,7 +104,7 @@ void _show_animated_tile_cell_image(const Model& model,
 }
 
 void _show_frame_popup(const Model& model,
-                       const Strings& lang,
+                       const Strings& strings,
                        const Entity tile_entity,
                        const usize frame_index,
                        const ssize parent_tile_frame_count,
@@ -116,7 +115,7 @@ void _show_frame_popup(const Model& model,
   const auto& frame = tile_animation.frames.at(frame_index);
 
   if (const Popup popup {"##FramePopup"}; popup.is_open()) {
-    if (auto new_duration = _show_frame_duration_slider(lang, frame.duration)) {
+    if (auto new_duration = _show_frame_duration_slider(strings, frame.duration)) {
       dispatcher.enqueue<SetTileAnimationFrameDurationEvent>(tile.index,
                                                              frame_index,
                                                              *new_duration);
@@ -126,7 +125,7 @@ void _show_frame_popup(const Model& model,
 
     {
       const Disable disable_if_first {frame_index == 0};
-      if (ImGui::MenuItem(lang.animation_dock.move_frame_forwards.c_str())) {
+      if (ImGui::MenuItem(strings.animation_dock.move_frame_forwards.c_str())) {
         dispatcher.enqueue<MoveAnimationFrameForwardsEvent>(frame_index);
       }
     }
@@ -134,7 +133,7 @@ void _show_frame_popup(const Model& model,
     {
       const auto frame_count = tile_animation.frames.size();
       const Disable disable_if_last {frame_index == frame_count - 1};
-      if (ImGui::MenuItem(lang.animation_dock.move_frame_backwards.c_str())) {
+      if (ImGui::MenuItem(strings.animation_dock.move_frame_backwards.c_str())) {
         dispatcher.enqueue<MoveAnimationFrameBackwardsEvent>(frame_index);
       }
     }
@@ -143,7 +142,7 @@ void _show_frame_popup(const Model& model,
 
     {
       const Disable disable_if_already_selected {tile.index == frame.tile_index};
-      if (ImGui::MenuItem(lang.animation_dock.select_referenced_tile.c_str())) {
+      if (ImGui::MenuItem(strings.animation_dock.select_referenced_tile.c_str())) {
         dispatcher.enqueue<SelectTilesetTileEvent>(frame.tile_index);
       }
     }
@@ -153,21 +152,21 @@ void _show_frame_popup(const Model& model,
     {
       const Disable disable_if_parent_frame {tile.index == frame.tile_index &&
                                              parent_tile_frame_count < 2};
-      if (ImGui::MenuItem(lang.animation_dock.remove_frame.c_str())) {
+      if (ImGui::MenuItem(strings.animation_dock.remove_frame.c_str())) {
         dispatcher.enqueue<RemoveTileAnimationFrameEvent>(frame_index);
       }
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(lang.animation_dock.delete_animation.c_str())) {
+    if (ImGui::MenuItem(strings.animation_dock.delete_animation.c_str())) {
       dispatcher.enqueue<DeleteTileAnimationEvent>();
     }
   }
 }
 
 void _show_animation_frame_list(const Model& model,
-                                const Strings& lang,
+                                const Strings& strings,
                                 const Tileset& tileset,
                                 const Entity tile_entity,
                                 Dispatcher& dispatcher)
@@ -218,7 +217,7 @@ void _show_animation_frame_list(const Model& model,
         }
 
         _show_frame_popup(model,
-                          lang,
+                          strings,
                           tile_entity,
                           frame_index,
                           parent_tile_frame_count,
@@ -228,13 +227,13 @@ void _show_animation_frame_list(const Model& model,
       }
     }
     else {
-      ui_centered_label(lang.animation_dock.tile_has_no_animation.c_str());
+      ui_centered_label(strings.animation_dock.tile_has_no_animation.c_str());
     }
   }
 }
 
 void _show_tile_animation_preview_section(const Model& model,
-                                          const Strings& lang,
+                                          const Strings& strings,
                                           const Tileset& tileset,
                                           const TileIndex tile_index)
 {
@@ -244,12 +243,12 @@ void _show_tile_animation_preview_section(const Model& model,
                       0.1f,
                       1.0f,
                       "");
-  ui_lazy_tooltip("##SizeTooltip", lang.misc.size.c_str());
+  ui_lazy_tooltip("##SizeTooltip", strings.misc.size.c_str());
 
   ImGui::SameLine();
 
   if (const Child child {"##PreviewChild", {0, 0}, true}; child.is_open()) {
-    ui_centered_label(lang.misc.preview.c_str());
+    ui_centered_label(strings.misc.preview.c_str());
 
     const auto& texture = model.get<Texture>(tileset.texture);
     const Float2 texture_size = texture.size;
@@ -273,14 +272,14 @@ void show_animation_dock(const Model& model, Entity, Dispatcher& dispatcher)
     return;
   }
 
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   const auto document_entity = sys::get_active_document(model);
   const auto& tileset_document = model.get<TilesetDocument>(document_entity);
   const auto& tileset = model.get<Tileset>(tileset_document.tileset);
 
   bool show_animation_dock = true;
-  const Window dock {lang.window.animation_dock.c_str(),
+  const Window dock {strings.window.animation_dock.c_str(),
                      ImGuiWindowFlags_NoCollapse,
                      &show_animation_dock};
 
@@ -299,12 +298,19 @@ void show_animation_dock(const Model& model, Entity, Dispatcher& dispatcher)
                                    tileset_document.tileset,
                                    *tileset.selected_tile_index);
 
-      _show_animation_frame_list(model, lang, tileset, selected_tile_entity, dispatcher);
-      _show_tile_animation_preview_section(model, lang, tileset, appearance_tile_index);
+      _show_animation_frame_list(model,
+                                 strings,
+                                 tileset,
+                                 selected_tile_entity,
+                                 dispatcher);
+      _show_tile_animation_preview_section(model,
+                                           strings,
+                                           tileset,
+                                           appearance_tile_index);
     }
     else {
       prepare_vertical_alignment_center();
-      ui_centered_label(lang.animation_dock.no_selected_tile_hint.c_str());
+      ui_centered_label(strings.animation_dock.no_selected_tile_hint.c_str());
     }
   }
 }

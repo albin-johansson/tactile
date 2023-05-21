@@ -25,10 +25,9 @@
 #include "common/type/path.hpp"
 #include "common/util/string_buffer.hpp"
 #include "io/file_dialog.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/event/tileset_events.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -74,12 +73,12 @@ void open_create_tileset_dialog()
 
 void show_create_tileset_dialog(const Model& model, Entity, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   DialogOptions options {
-      .title = lang.window.create_tileset.c_str(),
-      .close_label = lang.misc.cancel.c_str(),
-      .accept_label = lang.misc.create.c_str(),
+      .title = strings.window.create_tileset.c_str(),
+      .close_label = strings.misc.cancel.c_str(),
+      .accept_label = strings.misc.create.c_str(),
   };
 
   if (gDialogState.open_dialog) {
@@ -94,26 +93,26 @@ void show_create_tileset_dialog(const Model& model, Entity, Dispatcher& dispatch
 
   DialogAction action {DialogAction::None};
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
-    ImGui::TextUnformatted(lang.misc.create_tileset_instruction.c_str());
+    ImGui::TextUnformatted(strings.misc.create_tileset_instruction.c_str());
     ImGui::Spacing();
 
-    if (ui_button(lang.misc.select_image.c_str())) {
+    if (ui_button(strings.misc.select_image.c_str())) {
       _select_image_file();
     }
 
     ImGui::SameLine();
     ImGui::InputTextWithHint("##Source",
-                             lang.misc.tileset_image_input_hint.c_str(),
+                             strings.misc.tileset_image_input_hint.c_str(),
                              gDialogState.image_path_preview_buffer.data(),
                              sizeof gDialogState.image_path_preview_buffer,
                              ImGuiInputTextFlags_ReadOnly);
 
-    ImGui::DragInt(lang.misc.tile_width.c_str(),
+    ImGui::DragInt(strings.misc.tile_width.c_str(),
                    &gDialogState.tile_size.x,
                    1.0f,
                    1,
                    10'000);
-    ImGui::DragInt(lang.misc.tile_height.c_str(),
+    ImGui::DragInt(strings.misc.tile_height.c_str(),
                    &gDialogState.tile_size.y,
                    1.0f,
                    1,

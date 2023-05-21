@@ -22,12 +22,11 @@
 #include <utility>  // move
 
 #include "core/component.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/systems/component/component_set.hpp"
 #include "model/systems/context/components.hpp"
 #include "model/systems/context/context_system.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -78,8 +77,8 @@ void UndefComponent::redo()
 
 auto UndefComponent::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.undef_comp;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.undef_comp;
 }
 
 }  // namespace tactile::cmd

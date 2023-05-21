@@ -21,9 +21,8 @@
 
 #include "core/map.hpp"
 #include "core/tile_format.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -63,8 +62,8 @@ auto SetZlibCompressionLevel::merge_with(const Command* cmd) -> bool
 
 auto SetZlibCompressionLevel::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.set_zlib_compression_level;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.set_zlib_compression_level;
 }
 
 }  // namespace tactile::cmd

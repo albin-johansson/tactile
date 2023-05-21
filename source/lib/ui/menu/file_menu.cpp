@@ -22,11 +22,10 @@
 #include <imgui.h>
 
 #include "common/type/path.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/file_history.hpp"
+#include "systems/language_system.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -34,10 +33,10 @@ namespace tactile::ui {
 namespace {
 
 void _show_recent_files_menu(const Model& model,
-                             const Strings& lang,
+                             const Strings& strings,
                              Dispatcher& dispatcher)
 {
-  if (const Menu menu {lang.menu.recent_files.c_str()}; menu.is_open()) {
+  if (const Menu menu {strings.menu.recent_files.c_str()}; menu.is_open()) {
     show_menu_item(model, MenuAction::ReopenLastFile, dispatcher);
 
     const auto& history = get_file_history();
@@ -62,13 +61,13 @@ void _show_recent_files_menu(const Model& model,
 
 void show_file_menu(const Model& model, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
-  if (const Menu menu {lang.menu.file.c_str()}; menu.is_open()) {
+  if (const Menu menu {strings.menu.file.c_str()}; menu.is_open()) {
     show_menu_item(model, MenuAction::NewMap, dispatcher);
     show_menu_item(model, MenuAction::OpenMap, dispatcher);
 
-    _show_recent_files_menu(model, lang, dispatcher);
+    _show_recent_files_menu(model, strings, dispatcher);
 
     ImGui::Separator();
 

@@ -27,7 +27,6 @@
 #include "common/type/chrono.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/maybe.hpp"
-#include "lang/language.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/systems/menu_system.hpp"
 #include "ui/style/alignment.hpp"

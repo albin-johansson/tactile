@@ -25,9 +25,9 @@
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "io/directories.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
-#include "model/context.hpp"
+#include "model/event/setting_events.hpp"
+#include "model/settings.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::ui {
 namespace {
@@ -36,7 +36,7 @@ inline constinit Maybe<ImGuiID> gDockRootId;
 
 }  // namespace
 
-void update_dock_space()
+void update_dock_space(const Model& model)
 {
   static bool initialized = false;
 
@@ -44,11 +44,11 @@ void update_dock_space()
   if (!initialized) {
     const auto size = ImGui::GetMainViewport()->Size;
     if (size.x > 0 && size.y > 0) {
-      const auto& settings = get_global_settings();
+      const auto& settings = model.get<Settings>();
 
       if (!settings.test_flag(SETTINGS_RESTORE_LAYOUT_BIT) ||
           !fs::exists(get_widget_ini_path())) {
-        load_default_layout(gDockRootId.value(), false);
+        load_default_layout(model, gDockRootId.value());
       }
 
       initialized = true;
@@ -56,11 +56,12 @@ void update_dock_space()
   }
 }
 
-void load_default_layout(ImGuiID id, const bool reset_visibility)
+void load_default_layout(const Model& model, ImGuiID id)
 {
+  const auto& lang = sys::get_current_language_strings(model);
+
   ImGui::DockBuilderRemoveNodeChildNodes(id);
 
-  const auto& lang = get_current_language();
   const auto root = id;
 
   auto right = ImGui::DockBuilderSplitNode(id, ImGuiDir_Right, 0.33f, nullptr, &id);
@@ -78,23 +79,20 @@ void load_default_layout(ImGuiID id, const bool reset_visibility)
   ImGui::DockBuilderDockWindow(lang.window.log_dock.c_str(), bottom);
 
   ImGui::DockBuilderFinish(id);
-
-  if (reset_visibility) {
-    get_global_settings().reset_dock_visibilities();
-  }
 }
 
-void reset_layout()
+void reset_layout(const Model& model, Dispatcher& dispatcher)
 {
-  load_default_layout(gDockRootId.value(), true);
+  load_default_layout(model, gDockRootId.value());
+  dispatcher.enqueue<ResetDockVisibilitiesEvent>();
 }
 
-void check_for_missing_layout_file()
+void check_for_missing_layout_file(const Model& model, Dispatcher& dispatcher)
 {
   const auto& ini_path = get_widget_ini_path();
   if (!fs::exists(ini_path)) {
     spdlog::warn("Resetting layout because 'imgui.ini' file was missing");
-    ui::reset_layout();
+    ui::reset_layout(model, dispatcher);
 
     const auto str = ini_path.string();
     ImGui::SaveIniSettingsToDisk(str.c_str());

@@ -22,9 +22,8 @@
 #include <utility>  // move
 
 #include "core/component.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/event/component_events.hpp"
+#include "systems/language_system.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/attribute_widgets.hpp"
@@ -38,7 +37,8 @@ constexpr auto kHeaderFlags =
 constexpr auto kTableFlags =
     ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX;
 
-void _show_attribute_table(const Entity context_entity,
+void _push_attribute_table(const Strings& strings,
+                           const Entity context_entity,
                            const Entity definition_entity,
                            const Component& component,
                            Dispatcher& dispatcher)
@@ -54,7 +54,7 @@ void _show_attribute_table(const Entity context_entity,
       ImGui::TextUnformatted(attr_name.c_str());
 
       ImGui::TableNextColumn();
-      if (auto value = ui_attribute_input("##TableAttribute", attr_value)) {
+      if (auto value = push_attribute_input(strings, "##TableAttribute", attr_value)) {
         dispatcher.enqueue<UpdateAttachedComponentEvent>(context_entity,
                                                          definition_entity,
                                                          attr_name,
@@ -64,19 +64,18 @@ void _show_attribute_table(const Entity context_entity,
   }
 }
 
-void _show_trailing_button_popup_content(const Entity context_entity,
+void _push_trailing_button_popup_content(const Strings& strings,
+                                         const Entity context_entity,
                                          const Entity definition_entity,
                                          Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
-
-  if (ImGui::MenuItem(lang.action.reset_attached_component.c_str())) {
+  if (ImGui::MenuItem(strings.action.reset_attached_component.c_str())) {
     dispatcher.enqueue<ResetAttachedComponentEvent>(context_entity, definition_entity);
   }
 
   ImGui::Separator();
 
-  if (ImGui::MenuItem(lang.action.detach_component.c_str())) {
+  if (ImGui::MenuItem(strings.action.detach_component.c_str())) {
     dispatcher.enqueue<DetachComponentEvent>(context_entity, definition_entity);
   }
 }
@@ -100,6 +99,7 @@ void component_view(const Model& model,
                     const Entity component_entity,
                     Dispatcher& dispatcher)
 {
+  const auto& strings = sys::get_current_language_strings(model);
   const auto& component = model.get<Component>(component_entity);
   const auto& definition = model.get<ComponentDefinition>(component.definition);
 
@@ -111,12 +111,17 @@ void component_view(const Model& model,
     }
 
     if (auto popup = Popup::for_item("##ComponentPopup"); popup.is_open()) {
-      _show_trailing_button_popup_content(context_entity,
+      _push_trailing_button_popup_content(strings,
+                                          context_entity,
                                           component.definition,
                                           dispatcher);
     }
 
-    _show_attribute_table(context_entity, component.definition, component, dispatcher);
+    _push_attribute_table(strings,
+                          context_entity,
+                          component.definition,
+                          component,
+                          dispatcher);
   }
   else {
     // Show a disabled button when collapsed, to avoid having the button disappear

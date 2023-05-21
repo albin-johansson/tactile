@@ -22,9 +22,8 @@
 #include "common/debug/assert.hpp"
 #include "common/util/vector.hpp"
 #include "core/tile.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -69,8 +68,8 @@ void MoveAnimationFrameForwards::redo()
 
 auto MoveAnimationFrameForwards::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.move_animation_frame_forwards;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.move_animation_frame_forwards;
 }
 
 }  // namespace tactile::cmd

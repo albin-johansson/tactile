@@ -19,8 +19,8 @@
 
 #include "tileset_menu.hpp"
 
-#include "lang/language.hpp"
 #include "model/systems/document_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -28,10 +28,10 @@ namespace tactile::ui {
 
 void show_tileset_menu(const Model& model, Dispatcher& dispatcher)
 {
-  const Disable disable_if {!sys::is_tileset_document_active(model)};
+  const auto& strings = sys::get_current_language_strings(model);
 
-  const auto& lang = get_current_language();
-  if (const Menu menu {lang.menu.tileset.c_str()}; menu.is_open()) {
+  const Disable disable_if {!sys::is_tileset_document_active(model)};
+  if (const Menu menu {strings.menu.tileset.c_str()}; menu.is_open()) {
     show_menu_item(model, MenuAction::InspectTileset, dispatcher);
   }
 }

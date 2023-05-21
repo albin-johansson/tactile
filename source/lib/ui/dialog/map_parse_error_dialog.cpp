@@ -23,8 +23,7 @@
 #include <imgui.h>
 
 #include "common/type/string.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
@@ -39,20 +38,20 @@ inline MapParseErrorDialogState gDialogState;
 
 }  // namespace
 
-void open_map_parse_error_dialog(const ParseError error)
+void open_map_parse_error_dialog(const Strings& strings, const ParseError error)
 {
-  const auto& lang = get_current_language();
-  gDialogState.cause = fmt::format("{}: {}", lang.misc.cause, to_cause(error));
+  gDialogState.cause =
+      fmt::format("{}: {}", strings.misc.cause, to_cause(strings, error));
   gDialogState.open_dialog = true;
 }
 
-void show_map_parse_error_dialog(const Model&, Entity, Dispatcher&)
+void show_map_parse_error_dialog(const Model& model, Entity, Dispatcher&)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   DialogOptions options {
-      .title = lang.window.map_parse_error.c_str(),
-      .close_label = lang.misc.close.c_str(),
+      .title = strings.window.map_parse_error.c_str(),
+      .close_label = strings.misc.close.c_str(),
       .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
@@ -62,7 +61,7 @@ void show_map_parse_error_dialog(const Model&, Entity, Dispatcher&)
   }
 
   if (const ScopedDialog dialog {options}; dialog.was_opened()) {
-    ImGui::TextUnformatted(lang.misc.map_parse_error.c_str());
+    ImGui::TextUnformatted(strings.misc.map_parse_error.c_str());
     ImGui::TextUnformatted(gDialogState.cause.c_str());
   }
 }

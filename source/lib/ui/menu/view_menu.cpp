@@ -21,11 +21,10 @@
 
 #include <imgui.h>
 
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/menu_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
@@ -33,21 +32,21 @@
 namespace tactile::ui {
 namespace {
 
-void _show_widgets_menu(const Model& model, Dispatcher& dispatcher)
+void _push_widgets_menu(const Model& model,
+                        const Strings& strings,
+                        Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
-
-  if (const Menu menu {lang.menu.widgets.c_str(), sys::has_active_document(model)};
+  if (const Menu menu {strings.menu.widgets.c_str(), sys::has_active_document(model)};
       menu.is_open()) {
-    if (ImGui::MenuItem(lang.action.reset_layout.c_str())) {
-      reset_layout();
+    if (ImGui::MenuItem(strings.action.reset_layout.c_str())) {
+      reset_layout(model, dispatcher);
     }
 
     ImGui::Separator();
 
     const auto& settings = model.get<Settings>();
 
-    if (ImGui::MenuItem(lang.window.property_dock.c_str(),
+    if (ImGui::MenuItem(strings.window.property_dock.c_str(),
                         nullptr,
                         settings.test_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT))) {
       dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_PROPERTY_DOCK_BIT);
@@ -55,26 +54,26 @@ void _show_widgets_menu(const Model& model, Dispatcher& dispatcher)
 
     {
       const Disable disable_if {!sys::is_map_document_active(model)};
-      if (ImGui::MenuItem(lang.window.layer_dock.c_str(),
+      if (ImGui::MenuItem(strings.window.layer_dock.c_str(),
                           nullptr,
                           settings.test_flag(SETTINGS_SHOW_LAYER_DOCK_BIT))) {
         dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_LAYER_DOCK_BIT);
       }
 
-      if (ImGui::MenuItem(lang.window.tileset_dock.c_str(),
+      if (ImGui::MenuItem(strings.window.tileset_dock.c_str(),
                           nullptr,
                           settings.test_flag(SETTINGS_SHOW_TILESET_DOCK_BIT))) {
         dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_TILESET_DOCK_BIT);
       }
     }
 
-    if (ImGui::MenuItem(lang.window.log_dock.c_str(),
+    if (ImGui::MenuItem(strings.window.log_dock.c_str(),
                         nullptr,
                         settings.test_flag(SETTINGS_SHOW_LOG_DOCK_BIT))) {
       dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_LOG_DOCK_BIT);
     }
 
-    if (ImGui::MenuItem(lang.window.component_dock.c_str(),
+    if (ImGui::MenuItem(strings.window.component_dock.c_str(),
                         nullptr,
                         settings.test_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT))) {
       dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_COMPONENT_DOCK_BIT);
@@ -82,7 +81,7 @@ void _show_widgets_menu(const Model& model, Dispatcher& dispatcher)
 
     {
       const Disable disable_if {!sys::is_tileset_document_active(model)};
-      if (ImGui::MenuItem(lang.window.animation_dock.c_str(),
+      if (ImGui::MenuItem(strings.window.animation_dock.c_str(),
                           nullptr,
                           settings.test_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT))) {
         dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_ANIMATION_DOCK_BIT);
@@ -91,11 +90,11 @@ void _show_widgets_menu(const Model& model, Dispatcher& dispatcher)
   }
 }
 
-void _show_quick_theme_menu(const Settings& settings,
-                            const Strings& lang,
+void _push_quick_theme_menu(const Settings& settings,
+                            const Strings& strings,
                             Dispatcher& dispatcher)
 {
-  if (const Menu theme_menu {lang.action.quick_theme.c_str()}; theme_menu.is_open()) {
+  if (const Menu theme_menu {strings.action.quick_theme.c_str()}; theme_menu.is_open()) {
     auto theme_item = [&](const EditorTheme theme) {
       const auto is_current = settings.get_theme() == theme;
       if (ImGui::MenuItem(human_readable_name(theme).data(), nullptr, is_current)) {
@@ -115,9 +114,9 @@ void _show_quick_theme_menu(const Settings& settings,
   }
 }
 
-void _show_quick_lang_menu(const Strings& lang, Dispatcher& dispatcher)
+void _push_quick_lang_menu(const Strings& strings, Dispatcher& dispatcher)
 {
-  if (const Menu lang_menu {lang.action.quick_language.c_str()}; lang_menu.is_open()) {
+  if (const Menu lang_menu {strings.action.quick_language.c_str()}; lang_menu.is_open()) {
     if (ImGui::MenuItem("English (US)")) {
       dispatcher.enqueue<SetLanguageEvent>(Lang::EN);
     }
@@ -137,16 +136,16 @@ void _show_quick_lang_menu(const Strings& lang, Dispatcher& dispatcher)
 void show_view_menu(const Model& model, Dispatcher& dispatcher)
 {
   const auto& settings = model.get<Settings>();
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
-  if (const Menu menu {lang.menu.view.c_str()}; menu.is_open()) {
-    _show_widgets_menu(model, dispatcher);
-
-    ImGui::Separator();
-    _show_quick_theme_menu(settings, lang, dispatcher);
+  if (const Menu menu {strings.menu.view.c_str()}; menu.is_open()) {
+    _push_widgets_menu(model, strings, dispatcher);
 
     ImGui::Separator();
-    _show_quick_lang_menu(lang, dispatcher);
+    _push_quick_theme_menu(settings, strings, dispatcher);
+
+    ImGui::Separator();
+    _push_quick_lang_menu(strings, dispatcher);
 
     ImGui::Separator();
     show_menu_item(model, MenuAction::CenterViewport, dispatcher);

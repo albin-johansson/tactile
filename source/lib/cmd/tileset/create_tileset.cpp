@@ -23,12 +23,11 @@
 
 #include "core/context.hpp"
 #include "core/map.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/document.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/map_system.hpp"
+#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
@@ -101,8 +100,8 @@ void CreateTileset::create_tileset_document()
 
 auto CreateTileset::get_name() const -> String
 {
-  const auto& lang = get_current_language();
-  return lang.cmd.add_tileset;
+  const auto& strings = sys::get_current_language_strings(get_global_model());
+  return strings.cmd.add_tileset;
 }
 
 }  // namespace tactile::cmd

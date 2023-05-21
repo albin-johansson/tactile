@@ -24,10 +24,9 @@
 #include "common/debug/logging.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/util/assoc.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/context.hpp"
 #include "model/event/setting_events.hpp"
+#include "systems/language_system.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -50,13 +49,11 @@ struct LogDockState final {
 
 inline LogDockState gDockState;
 
-void _show_message_filter_checkboxes()
+void _push_message_filter_checkboxes(const Strings& strings)
 {
-  const auto& lang = get_current_language();
-
   {
     bool value = gDockState.log_filter.trace;
-    ImGui::Checkbox(lang.misc.log_trace_filter.c_str(), &value);
+    ImGui::Checkbox(strings.misc.log_trace_filter.c_str(), &value);
     gDockState.log_filter.trace = value;
   }
 
@@ -64,7 +61,7 @@ void _show_message_filter_checkboxes()
 
   {
     bool value = gDockState.log_filter.debug;
-    ImGui::Checkbox(lang.misc.log_debug_filter.c_str(), &value);
+    ImGui::Checkbox(strings.misc.log_debug_filter.c_str(), &value);
     gDockState.log_filter.debug = value;
   }
 
@@ -72,7 +69,7 @@ void _show_message_filter_checkboxes()
 
   {
     bool value = gDockState.log_filter.info;
-    ImGui::Checkbox(lang.misc.log_info_filter.c_str(), &value);
+    ImGui::Checkbox(strings.misc.log_info_filter.c_str(), &value);
     gDockState.log_filter.info = value;
   }
 
@@ -80,7 +77,7 @@ void _show_message_filter_checkboxes()
 
   {
     bool value = gDockState.log_filter.warn;
-    ImGui::Checkbox(lang.misc.log_warn_filter.c_str(), &value);
+    ImGui::Checkbox(strings.misc.log_warn_filter.c_str(), &value);
     gDockState.log_filter.warn = value;
   }
 
@@ -88,7 +85,7 @@ void _show_message_filter_checkboxes()
 
   {
     bool value = gDockState.log_filter.error;
-    ImGui::Checkbox(lang.misc.log_error_filter.c_str(), &value);
+    ImGui::Checkbox(strings.misc.log_error_filter.c_str(), &value);
     gDockState.log_filter.error = value;
   }
 
@@ -96,12 +93,12 @@ void _show_message_filter_checkboxes()
 
   {
     bool value = gDockState.log_filter.critical;
-    ImGui::Checkbox(lang.misc.log_critical_filter.c_str(), &value);
+    ImGui::Checkbox(strings.misc.log_critical_filter.c_str(), &value);
     gDockState.log_filter.critical = value;
   }
 }
 
-void _show_logged_message_legend_overlay(const Strings& lang)
+void _push_logged_message_legend_overlay(const Strings& strings)
 {
   constexpr float overlay_opacity = 0.35f;
   constexpr ImGuiWindowFlags overlay_window_flags =
@@ -124,26 +121,26 @@ void _show_logged_message_legend_overlay(const Strings& lang)
   if (const Window overlay {"##LegendOverlay", overlay_window_flags}; overlay.is_open()) {
     ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::trace),
                        "%s",
-                       lang.misc.log_trace_filter.c_str());
+                       strings.misc.log_trace_filter.c_str());
     ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::debug),
                        "%s",
-                       lang.misc.log_debug_filter.c_str());
+                       strings.misc.log_debug_filter.c_str());
     ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::info),
                        "%s",
-                       lang.misc.log_info_filter.c_str());
+                       strings.misc.log_info_filter.c_str());
     ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::warn),
                        "%s",
-                       lang.misc.log_warn_filter.c_str());
+                       strings.misc.log_warn_filter.c_str());
     ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::err),
                        "%s",
-                       lang.misc.log_error_filter.c_str());
+                       strings.misc.log_error_filter.c_str());
     ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::critical),
                        "%s",
-                       lang.misc.log_critical_filter.c_str());
+                       strings.misc.log_critical_filter.c_str());
   }
 }
 
-void _show_logged_message_view(const Strings& lang, const usize message_count)
+void _push_logged_message_view(const Strings& strings, const usize message_count)
 {
   const StyleColor child_bg {ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 
@@ -170,7 +167,7 @@ void _show_logged_message_view(const Strings& lang, const usize message_count)
       ImGui::SetScrollHereY(1.0f);
     }
 
-    _show_logged_message_legend_overlay(lang);
+    _push_logged_message_legend_overlay(strings);
   }
 }
 
@@ -178,16 +175,15 @@ void _show_logged_message_view(const Strings& lang, const usize message_count)
 
 void show_log_dock(const Model& model, Entity, Dispatcher& dispatcher)
 {
+  const auto& strings = sys::get_current_language_strings(model);
   const auto& settings = model.get<Settings>();
 
   if (!settings.test_flag(SETTINGS_SHOW_LOG_DOCK_BIT)) {
     return;
   }
 
-  const auto& lang = get_current_language();
-
   bool show_log_dock = true;
-  const Window dock {lang.window.log_dock.c_str(),
+  const Window dock {strings.window.log_dock.c_str(),
                      ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
                      &show_log_dock};
 
@@ -198,18 +194,18 @@ void show_log_dock(const Model& model, Entity, Dispatcher& dispatcher)
   gDockState.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
-    _show_message_filter_checkboxes();
+    _push_message_filter_checkboxes(strings);
 
     const auto message_count = count_matching_log_entries(gDockState.log_filter);
     if (message_count != 0u) {
-      _show_logged_message_view(lang, message_count);
+      _push_logged_message_view(strings, message_count);
     }
     else {
-      ui_centered_label(lang.misc.log_no_messages_match_filter.c_str());
+      ui_centered_label(strings.misc.log_no_messages_match_filter.c_str());
     }
 
     if (auto popup = Popup::for_window("##LogDockPopup"); popup.is_open()) {
-      if (ImGui::MenuItem(lang.action.clear_log.c_str())) {
+      if (ImGui::MenuItem(strings.action.clear_log.c_str())) {
         clear_log_history();
       }
     }

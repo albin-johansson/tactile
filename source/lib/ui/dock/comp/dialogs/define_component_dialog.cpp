@@ -22,12 +22,11 @@
 #include <imgui.h>
 
 #include "common/util/string_buffer.hpp"
-#include "lang/language.hpp"
-#include "lang/strings.hpp"
 #include "model/document.hpp"
 #include "model/event/component_events.hpp"
 #include "model/systems/component/component_set.hpp"
 #include "model/systems/document_system.hpp"
+#include "systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
@@ -50,12 +49,12 @@ void open_define_component_dialog()
 
 void update_define_component_dialog(const Model& model, Dispatcher& dispatcher)
 {
-  const auto& lang = get_current_language();
+  const auto& strings = sys::get_current_language_strings(model);
 
   DialogOptions options {
-      .title = lang.window.create_component.c_str(),
-      .close_label = lang.misc.cancel.c_str(),
-      .accept_label = lang.misc.create.c_str(),
+      .title = strings.window.create_component.c_str(),
+      .close_label = strings.misc.cancel.c_str(),
+      .accept_label = strings.misc.create.c_str(),
   };
 
   if (gDialogState.open_dialog) {
@@ -78,7 +77,7 @@ void update_define_component_dialog(const Model& model, Dispatcher& dispatcher)
   DialogAction action {DialogAction::None};
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
     ImGui::InputTextWithHint("##Name",
-                             lang.misc.component_name_hint.c_str(),
+                             strings.misc.component_name_hint.c_str(),
                              gDialogState.component_name_buffer.data(),
                              sizeof gDialogState.component_name_buffer);
   }
