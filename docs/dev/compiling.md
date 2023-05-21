@@ -73,4 +73,4 @@ If you're using an IDE such as JetBrains CLion, it is usually possible to config
 
 You can configure CMake profiles in the project settings under `Build, Execution, Deployment` -> `CMake`.
 You can also simply search for `CMake Settings` using the `Shift+Shift` shortcut.
-Here, you'll be able to configure CMake arguments such as `VCPKG_TARGET_TRIPLET`, the preferred generator, and the build type of a profile.
+Here, you'll be able to configure CMake arguments such as `VCPKG_TARGET_TRIPLET`, the preferred generator, and the build type profile.
