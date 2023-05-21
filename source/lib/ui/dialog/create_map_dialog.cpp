@@ -22,10 +22,10 @@
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/math.hpp"
-#include "model/context.hpp"
 #include "model/event/map_events.hpp"
+#include "model/settings.hpp"
 #include "systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/alignment.hpp"
@@ -92,9 +92,9 @@ void _on_dialog_accept(Dispatcher& dispatcher)
 
 }  // namespace
 
-void open_create_map_dialog()
+void open_create_map_dialog(const Model& model)
 {
-  const auto& settings = get_global_settings();
+  const auto& settings = model.get<Settings>();
 
   gDialogState.tile_size = settings.get_preferred_tile_size();
   gDialogState.row_count = 5;

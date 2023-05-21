@@ -21,13 +21,11 @@
 
 #include "common/debug/assert.hpp"
 #include "common/util/functional.hpp"
-#include "model/context.hpp"
 
 namespace tactile {
 
-// FIXME migrate to explicit parameter here
-CommandStack::CommandStack()
-    : mCapacity {get_global_settings().get_command_capacity()}
+CommandStack::CommandStack(const usize capacity)
+    : mCapacity {capacity}
 {
 }
 

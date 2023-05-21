@@ -28,6 +28,7 @@
 #include "core/viewport.hpp"
 #include "io/map/parse/parse_map.hpp"
 #include "model/document.hpp"
+#include "model/settings.hpp"
 #include "model/systems/map_system.hpp"
 #include "model/systems/tileset_system.hpp"
 #include "model/systems/validation.hpp"
@@ -53,8 +54,11 @@ namespace {
 auto create_map_document(Model& model, const TileExtent& extent, const Int2& tile_size)
     -> Entity
 {
+  const auto& settings = model.get<Settings>();
   const auto document_entity = model.create_entity();
-  model.add<CommandStack>(document_entity);
+
+  auto& command_stack = model.add<CommandStack>(document_entity);
+  command_stack.set_capacity(settings.get_command_capacity());
 
   auto& map_document = model.add<MapDocument>(document_entity);
   map_document.map = create_map(model, extent, tile_size);
@@ -75,8 +79,11 @@ auto create_map_document(Model& model, const TileExtent& extent, const Int2& til
 auto create_tileset_document(Model& model, const Int2& tile_size, const Path& image_path)
     -> Entity
 {
+  const auto& settings = model.get<Settings>();
   const auto document_entity = model.create_entity();
-  model.add<CommandStack>(document_entity);
+
+  auto& command_stack = model.add<CommandStack>(document_entity);
+  command_stack.set_capacity(settings.get_command_capacity());
 
   auto& tileset_document = model.add<TilesetDocument>(document_entity);
   tileset_document.tileset = create_tileset(model, tile_size, image_path);

@@ -25,7 +25,7 @@
 
 namespace tactile::ui {
 
-void open_create_map_dialog();
+void open_create_map_dialog(const Model& model);
 
 void show_create_map_dialog(const Model& model,
                             Entity widget_entity,

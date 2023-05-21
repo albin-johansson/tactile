@@ -28,7 +28,6 @@
 #include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
 #include "io/stream.hpp"
-#include "model/context.hpp"
 
 namespace tactile {
 namespace {
@@ -218,7 +217,8 @@ auto parse_json_file(const Path& path) -> Maybe<JSON>
   }
 }
 
-auto save_json_to_file(const JSON& json, const Path& path) -> Result
+auto save_json_to_file(const JSON& json, const Path& path, const int indentation)
+    -> Result
 {
   auto stream = open_output_stream(path, FileType::Text);
   if (!stream) {
@@ -227,10 +227,7 @@ auto save_json_to_file(const JSON& json, const Path& path) -> Result
   }
 
   try {
-    if (get_global_settings().test_flag(SETTINGS_INDENT_OUTPUT_BIT)) {
-      *stream << std::setw(2);
-    }
-
+    *stream << std::setw(indentation);
     *stream << json;
     return success;
   }

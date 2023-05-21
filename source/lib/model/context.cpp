@@ -22,15 +22,9 @@
 namespace tactile {
 namespace {
 
-inline Settings gSettings;
 inline Model gModel;
 
 }  // namespace
-
-auto get_global_settings() -> Settings&
-{
-  return gSettings;
-}
 
 auto get_global_model() -> Model&
 {

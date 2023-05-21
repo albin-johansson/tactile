@@ -41,7 +41,7 @@ void from_json(const JSON& json, AttributeType& type);
 [[nodiscard]] auto parse_json_file(const Path& path) -> Maybe<JSON>;
 
 /// Saves a JSON file to the specified path, returning failure if an error occurs.
-auto save_json_to_file(const JSON& json, const Path& path) -> Result;
+auto save_json_to_file(const JSON& json, const Path& path, int indentation = 0) -> Result;
 
 /// Attempts to retrieve an attribute from a JSON object.
 [[nodiscard]] auto try_get(const JSON& json, const char* key) -> const JSON*;

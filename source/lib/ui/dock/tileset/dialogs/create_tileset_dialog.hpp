@@ -25,7 +25,7 @@
 
 namespace tactile::ui {
 
-void open_create_tileset_dialog();
+void open_create_tileset_dialog(const Model& model);
 
 void show_create_tileset_dialog(const Model& model,
                                 Entity widget_entity,

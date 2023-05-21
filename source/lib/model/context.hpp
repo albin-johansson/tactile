@@ -20,12 +20,8 @@
 #pragma once
 
 #include "model/model.hpp"
-#include "model/settings.hpp"
 
 namespace tactile {
-
-/// Returns the global settings.
-[[nodiscard, deprecated]] auto get_global_settings() -> Settings&;
 
 /// Returns the global model instance.
 [[nodiscard]] auto get_global_model() -> Model&;

@@ -25,8 +25,8 @@
 #include "common/type/path.hpp"
 #include "common/util/string_buffer.hpp"
 #include "io/file_dialog.hpp"
-#include "model/context.hpp"
 #include "model/event/tileset_events.hpp"
+#include "model/settings.hpp"
 #include "systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/widgets.hpp"
@@ -63,11 +63,13 @@ void _select_image_file()
 
 }  // namespace
 
-void open_create_tileset_dialog()
+void open_create_tileset_dialog(const Model& model)
 {
+  const auto& settings = model.get<Settings>();
+
   gDialogState.image_path_preview_buffer.clear();
   gDialogState.image_path.clear();
-  gDialogState.tile_size = get_global_settings().get_preferred_tile_size();
+  gDialogState.tile_size = settings.get_preferred_tile_size();
   gDialogState.open_dialog = true;
 }
 

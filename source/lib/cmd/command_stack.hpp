@@ -22,20 +22,20 @@
 #include <concepts>  // derived_from
 #include <utility>   // move
 
+#include "cmd/command.hpp"
 #include "common/macros.hpp"
 #include "common/numeric.hpp"
 #include "common/type/deque.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
-#include "cmd/command.hpp"
 
 namespace tactile {
 
 /// Manages a history of commands.
 class CommandStack final {
  public:
-  CommandStack();
+  explicit CommandStack(usize capacity = 64);
 
   TACTILE_DELETE_COPY(CommandStack);
   TACTILE_DEFAULT_MOVE(CommandStack);

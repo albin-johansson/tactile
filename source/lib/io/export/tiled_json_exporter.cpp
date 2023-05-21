@@ -34,7 +34,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto emit_properties(const ContextIR& context) -> JSON
+[[nodiscard]] auto _emit_properties(const ContextIR& context) -> JSON
 {
   auto array = JSON::array();
 
@@ -51,7 +51,7 @@ namespace {
   return array;
 }
 
-[[nodiscard]] auto emit_object(const ObjectIR& object) -> JSON
+[[nodiscard]] auto _emit_object(const ObjectIR& object) -> JSON
 {
   auto json = JSON::object();
 
@@ -81,13 +81,13 @@ namespace {
   }
 
   if (!object.context.properties.empty()) {
-    json["properties"] = emit_properties(object.context);
+    json["properties"] = _emit_properties(object.context);
   }
 
   return json;
 }
 
-void emit_tile_layer(JSON& json, const MapIR& map, const LayerIR& layer)
+void _emit_tile_layer(JSON& json, const MapIR& map, const LayerIR& layer)
 {
   const auto& tile_layer = layer.as_tile_layer();
 
@@ -134,7 +134,7 @@ void emit_tile_layer(JSON& json, const MapIR& map, const LayerIR& layer)
   }
 }
 
-void emit_object_layer(JSON& json, const LayerIR& layer)
+void _emit_object_layer(JSON& json, const LayerIR& layer)
 {
   const auto& object_layer = layer.as_object_layer();
 
@@ -143,13 +143,13 @@ void emit_object_layer(JSON& json, const LayerIR& layer)
   auto objects = JSON::array();
 
   for (const auto& object: object_layer.objects) {
-    objects += emit_object(object);
+    objects += _emit_object(object);
   }
 
   json["objects"] = std::move(objects);
 }
 
-[[nodiscard]] auto emit_layer(const MapIR& map, const LayerIR& layer) -> JSON
+[[nodiscard]] auto _emit_layer(const MapIR& map, const LayerIR& layer) -> JSON
 {
   auto json = JSON::object();
 
@@ -162,11 +162,11 @@ void emit_object_layer(JSON& json, const LayerIR& layer)
 
   switch (layer.type) {
     case LayerType::TileLayer:
-      emit_tile_layer(json, map, layer);
+      _emit_tile_layer(json, map, layer);
       break;
 
     case LayerType::ObjectLayer:
-      emit_object_layer(json, layer);
+      _emit_object_layer(json, layer);
       break;
 
     case LayerType::GroupLayer: {
@@ -177,7 +177,7 @@ void emit_object_layer(JSON& json, const LayerIR& layer)
       auto layers = JSON::array();
 
       for (const auto& child_layer: group_layer.children) {
-        layers += emit_layer(map, *child_layer);
+        layers += _emit_layer(map, *child_layer);
       }
 
       json["layers"] = std::move(layers);
@@ -186,24 +186,24 @@ void emit_object_layer(JSON& json, const LayerIR& layer)
   }
 
   if (!layer.context.properties.empty()) {
-    json["properties"] = emit_properties(layer.context);
+    json["properties"] = _emit_properties(layer.context);
   }
 
   return json;
 }
 
-[[nodiscard]] auto emit_layers(const MapIR& map) -> JSON
+[[nodiscard]] auto _emit_layers(const MapIR& map) -> JSON
 {
   auto array = JSON::array();
 
   for (const auto& layer: map.layers) {
-    array += emit_layer(map, layer);
+    array += _emit_layer(map, layer);
   }
 
   return array;
 }
 
-[[nodiscard]] auto emit_fancy_tile_animation(const TileIR& tile) -> JSON
+[[nodiscard]] auto _emit_fancy_tile_animation(const TileIR& tile) -> JSON
 {
   auto array = JSON::array();
 
@@ -219,14 +219,14 @@ void emit_object_layer(JSON& json, const LayerIR& layer)
   return array;
 }
 
-[[nodiscard]] auto emit_fancy_tile(const TileID id, const TileIR& tile) -> JSON
+[[nodiscard]] auto _emit_fancy_tile(const TileID id, const TileIR& tile) -> JSON
 {
   auto json = JSON::object();
 
   json["id"] = id;
 
   if (!tile.frames.empty()) {
-    json["animation"] = emit_fancy_tile_animation(tile);
+    json["animation"] = _emit_fancy_tile_animation(tile);
   }
 
   if (!tile.objects.empty()) {
@@ -241,7 +241,7 @@ void emit_object_layer(JSON& json, const LayerIR& layer)
 
     auto objects = JSON::array();
     for (const auto& object: tile.objects) {
-      objects += emit_object(object);
+      objects += _emit_object(object);
     }
 
     dummy["objects"] = std::move(objects);
@@ -249,24 +249,24 @@ void emit_object_layer(JSON& json, const LayerIR& layer)
   }
 
   if (!tile.context.properties.empty()) {
-    json["properties"] = emit_properties(tile.context);
+    json["properties"] = _emit_properties(tile.context);
   }
 
   return json;
 }
 
-[[nodiscard]] auto emit_fancy_tiles(const TilesetIR& tileset) -> JSON
+[[nodiscard]] auto _emit_fancy_tiles(const TilesetIR& tileset) -> JSON
 {
   auto json = JSON::array();
 
   for (const auto& [id, tile_data]: tileset.fancy_tiles) {
-    json += emit_fancy_tile(id, tile_data);
+    json += _emit_fancy_tile(id, tile_data);
   }
 
   return json;
 }
 
-void add_common_tileset_attributes(JSON& json, const Path& dir, const TilesetIR& tileset)
+void _add_common_tileset_attributes(JSON& json, const Path& dir, const TilesetIR& tileset)
 {
   json["name"] = tileset.name;
   json["columns"] = tileset.column_count;
@@ -285,26 +285,26 @@ void add_common_tileset_attributes(JSON& json, const Path& dir, const TilesetIR&
   json["spacing"] = 0;
 
   if (!tileset.fancy_tiles.empty()) {
-    json["tiles"] = emit_fancy_tiles(tileset);
+    json["tiles"] = _emit_fancy_tiles(tileset);
   }
 
   if (!tileset.context.properties.empty()) {
-    json["properties"] = emit_properties(tileset.context);
+    json["properties"] = _emit_properties(tileset.context);
   }
 }
 
-[[nodiscard]] auto emit_embedded_tileset(const Path& dir, const TilesetIR& tileset)
+[[nodiscard]] auto _emit_embedded_tileset(const Path& dir, const TilesetIR& tileset)
     -> JSON
 {
   auto json = JSON::object();
 
   json["firstgid"] = tileset.first_tile;
-  add_common_tileset_attributes(json, dir, tileset);
+  _add_common_tileset_attributes(json, dir, tileset);
 
   return json;
 }
 
-[[nodiscard]] auto emit_external_tileset(const TilesetIR& tileset) -> JSON
+[[nodiscard]] auto _emit_external_tileset(const TilesetIR& tileset) -> JSON
 {
   auto json = JSON::object();
 
@@ -314,10 +314,12 @@ void add_common_tileset_attributes(JSON& json, const Path& dir, const TilesetIR&
   return json;
 }
 
-void create_external_tileset_file(const Path& dir, const TilesetIR& tileset)
+void _create_external_tileset_file(const Path& dir,
+                                   const TilesetIR& tileset,
+                                   const Settings& settings)
 {
   auto json = JSON::object();
-  add_common_tileset_attributes(json, dir, tileset);
+  _add_common_tileset_attributes(json, dir, tileset);
 
   json["type"] = "tileset";
   json["tiledversion"] = kTiledVersion;
@@ -325,33 +327,34 @@ void create_external_tileset_file(const Path& dir, const TilesetIR& tileset)
 
   const auto name = fmt::format("{}.json", tileset.name);
   const auto path = dir / name;
+  const auto indentation = settings.test_flag(SETTINGS_INDENT_OUTPUT_BIT) ? 2 : 0;
 
-  if (save_json_to_file(json, path).failed()) {
+  if (save_json_to_file(json, path, indentation).failed()) {
     spdlog::error("Could not save JSON tileset file");
   }
 }
 
-[[nodiscard]] auto emit_tileset(const Path& dir,
-                                const TilesetIR& tileset,
-                                const Settings& settings) -> JSON
+[[nodiscard]] auto _emit_tileset(const Path& dir,
+                                 const TilesetIR& tileset,
+                                 const Settings& settings) -> JSON
 {
   if (settings.test_flag(SETTINGS_EMBED_TILESETS_BIT)) {
-    return emit_embedded_tileset(dir, tileset);
+    return _emit_embedded_tileset(dir, tileset);
   }
   else {
-    create_external_tileset_file(dir, tileset);
-    return emit_external_tileset(tileset);
+    _create_external_tileset_file(dir, tileset, settings);
+    return _emit_external_tileset(tileset);
   }
 }
 
-[[nodiscard]] auto emit_tilesets(const Path& dir,
-                                 const MapIR& ir_map,
-                                 const Settings& settings) -> JSON
+[[nodiscard]] auto _emit_tilesets(const Path& dir,
+                                  const MapIR& ir_map,
+                                  const Settings& settings) -> JSON
 {
   auto json = JSON::array();
 
   for (const auto& ir_tileset: ir_map.tilesets) {
-    json += emit_tileset(dir, ir_tileset, settings);
+    json += _emit_tileset(dir, ir_tileset, settings);
   }
 
   return json;
@@ -396,11 +399,11 @@ void save_map_as_tiled_json(const Path& destination,
   json["tiledversion"] = kTiledVersion;
   json["version"] = kTiledJsonFormatVersion;
 
-  json["tilesets"] = emit_tilesets(destination.parent_path(), ir_map, settings);
-  json["layers"] = emit_layers(ir_map);
+  json["tilesets"] = _emit_tilesets(destination.parent_path(), ir_map, settings);
+  json["layers"] = _emit_layers(ir_map);
 
   if (!ir_map.context.properties.empty()) {
-    json["properties"] = emit_properties(ir_map.context);
+    json["properties"] = _emit_properties(ir_map.context);
   }
 
   if (save_json_to_file(json, destination).failed()) {
