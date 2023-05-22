@@ -21,14 +21,13 @@
 
 #include <utility>  // move
 
-#include <centurion/system.hpp>
+#include <fmt/std.h>
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
-#include "cmd/commands.hpp"
-#include "core/map.hpp"
+#include "common/util/fmt.hpp"
 #include "core/texture.hpp"
 #include "io/directories.hpp"
 #include "io/proto/history.hpp"
@@ -36,13 +35,15 @@
 #include "io/proto/settings.hpp"
 #include "model/context.hpp"
 #include "model/delegates/command_delegate.hpp"
+#include "model/delegates/input_delegate.hpp"
+#include "model/delegates/map_delegate.hpp"
+#include "model/delegates/menu_delegate.hpp"
+#include "model/delegates/settings_delegate.hpp"
 #include "model/document.hpp"
-#include "model/event/all.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/event/view_events.hpp"
 #include "model/file_history.hpp"
-#include "model/model.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/menu_system.hpp"
 #include "model/systems/texture_system.hpp"
@@ -68,20 +69,16 @@
 #include "ui/menu/menu_bar.hpp"
 #include "ui/shortcut/shortcuts.hpp"
 #include "ui/style/colors.hpp"
-#include "ui/ui.hpp"
 #include "ui/viewport/viewport_widget.hpp"
 
 namespace tactile {
 
-App::App()
-{
-  _subscribe_to_events();
-  init_default_shortcuts();
-}
-
 void App::on_startup()
 {
   auto& model = get_global_model();
+
+  _subscribe_to_events();
+  init_default_shortcuts();
 
   auto& icons = model.get<Icons>();
   icons.tactile_icon = sys::create_texture(model, find_resource("assets/icon.png"));
@@ -90,6 +87,41 @@ void App::on_startup()
 
   sys::init_menus(model);
   _init_widgets();
+}
+
+void App::_subscribe_to_events()
+{
+  // clang-format off
+  mDispatcher.sink<UndoEvent>().connect<&App::_on_undo>(this);
+  mDispatcher.sink<RedoEvent>().connect<&App::_on_redo>(this);
+  mDispatcher.sink<SetCommandCapacityEvent>().connect<&App::_on_set_command_capacity>(this);
+
+  mDispatcher.sink<ShowNewMapDialogEvent>().connect<&App::_on_show_new_map_dialog>(this);
+  mDispatcher.sink<ShowOpenMapDialogEvent>().connect<&App::_on_show_open_map_dialog>(this);
+  mDispatcher.sink<ShowResizeMapDialogEvent>().connect<&App::_on_show_resize_map_dialog>(this);
+  mDispatcher.sink<CreateMapEvent>().connect<&App::_on_create_map>(this);
+  mDispatcher.sink<OpenMapEvent>().connect<&App::_on_open_map>(this);
+  mDispatcher.sink<ResizeMapEvent>().connect<&App::_on_resize_map>(this);
+  mDispatcher.sink<AddRowEvent>().connect<&App::_on_add_row>(this);
+  mDispatcher.sink<AddColumnEvent>().connect<&App::_on_add_column>(this);
+  mDispatcher.sink<RemoveRowEvent>().connect<&App::_on_remove_row>(this);
+  mDispatcher.sink<RemoveColumnEvent>().connect<&App::_on_remove_column>(this);
+  mDispatcher.sink<FixTilesInMapEvent>().connect<&App::_on_fix_tiles_in_map>(this);
+  mDispatcher.sink<ExportAsGodotSceneEvent>().connect<&App::_on_export_as_godot_scene>(this);
+  mDispatcher.sink<InspectMapEvent>().connect<&App::_on_inspect_map>(this);
+  mDispatcher.sink<SetTileFormatEncodingEvent>().connect<&App::_on_set_tile_format_encoding>(this);
+  mDispatcher.sink<SetTileFormatCompressionEvent>().connect<&App::_on_set_tile_format_compression>(this);
+  mDispatcher.sink<SetZlibCompressionLevelEvent>().connect<&App::_on_set_zlib_compression_level>(this);
+  mDispatcher.sink<SetZstdCompressionLevelEvent>().connect<&App::_on_set_zstd_compression_level>(this);
+
+  mDispatcher.sink<ShowSettingsEvent>().connect<&App::_on_show_settings>(this);
+  mDispatcher.sink<SetSettingsEvent>().connect<&App::_on_set_settings>(this);
+  mDispatcher.sink<SetLanguageEvent>().connect<&App::_on_set_language>(this);
+  mDispatcher.sink<SetThemeEvent>().connect<&App::_on_set_theme>(this);
+  mDispatcher.sink<ResetDockVisibilitiesEvent>().connect<&App::_on_reset_dock_visibilities>(this);
+  mDispatcher.sink<MenuActionEvent>().connect<&App::_on_menu_action>(this);
+  mDispatcher.sink<QuitEvent>().connect<&App::_on_quit>(this);
+  // clang-format on
 }
 
 void App::_init_persistent_settings()
@@ -147,12 +179,22 @@ void App::_init_widgets()
 
 void App::on_shutdown()
 {
-  auto& model = get_global_model();
+  const auto& model = get_global_model();
+  const auto& settings = model.get<Settings>();
 
   _add_open_documents_to_file_history();
-  save_settings_to_disk(model.get<Settings>());
-  save_session_to_disk(get_global_model());
+  save_settings_to_disk(settings);
+  save_session_to_disk(model);
   save_file_history_to_disk(get_file_history());
+}
+
+void App::_add_open_documents_to_file_history()
+{
+  for (auto [document_entity, document]: get_global_model().each<Document>()) {
+    if (document.type == DocumentType::Map && document.path.has_value()) {
+      add_to_file_history(*document.path);
+    }
+  }
 }
 
 void App::on_pre_update()
@@ -181,382 +223,166 @@ void App::on_update()
   ui::check_for_missing_layout_file(model, mDispatcher);
 }
 
-void App::on_event(const cen::event_handler& handler)
+void App::on_event(const cen::event_handler& event)
 {
-  if (const auto type = handler.raw_type(); type > SDL_USEREVENT) {
-    mDispatcher.trigger(MenuActionEvent {static_cast<MenuAction>(*type)});
-    return;
-  }
-
-  switch (handler.type().value()) {
-    case cen::event_type::key_up:
-      [[fallthrough]];
-    case cen::event_type::key_down:
-      _on_keyboard_event(handler.get<cen::keyboard_event>());
-      break;
-
-    case cen::event_type::mouse_wheel:
-      _on_mouse_wheel_event(handler.get<cen::mouse_wheel_event>());
-      break;
-
-    default:
-      break;
-  }
+  tactile::on_event(get_global_model(), mDispatcher, event);
 }
 
-void App::_subscribe_to_events()
+void App::_on_menu_action(const MenuActionEvent& event)
 {
-  // clang-format off
-  mDispatcher.sink<ShowSettingsEvent>().connect<&App::_on_show_settings>(this);
-  mDispatcher.sink<SetSettingsEvent>().connect<&App::_on_set_settings>(this);
-  mDispatcher.sink<SetLanguageEvent>().connect<&App::_on_set_language>(this);
-  mDispatcher.sink<SetThemeEvent>().connect<&App::_on_set_theme>(this);
-  mDispatcher.sink<ResetDockVisibilitiesEvent>().connect<&App::_on_reset_dock_visibilities>(this);
-  mDispatcher.sink<MenuActionEvent>().connect<&App::_on_menu_action>(this);
-  mDispatcher.sink<QuitEvent>().connect<&App::_on_quit>(this);
-  // clang-format on
-
-  //  install_document_event_handler();
-  //  install_map_event_handler();
-  //  install_tileset_event_handler();
-  //  install_layer_event_handler();
-  //  install_object_event_handler();
-  //  install_tool_event_handler();
-  //  install_viewport_event_handler();
-  //  install_property_event_handler();
-  //  install_component_event_handler();
-  //  install_view_event_handler();
+  on_menu_action(get_global_model(), mDispatcher, event);
 }
 
-void App::_add_open_documents_to_file_history()
+void App::_on_undo(const UndoEvent& event)
 {
-  for (auto [document_entity, document]: get_global_model().each<Document>()) {
-    if (document.type == DocumentType::Map && document.path.has_value()) {
-      add_to_file_history(*document.path);
-    }
-  }
+  on_undo(get_global_model(), event);
 }
 
-void App::_on_keyboard_event(cen::keyboard_event event)
+void App::_on_redo(const RedoEvent& event)
 {
-  // We don't care about these modifiers, they are just noise.
-  event.set_modifier(cen::key_mod::caps, false);
-  event.set_modifier(cen::key_mod::num, false);
-  event.set_modifier(cen::key_mod::mode, false);
-
-  update_shortcuts(event, mDispatcher);
+  on_redo(get_global_model(), event);
 }
 
-void App::_on_mouse_wheel_event(const cen::mouse_wheel_event& event)
+void App::_on_set_command_capacity(const SetCommandCapacityEvent& event)
 {
-  // There doesn't seem to be a good way to handle mouse "wheel" events using the public
-  // ImGui APIs. Otherwise, it would be nicer to keep this code closer to the actual
-  // widgets.
+  on_set_command_capacity(get_global_model(), event);
+}
 
-  const auto& model = get_global_model();
-  const auto document_entity = sys::get_active_document(model);
+void App::_on_show_new_map_dialog(const ShowNewMapDialogEvent& event)
+{
+  spdlog::trace("[ShowNewMapDialogEvent]");
+  on_show_new_map_dialog(get_global_model(), event);
+}
 
-  if (document_entity != kNullEntity && !ImGui::GetTopMostPopupModal()) {
-    const auto& document = model.get<Document>(document_entity);
-    const auto& document_viewport = model.get<Viewport>(document_entity);
+void App::_on_show_open_map_dialog(const ShowOpenMapDialogEvent& event)
+{
+  spdlog::trace("[ShowOpenMapDialogEvent]");
+  on_show_open_map_dialog(get_global_model(), event);
+}
 
-    if (ui::is_mouse_within_viewport()) {
-      ui::viewport_widget_mouse_wheel_event_handler(document_viewport,
-                                                    mDispatcher,
-                                                    event);
-    }
-    else if (document.type == DocumentType::Map && ui::is_tileset_dock_hovered()) {
-      const auto& map_document = model.get<MapDocument>(document_entity);
-      const auto& map = model.get<Map>(map_document.map);
+void App::_on_show_resize_map_dialog(const ShowResizeMapDialogEvent& event)
+{
+  spdlog::trace("[ShowResizeMapDialogEvent]");
+  on_show_resize_map_dialog(get_global_model(), event);
+}
 
-      if (map_document.active_tileset != kNullEntity) {
-        const auto& attached_tileset =
-            model.get<AttachedTileset>(map_document.active_tileset);
+void App::_on_create_map(const CreateMapEvent& event)
+{
+  spdlog::trace("[CreateMapEvent] rows: {}, columns: {}, tile size: {}",
+                event.row_count,
+                event.column_count,
+                event.tile_size);
+  on_create_map(get_global_model(), event);
+}
 
-        // TODO ui::tileset_dock_mouse_wheel_event_handler(tileset_ref, event,
-        // get_dispatcher());
-      }
-    }
-  }
+void App::_on_open_map(const OpenMapEvent& event)
+{
+  spdlog::trace("[OpenMapEvent] path: {}", event.path);
+  on_open_map(get_global_model(), event);
+}
+
+void App::_on_resize_map(const ResizeMapEvent& event)
+{
+  spdlog::trace("[ResizeMapEvent] rows: {}, cols: {}", event.row_count, event.col_count);
+  on_resize_map(get_global_model(), event);
+}
+
+void App::_on_add_row(const AddRowEvent& event)
+{
+  spdlog::trace("[AddRowEvent]");
+  on_add_row(get_global_model(), event);
+}
+
+void App::_on_add_column(const AddColumnEvent& event)
+{
+  spdlog::trace("[AddColumnEvent]");
+  on_add_column(get_global_model(), event);
+}
+
+void App::_on_remove_row(const RemoveRowEvent& event)
+{
+  spdlog::trace("[RemoveRowEvent]");
+  on_remove_row(get_global_model(), event);
+}
+
+void App::_on_remove_column(const RemoveColumnEvent& event)
+{
+  spdlog::trace("[RemoveColumnEvent]");
+  on_remove_column(get_global_model(), event);
+}
+
+void App::_on_fix_tiles_in_map(const FixTilesInMapEvent& event)
+{
+  spdlog::trace("[FixTilesInMapEvent]");
+  on_fix_tiles_in_map(get_global_model(), event);
+}
+
+void App::_on_export_as_godot_scene(const ExportAsGodotSceneEvent& event)
+{
+  spdlog::trace("[ExportAsGodotSceneEvent] root: {}", event.root_dir);
+  on_export_as_godot_scene(get_global_model(), event);
+}
+
+void App::_on_inspect_map(const InspectMapEvent& event)
+{
+  spdlog::trace("[InspectMapEvent]");
+  on_inspect_map(get_global_model(), event);
+}
+
+void App::_on_set_tile_format_encoding(const SetTileFormatEncodingEvent& event)
+{
+  spdlog::trace("[SetTileFormatEncodingEvent] encoding: {}",
+                magic_enum::enum_name(event.encoding));
+  on_set_tile_format_encoding(get_global_model(), event);
+}
+
+void App::_on_set_tile_format_compression(const SetTileFormatCompressionEvent& event)
+{
+  spdlog::trace("[SetTileFormatCompressionEvent] compression: {}",
+                magic_enum::enum_name(event.compression));
+  on_set_tile_format_compression(get_global_model(), event);
+}
+
+void App::_on_set_zlib_compression_level(const SetZlibCompressionLevelEvent& event)
+{
+  spdlog::trace("[SetZlibCompressionLevelEvent] level: {}", event.level);
+  on_set_zlib_compression_level(get_global_model(), event);
+}
+
+void App::_on_set_zstd_compression_level(const SetZstdCompressionLevelEvent& event)
+{
+  spdlog::trace("[SetZstdCompressionLevelEvent] level: {}", event.level);
+  on_set_zstd_compression_level(get_global_model(), event);
+}
+
+void App::_on_show_settings(const ShowSettingsEvent& event)
+{
+  on_show_settings(get_global_model(), event);
+}
+
+void App::_on_set_settings(const SetSettingsEvent& event)
+{
+  on_set_settings(get_global_model(), mDispatcher, event);
+}
+
+void App::_on_set_language(const SetLanguageEvent& event)
+{
+  on_set_language(get_global_model(), mDispatcher, event);
+}
+
+void App::_on_set_theme(const SetThemeEvent& event)
+{
+  on_set_theme(get_global_model(), event);
+}
+
+void App::_on_reset_dock_visibilities(const ResetDockVisibilitiesEvent& event)
+{
+  on_reset_dock_visibilities(get_global_model(), event);
 }
 
 void App::_on_quit()
 {
   mShouldStop = true;
-}
-
-void App::_on_menu_action(const MenuActionEvent& event)
-{
-  spdlog::trace("[MenuActionEvent] action: {}", magic_enum::enum_name(event.action));
-
-  auto& model = get_global_model();
-  auto& settings = model.get<Settings>();
-
-  switch (event.action) {
-    case MenuAction::NewMap:
-      mDispatcher.enqueue<ShowNewMapDialogEvent>();
-      break;
-
-    case MenuAction::OpenMap:
-      mDispatcher.enqueue<ShowOpenMapDialogEvent>();
-      break;
-
-    case MenuAction::Save:
-      mDispatcher.enqueue<SaveEvent>();
-      break;
-
-    case MenuAction::SaveAs:
-      mDispatcher.enqueue<OpenSaveAsDialogEvent>();
-      break;
-
-    case MenuAction::Close:
-      mDispatcher.enqueue<CloseDocumentEvent>(sys::get_active_document(model));
-      break;
-
-    case MenuAction::Quit:
-      mDispatcher.enqueue<QuitEvent>();
-      break;
-
-    case MenuAction::ReopenLastFile: {
-      // TODO this will need to be tweaked if tileset documents viewing will be supported
-      Path file_path {get_file_history().last_closed_file.value()};
-      mDispatcher.enqueue<OpenMapEvent>(std::move(file_path));
-      break;
-    }
-    case MenuAction::ClearFileHistory:
-      clear_file_history();
-      break;
-
-    case MenuAction::Undo:
-      mDispatcher.enqueue<UndoEvent>();
-      break;
-
-    case MenuAction::Redo:
-      mDispatcher.enqueue<RedoEvent>();
-      break;
-
-    case MenuAction::EnableStamp:
-      mDispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
-      break;
-
-    case MenuAction::EnableEraser:
-      mDispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
-      break;
-
-    case MenuAction::EnableBucket:
-      mDispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
-      break;
-
-    case MenuAction::EnableObjectSelector:
-      mDispatcher.enqueue<SelectToolEvent>(ToolType::ObjectSelection);
-      break;
-
-    case MenuAction::EnableRectangle:
-      mDispatcher.enqueue<SelectToolEvent>(ToolType::Rectangle);
-      break;
-
-    case MenuAction::EnableEllipse:
-      mDispatcher.enqueue<SelectToolEvent>(ToolType::Ellipse);
-      break;
-
-    case MenuAction::EnablePoint:
-      mDispatcher.enqueue<SelectToolEvent>(ToolType::Point);
-      break;
-
-    case MenuAction::OpenComponentEditor:
-      ui::open_component_editor_dialog(model);
-      break;
-
-    case MenuAction::OpenSettings:
-      ui::open_settings_dialog(settings);
-      break;
-
-    case MenuAction::CenterViewport:
-      mDispatcher.enqueue<CenterViewportEvent>();
-      break;
-
-    case MenuAction::ToggleGrid:
-      mDispatcher.enqueue<ToggleGridEvent>();
-      break;
-
-    case MenuAction::IncreaseZoom:
-      mDispatcher.enqueue<IncreaseZoomEvent>();
-      break;
-
-    case MenuAction::DecreaseZoom:
-      mDispatcher.enqueue<DecreaseZoomEvent>();
-      break;
-
-    case MenuAction::ResetZoom:
-      mDispatcher.enqueue<ResetZoomEvent>();
-      break;
-
-    case MenuAction::IncreaseFontSize:
-      mDispatcher.enqueue<IncreaseFontSizeEvent>();
-      break;
-
-    case MenuAction::DecreaseFontSize:
-      mDispatcher.enqueue<DecreaseFontSizeEvent>();
-      break;
-
-    case MenuAction::ResetFontSize:
-      mDispatcher.enqueue<ResetFontSizeEvent>();
-      break;
-
-    case MenuAction::PanUp:
-      mDispatcher.enqueue<PanUpEvent>();
-      break;
-
-    case MenuAction::PanDown:
-      mDispatcher.enqueue<PanDownEvent>();
-      break;
-
-    case MenuAction::PanRight:
-      mDispatcher.enqueue<PanRightEvent>();
-      break;
-
-    case MenuAction::PanLeft:
-      mDispatcher.enqueue<PanLeftEvent>();
-      break;
-
-    case MenuAction::HighlightLayer:
-      settings.negate_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT);
-      break;
-
-    case MenuAction::ToggleUi:
-      mDispatcher.enqueue<ToggleUiEvent>();
-      break;
-
-    case MenuAction::InspectMap:
-      mDispatcher.enqueue<InspectMapEvent>();
-      break;
-
-    case MenuAction::CreateTileset:
-      mDispatcher.enqueue<ShowTilesetCreationDialogEvent>();
-      break;
-
-    case MenuAction::AddRow:
-      mDispatcher.enqueue<AddRowEvent>();
-      break;
-
-    case MenuAction::AddColumn:
-      mDispatcher.enqueue<AddColumnEvent>();
-      break;
-
-    case MenuAction::RemoveRow:
-      mDispatcher.enqueue<RemoveRowEvent>();
-      break;
-
-    case MenuAction::RemoveColumn:
-      mDispatcher.enqueue<RemoveColumnEvent>();
-      break;
-
-    case MenuAction::FixInvalidTiles:
-      mDispatcher.enqueue<FixTilesInMapEvent>();
-      break;
-
-    case MenuAction::ResizeMap:
-      mDispatcher.enqueue<OpenResizeMapDialogEvent>();
-      break;
-
-    case MenuAction::ExportGodotScene:
-      ui::open_godot_export_dialog();
-      break;
-
-    case MenuAction::InspectTileset:
-      mDispatcher.enqueue<InspectTilesetEvent>();
-      break;
-
-    case MenuAction::OpenDemoWindow:
-      break;
-
-    case MenuAction::OpenStyleEditor:
-      break;
-
-    case MenuAction::ShowAbout:
-      ui::open_about_dialog();
-      break;
-
-    case MenuAction::ShowAboutImGui:
-      ui::open_about_dear_imgui_dialog();
-      break;
-
-    case MenuAction::ShowCredits:
-      ui::open_credits_dialog();
-      break;
-
-    case MenuAction::ReportIssue:
-      cen::open_url("https://github.com/albin-johansson/tactile/issues/new");
-      break;
-  }
-}
-
-void App::_on_show_settings(const ShowSettingsEvent&)
-{
-  spdlog::trace("[ShowSettingsEvent]");
-
-  const auto& model = get_global_model();
-  const auto& settings = model.get<Settings>();
-  ui::open_settings_dialog(settings);
-}
-
-void App::_on_set_settings(const SetSettingsEvent& event)
-{
-  spdlog::trace("[SetSettingsEvent]");
-
-  auto& model = get_global_model();
-  auto& curr_settings = model.get<Settings>();
-
-  const auto prev_settings = curr_settings.copy();
-  curr_settings = event.settings.copy();
-
-  if (curr_settings.get_language() != prev_settings.get_language()) {
-    sys::retranslate_menus(model);
-    ui::reset_layout(model, mDispatcher);
-  }
-
-  if (curr_settings.get_command_capacity() != prev_settings.get_command_capacity()) {
-    // TODO notify existing command stacks
-  }
-
-  if (curr_settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) !=
-          prev_settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) ||
-      curr_settings.get_font_size() != prev_settings.get_font_size()) {
-    mDispatcher.trigger(ReloadFontsEvent {});
-  }
-}
-
-void App::_on_set_language(const SetLanguageEvent& event)
-{
-  spdlog::trace("[SetLanguageEvent] language: {}", magic_enum::enum_name(event.language));
-
-  auto& model = get_global_model();
-
-  auto& settings = model.get<Settings>();
-  settings.set_language(event.language);
-
-  sys::retranslate_menus(model);
-  ui::reset_layout(model, mDispatcher);
-}
-
-void App::_on_set_theme(const SetThemeEvent& event)
-{
-  auto& model = get_global_model();
-
-  auto& settings = model.get<Settings>();
-  settings.set_theme(event.theme);
-
-  ui::apply_theme(ImGui::GetStyle(),
-                  settings.get_theme(),
-                  settings.get_theme_saturation());
-}
-
-void App::_on_reset_dock_visibilities(const ResetDockVisibilitiesEvent&)
-{
-  auto& model = get_global_model();
-
-  auto& settings = model.get<Settings>();
-  settings.reset_dock_visibilities();
 }
 
 }  // namespace tactile

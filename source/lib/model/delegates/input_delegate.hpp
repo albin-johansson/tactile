@@ -19,28 +19,15 @@
 
 #pragma once
 
-#include "cmd/command.hpp"
-#include "common/type/ecs.hpp"
-#include "common/type/maybe.hpp"
-#include "core/tile_format.hpp"
+#include <centurion/event.hpp>
+#include <centurion/misc_events.hpp>
+#include <centurion/mouse_events.hpp>
 
-namespace tactile::cmd {
+#include "common/type/dispatcher.hpp"
+#include "model/model.hpp"
 
-class SetTileFormatEncoding final : public Command {
- public:
-  SetTileFormatEncoding(Entity map_entity, TileEncoding encoding);
+namespace tactile {
 
-  void undo() override;
+void on_event(Model& model, Dispatcher& dispatcher, const cen::event_handler& event);
 
-  void redo() override;
-
-  [[nodiscard]] auto get_name() const -> String override;
-
- private:
-  Entity mMapEntity {kNullEntity};
-  TileEncoding mNewEncoding;
-  Maybe<TileEncoding> mOldEncoding;
-  Maybe<TileCompression> mOldCompression;
-};
-
-}  // namespace tactile::cmd
+}  // namespace tactile

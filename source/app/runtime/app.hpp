@@ -30,8 +30,6 @@ namespace tactile {
 /// The heart of the Tactile map editor.
 class App final : public AppDelegate {
  public:
-  App();
-
   void on_startup() override;
 
   void on_shutdown() override;
@@ -40,7 +38,7 @@ class App final : public AppDelegate {
 
   void on_update() override;
 
-  void on_event(const cen::event_handler& handler) override;
+  void on_event(const cen::event_handler& event) override;
 
   [[nodiscard]] auto should_stop() const -> bool override { return mShouldStop; }
 
@@ -49,27 +47,39 @@ class App final : public AppDelegate {
   bool mShouldStop {false};
 
   void _subscribe_to_events();
-
   void _init_persistent_settings();
-
   void _init_widgets();
 
   void _add_open_documents_to_file_history();
 
-  void _on_keyboard_event(cen::keyboard_event event);
-
-  void _on_mouse_wheel_event(const cen::mouse_wheel_event& event);
-
   void _on_menu_action(const MenuActionEvent& event);
 
+  void _on_undo(const UndoEvent& event);
+  void _on_redo(const RedoEvent& event);
+  void _on_set_command_capacity(const SetCommandCapacityEvent& event);
+
+  void _on_show_new_map_dialog(const ShowNewMapDialogEvent& event);
+  void _on_show_open_map_dialog(const ShowOpenMapDialogEvent& event);
+  void _on_show_resize_map_dialog(const ShowResizeMapDialogEvent& event);
+  void _on_create_map(const CreateMapEvent& event);
+  void _on_open_map(const OpenMapEvent& event);
+  void _on_resize_map(const ResizeMapEvent& event);
+  void _on_add_row(const AddRowEvent& event);
+  void _on_add_column(const AddColumnEvent& event);
+  void _on_remove_row(const RemoveRowEvent& event);
+  void _on_remove_column(const RemoveColumnEvent& event);
+  void _on_fix_tiles_in_map(const FixTilesInMapEvent& event);
+  void _on_export_as_godot_scene(const ExportAsGodotSceneEvent& event);
+  void _on_inspect_map(const InspectMapEvent& event);
+  void _on_set_tile_format_encoding(const SetTileFormatEncodingEvent& event);
+  void _on_set_tile_format_compression(const SetTileFormatCompressionEvent& event);
+  void _on_set_zlib_compression_level(const SetZlibCompressionLevelEvent& event);
+  void _on_set_zstd_compression_level(const SetZstdCompressionLevelEvent& event);
+
   void _on_show_settings(const ShowSettingsEvent& event);
-
   void _on_set_settings(const SetSettingsEvent& event);
-
   void _on_set_language(const SetLanguageEvent& event);
-
   void _on_set_theme(const SetThemeEvent& event);
-
   void _on_reset_dock_visibilities(const ResetDockVisibilitiesEvent& event);
 
   void _on_quit();

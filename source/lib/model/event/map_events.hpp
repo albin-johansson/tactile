@@ -50,7 +50,7 @@ struct OpenMapEvent final {
 
 struct InspectMapEvent final {};
 
-struct OpenResizeMapDialogEvent final {};
+struct ShowResizeMapDialogEvent final {};
 
 struct ResizeMapEvent final {
   usize row_count {};

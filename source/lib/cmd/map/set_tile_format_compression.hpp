@@ -19,12 +19,12 @@
 
 #pragma once
 
+#include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "core/tile_format.hpp"
-#include "cmd/command.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
 class SetTileFormatCompression final : public Command {
  public:
@@ -42,4 +42,4 @@ class SetTileFormatCompression final : public Command {
   Maybe<TileCompression> mOldCompression;
 };
 
-}  // namespace tactile
+}  // namespace tactile::cmd

@@ -22,7 +22,7 @@
 #include "model/context.hpp"
 #include "systems/language_system.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
 SetTileFormatEncoding::SetTileFormatEncoding(const Entity map_entity,
                                              const TileEncoding encoding)
@@ -60,4 +60,4 @@ auto SetTileFormatEncoding::get_name() const -> String
   return strings.cmd.set_tile_format_encoding;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd

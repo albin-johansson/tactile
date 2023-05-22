@@ -23,7 +23,7 @@
 #include "model/context.hpp"
 #include "systems/language_system.hpp"
 
-namespace tactile {
+namespace tactile::cmd {
 
 SetTileFormatCompression::SetTileFormatCompression(const Entity map_entity,
                                                    const TileCompression compression)
@@ -56,4 +56,4 @@ auto SetTileFormatCompression::get_name() const -> String
   return strings.cmd.set_tile_format_compression;
 }
 
-}  // namespace tactile
+}  // namespace tactile::cmd
