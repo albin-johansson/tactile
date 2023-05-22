@@ -19,9 +19,6 @@
 
 #pragma once
 
-#include "common/type/path.hpp"
-#include "common/type/string.hpp"
-
 namespace tactile {
 
 /// Represents the available save file formats.
@@ -31,21 +28,5 @@ enum class SaveFormat {
   TiledJson = 1,
   TiledXml = 2
 };
-
-/// Returns a language-agnostic identifier for a save format identifier.
-[[nodiscard]] auto get_human_readable_name(SaveFormat format) -> const char*;
-
-/// Returns a valid file extension for a save format identifier.
-/// Note, several file extensions are valid for most formats, e.g. ".yml" and ".yaml".
-[[nodiscard]] auto get_file_extension(SaveFormat format) -> String;
-
-/// Indicates whether a file has one of the supported Tactile YAML file extensions.
-[[nodiscard]] auto has_supported_tactile_yaml_extension(const Path& path) -> bool;
-
-/// Indicates whether a file has one of the supported Tiled JSON file extensions.
-[[nodiscard]] auto has_supported_tiled_json_extension(const Path& path) -> bool;
-
-/// Indicates whether a file has one of the supported Tiled XML file extensions.
-[[nodiscard]] auto has_supported_tiled_xml_extension(const Path& path) -> bool;
 
 }  // namespace tactile

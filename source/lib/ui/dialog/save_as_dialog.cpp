@@ -25,7 +25,7 @@
 #include <spdlog/spdlog.h>
 
 #include "io/file_dialog.hpp"
-#include "io/save_format.hpp"
+#include "io/save_formats.hpp"
 #include "model/event/document_events.hpp"
 #include "model/settings.hpp"
 

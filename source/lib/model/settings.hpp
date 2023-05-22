@@ -21,6 +21,7 @@
 
 #include "common/enum/lang.hpp"
 #include "common/enum/overlay_pos.hpp"
+#include "common/enum/save_format.hpp"
 #include "common/enum/theme.hpp"
 #include "common/macros.hpp"
 #include "common/primitives.hpp"
@@ -28,7 +29,6 @@
 #include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
 #include "core/color.hpp"
-#include "io/save_format.hpp"
 
 namespace tactile {
 

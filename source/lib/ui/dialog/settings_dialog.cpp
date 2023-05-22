@@ -23,6 +23,7 @@
 #include <imgui_internal.h>
 
 #include "common/primitives.hpp"
+#include "io/save_formats.hpp"
 #include "model/event/command_events.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/event/view_events.hpp"
