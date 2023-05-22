@@ -21,7 +21,7 @@
 
 #include <doctest/doctest.h>
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "core/tile_matrix.hpp"
 #include "io/export/tactile_yaml_exporter.hpp"
 #include "io/ir/map/map_ir.hpp"
@@ -30,7 +30,7 @@
 namespace tactile::test {
 namespace {
 
-inline const TileMatrix test_tiles {
+inline const TileMatrix kTestTiles {
     {123, 8324, 4123, 68, 0},
     {7483, 32, 12944, 123, 8},
     {8, 284, 221, 435, 2123},
@@ -38,7 +38,7 @@ inline const TileMatrix test_tiles {
     {57, 348, 118, 12, 136},
 };
 
-[[nodiscard]] auto create_test_map() -> MapIR
+[[nodiscard]] auto _create_test_map() -> MapIR
 {
   MapIR map;
   map.extent.rows = 5;
@@ -57,7 +57,7 @@ inline const TileMatrix test_tiles {
 
   auto& tile_layer = layer.data.emplace<TileLayerIR>();
   tile_layer.extent = map.extent;
-  tile_layer.tiles = test_tiles;
+  tile_layer.tiles = kTestTiles;
 
   return map;
 }
@@ -65,7 +65,7 @@ inline const TileMatrix test_tiles {
 using TileFormatFactory = TileFormatIR (*)();
 using TestData = std::pair<std::string_view, TileFormatFactory>;
 
-[[nodiscard]] auto create_zlib_tile_format() -> TileFormatIR
+[[nodiscard]] auto _create_zlib_tile_format() -> TileFormatIR
 {
   return {
       .encoding = TileEncoding::Base64,
@@ -74,7 +74,7 @@ using TestData = std::pair<std::string_view, TileFormatFactory>;
   };
 }
 
-[[nodiscard]] auto create_zstd_tile_format() -> TileFormatIR
+[[nodiscard]] auto _create_zstd_tile_format() -> TileFormatIR
 {
   return {
       .encoding = TileEncoding::Base64,
@@ -83,13 +83,14 @@ using TestData = std::pair<std::string_view, TileFormatFactory>;
   };
 }
 
-void create_and_validate_yaml_map(const char* path, TileFormatFactory format_factory)
+void _create_and_validate_yaml_map(const char* path, TileFormatFactory format_factory)
 {
   {
-    auto test_map = create_test_map();
+    auto test_map = _create_test_map();
     test_map.tile_format = format_factory();
 
-    save_map_as_tactile_yaml(path, test_map);
+    Settings settings;
+    save_map_as_tactile_yaml(path, test_map, settings);
   }
 
   const auto result = parse_map(path);
@@ -99,7 +100,7 @@ void create_and_validate_yaml_map(const char* path, TileFormatFactory format_fac
   const auto& layer = map.layers.front();
   const auto& tile_layer = layer.as_tile_layer();
 
-  REQUIRE(test_tiles == tile_layer.tiles);
+  REQUIRE(kTestTiles == tile_layer.tiles);
 }
 
 }  // namespace
@@ -108,12 +109,12 @@ TEST_SUITE("Tactile YAML format tile compression")
 {
   TEST_CASE("Zlib")
   {
-    create_and_validate_yaml_map("zlib_compression_test.yaml", create_zlib_tile_format);
+    _create_and_validate_yaml_map("zlib_compression_test.yaml", _create_zlib_tile_format);
   }
 
   TEST_CASE("Zstd")
   {
-    create_and_validate_yaml_map("zstd_compression_test.yaml", create_zstd_tile_format);
+    _create_and_validate_yaml_map("zstd_compression_test.yaml", _create_zstd_tile_format);
   }
 }
 

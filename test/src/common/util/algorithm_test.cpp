@@ -23,12 +23,12 @@
 
 #include <doctest/doctest.h>
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 
 namespace tactile::test {
 namespace {
 
-constexpr auto u32_max = std::numeric_limits<uint32>::max();
+constexpr auto kMaxU32 = std::numeric_limits<uint32>::max();
 
 }  // namespace
 
@@ -36,10 +36,10 @@ TEST_SUITE("Algorithms")
 {
   TEST_CASE("udiff")
   {
-    REQUIRE(1u == udiff(u32_max, u32_max - 1));
-    REQUIRE(1u == udiff(u32_max - 1, u32_max));
+    REQUIRE(1u == udiff(kMaxU32, kMaxU32 - 1));
+    REQUIRE(1u == udiff(kMaxU32 - 1, kMaxU32));
 
-    REQUIRE(u32_max == udiff(0u, u32_max));
+    REQUIRE(kMaxU32 == udiff(0u, kMaxU32));
 
     REQUIRE(46u == udiff(28u, 74u));
   }

@@ -25,31 +25,29 @@
 
 #include <settings.pb.h>
 
-using tactile::ui::EditorTheme;
-
 namespace tactile::test {
 
 TEST_SUITE("Settings")
 {
   TEST_CASE("Ensure theme enums match")
   {
-    REQUIRE(proto::THEME_DEAR_DARK == std::to_underlying(EditorTheme::DearDark));
-    REQUIRE(proto::THEME_DEAR_LIGHT == std::to_underlying(EditorTheme::DearLight));
-    REQUIRE(proto::THEME_RUBY == std::to_underlying(EditorTheme::Ruby));
-    REQUIRE(proto::THEME_SAPPHIRE == std::to_underlying(EditorTheme::Sapphire));
-    REQUIRE(proto::THEME_EMERALD == std::to_underlying(EditorTheme::Emerald));
-    REQUIRE(proto::THEME_AMETHYST == std::to_underlying(EditorTheme::Amethyst));
-    REQUIRE(proto::THEME_AMBER == std::to_underlying(EditorTheme::Amber));
-    REQUIRE(proto::THEME_NOCTURNAL == std::to_underlying(EditorTheme::Nocturnal));
-    REQUIRE(proto::THEME_ASH == std::to_underlying(EditorTheme::Ash));
-    REQUIRE(proto::THEME_JOKER == std::to_underlying(EditorTheme::Joker));
-    REQUIRE(proto::THEME_RASPBERRY == std::to_underlying(EditorTheme::Raspberry));
-    REQUIRE(proto::THEME_STEALTH == std::to_underlying(EditorTheme::Stealth));
-    REQUIRE(proto::THEME_GASOLINE == std::to_underlying(EditorTheme::Gasoline));
-    REQUIRE(proto::THEME_BUMBLEBEE == std::to_underlying(EditorTheme::Bumblebee));
-    REQUIRE(proto::THEME_LAVENDER == std::to_underlying(EditorTheme::Lavender));
-    REQUIRE(proto::THEME_FROST == std::to_underlying(EditorTheme::Frost));
-    REQUIRE(proto::THEME_ROSE == std::to_underlying(EditorTheme::Rose));
+    REQUIRE(proto::THEME_DEAR_DARK == std::to_underlying(Theme::DearDark));
+    REQUIRE(proto::THEME_DEAR_LIGHT == std::to_underlying(Theme::DearLight));
+    REQUIRE(proto::THEME_RUBY == std::to_underlying(Theme::Ruby));
+    REQUIRE(proto::THEME_SAPPHIRE == std::to_underlying(Theme::Sapphire));
+    REQUIRE(proto::THEME_EMERALD == std::to_underlying(Theme::Emerald));
+    REQUIRE(proto::THEME_AMETHYST == std::to_underlying(Theme::Amethyst));
+    REQUIRE(proto::THEME_AMBER == std::to_underlying(Theme::Amber));
+    REQUIRE(proto::THEME_NOCTURNAL == std::to_underlying(Theme::Nocturnal));
+    REQUIRE(proto::THEME_ASH == std::to_underlying(Theme::Ash));
+    REQUIRE(proto::THEME_JOKER == std::to_underlying(Theme::Joker));
+    REQUIRE(proto::THEME_RASPBERRY == std::to_underlying(Theme::Raspberry));
+    REQUIRE(proto::THEME_STEALTH == std::to_underlying(Theme::Stealth));
+    REQUIRE(proto::THEME_GASOLINE == std::to_underlying(Theme::Gasoline));
+    REQUIRE(proto::THEME_BUMBLEBEE == std::to_underlying(Theme::Bumblebee));
+    REQUIRE(proto::THEME_LAVENDER == std::to_underlying(Theme::Lavender));
+    REQUIRE(proto::THEME_FROST == std::to_underlying(Theme::Frost));
+    REQUIRE(proto::THEME_ROSE == std::to_underlying(Theme::Rose));
   }
 
   TEST_CASE("Ensure overlay position enums match")

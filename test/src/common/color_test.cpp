@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/color.hpp"
+#include "common/color.hpp"
 
 #include <doctest/doctest.h>
 

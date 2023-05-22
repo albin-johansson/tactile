@@ -46,7 +46,7 @@ constexpr usize kColCount = 13;
 
 inline String gCurrentParser;
 
-void validate_contexts(const ContextIR& source, const ContextIR& restored)
+void _validate_contexts(const ContextIR& source, const ContextIR& restored)
 {
   REQUIRE(source.properties.size() == restored.properties.size());
   REQUIRE(source.components.size() == restored.components.size());
@@ -59,7 +59,7 @@ void validate_contexts(const ContextIR& source, const ContextIR& restored)
   }
 }
 
-void validate_objects(const ObjectIR& source, const ObjectIR& restored)
+void _validate_objects(const ObjectIR& source, const ObjectIR& restored)
 {
   REQUIRE(source.id == restored.id);
   REQUIRE(source.type == restored.type);
@@ -72,20 +72,20 @@ void validate_objects(const ObjectIR& source, const ObjectIR& restored)
 
   REQUIRE(source.visible == restored.visible);
 
-  validate_contexts(source.context, restored.context);
+  _validate_contexts(source.context, restored.context);
 }
 
-void validate_object_layers(const ObjectLayerIR& source, const ObjectLayerIR& restored)
+void _validate_object_layers(const ObjectLayerIR& source, const ObjectLayerIR& restored)
 {
   REQUIRE(source.objects.size() == restored.objects.size());
   for (usize index = 0; index < source.objects.size(); ++index) {
     const auto& source_object = source.objects.at(index);
     const auto& restored_object = restored.objects.at(index);
-    validate_objects(source_object, restored_object);
+    _validate_objects(source_object, restored_object);
   }
 }
 
-void validate_layers(const LayerIR& source_layer, const LayerIR& restored_layer)
+void _validate_layers(const LayerIR& source_layer, const LayerIR& restored_layer)
 {
   REQUIRE(source_layer.name == restored_layer.name);
   REQUIRE(source_layer.type == restored_layer.type);
@@ -107,7 +107,7 @@ void validate_layers(const LayerIR& source_layer, const LayerIR& restored_layer)
   else if (source_layer.type == LayerType::ObjectLayer) {
     const auto& source_objects = source_layer.as_object_layer();
     const auto& restored_objects = restored_layer.as_object_layer();
-    validate_object_layers(source_objects, restored_objects);
+    _validate_object_layers(source_objects, restored_objects);
   }
   else if (source_layer.type == LayerType::GroupLayer) {
     const auto& source_group = source_layer.as_group_layer();
@@ -117,30 +117,30 @@ void validate_layers(const LayerIR& source_layer, const LayerIR& restored_layer)
     for (usize index = 0; index < source_group.children.size(); ++index) {
       const auto& source_child_layer = source_group.children.at(index);
       const auto& restored_child_layer = restored_group.children.at(index);
-      validate_layers(*source_child_layer, *restored_child_layer);
+      _validate_layers(*source_child_layer, *restored_child_layer);
     }
   }
 
-  validate_contexts(source_layer.context, restored_layer.context);
+  _validate_contexts(source_layer.context, restored_layer.context);
 }
 
-void validate_layers(const MapIR& source, const MapIR& restored)
+void _validate_layers(const MapIR& source, const MapIR& restored)
 {
   REQUIRE(source.layers.size() == restored.layers.size());
   for (usize index = 0; index < source.layers.size(); ++index) {
     const auto& source_layer = source.layers.at(index);
     const auto& restored_layer = restored.layers.at(index);
-    validate_layers(source_layer, restored_layer);
+    _validate_layers(source_layer, restored_layer);
   }
 }
 
-void validate_fancy_tiles(const TileIR& source, const TileIR& restored)
+void _validate_fancy_tiles(const TileIR& source, const TileIR& restored)
 {
   REQUIRE(source.objects.size() == restored.objects.size());
   for (usize index = 0; index < source.objects.size(); ++index) {
     const auto& source_object = source.objects.at(index);
     const auto& restored_object = restored.objects.at(index);
-    validate_objects(source_object, restored_object);
+    _validate_objects(source_object, restored_object);
   }
 
   REQUIRE(source.frames.size() == restored.frames.size());
@@ -152,10 +152,10 @@ void validate_fancy_tiles(const TileIR& source, const TileIR& restored)
     REQUIRE(source_frame.duration_ms == restored_frame.duration_ms);
   }
 
-  validate_contexts(source.context, restored.context);
+  _validate_contexts(source.context, restored.context);
 }
 
-void validate_tilesets(const MapIR& source, const MapIR& restored)
+void _validate_tilesets(const MapIR& source, const MapIR& restored)
 {
   REQUIRE(source.tilesets.size() == restored.tilesets.size());
 
@@ -177,20 +177,20 @@ void validate_tilesets(const MapIR& source, const MapIR& restored)
     REQUIRE(source_tileset.fancy_tiles.size() == restored_tileset.fancy_tiles.size());
     for (const auto& [id, sourceTile]: source_tileset.fancy_tiles) {
       const auto& restored_tile = restored_tileset.fancy_tiles.at(id);
-      validate_fancy_tiles(sourceTile, restored_tile);
+      _validate_fancy_tiles(sourceTile, restored_tile);
     }
 
-    validate_contexts(source_tileset.context, restored_tileset.context);
+    _validate_contexts(source_tileset.context, restored_tileset.context);
   }
 }
 
-void validate_component_definitions(const MapIR& source, const MapIR& restored)
+void _validate_component_definitions(const MapIR& source, const MapIR& restored)
 {
   REQUIRE(source.component_definitions.size() == restored.component_definitions.size());
   REQUIRE(source.component_definitions == restored.component_definitions);
 }
 
-void validate_basic_map_info(const MapIR& source, const MapIR& restored)
+void _validate_basic_map_info(const MapIR& source, const MapIR& restored)
 {
   REQUIRE(source.extent.rows == restored.extent.rows);
   REQUIRE(source.extent.cols == restored.extent.cols);
@@ -206,7 +206,7 @@ void validate_basic_map_info(const MapIR& source, const MapIR& restored)
   }
 }
 
-[[nodiscard]] auto create_source_ground_layer() -> LayerIR
+[[nodiscard]] auto _create_source_ground_layer() -> LayerIR
 {
   LayerIR data;
 
@@ -236,7 +236,7 @@ void validate_basic_map_info(const MapIR& source, const MapIR& restored)
   return data;
 }
 
-[[nodiscard]] auto create_source_group_layer(const bool use_components) -> LayerIR
+[[nodiscard]] auto _create_source_group_layer(const bool use_components) -> LayerIR
 {
   LayerIR data;
 
@@ -296,7 +296,7 @@ void validate_basic_map_info(const MapIR& source, const MapIR& restored)
   return data;
 }
 
-[[nodiscard]] auto create_source_object_layer(const bool use_components) -> LayerIR
+[[nodiscard]] auto _create_source_object_layer(const bool use_components) -> LayerIR
 {
   LayerIR data;
 
@@ -355,7 +355,7 @@ void validate_basic_map_info(const MapIR& source, const MapIR& restored)
   return data;
 }
 
-[[nodiscard]] auto create_source_tileset(const bool use_components) -> TilesetIR
+[[nodiscard]] auto _create_source_tileset(const bool use_components) -> TilesetIR
 {
   TilesetIR data;
 
@@ -397,7 +397,7 @@ void validate_basic_map_info(const MapIR& source, const MapIR& restored)
   return data;
 }
 
-[[nodiscard]] auto create_source_data(const bool use_components) -> MapIR
+[[nodiscard]] auto _create_source_data(const bool use_components) -> MapIR
 {
   MapIR data;
 
@@ -438,11 +438,11 @@ void validate_basic_map_info(const MapIR& source, const MapIR& restored)
     data.component_definitions["long-component"]["col-v"] = Color {0x12, 0xF3, 0xCA};
   }
 
-  data.tilesets.push_back(create_source_tileset(use_components));
+  data.tilesets.push_back(_create_source_tileset(use_components));
 
-  data.layers.push_back(create_source_ground_layer());
-  data.layers.push_back(create_source_group_layer(use_components));
-  data.layers.push_back(create_source_object_layer(use_components));
+  data.layers.push_back(_create_source_ground_layer());
+  data.layers.push_back(_create_source_group_layer(use_components));
+  data.layers.push_back(_create_source_object_layer(use_components));
 
   data.context.properties["map-int"] = 123;
   data.context.properties["map-float"] = 56.3f;
@@ -465,56 +465,58 @@ void validate_basic_map_info(const MapIR& source, const MapIR& restored)
 
 TEST_SUITE("Parser round trip")
 {
+  const Settings settings;
+
   TEST_CASE("YAML")
   {
     gCurrentParser = "YAML";
 
-    const auto source = create_source_data(true);
-    save_map_as_tactile_yaml(fs::absolute("test_map.yaml"), source);
+    const auto source = _create_source_data(true);
+    save_map_as_tactile_yaml(fs::absolute("test_map.yaml"), source, settings);
 
     const auto result = parse_map("test_map.yaml");
     REQUIRE(result.has_value());
 
     const auto& restored = result.value();
 
-    validate_basic_map_info(source, restored);
-    validate_component_definitions(source, restored);
-    validate_tilesets(source, restored);
-    validate_layers(source, restored);
+    _validate_basic_map_info(source, restored);
+    _validate_component_definitions(source, restored);
+    _validate_tilesets(source, restored);
+    _validate_layers(source, restored);
   }
 
   TEST_CASE("JSON")
   {
     gCurrentParser = "JSON";
 
-    const auto source = create_source_data(false);
-    save_map_as_tiled_json(fs::absolute("test_map.json"), source);
+    const auto source = _create_source_data(false);
+    save_map_as_tiled_json(fs::absolute("test_map.json"), source, settings);
 
     const auto result = parse_map("test_map.json");
     REQUIRE(result.has_value());
 
     const auto& restored = result.value();
 
-    validate_basic_map_info(source, restored);
-    validate_tilesets(source, restored);
-    validate_layers(source, restored);
+    _validate_basic_map_info(source, restored);
+    _validate_tilesets(source, restored);
+    _validate_layers(source, restored);
   }
 
   TEST_CASE("XML")
   {
     gCurrentParser = "XML";
 
-    const auto source = create_source_data(false);
-    save_map_as_tiled_xml(fs::absolute("test_map.tmx"), source);
+    const auto source = _create_source_data(false);
+    save_map_as_tiled_xml(fs::absolute("test_map.tmx"), source, settings);
 
     const auto result = parse_map("test_map.tmx");
     REQUIRE(result.has_value());
 
     const auto& restored = result.value();
 
-    validate_basic_map_info(source, restored);
-    validate_tilesets(source, restored);
-    validate_layers(source, restored);
+    _validate_basic_map_info(source, restored);
+    _validate_tilesets(source, restored);
+    _validate_layers(source, restored);
   }
 }
 

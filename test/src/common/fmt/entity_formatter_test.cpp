@@ -17,22 +17,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "common/fmt/entity_formatter.hpp"
 
-#include <string_view>  // string_view
-#include <utility>      // to_underlying
+#include <doctest/doctest.h>
 
-#include <fmt/core.h>
-#include <fmt/ostream.h>
+namespace tactile::test {
 
-#include "common/type/ecs.hpp"
-
-template <>
-struct fmt::formatter<tactile::Entity> : fmt::formatter<std::string_view> {
-  auto format(const tactile::Entity entity, auto& ctx) const
+TEST_SUITE("Entity formatter")
+{
+  TEST_CASE("Format")
   {
-    return fmt::format_to(ctx.out(), "{}", std::to_underlying(entity));
+    CHECK(fmt::format("{}", Entity {}) == "0");
+    CHECK(fmt::format("{}", Entity {42}) == "42");
   }
-};
+}
 
-static_assert(fmt::is_formattable<tactile::Entity>::value);
+}  // namespace tactile::test

@@ -46,7 +46,7 @@ TEST_SUITE("CommandStack")
   {
     const CommandStack stack;
     REQUIRE(stack.size() == 0u);
-    REQUIRE(stack.capacity() == get_settings().get_command_capacity());
+    REQUIRE(stack.capacity() == 64u);
     REQUIRE(!stack.can_undo());
     REQUIRE(!stack.can_redo());
     REQUIRE(stack.is_clean());
