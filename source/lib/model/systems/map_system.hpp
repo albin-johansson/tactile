@@ -21,12 +21,12 @@
 
 #include "common/enum/layer_type.hpp"
 #include "common/primitives.hpp"
+#include "common/result.hpp"
 #include "common/tile_extent.hpp"
 #include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
-#include "common/type/result.hpp"
 #include "core/map.hpp"
 #include "model/model.hpp"
 

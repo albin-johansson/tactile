@@ -23,9 +23,9 @@
 
 #include "common/attribute.hpp"
 #include "common/primitives.hpp"
+#include "common/result.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
-#include "common/type/result.hpp"
 #include "common/type/string.hpp"
 
 namespace tactile {

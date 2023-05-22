@@ -21,7 +21,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "common/type/result.hpp"
+#include "common/result.hpp"
 
 namespace tactile {
 

@@ -24,7 +24,7 @@
 #include <unordered_map>  // unordered_map
 
 #include "common/primitives.hpp"
-#include "common/type/result.hpp"
+#include "common/result.hpp"
 #include "common/type/string.hpp"
 
 namespace tactile {
