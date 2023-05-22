@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "common/enums/object_type.hpp"
 #include "common/primitives.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
@@ -26,13 +27,6 @@
 #include "common/type/string.hpp"
 
 namespace tactile {
-
-/// Represents the available map object types.
-enum class ObjectType {
-  Point,
-  Rect,
-  Ellipse
-};
 
 /// Represents various map objects found in object layers.
 /// The current supported object types are rectangles, ellipses, and points.

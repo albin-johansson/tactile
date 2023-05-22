@@ -21,6 +21,7 @@
 
 #include "common/debug/assert.hpp"
 #include "core/context.hpp"
+#include "core/object.hpp"
 #include "model/systems/context/context_system.hpp"
 #include "model/systems/validation.hpp"
 

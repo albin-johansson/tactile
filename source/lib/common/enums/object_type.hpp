@@ -19,38 +19,13 @@
 
 #pragma once
 
-#include "cmd/command.hpp"
-#include "common/enums/object_type.hpp"
-#include "common/type/ecs.hpp"
-#include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
+namespace tactile {
 
-namespace tactile::cmd {
-
-class AddObject final : public Command {
- public:
-  AddObject(Entity map_entity,
-            Entity object_layer_entity,
-            ObjectType type,
-            Float2 position,
-            Float2 size = {0, 0});
-
-  void undo() override;
-
-  void redo() override;
-
-  void dispose() override;
-
-  [[nodiscard]] auto get_name() const -> String override;
-
- private:
-  Entity mMapEntity;
-  Entity mObjectLayerEntity;
-  ObjectType mObjectType;
-  Float2 mPosition;
-  Float2 mSize;
-  Maybe<Entity> mObjectEntity;
-  bool mDidAddObject : 1 {false};
+/// Represents the available map object types.
+enum class ObjectType {
+  Point,
+  Rect,
+  Ellipse
 };
 
-}  // namespace tactile::cmd
+}  // namespace tactile

@@ -22,19 +22,20 @@
 #include "common/debug/panic.hpp"
 #include "core/layer.hpp"
 #include "core/map.hpp"
+#include "core/object.hpp"
 #include "model/context.hpp"
 #include "model/systems/object_system.hpp"
 #include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 
-AddObject::AddObject(const MapEntity map_entity,
-                     const ObjectLayerEntity layer_entity,
+AddObject::AddObject(const Entity map_entity,
+                     const Entity object_layer_entity,
                      const ObjectType type,
                      const Float2 position,
                      const Float2 size)
     : mMapEntity {map_entity},
-      mLayerEntity {layer_entity},
+      mObjectLayerEntity {object_layer_entity},
       mObjectType {type},
       mPosition {position},
       mSize {size}
@@ -44,7 +45,7 @@ AddObject::AddObject(const MapEntity map_entity,
 void AddObject::undo()
 {
   auto& model = get_global_model();
-  auto& object_layer = model.get<ObjectLayer>(mLayerEntity);
+  auto& object_layer = model.get<ObjectLayer>(mObjectLayerEntity);
 
   const auto object_entity = mObjectEntity.value();
   std::erase(object_layer.objects, object_entity);
@@ -58,7 +59,7 @@ void AddObject::redo()
   auto& model = get_global_model();
 
   auto& map = model.get<Map>(mMapEntity);
-  auto& object_layer = model.get<ObjectLayer>(mLayerEntity);
+  auto& object_layer = model.get<ObjectLayer>(mObjectLayerEntity);
 
   if (!mObjectEntity.has_value()) {
     mObjectEntity = sys::create_object(model, mObjectType);
@@ -71,7 +72,10 @@ void AddObject::redo()
   object.type = mObjectType;
   object.position = mPosition;
   object.size = mSize;
-  object.meta_id = map.next_object_id++;
+
+  if (!object.meta_id.has_value()) {
+    object.meta_id = map.next_object_id++;
+  }
 
   object_layer.objects.push_back(object_entity);
   mDidAddObject = true;

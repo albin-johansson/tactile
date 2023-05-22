@@ -28,6 +28,7 @@
 #include "core/context.hpp"
 #include "core/layer.hpp"
 #include "core/map.hpp"
+#include "core/object.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/event/object_events.hpp"
 #include "model/event/property_events.hpp"
