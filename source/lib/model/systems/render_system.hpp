@@ -31,22 +31,17 @@
 
 namespace tactile::sys {
 
-void render_map(const Model& model,
-                const ui::CanvasInfo& canvas,
-                const Map& map,
-                const Settings& settings);
+void render_map(const Model& model, const ui::CanvasInfo& canvas, const Map& map);
 
 void render_tileset(const Model& model,
                     const ui::CanvasInfo& canvas,
-                    const Tileset& tileset,
-                    const Settings& settings);
+                    const Tileset& tileset);
 
 void render_layer(const Model& model,
                   const ui::CanvasInfo& canvas,
                   const Map& map,
                   Entity parent_layer_entity,
-                  Entity layer_entity,
-                  const Settings& settings);
+                  Entity layer_entity);
 
 void render_tile_layer(const Model& model,
                        const ui::CanvasInfo& canvas,

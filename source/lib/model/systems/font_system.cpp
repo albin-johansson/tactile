@@ -19,7 +19,7 @@
 
 #include "font_system.hpp"
 
-#include "model/context.hpp"
+#include "model/settings.hpp"
 #include "ui/constants.hpp"
 
 namespace tactile::sys {

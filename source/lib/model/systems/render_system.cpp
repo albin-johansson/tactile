@@ -29,6 +29,7 @@
 #include "core/layer.hpp"
 #include "core/object.hpp"
 #include "core/texture.hpp"
+#include "model/settings.hpp"
 #include "model/systems/group_layer_system.hpp"
 #include "model/systems/layer_system.hpp"
 #include "model/systems/tileset_system.hpp"
@@ -140,16 +141,13 @@ void _render_ellipse_object(const Model& model,
   }
 }
 
-void _render_layers(const Model& model,
-                    const ui::CanvasInfo& canvas,
-                    const Map& map,
-                    const Settings& settings)
+void _render_layers(const Model& model, const ui::CanvasInfo& canvas, const Map& map)
 {
   // TODO performance: include parent layer entity in function object signature
   sys::recurse_layers(model, map.root_layer, [&](const Entity layer_entity) {
     const auto parent_layer_entity =
         sys::get_parent_layer(model, map.root_layer, layer_entity);
-    render_layer(model, canvas, map, parent_layer_entity, layer_entity, settings);
+    render_layer(model, canvas, map, parent_layer_entity, layer_entity);
   });
 }
 
@@ -167,12 +165,11 @@ void _render_active_object_highlight(const Model& model,
 
 }  // namespace
 
-void render_map(const Model& model,
-                const ui::CanvasInfo& canvas,
-                const Map& map,
-                const Settings& settings)
+void render_map(const Model& model, const ui::CanvasInfo& canvas, const Map& map)
 {
-  _render_layers(model, canvas, map, settings);
+  const auto& settings = model.get<Settings>();
+
+  _render_layers(model, canvas, map);
   _render_active_object_highlight(model, canvas, map);
 
   if (settings.test_flag(SETTINGS_SHOW_GRID_BIT)) {
@@ -184,9 +181,9 @@ void render_map(const Model& model,
 
 void render_tileset(const Model& model,
                     const ui::CanvasInfo& canvas,
-                    const Tileset& tileset,
-                    const Settings& settings)
+                    const Tileset& tileset)
 {
+  const auto& settings = model.get<Settings>();
   const auto& texture = model.get<Texture>(tileset.texture);
 
   const auto rendered_position = ui::translate_pos(canvas, ImVec2 {0, 0});
@@ -205,8 +202,7 @@ void render_layer(const Model& model,
                   const ui::CanvasInfo& canvas,
                   const Map& map,
                   const Entity parent_layer_entity,
-                  const Entity layer_entity,
-                  const Settings& settings)
+                  const Entity layer_entity)
 {
   const auto& layer = model.get<Layer>(layer_entity);
   const Layer* parent_layer = (parent_layer_entity != kNullEntity)
@@ -217,6 +213,8 @@ void render_layer(const Model& model,
   if (!layer.visible || (parent_layer != nullptr && !parent_layer->visible)) {
     return;
   }
+
+  const auto& settings = model.get<Settings>();
 
   const auto parent_opacity = (parent_layer != nullptr) ? parent_layer->opacity : 1.0f;
   const auto layer_opacity = settings.test_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT)

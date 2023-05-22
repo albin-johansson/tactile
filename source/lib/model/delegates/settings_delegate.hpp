@@ -21,6 +21,7 @@
 
 #include "common/type/dispatcher.hpp"
 #include "model/event/setting_events.hpp"
+#include "model/event/view_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile {

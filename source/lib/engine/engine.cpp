@@ -34,6 +34,7 @@
 #include "engine/backend/gl/gl_backend.hpp"
 #include "io/directories.hpp"
 #include "model/context.hpp"
+#include "model/settings.hpp"
 #include "model/systems/model_system.hpp"
 #include "platform/window.hpp"
 #include "ui/style/fonts.hpp"

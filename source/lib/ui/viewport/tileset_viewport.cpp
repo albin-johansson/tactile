@@ -32,6 +32,7 @@
 #include "model/document.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
+#include "model/settings.hpp"
 #include "model/systems/render_system.hpp"
 #include "systems/language_system.hpp"
 #include "ui/conversions.hpp"
@@ -166,7 +167,7 @@ void show_tileset_viewport(const Model& model,
     gDockState.center_viewport = false;
   }
 
-  sys::render_tileset(model, canvas, tileset, settings);
+  sys::render_tileset(model, canvas, tileset);
 
   if (Window::contains_mouse()) {
     _poll_mouse(tileset, canvas, dispatcher);

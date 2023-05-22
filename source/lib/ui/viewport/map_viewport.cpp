@@ -35,6 +35,7 @@
 #include "model/event/property_events.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/event/viewport_events.hpp"
+#include "model/settings.hpp"
 #include "model/systems/render_system.hpp"
 #include "systems/language_system.hpp"
 #include "ui/conversions.hpp"
@@ -255,7 +256,7 @@ void show_map_viewport(const Model& model,
     gViewportState.will_be_centered = false;
   }
 
-  sys::render_map(model, canvas, map, settings);
+  sys::render_map(model, canvas, map);
 
   const auto cursor = get_viewport_cursor_info(canvas);
   _poll_mouse(dispatcher, cursor);
