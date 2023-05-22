@@ -26,5 +26,6 @@
 #include "cmd/map/all.hpp"
 #include "cmd/object/all.hpp"
 #include "cmd/property/all.hpp"
+#include "cmd/tile/all.hpp"
 #include "cmd/tileset/all.hpp"
 #include "cmd/tool/all.hpp"
