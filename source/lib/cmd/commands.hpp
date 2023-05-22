@@ -21,7 +21,7 @@
 
 /* Convenience header that includes all other command headers */
 
-#include "cmd/comp/all.hpp"
+#include "cmd/component/all.hpp"
 #include "cmd/layer/all.hpp"
 #include "cmd/map/all.hpp"
 #include "cmd/object/all.hpp"
