@@ -20,8 +20,8 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "common/enums/tile_compression.hpp"
-#include "common/enums/tile_encoding.hpp"
+#include "common/enum/tile_compression.hpp"
+#include "common/enum/tile_encoding.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 

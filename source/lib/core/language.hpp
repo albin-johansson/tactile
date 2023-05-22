@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/enums/lang.hpp"
+#include "common/enum/lang.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/string.hpp"
 

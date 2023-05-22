@@ -23,9 +23,9 @@
 #include <memory>    // addressof
 #include <variant>   // get
 
-#include "common/enums/object_type.hpp"
-#include "common/enums/tile_compression.hpp"
-#include "common/enums/tile_encoding.hpp"
+#include "common/enum/object_type.hpp"
+#include "common/enum/tile_compression.hpp"
+#include "common/enum/tile_encoding.hpp"
 #include "common/macros.hpp"
 #include "common/primitives.hpp"
 #include "common/type/hash_map.hpp"

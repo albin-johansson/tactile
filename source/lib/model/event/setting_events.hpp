@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/enums/lang.hpp"
-#include "common/enums/overlay_pos.hpp"
-#include "common/enums/theme.hpp"
+#include "common/enum/lang.hpp"
+#include "common/enum/overlay_pos.hpp"
+#include "common/enum/theme.hpp"
 #include "model/settings.hpp"
 
 namespace tactile {

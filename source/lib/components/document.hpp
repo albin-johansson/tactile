@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/enums/document_type.hpp"
+#include "common/enum/document_type.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"

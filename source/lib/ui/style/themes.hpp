@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/enums/theme.hpp"
+#include "common/enum/theme.hpp"
 #include "common/primitives.hpp"
 #include "common/type/array.hpp"
 #include "common/type/string.hpp"
