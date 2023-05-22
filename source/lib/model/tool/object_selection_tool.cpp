@@ -19,11 +19,11 @@
 
 #include "object_selection_tool.hpp"
 
+#include "components/document.hpp"
 #include "core/layer.hpp"
-#include "core/object.hpp"
 #include "core/map.hpp"
+#include "core/object.hpp"
 #include "core/viewport.hpp"
-#include "model/document.hpp"
 #include "model/event/object_events.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/systems/document_system.hpp"

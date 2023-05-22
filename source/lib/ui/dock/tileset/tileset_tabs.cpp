@@ -22,10 +22,10 @@
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
+#include "components/document.hpp"
 #include "core/context.hpp"
 #include "core/map.hpp"
 #include "core/tileset.hpp"
-#include "model/document.hpp"
 #include "model/event/document_events.hpp"
 #include "model/event/property_events.hpp"
 #include "model/event/tileset_events.hpp"

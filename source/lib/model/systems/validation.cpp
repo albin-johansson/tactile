@@ -20,6 +20,7 @@
 #include "validation.hpp"
 
 #include "cmd/command_stack.hpp"
+#include "components/document.hpp"
 #include "core/component.hpp"
 #include "core/context.hpp"
 #include "core/layer.hpp"
@@ -30,7 +31,6 @@
 #include "core/tile_format.hpp"
 #include "core/tileset.hpp"
 #include "core/viewport.hpp"
-#include "model/document.hpp"
 
 namespace tactile::sys {
 

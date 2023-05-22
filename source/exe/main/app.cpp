@@ -28,6 +28,7 @@
 #include <spdlog/spdlog.h>
 
 #include "common/util/fmt.hpp"
+#include "components/document.hpp"
 #include "core/texture.hpp"
 #include "io/directories.hpp"
 #include "io/proto/history.hpp"
@@ -40,7 +41,6 @@
 #include "model/delegates/map_delegate.hpp"
 #include "model/delegates/menu_delegate.hpp"
 #include "model/delegates/settings_delegate.hpp"
-#include "model/document.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/event/view_events.hpp"

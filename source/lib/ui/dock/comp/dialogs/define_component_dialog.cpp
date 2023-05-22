@@ -22,7 +22,7 @@
 #include <imgui.h>
 
 #include "common/util/string_buffer.hpp"
-#include "model/document.hpp"
+#include "components/document.hpp"
 #include "model/event/component_events.hpp"
 #include "model/systems/component/component_set.hpp"
 #include "model/systems/document_system.hpp"

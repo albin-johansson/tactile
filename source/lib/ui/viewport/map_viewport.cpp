@@ -24,13 +24,13 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "components/document.hpp"
 #include "core/color.hpp"
 #include "core/layer.hpp"
 #include "core/map.hpp"
 #include "core/object.hpp"
 #include "core/viewport.hpp"
 #include "model/context.hpp"
-#include "model/document.hpp"
 #include "model/event/object_events.hpp"
 #include "model/event/property_events.hpp"
 #include "model/event/tool_events.hpp"

@@ -23,7 +23,7 @@
 
 #include "cmd/command_stack.hpp"
 #include "common/util/fmt.hpp"
-#include "model/document.hpp"
+#include "components/document.hpp"
 #include "model/event/document_events.hpp"
 #include "model/systems/document_system.hpp"
 #include "ui/style/icons.hpp"

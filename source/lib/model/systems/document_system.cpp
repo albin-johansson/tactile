@@ -23,11 +23,11 @@
 
 #include "cmd/command_stack.hpp"
 #include "common/debug/panic.hpp"
+#include "components/document.hpp"
 #include "core/context.hpp"
 #include "core/map.hpp"
 #include "core/viewport.hpp"
 #include "io/map/parse/parse_map.hpp"
-#include "model/document.hpp"
 #include "model/settings.hpp"
 #include "model/systems/map_system.hpp"
 #include "model/systems/tileset_system.hpp"
@@ -39,7 +39,7 @@ namespace {
 [[nodiscard]] auto _is_active_document(const Model& model, const DocumentType type)
     -> bool
 {
-  const auto& document_context = model.get<CDocumentContext>();
+  const auto& document_context = model.get<DocumentContext>();
 
   if (document_context.active_document != kNullEntity) {
     const auto& document = model.get<Document>(document_context.active_document);
@@ -103,7 +103,7 @@ auto create_tileset_document(Model& model, const Int2& tile_size, const Path& im
 void destroy_document(Model& model, const Entity document_entity)
 {
   TACTILE_ASSERT(is_document_entity(model, document_entity));
-  auto& document_context = model.get<CDocumentContext>();
+  auto& document_context = model.get<DocumentContext>();
 
   if (document_context.active_document == document_entity) {
     document_context.active_document = kNullEntity;
@@ -118,7 +118,7 @@ void select_document(Model& model, const Entity document_entity)
 {
   TACTILE_ASSERT(is_document_entity(model, document_entity));
 
-  auto& document_context = model.get<CDocumentContext>();
+  auto& document_context = model.get<DocumentContext>();
   TACTILE_ASSERT(document_context.open_documents.contains(document_entity));
 
   document_context.active_document = document_entity;
@@ -128,7 +128,7 @@ void open_document(Model& model, const Entity document_entity)
 {
   TACTILE_ASSERT(is_document_entity(model, document_entity));
 
-  auto& document_context = model.get<CDocumentContext>();
+  auto& document_context = model.get<DocumentContext>();
   document_context.open_documents.insert(document_entity);
 }
 
@@ -137,7 +137,7 @@ void close_document(Model& model, const Entity document_entity)
 {
   TACTILE_ASSERT(is_document_entity(model, document_entity));
 
-  auto& document_context = model.get<CDocumentContext>();
+  auto& document_context = model.get<DocumentContext>();
   TACTILE_ASSERT(document_context.open_documents.contains(document_entity));
 
   document_context.open_documents.erase(document_entity);
@@ -163,7 +163,7 @@ auto get_document_name(const Model& model, const Entity document_entity) -> Stri
 
 auto get_active_document(const Model& model) -> Entity
 {
-  const auto& document_context = model.get<CDocumentContext>();
+  const auto& document_context = model.get<DocumentContext>();
   return document_context.active_document;
 }
 
@@ -171,7 +171,7 @@ auto get_associated_tileset_document(const Model& model, const Entity tileset_en
     -> Entity
 {
   TACTILE_ASSERT(is_tileset_entity(model, tileset_entity));
-  const auto& document_context = model.get<CDocumentContext>();
+  const auto& document_context = model.get<DocumentContext>();
 
   for (const auto document_entity: document_context.open_documents) {
     if (const auto* tileset_document = model.try_get<TilesetDocument>(document_entity)) {
@@ -202,7 +202,7 @@ auto get_document_with_path(const Model& model, const Path& path) -> Entity
 
 auto has_active_document(const Model& model) -> bool
 {
-  const auto& document_context = model.get<CDocumentContext>();
+  const auto& document_context = model.get<DocumentContext>();
   return document_context.active_document != kNullEntity;
 }
 
@@ -220,13 +220,13 @@ auto is_document_open(const Model& model, const Entity document_entity) -> bool
 {
   TACTILE_ASSERT(is_document_entity(model, document_entity));
 
-  const auto& document_context = model.get<CDocumentContext>();
+  const auto& document_context = model.get<DocumentContext>();
   return document_context.open_documents.contains(document_entity);
 }
 
 auto is_save_possible(const Model& model) -> bool
 {
-  const auto document_entity = model.get<CDocumentContext>().active_document;
+  const auto document_entity = model.get<DocumentContext>().active_document;
 
   if (document_entity != kNullEntity) {
     const auto& commands = model.get<CommandStack>(document_entity);
@@ -238,7 +238,7 @@ auto is_save_possible(const Model& model) -> bool
 
 auto is_undo_possible(const Model& model) -> bool
 {
-  const auto document_entity = model.get<CDocumentContext>().active_document;
+  const auto document_entity = model.get<DocumentContext>().active_document;
 
   if (document_entity != kNullEntity) {
     const auto& commands = model.get<CommandStack>(document_entity);
@@ -250,7 +250,7 @@ auto is_undo_possible(const Model& model) -> bool
 
 auto is_redo_possible(const Model& model) -> bool
 {
-  const auto document_entity = model.get<CDocumentContext>().active_document;
+  const auto document_entity = model.get<DocumentContext>().active_document;
 
   if (document_entity != kNullEntity) {
     const auto& commands = model.get<CommandStack>(document_entity);

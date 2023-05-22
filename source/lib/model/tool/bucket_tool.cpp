@@ -21,9 +21,9 @@
 
 #include <centurion/mouse.hpp>
 
+#include "components/document.hpp"
 #include "core/map.hpp"
 #include "core/tileset.hpp"
-#include "model/document.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"

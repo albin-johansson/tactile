@@ -24,7 +24,7 @@
 #include <spdlog/spdlog.h>
 
 #include "cmd/command_stack.hpp"
-#include "model/document.hpp"
+#include "components/document.hpp"
 #include "model/event/command_events.hpp"
 #include "model/systems/document_system.hpp"
 

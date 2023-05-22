@@ -24,12 +24,12 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "components/document.hpp"
 #include "core/color.hpp"
 #include "core/tile.hpp"
 #include "core/tileset.hpp"
 #include "core/viewport.hpp"
 #include "model/context.hpp"
-#include "model/document.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/settings.hpp"

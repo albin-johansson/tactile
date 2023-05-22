@@ -21,6 +21,7 @@
 
 #include "common/debug/assert.hpp"
 #include "common/debug/profile.hpp"
+#include "components/document.hpp"
 #include "core/component.hpp"
 #include "core/context.hpp"
 #include "core/layer.hpp"
@@ -29,7 +30,6 @@
 #include "core/texture.hpp"
 #include "core/tile.hpp"
 #include "core/tileset.hpp"
-#include "model/document.hpp"
 #include "model/model.hpp"
 
 namespace tactile {

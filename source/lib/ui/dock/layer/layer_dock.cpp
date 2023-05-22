@@ -23,10 +23,10 @@
 
 #include "common/debug/assert.hpp"
 #include "common/type/maybe.hpp"
+#include "components/document.hpp"
 #include "core/context.hpp"
 #include "core/map.hpp"
 #include "model/context.hpp"
-#include "model/document.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/model.hpp"

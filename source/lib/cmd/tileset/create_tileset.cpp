@@ -21,10 +21,10 @@
 
 #include <utility>  // move
 
+#include "components/document.hpp"
 #include "core/context.hpp"
 #include "core/map.hpp"
 #include "model/context.hpp"
-#include "model/document.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/map_system.hpp"
 #include "systems/language_system.hpp"

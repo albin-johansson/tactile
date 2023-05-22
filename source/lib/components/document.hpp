@@ -32,18 +32,20 @@ enum class DocumentType {
   Tileset,
 };
 
-struct CDocumentContext final {
-  Entity active_document {kNullEntity};
-  Set<Entity> open_documents;
+/// Context component that tracks the active and open documents.
+struct DocumentContext final {
+  Entity active_document {kNullEntity};  ///< The currently active document, if any.
+  Set<Entity> open_documents;            ///< The currently open documents.
 };
 
-// FIXME the active_context member is error-prone as it stands (might be null)
+/// General component for editor documents.
+/// \FIXME the active context member is error-prone as it stands (might be null)
 struct Document final {
-  DocumentType type {DocumentType::Unknown};
-  Entity component_set {kNullEntity};
-  Entity active_context {kNullEntity};
-  Entity default_context {kNullEntity};  ///< Default context entity (map or tileset).
-  Maybe<Path> path;
+  DocumentType type {DocumentType::Unknown};  ///< The specific document type.
+  Entity component_set {kNullEntity};         ///< The associated component set.
+  Entity active_context {kNullEntity};        ///< The currently active context.
+  Entity default_context {kNullEntity};       ///< Context entity used as a fallback.
+  Maybe<Path> path;                           ///< File path to the document.
 
   [[nodiscard]] auto get_active_context() const -> Entity
   {
@@ -51,13 +53,15 @@ struct Document final {
   }
 };
 
+/// Component featured by map document entities.
 struct MapDocument final {
-  Entity map {kNullEntity};
-  Entity active_tileset {kNullEntity};
+  Entity map {kNullEntity};             ///< The associated map.
+  Entity active_tileset {kNullEntity};  ///< The active attached tileset, if any.
 };
 
+/// Component featured by tileset document entities.
 struct TilesetDocument final {
-  Entity tileset {kNullEntity};
+  Entity tileset {kNullEntity};  ///< The associated tileset.
 };
 
 }  // namespace tactile

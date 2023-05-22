@@ -24,7 +24,7 @@
 #include <imgui.h>
 
 #include "common/type/maybe.hpp"
-#include "model/document.hpp"
+#include "components/document.hpp"
 #include "model/event/property_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"

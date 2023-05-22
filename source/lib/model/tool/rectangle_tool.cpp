@@ -22,10 +22,10 @@
 #include <glm/common.hpp>
 
 #include "common/type/math.hpp"
+#include "components/document.hpp"
 #include "core/layer.hpp"
 #include "core/map.hpp"
 #include "core/viewport.hpp"
-#include "model/document.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"
