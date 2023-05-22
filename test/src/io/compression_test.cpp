@@ -7,7 +7,7 @@
 namespace tactile::test {
 namespace {
 
-[[nodiscard]] auto make_random_bytes() -> ByteStream
+[[nodiscard]] auto _make_random_bytes() -> ByteStream
 {
   ByteStream bytes;
   bytes.reserve(42'000);
@@ -25,7 +25,7 @@ TEST_SUITE("Compression")
 {
   TEST_CASE("zlib compress and decompress")
   {
-    const auto original_bytes = make_random_bytes();
+    const auto original_bytes = _make_random_bytes();
 
     const auto compressed_bytes = zlib_compress(ByteSpan {original_bytes}).value();
     const auto decompressed_bytes = zlib_decompress(ByteSpan {compressed_bytes}).value();
@@ -35,7 +35,7 @@ TEST_SUITE("Compression")
 
   TEST_CASE("zstd compress and decompress")
   {
-    const auto original_bytes = make_random_bytes();
+    const auto original_bytes = _make_random_bytes();
 
     const auto compressed_bytes = zstd_compress(ByteSpan {original_bytes}).value();
     const auto decompressed_bytes = zstd_decompress(ByteSpan {compressed_bytes}).value();

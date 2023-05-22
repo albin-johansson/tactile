@@ -31,13 +31,13 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto get_settings_file_path() -> const Path&
+[[nodiscard]] auto _get_settings_file_path() -> const Path&
 {
   static const auto path = get_persistent_file_dir() / "settings.bin";
   return path;
 }
 
-[[nodiscard]] auto from_proto(const proto::Color& color) -> Color
+[[nodiscard]] auto _from_proto(const proto::Color& color) -> Color
 {
   const auto r = static_cast<uint8>(color.red());
   const auto g = static_cast<uint8>(color.green());
@@ -46,7 +46,7 @@ namespace {
   return Color {r, g, b, a};
 }
 
-void to_proto(const Color& color, proto::Color* out)
+void _to_proto(const Color& color, proto::Color* out)
 {
   out->set_red(color.red);
   out->set_green(color.green);
@@ -54,7 +54,7 @@ void to_proto(const Color& color, proto::Color* out)
   out->set_alpha(color.alpha);
 }
 
-[[nodiscard]] auto parse_settings_from_file(const Path& path) -> Maybe<Settings>
+[[nodiscard]] auto _parse_settings_from_file(const Path& path) -> Maybe<Settings>
 {
   auto stream = open_input_stream(path, FileType::Binary);
   if (!stream) {
@@ -79,11 +79,11 @@ void to_proto(const Color& color, proto::Color* out)
     }
 
     if (cfg.has_viewport_background()) {
-      settings.set_viewport_bg_color(from_proto(cfg.viewport_background()));
+      settings.set_viewport_bg_color(_from_proto(cfg.viewport_background()));
     }
 
     if (cfg.has_grid_color()) {
-      settings.set_grid_color(from_proto(cfg.grid_color()));
+      settings.set_grid_color(_from_proto(cfg.grid_color()));
     }
 
     if (cfg.has_show_grid()) {
@@ -191,9 +191,9 @@ void to_proto(const Color& color, proto::Color* out)
 
 auto load_settings_from_disk() -> Settings
 {
-  const auto& settings_path = get_settings_file_path();
+  const auto& settings_path = _get_settings_file_path();
   if (fs::exists(settings_path)) {
-    if (auto settings = parse_settings_from_file(settings_path)) {
+    if (auto settings = _parse_settings_from_file(settings_path)) {
       return std::move(*settings);
     }
     else {
@@ -219,8 +219,8 @@ void save_settings_to_disk(const Settings& settings)
   cfg.set_highlight_active_layer(settings.test_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT));
   cfg.set_window_border(settings.test_flag(SETTINGS_WINDOW_BORDER_BIT));
 
-  to_proto(settings.get_viewport_bg_color(), cfg.mutable_viewport_background());
-  to_proto(settings.get_grid_color(), cfg.mutable_grid_color());
+  _to_proto(settings.get_viewport_bg_color(), cfg.mutable_viewport_background());
+  _to_proto(settings.get_grid_color(), cfg.mutable_grid_color());
 
   cfg.set_command_capacity(settings.get_command_capacity());
   cfg.set_restore_last_session(settings.test_flag(SETTINGS_RESTORE_LAST_SESSION_BIT));
@@ -248,7 +248,7 @@ void save_settings_to_disk(const Settings& settings)
   cfg.set_use_default_font(settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT));
   cfg.set_font_size(settings.get_font_size());
 
-  const auto& path = get_settings_file_path();
+  const auto& path = _get_settings_file_path();
   auto stream = open_output_stream(path, FileType::Binary);
 
   if (!stream) {

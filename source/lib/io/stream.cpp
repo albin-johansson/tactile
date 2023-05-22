@@ -25,7 +25,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto open_input_stream_impl(const auto& path, const FileType type)
+[[nodiscard]] auto _open_input_stream(const auto& path, const FileType type)
     -> Maybe<IfStream>
 {
   const auto flags = (type == FileType::Binary) ? std::ios::in | std::ios::binary  //
@@ -40,7 +40,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto open_output_stream_impl(const auto& path, const FileType type)
+[[nodiscard]] auto _open_output_stream(const auto& path, const FileType type)
     -> Maybe<OfStream>
 {
   const auto flags = (type == FileType::Binary)
@@ -60,22 +60,22 @@ namespace {
 
 auto open_input_stream(const char* path, FileType type) -> Maybe<IfStream>
 {
-  return open_input_stream_impl(path, type);
+  return _open_input_stream(path, type);
 }
 
 auto open_input_stream(const Path& path, FileType type) -> Maybe<IfStream>
 {
-  return open_input_stream_impl(path, type);
+  return _open_input_stream(path, type);
 }
 
 auto open_output_stream(const char* path, FileType type) -> Maybe<OfStream>
 {
-  return open_output_stream_impl(path, type);
+  return _open_output_stream(path, type);
 }
 
 auto open_output_stream(const Path& path, FileType type) -> Maybe<OfStream>
 {
-  return open_output_stream_impl(path, type);
+  return _open_output_stream(path, type);
 }
 
 }  // namespace tactile

@@ -30,7 +30,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto parse_value(XmlNode node, const char* type)
+[[nodiscard]] auto _parse_value(XmlNode node, const char* type)
     -> Expected<Attribute, ParseError>
 {
   TACTILE_ASSERT(type);
@@ -99,12 +99,12 @@ namespace {
   return value;
 }
 
-[[nodiscard]] auto parse_property(XmlNode node) -> Expected<Attribute, ParseError>
+[[nodiscard]] auto _parse_property(XmlNode node) -> Expected<Attribute, ParseError>
 {
   // String properties may exclude the type attribute
   const char* type = node.attribute("type").as_string("string");
 
-  if (auto value = parse_value(node, type)) {
+  if (auto value = _parse_value(node, type)) {
     return std::move(*value);
   }
   else {
@@ -127,7 +127,7 @@ auto parse_properties(XmlNode node) -> Expected<AttributeMap, ParseError>
       return unexpected(ParseError::NoPropertyName);
     }
 
-    if (auto value = parse_property(property_node)) {
+    if (auto value = _parse_property(property_node)) {
       props[std::move(property_name)] = std::move(*value);
     }
     else {

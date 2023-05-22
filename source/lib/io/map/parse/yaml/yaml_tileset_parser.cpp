@@ -30,7 +30,7 @@ namespace {
 
 constexpr int32 kTilesetFormatVersion = 1;
 
-[[nodiscard]] auto parse_animation_frame(const YAML::Node& node)
+[[nodiscard]] auto _parse_animation_frame(const YAML::Node& node)
     -> Expected<AnimationFrameIR, ParseError>
 {
   TileIndex tile_index {};
@@ -50,7 +50,7 @@ constexpr int32 kTilesetFormatVersion = 1;
   return frame;
 }
 
-[[nodiscard]] auto parse_fancy_tile(const YAML::Node& node, const MapIR& map)
+[[nodiscard]] auto _parse_fancy_tile(const YAML::Node& node, const MapIR& map)
     -> Expected<TileIR, ParseError>
 {
   TileIR tile;
@@ -59,7 +59,7 @@ constexpr int32 kTilesetFormatVersion = 1;
     tile.frames.reserve(sequence.size());
 
     for (const auto& frame_node: sequence) {
-      if (auto frame = parse_animation_frame(frame_node)) {
+      if (auto frame = _parse_animation_frame(frame_node)) {
         tile.frames.push_back(*frame);
       }
       else {
@@ -91,7 +91,7 @@ constexpr int32 kTilesetFormatVersion = 1;
   return tile;
 }
 
-[[nodiscard]] auto parse_fancy_tiles(const YAML::Node& sequence, const MapIR& map)
+[[nodiscard]] auto _parse_fancy_tiles(const YAML::Node& sequence, const MapIR& map)
     -> Expected<TilesetIR::MetaTiles, ParseError>
 {
   TilesetIR::MetaTiles fancy_tiles;
@@ -103,7 +103,7 @@ constexpr int32 kTilesetFormatVersion = 1;
       return unexpected(ParseError::NoFancyTileId);
     }
 
-    if (auto tile = parse_fancy_tile(node, map)) {
+    if (auto tile = _parse_fancy_tile(node, map)) {
       fancy_tiles[id] = std::move(*tile);
     }
     else {
@@ -114,9 +114,9 @@ constexpr int32 kTilesetFormatVersion = 1;
   return fancy_tiles;
 }
 
-[[nodiscard]] auto parse_tileset(const MapIR& map,
-                                 const Path& source,
-                                 const TileID first_tile_id)
+[[nodiscard]] auto _parse_tileset(const MapIR& map,
+                                  const Path& source,
+                                  const TileID first_tile_id)
     -> Expected<TilesetIR, ParseError>
 {
   try {
@@ -181,7 +181,7 @@ constexpr int32 kTilesetFormatVersion = 1;
     }
 
     if (auto sequence = node["tiles"]) {
-      if (auto meta_tiles = parse_fancy_tiles(sequence, map)) {
+      if (auto meta_tiles = _parse_fancy_tiles(sequence, map)) {
         tileset.fancy_tiles = std::move(*meta_tiles);
       }
       else {
@@ -225,7 +225,7 @@ auto parse_tilesets(const YAML::Node& sequence, const MapIR& map, const Path& di
     const auto source = fs::weakly_canonical(dir / path);
 
     if (fs::exists(source)) {
-      if (auto tileset = parse_tileset(map, source, first)) {
+      if (auto tileset = _parse_tileset(map, source, first)) {
         tilesets.push_back(std::move(*tileset));
       }
       else {

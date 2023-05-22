@@ -27,7 +27,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto parse_value(const JSON& json, StringView type, Attribute& value)
+[[nodiscard]] auto _parse_value(const JSON& json, StringView type, Attribute& value)
     -> ParseError
 {
   const auto attr_type = parse_attr_type(type);
@@ -93,7 +93,8 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_property(const JSON& json, ContextIR& context_data) -> ParseError
+[[nodiscard]] auto _parse_property(const JSON& json, ContextIR& context_data)
+    -> ParseError
 {
   String property_name;
 
@@ -107,7 +108,7 @@ namespace {
   auto& value = context_data.properties[std::move(property_name)];
 
   if (auto type = as_string(json, "type")) {
-    if (const auto err = parse_value(json, *type, value); err != ParseError::None) {
+    if (const auto err = _parse_value(json, *type, value); err != ParseError::None) {
       return err;
     }
   }
@@ -124,7 +125,8 @@ auto parse_properties(const JSON& json, ContextIR& context_data) -> ParseError
 {
   if (const auto it = json.find("properties"); it != json.end()) {
     for (const auto& [_, value]: it->items()) {
-      if (const auto err = parse_property(value, context_data); err != ParseError::None) {
+      if (const auto err = _parse_property(value, context_data);
+          err != ParseError::None) {
         return err;
       }
     }

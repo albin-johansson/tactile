@@ -31,7 +31,7 @@ namespace {
 
 inline constinit bool gOpenDialog = false;
 
-void _show_dependency_row(const char* lib, const char* license, const char* license_url)
+void _push_dependency_row(const char* lib, const char* license, const char* license_url)
 {
   ImGui::TableNextRow();
 
@@ -86,84 +86,84 @@ void show_credits_dialog(const Model& model, Entity, Dispatcher&)
       ImGui::TableSetupColumn(strings.misc.license.c_str());
       ImGui::TableHeadersRow();
 
-      _show_dependency_row("argparse",
+      _push_dependency_row("argparse",
                            "MIT",
                            "https://github.com/p-ranav/argparse/blob/master/LICENSE");
-      _show_dependency_row(
+      _push_dependency_row(
           "Boost",
           "BSL-1.0",
           "https://github.com/boostorg/boost/blob/master/LICENSE_1_0.txt");
-      _show_dependency_row(
+      _push_dependency_row(
           "Centurion",
           "MIT",
           "https://github.com/albin-johansson/centurion/blob/dev/LICENSE");
-      _show_dependency_row("cppcodec",
+      _push_dependency_row("cppcodec",
                            "MIT",
                            "https://github.com/tplgy/cppcodec/blob/master/LICENSE");
-      _show_dependency_row("Dear ImGui",
+      _push_dependency_row("Dear ImGui",
                            "MIT",
                            "https://github.com/ocornut/imgui/blob/master/LICENSE.txt");
-      _show_dependency_row("doctest",
+      _push_dependency_row("doctest",
                            "MIT",
                            "https://github.com/doctest/doctest/blob/master/LICENSE.txt");
-      _show_dependency_row("EnTT",
+      _push_dependency_row("EnTT",
                            "MIT",
                            "https://github.com/skypjack/entt/blob/master/LICENSE");
-      _show_dependency_row("fmt",
+      _push_dependency_row("fmt",
                            "MIT",
                            "https://github.com/fmtlib/fmt/blob/master/LICENSE.rst");
-      _show_dependency_row("GLEW",
+      _push_dependency_row("GLEW",
                            "BSD/MIT",
                            "https://github.com/nigels-com/glew/blob/master/LICENSE.txt");
-      _show_dependency_row("glm",
+      _push_dependency_row("glm",
                            "Happy Bunny/MIT",
                            "https://github.com/g-truc/glm/blob/master/copying.txt");
-      _show_dependency_row(
+      _push_dependency_row(
           "IconFontCppHeaders",
           "Zlib",
           "https://github.com/juliettef/IconFontCppHeaders/blob/main/licence.txt");
-      _show_dependency_row("JSON for Modern C++",
+      _push_dependency_row("JSON for Modern C++",
                            "MIT",
                            "https://github.com/nlohmann/json/blob/develop/LICENSE.MIT");
-      _show_dependency_row("Magic Enum C++",
+      _push_dependency_row("Magic Enum C++",
                            "MIT",
                            "https://github.com/Neargye/magic_enum/blob/master/LICENSE");
-      _show_dependency_row(
+      _push_dependency_row(
           "Protocol Buffers",
           "BSD",
           "https://github.com/protocolbuffers/protobuf/blob/main/LICENSE");
-      _show_dependency_row("pugixml",
+      _push_dependency_row("pugixml",
                            "MIT",
                            "https://github.com/zeux/pugixml/blob/master/LICENSE.md");
-      _show_dependency_row("SDL2",
+      _push_dependency_row("SDL2",
                            "Zlib",
                            "https://github.com/libsdl-org/SDL/blob/main/LICENSE.txt");
-      _show_dependency_row(
+      _push_dependency_row(
           "SDL2_image",
           "Zlib",
           "https://github.com/libsdl-org/SDL_image/blob/main/LICENSE.txt");
-      _show_dependency_row("spdlog",
+      _push_dependency_row("spdlog",
                            "MIT",
                            "https://github.com/gabime/spdlog/blob/v1.x/LICENSE");
-      _show_dependency_row("stb_image",
+      _push_dependency_row("stb_image",
                            "MIT",
                            "https://github.com/nothings/stb/blob/master/LICENSE");
-      _show_dependency_row("tinyfiledialogs",
+      _push_dependency_row("tinyfiledialogs",
                            "Zlib",
                            "https://sourceforge.net/projects/tinyfiledialogs/");
-      _show_dependency_row("tl-expected",
+      _push_dependency_row("tl-expected",
                            "CC0-1.0",
                            "https://github.com/TartanLlama/expected/blob/master/COPYING");
-      _show_dependency_row("yaml-cpp",
+      _push_dependency_row("yaml-cpp",
                            "MIT",
                            "https://github.com/jbeder/yaml-cpp/blob/master/LICENSE");
-      _show_dependency_row("Zlib",
+      _push_dependency_row("Zlib",
                            "Zlib",
                            "https://github.com/madler/zlib/blob/master/LICENSE");
-      _show_dependency_row("zstd",
+      _push_dependency_row("zstd",
                            "BSD/GPLv2",
                            "https://github.com/facebook/zstd/blob/dev/LICENSE");
-      _show_dependency_row("Roboto",
+      _push_dependency_row("Roboto",
                            "Apache 2.0",
                            "https://github.com/googlefonts/roboto/blob/main/LICENSE");
     }

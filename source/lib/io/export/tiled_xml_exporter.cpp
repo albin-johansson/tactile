@@ -38,7 +38,7 @@
 namespace tactile {
 namespace {
 
-void append_properties(XmlNode node, const ContextIR& context)
+void _append_properties(XmlNode node, const ContextIR& context)
 {
   if (context.properties.empty()) {
     return;
@@ -128,7 +128,7 @@ void append_properties(XmlNode node, const ContextIR& context)
   }
 }
 
-void append_object(XmlNode node, const ObjectIR& object)
+void _append_object(XmlNode node, const ObjectIR& object)
 {
   auto object_node = node.append_child("object");
   object_node.append_attribute("id").set_value(object.id);
@@ -169,10 +169,10 @@ void append_object(XmlNode node, const ObjectIR& object)
     object_node.append_child("ellipse");
   }
 
-  append_properties(object_node, object.context);
+  _append_properties(object_node, object.context);
 }
 
-void append_common_layer_attributes(XmlNode node, const LayerIR& layer)
+void _append_common_layer_attributes(XmlNode node, const LayerIR& layer)
 {
   node.append_attribute("id").set_value(layer.id);
   node.append_attribute("name").set_value(layer.name.c_str());
@@ -186,10 +186,10 @@ void append_common_layer_attributes(XmlNode node, const LayerIR& layer)
   }
 }
 
-void append_csv_tile_layer_data(XmlNode data_node,
-                                const MapIR& map,
-                                const TileLayerIR& tile_layer,
-                                const Settings& settings)
+void _append_csv_tile_layer_data(XmlNode data_node,
+                                 const MapIR& map,
+                                 const TileLayerIR& tile_layer,
+                                 const Settings& settings)
 {
   data_node.append_attribute("encoding").set_value("csv");
 
@@ -220,9 +220,9 @@ void append_csv_tile_layer_data(XmlNode data_node,
   data_node.text().set(stream.str().c_str());
 }
 
-void append_base64_tile_layer_data(XmlNode data_node,
-                                   const MapIR& map,
-                                   const TileLayerIR& tile_layer)
+void _append_base64_tile_layer_data(XmlNode data_node,
+                                    const MapIR& map,
+                                    const TileLayerIR& tile_layer)
 {
   data_node.append_attribute("encoding").set_value("base64");
 
@@ -249,29 +249,29 @@ void append_base64_tile_layer_data(XmlNode data_node,
   data_node.text().set(tile_data.c_str());
 }
 
-void append_tile_layer(XmlNode root,
-                       const MapIR& map,
-                       const LayerIR& layer,
-                       const Settings& settings)
+void _append_tile_layer(XmlNode root,
+                        const MapIR& map,
+                        const LayerIR& layer,
+                        const Settings& settings)
 {
   const auto& tile_layer = layer.as_tile_layer();
 
   auto node = root.append_child("layer");
-  append_common_layer_attributes(node, layer);
+  _append_common_layer_attributes(node, layer);
 
   node.append_attribute("width").set_value(map.extent.cols);
   node.append_attribute("height").set_value(map.extent.rows);
 
-  append_properties(node, layer.context);
+  _append_properties(node, layer.context);
 
   auto data_node = node.append_child("data");
   switch (map.tile_format.encoding) {
     case TileEncoding::Plain:
-      append_csv_tile_layer_data(data_node, map, tile_layer, settings);
+      _append_csv_tile_layer_data(data_node, map, tile_layer, settings);
       break;
 
     case TileEncoding::Base64:
-      append_base64_tile_layer_data(data_node, map, tile_layer);
+      _append_base64_tile_layer_data(data_node, map, tile_layer);
       break;
 
     default:
@@ -279,42 +279,42 @@ void append_tile_layer(XmlNode root,
   }
 }
 
-void append_object_layer(XmlNode root, const LayerIR& layer)
+void _append_object_layer(XmlNode root, const LayerIR& layer)
 {
   const auto& object_layer = layer.as_object_layer();
 
   auto node = root.append_child("objectgroup");
-  append_common_layer_attributes(node, layer);
-  append_properties(node, layer.context);
+  _append_common_layer_attributes(node, layer);
+  _append_properties(node, layer.context);
 
   for (const auto& object: object_layer.objects) {
-    append_object(node, object);
+    _append_object(node, object);
   }
 }
 
-void append_layer(XmlNode root,
-                  const MapIR& map,
-                  const LayerIR& layer,
-                  const Settings& settings)
+void _append_layer(XmlNode root,
+                   const MapIR& map,
+                   const LayerIR& layer,
+                   const Settings& settings)
 {
   switch (layer.type) {
     case LayerType::TileLayer:
-      append_tile_layer(root, map, layer, settings);
+      _append_tile_layer(root, map, layer, settings);
       break;
 
     case LayerType::ObjectLayer:
-      append_object_layer(root, layer);
+      _append_object_layer(root, layer);
       break;
 
     case LayerType::GroupLayer: {
       const auto& group_layer = layer.as_group_layer();
 
       auto collection = root.append_child("group");
-      append_common_layer_attributes(collection, layer);
-      append_properties(collection, layer.context);
+      _append_common_layer_attributes(collection, layer);
+      _append_properties(collection, layer.context);
 
       for (const auto& child_layer: group_layer.children) {
-        append_layer(collection, map, *child_layer, settings);
+        _append_layer(collection, map, *child_layer, settings);
       }
 
       break;
@@ -324,7 +324,7 @@ void append_layer(XmlNode root,
   }
 }
 
-void append_fancy_tiles(XmlNode node, const TilesetIR& tileset)
+void _append_fancy_tiles(XmlNode node, const TilesetIR& tileset)
 {
   for (const auto& [id, tile]: tileset.fancy_tiles) {
     auto tile_node = node.append_child("tile");
@@ -345,17 +345,17 @@ void append_fancy_tiles(XmlNode node, const TilesetIR& tileset)
       object_layer_node.append_attribute("draworder").set_value("index");
 
       for (const auto& object: tile.objects) {
-        append_object(object_layer_node, object);
+        _append_object(object_layer_node, object);
       }
     }
 
-    append_properties(tile_node, tile.context);
+    _append_properties(tile_node, tile.context);
   }
 }
 
-void append_common_tileset_attributes(XmlNode node,
-                                      const TilesetIR& tileset,
-                                      const Path& dir)
+void _append_common_tileset_attributes(XmlNode node,
+                                       const TilesetIR& tileset,
+                                       const Path& dir)
 {
   node.append_attribute("name").set_value(tileset.name.c_str());
 
@@ -375,30 +375,30 @@ void append_common_tileset_attributes(XmlNode node,
     image_node.append_attribute("height").set_value(tileset.image_size.y);
   }
 
-  append_fancy_tiles(node, tileset);
-  append_properties(node, tileset.context);
+  _append_fancy_tiles(node, tileset);
+  _append_properties(node, tileset.context);
 }
 
-void append_embedded_tileset(XmlNode root, const TilesetIR& tileset, const Path& dir)
+void _append_embedded_tileset(XmlNode root, const TilesetIR& tileset, const Path& dir)
 {
   auto node = root.append_child("tileset");
   node.append_attribute("firstgid").set_value(tileset.first_tile);
 
-  append_common_tileset_attributes(node, tileset, dir);
+  _append_common_tileset_attributes(node, tileset, dir);
 }
 
-void append_external_tileset(XmlNode root,
-                             const TilesetIR& tileset,
-                             const String& filename)
+void _append_external_tileset(XmlNode root,
+                              const TilesetIR& tileset,
+                              const String& filename)
 {
   auto node = root.append_child("tileset");
   node.append_attribute("firstgid").set_value(tileset.first_tile);
   node.append_attribute("source").set_value(filename.c_str());
 }
 
-void emit_external_tileset_file(const Path& path,
-                                const TilesetIR& tileset,
-                                const Path& dir)
+void _emit_external_tileset_file(const Path& path,
+                                 const TilesetIR& tileset,
+                                 const Path& dir)
 {
   pugi::xml_document document;
 
@@ -406,33 +406,33 @@ void emit_external_tileset_file(const Path& path,
   root.append_attribute("version").set_value(kTiledXmlFormatVersion);
   root.append_attribute("tiledversion").set_value(kTiledVersion);
 
-  append_common_tileset_attributes(root, tileset, dir);
+  _append_common_tileset_attributes(root, tileset, dir);
 
   if (save_xml_to_file(document, path).failed()) {
     spdlog::error("[IO] Could not save XML tileset");
   }
 }
 
-void append_tileset(XmlNode root,
-                    const Path& dir,
-                    const TilesetIR& tileset,
-                    const Settings& settings)
+void _append_tileset(XmlNode root,
+                     const Path& dir,
+                     const TilesetIR& tileset,
+                     const Settings& settings)
 {
   if (settings.test_flag(SETTINGS_EMBED_TILESETS_BIT)) {
-    append_embedded_tileset(root, tileset, dir);
+    _append_embedded_tileset(root, tileset, dir);
   }
   else {
     const auto filename = fmt::format("{}.tsx", tileset.name);
     const auto source = dir / filename;
-    emit_external_tileset_file(source, tileset, dir);
-    append_external_tileset(root, tileset, filename);
+    _emit_external_tileset_file(source, tileset, dir);
+    _append_external_tileset(root, tileset, filename);
   }
 }
 
-void append_root(pugi::xml_document& document,
-                 const Path& dir,
-                 const MapIR& ir_map,
-                 const Settings& settings)
+void _append_root(pugi::xml_document& document,
+                  const Path& dir,
+                  const MapIR& ir_map,
+                  const Settings& settings)
 {
   auto root = document.append_child("map");
 
@@ -452,14 +452,14 @@ void append_root(pugi::xml_document& document,
   root.append_attribute("nextlayerid").set_value(ir_map.next_layer_id);
   root.append_attribute("nextobjectid").set_value(ir_map.next_object_id);
 
-  append_properties(root, ir_map.context);
+  _append_properties(root, ir_map.context);
 
   for (const auto& ir_tileset: ir_map.tilesets) {
-    append_tileset(root, dir, ir_tileset, settings);
+    _append_tileset(root, dir, ir_tileset, settings);
   }
 
   for (const auto& layer: ir_map.layers) {
-    append_layer(root, ir_map, layer, settings);
+    _append_layer(root, ir_map, layer, settings);
   }
 }
 
@@ -474,7 +474,7 @@ void save_map_as_tiled_xml(const Path& destination,
   }
 
   pugi::xml_document document;
-  append_root(document, destination.parent_path(), ir_map, settings);
+  _append_root(document, destination.parent_path(), ir_map, settings);
 
   if (save_xml_to_file(document, destination).failed()) {
     spdlog::error("[IO] Could not save XML map");

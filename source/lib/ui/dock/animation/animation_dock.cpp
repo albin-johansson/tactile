@@ -57,7 +57,7 @@ struct AnimationDockState final {
 
 inline constinit AnimationDockState gDockState;
 
-void _show_animated_tile_cell_image(const Model& model,
+void _push_animated_tile_cell_image(const Model& model,
                                     const Tileset& tileset,
                                     const TileIndex tile_index,
                                     const ImVec2& cell_image_size,
@@ -80,7 +80,7 @@ void _show_animated_tile_cell_image(const Model& model,
                tint);
 }
 
-[[nodiscard]] auto _show_frame_duration_slider(const Strings& strings,
+[[nodiscard]] auto _push_frame_duration_slider(const Strings& strings,
                                                const ms_t duration) -> Maybe<ms_t>
 {
   ImGui::AlignTextToFramePadding();
@@ -102,7 +102,7 @@ void _show_animated_tile_cell_image(const Model& model,
   }
 }
 
-void _show_frame_popup(const Model& model,
+void _push_frame_popup(const Model& model,
                        const Strings& strings,
                        const Entity tile_entity,
                        const usize frame_index,
@@ -114,7 +114,7 @@ void _show_frame_popup(const Model& model,
   const auto& frame = tile_animation.frames.at(frame_index);
 
   if (const Popup popup {"##FramePopup"}; popup.is_open()) {
-    if (auto new_duration = _show_frame_duration_slider(strings, frame.duration)) {
+    if (auto new_duration = _push_frame_duration_slider(strings, frame.duration)) {
       dispatcher.enqueue<SetTileAnimationFrameDurationEvent>(tile.index,
                                                              frame_index,
                                                              *new_duration);
@@ -164,7 +164,7 @@ void _show_frame_popup(const Model& model,
   }
 }
 
-void _show_animation_frame_list(const Model& model,
+void _push_animation_frame_list(const Model& model,
                                 const Strings& strings,
                                 const Tileset& tileset,
                                 const Entity tile_entity,
@@ -205,7 +205,7 @@ void _show_animation_frame_list(const Model& model,
                                     : ImVec4 {0.5, 0.5f, 0.5f, 1};
 
         ImGui::SameLine();
-        _show_animated_tile_cell_image(model,
+        _push_animated_tile_cell_image(model,
                                        tileset,
                                        frame.tile_index,
                                        kFrameImageSize,
@@ -215,7 +215,7 @@ void _show_animation_frame_list(const Model& model,
           ImGui::OpenPopup("##FramePopup");
         }
 
-        _show_frame_popup(model,
+        _push_frame_popup(model,
                           strings,
                           tile_entity,
                           frame_index,
@@ -231,7 +231,7 @@ void _show_animation_frame_list(const Model& model,
   }
 }
 
-void _show_tile_animation_preview_section(const Model& model,
+void _push_tile_animation_preview_section(const Model& model,
                                           const Strings& strings,
                                           const Tileset& tileset,
                                           const TileIndex tile_index)
@@ -257,7 +257,7 @@ void _show_tile_animation_preview_section(const Model& model,
     const ImVec2 cell_image_size {image_width, image_height};
 
     center_next_item_horizontally(image_width);
-    _show_animated_tile_cell_image(model, tileset, tile_index, cell_image_size);
+    _push_animated_tile_cell_image(model, tileset, tile_index, cell_image_size);
   }
 }
 
@@ -297,12 +297,12 @@ void show_animation_dock(const Model& model, Entity, Dispatcher& dispatcher)
                                    tileset_document.tileset,
                                    *tileset.selected_tile_index);
 
-      _show_animation_frame_list(model,
+      _push_animation_frame_list(model,
                                  strings,
                                  tileset,
                                  selected_tile_entity,
                                  dispatcher);
-      _show_tile_animation_preview_section(model,
+      _push_tile_animation_preview_section(model,
                                            strings,
                                            tileset,
                                            appearance_tile_index);

@@ -25,9 +25,9 @@
 namespace tactile::ui {
 namespace {
 
-[[nodiscard]] auto ui_dialog_begin(const char* title,
-                                   bool* open = nullptr,
-                                   const uint32 flags = UI_DIALOG_FLAG_NONE) -> bool
+[[nodiscard]] auto _dialog_begin(const char* title,
+                                 bool* open = nullptr,
+                                 const uint32 flags = UI_DIALOG_FLAG_NONE) -> bool
 {
   if (flags & UI_DIALOG_FLAG_OPEN) {
     ImGui::OpenPopup(title);
@@ -40,10 +40,10 @@ namespace {
   return ImGui::BeginPopupModal(title, open, popup_flags);
 }
 
-[[nodiscard]] auto ui_dialog_end(const char* close_label,
-                                 const char* accept_label = nullptr,
-                                 const char* apply_label = nullptr,
-                                 const uint32 flags = UI_DIALOG_FLAG_NONE) -> DialogAction
+[[nodiscard]] auto _dialog_end(const char* close_label,
+                               const char* accept_label = nullptr,
+                               const char* apply_label = nullptr,
+                               const uint32 flags = UI_DIALOG_FLAG_NONE) -> DialogAction
 {
   ImGui::Spacing();
 
@@ -86,17 +86,17 @@ namespace {
 ScopedDialog::ScopedDialog(const DialogOptions& options, DialogAction* action)
     : mOptions {options},
       mAction {action},
-      mWasOpened {ui_dialog_begin(options.title, options.is_open, options.flags)}
+      mWasOpened {_dialog_begin(options.title, options.is_open, options.flags)}
 {
 }
 
 ScopedDialog::~ScopedDialog()
 {
   if (mWasOpened) {
-    const auto action = ui_dialog_end(mOptions.close_label,
-                                      mOptions.accept_label,
-                                      mOptions.apply_label,
-                                      mOptions.flags);
+    const auto action = _dialog_end(mOptions.close_label,
+                                    mOptions.accept_label,
+                                    mOptions.apply_label,
+                                    mOptions.flags);
     if (mAction) {
       *mAction = action;
     }

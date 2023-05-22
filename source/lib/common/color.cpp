@@ -33,7 +33,7 @@ namespace {
 inline constexpr float kIsDarkThreshold = 0.3f;
 
 // https://en.wikipedia.org/wiki/SRGB#From_sRGB_to_CIE_XYZ
-[[nodiscard]] auto to_linear(const float channel) noexcept(TACTILE_COMPILER_MSVC) -> float
+[[nodiscard]] auto _to_linear(const float channel) noexcept(TACTILE_COMPILER_MSVC) -> float
 {
   if (channel <= 0.04045f) {
     return channel / 12.92f;
@@ -147,9 +147,9 @@ auto Color::from_argb(StringView argb) -> Maybe<Color>
 
 auto Color::get_luminance() const -> float
 {
-  const auto r_lin = to_linear(norm_red());
-  const auto g_lin = to_linear(norm_green());
-  const auto b_lin = to_linear(norm_blue());
+  const auto r_lin = _to_linear(norm_red());
+  const auto g_lin = _to_linear(norm_green());
+  const auto b_lin = _to_linear(norm_blue());
   return (0.2126f * r_lin) + (0.7152f * g_lin) + (0.0722f * b_lin);
 }
 

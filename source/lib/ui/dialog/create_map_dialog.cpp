@@ -42,7 +42,7 @@ struct CreateMapDialogState final {
 
 inline constinit CreateMapDialogState gDialogState;
 
-void _show_dialog_contents(const Strings& strings)
+void _push_dialog_contents(const Strings& strings)
 {
   {
     const auto& rows_label = strings.misc.rows;
@@ -125,7 +125,7 @@ void show_create_map_dialog(const Model& model, Entity, Dispatcher& dispatcher)
 
   DialogAction action {DialogAction::None};
   if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
-    _show_dialog_contents(strings);
+    _push_dialog_contents(strings);
   }
 
   if (action == DialogAction::Accept) {

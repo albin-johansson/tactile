@@ -27,7 +27,7 @@ namespace tactile::test {
 namespace {
 
 template <std::integral T>
-[[nodiscard]] auto nth_byte(const T value, const usize n) -> uint8
+[[nodiscard]] auto _nth_byte(const T value, const usize n) -> uint8
 {
   const auto* bytes = static_cast<const uint8*>(static_cast<const void*>(&value));
   return bytes[n];
@@ -42,10 +42,10 @@ TEST_SUITE("Bit utilities")
     const uint32 original = 0xFF'EE'22'11u;
     const auto little = to_little_endian(original);
 
-    REQUIRE(0x11 == nth_byte(little, 0));
-    REQUIRE(0x22 == nth_byte(little, 1));
-    REQUIRE(0xEE == nth_byte(little, 2));
-    REQUIRE(0xFF == nth_byte(little, 3));
+    REQUIRE(0x11 == _nth_byte(little, 0));
+    REQUIRE(0x22 == _nth_byte(little, 1));
+    REQUIRE(0xEE == _nth_byte(little, 2));
+    REQUIRE(0xFF == _nth_byte(little, 3));
   }
 
   TEST_CASE("to_little_endian[int32]")
@@ -53,10 +53,10 @@ TEST_SUITE("Bit utilities")
     const int32 original = 0x11'22'33'44;
     const auto little = to_little_endian(original);
 
-    REQUIRE(0x44 == nth_byte(little, 0));
-    REQUIRE(0x33 == nth_byte(little, 1));
-    REQUIRE(0x22 == nth_byte(little, 2));
-    REQUIRE(0x11 == nth_byte(little, 3));
+    REQUIRE(0x44 == _nth_byte(little, 0));
+    REQUIRE(0x33 == _nth_byte(little, 1));
+    REQUIRE(0x22 == _nth_byte(little, 2));
+    REQUIRE(0x11 == _nth_byte(little, 3));
   }
 }
 

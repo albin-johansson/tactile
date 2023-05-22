@@ -30,7 +30,7 @@ namespace tactile {
 namespace {
 
 template <std::integral T>
-[[nodiscard]] auto parse(const char* begin, const char* end, const int base) -> Maybe<T>
+[[nodiscard]] auto _parse(const char* begin, const char* end, const int base) -> Maybe<T>
 {
   if (!begin || !end) {
     return nothing;
@@ -68,12 +68,12 @@ auto split(StringView str, const char sep) -> Vec<String>
 
 auto parse_i32(StringView str, const int base) -> Maybe<int32>
 {
-  return parse<int32>(str.data(), str.data() + str.size(), base);
+  return _parse<int32>(str.data(), str.data() + str.size(), base);
 }
 
 auto parse_u32(StringView str, const int base) -> Maybe<uint32>
 {
-  return parse<uint32>(str.data(), str.data() + str.size(), base);
+  return _parse<uint32>(str.data(), str.data() + str.size(), base);
 }
 
 auto parse_f32(StringView str) -> Maybe<float32>

@@ -31,7 +31,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto parse_fancy_tile(const JSON& json, TilesetIR& tileset_data)
+[[nodiscard]] auto _parse_fancy_tile(const JSON& json, TilesetIR& tileset_data)
     -> ParseError
 {
   TileID tile_id {};
@@ -89,12 +89,12 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_fancy_tiles(const JSON& json, TilesetIR& tileset_data)
+[[nodiscard]] auto _parse_fancy_tiles(const JSON& json, TilesetIR& tileset_data)
     -> ParseError
 {
   if (json.contains("tiles")) {
     for (const auto& [_, value]: json.at("tiles").items()) {
-      if (const auto err = parse_fancy_tile(value, tileset_data);
+      if (const auto err = _parse_fancy_tile(value, tileset_data);
           err != ParseError::None) {
         return err;
       }
@@ -104,9 +104,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_image_path(const JSON& json,
-                                    TilesetIR& tileset_data,
-                                    const Path& dir) -> ParseError
+[[nodiscard]] auto _parse_image_path(const JSON& json,
+                                     TilesetIR& tileset_data,
+                                     const Path& dir) -> ParseError
 {
   const auto relative = json.find("image");
 
@@ -125,9 +125,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_common_tileset_attributes(const JSON& json,
-                                                   TilesetIR& tileset_data,
-                                                   const Path& dir) -> ParseError
+[[nodiscard]] auto _parse_common_tileset_attributes(const JSON& json,
+                                                    TilesetIR& tileset_data,
+                                                    const Path& dir) -> ParseError
 {
   if (auto name = as_string(json, "name")) {
     tileset_data.name = std::move(*name);
@@ -178,7 +178,7 @@ namespace {
     return ParseError::NoTilesetImageHeight;
   }
 
-  if (const auto err = parse_image_path(json, tileset_data, dir);
+  if (const auto err = _parse_image_path(json, tileset_data, dir);
       err != ParseError::None) {
     return err;
   }
@@ -188,16 +188,16 @@ namespace {
     return err;
   }
 
-  if (const auto err = parse_fancy_tiles(json, tileset_data); err != ParseError::None) {
+  if (const auto err = _parse_fancy_tiles(json, tileset_data); err != ParseError::None) {
     return err;
   }
 
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_external_tileset(const JSON& json,
-                                          TilesetIR& tileset_data,
-                                          const Path& dir) -> ParseError
+[[nodiscard]] auto _parse_external_tileset(const JSON& json,
+                                           TilesetIR& tileset_data,
+                                           const Path& dir) -> ParseError
 {
   TACTILE_ASSERT(json.contains("source"));
 
@@ -209,16 +209,16 @@ namespace {
   }
 
   if (const auto external = parse_json_file(source)) {
-    return parse_common_tileset_attributes(*external, tileset_data, dir);
+    return _parse_common_tileset_attributes(*external, tileset_data, dir);
   }
   else {
     return ParseError::UnknownExternalTilesetError;
   }
 }
 
-[[nodiscard]] auto parse_tileset(const JSON& json,
-                                 TilesetIR& tileset_data,
-                                 const Path& dir) -> ParseError
+[[nodiscard]] auto _parse_tileset(const JSON& json,
+                                  TilesetIR& tileset_data,
+                                  const Path& dir) -> ParseError
 {
   if (const auto first_tile = as_int(json, "firstgid")) {
     tileset_data.first_tile = *first_tile;
@@ -228,10 +228,10 @@ namespace {
   }
 
   if (json.contains("source")) {
-    return parse_external_tileset(json, tileset_data, dir);
+    return _parse_external_tileset(json, tileset_data, dir);
   }
   else {
-    return parse_common_tileset_attributes(json, tileset_data, dir);
+    return _parse_common_tileset_attributes(json, tileset_data, dir);
   }
 }
 
@@ -250,7 +250,7 @@ auto parse_tilesets(const JSON& json, MapIR& map_data, const Path& dir) -> Parse
 
   for (const auto& [_, value]: iter->items()) {
     auto& tileset_data = map_data.tilesets.emplace_back();
-    if (const auto err = parse_tileset(value, tileset_data, dir);
+    if (const auto err = _parse_tileset(value, tileset_data, dir);
         err != ParseError::None) {
       return err;
     }

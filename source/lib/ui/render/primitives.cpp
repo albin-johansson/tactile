@@ -28,12 +28,12 @@ namespace {
 inline constexpr int kEllipseSegments = 50;
 inline constexpr float kTau = std::numbers::pi_v<float> * 2.0f;
 
-void path_elliptical_arc_to(ImDrawList* self,
-                            const ImVec2& center,
-                            const ImVec2& radius,
-                            const float arc_min,
-                            const float arc_max,
-                            const int n_segments)
+void _path_elliptical_arc_to(ImDrawList* self,
+                             const ImVec2& center,
+                             const ImVec2& radius,
+                             const float arc_min,
+                             const float arc_max,
+                             const int n_segments)
 {
   for (auto i = 0; i <= n_segments; ++i) {
     const auto arc_diff = arc_max - arc_min;
@@ -61,7 +61,7 @@ void add_ellipse(ImDrawList* self,
 
   // Because we are filling a closed shape we remove 1 from the count of segments/points
   const float arc_max = kTau * (n_segments_f - 1.0f) / n_segments_f;
-  path_elliptical_arc_to(self, center, radius, 0.0f, arc_max, n_segments - 1);
+  _path_elliptical_arc_to(self, center, radius, 0.0f, arc_max, n_segments - 1);
 
   self->PathStroke(color, true, thickness);
 }

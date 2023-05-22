@@ -34,7 +34,7 @@
 namespace tactile::ui {
 namespace {
 
-void _show_document_tab(const Model& model,
+void _push_document_tab(const Model& model,
                         const Entity document_entity,
                         Dispatcher& dispatcher)
 {
@@ -86,7 +86,7 @@ void update_document_tabs(const Model& model, Dispatcher& dispatcher)
 {
   if (const TabBar bar {"##DocumentTabs", ImGuiTabBarFlags_Reorderable}; bar.is_open()) {
     for (const auto& [document_entity, document]: model.each<Document>()) {
-      _show_document_tab(model, document_entity, dispatcher);
+      _push_document_tab(model, document_entity, dispatcher);
     }
   }
 }

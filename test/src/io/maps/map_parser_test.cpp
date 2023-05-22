@@ -35,7 +35,7 @@ namespace {
 
 using PE = ParseError;
 
-void parse_and_check_error(const char* path, const ParseError expected_error)
+void _parse_and_check_error(const char* path, const ParseError expected_error)
 {
   const auto parse_result = parse_map(path);
   if (expected_error == ParseError::None) {
@@ -55,328 +55,331 @@ TEST_SUITE("Map parser")
 {
   TEST_CASE("Valid maps")
   {
-    parse_and_check_error(YAML_DIR "minimal.yaml", PE::None);
-    parse_and_check_error(JSON_DIR "minimal.json", PE::None);
-    parse_and_check_error(XML_DIR "minimal.xml", PE::None);
+    _parse_and_check_error(YAML_DIR "minimal.yaml", PE::None);
+    _parse_and_check_error(JSON_DIR "minimal.json", PE::None);
+    _parse_and_check_error(XML_DIR "minimal.xml", PE::None);
 
-    parse_and_check_error(YAML_DIR "normal.yaml", PE::None);
+    _parse_and_check_error(YAML_DIR "normal.yaml", PE::None);
   }
 
   TEST_CASE("Invalid file types and missing maps")
   {
-    parse_and_check_error("resources/dummy.txt", PE::UnsupportedMapExtension);
-    parse_and_check_error("foo.yaml", PE::MapDoesNotExist);
-    parse_and_check_error("foo.json", PE::MapDoesNotExist);
-    parse_and_check_error("foo.tmx", PE::MapDoesNotExist);
+    _parse_and_check_error("resources/dummy.txt", PE::UnsupportedMapExtension);
+    _parse_and_check_error("foo.yaml", PE::MapDoesNotExist);
+    _parse_and_check_error("foo.json", PE::MapDoesNotExist);
+    _parse_and_check_error("foo.tmx", PE::MapDoesNotExist);
   }
 
   TEST_CASE("No map width")
   {
-    parse_and_check_error(YAML_ERR "map/no_map_width.yaml", PE::NoMapWidth);
-    parse_and_check_error(JSON_ERR "map/no_map_width.json", PE::NoMapWidth);
-    parse_and_check_error(XML_ERR "map/no_map_width.xml", PE::NoMapWidth);
+    _parse_and_check_error(YAML_ERR "map/no_map_width.yaml", PE::NoMapWidth);
+    _parse_and_check_error(JSON_ERR "map/no_map_width.json", PE::NoMapWidth);
+    _parse_and_check_error(XML_ERR "map/no_map_width.xml", PE::NoMapWidth);
   }
 
   TEST_CASE("No map height")
   {
-    parse_and_check_error(YAML_ERR "map/no_map_height.yaml", PE::NoMapHeight);
-    parse_and_check_error(JSON_ERR "map/no_map_height.json", PE::NoMapHeight);
-    parse_and_check_error(XML_ERR "map/no_map_height.xml", PE::NoMapHeight);
+    _parse_and_check_error(YAML_ERR "map/no_map_height.yaml", PE::NoMapHeight);
+    _parse_and_check_error(JSON_ERR "map/no_map_height.json", PE::NoMapHeight);
+    _parse_and_check_error(XML_ERR "map/no_map_height.xml", PE::NoMapHeight);
   }
 
   TEST_CASE("No tile width")
   {
-    parse_and_check_error(YAML_ERR "map/no_map_tile_width.yaml", PE::NoMapTileWidth);
-    parse_and_check_error(JSON_ERR "map/no_map_tile_width.json", PE::NoMapTileWidth);
-    parse_and_check_error(XML_ERR "map/no_map_tile_width.xml", PE::NoMapTileWidth);
+    _parse_and_check_error(YAML_ERR "map/no_map_tile_width.yaml", PE::NoMapTileWidth);
+    _parse_and_check_error(JSON_ERR "map/no_map_tile_width.json", PE::NoMapTileWidth);
+    _parse_and_check_error(XML_ERR "map/no_map_tile_width.xml", PE::NoMapTileWidth);
   }
 
   TEST_CASE("No tile height")
   {
-    parse_and_check_error(YAML_ERR "map/no_map_tile_height.yaml", PE::NoMapTileHeight);
-    parse_and_check_error(JSON_ERR "map/no_map_tile_height.json", PE::NoMapTileHeight);
-    parse_and_check_error(XML_ERR "map/no_map_tile_height.xml", PE::NoMapTileHeight);
+    _parse_and_check_error(YAML_ERR "map/no_map_tile_height.yaml", PE::NoMapTileHeight);
+    _parse_and_check_error(JSON_ERR "map/no_map_tile_height.json", PE::NoMapTileHeight);
+    _parse_and_check_error(XML_ERR "map/no_map_tile_height.xml", PE::NoMapTileHeight);
   }
 
   TEST_CASE("No next layer ID")
   {
-    parse_and_check_error(YAML_ERR "map/no_next_layer_id.yaml", PE::NoMapNextLayerId);
-    parse_and_check_error(JSON_ERR "map/no_next_layer_id.json", PE::NoMapNextLayerId);
-    parse_and_check_error(XML_ERR "map/no_next_layer_id.xml", PE::NoMapNextLayerId);
+    _parse_and_check_error(YAML_ERR "map/no_next_layer_id.yaml", PE::NoMapNextLayerId);
+    _parse_and_check_error(JSON_ERR "map/no_next_layer_id.json", PE::NoMapNextLayerId);
+    _parse_and_check_error(XML_ERR "map/no_next_layer_id.xml", PE::NoMapNextLayerId);
   }
 
   TEST_CASE("No next object ID")
   {
-    parse_and_check_error(YAML_ERR "map/no_next_object_id.yaml", PE::NoMapNextObjectId);
-    parse_and_check_error(JSON_ERR "map/no_next_object_id.json", PE::NoMapNextObjectId);
-    parse_and_check_error(XML_ERR "map/no_next_object_id.xml", PE::NoMapNextObjectId);
+    _parse_and_check_error(YAML_ERR "map/no_next_object_id.yaml", PE::NoMapNextObjectId);
+    _parse_and_check_error(JSON_ERR "map/no_next_object_id.json", PE::NoMapNextObjectId);
+    _parse_and_check_error(XML_ERR "map/no_next_object_id.xml", PE::NoMapNextObjectId);
   }
 
   TEST_CASE("No tileset first tile ID")
   {
-    parse_and_check_error(YAML_ERR "map/no_tileset_first_tile_id.yaml",
-                          PE::NoTilesetFirstTileId);
-    parse_and_check_error(JSON_ERR "map/no_tileset_first_tile_id.json",
-                          PE::NoTilesetFirstTileId);
+    _parse_and_check_error(YAML_ERR "map/no_tileset_first_tile_id.yaml",
+                           PE::NoTilesetFirstTileId);
+    _parse_and_check_error(JSON_ERR "map/no_tileset_first_tile_id.json",
+                           PE::NoTilesetFirstTileId);
   }
 
   TEST_CASE("External tileset does not exist")
   {
-    parse_and_check_error(YAML_ERR "map/external_tileset_does_not_exist.yaml",
-                          PE::ExternalTilesetDoesNotExist);
-    parse_and_check_error(JSON_ERR "map/external_tileset_does_not_exist.json",
-                          PE::ExternalTilesetDoesNotExist);
-    parse_and_check_error(XML_ERR "map/external_tileset_does_not_exist.xml",
-                          PE::ExternalTilesetDoesNotExist);
+    _parse_and_check_error(YAML_ERR "map/external_tileset_does_not_exist.yaml",
+                           PE::ExternalTilesetDoesNotExist);
+    _parse_and_check_error(JSON_ERR "map/external_tileset_does_not_exist.json",
+                           PE::ExternalTilesetDoesNotExist);
+    _parse_and_check_error(XML_ERR "map/external_tileset_does_not_exist.xml",
+                           PE::ExternalTilesetDoesNotExist);
   }
 
   TEST_CASE("Unknown external tileset error")
   {
-    parse_and_check_error(YAML_ERR "map/unknown_external_tileset_error.yaml",
-                          PE::UnknownExternalTilesetError);
-    parse_and_check_error(JSON_ERR "map/unknown_external_tileset_error.json",
-                          PE::UnknownExternalTilesetError);
-    parse_and_check_error(XML_ERR "map/unknown_external_tileset_error.xml",
-                          PE::UnknownExternalTilesetError);
+    _parse_and_check_error(YAML_ERR "map/unknown_external_tileset_error.yaml",
+                           PE::UnknownExternalTilesetError);
+    _parse_and_check_error(JSON_ERR "map/unknown_external_tileset_error.json",
+                           PE::UnknownExternalTilesetError);
+    _parse_and_check_error(XML_ERR "map/unknown_external_tileset_error.xml",
+                           PE::UnknownExternalTilesetError);
   }
 
   TEST_CASE("Unsupported layer type")
   {
-    parse_and_check_error(YAML_ERR "layer/unsupported_layer_type.yaml",
-                          PE::UnsupportedLayerType);
-    parse_and_check_error(JSON_ERR "layer/unsupported_layer_type.json",
-                          PE::UnsupportedLayerType);
+    _parse_and_check_error(YAML_ERR "layer/unsupported_layer_type.yaml",
+                           PE::UnsupportedLayerType);
+    _parse_and_check_error(JSON_ERR "layer/unsupported_layer_type.json",
+                           PE::UnsupportedLayerType);
   }
 
   TEST_CASE("No layer ID")
   {
-    parse_and_check_error(YAML_ERR "layer/no_layer_id.yaml", PE::NoLayerId);
-    parse_and_check_error(JSON_ERR "layer/no_layer_id.json", PE::NoLayerId);
-    parse_and_check_error(XML_ERR "layer/no_layer_id.xml", PE::NoLayerId);
+    _parse_and_check_error(YAML_ERR "layer/no_layer_id.yaml", PE::NoLayerId);
+    _parse_and_check_error(JSON_ERR "layer/no_layer_id.json", PE::NoLayerId);
+    _parse_and_check_error(XML_ERR "layer/no_layer_id.xml", PE::NoLayerId);
   }
 
   TEST_CASE("No layer type")
   {
-    parse_and_check_error(YAML_ERR "layer/no_layer_type.yaml", PE::NoLayerType);
-    parse_and_check_error(JSON_ERR "layer/no_layer_type.json", PE::NoLayerType);
+    _parse_and_check_error(YAML_ERR "layer/no_layer_type.yaml", PE::NoLayerType);
+    _parse_and_check_error(JSON_ERR "layer/no_layer_type.json", PE::NoLayerType);
   }
 
   TEST_CASE("No tile layer data")
   {
-    parse_and_check_error(YAML_ERR "layer/no_tile_layer_data.yaml", PE::NoTileLayerData);
-    parse_and_check_error(JSON_ERR "layer/no_tile_layer_data.json", PE::NoTileLayerData);
-    parse_and_check_error(XML_ERR "layer/no_tile_layer_data.xml", PE::NoTileLayerData);
+    _parse_and_check_error(YAML_ERR "layer/no_tile_layer_data.yaml", PE::NoTileLayerData);
+    _parse_and_check_error(JSON_ERR "layer/no_tile_layer_data.json", PE::NoTileLayerData);
+    _parse_and_check_error(XML_ERR "layer/no_tile_layer_data.xml", PE::NoTileLayerData);
   }
 
   TEST_CASE("Corrupt tile layer data")
   {
-    parse_and_check_error(YAML_ERR "layer/corrupt_tile_layer_data.yaml",
-                          PE::CorruptTileLayerData);
-    parse_and_check_error(JSON_ERR "layer/corrupt_tile_layer_data.json",
-                          PE::CorruptTileLayerData);
-    parse_and_check_error(XML_ERR "layer/corrupt_tile_layer_data.xml",
-                          PE::CorruptTileLayerData);
+    _parse_and_check_error(YAML_ERR "layer/corrupt_tile_layer_data.yaml",
+                           PE::CorruptTileLayerData);
+    _parse_and_check_error(JSON_ERR "layer/corrupt_tile_layer_data.json",
+                           PE::CorruptTileLayerData);
+    _parse_and_check_error(XML_ERR "layer/corrupt_tile_layer_data.xml",
+                           PE::CorruptTileLayerData);
   }
 
   TEST_CASE("No tileset tile width")
   {
-    parse_and_check_error(YAML_ERR "tileset/no_tileset_tile_width.yaml",
-                          PE::NoTilesetTileWidth);
-    parse_and_check_error(JSON_ERR "tileset/no_tileset_tile_width.json",
-                          PE::NoTilesetTileWidth);
-    parse_and_check_error(XML_ERR "tileset/no_tileset_tile_width.xml",
-                          PE::NoTilesetTileWidth);
+    _parse_and_check_error(YAML_ERR "tileset/no_tileset_tile_width.yaml",
+                           PE::NoTilesetTileWidth);
+    _parse_and_check_error(JSON_ERR "tileset/no_tileset_tile_width.json",
+                           PE::NoTilesetTileWidth);
+    _parse_and_check_error(XML_ERR "tileset/no_tileset_tile_width.xml",
+                           PE::NoTilesetTileWidth);
   }
 
   TEST_CASE("No tileset tile height")
   {
-    parse_and_check_error(YAML_ERR "tileset/no_tileset_tile_height.yaml",
-                          PE::NoTilesetTileHeight);
-    parse_and_check_error(JSON_ERR "tileset/no_tileset_tile_height.json",
-                          PE::NoTilesetTileHeight);
-    parse_and_check_error(XML_ERR "tileset/no_tileset_tile_height.xml",
-                          PE::NoTilesetTileHeight);
+    _parse_and_check_error(YAML_ERR "tileset/no_tileset_tile_height.yaml",
+                           PE::NoTilesetTileHeight);
+    _parse_and_check_error(JSON_ERR "tileset/no_tileset_tile_height.json",
+                           PE::NoTilesetTileHeight);
+    _parse_and_check_error(XML_ERR "tileset/no_tileset_tile_height.xml",
+                           PE::NoTilesetTileHeight);
   }
 
   TEST_CASE("No tileset name")
   {
-    parse_and_check_error(YAML_ERR "tileset/no_tileset_name.yaml", PE::NoTilesetName);
-    parse_and_check_error(JSON_ERR "tileset/no_tileset_name.json", PE::NoTilesetName);
-    parse_and_check_error(XML_ERR "tileset/no_tileset_name.xml", PE::NoTilesetName);
+    _parse_and_check_error(YAML_ERR "tileset/no_tileset_name.yaml", PE::NoTilesetName);
+    _parse_and_check_error(JSON_ERR "tileset/no_tileset_name.json", PE::NoTilesetName);
+    _parse_and_check_error(XML_ERR "tileset/no_tileset_name.xml", PE::NoTilesetName);
   }
 
   TEST_CASE("Tileset image does not exist")
   {
-    parse_and_check_error(YAML_ERR "tileset/tileset_image_does_not_exist.yaml",
-                          PE::TilesetImageDoesNotExist);
-    parse_and_check_error(JSON_ERR "tileset/tileset_image_does_not_exist.json",
-                          PE::TilesetImageDoesNotExist);
-    parse_and_check_error(XML_ERR "tileset/tileset_image_does_not_exist.xml",
-                          PE::TilesetImageDoesNotExist);
+    _parse_and_check_error(YAML_ERR "tileset/tileset_image_does_not_exist.yaml",
+                           PE::TilesetImageDoesNotExist);
+    _parse_and_check_error(JSON_ERR "tileset/tileset_image_does_not_exist.json",
+                           PE::TilesetImageDoesNotExist);
+    _parse_and_check_error(XML_ERR "tileset/tileset_image_does_not_exist.xml",
+                           PE::TilesetImageDoesNotExist);
   }
 
   TEST_CASE("No tileset image path")
   {
-    parse_and_check_error(YAML_ERR "tileset/no_tileset_image_path.yaml",
-                          PE::NoTilesetImagePath);
-    parse_and_check_error(JSON_ERR "tileset/no_tileset_image_path.json",
-                          PE::NoTilesetImagePath);
-    parse_and_check_error(XML_ERR "tileset/no_tileset_image_path.xml",
-                          PE::NoTilesetImagePath);
+    _parse_and_check_error(YAML_ERR "tileset/no_tileset_image_path.yaml",
+                           PE::NoTilesetImagePath);
+    _parse_and_check_error(JSON_ERR "tileset/no_tileset_image_path.json",
+                           PE::NoTilesetImagePath);
+    _parse_and_check_error(XML_ERR "tileset/no_tileset_image_path.xml",
+                           PE::NoTilesetImagePath);
   }
 
   TEST_CASE("No tileset image width")
   {
-    parse_and_check_error(YAML_ERR "tileset/no_tileset_image_width.yaml",
-                          PE::NoTilesetImageWidth);
-    parse_and_check_error(JSON_ERR "tileset/no_tileset_image_width.json",
-                          PE::NoTilesetImageWidth);
-    parse_and_check_error(XML_ERR "tileset/no_tileset_image_width.xml",
-                          PE::NoTilesetImageWidth);
+    _parse_and_check_error(YAML_ERR "tileset/no_tileset_image_width.yaml",
+                           PE::NoTilesetImageWidth);
+    _parse_and_check_error(JSON_ERR "tileset/no_tileset_image_width.json",
+                           PE::NoTilesetImageWidth);
+    _parse_and_check_error(XML_ERR "tileset/no_tileset_image_width.xml",
+                           PE::NoTilesetImageWidth);
   }
 
   TEST_CASE("No tileset image height")
   {
-    parse_and_check_error(YAML_ERR "tileset/no_tileset_image_height.yaml",
-                          PE::NoTilesetImageHeight);
-    parse_and_check_error(JSON_ERR "tileset/no_tileset_image_height.json",
-                          PE::NoTilesetImageHeight);
-    parse_and_check_error(XML_ERR "tileset/no_tileset_image_height.xml",
-                          PE::NoTilesetImageHeight);
+    _parse_and_check_error(YAML_ERR "tileset/no_tileset_image_height.yaml",
+                           PE::NoTilesetImageHeight);
+    _parse_and_check_error(JSON_ERR "tileset/no_tileset_image_height.json",
+                           PE::NoTilesetImageHeight);
+    _parse_and_check_error(XML_ERR "tileset/no_tileset_image_height.xml",
+                           PE::NoTilesetImageHeight);
   }
 
   TEST_CASE("No tileset tile count")
   {
-    parse_and_check_error(YAML_ERR "tileset/no_tileset_tile_count.yaml",
-                          PE::NoTilesetTileCount);
-    parse_and_check_error(JSON_ERR "tileset/no_tileset_tile_count.json",
-                          PE::NoTilesetTileCount);
-    parse_and_check_error(XML_ERR "tileset/no_tileset_tile_count.xml",
-                          PE::NoTilesetTileCount);
+    _parse_and_check_error(YAML_ERR "tileset/no_tileset_tile_count.yaml",
+                           PE::NoTilesetTileCount);
+    _parse_and_check_error(JSON_ERR "tileset/no_tileset_tile_count.json",
+                           PE::NoTilesetTileCount);
+    _parse_and_check_error(XML_ERR "tileset/no_tileset_tile_count.xml",
+                           PE::NoTilesetTileCount);
   }
 
   TEST_CASE("No tileset column count")
   {
-    parse_and_check_error(YAML_ERR "tileset/no_tileset_column_count.yaml",
-                          PE::NoTilesetColumnCount);
-    parse_and_check_error(JSON_ERR "tileset/no_tileset_column_count.json",
-                          PE::NoTilesetColumnCount);
-    parse_and_check_error(XML_ERR "tileset/no_tileset_column_count.xml",
-                          PE::NoTilesetColumnCount);
+    _parse_and_check_error(YAML_ERR "tileset/no_tileset_column_count.yaml",
+                           PE::NoTilesetColumnCount);
+    _parse_and_check_error(JSON_ERR "tileset/no_tileset_column_count.json",
+                           PE::NoTilesetColumnCount);
+    _parse_and_check_error(XML_ERR "tileset/no_tileset_column_count.xml",
+                           PE::NoTilesetColumnCount);
   }
 
   TEST_CASE("Corrupt property value")
   {
-    parse_and_check_error(YAML_ERR "property/corrupt_property_value.yaml",
-                          PE::CorruptPropertyValue);
-    parse_and_check_error(JSON_ERR "property/corrupt_property_value.json",
-                          PE::CorruptPropertyValue);
-    parse_and_check_error(XML_ERR "property/corrupt_property_value.xml",
-                          PE::CorruptPropertyValue);
+    _parse_and_check_error(YAML_ERR "property/corrupt_property_value.yaml",
+                           PE::CorruptPropertyValue);
+    _parse_and_check_error(JSON_ERR "property/corrupt_property_value.json",
+                           PE::CorruptPropertyValue);
+    _parse_and_check_error(XML_ERR "property/corrupt_property_value.xml",
+                           PE::CorruptPropertyValue);
   }
 
   TEST_CASE("Unsupported property type")
   {
-    parse_and_check_error(YAML_ERR "property/unsupported_property_type.yaml",
-                          PE::UnsupportedPropertyType);
-    parse_and_check_error(JSON_ERR "property/unsupported_property_type.json",
-                          PE::UnsupportedPropertyType);
-    parse_and_check_error(XML_ERR "property/unsupported_property_type.xml",
-                          PE::UnsupportedPropertyType);
+    _parse_and_check_error(YAML_ERR "property/unsupported_property_type.yaml",
+                           PE::UnsupportedPropertyType);
+    _parse_and_check_error(JSON_ERR "property/unsupported_property_type.json",
+                           PE::UnsupportedPropertyType);
+    _parse_and_check_error(XML_ERR "property/unsupported_property_type.xml",
+                           PE::UnsupportedPropertyType);
   }
 
   TEST_CASE("No property name")
   {
-    parse_and_check_error(YAML_ERR "property/no_property_name.yaml", PE::NoPropertyName);
-    parse_and_check_error(JSON_ERR "property/no_property_name.json", PE::NoPropertyName);
-    parse_and_check_error(XML_ERR "property/no_property_name.xml", PE::NoPropertyName);
+    _parse_and_check_error(YAML_ERR "property/no_property_name.yaml", PE::NoPropertyName);
+    _parse_and_check_error(JSON_ERR "property/no_property_name.json", PE::NoPropertyName);
+    _parse_and_check_error(XML_ERR "property/no_property_name.xml", PE::NoPropertyName);
   }
 
   TEST_CASE("No property type")
   {
-    parse_and_check_error(YAML_ERR "property/no_property_type.yaml", PE::NoPropertyType);
-    parse_and_check_error(JSON_ERR "property/no_property_type.json", PE::NoPropertyType);
+    _parse_and_check_error(YAML_ERR "property/no_property_type.yaml", PE::NoPropertyType);
+    _parse_and_check_error(JSON_ERR "property/no_property_type.json", PE::NoPropertyType);
   }
 
   TEST_CASE("No object ID")
   {
-    parse_and_check_error(YAML_ERR "object/no_object_id.yaml", PE::NoObjectId);
-    parse_and_check_error(JSON_ERR "object/no_object_id.json", PE::NoObjectId);
-    parse_and_check_error(XML_ERR "object/no_object_id.xml", PE::NoObjectId);
+    _parse_and_check_error(YAML_ERR "object/no_object_id.yaml", PE::NoObjectId);
+    _parse_and_check_error(JSON_ERR "object/no_object_id.json", PE::NoObjectId);
+    _parse_and_check_error(XML_ERR "object/no_object_id.xml", PE::NoObjectId);
   }
 
   TEST_CASE("No fancy tile ID")
   {
-    parse_and_check_error(YAML_ERR "fancy-tile/no_fancy_tile_id.yaml", PE::NoFancyTileId);
-    parse_and_check_error(JSON_ERR "fancy-tile/no_fancy_tile_id.json", PE::NoFancyTileId);
-    parse_and_check_error(XML_ERR "fancy-tile/no_fancy_tile_id.xml", PE::NoFancyTileId);
+    _parse_and_check_error(YAML_ERR "fancy-tile/no_fancy_tile_id.yaml",
+                           PE::NoFancyTileId);
+    _parse_and_check_error(JSON_ERR "fancy-tile/no_fancy_tile_id.json",
+                           PE::NoFancyTileId);
+    _parse_and_check_error(XML_ERR "fancy-tile/no_fancy_tile_id.xml", PE::NoFancyTileId);
   }
 
   TEST_CASE("No animation frame tile")
   {
-    parse_and_check_error(YAML_ERR "fancy-tile/no_animation_frame_tile.yaml",
-                          PE::NoAnimationFrameTile);
-    parse_and_check_error(JSON_ERR "fancy-tile/no_animation_frame_tile.json",
-                          PE::NoAnimationFrameTile);
-    parse_and_check_error(XML_ERR "fancy-tile/no_animation_frame_tile.xml",
-                          PE::NoAnimationFrameTile);
+    _parse_and_check_error(YAML_ERR "fancy-tile/no_animation_frame_tile.yaml",
+                           PE::NoAnimationFrameTile);
+    _parse_and_check_error(JSON_ERR "fancy-tile/no_animation_frame_tile.json",
+                           PE::NoAnimationFrameTile);
+    _parse_and_check_error(XML_ERR "fancy-tile/no_animation_frame_tile.xml",
+                           PE::NoAnimationFrameTile);
   }
 
   TEST_CASE("No animation frame duration")
   {
-    parse_and_check_error(YAML_ERR "fancy-tile/no_animation_frame_duration.yaml",
-                          PE::NoAnimationFrameDuration);
-    parse_and_check_error(JSON_ERR "fancy-tile/no_animation_frame_duration.json",
-                          PE::NoAnimationFrameDuration);
-    parse_and_check_error(XML_ERR "fancy-tile/no_animation_frame_duration.xml",
-                          PE::NoAnimationFrameDuration);
+    _parse_and_check_error(YAML_ERR "fancy-tile/no_animation_frame_duration.yaml",
+                           PE::NoAnimationFrameDuration);
+    _parse_and_check_error(JSON_ERR "fancy-tile/no_animation_frame_duration.json",
+                           PE::NoAnimationFrameDuration);
+    _parse_and_check_error(XML_ERR "fancy-tile/no_animation_frame_duration.xml",
+                           PE::NoAnimationFrameDuration);
   }
 
   TEST_CASE("YAML specific")
   {
     // Tilesets
-    parse_and_check_error(YAML_ERR "map/no_external_tileset_path.yaml",
-                          PE::NoExternalTilesetPath);
-    parse_and_check_error(YAML_ERR "tileset/no_tileset_version.yaml",
-                          PE::NoTilesetVersion);
-    parse_and_check_error(YAML_ERR "tileset/unsupported_tileset_version.yaml",
-                          PE::UnsupportedTilesetVersion);
+    _parse_and_check_error(YAML_ERR "map/no_external_tileset_path.yaml",
+                           PE::NoExternalTilesetPath);
+    _parse_and_check_error(YAML_ERR "tileset/no_tileset_version.yaml",
+                           PE::NoTilesetVersion);
+    _parse_and_check_error(YAML_ERR "tileset/unsupported_tileset_version.yaml",
+                           PE::UnsupportedTilesetVersion);
 
     // Objects
-    parse_and_check_error(YAML_ERR "object/no_object_type.yaml", PE::NoObjectType);
-    parse_and_check_error(YAML_ERR "object/unsupported_object_type.yaml",
-                          PE::UnsupportedObjectType);
+    _parse_and_check_error(YAML_ERR "object/no_object_type.yaml", PE::NoObjectType);
+    _parse_and_check_error(YAML_ERR "object/unsupported_object_type.yaml",
+                           PE::UnsupportedObjectType);
 
     // Components
-    parse_and_check_error(YAML_ERR "component/no_component_def_name.yaml",
-                          PE::NoComponentDefName);
-    parse_and_check_error(YAML_ERR "component/no_component_def_attribute_name.yaml",
-                          PE::NoComponentDefAttributeName);
-    parse_and_check_error(YAML_ERR "component/no_component_def_attribute_type.yaml",
-                          PE::NoComponentDefAttributeType);
-    parse_and_check_error(YAML_ERR
-                          "component/unsupported_component_def_attribute_type.yaml",
-                          PE::UnsupportedComponentDefAttributeType);
-    parse_and_check_error(YAML_ERR "component/corrupt_component_def_attribute_value.yaml",
-                          PE::CorruptComponentDefAttributeValue);
-    parse_and_check_error(YAML_ERR "component/no_component_type.yaml",
-                          PE::NoComponentType);
-    parse_and_check_error(YAML_ERR "component/no_component_attribute_name.yaml",
-                          PE::NoComponentAttributeName);
-    parse_and_check_error(YAML_ERR "component/no_component_attribute_value.yaml",
-                          PE::NoComponentAttributeValue);
-    parse_and_check_error(YAML_ERR "component/corrupt_component_attribute_value.yaml",
-                          PE::CorruptComponentAttributeValue);
+    _parse_and_check_error(YAML_ERR "component/no_component_def_name.yaml",
+                           PE::NoComponentDefName);
+    _parse_and_check_error(YAML_ERR "component/no_component_def_attribute_name.yaml",
+                           PE::NoComponentDefAttributeName);
+    _parse_and_check_error(YAML_ERR "component/no_component_def_attribute_type.yaml",
+                           PE::NoComponentDefAttributeType);
+    _parse_and_check_error(YAML_ERR
+                           "component/unsupported_component_def_attribute_type.yaml",
+                           PE::UnsupportedComponentDefAttributeType);
+    _parse_and_check_error(YAML_ERR
+                           "component/corrupt_component_def_attribute_value.yaml",
+                           PE::CorruptComponentDefAttributeValue);
+    _parse_and_check_error(YAML_ERR "component/no_component_type.yaml",
+                           PE::NoComponentType);
+    _parse_and_check_error(YAML_ERR "component/no_component_attribute_name.yaml",
+                           PE::NoComponentAttributeName);
+    _parse_and_check_error(YAML_ERR "component/no_component_attribute_value.yaml",
+                           PE::NoComponentAttributeValue);
+    _parse_and_check_error(YAML_ERR "component/corrupt_component_attribute_value.yaml",
+                           PE::CorruptComponentAttributeValue);
 
     // Tile format
-    parse_and_check_error(YAML_ERR "tile-format/bad_tile_format_encoding.yaml",
-                          PE::BadTileFormatEncoding);
-    parse_and_check_error(YAML_ERR "tile-format/bad_tile_format_compression.yaml",
-                          PE::BadTileFormatCompression);
-    parse_and_check_error(YAML_ERR "tile-format/bad_zlib_compression_level.yaml",
-                          PE::BadZlibCompressionLevel);
-    parse_and_check_error(YAML_ERR "tile-format/plain_encoding_with_compression.yaml",
-                          PE::PlainEncodingWithCompression);
+    _parse_and_check_error(YAML_ERR "tile-format/bad_tile_format_encoding.yaml",
+                           PE::BadTileFormatEncoding);
+    _parse_and_check_error(YAML_ERR "tile-format/bad_tile_format_compression.yaml",
+                           PE::BadTileFormatCompression);
+    _parse_and_check_error(YAML_ERR "tile-format/bad_zlib_compression_level.yaml",
+                           PE::BadZlibCompressionLevel);
+    _parse_and_check_error(YAML_ERR "tile-format/plain_encoding_with_compression.yaml",
+                           PE::PlainEncodingWithCompression);
   }
 }
 

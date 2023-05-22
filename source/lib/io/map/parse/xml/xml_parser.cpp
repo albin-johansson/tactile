@@ -26,7 +26,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto validate_map(XmlNode map_node) -> ParseError
+[[nodiscard]] auto _validate_map(XmlNode map_node) -> ParseError
 {
   if (get_string_attr(map_node, "orientation") != "orthogonal") {
     return ParseError::UnsupportedMapOrientation;
@@ -39,7 +39,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_map(const Path& path, MapIR& data) -> ParseError
+[[nodiscard]] auto _parse_map(const Path& path, MapIR& data) -> ParseError
 {
   auto document = parse_xml_file(path);
   if (!document) {
@@ -48,7 +48,7 @@ namespace {
 
   auto map_node = document->child("map");
 
-  if (const auto err = validate_map(map_node); err != ParseError::None) {
+  if (const auto err = _validate_map(map_node); err != ParseError::None) {
     return err;
   }
 
@@ -127,7 +127,7 @@ namespace {
 auto parse_xml_map(const Path& path) -> ParseResult
 {
   MapIR ir_map;
-  const auto res = parse_map(path, ir_map);
+  const auto res = _parse_map(path, ir_map);
 
   if (res == ParseError::None) {
     return ir_map;

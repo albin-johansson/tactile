@@ -35,7 +35,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto collect_layer_nodes(XmlNode map_node) -> Vec<XmlNode>
+[[nodiscard]] auto _collect_layer_nodes(XmlNode map_node) -> Vec<XmlNode>
 {
   Vec<XmlNode> nodes;
 
@@ -50,7 +50,7 @@ namespace {
   return nodes;
 }
 
-[[nodiscard]] auto parse_csv_tiles(const char* csv, const TileExtent extent)
+[[nodiscard]] auto _parse_csv_tiles(const char* csv, const TileExtent extent)
     -> Expected<TileMatrix, ParseError>
 {
   auto tiles = make_tile_matrix(extent);
@@ -71,7 +71,7 @@ namespace {
   return tiles;
 }
 
-[[nodiscard]] auto parse_tile_nodes(XmlNode data_node, const TileExtent extent)
+[[nodiscard]] auto _parse_tile_nodes(XmlNode data_node, const TileExtent extent)
     -> Expected<TileMatrix, ParseError>
 {
   auto tiles = make_tile_matrix(extent);
@@ -87,7 +87,7 @@ namespace {
   return tiles;
 }
 
-[[nodiscard]] auto parse_tile_data(XmlNode layer_node, MapIR& map)
+[[nodiscard]] auto _parse_tile_data(XmlNode layer_node, MapIR& map)
     -> Expected<TileMatrix, ParseError>
 {
   const auto data = layer_node.child("data");
@@ -102,7 +102,7 @@ namespace {
       map.tile_format.compression = TileCompression::None;
 
       const auto text = data.text();
-      if (auto tiles = parse_csv_tiles(text.get(), map.extent)) {
+      if (auto tiles = _parse_csv_tiles(text.get(), map.extent)) {
         return std::move(*tiles);
       }
       else {
@@ -135,7 +135,7 @@ namespace {
     map.tile_format.encoding = TileEncoding::Plain;
     map.tile_format.compression = TileCompression::None;
 
-    if (auto tiles = parse_tile_nodes(data, map.extent)) {
+    if (auto tiles = _parse_tile_nodes(data, map.extent)) {
       return std::move(*tiles);
     }
     else {
@@ -144,7 +144,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto parse_tile_layer(XmlNode layer_node, MapIR& map)
+[[nodiscard]] auto _parse_tile_layer(XmlNode layer_node, MapIR& map)
     -> Expected<TileLayerIR, ParseError>
 {
   TileLayerIR tile_layer;
@@ -177,7 +177,7 @@ namespace {
     tile_layer.extent.rows = map.extent.rows;
   }
 
-  if (auto tiles = parse_tile_data(layer_node, map)) {
+  if (auto tiles = _parse_tile_data(layer_node, map)) {
     tile_layer.tiles = std::move(*tiles);
   }
   else {
@@ -187,7 +187,7 @@ namespace {
   return tile_layer;
 }
 
-[[nodiscard]] auto parse_object_layer(XmlNode layer_node)
+[[nodiscard]] auto _parse_object_layer(XmlNode layer_node)
     -> Expected<ObjectLayerIR, ParseError>
 {
   ObjectLayerIR object_layer;
@@ -204,7 +204,7 @@ namespace {
   return object_layer;
 }
 
-[[nodiscard]] auto parse_layer(XmlNode layer_node, MapIR& map, const usize index)
+[[nodiscard]] auto _parse_layer(XmlNode layer_node, MapIR& map, const usize index)
     -> Expected<LayerIR, ParseError>
 {
   LayerIR layer;
@@ -224,7 +224,7 @@ namespace {
   if (std::strcmp(layer_node.name(), "layer") == 0) {
     layer.type = LayerType::TileLayer;
 
-    if (auto tile_layer = parse_tile_layer(layer_node, map)) {
+    if (auto tile_layer = _parse_tile_layer(layer_node, map)) {
       layer.data.emplace<TileLayerIR>(std::move(*tile_layer));
     }
     else {
@@ -234,7 +234,7 @@ namespace {
   else if (std::strcmp(layer_node.name(), "objectgroup") == 0) {
     layer.type = LayerType::ObjectLayer;
 
-    if (auto object_layer = parse_object_layer(layer_node)) {
+    if (auto object_layer = _parse_object_layer(layer_node)) {
       layer.data.emplace<ObjectLayerIR>(std::move(*object_layer));
     }
     else {
@@ -246,8 +246,8 @@ namespace {
     auto& group = layer.data.emplace<GroupLayerIR>();
 
     usize child_index = 0;
-    for (auto child_node: collect_layer_nodes(layer_node)) {
-      if (auto child_layer = parse_layer(child_node, map, child_index)) {
+    for (auto child_node: _collect_layer_nodes(layer_node)) {
+      if (auto child_layer = _parse_layer(child_node, map, child_index)) {
         group.children.push_back(std::make_unique<LayerIR>(std::move(*child_layer)));
       }
       else {
@@ -320,8 +320,8 @@ auto parse_layers(XmlNode map_node, MapIR& map) -> Expected<Vec<LayerIR>, ParseE
   Vec<LayerIR> layers;
 
   usize index = 0;
-  for (const auto layer_node: collect_layer_nodes(map_node)) {
-    if (auto layer = parse_layer(layer_node, map, index)) {
+  for (const auto layer_node: _collect_layer_nodes(map_node)) {
+    if (auto layer = _parse_layer(layer_node, map, index)) {
       layers.push_back(std::move(*layer));
     }
     else {

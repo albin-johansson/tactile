@@ -48,10 +48,10 @@
 namespace tactile {
 namespace {
 
-void restore_context(Model& model,
-                     const Entity component_set_entity,
-                     const Entity context_entity,
-                     const ContextIR& ir_context)
+void _restore_context(Model& model,
+                      const Entity component_set_entity,
+                      const Entity context_entity,
+                      const ContextIR& ir_context)
 {
   auto& context = model.add<Context>(context_entity);
   context.props.reserve(ir_context.properties.size());
@@ -77,9 +77,9 @@ void restore_context(Model& model,
   }
 }
 
-auto restore_object(Model& model,
-                    const Entity component_set_entity,
-                    const ObjectIR& ir_object) -> Entity
+auto _restore_object(Model& model,
+                     const Entity component_set_entity,
+                     const ObjectIR& ir_object) -> Entity
 {
   const auto object_entity = model.create_entity();
 
@@ -91,7 +91,7 @@ auto restore_object(Model& model,
   object.visible = ir_object.visible;
   object.meta_id = ir_object.id;
 
-  restore_context(model, component_set_entity, object_entity, ir_object.context);
+  _restore_context(model, component_set_entity, object_entity, ir_object.context);
 
   auto& object_context = model.get<Context>(object_entity);
   object_context.name = ir_object.name;
@@ -99,25 +99,25 @@ auto restore_object(Model& model,
   return object_entity;
 }
 
-void restore_object_layer(Model& model,
-                          const Entity component_set_entity,
-                          const Entity layer_entity,
-                          const ObjectLayerIR& ir_object_layer)
+void _restore_object_layer(Model& model,
+                           const Entity component_set_entity,
+                           const Entity layer_entity,
+                           const ObjectLayerIR& ir_object_layer)
 {
   auto& object_layer = model.get<ObjectLayer>(layer_entity);
   object_layer.objects.reserve(ir_object_layer.objects.size());
 
   for (const auto& ir_object: ir_object_layer.objects) {
     object_layer.objects.push_back(
-        restore_object(model, component_set_entity, ir_object));
+        _restore_object(model, component_set_entity, ir_object));
   }
 }
 
-auto restore_layer(Model& model,
-                   const Entity component_set_entity,
-                   const Entity map_entity,
-                   const LayerIR& ir_layer,
-                   const Entity parent_layer_entity = kNullEntity) -> Entity
+auto _restore_layer(Model& model,
+                    const Entity component_set_entity,
+                    const Entity map_entity,
+                    const LayerIR& ir_layer,
+                    const Entity parent_layer_entity = kNullEntity) -> Entity
 {
   auto& map = model.get<Map>(map_entity);
 
@@ -137,10 +137,10 @@ auto restore_layer(Model& model,
     }
     case LayerType::ObjectLayer: {
       layer_entity = sys::create_object_layer(model, ir_layer.id);
-      restore_object_layer(model,
-                           component_set_entity,
-                           layer_entity,
-                           ir_layer.as_object_layer());
+      _restore_object_layer(model,
+                            component_set_entity,
+                            layer_entity,
+                            ir_layer.as_object_layer());
       break;
     }
     case LayerType::GroupLayer: {
@@ -148,11 +148,11 @@ auto restore_layer(Model& model,
 
       const auto& ir_group = ir_layer.as_group_layer();
       for (const auto& ir_child_layer: ir_group.children) {
-        restore_layer(model,
-                      component_set_entity,
-                      map_entity,
-                      *ir_child_layer,
-                      layer_entity);
+        _restore_layer(model,
+                       component_set_entity,
+                       map_entity,
+                       *ir_child_layer,
+                       layer_entity);
       }
 
       break;
@@ -170,7 +170,7 @@ auto restore_layer(Model& model,
   layer.opacity = ir_layer.opacity;
   layer.visible = ir_layer.visible;
 
-  restore_context(model, component_set_entity, layer_entity, ir_layer.context);
+  _restore_context(model, component_set_entity, layer_entity, ir_layer.context);
 
   auto& layer_context = model.get<Context>(layer_entity);
   layer_context.name = ir_layer.name;
@@ -178,17 +178,19 @@ auto restore_layer(Model& model,
   return layer_entity;
 }
 
-void restore_layers(Model& model,
-                    const Entity component_set_entity,
-                    const Entity map_entity,
-                    const MapIR& ir_map)
+void _restore_layers(Model& model,
+                     const Entity component_set_entity,
+                     const Entity map_entity,
+                     const MapIR& ir_map)
 {
   for (const auto& ir_layer: ir_map.layers) {
-    restore_layer(model, component_set_entity, map_entity, ir_layer);
+    _restore_layer(model, component_set_entity, map_entity, ir_layer);
   }
 }
 
-void restore_tile_animation(Model& model, const Entity tile_entity, const TileIR& ir_tile)
+void _restore_tile_animation(Model& model,
+                             const Entity tile_entity,
+                             const TileIR& ir_tile)
 {
   auto& animation = model.add<TileAnimation>(tile_entity);
   animation.frames.reserve(ir_tile.frames.size());
@@ -200,22 +202,22 @@ void restore_tile_animation(Model& model, const Entity tile_entity, const TileIR
   }
 }
 
-void restore_fancy_tile_objects(Model& model,
-                                Tile& tile,
-                                const Entity component_set_entity,
-                                const TileIR& ir_tile)
+void _restore_fancy_tile_objects(Model& model,
+                                 Tile& tile,
+                                 const Entity component_set_entity,
+                                 const TileIR& ir_tile)
 {
   tile.objects.reserve(ir_tile.objects.size());
 
   for (const auto& ir_object: ir_tile.objects) {
-    tile.objects.push_back(restore_object(model, component_set_entity, ir_object));
+    tile.objects.push_back(_restore_object(model, component_set_entity, ir_object));
   }
 }
 
-void restore_fancy_tiles(Model& model,
-                         const Entity component_set_entity,
-                         const Entity tileset_entity,
-                         const TilesetIR& ir_tileset)
+void _restore_fancy_tiles(Model& model,
+                          const Entity component_set_entity,
+                          const Entity tileset_entity,
+                          const TilesetIR& ir_tileset)
 {
   auto& tileset = model.get<Tileset>(tileset_entity);
 
@@ -229,20 +231,20 @@ void restore_fancy_tiles(Model& model,
                    ir_tileset.tile_size};
 
     if (!ir_tile.frames.empty()) {
-      restore_tile_animation(model, tile_entity, ir_tile);
+      _restore_tile_animation(model, tile_entity, ir_tile);
     }
 
     if (!ir_tile.objects.empty()) {
-      restore_fancy_tile_objects(model, tile, component_set_entity, ir_tile);
+      _restore_fancy_tile_objects(model, tile, component_set_entity, ir_tile);
     }
 
-    restore_context(model, component_set_entity, tile_entity, ir_tile.context);
+    _restore_context(model, component_set_entity, tile_entity, ir_tile.context);
   }
 }
 
-auto restore_tileset_document(Model& model,
-                              const Entity component_set_entity,
-                              const TilesetIR& ir_tileset) -> Entity
+auto _restore_tileset_document(Model& model,
+                               const Entity component_set_entity,
+                               const TilesetIR& ir_tileset) -> Entity
 {
   // TODO compare tileset document absolute paths to recognize the same tileset being
   // loaded multiple times
@@ -255,12 +257,12 @@ auto restore_tileset_document(Model& model,
 
   const auto& tileset_document = model.get<TilesetDocument>(document_entity);
 
-  restore_fancy_tiles(model, component_set_entity, tileset_document.tileset, ir_tileset);
+  _restore_fancy_tiles(model, component_set_entity, tileset_document.tileset, ir_tileset);
 
-  restore_context(model,
-                  component_set_entity,
-                  tileset_document.tileset,
-                  ir_tileset.context);
+  _restore_context(model,
+                   component_set_entity,
+                   tileset_document.tileset,
+                   ir_tileset.context);
 
   auto& tileset_context = model.get<Context>(tileset_document.tileset);
   tileset_context.name = ir_tileset.name;
@@ -268,10 +270,10 @@ auto restore_tileset_document(Model& model,
   return document_entity;
 }
 
-void attach_tileset_to_map(Model& model,
-                           Map& map,
-                           const Entity tileset_entity,
-                           const TilesetIR& ir_tileset)
+void _attach_tileset_to_map(Model& model,
+                            Map& map,
+                            const Entity tileset_entity,
+                            const TilesetIR& ir_tileset)
 {
   const auto attached_tileset_entity = model.create_entity();
   map.attached_tilesets.push_back(attached_tileset_entity);
@@ -287,17 +289,17 @@ void attach_tileset_to_map(Model& model,
   tileset_viewport.tile_size = ir_tileset.tile_size;
 }
 
-void restore_tileset_documents(Model& model,
-                               Map& map,
-                               const Entity component_set_entity,
-                               const MapIR& ir_map)
+void _restore_tileset_documents(Model& model,
+                                Map& map,
+                                const Entity component_set_entity,
+                                const MapIR& ir_map)
 {
   for (const auto& ir_tileset: ir_map.tilesets) {
     const auto tileset_document_entity =
-        restore_tileset_document(model, component_set_entity, ir_tileset);
+        _restore_tileset_document(model, component_set_entity, ir_tileset);
 
     const auto& tileset_document = model.get<TilesetDocument>(tileset_document_entity);
-    attach_tileset_to_map(model, map, tileset_document.tileset, ir_tileset);
+    _attach_tileset_to_map(model, map, tileset_document.tileset, ir_tileset);
   }
 
   // Determine the next available tile identifier
@@ -312,9 +314,9 @@ void restore_tileset_documents(Model& model,
   }
 }
 
-void restore_component_definitions(Model& model,
-                                   ComponentSet& component_set,
-                                   const MapIR& ir_map)
+void _restore_component_definitions(Model& model,
+                                    ComponentSet& component_set,
+                                    const MapIR& ir_map)
 {
   for (const auto& [name, attributes]: ir_map.component_definitions) {
     const auto component_def_entity = model.create_entity();
@@ -329,7 +331,7 @@ void restore_component_definitions(Model& model,
   }
 }
 
-void restore_tile_format(TileFormat& format, const TileFormatIR& ir_format)
+void _restore_tile_format(TileFormat& format, const TileFormatIR& ir_format)
 {
   format.encoding = ir_format.encoding;
   format.compression = ir_format.compression;
@@ -376,11 +378,11 @@ void create_map_document_from_ir(const MapIR& ir_map,
 
   auto& tile_format = model.get<TileFormat>(map_document.map);
 
-  restore_tile_format(tile_format, ir_map.tile_format);
-  restore_component_definitions(model, component_set, ir_map);
-  restore_tileset_documents(model, map, document.component_set, ir_map);
-  restore_layers(model, document.component_set, map_document.map, ir_map);
-  restore_context(model, document.component_set, map_document.map, ir_map.context);
+  _restore_tile_format(tile_format, ir_map.tile_format);
+  _restore_component_definitions(model, component_set, ir_map);
+  _restore_tileset_documents(model, map, document.component_set, ir_map);
+  _restore_layers(model, document.component_set, map_document.map, ir_map);
+  _restore_context(model, document.component_set, map_document.map, ir_map.context);
 }
 
 }  // namespace tactile

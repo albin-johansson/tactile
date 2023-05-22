@@ -32,7 +32,7 @@ namespace tactile {
 namespace {
 
 template <typename T>
-[[nodiscard]] auto parse_vector(const YAML::Node& value) -> Maybe<T>
+[[nodiscard]] auto _parse_vector(const YAML::Node& value) -> Maybe<T>
 {
   using ScalarType = typename T::value_type;
 
@@ -68,8 +68,8 @@ template <typename T>
   return vec;
 }
 
-[[nodiscard]] auto parse_attribute_value(const YAML::Node& value,
-                                         const AttributeType type) -> Maybe<Attribute>
+[[nodiscard]] auto _parse_attribute_value(const YAML::Node& value,
+                                          const AttributeType type) -> Maybe<Attribute>
 {
   switch (type) {
     case AttributeType::String:
@@ -79,25 +79,25 @@ template <typename T>
       return value.as<int32>();
 
     case AttributeType::Int2:
-      return parse_vector<Int2>(value);
+      return _parse_vector<Int2>(value);
 
     case AttributeType::Int3:
-      return parse_vector<Int3>(value);
+      return _parse_vector<Int3>(value);
 
     case AttributeType::Int4:
-      return parse_vector<Int4>(value);
+      return _parse_vector<Int4>(value);
 
     case AttributeType::Float:
       return value.as<float>();
 
     case AttributeType::Float2:
-      return parse_vector<Float2>(value);
+      return _parse_vector<Float2>(value);
 
     case AttributeType::Float3:
-      return parse_vector<Float3>(value);
+      return _parse_vector<Float3>(value);
 
     case AttributeType::Float4:
-      return parse_vector<Float4>(value);
+      return _parse_vector<Float4>(value);
 
     case AttributeType::Bool:
       return value.as<bool>();
@@ -122,7 +122,7 @@ template <typename T>
   }
 }
 
-[[nodiscard]] auto parse_component_definition_attribute(const YAML::Node& node)
+[[nodiscard]] auto _parse_component_definition_attribute(const YAML::Node& node)
     -> Expected<Attribute, ParseError>
 {
   String name;
@@ -157,7 +157,7 @@ template <typename T>
         break;
 
       case AttributeType::Int2:
-        if (const auto vec = parse_vector<Int2>(default_value)) {
+        if (const auto vec = _parse_vector<Int2>(default_value)) {
           value = *vec;
         }
         else {
@@ -166,7 +166,7 @@ template <typename T>
         break;
 
       case AttributeType::Int3:
-        if (const auto vec = parse_vector<Int3>(default_value)) {
+        if (const auto vec = _parse_vector<Int3>(default_value)) {
           value = *vec;
         }
         else {
@@ -175,7 +175,7 @@ template <typename T>
         break;
 
       case AttributeType::Int4:
-        if (const auto vec = parse_vector<Int4>(default_value)) {
+        if (const auto vec = _parse_vector<Int4>(default_value)) {
           value = *vec;
         }
         else {
@@ -188,7 +188,7 @@ template <typename T>
         break;
 
       case AttributeType::Float2:
-        if (const auto vec = parse_vector<Float2>(default_value)) {
+        if (const auto vec = _parse_vector<Float2>(default_value)) {
           value = *vec;
         }
         else {
@@ -197,7 +197,7 @@ template <typename T>
         break;
 
       case AttributeType::Float3:
-        if (const auto vec = parse_vector<Float3>(default_value)) {
+        if (const auto vec = _parse_vector<Float3>(default_value)) {
           value = *vec;
         }
         else {
@@ -206,7 +206,7 @@ template <typename T>
         break;
 
       case AttributeType::Float4:
-        if (const auto vec = parse_vector<Float4>(default_value)) {
+        if (const auto vec = _parse_vector<Float4>(default_value)) {
           value = *vec;
         }
         else {
@@ -241,7 +241,7 @@ template <typename T>
   return value;
 }
 
-[[nodiscard]] auto parse_component_definition(const YAML::Node& node)
+[[nodiscard]] auto _parse_component_definition(const YAML::Node& node)
     -> Expected<AttributeMap, ParseError>
 {
   AttributeMap def;
@@ -253,7 +253,7 @@ template <typename T>
         return unexpected(ParseError::NoComponentDefAttributeName);
       }
 
-      if (auto attr = parse_component_definition_attribute(attribute_node)) {
+      if (auto attr = _parse_component_definition_attribute(attribute_node)) {
         def[std::move(attribute_name)] = std::move(*attr);
       }
       else {
@@ -265,9 +265,9 @@ template <typename T>
   return def;
 }
 
-[[nodiscard]] auto parse_component(const YAML::Node& node,
-                                   const MapIR& map,
-                                   const String& type)
+[[nodiscard]] auto _parse_component(const YAML::Node& node,
+                                    const MapIR& map,
+                                    const String& type)
     -> Expected<AttributeMap, ParseError>
 {
   // TODO invalid component type check, e.g. ParseError::InvalidComponentType
@@ -283,7 +283,7 @@ template <typename T>
 
       if (auto value = value_node["value"]) {
         const auto attr_type = prototype.at(attr_name).get_type();
-        if (auto attribute_value = parse_attribute_value(value, attr_type)) {
+        if (auto attribute_value = _parse_attribute_value(value, attr_type)) {
           comp[attr_name] = std::move(*attribute_value);
         }
         else {
@@ -313,7 +313,7 @@ auto parse_component_definitions(const YAML::Node& node)
         return unexpected(ParseError::NoComponentDefName);
       }
 
-      if (auto def = parse_component_definition(def_node)) {
+      if (auto def = _parse_component_definition(def_node)) {
         defs[std::move(type)] = std::move(*def);
       }
       else {
@@ -337,7 +337,7 @@ auto parse_components(const YAML::Node& node, const MapIR& map)
         return unexpected(ParseError::NoComponentType);
       }
 
-      if (auto comp = parse_component(component_node, map, type)) {
+      if (auto comp = _parse_component(component_node, map, type)) {
         comps[std::move(type)] = std::move(*comp);
       }
       else {
@@ -374,7 +374,7 @@ auto parse_properties(const YAML::Node& node) -> Expected<AttributeMap, ParseErr
       }
 
       if (auto value_attr = property_node["value"]) {
-        if (auto value = parse_attribute_value(value_attr, property_type)) {
+        if (auto value = _parse_attribute_value(value_attr, property_type)) {
           props[std::move(property_name)] = std::move(*value);
         }
         else {

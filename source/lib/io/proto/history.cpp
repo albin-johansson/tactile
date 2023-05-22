@@ -31,7 +31,7 @@ namespace {
 
 constexpr int kHistoryFormatVersion [[maybe_unused]] = 1;
 
-[[nodiscard]] auto get_file_path() -> const Path&
+[[nodiscard]] auto _get_file_path() -> const Path&
 {
   static const auto path = get_persistent_file_dir() / "history.bin";
   return path;
@@ -43,7 +43,7 @@ auto load_file_history_from_disk() -> Maybe<FileHistory>
 {
   spdlog::debug("[History] Loading file history from disk");
 
-  auto stream = open_input_stream(get_file_path(), FileType::Binary);
+  auto stream = open_input_stream(_get_file_path(), FileType::Binary);
   if (!stream) {
     spdlog::error("[History] Could not open file history file");
     return nothing;
@@ -83,7 +83,7 @@ void save_file_history_to_disk(const FileHistory& history)
     h.add_files(path);
   }
 
-  auto stream = open_output_stream(get_file_path(), FileType::Binary);
+  auto stream = open_output_stream(_get_file_path(), FileType::Binary);
   if (!stream) {
     spdlog::error("[History] Could not write to file history file");
     return;

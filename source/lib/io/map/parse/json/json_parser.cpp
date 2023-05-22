@@ -27,7 +27,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto validate_map(const JSON& json) -> ParseError
+[[nodiscard]] auto _validate_map(const JSON& json) -> ParseError
 {
   if (const auto iter = json.find("orientation");
       iter == json.end() || iter->get<std::string>() != "orthogonal") {
@@ -41,14 +41,14 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_map(const Path& path, MapIR& map_data) -> ParseError
+[[nodiscard]] auto _parse_map(const Path& path, MapIR& map_data) -> ParseError
 {
   const auto json = parse_json_file(path);
   if (!json) {
     return ParseError::CouldNotReadFile;
   }
 
-  if (const auto err = validate_map(*json); err != ParseError::None) {
+  if (const auto err = _validate_map(*json); err != ParseError::None) {
     return err;
   }
 
@@ -119,7 +119,7 @@ namespace {
 auto parse_json_map(const Path& path) -> ParseResult
 {
   MapIR ir_map;
-  const auto res = parse_map(path, ir_map);
+  const auto res = _parse_map(path, ir_map);
 
   if (res == ParseError::None) {
     return ir_map;

@@ -39,8 +39,8 @@ namespace {
 // Update documentation if the representation of TileID changes
 static_assert(std::same_as<TileID, int32>);
 
-[[nodiscard]] auto convert_tile_matrix_to_sequence(const TileMatrix& matrix,
-                                                   const TileExtent extent) -> ByteStream
+[[nodiscard]] auto _convert_tile_matrix_to_sequence(const TileMatrix& matrix,
+                                                    const TileExtent extent) -> ByteStream
 {
   ByteStream seq;
   seq.reserve(extent.rows * extent.cols * sizeof(TileID));
@@ -54,7 +54,7 @@ static_assert(std::same_as<TileID, int32>);
   return seq;
 }
 
-[[nodiscard]] auto restore_tiles(const auto& data, const TileExtent extent) -> TileMatrix
+[[nodiscard]] auto _restore_tiles(const auto& data, const TileExtent extent) -> TileMatrix
 {
   auto matrix = make_tile_matrix(extent);
 
@@ -76,7 +76,7 @@ static_assert(std::same_as<TileID, int32>);
   return matrix;
 }
 
-[[nodiscard]] auto encode_bytes(const ByteStream& stream) -> String
+[[nodiscard]] auto _encode_bytes(const ByteStream& stream) -> String
 {
   return Base64::encode(stream.data(), stream.size());
 }
@@ -87,19 +87,19 @@ auto base64_encode_tiles(const TileMatrix& tiles,
                          const TileExtent extent,
                          const TileCompression compression) -> String
 {
-  const auto byte_stream = convert_tile_matrix_to_sequence(tiles, extent);
+  const auto byte_stream = _convert_tile_matrix_to_sequence(tiles, extent);
 
   switch (compression) {
     case TileCompression::None: {
-      return encode_bytes(byte_stream);
+      return _encode_bytes(byte_stream);
     }
     case TileCompression::Zlib: {
       const auto compressed_bytes = zlib_compress(ByteSpan {byte_stream}).value();
-      return encode_bytes(compressed_bytes);
+      return _encode_bytes(compressed_bytes);
     }
     case TileCompression::Zstd: {
       const auto compressed_bytes = zstd_compress(ByteSpan {byte_stream}).value();
-      return encode_bytes(compressed_bytes);
+      return _encode_bytes(compressed_bytes);
     }
     default:
       throw TactileError {"Invalid compression strategy"};
@@ -114,15 +114,15 @@ auto base64_decode_tiles(StringView tiles,
 
   switch (compression) {
     case TileCompression::None:
-      return restore_tiles(decoded_bytes, extent);
+      return _restore_tiles(decoded_bytes, extent);
 
     case TileCompression::Zlib: {
       const auto decompressed_bytes = zlib_decompress(ByteSpan {decoded_bytes}).value();
-      return restore_tiles(decompressed_bytes, extent);
+      return _restore_tiles(decompressed_bytes, extent);
     }
     case TileCompression::Zstd: {
       const auto decompressed_bytes = zstd_decompress(ByteSpan {decoded_bytes}).value();
-      return restore_tiles(decompressed_bytes, extent);
+      return _restore_tiles(decompressed_bytes, extent);
     }
     default:
       throw TactileError {"Invalid compression strategy"};

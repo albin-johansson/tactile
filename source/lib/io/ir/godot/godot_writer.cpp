@@ -37,7 +37,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto write_attribute(StringView name, const Attribute& value) -> String
+[[nodiscard]] auto _write_attribute(StringView name, const Attribute& value) -> String
 {
   switch (value.get_type()) {
     case AttributeType::String:
@@ -101,13 +101,13 @@ namespace {
   }
 }
 
-void write_attributes(OStream& stream, const GdAttributes& attrs, StringView prefix)
+void _write_attributes(OStream& stream, const GdAttributes& attrs, StringView prefix)
 {
   const auto count = attrs.size();
 
   usize index = 0;
   for (const auto& [name, value]: attrs) {
-    stream << prefix << write_attribute(name, value);
+    stream << prefix << _write_attribute(name, value);
 
     if (index < count - 1) {
       stream << ',';
@@ -118,7 +118,7 @@ void write_attributes(OStream& stream, const GdAttributes& attrs, StringView pre
   }
 }
 
-void write_components(OStream& stream, const GdMetaData& meta)
+void _write_components(OStream& stream, const GdMetaData& meta)
 {
   TACTILE_ASSERT(!meta.comps.empty());
   stream << "  \"components\": {\n";
@@ -130,7 +130,7 @@ void write_components(OStream& stream, const GdMetaData& meta)
     }
 
     stream << fmt::format("    \"{}\": {{\n", comp_name);
-    write_attributes(stream, comp_attrs, "      ");
+    _write_attributes(stream, comp_attrs, "      ");
     stream << "    }";
 
     first_comp = false;
@@ -139,17 +139,17 @@ void write_components(OStream& stream, const GdMetaData& meta)
   stream << "\n  }\n";
 }
 
-void write_properties(OStream& stream, const GdMetaData& meta)
+void _write_properties(OStream& stream, const GdMetaData& meta)
 {
   TACTILE_ASSERT(!meta.props.empty());
   stream << "  \"properties\": {\n";
 
-  write_attributes(stream, meta.props, "    ");
+  _write_attributes(stream, meta.props, "    ");
 
   stream << "  }";
 }
 
-void write_metadata(OStream& stream, const GdMetaData& meta)
+void _write_metadata(OStream& stream, const GdMetaData& meta)
 {
   const auto has_props = !meta.props.empty();
   const auto has_comps = !meta.comps.empty();
@@ -161,7 +161,7 @@ void write_metadata(OStream& stream, const GdMetaData& meta)
   stream << "__meta__ = {\n";
 
   if (has_props) {
-    write_properties(stream, meta);
+    _write_properties(stream, meta);
     if (has_comps) {
       stream << ',';
     }
@@ -169,13 +169,13 @@ void write_metadata(OStream& stream, const GdMetaData& meta)
   }
 
   if (has_comps) {
-    write_components(stream, meta);
+    _write_components(stream, meta);
   }
 
   stream << "}\n";
 }
 
-void write_ext_resources(OStream& stream, const GodotFile::ExtResources& resources)
+void _write_ext_resources(OStream& stream, const GodotFile::ExtResources& resources)
 {
   if (!resources.empty()) {
     stream << '\n';
@@ -188,7 +188,7 @@ void write_ext_resources(OStream& stream, const GodotFile::ExtResources& resourc
   }
 }
 
-void write_tileset_file(const GodotTileset& tileset, const GodotEmitOptions& options)
+void _write_tileset_file(const GodotTileset& tileset, const GodotEmitOptions& options)
 {
   const auto path = options.root_dir / options.project_tileset_dir / "tileset.tres";
   auto stream = open_output_stream(path, FileType::Text).value();
@@ -196,7 +196,7 @@ void write_tileset_file(const GodotTileset& tileset, const GodotEmitOptions& opt
   stream << fmt::format("[gd_resource type=\"TileSet\" load_steps={} format=2]\n",
                         tileset.get_load_steps());
 
-  write_ext_resources(stream, tileset.ext_resources());
+  _write_ext_resources(stream, tileset.ext_resources());
 
   for (const auto& [source, filename]: tileset.texture_paths()) {
     const auto relpath = options.project_image_dir / filename;
@@ -241,7 +241,7 @@ void write_tileset_file(const GodotTileset& tileset, const GodotEmitOptions& opt
   }
 }
 
-void write_atlas_textures(OStream& stream, const GodotScene& scene)
+void _write_atlas_textures(OStream& stream, const GodotScene& scene)
 {
   if (!scene.atlas_textures().empty()) {
     for (const auto& [id, texture]: scene.atlas_textures()) {
@@ -257,7 +257,7 @@ void write_atlas_textures(OStream& stream, const GodotScene& scene)
   }
 }
 
-void write_sprite_frames(OStream& stream, const GdSpriteFrames& sprite_frames)
+void _write_sprite_frames(OStream& stream, const GdSpriteFrames& sprite_frames)
 {
   stream << fmt::format("\n[sub_resource type=\"SpriteFrames\" id={}]\n",
                         sprite_frames.id);
@@ -286,7 +286,7 @@ void write_sprite_frames(OStream& stream, const GdSpriteFrames& sprite_frames)
   stream << "]\n";
 }
 
-void write_shapes(OStream& stream, const GodotScene& scene)
+void _write_shapes(OStream& stream, const GodotScene& scene)
 {
   for (const auto& [id, shape]: scene.rectangle_shapes()) {
     stream << fmt::format("\n[sub_resource type=\"RectangleShape2D\" id={}]\n", id);
@@ -296,9 +296,9 @@ void write_shapes(OStream& stream, const GodotScene& scene)
   }
 }
 
-void write_tile_layer_animation_nodes(OStream& stream,
-                                      const GodotScene& scene,
-                                      const GdTileLayer& tile_layer)
+void _write_tile_layer_animation_nodes(OStream& stream,
+                                       const GodotScene& scene,
+                                       const GdTileLayer& tile_layer)
 {
   const auto& sprite_frames = scene.sprite_frames();
 
@@ -321,7 +321,7 @@ void write_tile_layer_animation_nodes(OStream& stream,
   }
 }
 
-void write_tile_layer(OStream& stream, const GodotScene& scene, const GdLayer& layer)
+void _write_tile_layer(OStream& stream, const GodotScene& scene, const GdLayer& layer)
 {
   const auto& tile_layer = std::get<GdTileLayer>(layer.value);
 
@@ -355,12 +355,12 @@ void write_tile_layer(OStream& stream, const GodotScene& scene, const GdLayer& l
                         tile_layer.cell_size.x,
                         tile_layer.cell_size.y);
 
-  write_metadata(stream, layer.meta);
+  _write_metadata(stream, layer.meta);
 
-  write_tile_layer_animation_nodes(stream, scene, tile_layer);
+  _write_tile_layer_animation_nodes(stream, scene, tile_layer);
 }
 
-void write_rectangle_object(OStream& stream, const GdObject& object)
+void _write_rectangle_object(OStream& stream, const GdObject& object)
 {
   const auto& rect = std::get<GdRect>(object.value);
 
@@ -374,7 +374,7 @@ void write_rectangle_object(OStream& stream, const GdObject& object)
     stream << "visible = false\n";
   }
 
-  write_metadata(stream, object.meta);
+  _write_metadata(stream, object.meta);
 
   stream << fmt::format(
       "\n[node name=\"Shape\" type=\"CollisionShape2D\" parent=\"{}/{}\"]\n",
@@ -383,7 +383,7 @@ void write_rectangle_object(OStream& stream, const GdObject& object)
   stream << fmt::format("shape = SubResource( {} )\n", rect.shape);
 }
 
-void write_polygon_object(OStream& stream, const GdObject& object)
+void _write_polygon_object(OStream& stream, const GdObject& object)
 {
   const auto& polygon = std::get<GdPolygon>(object.value);
 
@@ -397,7 +397,7 @@ void write_polygon_object(OStream& stream, const GdObject& object)
     stream << "visible = false\n";
   }
 
-  write_metadata(stream, object.meta);
+  _write_metadata(stream, object.meta);
 
   stream << fmt::format(
       "\n[node name=\"Shape\" type=\"CollisionPolygon2D\" parent=\"{}/{}\"]\n",
@@ -418,13 +418,13 @@ void write_polygon_object(OStream& stream, const GdObject& object)
   stream << " )\n";
 }
 
-void write_object(OStream& stream, const GdObject& object)
+void _write_object(OStream& stream, const GdObject& object)
 {
   if (std::holds_alternative<GdRect>(object.value)) {
-    write_rectangle_object(stream, object);
+    _write_rectangle_object(stream, object);
   }
   else if (std::holds_alternative<GdPolygon>(object.value)) {
-    write_polygon_object(stream, object);
+    _write_polygon_object(stream, object);
   }
   else {
     stream << fmt::format("\n[node name=\"{}\" type=\"Node2D\" parent=\"{}\"]\n",
@@ -437,11 +437,11 @@ void write_object(OStream& stream, const GdObject& object)
       stream << "visible = false\n";
     }
 
-    write_metadata(stream, object.meta);
+    _write_metadata(stream, object.meta);
   }
 }
 
-void write_object_layer(OStream& stream, const GdLayer& layer)
+void _write_object_layer(OStream& stream, const GdLayer& layer)
 {
   const auto& object_layer = std::get<GdObjectLayer>(layer.value);
 
@@ -452,21 +452,21 @@ void write_object_layer(OStream& stream, const GdLayer& layer)
     stream << "visible = false\n";
   }
 
-  write_metadata(stream, layer.meta);
+  _write_metadata(stream, layer.meta);
 
   for (const auto& object: object_layer.objects) {
-    write_object(stream, object);
+    _write_object(stream, object);
   }
 }
 
-void write_layers(OStream& stream, const GodotScene& scene)
+void _write_layers(OStream& stream, const GodotScene& scene)
 {
   for (const auto& layer: scene.layers()) {
     if (std::holds_alternative<GdTileLayer>(layer.value)) {
-      write_tile_layer(stream, scene, layer);
+      _write_tile_layer(stream, scene, layer);
     }
     else if (std::holds_alternative<GdObjectLayer>(layer.value)) {
-      write_object_layer(stream, layer);
+      _write_object_layer(stream, layer);
     }
     else {
       stream << fmt::format("\n[node name=\"{}\" type=\"Node2D\" parent=\"{}\"]\n",
@@ -484,27 +484,27 @@ void write_layers(OStream& stream, const GodotScene& scene)
 void write_godot_scene(const GodotScene& scene, const GodotEmitOptions& options)
 {
   const auto& tileset = scene.tileset();
-  write_tileset_file(tileset, options);
+  _write_tileset_file(tileset, options);
 
   const auto path = options.root_dir / options.project_map_dir / "map.tscn";
   auto stream = open_output_stream(path, FileType::Text).value();
 
   stream << fmt::format("[gd_scene load_steps={} format=2]\n", scene.get_load_steps());
 
-  write_ext_resources(stream, scene.ext_resources());
-  write_atlas_textures(stream, scene);
+  _write_ext_resources(stream, scene.ext_resources());
+  _write_atlas_textures(stream, scene);
 
   const auto& sprite_frames = scene.sprite_frames();
   if (!sprite_frames.animations.empty()) {
-    write_sprite_frames(stream, sprite_frames);
+    _write_sprite_frames(stream, sprite_frames);
   }
 
-  write_shapes(stream, scene);
+  _write_shapes(stream, scene);
 
   stream << "\n[node name=\"Root\" type=\"Node2D\"]\n";
-  write_metadata(stream, scene.root_meta());
+  _write_metadata(stream, scene.root_meta());
 
-  write_layers(stream, scene);
+  _write_layers(stream, scene);
 }
 
 }  // namespace tactile

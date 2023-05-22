@@ -34,11 +34,11 @@ using namespace std::string_literals;
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto parse_layer(const YAML::Node& node, const MapIR& map, usize index)
+[[nodiscard]] auto _parse_layer(const YAML::Node& node, const MapIR& map, usize index)
     -> Expected<LayerIR, ParseError>;
 
-[[nodiscard]] auto parse_plain_tile_layer_data(const String& tile_data,
-                                               const TileExtent extent)
+[[nodiscard]] auto _parse_plain_tile_layer_data(const String& tile_data,
+                                                const TileExtent extent)
     -> Expected<TileMatrix, ParseError>
 {
   auto tiles = make_tile_matrix(extent);
@@ -58,9 +58,9 @@ namespace {
   return tiles;
 }
 
-[[nodiscard]] auto parse_tile_layer(const YAML::Node& node,
-                                    const MapIR& map,
-                                    const TileExtent extent)
+[[nodiscard]] auto _parse_tile_layer(const YAML::Node& node,
+                                     const MapIR& map,
+                                     const TileExtent extent)
     -> Expected<TileLayerIR, ParseError>
 {
   TileLayerIR tile_layer;
@@ -73,7 +73,7 @@ namespace {
 
   if (map.tile_format.encoding == TileEncoding::Plain) {
     std::ranges::replace(str_data, '\n', ' ');
-    if (auto matrix = parse_plain_tile_layer_data(str_data, extent)) {
+    if (auto matrix = _parse_plain_tile_layer_data(str_data, extent)) {
       tile_layer.tiles = std::move(*matrix);
     }
     else {
@@ -90,7 +90,7 @@ namespace {
   return tile_layer;
 }
 
-[[nodiscard]] auto parse_object_layer(const YAML::Node& node, const MapIR& map)
+[[nodiscard]] auto _parse_object_layer(const YAML::Node& node, const MapIR& map)
     -> Expected<ObjectLayerIR, ParseError>
 {
   ObjectLayerIR object_layer;
@@ -111,7 +111,7 @@ namespace {
   return object_layer;
 }
 
-[[nodiscard]] auto parse_group_layer(const YAML::Node& node, const MapIR& map)
+[[nodiscard]] auto _parse_group_layer(const YAML::Node& node, const MapIR& map)
     -> Expected<GroupLayerIR, ParseError>
 {
   GroupLayerIR group;
@@ -121,7 +121,7 @@ namespace {
 
     usize index = 0;
     for (const auto& layer_node: sequence) {
-      if (auto child = parse_layer(layer_node, map, index)) {
+      if (auto child = _parse_layer(layer_node, map, index)) {
         group.children.push_back(std::make_unique<LayerIR>(std::move(*child)));
       }
       else {
@@ -135,7 +135,7 @@ namespace {
   return group;
 }
 
-[[nodiscard]] auto parse_layer(const YAML::Node& node,
+[[nodiscard]] auto _parse_layer(const YAML::Node& node,
                                const MapIR& map,
                                const usize index) -> Expected<LayerIR, ParseError>
 {
@@ -157,7 +157,7 @@ namespace {
 
   if (type == "tile-layer") {
     layer.type = LayerType::TileLayer;
-    if (auto tile_layer = parse_tile_layer(node, map, map.extent)) {
+    if (auto tile_layer = _parse_tile_layer(node, map, map.extent)) {
       layer.data.emplace<TileLayerIR>(std::move(*tile_layer));
     }
     else {
@@ -166,7 +166,7 @@ namespace {
   }
   else if (type == "object-layer") {
     layer.type = LayerType::ObjectLayer;
-    if (auto object_layer = parse_object_layer(node, map)) {
+    if (auto object_layer = _parse_object_layer(node, map)) {
       layer.data.emplace<ObjectLayerIR>(std::move(*object_layer));
     }
     else {
@@ -175,7 +175,7 @@ namespace {
   }
   else if (type == "group-layer") {
     layer.type = LayerType::GroupLayer;
-    if (auto group = parse_group_layer(node, map)) {
+    if (auto group = _parse_group_layer(node, map)) {
       layer.data.emplace<GroupLayerIR>(std::move(*group));
     }
     else {
@@ -253,7 +253,7 @@ auto parse_layers(const YAML::Node& sequence, const MapIR& map)
 
   usize index = 0;
   for (const auto& layer_node: sequence) {
-    if (auto layer = parse_layer(layer_node, map, index)) {
+    if (auto layer = _parse_layer(layer_node, map, index)) {
       layers.push_back(std::move(*layer));
     }
     else {

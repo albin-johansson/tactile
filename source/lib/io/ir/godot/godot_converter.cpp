@@ -42,14 +42,14 @@ using TilesetTextures = HashMap<UUID, GdExtRes>;
 inline constexpr auto kTau = std::numbers::pi * 2.0;
 inline constexpr int32 kTileOffset = 65'536;
 
-[[nodiscard]] auto to_godot_name(StringView name) -> String
+[[nodiscard]] auto _to_godot_name(StringView name) -> String
 {
   String copy {name};
   std::ranges::replace(copy, '/', '-');
   return copy;
 }
 
-[[nodiscard]] auto copy_meta(const ContextIR& context) -> GdMetaData
+[[nodiscard]] auto _copy_meta(const ContextIR& context) -> GdMetaData
 {
   GdMetaData meta;
 
@@ -67,7 +67,7 @@ inline constexpr int32 kTileOffset = 65'536;
   return meta;
 }
 
-[[nodiscard]] auto join_tilesets(const MapIR& map, const GodotEmitOptions& options)
+[[nodiscard]] auto _join_tilesets(const MapIR& map, const GodotEmitOptions& options)
     -> GodotTileset
 {
   GodotTileset result;
@@ -92,10 +92,10 @@ inline constexpr int32 kTileOffset = 65'536;
   return result;
 }
 
-void add_tileset_textures(const MapIR& map,
-                          const GodotEmitOptions& options,
-                          GodotFile& file,
-                          HashMap<UUID, GdExtRes>& tileset_textures)
+void _add_tileset_textures(const MapIR& map,
+                           const GodotEmitOptions& options,
+                           GodotFile& file,
+                           HashMap<UUID, GdExtRes>& tileset_textures)
 {
   for (const auto& tileset: map.tilesets) {
     const auto filename = tileset.name + tileset.image_path.extension().string();
@@ -107,11 +107,11 @@ void add_tileset_textures(const MapIR& map,
   }
 }
 
-void add_animation(const TilesetIR& tileset,
-                   const GdExtRes texture_id,
-                   const TileIndex tile_index,
-                   const TileIR& tile,
-                   GodotFile& file)
+void _add_animation(const TilesetIR& tileset,
+                    const GdExtRes texture_id,
+                    const TileIndex tile_index,
+                    const TileIR& tile,
+                    GodotFile& file)
 {
   TACTILE_ASSERT(!tile.frames.empty());
 
@@ -140,22 +140,22 @@ void add_animation(const TilesetIR& tileset,
   file.add_animation(std::move(animation));
 }
 
-void add_animations(const MapIR& map,
-                    const TilesetTextures& tileset_textures,
-                    GodotFile& file)
+void _add_animations(const MapIR& map,
+                     const TilesetTextures& tileset_textures,
+                     GodotFile& file)
 {
   for (const auto& tileset: map.tilesets) {
     for (const auto& [tile_index, tile]: tileset.fancy_tiles) {
       if (!tile.frames.empty()) {
         const auto texture_id = lookup_in(tileset_textures, tileset.uuid);
-        add_animation(tileset, texture_id, tile_index, tile, file);
+        _add_animation(tileset, texture_id, tile_index, tile, file);
       }
     }
   }
 }
 
-[[nodiscard]] auto approximate_ellipse_as_polygon(const ObjectIR& object,
-                                                  const usize point_count) -> Vec<Float2>
+[[nodiscard]] auto _approximate_ellipse_as_polygon(const ObjectIR& object,
+                                                   const usize point_count) -> Vec<Float2>
 {
   TACTILE_ASSERT(object.type == ObjectType::Ellipse);
 
@@ -175,10 +175,10 @@ void add_animations(const MapIR& map,
   return points;
 }
 
-[[nodiscard]] auto create_object(const GodotEmitOptions& options,
-                                 const ObjectIR& object,
-                                 String parent,
-                                 GodotFile& file) -> GdObject
+[[nodiscard]] auto _create_object(const GodotEmitOptions& options,
+                                  const ObjectIR& object,
+                                  String parent,
+                                  GodotFile& file) -> GdObject
 {
   auto object_name = fmt::format("Object {}", object.id);
   if (!object.name.empty()) {
@@ -190,7 +190,7 @@ void add_animations(const MapIR& map,
   gd_object.parent = std::move(parent);
   gd_object.position = object.pos + (object.size / 2.0f);
   gd_object.visible = object.visible;
-  gd_object.meta = copy_meta(object.context);
+  gd_object.meta = _copy_meta(object.context);
 
   if (object.type == ObjectType::Rect) {
     GdRectShape shape;
@@ -204,7 +204,7 @@ void add_animations(const MapIR& map,
   else if (object.type == ObjectType::Ellipse) {
     auto& polygon = gd_object.value.emplace<GdPolygon>();
     polygon.points =
-        approximate_ellipse_as_polygon(object, options.ellipse_polygon_point_count);
+        _approximate_ellipse_as_polygon(object, options.ellipse_polygon_point_count);
   }
   else {
     TACTILE_ASSERT(object.type == ObjectType::Point);
@@ -215,17 +215,17 @@ void add_animations(const MapIR& map,
   return gd_object;
 }
 
-void add_object_layer(const GodotEmitOptions& options,
-                      const LayerIR& layer,
-                      String parent,
-                      GodotScene& scene)
+void _add_object_layer(const GodotEmitOptions& options,
+                       const LayerIR& layer,
+                       String parent,
+                       GodotScene& scene)
 {
   const auto& object_layer = layer.as_object_layer();
 
   GdLayer gd_layer = {
-      .name = to_godot_name(layer.name),
+      .name = _to_godot_name(layer.name),
       .parent = std::move(parent),
-      .meta = copy_meta(layer.context),
+      .meta = _copy_meta(layer.context),
       .visible = layer.visible,
   };
 
@@ -233,28 +233,28 @@ void add_object_layer(const GodotEmitOptions& options,
   gd_object_layer.objects.reserve(object_layer.objects.size());
 
   const auto object_parent =
-      (gd_layer.parent == ".") ? to_godot_name(layer.name)
-                               : fmt::format("{}/{}", parent, to_godot_name(layer.name));
+      (gd_layer.parent == ".") ? _to_godot_name(layer.name)
+                               : fmt::format("{}/{}", parent, _to_godot_name(layer.name));
 
   for (const auto& object: object_layer.objects) {
     gd_object_layer.objects.push_back(
-        create_object(options, object, object_parent, scene));
+        _create_object(options, object, object_parent, scene));
   }
 
   scene.add_layer(std::move(gd_layer));
 }
 
-void add_tile_layer(const MapIR& map,
-                    const LayerIR& layer,
-                    String parent,
-                    GodotScene& scene)
+void _add_tile_layer(const MapIR& map,
+                     const LayerIR& layer,
+                     String parent,
+                     GodotScene& scene)
 {
   const auto& tile_layer = layer.as_tile_layer();
 
   GdLayer gd_layer = {
-      .name = to_godot_name(layer.name),
+      .name = _to_godot_name(layer.name),
       .parent = std::move(parent),
-      .meta = copy_meta(layer.context),
+      .meta = _copy_meta(layer.context),
       .visible = layer.visible,
   };
 
@@ -298,28 +298,28 @@ void add_tile_layer(const MapIR& map,
   scene.add_layer(std::move(gd_layer));
 }
 
-void add_layer(const GodotEmitOptions& options,
-               const MapIR& map,
-               const LayerIR& layer,
-               String parent,
-               GodotScene& scene)
+void _add_layer(const GodotEmitOptions& options,
+                const MapIR& map,
+                const LayerIR& layer,
+                String parent,
+                GodotScene& scene)
 {
   switch (layer.type) {
     case LayerType::TileLayer:
-      add_tile_layer(map, layer, std::move(parent), scene);
+      _add_tile_layer(map, layer, std::move(parent), scene);
       break;
 
     case LayerType::ObjectLayer:
-      add_object_layer(options, layer, std::move(parent), scene);
+      _add_object_layer(options, layer, std::move(parent), scene);
       break;
 
     case LayerType::GroupLayer: {
-      const auto layer_name = to_godot_name(layer.name);
+      const auto layer_name = _to_godot_name(layer.name);
 
       scene.add_layer({
           .name = layer_name,
           .parent = parent,
-          .meta = copy_meta(layer.context),
+          .meta = _copy_meta(layer.context),
           .visible = layer.visible,
       });
 
@@ -328,7 +328,7 @@ void add_layer(const GodotEmitOptions& options,
 
       const auto& group_layer = layer.as_group_layer();
       for (const auto& child_layer: group_layer.children) {
-        add_layer(options, map, *child_layer, child_parent_path, scene);
+        _add_layer(options, map, *child_layer, child_parent_path, scene);
       }
 
       break;
@@ -343,18 +343,18 @@ void add_layer(const GodotEmitOptions& options,
 auto convert_to_godot(const MapIR& map, const GodotEmitOptions& options) -> GodotScene
 {
   GodotScene scene;
-  scene.set_tileset(join_tilesets(map, options),
+  scene.set_tileset(_join_tilesets(map, options),
                     options.project_tileset_dir / "tileset.tres");
-  scene.set_root_meta(copy_meta(map.context));
+  scene.set_root_meta(_copy_meta(map.context));
 
   // Temporary cache that maps tileset UUIDs to the associated external resource IDs
   TilesetTextures tileset_textures;
 
-  add_tileset_textures(map, options, scene, tileset_textures);
-  add_animations(map, tileset_textures, scene);
+  _add_tileset_textures(map, options, scene, tileset_textures);
+  _add_animations(map, tileset_textures, scene);
 
   for (const auto& layer: map.layers) {
-    add_layer(options, map, layer, ".", scene);
+    _add_layer(options, map, layer, ".", scene);
   }
 
   return scene;

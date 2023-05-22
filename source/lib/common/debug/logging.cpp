@@ -45,7 +45,7 @@ struct LogEntry final {
   String msg;
 };
 
-[[nodiscard]] auto to_filter_set(const LogFilter& filter) -> LogFilterSet
+[[nodiscard]] auto _to_filter_set(const LogFilter& filter) -> LogFilterSet
 {
   LogFilterSet filter_set;
 
@@ -167,7 +167,7 @@ void clear_log_history()
 
 auto count_matching_log_entries(const LogFilter& filter) -> usize
 {
-  const auto filter_set = to_filter_set(filter);
+  const auto filter_set = _to_filter_set(filter);
   return gHistorySink->count(filter_set);
 }
 
@@ -176,7 +176,7 @@ void visit_logged_message_range(const LogFilter& filter,
                                 const usize end_index,
                                 const LoggedMessageVisitorFn& fn)
 {
-  const auto filter_set = to_filter_set(filter);
+  const auto filter_set = _to_filter_set(filter);
   gHistorySink->visit_logged_message_range(filter_set, begin_index, end_index, fn);
 }
 

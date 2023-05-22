@@ -24,7 +24,7 @@
 namespace tactile::test {
 namespace {
 
-void check_parsed_properties(const char* path)
+void _check_parsed_properties(const char* path)
 {
   const auto result = parse_map(path);
   REQUIRE(result.has_value());
@@ -51,12 +51,12 @@ TEST_SUITE("Tiled format property special cases")
 {
   TEST_CASE("Tiled JSON")
   {
-    check_parsed_properties("resources/json/properties.tmj");
+    _check_parsed_properties("resources/json/properties.tmj");
   }
 
   TEST_CASE("Tiled XML")
   {
-    check_parsed_properties("resources/xml/properties.tmx");
+    _check_parsed_properties("resources/xml/properties.tmx");
   }
 }
 

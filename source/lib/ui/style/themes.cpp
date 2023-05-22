@@ -39,7 +39,8 @@ struct ThemeCfg final {
   ImVec4 text {};
 };
 
-[[nodiscard]] auto create_dark_theme(const uint16 hue, const int32 saturation) -> ThemeCfg
+[[nodiscard]] auto _create_dark_theme(const uint16 hue, const int32 saturation)
+    -> ThemeCfg
 {
   TACTILE_ASSERT(hue < 360);
   TACTILE_ASSERT(saturation <= 100);
@@ -60,7 +61,7 @@ struct ThemeCfg final {
   return cfg;
 }
 
-[[nodiscard]] auto create_light_theme(const uint16 hue, const int32 saturation)
+[[nodiscard]] auto _create_light_theme(const uint16 hue, const int32 saturation)
     -> ThemeCfg
 {
   TACTILE_ASSERT(hue < 360);
@@ -82,7 +83,7 @@ struct ThemeCfg final {
   return cfg;
 }
 
-void apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
+void _apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
 {
   const auto set = [&style](const ImGuiCol_ index, const ImVec4& color) {
     style.Colors[index] = color;
@@ -290,79 +291,79 @@ void apply_theme(ImGuiStyle& style, const Theme theme, int32 saturation)
       break;
 
     case Theme::Ruby:
-      apply_theme_from_config(style, create_dark_theme(0, saturation));
+      _apply_theme_from_config(style, _create_dark_theme(0, saturation));
       break;
 
     case Theme::Emerald:
-      apply_theme_from_config(style, create_dark_theme(141, saturation));
+      _apply_theme_from_config(style, _create_dark_theme(141, saturation));
       break;
 
     case Theme::Sapphire:
-      apply_theme_from_config(style, create_dark_theme(211, saturation));
+      _apply_theme_from_config(style, _create_dark_theme(211, saturation));
       break;
 
     case Theme::Joker:
-      apply_theme_from_config(style, create_dark_theme(268, saturation));
+      _apply_theme_from_config(style, _create_dark_theme(268, saturation));
       break;
 
     case Theme::Amethyst:
-      apply_theme_from_config(style, create_dark_theme(318, saturation));
+      _apply_theme_from_config(style, _create_dark_theme(318, saturation));
       break;
 
     case Theme::Raspberry:
-      apply_theme_from_config(style, create_dark_theme(346, saturation));
+      _apply_theme_from_config(style, _create_dark_theme(346, saturation));
       break;
 
     case Theme::Amber:
-      apply_theme_from_config(style, create_dark_theme(23, saturation));
+      _apply_theme_from_config(style, _create_dark_theme(23, saturation));
       break;
 
     case Theme::Gasoline:
-      apply_theme_from_config(style, create_dark_theme(82, saturation));
+      _apply_theme_from_config(style, _create_dark_theme(82, saturation));
       break;
 
     case Theme::Bumblebee:
-      apply_theme_from_config(style, create_dark_theme(56, saturation));
+      _apply_theme_from_config(style, _create_dark_theme(56, saturation));
       break;
 
     case Theme::Diamond:
       [[fallthrough]];
     case Theme::Nocturnal:
-      apply_theme_from_config(style, create_dark_theme(180, saturation));
+      _apply_theme_from_config(style, _create_dark_theme(180, saturation));
       break;
 
     case Theme::Ash:
-      apply_theme_from_config(style,
-                              {.accent = {0.4f, 0.4f, 0.4f, 1.0f},
-                               .accent_active = {0.5f, 0.5f, 0.5f, 1.0f},
-                               .window = {0.0f, 0.0f, 0.0f, 1.0f},
-                               .child = {0.0f, 0.0f, 0.0f, 1.0f},
-                               .text = {1.0f, 1.0f, 1.0f, 1.0f}});
+      _apply_theme_from_config(style,
+                               {.accent = {0.4f, 0.4f, 0.4f, 1.0f},
+                                .accent_active = {0.5f, 0.5f, 0.5f, 1.0f},
+                                .window = {0.0f, 0.0f, 0.0f, 1.0f},
+                                .child = {0.0f, 0.0f, 0.0f, 1.0f},
+                                .text = {1.0f, 1.0f, 1.0f, 1.0f}});
       break;
 
     case Theme::Stealth:
-      apply_theme_from_config(style,
-                              ThemeCfg {
-                                  .accent = {0.20f, 0.20f, 0.20f, 1.0f},
-                                  .accent_active = {0.25f, 0.25f, 0.25f, 1},
-                                  .window = {0.00f, 0.00f, 0.00f, 1},
-                                  .child = {0.00f, 0.00f, 0.00f, 1},
-                                  .text = {1.0f, 1.0f, 1.0f, 1},
-                              });
+      _apply_theme_from_config(style,
+                               ThemeCfg {
+                                   .accent = {0.20f, 0.20f, 0.20f, 1.0f},
+                                   .accent_active = {0.25f, 0.25f, 0.25f, 1},
+                                   .window = {0.00f, 0.00f, 0.00f, 1},
+                                   .child = {0.00f, 0.00f, 0.00f, 1},
+                                   .text = {1.0f, 1.0f, 1.0f, 1},
+                               });
       break;
 
     case Theme::Lavender:
-      apply_theme_from_config(style, create_light_theme(275, saturation));
+      _apply_theme_from_config(style, _create_light_theme(275, saturation));
       break;
 
     case Theme::Vanilla:
       [[fallthrough]];
     case Theme::Frost:
-      apply_theme_from_config(style, create_light_theme(180, saturation));
+      _apply_theme_from_config(style, _create_light_theme(180, saturation));
       break;
 
     case Theme::Rose:
-      apply_theme_from_config(style, create_light_theme(0, saturation));
+      _apply_theme_from_config(style, _create_light_theme(0, saturation));
       break;
   }
 }

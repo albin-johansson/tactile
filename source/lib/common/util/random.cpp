@@ -35,7 +35,7 @@ using Seed = std::random_device::result_type;
 using SeedArray = Array<Seed, RandomEngine::state_size>;
 
 /// Creates a seeded pseudo-random number generation engine.
-[[nodiscard]] auto make_random_engine() -> RandomEngine
+[[nodiscard]] auto _make_random_engine() -> RandomEngine
 {
   std::random_device device;
 
@@ -46,22 +46,22 @@ using SeedArray = Array<Seed, RandomEngine::state_size>;
   return RandomEngine {seeds};
 }
 
-[[nodiscard]] auto get_random_engine() -> RandomEngine&
+[[nodiscard]] auto _get_random_engine() -> RandomEngine&
 {
-  thread_local static auto engine = make_random_engine();
+  thread_local static auto engine = _make_random_engine();
   return engine;
 }
 
 /// Returns a random value in the range [min, max].
 template <typename T>
-[[nodiscard]] auto next_random(const T min, const T max) -> T
+[[nodiscard]] auto _next_random(const T min, const T max) -> T
 {
   static_assert(!std::same_as<T, bool>);
   static_assert(!std::same_as<T, char>);
   static_assert(!std::same_as<T, uchar>);
 
   TACTILE_ASSERT(min <= max);
-  auto& engine = get_random_engine();
+  auto& engine = _get_random_engine();
 
   if constexpr (std::floating_point<T>) {
     return std::uniform_real_distribution<T> {min, max}(engine);
@@ -75,32 +75,32 @@ template <typename T>
 
 auto next_random_u32(const uint32 min, const uint32 max) -> uint32
 {
-  return next_random(min, max);
+  return _next_random(min, max);
 }
 
 auto next_random_u64(const uint64 min, const uint64 max) -> uint64
 {
-  return next_random(min, max);
+  return _next_random(min, max);
 }
 
 auto next_random_i32(const int32 min, const int32 max) -> int32
 {
-  return next_random(min, max);
+  return _next_random(min, max);
 }
 
 auto next_random_i64(const int64 min, const int64 max) -> int64
 {
-  return next_random(min, max);
+  return _next_random(min, max);
 }
 
 auto next_random_f32(const float32 min, const float32 max) -> float32
 {
-  return next_random(min, max);
+  return _next_random(min, max);
 }
 
 auto next_bool() -> bool
 {
-  return next_random(0, 99) < 50;
+  return _next_random(0, 99) < 50;
 }
 
 }  // namespace tactile

@@ -39,7 +39,8 @@ NLOHMANN_JSON_SERIALIZE_ENUM(TileCompression,
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto parse_object_layer(const JSON& json, LayerIR& layer_data) -> ParseError
+[[nodiscard]] auto _parse_object_layer(const JSON& json, LayerIR& layer_data)
+    -> ParseError
 {
   auto& object_layer_data = layer_data.data.emplace<ObjectLayerIR>();
 
@@ -57,7 +58,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_tile_layer_csv_data(const JSON& json, TileLayerIR& tile_layer)
+[[nodiscard]] auto _parse_tile_layer_csv_data(const JSON& json, TileLayerIR& tile_layer)
     -> ParseError
 {
   if (!json.is_array()) {
@@ -79,9 +80,9 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_tile_layer_data(const JSON& json,
-                                         MapIR& map,
-                                         TileLayerIR& tile_layer) -> ParseError
+[[nodiscard]] auto _parse_tile_layer_data(const JSON& json,
+                                          MapIR& map,
+                                          TileLayerIR& tile_layer) -> ParseError
 {
   if (!json.contains("data")) {
     return ParseError::NoTileLayerData;
@@ -94,7 +95,7 @@ namespace {
     map.tile_format.encoding = TileEncoding::Plain;
     map.tile_format.compression = TileCompression::None;
 
-    if (const auto err = parse_tile_layer_csv_data(data, tile_layer);
+    if (const auto err = _parse_tile_layer_csv_data(data, tile_layer);
         err != ParseError::None) {
       return err;
     }
@@ -117,7 +118,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_tile_layer(const JSON& json, MapIR& map, LayerIR& layer)
+[[nodiscard]] auto _parse_tile_layer(const JSON& json, MapIR& map, LayerIR& layer)
     -> ParseError
 {
   auto& tile_layer = layer.data.emplace<TileLayerIR>();
@@ -152,7 +153,7 @@ namespace {
 
   tile_layer.tiles = make_tile_matrix(tile_layer.extent);
 
-  if (const auto err = parse_tile_layer_data(json, map, tile_layer);
+  if (const auto err = _parse_tile_layer_data(json, map, tile_layer);
       err != ParseError::None) {
     return err;
   }
@@ -160,10 +161,10 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto parse_layer(const JSON& json,
-                               MapIR& map,
-                               LayerIR& layer,
-                               const usize index) -> ParseError
+[[nodiscard]] auto _parse_layer(const JSON& json,
+                                MapIR& map,
+                                LayerIR& layer,
+                                const usize index) -> ParseError
 {
   layer.index = index;
 
@@ -181,13 +182,13 @@ namespace {
   if (auto type = as_string(json, "type")) {
     if (type == "tilelayer") {
       layer.type = LayerType::TileLayer;
-      if (const auto err = parse_tile_layer(json, map, layer); err != ParseError::None) {
+      if (const auto err = _parse_tile_layer(json, map, layer); err != ParseError::None) {
         return err;
       }
     }
     else if (type == "objectgroup") {
       layer.type = LayerType::ObjectLayer;
-      if (const auto err = parse_object_layer(json, layer); err != ParseError::None) {
+      if (const auto err = _parse_object_layer(json, layer); err != ParseError::None) {
         return err;
       }
     }
@@ -200,7 +201,7 @@ namespace {
         auto& child_layer =
             group_layer.children.emplace_back(std::make_unique<LayerIR>());
 
-        if (const auto err = parse_layer(value, map, *child_layer, child_index);
+        if (const auto err = _parse_layer(value, map, *child_layer, child_index);
             err != ParseError::None) {
           return err;
         }
@@ -276,7 +277,7 @@ auto parse_layers(const JSON& json, MapIR& map) -> ParseError
   for (const auto& [key, value]: iter->items()) {
     auto& layer_data = map.layers.emplace_back();
 
-    if (const auto err = parse_layer(value, map, layer_data, index);
+    if (const auto err = _parse_layer(value, map, layer_data, index);
         err != ParseError::None) {
       return err;
     }

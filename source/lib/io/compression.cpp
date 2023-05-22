@@ -37,10 +37,10 @@ using ZlibProcessFun = int (*)(z_stream*, int);
 
 constexpr usize kBufferSize = 32'768;  // About 32 KB for our temporary buffers
 
-[[nodiscard]] auto process_zlib_chunks(z_stream& stream,
-                                       ZlibProcessFun process,
-                                       Bytef* out_buffer,
-                                       ByteStream& result) -> int
+[[nodiscard]] auto _process_zlib_chunks(z_stream& stream,
+                                        ZlibProcessFun process,
+                                        Bytef* out_buffer,
+                                        ByteStream& result) -> int
 {
   const auto copy_written_bytes_in_buffer_to_dest = [&] {
     const auto written_bytes = kBufferSize - stream.avail_out;
@@ -101,7 +101,7 @@ auto zlib_compress(const void* source, const usize source_bytes, int level)
   ByteStream dest;
   dest.reserve(deflateBound(&stream, static_cast<uLong>(source_bytes)));
 
-  if (const auto status = process_zlib_chunks(stream, deflate, out_buffer, dest);
+  if (const auto status = _process_zlib_chunks(stream, deflate, out_buffer, dest);
       status != Z_STREAM_END) {
     spdlog::error("[Zlib] Compression error: {}", zError(status));
     return nothing;
@@ -147,7 +147,7 @@ auto zlib_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
   ByteStream dest;
   dest.reserve(2048);
 
-  if (const auto status = process_zlib_chunks(stream, inflate, out_buffer, dest);
+  if (const auto status = _process_zlib_chunks(stream, inflate, out_buffer, dest);
       status != Z_STREAM_END) {
     spdlog::error("[Zlib] Decompression error: {}", zError(status));
     return nothing;

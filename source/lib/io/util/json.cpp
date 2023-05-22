@@ -42,7 +42,7 @@ inline constexpr StringView kObjectAttrName = "object";
 inline constexpr StringView kFileAttrName = "file";
 
 template <typename T>
-[[nodiscard]] auto as(const JSON& json, StringView name) -> Maybe<T>
+[[nodiscard]] auto _as(const JSON& json, StringView name) -> Maybe<T>
 {
   const auto iter = json.find(name);
   if (iter != json.end()) {
@@ -54,7 +54,7 @@ template <typename T>
 }
 
 template <>
-[[nodiscard]] auto as(const JSON& json, StringView name) -> Maybe<String>
+[[nodiscard]] auto _as(const JSON& json, StringView name) -> Maybe<String>
 {
   const auto iter = json.find(name);
   if (iter != json.end()) {
@@ -254,27 +254,27 @@ auto try_get(const JSON& json, const char* key) -> const JSON*
 
 auto as_string(const JSON& json, StringView name) -> Maybe<String>
 {
-  return as<String>(json, name);
+  return _as<String>(json, name);
 }
 
 auto as_int(const JSON& json, StringView name) -> Maybe<int32>
 {
-  return as<int32>(json, name);
+  return _as<int32>(json, name);
 }
 
 auto as_uint(const JSON& json, StringView name) -> Maybe<uint32>
 {
-  return as<uint32>(json, name);
+  return _as<uint32>(json, name);
 }
 
 auto as_float(const JSON& json, StringView name) -> Maybe<float>
 {
-  return as<float>(json, name);
+  return _as<float>(json, name);
 }
 
 auto as_bool(const JSON& json, StringView name) -> Maybe<bool>
 {
-  return as<bool>(json, name);
+  return _as<bool>(json, name);
 }
 
 }  // namespace tactile

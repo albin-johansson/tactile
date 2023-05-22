@@ -35,7 +35,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto get_home_prefix() -> const OsString&
+[[nodiscard]] auto _get_home_prefix() -> const OsString&
 {
   // On Unix platforms, HOME is something like '/Users/username'
   // On Windows, USERPROFILE is something like 'C:\Users\username'
@@ -55,7 +55,7 @@ auto use_forward_slashes(const Path& path) -> String
 
 auto has_home_prefix(const Path& path) -> bool
 {
-  const auto& prefix = get_home_prefix();
+  const auto& prefix = _get_home_prefix();
   const OsStringView view {path.c_str()};
   return view.starts_with(prefix);
 }
@@ -63,7 +63,7 @@ auto has_home_prefix(const Path& path) -> bool
 auto use_short_home_prefix(const Path& path) -> Maybe<String>
 {
   if (has_home_prefix(path)) {
-    const auto& prefix = get_home_prefix();
+    const auto& prefix = _get_home_prefix();
     return '~' + path.string().substr(prefix.size());
   }
   else {

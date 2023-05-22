@@ -36,16 +36,16 @@
 namespace tactile {
 namespace {
 
-void convert_layer(const Model& model,
-                   Entity component_set_entity,
-                   Entity layer_entity,
-                   usize index,
-                   LayerIR& ir_layer);
+void _convert_layer(const Model& model,
+                    Entity component_set_entity,
+                    Entity layer_entity,
+                    usize index,
+                    LayerIR& ir_layer);
 
-void convert_context(const Model& model,
-                     const Entity component_set_entity,
-                     const Entity context_entity,
-                     ContextIR& ir_context)
+void _convert_context(const Model& model,
+                      const Entity component_set_entity,
+                      const Entity context_entity,
+                      ContextIR& ir_context)
 {
   const auto& context = model.get<Context>(context_entity);
   ir_context.properties = context.props;
@@ -59,10 +59,10 @@ void convert_context(const Model& model,
   }
 }
 
-void convert_object(const Model& model,
-                    const Entity component_set_entity,
-                    const Entity object_entity,
-                    ObjectIR& ir_object)
+void _convert_object(const Model& model,
+                     const Entity component_set_entity,
+                     const Entity object_entity,
+                     ObjectIR& ir_object)
 {
   const auto& object = model.get<Object>(object_entity);
   TACTILE_ASSERT(object.meta_id.has_value());
@@ -79,27 +79,27 @@ void convert_object(const Model& model,
   const auto& object_context = model.get<Context>(object_entity);
   ir_object.name = object_context.name;
 
-  convert_context(model, component_set_entity, object_entity, ir_object.context);
+  _convert_context(model, component_set_entity, object_entity, ir_object.context);
 }
 
-void convert_object_layer(const Model& model,
-                          const Entity component_set_entity,
-                          const Entity layer_entity,
-                          ObjectLayerIR& ir_object_layer)
+void _convert_object_layer(const Model& model,
+                           const Entity component_set_entity,
+                           const Entity layer_entity,
+                           ObjectLayerIR& ir_object_layer)
 {
   const auto& object_layer = model.get<ObjectLayer>(layer_entity);
   ir_object_layer.objects.reserve(object_layer.objects.size());
 
   for (const auto object_entity: object_layer.objects) {
     auto& ir_object = ir_object_layer.objects.emplace_back();
-    convert_object(model, component_set_entity, object_entity, ir_object);
+    _convert_object(model, component_set_entity, object_entity, ir_object);
   }
 }
 
-void convert_group_layer(const Model& model,
-                         const Entity component_set_entity,
-                         const Entity layer_entity,
-                         GroupLayerIR& ir_group)
+void _convert_group_layer(const Model& model,
+                          const Entity component_set_entity,
+                          const Entity layer_entity,
+                          GroupLayerIR& ir_group)
 {
   const auto& group_layer = model.get<GroupLayer>(layer_entity);
   ir_group.children.reserve(group_layer.children.size());
@@ -107,16 +107,16 @@ void convert_group_layer(const Model& model,
   usize index {0};
   for (const auto child_layer_entity: group_layer.children) {
     auto& ir_layer = ir_group.children.emplace_back(std::make_unique<LayerIR>());
-    convert_layer(model, component_set_entity, child_layer_entity, index, *ir_layer);
+    _convert_layer(model, component_set_entity, child_layer_entity, index, *ir_layer);
     ++index;
   }
 }
 
-void convert_layer(const Model& model,
-                   const Entity component_set_entity,
-                   const Entity layer_entity,
-                   const usize index,
-                   LayerIR& ir_layer)
+void _convert_layer(const Model& model,
+                    const Entity component_set_entity,
+                    const Entity layer_entity,
+                    const usize index,
+                    LayerIR& ir_layer)
 {
   const auto& layer = model.get<Layer>(layer_entity);
   const auto& layer_context = model.get<Context>(layer_entity);
@@ -141,25 +141,25 @@ void convert_layer(const Model& model,
     }
     case LayerType::ObjectLayer: {
       auto& ir_object_layer = ir_layer.data.emplace<ObjectLayerIR>();
-      convert_object_layer(model, component_set_entity, layer_entity, ir_object_layer);
+      _convert_object_layer(model, component_set_entity, layer_entity, ir_object_layer);
 
       break;
     }
     case LayerType::GroupLayer: {
       auto& ir_group_layer = ir_layer.data.emplace<GroupLayerIR>();
-      convert_group_layer(model, component_set_entity, layer_entity, ir_group_layer);
+      _convert_group_layer(model, component_set_entity, layer_entity, ir_group_layer);
 
       break;
     }
   }
 
-  convert_context(model, component_set_entity, layer_entity, ir_layer.context);
+  _convert_context(model, component_set_entity, layer_entity, ir_layer.context);
 }
 
-void convert_layers(const Model& model,
-                    const Entity component_set_entity,
-                    const Map& map,
-                    MapIR& ir_map)
+void _convert_layers(const Model& model,
+                     const Entity component_set_entity,
+                     const Map& map,
+                     MapIR& ir_map)
 {
   const auto& root_layer = model.get<GroupLayer>(map.root_layer);
   usize index = 0;
@@ -167,13 +167,13 @@ void convert_layers(const Model& model,
   // Here we only iterate top-level layers, and convert them recursively
   for (const auto layer_entity: root_layer.children) {
     auto& ir_layer = ir_map.layers.emplace_back();
-    convert_layer(model, component_set_entity, layer_entity, index, ir_layer);
+    _convert_layer(model, component_set_entity, layer_entity, index, ir_layer);
 
     ++index;
   }
 }
 
-void convert_fancy_tile_animation(const TileAnimation& animation, TileIR& ir_tile)
+void _convert_fancy_tile_animation(const TileAnimation& animation, TileIR& ir_tile)
 {
   ir_tile.frames.reserve(animation.frames.size());
 
@@ -184,10 +184,10 @@ void convert_fancy_tile_animation(const TileAnimation& animation, TileIR& ir_til
   }
 }
 
-void convert_fancy_tiles(const Model& model,
-                         const Entity component_set_entity,
-                         const Tileset& tileset,
-                         TilesetIR& ir_tileset)
+void _convert_fancy_tiles(const Model& model,
+                          const Entity component_set_entity,
+                          const Tileset& tileset,
+                          TilesetIR& ir_tileset)
 {
   for (const auto tile_entity: tileset.tiles) {
     const auto& tile = model.get<Tile>(tile_entity);
@@ -204,25 +204,25 @@ void convert_fancy_tiles(const Model& model,
 
       if (is_animated) {
         const auto& animation = model.get<TileAnimation>(tile_entity);
-        convert_fancy_tile_animation(animation, ir_tile);
+        _convert_fancy_tile_animation(animation, ir_tile);
       }
 
       if (has_props || has_comps) {
-        convert_context(model, component_set_entity, tile_entity, ir_tile.context);
+        _convert_context(model, component_set_entity, tile_entity, ir_tile.context);
       }
 
       for (const auto object_entity: tile.objects) {
         auto& ir_object = ir_tile.objects.emplace_back();
-        convert_object(model, component_set_entity, object_entity, ir_object);
+        _convert_object(model, component_set_entity, object_entity, ir_object);
       }
     }
   }
 }
 
-void convert_tilesets(const Model& model,
-                      const Entity component_set_entity,
-                      const Map& map,
-                      MapIR& ir_map)
+void _convert_tilesets(const Model& model,
+                       const Entity component_set_entity,
+                       const Map& map,
+                       MapIR& ir_map)
 {
   for (const auto attached_tileset_entity: map.attached_tilesets) {
     const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
@@ -243,14 +243,14 @@ void convert_tilesets(const Model& model,
     ir_tileset.image_path = texture.path;
     ir_tileset.image_size = texture.size;
 
-    convert_fancy_tiles(model, component_set_entity, tileset, ir_tileset);
-    convert_context(model, component_set_entity, tileset_entity, ir_tileset.context);
+    _convert_fancy_tiles(model, component_set_entity, tileset, ir_tileset);
+    _convert_context(model, component_set_entity, tileset_entity, ir_tileset.context);
   }
 }
 
-void convert_component_definitions(const Model& model,
-                                   const ComponentSet& component_set,
-                                   MapIR& ir_map)
+void _convert_component_definitions(const Model& model,
+                                    const ComponentSet& component_set,
+                                    MapIR& ir_map)
 {
   for (const auto definition_entity: component_set.definitions) {
     const auto& definition = model.get<ComponentDefinition>(definition_entity);
@@ -258,7 +258,7 @@ void convert_component_definitions(const Model& model,
   }
 }
 
-void convert_tile_format(const TileFormat& format, TileFormatIR& ir_format)
+void _convert_tile_format(const TileFormat& format, TileFormatIR& ir_format)
 {
   ir_format.compression = format.compression;
   ir_format.encoding = format.encoding;
@@ -284,16 +284,16 @@ auto convert_map_document_to_ir(const Model& model, const Entity map_document_en
   ir_map.next_object_id = map.next_object_id;
   ir_map.next_layer_id = map.next_layer_id;
 
-  convert_tile_format(tile_format, ir_map.tile_format);
+  _convert_tile_format(tile_format, ir_map.tile_format);
 
   if (const auto* component_set = model.try_get<ComponentSet>(document.component_set)) {
-    convert_component_definitions(model, *component_set, ir_map);
+    _convert_component_definitions(model, *component_set, ir_map);
   }
 
-  convert_tilesets(model, document.component_set, map, ir_map);
-  convert_layers(model, document.component_set, map, ir_map);
+  _convert_tilesets(model, document.component_set, map, ir_map);
+  _convert_layers(model, document.component_set, map, ir_map);
 
-  convert_context(model, document.component_set, map_document.map, ir_map.context);
+  _convert_context(model, document.component_set, map_document.map, ir_map.context);
 
   TACTILE_DEBUG_PROFILE_END("Converted document to IR")
   return ir_map;

@@ -32,7 +32,7 @@
 namespace tactile::ui {
 namespace {
 
-void _show_recent_files_menu(const Model& model,
+void _push_recent_files_menu(const Model& model,
                              const Strings& strings,
                              Dispatcher& dispatcher)
 {
@@ -67,7 +67,7 @@ void show_file_menu(const Model& model, Dispatcher& dispatcher)
     show_menu_item(model, MenuAction::NewMap, dispatcher);
     show_menu_item(model, MenuAction::OpenMap, dispatcher);
 
-    _show_recent_files_menu(model, strings, dispatcher);
+    _push_recent_files_menu(model, strings, dispatcher);
 
     ImGui::Separator();
 

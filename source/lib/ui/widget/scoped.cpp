@@ -30,45 +30,45 @@ namespace {
 inline constexpr ImVec4 kWhiteVec4 {0xFF, 0xFF, 0xFF, 0xFF};
 inline constexpr ImVec4 kBlackVec4 {0x00, 0x00, 0x00, 0xFF};
 
-[[nodiscard]] auto get_text_fg(const ImGuiCol bg) -> ImVec4
+[[nodiscard]] auto _get_text_fg(const ImGuiCol bg) -> ImVec4
 {
   return is_dark(bg) ? kWhiteVec4 : kBlackVec4;
 }
 
-[[nodiscard]] auto get_tab_item_text_color(const ImGuiTabItemFlags flags) -> ImVec4
+[[nodiscard]] auto _get_tab_item_text_color(const ImGuiTabItemFlags flags) -> ImVec4
 {
-  return get_text_fg((flags & ImGuiTabItemFlags_SetSelected) ? ImGuiCol_TabActive
-                                                             : ImGuiCol_Tab);
+  return _get_text_fg((flags & ImGuiTabItemFlags_SetSelected) ? ImGuiCol_TabActive
+                                                              : ImGuiCol_Tab);
 }
 
-[[nodiscard]] auto get_tree_node_text_color() -> ImVec4
+[[nodiscard]] auto _get_tree_node_text_color() -> ImVec4
 {
-  return get_text_fg(ImGuiCol_WindowBg);
+  return _get_text_fg(ImGuiCol_WindowBg);
 }
 
-[[nodiscard]] auto get_selectable_list_item_text_color(const bool selected) -> ImVec4
+[[nodiscard]] auto _get_selectable_list_item_text_color(const bool selected) -> ImVec4
 {
-  return get_text_fg(selected ? ImGuiCol_HeaderActive : ImGuiCol_FrameBg);
+  return _get_text_fg(selected ? ImGuiCol_HeaderActive : ImGuiCol_FrameBg);
 }
 
-[[nodiscard]] auto get_selectable_property_text_color(const bool selected) -> ImVec4
+[[nodiscard]] auto _get_selectable_property_text_color(const bool selected) -> ImVec4
 {
-  return get_text_fg(selected ? ImGuiCol_ChildBg : ImGuiCol_WindowBg);
+  return _get_text_fg(selected ? ImGuiCol_ChildBg : ImGuiCol_WindowBg);
 }
 
-[[nodiscard]] auto get_window_label_text_color(const WindowData& data) -> ImVec4
+[[nodiscard]] auto _get_window_label_text_color(const WindowData& data) -> ImVec4
 {
   if (data.is_docked) {
     if (data.has_focus) {
-      return get_text_fg(data.is_open ? ImGuiCol_TabActive : ImGuiCol_Tab);
+      return _get_text_fg(data.is_open ? ImGuiCol_TabActive : ImGuiCol_Tab);
     }
     else {
-      return get_text_fg(data.is_open ? ImGuiCol_TabUnfocusedActive
-                                      : ImGuiCol_TabUnfocused);
+      return _get_text_fg(data.is_open ? ImGuiCol_TabUnfocusedActive
+                                       : ImGuiCol_TabUnfocused);
     }
   }
   else {
-    return get_text_fg(data.has_focus ? ImGuiCol_TitleBgActive : ImGuiCol_TitleBg);
+    return _get_text_fg(data.has_focus ? ImGuiCol_TitleBgActive : ImGuiCol_TitleBg);
   }
 }
 
@@ -228,7 +228,7 @@ TabBar::~TabBar()
 }
 
 TabItem::TabItem(const char* name, bool* open, const ImGuiTabItemFlags flags)
-    : mTextColor {ImGuiCol_Text, get_tab_item_text_color(flags)},
+    : mTextColor {ImGuiCol_Text, _get_tab_item_text_color(flags)},
       mOpen {ImGui::BeginTabItem(name, open, flags)}
 {
   mTextColor.pop();
@@ -297,7 +297,7 @@ auto Selectable::list_item(const char* label,
                            const ImGuiSelectableFlags flags,
                            const ImVec2& size) -> bool
 {
-  StyleColor text_color {ImGuiCol_Text, get_selectable_list_item_text_color(selected)};
+  StyleColor text_color {ImGuiCol_Text, _get_selectable_list_item_text_color(selected)};
 
   const auto activated = ImGui::Selectable(label, selected, flags, size);
   text_color.pop();
@@ -310,7 +310,7 @@ auto Selectable::property(const char* label,
                           const ImGuiSelectableFlags flags,
                           const ImVec2& size) -> bool
 {
-  StyleColor text_color {ImGuiCol_Text, get_selectable_property_text_color(selected)};
+  StyleColor text_color {ImGuiCol_Text, _get_selectable_property_text_color(selected)};
 
   const auto activated = ImGui::Selectable(label, selected, flags, size);
   text_color.pop();
@@ -343,7 +343,7 @@ Modal::~Modal()
 }
 
 Window::Window(const char* label, const ImGuiWindowFlags flags, bool* open)
-    : mTextColor {ImGuiCol_Text, get_window_label_text_color(mWindowData[label])},
+    : mTextColor {ImGuiCol_Text, _get_window_label_text_color(mWindowData[label])},
       mLabel {label},
       mOpen {ImGui::Begin(label, open, flags)}
 {
@@ -397,15 +397,14 @@ auto Window::is_hovered() const -> bool
 }
 
 TreeNode::TreeNode(const char* id, const ImGuiTreeNodeFlags flags)
-    : mTextColor {ImGuiCol_Text, get_tree_node_text_color()},
+    : mTextColor {ImGuiCol_Text, _get_tree_node_text_color()},
       mOpen {ImGui::TreeNodeEx(id, flags)}
 {
   mTextColor.pop();
 }
 
 TreeNode::TreeNode(const char* id, ImGuiTreeNodeFlags flags, const char* label)
-
-    : mTextColor {ImGuiCol_Text, get_tree_node_text_color()},
+    : mTextColor {ImGuiCol_Text, _get_tree_node_text_color()},
       mOpen {ImGui::TreeNodeEx(id, flags, "%s", label)}
 {
   mTextColor.pop();
