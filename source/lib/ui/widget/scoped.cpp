@@ -348,7 +348,7 @@ Window::Window(const char* label, const ImGuiWindowFlags flags, bool* open)
       mOpen {ImGui::Begin(label, open, flags)}
 {
   if (!label) {
-    throw TactileError {"Invalid null window label!"};
+    throw TactileError {"Invalid null window label"};
   }
 
   mTextColor.pop();

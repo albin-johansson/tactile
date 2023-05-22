@@ -203,7 +203,7 @@ auto to_cause(const Strings& strings, const ParseError error) -> StringView
       return strings.parse_error.plain_encoding_with_compression;
 
     default:
-      throw TactileError {"Invalid parse error!"};
+      throw TactileError {"Invalid parse error"};
   }
 }
 

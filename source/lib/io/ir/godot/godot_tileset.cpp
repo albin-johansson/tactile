@@ -53,7 +53,7 @@ auto GodotTileset::index_of(const UUID& tileset_id) const -> int32
     ++index;
   }
 
-  throw TactileError {"Invalid tileset identifier!"};
+  throw TactileError {"Invalid tileset identifier"};
 }
 
 auto GodotTileset::texture_paths() const -> const Vec<TextureNamePair>&

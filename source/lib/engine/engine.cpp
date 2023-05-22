@@ -73,7 +73,7 @@ Engine::Engine(const BackendAPI api)
     mBackend = std::make_unique<OpenGLBackend>(window.get(), gl_context.get());
   }
 
-  spdlog::debug("Persistent file directory: {}", get_persistent_file_dir());
+  spdlog::debug("[IO] Persistent file directory: {}", get_persistent_file_dir());
 
   sys::init_model(get_global_model());
 }
@@ -83,7 +83,7 @@ void Engine::start()
   TACTILE_ASSERT(mBackend != nullptr);
   TACTILE_ASSERT(mApp != nullptr);
 
-  spdlog::debug("Starting core event loop");
+  spdlog::debug("[Engine] Starting core event loop");
 
   mRunning = true;
 

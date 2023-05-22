@@ -84,7 +84,7 @@ void _init_sdl_opengl_attributes()
 
 SDLContext::SDLContext(const BackendAPI api)
 {
-  spdlog::debug("Initializing SDL context");
+  spdlog::debug("[Engine] Initializing SDL context");
 
   SDL_SetHint(SDL_HINT_APP_NAME, "Tactile");
 
@@ -106,7 +106,7 @@ SDLContext::SDLContext(const BackendAPI api)
   auto& window = mWindow.emplace("Tactile", cen::window::default_size(), window_flags);
 
   if (api == BackendAPI::OpenGL) {
-    spdlog::debug("Initializing SDL OpenGL context");
+    spdlog::debug("[Engine] Initializing SDL OpenGL context");
     mGL = _create_gl_context(window);
   }
 }

@@ -67,42 +67,50 @@ TACTILE_DEFINE_MOVE(Settings);
 
 void Settings::print() const
 {
-  spdlog::debug("Language: {}", magic_enum::enum_name(get_language()));
-  spdlog::debug("Theme: {}", magic_enum::enum_name(get_theme()));
-  spdlog::debug("Theme saturation: {}", get_theme_saturation());
-  spdlog::debug("Viewport background: {}", get_viewport_bg_color().as_rgb());
-  spdlog::debug("Grid color: {}", get_grid_color().as_rgba());
+  spdlog::debug("[Settings] Language: {}", magic_enum::enum_name(get_language()));
+  spdlog::debug("[Settings] Theme: {}", magic_enum::enum_name(get_theme()));
+  spdlog::debug("[Settings] Theme saturation: {}", get_theme_saturation());
+  spdlog::debug("[Settings] Viewport background: {}", get_viewport_bg_color().as_rgb());
+  spdlog::debug("[Settings] Grid color: {}", get_grid_color().as_rgba());
 
-  spdlog::debug("Command capacity: {}", get_command_capacity());
-  spdlog::debug("Preferred tile width: {}", get_preferred_tile_size().x);
-  spdlog::debug("Preferred tile height: {}", get_preferred_tile_size().y);
+  spdlog::debug("[Settings] Command capacity: {}", get_command_capacity());
+  spdlog::debug("[Settings] Preferred tile width: {}", get_preferred_tile_size().x);
+  spdlog::debug("[Settings] Preferred tile height: {}", get_preferred_tile_size().y);
 
-  spdlog::debug("Preferred format: {}", magic_enum::enum_name(get_preferred_format()));
-  spdlog::debug("Viewport overlay pos: {}",
+  spdlog::debug("[Settings] Preferred format: {}",
+                magic_enum::enum_name(get_preferred_format()));
+  spdlog::debug("[Settings] Viewport overlay pos: {}",
                 magic_enum::enum_name(get_viewport_overlay_pos()));
-  spdlog::debug("Show FPS in viewport overlay: {}",
+  spdlog::debug("[Settings] Show FPS in viewport overlay: {}",
                 test_flag(SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT));
 
-  spdlog::debug("Font size: {}", get_font_size());
-  spdlog::debug("Use default font: {}", test_flag(SETTINGS_USE_DEFAULT_FONT_BIT));
+  spdlog::debug("[Settings] Font size: {}", get_font_size());
+  spdlog::debug("[Settings] Use default font: {}",
+                test_flag(SETTINGS_USE_DEFAULT_FONT_BIT));
 
-  spdlog::debug("Embed tilesets: {}", test_flag(SETTINGS_EMBED_TILESETS_BIT));
-  spdlog::debug("Indent output: {}", test_flag(SETTINGS_INDENT_OUTPUT_BIT));
-  spdlog::debug("Fold tile data: {}", test_flag(SETTINGS_FOLD_TILE_DATA_BIT));
+  spdlog::debug("[Settings] Embed tilesets: {}", test_flag(SETTINGS_EMBED_TILESETS_BIT));
+  spdlog::debug("[Settings] Indent output: {}", test_flag(SETTINGS_INDENT_OUTPUT_BIT));
+  spdlog::debug("[Settings] Fold tile data: {}", test_flag(SETTINGS_FOLD_TILE_DATA_BIT));
 
-  spdlog::debug("Show grid: {}", test_flag(SETTINGS_SHOW_GRID_BIT));
-  spdlog::debug("Highlight active layer: {}",
+  spdlog::debug("[Settings] Show grid: {}", test_flag(SETTINGS_SHOW_GRID_BIT));
+  spdlog::debug("[Settings] Highlight active layer: {}",
                 test_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT));
-  spdlog::debug("Show layer dock: {}", test_flag(SETTINGS_SHOW_LAYER_DOCK_BIT));
-  spdlog::debug("Show log dock: {}", test_flag(SETTINGS_SHOW_LOG_DOCK_BIT));
-  spdlog::debug("Show tileset dock: {}", test_flag(SETTINGS_SHOW_TILESET_DOCK_BIT));
-  spdlog::debug("Show property dock: {}", test_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT));
-  spdlog::debug("Show component dock: {}", test_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT));
-  spdlog::debug("Show animation dock: {}", test_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT));
+  spdlog::debug("[Settings] Show layer dock: {}",
+                test_flag(SETTINGS_SHOW_LAYER_DOCK_BIT));
+  spdlog::debug("[Settings] Show log dock: {}", test_flag(SETTINGS_SHOW_LOG_DOCK_BIT));
+  spdlog::debug("[Settings] Show tileset dock: {}",
+                test_flag(SETTINGS_SHOW_TILESET_DOCK_BIT));
+  spdlog::debug("[Settings] Show property dock: {}",
+                test_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT));
+  spdlog::debug("[Settings] Show component dock: {}",
+                test_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT));
+  spdlog::debug("[Settings] Show animation dock: {}",
+                test_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT));
 
-  spdlog::debug("Window border: {}", test_flag(SETTINGS_WINDOW_BORDER_BIT));
-  spdlog::debug("Restore layout: {}", test_flag(SETTINGS_RESTORE_LAYOUT_BIT));
-  spdlog::debug("Restore last session: {}", test_flag(SETTINGS_RESTORE_LAST_SESSION_BIT));
+  spdlog::debug("[Settings] Window border: {}", test_flag(SETTINGS_WINDOW_BORDER_BIT));
+  spdlog::debug("[Settings] Restore layout: {}", test_flag(SETTINGS_RESTORE_LAYOUT_BIT));
+  spdlog::debug("[Settings] Restore last session: {}",
+                test_flag(SETTINGS_RESTORE_LAST_SESSION_BIT));
 }
 
 auto Settings::copy() const -> Settings

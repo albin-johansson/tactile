@@ -32,7 +32,7 @@ namespace tactile::sys {
 
 void load_languages(Model& model)
 {
-  spdlog::debug("Loading languages");
+  spdlog::debug("[IO] Loading languages");
 
   auto& languages = model.get<Languages>();
 

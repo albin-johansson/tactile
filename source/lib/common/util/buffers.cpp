@@ -64,7 +64,7 @@ auto create_string_view_from_buffer(Span<const char> buffer) -> StringView
     return StringView {buffer.data(), index};
   }
   else {
-    throw TactileError {"Invalid string buffer!"};
+    throw TactileError {"Invalid string buffer"};
   }
 }
 

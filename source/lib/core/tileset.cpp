@@ -29,7 +29,7 @@ auto Tileset::index_of(const TilePos pos) const -> TileIndex
     return pos.row() * column_count + pos.col();
   }
   else {
-    throw TactileError {"Invalid tile position!"};
+    throw TactileError {"Invalid tile position"};
   }
 }
 

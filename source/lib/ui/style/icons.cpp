@@ -36,7 +36,7 @@ auto get_icon(const LayerType type) -> const char*
       return TAC_ICON_GROUP_LAYER;
 
     default:
-      throw TactileError {"Invalid layer type!"};
+      throw TactileError {"Invalid layer type"};
   }
 }
 
@@ -53,7 +53,7 @@ auto get_icon(const ObjectType type) -> const char*
       return TAC_ICON_POINT;
 
     default:
-      throw TactileError {"Invalid object type!"};
+      throw TactileError {"Invalid object type"};
   }
 }
 

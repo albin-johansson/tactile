@@ -44,7 +44,7 @@ template <typename T, std::predicate<const T&> P>
     return *iter;
   }
   else {
-    throw TactileError {"No element matched predicate!"};
+    throw TactileError {"No element matched predicate"};
   }
 }
 
@@ -57,7 +57,7 @@ template <typename T, std::predicate<const T&> P>
     return *iter;
   }
   else {
-    throw TactileError {"No element matched predicate!"};
+    throw TactileError {"No element matched predicate"};
   }
 }
 

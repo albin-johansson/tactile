@@ -99,7 +99,7 @@ auto AddObject::get_name() const -> String
       return strings.cmd.add_ellipse_object;
 
     default:
-      throw TactileError {"Invalid object type!"};
+      throw TactileError {"Invalid object type"};
   }
 }
 

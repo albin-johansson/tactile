@@ -230,7 +230,7 @@ auto human_readable_name(const EditorTheme theme) -> StringView
       return "Rose";
 
     default:
-      throw TactileError {"Invalid theme enumerator!"};
+      throw TactileError {"Invalid theme enumerator"};
   }
 }
 

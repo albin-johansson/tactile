@@ -158,7 +158,7 @@ auto restore_layer(Model& model,
       break;
     }
     default:
-      throw TactileError {"Invalid layer type!"};
+      throw TactileError {"Invalid layer type"};
   }
 
   if (parent_layer_entity != kNullEntity) {

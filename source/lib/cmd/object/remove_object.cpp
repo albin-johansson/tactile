@@ -91,7 +91,7 @@ auto RemoveObject::get_name() const -> String
       return strings.cmd.remove_ellipse_object;
 
     default:
-      throw TactileError {"Invalid object type!"};
+      throw TactileError {"Invalid object type"};
   }
 }
 

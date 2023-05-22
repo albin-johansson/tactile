@@ -239,7 +239,7 @@ void append_base64_tile_layer_data(XmlNode data_node,
       break;
 
     default:
-      throw TactileError {"Invalid compression strategy!"};
+      throw TactileError {"Invalid compression strategy"};
   }
 
   const auto tile_data = base64_encode_tiles(tile_layer.tiles,
@@ -274,7 +274,7 @@ void append_tile_layer(XmlNode root,
       break;
 
     default:
-      throw TactileError {"Invalid tile encoding!"};
+      throw TactileError {"Invalid tile encoding"};
   }
 }
 
@@ -319,7 +319,7 @@ void append_layer(XmlNode root,
       break;
     }
     default:
-      throw TactileError {"Invalid layer type!"};
+      throw TactileError {"Invalid layer type"};
   }
 }
 

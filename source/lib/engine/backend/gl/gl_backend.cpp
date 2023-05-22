@@ -33,7 +33,7 @@ namespace tactile {
 OpenGLBackend::OpenGLBackend(SDL_Window* window, SDL_GLContext context)
     : mWindow {window}
 {
-  spdlog::debug("Initializing OpenGL backend");
+  spdlog::debug("[Engine] Initializing OpenGL backend");
 
   if (!ImGui_ImplSDL2_InitForOpenGL(window, context)) {
     throw TactileError {"Could not initialize ImGui SDL2 backend"};

@@ -157,7 +157,7 @@ auto ToolManager::is_available(const Model& model, const ToolType type) const ->
       return mData->point.is_available(model);
 
     default:
-      throw TactileError {"Invalid tool type!"};
+      throw TactileError {"Invalid tool type"};
   }
 }
 
@@ -214,12 +214,12 @@ void ToolManager::on_released(Model& model,
 
 auto ToolManager::get_type() const -> ToolType
 {
-  throw TactileError {"Invalid call!"};
+  throw TactileError {"Invalid call"};
 }
 
 auto ToolManager::is_available(const Model&) const -> bool
 {
-  throw TactileError {"Invalid call!"};
+  throw TactileError {"Invalid call"};
 }
 
 }  // namespace tactile

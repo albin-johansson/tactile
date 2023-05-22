@@ -34,7 +34,7 @@ template <typename M, std::equality_comparable_with<typename M::key_type> K>
     return iter->second;
   }
   else {
-    throw TactileError {"Invalid key!"};
+    throw TactileError {"Invalid key"};
   }
 }
 
@@ -46,7 +46,7 @@ template <typename M, std::equality_comparable_with<typename M::key_type> K>
     return iter->second;
   }
   else {
-    throw TactileError {"Invalid key!"};
+    throw TactileError {"Invalid key"};
   }
 }
 

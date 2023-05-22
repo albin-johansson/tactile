@@ -36,7 +36,7 @@ constexpr ImWchar kFontIconRange[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
 
 void reload_imgui_fonts(const float font_size, const bool use_default_font)
 {
-  spdlog::debug("Reloading fonts...");
+  spdlog::debug("[UI] Reloading fonts");
 
   static const auto roboto_path = find_resource(kFontRobotoPath).string();
   static const auto fa_path = find_resource(kFontFaPath).string();

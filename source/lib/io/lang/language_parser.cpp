@@ -42,7 +42,7 @@ void load(const JSON& json, String& string, const char* key)
     if constexpr (kIsDebugBuild) {
       spdlog::critical("[IO] Found no translation for '{}'", key);
     }
-    throw TactileError {"Invalid empty translated string!"};
+    throw TactileError {"Invalid empty translated string"};
   }
 }
 
@@ -53,7 +53,7 @@ void load(const JSON& json, String& string, const char* key, const char* icon)
   }
 
   if (string.empty()) {
-    throw TactileError {"Invalid empty translated string!"};
+    throw TactileError {"Invalid empty translated string"};
   }
 }
 

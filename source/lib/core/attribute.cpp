@@ -82,7 +82,7 @@ void Attribute::reset_to_default(const AttributeType type)
       break;
 
     default:
-      throw TactileError {"Invalid attribute type!"};
+      throw TactileError {"Invalid attribute type"};
   }
 }
 

@@ -259,7 +259,7 @@ namespace {
   }
   else {
     // If we enter this branch, then the layer collection is broken
-    throw TactileError {"Collected invalid layer node!"};
+    throw TactileError {"Collected invalid layer node"};
   }
 
   if (auto props = parse_properties(layer_node)) {

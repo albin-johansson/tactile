@@ -30,7 +30,7 @@ namespace tactile {
 
 ImGuiContext::ImGuiContext()
 {
-  spdlog::debug("Initializing ImGui context");
+  spdlog::debug("[Engine] Initializing ImGui context");
 
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
