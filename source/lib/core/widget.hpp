@@ -19,15 +19,14 @@
 
 #pragma once
 
-#include "common/macros.hpp"
 #include "common/primitives.hpp"
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/func.hpp"
+#include "model/model.hpp"
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(Model)
 
 /// Callback with signature common for all widget functions.
 /// The entity is the widget entity.
