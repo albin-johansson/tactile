@@ -48,11 +48,11 @@ void open_directory(const Path& dir)
       std::system(cmd.c_str());
     }
     else {
-      spdlog::warn("Cannot open file explorer on this platform!");
+      spdlog::warn("[IO] Cannot open file explorer on this platform");
     }
   }
   else {
-    throw TactileError {"Not a directory!"};
+    throw TactileError {"Not a directory"};
   }
 }
 

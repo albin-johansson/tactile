@@ -58,7 +58,7 @@ void to_proto(const Color& color, proto::Color* out)
 {
   auto stream = open_input_stream(path, FileType::Binary);
   if (!stream) {
-    spdlog::error("Failed to open settings file");
+    spdlog::error("[Settings] Could not open settings file");
     return nothing;
   }
 
@@ -197,19 +197,19 @@ auto load_settings_from_disk() -> Settings
       return std::move(*settings);
     }
     else {
-      spdlog::warn("Could not read settings file, assuming defaults");
+      spdlog::warn("[Settings] Could not read settings file, assuming defaults");
       return Settings {};
     }
   }
   else {
-    spdlog::warn("Could not find settings file, assuming defaults");
+    spdlog::warn("[Settings] Could not find settings file, assuming defaults");
     return Settings {};
   }
 }
 
 void save_settings_to_disk(const Settings& settings)
 {
-  spdlog::debug("Saving settings...");
+  spdlog::debug("[Settings] Saving settings to disk");
   proto::Settings cfg;
 
   cfg.set_language(static_cast<proto::Lang>(settings.get_language()));
@@ -252,12 +252,12 @@ void save_settings_to_disk(const Settings& settings)
   auto stream = open_output_stream(path, FileType::Binary);
 
   if (!stream) {
-    spdlog::error("Could not open settings file for writing, no settings were saved");
+    spdlog::error("[Settings] Could not write to settings file, no settings were saved");
     return;
   }
 
   if (!cfg.SerializeToOstream(&stream.value())) {
-    spdlog::error("Failed to save settings");
+    spdlog::error("[Settings] Could not save settings");
   }
 }
 

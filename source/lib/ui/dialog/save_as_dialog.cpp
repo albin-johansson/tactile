@@ -44,7 +44,7 @@ void show_save_as_dialog(const Model& model, Dispatcher& dispatcher)
       const auto& settings = model.get<Settings>();
       const auto& format = settings.get_preferred_format();
 
-      spdlog::warn("Invalid file extension {}, assuming {} format",
+      spdlog::warn("[UI] Invalid file extension {}, assuming {} format",
                    path.extension(),
                    get_human_readable_name(format));
 

@@ -41,11 +41,11 @@ constexpr int kHistoryFormatVersion [[maybe_unused]] = 1;
 
 auto load_file_history_from_disk() -> Maybe<FileHistory>
 {
-  spdlog::debug("Loading file history...");
+  spdlog::debug("[History] Loading file history from disk");
 
   auto stream = open_input_stream(get_file_path(), FileType::Binary);
   if (!stream) {
-    spdlog::error("Could not open file history file");
+    spdlog::error("[History] Could not open file history file");
     return nothing;
   }
 
@@ -59,13 +59,13 @@ auto load_file_history_from_disk() -> Maybe<FileHistory>
 
     for (const auto& file: h.files()) {
       if (fs::exists(file)) {
-        spdlog::debug("Loaded '{}' from file history", file);
+        spdlog::debug("[History] Found '{}'", file);
         file_history.entries.push_back(file);
       }
     }
   }
   else {
-    spdlog::warn("Failed to read history file (this is expected for first time runs)");
+    spdlog::warn("[History] Could not read history file (expected for first time runs)");
   }
 
   return file_history;
@@ -80,18 +80,17 @@ void save_file_history_to_disk(const FileHistory& history)
   }
 
   for (const auto& path: history.entries) {
-    spdlog::debug("Saving '{}' to file history", path);
     h.add_files(path);
   }
 
   auto stream = open_output_stream(get_file_path(), FileType::Binary);
   if (!stream) {
-    spdlog::error("Could not open file history file for writing");
+    spdlog::error("[History] Could not write to file history file");
     return;
   }
 
   if (!h.SerializeToOstream(&stream.value())) {
-    spdlog::error("Failed to save file history");
+    spdlog::error("[History] Could not save file history");
   }
 }
 

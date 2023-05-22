@@ -126,13 +126,13 @@ namespace {
     tile_layer.extent.cols = *width;
 
     if (tile_layer.extent.cols != map.extent.cols) {
-      spdlog::warn("JSON tile layer width does not match map width, '{}' vs '{}'",
+      spdlog::warn("[JSON] Tile layer width does not match map width, '{}' vs '{}'",
                    tile_layer.extent.cols,
                    map.extent.cols);
     }
   }
   else {
-    spdlog::warn("JSON tile layer has no width information, assuming map width...");
+    spdlog::warn("[JSON] Tile layer has no width information, assuming map width");
     tile_layer.extent.cols = map.extent.cols;
   }
 
@@ -140,13 +140,13 @@ namespace {
     tile_layer.extent.rows = *height;
 
     if (tile_layer.extent.rows != map.extent.rows) {
-      spdlog::warn("JSON tile layer height does not match map height, '{}' vs '{}'",
+      spdlog::warn("[JSON] Tile layer height does not match map height, '{}' vs '{}'",
                    tile_layer.extent.rows,
                    map.extent.rows);
     }
   }
   else {
-    spdlog::warn("JSON tile layer has no height information, assuming map height...");
+    spdlog::warn("[JSON] Tile layer has no height information, assuming map height");
     tile_layer.extent.rows = map.extent.rows;
   }
 
@@ -266,7 +266,7 @@ auto parse_layers(const JSON& json, MapIR& map) -> ParseError
   const auto iter = json.find("layers");
 
   if (iter == json.end()) {
-    spdlog::warn("JSON map has no \"layers\" attribute, which is required!");
+    spdlog::warn("[JSON] Map is missing required \"layers\" attribute");
     return ParseError::None;
   }
 

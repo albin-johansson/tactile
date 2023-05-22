@@ -47,17 +47,17 @@ namespace {
   if (const auto iter = json.find("animation"); iter != json.end()) {
     tile_data.frames.reserve(iter->size());
 
-    for (const auto& [_, frameJson]: iter->items()) {
+    for (const auto& [_, frame_json]: iter->items()) {
       auto& frame_data = tile_data.frames.emplace_back();
 
-      if (const auto index = as_int(frameJson, "tileid")) {
+      if (const auto index = as_int(frame_json, "tileid")) {
         frame_data.tile_index = *index;
       }
       else {
         return ParseError::NoAnimationFrameTile;
       }
 
-      if (const auto duration = as_uint(frameJson, "duration")) {
+      if (const auto duration = as_uint(frame_json, "duration")) {
         frame_data.duration_ms = *duration;
       }
       else {
@@ -71,9 +71,9 @@ namespace {
     if (objects_iter != layer_iter->end()) {
       tile_data.objects.reserve(objects_iter->size());
 
-      for (const auto& [_, objectJson]: objects_iter->items()) {
+      for (const auto& [_, object_json]: objects_iter->items()) {
         auto& object_data = tile_data.objects.emplace_back();
-        if (const auto err = parse_object(objectJson, object_data);
+        if (const auto err = parse_object(object_json, object_data);
             err != ParseError::None) {
           return err;
         }
@@ -242,7 +242,7 @@ auto parse_tilesets(const JSON& json, MapIR& map_data, const Path& dir) -> Parse
   const auto iter = json.find("tilesets");
 
   if (iter == json.end()) {
-    spdlog::warn("JSON map has no \"tilesets\" attribute, which is required!");
+    spdlog::warn("[JSON] Map is missing required \"tilesets\" attribute");
     return ParseError::None;
   }
 

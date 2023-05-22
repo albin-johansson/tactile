@@ -36,7 +36,7 @@ auto save_yaml_to_file(const YAML::Emitter& emitter, const Path& path) -> Result
     return success;
   }
   else {
-    spdlog::error("Could not open YAML file for writing: ", path);
+    spdlog::error("[YAML] Could not write to YAML file at {}", path);
     return failure;
   }
 }
@@ -117,7 +117,7 @@ auto operator<<(YAML::Emitter& emitter, const TileEncoding encoding) -> YAML::Em
       return emitter << "base64";
 
     default:
-      throw TactileError {"Did not recognize tile encoding!"};
+      throw TactileError {"Did not recognize tile encoding"};
   }
 }
 
@@ -135,7 +135,7 @@ auto operator<<(YAML::Emitter& emitter, const TileCompression compression)
       return emitter << "zstd";
 
     default:
-      throw TactileError {"Did not recognize tile compression!"};
+      throw TactileError {"Did not recognize tile compression"};
   }
 }
 

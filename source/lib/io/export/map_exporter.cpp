@@ -44,12 +44,12 @@ auto save_map_document_to_disk(const Model& model, const Entity map_document_ent
     const auto& settings = model.get<Settings>();
 
     if (!document.path.has_value()) {
-      spdlog::error("Tried to save map document with no associated file path");
+      spdlog::error("[IO] Tried to save map with no associated file path");
       return failure;
     }
 
     const auto path = fs::absolute(*document.path);
-    spdlog::info("Trying to save map to {}", path);
+    spdlog::info("[IO] Trying to save map to {}", path);
 
     if (has_supported_tactile_yaml_extension(path)) {
       save_map_as_tactile_yaml(path,
@@ -67,7 +67,7 @@ auto save_map_document_to_disk(const Model& model, const Entity map_document_ent
                             settings);
     }
     else {
-      spdlog::error("Unsupported file extension {}", path.extension());
+      spdlog::error("[IO] Unsupported file extension {}", path.extension());
       return failure;
     }
 
@@ -75,11 +75,11 @@ auto save_map_document_to_disk(const Model& model, const Entity map_document_ent
     return success;
   }
   catch (const std::exception& e) {
-    spdlog::error("Could not save map document to disk: {}", e.what());
+    spdlog::error("[IO] Could not save map to disk: {}", e.what());
     return failure;
   }
   catch (...) {
-    spdlog::error("Could not save map document to disk");
+    spdlog::error("[IO] Could not save map to disk");
     return failure;
   }
 }

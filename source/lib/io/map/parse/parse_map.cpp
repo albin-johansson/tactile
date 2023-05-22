@@ -37,7 +37,7 @@ auto parse_map(const Path& path) -> ParseResult
 {
   try {
     const auto parse_start = Clock::now();
-    spdlog::debug("Parsing map {}", path);
+    spdlog::debug("[IO] Parsing map {}", path);
 
     if (!fs::exists(path)) {
       return unexpected(ParseError::MapDoesNotExist);
@@ -56,29 +56,27 @@ auto parse_map(const Path& path) -> ParseResult
       result = parse_json_map(path);
     }
     else {
-      spdlog::error("Unsupported save file extension: {}", ext);
+      spdlog::error("[IO] Unsupported save file extension: {}", ext);
       return unexpected(ParseError::UnsupportedMapExtension);
     }
 
     const auto parse_end = Clock::now();
     const auto parse_duration = chrono::duration_cast<ms_t>(parse_end - parse_start);
 
-    spdlog::info("Parsed {} in {}", path.filename(), parse_duration);
+    spdlog::info("[IO] Parsed {} in {}", path.filename(), parse_duration);
 
     return result;
   }
   catch (const TactileError& e) {
-    spdlog::error("Parser threw unhandled exception with message: '{}'\n{}",
-                  e.what(),
-                  e.get_trace());
+    spdlog::error("[IO] Parser crashed with message: '{}'\n{}", e.what(), e.get_trace());
     return unexpected(ParseError::Unknown);
   }
   catch (const std::exception& e) {
-    spdlog::error("Parser threw unhandled exception with message: '{}'\n", e.what());
+    spdlog::error("[IO] Parser crashed with message: '{}'\n", e.what());
     return unexpected(ParseError::Unknown);
   }
   catch (...) {
-    spdlog::error("Parser threw non-exception value!");
+    spdlog::error("[IO] Parser crashed");
     return unexpected(ParseError::Unknown);
   }
 }

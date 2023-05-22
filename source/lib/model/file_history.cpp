@@ -37,7 +37,7 @@ inline FileHistory gHistory;
 
 void clear_file_history()
 {
-  spdlog::debug("Clearing file history...");
+  spdlog::debug("[History] Clearing file history");
   gHistory.entries.clear();
 }
 
@@ -46,7 +46,7 @@ void add_to_file_history(const Path& path)
   auto converted = use_forward_slashes(path);
   if (std::find(gHistory.entries.begin(), gHistory.entries.end(), converted) ==
       gHistory.entries.end()) {
-    spdlog::debug("Adding '{}' to history...", converted);
+    spdlog::debug("[History] Storing '{}'", converted);
     gHistory.entries.push_back(std::move(converted));
 
     if (gHistory.entries.size() > kHistoryMaxSize) {
@@ -54,14 +54,14 @@ void add_to_file_history(const Path& path)
     }
   }
   else {
-    spdlog::debug("Did not add existing entry '{}' to file history", converted);
+    spdlog::debug("[History] Did not add existing entry '{}'", converted);
   }
 }
 
 void set_last_closed_file(const Path& path)
 {
   gHistory.last_closed_file = use_forward_slashes(path);
-  spdlog::debug("Last closed file is now '{}'", *gHistory.last_closed_file);
+  spdlog::debug("[History] Last closed file is now '{}'", *gHistory.last_closed_file);
 
   add_to_file_history(path);
 }
@@ -72,7 +72,7 @@ auto get_last_closed_file() -> const String&
     return gHistory.last_closed_file.value();
   }
   else {
-    throw TactileError {"Invalid last closed file!"};
+    throw TactileError {"Invalid last closed file"};
   }
 }
 

@@ -330,7 +330,7 @@ void _create_external_tileset_file(const Path& dir,
   const auto indentation = settings.test_flag(SETTINGS_INDENT_OUTPUT_BIT) ? 2 : 0;
 
   if (save_json_to_file(json, path, indentation).failed()) {
-    spdlog::error("Could not save JSON tileset file");
+    spdlog::error("[IO] Could not save JSON tileset file");
   }
 }
 
@@ -369,7 +369,7 @@ void save_map_as_tiled_json(const Path& destination,
   auto json = JSON::object();
 
   if (!ir_map.component_definitions.empty()) {
-    spdlog::warn("Component data will be ignored when saving the map as JSON!");
+    spdlog::warn("[IO] Component data is ignored when saving JSON maps");
   }
 
   json["type"] = "map";
@@ -407,7 +407,7 @@ void save_map_as_tiled_json(const Path& destination,
   }
 
   if (save_json_to_file(json, destination).failed()) {
-    spdlog::error("Could not save JSON map file");
+    spdlog::error("[IO] Could not save JSON map");
   }
 }
 

@@ -91,7 +91,7 @@ void check_for_missing_layout_file(const Model& model, Dispatcher& dispatcher)
 {
   const auto& ini_path = get_widget_ini_path();
   if (!fs::exists(ini_path)) {
-    spdlog::warn("Resetting layout because 'imgui.ini' file was missing");
+    spdlog::warn("[UI] Resetting layout because 'imgui.ini' file was missing");
     ui::reset_layout(model, dispatcher);
 
     const auto str = ini_path.string();

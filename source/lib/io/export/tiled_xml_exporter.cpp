@@ -120,7 +120,7 @@ void append_properties(XmlNode node, const ContextIR& context)
         break;
 
       default:
-        spdlog::warn("Cannot store '{}' property in an XML file",
+        spdlog::warn("[IO] Cannot store '{}' property in an XML file",
                      magic_enum::enum_name(type));
         break;
     }
@@ -408,7 +408,7 @@ void emit_external_tileset_file(const Path& path,
   append_common_tileset_attributes(root, tileset, dir);
 
   if (save_xml_to_file(document, path).failed()) {
-    spdlog::error("Could not save XML tileset file");
+    spdlog::error("[IO] Could not save XML tileset");
   }
 }
 
@@ -469,14 +469,14 @@ void save_map_as_tiled_xml(const Path& destination,
                            const Settings& settings)
 {
   if (!ir_map.component_definitions.empty()) {
-    spdlog::warn("Component data will be ignored when saving the map as XML!");
+    spdlog::warn("[IO] Component data is ignored when saving XML maps");
   }
 
   pugi::xml_document document;
   append_root(document, destination.parent_path(), ir_map, settings);
 
   if (save_xml_to_file(document, destination).failed()) {
-    spdlog::error("Could not save XML map file");
+    spdlog::error("[IO] Could not save XML map");
   }
 }
 

@@ -199,7 +199,7 @@ auto parse_json_file(const Path& path) -> Maybe<JSON>
   try {
     auto stream = open_input_stream(path, FileType::Text);
     if (!stream) {
-      spdlog::error("Failed to open JSON file: {}", path);
+      spdlog::error("[JSON] Could not parse JSON file at {}", path);
       return nothing;
     }
 
@@ -209,7 +209,7 @@ auto parse_json_file(const Path& path) -> Maybe<JSON>
     return json;
   }
   catch (const std::exception& e) {
-    spdlog::error("JSON parse error: {}", e.what());
+    spdlog::error("[JSON] Parse error: {}", e.what());
     return nothing;
   }
   catch (...) {
@@ -222,7 +222,7 @@ auto save_json_to_file(const JSON& json, const Path& path, const int indentation
 {
   auto stream = open_output_stream(path, FileType::Text);
   if (!stream) {
-    spdlog::error("Could not open JSON file for writing: {}", path);
+    spdlog::error("[JSON] Could not write to JSON file at {}", path);
     return failure;
   }
 
@@ -232,11 +232,11 @@ auto save_json_to_file(const JSON& json, const Path& path, const int indentation
     return success;
   }
   catch (const std::exception& e) {
-    spdlog::error("Could not save JSON: {}", e.what());
+    spdlog::error("[JSON] Could not save JSON file: {}", e.what());
     return failure;
   }
   catch (...) {
-    spdlog::error("Unknown error when saving JSON to {}", path);
+    spdlog::error("[JSON] Could not save JSON file to {}", path);
     return failure;
   }
 }

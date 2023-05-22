@@ -45,7 +45,6 @@
 #include "model/event/menu_events.hpp"
 #include "model/event/view_events.hpp"
 #include "model/file_history.hpp"
-#include "model/systems/document_system.hpp"
 #include "model/systems/menu_system.hpp"
 #include "model/systems/texture_system.hpp"
 #include "model/systems/widget_system.hpp"
@@ -185,7 +184,10 @@ void App::_init_widgets()
 
   // TODO
   //  if (gOpenMapFileDialog) {
-  //    _update_map_file_dialog(dispatcher);
+  //    auto dialog = FileDialog::open_map();
+  //    if (dialog.is_okay()) {
+  //      dispatcher.enqueue<OpenMapEvent>(dialog.path());
+  //    }
   //  }
 
   // TODO

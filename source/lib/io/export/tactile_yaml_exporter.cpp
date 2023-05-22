@@ -338,10 +338,10 @@ void emit_tileset_file(const Path& dir, const String& filename, const TilesetIR&
   emitter << YAML::EndMap;
 
   const auto path = dir / filename;
-  spdlog::debug("Saving external tileset to {}", path);
+  spdlog::debug("[YAML] Saving external tileset to {}", path);
 
   if (save_yaml_to_file(emitter, path).failed()) {
-    spdlog::error("Could not save YAML tileset file");
+    spdlog::error("[YAML] Could not save tileset file");
   }
 }
 
@@ -468,7 +468,7 @@ void save_map_as_tactile_yaml(const Path& destination,
   emitter << YAML::EndMap;
 
   if (save_yaml_to_file(emitter, destination).failed()) {
-    spdlog::error("Could not save YAML map file");
+    spdlog::error("[YAML] Could not save map file");
   }
 }
 

@@ -59,17 +59,17 @@ auto main(int, char*[]) -> int
   }
   catch (const TactileError& e) {
     _show_crash_message_box(e.what());
-    spdlog::critical("Unhandled exception: '{}'\n{}", e.what(), e.get_trace());
+    spdlog::critical("[Main] Unhandled exception: '{}'\n{}", e.what(), e.get_trace());
     return EXIT_FAILURE;
   }
   catch (const std::exception& e) {
     _show_crash_message_box(e.what());
-    spdlog::critical("Unhandled exception: '{}'", e.what());
+    spdlog::critical("[Main] Unhandled exception: '{}'", e.what());
     return EXIT_FAILURE;
   }
   catch (...) {
     _show_crash_message_box("N/A");
-    spdlog::critical("Unhandled exception");
+    spdlog::critical("[Main] Unhandled exception");
     return EXIT_FAILURE;
   }
 }

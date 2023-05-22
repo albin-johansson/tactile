@@ -49,7 +49,7 @@ void load_session_from_disk(Model& model)
 
   auto stream = open_input_stream(_get_file_path(), FileType::Binary);
   if (!stream) {
-    spdlog::error("Could not open session file");
+    spdlog::error("[Session] Could not open session file");
     return;
   }
 
@@ -60,12 +60,12 @@ void load_session_from_disk(Model& model)
         create_map_document_from_ir(*ir_map, file_path, model);
       }
       else {
-        spdlog::warn("Failed to restore map from last session!");
+        spdlog::warn("[Session] Could not restore map from previous session");
       }
     }
   }
   else {
-    spdlog::warn("Failed to parse binary session file!");
+    spdlog::warn("[Session] Could not parse session file");
   }
 }
 
@@ -83,11 +83,11 @@ void save_session_to_disk(const Model& model)
   auto stream = open_output_stream(_get_file_path(), FileType::Binary);
   if (stream.has_value()) {
     if (!session.SerializeToOstream(&stream.value())) {
-      spdlog::error("Failed to save session file");
+      spdlog::error("[Session] Failed to save session file");
     }
   }
   else {
-    spdlog::error("Failed to open session file for writing");
+    spdlog::error("[Session] Failed to open session file for writing");
   }
 }
 

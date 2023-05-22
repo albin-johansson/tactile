@@ -153,13 +153,13 @@ namespace {
     tile_layer.extent.cols = *width;
 
     if (tile_layer.extent.cols != map.extent.cols) {
-      spdlog::warn("XML tile layer width does not match map width, '{}' vs '{}'",
+      spdlog::warn("[XML] Tile layer width does not match map width, '{}' vs '{}'",
                    tile_layer.extent.cols,
                    map.extent.cols);
     }
   }
   else {
-    spdlog::warn("XML tile layer has no width information, assuming map width...");
+    spdlog::warn("[XML] Tile layer has no width information, assuming map width");
     tile_layer.extent.cols = map.extent.cols;
   }
 
@@ -167,13 +167,13 @@ namespace {
     tile_layer.extent.rows = *height;
 
     if (tile_layer.extent.rows != map.extent.rows) {
-      spdlog::warn("XML tile layer height does not match map height, '{}' vs '{}'",
+      spdlog::warn("[XML] Tile layer height does not match map height, '{}' vs '{}'",
                    tile_layer.extent.rows,
                    map.extent.rows);
     }
   }
   else {
-    spdlog::warn("XML tile layer has no height information, assuming map height...");
+    spdlog::warn("[XML] Tile layer has no height information, assuming map height");
     tile_layer.extent.rows = map.extent.rows;
   }
 

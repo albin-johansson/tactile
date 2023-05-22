@@ -52,7 +52,7 @@ auto save_xml_to_file(const XmlDocument& document, const Path& path) -> Result
     return success;
   }
   else {
-    spdlog::error("Could not open XML file for writing: {}", path);
+    spdlog::error("[XML] Could not write to XML file at {}", path);
     return failure;
   }
 }
