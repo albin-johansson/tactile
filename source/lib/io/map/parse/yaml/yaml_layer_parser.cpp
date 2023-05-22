@@ -72,7 +72,7 @@ namespace {
   }
 
   if (map.tile_format.encoding == TileEncoding::Plain) {
-    std::replace(str_data.begin(), str_data.end(), '\n', ' ');
+    std::ranges::replace(str_data, '\n', ' ');
     if (auto matrix = parse_plain_tile_layer_data(str_data, extent)) {
       tile_layer.tiles = std::move(*matrix);
     }

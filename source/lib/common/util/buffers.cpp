@@ -58,7 +58,7 @@ auto create_string_from_buffer(Span<const char> buffer) -> String
 
 auto create_string_view_from_buffer(Span<const char> buffer) -> StringView
 {
-  auto iter = std::find(buffer.begin(), buffer.end(), '\0');
+  auto iter = std::ranges::find(buffer, '\0');
   if (iter != buffer.end()) {
     const auto index = static_cast<usize>(std::distance(buffer.begin(), iter));
     return StringView {buffer.data(), index};

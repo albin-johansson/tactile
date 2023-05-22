@@ -19,7 +19,7 @@
 
 #include "colors.hpp"
 
-#include <algorithm>  // find, min, max
+#include <algorithm>  // min, max
 #include <cmath>      // pow
 
 #include "common/predef.hpp"

@@ -45,7 +45,7 @@ inline constexpr int32 kTileOffset = 65'536;
 [[nodiscard]] auto to_godot_name(StringView name) -> String
 {
   String copy {name};
-  std::replace(copy.begin(), copy.end(), '/', '-');
+  std::ranges::replace(copy, '/', '-');
   return copy;
 }
 

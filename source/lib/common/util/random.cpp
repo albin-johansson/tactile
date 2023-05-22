@@ -40,7 +40,7 @@ using SeedArray = Array<Seed, RandomEngine::state_size>;
   std::random_device device;
 
   SeedArray data;
-  std::generate(data.begin(), data.end(), std::ref(device));
+  std::ranges::generate(data, std::ref(device));
 
   std::seed_seq seeds(data.begin(), data.end());
   return RandomEngine {seeds};

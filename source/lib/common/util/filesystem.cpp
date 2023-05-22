@@ -49,7 +49,7 @@ namespace {
 auto use_forward_slashes(const Path& path) -> String
 {
   auto str = path.string();
-  std::replace(str.begin(), str.end(), '\\', '/');
+  std::ranges::replace(str, '\\', '/');
   return str;
 }
 

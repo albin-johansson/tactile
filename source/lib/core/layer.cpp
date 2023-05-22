@@ -58,8 +58,7 @@ auto TileLayer::contains(const TilePos pos) const -> bool
 
 void GroupLayer::append(const Entity layer_entity)
 {
-  TACTILE_ASSERT(std::find(children.begin(), children.end(), layer_entity) ==
-                 children.end());
+  TACTILE_ASSERT(std::ranges::find(children, layer_entity) == children.end());
   children.push_back(layer_entity);
 }
 
