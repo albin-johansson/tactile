@@ -23,6 +23,7 @@
 #include <utility>   // move
 
 #include "common/color.hpp"
+#include "common/enum/attribute_type.hpp"
 #include "common/primitives.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
@@ -35,23 +36,6 @@ namespace tactile {
 
 /// Strong type that represents object references.
 enum ObjectRef : int32 {
-};
-
-/// Represents the different possible attributes types.
-enum class AttributeType {
-  String,  ///< Arbitrary string.
-  Int,     ///< Plain int.
-  Int2,    ///< 2D int vector.
-  Int3,    ///< 3D int vector.
-  Int4,    ///< 4D int vector.
-  Float,   ///< Plain float.
-  Float2,  ///< 2D float vector.
-  Float3,  ///< 3D float vector.
-  Float4,  ///< 4D float vector.
-  Bool,    ///< Boolean value.
-  Path,    ///< File path.
-  Color,   ///< Color value.
-  Object,  ///< Integer object ID, references some map object.
 };
 
 template <typename T>

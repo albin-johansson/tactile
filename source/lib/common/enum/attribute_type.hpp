@@ -19,27 +19,23 @@
 
 #pragma once
 
-#include "cmd/command.hpp"
-#include "common/enum/attribute_type.hpp"
-#include "common/type/ecs.hpp"
-#include "common/type/string.hpp"
+namespace tactile {
 
-namespace tactile::cmd {
-
-class AddProperty final : public Command {
- public:
-  AddProperty(Entity context_entity, String name, AttributeType type);
-
-  void undo() override;
-
-  void redo() override;
-
-  [[nodiscard]] auto get_name() const -> String override;
-
- private:
-  Entity mContextEntity;
-  String mName;
-  AttributeType mType;
+/// Represents the different possible attributes types.
+enum class AttributeType {
+  String,  ///< Arbitrary string.
+  Int,     ///< Plain int.
+  Int2,    ///< 2D int vector.
+  Int3,    ///< 3D int vector.
+  Int4,    ///< 4D int vector.
+  Float,   ///< Plain float.
+  Float2,  ///< 2D float vector.
+  Float3,  ///< 3D float vector.
+  Float4,  ///< 4D float vector.
+  Bool,    ///< Boolean value.
+  Path,    ///< File path.
+  Color,   ///< Color value.
+  Object,  ///< Integer object ID, references some map object.
 };
 
-}  // namespace tactile::cmd
+}  // namespace tactile
