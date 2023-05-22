@@ -23,8 +23,8 @@
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
+#include "common/fmt/fmt_string.hpp"
 #include "common/type/string.hpp"
-#include "common/util/fmt.hpp"
 #include "core/context.hpp"
 #include "core/layer.hpp"
 #include "core/map.hpp"

@@ -22,7 +22,7 @@
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
-#include "common/util/fmt.hpp"
+#include "common/fmt/fmt_string.hpp"
 #include "component_view.hpp"
 #include "components/document.hpp"
 #include "core/component.hpp"

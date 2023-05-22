@@ -17,12 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "common/fmt/fmt_string.hpp"
+
 #include <filesystem>  // path
 
 #include <doctest/doctest.h>
 #include <fmt/std.h>
-
-#include "common/util/fmt.hpp"
 
 using namespace std::string_view_literals;
 
