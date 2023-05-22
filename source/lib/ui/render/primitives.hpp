@@ -24,10 +24,10 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "common/color.hpp"
 #include "common/debug/assert.hpp"
 #include "common/macros.hpp"
 #include "common/primitives.hpp"
-#include "core/color.hpp"
 #include "core/texture.hpp"
 #include "ui/conversions.hpp"
 

@@ -24,8 +24,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "common/color.hpp"
 #include "components/document.hpp"
-#include "core/color.hpp"
 #include "core/tile.hpp"
 #include "core/tileset.hpp"
 #include "core/viewport.hpp"

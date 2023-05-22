@@ -19,8 +19,8 @@
 
 #pragma once
 
+#include "common/color.hpp"
 #include "common/type/math.hpp"
-#include "core/color.hpp"
 #include "core/tile_pos.hpp"
 #include "ui/render/canvas.hpp"
 

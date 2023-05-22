@@ -22,7 +22,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/color.hpp"
+#include "common/color.hpp"
 #include "core/map.hpp"
 #include "core/texture.hpp"
 #include "core/tileset.hpp"

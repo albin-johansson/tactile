@@ -24,8 +24,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "common/color.hpp"
 #include "components/document.hpp"
-#include "core/color.hpp"
 #include "core/layer.hpp"
 #include "core/map.hpp"
 #include "core/object.hpp"

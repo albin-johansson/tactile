@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "common/color.hpp"
 #include "common/enum/lang.hpp"
 #include "common/enum/overlay_pos.hpp"
 #include "common/enum/save_format.hpp"
@@ -28,7 +29,6 @@
 #include "common/type/math.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
-#include "core/color.hpp"
 
 namespace tactile {
 

@@ -22,6 +22,7 @@
 #include <concepts>  // same_as
 #include <utility>   // move
 
+#include "common/color.hpp"
 #include "common/primitives.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
@@ -29,7 +30,6 @@
 #include "common/type/path.hpp"
 #include "common/type/string.hpp"
 #include "common/type/variant.hpp"
-#include "core/color.hpp"
 
 namespace tactile {
 

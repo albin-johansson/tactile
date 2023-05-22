@@ -19,9 +19,9 @@
 
 #pragma once
 
+#include "common/color.hpp"
 #include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
-#include "core/color.hpp"
 #include "core/map.hpp"
 #include "core/tile_pos.hpp"
 #include "core/tileset.hpp"
