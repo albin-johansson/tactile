@@ -20,11 +20,11 @@
 #include "tileset_system.hpp"
 
 #include "common/debug/assert.hpp"
+#include "common/tile_matrix.hpp"
 #include "common/util/lookup.hpp"
 #include "core/context.hpp"
 #include "core/texture.hpp"
 #include "core/tile.hpp"
-#include "core/tile_matrix.hpp"
 #include "core/tileset.hpp"
 #include "core/viewport.hpp"
 #include "model/systems/texture_system.hpp"

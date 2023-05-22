@@ -19,10 +19,10 @@
 
 #pragma once
 
+#include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/vec.hpp"
 #include "core/layer.hpp"
-#include "core/tile_pos.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {

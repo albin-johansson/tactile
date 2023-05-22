@@ -20,8 +20,8 @@
 #pragma once
 
 #include "common/primitives.hpp"
+#include "common/tile_pos.hpp"
 #include "common/type/vector_map.hpp"
-#include "core/tile_pos.hpp"
 
 namespace tactile {
 

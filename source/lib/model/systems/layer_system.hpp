@@ -20,10 +20,10 @@
 #pragma once
 
 #include "common/primitives.hpp"
+#include "common/tile_extent.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/func.hpp"
 #include "core/layer.hpp"
-#include "core/tile_extent.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {

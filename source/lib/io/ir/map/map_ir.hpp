@@ -29,6 +29,8 @@
 #include "common/enum/tile_encoding.hpp"
 #include "common/macros.hpp"
 #include "common/primitives.hpp"
+#include "common/tile_extent.hpp"
+#include "common/tile_matrix.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
@@ -41,8 +43,6 @@
 #include "common/type/vec.hpp"
 #include "common/util/algorithm.hpp"
 #include "core/attribute.hpp"
-#include "core/tile_extent.hpp"
-#include "core/tile_matrix.hpp"
 
 namespace tactile {
 

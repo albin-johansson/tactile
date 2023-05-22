@@ -21,11 +21,11 @@
 
 #include "common/enum/layer_type.hpp"
 #include "common/primitives.hpp"
+#include "common/tile_matrix.hpp"
+#include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/vec.hpp"
-#include "core/tile_matrix.hpp"
-#include "core/tile_pos.hpp"
 
 namespace tactile {
 

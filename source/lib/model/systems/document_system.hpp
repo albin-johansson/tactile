@@ -22,10 +22,10 @@
 #include <utility>  // forward
 
 #include "cmd/command_stack.hpp"
+#include "common/tile_extent.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
-#include "core/tile_extent.hpp"
 #include "model/event/map_events.hpp"
 #include "model/model.hpp"
 

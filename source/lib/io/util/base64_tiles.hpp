@@ -20,11 +20,11 @@
 #pragma once
 
 #include "common/primitives.hpp"
+#include "common/tile_extent.hpp"
+#include "common/tile_matrix.hpp"
 #include "common/type/string.hpp"
 #include "common/type/vec.hpp"
 #include "core/tile_format.hpp"
-#include "core/tile_extent.hpp"
-#include "core/tile_matrix.hpp"
 
 namespace tactile {
 

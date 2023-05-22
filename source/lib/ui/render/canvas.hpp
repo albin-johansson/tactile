@@ -22,9 +22,9 @@
 #include <imgui.h>
 
 #include "common/primitives.hpp"
+#include "common/region.hpp"
+#include "common/tile_extent.hpp"
 #include "common/type/math.hpp"
-#include "core/region.hpp"
-#include "core/tile_extent.hpp"
 #include "core/viewport.hpp"
 
 namespace tactile::ui {

@@ -20,13 +20,13 @@
 #pragma once
 
 #include "common/primitives.hpp"
+#include "common/region.hpp"
+#include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/vec.hpp"
-#include "core/region.hpp"
-#include "core/tile_pos.hpp"
 #include "core/viewport.hpp"
 
 namespace tactile {

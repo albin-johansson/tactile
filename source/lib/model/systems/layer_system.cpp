@@ -22,10 +22,10 @@
 #include <utility>  // move
 
 #include "common/debug/assert.hpp"
+#include "common/tile_matrix.hpp"
 #include "common/type/string.hpp"
 #include "core/context.hpp"
 #include "core/layer.hpp"
-#include "core/tile_matrix.hpp"
 #include "model/systems/context/context_system.hpp"
 #include "model/systems/object_system.hpp"
 #include "model/systems/validation.hpp"

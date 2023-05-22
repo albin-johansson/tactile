@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "core/tile_pos.hpp"
+#include "common/tile_pos.hpp"
 #include "ui/render/canvas.hpp"
 
 namespace tactile::ui {

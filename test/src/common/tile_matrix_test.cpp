@@ -1,7 +1,7 @@
 /*
  * This source file is a part of the Tactile map editor.
  *
- * Copyright (C) 2022 Albin Johansson
+ * Copyright (C) 2023 Albin Johansson
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/tile_matrix.hpp"
+#include "common/tile_matrix.hpp"
 
 #include <doctest/doctest.h>
 

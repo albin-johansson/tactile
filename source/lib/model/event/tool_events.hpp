@@ -20,10 +20,10 @@
 #pragma once
 
 #include "common/primitives.hpp"
+#include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "common/type/tile_cache.hpp"
-#include "core/tile_pos.hpp"
 #include "model/mouse_info.hpp"
 #include "model/tool/tool_type.hpp"
 

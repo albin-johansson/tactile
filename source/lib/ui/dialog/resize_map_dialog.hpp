@@ -19,9 +19,9 @@
 
 #pragma once
 
+#include "common/tile_extent.hpp"
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "core/tile_extent.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {

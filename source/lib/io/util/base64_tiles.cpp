@@ -26,9 +26,9 @@
 #include <cppcodec/base64_rfc4648.hpp>
 
 #include "common/debug/panic.hpp"
+#include "common/tile_matrix.hpp"
 #include "common/util/bit.hpp"
 #include "common/util/functional.hpp"
-#include "core/tile_matrix.hpp"
 #include "io/compression.hpp"
 
 using Base64 = cppcodec::base64_rfc4648;

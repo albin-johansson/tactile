@@ -20,12 +20,12 @@
 #pragma once
 
 #include "common/primitives.hpp"
+#include "common/region.hpp"
 #include "common/type/chrono.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "common/type/string.hpp"
-#include "core/region.hpp"
 
 namespace tactile {
 
