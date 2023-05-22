@@ -45,7 +45,7 @@ template <std::invocable T>
 {
   const Scope scope {id};
 
-  if (ui_button(TAC_ICON_THREE_DOTS)) {
+  if (push_button(TAC_ICON_THREE_DOTS)) {
     if (auto result = callback()) {
       return std::move(*result);
     }
@@ -62,7 +62,7 @@ template <std::invocable T>
                            sizeof buffer,
                            ImGuiInputTextFlags_ReadOnly);
 
-  ui_lazy_tooltip("##PathTooltip", strings.misc.type_path.c_str());
+  push_lazy_tooltip("##PathTooltip", strings.misc.type_path.c_str());
 
   return nothing;
 }
@@ -78,7 +78,7 @@ auto push_int_input(const Strings& strings, const char* id, int value) -> Maybe<
     return value;
   }
 
-  ui_lazy_tooltip("##IntTooltip", strings.misc.type_int.c_str());
+  push_lazy_tooltip("##IntTooltip", strings.misc.type_int.c_str());
 
   return nothing;
 }
@@ -92,7 +92,7 @@ auto push_int2_input(const Strings& strings, const char* id, Int2 value) -> Mayb
     return value;
   }
 
-  ui_lazy_tooltip("##Int2Tooltip", strings.misc.type_int2.c_str());
+  push_lazy_tooltip("##Int2Tooltip", strings.misc.type_int2.c_str());
 
   return nothing;
 }
@@ -106,7 +106,7 @@ auto push_int3_input(const Strings& strings, const char* id, Int3 value) -> Mayb
     return value;
   }
 
-  ui_lazy_tooltip("##Int3Tooltip", strings.misc.type_int3.c_str());
+  push_lazy_tooltip("##Int3Tooltip", strings.misc.type_int3.c_str());
 
   return nothing;
 }
@@ -120,7 +120,7 @@ auto push_int4_input(const Strings& strings, const char* id, Int4 value) -> Mayb
     return value;
   }
 
-  ui_lazy_tooltip("##Int4Tooltip", strings.misc.type_int4.c_str());
+  push_lazy_tooltip("##Int4Tooltip", strings.misc.type_int4.c_str());
 
   return nothing;
 }
@@ -146,7 +146,7 @@ auto push_float_input(const Strings& strings,
     }
   }
 
-  ui_lazy_tooltip("##FloatTooltip", strings.misc.type_float.c_str());
+  push_lazy_tooltip("##FloatTooltip", strings.misc.type_float.c_str());
 
   return nothing;
 }
@@ -172,7 +172,7 @@ auto push_float2_input(const Strings& strings,
     }
   }
 
-  ui_lazy_tooltip("##Float2Tooltip", strings.misc.type_float2.c_str());
+  push_lazy_tooltip("##Float2Tooltip", strings.misc.type_float2.c_str());
 
   return nothing;
 }
@@ -198,7 +198,7 @@ auto push_float3_input(const Strings& strings,
     }
   }
 
-  ui_lazy_tooltip("##Float3Tooltip", strings.misc.type_float3.c_str());
+  push_lazy_tooltip("##Float3Tooltip", strings.misc.type_float3.c_str());
 
   return nothing;
 }
@@ -224,7 +224,7 @@ auto push_float4_input(const Strings& strings,
     }
   }
 
-  ui_lazy_tooltip("##Float4Tooltip", strings.misc.type_float4.c_str());
+  push_lazy_tooltip("##Float4Tooltip", strings.misc.type_float4.c_str());
 
   return nothing;
 }
@@ -261,7 +261,7 @@ auto push_string_input_with_hint(const Strings& strings,
     return buffer.as_string();
   }
 
-  ui_lazy_tooltip("##StringTooltip", strings.misc.type_string.c_str());
+  push_lazy_tooltip("##StringTooltip", strings.misc.type_string.c_str());
 
   return nothing;
 }
@@ -284,7 +284,7 @@ auto push_bool_input(const Strings& strings, const char* id, bool value) -> Mayb
     return value;
   }
 
-  ui_lazy_tooltip("##BoolTooltip", strings.misc.type_bool.c_str());
+  push_lazy_tooltip("##BoolTooltip", strings.misc.type_bool.c_str());
 
   return nothing;
 }
@@ -297,7 +297,7 @@ auto push_object_input(const Strings& strings, const char* id, ObjectRef value)
   // TODO
   ImGui::Text("%i", value);
 
-  ui_lazy_tooltip("##ObjectTooltip", strings.misc.type_object.c_str());
+  push_lazy_tooltip("##ObjectTooltip", strings.misc.type_object.c_str());
 
   return nothing;
 }

@@ -34,26 +34,26 @@ void show_edit_menu(const Model& model, Dispatcher& dispatcher)
   const auto& strings = sys::get_current_language_strings(model);
 
   if (const Menu menu {strings.menu.edit.c_str()}; menu.is_open()) {
-    show_menu_item(model, MenuAction::Undo, dispatcher);
-    show_menu_item(model, MenuAction::Redo, dispatcher);
+    push_menu_item(model, MenuAction::Undo, dispatcher);
+    push_menu_item(model, MenuAction::Redo, dispatcher);
 
     ImGui::Separator();
 
-    show_menu_item(model, MenuAction::EnableStamp, dispatcher);
-    show_menu_item(model, MenuAction::EnableBucket, dispatcher);
-    show_menu_item(model, MenuAction::EnableEraser, dispatcher);
-    show_menu_item(model, MenuAction::EnableObjectSelector, dispatcher);
-    show_menu_item(model, MenuAction::EnableRectangle, dispatcher);
-    show_menu_item(model, MenuAction::EnableEllipse, dispatcher);
-    show_menu_item(model, MenuAction::EnablePoint, dispatcher);
+    push_menu_item(model, MenuAction::EnableStamp, dispatcher);
+    push_menu_item(model, MenuAction::EnableBucket, dispatcher);
+    push_menu_item(model, MenuAction::EnableEraser, dispatcher);
+    push_menu_item(model, MenuAction::EnableObjectSelector, dispatcher);
+    push_menu_item(model, MenuAction::EnableRectangle, dispatcher);
+    push_menu_item(model, MenuAction::EnableEllipse, dispatcher);
+    push_menu_item(model, MenuAction::EnablePoint, dispatcher);
 
     ImGui::Separator();
 
-    show_menu_item(model, MenuAction::OpenComponentEditor, dispatcher);
+    push_menu_item(model, MenuAction::OpenComponentEditor, dispatcher);
 
     ImGui::Separator();
 
-    show_menu_item(model, MenuAction::OpenSettings, dispatcher);
+    push_menu_item(model, MenuAction::OpenSettings, dispatcher);
   }
 }
 

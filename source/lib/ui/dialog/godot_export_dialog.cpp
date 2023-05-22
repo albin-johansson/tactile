@@ -64,7 +64,7 @@ void _push_dialog_contents(const Strings& strings)
 
   ImGui::AlignTextToFramePadding();
   ImGui::TextUnformatted(root_label.c_str());
-  ui_lazy_tooltip("##RootDirTooltip", strings.tooltip.godot_project_folder.c_str());
+  push_lazy_tooltip("##RootDirTooltip", strings.tooltip.godot_project_folder.c_str());
 
   ImGui::SameLine(offset);
   if (auto root_path =
@@ -82,7 +82,7 @@ void _push_dialog_contents(const Strings& strings)
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(map_label.c_str());
-    ui_lazy_tooltip("##MapDirTooltip", strings.tooltip.godot_map_folder.c_str());
+    push_lazy_tooltip("##MapDirTooltip", strings.tooltip.godot_map_folder.c_str());
 
     ImGui::SameLine(offset);
     if (const auto map_dir =
@@ -92,7 +92,7 @@ void _push_dialog_contents(const Strings& strings)
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(image_label.c_str());
-    ui_lazy_tooltip("##ImageDirTooltip", strings.tooltip.godot_image_folder.c_str());
+    push_lazy_tooltip("##ImageDirTooltip", strings.tooltip.godot_image_folder.c_str());
 
     ImGui::SameLine(offset);
     if (const auto image_dir =
@@ -102,7 +102,8 @@ void _push_dialog_contents(const Strings& strings)
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(tileset_label.c_str());
-    ui_lazy_tooltip("##TilesetPathTooltip", strings.tooltip.godot_tileset_folder.c_str());
+    push_lazy_tooltip("##TilesetPathTooltip",
+                      strings.tooltip.godot_tileset_folder.c_str());
 
     ImGui::SameLine(offset);
     if (auto tileset_dir = push_directory_path_input(strings,
@@ -116,7 +117,8 @@ void _push_dialog_contents(const Strings& strings)
 
   ImGui::AlignTextToFramePadding();
   ImGui::TextUnformatted(strings.misc.godot_polygon_points_label.c_str());
-  ui_lazy_tooltip("##PolygonPointsTooltip", strings.tooltip.godot_polygon_points.c_str());
+  push_lazy_tooltip("##PolygonPointsTooltip",
+                    strings.tooltip.godot_polygon_points.c_str());
 
   ImGui::SameLine();
   ImGui::SliderInt("##PolygonPoints",

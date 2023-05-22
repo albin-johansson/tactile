@@ -53,7 +53,7 @@ void _push_flag_checkbox(const SettingsFlagBits flag,
                          const char* tooltip = nullptr)
 {
   bool value = gDialogState.ui_settings.test_flag(flag);
-  ui_checkbox(label, &value, tooltip);
+  push_checkbox(label, &value, tooltip);
   gDialogState.ui_settings.set_flag(flag, value);
 }
 
@@ -134,7 +134,7 @@ void _push_behavior_tab(const Strings& lang)
   if (const TabItem tab {lang.setting.behavior_tab.c_str()}; tab.is_open()) {
     ImGui::Spacing();
 
-    if (ui_button(lang.setting.restore_defaults.c_str())) {
+    if (push_button(lang.setting.restore_defaults.c_str())) {
       gDialogState.ui_settings.reset_behavior_values();
       _apply_settings_preview(gDialogState.ui_settings);
     }
@@ -150,14 +150,15 @@ void _push_behavior_tab(const Strings& lang)
     ImGui::TextUnformatted(lang.setting.pref_tile_width.c_str());
     ImGui::SameLine();
     ImGui::DragInt("##PreferredTileWidth", &preferred_tile_size.x, 1.0f, 1, 10'000);
-    ui_lazy_tooltip("##PreferredTileWidthToolTip", lang.tooltip.pref_tile_width.c_str());
+    push_lazy_tooltip("##PreferredTileWidthToolTip",
+                      lang.tooltip.pref_tile_width.c_str());
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.setting.pref_tile_height.c_str());
     ImGui::SameLine();
     ImGui::DragInt("##PreferredTileHeight", &preferred_tile_size.y, 1.0f, 1, 10'000);
-    ui_lazy_tooltip("##PreferredTileHeightToolTip",
-                    lang.tooltip.pref_tile_height.c_str());
+    push_lazy_tooltip("##PreferredTileHeightToolTip",
+                      lang.tooltip.pref_tile_height.c_str());
 
     gDialogState.ui_settings.set_preferred_tile_size(preferred_tile_size);
 
@@ -176,7 +177,7 @@ void _push_behavior_tab(const Strings& lang)
                       1.0f,
                       &min_cmd_capacity,
                       &max_cmd_capacity);
-    ui_lazy_tooltip("##CommandCapacityTooltip", lang.tooltip.command_capacity.c_str());
+    push_lazy_tooltip("##CommandCapacityTooltip", lang.tooltip.command_capacity.c_str());
 
     gDialogState.ui_settings.set_command_capacity(command_capacity);
   }
@@ -187,7 +188,7 @@ void _push_appearance_tab(const Strings& lang)
   if (const TabItem tab {lang.setting.appearance_tab.c_str()}; tab.is_open()) {
     ImGui::Spacing();
 
-    if (ui_button(lang.setting.restore_defaults.c_str())) {
+    if (push_button(lang.setting.restore_defaults.c_str())) {
       gDialogState.ui_settings.reset_appearance_values();
       _apply_settings_preview(gDialogState.ui_settings);
     }
@@ -295,7 +296,7 @@ void _push_export_tab(const Strings& lang)
   if (const TabItem tab {lang.setting.export_tab.c_str()}; tab.is_open()) {
     ImGui::Spacing();
 
-    if (ui_button(lang.setting.restore_defaults.c_str())) {
+    if (push_button(lang.setting.restore_defaults.c_str())) {
       gDialogState.ui_settings.reset_export_values();
       _apply_settings_preview(gDialogState.ui_settings);
     }
@@ -307,7 +308,7 @@ void _push_export_tab(const Strings& lang)
     ImGui::SameLine();
     right_align_next_item();
     _push_map_format_combo();
-    ui_lazy_tooltip("##PreferredFormatTooltip", lang.tooltip.pref_format.c_str());
+    push_lazy_tooltip("##PreferredFormatTooltip", lang.tooltip.pref_format.c_str());
 
     _push_flag_checkbox(SETTINGS_EMBED_TILESETS_BIT,
                         lang.setting.embed_tilesets.c_str(),

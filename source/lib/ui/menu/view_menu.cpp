@@ -149,32 +149,32 @@ void show_view_menu(const Model& model, Dispatcher& dispatcher)
     _push_quick_lang_menu(strings, dispatcher);
 
     ImGui::Separator();
-    show_menu_item(model, MenuAction::CenterViewport, dispatcher);
+    push_menu_item(model, MenuAction::CenterViewport, dispatcher);
 
     ImGui::Separator();
-    show_menu_item(model, MenuAction::ToggleGrid, dispatcher);
+    push_menu_item(model, MenuAction::ToggleGrid, dispatcher);
 
     ImGui::Separator();
-    show_menu_item(model, MenuAction::IncreaseZoom, dispatcher);
-    show_menu_item(model, MenuAction::DecreaseZoom, dispatcher);
-    show_menu_item(model, MenuAction::ResetZoom, dispatcher);
+    push_menu_item(model, MenuAction::IncreaseZoom, dispatcher);
+    push_menu_item(model, MenuAction::DecreaseZoom, dispatcher);
+    push_menu_item(model, MenuAction::ResetZoom, dispatcher);
 
     ImGui::Separator();
-    show_menu_item(model, MenuAction::IncreaseFontSize, dispatcher);
-    show_menu_item(model, MenuAction::DecreaseFontSize, dispatcher);
-    show_menu_item(model, MenuAction::ResetFontSize, dispatcher);
+    push_menu_item(model, MenuAction::IncreaseFontSize, dispatcher);
+    push_menu_item(model, MenuAction::DecreaseFontSize, dispatcher);
+    push_menu_item(model, MenuAction::ResetFontSize, dispatcher);
 
     ImGui::Separator();
-    show_menu_item(model, MenuAction::PanUp, dispatcher);
-    show_menu_item(model, MenuAction::PanDown, dispatcher);
-    show_menu_item(model, MenuAction::PanRight, dispatcher);
-    show_menu_item(model, MenuAction::PanLeft, dispatcher);
+    push_menu_item(model, MenuAction::PanUp, dispatcher);
+    push_menu_item(model, MenuAction::PanDown, dispatcher);
+    push_menu_item(model, MenuAction::PanRight, dispatcher);
+    push_menu_item(model, MenuAction::PanLeft, dispatcher);
 
     ImGui::Separator();
-    show_menu_item(model, MenuAction::HighlightLayer, dispatcher);
+    push_menu_item(model, MenuAction::HighlightLayer, dispatcher);
 
     ImGui::Separator();
-    show_menu_item(model, MenuAction::ToggleUi, dispatcher);
+    push_menu_item(model, MenuAction::ToggleUi, dispatcher);
   }
 }
 

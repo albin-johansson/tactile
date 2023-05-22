@@ -33,14 +33,14 @@ void show_help_menu(const Model& model, Dispatcher& dispatcher)
   const auto& strings = sys::get_current_language_strings(model);
 
   if (const Menu menu {strings.menu.help.c_str()}; menu.is_open()) {
-    show_menu_item(model, MenuAction::ShowAbout, dispatcher);
-    show_menu_item(model, MenuAction::ShowAboutImGui, dispatcher);
+    push_menu_item(model, MenuAction::ShowAbout, dispatcher);
+    push_menu_item(model, MenuAction::ShowAboutImGui, dispatcher);
 
     ImGui::Separator();
-    show_menu_item(model, MenuAction::ReportIssue, dispatcher);
+    push_menu_item(model, MenuAction::ReportIssue, dispatcher);
 
     ImGui::Separator();
-    show_menu_item(model, MenuAction::ShowCredits, dispatcher);
+    push_menu_item(model, MenuAction::ShowCredits, dispatcher);
   }
 }
 

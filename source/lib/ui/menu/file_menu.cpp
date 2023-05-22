@@ -37,7 +37,7 @@ void _push_recent_files_menu(const Model& model,
                              Dispatcher& dispatcher)
 {
   if (const Menu menu {strings.menu.recent_files.c_str()}; menu.is_open()) {
-    show_menu_item(model, MenuAction::ReopenLastFile, dispatcher);
+    push_menu_item(model, MenuAction::ReopenLastFile, dispatcher);
 
     const auto& history = get_file_history();
     if (!history.entries.empty()) {
@@ -53,7 +53,7 @@ void _push_recent_files_menu(const Model& model,
 
     ImGui::Separator();
 
-    show_menu_item(model, MenuAction::ClearFileHistory, dispatcher);
+    push_menu_item(model, MenuAction::ClearFileHistory, dispatcher);
   }
 }
 
@@ -64,23 +64,23 @@ void show_file_menu(const Model& model, Dispatcher& dispatcher)
   const auto& strings = sys::get_current_language_strings(model);
 
   if (const Menu menu {strings.menu.file.c_str()}; menu.is_open()) {
-    show_menu_item(model, MenuAction::NewMap, dispatcher);
-    show_menu_item(model, MenuAction::OpenMap, dispatcher);
+    push_menu_item(model, MenuAction::NewMap, dispatcher);
+    push_menu_item(model, MenuAction::OpenMap, dispatcher);
 
     _push_recent_files_menu(model, strings, dispatcher);
 
     ImGui::Separator();
 
-    show_menu_item(model, MenuAction::Save, dispatcher);
-    show_menu_item(model, MenuAction::SaveAs, dispatcher);
+    push_menu_item(model, MenuAction::Save, dispatcher);
+    push_menu_item(model, MenuAction::SaveAs, dispatcher);
 
     ImGui::Separator();
 
-    show_menu_item(model, MenuAction::Close, dispatcher);
+    push_menu_item(model, MenuAction::Close, dispatcher);
 
     ImGui::Separator();
 
-    show_menu_item(model, MenuAction::Quit, dispatcher);
+    push_menu_item(model, MenuAction::Quit, dispatcher);
   }
 }
 

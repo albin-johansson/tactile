@@ -175,7 +175,7 @@ void _push_animation_frame_list(const Model& model,
                            kFrameImageSize.y + style.FramePadding.y * 2 +
                                style.ItemInnerSpacing.y + style.ScrollbarSize};
 
-  if (ui_button(TAC_ICON_ADD, nullptr, true, 32, child_size.y)) {
+  if (push_button(TAC_ICON_ADD, nullptr, true, 32, child_size.y)) {
     dispatcher.enqueue<EnableAnimationFrameSelectionMode>();
   }
 
@@ -226,7 +226,7 @@ void _push_animation_frame_list(const Model& model,
       }
     }
     else {
-      ui_centered_label(strings.animation_dock.tile_has_no_animation.c_str());
+      push_centered_label(strings.animation_dock.tile_has_no_animation.c_str());
     }
   }
 }
@@ -242,12 +242,12 @@ void _push_tile_animation_preview_section(const Model& model,
                       0.1f,
                       1.0f,
                       "");
-  ui_lazy_tooltip("##SizeTooltip", strings.misc.size.c_str());
+  push_lazy_tooltip("##SizeTooltip", strings.misc.size.c_str());
 
   ImGui::SameLine();
 
   if (const Child child {"##PreviewChild", {0, 0}, true}; child.is_open()) {
-    ui_centered_label(strings.misc.preview.c_str());
+    push_centered_label(strings.misc.preview.c_str());
 
     const auto& texture = model.get<Texture>(tileset.texture);
     const Float2 texture_size = texture.size;
@@ -309,7 +309,7 @@ void show_animation_dock(const Model& model, Entity, Dispatcher& dispatcher)
     }
     else {
       prepare_vertical_alignment_center();
-      ui_centered_label(strings.animation_dock.no_selected_tile_hint.c_str());
+      push_centered_label(strings.animation_dock.no_selected_tile_hint.c_str());
     }
   }
 }

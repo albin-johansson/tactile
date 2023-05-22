@@ -32,7 +32,7 @@ void show_tileset_menu(const Model& model, Dispatcher& dispatcher)
 
   const Disable disable_if {!sys::is_tileset_document_active(model)};
   if (const Menu menu {strings.menu.tileset.c_str()}; menu.is_open()) {
-    show_menu_item(model, MenuAction::InspectTileset, dispatcher);
+    push_menu_item(model, MenuAction::InspectTileset, dispatcher);
   }
 }
 

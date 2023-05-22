@@ -67,7 +67,7 @@ void show_about_dialog(const Model& model, Entity, Dispatcher&)
     ImGui::TextUnformatted(strings.misc.repository_link.c_str());
 
     ImGui::SameLine();
-    if (ui_button(TAC_ICON_LINK, strings.tooltip.repository_link.c_str())) {
+    if (push_button(TAC_ICON_LINK, strings.tooltip.repository_link.c_str())) {
       cen::open_url("https://www.github.com/albin-johansson/tactile");
     }
 

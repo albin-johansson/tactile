@@ -65,35 +65,36 @@ void _push_side_buttons(const Model& model,
   const auto has_active_layer = map.active_layer != kNullEntity;
   const Group group;
 
-  if (ui_icon_button(TAC_ICON_ADD, strings.tooltip.add_new_layer.c_str())) {
+  if (push_icon_button(TAC_ICON_ADD, strings.tooltip.add_new_layer.c_str())) {
     gDockState.add_layer_context_menu.show();
   }
 
   gDockState.add_layer_context_menu.update(model, dispatcher);
 
-  if (ui_icon_button(TAC_ICON_REMOVE,
-                     strings.tooltip.remove_layer.c_str(),
-                     has_active_layer)) {
+  if (push_icon_button(TAC_ICON_REMOVE,
+                       strings.tooltip.remove_layer.c_str(),
+                       has_active_layer)) {
     dispatcher.enqueue<RemoveLayerEvent>(map.active_layer);
   }
 
-  if (ui_icon_button(TAC_ICON_DUPLICATE,
-                     strings.tooltip.duplicate_layer.c_str(),
-                     has_active_layer)) {
+  if (push_icon_button(TAC_ICON_DUPLICATE,
+                       strings.tooltip.duplicate_layer.c_str(),
+                       has_active_layer)) {
     dispatcher.enqueue<DuplicateLayerEvent>(map.active_layer);
   }
 
-  if (ui_icon_button(TAC_ICON_MOVE_UP,
-                     strings.tooltip.move_layer_up.c_str(),
-                     has_active_layer &&
-                         sys::can_move_layer_up(model, root_layer, map.active_layer))) {
+  if (push_icon_button(TAC_ICON_MOVE_UP,
+                       strings.tooltip.move_layer_up.c_str(),
+                       has_active_layer &&
+                           sys::can_move_layer_up(model, root_layer, map.active_layer))) {
     dispatcher.enqueue<MoveLayerUpEvent>(map.active_layer);
   }
 
-  if (ui_icon_button(TAC_ICON_MOVE_DOWN,
-                     strings.tooltip.move_layer_down.c_str(),
-                     has_active_layer &&
-                         sys::can_move_layer_down(model, root_layer, map.active_layer))) {
+  if (push_icon_button(
+          TAC_ICON_MOVE_DOWN,
+          strings.tooltip.move_layer_down.c_str(),
+          has_active_layer &&
+              sys::can_move_layer_down(model, root_layer, map.active_layer))) {
     dispatcher.enqueue<MoveLayerDownEvent>(map.active_layer);
   }
 }
@@ -126,7 +127,7 @@ void _push_contents(const Model& model, const Strings& strings, Dispatcher& disp
 
   if (root_layer.children.empty()) {
     prepare_vertical_alignment_center(1);
-    ui_centered_label(strings.misc.map_has_no_layers.c_str());
+    push_centered_label(strings.misc.map_has_no_layers.c_str());
   }
   else {
     const ImVec2 size {-kMinFloat, -kMinFloat};

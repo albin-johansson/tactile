@@ -64,12 +64,12 @@ void _push_start_page(const Model& model, const Strings& strings, Dispatcher& di
   ImGui::Spacing();
   ImGui::Spacing();
 
-  if (ui_centered_button(strings.action.create_map.c_str())) {
+  if (push_centered_button(strings.action.create_map.c_str())) {
     dispatcher.enqueue<ShowNewMapDialogEvent>();
   }
 
   ImGui::Spacing();
-  if (ui_centered_button(strings.action.open_map.c_str())) {
+  if (push_centered_button(strings.action.open_map.c_str())) {
     dispatcher.enqueue<ShowOpenMapDialogEvent>();
   }
 }

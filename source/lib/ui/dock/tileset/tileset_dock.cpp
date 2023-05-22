@@ -79,11 +79,11 @@ void show_tileset_dock(const Model& model, Entity, Dispatcher& dispatcher)
 
     if (map.attached_tilesets.empty()) {
       prepare_vertical_alignment_center(2);
-      ui_centered_label(strings.misc.map_has_no_tilesets.c_str());
+      push_centered_label(strings.misc.map_has_no_tilesets.c_str());
 
       ImGui::Spacing();
 
-      if (ui_centered_button(strings.action.add_tileset.c_str())) {
+      if (push_centered_button(strings.action.add_tileset.c_str())) {
         dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
       }
     }

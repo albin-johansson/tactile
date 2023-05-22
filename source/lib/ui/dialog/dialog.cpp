@@ -49,7 +49,7 @@ namespace {
 
   auto action = DialogAction::None;
 
-  if (close_label && ui_button(close_label)) {
+  if (close_label && push_button(close_label)) {
     action = DialogAction::Cancel;
     ImGui::CloseCurrentPopup();
   }
@@ -61,7 +61,7 @@ namespace {
       ImGui::SameLine();
     }
 
-    if (ui_button(accept_label, nullptr, is_input_valid)) {
+    if (push_button(accept_label, nullptr, is_input_valid)) {
       action = DialogAction::Accept;
       ImGui::CloseCurrentPopup();
     }
@@ -72,7 +72,7 @@ namespace {
       ImGui::SameLine();
     }
 
-    if (ui_button(apply_label, nullptr, is_input_valid)) {
+    if (push_button(apply_label, nullptr, is_input_valid)) {
       action = DialogAction::Apply;
     }
   }

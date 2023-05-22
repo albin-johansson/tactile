@@ -126,21 +126,21 @@ void show_map_viewport_toolbar(const Model& model, Dispatcher& dispatcher)
     gToolbarState.has_focus = window.has_focus();
     gToolbarState.width = ImGui::GetWindowSize().x;
 
-    if (ui_icon_button(TAC_ICON_UNDO,
-                       strings.misc.undo.c_str(),
-                       command_stack.can_undo())) {
+    if (push_icon_button(TAC_ICON_UNDO,
+                         strings.misc.undo.c_str(),
+                         command_stack.can_undo())) {
       dispatcher.enqueue<UndoEvent>();
     }
 
-    if (ui_icon_button(TAC_ICON_REDO,
-                       strings.misc.redo.c_str(),
-                       command_stack.can_redo())) {
+    if (push_icon_button(TAC_ICON_REDO,
+                         strings.misc.redo.c_str(),
+                         command_stack.can_redo())) {
       dispatcher.enqueue<RedoEvent>();
     }
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    if (ui_icon_button(TAC_ICON_TILESET, strings.tooltip.create_tileset.c_str())) {
+    if (push_icon_button(TAC_ICON_TILESET, strings.tooltip.create_tileset.c_str())) {
       dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
     }
 

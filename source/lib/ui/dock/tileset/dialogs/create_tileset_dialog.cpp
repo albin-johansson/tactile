@@ -98,7 +98,7 @@ void show_create_tileset_dialog(const Model& model, Entity, Dispatcher& dispatch
     ImGui::TextUnformatted(strings.misc.create_tileset_instruction.c_str());
     ImGui::Spacing();
 
-    if (ui_button(strings.misc.select_image.c_str())) {
+    if (push_button(strings.misc.select_image.c_str())) {
       _select_image_file();
     }
 

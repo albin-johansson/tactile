@@ -94,7 +94,7 @@ void _push_dock_contents(const Model& model,
   if (const Child pane {"##ComponentsChild"}; pane.is_open()) {
     if (active_context.comps.empty()) {
       prepare_vertical_alignment_center(2);
-      ui_centered_label(strings.misc.context_has_no_components.c_str());
+      push_centered_label(strings.misc.context_has_no_components.c_str());
     }
     else {
       for (const auto component_entity: active_context.comps) {
@@ -105,7 +105,7 @@ void _push_dock_contents(const Model& model,
       ImGui::Separator();
     }
 
-    if (ui_centered_button(TAC_ICON_ADD, strings.tooltip.add_component.c_str())) {
+    if (push_centered_button(TAC_ICON_ADD, strings.tooltip.add_component.c_str())) {
       ImGui::OpenPopup(kAddComponentPopupId);
     }
 

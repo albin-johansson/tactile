@@ -35,31 +35,31 @@ void show_map_menu(const Model& model, Dispatcher& dispatcher)
 
   const Disable disable_if {!sys::is_map_document_active(model)};
   if (const Menu menu {strings.menu.map.c_str()}; menu.is_open()) {
-    show_menu_item(model, MenuAction::InspectMap, dispatcher);
+    push_menu_item(model, MenuAction::InspectMap, dispatcher);
 
     ImGui::Separator();
 
-    show_menu_item(model, MenuAction::CreateTileset, dispatcher);
+    push_menu_item(model, MenuAction::CreateTileset, dispatcher);
 
     ImGui::Separator();
 
-    show_menu_item(model, MenuAction::AddRow, dispatcher);
-    show_menu_item(model, MenuAction::AddColumn, dispatcher);
-    show_menu_item(model, MenuAction::RemoveRow, dispatcher);
-    show_menu_item(model, MenuAction::RemoveColumn, dispatcher);
+    push_menu_item(model, MenuAction::AddRow, dispatcher);
+    push_menu_item(model, MenuAction::AddColumn, dispatcher);
+    push_menu_item(model, MenuAction::RemoveRow, dispatcher);
+    push_menu_item(model, MenuAction::RemoveColumn, dispatcher);
 
     ImGui::Separator();
 
-    show_menu_item(model, MenuAction::FixInvalidTiles, dispatcher);
+    push_menu_item(model, MenuAction::FixInvalidTiles, dispatcher);
 
     ImGui::Separator();
 
-    show_menu_item(model, MenuAction::ResizeMap, dispatcher);
+    push_menu_item(model, MenuAction::ResizeMap, dispatcher);
 
     ImGui::Separator();
 
     if (const Menu export_menu {strings.menu.export_as.c_str()}; export_menu.is_open()) {
-      show_menu_item(model, MenuAction::ExportGodotScene, dispatcher);
+      push_menu_item(model, MenuAction::ExportGodotScene, dispatcher);
     }
   }
 }

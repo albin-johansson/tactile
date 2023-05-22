@@ -201,7 +201,7 @@ void show_log_dock(const Model& model, Entity, Dispatcher& dispatcher)
       _push_logged_message_view(strings, message_count);
     }
     else {
-      ui_centered_label(strings.misc.log_no_messages_match_filter.c_str());
+      push_centered_label(strings.misc.log_no_messages_match_filter.c_str());
     }
 
     if (auto popup = Popup::for_window("##LogDockPopup"); popup.is_open()) {

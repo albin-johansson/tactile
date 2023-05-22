@@ -115,12 +115,12 @@ void _push_component_selector_row(const Strings& strings,
   _push_component_selector_combo(model, component_set);
 
   ImGui::SameLine();
-  if (ui_button(TAC_ICON_ADD, strings.tooltip.create_component.c_str())) {
+  if (push_button(TAC_ICON_ADD, strings.tooltip.create_component.c_str())) {
     open_define_component_dialog();
   }
 
   ImGui::SameLine();
-  if (ui_button(TAC_ICON_THREE_DOTS, strings.tooltip.show_component_actions.c_str())) {
+  if (push_button(TAC_ICON_THREE_DOTS, strings.tooltip.show_component_actions.c_str())) {
     ImGui::OpenPopup(kComponentActionPopupId);
   }
 
@@ -197,7 +197,7 @@ void _push_component_attribute_table(const Strings& strings,
                                      Dispatcher& dispatcher)
 {
   if (component_def.attributes.empty()) {
-    ui_centered_label(strings.misc.empty_component.c_str());
+    push_centered_label(strings.misc.empty_component.c_str());
   }
   else {
     const auto table_flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_Resizable;
@@ -222,7 +222,7 @@ void _push_component_attribute_table(const Strings& strings,
     }
   }
 
-  if (ui_centered_button(strings.action.create_attribute.c_str())) {
+  if (push_centered_button(strings.action.create_attribute.c_str())) {
     open_create_component_attribute_dialog(
         gEditorState.active_component_def_entity.value());
   }
@@ -275,7 +275,7 @@ void show_component_editor_dialog(const Model& model, Entity, Dispatcher& dispat
     if (component_set.definitions.empty()) {
       ImGui::TextUnformatted(strings.misc.map_has_no_components.c_str());
 
-      if (ui_centered_button(TAC_ICON_ADD, strings.tooltip.create_component.c_str())) {
+      if (push_centered_button(TAC_ICON_ADD, strings.tooltip.create_component.c_str())) {
         open_define_component_dialog();
       }
     }
