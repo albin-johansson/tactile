@@ -28,9 +28,9 @@
 #include "engine/app_delegate.hpp"
 #include "engine/backend/backend.hpp"
 #include "engine/backend/backend_api.hpp"
-#include "platform/imgui_context.hpp"
-#include "platform/protobuf_context.hpp"
-#include "platform/sdl_context.hpp"
+#include "engine/platform/imgui_context.hpp"
+#include "engine/platform/protobuf_context.hpp"
+#include "engine/platform/sdl_context.hpp"
 
 namespace tactile {
 
