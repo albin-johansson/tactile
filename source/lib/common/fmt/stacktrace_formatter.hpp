@@ -19,23 +19,19 @@
 
 #pragma once
 
-namespace tactile {
+#include <string_view>  // string_view
 
-/// Represents different attribute value types.
-enum class AttributeType {
-  String,  ///< An arbitrary string.
-  Int,     ///< A signed integer.
-  Int2,    ///< A two-dimensional vector of integers.
-  Int3,    ///< A three-dimensional vector of integers.
-  Int4,    ///< A four-dimensional vector of integers.
-  Float,   ///< A floating-point number.
-  Float2,  ///< A two-dimensional vector of floats.
-  Float3,  ///< A three-dimensional vector of floats.
-  Float4,  ///< A four-dimensional vector of floats.
-  Bool,    ///< A Boolean value.
-  Path,    ///< A file path.
-  Color,   ///< A color value.
-  Object,  ///< An integer ID that references an object in a map.
+#include <fmt/core.h>
+#include <fmt/ostream.h>
+
+#include "common/debug/stacktrace.hpp"
+
+template <>
+struct fmt::formatter<boost::stacktrace::stacktrace> : fmt::formatter<std::string_view> {
+  auto format(const boost::stacktrace::stacktrace& trace, auto& ctx) const
+  {
+    return fmt::format_to(ctx.out(), "{}", fmt::streamed(trace));
+  }
 };
 
-}  // namespace tactile
+static_assert(fmt::is_formattable<boost::stacktrace::stacktrace>::value);

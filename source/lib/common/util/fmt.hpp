@@ -19,135 +19,14 @@
 
 #pragma once
 
-#include <algorithm>    // min
-#include <string_view>  // string_view
-#include <utility>      // to_underlying
+#include <algorithm>  // min
 
-#include <boost/uuid/uuid_io.hpp>
+#include <fmt/core.h>
 #include <fmt/format.h>
-#include <fmt/ostream.h>
 
-#include "common/debug/stacktrace.hpp"
 #include "common/primitives.hpp"
-#include "common/predef.hpp"
 #include "common/type/array.hpp"
-#include "common/type/ecs.hpp"
-#include "common/type/math.hpp"
 #include "common/type/string.hpp"
-#include "common/type/uuid.hpp"
-#include "core/attribute.hpp"
-#include "core/tile_pos.hpp"
-
-namespace fmt {
-
-template <>
-struct formatter<boost::stacktrace::stacktrace> : formatter<std::string_view> {
-  auto format(const boost::stacktrace::stacktrace& trace, auto& ctx) const
-  {
-    return fmt::format_to(ctx.out(), "{}", fmt::streamed(trace));
-  }
-};
-
-template <>
-struct formatter<tactile::UUID> : formatter<std::string_view> {
-  auto format(const tactile::UUID& uuid, auto& ctx) const
-  {
-    return fmt::format_to(ctx.out(), "{}", fmt::streamed(uuid));
-  }
-};
-
-template <>
-struct formatter<tactile::Entity> : formatter<std::string_view> {
-  auto format(const tactile::Entity entity, auto& ctx) const
-  {
-    return fmt::format_to(ctx.out(), "{:X}", std::to_underlying(entity));
-  }
-};
-
-template <>
-struct formatter<tactile::TilePos> : formatter<std::string_view> {
-  auto format(const tactile::TilePos& pos, auto& ctx) const
-  {
-    return fmt::format_to(ctx.out(), "{{{}, {}}}", pos.row(), pos.col());
-  }
-};
-
-template <>
-struct formatter<tactile::Float2> : formatter<std::string_view> {
-  auto format(const tactile::Float2& vec, auto& ctx) const
-  {
-    return fmt::format_to(ctx.out(), "{{{}, {}}}", vec.x, vec.y);
-  }
-};
-
-template <>
-struct formatter<tactile::Int2> : formatter<std::string_view> {
-  auto format(const tactile::Int2& vec, auto& ctx) const
-  {
-    return fmt::format_to(ctx.out(), "{{{}, {}}}", vec.x, vec.y);
-  }
-};
-
-template <>
-struct formatter<tactile::Float3> : formatter<std::string_view> {
-  auto format(const tactile::Float3& vec, auto& ctx) const
-  {
-    return fmt::format_to(ctx.out(), "{{{}, {}, {}}}", vec.x, vec.y, vec.z);
-  }
-};
-
-template <>
-struct formatter<tactile::Int3> : formatter<std::string_view> {
-  auto format(const tactile::Int3& vec, auto& ctx) const
-  {
-    return fmt::format_to(ctx.out(), "{{{}, {}, {}}}", vec.x, vec.y, vec.z);
-  }
-};
-
-template <>
-struct formatter<tactile::Float4> : formatter<std::string_view> {
-  auto format(const tactile::Float4& vec, auto& ctx) const
-  {
-    return fmt::format_to(ctx.out(), "{{{}, {}, {}, {}}}", vec.x, vec.y, vec.z, vec.w);
-  }
-};
-
-template <>
-struct formatter<tactile::Int4> : formatter<std::string_view> {
-  auto format(const tactile::Int4& vec, auto& ctx) const
-  {
-    return fmt::format_to(ctx.out(), "{{{}, {}, {}, {}}}", vec.x, vec.y, vec.z, vec.w);
-  }
-};
-
-template <>
-struct formatter<tactile::AttributeType> : formatter<std::string_view> {
-  auto format(const tactile::AttributeType& type, auto& ctx) const
-  {
-    return fmt::format_to(ctx.out(), "{}", fmt::streamed(type));
-  }
-};
-
-template <>
-struct formatter<tactile::Attribute> : formatter<std::string_view> {
-  auto format(const tactile::Attribute& attr, auto& ctx) const
-  {
-    return fmt::format_to(ctx.out(), "{}", fmt::streamed(attr));
-  }
-};
-
-static_assert(is_formattable<boost::stacktrace::stacktrace, char>::value);
-static_assert(is_formattable<tactile::Int2, char>::value);
-static_assert(is_formattable<tactile::Int3, char>::value);
-static_assert(is_formattable<tactile::Int4, char>::value);
-static_assert(is_formattable<tactile::Float2, char>::value);
-static_assert(is_formattable<tactile::Float3, char>::value);
-static_assert(is_formattable<tactile::Float4, char>::value);
-static_assert(is_formattable<tactile::AttributeType, char>::value);
-static_assert(is_formattable<tactile::Attribute, char>::value);
-static_assert(is_formattable<tactile::TilePos, char>::value);
-
-}  // namespace fmt
 
 namespace tactile {
 

@@ -22,6 +22,7 @@
 #include <fmt/std.h>
 
 #include "cmd/map/all.hpp"
+#include "components/document.hpp"
 #include "core/map.hpp"
 #include "io/ir/godot/godot_converter.hpp"
 #include "io/ir/godot/godot_options.hpp"
@@ -29,7 +30,6 @@
 #include "io/ir/ir_generation.hpp"
 #include "io/ir/ir_restoration.hpp"
 #include "io/map/parse/parse_map.hpp"
-#include "model/document.hpp"
 #include "model/event/map_events.hpp"
 #include "model/file_history.hpp"
 #include "model/systems/document_system.hpp"

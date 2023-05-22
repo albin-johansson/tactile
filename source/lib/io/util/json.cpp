@@ -27,6 +27,7 @@
 
 #include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
+#include "io/save_formats.hpp"
 #include "io/stream.hpp"
 
 namespace tactile {

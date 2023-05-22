@@ -27,7 +27,7 @@
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
-#include "common/util/fmt.hpp"
+#include "common/fmt/vector_formatter.hpp"
 #include "components/document.hpp"
 #include "core/texture.hpp"
 #include "io/directories.hpp"

@@ -307,21 +307,6 @@ class Attribute final {
 /// Parses an attribute type from a type name used in save files.
 [[nodiscard]] auto parse_attr_type(StringView name) -> Maybe<AttributeType>;
 
-/// Returns the name of an attribute type for use in save files.
-[[nodiscard]] auto serialize_to_save_format(AttributeType type) -> StringView;
-
-[[nodiscard]] auto serialize_to_save_format(const Int2& vec) -> String;
-[[nodiscard]] auto serialize_to_save_format(const Float2& vec) -> String;
-
-[[nodiscard]] auto serialize_to_save_format(const Int3& vec) -> String;
-[[nodiscard]] auto serialize_to_save_format(const Float3& vec) -> String;
-
-[[nodiscard]] auto serialize_to_save_format(const Int4& vec) -> String;
-[[nodiscard]] auto serialize_to_save_format(const Float4& vec) -> String;
-
-/// Outputs the result of calling `serialize_to_save_format` with the type to a stream.
-auto operator<<(OStream& stream, AttributeType type) -> OStream&;
-
 /// Outputs an attribute to a stream for debugging purposes.
 auto operator<<(OStream& stream, const Attribute& value) -> OStream&;
 

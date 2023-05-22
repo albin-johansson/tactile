@@ -19,6 +19,8 @@
 
 #include "save_formats.hpp"
 
+#include <fmt/format.h>
+
 #include "common/debug/panic.hpp"
 
 namespace tactile {
@@ -73,6 +75,83 @@ auto has_supported_tiled_xml_extension(const Path& path) -> bool
 {
   const auto ext = path.extension();
   return ext == ".xml" || ext == ".tmx";
+}
+
+auto serialize_to_save_format(const Int2& vec) -> String
+{
+  return fmt::format("{};{}", vec.x, vec.y);
+}
+
+auto serialize_to_save_format(const Float2& vec) -> String
+{
+  return fmt::format("{};{}", vec.x, vec.y);
+}
+
+auto serialize_to_save_format(const Int3& vec) -> String
+{
+  return fmt::format("{};{};{}", vec.x, vec.y, vec.z);
+}
+
+auto serialize_to_save_format(const Float3& vec) -> String
+{
+  return fmt::format("{};{};{}", vec.x, vec.y, vec.z);
+}
+
+auto serialize_to_save_format(const Int4& vec) -> String
+{
+  return fmt::format("{};{};{};{}", vec.x, vec.y, vec.z, vec.w);
+}
+
+auto serialize_to_save_format(const Float4& vec) -> String
+{
+  return fmt::format("{};{};{};{}", vec.x, vec.y, vec.z, vec.w);
+}
+
+auto serialize_to_save_format(const AttributeType type) -> StringView
+{
+  switch (type) {
+    case AttributeType::String:
+      return "string";
+
+    case AttributeType::Int:
+      return "int";
+
+    case AttributeType::Int2:
+      return "int2";
+
+    case AttributeType::Int3:
+      return "int3";
+
+    case AttributeType::Int4:
+      return "int4";
+
+    case AttributeType::Float:
+      return "float";
+
+    case AttributeType::Float2:
+      return "float2";
+
+    case AttributeType::Float3:
+      return "float3";
+
+    case AttributeType::Float4:
+      return "float4";
+
+    case AttributeType::Bool:
+      return "bool";
+
+    case AttributeType::Path:
+      return "file";
+
+    case AttributeType::Color:
+      return "color";
+
+    case AttributeType::Object:
+      return "object";
+
+    default:
+      throw TactileError {"Invalid attribute type"};
+  }
 }
 
 }  // namespace tactile

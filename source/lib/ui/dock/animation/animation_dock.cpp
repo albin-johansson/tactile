@@ -24,7 +24,6 @@
 #include <imgui.h>
 
 #include "common/type/maybe.hpp"
-#include "common/util/fmt.hpp"
 #include "common/util/lookup.hpp"
 #include "components/document.hpp"
 #include "core/texture.hpp"
