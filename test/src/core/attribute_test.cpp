@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "core/attribute.hpp"
+#include "common/attribute.hpp"
 
 #include <doctest/doctest.h>
 

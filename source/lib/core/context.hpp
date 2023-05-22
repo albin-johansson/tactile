@@ -19,11 +19,11 @@
 
 #pragma once
 
+#include "common/attribute.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
 #include "common/type/string_map.hpp"
 #include "common/type/vec.hpp"
-#include "core/attribute.hpp"
 
 namespace tactile {
 

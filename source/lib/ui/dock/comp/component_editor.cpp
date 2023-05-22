@@ -23,12 +23,12 @@
 
 #include <imgui.h>
 
+#include "common/attribute.hpp"
 #include "common/debug/assert.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
 #include "components/document.hpp"
-#include "core/attribute.hpp"
 #include "core/component.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"

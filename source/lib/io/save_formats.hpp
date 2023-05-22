@@ -22,6 +22,7 @@
 #include "common/enum/attribute_type.hpp"
 #include "common/enum/save_format.hpp"
 #include "common/type/math.hpp"
+#include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "common/type/string.hpp"
 
@@ -52,5 +53,8 @@ namespace tactile {
 
 /// Returns the name of an attribute type for use in save files.
 [[nodiscard]] auto serialize_to_save_format(AttributeType type) -> StringView;
+
+/// Parses an attribute type from a type name used in save files.
+[[nodiscard]] auto parse_attr_type(StringView name) -> Maybe<AttributeType>;
 
 }  // namespace tactile

@@ -22,6 +22,7 @@
 #include "common/type/string.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/json/json_parser.hpp"
+#include "io/save_formats.hpp"
 
 namespace tactile {
 namespace {

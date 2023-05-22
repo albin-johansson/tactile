@@ -389,52 +389,6 @@ auto Attribute::as_color() const -> const color_type&
   }
 }
 
-auto parse_attr_type(StringView name) -> Maybe<AttributeType>
-{
-  if (name == "string") {
-    return AttributeType::String;
-  }
-  else if (name == "int") {
-    return AttributeType::Int;
-  }
-  else if (name == "int2") {
-    return AttributeType::Int2;
-  }
-  else if (name == "int3") {
-    return AttributeType::Int3;
-  }
-  else if (name == "int4") {
-    return AttributeType::Int4;
-  }
-  else if (name == "float") {
-    return AttributeType::Float;
-  }
-  else if (name == "float2") {
-    return AttributeType::Float2;
-  }
-  else if (name == "float3") {
-    return AttributeType::Float3;
-  }
-  else if (name == "float4") {
-    return AttributeType::Float4;
-  }
-  else if (name == "bool") {
-    return AttributeType::Bool;
-  }
-  else if (name == "file" || name == "path") {
-    return AttributeType::Path;
-  }
-  else if (name == "color") {
-    return AttributeType::Color;
-  }
-  else if (name == "object") {
-    return AttributeType::Object;
-  }
-  else {
-    return nothing;
-  }
-}
-
 auto operator<<(OStream& stream, const Attribute& value) -> OStream&
 {
   switch (value.get_type()) {

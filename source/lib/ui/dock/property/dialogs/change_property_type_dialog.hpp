@@ -19,10 +19,10 @@
 
 #pragma once
 
+#include "common/attribute.hpp"
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
-#include "core/attribute.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {

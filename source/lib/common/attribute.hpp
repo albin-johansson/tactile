@@ -26,7 +26,6 @@
 #include "common/enum/attribute_type.hpp"
 #include "common/primitives.hpp"
 #include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/ostream.hpp"
 #include "common/type/path.hpp"
 #include "common/type/string.hpp"
@@ -303,9 +302,6 @@ class Attribute final {
     return std::get_if<T>(&mValue);
   }
 };
-
-/// Parses an attribute type from a type name used in save files.
-[[nodiscard]] auto parse_attr_type(StringView name) -> Maybe<AttributeType>;
 
 /// Outputs an attribute to a stream for debugging purposes.
 auto operator<<(OStream& stream, const Attribute& value) -> OStream&;

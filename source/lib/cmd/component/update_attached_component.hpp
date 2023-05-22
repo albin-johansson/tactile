@@ -19,10 +19,10 @@
 
 #pragma once
 
+#include "cmd/command.hpp"
+#include "common/attribute.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "core/attribute.hpp"
-#include "cmd/command.hpp"
 
 namespace tactile::cmd {
 

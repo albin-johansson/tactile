@@ -23,6 +23,7 @@
 #include <memory>    // addressof
 #include <variant>   // get
 
+#include "common/attribute.hpp"
 #include "common/enum/layer_type.hpp"
 #include "common/enum/object_type.hpp"
 #include "common/enum/tile_compression.hpp"
@@ -42,7 +43,6 @@
 #include "common/type/variant.hpp"
 #include "common/type/vec.hpp"
 #include "common/util/algorithm.hpp"
-#include "core/attribute.hpp"
 
 namespace tactile {
 

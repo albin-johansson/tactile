@@ -21,10 +21,10 @@
 
 #include <imgui.h>
 
+#include "common/attribute.hpp"
 #include "common/type/maybe.hpp"
 #include "common/util/string_buffer.hpp"
 #include "components/document.hpp"
-#include "core/attribute.hpp"
 #include "core/context.hpp"
 #include "model/event/property_events.hpp"
 #include "model/model.hpp"
