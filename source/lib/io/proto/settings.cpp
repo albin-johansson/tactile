@@ -71,7 +71,7 @@ void to_proto(const Color& color, proto::Color* out)
     }
 
     if (cfg.has_theme()) {
-      settings.set_theme(static_cast<ui::EditorTheme>(cfg.theme()));
+      settings.set_theme(static_cast<Theme>(cfg.theme()));
     }
 
     if (cfg.has_theme_saturation()) {

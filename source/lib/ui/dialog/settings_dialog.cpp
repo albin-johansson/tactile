@@ -209,8 +209,8 @@ void _push_appearance_tab(const Strings& lang)
 
     {
       const Disable no_saturation_for_default_themes {
-          gDialogState.ui_settings.get_theme() == EditorTheme::DearDark ||
-          gDialogState.ui_settings.get_theme() == EditorTheme::DearLight};
+          gDialogState.ui_settings.get_theme() == Theme::DearDark ||
+          gDialogState.ui_settings.get_theme() == Theme::DearLight};
 
       ImGui::AlignTextToFramePadding();
       ImGui::TextUnformatted(lang.setting.saturation.c_str());

@@ -19,38 +19,30 @@
 
 #pragma once
 
-#include "common/enums/lang.hpp"
-#include "common/enums/overlay_pos.hpp"
-#include "common/enums/theme.hpp"
-#include "model/settings.hpp"
-
 namespace tactile {
 
-struct SetSettingsEvent final {
-  Settings settings;
+/// Represents the different available themes.
+/// The enumerator values cannot change, and should mirror those of proto::Theme.
+enum class Theme {
+  DearDark = 0,   ///< The standard Dear ImGui dark theme.
+  DearLight = 1,  ///< The standard Dear ImGui light theme.
+  Ruby = 2,
+  Sapphire = 3,
+  Emerald = 4,
+  Amethyst = 5,
+  Amber = 6,
+  Nocturnal = 7,
+  Ash = 8,
+  Diamond = 9,  ///< Unused.
+  Joker = 10,
+  Raspberry = 11,
+  Stealth = 12,
+  Vanilla = 13,  ///< Unused.
+  Gasoline = 14,
+  Bumblebee = 15,
+  Lavender = 16,
+  Frost = 17,
+  Rose = 18,
 };
-
-struct SetSettingFlagEvent final {
-  SettingsFlagBits flag {};
-  bool value {};
-};
-
-struct NegateSettingFlagEvent final {
-  SettingsFlagBits flag {};
-};
-
-struct SetViewportOverlayPosEvent final {
-  OverlayPos pos {};
-};
-
-struct SetLanguageEvent final {
-  Lang language {};
-};
-
-struct SetThemeEvent final {
-  Theme theme {};
-};
-
-struct ResetDockVisibilitiesEvent final {};
 
 }  // namespace tactile

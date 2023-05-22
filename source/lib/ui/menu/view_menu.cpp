@@ -26,6 +26,7 @@
 #include "model/systems/menu_system.hpp"
 #include "systems/language_system.hpp"
 #include "ui/dock/dock_space.hpp"
+#include "ui/style/themes.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -95,7 +96,7 @@ void _push_quick_theme_menu(const Settings& settings,
                             Dispatcher& dispatcher)
 {
   if (const Menu theme_menu {strings.action.quick_theme.c_str()}; theme_menu.is_open()) {
-    auto theme_item = [&](const EditorTheme theme) {
+    auto theme_item = [&](const Theme theme) {
       const auto is_current = settings.get_theme() == theme;
       if (ImGui::MenuItem(human_readable_name(theme).data(), nullptr, is_current)) {
         dispatcher.enqueue<SetThemeEvent>(theme);

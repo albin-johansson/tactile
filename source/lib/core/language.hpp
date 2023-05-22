@@ -19,17 +19,11 @@
 
 #pragma once
 
+#include "common/enums/lang.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/string.hpp"
 
 namespace tactile {
-
-/// Represents supported languages.
-enum class Lang {
-  EN = 0,     ///< American English.
-  EN_GB = 1,  ///< British English.
-  SV = 2      ///< Swedish.
-};
 
 // TODO experiment with enum identifiers as indices into vector of translated strings,
 //   this could prove a nicer to maintain while also keeping about the same performance

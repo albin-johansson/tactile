@@ -19,38 +19,11 @@
 
 #pragma once
 
-#include "common/enums/lang.hpp"
-#include "common/enums/overlay_pos.hpp"
-#include "common/enums/theme.hpp"
-#include "model/settings.hpp"
-
 namespace tactile {
 
-struct SetSettingsEvent final {
-  Settings settings;
+enum class DocumentType {
+  Map,
+  Tileset,
 };
-
-struct SetSettingFlagEvent final {
-  SettingsFlagBits flag {};
-  bool value {};
-};
-
-struct NegateSettingFlagEvent final {
-  SettingsFlagBits flag {};
-};
-
-struct SetViewportOverlayPosEvent final {
-  OverlayPos pos {};
-};
-
-struct SetLanguageEvent final {
-  Lang language {};
-};
-
-struct SetThemeEvent final {
-  Theme theme {};
-};
-
-struct ResetDockVisibilitiesEvent final {};
 
 }  // namespace tactile

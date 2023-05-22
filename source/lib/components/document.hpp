@@ -19,18 +19,13 @@
 
 #pragma once
 
+#include "common/enums/document_type.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "common/type/set.hpp"
 
 namespace tactile {
-
-enum class DocumentType {
-  Unknown,
-  Map,
-  Tileset,
-};
 
 /// Context component that tracks the active and open documents.
 struct DocumentContext final {
@@ -41,11 +36,11 @@ struct DocumentContext final {
 /// General component for editor documents.
 /// \FIXME the active context member is error-prone as it stands (might be null)
 struct Document final {
-  DocumentType type {DocumentType::Unknown};  ///< The specific document type.
-  Entity component_set {kNullEntity};         ///< The associated component set.
-  Entity active_context {kNullEntity};        ///< The currently active context.
-  Entity default_context {kNullEntity};       ///< Context entity used as a fallback.
-  Maybe<Path> path;                           ///< File path to the document.
+  DocumentType type {};                  ///< The specific document type.
+  Entity component_set {kNullEntity};    ///< The associated component set.
+  Entity active_context {kNullEntity};   ///< The currently active context.
+  Entity default_context {kNullEntity};  ///< Context entity used as a fallback.
+  Maybe<Path> path;                      ///< File path to the document.
 
   [[nodiscard]] auto get_active_context() const -> Entity
   {

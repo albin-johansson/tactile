@@ -28,11 +28,9 @@
 
 namespace tactile {
 
-using ui::EditorTheme;
-
 struct SettingsState final {
   Lang language {Lang::EN};
-  EditorTheme theme {EditorTheme::Nocturnal};
+  Theme theme {Theme::Nocturnal};
   OverlayPos viewport_overlay_pos {OverlayPos::BottomRight};
 
   usize command_capacity {100};
@@ -177,7 +175,7 @@ void Settings::set_language(const Lang lang)
   mState->language = lang;
 }
 
-void Settings::set_theme(const ui::EditorTheme theme)
+void Settings::set_theme(const Theme theme)
 {
   mState->theme = theme;
 }
@@ -232,7 +230,7 @@ auto Settings::get_language() const -> Lang
   return mState->language;
 }
 
-auto Settings::get_theme() const -> ui::EditorTheme
+auto Settings::get_theme() const -> Theme
 {
   return mState->theme;
 }

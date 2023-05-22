@@ -169,64 +169,64 @@ void apply_theme_from_config(ImGuiStyle& style, const ThemeCfg& cfg)
 
 }  // namespace
 
-auto human_readable_name(const EditorTheme theme) -> StringView
+auto human_readable_name(const Theme theme) -> StringView
 {
   switch (theme) {
-    case EditorTheme::DearDark:
+    case Theme::DearDark:
       return "Dear Dark";
 
-    case EditorTheme::DearLight:
+    case Theme::DearLight:
       return "Dear Light";
 
-    case EditorTheme::Ruby:
+    case Theme::Ruby:
       return "Ruby";
 
-    case EditorTheme::Sapphire:
+    case Theme::Sapphire:
       return "Sapphire";
 
-    case EditorTheme::Emerald:
+    case Theme::Emerald:
       return "Emerald";
 
-    case EditorTheme::Amethyst:
+    case Theme::Amethyst:
       return "Amethyst";
 
-    case EditorTheme::Amber:
+    case Theme::Amber:
       return "Amber";
 
-    case EditorTheme::Nocturnal:
+    case Theme::Nocturnal:
       return "Nocturnal";
 
-    case EditorTheme::Ash:
+    case Theme::Ash:
       return "Ash";
 
-    case EditorTheme::Diamond:
+    case Theme::Diamond:
       return "Diamond";
 
-    case EditorTheme::Joker:
+    case Theme::Joker:
       return "Joker";
 
-    case EditorTheme::Raspberry:
+    case Theme::Raspberry:
       return "Raspberry";
 
-    case EditorTheme::Stealth:
+    case Theme::Stealth:
       return "Stealth";
 
-    case EditorTheme::Vanilla:
+    case Theme::Vanilla:
       return "Vanilla";
 
-    case EditorTheme::Gasoline:
+    case Theme::Gasoline:
       return "Gasoline";
 
-    case EditorTheme::Bumblebee:
+    case Theme::Bumblebee:
       return "Bumblebee";
 
-    case EditorTheme::Lavender:
+    case Theme::Lavender:
       return "Lavender";
 
-    case EditorTheme::Frost:
+    case Theme::Frost:
       return "Frost";
 
-    case EditorTheme::Rose:
+    case Theme::Rose:
       return "Rose";
 
     default:
@@ -276,62 +276,62 @@ void apply_style(ImGuiStyle& style)
   style.DisabledAlpha = 0.4f;
 }
 
-void apply_theme(ImGuiStyle& style, const EditorTheme theme, int32 saturation)
+void apply_theme(ImGuiStyle& style, const Theme theme, int32 saturation)
 {
   saturation = std::clamp(saturation, 0, 100);
 
   switch (theme) {
-    case EditorTheme::DearDark:
+    case Theme::DearDark:
       ImGui::StyleColorsDark(&style);
       break;
 
-    case EditorTheme::DearLight:
+    case Theme::DearLight:
       ImGui::StyleColorsLight(&style);
       break;
 
-    case EditorTheme::Ruby:
+    case Theme::Ruby:
       apply_theme_from_config(style, create_dark_theme(0, saturation));
       break;
 
-    case EditorTheme::Emerald:
+    case Theme::Emerald:
       apply_theme_from_config(style, create_dark_theme(141, saturation));
       break;
 
-    case EditorTheme::Sapphire:
+    case Theme::Sapphire:
       apply_theme_from_config(style, create_dark_theme(211, saturation));
       break;
 
-    case EditorTheme::Joker:
+    case Theme::Joker:
       apply_theme_from_config(style, create_dark_theme(268, saturation));
       break;
 
-    case EditorTheme::Amethyst:
+    case Theme::Amethyst:
       apply_theme_from_config(style, create_dark_theme(318, saturation));
       break;
 
-    case EditorTheme::Raspberry:
+    case Theme::Raspberry:
       apply_theme_from_config(style, create_dark_theme(346, saturation));
       break;
 
-    case EditorTheme::Amber:
+    case Theme::Amber:
       apply_theme_from_config(style, create_dark_theme(23, saturation));
       break;
 
-    case EditorTheme::Gasoline:
+    case Theme::Gasoline:
       apply_theme_from_config(style, create_dark_theme(82, saturation));
       break;
 
-    case EditorTheme::Bumblebee:
+    case Theme::Bumblebee:
       apply_theme_from_config(style, create_dark_theme(56, saturation));
       break;
 
-    case EditorTheme::Diamond:
+    case Theme::Diamond:
       [[fallthrough]];
-    case EditorTheme::Nocturnal:
+    case Theme::Nocturnal:
       apply_theme_from_config(style, create_dark_theme(180, saturation));
       break;
 
-    case EditorTheme::Ash:
+    case Theme::Ash:
       apply_theme_from_config(style,
                               {.accent = {0.4f, 0.4f, 0.4f, 1.0f},
                                .accent_active = {0.5f, 0.5f, 0.5f, 1.0f},
@@ -340,7 +340,7 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme, int32 saturation)
                                .text = {1.0f, 1.0f, 1.0f, 1.0f}});
       break;
 
-    case EditorTheme::Stealth:
+    case Theme::Stealth:
       apply_theme_from_config(style,
                               ThemeCfg {
                                   .accent = {0.20f, 0.20f, 0.20f, 1.0f},
@@ -351,17 +351,17 @@ void apply_theme(ImGuiStyle& style, const EditorTheme theme, int32 saturation)
                               });
       break;
 
-    case EditorTheme::Lavender:
+    case Theme::Lavender:
       apply_theme_from_config(style, create_light_theme(275, saturation));
       break;
 
-    case EditorTheme::Vanilla:
+    case Theme::Vanilla:
       [[fallthrough]];
-    case EditorTheme::Frost:
+    case Theme::Frost:
       apply_theme_from_config(style, create_light_theme(180, saturation));
       break;
 
-    case EditorTheme::Rose:
+    case Theme::Rose:
       apply_theme_from_config(style, create_light_theme(0, saturation));
       break;
   }

@@ -19,26 +19,18 @@
 
 #pragma once
 
+#include "common/enums/lang.hpp"
+#include "common/enums/overlay_pos.hpp"
+#include "common/enums/theme.hpp"
 #include "common/macros.hpp"
 #include "common/primitives.hpp"
 #include "common/type/math.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
 #include "core/color.hpp"
-#include "core/language.hpp"
 #include "io/save_format.hpp"
-#include "ui/style/themes.hpp"
 
 namespace tactile {
-
-/// Encodes different viewport overlay positions.
-/// The enumerator values cannot change, and should mirror those of proto::OverlayPos.
-enum class OverlayPos {
-  TopLeft = 0,
-  TopRight = 1,
-  BottomLeft = 2,
-  BottomRight = 3
-};
 
 using SettingsFlagBits = uint32;
 
@@ -88,7 +80,7 @@ class Settings final {
   void reset_dock_visibilities();
 
   void set_language(Lang lang);
-  void set_theme(ui::EditorTheme theme);
+  void set_theme(Theme theme);
   void set_theme_saturation(int32 saturation);
   void set_viewport_overlay_pos(OverlayPos pos);
   void set_command_capacity(usize capacity);
@@ -103,7 +95,7 @@ class Settings final {
   void negate_flag(SettingsFlagBits flag);
 
   [[nodiscard]] auto get_language() const -> Lang;
-  [[nodiscard]] auto get_theme() const -> ui::EditorTheme;
+  [[nodiscard]] auto get_theme() const -> Theme;
   [[nodiscard]] auto get_theme_saturation() const -> int32;
   [[nodiscard]] auto get_viewport_overlay_pos() const -> OverlayPos;
   [[nodiscard]] auto get_command_capacity() const -> usize;

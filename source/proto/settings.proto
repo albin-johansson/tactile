@@ -17,7 +17,7 @@ enum Lang {
   LANG_SV = 2;
 }
 
-// Remember to keep these values synced with tactile::ui::EditorTheme!
+// Remember to keep these values synced with tactile::Theme!
 enum Theme {
   reserved 9;  // THEME_DIAMOND
   reserved 13; // THEME_VANILLA

@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "common/enums/theme.hpp"
 #include "common/primitives.hpp"
 #include "common/type/array.hpp"
 #include "common/type/string.hpp"
@@ -27,54 +28,30 @@ struct ImGuiStyle;
 
 namespace tactile::ui {
 
-/// Represents the different available themes.
-/// The enumerator values cannot change, and should mirror those of proto::Theme.
-enum class EditorTheme {
-  DearDark = 0,   ///< The standard Dear ImGui dark theme.
-  DearLight = 1,  ///< The standard Dear ImGui light theme.
-  Ruby = 2,
-  Sapphire = 3,
-  Emerald = 4,
-  Amethyst = 5,
-  Amber = 6,
-  Nocturnal = 7,
-  Ash = 8,
-  Diamond = 9,  // Unused
-  Joker = 10,
-  Raspberry = 11,
-  Stealth = 12,
-  Vanilla = 13,  // Unused
-  Gasoline = 14,
-  Bumblebee = 15,
-  Lavender = 16,
-  Frost = 17,
-  Rose = 18,
+inline constexpr Array<Theme, 4> kLightThemes [[maybe_unused]] = {
+    Theme::DearLight,
+    Theme::Lavender,
+    Theme::Frost,
+    Theme::Rose,
 };
 
-inline constexpr Array<EditorTheme, 4> kLightThemes [[maybe_unused]] = {
-    EditorTheme::DearLight,
-    EditorTheme::Lavender,
-    EditorTheme::Frost,
-    EditorTheme::Rose,
+inline constexpr Array<Theme, 13> kDarkThemes [[maybe_unused]] = {
+    Theme::DearDark,
+    Theme::Ruby,
+    Theme::Sapphire,
+    Theme::Emerald,
+    Theme::Amethyst,
+    Theme::Amber,
+    Theme::Joker,
+    Theme::Raspberry,
+    Theme::Nocturnal,
+    Theme::Ash,
+    Theme::Stealth,
+    Theme::Gasoline,
+    Theme::Bumblebee,
 };
 
-inline constexpr Array<EditorTheme, 13> kDarkThemes [[maybe_unused]] = {
-    EditorTheme::DearDark,
-    EditorTheme::Ruby,
-    EditorTheme::Sapphire,
-    EditorTheme::Emerald,
-    EditorTheme::Amethyst,
-    EditorTheme::Amber,
-    EditorTheme::Joker,
-    EditorTheme::Raspberry,
-    EditorTheme::Nocturnal,
-    EditorTheme::Ash,
-    EditorTheme::Stealth,
-    EditorTheme::Gasoline,
-    EditorTheme::Bumblebee,
-};
-
-[[nodiscard]] auto human_readable_name(EditorTheme theme) -> StringView;
+[[nodiscard]] auto human_readable_name(Theme theme) -> StringView;
 
 /// Applies the styling used by Tactile to a style instance.
 ///
@@ -88,6 +65,6 @@ void apply_style(ImGuiStyle& style);
 /// \param style the style that will be affected.
 /// \param theme the theme that will be applied to the style.
 /// \param saturation the accent color saturation, clamped to [0, 100].
-void apply_theme(ImGuiStyle& style, EditorTheme theme, int32 saturation);
+void apply_theme(ImGuiStyle& style, Theme theme, int32 saturation);
 
 }  // namespace tactile::ui

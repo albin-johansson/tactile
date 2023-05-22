@@ -19,38 +19,15 @@
 
 #pragma once
 
-#include "common/enums/lang.hpp"
-#include "common/enums/overlay_pos.hpp"
-#include "common/enums/theme.hpp"
-#include "model/settings.hpp"
-
 namespace tactile {
 
-struct SetSettingsEvent final {
-  Settings settings;
+/// Encodes different viewport overlay positions.
+/// The enumerator values cannot change, and should mirror those of proto::OverlayPos.
+enum class OverlayPos {
+  TopLeft = 0,
+  TopRight = 1,
+  BottomLeft = 2,
+  BottomRight = 3
 };
-
-struct SetSettingFlagEvent final {
-  SettingsFlagBits flag {};
-  bool value {};
-};
-
-struct NegateSettingFlagEvent final {
-  SettingsFlagBits flag {};
-};
-
-struct SetViewportOverlayPosEvent final {
-  OverlayPos pos {};
-};
-
-struct SetLanguageEvent final {
-  Lang language {};
-};
-
-struct SetThemeEvent final {
-  Theme theme {};
-};
-
-struct ResetDockVisibilitiesEvent final {};
 
 }  // namespace tactile
