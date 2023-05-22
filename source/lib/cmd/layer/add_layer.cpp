@@ -20,6 +20,7 @@
 #include "add_layer.hpp"
 
 #include "components/document.hpp"
+#include "core/layer.hpp"
 #include "core/map.hpp"
 #include "model/context.hpp"
 #include "model/systems/layer_system.hpp"

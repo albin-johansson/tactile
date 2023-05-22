@@ -27,6 +27,7 @@
 #include "common/util/functional.hpp"
 #include "components/document.hpp"
 #include "core/context.hpp"
+#include "core/layer.hpp"
 #include "core/tile_format.hpp"
 #include "core/tileset.hpp"
 #include "model/systems/document_system.hpp"

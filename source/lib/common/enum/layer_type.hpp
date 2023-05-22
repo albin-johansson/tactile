@@ -19,30 +19,13 @@
 
 #pragma once
 
-#include "cmd/command.hpp"
-#include "common/enum/layer_type.hpp"
-#include "common/type/ecs.hpp"
+namespace tactile {
 
-namespace tactile::cmd {
-
-class AddLayer final : public Command {
- public:
-  AddLayer(Entity map_document_entity, LayerType type);
-
-  void undo() override;
-
-  void redo() override;
-
-  void dispose() override;
-
-  [[nodiscard]] auto get_name() const -> String override;
-
- private:
-  Entity mMapDocumentEntity;
-  LayerType mLayerType;
-  Entity mLayerEntity {kNullEntity};
-  Entity mParentLayerEntity {kNullEntity};
-  bool mLayerWasAdded : 1 {false};
+/// Represents all of the supported layer types.
+enum class LayerType {
+  TileLayer,
+  ObjectLayer,
+  GroupLayer
 };
 
-}  // namespace tactile::cmd
+}  // namespace tactile

@@ -23,6 +23,7 @@
 #include <memory>    // addressof
 #include <variant>   // get
 
+#include "common/enum/layer_type.hpp"
 #include "common/enum/object_type.hpp"
 #include "common/enum/tile_compression.hpp"
 #include "common/enum/tile_encoding.hpp"
@@ -40,7 +41,6 @@
 #include "common/type/vec.hpp"
 #include "common/util/algorithm.hpp"
 #include "core/attribute.hpp"
-#include "core/layer.hpp"
 #include "core/tile_extent.hpp"
 #include "core/tile_matrix.hpp"
 

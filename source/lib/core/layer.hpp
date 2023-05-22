@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "common/enum/layer_type.hpp"
 #include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
@@ -27,13 +28,6 @@
 #include "core/tile_pos.hpp"
 
 namespace tactile {
-
-/// Represents all of the supported layer types.
-enum class LayerType {
-  TileLayer,
-  ObjectLayer,
-  GroupLayer
-};
 
 /// Component featured by all layer entities.
 struct Layer final {
