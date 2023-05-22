@@ -28,6 +28,7 @@
 #include "model/systems/menu_system.hpp"
 #include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/dock_space.hpp"
+#include "ui/style/themes.hpp"
 
 namespace tactile {
 

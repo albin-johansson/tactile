@@ -19,20 +19,10 @@
 
 #pragma once
 
+#include "common/enums/tile_compression.hpp"
+#include "common/enums/tile_encoding.hpp"
+
 namespace tactile {
-
-/// Represents the different supported tile layer data encodings.
-enum class TileEncoding {
-  Plain,  ///< Encode the tile layer data in ordinary plain text.
-  Base64  ///< Use Base64 encoding.
-};
-
-/// Represents the different supported tile data compression methods.
-enum class TileCompression {
-  None,  ///< Apply no compression to tile layer data.
-  Zlib,  ///< Use the Zlib compression library.
-  Zstd   ///< Use the zstd compression library.
-};
 
 /// Component describing the tile layer data format used by a map.
 /// \see https://github.com/facebook/zstd/issues/3133 for Zstd compression levels.

@@ -29,6 +29,7 @@
 #include "core/object.hpp"
 #include "core/texture.hpp"
 #include "core/tile.hpp"
+#include "core/tile_format.hpp"
 #include "core/tileset.hpp"
 #include "model/model.hpp"
 

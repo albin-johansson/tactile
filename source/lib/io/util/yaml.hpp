@@ -23,12 +23,13 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include "common/enums/tile_compression.hpp"
+#include "common/enums/tile_encoding.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "common/type/result.hpp"
 #include "common/type/string.hpp"
 #include "core/attribute.hpp"
-#include "core/tile_format.hpp"
 
 namespace tactile {
 

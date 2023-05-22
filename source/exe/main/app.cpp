@@ -68,6 +68,7 @@
 #include "ui/menu/menu_bar.hpp"
 #include "ui/shortcut/shortcuts.hpp"
 #include "ui/style/colors.hpp"
+#include "ui/style/themes.hpp"
 #include "ui/viewport/viewport_widget.hpp"
 
 namespace tactile {
@@ -152,7 +153,7 @@ void App::_init_persistent_settings()
 
   auto& style = ImGui::GetStyle();
   style.WindowBorderSize = settings.test_flag(SETTINGS_WINDOW_BORDER_BIT) ? 1.0f : 0.0f;
-  apply_theme(style, settings.get_theme(), settings.get_theme_saturation());
+  ui::apply_theme(style, settings.get_theme(), settings.get_theme_saturation());
 }
 
 void App::_init_widgets()

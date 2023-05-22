@@ -19,29 +19,13 @@
 
 #pragma once
 
-#include "cmd/command.hpp"
-#include "common/enums/tile_compression.hpp"
-#include "common/enums/tile_encoding.hpp"
-#include "common/type/ecs.hpp"
-#include "common/type/maybe.hpp"
+namespace tactile {
 
-namespace tactile::cmd {
-
-class SetTileFormatEncoding final : public Command {
- public:
-  SetTileFormatEncoding(Entity map_entity, TileEncoding encoding);
-
-  void undo() override;
-
-  void redo() override;
-
-  [[nodiscard]] auto get_name() const -> String override;
-
- private:
-  Entity mMapEntity {kNullEntity};
-  TileEncoding mNewEncoding;
-  Maybe<TileEncoding> mOldEncoding;
-  Maybe<TileCompression> mOldCompression;
+/// Represents the different supported tile data compression methods.
+enum class TileCompression {
+  None,  ///< Apply no compression to tile layer data.
+  Zlib,  ///< Use the Zlib compression library.
+  Zstd   ///< Use the zstd compression library.
 };
 
-}  // namespace tactile::cmd
+}  // namespace tactile
