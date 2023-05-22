@@ -21,7 +21,7 @@
 
 #include <functional>  // hash
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 
 namespace tactile {
 

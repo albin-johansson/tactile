@@ -22,7 +22,7 @@
 #include <bit>       // byteswap, endian
 #include <concepts>  // integral, invocable
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 
 namespace tactile {
 

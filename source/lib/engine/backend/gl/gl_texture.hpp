@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/path.hpp"
 #include "io/texture_loader.hpp"
 

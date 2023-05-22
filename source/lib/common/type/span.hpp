@@ -21,7 +21,7 @@
 
 #include <span>  // span, dynamic_extent
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 
 namespace tactile {
 

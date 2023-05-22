@@ -26,7 +26,7 @@
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/string.hpp"
 #include "common/util/filesystem.hpp"
 #include "core/attribute.hpp"

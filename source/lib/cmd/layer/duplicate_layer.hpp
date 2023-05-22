@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/macros.hpp"
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "cmd/command.hpp"

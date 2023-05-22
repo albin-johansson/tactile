@@ -21,7 +21,7 @@
 
 #include <pugixml.hpp>
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/result.hpp"
 #include "common/type/string.hpp"

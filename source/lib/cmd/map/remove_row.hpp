@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
 #include "cmd/command.hpp"
 #include "cmd/map/map_command_cache.hpp"

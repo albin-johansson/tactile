@@ -26,7 +26,7 @@
 #include <fmt/format.h>
 
 #include "common/debug/assert.hpp"
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/ostream.hpp"
 #include "common/util/filesystem.hpp"
 #include "core/tile_pos.hpp"

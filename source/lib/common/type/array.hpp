@@ -21,7 +21,7 @@
 
 #include <array>  // array
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 
 namespace tactile {
 

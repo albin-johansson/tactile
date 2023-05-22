@@ -24,7 +24,7 @@
 #include <variant>   // get
 
 #include "common/macros.hpp"
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"

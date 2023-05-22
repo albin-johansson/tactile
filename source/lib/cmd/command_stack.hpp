@@ -24,7 +24,7 @@
 
 #include "cmd/command.hpp"
 #include "common/macros.hpp"
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/deque.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"

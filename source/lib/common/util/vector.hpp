@@ -23,7 +23,7 @@
 #include <utility>    // move
 
 #include "common/debug/assert.hpp"
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/vec.hpp"
 
 namespace tactile {

@@ -19,7 +19,7 @@
 
 #include <utility>  // move
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/string.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"

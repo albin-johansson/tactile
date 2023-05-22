@@ -22,7 +22,7 @@
 #include <concepts>  // same_as
 #include <utility>   // move
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ostream.hpp"

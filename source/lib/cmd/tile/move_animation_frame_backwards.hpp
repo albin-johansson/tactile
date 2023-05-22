@@ -20,7 +20,7 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
 
 namespace tactile::cmd {

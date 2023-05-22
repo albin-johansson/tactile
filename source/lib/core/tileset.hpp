@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"

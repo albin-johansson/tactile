@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/vector_map.hpp"
 #include "core/tile_pos.hpp"
 

@@ -28,7 +28,7 @@
 #include <fmt/ostream.h>
 
 #include "common/debug/stacktrace.hpp"
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/predef.hpp"
 #include "common/type/array.hpp"
 #include "common/type/ecs.hpp"

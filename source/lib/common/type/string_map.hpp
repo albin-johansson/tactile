@@ -23,7 +23,7 @@
 #include <type_traits>    // true_type
 #include <unordered_map>  // unordered_map
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/result.hpp"
 #include "common/type/string.hpp"
 

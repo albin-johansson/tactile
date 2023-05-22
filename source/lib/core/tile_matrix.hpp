@@ -21,7 +21,7 @@
 
 #include <concepts>  // integral
 
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/vec.hpp"
 #include "core/tile_extent.hpp"
 

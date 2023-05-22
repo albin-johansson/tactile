@@ -26,7 +26,7 @@
 
 #include "common/debug/assert.hpp"
 #include "common/macros.hpp"
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "core/color.hpp"
 #include "core/texture.hpp"
 #include "ui/conversions.hpp"

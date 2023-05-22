@@ -22,7 +22,7 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
-#include "common/numeric.hpp"
+#include "common/primitives.hpp"
 #include "common/type/maybe.hpp"
 #include "common/util/filesystem.hpp"
 
