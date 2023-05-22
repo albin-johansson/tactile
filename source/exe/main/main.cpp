@@ -28,7 +28,7 @@
 #include "common/debug/panic.hpp"
 #include "common/util/fmt.hpp"
 #include "engine/engine.hpp"
-#include "runtime/app.hpp"
+#include "main/app.hpp"
 
 using namespace tactile;
 

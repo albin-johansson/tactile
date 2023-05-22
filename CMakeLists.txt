@@ -76,5 +76,5 @@ endif ()
 
 add_subdirectory(source/proto)
 add_subdirectory(source/lib)
-add_subdirectory(source/app)
+add_subdirectory(source/exe)
 add_subdirectory(test)
