@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "common/util/assoc.hpp"
+#include "common/util/lookup.hpp"
 
 #include <doctest/doctest.h>
 
@@ -32,7 +32,7 @@ using namespace std::string_view_literals;
 
 namespace tactile::test {
 
-TEST_SUITE("Assoc")
+TEST_SUITE("Lookup")
 {
   TEST_CASE("Empty HashMap")
   {

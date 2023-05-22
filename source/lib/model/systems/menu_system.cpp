@@ -24,7 +24,7 @@
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
-#include "common/util/assoc.hpp"
+#include "common/util/lookup.hpp"
 #include "model/file_history.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/font_system.hpp"

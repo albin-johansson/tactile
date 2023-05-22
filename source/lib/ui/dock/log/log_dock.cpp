@@ -23,7 +23,7 @@
 
 #include "common/debug/logging.hpp"
 #include "common/type/hash_map.hpp"
-#include "common/util/assoc.hpp"
+#include "common/util/lookup.hpp"
 #include "model/context.hpp"
 #include "model/event/setting_events.hpp"
 #include "systems/language_system.hpp"

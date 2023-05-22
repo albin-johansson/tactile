@@ -24,7 +24,7 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
-#include "common/util/assoc.hpp"
+#include "common/util/lookup.hpp"
 #include "io/lang/language_parser.hpp"
 #include "model/settings.hpp"
 

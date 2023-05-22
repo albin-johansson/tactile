@@ -20,7 +20,7 @@
 #include "context_system.hpp"
 
 #include "common/debug/assert.hpp"
-#include "common/util/assoc.hpp"
+#include "common/util/lookup.hpp"
 #include "core/component.hpp"
 #include "model/systems/component/component.hpp"
 #include "model/systems/validation.hpp"

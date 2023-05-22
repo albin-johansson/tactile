@@ -22,7 +22,7 @@
 #include <fmt/format.h>
 
 #include "common/debug/assert.hpp"
-#include "common/util/assoc.hpp"
+#include "common/util/lookup.hpp"
 #include "core/component.hpp"
 #include "model/systems/validation.hpp"
 

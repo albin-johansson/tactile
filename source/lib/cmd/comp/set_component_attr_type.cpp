@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "common/util/assoc.hpp"
+#include "common/util/lookup.hpp"
 #include "core/component.hpp"
 #include "model/context.hpp"
 #include "model/systems/component/component_def.hpp"

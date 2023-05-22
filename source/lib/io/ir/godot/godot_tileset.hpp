@@ -26,7 +26,7 @@
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
 #include "common/type/vec.hpp"
-#include "common/util/assoc.hpp"
+#include "common/util/lookup.hpp"
 #include "io/ir/godot/godot_file.hpp"
 
 namespace tactile {

@@ -26,7 +26,7 @@
 
 #include "common/type/maybe.hpp"
 #include "common/type/uuid.hpp"
-#include "common/util/assoc.hpp"
+#include "common/util/lookup.hpp"
 #include "core/context.hpp"
 #include "core/layer.hpp"
 #include "core/map.hpp"

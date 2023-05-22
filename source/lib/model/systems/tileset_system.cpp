@@ -20,7 +20,7 @@
 #include "tileset_system.hpp"
 
 #include "common/debug/assert.hpp"
-#include "common/util/assoc.hpp"
+#include "common/util/lookup.hpp"
 #include "core/context.hpp"
 #include "core/texture.hpp"
 #include "core/tile.hpp"

@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "common/util/assoc.hpp"
+#include "common/util/lookup.hpp"
 #include "core/context.hpp"
 #include "model/context.hpp"
 #include "systems/language_system.hpp"

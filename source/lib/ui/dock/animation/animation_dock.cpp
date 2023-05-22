@@ -24,8 +24,8 @@
 #include <imgui.h>
 
 #include "common/type/maybe.hpp"
-#include "common/util/assoc.hpp"
 #include "common/util/fmt.hpp"
+#include "common/util/lookup.hpp"
 #include "core/texture.hpp"
 #include "core/tile.hpp"
 #include "core/tileset.hpp"
