@@ -20,6 +20,7 @@
 #pragma once
 
 #include <centurion/event.hpp>
+#include <imgui.h>
 
 #include "common/type/dispatcher.hpp"
 #include "engine/app_delegate.hpp"
@@ -34,17 +35,20 @@ class App final : public AppDelegate {
 
   void on_shutdown() override;
 
-  void on_pre_update() override;
-
   void on_update() override;
 
   void on_event(const cen::event_handler& event) override;
 
+  void on_font_reload() override;
+
+  [[nodiscard]] auto want_font_reload() const -> bool override { return mWantFontReload; }
   [[nodiscard]] auto should_stop() const -> bool override { return mShouldStop; }
 
  private:
   Dispatcher mDispatcher;
-  bool mShouldStop {false};
+  ImVec2 mFramebufferScale {};
+  bool mShouldStop     : 1 {false};
+  bool mWantFontReload : 1 {false};
 
   void _subscribe_to_events();
   void _init_persistent_settings();
@@ -54,10 +58,12 @@ class App final : public AppDelegate {
 
   void _on_menu_action(const MenuActionEvent& event);
 
+  // Command events
   void _on_undo(const UndoEvent& event);
   void _on_redo(const RedoEvent& event);
   void _on_set_command_capacity(const SetCommandCapacityEvent& event);
 
+  // Map events
   void _on_show_new_map_dialog(const ShowNewMapDialogEvent& event);
   void _on_show_open_map_dialog(const ShowOpenMapDialogEvent& event);
   void _on_show_resize_map_dialog(const ShowResizeMapDialogEvent& event);
@@ -76,6 +82,13 @@ class App final : public AppDelegate {
   void _on_set_zlib_compression_level(const SetZlibCompressionLevelEvent& event);
   void _on_set_zstd_compression_level(const SetZstdCompressionLevelEvent& event);
 
+  // Font events
+  void _on_reload_fonts(const ReloadFontsEvent& event);
+  void _on_increase_font_size(const IncreaseFontSizeEvent& event);
+  void _on_decrease_font_size(const DecreaseFontSizeEvent& event);
+  void _on_reset_font_size(const ResetFontSizeEvent& event);
+
+  // Setting events
   void _on_show_settings(const ShowSettingsEvent& event);
   void _on_set_settings(const SetSettingsEvent& event);
   void _on_set_language(const SetLanguageEvent& event);

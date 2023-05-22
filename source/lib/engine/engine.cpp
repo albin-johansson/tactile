@@ -86,28 +86,21 @@ void Engine::start()
   spdlog::debug("Starting core event loop");
 
   mRunning = true;
-  ImVec2 fb_scale {};
 
   mApp->on_startup();
   mSDL->get_window().show();
   mSDL->get_window().maximize();
 
   while (mRunning) {
-    poll_events();
+    _poll_events();
 
-    mApp->on_pre_update();
+    if (mApp->want_font_reload()) {
+      _reload_fonts();
+    }
 
     if (mBackend->new_frame().succeeded()) {
       mApp->on_update();
       mBackend->end_frame();
-    }
-
-    // We reload the fonts when the framebuffer scale changes. Since it is initially zero,
-    // we know that we will load the fonts at least once.
-    const auto& io = ImGui::GetIO();
-    if (fb_scale.x != io.DisplayFramebufferScale.x) {
-      fb_scale = io.DisplayFramebufferScale;
-      reload_fonts();
     }
   }
 
@@ -115,27 +108,27 @@ void Engine::start()
   mSDL->get_window().hide();
 }
 
-void Engine::poll_events()
+void Engine::_poll_events()
 {
   mKeyboard.refresh();
 
-  cen::event_handler handler;
-  while (handler.poll()) {
-    mBackend->process_event(handler.data());
+  cen::event_handler event;
+  while (event.poll()) {
+    mBackend->process_event(event.data());
 
-    switch (handler.type().value()) {
+    switch (event.type().value()) {
       case cen::event_type::quit:
         mRunning = false;
         break;
 
       default:
-        mApp->on_event(handler);
+        mApp->on_event(event);
         break;
     }
   }
 }
 
-void Engine::reload_fonts()
+void Engine::_reload_fonts()
 {
   const auto& model = get_global_model();
   const auto& settings = model.get<Settings>();

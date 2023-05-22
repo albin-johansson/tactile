@@ -35,6 +35,7 @@
 #include "io/proto/settings.hpp"
 #include "model/context.hpp"
 #include "model/delegates/command_delegate.hpp"
+#include "model/delegates/font_delegate.hpp"
 #include "model/delegates/input_delegate.hpp"
 #include "model/delegates/map_delegate.hpp"
 #include "model/delegates/menu_delegate.hpp"
@@ -48,7 +49,6 @@
 #include "model/systems/menu_system.hpp"
 #include "model/systems/texture_system.hpp"
 #include "model/systems/widget_system.hpp"
-#include "runtime/app_context.hpp"
 #include "systems/language_system.hpp"
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/create_map_dialog.hpp"
@@ -92,10 +92,12 @@ void App::on_startup()
 void App::_subscribe_to_events()
 {
   // clang-format off
+  // Command events
   mDispatcher.sink<UndoEvent>().connect<&App::_on_undo>(this);
   mDispatcher.sink<RedoEvent>().connect<&App::_on_redo>(this);
   mDispatcher.sink<SetCommandCapacityEvent>().connect<&App::_on_set_command_capacity>(this);
 
+  // Map events
   mDispatcher.sink<ShowNewMapDialogEvent>().connect<&App::_on_show_new_map_dialog>(this);
   mDispatcher.sink<ShowOpenMapDialogEvent>().connect<&App::_on_show_open_map_dialog>(this);
   mDispatcher.sink<ShowResizeMapDialogEvent>().connect<&App::_on_show_resize_map_dialog>(this);
@@ -114,6 +116,13 @@ void App::_subscribe_to_events()
   mDispatcher.sink<SetZlibCompressionLevelEvent>().connect<&App::_on_set_zlib_compression_level>(this);
   mDispatcher.sink<SetZstdCompressionLevelEvent>().connect<&App::_on_set_zstd_compression_level>(this);
 
+  // Font events
+  mDispatcher.sink<ReloadFontsEvent>().connect<&App::_on_reload_fonts>(this);
+  mDispatcher.sink<IncreaseFontSizeEvent>().connect<&App::_on_increase_font_size>(this);
+  mDispatcher.sink<DecreaseFontSizeEvent>().connect<&App::_on_decrease_font_size>(this);
+  mDispatcher.sink<ResetFontSizeEvent>().connect<&App::_on_reset_font_size>(this);
+
+  // Setting events
   mDispatcher.sink<ShowSettingsEvent>().connect<&App::_on_show_settings>(this);
   mDispatcher.sink<SetSettingsEvent>().connect<&App::_on_set_settings>(this);
   mDispatcher.sink<SetLanguageEvent>().connect<&App::_on_set_language>(this);
@@ -155,24 +164,35 @@ void App::_init_widgets()
   sys::add_widget(model, idx++, ui::show_menu_bar);
 
   // Dock widgets
-  sys::add_widget(model, idx++, ui::show_layer_dock, ui::is_layer_dock_enabled);
-  sys::add_widget(model, idx++, ui::show_tileset_dock, ui::is_tileset_dock_enabled);
-  sys::add_widget(model, idx++, ui::show_animation_dock, ui::is_animation_dock_enabled);
-  sys::add_widget(model, idx++, ui::show_property_dock);
-  sys::add_widget(model, idx++, ui::show_component_dock);
-  sys::add_widget(model, idx++, ui::show_log_dock);
-  sys::add_widget(model, idx++, ui::show_viewport_dock);
+  sys::add_widget(model, idx++, &ui::show_layer_dock, &ui::is_layer_dock_enabled);
+  sys::add_widget(model, idx++, &ui::show_tileset_dock, &ui::is_tileset_dock_enabled);
+  sys::add_widget(model, idx++, &ui::show_animation_dock, &ui::is_animation_dock_enabled);
+  sys::add_widget(model, idx++, &ui::show_property_dock);
+  sys::add_widget(model, idx++, &ui::show_component_dock);
+  sys::add_widget(model, idx++, &ui::show_log_dock);
+  sys::add_widget(model, idx++, &ui::show_viewport_dock);
 
   // Dialogs
-  sys::add_widget(model, idx++, ui::show_component_editor_dialog);
-  sys::add_widget(model, idx++, ui::show_create_map_dialog);
-  sys::add_widget(model, idx++, ui::show_create_tileset_dialog);
-  sys::add_widget(model, idx++, ui::show_resize_map_dialog);
-  sys::add_widget(model, idx++, ui::show_godot_export_dialog);
-  sys::add_widget(model, idx++, ui::show_settings_dialog);
-  sys::add_widget(model, idx++, ui::show_map_parse_error_dialog);
-  sys::add_widget(model, idx++, ui::show_credits_dialog);
-  sys::add_widget(model, idx, ui::show_about_dialog);
+  sys::add_widget(model, idx++, &ui::show_component_editor_dialog);
+  sys::add_widget(model, idx++, &ui::show_create_map_dialog);
+  sys::add_widget(model, idx++, &ui::show_create_tileset_dialog);
+  sys::add_widget(model, idx++, &ui::show_resize_map_dialog);
+  sys::add_widget(model, idx++, &ui::show_godot_export_dialog);
+  sys::add_widget(model, idx++, &ui::show_settings_dialog);
+  sys::add_widget(model, idx++, &ui::show_map_parse_error_dialog);
+  sys::add_widget(model, idx++, &ui::show_credits_dialog);
+  sys::add_widget(model, idx, &ui::show_about_dialog);
+
+  // TODO
+  //  if (gOpenMapFileDialog) {
+  //    _update_map_file_dialog(dispatcher);
+  //  }
+
+  // TODO
+  //  if (gOpenAboutImGuiDialog) {
+  //    center_next_window_on_appearance();
+  //    ImGui::ShowAboutWindow(&gOpenAboutImGuiDialog);
+  //  }
 
   sys::sort_widgets(model);
 }
@@ -197,14 +217,6 @@ void App::_add_open_documents_to_file_history()
   }
 }
 
-void App::on_pre_update()
-{
-  if (is_font_reload_scheduled()) {
-    // TODO ImGuiContext::reload_fonts();
-    handled_font_reload();
-  }
-}
-
 void App::on_update()
 {
   auto& model = get_global_model();
@@ -221,11 +233,22 @@ void App::on_update()
   sys::render_widgets(model, mDispatcher);
 
   ui::check_for_missing_layout_file(model, mDispatcher);
+
+  const auto& io = ImGui::GetIO();
+  if (mFramebufferScale.x != io.DisplayFramebufferScale.x) {
+    mFramebufferScale = io.DisplayFramebufferScale;
+    mWantFontReload = true;
+  }
 }
 
 void App::on_event(const cen::event_handler& event)
 {
   tactile::on_event(get_global_model(), mDispatcher, event);
+}
+
+void App::on_font_reload()
+{
+  mWantFontReload = false;
 }
 
 void App::_on_menu_action(const MenuActionEvent& event)
@@ -353,6 +376,30 @@ void App::_on_set_zstd_compression_level(const SetZstdCompressionLevelEvent& eve
 {
   spdlog::trace("[SetZstdCompressionLevelEvent] level: {}", event.level);
   on_set_zstd_compression_level(get_global_model(), event);
+}
+
+void App::_on_reload_fonts(const ReloadFontsEvent&)
+{
+  spdlog::trace("[ReloadFontsEvent]");
+  mWantFontReload = true;
+}
+
+void App::_on_increase_font_size(const IncreaseFontSizeEvent& event)
+{
+  spdlog::trace("[IncreaseFontSizeEvent]");
+  on_increase_font_size(get_global_model(), mDispatcher, event);
+}
+
+void App::_on_decrease_font_size(const DecreaseFontSizeEvent& event)
+{
+  spdlog::trace("[DecreaseFontSizeEvent]");
+  on_decrease_font_size(get_global_model(), mDispatcher, event);
+}
+
+void App::_on_reset_font_size(const ResetFontSizeEvent& event)
+{
+  spdlog::trace("[ResetFontSizeEvent]");
+  on_reset_font_size(get_global_model(), mDispatcher, event);
 }
 
 void App::_on_show_settings(const ShowSettingsEvent& event)

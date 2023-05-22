@@ -55,9 +55,9 @@ class Engine final {
   cen::keyboard mKeyboard;
   bool mRunning : 1 {};
 
-  void poll_events();
+  void _poll_events();
 
-  void reload_fonts();
+  void _reload_fonts();
 };
 
 [[noreturn]] TACTILE_NOINLINE void on_terminate();

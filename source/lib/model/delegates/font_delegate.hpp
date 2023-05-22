@@ -17,40 +17,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "app_context.hpp"
+#pragma once
 
-#include "ui/widget_show_state.hpp"
+#include "common/type/dispatcher.hpp"
+#include "model/event/view_events.hpp"
+#include "model/model.hpp"
 
 namespace tactile {
-namespace {
 
-struct AppState final {
-  WidgetShowState widget_show_state;
-  bool font_reload_scheduled : 1 {};
-};
+void on_reset_font_size(Model& model,
+                        Dispatcher& dispatcher,
+                        const ResetFontSizeEvent& event);
 
-inline AppState gAppState;
+void on_increase_font_size(Model& model,
+                           Dispatcher& dispatcher,
+                           const IncreaseFontSizeEvent& event);
 
-}  // namespace
-
-void request_font_reload()
-{
-  gAppState.font_reload_scheduled = true;
-}
-
-void handled_font_reload()
-{
-  gAppState.font_reload_scheduled = false;
-}
-
-auto get_widget_show_state() -> WidgetShowState&
-{
-  return gAppState.widget_show_state;
-}
-
-auto is_font_reload_scheduled() -> bool
-{
-  return gAppState.font_reload_scheduled;
-}
+void on_decrease_font_size(Model& model,
+                           Dispatcher& dispatcher,
+                           const DecreaseFontSizeEvent& event);
 
 }  // namespace tactile

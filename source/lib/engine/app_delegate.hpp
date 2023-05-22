@@ -33,9 +33,6 @@ class AppDelegate {
   /// Called once immediately after the event loop stops running.
   virtual void on_shutdown() {}
 
-  /// Called before each frame is started (regardless of the frame start success).
-  virtual void on_pre_update() {}
-
   /// Called for each frame.
   virtual void on_update() {}
 
@@ -44,6 +41,9 @@ class AppDelegate {
 
   /// Called whenever the backend font resources have been reloaded.
   virtual void on_font_reload() {}
+
+  /// Indicates whether the application wants all font resources to be reloaded.
+  [[nodiscard]] virtual auto want_font_reload() const -> bool { return false; }
 
   /// Indicates whether the application wants to exit.
   [[nodiscard]] virtual auto should_stop() const -> bool = 0;
