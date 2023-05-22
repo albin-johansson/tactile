@@ -146,7 +146,7 @@ void init_logger()
   const spdlog::sinks_init_list sinks {cs, fs, gHistorySink};
 
   auto logger = std::make_shared<spdlog::logger>("tactile", sinks);
-  logger->set_pattern("%^[%L][%T.%f]%$ %v");
+  logger->set_pattern("%^[%L][%T.%e]%$ %v");
   logger->flush_on(LogLevel::critical);
 
   spdlog::set_default_logger(logger);
