@@ -23,7 +23,7 @@
 
 #include "cmd/map/all.hpp"
 #include "components/document.hpp"
-#include "core/map.hpp"
+#include "components/map.hpp"
 #include "io/ir/godot/godot_converter.hpp"
 #include "io/ir/godot/godot_options.hpp"
 #include "io/ir/godot/godot_writer.hpp"
@@ -35,7 +35,6 @@
 #include "model/systems/document_system.hpp"
 #include "ui/dialog/create_map_dialog.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"
-#include "ui/ui.hpp"
 
 namespace tactile {
 namespace {
@@ -60,7 +59,7 @@ void on_show_new_map_dialog(Model& model, const ShowNewMapDialogEvent&)
 
 void on_show_open_map_dialog(Model&, const ShowOpenMapDialogEvent&)
 {
-  ui::open_map_file_dialog();
+  // ui::open_map_file_dialog();
 }
 
 void on_show_resize_map_dialog(Model& model, const ShowResizeMapDialogEvent&)

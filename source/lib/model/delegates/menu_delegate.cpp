@@ -32,7 +32,6 @@
 #include "ui/dialog/godot_export_dialog.hpp"
 #include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/comp/component_editor.hpp"
-#include "ui/ui.hpp"
 
 namespace tactile {
 
@@ -228,7 +227,7 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
 
     case MenuAction::ShowAboutImGui:
-      ui::open_about_dear_imgui_dialog();
+      // ui::open_about_dear_imgui_dialog();
       break;
 
     case MenuAction::ShowCredits:
