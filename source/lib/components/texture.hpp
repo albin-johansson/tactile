@@ -19,13 +19,27 @@
 
 #pragma once
 
+#include "common/macros.hpp"
 #include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
+#include "common/type/func.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "common/type/tree_map.hpp"
+#include "model/model.hpp"
 
 namespace tactile {
+
+TACTILE_FWD_DECLARE_STRUCT(TextureData)
+
+using TextureInitFn = Func<void(Model&, Entity, const TextureData&)>;
+using TextureDestroyFn = Func<void(Model&, Entity)>;
+
+/// Context component with backend specific texture callbacks.
+struct TextureCallbacks final {
+  TextureInitFn init;        ///< Initializes a texture.
+  TextureDestroyFn destroy;  ///< Destroys a texture.
+};
 
 /// Context component tracking loaded icon textures.
 struct Icons final {

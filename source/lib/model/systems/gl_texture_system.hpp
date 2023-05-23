@@ -19,12 +19,18 @@
 
 #pragma once
 
-#include "engine/backend/backend_api.hpp"  // TODO move to common/enum
+#include "common/macros.hpp"
+#include "common/type/ecs.hpp"
 #include "model/model.hpp"
+
+TACTILE_FWD_DECLARE_STRUCT_NS(tactile, TextureData)
 
 namespace tactile::sys {
 
-/// Prepares a model instance by initializing required context components.
-void init_model(Model& model, BackendAPI api);
+void on_init_gl_texture(Model& model,
+                        Entity texture_entity,
+                        const TextureData& texture_data);
+
+void on_destroy_gl_texture(Model& model, Entity texture_entity);
 
 }  // namespace tactile::sys

@@ -31,12 +31,14 @@
 #include "common/debug/logging.hpp"
 #include "common/debug/stacktrace.hpp"
 #include "common/fmt/stacktrace_formatter.hpp"
+#include "components/texture.hpp"
 #include "engine/backend/gl/gl_backend.hpp"
 #include "engine/backend/null/null_backend.hpp"
 #include "engine/platform/window.hpp"
 #include "io/directories.hpp"
 #include "model/context.hpp"
 #include "model/settings.hpp"
+#include "model/systems/gl_texture_system.hpp"
 #include "model/systems/model_system.hpp"
 #include "ui/style/fonts.hpp"
 
@@ -83,7 +85,8 @@ Engine::Engine(const BackendAPI api)
 
   spdlog::debug("[IO] Persistent file directory: {}", get_persistent_file_dir());
 
-  sys::init_model(get_global_model());
+  auto& model = get_global_model();
+  sys::init_model(model, api);
 }
 
 void Engine::start()

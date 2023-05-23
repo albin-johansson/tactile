@@ -25,10 +25,11 @@
 #include "core/language.hpp"
 #include "core/menu.hpp"
 #include "model/settings.hpp"
+#include "model/systems/gl_texture_system.hpp"
 
 namespace tactile::sys {
 
-void init_model(Model& model)
+void init_model(Model& model, const BackendAPI api)
 {
   auto& document_context = model.add<DocumentContext>();
   document_context.active_document = kNullEntity;
@@ -39,6 +40,17 @@ void init_model(Model& model)
   model.add<TextureCache>();
   model.add<Icons>();
   model.add<MenuItems>();
+
+  auto& texture_callbacks = model.add<TextureCallbacks>();
+
+  if (api == BackendAPI::Null) {
+    texture_callbacks.init = [](Model&, Entity, const TextureData&) {};
+    texture_callbacks.destroy = [](Model&, Entity) {};
+  }
+  else if (api == BackendAPI::OpenGL) {
+    texture_callbacks.init = &sys::on_init_gl_texture;
+    texture_callbacks.destroy = &sys::on_destroy_gl_texture;
+  }
 }
 
 }  // namespace tactile::sys

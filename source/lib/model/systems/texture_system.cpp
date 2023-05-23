@@ -19,25 +19,19 @@
 
 #include "texture_system.hpp"
 
-#include <bit>  // bit_cast
-
-#include "common/primitives.hpp"
 #include "components/texture.hpp"
-#include "engine/backend/gl/gl_texture.hpp"
 #include "io/texture_loader.hpp"
 #include "model/systems/validation.hpp"
 
 namespace tactile::sys {
 
-// TODO condition on selected backend to determine how to load texture
-
 void destroy_loaded_texture_resources(Model& model)
 {
+  const auto& texture_callbacks = model.get<TextureCallbacks>();
   const auto& texture_cache = model.get<TextureCache>();
 
   for (const auto& [texture_path, texture_entity]: texture_cache.textures) {
-    const auto& gl_texture = model.get<OpenGLTexture>(texture_entity);
-    gl::destroy_texture(gl_texture.id);
+    texture_callbacks.destroy(model, texture_entity);
   }
 }
 
@@ -51,6 +45,7 @@ auto create_texture(Model& model, const Path& path) -> Entity
     return iter->second;
   }
 
+  const auto& texture_callbacks = model.get<TextureCallbacks>();
   const auto texture_data = load_texture_data(path).value();
 
   const auto texture_entity = model.create_entity();
@@ -60,10 +55,7 @@ auto create_texture(Model& model, const Path& path) -> Entity
   texture.path = path;
   texture.size = texture_data.size;
 
-  auto& gl_texture = model.add<OpenGLTexture>(texture_entity);
-  gl_texture.id = gl::create_texture(texture_data);
-
-  texture.handle = std::bit_cast<void*>(static_cast<uintptr>(gl_texture.id));
+  texture_callbacks.init(model, texture_entity, texture_data);
 
   return texture_entity;
 }

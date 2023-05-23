@@ -12,6 +12,7 @@ These components are globally accessible in the model.
 * `FileHistory`
 * `Icons`
 * `TextureCache`
+* `TextureCallbacks`
 * `MenuItems`
 * `ComponentDockState` (TODO)
 * `MouseInfo` (TODO)
