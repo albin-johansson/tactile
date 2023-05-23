@@ -21,7 +21,8 @@
 
 #include "model/event/command_events.hpp"
 #include "model/event/component_events.hpp"
-#include "model/event/document_events.hpp"
+#include "model/event/file_events.hpp"
+#include "model/event/font_events.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/menu_events.hpp"

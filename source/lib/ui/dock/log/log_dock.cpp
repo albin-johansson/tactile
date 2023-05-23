@@ -188,7 +188,7 @@ void show_log_dock(const Model& model, Entity, Dispatcher& dispatcher)
                      &show_log_dock};
 
   if (show_log_dock != settings.test_flag(SETTINGS_SHOW_LOG_DOCK_BIT)) {
-    dispatcher.enqueue<SetSettingFlagEvent>(SETTINGS_SHOW_LOG_DOCK_BIT, show_log_dock);
+    dispatcher.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_LOG_DOCK_BIT, show_log_dock);
   }
 
   gDockState.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);

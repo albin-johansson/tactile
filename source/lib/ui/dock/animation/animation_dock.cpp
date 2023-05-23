@@ -283,7 +283,7 @@ void show_animation_dock(const Model& model, Entity, Dispatcher& dispatcher)
                      &show_animation_dock};
 
   if (show_animation_dock != settings.test_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT)) {
-    dispatcher.enqueue<SetSettingFlagEvent>(SETTINGS_SHOW_ANIMATION_DOCK_BIT,
+    dispatcher.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_ANIMATION_DOCK_BIT,
                                             show_animation_dock);
   }
 

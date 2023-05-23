@@ -41,9 +41,6 @@
 #include "model/delegates/map_delegate.hpp"
 #include "model/delegates/menu_delegate.hpp"
 #include "model/delegates/settings_delegate.hpp"
-#include "model/event/map_events.hpp"
-#include "model/event/menu_events.hpp"
-#include "model/event/view_events.hpp"
 #include "model/systems/file_history_system.hpp"
 #include "model/systems/menu_system.hpp"
 #include "model/systems/texture_system.hpp"
@@ -125,6 +122,9 @@ void App::_subscribe_to_events()
   // Setting events
   mDispatcher.sink<ShowSettingsEvent>().connect<&App::_on_show_settings>(this);
   mDispatcher.sink<SetSettingsEvent>().connect<&App::_on_set_settings>(this);
+  mDispatcher.sink<SetFlagSettingEvent>().connect<&App::_on_set_flag_setting>(this);
+  mDispatcher.sink<NegateFlagSettingEvent>().connect<&App::_on_negate_flag_setting>(this);
+  mDispatcher.sink<SetViewportOverlayPosEvent>().connect<&App::_on_set_viewport_overlay_pos>(this);
   mDispatcher.sink<SetLanguageEvent>().connect<&App::_on_set_language>(this);
   mDispatcher.sink<SetThemeEvent>().connect<&App::_on_set_theme>(this);
   mDispatcher.sink<ResetDockVisibilitiesEvent>().connect<&App::_on_reset_dock_visibilities>(this);
@@ -249,21 +249,25 @@ void App::on_font_reload()
 
 void App::_on_menu_action(const MenuActionEvent& event)
 {
+  spdlog::trace("[MenuActionEvent] action: {}", magic_enum::enum_name(event.action));
   on_menu_action(get_global_model(), mDispatcher, event);
 }
 
 void App::_on_undo(const UndoEvent& event)
 {
+  spdlog::trace("[UndoEvent]");
   on_undo(get_global_model(), event);
 }
 
 void App::_on_redo(const RedoEvent& event)
 {
+  spdlog::trace("[RedoEvent]");
   on_redo(get_global_model(), event);
 }
 
 void App::_on_set_command_capacity(const SetCommandCapacityEvent& event)
 {
+  spdlog::trace("[SetCommandCapacityEvent] capacity: {}", event.capacity);
   on_set_command_capacity(get_global_model(), event);
 }
 
@@ -400,26 +404,49 @@ void App::_on_reset_font_size(const ResetFontSizeEvent& event)
 
 void App::_on_show_settings(const ShowSettingsEvent& event)
 {
+  spdlog::trace("[ShowSettingsEvent]");
   on_show_settings(get_global_model(), event);
 }
 
 void App::_on_set_settings(const SetSettingsEvent& event)
 {
+  spdlog::trace("[SetSettingsEvent]");
   on_set_settings(get_global_model(), mDispatcher, event);
+}
+
+void App::_on_set_flag_setting(const SetFlagSettingEvent& event)
+{
+  spdlog::trace("[SetFlagSettingEvent] flag: {}, value: {}", event.flag, event.value);
+  on_set_flag_setting(get_global_model(), event);
+}
+
+void App::_on_negate_flag_setting(const NegateFlagSettingEvent& event)
+{
+  spdlog::trace("[NegateFlagSettingEvent] flag: {}", event.flag);
+  on_negate_flag_setting(get_global_model(), event);
+}
+
+void App::_on_set_viewport_overlay_pos(const SetViewportOverlayPosEvent& event)
+{
+  spdlog::trace("[SetViewportOverlayPosEvent] pos: {}", magic_enum::enum_name(event.pos));
+  on_set_viewport_overlay_pos(get_global_model(), event);
 }
 
 void App::_on_set_language(const SetLanguageEvent& event)
 {
+  spdlog::trace("[SetLanguageEvent] lang: {}", magic_enum::enum_name(event.language));
   on_set_language(get_global_model(), mDispatcher, event);
 }
 
 void App::_on_set_theme(const SetThemeEvent& event)
 {
+  spdlog::trace("[SetThemeEvent] theme: {}", magic_enum::enum_name(event.theme));
   on_set_theme(get_global_model(), event);
 }
 
 void App::_on_reset_dock_visibilities(const ResetDockVisibilitiesEvent& event)
 {
+  spdlog::trace("[ResetDockVisibilitiesEvent]");
   on_reset_dock_visibilities(get_global_model(), event);
 }
 

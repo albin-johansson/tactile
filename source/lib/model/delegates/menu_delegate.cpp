@@ -21,7 +21,6 @@
 
 #include <centurion/system.hpp>
 #include <magic_enum.hpp>
-#include <spdlog/spdlog.h>
 
 #include "components/file_history.hpp"
 #include "model/event/all.hpp"
@@ -35,10 +34,9 @@
 
 namespace tactile {
 
+// TODO this function should only dispatch other events, not make changes directly
 void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent& event)
 {
-  spdlog::trace("[MenuActionEvent] action: {}", magic_enum::enum_name(event.action));
-
   auto& settings = model.get<Settings>();
 
   switch (event.action) {

@@ -161,7 +161,7 @@ void show_layer_dock(const Model& model, Entity, Dispatcher& dispatcher)
                      &show_layer_dock};
 
   if (show_layer_dock != settings.test_flag(SETTINGS_SHOW_LAYER_DOCK_BIT)) {
-    dispatcher.enqueue<SetSettingFlagEvent>(SETTINGS_SHOW_LAYER_DOCK_BIT,
+    dispatcher.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_LAYER_DOCK_BIT,
                                             show_layer_dock);
   }
 

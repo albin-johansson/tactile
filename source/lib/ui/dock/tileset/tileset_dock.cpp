@@ -64,7 +64,7 @@ void show_tileset_dock(const Model& model, Entity, Dispatcher& dispatcher)
                      &show_tileset_dock};
 
   if (show_tileset_dock != settings.test_flag(SETTINGS_SHOW_TILESET_DOCK_BIT)) {
-    dispatcher.enqueue<SetSettingFlagEvent>(SETTINGS_SHOW_TILESET_DOCK_BIT,
+    dispatcher.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_TILESET_DOCK_BIT,
                                             show_tileset_dock);
   }
 

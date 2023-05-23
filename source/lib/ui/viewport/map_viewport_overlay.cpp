@@ -134,7 +134,7 @@ void _push_overlay_context_menu(const Strings& strings,
     if (ImGui::MenuItem(strings.action.show_frame_rate.c_str(),
                         nullptr,
                         &show_overlay_fps)) {
-      dispatcher.enqueue<SetSettingFlagEvent>(SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT,
+      dispatcher.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT,
                                               show_overlay_fps);
     }
   }

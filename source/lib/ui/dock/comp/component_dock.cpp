@@ -135,7 +135,7 @@ void show_component_dock(const Model& model, Entity, Dispatcher& dispatcher)
                      &show_component_dock};
 
   if (show_component_dock != settings.test_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT)) {
-    dispatcher.enqueue<SetSettingFlagEvent>(SETTINGS_SHOW_COMPONENT_DOCK_BIT,
+    dispatcher.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_COMPONENT_DOCK_BIT,
                                             show_component_dock);
   }
 

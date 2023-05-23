@@ -21,7 +21,6 @@
 
 #include "common/type/dispatcher.hpp"
 #include "model/event/setting_events.hpp"
-#include "model/event/view_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile {
@@ -29,6 +28,12 @@ namespace tactile {
 void on_show_settings(Model& model, const ShowSettingsEvent& event);
 
 void on_set_settings(Model& model, Dispatcher& dispatcher, const SetSettingsEvent& event);
+
+void on_set_flag_setting(Model& model, const SetFlagSettingEvent& event);
+
+void on_negate_flag_setting(Model& model, const NegateFlagSettingEvent& event);
+
+void on_set_viewport_overlay_pos(Model& model, const SetViewportOverlayPosEvent& event);
 
 void on_set_language(Model& model, Dispatcher& dispatcher, const SetLanguageEvent& event);
 

@@ -21,22 +21,10 @@
 
 namespace tactile {
 
-struct QuitEvent final {};
-
 struct ToggleUiEvent final {};
 
 struct ToggleGridEvent final {};
 
 struct ToggleHighlightLayerEvent final {};
-
-struct ShowSettingsEvent final {};
-
-struct ReloadFontsEvent final {};
-
-struct ResetFontSizeEvent final {};
-
-struct IncreaseFontSizeEvent final {};
-
-struct DecreaseFontSizeEvent final {};
 
 }  // namespace tactile

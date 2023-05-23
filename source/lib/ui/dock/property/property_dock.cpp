@@ -37,7 +37,7 @@
 #include "core/tileset.hpp"
 #include "io/compression.hpp"
 #include "model/context.hpp"
-#include "model/event/document_events.hpp"
+#include "model/event/file_events.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/object_events.hpp"
@@ -525,7 +525,7 @@ void show_property_dock(const Model& model, Entity, Dispatcher& dispatcher)
                        &show_property_dock};
 
   if (show_property_dock != settings.test_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT)) {
-    dispatcher.enqueue<SetSettingFlagEvent>(SETTINGS_SHOW_PROPERTY_DOCK_BIT,
+    dispatcher.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_PROPERTY_DOCK_BIT,
                                             show_property_dock);
   }
 

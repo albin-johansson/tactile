@@ -26,31 +26,41 @@
 
 namespace tactile {
 
+/// Event for opening the settings dialog.
+struct ShowSettingsEvent final {};
+
+/// Event for overwriting the current settings.
 struct SetSettingsEvent final {
-  Settings settings;
+  Settings settings;  ///< The new settings.
 };
 
-struct SetSettingFlagEvent final {
-  SettingsFlagBits flag {};
-  bool value {};
+/// Event for setting the value of a single flag setting.
+struct SetFlagSettingEvent final {
+  SettingsFlagBits flag {};  ///< The setting to modify.
+  bool value {};             ///< The new value.
 };
 
-struct NegateSettingFlagEvent final {
-  SettingsFlagBits flag {};
+/// Event for negating the value of a single flag setting.
+struct NegateFlagSettingEvent final {
+  SettingsFlagBits flag {};  ///< The setting to negate.
 };
 
+/// Event for setting the viewport overlay position.
 struct SetViewportOverlayPosEvent final {
-  OverlayPos pos {};
+  OverlayPos pos {};  ///< The new viewport overlay position.
 };
 
+/// Event for setting the current display language.
 struct SetLanguageEvent final {
-  Lang language {};
+  Lang language {};  ///< The new display language.
 };
 
+/// Event for setting the editor theme.
 struct SetThemeEvent final {
-  Theme theme {};
+  Theme theme {};  ///< The new editor theme.
 };
 
+/// Event for resetting the visibility of all dock widgets.
 struct ResetDockVisibilitiesEvent final {};
 
 }  // namespace tactile

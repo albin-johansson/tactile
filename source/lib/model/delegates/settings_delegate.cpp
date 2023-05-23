@@ -19,11 +19,8 @@
 
 #include "settings_delegate.hpp"
 
-#include <magic_enum.hpp>
-#include <spdlog/spdlog.h>
-
 #include "model/event/command_events.hpp"
-#include "model/event/view_events.hpp"
+#include "model/event/font_events.hpp"
 #include "model/settings.hpp"
 #include "model/systems/menu_system.hpp"
 #include "ui/dialog/settings_dialog.hpp"
@@ -34,16 +31,12 @@ namespace tactile {
 
 void on_show_settings(Model& model, const ShowSettingsEvent&)
 {
-  spdlog::trace("[ShowSettingsEvent]");
-
   const auto& settings = model.get<Settings>();
   ui::open_settings_dialog(settings);
 }
 
 void on_set_settings(Model& model, Dispatcher& dispatcher, const SetSettingsEvent& event)
 {
-  spdlog::trace("[SetSettingsEvent]");
-
   auto& curr_settings = model.get<Settings>();
 
   const auto prev_settings = curr_settings.copy();
@@ -65,10 +58,26 @@ void on_set_settings(Model& model, Dispatcher& dispatcher, const SetSettingsEven
   }
 }
 
+void on_set_flag_setting(Model& model, const SetFlagSettingEvent& event)
+{
+  auto& settings = model.get<Settings>();
+  settings.set_flag(event.flag, event.value);
+}
+
+void on_negate_flag_setting(Model& model, const NegateFlagSettingEvent& event)
+{
+  auto& settings = model.get<Settings>();
+  settings.negate_flag(event.flag);
+}
+
+void on_set_viewport_overlay_pos(Model& model, const SetViewportOverlayPosEvent& event)
+{
+  auto& settings = model.get<Settings>();
+  settings.set_viewport_overlay_pos(event.pos);
+}
+
 void on_set_language(Model& model, Dispatcher& dispatcher, const SetLanguageEvent& event)
 {
-  spdlog::trace("[SetLanguageEvent] language: {}", magic_enum::enum_name(event.language));
-
   auto& settings = model.get<Settings>();
   settings.set_language(event.language);
 

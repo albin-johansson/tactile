@@ -24,7 +24,12 @@
 
 #include "common/type/dispatcher.hpp"
 #include "engine/app_delegate.hpp"
-#include "model/event/all.hpp"
+#include "model/event/command_events.hpp"
+#include "model/event/file_events.hpp"
+#include "model/event/font_events.hpp"
+#include "model/event/map_events.hpp"
+#include "model/event/menu_events.hpp"
+#include "model/event/setting_events.hpp"
 
 namespace tactile {
 
@@ -89,6 +94,9 @@ class App final : public AppDelegate {
   // Setting events
   void _on_show_settings(const ShowSettingsEvent& event);
   void _on_set_settings(const SetSettingsEvent& event);
+  void _on_set_flag_setting(const SetFlagSettingEvent& event);
+  void _on_negate_flag_setting(const NegateFlagSettingEvent& event);
+  void _on_set_viewport_overlay_pos(const SetViewportOverlayPosEvent& event);
   void _on_set_language(const SetLanguageEvent& event);
   void _on_set_theme(const SetThemeEvent& event);
   void _on_reset_dock_visibilities(const ResetDockVisibilitiesEvent& event);

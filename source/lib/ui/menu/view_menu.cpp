@@ -50,7 +50,7 @@ void _push_widgets_menu(const Model& model,
     if (ImGui::MenuItem(strings.window.property_dock.c_str(),
                         nullptr,
                         settings.test_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT))) {
-      dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_PROPERTY_DOCK_BIT);
+      dispatcher.enqueue<NegateFlagSettingEvent>(SETTINGS_SHOW_PROPERTY_DOCK_BIT);
     }
 
     {
@@ -58,26 +58,26 @@ void _push_widgets_menu(const Model& model,
       if (ImGui::MenuItem(strings.window.layer_dock.c_str(),
                           nullptr,
                           settings.test_flag(SETTINGS_SHOW_LAYER_DOCK_BIT))) {
-        dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_LAYER_DOCK_BIT);
+        dispatcher.enqueue<NegateFlagSettingEvent>(SETTINGS_SHOW_LAYER_DOCK_BIT);
       }
 
       if (ImGui::MenuItem(strings.window.tileset_dock.c_str(),
                           nullptr,
                           settings.test_flag(SETTINGS_SHOW_TILESET_DOCK_BIT))) {
-        dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_TILESET_DOCK_BIT);
+        dispatcher.enqueue<NegateFlagSettingEvent>(SETTINGS_SHOW_TILESET_DOCK_BIT);
       }
     }
 
     if (ImGui::MenuItem(strings.window.log_dock.c_str(),
                         nullptr,
                         settings.test_flag(SETTINGS_SHOW_LOG_DOCK_BIT))) {
-      dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_LOG_DOCK_BIT);
+      dispatcher.enqueue<NegateFlagSettingEvent>(SETTINGS_SHOW_LOG_DOCK_BIT);
     }
 
     if (ImGui::MenuItem(strings.window.component_dock.c_str(),
                         nullptr,
                         settings.test_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT))) {
-      dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_COMPONENT_DOCK_BIT);
+      dispatcher.enqueue<NegateFlagSettingEvent>(SETTINGS_SHOW_COMPONENT_DOCK_BIT);
     }
 
     {
@@ -85,7 +85,7 @@ void _push_widgets_menu(const Model& model,
       if (ImGui::MenuItem(strings.window.animation_dock.c_str(),
                           nullptr,
                           settings.test_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT))) {
-        dispatcher.enqueue<NegateSettingFlagEvent>(SETTINGS_SHOW_ANIMATION_DOCK_BIT);
+        dispatcher.enqueue<NegateFlagSettingEvent>(SETTINGS_SHOW_ANIMATION_DOCK_BIT);
       }
     }
   }
