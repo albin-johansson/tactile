@@ -48,6 +48,7 @@
 
 # Generated Doxygen output
 doxygen-out
+doxy
 
 # Build output
 build
