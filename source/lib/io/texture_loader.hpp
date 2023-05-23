@@ -33,11 +33,19 @@ struct TextureDataDeleter final {
 
 using TexturePixelData = Unique<uchar, TextureDataDeleter>;
 
+/// Represents a loaded image file.
 struct TextureData final {
-  TexturePixelData pixels;
-  Int2 size;
+  TexturePixelData pixels;  ///< The image pixel data.
+  Int2 size {};             ///< The image dimensions.
 };
 
+/**
+ * Loads raw texture data from an image file on disk.
+ *
+ * \param path the file path to the texture file.
+ *
+ * \return the loaded texture data, or nothing if something went wrong.
+ */
 [[nodiscard]] auto load_texture_data(const Path& path) -> Maybe<TextureData>;
 
 }  // namespace tactile
