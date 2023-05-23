@@ -27,9 +27,9 @@
 
 namespace tactile {
 
-// TODO just store component instances? not entities for separate component instances
+/// Component featured by all entities that can store properties and components.
 struct Context final {
-  String name;
+  String name;                 ///< User provided name associated with the context.
   StringMap<Attribute> props;  ///< Attached attribute values, i.e. "properties".
   Vec<Entity> comps;           ///< Attached components.
 };
