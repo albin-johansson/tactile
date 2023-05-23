@@ -19,7 +19,7 @@
 
 #include "set_animation_frame_duration.hpp"
 
-#include "core/tile.hpp"
+#include "components/tile.hpp"
 #include "model/context.hpp"
 #include "systems/language_system.hpp"
 

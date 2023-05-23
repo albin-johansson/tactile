@@ -26,7 +26,7 @@
 
 #include "common/color.hpp"
 #include "components/document.hpp"
-#include "core/tile.hpp"
+#include "components/tile.hpp"
 #include "core/tileset.hpp"
 #include "core/viewport.hpp"
 #include "model/context.hpp"

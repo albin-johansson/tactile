@@ -21,7 +21,7 @@
 
 #include "common/debug/assert.hpp"
 #include "common/util/vector.hpp"
-#include "core/tile.hpp"
+#include "components/tile.hpp"
 #include "model/context.hpp"
 #include "systems/language_system.hpp"
 

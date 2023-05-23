@@ -20,7 +20,7 @@
 #include "add_animation_frame.hpp"
 
 #include "common/util/vector.hpp"
-#include "core/tile.hpp"
+#include "components/tile.hpp"
 #include "model/context.hpp"
 #include "model/systems/tileset_system.hpp"
 #include "systems/language_system.hpp"
