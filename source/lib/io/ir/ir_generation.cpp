@@ -276,13 +276,14 @@ auto convert_map_document_to_ir(const Model& model, const Entity map_document_en
   const auto& document = model.get<Document>(map_document_entity);
   const auto& map_document = model.get<MapDocument>(map_document_entity);
   const auto& map = model.get<Map>(map_document.map);
+  const auto& map_identifiers = model.get<MapIdentifiers>(map_document.map);
   const auto& tile_format = model.get<TileFormat>(map_document.map);
 
   MapIR ir_map;
   ir_map.extent = map.extent;
   ir_map.tile_size = map.tile_size;
-  ir_map.next_object_id = map.next_object_id;
-  ir_map.next_layer_id = map.next_layer_id;
+  ir_map.next_object_id = map_identifiers.next_object_id;
+  ir_map.next_layer_id = map_identifiers.next_layer_id;
 
   _convert_tile_format(tile_format, ir_map.tile_format);
 

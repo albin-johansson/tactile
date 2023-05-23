@@ -291,6 +291,7 @@ void _attach_tileset_to_map(Model& model,
 
 void _restore_tileset_documents(Model& model,
                                 Map& map,
+                                MapIdentifiers& map_identifiers,
                                 const Entity component_set_entity,
                                 const MapIR& ir_map)
 {
@@ -303,10 +304,11 @@ void _restore_tileset_documents(Model& model,
   }
 
   // Determine the next available tile identifier
-  map.next_tile_id = 1;
+  map_identifiers.next_tile_id = 1;
   for (const auto attached_tileset_entity: map.attached_tilesets) {
     const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
-    map.next_tile_id = std::max(map.next_tile_id, attached_tileset.last_tile + 1);
+    map_identifiers.next_tile_id =
+        std::max(map_identifiers.next_tile_id, attached_tileset.last_tile + 1);
   }
 
   if (!map.attached_tilesets.empty()) {
@@ -373,14 +375,16 @@ void create_map_document_from_ir(const MapIR& ir_map,
   auto& map = model.get<Map>(map_document.map);
   map.extent = ir_map.extent;
   map.tile_size = ir_map.tile_size;
-  map.next_layer_id = ir_map.next_layer_id;
-  map.next_object_id = ir_map.next_object_id;
+
+  auto& map_identifiers = model.get<MapIdentifiers>(map_document.map);
+  map_identifiers.next_layer_id = ir_map.next_layer_id;
+  map_identifiers.next_object_id = ir_map.next_object_id;
 
   auto& tile_format = model.get<TileFormat>(map_document.map);
 
   _restore_tile_format(tile_format, ir_map.tile_format);
   _restore_component_definitions(model, component_set, ir_map);
-  _restore_tileset_documents(model, map, document.component_set, ir_map);
+  _restore_tileset_documents(model, map, map_identifiers, document.component_set, ir_map);
   _restore_layers(model, document.component_set, map_document.map, ir_map);
   _restore_context(model, document.component_set, map_document.map, ir_map.context);
 }

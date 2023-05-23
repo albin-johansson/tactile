@@ -132,12 +132,12 @@ auto resize_map(Model& model, Map& map, TileExtent new_extent) -> Result;
  * root layer is used instead if this isn't the case.
  *
  * \param model the associated model.
- * \param map the map that will contain the new layer.
+ * \param map_entity a map entity.
  * \param type the type of the new layer.
  *
  * \return a layer entity.
  */
-auto add_new_layer_to_map(Model& model, Map& map, LayerType type) -> Entity;
+auto add_new_layer_to_map(Model& model, Entity map_entity, LayerType type) -> Entity;
 
 /**
  * Attaches a layer to a map.
@@ -174,12 +174,13 @@ void remove_layer_from_map(Model& model, Map& map, Entity layer_entity);
  * tile identifier property associated with the map.
  *
  * \param model the associated model.
- * \param map the target map.
+ * \param map_entity a map entity.
  * \param tileset_entity a tileset entity.
  *
  * \return an attached tileset entity.
  */
-auto attach_tileset_to_map(Model& model, Map& map, Entity tileset_entity) -> Entity;
+auto attach_tileset_to_map(Model& model, Entity map_entity, Entity tileset_entity)
+    -> Entity;
 
 /// Indicates whether the 'remove row' action is currently available.
 [[nodiscard]] auto can_tile_row_be_removed(const Model& model) -> bool;

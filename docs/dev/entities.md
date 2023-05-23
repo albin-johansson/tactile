@@ -13,6 +13,7 @@ These components are globally accessible in the model.
 * `Icons`
 * `LanguageContext` (TODO)
 * `ComponentDockState` (TODO)
+* `MouseInfo` (TODO)
 
 ## Documents
 
@@ -36,6 +37,8 @@ These components are globally accessible in the model.
 
 * `Context`
 * `Map`
+* `MapIdentifiers`
+* `MapLayerSuffixes`
 * `TileFormat`
 
 ## Layers

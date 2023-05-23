@@ -38,9 +38,12 @@
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto _create_layer(Model& model, Map& map, const LayerType type) -> Entity
+[[nodiscard]] auto _create_layer(Model& model,
+                                 Map& map,
+                                 MapIdentifiers& identifiers,
+                                 const LayerType type) -> Entity
 {
-  const auto layer_id = map.next_layer_id++;
+  const auto layer_id = identifiers.next_layer_id++;
   switch (type) {
     case LayerType::TileLayer:
       return create_tile_layer(model, layer_id, map.extent);
@@ -86,6 +89,18 @@ auto create_map(Model& model, const TileExtent& extent, const Int2& tile_size) -
   map.extent = extent;
   map.tile_size = tile_size;
   map.root_layer = create_group_layer(model, -1);
+  map.active_tileset = kNullEntity;
+  map.active_layer = kNullEntity;
+
+  auto& identifiers = model.add<MapIdentifiers>(map_entity);
+  identifiers.next_tile_id = 1;
+  identifiers.next_layer_id = 1;
+  identifiers.next_object_id = 1;
+
+  auto& layer_suffixes = model.add<MapLayerSuffixes>(map_entity);
+  layer_suffixes.tile_layer_suffix = 1;
+  layer_suffixes.object_layer_suffix = 1;
+  layer_suffixes.group_layer_suffix = 1;
 
   model.add<TileFormat>(map_entity);
 
@@ -212,9 +227,15 @@ auto resize_map(Model& model, Map& map, const TileExtent new_extent) -> Result
   return success;
 }
 
-auto add_new_layer_to_map(Model& model, Map& map, const LayerType type) -> Entity
+auto add_new_layer_to_map(Model& model, const Entity map_entity, const LayerType type)
+    -> Entity
 {
-  const auto layer_entity = _create_layer(model, map, type);
+  TACTILE_ASSERT(is_map_entity(model, map_entity));
+
+  auto& map = model.get<Map>(map_entity);
+  auto& map_identifiers = model.get<MapIdentifiers>(map_entity);
+
+  const auto layer_entity = _create_layer(model, map, map_identifiers, type);
 
   auto* root_layer = _determine_target_root_layer(model, map);
   root_layer->append(layer_entity);
@@ -251,18 +272,24 @@ void remove_layer_from_map(Model& model, Map& map, const Entity layer_entity)
   });
 }
 
-auto attach_tileset_to_map(Model& model, Map& map, const Entity tileset_entity)
-    -> AttachedTilesetEntity
+auto attach_tileset_to_map(Model& model,
+                           const Entity map_entity,
+                           const Entity tileset_entity) -> AttachedTilesetEntity
 {
-  // TODO assert that the tileset isn't already attached
+  TACTILE_ASSERT(is_map_entity(model, map_entity));
   TACTILE_ASSERT(is_tileset_entity(model, tileset_entity));
+
+  auto& map = model.get<Map>(map_entity);
+  auto& map_identifiers = model.get<MapIdentifiers>(map_entity);
+
+  // TODO assert that the tileset isn't already attached
   const auto& tileset = model.get<Tileset>(tileset_entity);
 
   const auto attached_tileset_entity =
-      create_attached_tileset(model, tileset_entity, map.next_tile_id);
+      create_attached_tileset(model, tileset_entity, map_identifiers.next_tile_id);
 
   map.attached_tilesets.push_back(attached_tileset_entity);
-  map.next_tile_id += (tileset.row_count * tileset.column_count) + 1;
+  map_identifiers.next_tile_id += (tileset.row_count * tileset.column_count) + 1;
 
   return attached_tileset_entity;
 }

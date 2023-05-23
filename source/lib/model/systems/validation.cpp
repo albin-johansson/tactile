@@ -65,9 +65,11 @@ auto is_context_entity(const Model& model, const Entity entity) -> bool
 
 auto is_map_entity(const Model& model, const Entity entity) -> bool
 {
-  return entity != kNullEntity &&       //
-         model.has<Context>(entity) &&  //
-         model.has<Map>(entity) &&      //
+  return entity != kNullEntity &&                //
+         model.has<Context>(entity) &&           //
+         model.has<Map>(entity) &&               //
+         model.has<MapIdentifiers>(entity) &&    //
+         model.has<MapLayerSuffixes>(entity) &&  //
          model.has<TileFormat>(entity);
 }
 

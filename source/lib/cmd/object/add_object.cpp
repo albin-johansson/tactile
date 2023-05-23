@@ -57,8 +57,6 @@ void AddObject::undo()
 void AddObject::redo()
 {
   auto& model = get_global_model();
-
-  auto& map = model.get<Map>(mMapEntity);
   auto& object_layer = model.get<ObjectLayer>(mObjectLayerEntity);
 
   if (!mObjectEntity.has_value()) {
@@ -74,7 +72,8 @@ void AddObject::redo()
   object.size = mSize;
 
   if (!object.meta_id.has_value()) {
-    object.meta_id = map.next_object_id++;
+    auto& map_identifiers = model.get<MapIdentifiers>(mMapEntity);
+    object.meta_id = map_identifiers.next_object_id++;
   }
 
   object_layer.objects.push_back(object_entity);

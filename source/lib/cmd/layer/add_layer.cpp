@@ -58,12 +58,12 @@ void AddLayer::redo()
   auto& model = get_global_model();
 
   const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
-  auto& map = model.get<Map>(map_document.map);
 
   if (mLayerEntity == kNullEntity) {
-    mLayerEntity = sys::add_new_layer_to_map(model, map, mLayerType);
+    mLayerEntity = sys::add_new_layer_to_map(model, map_document.map, mLayerType);
   }
   else {
+    auto& map = model.get<Map>(map_document.map);
     sys::attach_layer_to_map(model, map, mLayerEntity, mParentLayerEntity);
   }
 
