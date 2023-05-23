@@ -23,8 +23,8 @@
 #include <imgui_internal.h>
 
 #include "common/color.hpp"
+#include "components/texture.hpp"
 #include "core/map.hpp"
-#include "core/texture.hpp"
 #include "core/tileset.hpp"
 #include "io/proto/settings.hpp"
 #include "model/event/tileset_events.hpp"

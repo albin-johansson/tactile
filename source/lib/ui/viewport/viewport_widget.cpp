@@ -24,7 +24,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/texture.hpp"
+#include "components/texture.hpp"
 #include "core/viewport.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/viewport_events.hpp"

@@ -22,7 +22,7 @@
 #include <bit>  // bit_cast
 
 #include "common/primitives.hpp"
-#include "core/texture.hpp"
+#include "components/texture.hpp"
 #include "engine/backend/gl/gl_texture.hpp"
 #include "io/texture_loader.hpp"
 #include "model/systems/validation.hpp"

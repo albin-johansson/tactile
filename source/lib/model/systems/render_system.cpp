@@ -26,9 +26,9 @@
 
 #include "common/debug/assert.hpp"
 #include "components/context.hpp"
+#include "components/texture.hpp"
 #include "core/layer.hpp"
 #include "core/object.hpp"
-#include "core/texture.hpp"
 #include "model/settings.hpp"
 #include "model/systems/group_layer_system.hpp"
 #include "model/systems/layer_system.hpp"

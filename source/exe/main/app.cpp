@@ -29,7 +29,7 @@
 
 #include "common/fmt/vector_formatter.hpp"
 #include "components/document.hpp"
-#include "core/texture.hpp"
+#include "components/texture.hpp"
 #include "io/directories.hpp"
 #include "io/proto/history.hpp"
 #include "io/proto/session.hpp"

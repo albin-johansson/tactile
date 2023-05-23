@@ -20,9 +20,9 @@
 #include "model_system.hpp"
 
 #include "components/document.hpp"
+#include "components/texture.hpp"
 #include "core/language.hpp"
 #include "core/menu.hpp"
-#include "core/texture.hpp"
 #include "model/settings.hpp"
 
 namespace tactile::sys {
