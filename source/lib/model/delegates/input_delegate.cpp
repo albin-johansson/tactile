@@ -27,7 +27,6 @@
 #include "model/systems/document_system.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
 #include "ui/shortcut/shortcuts.hpp"
-#include "ui/ui.hpp"
 #include "ui/viewport/viewport_widget.hpp"
 
 namespace tactile {
