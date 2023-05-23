@@ -3,8 +3,6 @@ name: "CI: Ubuntu"
 on: [ push ]
 
 env:
-  DISPLAY: :99.0
-  SDL_VIDEODRIVER: x11
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
   VCPKG_CACHE_EDITION: 1
@@ -20,15 +18,6 @@ jobs:
         run: |
           sudo apt update
           sudo apt install ninja-build \
-                           libegl1-mesa-dev \
-                           libgles2-mesa-dev \
-                           libgl-dev \
-                           libasound2-dev \
-                           libpulse-dev \
-                           libx11-dev \
-                           libxmu-dev \
-                           libxi-dev \
-                           xvfb
                            gcc-12 \
                            g++-12
 
@@ -60,15 +49,6 @@ jobs:
       - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
-
-      - name: Emulate video device
-        run: |
-          /sbin/start-stop-daemon --start \
-                                  --pidfile /tmp/custom_xvfb_99.pid \
-                                  --make-pidfile \
-                                  --background \
-                                  --exec /usr/bin/Xvfb -- :99 -screen 0 800x600x24 -ac +extension GLX;
-          sleep 3
 
       - name: Generate build files
         env:
