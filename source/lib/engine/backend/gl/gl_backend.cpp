@@ -24,7 +24,6 @@
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl2.h>
-#include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
 
@@ -33,8 +32,6 @@ namespace tactile {
 OpenGLBackend::OpenGLBackend(SDL_Window* window, SDL_GLContext context)
     : mWindow {window}
 {
-  spdlog::debug("[Engine] Initializing OpenGL backend");
-
   if (!ImGui_ImplSDL2_InitForOpenGL(window, context)) {
     throw TactileError {"Could not initialize ImGui SDL2 backend"};
   }

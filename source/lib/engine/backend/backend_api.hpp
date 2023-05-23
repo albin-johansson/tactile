@@ -22,8 +22,9 @@
 namespace tactile {
 
 enum class BackendAPI {
-  OpenGL,
-  Vulkan
+  Null,    ///< No backend, useful for testing.
+  OpenGL,  ///< OpenGL 4.1.0.
+  Vulkan   ///< Vulkan 1.2.
 };
 
 }  // namespace tactile

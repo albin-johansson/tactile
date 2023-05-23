@@ -32,6 +32,7 @@
 #include "common/debug/stacktrace.hpp"
 #include "common/fmt/stacktrace_formatter.hpp"
 #include "engine/backend/gl/gl_backend.hpp"
+#include "engine/backend/null/null_backend.hpp"
 #include "engine/platform/window.hpp"
 #include "io/directories.hpp"
 #include "model/context.hpp"
@@ -68,7 +69,14 @@ Engine::Engine(const BackendAPI api)
 
   mImGui.emplace();
 
-  if (api == BackendAPI::OpenGL) {
+  if (api == BackendAPI::Null) {
+    spdlog::debug("[Engine] Using null backend");
+
+    mBackend = std::make_unique<NullBackend>();
+  }
+  else if (api == BackendAPI::OpenGL) {
+    spdlog::debug("[Engine] Initializing OpenGL backend");
+
     auto& gl_context = mSDL->get_gl_context();
     mBackend = std::make_unique<OpenGLBackend>(window.get(), gl_context.get());
   }

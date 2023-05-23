@@ -17,30 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#define DOCTEST_CONFIG_IMPLEMENT
-#include <doctest/doctest.h>
+#include "null_backend.hpp"
 
-#include "engine/engine.hpp"
+namespace tactile {
 
-using namespace tactile;
+void NullBackend::process_event(const SDL_Event*) {}
 
-class TestApp final : public AppDelegate {
- public:
-  [[nodiscard]] auto should_stop() const -> bool override { return false; }
-};
-
-auto main(int argc, char* argv[]) -> int
+Result NullBackend::new_frame()
 {
-  Engine engine {BackendAPI::Null};
-  engine.set_app_delegate(std::make_unique<TestApp>());
-  engine.get_window().show();
-
-  doctest::Context context {argc, argv};
-  const auto res = context.run();
-
-  if (context.shouldExit()) {
-    return res;
-  }
-
-  return 0;
+  return failure;
 }
+
+void NullBackend::end_frame() {}
+
+auto NullBackend::reload_font_resources() -> Result
+{
+  return failure;
+}
+
+}  // namespace tactile
