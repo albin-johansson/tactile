@@ -93,8 +93,7 @@ auto zlib_compress(const void* source, const usize source_bytes, int level)
   stream.avail_out = sizeof out_buffer;
 
   if (const auto res = deflateInit(&stream, level); res != Z_OK) {
-    spdlog::error("[Zlib] Could not initialize compression stream: {}",
-                  zError(res));
+    spdlog::error("[Zlib] Could not initialize compression stream: {}", zError(res));
     return nothing;
   }
 
@@ -139,8 +138,7 @@ auto zlib_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
   stream.avail_out = sizeof out_buffer;
 
   if (const auto res = inflateInit(&stream); res != Z_OK) {
-    spdlog::error("[Zlib] Could not initialize decompression stream: {}",
-                  zError(res));
+    spdlog::error("[Zlib] Could not initialize decompression stream: {}", zError(res));
     return nothing;
   }
 
@@ -159,6 +157,22 @@ auto zlib_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
   }
 
   return dest;
+}
+
+auto is_valid_zlib_compression_level(const int level) -> bool
+{
+  return level == Z_DEFAULT_COMPRESSION ||
+         (level >= min_zlib_compression_level() && level <= max_zlib_compression_level());
+}
+
+auto min_zlib_compression_level() -> int
+{
+  return Z_BEST_SPEED;
+}
+
+auto max_zlib_compression_level() -> int
+{
+  return Z_BEST_COMPRESSION;
 }
 
 auto zstd_compress(const void* source, const usize source_bytes) -> Maybe<ByteStream>
@@ -245,6 +259,21 @@ auto zstd_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
   result.shrink_to_fit();
 
   return result;
+}
+
+auto is_valid_zstd_compression_level(const int level) -> bool
+{
+  return level >= min_zstd_compression_level() && level <= max_zstd_compression_level();
+}
+
+auto min_zstd_compression_level() -> int
+{
+  return 1;
+}
+
+auto max_zstd_compression_level() -> int
+{
+  return 19;
 }
 
 }  // namespace tactile

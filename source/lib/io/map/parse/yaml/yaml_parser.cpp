@@ -25,7 +25,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "common/type/expected.hpp"
-#include "components/tile_format.hpp"
+#include "io/compression.hpp"
 #include "io/util/yaml.hpp"
 
 namespace tactile {

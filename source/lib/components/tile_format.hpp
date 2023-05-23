@@ -24,11 +24,7 @@
 
 namespace tactile {
 
-/**
- * Component describing the tile layer data format utilized by a map.
- *
- * \see https://github.com/facebook/zstd/issues/3133 for Zstd compression levels.
- */
+/// Component describing the tile layer data format utilized by a map.
 struct TileFormat final {
   TileEncoding encoding {TileEncoding::Plain};          ///< Encoding strategy.
   TileCompression compression {TileCompression::None};  ///< Compression strategy.
@@ -38,27 +34,5 @@ struct TileFormat final {
   /// Indicates whether the currently described format supports compression.
   [[nodiscard]] auto supports_compression() const -> bool;
 };
-
-/**
- * Indicates whether the specified value is a valid Zlib compression level.
- *
- * \param level the value to evaluate.
- * \return true if the value is valid; false otherwise.
- */
-[[nodiscard]] auto is_valid_zlib_compression_level(int level) -> bool;
-
-/**
- * Indicates whether the specified value is a valid Zstd compression level.
- *
- * \param level the value to evaluate.
- * \return true if the value is valid; false otherwise.
- */
-[[nodiscard]] auto is_valid_zstd_compression_level(int level) -> bool;
-
-[[nodiscard]] auto min_zlib_compression_level() -> int;
-[[nodiscard]] auto max_zlib_compression_level() -> int;
-
-[[nodiscard]] auto min_zstd_compression_level() -> int;
-[[nodiscard]] auto max_zstd_compression_level() -> int;
 
 }  // namespace tactile

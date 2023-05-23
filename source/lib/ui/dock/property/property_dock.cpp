@@ -35,6 +35,7 @@
 #include "core/map.hpp"
 #include "core/object.hpp"
 #include "core/tileset.hpp"
+#include "io/compression.hpp"
 #include "model/context.hpp"
 #include "model/event/document_events.hpp"
 #include "model/event/layer_events.hpp"
