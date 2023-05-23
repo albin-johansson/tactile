@@ -21,10 +21,10 @@
 
 #include "common/debug/assert.hpp"
 #include "common/debug/profile.hpp"
+#include "components/context.hpp"
 #include "components/document.hpp"
 #include "components/tile.hpp"
 #include "core/component.hpp"
-#include "core/context.hpp"
 #include "core/layer.hpp"
 #include "core/map.hpp"
 #include "core/object.hpp"

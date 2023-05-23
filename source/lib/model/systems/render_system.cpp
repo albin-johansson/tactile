@@ -25,7 +25,7 @@
 #include <imgui_internal.h>
 
 #include "common/debug/assert.hpp"
-#include "core/context.hpp"
+#include "components/context.hpp"
 #include "core/layer.hpp"
 #include "core/object.hpp"
 #include "core/texture.hpp"

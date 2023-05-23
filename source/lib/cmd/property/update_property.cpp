@@ -22,7 +22,7 @@
 #include <utility>  // move
 
 #include "common/util/lookup.hpp"
-#include "core/context.hpp"
+#include "components/context.hpp"
 #include "model/context.hpp"
 #include "systems/language_system.hpp"
 

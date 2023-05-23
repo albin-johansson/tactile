@@ -23,7 +23,7 @@
 #include "common/type/hash_map.hpp"
 #include "common/type/string.hpp"
 #include "common/type/string_map.hpp"
-#include "core/context.hpp"
+#include "components/context.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {

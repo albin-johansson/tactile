@@ -24,8 +24,8 @@
 #include <imgui.h>
 
 #include "common/util/string_buffer.hpp"
+#include "components/context.hpp"
 #include "components/document.hpp"
-#include "core/context.hpp"
 #include "model/event/property_events.hpp"
 #include "model/systems/document_system.hpp"
 #include "systems/language_system.hpp"

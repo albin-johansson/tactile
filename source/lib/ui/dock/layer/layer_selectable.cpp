@@ -25,7 +25,7 @@
 #include "common/debug/assert.hpp"
 #include "common/fmt/fmt_string.hpp"
 #include "common/type/string.hpp"
-#include "core/context.hpp"
+#include "components/context.hpp"
 #include "core/layer.hpp"
 #include "core/map.hpp"
 #include "core/object.hpp"

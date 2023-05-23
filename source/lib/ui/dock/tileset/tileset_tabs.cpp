@@ -22,8 +22,8 @@
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
+#include "components/context.hpp"
 #include "components/document.hpp"
-#include "core/context.hpp"
 #include "core/map.hpp"
 #include "core/tileset.hpp"
 #include "model/event/document_events.hpp"

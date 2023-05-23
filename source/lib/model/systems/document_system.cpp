@@ -23,8 +23,8 @@
 
 #include "cmd/command_stack.hpp"
 #include "common/debug/panic.hpp"
+#include "components/context.hpp"
 #include "components/document.hpp"
-#include "core/context.hpp"
 #include "core/map.hpp"
 #include "core/viewport.hpp"
 #include "io/map/parse/parse_map.hpp"
