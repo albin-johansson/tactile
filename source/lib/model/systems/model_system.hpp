@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "engine/backend/backend_api.hpp"  // TODO move to common/enum
+#include "common/enum/backend_api.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {

@@ -19,29 +19,20 @@
 
 #pragma once
 
-#include <SDL2/SDL.h>
-
-#include "engine/backend/backend.hpp"
+#include "backend/backend.hpp"
 
 namespace tactile {
 
-/// Represents an OpenGL renderer backend.
-class OpenGLBackend final : public Backend {
+/// This backend does nothing (useful for headless testing).
+class NullBackend final : public Backend {
  public:
-  OpenGLBackend(SDL_Window* window, SDL_GLContext context);
-
-  ~OpenGLBackend() noexcept override;
-
   void process_event(const SDL_Event* event) override;
 
   auto new_frame() -> Result override;
 
   void end_frame() override;
 
-  auto reload_font_resources() -> Result override;
-
- private:
-  SDL_Window* mWindow;
+  [[nodiscard]] auto reload_font_resources() -> Result override;
 };
 
 }  // namespace tactile

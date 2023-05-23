@@ -21,9 +21,9 @@
 
 #include <bit>  // bit_cast
 
+#include "backend/gl/gl_texture.hpp"
 #include "common/primitives.hpp"
 #include "components/texture.hpp"
-#include "engine/backend/gl/gl_texture.hpp"
 
 namespace tactile::sys {
 

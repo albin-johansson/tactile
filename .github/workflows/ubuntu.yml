@@ -29,6 +29,8 @@ jobs:
                            libxmu-dev \
                            libxi-dev \
                            xvfb
+                           gcc-12 \
+                           g++-12
 
       - name: Install Boost
         id: install-boost
