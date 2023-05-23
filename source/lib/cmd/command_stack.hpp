@@ -20,7 +20,7 @@
 #pragma once
 
 #include <concepts>  // derived_from
-#include <utility>   // move
+#include <utility>   // move, forward
 
 #include "cmd/command.hpp"
 #include "common/macros.hpp"
