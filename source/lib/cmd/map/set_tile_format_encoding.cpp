@@ -19,7 +19,7 @@
 
 #include "set_tile_format_encoding.hpp"
 
-#include "core/tile_format.hpp"
+#include "components/tile_format.hpp"
 #include "model/context.hpp"
 #include "systems/language_system.hpp"
 

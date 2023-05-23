@@ -24,7 +24,7 @@
 #include "common/tile_matrix.hpp"
 #include "common/type/string.hpp"
 #include "common/type/vec.hpp"
-#include "core/tile_format.hpp"
+#include "components/tile_format.hpp"
 
 namespace tactile {
 

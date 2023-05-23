@@ -25,11 +25,11 @@
 #include "components/document.hpp"
 #include "components/texture.hpp"
 #include "components/tile.hpp"
+#include "components/tile_format.hpp"
 #include "core/component.hpp"
 #include "core/layer.hpp"
 #include "core/map.hpp"
 #include "core/object.hpp"
-#include "core/tile_format.hpp"
 #include "core/tileset.hpp"
 #include "model/model.hpp"
 
