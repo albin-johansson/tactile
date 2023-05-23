@@ -274,7 +274,7 @@ void remove_layer_from_map(Model& model, Map& map, const Entity layer_entity)
 
 auto attach_tileset_to_map(Model& model,
                            const Entity map_entity,
-                           const Entity tileset_entity) -> AttachedTilesetEntity
+                           const Entity tileset_entity) -> Entity
 {
   TACTILE_ASSERT(is_map_entity(model, map_entity));
   TACTILE_ASSERT(is_tileset_entity(model, tileset_entity));

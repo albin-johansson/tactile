@@ -29,29 +29,6 @@ using Registry = entt::registry;
 
 inline constexpr Entity kNullEntity = entt::null;
 
-using ContextEntity = Entity;
-
-using ComponentEntity = Entity;
-using ComponentDefinitionEntity = Entity;
-using ComponentSetEntity = Entity;
-
-using DocumentEntity = Entity;
-using MapDocumentEntity = Entity;
-using TilesetDocumentEntity = Entity;
-
-using MapEntity = Entity;
-
-using TilesetEntity = Entity;
-using AttachedTilesetEntity = Entity;
-using TileEntity = Entity;
-
-using LayerEntity = Entity;
-using TileLayerEntity = Entity;
-using ObjectLayerEntity = Entity;
-using GroupLayerEntity = Entity;
-
-using ObjectEntity = Entity;
-
 /// Tag component attached to entities that should not be used.
 /// This is commonly used by commands and similar facilities to prevent "hidden" entities
 /// from being mistaken as real entities. For example, a layer entity associated with a

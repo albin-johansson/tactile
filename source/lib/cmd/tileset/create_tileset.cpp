@@ -31,7 +31,7 @@
 
 namespace tactile::cmd {
 
-CreateTileset::CreateTileset(const MapEntity map_entity,
+CreateTileset::CreateTileset(const Entity map_entity,
                              const Int2 tile_size,
                              Path image_path)
     : mMapEntity {map_entity},

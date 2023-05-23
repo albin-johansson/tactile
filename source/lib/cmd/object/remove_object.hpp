@@ -26,7 +26,7 @@ namespace tactile::cmd {
 
 class RemoveObject final : public Command {
  public:
-  RemoveObject(ObjectLayerEntity layer_entity, ObjectEntity object_entity);
+  RemoveObject(Entity object_layer_entity, Entity object_entity);
 
   void undo() override;
 
@@ -37,8 +37,8 @@ class RemoveObject final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  ObjectLayerEntity mLayerEntity;
-  ObjectEntity mObjectEntity;
+  Entity mObjectLayerEntity;
+  Entity mObjectEntity;
   bool mRemovedObject : 1 {false};
 };
 

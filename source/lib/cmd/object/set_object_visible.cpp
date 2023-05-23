@@ -25,7 +25,7 @@
 
 namespace tactile::cmd {
 
-SetObjectVisible::SetObjectVisible(const ObjectEntity object_entity, const bool visible)
+SetObjectVisible::SetObjectVisible(const Entity object_entity, const bool visible)
     : mObjectEntity {object_entity},
       mNewVisibility {visible}
 {

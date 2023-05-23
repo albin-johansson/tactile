@@ -35,7 +35,7 @@ namespace tactile::ui {
 namespace {
 
 struct AddComponentAttrDialogState final {
-  Maybe<ComponentDefinitionEntity> definition_entity;
+  Maybe<Entity> definition_entity;
   StringBuffer attribute_name_buffer {};
   bool open_dialog {};
 };

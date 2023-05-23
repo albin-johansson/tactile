@@ -19,15 +19,15 @@
 
 #pragma once
 
+#include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "cmd/command.hpp"
 
 namespace tactile::cmd {
 
 class SetObjectVisible final : public Command {
  public:
-  SetObjectVisible(ObjectEntity object_entity, bool visible);
+  SetObjectVisible(Entity object_entity, bool visible);
 
   void undo() override;
 
@@ -36,7 +36,7 @@ class SetObjectVisible final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  ObjectEntity mObjectEntity;
+  Entity mObjectEntity;
   bool mNewVisibility;
   Maybe<bool> mOldVisibility;
 };

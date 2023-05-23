@@ -28,7 +28,7 @@ namespace tactile::cmd {
 /// Command for moving an object in a map.
 class MoveObject final : public Command {
  public:
-  MoveObject(ObjectEntity object_entity, Float2 old_position, Float2 new_position);
+  MoveObject(Entity object_entity, Float2 old_position, Float2 new_position);
 
   void undo() override;
 
@@ -37,7 +37,7 @@ class MoveObject final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  ObjectEntity mObjectEntity;
+  Entity mObjectEntity;
   Float2 mOldPosition;
   Float2 mNewPosition;
 };

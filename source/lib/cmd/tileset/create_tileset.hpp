@@ -31,7 +31,7 @@ namespace tactile::cmd {
 /// Command for creating a tileset and attaching it to a map document.
 class CreateTileset final : public Command {
  public:
-  CreateTileset(MapEntity map_entity, Int2 tile_size, Path image_path);
+  CreateTileset(Entity map_entity, Int2 tile_size, Path image_path);
 
   void undo() override;
 
@@ -42,11 +42,11 @@ class CreateTileset final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  MapEntity mMapEntity;
+  Entity mMapEntity;
   Int2 mTileSize;
   Path mImagePath;
-  Maybe<TilesetDocumentEntity> mTilesetDocumentEntity;
-  Maybe<AttachedTilesetEntity> mAttachedTilesetEntity;
+  Maybe<Entity> mTilesetDocumentEntity;
+  Maybe<Entity> mAttachedTilesetEntity;
   bool mHasAttachedTileset : 1 {false};
 
   void create_tileset_document();

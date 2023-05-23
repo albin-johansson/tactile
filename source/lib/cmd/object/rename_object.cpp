@@ -27,7 +27,7 @@
 
 namespace tactile::cmd {
 
-RenameObject::RenameObject(const ObjectEntity object_entity, String name)
+RenameObject::RenameObject(const Entity object_entity, String name)
     : mObjectEntity {object_entity},
       mNewName {std::move(name)}
 {

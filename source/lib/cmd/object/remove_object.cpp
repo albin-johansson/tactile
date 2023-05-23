@@ -30,9 +30,8 @@
 
 namespace tactile::cmd {
 
-RemoveObject::RemoveObject(const ObjectLayerEntity layer_entity,
-                           const ObjectEntity object_entity)
-    : mLayerEntity {layer_entity},
+RemoveObject::RemoveObject(const Entity object_layer_entity, const Entity object_entity)
+    : mObjectLayerEntity {object_layer_entity},
       mObjectEntity {object_entity}
 {
 }
@@ -41,7 +40,7 @@ void RemoveObject::undo()
 {
   auto& model = get_global_model();
 
-  auto& object_layer = model.get<ObjectLayer>(mLayerEntity);
+  auto& object_layer = model.get<ObjectLayer>(mObjectLayerEntity);
   object_layer.objects.push_back(mObjectEntity);
 
   model.set_enabled(mObjectEntity, true);
@@ -51,7 +50,7 @@ void RemoveObject::undo()
 void RemoveObject::redo()
 {
   auto& model = get_global_model();
-  auto& object_layer = model.get<ObjectLayer>(mLayerEntity);
+  auto& object_layer = model.get<ObjectLayer>(mObjectLayerEntity);
 
   if (object_layer.active_object == mObjectEntity) {
     object_layer.active_object = kNullEntity;

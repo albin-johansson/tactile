@@ -27,7 +27,7 @@
 
 namespace tactile::cmd {
 
-SetObjectTag::SetObjectTag(const ObjectEntity object_entity, String tag)
+SetObjectTag::SetObjectTag(const Entity object_entity, String tag)
     : mObjectEntity {object_entity},
       mNewTag {std::move(tag)}
 {

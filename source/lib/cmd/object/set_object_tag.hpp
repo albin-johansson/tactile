@@ -27,7 +27,7 @@ namespace tactile::cmd {
 
 class SetObjectTag final : public Command {
  public:
-  SetObjectTag(ObjectEntity object_entity, String tag);
+  SetObjectTag(Entity object_entity, String tag);
 
   void undo() override;
 
@@ -38,7 +38,7 @@ class SetObjectTag final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  ObjectEntity mObjectEntity;
+  Entity mObjectEntity;
   String mNewTag;
   Maybe<String> mOldTag;
 };

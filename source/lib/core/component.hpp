@@ -28,7 +28,7 @@ namespace tactile {
 
 // TODO consider using UUID for component type reference, could make some systems simpler
 struct Component final {
-  ComponentDefinitionEntity definition {kNullEntity};
+  Entity definition {kNullEntity};  ///< The associated component definition.
   StringMap<Attribute> attributes;
 };
 
@@ -40,7 +40,7 @@ struct ComponentDefinition final {
 };
 
 struct ComponentSet final {
-  Vec<ComponentDefinitionEntity> definitions;
+  Vec<Entity> definitions;  ///< Associated component definitions.
 
   [[nodiscard]] auto has_component(Entity definition_entity) const -> bool;
 };

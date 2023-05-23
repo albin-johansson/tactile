@@ -45,7 +45,7 @@ class SetComponentAttrType final : public Command {
   String mAttributeName;
   AttributeType mNewType;
   Maybe<Attribute> mOldValue;
-  HashMap<ComponentEntity, Attribute> mPrevAttributes;
+  HashMap<Entity, Attribute> mPrevAttributes;  // Component entity -> attribute.
 };
 
 }  // namespace tactile::cmd

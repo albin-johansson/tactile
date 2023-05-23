@@ -28,7 +28,7 @@ namespace tactile::cmd {
 
 class RenameObject final : public Command {
  public:
-  RenameObject(ObjectEntity object_entity, String name);
+  RenameObject(Entity object_entity, String name);
 
   void undo() override;
 
@@ -39,7 +39,7 @@ class RenameObject final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  ObjectEntity mObjectEntity;
+  Entity mObjectEntity;
   String mNewName;
   Maybe<String> mOldName;
 };

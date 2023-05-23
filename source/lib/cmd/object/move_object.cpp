@@ -25,7 +25,7 @@
 
 namespace tactile::cmd {
 
-MoveObject::MoveObject(const ObjectEntity object_entity,
+MoveObject::MoveObject(const Entity object_entity,
                        const Float2 old_position,
                        const Float2 new_position)
     : mObjectEntity {object_entity},
