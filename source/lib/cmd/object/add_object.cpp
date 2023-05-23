@@ -20,8 +20,8 @@
 #include "add_object.hpp"
 
 #include "common/debug/panic.hpp"
+#include "components/map.hpp"
 #include "core/layer.hpp"
-#include "core/map.hpp"
 #include "core/object.hpp"
 #include "model/context.hpp"
 #include "model/systems/object_system.hpp"

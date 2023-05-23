@@ -23,7 +23,7 @@
 
 #include "components/context.hpp"
 #include "components/document.hpp"
-#include "core/map.hpp"
+#include "components/map.hpp"
 #include "model/context.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/map_system.hpp"

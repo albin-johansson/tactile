@@ -19,7 +19,7 @@
 
 #include "remove_tileset.hpp"
 
-#include "core/map.hpp"
+#include "components/map.hpp"
 #include "core/tileset.hpp"
 #include "model/context.hpp"
 #include "model/systems/document_system.hpp"

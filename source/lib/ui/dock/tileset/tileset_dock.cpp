@@ -23,7 +23,7 @@
 #include <imgui.h>
 
 #include "components/document.hpp"
-#include "core/map.hpp"
+#include "components/map.hpp"
 #include "core/tileset.hpp"
 #include "core/viewport.hpp"
 #include "model/context.hpp"

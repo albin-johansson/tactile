@@ -24,7 +24,7 @@
 #include "common/debug/assert.hpp"
 #include "components/context.hpp"
 #include "components/document.hpp"
-#include "core/map.hpp"
+#include "components/map.hpp"
 #include "core/tileset.hpp"
 #include "model/event/document_events.hpp"
 #include "model/event/property_events.hpp"

@@ -27,7 +27,7 @@
 #include "common/type/ecs.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
-#include "core/map.hpp"
+#include "components/map.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {

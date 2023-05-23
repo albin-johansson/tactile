@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/dispatcher.hpp"
-#include "core/map.hpp"
+#include "components/map.hpp"
 #include "model/model.hpp"
 #include "ui/viewport/viewport_cursor_info.hpp"
 

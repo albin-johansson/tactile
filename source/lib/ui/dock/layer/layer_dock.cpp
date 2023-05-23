@@ -25,7 +25,7 @@
 #include "common/type/maybe.hpp"
 #include "components/context.hpp"
 #include "components/document.hpp"
-#include "core/map.hpp"
+#include "components/map.hpp"
 #include "model/context.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/event/setting_events.hpp"

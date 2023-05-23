@@ -19,7 +19,7 @@
 
 #include "tool_system.hpp"
 
-#include "core/map.hpp"
+#include "components/map.hpp"
 #include "core/tileset.hpp"
 
 namespace tactile::sys {

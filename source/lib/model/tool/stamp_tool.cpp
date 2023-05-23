@@ -26,7 +26,7 @@
 #include "common/util/functional.hpp"
 #include "common/util/random.hpp"
 #include "components/document.hpp"
-#include "core/map.hpp"
+#include "components/map.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"

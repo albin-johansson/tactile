@@ -22,8 +22,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "components/map.hpp"
 #include "core/layer.hpp"
-#include "core/map.hpp"
 #include "model/context.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/systems/tileset_system.hpp"

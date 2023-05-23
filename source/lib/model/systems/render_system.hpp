@@ -23,7 +23,7 @@
 #include "common/primitives.hpp"
 #include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
-#include "core/map.hpp"
+#include "components/map.hpp"
 #include "core/tileset.hpp"
 #include "model/context.hpp"
 #include "model/model.hpp"

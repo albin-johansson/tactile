@@ -19,7 +19,7 @@
 
 #include "set_tile_format_compression.hpp"
 
-#include "core/map.hpp"
+#include "components/map.hpp"
 #include "model/context.hpp"
 #include "systems/language_system.hpp"
 

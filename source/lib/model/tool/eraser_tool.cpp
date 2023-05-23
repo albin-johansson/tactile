@@ -25,8 +25,8 @@
 #include <entt/signal/dispatcher.hpp>
 
 #include "components/document.hpp"
+#include "components/map.hpp"
 #include "core/layer.hpp"
-#include "core/map.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/model.hpp"
 #include "model/mouse_info.hpp"

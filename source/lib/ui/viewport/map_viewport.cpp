@@ -26,8 +26,8 @@
 
 #include "common/color.hpp"
 #include "components/document.hpp"
+#include "components/map.hpp"
 #include "core/layer.hpp"
-#include "core/map.hpp"
 #include "core/object.hpp"
 #include "core/viewport.hpp"
 #include "model/context.hpp"

@@ -19,8 +19,8 @@
 
 #include "set_zlib_compression_level.hpp"
 
+#include "components/map.hpp"
 #include "components/tile_format.hpp"
-#include "core/map.hpp"
 #include "model/context.hpp"
 #include "systems/language_system.hpp"
 
