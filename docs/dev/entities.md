@@ -6,12 +6,13 @@ This document provides an overview of the components featured by different kinds
 
 These components are globally accessible in the model.
 
-* `Settings`
 * `DocumentContext`
+* `Settings`
+* `Languages`
+* `FileHistory`
+* `Icons`
 * `TextureCache`
 * `MenuItems`
-* `Icons`
-* `LanguageContext` (TODO)
 * `ComponentDockState` (TODO)
 * `MouseInfo` (TODO)
 

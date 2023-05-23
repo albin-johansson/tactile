@@ -54,8 +54,6 @@ class App final : public AppDelegate {
   void _init_persistent_settings();
   void _init_widgets();
 
-  void _add_open_documents_to_file_history();
-
   void _on_menu_action(const MenuActionEvent& event);
 
   // Command events

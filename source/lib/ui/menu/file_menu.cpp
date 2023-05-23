@@ -22,9 +22,9 @@
 #include <imgui.h>
 
 #include "common/type/path.hpp"
+#include "components/file_history.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/menu_events.hpp"
-#include "model/file_history.hpp"
 #include "systems/language_system.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
@@ -39,7 +39,7 @@ void _push_recent_files_menu(const Model& model,
   if (const Menu menu {strings.menu.recent_files.c_str()}; menu.is_open()) {
     push_menu_item(model, MenuAction::ReopenLastFile, dispatcher);
 
-    const auto& history = get_file_history();
+    const auto& history = model.get<FileHistory>();
     if (!history.entries.empty()) {
       ImGui::Separator();
     }

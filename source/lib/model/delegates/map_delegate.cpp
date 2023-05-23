@@ -31,8 +31,8 @@
 #include "io/ir/ir_restoration.hpp"
 #include "io/map/parse/parse_map.hpp"
 #include "model/event/map_events.hpp"
-#include "model/file_history.hpp"
 #include "model/systems/document_system.hpp"
+#include "model/systems/file_history_system.hpp"
 #include "ui/dialog/create_map_dialog.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"
 
@@ -89,7 +89,9 @@ void on_open_map(Model& model, const OpenMapEvent& event)
     if (ir_map.has_value()) {
       const auto absolute_document_path = fs::absolute(event.path);
       create_map_document_from_ir(*ir_map, absolute_document_path, model);
-      add_to_file_history(absolute_document_path);
+
+      auto& file_history = model.get<FileHistory>();
+      sys::add_to_file_history(file_history, absolute_document_path);
     }
   }
 }

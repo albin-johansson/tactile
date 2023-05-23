@@ -19,36 +19,24 @@
 
 #pragma once
 
+#include "common/primitives.hpp"
 #include "common/type/deque.hpp"
 #include "common/type/maybe.hpp"
-#include "common/type/path.hpp"
 #include "common/type/string.hpp"
 
 namespace tactile {
 
-// We store paths as strings because that makes displaying them
-// in menus much easier (and faster)
+inline constexpr usize kFileHistoryMaxSize = 10;
+
+/**
+ * Context component tracking previously opened files.
+ *
+ * \details We store paths as strings because that makes displaying them in menus much
+ * easier (and faster).
+ */
 struct FileHistory final {
-  Maybe<String> last_closed_file;
-  Deque<String> entries;
+  Maybe<String> last_closed_file;  ///< Path to the last closed document, if any.
+  Deque<String> entries;           ///< Paths to previously opened files.
 };
-
-/// Clears the current in-memory recent file history.
-void clear_file_history();
-
-/// Adds a file path to the recent file history, if it doesn't already exist.
-void add_to_file_history(const Path& path);
-
-/// Sets the most recently closed file, and stores it in the file history.
-void set_last_closed_file(const Path& path);
-
-/// Indicates whether there is a valid most recently closed file entry.
-[[nodiscard]] auto is_last_closed_file_valid() -> bool;
-
-/// Overwrites the in-memory file history.
-void set_file_history(FileHistory history);
-
-/// Returns the current in-memory recent file history.
-[[nodiscard]] auto get_file_history() -> const FileHistory&;
 
 }  // namespace tactile

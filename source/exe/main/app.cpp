@@ -28,7 +28,7 @@
 #include <spdlog/spdlog.h>
 
 #include "common/fmt/vector_formatter.hpp"
-#include "components/document.hpp"
+#include "components/file_history.hpp"
 #include "components/texture.hpp"
 #include "io/directories.hpp"
 #include "io/proto/history.hpp"
@@ -44,7 +44,7 @@
 #include "model/event/map_events.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/event/view_events.hpp"
-#include "model/file_history.hpp"
+#include "model/systems/file_history_system.hpp"
 #include "model/systems/menu_system.hpp"
 #include "model/systems/texture_system.hpp"
 #include "model/systems/widget_system.hpp"
@@ -143,8 +143,9 @@ void App::_init_persistent_settings()
 
   sys::load_languages(model);
 
+  auto& file_history = model.get<FileHistory>();
   if (auto history = load_file_history_from_disk()) {
-    set_file_history(std::move(*history));
+    file_history = std::move(*history);
   }
 
   if (settings.test_flag(SETTINGS_RESTORE_LAST_SESSION_BIT)) {
@@ -202,22 +203,14 @@ void App::_init_widgets()
 
 void App::on_shutdown()
 {
-  const auto& model = get_global_model();
-  const auto& settings = model.get<Settings>();
+  auto& model = get_global_model();
 
-  _add_open_documents_to_file_history();
-  save_settings_to_disk(settings);
+  sys::store_open_documents_in_file_history(model);
+  save_settings_to_disk(model.get<Settings>());
   save_session_to_disk(model);
-  save_file_history_to_disk(get_file_history());
-}
 
-void App::_add_open_documents_to_file_history()
-{
-  for (auto [document_entity, document]: get_global_model().each<Document>()) {
-    if (document.type == DocumentType::Map && document.path.has_value()) {
-      add_to_file_history(*document.path);
-    }
-  }
+  const auto& file_history = model.get<FileHistory>();
+  save_file_history_to_disk(file_history);
 }
 
 void App::on_update()

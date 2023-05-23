@@ -17,28 +17,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "model_system.hpp"
+#pragma once
 
-#include "components/document.hpp"
+#include "common/type/path.hpp"
 #include "components/file_history.hpp"
-#include "components/texture.hpp"
-#include "core/language.hpp"
-#include "core/menu.hpp"
-#include "model/settings.hpp"
+#include "model/model.hpp"
 
 namespace tactile::sys {
 
-void init_model(Model& model)
-{
-  auto& document_context = model.add<DocumentContext>();
-  document_context.active_document = kNullEntity;
+void store_open_documents_in_file_history(Model& model);
 
-  model.add<Settings>();
-  model.add<Languages>();
-  model.add<FileHistory>();
-  model.add<TextureCache>();
-  model.add<Icons>();
-  model.add<MenuItems>();
-}
+/// Adds a file path to the recent file history, as long as it doesn't already exist.
+void add_to_file_history(FileHistory& history, const Path& path);
+
+/// Indicates whether there is a valid most recently closed file entry.
+[[nodiscard]] auto is_last_closed_file_valid(const FileHistory& history) -> bool;
 
 }  // namespace tactile::sys

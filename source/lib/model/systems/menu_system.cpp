@@ -25,8 +25,9 @@
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
 #include "common/util/lookup.hpp"
-#include "model/file_history.hpp"
+#include "components/file_history.hpp"
 #include "model/systems/document_system.hpp"
+#include "model/systems/file_history_system.hpp"
 #include "model/systems/font_system.hpp"
 #include "model/systems/map_system.hpp"
 #include "model/systems/viewport_system.hpp"
@@ -104,12 +105,14 @@ void _init_file_menu(Model& model)
 
   _add_menu_item(model, MenuAction::Quit);
 
-  _add_menu_item(model, MenuAction::ReopenLastFile, [](const Model&) {
-    return is_last_closed_file_valid();
+  _add_menu_item(model, MenuAction::ReopenLastFile, [](const Model& model) {
+    const auto& file_history = model.get<FileHistory>();
+    return sys::is_last_closed_file_valid(file_history);
   });
 
   _add_menu_item(model, MenuAction::ClearFileHistory, [](const Model& model) {
-    return has_active_document(model) && !get_file_history().entries.empty();
+    const auto& file_history = model.get<FileHistory>();
+    return sys::has_active_document(model) && !file_history.entries.empty();
   });
 }
 

@@ -24,7 +24,6 @@
 #include "io/directories.hpp"
 #include "io/proto/proto.hpp"
 #include "io/stream.hpp"
-#include "model/file_history.hpp"
 
 namespace tactile {
 namespace {

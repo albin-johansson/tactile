@@ -23,8 +23,8 @@
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
+#include "components/file_history.hpp"
 #include "model/event/all.hpp"
-#include "model/file_history.hpp"
 #include "model/settings.hpp"
 #include "model/systems/document_system.hpp"
 #include "ui/dialog/about_dialog.hpp"
@@ -68,14 +68,16 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
 
     case MenuAction::ReopenLastFile: {
       // TODO this will need to be tweaked if tileset documents viewing will be supported
-      Path file_path {get_file_history().last_closed_file.value()};
+      const auto& file_history = model.get<FileHistory>();
+      Path file_path {file_history.last_closed_file.value()};
       dispatcher.enqueue<OpenMapEvent>(std::move(file_path));
       break;
     }
-    case MenuAction::ClearFileHistory:
-      clear_file_history();
+    case MenuAction::ClearFileHistory: {
+      auto& file_history = model.get<FileHistory>();
+      file_history.entries.clear();
       break;
-
+    }
     case MenuAction::Undo:
       dispatcher.enqueue<UndoEvent>();
       break;
