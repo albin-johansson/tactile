@@ -26,33 +26,41 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/assert.hpp"
-#include "common/debug/panic.hpp"
 #include "common/predef.hpp"
+#include "common/type/maybe.hpp"
+#include "common/type/string.hpp"
 
 namespace tactile {
+namespace {
+
+[[nodiscard]] auto _get_open_directory_command_name() -> Maybe<StringView>
+{
+  if constexpr (kOnMacos) {
+    return "open";
+  }
+  else if constexpr (kOnWindows) {
+    return "explorer";
+  }
+  else if constexpr (kOnLinux) {
+    return "xdg-open";
+  }
+  else {
+    return nothing;
+  }
+}
+
+}  // namespace
 
 void open_directory(const Path& dir)
 {
   if (fs::is_directory(dir)) {
-    static const auto path = get_persistent_file_dir().string();
-    if constexpr (kOnMacos) {
-      static const auto cmd = fmt::format("open \"{}\"", path);
-      std::system(cmd.c_str());
-    }
-    else if constexpr (kOnWindows) {
-      static const auto cmd = fmt::format("explorer \"{}\"", path);
-      std::system(cmd.c_str());
-    }
-    else if constexpr (kOnLinux) {
-      static const auto cmd = fmt::format("xdg-open \"{}\"", path);
+    if (const auto cmd_name = _get_open_directory_command_name()) {
+      const auto cmd = fmt::format("{} \"{}\"", *cmd_name, dir.string());
       std::system(cmd.c_str());
     }
     else {
       spdlog::warn("[IO] Cannot open file explorer on this platform");
     }
-  }
-  else {
-    throw TactileError {"Not a directory"};
   }
 }
 
