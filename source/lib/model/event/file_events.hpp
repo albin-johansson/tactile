@@ -24,9 +24,6 @@
 
 namespace tactile {
 
-/// Event used to stop running the application.
-struct QuitEvent final {};
-
 /// Event used to open an existing document in its own tab.
 struct OpenDocumentEvent final {
   Entity document {kNullEntity};  ///< The document that should be opened.
@@ -51,6 +48,9 @@ struct SaveAsEvent final {
 };
 
 /// Event used to open the 'Save As...' dialog.
-struct OpenSaveAsDialogEvent final {};
+struct ShowSaveAsDialogEvent final {};
+
+/// Event used to stop running the application.
+struct QuitEvent final {};
 
 }  // namespace tactile

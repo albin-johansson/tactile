@@ -27,6 +27,7 @@
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
+#include "common/fmt/entity_formatter.hpp"
 #include "common/fmt/vector_formatter.hpp"
 #include "components/file_history.hpp"
 #include "components/texture.hpp"
@@ -36,6 +37,7 @@
 #include "io/proto/settings.hpp"
 #include "model/context.hpp"
 #include "model/delegates/command_delegate.hpp"
+#include "model/delegates/file_delegate.hpp"
 #include "model/delegates/font_delegate.hpp"
 #include "model/delegates/input_delegate.hpp"
 #include "model/delegates/map_delegate.hpp"
@@ -94,6 +96,15 @@ void App::_subscribe_to_events()
   mDispatcher.sink<RedoEvent>().connect<&App::_on_redo>(this);
   mDispatcher.sink<SetCommandCapacityEvent>().connect<&App::_on_set_command_capacity>(this);
 
+  // File events
+  mDispatcher.sink<OpenDocumentEvent>().connect<&App::_on_open_document>(this);
+  mDispatcher.sink<CloseDocumentEvent>().connect<&App::_on_close_document>(this);
+  mDispatcher.sink<SelectDocumentEvent>().connect<&App::_on_select_document>(this);
+  mDispatcher.sink<SaveEvent>().connect<&App::_on_save>(this);
+  mDispatcher.sink<SaveAsEvent>().connect<&App::_on_save_as>(this);
+  mDispatcher.sink<ShowSaveAsDialogEvent>().connect<&App::_on_show_save_as_dialog>(this);
+  mDispatcher.sink<QuitEvent>().connect<&App::_on_quit>(this);
+
   // Map events
   mDispatcher.sink<ShowNewMapDialogEvent>().connect<&App::_on_show_new_map_dialog>(this);
   mDispatcher.sink<ShowOpenMapDialogEvent>().connect<&App::_on_show_open_map_dialog>(this);
@@ -129,7 +140,6 @@ void App::_subscribe_to_events()
   mDispatcher.sink<SetThemeEvent>().connect<&App::_on_set_theme>(this);
   mDispatcher.sink<ResetDockVisibilitiesEvent>().connect<&App::_on_reset_dock_visibilities>(this);
   mDispatcher.sink<MenuActionEvent>().connect<&App::_on_menu_action>(this);
-  mDispatcher.sink<QuitEvent>().connect<&App::_on_quit>(this);
   // clang-format on
 }
 
@@ -269,6 +279,48 @@ void App::_on_set_command_capacity(const SetCommandCapacityEvent& event)
 {
   spdlog::trace("[SetCommandCapacityEvent] capacity: {}", event.capacity);
   on_set_command_capacity(get_global_model(), event);
+}
+
+void App::_on_open_document(const OpenDocumentEvent& event)
+{
+  spdlog::trace("[OpenDocumentEvent] document: {}", event.document);
+  on_open_document(get_global_model(), event);
+}
+
+void App::_on_close_document(const CloseDocumentEvent& event)
+{
+  spdlog::trace("[CloseDocumentEvent] document: {}", event.document);
+  on_close_document(get_global_model(), event);
+}
+
+void App::_on_select_document(const SelectDocumentEvent& event)
+{
+  spdlog::trace("[SelectDocumentEvent] document: {}", event.document);
+  on_select_document(get_global_model(), event);
+}
+
+void App::_on_save(const SaveEvent& event)
+{
+  spdlog::trace("[SaveEvent]");
+  on_save(get_global_model(), mDispatcher, event);
+}
+
+void App::_on_save_as(const SaveAsEvent& event)
+{
+  spdlog::trace("[SaveAsEvent]");
+  on_save_as(get_global_model(), mDispatcher, event);
+}
+
+void App::_on_show_save_as_dialog(const ShowSaveAsDialogEvent& event)
+{
+  spdlog::trace("[ShowSaveAsDialogEvent]");
+  on_show_save_as_dialog(get_global_model(), mDispatcher, event);
+}
+
+void App::_on_quit(const QuitEvent&)
+{
+  spdlog::trace("[QuitEvent]");
+  mShouldStop = true;
 }
 
 void App::_on_show_new_map_dialog(const ShowNewMapDialogEvent& event)
@@ -448,11 +500,6 @@ void App::_on_reset_dock_visibilities(const ResetDockVisibilitiesEvent& event)
 {
   spdlog::trace("[ResetDockVisibilitiesEvent]");
   on_reset_dock_visibilities(get_global_model(), event);
-}
-
-void App::_on_quit()
-{
-  mShouldStop = true;
 }
 
 }  // namespace tactile

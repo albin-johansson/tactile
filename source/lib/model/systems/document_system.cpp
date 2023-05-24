@@ -19,6 +19,8 @@
 
 #include "document_system.hpp"
 
+#include <utility>  // move
+
 #include <spdlog/spdlog.h>
 
 #include "cmd/command_stack.hpp"
@@ -141,6 +143,24 @@ void close_document(Model& model, const Entity document_entity)
   TACTILE_ASSERT(document_context.open_documents.contains(document_entity));
 
   document_context.open_documents.erase(document_entity);
+}
+
+void set_document_name(Model& model, const Entity document_entity, String name)
+{
+  TACTILE_ASSERT(is_document_entity(model, document_entity));
+
+  if (const auto* map_document = model.try_get<MapDocument>(document_entity)) {
+    auto& map_context = model.get<Context>(map_document->map);
+    map_context.name = std::move(name);
+  }
+  else if (const auto* tileset_document =
+               model.try_get<TilesetDocument>(document_entity)) {
+    auto& tileset_context = model.get<Context>(tileset_document->tileset);
+    tileset_context.name = std::move(name);
+  }
+  else {
+    throw TactileError {"Invalid document type"};
+  }
 }
 
 auto get_document_name(const Model& model, const Entity document_entity) -> String

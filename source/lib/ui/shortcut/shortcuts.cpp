@@ -66,7 +66,7 @@ void _init_default_file_shortcuts()
                                          cen::scancodes::o,
                                          kPrimaryModifier);
   _init_shortcut<SaveEvent>(MenuAction::Save, cen::scancodes::s, kPrimaryModifier);
-  _init_shortcut<OpenSaveAsDialogEvent>(MenuAction::SaveAs,
+  _init_shortcut<ShowSaveAsDialogEvent>(MenuAction::SaveAs,
                                         cen::scancodes::s,
                                         kPrimaryModifierAndShift);
 }

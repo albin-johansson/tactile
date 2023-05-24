@@ -53,7 +53,7 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
 
     case MenuAction::SaveAs:
-      dispatcher.enqueue<OpenSaveAsDialogEvent>();
+      dispatcher.enqueue<ShowSaveAsDialogEvent>();
       break;
 
     case MenuAction::Close:

@@ -101,10 +101,20 @@ void open_document(Model& model, Entity document_entity);
 void close_document(Model& model, Entity document_entity);
 
 /**
+ * Sets the name of a document.
+ *
+ * \param model the associated model.
+ * \param document_entity a valid document entity.
+ * \param name the new document name.
+ */
+void set_document_name(Model& model, Entity document_entity, String name);
+
+/**
  * Returns the name of a document.
  *
  * \param model the associated model.
  * \param document_entity a valid document entity.
+ *
  * \return the document name.
  */
 [[nodiscard]] auto get_document_name(const Model& model, Entity document_entity)
