@@ -369,9 +369,6 @@ void create_map_document_from_ir(const MapIR& ir_map,
 
   auto& map_document = model.get<MapDocument>(document_entity);
 
-  auto& map_context = model.get<Context>(map_document.map);
-  map_context.name = absolute_document_path.filename().string();
-
   auto& map = model.get<Map>(map_document.map);
   map.extent = ir_map.extent;
   map.tile_size = ir_map.tile_size;
@@ -386,7 +383,11 @@ void create_map_document_from_ir(const MapIR& ir_map,
   _restore_component_definitions(model, component_set, ir_map);
   _restore_tileset_documents(model, map, map_identifiers, document.component_set, ir_map);
   _restore_layers(model, document.component_set, map_document.map, ir_map);
+
   _restore_context(model, document.component_set, map_document.map, ir_map.context);
+
+  auto& map_context = model.get<Context>(map_document.map);
+  map_context.name = absolute_document_path.filename().string();
 }
 
 }  // namespace tactile

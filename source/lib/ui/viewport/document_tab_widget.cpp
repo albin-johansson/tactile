@@ -85,7 +85,8 @@ void _push_document_tab(const Model& model,
 void update_document_tabs(const Model& model, Dispatcher& dispatcher)
 {
   if (const TabBar bar {"##DocumentTabs", ImGuiTabBarFlags_Reorderable}; bar.is_open()) {
-    for (const auto& [document_entity, document]: model.each<Document>()) {
+    const auto& document_context = model.get<DocumentContext>();
+    for (const auto document_entity: document_context.open_documents) {
       _push_document_tab(model, document_entity, dispatcher);
     }
   }
