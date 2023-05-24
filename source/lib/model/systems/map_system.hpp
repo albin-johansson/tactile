@@ -155,6 +155,8 @@ void attach_layer_to_map(Model& model,
                          Entity layer_entity,
                          Entity root_layer_entity = kNullEntity);
 
+auto duplicate_layer(Model& model, Entity map_entity, Entity src_layer_entity) -> Entity;
+
 /**
  * Removes an existing layer from a map.
  *

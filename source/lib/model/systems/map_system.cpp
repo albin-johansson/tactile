@@ -30,8 +30,10 @@
 #include "components/tile_format.hpp"
 #include "core/layer.hpp"
 #include "core/tileset.hpp"
+#include "model/systems/context/context_system.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/layer_system.hpp"
+#include "model/systems/object_system.hpp"
 #include "model/systems/tileset_system.hpp"
 #include "model/systems/validation.hpp"
 
@@ -255,6 +257,64 @@ void attach_layer_to_map(Model& model,
                          : model.get<GroupLayer>(map.root_layer);
 
   root_layer.append(layer_entity);
+}
+
+auto duplicate_layer(Model& model, const Entity map_entity, const Entity src_layer_entity)
+    -> Entity
+{
+  TACTILE_ASSERT(is_map_entity(model, map_entity));
+  TACTILE_ASSERT(is_layer_entity(model, src_layer_entity));
+
+  const auto& map = model.get<Map>(map_entity);
+  auto& map_identifiers = model.get<MapIdentifiers>(map_entity);
+
+  const auto& src_layer = model.get<Layer>(src_layer_entity);
+  const auto& src_context = model.get<Context>(src_layer_entity);
+
+  const auto new_layer_entity = model.create_entity();
+
+  auto& new_context = model.add<Context>(new_layer_entity);
+  new_context = copy_context(model, src_context);
+
+  auto& new_layer = model.add<Layer>(new_layer_entity);
+  new_layer = src_layer;
+  new_layer.id = map_identifiers.next_layer_id++;
+
+  if (const auto* src_tile_layer = model.try_get<TileLayer>(src_layer_entity)) {
+    auto& new_tile_layer = model.add<TileLayer>(new_layer_entity);
+    new_tile_layer.tiles = src_tile_layer->tiles;
+  }
+  else if (const auto* src_object_layer = model.try_get<ObjectLayer>(src_layer_entity)) {
+    auto& new_object_layer = model.add<ObjectLayer>(new_layer_entity);
+    new_object_layer.objects.reserve(src_object_layer->objects.size());
+
+    for (const auto src_object_entity: src_object_layer->objects) {
+      new_object_layer.objects.push_back(duplicate_object(model, src_object_entity));
+    }
+  }
+  else if (const auto* src_group_layer = model.try_get<GroupLayer>(src_layer_entity)) {
+    auto& new_group_layer = model.add<GroupLayer>(new_layer_entity);
+    new_group_layer.children.reserve(src_group_layer->children.size());
+
+    for (const auto src_child_layer_entity: src_group_layer->children) {
+      duplicate_layer(model, map_entity, src_child_layer_entity);
+    }
+  }
+
+  const auto parent_layer_entity =
+      get_parent_layer(model, map.root_layer, src_layer_entity);
+
+  if (parent_layer_entity != kNullEntity) {
+    auto& parent_layer = model.get<GroupLayer>(parent_layer_entity);
+    parent_layer.children.push_back(new_layer_entity);
+  }
+  else {
+    auto& root_layer = model.get<GroupLayer>(map.root_layer);
+    root_layer.children.push_back(new_layer_entity);
+  }
+
+  TACTILE_ASSERT(is_layer_entity(model, new_layer_entity));
+  return new_layer_entity;
 }
 
 void remove_layer_from_map(Model& model, Map& map, const Entity layer_entity)

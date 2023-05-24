@@ -38,11 +38,6 @@ using ConstTileLayerCallback = Func<void(Entity, const TileLayer&)>;
 
 [[nodiscard]] auto create_group_layer(Model& model, int32 id) -> Entity;
 
-auto duplicate_layer(Model& model,
-                     Entity root_layer_entity,
-                     Entity source_layer_entity,
-                     int32 new_id) -> Entity;
-
 /// Recursively invokes a callback for each child layer, excluding the root group layer.
 ///
 /// \param model the source model.

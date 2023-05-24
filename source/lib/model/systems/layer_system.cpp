@@ -88,62 +88,6 @@ auto create_group_layer(Model& model, const int32 id) -> Entity
   return layer_entity;
 }
 
-auto duplicate_layer(Model& model,
-                     const Entity root_layer_entity,
-                     const Entity source_layer_entity,
-                     const int32 new_id) -> Entity
-{
-  TACTILE_ASSERT(root_layer_entity == kNullEntity ||
-                 is_group_layer_entity(model, root_layer_entity));
-  TACTILE_ASSERT(is_layer_entity(model, source_layer_entity));
-
-  const auto parent_layer_entity =
-      get_parent_layer(model, root_layer_entity, source_layer_entity);
-
-  const auto& src_layer = model.get<Layer>(source_layer_entity);
-  const auto& src_context = model.get<Context>(source_layer_entity);
-
-  const auto new_layer_entity = model.create_entity();
-
-  auto& new_context = model.add<Context>(new_layer_entity);
-  new_context = copy_context(model, src_context);
-
-  auto& new_layer = model.add<Layer>(new_layer_entity);
-  new_layer = src_layer;
-  new_layer.id = new_id;
-
-  if (const auto* src_tile_layer = model.try_get<TileLayer>(source_layer_entity)) {
-    auto& new_tile_layer = model.add<TileLayer>(new_layer_entity);
-    new_tile_layer.tiles = src_tile_layer->tiles;
-  }
-
-  if (const auto* src_object_layer = model.try_get<ObjectLayer>(source_layer_entity)) {
-    auto& new_object_layer = model.add<ObjectLayer>(new_layer_entity);
-    new_object_layer.objects.reserve(src_object_layer->objects.size());
-
-    for (const auto src_object_entity: src_object_layer->objects) {
-      new_object_layer.objects.push_back(duplicate_object(model, src_object_entity));
-    }
-  }
-
-  if (const auto* src_group_layer = model.try_get<GroupLayer>(source_layer_entity)) {
-    auto& new_group_layer = model.add<GroupLayer>(new_layer_entity);
-    new_group_layer.children.reserve(src_group_layer->children.size());
-
-    for (const auto src_child_layer_entity: src_group_layer->children) {
-      new_group_layer.children.push_back(duplicate_layer(model,
-                                                         source_layer_entity,
-                                                         src_child_layer_entity,
-                                                         new_id + 1));
-    }
-  }
-
-  // TODO copy tile, object, or group layer
-
-  TACTILE_ASSERT(is_layer_entity(model, new_layer_entity));
-  return new_layer_entity;
-}
-
 void recurse_layers(const Model& model,
                     const Entity root_layer_entity,
                     const EntityCallback& callback)

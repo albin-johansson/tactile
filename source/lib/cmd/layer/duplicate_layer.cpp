@@ -53,8 +53,6 @@ void DuplicateLayer::redo()
   auto& model = get_global_model();
 
   auto& map = model.get<Map>(mMapEntity);
-  auto& map_identifiers = model.get<MapIdentifiers>(mMapEntity);
-
   const auto& root_layer = model.get<GroupLayer>(map.root_layer);
 
   mNewLayerParentEntity =
@@ -67,9 +65,7 @@ void DuplicateLayer::redo()
     sys::set_layer_local_index(model, map.root_layer, mNewLayerEntity, mNewIndex.value());
   }
   else {
-    const auto layer_id = map_identifiers.next_layer_id++;
-    mNewLayerEntity =
-        sys::duplicate_layer(model, map.root_layer, mSourceLayerEntity, layer_id);
+    mNewLayerEntity = sys::duplicate_layer(model, mMapEntity, mSourceLayerEntity);
     mNewIndex = sys::get_local_layer_index(model, root_layer, mNewLayerEntity);
   }
 }
