@@ -249,7 +249,7 @@ void App::on_font_reload()
 
 void App::_on_menu_action(const MenuActionEvent& event)
 {
-  spdlog::trace("[MenuActionEvent] action: {}", magic_enum::enum_name(event.action));
+  // spdlog::trace("[MenuActionEvent] action: {}", magic_enum::enum_name(event.action));
   on_menu_action(get_global_model(), mDispatcher, event);
 }
 

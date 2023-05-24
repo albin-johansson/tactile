@@ -321,7 +321,7 @@ auto push_color_input(const Strings& strings, const char* id, const Color value)
 auto push_file_path_input(const Strings& strings, const char* id, const Path& value)
     -> Maybe<Path>
 {
-  return _input_file_path(strings, id, value.filename().string(), [] -> Maybe<Path> {
+  return _input_file_path(strings, id, value.filename().string(), []() -> Maybe<Path> {
     auto dialog = FileDialog::open_file();
     return dialog.is_okay() ? dialog.path() : Maybe<Path> {};
   });
@@ -333,7 +333,7 @@ auto push_directory_path_input(const Strings& strings, const char* id, const Pat
   return _input_file_path(strings,
                           id,
                           use_short_home_prefix(value).value_or(value.string()),
-                          [] -> Maybe<Path> {
+                          []()  -> Maybe<Path> {
                             auto dialog = FileDialog::open_folder();
                             return dialog.is_okay() ? dialog.path() : Maybe<Path> {};
                           });
