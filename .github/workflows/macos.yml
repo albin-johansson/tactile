@@ -57,6 +57,8 @@ jobs:
           mkdir build && cd build
           cmake .. -GNinja \
                    -DCMAKE_BUILD_TYPE=Debug \
+                   -DCMAKE_C_COMPILER=$(brew --prefix llvm@15)/bin/clang \
+                   -DCMAKE_CXX_COMPILER=$(brew --prefix llvm@15)/bin/clang++ \
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}}
 
       - name: Build
