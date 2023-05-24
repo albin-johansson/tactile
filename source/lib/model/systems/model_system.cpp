@@ -21,8 +21,8 @@
 
 #include "components/document.hpp"
 #include "components/file_history.hpp"
+#include "components/language.hpp"
 #include "components/texture.hpp"
-#include "core/language.hpp"
 #include "core/menu.hpp"
 #include "model/settings.hpp"
 #include "model/systems/gl_texture_system.hpp"

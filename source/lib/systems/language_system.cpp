@@ -25,7 +25,7 @@
 
 #include "common/debug/panic.hpp"
 #include "common/util/lookup.hpp"
-#include "core/language.hpp"
+#include "components/language.hpp"
 #include "io/lang/language_parser.hpp"
 #include "model/settings.hpp"
 

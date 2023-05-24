@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/enum/lang.hpp"
-#include "core/language.hpp"
+#include "components/language.hpp"
 #include "core/menu.hpp"
 #include "model/model.hpp"
 

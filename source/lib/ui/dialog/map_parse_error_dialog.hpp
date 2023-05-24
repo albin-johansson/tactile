@@ -21,7 +21,7 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "core/language.hpp"
+#include "components/language.hpp"
 #include "io/map/parse/parse_error.hpp"
 #include "model/model.hpp"
 
