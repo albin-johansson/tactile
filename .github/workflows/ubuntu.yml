@@ -19,7 +19,10 @@ jobs:
           sudo apt update
           sudo apt install ninja-build \
                            gcc-12 \
-                           g++-12
+                           g++-12 \
+                           libxmu-dev \
+                           libxi-dev \
+                           libgl-dev
 
       - name: Install Boost
         id: install-boost
