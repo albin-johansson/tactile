@@ -119,8 +119,6 @@ auto _restore_layer(Model& model,
                     const LayerIR& ir_layer,
                     const Entity parent_layer_entity = kNullEntity) -> Entity
 {
-  auto& map = model.get<Map>(map_entity);
-
   // TODO respect layerData.index?
 
   Entity layer_entity = kNullEntity;
@@ -216,11 +214,8 @@ void _restore_fancy_tile_objects(Model& model,
 
 void _restore_fancy_tiles(Model& model,
                           const Entity component_set_entity,
-                          const Entity tileset_entity,
                           const TilesetIR& ir_tileset)
 {
-  auto& tileset = model.get<Tileset>(tileset_entity);
-
   for (const auto& [index, ir_tile]: ir_tileset.fancy_tiles) {
     const auto [row, col] = to_matrix_coords(index, ir_tileset.column_count);
     const auto tile_entity = model.create_entity();
@@ -257,7 +252,7 @@ auto _restore_tileset_document(Model& model,
 
   const auto& tileset_document = model.get<TilesetDocument>(document_entity);
 
-  _restore_fancy_tiles(model, component_set_entity, tileset_document.tileset, ir_tileset);
+  _restore_fancy_tiles(model, component_set_entity, ir_tileset);
 
   _restore_context(model,
                    component_set_entity,

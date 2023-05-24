@@ -87,8 +87,7 @@ namespace tactile::ui {
                                      const char* id,
                                      ObjectRef value) -> Maybe<ObjectRef>;
 
-[[nodiscard]] auto push_color_input(const Strings& strings, const char* id, Color value)
-    -> Maybe<Color>;
+[[nodiscard]] auto push_color_input(const char* id, Color value) -> Maybe<Color>;
 
 [[nodiscard]] auto push_file_path_input(const Strings& strings,
                                         const char* id,

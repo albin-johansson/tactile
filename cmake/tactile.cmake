@@ -12,6 +12,7 @@ function(tactile_set_compile_options target)
                            /EHsc
                            /MP
                            /W4
+                           /WX
                            /bigobj
                            /permissive-
                            /Zc:preprocessor
@@ -25,6 +26,7 @@ function(tactile_set_compile_options target)
                            -Wall
                            -Wextra
                            -Wpedantic
+                           -Werror
                            -Wconversion
                            -Wsign-conversion
                            )

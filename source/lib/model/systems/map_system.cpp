@@ -319,8 +319,6 @@ auto duplicate_layer(Model& model, const Entity map_entity, const Entity src_lay
 
 void remove_layer_from_map(Model& model, Map& map, const Entity layer_entity)
 {
-  auto& root_layer = model.get<GroupLayer>(map.root_layer);
-
   if (map.active_layer == layer_entity) {
     map.active_layer = kNullEntity;
   }

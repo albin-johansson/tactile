@@ -45,7 +45,7 @@ inline constexpr auto kToolbarWindowFlags =
     ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav |
     ImGuiWindowFlags_NoMove;
 
-inline constexpr uint32 kToolbarHighlightColor = IM_COL32(0, 180, 0, 255);
+// inline constexpr uint32 kToolbarHighlightColor = IM_COL32(0, 180, 0, 255);
 
 struct MapViewportToolbarState final {
   float width {};
@@ -67,11 +67,11 @@ void _prepare_window_position(const ImVec2& offset = {})
   ImGui::SetNextWindowViewport(ImGui::GetWindowViewport()->ID);
 }
 
-void _tool_button(const Model& model,
-                  const ToolType tool,
-                  const char* icon,
-                  const char* tooltip,
-                  Dispatcher& dispatcher)
+void _tool_button([[maybe_unused]] const Model& model,
+                  [[maybe_unused]] const ToolType tool,
+                  [[maybe_unused]] const char* icon,
+                  [[maybe_unused]] const char* tooltip,
+                  [[maybe_unused]] Dispatcher& dispatcher)
 {
   //  const auto selected = tools.is_enabled(tool);
   //
@@ -116,7 +116,7 @@ void show_map_viewport_toolbar(const Model& model, Dispatcher& dispatcher)
   const StyleVar padding {ImGuiStyleVar_WindowPadding, {6, 6}};
 
   const auto document_entity = sys::get_active_document(model);
-  const auto& map_document = model.get<MapDocument>(document_entity);
+  // const auto& map_document = model.get<MapDocument>(document_entity);
   const auto& command_stack = model.get<CommandStack>(document_entity);
   // const auto& tools = map_document.get_tools();
 

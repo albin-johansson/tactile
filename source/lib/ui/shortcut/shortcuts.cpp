@@ -165,9 +165,10 @@ void init_default_shortcuts()
   _init_default_map_shortcuts();
 }
 
-void update_shortcuts(const cen::keyboard_event& event, entt::dispatcher& dispatcher)
+void update_shortcuts([[maybe_unused]] const cen::keyboard_event& event,
+                      [[maybe_unused]] entt::dispatcher& dispatcher)
 {
-  for (const auto& shortcut: gShortcuts) {
+  for (const auto& shortcut [[maybe_unused]]: gShortcuts) {
     // TODO
     //    if (get_menu_item(shortcut.action).enabled &&  //
     //        event.pressed() &&                         //

@@ -302,8 +302,7 @@ auto push_object_input(const Strings& strings, const char* id, ObjectRef value)
   return nothing;
 }
 
-auto push_color_input(const Strings& strings, const char* id, const Color value)
-    -> Maybe<Color>
+auto push_color_input(const char* id, const Color value) -> Maybe<Color>
 {
   constexpr auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
                          ImGuiColorEditFlags_AlphaBar;
@@ -413,7 +412,7 @@ auto push_attribute_input(const Strings& strings, const char* id, const Attribut
       break;
     }
     case AttributeType::Color: {
-      if (const auto updated = push_color_input(strings, id, value.as_color())) {
+      if (const auto updated = push_color_input(id, value.as_color())) {
         return updated;
       }
       break;

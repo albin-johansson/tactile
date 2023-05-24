@@ -95,7 +95,7 @@ void on_set_theme(Model& model, const SetThemeEvent& event)
                   settings.get_theme_saturation());
 }
 
-void on_reset_dock_visibilities(Model& model, const ResetDockVisibilitiesEvent& event)
+void on_reset_dock_visibilities(Model& model, const ResetDockVisibilitiesEvent&)
 {
   auto& settings = model.get<Settings>();
   settings.reset_dock_visibilities();

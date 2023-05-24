@@ -70,7 +70,7 @@ auto FileDialog::open_map() -> FileDialog
 {
   return {tinyfd_openFileDialog("Open Map",
                                 nullptr,
-                                std::ssize(kMapPatterns),
+                                static_cast<int>(std::ssize(kMapPatterns)),
                                 kMapPatterns.data(),
                                 kMapPatternDescriptor,
                                 0)};
@@ -80,7 +80,7 @@ auto FileDialog::open_image() -> FileDialog
 {
   return {tinyfd_openFileDialog("Open Image",
                                 nullptr,
-                                std::ssize(kImagePatterns),
+                                static_cast<int>(std::ssize(kImagePatterns)),
                                 kImagePatterns.data(),
                                 kImagePatternDescriptor,
                                 0)};
@@ -90,7 +90,7 @@ auto FileDialog::save_map() -> FileDialog
 {
   return {tinyfd_saveFileDialog("Save Map",
                                 nullptr,
-                                std::ssize(kMapPatterns),
+                                static_cast<int>(std::ssize(kMapPatterns)),
                                 kMapPatterns.data(),
                                 kMapPatternDescriptor)};
 }
@@ -99,7 +99,7 @@ auto FileDialog::save_image() -> FileDialog
 {
   return {tinyfd_saveFileDialog("Save Image",
                                 nullptr,
-                                std::ssize(kImagePatterns),
+                                static_cast<int>(std::ssize(kImagePatterns)),
                                 kImagePatterns.data(),
                                 kImagePatternDescriptor)};
 }
