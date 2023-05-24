@@ -19,7 +19,6 @@
 
 #include "move_animation_frame_forwards.hpp"
 
-#include "common/debug/assert.hpp"
 #include "common/util/vector.hpp"
 #include "components/tile.hpp"
 #include "model/context.hpp"
@@ -36,8 +35,6 @@ MoveAnimationFrameForwards::MoveAnimationFrameForwards(const Entity tile_entity,
 
 void MoveAnimationFrameForwards::undo()
 {
-  TACTILE_ASSERT(mFrameIndex - 1 >= 0);
-
   auto& model = get_global_model();
   auto& animation = model.get<TileAnimation>(mTileEntity);
 
@@ -52,8 +49,6 @@ void MoveAnimationFrameForwards::undo()
 
 void MoveAnimationFrameForwards::redo()
 {
-  TACTILE_ASSERT(mFrameIndex - 1 >= 0);
-
   auto& model = get_global_model();
   auto& animation = model.get<TileAnimation>(mTileEntity);
 
