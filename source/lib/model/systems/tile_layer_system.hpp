@@ -21,7 +21,7 @@
 
 #include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 #include "core/layer.hpp"
 #include "model/model.hpp"
 
@@ -39,6 +39,6 @@ namespace tactile::sys {
 void flood(TileLayer& tile_layer,
            const TilePos& origin,
            TileID replacement,
-           Vec<TilePos>* affected = nullptr);
+           Vector<TilePos>* affected = nullptr);
 
 }  // namespace tactile::sys

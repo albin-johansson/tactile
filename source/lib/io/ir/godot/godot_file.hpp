@@ -26,7 +26,7 @@
 #include "common/type/string.hpp"
 #include "common/type/string_map.hpp"
 #include "common/type/tree_map.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 
 namespace tactile {
 
@@ -52,13 +52,13 @@ struct GdAtlasTexture final {
 
 struct GdAnimation final {
   String name;
-  Vec<GdSubRes> frames;  /// Atlas textures
+  Vector<GdSubRes> frames;  /// Atlas textures
   float speed {};
 };
 
 struct GdSpriteFrames final {
   GdSubRes id {};
-  Vec<GdAnimation> animations;
+  Vector<GdAnimation> animations;
 };
 
 struct GdRectShape final {

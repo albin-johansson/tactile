@@ -25,7 +25,7 @@
 #include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 
 namespace tactile {
 
@@ -57,13 +57,13 @@ struct TileLayer final {
 
 /// Component for layer variant consisting of objects such as rectangles and points.
 struct ObjectLayer final {
-  Vec<Entity> objects;                 ///< Entity identifiers of all contained objects.
+  Vector<Entity> objects;              ///< Entity identifiers of all contained objects.
   Entity active_object {kNullEntity};  ///< The currently active object, if any.
 };
 
 /// Component for layer variant consisting of other layers (may be recursive).
 struct GroupLayer final {
-  Vec<Entity> children;  ///< Entity identifiers of all contained layers.
+  Vector<Entity> children;  ///< Entity identifiers of all contained layers.
 
   /// Adds a layer to the group, asserting that the layer hasn't already been added.
   void append(const Entity layer_entity);

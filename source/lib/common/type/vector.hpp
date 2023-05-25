@@ -24,6 +24,6 @@
 namespace tactile {
 
 template <typename T>
-using Vec = std::vector<T>;
+using Vector = std::vector<T>;
 
 }  // namespace tactile

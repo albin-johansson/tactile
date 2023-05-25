@@ -25,7 +25,7 @@
 #include "common/type/path.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 #include "common/util/lookup.hpp"
 #include "io/ir/godot/godot_file.hpp"
 
@@ -53,13 +53,13 @@ class GodotTileset final : public GodotFile {
 
   [[nodiscard]] auto index_of(const UUID& tileset_id) const -> int32;
 
-  [[nodiscard]] auto texture_paths() const -> const Vec<TextureNamePair>&;
+  [[nodiscard]] auto texture_paths() const -> const Vector<TextureNamePair>&;
 
-  [[nodiscard]] auto tilesets() const -> const Vec<GdTilesetInfo>&;
+  [[nodiscard]] auto tilesets() const -> const Vector<GdTilesetInfo>&;
 
  private:
-  Vec<TextureNamePair> mSourceTexturePaths;
-  Vec<GdTilesetInfo> mTilesetInfos;
+  Vector<TextureNamePair> mSourceTexturePaths;
+  Vector<GdTilesetInfo> mTilesetInfos;
 };
 
 }  // namespace tactile

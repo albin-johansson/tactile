@@ -26,7 +26,7 @@
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 #include "core/viewport.hpp"
 
 namespace tactile {
@@ -39,7 +39,7 @@ struct Tileset final {
   int32 column_count {};                      ///< The amount tile columns.
   Float2 uv_size {};                          ///< Size of a tile in texture coordinates.
   HashMap<TileIndex, Entity> tile_index_map;  ///< Maps local indices to tile entities.
-  Vec<Entity> tiles;                          ///< Tile definitions.
+  Vector<Entity> tiles;                       ///< Tile definitions.
   Maybe<TileIndex> selected_tile_index;       ///< Local index of selected tile.
 
   [[nodiscard]] auto tile_count() const -> int32 { return row_count * column_count; }

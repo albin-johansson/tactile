@@ -25,7 +25,7 @@
 #include "common/debug/panic.hpp"
 #include "common/tile_matrix.hpp"
 #include "common/type/string.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 #include "common/util/strings.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
@@ -35,9 +35,9 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto _collect_layer_nodes(XmlNode map_node) -> Vec<XmlNode>
+[[nodiscard]] auto _collect_layer_nodes(XmlNode map_node) -> Vector<XmlNode>
 {
-  Vec<XmlNode> nodes;
+  Vector<XmlNode> nodes;
 
   for (auto node: map_node.children()) {
     if (std::strcmp(node.name(), "layer") == 0 ||
@@ -315,9 +315,9 @@ auto parse_object(XmlNode object_node) -> Expected<ObjectIR, ParseError>
   return object;
 }
 
-auto parse_layers(XmlNode map_node, MapIR& map) -> Expected<Vec<LayerIR>, ParseError>
+auto parse_layers(XmlNode map_node, MapIR& map) -> Expected<Vector<LayerIR>, ParseError>
 {
-  Vec<LayerIR> layers;
+  Vector<LayerIR> layers;
 
   usize index = 0;
   for (const auto layer_node: _collect_layer_nodes(map_node)) {

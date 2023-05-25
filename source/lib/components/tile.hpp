@@ -23,15 +23,15 @@
 #include "common/type/chrono.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 
 namespace tactile {
 
 /// Component that provides metadata about a tile in a tileset.
 struct Tile final {
-  TileIndex index;      ///< Index of the tile in the parent tileset.
-  Int4 source {};       ///< Region in the parent tileset associated with the tile.
-  Vec<Entity> objects;  ///< Objects embedded in the tile.
+  TileIndex index;         ///< Index of the tile in the parent tileset.
+  Int4 source {};          ///< Region in the parent tileset associated with the tile.
+  Vector<Entity> objects;  ///< Objects embedded in the tile.
 };
 
 /// Component that describes an animation associated with a tile.
@@ -42,7 +42,7 @@ struct TileAnimation final {
     ms_t duration {};         ///< The duration that the frame is shown.
   };
 
-  Vec<Frame> frames;         ///< The associated animation frames.
+  Vector<Frame> frames;      ///< The associated animation frames.
   usize index {};            ///< Current frame index.
   TimePoint last_update {};  ///< Time of the last frame change.
 };

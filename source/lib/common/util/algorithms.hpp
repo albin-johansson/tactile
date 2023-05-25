@@ -24,7 +24,7 @@
 #include <utility>    // forward
 
 #include "common/debug/panic.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 
 namespace tactile {
 
@@ -37,7 +37,7 @@ template <std::unsigned_integral T>
 
 /// Returns the first element in a vector that satisfies the given predicate.
 template <typename T, std::predicate<const T&> P>
-[[nodiscard]] auto first_in(Vec<T>& vec, P&& pred) -> T&
+[[nodiscard]] auto first_in(Vector<T>& vec, P&& pred) -> T&
 {
   const auto iter = std::find_if(vec.begin(), vec.end(), std::forward<P>(pred));
   if (iter != vec.end()) {
@@ -50,7 +50,7 @@ template <typename T, std::predicate<const T&> P>
 
 /// Returns the first element in a vector that satisfies the given predicate.
 template <typename T, std::predicate<const T&> P>
-[[nodiscard]] auto first_in(const Vec<T>& vec, P&& pred) -> const T&
+[[nodiscard]] auto first_in(const Vector<T>& vec, P&& pred) -> const T&
 {
   const auto iter = std::find_if(vec.begin(), vec.end(), std::forward<P>(pred));
   if (iter != vec.end()) {

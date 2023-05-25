@@ -23,7 +23,7 @@
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
 #include "common/type/string_map.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 
 namespace tactile {
 
@@ -31,7 +31,7 @@ namespace tactile {
 struct Context final {
   String name;                 ///< User provided name associated with the context.
   StringMap<Attribute> props;  ///< Attached attribute values, i.e. "properties".
-  Vec<Entity> comps;           ///< Attached components.
+  Vector<Entity> comps;        ///< Attached components.
 };
 
 }  // namespace tactile

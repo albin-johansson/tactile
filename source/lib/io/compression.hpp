@@ -22,12 +22,12 @@
 #include "common/primitives.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/span.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 
 namespace tactile {
 
 /// Represents a sequence of bytes.
-using ByteStream = Vec<uint8>;
+using ByteStream = Vector<uint8>;
 
 /// Represents a read-only view into a sequence of bytes.
 using ByteSpan = Span<const uint8>;

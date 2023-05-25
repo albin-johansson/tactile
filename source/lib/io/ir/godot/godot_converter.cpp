@@ -29,7 +29,7 @@
 #include "common/debug/assert.hpp"
 #include "common/tile_pos.hpp"
 #include "common/type/string.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 #include "common/util/functional.hpp"
 #include "common/util/lookup.hpp"
 #include "io/ir/godot/godot_options.hpp"
@@ -155,11 +155,12 @@ void _add_animations(const MapIR& map,
 }
 
 [[nodiscard]] auto _approximate_ellipse_as_polygon(const ObjectIR& object,
-                                                   const usize point_count) -> Vec<Float2>
+                                                   const usize point_count)
+    -> Vector<Float2>
 {
   TACTILE_ASSERT(object.type == ObjectType::Ellipse);
 
-  Vec<Float2> points;
+  Vector<Float2> points;
   points.reserve(point_count);
 
   const auto n = static_cast<double>(point_count);

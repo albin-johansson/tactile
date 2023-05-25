@@ -22,7 +22,7 @@
 #include "common/attribute.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/string_map.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 
 namespace tactile {
 
@@ -40,7 +40,7 @@ struct ComponentDefinition final {
 };
 
 struct ComponentSet final {
-  Vec<Entity> definitions;  ///< Associated component definitions.
+  Vector<Entity> definitions;  ///< Associated component definitions.
 
   [[nodiscard]] auto has_component(Entity definition_entity) const -> bool;
 };

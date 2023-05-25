@@ -28,9 +28,9 @@ namespace tactile::sys {
 namespace {
 
 [[nodiscard]] auto _find_component_of_type(const Model& model,
-                                           const Vec<Entity>& component_entities,
+                                           const Vector<Entity>& component_entities,
                                            const Entity definition_entity)
-    -> Vec<Entity>::const_iterator
+    -> Vector<Entity>::const_iterator
 {
   return std::ranges::find_if(component_entities, [&](const Entity component_entity) {
     const auto& component = model.get<Component>(component_entity);

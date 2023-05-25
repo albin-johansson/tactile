@@ -24,12 +24,12 @@
 
 #include "common/debug/assert.hpp"
 #include "common/primitives.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 
 namespace tactile {
 
 template <typename T>
-void insert_at(Vec<T>& vec, const usize index, T value)
+void insert_at(Vector<T>& vec, const usize index, T value)
 {
   TACTILE_ASSERT(index <= vec.size());
 
@@ -42,7 +42,7 @@ void insert_at(Vec<T>& vec, const usize index, T value)
 }
 
 template <typename T>
-void erase_at(Vec<T>& vec, const usize index)
+void erase_at(Vector<T>& vec, const usize index)
 {
   TACTILE_ASSERT(index < vec.size());
 
@@ -52,7 +52,7 @@ void erase_at(Vec<T>& vec, const usize index)
 }
 
 template <typename T>
-[[nodiscard]] auto contains_value(const Vec<T>& vec, const T& value) -> bool
+[[nodiscard]] auto contains_value(const Vector<T>& vec, const T& value) -> bool
 {
   return std::ranges::find(vec, value) != vec.end();
 }

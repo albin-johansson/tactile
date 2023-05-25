@@ -22,12 +22,12 @@
 #include "common/primitives.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 
 namespace tactile {
 
 /// Splits a string into a collection of tokens, separated by a specific character.
-[[nodiscard]] auto split(StringView str, char sep) -> Vec<String>;
+[[nodiscard]] auto split(StringView str, char sep) -> Vector<String>;
 
 /// Converts a string into a 32-bit signed integer.
 [[nodiscard]] auto parse_i32(StringView str, int base = 10) -> Maybe<int32>;

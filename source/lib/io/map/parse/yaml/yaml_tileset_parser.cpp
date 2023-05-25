@@ -206,9 +206,9 @@ constexpr int32 kTilesetFormatVersion = 1;
 }  // namespace
 
 auto parse_tilesets(const YAML::Node& sequence, const MapIR& map, const Path& dir)
-    -> Expected<Vec<TilesetIR>, ParseError>
+    -> Expected<Vector<TilesetIR>, ParseError>
 {
-  Vec<TilesetIR> tilesets;
+  Vector<TilesetIR> tilesets;
   tilesets.reserve(sequence.size());
 
   for (const auto& node: sequence) {

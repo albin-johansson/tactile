@@ -23,7 +23,7 @@
 
 #include "common/type/expected.hpp"
 #include "common/type/path.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 #include "io/map/parse/parse_error.hpp"
 #include "io/map/parse/parse_result.hpp"
 
@@ -34,10 +34,10 @@ namespace tactile {
 [[nodiscard]] auto parse_tilesets(const YAML::Node& sequence,
                                   const MapIR& map,
                                   const Path& dir)
-    -> Expected<Vec<TilesetIR>, ParseError>;
+    -> Expected<Vector<TilesetIR>, ParseError>;
 
 [[nodiscard]] auto parse_layers(const YAML::Node& sequence, const MapIR& map)
-    -> Expected<Vec<LayerIR>, ParseError>;
+    -> Expected<Vector<LayerIR>, ParseError>;
 
 [[nodiscard]] auto parse_object(const YAML::Node& node, const MapIR& map)
     -> Expected<ObjectIR, ParseError>;

@@ -36,7 +36,7 @@ namespace tactile {
 [[nodiscard]] auto parse_object(XmlNode object_node) -> Expected<ObjectIR, ParseError>;
 
 [[nodiscard]] auto parse_layers(XmlNode map_node, MapIR& map)
-    -> Expected<Vec<LayerIR>, ParseError>;
+    -> Expected<Vector<LayerIR>, ParseError>;
 
 [[nodiscard]] auto parse_properties(XmlNode node) -> Expected<AttributeMap, ParseError>;
 

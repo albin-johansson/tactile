@@ -23,7 +23,7 @@
 #include "common/tile_extent.hpp"
 #include "common/tile_matrix.hpp"
 #include "common/type/string.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 #include "components/tile_format.hpp"
 
 namespace tactile {

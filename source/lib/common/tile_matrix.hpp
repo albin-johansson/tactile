@@ -23,12 +23,12 @@
 
 #include "common/primitives.hpp"
 #include "common/tile_extent.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 
 namespace tactile {
 
-using TileRow = Vec<TileID>;
-using TileMatrix = Vec<TileRow>;
+using TileRow = Vector<TileID>;
+using TileMatrix = Vector<TileRow>;
 
 template <typename T>
 struct MatrixCoords final {

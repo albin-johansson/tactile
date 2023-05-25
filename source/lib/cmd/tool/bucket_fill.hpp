@@ -24,7 +24,7 @@
 #include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 
 namespace tactile::cmd {
 
@@ -43,7 +43,7 @@ class BucketFill final : public Command {
   TilePos mOrigin;
   TileID mReplacement;
   Maybe<TileID> mTargetTileID;
-  Vec<TilePos> mAffectedPositions;
+  Vector<TilePos> mAffectedPositions;
 };
 
 }  // namespace tactile::cmd

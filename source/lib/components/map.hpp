@@ -23,7 +23,7 @@
 #include "common/tile_extent.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "common/type/vec.hpp"
+#include "common/type/vector.hpp"
 
 namespace tactile {
 
@@ -48,7 +48,7 @@ struct Map final {
   Entity root_layer {kNullEntity};      ///< The invisible root group layer.
   Entity active_layer {kNullEntity};    ///< The selected layer, if any.
   Entity active_tileset {kNullEntity};  ///< The active attached tileset, if any.
-  Vec<Entity> attached_tilesets;        ///< The associated attached tilesets.
+  Vector<Entity> attached_tilesets;     ///< The associated attached tilesets.
 };
 
 /// Map component storing available identifiers.
