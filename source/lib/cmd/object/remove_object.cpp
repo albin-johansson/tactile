@@ -26,7 +26,7 @@
 #include "core/layer.hpp"
 #include "core/object.hpp"
 #include "model/context.hpp"
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 
 namespace tactile::cmd {
 

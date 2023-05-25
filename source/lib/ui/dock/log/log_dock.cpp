@@ -26,7 +26,7 @@
 #include "common/util/lookup.hpp"
 #include "model/context.hpp"
 #include "model/event/setting_events.hpp"
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 

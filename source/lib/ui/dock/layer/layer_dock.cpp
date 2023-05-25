@@ -32,7 +32,7 @@
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/group_layer_system.hpp"
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "ui/constants.hpp"
 #include "ui/dock/layer/add_layer_context_menu.hpp"
 #include "ui/dock/layer/dialogs/rename_layer_dialog.hpp"

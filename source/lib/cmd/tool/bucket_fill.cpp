@@ -21,8 +21,8 @@
 
 #include "core/layer.hpp"
 #include "model/context.hpp"
+#include "model/systems/language_system.hpp"
 #include "model/systems/tile_layer_system.hpp"
-#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 

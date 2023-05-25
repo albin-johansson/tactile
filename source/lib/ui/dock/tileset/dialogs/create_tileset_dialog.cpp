@@ -27,7 +27,7 @@
 #include "io/file_dialog.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/settings.hpp"
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/widgets.hpp"
 

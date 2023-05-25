@@ -27,7 +27,7 @@
 #include "io/directories.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/settings.hpp"
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 
 namespace tactile::ui {
 namespace {

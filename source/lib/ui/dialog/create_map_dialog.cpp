@@ -26,7 +26,7 @@
 #include "common/type/math.hpp"
 #include "model/event/map_events.hpp"
 #include "model/settings.hpp"
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/alignment.hpp"
 

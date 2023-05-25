@@ -30,7 +30,7 @@
 #include "model/model.hpp"
 #include "model/systems/component/component_set.hpp"
 #include "model/systems/document_system.hpp"
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {

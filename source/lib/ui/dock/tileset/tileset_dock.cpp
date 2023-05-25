@@ -31,7 +31,7 @@
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/systems/document_system.hpp"
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "ui/dock/tileset/tileset_tabs.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"

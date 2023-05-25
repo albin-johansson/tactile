@@ -28,7 +28,7 @@
 #include "components/document.hpp"
 #include "model/event/property_events.hpp"
 #include "model/systems/document_system.hpp"
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {

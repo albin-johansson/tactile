@@ -33,7 +33,7 @@
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/dock/comp/dialogs/add_component_attr_dialog.hpp"

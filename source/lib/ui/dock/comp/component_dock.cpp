@@ -33,7 +33,7 @@
 #include "model/model.hpp"
 #include "model/systems/context/components.hpp"
 #include "model/systems/document_system.hpp"
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"

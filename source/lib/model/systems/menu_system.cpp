@@ -29,9 +29,9 @@
 #include "model/systems/document_system.hpp"
 #include "model/systems/file_history_system.hpp"
 #include "model/systems/font_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "model/systems/map_system.hpp"
 #include "model/systems/viewport_system.hpp"
-#include "systems/language_system.hpp"
 #include "ui/shortcut/mappings.hpp"
 
 namespace tactile::sys {

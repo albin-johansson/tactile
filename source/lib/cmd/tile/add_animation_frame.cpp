@@ -22,8 +22,8 @@
 #include "common/util/vector.hpp"
 #include "components/tile.hpp"
 #include "model/context.hpp"
+#include "model/systems/language_system.hpp"
 #include "model/systems/tileset_system.hpp"
-#include "systems/language_system.hpp"
 
 namespace tactile::cmd {
 

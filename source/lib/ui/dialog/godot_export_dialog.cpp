@@ -25,7 +25,7 @@
 
 #include "common/type/path.hpp"
 #include "model/event/map_events.hpp"
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/attribute_widgets.hpp"

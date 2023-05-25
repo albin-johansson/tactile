@@ -23,7 +23,7 @@
 
 #include "core/component.hpp"
 #include "model/event/component_events.hpp"
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/attribute_widgets.hpp"

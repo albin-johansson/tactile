@@ -26,7 +26,7 @@
 #include "common/type/maybe.hpp"
 #include "common/util/string_buffer.hpp"
 #include "model/event/layer_events.hpp"
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {

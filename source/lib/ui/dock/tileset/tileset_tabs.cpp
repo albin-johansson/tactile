@@ -30,7 +30,7 @@
 #include "model/event/property_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/systems/document_system.hpp"
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "ui/dock/tileset/tileset_view.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"

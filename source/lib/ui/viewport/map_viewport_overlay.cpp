@@ -26,8 +26,8 @@
 #include "core/layer.hpp"
 #include "model/context.hpp"
 #include "model/event/setting_events.hpp"
+#include "model/systems/language_system.hpp"
 #include "model/systems/tileset_system.hpp"
-#include "systems/language_system.hpp"
 #include "ui/render/canvas.hpp"
 #include "ui/widget/scoped.hpp"
 

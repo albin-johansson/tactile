@@ -23,8 +23,8 @@
 
 #include "model/event/setting_events.hpp"
 #include "model/systems/document_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "model/systems/menu_system.hpp"
-#include "systems/language_system.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/style/themes.hpp"
 #include "ui/widget/scoped.hpp"

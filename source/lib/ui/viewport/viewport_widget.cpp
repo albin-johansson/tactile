@@ -29,7 +29,7 @@
 #include "model/event/map_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/systems/document_system.hpp"
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "ui/conversions.hpp"
 #include "ui/shortcut/mappings.hpp"
 #include "ui/style/alignment.hpp"

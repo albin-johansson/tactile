@@ -22,7 +22,7 @@
 #include <centurion/system.hpp>
 #include <imgui.h>
 
-#include "systems/language_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/scoped.hpp"
 
