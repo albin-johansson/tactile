@@ -19,7 +19,7 @@
 
 #include "viewport_system.hpp"
 
-#include "core/viewport.hpp"
+#include "components/viewport.hpp"
 #include "model/systems/document_system.hpp"
 
 namespace tactile::sys {

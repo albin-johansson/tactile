@@ -28,7 +28,7 @@
 #include "components/document.hpp"
 #include "components/texture.hpp"
 #include "components/tile.hpp"
-#include "core/tileset.hpp"
+#include "components/tileset.hpp"
 #include "io/proto/settings.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/event/tileset_events.hpp"

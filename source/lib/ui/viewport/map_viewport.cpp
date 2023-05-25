@@ -26,10 +26,10 @@
 
 #include "common/color.hpp"
 #include "components/document.hpp"
+#include "components/layer.hpp"
 #include "components/map.hpp"
-#include "core/layer.hpp"
-#include "core/object.hpp"
-#include "core/viewport.hpp"
+#include "components/object.hpp"
+#include "components/viewport.hpp"
 #include "model/context.hpp"
 #include "model/event/object_events.hpp"
 #include "model/event/property_events.hpp"

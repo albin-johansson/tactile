@@ -19,7 +19,7 @@
 
 #include "set_layer_visible.hpp"
 
-#include "core/layer.hpp"
+#include "components/layer.hpp"
 #include "model/context.hpp"
 #include "model/systems/language_system.hpp"
 

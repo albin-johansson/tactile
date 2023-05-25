@@ -22,7 +22,7 @@
 #include <centurion/fwd.hpp>
 
 #include "common/type/dispatcher.hpp"
-#include "core/viewport.hpp"
+#include "components/viewport.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {

@@ -19,7 +19,7 @@
 
 #include "set_object_visible.hpp"
 
-#include "core/object.hpp"
+#include "components/object.hpp"
 #include "model/context.hpp"
 #include "model/systems/language_system.hpp"
 

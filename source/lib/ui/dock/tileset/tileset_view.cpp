@@ -25,7 +25,7 @@
 #include "common/color.hpp"
 #include "components/map.hpp"
 #include "components/texture.hpp"
-#include "core/tileset.hpp"
+#include "components/tileset.hpp"
 #include "io/proto/settings.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"

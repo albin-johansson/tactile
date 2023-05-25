@@ -25,8 +25,8 @@
 
 #include "common/type/maybe.hpp"
 #include "common/util/string_buffer.hpp"
+#include "components/component.hpp"
 #include "components/document.hpp"
-#include "core/component.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"

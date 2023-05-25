@@ -25,7 +25,7 @@
 #include "common/region.hpp"
 #include "common/tile_extent.hpp"
 #include "common/type/math.hpp"
-#include "core/viewport.hpp"
+#include "components/viewport.hpp"
 
 namespace tactile::ui {
 

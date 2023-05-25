@@ -25,7 +25,7 @@
 #include <imgui_internal.h>
 
 #include "components/texture.hpp"
-#include "core/viewport.hpp"
+#include "components/viewport.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/systems/document_system.hpp"

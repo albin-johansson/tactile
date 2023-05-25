@@ -24,7 +24,7 @@
 #include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "components/map.hpp"
-#include "core/tileset.hpp"
+#include "components/tileset.hpp"
 #include "model/context.hpp"
 #include "model/model.hpp"
 #include "ui/render/canvas.hpp"

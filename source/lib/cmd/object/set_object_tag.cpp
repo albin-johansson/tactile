@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/object.hpp"
+#include "components/object.hpp"
 #include "model/context.hpp"
 #include "model/systems/language_system.hpp"
 

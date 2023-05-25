@@ -22,9 +22,9 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
+#include "components/layer.hpp"
 #include "components/map.hpp"
-#include "core/layer.hpp"
-#include "core/object.hpp"
+#include "components/object.hpp"
 #include "model/context.hpp"
 #include "model/systems/language_system.hpp"
 

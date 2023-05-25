@@ -21,16 +21,16 @@
 
 #include "common/debug/assert.hpp"
 #include "common/debug/profile.hpp"
+#include "components/component.hpp"
 #include "components/context.hpp"
 #include "components/document.hpp"
+#include "components/layer.hpp"
 #include "components/map.hpp"
+#include "components/object.hpp"
 #include "components/texture.hpp"
 #include "components/tile.hpp"
 #include "components/tile_format.hpp"
-#include "core/component.hpp"
-#include "core/layer.hpp"
-#include "core/object.hpp"
-#include "core/tileset.hpp"
+#include "components/tileset.hpp"
 #include "model/model.hpp"
 
 namespace tactile {

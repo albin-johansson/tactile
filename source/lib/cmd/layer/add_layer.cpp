@@ -20,8 +20,8 @@
 #include "add_layer.hpp"
 
 #include "components/document.hpp"
+#include "components/layer.hpp"
 #include "components/map.hpp"
-#include "core/layer.hpp"
 #include "model/context.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/layer_system.hpp"

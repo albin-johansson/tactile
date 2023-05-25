@@ -25,8 +25,8 @@
 #include "components/context.hpp"
 #include "components/texture.hpp"
 #include "components/tile.hpp"
-#include "core/tileset.hpp"
-#include "core/viewport.hpp"
+#include "components/tileset.hpp"
+#include "components/viewport.hpp"
 #include "model/systems/texture_system.hpp"
 #include "model/systems/validation.hpp"
 

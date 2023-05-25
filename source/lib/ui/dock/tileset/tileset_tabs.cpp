@@ -25,7 +25,7 @@
 #include "components/context.hpp"
 #include "components/document.hpp"
 #include "components/map.hpp"
-#include "core/tileset.hpp"
+#include "components/tileset.hpp"
 #include "model/event/file_events.hpp"
 #include "model/event/property_events.hpp"
 #include "model/event/tileset_events.hpp"

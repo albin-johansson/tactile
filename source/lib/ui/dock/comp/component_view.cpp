@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/component.hpp"
+#include "components/component.hpp"
 #include "model/event/component_events.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/style/alignment.hpp"

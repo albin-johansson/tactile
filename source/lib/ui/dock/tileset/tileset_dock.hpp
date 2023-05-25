@@ -23,7 +23,7 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "core/tileset.hpp"
+#include "components/tileset.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {

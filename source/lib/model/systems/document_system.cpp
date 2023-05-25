@@ -27,7 +27,7 @@
 #include "common/debug/panic.hpp"
 #include "components/context.hpp"
 #include "components/document.hpp"
-#include "core/viewport.hpp"
+#include "components/viewport.hpp"
 #include "io/map/parse/parse_map.hpp"
 #include "model/settings.hpp"
 #include "model/systems/map_system.hpp"

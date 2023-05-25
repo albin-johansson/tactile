@@ -19,8 +19,8 @@
 
 #include "object_layer_system.hpp"
 
-#include "core/layer.hpp"
-#include "core/object.hpp"
+#include "components/layer.hpp"
+#include "components/object.hpp"
 
 namespace tactile::sys {
 namespace {

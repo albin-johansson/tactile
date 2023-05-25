@@ -21,7 +21,7 @@
 
 #include "common/primitives.hpp"
 #include "common/type/dispatcher.hpp"
-#include "core/widget.hpp"
+#include "components/widget.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {

@@ -24,7 +24,7 @@
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string_map.hpp"
-#include "core/component.hpp"
+#include "components/component.hpp"
 
 namespace tactile::cmd {
 

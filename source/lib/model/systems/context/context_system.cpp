@@ -21,7 +21,7 @@
 
 #include "common/debug/assert.hpp"
 #include "common/util/lookup.hpp"
-#include "core/component.hpp"
+#include "components/component.hpp"
 #include "model/systems/component/component.hpp"
 #include "model/systems/validation.hpp"
 

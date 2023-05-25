@@ -22,7 +22,7 @@
 #include <imgui_internal.h>
 
 #include "components/document.hpp"
-#include "core/viewport.hpp"
+#include "components/viewport.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/systems/document_system.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
