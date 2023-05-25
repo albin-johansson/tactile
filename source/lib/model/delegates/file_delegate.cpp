@@ -39,7 +39,7 @@ void on_close_document(Model& model, const CloseDocumentEvent& event)
 
   if (document.type == DocumentType::Map && document.path.has_value()) {
     auto& file_history = model.get<FileHistory>();
-    file_history.last_closed_file = *document.path;
+    file_history.last_closed_file = document.path->string();
   }
 
   sys::close_document(model, event.document);
