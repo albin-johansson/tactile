@@ -27,7 +27,6 @@
 #include "common/debug/panic.hpp"
 #include "components/context.hpp"
 #include "components/document.hpp"
-#include "components/map.hpp"
 #include "core/viewport.hpp"
 #include "io/map/parse/parse_map.hpp"
 #include "model/settings.hpp"
@@ -185,6 +184,18 @@ auto get_active_document(const Model& model) -> Entity
 {
   const auto& document_context = model.get<DocumentContext>();
   return document_context.active_document;
+}
+
+auto try_get_active_map(const Model& model) -> const Map*
+{
+  const auto document_entity = get_active_document(model);
+
+  if (document_entity != kNullEntity && model.has<MapDocument>(document_entity)) {
+    const auto& map_document = model.get<MapDocument>(document_entity);
+    return model.try_get<Map>(map_document.map);
+  }
+
+  return nullptr;
 }
 
 auto get_associated_tileset_document(const Model& model, const Entity tileset_entity)

@@ -21,20 +21,20 @@
 
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "model/mouse_info.hpp"
+#include "core/viewport.hpp"
 
 namespace tactile {
 
 struct ViewportMousePressedEvent final {
-  MouseInfo info;
+  ViewportMouseInfo mouse_info;
 };
 
 struct ViewportMouseDraggedEvent final {
-  MouseInfo info;
+  ViewportMouseInfo mouse_info;
 };
 
 struct ViewportMouseReleasedEvent final {
-  MouseInfo info;
+  ViewportMouseInfo mouse_info;
 };
 
 struct ViewportMouseEnteredEvent final {};

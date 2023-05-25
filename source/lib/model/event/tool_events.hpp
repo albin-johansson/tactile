@@ -19,13 +19,13 @@
 
 #pragma once
 
+#include "common/enum/tool_type.hpp"
 #include "common/primitives.hpp"
 #include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "common/type/tile_cache.hpp"
-#include "model/mouse_info.hpp"
-#include "model/tool/tool_type.hpp"
+#include "core/viewport.hpp"
 
 namespace tactile {
 

@@ -20,6 +20,7 @@
 #include "canvas.hpp"
 
 #include <algorithm>  // min, max
+#include <cmath>      // trunc
 
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -119,6 +120,32 @@ auto create_canvas_info(const Viewport& viewport,
   canvas.bounds_rect = _convert_bounds_to_rect(canvas);
 
   return canvas;
+}
+
+auto get_viewport_mouse_info(const CanvasInfo& canvas) -> ViewportMouseInfo
+{
+  ViewportMouseInfo cursor;
+
+  cursor.raw_pos = as_float2(ImGui::GetMousePos() - canvas.origin_pos);
+  cursor.scaled_pos = cursor.raw_pos / as_float2(canvas.tile_ratio);
+
+  const auto index = cursor.raw_pos / as_float2(canvas.graphical_tile_size);
+  const auto row = std::trunc(index.y);
+  const auto col = std::trunc(index.x);
+
+  cursor.in_viewport = index.y >= 0 &&            //
+                       index.x >= 0 &&            //
+                       row < canvas.row_count &&  //
+                       col < canvas.col_count;
+
+  if (cursor.in_viewport) {
+    cursor.tile_pos = {static_cast<int32>(row), static_cast<int32>(col)};
+  }
+
+  cursor.clamped_pos = {canvas.origin_pos.x + (col * canvas.graphical_tile_size.x),
+                        canvas.origin_pos.y + (row * canvas.graphical_tile_size.y)};
+
+  return cursor;
 }
 
 }  // namespace tactile::ui

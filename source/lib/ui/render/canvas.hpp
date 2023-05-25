@@ -55,4 +55,6 @@ struct CanvasInfo final {
                                       const Float2& logical_tile_size,
                                       const TileExtent& extent) -> CanvasInfo;
 
+[[nodiscard]] auto get_viewport_mouse_info(const CanvasInfo& canvas) -> ViewportMouseInfo;
+
 }  // namespace tactile::ui

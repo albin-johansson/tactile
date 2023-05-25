@@ -26,6 +26,7 @@
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
+#include "components/map.hpp"
 #include "model/event/map_events.hpp"
 #include "model/model.hpp"
 
@@ -127,6 +128,8 @@ void set_document_name(Model& model, Entity document_entity, String name);
  * \return a document entity, or the null entity.
  */
 [[nodiscard]] auto get_active_document(const Model& model) -> Entity;
+
+[[nodiscard]] auto try_get_active_map(const Model& model) -> const Map*;
 
 /**
  * Returns the tileset document associated with a tileset.

@@ -20,11 +20,15 @@
 #pragma once
 
 #include "common/type/ecs.hpp"
+#include "components/map.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {
 
 [[nodiscard]] auto is_stamp_tool_randomizer_possible(const Model& model,
                                                      Entity map_entity) -> bool;
+
+[[nodiscard]] auto is_stamp_tool_randomizer_possible(const Model& model, const Map& map)
+    -> bool;
 
 }  // namespace tactile::sys

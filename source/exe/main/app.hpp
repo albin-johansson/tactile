@@ -30,6 +30,7 @@
 #include "model/event/map_events.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/event/setting_events.hpp"
+#include "model/event/viewport_events.hpp"
 
 namespace tactile {
 
@@ -109,6 +110,13 @@ class App final : public AppDelegate {
   void _on_set_language(const SetLanguageEvent& event);
   void _on_set_theme(const SetThemeEvent& event);
   void _on_reset_dock_visibilities(const ResetDockVisibilitiesEvent& event);
+
+  // Viewport events
+  void _on_viewport_mouse_pressed(const ViewportMousePressedEvent& event);
+  void _on_viewport_mouse_dragged(const ViewportMouseDraggedEvent& event);
+  void _on_viewport_mouse_released(const ViewportMouseReleasedEvent& event);
+  void _on_viewport_mouse_entered(const ViewportMouseEnteredEvent& event);
+  void _on_viewport_mouse_exited(const ViewportMouseExitedEvent& event);
 };
 
 }  // namespace tactile

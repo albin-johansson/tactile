@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include "common/enum/mouse_button.hpp"
+#include "common/tile_pos.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 
@@ -27,6 +29,15 @@ namespace tactile {
 struct ViewportLimits final {
   Float2 min_offset {};
   Float2 max_offset {};
+};
+
+struct ViewportMouseInfo final {
+  TilePos tile_pos;           ///< The raw mouse position in tile coordinates.
+  Maybe<MouseButton> button;  ///< The active button, if any.
+  Float2 raw_pos {};          ///< The raw mouse position.
+  Float2 clamped_pos {};  ///< The position clamped to the TL corner of the hovered tile.
+  Float2 scaled_pos {};   // TODO document/rename/remove
+  bool in_viewport {};    ///< Indicates whether the mouse is within the viewport.
 };
 
 struct Viewport final {

@@ -23,9 +23,11 @@
 #include "components/file_history.hpp"
 #include "components/language.hpp"
 #include "components/texture.hpp"
+#include "components/tool.hpp"
 #include "core/menu.hpp"
 #include "model/settings.hpp"
 #include "model/systems/gl_texture_system.hpp"
+#include "model/systems/tool/stamp_tool.hpp"
 
 namespace tactile::sys {
 
@@ -51,6 +53,9 @@ void init_model(Model& model, const BackendAPI api)
     texture_callbacks.init = &sys::on_init_gl_texture;
     texture_callbacks.destroy = &sys::on_destroy_gl_texture;
   }
+
+  auto& tool_context = model.add<ToolContext>();
+  tool_context.tools[ToolType::Stamp] = sys::create_stamp_tool(model);
 }
 
 }  // namespace tactile::sys

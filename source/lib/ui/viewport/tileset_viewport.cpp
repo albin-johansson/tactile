@@ -40,7 +40,6 @@
 #include "ui/render/canvas_renderer.hpp"
 #include "ui/render/primitives.hpp"
 #include "ui/viewport/document_viewport_offset_handler.hpp"
-#include "ui/viewport/viewport_cursor_info.hpp"
 #include "ui/widget/scoped.hpp"
 
 namespace tactile::ui {
@@ -58,12 +57,12 @@ struct DockState final {
 
 inline constinit DockState gDockState;
 
-void _show_cursor_gizmos(const ViewportCursorInfo& cursor, const CanvasInfo& canvas_info)
+void _show_cursor_gizmos(const ViewportMouseInfo& cursor, const CanvasInfo& canvas_info)
 {
   const auto color = gDockState.animation_frame_selection_mode
                          ? kAnimationFrameSelectionColor
                          : kTileHoverColor;
-  draw_shadowed_rect(cursor.clamped_position,
+  draw_shadowed_rect(as_imvec2(cursor.clamped_pos),
                      canvas_info.graphical_tile_size,
                      color,
                      2.0f);
@@ -115,11 +114,11 @@ void _poll_mouse(const Tileset& tileset,
                  const CanvasInfo& canvas_info,
                  Dispatcher& dispatcher)
 {
-  const auto cursor = get_viewport_cursor_info(canvas_info);
-  if (cursor.is_within_map) {
+  const auto mouse = get_viewport_mouse_info(canvas_info);
+  if (mouse.in_viewport) {
     if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
       const TileIndex index =
-          cursor.map_position.col() + (cursor.map_position.row() * tileset.column_count);
+          mouse.tile_pos.col() + (mouse.tile_pos.row() * tileset.column_count);
 
       if (gDockState.animation_frame_selection_mode) {
         dispatcher.enqueue<AddTileAnimationFrameEvent>(index);
@@ -130,7 +129,7 @@ void _poll_mouse(const Tileset& tileset,
       }
     }
 
-    _show_cursor_gizmos(cursor, canvas_info);
+    _show_cursor_gizmos(mouse, canvas_info);
   }
 }
 

@@ -37,4 +37,14 @@ auto is_stamp_tool_randomizer_possible(const Model& model, const Entity map_enti
   return false;
 }
 
+auto is_stamp_tool_randomizer_possible(const Model& model, const Map& map) -> bool
+{
+  if (map.active_tileset != kNullEntity) {
+    const auto& attached_tileset = model.get<AttachedTileset>(map.active_tileset);
+    return attached_tileset.is_single_tile_selected();
+  }
+
+  return false;
+}
+
 }  // namespace tactile::sys

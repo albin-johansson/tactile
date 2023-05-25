@@ -28,10 +28,10 @@
 namespace tactile {
 
 class MapCommandCache final {
+ public:
   using TileCache = TreeMap<TilePos, TileID>;
   using LayerCache = TreeMap<Entity, TileCache>;
 
- public:
   void clear() noexcept;
 
   void restore_tiles(Model& model);

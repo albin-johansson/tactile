@@ -45,7 +45,6 @@
 #include "ui/viewport/document_viewport_offset_handler.hpp"
 #include "ui/viewport/map_viewport_overlay.hpp"
 #include "ui/viewport/map_viewport_toolbar.hpp"
-#include "ui/viewport/viewport_cursor_info.hpp"
 #include "ui/widget/scoped.hpp"
 
 namespace tactile::ui {
@@ -60,39 +59,27 @@ struct MapViewportState final {
 
 inline constinit MapViewportState gViewportState;
 
-/// Creates a mouse info struct, but does not set the button member.
-[[nodiscard]] auto _make_mouse_info(const ViewportCursorInfo& cursor) -> MouseInfo
+template <typename Event, std::predicate<ImGuiMouseButton> T>
+void _check_for(ViewportMouseInfo mouse_info, Dispatcher& dispatcher, T&& predicate)
 {
-  MouseInfo info;
+  const auto lmb = predicate(ImGuiMouseButton_Left);
+  const auto mmb = predicate(ImGuiMouseButton_Middle);
+  const auto rmb = predicate(ImGuiMouseButton_Right);
 
-  info.pos.x = cursor.raw_position.x;
-  info.pos.y = cursor.raw_position.y;
-  info.position_in_viewport = cursor.map_position;
-  info.is_within_contents = cursor.is_within_map;
-
-  return info;
-}
-
-template <typename Event, typename T>
-void _check_for(const ViewportCursorInfo& cursor, Dispatcher& dispatcher, T&& query)
-{
-  const auto left = query(ImGuiMouseButton_Left);
-  const auto mid = query(ImGuiMouseButton_Middle);
-  const auto right = query(ImGuiMouseButton_Right);
-  if (left || mid || right) {
-    auto info = _make_mouse_info(cursor);
-
-    if (left) {
-      info.button = cen::mouse_button::left;
-    }
-    else if (mid) {
-      info.button = cen::mouse_button::middle;
-    }
-    else /* if (right) */ {
-      info.button = cen::mouse_button::right;
+  if (lmb || mmb || rmb) {
+    if (lmb) {
+      mouse_info.button = MouseButton::Left;
     }
 
-    dispatcher.enqueue<Event>(info);
+    if (mmb) {
+      mouse_info.button = MouseButton::Middle;
+    }
+
+    if (rmb) {
+      mouse_info.button = MouseButton::Right;
+    }
+
+    dispatcher.enqueue<Event>(mouse_info);
   }
 }
 
@@ -113,13 +100,13 @@ void _center_viewport(const Viewport& viewport,
 void _draw_cursor_gizmos(const Model& model,
                          const CanvasInfo& canvas,
                          const Map& map,
-                         const ViewportCursorInfo& cursor)
+                         const ViewportMouseInfo& mouse)
 {
   const auto is_tile_layer_active =
       map.active_layer != kNullEntity && model.has<TileLayer>(map.active_layer);
 
-  if (cursor.is_within_map && is_tile_layer_active) {
-    draw_shadowed_rect(cursor.clamped_position,
+  if (mouse.in_viewport && is_tile_layer_active) {
+    draw_shadowed_rect(as_imvec2(mouse.clamped_pos),
                        canvas.graphical_tile_size,
                        Color {0, 0xFF, 0, 200},
                        2.0f);
@@ -130,7 +117,7 @@ void _draw_cursor_gizmos(const Model& model,
   // TODO tools.accept(preview_renderer);
 }
 
-void _poll_mouse(Dispatcher& dispatcher, const ViewportCursorInfo& cursor)
+void _poll_mouse(const ViewportMouseInfo& mouse_info, Dispatcher& dispatcher)
 {
   if (ImGui::IsPopupOpen(kViewportObjectContextMenuId, ImGuiPopupFlags_AnyPopup)) {
     return;
@@ -141,23 +128,24 @@ void _poll_mouse(Dispatcher& dispatcher, const ViewportCursorInfo& cursor)
   }
 
   // FIXME crash: we need to track origin dock for these mouse events, otherwise we
-  // might// end up emitting dragged events without an initial pressed event, etc.
+  // might end up emitting dragged events without an initial pressed event, etc.
   if (Window::contains_mouse()) {
-    _check_for<ViewportMousePressedEvent>(
-        cursor,
-        dispatcher,
-        [](ImGuiMouseButton button) { return ImGui::IsMouseClicked(button); });
+    using PressedEvent = ViewportMousePressedEvent;
+    using DraggedEvent = ViewportMouseDraggedEvent;
+    using ReleasedEvent = ViewportMouseReleasedEvent;
 
-    _check_for<
-        ViewportMouseDraggedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
+    _check_for<PressedEvent>(mouse_info, dispatcher, [](const ImGuiMouseButton button) {
+      return ImGui::IsMouseClicked(button);
+    });
+
+    _check_for<DraggedEvent>(mouse_info, dispatcher, [](const ImGuiMouseButton button) {
       const auto& io = ImGui::GetIO();
       return ImGui::IsMouseDragging(button) && as_float2(io.MouseDelta) != Float2 {0, 0};
     });
 
-    _check_for<ViewportMouseReleasedEvent>(
-        cursor,
-        dispatcher,
-        [](ImGuiMouseButton button) { return ImGui::IsMouseReleased(button); });
+    _check_for<ReleasedEvent>(mouse_info, dispatcher, [](const ImGuiMouseButton button) {
+      return ImGui::IsMouseReleased(button);
+    });
   }
 }
 
@@ -258,17 +246,17 @@ void show_map_viewport(const Model& model,
 
   sys::render_map(model, canvas, map);
 
-  const auto cursor = get_viewport_cursor_info(canvas);
-  _poll_mouse(dispatcher, cursor);
+  const auto mouse_info = get_viewport_mouse_info(canvas);
+  _poll_mouse(mouse_info, dispatcher);
 
   if (Window::contains_mouse()) {
-    _draw_cursor_gizmos(model, canvas, map, cursor);
+    _draw_cursor_gizmos(model, canvas, map, mouse_info);
   }
 
   pop_scissor();
 
   show_map_viewport_toolbar(model, dispatcher);
-  show_map_viewport_overlay(model, map, cursor, dispatcher);
+  show_map_viewport_overlay(model, map, mouse_info, dispatcher);
 
   _push_viewport_context_menu(strings, map_document.map, dispatcher);
   _push_object_context_menu(model, strings, map, dispatcher);

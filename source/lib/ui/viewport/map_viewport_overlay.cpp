@@ -28,7 +28,7 @@
 #include "model/event/setting_events.hpp"
 #include "model/systems/tileset_system.hpp"
 #include "systems/language_system.hpp"
-#include "ui/viewport/viewport_cursor_info.hpp"
+#include "ui/render/canvas.hpp"
 #include "ui/widget/scoped.hpp"
 
 namespace tactile::ui {
@@ -71,16 +71,16 @@ void _prepare_position_and_pivot(const Settings& settings)
 void _push_mouse_tile_labels(const Model& model,
                              const Strings& strings,
                              const Map& map,
-                             const ViewportCursorInfo& cursor)
+                             const ViewportMouseInfo& mouse)
 {
   if (map.active_layer == kNullEntity) {
     return;
   }
 
   if (const auto* tile_layer = model.try_get<TileLayer>(map.active_layer)) {
-    const auto tile_id = tile_layer->tile_at(cursor.map_position);
+    const auto tile_id = tile_layer->tile_at(mouse.tile_pos);
 
-    if (cursor.is_within_map && tile_id.has_value() && tile_id != kEmptyTile) {
+    if (mouse.in_viewport && tile_id.has_value() && tile_id != kEmptyTile) {
       ImGui::Text("%s: %i", strings.misc.global_id.c_str(), *tile_id);
 
       if (sys::is_valid_tile_identifier(model, map, *tile_id)) {
@@ -144,7 +144,7 @@ void _push_overlay_context_menu(const Strings& strings,
 
 void show_map_viewport_overlay(const Model& model,
                                const Map& map,
-                               const ViewportCursorInfo& cursor,
+                               const ViewportMouseInfo& mouse,
                                Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
@@ -163,27 +163,25 @@ void show_map_viewport_overlay(const Model& model,
     }
 
     if (ImGui::IsMousePosValid()) {
-      ImGui::Text("X/Y: (%.0f, %.0f)",
-                  cursor.scaled_position.x,
-                  cursor.scaled_position.y);
+      ImGui::Text("X/Y: (%.0f, %.0f)", mouse.scaled_pos.x, mouse.scaled_pos.y);
     }
     else {
       ImGui::TextUnformatted("X/Y: --");
     }
 
-    if (cursor.is_within_map) {
+    if (mouse.in_viewport) {
       ImGui::Text("%s/%s: (%i, %i)",
                   strings.misc.row.c_str(),
                   strings.misc.column.c_str(),
-                  cursor.map_position.row(),
-                  cursor.map_position.col());
+                  mouse.tile_pos.row(),
+                  mouse.tile_pos.col());
     }
     else {
       ImGui::Text("%s/%s: --", strings.misc.row.c_str(), strings.misc.column.c_str());
     }
 
     ImGui::Separator();
-    _push_mouse_tile_labels(model, strings, map, cursor);
+    _push_mouse_tile_labels(model, strings, map, mouse);
     _push_overlay_context_menu(strings, settings, dispatcher);
   }
 }

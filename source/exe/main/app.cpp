@@ -43,6 +43,7 @@
 #include "model/delegates/map_delegate.hpp"
 #include "model/delegates/menu_delegate.hpp"
 #include "model/delegates/settings_delegate.hpp"
+#include "model/delegates/viewport_delegate.hpp"
 #include "model/systems/file_history_system.hpp"
 #include "model/systems/menu_system.hpp"
 #include "model/systems/texture_system.hpp"
@@ -140,6 +141,13 @@ void App::_subscribe_to_events()
   mDispatcher.sink<SetThemeEvent>().connect<&App::_on_set_theme>(this);
   mDispatcher.sink<ResetDockVisibilitiesEvent>().connect<&App::_on_reset_dock_visibilities>(this);
   mDispatcher.sink<MenuActionEvent>().connect<&App::_on_menu_action>(this);
+
+  // Viewport events
+  mDispatcher.sink<ViewportMousePressedEvent>().connect<&App::_on_viewport_mouse_pressed>(this);
+  mDispatcher.sink<ViewportMouseDraggedEvent>().connect<&App::_on_viewport_mouse_dragged>(this);
+  mDispatcher.sink<ViewportMouseReleasedEvent>().connect<&App::_on_viewport_mouse_released>(this);
+  mDispatcher.sink<ViewportMouseEnteredEvent>().connect<&App::_on_viewport_mouse_entered>(this);
+  mDispatcher.sink<ViewportMouseExitedEvent>().connect<&App::_on_viewport_mouse_exited>(this);
   // clang-format on
 }
 
@@ -230,7 +238,6 @@ void App::on_update()
   mDispatcher.update();
 
   // TODO update animated tiles
-
   sys::update_menu_items(model);
 
   ui::update_dynamic_color_cache();
@@ -500,6 +507,36 @@ void App::_on_reset_dock_visibilities(const ResetDockVisibilitiesEvent& event)
 {
   spdlog::trace("[ResetDockVisibilitiesEvent]");
   on_reset_dock_visibilities(get_global_model(), event);
+}
+
+void App::_on_viewport_mouse_pressed(const ViewportMousePressedEvent& event)
+{
+  spdlog::trace("[ViewportMousePressedEvent]");
+  on_viewport_mouse_pressed(get_global_model(), mDispatcher, event);
+}
+
+void App::_on_viewport_mouse_dragged(const ViewportMouseDraggedEvent& event)
+{
+  spdlog::trace("[ViewportMouseDraggedEvent]");
+  on_viewport_mouse_dragged(get_global_model(), mDispatcher, event);
+}
+
+void App::_on_viewport_mouse_released(const ViewportMouseReleasedEvent& event)
+{
+  spdlog::trace("[ViewportMouseReleasedEvent]");
+  on_viewport_mouse_released(get_global_model(), mDispatcher, event);
+}
+
+void App::_on_viewport_mouse_entered(const ViewportMouseEnteredEvent& event)
+{
+  spdlog::trace("[ViewportMouseEnteredEvent]");
+  on_viewport_mouse_entered(get_global_model(), mDispatcher, event);
+}
+
+void App::_on_viewport_mouse_exited(const ViewportMouseExitedEvent& event)
+{
+  spdlog::trace("[ViewportMouseExitedEvent]");
+  on_viewport_mouse_exited(get_global_model(), mDispatcher, event);
 }
 
 }  // namespace tactile
