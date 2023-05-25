@@ -17,13 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "common/util/algorithm.hpp"
-
 #include <limits>  // numeric_limits
 
 #include <doctest/doctest.h>
 
 #include "common/primitives.hpp"
+#include "common/util/algorithms.hpp"
 
 namespace tactile::test {
 namespace {

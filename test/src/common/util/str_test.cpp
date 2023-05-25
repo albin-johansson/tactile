@@ -17,9 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "common/util/str.hpp"
-
 #include <doctest/doctest.h>
+
+#include "common/util/strings.hpp"
 
 namespace tactile::test {
 

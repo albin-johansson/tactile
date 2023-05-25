@@ -23,7 +23,7 @@
 
 #include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
-#include "common/util/algorithm.hpp"
+#include "common/util/algorithms.hpp"
 #include "common/util/functional.hpp"
 #include "components/context.hpp"
 #include "components/document.hpp"

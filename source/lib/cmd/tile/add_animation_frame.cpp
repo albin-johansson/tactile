@@ -19,7 +19,7 @@
 
 #include "add_animation_frame.hpp"
 
-#include "common/util/vector.hpp"
+#include "common/util/vectors.hpp"
 #include "components/tile.hpp"
 #include "model/context.hpp"
 #include "model/systems/language_system.hpp"

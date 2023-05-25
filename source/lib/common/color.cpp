@@ -25,7 +25,7 @@
 #include <fmt/format.h>
 
 #include "common/predef.hpp"
-#include "common/util/str.hpp"
+#include "common/util/strings.hpp"
 
 namespace tactile {
 namespace {

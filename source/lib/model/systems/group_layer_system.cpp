@@ -23,7 +23,7 @@
 
 #include "common/debug/assert.hpp"
 #include "common/type/maybe.hpp"
-#include "common/util/algorithm.hpp"
+#include "common/util/algorithms.hpp"
 #include "common/util/functional.hpp"
 #include "components/map.hpp"
 #include "model/systems/layer_system.hpp"

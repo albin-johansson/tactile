@@ -42,7 +42,7 @@
 #include "common/type/uuid.hpp"
 #include "common/type/variant.hpp"
 #include "common/type/vec.hpp"
-#include "common/util/algorithm.hpp"
+#include "common/util/algorithms.hpp"
 
 namespace tactile {
 

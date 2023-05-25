@@ -27,7 +27,7 @@
 
 #include "common/debug/panic.hpp"
 #include "common/tile_matrix.hpp"
-#include "common/util/bit.hpp"
+#include "common/util/bits.hpp"
 #include "common/util/functional.hpp"
 #include "io/compression.hpp"
 
