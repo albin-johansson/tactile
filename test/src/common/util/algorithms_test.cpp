@@ -17,12 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "common/util/algorithms.hpp"
+
 #include <limits>  // numeric_limits
 
 #include <doctest/doctest.h>
 
 #include "common/primitives.hpp"
-#include "common/util/algorithms.hpp"
 
 namespace tactile::test {
 namespace {
@@ -31,7 +32,7 @@ constexpr auto kMaxU32 = std::numeric_limits<uint32>::max();
 
 }  // namespace
 
-TEST_SUITE("Algorithms")
+TEST_SUITE("Algorithm utilities")
 {
   TEST_CASE("udiff")
   {

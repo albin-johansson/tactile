@@ -17,10 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "common/util/bits.hpp"
+
 #include <doctest/doctest.h>
 
 #include "common/type/array.hpp"
-#include "common/util/bits.hpp"
 
 namespace tactile::test {
 namespace {

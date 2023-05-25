@@ -17,13 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <doctest/doctest.h>
-
 #include "common/util/strings.hpp"
+
+#include <doctest/doctest.h>
 
 namespace tactile::test {
 
-TEST_SUITE("Str")
+TEST_SUITE("String utilities")
 {
   TEST_CASE("split")
   {
