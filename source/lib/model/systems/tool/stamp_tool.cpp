@@ -36,6 +36,7 @@
 #include "model/event/tool_events.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/tool_system.hpp"
+#include "model/systems/validation.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -190,6 +191,7 @@ auto create_stamp_tool(Model& model) -> Entity
   stamp_tool.on_released = &on_stamp_tool_released;
   stamp_tool.is_available = &is_stamp_tool_available;
 
+  TACTILE_ASSERT(is_tool_entity(model, stamp_tool_entity));
   return stamp_tool_entity;
 }
 
@@ -197,11 +199,13 @@ void on_stamp_tool_deactivated(Model& model,
                                const Entity tool_entity,
                                Dispatcher& dispatcher)
 {
+  TACTILE_ASSERT(is_tool_entity(model, tool_entity));
   _try_end_sequence(model, tool_entity, dispatcher);
 }
 
 void on_stamp_tool_exited(Model& model, const Entity tool_entity, Dispatcher& dispatcher)
 {
+  TACTILE_ASSERT(is_tool_entity(model, tool_entity));
   _try_end_sequence(model, tool_entity, dispatcher);
 }
 
@@ -210,6 +214,8 @@ void on_stamp_tool_pressed(Model& model,
                            const ViewportMouseInfo& mouse,
                            Dispatcher&)
 {
+  TACTILE_ASSERT(is_tool_entity(model, tool_entity));
+
   if (mouse.in_viewport && mouse.button == MouseButton::Left && _is_usable(model)) {
     auto& tool_data = model.add<StampToolData>(tool_entity);
     _update_sequence(model, tool_data, mouse.tile_pos);
@@ -221,6 +227,8 @@ void on_stamp_tool_dragged(Model& model,
                            const ViewportMouseInfo& mouse,
                            Dispatcher&)
 {
+  TACTILE_ASSERT(is_tool_entity(model, tool_entity));
+
   if (mouse.in_viewport && mouse.button == MouseButton::Left && _is_usable(model)) {
     auto& tool_data = model.add<StampToolData>(tool_entity);
     _update_sequence(model, tool_data, mouse.tile_pos);
@@ -232,6 +240,8 @@ void on_stamp_tool_released(Model& model,
                             const ViewportMouseInfo& mouse,
                             Dispatcher& dispatcher)
 {
+  TACTILE_ASSERT(is_tool_entity(model, tool_entity));
+
   if (mouse.button == MouseButton::Left && _is_usable(model)) {
     _try_end_sequence(model, tool_entity, dispatcher);
   }

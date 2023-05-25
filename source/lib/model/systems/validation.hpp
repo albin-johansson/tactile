@@ -64,4 +64,6 @@ namespace tactile::sys {
 
 [[nodiscard]] auto is_tile_entity(const Model& model, Entity entity) -> bool;
 
+[[nodiscard]] auto is_tool_entity(const Model& model, Entity entity) -> bool;
+
 }  // namespace tactile::sys
