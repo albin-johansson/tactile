@@ -27,7 +27,8 @@
 #include "components/tool.hpp"
 #include "model/settings.hpp"
 #include "model/systems/gl_texture_system.hpp"
-#include "model/systems/tool/stamp_tool.hpp"
+#include "model/systems/tools/bucket_tool.hpp"
+#include "model/systems/tools/stamp_tool.hpp"
 
 namespace tactile::sys {
 
@@ -56,6 +57,7 @@ void init_model(Model& model, const BackendAPI api)
 
   auto& tool_context = model.add<ToolContext>();
   tool_context.tools[ToolType::Stamp] = sys::create_stamp_tool(model);
+  tool_context.tools[ToolType::Bucket] = sys::create_bucket_tool(model);
 }
 
 }  // namespace tactile::sys
