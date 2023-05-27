@@ -29,7 +29,7 @@
 namespace tactile {
 
 /// Returns a language-agnostic identifier for a save format identifier.
-[[nodiscard]] auto get_human_readable_name(SaveFormat format) -> const char*;
+[[nodiscard]] auto get_human_readable_name(SaveFormat format) -> StringView;
 
 /// Returns a valid file extension for a save format identifier.
 /// Note, several file extensions are valid for most formats, e.g. ".yml" and ".yaml".

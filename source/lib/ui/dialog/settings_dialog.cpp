@@ -100,17 +100,18 @@ void _push_theme_combo()
 void _push_map_format_combo()
 {
   const auto preferred_format = gDialogState.ui_settings.get_preferred_format();
-  if (const Combo format("##PreferredFormat", get_human_readable_name(preferred_format));
+  if (const Combo format("##PreferredFormat",
+                         get_human_readable_name(preferred_format).data());
       format.is_open()) {
-    if (ImGui::MenuItem(get_human_readable_name(SaveFormat::TactileYaml))) {
+    if (ImGui::MenuItem(get_human_readable_name(SaveFormat::TactileYaml).data())) {
       gDialogState.ui_settings.set_preferred_format(SaveFormat::TactileYaml);
     }
 
-    if (ImGui::MenuItem(get_human_readable_name(SaveFormat::TiledJson))) {
+    if (ImGui::MenuItem(get_human_readable_name(SaveFormat::TiledJson).data())) {
       gDialogState.ui_settings.set_preferred_format(SaveFormat::TiledJson);
     }
 
-    if (ImGui::MenuItem(get_human_readable_name(SaveFormat::TiledXml))) {
+    if (ImGui::MenuItem(get_human_readable_name(SaveFormat::TiledXml).data())) {
       gDialogState.ui_settings.set_preferred_format(SaveFormat::TiledXml);
     }
   }

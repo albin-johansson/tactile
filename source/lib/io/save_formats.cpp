@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-auto get_human_readable_name(const SaveFormat format) -> const char*
+auto get_human_readable_name(const SaveFormat format) -> StringView
 {
   switch (format) {
     case SaveFormat::TactileYaml:
