@@ -23,6 +23,7 @@
 
 #include "common/fmt/entity_formatter.hpp"
 #include "common/fmt/lang_formatter.hpp"
+#include "common/fmt/menu_action_formatter.hpp"
 #include "common/fmt/theme_formatter.hpp"
 
 namespace tactile::test {
@@ -67,6 +68,19 @@ TEST_SUITE("Custom formatters")
 
     magic_enum::enum_for_each<Theme>([](const Theme theme) {
       const auto str = fmt::format("{}", theme);
+      CHECK(!str.empty());
+      CHECK(str != "?");
+    });
+  }
+
+  TEST_CASE("Menu actions")
+  {
+    CHECK(fmt::format("{}", MenuAction::ResizeMap) == "ResizeMap");
+    CHECK(fmt::format("{}", MenuAction::OpenSettings) == "OpenSettings");
+    CHECK(fmt::format("{}", MenuAction::FixInvalidTiles) == "FixInvalidTiles");
+
+    magic_enum::enum_for_each<MenuAction>([](const MenuAction action) {
+      const auto str = fmt::format("{}", action);
       CHECK(!str.empty());
       CHECK(str != "?");
     });

@@ -19,79 +19,13 @@
 
 #pragma once
 
-#include <SDL2/SDL.h>
-
+#include "common/enum/menu_action.hpp"
 #include "common/type/func.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/string.hpp"
 #include "model/model.hpp"
 
 namespace tactile {
-
-enum class MenuAction {
-  // File
-  NewMap = SDL_USEREVENT + 1,
-  OpenMap,
-  Save,
-  SaveAs,
-  Close,
-  Quit,
-  ReopenLastFile,
-  ClearFileHistory,
-
-  // Edit
-  Undo,
-  Redo,
-  EnableStamp,
-  EnableEraser,
-  EnableBucket,
-  EnableObjectSelector,
-  EnableRectangle,
-  EnableEllipse,
-  EnablePoint,
-  OpenComponentEditor,
-  OpenSettings,
-
-  // View
-  CenterViewport,
-  ToggleGrid,
-  IncreaseZoom,
-  DecreaseZoom,
-  ResetZoom,
-  IncreaseFontSize,
-  DecreaseFontSize,
-  ResetFontSize,
-  PanUp,
-  PanDown,
-  PanRight,
-  PanLeft,
-  HighlightLayer,
-  ToggleUi,
-
-  // Map
-  InspectMap,
-  CreateTileset,
-  AddRow,
-  AddColumn,
-  RemoveRow,
-  RemoveColumn,
-  FixInvalidTiles,
-  ResizeMap,
-  ExportGodotScene,
-
-  // Tileset
-  InspectTileset,
-
-  // Debug
-  OpenDemoWindow,
-  OpenStyleEditor,
-
-  // Help
-  ShowAbout,
-  ShowAboutImGui,
-  ShowCredits,
-  ReportIssue
-};
 
 using MenuItemEnabledFn = Func<bool(const Model&)>;
 

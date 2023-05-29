@@ -78,11 +78,6 @@ void _on_mouse_wheel(Model& model,
 
 void on_event(Model& model, Dispatcher& dispatcher, const cen::event_handler& event)
 {
-  if (const auto event_type = event.raw_type(); event_type > SDL_USEREVENT) {
-    dispatcher.trigger(MenuActionEvent {static_cast<MenuAction>(*event_type)});
-    return;
-  }
-
   switch (event.type().value()) {
     case cen::event_type::key_up:
       [[fallthrough]];

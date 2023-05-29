@@ -28,6 +28,9 @@
 #include <spdlog/spdlog.h>
 
 #include "common/fmt/entity_formatter.hpp"
+#include "common/fmt/lang_formatter.hpp"
+#include "common/fmt/menu_action_formatter.hpp"
+#include "common/fmt/theme_formatter.hpp"
 #include "common/fmt/vector_formatter.hpp"
 #include "components/file_history.hpp"
 #include "components/texture.hpp"
@@ -266,7 +269,7 @@ void App::on_font_reload()
 
 void App::_on_menu_action(const MenuActionEvent& event)
 {
-  // spdlog::trace("[MenuActionEvent] action: {}", magic_enum::enum_name(event.action));
+  spdlog::trace("[MenuActionEvent] action: {}", event.action);
   on_menu_action(get_global_model(), mDispatcher, event);
 }
 
@@ -493,13 +496,13 @@ void App::_on_set_viewport_overlay_pos(const SetViewportOverlayPosEvent& event)
 
 void App::_on_set_language(const SetLanguageEvent& event)
 {
-  spdlog::trace("[SetLanguageEvent] lang: {}", magic_enum::enum_name(event.language));
+  spdlog::trace("[SetLanguageEvent] lang: {}", event.language);
   on_set_language(get_global_model(), mDispatcher, event);
 }
 
 void App::_on_set_theme(const SetThemeEvent& event)
 {
-  spdlog::trace("[SetThemeEvent] theme: {}", magic_enum::enum_name(event.theme));
+  spdlog::trace("[SetThemeEvent] theme: {}", event.theme);
   on_set_theme(get_global_model(), event);
 }
 
