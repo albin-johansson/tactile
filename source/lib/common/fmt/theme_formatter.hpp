@@ -17,19 +17,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "common/fmt/entity_formatter.hpp"
+#pragma once
 
-#include <doctest/doctest.h>
+#include <string_view>  // string_view
 
-namespace tactile::test {
+#include <fmt/core.h>
+#include <magic_enum.hpp>
 
-TEST_SUITE("Entity formatter")
-{
-  TEST_CASE("Format")
+#include "common/enum/theme.hpp"
+
+template <>
+struct fmt::formatter<tactile::Theme> final : fmt::formatter<std::string_view> {
+  auto format(const tactile::Theme theme, auto& ctx) const
   {
-    CHECK(fmt::format("{}", Entity {}) == "0");
-    CHECK(fmt::format("{}", Entity {42}) == "42");
+    return fmt::format_to(ctx.out(), "{}", magic_enum::enum_name(theme));
   }
-}
+};
 
-}  // namespace tactile::test
+static_assert(fmt::is_formattable<tactile::Theme>::value);

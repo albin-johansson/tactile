@@ -20,18 +20,30 @@
 #pragma once
 
 #include <string_view>  // string_view
-#include <utility>      // to_underlying
 
 #include <fmt/core.h>
 
-#include "common/type/ecs.hpp"
+#include "common/enum/lang.hpp"
 
 template <>
-struct fmt::formatter<tactile::Entity> final : fmt::formatter<std::string_view> {
-  auto format(const tactile::Entity entity, auto& ctx) const
+struct fmt::formatter<tactile::Lang> final : fmt::formatter<std::string_view> {
+  auto format(const tactile::Lang lang, auto& ctx) const
   {
-    return fmt::format_to(ctx.out(), "{}", std::to_underlying(entity));
+    switch (lang) {
+      using enum tactile::Lang;
+      case EN:
+        return fmt::format_to(ctx.out(), "American English");
+
+      case EN_GB:
+        return fmt::format_to(ctx.out(), "British English");
+
+      case SV:
+        return fmt::format_to(ctx.out(), "Svenska");
+
+      default:
+        return fmt::format_to(ctx.out(), "?");
+    }
   }
 };
 
-static_assert(fmt::is_formattable<tactile::Entity>::value);
+static_assert(fmt::is_formattable<tactile::Lang>::value);
