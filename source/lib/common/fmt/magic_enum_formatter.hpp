@@ -19,7 +19,24 @@
 
 #pragma once
 
-#include "common/enum/menu_action.hpp"
-#include "common/fmt/magic_enum_formatter.hpp"
+#include <string_view>  // string_view
 
-TACTILE_MAGIC_ENUM_FORMATTER(tactile::MenuAction);
+#include <fmt/core.h>
+#include <magic_enum.hpp>
+
+namespace tactile {
+
+template <typename E>
+struct MagicEnumFormatter : fmt::formatter<std::string_view> {
+  auto format(const E value, auto& ctx) const
+  {
+    return fmt::format_to(ctx.out(), "{}", magic_enum::enum_name(value));
+  }
+};
+
+}  // namespace tactile
+
+#define TACTILE_MAGIC_ENUM_FORMATTER(Enum)                                  \
+  template <>                                                               \
+  struct fmt::formatter<Enum> final : tactile::MagicEnumFormatter<Enum> {}; \
+  static_assert(fmt::is_formattable<Enum>::value)

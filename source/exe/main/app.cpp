@@ -31,6 +31,8 @@
 #include "common/fmt/lang_formatter.hpp"
 #include "common/fmt/menu_action_formatter.hpp"
 #include "common/fmt/theme_formatter.hpp"
+#include "common/fmt/tile_compression_formatter.hpp"
+#include "common/fmt/tile_encoding_formatter.hpp"
 #include "common/fmt/vector_formatter.hpp"
 #include "components/file_history.hpp"
 #include "components/texture.hpp"
@@ -416,15 +418,13 @@ void App::_on_inspect_map(const InspectMapEvent& event)
 
 void App::_on_set_tile_format_encoding(const SetTileFormatEncodingEvent& event)
 {
-  spdlog::trace("[SetTileFormatEncodingEvent] encoding: {}",
-                magic_enum::enum_name(event.encoding));
+  spdlog::trace("[SetTileFormatEncodingEvent] encoding: {}", event.encoding);
   on_set_tile_format_encoding(get_global_model(), event);
 }
 
 void App::_on_set_tile_format_compression(const SetTileFormatCompressionEvent& event)
 {
-  spdlog::trace("[SetTileFormatCompressionEvent] compression: {}",
-                magic_enum::enum_name(event.compression));
+  spdlog::trace("[SetTileFormatCompressionEvent] compression: {}", event.compression);
   on_set_tile_format_compression(get_global_model(), event);
 }
 

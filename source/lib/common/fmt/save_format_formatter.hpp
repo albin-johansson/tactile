@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/enum/menu_action.hpp"
+#include "common/enum/save_format.hpp"
 #include "common/fmt/magic_enum_formatter.hpp"
 
-TACTILE_MAGIC_ENUM_FORMATTER(tactile::MenuAction);
+TACTILE_MAGIC_ENUM_FORMATTER(tactile::SaveFormat);

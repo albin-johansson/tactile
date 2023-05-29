@@ -19,19 +19,7 @@
 
 #pragma once
 
-#include <string_view>  // string_view
-
-#include <fmt/core.h>
-#include <magic_enum.hpp>
-
 #include "common/enum/attribute_type.hpp"
+#include "common/fmt/magic_enum_formatter.hpp"
 
-template <>
-struct fmt::formatter<tactile::AttributeType> : fmt::formatter<std::string_view> {
-  auto format(const tactile::AttributeType& type, auto& ctx) const
-  {
-    return fmt::format_to(ctx.out(), "{}", magic_enum::enum_name(type));
-  }
-};
-
-static_assert(fmt::is_formattable<tactile::AttributeType>::value);
+TACTILE_MAGIC_ENUM_FORMATTER(tactile::AttributeType);

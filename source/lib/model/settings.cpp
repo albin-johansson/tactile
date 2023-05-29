@@ -24,6 +24,9 @@
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
+#include "common/fmt/lang_formatter.hpp"
+#include "common/fmt/save_format_formatter.hpp"
+#include "common/fmt/theme_formatter.hpp"
 #include "ui/constants.hpp"
 
 namespace tactile {
@@ -65,8 +68,8 @@ TACTILE_DEFINE_MOVE(Settings);
 
 void Settings::print() const
 {
-  spdlog::debug("[Settings] Language: {}", magic_enum::enum_name(get_language()));
-  spdlog::debug("[Settings] Theme: {}", magic_enum::enum_name(get_theme()));
+  spdlog::debug("[Settings] Language: {}", get_language());
+  spdlog::debug("[Settings] Theme: {}", get_theme());
   spdlog::debug("[Settings] Theme saturation: {}", get_theme_saturation());
   spdlog::debug("[Settings] Viewport background: {}", get_viewport_bg_color().as_rgb());
   spdlog::debug("[Settings] Grid color: {}", get_grid_color().as_rgba());
@@ -75,8 +78,7 @@ void Settings::print() const
   spdlog::debug("[Settings] Preferred tile width: {}", get_preferred_tile_size().x);
   spdlog::debug("[Settings] Preferred tile height: {}", get_preferred_tile_size().y);
 
-  spdlog::debug("[Settings] Preferred format: {}",
-                magic_enum::enum_name(get_preferred_format()));
+  spdlog::debug("[Settings] Preferred format: {}", get_preferred_format());
   spdlog::debug("[Settings] Viewport overlay pos: {}",
                 magic_enum::enum_name(get_viewport_overlay_pos()));
   spdlog::debug("[Settings] Show FPS in viewport overlay: {}",

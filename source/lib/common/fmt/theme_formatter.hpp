@@ -19,19 +19,7 @@
 
 #pragma once
 
-#include <string_view>  // string_view
-
-#include <fmt/core.h>
-#include <magic_enum.hpp>
-
 #include "common/enum/theme.hpp"
+#include "common/fmt/magic_enum_formatter.hpp"
 
-template <>
-struct fmt::formatter<tactile::Theme> final : fmt::formatter<std::string_view> {
-  auto format(const tactile::Theme theme, auto& ctx) const
-  {
-    return fmt::format_to(ctx.out(), "{}", magic_enum::enum_name(theme));
-  }
-};
-
-static_assert(fmt::is_formattable<tactile::Theme>::value);
+TACTILE_MAGIC_ENUM_FORMATTER(tactile::Theme);

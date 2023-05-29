@@ -24,7 +24,10 @@
 #include "common/fmt/entity_formatter.hpp"
 #include "common/fmt/lang_formatter.hpp"
 #include "common/fmt/menu_action_formatter.hpp"
+#include "common/fmt/save_format_formatter.hpp"
 #include "common/fmt/theme_formatter.hpp"
+#include "common/fmt/tile_compression_formatter.hpp"
+#include "common/fmt/tile_encoding_formatter.hpp"
 
 namespace tactile::test {
 
@@ -65,12 +68,6 @@ TEST_SUITE("Custom formatters")
     CHECK(fmt::format("{}", Theme::Lavender) == "Lavender");
     CHECK(fmt::format("{}", Theme::Frost) == "Frost");
     CHECK(fmt::format("{}", Theme::Rose) == "Rose");
-
-    magic_enum::enum_for_each<Theme>([](const Theme theme) {
-      const auto str = fmt::format("{}", theme);
-      CHECK(!str.empty());
-      CHECK(str != "?");
-    });
   }
 
   TEST_CASE("Menu actions")
@@ -78,9 +75,38 @@ TEST_SUITE("Custom formatters")
     CHECK(fmt::format("{}", MenuAction::ResizeMap) == "ResizeMap");
     CHECK(fmt::format("{}", MenuAction::OpenSettings) == "OpenSettings");
     CHECK(fmt::format("{}", MenuAction::FixInvalidTiles) == "FixInvalidTiles");
+  }
 
-    magic_enum::enum_for_each<MenuAction>([](const MenuAction action) {
-      const auto str = fmt::format("{}", action);
+  TEST_CASE("Tile compression strategies")
+  {
+    CHECK(fmt::format("{}", TileCompression::None) == "None");
+    CHECK(fmt::format("{}", TileCompression::Zlib) == "Zlib");
+    CHECK(fmt::format("{}", TileCompression::Zstd) == "Zstd");
+  }
+
+  TEST_CASE("Tile encodings")
+  {
+    CHECK(fmt::format("{}", TileEncoding::Plain) == "Plain");
+    CHECK(fmt::format("{}", TileEncoding::Base64) == "Base64");
+  }
+
+  TEST_CASE("Save formats")
+  {
+    CHECK(fmt::format("{}", SaveFormat::TactileYaml) == "TactileYaml");
+    CHECK(fmt::format("{}", SaveFormat::TiledJson) == "TiledJson");
+    CHECK(fmt::format("{}", SaveFormat::TiledXml) == "TiledXml");
+  }
+
+  TEST_CASE_TEMPLATE("Magic enum formatters",
+                     E,
+                     Theme,
+                     MenuAction,
+                     TileCompression,
+                     TileEncoding,
+                     SaveFormat)
+  {
+    magic_enum::enum_for_each<E>([](const E value) {
+      const auto str = fmt::format("{}", value);
       CHECK(!str.empty());
       CHECK(str != "?");
     });
