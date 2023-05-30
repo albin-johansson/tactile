@@ -32,7 +32,7 @@
 #include "model/settings.hpp"
 #include "model/systems/map_system.hpp"
 #include "model/systems/tileset_system.hpp"
-#include "model/systems/validation.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::sys {
 namespace {

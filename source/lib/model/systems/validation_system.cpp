@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "validation.hpp"
+#include "validation_system.hpp"
 
 #include "cmd/command_stack.hpp"
 #include "components/component.hpp"

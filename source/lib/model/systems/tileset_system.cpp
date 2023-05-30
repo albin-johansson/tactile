@@ -28,7 +28,7 @@
 #include "components/tileset.hpp"
 #include "components/viewport.hpp"
 #include "model/systems/texture_system.hpp"
-#include "model/systems/validation.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::sys {
 namespace {

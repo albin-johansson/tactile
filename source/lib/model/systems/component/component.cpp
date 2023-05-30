@@ -23,7 +23,7 @@
 
 #include "common/debug/assert.hpp"
 #include "components/context.hpp"
-#include "model/systems/validation.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::sys {
 
