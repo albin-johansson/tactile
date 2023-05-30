@@ -185,6 +185,13 @@ class Model final {
     return mRegistry.ctx().get<T>();
   }
 
+  /// Indicates whether the model has a specific context component.
+  template <typename T>
+  [[nodiscard]] auto has() const -> bool
+  {
+    return mRegistry.ctx().contains<T>();
+  }
+
   /// Indicates whether an entity has a specific component.
   template <typename T>
   [[nodiscard]] auto has(const Entity entity) const -> bool

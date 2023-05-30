@@ -56,7 +56,10 @@ void _on_mouse_wheel(Model& model,
     const auto& document_viewport = model.get<Viewport>(document_entity);
 
     if (ui::is_mouse_within_viewport()) {
-      ui::viewport_widget_mouse_wheel_event_handler(document_viewport, dispatcher, event);
+      ui::viewport_widget_mouse_wheel_event_handler(document_entity,
+                                                    document_viewport,
+                                                    dispatcher,
+                                                    event);
     }
     else if (document.type == DocumentType::Map && ui::is_tileset_dock_hovered()) {
       const auto& map_document = model.get<MapDocument>(document_entity);
