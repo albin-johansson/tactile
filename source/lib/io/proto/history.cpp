@@ -19,6 +19,8 @@
 
 #include "history.hpp"
 
+#include <algorithm>  // find
+
 #include <spdlog/spdlog.h>
 
 #include "io/directories.hpp"
@@ -57,8 +59,9 @@ auto load_file_history_from_disk() -> Maybe<FileHistory>
     }
 
     for (const auto& file: h.files()) {
-      if (fs::exists(file)) {
-        spdlog::debug("[History] Found '{}'", file);
+      if (fs::exists(file) &&
+          std::ranges::find(file_history.entries, file) == file_history.entries.end()) {
+        spdlog::trace("[History] Found '{}'", file);
         file_history.entries.push_back(file);
       }
     }
