@@ -21,8 +21,6 @@
 
 #include <concepts>  // invocable
 
-#include <spdlog/spdlog.h>
-
 #include "cmd/command_stack.hpp"
 #include "components/document.hpp"
 #include "model/event/command_events.hpp"
@@ -46,22 +44,16 @@ void _with_current_command_stack(Model& model, T&& callable)
 
 void on_undo(Model& model, const UndoEvent&)
 {
-  spdlog::trace("[UndoEvent]");
-
   _with_current_command_stack(model, [](CommandStack& commands) { commands.undo(); });
 }
 
 void on_redo(Model& model, const RedoEvent&)
 {
-  spdlog::trace("[RedoEvent]");
-
   _with_current_command_stack(model, [](CommandStack& commands) { commands.redo(); });
 }
 
 void on_set_command_capacity(Model& model, const SetCommandCapacityEvent& event)
 {
-  spdlog::trace("[SetCommandCapacityEvent] capacity: {}", event.capacity);
-
   for (const auto [document_entity, document]: model.each<Document>()) {
     auto& commands = model.get<CommandStack>(document_entity);
     commands.set_capacity(event.capacity);
