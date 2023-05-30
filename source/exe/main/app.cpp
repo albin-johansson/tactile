@@ -71,7 +71,6 @@
 #include "ui/dock/tileset/dialogs/create_tileset_dialog.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
 #include "ui/menu/menu_bar.hpp"
-#include "ui/shortcut/shortcuts.hpp"
 #include "ui/style/colors.hpp"
 #include "ui/style/themes.hpp"
 #include "ui/viewport/viewport_widget.hpp"
@@ -83,7 +82,7 @@ void App::on_startup()
   auto& model = get_global_model();
 
   _subscribe_to_events();
-  init_default_shortcuts();
+  // init_default_shortcuts();
 
   auto& icons = model.get<Icons>();
   icons.tactile_icon = sys::create_texture(model, find_resource("assets/icon.png"));
