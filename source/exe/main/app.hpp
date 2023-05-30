@@ -51,6 +51,7 @@ class App final : public AppDelegate {
   [[nodiscard]] auto should_stop() const -> bool override { return mShouldStop; }
 
  private:
+  // TODO Unique<Model> mModel;
   Dispatcher mDispatcher;
   ImVec2 mFramebufferScale {};
   bool mShouldStop     : 1 {false};
@@ -117,6 +118,17 @@ class App final : public AppDelegate {
   void _on_viewport_mouse_released(const ViewportMouseReleasedEvent& event);
   void _on_viewport_mouse_entered(const ViewportMouseEnteredEvent& event);
   void _on_viewport_mouse_exited(const ViewportMouseExitedEvent& event);
+  void _on_center_viewport(const CenterViewportEvent& event);
+  void _on_reset_viewport_zoom(const ResetViewportZoomEvent& event);
+  void _on_increase_viewport_zoom(const IncreaseViewportZoomEvent& event);
+  void _on_decrease_viewport_zoom(const DecreaseViewportZoomEvent& event);
+  void _on_offset_viewport(const OffsetViewportEvent& event);
+  void _on_set_viewport_limits(const SetViewportLimitsEvent& event);
+  void _on_set_dynamic_viewport_info(const SetDynamicViewportInfoEvent& event);
+  void _on_pan_viewport_up(const PanViewportUpEvent& event);
+  void _on_pan_viewport_down(const PanViewportDownEvent& event);
+  void _on_pan_viewport_left(const PanViewportLeftEvent& event);
+  void _on_pan_viewport_right(const PanViewportRightEvent& event);
 };
 
 }  // namespace tactile

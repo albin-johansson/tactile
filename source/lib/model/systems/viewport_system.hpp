@@ -19,10 +19,21 @@
 
 #pragma once
 
+#include "common/type/math.hpp"
+#include "components/viewport.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {
 
+void offset_viewport(Viewport& viewport, Float2 delta);
+
+void reset_viewport_zoom(Viewport& viewport);
+
+void increase_viewport_zoom(Viewport& viewport, Float2 anchor_pos);
+
+void decrease_viewport_zoom(Viewport& viewport, Float2 anchor_pos);
+
+/// Indicates whether the 'zoom out' action is currently possible.
 [[nodiscard]] auto is_viewport_zoom_out_possible(const Model& model) -> bool;
 
 }  // namespace tactile::sys

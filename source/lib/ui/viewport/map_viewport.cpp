@@ -19,10 +19,9 @@
 
 #include "map_viewport.hpp"
 
-#include <cmath>  // round
+#include <concepts>  // predicate
 
 #include <imgui.h>
-#include <imgui_internal.h>
 
 #include "common/color.hpp"
 #include "components/document.hpp"
@@ -53,7 +52,6 @@ namespace {
 inline constexpr auto kViewportObjectContextMenuId = "##MapViewObjectContextMenu";
 
 struct MapViewportState final {
-  bool will_be_centered {};
   bool will_open_object_context_menu {};
 };
 
@@ -83,20 +81,6 @@ void _check_for(ViewportMouseInfo mouse_info, Dispatcher& dispatcher, T&& predic
   }
 }
 
-void _center_viewport(const Viewport& viewport,
-                      const CanvasInfo& canvas_info,
-                      Dispatcher& dispatcher)
-{
-  const auto width = canvas_info.col_count * viewport.tile_size.x;
-  const auto height = canvas_info.row_count * viewport.tile_size.y;
-
-  const auto dx = std::round(((canvas_info.size.x - width) / 2.0f) - viewport.offset.x);
-  const auto dy = std::round(((canvas_info.size.y - height) / 2.0f) - viewport.offset.y);
-  const Float2 delta {dx, dy};
-
-  dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
-}
-
 void _draw_cursor_gizmos(const Model& model,
                          const CanvasInfo& canvas,
                          const Map& map,
@@ -108,7 +92,7 @@ void _draw_cursor_gizmos(const Model& model,
   if (mouse.in_viewport && is_tile_layer_active) {
     draw_shadowed_rect(as_imvec2(mouse.clamped_pos),
                        canvas.graphical_tile_size,
-                       Color {0, 0xFF, 0, 200},
+                       Color {0, 0xFF, 0, 0xC8},
                        2.0f);
   }
 
@@ -150,7 +134,8 @@ void _poll_mouse(const ViewportMouseInfo& mouse_info, Dispatcher& dispatcher)
 }
 
 void _push_viewport_context_menu(const Strings& strings,
-                                 const Entity map_entity,
+                                 const Entity map_document_entity,
+                                 const MapDocument& map_document,
                                  Dispatcher& dispatcher)
 {
   constexpr auto flags =
@@ -159,19 +144,19 @@ void _push_viewport_context_menu(const Strings& strings,
   if (const auto popup = Popup::for_item("##MapViewContextMenu", flags);
       popup.is_open()) {
     if (ImGui::MenuItem(strings.action.inspect_map.c_str())) {
-      dispatcher.enqueue<InspectContextEvent>(map_entity);
+      dispatcher.enqueue<InspectContextEvent>(map_document.map);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(strings.action.center_viewport.c_str())) {
-      dispatcher.enqueue<CenterViewportEvent>();
+      dispatcher.enqueue<CenterViewportEvent>(map_document_entity);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(strings.action.reset_zoom.c_str())) {
-      dispatcher.enqueue<ResetZoomEvent>();
+      dispatcher.enqueue<ResetViewportZoomEvent>(map_document_entity);
     }
   }
 }
@@ -221,7 +206,7 @@ void _push_object_context_menu(const Model& model,
 
 }  // namespace
 
-void show_map_viewport(const Model& model,
+void push_map_viewport(const Model& model,
                        const Entity map_document_entity,
                        Dispatcher& dispatcher)
 {
@@ -233,16 +218,12 @@ void show_map_viewport(const Model& model,
   const auto& map = model.get<Map>(map_document.map);
 
   const auto canvas = create_canvas_info(viewport, map.tile_size, map.extent);
+
+  update_dynamic_viewport_info(map_document_entity, canvas, dispatcher);
   update_document_viewport_offset(canvas.size, dispatcher);
 
   clear_canvas(canvas, settings.get_viewport_bg_color());
   push_scissor(canvas);
-
-  // TODO viewport should be centered by default
-  if (gViewportState.will_be_centered) {
-    _center_viewport(viewport, canvas, dispatcher);
-    gViewportState.will_be_centered = false;
-  }
 
   sys::render_map(model, canvas, map);
 
@@ -258,13 +239,8 @@ void show_map_viewport(const Model& model,
   show_map_viewport_toolbar(model, dispatcher);
   show_map_viewport_overlay(model, map, mouse_info, dispatcher);
 
-  _push_viewport_context_menu(strings, map_document.map, dispatcher);
+  _push_viewport_context_menu(strings, map_document_entity, map_document, dispatcher);
   _push_object_context_menu(model, strings, map, dispatcher);
-}
-
-void center_map_viewport()
-{
-  gViewportState.will_be_centered = true;
 }
 
 void open_object_context_menu()

@@ -45,4 +45,30 @@ void on_viewport_mouse_exited(Model& model,
                               Dispatcher& dispatcher,
                               const ViewportMouseExitedEvent& event);
 
+void on_center_viewport(Model& model,
+                        Dispatcher& dispatcher,
+                        const CenterViewportEvent& event);
+
+void on_center_viewport(Model& model, const CenterViewportEvent& event);
+
+void on_reset_viewport_zoom(Model& model, const ResetViewportZoomEvent& event);
+
+void on_increase_viewport_zoom(Model& model, const IncreaseViewportZoomEvent& event);
+
+void on_decrease_viewport_zoom(Model& model, const DecreaseViewportZoomEvent& event);
+
+void on_offset_viewport(Model& model, const OffsetViewportEvent& event);
+
+void on_set_viewport_limits(Model& model, const SetViewportLimitsEvent& event);
+
+void on_set_dynamic_viewport_info(Model& model, const SetDynamicViewportInfoEvent& event);
+
+void on_pan_viewport_up(Model& model, const PanViewportUpEvent& event);
+
+void on_pan_viewport_down(Model& model, const PanViewportDownEvent& event);
+
+void on_pan_viewport_left(Model& model, const PanViewportLeftEvent& event);
+
+void on_pan_viewport_right(Model& model, const PanViewportRightEvent& event);
+
 }  // namespace tactile

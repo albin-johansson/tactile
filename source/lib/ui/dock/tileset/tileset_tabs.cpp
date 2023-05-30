@@ -99,6 +99,7 @@ void show_tileset_tabs(const Model& model, Dispatcher& dispatcher)
       const auto tileset_entity = attached_tileset.tileset;
       const auto tileset_document_entity =
           sys::get_associated_tileset_document(model, tileset_entity);
+      TACTILE_ASSERT(tileset_document_entity != kNullEntity);
 
       const auto& tileset_context = model.get<Context>(tileset_entity);
       const auto& tileset_name = tileset_context.name;

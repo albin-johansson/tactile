@@ -110,17 +110,20 @@ void show_viewport_dock(const Model& model, Entity, Dispatcher& dispatcher)
   }
 }
 
-void viewport_widget_mouse_wheel_event_handler(const Viewport& viewport,
+void viewport_widget_mouse_wheel_event_handler(const Entity viewport_entity,
+                                               const Viewport& viewport,
                                                Dispatcher& dispatcher,
                                                const cen::mouse_wheel_event& event)
 {
   if (cen::is_active(kPrimaryModifier)) {
     const auto y = event.precise_y();
     if (y > 0) {
-      dispatcher.enqueue<IncreaseZoomEvent>();
+      dispatcher.enqueue<IncreaseViewportZoomEvent>(viewport_entity,
+                                                    as_float2(ImGui::GetIO().MousePos));
     }
     else if (y < 0 && viewport.can_zoom_out()) {
-      dispatcher.enqueue<DecreaseZoomEvent>();
+      dispatcher.enqueue<DecreaseViewportZoomEvent>(viewport_entity,
+                                                    as_float2(ImGui::GetIO().MousePos));
     }
   }
   else {
@@ -130,7 +133,7 @@ void viewport_widget_mouse_wheel_event_handler(const Viewport& viewport,
     auto delta = precise * (viewport.tile_size / scaling);
     delta.x = -delta.x;
 
-    dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
+    dispatcher.enqueue<OffsetViewportEvent>(viewport_entity, delta);
   }
 }
 

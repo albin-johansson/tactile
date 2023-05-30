@@ -22,6 +22,7 @@
 #include <centurion/fwd.hpp>
 
 #include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
 #include "components/viewport.hpp"
 #include "model/model.hpp"
 
@@ -30,7 +31,8 @@ namespace tactile::ui {
 /// Updates the state of the primary viewport widget.
 void show_viewport_dock(const Model& model, Entity widget_entity, Dispatcher& dispatcher);
 
-void viewport_widget_mouse_wheel_event_handler(const Viewport& viewport,
+void viewport_widget_mouse_wheel_event_handler(Entity viewport_entity,
+                                               const Viewport& viewport,
                                                Dispatcher& dispatcher,
                                                const cen::mouse_wheel_event& event);
 

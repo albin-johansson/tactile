@@ -107,6 +107,8 @@ auto create_attached_tileset(Model& model,
   viewport.offset = Float2 {0, 0};
   viewport.tile_size = tileset.tile_size;
 
+  model.add<DynamicViewportInfo>(attached_tileset_entity);
+
   TACTILE_ASSERT(is_attached_tileset_entity(model, attached_tileset_entity));
   return attached_tileset_entity;
 }

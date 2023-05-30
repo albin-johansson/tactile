@@ -25,11 +25,9 @@
 
 namespace tactile::ui {
 
-void show_map_viewport(const Model& model,
-                       Entity map_document_entity,
+void push_map_viewport(const Model& model,
+                       const Entity map_document_entity,
                        Dispatcher& dispatcher);
-
-void center_map_viewport();
 
 void open_object_context_menu();
 

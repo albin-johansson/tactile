@@ -282,6 +282,8 @@ void _attach_tileset_to_map(Model& model,
   auto& tileset_viewport = model.add<Viewport>(attached_tileset_entity);
   tileset_viewport.offset = Float2 {0, 0};
   tileset_viewport.tile_size = ir_tileset.tile_size;
+
+  model.add<DynamicViewportInfo>(attached_tileset_entity);
 }
 
 void _restore_tileset_documents(Model& model,

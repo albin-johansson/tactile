@@ -19,8 +19,6 @@
 
 #include "tileset_viewport.hpp"
 
-#include <cmath>  // round
-
 #include <imgui.h>
 #include <imgui_internal.h>
 
@@ -31,7 +29,6 @@
 #include "components/viewport.hpp"
 #include "model/context.hpp"
 #include "model/event/tileset_events.hpp"
-#include "model/event/viewport_events.hpp"
 #include "model/settings.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/render_system.hpp"
@@ -45,13 +42,12 @@
 namespace tactile::ui {
 namespace {
 
-inline constexpr Color kTileHoverColor {0, 0xFF, 0, 200};
-inline constexpr Color kSelectedTileColor {0, 0xEE, 0xEE, 0xFF};
-inline constexpr Color kAnimationFrameSelectionColor {0xFF, 0x45, 0x00, 200};
+inline constexpr Color kTileHoverColor {0x00, 0xFF, 0x00, 0xC8};
+inline constexpr Color kSelectedTileColor {0x00, 0xEE, 0xEE, 0xFF};
+inline constexpr Color kAnimationFrameSelectionColor {0xFF, 0x45, 0x00, 0xC8};
 
 struct DockState final {
   Entity tileset_entity {};
-  bool center_viewport                : 1 {false};
   bool animation_frame_selection_mode : 1 {false};
 };
 
@@ -100,16 +96,6 @@ void _highlight_animation_frame_selection_mode(const Strings& strings,
   }
 }
 
-void _center_viewport(const CanvasInfo& canvas,
-                      const Viewport& viewport,
-                      Dispatcher& dispatcher)
-{
-  const auto raw_delta =
-      ((canvas.size - canvas.contents_size) / 2.0f) - as_imvec2(viewport.offset);
-  const Float2 delta {std::round(raw_delta.x), std::round(raw_delta.y)};
-  dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
-}
-
 void _poll_mouse(const Tileset& tileset,
                  const CanvasInfo& canvas_info,
                  Dispatcher& dispatcher)
@@ -156,15 +142,11 @@ void show_tileset_viewport(const Model& model,
                                    static_cast<usize>(tileset.column_count)};
   const auto canvas = create_canvas_info(viewport, tileset.tile_size, tileset_extent);
 
+  update_dynamic_viewport_info(tileset_document_entity, canvas, dispatcher);
   update_document_viewport_offset(canvas.size, dispatcher);
 
   clear_canvas(canvas, settings.get_viewport_bg_color());
   push_scissor(canvas);
-
-  if (gDockState.center_viewport) {
-    _center_viewport(canvas, viewport, dispatcher);
-    gDockState.center_viewport = false;
-  }
 
   sys::render_tileset(model, canvas, tileset);
 
@@ -176,11 +158,6 @@ void show_tileset_viewport(const Model& model,
   _highlight_animation_frame_selection_mode(strings, canvas);
 
   pop_scissor();
-}
-
-void center_tileset_viewport()
-{
-  gDockState.center_viewport = true;
 }
 
 void enable_tile_animation_frame_selection_mode()

@@ -152,6 +152,17 @@ void App::_subscribe_to_events()
   mDispatcher.sink<ViewportMouseReleasedEvent>().connect<&App::_on_viewport_mouse_released>(this);
   mDispatcher.sink<ViewportMouseEnteredEvent>().connect<&App::_on_viewport_mouse_entered>(this);
   mDispatcher.sink<ViewportMouseExitedEvent>().connect<&App::_on_viewport_mouse_exited>(this);
+  mDispatcher.sink<CenterViewportEvent>().connect<&App::_on_center_viewport>(this);
+  mDispatcher.sink<ResetViewportZoomEvent>().connect<&App::_on_reset_viewport_zoom>(this);
+  mDispatcher.sink<IncreaseViewportZoomEvent>().connect<&App::_on_increase_viewport_zoom>(this);
+  mDispatcher.sink<DecreaseViewportZoomEvent>().connect<&App::_on_decrease_viewport_zoom>(this);
+  mDispatcher.sink<OffsetViewportEvent>().connect<&App::_on_offset_viewport>(this);
+  mDispatcher.sink<SetViewportLimitsEvent>().connect<&App::_on_set_viewport_limits>(this);
+  mDispatcher.sink<SetDynamicViewportInfoEvent>().connect<&App::_on_set_dynamic_viewport_info>(this);
+  mDispatcher.sink<PanViewportUpEvent>().connect<&App::_on_pan_viewport_up>(this);
+  mDispatcher.sink<PanViewportDownEvent>().connect<&App::_on_pan_viewport_down>(this);
+  mDispatcher.sink<PanViewportLeftEvent>().connect<&App::_on_pan_viewport_left>(this);
+  mDispatcher.sink<PanViewportRightEvent>().connect<&App::_on_pan_viewport_right>(this);
   // clang-format on
 }
 
@@ -539,6 +550,77 @@ void App::_on_viewport_mouse_exited(const ViewportMouseExitedEvent& event)
 {
   spdlog::trace("[ViewportMouseExitedEvent]");
   on_viewport_mouse_exited(get_global_model(), mDispatcher, event);
+}
+
+void App::_on_center_viewport(const CenterViewportEvent& event)
+{
+  spdlog::trace("[CenterViewportEvent] viewport: {}", event.viewport);
+  on_center_viewport(get_global_model(), event);
+}
+
+void App::_on_reset_viewport_zoom(const ResetViewportZoomEvent& event)
+{
+  spdlog::trace("[ResetViewportZoomEvent] viewport: {}", event.viewport);
+  on_reset_viewport_zoom(get_global_model(), event);
+}
+
+void App::_on_increase_viewport_zoom(const IncreaseViewportZoomEvent& event)
+{
+  spdlog::trace("[IncreaseViewportZoomEvent] viewport: {}", event.viewport);
+  on_increase_viewport_zoom(get_global_model(), event);
+}
+
+void App::_on_decrease_viewport_zoom(const DecreaseViewportZoomEvent& event)
+{
+  spdlog::trace("[DecreaseViewportZoomEvent] viewport: {}", event.viewport);
+  on_decrease_viewport_zoom(get_global_model(), event);
+}
+
+void App::_on_offset_viewport(const OffsetViewportEvent& event)
+{
+  spdlog::trace("[OffsetViewportEvent] viewport: {}, delta: {}",
+                event.viewport,
+                event.delta);
+  on_offset_viewport(get_global_model(), event);
+}
+
+void App::_on_set_viewport_limits(const SetViewportLimitsEvent& event)
+{
+  spdlog::trace("[SetViewportLimitsEvent] viewport: {}, min: {}, max: {}",
+                event.viewport,
+                event.min_offset,
+                event.max_offset);
+  on_set_viewport_limits(get_global_model(), event);
+}
+
+void App::_on_set_dynamic_viewport_info(const SetDynamicViewportInfoEvent& event)
+{
+  // This event is usually dispatched multiple times for each frame, so we won't log it.
+  on_set_dynamic_viewport_info(get_global_model(), event);
+}
+
+void App::_on_pan_viewport_up(const PanViewportUpEvent& event)
+{
+  spdlog::trace("[PanViewportUpEvent] viewport: {}", event.viewport);
+  on_pan_viewport_up(get_global_model(), event);
+}
+
+void App::_on_pan_viewport_down(const PanViewportDownEvent& event)
+{
+  spdlog::trace("[PanViewportDownEvent] viewport: {}", event.viewport);
+  on_pan_viewport_down(get_global_model(), event);
+}
+
+void App::_on_pan_viewport_left(const PanViewportLeftEvent& event)
+{
+  spdlog::trace("[PanViewportLeftEvent] viewport: {}", event.viewport);
+  on_pan_viewport_left(get_global_model(), event);
+}
+
+void App::_on_pan_viewport_right(const PanViewportRightEvent& event)
+{
+  spdlog::trace("[PanViewportRightEvent] viewport: {}", event.viewport);
+  on_pan_viewport_right(get_global_model(), event);
 }
 
 }  // namespace tactile

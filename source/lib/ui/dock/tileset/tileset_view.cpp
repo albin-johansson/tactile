@@ -52,9 +52,9 @@ void _update_viewport_offset(const Entity attached_tileset_entity,
   const Float2 max_offset {};
 
   if (!viewport.limits.has_value() || min_offset != viewport.limits->min_offset) {
-    dispatcher.enqueue<UpdateTilesetViewportLimitsEvent>(attached_tileset_entity,
-                                                         min_offset,
-                                                         max_offset);
+    dispatcher.enqueue<SetViewportLimitsEvent>(attached_tileset_entity,
+                                               min_offset,
+                                               max_offset);
   }
 
   ImGui::InvisibleButton("##TilesetViewInvisibleButton",
@@ -67,7 +67,7 @@ void _update_viewport_offset(const Entity attached_tileset_entity,
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Middle)) {
     const auto& io = ImGui::GetIO();
     const Float2 delta {io.MouseDelta.x, io.MouseDelta.y};
-    dispatcher.enqueue<OffsetTilesetViewportEvent>(attached_tileset_entity, delta);
+    dispatcher.enqueue<OffsetViewportEvent>(attached_tileset_entity, delta);
   }
 }
 

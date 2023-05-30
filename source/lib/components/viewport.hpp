@@ -50,4 +50,11 @@ struct Viewport final {
   [[nodiscard]] auto can_zoom_out() const -> bool;
 };
 
+/// Component used to track frequently changing aspects of viewports.
+/// \note This is mainly used to support features such as viewport centering.
+struct DynamicViewportInfo final {
+  Maybe<Float2> total_size {};    ///< Size of the viewport itself.
+  Maybe<Float2> content_size {};  ///< Size of the rendered content.
+};
+
 }  // namespace tactile

@@ -19,8 +19,13 @@
 
 #include "viewport_delegate.hpp"
 
+#include <cmath>  // round
+
 #include "common/util/lookup.hpp"
+#include "components/document.hpp"
 #include "components/tool.hpp"
+#include "model/systems/document_system.hpp"
+#include "model/systems/viewport_system.hpp"
 
 namespace tactile {
 
@@ -102,6 +107,82 @@ void on_viewport_mouse_exited(Model& model,
       tool.on_exited(model, tool_entity, dispatcher);
     }
   }
+}
+
+void on_center_viewport(Model& model, const CenterViewportEvent& event)
+{
+  auto& viewport = model.get<Viewport>(event.viewport);
+  const auto& viewport_info = model.get<DynamicViewportInfo>(event.viewport);
+
+  if (viewport_info.total_size.has_value() && viewport_info.content_size.has_value()) {
+    const auto total_size = *viewport_info.total_size;
+    const auto content_size = *viewport_info.content_size;
+
+    const auto raw_offset = ((total_size - content_size) / 2.0f) - viewport.offset;
+    const Float2 rounded_offset {std::round(raw_offset.x), std::round(raw_offset.y)};
+
+    on_offset_viewport(model, OffsetViewportEvent {event.viewport, rounded_offset});
+  }
+}
+
+void on_reset_viewport_zoom(Model& model, const ResetViewportZoomEvent& event)
+{
+  auto& viewport = model.get<Viewport>(event.viewport);
+  sys::reset_viewport_zoom(viewport);
+}
+
+void on_increase_viewport_zoom(Model& model, const IncreaseViewportZoomEvent& event)
+{
+  auto& viewport = model.get<Viewport>(event.viewport);
+  sys::increase_viewport_zoom(viewport, event.anchor_pos);
+}
+
+void on_decrease_viewport_zoom(Model& model, const DecreaseViewportZoomEvent& event)
+{
+  auto& viewport = model.get<Viewport>(event.viewport);
+  sys::decrease_viewport_zoom(viewport, event.anchor_pos);
+}
+
+void on_offset_viewport(Model& model, const OffsetViewportEvent& event)
+{
+  auto& viewport = model.get<Viewport>(event.viewport);
+  sys::offset_viewport(viewport, event.delta);
+}
+
+void on_set_viewport_limits(Model& model, const SetViewportLimitsEvent& event)
+{
+  auto& viewport = model.get<Viewport>(event.viewport);
+  viewport.limits = ViewportLimits {event.min_offset, event.max_offset};
+}
+
+void on_set_dynamic_viewport_info(Model& model, const SetDynamicViewportInfoEvent& event)
+{
+  auto& dynamic_info = model.get<DynamicViewportInfo>(event.viewport);
+  dynamic_info = event.info;
+}
+
+void on_pan_viewport_up(Model& model, const PanViewportUpEvent& event)
+{
+  auto& viewport = model.get<Viewport>(event.viewport);
+  viewport.offset.y += viewport.tile_size.y;
+}
+
+void on_pan_viewport_down(Model& model, const PanViewportDownEvent& event)
+{
+  auto& viewport = model.get<Viewport>(event.viewport);
+  viewport.offset.y -= viewport.tile_size.y;
+}
+
+void on_pan_viewport_left(Model& model, const PanViewportLeftEvent& event)
+{
+  auto& viewport = model.get<Viewport>(event.viewport);
+  viewport.offset.x += viewport.tile_size.x;
+}
+
+void on_pan_viewport_right(Model& model, const PanViewportRightEvent& event)
+{
+  auto& viewport = model.get<Viewport>(event.viewport);
+  viewport.offset.x -= viewport.tile_size.x;
 }
 
 }  // namespace tactile

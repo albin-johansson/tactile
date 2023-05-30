@@ -20,12 +20,14 @@
 #include "menu_delegate.hpp"
 
 #include <centurion/system.hpp>
+#include <imgui.h>
 #include <magic_enum.hpp>
 
 #include "components/file_history.hpp"
 #include "model/event/all.hpp"
 #include "model/settings.hpp"
 #include "model/systems/document_system.hpp"
+#include "ui/conversions.hpp"
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/credits_dialog.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
@@ -38,6 +40,7 @@ namespace tactile {
 void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent& event)
 {
   auto& settings = model.get<Settings>();
+  const auto document_entity = sys::get_active_document(model);
 
   switch (event.action) {
     case MenuAction::NewMap:
@@ -57,7 +60,7 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
 
     case MenuAction::Close:
-      dispatcher.enqueue<CloseDocumentEvent>(sys::get_active_document(model));
+      dispatcher.enqueue<CloseDocumentEvent>(document_entity);
       break;
 
     case MenuAction::Quit:
@@ -121,7 +124,7 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
 
     case MenuAction::CenterViewport:
-      dispatcher.enqueue<CenterViewportEvent>();
+      dispatcher.enqueue<CenterViewportEvent>(document_entity);
       break;
 
     case MenuAction::ToggleGrid:
@@ -129,15 +132,17 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
 
     case MenuAction::IncreaseZoom:
-      dispatcher.enqueue<IncreaseZoomEvent>();
+      dispatcher.enqueue<IncreaseViewportZoomEvent>(document_entity,
+                                                    as_float2(ImGui::GetIO().MousePos));
       break;
 
     case MenuAction::DecreaseZoom:
-      dispatcher.enqueue<DecreaseZoomEvent>();
+      dispatcher.enqueue<DecreaseViewportZoomEvent>(document_entity,
+                                                    as_float2(ImGui::GetIO().MousePos));
       break;
 
     case MenuAction::ResetZoom:
-      dispatcher.enqueue<ResetZoomEvent>();
+      dispatcher.enqueue<ResetViewportZoomEvent>(document_entity);
       break;
 
     case MenuAction::IncreaseFontSize:
@@ -153,19 +158,19 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
 
     case MenuAction::PanUp:
-      dispatcher.enqueue<PanUpEvent>();
+      dispatcher.enqueue<PanViewportUpEvent>(document_entity);
       break;
 
     case MenuAction::PanDown:
-      dispatcher.enqueue<PanDownEvent>();
+      dispatcher.enqueue<PanViewportDownEvent>(document_entity);
       break;
 
     case MenuAction::PanRight:
-      dispatcher.enqueue<PanRightEvent>();
+      dispatcher.enqueue<PanViewportRightEvent>(document_entity);
       break;
 
     case MenuAction::PanLeft:
-      dispatcher.enqueue<PanLeftEvent>();
+      dispatcher.enqueue<PanViewportLeftEvent>(document_entity);
       break;
 
     case MenuAction::HighlightLayer:

@@ -134,11 +134,9 @@ void set_document_name(Model& model, Entity document_entity, String name);
 /**
  * Returns the tileset document associated with a tileset.
  *
- * \todo This functions only checks among open documents.
- *
  * \param model the associated model.
  * \param tileset_entity a valid tileset entity.
- * \return a tileset document entity, or the null entity..
+ * \return a tileset document entity, or the null entity.
  */
 [[nodiscard]] auto get_associated_tileset_document(const Model& model,
                                                    Entity tileset_entity) -> Entity;

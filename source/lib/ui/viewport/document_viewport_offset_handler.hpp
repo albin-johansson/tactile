@@ -19,13 +19,12 @@
 
 #pragma once
 
-#include <entt/signal/fwd.hpp>
+#include <imgui.h>
 
-struct ImVec2;
+#include "common/type/dispatcher.hpp"
 
 namespace tactile::ui {
 
-void update_document_viewport_offset(const ImVec2& viewport_size,
-                                     entt::dispatcher& dispatcher);
+void update_document_viewport_offset(const ImVec2& viewport_size, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

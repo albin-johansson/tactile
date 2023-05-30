@@ -73,6 +73,8 @@ auto create_map_document(Model& model, const TileExtent& extent, const Int2& til
   document_viewport.offset = Float2 {0, 0};
   document_viewport.tile_size = tile_size;
 
+  model.add<DynamicViewportInfo>(document_entity);
+
   TACTILE_ASSERT(is_map_document_entity(model, document_entity));
   return document_entity;
 }
@@ -96,6 +98,8 @@ auto create_tileset_document(Model& model, const Int2& tile_size, const Path& im
   auto& document_viewport = model.add<Viewport>(document_entity);
   document_viewport.offset = Float2 {0, 0};
   document_viewport.tile_size = tile_size;
+
+  model.add<DynamicViewportInfo>(document_entity);
 
   TACTILE_ASSERT(is_tileset_document_entity(model, document_entity));
   return document_entity;
@@ -133,7 +137,7 @@ void open_document(Model& model, const Entity document_entity)
   document_context.open_documents.insert(document_entity);
 }
 
-// TODO this function should perhaps check if the document is active as well
+// TODO this function should perhaps check if the document is active as well (and select another document)
 void close_document(Model& model, const Entity document_entity)
 {
   TACTILE_ASSERT(is_document_entity(model, document_entity));
@@ -202,13 +206,11 @@ auto get_associated_tileset_document(const Model& model, const Entity tileset_en
     -> Entity
 {
   TACTILE_ASSERT(is_tileset_entity(model, tileset_entity));
-  const auto& document_context = model.get<DocumentContext>();
 
-  for (const auto document_entity: document_context.open_documents) {
-    if (const auto* tileset_document = model.try_get<TilesetDocument>(document_entity)) {
-      if (tileset_document->tileset == tileset_entity) {
-        return document_entity;
-      }
+  // TODO add each version that ignores disabled entities
+  for (const auto& [document_entity, tileset_document]: model.each<TilesetDocument>()) {
+    if (tileset_document.tileset == tileset_entity) {
+      return document_entity;
     }
   }
 

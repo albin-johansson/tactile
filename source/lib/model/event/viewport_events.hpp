@@ -41,36 +41,64 @@ struct ViewportMouseEnteredEvent final {};
 
 struct ViewportMouseExitedEvent final {};
 
-struct CenterViewportEvent final {};
-
-struct ResetZoomEvent final {};
-
-struct DecreaseZoomEvent final {};
-
-struct IncreaseZoomEvent final {};
-
-struct OffsetDocumentViewportEvent final {
-  Float2 delta {};  ///< The offset to apply.
+/// Event for centering a viewport over its contents.
+struct CenterViewportEvent final {
+  Entity viewport {kNullEntity};  ///< The target viewport entity.
 };
 
-struct OffsetTilesetViewportEvent final {
-  Entity attached_tileset {kNullEntity};  ///< The target attached tileset entity.
-  Float2 delta {};                        ///< The offset to apply.
+/// Event for resetting the size of tiles in a viewport.
+struct ResetViewportZoomEvent final {
+  Entity viewport {kNullEntity};  ///< The target viewport entity.
 };
 
-/// Event used to update the limits of tilesets in the tileset dock widget.
-struct UpdateTilesetViewportLimitsEvent final {
-  Entity attached_tileset {kNullEntity};  ///< The target attached tileset entity.
-  Float2 min_offset {};                   ///< The minimum offset.
-  Float2 max_offset {};                   ///< The maximum offset.
+/// Event for increasing the tile size in a viewport.
+struct IncreaseViewportZoomEvent final {
+  Entity viewport {kNullEntity};  ///< The target viewport entity.
+  Float2 anchor_pos {};           ///< The anchor location of the zoom.
 };
 
-struct PanUpEvent final {};
+/// Event for decreasing the tile size in a viewport.
+struct DecreaseViewportZoomEvent final {
+  Entity viewport {kNullEntity};  ///< The target viewport entity.
+  Float2 anchor_pos {};           ///< The anchor location of the zoom.
+};
 
-struct PanDownEvent final {};
+/// Event for nudging the origin in a viewport.
+struct OffsetViewportEvent final {
+  Entity viewport {kNullEntity};  ///< The target viewport entity.
+  Float2 delta {};                ///< The offset to apply.
+};
 
-struct PanLeftEvent final {};
+/// Event for setting the offset limits of a viewport.
+struct SetViewportLimitsEvent final {
+  Entity viewport {kNullEntity};  ///< The target viewport entity.
+  Float2 min_offset {};           ///< The new minimum offset.
+  Float2 max_offset {};           ///< The new maximum offset.
+};
 
-struct PanRightEvent final {};
+struct SetDynamicViewportInfoEvent final {
+  Entity viewport {kNullEntity};  ///< The target viewport entity.
+  DynamicViewportInfo info;
+};
+
+/// Event for moving a viewport "up".
+struct PanViewportUpEvent final {
+  Entity viewport {kNullEntity};  ///< The target viewport entity.
+};
+
+/// Event for moving a viewport "down".
+struct PanViewportDownEvent final {
+  Entity viewport {kNullEntity};  ///< The target viewport entity.
+};
+
+/// Event for moving a viewport "left".
+struct PanViewportLeftEvent final {
+  Entity viewport {kNullEntity};  ///< The target viewport entity.
+};
+
+/// Event for moving a viewport "right".
+struct PanViewportRightEvent final {
+  Entity viewport {kNullEntity};  ///< The target viewport entity.
+};
 
 }  // namespace tactile

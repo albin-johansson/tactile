@@ -23,6 +23,7 @@ These components are globally accessible in the model.
 * `Document`
 * `CommandStack`
 * `Viewport`
+* `DynamicViewportInfo`
 * `MapDocument` (if map document)
 * `TilesetDocument` (if tileset document)
 
@@ -35,6 +36,7 @@ These components are globally accessible in the model.
 
 * `AttachedTileset`
 * `Viewport`
+* `DynamicViewportInfo`
 
 ## Maps
 

@@ -24,6 +24,8 @@
 #include "common/primitives.hpp"
 #include "common/region.hpp"
 #include "common/tile_extent.hpp"
+#include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "components/viewport.hpp"
 
@@ -50,6 +52,10 @@ struct CanvasInfo final {
 
   [[nodiscard]] auto intersects(const ImVec4& rect) const -> bool;
 };
+
+void update_dynamic_viewport_info(Entity viewport_entity,
+                                  const CanvasInfo& canvas,
+                                  Dispatcher& dispatcher);
 
 [[nodiscard]] auto create_canvas_info(const Viewport& viewport,
                                       const Float2& logical_tile_size,

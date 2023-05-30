@@ -43,19 +43,21 @@ auto is_document_entity(const Model& model, const Entity entity) -> bool
 
 auto is_map_document_entity(const Model& model, const Entity entity) -> bool
 {
-  return entity != kNullEntity &&           //
-         model.has<MapDocument>(entity) &&  //
-         model.has<Document>(entity) &&     //
-         model.has<Viewport>(entity) &&     //
+  return entity != kNullEntity &&                   //
+         model.has<MapDocument>(entity) &&          //
+         model.has<Document>(entity) &&             //
+         model.has<Viewport>(entity) &&             //
+         model.has<DynamicViewportInfo>(entity) &&  //
          model.has<CommandStack>(entity);
 }
 
 auto is_tileset_document_entity(const Model& model, const Entity entity) -> bool
 {
-  return entity != kNullEntity &&               //
-         model.has<TilesetDocument>(entity) &&  //
-         model.has<Document>(entity) &&         //
-         model.has<Viewport>(entity) &&         //
+  return entity != kNullEntity &&                   //
+         model.has<TilesetDocument>(entity) &&      //
+         model.has<Document>(entity) &&             //
+         model.has<Viewport>(entity) &&             //
+         model.has<DynamicViewportInfo>(entity) &&  //
          model.has<CommandStack>(entity);
 }
 
@@ -145,7 +147,8 @@ auto is_attached_tileset_entity(const Model& model, const Entity entity) -> bool
 {
   return entity != kNullEntity &&               //
          model.has<AttachedTileset>(entity) &&  //
-         model.has<Viewport>(entity);
+         model.has<Viewport>(entity) &&         //
+         model.has<DynamicViewportInfo>(entity);
 }
 
 auto is_tile_entity(const Model& model, const Entity entity) -> bool

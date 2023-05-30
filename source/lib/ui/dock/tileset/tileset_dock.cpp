@@ -103,7 +103,6 @@ void tileset_dock_mouse_wheel_event_handler(const Model& model,
                                             const cen::mouse_wheel_event& event,
                                             Dispatcher& dispatcher)
 {
-  const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
   const auto& viewport = model.get<Viewport>(attached_tileset_entity);
 
   const Float2 scaling {4, 4};
@@ -112,7 +111,7 @@ void tileset_dock_mouse_wheel_event_handler(const Model& model,
   auto delta = precise * (viewport.tile_size / scaling);
   delta.x = -delta.x;
 
-  dispatcher.enqueue<OffsetTilesetViewportEvent>(attached_tileset.tileset, delta);
+  dispatcher.enqueue<OffsetViewportEvent>(attached_tileset_entity, delta);
 }
 
 auto is_tileset_dock_focused() -> bool

@@ -64,7 +64,7 @@ void _push_document_tab(const Model& model,
   if (const TabItem item {name_with_icon.data(), &opened, flags}; item.is_open()) {
     if (is_active) {
       if (model.has<MapDocument>(document_entity)) {
-        show_map_viewport(model, document_entity, dispatcher);
+        push_map_viewport(model, document_entity, dispatcher);
       }
 
       if (model.has<TilesetDocument>(document_entity)) {

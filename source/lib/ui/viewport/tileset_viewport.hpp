@@ -29,8 +29,6 @@ void show_tileset_viewport(const Model& model,
                            Entity tileset_document_entity,
                            Dispatcher& dispatcher);
 
-void center_tileset_viewport();
-
 void enable_tile_animation_frame_selection_mode();
 
 }  // namespace tactile::ui

@@ -25,6 +25,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "model/event/viewport_events.hpp"
 #include "ui/conversions.hpp"
 
 namespace tactile::ui {
@@ -89,6 +90,20 @@ auto CanvasInfo::intersects(const ImVec4& rect) const -> bool
          bounds_rect.y < rect_max_y &&  //
          rect_pos.x < bounds_max_x &&   //
          rect_pos.y < bounds_max_y;
+}
+
+void update_dynamic_viewport_info(const Entity viewport_entity,
+                                  const CanvasInfo& canvas,
+                                  Dispatcher& dispatcher)
+{
+  dispatcher.enqueue(SetDynamicViewportInfoEvent {
+      .viewport = viewport_entity,
+      .info =
+          {
+              .total_size = as_float2(canvas.size),
+              .content_size = as_float2(canvas.contents_size),
+          },
+  });
 }
 
 auto create_canvas_info(const Viewport& viewport,
