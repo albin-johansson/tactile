@@ -15,8 +15,6 @@ These components are globally accessible in the model.
 * `TextureCache`
 * `TextureCallbacks`
 * `MenuItems`
-* `ComponentDockState` (TODO)
-* `MouseInfo` (TODO)
 
 ## Documents
 
