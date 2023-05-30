@@ -200,6 +200,12 @@ class Model final {
     return mRegistry.all_of<T>(entity);
   }
 
+  /// Indicates whether an entity identifier is valid.
+  [[nodiscard]] auto is_valid(const Entity entity) const -> bool
+  {
+    return mRegistry.valid(entity);
+  }
+
   /// Returns an iterable view of all entities featuring the specified components.
   /// \note This function includes all entities, including disabled entities.
   template <typename... Components>
