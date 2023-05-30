@@ -26,20 +26,19 @@
 #include "model/event/menu_events.hpp"
 #include "model/systems/document_system.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
-#include "ui/shortcut/shortcuts.hpp"
 #include "ui/viewport/viewport_widget.hpp"
 
 namespace tactile {
 namespace {
 
-void _on_keyboard(Dispatcher& dispatcher, cen::keyboard_event event)
+void _on_keyboard([[maybe_unused]] Dispatcher& dispatcher, cen::keyboard_event event)
 {
   // We don't care about these modifiers, they are just noise.
   event.set_modifier(cen::key_mod::caps, false);
   event.set_modifier(cen::key_mod::num, false);
   event.set_modifier(cen::key_mod::mode, false);
 
-  update_shortcuts(event, dispatcher);
+  // update_shortcuts(event, dispatcher);
 }
 
 void _on_mouse_wheel(Model& model,
