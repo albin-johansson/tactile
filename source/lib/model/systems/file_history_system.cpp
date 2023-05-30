@@ -35,7 +35,11 @@ void store_open_documents_in_file_history(Model& model)
 
   for (const auto& [document_entity, document]: model.each<Document>()) {
     if (document.type == DocumentType::Map && document.path.has_value()) {
-      file_history.entries.push_back(use_forward_slashes(*document.path));
+      auto path_str = use_forward_slashes(*document.path);
+      if (std::ranges::find(file_history.entries, path_str) ==
+          file_history.entries.end()) {
+        file_history.entries.push_back(std::move(path_str));
+      }
     }
   }
 }
