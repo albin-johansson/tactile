@@ -47,6 +47,7 @@ void Model::set_enabled(const Entity entity, const bool enabled)
 
 auto Model::is_enabled(const Entity entity) const -> bool
 {
+  TACTILE_ASSERT(entity != kNullEntity);
   TACTILE_ASSERT(mRegistry.valid(entity));
   return !mRegistry.all_of<DisabledTag>(entity);
 }
