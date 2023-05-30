@@ -58,6 +58,11 @@ struct Texture final {
   Path path;        ///< Path to the file from which the texture was created.
 };
 
+/// Component featured by texture entities loaded using the null backend.
+struct NullTexture final {
+  char unused;
+};
+
 /// Component featured by OpenGL texture entities.
 struct OpenGLTexture final {
   uint id {};  ///< Associated OpenGL texture ID.

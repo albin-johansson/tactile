@@ -132,7 +132,9 @@ auto is_object_entity(const Model& model, const Entity entity) -> bool
 auto is_texture_entity(const Model& model, const Entity entity) -> bool
 {
   return entity != kNullEntity && model.has<Texture>(entity) &&
-         (model.has<OpenGLTexture>(entity) || model.has<VulkanTexture>(entity));
+         (model.has<NullTexture>(entity) ||    //
+          model.has<OpenGLTexture>(entity) ||  //
+          model.has<VulkanTexture>(entity));
 }
 
 auto is_tileset_entity(const Model& model, const Entity entity) -> bool

@@ -84,6 +84,8 @@ auto create_tileset(Model& model, const Int2& tile_size, const Path& image_path)
     tileset.tile_index_map[tile_index] = tile_entity;
   }
 
+  TACTILE_ASSERT(is_texture_entity(model, tileset.texture));
+  TACTILE_ASSERT(is_tileset_entity(model, tileset_entity));
   return tileset_entity;
 }
 

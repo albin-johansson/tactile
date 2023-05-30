@@ -47,7 +47,10 @@ void init_model(Model& model, const BackendAPI api)
   auto& texture_callbacks = model.add<TextureCallbacks>();
 
   if (api == BackendAPI::Null) {
-    texture_callbacks.init = [](Model&, Entity, const TextureData&) {};
+    texture_callbacks.init =
+        [](Model& model, const Entity texture_entity, const TextureData&) {
+          model.add<NullTexture>(texture_entity);
+        };
     texture_callbacks.destroy = [](Model&, Entity) {};
   }
   else if (api == BackendAPI::OpenGL) {
