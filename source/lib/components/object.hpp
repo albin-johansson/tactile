@@ -31,12 +31,12 @@ namespace tactile {
 /// Represents various map objects found in object layers.
 /// The current supported object types are rectangles, ellipses, and points.
 struct Object final {
-  Float2 position {};       ///< Object position.
-  Float2 size {};           ///< Object size (might be zero).
-  ObjectType type {};       ///< Specific object type.
-  String tag;               ///< Optional user-provided tag.
-  Maybe<int32> meta_id;     ///< Identifier used in save files.
-  bool visible : 1 {true};  ///< Is the object rendered?
+  Float2 position {};    ///< Object position.
+  Float2 size {};        ///< Object size (might be zero).
+  ObjectType type {};    ///< Specific object type.
+  String tag;            ///< Optional user-provided tag.
+  Maybe<int32> meta_id;  ///< Identifier used in save files.
+  bool visible {true};   ///< Is the object rendered?
 };
 
 /// Outputs an object type to a stream for debugging purposes.
