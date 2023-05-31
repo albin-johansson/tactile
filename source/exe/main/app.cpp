@@ -250,8 +250,6 @@ void App::on_update()
 {
   auto& model = get_global_model();
 
-  mDispatcher.update();
-
   // TODO update animated tiles
   sys::update_menu_items(model);
 
@@ -267,6 +265,8 @@ void App::on_update()
     mFramebufferScale = io.DisplayFramebufferScale;
     mWantFontReload = true;
   }
+
+  mDispatcher.update();
 }
 
 void App::on_event(const cen::event_handler& event)
