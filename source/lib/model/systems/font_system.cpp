@@ -35,7 +35,7 @@ auto can_decrease_font_size(const Model& model) -> bool
 {
   const auto& settings = model.get<Settings>();
   return !settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) &&
-         settings.get_font_size() > kMaxFontSize;
+         settings.get_font_size() > kMinFontSize;
 }
 
 auto can_reset_font_size(const Model& model) -> bool
