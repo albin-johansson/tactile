@@ -27,6 +27,7 @@ function(tactile_set_compile_options target)
                            -Wextra
                            -Wpedantic
                            -Werror
+                           -Wno-error=unused-function
                            -Wconversion
                            -Wsign-conversion
                            )
