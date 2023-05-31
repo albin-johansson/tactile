@@ -49,7 +49,7 @@ void _load(const JSON& json, String& string, const char* key)
 void _load(const JSON& json, String& string, const char* key, const char* icon)
 {
   if (const auto* value = try_get(json, key)) {
-    string = fmt::format("{} {}", icon, *value);
+    string = fmt::format("{} {}", icon, value->get<String>());
   }
 
   if (string.empty()) {

@@ -30,6 +30,7 @@
 
 #include "common/debug/panic.hpp"
 #include "common/predef.hpp"
+#include "common/type/chrono.hpp"
 #include "common/type/deque.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/set.hpp"
@@ -81,7 +82,7 @@ class HistorySink final : public spdlog::sinks::base_sink<spdlog::details::null_
  public:
   void sink_it_(const spdlog::details::log_msg& msg) override
   {
-    const auto time = fmt::localtime(msg.time);
+    const auto time = fmt::localtime(Clock::to_time_t(msg.time));
     auto processed = fmt::format("[{:%H:%M:%S}] {}", time, msg.payload);
     mHistory.push_back({msg.level, std::move(processed)});
   }

@@ -68,6 +68,7 @@ auto create_map_document(Model& model, const TileExtent& extent, const Int2& til
   auto& document = model.add<Document>(document_entity);
   document.type = DocumentType::Map;
   document.default_context = map_document.map;
+  document.active_context = document.default_context;
 
   auto& document_viewport = model.add<Viewport>(document_entity);
   document_viewport.offset = Float2 {0, 0};
@@ -94,6 +95,7 @@ auto create_tileset_document(Model& model, const Int2& tile_size, const Path& im
   auto& document = model.add<Document>(document_entity);
   document.type = DocumentType::Tileset;
   document.default_context = tileset_document.tileset;
+  document.active_context = document.default_context;
 
   auto& document_viewport = model.add<Viewport>(document_entity);
   document_viewport.offset = Float2 {0, 0};
