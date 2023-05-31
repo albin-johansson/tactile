@@ -241,7 +241,7 @@ void apply_style(ImGuiStyle& style)
   style.WindowPadding = ImVec2 {8, 8};
   style.FramePadding = ImVec2 {4, 4};
   style.CellPadding = ImVec2 {4, 4};
-  style.ItemSpacing = ImVec2 {8, 8};
+  style.ItemSpacing = ImVec2 {12, 8};
   style.ItemInnerSpacing = ImVec2 {8, 4};
   style.IndentSpacing = 12;
   style.ScrollbarSize = 12;
