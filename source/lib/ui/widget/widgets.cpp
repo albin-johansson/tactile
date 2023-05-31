@@ -19,7 +19,6 @@
 
 #include "widgets.hpp"
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
@@ -126,7 +125,7 @@ void push_centered_label(const char* text)
   ImGui::TextUnformatted(text);
 }
 
-void push_menu_item(const Model& model, MenuAction action, Dispatcher& dispatcher)
+void push_menu_item(const Model& model, const MenuAction action, Dispatcher& dispatcher)
 {
   const auto& menu_item = sys::get_menu_item(model, action);
   if (ImGui::MenuItem(menu_item.label.c_str(),
