@@ -19,6 +19,8 @@
 
 #include "dialog.hpp"
 
+#include <imgui_internal.h>
+
 #include "ui/style/alignment.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -26,7 +28,7 @@ namespace tactile::ui {
 namespace {
 
 [[nodiscard]] auto _dialog_begin(const char* title,
-                                 bool* open = nullptr,
+                                 bool* is_open = nullptr,
                                  const uint32 flags = UI_DIALOG_FLAG_NONE) -> bool
 {
   if (flags & UI_DIALOG_FLAG_OPEN) {
@@ -37,7 +39,7 @@ namespace {
 
   const ImGuiWindowFlags popup_flags =
       ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
-  return ImGui::BeginPopupModal(title, open, popup_flags);
+  return ImGui::BeginPopupModal(title, is_open, popup_flags);
 }
 
 [[nodiscard]] auto _dialog_end(const char* close_label,
@@ -49,7 +51,7 @@ namespace {
 
   auto action = DialogAction::None;
 
-  if (close_label && push_button(close_label)) {
+  if ((close_label && push_button(close_label)) || ImGui::Shortcut(ImGuiKey_Escape)) {
     action = DialogAction::Cancel;
     ImGui::CloseCurrentPopup();
   }
