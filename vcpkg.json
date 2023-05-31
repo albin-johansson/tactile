@@ -9,6 +9,12 @@
   "builtin-baseline": "31a159c1cae2bf905299085d9ef01bdfea0ca7b8",
   "dependencies": [
     "argparse",
+    "boost-assert",
+    "boost-config",
+    "boost-container",
+    "boost-predef",
+    "boost-stacktrace",
+    "boost-uuid",
     "entt",
     "cppcodec",
     "doctest",

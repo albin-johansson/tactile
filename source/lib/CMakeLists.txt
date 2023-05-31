@@ -28,15 +28,14 @@ target_include_directories(${TACTILE_LIB}
                            ${LIBRARY_DIR}/fontawesome
                            ${STB_INCLUDE_DIRS}
                            ${TACTILE_PROTO_GENERATED_DIR}
-                           ${Boost_INCLUDE_DIRS}
                            ${CPPCODEC_INCLUDE_DIRS}
                            )
 
 target_link_libraries(${TACTILE_LIB}
                       PUBLIC
                       ${TACTILE_PROTO}
-                      ${Boost_LIBRARIES}
                       argparse::argparse
+                      Boost::boost
                       $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
                       $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
                       imgui::imgui

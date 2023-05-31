@@ -37,16 +37,14 @@ set(TACTILE_LIB TactileLib)
 set(TACTILE_EXE Tactile)
 set(TACTILE_TEST TactileTests)
 
-set(Boost_NO_WARN_NEW_VERSIONS ON)
-
 include(cmake/tactile.cmake)
 
 # System dependencies
 find_package(OpenGL REQUIRED)
-find_package(Boost REQUIRED)
 
 # Vcpkg dependencies
 find_package(argparse CONFIG REQUIRED)
+find_package(Boost REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(GLEW CONFIG REQUIRED)
