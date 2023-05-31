@@ -22,6 +22,7 @@
 #include "common/enum/menu_action.hpp"
 #include "common/type/func.hpp"
 #include "common/type/hash_map.hpp"
+#include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
 #include "model/model.hpp"
 
@@ -30,10 +31,12 @@ namespace tactile {
 using MenuItemEnabledFn = Func<bool(const Model&)>;
 
 struct MenuItem final {
-  String label;         ///< The label text, in the current language.
-  String shortcut;      ///< Optional shortcut label (language independent).
-  bool enabled : 1 {};  ///< Can the menu item be activated?
-  bool checked : 1 {};  ///< Should the menu item be rendered with a checkmark?
+  MenuAction action;      ///< The associated menu action.
+  String label;           ///< The label text, in the current language.
+  String shortcut_label;  ///< Optional shortcut label (currently always in English).
+  Maybe<int> shortcut;    ///< Bitmask for associated key chord.
+  bool enabled : 1 {};    ///< Can the menu item be activated?
+  bool checked : 1 {};    ///< Should the menu item be rendered with a checkmark?
 };
 
 struct MenuItemCallbacks final {

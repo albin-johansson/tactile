@@ -251,7 +251,7 @@ void App::on_update()
   auto& model = get_global_model();
 
   // TODO update animated tiles
-  sys::update_menu_items(model);
+  sys::update_menu_items(model, mDispatcher);
 
   ui::update_dynamic_color_cache();
   ui::update_dock_space(model);

@@ -21,11 +21,14 @@
 
 #include <utility>  // move
 
+#include <imgui_internal.h>
+
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
 #include "common/util/lookup.hpp"
 #include "components/file_history.hpp"
+#include "model/event/menu_events.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/file_history_system.hpp"
 #include "model/systems/font_system.hpp"
@@ -37,21 +40,66 @@
 namespace tactile::sys {
 namespace {
 
+[[nodiscard]] auto _to_shortcut_label(const ImGuiKeyChord chord) -> String
+{
+  String label;
+  label.reserve(32);
+
+  if (chord & ImGuiMod_Super) {
+    label += TACTILE_PRIMARY_MOD;
+  }
+
+  if (chord & ImGuiMod_Ctrl) {
+    if (!label.empty()) {
+      label += "+";
+    }
+
+    label += TACTILE_PRIMARY_MOD;
+  }
+
+  if (chord & ImGuiMod_Shift) {
+    if (!label.empty()) {
+      label += "+";
+    }
+
+    label += "Shift";
+  }
+
+  if (chord & ImGuiMod_Alt) {
+    if (!label.empty()) {
+      label += "+";
+    }
+
+    label += TACTILE_SECONDARY_MOD;
+  }
+
+  if (!label.empty()) {
+    label += "+";
+  }
+
+  const ImGuiKey key {chord & ~ImGuiMod_Mask_};
+  label += ImGui::GetKeyName(key);
+
+  return label;
+}
+
 auto _add_menu_item(Model& model,
                     const MenuAction action,
                     String label,
-                    Maybe<String> shortcut,
+                    Maybe<ImGuiKeyChord> shortcut,
                     Maybe<MenuItemEnabledFn> enabled_fn) -> Entity
 {
   const auto item_entity = model.create_entity();
 
   auto& item = model.add<MenuItem>(item_entity);
+  item.action = action;
   item.label = std::move(label);
   item.enabled = true;
   item.checked = false;
+  item.shortcut = shortcut;
 
   if (shortcut.has_value()) {
-    item.shortcut = std::move(*shortcut);
+    item.shortcut_label = _to_shortcut_label(*shortcut);
   }
 
   if (enabled_fn.has_value()) {
@@ -79,26 +127,26 @@ auto _add_menu_item(Model& model,
 
 auto _add_menu_item(Model& model,
                     const MenuAction action,
-                    Maybe<String> shortcut,
+                    const ImGuiKeyChord shortcut,
                     Maybe<MenuItemEnabledFn> enabled_fn = nothing) -> Entity
 {
   const auto& strings = get_current_language_strings(model);
   return _add_menu_item(model,
                         action,
                         get_string(strings, action),
-                        std::move(shortcut),
+                        shortcut,
                         std::move(enabled_fn));
 }
 
 void _init_file_menu(Model& model)
 {
-  _add_menu_item(model, MenuAction::NewMap, TACTILE_PRIMARY_MOD "+N");
-  _add_menu_item(model, MenuAction::OpenMap, TACTILE_PRIMARY_MOD "+O");
+  _add_menu_item(model, MenuAction::NewMap, ImGuiMod_Super | ImGuiKey_N);
+  _add_menu_item(model, MenuAction::OpenMap, ImGuiMod_Super | ImGuiKey_O);
 
-  _add_menu_item(model, MenuAction::Save, TACTILE_PRIMARY_MOD "+S", &is_save_possible);
+  _add_menu_item(model, MenuAction::Save, ImGuiMod_Super | ImGuiKey_S, &is_save_possible);
   _add_menu_item(model,
                  MenuAction::SaveAs,
-                 TACTILE_PRIMARY_MOD "+Shift+S",
+                 ImGuiMod_Super | ImGuiMod_Shift | ImGuiKey_S,
                  &has_active_document);
 
   _add_menu_item(model, MenuAction::Close, &has_active_document);
@@ -118,70 +166,73 @@ void _init_file_menu(Model& model)
 
 void _init_edit_menu(Model& model)
 {
-  _add_menu_item(model, MenuAction::Undo, TACTILE_PRIMARY_MOD "+Z", &is_undo_possible);
-  _add_menu_item(model, MenuAction::Redo, TACTILE_PRIMARY_MOD "+Y", &is_redo_possible);
+  _add_menu_item(model, MenuAction::Undo, ImGuiMod_Super | ImGuiKey_Z, &is_undo_possible);
+  _add_menu_item(model, MenuAction::Redo, ImGuiMod_Super | ImGuiKey_Y, &is_redo_possible);
 
   // TODO tool validation functions
-  _add_menu_item(model, MenuAction::EnableStamp, "S");
-  _add_menu_item(model, MenuAction::EnableBucket, "B");
-  _add_menu_item(model, MenuAction::EnableEraser, "E");
-  _add_menu_item(model, MenuAction::EnableObjectSelector, "Q");
-  _add_menu_item(model, MenuAction::EnableRectangle, "R");
-  _add_menu_item(model, MenuAction::EnableEllipse, "T");
-  _add_menu_item(model, MenuAction::EnablePoint, "Y");
+  _add_menu_item(model, MenuAction::EnableStamp, ImGuiKey_S);
+  _add_menu_item(model, MenuAction::EnableBucket, ImGuiKey_B);
+  _add_menu_item(model, MenuAction::EnableEraser, ImGuiKey_E);
+  _add_menu_item(model, MenuAction::EnableObjectSelector, ImGuiKey_Q);
+  _add_menu_item(model, MenuAction::EnableRectangle, ImGuiKey_R);
+  _add_menu_item(model, MenuAction::EnableEllipse, ImGuiKey_T);
+  _add_menu_item(model, MenuAction::EnablePoint, ImGuiKey_Y);
 
   _add_menu_item(model,
                  MenuAction::OpenComponentEditor,
-                 TACTILE_PRIMARY_MOD "+Shift+C",
+                 ImGuiMod_Super | ImGuiMod_Shift | ImGuiKey_C,
                  &is_map_document_active);
 
-  _add_menu_item(model, MenuAction::OpenSettings, TACTILE_PRIMARY_MOD "+,");
+  _add_menu_item(model, MenuAction::OpenSettings, ImGuiMod_Super | ImGuiKey_Comma);
 }
 
 void _init_view_menu(Model& model)
 {
-  _add_menu_item(model, MenuAction::CenterViewport, "Shift+Space", &has_active_document);
-  _add_menu_item(model, MenuAction::ToggleGrid, TACTILE_PRIMARY_MOD "+G");
+  _add_menu_item(model,
+                 MenuAction::CenterViewport,
+                 ImGuiMod_Shift | ImGuiKey_Space,
+                 &has_active_document);
+  _add_menu_item(model, MenuAction::ToggleGrid, ImGuiMod_Super | ImGuiKey_G);
 
   _add_menu_item(model,
                  MenuAction::IncreaseZoom,
-                 TACTILE_PRIMARY_MOD "+Plus",
+                 ImGuiMod_Super | ImGuiKey_0,
                  &has_active_document);
   _add_menu_item(model,
                  MenuAction::DecreaseZoom,
-                 TACTILE_PRIMARY_MOD "+Minus",
+                 ImGuiMod_Super | ImGuiKey_9,
                  &is_viewport_zoom_out_possible);
   _add_menu_item(model, MenuAction::ResetZoom, &has_active_document);
 
   _add_menu_item(model,
                  MenuAction::IncreaseFontSize,
-                 TACTILE_PRIMARY_MOD "+Shift+Plus",
+                 ImGuiMod_Super | ImGuiMod_Shift | ImGuiKey_0,
                  &can_increase_font_size);
   _add_menu_item(model,
                  MenuAction::DecreaseFontSize,
-                 TACTILE_PRIMARY_MOD "+Shift+Minus",
+                 ImGuiMod_Super | ImGuiMod_Shift | ImGuiKey_9,
                  &can_decrease_font_size);
   _add_menu_item(model, MenuAction::ResetFontSize, &can_reset_font_size);
 
   _add_menu_item(model,
                  MenuAction::PanUp,
-                 TACTILE_PRIMARY_MOD "+Shift+Up",
+                 ImGuiMod_Super | ImGuiMod_Shift | ImGuiKey_UpArrow,
                  &has_active_document);
   _add_menu_item(model,
                  MenuAction::PanDown,
-                 TACTILE_PRIMARY_MOD "+Shift+Down",
+                 ImGuiMod_Super | ImGuiMod_Shift | ImGuiKey_DownArrow,
                  &has_active_document);
   _add_menu_item(model,
                  MenuAction::PanLeft,
-                 TACTILE_PRIMARY_MOD "+Shift+Left",
+                 ImGuiMod_Super | ImGuiMod_Shift | ImGuiKey_LeftArrow,
                  &has_active_document);
   _add_menu_item(model,
                  MenuAction::PanRight,
-                 TACTILE_PRIMARY_MOD "+Shift+Right",
+                 ImGuiMod_Super | ImGuiMod_Shift | ImGuiKey_RightArrow,
                  &has_active_document);
 
-  _add_menu_item(model, MenuAction::HighlightLayer, "H", &is_map_document_active);
-  _add_menu_item(model, MenuAction::ToggleUi, "Tab", &has_active_document);
+  _add_menu_item(model, MenuAction::HighlightLayer, ImGuiKey_H, &is_map_document_active);
+  _add_menu_item(model, MenuAction::ToggleUi, ImGuiKey_Tab, &has_active_document);
 }
 
 void _init_map_menu(Model& model)
@@ -189,24 +240,24 @@ void _init_map_menu(Model& model)
   _add_menu_item(model, MenuAction::InspectMap, &is_map_document_active);
   _add_menu_item(model,
                  MenuAction::CreateTileset,
-                 TACTILE_PRIMARY_MOD "+T",
+                 ImGuiMod_Super | ImGuiKey_T,
                  &is_map_document_active);
 
   _add_menu_item(model,
                  MenuAction::AddRow,
-                 TACTILE_SECONDARY_MOD "+R",
+                 ImGuiMod_Alt | ImGuiKey_R,
                  &is_map_document_active);
   _add_menu_item(model,
                  MenuAction::AddColumn,
-                 TACTILE_SECONDARY_MOD "+C",
+                 ImGuiMod_Alt | ImGuiKey_C,
                  &is_map_document_active);
   _add_menu_item(model,
                  MenuAction::RemoveRow,
-                 TACTILE_SECONDARY_MOD "+Shift+R",
+                 ImGuiMod_Alt | ImGuiMod_Shift | ImGuiKey_R,
                  &can_tile_row_be_removed);
   _add_menu_item(model,
                  MenuAction::RemoveColumn,
-                 TACTILE_SECONDARY_MOD "+Shift+C",
+                 ImGuiMod_Alt | ImGuiMod_Shift | ImGuiKey_C,
                  &can_tile_column_be_removed);
 
   _add_menu_item(model, MenuAction::FixInvalidTiles);
@@ -239,11 +290,18 @@ void init_menus(Model& model)
   _init_help_menu(model);
 }
 
-void update_menu_items(Model& model)
+void update_menu_items(Model& model, Dispatcher& dispatcher)
 {
-  for (auto [item_entity, item, callbacks]: model.each<MenuItem, MenuItemCallbacks>()) {
-    if (callbacks.enabled_fn) {
-      item.enabled = callbacks.enabled_fn(model);
+  for (auto [item_entity, item]: model.each<MenuItem>()) {
+    if (const auto* callbacks = model.try_get<MenuItemCallbacks>(item_entity)) {
+      if (callbacks->enabled_fn) {
+        item.enabled = callbacks->enabled_fn(model);
+      }
+    }
+
+    if (item.enabled && item.shortcut.has_value() &&
+        ImGui::Shortcut(*item.shortcut, 0, ImGuiInputFlags_RouteGlobalLow)) {
+      dispatcher.enqueue<MenuActionEvent>(item.action);
     }
   }
 }

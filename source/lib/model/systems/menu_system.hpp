@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "common/type/dispatcher.hpp"
 #include "components/language.hpp"
 #include "components/menu.hpp"
 #include "model/model.hpp"
@@ -27,7 +28,7 @@ namespace tactile::sys {
 
 void init_menus(Model& model);
 
-void update_menu_items(Model& model);
+void update_menu_items(Model& model, Dispatcher& dispatcher);
 
 void translate_menus(Model& model, const Strings& strings);
 

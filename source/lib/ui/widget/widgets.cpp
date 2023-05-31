@@ -129,7 +129,7 @@ void push_menu_item(const Model& model, const MenuAction action, Dispatcher& dis
 {
   const auto& menu_item = sys::get_menu_item(model, action);
   if (ImGui::MenuItem(menu_item.label.c_str(),
-                      !menu_item.shortcut.empty() ? menu_item.shortcut.c_str() : nullptr,
+                      menu_item.shortcut_label.c_str(),
                       menu_item.checked,
                       menu_item.enabled)) {
     dispatcher.enqueue<MenuActionEvent>(action);
