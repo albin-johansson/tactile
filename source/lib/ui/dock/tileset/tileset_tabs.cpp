@@ -114,7 +114,7 @@ void show_tileset_tabs(const Model& model, Dispatcher& dispatcher)
 
       if (ImGui::IsItemClicked(ImGuiMouseButton_Left) ||
           ImGui::IsItemClicked(ImGuiMouseButton_Right) || ImGui::IsItemActivated()) {
-        dispatcher.enqueue<SelectTilesetEvent>(attached_tileset_entity);
+        // TODO dispatcher.enqueue<SelectTilesetEvent>(attached_tileset_entity);
       }
       else {
         _push_context_menu(model,
