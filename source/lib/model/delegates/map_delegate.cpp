@@ -21,7 +21,16 @@
 
 #include <fmt/std.h>
 
-#include "cmd/map/all.hpp"
+#include "cmd/map/add_column.hpp"
+#include "cmd/map/add_row.hpp"
+#include "cmd/map/fix_map_tiles.hpp"
+#include "cmd/map/remove_column.hpp"
+#include "cmd/map/remove_row.hpp"
+#include "cmd/map/resize_map.hpp"
+#include "cmd/map/set_tile_format_compression.hpp"
+#include "cmd/map/set_tile_format_encoding.hpp"
+#include "cmd/map/set_zlib_compression_level.hpp"
+#include "cmd/map/set_zstd_compression_level.hpp"
 #include "components/document.hpp"
 #include "components/map.hpp"
 #include "io/ir/godot/godot_converter.hpp"
