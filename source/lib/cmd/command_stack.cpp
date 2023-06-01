@@ -32,12 +32,12 @@ CommandStack::CommandStack(const usize capacity)
 void CommandStack::clear()
 {
   mStack.clear();
-  mIndex.reset();
+  mCurrentIndex.reset();
 }
 
 void CommandStack::mark_as_clean()
 {
-  mCleanIndex = mIndex;
+  mCleanIndex = mCurrentIndex;
 }
 
 void CommandStack::reset_clean()
@@ -49,14 +49,13 @@ void CommandStack::undo()
 {
   TACTILE_ASSERT(can_undo());
 
-  const auto& cmd = mStack.at(mIndex.value());
-  cmd->undo();
+  mStack.at(mCurrentIndex.value())->undo();
 
-  if (mIndex == 0) {
-    mIndex.reset();
+  if (mCurrentIndex == 0) {
+    mCurrentIndex.reset();
   }
   else {
-    mIndex = mIndex.value() - 1;
+    mCurrentIndex = *mCurrentIndex - 1;
   }
 }
 
@@ -64,12 +63,10 @@ void CommandStack::redo()
 {
   TACTILE_ASSERT(can_redo());
 
-  const auto index = mIndex ? *mIndex + 1 : 0;
+  const auto index = _get_next_index();
 
-  const auto& cmd = mStack.at(index);
-  cmd->redo();
-
-  mIndex = index;
+  mStack.at(index)->redo();
+  mCurrentIndex = index;
 }
 
 void CommandStack::set_capacity(const usize capacity)
@@ -79,53 +76,62 @@ void CommandStack::set_capacity(const usize capacity)
   const auto count = size();
   if (count > mCapacity) {
     const auto n = count - mCapacity;
-    invoke_n(n, [this] { remove_oldest_command(); });
+    invoke_n(n, [this] { _remove_oldest_command(); });
   }
 }
 
 auto CommandStack::is_clean() const -> bool
 {
-  return mStack.empty() || (mCleanIndex == mIndex);
+  return mStack.empty() || (mCleanIndex == mCurrentIndex);
 }
 
 auto CommandStack::can_undo() const -> bool
 {
-  return !mStack.empty() && mIndex.has_value();
+  return !mStack.empty() && mCurrentIndex.has_value();
 }
 
 auto CommandStack::can_redo() const -> bool
 {
-  return (!mStack.empty() && !mIndex) || (!mStack.empty() && mIndex < mStack.size() - 1);
+  return (!mStack.empty() && !mCurrentIndex.has_value()) ||
+         (!mStack.empty() && mCurrentIndex < mStack.size() - 1);
 }
 
 auto CommandStack::get_undo_text() const -> String
 {
   TACTILE_ASSERT(can_undo());
-
-  const auto& cmd = mStack.at(mIndex.value());
-  return cmd->get_name();
+  return mStack.at(mCurrentIndex.value())->get_name();
 }
 
 auto CommandStack::get_redo_text() const -> String
 {
   TACTILE_ASSERT(can_redo());
-
-  const auto& cmd = mStack.at(mIndex ? *mIndex + 1 : 0);
-  return cmd->get_name();
+  return mStack.at(_get_next_index())->get_name();
 }
 
-void CommandStack::remove_oldest_command()
+void CommandStack::_store(Unique<Command> cmd)
+{
+  if (size() == capacity()) {
+    _remove_oldest_command();
+  }
+
+  _remove_commands_after_current_index();
+
+  mCurrentIndex = _get_next_index();
+  mStack.push_back(std::move(cmd));
+}
+
+void CommandStack::_remove_oldest_command()
 {
   TACTILE_ASSERT(!mStack.empty());
 
   mStack.front()->dispose();
   mStack.pop_front();
 
-  if (mIndex) {
-    mIndex = *mIndex - 1;
+  if (mCurrentIndex.has_value()) {
+    mCurrentIndex = *mCurrentIndex - 1;
   }
 
-  if (mCleanIndex) {
+  if (mCleanIndex.has_value()) {
     if (mCleanIndex == 0) {
       mCleanIndex.reset();
     }
@@ -135,21 +141,26 @@ void CommandStack::remove_oldest_command()
   }
 }
 
-void CommandStack::remove_commands_after_current_index()
+void CommandStack::_remove_commands_after_current_index()
 {
-  const auto startIndex = mIndex ? *mIndex + 1 : 0;
-  const auto size = mStack.size();
+  const auto start_index = _get_next_index();
 
-  /* If we have a clean index, and there are undone commands when another
-     command is pushed, then the clean index becomes invalidated */
-  if (mCleanIndex >= startIndex) {
+  // If we have a clean index and there are undone commands when another
+  // command is pushed, then the clean index becomes invalidated.
+  if (mCleanIndex >= start_index) {
     mCleanIndex.reset();
   }
 
-  for (auto index = startIndex; index < size; ++index) {
+  const auto command_count = mStack.size();
+  for (auto index = start_index; index < command_count; ++index) {
     mStack.back()->dispose();
     mStack.pop_back();
   }
+}
+
+auto CommandStack::_get_next_index() const -> usize
+{
+  return mCurrentIndex.has_value() ? (*mCurrentIndex + 1) : 0;
 }
 
 }  // namespace tactile
