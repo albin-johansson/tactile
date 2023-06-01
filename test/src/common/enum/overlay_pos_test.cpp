@@ -25,7 +25,7 @@
 
 #include <settings.pb.h>
 
-namespace tactile::test {
+using namespace tactile;
 
 TEST_SUITE("Overlay position enum")
 {
@@ -38,5 +38,3 @@ TEST_SUITE("Overlay position enum")
     REQUIRE(std::to_underlying(OverlayPos::BottomLeft) == proto::OVERLAY_POS_BOTTOM_LEFT);
   }
 }
-
-}  // namespace tactile::test

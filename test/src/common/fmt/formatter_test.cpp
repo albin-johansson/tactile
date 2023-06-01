@@ -29,7 +29,7 @@
 #include "common/fmt/tile_compression_formatter.hpp"
 #include "common/fmt/tile_encoding_formatter.hpp"
 
-namespace tactile::test {
+using namespace tactile;
 
 TEST_SUITE("Custom formatters")
 {
@@ -112,5 +112,3 @@ TEST_SUITE("Custom formatters")
     });
   }
 }
-
-}  // namespace tactile::test

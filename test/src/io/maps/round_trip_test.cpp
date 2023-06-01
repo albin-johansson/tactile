@@ -38,7 +38,8 @@
 
 using namespace std::string_literals;
 
-namespace tactile::test {
+using namespace tactile;
+
 namespace {
 
 constexpr usize kRowCount = 15;
@@ -519,5 +520,3 @@ TEST_SUITE("Parser round trip")
     _validate_layers(source, restored);
   }
 }
-
-}  // namespace tactile::test

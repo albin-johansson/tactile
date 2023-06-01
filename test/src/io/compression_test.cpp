@@ -6,7 +6,8 @@
 
 #include "common/util/random.hpp"
 
-namespace tactile::test {
+using namespace tactile;
+
 namespace {
 
 [[nodiscard]] auto _make_random_bytes() -> ByteStream
@@ -84,5 +85,3 @@ TEST_SUITE("Compression")
     CHECK(is_valid_zstd_compression_level(10));
   }
 }
-
-}  // namespace tactile::test

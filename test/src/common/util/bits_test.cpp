@@ -21,9 +21,8 @@
 
 #include <doctest/doctest.h>
 
-#include "common/type/array.hpp"
+using namespace tactile;
 
-namespace tactile::test {
 namespace {
 
 template <std::integral T>
@@ -59,5 +58,3 @@ TEST_SUITE("Bit utilities")
     REQUIRE(0x11 == _nth_byte(little, 3));
   }
 }
-
-}  // namespace tactile::test

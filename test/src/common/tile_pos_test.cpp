@@ -22,7 +22,7 @@
 
 #include <doctest/doctest.h>
 
-namespace tactile::test {
+using namespace tactile;
 
 TEST_SUITE("TilePos")
 {
@@ -209,5 +209,3 @@ TEST_SUITE("TilePos")
     REQUIRE(other != pos);
   }
 }
-
-}  // namespace tactile::test

@@ -23,7 +23,7 @@
 
 #include "common/type/array.hpp"
 
-namespace tactile::test {
+using namespace tactile;
 
 TEST_SUITE("Buffers")
 {
@@ -86,5 +86,3 @@ TEST_SUITE("Buffers")
     REQUIRE("abcdef" == str);
   }
 }
-
-}  // namespace tactile::test

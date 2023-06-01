@@ -21,7 +21,7 @@
 
 #include <doctest/doctest.h>
 
-namespace tactile::test {
+using namespace tactile;
 
 TEST_SUITE("TileMatrix")
 {
@@ -62,5 +62,3 @@ TEST_SUITE("TileMatrix")
     REQUIRE(7u == matrix.at(0).size());
   }
 }
-
-}  // namespace tactile::test

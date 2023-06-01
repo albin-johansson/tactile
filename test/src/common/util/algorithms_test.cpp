@@ -25,7 +25,8 @@
 
 #include "common/primitives.hpp"
 
-namespace tactile::test {
+using namespace tactile;
+
 namespace {
 
 constexpr auto kMaxU32 = std::numeric_limits<uint32>::max();
@@ -44,5 +45,3 @@ TEST_SUITE("Algorithm utilities")
     REQUIRE(46u == udiff(28u, 74u));
   }
 }
-
-}  // namespace tactile::test

@@ -23,7 +23,7 @@
 
 #include "common/debug/panic.hpp"
 
-namespace tactile::test {
+using namespace tactile;
 
 TEST_SUITE("Save formats")
 {
@@ -143,5 +143,3 @@ TEST_SUITE("Save formats")
     CHECK(!parse_attr_type("int5").has_value());
   }
 }
-
-}  // namespace tactile::test

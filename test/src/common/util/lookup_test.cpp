@@ -21,16 +21,16 @@
 
 #include <doctest/doctest.h>
 
+#include "common/attribute.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/string.hpp"
 #include "common/type/string_map.hpp"
 #include "common/type/tree_map.hpp"
-#include "common/attribute.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
 
-namespace tactile::test {
+using namespace tactile;
 
 TEST_SUITE("Lookup")
 {
@@ -120,5 +120,3 @@ TEST_SUITE("Lookup")
     REQUIRE(!has_key(map, "c"sv));
   }
 }
-
-}  // namespace tactile::test

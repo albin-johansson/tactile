@@ -24,7 +24,7 @@
 #include "common/predef.hpp"
 #include "common/util/env.hpp"
 
-namespace tactile::test {
+using namespace tactile;
 
 TEST_SUITE("Filesystem")
 {
@@ -86,5 +86,3 @@ TEST_SUITE("Filesystem")
 #endif  // TACTILE_OS_WINDOWS
   }
 }
-
-}  // namespace tactile::test

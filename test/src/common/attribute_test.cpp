@@ -25,7 +25,7 @@
 
 using namespace std::string_literals;
 
-namespace tactile::test {
+using namespace tactile;
 
 TEST_SUITE("Attribute")
 {
@@ -399,5 +399,3 @@ TEST_SUITE("Attribute")
     REQUIRE(f4.is_any_vector());
   }
 }
-
-}  // namespace tactile::test

@@ -27,7 +27,8 @@
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/parse_map.hpp"
 
-namespace tactile::test {
+using namespace tactile;
+
 namespace {
 
 inline const TileMatrix kTestTiles {
@@ -117,5 +118,3 @@ TEST_SUITE("Tactile YAML format tile compression")
     _create_and_validate_yaml_map("zstd_compression_test.yaml", _create_zstd_tile_format);
   }
 }
-
-}  // namespace tactile::test

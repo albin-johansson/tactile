@@ -25,7 +25,7 @@
 
 #include <settings.pb.h>
 
-namespace tactile::test {
+using namespace tactile;
 
 TEST_SUITE("Theme enum")
 {
@@ -50,5 +50,3 @@ TEST_SUITE("Theme enum")
     REQUIRE(std::to_underlying(Theme::Rose) == proto::THEME_ROSE);
   }
 }
-
-}  // namespace tactile::test

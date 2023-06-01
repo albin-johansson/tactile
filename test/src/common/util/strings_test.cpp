@@ -21,7 +21,7 @@
 
 #include <doctest/doctest.h>
 
-namespace tactile::test {
+using namespace tactile;
 
 TEST_SUITE("String utilities")
 {
@@ -66,5 +66,3 @@ TEST_SUITE("String utilities")
     }
   }
 }
-
-}  // namespace tactile::test

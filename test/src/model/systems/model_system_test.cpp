@@ -30,7 +30,7 @@
 #include "components/tool.hpp"
 #include "model/settings.hpp"
 
-namespace tactile::test {
+using namespace tactile;
 
 TEST_SUITE("Model system")
 {
@@ -50,5 +50,3 @@ TEST_SUITE("Model system")
     CHECK(model.has<MenuItems>());
   }
 }
-
-}  // namespace tactile::test

@@ -21,7 +21,8 @@
 
 #include "io/map/parse/parse_map.hpp"
 
-namespace tactile::test {
+using namespace tactile;
+
 namespace {
 
 void _check_parsed_properties(const char* path)
@@ -59,5 +60,3 @@ TEST_SUITE("Tiled format property special cases")
     _check_parsed_properties("resources/xml/properties.tmx");
   }
 }
-
-}  // namespace tactile::test

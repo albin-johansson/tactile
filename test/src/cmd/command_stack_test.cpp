@@ -21,9 +21,8 @@
 
 #include <doctest/doctest.h>
 
-#include "model/settings.hpp"
+using namespace tactile;
 
-namespace tactile::test {
 namespace {
 
 struct FooCmd final : Command {
@@ -282,5 +281,3 @@ TEST_SUITE("CommandStack")
     REQUIRE(stack.get_undo_text() == "BarCmd");
   }
 }
-
-}  // namespace tactile::test

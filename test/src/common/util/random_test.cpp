@@ -26,7 +26,7 @@
 
 #include "common/type/array.hpp"
 
-namespace tactile::test {
+using namespace tactile;
 
 TEST_SUITE("Random")
 {
@@ -69,5 +69,3 @@ TEST_SUITE("Random")
     REQUIRE(value <= 1.0f);
   }
 }
-
-}  // namespace tactile::test

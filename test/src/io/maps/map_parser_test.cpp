@@ -30,7 +30,8 @@
 #define XML_DIR "resources/xml/"
 #define XML_ERR "resources/xml/errors/"
 
-namespace tactile::test {
+using namespace tactile;
+
 namespace {
 
 using PE = ParseError;
@@ -382,5 +383,3 @@ TEST_SUITE("Map parser")
                            PE::PlainEncodingWithCompression);
   }
 }
-
-}  // namespace tactile::test

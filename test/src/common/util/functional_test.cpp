@@ -21,7 +21,7 @@
 
 #include <doctest/doctest.h>
 
-namespace tactile::test {
+using namespace tactile;
 
 TEST_SUITE("Functional")
 {
@@ -49,5 +49,3 @@ TEST_SUITE("Functional")
     }
   }
 }
-
-}  // namespace tactile::test

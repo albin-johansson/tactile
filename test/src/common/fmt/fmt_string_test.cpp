@@ -26,7 +26,7 @@
 
 using namespace std::string_view_literals;
 
-namespace tactile::test {
+using namespace tactile;
 
 TEST_SUITE("FmtString")
 {
@@ -98,5 +98,3 @@ TEST_SUITE("FmtString")
     REQUIRE(6u == str.capacity());
   }
 }
-
-}  // namespace tactile::test

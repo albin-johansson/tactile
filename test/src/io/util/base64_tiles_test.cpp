@@ -21,7 +21,7 @@
 
 #include <doctest/doctest.h>
 
-namespace tactile::test {
+using namespace tactile;
 
 TEST_SUITE("Base64 tiles")
 {
@@ -37,5 +37,3 @@ TEST_SUITE("Base64 tiles")
     REQUIRE(source == decoded);
   }
 }
-
-}  // namespace tactile::test

@@ -21,11 +21,15 @@
 
 #include <doctest/doctest.h>
 
-namespace tactile::test {
+using namespace tactile;
 
-inline constexpr Color lime_green {0x32, 0xCD, 0x32};
-inline constexpr Color dark_blue {0, 0, 0x8B};
-inline constexpr Color hot_pink {0xFF, 0x69, 0xB4};
+namespace {
+
+inline constexpr Color kLimeGreen {0x32, 0xCD, 0x32};
+inline constexpr Color kDarkBlue {0, 0, 0x8B};
+inline constexpr Color kHotPink {0xFF, 0x69, 0xB4};
+
+}  // namespace
 
 TEST_SUITE("Color")
 {
@@ -131,9 +135,9 @@ TEST_SUITE("Color")
     REQUIRE(0.0f == kBlack.get_luminance());
 
     // Based on https://planetcalc.com/7778/
-    REQUIRE(0.4457104f == doctest::Approx {lime_green.get_luminance()});
-    REQUIRE(0.0186408f == doctest::Approx {dark_blue.get_luminance()});
-    REQUIRE(0.3465843f == doctest::Approx {hot_pink.get_luminance()});
+    REQUIRE(0.4457104f == doctest::Approx {kLimeGreen.get_luminance()});
+    REQUIRE(0.0186408f == doctest::Approx {kDarkBlue.get_luminance()});
+    REQUIRE(0.3465843f == doctest::Approx {kHotPink.get_luminance()});
   }
 
   TEST_CASE("is_dark")
@@ -176,5 +180,3 @@ TEST_SUITE("Color")
     REQUIRE(color.norm_alpha() == rgba.at(3));
   }
 }
-
-}  // namespace tactile::test
