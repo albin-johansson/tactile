@@ -77,6 +77,8 @@ void move_layer_up(Model& model,
                    const Entity root_layer_entity,
                    const Entity layer_entity)
 {
+  TACTILE_ASSERT(is_group_layer_entity(model, root_layer_entity));
+  TACTILE_ASSERT(is_layer_entity(model, layer_entity));
   TACTILE_ASSERT(can_move_layer_up(model,  //
                                    model.get<GroupLayer>(root_layer_entity),
                                    layer_entity));
@@ -87,6 +89,8 @@ void move_layer_down(Model& model,
                      const Entity root_layer_entity,
                      const Entity layer_entity)
 {
+  TACTILE_ASSERT(is_group_layer_entity(model, root_layer_entity));
+  TACTILE_ASSERT(is_layer_entity(model, layer_entity));
   TACTILE_ASSERT(
       can_move_layer_down(model, model.get<GroupLayer>(root_layer_entity), layer_entity));
   _offset_layer(model, root_layer_entity, layer_entity, 1);
@@ -117,6 +121,7 @@ auto can_move_layer_up(const Model& model,
                        const GroupLayer& root,
                        const Entity layer_entity) -> bool
 {
+  TACTILE_ASSERT(is_layer_entity(model, layer_entity));
   return get_local_layer_index(model, root, layer_entity) != 0;
 }
 
@@ -124,6 +129,7 @@ auto can_move_layer_down(const Model& model,
                          const GroupLayer& root,
                          const Entity layer_entity) -> bool
 {
+  TACTILE_ASSERT(is_layer_entity(model, layer_entity));
   const auto local_index = get_local_layer_index(model, root, layer_entity);
   const auto sibling_count = _get_sibling_count(model, root, layer_entity);
   return local_index < sibling_count;

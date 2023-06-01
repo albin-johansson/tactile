@@ -27,6 +27,7 @@
 #include "model/event/command_events.hpp"
 #include "model/event/file_events.hpp"
 #include "model/event/font_events.hpp"
+#include "model/event/layer_events.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/event/setting_events.hpp"
@@ -95,6 +96,18 @@ class App final : public AppDelegate {
   void _on_set_tile_format_compression(const SetTileFormatCompressionEvent& event);
   void _on_set_zlib_compression_level(const SetZlibCompressionLevelEvent& event);
   void _on_set_zstd_compression_level(const SetZstdCompressionLevelEvent& event);
+
+  // Layer events
+  void _on_create_layer(const CreateLayerEvent& event);
+  void _on_remove_layer(const RemoveLayerEvent& event);
+  void _on_rename_layer(const RenameLayerEvent& event);
+  void _on_duplicate_layer(const DuplicateLayerEvent& event);
+  void _on_select_layer(const SelectLayerEvent& event);
+  void _on_move_layer_up(const MoveLayerUpEvent& event);
+  void _on_move_layer_down(const MoveLayerDownEvent& event);
+  void _on_set_layer_opacity(const SetLayerOpacityEvent& event);
+  void _on_set_layer_visible(const SetLayerVisibleEvent& event);
+  void _on_show_layer_rename_dialog(const ShowLayerRenameDialogEvent& event);
 
   // Font events
   void _on_reload_fonts(const ReloadFontsEvent& event);

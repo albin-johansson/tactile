@@ -26,7 +26,7 @@
 namespace tactile {
 
 /// Event for creating a new layer.
-struct AddLayerEvent final {
+struct CreateLayerEvent final {
   LayerType type {};
 };
 
@@ -38,6 +38,12 @@ struct RemoveLayerEvent final {
 /// Event for duplicating an existing layer.
 struct DuplicateLayerEvent final {
   Entity layer {kNullEntity};
+};
+
+/// Event for changing the name of a layer.
+struct RenameLayerEvent final {
+  Entity layer {kNullEntity};
+  String name;
 };
 
 /// Event for setting the active layer.
@@ -68,14 +74,8 @@ struct SetLayerVisibleEvent final {
 };
 
 /// Event for opening the dialog to change a layer name.
-struct OpenRenameLayerDialogEvent final {
+struct ShowLayerRenameDialogEvent final {
   Entity layer {kNullEntity};
-};
-
-/// Event for changing the name of a layer.
-struct RenameLayerEvent final {
-  Entity layer {kNullEntity};
-  String name;
 };
 
 }  // namespace tactile

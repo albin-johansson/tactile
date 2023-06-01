@@ -323,11 +323,10 @@ void remove_layer_from_map(Model& model, Map& map, const Entity layer_entity)
     map.active_layer = kNullEntity;
   }
 
-  recurse_layers(model, map.root_layer, [&](const Entity child_layer_entity) {
-    if (auto* child_layer_group = model.try_get<GroupLayer>(child_layer_entity)) {
-      std::erase(child_layer_group->children, layer_entity);
-    }
-  });
+  const auto parent_layer_entity = get_parent_layer(model, map.root_layer, layer_entity);
+
+  auto& parent_layer = model.get<GroupLayer>(parent_layer_entity);
+  std::erase(parent_layer.children, layer_entity);
 }
 
 auto attach_tileset_to_map(Model& model,

@@ -29,6 +29,7 @@
 
 #include "common/fmt/entity_formatter.hpp"
 #include "common/fmt/lang_formatter.hpp"
+#include "common/fmt/layer_type_formatter.hpp"
 #include "common/fmt/menu_action_formatter.hpp"
 #include "common/fmt/theme_formatter.hpp"
 #include "common/fmt/tile_compression_formatter.hpp"
@@ -45,6 +46,7 @@
 #include "model/delegates/file_delegate.hpp"
 #include "model/delegates/font_delegate.hpp"
 #include "model/delegates/input_delegate.hpp"
+#include "model/delegates/layer_delegate.hpp"
 #include "model/delegates/map_delegate.hpp"
 #include "model/delegates/menu_delegate.hpp"
 #include "model/delegates/settings_delegate.hpp"
@@ -128,6 +130,18 @@ void App::_subscribe_to_events()
   mDispatcher.sink<SetTileFormatCompressionEvent>().connect<&App::_on_set_tile_format_compression>(this);
   mDispatcher.sink<SetZlibCompressionLevelEvent>().connect<&App::_on_set_zlib_compression_level>(this);
   mDispatcher.sink<SetZstdCompressionLevelEvent>().connect<&App::_on_set_zstd_compression_level>(this);
+
+  // Layer events
+  mDispatcher.sink<CreateLayerEvent>().connect<&App::_on_create_layer>(this);
+  mDispatcher.sink<RemoveLayerEvent>().connect<&App::_on_remove_layer>(this);
+  mDispatcher.sink<RenameLayerEvent>().connect<&App::_on_rename_layer>(this);
+  mDispatcher.sink<DuplicateLayerEvent>().connect<&App::_on_duplicate_layer>(this);
+  mDispatcher.sink<SelectLayerEvent>().connect<&App::_on_select_layer>(this);
+  mDispatcher.sink<MoveLayerUpEvent>().connect<&App::_on_move_layer_up>(this);
+  mDispatcher.sink<MoveLayerDownEvent>().connect<&App::_on_move_layer_down>(this);
+  mDispatcher.sink<SetLayerOpacityEvent>().connect<&App::_on_set_layer_opacity>(this);
+  mDispatcher.sink<SetLayerVisibleEvent>().connect<&App::_on_set_layer_visible>(this);
+  mDispatcher.sink<ShowLayerRenameDialogEvent>().connect<&App::_on_show_layer_rename_dialog>(this);
 
   // Font events
   mDispatcher.sink<ReloadFontsEvent>().connect<&App::_on_reload_fonts>(this);
@@ -448,6 +462,70 @@ void App::_on_set_zstd_compression_level(const SetZstdCompressionLevelEvent& eve
 {
   spdlog::trace("[SetZstdCompressionLevelEvent] level: {}", event.level);
   on_set_zstd_compression_level(get_global_model(), event);
+}
+
+void App::_on_create_layer(const CreateLayerEvent& event)
+{
+  spdlog::trace("[CreateLayerEvent] type: {}", event.type);
+  on_create_layer(get_global_model(), event);
+}
+
+void App::_on_remove_layer(const RemoveLayerEvent& event)
+{
+  spdlog::trace("[RemoveLayerEvent] layer: {}", event.layer);
+  on_remove_layer(get_global_model(), event);
+}
+
+void App::_on_rename_layer(const RenameLayerEvent& event)
+{
+  spdlog::trace("[RenameLayerEvent] layer: {}, name: {}", event.layer, event.name);
+  on_rename_layer(get_global_model(), event);
+}
+
+void App::_on_duplicate_layer(const DuplicateLayerEvent& event)
+{
+  spdlog::trace("[DuplicateLayerEvent] layer: {}", event.layer);
+  on_duplicate_layer(get_global_model(), event);
+}
+
+void App::_on_select_layer(const SelectLayerEvent& event)
+{
+  spdlog::trace("[SelectLayerEvent] layer: {}", event.layer);
+  on_select_layer(get_global_model(), event);
+}
+
+void App::_on_move_layer_up(const MoveLayerUpEvent& event)
+{
+  spdlog::trace("[MoveLayerUpEvent] layer: {}", event.layer);
+  on_move_layer_up(get_global_model(), event);
+}
+
+void App::_on_move_layer_down(const MoveLayerDownEvent& event)
+{
+  spdlog::trace("[MoveLayerDownEvent] layer: {}", event.layer);
+  on_move_layer_down(get_global_model(), event);
+}
+
+void App::_on_set_layer_opacity(const SetLayerOpacityEvent& event)
+{
+  spdlog::trace("[SetLayerOpacityEvent] layer: {}, opacity: {:.2f}",
+                event.layer,
+                event.opacity);
+  on_set_layer_opacity(get_global_model(), event);
+}
+
+void App::_on_set_layer_visible(const SetLayerVisibleEvent& event)
+{
+  spdlog::trace("[SetLayerVisibleEvent] layer: {}, visible: {}",
+                event.layer,
+                event.visible);
+  on_set_layer_visible(get_global_model(), event);
+}
+
+void App::_on_show_layer_rename_dialog(const ShowLayerRenameDialogEvent& event)
+{
+  spdlog::trace("[ShowLayerRenameDialogEvent] layer: {}", event.layer);
+  ui::show_rename_layer_dialog(event.layer);
 }
 
 void App::_on_reload_fonts(const ReloadFontsEvent&)

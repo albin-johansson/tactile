@@ -17,35 +17,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "add_layer_context_menu.hpp"
-
-#include <imgui.h>
+#pragma once
 
 #include "model/event/layer_events.hpp"
-#include "model/systems/language_system.hpp"
+#include "model/model.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-AddLayerContextMenu::AddLayerContextMenu()
-    : ContextMenu {"AddLayerContextMenu"}
-{
-}
+void on_create_layer(Model& model, const CreateLayerEvent& event);
 
-void AddLayerContextMenu::on_update(const Model& model, Dispatcher& dispatcher)
-{
-  const auto& strings = sys::get_current_language_strings(model);
+void on_remove_layer(Model& model, const RemoveLayerEvent& event);
 
-  if (ImGui::MenuItem(strings.action.tile_layer.c_str())) {
-    dispatcher.enqueue<CreateLayerEvent>(LayerType::TileLayer);
-  }
+void on_rename_layer(Model& model, const RenameLayerEvent& event);
 
-  if (ImGui::MenuItem(strings.action.object_layer.c_str())) {
-    dispatcher.enqueue<CreateLayerEvent>(LayerType::ObjectLayer);
-  }
+void on_duplicate_layer(Model& model, const DuplicateLayerEvent& event);
 
-  if (ImGui::MenuItem(strings.action.group_layer.c_str())) {
-    dispatcher.enqueue<CreateLayerEvent>(LayerType::GroupLayer);
-  }
-}
+void on_select_layer(Model& model, const SelectLayerEvent& event);
 
-}  // namespace tactile::ui
+void on_move_layer_up(Model& model, const MoveLayerUpEvent& event);
+
+void on_move_layer_down(Model& model, const MoveLayerDownEvent& event);
+
+void on_set_layer_opacity(Model& model, const SetLayerOpacityEvent& event);
+
+void on_set_layer_visible(Model& model, const SetLayerVisibleEvent& event);
+
+}  // namespace tactile

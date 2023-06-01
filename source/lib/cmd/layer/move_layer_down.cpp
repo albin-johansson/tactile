@@ -19,6 +19,7 @@
 
 #include "move_layer_down.hpp"
 
+#include "components/map.hpp"
 #include "model/context.hpp"
 #include "model/systems/group_layer_system.hpp"
 #include "model/systems/language_system.hpp"
@@ -34,13 +35,15 @@ MoveLayerDown::MoveLayerDown(Entity map_entity, Entity layer_entity)
 void MoveLayerDown::undo()
 {
   auto& model = get_global_model();
-  sys::move_layer_up(model, mMapEntity, mLayerEntity);
+  const auto& map = model.get<Map>(mMapEntity);
+  sys::move_layer_up(model, map.root_layer, mLayerEntity);
 }
 
 void MoveLayerDown::redo()
 {
   auto& model = get_global_model();
-  sys::move_layer_down(model, mMapEntity, mLayerEntity);
+  const auto& map = model.get<Map>(mMapEntity);
+  sys::move_layer_down(model, map.root_layer, mLayerEntity);
 }
 
 auto MoveLayerDown::get_name() const -> String

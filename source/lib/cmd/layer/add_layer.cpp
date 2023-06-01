@@ -63,11 +63,12 @@ void AddLayer::redo()
     mLayerEntity = sys::add_new_layer_to_map(model, map_document.map, mLayerType);
   }
   else {
+    model.set_enabled(mLayerEntity, true);
+
     auto& map = model.get<Map>(map_document.map);
     sys::attach_layer_to_map(model, map, mLayerEntity, mParentLayerEntity);
   }
 
-  model.set_enabled(mLayerEntity, true);
   mLayerWasAdded = true;
 }
 
