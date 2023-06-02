@@ -35,6 +35,7 @@ TEST_SUITE("Custom formatters")
 {
   TEST_CASE("Entities")
   {
+    CHECK(fmt::format("{}", kNullEntity) == "NULL");
     CHECK(fmt::format("{}", Entity {}) == "0");
     CHECK(fmt::format("{}", Entity {42}) == "42");
   }
