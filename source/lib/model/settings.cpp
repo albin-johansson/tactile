@@ -25,6 +25,7 @@
 #include <spdlog/spdlog.h>
 
 #include "common/fmt/lang_formatter.hpp"
+#include "common/fmt/overlay_pos_formatter.hpp"
 #include "common/fmt/save_format_formatter.hpp"
 #include "common/fmt/theme_formatter.hpp"
 #include "ui/constants.hpp"
@@ -79,8 +80,7 @@ void Settings::print() const
   spdlog::debug("[Settings] Preferred tile height: {}", get_preferred_tile_size().y);
 
   spdlog::debug("[Settings] Preferred format: {}", get_preferred_format());
-  spdlog::debug("[Settings] Viewport overlay pos: {}",
-                magic_enum::enum_name(get_viewport_overlay_pos()));
+  spdlog::debug("[Settings] Viewport overlay pos: {}", get_viewport_overlay_pos());
   spdlog::debug("[Settings] Show FPS in viewport overlay: {}",
                 test_flag(SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT));
 

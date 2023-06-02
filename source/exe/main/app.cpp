@@ -24,13 +24,13 @@
 #include <fmt/std.h>
 #include <imgui.h>
 #include <imgui_internal.h>
-#include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
 #include "common/fmt/entity_formatter.hpp"
 #include "common/fmt/lang_formatter.hpp"
 #include "common/fmt/layer_type_formatter.hpp"
 #include "common/fmt/menu_action_formatter.hpp"
+#include "common/fmt/overlay_pos_formatter.hpp"
 #include "common/fmt/theme_formatter.hpp"
 #include "common/fmt/tile_compression_formatter.hpp"
 #include "common/fmt/tile_encoding_formatter.hpp"
@@ -583,7 +583,7 @@ void App::_on_negate_flag_setting(const NegateFlagSettingEvent& event)
 
 void App::_on_set_viewport_overlay_pos(const SetViewportOverlayPosEvent& event)
 {
-  spdlog::trace("[SetViewportOverlayPosEvent] pos: {}", magic_enum::enum_name(event.pos));
+  spdlog::trace("[SetViewportOverlayPosEvent] pos: {}", event.pos);
   on_set_viewport_overlay_pos(*mModel, event);
 }
 

@@ -26,6 +26,7 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
+#include "common/fmt/attribute_type_formatter.hpp"
 #include "common/util/filesystem.hpp"
 #include "common/util/functional.hpp"
 #include "io/export/tiled_info.hpp"
@@ -121,8 +122,7 @@ void _append_properties(XmlNode node, const ContextIR& context)
         break;
 
       default:
-        spdlog::warn("[IO] Cannot store '{}' property in an XML file",
-                     magic_enum::enum_name(type));
+        spdlog::warn("[IO] Cannot store '{}' property in an XML file", type);
         break;
     }
   }
