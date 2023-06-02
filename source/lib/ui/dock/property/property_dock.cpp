@@ -36,7 +36,6 @@
 #include "components/tile_format.hpp"
 #include "components/tileset.hpp"
 #include "io/compression.hpp"
-#include "model/context.hpp"
 #include "model/event/file_events.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/event/map_events.hpp"

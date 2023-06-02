@@ -21,27 +21,29 @@
 
 #include "common/util/functional.hpp"
 #include "components/map.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/map_system.hpp"
 
 namespace tactile::cmd {
 
-AddRow::AddRow(const Entity map_entity)
-    : mMapEntity {map_entity}
+AddRow::AddRow(Model* model, const Entity map_entity)
+    : mModel {model},
+      mMapEntity {map_entity}
 {
 }
 
 void AddRow::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
+
   auto& map = model.get<Map>(mMapEntity);
   invoke_n(mRowCount, [&] { sys::remove_row_from_map(model, map); });
 }
 
 void AddRow::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
+
   auto& map = model.get<Map>(mMapEntity);
   invoke_n(mRowCount, [&] { sys::add_row_to_map(model, map); });
 }
@@ -58,7 +60,7 @@ auto AddRow::merge_with(const Command* cmd) -> bool
 
 auto AddRow::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return mRowCount == 1 ? strings.cmd.add_row : strings.cmd.add_rows;
 }
 

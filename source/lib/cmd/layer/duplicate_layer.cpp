@@ -22,7 +22,6 @@
 #include "common/debug/assert.hpp"
 #include "components/document.hpp"
 #include "components/map.hpp"
-#include "model/context.hpp"
 #include "model/systems/group_layer_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/layer_system.hpp"
@@ -31,16 +30,20 @@
 
 namespace tactile::cmd {
 
-DuplicateLayer::DuplicateLayer(const Entity map_entity, const Entity layer_entity)
-    : mMapEntity {map_entity},
+DuplicateLayer::DuplicateLayer(Model* model,
+                               const Entity map_entity,
+                               const Entity layer_entity)
+    : mModel {model},
+      mMapEntity {map_entity},
       mSourceLayerEntity {layer_entity}
 {
-  TACTILE_ASSERT(sys::is_map_entity(get_global_model(), map_entity));
+  TACTILE_ASSERT(sys::is_map_entity(*mModel, mMapEntity));
+  TACTILE_ASSERT(sys::is_layer_entity(*mModel, mSourceLayerEntity));
 }
 
 void DuplicateLayer::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& map = model.get<Map>(mMapEntity);
   sys::remove_layer_from_map(model, map, mNewLayerEntity);
@@ -50,7 +53,7 @@ void DuplicateLayer::undo()
 
 void DuplicateLayer::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& map = model.get<Map>(mMapEntity);
   const auto& root_layer = model.get<GroupLayer>(map.root_layer);
@@ -72,7 +75,7 @@ void DuplicateLayer::redo()
 
 auto DuplicateLayer::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.duplicate_layer;
 }
 

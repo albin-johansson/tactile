@@ -19,8 +19,10 @@
 
 #pragma once
 
+#include "model/settings.hpp"
+
 namespace tactile::ui {
 
-void reload_imgui_fonts(float font_size, bool use_default_font);
+void reload_imgui_fonts(const Settings& settings);
 
 }  // namespace tactile::ui

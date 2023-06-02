@@ -27,7 +27,6 @@
 #include "components/tile.hpp"
 #include "components/tileset.hpp"
 #include "components/viewport.hpp"
-#include "model/context.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/settings.hpp"
 #include "model/systems/language_system.hpp"

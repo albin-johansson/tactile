@@ -19,23 +19,28 @@
 
 #include "detach_component.hpp"
 
+#include "common/debug/assert.hpp"
 #include "components/component.hpp"
-#include "model/context.hpp"
 #include "model/systems/context/components.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-DetachComponent::DetachComponent(const Entity context_entity,
+DetachComponent::DetachComponent(Model* model,
+                                 const Entity context_entity,
                                  const Entity definition_entity)
-    : mContextEntity {context_entity},
+    : mModel {model},
+      mContextEntity {context_entity},
       mDefinitionEntity {definition_entity}
 {
+  TACTILE_ASSERT(sys::is_context_entity(*mModel, mContextEntity));
+  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, mDefinitionEntity));
 }
 
 void DetachComponent::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& context = model.get<Context>(mContextEntity);
 
   const auto component_entity = sys::attach_component(model, context, mDefinitionEntity);
@@ -47,14 +52,15 @@ void DetachComponent::undo()
 
 void DetachComponent::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
+
   auto& context = model.get<Context>(mContextEntity);
   mPrevValues = sys::detach_component(model, context, mDefinitionEntity);
 }
 
 auto DetachComponent::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.detach_comp;
 }
 

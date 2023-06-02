@@ -19,15 +19,16 @@
 
 #pragma once
 
-#include "common/type/ecs.hpp"
 #include "cmd/command.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
 #include "model/systems/map_system.hpp"
 
 namespace tactile::cmd {
 
 class FixMapTiles final : public Command {
  public:
-  explicit FixMapTiles(Entity map_entity);
+  FixMapTiles(Model* model, Entity map_entity);
 
   void undo() override;
 
@@ -36,7 +37,8 @@ class FixMapTiles final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Entity mMapEntity {kNullEntity};
+  Model* mModel;
+  Entity mMapEntity;
   sys::FixTilesInMapResult mInvalidLayerTiles;
 };
 

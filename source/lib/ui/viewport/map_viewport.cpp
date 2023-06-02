@@ -29,7 +29,6 @@
 #include "components/map.hpp"
 #include "components/object.hpp"
 #include "components/viewport.hpp"
-#include "model/context.hpp"
 #include "model/event/object_events.hpp"
 #include "model/event/property_events.hpp"
 #include "model/event/tool_events.hpp"

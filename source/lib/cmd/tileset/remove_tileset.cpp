@@ -19,24 +19,29 @@
 
 #include "remove_tileset.hpp"
 
+#include "common/debug/assert.hpp"
 #include "components/map.hpp"
 #include "components/tileset.hpp"
-#include "model/context.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-RemoveTileset::RemoveTileset(const Entity map_entity,
+RemoveTileset::RemoveTileset(Model* model,
+                             const Entity map_entity,
                              const Entity attached_tileset_entity)
-    : mMapEntity {map_entity},
+    : mModel {model},
+      mMapEntity {map_entity},
       mAttachedTilesetEntity {attached_tileset_entity}
 {
+  TACTILE_ASSERT(sys::is_map_entity(*mModel, mMapEntity));
+  TACTILE_ASSERT(sys::is_attached_tileset_entity(*mModel, mAttachedTilesetEntity));
 }
 
 void RemoveTileset::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& map = model.get<Map>(mMapEntity);
   map.attached_tilesets.push_back(mAttachedTilesetEntity);
@@ -48,7 +53,7 @@ void RemoveTileset::undo()
 
 void RemoveTileset::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& map = model.get<Map>(mMapEntity);
   std::erase(map.attached_tilesets, mAttachedTilesetEntity);
@@ -67,14 +72,13 @@ void RemoveTileset::redo()
 void RemoveTileset::dispose()
 {
   if (mDidDetachTileset) {
-    auto& model = get_global_model();
-    model.destroy(mAttachedTilesetEntity);
+    mModel->destroy(mAttachedTilesetEntity);
   }
 }
 
 auto RemoveTileset::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.remove_tileset;
 }
 

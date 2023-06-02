@@ -24,7 +24,6 @@
 #include <utility>    // move
 
 #include <fmt/std.h>
-#include <imgui.h>
 #include <spdlog/spdlog.h>
 
 #include "backend/gl/gl_backend.hpp"
@@ -33,14 +32,8 @@
 #include "common/debug/logging.hpp"
 #include "common/debug/stacktrace.hpp"
 #include "common/fmt/stacktrace_formatter.hpp"
-#include "components/texture.hpp"
 #include "engine/platform/window.hpp"
 #include "io/directories.hpp"
-#include "model/context.hpp"
-#include "model/settings.hpp"
-#include "model/systems/gl_texture_system.hpp"
-#include "model/systems/model_system.hpp"
-#include "ui/style/fonts.hpp"
 
 namespace tactile {
 
@@ -58,12 +51,13 @@ void on_terminate()
 }
 
 Engine::Engine(const BackendAPI api)
+    : mAPI {api}
 {
   std::set_terminate(&on_terminate);
   init_logger();
 
   mProtobuf.emplace();
-  auto& sdl = mSDL.emplace(api);
+  auto& sdl = mSDL.emplace(mAPI);
 
   auto& window = sdl.get_window();
   win32_use_immersive_dark_mode(window);
@@ -71,12 +65,12 @@ Engine::Engine(const BackendAPI api)
 
   mImGui.emplace();
 
-  if (api == BackendAPI::Null) {
+  if (mAPI == BackendAPI::Null) {
     spdlog::debug("[Engine] Using null backend");
 
     mBackend = std::make_unique<NullBackend>();
   }
-  else if (api == BackendAPI::OpenGL) {
+  else if (mAPI == BackendAPI::OpenGL) {
     spdlog::debug("[Engine] Initializing OpenGL backend");
 
     auto& gl_context = mSDL->get_gl_context();
@@ -84,9 +78,6 @@ Engine::Engine(const BackendAPI api)
   }
 
   spdlog::debug("[IO] Persistent file directory: {}", get_persistent_file_dir());
-
-  auto& model = get_global_model();
-  sys::init_model(model, api);
 }
 
 void Engine::start()
@@ -98,15 +89,17 @@ void Engine::start()
 
   mRunning = true;
 
-  mApp->on_startup();
+  mApp->on_startup(mAPI);
   mSDL->get_window().show();
   mSDL->get_window().maximize();
 
   while (mRunning) {
+    mRunning = !mApp->should_stop();
     _poll_events();
 
-    if (mApp->want_font_reload()) {
-      _reload_fonts();
+    if (mApp->want_font_reload() && mBackend->can_reload_fonts()) {
+      mApp->reload_font_files();
+      mBackend->reload_font_resources();
     }
 
     if (mBackend->new_frame().succeeded()) {
@@ -137,29 +130,6 @@ void Engine::_poll_events()
         break;
     }
   }
-}
-
-void Engine::_reload_fonts()
-{
-  const auto& model = get_global_model();
-  const auto& settings = model.get<Settings>();
-
-  const auto font_size = settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT)
-                             ? 13.0f
-                             : static_cast<float>(settings.get_font_size());
-  const auto use_default_font = settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT);
-
-  ui::reload_imgui_fonts(font_size, use_default_font);
-
-  if (mBackend->reload_font_resources().succeeded()) {
-    ImGui::GetStyle().ScaleAllSizes(1.0f);
-    mApp->on_font_reload();
-  }
-}
-
-void Engine::stop()
-{
-  mRunning = false;
 }
 
 void Engine::set_app_delegate(Unique<AppDelegate> app)

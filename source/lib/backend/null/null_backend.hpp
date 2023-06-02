@@ -32,7 +32,7 @@ class NullBackend final : public Backend {
 
   void end_frame() override;
 
-  [[nodiscard]] auto reload_font_resources() -> Result override;
+  [[nodiscard]] auto can_reload_fonts() const -> bool override;
 };
 
 }  // namespace tactile

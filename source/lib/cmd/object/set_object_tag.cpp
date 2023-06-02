@@ -21,30 +21,34 @@
 
 #include <utility>  // move
 
+#include "common/debug/assert.hpp"
 #include "components/object.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-SetObjectTag::SetObjectTag(const Entity object_entity, String tag)
-    : mObjectEntity {object_entity},
+SetObjectTag::SetObjectTag(Model* model, const Entity object_entity, String tag)
+    : mModel {model},
+      mObjectEntity {object_entity},
       mNewTag {std::move(tag)}
 {
+  TACTILE_ASSERT(sys::is_object_entity(*mModel, mObjectEntity));
 }
 
 void SetObjectTag::undo()
 {
-  auto& model = get_global_model();
-  auto& object = model.get<Object>(mObjectEntity);
+  auto& model = *mModel;
 
+  auto& object = model.get<Object>(mObjectEntity);
   object.tag = mOldTag.value();
+
   mOldTag.reset();
 }
 
 void SetObjectTag::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& object = model.get<Object>(mObjectEntity);
 
   mOldTag = object.tag;
@@ -65,7 +69,7 @@ auto SetObjectTag::merge_with(const Command* cmd) -> bool
 
 auto SetObjectTag::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.update_object_tag;
 }
 

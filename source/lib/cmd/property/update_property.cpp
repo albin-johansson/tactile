@@ -21,25 +21,29 @@
 
 #include <utility>  // move
 
+#include "common/debug/assert.hpp"
 #include "common/util/lookup.hpp"
 #include "components/context.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-UpdateProperty::UpdateProperty(const Entity context_entity,
+UpdateProperty::UpdateProperty(Model* model,
+                               const Entity context_entity,
                                String name,
                                Attribute new_value)
-    : mContextEntity {context_entity},
+    : mModel {model},
+      mContextEntity {context_entity},
       mName {std::move(name)},
       mNewValue {std::move(new_value)}
 {
+  TACTILE_ASSERT(sys::is_context_entity(*mModel, mContextEntity));
 }
 
 void UpdateProperty::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& context = model.get<Context>(mContextEntity);
   context.props[mName] = mOldValue.value();
@@ -49,7 +53,7 @@ void UpdateProperty::undo()
 
 void UpdateProperty::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& context = model.get<Context>(mContextEntity);
 
   mOldValue = lookup_in(context.props, mName);
@@ -70,7 +74,7 @@ auto UpdateProperty::merge_with(const Command* cmd) -> bool
 
 auto UpdateProperty::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.update_property;
 }
 

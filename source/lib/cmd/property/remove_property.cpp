@@ -21,22 +21,25 @@
 
 #include <utility>  // move
 
+#include "common/debug/assert.hpp"
 #include "common/util/lookup.hpp"
 #include "components/context.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-RemoveProperty::RemoveProperty(const Entity context_entity, String name)
-    : mContextEntity {context_entity},
+RemoveProperty::RemoveProperty(Model* model, const Entity context_entity, String name)
+    : mModel {model},
+      mContextEntity {context_entity},
       mName {std::move(name)}
 {
+  TACTILE_ASSERT(sys::is_context_entity(*mModel, mContextEntity));
 }
 
 void RemoveProperty::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& context = model.get<Context>(mContextEntity);
   context.props[mName] = mPreviousValue.value();
@@ -46,7 +49,7 @@ void RemoveProperty::undo()
 
 void RemoveProperty::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& context = model.get<Context>(mContextEntity);
 
   mPreviousValue = lookup_in(context.props, mName);
@@ -55,7 +58,7 @@ void RemoveProperty::redo()
 
 auto RemoveProperty::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.remove_property;
 }
 

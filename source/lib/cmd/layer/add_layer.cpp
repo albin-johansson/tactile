@@ -19,25 +19,27 @@
 
 #include "add_layer.hpp"
 
+#include "common/debug/assert.hpp"
 #include "components/document.hpp"
 #include "components/layer.hpp"
 #include "components/map.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
-#include "model/systems/layer_system.hpp"
 #include "model/systems/map_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-AddLayer::AddLayer(const Entity map_document_entity, const LayerType type)
-    : mMapDocumentEntity {map_document_entity},
+AddLayer::AddLayer(Model* model, const Entity map_document_entity, const LayerType type)
+    : mModel {model},
+      mMapDocumentEntity {map_document_entity},
       mLayerType {type}
 {
+  TACTILE_ASSERT(sys::is_map_document_entity(*mModel, mMapDocumentEntity));
 }
 
 void AddLayer::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
   auto& map = model.get<Map>(map_document.map);
@@ -55,8 +57,7 @@ void AddLayer::undo()
 
 void AddLayer::redo()
 {
-  auto& model = get_global_model();
-
+  auto& model = *mModel;
   const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
 
   if (mLayerEntity == kNullEntity) {
@@ -74,16 +75,14 @@ void AddLayer::redo()
 
 void AddLayer::dispose()
 {
-  // The layer entity can only be destroyed if we're sure it's not used elsewhere.
   if (!mLayerWasAdded) {
-    auto& model = get_global_model();
-    model.destroy(mLayerEntity);
+    mModel->destroy(mLayerEntity);
   }
 }
 
 auto AddLayer::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.add_layer;
 }
 

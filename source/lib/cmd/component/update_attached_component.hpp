@@ -23,13 +23,15 @@
 #include "common/attribute.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 /// A command for updating the attribute of a component attached to a context.
 class UpdateAttachedComponent final : public Command {
  public:
-  UpdateAttachedComponent(Entity component_entity,
+  UpdateAttachedComponent(Model* model,
+                          Entity component_entity,
                           String attribute_name,
                           Attribute new_value);
 
@@ -42,6 +44,7 @@ class UpdateAttachedComponent final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mComponentEntity;
   String mAttributeName;
   Attribute mNewValue;

@@ -19,15 +19,16 @@
 
 #pragma once
 
+#include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "cmd/command.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class SetZstdCompressionLevel final : public Command {
  public:
-  SetZstdCompressionLevel(Entity map_entity, int level);
+  SetZstdCompressionLevel(Model* model, Entity map_entity, int new_level);
 
   void undo() override;
 
@@ -38,8 +39,9 @@ class SetZstdCompressionLevel final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Entity mMapEntity {kNullEntity};
-  int mNewLevel {};
+  Model* mModel;
+  Entity mMapEntity;
+  int mNewLevel;
   Maybe<int> mOldLevel;
 };
 

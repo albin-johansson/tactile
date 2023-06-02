@@ -25,12 +25,13 @@
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/vector.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class BucketFill final : public Command {
  public:
-  BucketFill(Entity tile_layer_entity, TilePos origin, TileID replacement);
+  BucketFill(Model* model, Entity tile_layer_entity, TilePos origin, TileID replacement);
 
   void undo() override;
 
@@ -39,6 +40,7 @@ class BucketFill final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mTileLayerEntity;
   TilePos mOrigin;
   TileID mReplacement;

@@ -24,12 +24,16 @@
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class ChangePropertyType final : public Command {
  public:
-  ChangePropertyType(Entity context_entity, String name, AttributeType new_type);
+  ChangePropertyType(Model* model,
+                     Entity context_entity,
+                     String name,
+                     AttributeType new_type);
 
   void undo() override;
 
@@ -38,6 +42,7 @@ class ChangePropertyType final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mContextEntity;
   String mName;
   AttributeType mNewPropertyType;

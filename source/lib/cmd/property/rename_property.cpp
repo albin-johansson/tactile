@@ -21,36 +21,44 @@
 
 #include <utility>  // move
 
-#include "model/context.hpp"
+#include "common/debug/assert.hpp"
 #include "model/systems/context/properties.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-RenameProperty::RenameProperty(const Entity context_entity,
+RenameProperty::RenameProperty(Model* model,
+                               const Entity context_entity,
                                String old_name,
                                String new_name)
-    : mContextEntity {context_entity},
+    : mModel {model},
+      mContextEntity {context_entity},
       mOldName {std::move(old_name)},
       mNewName {std::move(new_name)}
 {
+  TACTILE_ASSERT(sys::is_context_entity(*mModel, mContextEntity));
 }
 
 void RenameProperty::undo()
 {
-  auto& context = get_global_model().get<Context>(mContextEntity);
+  auto& model = *mModel;
+
+  auto& context = model.get<Context>(mContextEntity);
   sys::rename_property(context, mNewName, mOldName);
 }
 
 void RenameProperty::redo()
 {
-  auto& context = get_global_model().get<Context>(mContextEntity);
+  auto& model = *mModel;
+
+  auto& context = model.get<Context>(mContextEntity);
   sys::rename_property(context, mOldName, mNewName);
 }
 
 auto RenameProperty::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.rename_property;
 }
 

@@ -19,19 +19,19 @@
 
 #pragma once
 
-#include "common/macros.hpp"
+#include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
-#include "cmd/command.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 /// Command for creating a tileset and attaching it to a map document.
 class CreateTileset final : public Command {
  public:
-  CreateTileset(Entity map_entity, Int2 tile_size, Path image_path);
+  CreateTileset(Model* model, Entity map_entity, Int2 tile_size, Path image_path);
 
   void undo() override;
 
@@ -42,6 +42,7 @@ class CreateTileset final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mMapEntity;
   Int2 mTileSize;
   Path mImagePath;
@@ -49,7 +50,7 @@ class CreateTileset final : public Command {
   Maybe<Entity> mAttachedTilesetEntity;
   bool mHasAttachedTileset : 1 {false};
 
-  void create_tileset_document();
+  void _create_tileset_document();
 };
 
 }  // namespace tactile::cmd

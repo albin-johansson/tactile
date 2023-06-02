@@ -21,20 +21,20 @@
 
 #include "common/util/functional.hpp"
 #include "components/map.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/map_system.hpp"
 
 namespace tactile::cmd {
 
-RemoveColumn::RemoveColumn(const Entity map_entity)
-    : mMapEntity {map_entity}
+RemoveColumn::RemoveColumn(Model* model, const Entity map_entity)
+    : mModel {model},
+      mMapEntity {map_entity}
 {
 }
 
 void RemoveColumn::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& map = model.get<Map>(mMapEntity);
   invoke_n(mColumnCount, [&] { sys::remove_column_from_map(model, map); });
@@ -44,7 +44,7 @@ void RemoveColumn::undo()
 
 void RemoveColumn::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& map = model.get<Map>(mMapEntity);
 
   const auto begin = TilePos::from(0u, map.extent.cols - mColumnCount - 1u);
@@ -69,7 +69,7 @@ auto RemoveColumn::merge_with(const Command* cmd) -> bool
 
 auto RemoveColumn::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return mColumnCount == 1 ? strings.cmd.remove_column : strings.cmd.remove_columns;
 }
 

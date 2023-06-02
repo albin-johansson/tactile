@@ -24,7 +24,6 @@
 #include "common/debug/logging.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/util/lookup.hpp"
-#include "model/context.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/widget/scoped.hpp"

@@ -40,13 +40,12 @@ class Engine final {
 
   void start();
 
-  void stop();
-
   void set_app_delegate(Unique<AppDelegate> app);
 
   [[nodiscard]] auto get_window() -> cen::window&;
 
  private:
+  BackendAPI mAPI;
   Maybe<ProtobufContext> mProtobuf;
   Maybe<SDLContext> mSDL;
   Maybe<ImGuiContext> mImGui;
@@ -56,8 +55,6 @@ class Engine final {
   bool mRunning : 1 {};
 
   void _poll_events();
-
-  void _reload_fonts();
 };
 
 [[noreturn]] TACTILE_NOINLINE void on_terminate();

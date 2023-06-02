@@ -20,21 +20,22 @@
 #include "set_tile_format_encoding.hpp"
 
 #include "components/tile_format.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
 
 namespace tactile::cmd {
 
-SetTileFormatEncoding::SetTileFormatEncoding(const Entity map_entity,
+SetTileFormatEncoding::SetTileFormatEncoding(Model* model,
+                                             const Entity map_entity,
                                              const TileEncoding encoding)
-    : mMapEntity {map_entity},
+    : mModel {model},
+      mMapEntity {map_entity},
       mNewEncoding {encoding}
 {
 }
 
 void SetTileFormatEncoding::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& format = model.get<TileFormat>(mMapEntity);
 
   format.encoding = mOldEncoding.value();
@@ -46,7 +47,7 @@ void SetTileFormatEncoding::undo()
 
 void SetTileFormatEncoding::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& format = model.get<TileFormat>(mMapEntity);
 
   mOldEncoding = format.encoding;
@@ -57,7 +58,7 @@ void SetTileFormatEncoding::redo()
 
 auto SetTileFormatEncoding::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.set_tile_format_encoding;
 }
 

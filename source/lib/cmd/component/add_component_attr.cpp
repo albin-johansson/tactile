@@ -21,27 +21,32 @@
 
 #include <utility>  // move
 
-#include "model/context.hpp"
+#include "common/debug/assert.hpp"
 #include "model/systems/component/component_def.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-AddComponentAttr::AddComponentAttr(const Entity definition_entity, String name)
-    : mDefinitionEntity {definition_entity},
+AddComponentAttr::AddComponentAttr(Model* model,
+                                   const Entity definition_entity,
+                                   String name)
+    : mModel {model},
+      mDefinitionEntity {definition_entity},
       mAttributeName {std::move(name)}
 {
+  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, mDefinitionEntity));
 }
 
 void AddComponentAttr::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   sys::remove_component_attribute(model, mDefinitionEntity, mAttributeName);
 }
 
 void AddComponentAttr::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   sys::add_component_attribute(model,
                                mDefinitionEntity,
                                mAttributeName,
@@ -50,7 +55,7 @@ void AddComponentAttr::redo()
 
 auto AddComponentAttr::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.create_comp_attr;
 }
 

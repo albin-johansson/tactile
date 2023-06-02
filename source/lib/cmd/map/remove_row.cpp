@@ -21,20 +21,20 @@
 
 #include "common/util/functional.hpp"
 #include "components/map.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/map_system.hpp"
 
 namespace tactile::cmd {
 
-RemoveRow::RemoveRow(const Entity map_entity)
-    : mMapEntity {map_entity}
+RemoveRow::RemoveRow(Model* model, const Entity map_entity)
+    : mModel {model},
+      mMapEntity {map_entity}
 {
 }
 
 void RemoveRow::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& map = model.get<Map>(mMapEntity);
   invoke_n(mRowCount, [&] { sys::add_row_to_map(model, map); });
@@ -44,7 +44,7 @@ void RemoveRow::undo()
 
 void RemoveRow::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& map = model.get<Map>(mMapEntity);
 
   const auto begin = TilePos::from(map.extent.rows - mRowCount - 1u, 0u);
@@ -69,7 +69,7 @@ auto RemoveRow::merge_with(const Command* cmd) -> bool
 
 auto RemoveRow::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return mRowCount == 1 ? strings.cmd.remove_row : strings.cmd.remove_rows;
 }
 

@@ -19,32 +19,37 @@
 
 #include "add_object.hpp"
 
+#include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
 #include "components/layer.hpp"
 #include "components/map.hpp"
 #include "components/object.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/object_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-AddObject::AddObject(const Entity map_entity,
+AddObject::AddObject(Model* model,
+                     const Entity map_entity,
                      const Entity object_layer_entity,
                      const ObjectType type,
                      const Float2 position,
                      const Float2 size)
-    : mMapEntity {map_entity},
+    : mModel {model},
+      mMapEntity {map_entity},
       mObjectLayerEntity {object_layer_entity},
       mObjectType {type},
       mPosition {position},
       mSize {size}
 {
+  TACTILE_ASSERT(sys::is_map_entity(*mModel, mMapEntity));
+  TACTILE_ASSERT(sys::is_object_layer_entity(*mModel, mObjectLayerEntity));
 }
 
 void AddObject::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& object_layer = model.get<ObjectLayer>(mObjectLayerEntity);
 
   const auto object_entity = mObjectEntity.value();
@@ -56,7 +61,7 @@ void AddObject::undo()
 
 void AddObject::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& object_layer = model.get<ObjectLayer>(mObjectLayerEntity);
 
   if (!mObjectEntity.has_value()) {
@@ -83,14 +88,14 @@ void AddObject::redo()
 void AddObject::dispose()
 {
   if (mObjectEntity.has_value() && !mDidAddObject) {
-    auto& model = get_global_model();
-    model.destroy(*mObjectEntity);
+    mModel->destroy(*mObjectEntity);
   }
 }
 
 auto AddObject::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
+
   switch (mObjectType) {
     case ObjectType::Point:
       return strings.cmd.add_point_object;

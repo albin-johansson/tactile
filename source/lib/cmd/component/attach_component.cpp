@@ -19,36 +19,43 @@
 
 #include "attach_component.hpp"
 
-#include "model/context.hpp"
+#include "common/debug/assert.hpp"
 #include "model/systems/context/components.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-AttachComponent::AttachComponent(const Entity context_entity,
+AttachComponent::AttachComponent(Model* model,
+                                 const Entity context_entity,
                                  const Entity definition_entity)
-    : mContextEntity {context_entity},
+    : mModel {model},
+      mContextEntity {context_entity},
       mDefinitionEntity {definition_entity}
 {
+  TACTILE_ASSERT(sys::is_context_entity(*mModel, mContextEntity));
+  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, mDefinitionEntity));
 }
 
 void AttachComponent::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
+
   auto& context = model.get<Context>(mContextEntity);
   sys::detach_component(model, context, mDefinitionEntity);
 }
 
 void AttachComponent::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
+
   auto& context = model.get<Context>(mContextEntity);
   sys::attach_component(model, context, mDefinitionEntity);
 }
 
 auto AttachComponent::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.attach_comp;
 }
 

@@ -19,15 +19,16 @@
 
 #pragma once
 
-#include "common/type/ecs.hpp"
 #include "cmd/command.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 /// A command for adding an attribute to a component definition.
 class AddComponentAttr final : public Command {
  public:
-  AddComponentAttr(Entity definition_entity, String name);
+  AddComponentAttr(Model* model, Entity definition_entity, String name);
 
   void undo() override;
 
@@ -36,7 +37,8 @@ class AddComponentAttr final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Entity mDefinitionEntity {kNullEntity};
+  Model* mModel;
+  Entity mDefinitionEntity;
   String mAttributeName;
 };
 

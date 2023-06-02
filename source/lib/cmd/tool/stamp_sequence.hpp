@@ -22,12 +22,16 @@
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/tile_cache.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class StampSequence final : public Command {
  public:
-  StampSequence(Entity tile_layer_entity, TileCache old_state, TileCache new_state);
+  StampSequence(Model* model,
+                Entity tile_layer_entity,
+                TileCache old_state,
+                TileCache new_state);
 
   void undo() override;
 
@@ -36,11 +40,12 @@ class StampSequence final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mTileLayerEntity;
   TileCache mOldState;
   TileCache mNewState;
 
-  void apply_sequence(const TileCache& cache);
+  void _apply_sequence(const TileCache& cache);
 };
 
 }  // namespace tactile::cmd

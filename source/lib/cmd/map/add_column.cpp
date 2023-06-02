@@ -21,27 +21,29 @@
 
 #include "common/util/functional.hpp"
 #include "components/map.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/map_system.hpp"
 
 namespace tactile::cmd {
 
-AddColumn::AddColumn(const Entity map_entity)
-    : mMapEntity {map_entity}
+AddColumn::AddColumn(Model* model, const Entity map_entity)
+    : mModel {model},
+      mMapEntity {map_entity}
 {
 }
 
 void AddColumn::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
+
   auto& map = model.get<Map>(mMapEntity);
   invoke_n(mColumnCount, [&] { sys::remove_column_from_map(model, map); });
 }
 
 void AddColumn::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
+
   auto& map = model.get<Map>(mMapEntity);
   invoke_n(mColumnCount, [&] { sys::add_column_to_map(model, map); });
 }
@@ -58,7 +60,7 @@ auto AddColumn::merge_with(const Command* cmd) -> bool
 
 auto AddColumn::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return mColumnCount == 1 ? strings.cmd.add_column : strings.cmd.add_columns;
 }
 

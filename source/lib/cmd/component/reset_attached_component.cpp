@@ -21,20 +21,24 @@
 
 #include <utility>  // move
 
-#include "model/context.hpp"
+#include "common/debug/assert.hpp"
 #include "model/systems/component/component.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-ResetAttachedComponent::ResetAttachedComponent(const Entity component_entity)
-    : mComponentEntity {component_entity}
+ResetAttachedComponent::ResetAttachedComponent(Model* model,
+                                               const Entity component_entity)
+    : mModel {model},
+      mComponentEntity {component_entity}
 {
+  TACTILE_ASSERT(sys::is_component_entity(*mModel, mComponentEntity));
 }
 
 void ResetAttachedComponent::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& component = model.get<Component>(mComponentEntity);
   component.attributes = std::move(mPreviousValues.value());
@@ -44,14 +48,15 @@ void ResetAttachedComponent::undo()
 
 void ResetAttachedComponent::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
+
   auto& component = model.get<Component>(mComponentEntity);
   mPreviousValues = sys::reset_component_values(model, component);
 }
 
 auto ResetAttachedComponent::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.reset_comp;
 }
 

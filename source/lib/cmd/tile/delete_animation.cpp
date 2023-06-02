@@ -19,19 +19,22 @@
 
 #include "delete_animation.hpp"
 
-#include "model/context.hpp"
+#include "common/debug/assert.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-DeleteAnimation::DeleteAnimation(const Entity tile_entity)
-    : mTileEntity {tile_entity}
+DeleteAnimation::DeleteAnimation(Model* model, const Entity tile_entity)
+    : mModel {model},
+      mTileEntity {tile_entity}
 {
+  TACTILE_ASSERT(sys::is_tile_entity(*mModel, tile_entity));
 }
 
 void DeleteAnimation::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& animation = model.add<TileAnimation>(mTileEntity);
   animation = mOldTileAnimation.value();
@@ -41,7 +44,7 @@ void DeleteAnimation::undo()
 
 void DeleteAnimation::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   mOldTileAnimation = model.get<TileAnimation>(mTileEntity);
   model.remove<TileAnimation>(mTileEntity);
@@ -49,7 +52,7 @@ void DeleteAnimation::redo()
 
 auto DeleteAnimation::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.delete_animation;
 }
 

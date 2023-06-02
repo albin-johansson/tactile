@@ -19,6 +19,10 @@
 
 #include "model.hpp"
 
+#include <spdlog/spdlog.h>
+
+#include "common/fmt/entity_formatter.hpp"
+
 namespace tactile {
 
 auto Model::create_entity() -> Entity
@@ -30,6 +34,8 @@ void Model::destroy(const Entity entity)
 {
   if (entity != kNullEntity) {
     TACTILE_ASSERT(mRegistry.valid(entity));
+
+    spdlog::trace("[Model] Destroying entity {}", entity);
     mRegistry.destroy(entity);
   }
 }

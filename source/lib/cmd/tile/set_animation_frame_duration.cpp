@@ -19,24 +19,28 @@
 
 #include "set_animation_frame_duration.hpp"
 
+#include "common/debug/assert.hpp"
 #include "components/tile.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-SetAnimationFrameDuration::SetAnimationFrameDuration(const Entity tile_entity,
+SetAnimationFrameDuration::SetAnimationFrameDuration(Model* model,
+                                                     const Entity tile_entity,
                                                      const usize frame_index,
                                                      const ms_t new_frame_duration)
-    : mTileEntity {tile_entity},
+    : mModel {model},
+      mTileEntity {tile_entity},
       mFrameIndex {frame_index},
       mNewFrameDuration {new_frame_duration}
 {
+  TACTILE_ASSERT(sys::is_tile_entity(*mModel, mTileEntity));
 }
 
 void SetAnimationFrameDuration::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& animation = model.get<TileAnimation>(mTileEntity);
 
   auto& frame = animation.frames.at(mFrameIndex);
@@ -47,7 +51,7 @@ void SetAnimationFrameDuration::undo()
 
 void SetAnimationFrameDuration::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& animation = model.get<TileAnimation>(mTileEntity);
   auto& frame = animation.frames.at(mFrameIndex);
@@ -70,7 +74,7 @@ auto SetAnimationFrameDuration::merge_with(const Command* cmd) -> bool
 
 auto SetAnimationFrameDuration::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.set_animation_frame_duration;
 }
 

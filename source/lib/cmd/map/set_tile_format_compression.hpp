@@ -23,12 +23,13 @@
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "components/tile_format.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class SetTileFormatCompression final : public Command {
  public:
-  SetTileFormatCompression(Entity map_entity, TileCompression compression);
+  SetTileFormatCompression(Model* model, Entity map_entity, TileCompression compression);
 
   void undo() override;
 
@@ -37,7 +38,8 @@ class SetTileFormatCompression final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Entity mMapEntity {kNullEntity};
+  Model* mModel;
+  Entity mMapEntity;
   TileCompression mNewCompression;
   Maybe<TileCompression> mOldCompression;
 };

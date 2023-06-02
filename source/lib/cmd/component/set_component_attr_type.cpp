@@ -21,27 +21,31 @@
 
 #include <utility>  // move
 
+#include "common/debug/assert.hpp"
 #include "common/util/lookup.hpp"
 #include "components/component.hpp"
-#include "model/context.hpp"
 #include "model/systems/component/component_def.hpp"
 #include "model/systems/context/context_system.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-SetComponentAttrType::SetComponentAttrType(const Entity definition_entity,
+SetComponentAttrType::SetComponentAttrType(Model* model,
+                                           const Entity definition_entity,
                                            String attribute_name,
                                            const AttributeType new_type)
-    : mDefinitionEntity {definition_entity},
+    : mModel {model},
+      mDefinitionEntity {definition_entity},
       mAttributeName {std::move(attribute_name)},
       mNewType {new_type}
 {
+  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, mDefinitionEntity));
 }
 
 void SetComponentAttrType::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
   definition.attributes[mAttributeName] = mOldValue.value();
@@ -56,7 +60,7 @@ void SetComponentAttrType::undo()
 
 void SetComponentAttrType::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   const auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
   mOldValue = lookup_in(definition.attributes, mAttributeName);
@@ -71,7 +75,7 @@ void SetComponentAttrType::redo()
 
 auto SetComponentAttrType::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.change_comp_attr_type;
 }
 

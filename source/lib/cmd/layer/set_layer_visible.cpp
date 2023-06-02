@@ -19,21 +19,26 @@
 
 #include "set_layer_visible.hpp"
 
+#include "common/debug/assert.hpp"
 #include "components/layer.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-SetLayerVisible::SetLayerVisible(const Entity layer_entity, const bool visible)
-    : mLayerEntity {layer_entity},
-      mNewVisibility {visible}
+SetLayerVisible::SetLayerVisible(Model* model,
+                                 const Entity layer_entity,
+                                 const bool new_visibility)
+    : mModel {model},
+      mLayerEntity {layer_entity},
+      mNewVisibility {new_visibility}
 {
+  TACTILE_ASSERT(sys::is_layer_entity(*mModel, mLayerEntity));
 }
 
 void SetLayerVisible::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& layer = model.get<Layer>(mLayerEntity);
 
   layer.visible = mOldVisibility.value();
@@ -42,7 +47,7 @@ void SetLayerVisible::undo()
 
 void SetLayerVisible::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& layer = model.get<Layer>(mLayerEntity);
 
   mOldVisibility = static_cast<bool>(layer.visible);
@@ -51,7 +56,7 @@ void SetLayerVisible::redo()
 
 auto SetLayerVisible::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return mNewVisibility ? strings.cmd.show_layer : strings.cmd.hide_layer;
 }
 

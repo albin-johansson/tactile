@@ -25,7 +25,6 @@
 #include "common/type/ecs.hpp"
 #include "components/map.hpp"
 #include "components/tileset.hpp"
-#include "model/context.hpp"
 #include "model/model.hpp"
 #include "ui/render/canvas.hpp"
 

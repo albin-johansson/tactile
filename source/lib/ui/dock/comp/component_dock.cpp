@@ -27,7 +27,6 @@
 #include "components/component.hpp"
 #include "components/context.hpp"
 #include "components/document.hpp"
-#include "model/context.hpp"
 #include "model/event/component_events.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/model.hpp"

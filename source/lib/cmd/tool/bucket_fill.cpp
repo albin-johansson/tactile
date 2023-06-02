@@ -19,25 +19,29 @@
 
 #include "bucket_fill.hpp"
 
+#include "common/debug/assert.hpp"
 #include "components/layer.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/tile_layer_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-BucketFill::BucketFill(const Entity tile_layer_entity,
+BucketFill::BucketFill(Model* model,
+                       const Entity tile_layer_entity,
                        const TilePos origin,
                        const TileID replacement)
-    : mTileLayerEntity {tile_layer_entity},
+    : mModel {model},
+      mTileLayerEntity {tile_layer_entity},
       mOrigin {origin},
       mReplacement {replacement}
 {
+  TACTILE_ASSERT(sys::is_tile_layer_entity(*mModel, mTileLayerEntity));
 }
 
 void BucketFill::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
 
   const auto target_tile_id = mTargetTileID.value();
@@ -51,7 +55,7 @@ void BucketFill::undo()
 
 void BucketFill::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
 
   mTargetTileID = tile_layer.tile_at(mOrigin);
@@ -60,7 +64,7 @@ void BucketFill::redo()
 
 auto BucketFill::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.bucket_tool;
 }
 

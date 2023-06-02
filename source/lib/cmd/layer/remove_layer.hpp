@@ -19,16 +19,17 @@
 
 #pragma once
 
+#include "cmd/command.hpp"
 #include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "cmd/command.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class RemoveLayer final : public Command {
  public:
-  RemoveLayer(Entity map_document_entity, Entity layer_entity);
+  RemoveLayer(Model* model, Entity map_document_entity, Entity layer_entity);
 
   void undo() override;
 
@@ -39,8 +40,9 @@ class RemoveLayer final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Entity mMapDocumentEntity {kNullEntity};
-  Entity mLayerEntity {kNullEntity};
+  Model* mModel;
+  Entity mMapDocumentEntity;
+  Entity mLayerEntity;
   Entity mParentLayerEntity {kNullEntity};
   Maybe<usize> mIndex;
 };

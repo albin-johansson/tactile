@@ -34,9 +34,13 @@ constexpr ImWchar kFontIconRange[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
 
 }  // namespace
 
-void reload_imgui_fonts(const float font_size, const bool use_default_font)
+void reload_imgui_fonts(const Settings& settings)
 {
   spdlog::debug("[UI] Reloading fonts");
+
+  const auto using_default_font = settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT);
+  const auto font_size =
+      using_default_font ? 13.0f : static_cast<float>(settings.get_font_size());
 
   static const auto roboto_path = find_resource(kFontRobotoPath).string();
   static const auto fa_path = find_resource(kFontFaPath).string();
@@ -46,7 +50,7 @@ void reload_imgui_fonts(const float font_size, const bool use_default_font)
 
   io.Fonts->Clear();
 
-  if (use_default_font) {
+  if (using_default_font) {
     ImFontConfig default_config {};
     default_config.SizePixels = font_size * fb_scale.x;
     io.Fonts->AddFontDefault(&default_config);
@@ -69,6 +73,8 @@ void reload_imgui_fonts(const float font_size, const bool use_default_font)
                                kFontIconRange);
 
   io.Fonts->Build();
+
+  ImGui::GetStyle().ScaleAllSizes(1.0f);
 }
 
 }  // namespace tactile::ui

@@ -19,38 +19,44 @@
 
 #include "move_object.hpp"
 
+#include "common/debug/assert.hpp"
 #include "components/object.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-MoveObject::MoveObject(const Entity object_entity,
+MoveObject::MoveObject(Model* model,
+                       const Entity object_entity,
                        const Float2 old_position,
                        const Float2 new_position)
-    : mObjectEntity {object_entity},
+    : mModel {model},
+      mObjectEntity {object_entity},
       mOldPosition {old_position},
       mNewPosition {new_position}
 {
+  TACTILE_ASSERT(sys::is_object_entity(*mModel, mObjectEntity));
 }
 
 void MoveObject::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
+
   auto& object = model.get<Object>(mObjectEntity);
   object.position = mOldPosition;
 }
 
 void MoveObject::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
+
   auto& object = model.get<Object>(mObjectEntity);
   object.position = mNewPosition;
 }
 
 auto MoveObject::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.move_object;
 }
 

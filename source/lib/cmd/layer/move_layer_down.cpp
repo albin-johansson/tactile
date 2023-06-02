@@ -19,36 +19,44 @@
 
 #include "move_layer_down.hpp"
 
+#include "common/debug/assert.hpp"
 #include "components/map.hpp"
-#include "model/context.hpp"
 #include "model/systems/group_layer_system.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-MoveLayerDown::MoveLayerDown(Entity map_entity, Entity layer_entity)
-    : mMapEntity {map_entity},
+MoveLayerDown::MoveLayerDown(Model* model,
+                             const Entity map_entity,
+                             const Entity layer_entity)
+    : mModel {model},
+      mMapEntity {map_entity},
       mLayerEntity {layer_entity}
 {
+  TACTILE_ASSERT(sys::is_map_entity(*mModel, mMapEntity));
+  TACTILE_ASSERT(sys::is_layer_entity(*mModel, mLayerEntity));
 }
 
 void MoveLayerDown::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
+
   const auto& map = model.get<Map>(mMapEntity);
   sys::move_layer_up(model, map.root_layer, mLayerEntity);
 }
 
 void MoveLayerDown::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
+
   const auto& map = model.get<Map>(mMapEntity);
   sys::move_layer_down(model, map.root_layer, mLayerEntity);
 }
 
 auto MoveLayerDown::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.move_layer_down;
 }
 

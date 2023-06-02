@@ -19,16 +19,17 @@
 
 #pragma once
 
+#include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
-#include "cmd/command.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class RenameObject final : public Command {
  public:
-  RenameObject(Entity object_entity, String name);
+  RenameObject(Model* model, Entity object_entity, String new_name);
 
   void undo() override;
 
@@ -39,6 +40,7 @@ class RenameObject final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mObjectEntity;
   String mNewName;
   Maybe<String> mOldName;

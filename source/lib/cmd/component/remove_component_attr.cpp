@@ -21,24 +21,30 @@
 
 #include <utility>  // move
 
+#include "common/debug/assert.hpp"
 #include "components/component.hpp"
-#include "model/context.hpp"
 #include "model/systems/component/component_def.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-RemoveComponentAttr::RemoveComponentAttr(const Entity definition_entity, String attribute)
-    : mComponentDefinitionEntity {definition_entity},
+RemoveComponentAttr::RemoveComponentAttr(Model* model,
+                                         const Entity definition_entity,
+                                         String attribute)
+    : mModel {model},
+      mDefinitionEntity {definition_entity},
       mAttributeName {std::move(attribute)}
 {
+  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, mDefinitionEntity));
 }
 
 void RemoveComponentAttr::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
+
   sys::add_component_attribute(model,
-                               mComponentDefinitionEntity,
+                               mDefinitionEntity,
                                mAttributeName,
                                mPreviousValue.value());
   mPreviousValue.reset();
@@ -46,17 +52,17 @@ void RemoveComponentAttr::undo()
 
 void RemoveComponentAttr::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
-  auto& definition = model.get<ComponentDefinition>(mComponentDefinitionEntity);
+  auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
   mPreviousValue = definition.attributes.at(mAttributeName);
 
-  sys::remove_component_attribute(model, mComponentDefinitionEntity, mAttributeName);
+  sys::remove_component_attribute(model, mDefinitionEntity, mAttributeName);
 }
 
 auto RemoveComponentAttr::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.remove_comp_attr;
 }
 

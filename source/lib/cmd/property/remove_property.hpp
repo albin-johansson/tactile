@@ -24,12 +24,13 @@
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class RemoveProperty final : public Command {
  public:
-  RemoveProperty(Entity context_entity, String name);
+  RemoveProperty(Model* model, Entity context_entity, String name);
 
   void undo() override;
 
@@ -38,6 +39,7 @@ class RemoveProperty final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mContextEntity;
   String mName;
   Maybe<Attribute> mPreviousValue;

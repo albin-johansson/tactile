@@ -19,16 +19,20 @@
 
 #pragma once
 
+#include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "cmd/command.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 /// Command for moving an object in a map.
 class MoveObject final : public Command {
  public:
-  MoveObject(Entity object_entity, Float2 old_position, Float2 new_position);
+  MoveObject(Model* model,
+             Entity object_entity,
+             Float2 old_position,
+             Float2 new_position);
 
   void undo() override;
 
@@ -37,6 +41,7 @@ class MoveObject final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mObjectEntity;
   Float2 mOldPosition;
   Float2 mNewPosition;

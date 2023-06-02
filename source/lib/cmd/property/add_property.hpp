@@ -23,12 +23,13 @@
 #include "common/enum/attribute_type.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class AddProperty final : public Command {
  public:
-  AddProperty(Entity context_entity, String name, AttributeType type);
+  AddProperty(Model* model, Entity context_entity, String name, AttributeType type);
 
   void undo() override;
 
@@ -37,6 +38,7 @@ class AddProperty final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mContextEntity;
   String mName;
   AttributeType mType;

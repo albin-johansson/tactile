@@ -30,9 +30,9 @@ Result NullBackend::new_frame()
 
 void NullBackend::end_frame() {}
 
-auto NullBackend::reload_font_resources() -> Result
+auto NullBackend::can_reload_fonts() const -> bool
 {
-  return failure;
+  return false;
 }
 
 }  // namespace tactile

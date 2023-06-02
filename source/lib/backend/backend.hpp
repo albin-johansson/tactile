@@ -40,9 +40,11 @@ class Backend {
   /// \note This function can only be called after a successful call to `new_frame`.
   virtual void end_frame() = 0;
 
-  /// Attempts to reload font resources.
-  /// \return `success` if the font resources were reloaded; `failure` otherwise.
-  virtual auto reload_font_resources() -> Result { return failure; }
+  /// Attempts to reload all font resources.
+  virtual void reload_font_resources() {}
+
+  /// Indicates whether the backend supports reloading font resources.
+  [[nodiscard]] virtual auto can_reload_fonts() const -> bool = 0;
 };
 
 }  // namespace tactile

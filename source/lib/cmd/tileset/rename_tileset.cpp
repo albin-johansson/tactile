@@ -21,21 +21,24 @@
 
 #include <utility>  // move
 
+#include "common/debug/assert.hpp"
 #include "components/context.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-RenameTileset::RenameTileset(Entity tileset_entity, String new_name)
-    : mTilesetEntity {tileset_entity},
+RenameTileset::RenameTileset(Model* model, const Entity tileset_entity, String new_name)
+    : mModel {model},
+      mTilesetEntity {tileset_entity},
       mNewName {std::move(new_name)}
 {
+  TACTILE_ASSERT(sys::is_tileset_entity(*mModel, mTilesetEntity));
 }
 
 void RenameTileset::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& tileset_context = model.get<Context>(mTilesetEntity);
   tileset_context.name = mOldName.value();
@@ -45,7 +48,7 @@ void RenameTileset::undo()
 
 void RenameTileset::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& tileset_context = model.get<Context>(mTilesetEntity);
 
   mOldName = tileset_context.name;
@@ -66,7 +69,7 @@ auto RenameTileset::merge_with(const Command* cmd) -> bool
 
 auto RenameTileset::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.rename_tileset;
 }
 

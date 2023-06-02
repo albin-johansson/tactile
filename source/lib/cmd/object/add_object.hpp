@@ -24,12 +24,14 @@
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class AddObject final : public Command {
  public:
-  AddObject(Entity map_entity,
+  AddObject(Model* model,
+            Entity map_entity,
             Entity object_layer_entity,
             ObjectType type,
             Float2 position,
@@ -44,6 +46,7 @@ class AddObject final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mMapEntity;
   Entity mObjectLayerEntity;
   ObjectType mObjectType;

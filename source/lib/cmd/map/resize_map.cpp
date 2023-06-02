@@ -19,39 +19,40 @@
 
 #include "resize_map.hpp"
 
+#include "common/debug/assert.hpp"
 #include "components/map.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/map_system.hpp"
 
 namespace tactile::cmd {
 
-ResizeMap::ResizeMap(const Entity map_entity, const TileExtent extent)
-    : mMapEntity {map_entity},
+ResizeMap::ResizeMap(Model* model, const Entity map_entity, const TileExtent extent)
+    : mModel {model},
+      mMapEntity {map_entity},
       mNewExtent {extent}
 {
 }
 
 void ResizeMap::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& map = model.get<Map>(mMapEntity);
   sys::resize_map(model, map, mOldExtent.value());
 
-  if (is_lossy_resize()) {
+  if (_is_lossy_resize()) {
     mCache.restore_tiles(model);
   }
 }
 
 void ResizeMap::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& map = model.get<Map>(mMapEntity);
 
   mOldExtent = map.extent;
 
-  if (is_lossy_resize()) {
+  if (_is_lossy_resize()) {
     mCache.clear();
 
     const auto begin_row =
@@ -70,12 +71,13 @@ void ResizeMap::redo()
 
 auto ResizeMap::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.resize_map;
 }
 
-auto ResizeMap::is_lossy_resize() const -> bool
+auto ResizeMap::_is_lossy_resize() const -> bool
 {
+  TACTILE_ASSERT(mOldExtent.has_value());
   return mOldExtent->rows > mNewExtent.rows || mOldExtent->cols > mNewExtent.cols;
 }
 

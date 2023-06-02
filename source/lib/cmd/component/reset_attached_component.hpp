@@ -25,13 +25,14 @@
 #include "common/type/maybe.hpp"
 #include "common/type/string_map.hpp"
 #include "components/component.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 /// A command for resetting the attributes of an attached component.
 class ResetAttachedComponent final : public Command {
  public:
-  ResetAttachedComponent(Entity component_entity);
+  ResetAttachedComponent(Model* model, Entity component_entity);
 
   void undo() override;
 
@@ -40,7 +41,8 @@ class ResetAttachedComponent final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Entity mComponentEntity {kNullEntity};
+  Model* mModel;
+  Entity mComponentEntity;
   Maybe<StringMap<Attribute>> mPreviousValues;
 };
 

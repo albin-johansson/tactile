@@ -19,26 +19,30 @@
 
 #include "remove_object.hpp"
 
-#include <spdlog/spdlog.h>
-
+#include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
 #include "components/layer.hpp"
 #include "components/map.hpp"
 #include "components/object.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-RemoveObject::RemoveObject(const Entity object_layer_entity, const Entity object_entity)
-    : mObjectLayerEntity {object_layer_entity},
+RemoveObject::RemoveObject(Model* model,
+                           const Entity object_layer_entity,
+                           const Entity object_entity)
+    : mModel {model},
+      mObjectLayerEntity {object_layer_entity},
       mObjectEntity {object_entity}
 {
+  TACTILE_ASSERT(sys::is_object_layer_entity(*mModel, mObjectLayerEntity));
+  TACTILE_ASSERT(sys::is_object_entity(*mModel, mObjectEntity));
 }
 
 void RemoveObject::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& object_layer = model.get<ObjectLayer>(mObjectLayerEntity);
   object_layer.objects.push_back(mObjectEntity);
@@ -49,7 +53,7 @@ void RemoveObject::undo()
 
 void RemoveObject::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& object_layer = model.get<ObjectLayer>(mObjectLayerEntity);
 
   if (object_layer.active_object == mObjectEntity) {
@@ -65,16 +69,13 @@ void RemoveObject::redo()
 void RemoveObject::dispose()
 {
   if (mRemovedObject) {
-    spdlog::trace("[CMD] Disposing removed object");
-
-    auto& model = get_global_model();
-    model.destroy(mObjectEntity);
+    mModel->destroy(mObjectEntity);
   }
 }
 
 auto RemoveObject::get_name() const -> String
 {
-  const auto& model = get_global_model();
+  const auto& model = *mModel;
 
   const auto& strings = sys::get_current_language_strings(model);
   const auto& object = model.get<Object>(mObjectEntity);

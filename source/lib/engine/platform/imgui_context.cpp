@@ -23,7 +23,6 @@
 #include <spdlog/spdlog.h>
 
 #include "io/directories.hpp"
-#include "model/context.hpp"
 #include "ui/style/themes.hpp"
 
 namespace tactile {

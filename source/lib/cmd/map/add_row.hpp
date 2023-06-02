@@ -19,15 +19,16 @@
 
 #pragma once
 
+#include "cmd/command.hpp"
 #include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
-#include "cmd/command.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class AddRow final : public Command {
  public:
-  explicit AddRow(Entity map_entity);
+  AddRow(Model* model, Entity map_entity);
 
   void undo() override;
 
@@ -38,7 +39,8 @@ class AddRow final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Entity mMapEntity {kNullEntity};
+  Model* mModel;
+  Entity mMapEntity;
   usize mRowCount {1};
 };
 

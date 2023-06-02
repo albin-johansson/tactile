@@ -19,26 +19,30 @@
 
 #include "add_animation_frame.hpp"
 
+#include "common/debug/assert.hpp"
 #include "common/util/vectors.hpp"
 #include "components/tile.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/tileset_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-AddAnimationFrame::AddAnimationFrame(const Entity tile_entity,
+AddAnimationFrame::AddAnimationFrame(Model* model,
+                                     const Entity tile_entity,
                                      const TileIndex frame_tile_index,
                                      const ms_t frame_duration)
-    : mTileEntity {tile_entity},
+    : mModel {model},
+      mTileEntity {tile_entity},
       mFrameTileIndex {frame_tile_index},
       mFrameDuration {frame_duration}
 {
+  TACTILE_ASSERT(sys::is_tile_entity(*mModel, tile_entity));
 }
 
 void AddAnimationFrame::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& animation = model.get<TileAnimation>(mTileEntity);
   erase_at(animation.frames, mFrameIndex.value());
@@ -52,7 +56,7 @@ void AddAnimationFrame::undo()
 
 void AddAnimationFrame::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   mTileWasAnimatedBefore = model.has<TileAnimation>(mTileEntity);
 
   if (!mTileWasAnimatedBefore) {
@@ -70,7 +74,7 @@ void AddAnimationFrame::redo()
 
 auto AddAnimationFrame::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.add_animation_frame;
 }
 

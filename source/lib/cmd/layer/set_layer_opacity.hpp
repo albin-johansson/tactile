@@ -23,12 +23,13 @@
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "components/layer.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class SetLayerOpacity final : public Command {
  public:
-  SetLayerOpacity(Entity layer_entity, float opacity);
+  SetLayerOpacity(Model* model, Entity layer_entity, float new_opacity);
 
   void undo() override;
 
@@ -39,8 +40,9 @@ class SetLayerOpacity final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Entity mLayerEntity {kNullEntity};
-  float mNewOpacity {};
+  Model* mModel;
+  Entity mLayerEntity;
+  float mNewOpacity;
   Maybe<float> mOldOpacity;
 };
 

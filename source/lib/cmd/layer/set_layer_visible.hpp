@@ -19,15 +19,16 @@
 
 #pragma once
 
+#include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "cmd/command.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class SetLayerVisible final : public Command {
  public:
-  SetLayerVisible(Entity layer_entity, bool visible);
+  SetLayerVisible(Model* model, Entity layer_entity, bool new_visibility);
 
   void undo() override;
 
@@ -36,8 +37,9 @@ class SetLayerVisible final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Entity mLayerEntity {kNullEntity};
-  bool mNewVisibility {};
+  Model* mModel;
+  Entity mLayerEntity;
+  bool mNewVisibility;
   Maybe<bool> mOldVisibility;
 };
 

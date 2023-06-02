@@ -38,7 +38,7 @@ namespace tactile {
 /// The heart of the Tactile map editor.
 class App final : public AppDelegate {
  public:
-  void on_startup() override;
+  void on_startup(BackendAPI api) override;
 
   void on_shutdown() override;
 
@@ -46,13 +46,14 @@ class App final : public AppDelegate {
 
   void on_event(const cen::event_handler& event) override;
 
-  void on_font_reload() override;
+  void reload_font_files() override;
 
   [[nodiscard]] auto want_font_reload() const -> bool override { return mWantFontReload; }
+
   [[nodiscard]] auto should_stop() const -> bool override { return mShouldStop; }
 
  private:
-  // TODO Unique<Model> mModel;
+  Unique<Model> mModel;
   Dispatcher mDispatcher;
   ImVec2 mFramebufferScale {};
   bool mShouldStop     : 1 {false};

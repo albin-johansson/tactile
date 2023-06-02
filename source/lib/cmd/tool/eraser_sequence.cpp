@@ -21,21 +21,26 @@
 
 #include <utility>  // move
 
+#include "common/debug/assert.hpp"
 #include "components/layer.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-EraserSequence::EraserSequence(const Entity tile_layer_entity, TileCache old_state)
-    : mTileLayerEntity {tile_layer_entity},
+EraserSequence::EraserSequence(Model* model,
+                               const Entity tile_layer_entity,
+                               TileCache old_state)
+    : mModel {model},
+      mTileLayerEntity {tile_layer_entity},
       mOldState {std::move(old_state)}
 {
+  TACTILE_ASSERT(sys::is_tile_layer_entity(*mModel, mTileLayerEntity));
 }
 
 void EraserSequence::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
 
   for (const auto& [position, tile_id]: mOldState) {
@@ -45,7 +50,7 @@ void EraserSequence::undo()
 
 void EraserSequence::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
 
   for (const auto& [position, tile_id]: mOldState) {
@@ -55,7 +60,7 @@ void EraserSequence::redo()
 
 auto EraserSequence::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.eraser_tool;
 }
 

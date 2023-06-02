@@ -22,12 +22,13 @@
 #include "cmd/command.hpp"
 #include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class MoveAnimationFrameBackwards final : public Command {
  public:
-  MoveAnimationFrameBackwards(Entity tile_entity, usize frame_index);
+  MoveAnimationFrameBackwards(Model* model, Entity tile_entity, usize frame_index);
 
   void undo() override;
 
@@ -36,6 +37,7 @@ class MoveAnimationFrameBackwards final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mTileEntity;
   usize mFrameIndex;
 };

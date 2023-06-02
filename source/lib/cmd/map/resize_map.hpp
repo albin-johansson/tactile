@@ -25,12 +25,13 @@
 #include "common/tile_extent.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class ResizeMap final : public Command {
  public:
-  ResizeMap(Entity map_entity, TileExtent extent);
+  ResizeMap(Model* model, Entity map_entity, TileExtent extent);
 
   void undo() override;
 
@@ -39,12 +40,13 @@ class ResizeMap final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Entity mMapEntity {kNullEntity};
+  Model* mModel;
+  Entity mMapEntity;
   TileExtent mNewExtent;
-  Maybe<TileExtent> mOldExtent {};
+  Maybe<TileExtent> mOldExtent;
   MapCommandCache mCache;
 
-  [[nodiscard]] auto is_lossy_resize() const -> bool;
+  [[nodiscard]] auto _is_lossy_resize() const -> bool;
 };
 
 }  // namespace tactile::cmd

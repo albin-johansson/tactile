@@ -19,15 +19,16 @@
 
 #pragma once
 
+#include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "cmd/command.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class SetZlibCompressionLevel final : public Command {
  public:
-  SetZlibCompressionLevel(Entity map_entity, int level);
+  SetZlibCompressionLevel(Model* model, Entity map_entity, int new_level);
 
   void undo() override;
 
@@ -38,9 +39,10 @@ class SetZlibCompressionLevel final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Entity mMapEntity {kNullEntity};
-  int mNewLevel {};
-  Maybe<int> mOldLevel {};
+  Model* mModel;
+  Entity mMapEntity;
+  int mNewLevel;
+  Maybe<int> mOldLevel;
 };
 
 }  // namespace tactile::cmd

@@ -21,6 +21,8 @@
 
 #include <centurion/event.hpp>
 
+#include "common/enum/backend_api.hpp"
+
 namespace tactile {
 
 class AppDelegate {
@@ -28,7 +30,7 @@ class AppDelegate {
   virtual ~AppDelegate() noexcept = default;
 
   /// Called once just before the event loop begins running.
-  virtual void on_startup() {}
+  virtual void on_startup([[maybe_unused]] BackendAPI api) {}
 
   /// Called once immediately after the event loop stops running.
   virtual void on_shutdown() {}
@@ -39,10 +41,10 @@ class AppDelegate {
   /// Called for each polled event.
   virtual void on_event([[maybe_unused]] const cen::event_handler& handler) {}
 
-  /// Called whenever the backend font resources have been reloaded.
-  virtual void on_font_reload() {}
+  /// Called when the engine wants the app to reload all font files.
+  virtual void reload_font_files() {}
 
-  /// Indicates whether the application wants all font resources to be reloaded.
+  /// Indicates whether the application wants font resources to be reloaded.
   [[nodiscard]] virtual auto want_font_reload() const -> bool { return false; }
 
   /// Indicates whether the application wants to exit.

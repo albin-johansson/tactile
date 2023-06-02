@@ -22,12 +22,13 @@
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class SetObjectVisible final : public Command {
  public:
-  SetObjectVisible(Entity object_entity, bool visible);
+  SetObjectVisible(Model* model, Entity object_entity, bool new_visibility);
 
   void undo() override;
 
@@ -36,6 +37,7 @@ class SetObjectVisible final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mObjectEntity;
   bool mNewVisibility;
   Maybe<bool> mOldVisibility;

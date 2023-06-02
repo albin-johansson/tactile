@@ -79,11 +79,10 @@ void OpenGLBackend::end_frame()
   SDL_GL_SwapWindow(mWindow);
 }
 
-auto OpenGLBackend::reload_font_resources() -> Result
+void OpenGLBackend::reload_font_resources()
 {
   ImGui_ImplOpenGL3_DestroyFontsTexture();
   ImGui_ImplOpenGL3_CreateFontsTexture();
-  return success;
 }
 
 }  // namespace tactile

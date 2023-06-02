@@ -21,44 +21,48 @@
 
 #include <utility>  // move
 
+#include "common/debug/assert.hpp"
 #include "components/layer.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-StampSequence::StampSequence(const Entity tile_layer_entity,
+StampSequence::StampSequence(Model* model,
+                             const Entity tile_layer_entity,
                              TileCache old_state,
                              TileCache new_state)
-    : mTileLayerEntity {tile_layer_entity},
+    : mModel {model},
+      mTileLayerEntity {tile_layer_entity},
       mOldState {std::move(old_state)},
       mNewState {std::move(new_state)}
 {
+  TACTILE_ASSERT(sys::is_tile_layer_entity(*mModel, mTileLayerEntity));
 }
 
 void StampSequence::undo()
 {
-  apply_sequence(mOldState);
+  _apply_sequence(mOldState);
 }
 
 void StampSequence::redo()
 {
-  apply_sequence(mNewState);
+  _apply_sequence(mNewState);
 }
 
 auto StampSequence::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.stamp_tool;
 }
 
-void StampSequence::apply_sequence(const TileCache& cache)
+void StampSequence::_apply_sequence(const TileCache& cache)
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
 
-  for (const auto& [pos, tile]: cache) {
-    tile_layer.set_tile(pos, tile);
+  for (const auto& [position, tile_id]: cache) {
+    tile_layer.set_tile(position, tile_id);
   }
 }
 

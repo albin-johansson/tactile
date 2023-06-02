@@ -20,30 +20,32 @@
 #include "set_tile_format_compression.hpp"
 
 #include "components/map.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
 
 namespace tactile::cmd {
 
-SetTileFormatCompression::SetTileFormatCompression(const Entity map_entity,
+SetTileFormatCompression::SetTileFormatCompression(Model* model,
+                                                   const Entity map_entity,
                                                    const TileCompression compression)
-    : mMapEntity {map_entity},
+    : mModel {model},
+      mMapEntity {map_entity},
       mNewCompression {compression}
 {
 }
 
 void SetTileFormatCompression::undo()
 {
-  auto& model = get_global_model();
-  auto& format = model.get<TileFormat>(mMapEntity);
+  auto& model = *mModel;
 
+  auto& format = model.get<TileFormat>(mMapEntity);
   format.compression = mOldCompression.value();
+
   mOldCompression.reset();
 }
 
 void SetTileFormatCompression::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& format = model.get<TileFormat>(mMapEntity);
 
   mOldCompression = format.compression;
@@ -52,7 +54,7 @@ void SetTileFormatCompression::redo()
 
 auto SetTileFormatCompression::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.set_tile_format_compression;
 }
 

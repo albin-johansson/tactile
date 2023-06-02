@@ -19,16 +19,17 @@
 
 #pragma once
 
-#include "common/primitives.hpp"
-#include "common/type/ecs.hpp"
 #include "cmd/command.hpp"
 #include "cmd/map/map_command_cache.hpp"
+#include "common/primitives.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class RemoveColumn final : public Command {
  public:
-  explicit RemoveColumn(Entity map_entity);
+  RemoveColumn(Model* model, Entity map_entity);
 
   void undo() override;
 
@@ -39,7 +40,8 @@ class RemoveColumn final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Entity mMapEntity {kNullEntity};
+  Model* mModel;
+  Entity mMapEntity;
   MapCommandCache mCache;
   usize mColumnCount {1};
 };

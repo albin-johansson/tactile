@@ -19,14 +19,15 @@
 
 #pragma once
 
-#include "common/type/ecs.hpp"
 #include "cmd/command.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class MoveLayerDown final : public Command {
  public:
-  MoveLayerDown(Entity map_entity, Entity layer_entity);
+  MoveLayerDown(Model* model, Entity map_entity, Entity layer_entity);
 
   void undo() override;
 
@@ -35,8 +36,9 @@ class MoveLayerDown final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Entity mMapEntity {kNullEntity};
-  Entity mLayerEntity {kNullEntity};
+  Model* mModel;
+  Entity mMapEntity;
+  Entity mLayerEntity;
 };
 
 }  // namespace tactile::cmd

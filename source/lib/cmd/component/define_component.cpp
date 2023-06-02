@@ -21,35 +21,42 @@
 
 #include <utility>  // move
 
-#include "model/context.hpp"
+#include "common/debug/assert.hpp"
 #include "model/systems/component/component_set.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-DefineComponent::DefineComponent(const Entity component_set_entity, String name)
-    : mComponentSetEntity {component_set_entity},
+DefineComponent::DefineComponent(Model* model,
+                                 const Entity component_set_entity,
+                                 String name)
+    : mModel {model},
+      mComponentSetEntity {component_set_entity},
       mName {std::move(name)}
 {
+  TACTILE_ASSERT(sys::is_component_set_entity(*mModel, mComponentSetEntity));
 }
 
 void DefineComponent::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
+
   auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
   sys::remove_component(model, component_set, mName);
 }
 
 void DefineComponent::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
+
   auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
   sys::create_component(model, component_set, mName);
 }
 
 auto DefineComponent::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.define_comp;
 }
 

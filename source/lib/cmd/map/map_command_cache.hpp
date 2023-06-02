@@ -23,7 +23,7 @@
 #include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/tree_map.hpp"
-#include "model/context.hpp"
+#include "model/model.hpp"
 
 namespace tactile {
 

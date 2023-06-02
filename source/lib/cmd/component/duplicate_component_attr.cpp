@@ -21,39 +21,42 @@
 
 #include <utility>  // move
 
-#include "model/context.hpp"
+#include "common/debug/assert.hpp"
 #include "model/systems/component/component_def.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-DuplicateComponentAttr::DuplicateComponentAttr(const Entity definition_entity,
+DuplicateComponentAttr::DuplicateComponentAttr(Model* model,
+                                               const Entity definition_entity,
                                                String attribute_name)
-    : mComponentDefinitionEntity {definition_entity},
+    : mModel {model},
+      mDefinitionEntity {definition_entity},
       mAttributeName {std::move(attribute_name)}
 {
+  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, mDefinitionEntity));
 }
 
 void DuplicateComponentAttr::undo()
 {
-  auto& model = get_global_model();
-  sys::remove_component_attribute(model,
-                                  mComponentDefinitionEntity,
-                                  mDuplicatedName.value());
+  auto& model = *mModel;
+
+  sys::remove_component_attribute(model, mDefinitionEntity, mDuplicatedName.value());
   mDuplicatedName.reset();
 }
 
 void DuplicateComponentAttr::redo()
 {
-  auto& model = get_global_model();
-  mDuplicatedName = sys::duplicate_component_attribute(model,
-                                                       mComponentDefinitionEntity,
-                                                       mAttributeName);
+  auto& model = *mModel;
+
+  mDuplicatedName =
+      sys::duplicate_component_attribute(model, mDefinitionEntity, mAttributeName);
 }
 
 auto DuplicateComponentAttr::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.duplicate_comp_attr;
 }
 

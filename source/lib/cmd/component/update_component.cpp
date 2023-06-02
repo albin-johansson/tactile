@@ -21,25 +21,29 @@
 
 #include <utility>  // move
 
+#include "common/debug/assert.hpp"
 #include "common/util/lookup.hpp"
 #include "components/component.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-UpdateComponent::UpdateComponent(const Entity definition_entity,
+UpdateComponent::UpdateComponent(Model* model,
+                                 const Entity definition_entity,
                                  String attribute_name,
                                  Attribute new_value)
-    : mDefinitionEntity {definition_entity},
+    : mModel {model},
+      mDefinitionEntity {definition_entity},
       mAttributeName {std::move(attribute_name)},
       mNewValue {std::move(new_value)}
 {
+  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, mDefinitionEntity));
 }
 
 void UpdateComponent::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
   definition.attributes[mAttributeName] = mOldValue.value();
@@ -49,7 +53,7 @@ void UpdateComponent::undo()
 
 void UpdateComponent::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
 
   mOldValue = lookup_in(definition.attributes, mAttributeName);
@@ -71,7 +75,7 @@ auto UpdateComponent::merge_with(const Command* cmd) -> bool
 
 auto UpdateComponent::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.update_comp_attr_defaults;
 }
 

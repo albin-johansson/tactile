@@ -24,12 +24,13 @@
 #include "common/enum/tile_encoding.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class SetTileFormatEncoding final : public Command {
  public:
-  SetTileFormatEncoding(Entity map_entity, TileEncoding encoding);
+  SetTileFormatEncoding(Model* model, Entity map_entity, TileEncoding encoding);
 
   void undo() override;
 
@@ -38,7 +39,8 @@ class SetTileFormatEncoding final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Entity mMapEntity {kNullEntity};
+  Model* mModel;
+  Entity mMapEntity;
   TileEncoding mNewEncoding;
   Maybe<TileEncoding> mOldEncoding;
   Maybe<TileCompression> mOldCompression;

@@ -19,17 +19,17 @@
 
 #pragma once
 
-#include "common/macros.hpp"
+#include "cmd/command.hpp"
 #include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "cmd/command.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class DuplicateLayer final : public Command {
  public:
-  DuplicateLayer(Entity map_entity, Entity layer_entity);
+  DuplicateLayer(Model* model, Entity map_entity, Entity layer_entity);
 
   void undo() override;
 
@@ -38,8 +38,9 @@ class DuplicateLayer final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Entity mMapEntity {kNullEntity};
-  Entity mSourceLayerEntity {kNullEntity};
+  Model* mModel;
+  Entity mMapEntity;
+  Entity mSourceLayerEntity;
   Entity mNewLayerEntity {kNullEntity};
   Entity mNewLayerParentEntity {kNullEntity};
   Maybe<usize> mNewIndex;

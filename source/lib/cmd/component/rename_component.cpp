@@ -21,21 +21,26 @@
 
 #include <utility>  // move
 
+#include "common/debug/assert.hpp"
 #include "components/component.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-RenameComponent::RenameComponent(const Entity definition_entity, String new_name)
-    : mDefinitionEntity {definition_entity},
+RenameComponent::RenameComponent(Model* model,
+                                 const Entity definition_entity,
+                                 String new_name)
+    : mModel {model},
+      mDefinitionEntity {definition_entity},
       mNewName {std::move(new_name)}
 {
+  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, mDefinitionEntity));
 }
 
 void RenameComponent::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
   definition.name = mOldName.value();
@@ -45,7 +50,7 @@ void RenameComponent::undo()
 
 void RenameComponent::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
   mOldName = definition.name;
@@ -55,7 +60,7 @@ void RenameComponent::redo()
 
 auto RenameComponent::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.rename_comp;
 }
 

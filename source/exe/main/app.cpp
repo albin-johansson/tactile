@@ -41,7 +41,6 @@
 #include "io/proto/history.hpp"
 #include "io/proto/session.hpp"
 #include "io/proto/settings.hpp"
-#include "model/context.hpp"
 #include "model/delegates/command_delegate.hpp"
 #include "model/delegates/file_delegate.hpp"
 #include "model/delegates/font_delegate.hpp"
@@ -51,9 +50,11 @@
 #include "model/delegates/menu_delegate.hpp"
 #include "model/delegates/settings_delegate.hpp"
 #include "model/delegates/viewport_delegate.hpp"
+#include "model/settings.hpp"
 #include "model/systems/file_history_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/menu_system.hpp"
+#include "model/systems/model_system.hpp"
 #include "model/systems/texture_system.hpp"
 #include "model/systems/widget_system.hpp"
 #include "ui/dialog/about_dialog.hpp"
@@ -74,17 +75,20 @@
 #include "ui/dock/tileset/tileset_dock.hpp"
 #include "ui/menu/menu_bar.hpp"
 #include "ui/style/colors.hpp"
+#include "ui/style/fonts.hpp"
 #include "ui/style/themes.hpp"
 #include "ui/viewport/viewport_widget.hpp"
 
 namespace tactile {
 
-void App::on_startup()
+void App::on_startup(const BackendAPI api)
 {
-  auto& model = get_global_model();
+  mModel = std::make_unique<Model>();
+  auto& model = *mModel;
+
+  sys::init_model(model, api);
 
   _subscribe_to_events();
-  // init_default_shortcuts();
 
   auto& icons = model.get<Icons>();
   icons.tactile_icon = sys::create_texture(model, find_resource("assets/icon.png"));
@@ -182,7 +186,7 @@ void App::_subscribe_to_events()
 
 void App::_init_persistent_settings()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& settings = model.get<Settings>();
   settings.copy_from(load_settings_from_disk());
@@ -206,7 +210,7 @@ void App::_init_persistent_settings()
 
 void App::_init_widgets()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   uint32 idx = 0;
   sys::add_widget(model, idx++, ui::show_menu_bar);
@@ -250,7 +254,7 @@ void App::_init_widgets()
 
 void App::on_shutdown()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   sys::store_open_documents_in_file_history(model);
   save_settings_to_disk(model.get<Settings>());
@@ -262,7 +266,7 @@ void App::on_shutdown()
 
 void App::on_update()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   // TODO update animated tiles
   sys::update_menu_items(model, mDispatcher);
@@ -285,72 +289,73 @@ void App::on_update()
 
 void App::on_event(const cen::event_handler& event)
 {
-  tactile::on_event(get_global_model(), mDispatcher, event);
+  tactile::on_event(*mModel, mDispatcher, event);
 }
 
-void App::on_font_reload()
+void App::reload_font_files()
 {
+  ui::reload_imgui_fonts(mModel->get<Settings>());
   mWantFontReload = false;
 }
 
 void App::_on_menu_action(const MenuActionEvent& event)
 {
   spdlog::trace("[MenuActionEvent] action: {}", event.action);
-  on_menu_action(get_global_model(), mDispatcher, event);
+  on_menu_action(*mModel, mDispatcher, event);
 }
 
 void App::_on_undo(const UndoEvent& event)
 {
   spdlog::trace("[UndoEvent]");
-  on_undo(get_global_model(), event);
+  on_undo(*mModel, event);
 }
 
 void App::_on_redo(const RedoEvent& event)
 {
   spdlog::trace("[RedoEvent]");
-  on_redo(get_global_model(), event);
+  on_redo(*mModel, event);
 }
 
 void App::_on_set_command_capacity(const SetCommandCapacityEvent& event)
 {
   spdlog::trace("[SetCommandCapacityEvent] capacity: {}", event.capacity);
-  on_set_command_capacity(get_global_model(), event);
+  on_set_command_capacity(*mModel, event);
 }
 
 void App::_on_open_document(const OpenDocumentEvent& event)
 {
   spdlog::trace("[OpenDocumentEvent] document: {}", event.document);
-  on_open_document(get_global_model(), event);
+  on_open_document(*mModel, event);
 }
 
 void App::_on_close_document(const CloseDocumentEvent& event)
 {
   spdlog::trace("[CloseDocumentEvent] document: {}", event.document);
-  on_close_document(get_global_model(), event);
+  on_close_document(*mModel, event);
 }
 
 void App::_on_select_document(const SelectDocumentEvent& event)
 {
   spdlog::trace("[SelectDocumentEvent] document: {}", event.document);
-  on_select_document(get_global_model(), event);
+  on_select_document(*mModel, event);
 }
 
 void App::_on_save(const SaveEvent& event)
 {
   spdlog::trace("[SaveEvent]");
-  on_save(get_global_model(), mDispatcher, event);
+  on_save(*mModel, mDispatcher, event);
 }
 
 void App::_on_save_as(const SaveAsEvent& event)
 {
   spdlog::trace("[SaveAsEvent]");
-  on_save_as(get_global_model(), mDispatcher, event);
+  on_save_as(*mModel, mDispatcher, event);
 }
 
 void App::_on_show_save_as_dialog(const ShowSaveAsDialogEvent& event)
 {
   spdlog::trace("[ShowSaveAsDialogEvent]");
-  on_show_save_as_dialog(get_global_model(), mDispatcher, event);
+  on_show_save_as_dialog(*mModel, mDispatcher, event);
 }
 
 void App::_on_quit(const QuitEvent&)
@@ -362,19 +367,19 @@ void App::_on_quit(const QuitEvent&)
 void App::_on_show_new_map_dialog(const ShowNewMapDialogEvent& event)
 {
   spdlog::trace("[ShowNewMapDialogEvent]");
-  on_show_new_map_dialog(get_global_model(), event);
+  on_show_new_map_dialog(*mModel, event);
 }
 
 void App::_on_show_open_map_dialog(const ShowOpenMapDialogEvent& event)
 {
   spdlog::trace("[ShowOpenMapDialogEvent]");
-  on_show_open_map_dialog(get_global_model(), event);
+  on_show_open_map_dialog(*mModel, event);
 }
 
 void App::_on_show_resize_map_dialog(const ShowResizeMapDialogEvent& event)
 {
   spdlog::trace("[ShowResizeMapDialogEvent]");
-  on_show_resize_map_dialog(get_global_model(), event);
+  on_show_resize_map_dialog(*mModel, event);
 }
 
 void App::_on_create_map(const CreateMapEvent& event)
@@ -383,127 +388,127 @@ void App::_on_create_map(const CreateMapEvent& event)
                 event.row_count,
                 event.column_count,
                 event.tile_size);
-  on_create_map(get_global_model(), event);
+  on_create_map(*mModel, event);
 }
 
 void App::_on_open_map(const OpenMapEvent& event)
 {
   spdlog::trace("[OpenMapEvent] path: {}", event.path);
-  on_open_map(get_global_model(), event);
+  on_open_map(*mModel, event);
 }
 
 void App::_on_resize_map(const ResizeMapEvent& event)
 {
   spdlog::trace("[ResizeMapEvent] rows: {}, cols: {}", event.row_count, event.col_count);
-  on_resize_map(get_global_model(), event);
+  on_resize_map(*mModel, event);
 }
 
 void App::_on_add_row(const AddRowEvent& event)
 {
   spdlog::trace("[AddRowEvent]");
-  on_add_row(get_global_model(), event);
+  on_add_row(*mModel, event);
 }
 
 void App::_on_add_column(const AddColumnEvent& event)
 {
   spdlog::trace("[AddColumnEvent]");
-  on_add_column(get_global_model(), event);
+  on_add_column(*mModel, event);
 }
 
 void App::_on_remove_row(const RemoveRowEvent& event)
 {
   spdlog::trace("[RemoveRowEvent]");
-  on_remove_row(get_global_model(), event);
+  on_remove_row(*mModel, event);
 }
 
 void App::_on_remove_column(const RemoveColumnEvent& event)
 {
   spdlog::trace("[RemoveColumnEvent]");
-  on_remove_column(get_global_model(), event);
+  on_remove_column(*mModel, event);
 }
 
 void App::_on_fix_tiles_in_map(const FixTilesInMapEvent& event)
 {
   spdlog::trace("[FixTilesInMapEvent]");
-  on_fix_tiles_in_map(get_global_model(), event);
+  on_fix_tiles_in_map(*mModel, event);
 }
 
 void App::_on_export_as_godot_scene(const ExportAsGodotSceneEvent& event)
 {
   spdlog::trace("[ExportAsGodotSceneEvent] root: {}", event.root_dir);
-  on_export_as_godot_scene(get_global_model(), event);
+  on_export_as_godot_scene(*mModel, event);
 }
 
 void App::_on_inspect_map(const InspectMapEvent& event)
 {
   spdlog::trace("[InspectMapEvent]");
-  on_inspect_map(get_global_model(), event);
+  on_inspect_map(*mModel, event);
 }
 
 void App::_on_set_tile_format_encoding(const SetTileFormatEncodingEvent& event)
 {
   spdlog::trace("[SetTileFormatEncodingEvent] encoding: {}", event.encoding);
-  on_set_tile_format_encoding(get_global_model(), event);
+  on_set_tile_format_encoding(*mModel, event);
 }
 
 void App::_on_set_tile_format_compression(const SetTileFormatCompressionEvent& event)
 {
   spdlog::trace("[SetTileFormatCompressionEvent] compression: {}", event.compression);
-  on_set_tile_format_compression(get_global_model(), event);
+  on_set_tile_format_compression(*mModel, event);
 }
 
 void App::_on_set_zlib_compression_level(const SetZlibCompressionLevelEvent& event)
 {
   spdlog::trace("[SetZlibCompressionLevelEvent] level: {}", event.level);
-  on_set_zlib_compression_level(get_global_model(), event);
+  on_set_zlib_compression_level(*mModel, event);
 }
 
 void App::_on_set_zstd_compression_level(const SetZstdCompressionLevelEvent& event)
 {
   spdlog::trace("[SetZstdCompressionLevelEvent] level: {}", event.level);
-  on_set_zstd_compression_level(get_global_model(), event);
+  on_set_zstd_compression_level(*mModel, event);
 }
 
 void App::_on_create_layer(const CreateLayerEvent& event)
 {
   spdlog::trace("[CreateLayerEvent] type: {}", event.type);
-  on_create_layer(get_global_model(), event);
+  on_create_layer(*mModel, event);
 }
 
 void App::_on_remove_layer(const RemoveLayerEvent& event)
 {
   spdlog::trace("[RemoveLayerEvent] layer: {}", event.layer);
-  on_remove_layer(get_global_model(), event);
+  on_remove_layer(*mModel, event);
 }
 
 void App::_on_rename_layer(const RenameLayerEvent& event)
 {
   spdlog::trace("[RenameLayerEvent] layer: {}, name: {}", event.layer, event.name);
-  on_rename_layer(get_global_model(), event);
+  on_rename_layer(*mModel, event);
 }
 
 void App::_on_duplicate_layer(const DuplicateLayerEvent& event)
 {
   spdlog::trace("[DuplicateLayerEvent] layer: {}", event.layer);
-  on_duplicate_layer(get_global_model(), event);
+  on_duplicate_layer(*mModel, event);
 }
 
 void App::_on_select_layer(const SelectLayerEvent& event)
 {
   spdlog::trace("[SelectLayerEvent] layer: {}", event.layer);
-  on_select_layer(get_global_model(), event);
+  on_select_layer(*mModel, event);
 }
 
 void App::_on_move_layer_up(const MoveLayerUpEvent& event)
 {
   spdlog::trace("[MoveLayerUpEvent] layer: {}", event.layer);
-  on_move_layer_up(get_global_model(), event);
+  on_move_layer_up(*mModel, event);
 }
 
 void App::_on_move_layer_down(const MoveLayerDownEvent& event)
 {
   spdlog::trace("[MoveLayerDownEvent] layer: {}", event.layer);
-  on_move_layer_down(get_global_model(), event);
+  on_move_layer_down(*mModel, event);
 }
 
 void App::_on_set_layer_opacity(const SetLayerOpacityEvent& event)
@@ -511,7 +516,7 @@ void App::_on_set_layer_opacity(const SetLayerOpacityEvent& event)
   spdlog::trace("[SetLayerOpacityEvent] layer: {}, opacity: {:.2f}",
                 event.layer,
                 event.opacity);
-  on_set_layer_opacity(get_global_model(), event);
+  on_set_layer_opacity(*mModel, event);
 }
 
 void App::_on_set_layer_visible(const SetLayerVisibleEvent& event)
@@ -519,7 +524,7 @@ void App::_on_set_layer_visible(const SetLayerVisibleEvent& event)
   spdlog::trace("[SetLayerVisibleEvent] layer: {}, visible: {}",
                 event.layer,
                 event.visible);
-  on_set_layer_visible(get_global_model(), event);
+  on_set_layer_visible(*mModel, event);
 }
 
 void App::_on_show_layer_rename_dialog(const ShowLayerRenameDialogEvent& event)
@@ -537,121 +542,121 @@ void App::_on_reload_fonts(const ReloadFontsEvent&)
 void App::_on_increase_font_size(const IncreaseFontSizeEvent& event)
 {
   spdlog::trace("[IncreaseFontSizeEvent]");
-  on_increase_font_size(get_global_model(), mDispatcher, event);
+  on_increase_font_size(*mModel, mDispatcher, event);
 }
 
 void App::_on_decrease_font_size(const DecreaseFontSizeEvent& event)
 {
   spdlog::trace("[DecreaseFontSizeEvent]");
-  on_decrease_font_size(get_global_model(), mDispatcher, event);
+  on_decrease_font_size(*mModel, mDispatcher, event);
 }
 
 void App::_on_reset_font_size(const ResetFontSizeEvent& event)
 {
   spdlog::trace("[ResetFontSizeEvent]");
-  on_reset_font_size(get_global_model(), mDispatcher, event);
+  on_reset_font_size(*mModel, mDispatcher, event);
 }
 
 void App::_on_show_settings(const ShowSettingsEvent& event)
 {
   spdlog::trace("[ShowSettingsEvent]");
-  on_show_settings(get_global_model(), event);
+  on_show_settings(*mModel, event);
 }
 
 void App::_on_set_settings(const SetSettingsEvent& event)
 {
   spdlog::trace("[SetSettingsEvent]");
-  on_set_settings(get_global_model(), mDispatcher, event);
+  on_set_settings(*mModel, mDispatcher, event);
 }
 
 void App::_on_set_flag_setting(const SetFlagSettingEvent& event)
 {
   spdlog::trace("[SetFlagSettingEvent] flag: {}, value: {}", event.flag, event.value);
-  on_set_flag_setting(get_global_model(), event);
+  on_set_flag_setting(*mModel, event);
 }
 
 void App::_on_negate_flag_setting(const NegateFlagSettingEvent& event)
 {
   spdlog::trace("[NegateFlagSettingEvent] flag: {}", event.flag);
-  on_negate_flag_setting(get_global_model(), event);
+  on_negate_flag_setting(*mModel, event);
 }
 
 void App::_on_set_viewport_overlay_pos(const SetViewportOverlayPosEvent& event)
 {
   spdlog::trace("[SetViewportOverlayPosEvent] pos: {}", magic_enum::enum_name(event.pos));
-  on_set_viewport_overlay_pos(get_global_model(), event);
+  on_set_viewport_overlay_pos(*mModel, event);
 }
 
 void App::_on_set_language(const SetLanguageEvent& event)
 {
   spdlog::trace("[SetLanguageEvent] lang: {}", event.language);
-  on_set_language(get_global_model(), mDispatcher, event);
+  on_set_language(*mModel, mDispatcher, event);
 }
 
 void App::_on_set_theme(const SetThemeEvent& event)
 {
   spdlog::trace("[SetThemeEvent] theme: {}", event.theme);
-  on_set_theme(get_global_model(), event);
+  on_set_theme(*mModel, event);
 }
 
 void App::_on_reset_dock_visibilities(const ResetDockVisibilitiesEvent& event)
 {
   spdlog::trace("[ResetDockVisibilitiesEvent]");
-  on_reset_dock_visibilities(get_global_model(), event);
+  on_reset_dock_visibilities(*mModel, event);
 }
 
 void App::_on_viewport_mouse_pressed(const ViewportMousePressedEvent& event)
 {
   spdlog::trace("[ViewportMousePressedEvent]");
-  on_viewport_mouse_pressed(get_global_model(), mDispatcher, event);
+  on_viewport_mouse_pressed(*mModel, mDispatcher, event);
 }
 
 void App::_on_viewport_mouse_dragged(const ViewportMouseDraggedEvent& event)
 {
   spdlog::trace("[ViewportMouseDraggedEvent]");
-  on_viewport_mouse_dragged(get_global_model(), mDispatcher, event);
+  on_viewport_mouse_dragged(*mModel, mDispatcher, event);
 }
 
 void App::_on_viewport_mouse_released(const ViewportMouseReleasedEvent& event)
 {
   spdlog::trace("[ViewportMouseReleasedEvent]");
-  on_viewport_mouse_released(get_global_model(), mDispatcher, event);
+  on_viewport_mouse_released(*mModel, mDispatcher, event);
 }
 
 void App::_on_viewport_mouse_entered(const ViewportMouseEnteredEvent& event)
 {
   spdlog::trace("[ViewportMouseEnteredEvent]");
-  on_viewport_mouse_entered(get_global_model(), mDispatcher, event);
+  on_viewport_mouse_entered(*mModel, mDispatcher, event);
 }
 
 void App::_on_viewport_mouse_exited(const ViewportMouseExitedEvent& event)
 {
   spdlog::trace("[ViewportMouseExitedEvent]");
-  on_viewport_mouse_exited(get_global_model(), mDispatcher, event);
+  on_viewport_mouse_exited(*mModel, mDispatcher, event);
 }
 
 void App::_on_center_viewport(const CenterViewportEvent& event)
 {
   spdlog::trace("[CenterViewportEvent] viewport: {}", event.viewport);
-  on_center_viewport(get_global_model(), event);
+  on_center_viewport(*mModel, event);
 }
 
 void App::_on_reset_viewport_zoom(const ResetViewportZoomEvent& event)
 {
   spdlog::trace("[ResetViewportZoomEvent] viewport: {}", event.viewport);
-  on_reset_viewport_zoom(get_global_model(), event);
+  on_reset_viewport_zoom(*mModel, event);
 }
 
 void App::_on_increase_viewport_zoom(const IncreaseViewportZoomEvent& event)
 {
   spdlog::trace("[IncreaseViewportZoomEvent] viewport: {}", event.viewport);
-  on_increase_viewport_zoom(get_global_model(), event);
+  on_increase_viewport_zoom(*mModel, event);
 }
 
 void App::_on_decrease_viewport_zoom(const DecreaseViewportZoomEvent& event)
 {
   spdlog::trace("[DecreaseViewportZoomEvent] viewport: {}", event.viewport);
-  on_decrease_viewport_zoom(get_global_model(), event);
+  on_decrease_viewport_zoom(*mModel, event);
 }
 
 void App::_on_offset_viewport(const OffsetViewportEvent& event)
@@ -659,7 +664,7 @@ void App::_on_offset_viewport(const OffsetViewportEvent& event)
   spdlog::trace("[OffsetViewportEvent] viewport: {}, delta: {}",
                 event.viewport,
                 event.delta);
-  on_offset_viewport(get_global_model(), event);
+  on_offset_viewport(*mModel, event);
 }
 
 void App::_on_set_viewport_limits(const SetViewportLimitsEvent& event)
@@ -668,37 +673,37 @@ void App::_on_set_viewport_limits(const SetViewportLimitsEvent& event)
                 event.viewport,
                 event.min_offset,
                 event.max_offset);
-  on_set_viewport_limits(get_global_model(), event);
+  on_set_viewport_limits(*mModel, event);
 }
 
 void App::_on_set_dynamic_viewport_info(const SetDynamicViewportInfoEvent& event)
 {
   // This event is usually dispatched multiple times for each frame, so we won't log it.
-  on_set_dynamic_viewport_info(get_global_model(), event);
+  on_set_dynamic_viewport_info(*mModel, event);
 }
 
 void App::_on_pan_viewport_up(const PanViewportUpEvent& event)
 {
   spdlog::trace("[PanViewportUpEvent] viewport: {}", event.viewport);
-  on_pan_viewport_up(get_global_model(), event);
+  on_pan_viewport_up(*mModel, event);
 }
 
 void App::_on_pan_viewport_down(const PanViewportDownEvent& event)
 {
   spdlog::trace("[PanViewportDownEvent] viewport: {}", event.viewport);
-  on_pan_viewport_down(get_global_model(), event);
+  on_pan_viewport_down(*mModel, event);
 }
 
 void App::_on_pan_viewport_left(const PanViewportLeftEvent& event)
 {
   spdlog::trace("[PanViewportLeftEvent] viewport: {}", event.viewport);
-  on_pan_viewport_left(get_global_model(), event);
+  on_pan_viewport_left(*mModel, event);
 }
 
 void App::_on_pan_viewport_right(const PanViewportRightEvent& event)
 {
   spdlog::trace("[PanViewportRightEvent] viewport: {}", event.viewport);
-  on_pan_viewport_right(get_global_model(), event);
+  on_pan_viewport_right(*mModel, event);
 }
 
 }  // namespace tactile

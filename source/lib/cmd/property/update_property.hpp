@@ -23,12 +23,13 @@
 #include "common/attribute.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class UpdateProperty final : public Command {
  public:
-  UpdateProperty(Entity context_entity, String name, Attribute new_value);
+  UpdateProperty(Model* model, Entity context_entity, String name, Attribute new_value);
 
   void undo() override;
 
@@ -39,6 +40,7 @@ class UpdateProperty final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mContextEntity;
   String mName;
   Attribute mNewValue;

@@ -190,6 +190,9 @@ void on_create_map(Model& model, const CreateMapEvent& event);
 /**
  * Tries to push a command to the currently active document, if there is one.
  *
+ * \warning The provided model must outlive the created command, since all commands store
+ *          a raw pointer to their associated model instance.
+ *
  * \tparam T a command type.
  * \param model the associated model.
  * \param args pack of command constructor arguments.
@@ -200,7 +203,7 @@ void try_execute(Model& model, Args&&... args)
   const auto document_entity = get_active_document(model);
   if (document_entity != kNullEntity) {
     auto& commands = model.get<CommandStack>(document_entity);
-    commands.push<T>(std::forward<Args>(args)...);
+    commands.push<T>(&model, std::forward<Args>(args)...);
   }
 }
 

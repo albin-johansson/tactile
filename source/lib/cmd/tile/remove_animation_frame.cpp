@@ -19,21 +19,25 @@
 
 #include "remove_animation_frame.hpp"
 
-#include "model/context.hpp"
+#include "common/debug/assert.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-RemoveAnimationFrame::RemoveAnimationFrame(const Entity tile_entity,
+RemoveAnimationFrame::RemoveAnimationFrame(Model* model,
+                                           const Entity tile_entity,
                                            const usize frame_index)
-    : mTileEntity {tile_entity},
+    : mModel {model},
+      mTileEntity {tile_entity},
       mFrameIndex {frame_index}
 {
+  TACTILE_ASSERT(sys::is_tile_entity(*mModel, mTileEntity));
 }
 
 void RemoveAnimationFrame::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   if (mRemovedAnimation.has_value()) {
     auto& animation = model.add<TileAnimation>(mTileEntity);
@@ -53,7 +57,7 @@ void RemoveAnimationFrame::undo()
 
 void RemoveAnimationFrame::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   const auto& tile = model.get<Tile>(mTileEntity);
   auto& animation = model.get<TileAnimation>(mTileEntity);
@@ -78,7 +82,7 @@ void RemoveAnimationFrame::redo()
 
 auto RemoveAnimationFrame::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.remove_animation_frame;
 }
 

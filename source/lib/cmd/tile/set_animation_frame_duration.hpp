@@ -24,12 +24,14 @@
 #include "common/type/chrono.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class SetAnimationFrameDuration final : public Command {
  public:
-  SetAnimationFrameDuration(Entity tile_entity,
+  SetAnimationFrameDuration(Model* model,
+                            Entity tile_entity,
                             usize frame_index,
                             ms_t new_frame_duration);
 
@@ -42,6 +44,7 @@ class SetAnimationFrameDuration final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mTileEntity;
   usize mFrameIndex;
   ms_t mNewFrameDuration;

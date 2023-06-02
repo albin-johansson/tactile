@@ -19,30 +19,36 @@
 
 #include "set_object_visible.hpp"
 
+#include "common/debug/assert.hpp"
 #include "components/object.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-SetObjectVisible::SetObjectVisible(const Entity object_entity, const bool visible)
-    : mObjectEntity {object_entity},
-      mNewVisibility {visible}
+SetObjectVisible::SetObjectVisible(Model* model,
+                                   const Entity object_entity,
+                                   const bool new_visibility)
+    : mModel {model},
+      mObjectEntity {object_entity},
+      mNewVisibility {new_visibility}
 {
+  TACTILE_ASSERT(sys::is_object_entity(*mModel, mObjectEntity));
 }
 
 void SetObjectVisible::undo()
 {
-  auto& model = get_global_model();
-  auto& object = model.get<Object>(mObjectEntity);
+  auto& model = *mModel;
 
+  auto& object = model.get<Object>(mObjectEntity);
   object.visible = mOldVisibility.value();
+
   mOldVisibility.reset();
 }
 
 void SetObjectVisible::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& object = model.get<Object>(mObjectEntity);
 
   mOldVisibility = static_cast<bool>(object.visible);
@@ -51,7 +57,7 @@ void SetObjectVisible::redo()
 
 auto SetObjectVisible::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return mNewVisibility ? strings.cmd.show_object : strings.cmd.hide_object;
 }
 

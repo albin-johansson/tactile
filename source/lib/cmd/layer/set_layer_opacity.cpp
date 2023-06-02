@@ -19,30 +19,36 @@
 
 #include "set_layer_opacity.hpp"
 
+#include "common/debug/assert.hpp"
 #include "components/layer.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-SetLayerOpacity::SetLayerOpacity(const Entity layer_entity, const float opacity)
-    : mLayerEntity {layer_entity},
-      mNewOpacity {opacity}
+SetLayerOpacity::SetLayerOpacity(Model* model,
+                                 const Entity layer_entity,
+                                 const float new_opacity)
+    : mModel {model},
+      mLayerEntity {layer_entity},
+      mNewOpacity {new_opacity}
 {
+  TACTILE_ASSERT(sys::is_layer_entity(*mModel, mLayerEntity));
 }
 
 void SetLayerOpacity::undo()
 {
-  auto& model = get_global_model();
-  auto& layer = model.get<Layer>(mLayerEntity);
+  auto& model = *mModel;
 
+  auto& layer = model.get<Layer>(mLayerEntity);
   layer.opacity = mOldOpacity.value();
+
   mOldOpacity.reset();
 }
 
 void SetLayerOpacity::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& layer = model.get<Layer>(mLayerEntity);
 
   mOldOpacity = layer.opacity;
@@ -63,7 +69,7 @@ auto SetLayerOpacity::merge_with(const Command* cmd) -> bool
 
 auto SetLayerOpacity::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.set_layer_opacity;
 }
 

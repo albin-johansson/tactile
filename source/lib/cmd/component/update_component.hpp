@@ -23,13 +23,17 @@
 #include "common/attribute.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 /// Command for changing the default value of an attribute in a component.
 class UpdateComponent final : public Command {
  public:
-  UpdateComponent(Entity definition_entity, String attribute_name, Attribute new_value);
+  UpdateComponent(Model* model,
+                  Entity definition_entity,
+                  String attribute_name,
+                  Attribute new_value);
 
   void undo() override;
 
@@ -40,6 +44,7 @@ class UpdateComponent final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mDefinitionEntity;
   String mAttributeName;
   Attribute mNewValue;

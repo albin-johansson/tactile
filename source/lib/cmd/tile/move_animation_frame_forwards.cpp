@@ -19,23 +19,27 @@
 
 #include "move_animation_frame_forwards.hpp"
 
+#include "common/debug/assert.hpp"
 #include "common/util/vectors.hpp"
 #include "components/tile.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-MoveAnimationFrameForwards::MoveAnimationFrameForwards(const Entity tile_entity,
+MoveAnimationFrameForwards::MoveAnimationFrameForwards(Model* model,
+                                                       const Entity tile_entity,
                                                        const usize frame_index)
-    : mTileEntity {tile_entity},
+    : mModel {model},
+      mTileEntity {tile_entity},
       mFrameIndex {frame_index}
 {
+  TACTILE_ASSERT(sys::is_tile_entity(*mModel, mTileEntity));
 }
 
 void MoveAnimationFrameForwards::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& animation = model.get<TileAnimation>(mTileEntity);
 
   const TileAnimationFrame frame {
@@ -49,7 +53,7 @@ void MoveAnimationFrameForwards::undo()
 
 void MoveAnimationFrameForwards::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& animation = model.get<TileAnimation>(mTileEntity);
 
   const TileAnimationFrame frame {
@@ -63,7 +67,7 @@ void MoveAnimationFrameForwards::redo()
 
 auto MoveAnimationFrameForwards::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.move_animation_frame_forwards;
 }
 

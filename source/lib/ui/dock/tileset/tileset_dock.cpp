@@ -26,7 +26,6 @@
 #include "components/map.hpp"
 #include "components/tileset.hpp"
 #include "components/viewport.hpp"
-#include "model/context.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"

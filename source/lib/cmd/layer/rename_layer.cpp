@@ -21,21 +21,24 @@
 
 #include <utility>  // move
 
+#include "common/debug/assert.hpp"
 #include "components/context.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-RenameLayer::RenameLayer(const Entity layer_entity, String name)
-    : mLayerEntity {layer_entity},
+RenameLayer::RenameLayer(Model* model, const Entity layer_entity, String name)
+    : mModel {model},
+      mLayerEntity {layer_entity},
       mNewName {std::move(name)}
 {
+  TACTILE_ASSERT(sys::is_layer_entity(*mModel, mLayerEntity));
 }
 
 void RenameLayer::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& layer_context = model.get<Context>(mLayerEntity);
   layer_context.name = mOldName.value();
@@ -45,7 +48,7 @@ void RenameLayer::undo()
 
 void RenameLayer::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& layer_context = model.get<Context>(mLayerEntity);
 
   mOldName = layer_context.name;
@@ -54,7 +57,7 @@ void RenameLayer::redo()
 
 auto RenameLayer::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.rename_layer;
 }
 

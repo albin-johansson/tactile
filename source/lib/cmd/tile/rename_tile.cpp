@@ -21,21 +21,24 @@
 
 #include <utility>  // move
 
+#include "common/debug/assert.hpp"
 #include "components/context.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-RenameTile::RenameTile(const Entity tile_entity, String new_name)
-    : mTileEntity {tile_entity},
+RenameTile::RenameTile(Model* model, const Entity tile_entity, String new_name)
+    : mModel {model},
+      mTileEntity {tile_entity},
       mNewName {std::move(new_name)}
 {
+  TACTILE_ASSERT(sys::is_tile_entity(*mModel, mTileEntity));
 }
 
 void RenameTile::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& tile_context = model.get<Context>(mTileEntity);
   tile_context.name = mOldName.value();
@@ -45,7 +48,7 @@ void RenameTile::undo()
 
 void RenameTile::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& tile_context = model.get<Context>(mTileEntity);
 
   mOldName = tile_context.name;
@@ -54,7 +57,7 @@ void RenameTile::redo()
 
 auto RenameTile::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.rename_tile;
 }
 

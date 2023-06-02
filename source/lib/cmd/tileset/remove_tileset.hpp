@@ -22,6 +22,7 @@
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
@@ -29,7 +30,7 @@ namespace tactile::cmd {
 /// TODO rename to DetachTileset
 class RemoveTileset final : public Command {
  public:
-  RemoveTileset(Entity map_entity, Entity attached_tileset_entity);
+  RemoveTileset(Model* model, Entity map_entity, Entity attached_tileset_entity);
 
   void undo() override;
 
@@ -40,6 +41,7 @@ class RemoveTileset final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mMapEntity;
   Entity mAttachedTilesetEntity;
   bool mDidDetachTileset : 1 {false};

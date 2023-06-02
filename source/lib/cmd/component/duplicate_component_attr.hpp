@@ -19,17 +19,18 @@
 
 #pragma once
 
+#include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
-#include "cmd/command.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 /// A command for duplicating an attribute in a component definition.
 class DuplicateComponentAttr final : public Command {
  public:
-  DuplicateComponentAttr(Entity definition_entity, String attribute_name);
+  DuplicateComponentAttr(Model* model, Entity definition_entity, String attribute_name);
 
   void undo() override;
 
@@ -38,7 +39,8 @@ class DuplicateComponentAttr final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Entity mComponentDefinitionEntity {kNullEntity};
+  Model* mModel;
+  Entity mDefinitionEntity;
   String mAttributeName;
   Maybe<String> mDuplicatedName;
 };

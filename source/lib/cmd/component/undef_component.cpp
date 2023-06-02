@@ -21,24 +21,29 @@
 
 #include <utility>  // move
 
+#include "common/debug/assert.hpp"
 #include "components/component.hpp"
-#include "model/context.hpp"
 #include "model/systems/component/component_set.hpp"
 #include "model/systems/context/components.hpp"
 #include "model/systems/context/context_system.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-UndefComponent::UndefComponent(const Entity component_set_entity, String component_name)
-    : mComponentSetEntity {component_set_entity},
+UndefComponent::UndefComponent(Model* model,
+                               const Entity component_set_entity,
+                               String component_name)
+    : mModel {model},
+      mComponentSetEntity {component_set_entity},
       mComponentName {std::move(component_name)}
 {
+  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, mComponentSetEntity));
 }
 
 void UndefComponent::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
   const auto definition_entity =
@@ -62,7 +67,7 @@ void UndefComponent::undo()
 
 void UndefComponent::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
   auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
 
   const auto definition_entity =
@@ -77,7 +82,7 @@ void UndefComponent::redo()
 
 auto UndefComponent::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.undef_comp;
 }
 

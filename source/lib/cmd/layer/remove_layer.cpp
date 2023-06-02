@@ -19,24 +19,30 @@
 
 #include "remove_layer.hpp"
 
+#include "common/debug/assert.hpp"
 #include "components/document.hpp"
 #include "components/map.hpp"
-#include "model/context.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/layer_system.hpp"
 #include "model/systems/map_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 
-RemoveLayer::RemoveLayer(const Entity map_document_entity, const Entity layer_entity)
-    : mMapDocumentEntity {map_document_entity},
+RemoveLayer::RemoveLayer(Model* model,
+                         const Entity map_document_entity,
+                         const Entity layer_entity)
+    : mModel {model},
+      mMapDocumentEntity {map_document_entity},
       mLayerEntity {layer_entity}
 {
+  TACTILE_ASSERT(sys::is_map_document_entity(*mModel, mMapDocumentEntity));
+  TACTILE_ASSERT(sys::is_layer_entity(*mModel, mLayerEntity));
 }
 
 void RemoveLayer::undo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
   auto& map = model.get<Map>(map_document.map);
@@ -49,7 +55,7 @@ void RemoveLayer::undo()
 
 void RemoveLayer::redo()
 {
-  auto& model = get_global_model();
+  auto& model = *mModel;
 
   const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
   auto& map = model.get<Map>(map_document.map);
@@ -62,13 +68,14 @@ void RemoveLayer::redo()
 
 void RemoveLayer::dispose()
 {
-  //  auto& model = get_global_model();
+  // TODO
+  //  auto& model = *mModel;
   //  model.destroy(m)
 }
 
 auto RemoveLayer::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(get_global_model());
+  const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.remove_layer;
 }
 

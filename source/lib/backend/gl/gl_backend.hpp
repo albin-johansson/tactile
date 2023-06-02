@@ -38,7 +38,9 @@ class OpenGLBackend final : public Backend {
 
   void end_frame() override;
 
-  auto reload_font_resources() -> Result override;
+  void reload_font_resources() override;
+
+  [[nodiscard]] auto can_reload_fonts() const -> bool override { return true; }
 
  private:
   SDL_Window* mWindow;

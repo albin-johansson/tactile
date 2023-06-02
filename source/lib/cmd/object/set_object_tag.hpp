@@ -19,15 +19,16 @@
 
 #pragma once
 
+#include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "cmd/command.hpp"
+#include "model/model.hpp"
 
 namespace tactile::cmd {
 
 class SetObjectTag final : public Command {
  public:
-  SetObjectTag(Entity object_entity, String tag);
+  SetObjectTag(Model* model, Entity object_entity, String tag);
 
   void undo() override;
 
@@ -38,6 +39,7 @@ class SetObjectTag final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
+  Model* mModel;
   Entity mObjectEntity;
   String mNewTag;
   Maybe<String> mOldTag;
