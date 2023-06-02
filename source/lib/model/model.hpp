@@ -95,6 +95,13 @@ class Model final {
     return mRegistry.emplace_or_replace<T>(entity);
   }
 
+  /// Removes a context component from the model.
+  template <typename T>
+  void remove()
+  {
+    mRegistry.ctx().erase<T>();
+  }
+
   /**
    * Removes a component from an entity.
    *
@@ -108,6 +115,22 @@ class Model final {
   {
     TACTILE_ASSERT(is_enabled(entity));
     mRegistry.remove<T>(entity);
+  }
+
+  /// Returns a context component.
+  template <typename T>
+  [[nodiscard]] auto get() -> T&
+  {
+    TACTILE_ASSERT(mRegistry.ctx().contains<T>());
+    return mRegistry.ctx().get<T>();
+  }
+
+  /// Returns a context component.
+  template <typename T>
+  [[nodiscard]] auto get() const -> const T&
+  {
+    TACTILE_ASSERT(mRegistry.ctx().contains<T>());
+    return mRegistry.ctx().get<T>();
   }
 
   /**
@@ -135,6 +158,20 @@ class Model final {
     TACTILE_ASSERT(is_enabled(entity));
     TACTILE_ASSERT(mRegistry.all_of<T>(entity));
     return mRegistry.get<T>(entity);
+  }
+
+  /// Attempts to return a context component.
+  template <typename T>
+  [[nodiscard]] auto try_get() -> T*
+  {
+    return mRegistry.ctx().find<T>();
+  }
+
+  /// Attempts to return a context component.
+  template <typename T>
+  [[nodiscard]] auto try_get() const -> const T*
+  {
+    return mRegistry.ctx().find<T>();
   }
 
   /// Returns a component attached to an entity, or null if it doesn't exist.
@@ -167,22 +204,6 @@ class Model final {
   [[nodiscard]] auto unchecked_try_get(const Entity entity) const -> const T*
   {
     return (entity != kNullEntity) ? mRegistry.try_get<T>(entity) : nullptr;
-  }
-
-  /// Returns a context component.
-  template <typename T>
-  [[nodiscard]] auto get() -> T&
-  {
-    TACTILE_ASSERT(mRegistry.ctx().contains<T>());
-    return mRegistry.ctx().get<T>();
-  }
-
-  /// Returns a context component.
-  template <typename T>
-  [[nodiscard]] auto get() const -> const T&
-  {
-    TACTILE_ASSERT(mRegistry.ctx().contains<T>());
-    return mRegistry.ctx().get<T>();
   }
 
   /// Indicates whether the model has a specific context component.
