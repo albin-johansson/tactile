@@ -21,12 +21,8 @@
 
 #include <imgui.h>
 
-#include "common/type/math.hpp"
-#include "common/type/path.hpp"
-#include "common/util/string_buffer.hpp"
 #include "io/file_dialog.hpp"
 #include "model/event/tileset_events.hpp"
-#include "model/settings.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/widgets.hpp"
@@ -34,46 +30,29 @@
 namespace tactile::ui {
 namespace {
 
-struct CreateTilesetDialogState final {
-  Path image_path;
-  StringBuffer image_path_preview_buffer {};
-  Int2 tile_size {32, 32};
-  bool open_dialog {};
-};
-
-inline CreateTilesetDialogState gDialogState;
-
-void _select_image_file()
+void _select_image_file(CreateTilesetDialogState& state)
 {
   auto dialog = FileDialog::open_image();
   if (!dialog.is_okay()) {
     return;
   }
 
-  gDialogState.image_path = dialog.path();
-  const auto image_path_str = gDialogState.image_path.string();
+  state.image_path = dialog.path();
+  const auto image_path_str = state.image_path.string();
 
-  if (image_path_str.size() > gDialogState.image_path_preview_buffer.size()) {
-    gDialogState.image_path_preview_buffer = gDialogState.image_path.filename().string();
+  if (image_path_str.size() > state.image_path_preview_buffer.size()) {
+    state.image_path_preview_buffer = state.image_path.filename().string();
   }
   else {
-    gDialogState.image_path_preview_buffer = image_path_str;
+    state.image_path_preview_buffer = image_path_str;
   }
 }
 
 }  // namespace
 
-void open_create_tileset_dialog(const Model& model)
-{
-  const auto& settings = model.get<Settings>();
-
-  gDialogState.image_path_preview_buffer.clear();
-  gDialogState.image_path.clear();
-  gDialogState.tile_size = settings.get_preferred_tile_size();
-  gDialogState.open_dialog = true;
-}
-
-void show_create_tileset_dialog(const Model& model, Entity, Dispatcher& dispatcher)
+void push_create_tileset_dialog(CreateTilesetDialogState& state,
+                                const Model& model,
+                                Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
 
@@ -83,13 +62,12 @@ void show_create_tileset_dialog(const Model& model, Entity, Dispatcher& dispatch
       .accept_label = strings.misc.create.c_str(),
   };
 
-  if (gDialogState.open_dialog) {
+  if (state.should_open) {
     options.flags |= UI_DIALOG_FLAG_OPEN;
-    gDialogState.open_dialog = false;
+    state.should_open = false;
   }
 
-  if (!gDialogState.image_path.empty() &&  //
-      gDialogState.tile_size.x > 0 && gDialogState.tile_size.y > 0) {
+  if (!state.image_path.empty() && state.tile_size.x > 0 && state.tile_size.y > 0) {
     options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
@@ -99,30 +77,24 @@ void show_create_tileset_dialog(const Model& model, Entity, Dispatcher& dispatch
     ImGui::Spacing();
 
     if (push_button(strings.misc.select_image.c_str())) {
-      _select_image_file();
+      _select_image_file(state);
     }
 
     ImGui::SameLine();
     ImGui::InputTextWithHint("##Source",
                              strings.misc.tileset_image_input_hint.c_str(),
-                             gDialogState.image_path_preview_buffer.data(),
-                             sizeof gDialogState.image_path_preview_buffer,
+                             state.image_path_preview_buffer.data(),
+                             sizeof state.image_path_preview_buffer,
                              ImGuiInputTextFlags_ReadOnly);
 
-    ImGui::DragInt(strings.misc.tile_width.c_str(),
-                   &gDialogState.tile_size.x,
-                   1.0f,
-                   1,
-                   10'000);
-    ImGui::DragInt(strings.misc.tile_height.c_str(),
-                   &gDialogState.tile_size.y,
-                   1.0f,
-                   1,
-                   10'000);
+    ImGui::DragInt(strings.misc.tile_width.c_str(), &state.tile_size.x, 1.0f, 1, 10'000);
+    ImGui::DragInt(strings.misc.tile_height.c_str(), &state.tile_size.y, 1.0f, 1, 10'000);
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<LoadTilesetEvent>(gDialogState.image_path, gDialogState.tile_size);
+    dispatcher.enqueue<CreateTilesetEvent>(state.map_entity,
+                                           state.image_path,
+                                           state.tile_size);
   }
 }
 

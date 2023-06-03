@@ -19,25 +19,15 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
-#include "common/type/ecs.hpp"
-#include "common/type/math.hpp"
-#include "common/type/path.hpp"
-#include "common/util/string_buffer.hpp"
+#include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-struct CreateTilesetDialogState final {
-  Entity map_entity {kNullEntity};
-  Path image_path;
-  StringBuffer image_path_preview_buffer {};
-  Int2 tile_size {32, 32};
-  bool should_open {};
-};
+void on_show_new_tileset_dialog(Model& model, const ShowNewTilesetDialogEvent& event);
 
-void push_create_tileset_dialog(CreateTilesetDialogState& state,
-                                const Model& model,
-                                Dispatcher& dispatcher);
+void on_create_tileset(Model& model, const CreateTilesetEvent& event);
 
-}  // namespace tactile::ui
+void on_detach_tileset(Model& model, const DetachTilesetEvent& event);
+
+}  // namespace tactile

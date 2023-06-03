@@ -186,7 +186,7 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
 
     case MenuAction::CreateTileset:
-      dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
+      dispatcher.enqueue<ShowNewTilesetDialogEvent>();
       break;
 
     case MenuAction::AddRow:

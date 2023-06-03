@@ -41,18 +41,18 @@ namespace {
 void _push_context_menu(const Model& model,
                         const Strings& strings,
                         const Entity tileset_document_entity,
-                        const Entity tileset_entity,
+                        const Entity attached_tileset_entity,
                         Dispatcher& dispatcher)
 {
   if (auto popup = Popup::for_item("##TilesetTabContext"); popup.is_open()) {
     if (ImGui::MenuItem(strings.action.create_tileset.c_str())) {
-      dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
+      dispatcher.enqueue<ShowNewTilesetDialogEvent>();
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(strings.action.inspect_tileset.c_str())) {
-      dispatcher.enqueue<InspectContextEvent>(tileset_entity);
+      dispatcher.enqueue<InspectContextEvent>(attached_tileset_entity);
     }
 
     ImGui::Separator();
@@ -66,7 +66,8 @@ void _push_context_menu(const Model& model,
     ImGui::Separator();
 
     if (ImGui::MenuItem(strings.action.remove_tileset.c_str())) {
-      dispatcher.enqueue<RemoveTilesetEvent>(tileset_entity);
+      dispatcher.enqueue<DetachTilesetEvent>(sys::get_active_map(model),
+                                             attached_tileset_entity);
     }
   }
 }
@@ -83,7 +84,7 @@ void show_tileset_tabs(const Model& model, Dispatcher& dispatcher)
   if (const TabBar bar {"##TilesetTabBar", tab_bar_flags}; bar.is_open()) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
                              ImGuiTabItemFlags_Trailing)) {
-      dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
+      dispatcher.enqueue<ShowNewTilesetDialogEvent>();
     }
 
     const auto& strings = sys::get_current_language_strings(model);
@@ -101,8 +102,7 @@ void show_tileset_tabs(const Model& model, Dispatcher& dispatcher)
           sys::get_associated_tileset_document(model, tileset_entity);
       TACTILE_ASSERT(tileset_document_entity != kNullEntity);
 
-      const auto& tileset_context = model.get<Context>(tileset_entity);
-      const auto& tileset_name = tileset_context.name;
+      const auto tileset_name = sys::get_document_name(model, tileset_document_entity);
       const auto is_tileset_active = map.active_tileset == attached_tileset_entity;
 
       if (const TabItem item {tileset_name.c_str(),
@@ -120,7 +120,7 @@ void show_tileset_tabs(const Model& model, Dispatcher& dispatcher)
         _push_context_menu(model,
                            strings,
                            tileset_document_entity,
-                           tileset_entity,
+                           attached_tileset_entity,
                            dispatcher);
       }
     }

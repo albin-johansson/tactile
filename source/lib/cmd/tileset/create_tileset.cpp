@@ -51,7 +51,10 @@ void CreateTileset::undo()
   const auto tileset_document_entity = mTilesetDocumentEntity.value();
   const auto attached_tileset_entity = mAttachedTilesetEntity.value();
 
-  sys::close_document(model, tileset_document_entity);
+  // TODO in the future, we should check if there are other maps that use the tileset
+  if (sys::is_document_open(model, tileset_document_entity)) {
+    sys::close_document(model, tileset_document_entity);
+  }
 
   auto& map = model.get<Map>(mMapEntity);
   std::erase(map.attached_tilesets, attached_tileset_entity);

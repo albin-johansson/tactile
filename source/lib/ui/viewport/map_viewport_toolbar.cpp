@@ -140,7 +140,7 @@ void show_map_viewport_toolbar(const Model& model, Dispatcher& dispatcher)
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
     if (push_icon_button(TAC_ICON_TILESET, strings.tooltip.create_tileset.c_str())) {
-      dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
+      dispatcher.enqueue<ShowNewTilesetDialogEvent>();
     }
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);

@@ -31,17 +31,21 @@ namespace tactile {
 
 // TODO clarify what kind of tileset entities are used in the events
 
-struct ShowTilesetCreationDialogEvent final {};
+struct ShowNewTilesetDialogEvent final {};
 
-struct InspectTilesetEvent final {};
-
-struct LoadTilesetEvent final {
-  Path path;
-  Int2 tile_size {};
+struct InspectTilesetEvent final {
+  Entity attached_tileset {kNullEntity};  ///< The attached tileset to inspect.
 };
 
-struct RemoveTilesetEvent final {
-  Entity tileset {kNullEntity};
+struct CreateTilesetEvent final {
+  Entity map {kNullEntity};  ///< The map that the tileset will be attached to.
+  Path image_path;           ///< Path to the tileset image.
+  Int2 tile_size {};         ///< The logical size of tiles in the tileset.
+};
+
+struct DetachTilesetEvent final {
+  Entity map {kNullEntity};               ///< The associated map.
+  Entity attached_tileset {kNullEntity};  ///< The tileset that will be detached.
 };
 
 struct SelectTilesetEvent final {

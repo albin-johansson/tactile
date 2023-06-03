@@ -122,12 +122,20 @@ void set_document_name(Model& model, Entity document_entity, String name);
     -> String;
 
 /**
- * Returns the currently active document, if there is one.
+ * Returns the currently active document (if there is one).
  *
  * \param model the associated model.
- * \return a document entity, or the null entity.
+ * \return a document entity or null.
  */
 [[nodiscard]] auto get_active_document(const Model& model) -> Entity;
+
+/**
+ * Returns the currently active map (if there is one).
+ *
+ * \param model the associated model.
+ * \return a map entity or null.
+ */
+[[nodiscard]] auto get_active_map(const Model& model) -> Entity;
 
 [[nodiscard]] auto try_get_active_map(const Model& model) -> const Map*;
 

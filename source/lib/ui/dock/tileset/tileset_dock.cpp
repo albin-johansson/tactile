@@ -83,7 +83,7 @@ void show_tileset_dock(const Model& model, Entity, Dispatcher& dispatcher)
       ImGui::Spacing();
 
       if (push_centered_button(strings.action.add_tileset.c_str())) {
-        dispatcher.enqueue<ShowTilesetCreationDialogEvent>();
+        dispatcher.enqueue<ShowNewTilesetDialogEvent>();
       }
     }
     else {

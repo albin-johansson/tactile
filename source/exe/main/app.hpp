@@ -31,6 +31,7 @@
 #include "model/event/map_events.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/event/setting_events.hpp"
+#include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
 
 namespace tactile {
@@ -97,6 +98,11 @@ class App final : public AppDelegate {
   void _on_set_tile_format_compression(const SetTileFormatCompressionEvent& event);
   void _on_set_zlib_compression_level(const SetZlibCompressionLevelEvent& event);
   void _on_set_zstd_compression_level(const SetZstdCompressionLevelEvent& event);
+
+  // Tileset events
+  void _on_show_new_tileset_dialog(const ShowNewTilesetDialogEvent& event);
+  void _on_create_tileset(const CreateTilesetEvent& event);
+  void _on_detach_tileset(const DetachTilesetEvent& event);
 
   // Layer events
   void _on_create_layer(const CreateLayerEvent& event);

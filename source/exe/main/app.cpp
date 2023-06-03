@@ -49,6 +49,7 @@
 #include "model/delegates/map_delegate.hpp"
 #include "model/delegates/menu_delegate.hpp"
 #include "model/delegates/settings_delegate.hpp"
+#include "model/delegates/tileset_delegate.hpp"
 #include "model/delegates/viewport_delegate.hpp"
 #include "model/settings.hpp"
 #include "model/systems/file_history_system.hpp"
@@ -134,6 +135,11 @@ void App::_subscribe_to_events()
   mDispatcher.sink<SetTileFormatCompressionEvent>().connect<&App::_on_set_tile_format_compression>(this);
   mDispatcher.sink<SetZlibCompressionLevelEvent>().connect<&App::_on_set_zlib_compression_level>(this);
   mDispatcher.sink<SetZstdCompressionLevelEvent>().connect<&App::_on_set_zstd_compression_level>(this);
+
+  // Tileset events
+  mDispatcher.sink<ShowNewTilesetDialogEvent>().connect<&App::_on_show_new_tileset_dialog>(this);
+  mDispatcher.sink<CreateTilesetEvent>().connect<&App::_on_create_tileset>(this);
+  mDispatcher.sink<DetachTilesetEvent>().connect<&App::_on_detach_tileset>(this);
 
   // Layer events
   mDispatcher.sink<CreateLayerEvent>().connect<&App::_on_create_layer>(this);
@@ -227,7 +233,6 @@ void App::_init_widgets()
   // Dialogs
   sys::add_widget(model, idx++, &ui::show_component_editor_dialog);
   sys::add_widget(model, idx++, &ui::show_create_map_dialog);
-  sys::add_widget(model, idx++, &ui::show_create_tileset_dialog);
   sys::add_widget(model, idx++, &ui::show_resize_map_dialog);
   sys::add_widget(model, idx++, &ui::show_godot_export_dialog);
   sys::add_widget(model, idx++, &ui::show_settings_dialog);
@@ -275,6 +280,9 @@ void App::on_update()
   ui::update_dock_space(model);
 
   sys::render_widgets(model, mDispatcher);
+
+  auto& create_tileset_dialog_state = model.get<ui::CreateTilesetDialogState>();
+  ui::push_create_tileset_dialog(create_tileset_dialog_state, model, mDispatcher);
 
   ui::check_for_missing_layout_file(model, mDispatcher);
 
@@ -467,6 +475,29 @@ void App::_on_set_zstd_compression_level(const SetZstdCompressionLevelEvent& eve
 {
   spdlog::trace("[SetZstdCompressionLevelEvent] level: {}", event.level);
   on_set_zstd_compression_level(*mModel, event);
+}
+
+void App::_on_show_new_tileset_dialog(const ShowNewTilesetDialogEvent& event)
+{
+  spdlog::trace("[ShowNewTilesetDialogEvent]");
+  on_show_new_tileset_dialog(*mModel, event);
+}
+
+void App::_on_create_tileset(const CreateTilesetEvent& event)
+{
+  spdlog::trace("[CreateTilesetEvent] map: {}, image: {}, tile size: {}",
+                event.map,
+                event.image_path,
+                event.tile_size);
+  on_create_tileset(*mModel, event);
+}
+
+void App::_on_detach_tileset(const DetachTilesetEvent& event)
+{
+  spdlog::trace("[DetachTilesetEvent] map: {}, attached tileset: {}",
+                event.map,
+                event.attached_tileset);
+  on_detach_tileset(*mModel, event);
 }
 
 void App::_on_create_layer(const CreateLayerEvent& event)
