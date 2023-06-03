@@ -26,7 +26,8 @@
 #include "components/texture.hpp"
 #include "components/tool.hpp"
 #include "model/settings.hpp"
-#include "model/systems/gl_texture_system.hpp"
+#include "model/systems/textures/gl_texture_system.hpp"
+#include "model/systems/textures/null_texture_system.hpp"
 #include "model/systems/tools/bucket_tool.hpp"
 #include "model/systems/tools/stamp_tool.hpp"
 
@@ -44,14 +45,11 @@ void init_model(Model& model, const BackendAPI api)
   model.add<Icons>();
   model.add<MenuItems>();
 
-  auto& texture_callbacks = model.add<TextureCallbacks>();
 
+  auto& texture_callbacks = model.add<TextureCallbacks>();
   if (api == BackendAPI::Null) {
-    texture_callbacks.init =
-        [](Model& model, const Entity texture_entity, const TextureData&) {
-          model.add<NullTexture>(texture_entity);
-        };
-    texture_callbacks.destroy = [](Model&, Entity) {};
+    texture_callbacks.init = &sys::on_init_null_texture;
+    texture_callbacks.destroy = &sys::on_destroy_null_texture;
   }
   else if (api == BackendAPI::OpenGL) {
     texture_callbacks.init = &sys::on_init_gl_texture;
