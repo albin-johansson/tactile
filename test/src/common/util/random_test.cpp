@@ -62,9 +62,9 @@ TEST_SUITE("Random")
                   false_count);
   }
 
-  TEST_CASE("next_float")
+  TEST_CASE("next_normalized_float")
   {
-    const auto value = next_float();
+    const auto value = next_normalized_float();
     REQUIRE(value >= 0.0f);
     REQUIRE(value <= 1.0f);
   }

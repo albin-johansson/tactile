@@ -23,19 +23,26 @@
 
 namespace tactile {
 
+/// Returns a pseudo-random unsigned 32-bit integer within the interval [min, max].
 [[nodiscard]] auto next_random_u32(uint32 min, uint32 max) -> uint32;
+
+/// Returns a pseudo-random unsigned 64-bit integer within the interval [min, max].
 [[nodiscard]] auto next_random_u64(uint64 min, uint64 max) -> uint64;
 
+/// Returns a pseudo-random signed 32-bit integer within the interval [min, max].
 [[nodiscard]] auto next_random_i32(int32 min, int32 max) -> int32;
+
+/// Returns a pseudo-random signed 64-bit integer within the interval [min, max].
 [[nodiscard]] auto next_random_i64(int64 min, int64 max) -> int64;
 
+/// Returns a pseudo-random 32-bit floating-point value within the interval [min, max].
 [[nodiscard]] auto next_random_f32(float32 min, float32 max) -> float32;
 
-/// Returns a random boolean value.
+/// Returns a pseudo-random boolean value.
 [[nodiscard]] auto next_bool() -> bool;
 
-/// Returns a random float in the interval [0, 1].
-[[nodiscard]] inline auto next_float() -> float
+/// Returns a pseudo-random floating-point value within the interval [0, 1].
+[[nodiscard]] inline auto next_normalized_float() -> float
 {
   return next_random_f32(0.0f, 1.0f);
 }

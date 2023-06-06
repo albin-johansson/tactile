@@ -19,13 +19,13 @@
 
 #include "component.hpp"
 
-#include <algorithm>  // find
+#include "common/util/vectors.hpp"
 
 namespace tactile {
 
 auto ComponentSet::has_component(const Entity definition_entity) const -> bool
 {
-  return std::ranges::find(definitions, definition_entity) != definitions.end();
+  return contained_in(definitions, definition_entity);
 }
 
 }  // namespace tactile

@@ -60,7 +60,7 @@ void update_create_component_attribute_dialog(const Model& model, Dispatcher& di
   const auto& component_set = model.get<ComponentSet>(document.component_set);
 
   if (gDialogState.definition_entity.has_value() &&
-      !contains_value(component_set.definitions, *gDialogState.definition_entity)) {
+      !contained_in(component_set.definitions, *gDialogState.definition_entity)) {
     gDialogState.definition_entity.reset();
     gDialogState.open_dialog = false;
     return;

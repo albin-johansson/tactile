@@ -49,6 +49,7 @@ target_compile_definitions(${TACTILE_TEST}
                            DOCTEST_CONFIG_USE_STD_HEADERS
                            DOCTEST_CONFIG_VOID_CAST_EXPRESSIONS
                            DOCTEST_CONFIG_NO_COMPARISON_WARNING_SUPPRESSION
+                           DOCTEST_CONFIG_SUPER_FAST_ASSERTS
                            )
 
 target_precompile_headers(${TACTILE_TEST} REUSE_FROM ${TACTILE_LIB})

@@ -37,10 +37,10 @@ using SeedArray = Array<Seed, RandomEngine::state_size>;
 /// Creates a seeded pseudo-random number generation engine.
 [[nodiscard]] auto _make_random_engine() -> RandomEngine
 {
-  std::random_device device;
+  std::random_device random_device;
 
   SeedArray data;
-  std::ranges::generate(data, std::ref(device));
+  std::ranges::generate(data, std::ref(random_device));
 
   std::seed_seq seeds(data.begin(), data.end());
   return RandomEngine {seeds};

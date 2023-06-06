@@ -22,37 +22,41 @@
 #include <algorithm>  // find
 #include <utility>    // move
 
-#include "common/debug/assert.hpp"
 #include "common/primitives.hpp"
+#include "common/result.hpp"
 #include "common/type/vector.hpp"
 
 namespace tactile {
 
+/// Inserts or appends an element to a vector.
 template <typename T>
-void insert_at(Vector<T>& vec, const usize index, T value)
+auto insert_at(Vector<T>& vec, const usize index, T value) -> Result
 {
-  TACTILE_ASSERT(index <= vec.size());
-
   if (index < vec.size()) {
     vec.insert(vec.begin() + static_cast<ssize>(index), std::move(value));
+    return success;
   }
   else if (index == vec.size()) {
     vec.push_back(std::move(value));
+    return success;
   }
+
+  return failure;
 }
 
 template <typename T>
-void erase_at(Vector<T>& vec, const usize index)
+auto erase_at(Vector<T>& vec, const usize index) -> Result
 {
-  TACTILE_ASSERT(index < vec.size());
-
   if (index < vec.size()) {
     vec.erase(vec.begin() + static_cast<ssize>(index));
+    return success;
   }
+
+  return failure;
 }
 
-template <typename T>
-[[nodiscard]] auto contains_value(const Vector<T>& vec, const T& value) -> bool
+template <typename T, typename U>
+[[nodiscard]] auto contained_in(const Vector<T>& vec, const U& value) -> bool
 {
   return std::ranges::find(vec, value) != vec.end();
 }
