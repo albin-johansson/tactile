@@ -26,8 +26,8 @@ jobs:
 
       - name: Configure default compilers
         run: |
-          update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 12
-          update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 12
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 12
+          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 12
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
@@ -57,7 +57,7 @@ jobs:
           mkdir build && cd build
           cmake .. -GNinja \
                    -DCMAKE_BUILD_TYPE=Debug \
-                   -DTACTILE_TREAT_WARNINGS_AS_ERRORS=OFF
+                   -DTACTILE_TREAT_WARNINGS_AS_ERRORS=ON
 
       - name: Build
         run: ninja -C build
