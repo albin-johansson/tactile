@@ -226,11 +226,12 @@ void _add_object_layer(const GodotEmitOptions& options,
   GdLayer gd_layer = {
       .name = _to_godot_name(layer.name),
       .parent = std::move(parent),
+      .value = GdObjectLayer {},
       .meta = _copy_meta(layer.context),
       .visible = layer.visible,
   };
 
-  auto& gd_object_layer = gd_layer.value.emplace<GdObjectLayer>();
+  auto& gd_object_layer = std::get<GdObjectLayer>(gd_layer.value);
   gd_object_layer.objects.reserve(object_layer.objects.size());
 
   const auto object_parent =
@@ -255,11 +256,12 @@ void _add_tile_layer(const MapIR& map,
   GdLayer gd_layer = {
       .name = _to_godot_name(layer.name),
       .parent = std::move(parent),
+      .value = GdTileLayer {},
       .meta = _copy_meta(layer.context),
       .visible = layer.visible,
   };
 
-  auto& gd_tile_layer = gd_layer.value.emplace<GdTileLayer>();
+  auto& gd_tile_layer = std::get<GdTileLayer>(gd_layer.value);
   gd_tile_layer.cell_size = map.tile_size;
   gd_tile_layer.data.reserve(3 * map.extent.rows * map.extent.cols);
 

@@ -19,9 +19,8 @@
 
 #include "layer.hpp"
 
-#include <algorithm>  // find
-
 #include "common/debug/assert.hpp"
+#include "common/util/vectors.hpp"
 
 namespace tactile {
 
@@ -58,7 +57,7 @@ auto TileLayer::contains(const TilePos pos) const -> bool
 
 void GroupLayer::append(const Entity layer_entity)
 {
-  TACTILE_ASSERT(std::ranges::find(children, layer_entity) == children.end());
+  TACTILE_ASSERT(!contained_in(children, layer_entity));
   children.push_back(layer_entity);
 }
 
