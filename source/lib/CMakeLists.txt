@@ -19,17 +19,16 @@ if (NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
                         )
 endif ()
 
-target_include_directories(${TACTILE_LIB}
-                           PUBLIC
-                           ${PROJECT_SOURCE_DIR}
+target_include_directories(${TACTILE_LIB} PUBLIC ${PROJECT_SOURCE_DIR})
 
-                           SYSTEM PUBLIC
-                           ${LIBRARY_DIR}/centurion
-                           ${LIBRARY_DIR}/fontawesome
-                           ${STB_INCLUDE_DIRS}
-                           ${TACTILE_PROTO_GENERATED_DIR}
-                           ${CPPCODEC_INCLUDE_DIRS}
-                           )
+tactile_target_include_system_directories(${TACTILE_LIB}
+                                          SYSTEM PUBLIC
+                                          ${LIBRARY_DIR}/centurion
+                                          ${LIBRARY_DIR}/fontawesome
+                                          ${STB_INCLUDE_DIRS}
+                                          ${TACTILE_PROTO_GENERATED_DIR}
+                                          ${CPPCODEC_INCLUDE_DIRS}
+                                          )
 
 target_link_libraries(${TACTILE_LIB}
                       PUBLIC
