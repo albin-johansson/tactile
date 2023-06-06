@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ilammy/msvc-dev-cmd@v1.12.1
-      - uses: lukka/get-cmake@3.26.3
+      - uses: lukka/get-cmake@v3.26.3
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
