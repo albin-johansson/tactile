@@ -24,7 +24,7 @@
 
 using namespace tactile;
 
-class TestApp final : public AppDelegate {
+class NullApp final : public AppDelegate {
  public:
   [[nodiscard]] auto should_stop() const -> bool override { return false; }
 };
@@ -32,8 +32,7 @@ class TestApp final : public AppDelegate {
 auto main(int argc, char* argv[]) -> int
 {
   Engine engine {BackendAPI::Null};
-  engine.set_app_delegate(std::make_unique<TestApp>());
-  engine.get_window().show();
+  engine.set_app_delegate(std::make_unique<NullApp>());
 
   doctest::Context context {argc, argv};
   const auto res = context.run();
