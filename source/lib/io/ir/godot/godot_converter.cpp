@@ -317,9 +317,10 @@ void _add_layer(const GodotEmitOptions& options,
     case LayerType::GroupLayer: {
       const auto layer_name = _to_godot_name(layer.name);
 
-      scene.add_layer({
+      scene.add_layer(GdLayer {
           .name = layer_name,
           .parent = parent,
+          .value = Monostate {},
           .meta = _copy_meta(layer.context),
           .visible = layer.visible,
       });
