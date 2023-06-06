@@ -67,6 +67,7 @@ find_path(STB_INCLUDE_DIRS "stb_c_lexer.h")
 
 option(TACTILE_BUILD_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)
 option(TACTILE_BUILD_WITH_ASAN "Build with AddressSanitizer" OFF)
+option(TACTILE_TREAT_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
 
 if (TACTILE_BUILD_WITH_ASAN MATCHES ON)
   tactile_enable_address_sanitizer()

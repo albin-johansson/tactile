@@ -53,7 +53,8 @@ jobs:
           cmake .. -GNinja \
                    -DCMAKE_BUILD_TYPE=Debug \
                    -DCMAKE_C_COMPILER=gcc-12 \
-                   -DCMAKE_CXX_COMPILER=g++-12
+                   -DCMAKE_CXX_COMPILER=g++-12 \
+                   -DTACTILE_TREAT_WARNINGS_AS_ERRORS=OFF
 
       - name: Build
         run: ninja -C build

@@ -12,7 +12,6 @@ function(tactile_set_compile_options target)
                            /EHsc
                            /MP
                            /W4
-                           /WX
                            /bigobj
                            /permissive-
                            /Zc:preprocessor
@@ -20,17 +19,25 @@ function(tactile_set_compile_options target)
                            /wd4005 # Avoid macro redefinition warnings in third-party libraries
                            )
 
+    if (TACTILE_TREAT_WARNINGS_AS_ERRORS MATCHES ON)
+      target_compile_options(${target} PRIVATE /WX)
+    endif ()
   elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang|GNU")
     target_compile_options(${target}
                            PRIVATE
                            -Wall
                            -Wextra
                            -Wpedantic
-                           -Werror
-                           -Wno-error=unused-function
                            -Wconversion
                            -Wsign-conversion
                            )
+
+    if (TACTILE_TREAT_WARNINGS_AS_ERRORS MATCHES ON)
+      target_compile_options(${target} PRIVATE
+                             -Werror
+                             -Wno-error=unused-function
+                             )
+    endif ()
   endif ()
 endfunction()
 

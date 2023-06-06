@@ -46,7 +46,8 @@ jobs:
           cd build
           cmake .. -GNinja `
                    -DCMAKE_BUILD_TYPE=Debug `
-                   -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}}
+                   -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} `
+                   -DTACTILE_TREAT_WARNINGS_AS_ERRORS=ON
 
       - name: Build
         run: ninja -C build
