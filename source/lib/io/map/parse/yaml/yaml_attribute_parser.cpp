@@ -40,7 +40,7 @@ template <typename T>
   const auto components = split(raw_value, ';');
 
   T vec {};
-  if (components.size() != vec.length()) {
+  if (components.size() != static_cast<usize>(vec.length())) {
     return nothing;
   }
 
