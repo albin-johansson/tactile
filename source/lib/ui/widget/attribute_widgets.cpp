@@ -347,7 +347,7 @@ auto push_attribute_input(const Strings& strings, const char* id, const Attribut
                                                      id,
                                                      strings.misc.empty.c_str(),
                                                      value.as_string())) {
-        return std::move(updated);
+        return updated;
       }
       break;
     }
@@ -407,7 +407,7 @@ auto push_attribute_input(const Strings& strings, const char* id, const Attribut
     }
     case AttributeType::Path: {
       if (auto updated = push_file_path_input(strings, id, value.as_path())) {
-        return std::move(updated);
+        return updated;
       }
       break;
     }

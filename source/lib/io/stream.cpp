@@ -19,8 +19,7 @@
 
 #include "stream.hpp"
 
-#include <ios>      // ios
-#include <utility>  // move
+#include <ios>  // ios
 
 namespace tactile {
 namespace {
@@ -33,7 +32,7 @@ namespace {
   IfStream stream {path, flags};
 
   if (stream.is_open() && stream.good()) {
-    return std::move(stream);
+    return stream;
   }
   else {
     return nothing;
@@ -49,7 +48,7 @@ namespace {
   OfStream stream {path, flags};
 
   if (stream.is_open() && stream.good()) {
-    return std::move(stream);
+    return stream;
   }
   else {
     return nothing;

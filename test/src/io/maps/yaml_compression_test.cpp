@@ -72,6 +72,7 @@ using TestData = std::pair<std::string_view, TileFormatFactory>;
       .encoding = TileEncoding::Base64,
       .compression = TileCompression::Zlib,
       .zlib_compression_level = 6,
+      .zstd_compression_level = 0,
   };
 }
 
@@ -80,6 +81,7 @@ using TestData = std::pair<std::string_view, TileFormatFactory>;
   return {
       .encoding = TileEncoding::Base64,
       .compression = TileCompression::Zstd,
+      .zlib_compression_level = 0,
       .zstd_compression_level = 19,
   };
 }
@@ -90,7 +92,7 @@ void _create_and_validate_yaml_map(const char* path, TileFormatFactory format_fa
     auto test_map = _create_test_map();
     test_map.tile_format = format_factory();
 
-    Settings settings;
+    const Settings settings;
     save_map_as_tactile_yaml(path, test_map, settings);
   }
 

@@ -181,7 +181,7 @@ void _to_proto(const Color& color, proto::Color* out)
       settings.set_font_size(cfg.font_size());
     }
 
-    return std::move(settings);
+    return settings;
   }
 
   return nothing;
