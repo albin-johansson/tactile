@@ -41,59 +41,52 @@ const HashMap<LogLevel, ImVec4> kLogLevelColors = {
     {LogLevel::critical, ImVec4 {1.00f, 0.00f, 0.00f, 1.00f}},
 };
 
-struct LogDockState final {
-  LogFilter log_filter;
-  bool has_focus {};
-};
-
-inline LogDockState gDockState;
-
-void _push_message_filter_checkboxes(const Strings& strings)
+void _push_message_filter_checkboxes(const Strings& strings, LogDockState& state)
 {
   {
-    bool value = gDockState.log_filter.trace;
+    bool value = state.log_filter.trace;
     ImGui::Checkbox(strings.misc.log_trace_filter.c_str(), &value);
-    gDockState.log_filter.trace = value;
+    state.log_filter.trace = value;
   }
 
   ImGui::SameLine();
 
   {
-    bool value = gDockState.log_filter.debug;
+    bool value = state.log_filter.debug;
     ImGui::Checkbox(strings.misc.log_debug_filter.c_str(), &value);
-    gDockState.log_filter.debug = value;
+    state.log_filter.debug = value;
   }
 
   ImGui::SameLine();
 
   {
-    bool value = gDockState.log_filter.info;
+    bool value = state.log_filter.info;
     ImGui::Checkbox(strings.misc.log_info_filter.c_str(), &value);
-    gDockState.log_filter.info = value;
+    state.log_filter.info = value;
   }
 
   ImGui::SameLine();
 
   {
-    bool value = gDockState.log_filter.warn;
+    bool value = state.log_filter.warn;
     ImGui::Checkbox(strings.misc.log_warn_filter.c_str(), &value);
-    gDockState.log_filter.warn = value;
+    state.log_filter.warn = value;
   }
 
   ImGui::SameLine();
 
   {
-    bool value = gDockState.log_filter.error;
+    bool value = state.log_filter.error;
     ImGui::Checkbox(strings.misc.log_error_filter.c_str(), &value);
-    gDockState.log_filter.error = value;
+    state.log_filter.error = value;
   }
 
   ImGui::SameLine();
 
   {
-    bool value = gDockState.log_filter.critical;
+    bool value = state.log_filter.critical;
     ImGui::Checkbox(strings.misc.log_critical_filter.c_str(), &value);
-    gDockState.log_filter.critical = value;
+    state.log_filter.critical = value;
   }
 }
 
@@ -139,7 +132,9 @@ void _push_logged_message_legend_overlay(const Strings& strings)
   }
 }
 
-void _push_logged_message_view(const Strings& strings, const usize message_count)
+void _push_logged_message_view(const Strings& strings,
+                               const usize message_count,
+                               LogDockState& state)
 {
   const StyleColor child_bg {ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 
@@ -152,7 +147,7 @@ void _push_logged_message_view(const Strings& strings, const usize message_count
     clipper.Begin(static_cast<int>(message_count));
 
     while (clipper.Step()) {
-      visit_logged_message_range(gDockState.log_filter,
+      visit_logged_message_range(state.log_filter,
                                  static_cast<usize>(clipper.DisplayStart),
                                  static_cast<usize>(clipper.DisplayEnd),
                                  [](const LogLevel level, const String& msg) {
@@ -172,7 +167,7 @@ void _push_logged_message_view(const Strings& strings, const usize message_count
 
 }  // namespace
 
-void show_log_dock(const Model& model, Entity, Dispatcher& dispatcher)
+void push_log_dock_widget(const Model& model, LogDockState& state, Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
   const auto& settings = model.get<Settings>();
@@ -190,14 +185,14 @@ void show_log_dock(const Model& model, Entity, Dispatcher& dispatcher)
     dispatcher.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_LOG_DOCK_BIT, show_log_dock);
   }
 
-  gDockState.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
+  state.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
-    _push_message_filter_checkboxes(strings);
+    _push_message_filter_checkboxes(strings, state);
 
-    const auto message_count = count_matching_log_entries(gDockState.log_filter);
+    const auto message_count = count_matching_log_entries(state.log_filter);
     if (message_count != 0u) {
-      _push_logged_message_view(strings, message_count);
+      _push_logged_message_view(strings, message_count, state);
     }
     else {
       push_centered_label(strings.misc.log_no_messages_match_filter.c_str());
@@ -209,11 +204,6 @@ void show_log_dock(const Model& model, Entity, Dispatcher& dispatcher)
       }
     }
   }
-}
-
-auto is_log_dock_focused() -> bool
-{
-  return gDockState.has_focus;
 }
 
 }  // namespace tactile::ui

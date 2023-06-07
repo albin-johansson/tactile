@@ -31,6 +31,8 @@ void on_show_open_map_dialog(Model& model, const ShowOpenMapDialogEvent& event);
 
 void on_show_resize_map_dialog(Model& model, const ShowResizeMapDialogEvent& event);
 
+void on_show_godot_export_dialog(Model& model, const ShowGodotExportDialogEvent& event);
+
 void on_create_map(Model& model, const CreateMapEvent& event);
 
 void on_open_map(Model& model, const OpenMapEvent& event);

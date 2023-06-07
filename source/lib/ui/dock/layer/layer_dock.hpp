@@ -21,18 +21,22 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
+#include "common/type/maybe.hpp"
 #include "model/model.hpp"
+#include "ui/dock/layer/add_layer_context_menu.hpp"
 
 namespace tactile::ui {
 
-void show_layer_dock(const Model& model, Entity widget_entity, Dispatcher& dispatcher);
+struct LayerDockState final {
+  AddLayerContextMenu add_layer_context_menu;
+  Maybe<Entity> rename_target_layer;
+  bool has_focus {};
+};
+
+void push_layer_dock_widget(const Model& model,
+                            LayerDockState& state,
+                            Dispatcher& dispatcher);
 
 [[nodiscard]] auto is_layer_dock_enabled(const Model& model) -> bool;
-
-/// Makes the dialog for renaming layers visible.
-void show_rename_layer_dialog(Entity layer_entity);
-
-/// Indicates whether the layer dock widget has input focus.
-[[nodiscard]] auto is_layer_dock_focused() -> bool;
 
 }  // namespace tactile::ui

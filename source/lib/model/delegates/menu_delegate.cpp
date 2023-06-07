@@ -32,7 +32,6 @@
 #include "ui/dialog/credits_dialog.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
 #include "ui/dialog/settings_dialog.hpp"
-#include "ui/dock/comp/component_editor.hpp"
 
 namespace tactile {
 
@@ -116,7 +115,7 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
 
     case MenuAction::OpenComponentEditor:
-      ui::open_component_editor_dialog(model);
+      dispatcher.enqueue<OpenComponentEditorEvent>();
       break;
 
     case MenuAction::OpenSettings:
@@ -214,7 +213,7 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
 
     case MenuAction::ExportGodotScene:
-      ui::open_godot_export_dialog();
+      dispatcher.enqueue<ShowGodotExportDialogEvent>();
       break;
 
     case MenuAction::InspectTileset:

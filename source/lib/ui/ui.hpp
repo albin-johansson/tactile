@@ -19,25 +19,24 @@
 
 #pragma once
 
-#include <centurion/fwd.hpp>
-
 #include "common/type/dispatcher.hpp"
-#include "common/type/ecs.hpp"
-#include "components/viewport.hpp"
 #include "model/model.hpp"
+#include "ui/widget_state.hpp"
 
 namespace tactile::ui {
 
-/// Updates the state of the primary viewport widget.
-void show_viewport_dock(const Model& model, Entity widget_entity, Dispatcher& dispatcher);
-
-void viewport_widget_mouse_wheel_event_handler(Entity viewport_entity,
-                                               const Viewport& viewport,
-                                               Dispatcher& dispatcher,
-                                               const cen::mouse_wheel_event& event);
-
-[[nodiscard]] auto is_viewport_focused() noexcept -> bool;
-
-[[nodiscard]] auto is_mouse_within_viewport() noexcept -> bool;
+/**
+ * Renders the user interface and enqueues user events as needed.
+ *
+ * \details The UI doesn't directly modify the model. Instead, events are issued using the
+ *          provided event dispatcher. The UI only ever directly modifies state not
+ *          directly related to the core model, this corresponds to the widget state
+ *          instance.
+ *
+ * \param model      the associated model instance.
+ * \param widgets    dynamic state used by miscellaneous widgets.
+ * \param dispatcher the event dispatcher used to signal user actions.
+ */
+void render_ui(const Model& model, WidgetState& widgets, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

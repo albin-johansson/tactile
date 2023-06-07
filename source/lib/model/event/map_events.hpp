@@ -60,6 +60,8 @@ struct ResizeMapEvent final {
 
 struct FixTilesInMapEvent final {};
 
+struct ShowGodotExportDialogEvent final {};
+
 /// Event emitted when the user wants to save a map as a Godot scene.
 struct ExportAsGodotSceneEvent final {
   Path root_dir;

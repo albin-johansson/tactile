@@ -30,7 +30,7 @@
 #include "model/systems/textures/null_texture_system.hpp"
 #include "model/systems/tools/bucket_tool.hpp"
 #include "model/systems/tools/stamp_tool.hpp"
-#include "ui/dock/tileset/dialogs/create_tileset_dialog.hpp"
+#include "ui/widget_state.hpp"
 
 namespace tactile::sys {
 
@@ -46,7 +46,7 @@ void init_model(Model& model, const BackendAPI api)
   model.add<Icons>();
   model.add<MenuItems>();
 
-  model.add<ui::CreateTilesetDialogState>();
+  model.add<ui::WidgetState>();
 
   auto& texture_callbacks = model.add<TextureCallbacks>();
   if (api == BackendAPI::Null) {

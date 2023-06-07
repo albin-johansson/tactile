@@ -57,28 +57,11 @@
 #include "model/systems/menu_system.hpp"
 #include "model/systems/model_system.hpp"
 #include "model/systems/texture_system.hpp"
-#include "model/systems/widget_system.hpp"
-#include "ui/dialog/about_dialog.hpp"
-#include "ui/dialog/create_map_dialog.hpp"
-#include "ui/dialog/credits_dialog.hpp"
-#include "ui/dialog/godot_export_dialog.hpp"
-#include "ui/dialog/map_parse_error_dialog.hpp"
-#include "ui/dialog/resize_map_dialog.hpp"
-#include "ui/dialog/settings_dialog.hpp"
-#include "ui/dock/animation/animation_dock.hpp"
-#include "ui/dock/comp/component_dock.hpp"
-#include "ui/dock/comp/component_editor.hpp"
 #include "ui/dock/dock_space.hpp"
-#include "ui/dock/layer/layer_dock.hpp"
-#include "ui/dock/log/log_dock.hpp"
-#include "ui/dock/property/property_dock.hpp"
-#include "ui/dock/tileset/dialogs/create_tileset_dialog.hpp"
-#include "ui/dock/tileset/tileset_dock.hpp"
-#include "ui/menu/menu_bar.hpp"
-#include "ui/style/colors.hpp"
 #include "ui/style/fonts.hpp"
 #include "ui/style/themes.hpp"
-#include "ui/viewport/viewport_widget.hpp"
+#include "ui/ui.hpp"
+#include "ui/widget_state.hpp"
 
 namespace tactile {
 
@@ -97,7 +80,6 @@ void App::on_startup(const BackendAPI api)
   _init_persistent_settings();
 
   sys::init_menus(model);
-  _init_widgets();
 }
 
 void App::_subscribe_to_events()
@@ -121,6 +103,7 @@ void App::_subscribe_to_events()
   mDispatcher.sink<ShowNewMapDialogEvent>().connect<&App::_on_show_new_map_dialog>(this);
   mDispatcher.sink<ShowOpenMapDialogEvent>().connect<&App::_on_show_open_map_dialog>(this);
   mDispatcher.sink<ShowResizeMapDialogEvent>().connect<&App::_on_show_resize_map_dialog>(this);
+  mDispatcher.sink<ShowGodotExportDialogEvent>().connect<&App::_on_show_godot_export_dialog>(this);
   mDispatcher.sink<CreateMapEvent>().connect<&App::_on_create_map>(this);
   mDispatcher.sink<OpenMapEvent>().connect<&App::_on_open_map>(this);
   mDispatcher.sink<ResizeMapEvent>().connect<&App::_on_resize_map>(this);
@@ -214,49 +197,6 @@ void App::_init_persistent_settings()
   ui::apply_theme(style, settings.get_theme(), settings.get_theme_saturation());
 }
 
-void App::_init_widgets()
-{
-  auto& model = *mModel;
-
-  uint32 idx = 0;
-  sys::add_widget(model, idx++, ui::show_menu_bar);
-
-  // Dock widgets
-  sys::add_widget(model, idx++, &ui::show_layer_dock, &ui::is_layer_dock_enabled);
-  sys::add_widget(model, idx++, &ui::show_tileset_dock, &ui::is_tileset_dock_enabled);
-  sys::add_widget(model, idx++, &ui::show_animation_dock, &ui::is_animation_dock_enabled);
-  sys::add_widget(model, idx++, &ui::show_property_dock);
-  sys::add_widget(model, idx++, &ui::show_component_dock);
-  sys::add_widget(model, idx++, &ui::show_log_dock);
-  sys::add_widget(model, idx++, &ui::show_viewport_dock);
-
-  // Dialogs
-  sys::add_widget(model, idx++, &ui::show_component_editor_dialog);
-  sys::add_widget(model, idx++, &ui::show_create_map_dialog);
-  sys::add_widget(model, idx++, &ui::show_resize_map_dialog);
-  sys::add_widget(model, idx++, &ui::show_godot_export_dialog);
-  sys::add_widget(model, idx++, &ui::show_settings_dialog);
-  sys::add_widget(model, idx++, &ui::show_map_parse_error_dialog);
-  sys::add_widget(model, idx++, &ui::show_credits_dialog);
-  sys::add_widget(model, idx, &ui::show_about_dialog);
-
-  // TODO
-  //  if (gOpenMapFileDialog) {
-  //    auto dialog = FileDialog::open_map();
-  //    if (dialog.is_okay()) {
-  //      dispatcher.enqueue<OpenMapEvent>(dialog.path());
-  //    }
-  //  }
-
-  // TODO
-  //  if (gOpenAboutImGuiDialog) {
-  //    center_next_window_on_appearance();
-  //    ImGui::ShowAboutWindow(&gOpenAboutImGuiDialog);
-  //  }
-
-  sys::sort_widgets(model);
-}
-
 void App::on_shutdown()
 {
   auto& model = *mModel;
@@ -276,14 +216,8 @@ void App::on_update()
   // TODO update animated tiles
   sys::update_menu_items(model, mDispatcher);
 
-  ui::update_dynamic_color_cache();
-  ui::update_dock_space(model);
-
-  sys::render_widgets(model, mDispatcher);
-
-  auto& create_tileset_dialog_state = model.get<ui::CreateTilesetDialogState>();
-  ui::push_create_tileset_dialog(create_tileset_dialog_state, model, mDispatcher);
-
+  auto& ui_state = model.get<ui::WidgetState>();
+  ui::render_ui(model, ui_state, mDispatcher);
   ui::check_for_missing_layout_file(model, mDispatcher);
 
   const auto& io = ImGui::GetIO();
@@ -388,6 +322,12 @@ void App::_on_show_resize_map_dialog(const ShowResizeMapDialogEvent& event)
 {
   spdlog::trace("[ShowResizeMapDialogEvent]");
   on_show_resize_map_dialog(*mModel, event);
+}
+
+void App::_on_show_godot_export_dialog(const ShowGodotExportDialogEvent& event)
+{
+  spdlog::trace("[ShowGodotExportDialogEvent]");
+  on_show_godot_export_dialog(*mModel, event);
 }
 
 void App::_on_create_map(const CreateMapEvent& event)
@@ -561,7 +501,7 @@ void App::_on_set_layer_visible(const SetLayerVisibleEvent& event)
 void App::_on_show_layer_rename_dialog(const ShowLayerRenameDialogEvent& event)
 {
   spdlog::trace("[ShowLayerRenameDialogEvent] layer: {}", event.layer);
-  ui::show_rename_layer_dialog(event.layer);
+  // TODO ui::show_rename_layer_dialog(event.layer);
 }
 
 void App::_on_reload_fonts(const ReloadFontsEvent&)

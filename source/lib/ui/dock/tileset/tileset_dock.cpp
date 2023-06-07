@@ -24,7 +24,6 @@
 
 #include "components/document.hpp"
 #include "components/map.hpp"
-#include "components/tileset.hpp"
 #include "components/viewport.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/event/tileset_events.hpp"
@@ -37,18 +36,10 @@
 #include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
-namespace {
 
-struct TilesetDockState final {
-  bool has_focus {};
-  bool has_hover {};
-};
-
-inline constinit TilesetDockState gDockState;
-
-}  // namespace
-
-void show_tileset_dock(const Model& model, Entity, Dispatcher& dispatcher)
+void push_tileset_dock_widget(const Model& model,
+                              TilesetDockState& state,
+                              Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
   const auto& settings = model.get<Settings>();
@@ -68,8 +59,8 @@ void show_tileset_dock(const Model& model, Entity, Dispatcher& dispatcher)
   }
 
   // We intentionally do not use the window is_hovered function here
-  gDockState.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
-  gDockState.has_hover = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
+  state.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
+  state.has_hover = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
     const auto document_entity = sys::get_active_document(model);
@@ -111,16 +102,6 @@ void tileset_dock_mouse_wheel_event_handler(const Model& model,
   delta.x = -delta.x;
 
   dispatcher.enqueue<OffsetViewportEvent>(attached_tileset_entity, delta);
-}
-
-auto is_tileset_dock_focused() -> bool
-{
-  return gDockState.has_focus;
-}
-
-auto is_tileset_dock_hovered() -> bool
-{
-  return gDockState.has_hover;
 }
 
 }  // namespace tactile::ui

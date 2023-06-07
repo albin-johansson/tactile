@@ -21,11 +21,28 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
+#include "common/type/maybe.hpp"
+#include "common/type/string.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 
-void show_property_dock(const Model& model, Entity widget_entity, Dispatcher& dispatcher);
+struct PropertyItemContextMenuState final {
+  bool show_add_dialog         : 1 {};
+  bool show_rename_dialog      : 1 {};
+  bool show_change_type_dialog : 1 {};
+};
+
+struct PropertyDockState final {
+  Maybe<String> rename_target;
+  Maybe<String> change_type_target;
+  PropertyItemContextMenuState context_state;
+  bool has_focus : 1 {};
+};
+
+void push_property_dock_widget(const Model& model,
+                               PropertyDockState& state,
+                               Dispatcher& dispatcher);
 
 [[nodiscard]] auto is_property_dock_focused() -> bool;
 

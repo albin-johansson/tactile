@@ -21,9 +21,7 @@
 
 #include <imgui.h>
 
-#include "common/debug/assert.hpp"
 #include "common/fmt/fmt_string.hpp"
-#include "component_view.hpp"
 #include "components/component.hpp"
 #include "components/context.hpp"
 #include "components/document.hpp"
@@ -33,6 +31,7 @@
 #include "model/systems/context/components.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
+#include "ui/dock/comp/component_view.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"
@@ -119,7 +118,7 @@ void _push_dock_contents(const Model& model,
 
 }  // namespace
 
-void show_component_dock(const Model& model, Entity, Dispatcher& dispatcher)
+void push_component_dock_widget(const Model& model, Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
   const auto& settings = model.get<Settings>();

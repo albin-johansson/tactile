@@ -27,9 +27,9 @@
 #include "model/event/file_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/systems/document_system.hpp"
+#include "ui/dock/editor/central_map_viewport.hpp"
+#include "ui/dock/editor/central_tileset_viewport.hpp"
 #include "ui/style/icons.hpp"
-#include "ui/viewport/map_viewport.hpp"
-#include "ui/viewport/tileset_viewport.hpp"
 #include "ui/widget/scoped.hpp"
 
 namespace tactile::ui {
@@ -37,9 +37,10 @@ namespace {
 
 void _push_document_tab(const Model& model,
                         const Entity document_entity,
+                        TilesetViewportState& tileset_viewport_state,
                         Dispatcher& dispatcher)
 {
-  const Scope scope {document_entity};
+  const Scope document_scope {document_entity};
 
   const auto& document = model.get<Document>(document_entity);
   const auto& command_stack = model.get<CommandStack>(document_entity);
@@ -68,7 +69,7 @@ void _push_document_tab(const Model& model,
       }
 
       if (model.has<TilesetDocument>(document_entity)) {
-        show_tileset_viewport(model, document_entity, dispatcher);
+        push_tileset_viewport(model, tileset_viewport_state, document_entity, dispatcher);
       }
     }
   }
@@ -83,12 +84,14 @@ void _push_document_tab(const Model& model,
 
 }  // namespace
 
-void update_document_tabs(const Model& model, Dispatcher& dispatcher)
+void push_document_tab_widget(const Model& model,
+                              TilesetViewportState& tileset_viewport_state,
+                              Dispatcher& dispatcher)
 {
   if (const TabBar bar {"##DocumentTabs", ImGuiTabBarFlags_Reorderable}; bar.is_open()) {
     const auto& document_context = model.get<DocumentContext>();
     for (const auto document_entity: document_context.open_documents) {
-      _push_document_tab(model, document_entity, dispatcher);
+      _push_document_tab(model, document_entity, tileset_viewport_state, dispatcher);
     }
   }
 }

@@ -19,17 +19,21 @@
 
 #pragma once
 
-#include "common/tile_extent.hpp"
+#include "common/primitives.hpp"
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 
-void open_resize_map_dialog(TileExtent current_extent);
+struct ResizeMapDialogState final {
+  uint64 row_count {};
+  uint64 col_count {};
+  bool should_open {};
+};
 
-void show_resize_map_dialog(const Model& model,
-                            Entity widget_entity,
+void push_resize_map_dialog(const Model& model,
+                            ResizeMapDialogState& state,
                             Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

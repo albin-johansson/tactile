@@ -21,7 +21,6 @@
 
 #include <imgui.h>
 
-#include "common/type/dispatcher.hpp"
 #include "model/model.hpp"
 #include "ui/menu/debug_menu.hpp"
 #include "ui/menu/edit_menu.hpp"
@@ -33,7 +32,7 @@
 
 namespace tactile::ui {
 
-void show_menu_bar(const Model& model, Entity, Dispatcher& dispatcher)
+void push_menu_bar(const Model& model, Dispatcher& dispatcher)
 {
   if (ImGui::BeginMainMenuBar()) {
     show_file_menu(model, dispatcher);

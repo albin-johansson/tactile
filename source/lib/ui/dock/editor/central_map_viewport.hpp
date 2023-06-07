@@ -25,10 +25,10 @@
 
 namespace tactile::ui {
 
-void show_tileset_viewport(const Model& model,
-                           Entity tileset_document_entity,
-                           Dispatcher& dispatcher);
+void push_map_viewport(const Model& model,
+                       Entity map_document_entity,
+                       Dispatcher& dispatcher);
 
-void enable_tile_animation_frame_selection_mode();
+void open_object_context_menu();
 
 }  // namespace tactile::ui

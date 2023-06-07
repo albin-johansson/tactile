@@ -28,7 +28,7 @@
 
 namespace tactile::ui {
 
-struct CreateTilesetDialogState final {
+struct NewTilesetDialogState final {
   Entity map_entity {kNullEntity};
   Path image_path;
   StringBuffer image_path_preview_buffer {};
@@ -36,8 +36,8 @@ struct CreateTilesetDialogState final {
   bool should_open {};
 };
 
-void push_create_tileset_dialog(CreateTilesetDialogState& state,
-                                const Model& model,
-                                Dispatcher& dispatcher);
+void push_new_tileset_dialog(const Model& model,
+                             NewTilesetDialogState& state,
+                             Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

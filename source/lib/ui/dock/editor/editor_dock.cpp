@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "viewport_widget.hpp"
+#include "editor_dock.hpp"
 
 #include <centurion/keyboard.hpp>
 #include <centurion/mouse_events.hpp>
@@ -31,23 +31,16 @@
 #include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/conversions.hpp"
+#include "ui/dock/editor/document_tab_widget.hpp"
 #include "ui/shortcut/mappings.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
-#include "ui/viewport/document_tab_widget.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 #include "ui/widget/windows.hpp"
 
 namespace tactile::ui {
 namespace {
-
-struct ViewportWidgetState final {
-  bool has_focus = false;
-  bool has_hover = false;
-};
-
-inline constinit ViewportWidgetState gWidgetState;
 
 void _push_start_page(const Model& model, const Strings& strings, Dispatcher& dispatcher)
 {
@@ -76,7 +69,10 @@ void _push_start_page(const Model& model, const Strings& strings, Dispatcher& di
 
 }  // namespace
 
-void show_viewport_dock(const Model& model, Entity, Dispatcher& dispatcher)
+void push_editor_dock_widget(const Model& model,
+                             EditorDockState& state,
+                             TilesetViewportState& tileset_viewport_state,
+                             Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
 
@@ -85,14 +81,14 @@ void show_viewport_dock(const Model& model, Entity, Dispatcher& dispatcher)
 
   const Window window {"Viewport",
                        ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse};
-  gWidgetState.has_focus = window.has_focus();
-  gWidgetState.has_hover = window.is_hovered();
+  state.is_focused = window.has_focus();
+  state.is_hovered = window.is_hovered();
 
   if (window.is_open()) {
     padding.pop();
 
     if (sys::has_active_document(model)) {
-      update_document_tabs(model, dispatcher);
+      push_document_tab_widget(model, tileset_viewport_state, dispatcher);
 
       if (sys::is_map_document_active(model)) {
         if (window.mouse_entered()) {
@@ -135,16 +131,6 @@ void viewport_widget_mouse_wheel_event_handler(const Entity viewport_entity,
 
     dispatcher.enqueue<OffsetViewportEvent>(viewport_entity, delta);
   }
-}
-
-auto is_viewport_focused() noexcept -> bool
-{
-  return gWidgetState.has_focus;
-}
-
-auto is_mouse_within_viewport() noexcept -> bool
-{
-  return gWidgetState.has_hover;
 }
 
 }  // namespace tactile::ui

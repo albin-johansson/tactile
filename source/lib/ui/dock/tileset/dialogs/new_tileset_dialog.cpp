@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "create_tileset_dialog.hpp"
+#include "new_tileset_dialog.hpp"
 
 #include <imgui.h>
 
@@ -30,7 +30,7 @@
 namespace tactile::ui {
 namespace {
 
-void _select_image_file(CreateTilesetDialogState& state)
+void _select_image_file(NewTilesetDialogState& state)
 {
   auto dialog = FileDialog::open_image();
   if (!dialog.is_okay()) {
@@ -50,9 +50,9 @@ void _select_image_file(CreateTilesetDialogState& state)
 
 }  // namespace
 
-void push_create_tileset_dialog(CreateTilesetDialogState& state,
-                                const Model& model,
-                                Dispatcher& dispatcher)
+void push_new_tileset_dialog(const Model& model,
+                             NewTilesetDialogState& state,
+                             Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
 

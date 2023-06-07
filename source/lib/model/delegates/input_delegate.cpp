@@ -25,8 +25,9 @@
 #include "components/viewport.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/systems/document_system.hpp"
+#include "ui/dock/editor/editor_dock.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
-#include "ui/viewport/viewport_widget.hpp"
+#include "ui/widget_state.hpp"
 
 namespace tactile {
 namespace {
@@ -50,18 +51,19 @@ void _on_mouse_wheel(Model& model,
   // widgets.
 
   const auto document_entity = sys::get_active_document(model);
+  const auto& widgets = model.get<ui::WidgetState>();
 
   if (document_entity != kNullEntity && !ImGui::GetTopMostPopupModal()) {
     const auto& document = model.get<Document>(document_entity);
     const auto& document_viewport = model.get<Viewport>(document_entity);
 
-    if (ui::is_mouse_within_viewport()) {
+    if (widgets.editor_dock.is_hovered) {
       ui::viewport_widget_mouse_wheel_event_handler(document_entity,
                                                     document_viewport,
                                                     dispatcher,
                                                     event);
     }
-    else if (document.type == DocumentType::Map && ui::is_tileset_dock_hovered()) {
+    else if (document.type == DocumentType::Map && widgets.tileset_dock.has_hover) {
       const auto& map_document = model.get<MapDocument>(document_entity);
       // const auto& map = model.get<Map>(map_document.map);
 

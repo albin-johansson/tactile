@@ -21,14 +21,18 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
+#include "common/type/maybe.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 
-void open_component_editor_dialog(const Model& model);
+struct ComponentEditorDialogState final {
+  Maybe<Entity> active_component_def;
+  bool should_open {};
+};
 
-void show_component_editor_dialog(const Model& model,
-                                  Entity widget_entity,
+void push_component_editor_dialog(const Model& model,
+                                  ComponentEditorDialogState& state,
                                   Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

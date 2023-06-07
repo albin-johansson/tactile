@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "map_viewport.hpp"
+#include "central_map_viewport.hpp"
 
 #include <concepts>  // predicate
 
@@ -37,12 +37,12 @@
 #include "model/systems/language_system.hpp"
 #include "model/systems/render_system.hpp"
 #include "ui/conversions.hpp"
+#include "ui/dock/editor/document_viewport_offset_handler.hpp"
+#include "ui/dock/editor/map_viewport_overlay.hpp"
+#include "ui/dock/editor/map_viewport_toolbar.hpp"
 #include "ui/render/canvas.hpp"
 #include "ui/render/canvas_renderer.hpp"
 #include "ui/render/primitives.hpp"
-#include "ui/viewport/document_viewport_offset_handler.hpp"
-#include "ui/viewport/map_viewport_overlay.hpp"
-#include "ui/viewport/map_viewport_toolbar.hpp"
 #include "ui/widget/scoped.hpp"
 
 namespace tactile::ui {

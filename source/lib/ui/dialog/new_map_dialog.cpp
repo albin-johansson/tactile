@@ -17,15 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "create_map_dialog.hpp"
+#include "new_map_dialog.hpp"
 
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
-#include "common/primitives.hpp"
-#include "common/type/math.hpp"
 #include "model/event/map_events.hpp"
-#include "model/settings.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/alignment.hpp"
@@ -33,16 +30,7 @@
 namespace tactile::ui {
 namespace {
 
-struct CreateMapDialogState final {
-  Int2 tile_size {};
-  uint64 row_count {};
-  uint64 column_count {};
-  bool open_dialog {};
-};
-
-inline constinit CreateMapDialogState gDialogState;
-
-void _push_dialog_contents(const Strings& strings)
+void _push_dialog_contents(const Strings& strings, NewMapDialogState& state)
 {
   {
     const auto& rows_label = strings.misc.rows;
@@ -53,12 +41,12 @@ void _push_dialog_contents(const Strings& strings)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(rows_label.c_str());
     ImGui::SameLine(offset);
-    ImGui::InputScalar("##Rows", ImGuiDataType_U64, &gDialogState.row_count);
+    ImGui::InputScalar("##Rows", ImGuiDataType_U64, &state.row_count);
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(columns_label.c_str());
     ImGui::SameLine(offset);
-    ImGui::InputScalar("##Columns", ImGuiDataType_U64, &gDialogState.column_count);
+    ImGui::InputScalar("##Columns", ImGuiDataType_U64, &state.col_count);
   }
 
   ImGui::Separator();
@@ -72,64 +60,53 @@ void _push_dialog_contents(const Strings& strings)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(tile_width_label.c_str());
     ImGui::SameLine(offset);
-    ImGui::InputInt("##TileWidth", &gDialogState.tile_size.x);
+    ImGui::InputInt("##TileWidth", &state.tile_size.x);
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(tile_height_label.c_str());
     ImGui::SameLine(offset);
-    ImGui::InputInt("##TileHeight", &gDialogState.tile_size.y);
+    ImGui::InputInt("##TileHeight", &state.tile_size.y);
   }
 }
 
-void _on_dialog_accept(Dispatcher& dispatcher)
+void _on_dialog_accept(const NewMapDialogState& state, Dispatcher& dispatcher)
 {
-  TACTILE_ASSERT(gDialogState.tile_size.x > 0);
-  TACTILE_ASSERT(gDialogState.tile_size.y > 0);
-  dispatcher.enqueue<CreateMapEvent>(gDialogState.tile_size,
-                                     gDialogState.row_count,
-                                     gDialogState.column_count);
+  TACTILE_ASSERT(state.tile_size.x > 0);
+  TACTILE_ASSERT(state.tile_size.y > 0);
+  dispatcher.enqueue<CreateMapEvent>(state.tile_size, state.row_count, state.col_count);
 }
 
 }  // namespace
 
-void open_create_map_dialog(const Model& model)
-{
-  const auto& settings = model.get<Settings>();
-
-  gDialogState.tile_size = settings.get_preferred_tile_size();
-  gDialogState.row_count = 5;
-  gDialogState.column_count = 5;
-  gDialogState.open_dialog = true;
-}
-
-void show_create_map_dialog(const Model& model, Entity, Dispatcher& dispatcher)
+void push_new_map_dialog(const Model& model,
+                         NewMapDialogState& state,
+                         Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
 
-  DialogOptions options {
+  DialogOptions dialog_options {
       .title = strings.window.create_new_map.c_str(),
       .close_label = strings.misc.close.c_str(),
       .accept_label = strings.misc.create.c_str(),
   };
 
-  if (gDialogState.open_dialog) {
-    options.flags |= UI_DIALOG_FLAG_OPEN;
-    gDialogState.open_dialog = false;
+  if (state.should_open) {
+    dialog_options.flags |= UI_DIALOG_FLAG_OPEN;
+    state.should_open = false;
   }
 
-  const bool is_input_valid =
-      (gDialogState.tile_size.x > 0) && (gDialogState.tile_size.y > 0);
+  const bool is_input_valid = (state.tile_size.x > 0) && (state.tile_size.y > 0);
   if (is_input_valid) {
-    options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
+    dialog_options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
-  DialogAction action {DialogAction::None};
-  if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
-    _push_dialog_contents(strings);
+  auto action = DialogAction::None;
+  if (const ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
+    _push_dialog_contents(strings, state);
   }
 
   if (action == DialogAction::Accept) {
-    _on_dialog_accept(dispatcher);
+    _on_dialog_accept(state, dispatcher);
   }
 }
 

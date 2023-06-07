@@ -19,22 +19,16 @@
 
 #pragma once
 
-#include "common/primitives.hpp"
 #include "common/type/dispatcher.hpp"
-#include "components/widget.hpp"
 #include "model/model.hpp"
+#include "ui/widget_state.hpp"
 
-namespace tactile::sys {
+namespace tactile::ui {
 
-void sort_widgets(Model& model);
+void push_document_tab_widget(const Model& model,
+                              TilesetViewportState& tileset_viewport_state,
+                              Dispatcher& dispatcher);
 
-void add_widget(Model& model, uint32 weight, WidgetCallback callback);
+void center_map_viewport();
 
-void add_widget(Model& model,
-                uint32 weight,
-                WidgetCallback callback,
-                IsWidgetEnabledFn is_enabled_fn);
-
-void render_widgets(const Model& model, Dispatcher& dispatcher);
-
-}  // namespace tactile::sys
+}  // namespace tactile::ui

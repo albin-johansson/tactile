@@ -21,14 +21,22 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
+#include "common/type/path.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 
-void open_godot_export_dialog();
+struct GodotExportDialogState final {
+  Path root_dir;
+  Path map_dir;
+  Path image_dir;
+  Path tileset_dir;
+  int polygon_point_count {};
+  bool should_open {};
+};
 
-void show_godot_export_dialog(const Model& model,
-                              Entity widget_entity,
+void push_godot_export_dialog(const Model& model,
+                              GodotExportDialogState& state,
                               Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

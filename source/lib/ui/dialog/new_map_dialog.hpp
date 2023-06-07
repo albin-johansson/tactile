@@ -22,22 +22,20 @@
 #include "common/primitives.hpp"
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/func.hpp"
+#include "common/type/math.hpp"
 #include "model/model.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
-
-/// Callback with signature common for all widget functions.
-/// The entity is the widget entity.
-using WidgetCallback = Func<void(const Model&, Entity, Dispatcher&)>;
-
-using IsWidgetEnabledFn = Func<bool(const Model&)>;
-
-struct Widget final {
-  uint32 weight {};         ///< Used when sorting widgets.
-  WidgetCallback callback;  ///< Callback for the widget ImGui code.
-  IsWidgetEnabledFn is_enabled;
+struct NewMapDialogState final {
+  Int2 tile_size {};
+  uint64 row_count {};
+  uint64 col_count {};
+  bool should_open {};
 };
 
-}  // namespace tactile
+void push_new_map_dialog(const Model& model,
+                         NewMapDialogState& state,
+                         Dispatcher& dispatcher);
+
+}  // namespace tactile::ui

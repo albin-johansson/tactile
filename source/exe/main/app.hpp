@@ -62,7 +62,6 @@ class App final : public AppDelegate {
 
   void _subscribe_to_events();
   void _init_persistent_settings();
-  void _init_widgets();
 
   void _on_menu_action(const MenuActionEvent& event);
 
@@ -84,6 +83,7 @@ class App final : public AppDelegate {
   void _on_show_new_map_dialog(const ShowNewMapDialogEvent& event);
   void _on_show_open_map_dialog(const ShowOpenMapDialogEvent& event);
   void _on_show_resize_map_dialog(const ShowResizeMapDialogEvent& event);
+  void _on_show_godot_export_dialog(const ShowGodotExportDialogEvent& event);
   void _on_create_map(const CreateMapEvent& event);
   void _on_open_map(const OpenMapEvent& event);
   void _on_resize_map(const ResizeMapEvent& event);

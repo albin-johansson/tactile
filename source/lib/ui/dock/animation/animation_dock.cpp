@@ -51,12 +51,6 @@ inline constexpr ImVec2 kFrameImageSize {32, 32};
 inline constexpr int64 kMinFrameDurationMs = 1;
 inline constexpr int64 kMaxFrameDurationMs = 100'000;
 
-struct AnimationDockState final {
-  float preview_animation_size {0.4f};
-};
-
-inline constinit AnimationDockState gDockState;
-
 void _push_animated_tile_cell_image(const Model& model,
                                     const Tileset& tileset,
                                     const TileIndex tile_index,
@@ -109,57 +103,50 @@ void _push_frame_popup(const Model& model,
                        const ssize parent_tile_frame_count,
                        Dispatcher& dispatcher)
 {
+  const auto document_entity = sys::get_active_document(model);
+
   const auto& tile = model.get<Tile>(tile_entity);
   const auto& tile_animation = model.get<TileAnimation>(tile_entity);
   const auto& frame = tile_animation.frames.at(frame_index);
 
   if (const Popup popup {"##FramePopup"}; popup.is_open()) {
-    if (auto new_duration = _push_frame_duration_slider(strings, frame.duration)) {
-      dispatcher.enqueue<SetTileAnimationFrameDurationEvent>(tile.index,
-                                                             frame_index,
-                                                             *new_duration);
+    if (auto new_frame_duration = _push_frame_duration_slider(strings, frame.duration)) {
+      dispatcher.enqueue<SetAnimationFrameDurationEvent>(tile_entity,
+                                                         frame_index,
+                                                         *new_frame_duration);
     }
 
     ImGui::Separator();
 
-    {
-      const Disable disable_if_first {frame_index == 0};
-      if (ImGui::MenuItem(strings.animation_dock.move_frame_forwards.c_str())) {
-        dispatcher.enqueue<MoveAnimationFrameForwardsEvent>(frame_index);
-      }
+    if (const Disable disable_if {frame_index == 0};
+        ImGui::MenuItem(strings.animation_dock.move_frame_forwards.c_str())) {
+      dispatcher.enqueue<MoveAnimationFrameForwardsEvent>(tile_entity, frame_index);
     }
 
-    {
-      const auto frame_count = tile_animation.frames.size();
-      const Disable disable_if_last {frame_index == frame_count - 1};
-      if (ImGui::MenuItem(strings.animation_dock.move_frame_backwards.c_str())) {
-        dispatcher.enqueue<MoveAnimationFrameBackwardsEvent>(frame_index);
-      }
+    if (const Disable disable_if {frame_index == tile_animation.frames.size() - 1};
+        ImGui::MenuItem(strings.animation_dock.move_frame_backwards.c_str())) {
+      dispatcher.enqueue<MoveAnimationFrameBackwardsEvent>(tile_entity, frame_index);
     }
 
     ImGui::Separator();
 
-    {
-      const Disable disable_if_already_selected {tile.index == frame.tile_index};
-      if (ImGui::MenuItem(strings.animation_dock.select_referenced_tile.c_str())) {
-        dispatcher.enqueue<SelectTilesetTileEvent>(frame.tile_index);
-      }
+    if (const Disable disable_if {tile.index == frame.tile_index};
+        ImGui::MenuItem(strings.animation_dock.select_referenced_tile.c_str())) {
+      dispatcher.enqueue<SelectTilesetTileEvent>(document_entity, frame.tile_index);
     }
 
     ImGui::Separator();
 
-    {
-      const Disable disable_if_parent_frame {tile.index == frame.tile_index &&
-                                             parent_tile_frame_count < 2};
-      if (ImGui::MenuItem(strings.animation_dock.remove_frame.c_str())) {
-        dispatcher.enqueue<RemoveTileAnimationFrameEvent>(frame_index);
-      }
+    if (const Disable disable_if {tile.index == frame.tile_index &&
+                                  parent_tile_frame_count < 2};
+        ImGui::MenuItem(strings.animation_dock.remove_frame.c_str())) {
+      dispatcher.enqueue<RemoveAnimationFrameEvent>(tile_entity, frame_index);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(strings.animation_dock.delete_animation.c_str())) {
-      dispatcher.enqueue<DeleteTileAnimationEvent>();
+      dispatcher.enqueue<DeleteTileAnimationEvent>(tile_entity);
     }
   }
 }
@@ -171,6 +158,7 @@ void _push_animation_frame_list(const Model& model,
                                 Dispatcher& dispatcher)
 {
   const auto& style = ImGui::GetStyle();
+
   const ImVec2 child_size {-kMinFloat,
                            kFrameImageSize.y + style.FramePadding.y * 2 +
                                style.ItemInnerSpacing.y + style.ScrollbarSize};
@@ -233,12 +221,13 @@ void _push_animation_frame_list(const Model& model,
 
 void _push_tile_animation_preview_section(const Model& model,
                                           const Strings& strings,
+                                          AnimationDockState& state,
                                           const Tileset& tileset,
                                           const TileIndex tile_index)
 {
   ImGui::VSliderFloat("##Size",
                       {32, ImGui::GetContentRegionAvail().y},
-                      &gDockState.preview_animation_size,
+                      &state.preview_animation_size,
                       0.1f,
                       1.0f,
                       "");
@@ -252,7 +241,7 @@ void _push_tile_animation_preview_section(const Model& model,
     const auto& texture = model.get<Texture>(tileset.texture);
     const Float2 texture_size = texture.size;
 
-    const auto image_width = ImGui::GetWindowSize().x * gDockState.preview_animation_size;
+    const auto image_width = ImGui::GetWindowSize().x * state.preview_animation_size;
     const auto image_height = image_width * (texture_size.y / texture_size.x);
     const ImVec2 cell_image_size {image_width, image_height};
 
@@ -263,7 +252,9 @@ void _push_tile_animation_preview_section(const Model& model,
 
 }  // namespace
 
-void show_animation_dock(const Model& model, Entity, Dispatcher& dispatcher)
+void push_animation_dock_widget(const Model& model,
+                                AnimationDockState& state,
+                                Dispatcher& dispatcher)
 {
   const auto& settings = model.get<Settings>();
 
@@ -304,6 +295,7 @@ void show_animation_dock(const Model& model, Entity, Dispatcher& dispatcher)
                                  dispatcher);
       _push_tile_animation_preview_section(model,
                                            strings,
+                                           state,
                                            tileset,
                                            appearance_tile_index);
     }

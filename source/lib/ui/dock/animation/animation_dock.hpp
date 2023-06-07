@@ -20,14 +20,17 @@
 #pragma once
 
 #include "common/type/dispatcher.hpp"
-#include "common/type/ecs.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 
-void show_animation_dock(const Model& model,
-                         Entity widget_entity,
-                         Dispatcher& dispatcher);
+struct AnimationDockState final {
+  float preview_animation_size {0.4f};
+};
+
+void push_animation_dock_widget(const Model& model,
+                                AnimationDockState& state,
+                                Dispatcher& dispatcher);
 
 [[nodiscard]] auto is_animation_dock_enabled(const Model& model) -> bool;
 

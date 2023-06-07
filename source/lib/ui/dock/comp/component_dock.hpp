@@ -25,8 +25,6 @@
 
 namespace tactile::ui {
 
-void show_component_dock(const Model& model,
-                         Entity widget_entity,
-                         Dispatcher& dispatcher);
+void push_component_dock_widget(const Model& model, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

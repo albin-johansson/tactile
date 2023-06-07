@@ -28,7 +28,14 @@
 
 namespace tactile::ui {
 
-void show_tileset_dock(const Model& model, Entity widget_entity, Dispatcher& dispatcher);
+struct TilesetDockState final {
+  bool has_focus {};
+  bool has_hover {};
+};
+
+void push_tileset_dock_widget(const Model& model,
+                              TilesetDockState& state,
+                              Dispatcher& dispatcher);
 
 [[nodiscard]] auto is_tileset_dock_enabled(const Model& model) -> bool;
 
@@ -36,9 +43,5 @@ void tileset_dock_mouse_wheel_event_handler(const Model& model,
                                             Entity attached_tileset_entity,
                                             const cen::mouse_wheel_event& event,
                                             Dispatcher& dispatcher);
-
-[[nodiscard]] auto is_tileset_dock_focused() -> bool;
-
-[[nodiscard]] auto is_tileset_dock_hovered() -> bool;
 
 }  // namespace tactile::ui

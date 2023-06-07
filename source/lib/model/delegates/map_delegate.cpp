@@ -40,44 +40,49 @@
 #include "io/ir/ir_restoration.hpp"
 #include "io/map/parse/parse_map.hpp"
 #include "model/event/map_events.hpp"
+#include "model/settings.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/file_history_system.hpp"
-#include "ui/dialog/create_map_dialog.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"
+#include "ui/widget_state.hpp"
 
 namespace tactile {
-namespace {
-
-[[nodiscard]] auto _get_current_map_entity(const Model& model) -> Entity
-{
-  if (sys::is_map_document_active(model)) {
-    const auto document_entity = sys::get_active_document(model);
-    const auto& map_document = model.get<MapDocument>(document_entity);
-    return map_document.map;
-  }
-
-  return kNullEntity;
-}
-
-}  // namespace
 
 void on_show_new_map_dialog(Model& model, const ShowNewMapDialogEvent&)
 {
-  ui::open_create_map_dialog(model);
+  const auto& settings = model.get<Settings>();
+
+  auto& widgets = model.get<ui::WidgetState>();
+  widgets.new_map_dialog.tile_size = settings.get_preferred_tile_size();
+  widgets.new_map_dialog.row_count = 5;
+  widgets.new_map_dialog.col_count = 5;
+  widgets.new_map_dialog.should_open = true;
 }
 
 void on_show_open_map_dialog(Model&, const ShowOpenMapDialogEvent&)
 {
-  // ui::open_map_file_dialog();
+  // TODO ui::open_map_file_dialog();
 }
 
 void on_show_resize_map_dialog(Model& model, const ShowResizeMapDialogEvent&)
 {
-  const auto map_entity = _get_current_map_entity(model);
-  if (map_entity != kNullEntity) {
-    const auto& map = model.get<Map>(map_entity);
-    ui::open_resize_map_dialog(map.extent);
+  if (const auto* map = sys::try_get_active_map(model)) {
+    auto& widgets = model.get<ui::WidgetState>();
+    widgets.resize_map_dialog.row_count = map->extent.rows;
+    widgets.resize_map_dialog.col_count = map->extent.cols;
+    widgets.resize_map_dialog.should_open = true;
   }
+}
+
+void on_show_godot_export_dialog(Model& model, const ShowGodotExportDialogEvent&)
+{
+  auto& widgets = model.get<ui::WidgetState>();
+  widgets.godot_export_dialog.root_dir.clear();
+  widgets.godot_export_dialog.map_dir.clear();
+  widgets.godot_export_dialog.image_dir.clear();
+  widgets.godot_export_dialog.tileset_dir.clear();
+  widgets.godot_export_dialog.polygon_point_count = 16;
+  widgets.godot_export_dialog.should_open = true;
 }
 
 void on_create_map(Model& model, const CreateMapEvent& event)
@@ -107,7 +112,7 @@ void on_open_map(Model& model, const OpenMapEvent& event)
 
 void on_resize_map(Model& model, const ResizeMapEvent& event)
 {
-  const auto map_entity = _get_current_map_entity(model);
+  const auto map_entity = sys::get_active_map(model);
   if (map_entity != kNullEntity) {
     sys::try_execute<cmd::ResizeMap>(model,
                                      map_entity,
@@ -117,7 +122,7 @@ void on_resize_map(Model& model, const ResizeMapEvent& event)
 
 void on_add_row(Model& model, const AddRowEvent&)
 {
-  const auto map_entity = _get_current_map_entity(model);
+  const auto map_entity = sys::get_active_map(model);
   if (map_entity != kNullEntity) {
     sys::try_execute<cmd::AddRow>(model, map_entity);
   }
@@ -125,7 +130,7 @@ void on_add_row(Model& model, const AddRowEvent&)
 
 void on_add_column(Model& model, const AddColumnEvent&)
 {
-  const auto map_entity = _get_current_map_entity(model);
+  const auto map_entity = sys::get_active_map(model);
   if (map_entity != kNullEntity) {
     sys::try_execute<cmd::AddColumn>(model, map_entity);
   }
@@ -133,7 +138,7 @@ void on_add_column(Model& model, const AddColumnEvent&)
 
 void on_remove_row(Model& model, const RemoveRowEvent&)
 {
-  const auto map_entity = _get_current_map_entity(model);
+  const auto map_entity = sys::get_active_map(model);
   if (map_entity != kNullEntity) {
     sys::try_execute<cmd::RemoveRow>(model, map_entity);
   }
@@ -141,7 +146,7 @@ void on_remove_row(Model& model, const RemoveRowEvent&)
 
 void on_remove_column(Model& model, const RemoveColumnEvent&)
 {
-  const auto map_entity = _get_current_map_entity(model);
+  const auto map_entity = sys::get_active_map(model);
   if (map_entity != kNullEntity) {
     sys::try_execute<cmd::RemoveColumn>(model, map_entity);
   }
@@ -149,7 +154,7 @@ void on_remove_column(Model& model, const RemoveColumnEvent&)
 
 void on_fix_tiles_in_map(Model& model, const FixTilesInMapEvent&)
 {
-  const auto map_entity = _get_current_map_entity(model);
+  const auto map_entity = sys::get_active_map(model);
   if (map_entity != kNullEntity) {
     sys::try_execute<cmd::FixMapTiles>(model, map_entity);
   }
@@ -187,7 +192,7 @@ void on_inspect_map(Model& model, const InspectMapEvent&)
 
 void on_set_tile_format_encoding(Model& model, const SetTileFormatEncodingEvent& event)
 {
-  const auto map_entity = _get_current_map_entity(model);
+  const auto map_entity = sys::get_active_map(model);
   if (map_entity != kNullEntity) {
     sys::try_execute<cmd::SetTileFormatEncoding>(model, map_entity, event.encoding);
   }
@@ -196,7 +201,7 @@ void on_set_tile_format_encoding(Model& model, const SetTileFormatEncodingEvent&
 void on_set_tile_format_compression(Model& model,
                                     const SetTileFormatCompressionEvent& event)
 {
-  const auto map_entity = _get_current_map_entity(model);
+  const auto map_entity = sys::get_active_map(model);
   if (map_entity != kNullEntity) {
     sys::try_execute<cmd::SetTileFormatCompression>(model, map_entity, event.compression);
   }
@@ -205,7 +210,7 @@ void on_set_tile_format_compression(Model& model,
 void on_set_zlib_compression_level(Model& model,
                                    const SetZlibCompressionLevelEvent& event)
 {
-  const auto map_entity = _get_current_map_entity(model);
+  const auto map_entity = sys::get_active_map(model);
   if (map_entity != kNullEntity) {
     sys::try_execute<cmd::SetZlibCompressionLevel>(model, map_entity, event.level);
   }
@@ -214,7 +219,7 @@ void on_set_zlib_compression_level(Model& model,
 void on_set_zstd_compression_level(Model& model,
                                    const SetZstdCompressionLevelEvent& event)
 {
-  const auto map_entity = _get_current_map_entity(model);
+  const auto map_entity = sys::get_active_map(model);
   if (map_entity != kNullEntity) {
     sys::try_execute<cmd::SetZstdCompressionLevel>(model, map_entity, event.level);
   }

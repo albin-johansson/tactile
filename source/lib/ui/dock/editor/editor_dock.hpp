@@ -19,16 +19,29 @@
 
 #pragma once
 
+#include <centurion/fwd.hpp>
+
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
+#include "components/viewport.hpp"
 #include "model/model.hpp"
+#include "ui/dock/editor/central_tileset_viewport.hpp"
 
 namespace tactile::ui {
 
-void open_create_map_dialog(const Model& model);
+struct EditorDockState final {
+  bool is_focused {};
+  bool is_hovered {};
+};
 
-void show_create_map_dialog(const Model& model,
-                            Entity widget_entity,
-                            Dispatcher& dispatcher);
+void push_editor_dock_widget(const Model& model,
+                             EditorDockState& state,
+                             TilesetViewportState& tileset_viewport_state,
+                             Dispatcher& dispatcher);
+
+void viewport_widget_mouse_wheel_event_handler(Entity viewport_entity,
+                                               const Viewport& viewport,
+                                               Dispatcher& dispatcher,
+                                               const cen::mouse_wheel_event& event);
 
 }  // namespace tactile::ui

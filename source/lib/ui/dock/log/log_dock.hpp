@@ -19,14 +19,20 @@
 
 #pragma once
 
+#include "common/debug/logging.hpp"
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 
-void show_log_dock(const Model& model, Entity widget_entity, Dispatcher& dispatcher);
+struct LogDockState final {
+  LogFilter log_filter;
+  bool has_focus {};
+};
 
-[[nodiscard]] auto is_log_dock_focused() -> bool;
+void push_log_dock_widget(const Model& model,
+                          LogDockState& state,
+                          Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

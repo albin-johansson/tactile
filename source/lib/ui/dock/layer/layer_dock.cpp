@@ -33,7 +33,6 @@
 #include "model/systems/group_layer_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/constants.hpp"
-#include "ui/dock/layer/add_layer_context_menu.hpp"
 #include "ui/dock/layer/dialogs/rename_layer_dialog.hpp"
 #include "ui/dock/layer/layer_selectable.hpp"
 #include "ui/style/alignment.hpp"
@@ -44,16 +43,9 @@
 namespace tactile::ui {
 namespace {
 
-struct LayerDockState final {
-  AddLayerContextMenu add_layer_context_menu;
-  Maybe<Entity> rename_target_layer_entity;
-  bool has_focus {};
-};
-
-inline LayerDockState gDockState;
-
 void _push_side_buttons(const Model& model,
                         const Strings& strings,
+                        LayerDockState& state,
                         Dispatcher& dispatcher)
 {
   const auto& document_entity = sys::get_active_document(model);
@@ -65,10 +57,10 @@ void _push_side_buttons(const Model& model,
   const Group group;
 
   if (push_icon_button(TAC_ICON_ADD, strings.tooltip.add_new_layer.c_str())) {
-    gDockState.add_layer_context_menu.show();
+    state.add_layer_context_menu.show();
   }
 
-  gDockState.add_layer_context_menu.update(model, dispatcher);
+  state.add_layer_context_menu.update(model, dispatcher);
 
   if (push_icon_button(TAC_ICON_REMOVE,
                        strings.tooltip.remove_layer.c_str(),
@@ -98,22 +90,27 @@ void _push_side_buttons(const Model& model,
   }
 }
 
-void _push_rename_dialog(const Model& model, Dispatcher& dispatcher)
+void _push_rename_dialog(const Model& model,
+                         LayerDockState& state,
+                         Dispatcher& dispatcher)
 {
-  if (gDockState.rename_target_layer_entity.has_value()) {
-    const auto target_layer_entity = *gDockState.rename_target_layer_entity;
+  if (state.rename_target_layer.has_value()) {
+    const auto target_layer_entity = *state.rename_target_layer;
     const auto& layer_context = model.get<Context>(target_layer_entity);
 
     open_rename_layer_dialog(target_layer_entity, layer_context.name);
-    gDockState.rename_target_layer_entity.reset();
+    state.rename_target_layer.reset();
   }
 
   update_rename_layer_dialog(model, dispatcher);
 }
 
-void _push_contents(const Model& model, const Strings& strings, Dispatcher& dispatcher)
+void _push_contents(const Model& model,
+                    const Strings& strings,
+                    LayerDockState& state,
+                    Dispatcher& dispatcher)
 {
-  _push_side_buttons(model, strings, dispatcher);
+  _push_side_buttons(model, strings, state, dispatcher);
 
   ImGui::SameLine();
   const Group group;
@@ -137,12 +134,14 @@ void _push_contents(const Model& model, const Strings& strings, Dispatcher& disp
     }
   }
 
-  _push_rename_dialog(model, dispatcher);
+  _push_rename_dialog(model, state, dispatcher);
 }
 
 }  // namespace
 
-void show_layer_dock(const Model& model, Entity, Dispatcher& dispatcher)
+void push_layer_dock_widget(const Model& model,
+                            LayerDockState& state,
+                            Dispatcher& dispatcher)
 {
   TACTILE_ASSERT(sys::has_active_document(model));
 
@@ -164,26 +163,16 @@ void show_layer_dock(const Model& model, Entity, Dispatcher& dispatcher)
                                             show_layer_dock);
   }
 
-  gDockState.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
+  state.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
-    _push_contents(model, strings, dispatcher);
+    _push_contents(model, strings, state, dispatcher);
   }
 }
 
 auto is_layer_dock_enabled(const Model& model) -> bool
 {
   return sys::is_map_document_active(model);
-}
-
-void show_rename_layer_dialog(const Entity layer_entity)
-{
-  gDockState.rename_target_layer_entity = layer_entity;
-}
-
-auto is_layer_dock_focused() -> bool
-{
-  return gDockState.has_focus;
 }
 
 }  // namespace tactile::ui

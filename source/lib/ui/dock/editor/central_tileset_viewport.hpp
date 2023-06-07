@@ -20,12 +20,19 @@
 #pragma once
 
 #include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 
-void update_document_tabs(const Model& model, Dispatcher& dispatcher);
+struct TilesetViewportState final {
+  Entity tileset_entity {kNullEntity};
+  bool animation_frame_selection_mode : 1 {false};
+};
 
-void center_map_viewport();
+void push_tileset_viewport(const Model& model,
+                           TilesetViewportState& state,
+                           Entity tileset_document_entity,
+                           Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

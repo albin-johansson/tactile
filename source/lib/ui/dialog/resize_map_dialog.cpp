@@ -27,26 +27,10 @@
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
-namespace {
 
-struct ResizeMapDialogState final {
-  uint64 row_count {};
-  uint64 column_count {};
-  bool open_dialog {};
-};
-
-inline constinit ResizeMapDialogState gDialogState;
-
-}  // namespace
-
-void open_resize_map_dialog(const TileExtent current_extent)
-{
-  gDialogState.row_count = current_extent.rows;
-  gDialogState.column_count = current_extent.cols;
-  gDialogState.open_dialog = true;
-}
-
-void show_resize_map_dialog(const Model& model, Entity, Dispatcher& dispatcher)
+void push_resize_map_dialog(const Model& model,
+                            ResizeMapDialogState& state,
+                            Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
 
@@ -57,9 +41,9 @@ void show_resize_map_dialog(const Model& model, Entity, Dispatcher& dispatcher)
       .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
-  if (gDialogState.open_dialog) {
+  if (state.should_open) {
     options.flags |= UI_DIALOG_FLAG_OPEN;
-    gDialogState.open_dialog = false;
+    state.should_open = false;
   }
 
   DialogAction action {DialogAction::None};
@@ -73,7 +57,7 @@ void show_resize_map_dialog(const Model& model, Entity, Dispatcher& dispatcher)
     ImGui::SetNextItemWidth(-kMinFloat);
     ImGui::DragScalar("##Rows",
                       ImGuiDataType_U64,
-                      &gDialogState.row_count,
+                      &state.row_count,
                       1.0f,
                       &min_value,
                       &max_value);
@@ -83,14 +67,14 @@ void show_resize_map_dialog(const Model& model, Entity, Dispatcher& dispatcher)
     ImGui::SameLine();
     ImGui::DragScalar("##Columns",
                       ImGuiDataType_U64,
-                      &gDialogState.column_count,
+                      &state.col_count,
                       1.0f,
                       &min_value,
                       &max_value);
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<ResizeMapEvent>(gDialogState.row_count, gDialogState.column_count);
+    dispatcher.enqueue<ResizeMapEvent>(state.row_count, state.col_count);
   }
 }
 

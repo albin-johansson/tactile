@@ -21,10 +21,8 @@
 
 #include <utility>  // move
 
-#include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "common/type/maybe.hpp"
 #include "common/type/uuid.hpp"
 #include "common/util/lookup.hpp"
 #include "components/context.hpp"
@@ -55,21 +53,6 @@
 
 namespace tactile::ui {
 namespace {
-
-struct PropertyItemContextMenuState final {
-  bool show_add_dialog         : 1 {};
-  bool show_rename_dialog      : 1 {};
-  bool show_change_type_dialog : 1 {};
-};
-
-struct PropertyDockState final {
-  Maybe<String> rename_target;
-  Maybe<String> change_type_target;
-  PropertyItemContextMenuState context_state;
-  bool has_focus : 1 {};
-};
-
-inline PropertyDockState gDockState;
 
 [[nodiscard]] auto _push_property_item_context_menu(const Strings& strings,
                                                     const Entity context_entity,
@@ -293,7 +276,7 @@ void _push_native_tile_properties(const Model& model,
 
   if (const auto updated_name = _push_native_name_row(strings, context.name);
       updated_name && !updated_name->empty()) {
-    dispatcher.enqueue<RenameTileEvent>(tile.index, *updated_name);
+    dispatcher.enqueue<RenameTileEvent>(tile_entity, *updated_name);
   }
 
   _push_native_read_only_row(strings.misc.index.c_str(), tile.index);
@@ -391,6 +374,7 @@ void _push_native_object_properties(const Model& model,
 void _push_custom_properties(const Strings& strings,
                              const Entity context_entity,
                              const Context& context,
+                             PropertyDockState& state,
                              Dispatcher& dispatcher,
                              bool& is_item_context_open)
 {
@@ -413,17 +397,16 @@ void _push_custom_properties(const Strings& strings,
       is_item_context_open = _push_property_item_context_menu(strings,
                                                               context_entity,
                                                               name,
-                                                              gDockState.context_state,
+                                                              state.context_state,
                                                               dispatcher);
     }
 
-    if (gDockState.context_state.show_rename_dialog && !gDockState.rename_target) {
-      gDockState.rename_target = name;
+    if (state.context_state.show_rename_dialog && !state.rename_target) {
+      state.rename_target = name;
     }
 
-    if (gDockState.context_state.show_change_type_dialog &&
-        !gDockState.change_type_target) {
-      gDockState.change_type_target = name;
+    if (state.context_state.show_change_type_dialog && !state.change_type_target) {
+      state.change_type_target = name;
     }
 
     ImGui::TableNextColumn();
@@ -442,6 +425,7 @@ void _push_custom_properties(const Strings& strings,
 
 void _push_property_table(const Model& model,
                           const Strings& strings,
+                          PropertyDockState& state,
                           Dispatcher& dispatcher)
 {
   const auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
@@ -474,41 +458,44 @@ void _push_property_table(const Model& model,
     _push_custom_properties(strings,
                             context_entity,
                             context,
+                            state,
                             dispatcher,
                             is_item_context_open);
 
     if (!is_item_context_open) {
       if (auto popup = Popup::for_window("##PropertyTablePopup"); popup.is_open()) {
-        gDockState.context_state.show_add_dialog =
+        state.context_state.show_add_dialog =
             ImGui::MenuItem(strings.action.create_property.c_str());
       }
     }
   }
 
-  if (gDockState.context_state.show_add_dialog) {
+  if (state.context_state.show_add_dialog) {
     dispatcher.enqueue<ShowNewPropertyDialogEvent>();
-    gDockState.context_state.show_add_dialog = false;
+    state.context_state.show_add_dialog = false;
   }
 
-  if (gDockState.context_state.show_rename_dialog) {
-    dispatcher.enqueue<ShowRenamePropertyDialogEvent>(gDockState.rename_target.value());
-    gDockState.rename_target.reset();
-    gDockState.context_state.show_rename_dialog = false;
+  if (state.context_state.show_rename_dialog) {
+    dispatcher.enqueue<ShowRenamePropertyDialogEvent>(state.rename_target.value());
+    state.rename_target.reset();
+    state.context_state.show_rename_dialog = false;
   }
 
-  if (gDockState.context_state.show_change_type_dialog) {
-    const auto& target_name = gDockState.change_type_target.value();
+  if (state.context_state.show_change_type_dialog) {
+    const auto& target_name = state.change_type_target.value();
     const auto type = lookup_in(context.props, target_name).get_type();
     dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(target_name, type);
 
-    gDockState.change_type_target.reset();
-    gDockState.context_state.show_change_type_dialog = false;
+    state.change_type_target.reset();
+    state.context_state.show_change_type_dialog = false;
   }
 }
 
 }  // namespace
 
-void show_property_dock(const Model& model, Entity, Dispatcher& dispatcher)
+void push_property_dock_widget(const Model& model,
+                               PropertyDockState& state,
+                               Dispatcher& dispatcher)
 {
   const auto& settings = model.get<Settings>();
 
@@ -528,20 +515,15 @@ void show_property_dock(const Model& model, Entity, Dispatcher& dispatcher)
                                             show_property_dock);
   }
 
-  gDockState.has_focus = window.has_focus();
+  state.has_focus = window.has_focus();
 
   if (window.is_open()) {
-    _push_property_table(model, strings, dispatcher);
+    _push_property_table(model, strings, state, dispatcher);
 
     update_add_property_dialog(model, dispatcher);
     update_rename_property_dialog(model, dispatcher);
     update_change_property_type_dialog(model, dispatcher);
   }
-}
-
-auto is_property_dock_focused() -> bool
-{
-  return gDockState.has_focus;
 }
 
 }  // namespace tactile::ui

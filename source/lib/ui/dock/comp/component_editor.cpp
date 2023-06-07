@@ -25,9 +25,7 @@
 
 #include "common/attribute.hpp"
 #include "common/debug/assert.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
-#include "common/type/uuid.hpp"
 #include "components/component.hpp"
 #include "components/document.hpp"
 #include "model/event/component_events.hpp"
@@ -48,22 +46,15 @@
 namespace tactile::ui {
 namespace {
 
-inline constexpr const char* kComponentActionPopupId = "##ComponentActionPopup";
-
-struct ComponentEditorState final {
-  Maybe<Entity> active_component_def_entity;
-  bool open_dialog {};
-};
-
-inline ComponentEditorState gEditorState;
+constexpr const char* kComponentActionPopupId = "##ComponentActionPopup";
 
 void _push_component_action_popup(const Strings& strings,
                                   const Model& model,
+                                  ComponentEditorDialogState& state,
                                   Dispatcher& dispatcher)
 {
   if (const Popup popup {kComponentActionPopupId}; popup.is_open()) {
-    const auto active_definition_entity =
-        gEditorState.active_component_def_entity.value();
+    const auto active_definition_entity = state.active_component_def.value();
 
     if (ImGui::MenuItem(strings.action.rename_component.c_str())) {
       const auto& active_definition =
@@ -76,20 +67,22 @@ void _push_component_action_popup(const Strings& strings,
 
     if (ImGui::MenuItem(strings.action.remove_component.c_str())) {
       dispatcher.enqueue<UndefComponentEvent>(active_definition_entity);
-      gEditorState.active_component_def_entity.reset();
+      state.active_component_def.reset();
     }
   }
 }
 
-void _push_component_selector_combo(const Model& model, const ComponentSet& component_set)
+void _push_component_selector_combo(const Model& model,
+                                    const ComponentSet& component_set,
+                                    ComponentEditorDialogState& state)
 {
-  if (!gEditorState.active_component_def_entity.has_value()) {
+  if (!state.active_component_def.has_value()) {
     TACTILE_ASSERT(!component_set.definitions.empty());
-    gEditorState.active_component_def_entity = component_set.definitions.front();
+    state.active_component_def = component_set.definitions.front();
   }
 
   const auto& active_component_def =
-      model.get<ComponentDefinition>(gEditorState.active_component_def_entity.value());
+      model.get<ComponentDefinition>(state.active_component_def.value());
 
   if (const Combo combo {"##ComponentCombo", active_component_def.name.c_str()};
       combo.is_open()) {
@@ -97,7 +90,7 @@ void _push_component_selector_combo(const Model& model, const ComponentSet& comp
       const auto& component_def = model.get<ComponentDefinition>(definition_entity);
 
       if (Selectable::property(component_def.name.c_str())) {
-        gEditorState.active_component_def_entity = definition_entity;
+        state.active_component_def = definition_entity;
       }
     }
   }
@@ -106,13 +99,14 @@ void _push_component_selector_combo(const Model& model, const ComponentSet& comp
 void _push_component_selector_row(const Strings& strings,
                                   const Model& model,
                                   const ComponentSet& component_set,
+                                  ComponentEditorDialogState& state,
                                   Dispatcher& dispatcher)
 {
   ImGui::AlignTextToFramePadding();
   ImGui::TextUnformatted(strings.misc.component.c_str());
   ImGui::SameLine();
 
-  _push_component_selector_combo(model, component_set);
+  _push_component_selector_combo(model, component_set, state);
 
   ImGui::SameLine();
   if (push_button(TAC_ICON_ADD, strings.tooltip.create_component.c_str())) {
@@ -124,7 +118,7 @@ void _push_component_selector_row(const Strings& strings,
     ImGui::OpenPopup(kComponentActionPopupId);
   }
 
-  _push_component_action_popup(strings, model, dispatcher);
+  _push_component_action_popup(strings, model, state, dispatcher);
 }
 
 void _push_component_attribute_row_name_popup(const Strings& strings,
@@ -134,9 +128,7 @@ void _push_component_attribute_row_name_popup(const Strings& strings,
 {
   if (auto popup = Popup::for_item("##ComponentAttributeNamePopup"); popup.is_open()) {
     if (ImGui::MenuItem(strings.action.rename_attribute.c_str())) {
-      open_rename_component_attribute_dialog(
-          gEditorState.active_component_def_entity.value(),
-          attribute_name);
+      open_rename_component_attribute_dialog(definition_entity, attribute_name);
     }
 
     ImGui::Separator();
@@ -223,53 +215,38 @@ void _push_component_attribute_table(const Strings& strings,
   }
 
   if (push_centered_button(strings.action.create_attribute.c_str())) {
-    open_create_component_attribute_dialog(
-        gEditorState.active_component_def_entity.value());
+    open_create_component_attribute_dialog(definition_entity);
   }
 }
 
 }  // namespace
 
-void open_component_editor_dialog(const Model& model)
-{
-  const auto document_entity = sys::get_active_document(model);
-  const auto& document = model.get<Document>(document_entity);
-  const auto& component_set = model.get<ComponentSet>(document.component_set);
-
-  if (!component_set.definitions.empty()) {
-    gEditorState.active_component_def_entity = component_set.definitions.front();
-  }
-  else {
-    gEditorState.active_component_def_entity.reset();
-  }
-
-  gEditorState.open_dialog = true;
-}
-
-void show_component_editor_dialog(const Model& model, Entity, Dispatcher& dispatcher)
+void push_component_editor_dialog(const Model& model,
+                                  ComponentEditorDialogState& state,
+                                  Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
 
-  DialogOptions options {
+  DialogOptions dialog_options {
       .title = strings.window.component_editor.c_str(),
       .close_label = strings.misc.close.c_str(),
       .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
-  if (gEditorState.open_dialog) {
-    options.flags |= UI_DIALOG_FLAG_OPEN;
-    gEditorState.open_dialog = false;
+  if (state.should_open) {
+    dialog_options.flags |= UI_DIALOG_FLAG_OPEN;
+    state.should_open = false;
   }
 
-  if (const ScopedDialog dialog {options}; dialog.was_opened()) {
+  if (const ScopedDialog dialog {dialog_options}; dialog.was_opened()) {
     const auto document_entity = sys::get_active_document(model);
     const auto& document = model.get<Document>(document_entity);
     const auto& component_set = model.get<ComponentSet>(document.component_set);
 
-    // Ensure that the active component ID hasn't been invalidated
-    if (gEditorState.active_component_def_entity.has_value() &&
-        !component_set.has_component(*gEditorState.active_component_def_entity)) {
-      gEditorState.active_component_def_entity.reset();
+    // Ensure that the active component entity hasn't been invalidated
+    if (state.active_component_def.has_value() &&
+        !component_set.has_component(*state.active_component_def)) {
+      state.active_component_def.reset();
     }
 
     if (component_set.definitions.empty()) {
@@ -280,15 +257,15 @@ void show_component_editor_dialog(const Model& model, Entity, Dispatcher& dispat
       }
     }
     else {
-      _push_component_selector_row(strings, model, component_set, dispatcher);
+      _push_component_selector_row(strings, model, component_set, state, dispatcher);
 
       ImGui::Separator();
 
-      if (gEditorState.active_component_def_entity.has_value()) {
+      if (state.active_component_def.has_value()) {
         const auto& active_component_def =
-            model.get<ComponentDefinition>(*gEditorState.active_component_def_entity);
+            model.get<ComponentDefinition>(*state.active_component_def);
         _push_component_attribute_table(strings,
-                                        *gEditorState.active_component_def_entity,
+                                        *state.active_component_def,
                                         active_component_def,
                                         dispatcher);
       }
