@@ -20,6 +20,7 @@
 #include "tileset.hpp"
 
 #include "common/debug/panic.hpp"
+#include "common/util/lookup.hpp"
 
 namespace tactile {
 
@@ -38,6 +39,15 @@ auto Tileset::contains(const TilePos pos) const -> bool
   const auto row = pos.row();
   const auto col = pos.col();
   return row >= 0 && col >= 0 && row < row_count && col < column_count;
+}
+
+auto Tileset::get_active_tile() const -> Entity
+{
+  if (selected_tile_index.has_value()) {
+    return lookup_in(tile_index_map, *selected_tile_index);
+  }
+
+  return kNullEntity;
 }
 
 auto AttachedTileset::is_valid_tile(const TileID tile_id) const -> bool
