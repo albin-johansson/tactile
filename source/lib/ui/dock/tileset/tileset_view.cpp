@@ -112,7 +112,7 @@ void update_attached_tileset_view(const Model& model,
   const auto tile_size = as_imvec2(tileset.tile_size);
 
   if (const auto selection = ui_rubber_band(offset, tile_size)) {
-    dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);
+    dispatcher.enqueue<SetTilesetSelectionEvent>(attached_tileset_entity, *selection);
   }
 
   push_scissor(canvas);

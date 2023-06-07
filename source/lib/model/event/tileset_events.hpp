@@ -29,8 +29,6 @@
 
 namespace tactile {
 
-// TODO clarify what kind of tileset entities are used in the events
-
 struct ShowNewTilesetDialogEvent final {};
 
 struct InspectTilesetEvent final {
@@ -49,62 +47,71 @@ struct DetachTilesetEvent final {
 };
 
 struct SelectTilesetEvent final {
-  Entity tileset {kNullEntity};
+  Entity attached_tileset {kNullEntity};
 };
 
 struct SetTilesetSelectionEvent final {
+  Entity attached_tileset {kNullEntity};
   Region selection;
 };
 
 /// Event for changing the name a tileset.
 struct RenameTilesetEvent final {
-  Entity tileset {kNullEntity};  ///< Target tileset.
-  String name;                   ///< New tileset name.
+  Entity attached_tileset {kNullEntity};  ///< Target tileset.
+  String name;                            ///< New tileset name.
 };
 
 /// Event for selecting a tile in an open tileset document.
 struct SelectTilesetTileEvent final {
+  Entity tileset_document {kNullEntity};
   TileIndex tile_index {};
 };
 
+/// Event for adding an animation frame to a tileset tile.
+struct AddAnimationFrameEvent final {
+  Entity tile {kNullEntity};      ///< The target tile.
+  TileIndex frame_tile_index {};  ///< Tile index of shown during the frame.
+  ms_t frame_duration {};         ///< Duration of the new frame.
+};
+
 /// Event for changing the duration of a frame in a tile animation.
-struct SetTileAnimationFrameDurationEvent final {
-  TileIndex tile_index {};  ///< Tile index of the tile that features the animation.
-  usize frame_index {};     ///< Index of frame that will be modified.
-  ms_t duration {};         ///< New duration of the frame.
+struct SetAnimationFrameDurationEvent final {
+  Entity tile {kNullEntity};  ///< Target tile.
+  usize frame_index {};       ///< Index of frame that will be modified.
+  ms_t duration {};           ///< New duration of the frame.
 };
 
 /// Event for enabling animation frame selection mode, where the next selected tile in the
 /// tileset is added to the animation of the previously selected tile.
 struct EnableAnimationFrameSelectionMode final {};
 
-/// Event for adding an animation frame to the selected tileset tile.
-struct AddTileAnimationFrameEvent final {
-  TileIndex tile_index {};  ///< Tile that will be added as a frame to the animation.
-};
-
 /// Event for removing an animation frame from the selected tileset tile.
-struct RemoveTileAnimationFrameEvent final {
-  usize frame_index {};  ///< Index of frame that will be removed from the animation.
+struct RemoveAnimationFrameEvent final {
+  Entity tile {kNullEntity};  ///< Target tile.
+  usize frame_index {};       ///< Index of the frame that will be removed.
 };
 
 /// Event for moving a frame earlier in the animation sequence.
 struct MoveAnimationFrameForwardsEvent final {
-  usize frame_index {};
+  Entity tile {kNullEntity};  ///< Target tile.
+  usize frame_index {};       ///< The index of the target frame.
 };
 
 /// Event for moving a frame later in the animation sequence.
 struct MoveAnimationFrameBackwardsEvent final {
-  usize frame_index {};
+  Entity tile {kNullEntity};  ///< Target tile.
+  usize frame_index {};       ///< The index of the target frame.
 };
 
 /// Event for changing the name of a tile in a tileset.
 struct RenameTileEvent final {
-  TileIndex tile_index {};
-  String name;
+  Entity tile {kNullEntity};  ///< Target tile.
+  String name;                ///< The new tile name.
 };
 
 /// Event for deleting the tile animation associated with the selected tileset tile.
-struct DeleteTileAnimationEvent final {};
+struct DeleteTileAnimationEvent final {
+  Entity tile {kNullEntity};  ///< Target tile.
+};
 
 }  // namespace tactile
