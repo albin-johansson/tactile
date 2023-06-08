@@ -73,8 +73,8 @@ void render_ui(const Model& model, WidgetState& widgets, Dispatcher& dispatcher)
   push_resize_map_dialog(model, widgets.resize_map_dialog, dispatcher);
   push_component_editor_dialog(model, widgets.component_editor_dialog, dispatcher);
   push_godot_export_dialog(model, widgets.godot_export_dialog, dispatcher);
+  push_settings_dialog(model, widgets.settings_dialog, dispatcher);
 
-  show_settings_dialog(model, kNullEntity, dispatcher);
   show_map_parse_error_dialog(model, kNullEntity, dispatcher);
   show_credits_dialog(model, kNullEntity, dispatcher);
   show_about_dialog(model, kNullEntity, dispatcher);

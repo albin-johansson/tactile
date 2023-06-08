@@ -21,6 +21,7 @@
 
 #include <utility>  // move
 
+#include <fmt/chrono.h>
 #include <fmt/std.h>
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -42,6 +43,7 @@
 #include "io/proto/session.hpp"
 #include "io/proto/settings.hpp"
 #include "model/delegates/command_delegate.hpp"
+#include "model/delegates/component_delegate.hpp"
 #include "model/delegates/file_delegate.hpp"
 #include "model/delegates/font_delegate.hpp"
 #include "model/delegates/input_delegate.hpp"
@@ -123,6 +125,19 @@ void App::_subscribe_to_events()
   mDispatcher.sink<ShowNewTilesetDialogEvent>().connect<&App::_on_show_new_tileset_dialog>(this);
   mDispatcher.sink<CreateTilesetEvent>().connect<&App::_on_create_tileset>(this);
   mDispatcher.sink<DetachTilesetEvent>().connect<&App::_on_detach_tileset>(this);
+  mDispatcher.sink<SelectTilesetEvent>().connect<&App::_on_select_tileset>(this);
+  mDispatcher.sink<SetTilesetSelectionEvent>().connect<&App::_on_set_tileset_selection>(this);
+  mDispatcher.sink<RenameTilesetEvent>().connect<&App::_on_rename_tileset>(this);
+  mDispatcher.sink<SelectTilesetTileEvent>().connect<&App::_on_select_tileset_tile>(this);
+
+  // Tile events
+  mDispatcher.sink<AddAnimationFrameEvent>().connect<&App::_on_add_animation_frame>(this);
+  mDispatcher.sink<SetAnimationFrameDurationEvent>().connect<&App::_on_set_animation_frame_duration>(this);
+  mDispatcher.sink<EnableAnimationFrameSelectionMode>().connect<&App::_on_enable_animation_frame_selection_mode>(this);
+  mDispatcher.sink<RemoveAnimationFrameEvent>().connect<&App::_on_remove_animation_frame>(this);
+  mDispatcher.sink<MoveAnimationFrameForwardsEvent>().connect<&App::_on_move_animation_frame_forwards>(this);
+  mDispatcher.sink<MoveAnimationFrameBackwardsEvent>().connect<&App::_on_move_animation_frame_backwards>(this);
+  mDispatcher.sink<RenameTileEvent>().connect<&App::_on_rename_tile>(this);
 
   // Layer events
   mDispatcher.sink<CreateLayerEvent>().connect<&App::_on_create_layer>(this);
@@ -170,6 +185,9 @@ void App::_subscribe_to_events()
   mDispatcher.sink<PanViewportDownEvent>().connect<&App::_on_pan_viewport_down>(this);
   mDispatcher.sink<PanViewportLeftEvent>().connect<&App::_on_pan_viewport_left>(this);
   mDispatcher.sink<PanViewportRightEvent>().connect<&App::_on_pan_viewport_right>(this);
+
+  // Component events
+  mDispatcher.sink<OpenComponentEditorEvent>().connect<&App::_on_open_component_editor>(this);
   // clang-format on
 }
 
@@ -440,6 +458,91 @@ void App::_on_detach_tileset(const DetachTilesetEvent& event)
   on_detach_tileset(*mModel, event);
 }
 
+void App::_on_select_tileset(const SelectTilesetEvent& event)
+{
+  spdlog::trace("[SelectTilesetEvent] attached tileset: {}", event.attached_tileset);
+  on_select_tileset(*mModel, event);
+}
+
+void App::_on_set_tileset_selection(const SetTilesetSelectionEvent& event)
+{
+  spdlog::trace("[SetTilesetSelectionEvent] attached tileset: {}",  // TODO region
+                event.attached_tileset);
+  on_set_tileset_selection(*mModel, event);
+}
+
+void App::_on_rename_tileset(const RenameTilesetEvent& event)
+{
+  spdlog::trace("[RenameTilesetEvent] attached tileset: {}, name: {}",
+                event.attached_tileset,
+                event.name);
+  on_rename_tileset(*mModel, event);
+}
+
+void App::_on_select_tileset_tile(const SelectTilesetTileEvent& event)
+{
+  spdlog::trace("[SelectTilesetTileEvent] tile index: {}", event.tile_index);
+  on_select_tileset_tile(*mModel, event);
+}
+
+void App::_on_add_animation_frame(const AddAnimationFrameEvent& event)
+{
+  spdlog::trace("[AddAnimationFrameEvent] tile: {}, frame tile index: {}, duration: {}",
+                event.tile,
+                event.frame_tile_index,
+                event.frame_duration);
+  on_add_animation_frame(*mModel, event);
+}
+
+void App::_on_set_animation_frame_duration(const SetAnimationFrameDurationEvent& event)
+{
+  spdlog::trace("[SetAnimationFrameDurationEvent] tile: {}, frame: {}, duration: {}",
+                event.tile,
+                event.frame_index,
+                event.duration);
+  on_set_animation_frame_duration(*mModel, event);
+}
+
+void App::_on_enable_animation_frame_selection_mode(
+    const EnableAnimationFrameSelectionMode& event)
+{
+  spdlog::trace("[EnableAnimationFrameSelectionMode]");
+  on_enable_animation_frame_selection_mode(*mModel, event);
+}
+
+void App::_on_remove_animation_frame(const RemoveAnimationFrameEvent& event)
+{
+  spdlog::trace("[RemoveAnimationFrameEvent] tile: {}, frame: {}",
+                event.tile,
+                event.frame_index);
+  on_remove_animation_frame(*mModel, event);
+}
+
+void App::_on_move_animation_frame_forwards(const MoveAnimationFrameForwardsEvent& event)
+{
+  spdlog::trace("[MoveAnimationFrameForwardsEvent] tile: {}", event.tile);
+  on_move_animation_frame_forwards(*mModel, event);
+}
+
+void App::_on_move_animation_frame_backwards(
+    const MoveAnimationFrameBackwardsEvent& event)
+{
+  spdlog::trace("[MoveAnimationFrameBackwardsEvent] tile: {}", event.tile);
+  on_move_animation_frame_backwards(*mModel, event);
+}
+
+void App::_on_rename_tile(const RenameTileEvent& event)
+{
+  spdlog::trace("[RenameTileEvent] tile: {}, name: {}", event.tile, event.name);
+  on_rename_tile(*mModel, event);
+}
+
+void App::_on_delete_tile_animation(const DeleteTileAnimationEvent& event)
+{
+  spdlog::trace("[DeleteTileAnimationEvent] tile: {}", event.tile);
+  on_delete_tile_animation(*mModel, event);
+}
+
 void App::_on_create_layer(const CreateLayerEvent& event)
 {
   spdlog::trace("[CreateLayerEvent] type: {}", event.type);
@@ -675,6 +778,12 @@ void App::_on_pan_viewport_right(const PanViewportRightEvent& event)
 {
   spdlog::trace("[PanViewportRightEvent] viewport: {}", event.viewport);
   on_pan_viewport_right(*mModel, event);
+}
+
+void App::_on_open_component_editor(const OpenComponentEditorEvent& event)
+{
+  spdlog::trace("[OpenComponentEditorEvent]");
+  on_open_component_editor(*mModel, event);
 }
 
 }  // namespace tactile

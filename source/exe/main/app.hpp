@@ -25,6 +25,7 @@
 #include "common/type/dispatcher.hpp"
 #include "engine/app_delegate.hpp"
 #include "model/event/command_events.hpp"
+#include "model/event/component_events.hpp"
 #include "model/event/file_events.hpp"
 #include "model/event/font_events.hpp"
 #include "model/event/layer_events.hpp"
@@ -103,6 +104,21 @@ class App final : public AppDelegate {
   void _on_show_new_tileset_dialog(const ShowNewTilesetDialogEvent& event);
   void _on_create_tileset(const CreateTilesetEvent& event);
   void _on_detach_tileset(const DetachTilesetEvent& event);
+  void _on_select_tileset(const SelectTilesetEvent& event);
+  void _on_set_tileset_selection(const SetTilesetSelectionEvent& event);
+  void _on_rename_tileset(const RenameTilesetEvent& event);
+  void _on_select_tileset_tile(const SelectTilesetTileEvent& event);
+
+  // Tile events
+  void _on_add_animation_frame(const AddAnimationFrameEvent& event);
+  void _on_set_animation_frame_duration(const SetAnimationFrameDurationEvent& event);
+  void _on_enable_animation_frame_selection_mode(
+      const EnableAnimationFrameSelectionMode& event);
+  void _on_remove_animation_frame(const RemoveAnimationFrameEvent& event);
+  void _on_move_animation_frame_forwards(const MoveAnimationFrameForwardsEvent& event);
+  void _on_move_animation_frame_backwards(const MoveAnimationFrameBackwardsEvent& event);
+  void _on_rename_tile(const RenameTileEvent& event);
+  void _on_delete_tile_animation(const DeleteTileAnimationEvent& event);
 
   // Layer events
   void _on_create_layer(const CreateLayerEvent& event);
@@ -149,6 +165,9 @@ class App final : public AppDelegate {
   void _on_pan_viewport_down(const PanViewportDownEvent& event);
   void _on_pan_viewport_left(const PanViewportLeftEvent& event);
   void _on_pan_viewport_right(const PanViewportRightEvent& event);
+
+  // Component events
+  void _on_open_component_editor(const OpenComponentEditorEvent& event);
 };
 
 }  // namespace tactile

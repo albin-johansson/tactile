@@ -23,16 +23,20 @@
 #include "model/event/font_events.hpp"
 #include "model/settings.hpp"
 #include "model/systems/menu_system.hpp"
-#include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/style/themes.hpp"
+#include "ui/widget_state.hpp"
 
 namespace tactile {
 
 void on_show_settings(Model& model, const ShowSettingsEvent&)
 {
   const auto& settings = model.get<Settings>();
-  ui::open_settings_dialog(settings);
+
+  auto& widgets = model.get<ui::WidgetState>();
+  widgets.settings_dialog.old_settings.copy_from(settings);
+  widgets.settings_dialog.ui_settings.copy_from(settings);
+  widgets.settings_dialog.should_open = true;
 }
 
 void on_set_settings(Model& model, Dispatcher& dispatcher, const SetSettingsEvent& event)

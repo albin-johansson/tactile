@@ -19,21 +19,11 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
-#include "common/type/ecs.hpp"
+#include "model/event/component_events.hpp"
 #include "model/model.hpp"
-#include "model/settings.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-struct SettingsDialogState final {
-  Settings old_settings;
-  Settings ui_settings;
-  bool should_open {};
-};
+void on_open_component_editor(Model& model, const OpenComponentEditorEvent& event);
 
-void push_settings_dialog(const Model& model,
-                          SettingsDialogState& state,
-                          Dispatcher& dispatcher);
-
-}  // namespace tactile::ui
+}  // namespace tactile

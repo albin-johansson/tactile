@@ -25,6 +25,7 @@
 #include "common/debug/panic.hpp"
 #include "common/util/algorithms.hpp"
 #include "common/util/functional.hpp"
+#include "common/util/vectors.hpp"
 #include "components/context.hpp"
 #include "components/document.hpp"
 #include "components/layer.hpp"
@@ -349,6 +350,19 @@ auto attach_tileset_to_map(Model& model,
   map_identifiers.next_tile_id += (tileset.row_count * tileset.column_count) + 1;
 
   return attached_tileset_entity;
+}
+
+auto select_tileset(Model& model, Map& map, const Entity attached_tileset_entity)
+    -> Result
+{
+  TACTILE_ASSERT(sys::is_attached_tileset_entity(model, attached_tileset_entity));
+
+  if (contained_in(map.attached_tilesets, attached_tileset_entity)) {
+    map.active_tileset = attached_tileset_entity;
+    return success;
+  }
+
+  return failure;
 }
 
 auto can_tile_row_be_removed(const Model& model) -> bool

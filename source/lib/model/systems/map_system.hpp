@@ -184,6 +184,19 @@ void remove_layer_from_map(Model& model, Map& map, Entity layer_entity);
 auto attach_tileset_to_map(Model& model, Entity map_entity, Entity tileset_entity)
     -> Entity;
 
+/**
+ * Makes an attached tileset active in a map.
+ *
+ * \pre `attached_tileset_entity` must be a valid attached tileset entity.
+ *
+ * \param model                   the associated model instance.
+ * \param map                     the target map.
+ * \param attached_tileset_entity the attached tileset that will be selected.
+ *
+ * \return success if the tileset was selected; failure otherwise.
+ */
+auto select_tileset(Model& model, Map& map, Entity attached_tileset_entity) -> Result;
+
 /// Indicates whether the 'remove row' action is currently available.
 [[nodiscard]] auto can_tile_row_be_removed(const Model& model) -> bool;
 

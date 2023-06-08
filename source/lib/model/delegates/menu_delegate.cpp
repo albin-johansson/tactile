@@ -119,7 +119,7 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
 
     case MenuAction::OpenSettings:
-      ui::open_settings_dialog(settings);
+      dispatcher.enqueue<ShowSettingsEvent>();
       break;
 
     case MenuAction::CenterViewport:

@@ -22,6 +22,7 @@
 #include "ui/dialog/godot_export_dialog.hpp"
 #include "ui/dialog/new_map_dialog.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"
+#include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/animation/animation_dock.hpp"
 #include "ui/dock/comp/component_editor.hpp"
 #include "ui/dock/editor/central_tileset_viewport.hpp"
@@ -42,6 +43,8 @@ struct WidgetState final {
   TilesetViewportState tileset_viewport;
   LogDockState log_dock;
   PropertyDockState property_dock;
+
+  SettingsDialogState settings_dialog;
   ComponentEditorDialogState component_editor_dialog;
   NewMapDialogState new_map_dialog;
   NewTilesetDialogState new_tileset_dialog;
