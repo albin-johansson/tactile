@@ -36,8 +36,7 @@
 #include "model/systems/document_system.hpp"
 #include "model/systems/map_system.hpp"
 #include "model/systems/validation_system.hpp"
-#include "ui/dock/editor/central_tileset_viewport.hpp"
-#include "ui/dock/tileset/dialogs/new_tileset_dialog.hpp"
+#include "ui/widget_state.hpp"
 
 namespace tactile {
 
@@ -45,14 +44,14 @@ void on_show_new_tileset_dialog(Model& model, const ShowNewTilesetDialogEvent&)
 {
   const auto& settings = model.get<Settings>();
 
-  auto& state = model.get<ui::NewTilesetDialogState>();
-  state.map_entity = sys::get_active_map(model);
-  state.image_path.clear();
-  state.image_path_preview_buffer.clear();
-  state.tile_size = settings.get_preferred_tile_size();
-  state.should_open = true;
+  auto& widgets = model.get<ui::WidgetState>();
+  widgets.new_tileset_dialog.map_entity = sys::get_active_map(model);
+  widgets.new_tileset_dialog.image_path.clear();
+  widgets.new_tileset_dialog.image_path_preview_buffer.clear();
+  widgets.new_tileset_dialog.tile_size = settings.get_preferred_tile_size();
+  widgets.new_tileset_dialog.should_open = true;
 
-  TACTILE_ASSERT(state.map_entity != kNullEntity);
+  TACTILE_ASSERT(widgets.new_tileset_dialog.map_entity != kNullEntity);
 }
 
 void on_create_tileset(Model& model, const CreateTilesetEvent& event)
