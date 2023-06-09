@@ -25,6 +25,7 @@
 #include "common/type/ecs.hpp"
 #include "components/viewport.hpp"
 #include "model/model.hpp"
+#include "ui/dock/editor/central_map_viewport.hpp"
 #include "ui/dock/editor/central_tileset_viewport.hpp"
 
 namespace tactile::ui {
@@ -36,6 +37,7 @@ struct EditorDockState final {
 
 void push_editor_dock_widget(const Model& model,
                              EditorDockState& state,
+                             CentralMapViewportState& central_map_viewport_state,
                              TilesetViewportState& tileset_viewport_state,
                              Dispatcher& dispatcher);
 

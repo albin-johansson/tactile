@@ -111,7 +111,7 @@ class Settings final {
  private:
   Unique<SettingsState> mState;
 
-  void reset_flag(SettingsFlagBits flag);
+  void _reset_flag(SettingsFlagBits flag);
 };
 
 }  // namespace tactile

@@ -25,10 +25,13 @@
 
 namespace tactile::ui {
 
-void push_map_viewport(const Model& model,
-                       Entity map_document_entity,
-                       Dispatcher& dispatcher);
+struct CentralMapViewportState final {
+  bool should_open_object_context_menu {};
+};
 
-void open_object_context_menu();
+void push_central_map_viewport(const Model& model,
+                               CentralMapViewportState& state,
+                               Entity map_document_entity,
+                               Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

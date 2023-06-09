@@ -19,17 +19,23 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
+#include "model/event/object_events.hpp"
 #include "model/model.hpp"
-#include "ui/widget_state.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void push_document_tab_widget(const Model& model,
-                              CentralMapViewportState& central_map_viewport_state,
-                              TilesetViewportState& tileset_viewport_state,
-                              Dispatcher& dispatcher);
+void on_move_object(Model& model, const MoveObjectEvent& event);
 
-void center_map_viewport();
+void on_set_object_visible(Model& model, const SetObjectVisibleEvent& event);
 
-}  // namespace tactile::ui
+void on_set_object_tag(Model& model, const SetObjectTagEvent& event);
+
+void on_set_object_name(Model& model, const SetObjectNameEvent& event);
+
+void on_duplicate_object(Model& model, const DuplicateObjectEvent& event);
+
+void on_remove_object(Model& model, const RemoveObjectEvent& event);
+
+void on_spawn_object_context_menu(Model& model, const SpawnObjectContextMenuEvent& event);
+
+}  // namespace tactile

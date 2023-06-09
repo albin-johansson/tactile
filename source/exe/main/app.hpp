@@ -31,6 +31,7 @@
 #include "model/event/layer_events.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/menu_events.hpp"
+#include "model/event/object_events.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
@@ -131,6 +132,15 @@ class App final : public AppDelegate {
   void _on_set_layer_opacity(const SetLayerOpacityEvent& event);
   void _on_set_layer_visible(const SetLayerVisibleEvent& event);
   void _on_show_layer_rename_dialog(const ShowLayerRenameDialogEvent& event);
+
+  // Object events
+  void _on_move_object(const MoveObjectEvent& event);
+  void _on_set_object_visible(const SetObjectVisibleEvent& event);
+  void _on_set_object_tag(const SetObjectTagEvent& event);
+  void _on_set_object_name(const SetObjectNameEvent& event);
+  void _on_duplicate_object(const DuplicateObjectEvent& event);
+  void _on_remove_object(const RemoveObjectEvent& event);
+  void _on_spawn_object_context_menu(const SpawnObjectContextMenuEvent& event);
 
   // Font events
   void _on_reload_fonts(const ReloadFontsEvent& event);

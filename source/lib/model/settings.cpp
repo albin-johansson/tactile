@@ -135,7 +135,7 @@ void Settings::reset_behavior_values()
   mState->command_capacity = kDefaultSettings.command_capacity;
   mState->preferred_tile_size = kDefaultSettings.preferred_tile_size;
 
-  reset_flag(SETTINGS_RESTORE_LAST_SESSION_BIT);
+  _reset_flag(SETTINGS_RESTORE_LAST_SESSION_BIT);
 }
 
 void Settings::reset_appearance_values()
@@ -147,29 +147,29 @@ void Settings::reset_appearance_values()
   mState->grid_color = kDefaultSettings.grid_color;
   mState->font_size = kDefaultSettings.font_size;
 
-  reset_flag(SETTINGS_WINDOW_BORDER_BIT);
-  reset_flag(SETTINGS_SHOW_GRID_BIT);
-  reset_flag(SETTINGS_RESTORE_LAYOUT_BIT);
-  reset_flag(SETTINGS_USE_DEFAULT_FONT_BIT);
+  _reset_flag(SETTINGS_WINDOW_BORDER_BIT);
+  _reset_flag(SETTINGS_SHOW_GRID_BIT);
+  _reset_flag(SETTINGS_RESTORE_LAYOUT_BIT);
+  _reset_flag(SETTINGS_USE_DEFAULT_FONT_BIT);
 }
 
 void Settings::reset_export_values()
 {
   mState->preferred_format = kDefaultSettings.preferred_format;
 
-  reset_flag(SETTINGS_EMBED_TILESETS_BIT);
-  reset_flag(SETTINGS_INDENT_OUTPUT_BIT);
-  reset_flag(SETTINGS_FOLD_TILE_DATA_BIT);
+  _reset_flag(SETTINGS_EMBED_TILESETS_BIT);
+  _reset_flag(SETTINGS_INDENT_OUTPUT_BIT);
+  _reset_flag(SETTINGS_FOLD_TILE_DATA_BIT);
 }
 
 void Settings::reset_dock_visibilities()
 {
-  reset_flag(SETTINGS_SHOW_LAYER_DOCK_BIT);
-  reset_flag(SETTINGS_SHOW_TILESET_DOCK_BIT);
-  reset_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT);
-  reset_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT);
-  reset_flag(SETTINGS_SHOW_LOG_DOCK_BIT);
-  reset_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT);
+  _reset_flag(SETTINGS_SHOW_LAYER_DOCK_BIT);
+  _reset_flag(SETTINGS_SHOW_TILESET_DOCK_BIT);
+  _reset_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT);
+  _reset_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT);
+  _reset_flag(SETTINGS_SHOW_LOG_DOCK_BIT);
+  _reset_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT);
 }
 
 void Settings::set_language(const Lang lang)
@@ -282,7 +282,7 @@ auto Settings::get_flags() const -> SettingsFlagBits
   return mState->flags;
 }
 
-void Settings::reset_flag(const SettingsFlagBits flag)
+void Settings::_reset_flag(const SettingsFlagBits flag)
 {
   set_flag(flag, kDefaultSettings.flags & flag);
 }

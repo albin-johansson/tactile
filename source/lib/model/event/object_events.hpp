@@ -34,8 +34,8 @@ struct SelectObjectEvent final {
 /// Emitted after an object has been moved.
 struct MoveObjectEvent final {
   Entity object {kNullEntity};  ///< The object to move.
-  Float2 previous;              ///< Previous position of the object.
-  Float2 updated;               ///< Updated position of the object.
+  Float2 old_pos;               ///< Previous position of the object.
+  Float2 new_pos;               ///< Updated position of the object.
 };
 
 /// Emitted when the visibility of an object should be changed.
@@ -61,11 +61,10 @@ struct DuplicateObjectEvent final {
 };
 
 struct RemoveObjectEvent final {
-  Entity object {kNullEntity};  ///< The target object.
+  Entity object_layer {kNullEntity};  ///< The object layer holding the object.
+  Entity object {kNullEntity};        ///< The object to remove.
 };
 
-struct SpawnObjectContextMenuEvent final {
-  Entity object {kNullEntity};
-};
+struct SpawnObjectContextMenuEvent final {};
 
 }  // namespace tactile

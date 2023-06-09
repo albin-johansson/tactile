@@ -32,6 +32,7 @@
 #include "ui/dock/property/property_dock.hpp"
 #include "ui/dock/tileset/dialogs/new_tileset_dialog.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
+#include "ui/dock/editor/central_map_viewport.hpp"
 
 namespace tactile::ui {
 
@@ -40,6 +41,7 @@ struct WidgetState final {
   TilesetDockState tileset_dock;
   AnimationDockState animation_dock;
   EditorDockState editor_dock;
+  CentralMapViewportState central_map_viewport;
   TilesetViewportState tileset_viewport;
   LogDockState log_dock;
   PropertyDockState property_dock;

@@ -48,13 +48,7 @@
 namespace tactile::ui {
 namespace {
 
-inline constexpr auto kViewportObjectContextMenuId = "##MapViewObjectContextMenu";
-
-struct MapViewportState final {
-  bool will_open_object_context_menu {};
-};
-
-inline constinit MapViewportState gViewportState;
+constexpr auto kViewportObjectContextMenuId = "##MapViewObjectContextMenu";
 
 template <typename Event, std::predicate<ImGuiMouseButton> T>
 void _check_for(ViewportMouseInfo mouse_info, Dispatcher& dispatcher, T&& predicate)
@@ -163,6 +157,7 @@ void _push_viewport_context_menu(const Strings& strings,
 void _push_object_context_menu(const Model& model,
                                const Strings& strings,
                                const Map& map,
+                               CentralMapViewportState& state,
                                Dispatcher& dispatcher)
 {
   if (const Popup popup {kViewportObjectContextMenuId}; popup.is_open()) {
@@ -196,18 +191,19 @@ void _push_object_context_menu(const Model& model,
     }
   }
 
-  if (gViewportState.will_open_object_context_menu) {
+  if (state.should_open_object_context_menu) {
     ImGui::OpenPopup(kViewportObjectContextMenuId,
                      ImGuiPopupFlags_AnyPopup | ImGuiPopupFlags_MouseButtonRight);
-    gViewportState.will_open_object_context_menu = false;
+    state.should_open_object_context_menu = false;
   }
 }
 
 }  // namespace
 
-void push_map_viewport(const Model& model,
-                       const Entity map_document_entity,
-                       Dispatcher& dispatcher)
+void push_central_map_viewport(const Model& model,
+                               CentralMapViewportState& state,
+                               const Entity map_document_entity,
+                               Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
   const auto& settings = model.get<Settings>();
@@ -239,12 +235,7 @@ void push_map_viewport(const Model& model,
   show_map_viewport_overlay(model, map, mouse_info, dispatcher);
 
   _push_viewport_context_menu(strings, map_document_entity, map_document, dispatcher);
-  _push_object_context_menu(model, strings, map, dispatcher);
-}
-
-void open_object_context_menu()
-{
-  gViewportState.will_open_object_context_menu = true;
+  _push_object_context_menu(model, strings, map, state, dispatcher);
 }
 
 }  // namespace tactile::ui

@@ -37,6 +37,7 @@ namespace {
 
 void _push_document_tab(const Model& model,
                         const Entity document_entity,
+                        CentralMapViewportState& central_map_viewport_state,
                         TilesetViewportState& tileset_viewport_state,
                         Dispatcher& dispatcher)
 {
@@ -65,7 +66,10 @@ void _push_document_tab(const Model& model,
   if (const TabItem item {name_with_icon.data(), &opened, flags}; item.is_open()) {
     if (is_active) {
       if (model.has<MapDocument>(document_entity)) {
-        push_map_viewport(model, document_entity, dispatcher);
+        push_central_map_viewport(model,
+                                  central_map_viewport_state,
+                                  document_entity,
+                                  dispatcher);
       }
 
       if (model.has<TilesetDocument>(document_entity)) {
@@ -85,13 +89,18 @@ void _push_document_tab(const Model& model,
 }  // namespace
 
 void push_document_tab_widget(const Model& model,
+                              CentralMapViewportState& central_map_viewport_state,
                               TilesetViewportState& tileset_viewport_state,
                               Dispatcher& dispatcher)
 {
   if (const TabBar bar {"##DocumentTabs", ImGuiTabBarFlags_Reorderable}; bar.is_open()) {
     const auto& document_context = model.get<DocumentContext>();
     for (const auto document_entity: document_context.open_documents) {
-      _push_document_tab(model, document_entity, tileset_viewport_state, dispatcher);
+      _push_document_tab(model,
+                         document_entity,
+                         central_map_viewport_state,
+                         tileset_viewport_state,
+                         dispatcher);
     }
   }
 }

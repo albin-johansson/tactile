@@ -71,6 +71,7 @@ void _push_start_page(const Model& model, const Strings& strings, Dispatcher& di
 
 void push_editor_dock_widget(const Model& model,
                              EditorDockState& state,
+                             CentralMapViewportState& central_map_viewport_state,
                              TilesetViewportState& tileset_viewport_state,
                              Dispatcher& dispatcher)
 {
@@ -88,7 +89,10 @@ void push_editor_dock_widget(const Model& model,
     padding.pop();
 
     if (sys::has_active_document(model)) {
-      push_document_tab_widget(model, tileset_viewport_state, dispatcher);
+      push_document_tab_widget(model,
+                               central_map_viewport_state,
+                               tileset_viewport_state,
+                               dispatcher);
 
       if (sys::is_map_document_active(model)) {
         if (window.mouse_entered()) {

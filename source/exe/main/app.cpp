@@ -50,6 +50,7 @@
 #include "model/delegates/layer_delegate.hpp"
 #include "model/delegates/map_delegate.hpp"
 #include "model/delegates/menu_delegate.hpp"
+#include "model/delegates/object_delegate.hpp"
 #include "model/delegates/settings_delegate.hpp"
 #include "model/delegates/tileset_delegate.hpp"
 #include "model/delegates/viewport_delegate.hpp"
@@ -150,6 +151,16 @@ void App::_subscribe_to_events()
   mDispatcher.sink<SetLayerOpacityEvent>().connect<&App::_on_set_layer_opacity>(this);
   mDispatcher.sink<SetLayerVisibleEvent>().connect<&App::_on_set_layer_visible>(this);
   mDispatcher.sink<ShowLayerRenameDialogEvent>().connect<&App::_on_show_layer_rename_dialog>(this);
+
+  // Object events
+  mDispatcher.sink<MoveObjectEvent>().connect<&App::_on_move_object>(this);
+  mDispatcher.sink<MoveObjectEvent>().connect<&App::_on_move_object>(this);
+  mDispatcher.sink<SetObjectVisibleEvent>().connect<&App::_on_set_object_visible>(this);
+  mDispatcher.sink<SetObjectTagEvent>().connect<&App::_on_set_object_tag>(this);
+  mDispatcher.sink<SetObjectNameEvent>().connect<&App::_on_set_object_name>(this);
+  mDispatcher.sink<DuplicateObjectEvent>().connect<&App::_on_duplicate_object>(this);
+  mDispatcher.sink<RemoveObjectEvent>().connect<&App::_on_remove_object>(this);
+  mDispatcher.sink<SpawnObjectContextMenuEvent>().connect<&App::_on_spawn_object_context_menu>(this);
 
   // Font events
   mDispatcher.sink<ReloadFontsEvent>().connect<&App::_on_reload_fonts>(this);
@@ -605,6 +616,54 @@ void App::_on_show_layer_rename_dialog(const ShowLayerRenameDialogEvent& event)
 {
   spdlog::trace("[ShowLayerRenameDialogEvent] layer: {}", event.layer);
   // TODO ui::show_rename_layer_dialog(event.layer);
+}
+
+void App::_on_move_object(const MoveObjectEvent& event)
+{
+  spdlog::trace("[MoveObjectEvent] object: {}, position: {}",
+                event.object,
+                event.new_pos);
+  on_move_object(*mModel, event);
+}
+
+void App::_on_set_object_visible(const SetObjectVisibleEvent& event)
+{
+  spdlog::trace("[SetObjectVisibleEvent] object: {}, visible: {}",
+                event.object,
+                event.visible);
+  on_set_object_visible(*mModel, event);
+}
+
+void App::_on_set_object_tag(const SetObjectTagEvent& event)
+{
+  spdlog::trace("[SetObjectTagEvent] object: {}, tag: {}", event.object, event.tag);
+  on_set_object_tag(*mModel, event);
+}
+
+void App::_on_set_object_name(const SetObjectNameEvent& event)
+{
+  spdlog::trace("[SetObjectNameEvent] object: {}, name: {}", event.object, event.name);
+  on_set_object_name(*mModel, event);
+}
+
+void App::_on_duplicate_object(const DuplicateObjectEvent& event)
+{
+  spdlog::trace("[DuplicateObjectEvent] object: {}", event.object);
+  on_duplicate_object(*mModel, event);
+}
+
+void App::_on_remove_object(const RemoveObjectEvent& event)
+{
+  spdlog::trace("[RemoveObjectEvent] object layer: {}, object: {}",
+                event.object_layer,
+                event.object);
+  on_remove_object(*mModel, event);
+}
+
+void App::_on_spawn_object_context_menu(const SpawnObjectContextMenuEvent& event)
+{
+  spdlog::trace("[SpawnObjectContextMenuEvent]");
+  on_spawn_object_context_menu(*mModel, event);
 }
 
 void App::_on_reload_fonts(const ReloadFontsEvent&)

@@ -65,6 +65,7 @@ void render_ui(const Model& model, WidgetState& widgets, Dispatcher& dispatcher)
 
   push_editor_dock_widget(model,
                           widgets.editor_dock,
+                          widgets.central_map_viewport,
                           widgets.tileset_viewport,
                           dispatcher);
 
