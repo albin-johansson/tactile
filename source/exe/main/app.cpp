@@ -27,6 +27,8 @@
 #include <imgui_internal.h>
 #include <spdlog/spdlog.h>
 
+#include "common/fmt/attribute_formatter.hpp"
+#include "common/fmt/attribute_type_formatter.hpp"
 #include "common/fmt/entity_formatter.hpp"
 #include "common/fmt/lang_formatter.hpp"
 #include "common/fmt/layer_type_formatter.hpp"
@@ -198,7 +200,24 @@ void App::_subscribe_to_events()
   mDispatcher.sink<PanViewportRightEvent>().connect<&App::_on_pan_viewport_right>(this);
 
   // Component events
-  mDispatcher.sink<OpenComponentEditorEvent>().connect<&App::_on_open_component_editor>(this);
+  mDispatcher.sink<ShowComponentEditorEvent>().connect<&App::_on_show_component_editor>(this);
+  mDispatcher.sink<ShowNewCompDialogEvent>().connect<&App::_on_show_new_comp_dialog>(this);
+  mDispatcher.sink<ShowRenameCompDialogEvent>().connect<&App::_on_show_rename_comp_dialog>(this);
+  mDispatcher.sink<ShowNewCompAttrDialogEvent>().connect<&App::_on_show_new_comp_attr_dialog>(this);
+  mDispatcher.sink<ShowRenameCompAttrDialogEvent>().connect<&App::_on_show_rename_comp_attr_dialog>(this);
+  mDispatcher.sink<DefineComponentEvent>().connect<&App::_on_define_component>(this);
+  mDispatcher.sink<UndefComponentEvent>().connect<&App::_on_undef_component>(this);
+  mDispatcher.sink<RenameComponentEvent>().connect<&App::_on_rename_component>(this);
+  mDispatcher.sink<UpdateComponentEvent>().connect<&App::_on_update_component>(this);
+  mDispatcher.sink<AddComponentAttrEvent>().connect<&App::_on_add_component_attr>(this);
+  mDispatcher.sink<RemoveComponentAttrEvent>().connect<&App::_on_remove_component_attr>(this);
+  mDispatcher.sink<RenameComponentAttrEvent>().connect<&App::_on_rename_component_attr>(this);
+  mDispatcher.sink<DuplicateComponentAttrEvent>().connect<&App::_on_duplicate_component_attr>(this);
+  mDispatcher.sink<SetComponentAttrTypeEvent>().connect<&App::_on_set_component_attr_type>(this);
+  mDispatcher.sink<AttachComponentEvent>().connect<&App::_on_attach_component>(this);
+  mDispatcher.sink<DetachComponentEvent>().connect<&App::_on_detach_component>(this);
+  mDispatcher.sink<ResetAttachedComponentEvent>().connect<&App::_on_reset_attached_component>(this);
+  mDispatcher.sink<UpdateAttachedComponentEvent>().connect<&App::_on_update_attached_component>(this);
   // clang-format on
 }
 
@@ -839,10 +858,140 @@ void App::_on_pan_viewport_right(const PanViewportRightEvent& event)
   on_pan_viewport_right(*mModel, event);
 }
 
-void App::_on_open_component_editor(const OpenComponentEditorEvent& event)
+void App::_on_show_component_editor(const ShowComponentEditorEvent& event)
 {
-  spdlog::trace("[OpenComponentEditorEvent]");
-  on_open_component_editor(*mModel, event);
+  spdlog::trace("[ShowComponentEditorEvent]");
+  on_show_component_editor(*mModel, event);
+}
+
+void App::_on_show_new_comp_dialog(const ShowNewCompDialogEvent& event)
+{
+  spdlog::trace("[ShowNewCompDialogEvent]");
+  on_show_new_comp_dialog(*mModel, event);
+}
+
+void App::_on_show_rename_comp_dialog(const ShowRenameCompDialogEvent& event)
+{
+  spdlog::trace("[ShowRenameCompDialogEvent]");
+  on_show_rename_comp_dialog(*mModel, event);
+}
+
+void App::_on_show_new_comp_attr_dialog(const ShowNewCompAttrDialogEvent& event)
+{
+  spdlog::trace("[ShowNewComponentAttributeDialogEvent] component: {}", event.definition);
+  on_show_new_comp_attr_dialog(*mModel, event);
+}
+
+void App::_on_show_rename_comp_attr_dialog(const ShowRenameCompAttrDialogEvent& event)
+{
+  spdlog::trace("[ShowRenameCompAttrDialogEvent] component: {}, attribute: {}",
+                event.definition,
+                event.attr_name);
+  on_show_rename_comp_attr_dialog(*mModel, event);
+}
+
+void App::_on_define_component(const DefineComponentEvent& event)
+{
+  spdlog::trace("[DefineComponentEvent] name: {}", event.name);
+  on_define_component(*mModel, event);
+}
+
+void App::_on_undef_component(const UndefComponentEvent& event)
+{
+  spdlog::trace("[UndefComponentEvent] component: {}", event.definition);
+  on_undef_component(*mModel, event);
+}
+
+void App::_on_rename_component(const RenameComponentEvent& event)
+{
+  spdlog::trace("[RenameComponentEvent] component: {}, name: {}",
+                event.definition,
+                event.name);
+  on_rename_component(*mModel, event);
+}
+
+void App::_on_update_component(const UpdateComponentEvent& event)
+{
+  spdlog::trace("[UpdateComponentEvent] component: {}, attribute: {}, value: {}",
+                event.definition,
+                event.attr_name,
+                event.value);
+  on_update_component(*mModel, event);
+}
+
+void App::_on_add_component_attr(const AddComponentAttrEvent& event)
+{
+  spdlog::trace("[AddComponentAttrEvent] component: {}, attribute: {}",
+                event.definition,
+                event.attr_name);
+  on_add_component_attr(*mModel, event);
+}
+
+void App::_on_remove_component_attr(const RemoveComponentAttrEvent& event)
+{
+  spdlog::trace("[RemoveComponentAttrEvent] component: {}, attribute: {}",
+                event.definition,
+                event.attr_name);
+  on_remove_component_attr(*mModel, event);
+}
+
+void App::_on_rename_component_attr(const RenameComponentAttrEvent& event)
+{
+  spdlog::trace("[RenameComponentAttrEvent] component: {}, old name: {}, new name: {}",
+                event.definition,
+                event.current_name,
+                event.updated_name);
+  on_rename_component_attr(*mModel, event);
+}
+
+void App::_on_duplicate_component_attr(const DuplicateComponentAttrEvent& event)
+{
+  spdlog::trace("[DuplicateComponentAttrEvent] component: {}, attribute: {}",
+                event.definition,
+                event.attr_name);
+  on_duplicate_component_attr(*mModel, event);
+}
+
+void App::_on_set_component_attr_type(const SetComponentAttrTypeEvent& event)
+{
+  spdlog::trace("[SetComponentAttrTypeEvent] component: {}, attribute: {}, type: {}",
+                event.definition,
+                event.attr_name,
+                event.type);
+  on_set_component_attr_type(*mModel, event);
+}
+
+void App::_on_attach_component(const AttachComponentEvent& event)
+{
+  spdlog::trace("[AttachComponentEvent] context: {}, component: {}",
+                event.context,
+                event.definition);
+  on_attach_component(*mModel, event);
+}
+
+void App::_on_detach_component(const DetachComponentEvent& event)
+{
+  spdlog::trace("[DetachComponentEvent] context: {}, component: {}",
+                event.context,
+                event.definition);
+  on_detach_component(*mModel, event);
+}
+
+void App::_on_reset_attached_component(const ResetAttachedComponentEvent& event)
+{
+  spdlog::trace("[ResetAttachedComponentEvent] attached component: {}",
+                event.attached_component);
+  on_reset_attached_component(*mModel, event);
+}
+
+void App::_on_update_attached_component(const UpdateAttachedComponentEvent& event)
+{
+  spdlog::trace(
+      "[UpdateAttachedComponentEvent] attached component: {}, attribute: {}, value: {}",
+      event.attached_component,
+      event.attr_name,
+      event.value);
+  on_update_attached_component(*mModel, event);
 }
 
 }  // namespace tactile

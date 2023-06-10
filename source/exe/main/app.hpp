@@ -177,7 +177,24 @@ class App final : public AppDelegate {
   void _on_pan_viewport_right(const PanViewportRightEvent& event);
 
   // Component events
-  void _on_open_component_editor(const OpenComponentEditorEvent& event);
+  void _on_show_component_editor(const ShowComponentEditorEvent& event);
+  void _on_show_new_comp_dialog(const ShowNewCompDialogEvent& event);
+  void _on_show_rename_comp_dialog(const ShowRenameCompDialogEvent& event);
+  void _on_show_new_comp_attr_dialog(const ShowNewCompAttrDialogEvent& event);
+  void _on_show_rename_comp_attr_dialog(const ShowRenameCompAttrDialogEvent& event);
+  void _on_define_component(const DefineComponentEvent& event);
+  void _on_undef_component(const UndefComponentEvent& event);
+  void _on_rename_component(const RenameComponentEvent& event);
+  void _on_update_component(const UpdateComponentEvent& event);
+  void _on_add_component_attr(const AddComponentAttrEvent& event);
+  void _on_remove_component_attr(const RemoveComponentAttrEvent& event);
+  void _on_rename_component_attr(const RenameComponentAttrEvent& event);
+  void _on_duplicate_component_attr(const DuplicateComponentAttrEvent& event);
+  void _on_set_component_attr_type(const SetComponentAttrTypeEvent& event);
+  void _on_attach_component(const AttachComponentEvent& event);
+  void _on_detach_component(const DetachComponentEvent& event);
+  void _on_reset_attached_component(const ResetAttachedComponentEvent& event);
+  void _on_update_attached_component(const UpdateAttachedComponentEvent& event);
 };
 
 }  // namespace tactile

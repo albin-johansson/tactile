@@ -115,7 +115,7 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
 
     case MenuAction::OpenComponentEditor:
-      dispatcher.enqueue<OpenComponentEditorEvent>();
+      dispatcher.enqueue<ShowComponentEditorEvent>();
       break;
 
     case MenuAction::OpenSettings:

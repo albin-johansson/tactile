@@ -19,12 +19,9 @@
 
 #include "rename_component_attribute_dialog.hpp"
 
-#include <utility>  // move
-
 #include <imgui.h>
 
-#include "common/type/maybe.hpp"
-#include "common/util/string_buffer.hpp"
+#include "common/util/vectors.hpp"
 #include "components/component.hpp"
 #include "components/document.hpp"
 #include "model/event/component_events.hpp"
@@ -34,75 +31,52 @@
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
-namespace {
 
-struct RenameComponentAttributeDialogState final {
-  Maybe<Entity> component_def_entity;
-  String attribute_name;
-  StringBuffer attribute_name_buffer {};
-  bool open_dialog {};
-};
-
-inline RenameComponentAttributeDialogState gDialogState;
-
-}  // namespace
-
-void open_rename_component_attribute_dialog(const Entity definition_entity,
-                                            String attribute_name)
+void push_rename_comp_attr_dialog(const Model& model,
+                                  RenameCompAttrDialogState& state,
+                                  Dispatcher& dispatcher)
 {
-  gDialogState.component_def_entity = definition_entity;
-  gDialogState.attribute_name = std::move(attribute_name);
-  gDialogState.attribute_name_buffer.clear();
-  gDialogState.open_dialog = true;
-}
-
-void update_rename_component_attribute_dialog(const Model& model, Dispatcher& dispatcher)
-{
-  const auto& strings = sys::get_current_language_strings(model);
-
   const auto document_entity = sys::get_active_document(model);
   const auto& document = model.get<Document>(document_entity);
-  const auto& component_set = model.get<ComponentSet>(document.component_set);
 
-  if (gDialogState.component_def_entity.has_value() &&
-      !component_set.has_component(*gDialogState.component_def_entity)) {
-    gDialogState.component_def_entity.reset();
-    gDialogState.open_dialog = false;
+  const auto& component_set = model.get<ComponentSet>(document.component_set);
+  if (!contained_in(component_set.definitions, state.definition)) {
+    state.definition = kNullEntity;
+    state.should_open = false;
     return;
   }
 
-  DialogOptions options {
+  const auto& strings = sys::get_current_language_strings(model);
+  DialogOptions dialog_options {
       .title = strings.window.rename_component_attribute.c_str(),
       .close_label = strings.misc.cancel.c_str(),
       .accept_label = strings.misc.rename.c_str(),
   };
 
-  if (gDialogState.open_dialog) {
-    options.flags |= UI_DIALOG_FLAG_OPEN;
-    gDialogState.open_dialog = false;
+  if (state.should_open) {
+    dialog_options.flags |= UI_DIALOG_FLAG_OPEN;
+    state.should_open = false;
   }
 
-  const auto current_name = gDialogState.attribute_name_buffer.as_string_view();
-  const auto& component_def =
-      model.get<ComponentDefinition>(gDialogState.component_def_entity.value());
+  const auto current_name = state.attribute_name_buffer.as_string_view();
+  const auto& definition = model.get<ComponentDefinition>(state.definition);
 
-  if (!current_name.empty() && !component_def.attributes.contains(current_name)) {
-    options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
+  if (!current_name.empty() && !definition.attributes.contains(current_name)) {
+    dialog_options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
   DialogAction action {DialogAction::None};
-  if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
+  if (const ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
     ImGui::InputTextWithHint("##Name",
                              strings.misc.attribute_name_hint.c_str(),
-                             gDialogState.attribute_name_buffer.data(),
-                             sizeof gDialogState.attribute_name_buffer);
+                             state.attribute_name_buffer.data(),
+                             state.attribute_name_buffer.size_bytes());
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<RenameComponentAttrEvent>(
-        gDialogState.component_def_entity.value(),
-        gDialogState.attribute_name,
-        gDialogState.attribute_name_buffer.as_string());
+    dispatcher.enqueue<RenameComponentAttrEvent>(state.definition,
+                                                 state.attribute_name,
+                                                 state.attribute_name_buffer.as_string());
   }
 }
 

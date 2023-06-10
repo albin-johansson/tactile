@@ -20,19 +20,18 @@
 #pragma once
 
 #include "common/type/dispatcher.hpp"
-#include "common/type/ecs.hpp"
-#include "common/type/maybe.hpp"
+#include "common/util/string_buffer.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 
-struct ComponentEditorDialogState final {
-  Maybe<Entity> active_component_def;
+struct NewCompDialogState final {
+  StringBuffer name_buffer {};
   bool should_open {};
 };
 
-void push_component_editor_dialog(const Model& model,
-                                  ComponentEditorDialogState& state,
-                                  Dispatcher& dispatcher);
+void push_new_comp_dialog(const Model& model,
+                          NewCompDialogState& state,
+                          Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

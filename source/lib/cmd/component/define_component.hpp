@@ -41,6 +41,7 @@ class DefineComponent final : public Command {
  private:
   Model* mModel;
   Entity mComponentSetEntity;
+  Entity mDefinitionEntity {kNullEntity};
   String mName;
 };
 

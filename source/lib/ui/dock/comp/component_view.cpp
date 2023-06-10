@@ -21,9 +21,11 @@
 
 #include <utility>  // move
 
+#include "common/debug/assert.hpp"
 #include "components/component.hpp"
 #include "model/event/component_events.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/systems/validation_system.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/attribute_widgets.hpp"
@@ -38,14 +40,13 @@ constexpr auto kTableFlags =
     ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX;
 
 void _push_attribute_table(const Strings& strings,
-                           const Entity context_entity,
-                           const Entity definition_entity,
-                           const Component& component,
+                           const Entity attached_component_entity,
+                           const Component& attached_component,
                            Dispatcher& dispatcher)
 {
-  if (Table table {"##AttributeTable", 2, kTableFlags}; table.is_open()) {
-    for (const auto& [attr_name, attr_value]: component.attributes) {
-      const Scope scope {attr_name.c_str()};
+  if (const Table table {"##AttributeTable", 2, kTableFlags}; table.is_open()) {
+    for (const auto& [attr_name, attr_value]: attached_component.attributes) {
+      const Scope attribute_scope {attr_name.c_str()};
 
       ImGui::TableNextRow();
       ImGui::TableNextColumn();
@@ -55,8 +56,7 @@ void _push_attribute_table(const Strings& strings,
 
       ImGui::TableNextColumn();
       if (auto value = push_attribute_input(strings, "##TableAttribute", attr_value)) {
-        dispatcher.enqueue<UpdateAttachedComponentEvent>(context_entity,
-                                                         definition_entity,
+        dispatcher.enqueue<UpdateAttachedComponentEvent>(attached_component_entity,
                                                          attr_name,
                                                          std::move(*value));
       }
@@ -67,15 +67,17 @@ void _push_attribute_table(const Strings& strings,
 void _push_trailing_button_popup_content(const Strings& strings,
                                          const Entity context_entity,
                                          const Entity definition_entity,
+                                         const Entity attached_component_entity,
                                          Dispatcher& dispatcher)
 {
   if (ImGui::MenuItem(strings.action.reset_attached_component.c_str())) {
-    dispatcher.enqueue<ResetAttachedComponentEvent>(context_entity, definition_entity);
+    dispatcher.enqueue<ResetAttachedComponentEvent>(attached_component_entity);
   }
 
   ImGui::Separator();
 
   if (ImGui::MenuItem(strings.action.detach_component.c_str())) {
+    // TODO provide the attached component entity instead of the definition
     dispatcher.enqueue<DetachComponentEvent>(context_entity, definition_entity);
   }
 }
@@ -96,15 +98,20 @@ auto _show_trailing_button() -> bool
 
 void component_view(const Model& model,
                     const Entity context_entity,
-                    const Entity component_entity,
+                    const Entity attached_component_entity,
                     Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
-  const auto& component = model.get<Component>(component_entity);
-  const auto& definition = model.get<ComponentDefinition>(component.definition);
+  TACTILE_ASSERT(sys::is_context_entity(model, context_entity));
+  TACTILE_ASSERT(sys::is_component_entity(model, attached_component_entity));
 
-  const Scope scope {definition.name.c_str()};
-  if (TreeNode header {definition.name.c_str(), kHeaderFlags}; header.is_open()) {
+  const auto& strings = sys::get_current_language_strings(model);
+
+  const auto& attached_component = model.get<Component>(attached_component_entity);
+  const auto& definition = model.get<ComponentDefinition>(attached_component.definition);
+
+  const Scope component_scope {definition.name.c_str()};
+
+  if (const TreeNode header {definition.name.c_str(), kHeaderFlags}; header.is_open()) {
     ImGui::SameLine();
     if (_show_trailing_button()) {
       ImGui::OpenPopup("##ComponentPopup");
@@ -113,19 +120,19 @@ void component_view(const Model& model,
     if (auto popup = Popup::for_item("##ComponentPopup"); popup.is_open()) {
       _push_trailing_button_popup_content(strings,
                                           context_entity,
-                                          component.definition,
+                                          attached_component.definition,
+                                          attached_component_entity,
                                           dispatcher);
     }
 
     _push_attribute_table(strings,
-                          context_entity,
-                          component.definition,
-                          component,
+                          attached_component_entity,
+                          attached_component,
                           dispatcher);
   }
   else {
     // Show a disabled button when collapsed, to avoid having the button disappear
-    Disable disable;
+    const Disable disable;
     ImGui::SameLine();
     _show_trailing_button();
   }

@@ -19,11 +19,9 @@
 
 #include "rename_component_dialog.hpp"
 
-#include <utility>  // move
-
 #include <imgui.h>
 
-#include "common/util/string_buffer.hpp"
+#include "common/util/vectors.hpp"
 #include "components/component.hpp"
 #include "components/document.hpp"
 #include "model/event/component_events.hpp"
@@ -34,75 +32,54 @@
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
-namespace {
 
-struct RenameComponentDialogState final {
-  Maybe<Entity> definition_entity;
-  String old_component_name;
-  StringBuffer component_name_buffer;
-  bool open_dialog {};
-};
-
-inline RenameComponentDialogState gDialogState;
-
-}  // namespace
-
-void open_rename_component_dialog(const Entity definition_entity, String current_name)
+void push_rename_comp_dialog(const Model& model,
+                             RenameCompDialogState& state,
+                             Dispatcher& dispatcher)
 {
-  gDialogState.definition_entity = definition_entity;
-  gDialogState.component_name_buffer = current_name;
-  gDialogState.old_component_name = std::move(current_name);
-  gDialogState.open_dialog = true;
-}
-
-void update_rename_component_dialog(const Model& model, Dispatcher& dispatcher)
-{
-  const auto& strings = sys::get_current_language_strings(model);
-
   const auto document_entity = sys::get_active_document(model);
   const auto& document = model.get<Document>(document_entity);
-  const auto& component_set = model.get<ComponentSet>(document.component_set);
 
-  if (gDialogState.definition_entity.has_value() &&
-      !component_set.has_component(*gDialogState.definition_entity)) {
-    gDialogState.definition_entity.reset();
-    gDialogState.open_dialog = false;
+  const auto& component_set = model.get<ComponentSet>(document.component_set);
+  if (!contained_in(component_set.definitions, state.definition)) {
+    state.definition = kNullEntity;
+    state.should_open = false;
     return;
   }
 
-  DialogOptions options {
+  const auto& strings = sys::get_current_language_strings(model);
+  DialogOptions dialog_options {
       .title = strings.window.rename_component.c_str(),
       .close_label = strings.misc.cancel.c_str(),
       .accept_label = strings.misc.rename.c_str(),
   };
 
-  const bool should_acquire_focus = gDialogState.open_dialog;
+  const bool should_acquire_focus = state.should_open;
 
-  if (gDialogState.open_dialog) {
-    options.flags |= UI_DIALOG_FLAG_OPEN;
-    gDialogState.open_dialog = false;
+  if (state.should_open) {
+    dialog_options.flags |= UI_DIALOG_FLAG_OPEN;
+    state.should_open = false;
   }
 
-  const auto current_name = gDialogState.component_name_buffer.as_string_view();
+  const auto current_name = state.component_name_buffer.as_string_view();
   if (!current_name.empty() &&
       sys::find_component_definition(model, component_set, current_name) == kNullEntity) {
-    options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
+    dialog_options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
   DialogAction action {DialogAction::None};
-  if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
+  if (const ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
     if (should_acquire_focus) {
       ImGui::SetKeyboardFocusHere();
     }
     ImGui::InputText("##Input",
-                     gDialogState.component_name_buffer.data(),
-                     sizeof gDialogState.component_name_buffer);
+                     state.component_name_buffer.data(),
+                     state.component_name_buffer.size_bytes());
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<RenameComponentEvent>(
-        gDialogState.definition_entity.value(),
-        gDialogState.component_name_buffer.as_string());
+    dispatcher.enqueue<RenameComponentEvent>(state.definition,
+                                             state.component_name_buffer.as_string());
   }
 }
 

@@ -72,7 +72,7 @@ void _push_add_component_button_popup_content(const Model& model,
 
   ImGui::Separator();
   if (ImGui::MenuItem(strings.action.component_editor.c_str())) {
-    dispatcher.enqueue<OpenComponentEditorEvent>();
+    dispatcher.enqueue<ShowComponentEditorEvent>();
   }
 }
 

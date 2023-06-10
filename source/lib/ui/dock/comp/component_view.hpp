@@ -28,7 +28,7 @@ namespace tactile::ui {
 /// Shows a view of a single component attached to a context.
 void component_view(const Model& model,
                     Entity context_entity,
-                    Entity component_entity,
+                    Entity attached_component_entity,
                     Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

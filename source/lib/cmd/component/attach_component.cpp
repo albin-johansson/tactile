@@ -20,7 +20,8 @@
 #include "attach_component.hpp"
 
 #include "common/debug/assert.hpp"
-#include "model/systems/context/components.hpp"
+#include "components/context.hpp"
+#include "model/systems/component/component_def.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/validation_system.hpp"
 
@@ -42,15 +43,19 @@ void AttachComponent::undo()
   auto& model = *mModel;
 
   auto& context = model.get<Context>(mContextEntity);
-  sys::detach_component(model, context, mDefinitionEntity);
+  std::erase(context.comps, mAttachedComponentEntity);
 }
 
 void AttachComponent::redo()
 {
   auto& model = *mModel;
 
+  if (mAttachedComponentEntity == kNullEntity) {
+    mAttachedComponentEntity = sys::instantiate_component(model, mDefinitionEntity);
+  }
+
   auto& context = model.get<Context>(mContextEntity);
-  sys::attach_component(model, context, mDefinitionEntity);
+  context.comps.push_back(mAttachedComponentEntity);
 }
 
 auto AttachComponent::get_name() const -> String

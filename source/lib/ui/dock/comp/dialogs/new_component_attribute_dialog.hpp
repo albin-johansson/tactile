@@ -21,12 +21,19 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
+#include "common/util/string_buffer.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 
-void open_create_component_attribute_dialog(Entity component_definition_entity);
+struct NewCompAttrDialogState final {
+  Entity definition_entity {kNullEntity};
+  StringBuffer attribute_name_buffer {};
+  bool should_open {};
+};
 
-void update_create_component_attribute_dialog(const Model& model, Dispatcher& dispatcher);
+void push_new_comp_attr_dialog(const Model& model,
+                               NewCompAttrDialogState& state,
+                               Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

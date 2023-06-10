@@ -38,7 +38,7 @@ UndefComponent::UndefComponent(Model* model,
       mComponentSetEntity {component_set_entity},
       mComponentName {std::move(component_name)}
 {
-  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, mComponentSetEntity));
+  TACTILE_ASSERT(sys::is_component_set_entity(*mModel, mComponentSetEntity));
 }
 
 void UndefComponent::undo()

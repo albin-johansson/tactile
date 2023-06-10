@@ -40,6 +40,7 @@ class AttachComponent final : public Command {
   Model* mModel;
   Entity mContextEntity;
   Entity mDefinitionEntity;
+  Entity mAttachedComponentEntity {kNullEntity};
 };
 
 }  // namespace tactile::cmd

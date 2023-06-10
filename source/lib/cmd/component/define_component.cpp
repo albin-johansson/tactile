@@ -49,9 +49,14 @@ void DefineComponent::undo()
 void DefineComponent::redo()
 {
   auto& model = *mModel;
-
   auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
-  sys::create_component(model, component_set, mName);
+
+  if (mDefinitionEntity == kNullEntity) {
+    mDefinitionEntity = sys::create_component(model, component_set, mName);
+  }
+  else {
+    component_set.definitions.push_back(mDefinitionEntity);
+  }
 }
 
 auto DefineComponent::get_name() const -> String

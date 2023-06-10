@@ -22,13 +22,20 @@
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
+#include "common/util/string_buffer.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 
-void open_rename_component_attribute_dialog(Entity definition_entity,
-                                            String attribute_name);
+struct RenameCompAttrDialogState final {
+  Entity definition {kNullEntity};
+  String attribute_name;
+  StringBuffer attribute_name_buffer {};
+  bool should_open {};
+};
 
-void update_rename_component_attribute_dialog(const Model& model, Dispatcher& dispatcher);
+void push_rename_comp_attr_dialog(const Model& model,
+                                  RenameCompAttrDialogState& state,
+                                  Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

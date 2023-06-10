@@ -26,7 +26,22 @@
 
 namespace tactile {
 
-struct OpenComponentEditorEvent final {};
+struct ShowComponentEditorEvent final {};
+
+struct ShowNewCompDialogEvent final {};
+
+struct ShowRenameCompDialogEvent final {
+  Entity definition {kNullEntity};  ///< A component definition entity.
+};
+
+struct ShowNewCompAttrDialogEvent final {
+  Entity definition {kNullEntity};  ///< A component definition entity.
+};
+
+struct ShowRenameCompAttrDialogEvent final {
+  Entity definition {kNullEntity};  ///< A component definition entity.
+  String attr_name;                 ///< The target attribute.
+};
 
 /// Event for defining a new component.
 struct DefineComponentEvent final {
@@ -42,6 +57,13 @@ struct UndefComponentEvent final {
 struct RenameComponentEvent final {
   Entity definition {kNullEntity};  ///< Target component to rename.
   String name;                      ///< The new component name.
+};
+
+/// Event for updating the default value of an attribute in a component definition.
+struct UpdateComponentEvent final {
+  Entity definition {kNullEntity};  ///< Target component definition.
+  String attr_name;                 ///< Name of target attribute.
+  Attribute value;                  ///< New default attribute value.
 };
 
 /// Event for adding an attribute to a component definition.
@@ -76,13 +98,6 @@ struct SetComponentAttrTypeEvent final {
   AttributeType type {};  ///< New attribute type.
 };
 
-/// Event for updating the default value of an attribute in a component definition.
-struct UpdateComponentEvent final {
-  Entity definition {kNullEntity};  ///< Target component definition.
-  String attr_name;                 ///< Name of target attribute.
-  Attribute value;                  ///< New default attribute value.
-};
-
 /// Event for adding a component to a context.
 struct AttachComponentEvent final {
   Entity context {kNullEntity};     ///< Target context.
@@ -97,16 +112,14 @@ struct DetachComponentEvent final {
 
 /// Event for restoring the default attribute values in an attached component.
 struct ResetAttachedComponentEvent final {
-  Entity context {kNullEntity};     ///< Target context.
-  Entity definition {kNullEntity};  ///< Type of the component to reset.
+  Entity attached_component {kNullEntity};  ///< The target attached component.
 };
 
 /// Event for updating the value of an attribute in an attached component.
 struct UpdateAttachedComponentEvent final {
-  Entity context {kNullEntity};     ///< Target context.
-  Entity definition {kNullEntity};  ///< Type of the component to modify.
-  String attr_name;                 ///< Name of target attribute.
-  Attribute value;                  ///< New attribute value.
+  Entity attached_component {kNullEntity};  ///< The target attached component.
+  String attr_name;                         ///< Name of target attribute.
+  Attribute value;                          ///< New attribute value.
 };
 
 }  // namespace tactile

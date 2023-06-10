@@ -28,7 +28,7 @@
 #include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/animation/animation_dock.hpp"
 #include "ui/dock/comp/component_dock.hpp"
-#include "ui/dock/comp/component_editor.hpp"
+#include "ui/dock/comp/component_editor_dialog.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/dock/editor/editor_dock.hpp"
 #include "ui/dock/layer/layer_dock.hpp"

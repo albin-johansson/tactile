@@ -68,9 +68,7 @@ auto detach_component(Model& model, Context& context, const Entity definition_en
   const auto iter = _find_component_of_type(model, context.comps, definition_entity);
   if (iter != context.comps.end()) {
     auto values = model.get<Component>(*iter).attributes;
-
     context.comps.erase(iter);
-    model.destroy(*iter);
 
     return values;
   }

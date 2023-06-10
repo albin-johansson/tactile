@@ -24,7 +24,8 @@
 #include "ui/dialog/resize_map_dialog.hpp"
 #include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/animation/animation_dock.hpp"
-#include "ui/dock/comp/component_editor.hpp"
+#include "ui/dock/comp/component_editor_dialog.hpp"
+#include "ui/dock/editor/central_map_viewport.hpp"
 #include "ui/dock/editor/central_tileset_viewport.hpp"
 #include "ui/dock/editor/editor_dock.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
@@ -32,7 +33,6 @@
 #include "ui/dock/property/property_dock.hpp"
 #include "ui/dock/tileset/dialogs/new_tileset_dialog.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
-#include "ui/dock/editor/central_map_viewport.hpp"
 
 namespace tactile::ui {
 
@@ -45,7 +45,6 @@ struct WidgetState final {
   TilesetViewportState tileset_viewport;
   LogDockState log_dock;
   PropertyDockState property_dock;
-
   SettingsDialogState settings_dialog;
   ComponentEditorDialogState component_editor_dialog;
   NewMapDialogState new_map_dialog;

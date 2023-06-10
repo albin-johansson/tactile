@@ -40,6 +40,11 @@ class StringBuffer final {
 
   [[nodiscard]] auto size() const noexcept -> usize { return mBuffer.size(); }
 
+  [[nodiscard]] auto size_bytes() const noexcept -> usize
+  {
+    return mBuffer.size() * sizeof(char);
+  }
+
   [[nodiscard]] auto as_string() const -> String;
   [[nodiscard]] auto as_string_view() const -> StringView;
 
