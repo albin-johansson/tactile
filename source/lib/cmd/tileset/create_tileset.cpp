@@ -48,59 +48,57 @@ void CreateTileset::undo()
 {
   auto& model = *mModel;
 
-  const auto tileset_document_entity = mTilesetDocumentEntity.value();
-  const auto attached_tileset_entity = mAttachedTilesetEntity.value();
-
   // TODO in the future, we should check if there are other maps that use the tileset
-  if (sys::is_document_open(model, tileset_document_entity)) {
-    sys::close_document(model, tileset_document_entity);
+  if (sys::is_document_open(model, mTilesetDocumentEntity)) {
+    sys::close_document(model, mTilesetDocumentEntity);
   }
 
   auto& map = model.get<Map>(mMapEntity);
-  std::erase(map.attached_tilesets, attached_tileset_entity);
+  std::erase(map.attached_tilesets, mAttachedTilesetEntity);
 
-  model.set_enabled(attached_tileset_entity, false);
+  model.set_enabled(mAttachedTilesetEntity, false);
   mHasAttachedTileset = false;
 }
 
 void CreateTileset::redo()
 {
-  if (!mTilesetDocumentEntity.has_value()) {
+  auto& model = *mModel;
+
+  if (mTilesetDocumentEntity == kNullEntity) {
     _create_tileset_document();
   }
 
-  auto& model = *mModel;
-
-  if (mAttachedTilesetEntity.has_value()) {
+  if (mAttachedTilesetEntity != kNullEntity) {
     auto& map = model.get<Map>(mMapEntity);
-    map.attached_tilesets.push_back(*mAttachedTilesetEntity);
+    map.attached_tilesets.push_back(mAttachedTilesetEntity);
   }
   else {
-    const auto& tileset_document = model.get<TilesetDocument>(*mTilesetDocumentEntity);
+    const auto& tileset_document = model.get<TilesetDocument>(mTilesetDocumentEntity);
     mAttachedTilesetEntity =
         sys::attach_tileset_to_map(model, mMapEntity, tileset_document.tileset);
   }
 
-  model.set_enabled(mAttachedTilesetEntity.value(), true);
+  model.set_enabled(mAttachedTilesetEntity, true);
   mHasAttachedTileset = true;
 }
 
 void CreateTileset::dispose()
 {
-  if (!mHasAttachedTileset) {
-    auto& model = *mModel;
+  auto& model = *mModel;
 
-    model.destroy(mAttachedTilesetEntity.value());
-    sys::destroy_document(model, mTilesetDocumentEntity.value());
+  if (!mHasAttachedTileset) {
+    model.destroy(mAttachedTilesetEntity);
+    sys::destroy_document(model, mTilesetDocumentEntity);
   }
 }
 
 void CreateTileset::_create_tileset_document()
 {
   auto& model = *mModel;
-  mTilesetDocumentEntity = sys::create_tileset_document(model, mTileSize, mImagePath);
 
-  const auto& tileset_document = model.get<TilesetDocument>(*mTilesetDocumentEntity);
+  mTilesetDocumentEntity = sys::create_tileset_document(model, mTileSize, mImagePath);
+  const auto& tileset_document = model.get<TilesetDocument>(mTilesetDocumentEntity);
+
   auto& tileset_context = model.get<Context>(tileset_document.tileset);
   tileset_context.name = mImagePath.stem().string();
 }

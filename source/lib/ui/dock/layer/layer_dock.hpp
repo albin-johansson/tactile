@@ -29,7 +29,7 @@ namespace tactile::ui {
 
 struct LayerDockState final {
   AddLayerContextMenu add_layer_context_menu;
-  Maybe<Entity> rename_target_layer;
+  Entity rename_target_layer {kNullEntity};
   bool has_focus {};
 };
 

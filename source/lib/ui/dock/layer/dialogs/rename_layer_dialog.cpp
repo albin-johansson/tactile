@@ -23,7 +23,6 @@
 
 #include <imgui.h>
 
-#include "common/type/maybe.hpp"
 #include "common/util/string_buffer.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/systems/language_system.hpp"
@@ -33,7 +32,7 @@ namespace tactile::ui {
 namespace {
 
 struct RenameLayerDialogState final {
-  Maybe<Entity> layer_entity;
+  Entity layer_entity {kNullEntity};
   String old_name;
   StringBuffer name_buffer {};
   bool open_dialog {};
@@ -80,11 +79,11 @@ void update_rename_layer_dialog(const Model& model, Dispatcher& dispatcher)
     }
     ImGui::InputText("##Input",
                      gDialogState.name_buffer.data(),
-                     sizeof gDialogState.name_buffer);
+                     gDialogState.name_buffer.size_bytes());
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<RenameLayerEvent>(gDialogState.layer_entity.value(),
+    dispatcher.enqueue<RenameLayerEvent>(gDialogState.layer_entity,
                                          gDialogState.name_buffer.as_string());
   }
 }

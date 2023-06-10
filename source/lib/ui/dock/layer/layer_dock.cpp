@@ -22,7 +22,6 @@
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
-#include "common/type/maybe.hpp"
 #include "components/context.hpp"
 #include "components/document.hpp"
 #include "components/map.hpp"
@@ -49,6 +48,7 @@ void _push_side_buttons(const Model& model,
                         Dispatcher& dispatcher)
 {
   const auto& document_entity = sys::get_active_document(model);
+
   const auto& map_document = model.get<MapDocument>(document_entity);
   const auto& map = model.get<Map>(map_document.map);
   const auto& root_layer = model.get<GroupLayer>(map.root_layer);
@@ -94,12 +94,11 @@ void _push_rename_dialog(const Model& model,
                          LayerDockState& state,
                          Dispatcher& dispatcher)
 {
-  if (state.rename_target_layer.has_value()) {
-    const auto target_layer_entity = *state.rename_target_layer;
-    const auto& layer_context = model.get<Context>(target_layer_entity);
+  if (state.rename_target_layer != kNullEntity) {
+    const auto& layer_context = model.get<Context>(state.rename_target_layer);
 
-    open_rename_layer_dialog(target_layer_entity, layer_context.name);
-    state.rename_target_layer.reset();
+    open_rename_layer_dialog(state.rename_target_layer, layer_context.name);
+    state.rename_target_layer = kNullEntity;
   }
 
   update_rename_layer_dialog(model, dispatcher);

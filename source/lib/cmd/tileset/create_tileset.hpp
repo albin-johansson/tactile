@@ -22,7 +22,6 @@
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "model/model.hpp"
 
@@ -46,8 +45,8 @@ class CreateTileset final : public Command {
   Entity mMapEntity;
   Int2 mTileSize;
   Path mImagePath;
-  Maybe<Entity> mTilesetDocumentEntity;
-  Maybe<Entity> mAttachedTilesetEntity;
+  Entity mTilesetDocumentEntity {kNullEntity};
+  Entity mAttachedTilesetEntity {kNullEntity};
   bool mHasAttachedTileset : 1 {false};
 
   void _create_tileset_document();

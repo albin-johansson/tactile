@@ -22,7 +22,6 @@
 #include <imgui.h>
 
 #include "common/attribute.hpp"
-#include "common/type/maybe.hpp"
 #include "common/util/string_buffer.hpp"
 #include "components/context.hpp"
 #include "components/document.hpp"
@@ -37,7 +36,7 @@ namespace tactile::ui {
 namespace {
 
 struct AddPropertyDialogState final {
-  Maybe<Entity> context_entity;
+  Entity context_entity {kNullEntity};
   StringBuffer name_buffer {};
   AttributeType property_type {AttributeType::String};
   bool open_dialog {};
@@ -63,7 +62,7 @@ void update_add_property_dialog(const Model& model, Dispatcher& dispatcher)
   const auto& document = model.get<Document>(document_entity);
 
   if (document.active_context != gDialogState.context_entity) {
-    gDialogState.context_entity.reset();
+    gDialogState.context_entity = kNullEntity;
     gDialogState.open_dialog = false;
     return;
   }
@@ -99,10 +98,10 @@ void update_add_property_dialog(const Model& model, Dispatcher& dispatcher)
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<AddPropertyEvent>(gDialogState.context_entity.value(),
+    dispatcher.enqueue<AddPropertyEvent>(gDialogState.context_entity,
                                          gDialogState.name_buffer.as_string(),
                                          gDialogState.property_type);
-    gDialogState.context_entity.reset();
+    gDialogState.context_entity = kNullEntity;
   }
 }
 

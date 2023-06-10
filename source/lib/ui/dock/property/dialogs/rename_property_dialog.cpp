@@ -35,7 +35,7 @@ namespace tactile::ui {
 namespace {
 
 struct RenamePropertyDialogState final {
-  Maybe<Entity> context_entity;
+  Entity context_entity {kNullEntity};
   String previous_name;
   StringBuffer name_buffer {};
   bool open_dialog {};
@@ -61,7 +61,7 @@ void update_rename_property_dialog(const Model& model, Dispatcher& dispatcher)
   const auto& document = model.get<Document>(document_entity);
 
   if (document.active_context != gDialogState.context_entity) {
-    gDialogState.context_entity.reset();
+    gDialogState.context_entity = kNullEntity;
     gDialogState.open_dialog = false;
     return;
   }
@@ -93,10 +93,10 @@ void update_rename_property_dialog(const Model& model, Dispatcher& dispatcher)
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<RenamePropertyEvent>(gDialogState.context_entity.value(),
+    dispatcher.enqueue<RenamePropertyEvent>(gDialogState.context_entity,
                                             gDialogState.previous_name,
                                             gDialogState.name_buffer.as_string());
-    gDialogState.context_entity.reset();
+    gDialogState.context_entity = kNullEntity;
   }
 }
 

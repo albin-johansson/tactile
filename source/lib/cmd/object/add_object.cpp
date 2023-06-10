@@ -52,10 +52,9 @@ void AddObject::undo()
   auto& model = *mModel;
   auto& object_layer = model.get<ObjectLayer>(mObjectLayerEntity);
 
-  const auto object_entity = mObjectEntity.value();
-  std::erase(object_layer.objects, object_entity);
+  std::erase(object_layer.objects, mObjectEntity);
+  model.set_enabled(mObjectEntity, false);
 
-  model.set_enabled(object_entity, false);
   mDidAddObject = false;
 }
 
@@ -64,14 +63,13 @@ void AddObject::redo()
   auto& model = *mModel;
   auto& object_layer = model.get<ObjectLayer>(mObjectLayerEntity);
 
-  if (!mObjectEntity.has_value()) {
+  if (mObjectEntity == kNullEntity) {
     mObjectEntity = sys::create_object(model, mObjectType);
   }
 
-  const auto object_entity = mObjectEntity.value();
-  model.set_enabled(object_entity, true);
+  model.set_enabled(mObjectEntity, true);
 
-  auto& object = model.get<Object>(object_entity);
+  auto& object = model.get<Object>(mObjectEntity);
   object.type = mObjectType;
   object.position = mPosition;
   object.size = mSize;
@@ -81,14 +79,14 @@ void AddObject::redo()
     object.meta_id = map_identifiers.next_object_id++;
   }
 
-  object_layer.objects.push_back(object_entity);
+  object_layer.objects.push_back(mObjectEntity);
   mDidAddObject = true;
 }
 
 void AddObject::dispose()
 {
-  if (mObjectEntity.has_value() && !mDidAddObject) {
-    mModel->destroy(*mObjectEntity);
+  if (mObjectEntity != kNullEntity && !mDidAddObject) {
+    mModel->destroy(mObjectEntity);
   }
 }
 

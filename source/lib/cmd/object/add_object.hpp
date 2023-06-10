@@ -23,7 +23,6 @@
 #include "common/enum/object_type.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
 #include "model/model.hpp"
 
 namespace tactile::cmd {
@@ -52,7 +51,7 @@ class AddObject final : public Command {
   ObjectType mObjectType;
   Float2 mPosition;
   Float2 mSize;
-  Maybe<Entity> mObjectEntity;
+  Entity mObjectEntity {kNullEntity};
   bool mDidAddObject : 1 {false};
 };
 

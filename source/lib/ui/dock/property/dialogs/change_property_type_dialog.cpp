@@ -36,7 +36,7 @@ namespace tactile::ui {
 namespace {
 
 struct ChangePropertyTypeDialogState final {
-  Maybe<Entity> context_entity;
+  Entity context_entity {kNullEntity};
   AttributeType current_type {AttributeType::String};
   Maybe<String> property_name;
   Maybe<AttributeType> previous_type;
@@ -66,7 +66,7 @@ void update_change_property_type_dialog(const Model& model, Dispatcher& dispatch
   const auto& document = model.get<Document>(document_entity);
 
   if (document.active_context != gDialogState.context_entity) {
-    gDialogState.context_entity.reset();
+    gDialogState.context_entity = kNullEntity;
     gDialogState.open_dialog = false;
     return;
   }
@@ -101,10 +101,10 @@ void update_change_property_type_dialog(const Model& model, Dispatcher& dispatch
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<ChangePropertyTypeEvent>(gDialogState.context_entity.value(),
+    dispatcher.enqueue<ChangePropertyTypeEvent>(gDialogState.context_entity,
                                                 gDialogState.property_name.value(),
                                                 gDialogState.current_type);
-    gDialogState.context_entity.reset();
+    gDialogState.context_entity = kNullEntity;
   }
 }
 
