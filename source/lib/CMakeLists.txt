@@ -25,9 +25,10 @@ tactile_target_include_system_directories(${TACTILE_LIB}
                                           SYSTEM PUBLIC
                                           ${LIBRARY_DIR}/centurion
                                           ${LIBRARY_DIR}/fontawesome
-                                          ${STB_INCLUDE_DIRS}
-                                          ${TACTILE_PROTO_GENERATED_DIR}
                                           ${CPPCODEC_INCLUDE_DIRS}
+                                          ${Stb_INCLUDE_DIR}
+                                          ${VULKAN_INCLUDE_DIR}
+                                          ${TACTILE_PROTO_GENERATED_DIR}
                                           )
 
 target_link_libraries(${TACTILE_LIB}
@@ -35,24 +36,26 @@ target_link_libraries(${TACTILE_LIB}
                       ${TACTILE_PROTO}
                       argparse::argparse
                       Boost::boost
+                      EnTT::EnTT
+                      fmt::fmt
+                      glad::glad
+                      glm::glm
+                      imgui::imgui
+                      magic_enum::magic_enum
+                      nlohmann_json::nlohmann_json
+                      OpenGL::GL
+                      protobuf::libprotobuf
+                      pugixml::pugixml
                       $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
                       $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
-                      imgui::imgui
-                      EnTT::EnTT
-                      magic_enum::magic_enum
-                      fmt::fmt
-                      glm::glm
-                      protobuf::libprotobuf
-                      yaml-cpp
-                      nlohmann_json::nlohmann_json
-                      pugixml::static
+                      spdlog::spdlog
+                      Vulkan::Vulkan
+                      unofficial::vulkan-memory-allocator::vulkan-memory-allocator
                       tinyfiledialogs::tinyfiledialogs
                       tl::expected
-                      ZLIB::ZLIB
-                      GLEW::GLEW
-                      OpenGL::GL
-                      spdlog::spdlog
+                      yaml-cpp
                       $<IF:$<TARGET_EXISTS:zstd::libzstd_shared>,zstd::libzstd_shared,zstd::libzstd_static>
+                      ZLIB::ZLIB
                       )
 
 target_compile_definitions(${TACTILE_LIB}
@@ -61,7 +64,6 @@ target_compile_definitions(${TACTILE_LIB}
                            CENTURION_NO_SDL_TTF
                            IMGUI_DISABLE_OBSOLETE_FUNCTIONS
                            IMGUI_DEFINE_MATH_OPERATORS
-                           GLEW_NO_GLU
                            BOOST_ENABLE_ASSERT_DEBUG_HANDLER
                            BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
                            BOOST_UUID_RANDOM_PROVIDER_FORCE_WINCRYPT
@@ -75,6 +77,14 @@ if (MSVC)
                              WIN32_LEAN_AND_MEAN
                              NOMINMAX
                              )
+endif ()
+
+# The Intel macOS GitHub runners seemingly don't provide some of
+# the required Vulkan subset definitions, so we condition on the
+# presence of an Apple Silicon processor.
+if (CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin" AND
+    CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64")
+  target_compile_definitions(${TACTILE_LIB} PUBLIC TACTILE_USE_VULKAN_SUBSET)
 endif ()
 
 if (TACTILE_BUILD_APP_BUNDLE MATCHES ON)

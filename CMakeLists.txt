@@ -41,14 +41,18 @@ include(cmake/tactile.cmake)
 
 # System dependencies
 find_package(OpenGL REQUIRED)
+find_package(Vulkan REQUIRED)
+
+set(VULKAN_INCLUDE_DIR "$ENV{VULKAN_SDK}/include")
 
 # Vcpkg dependencies
 find_package(argparse CONFIG REQUIRED)
 find_package(Boost REQUIRED)
+find_package(doctest CONFIG REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
-find_package(GLEW CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
+find_package(glad CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 find_package(magic_enum CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
@@ -57,13 +61,14 @@ find_package(pugixml CONFIG REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
+find_package(Stb REQUIRED)
 find_package(tinyfiledialogs CONFIG REQUIRED)
 find_package(tl-expected CONFIG REQUIRED)
+find_package(unofficial-vulkan-memory-allocator CONFIG REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
 find_package(zstd CONFIG REQUIRED)
 
 find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
-find_path(STB_INCLUDE_DIRS "stb_c_lexer.h")
 
 option(TACTILE_BUILD_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)
 option(TACTILE_BUILD_WITH_ASAN "Build with AddressSanitizer" OFF)

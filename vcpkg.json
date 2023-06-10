@@ -15,28 +15,41 @@
     "boost-predef",
     "boost-stacktrace",
     "boost-uuid",
-    "entt",
     "cppcodec",
     "doctest",
+    "entt",
     "fmt",
-    "glew",
+    {
+      "name": "glad",
+      "features": [
+        "extensions"
+      ]
+    },
     "glm",
     {
       "name": "imgui",
       "features": [
         "docking-experimental",
         "sdl2-binding",
-        "opengl3-binding"
+        "opengl3-binding",
+        "vulkan-binding"
       ]
     },
     "magic-enum",
     "nlohmann-json",
     "protobuf",
     "pugixml",
-    "sdl2",
+    {
+      "name": "sdl2",
+      "features": [
+        "vulkan"
+      ]
+    },
     "sdl2-image",
     "spdlog",
     "stb",
+    "vulkan",
+    "vulkan-memory-allocator",
     "tinyfiledialogs",
     "tl-expected",
     "yaml-cpp",

@@ -21,13 +21,13 @@
 
 #include <utility>  // move
 
-#include <GL/glew.h>
 #include <fmt/format.h>
+#include <glad/glad.h>
 #include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
-#include "common/primitives.hpp"
 #include "common/predef.hpp"
+#include "common/primitives.hpp"
 
 namespace tactile {
 namespace {
@@ -62,10 +62,8 @@ void _init_sdl_opengl_attributes()
 
   cen::gl::set_swap_interval(cen::gl_swap_interval::synchronized);
 
-  if (const auto result = glewInit(); result != GLEW_OK) {
-    throw TactileError {
-        fmt::format("Failed to initialize GLEW: {}",
-                    reinterpret_cast<const char*>(glewGetString(result)))};
+  if (!gladLoadGLLoader(&SDL_GL_GetProcAddress)) {
+    throw TactileError {"Could not initialize OpenGL"};
   }
 
   spdlog::debug("[OpenGL] Version: {}",

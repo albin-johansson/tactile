@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.16)
 
 project(tactile-test CXX)
 
-find_package(doctest CONFIG REQUIRED)
-
 enable_testing()
 
 file(GLOB_RECURSE TEST_FILES

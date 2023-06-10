@@ -26,12 +26,15 @@
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/scoped.hpp"
 
+#define GITHUB_URL "https://github.com/"
+#define SOURCEFORGE_URL "https://sourceforge.net/"
+
 namespace tactile::ui {
 namespace {
 
 inline constinit bool gOpenDialog = false;
 
-void _push_dependency_row(const char* lib, const char* license, const char* license_url)
+void _push_row(const char* lib, const char* license, const char* license_url)
 {
   ImGui::TableNextRow();
 
@@ -86,86 +89,55 @@ void show_credits_dialog(const Model& model, Entity, Dispatcher&)
       ImGui::TableSetupColumn(strings.misc.license.c_str());
       ImGui::TableHeadersRow();
 
-      _push_dependency_row("argparse",
-                           "MIT",
-                           "https://github.com/p-ranav/argparse/blob/master/LICENSE");
-      _push_dependency_row(
-          "Boost",
-          "BSL-1.0",
-          "https://github.com/boostorg/boost/blob/master/LICENSE_1_0.txt");
-      _push_dependency_row(
-          "Centurion",
-          "MIT",
-          "https://github.com/albin-johansson/centurion/blob/dev/LICENSE");
-      _push_dependency_row("cppcodec",
-                           "MIT",
-                           "https://github.com/tplgy/cppcodec/blob/master/LICENSE");
-      _push_dependency_row("Dear ImGui",
-                           "MIT",
-                           "https://github.com/ocornut/imgui/blob/master/LICENSE.txt");
-      _push_dependency_row("doctest",
-                           "MIT",
-                           "https://github.com/doctest/doctest/blob/master/LICENSE.txt");
-      _push_dependency_row("EnTT",
-                           "MIT",
-                           "https://github.com/skypjack/entt/blob/master/LICENSE");
-      _push_dependency_row("fmt",
-                           "MIT",
-                           "https://github.com/fmtlib/fmt/blob/master/LICENSE.rst");
-      _push_dependency_row("GLEW",
-                           "BSD/MIT",
-                           "https://github.com/nigels-com/glew/blob/master/LICENSE.txt");
-      _push_dependency_row("glm",
-                           "Happy Bunny/MIT",
-                           "https://github.com/g-truc/glm/blob/master/copying.txt");
-      _push_dependency_row(
-          "IconFontCppHeaders",
-          "Zlib",
-          "https://github.com/juliettef/IconFontCppHeaders/blob/main/licence.txt");
-      _push_dependency_row("JSON for Modern C++",
-                           "MIT",
-                           "https://github.com/nlohmann/json/blob/develop/LICENSE.MIT");
-      _push_dependency_row("Magic Enum C++",
-                           "MIT",
-                           "https://github.com/Neargye/magic_enum/blob/master/LICENSE");
-      _push_dependency_row(
-          "Protocol Buffers",
-          "BSD",
-          "https://github.com/protocolbuffers/protobuf/blob/main/LICENSE");
-      _push_dependency_row("pugixml",
-                           "MIT",
-                           "https://github.com/zeux/pugixml/blob/master/LICENSE.md");
-      _push_dependency_row("SDL2",
-                           "Zlib",
-                           "https://github.com/libsdl-org/SDL/blob/main/LICENSE.txt");
-      _push_dependency_row(
-          "SDL2_image",
-          "Zlib",
-          "https://github.com/libsdl-org/SDL_image/blob/main/LICENSE.txt");
-      _push_dependency_row("spdlog",
-                           "MIT",
-                           "https://github.com/gabime/spdlog/blob/v1.x/LICENSE");
-      _push_dependency_row("stb_image",
-                           "MIT",
-                           "https://github.com/nothings/stb/blob/master/LICENSE");
-      _push_dependency_row("tinyfiledialogs",
-                           "Zlib",
-                           "https://sourceforge.net/projects/tinyfiledialogs/");
-      _push_dependency_row("tl-expected",
-                           "CC0-1.0",
-                           "https://github.com/TartanLlama/expected/blob/master/COPYING");
-      _push_dependency_row("yaml-cpp",
-                           "MIT",
-                           "https://github.com/jbeder/yaml-cpp/blob/master/LICENSE");
-      _push_dependency_row("Zlib",
-                           "Zlib",
-                           "https://github.com/madler/zlib/blob/master/LICENSE");
-      _push_dependency_row("zstd",
-                           "BSD/GPLv2",
-                           "https://github.com/facebook/zstd/blob/dev/LICENSE");
-      _push_dependency_row("Roboto",
-                           "Apache 2.0",
-                           "https://github.com/googlefonts/roboto/blob/main/LICENSE");
+      _push_row("argparse", "MIT", GITHUB_URL "p-ranav/argparse/blob/master/LICENSE");
+      _push_row("Boost",
+                "BSL-1.0",
+                GITHUB_URL "boostorg/boost/blob/master/LICENSE_1_0.txt");
+      _push_row("Centurion",
+                "MIT",
+                GITHUB_URL "albin-johansson/centurion/blob/dev/LICENSE");
+      _push_row("cppcodec", "MIT", GITHUB_URL "tplgy/cppcodec/blob/master/LICENSE");
+      _push_row("Dear ImGui", "MIT", GITHUB_URL "ocornut/imgui/blob/master/LICENSE.txt");
+      _push_row("doctest", "MIT", GITHUB_URL "doctest/doctest/blob/master/LICENSE.txt");
+      _push_row("EnTT", "MIT", GITHUB_URL "skypjack/entt/blob/master/LICENSE");
+      _push_row("fmt", "MIT", GITHUB_URL "fmtlib/fmt/blob/master/LICENSE.rst");
+      _push_row("glad", "MIT", GITHUB_URL "Dav1dde/glad/blob/glad2/LICENSE");
+      _push_row("glm",
+                "Happy Bunny/MIT",
+                GITHUB_URL "g-truc/glm/blob/master/copying.txt");
+      _push_row("IconFontCppHeaders",
+                "Zlib",
+                GITHUB_URL "juliettef/IconFontCppHeaders/blob/main/licence.txt");
+      _push_row("JSON for Modern C++",
+                "MIT",
+                GITHUB_URL "nlohmann/json/blob/develop/LICENSE.MIT");
+      _push_row("Magic Enum C++",
+                "MIT",
+                GITHUB_URL "Neargye/magic_enum/blob/master/LICENSE");
+      _push_row("Protocol Buffers",
+                "BSD",
+                GITHUB_URL "protocolbuffers/protobuf/blob/main/LICENSE");
+      _push_row("pugixml", "MIT", GITHUB_URL "zeux/pugixml/blob/master/LICENSE.md");
+      _push_row("SDL2", "Zlib", GITHUB_URL "libsdl-org/SDL/blob/main/LICENSE.txt");
+      _push_row("SDL2_image",
+                "Zlib",
+                GITHUB_URL "libsdl-org/SDL_image/blob/main/LICENSE.txt");
+      _push_row("spdlog", "MIT", GITHUB_URL "gabime/spdlog/blob/v1.x/LICENSE");
+      _push_row("stb_image", "MIT", GITHUB_URL "nothings/stb/blob/master/LICENSE");
+      _push_row("Vulkan Memory Allocator",
+                "MIT",
+                GITHUB_URL
+                "GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/blob/master/LICENSE.txt");
+      _push_row("tinyfiledialogs", "Zlib", SOURCEFORGE_URL "projects/tinyfiledialogs/");
+      _push_row("tl-expected",
+                "CC0-1.0",
+                GITHUB_URL "TartanLlama/expected/blob/master/COPYING");
+      _push_row("yaml-cpp", "MIT", GITHUB_URL "jbeder/yaml-cpp/blob/master/LICENSE");
+      _push_row("Zlib", "Zlib", GITHUB_URL "madler/zlib/blob/master/LICENSE");
+      _push_row("zstd", "BSD/GPLv2", GITHUB_URL "facebook/zstd/blob/dev/LICENSE");
+      _push_row("Roboto",
+                "Apache 2.0",
+                GITHUB_URL "googlefonts/roboto/blob/main/LICENSE");
     }
   }
 }
