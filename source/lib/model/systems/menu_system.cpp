@@ -34,6 +34,8 @@
 #include "model/systems/font_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/map_system.hpp"
+#include "model/systems/tools/bucket_tool.hpp"
+#include "model/systems/tools/stamp_tool.hpp"
 #include "model/systems/viewport_system.hpp"
 #include "ui/shortcut/mappings.hpp"
 
@@ -45,7 +47,7 @@ namespace {
   String label;
   label.reserve(32);
 
-  if (chord & ImGuiMod_Super) {
+  if (chord & ImGuiMod_Shortcut) {
     label += TACTILE_PRIMARY_MOD;
   }
 
@@ -140,13 +142,16 @@ auto _add_menu_item(Model& model,
 
 void _init_file_menu(Model& model)
 {
-  _add_menu_item(model, MenuAction::NewMap, ImGuiMod_Super | ImGuiKey_N);
-  _add_menu_item(model, MenuAction::OpenMap, ImGuiMod_Super | ImGuiKey_O);
+  _add_menu_item(model, MenuAction::NewMap, ImGuiMod_Shortcut | ImGuiKey_N);
+  _add_menu_item(model, MenuAction::OpenMap, ImGuiMod_Shortcut | ImGuiKey_O);
 
-  _add_menu_item(model, MenuAction::Save, ImGuiMod_Super | ImGuiKey_S, &is_save_possible);
+  _add_menu_item(model,
+                 MenuAction::Save,
+                 ImGuiMod_Shortcut | ImGuiKey_S,
+                 &is_save_possible);
   _add_menu_item(model,
                  MenuAction::SaveAs,
-                 ImGuiMod_Super | ImGuiMod_Shift | ImGuiKey_S,
+                 ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_S,
                  &has_active_document);
 
   _add_menu_item(model, MenuAction::Close, &has_active_document);
@@ -166,24 +171,31 @@ void _init_file_menu(Model& model)
 
 void _init_edit_menu(Model& model)
 {
-  _add_menu_item(model, MenuAction::Undo, ImGuiMod_Super | ImGuiKey_Z, &is_undo_possible);
-  _add_menu_item(model, MenuAction::Redo, ImGuiMod_Super | ImGuiKey_Y, &is_redo_possible);
+  _add_menu_item(model,
+                 MenuAction::Undo,
+                 ImGuiMod_Shortcut | ImGuiKey_Z,
+                 &is_undo_possible);
+  _add_menu_item(model,
+                 MenuAction::Redo,
+                 ImGuiMod_Shortcut | ImGuiKey_Y,
+                 &is_redo_possible);
 
   // TODO tool validation functions
-  _add_menu_item(model, MenuAction::EnableStamp, ImGuiKey_S);
-  _add_menu_item(model, MenuAction::EnableBucket, ImGuiKey_B);
-  _add_menu_item(model, MenuAction::EnableEraser, ImGuiKey_E);
-  _add_menu_item(model, MenuAction::EnableObjectSelector, ImGuiKey_Q);
-  _add_menu_item(model, MenuAction::EnableRectangle, ImGuiKey_R);
-  _add_menu_item(model, MenuAction::EnableEllipse, ImGuiKey_T);
-  _add_menu_item(model, MenuAction::EnablePoint, ImGuiKey_Y);
+  // TODO these items should have Shortcut updates in the editor dock
+  _add_menu_item(model, MenuAction::EnableStamp, ImGuiKey_S, &is_stamp_tool_available);
+  _add_menu_item(model, MenuAction::EnableBucket, ImGuiKey_B, &is_bucket_tool_available);
+  _add_menu_item(model, MenuAction::EnableEraser);
+  _add_menu_item(model, MenuAction::EnableObjectSelector);
+  _add_menu_item(model, MenuAction::EnableRectangle);
+  _add_menu_item(model, MenuAction::EnableEllipse);
+  _add_menu_item(model, MenuAction::EnablePoint);
 
   _add_menu_item(model,
                  MenuAction::OpenComponentEditor,
-                 ImGuiMod_Super | ImGuiMod_Shift | ImGuiKey_C,
+                 ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_C,
                  &is_map_document_active);
 
-  _add_menu_item(model, MenuAction::OpenSettings, ImGuiMod_Super | ImGuiKey_Comma);
+  _add_menu_item(model, MenuAction::OpenSettings, ImGuiMod_Shortcut | ImGuiKey_Comma);
 }
 
 void _init_view_menu(Model& model)
@@ -192,43 +204,43 @@ void _init_view_menu(Model& model)
                  MenuAction::CenterViewport,
                  ImGuiMod_Shift | ImGuiKey_Space,
                  &has_active_document);
-  _add_menu_item(model, MenuAction::ToggleGrid, ImGuiMod_Super | ImGuiKey_G);
+  _add_menu_item(model, MenuAction::ToggleGrid, ImGuiMod_Shortcut | ImGuiKey_G);
 
   _add_menu_item(model,
                  MenuAction::IncreaseZoom,
-                 ImGuiMod_Super | ImGuiKey_0,
+                 ImGuiMod_Shortcut | ImGuiKey_0,
                  &has_active_document);
   _add_menu_item(model,
                  MenuAction::DecreaseZoom,
-                 ImGuiMod_Super | ImGuiKey_9,
+                 ImGuiMod_Shortcut | ImGuiKey_9,
                  &is_viewport_zoom_out_possible);
   _add_menu_item(model, MenuAction::ResetZoom, &has_active_document);
 
   _add_menu_item(model,
                  MenuAction::IncreaseFontSize,
-                 ImGuiMod_Super | ImGuiMod_Shift | ImGuiKey_0,
+                 ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_0,
                  &can_increase_font_size);
   _add_menu_item(model,
                  MenuAction::DecreaseFontSize,
-                 ImGuiMod_Super | ImGuiMod_Shift | ImGuiKey_9,
+                 ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_9,
                  &can_decrease_font_size);
   _add_menu_item(model, MenuAction::ResetFontSize, &can_reset_font_size);
 
   _add_menu_item(model,
                  MenuAction::PanUp,
-                 ImGuiMod_Super | ImGuiMod_Shift | ImGuiKey_UpArrow,
+                 ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_UpArrow,
                  &has_active_document);
   _add_menu_item(model,
                  MenuAction::PanDown,
-                 ImGuiMod_Super | ImGuiMod_Shift | ImGuiKey_DownArrow,
+                 ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_DownArrow,
                  &has_active_document);
   _add_menu_item(model,
                  MenuAction::PanLeft,
-                 ImGuiMod_Super | ImGuiMod_Shift | ImGuiKey_LeftArrow,
+                 ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_LeftArrow,
                  &has_active_document);
   _add_menu_item(model,
                  MenuAction::PanRight,
-                 ImGuiMod_Super | ImGuiMod_Shift | ImGuiKey_RightArrow,
+                 ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_RightArrow,
                  &has_active_document);
 
   _add_menu_item(model, MenuAction::HighlightLayer, ImGuiKey_H, &is_map_document_active);
@@ -240,7 +252,7 @@ void _init_map_menu(Model& model)
   _add_menu_item(model, MenuAction::InspectMap, &is_map_document_active);
   _add_menu_item(model,
                  MenuAction::CreateTileset,
-                 ImGuiMod_Super | ImGuiKey_T,
+                 ImGuiMod_Shortcut | ImGuiKey_T,
                  &is_map_document_active);
 
   _add_menu_item(model,
