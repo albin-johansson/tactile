@@ -28,6 +28,7 @@
 #include "model/settings.hpp"
 #include "model/systems/textures/gl_texture_system.hpp"
 #include "model/systems/textures/null_texture_system.hpp"
+#include "model/systems/textures/vk_texture_system.hpp"
 #include "model/systems/tools/bucket_tool.hpp"
 #include "model/systems/tools/stamp_tool.hpp"
 #include "ui/widget_state.hpp"
@@ -56,6 +57,10 @@ void init_model(Model& model, const BackendAPI api)
   else if (api == BackendAPI::OpenGL) {
     texture_callbacks.init = &sys::on_init_gl_texture;
     texture_callbacks.destroy = &sys::on_destroy_gl_texture;
+  }
+  else if (api == BackendAPI::Vulkan) {
+    texture_callbacks.init = &sys::on_init_vk_texture;
+    texture_callbacks.destroy = &sys::on_destroy_vk_texture;
   }
 
   auto& tool_context = model.add<ToolContext>();

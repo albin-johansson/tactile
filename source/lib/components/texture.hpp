@@ -70,9 +70,9 @@ struct OpenGLTexture final {
 
 /// Component featured by Vulkan texture entities.
 struct VulkanTexture final {
-  // TODO VkImage image {};
-  // TODO VkImageView view {};
-  // TODO VkDescriptorSet imgui_descriptor_set {};
+  void* image {};           ///< Associated VkImage.
+  void* view {};            ///< Associated VkImageView.
+  void* descriptor_set {};  ///< Associated VkDescriptorSet obtained from Dear ImGui.
 };
 
 }  // namespace tactile

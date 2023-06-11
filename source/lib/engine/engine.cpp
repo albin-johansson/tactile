@@ -28,6 +28,7 @@
 
 #include "backend/gl/gl_backend.hpp"
 #include "backend/null/null_backend.hpp"
+#include "backend/vk/vk_backend.hpp"
 #include "common/debug/assert.hpp"
 #include "common/debug/logging.hpp"
 #include "common/debug/stacktrace.hpp"
@@ -75,6 +76,11 @@ Engine::Engine(const BackendAPI api)
 
     auto& gl_context = mSDL->get_gl_context();
     mBackend = std::make_unique<OpenGLBackend>(window.get(), gl_context.get());
+  }
+  else if (mAPI == BackendAPI::Vulkan) {
+    spdlog::debug("[Engine] Initializing Vulkan backend");
+
+    mBackend = std::make_unique<VulkanBackend>(window.get());
   }
 
   spdlog::debug("[IO] Persistent file directory: {}", get_persistent_file_dir());

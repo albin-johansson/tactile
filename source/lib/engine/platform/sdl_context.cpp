@@ -21,6 +21,7 @@
 
 #include <utility>  // move
 
+#include <SDL2/SDL_vulkan.h>
 #include <fmt/format.h>
 #include <glad/glad.h>
 #include <spdlog/spdlog.h>
@@ -95,10 +96,19 @@ SDLContext::SDLContext(const BackendAPI api)
   if (api == BackendAPI::OpenGL) {
     _init_sdl_opengl_attributes();
   }
+  else if (api == BackendAPI::Vulkan) {
+    if (SDL_Vulkan_LoadLibrary(nullptr) == -1) {
+      throw TactileError {
+          fmt::format("Could not load Vulkan library: {}", SDL_GetError())};
+    }
+  }
 
   auto window_flags = kBaseWindowFlags;
   if (api == BackendAPI::OpenGL) {
     window_flags |= cen::window::opengl;
+  }
+  else if (api == BackendAPI::Vulkan) {
+    window_flags |= cen::window::vulkan;
   }
 
   auto& window = mWindow.emplace("Tactile", cen::window::default_size(), window_flags);
