@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "add_property.hpp"
+#include "create_property.hpp"
 
 #include <utility>  // move
 
@@ -28,10 +28,10 @@
 
 namespace tactile::cmd {
 
-AddProperty::AddProperty(Model* model,
-                         const Entity context_entity,
-                         String name,
-                         const AttributeType type)
+CreateProperty::CreateProperty(Model* model,
+                               const Entity context_entity,
+                               String name,
+                               const AttributeType type)
     : mModel {model},
       mContextEntity {context_entity},
       mName {std::move(name)},
@@ -40,7 +40,7 @@ AddProperty::AddProperty(Model* model,
   TACTILE_ASSERT(sys::is_context_entity(*mModel, mContextEntity));
 }
 
-void AddProperty::undo()
+void CreateProperty::undo()
 {
   auto& model = *mModel;
 
@@ -48,7 +48,7 @@ void AddProperty::undo()
   erase_from(context.props, mName);
 }
 
-void AddProperty::redo()
+void CreateProperty::redo()
 {
   auto& model = *mModel;
 
@@ -56,7 +56,7 @@ void AddProperty::redo()
   context.props[mName].reset_to_default(mType);
 }
 
-auto AddProperty::get_name() const -> String
+auto CreateProperty::get_name() const -> String
 {
   const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.add_property;

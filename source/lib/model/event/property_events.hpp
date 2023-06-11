@@ -25,18 +25,25 @@
 
 namespace tactile {
 
-struct ShowNewPropertyDialogEvent final {};
-
-struct ShowChangePropertyTypeDialogEvent final {
-  String name;
-  AttributeType current_type {};
+struct ShowNewPropertyDialogEvent final {
+  Entity context {kNullEntity};  ///< The target context.
 };
 
 struct ShowRenamePropertyDialogEvent final {
-  String current_name;
+  Entity context {kNullEntity};  ///< The target context.
+  String property_name;          ///< The current property name.
 };
 
-struct AddPropertyEvent final {
+struct ShowSetPropertyTypeDialogEvent final {
+  Entity context {kNullEntity};  ///< The target context.
+  String property_name;          ///< The name of the target property.
+};
+
+struct InspectContextEvent final {
+  Entity context {kNullEntity};  ///< Target context.
+};
+
+struct CreatePropertyEvent final {
   Entity context {kNullEntity};  ///< Target context.
   String name;                   ///< The property name.
   AttributeType type {};         ///< The property type.
@@ -59,14 +66,10 @@ struct UpdatePropertyEvent final {
   Attribute value;               ///< Updated value of the property.
 };
 
-struct ChangePropertyTypeEvent final {
+struct SetPropertyTypeEvent final {
   Entity context {kNullEntity};  ///< Target context.
   String name;                   ///< Name of property to modify.
   AttributeType type {};         ///< Requested new property type.
-};
-
-struct InspectContextEvent final {
-  Entity context {kNullEntity};  ///< Target context.
 };
 
 }  // namespace tactile

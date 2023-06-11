@@ -19,14 +19,29 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
+#include "cmd/command.hpp"
+#include "common/enum/attribute_type.hpp"
 #include "common/type/ecs.hpp"
+#include "common/type/string.hpp"
 #include "model/model.hpp"
 
-namespace tactile::ui {
+namespace tactile::cmd {
 
-void open_add_property_dialog(Entity context_entity);
+class CreateProperty final : public Command {
+ public:
+  CreateProperty(Model* model, Entity context_entity, String name, AttributeType type);
 
-void update_add_property_dialog(const Model& model, Dispatcher& dispatcher);
+  void undo() override;
 
-}  // namespace tactile::ui
+  void redo() override;
+
+  [[nodiscard]] auto get_name() const -> String override;
+
+ private:
+  Model* mModel;
+  Entity mContextEntity;
+  String mName;
+  AttributeType mType;
+};
+
+}  // namespace tactile::cmd

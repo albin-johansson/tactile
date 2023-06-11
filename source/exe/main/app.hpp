@@ -32,6 +32,7 @@
 #include "model/event/map_events.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/event/object_events.hpp"
+#include "model/event/property_events.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
@@ -195,6 +196,17 @@ class App final : public AppDelegate {
   void _on_detach_component(const DetachComponentEvent& event);
   void _on_reset_attached_component(const ResetAttachedComponentEvent& event);
   void _on_update_attached_component(const UpdateAttachedComponentEvent& event);
+
+  // Property events
+  void _on_show_new_property_dialog(const ShowNewPropertyDialogEvent& event);
+  void _on_show_rename_property_dialog(const ShowRenamePropertyDialogEvent& event);
+  void _on_show_set_property_type_dialog(const ShowSetPropertyTypeDialogEvent& event);
+  void _on_inspect_context(const InspectContextEvent& event);
+  void _on_create_property(const CreatePropertyEvent& event);
+  void _on_remove_property(const RemovePropertyEvent& event);
+  void _on_rename_property(const RenamePropertyEvent& event);
+  void _on_update_property(const UpdatePropertyEvent& event);
+  void _on_set_property_type(const SetPropertyTypeEvent& event);
 };
 
 }  // namespace tactile

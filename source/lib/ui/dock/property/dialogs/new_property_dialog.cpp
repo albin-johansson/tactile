@@ -17,39 +17,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "rename_property_dialog.hpp"
+#include "new_property_dialog.hpp"
 
 #include <imgui.h>
 
 #include "components/context.hpp"
 #include "components/document.hpp"
 #include "model/event/property_events.hpp"
+#include "model/model.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
+#include "ui/widget/attribute_widgets.hpp"
 
 namespace tactile::ui {
 
-void push_rename_property_dialog(const Model& model,
-                                 RenamePropertyDialogState& state,
-                                 Dispatcher& dispatcher)
+void push_new_property_dialog(const Model& model,
+                              NewPropertyDialogState& state,
+                              Dispatcher& dispatcher)
 {
   const auto document_entity = sys::get_active_document(model);
   const auto& document = model.get<Document>(document_entity);
 
   if (document.active_context != state.context) {
     state.context = kNullEntity;
-    state.old_name.clear();
-    state.name_buffer.clear();
     state.should_open = false;
     return;
   }
 
   const auto& strings = sys::get_current_language_strings(model);
   DialogOptions dialog_options {
-      .title = strings.window.rename_property.c_str(),
+      .title = strings.window.add_property.c_str(),
       .close_label = strings.misc.cancel.c_str(),
-      .accept_label = strings.misc.rename.c_str(),
+      .accept_label = strings.misc.add.c_str(),
   };
 
   if (state.should_open) {
@@ -70,12 +70,15 @@ void push_rename_property_dialog(const Model& model,
                              strings.misc.property_name_hint.c_str(),
                              state.name_buffer.data(),
                              state.name_buffer.size_bytes());
+    if (const auto new_type = push_attribute_type_combo(strings, state.property_type)) {
+      state.property_type = *new_type;
+    }
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<RenamePropertyEvent>(state.context,
-                                            state.old_name,
-                                            state.name_buffer.as_string());
+    dispatcher.enqueue<CreatePropertyEvent>(state.context,
+                                            state.name_buffer.as_string(),
+                                            state.property_type);
     state.context = kNullEntity;
   }
 }

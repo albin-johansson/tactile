@@ -192,6 +192,18 @@ auto get_active_document(const Model& model) -> Entity
   return document_context.active_document;
 }
 
+auto get_active_context(const Model& model) -> Entity
+{
+  const auto document_entity = get_active_document(model);
+
+  if (document_entity != kNullEntity) {
+    const auto& document = model.get<Document>(document_entity);
+    return document.active_context;
+  }
+
+  return kNullEntity;
+}
+
 auto get_active_map(const Model& model) -> Entity
 {
   const auto document_entity = get_active_document(model);
