@@ -21,28 +21,17 @@
 
 #include <vulkan/vulkan.h>
 
-#include "common/primitives.hpp"
-#include "common/debug/panic.hpp"
+#include "backend/vk/vk_common.hpp"
+#include "common/type/ptr.hpp"
 
 namespace tactile::vk {
 
-inline constexpr uint32 kVulkanApiVersion = VK_API_VERSION_1_2;
-
-inline constexpr usize kMaxFramesInFlight = 2;
-
-/// Names of the validations layers we use.
-inline constexpr const char* kValidationLayerNames[] {
-    "VK_LAYER_KHRONOS_validation",
+struct DeviceDeleter final {
+  void operator()(VkDevice device) noexcept;
 };
 
-/// Names of the extensions that the Vulkan implementation must provide.
-inline constexpr const char* kRequiredDeviceExtensions[] {
-    VK_KHR_SWAPCHAIN_EXTENSION_NAME,
-#ifdef TACTILE_USE_VULKAN_SUBSET
-    "VK_KHR_portability_subset",
-#endif  // TACTILE_USE_VULKAN_SUBSET
-};
+using UniqueDevice = Unique<VkDevice_T, DeviceDeleter>;
 
-using GPU = VkPhysicalDevice;
+[[nodiscard]] auto create_device(GPU gpu, VkSurfaceKHR surface) -> UniqueDevice;
 
 }  // namespace tactile::vk

@@ -21,13 +21,12 @@
 
 #include <vulkan/vulkan.h>
 
+#include "backend/vk/vk_common.hpp"
 #include "common/primitives.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/vector.hpp"
 
 namespace tactile::vk {
-
-using GPU = VkPhysicalDevice;
 
 struct QueueFamilyIndices final {
   Maybe<uint32> graphics_family;

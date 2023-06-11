@@ -21,7 +21,6 @@
 
 #include <algorithm>  // max_element
 
-#include "backend/vk/vk_common.hpp"
 #include "backend/vk/vk_context.hpp"
 #include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
