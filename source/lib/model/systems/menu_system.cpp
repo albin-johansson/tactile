@@ -180,10 +180,22 @@ void _init_edit_menu(Model& model)
                  ImGuiMod_Shortcut | ImGuiKey_Y,
                  &is_redo_possible);
 
-  // TODO tool validation functions
-  // TODO these items should have Shortcut updates in the editor dock
-  _add_menu_item(model, MenuAction::EnableStamp, ImGuiKey_S, &is_stamp_tool_available);
-  _add_menu_item(model, MenuAction::EnableBucket, ImGuiKey_B, &is_bucket_tool_available);
+  auto add_item_with_dummy_shortcut = [&](const MenuAction action,
+                                          const ImGuiKeyChord chord,
+                                          MenuItemEnabledFn enabled_fn) {
+    const auto item_entity = _add_menu_item(model, action, std::move(enabled_fn));
+    auto& item = model.get<MenuItem>(item_entity);
+    item.shortcut_label = _to_shortcut_label(chord);
+  };
+
+  add_item_with_dummy_shortcut(MenuAction::EnableStamp,
+                               ImGuiKey_S,
+                               &is_stamp_tool_available);
+  add_item_with_dummy_shortcut(MenuAction::EnableBucket,
+                               ImGuiKey_B,
+                               &is_bucket_tool_available);
+
+  // TODO include shortcuts
   _add_menu_item(model, MenuAction::EnableEraser);
   _add_menu_item(model, MenuAction::EnableObjectSelector);
   _add_menu_item(model, MenuAction::EnableRectangle);
