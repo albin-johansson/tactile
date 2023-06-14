@@ -22,6 +22,7 @@
 #include <fmt/format.h>
 
 #include "common/debug/panic.hpp"
+#include "common/util/numeric.hpp"
 
 namespace tactile {
 
@@ -387,6 +388,56 @@ auto Attribute::as_color() const -> const color_type&
   else {
     throw TactileError {"Attribute was not a color"};
   }
+}
+
+auto get_first_different_vector_dimension(const Attribute& a, const Attribute& b)
+    -> Maybe<usize>
+{
+  auto compare = [](const auto& vec1, const auto& vec2) -> Maybe<usize> {
+    const auto mask = compare_vector_components(vec1, vec2);
+
+    if (!(mask & kVectorXBit)) {
+      return 0;
+    }
+    else if (!(mask & kVectorYBit)) {
+      return 1;
+    }
+    else if (!(mask & kVectorZBit)) {
+      return 2;
+    }
+    else if (!(mask & kVectorWBit)) {
+      return 3;
+    }
+
+    return nothing;
+  };
+
+  if (a.is_any_vector() && a.get_type() == b.get_type()) {
+    switch (a.get_type()) {
+      case AttributeType::Int2:
+        return compare(a.as_int2(), b.as_int2());
+
+      case AttributeType::Int3:
+        return compare(a.as_int3(), b.as_int3());
+
+      case AttributeType::Int4:
+        return compare(a.as_int4(), b.as_int4());
+
+      case AttributeType::Float2:
+        return compare(a.as_float2(), b.as_float2());
+
+      case AttributeType::Float3:
+        return compare(a.as_float3(), b.as_float3());
+
+      case AttributeType::Float4:
+        return compare(a.as_float4(), b.as_float4());
+
+      default:
+        break;
+    }
+  }
+
+  return nothing;
 }
 
 auto operator<<(OStream& stream, const Attribute& value) -> OStream&

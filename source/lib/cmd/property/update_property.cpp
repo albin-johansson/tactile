@@ -48,6 +48,7 @@ void UpdateProperty::undo()
   auto& context = model.get<Context>(mContextEntity);
   context.props[mName] = mOldValue.value();
 
+  mUpdatedVectorComponentIndex.reset();
   mOldValue.reset();
 }
 
@@ -57,6 +58,12 @@ void UpdateProperty::redo()
   auto& context = model.get<Context>(mContextEntity);
 
   mOldValue = lookup_in(context.props, mName);
+
+  if (mNewValue.is_any_vector()) {
+    mUpdatedVectorComponentIndex =
+        get_first_different_vector_dimension(mNewValue, *mOldValue);
+  }
+
   context.props[mName] = mNewValue;
 }
 
@@ -64,6 +71,13 @@ auto UpdateProperty::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const UpdateProperty*>(cmd)) {
     if (mContextEntity == other->mContextEntity && mName == other->mName) {
+      // We don't want to merge updates to different components of vector properties
+      if (mNewValue.is_any_vector() &&
+          mNewValue.get_type() == other->mNewValue.get_type() &&
+          mUpdatedVectorComponentIndex != other->mUpdatedVectorComponentIndex) {
+        return false;
+      }
+
       mNewValue = other->mNewValue;
       return true;
     }
