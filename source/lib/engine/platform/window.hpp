@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <centurion/window.hpp>
+#include <centurion/video/window.hpp>
 
 namespace tactile {
 

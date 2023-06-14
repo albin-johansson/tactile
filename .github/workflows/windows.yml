@@ -5,7 +5,6 @@ on: [ push ]
 env:
   VCPKG_ROOT: ${{github.workspace}}\vcpkg
   VCPKG_TARGET_TRIPLET: x64-windows-static-md
-  VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}\vcpkg\bincache
   VCPKG_CACHE_EDITION: 1
 
 jobs:
@@ -14,7 +13,11 @@ jobs:
     if: contains(github.event.head_commit.message, '[skip-ci]') == false
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
       - uses: ilammy/msvc-dev-cmd@v1.11.0
+
       - uses: lukka/get-cmake@latest
 
       - name: Cache Vcpkg
@@ -35,10 +38,6 @@ jobs:
           git clone https://github.com/microsoft/vcpkg
           .\vcpkg\bootstrap-vcpkg.bat -disableMetrics
           .\vcpkg\vcpkg integrate install
-
-      - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
-        if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
-        run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
       - name: Generate build files
         run: |

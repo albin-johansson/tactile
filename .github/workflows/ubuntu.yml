@@ -4,7 +4,6 @@ on: [ push ]
 
 env:
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
-  VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
   VCPKG_CACHE_EDITION: 1
 
 jobs:
@@ -13,7 +12,11 @@ jobs:
     if: contains(github.event.head_commit.message, '[skip-ci]') == false
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
       - uses: lukka/get-cmake@latest
+
       - name: Install system dependencies
         run: |
           sudo apt update
@@ -47,10 +50,6 @@ jobs:
           git clone https://github.com/microsoft/vcpkg
           ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
           sudo ./vcpkg/vcpkg integrate install
-
-      - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
-        if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
-        run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
       - name: Generate build files
         run: |

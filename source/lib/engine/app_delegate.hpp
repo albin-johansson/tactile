@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <centurion/event.hpp>
+#include <centurion/events/event_handler.hpp>
 
 #include "common/enum/backend_api.hpp"
 

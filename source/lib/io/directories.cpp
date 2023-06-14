@@ -21,7 +21,7 @@
 
 #include <cstdlib>  // system
 
-#include <centurion/filesystem.hpp>
+#include <centurion/io/paths.hpp>
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 

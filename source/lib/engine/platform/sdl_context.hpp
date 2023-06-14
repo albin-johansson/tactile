@@ -20,8 +20,8 @@
 #pragma once
 
 #include <centurion/initialization.hpp>
-#include <centurion/opengl.hpp>
-#include <centurion/window.hpp>
+#include <centurion/video/opengl.hpp>
+#include <centurion/video/window.hpp>
 
 #include "common/enum/backend_api.hpp"
 #include "common/type/maybe.hpp"

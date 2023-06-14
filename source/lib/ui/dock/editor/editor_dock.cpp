@@ -19,8 +19,8 @@
 
 #include "editor_dock.hpp"
 
-#include <centurion/keyboard.hpp>
-#include <centurion/mouse_events.hpp>
+#include <centurion/events/mouse_events.hpp>
+#include <centurion/input/keyboard.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 
