@@ -23,7 +23,6 @@
 #include <fmt/format.h>
 
 #include "backend/vk/vk_context.hpp"
-#include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
 
 namespace tactile::vk {
@@ -33,12 +32,10 @@ void SurfaceDeleter::operator()(VkSurfaceKHR surface) noexcept
   vkDestroySurfaceKHR(get_global_instance(), surface, nullptr);
 }
 
-auto create_surface(SDL_Window* window) -> UniqueSurface
+auto create_surface(VkInstance instance, SDL_Window* window) -> UniqueSurface
 {
-  TACTILE_ASSERT(get_global_instance() != nullptr);
-
   VkSurfaceKHR surface = VK_NULL_HANDLE;
-  if (!SDL_Vulkan_CreateSurface(window, get_global_instance(), &surface)) {
+  if (!SDL_Vulkan_CreateSurface(window, instance, &surface)) {
     throw TactileError {
         fmt::format("Could not create Vulkan surface: {}", SDL_GetError())};
   }

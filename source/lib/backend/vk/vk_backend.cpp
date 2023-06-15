@@ -22,15 +22,46 @@
 #include <imgui_impl_sdl2.h>
 #include <imgui_impl_vulkan.h>
 
+#include "backend/vk/vk_context.hpp"
+#include "common/debug/panic.hpp"
 
 namespace tactile {
 
 VulkanBackend::VulkanBackend(SDL_Window* window)
+    : mInstance {vk::create_instance(window)},
+      mSurface {vk::create_surface(mInstance.get(), window)},
+      mGPU {vk::get_suitable_gpu(mInstance.get(), mSurface.get())},
+      mDevice {vk::create_device(mGPU, mSurface.get())},
+      mAllocator {vk::create_allocator(mInstance.get(), mGPU, mDevice.get())}
 {
+  vk::set_global_instance(mInstance.get());
+  vk::set_global_device(mDevice.get());
+  vk::set_global_allocator(mAllocator.get());
+
+  {
+    const auto indices = vk::get_queue_family_indices(mGPU, mSurface.get());
+    vkGetDeviceQueue(mDevice.get(), indices.graphics_family.value(), 0, &mGraphicsQueue);
+    vkGetDeviceQueue(mDevice.get(), indices.present_family.value(), 0, &mPresentQueue);
+  }
+
+  if (!ImGui_ImplSDL2_InitForVulkan(window)) {
+    throw TactileError {"Could not initialize ImGui SDL2 backend"};
+  }
+
+  ImGui_ImplVulkan_InitInfo init_info = {};
+  init_info.Instance = mInstance.get();
+  VkRenderPass render_pass = VK_NULL_HANDLE;
+
+  if (!ImGui_ImplVulkan_Init(&init_info, render_pass)) {
+    ImGui_ImplSDL2_Shutdown();
+    throw TactileError {"Could not initialize ImGui Vulkan backend"};
+  }
 }
 
 VulkanBackend::~VulkanBackend() noexcept
 {
+  ImGui_ImplVulkan_Shutdown();
+  ImGui_ImplSDL2_Shutdown();
 }
 
 void VulkanBackend::process_event(const SDL_Event* event)

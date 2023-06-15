@@ -22,6 +22,11 @@
 #include <SDL2/SDL.h>
 
 #include "backend/backend.hpp"
+#include "backend/vk/vk_allocator.hpp"
+#include "backend/vk/vk_device.hpp"
+#include "backend/vk/vk_gpu.hpp"
+#include "backend/vk/vk_instance.hpp"
+#include "backend/vk/vk_surface.hpp"
 
 namespace tactile {
 
@@ -40,6 +45,13 @@ class VulkanBackend final : public Backend {
   [[nodiscard]] auto can_reload_fonts() const -> bool override;
 
  private:
+  vk::UniqueInstance mInstance;
+  vk::UniqueSurface mSurface;
+  VkGPU mGPU;
+  vk::UniqueDevice mDevice;
+  vk::UniqueAllocator mAllocator;
+  VkQueue mGraphicsQueue {VK_NULL_HANDLE};
+  VkQueue mPresentQueue {VK_NULL_HANDLE};
 };
 
 }  // namespace tactile

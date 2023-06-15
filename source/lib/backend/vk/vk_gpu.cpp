@@ -21,8 +21,6 @@
 
 #include <algorithm>  // max_element
 
-#include "backend/vk/vk_context.hpp"
-#include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/set.hpp"
@@ -30,7 +28,7 @@
 namespace tactile::vk {
 namespace {
 
-[[nodiscard]] auto _rate_gpu(GPU gpu) -> int
+[[nodiscard]] auto _rate_gpu(VkGPU gpu) -> int
 {
   VkPhysicalDeviceProperties properties;
   vkGetPhysicalDeviceProperties(gpu, &properties);
@@ -48,7 +46,7 @@ namespace {
   return score;
 }
 
-[[nodiscard]] auto _has_required_extensions(GPU gpu) -> bool
+[[nodiscard]] auto _has_required_extensions(VkGPU gpu) -> bool
 {
   Set<String> missing_extensions {std::begin(kRequiredDeviceExtensions),
                                   std::end(kRequiredDeviceExtensions)};
@@ -61,7 +59,7 @@ namespace {
   return missing_extensions.empty();
 }
 
-[[nodiscard]] auto _is_gpu_suitable(GPU gpu, VkSurfaceKHR surface) -> bool
+[[nodiscard]] auto _is_gpu_suitable(VkGPU gpu, VkSurfaceKHR surface) -> bool
 {
   const auto has_extensions = _has_required_extensions(gpu);
   if (!has_extensions) {
@@ -89,15 +87,12 @@ namespace {
 
 }  // namespace
 
-auto get_available_gpus() -> Vector<GPU>
+auto get_available_gpus(VkInstance instance) -> Vector<VkGPU>
 {
-  VkInstance instance = get_global_instance();
-  TACTILE_ASSERT(instance != nullptr);
-
   uint32 gpu_count = 0;
   vkEnumeratePhysicalDevices(instance, &gpu_count, nullptr);
 
-  Vector<GPU> gpus;
+  Vector<VkGPU> gpus;
   gpus.resize(gpu_count);
 
   vkEnumeratePhysicalDevices(instance, &gpu_count, gpus.data());
@@ -105,7 +100,7 @@ auto get_available_gpus() -> Vector<GPU>
   return gpus;
 }
 
-auto get_extensions(GPU gpu) -> Vector<VkExtensionProperties>
+auto get_extensions(VkGPU gpu) -> Vector<VkExtensionProperties>
 {
   uint32 extension_count = 0;
   vkEnumerateDeviceExtensionProperties(gpu, nullptr, &extension_count, nullptr);
@@ -118,7 +113,7 @@ auto get_extensions(GPU gpu) -> Vector<VkExtensionProperties>
   return extensions;
 }
 
-auto get_queue_families(GPU gpu) -> Vector<VkQueueFamilyProperties>
+auto get_queue_families(VkGPU gpu) -> Vector<VkQueueFamilyProperties>
 {
   uint32 family_count = 0;
   vkGetPhysicalDeviceQueueFamilyProperties(gpu, &family_count, nullptr);
@@ -131,7 +126,7 @@ auto get_queue_families(GPU gpu) -> Vector<VkQueueFamilyProperties>
   return families;
 }
 
-auto get_queue_family_indices(GPU gpu, VkSurfaceKHR surface) -> QueueFamilyIndices
+auto get_queue_family_indices(VkGPU gpu, VkSurfaceKHR surface) -> QueueFamilyIndices
 {
   QueueFamilyIndices indices;
 
@@ -156,7 +151,7 @@ auto get_queue_family_indices(GPU gpu, VkSurfaceKHR surface) -> QueueFamilyIndic
   return indices;
 }
 
-auto get_surface_formats(GPU gpu, VkSurfaceKHR surface) -> Vector<VkSurfaceFormatKHR>
+auto get_surface_formats(VkGPU gpu, VkSurfaceKHR surface) -> Vector<VkSurfaceFormatKHR>
 {
   uint32 format_count = 0;
   vkGetPhysicalDeviceSurfaceFormatsKHR(gpu, surface, &format_count, nullptr);
@@ -169,7 +164,7 @@ auto get_surface_formats(GPU gpu, VkSurfaceKHR surface) -> Vector<VkSurfaceForma
   return formats;
 }
 
-auto get_present_modes(GPU gpu, VkSurfaceKHR surface) -> Vector<VkPresentModeKHR>
+auto get_present_modes(VkGPU gpu, VkSurfaceKHR surface) -> Vector<VkPresentModeKHR>
 {
   uint32 present_mode_count = 0;
   vkGetPhysicalDeviceSurfacePresentModesKHR(gpu, surface, &present_mode_count, nullptr);
@@ -185,7 +180,7 @@ auto get_present_modes(GPU gpu, VkSurfaceKHR surface) -> Vector<VkPresentModeKHR
   return present_modes;
 }
 
-auto get_swapchain_support(GPU gpu, VkSurfaceKHR surface) -> SwapchainSupport
+auto get_swapchain_support(VkGPU gpu, VkSurfaceKHR surface) -> SwapchainSupport
 {
   SwapchainSupport support;
   vkGetPhysicalDeviceSurfaceCapabilitiesKHR(gpu, surface, &support.capabilities);
@@ -196,18 +191,16 @@ auto get_swapchain_support(GPU gpu, VkSurfaceKHR surface) -> SwapchainSupport
   return support;
 }
 
-auto get_suitable_gpu(VkSurfaceKHR surface) -> GPU
+auto get_suitable_gpu(VkInstance instance, VkSurfaceKHR surface) -> VkGPU
 {
-  TACTILE_ASSERT(get_global_instance() != nullptr);
-
-  const auto gpus = get_available_gpus();
+  const auto gpus = get_available_gpus(instance);
 
   if (gpus.empty()) {
     throw TactileError {"No available GPUs with Vulkan support"};
   }
 
   // Rate available GPUs and select the best one
-  HashMap<GPU, int> gpu_scores;
+  HashMap<VkGPU, int> gpu_scores;
   gpu_scores.reserve(gpus.size());
 
   for (const auto& gpu: gpus) {

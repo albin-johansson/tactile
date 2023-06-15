@@ -22,7 +22,7 @@
 #include <vk_mem_alloc.h>
 #include <vulkan/vulkan.h>
 
-#include "backend/vk/vk_gpu.hpp"
+#include "backend/vk/vk_common.hpp"
 #include "common/type/ptr.hpp"
 
 namespace tactile::vk {
@@ -33,7 +33,7 @@ struct AllocatorDeleter final {
 
 using UniqueAllocator = Unique<VmaAllocator_T, AllocatorDeleter>;
 
-[[nodiscard]] auto create_allocator(VkInstance instance, GPU gpu, VkDevice device)
+[[nodiscard]] auto create_allocator(VkInstance instance, VkGPU gpu, VkDevice device)
     -> UniqueAllocator;
 
 }  // namespace tactile::vk

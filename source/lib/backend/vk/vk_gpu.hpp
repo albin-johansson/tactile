@@ -39,24 +39,24 @@ struct SwapchainSupport final {
   Vector<VkPresentModeKHR> present_modes;
 };
 
-[[nodiscard]] auto get_available_gpus() -> Vector<GPU>;
+[[nodiscard]] auto get_available_gpus(VkInstance instance) -> Vector<VkGPU>;
 
-[[nodiscard]] auto get_extensions(GPU gpu) -> Vector<VkExtensionProperties>;
+[[nodiscard]] auto get_extensions(VkGPU gpu) -> Vector<VkExtensionProperties>;
 
-[[nodiscard]] auto get_queue_families(GPU gpu) -> Vector<VkQueueFamilyProperties>;
+[[nodiscard]] auto get_queue_families(VkGPU gpu) -> Vector<VkQueueFamilyProperties>;
 
-[[nodiscard]] auto get_queue_family_indices(GPU gpu, VkSurfaceKHR surface)
+[[nodiscard]] auto get_queue_family_indices(VkGPU gpu, VkSurfaceKHR surface)
     -> QueueFamilyIndices;
 
-[[nodiscard]] auto get_surface_formats(GPU gpu, VkSurfaceKHR surface)
+[[nodiscard]] auto get_surface_formats(VkGPU gpu, VkSurfaceKHR surface)
     -> Vector<VkSurfaceFormatKHR>;
 
-[[nodiscard]] auto get_present_modes(GPU gpu, VkSurfaceKHR surface)
+[[nodiscard]] auto get_present_modes(VkGPU gpu, VkSurfaceKHR surface)
     -> Vector<VkPresentModeKHR>;
 
-[[nodiscard]] auto get_swapchain_support(GPU gpu, VkSurfaceKHR surface)
+[[nodiscard]] auto get_swapchain_support(VkGPU gpu, VkSurfaceKHR surface)
     -> SwapchainSupport;
 
-[[nodiscard]] auto get_suitable_gpu(VkSurfaceKHR surface) -> GPU;
+[[nodiscard]] auto get_suitable_gpu(VkInstance instance, VkSurfaceKHR surface) -> VkGPU;
 
 }  // namespace tactile::vk

@@ -23,7 +23,6 @@
 #include <vk_mem_alloc.h>
 
 #include "backend/vk/vk_common.hpp"
-#include "backend/vk/vk_context.hpp"
 #include "backend/vk/vk_error.hpp"
 
 namespace tactile::vk {
@@ -33,7 +32,7 @@ void AllocatorDeleter::operator()(VmaAllocator allocator) noexcept
   vmaDestroyAllocator(allocator);
 }
 
-auto create_allocator(VkInstance instance, GPU gpu, VkDevice device) -> UniqueAllocator
+auto create_allocator(VkInstance instance, VkGPU gpu, VkDevice device) -> UniqueAllocator
 {
   VmaAllocatorCreateInfo alloc_info {};
   alloc_info.instance = instance;
@@ -46,7 +45,6 @@ auto create_allocator(VkInstance instance, GPU gpu, VkDevice device) -> UniqueAl
     throw VulkanError {"Could not create allocator", res};
   }
 
-  set_global_allocator(allocator);
   return UniqueAllocator {allocator};
 }
 

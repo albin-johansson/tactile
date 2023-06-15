@@ -32,6 +32,7 @@ struct SurfaceDeleter final {
 
 using UniqueSurface = Unique<VkSurfaceKHR_T, SurfaceDeleter>;
 
-[[nodiscard]] auto create_surface(SDL_Window* window) -> UniqueSurface;
+[[nodiscard]] auto create_surface(VkInstance instance, SDL_Window* window)
+    -> UniqueSurface;
 
 }  // namespace tactile::vk

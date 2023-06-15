@@ -32,6 +32,6 @@ struct DeviceDeleter final {
 
 using UniqueDevice = Unique<VkDevice_T, DeviceDeleter>;
 
-[[nodiscard]] auto create_device(GPU gpu, VkSurfaceKHR surface) -> UniqueDevice;
+[[nodiscard]] auto create_device(VkGPU gpu, VkSurfaceKHR surface) -> UniqueDevice;
 
 }  // namespace tactile::vk

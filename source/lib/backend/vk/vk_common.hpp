@@ -21,8 +21,10 @@
 
 #include <vulkan/vulkan.h>
 
-#include "common/primitives.hpp"
 #include "common/debug/panic.hpp"
+#include "common/primitives.hpp"
+
+using VkGPU = VkPhysicalDevice;
 
 namespace tactile::vk {
 
@@ -42,7 +44,5 @@ inline constexpr const char* kRequiredDeviceExtensions[] {
     "VK_KHR_portability_subset",
 #endif  // TACTILE_USE_VULKAN_SUBSET
 };
-
-using GPU = VkPhysicalDevice;
 
 }  // namespace tactile::vk

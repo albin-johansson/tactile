@@ -20,7 +20,6 @@
 #include "vk_device.hpp"
 
 #include "backend/vk/vk_common.hpp"
-#include "backend/vk/vk_context.hpp"
 #include "backend/vk/vk_error.hpp"
 #include "backend/vk/vk_gpu.hpp"
 #include "common/predef.hpp"
@@ -35,7 +34,7 @@ void DeviceDeleter::operator()(VkDevice device) noexcept
   vkDestroyDevice(device, nullptr);
 }
 
-auto create_device(GPU gpu, VkSurfaceKHR surface) -> UniqueDevice
+auto create_device(VkGPU gpu, VkSurfaceKHR surface) -> UniqueDevice
 {
   const auto queue_family_indices = get_queue_family_indices(gpu, surface);
 
@@ -77,7 +76,7 @@ auto create_device(GPU gpu, VkSurfaceKHR surface) -> UniqueDevice
   };
 
   if constexpr (kIsDebugBuild) {
-    device_info.enabledLayerCount = std::size(kValidationLayerNames);
+    device_info.enabledLayerCount = static_cast<uint32>(std::size(kValidationLayerNames));
     device_info.ppEnabledLayerNames = kValidationLayerNames;
   }
 
@@ -86,8 +85,6 @@ auto create_device(GPU gpu, VkSurfaceKHR surface) -> UniqueDevice
       res != VK_SUCCESS) {
     throw VulkanError {"Could not create Vulkan device", res};
   }
-
-  set_global_device(device);
 
   return UniqueDevice {device};
 }
