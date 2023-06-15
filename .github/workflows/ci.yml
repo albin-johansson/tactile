@@ -65,6 +65,8 @@ jobs:
   ubuntu-latest-ci:
     runs-on: ubuntu-latest
     if: contains(github.event.head_commit.message, '[skip-ci]') == false
+    env:
+      VCPKG_ROOT: ${{github.workspace}}/vcpkg
     steps:
       - uses: actions/checkout@v3
         with:
@@ -76,10 +78,38 @@ jobs:
           vulkan-query-version: 1.3.204.0
           vulkan-components: Vulkan-Headers, Vulkan-Loader
           vulkan-use-cache: true
+
+      - name: Restore Vcpkg artifacts
+        id: restore-vcpkg-artifacts
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{env.VCPKG_ROOT}}
+            !${{env.VCPKG_ROOT}}\buildtrees
+            !${{env.VCPKG_ROOT}}\packages
+            !${{env.VCPKG_ROOT}}\downloads
+            !${{env.VCPKG_ROOT}}\installed
+          key: tactile-ci-ubuntu-vcpkg-${{hashFiles('vcpkg.json')}}
+
+      - name: Install Vcpkg
+        if: steps.restore-vcpkg-artifacts.outputs.cache-hit != 'true'
+        run: |
+          git clone https://github.com/microsoft/vcpkg
+          ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
+
+      - name: Generate build files
+        run: |
+          mkdir build && cd build
+          cmake .. -GNinja \
+                   -DCMAKE_BUILD_TYPE=Debug \
+                   -DTACTILE_TREAT_WARNINGS_AS_ERRORS=ON
 
   windows-latest-ci:
     runs-on: windows-latest
     if: contains(github.event.head_commit.message, '[skip-ci]') == false
+    env:
+      VCPKG_ROOT: ${{github.workspace}}\vcpkg
+      VCPKG_TARGET_TRIPLET: x64-windows-static-md
     steps:
       - uses: actions/checkout@v3
         with:
@@ -91,3 +121,31 @@ jobs:
           vulkan-query-version: 1.3.204.0
           vulkan-components: Vulkan-Headers, Vulkan-Loader
           vulkan-use-cache: true
+
+      - name: Restore Vcpkg artifacts
+        id: restore-vcpkg-artifacts
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{env.VCPKG_ROOT}}
+            !${{env.VCPKG_ROOT}}\buildtrees
+            !${{env.VCPKG_ROOT}}\packages
+            !${{env.VCPKG_ROOT}}\downloads
+            !${{env.VCPKG_ROOT}}\installed
+          key: tactile-ci-windows-vcpkg-${{hashFiles('vcpkg.json')}}
+
+      - name: Install Vcpkg
+        if: steps.restore-vcpkg-artifacts.outputs.cache-hit != 'true'
+        run: |
+          git clone https://github.com/microsoft/vcpkg
+          .\vcpkg\bootstrap-vcpkg.bat -disableMetrics
+
+      - name: Generate build files
+        run: |
+          mkdir build
+          cd build
+          cmake .. -GNinja `
+                   -DCMAKE_BUILD_TYPE=Debug `
+                   -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} `
+                   -DTACTILE_TREAT_WARNINGS_AS_ERRORS=ON
+
