@@ -33,4 +33,6 @@ void on_bucket_tool_pressed(Model& model,
                             const ViewportMouseInfo& mouse,
                             Dispatcher& dispatcher);
 
+[[nodiscard]] auto is_bucket_tool_available(const Model& model) -> bool;
+
 }  // namespace tactile::sys

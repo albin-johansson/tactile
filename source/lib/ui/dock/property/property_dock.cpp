@@ -23,8 +23,6 @@
 
 #include <imgui.h>
 
-#include "common/type/uuid.hpp"
-#include "common/util/lookup.hpp"
 #include "components/context.hpp"
 #include "components/document.hpp"
 #include "components/layer.hpp"
@@ -44,9 +42,9 @@
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
-#include "ui/dock/property/dialogs/add_property_dialog.hpp"
-#include "ui/dock/property/dialogs/change_property_type_dialog.hpp"
+#include "ui/dock/property/dialogs/new_property_dialog.hpp"
 #include "ui/dock/property/dialogs/rename_property_dialog.hpp"
+#include "ui/dock/property/dialogs/set_property_type_dialog.hpp"
 #include "ui/filename_filter.hpp"
 #include "ui/widget/attribute_widgets.hpp"
 #include "ui/widget/scoped.hpp"
@@ -428,16 +426,11 @@ void _push_property_table(const Model& model,
                           PropertyDockState& state,
                           Dispatcher& dispatcher)
 {
-  const auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
-                     ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
+  const auto context_entity = sys::get_active_context(model);
 
-  const auto document_entity = sys::get_active_document(model);
-  const auto& document = model.get<Document>(document_entity);
-
-  const auto context_entity = document.get_active_context();
-  const auto& context = model.get<Context>(context_entity);
-
-  if (const Table table {"##PropertyTable", 2, flags}; table.is_open()) {
+  const auto table_flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
+                           ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
+  if (const Table table {"##PropertyTable", 2, table_flags}; table.is_open()) {
     if (model.has<Map>(context_entity)) {
       _push_native_map_properties(model, strings, context_entity, dispatcher);
     }
@@ -453,6 +446,8 @@ void _push_property_table(const Model& model,
     else if (model.has<Tile>(context_entity)) {
       _push_native_tile_properties(model, strings, context_entity, dispatcher);
     }
+
+    const auto& context = model.get<Context>(context_entity);
 
     bool is_item_context_open = false;
     _push_custom_properties(strings,
@@ -471,20 +466,20 @@ void _push_property_table(const Model& model,
   }
 
   if (state.context_state.show_add_dialog) {
-    dispatcher.enqueue<ShowNewPropertyDialogEvent>();
+    dispatcher.enqueue<ShowNewPropertyDialogEvent>(context_entity);
     state.context_state.show_add_dialog = false;
   }
 
   if (state.context_state.show_rename_dialog) {
-    dispatcher.enqueue<ShowRenamePropertyDialogEvent>(state.rename_target.value());
+    dispatcher.enqueue<ShowRenamePropertyDialogEvent>(context_entity,
+                                                      state.rename_target.value());
     state.rename_target.reset();
     state.context_state.show_rename_dialog = false;
   }
 
   if (state.context_state.show_change_type_dialog) {
-    const auto& target_name = state.change_type_target.value();
-    const auto type = lookup_in(context.props, target_name).get_type();
-    dispatcher.enqueue<ShowChangePropertyTypeDialogEvent>(target_name, type);
+    const auto& property_name = state.change_type_target.value();
+    dispatcher.enqueue<ShowSetPropertyTypeDialogEvent>(context_entity, property_name);
 
     state.change_type_target.reset();
     state.context_state.show_change_type_dialog = false;
@@ -520,9 +515,9 @@ void push_property_dock_widget(const Model& model,
   if (window.is_open()) {
     _push_property_table(model, strings, state, dispatcher);
 
-    update_add_property_dialog(model, dispatcher);
-    update_rename_property_dialog(model, dispatcher);
-    update_change_property_type_dialog(model, dispatcher);
+    push_new_property_dialog(model, state.new_property_dialog, dispatcher);
+    push_rename_property_dialog(model, state.rename_property_dialog, dispatcher);
+    push_set_property_type_dialog(model, state.set_property_type_dialog, dispatcher);
   }
 }
 

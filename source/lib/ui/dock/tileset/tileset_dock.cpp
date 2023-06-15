@@ -19,7 +19,7 @@
 
 #include "tileset_dock.hpp"
 
-#include <centurion/mouse_events.hpp>
+#include <centurion/events/mouse_events.hpp>
 #include <imgui.h>
 
 #include "components/document.hpp"

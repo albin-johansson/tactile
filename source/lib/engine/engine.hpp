@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <centurion/event.hpp>
-#include <centurion/keyboard.hpp>
+#include <centurion/input/keyboard.hpp>
 
 #include "backend/backend.hpp"
 #include "common/enum/backend_api.hpp"

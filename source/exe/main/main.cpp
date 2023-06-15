@@ -20,7 +20,7 @@
 #include <cstdlib>    // EXIT_SUCCESS, EXIT_FAILURE
 #include <exception>  // exception
 
-#include <centurion/message_box.hpp>
+#include <centurion/video/message_box.hpp>
 #include <fmt/format.h>
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>

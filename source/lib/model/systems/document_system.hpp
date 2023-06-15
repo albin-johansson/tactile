@@ -130,6 +130,15 @@ void set_document_name(Model& model, Entity document_entity, String name);
 [[nodiscard]] auto get_active_document(const Model& model) -> Entity;
 
 /**
+ * Returns the active context in the currently active document.
+ *
+ * \param model the associated model.
+ *
+ * \return a context entity or null.
+ */
+[[nodiscard]] auto get_active_context(const Model& model) -> Entity;
+
+/**
  * Returns the currently active map (if there is one).
  *
  * \param model the associated model.

@@ -1,0 +1,3 @@
+[submodule "vendor/centurion"]
+	path = vendor/centurion
+	url = https://github.com/albin-johansson/centurion

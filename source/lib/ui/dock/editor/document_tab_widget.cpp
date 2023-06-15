@@ -20,13 +20,17 @@
 #include "document_tab_widget.hpp"
 
 #include <imgui.h>
+#include <imgui_internal.h>
 
 #include "cmd/command_stack.hpp"
 #include "common/fmt/fmt_string.hpp"
 #include "components/document.hpp"
 #include "model/event/file_events.hpp"
+#include "model/event/tool_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/systems/document_system.hpp"
+#include "model/systems/tools/bucket_tool.hpp"
+#include "model/systems/tools/stamp_tool.hpp"
 #include "ui/dock/editor/central_map_viewport.hpp"
 #include "ui/dock/editor/central_tileset_viewport.hpp"
 #include "ui/style/icons.hpp"
@@ -70,6 +74,20 @@ void _push_document_tab(const Model& model,
                                   central_map_viewport_state,
                                   document_entity,
                                   dispatcher);
+
+        if (sys::is_stamp_tool_available(model) &&
+            ImGui::Shortcut(ImGuiKey_S,
+                            ImGuiKeyOwner_Any,
+                            ImGuiInputFlags_RouteFocused)) {
+          dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
+        }
+
+        if (sys::is_bucket_tool_available(model) &&
+            ImGui::Shortcut(ImGuiKey_B,
+                            ImGuiKeyOwner_Any,
+                            ImGuiInputFlags_RouteFocused)) {
+          dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
+        }
       }
 
       if (model.has<TilesetDocument>(document_entity)) {

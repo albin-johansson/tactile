@@ -303,6 +303,19 @@ class Attribute final {
   }
 };
 
+/**
+ * Returns the index of the first different dimension, if the attributes are vectors.
+ *
+ * \param a the first vector attribute.
+ * \param b the second vector attribute.
+ *
+ * \return 0 if X dimension differs, 1 for Y, 2 for Z, or 3 for W;
+ *         nothing if any of the attributes aren't vectors.
+ */
+[[nodiscard]] auto get_first_different_vector_dimension(const Attribute& a,
+                                                        const Attribute& b)
+    -> Maybe<usize>;
+
 /// Outputs an attribute to a stream for debugging purposes.
 auto operator<<(OStream& stream, const Attribute& value) -> OStream&;
 

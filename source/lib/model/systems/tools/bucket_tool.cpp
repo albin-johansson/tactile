@@ -27,23 +27,6 @@
 #include "model/systems/document_system.hpp"
 
 namespace tactile::sys {
-namespace {
-
-[[nodiscard]] auto _is_available(const Model& model) -> bool
-{
-  if (const auto* map = try_get_active_map(model)) {
-    if (map->active_tileset != kNullEntity &&  //
-        map->active_layer != kNullEntity &&    //
-        model.has<TileLayer>(map->active_layer)) {
-      const auto& attached_tileset = model.get<AttachedTileset>(map->active_tileset);
-      return attached_tileset.is_single_tile_selected();
-    }
-  }
-
-  return false;
-}
-
-}  // namespace
 
 auto create_bucket_tool(Model& model) -> Entity
 {
@@ -60,7 +43,8 @@ void on_bucket_tool_pressed(Model& model,
                             const ViewportMouseInfo& mouse,
                             Dispatcher& dispatcher)
 {
-  if (mouse.in_viewport && mouse.button == MouseButton::Left && _is_available(model)) {
+  if (mouse.in_viewport && mouse.button == MouseButton::Left &&
+      is_bucket_tool_available(model)) {
     const auto document_entity = sys::get_active_document(model);
 
     const auto& map_document = model.get<MapDocument>(document_entity);
@@ -74,6 +58,20 @@ void on_bucket_tool_pressed(Model& model,
 
     dispatcher.enqueue<FloodEvent>(map.active_layer, mouse.tile_pos, new_tile_id);
   }
+}
+
+auto is_bucket_tool_available(const Model& model) -> bool
+{
+  if (const auto* map = try_get_active_map(model)) {
+    if (map->active_tileset != kNullEntity &&  //
+        map->active_layer != kNullEntity &&    //
+        model.has<TileLayer>(map->active_layer)) {
+      const auto& attached_tileset = model.get<AttachedTileset>(map->active_tileset);
+      return attached_tileset.is_single_tile_selected();
+    }
+  }
+
+  return false;
 }
 
 }  // namespace tactile::sys

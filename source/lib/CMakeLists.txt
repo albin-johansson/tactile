@@ -23,7 +23,7 @@ target_include_directories(${TACTILE_LIB} PUBLIC ${PROJECT_SOURCE_DIR})
 
 tactile_target_include_system_directories(${TACTILE_LIB}
                                           SYSTEM PUBLIC
-                                          ${LIBRARY_DIR}/centurion
+                                          ${LIBRARY_DIR}/centurion/src
                                           ${LIBRARY_DIR}/fontawesome
                                           ${CPPCODEC_INCLUDE_DIRS}
                                           ${Stb_INCLUDE_DIR}

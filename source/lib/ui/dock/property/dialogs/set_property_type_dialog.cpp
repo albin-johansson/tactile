@@ -17,39 +17,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "rename_property_dialog.hpp"
+#include "set_property_type_dialog.hpp"
 
 #include <imgui.h>
 
-#include "components/context.hpp"
 #include "components/document.hpp"
 #include "model/event/property_events.hpp"
+#include "model/model.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
+#include "ui/widget/attribute_widgets.hpp"
 
 namespace tactile::ui {
 
-void push_rename_property_dialog(const Model& model,
-                                 RenamePropertyDialogState& state,
-                                 Dispatcher& dispatcher)
+void push_set_property_type_dialog(const Model& model,
+                                   SetPropertyTypeDialogState& state,
+                                   Dispatcher& dispatcher)
 {
+  const auto& strings = sys::get_current_language_strings(model);
+
   const auto document_entity = sys::get_active_document(model);
   const auto& document = model.get<Document>(document_entity);
 
   if (document.active_context != state.context) {
     state.context = kNullEntity;
-    state.old_name.clear();
-    state.name_buffer.clear();
     state.should_open = false;
     return;
   }
 
-  const auto& strings = sys::get_current_language_strings(model);
   DialogOptions dialog_options {
-      .title = strings.window.rename_property.c_str(),
+      .title = strings.window.change_property_type.c_str(),
       .close_label = strings.misc.cancel.c_str(),
-      .accept_label = strings.misc.rename.c_str(),
+      .accept_label = strings.misc.change.c_str(),
   };
 
   if (state.should_open) {
@@ -57,25 +57,27 @@ void push_rename_property_dialog(const Model& model,
     state.should_open = false;
   }
 
-  const auto& active_context = model.get<Context>(document.active_context);
-
-  if (const auto current_name = state.name_buffer.as_string_view();
-      !current_name.empty() && !active_context.props.contains(current_name)) {
+  if (state.current_type != state.old_type.value()) {
     dialog_options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
   DialogAction action {DialogAction::None};
   if (const ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
-    ImGui::InputTextWithHint("##Name",
-                             strings.misc.property_name_hint.c_str(),
-                             state.name_buffer.data(),
-                             state.name_buffer.size_bytes());
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted(strings.misc.type.c_str());
+
+    ImGui::SameLine();
+    if (const auto new_type = push_attribute_type_combo(strings,
+                                                        state.current_type,
+                                                        state.old_type.value())) {
+      state.current_type = *new_type;
+    }
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<RenamePropertyEvent>(state.context,
-                                            state.old_name,
-                                            state.name_buffer.as_string());
+    dispatcher.enqueue<SetPropertyTypeEvent>(state.context,
+                                             state.property_name.value(),
+                                             state.current_type);
     state.context = kNullEntity;
   }
 }

@@ -21,6 +21,7 @@
 
 #include "cmd/command.hpp"
 #include "common/attribute.hpp"
+#include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "model/model.hpp"
@@ -45,6 +46,7 @@ class UpdateProperty final : public Command {
   String mName;
   Attribute mNewValue;
   Maybe<Attribute> mOldValue;
+  Maybe<usize> mUpdatedVectorComponentIndex;
 };
 
 }  // namespace tactile::cmd

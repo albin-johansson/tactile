@@ -53,6 +53,7 @@
 #include "model/delegates/map_delegate.hpp"
 #include "model/delegates/menu_delegate.hpp"
 #include "model/delegates/object_delegate.hpp"
+#include "model/delegates/property_delegate.hpp"
 #include "model/delegates/settings_delegate.hpp"
 #include "model/delegates/tileset_delegate.hpp"
 #include "model/delegates/viewport_delegate.hpp"
@@ -67,6 +68,9 @@
 #include "ui/style/themes.hpp"
 #include "ui/ui.hpp"
 #include "ui/widget_state.hpp"
+
+// Shorthand used when connecting events to slot functions
+#define ROUTE(Event, Slot) mDispatcher.sink<Event>().connect<Slot>(this)
 
 namespace tactile {
 
@@ -89,136 +93,146 @@ void App::on_startup(const BackendAPI api)
 
 void App::_subscribe_to_events()
 {
-  // clang-format off
   // Command events
-  mDispatcher.sink<UndoEvent>().connect<&App::_on_undo>(this);
-  mDispatcher.sink<RedoEvent>().connect<&App::_on_redo>(this);
-  mDispatcher.sink<SetCommandCapacityEvent>().connect<&App::_on_set_command_capacity>(this);
+  ROUTE(UndoEvent, &App::_on_undo);
+  ROUTE(RedoEvent, &App::_on_redo);
+  ROUTE(SetCommandCapacityEvent, &App::_on_set_command_capacity);
 
   // File events
-  mDispatcher.sink<OpenDocumentEvent>().connect<&App::_on_open_document>(this);
-  mDispatcher.sink<CloseDocumentEvent>().connect<&App::_on_close_document>(this);
-  mDispatcher.sink<SelectDocumentEvent>().connect<&App::_on_select_document>(this);
-  mDispatcher.sink<SaveEvent>().connect<&App::_on_save>(this);
-  mDispatcher.sink<SaveAsEvent>().connect<&App::_on_save_as>(this);
-  mDispatcher.sink<ShowSaveAsDialogEvent>().connect<&App::_on_show_save_as_dialog>(this);
-  mDispatcher.sink<QuitEvent>().connect<&App::_on_quit>(this);
+  ROUTE(OpenDocumentEvent, &App::_on_open_document);
+  ROUTE(CloseDocumentEvent, &App::_on_close_document);
+  ROUTE(SelectDocumentEvent, &App::_on_select_document);
+  ROUTE(SaveEvent, &App::_on_save);
+  ROUTE(SaveAsEvent, &App::_on_save_as);
+  ROUTE(ShowSaveAsDialogEvent, &App::_on_show_save_as_dialog);
+  ROUTE(QuitEvent, &App::_on_quit);
 
   // Map events
-  mDispatcher.sink<ShowNewMapDialogEvent>().connect<&App::_on_show_new_map_dialog>(this);
-  mDispatcher.sink<ShowOpenMapDialogEvent>().connect<&App::_on_show_open_map_dialog>(this);
-  mDispatcher.sink<ShowResizeMapDialogEvent>().connect<&App::_on_show_resize_map_dialog>(this);
-  mDispatcher.sink<ShowGodotExportDialogEvent>().connect<&App::_on_show_godot_export_dialog>(this);
-  mDispatcher.sink<CreateMapEvent>().connect<&App::_on_create_map>(this);
-  mDispatcher.sink<OpenMapEvent>().connect<&App::_on_open_map>(this);
-  mDispatcher.sink<ResizeMapEvent>().connect<&App::_on_resize_map>(this);
-  mDispatcher.sink<AddRowEvent>().connect<&App::_on_add_row>(this);
-  mDispatcher.sink<AddColumnEvent>().connect<&App::_on_add_column>(this);
-  mDispatcher.sink<RemoveRowEvent>().connect<&App::_on_remove_row>(this);
-  mDispatcher.sink<RemoveColumnEvent>().connect<&App::_on_remove_column>(this);
-  mDispatcher.sink<FixTilesInMapEvent>().connect<&App::_on_fix_tiles_in_map>(this);
-  mDispatcher.sink<ExportAsGodotSceneEvent>().connect<&App::_on_export_as_godot_scene>(this);
-  mDispatcher.sink<InspectMapEvent>().connect<&App::_on_inspect_map>(this);
-  mDispatcher.sink<SetTileFormatEncodingEvent>().connect<&App::_on_set_tile_format_encoding>(this);
-  mDispatcher.sink<SetTileFormatCompressionEvent>().connect<&App::_on_set_tile_format_compression>(this);
-  mDispatcher.sink<SetZlibCompressionLevelEvent>().connect<&App::_on_set_zlib_compression_level>(this);
-  mDispatcher.sink<SetZstdCompressionLevelEvent>().connect<&App::_on_set_zstd_compression_level>(this);
+  ROUTE(ShowNewMapDialogEvent, &App::_on_show_new_map_dialog);
+  ROUTE(ShowOpenMapDialogEvent, &App::_on_show_open_map_dialog);
+  ROUTE(ShowResizeMapDialogEvent, &App::_on_show_resize_map_dialog);
+  ROUTE(ShowGodotExportDialogEvent, &App::_on_show_godot_export_dialog);
+  ROUTE(CreateMapEvent, &App::_on_create_map);
+  ROUTE(OpenMapEvent, &App::_on_open_map);
+  ROUTE(ResizeMapEvent, &App::_on_resize_map);
+  ROUTE(AddRowEvent, &App::_on_add_row);
+  ROUTE(AddColumnEvent, &App::_on_add_column);
+  ROUTE(RemoveRowEvent, &App::_on_remove_row);
+  ROUTE(RemoveColumnEvent, &App::_on_remove_column);
+  ROUTE(FixTilesInMapEvent, &App::_on_fix_tiles_in_map);
+  ROUTE(ExportAsGodotSceneEvent, &App::_on_export_as_godot_scene);
+  ROUTE(InspectMapEvent, &App::_on_inspect_map);
+  ROUTE(SetTileFormatEncodingEvent, &App::_on_set_tile_format_encoding);
+  ROUTE(SetTileFormatCompressionEvent, &App::_on_set_tile_format_compression);
+  ROUTE(SetZlibCompressionLevelEvent, &App::_on_set_zlib_compression_level);
+  ROUTE(SetZstdCompressionLevelEvent, &App::_on_set_zstd_compression_level);
 
   // Tileset events
-  mDispatcher.sink<ShowNewTilesetDialogEvent>().connect<&App::_on_show_new_tileset_dialog>(this);
-  mDispatcher.sink<CreateTilesetEvent>().connect<&App::_on_create_tileset>(this);
-  mDispatcher.sink<DetachTilesetEvent>().connect<&App::_on_detach_tileset>(this);
-  mDispatcher.sink<SelectTilesetEvent>().connect<&App::_on_select_tileset>(this);
-  mDispatcher.sink<SetTilesetSelectionEvent>().connect<&App::_on_set_tileset_selection>(this);
-  mDispatcher.sink<RenameTilesetEvent>().connect<&App::_on_rename_tileset>(this);
-  mDispatcher.sink<SelectTilesetTileEvent>().connect<&App::_on_select_tileset_tile>(this);
+  ROUTE(ShowNewTilesetDialogEvent, &App::_on_show_new_tileset_dialog);
+  ROUTE(CreateTilesetEvent, &App::_on_create_tileset);
+  ROUTE(DetachTilesetEvent, &App::_on_detach_tileset);
+  ROUTE(SelectTilesetEvent, &App::_on_select_tileset);
+  ROUTE(SetTilesetSelectionEvent, &App::_on_set_tileset_selection);
+  ROUTE(RenameTilesetEvent, &App::_on_rename_tileset);
+  ROUTE(SelectTilesetTileEvent, &App::_on_select_tileset_tile);
 
   // Tile events
-  mDispatcher.sink<AddAnimationFrameEvent>().connect<&App::_on_add_animation_frame>(this);
-  mDispatcher.sink<SetAnimationFrameDurationEvent>().connect<&App::_on_set_animation_frame_duration>(this);
-  mDispatcher.sink<EnableAnimationFrameSelectionMode>().connect<&App::_on_enable_animation_frame_selection_mode>(this);
-  mDispatcher.sink<RemoveAnimationFrameEvent>().connect<&App::_on_remove_animation_frame>(this);
-  mDispatcher.sink<MoveAnimationFrameForwardsEvent>().connect<&App::_on_move_animation_frame_forwards>(this);
-  mDispatcher.sink<MoveAnimationFrameBackwardsEvent>().connect<&App::_on_move_animation_frame_backwards>(this);
-  mDispatcher.sink<RenameTileEvent>().connect<&App::_on_rename_tile>(this);
+  ROUTE(AddAnimationFrameEvent, &App::_on_add_animation_frame);
+  ROUTE(SetAnimationFrameDurationEvent, &App::_on_set_animation_frame_duration);
+  ROUTE(EnableAnimationFrameSelectionMode,
+        &App::_on_enable_animation_frame_selection_mode);
+  ROUTE(RemoveAnimationFrameEvent, &App::_on_remove_animation_frame);
+  ROUTE(MoveAnimationFrameForwardsEvent, &App::_on_move_animation_frame_forwards);
+  ROUTE(MoveAnimationFrameBackwardsEvent, &App::_on_move_animation_frame_backwards);
+  ROUTE(RenameTileEvent, &App::_on_rename_tile);
 
   // Layer events
-  mDispatcher.sink<CreateLayerEvent>().connect<&App::_on_create_layer>(this);
-  mDispatcher.sink<RemoveLayerEvent>().connect<&App::_on_remove_layer>(this);
-  mDispatcher.sink<RenameLayerEvent>().connect<&App::_on_rename_layer>(this);
-  mDispatcher.sink<DuplicateLayerEvent>().connect<&App::_on_duplicate_layer>(this);
-  mDispatcher.sink<SelectLayerEvent>().connect<&App::_on_select_layer>(this);
-  mDispatcher.sink<MoveLayerUpEvent>().connect<&App::_on_move_layer_up>(this);
-  mDispatcher.sink<MoveLayerDownEvent>().connect<&App::_on_move_layer_down>(this);
-  mDispatcher.sink<SetLayerOpacityEvent>().connect<&App::_on_set_layer_opacity>(this);
-  mDispatcher.sink<SetLayerVisibleEvent>().connect<&App::_on_set_layer_visible>(this);
-  mDispatcher.sink<ShowLayerRenameDialogEvent>().connect<&App::_on_show_layer_rename_dialog>(this);
+  ROUTE(CreateLayerEvent, &App::_on_create_layer);
+  ROUTE(RemoveLayerEvent, &App::_on_remove_layer);
+  ROUTE(RenameLayerEvent, &App::_on_rename_layer);
+  ROUTE(DuplicateLayerEvent, &App::_on_duplicate_layer);
+  ROUTE(SelectLayerEvent, &App::_on_select_layer);
+  ROUTE(MoveLayerUpEvent, &App::_on_move_layer_up);
+  ROUTE(MoveLayerDownEvent, &App::_on_move_layer_down);
+  ROUTE(SetLayerOpacityEvent, &App::_on_set_layer_opacity);
+  ROUTE(SetLayerVisibleEvent, &App::_on_set_layer_visible);
+  ROUTE(ShowLayerRenameDialogEvent, &App::_on_show_layer_rename_dialog);
 
   // Object events
-  mDispatcher.sink<MoveObjectEvent>().connect<&App::_on_move_object>(this);
-  mDispatcher.sink<MoveObjectEvent>().connect<&App::_on_move_object>(this);
-  mDispatcher.sink<SetObjectVisibleEvent>().connect<&App::_on_set_object_visible>(this);
-  mDispatcher.sink<SetObjectTagEvent>().connect<&App::_on_set_object_tag>(this);
-  mDispatcher.sink<SetObjectNameEvent>().connect<&App::_on_set_object_name>(this);
-  mDispatcher.sink<DuplicateObjectEvent>().connect<&App::_on_duplicate_object>(this);
-  mDispatcher.sink<RemoveObjectEvent>().connect<&App::_on_remove_object>(this);
-  mDispatcher.sink<SpawnObjectContextMenuEvent>().connect<&App::_on_spawn_object_context_menu>(this);
+  ROUTE(MoveObjectEvent, &App::_on_move_object);
+  ROUTE(MoveObjectEvent, &App::_on_move_object);
+  ROUTE(SetObjectVisibleEvent, &App::_on_set_object_visible);
+  ROUTE(SetObjectTagEvent, &App::_on_set_object_tag);
+  ROUTE(SetObjectNameEvent, &App::_on_set_object_name);
+  ROUTE(DuplicateObjectEvent, &App::_on_duplicate_object);
+  ROUTE(RemoveObjectEvent, &App::_on_remove_object);
+  ROUTE(SpawnObjectContextMenuEvent, &App::_on_spawn_object_context_menu);
 
   // Font events
-  mDispatcher.sink<ReloadFontsEvent>().connect<&App::_on_reload_fonts>(this);
-  mDispatcher.sink<IncreaseFontSizeEvent>().connect<&App::_on_increase_font_size>(this);
-  mDispatcher.sink<DecreaseFontSizeEvent>().connect<&App::_on_decrease_font_size>(this);
-  mDispatcher.sink<ResetFontSizeEvent>().connect<&App::_on_reset_font_size>(this);
+  ROUTE(ReloadFontsEvent, &App::_on_reload_fonts);
+  ROUTE(IncreaseFontSizeEvent, &App::_on_increase_font_size);
+  ROUTE(DecreaseFontSizeEvent, &App::_on_decrease_font_size);
+  ROUTE(ResetFontSizeEvent, &App::_on_reset_font_size);
 
   // Setting events
-  mDispatcher.sink<ShowSettingsEvent>().connect<&App::_on_show_settings>(this);
-  mDispatcher.sink<SetSettingsEvent>().connect<&App::_on_set_settings>(this);
-  mDispatcher.sink<SetFlagSettingEvent>().connect<&App::_on_set_flag_setting>(this);
-  mDispatcher.sink<NegateFlagSettingEvent>().connect<&App::_on_negate_flag_setting>(this);
-  mDispatcher.sink<SetViewportOverlayPosEvent>().connect<&App::_on_set_viewport_overlay_pos>(this);
-  mDispatcher.sink<SetLanguageEvent>().connect<&App::_on_set_language>(this);
-  mDispatcher.sink<SetThemeEvent>().connect<&App::_on_set_theme>(this);
-  mDispatcher.sink<ResetDockVisibilitiesEvent>().connect<&App::_on_reset_dock_visibilities>(this);
-  mDispatcher.sink<MenuActionEvent>().connect<&App::_on_menu_action>(this);
+  ROUTE(ShowSettingsEvent, &App::_on_show_settings);
+  ROUTE(SetSettingsEvent, &App::_on_set_settings);
+  ROUTE(SetFlagSettingEvent, &App::_on_set_flag_setting);
+  ROUTE(NegateFlagSettingEvent, &App::_on_negate_flag_setting);
+  ROUTE(SetViewportOverlayPosEvent, &App::_on_set_viewport_overlay_pos);
+  ROUTE(SetLanguageEvent, &App::_on_set_language);
+  ROUTE(SetThemeEvent, &App::_on_set_theme);
+  ROUTE(ResetDockVisibilitiesEvent, &App::_on_reset_dock_visibilities);
+  ROUTE(MenuActionEvent, &App::_on_menu_action);
 
   // Viewport events
-  mDispatcher.sink<ViewportMousePressedEvent>().connect<&App::_on_viewport_mouse_pressed>(this);
-  mDispatcher.sink<ViewportMouseDraggedEvent>().connect<&App::_on_viewport_mouse_dragged>(this);
-  mDispatcher.sink<ViewportMouseReleasedEvent>().connect<&App::_on_viewport_mouse_released>(this);
-  mDispatcher.sink<ViewportMouseEnteredEvent>().connect<&App::_on_viewport_mouse_entered>(this);
-  mDispatcher.sink<ViewportMouseExitedEvent>().connect<&App::_on_viewport_mouse_exited>(this);
-  mDispatcher.sink<CenterViewportEvent>().connect<&App::_on_center_viewport>(this);
-  mDispatcher.sink<ResetViewportZoomEvent>().connect<&App::_on_reset_viewport_zoom>(this);
-  mDispatcher.sink<IncreaseViewportZoomEvent>().connect<&App::_on_increase_viewport_zoom>(this);
-  mDispatcher.sink<DecreaseViewportZoomEvent>().connect<&App::_on_decrease_viewport_zoom>(this);
-  mDispatcher.sink<OffsetViewportEvent>().connect<&App::_on_offset_viewport>(this);
-  mDispatcher.sink<SetViewportLimitsEvent>().connect<&App::_on_set_viewport_limits>(this);
-  mDispatcher.sink<SetDynamicViewportInfoEvent>().connect<&App::_on_set_dynamic_viewport_info>(this);
-  mDispatcher.sink<PanViewportUpEvent>().connect<&App::_on_pan_viewport_up>(this);
-  mDispatcher.sink<PanViewportDownEvent>().connect<&App::_on_pan_viewport_down>(this);
-  mDispatcher.sink<PanViewportLeftEvent>().connect<&App::_on_pan_viewport_left>(this);
-  mDispatcher.sink<PanViewportRightEvent>().connect<&App::_on_pan_viewport_right>(this);
+  ROUTE(ViewportMousePressedEvent, &App::_on_viewport_mouse_pressed);
+  ROUTE(ViewportMouseDraggedEvent, &App::_on_viewport_mouse_dragged);
+  ROUTE(ViewportMouseReleasedEvent, &App::_on_viewport_mouse_released);
+  ROUTE(ViewportMouseEnteredEvent, &App::_on_viewport_mouse_entered);
+  ROUTE(ViewportMouseExitedEvent, &App::_on_viewport_mouse_exited);
+  ROUTE(CenterViewportEvent, &App::_on_center_viewport);
+  ROUTE(ResetViewportZoomEvent, &App::_on_reset_viewport_zoom);
+  ROUTE(IncreaseViewportZoomEvent, &App::_on_increase_viewport_zoom);
+  ROUTE(DecreaseViewportZoomEvent, &App::_on_decrease_viewport_zoom);
+  ROUTE(OffsetViewportEvent, &App::_on_offset_viewport);
+  ROUTE(SetViewportLimitsEvent, &App::_on_set_viewport_limits);
+  ROUTE(SetDynamicViewportInfoEvent, &App::_on_set_dynamic_viewport_info);
+  ROUTE(PanViewportUpEvent, &App::_on_pan_viewport_up);
+  ROUTE(PanViewportDownEvent, &App::_on_pan_viewport_down);
+  ROUTE(PanViewportLeftEvent, &App::_on_pan_viewport_left);
+  ROUTE(PanViewportRightEvent, &App::_on_pan_viewport_right);
 
   // Component events
-  mDispatcher.sink<ShowComponentEditorEvent>().connect<&App::_on_show_component_editor>(this);
-  mDispatcher.sink<ShowNewCompDialogEvent>().connect<&App::_on_show_new_comp_dialog>(this);
-  mDispatcher.sink<ShowRenameCompDialogEvent>().connect<&App::_on_show_rename_comp_dialog>(this);
-  mDispatcher.sink<ShowNewCompAttrDialogEvent>().connect<&App::_on_show_new_comp_attr_dialog>(this);
-  mDispatcher.sink<ShowRenameCompAttrDialogEvent>().connect<&App::_on_show_rename_comp_attr_dialog>(this);
-  mDispatcher.sink<DefineComponentEvent>().connect<&App::_on_define_component>(this);
-  mDispatcher.sink<UndefComponentEvent>().connect<&App::_on_undef_component>(this);
-  mDispatcher.sink<RenameComponentEvent>().connect<&App::_on_rename_component>(this);
-  mDispatcher.sink<UpdateComponentEvent>().connect<&App::_on_update_component>(this);
-  mDispatcher.sink<AddComponentAttrEvent>().connect<&App::_on_add_component_attr>(this);
-  mDispatcher.sink<RemoveComponentAttrEvent>().connect<&App::_on_remove_component_attr>(this);
-  mDispatcher.sink<RenameComponentAttrEvent>().connect<&App::_on_rename_component_attr>(this);
-  mDispatcher.sink<DuplicateComponentAttrEvent>().connect<&App::_on_duplicate_component_attr>(this);
-  mDispatcher.sink<SetComponentAttrTypeEvent>().connect<&App::_on_set_component_attr_type>(this);
-  mDispatcher.sink<AttachComponentEvent>().connect<&App::_on_attach_component>(this);
-  mDispatcher.sink<DetachComponentEvent>().connect<&App::_on_detach_component>(this);
-  mDispatcher.sink<ResetAttachedComponentEvent>().connect<&App::_on_reset_attached_component>(this);
-  mDispatcher.sink<UpdateAttachedComponentEvent>().connect<&App::_on_update_attached_component>(this);
-  // clang-format on
+  ROUTE(ShowComponentEditorEvent, &App::_on_show_component_editor);
+  ROUTE(ShowNewCompDialogEvent, &App::_on_show_new_comp_dialog);
+  ROUTE(ShowRenameCompDialogEvent, &App::_on_show_rename_comp_dialog);
+  ROUTE(ShowNewCompAttrDialogEvent, &App::_on_show_new_comp_attr_dialog);
+  ROUTE(ShowRenameCompAttrDialogEvent, &App::_on_show_rename_comp_attr_dialog);
+  ROUTE(DefineComponentEvent, &App::_on_define_component);
+  ROUTE(UndefComponentEvent, &App::_on_undef_component);
+  ROUTE(RenameComponentEvent, &App::_on_rename_component);
+  ROUTE(UpdateComponentEvent, &App::_on_update_component);
+  ROUTE(AddComponentAttrEvent, &App::_on_add_component_attr);
+  ROUTE(RemoveComponentAttrEvent, &App::_on_remove_component_attr);
+  ROUTE(RenameComponentAttrEvent, &App::_on_rename_component_attr);
+  ROUTE(DuplicateComponentAttrEvent, &App::_on_duplicate_component_attr);
+  ROUTE(SetComponentAttrTypeEvent, &App::_on_set_component_attr_type);
+  ROUTE(AttachComponentEvent, &App::_on_attach_component);
+  ROUTE(DetachComponentEvent, &App::_on_detach_component);
+  ROUTE(ResetAttachedComponentEvent, &App::_on_reset_attached_component);
+  ROUTE(UpdateAttachedComponentEvent, &App::_on_update_attached_component);
+
+  // Property events
+  ROUTE(ShowNewPropertyDialogEvent, &App::_on_show_new_property_dialog);
+  ROUTE(ShowRenamePropertyDialogEvent, &App::_on_show_rename_property_dialog);
+  ROUTE(ShowSetPropertyTypeDialogEvent, &App::_on_show_set_property_type_dialog);
+  ROUTE(InspectContextEvent, &App::_on_inspect_context);
+  ROUTE(CreatePropertyEvent, &App::_on_create_property);
+  ROUTE(RemovePropertyEvent, &App::_on_remove_property);
+  ROUTE(RenamePropertyEvent, &App::_on_rename_property);
+  ROUTE(UpdatePropertyEvent, &App::_on_update_property);
+  ROUTE(SetPropertyTypeEvent, &App::_on_set_property_type);
 }
 
 void App::_init_persistent_settings()
@@ -992,6 +1006,76 @@ void App::_on_update_attached_component(const UpdateAttachedComponentEvent& even
       event.attr_name,
       event.value);
   on_update_attached_component(*mModel, event);
+}
+
+void App::_on_show_new_property_dialog(const ShowNewPropertyDialogEvent& event)
+{
+  spdlog::trace("[ShowNewPropertyDialogEvent] context: {}", event.context);
+  on_show_new_property_dialog(*mModel, event);
+}
+
+void App::_on_show_rename_property_dialog(const ShowRenamePropertyDialogEvent& event)
+{
+  spdlog::trace("[ShowRenamePropertyDialogEvent] context: {}, property: {}",
+                event.context,
+                event.property_name);
+  on_show_rename_property_dialog(*mModel, event);
+}
+
+void App::_on_show_set_property_type_dialog(const ShowSetPropertyTypeDialogEvent& event)
+{
+  spdlog::trace("[ShowSetPropertyTypeDialogEvent] context: {}, property: {}",
+                event.context,
+                event.property_name);
+  on_show_set_property_type_dialog(*mModel, event);
+}
+
+void App::_on_inspect_context(const InspectContextEvent& event)
+{
+  spdlog::trace("[InspectContextEvent] context: {}", event.context);
+  on_inspect_context(*mModel, event);
+}
+
+void App::_on_create_property(const CreatePropertyEvent& event)
+{
+  spdlog::trace("[CreatePropertyEvent] context: {}, name: {}, type: {}",
+                event.context,
+                event.name,
+                event.type);
+  on_create_property(*mModel, event);
+}
+
+void App::_on_remove_property(const RemovePropertyEvent& event)
+{
+  spdlog::trace("[RemovePropertyEvent] context: {}, name: {}", event.context, event.name);
+  on_remove_property(*mModel, event);
+}
+
+void App::_on_rename_property(const RenamePropertyEvent& event)
+{
+  spdlog::trace("[RenamePropertyEvent] context: {}, old name: {}, new name: {}",
+                event.context,
+                event.old_name,
+                event.new_name);
+  on_rename_property(*mModel, event);
+}
+
+void App::_on_update_property(const UpdatePropertyEvent& event)
+{
+  spdlog::trace("[UpdatePropertyEvent] context: {}, name: {}, value: {}",
+                event.context,
+                event.name,
+                event.value);
+  on_update_property(*mModel, event);
+}
+
+void App::_on_set_property_type(const SetPropertyTypeEvent& event)
+{
+  spdlog::trace("[SetPropertyTypeEvent] context: {}, name: {}, type: {}",
+                event.context,
+                event.name,
+                event.type);
+  on_set_property_type(*mModel, event);
 }
 
 }  // namespace tactile

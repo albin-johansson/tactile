@@ -19,7 +19,7 @@
 
 #include "gl_backend.hpp"
 
-#include <centurion/opengl.hpp>
+#include <centurion/video/opengl.hpp>
 #include <glad/glad.h>
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>

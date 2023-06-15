@@ -19,34 +19,23 @@
 
 #pragma once
 
-#include "cmd/command.hpp"
-#include "common/attribute.hpp"
+#include "common/enum/attribute_type.hpp"
+#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/string.hpp"
+#include "common/util/string_buffer.hpp"
 #include "model/model.hpp"
 
-namespace tactile::cmd {
+namespace tactile::ui {
 
-class ChangePropertyType final : public Command {
- public:
-  ChangePropertyType(Model* model,
-                     Entity context_entity,
-                     String name,
-                     AttributeType new_type);
-
-  void undo() override;
-
-  void redo() override;
-
-  [[nodiscard]] auto get_name() const -> String override;
-
- private:
-  Model* mModel;
-  Entity mContextEntity;
-  String mName;
-  AttributeType mNewPropertyType;
-  Maybe<Attribute> mPreviousValue;
+struct NewPropertyDialogState final {
+  Entity context{kNullEntity};
+  StringBuffer name_buffer {};
+  AttributeType property_type {AttributeType::String};
+  bool should_open {};
 };
 
-}  // namespace tactile::cmd
+void push_new_property_dialog(const Model& model,
+                              NewPropertyDialogState& state,
+                              Dispatcher& dispatcher);
+
+}  // namespace tactile::ui

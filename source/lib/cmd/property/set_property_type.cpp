@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "change_property_type.hpp"
+#include "set_property_type.hpp"
 
 #include <utility>  // move
 
@@ -29,10 +29,10 @@
 
 namespace tactile::cmd {
 
-ChangePropertyType::ChangePropertyType(Model* model,
-                                       const Entity context_entity,
-                                       String name,
-                                       const AttributeType new_type)
+SetPropertyType::SetPropertyType(Model* model,
+                                 const Entity context_entity,
+                                 String name,
+                                 const AttributeType new_type)
     : mModel {model},
       mContextEntity {context_entity},
       mName {std::move(name)},
@@ -41,7 +41,7 @@ ChangePropertyType::ChangePropertyType(Model* model,
   TACTILE_ASSERT(sys::is_context_entity(*mModel, mContextEntity));
 }
 
-void ChangePropertyType::undo()
+void SetPropertyType::undo()
 {
   auto& model = *mModel;
   auto& context = model.get<Context>(mContextEntity);
@@ -50,7 +50,7 @@ void ChangePropertyType::undo()
   mPreviousValue.reset();
 }
 
-void ChangePropertyType::redo()
+void SetPropertyType::redo()
 {
   auto& model = *mModel;
   auto& context = model.get<Context>(mContextEntity);
@@ -59,7 +59,7 @@ void ChangePropertyType::redo()
   context.props[mName].reset_to_default(mNewPropertyType);
 }
 
-auto ChangePropertyType::get_name() const -> String
+auto SetPropertyType::get_name() const -> String
 {
   const auto& strings = sys::get_current_language_strings(*mModel);
   return strings.cmd.change_property_type;

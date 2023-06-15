@@ -19,13 +19,41 @@
 
 #pragma once
 
-#include <centurion/video/window.hpp>
+#include "common/primitives.hpp"
+#include "common/type/math.hpp"
 
 namespace tactile {
 
-void load_window_icon(cen::window& window);
+inline constexpr uint32 kVectorXBit = 1u << 0u;
+inline constexpr uint32 kVectorYBit = 1u << 1u;
+inline constexpr uint32 kVectorZBit = 1u << 2u;
+inline constexpr uint32 kVectorWBit = 1u << 3u;
 
-/// Makes a Windows window title bar dark (does nothing on other platforms).
-void win32_use_immersive_dark_mode(cen::window& window);
+/// Returns a bitmask of components that are equal in both vectors.
+template <typename Vec>
+[[nodiscard]] auto compare_vector_components(const Vec& a, const Vec& b) -> uint32
+{
+  uint32 mask = 0;
+
+  if (a.x == b.x) {
+    mask |= kVectorXBit;
+  }
+
+  if (a.y == b.y) {
+    mask |= kVectorYBit;
+  }
+
+  const int dimensions = a.length();
+
+  if (dimensions >= 3 && a[2] == b[2]) {
+    mask |= kVectorZBit;
+  }
+
+  if (dimensions >= 4 && a[3] == b[3]) {
+    mask |= kVectorWBit;
+  }
+
+  return mask;
+}
 
 }  // namespace tactile

@@ -19,9 +19,7 @@
 
 #pragma once
 
-#include <centurion/event.hpp>
-#include <centurion/misc_events.hpp>
-#include <centurion/mouse_events.hpp>
+#include <centurion/events/event_handler.hpp>
 
 #include "common/type/dispatcher.hpp"
 #include "model/model.hpp"

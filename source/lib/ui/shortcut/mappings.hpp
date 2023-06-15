@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <centurion/keyboard.hpp>
+#include <centurion/input/keyboard.hpp>
 
 #include "common/predef.hpp"
 

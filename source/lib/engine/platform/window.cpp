@@ -29,7 +29,7 @@
 #if TACTILE_OS_WINDOWS
 
 #include <SDL_syswm.h>
-#include <centurion/system.hpp>
+#include <centurion/system/shared_object.hpp>
 #include <dwmapi.h>
 
 #endif  // TACTILE_OS_WINDOWS
