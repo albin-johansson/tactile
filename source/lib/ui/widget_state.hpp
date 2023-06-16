@@ -29,8 +29,6 @@
 #include "ui/dock/animation/animation_dock.hpp"
 #include "ui/dock/comp/component_editor_dialog.hpp"
 #include "ui/dock/dock_space.hpp"
-#include "ui/dock/editor/central_map_viewport.hpp"
-#include "ui/dock/editor/central_tileset_viewport.hpp"
 #include "ui/dock/editor/editor_dock.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
 #include "ui/dock/log/log_dock.hpp"
@@ -47,8 +45,6 @@ struct WidgetState final {
   TilesetDockState tileset_dock;
   AnimationDockState animation_dock;
   EditorDockState editor_dock;
-  CentralMapViewportState central_map_viewport;
-  TilesetViewportState tileset_viewport;
   LogDockState log_dock;
   PropertyDockState property_dock;
   MenuBarState menu_bar;

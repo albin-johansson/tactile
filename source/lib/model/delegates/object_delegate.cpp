@@ -63,7 +63,7 @@ void on_remove_object(Model& model, const RemoveObjectEvent& event)
 void on_spawn_object_context_menu(Model& model, const SpawnObjectContextMenuEvent&)
 {
   auto& widgets = model.get<ui::WidgetState>();
-  widgets.central_map_viewport.should_open_object_context_menu = true;
+  widgets.editor_dock.central_map_viewport.should_open_object_context_menu = true;
 }
 
 }  // namespace tactile

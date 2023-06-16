@@ -50,6 +50,8 @@ void render_ui(const Model& model, WidgetState& widgets, Dispatcher& dispatcher)
 
   push_menu_bar(model, widgets.menu_bar, dispatcher);
 
+  push_editor_dock_widget(model, widgets.editor_dock, dispatcher);
+
   if (is_layer_dock_enabled(model)) {
     push_layer_dock_widget(model, widgets.layer_dock, dispatcher);
   }
@@ -65,12 +67,6 @@ void render_ui(const Model& model, WidgetState& widgets, Dispatcher& dispatcher)
   push_property_dock_widget(model, widgets.property_dock, dispatcher);
   push_component_dock_widget(model, dispatcher);
   push_log_dock_widget(model, widgets.log_dock, dispatcher);
-
-  push_editor_dock_widget(model,
-                          widgets.editor_dock,
-                          widgets.central_map_viewport,
-                          widgets.tileset_viewport,
-                          dispatcher);
 
   push_new_map_dialog(model, widgets.new_map_dialog, dispatcher);
   push_new_tileset_dialog(model, widgets.new_tileset_dialog, dispatcher);
