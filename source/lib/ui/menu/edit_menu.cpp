@@ -29,7 +29,7 @@
 
 namespace tactile::ui {
 
-void show_edit_menu(const Model& model, Dispatcher& dispatcher)
+void push_edit_menu(const Model& model, Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
 

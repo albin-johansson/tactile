@@ -32,8 +32,6 @@
 namespace tactile::ui {
 namespace {
 
-inline constinit bool gOpenDialog = false;
-
 void _push_row(const char* lib, const char* license, const char* license_url)
 {
   ImGui::TableNextRow();
@@ -55,27 +53,22 @@ void _push_row(const char* lib, const char* license, const char* license_url)
 
 }  // namespace
 
-void open_credits_dialog()
-{
-  gOpenDialog = true;
-}
-
-void show_credits_dialog(const Model& model, Entity, Dispatcher&)
+void push_credits_dialog(const Model& model, CreditsDialogState& state)
 {
   const auto& strings = sys::get_current_language_strings(model);
 
-  DialogOptions options {
+  DialogOptions dialog_options {
       .title = strings.window.credits.c_str(),
       .close_label = strings.misc.close.c_str(),
       .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
-  if (gOpenDialog) {
-    options.flags |= UI_DIALOG_FLAG_OPEN;
-    gOpenDialog = false;
+  if (state.should_open) {
+    dialog_options.flags |= UI_DIALOG_FLAG_OPEN;
+    state.should_open = false;
   }
 
-  if (const ScopedDialog dialog {options}; dialog.was_opened()) {
+  if (const ScopedDialog dialog {dialog_options}; dialog.was_opened()) {
     ImGui::TextUnformatted(strings.misc.credits_info.c_str());
     ImGui::Spacing();
 

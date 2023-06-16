@@ -24,6 +24,6 @@
 
 namespace tactile::ui {
 
-void show_view_menu(const Model& model, Dispatcher& dispatcher);
+void push_view_menu(const Model& model, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

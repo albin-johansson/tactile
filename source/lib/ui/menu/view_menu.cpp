@@ -22,10 +22,9 @@
 #include <imgui.h>
 
 #include "model/event/setting_events.hpp"
+#include "model/event/view_events.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
-#include "model/systems/menu_system.hpp"
-#include "ui/dock/dock_space.hpp"
 #include "ui/style/themes.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
@@ -40,7 +39,7 @@ void _push_widgets_menu(const Model& model,
   if (const Menu menu {strings.menu.widgets.c_str(), sys::has_active_document(model)};
       menu.is_open()) {
     if (ImGui::MenuItem(strings.action.reset_layout.c_str())) {
-      reset_layout(model, dispatcher);
+      dispatcher.enqueue<ResetLayoutEvent>();
     }
 
     ImGui::Separator();
@@ -134,7 +133,7 @@ void _push_quick_lang_menu(const Strings& strings, Dispatcher& dispatcher)
 
 }  // namespace
 
-void show_view_menu(const Model& model, Dispatcher& dispatcher)
+void push_view_menu(const Model& model, Dispatcher& dispatcher)
 {
   const auto& settings = model.get<Settings>();
   const auto& strings = sys::get_current_language_strings(model);

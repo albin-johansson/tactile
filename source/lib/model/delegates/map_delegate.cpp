@@ -20,6 +20,7 @@
 #include "map_delegate.hpp"
 
 #include <fmt/std.h>
+#include <model/systems/language_system.hpp>
 
 #include "cmd/map/add_column.hpp"
 #include "cmd/map/add_row.hpp"
@@ -59,9 +60,10 @@ void on_show_new_map_dialog(Model& model, const ShowNewMapDialogEvent&)
   widgets.new_map_dialog.should_open = true;
 }
 
-void on_show_open_map_dialog(Model&, const ShowOpenMapDialogEvent&)
+void on_show_open_map_dialog(Model& model, const ShowOpenMapDialogEvent&)
 {
-  // TODO ui::open_map_file_dialog();
+  auto& widgets = model.get<ui::WidgetState>();
+  widgets.should_open_map_file_dialog = true;
 }
 
 void on_show_resize_map_dialog(Model& model, const ShowResizeMapDialogEvent&)
@@ -106,6 +108,15 @@ void on_open_map(Model& model, const OpenMapEvent& event)
 
       auto& file_history = model.get<FileHistory>();
       sys::add_to_file_history(file_history, absolute_document_path);
+    }
+    else {
+      const auto& strings = sys::get_current_language_strings(model);
+      auto& widget_state = model.get<ui::WidgetState>();
+
+      auto& error_dialog = widget_state.map_parse_error_dialog;
+      error_dialog.cause =
+          fmt::format("{}: {}", strings.misc.cause, to_cause(strings, ir_map.error()));
+      error_dialog.should_open = true;
     }
   }
 }

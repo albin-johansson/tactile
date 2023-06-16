@@ -19,16 +19,14 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
-#include "common/type/ecs.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 
-void open_credits_dialog();
+struct CreditsDialogState final {
+  bool should_open {};
+};
 
-void show_credits_dialog(const Model& model,
-                         Entity widget_entity,
-                         Dispatcher& dispatcher);
+void push_credits_dialog(const Model& model, CreditsDialogState& state);
 
 }  // namespace tactile::ui

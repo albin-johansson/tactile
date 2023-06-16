@@ -59,7 +59,7 @@ void _push_recent_files_menu(const Model& model,
 
 }  // namespace
 
-void show_file_menu(const Model& model, Dispatcher& dispatcher)
+void push_file_menu(const Model& model, Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
 

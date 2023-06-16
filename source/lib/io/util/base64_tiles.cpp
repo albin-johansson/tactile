@@ -19,7 +19,7 @@
 
 #include "base64_tiles.hpp"
 
-#include <bit>       // endian, byteswap
+#include <bit>       // endian
 #include <concepts>  // same_as
 #include <cstring>   // memcpy
 
@@ -66,7 +66,7 @@ static_assert(std::same_as<TileID, int32>);
     std::memcpy(&tile, &data[index], sizeof(TileID));
 
     if constexpr (std::endian::native == std::endian::big) {
-      tile = std::byteswap(tile);
+      tile = reverse_bytes(tile);
     }
 
     const auto [row, col] = to_matrix_coords(i, extent.cols);

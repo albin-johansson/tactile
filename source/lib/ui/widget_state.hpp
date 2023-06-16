@@ -19,38 +19,46 @@
 
 #pragma once
 
+#include "ui/dialog/about_dialog.hpp"
+#include "ui/dialog/credits_dialog.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
+#include "ui/dialog/map_parse_error_dialog.hpp"
 #include "ui/dialog/new_map_dialog.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"
 #include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/animation/animation_dock.hpp"
 #include "ui/dock/comp/component_editor_dialog.hpp"
-#include "ui/dock/editor/central_map_viewport.hpp"
-#include "ui/dock/editor/central_tileset_viewport.hpp"
+#include "ui/dock/dock_space.hpp"
 #include "ui/dock/editor/editor_dock.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
 #include "ui/dock/log/log_dock.hpp"
 #include "ui/dock/property/property_dock.hpp"
 #include "ui/dock/tileset/dialogs/new_tileset_dialog.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
+#include "ui/menu/menu_bar.hpp"
 
 namespace tactile::ui {
 
 struct WidgetState final {
+  DockSpaceState dock_space;
   LayerDockState layer_dock;
   TilesetDockState tileset_dock;
   AnimationDockState animation_dock;
   EditorDockState editor_dock;
-  CentralMapViewportState central_map_viewport;
-  TilesetViewportState tileset_viewport;
   LogDockState log_dock;
   PropertyDockState property_dock;
+  MenuBarState menu_bar;
   SettingsDialogState settings_dialog;
   ComponentEditorDialogState component_editor_dialog;
   NewMapDialogState new_map_dialog;
   NewTilesetDialogState new_tileset_dialog;
   ResizeMapDialogState resize_map_dialog;
   GodotExportDialogState godot_export_dialog;
+  AboutDialogState about_dialog;
+  CreditsDialogState credits_dialog;
+  MapParseErrorDialogState map_parse_error_dialog;
+  bool should_open_map_file_dialog : 1 {};
+  bool should_open_about_imgui_dialog {};
 };
 
 }  // namespace tactile::ui

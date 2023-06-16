@@ -21,6 +21,8 @@
 
 namespace tactile {
 
+struct ResetLayoutEvent final {};
+
 struct ToggleUiEvent final {};
 
 struct ToggleGridEvent final {};

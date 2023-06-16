@@ -74,7 +74,7 @@ struct SetLayerVisibleEvent final {
 };
 
 /// Event for opening the dialog to change a layer name.
-struct ShowLayerRenameDialogEvent final {
+struct ShowRenameLayerDialogEvent final {
   Entity layer {kNullEntity};
 };
 

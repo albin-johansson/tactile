@@ -31,14 +31,14 @@
 namespace tactile::ui {
 
 struct EditorDockState final {
+  CentralMapViewportState central_map_viewport;
+  TilesetViewportState tileset_viewport;
   bool is_focused {};
   bool is_hovered {};
 };
 
 void push_editor_dock_widget(const Model& model,
                              EditorDockState& state,
-                             CentralMapViewportState& central_map_viewport_state,
-                             TilesetViewportState& tileset_viewport_state,
                              Dispatcher& dispatcher);
 
 void viewport_widget_mouse_wheel_event_handler(Entity viewport_entity,

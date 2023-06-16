@@ -19,7 +19,11 @@
 
 #include "common/util/bits.hpp"
 
+#include <bit>  // bit_cast
+
 #include <doctest/doctest.h>
+
+#include "common/type/array.hpp"
 
 using namespace tactile;
 
@@ -34,8 +38,24 @@ template <std::integral T>
 
 }  // namespace
 
-TEST_SUITE("Bit utilities")
+TEST_SUITE("BitUtils")
 {
+  TEST_CASE("reverse_bytes")
+  {
+    using ByteArray = Array<uint8, sizeof(uint32)>;
+
+    const uint32 original = 0xDEADBEEF;
+    const auto swapped = reverse_bytes(original);
+
+    const auto original_bytes = std::bit_cast<ByteArray>(original);
+    const auto swapped_bytes = std::bit_cast<ByteArray>(swapped);
+
+    CHECK(original_bytes[0] == swapped_bytes[3]);
+    CHECK(original_bytes[1] == swapped_bytes[2]);
+    CHECK(original_bytes[2] == swapped_bytes[1]);
+    CHECK(original_bytes[3] == swapped_bytes[0]);
+  }
+
   TEST_CASE("to_little_endian[uint32]")
   {
     const uint32 original = 0xFF'EE'22'11u;

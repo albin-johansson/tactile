@@ -24,6 +24,12 @@
 
 namespace tactile::ui {
 
-void show_debug_menu(const Model& model, Dispatcher& dispatcher);
+struct DebugMenuState final {
+  bool show_demo_dialog {};
+  bool show_metrics_dialog {};
+  bool show_style_editor_dialog {};
+};
+
+void push_debug_menu(const Model& model, DebugMenuState& state, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

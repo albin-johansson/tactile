@@ -19,6 +19,8 @@
 
 #include "ui.hpp"
 
+#include "io/file_dialog.hpp"
+#include "model/event/map_events.hpp"
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/credits_dialog.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
@@ -36,6 +38,7 @@
 #include "ui/dock/property/property_dock.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
 #include "ui/menu/menu_bar.hpp"
+#include "ui/style/alignment.hpp"
 #include "ui/style/colors.hpp"
 
 namespace tactile::ui {
@@ -43,9 +46,11 @@ namespace tactile::ui {
 void render_ui(const Model& model, WidgetState& widgets, Dispatcher& dispatcher)
 {
   update_dynamic_color_cache();
-  update_dock_space(model);
+  update_dock_space(model, widgets.dock_space);
 
-  push_menu_bar(model, dispatcher);
+  push_menu_bar(model, widgets.menu_bar, dispatcher);
+
+  push_editor_dock_widget(model, widgets.editor_dock, dispatcher);
 
   if (is_layer_dock_enabled(model)) {
     push_layer_dock_widget(model, widgets.layer_dock, dispatcher);
@@ -63,36 +68,28 @@ void render_ui(const Model& model, WidgetState& widgets, Dispatcher& dispatcher)
   push_component_dock_widget(model, dispatcher);
   push_log_dock_widget(model, widgets.log_dock, dispatcher);
 
-  push_editor_dock_widget(model,
-                          widgets.editor_dock,
-                          widgets.central_map_viewport,
-                          widgets.tileset_viewport,
-                          dispatcher);
-
   push_new_map_dialog(model, widgets.new_map_dialog, dispatcher);
   push_new_tileset_dialog(model, widgets.new_tileset_dialog, dispatcher);
   push_resize_map_dialog(model, widgets.resize_map_dialog, dispatcher);
   push_component_editor_dialog(model, widgets.component_editor_dialog, dispatcher);
   push_godot_export_dialog(model, widgets.godot_export_dialog, dispatcher);
   push_settings_dialog(model, widgets.settings_dialog, dispatcher);
+  push_map_parse_error_dialog(model, widgets.map_parse_error_dialog);
+  push_credits_dialog(model, widgets.credits_dialog);
+  push_about_dialog(model, widgets.about_dialog);
 
-  show_map_parse_error_dialog(model, kNullEntity, dispatcher);
-  show_credits_dialog(model, kNullEntity, dispatcher);
-  show_about_dialog(model, kNullEntity, dispatcher);
+  if (widgets.should_open_map_file_dialog) {
+    auto dialog = FileDialog::open_map();
+    if (dialog.is_okay()) {
+      dispatcher.enqueue<OpenMapEvent>(dialog.path());
+    }
+    widgets.should_open_map_file_dialog = false;
+  }
 
-  // TODO
-  //  if (gOpenMapFileDialog) {
-  //    auto dialog = FileDialog::open_map();
-  //    if (dialog.is_okay()) {
-  //      dispatcher.enqueue<OpenMapEvent>(dialog.path());
-  //    }
-  //  }
-
-  // TODO
-  //  if (gOpenAboutImGuiDialog) {
-  //    center_next_window_on_appearance();
-  //    ImGui::ShowAboutWindow(&gOpenAboutImGuiDialog);
-  //  }
+  if (widgets.should_open_about_imgui_dialog) {
+    center_next_window_on_appearance();
+    ImGui::ShowAboutWindow(&widgets.should_open_about_imgui_dialog);
+  }
 }
 
 }  // namespace tactile::ui

@@ -19,18 +19,16 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
-#include "common/type/ecs.hpp"
-#include "components/language.hpp"
-#include "io/map/parse/parse_error.hpp"
+#include "common/type/string.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 
-void open_map_parse_error_dialog(const Strings& strings, ParseError error);
+struct MapParseErrorDialogState final {
+  String cause;
+  bool should_open {};
+};
 
-void show_map_parse_error_dialog(const Model& model,
-                                 Entity widget_entity,
-                                 Dispatcher& dispatcher);
+void push_map_parse_error_dialog(const Model& model, MapParseErrorDialogState& state);
 
 }  // namespace tactile::ui

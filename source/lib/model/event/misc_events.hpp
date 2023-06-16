@@ -1,7 +1,7 @@
 /*
  * This source file is a part of the Tactile map editor.
  *
- * Copyright (C) 2023 Albin Johansson
+ * Copyright (C) 2022 Albin Johansson
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,12 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
-#include "model/model.hpp"
+namespace tactile {
 
-namespace tactile::ui {
+struct ShowAboutDialogEvent final {};
 
-void push_edit_menu(const Model& model, Dispatcher& dispatcher);
+struct ShowCreditsDialogEvent final {};
 
-}  // namespace tactile::ui
+struct ShowAboutImGuiDialogEvent final {};
+
+}  // namespace tactile

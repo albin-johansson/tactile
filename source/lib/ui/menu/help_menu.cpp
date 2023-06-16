@@ -28,7 +28,7 @@
 
 namespace tactile::ui {
 
-void show_help_menu(const Model& model, Dispatcher& dispatcher)
+void push_help_menu(const Model& model, Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
 

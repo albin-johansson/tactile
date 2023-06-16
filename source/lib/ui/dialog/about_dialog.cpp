@@ -29,33 +29,23 @@
 #include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {
-namespace {
 
-inline constinit bool gOpenDialog = false;
-
-}  // namespace
-
-void open_about_dialog()
-{
-  gOpenDialog = true;
-}
-
-void show_about_dialog(const Model& model, Entity, Dispatcher&)
+void push_about_dialog(const Model& model, AboutDialogState& state)
 {
   const auto& strings = sys::get_current_language_strings(model);
 
-  DialogOptions options {
+  DialogOptions dialog_options {
       .title = strings.window.about_tactile.c_str(),
       .accept_label = strings.misc.close.c_str(),
       .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
-  if (gOpenDialog) {
-    options.flags |= UI_DIALOG_FLAG_OPEN;
-    gOpenDialog = false;
+  if (state.should_open) {
+    dialog_options.flags |= UI_DIALOG_FLAG_OPEN;
+    state.should_open = false;
   }
 
-  if (const ScopedDialog dialog {options}; dialog.was_opened()) {
+  if (const ScopedDialog dialog {dialog_options}; dialog.was_opened()) {
     ImGui::TextUnformatted("Tactile " TACTILE_VERSION_STRING
                            " (C) Albin Johansson 2020-2022");
 
