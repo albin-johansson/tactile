@@ -24,6 +24,8 @@
 
 namespace tactile {
 
+void on_show_rename_layer_dialog(Model& model, const ShowRenameLayerDialogEvent& event);
+
 void on_create_layer(Model& model, const CreateLayerEvent& event);
 
 void on_remove_layer(Model& model, const RemoveLayerEvent& event);

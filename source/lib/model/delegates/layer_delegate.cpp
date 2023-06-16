@@ -27,11 +27,29 @@
 #include "cmd/layer/rename_layer.hpp"
 #include "cmd/layer/set_layer_opacity.hpp"
 #include "cmd/layer/set_layer_visible.hpp"
+#include "common/debug/assert.hpp"
 #include "components/document.hpp"
+#include "components/context.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/map_system.hpp"
+#include "model/systems/validation_system.hpp"
+#include "ui/widget_state.hpp"
 
 namespace tactile {
+
+void on_show_rename_layer_dialog(Model& model, const ShowRenameLayerDialogEvent& event)
+{
+  TACTILE_ASSERT(sys::is_layer_entity(model, event.layer));
+  const auto& layer_context = model.get<Context>(event.layer);
+
+  auto& widgets = model.get<ui::WidgetState>();
+  auto& rename_dialog = widgets.layer_dock.rename_layer_dialog;
+
+  rename_dialog.layer = event.layer;
+  rename_dialog.old_name = layer_context.name;
+  rename_dialog.name_buffer = layer_context.name;
+  rename_dialog.should_open = true;
+}
 
 void on_create_layer(Model& model, const CreateLayerEvent& event)
 {

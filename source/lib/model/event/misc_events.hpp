@@ -1,7 +1,7 @@
 /*
  * This source file is a part of the Tactile map editor.
  *
- * Copyright (C) 2023 Albin Johansson
+ * Copyright (C) 2022 Albin Johansson
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,16 +19,12 @@
 
 #pragma once
 
-#include "common/type/string.hpp"
-#include "model/model.hpp"
+namespace tactile {
 
-namespace tactile::ui {
+struct ShowAboutDialogEvent final {};
 
-struct MapParseErrorDialogState final {
-  String cause;
-  bool should_open {};
-};
+struct ShowCreditsDialogEvent final {};
 
-void push_map_parse_error_dialog(const Model& model, MapParseErrorDialogState& state);
+struct ShowAboutImGuiDialogEvent final {};
 
-}  // namespace tactile::ui
+}  // namespace tactile

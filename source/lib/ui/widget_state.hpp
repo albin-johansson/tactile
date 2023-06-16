@@ -19,7 +19,10 @@
 
 #pragma once
 
+#include "ui/dialog/about_dialog.hpp"
+#include "ui/dialog/credits_dialog.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
+#include "ui/dialog/map_parse_error_dialog.hpp"
 #include "ui/dialog/new_map_dialog.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"
 #include "ui/dialog/settings_dialog.hpp"
@@ -51,6 +54,11 @@ struct WidgetState final {
   NewTilesetDialogState new_tileset_dialog;
   ResizeMapDialogState resize_map_dialog;
   GodotExportDialogState godot_export_dialog;
+  AboutDialogState about_dialog;
+  CreditsDialogState credits_dialog;
+  MapParseErrorDialogState map_parse_error_dialog;
+  bool should_open_map_file_dialog    : 1 {};
+  bool should_open_about_imgui_dialog {};
 };
 
 }  // namespace tactile::ui

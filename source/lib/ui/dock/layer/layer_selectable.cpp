@@ -61,7 +61,7 @@ void _push_layer_popup(const Model& model,
 
     ImGui::Separator();
     if (ImGui::MenuItem(strings.action.rename_layer.c_str())) {
-      dispatcher.enqueue<ShowLayerRenameDialogEvent>(layer_entity);
+      dispatcher.enqueue<ShowRenameLayerDialogEvent>(layer_entity);
     }
 
     ImGui::Separator();

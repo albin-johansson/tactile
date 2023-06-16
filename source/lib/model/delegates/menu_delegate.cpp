@@ -67,6 +67,7 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
 
     case MenuAction::ReopenLastFile: {
+      // TODO event
       // TODO this will need to be tweaked if tileset documents viewing will be supported
       const auto& file_history = model.get<FileHistory>();
       Path file_path {file_history.last_closed_file.value()};
@@ -74,6 +75,7 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
     }
     case MenuAction::ClearFileHistory: {
+      // TODO event
       auto& file_history = model.get<FileHistory>();
       file_history.entries.clear();
       break;
@@ -173,6 +175,7 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
 
     case MenuAction::HighlightLayer:
+      // TODO event
       settings.negate_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT);
       break;
 
@@ -221,24 +224,27 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
 
     case MenuAction::OpenDemoWindow:
+      // TODO event
       break;
 
     case MenuAction::OpenStyleEditor:
+      // TODO event
       break;
 
     case MenuAction::ShowAbout:
-      ui::open_about_dialog();
+      dispatcher.enqueue<ShowAboutDialogEvent>();
       break;
 
     case MenuAction::ShowAboutImGui:
-      // ui::open_about_dear_imgui_dialog();
+      dispatcher.enqueue<ShowAboutImGuiDialogEvent>();
       break;
 
     case MenuAction::ShowCredits:
-      ui::open_credits_dialog();
+      dispatcher.enqueue<ShowCreditsDialogEvent>();
       break;
 
     case MenuAction::ReportIssue:
+      // FIXME emit event instead
       cen::open_url("https://github.com/albin-johansson/tactile/issues/new");
       break;
   }

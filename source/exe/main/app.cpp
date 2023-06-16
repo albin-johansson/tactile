@@ -156,7 +156,7 @@ void App::_subscribe_to_events()
   ROUTE(MoveLayerDownEvent, &App::_on_move_layer_down);
   ROUTE(SetLayerOpacityEvent, &App::_on_set_layer_opacity);
   ROUTE(SetLayerVisibleEvent, &App::_on_set_layer_visible);
-  ROUTE(ShowLayerRenameDialogEvent, &App::_on_show_layer_rename_dialog);
+  ROUTE(ShowRenameLayerDialogEvent, &App::_on_show_layer_rename_dialog);
 
   // Object events
   ROUTE(MoveObjectEvent, &App::_on_move_object);
@@ -233,6 +233,11 @@ void App::_subscribe_to_events()
   ROUTE(RenamePropertyEvent, &App::_on_rename_property);
   ROUTE(UpdatePropertyEvent, &App::_on_update_property);
   ROUTE(SetPropertyTypeEvent, &App::_on_set_property_type);
+
+  // Miscellaneous events
+  ROUTE(ShowAboutDialogEvent, &App::_on_show_about_dialog);
+  ROUTE(ShowCreditsDialogEvent, &App::_on_show_credits_dialog);
+  ROUTE(ShowAboutImGuiDialogEvent, &App::_on_show_about_imgui_dialog);
 }
 
 void App::_init_persistent_settings()
@@ -645,10 +650,10 @@ void App::_on_set_layer_visible(const SetLayerVisibleEvent& event)
   on_set_layer_visible(*mModel, event);
 }
 
-void App::_on_show_layer_rename_dialog(const ShowLayerRenameDialogEvent& event)
+void App::_on_show_layer_rename_dialog(const ShowRenameLayerDialogEvent& event)
 {
-  spdlog::trace("[ShowLayerRenameDialogEvent] layer: {}", event.layer);
-  // TODO ui::show_rename_layer_dialog(event.layer);
+  spdlog::trace("[ShowRenameLayerDialogEvent] layer: {}", event.layer);
+  on_show_rename_layer_dialog(*mModel, event);
 }
 
 void App::_on_move_object(const MoveObjectEvent& event)
@@ -1076,6 +1081,30 @@ void App::_on_set_property_type(const SetPropertyTypeEvent& event)
                 event.name,
                 event.type);
   on_set_property_type(*mModel, event);
+}
+
+void App::_on_show_about_dialog(const ShowAboutDialogEvent&)
+{
+  spdlog::trace("[ShowAboutDialogEvent]");
+
+  auto& widget_state = mModel->get<ui::WidgetState>();
+  widget_state.about_dialog.should_open = true;
+}
+
+void App::_on_show_credits_dialog(const ShowCreditsDialogEvent&)
+{
+  spdlog::trace("[ShowCreditsDialog]");
+
+  auto& widget_state = mModel->get<ui::WidgetState>();
+  widget_state.credits_dialog.should_open = true;
+}
+
+void App::_on_show_about_imgui_dialog(const ShowAboutImGuiDialogEvent&)
+{
+  spdlog::trace("[ShowAboutImGuiDialogEvent]");
+
+  auto& widget_state = mModel->get<ui::WidgetState>();
+  widget_state.should_open_about_imgui_dialog = true;
 }
 
 }  // namespace tactile

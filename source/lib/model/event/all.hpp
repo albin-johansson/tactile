@@ -26,6 +26,7 @@
 #include "model/event/layer_events.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/menu_events.hpp"
+#include "model/event/misc_events.hpp"
 #include "model/event/object_events.hpp"
 #include "model/event/property_events.hpp"
 #include "model/event/setting_events.hpp"

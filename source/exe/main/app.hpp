@@ -31,6 +31,7 @@
 #include "model/event/layer_events.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/menu_events.hpp"
+#include "model/event/misc_events.hpp"
 #include "model/event/object_events.hpp"
 #include "model/event/property_events.hpp"
 #include "model/event/setting_events.hpp"
@@ -132,7 +133,7 @@ class App final : public AppDelegate {
   void _on_move_layer_down(const MoveLayerDownEvent& event);
   void _on_set_layer_opacity(const SetLayerOpacityEvent& event);
   void _on_set_layer_visible(const SetLayerVisibleEvent& event);
-  void _on_show_layer_rename_dialog(const ShowLayerRenameDialogEvent& event);
+  void _on_show_layer_rename_dialog(const ShowRenameLayerDialogEvent& event);
 
   // Object events
   void _on_move_object(const MoveObjectEvent& event);
@@ -207,6 +208,11 @@ class App final : public AppDelegate {
   void _on_rename_property(const RenamePropertyEvent& event);
   void _on_update_property(const UpdatePropertyEvent& event);
   void _on_set_property_type(const SetPropertyTypeEvent& event);
+
+  // Miscellaneous events
+  void _on_show_about_dialog(const ShowAboutDialogEvent& event);
+  void _on_show_credits_dialog(const ShowCreditsDialogEvent& event);
+  void _on_show_about_imgui_dialog(const ShowAboutImGuiDialogEvent& event);
 };
 
 }  // namespace tactile

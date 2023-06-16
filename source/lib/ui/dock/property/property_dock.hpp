@@ -39,10 +39,10 @@ struct PropertyItemContextMenuState final {
 struct PropertyDockState final {
   Maybe<String> rename_target;
   Maybe<String> change_type_target;
-  PropertyItemContextMenuState context_state;
   NewPropertyDialogState new_property_dialog;
   RenamePropertyDialogState rename_property_dialog;
   SetPropertyTypeDialogState set_property_type_dialog;
+  PropertyItemContextMenuState context_state;
   bool has_focus : 1 {};
 };
 

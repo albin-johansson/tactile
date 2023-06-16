@@ -19,72 +19,48 @@
 
 #include "rename_layer_dialog.hpp"
 
-#include <utility>  // move
-
 #include <imgui.h>
 
-#include "common/util/string_buffer.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
-namespace {
 
-struct RenameLayerDialogState final {
-  Entity layer_entity {kNullEntity};
-  String old_name;
-  StringBuffer name_buffer {};
-  bool open_dialog {};
-};
-
-inline RenameLayerDialogState gDialogState;
-
-}  // namespace
-
-void open_rename_layer_dialog(const Entity layer_entity, String current_name)
-{
-  gDialogState.layer_entity = layer_entity;
-  gDialogState.old_name = std::move(current_name);
-  gDialogState.name_buffer = gDialogState.old_name;
-  gDialogState.open_dialog = true;
-}
-
-void update_rename_layer_dialog(const Model& model, Dispatcher& dispatcher)
+void push_rename_layer_dialog(const Model& model,
+                              RenameLayerDialogState& state,
+                              Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
 
-  DialogOptions options {
+  DialogOptions dialog_options {
       .title = strings.window.rename_layer.c_str(),
       .close_label = strings.misc.close.c_str(),
       .accept_label = strings.misc.rename.c_str(),
   };
 
-  const bool should_acquire_focus = gDialogState.open_dialog;
+  const bool should_acquire_focus = state.should_open;
 
-  if (gDialogState.open_dialog) {
-    options.flags |= UI_DIALOG_FLAG_OPEN;
-    gDialogState.open_dialog = false;
+  if (state.should_open) {
+    dialog_options.flags |= UI_DIALOG_FLAG_OPEN;
+    state.should_open = false;
   }
 
-  if (auto new_name = gDialogState.name_buffer.as_string_view();
-      !new_name.empty() && new_name != gDialogState.old_name) {
-    options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
+  if (auto new_name = state.name_buffer.as_string_view();
+      !new_name.empty() && new_name != state.old_name) {
+    dialog_options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
   DialogAction action {DialogAction::None};
-  if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
+  if (const ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
     if (should_acquire_focus) {
       ImGui::SetKeyboardFocusHere();
     }
-    ImGui::InputText("##Input",
-                     gDialogState.name_buffer.data(),
-                     gDialogState.name_buffer.size_bytes());
+    ImGui::InputText("##Input", state.name_buffer.data(), state.name_buffer.size_bytes());
   }
 
   if (action == DialogAction::Accept) {
-    dispatcher.enqueue<RenameLayerEvent>(gDialogState.layer_entity,
-                                         gDialogState.name_buffer.as_string());
+    dispatcher.enqueue<RenameLayerEvent>(state.layer, state.name_buffer.as_string());
   }
 }
 

@@ -22,7 +22,6 @@
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
-#include "components/context.hpp"
 #include "components/document.hpp"
 #include "components/map.hpp"
 #include "model/event/layer_events.hpp"
@@ -90,20 +89,6 @@ void _push_side_buttons(const Model& model,
   }
 }
 
-void _push_rename_dialog(const Model& model,
-                         LayerDockState& state,
-                         Dispatcher& dispatcher)
-{
-  if (state.rename_target_layer != kNullEntity) {
-    const auto& layer_context = model.get<Context>(state.rename_target_layer);
-
-    open_rename_layer_dialog(state.rename_target_layer, layer_context.name);
-    state.rename_target_layer = kNullEntity;
-  }
-
-  update_rename_layer_dialog(model, dispatcher);
-}
-
 void _push_contents(const Model& model,
                     const Strings& strings,
                     LayerDockState& state,
@@ -133,7 +118,7 @@ void _push_contents(const Model& model,
     }
   }
 
-  _push_rename_dialog(model, state, dispatcher);
+  push_rename_layer_dialog(model, state.rename_layer_dialog, dispatcher);
 }
 
 }  // namespace
@@ -145,7 +130,6 @@ void push_layer_dock_widget(const Model& model,
   TACTILE_ASSERT(sys::has_active_document(model));
 
   const auto& settings = model.get<Settings>();
-
   if (!settings.test_flag(SETTINGS_SHOW_LAYER_DOCK_BIT)) {
     return;
   }

@@ -20,16 +20,16 @@
 #pragma once
 
 #include "common/type/dispatcher.hpp"
-#include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "model/model.hpp"
 #include "ui/dock/layer/add_layer_context_menu.hpp"
+#include "ui/dock/layer/dialogs/rename_layer_dialog.hpp"
 
 namespace tactile::ui {
 
 struct LayerDockState final {
   AddLayerContextMenu add_layer_context_menu;
-  Entity rename_target_layer {kNullEntity};
+  RenameLayerDialogState rename_layer_dialog;
   bool has_focus {};
 };
 
