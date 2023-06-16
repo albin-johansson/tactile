@@ -22,20 +22,28 @@
 #include <imgui.h>
 
 #include "common/type/dispatcher.hpp"
+#include "common/type/maybe.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
 
+struct DockSpaceState final {
+  Maybe<ImGuiID> root_dock_id;
+  bool did_initialize {};
+};
+
 /// Updates the root dock space, call this function once each frame.
-void update_dock_space(const Model& model);
+void update_dock_space(const Model& model, DockSpaceState& state);
 
 /// Loads the default layout for a dock space.
 void load_default_layout(const Model& model, ImGuiID id);
 
 /// Resets all dock space widgets to the default layout.
-void reset_layout(const Model& model, Dispatcher& dispatcher);
+void reset_layout(const Model& model, ImGuiID root_id, Dispatcher& dispatcher);
 
 /// Resets the layout and regenerates the 'imgui.ini' file if it is missing.
-void check_for_missing_layout_file(const Model& model, Dispatcher& dispatcher);
+void check_for_missing_layout_file(const Model& model,
+                                   ImGuiID root_id,
+                                   Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

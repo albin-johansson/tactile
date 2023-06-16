@@ -36,6 +36,7 @@
 #include "model/event/property_events.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/event/tileset_events.hpp"
+#include "model/event/view_events.hpp"
 #include "model/event/viewport_events.hpp"
 
 namespace tactile {
@@ -82,6 +83,9 @@ class App final : public AppDelegate {
   void _on_save_as(const SaveAsEvent& event);
   void _on_show_save_as_dialog(const ShowSaveAsDialogEvent& event);
   void _on_quit(const QuitEvent& event);
+
+  // View events
+  void _on_reset_layout(const ResetLayoutEvent& event);
 
   // Map events
   void _on_show_new_map_dialog(const ShowNewMapDialogEvent& event);

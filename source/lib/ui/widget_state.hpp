@@ -28,6 +28,7 @@
 #include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/animation/animation_dock.hpp"
 #include "ui/dock/comp/component_editor_dialog.hpp"
+#include "ui/dock/dock_space.hpp"
 #include "ui/dock/editor/central_map_viewport.hpp"
 #include "ui/dock/editor/central_tileset_viewport.hpp"
 #include "ui/dock/editor/editor_dock.hpp"
@@ -41,6 +42,7 @@
 namespace tactile::ui {
 
 struct WidgetState final {
+  DockSpaceState dock_space;
   LayerDockState layer_dock;
   TilesetDockState tileset_dock;
   AnimationDockState animation_dock;

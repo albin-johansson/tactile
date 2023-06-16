@@ -21,6 +21,7 @@
 
 #include "model/event/command_events.hpp"
 #include "model/event/font_events.hpp"
+#include "model/event/view_events.hpp"
 #include "model/settings.hpp"
 #include "model/systems/menu_system.hpp"
 #include "ui/dock/dock_space.hpp"
@@ -48,7 +49,7 @@ void on_set_settings(Model& model, Dispatcher& dispatcher, const SetSettingsEven
 
   if (curr_settings.get_language() != prev_settings.get_language()) {
     sys::retranslate_menus(model);
-    ui::reset_layout(model, dispatcher);
+    dispatcher.enqueue<ResetLayoutEvent>();
   }
 
   if (curr_settings.get_command_capacity() != prev_settings.get_command_capacity()) {
@@ -86,7 +87,7 @@ void on_set_language(Model& model, Dispatcher& dispatcher, const SetLanguageEven
   settings.set_language(event.language);
 
   sys::retranslate_menus(model);
-  ui::reset_layout(model, dispatcher);
+  dispatcher.enqueue<ResetLayoutEvent>();
 }
 
 void on_set_theme(Model& model, const SetThemeEvent& event)

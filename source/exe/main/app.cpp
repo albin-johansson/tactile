@@ -107,6 +107,9 @@ void App::_subscribe_to_events()
   ROUTE(ShowSaveAsDialogEvent, &App::_on_show_save_as_dialog);
   ROUTE(QuitEvent, &App::_on_quit);
 
+  // View events
+  ROUTE(ResetLayoutEvent, &App::_on_reset_layout);
+
   // Map events
   ROUTE(ShowNewMapDialogEvent, &App::_on_show_new_map_dialog);
   ROUTE(ShowOpenMapDialogEvent, &App::_on_show_open_map_dialog);
@@ -283,9 +286,11 @@ void App::on_update()
   // TODO update animated tiles
   sys::update_menu_items(model, mDispatcher);
 
-  auto& ui_state = model.get<ui::WidgetState>();
-  ui::render_ui(model, ui_state, mDispatcher);
-  ui::check_for_missing_layout_file(model, mDispatcher);
+  auto& widgets = model.get<ui::WidgetState>();
+  ui::render_ui(model, widgets, mDispatcher);
+  ui::check_for_missing_layout_file(model,
+                                    widgets.dock_space.root_dock_id.value(),
+                                    mDispatcher);
 
   const auto& io = ImGui::GetIO();
   if (mFramebufferScale.x != io.DisplayFramebufferScale.x) {
@@ -371,6 +376,14 @@ void App::_on_quit(const QuitEvent&)
 {
   spdlog::trace("[QuitEvent]");
   mShouldStop = true;
+}
+
+void App::_on_reset_layout(const ResetLayoutEvent&)
+{
+  spdlog::trace("[ResetLayoutEvent]");
+
+  const auto& widgets = mModel->get<ui::WidgetState>();
+  ui::reset_layout(*mModel, widgets.dock_space.root_dock_id.value(), mDispatcher);
 }
 
 void App::_on_show_new_map_dialog(const ShowNewMapDialogEvent& event)

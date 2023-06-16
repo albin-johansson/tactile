@@ -46,7 +46,7 @@ namespace tactile::ui {
 void render_ui(const Model& model, WidgetState& widgets, Dispatcher& dispatcher)
 {
   update_dynamic_color_cache();
-  update_dock_space(model);
+  update_dock_space(model, widgets.dock_space);
 
   push_menu_bar(model, widgets.menu_bar, dispatcher);
 

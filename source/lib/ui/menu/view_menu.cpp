@@ -22,10 +22,9 @@
 #include <imgui.h>
 
 #include "model/event/setting_events.hpp"
+#include "model/event/view_events.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
-#include "model/systems/menu_system.hpp"
-#include "ui/dock/dock_space.hpp"
 #include "ui/style/themes.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
@@ -40,7 +39,7 @@ void _push_widgets_menu(const Model& model,
   if (const Menu menu {strings.menu.widgets.c_str(), sys::has_active_document(model)};
       menu.is_open()) {
     if (ImGui::MenuItem(strings.action.reset_layout.c_str())) {
-      reset_layout(model, dispatcher);
+      dispatcher.enqueue<ResetLayoutEvent>();
     }
 
     ImGui::Separator();
