@@ -28,29 +28,18 @@
 #include "ui/widget/scoped.hpp"
 
 namespace tactile::ui {
-namespace {
 
-struct DebugMenuState final {
-  bool show_metrics {};
-  bool show_demo {};
-  bool show_style_editor {};
-};
-
-inline constinit DebugMenuState gMenuState;
-
-}  // namespace
-
-void show_debug_menu(const Model& model, Dispatcher&)
+void push_debug_menu(const Model& model, DebugMenuState& state, Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
 
   if (const Menu menu {strings.menu.debug.c_str()}; menu.is_open()) {
-    gMenuState.show_metrics = ImGui::MenuItem(strings.action.show_metrics.c_str());
+    state.show_metrics_dialog = ImGui::MenuItem(strings.action.show_metrics.c_str());
 
     if constexpr (kIsDebugBuild) {
       ImGui::Separator();
-      gMenuState.show_demo = ImGui::MenuItem("Show Demo Window...");
-      gMenuState.show_style_editor = ImGui::MenuItem("Show Style Editor...");
+      state.show_demo_dialog = ImGui::MenuItem("Show Demo Window...");
+      state.show_style_editor_dialog = ImGui::MenuItem("Show Style Editor...");
     }
 
     ImGui::Separator();
@@ -60,16 +49,16 @@ void show_debug_menu(const Model& model, Dispatcher&)
     }
   }
 
-  if (gMenuState.show_metrics) {
+  if (state.show_metrics_dialog) {
     center_next_window_on_appearance();
-    ImGui::ShowMetricsWindow(&gMenuState.show_metrics);
+    ImGui::ShowMetricsWindow(&state.show_metrics_dialog);
   }
 
-  if (gMenuState.show_demo) {
-    ImGui::ShowDemoWindow(&gMenuState.show_demo);
+  if (state.show_demo_dialog) {
+    ImGui::ShowDemoWindow(&state.show_demo_dialog);
   }
 
-  if (gMenuState.show_style_editor) {
+  if (state.show_style_editor_dialog) {
     const Window editor {"Style Editor"};
     ImGui::ShowStyleEditor();
   }

@@ -134,7 +134,7 @@ void _push_quick_lang_menu(const Strings& strings, Dispatcher& dispatcher)
 
 }  // namespace
 
-void show_view_menu(const Model& model, Dispatcher& dispatcher)
+void push_view_menu(const Model& model, Dispatcher& dispatcher)
 {
   const auto& settings = model.get<Settings>();
   const auto& strings = sys::get_current_language_strings(model);

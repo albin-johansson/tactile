@@ -36,6 +36,7 @@
 #include "ui/dock/property/property_dock.hpp"
 #include "ui/dock/tileset/dialogs/new_tileset_dialog.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
+#include "ui/menu/menu_bar.hpp"
 
 namespace tactile::ui {
 
@@ -48,6 +49,7 @@ struct WidgetState final {
   TilesetViewportState tileset_viewport;
   LogDockState log_dock;
   PropertyDockState property_dock;
+  MenuBarState menu_bar;
   SettingsDialogState settings_dialog;
   ComponentEditorDialogState component_editor_dialog;
   NewMapDialogState new_map_dialog;
@@ -57,7 +59,7 @@ struct WidgetState final {
   AboutDialogState about_dialog;
   CreditsDialogState credits_dialog;
   MapParseErrorDialogState map_parse_error_dialog;
-  bool should_open_map_file_dialog    : 1 {};
+  bool should_open_map_file_dialog : 1 {};
   bool should_open_about_imgui_dialog {};
 };
 

@@ -48,7 +48,7 @@ void render_ui(const Model& model, WidgetState& widgets, Dispatcher& dispatcher)
   update_dynamic_color_cache();
   update_dock_space(model);
 
-  push_menu_bar(model, dispatcher);
+  push_menu_bar(model, widgets.menu_bar, dispatcher);
 
   if (is_layer_dock_enabled(model)) {
     push_layer_dock_widget(model, widgets.layer_dock, dispatcher);
