@@ -115,7 +115,7 @@ void _restore_object_layer(Model& model,
 
 auto _restore_layer(Model& model,
                     const Entity component_set_entity,
-                    const Entity map_entity,
+                    const Map& map,
                     const LayerIR& ir_layer,
                     const Entity parent_layer_entity = kNullEntity) -> Entity
 {
@@ -146,11 +146,7 @@ auto _restore_layer(Model& model,
 
       const auto& ir_group = ir_layer.as_group_layer();
       for (const auto& ir_child_layer: ir_group.children) {
-        _restore_layer(model,
-                       component_set_entity,
-                       map_entity,
-                       *ir_child_layer,
-                       layer_entity);
+        _restore_layer(model, component_set_entity, map, *ir_child_layer, layer_entity);
       }
 
       break;
@@ -162,6 +158,10 @@ auto _restore_layer(Model& model,
   if (parent_layer_entity != kNullEntity) {
     auto& parent_layer = model.get<GroupLayer>(parent_layer_entity);
     parent_layer.children.push_back(layer_entity);
+  }
+  else {
+    auto& root_layer = model.get<GroupLayer>(map.root_layer);
+    root_layer.children.push_back(layer_entity);
   }
 
   auto& layer = model.get<Layer>(layer_entity);
@@ -178,11 +178,11 @@ auto _restore_layer(Model& model,
 
 void _restore_layers(Model& model,
                      const Entity component_set_entity,
-                     const Entity map_entity,
+                     const Map& map,
                      const MapIR& ir_map)
 {
   for (const auto& ir_layer: ir_map.layers) {
-    _restore_layer(model, component_set_entity, map_entity, ir_layer);
+    _restore_layer(model, component_set_entity, map, ir_layer);
   }
 }
 
@@ -379,7 +379,7 @@ void create_map_document_from_ir(const MapIR& ir_map,
   _restore_tile_format(tile_format, ir_map.tile_format);
   _restore_component_definitions(model, component_set, ir_map);
   _restore_tileset_documents(model, map, map_identifiers, document.component_set, ir_map);
-  _restore_layers(model, document.component_set, map_document.map, ir_map);
+  _restore_layers(model, document.component_set, map, ir_map);
 
   _restore_context(model, document.component_set, map_document.map, ir_map.context);
 
