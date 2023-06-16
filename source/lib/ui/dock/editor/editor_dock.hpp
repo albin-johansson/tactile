@@ -41,9 +41,9 @@ void push_editor_dock_widget(const Model& model,
                              EditorDockState& state,
                              Dispatcher& dispatcher);
 
-void viewport_widget_mouse_wheel_event_handler(Entity viewport_entity,
-                                               const Viewport& viewport,
-                                               Dispatcher& dispatcher,
-                                               const cen::mouse_wheel_event& event);
+void on_mouse_wheel_event_in_central_viewport(Entity viewport_entity,
+                                              const Viewport& viewport,
+                                              Dispatcher& dispatcher,
+                                              const cen::mouse_wheel_event& event);
 
 }  // namespace tactile::ui

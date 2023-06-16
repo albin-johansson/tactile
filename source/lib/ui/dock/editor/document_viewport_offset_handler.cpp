@@ -25,8 +25,9 @@
 
 namespace tactile::ui {
 
-void update_document_viewport_offset(const ImVec2& viewport_size,
-                                     [[maybe_unused]] Dispatcher& dispatcher)
+void update_document_viewport_offset(const Entity viewport_entity,
+                                     const ImVec2& viewport_size,
+                                     Dispatcher& dispatcher)
 {
   if (ImGui::GetTopMostPopupModal() != nullptr) {
     return;
@@ -42,7 +43,7 @@ void update_document_viewport_offset(const ImVec2& viewport_size,
     const auto& io = ImGui::GetIO();
     const Float2 delta {io.MouseDelta.x, io.MouseDelta.y};
     if (delta != Float2 {0, 0}) {
-      // TODO dispatcher.enqueue<OffsetViewportEvent>(delta);
+      dispatcher.enqueue<OffsetViewportEvent>(viewport_entity, delta);
     }
   }
 }

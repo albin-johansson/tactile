@@ -22,9 +22,12 @@
 #include <imgui.h>
 
 #include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
 
 namespace tactile::ui {
 
-void update_document_viewport_offset(const ImVec2& viewport_size, Dispatcher& dispatcher);
+void update_document_viewport_offset(Entity viewport_entity,
+                                     const ImVec2& viewport_size,
+                                     Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

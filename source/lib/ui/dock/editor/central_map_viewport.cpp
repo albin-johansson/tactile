@@ -215,7 +215,7 @@ void push_central_map_viewport(const Model& model,
   const auto canvas = create_canvas_info(viewport, map.tile_size, map.extent);
 
   update_dynamic_viewport_info(map_document_entity, canvas, dispatcher);
-  update_document_viewport_offset(canvas.size, dispatcher);
+  update_document_viewport_offset(map_document_entity, canvas.size, dispatcher);
 
   clear_canvas(canvas, settings.get_viewport_bg_color());
   push_scissor(canvas);

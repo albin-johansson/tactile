@@ -39,9 +39,9 @@ void push_tileset_dock_widget(const Model& model,
 
 [[nodiscard]] auto is_tileset_dock_enabled(const Model& model) -> bool;
 
-void tileset_dock_mouse_wheel_event_handler(const Model& model,
-                                            Entity attached_tileset_entity,
-                                            const cen::mouse_wheel_event& event,
-                                            Dispatcher& dispatcher);
+void on_mouse_wheel_event_in_tileset_dock(const Model& model,
+                                          Entity attached_tileset_entity,
+                                          const cen::mouse_wheel_event& event,
+                                          Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

@@ -32,16 +32,6 @@
 namespace tactile {
 namespace {
 
-void _on_keyboard([[maybe_unused]] Dispatcher& dispatcher, cen::keyboard_event event)
-{
-  // We don't care about these modifiers, they are just noise.
-  event.set_modifier(cen::key_mod::caps, false);
-  event.set_modifier(cen::key_mod::num, false);
-  event.set_modifier(cen::key_mod::mode, false);
-
-  // update_shortcuts(event, dispatcher);
-}
-
 void _on_mouse_wheel(Model& model,
                      Dispatcher& dispatcher,
                      const cen::mouse_wheel_event& event)
@@ -58,21 +48,18 @@ void _on_mouse_wheel(Model& model,
     const auto& document_viewport = model.get<Viewport>(document_entity);
 
     if (widgets.editor_dock.is_hovered) {
-      ui::viewport_widget_mouse_wheel_event_handler(document_entity,
-                                                    document_viewport,
-                                                    dispatcher,
-                                                    event);
+      ui::on_mouse_wheel_event_in_central_viewport(document_entity,
+                                                   document_viewport,
+                                                   dispatcher,
+                                                   event);
     }
     else if (document.type == DocumentType::Map && widgets.tileset_dock.has_hover) {
       const auto& map_document = model.get<MapDocument>(document_entity);
-      // const auto& map = model.get<Map>(map_document.map);
-
       if (map_document.active_tileset != kNullEntity) {
-        // const auto& attached_tileset =
-        //     model.get<AttachedTileset>(map_document.active_tileset);
-
-        // TODO ui::tileset_dock_mouse_wheel_event_handler(tileset_ref, event,
-        // get_dispatcher());
+        ui::on_mouse_wheel_event_in_tileset_dock(model,
+                                                 map_document.active_tileset,
+                                                 event,
+                                                 dispatcher);
       }
     }
   }
@@ -83,12 +70,6 @@ void _on_mouse_wheel(Model& model,
 void on_event(Model& model, Dispatcher& dispatcher, const cen::event_handler& event)
 {
   switch (event.type().value()) {
-    case cen::event_type::key_up:
-      [[fallthrough]];
-    case cen::event_type::key_down:
-      _on_keyboard(dispatcher, event.get<cen::keyboard_event>());
-      break;
-
     case cen::event_type::mouse_wheel:
       _on_mouse_wheel(model, dispatcher, event.get<cen::mouse_wheel_event>());
       break;

@@ -88,10 +88,10 @@ auto is_tileset_dock_enabled(const Model& model) -> bool
   return sys::is_map_document_active(model);
 }
 
-void tileset_dock_mouse_wheel_event_handler(const Model& model,
-                                            const Entity attached_tileset_entity,
-                                            const cen::mouse_wheel_event& event,
-                                            Dispatcher& dispatcher)
+void on_mouse_wheel_event_in_tileset_dock(const Model& model,
+                                          const Entity attached_tileset_entity,
+                                          const cen::mouse_wheel_event& event,
+                                          Dispatcher& dispatcher)
 {
   const auto& viewport = model.get<Viewport>(attached_tileset_entity);
 

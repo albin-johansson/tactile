@@ -146,7 +146,7 @@ void push_tileset_viewport(const Model& model,
   const auto canvas = create_canvas_info(viewport, tileset.tile_size, tileset_extent);
 
   update_dynamic_viewport_info(tileset_document_entity, canvas, dispatcher);
-  update_document_viewport_offset(canvas.size, dispatcher);
+  update_document_viewport_offset(tileset_document_entity, canvas.size, dispatcher);
 
   clear_canvas(canvas, settings.get_viewport_bg_color());
   push_scissor(canvas);

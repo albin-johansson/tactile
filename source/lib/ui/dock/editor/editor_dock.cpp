@@ -108,10 +108,10 @@ void push_editor_dock_widget(const Model& model,
   }
 }
 
-void viewport_widget_mouse_wheel_event_handler(const Entity viewport_entity,
-                                               const Viewport& viewport,
-                                               Dispatcher& dispatcher,
-                                               const cen::mouse_wheel_event& event)
+void on_mouse_wheel_event_in_central_viewport(const Entity viewport_entity,
+                                              const Viewport& viewport,
+                                              Dispatcher& dispatcher,
+                                              const cen::mouse_wheel_event& event)
 {
   if (cen::is_active(kPrimaryModifier)) {
     const auto y = event.precise_y();
