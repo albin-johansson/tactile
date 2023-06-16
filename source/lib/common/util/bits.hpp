@@ -19,10 +19,14 @@
 
 #pragma once
 
-#include <bit>       // byteswap, endian
-#include <concepts>  // integral, invocable
+#include <algorithm>    // reverse
+#include <bit>          // bit_cast, endian
+#include <concepts>     // integral, invocable
+#include <cstddef>      // byte
+#include <type_traits>  // has_unique_object_representations_v
 
 #include "common/primitives.hpp"
+#include "common/type/array.hpp"
 
 namespace tactile {
 
@@ -35,14 +39,28 @@ void each_byte(const Int value, T&& callable)
   }
 }
 
+template <std::integral T>
+[[nodiscard]] constexpr auto reverse_bytes(const T value) noexcept -> T
+{
+  using ByteArray = Array<std::byte, sizeof(T)>;
+
+  static_assert(std::has_unique_object_representations_v<T>,
+                "Must not have padding bits");
+
+  auto bytes = std::bit_cast<ByteArray>(value);
+  std::ranges::reverse(bytes);
+
+  return std::bit_cast<T>(bytes);
+}
+
 [[nodiscard]] constexpr auto to_little_endian(const uint32 value) noexcept -> uint32
 {
-  return (std::endian::native == std::endian::little) ? value : std::byteswap(value);
+  return (std::endian::native == std::endian::little) ? value : reverse_bytes(value);
 }
 
 [[nodiscard]] constexpr auto to_little_endian(const int32 value) noexcept -> int32
 {
-  return (std::endian::native == std::endian::little) ? value : std::byteswap(value);
+  return (std::endian::native == std::endian::little) ? value : reverse_bytes(value);
 }
 
 }  // namespace tactile
