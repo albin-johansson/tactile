@@ -39,16 +39,16 @@ class Color final {
   [[nodiscard]] static auto from_rgba(StringView rgba) -> Maybe<Color>;
   [[nodiscard]] static auto from_argb(StringView argb) -> Maybe<Color>;
 
-  /// Computes the relative luminance of the color.
-  ///
-  /// \details
-  /// This function is useful when determining appropriate text color for a background
-  /// of a certain color.
-  ///
-  /// \see
-  /// https://en.wikipedia.org/wiki/Relative_luminance
-  ///
-  /// \return the color luminance, in the interval [0, 1].
+  /**
+   * Computes the relative luminance of the color.
+   *
+   * \details This function is useful when determining appropriate text color for a
+   *          background of a certain color.
+   *
+   * \see https://en.wikipedia.org/wiki/Relative_luminance
+   *
+   * \return the color luminance, in the interval [0, 1].
+   */
   [[nodiscard]] auto get_luminance() const -> float;
 
   /// Indicates whether the color is considered to be dark.

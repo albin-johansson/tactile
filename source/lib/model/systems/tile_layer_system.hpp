@@ -27,15 +27,17 @@
 
 namespace tactile::sys {
 
-/// Runs a flood-fill algorithm in the layer, used by the bucket tool.
-///
-/// \details This will replace all adjacent tiles of the type at the origin position with
-/// the specified tile replacement.
-///
-/// \param tile_layer the target tile layer.
-/// \param origin the initial position of the flood.
-/// \param replacement the tile ID that will be used when replacing tiles.
-/// \param[out] affected optional destination for all modified positions.
+/**
+ * Runs a flood-fill algorithm in the layer, used by the bucket tool.
+ *
+ * \details This will replace all adjacent tiles of the type at the origin position with
+ *          the specified tile replacement.
+ *
+ * \param tile_layer    the target tile layer.
+ * \param origin        the initial position of the flood.
+ * \param replacement   the tile ID that will be used when replacing tiles.
+ * \param[out] affected optional destination for all modified positions.
+ */
 void flood(TileLayer& tile_layer,
            const TilePos& origin,
            TileID replacement,

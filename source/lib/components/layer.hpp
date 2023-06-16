@@ -41,11 +41,14 @@ struct Layer final {
 struct TileLayer final {
   TileMatrix tiles;  ///< 2D matrix of identifiers for all tiles in the layer.
 
-  /// Sets the tile identifier at the specified position.
-  ///
-  /// \note This function does nothing if the provided position is out-of-bounds.
-  /// \param pos the position of the tile to modify.
-  /// \param tile_id the new tile identifier.
+  /**
+   * Sets the tile identifier at the specified position.
+   *
+   * \note This function does nothing if the provided position is out-of-bounds.
+   *
+   * \param pos     the position of the tile to modify.
+   * \param tile_id the new tile identifier.
+   */
   void set_tile(TilePos pos, TileID tile_id);
 
   /// Returns the tile identifier at the specified position, as long as it's valid.

@@ -45,7 +45,7 @@ class Model final {
   /**
    * Sets whether an entity is enabled.
    *
-   * \param entity a valid entity.
+   * \param entity  a valid entity.
    * \param enabled true if the entity should be enabled; false otherwise.
    */
   void set_enabled(Entity entity, bool enabled);

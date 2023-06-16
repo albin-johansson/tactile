@@ -55,7 +55,7 @@ void load_languages(Model& model);
  * Returns the translated string for a menu action label.
  *
  * \param strings the associated set of translated strings.
- * \param action the menu action to translate.
+ * \param action  the menu action to translate.
  *
  * \return a string suitable for use as a menu action label.
  */

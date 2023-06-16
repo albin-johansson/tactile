@@ -38,9 +38,9 @@ using ByteSpan = Span<const uint8>;
  * \details Supplying a null data pointer or a data stream of zero bytes will cause the
  * function to simply return nothing.
  *
- * \param source the source data that will be compressed.
+ * \param source       the source data that will be compressed.
  * \param source_bytes the total size of the source data in bytes.
- * \param level the compression level that will be used (clamped to a valid value).
+ * \param level        the compression level that will be used (clamped to a valid value).
  *
  * \return a compressed byte stream, or nothing if something went wrong.
  */
@@ -61,7 +61,7 @@ template <typename T>
  *
  * \pre the source data must have been compressed using Zlib.
  *
- * \param source the compressed source data.
+ * \param source       the compressed source data.
  * \param source_bytes the total size of the compressed source data in bytes.
  *
  * \return a byte stream of uncompressed data, or nothing if something went wrong.
@@ -95,7 +95,7 @@ template <typename T>
  * \details Supplying a null data pointer or a data stream of zero bytes will cause the
  * function to simply return nothing.
  *
- * \param source the source data that will be compressed.
+ * \param source       the source data that will be compressed.
  * \param source_bytes the total size of the source data, in bytes.
  *
  * \return a compressed byte stream, or nothing if something went wrong.
@@ -116,7 +116,7 @@ template <typename T>
  *
  * \pre the source data must have been compressed using Zstd.
  *
- * \param source the compressed source data.
+ * \param source       the compressed source data.
  * \param source_bytes the total size of the compressed source data in bytes.
  *
  * \return a byte stream of uncompressed data, or nothing if something went wrong.

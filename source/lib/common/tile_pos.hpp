@@ -28,9 +28,11 @@
 
 namespace tactile {
 
-/// Represents a tile position in a map or tileset.
-///
-/// Note, this class may represent positions with negative indices.
+/**
+ * Represents a tile position in a map or tileset.
+ *
+ * \note This class may represent positions with negative indices.
+ */
 class TilePos final {
  public:
   /// Creates a tile position at origin, (0, 0).

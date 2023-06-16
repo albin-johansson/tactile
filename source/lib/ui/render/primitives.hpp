@@ -175,14 +175,16 @@ inline void draw_shadowed_ellipse(const Float2& center,
   draw_shadowed_ellipse(as_imvec2(center), as_imvec2(radius), color, thickness);
 }
 
-/// Renders a region of a texture.
-///
-/// \param texture the source texture.
-/// \param position the position of the rendered texture.
-/// \param size the size of the rendered texture.
-/// \param uv_min the normalized top-left corner of the texture region to render.
-/// \param uv_max the normalized bottom-right corner of the texture region to render.
-/// \param opacity the opacity of the rendered texture, in the interval [0, 255].
+/**
+ * Renders a region of a texture.
+ *
+ * \param texture  the source texture.
+ * \param position the position of the rendered texture.
+ * \param size     the size of the rendered texture.
+ * \param uv_min   the normalized top-left corner of the texture region to render.
+ * \param uv_max   the normalized bottom-right corner of the texture region to render.
+ * \param opacity  the opacity of the rendered texture, in the interval [0, 255].
+ */
 inline void render_image(ImTextureID texture,
                          const ImVec2& position,
                          const ImVec2& size,

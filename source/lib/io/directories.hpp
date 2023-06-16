@@ -26,14 +26,16 @@ namespace tactile {
 /// Opens a directory in the OS file explorer
 void open_directory(const Path& dir);
 
-/// Returns the path to a resource.
-///
-/// \details This function should be used to locate all resource files, such as images, to
-/// ensure that resource paths are resolved in app bundles on macOS.
-///
-/// \param resource the path to the resource, e.g "assets/foo.png".
-///
-/// \return the resolved file path.
+/**
+ * Returns the path to a resource.
+ *
+ * \details This function should be used to locate all resource files, such as images, to
+ *          ensure that resource paths are resolved in app bundles on macOS.
+ *
+ * \param resource the path to the resource, e.g "assets/foo.png".
+ *
+ * \return the resolved file path.
+ */
 [[nodiscard]] auto find_resource(const char* resource) -> Path;
 
 /// Returns the file path to the associated `imgui.ini` file.

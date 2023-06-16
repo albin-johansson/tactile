@@ -37,9 +37,10 @@ namespace tactile::sys {
  *
  * \note The created document is neither opened nor selected by this function.
  *
- * \param model the associated model.
- * \param extent the size of the map.
+ * \param model     the associated model.
+ * \param extent    the size of the map.
  * \param tile_size the logical size of tiles in the map.
+ *
  * \return a map document entity.
  */
 auto create_map_document(Model& model, const TileExtent& extent, const Int2& tile_size)
@@ -50,9 +51,10 @@ auto create_map_document(Model& model, const TileExtent& extent, const Int2& til
  *
  * \note The created document is neither opened nor selected by this function.
  *
- * \param model the associated model.
- * \param tile_size the size of the tiles in the tileset image.
+ * \param model      the associated model.
+ * \param tile_size  the size of the tiles in the tileset image.
  * \param image_path the path to the source image.
+ *
  * \return a tileset document entity.
  */
 auto create_tileset_document(Model& model, const Int2& tile_size, const Path& image_path)
@@ -64,7 +66,7 @@ auto create_tileset_document(Model& model, const Int2& tile_size, const Path& im
  * \details The document is automatically closed by this function. Additionally, the
  * active document property is reset if the document is active.
  *
- * \param model the associated model.
+ * \param model           the associated model.
  * \param document_entity a valid document entity.
  */
 void destroy_document(Model& model, Entity document_entity);
@@ -74,7 +76,7 @@ void destroy_document(Model& model, Entity document_entity);
  *
  * \pre The specified document must be open.
  *
- * \param model the associated model.
+ * \param model           the associated model.
  * \param document_entity a valid document entity.
  */
 void select_document(Model& model, Entity document_entity);
@@ -84,7 +86,7 @@ void select_document(Model& model, Entity document_entity);
  *
  * \details This function has no effect if the document is already open.
  *
- * \param model the associated model.
+ * \param model           the associated model.
  * \param document_entity a valid document entity.
  */
 void open_document(Model& model, Entity document_entity);
@@ -96,7 +98,7 @@ void open_document(Model& model, Entity document_entity);
  *
  * \pre The specified document must be open.
  *
- * \param model the associated model.
+ * \param model           the associated model.
  * \param document_entity a valid document entity.
  */
 void close_document(Model& model, Entity document_entity);
@@ -104,16 +106,16 @@ void close_document(Model& model, Entity document_entity);
 /**
  * Sets the name of a document.
  *
- * \param model the associated model.
+ * \param model           the associated model.
  * \param document_entity a valid document entity.
- * \param name the new document name.
+ * \param name            the new document name.
  */
 void set_document_name(Model& model, Entity document_entity, String name);
 
 /**
  * Returns the name of a document.
  *
- * \param model the associated model.
+ * \param model           the associated model.
  * \param document_entity a valid document entity.
  *
  * \return the document name.
@@ -125,6 +127,7 @@ void set_document_name(Model& model, Entity document_entity, String name);
  * Returns the currently active document (if there is one).
  *
  * \param model the associated model.
+ *
  * \return a document entity or null.
  */
 [[nodiscard]] auto get_active_document(const Model& model) -> Entity;
@@ -142,6 +145,7 @@ void set_document_name(Model& model, Entity document_entity, String name);
  * Returns the currently active map (if there is one).
  *
  * \param model the associated model.
+ *
  * \return a map entity or null.
  */
 [[nodiscard]] auto get_active_map(const Model& model) -> Entity;
@@ -151,8 +155,9 @@ void set_document_name(Model& model, Entity document_entity, String name);
 /**
  * Returns the tileset document associated with a tileset.
  *
- * \param model the associated model.
+ * \param model          the associated model.
  * \param tileset_entity a valid tileset entity.
+ *
  * \return a tileset document entity, or the null entity.
  */
 [[nodiscard]] auto get_associated_tileset_document(const Model& model,
@@ -162,7 +167,8 @@ void set_document_name(Model& model, Entity document_entity, String name);
  * Indicates whether any loaded document is associated with the specified path.
  *
  * \param model the associated model.
- * \param path the file path to look for.
+ * \param path  the file path to look for.
+ *
  * \return true if a document was found; false otherwise.
  */
 [[nodiscard]] auto has_document_with_path(const Model& model, const Path& path) -> bool;
@@ -181,8 +187,9 @@ void set_document_name(Model& model, Entity document_entity, String name);
 /**
  * Indicates whether a specific document is open.
  *
- * \param model the associated model.
+ * \param model           the associated model.
  * \param document_entity a valid document entity.
+ *
  * \return true if the document is open; false otherwise.
  */
 [[nodiscard]] auto is_document_open(const Model& model, Entity document_entity) -> bool;

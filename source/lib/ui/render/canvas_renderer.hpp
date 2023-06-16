@@ -40,12 +40,12 @@ void render_outline(const CanvasInfo& canvas, const Color& outline_color);
 /**
  * Renders a single tile from a tileset.
  *
- * \param canvas the target canvas.
- * \param texture a handle to the tileset texture.
- * \param uv_size the size of each tile in the tileset image, in UV coordinates.
+ * \param canvas         the target canvas.
+ * \param texture        a handle to the tileset texture.
+ * \param uv_size        the size of each tile in the tileset image, in UV coordinates.
  * \param pos_in_tileset the position of the tile in the tileset.
- * \param rendered_pos the position of the rendered tile.
- * \param opacity the opacity of the tile, in the interval [0, 1].
+ * \param rendered_pos   the position of the rendered tile.
+ * \param opacity        the opacity of the tile, in the interval [0, 1].
  */
 void render_tile_image(const CanvasInfo& canvas,
                        ImTextureID texture,

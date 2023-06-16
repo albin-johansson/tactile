@@ -34,7 +34,7 @@ namespace tactile::sys {
 /**
  * Copies the attributes of all components of a specific component type.
  *
- * \param model the associated model.
+ * \param model             the associated model.
  * \param definition_entity a component definition entity.
  *
  * \return a map that associates context entities to attribute values.
@@ -45,9 +45,9 @@ namespace tactile::sys {
 /**
  * Copies a specific attribute in all components of a specific component type.
  *
- * \param model the associated model.
+ * \param model             the associated model.
  * \param definition_entity a component definition entity.
- * \param attribute_name the name of the attribute to copy.
+ * \param attribute_name    the name of the attribute to copy.
  *
  * \return a map that associates component entities to attributes.
  */

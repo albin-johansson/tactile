@@ -53,18 +53,22 @@ inline constexpr Array<Theme, 13> kDarkThemes [[maybe_unused]] = {
 
 [[nodiscard]] auto human_readable_name(Theme theme) -> StringView;
 
-/// Applies the styling used by Tactile to a style instance.
-///
-/// Note, this function does not affect the colors of the style.
-///
-/// \param style the style that will be updated.
+/**
+ * Applies the styling used by Tactile to a style instance.
+ *
+ * \note This function does not affect the colors of the style.
+ *
+ * \param style the style that will be updated.
+ */
 void apply_style(ImGuiStyle& style);
 
-/// Applies a theme to a style.
-///
-/// \param style the style that will be affected.
-/// \param theme the theme that will be applied to the style.
-/// \param saturation the accent color saturation, clamped to [0, 100].
+/**
+ * Applies a theme to a style.
+ *
+ * \param style      the style that will be affected.
+ * \param theme      the theme that will be applied to the style.
+ * \param saturation the accent color saturation, clamped to [0, 100].
+ */
 void apply_theme(ImGuiStyle& style, Theme theme, int32 saturation);
 
 }  // namespace tactile::ui

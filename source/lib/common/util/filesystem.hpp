@@ -25,14 +25,17 @@
 
 namespace tactile {
 
-/// Converts a path to a string that is guaranteed to use forward slashes.
-///
-/// This function is useful when saving paths to files in a portable way. Since all
-/// relevant operating systems understand forward slashes, even if some operating systems
-/// prefer backslashes (e.g. Windows).
-///
-/// \param path the file path that will be converted.
-/// \return a version of the path with forward slashes instead of backslashes.
+/**
+ * Converts a path to a string that is guaranteed to use forward slashes.
+ *
+ * \details This function is useful when saving paths to files in a portable way. Since
+ *          all relevant operating systems understand forward slashes, even if some
+ *          operating systems prefer backslashes (e.g. Windows).
+ *
+ * \param path the file path that will be converted.
+ *
+ * \return a version of the path using forward slashes instead of backslashes.
+ */
 [[nodiscard]] auto use_forward_slashes(const Path& path) -> String;
 
 /// Indicates whether a file path starts with the home directory.

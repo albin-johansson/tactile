@@ -38,11 +38,13 @@ using ConstTileLayerCallback = Func<void(Entity, const TileLayer&)>;
 
 [[nodiscard]] auto create_group_layer(Model& model, int32 id) -> Entity;
 
-/// Recursively invokes a callback for each child layer, excluding the root group layer.
-///
-/// \param model the source model.
-/// \param root_layer_entity a group layer entity representing the root of the search.
-/// \param callback a function object invoked for each layer entity.
+/**
+ * Recursively invokes a callback for each child layer, excluding the root group layer.
+ *
+ * \param model             the source model.
+ * \param root_layer_entity a group layer entity representing the root of the search.
+ * \param callback          a function object invoked for each layer entity.
+ */
 void recurse_layers(const Model& model,
                     Entity root_layer_entity,
                     const EntityCallback& callback);

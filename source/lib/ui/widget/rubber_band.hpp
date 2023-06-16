@@ -26,12 +26,14 @@ struct ImVec2;
 
 namespace tactile::ui {
 
-/// Updates a "rubber band" (rectangular selection) in the current canvas.
-///
-/// \param scroll_offset the current viewport scroll offset.
-/// \param tile_size the logical tile size.
-///
-/// \return the current selection; an empty optional if there is none.
+/**
+ * Updates a "rubber band" (rectangular selection) in the current canvas.
+ *
+ * \param scroll_offset the current viewport scroll offset.
+ * \param tile_size     the logical tile size.
+ *
+ * \return the current selection; nothing there is none.
+ */
 [[nodiscard]] auto ui_rubber_band(const ImVec2& scroll_offset, const ImVec2& tile_size)
     -> Maybe<Region>;
 

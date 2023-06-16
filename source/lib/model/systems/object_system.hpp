@@ -30,7 +30,7 @@ namespace tactile::sys {
  * Creates a map object.
  *
  * \param model the associated model instance.
- * \param type the type of the new object.
+ * \param type  the type of the new object.
  *
  * \return an object entity.
  */
@@ -40,9 +40,9 @@ namespace tactile::sys {
  * Creates a copy of an object.
  *
  * \details The new object will not feature a meta ID, nor will it share any entities
- * associated with the old object.
+ *          associated with the old object.
  *
- * \param model the associated model instance.
+ * \param model         the associated model instance.
  * \param object_entity the object entity that will be duplicated.
  *
  * \return an object entity.
