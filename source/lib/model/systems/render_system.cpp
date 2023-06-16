@@ -48,7 +48,6 @@ void _render_point_object(const Model& model,
                           const ImVec2& rendered_position,
                           const Color& color)
 {
-  const auto& object = model.get<Object>(object_entity);
   const auto& object_context = model.get<Context>(object_entity);
 
   const auto translated_position = ui::translate_pos(canvas, rendered_position);
@@ -61,13 +60,12 @@ void _render_point_object(const Model& model,
       const auto text_size = ImGui::CalcTextSize(object_context.name.c_str());
 
       if (text_size.x <= canvas.graphical_tile_size.x) {
-        ImVec2 text_pos;
-        text_pos.x = object.position.x - (text_size.x / 2.0f);
-        text_pos.y = object.position.y + point_radius + 4.0f;
+        ImVec2 text_offset;
+        text_offset.x = -text_size.x / 2.0f;
+        text_offset.y = point_radius + 4.0f;
 
-        ui::render_text(object_context.name.c_str(),
-                        ui::translate_pos(canvas, text_pos),
-                        kWhite);
+        const auto text_pos = ui::translate_pos(canvas, rendered_position + text_offset);
+        ui::render_text(object_context.name.c_str(), text_pos, kWhite);
       }
     }
   }
