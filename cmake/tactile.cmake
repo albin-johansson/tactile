@@ -16,7 +16,7 @@ function(tactile_set_compile_options target)
                            /permissive-
                            /Zc:preprocessor
                            /Zc:__cplusplus
-                           /wd4005 # Avoid macro redefinition warnings in third-party libraries
+                           /wd4996  # No deprecation warnings
                            )
 
     if (TACTILE_TREAT_WARNINGS_AS_ERRORS MATCHES ON)
@@ -30,6 +30,7 @@ function(tactile_set_compile_options target)
                            -Wpedantic
                            -Wconversion
                            -Wsign-conversion
+                           -Wno-deprecated-declarations
                            )
 
     if (TACTILE_TREAT_WARNINGS_AS_ERRORS MATCHES ON)
