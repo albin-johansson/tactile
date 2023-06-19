@@ -23,7 +23,7 @@
 
 #include "backend/gl/gl_texture.hpp"
 #include "common/primitives.hpp"
-#include "components/texture.hpp"
+#include "model/components/texture.hpp"
 
 namespace tactile::sys {
 

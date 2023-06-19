@@ -23,7 +23,7 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "components/viewport.hpp"
+#include "model/components/viewport.hpp"
 #include "model/model.hpp"
 #include "ui/dock/editor/central_map_viewport.hpp"
 #include "ui/dock/editor/central_tileset_viewport.hpp"

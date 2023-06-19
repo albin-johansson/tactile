@@ -22,7 +22,7 @@
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "components/layer.hpp"
+#include "model/components/layer.hpp"
 #include "model/model.hpp"
 
 namespace tactile::cmd {

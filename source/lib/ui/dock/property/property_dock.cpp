@@ -23,15 +23,15 @@
 
 #include <imgui.h>
 
-#include "components/context.hpp"
-#include "components/document.hpp"
-#include "components/layer.hpp"
-#include "components/map.hpp"
-#include "components/object.hpp"
-#include "components/tile.hpp"
-#include "components/tile_format.hpp"
-#include "components/tileset.hpp"
 #include "io/compression.hpp"
+#include "model/components/context.hpp"
+#include "model/components/document.hpp"
+#include "model/components/layer.hpp"
+#include "model/components/map.hpp"
+#include "model/components/object.hpp"
+#include "model/components/tile.hpp"
+#include "model/components/tile_format.hpp"
+#include "model/components/tileset.hpp"
 #include "model/event/file_events.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/event/map_events.hpp"

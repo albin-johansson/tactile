@@ -19,12 +19,12 @@
 
 #include "model_system.hpp"
 
-#include "components/document.hpp"
-#include "components/file_history.hpp"
-#include "components/language.hpp"
-#include "components/menu.hpp"
-#include "components/texture.hpp"
-#include "components/tool.hpp"
+#include "model/components/document.hpp"
+#include "model/components/file_history.hpp"
+#include "model/components/language.hpp"
+#include "model/components/menu.hpp"
+#include "model/components/texture.hpp"
+#include "model/components/tool.hpp"
 #include "model/settings.hpp"
 #include "model/systems/textures/gl_texture_system.hpp"
 #include "model/systems/textures/null_texture_system.hpp"

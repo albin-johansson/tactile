@@ -22,8 +22,8 @@
 #include <cmath>  // round
 
 #include "common/util/lookup.hpp"
-#include "components/document.hpp"
-#include "components/tool.hpp"
+#include "model/components/document.hpp"
+#include "model/components/tool.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/viewport_system.hpp"
 

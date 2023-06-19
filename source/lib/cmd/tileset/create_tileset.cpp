@@ -22,9 +22,9 @@
 #include <utility>  // move
 
 #include "common/debug/assert.hpp"
-#include "components/context.hpp"
-#include "components/document.hpp"
-#include "components/map.hpp"
+#include "model/components/context.hpp"
+#include "model/components/document.hpp"
+#include "model/components/map.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/map_system.hpp"

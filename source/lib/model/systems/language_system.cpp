@@ -25,8 +25,8 @@
 
 #include "common/debug/panic.hpp"
 #include "common/util/lookup.hpp"
-#include "components/language.hpp"
 #include "io/lang/language_parser.hpp"
+#include "model/components/language.hpp"
 #include "model/settings.hpp"
 
 namespace tactile::sys {

@@ -20,7 +20,7 @@
 #include "add_row.hpp"
 
 #include "common/util/functional.hpp"
-#include "components/map.hpp"
+#include "model/components/map.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/map_system.hpp"
 

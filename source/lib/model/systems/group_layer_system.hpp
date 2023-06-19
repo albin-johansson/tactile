@@ -21,7 +21,7 @@
 
 #include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
-#include "components/layer.hpp"
+#include "model/components/layer.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {

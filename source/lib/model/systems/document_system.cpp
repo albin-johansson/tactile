@@ -25,10 +25,10 @@
 
 #include "cmd/command_stack.hpp"
 #include "common/debug/panic.hpp"
-#include "components/context.hpp"
-#include "components/document.hpp"
-#include "components/viewport.hpp"
 #include "io/map/parse/parse_map.hpp"
+#include "model/components/context.hpp"
+#include "model/components/document.hpp"
+#include "model/components/viewport.hpp"
 #include "model/settings.hpp"
 #include "model/systems/map_system.hpp"
 #include "model/systems/tileset_system.hpp"

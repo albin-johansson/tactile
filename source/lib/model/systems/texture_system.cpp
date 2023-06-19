@@ -19,8 +19,8 @@
 
 #include "texture_system.hpp"
 
-#include "components/texture.hpp"
 #include "io/texture_loader.hpp"
+#include "model/components/texture.hpp"
 #include "model/systems/validation_system.hpp"
 
 namespace tactile::sys {

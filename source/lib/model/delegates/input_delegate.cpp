@@ -21,8 +21,8 @@
 
 #include <imgui_internal.h>
 
-#include "components/document.hpp"
-#include "components/viewport.hpp"
+#include "model/components/document.hpp"
+#include "model/components/viewport.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/systems/document_system.hpp"
 #include "ui/dock/editor/editor_dock.hpp"

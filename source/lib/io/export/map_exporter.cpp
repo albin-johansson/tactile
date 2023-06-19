@@ -25,12 +25,12 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/profile.hpp"
-#include "components/document.hpp"
 #include "io/export/tactile_yaml_exporter.hpp"
 #include "io/export/tiled_json_exporter.hpp"
 #include "io/export/tiled_xml_exporter.hpp"
 #include "io/ir/ir_generation.hpp"
 #include "io/save_formats.hpp"
+#include "model/components/document.hpp"
 
 namespace tactile {
 

@@ -23,10 +23,10 @@
 #include <imgui_internal.h>
 
 #include "common/color.hpp"
-#include "components/map.hpp"
-#include "components/texture.hpp"
-#include "components/tileset.hpp"
 #include "io/proto/settings.hpp"
+#include "model/components/map.hpp"
+#include "model/components/texture.hpp"
+#include "model/components/tileset.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/systems/document_system.hpp"

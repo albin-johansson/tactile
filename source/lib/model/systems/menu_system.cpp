@@ -27,7 +27,7 @@
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
 #include "common/util/lookup.hpp"
-#include "components/file_history.hpp"
+#include "model/components/file_history.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/file_history_system.hpp"

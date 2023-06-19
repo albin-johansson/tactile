@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/ecs.hpp"
-#include "components/map.hpp"
+#include "model/components/map.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {

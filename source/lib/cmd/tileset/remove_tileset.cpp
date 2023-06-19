@@ -20,8 +20,8 @@
 #include "remove_tileset.hpp"
 
 #include "common/debug/assert.hpp"
-#include "components/map.hpp"
-#include "components/tileset.hpp"
+#include "model/components/map.hpp"
+#include "model/components/tileset.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/validation_system.hpp"

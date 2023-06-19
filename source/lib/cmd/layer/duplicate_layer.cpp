@@ -20,8 +20,8 @@
 #include "duplicate_layer.hpp"
 
 #include "common/debug/assert.hpp"
-#include "components/document.hpp"
-#include "components/map.hpp"
+#include "model/components/document.hpp"
+#include "model/components/map.hpp"
 #include "model/systems/group_layer_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/layer_system.hpp"

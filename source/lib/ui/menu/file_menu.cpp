@@ -22,7 +22,7 @@
 #include <imgui.h>
 
 #include "common/type/path.hpp"
-#include "components/file_history.hpp"
+#include "model/components/file_history.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/menu_events.hpp"
 #include "model/systems/language_system.hpp"

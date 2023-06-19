@@ -21,8 +21,8 @@
 
 #include <doctest/doctest.h>
 
-#include "components/context.hpp"
-#include "components/object.hpp"
+#include "model/components/context.hpp"
+#include "model/components/object.hpp"
 #include "model/systems/model_system.hpp"
 #include "model/systems/validation_system.hpp"
 

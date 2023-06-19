@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/path.hpp"
-#include "components/file_history.hpp"
+#include "model/components/file_history.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {

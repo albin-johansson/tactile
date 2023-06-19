@@ -22,7 +22,7 @@
 #include <concepts>  // invocable
 
 #include "cmd/command_stack.hpp"
-#include "components/document.hpp"
+#include "model/components/document.hpp"
 #include "model/event/command_events.hpp"
 #include "model/systems/document_system.hpp"
 

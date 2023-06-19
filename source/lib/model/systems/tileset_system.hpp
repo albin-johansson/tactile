@@ -24,7 +24,7 @@
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
-#include "components/map.hpp"
+#include "model/components/map.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {

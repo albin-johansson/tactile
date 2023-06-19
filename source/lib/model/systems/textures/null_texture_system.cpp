@@ -19,7 +19,7 @@
 
 #include "null_texture_system.hpp"
 
-#include "components/texture.hpp"
+#include "model/components/texture.hpp"
 
 namespace tactile::sys {
 

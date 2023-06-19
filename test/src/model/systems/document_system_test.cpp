@@ -21,9 +21,9 @@
 
 #include <doctest/doctest.h>
 
-#include "components/document.hpp"
-#include "components/texture.hpp"
-#include "components/tileset.hpp"
+#include "model/components/document.hpp"
+#include "model/components/texture.hpp"
+#include "model/components/tileset.hpp"
 #include "model/model.hpp"
 #include "model/systems/model_system.hpp"
 #include "model/systems/validation_system.hpp"

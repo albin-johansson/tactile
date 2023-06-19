@@ -25,7 +25,7 @@
 #include "common/type/maybe.hpp"
 #include "common/util/algorithms.hpp"
 #include "common/util/functional.hpp"
-#include "components/map.hpp"
+#include "model/components/map.hpp"
 #include "model/systems/layer_system.hpp"
 #include "model/systems/validation_system.hpp"
 

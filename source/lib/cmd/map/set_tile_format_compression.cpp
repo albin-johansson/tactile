@@ -19,7 +19,7 @@
 
 #include "set_tile_format_compression.hpp"
 
-#include "components/map.hpp"
+#include "model/components/map.hpp"
 #include "model/systems/language_system.hpp"
 
 namespace tactile::cmd {

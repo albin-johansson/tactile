@@ -22,7 +22,7 @@
 #include <utility>  // move
 
 #include "common/debug/assert.hpp"
-#include "components/component.hpp"
+#include "model/components/component.hpp"
 #include "model/systems/component/component_set.hpp"
 #include "model/systems/context/components.hpp"
 #include "model/systems/context/context_system.hpp"

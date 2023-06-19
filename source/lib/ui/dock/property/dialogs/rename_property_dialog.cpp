@@ -21,8 +21,8 @@
 
 #include <imgui.h>
 
-#include "components/context.hpp"
-#include "components/document.hpp"
+#include "model/components/context.hpp"
+#include "model/components/document.hpp"
 #include "model/event/property_events.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"

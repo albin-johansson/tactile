@@ -20,7 +20,7 @@
 #include "move_layer_down.hpp"
 
 #include "common/debug/assert.hpp"
-#include "components/map.hpp"
+#include "model/components/map.hpp"
 #include "model/systems/group_layer_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/validation_system.hpp"

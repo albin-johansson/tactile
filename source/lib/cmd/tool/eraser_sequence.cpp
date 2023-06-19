@@ -22,7 +22,7 @@
 #include <utility>  // move
 
 #include "common/debug/assert.hpp"
-#include "components/layer.hpp"
+#include "model/components/layer.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/validation_system.hpp"
 

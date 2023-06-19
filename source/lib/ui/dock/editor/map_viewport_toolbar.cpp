@@ -24,7 +24,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "components/document.hpp"
+#include "model/components/document.hpp"
 #include "model/event/command_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/tool_events.hpp"

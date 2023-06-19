@@ -22,8 +22,8 @@
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
-#include "components/document.hpp"
-#include "components/map.hpp"
+#include "model/components/document.hpp"
+#include "model/components/map.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/model.hpp"

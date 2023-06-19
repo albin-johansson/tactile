@@ -21,7 +21,7 @@
 
 #include <glm/common.hpp>
 
-#include "components/viewport.hpp"
+#include "model/components/viewport.hpp"
 #include "model/systems/document_system.hpp"
 
 namespace tactile::sys {

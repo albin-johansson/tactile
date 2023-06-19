@@ -21,7 +21,7 @@
 
 #include "common/type/ostream.hpp"
 #include "common/type/string.hpp"
-#include "components/language.hpp"
+#include "model/components/language.hpp"
 
 namespace tactile {
 

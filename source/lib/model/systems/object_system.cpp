@@ -20,8 +20,8 @@
 #include "object_system.hpp"
 
 #include "common/debug/assert.hpp"
-#include "components/context.hpp"
-#include "components/object.hpp"
+#include "model/components/context.hpp"
+#include "model/components/object.hpp"
 #include "model/systems/context/context_system.hpp"
 #include "model/systems/validation_system.hpp"
 

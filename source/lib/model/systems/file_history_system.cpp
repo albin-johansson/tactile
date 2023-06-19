@@ -25,7 +25,7 @@
 #include <spdlog/spdlog.h>
 
 #include "common/util/filesystem.hpp"
-#include "components/document.hpp"
+#include "model/components/document.hpp"
 
 namespace tactile::sys {
 

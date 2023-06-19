@@ -22,9 +22,9 @@
 #include <centurion/events/mouse_events.hpp>
 #include <imgui.h>
 
-#include "components/document.hpp"
-#include "components/map.hpp"
-#include "components/viewport.hpp"
+#include "model/components/document.hpp"
+#include "model/components/map.hpp"
+#include "model/components/viewport.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"

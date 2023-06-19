@@ -20,10 +20,10 @@
 #include <spdlog/spdlog.h>
 
 #include "common/tile_matrix.hpp"
-#include "components/tile_format.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 #include "io/util/base64_tiles.hpp"
+#include "model/components/tile_format.hpp"
 
 namespace tactile {
 

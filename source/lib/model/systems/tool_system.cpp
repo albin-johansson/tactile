@@ -19,8 +19,8 @@
 
 #include "tool_system.hpp"
 
-#include "components/map.hpp"
-#include "components/tileset.hpp"
+#include "model/components/map.hpp"
+#include "model/components/tileset.hpp"
 
 namespace tactile::sys {
 

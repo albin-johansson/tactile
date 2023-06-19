@@ -19,7 +19,7 @@
 
 #include <doctest/doctest.h>
 
-#include "components/component.hpp"
+#include "model/components/component.hpp"
 #include "model/systems/model_system.hpp"
 
 using namespace tactile;

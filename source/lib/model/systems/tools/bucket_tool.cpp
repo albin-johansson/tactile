@@ -19,10 +19,10 @@
 
 #include "bucket_tool.hpp"
 
-#include "components/document.hpp"
-#include "components/layer.hpp"
-#include "components/tileset.hpp"
-#include "components/tool.hpp"
+#include "model/components/document.hpp"
+#include "model/components/layer.hpp"
+#include "model/components/tileset.hpp"
+#include "model/components/tool.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/systems/document_system.hpp"
 

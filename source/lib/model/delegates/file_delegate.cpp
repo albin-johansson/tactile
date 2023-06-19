@@ -20,9 +20,9 @@
 #include "file_delegate.hpp"
 
 #include "cmd/command_stack.hpp"
-#include "components/document.hpp"
-#include "components/file_history.hpp"
 #include "io/export/map_exporter.hpp"
+#include "model/components/document.hpp"
+#include "model/components/file_history.hpp"
 #include "model/systems/document_system.hpp"
 #include "ui/dialog/save_as_dialog.hpp"
 

@@ -20,7 +20,7 @@
 #include "set_object_visible.hpp"
 
 #include "common/debug/assert.hpp"
-#include "components/object.hpp"
+#include "model/components/object.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/validation_system.hpp"
 

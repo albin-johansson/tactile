@@ -20,7 +20,7 @@
 #include "detach_component.hpp"
 
 #include "common/debug/assert.hpp"
-#include "components/component.hpp"
+#include "model/components/component.hpp"
 #include "model/systems/context/components.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/validation_system.hpp"

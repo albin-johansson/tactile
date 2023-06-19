@@ -22,9 +22,9 @@
 #include <imgui.h>
 
 #include "common/fmt/fmt_string.hpp"
-#include "components/component.hpp"
-#include "components/context.hpp"
-#include "components/document.hpp"
+#include "model/components/component.hpp"
+#include "model/components/context.hpp"
+#include "model/components/document.hpp"
 #include "model/event/component_events.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/model.hpp"

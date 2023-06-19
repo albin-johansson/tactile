@@ -24,11 +24,11 @@
 #include <imgui.h>
 
 #include "common/color.hpp"
-#include "components/document.hpp"
-#include "components/layer.hpp"
-#include "components/map.hpp"
-#include "components/object.hpp"
-#include "components/viewport.hpp"
+#include "model/components/document.hpp"
+#include "model/components/layer.hpp"
+#include "model/components/map.hpp"
+#include "model/components/object.hpp"
+#include "model/components/viewport.hpp"
 #include "model/event/object_events.hpp"
 #include "model/event/property_events.hpp"
 #include "model/event/tool_events.hpp"

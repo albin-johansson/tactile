@@ -24,7 +24,7 @@
 #include "common/type/chrono.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "components/tile.hpp"
+#include "model/components/tile.hpp"
 #include "model/model.hpp"
 
 namespace tactile::cmd {
