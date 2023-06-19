@@ -39,4 +39,10 @@ void on_show_save_as_dialog(Model& model,
                             Dispatcher& dispatcher,
                             const ShowSaveAsDialogEvent& event);
 
+void on_reopen_last_closed_file(Model& model,
+                                Dispatcher& dispatcher,
+                                const ReopenLastClosedFileEvent& event);
+
+void on_clear_file_history(Model& model, const ClearFileHistoryEvent& event);
+
 }  // namespace tactile

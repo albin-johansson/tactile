@@ -82,10 +82,13 @@ class App final : public AppDelegate {
   void _on_save(const SaveEvent& event);
   void _on_save_as(const SaveAsEvent& event);
   void _on_show_save_as_dialog(const ShowSaveAsDialogEvent& event);
+  void _on_reopen_last_closed_file(const ReopenLastClosedFileEvent& event);
+  void _on_clear_file_history(const ClearFileHistoryEvent& event);
   void _on_quit(const QuitEvent& event);
 
   // View events
   void _on_reset_layout(const ResetLayoutEvent& event);
+  void _on_toggle_highlight_layer(const ToggleHighlightLayerEvent& event);
 
   // Map events
   void _on_show_new_map_dialog(const ShowNewMapDialogEvent& event);
@@ -217,6 +220,8 @@ class App final : public AppDelegate {
   void _on_show_about_dialog(const ShowAboutDialogEvent& event);
   void _on_show_credits_dialog(const ShowCreditsDialogEvent& event);
   void _on_show_about_imgui_dialog(const ShowAboutImGuiDialogEvent& event);
+  void _on_open_directory_in_finder(const OpenDirectoryInFinderEvent& event);
+  void _on_open_url(const OpenUrlEvent& event);
 };
 
 }  // namespace tactile

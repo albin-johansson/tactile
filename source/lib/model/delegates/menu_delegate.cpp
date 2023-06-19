@@ -19,26 +19,18 @@
 
 #include "menu_delegate.hpp"
 
-#include <centurion/system.hpp>
 #include <imgui.h>
-#include <magic_enum.hpp>
 
-#include "components/file_history.hpp"
 #include "model/event/all.hpp"
-#include "model/settings.hpp"
 #include "model/systems/document_system.hpp"
 #include "ui/conversions.hpp"
 #include "ui/dialog/about_dialog.hpp"
-#include "ui/dialog/credits_dialog.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
-#include "ui/dialog/settings_dialog.hpp"
 
 namespace tactile {
 
-// TODO this function should only dispatch other events, not make changes directly
 void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent& event)
 {
-  auto& settings = model.get<Settings>();
   const auto document_entity = sys::get_active_document(model);
 
   switch (event.action) {
@@ -66,20 +58,14 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       dispatcher.enqueue<QuitEvent>();
       break;
 
-    case MenuAction::ReopenLastFile: {
-      // TODO event
-      // TODO this will need to be tweaked if tileset documents viewing will be supported
-      const auto& file_history = model.get<FileHistory>();
-      Path file_path {file_history.last_closed_file.value()};
-      dispatcher.enqueue<OpenMapEvent>(std::move(file_path));
+    case MenuAction::ReopenLastFile:
+      dispatcher.enqueue<ReopenLastClosedFileEvent>();
       break;
-    }
-    case MenuAction::ClearFileHistory: {
-      // TODO event
-      auto& file_history = model.get<FileHistory>();
-      file_history.entries.clear();
+
+    case MenuAction::ClearFileHistory:
+      dispatcher.enqueue<ClearFileHistoryEvent>();
       break;
-    }
+
     case MenuAction::Undo:
       dispatcher.enqueue<UndoEvent>();
       break;
@@ -175,8 +161,7 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
 
     case MenuAction::HighlightLayer:
-      // TODO event
-      settings.negate_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT);
+      dispatcher.enqueue<ToggleHighlightLayerEvent>();
       break;
 
     case MenuAction::ToggleUi:
@@ -244,8 +229,8 @@ void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent&
       break;
 
     case MenuAction::ReportIssue:
-      // FIXME emit event instead
-      cen::open_url("https://github.com/albin-johansson/tactile/issues/new");
+      dispatcher.enqueue<OpenUrlEvent>(
+          "https://github.com/albin-johansson/tactile/issues/new");
       break;
   }
 }

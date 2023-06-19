@@ -94,4 +94,20 @@ void on_show_save_as_dialog(Model& model,
   }
 }
 
+void on_reopen_last_closed_file(Model& model,
+                                Dispatcher& dispatcher,
+                                const ReopenLastClosedFileEvent&)
+{
+  // TODO update if tileset documents viewing needs to be supported
+  const auto& file_history = model.get<FileHistory>();
+  Path file_path {file_history.last_closed_file.value()};
+  dispatcher.enqueue<OpenMapEvent>(std::move(file_path));
+}
+
+void on_clear_file_history(Model& model, const ClearFileHistoryEvent&)
+{
+  auto& file_history = model.get<FileHistory>();
+  file_history.entries.clear();
+}
+
 }  // namespace tactile

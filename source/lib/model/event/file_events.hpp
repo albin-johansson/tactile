@@ -50,6 +50,10 @@ struct SaveAsEvent final {
 /// Event used to open the 'Save As...' dialog.
 struct ShowSaveAsDialogEvent final {};
 
+struct ReopenLastClosedFileEvent final {};
+
+struct ClearFileHistoryEvent final {};
+
 /// Event used to stop running the application.
 struct QuitEvent final {};
 

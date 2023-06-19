@@ -23,6 +23,7 @@
 
 #include "common/predef.hpp"
 #include "io/directories.hpp"
+#include "model/event/misc_events.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"
@@ -45,7 +46,7 @@ void push_debug_menu(const Model& model, DebugMenuState& state, Dispatcher& disp
     ImGui::Separator();
 
     if (ImGui::MenuItem(strings.action.open_persistent_file_dir.c_str())) {
-      open_directory(get_persistent_file_dir());
+      dispatcher.enqueue<OpenDirectoryInFinderEvent>(get_persistent_file_dir());
     }
   }
 

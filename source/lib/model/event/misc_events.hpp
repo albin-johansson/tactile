@@ -19,6 +19,9 @@
 
 #pragma once
 
+#include "common/type/path.hpp"
+#include "common/type/string.hpp"
+
 namespace tactile {
 
 struct ShowAboutDialogEvent final {};
@@ -26,5 +29,13 @@ struct ShowAboutDialogEvent final {};
 struct ShowCreditsDialogEvent final {};
 
 struct ShowAboutImGuiDialogEvent final {};
+
+struct OpenDirectoryInFinderEvent final {
+  Path dir;
+};
+
+struct OpenUrlEvent final {
+  String url;
+};
 
 }  // namespace tactile

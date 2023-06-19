@@ -21,6 +21,7 @@
 
 #include <utility>  // move
 
+#include <centurion/system.hpp>
 #include <fmt/chrono.h>
 #include <fmt/std.h>
 #include <imgui.h>
@@ -105,10 +106,13 @@ void App::_subscribe_to_events()
   ROUTE(SaveEvent, &App::_on_save);
   ROUTE(SaveAsEvent, &App::_on_save_as);
   ROUTE(ShowSaveAsDialogEvent, &App::_on_show_save_as_dialog);
+  ROUTE(ReopenLastClosedFileEvent, &App::_on_reopen_last_closed_file);
+  ROUTE(ClearFileHistoryEvent, &App::_on_clear_file_history);
   ROUTE(QuitEvent, &App::_on_quit);
 
   // View events
   ROUTE(ResetLayoutEvent, &App::_on_reset_layout);
+  ROUTE(ToggleHighlightLayerEvent, &App::_on_toggle_highlight_layer);
 
   // Map events
   ROUTE(ShowNewMapDialogEvent, &App::_on_show_new_map_dialog);
@@ -241,6 +245,8 @@ void App::_subscribe_to_events()
   ROUTE(ShowAboutDialogEvent, &App::_on_show_about_dialog);
   ROUTE(ShowCreditsDialogEvent, &App::_on_show_credits_dialog);
   ROUTE(ShowAboutImGuiDialogEvent, &App::_on_show_about_imgui_dialog);
+  ROUTE(OpenDirectoryInFinderEvent, &App::_on_open_directory_in_finder);
+  ROUTE(OpenUrlEvent, &App::_on_open_url);
 }
 
 void App::_init_persistent_settings()
@@ -372,6 +378,18 @@ void App::_on_show_save_as_dialog(const ShowSaveAsDialogEvent& event)
   on_show_save_as_dialog(*mModel, mDispatcher, event);
 }
 
+void App::_on_reopen_last_closed_file(const ReopenLastClosedFileEvent& event)
+{
+  spdlog::trace("[ReopenLastClosedFileEvent]");
+  on_reopen_last_closed_file(*mModel, mDispatcher, event);
+}
+
+void App::_on_clear_file_history(const ClearFileHistoryEvent& event)
+{
+  spdlog::trace("[ClearFileHistoryEvent]");
+  on_clear_file_history(*mModel, event);
+}
+
 void App::_on_quit(const QuitEvent&)
 {
   spdlog::trace("[QuitEvent]");
@@ -384,6 +402,14 @@ void App::_on_reset_layout(const ResetLayoutEvent&)
 
   const auto& widgets = mModel->get<ui::WidgetState>();
   ui::reset_layout(*mModel, widgets.dock_space.root_dock_id.value(), mDispatcher);
+}
+
+void App::_on_toggle_highlight_layer(const ToggleHighlightLayerEvent&)
+{
+  spdlog::trace("[ToggleHighlightLayerEvent]");
+
+  auto& settings = mModel->get<Settings>();
+  settings.negate_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT);
 }
 
 void App::_on_show_new_map_dialog(const ShowNewMapDialogEvent& event)
@@ -1118,6 +1144,18 @@ void App::_on_show_about_imgui_dialog(const ShowAboutImGuiDialogEvent&)
 
   auto& widget_state = mModel->get<ui::WidgetState>();
   widget_state.should_open_about_imgui_dialog = true;
+}
+
+void App::_on_open_directory_in_finder(const OpenDirectoryInFinderEvent& event)
+{
+  spdlog::trace("[OpenDirectoryInFinderEvent] dir: {}", event.dir);
+  open_directory(event.dir);
+}
+
+void App::_on_open_url(const OpenUrlEvent& event)
+{
+  spdlog::trace("[OpenUrlEvent] URL: {}", event.url);
+  cen::open_url(event.url);
 }
 
 }  // namespace tactile
