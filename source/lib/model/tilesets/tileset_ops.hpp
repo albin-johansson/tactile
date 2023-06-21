@@ -19,29 +19,23 @@
 
 #pragma once
 
-#include <centurion/fwd.hpp>
-
-#include "common/type/dispatcher.hpp"
+#include "common/primitives.hpp"
+#include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
 #include "model/tilesets/tileset_components.hpp"
 
-namespace tactile::ui {
+namespace tactile::sys {
 
-struct TilesetDockState final {
-  bool has_focus {};
-  bool has_hover {};
-};
+/// Returns the amount of tiles in the tileset.
+[[nodiscard]] auto tile_count(const Tileset& tileset) -> int32;
 
-void push_tileset_dock_widget(const Model& model,
-                              TilesetDockState& state,
-                              Dispatcher& dispatcher);
+/// Returns the index of the tile at a specific position.
+[[nodiscard]] auto tile_index_at(const Tileset& tileset, TilePos pos) -> TileIndex;
 
-[[nodiscard]] auto is_tileset_dock_enabled(const Model& model) -> bool;
+/// Indicates whether a position refers to a tile in the tileset.
+[[nodiscard]] auto is_valid_tile(const Tileset& tileset, TilePos pos) -> bool;
 
-void on_mouse_wheel_event_in_tileset_dock(const Model& model,
-                                          Entity attached_tileset_entity,
-                                          const cen::mouse_wheel_event& event,
-                                          Dispatcher& dispatcher);
+/// Returns the currently selected tile, if there is one.
+[[nodiscard]] auto get_active_tile(const Tileset& tileset) -> Entity;
 
-}  // namespace tactile::ui
+}  // namespace tactile::sys

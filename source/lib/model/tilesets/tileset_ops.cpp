@@ -17,60 +17,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "tileset.hpp"
+#include "tileset_ops.hpp"
 
 #include "common/debug/panic.hpp"
 #include "common/util/lookup.hpp"
 
-namespace tactile {
+namespace tactile::sys {
 
-auto Tileset::index_of(const TilePos pos) const -> TileIndex
+auto tile_count(const Tileset& tileset) -> int32
 {
-  if (contains(pos)) {
-    return pos.row() * column_count + pos.col();
+  return tileset.row_count * tileset.column_count;
+}
+
+auto tile_index_at(const Tileset& tileset, const TilePos pos) -> TileIndex
+{
+  if (is_valid_tile(tileset, pos)) {
+    return pos.row() * tileset.column_count + pos.col();
   }
   else {
     throw TactileError {"Invalid tile position"};
   }
 }
 
-auto Tileset::contains(const TilePos pos) const -> bool
+auto is_valid_tile(const Tileset& tileset, const TilePos pos) -> bool
 {
   const auto row = pos.row();
   const auto col = pos.col();
-  return row >= 0 && col >= 0 && row < row_count && col < column_count;
+  return row >= 0 && col >= 0 && row < tileset.row_count && col < tileset.column_count;
 }
 
-auto Tileset::get_active_tile() const -> Entity
+auto get_active_tile(const Tileset& tileset) -> Entity
 {
-  if (selected_tile_index.has_value()) {
-    return lookup_in(tile_index_map, *selected_tile_index);
+  if (tileset.selected_tile_index.has_value()) {
+    return lookup_in(tileset.tile_index_map, *tileset.selected_tile_index);
   }
 
   return kNullEntity;
 }
 
-auto AttachedTileset::is_valid_tile(const TileID tile_id) const -> bool
-{
-  return tile_id >= first_tile && tile_id <= last_tile;
-}
-
-auto AttachedTileset::to_tile_index(const TileID tile_id) const -> Maybe<TileIndex>
-{
-  if (is_valid_tile(tile_id)) {
-    return tile_id - first_tile;
-  }
-
-  return nothing;
-}
-
-auto AttachedTileset::is_single_tile_selected() const -> bool
-{
-  if (selection.has_value()) {
-    return (selection->end - selection->begin) == TilePos {1, 1};
-  }
-
-  return false;
-}
-
-}  // namespace tactile
+}  // namespace tactile::sys

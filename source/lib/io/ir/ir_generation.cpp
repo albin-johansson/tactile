@@ -29,9 +29,9 @@
 #include "model/components/texture.hpp"
 #include "model/components/tile.hpp"
 #include "model/components/tile_format.hpp"
-#include "model/components/tileset.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/model.hpp"
+#include "model/tilesets/tileset_components.hpp"
 
 namespace tactile {
 namespace {

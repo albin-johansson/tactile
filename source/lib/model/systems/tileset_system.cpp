@@ -25,10 +25,11 @@
 #include "model/components/context.hpp"
 #include "model/components/texture.hpp"
 #include "model/components/tile.hpp"
-#include "model/components/tileset.hpp"
 #include "model/components/viewport.hpp"
 #include "model/systems/texture_system.hpp"
 #include "model/systems/validation_system.hpp"
+#include "model/tilesets/attached_tileset_ops.hpp"
+#include "model/tilesets/tileset_components.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -180,7 +181,7 @@ auto convert_tile_id_to_index(const Model& model, const Map& map, const TileID t
 
   if (attached_tileset_entity != kNullEntity) {
     const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
-    return attached_tileset.to_tile_index(tile_id).value();
+    return to_tile_index(attached_tileset, tile_id).value();
   }
 
   return nothing;
@@ -192,7 +193,7 @@ auto find_tileset_with_tile(const Model& model, const Map& map, const TileID til
   for (const auto attached_tileset_entity: map.attached_tilesets) {
     const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
 
-    if (attached_tileset.is_valid_tile(tile_id)) {
+    if (is_valid_tile(attached_tileset, tile_id)) {
       return attached_tileset_entity;
     }
   }

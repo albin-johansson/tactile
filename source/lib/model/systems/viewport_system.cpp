@@ -85,7 +85,7 @@ void decrease_viewport_zoom(Viewport& viewport, const Float2 anchor_pos)
 
 auto is_viewport_zoom_out_possible(const Model& model) -> bool
 {
-  const auto document_entity = sys::get_active_document(model);
+  const auto document_entity = get_active_document(model);
 
   if (document_entity != kNullEntity) {
     const auto& viewport = model.get<Viewport>(document_entity);

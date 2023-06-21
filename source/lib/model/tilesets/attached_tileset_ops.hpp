@@ -19,29 +19,22 @@
 
 #pragma once
 
-#include <centurion/fwd.hpp>
-
-#include "common/type/dispatcher.hpp"
-#include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "common/primitives.hpp"
+#include "common/type/maybe.hpp"
 #include "model/tilesets/tileset_components.hpp"
 
-namespace tactile::ui {
+namespace tactile::sys {
 
-struct TilesetDockState final {
-  bool has_focus {};
-  bool has_hover {};
-};
+/// Indicates whether a global tile identifier is associated with the tileset.
+[[nodiscard]] auto is_valid_tile(const AttachedTileset& attached_tileset, TileID tile_id)
+    -> bool;
 
-void push_tileset_dock_widget(const Model& model,
-                              TilesetDockState& state,
-                              Dispatcher& dispatcher);
+/// Converts a global tile identifier to a local tile index (as long as it's valid).
+[[nodiscard]] auto to_tile_index(const AttachedTileset& attached_tileset, TileID tile_id)
+    -> Maybe<TileIndex>;
 
-[[nodiscard]] auto is_tileset_dock_enabled(const Model& model) -> bool;
+/// Indicates whether a single tile is selected in the tileset.
+[[nodiscard]] auto is_single_tile_selected(const AttachedTileset& attached_tileset)
+    -> bool;
 
-void on_mouse_wheel_event_in_tileset_dock(const Model& model,
-                                          Entity attached_tileset_entity,
-                                          const cen::mouse_wheel_event& event,
-                                          Dispatcher& dispatcher);
-
-}  // namespace tactile::ui
+}  // namespace tactile::sys

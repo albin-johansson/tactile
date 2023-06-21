@@ -29,7 +29,6 @@
 #include "model/components/context.hpp"
 #include "model/components/document.hpp"
 #include "model/components/tile_format.hpp"
-#include "model/components/tileset.hpp"
 #include "model/layers/group_layers.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/layers/layer_factory.hpp"
@@ -40,6 +39,7 @@
 #include "model/systems/object_system.hpp"
 #include "model/systems/tileset_system.hpp"
 #include "model/systems/validation_system.hpp"
+#include "model/tilesets/tileset_components.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -225,17 +225,17 @@ auto resize_map(Model& model, Map& map, const TileExtent new_extent) -> Result
   const auto col_diff = udiff(old_extent.cols, new_extent.cols);
 
   if (old_extent.cols < new_extent.cols) {
-    invoke_n(col_diff, [&] { sys::add_column_to_map(model, map); });
+    invoke_n(col_diff, [&] { add_column_to_map(model, map); });
   }
   else {
-    invoke_n(col_diff, [&] { sys::remove_column_from_map(model, map); });
+    invoke_n(col_diff, [&] { remove_column_from_map(model, map); });
   }
 
   if (old_extent.rows < new_extent.rows) {
-    invoke_n(row_diff, [&] { sys::add_row_to_map(model, map); });
+    invoke_n(row_diff, [&] { add_row_to_map(model, map); });
   }
   else {
-    invoke_n(row_diff, [&] { sys::remove_row_from_map(model, map); });
+    invoke_n(row_diff, [&] { remove_row_from_map(model, map); });
   }
 
   return success;
@@ -252,7 +252,7 @@ auto add_new_layer_to_map(Model& model, const Entity map_entity, const LayerType
   const auto layer_entity = _create_layer(model, map, map_identifiers, type);
 
   auto* root_layer = _determine_target_root_layer(model, map);
-  sys::attach_layer_to(*root_layer, layer_entity);
+  attach_layer_to(*root_layer, layer_entity);
 
   return layer_entity;
 }
@@ -268,7 +268,7 @@ void attach_layer_to_map(Model& model,
                          ? model.get<GroupLayer>(root_layer_entity)
                          : model.get<GroupLayer>(map.root_layer);
 
-  sys::attach_layer_to(root_layer, layer_entity);
+  attach_layer_to(root_layer, layer_entity);
 }
 
 auto duplicate_layer(Model& model, const Entity map_entity, const Entity src_layer_entity)
@@ -365,7 +365,7 @@ auto attach_tileset_to_map(Model& model,
 auto select_tileset(Model& model, Map& map, const Entity attached_tileset_entity)
     -> Result
 {
-  TACTILE_ASSERT(sys::is_attached_tileset_entity(model, attached_tileset_entity));
+  TACTILE_ASSERT(is_attached_tileset_entity(model, attached_tileset_entity));
 
   if (contained_in(map.attached_tilesets, attached_tileset_entity)) {
     map.active_tileset = attached_tileset_entity;
@@ -377,8 +377,8 @@ auto select_tileset(Model& model, Map& map, const Entity attached_tileset_entity
 
 auto can_tile_row_be_removed(const Model& model) -> bool
 {
-  if (sys::is_map_document_active(model)) {
-    const auto document_entity = sys::get_active_document(model);
+  if (is_map_document_active(model)) {
+    const auto document_entity = get_active_document(model);
 
     const auto& map_document = model.get<MapDocument>(document_entity);
     const auto& map = model.get<Map>(map_document.map);
@@ -391,8 +391,8 @@ auto can_tile_row_be_removed(const Model& model) -> bool
 
 auto can_tile_column_be_removed(const Model& model) -> bool
 {
-  if (sys::is_map_document_active(model)) {
-    const auto document_entity = sys::get_active_document(model);
+  if (is_map_document_active(model)) {
+    const auto document_entity = get_active_document(model);
 
     const auto& map_document = model.get<MapDocument>(document_entity);
     const auto& map = model.get<Map>(map_document.map);

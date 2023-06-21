@@ -160,12 +160,12 @@ void _init_file_menu(Model& model)
 
   _add_menu_item(model, MenuAction::ReopenLastFile, [](const Model& model) {
     const auto& file_history = model.get<FileHistory>();
-    return sys::is_last_closed_file_valid(file_history);
+    return is_last_closed_file_valid(file_history);
   });
 
   _add_menu_item(model, MenuAction::ClearFileHistory, [](const Model& model) {
     const auto& file_history = model.get<FileHistory>();
-    return sys::has_active_document(model) && !file_history.entries.empty();
+    return has_active_document(model) && !file_history.entries.empty();
   });
 }
 

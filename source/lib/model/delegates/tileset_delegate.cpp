@@ -31,11 +31,11 @@
 #include "cmd/tileset/rename_tileset.hpp"
 #include "common/debug/assert.hpp"
 #include "model/components/document.hpp"
-#include "model/components/tileset.hpp"
 #include "model/settings.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/map_system.hpp"
 #include "model/systems/validation_system.hpp"
+#include "model/tilesets/tileset_components.hpp"
 #include "ui/widget_state.hpp"
 
 namespace tactile {

@@ -24,8 +24,8 @@
 #include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "model/components/map.hpp"
-#include "model/components/tileset.hpp"
 #include "model/model.hpp"
+#include "model/tilesets/tileset_components.hpp"
 #include "ui/render/canvas.hpp"
 
 namespace tactile::sys {

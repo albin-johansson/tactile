@@ -28,10 +28,10 @@
 #include "model/components/texture.hpp"
 #include "model/components/tile.hpp"
 #include "model/components/tile_format.hpp"
-#include "model/components/tileset.hpp"
 #include "model/components/tool.hpp"
 #include "model/components/viewport.hpp"
 #include "model/layers/layer_components.hpp"
+#include "model/tilesets/tileset_components.hpp"
 
 namespace tactile::sys {
 

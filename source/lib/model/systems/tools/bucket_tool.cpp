@@ -20,11 +20,13 @@
 #include "bucket_tool.hpp"
 
 #include "model/components/document.hpp"
-#include "model/components/tileset.hpp"
 #include "model/components/tool.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/systems/document_system.hpp"
+#include "model/tilesets/attached_tileset_ops.hpp"
+#include "model/tilesets/tileset_components.hpp"
+#include "model/tilesets/tileset_ops.hpp"
 
 namespace tactile::sys {
 
@@ -45,7 +47,7 @@ void on_bucket_tool_pressed(Model& model,
 {
   if (mouse.in_viewport && mouse.button == MouseButton::Left &&
       is_bucket_tool_available(model)) {
-    const auto document_entity = sys::get_active_document(model);
+    const auto document_entity = get_active_document(model);
 
     const auto& map_document = model.get<MapDocument>(document_entity);
     const auto& map = model.get<Map>(map_document.map);
@@ -54,7 +56,8 @@ void on_bucket_tool_pressed(Model& model,
     const auto& tileset = model.get<Tileset>(attached_tileset.tileset);
 
     const auto selected_pos = attached_tileset.selection->begin;
-    const auto new_tile_id = attached_tileset.first_tile + tileset.index_of(selected_pos);
+    const auto new_tile_id =
+        attached_tileset.first_tile + tile_index_at(tileset, selected_pos);
 
     dispatcher.enqueue<FloodEvent>(map.active_layer, mouse.tile_pos, new_tile_id);
   }
@@ -67,7 +70,7 @@ auto is_bucket_tool_available(const Model& model) -> bool
         map->active_layer != kNullEntity &&    //
         model.has<TileLayer>(map->active_layer)) {
       const auto& attached_tileset = model.get<AttachedTileset>(map->active_tileset);
-      return attached_tileset.is_single_tile_selected();
+      return is_single_tile_selected(attached_tileset);
     }
   }
 

@@ -29,7 +29,6 @@
 #include "common/util/random.hpp"
 #include "model/components/document.hpp"
 #include "model/components/map.hpp"
-#include "model/components/tileset.hpp"
 #include "model/components/tool.hpp"
 #include "model/components/viewport.hpp"
 #include "model/event/tool_events.hpp"
@@ -38,6 +37,8 @@
 #include "model/systems/document_system.hpp"
 #include "model/systems/tool_system.hpp"
 #include "model/systems/validation_system.hpp"
+#include "model/tilesets/tileset_components.hpp"
+#include "model/tilesets/tileset_ops.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -51,7 +52,7 @@ struct StampToolData final {
 
 [[nodiscard]] auto _is_usable(const Model& model) -> bool
 {
-  const auto document_entity = sys::get_active_document(model);
+  const auto document_entity = get_active_document(model);
 
   const auto& map_document = model.get<MapDocument>(document_entity);
   const auto& map = model.get<Map>(map_document.map);
@@ -72,7 +73,7 @@ struct StampToolData final {
                                          const StampToolData& tool_data,
                                          const Map& map) -> bool
 {
-  return tool_data.is_random && sys::is_stamp_tool_randomizer_possible(model, map);
+  return tool_data.is_random && is_stamp_tool_randomizer_possible(model, map);
 }
 
 void _update_random_sequence(Model& model,
@@ -94,14 +95,15 @@ void _update_random_sequence(Model& model,
         selection.begin + TilePos::from_index(index, selection_size.col());
 
     const auto& tileset = model.get<Tileset>(attached_tileset.tileset);
-    const auto tile_id = attached_tileset.first_tile + tileset.index_of(selection_pos);
+    const auto tile_id =
+        attached_tileset.first_tile + tile_index_at(tileset, selection_pos);
 
     if (!tool_data.old_state.contains(mouse_pos)) {
-      tool_data.old_state[mouse_pos] = sys::tile_at(tile_layer, mouse_pos).value();
+      tool_data.old_state[mouse_pos] = tile_at(tile_layer, mouse_pos).value();
     }
 
     tool_data.new_state[mouse_pos] = tile_id;
-    sys::set_tile(tile_layer, mouse_pos, tile_id);
+    set_tile(tile_layer, mouse_pos, tile_id);
   }
 
   tool_data.last_changed_pos = mouse_pos;
@@ -128,17 +130,18 @@ void _update_normal_sequence(Model& model,
     const TilePos index {row, col};
     const auto selection_pos = selection.begin + index;
 
-    const auto tile_id = attached_tileset.first_tile + tileset.index_of(selection_pos);
+    const auto tile_id =
+        attached_tileset.first_tile + tile_index_at(tileset, selection_pos);
     if (tile_id != kEmptyTile) {
       const auto pos = mouse_pos + index - preview_offset;
 
-      if (sys::is_valid_tile(tile_layer, pos)) {
+      if (is_valid_tile(tile_layer, pos)) {
         if (!tool_data.old_state.contains(pos)) {
-          tool_data.old_state[pos] = sys::tile_at(tile_layer, pos).value();
+          tool_data.old_state[pos] = tile_at(tile_layer, pos).value();
         }
 
         tool_data.new_state[pos] = tile_id;
-        sys::set_tile(tile_layer, pos, tile_id);
+        set_tile(tile_layer, pos, tile_id);
       }
     }
   });
@@ -148,7 +151,7 @@ void _update_sequence(Model& model, StampToolData& tool_data, const TilePos& mou
 {
   TACTILE_ASSERT(_is_usable(model));
 
-  const auto document_entity = sys::get_active_document(model);
+  const auto document_entity = get_active_document(model);
 
   const auto& map_document = model.get<MapDocument>(document_entity);
   const auto& map = model.get<Map>(map_document.map);
@@ -163,7 +166,7 @@ void _update_sequence(Model& model, StampToolData& tool_data, const TilePos& mou
 
 void _try_end_sequence(Model& model, const Entity tool_entity, Dispatcher& dispatcher)
 {
-  if (const auto* map = sys::try_get_active_map(model)) {
+  if (const auto* map = try_get_active_map(model)) {
     auto& tool_data = model.get<StampToolData>(tool_entity);
 
     if (!tool_data.old_state.empty() && !tool_data.new_state.empty()) {
@@ -250,7 +253,7 @@ void on_stamp_tool_released(Model& model,
 
 auto is_stamp_tool_available(const Model& model) -> bool
 {
-  if (const auto* map = sys::try_get_active_map(model)) {
+  if (const auto* map = try_get_active_map(model)) {
     if (map->active_layer != kNullEntity && map->active_tileset != kNullEntity) {
       const auto& attached_tileset = model.get<AttachedTileset>(map->active_tileset);
 

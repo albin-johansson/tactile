@@ -23,10 +23,11 @@
 
 #include "model/components/document.hpp"
 #include "model/components/texture.hpp"
-#include "model/components/tileset.hpp"
 #include "model/model.hpp"
 #include "model/systems/model_system.hpp"
 #include "model/systems/validation_system.hpp"
+#include "model/tilesets/tileset_components.hpp"
+#include "model/tilesets/tileset_ops.hpp"
 
 using namespace tactile;
 
@@ -90,7 +91,7 @@ TEST_SUITE("DocumentSystem")
     CHECK(tileset.column_count == (img_size / tile_size).x);
     CHECK(tileset.tile_index_map.size() == tileset.tiles.size());
     CHECK(tileset.uv_size == Float2 {tileset.tile_size} / Float2 {img_size});
-    CHECK(static_cast<usize>(tileset.tile_count()) == tileset.tiles.size());
+    CHECK(static_cast<usize>(sys::tile_count(tileset)) == tileset.tiles.size());
     CHECK(!tileset.selected_tile_index.has_value());
     REQUIRE(sys::is_texture_entity(model, tileset.texture));
 

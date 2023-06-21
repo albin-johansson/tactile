@@ -17,26 +17,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "tool_system.hpp"
-
-#include "model/components/map.hpp"
-#include "model/tilesets/attached_tileset_ops.hpp"
-#include "model/tilesets/tileset_components.hpp"
+#include "attached_tileset_ops.hpp"
 
 namespace tactile::sys {
 
-auto is_stamp_tool_randomizer_possible(const Model& model, const Entity map_entity)
-    -> bool
+auto is_valid_tile(const AttachedTileset& attached_tileset, const TileID tile_id) -> bool
 {
-  const auto& map = model.get<Map>(map_entity);
-  return is_stamp_tool_randomizer_possible(model, map);
+  return tile_id >= attached_tileset.first_tile && tile_id <= attached_tileset.last_tile;
 }
 
-auto is_stamp_tool_randomizer_possible(const Model& model, const Map& map) -> bool
+auto to_tile_index(const AttachedTileset& attached_tileset, const TileID tile_id)
+    -> Maybe<TileIndex>
 {
-  if (map.active_tileset != kNullEntity) {
-    const auto& attached_tileset = model.get<AttachedTileset>(map.active_tileset);
-    return is_single_tile_selected(attached_tileset);
+  if (is_valid_tile(attached_tileset, tile_id)) {
+    return tile_id - attached_tileset.first_tile;
+  }
+
+  return nothing;
+}
+
+auto is_single_tile_selected(const AttachedTileset& attached_tileset) -> bool
+{
+  if (attached_tileset.selection.has_value()) {
+    return (attached_tileset.selection->end - attached_tileset.selection->begin) ==
+           TilePos {1, 1};
   }
 
   return false;

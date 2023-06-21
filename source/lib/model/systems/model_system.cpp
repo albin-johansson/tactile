@@ -50,17 +50,17 @@ void init_model(Model& model, const BackendAPI api)
 
   auto& texture_callbacks = model.add<TextureCallbacks>();
   if (api == BackendAPI::Null) {
-    texture_callbacks.init = &sys::on_init_null_texture;
-    texture_callbacks.destroy = &sys::on_destroy_null_texture;
+    texture_callbacks.init = &on_init_null_texture;
+    texture_callbacks.destroy = &on_destroy_null_texture;
   }
   else if (api == BackendAPI::OpenGL) {
-    texture_callbacks.init = &sys::on_init_gl_texture;
-    texture_callbacks.destroy = &sys::on_destroy_gl_texture;
+    texture_callbacks.init = &on_init_gl_texture;
+    texture_callbacks.destroy = &on_destroy_gl_texture;
   }
 
   auto& tool_context = model.add<ToolContext>();
-  tool_context.tools[ToolType::Stamp] = sys::create_stamp_tool(model);
-  tool_context.tools[ToolType::Bucket] = sys::create_bucket_tool(model);
+  tool_context.tools[ToolType::Stamp] = create_stamp_tool(model);
+  tool_context.tools[ToolType::Bucket] = create_bucket_tool(model);
 }
 
 }  // namespace tactile::sys

@@ -35,6 +35,7 @@
 #include "model/settings.hpp"
 #include "model/systems/layer_system.hpp"
 #include "model/systems/tileset_system.hpp"
+#include "model/tilesets/attached_tileset_ops.hpp"
 #include "ui/conversions.hpp"
 #include "ui/render/canvas_renderer.hpp"
 #include "ui/render/primitives.hpp"
@@ -144,8 +145,8 @@ void _render_ellipse_object(const Model& model,
 void _render_layers(const Model& model, const ui::CanvasInfo& canvas, const Map& map)
 {
   // TODO performance: include parent layer entity in function object signature
-  sys::visit_layers(model, map, [&](const Entity layer_entity) {
-    const auto parent_layer_entity = sys::get_parent_layer(model, map, layer_entity);
+  visit_layers(model, map, [&](const Entity layer_entity) {
+    const auto parent_layer_entity = get_parent_layer(model, map, layer_entity);
     render_layer(model, canvas, map, parent_layer_entity, layer_entity);
   });
 }
@@ -245,7 +246,7 @@ void render_tile_layer(const Model& model,
     for (auto col = begin_col; col < end_col; ++col) {
       const TilePos tile_pos {row, col};
 
-      const auto tile_id = sys::tile_at(tile_layer, tile_pos);
+      const auto tile_id = tile_at(tile_layer, tile_pos);
       if (tile_id.has_value() && tile_id != kEmptyTile) {
         render_tile(model, canvas, map, *tile_id, tile_pos, opacity);
       }
@@ -261,7 +262,7 @@ void render_tile(const Model& model,
                  const float opacity)
 {
   TACTILE_ASSERT(tile_id != kEmptyTile);
-  const auto attached_tileset_entity = sys::find_tileset_with_tile(model, map, tile_id);
+  const auto attached_tileset_entity = find_tileset_with_tile(model, map, tile_id);
 
   if (attached_tileset_entity != kNullEntity) {
     const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
@@ -269,9 +270,9 @@ void render_tile(const Model& model,
     const auto& tileset = model.get<Tileset>(attached_tileset.tileset);
     const auto& texture = model.get<Texture>(tileset.texture);
 
-    const auto logical_tile_index = attached_tileset.to_tile_index(tile_id).value();
+    const auto logical_tile_index = to_tile_index(attached_tileset, tile_id).value();
     const auto rendered_tile_index =
-        sys::get_tile_appearance(model, attached_tileset.tileset, logical_tile_index);
+        get_tile_appearance(model, attached_tileset.tileset, logical_tile_index);
 
     const auto pos_in_tileset =
         TilePos::from_index(rendered_tile_index, tileset.column_count);

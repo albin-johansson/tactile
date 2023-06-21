@@ -26,12 +26,13 @@
 #include "common/util/lookup.hpp"
 #include "model/components/document.hpp"
 #include "model/components/tile.hpp"
-#include "model/components/tileset.hpp"
 #include "model/components/viewport.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/settings.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/render_system.hpp"
+#include "model/tilesets/tileset_components.hpp"
+#include "model/tilesets/tileset_ops.hpp"
 #include "ui/conversions.hpp"
 #include "ui/dock/editor/document_viewport_offset_handler.hpp"
 #include "ui/render/canvas.hpp"
@@ -102,10 +103,10 @@ void _poll_mouse(TilesetViewportState& state,
 
   if (mouse.in_viewport) {
     if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-      const auto mouse_tile_index = tileset.index_of(mouse.tile_pos);
+      const auto mouse_tile_index = sys::tile_index_at(tileset, mouse.tile_pos);
 
       if (state.animation_frame_selection_mode) {
-        dispatcher.enqueue<AddAnimationFrameEvent>(tileset.get_active_tile(),
+        dispatcher.enqueue<AddAnimationFrameEvent>(sys::get_active_tile(tileset),
                                                    mouse_tile_index,
                                                    100ms);
         state.animation_frame_selection_mode = false;

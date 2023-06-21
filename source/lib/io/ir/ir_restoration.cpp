@@ -37,7 +37,6 @@
 #include "model/components/object.hpp"
 #include "model/components/tile.hpp"
 #include "model/components/tile_format.hpp"
-#include "model/components/tileset.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/layers/layer_factory.hpp"
 #include "model/model.hpp"
@@ -45,6 +44,7 @@
 #include "model/systems/component/component_set.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/layer_system.hpp"
+#include "model/tilesets/tileset_components.hpp"
 
 namespace tactile {
 namespace {

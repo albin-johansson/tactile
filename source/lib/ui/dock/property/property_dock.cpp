@@ -30,7 +30,6 @@
 #include "model/components/object.hpp"
 #include "model/components/tile.hpp"
 #include "model/components/tile_format.hpp"
-#include "model/components/tileset.hpp"
 #include "model/event/file_events.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/event/map_events.hpp"
@@ -42,6 +41,8 @@
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/tilesets/tileset_components.hpp"
+#include "model/tilesets/tileset_ops.hpp"
 #include "ui/dock/property/dialogs/new_property_dialog.hpp"
 #include "ui/dock/property/dialogs/rename_property_dialog.hpp"
 #include "ui/dock/property/dialogs/set_property_type_dialog.hpp"
@@ -255,7 +256,7 @@ void _push_native_tileset_properties(const Model& model,
     dispatcher.enqueue<RenameTilesetEvent>(tileset_entity, *updated_name);
   }
 
-  _push_native_read_only_row(strings.misc.tile_count.c_str(), tileset.tile_count());
+  _push_native_read_only_row(strings.misc.tile_count.c_str(), sys::tile_count(tileset));
   _push_native_read_only_row(strings.misc.column_count.c_str(), tileset.column_count);
 
   _push_native_read_only_row(strings.misc.tile_width.c_str(), tileset.tile_size.x);
