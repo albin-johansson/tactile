@@ -39,6 +39,7 @@
 #include "model/components/tile.hpp"
 #include "model/components/tile_format.hpp"
 #include "model/components/tileset.hpp"
+#include "model/layers/layer_factory.hpp"
 #include "model/model.hpp"
 #include "model/systems/component/component_def.hpp"
 #include "model/systems/component/component_set.hpp"

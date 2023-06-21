@@ -32,7 +32,7 @@
 #include "model/event/layer_events.hpp"
 #include "model/event/object_events.hpp"
 #include "model/event/property_events.hpp"
-#include "model/systems/group_layer_system.hpp"
+#include "model/layers/group_layers.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"

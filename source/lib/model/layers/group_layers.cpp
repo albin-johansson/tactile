@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "group_layer_system.hpp"
+#include "group_layers.hpp"
 
 #include <algorithm>  // find, iter_swap
 
@@ -53,14 +53,13 @@ namespace {
 }
 
 void _offset_layer(Model& model,
-                   const Entity root_layer_entity,
+                   const Map& map,
                    const Entity layer_entity,
                    const ssize offset)
 {
   TACTILE_ASSERT(is_layer_entity(model, layer_entity));
 
-  const auto parent_layer_entity =
-      get_parent_layer(model, root_layer_entity, layer_entity);
+  const auto parent_layer_entity = get_parent_layer(model, map, layer_entity);
   auto& parent_layer = model.get<GroupLayer>(parent_layer_entity);
 
   const auto begin = parent_layer.children.begin();
@@ -73,47 +72,39 @@ void _offset_layer(Model& model,
 
 }  // namespace
 
-void move_layer_up(Model& model,
-                   const Entity root_layer_entity,
-                   const Entity layer_entity)
+void move_layer_up(Model& model, const Map& map, const Entity layer_entity)
 {
-  TACTILE_ASSERT(is_group_layer_entity(model, root_layer_entity));
-  TACTILE_ASSERT(is_layer_entity(model, layer_entity));
-  TACTILE_ASSERT(can_move_layer_up(model,  //
-                                   model.get<GroupLayer>(root_layer_entity),
-                                   layer_entity));
-  _offset_layer(model, root_layer_entity, layer_entity, -1);
-}
-
-void move_layer_down(Model& model,
-                     const Entity root_layer_entity,
-                     const Entity layer_entity)
-{
-  TACTILE_ASSERT(is_group_layer_entity(model, root_layer_entity));
   TACTILE_ASSERT(is_layer_entity(model, layer_entity));
   TACTILE_ASSERT(
-      can_move_layer_down(model, model.get<GroupLayer>(root_layer_entity), layer_entity));
-  _offset_layer(model, root_layer_entity, layer_entity, 1);
+      can_move_layer_up(model, model.get<GroupLayer>(map.root_layer), layer_entity));
+  _offset_layer(model, map, layer_entity, -1);
+}
+
+void move_layer_down(Model& model, const Map& map, const Entity layer_entity)
+{
+  TACTILE_ASSERT(is_layer_entity(model, layer_entity));
+  TACTILE_ASSERT(
+      can_move_layer_down(model, model.get<GroupLayer>(map.root_layer), layer_entity));
+  _offset_layer(model, map, layer_entity, 1);
 }
 
 void set_layer_local_index(Model& model,
-                           const Entity root_layer_entity,
+                           const Map& map,
                            const Entity layer_entity,
                            const usize new_index)
 {
-  TACTILE_ASSERT(is_group_layer_entity(model, root_layer_entity));
   TACTILE_ASSERT(is_layer_entity(model, layer_entity));
 
-  const auto& root = model.get<GroupLayer>(root_layer_entity);
+  const auto& root = model.get<GroupLayer>(map.root_layer);
 
   const auto current_local_index = get_local_layer_index(model, root, layer_entity);
   const auto steps = udiff(current_local_index.value(), new_index);
 
   if (new_index < current_local_index) {
-    invoke_n(steps, [&] { move_layer_up(model, root_layer_entity, layer_entity); });
+    invoke_n(steps, [&] { move_layer_up(model, map, layer_entity); });
   }
   else {
-    invoke_n(steps, [&] { move_layer_down(model, root_layer_entity, layer_entity); });
+    invoke_n(steps, [&] { move_layer_down(model, map, layer_entity); });
   }
 }
 

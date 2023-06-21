@@ -31,6 +31,8 @@
 #include "model/components/layer.hpp"
 #include "model/components/tile_format.hpp"
 #include "model/components/tileset.hpp"
+#include "model/layers/layer_factory.hpp"
+#include "model/layers/layer_recursion.hpp"
 #include "model/systems/context/context_system.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/layer_system.hpp"
@@ -114,9 +116,10 @@ auto fix_tiles_in_map(Model& model, Map& map) -> FixTilesInMapResult
 {
   FixTilesInMapResult result;
 
-  recurse_tile_layers(model, map.root_layer, [&](Entity layer_entity, TileLayer& layer) {
+  visit_tile_layers(model, map, [&](const Entity layer_entity) {
     HashMap<TilePos, TileID> previous_tile_ids;
 
+    auto& layer = model.get<TileLayer>(layer_entity);
     invoke_mn(map.extent.rows, map.extent.cols, [&](const usize row, const usize col) {
       TACTILE_ASSERT(row < layer.tiles.size());
       TACTILE_ASSERT(col < layer.tiles.at(row).size());
@@ -151,7 +154,9 @@ void add_row_to_map(Model& model, Map& map)
 {
   ++map.extent.rows;
 
-  recurse_tile_layers(model, map.root_layer, [&](Entity, TileLayer& tile_layer) {
+  visit_tile_layers(model, map, [&](const Entity layer_entity) {
+    auto& tile_layer = model.get<TileLayer>(layer_entity);
+
     TACTILE_ASSERT(tile_layer.tiles.at(0).size() == map.extent.cols);
     tile_layer.tiles.push_back(make_tile_row(map.extent.cols));
   });
@@ -161,7 +166,9 @@ void add_column_to_map(Model& model, Map& map)
 {
   ++map.extent.cols;
 
-  recurse_tile_layers(model, map.root_layer, [&](Entity, TileLayer& tile_layer) {
+  visit_tile_layers(model, map, [&](const Entity layer_entity) {
+    auto& tile_layer = model.get<TileLayer>(layer_entity);
+
     for (auto& row: tile_layer.tiles) {
       row.push_back(kEmptyTile);
     }
@@ -176,7 +183,8 @@ auto remove_row_from_map(Model& model, Map& map) -> Result
 
   --map.extent.rows;
 
-  recurse_tile_layers(model, map.root_layer, [&](Entity, TileLayer& tile_layer) {
+  visit_tile_layers(model, map, [&](const Entity layer_entity) {
+    auto& tile_layer = model.get<TileLayer>(layer_entity);
     tile_layer.tiles.pop_back();
   });
 
@@ -191,7 +199,9 @@ auto remove_column_from_map(Model& model, Map& map) -> Result
 
   --map.extent.cols;
 
-  recurse_tile_layers(model, map.root_layer, [&](Entity, TileLayer& tile_layer) {
+  visit_tile_layers(model, map, [&](const Entity layer_entity) {
+    auto& tile_layer = model.get<TileLayer>(layer_entity);
+
     for (auto& row: tile_layer.tiles) {
       TACTILE_ASSERT(row.size() > 1);
       row.pop_back();
@@ -302,8 +312,7 @@ auto duplicate_layer(Model& model, const Entity map_entity, const Entity src_lay
     }
   }
 
-  const auto parent_layer_entity =
-      get_parent_layer(model, map.root_layer, src_layer_entity);
+  const auto parent_layer_entity = get_parent_layer(model, map, src_layer_entity);
 
   if (parent_layer_entity != kNullEntity) {
     auto& parent_layer = model.get<GroupLayer>(parent_layer_entity);
@@ -324,7 +333,7 @@ void remove_layer_from_map(Model& model, Map& map, const Entity layer_entity)
     map.active_layer = kNullEntity;
   }
 
-  const auto parent_layer_entity = get_parent_layer(model, map.root_layer, layer_entity);
+  const auto parent_layer_entity = get_parent_layer(model, map, layer_entity);
 
   auto& parent_layer = model.get<GroupLayer>(parent_layer_entity);
   std::erase(parent_layer.children, layer_entity);

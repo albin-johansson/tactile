@@ -22,7 +22,7 @@
 #include "common/debug/assert.hpp"
 #include "model/components/document.hpp"
 #include "model/components/map.hpp"
-#include "model/systems/group_layer_system.hpp"
+#include "model/layers/group_layers.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/layer_system.hpp"
 #include "model/systems/map_system.hpp"
@@ -58,14 +58,13 @@ void DuplicateLayer::redo()
   auto& map = model.get<Map>(mMapEntity);
   const auto& root_layer = model.get<GroupLayer>(map.root_layer);
 
-  mNewLayerParentEntity =
-      sys::get_parent_layer(model, map.root_layer, mSourceLayerEntity);
+  mNewLayerParentEntity = sys::get_parent_layer(model, map, mSourceLayerEntity);
 
   if (mNewLayerEntity != kNullEntity) {
     model.set_enabled(mNewLayerEntity, true);
 
     sys::attach_layer_to_map(model, map, mNewLayerEntity, mNewLayerParentEntity);
-    sys::set_layer_local_index(model, map.root_layer, mNewLayerEntity, mNewIndex.value());
+    sys::set_layer_local_index(model, map, mNewLayerEntity, mNewIndex.value());
   }
   else {
     mNewLayerEntity = sys::duplicate_layer(model, mMapEntity, mSourceLayerEntity);

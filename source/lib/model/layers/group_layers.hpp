@@ -22,16 +22,17 @@
 #include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
 #include "model/components/layer.hpp"
+#include "model/components/map.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {
 
-void move_layer_up(Model& model, Entity root_layer_entity, Entity layer_entity);
+void move_layer_up(Model& model, const Map& map, Entity layer_entity);
 
-void move_layer_down(Model& model, Entity root_layer_entity, Entity layer_entity);
+void move_layer_down(Model& model, const Map& map, Entity layer_entity);
 
 void set_layer_local_index(Model& model,
-                           Entity root_layer_entity,
+                           const Map& map,
                            Entity layer_entity,
                            usize new_index);
 

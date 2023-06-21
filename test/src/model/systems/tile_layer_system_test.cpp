@@ -17,10 +17,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "model/systems/tile_layer_system.hpp"
-
 #include <doctest/doctest.h>
 
+#include "model/layers/layer_factory.hpp"
+#include "model/layers/tile_layers.hpp"
 #include "model/model.hpp"
 #include "model/systems/layer_system.hpp"
 

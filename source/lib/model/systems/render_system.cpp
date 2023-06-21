@@ -29,8 +29,9 @@
 #include "model/components/layer.hpp"
 #include "model/components/object.hpp"
 #include "model/components/texture.hpp"
+#include "model/layers/group_layers.hpp"
+#include "model/layers/layer_recursion.hpp"
 #include "model/settings.hpp"
-#include "model/systems/group_layer_system.hpp"
 #include "model/systems/layer_system.hpp"
 #include "model/systems/tileset_system.hpp"
 #include "ui/conversions.hpp"
@@ -142,9 +143,8 @@ void _render_ellipse_object(const Model& model,
 void _render_layers(const Model& model, const ui::CanvasInfo& canvas, const Map& map)
 {
   // TODO performance: include parent layer entity in function object signature
-  sys::recurse_layers(model, map.root_layer, [&](const Entity layer_entity) {
-    const auto parent_layer_entity =
-        sys::get_parent_layer(model, map.root_layer, layer_entity);
+  sys::visit_layers(model, map, [&](const Entity layer_entity) {
+    const auto parent_layer_entity = sys::get_parent_layer(model, map, layer_entity);
     render_layer(model, canvas, map, parent_layer_entity, layer_entity);
   });
 }

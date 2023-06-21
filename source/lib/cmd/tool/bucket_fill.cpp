@@ -21,8 +21,8 @@
 
 #include "common/debug/assert.hpp"
 #include "model/components/layer.hpp"
+#include "model/layers/tile_layers.hpp"
 #include "model/systems/language_system.hpp"
-#include "model/systems/tile_layer_system.hpp"
 #include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {

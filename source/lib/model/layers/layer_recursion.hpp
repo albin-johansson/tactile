@@ -19,18 +19,25 @@
 
 #pragma once
 
-#include "common/primitives.hpp"
-#include "common/tile_extent.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/func.hpp"
 #include "model/components/layer.hpp"
 #include "model/components/map.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {
 
-[[nodiscard]] auto get_parent_layer(const Model& model,
-                                    const Map& map,
-                                    Entity layer_entity) -> Entity;
+void visit_layers(const Model& model,
+                  const GroupLayer& root_layer,
+                  const EntityCallback& callback);
+
+void visit_layers(const Model& model, const Map& map, const EntityCallback& callback);
+
+void visit_tile_layers(const Model& model,
+                       const GroupLayer& root_layer,
+                       const EntityCallback& callback);
+
+void visit_tile_layers(const Model& model,
+                       const Map& map,
+                       const EntityCallback& callback);
 
 }  // namespace tactile::sys

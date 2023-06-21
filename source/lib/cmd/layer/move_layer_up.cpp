@@ -21,7 +21,7 @@
 
 #include "common/debug/assert.hpp"
 #include "model/components/map.hpp"
-#include "model/systems/group_layer_system.hpp"
+#include "model/layers/group_layers.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/validation_system.hpp"
 
@@ -41,7 +41,7 @@ void MoveLayerUp::undo()
   auto& model = *mModel;
 
   const auto& map = model.get<Map>(mMapEntity);
-  sys::move_layer_down(model, map.root_layer, mLayerEntity);
+  sys::move_layer_down(model, map, mLayerEntity);
 }
 
 void MoveLayerUp::redo()
@@ -49,7 +49,7 @@ void MoveLayerUp::redo()
   auto& model = *mModel;
 
   const auto& map = model.get<Map>(mMapEntity);
-  sys::move_layer_up(model, map.root_layer, mLayerEntity);
+  sys::move_layer_up(model, map, mLayerEntity);
 }
 
 auto MoveLayerUp::get_name() const -> String

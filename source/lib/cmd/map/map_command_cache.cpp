@@ -21,7 +21,7 @@
 
 #include "model/components/layer.hpp"
 #include "model/components/map.hpp"
-#include "model/systems/layer_system.hpp"
+#include "model/layers/layer_recursion.hpp"
 
 namespace tactile {
 
@@ -48,7 +48,8 @@ void MapCommandCache::save_tiles(const Model& model,
                                  const TilePos& begin,
                                  const TilePos& end)
 {
-  auto callback = [&, this](const Entity layer_entity, const TileLayer& layer) {
+  auto callback = [&, this](const Entity layer_entity) {
+    const auto& layer = model.get<TileLayer>(layer_entity);
     auto& tile_cache = mCache[layer_entity];
 
     const auto end_row = end.row();
@@ -67,7 +68,8 @@ void MapCommandCache::save_tiles(const Model& model,
   };
 
   const auto& map = model.get<Map>(map_entity);
-  sys::recurse_tile_layers(model, map.root_layer, callback);
+  const auto& root = model.get<GroupLayer>(map.root_layer);
+  sys::visit_tile_layers(model, root, callback);
 }
 
 void MapCommandCache::merge_with(const MapCommandCache& other)

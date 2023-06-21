@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "object_layer_system.hpp"
+#include "object_layers.hpp"
 
 #include "model/components/layer.hpp"
 #include "model/components/object.hpp"

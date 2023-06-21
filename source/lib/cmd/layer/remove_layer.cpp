@@ -60,7 +60,7 @@ void RemoveLayer::redo()
   const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
   auto& map = model.get<Map>(map_document.map);
 
-  mParentLayerEntity = sys::get_parent_layer(model, map.root_layer, mLayerEntity);
+  mParentLayerEntity = sys::get_parent_layer(model, map, mLayerEntity);
   // TODO mIndex = sys::get_layer_local_index(model, map.root_layer, mLayerEntity);
 
   sys::remove_layer_from_map(model, map, mLayerEntity);
