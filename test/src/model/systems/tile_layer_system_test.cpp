@@ -26,9 +26,9 @@
 
 using namespace tactile;
 
-TEST_SUITE("Tile Layer System")
+TEST_SUITE("TileLayerSystem")
 {
-  TEST_CASE("Flood")
+  TEST_CASE("flood_tiles")
   {
     Model model;
 
@@ -58,7 +58,7 @@ TEST_SUITE("Tile Layer System")
     // 0  0  0  1  2
     // 0  1  1  1  2
     // 1  2  2  2  2
-    sys::flood(layer, {4, 1}, 2);
+    sys::flood_tiles(layer, {4, 1}, 2);
 
     REQUIRE(0 == layer.tile_at({0, 0}));
     REQUIRE(0 == layer.tile_at({0, 1}));
@@ -95,7 +95,7 @@ TEST_SUITE("Tile Layer System")
     // 0  0  0  3  2
     // 0  3  3  3  2
     // 1  2  2  2  2
-    sys::flood(layer, {3, 1}, 3);
+    sys::flood_tiles(layer, {3, 1}, 3);
 
     REQUIRE(0 == layer.tile_at({0, 0}));
     REQUIRE(0 == layer.tile_at({0, 1}));

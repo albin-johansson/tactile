@@ -25,7 +25,7 @@
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto _get_bounds(const Object& object, const Float2& tile_size) -> Float4
+[[nodiscard]] auto _create_bounds(const Object& object, const Float2& tile_size) -> Float4
 {
   if (object.type == ObjectType::Point) {
     return {object.position - (tile_size * 0.25f), tile_size * 0.5f};
@@ -38,16 +38,14 @@ namespace {
 }  // namespace
 
 auto find_object_at_position(const Model& model,
-                             const Entity object_layer_entity,
+                             const ObjectLayer& object_layer,
                              const Float2& target_pos,
                              const Float2& tile_size) -> Entity
 {
-  const auto& object_layer = model.get<ObjectLayer>(object_layer_entity);
-
   for (const auto object_entity: object_layer.objects) {
     const auto& object = model.get<Object>(object_entity);
 
-    const auto object_bounds = _get_bounds(object, tile_size);
+    const auto object_bounds = _create_bounds(object, tile_size);
     const auto max_object_x = object_bounds.x + object_bounds.z;
     const auto max_object_y = object_bounds.y + object_bounds.w;
 

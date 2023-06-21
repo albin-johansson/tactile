@@ -38,9 +38,9 @@ namespace tactile::sys {
  * \param replacement   the tile ID that will be used when replacing tiles.
  * \param[out] affected optional destination for all modified positions.
  */
-void flood(TileLayer& tile_layer,
-           const TilePos& origin,
-           TileID replacement,
-           Vector<TilePos>* affected = nullptr);
+void flood_tiles(TileLayer& tile_layer,
+                 const TilePos& origin,
+                 TileID replacement,
+                 Vector<TilePos>* affected = nullptr);
 
 }  // namespace tactile::sys

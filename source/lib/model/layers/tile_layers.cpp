@@ -23,10 +23,10 @@
 
 namespace tactile::sys {
 
-void flood(TileLayer& tile_layer,
-           const TilePos& origin,
-           const TileID replacement,
-           Vector<TilePos>* affected)
+void flood_tiles(TileLayer& tile_layer,
+                 const TilePos& origin,
+                 const TileID replacement,
+                 Vector<TilePos>* affected)
 {
   const auto target = tile_layer.tile_at(origin);
 

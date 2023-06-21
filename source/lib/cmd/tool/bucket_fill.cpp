@@ -59,7 +59,7 @@ void BucketFill::redo()
   auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
 
   mTargetTileID = tile_layer.tile_at(mOrigin);
-  sys::flood(tile_layer, mOrigin, mReplacement, &mAffectedPositions);
+  sys::flood_tiles(tile_layer, mOrigin, mReplacement, &mAffectedPositions);
 }
 
 auto BucketFill::get_name() const -> String
