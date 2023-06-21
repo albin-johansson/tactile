@@ -22,7 +22,7 @@
 #include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "model/components/layer.hpp"
+#include "model/layers/layer_components.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {

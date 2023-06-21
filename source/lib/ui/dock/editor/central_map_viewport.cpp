@@ -25,7 +25,6 @@
 
 #include "common/color.hpp"
 #include "model/components/document.hpp"
-#include "model/components/layer.hpp"
 #include "model/components/map.hpp"
 #include "model/components/object.hpp"
 #include "model/components/viewport.hpp"
@@ -33,6 +32,7 @@
 #include "model/event/property_events.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/event/viewport_events.hpp"
+#include "model/layers/layer_components.hpp"
 #include "model/settings.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/render_system.hpp"

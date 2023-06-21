@@ -45,13 +45,13 @@ TEST_SUITE("TileLayerSystem")
     // 0  0  0  1  0
     // 0  1  1  1  0
     // 1  0  0  0  0
-    layer.set_tile({1, 3}, 1);
-    layer.set_tile({1, 4}, 1);
-    layer.set_tile({2, 3}, 1);
-    layer.set_tile({3, 1}, 1);
-    layer.set_tile({3, 2}, 1);
-    layer.set_tile({3, 3}, 1);
-    layer.set_tile({4, 0}, 1);
+    sys::set_tile(layer, {1, 3}, 1);
+    sys::set_tile(layer, {1, 4}, 1);
+    sys::set_tile(layer, {2, 3}, 1);
+    sys::set_tile(layer, {3, 1}, 1);
+    sys::set_tile(layer, {3, 2}, 1);
+    sys::set_tile(layer, {3, 3}, 1);
+    sys::set_tile(layer, {4, 0}, 1);
 
     // 0  0  0  0  0
     // 0  0  0  1  1
@@ -60,35 +60,35 @@ TEST_SUITE("TileLayerSystem")
     // 1  2  2  2  2
     sys::flood_tiles(layer, {4, 1}, 2);
 
-    REQUIRE(0 == layer.tile_at({0, 0}));
-    REQUIRE(0 == layer.tile_at({0, 1}));
-    REQUIRE(0 == layer.tile_at({0, 2}));
-    REQUIRE(0 == layer.tile_at({0, 3}));
-    REQUIRE(0 == layer.tile_at({0, 4}));
+    REQUIRE(0 == sys::tile_at(layer, {0, 0}));
+    REQUIRE(0 == sys::tile_at(layer, {0, 1}));
+    REQUIRE(0 == sys::tile_at(layer, {0, 2}));
+    REQUIRE(0 == sys::tile_at(layer, {0, 3}));
+    REQUIRE(0 == sys::tile_at(layer, {0, 4}));
 
-    REQUIRE(0 == layer.tile_at({1, 0}));
-    REQUIRE(0 == layer.tile_at({1, 1}));
-    REQUIRE(0 == layer.tile_at({1, 2}));
-    REQUIRE(1 == layer.tile_at({1, 3}));
-    REQUIRE(1 == layer.tile_at({1, 4}));
+    REQUIRE(0 == sys::tile_at(layer, {1, 0}));
+    REQUIRE(0 == sys::tile_at(layer, {1, 1}));
+    REQUIRE(0 == sys::tile_at(layer, {1, 2}));
+    REQUIRE(1 == sys::tile_at(layer, {1, 3}));
+    REQUIRE(1 == sys::tile_at(layer, {1, 4}));
 
-    REQUIRE(0 == layer.tile_at({2, 0}));
-    REQUIRE(0 == layer.tile_at({2, 1}));
-    REQUIRE(0 == layer.tile_at({2, 2}));
-    REQUIRE(1 == layer.tile_at({2, 3}));
-    REQUIRE(2 == layer.tile_at({2, 4}));
+    REQUIRE(0 == sys::tile_at(layer, {2, 0}));
+    REQUIRE(0 == sys::tile_at(layer, {2, 1}));
+    REQUIRE(0 == sys::tile_at(layer, {2, 2}));
+    REQUIRE(1 == sys::tile_at(layer, {2, 3}));
+    REQUIRE(2 == sys::tile_at(layer, {2, 4}));
 
-    REQUIRE(0 == layer.tile_at({3, 0}));
-    REQUIRE(1 == layer.tile_at({3, 1}));
-    REQUIRE(1 == layer.tile_at({3, 2}));
-    REQUIRE(1 == layer.tile_at({3, 3}));
-    REQUIRE(2 == layer.tile_at({3, 4}));
+    REQUIRE(0 == sys::tile_at(layer, {3, 0}));
+    REQUIRE(1 == sys::tile_at(layer, {3, 1}));
+    REQUIRE(1 == sys::tile_at(layer, {3, 2}));
+    REQUIRE(1 == sys::tile_at(layer, {3, 3}));
+    REQUIRE(2 == sys::tile_at(layer, {3, 4}));
 
-    REQUIRE(1 == layer.tile_at({4, 0}));
-    REQUIRE(2 == layer.tile_at({4, 1}));
-    REQUIRE(2 == layer.tile_at({4, 2}));
-    REQUIRE(2 == layer.tile_at({4, 3}));
-    REQUIRE(2 == layer.tile_at({4, 4}));
+    REQUIRE(1 == sys::tile_at(layer, {4, 0}));
+    REQUIRE(2 == sys::tile_at(layer, {4, 1}));
+    REQUIRE(2 == sys::tile_at(layer, {4, 2}));
+    REQUIRE(2 == sys::tile_at(layer, {4, 3}));
+    REQUIRE(2 == sys::tile_at(layer, {4, 4}));
 
     // 0  0  0  0  0
     // 0  0  0  3  3
@@ -97,34 +97,34 @@ TEST_SUITE("TileLayerSystem")
     // 1  2  2  2  2
     sys::flood_tiles(layer, {3, 1}, 3);
 
-    REQUIRE(0 == layer.tile_at({0, 0}));
-    REQUIRE(0 == layer.tile_at({0, 1}));
-    REQUIRE(0 == layer.tile_at({0, 2}));
-    REQUIRE(0 == layer.tile_at({0, 3}));
-    REQUIRE(0 == layer.tile_at({0, 4}));
+    REQUIRE(0 == sys::tile_at(layer, {0, 0}));
+    REQUIRE(0 == sys::tile_at(layer, {0, 1}));
+    REQUIRE(0 == sys::tile_at(layer, {0, 2}));
+    REQUIRE(0 == sys::tile_at(layer, {0, 3}));
+    REQUIRE(0 == sys::tile_at(layer, {0, 4}));
 
-    REQUIRE(0 == layer.tile_at({1, 0}));
-    REQUIRE(0 == layer.tile_at({1, 1}));
-    REQUIRE(0 == layer.tile_at({1, 2}));
-    REQUIRE(3 == layer.tile_at({1, 3}));
-    REQUIRE(3 == layer.tile_at({1, 4}));
+    REQUIRE(0 == sys::tile_at(layer, {1, 0}));
+    REQUIRE(0 == sys::tile_at(layer, {1, 1}));
+    REQUIRE(0 == sys::tile_at(layer, {1, 2}));
+    REQUIRE(3 == sys::tile_at(layer, {1, 3}));
+    REQUIRE(3 == sys::tile_at(layer, {1, 4}));
 
-    REQUIRE(0 == layer.tile_at({2, 0}));
-    REQUIRE(0 == layer.tile_at({2, 1}));
-    REQUIRE(0 == layer.tile_at({2, 2}));
-    REQUIRE(3 == layer.tile_at({2, 3}));
-    REQUIRE(2 == layer.tile_at({2, 4}));
+    REQUIRE(0 == sys::tile_at(layer, {2, 0}));
+    REQUIRE(0 == sys::tile_at(layer, {2, 1}));
+    REQUIRE(0 == sys::tile_at(layer, {2, 2}));
+    REQUIRE(3 == sys::tile_at(layer, {2, 3}));
+    REQUIRE(2 == sys::tile_at(layer, {2, 4}));
 
-    REQUIRE(0 == layer.tile_at({3, 0}));
-    REQUIRE(3 == layer.tile_at({3, 1}));
-    REQUIRE(3 == layer.tile_at({3, 2}));
-    REQUIRE(3 == layer.tile_at({3, 3}));
-    REQUIRE(2 == layer.tile_at({3, 4}));
+    REQUIRE(0 == sys::tile_at(layer, {3, 0}));
+    REQUIRE(3 == sys::tile_at(layer, {3, 1}));
+    REQUIRE(3 == sys::tile_at(layer, {3, 2}));
+    REQUIRE(3 == sys::tile_at(layer, {3, 3}));
+    REQUIRE(2 == sys::tile_at(layer, {3, 4}));
 
-    REQUIRE(1 == layer.tile_at({4, 0}));
-    REQUIRE(2 == layer.tile_at({4, 1}));
-    REQUIRE(2 == layer.tile_at({4, 2}));
-    REQUIRE(2 == layer.tile_at({4, 3}));
-    REQUIRE(2 == layer.tile_at({4, 4}));
+    REQUIRE(1 == sys::tile_at(layer, {4, 0}));
+    REQUIRE(2 == sys::tile_at(layer, {4, 1}));
+    REQUIRE(2 == sys::tile_at(layer, {4, 2}));
+    REQUIRE(2 == sys::tile_at(layer, {4, 3}));
+    REQUIRE(2 == sys::tile_at(layer, {4, 4}));
   }
 }

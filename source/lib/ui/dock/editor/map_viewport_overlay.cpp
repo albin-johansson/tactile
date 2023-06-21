@@ -22,9 +22,10 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "model/components/layer.hpp"
 #include "model/components/map.hpp"
 #include "model/event/setting_events.hpp"
+#include "model/layers/layer_components.hpp"
+#include "model/layers/tile_layers.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/tileset_system.hpp"
 #include "ui/render/canvas.hpp"
@@ -77,7 +78,7 @@ void _push_mouse_tile_labels(const Model& model,
   }
 
   if (const auto* tile_layer = model.try_get<TileLayer>(map.active_layer)) {
-    const auto tile_id = tile_layer->tile_at(mouse.tile_pos);
+    const auto tile_id = sys::tile_at(*tile_layer, mouse.tile_pos);
 
     if (mouse.in_viewport && tile_id.has_value() && tile_id != kEmptyTile) {
       ImGui::Text("%s: %i", strings.misc.global_id.c_str(), *tile_id);

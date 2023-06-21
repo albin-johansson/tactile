@@ -20,7 +20,7 @@
 #include "set_layer_opacity.hpp"
 
 #include "common/debug/assert.hpp"
-#include "model/components/layer.hpp"
+#include "model/layers/layer_components.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/validation_system.hpp"
 

@@ -22,7 +22,8 @@
 #include <utility>  // move
 
 #include "common/debug/assert.hpp"
-#include "model/components/layer.hpp"
+#include "model/layers/layer_components.hpp"
+#include "model/layers/tile_layers.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/validation_system.hpp"
 
@@ -44,7 +45,7 @@ void EraserSequence::undo()
   auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
 
   for (const auto& [position, tile_id]: mOldState) {
-    tile_layer.set_tile(position, tile_id);
+    sys::set_tile(tile_layer, position, tile_id);
   }
 }
 
@@ -54,7 +55,7 @@ void EraserSequence::redo()
   auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
 
   for (const auto& [position, tile_id]: mOldState) {
-    tile_layer.set_tile(position, kEmptyTile);
+    sys::set_tile(tile_layer, position, kEmptyTile);
   }
 }
 

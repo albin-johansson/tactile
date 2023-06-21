@@ -23,8 +23,8 @@
 #include "common/tile_extent.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/func.hpp"
-#include "model/components/layer.hpp"
 #include "model/components/map.hpp"
+#include "model/layers/layer_components.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {

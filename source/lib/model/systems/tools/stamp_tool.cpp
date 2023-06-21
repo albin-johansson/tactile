@@ -28,12 +28,13 @@
 #include "common/util/functional.hpp"
 #include "common/util/random.hpp"
 #include "model/components/document.hpp"
-#include "model/components/layer.hpp"
 #include "model/components/map.hpp"
 #include "model/components/tileset.hpp"
 #include "model/components/tool.hpp"
 #include "model/components/viewport.hpp"
 #include "model/event/tool_events.hpp"
+#include "model/layers/layer_components.hpp"
+#include "model/layers/tile_layers.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/tool_system.hpp"
 #include "model/systems/validation_system.hpp"
@@ -96,11 +97,11 @@ void _update_random_sequence(Model& model,
     const auto tile_id = attached_tileset.first_tile + tileset.index_of(selection_pos);
 
     if (!tool_data.old_state.contains(mouse_pos)) {
-      tool_data.old_state[mouse_pos] = tile_layer.tile_at(mouse_pos).value();
+      tool_data.old_state[mouse_pos] = sys::tile_at(tile_layer, mouse_pos).value();
     }
 
     tool_data.new_state[mouse_pos] = tile_id;
-    tile_layer.set_tile(mouse_pos, tile_id);
+    sys::set_tile(tile_layer, mouse_pos, tile_id);
   }
 
   tool_data.last_changed_pos = mouse_pos;
@@ -131,13 +132,13 @@ void _update_normal_sequence(Model& model,
     if (tile_id != kEmptyTile) {
       const auto pos = mouse_pos + index - preview_offset;
 
-      if (tile_layer.contains(pos)) {
+      if (sys::is_valid_tile(tile_layer, pos)) {
         if (!tool_data.old_state.contains(pos)) {
-          tool_data.old_state[pos] = tile_layer.tile_at(pos).value();
+          tool_data.old_state[pos] = sys::tile_at(tile_layer, pos).value();
         }
 
         tool_data.new_state[pos] = tile_id;
-        tile_layer.set_tile(pos, tile_id);
+        sys::set_tile(tile_layer, pos, tile_id);
       }
     }
   });

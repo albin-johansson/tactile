@@ -28,9 +28,10 @@
 #include "common/util/vectors.hpp"
 #include "model/components/context.hpp"
 #include "model/components/document.hpp"
-#include "model/components/layer.hpp"
 #include "model/components/tile_format.hpp"
 #include "model/components/tileset.hpp"
+#include "model/layers/group_layers.hpp"
+#include "model/layers/layer_components.hpp"
 #include "model/layers/layer_factory.hpp"
 #include "model/layers/layer_recursion.hpp"
 #include "model/systems/context/context_system.hpp"
@@ -251,7 +252,7 @@ auto add_new_layer_to_map(Model& model, const Entity map_entity, const LayerType
   const auto layer_entity = _create_layer(model, map, map_identifiers, type);
 
   auto* root_layer = _determine_target_root_layer(model, map);
-  root_layer->append(layer_entity);
+  sys::attach_layer_to(*root_layer, layer_entity);
 
   return layer_entity;
 }
@@ -267,7 +268,7 @@ void attach_layer_to_map(Model& model,
                          ? model.get<GroupLayer>(root_layer_entity)
                          : model.get<GroupLayer>(map.root_layer);
 
-  root_layer.append(layer_entity);
+  sys::attach_layer_to(root_layer, layer_entity);
 }
 
 auto duplicate_layer(Model& model, const Entity map_entity, const Entity src_layer_entity)

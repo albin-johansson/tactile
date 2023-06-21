@@ -28,16 +28,16 @@ void flood_tiles(TileLayer& tile_layer,
                  const TileID replacement,
                  Vector<TilePos>* affected)
 {
-  const auto target = tile_layer.tile_at(origin);
+  const auto target = tile_at(tile_layer, origin);
 
-  if (!tile_layer.contains(origin) || target == replacement) {
+  if (!is_valid_tile(tile_layer, origin) || target == replacement) {
     return;
   }
 
   Queue<TilePos> affected_positions;
 
   auto replace_tile = [&](const TilePos& position) {
-    tile_layer.set_tile(position, replacement);
+    set_tile(tile_layer, position, replacement);
 
     if (affected != nullptr) {
       affected->push_back(position);
@@ -53,7 +53,7 @@ void flood_tiles(TileLayer& tile_layer,
     affected_positions.pop();
 
     auto check_position = [&](const TilePos& position) {
-      if (tile_layer.tile_at(position) == target) {
+      if (tile_at(tile_layer, position) == target) {
         replace_tile(position);
       }
     };
@@ -63,6 +63,41 @@ void flood_tiles(TileLayer& tile_layer,
     check_position(affected_position.south());
     check_position(affected_position.north());
   }
+}
+
+void set_tile(TileLayer& tile_layer, const TilePos pos, const TileID tile_id)
+{
+  if (is_valid_tile(tile_layer, pos)) [[likely]] {
+    const auto row = static_cast<usize>(pos.row());
+    const auto col = static_cast<usize>(pos.col());
+    tile_layer.tiles[row][col] = tile_id;
+  }
+}
+
+auto tile_at(const TileLayer& tile_layer, const TilePos pos) -> Maybe<TileID>
+{
+  if (is_valid_tile(tile_layer, pos)) [[likely]] {
+    const auto row = static_cast<usize>(pos.row());
+    const auto col = static_cast<usize>(pos.col());
+    return tile_layer.tiles[row][col];
+  }
+  else {
+    return nothing;
+  }
+}
+
+auto is_valid_tile(const TileLayer& tile_layer, const TilePos pos) -> bool
+{
+  const auto row = pos.row();
+  const auto col = pos.col();
+
+  const auto row_count = tile_layer.tiles.size();
+  const auto col_count = tile_layer.tiles.at(0).size();
+
+  return row >= 0 &&                             //
+         col >= 0 &&                             //
+         static_cast<usize>(row) < row_count &&  //
+         static_cast<usize>(col) < col_count;
 }
 
 }  // namespace tactile::sys

@@ -25,6 +25,7 @@
 #include "common/type/maybe.hpp"
 #include "common/util/algorithms.hpp"
 #include "common/util/functional.hpp"
+#include "common/util/vectors.hpp"
 #include "model/components/map.hpp"
 #include "model/systems/layer_system.hpp"
 #include "model/systems/validation_system.hpp"
@@ -71,6 +72,16 @@ void _offset_layer(Model& model,
 }
 
 }  // namespace
+
+auto attach_layer_to(GroupLayer& group_layer, const Entity layer_entity) -> Result
+{
+  if (!contained_in(group_layer.children, layer_entity)) {
+    group_layer.children.push_back(layer_entity);
+    return success;
+  }
+
+  return failure;
+}
 
 void move_layer_up(Model& model, const Map& map, const Entity layer_entity)
 {

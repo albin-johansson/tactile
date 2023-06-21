@@ -26,11 +26,12 @@
 
 #include "common/debug/assert.hpp"
 #include "model/components/context.hpp"
-#include "model/components/layer.hpp"
 #include "model/components/object.hpp"
 #include "model/components/texture.hpp"
 #include "model/layers/group_layers.hpp"
+#include "model/layers/layer_components.hpp"
 #include "model/layers/layer_recursion.hpp"
+#include "model/layers/tile_layers.hpp"
 #include "model/settings.hpp"
 #include "model/systems/layer_system.hpp"
 #include "model/systems/tileset_system.hpp"
@@ -244,7 +245,7 @@ void render_tile_layer(const Model& model,
     for (auto col = begin_col; col < end_col; ++col) {
       const TilePos tile_pos {row, col};
 
-      const auto tile_id = tile_layer.tile_at(tile_pos);
+      const auto tile_id = sys::tile_at(tile_layer, tile_pos);
       if (tile_id.has_value() && tile_id != kEmptyTile) {
         render_tile(model, canvas, map, *tile_id, tile_pos, opacity);
       }

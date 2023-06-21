@@ -19,10 +19,12 @@
 
 #pragma once
 
+#include "common/primitives.hpp"
 #include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
+#include "common/type/maybe.hpp"
 #include "common/type/vector.hpp"
-#include "model/components/layer.hpp"
+#include "model/layers/layer_components.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {
@@ -42,5 +44,22 @@ void flood_tiles(TileLayer& tile_layer,
                  const TilePos& origin,
                  TileID replacement,
                  Vector<TilePos>* affected = nullptr);
+
+/**
+ * Sets the tile ID in a tile layer.
+ *
+ * \note This function does nothing if the provided position is out-of-bounds.
+ *
+ * \param tile_layer the target tile layer.
+ * \param pos        the position of the tile to modify.
+ * \param tile_id    the new tile identifier.
+ */
+void set_tile(TileLayer& tile_layer, TilePos pos, TileID tile_id);
+
+/// Returns the tile identifier at the specified position, as long as it's valid.
+[[nodiscard]] auto tile_at(const TileLayer& tile_layer, TilePos pos) -> Maybe<TileID>;
+
+/// Indicates whether a position is a valid tile position in the tile layer.
+[[nodiscard]] auto is_valid_tile(const TileLayer& tile_layer, TilePos pos) -> bool;
 
 }  // namespace tactile::sys

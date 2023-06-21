@@ -21,7 +21,7 @@
 
 #include "common/debug/assert.hpp"
 #include "common/type/string.hpp"
-#include "model/components/layer.hpp"
+#include "model/layers/layer_components.hpp"
 #include "model/systems/validation_system.hpp"
 
 namespace tactile::sys {

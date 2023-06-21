@@ -21,9 +21,9 @@
 
 #include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
-#include "model/components/layer.hpp"
 #include "model/components/map.hpp"
 #include "model/components/object.hpp"
+#include "model/layers/layer_components.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/validation_system.hpp"
 

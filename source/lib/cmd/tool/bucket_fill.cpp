@@ -20,7 +20,7 @@
 #include "bucket_fill.hpp"
 
 #include "common/debug/assert.hpp"
-#include "model/components/layer.hpp"
+#include "model/layers/layer_components.hpp"
 #include "model/layers/tile_layers.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/validation_system.hpp"
@@ -46,7 +46,7 @@ void BucketFill::undo()
 
   const auto target_tile_id = mTargetTileID.value();
   for (const auto& affected_position: mAffectedPositions) {
-    tile_layer.set_tile(affected_position, target_tile_id);
+    sys::set_tile(tile_layer, affected_position, target_tile_id);
   }
 
   mAffectedPositions.clear();
@@ -58,7 +58,7 @@ void BucketFill::redo()
   auto& model = *mModel;
   auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
 
-  mTargetTileID = tile_layer.tile_at(mOrigin);
+  mTargetTileID = sys::tile_at(tile_layer, mOrigin);
   sys::flood_tiles(tile_layer, mOrigin, mReplacement, &mAffectedPositions);
 }
 

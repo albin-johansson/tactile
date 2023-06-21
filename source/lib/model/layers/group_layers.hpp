@@ -20,12 +20,17 @@
 #pragma once
 
 #include "common/primitives.hpp"
+#include "common/result.hpp"
 #include "common/type/ecs.hpp"
-#include "model/components/layer.hpp"
+#include "common/type/maybe.hpp"
 #include "model/components/map.hpp"
+#include "model/layers/layer_components.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {
+
+/// Adds a layer to the group unless the layer has been added before.
+auto attach_layer_to(GroupLayer& group_layer, Entity layer_entity) -> Result;
 
 void move_layer_up(Model& model, const Map& map, Entity layer_entity);
 

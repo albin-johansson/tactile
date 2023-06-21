@@ -23,7 +23,6 @@
 #include "model/components/component.hpp"
 #include "model/components/context.hpp"
 #include "model/components/document.hpp"
-#include "model/components/layer.hpp"
 #include "model/components/map.hpp"
 #include "model/components/object.hpp"
 #include "model/components/texture.hpp"
@@ -32,6 +31,7 @@
 #include "model/components/tileset.hpp"
 #include "model/components/tool.hpp"
 #include "model/components/viewport.hpp"
+#include "model/layers/layer_components.hpp"
 
 namespace tactile::sys {
 

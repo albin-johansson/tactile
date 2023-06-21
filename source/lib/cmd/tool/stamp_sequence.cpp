@@ -22,7 +22,8 @@
 #include <utility>  // move
 
 #include "common/debug/assert.hpp"
-#include "model/components/layer.hpp"
+#include "model/layers/layer_components.hpp"
+#include "model/layers/tile_layers.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/validation_system.hpp"
 
@@ -62,7 +63,7 @@ void StampSequence::_apply_sequence(const TileCache& cache)
   auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
 
   for (const auto& [position, tile_id]: cache) {
-    tile_layer.set_tile(position, tile_id);
+    sys::set_tile(tile_layer, position, tile_id);
   }
 }
 
