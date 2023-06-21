@@ -25,7 +25,7 @@
 #include "model/components/map.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/layers/layer_components.hpp"
-#include "model/layers/tile_layers.hpp"
+#include "model/layers/tile_layer_ops.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/tileset_system.hpp"
 #include "ui/render/canvas.hpp"

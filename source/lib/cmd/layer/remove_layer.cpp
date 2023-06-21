@@ -22,8 +22,8 @@
 #include "common/debug/assert.hpp"
 #include "model/components/document.hpp"
 #include "model/components/map.hpp"
+#include "model/layers/layer_tree_system.hpp"
 #include "model/systems/language_system.hpp"
-#include "model/systems/layer_system.hpp"
 #include "model/systems/map_system.hpp"
 #include "model/systems/validation_system.hpp"
 

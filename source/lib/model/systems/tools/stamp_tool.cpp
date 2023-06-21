@@ -33,7 +33,7 @@
 #include "model/components/viewport.hpp"
 #include "model/event/tool_events.hpp"
 #include "model/layers/layer_components.hpp"
-#include "model/layers/tile_layers.hpp"
+#include "model/layers/tile_layer_ops.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/tool_system.hpp"
 #include "model/systems/validation_system.hpp"

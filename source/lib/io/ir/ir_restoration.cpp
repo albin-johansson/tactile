@@ -39,11 +39,11 @@
 #include "model/components/tile_format.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/layers/layer_factory.hpp"
+#include "model/layers/layer_tree_system.hpp"
 #include "model/model.hpp"
 #include "model/systems/component/component_def.hpp"
 #include "model/systems/component/component_set.hpp"
 #include "model/systems/document_system.hpp"
-#include "model/systems/layer_system.hpp"
 #include "model/tilesets/tileset_components.hpp"
 
 namespace tactile {

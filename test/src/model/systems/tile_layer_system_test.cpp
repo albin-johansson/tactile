@@ -20,9 +20,9 @@
 #include <doctest/doctest.h>
 
 #include "model/layers/layer_factory.hpp"
-#include "model/layers/tile_layers.hpp"
+#include "model/layers/layer_tree_system.hpp"
+#include "model/layers/tile_layer_ops.hpp"
 #include "model/model.hpp"
-#include "model/systems/layer_system.hpp"
 
 using namespace tactile;
 

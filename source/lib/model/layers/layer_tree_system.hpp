@@ -20,7 +20,6 @@
 #pragma once
 
 #include "common/primitives.hpp"
-#include "common/result.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "model/components/map.hpp"
@@ -28,9 +27,6 @@
 #include "model/model.hpp"
 
 namespace tactile::sys {
-
-/// Adds a layer to the group unless the layer has been added before.
-auto attach_layer_to(GroupLayer& group_layer, Entity layer_entity) -> Result;
 
 void move_layer_up(Model& model, const Map& map, Entity layer_entity);
 
@@ -52,5 +48,9 @@ void set_layer_local_index(Model& model,
 [[nodiscard]] auto get_local_layer_index(const Model& model,
                                          const GroupLayer& root,
                                          Entity layer_entity) -> Maybe<usize>;
+
+[[nodiscard]] auto get_parent_layer(const Model& model,
+                                    const Map& map,
+                                    Entity layer_entity) -> Entity;
 
 }  // namespace tactile::sys

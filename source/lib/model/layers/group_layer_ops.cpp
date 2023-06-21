@@ -17,20 +17,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "group_layer_ops.hpp"
 
-#include "common/primitives.hpp"
-#include "common/tile_extent.hpp"
-#include "common/type/ecs.hpp"
-#include "common/type/func.hpp"
+#include <algorithm>  // find, iter_swap
+
+#include "common/debug/assert.hpp"
+#include "common/type/maybe.hpp"
+#include "common/util/algorithms.hpp"
+#include "common/util/functional.hpp"
+#include "common/util/vectors.hpp"
 #include "model/components/map.hpp"
-#include "model/layers/layer_components.hpp"
-#include "model/model.hpp"
+#include "model/layers/layer_tree_system.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::sys {
 
-[[nodiscard]] auto get_parent_layer(const Model& model,
-                                    const Map& map,
-                                    Entity layer_entity) -> Entity;
+auto attach_layer_to(GroupLayer& group_layer, const Entity layer_entity) -> Result
+{
+  if (!contained_in(group_layer.children, layer_entity)) {
+    group_layer.children.push_back(layer_entity);
+    return success;
+  }
+
+  return failure;
+}
 
 }  // namespace tactile::sys

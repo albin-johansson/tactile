@@ -17,21 +17,43 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "group_layers.hpp"
+#include "layer_tree_system.hpp"
 
 #include <algorithm>  // find, iter_swap
 
 #include "common/debug/assert.hpp"
-#include "common/type/maybe.hpp"
 #include "common/util/algorithms.hpp"
 #include "common/util/functional.hpp"
-#include "common/util/vectors.hpp"
-#include "model/components/map.hpp"
-#include "model/systems/layer_system.hpp"
 #include "model/systems/validation_system.hpp"
 
 namespace tactile::sys {
 namespace {
+
+[[nodiscard]] auto _get_parent_layer(const Model& model,
+                                     const Entity root_layer_entity,
+                                     const Entity target_layer_entity) -> Entity
+{
+  TACTILE_ASSERT(is_group_layer_entity(model, root_layer_entity));
+  TACTILE_ASSERT(is_layer_entity(model, target_layer_entity));
+
+  const auto& root_layer = model.get<GroupLayer>(root_layer_entity);
+
+  for (const auto layer_entity: root_layer.children) {
+    if (layer_entity == target_layer_entity) {
+      return root_layer_entity;
+    }
+    else if (model.has<GroupLayer>(layer_entity)) {
+      const auto parent_entity =
+          _get_parent_layer(model, layer_entity, target_layer_entity);
+
+      if (parent_entity != kNullEntity) {
+        return parent_entity;
+      }
+    }
+  }
+
+  return kNullEntity;
+}
 
 [[nodiscard]] auto _get_sibling_count(const Model& model,
                                       const GroupLayer& root,
@@ -72,16 +94,6 @@ void _offset_layer(Model& model,
 }
 
 }  // namespace
-
-auto attach_layer_to(GroupLayer& group_layer, const Entity layer_entity) -> Result
-{
-  if (!contained_in(group_layer.children, layer_entity)) {
-    group_layer.children.push_back(layer_entity);
-    return success;
-  }
-
-  return failure;
-}
 
 void move_layer_up(Model& model, const Map& map, const Entity layer_entity)
 {
@@ -160,6 +172,12 @@ auto get_local_layer_index(const Model& model,
   }
 
   return nothing;
+}
+
+auto get_parent_layer(const Model& model, const Map& map, const Entity layer_entity)
+    -> Entity
+{
+  return _get_parent_layer(model, map.root_layer, layer_entity);
 }
 
 }  // namespace tactile::sys

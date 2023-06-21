@@ -26,7 +26,7 @@
 #include "model/components/map.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/event/setting_events.hpp"
-#include "model/layers/group_layers.hpp"
+#include "model/layers/layer_tree_system.hpp"
 #include "model/model.hpp"
 #include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
