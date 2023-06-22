@@ -19,10 +19,10 @@
 
 #include "map_factory.hpp"
 
-#include "model/components/tile_format.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/layers/layer_factory.hpp"
 #include "model/maps/map_components.hpp"
+#include "model/tiles/tile_components.hpp"
 
 namespace tactile::sys {
 

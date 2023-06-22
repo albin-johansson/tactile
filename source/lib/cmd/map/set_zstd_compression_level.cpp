@@ -19,9 +19,9 @@
 
 #include "set_zstd_compression_level.hpp"
 
-#include "model/components/tile_format.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/tiles/tile_components.hpp"
 
 namespace tactile::cmd {
 

@@ -19,20 +19,11 @@
 
 #pragma once
 
-#include "common/enum/tile_compression.hpp"
-#include "common/enum/tile_encoding.hpp"
+#include "model/tiles/tile_components.hpp"
 
 namespace tactile {
 
-/// Component describing the tile layer data format utilized by a map.
-struct TileFormat final {
-  TileEncoding encoding {TileEncoding::Plain};          ///< Encoding strategy.
-  TileCompression compression {TileCompression::None};  ///< Compression strategy.
-  int zlib_compression_level {-1};  ///< Zlib compression level (if Zlib is used).
-  int zstd_compression_level {3};   ///< Zstd compression level (if Zstd is used).
-
-  /// Indicates whether the currently described format supports compression.
-  [[nodiscard]] auto supports_compression() const -> bool;
-};
+/// Indicates whether the currently described format supports compression.
+[[nodiscard]] auto supports_compression(const TileFormat& format) -> bool;
 
 }  // namespace tactile

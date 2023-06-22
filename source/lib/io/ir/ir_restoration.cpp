@@ -31,7 +31,8 @@
 #include "io/ir/map/map_ir.hpp"
 #include "io/texture_loader.hpp"
 #include "model/components/component_components.hpp"
-#include "model/components/tile_format.hpp"
+#include "model/components/component_def_system.hpp"
+#include "model/components/component_set_system.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_factory.hpp"
@@ -42,8 +43,6 @@
 #include "model/maps/map_components.hpp"
 #include "model/model.hpp"
 #include "model/objects/object_components.hpp"
-#include "model/components/component_def_system.hpp"
-#include "model/components/component_set_system.hpp"
 #include "model/tiles/tile_components.hpp"
 #include "model/tilesets/tileset_components.hpp"
 

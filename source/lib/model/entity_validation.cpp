@@ -21,7 +21,6 @@
 
 #include "cmd/command_stack.hpp"
 #include "model/components/component_components.hpp"
-#include "model/components/tile_format.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/layers/layer_components.hpp"

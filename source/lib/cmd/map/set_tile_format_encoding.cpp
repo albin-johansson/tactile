@@ -19,8 +19,8 @@
 
 #include "set_tile_format_encoding.hpp"
 
-#include "model/components/tile_format.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/tiles/tile_components.hpp"
 
 namespace tactile::cmd {
 

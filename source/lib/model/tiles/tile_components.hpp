@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include "common/enum/tile_compression.hpp"
+#include "common/enum/tile_encoding.hpp"
 #include "common/primitives.hpp"
 #include "common/type/chrono.hpp"
 #include "common/type/ecs.hpp"
@@ -45,6 +47,14 @@ struct TileAnimation final {
   Vector<TileAnimationFrame> frames;  ///< The associated animation frames.
   usize index {};                     ///< Current frame index.
   TimePoint last_update {};           ///< Time of the last frame change.
+};
+
+/// Component describing the tile layer data format utilized by a map.
+struct TileFormat final {
+  TileEncoding encoding {TileEncoding::Plain};          ///< Encoding strategy.
+  TileCompression compression {TileCompression::None};  ///< Compression strategy.
+  int zlib_compression_level {-1};  ///< Zlib compression level (if Zlib is used).
+  int zstd_compression_level {3};   ///< Zstd compression level (if Zstd is used).
 };
 
 }  // namespace tactile

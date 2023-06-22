@@ -17,24 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "tile_format_ops.hpp"
 
-#include "common/type/dispatcher.hpp"
-#include "model/components/menu.hpp"
-#include "model/i18n/language_components.hpp"
-#include "model/model.hpp"
+namespace tactile {
 
-namespace tactile::sys {
+auto supports_compression(const TileFormat& format) -> bool
+{
+  return format.encoding != TileEncoding::Plain;
+}
 
-void init_menus(Model& model);
-
-void update_menu_items(Model& model, Dispatcher& dispatcher);
-
-void translate_menus(Model& model, const Strings& strings);
-
-void retranslate_menus(Model& model);
-
-[[nodiscard]] auto get_menu_item(const Model& model, MenuAction action)
-    -> const MenuItem&;
-
-}  // namespace tactile::sys
+}  // namespace tactile

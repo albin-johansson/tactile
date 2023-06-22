@@ -19,10 +19,10 @@
 
 #include "model_factory.hpp"
 
-#include "model/components/file_history.hpp"
-#include "model/components/menu.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/i18n/language_components.hpp"
+#include "model/menus/menu_components.hpp"
+#include "model/persistence/file_history_components.hpp"
 #include "model/persistence/settings.hpp"
 #include "model/textures/gl_texture_system.hpp"
 #include "model/textures/null_texture_system.hpp"

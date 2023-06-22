@@ -19,8 +19,8 @@
 
 #include <doctest/doctest.h>
 
-#include "model/components/file_history.hpp"
-#include "model/components/menu.hpp"
+#include "model/persistence/file_history_components.hpp"
+#include "model/menus/menu_components.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/i18n/language_components.hpp"
 #include "model/model_factory.hpp"

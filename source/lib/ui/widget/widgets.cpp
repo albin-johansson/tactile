@@ -27,7 +27,7 @@
 #include "common/type/hash_map.hpp"
 #include "common/type/maybe.hpp"
 #include "model/events/menu_events.hpp"
-#include "model/systems/menu_system.hpp"
+#include "model/menus/menu_system.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"
 

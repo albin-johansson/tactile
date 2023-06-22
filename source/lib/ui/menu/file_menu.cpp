@@ -22,9 +22,9 @@
 #include <imgui.h>
 
 #include "common/type/path.hpp"
-#include "model/components/file_history.hpp"
 #include "model/events/map_events.hpp"
 #include "model/events/menu_events.hpp"
+#include "model/persistence/file_history_components.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"

@@ -24,7 +24,6 @@
 #include <imgui.h>
 
 #include "io/compression.hpp"
-#include "model/components/tile_format.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
@@ -41,6 +40,7 @@
 #include "model/objects/object_components.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/tiles/tile_components.hpp"
+#include "model/tiles/tile_format_ops.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_ops.hpp"
 #include "ui/dock/property/dialogs/new_property_dialog.hpp"
@@ -190,7 +190,7 @@ void _push_native_map_properties(const Model& model,
   ImGui::TableNextColumn();
 
   {
-    const Disable disable_if {!tile_format.supports_compression()};
+    const Disable disable_if {!supports_compression(tile_format)};
 
     auto compression = strings.misc.none;
     if (tile_format.compression == TileCompression::Zlib) {

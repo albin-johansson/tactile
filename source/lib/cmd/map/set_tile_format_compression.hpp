@@ -22,8 +22,8 @@
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "model/components/tile_format.hpp"
 #include "model/model.hpp"
+#include "model/tiles/tile_components.hpp"
 
 namespace tactile::cmd {
 

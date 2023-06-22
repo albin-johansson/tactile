@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "model/components/menu.hpp"
+#include "model/menus/menu_components.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"

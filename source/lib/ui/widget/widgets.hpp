@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/dispatcher.hpp"
-#include "model/components/menu.hpp"
+#include "model/menus/menu_components.hpp"
 #include "model/model.hpp"
 
 namespace tactile::ui {
