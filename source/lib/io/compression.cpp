@@ -208,7 +208,7 @@ auto zstd_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
   const auto stream_deleter = [](ZSTD_DStream* ptr) noexcept { ZSTD_freeDStream(ptr); };
 
   using DStream = Unique<ZSTD_DStream, decltype(stream_deleter)>;
-  DStream stream {ZSTD_createDStream()};
+  const DStream stream {ZSTD_createDStream()};
 
   if (!stream) {
     spdlog::error("[Zstd] Could not initialize decompression stream");
@@ -219,46 +219,50 @@ auto zstd_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
 
   const auto out_buffer_size = ZSTD_DStreamOutSize();
 
-  ByteStream out_buffer;
-  out_buffer.reserve(out_buffer_size);
+  ByteStream out_backing_buffer;
+  out_backing_buffer.resize(out_buffer_size);
 
-  ZSTD_inBuffer input {.src = source, .size = source_bytes, .pos = 0};
-  ZSTD_outBuffer output {.dst = out_buffer.data(), .size = out_buffer_size, .pos = 0};
+  ZSTD_inBuffer in_buffer {.src = source, .size = source_bytes, .pos = 0};
+  ZSTD_outBuffer out_buffer {.dst = out_backing_buffer.data(),
+                             .size = out_buffer_size,
+                             .pos = 0};
 
-  ByteStream result;
-  result.reserve(out_buffer_size);  // Won't be enough, but better than nothing
+  ByteStream decompressed_bytes;
+  decompressed_bytes.reserve(out_buffer_size);  // Won't be enough, just a guess.
 
   const auto copy_output_buffer_to_result = [&] {
-    std::copy_n(out_buffer.data(), output.pos, std::back_inserter(result));
+    std::copy_n(out_backing_buffer.data(),
+                out_buffer.pos,
+                std::back_inserter(decompressed_bytes));
   };
 
   usize written_bytes = 0;
 
   do {
     // Check if our output buffer is full, in which case we reset and reuse the buffer
-    if (output.pos == output.size) {
+    if (out_buffer.pos == out_buffer.size) {
       copy_output_buffer_to_result();
 
-      output.dst = out_buffer.data();
-      output.size = out_buffer_size;
-      output.pos = 0;
+      out_buffer.dst = out_backing_buffer.data();
+      out_buffer.size = out_buffer_size;
+      out_buffer.pos = 0;
     }
 
-    const auto err = ZSTD_decompressStream(stream.get(), &output, &input);
+    const auto err = ZSTD_decompressStream(stream.get(), &out_buffer, &in_buffer);
     if (ZSTD_isError(err)) {
       spdlog::error("[Zstd] Could not decompress: {}", ZSTD_getErrorName(err));
       return nothing;
     }
 
-    written_bytes += output.pos;
-  } while (input.pos < input.size);
+    written_bytes += out_buffer.pos;
+  } while (in_buffer.pos < in_buffer.size);
 
   copy_output_buffer_to_result();
 
-  result.resize(written_bytes);
-  result.shrink_to_fit();
+  decompressed_bytes.resize(written_bytes);
+  decompressed_bytes.shrink_to_fit();
 
-  return result;
+  return decompressed_bytes;
 }
 
 auto is_valid_zstd_compression_level(const int level) -> bool
