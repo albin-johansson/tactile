@@ -42,8 +42,8 @@
 #include "model/maps/map_components.hpp"
 #include "model/model.hpp"
 #include "model/objects/object_components.hpp"
-#include "model/systems/component/component_def.hpp"
-#include "model/systems/component/component_set.hpp"
+#include "model/components/component_def_system.hpp"
+#include "model/components/component_set_system.hpp"
 #include "model/tiles/tile_components.hpp"
 #include "model/tilesets/tileset_components.hpp"
 

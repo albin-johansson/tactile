@@ -23,7 +23,8 @@
 
 #include "common/debug/assert.hpp"
 #include "model/components/component_components.hpp"
-#include "model/systems/component/component_set.hpp"
+#include "model/components/component_factory.hpp"
+#include "model/components/component_set_system.hpp"
 #include "model/systems/context/components.hpp"
 #include "model/systems/context/context_system.hpp"
 #include "model/systems/language_system.hpp"

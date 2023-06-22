@@ -21,7 +21,7 @@
 
 #include "common/debug/assert.hpp"
 #include "model/contexts/context_components.hpp"
-#include "model/systems/component/component_def.hpp"
+#include "model/components/component_def_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/validation_system.hpp"
 

@@ -26,19 +26,15 @@
 
 namespace tactile::sys {
 
-/// Creates a new empty component definition.
+/**
+ * Creates a new empty component definition.
+ *
+ * \param model         the associated model.
+ * \param component_set the associated component set.
+ * \param name          the name of the component.
+ *
+ * \return a component definition entity.
+ */
 auto create_component(Model& model, ComponentSet& component_set, String name) -> Entity;
-
-/// Removes a component definition (and destroys it), and removes it from all contexts.
-void remove_component(Model& model, ComponentSet& component_set, StringView name);
-
-/// Tries to find a component definition entity with a specific name, or returns null.
-[[nodiscard]] auto find_component_definition(const Model& model,
-                                             const ComponentSet& component_set,
-                                             StringView name) -> Entity;
-
-[[nodiscard, deprecated]] auto find_component_definition(const Model& model,
-                                                         Entity component_set_entity,
-                                                         StringView name) -> Entity;
 
 }  // namespace tactile::sys

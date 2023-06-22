@@ -22,7 +22,8 @@
 #include <utility>  // move
 
 #include "common/debug/assert.hpp"
-#include "model/systems/component/component_set.hpp"
+#include "model/components/component_factory.hpp"
+#include "model/components/component_set_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/validation_system.hpp"
 

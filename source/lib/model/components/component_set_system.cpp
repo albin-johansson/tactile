@@ -17,25 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "component_set.hpp"
+#include "component_set_system.hpp"
 
 #include "common/debug/assert.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/systems/validation_system.hpp"
 
 namespace tactile::sys {
-
-auto create_component(Model& model, ComponentSet& component_set, String name) -> Entity
-{
-  const auto definition_entity = model.create_entity();
-  component_set.definitions.push_back(definition_entity);
-
-  auto& definition = model.add<ComponentDefinition>(definition_entity);
-  definition.name = std::move(name);
-
-  TACTILE_ASSERT(is_component_definition_entity(model, definition_entity));
-  return definition_entity;
-}
 
 void remove_component(Model& model, ComponentSet& component_set, StringView name)
 {

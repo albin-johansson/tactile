@@ -23,7 +23,7 @@
 
 #include "common/debug/assert.hpp"
 #include "model/components/component_components.hpp"
-#include "model/systems/component/component.hpp"
+#include "model/components/component_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/validation_system.hpp"
 

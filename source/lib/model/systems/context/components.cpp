@@ -21,7 +21,7 @@
 
 #include <algorithm>  // find_if, any_of
 
-#include "model/systems/component/component_def.hpp"
+#include "model/components/component_def_system.hpp"
 #include "model/systems/validation_system.hpp"
 
 namespace tactile::sys {

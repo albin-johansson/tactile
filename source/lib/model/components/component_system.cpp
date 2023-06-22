@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "component.hpp"
+#include "component_system.hpp"
 
 #include <utility>  // move
 

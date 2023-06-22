@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "component_def.hpp"
+#include "component_def_system.hpp"
 
 #include <fmt/format.h>
 
