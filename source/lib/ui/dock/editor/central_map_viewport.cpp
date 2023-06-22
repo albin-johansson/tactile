@@ -231,8 +231,8 @@ void push_central_map_viewport(const Model& model,
 
   pop_scissor();
 
-  show_map_viewport_toolbar(model, dispatcher);
-  show_map_viewport_overlay(model, map, mouse_info, dispatcher);
+  push_map_viewport_toolbar(model, dispatcher);
+  push_map_viewport_overlay(model, map, mouse_info, dispatcher);
 
   _push_viewport_context_menu(strings, map_document_entity, map_document, dispatcher);
   _push_object_context_menu(model, strings, map, state, dispatcher);

@@ -24,6 +24,6 @@
 
 namespace tactile::ui {
 
-void show_tileset_tabs(const Model& model, Dispatcher& dispatcher);
+void push_tileset_tabs(const Model& model, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

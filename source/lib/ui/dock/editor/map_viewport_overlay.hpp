@@ -26,7 +26,7 @@
 
 namespace tactile::ui {
 
-void show_map_viewport_overlay(const Model& model,
+void push_map_viewport_overlay(const Model& model,
                                const Map& map,
                                const ViewportMouseInfo& cursor,
                                Dispatcher& dispatcher);

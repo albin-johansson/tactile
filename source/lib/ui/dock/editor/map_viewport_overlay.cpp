@@ -142,7 +142,7 @@ void _push_overlay_context_menu(const Strings& strings,
 
 }  // namespace
 
-void show_map_viewport_overlay(const Model& model,
+void push_map_viewport_overlay(const Model& model,
                                const Map& map,
                                const ViewportMouseInfo& mouse,
                                Dispatcher& dispatcher)

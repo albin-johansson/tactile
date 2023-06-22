@@ -103,7 +103,7 @@ void _push_extra_toolbar(std::invocable auto callable)
 
 }  // namespace
 
-void show_map_viewport_toolbar(const Model& model, Dispatcher& dispatcher)
+void push_map_viewport_toolbar(const Model& model, Dispatcher& dispatcher)
 {
   const auto& strings = sys::get_current_language_strings(model);
 

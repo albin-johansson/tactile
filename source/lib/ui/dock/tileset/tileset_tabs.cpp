@@ -74,7 +74,7 @@ void _push_context_menu(const Model& model,
 
 }  // namespace
 
-void show_tileset_tabs(const Model& model, Dispatcher& dispatcher)
+void push_tileset_tabs(const Model& model, Dispatcher& dispatcher)
 {
   TACTILE_ASSERT(sys::is_map_document_active(model));
 

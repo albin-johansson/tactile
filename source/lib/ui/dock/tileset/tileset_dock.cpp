@@ -78,7 +78,7 @@ void push_tileset_dock_widget(const Model& model,
       }
     }
     else {
-      show_tileset_tabs(model, dispatcher);
+      push_tileset_tabs(model, dispatcher);
     }
   }
 }
