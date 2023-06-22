@@ -35,8 +35,8 @@
 #include "model/event/tool_events.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/layers/tile_layer_ops.hpp"
-#include "model/systems/tool_system.hpp"
 #include "model/systems/validation_system.hpp"
+#include "model/tilesets/attached_tileset_ops.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_ops.hpp"
 
@@ -260,6 +260,16 @@ auto is_stamp_tool_available(const Model& model) -> bool
       return model.has<TileLayer>(map->active_layer) &&
              attached_tileset.selection.has_value();
     }
+  }
+
+  return false;
+}
+
+auto is_stamp_tool_randomizer_possible(const Model& model, const Map& map) -> bool
+{
+  if (map.active_tileset != kNullEntity) {
+    const auto& attached_tileset = model.get<AttachedTileset>(map.active_tileset);
+    return is_single_tile_selected(attached_tileset);
   }
 
   return false;

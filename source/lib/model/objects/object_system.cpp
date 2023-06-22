@@ -27,20 +27,6 @@
 
 namespace tactile::sys {
 
-auto create_object(Model& model, const ObjectType type) -> Entity
-{
-  const auto object_entity = model.create_entity();
-
-  auto& object = model.add<Object>(object_entity);
-  object.type = type;
-
-  auto& context = model.add<Context>(object_entity);
-  context.name = "Object";
-
-  TACTILE_ASSERT(is_object_entity(model, object_entity));
-  return object_entity;
-}
-
 auto duplicate_object(Model& model, const Entity object_entity) -> Entity
 {
   TACTILE_ASSERT(is_object_entity(model, object_entity));

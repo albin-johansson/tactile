@@ -20,7 +20,6 @@
 #pragma once
 
 #include "common/enum/object_type.hpp"
-#include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
 #include "model/model.hpp"
 
@@ -35,18 +34,5 @@ namespace tactile::sys {
  * \return an object entity.
  */
 [[nodiscard]] auto create_object(Model& model, ObjectType type) -> Entity;
-
-/**
- * Creates a copy of an object.
- *
- * \details The new object will not feature a meta ID, nor will it share any entities
- *          associated with the old object.
- *
- * \param model         the associated model instance.
- * \param object_entity the object entity that will be duplicated.
- *
- * \return an object entity.
- */
-[[nodiscard]] auto duplicate_object(Model& model, Entity object_entity) -> Entity;
 
 }  // namespace tactile::sys

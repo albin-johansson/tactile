@@ -20,15 +20,21 @@
 #pragma once
 
 #include "common/type/ecs.hpp"
-#include "model/components/map.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {
 
-[[nodiscard]] auto is_stamp_tool_randomizer_possible(const Model& model,
-                                                     Entity map_entity) -> bool;
-
-[[nodiscard]] auto is_stamp_tool_randomizer_possible(const Model& model, const Map& map)
-    -> bool;
+/**
+ * Creates a copy of an object.
+ *
+ * \details The new object will not feature a meta ID, nor will it share any entities
+ *          associated with the old object.
+ *
+ * \param model         the associated model instance.
+ * \param object_entity the object entity that will be duplicated.
+ *
+ * \return an object entity.
+ */
+[[nodiscard]] auto duplicate_object(Model& model, Entity object_entity) -> Entity;
 
 }  // namespace tactile::sys

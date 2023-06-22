@@ -21,6 +21,7 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
+#include "model/components/map.hpp"
 #include "model/components/viewport.hpp"
 #include "model/model.hpp"
 
@@ -48,5 +49,8 @@ void on_stamp_tool_released(Model& model,
                             Dispatcher& dispatcher);
 
 [[nodiscard]] auto is_stamp_tool_available(const Model& model) -> bool;
+
+[[nodiscard]] auto is_stamp_tool_randomizer_possible(const Model& model, const Map& map)
+    -> bool;
 
 }  // namespace tactile::sys

@@ -17,12 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "model/systems/object_system.hpp"
+#include "model/objects/object_system.hpp"
 
 #include <doctest/doctest.h>
 
 #include "model/components/context.hpp"
 #include "model/components/object.hpp"
+#include "model/objects/object_factory.hpp"
 #include "model/systems/model_system.hpp"
 #include "model/systems/validation_system.hpp"
 

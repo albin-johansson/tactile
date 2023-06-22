@@ -17,29 +17,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "tool_system.hpp"
+#include "object_factory.hpp"
 
-#include "model/components/map.hpp"
-#include "model/tilesets/attached_tileset_ops.hpp"
-#include "model/tilesets/tileset_components.hpp"
+#include "common/debug/assert.hpp"
+#include "model/components/context.hpp"
+#include "model/components/object.hpp"
+#include "model/systems/validation_system.hpp"
 
 namespace tactile::sys {
 
-auto is_stamp_tool_randomizer_possible(const Model& model, const Entity map_entity)
-    -> bool
+auto create_object(Model& model, const ObjectType type) -> Entity
 {
-  const auto& map = model.get<Map>(map_entity);
-  return is_stamp_tool_randomizer_possible(model, map);
-}
+  const auto object_entity = model.create_entity();
 
-auto is_stamp_tool_randomizer_possible(const Model& model, const Map& map) -> bool
-{
-  if (map.active_tileset != kNullEntity) {
-    const auto& attached_tileset = model.get<AttachedTileset>(map.active_tileset);
-    return is_single_tile_selected(attached_tileset);
-  }
+  auto& object = model.add<Object>(object_entity);
+  object.type = type;
+  object.position = Float2 {0, 0};
+  object.size = Float2 {0, 0};
+  object.visible = true;
 
-  return false;
+  auto& context = model.add<Context>(object_entity);
+  context.name = "Object";
+
+  TACTILE_ASSERT(is_object_entity(model, object_entity));
+  return object_entity;
 }
 
 }  // namespace tactile::sys
