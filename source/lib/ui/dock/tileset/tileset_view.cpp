@@ -23,7 +23,7 @@
 #include <imgui_internal.h>
 
 #include "common/color.hpp"
-#include "io/proto/settings.hpp"
+#include "io/settings_io.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/events/tileset_events.hpp"
 #include "model/events/viewport_events.hpp"

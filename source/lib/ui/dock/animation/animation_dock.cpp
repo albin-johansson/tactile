@@ -25,7 +25,7 @@
 
 #include "common/type/maybe.hpp"
 #include "common/util/lookup.hpp"
-#include "io/proto/settings.hpp"
+#include "io/settings_io.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/events/setting_events.hpp"

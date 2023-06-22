@@ -17,15 +17,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "history.hpp"
+#include "file_history_io.hpp"
 
 #include <algorithm>  // find
 
 #include <spdlog/spdlog.h>
 
 #include "io/directories.hpp"
-#include "io/proto/proto.hpp"
-#include "io/stream.hpp"
+#include "io/protobuf_types.hpp"
+#include "io/util/streams.hpp"
 
 namespace tactile {
 namespace {

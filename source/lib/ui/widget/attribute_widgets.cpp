@@ -27,7 +27,7 @@
 #include "common/type/array.hpp"
 #include "common/util/filesystem.hpp"
 #include "common/util/string_buffer.hpp"
-#include "io/file_dialog.hpp"
+#include "io/util/file_dialog.hpp"
 #include "ui/constants.hpp"
 #include "ui/style/colors.hpp"
 #include "ui/style/icons.hpp"

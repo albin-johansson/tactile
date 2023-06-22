@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "io/file_dialog.hpp"
+#include "io/util/file_dialog.hpp"
 #include "model/events/tileset_events.hpp"
 #include "model/i18n/language_system.hpp"
 #include "ui/dialog/dialog.hpp"

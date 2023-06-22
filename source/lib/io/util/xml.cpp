@@ -26,7 +26,7 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/assert.hpp"
-#include "io/stream.hpp"
+#include "io/util/streams.hpp"
 #include "ui/constants.hpp"
 
 namespace tactile {

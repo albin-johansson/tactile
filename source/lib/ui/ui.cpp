@@ -19,7 +19,7 @@
 
 #include "ui.hpp"
 
-#include "io/file_dialog.hpp"
+#include "io/util/file_dialog.hpp"
 #include "model/events/map_events.hpp"
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/credits_dialog.hpp"

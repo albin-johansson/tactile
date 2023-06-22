@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "session.hpp"
+#include "session_io.hpp"
 
 #include <spdlog/spdlog.h>
 
@@ -25,8 +25,8 @@
 #include "io/directories.hpp"
 #include "io/ir/ir_restoration.hpp"
 #include "io/map/parse/parse_map.hpp"
-#include "io/proto/proto.hpp"
-#include "io/stream.hpp"
+#include "io/protobuf_types.hpp"
+#include "io/util/streams.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/model.hpp"
 

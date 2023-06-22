@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "settings.hpp"
+#include "settings_io.hpp"
 
 #include <utility>  // move
 
@@ -25,8 +25,8 @@
 
 #include "common/type/path.hpp"
 #include "io/directories.hpp"
-#include "io/proto/proto.hpp"
-#include "io/stream.hpp"
+#include "io/protobuf_types.hpp"
+#include "io/util/streams.hpp"
 
 namespace tactile {
 namespace {

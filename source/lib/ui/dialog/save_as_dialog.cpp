@@ -24,8 +24,8 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "io/file_dialog.hpp"
 #include "io/save_formats.hpp"
+#include "io/util/file_dialog.hpp"
 #include "model/events/file_events.hpp"
 #include "model/persistence/settings.hpp"
 

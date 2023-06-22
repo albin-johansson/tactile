@@ -30,10 +30,10 @@
 #include "common/primitives.hpp"
 #include "common/type/string.hpp"
 #include "common/util/filesystem.hpp"
+#include "io/base64_tiles.hpp"
 #include "io/compression.hpp"
 #include "io/ir/map/map_ir.hpp"
-#include "io/stream.hpp"
-#include "io/util/base64_tiles.hpp"
+#include "io/util/streams.hpp"
 #include "io/util/yaml.hpp"
 
 namespace tactile {

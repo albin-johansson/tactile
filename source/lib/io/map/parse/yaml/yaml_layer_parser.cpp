@@ -24,9 +24,9 @@
 #include "common/type/expected.hpp"
 #include "common/type/string.hpp"
 #include "common/util/strings.hpp"
+#include "io/base64_tiles.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
-#include "io/util/base64_tiles.hpp"
 #include "io/util/yaml.hpp"
 
 using namespace std::string_literals;

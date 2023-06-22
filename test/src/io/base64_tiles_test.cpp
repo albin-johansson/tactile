@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "io/util/base64_tiles.hpp"
+#include "io/base64_tiles.hpp"
 
 #include <doctest/doctest.h>
 
