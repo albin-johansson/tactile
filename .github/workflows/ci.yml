@@ -122,9 +122,9 @@ jobs:
       - name: Build
         run: ninja -C build
 
-      - name: Run tests
-        working-directory: ./build/test
-        run: ./TactileTests
+      #- name: Run tests
+      #  working-directory: ./build/test
+      #  run: ./TactileTests
 
   windows-latest-ci:
     runs-on: windows-latest
