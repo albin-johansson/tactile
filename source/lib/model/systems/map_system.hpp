@@ -36,17 +36,6 @@ namespace tactile::sys {
 using FixTilesInMapResult = HashMap<Entity, HashMap<TilePos, TileID>>;
 
 /**
- * Creates an empty map.
- *
- * \param model     the associated model.
- * \param extent    the initial size of the map.
- * \param tile_size the logical size of tiles in the map.
- *
- * \return a map entity.
- */
-auto create_map(Model& model, const TileExtent& extent, const Int2& tile_size) -> Entity;
-
-/**
  * Fixes all invalid tile identifiers in a map.
  *
  * \details This function iterates all associated tile layers in the map and marks all

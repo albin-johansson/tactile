@@ -19,13 +19,40 @@
 
 #pragma once
 
+#include "common/tile_extent.hpp"
 #include "common/type/ecs.hpp"
+#include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {
 
-/// Destroys all loaded textures (this should only be called once, just before shutdown).
-void destroy_loaded_texture_resources(Model& model);
+/**
+ * Creates a map document.
+ *
+ * \note The created document is neither opened nor selected by this function.
+ *
+ * \param model     the associated model.
+ * \param extent    the size of the map.
+ * \param tile_size the logical size of tiles in the map.
+ *
+ * \return a map document entity.
+ */
+auto create_map_document(Model& model, const TileExtent& extent, const Int2& tile_size)
+    -> Entity;
+
+/**
+ * Creates a tileset document.
+ *
+ * \note The created document is neither opened nor selected by this function.
+ *
+ * \param model      the associated model.
+ * \param tile_size  the size of the tiles in the tileset image.
+ * \param image_path the path to the source image.
+ *
+ * \return a tileset document entity.
+ */
+auto create_tileset_document(Model& model, const Int2& tile_size, const Path& image_path)
+    -> Entity;
 
 }  // namespace tactile::sys

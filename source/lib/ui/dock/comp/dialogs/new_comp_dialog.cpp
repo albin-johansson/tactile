@@ -22,9 +22,9 @@
 #include <imgui.h>
 
 #include "model/components/document.hpp"
+#include "model/documents/document_system.hpp"
 #include "model/event/component_events.hpp"
 #include "model/systems/component/component_set.hpp"
-#include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 

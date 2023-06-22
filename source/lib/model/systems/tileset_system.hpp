@@ -29,14 +29,6 @@
 
 namespace tactile::sys {
 
-[[nodiscard]] auto create_tileset(Model& model,
-                                  const Int2& tile_size,
-                                  const Path& image_path) -> Entity;
-
-[[nodiscard]] auto create_attached_tileset(Model& model,
-                                           Entity tileset_entity,
-                                           TileID first_tile) -> Entity;
-
 [[nodiscard]] auto get_tile_appearance(const Model& model,
                                        Entity tileset_entity,
                                        TileIndex tile_index) -> TileIndex;

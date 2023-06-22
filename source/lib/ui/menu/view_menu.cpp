@@ -21,9 +21,9 @@
 
 #include <imgui.h>
 
+#include "model/documents/document_system.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/event/view_events.hpp"
-#include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/style/themes.hpp"
 #include "ui/widget/scoped.hpp"

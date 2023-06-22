@@ -28,7 +28,8 @@
 #include "common/util/lookup.hpp"
 #include "model/components/context.hpp"
 #include "model/components/document.hpp"
-#include "model/systems/document_system.hpp"
+#include "model/documents/command_system.hpp"
+#include "model/documents/document_system.hpp"
 #include "model/systems/validation_system.hpp"
 #include "ui/widget_state.hpp"
 

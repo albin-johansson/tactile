@@ -17,22 +17,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "texture_system.hpp"
+#include "tile_factory.hpp"
 
-#include "io/texture_loader.hpp"
-#include "model/components/texture.hpp"
+#include "common/debug/assert.hpp"
+#include "common/tile_matrix.hpp"
+#include "model/components/context.hpp"
+#include "model/components/tile.hpp"
 #include "model/systems/validation_system.hpp"
 
 namespace tactile::sys {
 
-void destroy_loaded_texture_resources(Model& model)
+auto create_tile(Model& model, const Tileset& tileset, const TileIndex tile_index)
+    -> Entity
 {
-  const auto& texture_callbacks = model.get<TextureCallbacks>();
-  const auto& texture_cache = model.get<TextureCache>();
+  const auto [row, col] = to_matrix_coords(tile_index, tileset.column_count);
 
-  for (const auto& [texture_path, texture_entity]: texture_cache.textures) {
-    texture_callbacks.destroy(model, texture_entity);
-  }
+  const auto tile_entity = model.create_entity();
+
+  auto& context = model.add<Context>(tile_entity);
+  context.name = "Tile";
+
+  const Int2 tile_position {col * tileset.tile_size.x, row * tileset.tile_size.y};
+
+  auto& tile = model.add<Tile>(tile_entity);
+  tile.index = tile_index;
+  tile.source = Int4 {tile_position, tileset.tile_size};
+
+  TACTILE_ASSERT(is_tile_entity(model, tile_entity));
+  return tile_entity;
 }
 
 }  // namespace tactile::sys

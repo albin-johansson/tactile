@@ -35,7 +35,8 @@
 #include "common/debug/assert.hpp"
 #include "model/components/component.hpp"
 #include "model/components/document.hpp"
-#include "model/systems/document_system.hpp"
+#include "model/documents/command_system.hpp"
+#include "model/documents/document_system.hpp"
 #include "model/systems/validation_system.hpp"
 #include "ui/widget_state.hpp"
 

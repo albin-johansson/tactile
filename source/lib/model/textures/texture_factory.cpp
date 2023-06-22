@@ -17,22 +17,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "texture_system.hpp"
+#include "texture_factory.hpp"
 
 #include "io/texture_loader.hpp"
 #include "model/components/texture.hpp"
-#include "model/systems/validation_system.hpp"
 
 namespace tactile::sys {
 
-void destroy_loaded_texture_resources(Model& model)
+auto create_texture(Model& model, const Path& path) -> Entity
 {
-  const auto& texture_callbacks = model.get<TextureCallbacks>();
-  const auto& texture_cache = model.get<TextureCache>();
+  auto& texture_cache = model.get<TextureCache>();
 
-  for (const auto& [texture_path, texture_entity]: texture_cache.textures) {
-    texture_callbacks.destroy(model, texture_entity);
+  // Check if the image has already been loaded, if so just return the associated entity.
+  if (const auto iter = texture_cache.textures.find(path);
+      iter != texture_cache.textures.end()) {
+    return iter->second;
   }
+
+  // TODO return null entity if loading fails
+  const auto texture_data = load_texture_data(path).value();
+
+  const auto texture_entity = model.create_entity();
+  texture_cache.textures[path] = texture_entity;
+
+  auto& texture = model.add<Texture>(texture_entity);
+  texture.path = path;
+  texture.size = texture_data.size;
+
+  const auto& texture_callbacks = model.get<TextureCallbacks>();
+  texture_callbacks.init(model, texture_entity, texture_data);
+
+  return texture_entity;
 }
 
 }  // namespace tactile::sys

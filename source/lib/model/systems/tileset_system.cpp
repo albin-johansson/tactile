@@ -26,95 +26,11 @@
 #include "model/components/texture.hpp"
 #include "model/components/tile.hpp"
 #include "model/components/viewport.hpp"
-#include "model/systems/texture_system.hpp"
 #include "model/systems/validation_system.hpp"
 #include "model/tilesets/attached_tileset_ops.hpp"
 #include "model/tilesets/tileset_components.hpp"
 
 namespace tactile::sys {
-namespace {
-
-[[nodiscard]] auto _create_tile(Model& model,
-                                const Tileset& tileset,
-                                const TileIndex tile_index) -> Entity
-{
-  const auto [row, col] = to_matrix_coords(tile_index, tileset.column_count);
-
-  const auto tile_entity = model.create_entity();
-
-  auto& context = model.add<Context>(tile_entity);
-  context.name = "Tile";
-
-  const Int2 tile_position {col * tileset.tile_size.x, row * tileset.tile_size.y};
-
-  auto& tile = model.add<Tile>(tile_entity);
-  tile.index = tile_index;
-  tile.source = Int4 {tile_position, tileset.tile_size};
-
-  TACTILE_ASSERT(is_tile_entity(model, tile_entity));
-  return tile_entity;
-}
-
-}  // namespace
-
-auto create_tileset(Model& model, const Int2& tile_size, const Path& image_path) -> Entity
-{
-  const auto tileset_entity = model.create_entity();
-
-  auto& context = model.add<Context>(tileset_entity);
-  context.name = "Tileset";
-
-  auto& tileset = model.add<Tileset>(tileset_entity);
-  tileset.tile_size = tile_size;
-  tileset.texture = create_texture(model, image_path);
-
-  model.add<TilesetRenderCache>(tileset_entity);
-
-  const auto& texture = model.get<Texture>(tileset.texture);
-
-  tileset.row_count = texture.size.y / tile_size.y;
-  tileset.column_count = texture.size.x / tile_size.x;
-  tileset.uv_size = Float2 {tile_size} / Float2 {texture.size};
-
-  const auto tile_count = tileset.row_count * tileset.column_count;
-  tileset.tiles.reserve(static_cast<usize>(tile_count));
-
-  for (TileIndex tile_index = 0; tile_index < tile_count; ++tile_index) {
-    const auto tile_entity = _create_tile(model, tileset, tile_index);
-    tileset.tiles.push_back(tile_entity);
-    tileset.tile_index_map[tile_index] = tile_entity;
-  }
-
-  TACTILE_ASSERT(is_texture_entity(model, tileset.texture));
-  TACTILE_ASSERT(is_tileset_entity(model, tileset_entity));
-  return tileset_entity;
-}
-
-auto create_attached_tileset(Model& model,
-                             const Entity tileset_entity,
-                             const TileID first_tile) -> Entity
-{
-  TACTILE_ASSERT(is_tileset_entity(model, tileset_entity));
-  const auto& tileset = model.get<Tileset>(tileset_entity);
-
-  const auto attached_tileset_entity = model.create_entity();
-
-  auto& attached_tileset = model.add<AttachedTileset>(attached_tileset_entity);
-  attached_tileset.tileset = tileset_entity;
-  attached_tileset.embedded = false;
-  attached_tileset.first_tile = first_tile;
-  attached_tileset.last_tile = first_tile + (tileset.row_count * tileset.column_count);
-
-  // TODO set limits
-  auto& viewport = model.add<Viewport>(attached_tileset_entity);
-  viewport.offset = Float2 {0, 0};
-  viewport.tile_size = tileset.tile_size;
-
-  model.add<DynamicViewportInfo>(attached_tileset_entity);
-
-  TACTILE_ASSERT(is_attached_tileset_entity(model, attached_tileset_entity));
-  return attached_tileset_entity;
-}
 
 auto get_tile_appearance(const Model& model,
                          const Entity tileset_entity,

@@ -21,7 +21,7 @@
 
 #include "common/debug/assert.hpp"
 #include "model/components/map.hpp"
-#include "model/systems/document_system.hpp"
+#include "model/documents/document_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/validation_system.hpp"
 #include "model/tilesets/tileset_components.hpp"

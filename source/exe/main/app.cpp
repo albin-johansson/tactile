@@ -64,6 +64,7 @@
 #include "model/systems/menu_system.hpp"
 #include "model/systems/model_system.hpp"
 #include "model/systems/texture_system.hpp"
+#include "model/textures/texture_factory.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/style/fonts.hpp"
 #include "ui/style/themes.hpp"

@@ -17,22 +17,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "texture_system.hpp"
+#pragma once
 
-#include "io/texture_loader.hpp"
-#include "model/components/texture.hpp"
-#include "model/systems/validation_system.hpp"
+#include "common/type/ecs.hpp"
+#include "common/type/path.hpp"
+#include "model/model.hpp"
 
 namespace tactile::sys {
 
-void destroy_loaded_texture_resources(Model& model)
-{
-  const auto& texture_callbacks = model.get<TextureCallbacks>();
-  const auto& texture_cache = model.get<TextureCache>();
-
-  for (const auto& [texture_path, texture_entity]: texture_cache.textures) {
-    texture_callbacks.destroy(model, texture_entity);
-  }
-}
+[[nodiscard]] auto create_texture(Model& model, const Path& path) -> Entity;
 
 }  // namespace tactile::sys

@@ -21,8 +21,8 @@
 
 #include <imgui.h>
 
+#include "model/documents/document_system.hpp"
 #include "model/event/all.hpp"
-#include "model/systems/document_system.hpp"
 #include "ui/conversions.hpp"
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"

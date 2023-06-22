@@ -25,10 +25,10 @@
 #include <imgui_internal.h>
 
 #include "model/components/document.hpp"
+#include "model/documents/document_system.hpp"
 #include "model/event/command_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/tool_events.hpp"
-#include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"

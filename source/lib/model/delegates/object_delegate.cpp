@@ -24,7 +24,8 @@
 #include "cmd/object/rename_object.hpp"
 #include "cmd/object/set_object_tag.hpp"
 #include "cmd/object/set_object_visible.hpp"
-#include "model/systems/document_system.hpp"
+#include "model/documents/command_system.hpp"
+#include "model/documents/document_system.hpp"
 #include "ui/widget_state.hpp"
 
 namespace tactile {

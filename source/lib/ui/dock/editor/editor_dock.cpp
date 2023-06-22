@@ -26,9 +26,9 @@
 
 #include "model/components/texture.hpp"
 #include "model/components/viewport.hpp"
+#include "model/documents/document_system.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/viewport_events.hpp"
-#include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/conversions.hpp"
 #include "ui/dock/editor/document_tab_widget.hpp"

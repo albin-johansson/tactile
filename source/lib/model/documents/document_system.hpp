@@ -33,34 +33,6 @@
 namespace tactile::sys {
 
 /**
- * Creates a map document.
- *
- * \note The created document is neither opened nor selected by this function.
- *
- * \param model     the associated model.
- * \param extent    the size of the map.
- * \param tile_size the logical size of tiles in the map.
- *
- * \return a map document entity.
- */
-auto create_map_document(Model& model, const TileExtent& extent, const Int2& tile_size)
-    -> Entity;
-
-/**
- * Creates a tileset document.
- *
- * \note The created document is neither opened nor selected by this function.
- *
- * \param model      the associated model.
- * \param tile_size  the size of the tiles in the tileset image.
- * \param image_path the path to the source image.
- *
- * \return a tileset document entity.
- */
-auto create_tileset_document(Model& model, const Int2& tile_size, const Path& image_path)
-    -> Entity;
-
-/**
  * Disposes an existing document.
  *
  * \details The document is automatically closed by this function. Additionally, the
@@ -194,15 +166,6 @@ void set_document_name(Model& model, Entity document_entity, String name);
  */
 [[nodiscard]] auto is_document_open(const Model& model, Entity document_entity) -> bool;
 
-/// Indicates whether the 'save' action is currently available.
-[[nodiscard]] auto is_save_possible(const Model& model) -> bool;
-
-/// Indicates whether the 'undo' action is currently available.
-[[nodiscard]] auto is_undo_possible(const Model& model) -> bool;
-
-/// Indicates whether the 'redo' action is currently available.
-[[nodiscard]] auto is_redo_possible(const Model& model) -> bool;
-
 /**
  * Creates a map document, opens it, and makes it the active document.
  *
@@ -210,25 +173,5 @@ void set_document_name(Model& model, Entity document_entity, String name);
  * \param event information about the map that will be created.
  */
 void on_create_map(Model& model, const CreateMapEvent& event);
-
-/**
- * Tries to push a command to the currently active document, if there is one.
- *
- * \warning The provided model must outlive the created command, since all commands store
- *          a raw pointer to their associated model instance.
- *
- * \tparam T a command type.
- * \param model the associated model.
- * \param args pack of command constructor arguments.
- */
-template <typename T, typename... Args>
-void try_execute(Model& model, Args&&... args)
-{
-  const auto document_entity = get_active_document(model);
-  if (document_entity != kNullEntity) {
-    auto& commands = model.get<CommandStack>(document_entity);
-    commands.push<T>(&model, std::forward<Args>(args)...);
-  }
-}
 
 }  // namespace tactile::sys

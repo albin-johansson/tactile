@@ -20,7 +20,6 @@
 #include "map_delegate.hpp"
 
 #include <fmt/std.h>
-#include <model/systems/language_system.hpp>
 
 #include "cmd/map/add_column.hpp"
 #include "cmd/map/add_row.hpp"
@@ -40,10 +39,12 @@
 #include "io/map/parse/parse_map.hpp"
 #include "model/components/document.hpp"
 #include "model/components/map.hpp"
+#include "model/documents/command_system.hpp"
+#include "model/documents/document_system.hpp"
 #include "model/event/map_events.hpp"
 #include "model/settings.hpp"
-#include "model/systems/document_system.hpp"
 #include "model/systems/file_history_system.hpp"
+#include "model/systems/language_system.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"
 #include "ui/widget_state.hpp"
 

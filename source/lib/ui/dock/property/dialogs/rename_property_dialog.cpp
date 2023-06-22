@@ -23,8 +23,8 @@
 
 #include "model/components/context.hpp"
 #include "model/components/document.hpp"
+#include "model/documents/document_system.hpp"
 #include "model/event/property_events.hpp"
-#include "model/systems/document_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 

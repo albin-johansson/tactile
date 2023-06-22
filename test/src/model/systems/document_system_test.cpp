@@ -17,12 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "model/systems/document_system.hpp"
+#include "model/documents/document_system.hpp"
 
 #include <doctest/doctest.h>
 
 #include "model/components/document.hpp"
 #include "model/components/texture.hpp"
+#include "model/documents/document_factory.hpp"
 #include "model/model.hpp"
 #include "model/systems/model_system.hpp"
 #include "model/systems/validation_system.hpp"

@@ -29,17 +29,18 @@
 #include "model/components/context.hpp"
 #include "model/components/document.hpp"
 #include "model/components/tile_format.hpp"
+#include "model/documents/document_system.hpp"
 #include "model/layers/group_layer_ops.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/layers/layer_factory.hpp"
 #include "model/layers/layer_recursion.hpp"
 #include "model/layers/layer_tree_system.hpp"
 #include "model/systems/context/context_system.hpp"
-#include "model/systems/document_system.hpp"
 #include "model/systems/object_system.hpp"
 #include "model/systems/tileset_system.hpp"
 #include "model/systems/validation_system.hpp"
 #include "model/tilesets/tileset_components.hpp"
+#include "model/tilesets/tileset_factory.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -83,35 +84,6 @@ namespace {
 }
 
 }  // namespace
-
-auto create_map(Model& model, const TileExtent& extent, const Int2& tile_size) -> Entity
-{
-  const auto map_entity = model.create_entity();
-
-  auto& map_context = model.add<Context>(map_entity);
-  map_context.name = "Map";
-
-  auto& map = model.add<Map>(map_entity);
-  map.extent = extent;
-  map.tile_size = tile_size;
-  map.root_layer = create_group_layer(model, -1);
-  map.active_tileset = kNullEntity;
-  map.active_layer = kNullEntity;
-
-  auto& identifiers = model.add<MapIdentifiers>(map_entity);
-  identifiers.next_tile_id = 1;
-  identifiers.next_layer_id = 1;
-  identifiers.next_object_id = 1;
-
-  auto& layer_suffixes = model.add<MapLayerSuffixes>(map_entity);
-  layer_suffixes.tile_layer_suffix = 1;
-  layer_suffixes.object_layer_suffix = 1;
-  layer_suffixes.group_layer_suffix = 1;
-
-  model.add<TileFormat>(map_entity);
-
-  return map_entity;
-}
 
 auto fix_tiles_in_map(Model& model, Map& map) -> FixTilesInMapResult
 {

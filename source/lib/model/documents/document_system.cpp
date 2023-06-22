@@ -29,6 +29,7 @@
 #include "model/components/context.hpp"
 #include "model/components/document.hpp"
 #include "model/components/viewport.hpp"
+#include "model/documents/document_factory.hpp"
 #include "model/settings.hpp"
 #include "model/systems/map_system.hpp"
 #include "model/systems/tileset_system.hpp"
@@ -51,61 +52,6 @@ namespace {
 }
 
 }  // namespace
-
-auto create_map_document(Model& model, const TileExtent& extent, const Int2& tile_size)
-    -> Entity
-{
-  const auto& settings = model.get<Settings>();
-  const auto document_entity = model.create_entity();
-
-  auto& command_stack = model.add<CommandStack>(document_entity);
-  command_stack.set_capacity(settings.get_command_capacity());
-
-  auto& map_document = model.add<MapDocument>(document_entity);
-  map_document.map = create_map(model, extent, tile_size);
-  map_document.active_tileset = kNullEntity;
-
-  auto& document = model.add<Document>(document_entity);
-  document.type = DocumentType::Map;
-  document.default_context = map_document.map;
-  document.active_context = document.default_context;
-
-  auto& document_viewport = model.add<Viewport>(document_entity);
-  document_viewport.offset = Float2 {0, 0};
-  document_viewport.tile_size = tile_size;
-
-  model.add<DynamicViewportInfo>(document_entity);
-
-  TACTILE_ASSERT(is_map_document_entity(model, document_entity));
-  return document_entity;
-}
-
-auto create_tileset_document(Model& model, const Int2& tile_size, const Path& image_path)
-    -> Entity
-{
-  const auto& settings = model.get<Settings>();
-  const auto document_entity = model.create_entity();
-
-  auto& command_stack = model.add<CommandStack>(document_entity);
-  command_stack.set_capacity(settings.get_command_capacity());
-
-  auto& tileset_document = model.add<TilesetDocument>(document_entity);
-  tileset_document.tileset = create_tileset(model, tile_size, image_path);
-
-  auto& document = model.add<Document>(document_entity);
-  document.type = DocumentType::Tileset;
-  document.default_context = tileset_document.tileset;
-  document.active_context = document.default_context;
-
-  auto& document_viewport = model.add<Viewport>(document_entity);
-  document_viewport.offset = Float2 {0, 0};
-  document_viewport.tile_size = tile_size;
-
-  model.add<DynamicViewportInfo>(document_entity);
-
-  TACTILE_ASSERT(is_tileset_document_entity(model, document_entity));
-  return document_entity;
-}
 
 void destroy_document(Model& model, const Entity document_entity)
 {
@@ -281,42 +227,6 @@ auto is_document_open(const Model& model, const Entity document_entity) -> bool
 
   const auto& document_context = model.get<DocumentContext>();
   return document_context.open_documents.contains(document_entity);
-}
-
-auto is_save_possible(const Model& model) -> bool
-{
-  const auto document_entity = model.get<DocumentContext>().active_document;
-
-  if (document_entity != kNullEntity) {
-    const auto& commands = model.get<CommandStack>(document_entity);
-    return !commands.is_clean();
-  }
-
-  return false;
-}
-
-auto is_undo_possible(const Model& model) -> bool
-{
-  const auto document_entity = model.get<DocumentContext>().active_document;
-
-  if (document_entity != kNullEntity) {
-    const auto& commands = model.get<CommandStack>(document_entity);
-    return commands.can_undo();
-  }
-
-  return false;
-}
-
-auto is_redo_possible(const Model& model) -> bool
-{
-  const auto document_entity = model.get<DocumentContext>().active_document;
-
-  if (document_entity != kNullEntity) {
-    const auto& commands = model.get<CommandStack>(document_entity);
-    return commands.can_redo();
-  }
-
-  return false;
 }
 
 void on_create_map(Model& model, const CreateMapEvent& event)

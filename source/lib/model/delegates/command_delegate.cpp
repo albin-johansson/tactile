@@ -23,8 +23,8 @@
 
 #include "cmd/command_stack.hpp"
 #include "model/components/document.hpp"
+#include "model/documents/document_system.hpp"
 #include "model/event/command_events.hpp"
-#include "model/systems/document_system.hpp"
 
 namespace tactile {
 namespace {
