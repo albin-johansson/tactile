@@ -26,10 +26,10 @@
 #include "model/components/texture.hpp"
 #include "model/components/tool.hpp"
 #include "model/settings.hpp"
-#include "model/systems/textures/gl_texture_system.hpp"
-#include "model/systems/textures/null_texture_system.hpp"
 #include "model/systems/tools/bucket_tool.hpp"
 #include "model/systems/tools/stamp_tool.hpp"
+#include "model/textures/gl_texture_system.hpp"
+#include "model/textures/null_texture_system.hpp"
 #include "ui/widget_state.hpp"
 
 namespace tactile::sys {
