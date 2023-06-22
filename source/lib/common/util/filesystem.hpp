@@ -36,7 +36,7 @@ namespace tactile {
  *
  * \return a version of the path using forward slashes instead of backslashes.
  */
-[[nodiscard]] auto use_forward_slashes(const Path& path) -> String;
+[[nodiscard]] auto to_forward_slashes_path(const Path& path) -> String;
 
 /// Indicates whether a file path starts with the home directory.
 [[nodiscard]] auto has_home_prefix(const Path& path) -> bool;

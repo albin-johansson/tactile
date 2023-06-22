@@ -76,7 +76,7 @@ void save_session_to_disk(const Model& model)
   for (auto [document_entity, document]: model.each<Document>()) {
     if (document.type == DocumentType::Map && document.path.has_value()) {
       const auto document_path = fs::absolute(*document.path);
-      session.add_files(use_forward_slashes(document_path));
+      session.add_files(to_forward_slashes_path(document_path));
     }
   }
 

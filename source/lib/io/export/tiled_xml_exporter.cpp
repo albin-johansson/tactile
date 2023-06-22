@@ -109,7 +109,7 @@ void _append_properties(XmlNode node, const ContextIR& context)
         break;
 
       case AttributeType::Path: {
-        const auto str = use_forward_slashes(property_value.as_path());
+        const auto str = to_forward_slashes_path(property_value.as_path());
         value_attr.set_value(str.c_str());
         break;
       }
@@ -368,7 +368,7 @@ void _append_common_tileset_attributes(XmlNode node,
   {
     auto image_node = node.append_child("image");
 
-    const auto source = use_forward_slashes(fs::relative(tileset.image_path, dir));
+    const auto source = to_forward_slashes_path(fs::relative(tileset.image_path, dir));
     image_node.append_attribute("source").set_value(source.c_str());
 
     image_node.append_attribute("width").set_value(tileset.image_size.x);

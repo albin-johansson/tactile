@@ -82,7 +82,7 @@ namespace {
       return fmt::format(R"("{}": {})", name, value.as_bool() ? "true" : "false");
 
     case AttributeType::Path:
-      return fmt::format(R"("{}": "{}")", name, use_forward_slashes(value.as_path()));
+      return fmt::format(R"("{}": "{}")", name, to_forward_slashes_path(value.as_path()));
 
     case AttributeType::Color: {
       const auto& color = value.as_color();

@@ -151,7 +151,7 @@ void to_json(JSON& json, const Attribute& value)
       break;
 
     case AttributeType::Path:
-      json = use_forward_slashes(value.as_path());
+      json = to_forward_slashes_path(value.as_path());
       break;
 
     case AttributeType::Color:

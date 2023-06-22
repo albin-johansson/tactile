@@ -28,10 +28,10 @@ using namespace tactile;
 
 TEST_SUITE("Filesystem")
 {
-  TEST_CASE("use_forward_slashes")
+  TEST_CASE("to_forward_slashes_path")
   {
     const fs::path source = R"(C:\foo\bar\abc.yaml)";
-    REQUIRE("C:/foo/bar/abc.yaml" == use_forward_slashes(source));
+    REQUIRE("C:/foo/bar/abc.yaml" == to_forward_slashes_path(source));
   }
 
   TEST_CASE("has_home_prefix")
