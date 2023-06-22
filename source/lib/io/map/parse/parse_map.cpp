@@ -33,7 +33,7 @@
 
 namespace tactile {
 
-auto parse_map(const Path& path) -> ParseResult
+auto parse_map(const Path& path) -> Parsed<MapIR>
 {
   try {
     const auto parse_start = Clock::now();
@@ -43,7 +43,7 @@ auto parse_map(const Path& path) -> ParseResult
       return unexpected(ParseError::MapDoesNotExist);
     }
 
-    ParseResult result;
+    Parsed<MapIR> result;
     const auto ext = path.extension();
 
     if (ext == ".yaml" || ext == ".yml") {

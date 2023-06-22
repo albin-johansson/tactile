@@ -35,11 +35,11 @@ namespace tactile {
 namespace {
 
 [[nodiscard]] auto _parse_layer(const YAML::Node& node, const MapIR& map, usize index)
-    -> Expected<LayerIR, ParseError>;
+    -> Parsed<LayerIR>;
 
 [[nodiscard]] auto _parse_plain_tile_layer_data(const String& tile_data,
                                                 const TileExtent extent)
-    -> Expected<TileMatrix, ParseError>
+    -> Parsed<TileMatrix>
 {
   auto tiles = make_tile_matrix(extent);
 
@@ -60,8 +60,7 @@ namespace {
 
 [[nodiscard]] auto _parse_tile_layer(const YAML::Node& node,
                                      const MapIR& map,
-                                     const TileExtent extent)
-    -> Expected<TileLayerIR, ParseError>
+                                     const TileExtent extent) -> Parsed<TileLayerIR>
 {
   TileLayerIR tile_layer;
   tile_layer.extent = extent;
@@ -91,7 +90,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_object_layer(const YAML::Node& node, const MapIR& map)
-    -> Expected<ObjectLayerIR, ParseError>
+    -> Parsed<ObjectLayerIR>
 {
   ObjectLayerIR object_layer;
 
@@ -112,7 +111,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_group_layer(const YAML::Node& node, const MapIR& map)
-    -> Expected<GroupLayerIR, ParseError>
+    -> Parsed<GroupLayerIR>
 {
   GroupLayerIR group;
 
@@ -136,8 +135,8 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_layer(const YAML::Node& node,
-                               const MapIR& map,
-                               const usize index) -> Expected<LayerIR, ParseError>
+                                const MapIR& map,
+                                const usize index) -> Parsed<LayerIR>
 {
   LayerIR layer;
   layer.index = index;
@@ -198,8 +197,7 @@ namespace {
 
 }  // namespace
 
-auto parse_object(const YAML::Node& node, const MapIR& map)
-    -> Expected<ObjectIR, ParseError>
+auto parse_object(const YAML::Node& node, const MapIR& map) -> Parsed<ObjectIR>
 {
   ObjectIR object;
 
@@ -245,8 +243,7 @@ auto parse_object(const YAML::Node& node, const MapIR& map)
   return object;
 }
 
-auto parse_layers(const YAML::Node& sequence, const MapIR& map)
-    -> Expected<Vector<LayerIR>, ParseError>
+auto parse_layers(const YAML::Node& sequence, const MapIR& map) -> Parsed<Vector<LayerIR>>
 {
   Vector<LayerIR> layers;
   layers.reserve(sequence.size());

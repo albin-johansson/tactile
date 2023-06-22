@@ -20,13 +20,15 @@
 #pragma once
 
 #include "common/type/path.hpp"
-#include "io/map/parse/parse_result.hpp"
+#include "io/ir/map/map_ir.hpp"
+#include "io/map/parse/parse_error.hpp"
 
 namespace tactile {
 
-[[nodiscard]] auto parse_map_with_yaml_format(const Path& path) -> ParseResult;
+[[nodiscard]] auto parse_map_with_yaml_format(const Path& path) -> Parsed<MapIR>;
 
-[[nodiscard]] auto parse_map_with_tiled_tmj_format(const Path& path) -> ParseResult;
-[[nodiscard]] auto parse_map_with_tiled_tmx_format(const Path& path) -> ParseResult;
+[[nodiscard]] auto parse_map_with_tiled_tmj_format(const Path& path) -> Parsed<MapIR>;
+
+[[nodiscard]] auto parse_map_with_tiled_tmx_format(const Path& path) -> Parsed<MapIR>;
 
 }  // namespace tactile

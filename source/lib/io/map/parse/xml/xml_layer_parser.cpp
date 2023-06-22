@@ -51,7 +51,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_csv_tiles(const char* csv, const TileExtent extent)
-    -> Expected<TileMatrix, ParseError>
+    -> Parsed<TileMatrix>
 {
   auto tiles = make_tile_matrix(extent);
 
@@ -72,7 +72,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_tile_nodes(XmlNode data_node, const TileExtent extent)
-    -> Expected<TileMatrix, ParseError>
+    -> Parsed<TileMatrix>
 {
   auto tiles = make_tile_matrix(extent);
 
@@ -87,8 +87,7 @@ namespace {
   return tiles;
 }
 
-[[nodiscard]] auto _parse_tile_data(XmlNode layer_node, MapIR& map)
-    -> Expected<TileMatrix, ParseError>
+[[nodiscard]] auto _parse_tile_data(XmlNode layer_node, MapIR& map) -> Parsed<TileMatrix>
 {
   const auto data = layer_node.child("data");
 
@@ -145,7 +144,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_tile_layer(XmlNode layer_node, MapIR& map)
-    -> Expected<TileLayerIR, ParseError>
+    -> Parsed<TileLayerIR>
 {
   TileLayerIR tile_layer;
 
@@ -187,8 +186,7 @@ namespace {
   return tile_layer;
 }
 
-[[nodiscard]] auto _parse_object_layer(XmlNode layer_node)
-    -> Expected<ObjectLayerIR, ParseError>
+[[nodiscard]] auto _parse_object_layer(XmlNode layer_node) -> Parsed<ObjectLayerIR>
 {
   ObjectLayerIR object_layer;
 
@@ -205,7 +203,7 @@ namespace {
 }
 
 [[nodiscard]] auto _parse_layer(XmlNode layer_node, MapIR& map, const usize index)
-    -> Expected<LayerIR, ParseError>
+    -> Parsed<LayerIR>
 {
   LayerIR layer;
   layer.index = index;
@@ -274,7 +272,7 @@ namespace {
 
 }  // namespace
 
-auto parse_object(XmlNode object_node) -> Expected<ObjectIR, ParseError>
+auto parse_object(XmlNode object_node) -> Parsed<ObjectIR>
 {
   ObjectIR object;
 
@@ -315,7 +313,7 @@ auto parse_object(XmlNode object_node) -> Expected<ObjectIR, ParseError>
   return object;
 }
 
-auto parse_layers(XmlNode map_node, MapIR& map) -> Expected<Vector<LayerIR>, ParseError>
+auto parse_layers(XmlNode map_node, MapIR& map) -> Parsed<Vector<LayerIR>>
 {
   Vector<LayerIR> layers;
 

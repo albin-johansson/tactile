@@ -22,12 +22,11 @@
 #include "common/type/path.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/parse_error.hpp"
-#include "io/map/parse/parse_result.hpp"
 #include "io/util/json.hpp"
 
 namespace tactile {
 
-[[nodiscard]] auto parse_json_map(const Path& path) -> ParseResult;
+[[nodiscard]] auto parse_json_map(const Path& path) -> Parsed<MapIR>;
 
 [[nodiscard]] auto parse_tilesets(const JSON& json, MapIR& map, const Path& dir)
     -> ParseError;

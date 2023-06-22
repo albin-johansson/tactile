@@ -23,23 +23,20 @@
 #include "common/type/path.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/parse_error.hpp"
-#include "io/map/parse/parse_result.hpp"
 #include "io/util/xml.hpp"
 
 namespace tactile {
 
-[[nodiscard]] auto parse_xml_map(const Path& path) -> ParseResult;
+[[nodiscard]] auto parse_xml_map(const Path& path) -> Parsed<MapIR>;
 
-[[nodiscard]] auto parse_tileset(XmlNode node, const Path& dir)
-    -> Expected<TilesetIR, ParseError>;
+[[nodiscard]] auto parse_tileset(XmlNode node, const Path& dir) -> Parsed<TilesetIR>;
 
-[[nodiscard]] auto parse_object(XmlNode object_node) -> Expected<ObjectIR, ParseError>;
+[[nodiscard]] auto parse_object(XmlNode object_node) -> Parsed<ObjectIR>;
 
-[[nodiscard]] auto parse_layers(XmlNode map_node, MapIR& map)
-    -> Expected<Vector<LayerIR>, ParseError>;
+[[nodiscard]] auto parse_layers(XmlNode map_node, MapIR& map) -> Parsed<Vector<LayerIR>>;
 
-[[nodiscard]] auto parse_properties(XmlNode node) -> Expected<AttributeMap, ParseError>;
+[[nodiscard]] auto parse_properties(XmlNode node) -> Parsed<AttributeMap>;
 
-[[nodiscard]] auto parse_context(XmlNode node) -> Expected<ContextIR, ParseError>;
+[[nodiscard]] auto parse_context(XmlNode node) -> Parsed<ContextIR>;
 
 }  // namespace tactile

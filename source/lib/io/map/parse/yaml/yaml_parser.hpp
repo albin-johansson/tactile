@@ -24,34 +24,32 @@
 #include "common/type/expected.hpp"
 #include "common/type/path.hpp"
 #include "common/type/vector.hpp"
+#include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/parse_error.hpp"
-#include "io/map/parse/parse_result.hpp"
 
 namespace tactile {
 
-[[nodiscard]] auto parse_yaml_map(const Path& path) -> ParseResult;
+[[nodiscard]] auto parse_yaml_map(const Path& path) -> Parsed<MapIR>;
 
 [[nodiscard]] auto parse_tilesets(const YAML::Node& sequence,
                                   const MapIR& map,
-                                  const Path& dir)
-    -> Expected<Vector<TilesetIR>, ParseError>;
+                                  const Path& dir) -> Parsed<Vector<TilesetIR>>;
 
 [[nodiscard]] auto parse_layers(const YAML::Node& sequence, const MapIR& map)
-    -> Expected<Vector<LayerIR>, ParseError>;
+    -> Parsed<Vector<LayerIR>>;
 
 [[nodiscard]] auto parse_object(const YAML::Node& node, const MapIR& map)
-    -> Expected<ObjectIR, ParseError>;
+    -> Parsed<ObjectIR>;
 
 [[nodiscard]] auto parse_component_definitions(const YAML::Node& node)
-    -> Expected<ComponentMap, ParseError>;
+    -> Parsed<ComponentMap>;
 
-[[nodiscard]] auto parse_properties(const YAML::Node& node)
-    -> Expected<AttributeMap, ParseError>;
+[[nodiscard]] auto parse_properties(const YAML::Node& node) -> Parsed<AttributeMap>;
 
 [[nodiscard]] auto parse_components(const YAML::Node& node, const MapIR& map)
-    -> Expected<ComponentMap, ParseError>;
+    -> Parsed<ComponentMap>;
 
 [[nodiscard]] auto parse_context(const YAML::Node& node, const MapIR& map)
-    -> Expected<ContextIR, ParseError>;
+    -> Parsed<ContextIR>;
 
 }  // namespace tactile

@@ -123,7 +123,7 @@ template <typename T>
 }
 
 [[nodiscard]] auto _parse_component_definition_attribute(const YAML::Node& node)
-    -> Expected<Attribute, ParseError>
+    -> Parsed<Attribute>
 {
   String name;
   if (!read_attr(node, "name", name)) {
@@ -242,7 +242,7 @@ template <typename T>
 }
 
 [[nodiscard]] auto _parse_component_definition(const YAML::Node& node)
-    -> Expected<AttributeMap, ParseError>
+    -> Parsed<AttributeMap>
 {
   AttributeMap def;
 
@@ -267,8 +267,7 @@ template <typename T>
 
 [[nodiscard]] auto _parse_component(const YAML::Node& node,
                                     const MapIR& map,
-                                    const String& type)
-    -> Expected<AttributeMap, ParseError>
+                                    const String& type) -> Parsed<AttributeMap>
 {
   // TODO invalid component type check, e.g. ParseError::InvalidComponentType
   const auto& prototype = map.component_definitions.at(type);
@@ -301,8 +300,7 @@ template <typename T>
 
 }  // namespace
 
-auto parse_component_definitions(const YAML::Node& node)
-    -> Expected<ComponentMap, ParseError>
+auto parse_component_definitions(const YAML::Node& node) -> Parsed<ComponentMap>
 {
   ComponentMap defs;
 
@@ -325,8 +323,7 @@ auto parse_component_definitions(const YAML::Node& node)
   return defs;
 }
 
-auto parse_components(const YAML::Node& node, const MapIR& map)
-    -> Expected<ComponentMap, ParseError>
+auto parse_components(const YAML::Node& node, const MapIR& map) -> Parsed<ComponentMap>
 {
   ComponentMap comps;
 
@@ -349,7 +346,7 @@ auto parse_components(const YAML::Node& node, const MapIR& map)
   return comps;
 }
 
-auto parse_properties(const YAML::Node& node) -> Expected<AttributeMap, ParseError>
+auto parse_properties(const YAML::Node& node) -> Parsed<AttributeMap>
 {
   AttributeMap props;
 
@@ -391,8 +388,7 @@ auto parse_properties(const YAML::Node& node) -> Expected<AttributeMap, ParseErr
   return props;
 }
 
-auto parse_context(const YAML::Node& node, const MapIR& map)
-    -> Expected<ContextIR, ParseError>
+auto parse_context(const YAML::Node& node, const MapIR& map) -> Parsed<ContextIR>
 {
   ContextIR context;
 

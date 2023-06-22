@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "common/type/expected.hpp"
 #include "common/type/ostream.hpp"
 #include "common/type/string.hpp"
 #include "model/components/language.hpp"
@@ -100,6 +101,9 @@ enum class ParseError {
   BadZstdCompressionLevel,
   PlainEncodingWithCompression
 };
+
+template <typename T>
+using Parsed = Expected<T, ParseError>;
 
 /// Returns a (translated) human-readable message with an explanation of an error.
 [[nodiscard]] auto to_cause(const Strings& strings, ParseError error) -> StringView;

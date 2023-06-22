@@ -31,7 +31,7 @@ namespace {
 constexpr int32 kTilesetFormatVersion = 1;
 
 [[nodiscard]] auto _parse_animation_frame(const YAML::Node& node)
-    -> Expected<AnimationFrameIR, ParseError>
+    -> Parsed<AnimationFrameIR>
 {
   TileIndex tile_index {};
   if (!read_attr(node, "tile", tile_index)) {
@@ -51,7 +51,7 @@ constexpr int32 kTilesetFormatVersion = 1;
 }
 
 [[nodiscard]] auto _parse_fancy_tile(const YAML::Node& node, const MapIR& map)
-    -> Expected<TileIR, ParseError>
+    -> Parsed<TileIR>
 {
   TileIR tile;
 
@@ -92,7 +92,7 @@ constexpr int32 kTilesetFormatVersion = 1;
 }
 
 [[nodiscard]] auto _parse_fancy_tiles(const YAML::Node& sequence, const MapIR& map)
-    -> Expected<TilesetIR::MetaTiles, ParseError>
+    -> Parsed<TilesetIR::MetaTiles>
 {
   TilesetIR::MetaTiles fancy_tiles;
   fancy_tiles.reserve(sequence.size());
@@ -116,8 +116,7 @@ constexpr int32 kTilesetFormatVersion = 1;
 
 [[nodiscard]] auto _parse_tileset(const MapIR& map,
                                   const Path& source,
-                                  const TileID first_tile_id)
-    -> Expected<TilesetIR, ParseError>
+                                  const TileID first_tile_id) -> Parsed<TilesetIR>
 {
   try {
     const auto node = YAML::LoadFile(source.string());
@@ -206,7 +205,7 @@ constexpr int32 kTilesetFormatVersion = 1;
 }  // namespace
 
 auto parse_tilesets(const YAML::Node& sequence, const MapIR& map, const Path& dir)
-    -> Expected<Vector<TilesetIR>, ParseError>
+    -> Parsed<Vector<TilesetIR>>
 {
   Vector<TilesetIR> tilesets;
   tilesets.reserve(sequence.size());

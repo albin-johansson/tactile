@@ -21,17 +21,17 @@
 
 namespace tactile {
 
-auto parse_map_with_yaml_format(const Path&) -> ParseResult
+auto parse_map_with_yaml_format(const Path&) -> Parsed<MapIR>
 {
   return unexpected(ParseError::Unknown);
 }
 
-auto parse_map_with_tiled_tmj_format(const Path&) -> ParseResult
+auto parse_map_with_tiled_tmj_format(const Path&) -> Parsed<MapIR>
 {
   return unexpected(ParseError::Unknown);
 }
 
-auto parse_map_with_tiled_tmx_format(const Path&) -> ParseResult
+auto parse_map_with_tiled_tmx_format(const Path&) -> Parsed<MapIR>
 {
   return unexpected(ParseError::Unknown);
 }

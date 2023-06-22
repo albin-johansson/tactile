@@ -116,7 +116,7 @@ namespace {
 
 }  // namespace
 
-auto parse_json_map(const Path& path) -> ParseResult
+auto parse_json_map(const Path& path) -> Parsed<MapIR>
 {
   MapIR ir_map;
   const auto res = _parse_map(path, ir_map);
