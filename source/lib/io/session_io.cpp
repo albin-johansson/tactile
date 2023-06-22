@@ -73,7 +73,10 @@ void save_session_to_disk(const Model& model)
 {
   proto::Session session;
 
-  for (auto [document_entity, document]: model.each<Document>()) {
+  const auto& document_context = model.get<DocumentContext>();
+  for (const auto document_entity: document_context.open_documents) {
+    const auto& document = model.get<Document>(document_entity);
+
     if (document.type == DocumentType::Map && document.path.has_value()) {
       const auto document_path = fs::absolute(*document.path);
       session.add_files(to_forward_slashes_path(document_path));
