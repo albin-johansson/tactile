@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "object.hpp"
+#include "object_type.hpp"
 
 #include <magic_enum.hpp>
 

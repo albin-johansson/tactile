@@ -24,9 +24,9 @@
 #include "common/util/lookup.hpp"
 #include "model/components/context.hpp"
 #include "model/components/texture.hpp"
-#include "model/components/tile.hpp"
 #include "model/components/viewport.hpp"
 #include "model/systems/validation_system.hpp"
+#include "model/tiles/tile_components.hpp"
 #include "model/tilesets/attached_tileset_ops.hpp"
 #include "model/tilesets/tileset_components.hpp"
 

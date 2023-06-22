@@ -23,7 +23,6 @@
 #include "common/primitives.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
-#include "common/type/ostream.hpp"
 #include "common/type/string.hpp"
 
 namespace tactile {
@@ -38,8 +37,5 @@ struct Object final {
   Maybe<int32> meta_id;  ///< Identifier used in save files.
   bool visible {true};   ///< Is the object rendered?
 };
-
-/// Outputs an object type to a stream for debugging purposes.
-auto operator<<(OStream& stream, ObjectType type) -> OStream&;
 
 }  // namespace tactile

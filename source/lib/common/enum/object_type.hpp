@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include "common/type/ostream.hpp"
+
 namespace tactile {
 
 /// Represents the available map object types.
@@ -27,5 +29,8 @@ enum class ObjectType {
   Rect,
   Ellipse
 };
+
+/// Outputs an object type to a stream for debugging purposes.
+auto operator<<(OStream& stream, ObjectType type) -> OStream&;
 
 }  // namespace tactile

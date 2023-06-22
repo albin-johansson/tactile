@@ -34,19 +34,17 @@ struct Tile final {
   Vector<Entity> objects;  ///< Objects embedded in the tile.
 };
 
-/// Component that describes an animation associated with a tile.
-struct TileAnimation final {
-  /// Represents a single frame in a tile animation.
-  struct Frame final {
-    TileIndex tile_index {};  ///< Index of the shown tile during the frame.
-    ms_t duration {};         ///< The duration that the frame is shown.
-  };
-
-  Vector<Frame> frames;      ///< The associated animation frames.
-  usize index {};            ///< Current frame index.
-  TimePoint last_update {};  ///< Time of the last frame change.
+/// Represents a single frame in a tile animation.
+struct TileAnimationFrame final {
+  TileIndex tile_index {};  ///< Index of the shown tile during the frame.
+  ms_t duration {};         ///< The duration that the frame is shown.
 };
 
-using TileAnimationFrame = TileAnimation::Frame;
+/// Component that describes an animation associated with a tile.
+struct TileAnimation final {
+  Vector<TileAnimationFrame> frames;  ///< The associated animation frames.
+  usize index {};                     ///< Current frame index.
+  TimePoint last_update {};           ///< Time of the last frame change.
+};
 
 }  // namespace tactile
