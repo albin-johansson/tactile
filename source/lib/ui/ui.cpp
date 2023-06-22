@@ -20,6 +20,7 @@
 #include "ui.hpp"
 
 #include "io/util/file_dialog.hpp"
+#include "model/documents/document_system.hpp"
 #include "model/events/map_events.hpp"
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/credits_dialog.hpp"
@@ -64,8 +65,11 @@ void render_ui(const Model& model, WidgetState& widgets, Dispatcher& dispatcher)
     push_animation_dock_widget(model, widgets.animation_dock, dispatcher);
   }
 
-  push_property_dock_widget(model, widgets.property_dock, dispatcher);
-  push_component_dock_widget(model, dispatcher);
+  if (sys::has_active_document(model)) {
+    push_property_dock_widget(model, widgets.property_dock, dispatcher);
+    push_component_dock_widget(model, dispatcher);
+  }
+
   push_log_dock_widget(model, widgets.log_dock, dispatcher);
 
   push_new_map_dialog(model, widgets.new_map_dialog, dispatcher);
