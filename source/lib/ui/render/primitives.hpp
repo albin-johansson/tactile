@@ -28,7 +28,7 @@
 #include "common/debug/assert.hpp"
 #include "common/macros.hpp"
 #include "common/primitives.hpp"
-#include "model/components/texture.hpp"
+#include "model/textures/texture_components.hpp"
 #include "ui/conversions.hpp"
 
 namespace tactile::ui {

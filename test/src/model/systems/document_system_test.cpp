@@ -22,7 +22,7 @@
 #include <doctest/doctest.h>
 
 #include "model/components/document.hpp"
-#include "model/components/texture.hpp"
+#include "model/textures/texture_components.hpp"
 #include "model/documents/document_factory.hpp"
 #include "model/model.hpp"
 #include "model/systems/model_system.hpp"

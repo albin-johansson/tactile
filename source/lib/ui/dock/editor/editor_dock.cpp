@@ -24,12 +24,12 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "model/components/texture.hpp"
 #include "model/components/viewport.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/textures/texture_components.hpp"
 #include "ui/conversions.hpp"
 #include "ui/dock/editor/document_tab_widget.hpp"
 #include "ui/shortcut/mappings.hpp"

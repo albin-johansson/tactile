@@ -20,7 +20,7 @@
 #include "texture_factory.hpp"
 
 #include "io/texture_loader.hpp"
-#include "model/components/texture.hpp"
+#include "model/textures/texture_components.hpp"
 
 namespace tactile::sys {
 

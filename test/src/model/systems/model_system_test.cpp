@@ -26,7 +26,7 @@
 #include "model/components/file_history.hpp"
 #include "model/components/language.hpp"
 #include "model/components/menu.hpp"
-#include "model/components/texture.hpp"
+#include "model/textures/texture_components.hpp"
 #include "model/components/tool.hpp"
 #include "model/settings.hpp"
 

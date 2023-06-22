@@ -26,7 +26,6 @@
 
 #include "common/debug/assert.hpp"
 #include "model/components/context.hpp"
-#include "model/components/texture.hpp"
 #include "model/layers/group_layer_ops.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/layers/layer_recursion.hpp"
@@ -35,6 +34,7 @@
 #include "model/objects/object_components.hpp"
 #include "model/settings.hpp"
 #include "model/systems/tileset_system.hpp"
+#include "model/textures/texture_components.hpp"
 #include "model/tilesets/attached_tileset_ops.hpp"
 #include "ui/conversions.hpp"
 #include "ui/render/canvas_renderer.hpp"
