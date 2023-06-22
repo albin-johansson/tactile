@@ -27,4 +27,6 @@ namespace tactile::sys {
 /// Prepares a model instance by initializing required context components.
 void init_model(Model& model, BackendAPI api);
 
+[[nodiscard]] auto create_model(BackendAPI api) -> Model;
+
 }  // namespace tactile::sys

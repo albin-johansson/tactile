@@ -36,8 +36,7 @@ TEST_SUITE("DocumentSystem")
 {
   TEST_CASE("create_map_document")
   {
-    Model model;
-    sys::init_model(model, BackendAPI::Null);
+    auto model = sys::create_model(BackendAPI::Null);
 
     const TileExtent extent {12, 34};
     const Int2 tile_size {32, 48};
@@ -67,8 +66,7 @@ TEST_SUITE("DocumentSystem")
 
   TEST_CASE("create_tileset_document")
   {
-    Model model;
-    sys::init_model(model, BackendAPI::Null);
+    auto model = sys::create_model(BackendAPI::Null);
 
     const Int2 tile_size {128, 96};
     const Path img_path = "resources/outside.png";
@@ -103,8 +101,7 @@ TEST_SUITE("DocumentSystem")
 
   TEST_CASE("destroy_document")
   {
-    Model model;
-    sys::init_model(model, BackendAPI::Null);
+    auto model = sys::create_model(BackendAPI::Null);
 
     const auto document_entity =
         sys::create_map_document(model, TileExtent {5, 5}, Float2 {32, 32});
@@ -126,8 +123,7 @@ TEST_SUITE("DocumentSystem")
 
   TEST_CASE("select_document")
   {
-    Model model;
-    sys::init_model(model, BackendAPI::Null);
+    auto model = sys::create_model(BackendAPI::Null);
 
     const auto document_entity1 =
         sys::create_map_document(model, TileExtent {5, 5}, Float2 {32, 32});

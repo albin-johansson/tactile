@@ -33,8 +33,7 @@ TEST_SUITE("ObjectSystem")
 {
   TEST_CASE("create_object")
   {
-    Model model;
-    sys::init_model(model, BackendAPI::Null);
+    auto model = sys::create_model(BackendAPI::Null);
 
     const auto object_entity = sys::create_object(model, ObjectType::Ellipse);
     REQUIRE(sys::is_object_entity(model, object_entity));
@@ -55,8 +54,7 @@ TEST_SUITE("ObjectSystem")
 
   TEST_CASE("duplicate_object")
   {
-    Model model;
-    sys::init_model(model, BackendAPI::Null);
+    auto model = sys::create_model(BackendAPI::Null);
 
     const auto old_object_entity = sys::create_object(model, ObjectType::Rect);
 

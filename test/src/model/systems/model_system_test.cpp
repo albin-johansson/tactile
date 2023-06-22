@@ -34,8 +34,7 @@ TEST_SUITE("Model system")
 {
   TEST_CASE("init_model")
   {
-    Model model;
-    sys::init_model(model, BackendAPI::Null);
+    auto model = sys::create_model(BackendAPI::Null);
 
     CHECK(model.has<DocumentContext>());
     CHECK(model.has<ToolContext>());

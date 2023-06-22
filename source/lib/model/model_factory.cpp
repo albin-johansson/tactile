@@ -63,4 +63,11 @@ void init_model(Model& model, const BackendAPI api)
   tool_context.tools[ToolType::Bucket] = create_bucket_tool(model);
 }
 
+auto create_model(const BackendAPI api) -> Model
+{
+  Model model;
+  init_model(model, api);
+  return model;
+}
+
 }  // namespace tactile::sys
