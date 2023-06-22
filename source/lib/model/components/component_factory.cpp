@@ -22,7 +22,7 @@
 #include <utility>  // move
 
 #include "common/debug/assert.hpp"
-#include "model/systems/validation_system.hpp"
+#include "model/entity_validation.hpp"
 
 namespace tactile::sys {
 

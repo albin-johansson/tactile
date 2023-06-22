@@ -23,7 +23,7 @@
 #include "common/util/lookup.hpp"
 #include "model/components/component_components.hpp"
 #include "model/components/component_system.hpp"
-#include "model/systems/validation_system.hpp"
+#include "model/entity_validation.hpp"
 
 namespace tactile::sys {
 

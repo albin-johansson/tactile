@@ -22,7 +22,7 @@
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "model/model.hpp"
-#include "model/settings.hpp"
+#include "model/persistence/settings.hpp"
 
 namespace tactile::ui {
 

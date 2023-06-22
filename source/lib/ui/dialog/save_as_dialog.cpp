@@ -27,7 +27,7 @@
 #include "io/file_dialog.hpp"
 #include "io/save_formats.hpp"
 #include "model/event/file_events.hpp"
-#include "model/settings.hpp"
+#include "model/persistence/settings.hpp"
 
 namespace tactile::ui {
 

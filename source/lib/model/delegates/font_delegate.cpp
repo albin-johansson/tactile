@@ -21,7 +21,7 @@
 
 #include <algorithm>  // min, max
 
-#include "model/settings.hpp"
+#include "model/persistence/settings.hpp"
 #include "ui/constants.hpp"
 
 namespace tactile {

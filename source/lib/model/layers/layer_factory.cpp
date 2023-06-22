@@ -24,8 +24,8 @@
 #include "common/debug/assert.hpp"
 #include "common/type/string.hpp"
 #include "model/contexts/context_components.hpp"
+#include "model/entity_validation.hpp"
 #include "model/layers/layer_components.hpp"
-#include "model/systems/validation_system.hpp"
 
 namespace tactile::sys {
 namespace {

@@ -25,10 +25,10 @@
 #include "model/components/component_components.hpp"
 #include "model/components/component_factory.hpp"
 #include "model/components/component_set_system.hpp"
-#include "model/systems/context/components.hpp"
-#include "model/systems/context/context_system.hpp"
+#include "model/contexts/attached_component_system.hpp"
+#include "model/contexts/context_system.hpp"
+#include "model/entity_validation.hpp"
 #include "model/systems/language_system.hpp"
-#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 

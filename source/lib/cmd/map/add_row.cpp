@@ -21,8 +21,8 @@
 
 #include "common/util/functional.hpp"
 #include "model/maps/map_components.hpp"
+#include "model/maps/map_system.hpp"
 #include "model/systems/language_system.hpp"
-#include "model/systems/map_system.hpp"
 
 namespace tactile::cmd {
 

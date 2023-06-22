@@ -32,7 +32,7 @@
 #include "model/layers/layer_components.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/objects/object_components.hpp"
-#include "model/settings.hpp"
+#include "model/persistence/settings.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/render_system.hpp"
 #include "model/viewports/viewport_components.hpp"

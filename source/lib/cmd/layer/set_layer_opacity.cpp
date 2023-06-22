@@ -20,9 +20,9 @@
 #include "set_layer_opacity.hpp"
 
 #include "common/debug/assert.hpp"
+#include "model/entity_validation.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/systems/language_system.hpp"
-#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 

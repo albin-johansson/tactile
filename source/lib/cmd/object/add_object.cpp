@@ -21,13 +21,13 @@
 
 #include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
+#include "model/entity_validation.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/objects/object_components.hpp"
 #include "model/objects/object_factory.hpp"
 #include "model/objects/object_system.hpp"
 #include "model/systems/language_system.hpp"
-#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 

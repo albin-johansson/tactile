@@ -33,9 +33,9 @@
 #include "model/documents/command_system.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
-#include "model/settings.hpp"
-#include "model/systems/map_system.hpp"
-#include "model/systems/validation_system.hpp"
+#include "model/entity_validation.hpp"
+#include "model/maps/map_system.hpp"
+#include "model/persistence/settings.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "ui/widget_state.hpp"
 

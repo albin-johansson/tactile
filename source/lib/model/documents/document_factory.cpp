@@ -22,9 +22,9 @@
 #include "cmd/command_stack.hpp"
 #include "common/debug/assert.hpp"
 #include "model/documents/document_components.hpp"
+#include "model/entity_validation.hpp"
 #include "model/maps/map_factory.hpp"
-#include "model/settings.hpp"
-#include "model/systems/validation_system.hpp"
+#include "model/persistence/settings.hpp"
 #include "model/tilesets/tileset_factory.hpp"
 #include "model/viewports/viewport_components.hpp"
 

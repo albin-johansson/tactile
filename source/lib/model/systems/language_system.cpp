@@ -27,7 +27,7 @@
 #include "common/util/lookup.hpp"
 #include "io/lang/language_parser.hpp"
 #include "model/i18n/language_components.hpp"
-#include "model/settings.hpp"
+#include "model/persistence/settings.hpp"
 
 namespace tactile::sys {
 

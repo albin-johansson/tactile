@@ -22,9 +22,9 @@
 #include <utility>  // move
 
 #include "common/debug/assert.hpp"
-#include "model/systems/context/properties.hpp"
+#include "model/contexts/property_system.hpp"
+#include "model/entity_validation.hpp"
 #include "model/systems/language_system.hpp"
-#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 

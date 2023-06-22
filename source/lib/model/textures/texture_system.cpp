@@ -17,23 +17,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "properties.hpp"
+#include "texture_system.hpp"
 
-#include <utility>  // move
-
-#include "common/debug/assert.hpp"
+#include "io/texture_loader.hpp"
+#include "model/entity_validation.hpp"
+#include "model/textures/texture_components.hpp"
 
 namespace tactile::sys {
 
-void rename_property(Context& context, StringView current_name, String new_name)
+void destroy_loaded_texture_resources(Model& model)
 {
-  TACTILE_ASSERT(!context.props.contains(new_name));
+  const auto& texture_callbacks = model.get<TextureCallbacks>();
+  const auto& texture_cache = model.get<TextureCache>();
 
-  const auto iter = context.props.find(current_name);
-  if (iter != context.props.end()) {
-    auto property_value = iter->second;
-    context.props.erase(iter);
-    context.props[new_name] = std::move(property_value);
+  for (const auto& [texture_path, texture_entity]: texture_cache.textures) {
+    texture_callbacks.destroy(model, texture_entity);
   }
 }
 

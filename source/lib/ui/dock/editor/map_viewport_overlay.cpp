@@ -27,7 +27,7 @@
 #include "model/layers/tile_layer_ops.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/systems/language_system.hpp"
-#include "model/systems/tileset_system.hpp"
+#include "model/tilesets/tileset_system.hpp"
 #include "ui/render/canvas.hpp"
 #include "ui/widget/scoped.hpp"
 

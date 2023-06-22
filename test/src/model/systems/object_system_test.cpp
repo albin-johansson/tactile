@@ -22,10 +22,10 @@
 #include <doctest/doctest.h>
 
 #include "model/contexts/context_components.hpp"
+#include "model/entity_validation.hpp"
+#include "model/model_factory.hpp"
 #include "model/objects/object_components.hpp"
 #include "model/objects/object_factory.hpp"
-#include "model/systems/model_system.hpp"
-#include "model/systems/validation_system.hpp"
 
 using namespace tactile;
 

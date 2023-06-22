@@ -26,7 +26,7 @@
 #include "common/util/lookup.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/event/tileset_events.hpp"
-#include "model/settings.hpp"
+#include "model/persistence/settings.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/render_system.hpp"
 #include "model/tiles/tile_components.hpp"

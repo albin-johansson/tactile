@@ -29,10 +29,10 @@
 #include "model/contexts/context_components.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_factory.hpp"
-#include "model/settings.hpp"
-#include "model/systems/map_system.hpp"
-#include "model/systems/tileset_system.hpp"
-#include "model/systems/validation_system.hpp"
+#include "model/entity_validation.hpp"
+#include "model/maps/map_system.hpp"
+#include "model/persistence/settings.hpp"
+#include "model/tilesets/tileset_system.hpp"
 #include "model/viewports/viewport_components.hpp"
 
 namespace tactile::sys {

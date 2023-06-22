@@ -17,34 +17,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "tile_factory.hpp"
+#include "property_system.hpp"
+
+#include <utility>  // move
 
 #include "common/debug/assert.hpp"
-#include "common/tile_matrix.hpp"
-#include "model/contexts/context_components.hpp"
-#include "model/entity_validation.hpp"
-#include "model/tiles/tile_components.hpp"
 
 namespace tactile::sys {
 
-auto create_tile(Model& model, const Tileset& tileset, const TileIndex tile_index)
-    -> Entity
+void rename_property(Context& context, StringView current_name, String new_name)
 {
-  const auto [row, col] = to_matrix_coords(tile_index, tileset.column_count);
+  TACTILE_ASSERT(!context.props.contains(new_name));
 
-  const auto tile_entity = model.create_entity();
-
-  auto& context = model.add<Context>(tile_entity);
-  context.name = "Tile";
-
-  const Int2 tile_position {col * tileset.tile_size.x, row * tileset.tile_size.y};
-
-  auto& tile = model.add<Tile>(tile_entity);
-  tile.index = tile_index;
-  tile.source = Int4 {tile_position, tileset.tile_size};
-
-  TACTILE_ASSERT(is_tile_entity(model, tile_entity));
-  return tile_entity;
+  const auto iter = context.props.find(current_name);
+  if (iter != context.props.end()) {
+    auto property_value = iter->second;
+    context.props.erase(iter);
+    context.props[new_name] = std::move(property_value);
+  }
 }
 
 }  // namespace tactile::sys

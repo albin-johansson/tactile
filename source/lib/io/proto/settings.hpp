@@ -21,7 +21,7 @@
 
 #include "common/macros.hpp"
 #include "common/type/maybe.hpp"
-#include "model/settings.hpp"
+#include "model/persistence/settings.hpp"
 
 namespace tactile {
 

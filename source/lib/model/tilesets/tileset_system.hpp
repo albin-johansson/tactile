@@ -33,15 +33,9 @@ namespace tactile::sys {
                                        Entity tileset_entity,
                                        TileIndex tile_index) -> TileIndex;
 
-void make_tile_animated(Model& model, Entity tile_entity);
-
 [[nodiscard]] auto is_valid_tile_identifier(const Model& model,
                                             const Map& map,
                                             TileID tile_id) -> bool;
-
-[[nodiscard, deprecated]] auto is_valid_tile_identifier(const Model& model,
-                                                        Entity map_entity,
-                                                        TileID tile_id) -> bool;
 
 [[nodiscard]] auto convert_tile_id_to_index(const Model& model,
                                             const Map& map,

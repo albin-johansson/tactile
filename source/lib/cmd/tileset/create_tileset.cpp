@@ -26,10 +26,10 @@
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_factory.hpp"
 #include "model/documents/document_system.hpp"
+#include "model/entity_validation.hpp"
 #include "model/maps/map_components.hpp"
+#include "model/maps/map_system.hpp"
 #include "model/systems/language_system.hpp"
-#include "model/systems/map_system.hpp"
-#include "model/systems/validation_system.hpp"
 
 namespace tactile::cmd {
 

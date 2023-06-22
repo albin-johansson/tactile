@@ -23,9 +23,9 @@
 
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_factory.hpp"
+#include "model/entity_validation.hpp"
 #include "model/model.hpp"
-#include "model/systems/model_system.hpp"
-#include "model/systems/validation_system.hpp"
+#include "model/model_factory.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_ops.hpp"

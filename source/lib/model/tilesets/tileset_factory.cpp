@@ -21,7 +21,7 @@
 
 #include "common/debug/assert.hpp"
 #include "model/contexts/context_components.hpp"
-#include "model/systems/validation_system.hpp"
+#include "model/entity_validation.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/textures/texture_factory.hpp"
 #include "model/tiles/tile_factory.hpp"

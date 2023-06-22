@@ -22,7 +22,7 @@
 #include "model/event/command_events.hpp"
 #include "model/event/font_events.hpp"
 #include "model/event/view_events.hpp"
-#include "model/settings.hpp"
+#include "model/persistence/settings.hpp"
 #include "model/systems/menu_system.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/style/themes.hpp"

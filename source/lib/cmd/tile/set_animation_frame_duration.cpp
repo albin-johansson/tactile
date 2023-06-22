@@ -20,8 +20,8 @@
 #include "set_animation_frame_duration.hpp"
 
 #include "common/debug/assert.hpp"
+#include "model/entity_validation.hpp"
 #include "model/systems/language_system.hpp"
-#include "model/systems/validation_system.hpp"
 #include "model/tiles/tile_components.hpp"
 
 namespace tactile::cmd {

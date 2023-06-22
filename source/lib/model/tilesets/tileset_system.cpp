@@ -23,7 +23,7 @@
 #include "common/tile_matrix.hpp"
 #include "common/util/lookup.hpp"
 #include "model/contexts/context_components.hpp"
-#include "model/systems/validation_system.hpp"
+#include "model/entity_validation.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/tiles/tile_components.hpp"
 #include "model/tilesets/attached_tileset_ops.hpp"
@@ -58,19 +58,6 @@ auto get_tile_appearance(const Model& model,
   return tile_index;
 }
 
-void make_tile_animated(Model& model, const Entity tile_entity)
-{
-  TACTILE_ASSERT(is_tile_entity(model, tile_entity));
-  TACTILE_ASSERT(!model.has<TileAnimation>(tile_entity));
-
-  const auto& tile = model.get<Tile>(tile_entity);
-
-  auto& animation = model.add<TileAnimation>(tile_entity);
-  animation.index = 0;
-  animation.frames.push_back(TileAnimationFrame {tile.index, ms_t {1'000}});
-  animation.last_update = Clock::now();
-}
-
 auto is_valid_tile_identifier(const Model& model, const Map& map, const TileID tile_id)
     -> bool
 {
@@ -79,15 +66,6 @@ auto is_valid_tile_identifier(const Model& model, const Map& map, const TileID t
   }
 
   return find_tileset_with_tile(model, map, tile_id) != kNullEntity;
-}
-
-auto is_valid_tile_identifier(const Model& model,
-                              const Entity map_entity,
-                              const TileID tile_id) -> bool
-{
-  TACTILE_ASSERT(is_map_entity(model, map_entity));
-  const auto& map = model.get<Map>(map_entity);
-  return is_valid_tile_identifier(model, map, tile_id);
 }
 
 auto convert_tile_id_to_index(const Model& model, const Map& map, const TileID tile_id)

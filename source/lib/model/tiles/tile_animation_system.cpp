@@ -17,22 +17,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "texture_system.hpp"
+#include "tile_animation_system.hpp"
 
-#include "io/texture_loader.hpp"
-#include "model/systems/validation_system.hpp"
-#include "model/textures/texture_components.hpp"
+#include "common/debug/assert.hpp"
+#include "common/type/chrono.hpp"
+#include "model/entity_validation.hpp"
+#include "model/tiles/tile_components.hpp"
 
 namespace tactile::sys {
 
-void destroy_loaded_texture_resources(Model& model)
+void make_tile_animated(Model& model, const Entity tile_entity)
 {
-  const auto& texture_callbacks = model.get<TextureCallbacks>();
-  const auto& texture_cache = model.get<TextureCache>();
+  TACTILE_ASSERT(is_tile_entity(model, tile_entity));
+  TACTILE_ASSERT(!model.has<TileAnimation>(tile_entity));
 
-  for (const auto& [texture_path, texture_entity]: texture_cache.textures) {
-    texture_callbacks.destroy(model, texture_entity);
-  }
+  const auto& tile = model.get<Tile>(tile_entity);
+
+  auto& animation = model.add<TileAnimation>(tile_entity);
+  animation.index = 0;
+  animation.frames.push_back(TileAnimationFrame {tile.index, ms_t {1'000}});
+  animation.last_update = Clock::now();
 }
 
 }  // namespace tactile::sys

@@ -21,10 +21,11 @@
 
 #include "common/debug/assert.hpp"
 #include "common/util/vectors.hpp"
+#include "model/entity_validation.hpp"
 #include "model/systems/language_system.hpp"
-#include "model/systems/tileset_system.hpp"
-#include "model/systems/validation_system.hpp"
+#include "model/tiles/tile_animation_system.hpp"
 #include "model/tiles/tile_components.hpp"
+#include "model/tilesets/tileset_system.hpp"
 
 namespace tactile::cmd {
 

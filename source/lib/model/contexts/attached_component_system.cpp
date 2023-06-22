@@ -17,12 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "components.hpp"
+#include "attached_component_system.hpp"
 
 #include <algorithm>  // find_if, any_of
 
 #include "model/components/component_def_system.hpp"
-#include "model/systems/validation_system.hpp"
+#include "model/entity_validation.hpp"
 
 namespace tactile::sys {
 namespace {

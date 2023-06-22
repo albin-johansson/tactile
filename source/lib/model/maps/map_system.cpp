@@ -28,19 +28,19 @@
 #include "common/util/vectors.hpp"
 #include "model/components/tile_format.hpp"
 #include "model/contexts/context_components.hpp"
+#include "model/contexts/context_system.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
+#include "model/entity_validation.hpp"
 #include "model/layers/group_layer_ops.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/layers/layer_factory.hpp"
 #include "model/layers/layer_recursion.hpp"
 #include "model/layers/layer_tree_system.hpp"
 #include "model/objects/object_system.hpp"
-#include "model/systems/context/context_system.hpp"
-#include "model/systems/tileset_system.hpp"
-#include "model/systems/validation_system.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_factory.hpp"
+#include "model/tilesets/tileset_system.hpp"
 
 namespace tactile::sys {
 namespace {

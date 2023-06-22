@@ -22,7 +22,7 @@
 #include "common/enum/lang.hpp"
 #include "common/enum/overlay_pos.hpp"
 #include "common/enum/theme.hpp"
-#include "model/settings.hpp"
+#include "model/persistence/settings.hpp"
 
 namespace tactile {
 
