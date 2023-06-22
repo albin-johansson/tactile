@@ -21,7 +21,8 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
 endif ()
 
 if (TACTILE_USE_SANITIZERS MATCHES ON)
-  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=address,undefined")
+  add_compile_options(-fno-omit-frame-pointer -fsanitize=address,undefined)
+  add_link_options(-fno-omit-frame-pointer -fsanitize=address,undefined)
 endif ()
 
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
