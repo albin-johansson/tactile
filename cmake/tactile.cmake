@@ -17,6 +17,7 @@ function(tactile_set_compile_options target)
                            /Zc:preprocessor
                            /Zc:__cplusplus
                            /wd4996  # No deprecation warnings
+                           /wd4127  # No conditional expressions are constant warnings
                            )
 
     if (TACTILE_TREAT_WARNINGS_AS_ERRORS MATCHES ON)
