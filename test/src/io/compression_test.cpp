@@ -24,7 +24,7 @@ namespace {
 
 }  // namespace
 
-TEST_SUITE("Compression" * doctest::skip())
+TEST_SUITE("Compression")
 {
   TEST_CASE("zlib compress and decompress")
   {
