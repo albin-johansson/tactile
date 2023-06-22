@@ -83,6 +83,7 @@ void open_document(Model& model, const Entity document_entity)
 
   auto& document_context = model.get<DocumentContext>();
   document_context.open_documents.insert(document_entity);
+  document_context.active_document = document_entity;
 }
 
 // TODO this function should perhaps check if the document is active as well (and select another document)
@@ -91,9 +92,18 @@ void close_document(Model& model, const Entity document_entity)
   TACTILE_ASSERT(is_document_entity(model, document_entity));
 
   auto& document_context = model.get<DocumentContext>();
-  TACTILE_ASSERT(document_context.open_documents.contains(document_entity));
 
+  TACTILE_ASSERT(document_context.open_documents.contains(document_entity));
   document_context.open_documents.erase(document_entity);
+
+  if (document_context.active_document == document_entity) {
+    document_context.active_document = kNullEntity;
+  }
+
+  if (document_context.active_document == kNullEntity &&
+      !document_context.open_documents.empty()) {
+    document_context.active_document = *document_context.open_documents.begin();
+  }
 }
 
 void set_document_name(Model& model, const Entity document_entity, String name)
@@ -234,7 +244,6 @@ void on_create_map(Model& model, const CreateMapEvent& event)
   const TileExtent extent {event.row_count, event.column_count};
   const auto document_entity = create_map_document(model, extent, event.tile_size);
   open_document(model, document_entity);
-  select_document(model, document_entity);
 }
 
 }  // namespace tactile::sys

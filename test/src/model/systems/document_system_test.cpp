@@ -111,7 +111,6 @@ TEST_SUITE("DocumentSystem")
     REQUIRE(sys::is_document_entity(model, document_entity));
 
     sys::open_document(model, document_entity);
-    sys::select_document(model, document_entity);
 
     CHECK(sys::is_document_open(model, document_entity));
     CHECK(document_entity == sys::get_active_document(model));
@@ -130,14 +129,19 @@ TEST_SUITE("DocumentSystem")
     Model model;
     sys::init_model(model, BackendAPI::Null);
 
-    const auto document_entity =
+    const auto document_entity1 =
         sys::create_map_document(model, TileExtent {5, 5}, Float2 {32, 32});
-    REQUIRE(sys::is_document_entity(model, document_entity));
+    const auto document_entity2 =
+        sys::create_map_document(model, TileExtent {5, 5}, Float2 {32, 32});
 
-    sys::open_document(model, document_entity);
-    CHECK(document_entity != sys::get_active_document(model));
+    REQUIRE(sys::is_document_entity(model, document_entity1));
+    REQUIRE(sys::is_document_entity(model, document_entity2));
 
-    sys::select_document(model, document_entity);
-    CHECK(document_entity == sys::get_active_document(model));
+    sys::open_document(model, document_entity1);
+    sys::open_document(model, document_entity2);
+    CHECK(sys::get_active_document(model) == document_entity2);
+
+    sys::select_document(model, document_entity1);
+    CHECK(sys::get_active_document(model) == document_entity1);
   }
 }

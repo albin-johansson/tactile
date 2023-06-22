@@ -359,7 +359,6 @@ void create_map_document_from_ir(const MapIR& ir_map,
       sys::create_map_document(model, ir_map.extent, ir_map.tile_size);
 
   sys::open_document(model, document_entity);
-  sys::select_document(model, document_entity);
 
   auto& document = model.get<Document>(document_entity);
   document.component_set = model.create_entity();

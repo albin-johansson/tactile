@@ -54,19 +54,15 @@ void destroy_document(Model& model, Entity document_entity);
 void select_document(Model& model, Entity document_entity);
 
 /**
- * Opens an existing document, making it show up as tab in the primary viewport widget.
- *
- * \details This function has no effect if the document is already open.
+ * Opens an existing document and makes it the active document.
  *
  * \param model           the associated model.
- * \param document_entity a valid document entity.
+ * \param document_entity a document entity.
  */
 void open_document(Model& model, Entity document_entity);
 
 /**
- * Closes an existing document.
- *
- * \todo Determine behavior when closing the active document.
+ * Closes an existing document (and selects another document if there are any open).
  *
  * \pre The specified document must be open.
  *
