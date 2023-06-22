@@ -35,9 +35,9 @@
 #include "model/systems/font_system.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/map_system.hpp"
-#include "model/systems/tools/bucket_tool.hpp"
-#include "model/systems/tools/stamp_tool.hpp"
 #include "model/systems/viewport_system.hpp"
+#include "model/tools/bucket_tool.hpp"
+#include "model/tools/stamp_tool.hpp"
 #include "ui/shortcut/mappings.hpp"
 
 namespace tactile::sys {
