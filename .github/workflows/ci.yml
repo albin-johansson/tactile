@@ -53,7 +53,8 @@ jobs:
                    -DCMAKE_C_COMPILER=$(brew --prefix llvm)/bin/clang \
                    -DCMAKE_CXX_COMPILER=$(brew --prefix llvm)/bin/clang++ \
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
-                   -DTACTILE_TREAT_WARNINGS_AS_ERRORS=OFF
+                   -DTACTILE_TREAT_WARNINGS_AS_ERRORS=ON \
+                   -DTACTILE_USE_SANITIZERS=ON
 
       - name: Build
         run: ninja -C build
@@ -114,7 +115,9 @@ jobs:
           mkdir build && cd build
           cmake .. -GNinja \
                    -DCMAKE_BUILD_TYPE=Debug \
-                   -DTACTILE_TREAT_WARNINGS_AS_ERRORS=OFF
+                   -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
+                   -DTACTILE_TREAT_WARNINGS_AS_ERRORS=ON \
+                   -DTACTILE_USE_SANITIZERS=ON
 
       - name: Build
         run: ninja -C build
@@ -172,7 +175,7 @@ jobs:
           cmake .. -GNinja `
                    -DCMAKE_BUILD_TYPE=Debug `
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} `
-                   -DTACTILE_TREAT_WARNINGS_AS_ERRORS=OFF
+                   -DTACTILE_TREAT_WARNINGS_AS_ERRORS=ON
 
       - name: Build
         run: ninja -C build

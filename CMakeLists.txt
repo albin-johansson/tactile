@@ -7,21 +7,21 @@ endif ()
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-message("[Tactile]: CMake toolchain file is... ${CMAKE_TOOLCHAIN_FILE}")
-message("[Tactile]: Vcpkg target triplet is... ${VCPKG_TARGET_TRIPLET}")
-
 project(tactile
         HOMEPAGE_URL "https://github.com/albin-johansson/tactile"
         VERSION 0.5.0
         LANGUAGES CXX)
 
-message("[Tactile]: Using C++${CMAKE_CXX_STANDARD}")
-message("[Tactile]: Compiler is ${CMAKE_CXX_COMPILER_ID}")
-message("[Tactile]: Current version is ${CMAKE_PROJECT_VERSION}")
+option(TACTILE_BUILD_APP_BUNDLE "Build as a macOS application bundle (.app)" OFF)
+option(TACTILE_USE_SANITIZERS "Enable runtime sanitizers" OFF)
+option(TACTILE_TREAT_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
-  message("[Tactile]: Enabling IPO...")
   set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
+endif ()
+
+if (TACTILE_USE_SANITIZERS MATCHES ON)
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=address,undefined")
 endif ()
 
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
@@ -69,10 +69,6 @@ find_package(yaml-cpp CONFIG REQUIRED)
 find_package(zstd CONFIG REQUIRED)
 
 find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
-
-option(TACTILE_BUILD_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)
-option(TACTILE_BUILD_WITH_ASAN "Build with AddressSanitizer" OFF)
-option(TACTILE_TREAT_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
 
 if (TACTILE_BUILD_WITH_ASAN MATCHES ON)
   tactile_enable_address_sanitizer()

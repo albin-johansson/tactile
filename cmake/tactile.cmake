@@ -116,12 +116,6 @@ function(target_link_system_libraries target)
   endforeach ()
 endfunction()
 
-function(tactile_enable_address_sanitizer)
-  message(INFO "[Tactile]: Building with AddressSanitizer")
-  add_compile_options(-fno-omit-frame-pointer -fsanitize=address)
-  add_link_options(-fno-omit-frame-pointer -fsanitize=address)
-endfunction()
-
 set(TACTILE_STD_HEADERS
     <algorithm>
     <array>
