@@ -22,13 +22,13 @@
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
-#include "model/components/context.hpp"
-#include "model/components/document.hpp"
-#include "model/components/map.hpp"
+#include "model/contexts/context_components.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/event/file_events.hpp"
 #include "model/event/property_events.hpp"
 #include "model/event/tileset_events.hpp"
+#include "model/maps/map_components.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "ui/dock/tileset/tileset_view.hpp"

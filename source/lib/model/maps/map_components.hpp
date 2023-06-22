@@ -31,16 +31,17 @@ namespace tactile {
  * Primary component featured by map entities.
  *
  * \details Maps a constructed from multiple layers stacked on top of each other. An
- * invisible group layer (the "root" layer) tracks the layers in each map. This root
- * layer is always present, even in empty maps. However, this root layer is never included
- * in save files, as it is merely an implementation detail to simplify the code.
+ *          invisible group layer (the "root" layer) tracks the layers in each map. This
+ *          root layer is always present, even in empty maps. However, this root layer is
+ *          never included in save files, as it is merely an implementation detail to
+ *          simplify the code.
  *
  * \details Each map has a collection of associated ("attached") tilesets that provide the
- * tiles for use in tile layers. Tilesets may be shared with other maps in the case of
- * external tilesets.
+ *          tiles for use in tile layers. Tilesets may be shared with other maps in the
+ *          case of external tilesets.
  *
  * \details Every map uses its own tile format specification, which can be used to control
- * aspects such as whether tile layer data is compressed.
+ *          aspects such as whether tile layer data is compressed.
  */
 struct Map final {
   TileExtent extent {5, 5};             ///< The size of the map in tiles.

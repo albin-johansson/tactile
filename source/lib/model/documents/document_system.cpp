@@ -26,14 +26,14 @@
 #include "cmd/command_stack.hpp"
 #include "common/debug/panic.hpp"
 #include "io/map/parse/parse_map.hpp"
-#include "model/components/context.hpp"
-#include "model/components/document.hpp"
-#include "model/components/viewport.hpp"
+#include "model/contexts/context_components.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/documents/document_factory.hpp"
 #include "model/settings.hpp"
 #include "model/systems/map_system.hpp"
 #include "model/systems/tileset_system.hpp"
 #include "model/systems/validation_system.hpp"
+#include "model/viewports/viewport_components.hpp"
 
 namespace tactile::sys {
 namespace {

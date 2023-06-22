@@ -24,12 +24,13 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "model/components/viewport.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/event/map_events.hpp"
 #include "model/event/viewport_events.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/textures/texture_components.hpp"
+#include "model/viewports/viewport_components.hpp"
+#include "model/viewports/viewport_ops.hpp"
 #include "ui/conversions.hpp"
 #include "ui/dock/editor/document_tab_widget.hpp"
 #include "ui/shortcut/mappings.hpp"
@@ -119,7 +120,7 @@ void on_mouse_wheel_event_in_central_viewport(const Entity viewport_entity,
       dispatcher.enqueue<IncreaseViewportZoomEvent>(viewport_entity,
                                                     as_float2(ImGui::GetIO().MousePos));
     }
-    else if (y < 0 && viewport.can_zoom_out()) {
+    else if (y < 0 && can_zoom_out_in(viewport)) {
       dispatcher.enqueue<DecreaseViewportZoomEvent>(viewport_entity,
                                                     as_float2(ImGui::GetIO().MousePos));
     }

@@ -25,7 +25,7 @@
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "common/type/tile_cache.hpp"
-#include "model/components/viewport.hpp"
+#include "model/viewports/viewport_components.hpp"
 
 namespace tactile {
 

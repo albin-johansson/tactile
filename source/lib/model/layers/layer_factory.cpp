@@ -23,7 +23,7 @@
 
 #include "common/debug/assert.hpp"
 #include "common/type/string.hpp"
-#include "model/components/context.hpp"
+#include "model/contexts/context_components.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/systems/validation_system.hpp"
 

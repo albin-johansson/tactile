@@ -21,8 +21,9 @@
 
 #include <glm/common.hpp>
 
-#include "model/components/viewport.hpp"
 #include "model/documents/document_system.hpp"
+#include "model/viewports/viewport_components.hpp"
+#include "model/viewports/viewport_ops.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -89,7 +90,7 @@ auto is_viewport_zoom_out_possible(const Model& model) -> bool
 
   if (document_entity != kNullEntity) {
     const auto& viewport = model.get<Viewport>(document_entity);
-    return viewport.can_zoom_out();
+    return can_zoom_out_in(viewport);
   }
 
   return false;

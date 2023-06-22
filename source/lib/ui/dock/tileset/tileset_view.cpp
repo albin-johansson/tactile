@@ -24,10 +24,10 @@
 
 #include "common/color.hpp"
 #include "io/proto/settings.hpp"
-#include "model/components/map.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
+#include "model/maps/map_components.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "ui/conversions.hpp"

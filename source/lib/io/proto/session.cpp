@@ -27,7 +27,7 @@
 #include "io/map/parse/parse_map.hpp"
 #include "io/proto/proto.hpp"
 #include "io/stream.hpp"
-#include "model/components/document.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/model.hpp"
 
 namespace tactile {

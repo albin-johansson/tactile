@@ -20,14 +20,14 @@
 #include "tileset_factory.hpp"
 
 #include "common/debug/assert.hpp"
-#include "model/components/context.hpp"
-#include "model/components/viewport.hpp"
+#include "model/contexts/context_components.hpp"
 #include "model/systems/validation_system.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/textures/texture_factory.hpp"
 #include "model/tiles/tile_factory.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_ops.hpp"
+#include "model/viewports/viewport_components.hpp"
 
 namespace tactile::sys {
 

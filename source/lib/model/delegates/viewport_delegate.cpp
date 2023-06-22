@@ -22,10 +22,10 @@
 #include <cmath>  // round
 
 #include "common/util/lookup.hpp"
-#include "model/components/document.hpp"
-#include "model/components/tool.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/systems/viewport_system.hpp"
+#include "model/tools/tool_components.hpp"
 
 namespace tactile {
 

@@ -20,9 +20,9 @@
 #include "remove_layer.hpp"
 
 #include "common/debug/assert.hpp"
-#include "model/components/document.hpp"
-#include "model/components/map.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/layers/layer_tree_system.hpp"
+#include "model/maps/map_components.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/systems/map_system.hpp"
 #include "model/systems/validation_system.hpp"

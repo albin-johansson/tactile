@@ -25,8 +25,8 @@
 #include "common/type/func.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/maybe.hpp"
-#include "model/components/viewport.hpp"
 #include "model/model.hpp"
+#include "model/viewports/viewport_components.hpp"
 
 namespace tactile {
 

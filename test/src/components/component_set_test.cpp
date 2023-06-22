@@ -19,7 +19,7 @@
 
 #include <doctest/doctest.h>
 
-#include "model/components/component.hpp"
+#include "model/components/component_components.hpp"
 #include "model/systems/model_system.hpp"
 
 using namespace tactile;
@@ -30,25 +30,5 @@ TEST_SUITE("ComponentSet")
   {
     const ComponentSet set;
     CHECK(set.definitions.empty());
-  }
-
-  TEST_CASE("has_component")
-  {
-    Model model;
-    sys::init_model(model, BackendAPI::Null);
-
-    ComponentSet set;
-    CHECK(!set.has_component(kNullEntity));
-
-    const auto entity_a = model.create_entity();
-    const auto entity_b = model.create_entity();
-    const auto entity_c = model.create_entity();
-
-    set.definitions.push_back(entity_a);
-    set.definitions.push_back(entity_b);
-
-    CHECK(set.has_component(entity_a));
-    CHECK(set.has_component(entity_b));
-    CHECK(!set.has_component(entity_c));
   }
 }

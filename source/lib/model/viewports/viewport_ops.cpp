@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "viewport.hpp"
+#include "viewport_ops.hpp"
 
 namespace tactile {
 namespace {
@@ -26,14 +26,14 @@ inline constexpr float kViewportMinTileHeight = 4;
 
 }  // namespace
 
-auto Viewport::scaling_ratio(const Float2& logical_tile_size) const -> Float2
+auto scaling_ratio(const Viewport& viewport, const Float2& logical_tile_size) -> Float2
 {
-  return tile_size / logical_tile_size;
+  return viewport.tile_size / logical_tile_size;
 }
 
-auto Viewport::can_zoom_out() const -> bool
+auto can_zoom_out_in(const Viewport& viewport) -> bool
 {
-  return tile_size.y > kViewportMinTileHeight;
+  return viewport.tile_size.y > kViewportMinTileHeight;
 }
 
 }  // namespace tactile

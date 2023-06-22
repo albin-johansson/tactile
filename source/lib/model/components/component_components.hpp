@@ -17,15 +17,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "component.hpp"
+#pragma once
 
-#include "common/util/vectors.hpp"
+#include "common/attribute.hpp"
+#include "common/type/ecs.hpp"
+#include "common/type/string_map.hpp"
+#include "common/type/vector.hpp"
 
 namespace tactile {
 
-auto ComponentSet::has_component(const Entity definition_entity) const -> bool
-{
-  return contained_in(definitions, definition_entity);
-}
+// TODO consider using UUID for component type reference, could make some systems simpler
+struct Component final {
+  Entity definition {kNullEntity};  ///< The associated component definition.
+  StringMap<Attribute> attributes;
+};
+
+// TODO think of shorter name: ComponentArchetype, ComponentTemplate, ComponentDef¨
+//  or maybe rename Component to AttachedComponent/ComponentInstance
+struct ComponentDefinition final {
+  String name;
+  StringMap<Attribute> attributes;
+};
+
+struct ComponentSet final {
+  Vector<Entity> definitions;  ///< Associated component definitions.
+};
 
 }  // namespace tactile

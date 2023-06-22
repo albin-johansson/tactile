@@ -27,7 +27,7 @@
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "model/components/viewport.hpp"
+#include "model/viewports/viewport_components.hpp"
 
 namespace tactile::ui {
 

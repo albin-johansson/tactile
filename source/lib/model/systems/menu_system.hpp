@@ -20,8 +20,8 @@
 #pragma once
 
 #include "common/type/dispatcher.hpp"
-#include "model/components/language.hpp"
 #include "model/components/menu.hpp"
+#include "model/i18n/language_components.hpp"
 #include "model/model.hpp"
 
 namespace tactile::sys {

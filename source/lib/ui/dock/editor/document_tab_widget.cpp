@@ -24,7 +24,7 @@
 
 #include "cmd/command_stack.hpp"
 #include "common/fmt/fmt_string.hpp"
-#include "model/components/document.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/event/file_events.hpp"
 #include "model/event/tool_events.hpp"

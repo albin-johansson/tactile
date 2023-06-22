@@ -21,8 +21,8 @@
 
 #include "cmd/command_stack.hpp"
 #include "io/export/map_exporter.hpp"
-#include "model/components/document.hpp"
 #include "model/components/file_history.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "ui/dialog/save_as_dialog.hpp"
 

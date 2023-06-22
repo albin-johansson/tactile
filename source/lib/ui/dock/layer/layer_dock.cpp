@@ -22,12 +22,12 @@
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
-#include "model/components/document.hpp"
-#include "model/components/map.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/event/layer_events.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/layers/layer_tree_system.hpp"
+#include "model/maps/map_components.hpp"
 #include "model/model.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/constants.hpp"

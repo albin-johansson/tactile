@@ -30,7 +30,7 @@
 #include "io/export/tiled_xml_exporter.hpp"
 #include "io/ir/ir_generation.hpp"
 #include "io/save_formats.hpp"
-#include "model/components/document.hpp"
+#include "model/documents/document_components.hpp"
 
 namespace tactile {
 

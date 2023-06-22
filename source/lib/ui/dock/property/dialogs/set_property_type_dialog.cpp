@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "model/components/document.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/event/property_events.hpp"
 #include "model/model.hpp"

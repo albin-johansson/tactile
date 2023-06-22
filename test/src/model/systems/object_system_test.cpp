@@ -21,7 +21,7 @@
 
 #include <doctest/doctest.h>
 
-#include "model/components/context.hpp"
+#include "model/contexts/context_components.hpp"
 #include "model/objects/object_components.hpp"
 #include "model/objects/object_factory.hpp"
 #include "model/systems/model_system.hpp"

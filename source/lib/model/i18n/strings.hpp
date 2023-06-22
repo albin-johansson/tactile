@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include "common/enum/lang.hpp"
-#include "common/type/hash_map.hpp"
 #include "common/type/string.hpp"
 
 namespace tactile {
@@ -552,11 +550,6 @@ struct Strings final {
   CommandStrings cmd;
   ParseErrorStrings parse_error;
   AnimationDockStrings animation_dock;
-};
-
-/// Context component tracking loaded languages.
-struct Languages final {
-  HashMap<Lang, Strings> strings;
 };
 
 }  // namespace tactile

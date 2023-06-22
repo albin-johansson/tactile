@@ -19,9 +19,9 @@
 
 #include "map_command_cache.hpp"
 
-#include "model/components/map.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/layers/layer_recursion.hpp"
+#include "model/maps/map_components.hpp"
 
 namespace tactile {
 

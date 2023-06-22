@@ -27,7 +27,7 @@
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/vector.hpp"
-#include "model/components/viewport.hpp"
+#include "model/viewports/viewport_components.hpp"
 
 namespace tactile {
 

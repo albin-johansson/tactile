@@ -22,14 +22,14 @@
 #include <centurion/events/mouse_events.hpp>
 #include <imgui.h>
 
-#include "model/components/document.hpp"
-#include "model/components/map.hpp"
-#include "model/components/viewport.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/event/setting_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/event/viewport_events.hpp"
+#include "model/maps/map_components.hpp"
 #include "model/systems/language_system.hpp"
+#include "model/viewports/viewport_components.hpp"
 #include "ui/dock/tileset/tileset_tabs.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"

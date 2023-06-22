@@ -22,13 +22,13 @@
 #include "common/debug/assert.hpp"
 #include "common/tile_matrix.hpp"
 #include "common/util/lookup.hpp"
-#include "model/components/context.hpp"
-#include "model/components/viewport.hpp"
+#include "model/contexts/context_components.hpp"
 #include "model/systems/validation_system.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/tiles/tile_components.hpp"
 #include "model/tilesets/attached_tileset_ops.hpp"
 #include "model/tilesets/tileset_components.hpp"
+#include "model/viewports/viewport_components.hpp"
 
 namespace tactile::sys {
 

@@ -23,7 +23,7 @@
 
 #include "common/debug/assert.hpp"
 #include "common/util/lookup.hpp"
-#include "model/components/component.hpp"
+#include "model/components/component_components.hpp"
 #include "model/systems/component/component_def.hpp"
 #include "model/systems/context/context_system.hpp"
 #include "model/systems/language_system.hpp"

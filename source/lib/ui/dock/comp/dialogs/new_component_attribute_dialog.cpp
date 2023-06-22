@@ -23,8 +23,8 @@
 
 #include "common/util/string_buffer.hpp"
 #include "common/util/vectors.hpp"
-#include "model/components/component.hpp"
-#include "model/components/document.hpp"
+#include "model/components/component_components.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"

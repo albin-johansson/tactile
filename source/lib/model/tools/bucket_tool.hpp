@@ -21,8 +21,8 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "model/components/viewport.hpp"
 #include "model/model.hpp"
+#include "model/viewports/viewport_components.hpp"
 
 namespace tactile::sys {
 

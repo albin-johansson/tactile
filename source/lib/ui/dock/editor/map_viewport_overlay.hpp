@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/dispatcher.hpp"
-#include "model/components/map.hpp"
+#include "model/maps/map_components.hpp"
 #include "model/model.hpp"
 #include "ui/render/canvas.hpp"
 

@@ -26,8 +26,8 @@
 #include "common/util/algorithms.hpp"
 #include "common/util/functional.hpp"
 #include "common/util/vectors.hpp"
-#include "model/components/map.hpp"
 #include "model/layers/layer_tree_system.hpp"
+#include "model/maps/map_components.hpp"
 #include "model/systems/validation_system.hpp"
 
 namespace tactile::sys {

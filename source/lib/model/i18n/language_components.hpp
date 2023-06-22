@@ -19,12 +19,16 @@
 
 #pragma once
 
-#include "model/i18n/language_components.hpp"
+#include "common/enum/lang.hpp"
+#include "common/type/hash_map.hpp"
+#include "common/type/string.hpp"
+#include "model/i18n/strings.hpp"
 
 namespace tactile {
 
-/// Parses a language translation JSON file.
-[[nodiscard]] auto parse_language(const char* path, const Strings& fallback = {})
-    -> Strings;
+/// Context component tracking loaded languages.
+struct Languages final {
+  HashMap<Lang, Strings> strings;
+};
 
 }  // namespace tactile

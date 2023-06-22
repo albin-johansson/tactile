@@ -19,17 +19,17 @@
 
 #include "model_system.hpp"
 
-#include "model/components/document.hpp"
 #include "model/components/file_history.hpp"
-#include "model/components/language.hpp"
 #include "model/components/menu.hpp"
-#include "model/components/tool.hpp"
+#include "model/documents/document_components.hpp"
+#include "model/i18n/language_components.hpp"
 #include "model/settings.hpp"
 #include "model/textures/gl_texture_system.hpp"
 #include "model/textures/null_texture_system.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/tools/bucket_tool.hpp"
 #include "model/tools/stamp_tool.hpp"
+#include "model/tools/tool_components.hpp"
 #include "ui/widget_state.hpp"
 
 namespace tactile::sys {

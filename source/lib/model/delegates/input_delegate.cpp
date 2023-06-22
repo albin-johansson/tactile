@@ -21,10 +21,10 @@
 
 #include <imgui_internal.h>
 
-#include "model/components/document.hpp"
-#include "model/components/viewport.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/event/menu_events.hpp"
+#include "model/viewports/viewport_components.hpp"
 #include "ui/dock/editor/editor_dock.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
 #include "ui/widget_state.hpp"

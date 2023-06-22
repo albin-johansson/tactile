@@ -24,10 +24,9 @@
 #include <imgui.h>
 
 #include "io/compression.hpp"
-#include "model/components/context.hpp"
-#include "model/components/document.hpp"
-#include "model/components/map.hpp"
 #include "model/components/tile_format.hpp"
+#include "model/contexts/context_components.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/event/file_events.hpp"
 #include "model/event/layer_events.hpp"
@@ -37,6 +36,7 @@
 #include "model/event/setting_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/layers/layer_components.hpp"
+#include "model/maps/map_components.hpp"
 #include "model/model.hpp"
 #include "model/objects/object_components.hpp"
 #include "model/systems/language_system.hpp"

@@ -19,30 +19,13 @@
 
 #pragma once
 
-#include "common/attribute.hpp"
-#include "common/type/ecs.hpp"
-#include "common/type/string_map.hpp"
-#include "common/type/vector.hpp"
+#include "model/viewports/viewport_components.hpp"
 
 namespace tactile {
 
-// TODO consider using UUID for component type reference, could make some systems simpler
-struct Component final {
-  Entity definition {kNullEntity};  ///< The associated component definition.
-  StringMap<Attribute> attributes;
-};
+[[nodiscard]] auto get_scaling_ratio(const Viewport& viewport,
+                                     const Float2& logical_tile_size) -> Float2;
 
-// TODO think of shorter name: ComponentArchetype, ComponentTemplate, ComponentDef¨
-//  or maybe rename Component to AttachedComponent/ComponentInstance
-struct ComponentDefinition final {
-  String name;
-  StringMap<Attribute> attributes;
-};
-
-struct ComponentSet final {
-  Vector<Entity> definitions;  ///< Associated component definitions.
-
-  [[nodiscard]] auto has_component(Entity definition_entity) const -> bool;
-};
+[[nodiscard]] auto can_zoom_out_in(const Viewport& viewport) -> bool;
 
 }  // namespace tactile

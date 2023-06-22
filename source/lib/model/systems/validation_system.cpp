@@ -20,18 +20,18 @@
 #include "validation_system.hpp"
 
 #include "cmd/command_stack.hpp"
-#include "model/components/component.hpp"
-#include "model/components/context.hpp"
-#include "model/components/document.hpp"
-#include "model/components/map.hpp"
+#include "model/components/component_components.hpp"
 #include "model/components/tile_format.hpp"
-#include "model/components/tool.hpp"
-#include "model/components/viewport.hpp"
+#include "model/contexts/context_components.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/layers/layer_components.hpp"
+#include "model/maps/map_components.hpp"
 #include "model/objects/object_components.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/tiles/tile_components.hpp"
 #include "model/tilesets/tileset_components.hpp"
+#include "model/tools/tool_components.hpp"
+#include "model/viewports/viewport_components.hpp"
 
 namespace tactile::sys {
 

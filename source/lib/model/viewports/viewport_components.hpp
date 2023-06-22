@@ -26,11 +26,6 @@
 
 namespace tactile {
 
-struct ViewportLimits final {
-  Float2 min_offset {};
-  Float2 max_offset {};
-};
-
 struct ViewportMouseInfo final {
   TilePos tile_pos;           ///< The raw mouse position in tile coordinates.
   Maybe<MouseButton> button;  ///< The active button, if any.
@@ -40,14 +35,15 @@ struct ViewportMouseInfo final {
   bool in_viewport {};    ///< Indicates whether the mouse is within the viewport.
 };
 
+struct ViewportLimits final {
+  Float2 min_offset {};
+  Float2 max_offset {};
+};
+
 struct Viewport final {
   Float2 offset {};
   Float2 tile_size {32, 32};
   Maybe<ViewportLimits> limits;
-
-  [[nodiscard]] auto scaling_ratio(const Float2& logical_tile_size) const -> Float2;
-
-  [[nodiscard]] auto can_zoom_out() const -> bool;
 };
 
 /// Component used to track frequently changing aspects of viewports.

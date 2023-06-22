@@ -24,8 +24,7 @@
 
 #include "common/color.hpp"
 #include "common/util/lookup.hpp"
-#include "model/components/document.hpp"
-#include "model/components/viewport.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/settings.hpp"
 #include "model/systems/language_system.hpp"
@@ -33,6 +32,7 @@
 #include "model/tiles/tile_components.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_ops.hpp"
+#include "model/viewports/viewport_components.hpp"
 #include "ui/conversions.hpp"
 #include "ui/dock/editor/document_viewport_offset_handler.hpp"
 #include "ui/render/canvas.hpp"

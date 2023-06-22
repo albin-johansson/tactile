@@ -19,7 +19,7 @@
 
 #include "command_system.hpp"
 
-#include "model/components/document.hpp"
+#include "model/documents/document_components.hpp"
 
 namespace tactile::sys {
 

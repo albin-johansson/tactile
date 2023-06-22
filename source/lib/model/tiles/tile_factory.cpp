@@ -21,7 +21,7 @@
 
 #include "common/debug/assert.hpp"
 #include "common/tile_matrix.hpp"
-#include "model/components/context.hpp"
+#include "model/contexts/context_components.hpp"
 #include "model/systems/validation_system.hpp"
 #include "model/tiles/tile_components.hpp"
 
