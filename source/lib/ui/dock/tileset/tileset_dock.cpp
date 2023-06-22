@@ -24,9 +24,9 @@
 
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
-#include "model/event/setting_events.hpp"
-#include "model/event/tileset_events.hpp"
-#include "model/event/viewport_events.hpp"
+#include "model/events/setting_events.hpp"
+#include "model/events/tileset_events.hpp"
+#include "model/events/viewport_events.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/systems/language_system.hpp"
 #include "model/viewports/viewport_components.hpp"

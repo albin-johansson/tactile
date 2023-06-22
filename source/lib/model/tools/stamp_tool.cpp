@@ -30,7 +30,7 @@
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/entity_validation.hpp"
-#include "model/event/tool_events.hpp"
+#include "model/events/tool_events.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/layers/tile_layer_ops.hpp"
 #include "model/maps/map_components.hpp"

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "model/event/tileset_events.hpp"
+#include "model/events/tileset_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile {

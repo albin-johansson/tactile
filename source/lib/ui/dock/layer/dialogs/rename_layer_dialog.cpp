@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "model/event/layer_events.hpp"
+#include "model/events/layer_events.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 

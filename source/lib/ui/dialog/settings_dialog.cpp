@@ -24,9 +24,9 @@
 
 #include "common/primitives.hpp"
 #include "io/save_formats.hpp"
-#include "model/event/command_events.hpp"
-#include "model/event/setting_events.hpp"
-#include "model/event/view_events.hpp"
+#include "model/events/command_events.hpp"
+#include "model/events/setting_events.hpp"
+#include "model/events/view_events.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"

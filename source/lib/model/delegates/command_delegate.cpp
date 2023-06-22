@@ -24,7 +24,7 @@
 #include "cmd/command_stack.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
-#include "model/event/command_events.hpp"
+#include "model/events/command_events.hpp"
 
 namespace tactile {
 namespace {

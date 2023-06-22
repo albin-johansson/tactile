@@ -21,7 +21,7 @@
 
 #include <imgui_internal.h>
 
-#include "model/event/viewport_events.hpp"
+#include "model/events/viewport_events.hpp"
 
 namespace tactile::ui {
 

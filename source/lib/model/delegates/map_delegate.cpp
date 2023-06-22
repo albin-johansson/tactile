@@ -40,7 +40,7 @@
 #include "model/documents/command_system.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
-#include "model/event/map_events.hpp"
+#include "model/events/map_events.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/persistence/file_history_system.hpp"
 #include "model/persistence/settings.hpp"

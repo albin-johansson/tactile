@@ -30,7 +30,7 @@
 #include "model/components/file_history.hpp"
 #include "model/documents/command_system.hpp"
 #include "model/documents/document_system.hpp"
-#include "model/event/menu_events.hpp"
+#include "model/events/menu_events.hpp"
 #include "model/maps/map_system.hpp"
 #include "model/persistence/file_history_system.hpp"
 #include "model/systems/font_system.hpp"

@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/dispatcher.hpp"
-#include "model/event/viewport_events.hpp"
+#include "model/events/viewport_events.hpp"
 #include "model/model.hpp"
 
 namespace tactile {

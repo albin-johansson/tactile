@@ -22,7 +22,16 @@
 #include <imgui.h>
 
 #include "model/documents/document_system.hpp"
-#include "model/event/all.hpp"
+#include "model/events/command_events.hpp"
+#include "model/events/component_events.hpp"
+#include "model/events/file_events.hpp"
+#include "model/events/font_events.hpp"
+#include "model/events/misc_events.hpp"
+#include "model/events/setting_events.hpp"
+#include "model/events/tileset_events.hpp"
+#include "model/events/tool_events.hpp"
+#include "model/events/view_events.hpp"
+#include "model/events/viewport_events.hpp"
 #include "ui/conversions.hpp"
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"

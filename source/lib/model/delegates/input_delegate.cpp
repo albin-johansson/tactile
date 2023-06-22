@@ -23,7 +23,7 @@
 
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
-#include "model/event/menu_events.hpp"
+#include "model/events/menu_events.hpp"
 #include "model/viewports/viewport_components.hpp"
 #include "ui/dock/editor/editor_dock.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"

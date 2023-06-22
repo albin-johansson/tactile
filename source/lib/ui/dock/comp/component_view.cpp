@@ -24,7 +24,7 @@
 #include "common/debug/assert.hpp"
 #include "model/components/component_components.hpp"
 #include "model/entity_validation.hpp"
-#include "model/event/component_events.hpp"
+#include "model/events/component_events.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"

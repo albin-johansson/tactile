@@ -24,7 +24,7 @@
 
 #include "common/type/path.hpp"
 #include "io/directories.hpp"
-#include "model/event/setting_events.hpp"
+#include "model/events/setting_events.hpp"
 #include "model/persistence/settings.hpp"
 #include "model/systems/language_system.hpp"
 

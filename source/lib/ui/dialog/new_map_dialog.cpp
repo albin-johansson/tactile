@@ -22,7 +22,7 @@
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
-#include "model/event/map_events.hpp"
+#include "model/events/map_events.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/alignment.hpp"

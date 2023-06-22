@@ -19,9 +19,9 @@
 
 #include "settings_delegate.hpp"
 
-#include "model/event/command_events.hpp"
-#include "model/event/font_events.hpp"
-#include "model/event/view_events.hpp"
+#include "model/events/command_events.hpp"
+#include "model/events/font_events.hpp"
+#include "model/events/view_events.hpp"
 #include "model/persistence/settings.hpp"
 #include "model/systems/menu_system.hpp"
 #include "ui/dock/dock_space.hpp"

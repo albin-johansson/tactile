@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "model/event/map_events.hpp"
+#include "model/events/map_events.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"

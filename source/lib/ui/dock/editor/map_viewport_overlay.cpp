@@ -22,7 +22,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "model/event/setting_events.hpp"
+#include "model/events/setting_events.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/layers/tile_layer_ops.hpp"
 #include "model/maps/map_components.hpp"

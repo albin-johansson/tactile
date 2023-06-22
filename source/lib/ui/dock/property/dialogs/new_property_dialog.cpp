@@ -24,7 +24,7 @@
 #include "model/contexts/context_components.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
-#include "model/event/property_events.hpp"
+#include "model/events/property_events.hpp"
 #include "model/model.hpp"
 #include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
