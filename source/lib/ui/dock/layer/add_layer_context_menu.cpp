@@ -22,7 +22,7 @@
 #include <imgui.h>
 
 #include "model/events/layer_events.hpp"
-#include "model/systems/language_system.hpp"
+#include "model/i18n/language_system.hpp"
 
 namespace tactile::ui {
 

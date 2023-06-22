@@ -19,13 +19,22 @@
 
 #pragma once
 
+#include "common/type/math.hpp"
 #include "model/viewports/viewport_components.hpp"
 
-namespace tactile {
+namespace tactile::sys {
+
+void offset_viewport(Viewport& viewport, Float2 delta);
+
+void reset_viewport_zoom(Viewport& viewport);
+
+void increase_viewport_zoom(Viewport& viewport, Float2 anchor_pos);
+
+void decrease_viewport_zoom(Viewport& viewport, Float2 anchor_pos);
 
 [[nodiscard]] auto get_scaling_ratio(const Viewport& viewport,
                                      const Float2& logical_tile_size) -> Float2;
 
 [[nodiscard]] auto can_zoom_out_in(const Viewport& viewport) -> bool;
 
-}  // namespace tactile
+}  // namespace tactile::sys

@@ -23,12 +23,12 @@
 
 #include "common/util/vectors.hpp"
 #include "model/components/component_components.hpp"
+#include "model/components/component_set_system.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/events/component_events.hpp"
+#include "model/i18n/language_system.hpp"
 #include "model/model.hpp"
-#include "model/components/component_set_system.hpp"
-#include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {

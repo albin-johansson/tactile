@@ -24,8 +24,8 @@
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/events/property_events.hpp"
+#include "model/i18n/language_system.hpp"
 #include "model/model.hpp"
-#include "model/systems/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/attribute_widgets.hpp"
 

@@ -24,7 +24,7 @@
 #include "common/predef.hpp"
 #include "io/directories.hpp"
 #include "model/events/misc_events.hpp"
-#include "model/systems/language_system.hpp"
+#include "model/i18n/language_system.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"
 

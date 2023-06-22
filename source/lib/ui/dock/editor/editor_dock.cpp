@@ -27,7 +27,7 @@
 #include "model/documents/document_system.hpp"
 #include "model/events/map_events.hpp"
 #include "model/events/viewport_events.hpp"
-#include "model/systems/language_system.hpp"
+#include "model/i18n/language_system.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/viewports/viewport_components.hpp"
 #include "model/viewports/viewport_ops.hpp"
@@ -120,7 +120,7 @@ void on_mouse_wheel_event_in_central_viewport(const Entity viewport_entity,
       dispatcher.enqueue<IncreaseViewportZoomEvent>(viewport_entity,
                                                     as_float2(ImGui::GetIO().MousePos));
     }
-    else if (y < 0 && can_zoom_out_in(viewport)) {
+    else if (y < 0 && sys::can_zoom_out_in(viewport)) {
       dispatcher.enqueue<DecreaseViewportZoomEvent>(viewport_entity,
                                                     as_float2(ImGui::GetIO().MousePos));
     }

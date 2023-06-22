@@ -19,7 +19,7 @@
 
 #include "fix_map_tiles.hpp"
 
-#include "model/systems/language_system.hpp"
+#include "model/i18n/language_system.hpp"
 
 namespace tactile::cmd {
 

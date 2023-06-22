@@ -25,7 +25,7 @@
 #include "model/components/component_components.hpp"
 #include "model/entity_validation.hpp"
 #include "model/events/component_events.hpp"
-#include "model/systems/language_system.hpp"
+#include "model/i18n/language_system.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/attribute_widgets.hpp"

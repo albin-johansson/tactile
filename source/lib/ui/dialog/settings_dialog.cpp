@@ -27,7 +27,7 @@
 #include "model/events/command_events.hpp"
 #include "model/events/setting_events.hpp"
 #include "model/events/view_events.hpp"
-#include "model/systems/language_system.hpp"
+#include "model/i18n/language_system.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/dock/dock_space.hpp"

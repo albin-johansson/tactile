@@ -21,7 +21,6 @@
 
 #include "model/documents/document_components.hpp"
 #include "model/i18n/language_components.hpp"
-#include "model/menus/menu_components.hpp"
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/settings.hpp"
 #include "model/textures/gl_texture_system.hpp"
@@ -30,6 +29,7 @@
 #include "model/tools/bucket_tool.hpp"
 #include "model/tools/stamp_tool.hpp"
 #include "model/tools/tool_components.hpp"
+#include "model/view/menu_components.hpp"
 #include "ui/widget_state.hpp"
 
 namespace tactile::sys {

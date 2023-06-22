@@ -19,12 +19,66 @@
 
 #include "viewport_ops.hpp"
 
-namespace tactile {
+#include <glm/common.hpp>
+
+namespace tactile::sys {
 namespace {
 
-inline constexpr float kViewportMinTileHeight = 4;
+inline constexpr Float2 kDefaultViewportTileSize = {64, 64};
+inline constexpr float kMinViewportTileWidth = 4;
+
+[[nodiscard]] auto _get_offset_delta(const Viewport& viewport) -> Float2
+{
+  const auto y_ratio = viewport.tile_size.y / viewport.tile_size.x;
+
+  const auto dx = glm::round(glm::max(2.0f, viewport.tile_size.x * 0.05f));
+  const auto dy = dx * y_ratio;
+
+  return {dx, dy};
+}
+
+[[nodiscard]] auto _get_min_tile_size(const Viewport& viewport) -> Float2
+{
+  const auto y_ratio = viewport.tile_size.y / viewport.tile_size.x;
+  return {kMinViewportTileWidth, kMinViewportTileWidth * y_ratio};
+}
 
 }  // namespace
+
+void offset_viewport(Viewport& viewport, const Float2 delta)
+{
+  viewport.offset += delta;
+
+  if (viewport.limits.has_value()) {
+    viewport.offset = glm::clamp(viewport.offset,
+                                 viewport.limits->min_offset,
+                                 viewport.limits->max_offset);
+  }
+}
+
+void reset_viewport_zoom(Viewport& viewport)
+{
+  viewport.tile_size = kDefaultViewportTileSize;
+}
+
+void increase_viewport_zoom(Viewport& viewport, const Float2 anchor_pos)
+{
+  const auto ratio = (anchor_pos - viewport.offset) / viewport.tile_size;
+
+  viewport.tile_size += _get_offset_delta(viewport);
+  viewport.offset = anchor_pos - (ratio * viewport.tile_size);
+}
+
+void decrease_viewport_zoom(Viewport& viewport, const Float2 anchor_pos)
+{
+  const auto ratio = (anchor_pos - viewport.offset) / viewport.tile_size;
+  const auto min_tile_size = _get_min_tile_size(viewport);
+
+  viewport.tile_size -= _get_offset_delta(viewport);
+  viewport.tile_size = glm::max(viewport.tile_size, min_tile_size);
+
+  viewport.offset = anchor_pos - (ratio * viewport.tile_size);
+}
 
 auto scaling_ratio(const Viewport& viewport, const Float2& logical_tile_size) -> Float2
 {
@@ -33,7 +87,7 @@ auto scaling_ratio(const Viewport& viewport, const Float2& logical_tile_size) ->
 
 auto can_zoom_out_in(const Viewport& viewport) -> bool
 {
-  return viewport.tile_size.y > kViewportMinTileHeight;
+  return viewport.tile_size.y > kMinViewportTileWidth;
 }
 
-}  // namespace tactile
+}  // namespace tactile::sys

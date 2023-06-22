@@ -23,7 +23,7 @@
 #include "model/components/component_components.hpp"
 #include "model/contexts/attached_component_system.hpp"
 #include "model/entity_validation.hpp"
-#include "model/systems/language_system.hpp"
+#include "model/i18n/language_system.hpp"
 
 namespace tactile::cmd {
 

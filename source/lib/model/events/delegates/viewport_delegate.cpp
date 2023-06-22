@@ -24,8 +24,9 @@
 #include "common/util/lookup.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
-#include "model/systems/viewport_system.hpp"
 #include "model/tools/tool_components.hpp"
+#include "model/viewports/viewport_ops.hpp"
+#include "model/viewports/viewport_system.hpp"
 
 namespace tactile {
 

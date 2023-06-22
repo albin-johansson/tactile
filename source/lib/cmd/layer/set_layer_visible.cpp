@@ -21,8 +21,8 @@
 
 #include "common/debug/assert.hpp"
 #include "model/entity_validation.hpp"
+#include "model/i18n/language_system.hpp"
 #include "model/layers/layer_components.hpp"
-#include "model/systems/language_system.hpp"
 
 namespace tactile::cmd {
 

@@ -24,7 +24,7 @@
 #include "model/documents/document_system.hpp"
 #include "model/events/setting_events.hpp"
 #include "model/events/view_events.hpp"
-#include "model/systems/language_system.hpp"
+#include "model/i18n/language_system.hpp"
 #include "ui/style/themes.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"

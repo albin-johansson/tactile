@@ -17,31 +17,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "help_menu.hpp"
+#pragma once
 
-#include <imgui.h>
-
-#include "model/i18n/language_system.hpp"
+#include "common/type/dispatcher.hpp"
+#include "model/i18n/language_components.hpp"
+#include "model/model.hpp"
 #include "model/view/menu_components.hpp"
-#include "ui/widget/scoped.hpp"
-#include "ui/widget/widgets.hpp"
 
-namespace tactile::ui {
+namespace tactile::sys {
 
-void push_help_menu(const Model& model, Dispatcher& dispatcher)
-{
-  const auto& strings = sys::get_current_language_strings(model);
+void init_menus(Model& model);
 
-  if (const Menu menu {strings.menu.help.c_str()}; menu.is_open()) {
-    push_menu_item(model, MenuAction::ShowAbout, dispatcher);
-    push_menu_item(model, MenuAction::ShowAboutImGui, dispatcher);
+void update_menu_items(Model& model, Dispatcher& dispatcher);
 
-    ImGui::Separator();
-    push_menu_item(model, MenuAction::ReportIssue, dispatcher);
+void translate_menus(Model& model, const Strings& strings);
 
-    ImGui::Separator();
-    push_menu_item(model, MenuAction::ShowCredits, dispatcher);
-  }
-}
+void retranslate_menus(Model& model);
 
-}  // namespace tactile::ui
+[[nodiscard]] auto get_menu_item(const Model& model, MenuAction action)
+    -> const MenuItem&;
+
+}  // namespace tactile::sys

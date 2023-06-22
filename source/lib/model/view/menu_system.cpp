@@ -30,14 +30,14 @@
 #include "model/documents/command_system.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/events/menu_events.hpp"
+#include "model/i18n/language_system.hpp"
 #include "model/maps/map_system.hpp"
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/file_history_system.hpp"
-#include "model/systems/font_system.hpp"
-#include "model/systems/language_system.hpp"
-#include "model/systems/viewport_system.hpp"
 #include "model/tools/bucket_tool.hpp"
 #include "model/tools/stamp_tool.hpp"
+#include "model/view/font_system.hpp"
+#include "model/viewports/viewport_system.hpp"
 #include "ui/shortcut/mappings.hpp"
 
 namespace tactile::sys {

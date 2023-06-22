@@ -41,10 +41,10 @@
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/events/map_events.hpp"
+#include "model/i18n/language_system.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/persistence/file_history_system.hpp"
 #include "model/persistence/settings.hpp"
-#include "model/systems/language_system.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"
 #include "ui/widget_state.hpp"
 

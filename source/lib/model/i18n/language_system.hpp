@@ -21,8 +21,8 @@
 
 #include "common/enum/lang.hpp"
 #include "model/i18n/language_components.hpp"
-#include "model/menus/menu_components.hpp"
 #include "model/model.hpp"
+#include "model/view/menu_components.hpp"
 
 namespace tactile::sys {
 

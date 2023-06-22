@@ -20,8 +20,8 @@
 #pragma once
 
 #include "common/type/dispatcher.hpp"
-#include "model/menus/menu_components.hpp"
 #include "model/model.hpp"
+#include "model/view/menu_components.hpp"
 
 namespace tactile::ui {
 

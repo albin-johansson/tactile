@@ -17,24 +17,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "viewport_system.hpp"
 
-#include "common/type/dispatcher.hpp"
-#include "model/i18n/language_components.hpp"
-#include "model/menus/menu_components.hpp"
-#include "model/model.hpp"
+#include "model/documents/document_system.hpp"
+#include "model/viewports/viewport_components.hpp"
+#include "model/viewports/viewport_ops.hpp"
 
 namespace tactile::sys {
 
-void init_menus(Model& model);
+auto is_viewport_zoom_out_possible(const Model& model) -> bool
+{
+  const auto document_entity = get_active_document(model);
 
-void update_menu_items(Model& model, Dispatcher& dispatcher);
+  if (document_entity != kNullEntity) {
+    const auto& viewport = model.get<Viewport>(document_entity);
+    return can_zoom_out_in(viewport);
+  }
 
-void translate_menus(Model& model, const Strings& strings);
-
-void retranslate_menus(Model& model);
-
-[[nodiscard]] auto get_menu_item(const Model& model, MenuAction action)
-    -> const MenuItem&;
+  return false;
+}
 
 }  // namespace tactile::sys

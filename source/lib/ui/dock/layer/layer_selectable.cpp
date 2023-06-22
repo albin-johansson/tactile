@@ -29,11 +29,11 @@
 #include "model/events/layer_events.hpp"
 #include "model/events/object_events.hpp"
 #include "model/events/property_events.hpp"
+#include "model/i18n/language_system.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/layers/layer_tree_system.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/objects/object_components.hpp"
-#include "model/systems/language_system.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"
 
