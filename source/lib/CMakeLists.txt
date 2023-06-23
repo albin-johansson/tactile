@@ -11,6 +11,12 @@ file(GLOB_RECURSE SOURCE_FILES
 add_library(${TACTILE_LIB} ${SOURCE_FILES})
 add_dependencies(${TACTILE_LIB} ${TACTILE_PROTO})
 
+set_target_properties(${TACTILE_LIB}
+                      PROPERTIES
+                      CXX_STANDARD 23
+                      CXX_EXTENSIONS OFF
+                      )
+
 if (NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   # Can't do this on MSVC for some reason, it causes issues with the precompiled headers
   set_target_properties(${TACTILE_LIB} PROPERTIES
@@ -23,8 +29,8 @@ target_include_directories(${TACTILE_LIB} PUBLIC ${PROJECT_SOURCE_DIR})
 
 tactile_target_include_system_directories(${TACTILE_LIB}
                                           SYSTEM PUBLIC
-                                          ${LIBRARY_DIR}/centurion/src
-                                          ${LIBRARY_DIR}/fontawesome
+                                          ${TACTILE_VENDOR_DIR}/centurion/src
+                                          ${TACTILE_VENDOR_DIR}/fontawesome
                                           ${CPPCODEC_INCLUDE_DIRS}
                                           ${Stb_INCLUDE_DIR}
                                           ${VULKAN_INCLUDE_DIR}

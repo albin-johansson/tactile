@@ -4,9 +4,6 @@ if (DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
   set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
 endif ()
 
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
 project(tactile
         HOMEPAGE_URL "https://github.com/albin-johansson/tactile"
         VERSION 0.5.0
@@ -25,12 +22,9 @@ if (TACTILE_USE_SANITIZERS MATCHES ON)
   add_link_options(-fno-omit-frame-pointer -fsanitize=address,undefined)
 endif ()
 
-set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-set(LIBRARY_DIR "${ROOT_DIR}/vendor")
-set(RESOURCE_DIR "${ROOT_DIR}/assets")
-
-set(TACTILE_APP_DIR "${PROJECT_SOURCE_DIR}/source/app")
-set(TACTILE_LIB_DIR "${PROJECT_SOURCE_DIR}/source/lib")
+set(TACTILE_ROOT_DIR "${PROJECT_SOURCE_DIR}")
+set(TACTILE_VENDOR_DIR "${TACTILE_ROOT_DIR}/vendor")
+set(TACTILE_ASSETS_DIR "${TACTILE_ROOT_DIR}/assets")
 
 # Target names
 set(TACTILE_PROTO TactileProto)

@@ -12,8 +12,13 @@ file(GLOB_RECURSE TEST_FILES
      )
 
 add_executable(${TACTILE_TEST} ${TEST_FILES})
-
 add_dependencies(${TACTILE_TEST} ${TACTILE_LIB})
+
+set_target_properties(${TACTILE_TEST}
+                      PROPERTIES
+                      CXX_STANDARD 23
+                      CXX_EXTENSIONS OFF
+                      )
 
 tactile_set_compile_options(${TACTILE_TEST})
 
@@ -59,5 +64,5 @@ copy_directory_post_build(${TACTILE_TEST}
                           "${CMAKE_CURRENT_BINARY_DIR}/resources")
 
 copy_directory_post_build(${TACTILE_TEST}
-                          ${RESOURCE_DIR}
+                          ${TACTILE_ASSETS_DIR}
                           "${CMAKE_CURRENT_BINARY_DIR}/assets")
