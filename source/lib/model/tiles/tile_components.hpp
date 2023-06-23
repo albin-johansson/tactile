@@ -50,6 +50,7 @@ struct TileAnimation final {
 };
 
 /// Component describing the tile layer data format utilized by a map.
+/// TODO move to map components
 struct TileFormat final {
   TileEncoding encoding {TileEncoding::Plain};          ///< Encoding strategy.
   TileCompression compression {TileCompression::None};  ///< Compression strategy.

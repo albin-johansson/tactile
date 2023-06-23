@@ -19,11 +19,75 @@
 
 #pragma once
 
+#include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
 #include "io/ir/map/map_ir.hpp"
+#include "model/components/component_components.hpp"
+#include "model/contexts/context_components.hpp"
+#include "model/maps/map_components.hpp"
 #include "model/model.hpp"
+#include "model/tiles/tile_components.hpp"
+#include "model/tilesets/tileset_components.hpp"
 
 namespace tactile {
+
+void convert_context_to_ir(const Model& model,
+                           Entity component_set_entity,
+                           const Context& context,
+                           ContextIR& ir_context);
+
+void convert_object_to_ir(const Model& model,
+                          Entity component_set_entity,
+                          Entity object_entity,
+                          ObjectIR& ir_object);
+
+void convert_tile_layer_to_ir(const Model& model,
+                              Entity layer_entity,
+                              TileLayerIR& ir_tile_layer);
+
+void convert_object_layer_to_ir(const Model& model,
+                                Entity component_set_entity,
+                                Entity layer_entity,
+                                ObjectLayerIR& ir_object_layer);
+
+void convert_group_layer_to_ir(const Model& model,
+                               Entity component_set_entity,
+                               Entity layer_entity,
+                               GroupLayerIR& ir_group);
+
+void convert_layer_to_ir(const Model& model,
+                         Entity component_set_entity,
+                         Entity layer_entity,
+                         usize index,
+                         LayerIR& ir_layer);
+
+void convert_layers_to_ir(const Model& model,
+                          Entity component_set_entity,
+                          const Map& map,
+                          MapIR& ir_map);
+
+void convert_tile_animation_to_ir(const TileAnimation& animation, TileIR& ir_tile);
+
+void convert_tiles_to_ir(const Model& model,
+                         Entity component_set_entity,
+                         const Tileset& tileset,
+                         TilesetIR& ir_tileset);
+
+void convert_tileset_to_ir(const Model& model,
+                           Entity component_set_entity,
+                           Entity attached_tileset_entity,
+                           TilesetIR& ir_tileset);
+
+void convert_tilesets_to_ir(const Model& model,
+                            Entity component_set_entity,
+                            const Map& map,
+                            MapIR& ir_map);
+
+void convert_components_to_ir(const Model& model,
+                              const ComponentSet& component_set,
+                              ComponentMap& ir_components);
+
+void convert_tile_format_to_ir(const TileFormat& format, TileFormatIR& ir_format);
 
 [[nodiscard]] auto convert_map_document_to_ir(const Model& model,
                                               Entity map_document_entity) -> MapIR;
