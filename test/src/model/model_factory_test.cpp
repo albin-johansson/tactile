@@ -27,14 +27,15 @@
 #include "model/textures/texture_components.hpp"
 #include "model/tools/tool_components.hpp"
 #include "model/view/menu_components.hpp"
+#include "ui/widget_state.hpp"
 
 using namespace tactile;
 
-TEST_SUITE("Model system")
+TEST_SUITE("ModelFactory")
 {
-  TEST_CASE("init_model")
+  TEST_CASE("create_model")
   {
-    auto model = sys::create_model(BackendAPI::Null);
+    const auto model = sys::create_model(BackendAPI::Null);
 
     CHECK(model.has<DocumentContext>());
     CHECK(model.has<ToolContext>());
@@ -45,5 +46,6 @@ TEST_SUITE("Model system")
     CHECK(model.has<TextureCache>());
     CHECK(model.has<TextureCallbacks>());
     CHECK(model.has<MenuItems>());
+    CHECK(model.has<ui::WidgetState>());
   }
 }

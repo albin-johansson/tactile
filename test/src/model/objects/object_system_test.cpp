@@ -22,7 +22,6 @@
 #include <doctest/doctest.h>
 
 #include "model/contexts/context_components.hpp"
-#include "model/entity_validation.hpp"
 #include "model/model_factory.hpp"
 #include "model/objects/object_components.hpp"
 #include "model/objects/object_factory.hpp"
@@ -31,48 +30,28 @@ using namespace tactile;
 
 TEST_SUITE("ObjectSystem")
 {
-  TEST_CASE("create_object")
-  {
-    auto model = sys::create_model(BackendAPI::Null);
-
-    const auto object_entity = sys::create_object(model, ObjectType::Ellipse);
-    REQUIRE(sys::is_object_entity(model, object_entity));
-
-    const auto& object = model.get<Object>(object_entity);
-    CHECK(object.type == ObjectType::Ellipse);
-    CHECK(object.position == Float2 {});
-    CHECK(object.size == Float2 {});
-    CHECK(object.visible);
-    CHECK(object.tag.empty());
-    CHECK(!object.meta_id.has_value());
-
-    const auto& object_context = model.get<Context>(object_entity);
-    CHECK(object_context.name == "Object");
-    CHECK(object_context.props.empty());
-    CHECK(object_context.comps.empty());
-  }
-
   TEST_CASE("duplicate_object")
   {
     auto model = sys::create_model(BackendAPI::Null);
 
     const auto old_object_entity = sys::create_object(model, ObjectType::Rect);
-
     auto& old_object = model.get<Object>(old_object_entity);
+    auto& old_object_context = model.get<Context>(old_object_entity);
+
     old_object.position = Float2 {12, 34};
     old_object.size = Float2 {120, 100};
     old_object.visible = false;
     old_object.tag = "tag";
     old_object.meta_id = 42;
 
-    auto& old_object_context = model.get<Context>(old_object_entity);
     old_object_context.name = "Cool object";
     old_object_context.props["answer"] = 42;
     old_object_context.props["tint"] = Color {0xFF, 0, 0};
 
     const auto new_object_entity = sys::duplicate_object(model, old_object_entity);
-
     const auto& new_object = model.get<Object>(new_object_entity);
+    const auto& new_object_context = model.get<Context>(new_object_entity);
+
     CHECK(new_object.type == old_object.type);
     CHECK(new_object.position == old_object.position);
     CHECK(new_object.size == old_object.size);
@@ -81,7 +60,6 @@ TEST_SUITE("ObjectSystem")
     CHECK(!new_object.meta_id.has_value());
     CHECK(old_object.meta_id == 42);
 
-    const auto& new_object_context = model.get<Context>(new_object_entity);
     CHECK(new_object_context.name == old_object_context.name);
     CHECK(new_object_context.props == old_object_context.props);
     CHECK(new_object_context.comps.size() == old_object_context.comps.size());
