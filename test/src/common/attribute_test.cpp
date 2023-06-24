@@ -32,255 +32,255 @@ TEST_SUITE("Attribute")
   TEST_CASE("Defaults")
   {
     const Attribute value;
-    REQUIRE(AttributeType::String == value.get_type());
+    CHECK(value.get_type() == AttributeType::String);
 
-    REQUIRE(value.is_string());
-    REQUIRE(!value.is_int());
-    REQUIRE(!value.is_int2());
-    REQUIRE(!value.is_int3());
-    REQUIRE(!value.is_int4());
-    REQUIRE(!value.is_float());
-    REQUIRE(!value.is_float2());
-    REQUIRE(!value.is_float3());
-    REQUIRE(!value.is_float4());
-    REQUIRE(!value.is_bool());
-    REQUIRE(!value.is_color());
-    REQUIRE(!value.is_path());
-    REQUIRE(!value.is_object());
+    CHECK(value.is_string());
+    CHECK(!value.is_int());
+    CHECK(!value.is_int2());
+    CHECK(!value.is_int3());
+    CHECK(!value.is_int4());
+    CHECK(!value.is_float());
+    CHECK(!value.is_float2());
+    CHECK(!value.is_float3());
+    CHECK(!value.is_float4());
+    CHECK(!value.is_bool());
+    CHECK(!value.is_color());
+    CHECK(!value.is_path());
+    CHECK(!value.is_object());
 
-    REQUIRE("" == value.as_string());
-    REQUIRE_THROWS_AS(value.as_int(), TactileError);
-    REQUIRE_THROWS_AS(value.as_int2(), TactileError);
-    REQUIRE_THROWS_AS(value.as_int3(), TactileError);
-    REQUIRE_THROWS_AS(value.as_int4(), TactileError);
-    REQUIRE_THROWS_AS(value.as_float(), TactileError);
-    REQUIRE_THROWS_AS(value.as_float2(), TactileError);
-    REQUIRE_THROWS_AS(value.as_float3(), TactileError);
-    REQUIRE_THROWS_AS(value.as_float4(), TactileError);
-    REQUIRE_THROWS_AS(value.as_bool(), TactileError);
-    REQUIRE_THROWS_AS(value.as_color(), TactileError);
-    REQUIRE_THROWS_AS(value.as_path(), TactileError);
-    REQUIRE_THROWS_AS(value.as_object(), TactileError);
+    CHECK(value.as_string() == "");
+    CHECK_THROWS_AS(value.as_int(), TactileError);
+    CHECK_THROWS_AS(value.as_int2(), TactileError);
+    CHECK_THROWS_AS(value.as_int3(), TactileError);
+    CHECK_THROWS_AS(value.as_int4(), TactileError);
+    CHECK_THROWS_AS(value.as_float(), TactileError);
+    CHECK_THROWS_AS(value.as_float2(), TactileError);
+    CHECK_THROWS_AS(value.as_float3(), TactileError);
+    CHECK_THROWS_AS(value.as_float4(), TactileError);
+    CHECK_THROWS_AS(value.as_bool(), TactileError);
+    CHECK_THROWS_AS(value.as_color(), TactileError);
+    CHECK_THROWS_AS(value.as_path(), TactileError);
+    CHECK_THROWS_AS(value.as_object(), TactileError);
   }
 
   TEST_CASE("Int attribute")
   {
     const Attribute value {123};
-    REQUIRE(123 == value.as_int());
+    CHECK(value.as_int() == 123);
 
-    REQUIRE(value.is_int());
-    REQUIRE(value.try_as_int());
+    CHECK(value.is_int());
+    CHECK(value.try_as_int());
 
-    REQUIRE(!value.is_string());
-    REQUIRE(!value.is_float());
-    REQUIRE(!value.is_float2());
-    REQUIRE(!value.is_float3());
-    REQUIRE(!value.is_float4());
-    REQUIRE(!value.is_int2());
-    REQUIRE(!value.is_int3());
-    REQUIRE(!value.is_int4());
-    REQUIRE(!value.is_bool());
-    REQUIRE(!value.is_color());
-    REQUIRE(!value.is_path());
-    REQUIRE(!value.is_object());
+    CHECK(!value.is_string());
+    CHECK(!value.is_float());
+    CHECK(!value.is_float2());
+    CHECK(!value.is_float3());
+    CHECK(!value.is_float4());
+    CHECK(!value.is_int2());
+    CHECK(!value.is_int3());
+    CHECK(!value.is_int4());
+    CHECK(!value.is_bool());
+    CHECK(!value.is_color());
+    CHECK(!value.is_path());
+    CHECK(!value.is_object());
   }
 
   TEST_CASE("Int2 attribute")
   {
     const Attribute value {Int2 {1, 2}};
-    REQUIRE(Int2 {1, 2} == value.as_int2());
+    CHECK(value.as_int2() == Int2 {1, 2});
 
-    REQUIRE(value.is_int2());
-    REQUIRE(value.try_as_int2());
+    CHECK(value.is_int2());
+    CHECK(value.try_as_int2());
 
-    REQUIRE(!value.is_string());
-    REQUIRE(!value.is_float());
-    REQUIRE(!value.is_float2());
-    REQUIRE(!value.is_float3());
-    REQUIRE(!value.is_float4());
-    REQUIRE(!value.is_int());
-    REQUIRE(!value.is_int3());
-    REQUIRE(!value.is_int4());
-    REQUIRE(!value.is_bool());
-    REQUIRE(!value.is_color());
-    REQUIRE(!value.is_path());
-    REQUIRE(!value.is_object());
+    CHECK(!value.is_string());
+    CHECK(!value.is_float());
+    CHECK(!value.is_float2());
+    CHECK(!value.is_float3());
+    CHECK(!value.is_float4());
+    CHECK(!value.is_int());
+    CHECK(!value.is_int3());
+    CHECK(!value.is_int4());
+    CHECK(!value.is_bool());
+    CHECK(!value.is_color());
+    CHECK(!value.is_path());
+    CHECK(!value.is_object());
   }
 
   TEST_CASE("Int3 attribute")
   {
     const Attribute value {Int3 {1, 2, 3}};
-    REQUIRE(Int3 {1, 2, 3} == value.as_int3());
+    CHECK(value.as_int3() == Int3 {1, 2, 3});
 
-    REQUIRE(value.is_int3());
-    REQUIRE(value.try_as_int3());
+    CHECK(value.is_int3());
+    CHECK(value.try_as_int3());
 
-    REQUIRE(!value.is_string());
-    REQUIRE(!value.is_float());
-    REQUIRE(!value.is_float2());
-    REQUIRE(!value.is_float3());
-    REQUIRE(!value.is_float4());
-    REQUIRE(!value.is_int());
-    REQUIRE(!value.is_int2());
-    REQUIRE(!value.is_int4());
-    REQUIRE(!value.is_bool());
-    REQUIRE(!value.is_color());
-    REQUIRE(!value.is_path());
-    REQUIRE(!value.is_object());
+    CHECK(!value.is_string());
+    CHECK(!value.is_float());
+    CHECK(!value.is_float2());
+    CHECK(!value.is_float3());
+    CHECK(!value.is_float4());
+    CHECK(!value.is_int());
+    CHECK(!value.is_int2());
+    CHECK(!value.is_int4());
+    CHECK(!value.is_bool());
+    CHECK(!value.is_color());
+    CHECK(!value.is_path());
+    CHECK(!value.is_object());
   }
 
   TEST_CASE("Int4 attribute")
   {
     const Attribute value {Int4 {1, 2, 3, 4}};
-    REQUIRE(Int4 {1, 2, 3, 4} == value.as_int4());
+    CHECK(value.as_int4() == Int4 {1, 2, 3, 4});
 
-    REQUIRE(value.is_int4());
-    REQUIRE(value.try_as_int4());
+    CHECK(value.is_int4());
+    CHECK(value.try_as_int4());
 
-    REQUIRE(!value.is_string());
-    REQUIRE(!value.is_float());
-    REQUIRE(!value.is_float2());
-    REQUIRE(!value.is_float3());
-    REQUIRE(!value.is_float4());
-    REQUIRE(!value.is_int());
-    REQUIRE(!value.is_int2());
-    REQUIRE(!value.is_int3());
-    REQUIRE(!value.is_bool());
-    REQUIRE(!value.is_color());
-    REQUIRE(!value.is_path());
-    REQUIRE(!value.is_object());
+    CHECK(!value.is_string());
+    CHECK(!value.is_float());
+    CHECK(!value.is_float2());
+    CHECK(!value.is_float3());
+    CHECK(!value.is_float4());
+    CHECK(!value.is_int());
+    CHECK(!value.is_int2());
+    CHECK(!value.is_int3());
+    CHECK(!value.is_bool());
+    CHECK(!value.is_color());
+    CHECK(!value.is_path());
+    CHECK(!value.is_object());
   }
 
   TEST_CASE("Float attribute")
   {
     const Attribute value {12.3f};
-    REQUIRE(12.3f == value.as_float());
+    CHECK(value.as_float() == 12.3f);
 
-    REQUIRE(value.is_float());
-    REQUIRE(value.try_as_float());
+    CHECK(value.is_float());
+    CHECK(value.try_as_float());
 
-    REQUIRE(!value.is_string());
-    REQUIRE(!value.is_float2());
-    REQUIRE(!value.is_float3());
-    REQUIRE(!value.is_float4());
-    REQUIRE(!value.is_int());
-    REQUIRE(!value.is_int2());
-    REQUIRE(!value.is_int3());
-    REQUIRE(!value.is_int4());
-    REQUIRE(!value.is_bool());
-    REQUIRE(!value.is_color());
-    REQUIRE(!value.is_path());
-    REQUIRE(!value.is_object());
+    CHECK(!value.is_string());
+    CHECK(!value.is_float2());
+    CHECK(!value.is_float3());
+    CHECK(!value.is_float4());
+    CHECK(!value.is_int());
+    CHECK(!value.is_int2());
+    CHECK(!value.is_int3());
+    CHECK(!value.is_int4());
+    CHECK(!value.is_bool());
+    CHECK(!value.is_color());
+    CHECK(!value.is_path());
+    CHECK(!value.is_object());
   }
 
   TEST_CASE("Float2 attribute")
   {
     const Attribute value {Float2 {24, 48}};
-    REQUIRE(Float2 {24, 48} == value.as_float2());
+    CHECK(value.as_float2() == Float2 {24, 48});
 
-    REQUIRE(value.is_float2());
-    REQUIRE(value.try_as_float2());
+    CHECK(value.is_float2());
+    CHECK(value.try_as_float2());
 
-    REQUIRE(!value.is_string());
-    REQUIRE(!value.is_float());
-    REQUIRE(!value.is_float3());
-    REQUIRE(!value.is_float4());
-    REQUIRE(!value.is_int());
-    REQUIRE(!value.is_int2());
-    REQUIRE(!value.is_int3());
-    REQUIRE(!value.is_int4());
-    REQUIRE(!value.is_bool());
-    REQUIRE(!value.is_color());
-    REQUIRE(!value.is_path());
-    REQUIRE(!value.is_object());
+    CHECK(!value.is_string());
+    CHECK(!value.is_float());
+    CHECK(!value.is_float3());
+    CHECK(!value.is_float4());
+    CHECK(!value.is_int());
+    CHECK(!value.is_int2());
+    CHECK(!value.is_int3());
+    CHECK(!value.is_int4());
+    CHECK(!value.is_bool());
+    CHECK(!value.is_color());
+    CHECK(!value.is_path());
+    CHECK(!value.is_object());
   }
 
   TEST_CASE("Float3 attribute")
   {
     const Attribute value {Float3 {24, 48, 64}};
-    REQUIRE(Float3 {24, 48, 64} == value.as_float3());
+    CHECK(value.as_float3() == Float3 {24, 48, 64});
 
-    REQUIRE(value.is_float3());
-    REQUIRE(value.try_as_float3());
+    CHECK(value.is_float3());
+    CHECK(value.try_as_float3());
 
-    REQUIRE(!value.is_string());
-    REQUIRE(!value.is_float());
-    REQUIRE(!value.is_float2());
-    REQUIRE(!value.is_float4());
-    REQUIRE(!value.is_int());
-    REQUIRE(!value.is_int2());
-    REQUIRE(!value.is_int3());
-    REQUIRE(!value.is_int4());
-    REQUIRE(!value.is_bool());
-    REQUIRE(!value.is_color());
-    REQUIRE(!value.is_path());
-    REQUIRE(!value.is_object());
+    CHECK(!value.is_string());
+    CHECK(!value.is_float());
+    CHECK(!value.is_float2());
+    CHECK(!value.is_float4());
+    CHECK(!value.is_int());
+    CHECK(!value.is_int2());
+    CHECK(!value.is_int3());
+    CHECK(!value.is_int4());
+    CHECK(!value.is_bool());
+    CHECK(!value.is_color());
+    CHECK(!value.is_path());
+    CHECK(!value.is_object());
   }
 
   TEST_CASE("Float4 attribute")
   {
     const Attribute value {Float4 {24, 48, 64, 96}};
-    REQUIRE(Float4 {24, 48, 64, 96} == value.as_float4());
+    CHECK(value.as_float4() == Float4 {24, 48, 64, 96});
 
-    REQUIRE(value.is_float4());
-    REQUIRE(value.try_as_float4());
+    CHECK(value.is_float4());
+    CHECK(value.try_as_float4());
 
-    REQUIRE(!value.is_string());
-    REQUIRE(!value.is_float());
-    REQUIRE(!value.is_float2());
-    REQUIRE(!value.is_float3());
-    REQUIRE(!value.is_int());
-    REQUIRE(!value.is_int2());
-    REQUIRE(!value.is_int3());
-    REQUIRE(!value.is_int4());
-    REQUIRE(!value.is_bool());
-    REQUIRE(!value.is_color());
-    REQUIRE(!value.is_path());
-    REQUIRE(!value.is_object());
+    CHECK(!value.is_string());
+    CHECK(!value.is_float());
+    CHECK(!value.is_float2());
+    CHECK(!value.is_float3());
+    CHECK(!value.is_int());
+    CHECK(!value.is_int2());
+    CHECK(!value.is_int3());
+    CHECK(!value.is_int4());
+    CHECK(!value.is_bool());
+    CHECK(!value.is_color());
+    CHECK(!value.is_path());
+    CHECK(!value.is_object());
   }
 
   TEST_CASE("String attribute")
   {
     const Attribute value {"foo"s};
-    REQUIRE("foo" == value.as_string());
+    CHECK(value.as_string() == "foo");
 
-    REQUIRE(value.is_string());
-    REQUIRE(value.try_as_string());
+    CHECK(value.is_string());
+    CHECK(value.try_as_string());
 
-    REQUIRE(!value.is_float());
-    REQUIRE(!value.is_float2());
-    REQUIRE(!value.is_float3());
-    REQUIRE(!value.is_float4());
-    REQUIRE(!value.is_int());
-    REQUIRE(!value.is_int2());
-    REQUIRE(!value.is_int3());
-    REQUIRE(!value.is_int4());
-    REQUIRE(!value.is_bool());
-    REQUIRE(!value.is_color());
-    REQUIRE(!value.is_path());
-    REQUIRE(!value.is_object());
+    CHECK(!value.is_float());
+    CHECK(!value.is_float2());
+    CHECK(!value.is_float3());
+    CHECK(!value.is_float4());
+    CHECK(!value.is_int());
+    CHECK(!value.is_int2());
+    CHECK(!value.is_int3());
+    CHECK(!value.is_int4());
+    CHECK(!value.is_bool());
+    CHECK(!value.is_color());
+    CHECK(!value.is_path());
+    CHECK(!value.is_object());
   }
 
   TEST_CASE("Bool attribute")
   {
     const Attribute value {false};
-    REQUIRE(!value.as_bool());
+    CHECK(!value.as_bool());
 
-    REQUIRE(value.is_bool());
-    REQUIRE(value.try_as_bool());
+    CHECK(value.is_bool());
+    CHECK(value.try_as_bool());
 
-    REQUIRE(!value.is_string());
-    REQUIRE(!value.is_float());
-    REQUIRE(!value.is_float2());
-    REQUIRE(!value.is_float3());
-    REQUIRE(!value.is_float4());
-    REQUIRE(!value.is_int());
-    REQUIRE(!value.is_int2());
-    REQUIRE(!value.is_int3());
-    REQUIRE(!value.is_int4());
-    REQUIRE(!value.is_color());
-    REQUIRE(!value.is_path());
-    REQUIRE(!value.is_object());
+    CHECK(!value.is_string());
+    CHECK(!value.is_float());
+    CHECK(!value.is_float2());
+    CHECK(!value.is_float3());
+    CHECK(!value.is_float4());
+    CHECK(!value.is_int());
+    CHECK(!value.is_int2());
+    CHECK(!value.is_int3());
+    CHECK(!value.is_int4());
+    CHECK(!value.is_color());
+    CHECK(!value.is_path());
+    CHECK(!value.is_object());
   }
 
   TEST_CASE("File attribute")
@@ -288,63 +288,63 @@ TEST_SUITE("Attribute")
     const std::filesystem::path file {"resources/foo.txt"};
     const Attribute value {file};
 
-    REQUIRE(value.is_path());
-    REQUIRE(value.try_as_path());
+    CHECK(value.is_path());
+    CHECK(value.try_as_path());
 
-    REQUIRE(!value.is_string());
-    REQUIRE(!value.is_float());
-    REQUIRE(!value.is_float2());
-    REQUIRE(!value.is_float3());
-    REQUIRE(!value.is_float4());
-    REQUIRE(!value.is_int());
-    REQUIRE(!value.is_int2());
-    REQUIRE(!value.is_int3());
-    REQUIRE(!value.is_int4());
-    REQUIRE(!value.is_bool());
-    REQUIRE(!value.is_color());
-    REQUIRE(!value.is_object());
+    CHECK(!value.is_string());
+    CHECK(!value.is_float());
+    CHECK(!value.is_float2());
+    CHECK(!value.is_float3());
+    CHECK(!value.is_float4());
+    CHECK(!value.is_int());
+    CHECK(!value.is_int2());
+    CHECK(!value.is_int3());
+    CHECK(!value.is_int4());
+    CHECK(!value.is_bool());
+    CHECK(!value.is_color());
+    CHECK(!value.is_object());
   }
 
   TEST_CASE("Object attribute")
   {
     const Attribute value {ObjectRef {7}};
 
-    REQUIRE(value.is_object());
-    REQUIRE(value.try_as_object());
+    CHECK(value.is_object());
+    CHECK(value.try_as_object());
 
-    REQUIRE(!value.is_string());
-    REQUIRE(!value.is_float());
-    REQUIRE(!value.is_float2());
-    REQUIRE(!value.is_float3());
-    REQUIRE(!value.is_float4());
-    REQUIRE(!value.is_int());
-    REQUIRE(!value.is_int2());
-    REQUIRE(!value.is_int3());
-    REQUIRE(!value.is_int4());
-    REQUIRE(!value.is_bool());
-    REQUIRE(!value.is_color());
-    REQUIRE(!value.is_path());
+    CHECK(!value.is_string());
+    CHECK(!value.is_float());
+    CHECK(!value.is_float2());
+    CHECK(!value.is_float3());
+    CHECK(!value.is_float4());
+    CHECK(!value.is_int());
+    CHECK(!value.is_int2());
+    CHECK(!value.is_int3());
+    CHECK(!value.is_int4());
+    CHECK(!value.is_bool());
+    CHECK(!value.is_color());
+    CHECK(!value.is_path());
   }
 
   TEST_CASE("Color attribute")
   {
     const Attribute value {Color {0xFF, 0, 0}};
 
-    REQUIRE(value.is_color());
-    REQUIRE(value.try_as_color());
+    CHECK(value.is_color());
+    CHECK(value.try_as_color());
 
-    REQUIRE(!value.is_string());
-    REQUIRE(!value.is_float());
-    REQUIRE(!value.is_float2());
-    REQUIRE(!value.is_float3());
-    REQUIRE(!value.is_float4());
-    REQUIRE(!value.is_int());
-    REQUIRE(!value.is_int2());
-    REQUIRE(!value.is_int3());
-    REQUIRE(!value.is_int4());
-    REQUIRE(!value.is_bool());
-    REQUIRE(!value.is_path());
-    REQUIRE(!value.is_object());
+    CHECK(!value.is_string());
+    CHECK(!value.is_float());
+    CHECK(!value.is_float2());
+    CHECK(!value.is_float3());
+    CHECK(!value.is_float4());
+    CHECK(!value.is_int());
+    CHECK(!value.is_int2());
+    CHECK(!value.is_int3());
+    CHECK(!value.is_int4());
+    CHECK(!value.is_bool());
+    CHECK(!value.is_path());
+    CHECK(!value.is_object());
   }
 
   TEST_CASE("set_value")
@@ -352,20 +352,20 @@ TEST_SUITE("Attribute")
     Attribute value;
 
     value.set_value(10);
-    REQUIRE(value.is_int());
-    REQUIRE(10 == value.as_int());
+    CHECK(value.is_int());
+    CHECK(value.as_int() == 10);
 
     value.set_value(93.2f);
-    REQUIRE(value.is_float());
-    REQUIRE(93.2f == value.as_float());
+    CHECK(value.is_float());
+    CHECK(value.as_float() == 93.2f);
 
     value.set_value(true);
-    REQUIRE(value.is_bool());
-    REQUIRE(value.as_bool());
+    CHECK(value.is_bool());
+    CHECK(value.as_bool());
 
     value.set_value("foo"s);
-    REQUIRE(value.is_string());
-    REQUIRE("foo" == value.as_string());
+    CHECK(value.is_string());
+    CHECK(value.as_string() == "foo");
   }
 
   TEST_CASE("is_any_vector")
@@ -383,19 +383,19 @@ TEST_SUITE("Attribute")
     const Attribute p = Path {"foo.txt"};
     const Attribute o = ObjectRef {10};
 
-    REQUIRE(!i.is_any_vector());
-    REQUIRE(!f.is_any_vector());
-    REQUIRE(!b.is_any_vector());
-    REQUIRE(!c.is_any_vector());
-    REQUIRE(!p.is_any_vector());
-    REQUIRE(!o.is_any_vector());
+    CHECK(!i.is_any_vector());
+    CHECK(!f.is_any_vector());
+    CHECK(!b.is_any_vector());
+    CHECK(!c.is_any_vector());
+    CHECK(!p.is_any_vector());
+    CHECK(!o.is_any_vector());
 
-    REQUIRE(i2.is_any_vector());
-    REQUIRE(i3.is_any_vector());
-    REQUIRE(i4.is_any_vector());
+    CHECK(i2.is_any_vector());
+    CHECK(i3.is_any_vector());
+    CHECK(i4.is_any_vector());
 
-    REQUIRE(f2.is_any_vector());
-    REQUIRE(f3.is_any_vector());
-    REQUIRE(f4.is_any_vector());
+    CHECK(f2.is_any_vector());
+    CHECK(f3.is_any_vector());
+    CHECK(f4.is_any_vector());
   }
 }

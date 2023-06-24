@@ -27,7 +27,7 @@
 
 using namespace tactile;
 
-TEST_SUITE("Theme enum")
+TEST_SUITE("Theme")
 {
   TEST_CASE("Enumerators should match corresponding proto enumerators")
   {

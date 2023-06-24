@@ -23,7 +23,7 @@
 
 using namespace tactile;
 
-TEST_SUITE("Base64 tiles")
+TEST_SUITE("Base64Tiles")
 {
   TEST_CASE("Encode/decode roundtrip")
   {
@@ -34,6 +34,6 @@ TEST_SUITE("Base64 tiles")
     const auto encoded = base64_encode_tiles(source, extent, compression_mode);
     const auto decoded = base64_decode_tiles(encoded, extent, compression_mode);
 
-    REQUIRE(source == decoded);
+    CHECK(source == decoded);
   }
 }

@@ -25,7 +25,7 @@
 
 using namespace tactile;
 
-TEST_SUITE("Save formats")
+TEST_SUITE("SaveFormats")
 {
   TEST_CASE("Human-readable save format names")
   {

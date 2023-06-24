@@ -25,7 +25,7 @@
 
 using namespace tactile;
 
-TEST_SUITE("Vector utilities")
+TEST_SUITE("VectorUtils")
 {
   TEST_CASE("insert_at")
   {

@@ -31,7 +31,7 @@
 
 using namespace tactile;
 
-TEST_SUITE("Custom formatters")
+TEST_SUITE("CustomFormatters")
 {
   TEST_CASE("Entities")
   {

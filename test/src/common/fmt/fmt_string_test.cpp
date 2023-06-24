@@ -34,67 +34,67 @@ TEST_SUITE("FmtString")
   {
     const FmtString str {"foobar"};
 
-    REQUIRE("foobar"sv == str.data());
-    REQUIRE("foobar" == str.view());
+    CHECK(str.data() == "foobar"sv);
+    CHECK(str.view() == "foobar");
 
-    REQUIRE(6u == str.size());
-    REQUIRE(128u == str.capacity());
+    CHECK(str.size() == 6u);
+    CHECK(str.capacity() == 128u);
   }
 
   TEST_CASE("Simple formatting")
   {
     const FmtString str {"Hello, {}!", "World"};
-    REQUIRE("Hello, World!" == str.view());
+    CHECK(str.view() == "Hello, World!");
   }
 
   TEST_CASE("Advanced formatting")
   {
     const std::filesystem::path path = "foo/bar.txt";
     const FmtString str {"The answer is {}, here's a path: {}", 42, path};
-    REQUIRE("The answer is 42, here's a path: \"foo/bar.txt\"" == str.view());
+    CHECK(str.view() == "The answer is 42, here's a path: \"foo/bar.txt\"");
   }
 
   TEST_CASE("Spare capacity")
   {
     const FmtString<16> str {"123"};
 
-    REQUIRE("123" == str.view());
-    REQUIRE("123"sv == str.data());
+    CHECK(str.view() == "123");
+    CHECK(str.data() == "123"sv);
 
-    REQUIRE(3u == str.size());
-    REQUIRE(16u == str.capacity());
+    CHECK(str.size() == 3u);
+    CHECK(str.capacity() == 16u);
   }
 
   TEST_CASE("Exact capacity")
   {
     const FmtString<5> str {"12345"};
 
-    REQUIRE("12345" == str.view());
-    REQUIRE("12345"sv == str.data());
+    CHECK(str.view() == "12345");
+    CHECK(str.data() == "12345"sv);
 
-    REQUIRE(5u == str.size());
-    REQUIRE(5u == str.capacity());
+    CHECK(str.size() == 5u);
+    CHECK(str.capacity() == 5u);
   }
 
   TEST_CASE("Not enough capacity")
   {
     const FmtString<4> str {"12345"};
 
-    REQUIRE("1234" == str.view());
-    REQUIRE("1234"sv == str.data());
+    CHECK(str.view() == "1234");
+    CHECK(str.data() == "1234"sv);
 
-    REQUIRE(4u == str.size());
-    REQUIRE(4u == str.capacity());
+    CHECK(str.size() == 4u);
+    CHECK(str.capacity() == 4u);
   }
 
   TEST_CASE("Format argument capacity overflow")
   {
     const FmtString<6> str {"1234{}", "567"};
 
-    REQUIRE("123456" == str.view());
-    REQUIRE("123456"sv == str.data());
+    CHECK(str.view() == "123456");
+    CHECK(str.data() == "123456"sv);
 
-    REQUIRE(6u == str.size());
-    REQUIRE(6u == str.capacity());
+    CHECK(str.size() == 6u);
+    CHECK(str.capacity() == 6u);
   }
 }

@@ -28,13 +28,13 @@
 
 using namespace tactile;
 
-TEST_SUITE("Random")
+TEST_SUITE("RandomUtils")
 {
   TEST_CASE("next_random_i32")
   {
-    REQUIRE(0 == next_random_i32(0, 0));
-    REQUIRE(1 == next_random_i32(1, 1));
-    REQUIRE(-1 == next_random_i32(-1, -1));
+    REQUIRE(next_random_i32(0, 0) == 0);
+    REQUIRE(next_random_i32(1, 1) == 1);
+    REQUIRE(next_random_i32(-1, -1) == -1);
 
     const auto value = next_random_u32(0u, 100u);
     REQUIRE(value >= 0u);

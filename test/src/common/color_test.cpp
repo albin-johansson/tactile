@@ -35,13 +35,13 @@ TEST_SUITE("Color")
 {
   TEST_CASE("from_norm")
   {
-    REQUIRE(Color {0xFF, 0xFF, 0, 0} == Color::from_norm(1.5f, 100, -3.0f, -0.4f));
+    REQUIRE(Color::from_norm(1.5f, 100, -3.0f, -0.4f) == Color {0xFF, 0xFF, 0, 0});
 
-    REQUIRE(Color {0, 0, 0, 0xFF} == Color::from_norm(0, 0, 0));
-    REQUIRE(Color {0, 0, 0, 0} == Color::from_norm(0, 0, 0, 0));
-    REQUIRE(Color {0xFF, 0xFF, 0xFF, 0xFF} == Color::from_norm(1, 1, 1));
+    REQUIRE(Color::from_norm(0, 0, 0) == Color {0, 0, 0, 0xFF});
+    REQUIRE(Color::from_norm(0, 0, 0, 0) == Color {0, 0, 0, 0});
+    REQUIRE(Color::from_norm(1, 1, 1) == Color {0xFF, 0xFF, 0xFF, 0xFF});
 
-    REQUIRE(Color {51, 51, 51} == Color::from_norm(0.2f, 0.2f, 0.2f));
+    REQUIRE(Color::from_norm(0.2f, 0.2f, 0.2f) == Color {51, 51, 51});
   }
 
   TEST_CASE("from_rgb")
@@ -52,9 +52,9 @@ TEST_SUITE("Color")
     REQUIRE(!Color::from_rgb("#0000000").has_value());
     REQUIRE(!Color::from_rgb("#foobar").has_value());
 
-    REQUIRE("#000000" == Color::from_rgb("#000000").value().as_rgb());
-    REQUIRE("#123456" == Color::from_rgb("#123456").value().as_rgb());
-    REQUIRE("#ABCDEF" == Color::from_rgb("#ABCDEF").value().as_rgb());
+    REQUIRE(Color::from_rgb("#000000").value().as_rgb() == "#000000");
+    REQUIRE(Color::from_rgb("#123456").value().as_rgb() == "#123456");
+    REQUIRE(Color::from_rgb("#ABCDEF").value().as_rgb() == "#ABCDEF");
 
     const auto color = Color::from_rgb("#A1B2C3").value();
     REQUIRE(0xA1 == color.red);
@@ -71,15 +71,15 @@ TEST_SUITE("Color")
     REQUIRE(!Color::from_rgba("#000000000").has_value());
     REQUIRE(!Color::from_rgba("#foobar12").has_value());
 
-    REQUIRE("#00000000" == Color::from_rgba("#00000000").value().as_rgba());
-    REQUIRE("#12345678" == Color::from_rgba("#12345678").value().as_rgba());
-    REQUIRE("#ABCDEF12" == Color::from_rgba("#ABCDEF12").value().as_rgba());
+    REQUIRE(Color::from_rgba("#00000000").value().as_rgba() == "#00000000");
+    REQUIRE(Color::from_rgba("#12345678").value().as_rgba() == "#12345678");
+    REQUIRE(Color::from_rgba("#ABCDEF12").value().as_rgba() == "#ABCDEF12");
 
     const auto color = Color::from_rgba("#A1B2C3D4").value();
-    REQUIRE(0xA1 == color.red);
-    REQUIRE(0xB2 == color.green);
-    REQUIRE(0xC3 == color.blue);
-    REQUIRE(0xD4 == color.alpha);
+    REQUIRE(color.red == 0xA1);
+    REQUIRE(color.green == 0xB2);
+    REQUIRE(color.blue == 0xC3);
+    REQUIRE(color.alpha == 0xD4);
   }
 
   TEST_CASE("from_argb")
@@ -90,54 +90,54 @@ TEST_SUITE("Color")
     REQUIRE(!Color::from_argb("#000000000").has_value());
     REQUIRE(!Color::from_argb("#foobar12").has_value());
 
-    REQUIRE("#00000000" == Color::from_argb("#00000000").value().as_argb());
-    REQUIRE("#12345678" == Color::from_argb("#12345678").value().as_argb());
-    REQUIRE("#ABCDEF12" == Color::from_argb("#ABCDEF12").value().as_argb());
+    REQUIRE(Color::from_argb("#00000000").value().as_argb() == "#00000000");
+    REQUIRE(Color::from_argb("#12345678").value().as_argb() == "#12345678");
+    REQUIRE(Color::from_argb("#ABCDEF12").value().as_argb() == "#ABCDEF12");
 
     const auto color = Color::from_argb("#A1B2C3D4").value();
-    REQUIRE(0xA1 == color.alpha);
-    REQUIRE(0xB2 == color.red);
-    REQUIRE(0xC3 == color.green);
-    REQUIRE(0xD4 == color.blue);
+    REQUIRE(color.alpha == 0xA1);
+    REQUIRE(color.red == 0xB2);
+    REQUIRE(color.green == 0xC3);
+    REQUIRE(color.blue == 0xD4);
   }
 
   TEST_CASE("norm_red")
   {
-    REQUIRE(0.0f == Color {0, 0, 0}.norm_red());
-    REQUIRE(1.0f == Color {0xFF, 0, 0}.norm_red());
-    REQUIRE(0.2f == Color {51, 0, 0}.norm_red());
+    REQUIRE(Color {0, 0, 0}.norm_red() == 0.0f);
+    REQUIRE(Color {0xFF, 0, 0}.norm_red() == 1.0f);
+    REQUIRE(Color {51, 0, 0}.norm_red() == 0.2f);
   }
 
   TEST_CASE("norm_green")
   {
-    REQUIRE(0.0f == Color {0, 0, 0}.norm_green());
-    REQUIRE(1.0f == Color {0, 0xFF, 0}.norm_green());
-    REQUIRE(0.2f == Color {0, 51, 0}.norm_green());
+    REQUIRE(Color {0, 0, 0}.norm_green() == 0.0f);
+    REQUIRE(Color {0, 0xFF, 0}.norm_green() == 1.0f);
+    REQUIRE(Color {0, 51, 0}.norm_green() == 0.2f);
   }
 
   TEST_CASE("norm_blue")
   {
-    REQUIRE(0.0f == Color {0, 0, 0}.norm_blue());
-    REQUIRE(1.0f == Color {0, 0, 0xFF}.norm_blue());
-    REQUIRE(0.2f == Color {0, 0, 51}.norm_blue());
+    REQUIRE(Color {0, 0, 0}.norm_blue() == 0.0f);
+    REQUIRE(Color {0, 0, 0xFF}.norm_blue() == 1.0f);
+    REQUIRE(Color {0, 0, 51}.norm_blue() == 0.2f);
   }
 
   TEST_CASE("norm_alpha")
   {
-    REQUIRE(0.0f == Color {0, 0, 0, 0}.norm_alpha());
-    REQUIRE(1.0f == Color {0, 0, 0, 0xFF}.norm_alpha());
-    REQUIRE(0.2f == Color {0, 0, 0, 51}.norm_alpha());
+    REQUIRE(Color {0, 0, 0, 0}.norm_alpha() == 0.0f);
+    REQUIRE(Color {0, 0, 0, 0xFF}.norm_alpha() == 1.0f);
+    REQUIRE(Color {0, 0, 0, 51}.norm_alpha() == 0.2f);
   }
 
   TEST_CASE("get_luminance")
   {
-    REQUIRE(1.0f == kWhite.get_luminance());
-    REQUIRE(0.0f == kBlack.get_luminance());
+    REQUIRE(kWhite.get_luminance() == 1.0f);
+    REQUIRE(kBlack.get_luminance() == 0.0f);
 
     // Based on https://planetcalc.com/7778/
-    REQUIRE(0.4457104f == doctest::Approx {kLimeGreen.get_luminance()});
-    REQUIRE(0.0186408f == doctest::Approx {kDarkBlue.get_luminance()});
-    REQUIRE(0.3465843f == doctest::Approx {kHotPink.get_luminance()});
+    REQUIRE(doctest::Approx {kLimeGreen.get_luminance()} == 0.4457104f);
+    REQUIRE(doctest::Approx {kDarkBlue.get_luminance()} == 0.0186408f);
+    REQUIRE(doctest::Approx {kHotPink.get_luminance()} == 0.3465843f);
   }
 
   TEST_CASE("is_dark")
@@ -148,26 +148,26 @@ TEST_SUITE("Color")
 
   TEST_CASE("as_rgb")
   {
-    REQUIRE("#000000" == Color {0, 0, 0}.as_rgb());
-    REQUIRE("#FF0000" == Color {0xFF, 0, 0}.as_rgb());
-    REQUIRE("#FF00FF" == Color {0xFF, 0, 0xFF}.as_rgb());
-    REQUIRE("#ABCDEF" == Color {0xAB, 0xCD, 0xEF, 0x12}.as_rgb());
+    REQUIRE(Color {0, 0, 0}.as_rgb() == "#000000");
+    REQUIRE(Color {0xFF, 0, 0}.as_rgb() == "#FF0000");
+    REQUIRE(Color {0xFF, 0, 0xFF}.as_rgb() == "#FF00FF");
+    REQUIRE(Color {0xAB, 0xCD, 0xEF, 0x12}.as_rgb() == "#ABCDEF");
   }
 
   TEST_CASE("as_rgba")
   {
-    REQUIRE("#00000000" == Color {0, 0, 0, 0}.as_rgba());
-    REQUIRE("#FF0000FF" == Color {0xFF, 0, 0}.as_rgba());
-    REQUIRE("#FF00FFFF" == Color {0xFF, 0, 0xFF}.as_rgba());
-    REQUIRE("#ABCDEF12" == Color {0xAB, 0xCD, 0xEF, 0x12}.as_rgba());
+    REQUIRE(Color {0, 0, 0, 0}.as_rgba() == "#00000000");
+    REQUIRE(Color {0xFF, 0, 0}.as_rgba() == "#FF0000FF");
+    REQUIRE(Color {0xFF, 0, 0xFF}.as_rgba() == "#FF00FFFF");
+    REQUIRE(Color {0xAB, 0xCD, 0xEF, 0x12}.as_rgba() == "#ABCDEF12");
   }
 
   TEST_CASE("as_argb")
   {
-    REQUIRE("#00000000" == Color {0, 0, 0, 0}.as_argb());
-    REQUIRE("#FF000000" == Color {0, 0, 0, 0xFF}.as_argb());
-    REQUIRE("#EE123456" == Color {0x12, 0x34, 0x56, 0xEE}.as_argb());
-    REQUIRE("#12ABCDEF" == Color {0xAB, 0xCD, 0xEF, 0x12}.as_argb());
+    REQUIRE(Color {0, 0, 0, 0}.as_argb() == "#00000000");
+    REQUIRE(Color {0, 0, 0, 0xFF}.as_argb() == "#FF000000");
+    REQUIRE(Color {0x12, 0x34, 0x56, 0xEE}.as_argb() == "#EE123456");
+    REQUIRE(Color {0xAB, 0xCD, 0xEF, 0x12}.as_argb() == "#12ABCDEF");
   }
 
   TEST_CASE("as_float_array")

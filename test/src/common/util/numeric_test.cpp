@@ -23,7 +23,7 @@
 
 using namespace tactile;
 
-TEST_SUITE("NumericUtilities")
+TEST_SUITE("NumericUtils")
 {
   TEST_CASE("compare_vector_components")
   {

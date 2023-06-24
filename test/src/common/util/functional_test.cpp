@@ -23,7 +23,7 @@
 
 using namespace tactile;
 
-TEST_SUITE("Functional")
+TEST_SUITE("FunctionalUtils")
 {
   TEST_CASE("invoke_n")
   {
@@ -38,14 +38,14 @@ TEST_SUITE("Functional")
     {
       int calls = 0;
       invoke_n(1, [&] { ++calls; });
-      REQUIRE(1 == calls);
+      REQUIRE(calls == 1);
     }
 
     SUBCASE("several invocations")
     {
       int calls = 0;
       invoke_n(42, [&] { ++calls; });
-      REQUIRE(42 == calls);
+      REQUIRE(calls == 42);
     }
   }
 }

@@ -27,38 +27,38 @@ TEST_SUITE("TileMatrix")
 {
   TEST_CASE("to_matrix_coords")
   {
-    REQUIRE(0 == to_matrix_coords(0, 3).row);
-    REQUIRE(0 == to_matrix_coords(0, 3).col);
+    REQUIRE(to_matrix_coords(0, 3).row == 0);
+    REQUIRE(to_matrix_coords(0, 3).col == 0);
 
-    REQUIRE(0 == to_matrix_coords(1, 3).row);
-    REQUIRE(1 == to_matrix_coords(1, 3).col);
+    REQUIRE(to_matrix_coords(1, 3).row == 0);
+    REQUIRE(to_matrix_coords(1, 3).col == 1);
 
-    REQUIRE(0 == to_matrix_coords(2, 3).row);
-    REQUIRE(2 == to_matrix_coords(2, 3).col);
+    REQUIRE(to_matrix_coords(2, 3).row == 0);
+    REQUIRE(to_matrix_coords(2, 3).col == 2);
 
-    REQUIRE(1 == to_matrix_coords(3, 3).row);
-    REQUIRE(0 == to_matrix_coords(3, 3).col);
+    REQUIRE(to_matrix_coords(3, 3).row == 1);
+    REQUIRE(to_matrix_coords(3, 3).col == 0);
 
-    REQUIRE(1 == to_matrix_coords(4, 3).row);
-    REQUIRE(1 == to_matrix_coords(4, 3).col);
+    REQUIRE(to_matrix_coords(4, 3).row == 1);
+    REQUIRE(to_matrix_coords(4, 3).col == 1);
 
-    REQUIRE(1 == to_matrix_coords(5, 3).row);
-    REQUIRE(2 == to_matrix_coords(5, 3).col);
+    REQUIRE(to_matrix_coords(5, 3).row == 1);
+    REQUIRE(to_matrix_coords(5, 3).col == 2);
   }
 
   TEST_CASE("make_tile_row")
   {
     const auto row = make_tile_row(10);
-    REQUIRE(10u == row.capacity());
-    REQUIRE(10u == row.size());
+    REQUIRE(row.capacity() == 10u);
+    REQUIRE(row.size() == 10u);
   }
 
   TEST_CASE("make_tile_matrix")
   {
-    const auto matrix = make_tile_matrix(TileExtent {5, 7});
-    REQUIRE(5u == matrix.capacity());
-    REQUIRE(5u == matrix.size());
-    REQUIRE(7u == matrix.at(0).capacity());
-    REQUIRE(7u == matrix.at(0).size());
+    const auto matrix = make_tile_matrix({5, 7});
+    REQUIRE(matrix.capacity() == 5u);
+    REQUIRE(matrix.size() == 5u);
+    REQUIRE(matrix.at(0).capacity() == 7u);
+    REQUIRE(matrix.at(0).size() == 7u);
   }
 }

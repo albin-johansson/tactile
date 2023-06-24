@@ -27,7 +27,7 @@
 
 using namespace tactile;
 
-TEST_SUITE("Overlay position enum")
+TEST_SUITE("OverlayPos")
 {
   TEST_CASE("Enumerators should match corresponding proto enumerators")
   {

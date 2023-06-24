@@ -33,15 +33,13 @@ constexpr auto kMaxU32 = std::numeric_limits<uint32>::max();
 
 }  // namespace
 
-TEST_SUITE("Algorithm utilities")
+TEST_SUITE("AlgorithmUtils")
 {
   TEST_CASE("udiff")
   {
-    REQUIRE(1u == udiff(kMaxU32, kMaxU32 - 1));
-    REQUIRE(1u == udiff(kMaxU32 - 1, kMaxU32));
-
-    REQUIRE(kMaxU32 == udiff(0u, kMaxU32));
-
-    REQUIRE(46u == udiff(28u, 74u));
+    REQUIRE(udiff(kMaxU32, kMaxU32 - 1) == 1u);
+    REQUIRE(udiff(kMaxU32 - 1, kMaxU32) == 1u);
+    REQUIRE(udiff(0u, kMaxU32) == kMaxU32);
+    REQUIRE(udiff(28u, 74u) == 46u);
   }
 }

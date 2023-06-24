@@ -32,22 +32,22 @@ using namespace std::string_view_literals;
 
 using namespace tactile;
 
-TEST_SUITE("Lookup")
+TEST_SUITE("LookupUtils")
 {
   TEST_CASE("Empty HashMap")
   {
     const StringMap<int> map;
 
-    REQUIRE(!has_key(map, "foo"));
-    REQUIRE_THROWS_AS(lookup_in(map, "foo"), TactileError);
+    CHECK(!has_key(map, "foo"));
+    CHECK_THROWS_AS(lookup_in(map, "foo"), TactileError);
   }
 
   TEST_CASE("Empty TreeMap")
   {
     const TreeMap<String, int> map;
 
-    REQUIRE(!has_key(map, "foo"));
-    REQUIRE_THROWS_AS(lookup_in(map, "foo"), TactileError);
+    CHECK(!has_key(map, "foo"));
+    CHECK_THROWS_AS(lookup_in(map, "foo"), TactileError);
   }
 
   TEST_CASE("lookup_in[HashMap]")
@@ -56,12 +56,12 @@ TEST_SUITE("Lookup")
     map["foo"] = 3.5f;
     map["bar"] = true;
 
-    REQUIRE_THROWS_AS(lookup_in(map, ""), TactileError);
-    REQUIRE_THROWS_AS(lookup_in(map, "foO"), TactileError);
-    REQUIRE_THROWS_AS(lookup_in(map, "BAR"), TactileError);
+    CHECK_THROWS_AS(lookup_in(map, ""), TactileError);
+    CHECK_THROWS_AS(lookup_in(map, "foO"), TactileError);
+    CHECK_THROWS_AS(lookup_in(map, "BAR"), TactileError);
 
-    REQUIRE(3.5f == lookup_in(map, "foo"));
-    REQUIRE(true == lookup_in(map, "bar"));
+    CHECK(lookup_in(map, "foo") == 3.5f);
+    CHECK(lookup_in(map, "bar") == true);
   }
 
   TEST_CASE("lookup_in[TreeMap]")
@@ -70,11 +70,11 @@ TEST_SUITE("Lookup")
     map[10] = "hello"s;
     map[11] = Color {0xFF, 0, 0};
 
-    REQUIRE_THROWS_AS(lookup_in(map, 9), TactileError);
-    REQUIRE_THROWS_AS(lookup_in(map, 12), TactileError);
+    CHECK_THROWS_AS(lookup_in(map, 9), TactileError);
+    CHECK_THROWS_AS(lookup_in(map, 12), TactileError);
 
-    REQUIRE("hello"s == lookup_in(map, 10));
-    REQUIRE(Color {0xFF, 0, 0} == lookup_in(map, 11));
+    CHECK(lookup_in(map, 10) == "hello"s);
+    CHECK(lookup_in(map, 11) == Color {0xFF, 0, 0});
   }
 
   TEST_CASE("has_key[HashMap]")
@@ -84,17 +84,17 @@ TEST_SUITE("Lookup")
     map["bar"] = 20;
     map["abc"] = 30;
 
-    REQUIRE(3u == map.size());
+    CHECK(map.size() == 3u);
 
-    REQUIRE(has_key(map, "foo"));
-    REQUIRE(has_key(map, "bar"));
-    REQUIRE(has_key(map, "abc"));
+    CHECK(has_key(map, "foo"));
+    CHECK(has_key(map, "bar"));
+    CHECK(has_key(map, "abc"));
 
-    REQUIRE(!has_key(map, ""));
-    REQUIRE(!has_key(map, "fooo"));
-    REQUIRE(!has_key(map, "foO"));
-    REQUIRE(!has_key(map, "BAR"));
-    REQUIRE(!has_key(map, "bar "));
+    CHECK(!has_key(map, ""));
+    CHECK(!has_key(map, "fooo"));
+    CHECK(!has_key(map, "foO"));
+    CHECK(!has_key(map, "BAR"));
+    CHECK(!has_key(map, "bar "));
   }
 
   TEST_CASE("has_key[TreeMap]")
@@ -103,20 +103,20 @@ TEST_SUITE("Lookup")
     map["A"] = 1.0f;
     map["B"] = 42.0f;
 
-    REQUIRE(2u == map.size());
+    CHECK(map.size() == 2u);
 
-    REQUIRE(has_key(map, "A"));
-    REQUIRE(has_key(map, "A"s));
-    REQUIRE(has_key(map, "A"sv));
-    REQUIRE(has_key(map, "B"));
-    REQUIRE(has_key(map, "B"s));
-    REQUIRE(has_key(map, "B"sv));
+    CHECK(has_key(map, "A"));
+    CHECK(has_key(map, "A"s));
+    CHECK(has_key(map, "A"sv));
+    CHECK(has_key(map, "B"));
+    CHECK(has_key(map, "B"s));
+    CHECK(has_key(map, "B"sv));
 
-    REQUIRE(!has_key(map, ""));
-    REQUIRE(!has_key(map, "a"));
-    REQUIRE(!has_key(map, "b"));
-    REQUIRE(!has_key(map, "c"));
-    REQUIRE(!has_key(map, "c"s));
-    REQUIRE(!has_key(map, "c"sv));
+    CHECK(!has_key(map, ""));
+    CHECK(!has_key(map, "a"));
+    CHECK(!has_key(map, "b"));
+    CHECK(!has_key(map, "c"));
+    CHECK(!has_key(map, "c"s));
+    CHECK(!has_key(map, "c"sv));
   }
 }

@@ -61,10 +61,10 @@ TEST_SUITE("BitUtils")
     const uint32 original = 0xFF'EE'22'11u;
     const auto little = to_little_endian(original);
 
-    REQUIRE(0x11 == _nth_byte(little, 0));
-    REQUIRE(0x22 == _nth_byte(little, 1));
-    REQUIRE(0xEE == _nth_byte(little, 2));
-    REQUIRE(0xFF == _nth_byte(little, 3));
+    CHECK(_nth_byte(little, 0) == 0x11);
+    CHECK(_nth_byte(little, 1) == 0x22);
+    CHECK(_nth_byte(little, 2) == 0xEE);
+    CHECK(_nth_byte(little, 3) == 0xFF);
   }
 
   TEST_CASE("to_little_endian[int32]")
@@ -72,9 +72,9 @@ TEST_SUITE("BitUtils")
     const int32 original = 0x11'22'33'44;
     const auto little = to_little_endian(original);
 
-    REQUIRE(0x44 == _nth_byte(little, 0));
-    REQUIRE(0x33 == _nth_byte(little, 1));
-    REQUIRE(0x22 == _nth_byte(little, 2));
-    REQUIRE(0x11 == _nth_byte(little, 3));
+    CHECK(_nth_byte(little, 0) == 0x44);
+    CHECK(_nth_byte(little, 1) == 0x33);
+    CHECK(_nth_byte(little, 2) == 0x22);
+    CHECK(_nth_byte(little, 3) == 0x11);
   }
 }

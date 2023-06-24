@@ -25,18 +25,18 @@
 
 using namespace tactile;
 
-TEST_SUITE("Buffers")
+TEST_SUITE("BufferUtils")
 {
   TEST_CASE("zero_buffer")
   {
     Array<char, 5> buffer = {'0', '1', '2', '3', '4'};
     zero_buffer(buffer);
 
-    REQUIRE(0 == buffer[0]);
-    REQUIRE(0 == buffer[1]);
-    REQUIRE(0 == buffer[2]);
-    REQUIRE(0 == buffer[3]);
-    REQUIRE(0 == buffer[4]);
+    CHECK(buffer[0] == 0);
+    CHECK(buffer[1] == 0);
+    CHECK(buffer[2] == 0);
+    CHECK(buffer[3] == 0);
+    CHECK(buffer[4] == 0);
   }
 
   TEST_CASE("copy_string_into_buffer")
@@ -44,18 +44,18 @@ TEST_SUITE("Buffers")
     Array<char, 10> buffer = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
     copy_string_into_buffer(buffer, "abcdef");
 
-    REQUIRE('a' == buffer.at(0));
-    REQUIRE('b' == buffer.at(1));
-    REQUIRE('c' == buffer.at(2));
-    REQUIRE('d' == buffer.at(3));
-    REQUIRE('e' == buffer.at(4));
-    REQUIRE('f' == buffer.at(5));
+    CHECK(buffer.at(0) == 'a');
+    CHECK(buffer.at(1) == 'b');
+    CHECK(buffer.at(2) == 'c');
+    CHECK(buffer.at(3) == 'd');
+    CHECK(buffer.at(4) == 'e');
+    CHECK(buffer.at(5) == 'f');
 
     // The rest of the buffer should have been zeroed
-    REQUIRE(0 == buffer.at(6));
-    REQUIRE(0 == buffer.at(7));
-    REQUIRE(0 == buffer.at(8));
-    REQUIRE(0 == buffer.at(9));
+   CHECK(buffer.at(6) == 0);
+   CHECK(buffer.at(7) == 0);
+   CHECK(buffer.at(8) == 0);
+   CHECK(buffer.at(9) == 0);
   }
 
   TEST_CASE("copy_string_into_buffer (with buffer that is too small)")
@@ -63,10 +63,10 @@ TEST_SUITE("Buffers")
     Array<char, 4> buffer = {'0', '1', '2', '3'};
     copy_string_into_buffer(buffer, "abcdef");
 
-    REQUIRE('a' == buffer.at(0));
-    REQUIRE('b' == buffer.at(1));
-    REQUIRE('c' == buffer.at(2));
-    REQUIRE('d' == buffer.at(3));
+    CHECK(buffer.at(0) == 'a');
+    CHECK(buffer.at(1) == 'b');
+    CHECK(buffer.at(2) == 'c');
+    CHECK(buffer.at(3) == 'd');
   }
 
   TEST_CASE("create_string_from_buffer")
@@ -74,7 +74,7 @@ TEST_SUITE("Buffers")
     const Array<char, 7> buffer = {'a', 'b', 'c', 'd', 'e', 'f', '\0'};
     const auto str = create_string_from_buffer(buffer);
 
-    REQUIRE("abcdef" == str);
+    CHECK(str == "abcdef");
   }
 
   TEST_CASE("create_string_view_from_buffer")
@@ -82,7 +82,7 @@ TEST_SUITE("Buffers")
     const Array<char, 7> buffer = {'a', 'b', 'c', 'd', 'e', 'f', '\0'};
     const auto str = create_string_view_from_buffer(buffer);
 
-    REQUIRE(6u == str.size());
-    REQUIRE("abcdef" == str);
+    CHECK(str.size() == 6u);
+    CHECK(str == "abcdef");
   }
 }
