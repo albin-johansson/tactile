@@ -25,6 +25,16 @@
 
 namespace tactile::sys {
 
+auto create_component_set(Model& model) -> Entity
+{
+  const auto component_set_entity = model.create_entity();
+
+  model.add<ComponentSet>(component_set_entity);
+
+  TACTILE_ASSERT(is_component_set_entity(model, component_set_entity));
+  return component_set_entity;
+}
+
 void remove_component(Model& model, ComponentSet& component_set, StringView name)
 {
   const auto definition_entity = find_component_definition(model, component_set, name);

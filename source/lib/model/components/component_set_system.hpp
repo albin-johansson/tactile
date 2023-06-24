@@ -26,6 +26,8 @@
 
 namespace tactile::sys {
 
+[[nodiscard]] auto create_component_set(Model& model) -> Entity;
+
 /// Removes a component definition (and destroys it), and removes it from all contexts.
 void remove_component(Model& model, ComponentSet& component_set, StringView name);
 

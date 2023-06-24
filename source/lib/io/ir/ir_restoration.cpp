@@ -361,10 +361,10 @@ void create_map_document_from_ir(const MapIR& ir_map,
   sys::open_document(model, document_entity);
 
   auto& document = model.get<Document>(document_entity);
-  document.component_set = model.create_entity();
+  document.component_set = sys::create_component_set(model);
   document.path = absolute_document_path;
 
-  auto& component_set = model.add<ComponentSet>(document.component_set);
+  auto& component_set = model.get<ComponentSet>(document.component_set);
 
   auto& map_document = model.get<MapDocument>(document_entity);
 
