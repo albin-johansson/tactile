@@ -24,6 +24,7 @@
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/vector.hpp"
+#include "common/result.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/model.hpp"
 
@@ -53,8 +54,10 @@ void flood_tiles(TileLayer& tile_layer,
  * \param tile_layer the target tile layer.
  * \param pos        the position of the tile to modify.
  * \param tile_id    the new tile identifier.
+ *
+ * \return success if the tile was set; failure otherwise.
  */
-void set_tile(TileLayer& tile_layer, TilePos pos, TileID tile_id);
+auto set_tile(TileLayer& tile_layer, TilePos pos, TileID tile_id) -> Result;
 
 /// Returns the tile identifier at the specified position, as long as it's valid.
 [[nodiscard]] auto tile_at(const TileLayer& tile_layer, TilePos pos) -> Maybe<TileID>;

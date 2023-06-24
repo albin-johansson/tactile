@@ -65,13 +65,17 @@ void flood_tiles(TileLayer& tile_layer,
   }
 }
 
-void set_tile(TileLayer& tile_layer, const TilePos pos, const TileID tile_id)
+auto set_tile(TileLayer& tile_layer, const TilePos pos, const TileID tile_id) -> Result
 {
   if (is_valid_tile(tile_layer, pos)) [[likely]] {
     const auto row = static_cast<usize>(pos.row());
     const auto col = static_cast<usize>(pos.col());
     tile_layer.tiles[row][col] = tile_id;
+
+    return success;
   }
+
+  return failure;
 }
 
 auto tile_at(const TileLayer& tile_layer, const TilePos pos) -> Maybe<TileID>
