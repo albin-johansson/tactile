@@ -17,22 +17,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "model/documents/document_system.hpp"
+#include "model/documents/document_factory.hpp"
 
 #include <doctest/doctest.h>
 
 #include "model/documents/document_components.hpp"
-#include "model/documents/document_factory.hpp"
 #include "model/entity_validation.hpp"
-#include "model/model.hpp"
+#include "model/maps/map_components.hpp"
 #include "model/model_factory.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/tilesets/tileset_components.hpp"
-#include "model/tilesets/tileset_ops.hpp"
 
 using namespace tactile;
 
-TEST_SUITE("DocumentSystem")
+TEST_SUITE("DocumentFactory")
 {
   TEST_CASE("create_map_document")
   {
@@ -45,17 +43,18 @@ TEST_SUITE("DocumentSystem")
     REQUIRE(sys::is_map_document_entity(model, document_entity));
 
     const auto& document = model.get<Document>(document_entity);
+    const auto& map_document = model.get<MapDocument>(document_entity);
+    const auto& map = model.get<Map>(map_document.map);
+
     CHECK(document.type == DocumentType::Map);
     CHECK(document.component_set == kNullEntity);
+    CHECK(document.default_context == map_document.map);
     CHECK(document.active_context == document.default_context);
     CHECK(!document.path.has_value());
 
-    const auto& map_document = model.get<MapDocument>(document_entity);
-    CHECK(map_document.map == document.default_context);
     CHECK(map_document.active_tileset == kNullEntity);
     REQUIRE(sys::is_map_entity(model, map_document.map));
 
-    const auto& map = model.get<Map>(map_document.map);
     CHECK(map.extent == extent);
     CHECK(map.tile_size == tile_size);
     CHECK(map.active_layer == kNullEntity);
@@ -76,68 +75,31 @@ TEST_SUITE("DocumentSystem")
     REQUIRE(sys::is_tileset_document_entity(model, document_entity));
 
     const auto& document = model.get<Document>(document_entity);
+    const auto& tileset_document = model.get<TilesetDocument>(document_entity);
+    const auto& tileset = model.get<Tileset>(tileset_document.tileset);
+    const auto& texture = model.get<Texture>(tileset.texture);
+
+    REQUIRE(sys::is_tileset_entity(model, tileset_document.tileset));
+    REQUIRE(sys::is_texture_entity(model, tileset.texture));
+
     CHECK(document.type == DocumentType::Tileset);
     CHECK(document.component_set == kNullEntity);
+    CHECK(document.default_context == tileset_document.tileset);
     CHECK(document.active_context == document.default_context);
     CHECK(!document.path.has_value());
 
-    const auto& tileset_document = model.get<TilesetDocument>(document_entity);
-    REQUIRE(sys::is_tileset_entity(model, tileset_document.tileset));
-
-    const auto& tileset = model.get<Tileset>(tileset_document.tileset);
     CHECK(tileset.tile_size == tile_size);
-    CHECK(tileset.row_count == (img_size / tile_size).y);
-    CHECK(tileset.column_count == (img_size / tile_size).x);
+
+    const auto tile_count = img_size / tile_size;
+    CHECK(tileset.row_count == tile_count.y);
+    CHECK(tileset.column_count == tile_count.x);
+    CHECK(static_cast<usize>(tile_count.x * tile_count.y) == tileset.tiles.size());
+
     CHECK(tileset.tile_index_map.size() == tileset.tiles.size());
     CHECK(tileset.uv_size == Float2 {tileset.tile_size} / Float2 {img_size});
-    CHECK(static_cast<usize>(sys::tile_count(tileset)) == tileset.tiles.size());
     CHECK(!tileset.selected_tile_index.has_value());
-    REQUIRE(sys::is_texture_entity(model, tileset.texture));
 
-    const auto& texture = model.get<Texture>(tileset.texture);
     CHECK(texture.size == img_size);
     CHECK(texture.path == img_path);
-  }
-
-  TEST_CASE("destroy_document")
-  {
-    auto model = sys::create_model(BackendAPI::Null);
-
-    const auto document_entity =
-        sys::create_map_document(model, TileExtent {5, 5}, Float2 {32, 32});
-    REQUIRE(sys::is_document_entity(model, document_entity));
-
-    sys::open_document(model, document_entity);
-
-    CHECK(sys::is_document_open(model, document_entity));
-    CHECK(document_entity == sys::get_active_document(model));
-
-    sys::destroy_document(model, document_entity);
-
-    CHECK(!model.is_valid(document_entity));
-    CHECK(!sys::has_active_document(model));
-
-    const auto& document_context = model.get<DocumentContext>();
-    CHECK(!document_context.open_documents.contains(document_entity));
-  }
-
-  TEST_CASE("select_document")
-  {
-    auto model = sys::create_model(BackendAPI::Null);
-
-    const auto document_entity1 =
-        sys::create_map_document(model, TileExtent {5, 5}, Float2 {32, 32});
-    const auto document_entity2 =
-        sys::create_map_document(model, TileExtent {5, 5}, Float2 {32, 32});
-
-    REQUIRE(sys::is_document_entity(model, document_entity1));
-    REQUIRE(sys::is_document_entity(model, document_entity2));
-
-    sys::open_document(model, document_entity1);
-    sys::open_document(model, document_entity2);
-    CHECK(sys::get_active_document(model) == document_entity2);
-
-    sys::select_document(model, document_entity1);
-    CHECK(sys::get_active_document(model) == document_entity1);
   }
 }
