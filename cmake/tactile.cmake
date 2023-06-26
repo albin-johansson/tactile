@@ -39,7 +39,8 @@ function(tactile_set_compile_options target)
     if (TACTILE_TREAT_WARNINGS_AS_ERRORS MATCHES ON)
       target_compile_options(${target} PRIVATE
                              -Werror
-                             -Wno-error=unused-function,deprecated-declarations
+                             -Wno-error=unused-function
+                             -Wno-error=deprecated-declarations
                              )
     endif ()
   endif ()
