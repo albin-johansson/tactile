@@ -28,7 +28,7 @@ namespace tactile::cmd {
 /// A command for adding an attribute to a component definition.
 class AddComponentAttr final : public Command {
  public:
-  AddComponentAttr(Model* model, Entity definition_entity, String name);
+  AddComponentAttr(Model* model, Entity component_entity, String name);
 
   void undo() override;
 
@@ -38,7 +38,7 @@ class AddComponentAttr final : public Command {
 
  private:
   Model* mModel;
-  Entity mDefinitionEntity;
+  Entity mComponentEntity;
   String mAttributeName;
 };
 

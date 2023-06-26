@@ -29,13 +29,13 @@ namespace tactile::cmd {
 
 DetachComponent::DetachComponent(Model* model,
                                  const Entity context_entity,
-                                 const Entity definition_entity)
+                                 const Entity component_entity)
     : mModel {model},
       mContextEntity {context_entity},
-      mDefinitionEntity {definition_entity}
+      mComponentEntity {component_entity}
 {
   TACTILE_ASSERT(sys::is_context_entity(*mModel, mContextEntity));
-  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, mDefinitionEntity));
+  TACTILE_ASSERT(sys::is_component_entity(*mModel, mComponentEntity));
 }
 
 void DetachComponent::undo()
@@ -44,7 +44,7 @@ void DetachComponent::undo()
   auto& context = model.get<Context>(mContextEntity);
 
   const auto attached_component_entity =
-      sys::attach_component(model, context, mDefinitionEntity);
+      sys::attach_component(model, context, mComponentEntity);
   auto& attached_component = model.get<AttachedComponent>(attached_component_entity);
   attached_component.attributes = mPrevValues.value();
 
@@ -56,7 +56,7 @@ void DetachComponent::redo()
   auto& model = *mModel;
 
   auto& context = model.get<Context>(mContextEntity);
-  mPrevValues = sys::detach_component(model, context, mDefinitionEntity);
+  mPrevValues = sys::detach_component(model, context, mComponentEntity);
 }
 
 auto DetachComponent::get_name() const -> String

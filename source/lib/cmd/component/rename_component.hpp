@@ -29,7 +29,7 @@ namespace tactile::cmd {
 /// A command for renaming a component definition.
 class RenameComponent final : public Command {
  public:
-  RenameComponent(Model* model, Entity definition_entity, String new_name);
+  RenameComponent(Model* model, Entity component_entity, String new_name);
 
   void undo() override;
 
@@ -39,7 +39,7 @@ class RenameComponent final : public Command {
 
  private:
   Model* mModel;
-  Entity mDefinitionEntity;
+  Entity mComponentEntity;
   String mNewName;
   Maybe<String> mOldName;
 };

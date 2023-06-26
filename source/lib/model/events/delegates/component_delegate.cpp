@@ -72,21 +72,21 @@ void on_show_new_comp_dialog(Model& model, const ShowNewCompDialogEvent&)
 
 void on_show_rename_comp_dialog(Model& model, const ShowRenameCompDialogEvent& event)
 {
-  TACTILE_ASSERT(sys::is_component_definition_entity(model, event.definition));
-  const auto& definition = model.get<ComponentDefinition>(event.definition);
+  TACTILE_ASSERT(sys::is_component_entity(model, event.definition));
+  const auto& component = model.get<Component>(event.definition);
 
   auto& widgets = model.get<ui::WidgetState>();
   auto& dialog_state = widgets.component_editor_dialog.rename_comp_dialog;
 
   dialog_state.definition = event.definition;
-  dialog_state.old_component_name = definition.name;
-  dialog_state.component_name_buffer = definition.name;
+  dialog_state.old_component_name = component.name;
+  dialog_state.component_name_buffer = component.name;
   dialog_state.should_open = true;
 }
 
 void on_show_new_comp_attr_dialog(Model& model, const ShowNewCompAttrDialogEvent& event)
 {
-  TACTILE_ASSERT(sys::is_component_definition_entity(model, event.definition));
+  TACTILE_ASSERT(sys::is_component_entity(model, event.definition));
 
   auto& widgets = model.get<ui::WidgetState>();
   auto& dialog_state = widgets.component_editor_dialog.new_comp_attr_dialog;
@@ -119,26 +119,26 @@ void on_define_component(Model& model, const DefineComponentEvent& event)
 
 void on_undef_component(Model& model, const UndefComponentEvent& event)
 {
-  TACTILE_ASSERT(sys::is_component_definition_entity(model, event.definition));
+  TACTILE_ASSERT(sys::is_component_entity(model, event.definition));
 
   const auto document_entity = sys::get_active_document(model);
   if (document_entity != kNullEntity) {
     const auto& document = model.get<Document>(document_entity);
-    const auto& definition = model.get<ComponentDefinition>(event.definition);
-    sys::try_execute<cmd::UndefComponent>(model, document.component_set, definition.name);
+    const auto& component = model.get<Component>(event.definition);
+    sys::try_execute<cmd::UndefComponent>(model, document.component_set, component.name);
   }
 }
 
 void on_rename_component(Model& model, const RenameComponentEvent& event)
 {
-  TACTILE_ASSERT(sys::is_component_definition_entity(model, event.definition));
+  TACTILE_ASSERT(sys::is_component_entity(model, event.definition));
 
   sys::try_execute<cmd::RenameComponent>(model, event.definition, event.name);
 }
 
 void on_update_component(Model& model, const UpdateComponentEvent& event)
 {
-  TACTILE_ASSERT(sys::is_component_definition_entity(model, event.definition));
+  TACTILE_ASSERT(sys::is_component_entity(model, event.definition));
 
   sys::try_execute<cmd::UpdateComponent>(model,
                                          event.definition,
@@ -148,21 +148,21 @@ void on_update_component(Model& model, const UpdateComponentEvent& event)
 
 void on_add_component_attr(Model& model, const AddComponentAttrEvent& event)
 {
-  TACTILE_ASSERT(sys::is_component_definition_entity(model, event.definition));
+  TACTILE_ASSERT(sys::is_component_entity(model, event.definition));
 
   sys::try_execute<cmd::AddComponentAttr>(model, event.definition, event.attr_name);
 }
 
 void on_remove_component_attr(Model& model, const RemoveComponentAttrEvent& event)
 {
-  TACTILE_ASSERT(sys::is_component_definition_entity(model, event.definition));
+  TACTILE_ASSERT(sys::is_component_entity(model, event.definition));
 
   sys::try_execute<cmd::RemoveComponentAttr>(model, event.definition, event.attr_name);
 }
 
 void on_rename_component_attr(Model& model, const RenameComponentAttrEvent& event)
 {
-  TACTILE_ASSERT(sys::is_component_definition_entity(model, event.definition));
+  TACTILE_ASSERT(sys::is_component_entity(model, event.definition));
 
   sys::try_execute<cmd::RenameComponentAttr>(model,
                                              event.definition,
@@ -172,14 +172,14 @@ void on_rename_component_attr(Model& model, const RenameComponentAttrEvent& even
 
 void on_duplicate_component_attr(Model& model, const DuplicateComponentAttrEvent& event)
 {
-  TACTILE_ASSERT(sys::is_component_definition_entity(model, event.definition));
+  TACTILE_ASSERT(sys::is_component_entity(model, event.definition));
 
   sys::try_execute<cmd::DuplicateComponentAttr>(model, event.definition, event.attr_name);
 }
 
 void on_set_component_attr_type(Model& model, const SetComponentAttrTypeEvent& event)
 {
-  TACTILE_ASSERT(sys::is_component_definition_entity(model, event.definition));
+  TACTILE_ASSERT(sys::is_component_entity(model, event.definition));
 
   sys::try_execute<cmd::SetComponentAttrType>(model,
                                               event.definition,
@@ -190,7 +190,7 @@ void on_set_component_attr_type(Model& model, const SetComponentAttrTypeEvent& e
 void on_attach_component(Model& model, const AttachComponentEvent& event)
 {
   TACTILE_ASSERT(sys::is_context_entity(model, event.context));
-  TACTILE_ASSERT(sys::is_component_definition_entity(model, event.definition));
+  TACTILE_ASSERT(sys::is_component_entity(model, event.definition));
 
   sys::try_execute<cmd::AttachComponent>(model, event.context, event.definition);
 }
@@ -198,7 +198,7 @@ void on_attach_component(Model& model, const AttachComponentEvent& event)
 void on_detach_component(Model& model, const DetachComponentEvent& event)
 {
   TACTILE_ASSERT(sys::is_context_entity(model, event.context));
-  TACTILE_ASSERT(sys::is_component_definition_entity(model, event.definition));
+  TACTILE_ASSERT(sys::is_component_entity(model, event.definition));
 
   sys::try_execute<cmd::DetachComponent>(model, event.context, event.definition);
 }

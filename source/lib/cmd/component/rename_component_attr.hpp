@@ -30,7 +30,7 @@ namespace tactile::cmd {
 class RenameComponentAttr final : public Command {
  public:
   RenameComponentAttr(Model* model,
-                      Entity definition_entity,
+                      Entity component_entity,
                       String old_name,
                       String new_name);
 
@@ -42,7 +42,7 @@ class RenameComponentAttr final : public Command {
 
  private:
   Model* mModel;
-  Entity mComponentDefinitionEntity;
+  Entity mComponentEntity;
   String mOldName;
   String mNewName;
 };

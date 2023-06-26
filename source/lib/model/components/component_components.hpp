@@ -22,17 +22,18 @@
 #include "common/attribute.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/string_map.hpp"
+#include "common/type/uuid.hpp"
 #include "common/type/vector.hpp"
 
 namespace tactile {
 
-// TODO consider using UUID for component type reference, could make some systems simpler
 struct AttachedComponent final {
   Entity definition {kNullEntity};  ///< The associated component definition.
   StringMap<Attribute> attributes;
 };
 
-struct ComponentDefinition final {
+struct Component final {
+  UUID uuid {make_uuid()};
   String name;
   StringMap<Attribute> attributes;
 };

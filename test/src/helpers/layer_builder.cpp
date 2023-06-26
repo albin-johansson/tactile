@@ -69,7 +69,7 @@ auto LayerBuilder::with_property(String name, Attribute value) -> Self&
 
 auto LayerBuilder::with_component(const Entity component_entity) -> Self&
 {
-  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, component_entity));
+  TACTILE_ASSERT(sys::is_component_entity(*mModel, component_entity));
   mComponents.push_back(component_entity);
   return *this;
 }

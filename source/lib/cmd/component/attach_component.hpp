@@ -28,7 +28,7 @@ namespace tactile::cmd {
 /// Command for attaching a component to a context.
 class AttachComponent final : public Command {
  public:
-  AttachComponent(Model* model, Entity context_entity, Entity definition_entity);
+  AttachComponent(Model* model, Entity context_entity, Entity component_entity);
 
   void undo() override;
 
@@ -39,7 +39,7 @@ class AttachComponent final : public Command {
  private:
   Model* mModel;
   Entity mContextEntity;
-  Entity mDefinitionEntity;
+  Entity mComponentEntity;
   Entity mAttachedComponentEntity {kNullEntity};
 };
 

@@ -32,12 +32,8 @@ namespace tactile::sys {
 void remove_component(Model& model, ComponentSet& component_set, StringView name);
 
 /// Tries to find a component definition entity with a specific name, or returns null.
-[[nodiscard]] auto find_component_definition(const Model& model,
-                                             const ComponentSet& component_set,
-                                             StringView name) -> Entity;
-
-[[nodiscard, deprecated]] auto find_component_definition(const Model& model,
-                                                         Entity component_set_entity,
-                                                         StringView name) -> Entity;
+[[nodiscard]] auto find_component(const Model& model,
+                                  const ComponentSet& component_set,
+                                  StringView name) -> Entity;
 
 }  // namespace tactile::sys

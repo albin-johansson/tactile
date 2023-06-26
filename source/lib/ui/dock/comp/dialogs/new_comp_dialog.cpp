@@ -53,7 +53,7 @@ void push_new_comp_dialog(const Model& model,
 
   const auto current_name = state.name_buffer.as_string_view();
   if (!current_name.empty() &&
-      sys::find_component_definition(model, component_set, current_name) == kNullEntity) {
+      sys::find_component(model, component_set, current_name) == kNullEntity) {
     dialog_options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 

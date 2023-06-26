@@ -80,9 +80,9 @@ auto is_component_set_entity(const Model& model, const Entity entity) -> bool
   return entity != kNullEntity && model.has<ComponentSet>(entity);
 }
 
-auto is_component_definition_entity(const Model& model, const Entity entity) -> bool
+auto is_component_entity(const Model& model, Entity entity) -> bool
 {
-  return entity != kNullEntity && model.has<ComponentDefinition>(entity);
+  return entity != kNullEntity && model.has<Component>(entity);
 }
 
 auto is_attached_component_entity(const Model& model, const Entity entity) -> bool

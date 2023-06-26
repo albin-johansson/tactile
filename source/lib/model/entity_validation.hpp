@@ -39,8 +39,7 @@ namespace tactile::sys {
 [[nodiscard]] auto is_component_set_entity(const Model& model, Entity entity) -> bool;
 
 /// Indicates whether an entity is a valid component definition entity.
-[[nodiscard]] auto is_component_definition_entity(const Model& model, Entity entity)
-    -> bool;
+[[nodiscard]] auto is_component_entity(const Model& model, Entity entity) -> bool;
 
 /// Indicates whether an entity is a valid component entity.
 [[nodiscard]] auto is_attached_component_entity(const Model& model, const Entity entity) -> bool;

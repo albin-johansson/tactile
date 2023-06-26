@@ -45,7 +45,7 @@ class UndefComponent final : public Command {
   Model* mModel;
   Entity mComponentSetEntity;
   String mComponentName;
-  Maybe<StringMap<Attribute>> mPrevDefinitionValues;
+  Maybe<StringMap<Attribute>> mPrevComponentValues;
   HashMap<Entity, StringMap<Attribute>> mRemovedComponentValues;
 };
 

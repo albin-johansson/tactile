@@ -30,13 +30,13 @@
 namespace tactile::cmd {
 
 RemoveComponentAttr::RemoveComponentAttr(Model* model,
-                                         const Entity definition_entity,
+                                         const Entity component_entity,
                                          String attribute)
     : mModel {model},
-      mDefinitionEntity {definition_entity},
+      mComponentEntity {component_entity},
       mAttributeName {std::move(attribute)}
 {
-  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, mDefinitionEntity));
+  TACTILE_ASSERT(sys::is_component_entity(*mModel, mComponentEntity));
 }
 
 void RemoveComponentAttr::undo()
@@ -44,7 +44,7 @@ void RemoveComponentAttr::undo()
   auto& model = *mModel;
 
   sys::add_component_attribute(model,
-                               mDefinitionEntity,
+                               mComponentEntity,
                                mAttributeName,
                                mPreviousValue.value());
   mPreviousValue.reset();
@@ -54,10 +54,10 @@ void RemoveComponentAttr::redo()
 {
   auto& model = *mModel;
 
-  auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
-  mPreviousValue = definition.attributes.at(mAttributeName);
+  auto& component = model.get<Component>(mComponentEntity);
+  mPreviousValue = component.attributes.at(mAttributeName);
 
-  sys::remove_component_attribute(model, mDefinitionEntity, mAttributeName);
+  sys::remove_component_attribute(model, mComponentEntity, mAttributeName);
 }
 
 auto RemoveComponentAttr::get_name() const -> String

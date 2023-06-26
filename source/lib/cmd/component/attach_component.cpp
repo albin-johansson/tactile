@@ -29,13 +29,13 @@ namespace tactile::cmd {
 
 AttachComponent::AttachComponent(Model* model,
                                  const Entity context_entity,
-                                 const Entity definition_entity)
+                                 const Entity component_entity)
     : mModel {model},
       mContextEntity {context_entity},
-      mDefinitionEntity {definition_entity}
+      mComponentEntity {component_entity}
 {
   TACTILE_ASSERT(sys::is_context_entity(*mModel, mContextEntity));
-  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, mDefinitionEntity));
+  TACTILE_ASSERT(sys::is_component_entity(*mModel, mComponentEntity));
 }
 
 void AttachComponent::undo()
@@ -51,7 +51,7 @@ void AttachComponent::redo()
   auto& model = *mModel;
 
   if (mAttachedComponentEntity == kNullEntity) {
-    mAttachedComponentEntity = sys::instantiate_component(model, mDefinitionEntity);
+    mAttachedComponentEntity = sys::instantiate_component(model, mComponentEntity);
   }
 
   auto& context = model.get<Context>(mContextEntity);

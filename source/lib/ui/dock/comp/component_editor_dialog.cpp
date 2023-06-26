@@ -76,15 +76,14 @@ void _push_comp_selector_combo(const Model& model,
     state.active_definition = component_set.definitions.front();
   }
 
-  const auto& active_component_def =
-      model.get<ComponentDefinition>(state.active_definition);
+  const auto& active_component_def = model.get<Component>(state.active_definition);
 
   if (const Combo combo {"##ComponentCombo", active_component_def.name.c_str()};
       combo.is_open()) {
     for (const auto definition_entity: component_set.definitions) {
-      const auto& component_def = model.get<ComponentDefinition>(definition_entity);
+      const auto& component = model.get<Component>(definition_entity);
 
-      if (Selectable::property(component_def.name.c_str())) {
+      if (Selectable::property(component.name.c_str())) {
         state.active_definition = definition_entity;
       }
     }
@@ -178,10 +177,10 @@ void _push_comp_attr_row(const Strings& strings,
 
 void _push_comp_attr_table(const Strings& strings,
                            const Entity definition_entity,
-                           const ComponentDefinition& component_def,
+                           const Component& component,
                            Dispatcher& dispatcher)
 {
-  if (component_def.attributes.empty()) {
+  if (component.attributes.empty()) {
     push_centered_label(strings.misc.empty_component.c_str());
   }
   else {
@@ -197,7 +196,7 @@ void _push_comp_attr_table(const Strings& strings,
 
       ImGui::TableHeadersRow();
 
-      for (const auto& [attr_name, attr_value]: component_def.attributes) {
+      for (const auto& [attr_name, attr_value]: component.attributes) {
         _push_comp_attr_row(strings,
                             definition_entity,
                             attr_name,
@@ -254,8 +253,7 @@ void push_component_editor_dialog(const Model& model,
       ImGui::Separator();
 
       if (state.active_definition != kNullEntity) {
-        const auto& active_component_def =
-            model.get<ComponentDefinition>(state.active_definition);
+        const auto& active_component_def = model.get<Component>(state.active_definition);
         _push_comp_attr_table(strings,
                               state.active_definition,
                               active_component_def,

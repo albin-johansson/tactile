@@ -37,7 +37,7 @@ auto create_component_set(Model& model) -> Entity
 
 void remove_component(Model& model, ComponentSet& component_set, StringView name)
 {
-  const auto definition_entity = find_component_definition(model, component_set, name);
+  const auto definition_entity = find_component(model, component_set, name);
   if (definition_entity == kNullEntity) {
     return;
   }
@@ -59,29 +59,19 @@ void remove_component(Model& model, ComponentSet& component_set, StringView name
   }
 }
 
-auto find_component_definition(const Model& model,
-                               const ComponentSet& component_set,
-                               StringView name) -> Entity
+auto find_component(const Model& model,
+                    const ComponentSet& component_set,
+                    StringView name) -> Entity
 {
-  for (const auto definition_entity: component_set.definitions) {
-    const auto& definition = model.get<ComponentDefinition>(definition_entity);
+  for (const auto component_entity: component_set.definitions) {
+    const auto& component = model.get<Component>(component_entity);
 
-    if (definition.name == name) {
-      return definition_entity;
+    if (component.name == name) {
+      return component_entity;
     }
   }
 
   return kNullEntity;
-}
-
-auto find_component_definition(const Model& model,
-                               const Entity component_set_entity,
-                               StringView name) -> Entity
-{
-  TACTILE_ASSERT(is_component_set_entity(model, component_set_entity));
-
-  const auto& component_set = model.get<ComponentSet>(component_set_entity);
-  return find_component_definition(model, component_set, name);
 }
 
 }  // namespace tactile::sys

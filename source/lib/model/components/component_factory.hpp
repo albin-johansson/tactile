@@ -33,7 +33,7 @@ namespace tactile::sys {
  * \param component_set the associated component set.
  * \param name          the name of the component.
  *
- * \return a component definition entity.
+ * \return a component entity.
  */
 auto create_component(Model& model, ComponentSet& component_set, String name) -> Entity;
 

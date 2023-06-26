@@ -32,7 +32,7 @@ namespace tactile::cmd {
 class SetComponentAttrType final : public Command {
  public:
   SetComponentAttrType(Model* model,
-                       Entity definition_entity,
+                       Entity component_entity,
                        String attribute_name,
                        AttributeType new_type);
 
@@ -44,7 +44,7 @@ class SetComponentAttrType final : public Command {
 
  private:
   Model* mModel;
-  Entity mDefinitionEntity;
+  Entity mComponentEntity;
   String mAttributeName;
   AttributeType mNewType;
   Maybe<Attribute> mOldValue;

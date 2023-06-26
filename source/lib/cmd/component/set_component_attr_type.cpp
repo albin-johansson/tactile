@@ -32,23 +32,23 @@
 namespace tactile::cmd {
 
 SetComponentAttrType::SetComponentAttrType(Model* model,
-                                           const Entity definition_entity,
+                                           const Entity component_entity,
                                            String attribute_name,
                                            const AttributeType new_type)
     : mModel {model},
-      mDefinitionEntity {definition_entity},
+      mComponentEntity {component_entity},
       mAttributeName {std::move(attribute_name)},
       mNewType {new_type}
 {
-  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, mDefinitionEntity));
+  TACTILE_ASSERT(sys::is_component_entity(*mModel, mComponentEntity));
 }
 
 void SetComponentAttrType::undo()
 {
   auto& model = *mModel;
 
-  auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
-  definition.attributes[mAttributeName] = mOldValue.value();
+  auto& component = model.get<Component>(mComponentEntity);
+  component.attributes[mAttributeName] = mOldValue.value();
 
   for (const auto& [attached_component_entity, attribute_value]: mPrevAttributes) {
     auto& attached_component = model.get<AttachedComponent>(attached_component_entity);
@@ -62,13 +62,13 @@ void SetComponentAttrType::redo()
 {
   auto& model = *mModel;
 
-  const auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
-  mOldValue = lookup_in(definition.attributes, mAttributeName);
+  const auto& component = model.get<Component>(mComponentEntity);
+  mOldValue = lookup_in(component.attributes, mAttributeName);
 
   mPrevAttributes =
-      sys::copy_single_attribute_in_components(model, mDefinitionEntity, mAttributeName);
+      sys::copy_single_attribute_in_components(model, mComponentEntity, mAttributeName);
   sys::force_update_component_attribute(model,
-                                        mDefinitionEntity,
+                                        mComponentEntity,
                                         mAttributeName,
                                         Attribute {mNewType});
 }

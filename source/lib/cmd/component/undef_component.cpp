@@ -47,22 +47,22 @@ void UndefComponent::undo()
   auto& model = *mModel;
 
   auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
-  const auto definition_entity =
+  const auto component_entity =
       sys::create_component(model, component_set, mComponentName);
 
-  auto& definition = model.get<ComponentDefinition>(definition_entity);
-  definition.attributes = std::move(mPrevDefinitionValues.value());
+  auto& component = model.get<Component>(component_entity);
+  component.attributes = std::move(mPrevComponentValues.value());
 
   for (auto& [context_entity, attributes]: mRemovedComponentValues) {
     auto& context = model.get<Context>(context_entity);
     const auto attached_component_entity =
-        sys::attach_component(model, context, definition_entity);
+        sys::attach_component(model, context, component_entity);
 
     auto& attached_component = model.get<AttachedComponent>(attached_component_entity);
     attached_component.attributes = std::move(attributes);
   }
 
-  mPrevDefinitionValues.reset();
+  mPrevComponentValues.reset();
   mRemovedComponentValues.clear();
 }
 
@@ -71,13 +71,12 @@ void UndefComponent::redo()
   auto& model = *mModel;
   auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
 
-  const auto definition_entity =
-      sys::find_component_definition(model, component_set, mComponentName);
+  const auto component_entity = sys::find_component(model, component_set, mComponentName);
 
-  const auto& definition = model.get<ComponentDefinition>(definition_entity);
-  mPrevDefinitionValues = definition.attributes;
+  const auto& component = model.get<Component>(component_entity);
+  mPrevComponentValues = component.attributes;
 
-  mRemovedComponentValues = sys::copy_component_values(model, definition_entity);
+  mRemovedComponentValues = sys::copy_component_values(model, component_entity);
   sys::remove_component(model, component_set, mComponentName);
 }
 

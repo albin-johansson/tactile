@@ -50,7 +50,7 @@ auto ComponentBuilder::build() -> Entity
   const auto component_entity =
       sys::create_component(*mModel, component_set, mComponentName);
 
-  auto& component = mModel->get<ComponentDefinition>(component_entity);
+  auto& component = mModel->get<Component>(component_entity);
   component.attributes = std::move(mAttributes);
 
   return component_entity;

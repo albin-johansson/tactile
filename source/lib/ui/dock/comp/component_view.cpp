@@ -108,11 +108,11 @@ void component_view(const Model& model,
 
   const auto& attached_component =
       model.get<AttachedComponent>(attached_component_entity);
-  const auto& definition = model.get<ComponentDefinition>(attached_component.definition);
+  const auto& component = model.get<Component>(attached_component.definition);
 
-  const Scope component_scope {definition.name.c_str()};
+  const Scope component_scope {component.name.c_str()};
 
-  if (const TreeNode header {definition.name.c_str(), kHeaderFlags}; header.is_open()) {
+  if (const TreeNode header {component.name.c_str(), kHeaderFlags}; header.is_open()) {
     ImGui::SameLine();
     if (_show_trailing_button()) {
       ImGui::OpenPopup("##ComponentPopup");

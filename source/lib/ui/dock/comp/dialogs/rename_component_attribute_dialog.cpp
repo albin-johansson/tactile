@@ -59,9 +59,9 @@ void push_rename_comp_attr_dialog(const Model& model,
   }
 
   const auto current_name = state.attribute_name_buffer.as_string_view();
-  const auto& definition = model.get<ComponentDefinition>(state.definition);
+  const auto& component = model.get<Component>(state.definition);
 
-  if (!current_name.empty() && !definition.attributes.contains(current_name)) {
+  if (!current_name.empty() && !component.attributes.contains(current_name)) {
     dialog_options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 

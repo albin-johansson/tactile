@@ -30,23 +30,23 @@
 namespace tactile::cmd {
 
 UpdateComponent::UpdateComponent(Model* model,
-                                 const Entity definition_entity,
+                                 const Entity component_entity,
                                  String attribute_name,
                                  Attribute new_value)
     : mModel {model},
-      mDefinitionEntity {definition_entity},
+      mComponentEntity {component_entity},
       mAttributeName {std::move(attribute_name)},
       mNewValue {std::move(new_value)}
 {
-  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, mDefinitionEntity));
+  TACTILE_ASSERT(sys::is_component_entity(*mModel, mComponentEntity));
 }
 
 void UpdateComponent::undo()
 {
   auto& model = *mModel;
 
-  auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
-  definition.attributes[mAttributeName] = mOldValue.value();
+  auto& component = model.get<Component>(mComponentEntity);
+  component.attributes[mAttributeName] = mOldValue.value();
 
   mOldValue.reset();
 }
@@ -54,16 +54,16 @@ void UpdateComponent::undo()
 void UpdateComponent::redo()
 {
   auto& model = *mModel;
-  auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
+  auto& component = model.get<Component>(mComponentEntity);
 
-  mOldValue = lookup_in(definition.attributes, mAttributeName);
-  definition.attributes[mAttributeName] = mNewValue;
+  mOldValue = lookup_in(component.attributes, mAttributeName);
+  component.attributes[mAttributeName] = mNewValue;
 }
 
 auto UpdateComponent::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const UpdateComponent*>(cmd)) {
-    if (mDefinitionEntity == other->mDefinitionEntity &&
+    if (mComponentEntity == other->mComponentEntity &&
         mAttributeName == other->mAttributeName) {
       mNewValue = other->mNewValue;
       return true;

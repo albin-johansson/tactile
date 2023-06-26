@@ -27,26 +27,28 @@
 
 namespace tactile::sys {
 
-auto copy_component(Model& model, const AttachedComponent& src_component) -> Entity
+auto copy_component(Model& model, const AttachedComponent& src_attached_component)
+    -> Entity
 {
-  const auto new_component_entity = model.create_entity();
+  const auto new_attached_component_entity = model.create_entity();
 
-  auto& new_component = model.add<AttachedComponent>(new_component_entity);
-  new_component = src_component;
+  auto& new_attached_component =
+      model.add<AttachedComponent>(new_attached_component_entity);
+  new_attached_component = src_attached_component;
 
-  TACTILE_ASSERT(is_attached_component_entity(model, new_component_entity));
-  return new_component_entity;
+  TACTILE_ASSERT(is_attached_component_entity(model, new_attached_component_entity));
+  return new_attached_component_entity;
 }
 
-auto reset_component_values(const Model& model, AttachedComponent& component)
+auto reset_component_values(const Model& model, AttachedComponent& attached_component)
     -> StringMap<Attribute>
 {
-  const auto& definition = model.get<ComponentDefinition>(component.definition);
+  const auto& component = model.get<Component>(attached_component.definition);
 
-  auto previous_values = std::move(component.attributes);
+  auto previous_values = std::move(attached_component.attributes);
 
-  component.attributes.clear();
-  component.attributes = definition.attributes;
+  attached_component.attributes.clear();
+  attached_component.attributes = component.attributes;
 
   return previous_values;
 }

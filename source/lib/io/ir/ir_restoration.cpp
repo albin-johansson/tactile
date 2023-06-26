@@ -66,12 +66,12 @@ void _restore_context(Model& model,
 
   if (auto* component_set = model.try_get<ComponentSet>(component_set_entity)) {
     for (const auto& [component_type_name, attributes]: ir_context.components) {
-      const auto component_definition_entity =
-          sys::find_component_definition(model, *component_set, component_type_name);
-      TACTILE_ASSERT(component_definition_entity != kNullEntity);
+      const auto component_entity =
+          sys::find_component(model, *component_set, component_type_name);
+      TACTILE_ASSERT(component_entity != kNullEntity);
 
       const auto attached_component_entity =
-          sys::instantiate_component(model, component_definition_entity);
+          sys::instantiate_component(model, component_entity);
       context.comps.push_back(attached_component_entity);
 
       auto& attached_component = model.get<AttachedComponent>(attached_component_entity);
@@ -321,14 +321,14 @@ void _restore_component_definitions(Model& model,
                                     const MapIR& ir_map)
 {
   for (const auto& [name, attributes]: ir_map.component_definitions) {
-    const auto component_def_entity = model.create_entity();
-    component_set.definitions.push_back(component_def_entity);
+    const auto component_entity = model.create_entity();
+    component_set.definitions.push_back(component_entity);
 
-    auto& component_def = model.add<ComponentDefinition>(component_def_entity);
-    component_def.name = name;
+    auto& component = model.add<Component>(component_entity);
+    component.name = name;
 
     for (const auto& [attr_name, attr_value]: attributes) {
-      component_def.attributes[attr_name] = attr_value;
+      component.attributes[attr_name] = attr_value;
     }
   }
 }

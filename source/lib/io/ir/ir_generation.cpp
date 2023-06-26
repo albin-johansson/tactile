@@ -39,9 +39,9 @@ void convert_context_to_ir(const Model& model,
   if (component_set_entity != kNullEntity) {
     const auto& component_set = model.get<ComponentSet>(component_set_entity);
 
-    for (const auto definition_entity: component_set.definitions) {
-      const auto& definition = model.get<ComponentDefinition>(definition_entity);
-      ir_context.components[definition.name] = definition.attributes;
+    for (const auto component_entity: component_set.definitions) {
+      const auto& component = model.get<Component>(component_entity);
+      ir_context.components[component.name] = component.attributes;
     }
   }
 }
@@ -271,9 +271,9 @@ void convert_components_to_ir(const Model& model,
                               const ComponentSet& component_set,
                               ComponentMap& ir_components)
 {
-  for (const auto definition_entity: component_set.definitions) {
-    const auto& definition = model.get<ComponentDefinition>(definition_entity);
-    ir_components[definition.name] = definition.attributes;
+  for (const auto component_entity: component_set.definitions) {
+    const auto& component = model.get<Component>(component_entity);
+    ir_components[component.name] = component.attributes;
   }
 }
 

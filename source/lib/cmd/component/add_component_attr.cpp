@@ -29,26 +29,26 @@
 namespace tactile::cmd {
 
 AddComponentAttr::AddComponentAttr(Model* model,
-                                   const Entity definition_entity,
+                                   const Entity component_entity,
                                    String name)
     : mModel {model},
-      mDefinitionEntity {definition_entity},
+      mComponentEntity {component_entity},
       mAttributeName {std::move(name)}
 {
-  TACTILE_ASSERT(sys::is_component_definition_entity(*mModel, mDefinitionEntity));
+  TACTILE_ASSERT(sys::is_component_entity(*mModel, mComponentEntity));
 }
 
 void AddComponentAttr::undo()
 {
   auto& model = *mModel;
-  sys::remove_component_attribute(model, mDefinitionEntity, mAttributeName);
+  sys::remove_component_attribute(model, mComponentEntity, mAttributeName);
 }
 
 void AddComponentAttr::redo()
 {
   auto& model = *mModel;
   sys::add_component_attribute(model,
-                               mDefinitionEntity,
+                               mComponentEntity,
                                mAttributeName,
                                Attribute {AttributeType::String});
 }

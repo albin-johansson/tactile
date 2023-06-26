@@ -46,7 +46,7 @@ auto copy_context(Model& model, const Context& src_context) -> Context
 auto copy_component_values(const Model& model, const Entity definition_entity)
     -> HashMap<Entity, StringMap<Attribute>>
 {
-  TACTILE_ASSERT(is_component_definition_entity(model, definition_entity));
+  TACTILE_ASSERT(is_component_entity(model, definition_entity));
   HashMap<Entity, StringMap<Attribute>> component_values;
 
   for (auto [context_entity, context]: model.each<Context>()) {
@@ -68,7 +68,7 @@ auto copy_single_attribute_in_components(const Model& model,
                                          StringView attribute_name)
     -> HashMap<Entity, Attribute>
 {
-  TACTILE_ASSERT(is_component_definition_entity(model, definition_entity));
+  TACTILE_ASSERT(is_component_entity(model, definition_entity));
   HashMap<Entity, Attribute> attributes;
 
   for (auto [attached_component_entity, attached_component]:

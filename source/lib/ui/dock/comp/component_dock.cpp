@@ -57,15 +57,15 @@ void _push_add_component_button_popup_content(const Model& model,
   else {
     const auto& active_context = model.get<Context>(document.active_context);
 
-    for (const auto definition_entity: component_set.definitions) {
-      const auto& definition = model.get<ComponentDefinition>(definition_entity);
+    for (const auto component_entity: component_set.definitions) {
+      const auto& component = model.get<Component>(component_entity);
 
       const Disable disable_if {
-          sys::has_component(model, active_context, definition.name)};
+          sys::has_component(model, active_context, component.name)};
 
-      if (ImGui::MenuItem(definition.name.c_str())) {
+      if (ImGui::MenuItem(component.name.c_str())) {
         dispatcher.enqueue<AttachComponentEvent>(document.active_context,
-                                                 definition_entity);
+                                                 component_entity);
       }
     }
   }

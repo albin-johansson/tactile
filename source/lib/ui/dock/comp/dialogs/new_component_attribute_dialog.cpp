@@ -60,10 +60,10 @@ void push_new_comp_attr_dialog(const Model& model,
     state.should_open = false;
   }
 
-  const auto& component_def = model.get<ComponentDefinition>(state.definition_entity);
+  const auto& component = model.get<Component>(state.definition_entity);
   const auto current_name = state.attribute_name_buffer.as_string_view();
 
-  if (!current_name.empty() && !component_def.attributes.contains(current_name)) {
+  if (!current_name.empty() && !component.attributes.contains(current_name)) {
     dialog_options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 

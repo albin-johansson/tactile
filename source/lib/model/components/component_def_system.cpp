@@ -28,51 +28,51 @@
 
 namespace tactile::sys {
 
-auto instantiate_component(Model& model, const Entity definition_entity) -> Entity
+auto instantiate_component(Model& model, const Entity component_entity) -> Entity
 {
-  TACTILE_ASSERT(is_component_definition_entity(model, definition_entity));
-  const auto& definition = model.get<ComponentDefinition>(definition_entity);
+  TACTILE_ASSERT(is_component_entity(model, component_entity));
+  const auto& component = model.get<Component>(component_entity);
 
   const auto attached_component_entity = model.create_entity();
 
   auto& attached_component = model.add<AttachedComponent>(attached_component_entity);
-  attached_component.definition = definition_entity;
-  attached_component.attributes = definition.attributes;
+  attached_component.definition = component_entity;
+  attached_component.attributes = component.attributes;
 
   TACTILE_ASSERT(is_attached_component_entity(model, attached_component_entity));
   return attached_component_entity;
 }
 
 void add_component_attribute(Model& model,
-                             const Entity definition_entity,
+                             const Entity component_entity,
                              const String& name,
                              const Attribute& value)
 {
-  TACTILE_ASSERT(is_component_definition_entity(model, definition_entity));
+  TACTILE_ASSERT(is_component_entity(model, component_entity));
 
-  auto& definition = model.get<ComponentDefinition>(definition_entity);
-  definition.attributes[name] = value;
+  auto& component = model.get<Component>(component_entity);
+  component.attributes[name] = value;
 
   for (auto [attached_component_entity, attached_component]:
        model.each<AttachedComponent>()) {
-    if (attached_component.definition == definition_entity) {
+    if (attached_component.definition == component_entity) {
       attached_component.attributes[name] = value;
     }
   }
 }
 
 void remove_component_attribute(Model& model,
-                                const Entity definition_entity,
+                                const Entity component_entity,
                                 StringView attribute_name)
 {
-  TACTILE_ASSERT(is_component_definition_entity(model, definition_entity));
-  auto& definition = model.get<ComponentDefinition>(definition_entity);
+  TACTILE_ASSERT(is_component_entity(model, component_entity));
+  auto& component = model.get<Component>(component_entity);
 
   // Removes the attribute from all component instances of the affected type
-  if (erase_from(definition.attributes, attribute_name).succeeded()) {
+  if (erase_from(component.attributes, attribute_name).succeeded()) {
     for (auto [attached_component_entity, attached_component]:
          model.each<AttachedComponent>()) {
-      if (attached_component.definition == definition_entity) {
+      if (attached_component.definition == component_entity) {
         erase_from(attached_component.attributes, attribute_name);
       }
     }
@@ -80,21 +80,21 @@ void remove_component_attribute(Model& model,
 }
 
 void rename_component_attribute(Model& model,
-                                const Entity definition_entity,
+                                const Entity component_entity,
                                 StringView old_attribute_name,
                                 const String& new_attribute_name)
 {
-  TACTILE_ASSERT(is_component_definition_entity(model, definition_entity));
+  TACTILE_ASSERT(is_component_entity(model, component_entity));
 
-  auto& definition = model.get<ComponentDefinition>(definition_entity);
-  const auto attribute_value = lookup_in(definition.attributes, old_attribute_name);
+  auto& component = model.get<Component>(component_entity);
+  const auto attribute_value = lookup_in(component.attributes, old_attribute_name);
 
-  erase_from(definition.attributes, old_attribute_name);
-  definition.attributes[new_attribute_name] = attribute_value;
+  erase_from(component.attributes, old_attribute_name);
+  component.attributes[new_attribute_name] = attribute_value;
 
   for (auto [attached_component_entity, attached_component]:
        model.each<AttachedComponent>()) {
-    if (attached_component.definition == definition_entity) {
+    if (attached_component.definition == component_entity) {
       erase_from(attached_component.attributes, old_attribute_name);
       attached_component.attributes[new_attribute_name] = attribute_value;
     }
@@ -102,38 +102,38 @@ void rename_component_attribute(Model& model,
 }
 
 auto duplicate_component_attribute(Model& model,
-                                   const Entity definition_entity,
+                                   const Entity component_entity,
                                    StringView attribute_name) -> String
 {
-  TACTILE_ASSERT(is_component_definition_entity(model, definition_entity));
+  TACTILE_ASSERT(is_component_entity(model, component_entity));
 
-  auto& definition = model.get<ComponentDefinition>(definition_entity);
-  const auto& attribute_value = lookup_in(definition.attributes, attribute_name);
+  auto& component = model.get<Component>(component_entity);
+  const auto& attribute_value = lookup_in(component.attributes, attribute_name);
 
   int suffix = 1;
   String new_attribute_name;
   do {
     new_attribute_name = fmt::format("{} ({})", attribute_name, suffix);
     ++suffix;
-  } while (has_key(definition.attributes, new_attribute_name));
+  } while (has_key(component.attributes, new_attribute_name));
 
-  add_component_attribute(model, definition_entity, new_attribute_name, attribute_value);
+  add_component_attribute(model, component_entity, new_attribute_name, attribute_value);
   return new_attribute_name;
 }
 
 void force_update_component_attribute(Model& model,
-                                      const Entity definition_entity,
+                                      const Entity component_entity,
                                       const String& attribute_name,
                                       const Attribute& attribute_value)
 {
-  TACTILE_ASSERT(is_component_definition_entity(model, definition_entity));
+  TACTILE_ASSERT(is_component_entity(model, component_entity));
 
-  auto& definition = model.get<ComponentDefinition>(definition_entity);
-  definition.attributes[attribute_name] = attribute_value;
+  auto& component = model.get<Component>(component_entity);
+  component.attributes[attribute_name] = attribute_value;
 
   for (auto [attached_component_entity, attached_component]:
        model.each<AttachedComponent>()) {
-    if (attached_component.definition == definition_entity) {
+    if (attached_component.definition == component_entity) {
       attached_component.attributes[attribute_name] = attribute_value;
     }
   }

@@ -52,11 +52,11 @@ void DefineComponent::redo()
   auto& model = *mModel;
   auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
 
-  if (mDefinitionEntity == kNullEntity) {
-    mDefinitionEntity = sys::create_component(model, component_set, mName);
+  if (mComponentEntity == kNullEntity) {
+    mComponentEntity = sys::create_component(model, component_set, mName);
   }
   else {
-    component_set.definitions.push_back(mDefinitionEntity);
+    component_set.definitions.push_back(mComponentEntity);
   }
 }
 

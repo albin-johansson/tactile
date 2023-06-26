@@ -28,14 +28,14 @@ namespace tactile::sys {
 
 auto create_component(Model& model, ComponentSet& component_set, String name) -> Entity
 {
-  const auto definition_entity = model.create_entity();
-  component_set.definitions.push_back(definition_entity);
+  const auto component_entity = model.create_entity();
+  component_set.definitions.push_back(component_entity);
 
-  auto& definition = model.add<ComponentDefinition>(definition_entity);
-  definition.name = std::move(name);
+  auto& component = model.add<Component>(component_entity);
+  component.name = std::move(name);
 
-  TACTILE_ASSERT(is_component_definition_entity(model, definition_entity));
-  return definition_entity;
+  TACTILE_ASSERT(is_component_entity(model, component_entity));
+  return component_entity;
 }
 
 }  // namespace tactile::sys

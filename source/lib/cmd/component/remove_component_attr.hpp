@@ -30,7 +30,7 @@ namespace tactile::cmd {
 /// A command for removing an attribute from a component definition.
 class RemoveComponentAttr final : public Command {
  public:
-  RemoveComponentAttr(Model* model, Entity definition_entity, String attribute);
+  RemoveComponentAttr(Model* model, Entity component_entity, String attribute);
 
   void undo() override;
 
@@ -40,7 +40,7 @@ class RemoveComponentAttr final : public Command {
 
  private:
   Model* mModel;
-  Entity mDefinitionEntity;
+  Entity mComponentEntity;
   String mAttributeName;
   Maybe<Attribute> mPreviousValue;
 };

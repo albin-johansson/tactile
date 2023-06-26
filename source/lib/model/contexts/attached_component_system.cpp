@@ -54,7 +54,7 @@ namespace {
 auto attach_component(Model& model, Context& context, const Entity definition_entity)
     -> Entity
 {
-  TACTILE_ASSERT(is_component_definition_entity(model, definition_entity));
+  TACTILE_ASSERT(is_component_entity(model, definition_entity));
   TACTILE_ASSERT(!_has_component_type(model, context, definition_entity));
 
   const auto attached_component_entity = instantiate_component(model, definition_entity);
@@ -66,7 +66,7 @@ auto attach_component(Model& model, Context& context, const Entity definition_en
 auto detach_component(Model& model, Context& context, const Entity definition_entity)
     -> Maybe<StringMap<Attribute>>
 {
-  TACTILE_ASSERT(is_component_definition_entity(model, definition_entity));
+  TACTILE_ASSERT(is_component_entity(model, definition_entity));
 
   const auto iter = _find_component_of_type(model, context.comps, definition_entity);
   if (iter != context.comps.end()) {
@@ -85,9 +85,8 @@ auto has_component(const Model& model, const Context& context, StringView compon
   return std::ranges::any_of(context.comps, [&](const Entity attached_component_entity) {
     const auto& attached_component =
         model.get<AttachedComponent>(attached_component_entity);
-    const auto& definition =
-        model.get<ComponentDefinition>(attached_component.definition);
-    return definition.name == component_name;
+    const auto& component = model.get<Component>(attached_component.definition);
+    return component.name == component_name;
   });
 }
 
