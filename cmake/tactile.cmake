@@ -16,12 +16,15 @@ function(tactile_set_compile_options target)
                            /permissive-
                            /Zc:preprocessor
                            /Zc:__cplusplus
-                           /wd4996  # No deprecation warnings
                            /wd4127  # No conditional expressions are constant warnings
                            )
 
     if (TACTILE_TREAT_WARNINGS_AS_ERRORS MATCHES ON)
-      target_compile_options(${target} PRIVATE /WX)
+      target_compile_options(${target}
+                             PRIVATE
+                             /WX
+                             /wd4996  # No deprecation warnings
+                             )
     endif ()
   elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang|GNU")
     target_compile_options(${target}
@@ -31,13 +34,12 @@ function(tactile_set_compile_options target)
                            -Wpedantic
                            -Wconversion
                            -Wsign-conversion
-                           -Wno-deprecated-declarations
                            )
 
     if (TACTILE_TREAT_WARNINGS_AS_ERRORS MATCHES ON)
       target_compile_options(${target} PRIVATE
                              -Werror
-                             -Wno-error=unused-function
+                             -Wno-error=unused-function,deprecated-declarations
                              )
     endif ()
   endif ()
