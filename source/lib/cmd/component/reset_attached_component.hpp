@@ -32,7 +32,7 @@ namespace tactile::cmd {
 /// A command for resetting the attributes of an attached component.
 class ResetAttachedComponent final : public Command {
  public:
-  ResetAttachedComponent(Model* model, Entity component_entity);
+  ResetAttachedComponent(Model* model, Entity attached_component_entity);
 
   void undo() override;
 
@@ -42,7 +42,7 @@ class ResetAttachedComponent final : public Command {
 
  private:
   Model* mModel;
-  Entity mComponentEntity;
+  Entity mAttachedComponentEntity;
   Maybe<StringMap<Attribute>> mPreviousValues;
 };
 

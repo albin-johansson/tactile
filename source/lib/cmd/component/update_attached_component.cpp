@@ -30,23 +30,23 @@
 namespace tactile::cmd {
 
 UpdateAttachedComponent::UpdateAttachedComponent(Model* model,
-                                                 const Entity component_entity,
+                                                 const Entity attached_component_entity,
                                                  String attribute_name,
                                                  Attribute new_value)
     : mModel {model},
-      mComponentEntity {component_entity},
+      mAttachedComponentEntity {attached_component_entity},
       mAttributeName {std::move(attribute_name)},
       mNewValue {std::move(new_value)}
 {
-  TACTILE_ASSERT(sys::is_component_entity(*mModel, mComponentEntity));
+  TACTILE_ASSERT(sys::is_attached_component_entity(*mModel, mAttachedComponentEntity));
 }
 
 void UpdateAttachedComponent::undo()
 {
   auto& model = *mModel;
 
-  auto& component = model.get<Component>(mComponentEntity);
-  component.attributes[mAttributeName] = mOldValue.value();
+  auto& attached_component = model.get<AttachedComponent>(mAttachedComponentEntity);
+  attached_component.attributes[mAttributeName] = mOldValue.value();
 
   mOldValue.reset();
 }
@@ -54,16 +54,16 @@ void UpdateAttachedComponent::undo()
 void UpdateAttachedComponent::redo()
 {
   auto& model = *mModel;
-  auto& component = model.get<Component>(mComponentEntity);
+  auto& attached_component = model.get<AttachedComponent>(mAttachedComponentEntity);
 
-  mOldValue = lookup_in(component.attributes, mAttributeName);
-  component.attributes[mAttributeName] = mNewValue;
+  mOldValue = lookup_in(attached_component.attributes, mAttributeName);
+  attached_component.attributes[mAttributeName] = mNewValue;
 }
 
 auto UpdateAttachedComponent::merge_with(const Command* cmd) -> bool
 {
   if (const auto* other = dynamic_cast<const UpdateAttachedComponent*>(cmd)) {
-    const bool can_merge = mComponentEntity == other->mComponentEntity &&
+    const bool can_merge = mAttachedComponentEntity == other->mAttachedComponentEntity &&
                            mAttributeName == other->mAttributeName;
     if (can_merge) {
       mNewValue = other->mNewValue;

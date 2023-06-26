@@ -50,9 +50,9 @@ void SetComponentAttrType::undo()
   auto& definition = model.get<ComponentDefinition>(mDefinitionEntity);
   definition.attributes[mAttributeName] = mOldValue.value();
 
-  for (const auto& [component_entity, attribute_value]: mPrevAttributes) {
-    auto& component = model.get<Component>(component_entity);
-    component.attributes[mAttributeName] = attribute_value;
+  for (const auto& [attached_component_entity, attribute_value]: mPrevAttributes) {
+    auto& attached_component = model.get<AttachedComponent>(attached_component_entity);
+    attached_component.attributes[mAttributeName] = attribute_value;
   }
 
   mOldValue.reset();

@@ -43,9 +43,10 @@ void DetachComponent::undo()
   auto& model = *mModel;
   auto& context = model.get<Context>(mContextEntity);
 
-  const auto component_entity = sys::attach_component(model, context, mDefinitionEntity);
-  auto& component = model.get<Component>(component_entity);
-  component.attributes = mPrevValues.value();
+  const auto attached_component_entity =
+      sys::attach_component(model, context, mDefinitionEntity);
+  auto& attached_component = model.get<AttachedComponent>(attached_component_entity);
+  attached_component.attributes = mPrevValues.value();
 
   mPrevValues.reset();
 }

@@ -22,27 +22,27 @@
 #include <utility>  // move
 
 #include "common/debug/assert.hpp"
+#include "model/components/attached_component_system.hpp"
 #include "model/components/component_components.hpp"
-#include "model/components/component_system.hpp"
 #include "model/entity_validation.hpp"
 #include "model/i18n/language_system.hpp"
 
 namespace tactile::cmd {
 
 ResetAttachedComponent::ResetAttachedComponent(Model* model,
-                                               const Entity component_entity)
+                                               const Entity attached_component_entity)
     : mModel {model},
-      mComponentEntity {component_entity}
+      mAttachedComponentEntity {attached_component_entity}
 {
-  TACTILE_ASSERT(sys::is_component_entity(*mModel, mComponentEntity));
+  TACTILE_ASSERT(sys::is_attached_component_entity(*mModel, mAttachedComponentEntity));
 }
 
 void ResetAttachedComponent::undo()
 {
   auto& model = *mModel;
 
-  auto& component = model.get<Component>(mComponentEntity);
-  component.attributes = std::move(mPreviousValues.value());
+  auto& attached_component = model.get<AttachedComponent>(mAttachedComponentEntity);
+  attached_component.attributes = std::move(mPreviousValues.value());
 
   mPreviousValues.reset();
 }
@@ -51,8 +51,8 @@ void ResetAttachedComponent::redo()
 {
   auto& model = *mModel;
 
-  auto& component = model.get<Component>(mComponentEntity);
-  mPreviousValues = sys::reset_component_values(model, component);
+  auto& attached_component = model.get<AttachedComponent>(mAttachedComponentEntity);
+  mPreviousValues = sys::reset_component_values(model, attached_component);
 }
 
 auto ResetAttachedComponent::get_name() const -> String

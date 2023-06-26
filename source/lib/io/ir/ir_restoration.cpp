@@ -70,12 +70,12 @@ void _restore_context(Model& model,
           sys::find_component_definition(model, *component_set, component_type_name);
       TACTILE_ASSERT(component_definition_entity != kNullEntity);
 
-      const auto component_entity =
+      const auto attached_component_entity =
           sys::instantiate_component(model, component_definition_entity);
-      context.comps.push_back(component_entity);
+      context.comps.push_back(attached_component_entity);
 
-      auto& component = model.get<Component>(component_entity);
-      component.attributes = attributes;
+      auto& attached_component = model.get<AttachedComponent>(attached_component_entity);
+      attached_component.attributes = attributes;
     }
   }
 }

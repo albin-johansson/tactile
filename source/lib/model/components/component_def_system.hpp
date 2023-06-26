@@ -28,7 +28,7 @@
 
 namespace tactile::sys {
 
-/// Creates a new component entity based on a component definition template.
+/// Creates a new attached component entity based on a component definition template.
 [[nodiscard]] auto instantiate_component(Model& model, Entity definition_entity)
     -> Entity;
 

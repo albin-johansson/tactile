@@ -32,10 +32,13 @@ namespace {
                                            const Entity definition_entity)
     -> Vector<Entity>::const_iterator
 {
-  return std::ranges::find_if(component_entities, [&](const Entity component_entity) {
-    const auto& component = model.get<Component>(component_entity);
-    return component.definition == definition_entity;
-  });
+  return std::ranges::find_if(
+      component_entities,
+      [&](const Entity attached_component_entity) {
+        const auto& attached_component =
+            model.get<AttachedComponent>(attached_component_entity);
+        return attached_component.definition == definition_entity;
+      });
 }
 
 [[nodiscard]] auto _has_component_type(const Model& model,
@@ -54,10 +57,10 @@ auto attach_component(Model& model, Context& context, const Entity definition_en
   TACTILE_ASSERT(is_component_definition_entity(model, definition_entity));
   TACTILE_ASSERT(!_has_component_type(model, context, definition_entity));
 
-  const auto component_entity = instantiate_component(model, definition_entity);
-  context.comps.push_back(component_entity);
+  const auto attached_component_entity = instantiate_component(model, definition_entity);
+  context.comps.push_back(attached_component_entity);
 
-  return component_entity;
+  return attached_component_entity;
 }
 
 auto detach_component(Model& model, Context& context, const Entity definition_entity)
@@ -67,7 +70,7 @@ auto detach_component(Model& model, Context& context, const Entity definition_en
 
   const auto iter = _find_component_of_type(model, context.comps, definition_entity);
   if (iter != context.comps.end()) {
-    auto values = model.get<Component>(*iter).attributes;
+    auto values = model.get<AttachedComponent>(*iter).attributes;
     context.comps.erase(iter);
 
     return values;
@@ -79,9 +82,11 @@ auto detach_component(Model& model, Context& context, const Entity definition_en
 auto has_component(const Model& model, const Context& context, StringView component_name)
     -> bool
 {
-  return std::ranges::any_of(context.comps, [&](const Entity component_entity) {
-    const auto& component = model.get<Component>(component_entity);
-    const auto& definition = model.get<ComponentDefinition>(component.definition);
+  return std::ranges::any_of(context.comps, [&](const Entity attached_component_entity) {
+    const auto& attached_component =
+        model.get<AttachedComponent>(attached_component_entity);
+    const auto& definition =
+        model.get<ComponentDefinition>(attached_component.definition);
     return definition.name == component_name;
   });
 }

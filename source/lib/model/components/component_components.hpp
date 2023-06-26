@@ -27,13 +27,11 @@
 namespace tactile {
 
 // TODO consider using UUID for component type reference, could make some systems simpler
-struct Component final {
+struct AttachedComponent final {
   Entity definition {kNullEntity};  ///< The associated component definition.
   StringMap<Attribute> attributes;
 };
 
-// TODO think of shorter name: ComponentArchetype, ComponentTemplate, ComponentDef¨
-//  or maybe rename Component to AttachedComponent/ComponentInstance
 struct ComponentDefinition final {
   String name;
   StringMap<Attribute> attributes;

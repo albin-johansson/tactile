@@ -31,7 +31,7 @@ namespace tactile::cmd {
 class UpdateAttachedComponent final : public Command {
  public:
   UpdateAttachedComponent(Model* model,
-                          Entity component_entity,
+                          Entity attached_component_entity,
                           String attribute_name,
                           Attribute new_value);
 
@@ -45,7 +45,7 @@ class UpdateAttachedComponent final : public Command {
 
  private:
   Model* mModel;
-  Entity mComponentEntity;
+  Entity mAttachedComponentEntity;
   String mAttributeName;
   Attribute mNewValue;
   Maybe<Attribute> mOldValue;

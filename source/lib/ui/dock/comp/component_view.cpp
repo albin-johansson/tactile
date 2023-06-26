@@ -41,7 +41,7 @@ constexpr auto kTableFlags =
 
 void _push_attribute_table(const Strings& strings,
                            const Entity attached_component_entity,
-                           const Component& attached_component,
+                           const AttachedComponent& attached_component,
                            Dispatcher& dispatcher)
 {
   if (const Table table {"##AttributeTable", 2, kTableFlags}; table.is_open()) {
@@ -102,11 +102,12 @@ void component_view(const Model& model,
                     Dispatcher& dispatcher)
 {
   TACTILE_ASSERT(sys::is_context_entity(model, context_entity));
-  TACTILE_ASSERT(sys::is_component_entity(model, attached_component_entity));
+  TACTILE_ASSERT(sys::is_attached_component_entity(model, attached_component_entity));
 
   const auto& strings = sys::get_current_language_strings(model);
 
-  const auto& attached_component = model.get<Component>(attached_component_entity);
+  const auto& attached_component =
+      model.get<AttachedComponent>(attached_component_entity);
   const auto& definition = model.get<ComponentDefinition>(attached_component.definition);
 
   const Scope component_scope {definition.name.c_str()};

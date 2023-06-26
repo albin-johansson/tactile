@@ -33,14 +33,14 @@ auto instantiate_component(Model& model, const Entity definition_entity) -> Enti
   TACTILE_ASSERT(is_component_definition_entity(model, definition_entity));
   const auto& definition = model.get<ComponentDefinition>(definition_entity);
 
-  const auto component_entity = model.create_entity();
+  const auto attached_component_entity = model.create_entity();
 
-  auto& component = model.add<Component>(component_entity);
-  component.definition = definition_entity;
-  component.attributes = definition.attributes;
+  auto& attached_component = model.add<AttachedComponent>(attached_component_entity);
+  attached_component.definition = definition_entity;
+  attached_component.attributes = definition.attributes;
 
-  TACTILE_ASSERT(is_component_entity(model, component_entity));
-  return component_entity;
+  TACTILE_ASSERT(is_attached_component_entity(model, attached_component_entity));
+  return attached_component_entity;
 }
 
 void add_component_attribute(Model& model,
@@ -53,9 +53,10 @@ void add_component_attribute(Model& model,
   auto& definition = model.get<ComponentDefinition>(definition_entity);
   definition.attributes[name] = value;
 
-  for (auto [component_entity, component]: model.each<Component>()) {
-    if (component.definition == definition_entity) {
-      component.attributes[name] = value;
+  for (auto [attached_component_entity, attached_component]:
+       model.each<AttachedComponent>()) {
+    if (attached_component.definition == definition_entity) {
+      attached_component.attributes[name] = value;
     }
   }
 }
@@ -69,9 +70,10 @@ void remove_component_attribute(Model& model,
 
   // Removes the attribute from all component instances of the affected type
   if (erase_from(definition.attributes, attribute_name).succeeded()) {
-    for (auto [component_entity, component]: model.each<Component>()) {
-      if (component.definition == definition_entity) {
-        erase_from(component.attributes, attribute_name);
+    for (auto [attached_component_entity, attached_component]:
+         model.each<AttachedComponent>()) {
+      if (attached_component.definition == definition_entity) {
+        erase_from(attached_component.attributes, attribute_name);
       }
     }
   }
@@ -90,10 +92,11 @@ void rename_component_attribute(Model& model,
   erase_from(definition.attributes, old_attribute_name);
   definition.attributes[new_attribute_name] = attribute_value;
 
-  for (auto [component_entity, component]: model.each<Component>()) {
-    if (component.definition == definition_entity) {
-      erase_from(component.attributes, old_attribute_name);
-      component.attributes[new_attribute_name] = attribute_value;
+  for (auto [attached_component_entity, attached_component]:
+       model.each<AttachedComponent>()) {
+    if (attached_component.definition == definition_entity) {
+      erase_from(attached_component.attributes, old_attribute_name);
+      attached_component.attributes[new_attribute_name] = attribute_value;
     }
   }
 }
@@ -128,9 +131,10 @@ void force_update_component_attribute(Model& model,
   auto& definition = model.get<ComponentDefinition>(definition_entity);
   definition.attributes[attribute_name] = attribute_value;
 
-  for (auto [component_entity, component]: model.each<Component>()) {
-    if (component.definition == definition_entity) {
-      component.attributes[attribute_name] = attribute_value;
+  for (auto [attached_component_entity, attached_component]:
+       model.each<AttachedComponent>()) {
+    if (attached_component.definition == definition_entity) {
+      attached_component.attributes[attribute_name] = attribute_value;
     }
   }
 }

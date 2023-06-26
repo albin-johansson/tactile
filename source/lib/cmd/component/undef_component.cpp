@@ -55,11 +55,11 @@ void UndefComponent::undo()
 
   for (auto& [context_entity, attributes]: mRemovedComponentValues) {
     auto& context = model.get<Context>(context_entity);
-    const auto component_entity =
+    const auto attached_component_entity =
         sys::attach_component(model, context, definition_entity);
 
-    auto& component = model.get<Component>(component_entity);
-    component.attributes = std::move(attributes);
+    auto& attached_component = model.get<AttachedComponent>(attached_component_entity);
+    attached_component.attributes = std::move(attributes);
   }
 
   mPrevDefinitionValues.reset();

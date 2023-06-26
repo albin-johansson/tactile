@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "component_system.hpp"
+#include "attached_component_system.hpp"
 
 #include <utility>  // move
 
@@ -27,18 +27,18 @@
 
 namespace tactile::sys {
 
-auto copy_component(Model& model, const Component& src_component) -> Entity
+auto copy_component(Model& model, const AttachedComponent& src_component) -> Entity
 {
   const auto new_component_entity = model.create_entity();
 
-  auto& new_component = model.add<Component>(new_component_entity);
+  auto& new_component = model.add<AttachedComponent>(new_component_entity);
   new_component = src_component;
 
-  TACTILE_ASSERT(is_component_entity(model, new_component_entity));
+  TACTILE_ASSERT(is_attached_component_entity(model, new_component_entity));
   return new_component_entity;
 }
 
-auto reset_component_values(const Model& model, Component& component)
+auto reset_component_values(const Model& model, AttachedComponent& component)
     -> StringMap<Attribute>
 {
   const auto& definition = model.get<ComponentDefinition>(component.definition);

@@ -85,9 +85,9 @@ auto is_component_definition_entity(const Model& model, const Entity entity) -> 
   return entity != kNullEntity && model.has<ComponentDefinition>(entity);
 }
 
-auto is_component_entity(const Model& model, const Entity entity) -> bool
+auto is_attached_component_entity(const Model& model, const Entity entity) -> bool
 {
-  return entity != kNullEntity && model.has<Component>(entity);
+  return entity != kNullEntity && model.has<AttachedComponent>(entity);
 }
 
 auto is_layer_entity(const Model& model, const Entity entity) -> bool

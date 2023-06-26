@@ -28,10 +28,10 @@
 namespace tactile::sys {
 
 /// Copies an existing component instance.
-[[nodiscard]] auto copy_component(Model& model, const Component& src_component) -> Entity;
+[[nodiscard]] auto copy_component(Model& model, const AttachedComponent& src_component) -> Entity;
 
 /// Resets the attribute values in a component to the component definition defaults.
-auto reset_component_values(const Model& model, Component& component)
+auto reset_component_values(const Model& model, AttachedComponent& component)
     -> StringMap<Attribute>;
 
 }  // namespace tactile::sys

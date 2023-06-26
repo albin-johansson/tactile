@@ -45,11 +45,12 @@ void remove_component(Model& model, ComponentSet& component_set, StringView name
   std::erase(component_set.definitions, definition_entity);
 
   for (auto [entity, context]: model.each<Context>()) {
-    std::erase_if(context.comps, [&](const Entity component_entity) {
-      const auto& component = model.get<Component>(component_entity);
+    std::erase_if(context.comps, [&](const Entity attached_component_entity) {
+      const auto& attached_component =
+          model.get<AttachedComponent>(attached_component_entity);
 
-      if (component.definition == definition_entity) {
-        model.destroy(component_entity);
+      if (attached_component.definition == definition_entity) {
+        model.destroy(attached_component_entity);
         return true;
       }
 

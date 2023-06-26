@@ -205,14 +205,14 @@ void on_detach_component(Model& model, const DetachComponentEvent& event)
 
 void on_reset_attached_component(Model& model, const ResetAttachedComponentEvent& event)
 {
-  TACTILE_ASSERT(sys::is_component_entity(model, event.attached_component));
+  TACTILE_ASSERT(sys::is_attached_component_entity(model, event.attached_component));
 
   sys::try_execute<cmd::ResetAttachedComponent>(model, event.attached_component);
 }
 
 void on_update_attached_component(Model& model, const UpdateAttachedComponentEvent& event)
 {
-  TACTILE_ASSERT(sys::is_component_entity(model, event.attached_component));
+  TACTILE_ASSERT(sys::is_attached_component_entity(model, event.attached_component));
 
   sys::try_execute<cmd::UpdateAttachedComponent>(model,
                                                  event.attached_component,

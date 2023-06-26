@@ -95,9 +95,12 @@ void _push_dock_contents(const Model& model,
       push_centered_label(strings.misc.context_has_no_components.c_str());
     }
     else {
-      for (const auto component_entity: active_context.comps) {
+      for (const auto attached_component_entity: active_context.comps) {
         ImGui::Separator();
-        component_view(model, active_context_entity, component_entity, dispatcher);
+        component_view(model,
+                       active_context_entity,
+                       attached_component_entity,
+                       dispatcher);
       }
 
       ImGui::Separator();
