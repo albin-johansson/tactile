@@ -46,6 +46,9 @@
 # JetBrains Fleet files
 .fleet
 
+# Compiler cache files
+.cache
+
 # Generated Doxygen output
 doxygen-out
 doxy
