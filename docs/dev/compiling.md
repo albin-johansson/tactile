@@ -40,7 +40,13 @@ It is recommended to set the environment variable `VCPKG_ROOT` to point to the d
 ## Building the project
 
 Given a successful Vcpkg installation, building the project should be a simple as entering the following commands, starting in the root directory of the repository.
+First, make sure that all submodules have been checked out.
 
+```bash
+git submodule update --init
+```
+
+Then we just need to generate our build files and begin the compilation. 
 It is advisable to make use of the Ninja generator, since that improves compile times significantly.
 However, you can specify whatever generator you want (and omit the `-G` argument to use the default generator).
 
