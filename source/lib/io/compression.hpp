@@ -36,13 +36,13 @@ using ByteSpan = Span<const uint8>;
  * Compresses a sequence of bytes with Zlib.
  *
  * \details Supplying a null data pointer or a data stream of zero bytes will cause the
- * function to simply return nothing.
+ *          function to simply return nothing.
  *
  * \param source       the source data that will be compressed.
  * \param source_bytes the total size of the source data in bytes.
  * \param level        the compression level that will be used (clamped to a valid value).
  *
- * \return a compressed byte stream, or nothing if something went wrong.
+ * \return a potentially empty compressed byte stream.
  */
 [[nodiscard]] auto zlib_compress(const void* source, usize source_bytes, int level = -1)
     -> Maybe<ByteStream>;
@@ -64,7 +64,7 @@ template <typename T>
  * \param source       the compressed source data.
  * \param source_bytes the total size of the compressed source data in bytes.
  *
- * \return a byte stream of uncompressed data, or nothing if something went wrong.
+ * \return a potentially empty uncompressed byte stream.
  */
 [[nodiscard]] auto zlib_decompress(const void* source, usize source_bytes)
     -> Maybe<ByteStream>;
@@ -81,6 +81,7 @@ template <typename T>
  * Indicates whether the specified value is a valid Zlib compression level.
  *
  * \param level the value to evaluate.
+ *
  * \return true if the value is valid; false otherwise.
  */
 [[nodiscard]] auto is_valid_zlib_compression_level(int level) -> bool;
@@ -93,12 +94,12 @@ template <typename T>
  * Compresses a sequence of bytes with Zstd.
  *
  * \details Supplying a null data pointer or a data stream of zero bytes will cause the
- * function to simply return nothing.
+ *          function to simply return nothing.
  *
  * \param source       the source data that will be compressed.
  * \param source_bytes the total size of the source data, in bytes.
  *
- * \return a compressed byte stream, or nothing if something went wrong.
+ * \return a potentially empty compressed byte stream.
  */
 [[nodiscard]] auto zstd_compress(const void* source, usize source_bytes)
     -> Maybe<ByteStream>;
@@ -119,7 +120,7 @@ template <typename T>
  * \param source       the compressed source data.
  * \param source_bytes the total size of the compressed source data in bytes.
  *
- * \return a byte stream of uncompressed data, or nothing if something went wrong.
+ * \return a potentially empty uncompressed byte stream.
  */
 [[nodiscard]] auto zstd_decompress(const void* source, usize source_bytes)
     -> Maybe<ByteStream>;
@@ -135,10 +136,11 @@ template <typename T>
 /**
  * Indicates whether the specified value is a valid Zstd compression level.
  *
- * \param level the value to evaluate.
- * \return true if the value is valid; false otherwise.
- *
  * \see https://github.com/facebook/zstd/issues/3133 for Zstd compression levels.
+ *
+ * \param level the value to evaluate.
+ *
+ * \return true if the value is valid; false otherwise.
  */
 [[nodiscard]] auto is_valid_zstd_compression_level(int level) -> bool;
 

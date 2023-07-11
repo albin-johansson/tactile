@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "yaml.hpp"
+#include "yaml_utils.hpp"
 
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
@@ -25,7 +25,7 @@
 #include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
 #include "io/save_formats.hpp"
-#include "io/util/streams.hpp"
+#include "ui/stream_utils.hpp"
 
 namespace tactile {
 

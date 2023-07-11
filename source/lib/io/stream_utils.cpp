@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "streams.hpp"
+#include "stream_utils.hpp"
 
 #include <ios>  // ios
 

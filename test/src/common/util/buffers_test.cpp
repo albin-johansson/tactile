@@ -52,10 +52,10 @@ TEST_SUITE("BufferUtils")
     CHECK(buffer.at(5) == 'f');
 
     // The rest of the buffer should have been zeroed
-   CHECK(buffer.at(6) == 0);
-   CHECK(buffer.at(7) == 0);
-   CHECK(buffer.at(8) == 0);
-   CHECK(buffer.at(9) == 0);
+    CHECK(buffer.at(6) == 0);
+    CHECK(buffer.at(7) == 0);
+    CHECK(buffer.at(8) == 0);
+    CHECK(buffer.at(9) == 0);
   }
 
   TEST_CASE("copy_string_into_buffer (with buffer that is too small)")

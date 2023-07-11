@@ -26,9 +26,9 @@
 #include "io/ir/ir_restoration.hpp"
 #include "io/map/parse/parse_map.hpp"
 #include "io/protobuf_types.hpp"
-#include "io/util/streams.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/model.hpp"
+#include "ui/stream_utils.hpp"
 
 namespace tactile {
 namespace {

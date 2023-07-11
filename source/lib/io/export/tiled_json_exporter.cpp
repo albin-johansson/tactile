@@ -29,7 +29,7 @@
 #include "io/base64_tiles.hpp"
 #include "io/export/tiled_info.hpp"
 #include "io/ir/map/map_ir.hpp"
-#include "io/util/json.hpp"
+#include "ui/json_utils.hpp"
 
 namespace tactile {
 namespace {

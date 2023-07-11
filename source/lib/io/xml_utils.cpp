@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "xml.hpp"
+#include "xml_utils.hpp"
 
 #include <algorithm>  // any_of
 #include <cstring>    // strcmp
@@ -26,8 +26,8 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/assert.hpp"
-#include "io/util/streams.hpp"
 #include "ui/constants.hpp"
+#include "ui/stream_utils.hpp"
 
 namespace tactile {
 

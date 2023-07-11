@@ -17,11 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "model/model_factory.hpp"
+
 #include <doctest/doctest.h>
 
 #include "model/documents/document_components.hpp"
 #include "model/i18n/language_components.hpp"
-#include "model/model_factory.hpp"
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/settings.hpp"
 #include "model/textures/texture_components.hpp"

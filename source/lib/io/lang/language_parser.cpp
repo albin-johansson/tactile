@@ -26,7 +26,7 @@
 #include "common/predef.hpp"
 #include "common/type/string.hpp"
 #include "io/directories.hpp"
-#include "io/util/json.hpp"
+#include "ui/json_utils.hpp"
 #include "ui/style/icons.hpp"
 
 namespace tactile {

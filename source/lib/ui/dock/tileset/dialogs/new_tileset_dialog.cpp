@@ -21,10 +21,10 @@
 
 #include <imgui.h>
 
-#include "io/util/file_dialog.hpp"
 #include "model/events/tileset_events.hpp"
 #include "model/i18n/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
+#include "ui/file_dialog.hpp"
 #include "ui/widget/widgets.hpp"
 
 namespace tactile::ui {

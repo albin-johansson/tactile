@@ -33,8 +33,8 @@
 #include "io/export/tiled_info.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/save_formats.hpp"
-#include "io/util/streams.hpp"
-#include "io/util/xml.hpp"
+#include "ui/stream_utils.hpp"
+#include "ui/xml_utils.hpp"
 
 namespace tactile {
 namespace {

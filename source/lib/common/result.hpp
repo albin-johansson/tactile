@@ -39,7 +39,7 @@ class Result final {
 
   [[nodiscard]] constexpr explicit operator bool() const noexcept { return mSuccess; }
 
-  [[nodiscard]] bool operator==(const Result& other) const noexcept = default;
+  [[nodiscard]] auto operator==(const Result& other) const noexcept -> bool = default;
 
  private:
   bool mSuccess {false};

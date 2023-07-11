@@ -25,9 +25,9 @@
 #include <spdlog/spdlog.h>
 
 #include "io/save_formats.hpp"
-#include "io/util/file_dialog.hpp"
 #include "model/events/file_events.hpp"
 #include "model/persistence/settings.hpp"
+#include "ui/file_dialog.hpp"
 
 namespace tactile::ui {
 

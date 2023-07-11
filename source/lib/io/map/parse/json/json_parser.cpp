@@ -22,7 +22,7 @@
 #include <string>  // string
 
 #include "common/type/string.hpp"
-#include "io/util/json.hpp"
+#include "ui/json_utils.hpp"
 
 namespace tactile {
 namespace {

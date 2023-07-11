@@ -26,6 +26,7 @@
 
 namespace tactile {
 
+/// Represents an 8-bit RGBA color.
 class Color final {
  public:
   uint8 red {0};
@@ -33,10 +34,45 @@ class Color final {
   uint8 blue {0};
   uint8 alpha {0xFF};
 
+  /**
+   * Creates a color from normalized color components.
+   *
+   * \details The channel values are clamped within [0, 1].
+   *
+   * \param r the red channel value.
+   * \param g the green channel value.
+   * \param b the blue channel value.
+   * \param a the alpha channel value.
+   *
+   * \return a color.
+   */
   [[nodiscard]] static auto from_norm(float r, float g, float b, float a = 1.0f) -> Color;
 
+  /**
+   * Creates a color from a hexadecimal RGB color string, such as "#AABBCC".
+   *
+   * \param rgb an RGB color string.
+   *
+   * \return a potentially null color.
+   */
   [[nodiscard]] static auto from_rgb(StringView rgb) -> Maybe<Color>;
+
+  /**
+   * Creates a color from a hexadecimal RGBA color string, such as "#AABBCCDD".
+   *
+   * \param rgba an RGBA color string.
+   *
+   * \return a potentially null color.
+   */
   [[nodiscard]] static auto from_rgba(StringView rgba) -> Maybe<Color>;
+
+  /**
+   * Creates a color from a hexadecimal ARGB color string, such as "#AABBCCDD".
+   *
+   * \param argb an ARGB color string.
+   *
+   * \return a potentially null color.
+   */
   [[nodiscard]] static auto from_argb(StringView argb) -> Maybe<Color>;
 
   /**
@@ -47,7 +83,7 @@ class Color final {
    *
    * \see https://en.wikipedia.org/wiki/Relative_luminance
    *
-   * \return the color luminance, in the interval [0, 1].
+   * \return the color luminance in the range [0, 1].
    */
   [[nodiscard]] auto get_luminance() const -> float;
 
@@ -74,14 +110,19 @@ class Color final {
     return static_cast<float>(alpha) / 255.0f;
   }
 
+  /// Creates a hexadecimal RGB color string that represents the color.
   [[nodiscard]] auto as_rgb() const -> String;
+
+  /// Creates a hexadecimal RGBA color string that represents the color.
   [[nodiscard]] auto as_rgba() const -> String;
+
+  /// Creates a hexadecimal ARGB color string that represents the color.
   [[nodiscard]] auto as_argb() const -> String;
 
   /// Returns the color as an array of normalized color channels, in RGBA format.
   [[nodiscard]] auto as_float_array() const -> Array<float, 4>;
 
-  [[nodiscard]] constexpr bool operator==(const Color&) const noexcept = default;
+  [[nodiscard]] constexpr auto operator==(const Color&) const noexcept -> bool = default;
 };
 
 inline constexpr Color kWhite = {0xFF, 0xFF, 0xFF};

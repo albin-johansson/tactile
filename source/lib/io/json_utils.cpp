@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "json.hpp"
+#include "json_utils.hpp"
 
 #include <exception>  // exception
 #include <iomanip>    // setw
@@ -28,7 +28,7 @@
 #include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
 #include "io/save_formats.hpp"
-#include "io/util/streams.hpp"
+#include "ui/stream_utils.hpp"
 
 namespace tactile {
 namespace {
