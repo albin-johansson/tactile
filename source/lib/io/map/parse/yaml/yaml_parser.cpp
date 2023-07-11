@@ -26,7 +26,7 @@
 
 #include "common/type/expected.hpp"
 #include "io/compression.hpp"
-#include "ui/yaml_utils.hpp"
+#include "io/yaml_utils.hpp"
 
 namespace tactile {
 namespace {

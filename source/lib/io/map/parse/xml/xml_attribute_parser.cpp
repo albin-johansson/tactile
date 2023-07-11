@@ -25,7 +25,7 @@
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/save_formats.hpp"
-#include "ui/xml_utils.hpp"
+#include "io/xml_utils.hpp"
 
 namespace tactile {
 namespace {

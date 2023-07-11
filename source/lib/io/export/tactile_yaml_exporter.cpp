@@ -33,8 +33,8 @@
 #include "io/base64_tiles.hpp"
 #include "io/compression.hpp"
 #include "io/ir/map/map_ir.hpp"
-#include "ui/stream_utils.hpp"
-#include "ui/yaml_utils.hpp"
+#include "io/stream_utils.hpp"
+#include "io/yaml_utils.hpp"
 
 namespace tactile {
 namespace {

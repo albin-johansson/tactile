@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "ui/xml_utils.hpp"
+#include "io/xml_utils.hpp"
 
 namespace tactile {
 namespace {

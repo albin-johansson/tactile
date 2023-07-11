@@ -27,7 +27,7 @@
 
 #include "common/debug/assert.hpp"
 #include "ui/constants.hpp"
-#include "ui/stream_utils.hpp"
+#include "io/stream_utils.hpp"
 
 namespace tactile {
 

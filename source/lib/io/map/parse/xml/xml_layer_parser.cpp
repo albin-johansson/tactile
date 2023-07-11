@@ -30,7 +30,7 @@
 #include "io/base64_tiles.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
-#include "ui/xml_utils.hpp"
+#include "io/xml_utils.hpp"
 
 namespace tactile {
 namespace {

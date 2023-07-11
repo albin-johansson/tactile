@@ -26,7 +26,7 @@
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/save_formats.hpp"
-#include "ui/yaml_utils.hpp"
+#include "io/yaml_utils.hpp"
 
 namespace tactile {
 namespace {

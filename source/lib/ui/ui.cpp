@@ -19,6 +19,7 @@
 
 #include "ui.hpp"
 
+#include "io/file_dialog.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/events/map_events.hpp"
 #include "ui/dialog/about_dialog.hpp"
@@ -37,7 +38,6 @@
 #include "ui/dock/log/log_dock.hpp"
 #include "ui/dock/property/property_dock.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
-#include "ui/file_dialog.hpp"
 #include "ui/menu/menu_bar.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/colors.hpp"

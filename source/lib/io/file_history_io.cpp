@@ -25,7 +25,7 @@
 
 #include "io/directories.hpp"
 #include "io/protobuf_types.hpp"
-#include "ui/stream_utils.hpp"
+#include "io/stream_utils.hpp"
 
 namespace tactile {
 namespace {

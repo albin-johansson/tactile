@@ -24,10 +24,10 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
+#include "io/file_dialog.hpp"
 #include "io/save_formats.hpp"
 #include "model/events/file_events.hpp"
 #include "model/persistence/settings.hpp"
-#include "ui/file_dialog.hpp"
 
 namespace tactile::ui {
 

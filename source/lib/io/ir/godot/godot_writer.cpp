@@ -32,7 +32,7 @@
 #include "common/util/filesystem.hpp"
 #include "io/ir/godot/godot_options.hpp"
 #include "io/ir/godot/godot_scene.hpp"
-#include "ui/stream_utils.hpp"
+#include "io/stream_utils.hpp"
 
 namespace tactile {
 namespace {
