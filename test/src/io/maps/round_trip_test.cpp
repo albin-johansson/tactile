@@ -34,7 +34,7 @@
 #include "io/export/tactile_yaml_exporter.hpp"
 #include "io/export/tiled_json_exporter.hpp"
 #include "io/export/tiled_xml_exporter.hpp"
-#include "io/map/parse/parse_map.hpp"
+#include "io/parsers/map_parser.hpp"
 
 using namespace std::string_literals;
 

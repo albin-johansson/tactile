@@ -19,7 +19,7 @@
 
 #include <doctest/doctest.h>
 
-#include "io/map/parse/parse_map.hpp"
+#include "io/parsers/map_parser.hpp"
 
 using namespace tactile;
 

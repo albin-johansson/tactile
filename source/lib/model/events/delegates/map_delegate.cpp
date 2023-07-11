@@ -36,7 +36,7 @@
 #include "io/ir/godot/godot_writer.hpp"
 #include "io/ir/ir_generation.hpp"
 #include "io/ir/ir_restoration.hpp"
-#include "io/map/parse/parse_map.hpp"
+#include "io/parsers/map_parser.hpp"
 #include "model/documents/command_system.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"

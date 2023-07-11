@@ -22,7 +22,7 @@
 #include "common/type/expected.hpp"
 #include "common/type/path.hpp"
 #include "io/ir/map/map_ir.hpp"
-#include "io/map/parse/parse_error.hpp"
+#include "io/parsers/parse_error.hpp"
 #include "io/xml_utils.hpp"
 
 namespace tactile {

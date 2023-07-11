@@ -24,11 +24,11 @@
 #include "common/util/filesystem.hpp"
 #include "io/directories.hpp"
 #include "io/ir/ir_restoration.hpp"
-#include "io/map/parse/parse_map.hpp"
+#include "io/parsers/map_parser.hpp"
 #include "io/protobuf_types.hpp"
+#include "io/stream_utils.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/model.hpp"
-#include "io/stream_utils.hpp"
 
 namespace tactile {
 namespace {

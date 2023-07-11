@@ -26,11 +26,7 @@
 
 namespace tactile {
 
-/**
- * Represents various possible errors related to map parsing.
- *
- * \see to_cause(ParseError)
- */
+/// Represents various possible errors related to map parsing.
 enum class ParseError {
   None,
   Unknown,

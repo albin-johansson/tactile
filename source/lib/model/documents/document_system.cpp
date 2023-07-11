@@ -25,7 +25,7 @@
 
 #include "cmd/command_stack.hpp"
 #include "common/debug/panic.hpp"
-#include "io/map/parse/parse_map.hpp"
+#include "io/parsers/map_parser.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_factory.hpp"

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "parse_map.hpp"
+#include "map_parser.hpp"
 
 #include <exception>  // exception
 
@@ -32,6 +32,21 @@
 #include "io/map/parse/yaml/yaml_parser.hpp"
 
 namespace tactile {
+
+auto parse_map_with_yaml_format(const Path&) -> Parsed<MapIR>
+{
+  return unexpected(ParseError::Unknown);
+}
+
+auto parse_map_with_tiled_tmj_format(const Path&) -> Parsed<MapIR>
+{
+  return unexpected(ParseError::Unknown);
+}
+
+auto parse_map_with_tiled_tmx_format(const Path&) -> Parsed<MapIR>
+{
+  return unexpected(ParseError::Unknown);
+}
 
 auto parse_map(const Path& path) -> Parsed<MapIR>
 {
