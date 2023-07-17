@@ -22,6 +22,8 @@
 #include <concepts>  // predicate
 #include <utility>   // forward
 
+#include <entt/entity/registry.hpp>
+
 #include "common/debug/assert.hpp"
 #include "common/type/ecs.hpp"
 
@@ -244,7 +246,7 @@ class Model final {
   }
 
  private:
-  Registry mRegistry;
+  entt::registry mRegistry;
 };
 
 }  // namespace tactile

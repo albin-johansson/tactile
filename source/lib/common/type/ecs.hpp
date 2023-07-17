@@ -20,14 +20,12 @@
 #pragma once
 
 #include <entt/entity/entity.hpp>
-#include <entt/entity/registry.hpp>
 
 #include "common/type/func.hpp"
 
 namespace tactile {
 
 using Entity = entt::entity;
-using Registry = entt::registry;
 
 inline constexpr Entity kNullEntity = entt::null;
 
