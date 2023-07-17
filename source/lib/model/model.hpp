@@ -249,4 +249,6 @@ class Model final {
   entt::registry mRegistry;
 };
 
+using Registry = Model;
+
 }  // namespace tactile
