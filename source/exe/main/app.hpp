@@ -36,6 +36,7 @@
 #include "model/events/property_events.hpp"
 #include "model/events/setting_events.hpp"
 #include "model/events/tileset_events.hpp"
+#include "model/events/tool_events.hpp"
 #include "model/events/view_events.hpp"
 #include "model/events/viewport_events.hpp"
 
@@ -150,6 +151,10 @@ class App final : public AppDelegate {
   void _on_duplicate_object(const DuplicateObjectEvent& event);
   void _on_remove_object(const RemoveObjectEvent& event);
   void _on_spawn_object_context_menu(const SpawnObjectContextMenuEvent& event);
+
+  // Tool events
+  void _on_stamp_sequence(const StampSequenceEvent& event);
+  void _on_flood(const FloodEvent& event);
 
   // Font events
   void _on_reload_fonts(const ReloadFontsEvent& event);
