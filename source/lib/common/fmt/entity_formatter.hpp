@@ -31,10 +31,10 @@ struct fmt::formatter<tactile::Entity> final : fmt::formatter<std::string_view> 
   auto format(const tactile::Entity entity, auto& ctx) const
   {
     if (entity == tactile::kNullEntity) {
-      return fmt::format_to(ctx.out(), "NULL");
+      return fmt::format_to(ctx.out(), "Entity(NULL)");
     }
     else {
-      return fmt::format_to(ctx.out(), "{}", std::to_underlying(entity));
+      return fmt::format_to(ctx.out(), "Entity({})", std::to_underlying(entity));
     }
   }
 };
