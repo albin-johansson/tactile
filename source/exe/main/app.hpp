@@ -22,7 +22,10 @@
 #include <centurion/events.hpp>
 #include <imgui.h>
 
+#include "common/macros.hpp"
 #include "common/type/dispatcher.hpp"
+#include "common/type/ptr.hpp"
+#include "common/type/vector.hpp"
 #include "engine/app_delegate.hpp"
 #include "model/events/command_events.hpp"
 #include "model/events/component_events.hpp"
@@ -42,9 +45,16 @@
 
 namespace tactile {
 
+TACTILE_FWD_DECLARE_CLASS(System)
+TACTILE_FWD_DECLARE_CLASS(ToolSystem)
+
 /// The heart of the Tactile map editor.
 class App final : public AppDelegate {
  public:
+  App();
+
+  ~App() noexcept override;
+
   void on_startup(BackendAPI api) override;
 
   void on_shutdown() override;
@@ -62,6 +72,8 @@ class App final : public AppDelegate {
  private:
   Unique<Model> mModel;
   Dispatcher mDispatcher;
+  Unique<ToolSystem> mToolSystem;
+  Vector<System*> mSystems;
   ImVec2 mFramebufferScale {};
   bool mShouldStop     : 1 {false};
   bool mWantFontReload : 1 {false};
@@ -173,11 +185,6 @@ class App final : public AppDelegate {
   void _on_reset_dock_visibilities(const ResetDockVisibilitiesEvent& event);
 
   // Viewport events
-  void _on_viewport_mouse_pressed(const ViewportMousePressedEvent& event);
-  void _on_viewport_mouse_dragged(const ViewportMouseDraggedEvent& event);
-  void _on_viewport_mouse_released(const ViewportMouseReleasedEvent& event);
-  void _on_viewport_mouse_entered(const ViewportMouseEnteredEvent& event);
-  void _on_viewport_mouse_exited(const ViewportMouseExitedEvent& event);
   void _on_center_viewport(const CenterViewportEvent& event);
   void _on_reset_viewport_zoom(const ResetViewportZoomEvent& event);
   void _on_increase_viewport_zoom(const IncreaseViewportZoomEvent& event);

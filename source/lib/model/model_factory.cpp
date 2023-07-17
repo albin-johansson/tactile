@@ -26,9 +26,6 @@
 #include "model/textures/gl_texture_system.hpp"
 #include "model/textures/null_texture_system.hpp"
 #include "model/textures/texture_components.hpp"
-#include "model/tools/bucket_tool.hpp"
-#include "model/tools/stamp_tool.hpp"
-#include "model/tools/tool_components.hpp"
 #include "model/view/menu_components.hpp"
 #include "ui/widget_state.hpp"
 
@@ -57,10 +54,6 @@ void init_model(Model& model, const BackendAPI api)
     texture_callbacks.init = &on_init_gl_texture;
     texture_callbacks.destroy = &on_destroy_gl_texture;
   }
-
-  auto& tool_context = model.add<ToolContext>();
-  tool_context.tools[ToolType::Stamp] = create_stamp_tool(model);
-  tool_context.tools[ToolType::Bucket] = create_bucket_tool(model);
 }
 
 auto create_model(const BackendAPI api) -> Model

@@ -1,7 +1,7 @@
 /*
  * This source file is a part of the Tactile map editor.
  *
- * Copyright (C) 2023 Albin Johansson
+ * Copyright (C) 2022 Albin Johansson
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,27 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include "model/model.hpp"
-#include "model/tools/tool.hpp"
+#include "tool.hpp"
 
 namespace tactile {
 
-class BucketTool final : public Tool {
- public:
-  void reset() override {}
+void Tool::on_activated(Model&, Dispatcher&) {}
 
-  void on_mouse_pressed(Model& model,
-                        Dispatcher& dispatcher,
-                        const ViewportMouseInfo& mouse) override;
+void Tool::on_deactivated(Model&, Dispatcher&) {}
 
-  [[nodiscard]] auto is_available(const Model& model) const -> bool override;
-};
+void Tool::on_mouse_entered(Model&, Dispatcher&) {}
 
-namespace sys {
+void Tool::on_mouse_exited(Model&, Dispatcher&) {}
 
-[[nodiscard]] auto is_bucket_tool_available(const Model& model) -> bool;
+void Tool::on_mouse_pressed(Model&, Dispatcher&, const ViewportMouseInfo&) {}
 
-}  // namespace sys
-}  // namespace tactile::sys
+void Tool::on_mouse_dragged(Model&, Dispatcher&, const ViewportMouseInfo&) {}
+
+void Tool::on_mouse_released(Model&, Dispatcher&, const ViewportMouseInfo&) {}
+
+}  // namespace tactile

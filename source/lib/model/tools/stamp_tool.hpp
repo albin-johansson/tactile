@@ -19,36 +19,63 @@
 
 #pragma once
 
+#include "common/macros.hpp"
+#include "common/tile_pos.hpp"
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
+#include "common/type/maybe.hpp"
+#include "common/type/tile_cache.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/model.hpp"
+#include "model/tools/tool.hpp"
 #include "model/viewports/viewport_components.hpp"
+
+namespace tactile {
+
+TACTILE_FWD_DECLARE_STRUCT(Map)
+
+class StampTool final : public Tool {
+ public:
+  void reset() override;
+
+  void on_deactivated(Model& model, Dispatcher& dispatcher) override;
+
+  void on_mouse_exited(Model& model, Dispatcher& dispatcher) override;
+
+  void on_mouse_pressed(Model& model,
+                        Dispatcher& dispatcher,
+                        const ViewportMouseInfo& mouse) override;
+
+  void on_mouse_dragged(Model& model,
+                        Dispatcher& dispatcher,
+                        const ViewportMouseInfo& mouse) override;
+
+  void on_mouse_released(Model& model,
+                         Dispatcher& dispatcher,
+                         const ViewportMouseInfo& mouse) override;
+
+  [[nodiscard]] auto is_available(const Model& model) const -> bool override;
+
+ private:
+  TileCache mOldState;
+  TileCache mNewState;
+  Maybe<TilePos> mLastChangedPos;
+  bool mIsRandom {false};
+
+  void _update_sequence(Model& model, const TilePos& mouse_pos);
+  void _update_normal_sequence(Model& model, const Map& map, const TilePos& mouse_pos);
+  void _update_random_sequence(Model& model, const Map& map, const TilePos& mouse_pos);
+  void _try_end_sequence(Model& model, Dispatcher& dispatcher);
+
+  [[nodiscard]] auto _behaves_as_if_random(const Model& model, const Map& map) const
+      -> bool;
+};
+
+}  // namespace tactile
 
 namespace tactile::sys {
 
-auto create_stamp_tool(Model& model) -> Entity;
-
-void on_stamp_tool_deactivated(Model& model, Entity tool_entity, Dispatcher& dispatcher);
-
-void on_stamp_tool_exited(Model& model, Entity tool_entity, Dispatcher& dispatcher);
-
-void on_stamp_tool_pressed(Model& model,
-                           Entity tool_entity,
-                           const ViewportMouseInfo& mouse_info,
-                           Dispatcher& dispatcher);
-
-void on_stamp_tool_dragged(Model& model,
-                           Entity tool_entity,
-                           const ViewportMouseInfo& mouse_info,
-                           Dispatcher& dispatcher);
-
-void on_stamp_tool_released(Model& model,
-                            Entity tool_entity,
-                            const ViewportMouseInfo& mouse_info,
-                            Dispatcher& dispatcher);
-
-[[nodiscard]] auto is_stamp_tool_available(const Model& model) -> bool;
+[[nodiscard, deprecated]] auto is_stamp_tool_available(const Model& model) -> bool;
 
 [[nodiscard]] auto is_stamp_tool_randomizer_possible(const Model& model, const Map& map)
     -> bool;

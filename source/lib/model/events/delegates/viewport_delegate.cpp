@@ -21,94 +21,12 @@
 
 #include <cmath>  // round
 
-#include "common/util/lookup.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
-#include "model/tools/tool_components.hpp"
 #include "model/viewports/viewport_ops.hpp"
 #include "model/viewports/viewport_system.hpp"
 
 namespace tactile {
-
-void on_viewport_mouse_pressed(Model& model,
-                               Dispatcher& dispatcher,
-                               const ViewportMousePressedEvent& event)
-{
-  auto& tool_context = model.get<ToolContext>();
-
-  if (tool_context.active_tool.has_value()) {
-    const auto tool_entity = lookup_in(tool_context.tools, *tool_context.active_tool);
-    const auto& tool = model.get<Tool>(tool_entity);
-
-    if (tool.on_pressed) {
-      tool.on_pressed(model, tool_entity, event.mouse_info, dispatcher);
-    }
-  }
-}
-
-void on_viewport_mouse_dragged(Model& model,
-                               Dispatcher& dispatcher,
-                               const ViewportMouseDraggedEvent& event)
-{
-  auto& tool_context = model.get<ToolContext>();
-
-  if (tool_context.active_tool.has_value()) {
-    const auto tool_entity = lookup_in(tool_context.tools, *tool_context.active_tool);
-    const auto& tool = model.get<Tool>(tool_entity);
-
-    if (tool.on_dragged) {
-      tool.on_dragged(model, tool_entity, event.mouse_info, dispatcher);
-    }
-  }
-}
-
-void on_viewport_mouse_released(Model& model,
-                                Dispatcher& dispatcher,
-                                const ViewportMouseReleasedEvent& event)
-{
-  auto& tool_context = model.get<ToolContext>();
-
-  if (tool_context.active_tool.has_value()) {
-    const auto tool_entity = lookup_in(tool_context.tools, *tool_context.active_tool);
-    const auto& tool = model.get<Tool>(tool_entity);
-
-    if (tool.on_released) {
-      tool.on_released(model, tool_entity, event.mouse_info, dispatcher);
-    }
-  }
-}
-
-void on_viewport_mouse_entered(Model& model,
-                               Dispatcher& dispatcher,
-                               const ViewportMouseEnteredEvent&)
-{
-  auto& tool_context = model.get<ToolContext>();
-
-  if (tool_context.active_tool.has_value()) {
-    const auto tool_entity = lookup_in(tool_context.tools, *tool_context.active_tool);
-    const auto& tool = model.get<Tool>(tool_entity);
-
-    if (tool.on_entered) {
-      tool.on_entered(model, tool_entity, dispatcher);
-    }
-  }
-}
-
-void on_viewport_mouse_exited(Model& model,
-                              Dispatcher& dispatcher,
-                              const ViewportMouseExitedEvent&)
-{
-  auto& tool_context = model.get<ToolContext>();
-
-  if (tool_context.active_tool.has_value()) {
-    const auto tool_entity = lookup_in(tool_context.tools, *tool_context.active_tool);
-    const auto& tool = model.get<Tool>(tool_entity);
-
-    if (tool.on_exited) {
-      tool.on_exited(model, tool_entity, dispatcher);
-    }
-  }
-}
 
 void on_center_viewport(Model& model, const CenterViewportEvent& event)
 {

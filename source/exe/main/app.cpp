@@ -43,6 +43,7 @@
 #include "io/file_history_io.hpp"
 #include "io/session_io.hpp"
 #include "io/settings_io.hpp"
+#include "model/documents/document_system.hpp"
 #include "model/events/delegates/command_delegate.hpp"
 #include "model/events/delegates/component_delegate.hpp"
 #include "model/events/delegates/file_delegate.hpp"
@@ -62,9 +63,11 @@
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/file_history_system.hpp"
 #include "model/persistence/settings.hpp"
+#include "model/system.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/textures/texture_factory.hpp"
 #include "model/textures/texture_system.hpp"
+#include "model/tools/tool_system.hpp"
 #include "model/view/menu_system.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/style/fonts.hpp"
@@ -77,12 +80,24 @@
 
 namespace tactile {
 
+App::App() = default;
+
+App::~App() noexcept = default;
+
 void App::on_startup(const BackendAPI api)
 {
   mModel = std::make_unique<Model>();
   auto& model = *mModel;
 
   sys::init_model(model, api);
+
+  mToolSystem = std::make_unique<ToolSystem>(*mModel, mDispatcher);
+
+  mSystems.push_back(mToolSystem.get());
+
+  for (auto& system: mSystems) {
+    system->install();
+  }
 
   _subscribe_to_events();
 
@@ -199,11 +214,6 @@ void App::_subscribe_to_events()
   ROUTE(MenuActionEvent, &App::_on_menu_action);
 
   // Viewport events
-  ROUTE(ViewportMousePressedEvent, &App::_on_viewport_mouse_pressed);
-  ROUTE(ViewportMouseDraggedEvent, &App::_on_viewport_mouse_dragged);
-  ROUTE(ViewportMouseReleasedEvent, &App::_on_viewport_mouse_released);
-  ROUTE(ViewportMouseEnteredEvent, &App::_on_viewport_mouse_entered);
-  ROUTE(ViewportMouseExitedEvent, &App::_on_viewport_mouse_exited);
   ROUTE(CenterViewportEvent, &App::_on_center_viewport);
   ROUTE(ResetViewportZoomEvent, &App::_on_reset_viewport_zoom);
   ROUTE(IncreaseViewportZoomEvent, &App::_on_increase_viewport_zoom);
@@ -298,6 +308,10 @@ void App::on_update()
   // TODO update animated tiles
   sys::update_menu_items(model, mDispatcher);
 
+  for (auto& system: mSystems) {
+    system->update();
+  }
+
   auto& widgets = model.get<ui::WidgetState>();
   ui::render_ui(model, widgets, mDispatcher);
   ui::check_for_missing_layout_file(model,
@@ -363,6 +377,14 @@ void App::_on_close_document(const CloseDocumentEvent& event)
 void App::_on_select_document(const SelectDocumentEvent& event)
 {
   spdlog::trace("[SelectDocumentEvent] document: {}", event.document);
+
+  // FIXME documents are selected for every mouse press, so we need this check.
+  if (event.document != sys::get_active_document(*mModel)) {
+    for (auto& system: mSystems) {
+      system->reset();
+    }
+  }
+
   on_select_document(*mModel, event);
 }
 
@@ -829,36 +851,6 @@ void App::_on_reset_dock_visibilities(const ResetDockVisibilitiesEvent& event)
 {
   spdlog::trace("[ResetDockVisibilitiesEvent]");
   on_reset_dock_visibilities(*mModel, event);
-}
-
-void App::_on_viewport_mouse_pressed(const ViewportMousePressedEvent& event)
-{
-  spdlog::trace("[ViewportMousePressedEvent]");
-  on_viewport_mouse_pressed(*mModel, mDispatcher, event);
-}
-
-void App::_on_viewport_mouse_dragged(const ViewportMouseDraggedEvent& event)
-{
-  spdlog::trace("[ViewportMouseDraggedEvent]");
-  on_viewport_mouse_dragged(*mModel, mDispatcher, event);
-}
-
-void App::_on_viewport_mouse_released(const ViewportMouseReleasedEvent& event)
-{
-  spdlog::trace("[ViewportMouseReleasedEvent]");
-  on_viewport_mouse_released(*mModel, mDispatcher, event);
-}
-
-void App::_on_viewport_mouse_entered(const ViewportMouseEnteredEvent& event)
-{
-  spdlog::trace("[ViewportMouseEnteredEvent]");
-  on_viewport_mouse_entered(*mModel, mDispatcher, event);
-}
-
-void App::_on_viewport_mouse_exited(const ViewportMouseExitedEvent& event)
-{
-  spdlog::trace("[ViewportMouseExitedEvent]");
-  on_viewport_mouse_exited(*mModel, mDispatcher, event);
 }
 
 void App::_on_center_viewport(const CenterViewportEvent& event)

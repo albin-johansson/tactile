@@ -26,7 +26,6 @@
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/settings.hpp"
 #include "model/textures/texture_components.hpp"
-#include "model/tools/tool_components.hpp"
 #include "model/view/menu_components.hpp"
 #include "ui/widget_state.hpp"
 
@@ -39,7 +38,6 @@ TEST_SUITE("ModelFactory")
     const auto model = sys::create_model(BackendAPI::Null);
 
     CHECK(model.has<DocumentContext>());
-    CHECK(model.has<ToolContext>());
     CHECK(model.has<Settings>());
     CHECK(model.has<Languages>());
     CHECK(model.has<FileHistory>());

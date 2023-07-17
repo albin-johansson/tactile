@@ -25,26 +25,6 @@
 
 namespace tactile {
 
-void on_viewport_mouse_pressed(Model& model,
-                               Dispatcher& dispatcher,
-                               const ViewportMousePressedEvent& event);
-
-void on_viewport_mouse_dragged(Model& model,
-                               Dispatcher& dispatcher,
-                               const ViewportMouseDraggedEvent& event);
-
-void on_viewport_mouse_released(Model& model,
-                                Dispatcher& dispatcher,
-                                const ViewportMouseReleasedEvent& event);
-
-void on_viewport_mouse_entered(Model& model,
-                               Dispatcher& dispatcher,
-                               const ViewportMouseEnteredEvent& event);
-
-void on_viewport_mouse_exited(Model& model,
-                              Dispatcher& dispatcher,
-                              const ViewportMouseExitedEvent& event);
-
 void on_center_viewport(Model& model,
                         Dispatcher& dispatcher,
                         const CenterViewportEvent& event);

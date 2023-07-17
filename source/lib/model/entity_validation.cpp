@@ -29,7 +29,6 @@
 #include "model/textures/texture_components.hpp"
 #include "model/tiles/tile_components.hpp"
 #include "model/tilesets/tileset_components.hpp"
-#include "model/tools/tool_components.hpp"
 #include "model/viewports/viewport_components.hpp"
 
 namespace tactile::sys {
@@ -157,11 +156,6 @@ auto is_tile_entity(const Model& model, const Entity entity) -> bool
   return entity != kNullEntity &&       //
          model.has<Context>(entity) &&  //
          model.has<Tile>(entity);
-}
-
-auto is_tool_entity(const Model& model, const Entity entity) -> bool
-{
-  return entity != kNullEntity && model.has<Tool>(entity);
 }
 
 }  // namespace tactile::sys

@@ -34,85 +34,78 @@
 #include "model/layers/layer_components.hpp"
 #include "model/layers/tile_layer_ops.hpp"
 #include "model/maps/map_components.hpp"
+#include "model/model.hpp"
 #include "model/tilesets/attached_tileset_ops.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_ops.hpp"
-#include "model/tools/tool_components.hpp"
 #include "model/viewports/viewport_components.hpp"
 
-namespace tactile::sys {
-namespace {
+namespace tactile {
 
-struct StampToolData final {
-  TileCache old_state;
-  TileCache new_state;
-  Maybe<TilePos> last_changed_pos;
-  bool is_random {false};
-};
-
-[[nodiscard]] auto _is_usable(const Model& model) -> bool
+void StampTool::reset()
 {
-  const auto document_entity = get_active_document(model);
+  mOldState.clear();
+  mNewState.clear();
+  mLastChangedPos.reset();
+  mIsRandom = false;
+}
+
+void StampTool::on_deactivated(Model& model, Dispatcher& dispatcher)
+{
+  _try_end_sequence(model, dispatcher);
+}
+
+void StampTool::on_mouse_exited(Model& model, Dispatcher& dispatcher)
+{
+  _try_end_sequence(model, dispatcher);
+}
+
+void StampTool::on_mouse_pressed(Model& model,
+                                 Dispatcher&,
+                                 const ViewportMouseInfo& mouse)
+{
+  if (mouse.in_viewport && mouse.button == MouseButton::Left && is_available(model)) {
+    _update_sequence(model, mouse.tile_pos);
+  }
+}
+
+void StampTool::on_mouse_dragged(Model& model,
+                                 Dispatcher&,
+                                 const ViewportMouseInfo& mouse)
+{
+  if (mouse.in_viewport && mouse.button == MouseButton::Left && is_available(model)) {
+    _update_sequence(model, mouse.tile_pos);
+  }
+}
+
+void StampTool::on_mouse_released(Model& model,
+                                  Dispatcher& dispatcher,
+                                  const ViewportMouseInfo& mouse)
+{
+  if (mouse.button == MouseButton::Left && is_available(model)) {
+    _try_end_sequence(model, dispatcher);
+  }
+}
+
+void StampTool::_update_sequence(Model& model, const TilePos& mouse_pos)
+{
+  TACTILE_ASSERT(is_available(model));
+  const auto document_entity = sys::get_active_document(model);
 
   const auto& map_document = model.get<MapDocument>(document_entity);
   const auto& map = model.get<Map>(map_document.map);
 
-  if (map.active_layer == kNullEntity || !model.has<TileLayer>(map.active_layer)) {
-    return false;
+  if (_behaves_as_if_random(model, map)) {
+    _update_random_sequence(model, map, mouse_pos);
   }
-
-  if (map.active_tileset != kNullEntity) {
-    const auto& attached_tileset = model.get<AttachedTileset>(map.active_tileset);
-    return attached_tileset.selection.has_value();
+  else {
+    _update_normal_sequence(model, map, mouse_pos);
   }
-
-  return false;
 }
 
-[[nodiscard]] auto _behaves_as_if_random(const Model& model,
-                                         const StampToolData& tool_data,
-                                         const Map& map) -> bool
-{
-  return tool_data.is_random && is_stamp_tool_randomizer_possible(model, map);
-}
-
-void _update_random_sequence(Model& model,
-                             StampToolData& tool_data,
-                             const Map& map,
-                             const TilePos& mouse_pos)
-{
-  auto& tile_layer = model.get<TileLayer>(map.active_layer);
-
-  const auto& attached_tileset = model.get<AttachedTileset>(map.active_tileset);
-  const auto& selection = attached_tileset.selection.value();
-
-  const auto selection_size = selection.end - selection.begin;
-  const auto selected_tile_count = selection_size.row() * selection_size.col();
-
-  if (tool_data.last_changed_pos != mouse_pos) {
-    const auto index = next_random_i32(0, selected_tile_count - 1);
-    const auto selection_pos =
-        selection.begin + TilePos::from_index(index, selection_size.col());
-
-    const auto& tileset = model.get<Tileset>(attached_tileset.tileset);
-    const auto tile_id =
-        attached_tileset.first_tile + tile_index_at(tileset, selection_pos);
-
-    if (!tool_data.old_state.contains(mouse_pos)) {
-      tool_data.old_state[mouse_pos] = tile_at(tile_layer, mouse_pos).value();
-    }
-
-    tool_data.new_state[mouse_pos] = tile_id;
-    set_tile(tile_layer, mouse_pos, tile_id);
-  }
-
-  tool_data.last_changed_pos = mouse_pos;
-}
-
-void _update_normal_sequence(Model& model,
-                             StampToolData& tool_data,
-                             const Map& map,
-                             const TilePos& mouse_pos)
+void StampTool::_update_normal_sequence(Model& model,
+                                        const Map& map,
+                                        const TilePos& mouse_pos)
 {
   auto& tile_layer = model.get<TileLayer>(map.active_layer);
 
@@ -126,130 +119,96 @@ void _update_normal_sequence(Model& model,
   const auto selected_rows = selection_size.row();
   const auto selected_cols = selection_size.col();
 
-  invoke_mn(selected_rows, selected_cols, [&](const int32 row, const int32 col) {
-    const TilePos index {row, col};
-    const auto selection_pos = selection.begin + index;
+  for (int32 row = 0; row < selected_rows; ++row) {
+    for (int32 col = 0; col < selected_cols; ++col) {
+      const TilePos index {row, col};
+      const auto selection_pos = selection.begin + index;
 
-    const auto tile_id =
-        attached_tileset.first_tile + tile_index_at(tileset, selection_pos);
-    if (tile_id != kEmptyTile) {
-      const auto pos = mouse_pos + index - preview_offset;
+      const auto tile_id =
+          attached_tileset.first_tile + sys::tile_index_at(tileset, selection_pos);
+      if (tile_id != kEmptyTile) {
+        const auto pos = mouse_pos + index - preview_offset;
 
-      if (is_valid_tile(tile_layer, pos)) {
-        if (!tool_data.old_state.contains(pos)) {
-          tool_data.old_state[pos] = tile_at(tile_layer, pos).value();
+        if (sys::is_valid_tile(tile_layer, pos)) {
+          if (!mOldState.contains(pos)) {
+            mOldState[pos] = sys::tile_at(tile_layer, pos).value();
+          }
+
+          mNewState[pos] = tile_id;
+          sys::set_tile(tile_layer, pos, tile_id);
         }
-
-        tool_data.new_state[pos] = tile_id;
-        set_tile(tile_layer, pos, tile_id);
       }
     }
-  });
-}
-
-void _update_sequence(Model& model, StampToolData& tool_data, const TilePos& mouse_pos)
-{
-  TACTILE_ASSERT(_is_usable(model));
-
-  const auto document_entity = get_active_document(model);
-
-  const auto& map_document = model.get<MapDocument>(document_entity);
-  const auto& map = model.get<Map>(map_document.map);
-
-  if (_behaves_as_if_random(model, tool_data, map)) {
-    _update_random_sequence(model, tool_data, map, mouse_pos);
-  }
-  else {
-    _update_normal_sequence(model, tool_data, map, mouse_pos);
   }
 }
 
-void _try_end_sequence(Model& model, const Entity tool_entity, Dispatcher& dispatcher)
+void StampTool::_update_random_sequence(Model& model,
+                                        const Map& map,
+                                        const TilePos& mouse_pos)
 {
-  if (const auto* map = try_get_active_map(model)) {
-    auto& tool_data = model.get<StampToolData>(tool_entity);
+  auto& tile_layer = model.get<TileLayer>(map.active_layer);
 
-    if (!tool_data.old_state.empty() && !tool_data.new_state.empty()) {
+  const auto& attached_tileset = model.get<AttachedTileset>(map.active_tileset);
+  const auto& selection = attached_tileset.selection.value();
+
+  const auto selection_size = selection.end - selection.begin;
+  const auto selected_tile_count = selection_size.row() * selection_size.col();
+
+  if (mLastChangedPos != mouse_pos) {
+    const auto index = next_random_i32(0, selected_tile_count - 1);
+    const auto selection_pos =
+        selection.begin + TilePos::from_index(index, selection_size.col());
+
+    const auto& tileset = model.get<Tileset>(attached_tileset.tileset);
+    const auto tile_id =
+        attached_tileset.first_tile + sys::tile_index_at(tileset, selection_pos);
+
+    if (!mOldState.contains(mouse_pos)) {
+      mOldState[mouse_pos] = sys::tile_at(tile_layer, mouse_pos).value();
+    }
+
+    mNewState[mouse_pos] = tile_id;
+    sys::set_tile(tile_layer, mouse_pos, tile_id);
+  }
+
+  mLastChangedPos = mouse_pos;
+}
+
+void StampTool::_try_end_sequence(Model& model, Dispatcher& dispatcher)
+{
+  if (const auto* map = sys::try_get_active_map(model)) {
+    if (!mOldState.empty() && !mNewState.empty()) {
       dispatcher.enqueue<StampSequenceEvent>(map->active_layer,
-                                             std::move(tool_data.old_state),
-                                             std::move(tool_data.new_state));
+                                             std::move(mOldState),
+                                             std::move(mNewState));
 
-      tool_data.old_state.clear();
-      tool_data.new_state.clear();
-      tool_data.last_changed_pos.reset();
+      mOldState.clear();
+      mNewState.clear();
+      mLastChangedPos.reset();
     }
   }
 }
 
-}  // namespace
-
-auto create_stamp_tool(Model& model) -> Entity
+auto StampTool::_behaves_as_if_random(const Model& model, const Map& map) const -> bool
 {
-  const auto stamp_tool_entity = model.create_entity();
-
-  auto& stamp_tool = model.add<Tool>(stamp_tool_entity);
-  stamp_tool.on_deactivated = &on_stamp_tool_deactivated;
-  stamp_tool.on_exited = &on_stamp_tool_exited;
-  stamp_tool.on_pressed = &on_stamp_tool_pressed;
-  stamp_tool.on_dragged = &on_stamp_tool_dragged;
-  stamp_tool.on_released = &on_stamp_tool_released;
-  stamp_tool.is_available = &is_stamp_tool_available;
-
-  TACTILE_ASSERT(is_tool_entity(model, stamp_tool_entity));
-  return stamp_tool_entity;
+  return mIsRandom && sys::is_stamp_tool_randomizer_possible(model, map);
 }
 
-void on_stamp_tool_deactivated(Model& model,
-                               const Entity tool_entity,
-                               Dispatcher& dispatcher)
+auto StampTool::is_available(const Model& model) const -> bool
 {
-  TACTILE_ASSERT(is_tool_entity(model, tool_entity));
-  _try_end_sequence(model, tool_entity, dispatcher);
-}
+  if (const auto* map = sys::try_get_active_map(model)) {
+    if (map->active_layer != kNullEntity && map->active_tileset != kNullEntity) {
+      const auto& attached_tileset = model.get<AttachedTileset>(map->active_tileset);
 
-void on_stamp_tool_exited(Model& model, const Entity tool_entity, Dispatcher& dispatcher)
-{
-  TACTILE_ASSERT(is_tool_entity(model, tool_entity));
-  _try_end_sequence(model, tool_entity, dispatcher);
-}
-
-void on_stamp_tool_pressed(Model& model,
-                           const Entity tool_entity,
-                           const ViewportMouseInfo& mouse,
-                           Dispatcher&)
-{
-  TACTILE_ASSERT(is_tool_entity(model, tool_entity));
-
-  if (mouse.in_viewport && mouse.button == MouseButton::Left && _is_usable(model)) {
-    auto& tool_data = model.add<StampToolData>(tool_entity);
-    _update_sequence(model, tool_data, mouse.tile_pos);
+      return model.has<TileLayer>(map->active_layer) &&
+             attached_tileset.selection.has_value();
+    }
   }
+
+  return false;
 }
 
-void on_stamp_tool_dragged(Model& model,
-                           const Entity tool_entity,
-                           const ViewportMouseInfo& mouse,
-                           Dispatcher&)
-{
-  TACTILE_ASSERT(is_tool_entity(model, tool_entity));
-
-  if (mouse.in_viewport && mouse.button == MouseButton::Left && _is_usable(model)) {
-    auto& tool_data = model.add<StampToolData>(tool_entity);
-    _update_sequence(model, tool_data, mouse.tile_pos);
-  }
-}
-
-void on_stamp_tool_released(Model& model,
-                            const Entity tool_entity,
-                            const ViewportMouseInfo& mouse,
-                            Dispatcher& dispatcher)
-{
-  TACTILE_ASSERT(is_tool_entity(model, tool_entity));
-
-  if (mouse.button == MouseButton::Left && _is_usable(model)) {
-    _try_end_sequence(model, tool_entity, dispatcher);
-  }
-}
+namespace sys {
 
 auto is_stamp_tool_available(const Model& model) -> bool
 {
@@ -275,4 +234,5 @@ auto is_stamp_tool_randomizer_possible(const Model& model, const Map& map) -> bo
   return false;
 }
 
-}  // namespace tactile::sys
+}  // namespace sys
+}  // namespace tactile

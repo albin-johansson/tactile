@@ -23,31 +23,19 @@
 #include "model/documents/document_system.hpp"
 #include "model/events/tool_events.hpp"
 #include "model/layers/layer_components.hpp"
+#include "model/model.hpp"
 #include "model/tilesets/attached_tileset_ops.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_ops.hpp"
-#include "model/tools/tool_components.hpp"
 
-namespace tactile::sys {
+namespace tactile {
 
-auto create_bucket_tool(Model& model) -> Entity
+void BucketTool::on_mouse_pressed(Model& model,
+                                  Dispatcher& dispatcher,
+                                  const ViewportMouseInfo& mouse)
 {
-  const auto bucket_tool_entity = model.create_entity();
-
-  auto& bucket_tool = model.add<Tool>(bucket_tool_entity);
-  bucket_tool.on_pressed = &on_bucket_tool_pressed;
-
-  return bucket_tool_entity;
-}
-
-void on_bucket_tool_pressed(Model& model,
-                            Entity,
-                            const ViewportMouseInfo& mouse,
-                            Dispatcher& dispatcher)
-{
-  if (mouse.in_viewport && mouse.button == MouseButton::Left &&
-      is_bucket_tool_available(model)) {
-    const auto document_entity = get_active_document(model);
+  if (mouse.in_viewport && mouse.button == MouseButton::Left && is_available(model)) {
+    const auto document_entity = sys::get_active_document(model);
 
     const auto& map_document = model.get<MapDocument>(document_entity);
     const auto& map = model.get<Map>(map_document.map);
@@ -57,11 +45,18 @@ void on_bucket_tool_pressed(Model& model,
 
     const auto selected_pos = attached_tileset.selection->begin;
     const auto new_tile_id =
-        attached_tileset.first_tile + tile_index_at(tileset, selected_pos);
+        attached_tileset.first_tile + sys::tile_index_at(tileset, selected_pos);
 
     dispatcher.enqueue<FloodEvent>(map.active_layer, mouse.tile_pos, new_tile_id);
   }
 }
+
+auto BucketTool::is_available(const Model& model) const -> bool
+{
+  return sys::is_bucket_tool_available(model);
+}
+
+namespace sys {
 
 auto is_bucket_tool_available(const Model& model) -> bool
 {
@@ -77,4 +72,5 @@ auto is_bucket_tool_available(const Model& model) -> bool
   return false;
 }
 
-}  // namespace tactile::sys
+}  // namespace sys
+}  // namespace tactile
