@@ -19,16 +19,15 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
-#include "model/model.hpp"
+#include "model/model_view.hpp"
 #include "ui/menu/debug_menu.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct MenuBarState final {
   DebugMenuState debug_menu;
 };
 
-void push_menu_bar(const Model& model, MenuBarState& state, Dispatcher& dispatcher);
+void push_menu_bar(ModelView& model, MenuBarState& state);
 
-}  // namespace tactile::ui
+}  // namespace tactile

@@ -22,6 +22,7 @@
 #include "io/file_dialog.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/events/map_events.hpp"
+#include "model/model_view.hpp"
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/credits_dialog.hpp"
 #include "ui/dialog/godot_export_dialog.hpp"
@@ -41,46 +42,50 @@
 #include "ui/menu/menu_bar.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/colors.hpp"
+#include "ui/widget_state.hpp"
 
 namespace tactile::ui {
 
-void render_ui(const Model& model, WidgetState& widgets, Dispatcher& dispatcher)
+void render_ui(ModelView& model, WidgetState& widgets)
 {
+  const auto& registry = model.get_registry();
+  auto& dispatcher = model.get_dispatcher();
+
   update_dynamic_color_cache();
-  update_dock_space(model, widgets.dock_space);
+  update_dock_space(registry, widgets.dock_space);
 
-  push_menu_bar(model, widgets.menu_bar, dispatcher);
+  push_menu_bar(model, widgets.menu_bar);
 
-  push_editor_dock_widget(model, widgets.editor_dock, dispatcher);
+  push_editor_dock_widget(registry, widgets.editor_dock, dispatcher);
 
-  if (is_layer_dock_enabled(model)) {
-    push_layer_dock_widget(model, widgets.layer_dock, dispatcher);
+  if (is_layer_dock_enabled(registry)) {
+    push_layer_dock_widget(registry, widgets.layer_dock, dispatcher);
   }
 
-  if (is_tileset_dock_enabled(model)) {
-    push_tileset_dock_widget(model, widgets.tileset_dock, dispatcher);
+  if (is_tileset_dock_enabled(registry)) {
+    push_tileset_dock_widget(registry, widgets.tileset_dock, dispatcher);
   }
 
-  if (is_animation_dock_enabled(model)) {
-    push_animation_dock_widget(model, widgets.animation_dock, dispatcher);
+  if (is_animation_dock_enabled(registry)) {
+    push_animation_dock_widget(registry, widgets.animation_dock, dispatcher);
   }
 
-  if (sys::has_active_document(model)) {
-    push_property_dock_widget(model, widgets.property_dock, dispatcher);
-    push_component_dock_widget(model, dispatcher);
+  if (sys::has_active_document(registry)) {
+    push_property_dock_widget(registry, widgets.property_dock, dispatcher);
+    push_component_dock_widget(registry, dispatcher);
   }
 
-  push_log_dock_widget(model, widgets.log_dock, dispatcher);
+  push_log_dock_widget(registry, widgets.log_dock, dispatcher);
 
-  push_new_map_dialog(model, widgets.new_map_dialog, dispatcher);
-  push_new_tileset_dialog(model, widgets.new_tileset_dialog, dispatcher);
-  push_resize_map_dialog(model, widgets.resize_map_dialog, dispatcher);
-  push_component_editor_dialog(model, widgets.component_editor_dialog, dispatcher);
-  push_godot_export_dialog(model, widgets.godot_export_dialog, dispatcher);
-  push_settings_dialog(model, widgets.settings_dialog, dispatcher);
-  push_map_parse_error_dialog(model, widgets.map_parse_error_dialog);
-  push_credits_dialog(model, widgets.credits_dialog);
-  push_about_dialog(model, widgets.about_dialog);
+  push_new_map_dialog(registry, widgets.new_map_dialog, dispatcher);
+  push_new_tileset_dialog(registry, widgets.new_tileset_dialog, dispatcher);
+  push_resize_map_dialog(registry, widgets.resize_map_dialog, dispatcher);
+  push_component_editor_dialog(registry, widgets.component_editor_dialog, dispatcher);
+  push_godot_export_dialog(registry, widgets.godot_export_dialog, dispatcher);
+  push_settings_dialog(registry, widgets.settings_dialog, dispatcher);
+  push_map_parse_error_dialog(registry, widgets.map_parse_error_dialog);
+  push_credits_dialog(registry, widgets.credits_dialog);
+  push_about_dialog(registry, widgets.about_dialog);
 
   if (widgets.should_open_map_file_dialog) {
     auto dialog = FileDialog::open_map();

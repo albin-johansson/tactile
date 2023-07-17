@@ -20,20 +20,27 @@
 #include "tileset_menu.hpp"
 
 #include "model/documents/document_system.hpp"
+#include "model/events/menu_events.hpp"
 #include "model/i18n/language_system.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void push_tileset_menu(const Model& model, Dispatcher& dispatcher)
+void push_tileset_menu(ModelView& model)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = model.get_language_strings();
 
-  const Disable disable_if {!sys::is_tileset_document_active(model)};
-  if (const Menu menu {strings.menu.tileset.c_str()}; menu.is_open()) {
-    push_menu_item(model, MenuAction::InspectTileset, dispatcher);
+  if (const ui::Menu menu {strings.menu.tileset.c_str(),
+                           model.has_active_tileset_document()};
+      menu.is_open()) {
+    if (ImGui::MenuItem(strings.action.inspect_tileset.c_str(),
+                        nullptr,
+                        nullptr,
+                        model.is_available(MenuAction::InspectTileset))) {
+      model.enqueue<MenuActionEvent>(MenuAction::InspectTileset);
+    }
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

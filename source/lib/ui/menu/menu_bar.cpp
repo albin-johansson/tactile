@@ -21,7 +21,6 @@
 
 #include <imgui.h>
 
-#include "model/model.hpp"
 #include "ui/menu/edit_menu.hpp"
 #include "ui/menu/file_menu.hpp"
 #include "ui/menu/help_menu.hpp"
@@ -29,21 +28,21 @@
 #include "ui/menu/tileset_menu.hpp"
 #include "ui/menu/view_menu.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void push_menu_bar(const Model& model, MenuBarState& state, Dispatcher& dispatcher)
+void push_menu_bar(ModelView& model, MenuBarState& state)
 {
   if (ImGui::BeginMainMenuBar()) {
-    push_file_menu(model, dispatcher);
-    push_edit_menu(model, dispatcher);
-    push_view_menu(model, dispatcher);
-    push_map_menu(model, dispatcher);
-    push_tileset_menu(model, dispatcher);
-    push_help_menu(model, dispatcher);
-    push_debug_menu(model, state.debug_menu, dispatcher);
+    push_file_menu(model);
+    push_edit_menu(model);
+    push_view_menu(model);
+    push_map_menu(model);
+    push_tileset_menu(model);
+    push_help_menu(model);
+    push_debug_menu(model, state.debug_menu);
 
     ImGui::EndMainMenuBar();
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

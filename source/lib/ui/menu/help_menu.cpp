@@ -21,27 +21,51 @@
 
 #include <imgui.h>
 
+#include "model/events/menu_events.hpp"
 #include "model/i18n/language_system.hpp"
 #include "model/view/menu_components.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void push_help_menu(const Model& model, Dispatcher& dispatcher)
+void push_help_menu(ModelView& model)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = model.get_language_strings();
 
-  if (const Menu menu {strings.menu.help.c_str()}; menu.is_open()) {
-    push_menu_item(model, MenuAction::ShowAbout, dispatcher);
-    push_menu_item(model, MenuAction::ShowAboutImGui, dispatcher);
+  if (const ui::Menu menu {strings.menu.help.c_str()}; menu.is_open()) {
+    if (ImGui::MenuItem(strings.action.show_about.c_str(),
+                        nullptr,
+                        nullptr,
+                        model.is_available(MenuAction::ShowAbout))) {
+      model.enqueue<MenuActionEvent>(MenuAction::ShowAbout);
+    }
+
+    if (ImGui::MenuItem(strings.action.about_dear_imgui.c_str(),
+                        nullptr,
+                        nullptr,
+                        model.is_available(MenuAction::ShowAboutImGui))) {
+      model.enqueue<MenuActionEvent>(MenuAction::ShowAboutImGui);
+    }
 
     ImGui::Separator();
-    push_menu_item(model, MenuAction::ReportIssue, dispatcher);
+
+    if (ImGui::MenuItem(strings.action.report_issue.c_str(),
+                        nullptr,
+                        nullptr,
+                        model.is_available(MenuAction::ReportIssue))) {
+      model.enqueue<MenuActionEvent>(MenuAction::ReportIssue);
+    }
 
     ImGui::Separator();
-    push_menu_item(model, MenuAction::ShowCredits, dispatcher);
+
+    if (ImGui::MenuItem(strings.action.show_credits.c_str(),
+                        nullptr,
+                        nullptr,
+                        model.is_available(MenuAction::ShowCredits))) {
+      model.enqueue<MenuActionEvent>(MenuAction::ShowCredits);
+    }
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

@@ -19,24 +19,24 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
-#include "model/model.hpp"
-#include "ui/widget_state.hpp"
+#include "common/macros.hpp"
+
+TACTILE_FWD_DECLARE_CLASS_NS(tactile, ModelView)
+TACTILE_FWD_DECLARE_STRUCT_NS(tactile::ui, WidgetState)
 
 namespace tactile::ui {
 
 /**
  * Renders the user interface and enqueues user events as needed.
  *
- * \details The UI doesn't directly modify the model. Instead, events are issued using the
- *          provided event dispatcher. The UI only ever directly modifies state not
- *          directly related to the core model, this corresponds to the widget state
- *          instance.
+ * \details The UI doesn't directly modify the model. Instead, events are issued using an
+ *          event dispatcher bundled with the model view instance. The UI only ever
+ *          directly modifies state not directly related to the core model, this
+ *          corresponds to the widget state instance.
  *
- * \param model      the associated model instance.
- * \param widgets    dynamic state used by miscellaneous widgets.
- * \param dispatcher the event dispatcher used to signal user actions.
+ * \param model   a view into the associated model.
+ * \param widgets dynamic state used by miscellaneous widgets.
  */
-void render_ui(const Model& model, WidgetState& widgets, Dispatcher& dispatcher);
+void render_ui(ModelView& model, WidgetState& widgets);
 
 }  // namespace tactile::ui

@@ -60,6 +60,7 @@
 #include "model/events/delegates/viewport_delegate.hpp"
 #include "model/i18n/language_system.hpp"
 #include "model/model_factory.hpp"
+#include "model/model_view.hpp"
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/file_history_system.hpp"
 #include "model/persistence/settings.hpp"
@@ -304,6 +305,7 @@ void App::on_shutdown()
 void App::on_update()
 {
   auto& model = *mModel;
+  ModelView model_view {model, *mToolSystem, mDispatcher};
 
   // TODO update animated tiles
   sys::update_menu_items(model, mDispatcher);
@@ -313,7 +315,7 @@ void App::on_update()
   }
 
   auto& widgets = model.get<ui::WidgetState>();
-  ui::render_ui(model, widgets, mDispatcher);
+  ui::render_ui(model_view, widgets);
   ui::check_for_missing_layout_file(model,
                                     widgets.dock_space.root_dock_id.value(),
                                     mDispatcher);

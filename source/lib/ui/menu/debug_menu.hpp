@@ -19,10 +19,9 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
-#include "model/model.hpp"
+#include "model/model_view.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct DebugMenuState final {
   bool show_demo_dialog {};
@@ -30,6 +29,6 @@ struct DebugMenuState final {
   bool show_style_editor_dialog {};
 };
 
-void push_debug_menu(const Model& model, DebugMenuState& state, Dispatcher& dispatcher);
+void push_debug_menu(ModelView& model, DebugMenuState& state);
 
-}  // namespace tactile::ui
+}  // namespace tactile

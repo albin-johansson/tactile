@@ -21,40 +21,101 @@
 
 #include <imgui.h>
 
-#include "model/i18n/language_system.hpp"
-#include "model/view/menu_system.hpp"
+#include "model/events/menu_events.hpp"
 #include "ui/shortcut/mappings.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void push_edit_menu(const Model& model, Dispatcher& dispatcher)
+void push_edit_menu(ModelView& model)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = model.get_language_strings();
 
-  if (const Menu menu {strings.menu.edit.c_str()}; menu.is_open()) {
-    push_menu_item(model, MenuAction::Undo, dispatcher);
-    push_menu_item(model, MenuAction::Redo, dispatcher);
+  if (const ui::Menu menu {strings.menu.edit.c_str()}; menu.is_open()) {
+    if (ImGui::MenuItem(strings.action.undo.c_str(),
+                        TACTILE_PRIMARY_MOD "+Z",
+                        nullptr,
+                        model.is_available(MenuAction::Undo))) {
+      model.enqueue<MenuActionEvent>(MenuAction::Undo);
+    }
 
-    ImGui::Separator();
-
-    push_menu_item(model, MenuAction::EnableStamp, dispatcher);
-    push_menu_item(model, MenuAction::EnableBucket, dispatcher);
-    push_menu_item(model, MenuAction::EnableEraser, dispatcher);
-    push_menu_item(model, MenuAction::EnableObjectSelector, dispatcher);
-    push_menu_item(model, MenuAction::EnableRectangle, dispatcher);
-    push_menu_item(model, MenuAction::EnableEllipse, dispatcher);
-    push_menu_item(model, MenuAction::EnablePoint, dispatcher);
-
-    ImGui::Separator();
-
-    push_menu_item(model, MenuAction::OpenComponentEditor, dispatcher);
+    if (ImGui::MenuItem(strings.action.redo.c_str(),
+                        TACTILE_PRIMARY_MOD "+Y",
+                        nullptr,
+                        model.is_available(MenuAction::Redo))) {
+      model.enqueue<MenuActionEvent>(MenuAction::Redo);
+    }
 
     ImGui::Separator();
 
-    push_menu_item(model, MenuAction::OpenSettings, dispatcher);
+    if (ImGui::MenuItem(strings.action.stamp_tool.c_str(),
+                        "S",
+                        nullptr,
+                        model.is_available(MenuAction::EnableStamp))) {
+      model.enqueue<MenuActionEvent>(MenuAction::EnableStamp);
+    }
+
+    if (ImGui::MenuItem(strings.action.bucket_tool.c_str(),
+                        "B",
+                        nullptr,
+                        model.is_available(MenuAction::EnableBucket))) {
+      model.enqueue<MenuActionEvent>(MenuAction::EnableBucket);
+    }
+
+    if (ImGui::MenuItem(strings.action.eraser_tool.c_str(),
+                        "E",
+                        nullptr,
+                        model.is_available(MenuAction::EnableEraser))) {
+      model.enqueue<MenuActionEvent>(MenuAction::EnableEraser);
+    }
+
+    if (ImGui::MenuItem(strings.action.object_selection_tool.c_str(),
+                        "Q",
+                        nullptr,
+                        model.is_available(MenuAction::EnableObjectSelector))) {
+      model.enqueue<MenuActionEvent>(MenuAction::EnableObjectSelector);
+    }
+
+    if (ImGui::MenuItem(strings.action.rectangle_tool.c_str(),
+                        "R",
+                        nullptr,
+                        model.is_available(MenuAction::EnableRectangle))) {
+      model.enqueue<MenuActionEvent>(MenuAction::EnableRectangle);
+    }
+
+    if (ImGui::MenuItem(strings.action.ellipse_tool.c_str(),
+                        "T",
+                        nullptr,
+                        model.is_available(MenuAction::EnableEllipse))) {
+      model.enqueue<MenuActionEvent>(MenuAction::EnableEllipse);
+    }
+
+    if (ImGui::MenuItem(strings.action.point_tool.c_str(),
+                        "Y",
+                        nullptr,
+                        model.is_available(MenuAction::EnablePoint))) {
+      model.enqueue<MenuActionEvent>(MenuAction::EnablePoint);
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(strings.action.component_editor.c_str(),
+                        TACTILE_PRIMARY_MOD "+Shift+C",
+                        nullptr,
+                        model.is_available(MenuAction::OpenComponentEditor))) {
+      model.enqueue<MenuActionEvent>(MenuAction::OpenComponentEditor);
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(strings.action.show_settings.c_str(),
+                        TACTILE_PRIMARY_MOD "+,",
+                        nullptr,
+                        model.is_available(MenuAction::OpenSettings))) {
+      model.enqueue<MenuActionEvent>(MenuAction::OpenSettings);
+    }
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
-#include "model/model.hpp"
+#include "model/model_view.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void push_edit_menu(const Model& model, Dispatcher& dispatcher);
+void push_edit_menu(ModelView& model);
 
-}  // namespace tactile::ui
+}  // namespace tactile

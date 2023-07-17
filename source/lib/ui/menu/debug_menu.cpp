@@ -24,17 +24,16 @@
 #include "common/predef.hpp"
 #include "io/directories.hpp"
 #include "model/events/misc_events.hpp"
-#include "model/i18n/language_system.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void push_debug_menu(const Model& model, DebugMenuState& state, Dispatcher& dispatcher)
+void push_debug_menu(ModelView& model, DebugMenuState& state)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = model.get_language_strings();
 
-  if (const Menu menu {strings.menu.debug.c_str()}; menu.is_open()) {
+  if (const ui::Menu menu {strings.menu.debug.c_str()}; menu.is_open()) {
     state.show_metrics_dialog = ImGui::MenuItem(strings.action.show_metrics.c_str());
 
     if constexpr (kIsDebugBuild) {
@@ -46,12 +45,12 @@ void push_debug_menu(const Model& model, DebugMenuState& state, Dispatcher& disp
     ImGui::Separator();
 
     if (ImGui::MenuItem(strings.action.open_persistent_file_dir.c_str())) {
-      dispatcher.enqueue<OpenDirectoryInFinderEvent>(get_persistent_file_dir());
+      model.enqueue<OpenDirectoryInFinderEvent>(get_persistent_file_dir());
     }
   }
 
   if (state.show_metrics_dialog) {
-    center_next_window_on_appearance();
+    ui::center_next_window_on_appearance();
     ImGui::ShowMetricsWindow(&state.show_metrics_dialog);
   }
 
@@ -60,9 +59,9 @@ void push_debug_menu(const Model& model, DebugMenuState& state, Dispatcher& disp
   }
 
   if (state.show_style_editor_dialog) {
-    const Window editor {"Style Editor"};
+    const ui::Window editor {"Style Editor"};
     ImGui::ShowStyleEditor();
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

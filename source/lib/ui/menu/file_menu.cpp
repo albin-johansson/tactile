@@ -24,64 +24,105 @@
 #include "common/type/path.hpp"
 #include "model/events/map_events.hpp"
 #include "model/events/menu_events.hpp"
-#include "model/i18n/language_system.hpp"
-#include "model/persistence/file_history_components.hpp"
+#include "model/model_view.hpp"
+#include "ui/shortcut/mappings.hpp"
 #include "ui/widget/scoped.hpp"
-#include "ui/widget/widgets.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
-void _push_recent_files_menu(const Model& model,
-                             const Strings& strings,
-                             Dispatcher& dispatcher)
+void _push_recent_files_menu(ModelView& model)
 {
-  if (const Menu menu {strings.menu.recent_files.c_str()}; menu.is_open()) {
-    push_menu_item(model, MenuAction::ReopenLastFile, dispatcher);
+  const auto& strings = model.get_language_strings();
 
-    const auto& history = model.get<FileHistory>();
-    if (!history.entries.empty()) {
+  if (const ui::Menu menu {strings.menu.recent_files.c_str()}; menu.is_open()) {
+    if (ImGui::MenuItem(strings.action.reopen_last_closed_file.c_str(),
+                        nullptr,
+                        false,
+                        model.is_available(MenuAction::ReopenLastFile))) {
+      model.enqueue<MenuActionEvent>(MenuAction::ReopenLastFile);
+    }
+
+    const auto& file_history = model.get_file_history();
+    if (!file_history.empty()) {
       ImGui::Separator();
     }
 
-    for (const auto& path: history.entries) {
+    for (const auto& path: file_history) {
       if (ImGui::MenuItem(path.c_str())) {
         // It's fine if the file doesn't exist anymore, the parser handles that.
-        dispatcher.enqueue<OpenMapEvent>(Path {path});
+        model.enqueue<OpenMapEvent>(Path {path});
       }
     }
 
     ImGui::Separator();
 
-    push_menu_item(model, MenuAction::ClearFileHistory, dispatcher);
+    if (ImGui::MenuItem(strings.action.clear_file_history.c_str(),
+                        nullptr,
+                        false,
+                        model.is_available(MenuAction::ClearFileHistory))) {
+      model.enqueue<MenuActionEvent>(MenuAction::ClearFileHistory);
+    }
   }
 }
 
 }  // namespace
 
-void push_file_menu(const Model& model, Dispatcher& dispatcher)
+void push_file_menu(ModelView& model)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = model.get_language_strings();
 
-  if (const Menu menu {strings.menu.file.c_str()}; menu.is_open()) {
-    push_menu_item(model, MenuAction::NewMap, dispatcher);
-    push_menu_item(model, MenuAction::OpenMap, dispatcher);
+  if (const ui::Menu menu {strings.menu.file.c_str()}; menu.is_open()) {
+    if (ImGui::MenuItem(strings.action.create_map.c_str(),
+                        TACTILE_PRIMARY_MOD "+N",
+                        nullptr,
+                        model.is_available(MenuAction::NewMap))) {
+      model.enqueue<MenuActionEvent>(MenuAction::NewMap);
+    }
 
-    _push_recent_files_menu(model, strings, dispatcher);
+    if (ImGui::MenuItem(strings.action.open_map.c_str(),
+                        TACTILE_PRIMARY_MOD "+O",
+                        nullptr,
+                        model.is_available(MenuAction::OpenMap))) {
+      model.enqueue<MenuActionEvent>(MenuAction::OpenMap);
+    }
+
+    _push_recent_files_menu(model);
 
     ImGui::Separator();
 
-    push_menu_item(model, MenuAction::Save, dispatcher);
-    push_menu_item(model, MenuAction::SaveAs, dispatcher);
+    if (ImGui::MenuItem(strings.action.save.c_str(),
+                        TACTILE_PRIMARY_MOD "+S",
+                        false,
+                        model.is_available(MenuAction::Save))) {
+      model.enqueue<MenuActionEvent>(MenuAction::Save);
+    }
+
+    if (ImGui::MenuItem(strings.action.save_as.c_str(),
+                        TACTILE_PRIMARY_MOD "+Shift+S",
+                        false,
+                        model.is_available(MenuAction::SaveAs))) {
+      model.enqueue<MenuActionEvent>(MenuAction::SaveAs);
+    }
 
     ImGui::Separator();
 
-    push_menu_item(model, MenuAction::Close, dispatcher);
+    if (ImGui::MenuItem(strings.action.close_document.c_str(),
+                        nullptr,
+                        false,
+                        model.is_available(MenuAction::Close))) {
+      model.enqueue<MenuActionEvent>(MenuAction::Close);
+    }
 
     ImGui::Separator();
 
-    push_menu_item(model, MenuAction::Quit, dispatcher);
+    if (ImGui::MenuItem(strings.action.exit.c_str(),
+                        nullptr,
+                        false,
+                        model.is_available(MenuAction::Quit))) {
+      model.enqueue<MenuActionEvent>(MenuAction::Quit);
+    }
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile
