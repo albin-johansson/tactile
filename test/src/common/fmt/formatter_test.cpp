@@ -35,9 +35,9 @@ TEST_SUITE("CustomFormatters")
 {
   TEST_CASE("Entities")
   {
-    CHECK(fmt::format("{}", kNullEntity) == "NULL");
-    CHECK(fmt::format("{}", Entity {}) == "0");
-    CHECK(fmt::format("{}", Entity {42}) == "42");
+    CHECK(fmt::format("{}", kNullEntity) == "Entity(NULL)");
+    CHECK(fmt::format("{}", Entity {}) == "Entity(0)");
+    CHECK(fmt::format("{}", Entity {42}) == "Entity(42)");
   }
 
   TEST_CASE("Languages")
