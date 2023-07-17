@@ -148,12 +148,12 @@ auto get_viewport_mouse_info(const CanvasInfo& canvas) -> ViewportMouseInfo
   const auto row = std::trunc(index.y);
   const auto col = std::trunc(index.x);
 
-  cursor.in_viewport = index.y >= 0 &&            //
-                       index.x >= 0 &&            //
-                       row < canvas.row_count &&  //
-                       col < canvas.col_count;
+  cursor.over_content = index.y >= 0 &&            //
+                        index.x >= 0 &&            //
+                        row < canvas.row_count &&  //
+                        col < canvas.col_count;
 
-  if (cursor.in_viewport) {
+  if (cursor.over_content) {
     cursor.tile_pos = {static_cast<int32>(row), static_cast<int32>(col)};
   }
 

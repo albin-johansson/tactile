@@ -82,7 +82,7 @@ void _draw_cursor_gizmos(const Model& model,
   const auto is_tile_layer_active =
       map.active_layer != kNullEntity && model.has<TileLayer>(map.active_layer);
 
-  if (mouse.in_viewport && is_tile_layer_active) {
+  if (mouse.over_content && is_tile_layer_active) {
     draw_shadowed_rect(as_imvec2(mouse.clamped_pos),
                        canvas.graphical_tile_size,
                        Color {0, 0xFF, 0, 0xC8},

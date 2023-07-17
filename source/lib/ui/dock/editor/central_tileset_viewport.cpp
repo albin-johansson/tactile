@@ -101,7 +101,7 @@ void _poll_mouse(TilesetViewportState& state,
   using namespace std::chrono_literals;
   const auto mouse = get_viewport_mouse_info(canvas_info);
 
-  if (mouse.in_viewport) {
+  if (mouse.over_content) {
     if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
       const auto mouse_tile_index = sys::tile_index_at(tileset, mouse.tile_pos);
 

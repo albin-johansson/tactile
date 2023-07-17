@@ -64,7 +64,7 @@ void StampTool::on_mouse_pressed(Model& model,
                                  Dispatcher&,
                                  const ViewportMouseInfo& mouse)
 {
-  if (mouse.in_viewport && mouse.button == MouseButton::Left && is_available(model)) {
+  if (mouse.over_content && mouse.button == MouseButton::Left && is_available(model)) {
     _update_sequence(model, mouse.tile_pos);
   }
 }
@@ -73,7 +73,7 @@ void StampTool::on_mouse_dragged(Model& model,
                                  Dispatcher&,
                                  const ViewportMouseInfo& mouse)
 {
-  if (mouse.in_viewport && mouse.button == MouseButton::Left && is_available(model)) {
+  if (mouse.over_content && mouse.button == MouseButton::Left && is_available(model)) {
     _update_sequence(model, mouse.tile_pos);
   }
 }

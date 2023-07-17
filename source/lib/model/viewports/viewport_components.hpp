@@ -32,7 +32,7 @@ struct ViewportMouseInfo final {
   Float2 raw_pos {};          ///< The raw mouse position.
   Float2 clamped_pos {};  ///< The position clamped to the TL corner of the hovered tile.
   Float2 scaled_pos {};   // TODO document/rename/remove
-  bool in_viewport {};    ///< Indicates whether the mouse is within the viewport.
+  bool over_content {};   ///< Indicates whether the mouse is above the viewport contents.
 };
 
 struct ViewportLimits final {

@@ -80,7 +80,7 @@ void _push_mouse_tile_labels(const Model& model,
   if (const auto* tile_layer = model.try_get<TileLayer>(map.active_layer)) {
     const auto tile_id = sys::tile_at(*tile_layer, mouse.tile_pos);
 
-    if (mouse.in_viewport && tile_id.has_value() && tile_id != kEmptyTile) {
+    if (mouse.over_content && tile_id.has_value() && tile_id != kEmptyTile) {
       ImGui::Text("%s: %i", strings.misc.global_id.c_str(), *tile_id);
 
       if (sys::is_valid_tile_identifier(model, map, *tile_id)) {
@@ -169,7 +169,7 @@ void push_map_viewport_overlay(const Model& model,
       ImGui::TextUnformatted("X/Y: --");
     }
 
-    if (mouse.in_viewport) {
+    if (mouse.over_content) {
       ImGui::Text("%s/%s: (%i, %i)",
                   strings.misc.row.c_str(),
                   strings.misc.column.c_str(),

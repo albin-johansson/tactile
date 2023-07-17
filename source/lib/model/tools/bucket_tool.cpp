@@ -34,7 +34,7 @@ void BucketTool::on_mouse_pressed(Model& model,
                                   Dispatcher& dispatcher,
                                   const ViewportMouseInfo& mouse)
 {
-  if (mouse.in_viewport && mouse.button == MouseButton::Left && is_available(model)) {
+  if (mouse.over_content && mouse.button == MouseButton::Left && is_available(model)) {
     const auto document_entity = sys::get_active_document(model);
 
     const auto& map_document = model.get<MapDocument>(document_entity);
