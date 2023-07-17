@@ -49,6 +49,9 @@
 # Compiler cache files
 .cache
 
+# CMake profile settings
+CMakeSettings.json
+
 # Generated Doxygen output
 doxygen-out
 doxy
