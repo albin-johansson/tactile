@@ -23,7 +23,6 @@
 #include "model/events/font_events.hpp"
 #include "model/events/view_events.hpp"
 #include "model/persistence/settings.hpp"
-#include "model/view/menu_system.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/style/themes.hpp"
 #include "ui/widget_state.hpp"
@@ -48,7 +47,6 @@ void on_set_settings(Model& model, Dispatcher& dispatcher, const SetSettingsEven
   curr_settings = event.settings.copy();
 
   if (curr_settings.get_language() != prev_settings.get_language()) {
-    sys::retranslate_menus(model);
     dispatcher.enqueue<ResetLayoutEvent>();
   }
 
@@ -86,7 +84,6 @@ void on_set_language(Model& model, Dispatcher& dispatcher, const SetLanguageEven
   auto& settings = model.get<Settings>();
   settings.set_language(event.language);
 
-  sys::retranslate_menus(model);
   dispatcher.enqueue<ResetLayoutEvent>();
 }
 

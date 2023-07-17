@@ -21,7 +21,6 @@
 
 #include "common/type/dispatcher.hpp"
 #include "model/model.hpp"
-#include "model/view/menu_components.hpp"
 
 namespace tactile::ui {
 
@@ -57,8 +56,5 @@ void push_lazy_tooltip(const char* id, const char* tooltip);
 
 /// Shows a label that is horizontally centered in the parent item.
 void push_centered_label(const char* text);
-
-/// Displays a menu item for a specific action.
-void push_menu_item(const Model& model, MenuAction action, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

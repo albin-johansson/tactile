@@ -26,6 +26,8 @@ TACTILE_FWD_DECLARE_STRUCT_NS(tactile::ui, WidgetState)
 
 namespace tactile::ui {
 
+void poll_global_shortcuts(ModelView& model);
+
 /**
  * Renders the user interface and enqueues user events as needed.
  *

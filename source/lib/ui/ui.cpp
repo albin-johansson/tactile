@@ -19,9 +19,12 @@
 
 #include "ui.hpp"
 
+#include <imgui_internal.h>
+
 #include "io/file_dialog.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/events/map_events.hpp"
+#include "model/events/menu_events.hpp"
 #include "model/model_view.hpp"
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/credits_dialog.hpp"
@@ -45,6 +48,51 @@
 #include "ui/widget_state.hpp"
 
 namespace tactile::ui {
+namespace {
+
+void _poll_shortcut(ModelView& model, const MenuAction action, const ImGuiKeyChord chord)
+{
+  if (ImGui::Shortcut(chord, 0, ImGuiInputFlags_RouteGlobalLow) &&
+      model.is_available(action)) {
+    model.enqueue<MenuActionEvent>(action);
+  }
+}
+
+}  // namespace
+
+void poll_global_shortcuts(ModelView& model)
+{
+  // clang-format off
+  _poll_shortcut(model, MenuAction::NewMap, ImGuiMod_Shortcut | ImGuiKey_N);
+  _poll_shortcut(model, MenuAction::OpenMap, ImGuiMod_Shortcut | ImGuiKey_O);
+  _poll_shortcut(model, MenuAction::Save, ImGuiMod_Shortcut | ImGuiKey_S);
+  _poll_shortcut(model, MenuAction::SaveAs, ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_S);
+
+  _poll_shortcut(model, MenuAction::Undo, ImGuiMod_Shortcut | ImGuiKey_Z);
+  _poll_shortcut(model, MenuAction::Redo, ImGuiMod_Shortcut | ImGuiKey_Y);
+  _poll_shortcut(model, MenuAction::OpenComponentEditor, ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_C);
+  _poll_shortcut(model, MenuAction::OpenSettings, ImGuiMod_Shortcut | ImGuiKey_Comma);
+
+  _poll_shortcut(model, MenuAction::CenterViewport, ImGuiMod_Shift | ImGuiKey_Space);
+  _poll_shortcut(model, MenuAction::IncreaseZoom, ImGuiMod_Shortcut | ImGuiKey_0);
+  _poll_shortcut(model, MenuAction::DecreaseZoom, ImGuiMod_Shortcut | ImGuiKey_9);
+  _poll_shortcut(model, MenuAction::IncreaseFontSize, ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_0);
+  _poll_shortcut(model, MenuAction::DecreaseFontSize, ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_9);
+  _poll_shortcut(model, MenuAction::PanUp, ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_UpArrow);
+  _poll_shortcut(model, MenuAction::PanDown, ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_DownArrow);
+  _poll_shortcut(model, MenuAction::PanLeft, ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_LeftArrow);
+  _poll_shortcut(model, MenuAction::PanRight, ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_RightArrow);
+
+  _poll_shortcut(model, MenuAction::HighlightLayer, ImGuiKey_H);
+  _poll_shortcut(model, MenuAction::ToggleUi, ImGuiKey_Tab);
+
+  _poll_shortcut(model, MenuAction::CreateTileset, ImGuiMod_Shortcut | ImGuiKey_T);
+  _poll_shortcut(model, MenuAction::AddRow, ImGuiMod_Alt | ImGuiKey_R);
+  _poll_shortcut(model, MenuAction::AddColumn, ImGuiMod_Alt | ImGuiKey_C);
+  _poll_shortcut(model, MenuAction::RemoveRow, ImGuiMod_Alt | ImGuiMod_Shift | ImGuiKey_R);
+  _poll_shortcut(model, MenuAction::RemoveColumn, ImGuiMod_Alt | ImGuiMod_Shift | ImGuiKey_C);
+  // clang-format on
+}
 
 void render_ui(ModelView& model, WidgetState& widgets)
 {

@@ -20,14 +20,11 @@
 #include "widgets.hpp"
 
 #include <imgui.h>
-#include <imgui_internal.h>
 
 #include "common/debug/assert.hpp"
 #include "common/type/chrono.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/maybe.hpp"
-#include "model/events/menu_events.hpp"
-#include "model/view/menu_system.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"
 
@@ -123,17 +120,6 @@ void push_centered_label(const char* text)
   const auto cursor_pos = ImGui::GetCursorPos();
   ImGui::SetCursorPos(cursor_pos + ImVec2 {half_region.x - (text_size.x * 0.5f), 0});
   ImGui::TextUnformatted(text);
-}
-
-void push_menu_item(const Model& model, const MenuAction action, Dispatcher& dispatcher)
-{
-  const auto& menu_item = sys::get_menu_item(model, action);
-  if (ImGui::MenuItem(menu_item.label.c_str(),
-                      menu_item.shortcut_label.c_str(),
-                      menu_item.checked,
-                      menu_item.enabled)) {
-    dispatcher.enqueue<MenuActionEvent>(action);
-  }
 }
 
 }  // namespace tactile::ui

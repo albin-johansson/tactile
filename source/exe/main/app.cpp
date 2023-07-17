@@ -69,7 +69,6 @@
 #include "model/textures/texture_factory.hpp"
 #include "model/textures/texture_system.hpp"
 #include "model/tools/tool_system.hpp"
-#include "model/view/menu_system.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/style/fonts.hpp"
 #include "ui/style/themes.hpp"
@@ -106,8 +105,6 @@ void App::on_startup(const BackendAPI api)
   icons.tactile_icon = sys::create_texture(model, find_resource("assets/icon.png"));
 
   _init_persistent_settings();
-
-  sys::init_menus(model);
 }
 
 void App::_subscribe_to_events()
@@ -308,13 +305,13 @@ void App::on_update()
   ModelView model_view {model, *mToolSystem, mDispatcher};
 
   // TODO update animated tiles
-  sys::update_menu_items(model, mDispatcher);
 
   for (auto& system: mSystems) {
     system->update();
   }
 
   auto& widgets = model.get<ui::WidgetState>();
+  ui::poll_global_shortcuts(model_view);
   ui::render_ui(model_view, widgets);
   ui::check_for_missing_layout_file(model,
                                     widgets.dock_space.root_dock_id.value(),
