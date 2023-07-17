@@ -21,7 +21,7 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/maybe.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "ui/dock/layer/add_layer_context_menu.hpp"
 #include "ui/dock/layer/dialogs/rename_layer_dialog.hpp"
 
@@ -33,10 +33,10 @@ struct LayerDockState final {
   bool has_focus {};
 };
 
-void push_layer_dock_widget(const Model& model,
+void push_layer_dock_widget(const Registry& registry,
                             LayerDockState& state,
                             Dispatcher& dispatcher);
 
-[[nodiscard]] auto is_layer_dock_enabled(const Model& model) -> bool;
+[[nodiscard]] auto is_layer_dock_enabled(const Registry& registry) -> bool;
 
 }  // namespace tactile::ui

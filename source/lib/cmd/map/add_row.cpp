@@ -26,26 +26,26 @@
 
 namespace tactile::cmd {
 
-AddRow::AddRow(Model* model, const Entity map_entity)
-    : mModel {model},
+AddRow::AddRow(Registry* registry, const Entity map_entity)
+    : mRegistry {registry},
       mMapEntity {map_entity}
 {
 }
 
 void AddRow::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& map = model.get<Map>(mMapEntity);
-  invoke_n(mRowCount, [&] { sys::remove_row_from_map(model, map); });
+  auto& map = registry.get<Map>(mMapEntity);
+  invoke_n(mRowCount, [&] { sys::remove_row_from_map(registry, map); });
 }
 
 void AddRow::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& map = model.get<Map>(mMapEntity);
-  invoke_n(mRowCount, [&] { sys::add_row_to_map(model, map); });
+  auto& map = registry.get<Map>(mMapEntity);
+  invoke_n(mRowCount, [&] { sys::add_row_to_map(registry, map); });
 }
 
 auto AddRow::merge_with(const Command* cmd) -> bool
@@ -60,7 +60,7 @@ auto AddRow::merge_with(const Command* cmd) -> bool
 
 auto AddRow::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return mRowCount == 1 ? strings.cmd.add_row : strings.cmd.add_rows;
 }
 

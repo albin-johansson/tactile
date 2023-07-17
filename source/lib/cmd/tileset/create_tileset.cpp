@@ -33,80 +33,80 @@
 
 namespace tactile::cmd {
 
-CreateTileset::CreateTileset(Model* model,
+CreateTileset::CreateTileset(Registry* registry,
                              const Entity map_entity,
                              const Int2 tile_size,
                              Path image_path)
-    : mModel {model},
+    : mRegistry {registry},
       mMapEntity {map_entity},
       mTileSize {tile_size},
       mImagePath {std::move(image_path)}
 {
-  TACTILE_ASSERT(sys::is_map_entity(*mModel, mMapEntity));
+  TACTILE_ASSERT(sys::is_map_entity(*mRegistry, mMapEntity));
 }
 
 void CreateTileset::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
   // TODO in the future, we should check if there are other maps that use the tileset
-  if (sys::is_document_open(model, mTilesetDocumentEntity)) {
-    sys::close_document(model, mTilesetDocumentEntity);
+  if (sys::is_document_open(registry, mTilesetDocumentEntity)) {
+    sys::close_document(registry, mTilesetDocumentEntity);
   }
 
-  auto& map = model.get<Map>(mMapEntity);
+  auto& map = registry.get<Map>(mMapEntity);
   std::erase(map.attached_tilesets, mAttachedTilesetEntity);
 
-  model.set_enabled(mAttachedTilesetEntity, false);
+  registry.set_enabled(mAttachedTilesetEntity, false);
   mHasAttachedTileset = false;
 }
 
 void CreateTileset::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
   if (mTilesetDocumentEntity == kNullEntity) {
     _create_tileset_document();
   }
 
   if (mAttachedTilesetEntity != kNullEntity) {
-    auto& map = model.get<Map>(mMapEntity);
+    auto& map = registry.get<Map>(mMapEntity);
     map.attached_tilesets.push_back(mAttachedTilesetEntity);
   }
   else {
-    const auto& tileset_document = model.get<TilesetDocument>(mTilesetDocumentEntity);
+    const auto& tileset_document = registry.get<TilesetDocument>(mTilesetDocumentEntity);
     mAttachedTilesetEntity =
-        sys::attach_tileset_to_map(model, mMapEntity, tileset_document.tileset);
+        sys::attach_tileset_to_map(registry, mMapEntity, tileset_document.tileset);
   }
 
-  model.set_enabled(mAttachedTilesetEntity, true);
+  registry.set_enabled(mAttachedTilesetEntity, true);
   mHasAttachedTileset = true;
 }
 
 void CreateTileset::dispose()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
   if (!mHasAttachedTileset) {
-    model.destroy(mAttachedTilesetEntity);
-    sys::destroy_document(model, mTilesetDocumentEntity);
+    registry.destroy(mAttachedTilesetEntity);
+    sys::destroy_document(registry, mTilesetDocumentEntity);
   }
 }
 
 void CreateTileset::_create_tileset_document()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  mTilesetDocumentEntity = sys::create_tileset_document(model, mTileSize, mImagePath);
-  const auto& tileset_document = model.get<TilesetDocument>(mTilesetDocumentEntity);
+  mTilesetDocumentEntity = sys::create_tileset_document(registry, mTileSize, mImagePath);
+  const auto& tileset_document = registry.get<TilesetDocument>(mTilesetDocumentEntity);
 
-  auto& tileset_context = model.get<Context>(tileset_document.tileset);
+  auto& tileset_context = registry.get<Context>(tileset_document.tileset);
   tileset_context.name = mImagePath.stem().string();
 }
 
 auto CreateTileset::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.add_tileset;
 }
 

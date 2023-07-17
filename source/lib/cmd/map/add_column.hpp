@@ -22,13 +22,13 @@
 #include "cmd/command.hpp"
 #include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class AddColumn final : public Command {
  public:
-  AddColumn(Model* model, Entity map_entity);
+  AddColumn(Registry* registry, Entity map_entity);
 
   void undo() override;
 
@@ -39,7 +39,7 @@ class AddColumn final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mMapEntity;
   usize mColumnCount {1};
 };

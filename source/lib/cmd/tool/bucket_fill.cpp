@@ -27,22 +27,22 @@
 
 namespace tactile::cmd {
 
-BucketFill::BucketFill(Model* model,
+BucketFill::BucketFill(Registry* registry,
                        const Entity tile_layer_entity,
                        const TilePos origin,
                        const TileID replacement)
-    : mModel {model},
+    : mRegistry {registry},
       mTileLayerEntity {tile_layer_entity},
       mOrigin {origin},
       mReplacement {replacement}
 {
-  TACTILE_ASSERT(sys::is_tile_layer_entity(*mModel, mTileLayerEntity));
+  TACTILE_ASSERT(sys::is_tile_layer_entity(*mRegistry, mTileLayerEntity));
 }
 
 void BucketFill::undo()
 {
-  auto& model = *mModel;
-  auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
+  auto& registry = *mRegistry;
+  auto& tile_layer = registry.get<TileLayer>(mTileLayerEntity);
 
   const auto target_tile_id = mTargetTileID.value();
   for (const auto& affected_position: mAffectedPositions) {
@@ -55,8 +55,8 @@ void BucketFill::undo()
 
 void BucketFill::redo()
 {
-  auto& model = *mModel;
-  auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
+  auto& registry = *mRegistry;
+  auto& tile_layer = registry.get<TileLayer>(mTileLayerEntity);
 
   mTargetTileID = sys::tile_at(tile_layer, mOrigin);
   sys::flood_tiles(tile_layer, mOrigin, mReplacement, &mAffectedPositions);
@@ -64,7 +64,7 @@ void BucketFill::redo()
 
 auto BucketFill::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.bucket_tool;
 }
 

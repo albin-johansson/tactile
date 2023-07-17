@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
 /// Indicates whether the 'zoom out' action is currently possible.
-[[nodiscard]] auto is_viewport_zoom_out_possible(const Model& model) -> bool;
+[[nodiscard]] auto is_viewport_zoom_out_possible(const Registry& registry) -> bool;
 
 }  // namespace tactile::sys

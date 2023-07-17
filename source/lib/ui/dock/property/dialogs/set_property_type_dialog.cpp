@@ -25,20 +25,20 @@
 #include "model/documents/document_system.hpp"
 #include "model/events/property_events.hpp"
 #include "model/i18n/language_system.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/attribute_widgets.hpp"
 
 namespace tactile::ui {
 
-void push_set_property_type_dialog(const Model& model,
+void push_set_property_type_dialog(const Registry& registry,
                                    SetPropertyTypeDialogState& state,
                                    Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
-  const auto document_entity = sys::get_active_document(model);
-  const auto& document = model.get<Document>(document_entity);
+  const auto document_entity = sys::get_active_document(registry);
+  const auto& document = registry.get<Document>(document_entity);
 
   if (document.active_context != state.context) {
     state.context = kNullEntity;

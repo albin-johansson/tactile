@@ -22,13 +22,13 @@
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/tile_cache.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class EraserSequence final : public Command {
  public:
-  EraserSequence(Model* model, Entity tile_layer_entity, TileCache old_state);
+  EraserSequence(Registry* registry, Entity tile_layer_entity, TileCache old_state);
 
   void undo() override;
 
@@ -37,7 +37,7 @@ class EraserSequence final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mTileLayerEntity;
   TileCache mOldState;
 };

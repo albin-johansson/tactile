@@ -22,13 +22,13 @@
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class SetObjectVisible final : public Command {
  public:
-  SetObjectVisible(Model* model, Entity object_entity, bool new_visibility);
+  SetObjectVisible(Registry* registry, Entity object_entity, bool new_visibility);
 
   void undo() override;
 
@@ -37,7 +37,7 @@ class SetObjectVisible final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mObjectEntity;
   bool mNewVisibility;
   Maybe<bool> mOldVisibility;

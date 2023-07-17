@@ -45,13 +45,13 @@ namespace {
 
 inline constexpr Color kActiveObjectColor {0xFF, 0xFF, 0x00, 0xFF};
 
-void _render_point_object(const Model& model,
+void _render_point_object(const Registry& registry,
                           const ui::CanvasInfo& canvas,
                           const Entity object_entity,
                           const ImVec2& rendered_position,
                           const Color& color)
 {
-  const auto& object_context = model.get<Context>(object_entity);
+  const auto& object_context = registry.get<Context>(object_entity);
 
   const auto translated_position = ui::translate_pos(canvas, rendered_position);
   const auto point_radius = std::min(canvas.graphical_tile_size.x / 4.0f, 6.0f);
@@ -74,14 +74,14 @@ void _render_point_object(const Model& model,
   }
 }
 
-void _render_rectangle_object(const Model& model,
+void _render_rectangle_object(const Registry& registry,
                               const ui::CanvasInfo& canvas,
                               const Entity object_entity,
                               const ImVec2& rendered_position,
                               const Color& color)
 {
-  const auto& object = model.get<Object>(object_entity);
-  const auto& object_context = model.get<Context>(object_entity);
+  const auto& object = registry.get<Object>(object_entity);
+  const auto& object_context = registry.get<Context>(object_entity);
 
   const auto translated_position = ui::translate_pos(canvas, rendered_position);
   const auto rendered_size = as_imvec2(object.size) * canvas.tile_ratio;
@@ -108,14 +108,14 @@ void _render_rectangle_object(const Model& model,
   }
 }
 
-void _render_ellipse_object(const Model& model,
+void _render_ellipse_object(const Registry& registry,
                             const ui::CanvasInfo& canvas,
                             const Entity object_entity,
                             const ImVec2& rendered_position,
                             const Color& color)
 {
-  const auto& object = model.get<Object>(object_entity);
-  const auto& object_context = model.get<Context>(object_entity);
+  const auto& object = registry.get<Object>(object_entity);
+  const auto& object_context = registry.get<Context>(object_entity);
 
   const auto rendered_size = as_imvec2(object.size) * canvas.tile_ratio;
 
@@ -142,35 +142,37 @@ void _render_ellipse_object(const Model& model,
   }
 }
 
-void _render_layers(const Model& model, const ui::CanvasInfo& canvas, const Map& map)
+void _render_layers(const Registry& registry,
+                    const ui::CanvasInfo& canvas,
+                    const Map& map)
 {
   // TODO performance: include parent layer entity in function object signature
-  visit_layers(model, map, [&](const Entity layer_entity) {
-    const auto parent_layer_entity = get_parent_layer(model, map, layer_entity);
-    render_layer(model, canvas, map, parent_layer_entity, layer_entity);
+  visit_layers(registry, map, [&](const Entity layer_entity) {
+    const auto parent_layer_entity = get_parent_layer(registry, map, layer_entity);
+    render_layer(registry, canvas, map, parent_layer_entity, layer_entity);
   });
 }
 
-void _render_active_object_highlight(const Model& model,
+void _render_active_object_highlight(const Registry& registry,
                                      const ui::CanvasInfo& canvas,
                                      const Map& map)
 {
-  if (map.active_layer != kNullEntity && model.has<ObjectLayer>(map.active_layer)) {
-    const auto& object_layer = model.get<ObjectLayer>(map.active_layer);
+  if (map.active_layer != kNullEntity && registry.has<ObjectLayer>(map.active_layer)) {
+    const auto& object_layer = registry.get<ObjectLayer>(map.active_layer);
     if (object_layer.active_object != kNullEntity) {
-      render_object(model, canvas, object_layer.active_object, kActiveObjectColor);
+      render_object(registry, canvas, object_layer.active_object, kActiveObjectColor);
     }
   }
 }
 
 }  // namespace
 
-void render_map(const Model& model, const ui::CanvasInfo& canvas, const Map& map)
+void render_map(const Registry& registry, const ui::CanvasInfo& canvas, const Map& map)
 {
-  const auto& settings = model.get<Settings>();
+  const auto& settings = registry.get<Settings>();
 
-  _render_layers(model, canvas, map);
-  _render_active_object_highlight(model, canvas, map);
+  _render_layers(registry, canvas, map);
+  _render_active_object_highlight(registry, canvas, map);
 
   if (settings.test_flag(SETTINGS_SHOW_GRID_BIT)) {
     ui::render_infinite_grid(canvas, settings.get_grid_color());
@@ -179,12 +181,12 @@ void render_map(const Model& model, const ui::CanvasInfo& canvas, const Map& map
   ui::render_outline(canvas, to_color(ImGui::GetStyle().Colors[ImGuiCol_HeaderActive]));
 }
 
-void render_tileset(const Model& model,
+void render_tileset(const Registry& registry,
                     const ui::CanvasInfo& canvas,
                     const Tileset& tileset)
 {
-  const auto& settings = model.get<Settings>();
-  const auto& texture = model.get<Texture>(tileset.texture);
+  const auto& settings = registry.get<Settings>();
+  const auto& texture = registry.get<Texture>(tileset.texture);
 
   const auto rendered_position = ui::translate_pos(canvas, ImVec2 {0, 0});
   const auto rendered_size = as_imvec2(texture.size) * canvas.tile_ratio;
@@ -198,15 +200,15 @@ void render_tileset(const Model& model,
   ui::render_outline(canvas, to_color(ImGui::GetStyle().Colors[ImGuiCol_HeaderActive]));
 }
 
-void render_layer(const Model& model,
+void render_layer(const Registry& registry,
                   const ui::CanvasInfo& canvas,
                   const Map& map,
                   const Entity parent_layer_entity,
                   const Entity layer_entity)
 {
-  const auto& layer = model.get<Layer>(layer_entity);
+  const auto& layer = registry.get<Layer>(layer_entity);
   const Layer* parent_layer = (parent_layer_entity != kNullEntity)
-                                  ? model.try_get<Layer>(parent_layer_entity)
+                                  ? registry.try_get<Layer>(parent_layer_entity)
                                   : nullptr;
 
   // Return early if the layer or parent layer are invisible
@@ -214,7 +216,7 @@ void render_layer(const Model& model,
     return;
   }
 
-  const auto& settings = model.get<Settings>();
+  const auto& settings = registry.get<Settings>();
 
   const auto parent_opacity = (parent_layer != nullptr) ? parent_layer->opacity : 1.0f;
   const auto layer_opacity = settings.test_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT)
@@ -222,20 +224,20 @@ void render_layer(const Model& model,
                                  : parent_opacity * layer.opacity;
 
   if (layer.type == LayerType::TileLayer) {
-    render_tile_layer(model, canvas, map, layer_entity, layer_opacity);
+    render_tile_layer(registry, canvas, map, layer_entity, layer_opacity);
   }
   else if (layer.type == LayerType::ObjectLayer) {
-    render_object_layer(model, canvas, layer_entity, layer_opacity);
+    render_object_layer(registry, canvas, layer_entity, layer_opacity);
   }
 }
 
-void render_tile_layer(const Model& model,
+void render_tile_layer(const Registry& registry,
                        const ui::CanvasInfo& canvas,
                        const Map& map,
                        const Entity tile_layer_entity,
                        const float opacity)
 {
-  const auto& tile_layer = model.get<TileLayer>(tile_layer_entity);
+  const auto& tile_layer = registry.get<TileLayer>(tile_layer_entity);
 
   const auto begin_row = canvas.bounds.begin.row();
   const auto begin_col = canvas.bounds.begin.col();
@@ -248,13 +250,13 @@ void render_tile_layer(const Model& model,
 
       const auto tile_id = tile_at(tile_layer, tile_pos);
       if (tile_id.has_value() && tile_id != kEmptyTile) {
-        render_tile(model, canvas, map, *tile_id, tile_pos, opacity);
+        render_tile(registry, canvas, map, *tile_id, tile_pos, opacity);
       }
     }
   }
 }
 
-void render_tile(const Model& model,
+void render_tile(const Registry& registry,
                  const ui::CanvasInfo& canvas,
                  const Map& map,
                  const TileID tile_id,
@@ -262,17 +264,17 @@ void render_tile(const Model& model,
                  const float opacity)
 {
   TACTILE_ASSERT(tile_id != kEmptyTile);
-  const auto attached_tileset_entity = find_tileset_with_tile(model, map, tile_id);
+  const auto attached_tileset_entity = find_tileset_with_tile(registry, map, tile_id);
 
   if (attached_tileset_entity != kNullEntity) {
-    const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
+    const auto& attached_tileset = registry.get<AttachedTileset>(attached_tileset_entity);
 
-    const auto& tileset = model.get<Tileset>(attached_tileset.tileset);
-    const auto& texture = model.get<Texture>(tileset.texture);
+    const auto& tileset = registry.get<Tileset>(attached_tileset.tileset);
+    const auto& texture = registry.get<Texture>(tileset.texture);
 
     const auto logical_tile_index = to_tile_index(attached_tileset, tile_id).value();
     const auto rendered_tile_index =
-        get_tile_appearance(model, attached_tileset.tileset, logical_tile_index);
+        get_tile_appearance(registry, attached_tileset.tileset, logical_tile_index);
 
     const auto pos_in_tileset =
         TilePos::from_index(rendered_tile_index, tileset.column_count);
@@ -286,39 +288,39 @@ void render_tile(const Model& model,
   }
 }
 
-void render_object_layer(const Model& model,
+void render_object_layer(const Registry& registry,
                          const ui::CanvasInfo& canvas,
                          const Entity object_layer_entity,
                          const float opacity)
 {
-  const auto& object_layer = model.get<ObjectLayer>(object_layer_entity);
+  const auto& object_layer = registry.get<ObjectLayer>(object_layer_entity);
 
   const Color object_color {0xFF, 0, 0, opacity_cast(opacity)};
 
   for (const auto object_entity: object_layer.objects) {
-    render_object(model, canvas, object_entity, object_color);
+    render_object(registry, canvas, object_entity, object_color);
   }
 }
 
-void render_object(const Model& model,
+void render_object(const Registry& registry,
                    const ui::CanvasInfo& canvas,
                    const Entity object_entity,
                    const Color& color)
 {
-  const auto& object = model.get<Object>(object_entity);
+  const auto& object = registry.get<Object>(object_entity);
   const auto rendered_position = as_imvec2(object.position) * canvas.tile_ratio;
 
   switch (object.type) {
     case ObjectType::Point:
-      _render_point_object(model, canvas, object_entity, rendered_position, color);
+      _render_point_object(registry, canvas, object_entity, rendered_position, color);
       break;
 
     case ObjectType::Rect:
-      _render_rectangle_object(model, canvas, object_entity, rendered_position, color);
+      _render_rectangle_object(registry, canvas, object_entity, rendered_position, color);
       break;
 
     case ObjectType::Ellipse:
-      _render_ellipse_object(model, canvas, object_entity, rendered_position, color);
+      _render_ellipse_object(registry, canvas, object_entity, rendered_position, color);
       break;
   }
 }

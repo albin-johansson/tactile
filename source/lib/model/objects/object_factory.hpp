@@ -21,7 +21,7 @@
 
 #include "common/enum/object_type.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
@@ -33,6 +33,6 @@ namespace tactile::sys {
  *
  * \return an object entity.
  */
-[[nodiscard]] auto create_object(Model& model, ObjectType type) -> Entity;
+[[nodiscard]] auto create_object(Registry& registry, ObjectType type) -> Entity;
 
 }  // namespace tactile::sys

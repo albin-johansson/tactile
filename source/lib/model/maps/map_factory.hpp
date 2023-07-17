@@ -22,19 +22,20 @@
 #include "common/tile_extent.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
 /**
  * Creates an empty map.
  *
- * \param model     the associated model.
+ * \param model     the associated registry.
  * \param extent    the initial size of the map.
  * \param tile_size the logical size of tiles in the map.
  *
  * \return a map entity.
  */
-auto create_map(Model& model, const TileExtent& extent, const Int2& tile_size) -> Entity;
+auto create_map(Registry& registry, const TileExtent& extent, const Int2& tile_size)
+    -> Entity;
 
 }  // namespace tactile::sys

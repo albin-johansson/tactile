@@ -24,13 +24,13 @@
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class SetPropertyType final : public Command {
  public:
-  SetPropertyType(Model* model,
+  SetPropertyType(Registry* registry,
                   Entity context_entity,
                   String name,
                   AttributeType new_type);
@@ -42,7 +42,7 @@ class SetPropertyType final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mContextEntity;
   String mName;
   AttributeType mNewPropertyType;

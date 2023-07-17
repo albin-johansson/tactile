@@ -24,14 +24,14 @@
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string_map.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 /// A command for detaching a component from a context.
 class DetachComponent final : public Command {
  public:
-  DetachComponent(Model* model, Entity context_entity, Entity component_entity);
+  DetachComponent(Registry* registry, Entity context_entity, Entity component_entity);
 
   void undo() override;
 
@@ -40,7 +40,7 @@ class DetachComponent final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mContextEntity;
   Entity mComponentEntity;
   Maybe<StringMap<Attribute>> mPrevValues;

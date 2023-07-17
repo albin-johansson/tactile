@@ -28,21 +28,21 @@
 
 namespace tactile::cmd {
 
-RenameComponent::RenameComponent(Model* model,
+RenameComponent::RenameComponent(Registry* registry,
                                  const Entity component_entity,
                                  String new_name)
-    : mModel {model},
+    : mRegistry {registry},
       mComponentEntity {component_entity},
       mNewName {std::move(new_name)}
 {
-  TACTILE_ASSERT(sys::is_component_entity(*mModel, mComponentEntity));
+  TACTILE_ASSERT(sys::is_component_entity(*mRegistry, mComponentEntity));
 }
 
 void RenameComponent::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& component = model.get<Component>(mComponentEntity);
+  auto& component = registry.get<Component>(mComponentEntity);
   component.name = mOldName.value();
 
   mOldName.reset();
@@ -50,9 +50,9 @@ void RenameComponent::undo()
 
 void RenameComponent::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& component = model.get<Component>(mComponentEntity);
+  auto& component = registry.get<Component>(mComponentEntity);
   mOldName = component.name;
 
   component.name = mNewName;
@@ -60,7 +60,7 @@ void RenameComponent::redo()
 
 auto RenameComponent::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.rename_comp;
 }
 

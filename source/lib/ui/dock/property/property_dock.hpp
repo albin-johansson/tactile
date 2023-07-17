@@ -23,7 +23,7 @@
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "ui/dock/property/dialogs/new_property_dialog.hpp"
 #include "ui/dock/property/dialogs/rename_property_dialog.hpp"
 #include "ui/dock/property/dialogs/set_property_type_dialog.hpp"
@@ -46,7 +46,7 @@ struct PropertyDockState final {
   bool has_focus : 1 {};
 };
 
-void push_property_dock_widget(const Model& model,
+void push_property_dock_widget(const Registry& registry,
                                PropertyDockState& state,
                                Dispatcher& dispatcher);
 

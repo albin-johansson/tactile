@@ -29,16 +29,16 @@
 
 namespace tactile::cmd {
 
-StampSequence::StampSequence(Model* model,
+StampSequence::StampSequence(Registry* registry,
                              const Entity tile_layer_entity,
                              TileCache old_state,
                              TileCache new_state)
-    : mModel {model},
+    : mRegistry {registry},
       mTileLayerEntity {tile_layer_entity},
       mOldState {std::move(old_state)},
       mNewState {std::move(new_state)}
 {
-  TACTILE_ASSERT(sys::is_tile_layer_entity(*mModel, mTileLayerEntity));
+  TACTILE_ASSERT(sys::is_tile_layer_entity(*mRegistry, mTileLayerEntity));
 }
 
 void StampSequence::undo()
@@ -53,14 +53,14 @@ void StampSequence::redo()
 
 auto StampSequence::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.stamp_tool;
 }
 
 void StampSequence::_apply_sequence(const TileCache& cache)
 {
-  auto& model = *mModel;
-  auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
+  auto& registry = *mRegistry;
+  auto& tile_layer = registry.get<TileLayer>(mTileLayerEntity);
 
   for (const auto& [position, tile_id]: cache) {
     sys::set_tile(tile_layer, position, tile_id);

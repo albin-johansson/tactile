@@ -26,9 +26,10 @@
 
 namespace tactile::ui {
 
-void push_map_parse_error_dialog(const Model& model, MapParseErrorDialogState& state)
+void push_map_parse_error_dialog(const Registry& registry,
+                                 MapParseErrorDialogState& state)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   DialogOptions dialog_options {
       .title = strings.window.map_parse_error.c_str(),

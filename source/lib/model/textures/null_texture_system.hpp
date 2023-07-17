@@ -21,14 +21,14 @@
 
 #include "common/type/ecs.hpp"
 #include "io/texture_loader.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
-void on_init_null_texture(Model& model,
+void on_init_null_texture(Registry& registry,
                           Entity texture_entity,
                           const TextureData& texture_data);
 
-void on_destroy_null_texture(Model& model, Entity texture_entity);
+void on_destroy_null_texture(Registry& registry, Entity texture_entity);
 
 }  // namespace tactile::sys

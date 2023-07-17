@@ -23,18 +23,18 @@
 
 #include "cmd/command_stack.hpp"
 #include "model/documents/document_system.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
 /// Indicates whether the 'save' action is currently available.
-[[nodiscard]] auto is_save_possible(const Model& model) -> bool;
+[[nodiscard]] auto is_save_possible(const Registry& registry) -> bool;
 
 /// Indicates whether the 'undo' action is currently available.
-[[nodiscard]] auto is_undo_possible(const Model& model) -> bool;
+[[nodiscard]] auto is_undo_possible(const Registry& registry) -> bool;
 
 /// Indicates whether the 'redo' action is currently available.
-[[nodiscard]] auto is_redo_possible(const Model& model) -> bool;
+[[nodiscard]] auto is_redo_possible(const Registry& registry) -> bool;
 
 /**
  * Tries to push a command to the currently active document, if there is one.
@@ -44,16 +44,16 @@ namespace tactile::sys {
  *
  * \tparam T a command type.
  *
- * \param model the associated model.
+ * \param model the associated registry.
  * \param args  pack of command constructor arguments.
  */
 template <typename T, typename... Args>
-void try_execute(Model& model, Args&&... args)
+void try_execute(Registry& registry, Args&&... args)
 {
-  const auto document_entity = get_active_document(model);
+  const auto document_entity = get_active_document(registry);
   if (document_entity != kNullEntity) {
-    auto& command_stack = model.get<CommandStack>(document_entity);
-    command_stack.push<T>(&model, std::forward<Args>(args)...);
+    auto& command_stack = registry.get<CommandStack>(document_entity);
+    command_stack.push<T>(&registry, std::forward<Args>(args)...);
   }
 }
 

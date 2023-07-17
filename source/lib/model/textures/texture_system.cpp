@@ -25,13 +25,13 @@
 
 namespace tactile::sys {
 
-void destroy_loaded_texture_resources(Model& model)
+void destroy_loaded_texture_resources(Registry& registry)
 {
-  const auto& texture_callbacks = model.get<TextureCallbacks>();
-  const auto& texture_cache = model.get<TextureCache>();
+  const auto& texture_callbacks = registry.get<TextureCallbacks>();
+  const auto& texture_cache = registry.get<TextureCache>();
 
   for (const auto& [texture_path, texture_entity]: texture_cache.textures) {
-    texture_callbacks.destroy(model, texture_entity);
+    texture_callbacks.destroy(registry, texture_entity);
   }
 }
 

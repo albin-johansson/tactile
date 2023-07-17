@@ -23,12 +23,14 @@
 
 namespace tactile::sys {
 
-void on_init_null_texture(Model& model, const Entity texture_entity, const TextureData&)
+void on_init_null_texture(Registry& registry,
+                          const Entity texture_entity,
+                          const TextureData&)
 {
-  model.add<NullTexture>(texture_entity);
+  registry.add<NullTexture>(texture_entity);
 }
 
-void on_destroy_null_texture(Model&, Entity)
+void on_destroy_null_texture(Registry&, Entity)
 {
   // Do nothing
 }

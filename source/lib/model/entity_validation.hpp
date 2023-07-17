@@ -20,47 +20,53 @@
 #pragma once
 
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
-[[nodiscard]] auto is_document_entity(const Model& model, Entity entity) -> bool;
+[[nodiscard]] auto is_document_entity(const Registry& registry, Entity entity) -> bool;
 
-[[nodiscard]] auto is_map_document_entity(const Model& model, Entity entity) -> bool;
+[[nodiscard]] auto is_map_document_entity(const Registry& registry, Entity entity)
+    -> bool;
 
-[[nodiscard]] auto is_tileset_document_entity(const Model& model, Entity entity) -> bool;
+[[nodiscard]] auto is_tileset_document_entity(const Registry& registry, Entity entity)
+    -> bool;
 
 /// Indicates whether an entity is a valid context entity.
-[[nodiscard]] auto is_context_entity(const Model& model, Entity entity) -> bool;
+[[nodiscard]] auto is_context_entity(const Registry& registry, Entity entity) -> bool;
 
-[[nodiscard]] auto is_map_entity(const Model& model, Entity entity) -> bool;
+[[nodiscard]] auto is_map_entity(const Registry& registry, Entity entity) -> bool;
 
 /// Indicates whether an entity is a valid component set entity.
-[[nodiscard]] auto is_component_set_entity(const Model& model, Entity entity) -> bool;
+[[nodiscard]] auto is_component_set_entity(const Registry& registry, Entity entity)
+    -> bool;
 
 /// Indicates whether an entity is a valid component definition entity.
-[[nodiscard]] auto is_component_entity(const Model& model, Entity entity) -> bool;
+[[nodiscard]] auto is_component_entity(const Registry& registry, Entity entity) -> bool;
 
 /// Indicates whether an entity is a valid component entity.
-[[nodiscard]] auto is_attached_component_entity(const Model& model, const Entity entity) -> bool;
+[[nodiscard]] auto is_attached_component_entity(const Registry& registry,
+                                                const Entity entity) -> bool;
 
-[[nodiscard]] auto is_layer_entity(const Model& model, Entity entity) -> bool;
+[[nodiscard]] auto is_layer_entity(const Registry& registry, Entity entity) -> bool;
 
-[[nodiscard]] auto is_tile_layer_entity(const Model& model, Entity entity) -> bool;
+[[nodiscard]] auto is_tile_layer_entity(const Registry& registry, Entity entity) -> bool;
 
-[[nodiscard]] auto is_object_layer_entity(const Model& model, Entity entity) -> bool;
+[[nodiscard]] auto is_object_layer_entity(const Registry& registry, Entity entity)
+    -> bool;
 
-[[nodiscard]] auto is_group_layer_entity(const Model& model, Entity entity) -> bool;
+[[nodiscard]] auto is_group_layer_entity(const Registry& registry, Entity entity) -> bool;
 
-[[nodiscard]] auto is_object_entity(const Model& model, Entity entity) -> bool;
+[[nodiscard]] auto is_object_entity(const Registry& registry, Entity entity) -> bool;
 
 /// Indicates whether an entity is a valid texture entity.
-[[nodiscard]] auto is_texture_entity(const Model& model, Entity entity) -> bool;
+[[nodiscard]] auto is_texture_entity(const Registry& registry, Entity entity) -> bool;
 
-[[nodiscard]] auto is_tileset_entity(const Model& model, Entity entity) -> bool;
+[[nodiscard]] auto is_tileset_entity(const Registry& registry, Entity entity) -> bool;
 
-[[nodiscard]] auto is_attached_tileset_entity(const Model& model, Entity entity) -> bool;
+[[nodiscard]] auto is_attached_tileset_entity(const Registry& registry, Entity entity)
+    -> bool;
 
-[[nodiscard]] auto is_tile_entity(const Model& model, Entity entity) -> bool;
+[[nodiscard]] auto is_tile_entity(const Registry& registry, Entity entity) -> bool;
 
 }  // namespace tactile::sys

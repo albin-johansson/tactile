@@ -24,13 +24,13 @@
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class RenameTile final : public Command {
  public:
-  RenameTile(Model* model, Entity tile_entity, String new_name);
+  RenameTile(Registry* registry, Entity tile_entity, String new_name);
 
   void undo() override;
 
@@ -39,7 +39,7 @@ class RenameTile final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mTileEntity;
   String mNewName;
   Maybe<String> mOldName;

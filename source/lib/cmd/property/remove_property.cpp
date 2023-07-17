@@ -29,19 +29,21 @@
 
 namespace tactile::cmd {
 
-RemoveProperty::RemoveProperty(Model* model, const Entity context_entity, String name)
-    : mModel {model},
+RemoveProperty::RemoveProperty(Registry* registry,
+                               const Entity context_entity,
+                               String name)
+    : mRegistry {registry},
       mContextEntity {context_entity},
       mName {std::move(name)}
 {
-  TACTILE_ASSERT(sys::is_context_entity(*mModel, mContextEntity));
+  TACTILE_ASSERT(sys::is_context_entity(*mRegistry, mContextEntity));
 }
 
 void RemoveProperty::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& context = model.get<Context>(mContextEntity);
+  auto& context = registry.get<Context>(mContextEntity);
   context.props[mName] = mPreviousValue.value();
 
   mPreviousValue.reset();
@@ -49,8 +51,8 @@ void RemoveProperty::undo()
 
 void RemoveProperty::redo()
 {
-  auto& model = *mModel;
-  auto& context = model.get<Context>(mContextEntity);
+  auto& registry = *mRegistry;
+  auto& context = registry.get<Context>(mContextEntity);
 
   mPreviousValue = lookup_in(context.props, mName);
   context.props.erase(mName);
@@ -58,7 +60,7 @@ void RemoveProperty::redo()
 
 auto RemoveProperty::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.remove_property;
 }
 

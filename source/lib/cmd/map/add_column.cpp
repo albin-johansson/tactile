@@ -26,26 +26,26 @@
 
 namespace tactile::cmd {
 
-AddColumn::AddColumn(Model* model, const Entity map_entity)
-    : mModel {model},
+AddColumn::AddColumn(Registry* registry, const Entity map_entity)
+    : mRegistry {registry},
       mMapEntity {map_entity}
 {
 }
 
 void AddColumn::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& map = model.get<Map>(mMapEntity);
-  invoke_n(mColumnCount, [&] { sys::remove_column_from_map(model, map); });
+  auto& map = registry.get<Map>(mMapEntity);
+  invoke_n(mColumnCount, [&] { sys::remove_column_from_map(registry, map); });
 }
 
 void AddColumn::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& map = model.get<Map>(mMapEntity);
-  invoke_n(mColumnCount, [&] { sys::add_column_to_map(model, map); });
+  auto& map = registry.get<Map>(mMapEntity);
+  invoke_n(mColumnCount, [&] { sys::add_column_to_map(registry, map); });
 }
 
 auto AddColumn::merge_with(const Command* cmd) -> bool
@@ -60,7 +60,7 @@ auto AddColumn::merge_with(const Command* cmd) -> bool
 
 auto AddColumn::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return mColumnCount == 1 ? strings.cmd.add_column : strings.cmd.add_columns;
 }
 

@@ -29,45 +29,47 @@
 
 namespace tactile::cmd {
 
-AddLayer::AddLayer(Model* model, const Entity map_document_entity, const LayerType type)
-    : mModel {model},
+AddLayer::AddLayer(Registry* registry,
+                   const Entity map_document_entity,
+                   const LayerType type)
+    : mRegistry {registry},
       mMapDocumentEntity {map_document_entity},
       mLayerType {type}
 {
-  TACTILE_ASSERT(sys::is_map_document_entity(*mModel, mMapDocumentEntity));
+  TACTILE_ASSERT(sys::is_map_document_entity(*mRegistry, mMapDocumentEntity));
 }
 
 void AddLayer::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
-  auto& map = model.get<Map>(map_document.map);
+  const auto& map_document = registry.get<MapDocument>(mMapDocumentEntity);
+  auto& map = registry.get<Map>(map_document.map);
 
-  sys::remove_layer_from_map(model, map, mLayerEntity);
+  sys::remove_layer_from_map(registry, map, mLayerEntity);
 
-  auto& document = model.get<Document>(mMapDocumentEntity);
+  auto& document = registry.get<Document>(mMapDocumentEntity);
   if (document.active_context == mLayerEntity) {
     document.active_context = kNullEntity;
   }
 
-  model.set_enabled(mLayerEntity, false);
+  registry.set_enabled(mLayerEntity, false);
   mLayerWasAdded = false;
 }
 
 void AddLayer::redo()
 {
-  auto& model = *mModel;
-  const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
+  auto& registry = *mRegistry;
+  const auto& map_document = registry.get<MapDocument>(mMapDocumentEntity);
 
   if (mLayerEntity == kNullEntity) {
-    mLayerEntity = sys::add_new_layer_to_map(model, map_document.map, mLayerType);
+    mLayerEntity = sys::add_new_layer_to_map(registry, map_document.map, mLayerType);
   }
   else {
-    model.set_enabled(mLayerEntity, true);
+    registry.set_enabled(mLayerEntity, true);
 
-    auto& map = model.get<Map>(map_document.map);
-    sys::attach_layer_to_map(model, map, mLayerEntity, mParentLayerEntity);
+    auto& map = registry.get<Map>(map_document.map);
+    sys::attach_layer_to_map(registry, map, mLayerEntity, mParentLayerEntity);
   }
 
   mLayerWasAdded = true;
@@ -76,13 +78,13 @@ void AddLayer::redo()
 void AddLayer::dispose()
 {
   if (!mLayerWasAdded) {
-    mModel->destroy(mLayerEntity);
+    mRegistry->destroy(mLayerEntity);
   }
 }
 
 auto AddLayer::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.add_layer;
 }
 

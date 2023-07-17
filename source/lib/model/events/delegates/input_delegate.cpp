@@ -32,7 +32,7 @@
 namespace tactile {
 namespace {
 
-void _on_mouse_wheel(Model& model,
+void _on_mouse_wheel(Registry& registry,
                      Dispatcher& dispatcher,
                      const cen::mouse_wheel_event& event)
 {
@@ -40,12 +40,12 @@ void _on_mouse_wheel(Model& model,
   // ImGui APIs. Otherwise, it would be nicer to keep this code closer to the actual
   // widgets.
 
-  const auto document_entity = sys::get_active_document(model);
-  const auto& widgets = model.get<ui::WidgetState>();
+  const auto document_entity = sys::get_active_document(registry);
+  const auto& widgets = registry.get<ui::WidgetState>();
 
   if (document_entity != kNullEntity && !ImGui::GetTopMostPopupModal()) {
-    const auto& document = model.get<Document>(document_entity);
-    const auto& document_viewport = model.get<Viewport>(document_entity);
+    const auto& document = registry.get<Document>(document_entity);
+    const auto& document_viewport = registry.get<Viewport>(document_entity);
 
     if (widgets.editor_dock.is_hovered) {
       ui::on_mouse_wheel_event_in_central_viewport(document_entity,
@@ -54,9 +54,9 @@ void _on_mouse_wheel(Model& model,
                                                    event);
     }
     else if (document.type == DocumentType::Map && widgets.tileset_dock.has_hover) {
-      const auto& map_document = model.get<MapDocument>(document_entity);
+      const auto& map_document = registry.get<MapDocument>(document_entity);
       if (map_document.active_tileset != kNullEntity) {
-        ui::on_mouse_wheel_event_in_tileset_dock(model,
+        ui::on_mouse_wheel_event_in_tileset_dock(registry,
                                                  map_document.active_tileset,
                                                  event,
                                                  dispatcher);
@@ -67,11 +67,11 @@ void _on_mouse_wheel(Model& model,
 
 }  // namespace
 
-void on_event(Model& model, Dispatcher& dispatcher, const cen::event_handler& event)
+void on_event(Registry& registry, Dispatcher& dispatcher, const cen::event_handler& event)
 {
   switch (event.type().value()) {
     case cen::event_type::mouse_wheel:
-      _on_mouse_wheel(model, dispatcher, event.get<cen::mouse_wheel_event>());
+      _on_mouse_wheel(registry, dispatcher, event.get<cen::mouse_wheel_event>());
       break;
 
     default:

@@ -25,13 +25,13 @@
 #include "common/tile_extent.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class ResizeMap final : public Command {
  public:
-  ResizeMap(Model* model, Entity map_entity, TileExtent extent);
+  ResizeMap(Registry* registry, Entity map_entity, TileExtent extent);
 
   void undo() override;
 
@@ -40,7 +40,7 @@ class ResizeMap final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mMapEntity;
   TileExtent mNewExtent;
   Maybe<TileExtent> mOldExtent;

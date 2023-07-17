@@ -21,28 +21,28 @@
 
 #include "common/type/dispatcher.hpp"
 #include "model/events/file_events.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
-void on_open_document(Model& model, const OpenDocumentEvent& event);
+void on_open_document(Registry& registry, const OpenDocumentEvent& event);
 
-void on_close_document(Model& model, const CloseDocumentEvent& event);
+void on_close_document(Registry& registry, const CloseDocumentEvent& event);
 
-void on_select_document(Model& model, const SelectDocumentEvent& event);
+void on_select_document(Registry& registry, const SelectDocumentEvent& event);
 
-void on_save(Model& model, Dispatcher& dispatcher, const SaveEvent& event);
+void on_save(Registry& registry, Dispatcher& dispatcher, const SaveEvent& event);
 
-void on_save_as(Model& model, Dispatcher& dispatcher, const SaveAsEvent& event);
+void on_save_as(Registry& registry, Dispatcher& dispatcher, const SaveAsEvent& event);
 
-void on_show_save_as_dialog(Model& model,
+void on_show_save_as_dialog(Registry& registry,
                             Dispatcher& dispatcher,
                             const ShowSaveAsDialogEvent& event);
 
-void on_reopen_last_closed_file(Model& model,
+void on_reopen_last_closed_file(Registry& registry,
                                 Dispatcher& dispatcher,
                                 const ReopenLastClosedFileEvent& event);
 
-void on_clear_file_history(Model& model, const ClearFileHistoryEvent& event);
+void on_clear_file_history(Registry& registry, const ClearFileHistoryEvent& event);
 
 }  // namespace tactile

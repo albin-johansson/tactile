@@ -34,14 +34,14 @@
 
 namespace tactile {
 
-auto save_map_document_to_disk(const Model& model, const Entity map_document_entity)
+auto save_map_document_to_disk(const Registry& registry, const Entity map_document_entity)
     -> Result
 {
   try {
     TACTILE_DEBUG_PROFILE_START
 
-    const auto& document = model.get<Document>(map_document_entity);
-    const auto& settings = model.get<Settings>();
+    const auto& document = registry.get<Document>(map_document_entity);
+    const auto& settings = registry.get<Settings>();
 
     if (!document.path.has_value()) {
       spdlog::error("[IO] Tried to save map with no associated file path");
@@ -53,17 +53,17 @@ auto save_map_document_to_disk(const Model& model, const Entity map_document_ent
 
     if (has_supported_tactile_yaml_extension(path)) {
       save_map_as_tactile_yaml(path,
-                               convert_map_document_to_ir(model, map_document_entity),
+                               convert_map_document_to_ir(registry, map_document_entity),
                                settings);
     }
     else if (has_supported_tiled_json_extension(path)) {
       save_map_as_tiled_json(path,
-                             convert_map_document_to_ir(model, map_document_entity),
+                             convert_map_document_to_ir(registry, map_document_entity),
                              settings);
     }
     else if (has_supported_tiled_xml_extension(path)) {
       save_map_as_tiled_xml(path,
-                            convert_map_document_to_ir(model, map_document_entity),
+                            convert_map_document_to_ir(registry, map_document_entity),
                             settings);
     }
     else {

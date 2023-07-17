@@ -25,26 +25,26 @@
 
 namespace tactile::cmd {
 
-RemoveAnimationFrame::RemoveAnimationFrame(Model* model,
+RemoveAnimationFrame::RemoveAnimationFrame(Registry* registry,
                                            const Entity tile_entity,
                                            const usize frame_index)
-    : mModel {model},
+    : mRegistry {registry},
       mTileEntity {tile_entity},
       mFrameIndex {frame_index}
 {
-  TACTILE_ASSERT(sys::is_tile_entity(*mModel, mTileEntity));
+  TACTILE_ASSERT(sys::is_tile_entity(*mRegistry, mTileEntity));
 }
 
 void RemoveAnimationFrame::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
   if (mRemovedAnimation.has_value()) {
-    auto& animation = model.add<TileAnimation>(mTileEntity);
+    auto& animation = registry.add<TileAnimation>(mTileEntity);
     animation = *mRemovedAnimation;
   }
 
-  auto& animation = model.get<TileAnimation>(mTileEntity);
+  auto& animation = registry.get<TileAnimation>(mTileEntity);
   animation.frames.insert(animation.frames.begin() + static_cast<ssize>(mFrameIndex),
                           TileAnimationFrame {
                               .tile_index = mFrameTileIndex.value(),
@@ -57,10 +57,10 @@ void RemoveAnimationFrame::undo()
 
 void RemoveAnimationFrame::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  const auto& tile = model.get<Tile>(mTileEntity);
-  auto& animation = model.get<TileAnimation>(mTileEntity);
+  const auto& tile = registry.get<Tile>(mTileEntity);
+  auto& animation = registry.get<TileAnimation>(mTileEntity);
 
   {
     const auto& frame = animation.frames.at(mFrameIndex);
@@ -73,16 +73,16 @@ void RemoveAnimationFrame::redo()
   // Check if the animated tile is itself in the sequence
   if (animation.frames.size() == 1 && animation.frames.at(0).tile_index == tile.index) {
     mRemovedAnimation = animation;
-    model.remove<TileAnimation>(mTileEntity);
+    registry.remove<TileAnimation>(mTileEntity);
   }
   else if (animation.frames.empty()) {
-    model.remove<TileAnimation>(mTileEntity);
+    registry.remove<TileAnimation>(mTileEntity);
   }
 }
 
 auto RemoveAnimationFrame::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.remove_animation_frame;
 }
 

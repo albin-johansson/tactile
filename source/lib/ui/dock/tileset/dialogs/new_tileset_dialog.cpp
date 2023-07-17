@@ -50,11 +50,11 @@ void _select_image_file(NewTilesetDialogState& state)
 
 }  // namespace
 
-void push_new_tileset_dialog(const Model& model,
+void push_new_tileset_dialog(const Registry& registry,
                              NewTilesetDialogState& state,
                              Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   DialogOptions options {
       .title = strings.window.create_tileset.c_str(),

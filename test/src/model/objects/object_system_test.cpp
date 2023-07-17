@@ -35,8 +35,8 @@ TEST_SUITE("ObjectSystem")
     auto model = sys::create_model(BackendAPI::Null);
 
     const auto old_object_entity = sys::create_object(model, ObjectType::Rect);
-    auto& old_object = model.get<Object>(old_object_entity);
-    auto& old_object_context = model.get<Context>(old_object_entity);
+    auto& old_object = registry.get<Object>(old_object_entity);
+    auto& old_object_context = registry.get<Context>(old_object_entity);
 
     old_object.position = Float2 {12, 34};
     old_object.size = Float2 {120, 100};
@@ -49,8 +49,8 @@ TEST_SUITE("ObjectSystem")
     old_object_context.props["tint"] = Color {0xFF, 0, 0};
 
     const auto new_object_entity = sys::duplicate_object(model, old_object_entity);
-    const auto& new_object = model.get<Object>(new_object_entity);
-    const auto& new_object_context = model.get<Context>(new_object_entity);
+    const auto& new_object = registry.get<Object>(new_object_entity);
+    const auto& new_object_context = registry.get<Context>(new_object_entity);
 
     CHECK(new_object.type == old_object.type);
     CHECK(new_object.position == old_object.position);

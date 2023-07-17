@@ -24,32 +24,32 @@
 #include "common/type/maybe.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/maps/map_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
-void move_layer_up(Model& model, const Map& map, Entity layer_entity);
+void move_layer_up(Registry& registry, const Map& map, Entity layer_entity);
 
-void move_layer_down(Model& model, const Map& map, Entity layer_entity);
+void move_layer_down(Registry& registry, const Map& map, Entity layer_entity);
 
-void set_layer_local_index(Model& model,
+void set_layer_local_index(Registry& registry,
                            const Map& map,
                            Entity layer_entity,
                            usize new_index);
 
-[[nodiscard]] auto can_move_layer_up(const Model& model,
+[[nodiscard]] auto can_move_layer_up(const Registry& registry,
                                      const GroupLayer& root,
                                      Entity layer_entity) -> bool;
 
-[[nodiscard]] auto can_move_layer_down(const Model& model,
+[[nodiscard]] auto can_move_layer_down(const Registry& registry,
                                        const GroupLayer& root,
                                        Entity layer_entity) -> bool;
 
-[[nodiscard]] auto get_local_layer_index(const Model& model,
+[[nodiscard]] auto get_local_layer_index(const Registry& registry,
                                          const GroupLayer& root,
                                          Entity layer_entity) -> Maybe<usize>;
 
-[[nodiscard]] auto get_parent_layer(const Model& model,
+[[nodiscard]] auto get_parent_layer(const Registry& registry,
                                     const Map& map,
                                     Entity layer_entity) -> Entity;
 

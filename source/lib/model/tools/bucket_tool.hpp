@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "model/tools/tool.hpp"
 
 namespace tactile {
@@ -28,16 +28,16 @@ class BucketTool final : public Tool {
  public:
   void reset() override {}
 
-  void on_mouse_pressed(Model& model,
+  void on_mouse_pressed(Registry& registry,
                         Dispatcher& dispatcher,
                         const ViewportMouseInfo& mouse) override;
 
-  [[nodiscard]] auto is_available(const Model& model) const -> bool override;
+  [[nodiscard]] auto is_available(const Registry& registry) const -> bool override;
 };
 
 namespace sys {
 
-[[nodiscard]] auto is_bucket_tool_available(const Model& model) -> bool;
+[[nodiscard]] auto is_bucket_tool_available(const Registry& registry) -> bool;
 
 }  // namespace sys
 }  // namespace tactile::sys

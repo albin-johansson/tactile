@@ -22,7 +22,7 @@
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/path.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
@@ -35,7 +35,7 @@ struct GodotExportDialogState final {
   bool should_open {};
 };
 
-void push_godot_export_dialog(const Model& model,
+void push_godot_export_dialog(const Registry& registry,
                               GodotExportDialogState& state,
                               Dispatcher& dispatcher);
 

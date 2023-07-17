@@ -50,36 +50,36 @@
 
 namespace tactile {
 
-void on_show_new_map_dialog(Model& model, const ShowNewMapDialogEvent&)
+void on_show_new_map_dialog(Registry& registry, const ShowNewMapDialogEvent&)
 {
-  const auto& settings = model.get<Settings>();
+  const auto& settings = registry.get<Settings>();
 
-  auto& widgets = model.get<ui::WidgetState>();
+  auto& widgets = registry.get<ui::WidgetState>();
   widgets.new_map_dialog.tile_size = settings.get_preferred_tile_size();
   widgets.new_map_dialog.row_count = 5;
   widgets.new_map_dialog.col_count = 5;
   widgets.new_map_dialog.should_open = true;
 }
 
-void on_show_open_map_dialog(Model& model, const ShowOpenMapDialogEvent&)
+void on_show_open_map_dialog(Registry& registry, const ShowOpenMapDialogEvent&)
 {
-  auto& widgets = model.get<ui::WidgetState>();
+  auto& widgets = registry.get<ui::WidgetState>();
   widgets.should_open_map_file_dialog = true;
 }
 
-void on_show_resize_map_dialog(Model& model, const ShowResizeMapDialogEvent&)
+void on_show_resize_map_dialog(Registry& registry, const ShowResizeMapDialogEvent&)
 {
-  if (const auto* map = sys::try_get_active_map(model)) {
-    auto& widgets = model.get<ui::WidgetState>();
+  if (const auto* map = sys::try_get_active_map(registry)) {
+    auto& widgets = registry.get<ui::WidgetState>();
     widgets.resize_map_dialog.row_count = map->extent.rows;
     widgets.resize_map_dialog.col_count = map->extent.cols;
     widgets.resize_map_dialog.should_open = true;
   }
 }
 
-void on_show_godot_export_dialog(Model& model, const ShowGodotExportDialogEvent&)
+void on_show_godot_export_dialog(Registry& registry, const ShowGodotExportDialogEvent&)
 {
-  auto& widgets = model.get<ui::WidgetState>();
+  auto& widgets = registry.get<ui::WidgetState>();
   widgets.godot_export_dialog.root_dir.clear();
   widgets.godot_export_dialog.map_dir.clear();
   widgets.godot_export_dialog.image_dir.clear();
@@ -88,31 +88,31 @@ void on_show_godot_export_dialog(Model& model, const ShowGodotExportDialogEvent&
   widgets.godot_export_dialog.should_open = true;
 }
 
-void on_create_map(Model& model, const CreateMapEvent& event)
+void on_create_map(Registry& registry, const CreateMapEvent& event)
 {
-  sys::on_create_map(model, event);
+  sys::on_create_map(registry, event);
 }
 
 // TODO consider renaming event (if standalone tileset documents can be parsed)
-void on_open_map(Model& model, const OpenMapEvent& event)
+void on_open_map(Registry& registry, const OpenMapEvent& event)
 {
-  const auto document_entity = sys::get_document_with_path(model, event.path);
+  const auto document_entity = sys::get_document_with_path(registry, event.path);
 
   if (document_entity != kNullEntity) {
-    sys::open_document(model, document_entity);
+    sys::open_document(registry, document_entity);
   }
   else {
     const auto ir_map = parse_map(event.path);
     if (ir_map.has_value()) {
       const auto absolute_document_path = fs::absolute(event.path);
-      create_map_document_from_ir(*ir_map, absolute_document_path, model);
+      create_map_document_from_ir(*ir_map, absolute_document_path, registry);
 
-      auto& file_history = model.get<FileHistory>();
+      auto& file_history = registry.get<FileHistory>();
       sys::add_to_file_history(file_history, absolute_document_path);
     }
     else {
-      const auto& strings = sys::get_current_language_strings(model);
-      auto& widget_state = model.get<ui::WidgetState>();
+      const auto& strings = sys::get_current_language_strings(registry);
+      auto& widget_state = registry.get<ui::WidgetState>();
 
       auto& error_dialog = widget_state.map_parse_error_dialog;
       error_dialog.cause =
@@ -122,61 +122,61 @@ void on_open_map(Model& model, const OpenMapEvent& event)
   }
 }
 
-void on_resize_map(Model& model, const ResizeMapEvent& event)
+void on_resize_map(Registry& registry, const ResizeMapEvent& event)
 {
-  const auto map_entity = sys::get_active_map(model);
+  const auto map_entity = sys::get_active_map(registry);
   if (map_entity != kNullEntity) {
-    sys::try_execute<cmd::ResizeMap>(model,
+    sys::try_execute<cmd::ResizeMap>(registry,
                                      map_entity,
                                      TileExtent {event.row_count, event.col_count});
   }
 }
 
-void on_add_row(Model& model, const AddRowEvent&)
+void on_add_row(Registry& registry, const AddRowEvent&)
 {
-  const auto map_entity = sys::get_active_map(model);
+  const auto map_entity = sys::get_active_map(registry);
   if (map_entity != kNullEntity) {
-    sys::try_execute<cmd::AddRow>(model, map_entity);
+    sys::try_execute<cmd::AddRow>(registry, map_entity);
   }
 }
 
-void on_add_column(Model& model, const AddColumnEvent&)
+void on_add_column(Registry& registry, const AddColumnEvent&)
 {
-  const auto map_entity = sys::get_active_map(model);
+  const auto map_entity = sys::get_active_map(registry);
   if (map_entity != kNullEntity) {
-    sys::try_execute<cmd::AddColumn>(model, map_entity);
+    sys::try_execute<cmd::AddColumn>(registry, map_entity);
   }
 }
 
-void on_remove_row(Model& model, const RemoveRowEvent&)
+void on_remove_row(Registry& registry, const RemoveRowEvent&)
 {
-  const auto map_entity = sys::get_active_map(model);
+  const auto map_entity = sys::get_active_map(registry);
   if (map_entity != kNullEntity) {
-    sys::try_execute<cmd::RemoveRow>(model, map_entity);
+    sys::try_execute<cmd::RemoveRow>(registry, map_entity);
   }
 }
 
-void on_remove_column(Model& model, const RemoveColumnEvent&)
+void on_remove_column(Registry& registry, const RemoveColumnEvent&)
 {
-  const auto map_entity = sys::get_active_map(model);
+  const auto map_entity = sys::get_active_map(registry);
   if (map_entity != kNullEntity) {
-    sys::try_execute<cmd::RemoveColumn>(model, map_entity);
+    sys::try_execute<cmd::RemoveColumn>(registry, map_entity);
   }
 }
 
-void on_fix_tiles_in_map(Model& model, const FixTilesInMapEvent&)
+void on_fix_tiles_in_map(Registry& registry, const FixTilesInMapEvent&)
 {
-  const auto map_entity = sys::get_active_map(model);
+  const auto map_entity = sys::get_active_map(registry);
   if (map_entity != kNullEntity) {
-    sys::try_execute<cmd::FixMapTiles>(model, map_entity);
+    sys::try_execute<cmd::FixMapTiles>(registry, map_entity);
   }
 }
 
-void on_export_as_godot_scene(Model& model, const ExportAsGodotSceneEvent& event)
+void on_export_as_godot_scene(Registry& registry, const ExportAsGodotSceneEvent& event)
 {
-  if (sys::is_map_document_active(model)) {
-    const auto document_entity = sys::get_active_document(model);
-    const auto ir_map = convert_map_document_to_ir(model, document_entity);
+  if (sys::is_map_document_active(registry)) {
+    const auto document_entity = sys::get_active_document(registry);
+    const auto ir_map = convert_map_document_to_ir(registry, document_entity);
 
     const GodotEmitOptions options {
         .root_dir = event.root_dir,
@@ -191,49 +191,52 @@ void on_export_as_godot_scene(Model& model, const ExportAsGodotSceneEvent& event
   }
 }
 
-void on_inspect_map(Model& model, const InspectMapEvent&)
+void on_inspect_map(Registry& registry, const InspectMapEvent&)
 {
-  if (sys::is_map_document_active(model)) {
-    const auto document_entity = sys::get_active_document(model);
-    const auto& map_document = model.get<MapDocument>(document_entity);
+  if (sys::is_map_document_active(registry)) {
+    const auto document_entity = sys::get_active_document(registry);
+    const auto& map_document = registry.get<MapDocument>(document_entity);
 
-    auto& document = model.get<Document>(document_entity);
+    auto& document = registry.get<Document>(document_entity);
     document.active_context = map_document.map;
   }
 }
 
-void on_set_tile_format_encoding(Model& model, const SetTileFormatEncodingEvent& event)
+void on_set_tile_format_encoding(Registry& registry,
+                                 const SetTileFormatEncodingEvent& event)
 {
-  const auto map_entity = sys::get_active_map(model);
+  const auto map_entity = sys::get_active_map(registry);
   if (map_entity != kNullEntity) {
-    sys::try_execute<cmd::SetTileFormatEncoding>(model, map_entity, event.encoding);
+    sys::try_execute<cmd::SetTileFormatEncoding>(registry, map_entity, event.encoding);
   }
 }
 
-void on_set_tile_format_compression(Model& model,
+void on_set_tile_format_compression(Registry& registry,
                                     const SetTileFormatCompressionEvent& event)
 {
-  const auto map_entity = sys::get_active_map(model);
+  const auto map_entity = sys::get_active_map(registry);
   if (map_entity != kNullEntity) {
-    sys::try_execute<cmd::SetTileFormatCompression>(model, map_entity, event.compression);
+    sys::try_execute<cmd::SetTileFormatCompression>(registry,
+                                                    map_entity,
+                                                    event.compression);
   }
 }
 
-void on_set_zlib_compression_level(Model& model,
+void on_set_zlib_compression_level(Registry& registry,
                                    const SetZlibCompressionLevelEvent& event)
 {
-  const auto map_entity = sys::get_active_map(model);
+  const auto map_entity = sys::get_active_map(registry);
   if (map_entity != kNullEntity) {
-    sys::try_execute<cmd::SetZlibCompressionLevel>(model, map_entity, event.level);
+    sys::try_execute<cmd::SetZlibCompressionLevel>(registry, map_entity, event.level);
   }
 }
 
-void on_set_zstd_compression_level(Model& model,
+void on_set_zstd_compression_level(Registry& registry,
                                    const SetZstdCompressionLevelEvent& event)
 {
-  const auto map_entity = sys::get_active_map(model);
+  const auto map_entity = sys::get_active_map(registry);
   if (map_entity != kNullEntity) {
-    sys::try_execute<cmd::SetZstdCompressionLevel>(model, map_entity, event.level);
+    sys::try_execute<cmd::SetZstdCompressionLevel>(registry, map_entity, event.level);
   }
 }
 

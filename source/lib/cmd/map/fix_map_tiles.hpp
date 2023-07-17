@@ -22,13 +22,13 @@
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "model/maps/map_system.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class FixMapTiles final : public Command {
  public:
-  FixMapTiles(Model* model, Entity map_entity);
+  FixMapTiles(Registry* registry, Entity map_entity);
 
   void undo() override;
 
@@ -37,7 +37,7 @@ class FixMapTiles final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mMapEntity;
   sys::FixTilesInMapResult mInvalidLayerTiles;
 };

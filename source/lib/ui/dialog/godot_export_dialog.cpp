@@ -128,11 +128,11 @@ void _on_dialog_accept(const GodotExportDialogState& state, Dispatcher& dispatch
 
 }  // namespace
 
-void push_godot_export_dialog(const Model& model,
+void push_godot_export_dialog(const Registry& registry,
                               GodotExportDialogState& state,
                               Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   DialogOptions options {
       .title = strings.window.export_as_godot_scene.c_str(),

@@ -28,7 +28,7 @@
 #include "common/type/string.hpp"
 #include "common/type/vector.hpp"
 #include "io/ir/map/map_ir.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
@@ -36,7 +36,7 @@ class LayerBuilder final {
  public:
   using Self = LayerBuilder;
 
-  explicit LayerBuilder(Model& model);
+  explicit LayerBuilder(Registry& registry);
 
   auto with_id(int32 id) -> Self&;
 
@@ -65,7 +65,7 @@ class LayerBuilder final {
   [[nodiscard]] auto build() -> Entity;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   String mName;
   int32 mId {};
   AttributeMap mProperties;

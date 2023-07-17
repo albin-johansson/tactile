@@ -23,13 +23,16 @@
 #include "common/enum/attribute_type.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class CreateProperty final : public Command {
  public:
-  CreateProperty(Model* model, Entity context_entity, String name, AttributeType type);
+  CreateProperty(Registry* registry,
+                 Entity context_entity,
+                 String name,
+                 AttributeType type);
 
   void undo() override;
 
@@ -38,7 +41,7 @@ class CreateProperty final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mContextEntity;
   String mName;
   AttributeType mType;

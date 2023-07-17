@@ -31,21 +31,21 @@
 
 namespace tactile::sys {
 
-void init_model(Model& model, const BackendAPI api)
+void init_model(Registry& registry, const BackendAPI api)
 {
-  auto& document_context = model.add<DocumentContext>();
+  auto& document_context = registry.add<DocumentContext>();
   document_context.active_document = kNullEntity;
 
-  model.add<Settings>();
-  model.add<Languages>();
-  model.add<FileHistory>();
-  model.add<TextureCache>();
-  model.add<Icons>();
-  model.add<MenuItems>();
+  registry.add<Settings>();
+  registry.add<Languages>();
+  registry.add<FileHistory>();
+  registry.add<TextureCache>();
+  registry.add<Icons>();
+  registry.add<MenuItems>();
 
-  model.add<ui::WidgetState>();
+  registry.add<ui::WidgetState>();
 
-  auto& texture_callbacks = model.add<TextureCallbacks>();
+  auto& texture_callbacks = registry.add<TextureCallbacks>();
   if (api == BackendAPI::Null) {
     texture_callbacks.init = &on_init_null_texture;
     texture_callbacks.destroy = &on_destroy_null_texture;
@@ -56,9 +56,9 @@ void init_model(Model& model, const BackendAPI api)
   }
 }
 
-auto create_model(const BackendAPI api) -> Model
+auto create_model(const BackendAPI api) -> Registry
 {
-  Model model;
+  Registry model;
   init_model(model, api);
   return model;
 }

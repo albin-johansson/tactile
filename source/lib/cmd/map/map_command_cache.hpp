@@ -23,7 +23,7 @@
 #include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/tree_map.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
@@ -34,9 +34,9 @@ class MapCommandCache final {
 
   void clear() noexcept;
 
-  void restore_tiles(Model& model);
+  void restore_tiles(Registry& registry);
 
-  void save_tiles(const Model& model,
+  void save_tiles(const Registry& registry,
                   Entity map_entity,
                   const TilePos& begin,
                   const TilePos& end);

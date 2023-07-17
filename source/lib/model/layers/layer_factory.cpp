@@ -30,17 +30,17 @@
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto _create_layer_entity_base(Model& model,
+[[nodiscard]] auto _create_layer_entity_base(Registry& registry,
                                              const LayerType type,
                                              String name,
                                              const int32 id) -> Entity
 {
-  const auto layer_entity = model.create_entity();
+  const auto layer_entity = registry.create_entity();
 
-  auto& context = model.add<Context>(layer_entity);
+  auto& context = registry.add<Context>(layer_entity);
   context.name = std::move(name);
 
-  auto& layer = model.add<Layer>(layer_entity);
+  auto& layer = registry.add<Layer>(layer_entity);
   layer.type = type;
   layer.id = id;
   layer.opacity = 1.0f;
@@ -51,37 +51,38 @@ namespace {
 
 }  // namespace
 
-auto create_tile_layer(Model& model, const int32 id, const TileExtent extent) -> Entity
+auto create_tile_layer(Registry& registry, const int32 id, const TileExtent extent)
+    -> Entity
 {
   const auto layer_entity =
-      _create_layer_entity_base(model, LayerType::TileLayer, "Tile Layer", id);
+      _create_layer_entity_base(registry, LayerType::TileLayer, "Tile Layer", id);
 
-  auto& tile_layer = model.add<TileLayer>(layer_entity);
+  auto& tile_layer = registry.add<TileLayer>(layer_entity);
   tile_layer.tiles = make_tile_matrix(extent);
 
-  TACTILE_ASSERT(is_tile_layer_entity(model, layer_entity));
+  TACTILE_ASSERT(is_tile_layer_entity(registry, layer_entity));
   return layer_entity;
 }
 
-auto create_object_layer(Model& model, const int32 id) -> Entity
+auto create_object_layer(Registry& registry, const int32 id) -> Entity
 {
   const auto layer_entity =
-      _create_layer_entity_base(model, LayerType::ObjectLayer, "Object Layer", id);
+      _create_layer_entity_base(registry, LayerType::ObjectLayer, "Object Layer", id);
 
-  model.add<ObjectLayer>(layer_entity);
+  registry.add<ObjectLayer>(layer_entity);
 
-  TACTILE_ASSERT(is_object_layer_entity(model, layer_entity));
+  TACTILE_ASSERT(is_object_layer_entity(registry, layer_entity));
   return layer_entity;
 }
 
-auto create_group_layer(Model& model, const int32 id) -> Entity
+auto create_group_layer(Registry& registry, const int32 id) -> Entity
 {
   const auto layer_entity =
-      _create_layer_entity_base(model, LayerType::GroupLayer, "Group Layer", id);
+      _create_layer_entity_base(registry, LayerType::GroupLayer, "Group Layer", id);
 
-  model.add<GroupLayer>(layer_entity);
+  registry.add<GroupLayer>(layer_entity);
 
-  TACTILE_ASSERT(is_group_layer_entity(model, layer_entity));
+  TACTILE_ASSERT(is_group_layer_entity(registry, layer_entity));
   return layer_entity;
 }
 

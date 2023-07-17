@@ -26,18 +26,19 @@
 #include "common/type/string_map.hpp"
 #include "model/components/component_components.hpp"
 #include "model/contexts/context_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
 /// Creates a component entity and attaches it to the specified context.
-auto attach_component(Model& model, Context& context, Entity definition_entity) -> Entity;
+auto attach_component(Registry& registry, Context& context, Entity definition_entity)
+    -> Entity;
 
 /// Detaches a component from a context (this destroys the attached component entity).
-auto detach_component(Model& model, Context& context, Entity definition_entity)
+auto detach_component(Registry& registry, Context& context, Entity definition_entity)
     -> Maybe<StringMap<Attribute>>;
 
-[[nodiscard]] auto has_component(const Model& model,
+[[nodiscard]] auto has_component(const Registry& registry,
                                  const Context& context,
                                  StringView component_name) -> bool;
 

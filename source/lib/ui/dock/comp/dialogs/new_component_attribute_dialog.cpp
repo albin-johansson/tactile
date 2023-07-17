@@ -28,21 +28,21 @@
 #include "model/documents/document_system.hpp"
 #include "model/events/component_events.hpp"
 #include "model/i18n/language_system.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
 
-void push_new_comp_attr_dialog(const Model& model,
+void push_new_comp_attr_dialog(const Registry& registry,
                                NewCompAttrDialogState& state,
                                Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
-  const auto document_entity = sys::get_active_document(model);
-  const auto& document = model.get<Document>(document_entity);
+  const auto document_entity = sys::get_active_document(registry);
+  const auto& document = registry.get<Document>(document_entity);
 
-  const auto& component_set = model.get<ComponentSet>(document.component_set);
+  const auto& component_set = registry.get<ComponentSet>(document.component_set);
   if (!contained_in(component_set.definitions, state.definition_entity)) {
     state.definition_entity = kNullEntity;
     state.should_open = false;
@@ -60,7 +60,7 @@ void push_new_comp_attr_dialog(const Model& model,
     state.should_open = false;
   }
 
-  const auto& component = model.get<Component>(state.definition_entity);
+  const auto& component = registry.get<Component>(state.definition_entity);
   const auto current_name = state.attribute_name_buffer.as_string_view();
 
   if (!current_name.empty() && !component.attributes.contains(current_name)) {

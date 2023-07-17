@@ -26,19 +26,21 @@
 
 namespace tactile {
 
-void on_reset_font_size(Model& model, Dispatcher& dispatcher, const ResetFontSizeEvent&)
+void on_reset_font_size(Registry& registry,
+                        Dispatcher& dispatcher,
+                        const ResetFontSizeEvent&)
 {
-  auto& settings = model.get<Settings>();
+  auto& settings = registry.get<Settings>();
   settings.set_font_size(kDefFontSize);
 
   dispatcher.trigger(ReloadFontsEvent {});
 }
 
-void on_increase_font_size(Model& model,
+void on_increase_font_size(Registry& registry,
                            Dispatcher& dispatcher,
                            const IncreaseFontSizeEvent&)
 {
-  auto& settings = model.get<Settings>();
+  auto& settings = registry.get<Settings>();
 
   const auto new_size = std::min(settings.get_font_size() + 2, kMaxFontSize);
   settings.set_font_size(new_size);
@@ -46,11 +48,11 @@ void on_increase_font_size(Model& model,
   dispatcher.trigger(ReloadFontsEvent {});
 }
 
-void on_decrease_font_size(Model& model,
+void on_decrease_font_size(Registry& registry,
                            Dispatcher& dispatcher,
                            const DecreaseFontSizeEvent&)
 {
-  auto& settings = model.get<Settings>();
+  auto& settings = registry.get<Settings>();
 
   const auto new_size = std::max(settings.get_font_size() - 2, kMinFontSize);
   settings.set_font_size(new_size);

@@ -26,14 +26,14 @@
 
 namespace tactile::sys {
 
-void make_tile_animated(Model& model, const Entity tile_entity)
+void make_tile_animated(Registry& registry, const Entity tile_entity)
 {
-  TACTILE_ASSERT(is_tile_entity(model, tile_entity));
-  TACTILE_ASSERT(!model.has<TileAnimation>(tile_entity));
+  TACTILE_ASSERT(is_tile_entity(registry, tile_entity));
+  TACTILE_ASSERT(!registry.has<TileAnimation>(tile_entity));
 
-  const auto& tile = model.get<Tile>(tile_entity);
+  const auto& tile = registry.get<Tile>(tile_entity);
 
-  auto& animation = model.add<TileAnimation>(tile_entity);
+  auto& animation = registry.add<TileAnimation>(tile_entity);
   animation.index = 0;
   animation.frames.push_back(TileAnimationFrame {tile.index, ms_t {1'000}});
   animation.last_update = Clock::now();

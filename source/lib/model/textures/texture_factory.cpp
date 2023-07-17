@@ -24,9 +24,9 @@
 
 namespace tactile::sys {
 
-auto create_texture(Model& model, const Path& path) -> Entity
+auto create_texture(Registry& registry, const Path& path) -> Entity
 {
-  auto& texture_cache = model.get<TextureCache>();
+  auto& texture_cache = registry.get<TextureCache>();
 
   // Check if the image has already been loaded, if so just return the associated entity.
   if (const auto iter = texture_cache.textures.find(path);
@@ -37,15 +37,15 @@ auto create_texture(Model& model, const Path& path) -> Entity
   // TODO return null entity if loading fails
   const auto texture_data = load_texture_data(path).value();
 
-  const auto texture_entity = model.create_entity();
+  const auto texture_entity = registry.create_entity();
   texture_cache.textures[path] = texture_entity;
 
-  auto& texture = model.add<Texture>(texture_entity);
+  auto& texture = registry.add<Texture>(texture_entity);
   texture.path = path;
   texture.size = texture_data.size;
 
-  const auto& texture_callbacks = model.get<TextureCallbacks>();
-  texture_callbacks.init(model, texture_entity, texture_data);
+  const auto& texture_callbacks = registry.get<TextureCallbacks>();
+  texture_callbacks.init(registry, texture_entity, texture_data);
 
   return texture_entity;
 }

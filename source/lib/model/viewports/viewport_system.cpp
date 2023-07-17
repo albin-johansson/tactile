@@ -25,12 +25,12 @@
 
 namespace tactile::sys {
 
-auto is_viewport_zoom_out_possible(const Model& model) -> bool
+auto is_viewport_zoom_out_possible(const Registry& registry) -> bool
 {
-  const auto document_entity = get_active_document(model);
+  const auto document_entity = get_active_document(registry);
 
   if (document_entity != kNullEntity) {
-    const auto& viewport = model.get<Viewport>(document_entity);
+    const auto& viewport = registry.get<Viewport>(document_entity);
     return can_zoom_out_in(viewport);
   }
 

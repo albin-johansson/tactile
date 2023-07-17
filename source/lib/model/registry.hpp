@@ -29,8 +29,7 @@
 
 namespace tactile {
 
-/// A wrapper around an entity registry.
-class Model final {
+class Registry final {
  public:
   /// Creates a new entity with no attached components.
   [[nodiscard]] auto create_entity() -> Entity;
@@ -97,7 +96,7 @@ class Model final {
     return mRegistry.emplace_or_replace<T>(entity);
   }
 
-  /// Removes a context component from the model.
+  /// Removes a context component from the registry.
   template <typename T>
   void remove()
   {
@@ -249,6 +248,6 @@ class Model final {
   entt::registry mRegistry;
 };
 
-using Registry = Model;
+using Registry = Registry;
 
 }  // namespace tactile

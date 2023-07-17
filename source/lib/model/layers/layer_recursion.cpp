@@ -21,40 +21,45 @@
 
 namespace tactile::sys {
 
-void visit_layers(const Model& model,
+void visit_layers(const Registry& registry,
                   const GroupLayer& root_layer,
                   const EntityCallback& callback)
 {
   for (const auto child_layer_entity: root_layer.children) {
-    if (const auto* child_group_layer = model.try_get<GroupLayer>(child_layer_entity)) {
-      visit_layers(model, *child_group_layer, callback);
+    if (const auto* child_group_layer =
+            registry.try_get<GroupLayer>(child_layer_entity)) {
+      visit_layers(registry, *child_group_layer, callback);
     }
 
     callback(child_layer_entity);
   }
 }
 
-void visit_layers(const Model& model, const Map& map, const EntityCallback& callback)
+void visit_layers(const Registry& registry,
+                  const Map& map,
+                  const EntityCallback& callback)
 {
-  const auto& root_layer = model.get<GroupLayer>(map.root_layer);
-  visit_layers(model, root_layer, callback);
+  const auto& root_layer = registry.get<GroupLayer>(map.root_layer);
+  visit_layers(registry, root_layer, callback);
 }
 
-void visit_tile_layers(const Model& model,
+void visit_tile_layers(const Registry& registry,
                        const GroupLayer& root_layer,
                        const EntityCallback& callback)
 {
-  visit_layers(model, root_layer, [&](const Entity layer_entity) {
-    if (model.has<TileLayer>(layer_entity)) {
+  visit_layers(registry, root_layer, [&](const Entity layer_entity) {
+    if (registry.has<TileLayer>(layer_entity)) {
       callback(layer_entity);
     }
   });
 }
 
-void visit_tile_layers(const Model& model, const Map& map, const EntityCallback& callback)
+void visit_tile_layers(const Registry& registry,
+                       const Map& map,
+                       const EntityCallback& callback)
 {
-  const auto& root_layer = model.get<GroupLayer>(map.root_layer);
-  visit_tile_layers(model, root_layer, callback);
+  const auto& root_layer = registry.get<GroupLayer>(map.root_layer);
+  visit_tile_layers(registry, root_layer, callback);
 }
 
 }  // namespace tactile::sys

@@ -86,12 +86,12 @@ App::~App() noexcept = default;
 
 void App::on_startup(const BackendAPI api)
 {
-  mModel = std::make_unique<Model>();
-  auto& model = *mModel;
+  mRegistry = std::make_unique<Registry>();
+  auto& registry = *mRegistry;
 
-  sys::init_model(model, api);
+  sys::init_model(registry, api);
 
-  mToolSystem = std::make_unique<ToolSystem>(*mModel, mDispatcher);
+  mToolSystem = std::make_unique<ToolSystem>(*mRegistry, mDispatcher);
 
   mSystems.push_back(mToolSystem.get());
 
@@ -101,8 +101,8 @@ void App::on_startup(const BackendAPI api)
 
   _subscribe_to_events();
 
-  auto& icons = model.get<Icons>();
-  icons.tactile_icon = sys::create_texture(model, find_resource("assets/icon.png"));
+  auto& icons = registry.get<Icons>();
+  icons.tactile_icon = sys::create_texture(registry, find_resource("assets/icon.png"));
 
   _init_persistent_settings();
 }
@@ -265,21 +265,21 @@ void App::_subscribe_to_events()
 
 void App::_init_persistent_settings()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& settings = model.get<Settings>();
+  auto& settings = registry.get<Settings>();
   settings.copy_from(load_settings_from_disk());
   settings.print();
 
-  sys::load_languages(model);
+  sys::load_languages(registry);
 
-  auto& file_history = model.get<FileHistory>();
+  auto& file_history = registry.get<FileHistory>();
   if (auto history = load_file_history_from_disk()) {
     file_history = std::move(*history);
   }
 
   if (settings.test_flag(SETTINGS_RESTORE_LAST_SESSION_BIT)) {
-    load_session_from_disk(model);
+    load_session_from_disk(registry);
   }
 
   auto& style = ImGui::GetStyle();
@@ -289,20 +289,20 @@ void App::_init_persistent_settings()
 
 void App::on_shutdown()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  sys::store_open_documents_in_file_history(model);
-  save_settings_to_disk(model.get<Settings>());
-  save_session_to_disk(model);
+  sys::store_open_documents_in_file_history(registry);
+  save_settings_to_disk(registry.get<Settings>());
+  save_session_to_disk(registry);
 
-  const auto& file_history = model.get<FileHistory>();
+  const auto& file_history = registry.get<FileHistory>();
   save_file_history_to_disk(file_history);
 }
 
 void App::on_update()
 {
-  auto& model = *mModel;
-  ModelView model_view {model, *mToolSystem, mDispatcher};
+  auto& registry = *mRegistry;
+  ModelView model_view {registry, *mToolSystem, mDispatcher};
 
   // TODO update animated tiles
 
@@ -310,10 +310,10 @@ void App::on_update()
     system->update();
   }
 
-  auto& widgets = model.get<ui::WidgetState>();
+  auto& widgets = registry.get<ui::WidgetState>();
   ui::poll_global_shortcuts(model_view);
   ui::render_ui(model_view, widgets);
-  ui::check_for_missing_layout_file(model,
+  ui::check_for_missing_layout_file(registry,
                                     widgets.dock_space.root_dock_id.value(),
                                     mDispatcher);
 
@@ -328,49 +328,49 @@ void App::on_update()
 
 void App::on_event(const cen::event_handler& event)
 {
-  tactile::on_event(*mModel, mDispatcher, event);
+  tactile::on_event(*mRegistry, mDispatcher, event);
 }
 
 void App::reload_font_files()
 {
-  ui::reload_imgui_fonts(mModel->get<Settings>());
+  ui::reload_imgui_fonts(mRegistry->get<Settings>());
   mWantFontReload = false;
 }
 
 void App::_on_menu_action(const MenuActionEvent& event)
 {
   spdlog::trace("[MenuActionEvent] action: {}", event.action);
-  on_menu_action(*mModel, mDispatcher, event);
+  on_menu_action(*mRegistry, mDispatcher, event);
 }
 
 void App::_on_undo(const UndoEvent& event)
 {
   spdlog::trace("[UndoEvent]");
-  on_undo(*mModel, event);
+  on_undo(*mRegistry, event);
 }
 
 void App::_on_redo(const RedoEvent& event)
 {
   spdlog::trace("[RedoEvent]");
-  on_redo(*mModel, event);
+  on_redo(*mRegistry, event);
 }
 
 void App::_on_set_command_capacity(const SetCommandCapacityEvent& event)
 {
   spdlog::trace("[SetCommandCapacityEvent] capacity: {}", event.capacity);
-  on_set_command_capacity(*mModel, event);
+  on_set_command_capacity(*mRegistry, event);
 }
 
 void App::_on_open_document(const OpenDocumentEvent& event)
 {
   spdlog::trace("[OpenDocumentEvent] document: {}", event.document);
-  on_open_document(*mModel, event);
+  on_open_document(*mRegistry, event);
 }
 
 void App::_on_close_document(const CloseDocumentEvent& event)
 {
   spdlog::trace("[CloseDocumentEvent] document: {}", event.document);
-  on_close_document(*mModel, event);
+  on_close_document(*mRegistry, event);
 }
 
 void App::_on_select_document(const SelectDocumentEvent& event)
@@ -378,43 +378,43 @@ void App::_on_select_document(const SelectDocumentEvent& event)
   spdlog::trace("[SelectDocumentEvent] document: {}", event.document);
 
   // FIXME documents are selected for every mouse press, so we need this check.
-  if (event.document != sys::get_active_document(*mModel)) {
+  if (event.document != sys::get_active_document(*mRegistry)) {
     for (auto& system: mSystems) {
       system->reset();
     }
   }
 
-  on_select_document(*mModel, event);
+  on_select_document(*mRegistry, event);
 }
 
 void App::_on_save(const SaveEvent& event)
 {
   spdlog::trace("[SaveEvent]");
-  on_save(*mModel, mDispatcher, event);
+  on_save(*mRegistry, mDispatcher, event);
 }
 
 void App::_on_save_as(const SaveAsEvent& event)
 {
   spdlog::trace("[SaveAsEvent]");
-  on_save_as(*mModel, mDispatcher, event);
+  on_save_as(*mRegistry, mDispatcher, event);
 }
 
 void App::_on_show_save_as_dialog(const ShowSaveAsDialogEvent& event)
 {
   spdlog::trace("[ShowSaveAsDialogEvent]");
-  on_show_save_as_dialog(*mModel, mDispatcher, event);
+  on_show_save_as_dialog(*mRegistry, mDispatcher, event);
 }
 
 void App::_on_reopen_last_closed_file(const ReopenLastClosedFileEvent& event)
 {
   spdlog::trace("[ReopenLastClosedFileEvent]");
-  on_reopen_last_closed_file(*mModel, mDispatcher, event);
+  on_reopen_last_closed_file(*mRegistry, mDispatcher, event);
 }
 
 void App::_on_clear_file_history(const ClearFileHistoryEvent& event)
 {
   spdlog::trace("[ClearFileHistoryEvent]");
-  on_clear_file_history(*mModel, event);
+  on_clear_file_history(*mRegistry, event);
 }
 
 void App::_on_quit(const QuitEvent&)
@@ -427,40 +427,40 @@ void App::_on_reset_layout(const ResetLayoutEvent&)
 {
   spdlog::trace("[ResetLayoutEvent]");
 
-  const auto& widgets = mModel->get<ui::WidgetState>();
-  ui::reset_layout(*mModel, widgets.dock_space.root_dock_id.value(), mDispatcher);
+  const auto& widgets = mRegistry->get<ui::WidgetState>();
+  ui::reset_layout(*mRegistry, widgets.dock_space.root_dock_id.value(), mDispatcher);
 }
 
 void App::_on_toggle_highlight_layer(const ToggleHighlightLayerEvent&)
 {
   spdlog::trace("[ToggleHighlightLayerEvent]");
 
-  auto& settings = mModel->get<Settings>();
+  auto& settings = mRegistry->get<Settings>();
   settings.negate_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT);
 }
 
 void App::_on_show_new_map_dialog(const ShowNewMapDialogEvent& event)
 {
   spdlog::trace("[ShowNewMapDialogEvent]");
-  on_show_new_map_dialog(*mModel, event);
+  on_show_new_map_dialog(*mRegistry, event);
 }
 
 void App::_on_show_open_map_dialog(const ShowOpenMapDialogEvent& event)
 {
   spdlog::trace("[ShowOpenMapDialogEvent]");
-  on_show_open_map_dialog(*mModel, event);
+  on_show_open_map_dialog(*mRegistry, event);
 }
 
 void App::_on_show_resize_map_dialog(const ShowResizeMapDialogEvent& event)
 {
   spdlog::trace("[ShowResizeMapDialogEvent]");
-  on_show_resize_map_dialog(*mModel, event);
+  on_show_resize_map_dialog(*mRegistry, event);
 }
 
 void App::_on_show_godot_export_dialog(const ShowGodotExportDialogEvent& event)
 {
   spdlog::trace("[ShowGodotExportDialogEvent]");
-  on_show_godot_export_dialog(*mModel, event);
+  on_show_godot_export_dialog(*mRegistry, event);
 }
 
 void App::_on_create_map(const CreateMapEvent& event)
@@ -469,91 +469,91 @@ void App::_on_create_map(const CreateMapEvent& event)
                 event.row_count,
                 event.column_count,
                 event.tile_size);
-  on_create_map(*mModel, event);
+  on_create_map(*mRegistry, event);
 }
 
 void App::_on_open_map(const OpenMapEvent& event)
 {
   spdlog::trace("[OpenMapEvent] path: {}", event.path);
-  on_open_map(*mModel, event);
+  on_open_map(*mRegistry, event);
 }
 
 void App::_on_resize_map(const ResizeMapEvent& event)
 {
   spdlog::trace("[ResizeMapEvent] rows: {}, cols: {}", event.row_count, event.col_count);
-  on_resize_map(*mModel, event);
+  on_resize_map(*mRegistry, event);
 }
 
 void App::_on_add_row(const AddRowEvent& event)
 {
   spdlog::trace("[AddRowEvent]");
-  on_add_row(*mModel, event);
+  on_add_row(*mRegistry, event);
 }
 
 void App::_on_add_column(const AddColumnEvent& event)
 {
   spdlog::trace("[AddColumnEvent]");
-  on_add_column(*mModel, event);
+  on_add_column(*mRegistry, event);
 }
 
 void App::_on_remove_row(const RemoveRowEvent& event)
 {
   spdlog::trace("[RemoveRowEvent]");
-  on_remove_row(*mModel, event);
+  on_remove_row(*mRegistry, event);
 }
 
 void App::_on_remove_column(const RemoveColumnEvent& event)
 {
   spdlog::trace("[RemoveColumnEvent]");
-  on_remove_column(*mModel, event);
+  on_remove_column(*mRegistry, event);
 }
 
 void App::_on_fix_tiles_in_map(const FixTilesInMapEvent& event)
 {
   spdlog::trace("[FixTilesInMapEvent]");
-  on_fix_tiles_in_map(*mModel, event);
+  on_fix_tiles_in_map(*mRegistry, event);
 }
 
 void App::_on_export_as_godot_scene(const ExportAsGodotSceneEvent& event)
 {
   spdlog::trace("[ExportAsGodotSceneEvent] root: {}", event.root_dir);
-  on_export_as_godot_scene(*mModel, event);
+  on_export_as_godot_scene(*mRegistry, event);
 }
 
 void App::_on_inspect_map(const InspectMapEvent& event)
 {
   spdlog::trace("[InspectMapEvent]");
-  on_inspect_map(*mModel, event);
+  on_inspect_map(*mRegistry, event);
 }
 
 void App::_on_set_tile_format_encoding(const SetTileFormatEncodingEvent& event)
 {
   spdlog::trace("[SetTileFormatEncodingEvent] encoding: {}", event.encoding);
-  on_set_tile_format_encoding(*mModel, event);
+  on_set_tile_format_encoding(*mRegistry, event);
 }
 
 void App::_on_set_tile_format_compression(const SetTileFormatCompressionEvent& event)
 {
   spdlog::trace("[SetTileFormatCompressionEvent] compression: {}", event.compression);
-  on_set_tile_format_compression(*mModel, event);
+  on_set_tile_format_compression(*mRegistry, event);
 }
 
 void App::_on_set_zlib_compression_level(const SetZlibCompressionLevelEvent& event)
 {
   spdlog::trace("[SetZlibCompressionLevelEvent] level: {}", event.level);
-  on_set_zlib_compression_level(*mModel, event);
+  on_set_zlib_compression_level(*mRegistry, event);
 }
 
 void App::_on_set_zstd_compression_level(const SetZstdCompressionLevelEvent& event)
 {
   spdlog::trace("[SetZstdCompressionLevelEvent] level: {}", event.level);
-  on_set_zstd_compression_level(*mModel, event);
+  on_set_zstd_compression_level(*mRegistry, event);
 }
 
 void App::_on_show_new_tileset_dialog(const ShowNewTilesetDialogEvent& event)
 {
   spdlog::trace("[ShowNewTilesetDialogEvent]");
-  on_show_new_tileset_dialog(*mModel, event);
+  on_show_new_tileset_dialog(*mRegistry, event);
 }
 
 void App::_on_create_tileset(const CreateTilesetEvent& event)
@@ -562,7 +562,7 @@ void App::_on_create_tileset(const CreateTilesetEvent& event)
                 event.map,
                 event.image_path,
                 event.tile_size);
-  on_create_tileset(*mModel, event);
+  on_create_tileset(*mRegistry, event);
 }
 
 void App::_on_detach_tileset(const DetachTilesetEvent& event)
@@ -570,20 +570,20 @@ void App::_on_detach_tileset(const DetachTilesetEvent& event)
   spdlog::trace("[DetachTilesetEvent] map: {}, attached tileset: {}",
                 event.map,
                 event.attached_tileset);
-  on_detach_tileset(*mModel, event);
+  on_detach_tileset(*mRegistry, event);
 }
 
 void App::_on_select_tileset(const SelectTilesetEvent& event)
 {
   spdlog::trace("[SelectTilesetEvent] attached tileset: {}", event.attached_tileset);
-  on_select_tileset(*mModel, event);
+  on_select_tileset(*mRegistry, event);
 }
 
 void App::_on_set_tileset_selection(const SetTilesetSelectionEvent& event)
 {
   spdlog::trace("[SetTilesetSelectionEvent] attached tileset: {}",  // TODO region
                 event.attached_tileset);
-  on_set_tileset_selection(*mModel, event);
+  on_set_tileset_selection(*mRegistry, event);
 }
 
 void App::_on_rename_tileset(const RenameTilesetEvent& event)
@@ -591,13 +591,13 @@ void App::_on_rename_tileset(const RenameTilesetEvent& event)
   spdlog::trace("[RenameTilesetEvent] attached tileset: {}, name: {}",
                 event.attached_tileset,
                 event.name);
-  on_rename_tileset(*mModel, event);
+  on_rename_tileset(*mRegistry, event);
 }
 
 void App::_on_select_tileset_tile(const SelectTilesetTileEvent& event)
 {
   spdlog::trace("[SelectTilesetTileEvent] tile index: {}", event.tile_index);
-  on_select_tileset_tile(*mModel, event);
+  on_select_tileset_tile(*mRegistry, event);
 }
 
 void App::_on_add_animation_frame(const AddAnimationFrameEvent& event)
@@ -606,7 +606,7 @@ void App::_on_add_animation_frame(const AddAnimationFrameEvent& event)
                 event.tile,
                 event.frame_tile_index,
                 event.frame_duration);
-  on_add_animation_frame(*mModel, event);
+  on_add_animation_frame(*mRegistry, event);
 }
 
 void App::_on_set_animation_frame_duration(const SetAnimationFrameDurationEvent& event)
@@ -615,14 +615,14 @@ void App::_on_set_animation_frame_duration(const SetAnimationFrameDurationEvent&
                 event.tile,
                 event.frame_index,
                 event.duration);
-  on_set_animation_frame_duration(*mModel, event);
+  on_set_animation_frame_duration(*mRegistry, event);
 }
 
 void App::_on_enable_animation_frame_selection_mode(
     const EnableAnimationFrameSelectionMode& event)
 {
   spdlog::trace("[EnableAnimationFrameSelectionMode]");
-  on_enable_animation_frame_selection_mode(*mModel, event);
+  on_enable_animation_frame_selection_mode(*mRegistry, event);
 }
 
 void App::_on_remove_animation_frame(const RemoveAnimationFrameEvent& event)
@@ -630,74 +630,74 @@ void App::_on_remove_animation_frame(const RemoveAnimationFrameEvent& event)
   spdlog::trace("[RemoveAnimationFrameEvent] tile: {}, frame: {}",
                 event.tile,
                 event.frame_index);
-  on_remove_animation_frame(*mModel, event);
+  on_remove_animation_frame(*mRegistry, event);
 }
 
 void App::_on_move_animation_frame_forwards(const MoveAnimationFrameForwardsEvent& event)
 {
   spdlog::trace("[MoveAnimationFrameForwardsEvent] tile: {}", event.tile);
-  on_move_animation_frame_forwards(*mModel, event);
+  on_move_animation_frame_forwards(*mRegistry, event);
 }
 
 void App::_on_move_animation_frame_backwards(
     const MoveAnimationFrameBackwardsEvent& event)
 {
   spdlog::trace("[MoveAnimationFrameBackwardsEvent] tile: {}", event.tile);
-  on_move_animation_frame_backwards(*mModel, event);
+  on_move_animation_frame_backwards(*mRegistry, event);
 }
 
 void App::_on_rename_tile(const RenameTileEvent& event)
 {
   spdlog::trace("[RenameTileEvent] tile: {}, name: {}", event.tile, event.name);
-  on_rename_tile(*mModel, event);
+  on_rename_tile(*mRegistry, event);
 }
 
 void App::_on_delete_tile_animation(const DeleteTileAnimationEvent& event)
 {
   spdlog::trace("[DeleteTileAnimationEvent] tile: {}", event.tile);
-  on_delete_tile_animation(*mModel, event);
+  on_delete_tile_animation(*mRegistry, event);
 }
 
 void App::_on_create_layer(const CreateLayerEvent& event)
 {
   spdlog::trace("[CreateLayerEvent] type: {}", event.type);
-  on_create_layer(*mModel, event);
+  on_create_layer(*mRegistry, event);
 }
 
 void App::_on_remove_layer(const RemoveLayerEvent& event)
 {
   spdlog::trace("[RemoveLayerEvent] layer: {}", event.layer);
-  on_remove_layer(*mModel, event);
+  on_remove_layer(*mRegistry, event);
 }
 
 void App::_on_rename_layer(const RenameLayerEvent& event)
 {
   spdlog::trace("[RenameLayerEvent] layer: {}, name: {}", event.layer, event.name);
-  on_rename_layer(*mModel, event);
+  on_rename_layer(*mRegistry, event);
 }
 
 void App::_on_duplicate_layer(const DuplicateLayerEvent& event)
 {
   spdlog::trace("[DuplicateLayerEvent] layer: {}", event.layer);
-  on_duplicate_layer(*mModel, event);
+  on_duplicate_layer(*mRegistry, event);
 }
 
 void App::_on_select_layer(const SelectLayerEvent& event)
 {
   spdlog::trace("[SelectLayerEvent] layer: {}", event.layer);
-  on_select_layer(*mModel, event);
+  on_select_layer(*mRegistry, event);
 }
 
 void App::_on_move_layer_up(const MoveLayerUpEvent& event)
 {
   spdlog::trace("[MoveLayerUpEvent] layer: {}", event.layer);
-  on_move_layer_up(*mModel, event);
+  on_move_layer_up(*mRegistry, event);
 }
 
 void App::_on_move_layer_down(const MoveLayerDownEvent& event)
 {
   spdlog::trace("[MoveLayerDownEvent] layer: {}", event.layer);
-  on_move_layer_down(*mModel, event);
+  on_move_layer_down(*mRegistry, event);
 }
 
 void App::_on_set_layer_opacity(const SetLayerOpacityEvent& event)
@@ -705,7 +705,7 @@ void App::_on_set_layer_opacity(const SetLayerOpacityEvent& event)
   spdlog::trace("[SetLayerOpacityEvent] layer: {}, opacity: {:.2f}",
                 event.layer,
                 event.opacity);
-  on_set_layer_opacity(*mModel, event);
+  on_set_layer_opacity(*mRegistry, event);
 }
 
 void App::_on_set_layer_visible(const SetLayerVisibleEvent& event)
@@ -713,13 +713,13 @@ void App::_on_set_layer_visible(const SetLayerVisibleEvent& event)
   spdlog::trace("[SetLayerVisibleEvent] layer: {}, visible: {}",
                 event.layer,
                 event.visible);
-  on_set_layer_visible(*mModel, event);
+  on_set_layer_visible(*mRegistry, event);
 }
 
 void App::_on_show_layer_rename_dialog(const ShowRenameLayerDialogEvent& event)
 {
   spdlog::trace("[ShowRenameLayerDialogEvent] layer: {}", event.layer);
-  on_show_rename_layer_dialog(*mModel, event);
+  on_show_rename_layer_dialog(*mRegistry, event);
 }
 
 void App::_on_move_object(const MoveObjectEvent& event)
@@ -727,7 +727,7 @@ void App::_on_move_object(const MoveObjectEvent& event)
   spdlog::trace("[MoveObjectEvent] object: {}, position: {}",
                 event.object,
                 event.new_pos);
-  on_move_object(*mModel, event);
+  on_move_object(*mRegistry, event);
 }
 
 void App::_on_set_object_visible(const SetObjectVisibleEvent& event)
@@ -735,25 +735,25 @@ void App::_on_set_object_visible(const SetObjectVisibleEvent& event)
   spdlog::trace("[SetObjectVisibleEvent] object: {}, visible: {}",
                 event.object,
                 event.visible);
-  on_set_object_visible(*mModel, event);
+  on_set_object_visible(*mRegistry, event);
 }
 
 void App::_on_set_object_tag(const SetObjectTagEvent& event)
 {
   spdlog::trace("[SetObjectTagEvent] object: {}, tag: {}", event.object, event.tag);
-  on_set_object_tag(*mModel, event);
+  on_set_object_tag(*mRegistry, event);
 }
 
 void App::_on_set_object_name(const SetObjectNameEvent& event)
 {
   spdlog::trace("[SetObjectNameEvent] object: {}, name: {}", event.object, event.name);
-  on_set_object_name(*mModel, event);
+  on_set_object_name(*mRegistry, event);
 }
 
 void App::_on_duplicate_object(const DuplicateObjectEvent& event)
 {
   spdlog::trace("[DuplicateObjectEvent] object: {}", event.object);
-  on_duplicate_object(*mModel, event);
+  on_duplicate_object(*mRegistry, event);
 }
 
 void App::_on_remove_object(const RemoveObjectEvent& event)
@@ -761,23 +761,23 @@ void App::_on_remove_object(const RemoveObjectEvent& event)
   spdlog::trace("[RemoveObjectEvent] object layer: {}, object: {}",
                 event.object_layer,
                 event.object);
-  on_remove_object(*mModel, event);
+  on_remove_object(*mRegistry, event);
 }
 
 void App::_on_spawn_object_context_menu(const SpawnObjectContextMenuEvent& event)
 {
   spdlog::trace("[SpawnObjectContextMenuEvent]");
-  on_spawn_object_context_menu(*mModel, event);
+  on_spawn_object_context_menu(*mRegistry, event);
 }
 
 void App::_on_stamp_sequence(const StampSequenceEvent& event)
 {
-  on_stamp_sequence(*mModel, event);
+  on_stamp_sequence(*mRegistry, event);
 }
 
 void App::_on_flood(const FloodEvent& event)
 {
-  on_flood(*mModel, event);
+  on_flood(*mRegistry, event);
 }
 
 void App::_on_reload_fonts(const ReloadFontsEvent&)
@@ -789,91 +789,91 @@ void App::_on_reload_fonts(const ReloadFontsEvent&)
 void App::_on_increase_font_size(const IncreaseFontSizeEvent& event)
 {
   spdlog::trace("[IncreaseFontSizeEvent]");
-  on_increase_font_size(*mModel, mDispatcher, event);
+  on_increase_font_size(*mRegistry, mDispatcher, event);
 }
 
 void App::_on_decrease_font_size(const DecreaseFontSizeEvent& event)
 {
   spdlog::trace("[DecreaseFontSizeEvent]");
-  on_decrease_font_size(*mModel, mDispatcher, event);
+  on_decrease_font_size(*mRegistry, mDispatcher, event);
 }
 
 void App::_on_reset_font_size(const ResetFontSizeEvent& event)
 {
   spdlog::trace("[ResetFontSizeEvent]");
-  on_reset_font_size(*mModel, mDispatcher, event);
+  on_reset_font_size(*mRegistry, mDispatcher, event);
 }
 
 void App::_on_show_settings(const ShowSettingsEvent& event)
 {
   spdlog::trace("[ShowSettingsEvent]");
-  on_show_settings(*mModel, event);
+  on_show_settings(*mRegistry, event);
 }
 
 void App::_on_set_settings(const SetSettingsEvent& event)
 {
   spdlog::trace("[SetSettingsEvent]");
-  on_set_settings(*mModel, mDispatcher, event);
+  on_set_settings(*mRegistry, mDispatcher, event);
 }
 
 void App::_on_set_flag_setting(const SetFlagSettingEvent& event)
 {
   spdlog::trace("[SetFlagSettingEvent] flag: {}, value: {}", event.flag, event.value);
-  on_set_flag_setting(*mModel, event);
+  on_set_flag_setting(*mRegistry, event);
 }
 
 void App::_on_negate_flag_setting(const NegateFlagSettingEvent& event)
 {
   spdlog::trace("[NegateFlagSettingEvent] flag: {}", event.flag);
-  on_negate_flag_setting(*mModel, event);
+  on_negate_flag_setting(*mRegistry, event);
 }
 
 void App::_on_set_viewport_overlay_pos(const SetViewportOverlayPosEvent& event)
 {
   spdlog::trace("[SetViewportOverlayPosEvent] pos: {}", event.pos);
-  on_set_viewport_overlay_pos(*mModel, event);
+  on_set_viewport_overlay_pos(*mRegistry, event);
 }
 
 void App::_on_set_language(const SetLanguageEvent& event)
 {
   spdlog::trace("[SetLanguageEvent] lang: {}", event.language);
-  on_set_language(*mModel, mDispatcher, event);
+  on_set_language(*mRegistry, mDispatcher, event);
 }
 
 void App::_on_set_theme(const SetThemeEvent& event)
 {
   spdlog::trace("[SetThemeEvent] theme: {}", event.theme);
-  on_set_theme(*mModel, event);
+  on_set_theme(*mRegistry, event);
 }
 
 void App::_on_reset_dock_visibilities(const ResetDockVisibilitiesEvent& event)
 {
   spdlog::trace("[ResetDockVisibilitiesEvent]");
-  on_reset_dock_visibilities(*mModel, event);
+  on_reset_dock_visibilities(*mRegistry, event);
 }
 
 void App::_on_center_viewport(const CenterViewportEvent& event)
 {
   spdlog::trace("[CenterViewportEvent] viewport: {}", event.viewport);
-  on_center_viewport(*mModel, event);
+  on_center_viewport(*mRegistry, event);
 }
 
 void App::_on_reset_viewport_zoom(const ResetViewportZoomEvent& event)
 {
   spdlog::trace("[ResetViewportZoomEvent] viewport: {}", event.viewport);
-  on_reset_viewport_zoom(*mModel, event);
+  on_reset_viewport_zoom(*mRegistry, event);
 }
 
 void App::_on_increase_viewport_zoom(const IncreaseViewportZoomEvent& event)
 {
   spdlog::trace("[IncreaseViewportZoomEvent] viewport: {}", event.viewport);
-  on_increase_viewport_zoom(*mModel, event);
+  on_increase_viewport_zoom(*mRegistry, event);
 }
 
 void App::_on_decrease_viewport_zoom(const DecreaseViewportZoomEvent& event)
 {
   spdlog::trace("[DecreaseViewportZoomEvent] viewport: {}", event.viewport);
-  on_decrease_viewport_zoom(*mModel, event);
+  on_decrease_viewport_zoom(*mRegistry, event);
 }
 
 void App::_on_offset_viewport(const OffsetViewportEvent& event)
@@ -881,7 +881,7 @@ void App::_on_offset_viewport(const OffsetViewportEvent& event)
   spdlog::trace("[OffsetViewportEvent] viewport: {}, delta: {}",
                 event.viewport,
                 event.delta);
-  on_offset_viewport(*mModel, event);
+  on_offset_viewport(*mRegistry, event);
 }
 
 void App::_on_set_viewport_limits(const SetViewportLimitsEvent& event)
@@ -890,61 +890,61 @@ void App::_on_set_viewport_limits(const SetViewportLimitsEvent& event)
                 event.viewport,
                 event.min_offset,
                 event.max_offset);
-  on_set_viewport_limits(*mModel, event);
+  on_set_viewport_limits(*mRegistry, event);
 }
 
 void App::_on_set_dynamic_viewport_info(const SetDynamicViewportInfoEvent& event)
 {
   // This event is usually dispatched multiple times for each frame, so we won't log it.
-  on_set_dynamic_viewport_info(*mModel, event);
+  on_set_dynamic_viewport_info(*mRegistry, event);
 }
 
 void App::_on_pan_viewport_up(const PanViewportUpEvent& event)
 {
   spdlog::trace("[PanViewportUpEvent] viewport: {}", event.viewport);
-  on_pan_viewport_up(*mModel, event);
+  on_pan_viewport_up(*mRegistry, event);
 }
 
 void App::_on_pan_viewport_down(const PanViewportDownEvent& event)
 {
   spdlog::trace("[PanViewportDownEvent] viewport: {}", event.viewport);
-  on_pan_viewport_down(*mModel, event);
+  on_pan_viewport_down(*mRegistry, event);
 }
 
 void App::_on_pan_viewport_left(const PanViewportLeftEvent& event)
 {
   spdlog::trace("[PanViewportLeftEvent] viewport: {}", event.viewport);
-  on_pan_viewport_left(*mModel, event);
+  on_pan_viewport_left(*mRegistry, event);
 }
 
 void App::_on_pan_viewport_right(const PanViewportRightEvent& event)
 {
   spdlog::trace("[PanViewportRightEvent] viewport: {}", event.viewport);
-  on_pan_viewport_right(*mModel, event);
+  on_pan_viewport_right(*mRegistry, event);
 }
 
 void App::_on_show_component_editor(const ShowComponentEditorEvent& event)
 {
   spdlog::trace("[ShowComponentEditorEvent]");
-  on_show_component_editor(*mModel, event);
+  on_show_component_editor(*mRegistry, event);
 }
 
 void App::_on_show_new_comp_dialog(const ShowNewCompDialogEvent& event)
 {
   spdlog::trace("[ShowNewCompDialogEvent]");
-  on_show_new_comp_dialog(*mModel, event);
+  on_show_new_comp_dialog(*mRegistry, event);
 }
 
 void App::_on_show_rename_comp_dialog(const ShowRenameCompDialogEvent& event)
 {
   spdlog::trace("[ShowRenameCompDialogEvent]");
-  on_show_rename_comp_dialog(*mModel, event);
+  on_show_rename_comp_dialog(*mRegistry, event);
 }
 
 void App::_on_show_new_comp_attr_dialog(const ShowNewCompAttrDialogEvent& event)
 {
   spdlog::trace("[ShowNewComponentAttributeDialogEvent] component: {}", event.definition);
-  on_show_new_comp_attr_dialog(*mModel, event);
+  on_show_new_comp_attr_dialog(*mRegistry, event);
 }
 
 void App::_on_show_rename_comp_attr_dialog(const ShowRenameCompAttrDialogEvent& event)
@@ -952,19 +952,19 @@ void App::_on_show_rename_comp_attr_dialog(const ShowRenameCompAttrDialogEvent& 
   spdlog::trace("[ShowRenameCompAttrDialogEvent] component: {}, attribute: {}",
                 event.definition,
                 event.attr_name);
-  on_show_rename_comp_attr_dialog(*mModel, event);
+  on_show_rename_comp_attr_dialog(*mRegistry, event);
 }
 
 void App::_on_define_component(const DefineComponentEvent& event)
 {
   spdlog::trace("[DefineComponentEvent] name: {}", event.name);
-  on_define_component(*mModel, event);
+  on_define_component(*mRegistry, event);
 }
 
 void App::_on_undef_component(const UndefComponentEvent& event)
 {
   spdlog::trace("[UndefComponentEvent] component: {}", event.definition);
-  on_undef_component(*mModel, event);
+  on_undef_component(*mRegistry, event);
 }
 
 void App::_on_rename_component(const RenameComponentEvent& event)
@@ -972,7 +972,7 @@ void App::_on_rename_component(const RenameComponentEvent& event)
   spdlog::trace("[RenameComponentEvent] component: {}, name: {}",
                 event.definition,
                 event.name);
-  on_rename_component(*mModel, event);
+  on_rename_component(*mRegistry, event);
 }
 
 void App::_on_update_component(const UpdateComponentEvent& event)
@@ -981,7 +981,7 @@ void App::_on_update_component(const UpdateComponentEvent& event)
                 event.definition,
                 event.attr_name,
                 event.value);
-  on_update_component(*mModel, event);
+  on_update_component(*mRegistry, event);
 }
 
 void App::_on_add_component_attr(const AddComponentAttrEvent& event)
@@ -989,7 +989,7 @@ void App::_on_add_component_attr(const AddComponentAttrEvent& event)
   spdlog::trace("[AddComponentAttrEvent] component: {}, attribute: {}",
                 event.definition,
                 event.attr_name);
-  on_add_component_attr(*mModel, event);
+  on_add_component_attr(*mRegistry, event);
 }
 
 void App::_on_remove_component_attr(const RemoveComponentAttrEvent& event)
@@ -997,7 +997,7 @@ void App::_on_remove_component_attr(const RemoveComponentAttrEvent& event)
   spdlog::trace("[RemoveComponentAttrEvent] component: {}, attribute: {}",
                 event.definition,
                 event.attr_name);
-  on_remove_component_attr(*mModel, event);
+  on_remove_component_attr(*mRegistry, event);
 }
 
 void App::_on_rename_component_attr(const RenameComponentAttrEvent& event)
@@ -1006,7 +1006,7 @@ void App::_on_rename_component_attr(const RenameComponentAttrEvent& event)
                 event.definition,
                 event.current_name,
                 event.updated_name);
-  on_rename_component_attr(*mModel, event);
+  on_rename_component_attr(*mRegistry, event);
 }
 
 void App::_on_duplicate_component_attr(const DuplicateComponentAttrEvent& event)
@@ -1014,7 +1014,7 @@ void App::_on_duplicate_component_attr(const DuplicateComponentAttrEvent& event)
   spdlog::trace("[DuplicateComponentAttrEvent] component: {}, attribute: {}",
                 event.definition,
                 event.attr_name);
-  on_duplicate_component_attr(*mModel, event);
+  on_duplicate_component_attr(*mRegistry, event);
 }
 
 void App::_on_set_component_attr_type(const SetComponentAttrTypeEvent& event)
@@ -1023,7 +1023,7 @@ void App::_on_set_component_attr_type(const SetComponentAttrTypeEvent& event)
                 event.definition,
                 event.attr_name,
                 event.type);
-  on_set_component_attr_type(*mModel, event);
+  on_set_component_attr_type(*mRegistry, event);
 }
 
 void App::_on_attach_component(const AttachComponentEvent& event)
@@ -1031,7 +1031,7 @@ void App::_on_attach_component(const AttachComponentEvent& event)
   spdlog::trace("[AttachComponentEvent] context: {}, component: {}",
                 event.context,
                 event.definition);
-  on_attach_component(*mModel, event);
+  on_attach_component(*mRegistry, event);
 }
 
 void App::_on_detach_component(const DetachComponentEvent& event)
@@ -1039,14 +1039,14 @@ void App::_on_detach_component(const DetachComponentEvent& event)
   spdlog::trace("[DetachComponentEvent] context: {}, component: {}",
                 event.context,
                 event.definition);
-  on_detach_component(*mModel, event);
+  on_detach_component(*mRegistry, event);
 }
 
 void App::_on_reset_attached_component(const ResetAttachedComponentEvent& event)
 {
   spdlog::trace("[ResetAttachedComponentEvent] attached component: {}",
                 event.attached_component);
-  on_reset_attached_component(*mModel, event);
+  on_reset_attached_component(*mRegistry, event);
 }
 
 void App::_on_update_attached_component(const UpdateAttachedComponentEvent& event)
@@ -1056,13 +1056,13 @@ void App::_on_update_attached_component(const UpdateAttachedComponentEvent& even
       event.attached_component,
       event.attr_name,
       event.value);
-  on_update_attached_component(*mModel, event);
+  on_update_attached_component(*mRegistry, event);
 }
 
 void App::_on_show_new_property_dialog(const ShowNewPropertyDialogEvent& event)
 {
   spdlog::trace("[ShowNewPropertyDialogEvent] context: {}", event.context);
-  on_show_new_property_dialog(*mModel, event);
+  on_show_new_property_dialog(*mRegistry, event);
 }
 
 void App::_on_show_rename_property_dialog(const ShowRenamePropertyDialogEvent& event)
@@ -1070,7 +1070,7 @@ void App::_on_show_rename_property_dialog(const ShowRenamePropertyDialogEvent& e
   spdlog::trace("[ShowRenamePropertyDialogEvent] context: {}, property: {}",
                 event.context,
                 event.property_name);
-  on_show_rename_property_dialog(*mModel, event);
+  on_show_rename_property_dialog(*mRegistry, event);
 }
 
 void App::_on_show_set_property_type_dialog(const ShowSetPropertyTypeDialogEvent& event)
@@ -1078,13 +1078,13 @@ void App::_on_show_set_property_type_dialog(const ShowSetPropertyTypeDialogEvent
   spdlog::trace("[ShowSetPropertyTypeDialogEvent] context: {}, property: {}",
                 event.context,
                 event.property_name);
-  on_show_set_property_type_dialog(*mModel, event);
+  on_show_set_property_type_dialog(*mRegistry, event);
 }
 
 void App::_on_inspect_context(const InspectContextEvent& event)
 {
   spdlog::trace("[InspectContextEvent] context: {}", event.context);
-  on_inspect_context(*mModel, event);
+  on_inspect_context(*mRegistry, event);
 }
 
 void App::_on_create_property(const CreatePropertyEvent& event)
@@ -1093,13 +1093,13 @@ void App::_on_create_property(const CreatePropertyEvent& event)
                 event.context,
                 event.name,
                 event.type);
-  on_create_property(*mModel, event);
+  on_create_property(*mRegistry, event);
 }
 
 void App::_on_remove_property(const RemovePropertyEvent& event)
 {
   spdlog::trace("[RemovePropertyEvent] context: {}, name: {}", event.context, event.name);
-  on_remove_property(*mModel, event);
+  on_remove_property(*mRegistry, event);
 }
 
 void App::_on_rename_property(const RenamePropertyEvent& event)
@@ -1108,7 +1108,7 @@ void App::_on_rename_property(const RenamePropertyEvent& event)
                 event.context,
                 event.old_name,
                 event.new_name);
-  on_rename_property(*mModel, event);
+  on_rename_property(*mRegistry, event);
 }
 
 void App::_on_update_property(const UpdatePropertyEvent& event)
@@ -1117,7 +1117,7 @@ void App::_on_update_property(const UpdatePropertyEvent& event)
                 event.context,
                 event.name,
                 event.value);
-  on_update_property(*mModel, event);
+  on_update_property(*mRegistry, event);
 }
 
 void App::_on_set_property_type(const SetPropertyTypeEvent& event)
@@ -1126,14 +1126,14 @@ void App::_on_set_property_type(const SetPropertyTypeEvent& event)
                 event.context,
                 event.name,
                 event.type);
-  on_set_property_type(*mModel, event);
+  on_set_property_type(*mRegistry, event);
 }
 
 void App::_on_show_about_dialog(const ShowAboutDialogEvent&)
 {
   spdlog::trace("[ShowAboutDialogEvent]");
 
-  auto& widget_state = mModel->get<ui::WidgetState>();
+  auto& widget_state = mRegistry->get<ui::WidgetState>();
   widget_state.about_dialog.should_open = true;
 }
 
@@ -1141,7 +1141,7 @@ void App::_on_show_credits_dialog(const ShowCreditsDialogEvent&)
 {
   spdlog::trace("[ShowCreditsDialog]");
 
-  auto& widget_state = mModel->get<ui::WidgetState>();
+  auto& widget_state = mRegistry->get<ui::WidgetState>();
   widget_state.credits_dialog.should_open = true;
 }
 
@@ -1149,7 +1149,7 @@ void App::_on_show_about_imgui_dialog(const ShowAboutImGuiDialogEvent&)
 {
   spdlog::trace("[ShowAboutImGuiDialogEvent]");
 
-  auto& widget_state = mModel->get<ui::WidgetState>();
+  auto& widget_state = mRegistry->get<ui::WidgetState>();
   widget_state.should_open_about_imgui_dialog = true;
 }
 

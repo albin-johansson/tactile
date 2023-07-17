@@ -24,23 +24,23 @@
 
 namespace tactile::sys {
 
-auto can_increase_font_size(const Model& model) -> bool
+auto can_increase_font_size(const Registry& registry) -> bool
 {
-  const auto& settings = model.get<Settings>();
+  const auto& settings = registry.get<Settings>();
   return !settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) &&
          settings.get_font_size() < kMaxFontSize;
 }
 
-auto can_decrease_font_size(const Model& model) -> bool
+auto can_decrease_font_size(const Registry& registry) -> bool
 {
-  const auto& settings = model.get<Settings>();
+  const auto& settings = registry.get<Settings>();
   return !settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) &&
          settings.get_font_size() > kMinFontSize;
 }
 
-auto can_reset_font_size(const Model& model) -> bool
+auto can_reset_font_size(const Registry& registry) -> bool
 {
-  const auto& settings = model.get<Settings>();
+  const auto& settings = registry.get<Settings>();
   return !settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT);
 }
 

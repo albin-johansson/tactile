@@ -21,11 +21,11 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
-void update_attached_tileset_view(const Model& model,
+void update_attached_tileset_view(const Registry& registry,
                                   Entity attached_tileset_entity,
                                   Dispatcher& dispatcher);
 

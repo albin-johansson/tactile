@@ -26,37 +26,37 @@
 
 namespace tactile::cmd {
 
-MoveObject::MoveObject(Model* model,
+MoveObject::MoveObject(Registry* registry,
                        const Entity object_entity,
                        const Float2 old_position,
                        const Float2 new_position)
-    : mModel {model},
+    : mRegistry {registry},
       mObjectEntity {object_entity},
       mOldPosition {old_position},
       mNewPosition {new_position}
 {
-  TACTILE_ASSERT(sys::is_object_entity(*mModel, mObjectEntity));
+  TACTILE_ASSERT(sys::is_object_entity(*mRegistry, mObjectEntity));
 }
 
 void MoveObject::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& object = model.get<Object>(mObjectEntity);
+  auto& object = registry.get<Object>(mObjectEntity);
   object.position = mOldPosition;
 }
 
 void MoveObject::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& object = model.get<Object>(mObjectEntity);
+  auto& object = registry.get<Object>(mObjectEntity);
   object.position = mNewPosition;
 }
 
 auto MoveObject::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.move_object;
 }
 

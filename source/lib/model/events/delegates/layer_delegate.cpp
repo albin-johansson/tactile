@@ -38,12 +38,13 @@
 
 namespace tactile {
 
-void on_show_rename_layer_dialog(Model& model, const ShowRenameLayerDialogEvent& event)
+void on_show_rename_layer_dialog(Registry& registry,
+                                 const ShowRenameLayerDialogEvent& event)
 {
-  TACTILE_ASSERT(sys::is_layer_entity(model, event.layer));
-  const auto& layer_context = model.get<Context>(event.layer);
+  TACTILE_ASSERT(sys::is_layer_entity(registry, event.layer));
+  const auto& layer_context = registry.get<Context>(event.layer);
 
-  auto& widgets = model.get<ui::WidgetState>();
+  auto& widgets = registry.get<ui::WidgetState>();
   auto& rename_dialog = widgets.layer_dock.rename_layer_dialog;
 
   rename_dialog.layer = event.layer;
@@ -52,81 +53,81 @@ void on_show_rename_layer_dialog(Model& model, const ShowRenameLayerDialogEvent&
   rename_dialog.should_open = true;
 }
 
-void on_create_layer(Model& model, const CreateLayerEvent& event)
+void on_create_layer(Registry& registry, const CreateLayerEvent& event)
 {
-  if (sys::is_map_document_active(model)) {
-    const auto document_entity = sys::get_active_document(model);
-    sys::try_execute<cmd::AddLayer>(model, document_entity, event.type);
+  if (sys::is_map_document_active(registry)) {
+    const auto document_entity = sys::get_active_document(registry);
+    sys::try_execute<cmd::AddLayer>(registry, document_entity, event.type);
   }
 }
 
-void on_remove_layer(Model& model, const RemoveLayerEvent& event)
+void on_remove_layer(Registry& registry, const RemoveLayerEvent& event)
 {
-  if (sys::is_map_document_active(model)) {
-    const auto document_entity = sys::get_active_document(model);
-    sys::try_execute<cmd::RemoveLayer>(model, document_entity, event.layer);
+  if (sys::is_map_document_active(registry)) {
+    const auto document_entity = sys::get_active_document(registry);
+    sys::try_execute<cmd::RemoveLayer>(registry, document_entity, event.layer);
   }
 }
 
-void on_rename_layer(Model& model, const RenameLayerEvent& event)
+void on_rename_layer(Registry& registry, const RenameLayerEvent& event)
 {
-  if (sys::is_map_document_active(model)) {
-    sys::try_execute<cmd::RenameLayer>(model, event.layer, event.name);
+  if (sys::is_map_document_active(registry)) {
+    sys::try_execute<cmd::RenameLayer>(registry, event.layer, event.name);
   }
 }
 
-void on_duplicate_layer(Model& model, const DuplicateLayerEvent& event)
+void on_duplicate_layer(Registry& registry, const DuplicateLayerEvent& event)
 {
-  if (sys::is_map_document_active(model)) {
-    const auto document_entity = sys::get_active_document(model);
-    const auto& map_document = model.get<MapDocument>(document_entity);
+  if (sys::is_map_document_active(registry)) {
+    const auto document_entity = sys::get_active_document(registry);
+    const auto& map_document = registry.get<MapDocument>(document_entity);
 
-    sys::try_execute<cmd::DuplicateLayer>(model, map_document.map, event.layer);
+    sys::try_execute<cmd::DuplicateLayer>(registry, map_document.map, event.layer);
   }
 }
 
-void on_select_layer(Model& model, const SelectLayerEvent& event)
+void on_select_layer(Registry& registry, const SelectLayerEvent& event)
 {
-  if (sys::is_map_document_active(model)) {
-    const auto document_entity = sys::get_active_document(model);
-    const auto& map_document = model.get<MapDocument>(document_entity);
+  if (sys::is_map_document_active(registry)) {
+    const auto document_entity = sys::get_active_document(registry);
+    const auto& map_document = registry.get<MapDocument>(document_entity);
 
-    auto& map = model.get<Map>(map_document.map);
+    auto& map = registry.get<Map>(map_document.map);
     map.active_layer = event.layer;
   }
 }
 
-void on_move_layer_up(Model& model, const MoveLayerUpEvent& event)
+void on_move_layer_up(Registry& registry, const MoveLayerUpEvent& event)
 {
-  if (sys::is_map_document_active(model)) {
-    const auto document_entity = sys::get_active_document(model);
-    const auto& map_document = model.get<MapDocument>(document_entity);
+  if (sys::is_map_document_active(registry)) {
+    const auto document_entity = sys::get_active_document(registry);
+    const auto& map_document = registry.get<MapDocument>(document_entity);
 
-    sys::try_execute<cmd::MoveLayerUp>(model, map_document.map, event.layer);
+    sys::try_execute<cmd::MoveLayerUp>(registry, map_document.map, event.layer);
   }
 }
 
-void on_move_layer_down(Model& model, const MoveLayerDownEvent& event)
+void on_move_layer_down(Registry& registry, const MoveLayerDownEvent& event)
 {
-  if (sys::is_map_document_active(model)) {
-    const auto document_entity = sys::get_active_document(model);
-    const auto& map_document = model.get<MapDocument>(document_entity);
+  if (sys::is_map_document_active(registry)) {
+    const auto document_entity = sys::get_active_document(registry);
+    const auto& map_document = registry.get<MapDocument>(document_entity);
 
-    sys::try_execute<cmd::MoveLayerDown>(model, map_document.map, event.layer);
+    sys::try_execute<cmd::MoveLayerDown>(registry, map_document.map, event.layer);
   }
 }
 
-void on_set_layer_opacity(Model& model, const SetLayerOpacityEvent& event)
+void on_set_layer_opacity(Registry& registry, const SetLayerOpacityEvent& event)
 {
-  if (sys::is_map_document_active(model)) {
-    sys::try_execute<cmd::SetLayerOpacity>(model, event.layer, event.opacity);
+  if (sys::is_map_document_active(registry)) {
+    sys::try_execute<cmd::SetLayerOpacity>(registry, event.layer, event.opacity);
   }
 }
 
-void on_set_layer_visible(Model& model, const SetLayerVisibleEvent& event)
+void on_set_layer_visible(Registry& registry, const SetLayerVisibleEvent& event)
 {
-  if (sys::is_map_document_active(model)) {
-    sys::try_execute<cmd::SetLayerVisible>(model, event.layer, event.visible);
+  if (sys::is_map_document_active(registry)) {
+    sys::try_execute<cmd::SetLayerVisible>(registry, event.layer, event.visible);
   }
 }
 

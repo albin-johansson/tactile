@@ -53,9 +53,9 @@ void _push_row(const char* lib, const char* license, const char* license_url)
 
 }  // namespace
 
-void push_credits_dialog(const Model& model, CreditsDialogState& state)
+void push_credits_dialog(const Registry& registry, CreditsDialogState& state)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   DialogOptions dialog_options {
       .title = strings.window.credits.c_str(),

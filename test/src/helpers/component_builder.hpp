@@ -23,7 +23,7 @@
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
 #include "io/ir/map/map_ir.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
@@ -31,7 +31,7 @@ class ComponentBuilder final {
  public:
   using Self = ComponentBuilder;
 
-  explicit ComponentBuilder(Model& model, Entity component_set_entity);
+  explicit ComponentBuilder(Registry& registry, Entity component_set_entity);
 
   auto with_name(String name) -> Self&;
 
@@ -40,7 +40,7 @@ class ComponentBuilder final {
   auto build() -> Entity;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mComponentSetEntity;
   String mComponentName;
   AttributeMap mAttributes;  // TODO move definition of this alias

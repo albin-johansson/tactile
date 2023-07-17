@@ -27,7 +27,7 @@
 
 namespace tactile::sys {
 
-auto copy_context(Model& model, const Context& src_context) -> Context
+auto copy_context(Registry& registry, const Context& src_context) -> Context
 {
   Context new_context;
   new_context.name = src_context.name;
@@ -36,23 +36,23 @@ auto copy_context(Model& model, const Context& src_context) -> Context
   new_context.comps.reserve(src_context.comps.size());
   for (const auto src_attached_component_entity: src_context.comps) {
     const auto& src_attached_component =
-        model.get<AttachedComponent>(src_attached_component_entity);
-    new_context.comps.push_back(copy_component(model, src_attached_component));
+        registry.get<AttachedComponent>(src_attached_component_entity);
+    new_context.comps.push_back(copy_component(registry, src_attached_component));
   }
 
   return new_context;
 }
 
-auto copy_component_values(const Model& model, const Entity definition_entity)
+auto copy_component_values(const Registry& registry, const Entity definition_entity)
     -> HashMap<Entity, StringMap<Attribute>>
 {
-  TACTILE_ASSERT(is_component_entity(model, definition_entity));
+  TACTILE_ASSERT(is_component_entity(registry, definition_entity));
   HashMap<Entity, StringMap<Attribute>> component_values;
 
-  for (auto [context_entity, context]: model.each<Context>()) {
+  for (auto [context_entity, context]: registry.each<Context>()) {
     for (const auto attached_component_entity: context.comps) {
       const auto& attached_component =
-          model.get<AttachedComponent>(attached_component_entity);
+          registry.get<AttachedComponent>(attached_component_entity);
 
       if (attached_component.definition == definition_entity) {
         component_values[context_entity] = attached_component.attributes;
@@ -63,16 +63,16 @@ auto copy_component_values(const Model& model, const Entity definition_entity)
   return component_values;
 }
 
-auto copy_single_attribute_in_components(const Model& model,
+auto copy_single_attribute_in_components(const Registry& registry,
                                          const Entity definition_entity,
                                          StringView attribute_name)
     -> HashMap<Entity, Attribute>
 {
-  TACTILE_ASSERT(is_component_entity(model, definition_entity));
+  TACTILE_ASSERT(is_component_entity(registry, definition_entity));
   HashMap<Entity, Attribute> attributes;
 
   for (auto [attached_component_entity, attached_component]:
-       model.each<AttachedComponent>()) {
+       registry.each<AttachedComponent>()) {
     if (attached_component.definition == definition_entity) {
       attributes[attached_component_entity] =
           lookup_in(attached_component.attributes, attribute_name);

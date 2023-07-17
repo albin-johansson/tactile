@@ -23,14 +23,14 @@
 #include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "model/tiles/tile_components.hpp"
 
 namespace tactile::cmd {
 
 class DeleteAnimation final : public Command {
  public:
-  DeleteAnimation(Model* model, Entity tile_entity);
+  DeleteAnimation(Registry* registry, Entity tile_entity);
 
   void undo() override;
 
@@ -39,7 +39,7 @@ class DeleteAnimation final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mTileEntity;
   Maybe<TileAnimation> mOldTileAnimation;
 };

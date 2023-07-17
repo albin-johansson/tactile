@@ -23,14 +23,14 @@
 #include "common/attribute.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 /// A command for removing an attribute from a component definition.
 class RemoveComponentAttr final : public Command {
  public:
-  RemoveComponentAttr(Model* model, Entity component_entity, String attribute);
+  RemoveComponentAttr(Registry* registry, Entity component_entity, String attribute);
 
   void undo() override;
 
@@ -39,7 +39,7 @@ class RemoveComponentAttr final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mComponentEntity;
   String mAttributeName;
   Maybe<Attribute> mPreviousValue;

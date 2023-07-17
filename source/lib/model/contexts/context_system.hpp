@@ -24,34 +24,36 @@
 #include "common/type/string.hpp"
 #include "common/type/string_map.hpp"
 #include "model/contexts/context_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
 /// Creates a copy of the context component attached to a context entity.
-[[nodiscard]] auto copy_context(Model& model, const Context& src_context) -> Context;
+[[nodiscard]] auto copy_context(Registry& registry, const Context& src_context)
+    -> Context;
 
 /**
  * Copies the attributes of all components of a specific component type.
  *
- * \param model             the associated model.
+ * \param model             the associated registry.
  * \param definition_entity a component definition entity.
  *
  * \return a map that associates context entities to attribute values.
  */
-[[nodiscard]] auto copy_component_values(const Model& model, Entity definition_entity)
+[[nodiscard]] auto copy_component_values(const Registry& registry,
+                                         Entity definition_entity)
     -> HashMap<Entity, StringMap<Attribute>>;
 
 /**
  * Copies a specific attribute in all components of a specific component type.
  *
- * \param model             the associated model.
+ * \param model             the associated registry.
  * \param definition_entity a component definition entity.
  * \param attribute_name    the name of the attribute to copy.
  *
  * \return a map that associates component entities to attributes.
  */
-[[nodiscard]] auto copy_single_attribute_in_components(const Model& model,
+[[nodiscard]] auto copy_single_attribute_in_components(const Registry& registry,
                                                        Entity definition_entity,
                                                        StringView attribute_name)
     -> HashMap<Entity, Attribute>;

@@ -22,13 +22,13 @@
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class RenameTileset final : public Command {
  public:
-  RenameTileset(Model* model, Entity tileset_entity, String new_name);
+  RenameTileset(Registry* registry, Entity tileset_entity, String new_name);
 
   void undo() override;
 
@@ -39,7 +39,7 @@ class RenameTileset final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mTilesetEntity;
   String mNewName;
   Maybe<String> mOldName;

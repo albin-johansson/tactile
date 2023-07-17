@@ -28,19 +28,19 @@
 
 namespace tactile::cmd {
 
-SetObjectTag::SetObjectTag(Model* model, const Entity object_entity, String tag)
-    : mModel {model},
+SetObjectTag::SetObjectTag(Registry* registry, const Entity object_entity, String tag)
+    : mRegistry {registry},
       mObjectEntity {object_entity},
       mNewTag {std::move(tag)}
 {
-  TACTILE_ASSERT(sys::is_object_entity(*mModel, mObjectEntity));
+  TACTILE_ASSERT(sys::is_object_entity(*mRegistry, mObjectEntity));
 }
 
 void SetObjectTag::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& object = model.get<Object>(mObjectEntity);
+  auto& object = registry.get<Object>(mObjectEntity);
   object.tag = mOldTag.value();
 
   mOldTag.reset();
@@ -48,8 +48,8 @@ void SetObjectTag::undo()
 
 void SetObjectTag::redo()
 {
-  auto& model = *mModel;
-  auto& object = model.get<Object>(mObjectEntity);
+  auto& registry = *mRegistry;
+  auto& object = registry.get<Object>(mObjectEntity);
 
   mOldTag = object.tag;
   object.tag = mNewTag;
@@ -69,7 +69,7 @@ auto SetObjectTag::merge_with(const Command* cmd) -> bool
 
 auto SetObjectTag::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.update_object_tag;
 }
 

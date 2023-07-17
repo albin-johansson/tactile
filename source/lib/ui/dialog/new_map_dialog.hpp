@@ -23,7 +23,7 @@
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
@@ -34,7 +34,7 @@ struct NewMapDialogState final {
   bool should_open {};
 };
 
-void push_new_map_dialog(const Model& model,
+void push_new_map_dialog(const Registry& registry,
                          NewMapDialogState& state,
                          Dispatcher& dispatcher);
 

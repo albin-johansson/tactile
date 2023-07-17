@@ -23,14 +23,14 @@
 #include "common/attribute.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 /// A command for defining new components.
 class DefineComponent final : public Command {
  public:
-  DefineComponent(Model* model, Entity component_set_entity, String name);
+  DefineComponent(Registry* registry, Entity component_set_entity, String name);
 
   void undo() override;
 
@@ -39,7 +39,7 @@ class DefineComponent final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mComponentSetEntity;
   Entity mComponentEntity {kNullEntity};
   String mName;

@@ -123,17 +123,17 @@ void _poll_mouse(TilesetViewportState& state,
 
 }  // namespace
 
-void push_tileset_viewport(const Model& model,
+void push_tileset_viewport(const Registry& registry,
                            TilesetViewportState& state,
                            const Entity tileset_document_entity,
                            Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
-  const auto& settings = model.get<Settings>();
+  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& settings = registry.get<Settings>();
 
-  const auto& tileset_document = model.get<TilesetDocument>(tileset_document_entity);
-  const auto& viewport = model.get<Viewport>(tileset_document_entity);
-  const auto& tileset = model.get<Tileset>(tileset_document.tileset);
+  const auto& tileset_document = registry.get<TilesetDocument>(tileset_document_entity);
+  const auto& viewport = registry.get<Viewport>(tileset_document_entity);
+  const auto& tileset = registry.get<Tileset>(tileset_document.tileset);
 
   // Reset some previous state when changing displayed tileset
   if (state.tileset_entity != tileset_document.tileset) {
@@ -152,7 +152,7 @@ void push_tileset_viewport(const Model& model,
   clear_canvas(canvas, settings.get_viewport_bg_color());
   push_scissor(canvas);
 
-  sys::render_tileset(model, canvas, tileset);
+  sys::render_tileset(registry, canvas, tileset);
 
   if (Window::contains_mouse()) {
     _poll_mouse(state, tileset_document_entity, tileset, canvas, dispatcher);

@@ -24,11 +24,11 @@
 #include "common/type/hash_map.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
-using MenuItemEnabledFn = Func<bool(const Model&)>;
+using MenuItemEnabledFn = Func<bool(const Registry&)>;
 
 struct MenuItem final {
   MenuAction action;      ///< The associated menu action.

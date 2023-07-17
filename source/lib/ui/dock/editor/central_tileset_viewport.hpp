@@ -21,7 +21,7 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
@@ -30,7 +30,7 @@ struct TilesetViewportState final {
   bool animation_frame_selection_mode : 1 {false};
 };
 
-void push_tileset_viewport(const Model& model,
+void push_tileset_viewport(const Registry& registry,
                            TilesetViewportState& state,
                            Entity tileset_document_entity,
                            Dispatcher& dispatcher);

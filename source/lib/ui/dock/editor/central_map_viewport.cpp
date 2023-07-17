@@ -74,13 +74,13 @@ void _check_for(ViewportMouseInfo mouse_info, Dispatcher& dispatcher, T&& predic
   }
 }
 
-void _draw_cursor_gizmos(const Model& model,
+void _draw_cursor_gizmos(const Registry& registry,
                          const CanvasInfo& canvas,
                          const Map& map,
                          const ViewportMouseInfo& mouse)
 {
   const auto is_tile_layer_active =
-      map.active_layer != kNullEntity && model.has<TileLayer>(map.active_layer);
+      map.active_layer != kNullEntity && registry.has<TileLayer>(map.active_layer);
 
   if (mouse.over_content && is_tile_layer_active) {
     draw_shadowed_rect(as_imvec2(mouse.clamped_pos),
@@ -89,7 +89,7 @@ void _draw_cursor_gizmos(const Model& model,
                        2.0f);
   }
 
-  // ToolPreviewRenderer preview_renderer {model, renderer, make_mouse_info(cursor)};
+  // ToolPreviewRenderer preview_renderer {registry, renderer, make_mouse_info(cursor)};
   // TODO const auto& tools = document.get_tools();
   // TODO tools.accept(preview_renderer);
 }
@@ -154,15 +154,15 @@ void _push_viewport_context_menu(const Strings& strings,
   }
 }
 
-void _push_object_context_menu(const Model& model,
+void _push_object_context_menu(const Registry& registry,
                                const Strings& strings,
                                const Map& map,
                                CentralMapViewportState& state,
                                Dispatcher& dispatcher)
 {
   if (const Popup popup {kViewportObjectContextMenuId}; popup.is_open()) {
-    const auto& object_layer = model.get<ObjectLayer>(map.active_layer);
-    const auto& object = model.get<Object>(object_layer.active_object);
+    const auto& object_layer = registry.get<ObjectLayer>(map.active_layer);
+    const auto& object = registry.get<Object>(object_layer.active_object);
 
     if (ImGui::MenuItem(strings.action.inspect_object.c_str())) {
       dispatcher.enqueue<InspectContextEvent>(object_layer.active_object);
@@ -200,17 +200,17 @@ void _push_object_context_menu(const Model& model,
 
 }  // namespace
 
-void push_central_map_viewport(const Model& model,
+void push_central_map_viewport(const Registry& registry,
                                CentralMapViewportState& state,
                                const Entity map_document_entity,
                                Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
-  const auto& settings = model.get<Settings>();
+  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& settings = registry.get<Settings>();
 
-  const auto& map_document = model.get<MapDocument>(map_document_entity);
-  const auto& viewport = model.get<Viewport>(map_document_entity);
-  const auto& map = model.get<Map>(map_document.map);
+  const auto& map_document = registry.get<MapDocument>(map_document_entity);
+  const auto& viewport = registry.get<Viewport>(map_document_entity);
+  const auto& map = registry.get<Map>(map_document.map);
 
   const auto canvas = create_canvas_info(viewport, map.tile_size, map.extent);
 
@@ -220,22 +220,22 @@ void push_central_map_viewport(const Model& model,
   clear_canvas(canvas, settings.get_viewport_bg_color());
   push_scissor(canvas);
 
-  sys::render_map(model, canvas, map);
+  sys::render_map(registry, canvas, map);
 
   const auto mouse_info = get_viewport_mouse_info(canvas);
   _poll_mouse(mouse_info, dispatcher);
 
   if (Window::contains_mouse()) {
-    _draw_cursor_gizmos(model, canvas, map, mouse_info);
+    _draw_cursor_gizmos(registry, canvas, map, mouse_info);
   }
 
   pop_scissor();
 
-  push_map_viewport_toolbar(model, dispatcher);
-  push_map_viewport_overlay(model, map, mouse_info, dispatcher);
+  push_map_viewport_toolbar(registry, dispatcher);
+  push_map_viewport_overlay(registry, map, mouse_info, dispatcher);
 
   _push_viewport_context_menu(strings, map_document_entity, map_document, dispatcher);
-  _push_object_context_menu(model, strings, map, state, dispatcher);
+  _push_object_context_menu(registry, strings, map, state, dispatcher);
 }
 
 }  // namespace tactile::ui

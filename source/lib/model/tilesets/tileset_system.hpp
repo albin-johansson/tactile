@@ -25,24 +25,24 @@
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "model/maps/map_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
-[[nodiscard]] auto get_tile_appearance(const Model& model,
+[[nodiscard]] auto get_tile_appearance(const Registry& registry,
                                        Entity tileset_entity,
                                        TileIndex tile_index) -> TileIndex;
 
-[[nodiscard]] auto is_valid_tile_identifier(const Model& model,
+[[nodiscard]] auto is_valid_tile_identifier(const Registry& registry,
                                             const Map& map,
                                             TileID tile_id) -> bool;
 
-[[nodiscard]] auto convert_tile_id_to_index(const Model& model,
+[[nodiscard]] auto convert_tile_id_to_index(const Registry& registry,
                                             const Map& map,
                                             TileID tile_id) -> Maybe<TileIndex>;
 
 /// Returns the attached tileset entity associated with a global tile ID.
-[[nodiscard]] auto find_tileset_with_tile(const Model& model,
+[[nodiscard]] auto find_tileset_with_tile(const Registry& registry,
                                           const Map& map,
                                           TileID tile_id) -> Entity;
 

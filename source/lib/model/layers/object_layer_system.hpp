@@ -23,11 +23,11 @@
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "model/layers/layer_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
-[[nodiscard]] auto find_object_at_position(const Model& model,
+[[nodiscard]] auto find_object_at_position(const Registry& registry,
                                            const ObjectLayer& object_layer,
                                            const Float2& target_pos,
                                            const Float2& tile_size) -> Entity;

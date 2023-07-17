@@ -68,7 +68,7 @@ void _prepare_position_and_pivot(const Settings& settings)
   ImGui::SetNextWindowViewport(ImGui::GetWindowViewport()->ID);
 }
 
-void _push_mouse_tile_labels(const Model& model,
+void _push_mouse_tile_labels(const Registry& registry,
                              const Strings& strings,
                              const Map& map,
                              const ViewportMouseInfo& mouse)
@@ -77,14 +77,14 @@ void _push_mouse_tile_labels(const Model& model,
     return;
   }
 
-  if (const auto* tile_layer = model.try_get<TileLayer>(map.active_layer)) {
+  if (const auto* tile_layer = registry.try_get<TileLayer>(map.active_layer)) {
     const auto tile_id = sys::tile_at(*tile_layer, mouse.tile_pos);
 
     if (mouse.over_content && tile_id.has_value() && tile_id != kEmptyTile) {
       ImGui::Text("%s: %i", strings.misc.global_id.c_str(), *tile_id);
 
-      if (sys::is_valid_tile_identifier(model, map, *tile_id)) {
-        const auto tile_index = sys::convert_tile_id_to_index(model, map, *tile_id);
+      if (sys::is_valid_tile_identifier(registry, map, *tile_id)) {
+        const auto tile_index = sys::convert_tile_id_to_index(registry, map, *tile_id);
         ImGui::Text("%s: %i", strings.misc.local_id.c_str(), tile_index.value());
       }
       else {
@@ -142,13 +142,13 @@ void _push_overlay_context_menu(const Strings& strings,
 
 }  // namespace
 
-void push_map_viewport_overlay(const Model& model,
+void push_map_viewport_overlay(const Registry& registry,
                                const Map& map,
                                const ViewportMouseInfo& mouse,
                                Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
-  const auto& settings = model.get<Settings>();
+  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& settings = registry.get<Settings>();
 
   _prepare_position_and_pivot(settings);
 
@@ -181,7 +181,7 @@ void push_map_viewport_overlay(const Model& model,
     }
 
     ImGui::Separator();
-    _push_mouse_tile_labels(model, strings, map, mouse);
+    _push_mouse_tile_labels(registry, strings, map, mouse);
     _push_overlay_context_menu(strings, settings, dispatcher);
   }
 }

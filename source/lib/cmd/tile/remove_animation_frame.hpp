@@ -24,14 +24,14 @@
 #include "common/type/chrono.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "model/tiles/tile_components.hpp"
 
 namespace tactile::cmd {
 
 class RemoveAnimationFrame final : public Command {
  public:
-  RemoveAnimationFrame(Model* model, Entity tile_entity, usize frame_index);
+  RemoveAnimationFrame(Registry* registry, Entity tile_entity, usize frame_index);
 
   void undo() override;
 
@@ -40,7 +40,7 @@ class RemoveAnimationFrame final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mTileEntity;
   usize mFrameIndex;
   Maybe<TileIndex> mFrameTileIndex;

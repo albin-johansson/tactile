@@ -20,28 +20,29 @@
 #pragma once
 
 #include "model/events/layer_events.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
-void on_show_rename_layer_dialog(Model& model, const ShowRenameLayerDialogEvent& event);
+void on_show_rename_layer_dialog(Registry& registry,
+                                 const ShowRenameLayerDialogEvent& event);
 
-void on_create_layer(Model& model, const CreateLayerEvent& event);
+void on_create_layer(Registry& registry, const CreateLayerEvent& event);
 
-void on_remove_layer(Model& model, const RemoveLayerEvent& event);
+void on_remove_layer(Registry& registry, const RemoveLayerEvent& event);
 
-void on_rename_layer(Model& model, const RenameLayerEvent& event);
+void on_rename_layer(Registry& registry, const RenameLayerEvent& event);
 
-void on_duplicate_layer(Model& model, const DuplicateLayerEvent& event);
+void on_duplicate_layer(Registry& registry, const DuplicateLayerEvent& event);
 
-void on_select_layer(Model& model, const SelectLayerEvent& event);
+void on_select_layer(Registry& registry, const SelectLayerEvent& event);
 
-void on_move_layer_up(Model& model, const MoveLayerUpEvent& event);
+void on_move_layer_up(Registry& registry, const MoveLayerUpEvent& event);
 
-void on_move_layer_down(Model& model, const MoveLayerDownEvent& event);
+void on_move_layer_down(Registry& registry, const MoveLayerDownEvent& event);
 
-void on_set_layer_opacity(Model& model, const SetLayerOpacityEvent& event);
+void on_set_layer_opacity(Registry& registry, const SetLayerOpacityEvent& event);
 
-void on_set_layer_visible(Model& model, const SetLayerVisibleEvent& event);
+void on_set_layer_visible(Registry& registry, const SetLayerVisibleEvent& event);
 
 }  // namespace tactile

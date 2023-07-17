@@ -20,11 +20,11 @@
 #pragma once
 
 #include "common/type/dispatcher.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
-void push_map_viewport_toolbar(const Model& model, Dispatcher& dispatcher);
+void push_map_viewport_toolbar(const Registry& registry, Dispatcher& dispatcher);
 
 [[nodiscard]] auto is_map_toolbar_visible() -> bool;
 

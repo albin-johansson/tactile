@@ -28,37 +28,37 @@
 
 namespace tactile::cmd {
 
-RenameProperty::RenameProperty(Model* model,
+RenameProperty::RenameProperty(Registry* registry,
                                const Entity context_entity,
                                String old_name,
                                String new_name)
-    : mModel {model},
+    : mRegistry {registry},
       mContextEntity {context_entity},
       mOldName {std::move(old_name)},
       mNewName {std::move(new_name)}
 {
-  TACTILE_ASSERT(sys::is_context_entity(*mModel, mContextEntity));
+  TACTILE_ASSERT(sys::is_context_entity(*mRegistry, mContextEntity));
 }
 
 void RenameProperty::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& context = model.get<Context>(mContextEntity);
+  auto& context = registry.get<Context>(mContextEntity);
   sys::rename_property(context, mNewName, mOldName);
 }
 
 void RenameProperty::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& context = model.get<Context>(mContextEntity);
+  auto& context = registry.get<Context>(mContextEntity);
   sys::rename_property(context, mOldName, mNewName);
 }
 
 auto RenameProperty::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.rename_property;
 }
 

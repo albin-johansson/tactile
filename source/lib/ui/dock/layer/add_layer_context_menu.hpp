@@ -28,7 +28,7 @@ class AddLayerContextMenu final : public ContextMenu {
   AddLayerContextMenu();
 
  protected:
-  void on_update(const Model& model, Dispatcher& dispatcher) override;
+  void on_update(const Registry& registry, Dispatcher& dispatcher) override;
 };
 
 }  // namespace tactile::ui

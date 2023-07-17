@@ -37,14 +37,14 @@ TEST_SUITE("ModelFactory")
   {
     const auto model = sys::create_model(BackendAPI::Null);
 
-    CHECK(model.has<DocumentContext>());
-    CHECK(model.has<Settings>());
-    CHECK(model.has<Languages>());
-    CHECK(model.has<FileHistory>());
-    CHECK(model.has<Icons>());
-    CHECK(model.has<TextureCache>());
-    CHECK(model.has<TextureCallbacks>());
-    CHECK(model.has<MenuItems>());
-    CHECK(model.has<ui::WidgetState>());
+    CHECK(registry.has<DocumentContext>());
+    CHECK(registry.has<Settings>());
+    CHECK(registry.has<Languages>());
+    CHECK(registry.has<FileHistory>());
+    CHECK(registry.has<Icons>());
+    CHECK(registry.has<TextureCache>());
+    CHECK(registry.has<TextureCallbacks>());
+    CHECK(registry.has<MenuItems>());
+    CHECK(registry.has<ui::WidgetState>());
   }
 }

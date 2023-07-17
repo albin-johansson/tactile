@@ -29,8 +29,8 @@
 #include "common/type/ref.hpp"
 #include "common/type/string.hpp"
 #include "model/i18n/strings.hpp"
-#include "model/model.hpp"
 #include "model/persistence/settings.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 

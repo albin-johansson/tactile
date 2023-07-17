@@ -78,11 +78,11 @@ void _on_dialog_accept(const NewMapDialogState& state, Dispatcher& dispatcher)
 
 }  // namespace
 
-void push_new_map_dialog(const Model& model,
+void push_new_map_dialog(const Registry& registry,
                          NewMapDialogState& state,
                          Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   DialogOptions dialog_options {
       .title = strings.window.create_new_map.c_str(),

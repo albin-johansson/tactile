@@ -21,7 +21,7 @@
 
 #include "common/enum/lang.hpp"
 #include "model/i18n/language_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "model/view/menu_components.hpp"
 
 namespace tactile::sys {
@@ -29,18 +29,19 @@ namespace tactile::sys {
 /**
  * Loads all translation files and initializes the language mapping context component.
  *
- * \param model the associated model.
+ * \param model the associated registry.
  */
-void load_languages(Model& model);
+void load_languages(Registry& registry);
 
 /**
  * Returns the translated strings associated with the currently active language.
  *
- * \param model the associated model.
+ * \param model the associated registry.
  *
  * \return a set of translated strings.
  */
-[[nodiscard]] auto get_current_language_strings(const Model& model) -> const Strings&;
+[[nodiscard]] auto get_current_language_strings(const Registry& registry)
+    -> const Strings&;
 
 /**
  * Returns the native name of a language.

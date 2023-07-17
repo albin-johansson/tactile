@@ -19,14 +19,14 @@
 
 #pragma once
 
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
-[[nodiscard]] auto can_increase_font_size(const Model& model) -> bool;
+[[nodiscard]] auto can_increase_font_size(const Registry& registry) -> bool;
 
-[[nodiscard]] auto can_decrease_font_size(const Model& model) -> bool;
+[[nodiscard]] auto can_decrease_font_size(const Registry& registry) -> bool;
 
-[[nodiscard]] auto can_reset_font_size(const Model& model) -> bool;
+[[nodiscard]] auto can_reset_font_size(const Registry& registry) -> bool;
 
 }  // namespace tactile::sys

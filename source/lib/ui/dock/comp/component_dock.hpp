@@ -21,10 +21,10 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
-void push_component_dock_widget(const Model& model, Dispatcher& dispatcher);
+void push_component_dock_widget(const Registry& registry, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

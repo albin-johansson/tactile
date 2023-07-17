@@ -29,21 +29,21 @@
 
 namespace tactile::cmd {
 
-RemoveComponentAttr::RemoveComponentAttr(Model* model,
+RemoveComponentAttr::RemoveComponentAttr(Registry* registry,
                                          const Entity component_entity,
                                          String attribute)
-    : mModel {model},
+    : mRegistry {registry},
       mComponentEntity {component_entity},
       mAttributeName {std::move(attribute)}
 {
-  TACTILE_ASSERT(sys::is_component_entity(*mModel, mComponentEntity));
+  TACTILE_ASSERT(sys::is_component_entity(*mRegistry, mComponentEntity));
 }
 
 void RemoveComponentAttr::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  sys::add_component_attribute(model,
+  sys::add_component_attribute(registry,
                                mComponentEntity,
                                mAttributeName,
                                mPreviousValue.value());
@@ -52,17 +52,17 @@ void RemoveComponentAttr::undo()
 
 void RemoveComponentAttr::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& component = model.get<Component>(mComponentEntity);
+  auto& component = registry.get<Component>(mComponentEntity);
   mPreviousValue = component.attributes.at(mAttributeName);
 
-  sys::remove_component_attribute(model, mComponentEntity, mAttributeName);
+  sys::remove_component_attribute(registry, mComponentEntity, mAttributeName);
 }
 
 auto RemoveComponentAttr::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.remove_comp_attr;
 }
 

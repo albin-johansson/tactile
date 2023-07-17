@@ -21,13 +21,13 @@
 
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class RemoveObject final : public Command {
  public:
-  RemoveObject(Model* model, Entity object_layer_entity, Entity object_entity);
+  RemoveObject(Registry* registry, Entity object_layer_entity, Entity object_entity);
 
   void undo() override;
 
@@ -38,7 +38,7 @@ class RemoveObject final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mObjectLayerEntity;
   Entity mObjectEntity;
   bool mRemovedObject : 1 {false};

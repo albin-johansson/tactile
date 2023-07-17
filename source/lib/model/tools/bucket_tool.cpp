@@ -23,25 +23,25 @@
 #include "model/documents/document_system.hpp"
 #include "model/events/tool_events.hpp"
 #include "model/layers/layer_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "model/tilesets/attached_tileset_ops.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_ops.hpp"
 
 namespace tactile {
 
-void BucketTool::on_mouse_pressed(Model& model,
+void BucketTool::on_mouse_pressed(Registry& registry,
                                   Dispatcher& dispatcher,
                                   const ViewportMouseInfo& mouse)
 {
-  if (mouse.over_content && mouse.button == MouseButton::Left && is_available(model)) {
-    const auto document_entity = sys::get_active_document(model);
+  if (mouse.over_content && mouse.button == MouseButton::Left && is_available(registry)) {
+    const auto document_entity = sys::get_active_document(registry);
 
-    const auto& map_document = model.get<MapDocument>(document_entity);
-    const auto& map = model.get<Map>(map_document.map);
+    const auto& map_document = registry.get<MapDocument>(document_entity);
+    const auto& map = registry.get<Map>(map_document.map);
 
-    const auto& attached_tileset = model.get<AttachedTileset>(map.active_tileset);
-    const auto& tileset = model.get<Tileset>(attached_tileset.tileset);
+    const auto& attached_tileset = registry.get<AttachedTileset>(map.active_tileset);
+    const auto& tileset = registry.get<Tileset>(attached_tileset.tileset);
 
     const auto selected_pos = attached_tileset.selection->begin;
     const auto new_tile_id =
@@ -51,20 +51,20 @@ void BucketTool::on_mouse_pressed(Model& model,
   }
 }
 
-auto BucketTool::is_available(const Model& model) const -> bool
+auto BucketTool::is_available(const Registry& registry) const -> bool
 {
-  return sys::is_bucket_tool_available(model);
+  return sys::is_bucket_tool_available(registry);
 }
 
 namespace sys {
 
-auto is_bucket_tool_available(const Model& model) -> bool
+auto is_bucket_tool_available(const Registry& registry) -> bool
 {
-  if (const auto* map = try_get_active_map(model)) {
+  if (const auto* map = try_get_active_map(registry)) {
     if (map->active_tileset != kNullEntity &&  //
         map->active_layer != kNullEntity &&    //
-        model.has<TileLayer>(map->active_layer)) {
-      const auto& attached_tileset = model.get<AttachedTileset>(map->active_tileset);
+        registry.has<TileLayer>(map->active_layer)) {
+      const auto& attached_tileset = registry.get<AttachedTileset>(map->active_tileset);
       return is_single_tile_selected(attached_tileset);
     }
   }

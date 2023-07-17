@@ -26,14 +26,14 @@
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "common/type/tree_map.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
 TACTILE_FWD_DECLARE_STRUCT(TextureData)
 
-using TextureInitFn = Func<void(Model&, Entity, const TextureData&)>;
-using TextureDestroyFn = Func<void(Model&, Entity)>;
+using TextureInitFn = Func<void(Registry&, Entity, const TextureData&)>;
+using TextureDestroyFn = Func<void(Registry&, Entity)>;
 
 /// Context component with backend specific texture callbacks.
 struct TextureCallbacks final {

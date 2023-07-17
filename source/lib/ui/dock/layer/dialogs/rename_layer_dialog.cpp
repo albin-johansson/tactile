@@ -27,11 +27,11 @@
 
 namespace tactile::ui {
 
-void push_rename_layer_dialog(const Model& model,
+void push_rename_layer_dialog(const Registry& registry,
                               RenameLayerDialogState& state,
                               Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   DialogOptions dialog_options {
       .title = strings.window.rename_layer.c_str(),

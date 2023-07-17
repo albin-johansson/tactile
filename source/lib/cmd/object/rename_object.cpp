@@ -28,19 +28,21 @@
 
 namespace tactile::cmd {
 
-RenameObject::RenameObject(Model* model, const Entity object_entity, String new_name)
-    : mModel {model},
+RenameObject::RenameObject(Registry* registry,
+                           const Entity object_entity,
+                           String new_name)
+    : mRegistry {registry},
       mObjectEntity {object_entity},
       mNewName {std::move(new_name)}
 {
-  TACTILE_ASSERT(sys::is_object_entity(*mModel, mObjectEntity));
+  TACTILE_ASSERT(sys::is_object_entity(*mRegistry, mObjectEntity));
 }
 
 void RenameObject::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& object_context = model.get<Context>(mObjectEntity);
+  auto& object_context = registry.get<Context>(mObjectEntity);
   object_context.name = mOldName.value();
 
   mOldName.reset();
@@ -48,8 +50,8 @@ void RenameObject::undo()
 
 void RenameObject::redo()
 {
-  auto& model = *mModel;
-  auto& object_context = model.get<Context>(mObjectEntity);
+  auto& registry = *mRegistry;
+  auto& object_context = registry.get<Context>(mObjectEntity);
 
   mOldName = object_context.name;
   object_context.name = mNewName;
@@ -69,7 +71,7 @@ auto RenameObject::merge_with(const Command* cmd) -> bool
 
 auto RenameObject::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.rename_object;
 }
 

@@ -28,57 +28,57 @@
 
 namespace tactile::cmd {
 
-RemoveTileset::RemoveTileset(Model* model,
+RemoveTileset::RemoveTileset(Registry* registry,
                              const Entity map_entity,
                              const Entity attached_tileset_entity)
-    : mModel {model},
+    : mRegistry {registry},
       mMapEntity {map_entity},
       mAttachedTilesetEntity {attached_tileset_entity}
 {
-  TACTILE_ASSERT(sys::is_map_entity(*mModel, mMapEntity));
-  TACTILE_ASSERT(sys::is_attached_tileset_entity(*mModel, mAttachedTilesetEntity));
+  TACTILE_ASSERT(sys::is_map_entity(*mRegistry, mMapEntity));
+  TACTILE_ASSERT(sys::is_attached_tileset_entity(*mRegistry, mAttachedTilesetEntity));
 }
 
 void RemoveTileset::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& map = model.get<Map>(mMapEntity);
+  auto& map = registry.get<Map>(mMapEntity);
   map.attached_tilesets.push_back(mAttachedTilesetEntity);
   map.active_tileset = mAttachedTilesetEntity;
 
-  model.set_enabled(mAttachedTilesetEntity, true);
+  registry.set_enabled(mAttachedTilesetEntity, true);
   mDidDetachTileset = false;
 }
 
 void RemoveTileset::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& map = model.get<Map>(mMapEntity);
+  auto& map = registry.get<Map>(mMapEntity);
   std::erase(map.attached_tilesets, mAttachedTilesetEntity);
 
-  const auto& attached_tileset = model.get<AttachedTileset>(mAttachedTilesetEntity);
+  const auto& attached_tileset = registry.get<AttachedTileset>(mAttachedTilesetEntity);
   if (attached_tileset.embedded) {
     const auto tileset_document_entity =
-        sys::get_associated_tileset_document(model, attached_tileset.tileset);
-    sys::close_document(model, tileset_document_entity);
+        sys::get_associated_tileset_document(registry, attached_tileset.tileset);
+    sys::close_document(registry, tileset_document_entity);
   }
 
-  model.set_enabled(mAttachedTilesetEntity, false);
+  registry.set_enabled(mAttachedTilesetEntity, false);
   mDidDetachTileset = true;
 }
 
 void RemoveTileset::dispose()
 {
   if (mDidDetachTileset) {
-    mModel->destroy(mAttachedTilesetEntity);
+    mRegistry->destroy(mAttachedTilesetEntity);
   }
 }
 
 auto RemoveTileset::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.remove_tileset;
 }
 

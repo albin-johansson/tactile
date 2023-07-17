@@ -21,18 +21,18 @@
 
 namespace tactile {
 
-void Tool::on_activated(Model&, Dispatcher&) {}
+void Tool::on_activated(Registry&, Dispatcher&) {}
 
-void Tool::on_deactivated(Model&, Dispatcher&) {}
+void Tool::on_deactivated(Registry&, Dispatcher&) {}
 
-void Tool::on_mouse_entered(Model&, Dispatcher&) {}
+void Tool::on_mouse_entered(Registry&, Dispatcher&) {}
 
-void Tool::on_mouse_exited(Model&, Dispatcher&) {}
+void Tool::on_mouse_exited(Registry&, Dispatcher&) {}
 
-void Tool::on_mouse_pressed(Model&, Dispatcher&, const ViewportMouseInfo&) {}
+void Tool::on_mouse_pressed(Registry&, Dispatcher&, const ViewportMouseInfo&) {}
 
-void Tool::on_mouse_dragged(Model&, Dispatcher&, const ViewportMouseInfo&) {}
+void Tool::on_mouse_dragged(Registry&, Dispatcher&, const ViewportMouseInfo&) {}
 
-void Tool::on_mouse_released(Model&, Dispatcher&, const ViewportMouseInfo&) {}
+void Tool::on_mouse_released(Registry&, Dispatcher&, const ViewportMouseInfo&) {}
 
 }  // namespace tactile

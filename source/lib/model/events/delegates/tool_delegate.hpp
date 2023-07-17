@@ -20,12 +20,12 @@
 #pragma once
 
 #include "model/events/tool_events.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
-void on_stamp_sequence(Model& model, const StampSequenceEvent& event);
+void on_stamp_sequence(Registry& registry, const StampSequenceEvent& event);
 
-void on_flood(Model& model, const FloodEvent& event);
+void on_flood(Registry& registry, const FloodEvent& event);
 
 }  // namespace tactile

@@ -31,27 +31,27 @@
 
 namespace tactile::cmd {
 
-SetComponentAttrType::SetComponentAttrType(Model* model,
+SetComponentAttrType::SetComponentAttrType(Registry* registry,
                                            const Entity component_entity,
                                            String attribute_name,
                                            const AttributeType new_type)
-    : mModel {model},
+    : mRegistry {registry},
       mComponentEntity {component_entity},
       mAttributeName {std::move(attribute_name)},
       mNewType {new_type}
 {
-  TACTILE_ASSERT(sys::is_component_entity(*mModel, mComponentEntity));
+  TACTILE_ASSERT(sys::is_component_entity(*mRegistry, mComponentEntity));
 }
 
 void SetComponentAttrType::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& component = model.get<Component>(mComponentEntity);
+  auto& component = registry.get<Component>(mComponentEntity);
   component.attributes[mAttributeName] = mOldValue.value();
 
   for (const auto& [attached_component_entity, attribute_value]: mPrevAttributes) {
-    auto& attached_component = model.get<AttachedComponent>(attached_component_entity);
+    auto& attached_component = registry.get<AttachedComponent>(attached_component_entity);
     attached_component.attributes[mAttributeName] = attribute_value;
   }
 
@@ -60,14 +60,15 @@ void SetComponentAttrType::undo()
 
 void SetComponentAttrType::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  const auto& component = model.get<Component>(mComponentEntity);
+  const auto& component = registry.get<Component>(mComponentEntity);
   mOldValue = lookup_in(component.attributes, mAttributeName);
 
-  mPrevAttributes =
-      sys::copy_single_attribute_in_components(model, mComponentEntity, mAttributeName);
-  sys::force_update_component_attribute(model,
+  mPrevAttributes = sys::copy_single_attribute_in_components(registry,
+                                                             mComponentEntity,
+                                                             mAttributeName);
+  sys::force_update_component_attribute(registry,
                                         mComponentEntity,
                                         mAttributeName,
                                         Attribute {mNewType});
@@ -75,7 +76,7 @@ void SetComponentAttrType::redo()
 
 auto SetComponentAttrType::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.change_comp_attr_type;
 }
 

@@ -23,15 +23,15 @@
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
-[[nodiscard]] auto create_tileset(Model& model,
+[[nodiscard]] auto create_tileset(Registry& registry,
                                   const Int2& tile_size,
                                   const Path& image_path) -> Entity;
 
-[[nodiscard]] auto create_attached_tileset(Model& model,
+[[nodiscard]] auto create_attached_tileset(Registry& registry,
                                            Entity tileset_entity,
                                            TileID first_tile) -> Entity;
 

@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
@@ -35,6 +35,6 @@ namespace tactile::sys {
  *
  * \return an object entity.
  */
-[[nodiscard]] auto duplicate_object(Model& model, Entity object_entity) -> Entity;
+[[nodiscard]] auto duplicate_object(Registry& registry, Entity object_entity) -> Entity;
 
 }  // namespace tactile::sys

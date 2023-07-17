@@ -23,17 +23,18 @@
 #include "common/type/ecs.hpp"
 #include "common/type/string_map.hpp"
 #include "model/components/component_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
 /// Copies an existing component instance.
-[[nodiscard]] auto copy_component(Model& model,
+[[nodiscard]] auto copy_component(Registry& registry,
                                   const AttachedComponent& src_attached_component)
     -> Entity;
 
 /// Resets the attribute values in a component to the component definition defaults.
-auto reset_component_values(const Model& model, AttachedComponent& attached_component)
+auto reset_component_values(const Registry& registry,
+                            AttachedComponent& attached_component)
     -> StringMap<Attribute>;
 
 }  // namespace tactile::sys

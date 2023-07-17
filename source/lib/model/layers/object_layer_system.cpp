@@ -37,13 +37,13 @@ namespace {
 
 }  // namespace
 
-auto find_object_at_position(const Model& model,
+auto find_object_at_position(const Registry& registry,
                              const ObjectLayer& object_layer,
                              const Float2& target_pos,
                              const Float2& tile_size) -> Entity
 {
   for (const auto object_entity: object_layer.objects) {
-    const auto& object = model.get<Object>(object_entity);
+    const auto& object = registry.get<Object>(object_entity);
 
     const auto object_bounds = _create_bounds(object, tile_size);
     const auto max_object_x = object_bounds.x + object_bounds.z;

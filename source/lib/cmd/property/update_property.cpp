@@ -29,23 +29,23 @@
 
 namespace tactile::cmd {
 
-UpdateProperty::UpdateProperty(Model* model,
+UpdateProperty::UpdateProperty(Registry* registry,
                                const Entity context_entity,
                                String name,
                                Attribute new_value)
-    : mModel {model},
+    : mRegistry {registry},
       mContextEntity {context_entity},
       mName {std::move(name)},
       mNewValue {std::move(new_value)}
 {
-  TACTILE_ASSERT(sys::is_context_entity(*mModel, mContextEntity));
+  TACTILE_ASSERT(sys::is_context_entity(*mRegistry, mContextEntity));
 }
 
 void UpdateProperty::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& context = model.get<Context>(mContextEntity);
+  auto& context = registry.get<Context>(mContextEntity);
   context.props[mName] = mOldValue.value();
 
   mUpdatedVectorComponentIndex.reset();
@@ -54,8 +54,8 @@ void UpdateProperty::undo()
 
 void UpdateProperty::redo()
 {
-  auto& model = *mModel;
-  auto& context = model.get<Context>(mContextEntity);
+  auto& registry = *mRegistry;
+  auto& context = registry.get<Context>(mContextEntity);
 
   mOldValue = lookup_in(context.props, mName);
 
@@ -88,7 +88,7 @@ auto UpdateProperty::merge_with(const Command* cmd) -> bool
 
 auto UpdateProperty::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.update_property;
 }
 

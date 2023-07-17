@@ -30,9 +30,9 @@
 
 namespace tactile::ui {
 
-void push_about_dialog(const Model& model, AboutDialogState& state)
+void push_about_dialog(const Registry& registry, AboutDialogState& state)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   DialogOptions dialog_options {
       .title = strings.window.about_tactile.c_str(),

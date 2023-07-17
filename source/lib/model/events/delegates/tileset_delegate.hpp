@@ -20,43 +20,45 @@
 #pragma once
 
 #include "model/events/tileset_events.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
-void on_show_new_tileset_dialog(Model& model, const ShowNewTilesetDialogEvent& event);
+void on_show_new_tileset_dialog(Registry& registry,
+                                const ShowNewTilesetDialogEvent& event);
 
-void on_create_tileset(Model& model, const CreateTilesetEvent& event);
+void on_create_tileset(Registry& registry, const CreateTilesetEvent& event);
 
-void on_detach_tileset(Model& model, const DetachTilesetEvent& event);
+void on_detach_tileset(Registry& registry, const DetachTilesetEvent& event);
 
-void on_select_tileset(Model& model, const SelectTilesetEvent& event);
+void on_select_tileset(Registry& registry, const SelectTilesetEvent& event);
 
-void on_set_tileset_selection(Model& model, const SetTilesetSelectionEvent& event);
+void on_set_tileset_selection(Registry& registry, const SetTilesetSelectionEvent& event);
 
-void on_rename_tileset(Model& model, const RenameTilesetEvent& event);
+void on_rename_tileset(Registry& registry, const RenameTilesetEvent& event);
 
-void on_select_tileset_tile(Model& model, const SelectTilesetTileEvent& event);
+void on_select_tileset_tile(Registry& registry, const SelectTilesetTileEvent& event);
 
-void on_add_animation_frame(Model& model, const AddAnimationFrameEvent& event);
+void on_add_animation_frame(Registry& registry, const AddAnimationFrameEvent& event);
 
-void on_set_animation_frame_duration(Model& model,
+void on_set_animation_frame_duration(Registry& registry,
                                      const SetAnimationFrameDurationEvent& event);
 
 void on_enable_animation_frame_selection_mode(
-    Model& model,
+    Registry& registry,
     const EnableAnimationFrameSelectionMode& event);
 
-void on_remove_animation_frame(Model& model, const RemoveAnimationFrameEvent& event);
+void on_remove_animation_frame(Registry& registry,
+                               const RemoveAnimationFrameEvent& event);
 
-void on_move_animation_frame_forwards(Model& model,
+void on_move_animation_frame_forwards(Registry& registry,
                                       const MoveAnimationFrameForwardsEvent& event);
 
-void on_move_animation_frame_backwards(Model& model,
+void on_move_animation_frame_backwards(Registry& registry,
                                        const MoveAnimationFrameBackwardsEvent& event);
 
-void on_rename_tile(Model& model, const RenameTileEvent& event);
+void on_rename_tile(Registry& registry, const RenameTileEvent& event);
 
-void on_delete_tile_animation(Model& model, const DeleteTileAnimationEvent& event);
+void on_delete_tile_animation(Registry& registry, const DeleteTileAnimationEvent& event);
 
 }  // namespace tactile

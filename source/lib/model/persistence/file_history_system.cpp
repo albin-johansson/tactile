@@ -29,11 +29,11 @@
 
 namespace tactile::sys {
 
-void store_open_documents_in_file_history(Model& model)
+void store_open_documents_in_file_history(Registry& registry)
 {
-  auto& file_history = model.get<FileHistory>();
+  auto& file_history = registry.get<FileHistory>();
 
-  for (const auto& [document_entity, document]: model.each<Document>()) {
+  for (const auto& [document_entity, document]: registry.each<Document>()) {
     if (document.type == DocumentType::Map && document.path.has_value()) {
       auto path_str = to_forward_slashes_path(*document.path);
       if (std::ranges::find(file_history.entries, path_str) ==

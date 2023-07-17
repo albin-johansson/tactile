@@ -21,12 +21,13 @@
 
 #include "common/result.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
 /// Saves a map document to disk, inferring the destination from the document path.
 /// The file format is also deduced from the document path.
-auto save_map_document_to_disk(const Model& model, Entity map_document_entity) -> Result;
+auto save_map_document_to_disk(const Registry& registry, Entity map_document_entity)
+    -> Result;
 
 }  // namespace tactile

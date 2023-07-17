@@ -21,14 +21,14 @@
 
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 /// Command for attaching a component to a context.
 class AttachComponent final : public Command {
  public:
-  AttachComponent(Model* model, Entity context_entity, Entity component_entity);
+  AttachComponent(Registry* registry, Entity context_entity, Entity component_entity);
 
   void undo() override;
 
@@ -37,7 +37,7 @@ class AttachComponent final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mContextEntity;
   Entity mComponentEntity;
   Entity mAttachedComponentEntity {kNullEntity};

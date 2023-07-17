@@ -20,11 +20,11 @@
 #pragma once
 
 #include "common/type/dispatcher.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
 /// Opens the blocking "Save As..." file dialog.
-void show_save_as_dialog(const Model& model, Dispatcher& dispatcher);
+void show_save_as_dialog(const Registry& registry, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

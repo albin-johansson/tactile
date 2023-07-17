@@ -96,19 +96,19 @@ auto _show_trailing_button() -> bool
 
 }  // namespace
 
-void component_view(const Model& model,
+void component_view(const Registry& registry,
                     const Entity context_entity,
                     const Entity attached_component_entity,
                     Dispatcher& dispatcher)
 {
-  TACTILE_ASSERT(sys::is_context_entity(model, context_entity));
-  TACTILE_ASSERT(sys::is_attached_component_entity(model, attached_component_entity));
+  TACTILE_ASSERT(sys::is_context_entity(registry, context_entity));
+  TACTILE_ASSERT(sys::is_attached_component_entity(registry, attached_component_entity));
 
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   const auto& attached_component =
-      model.get<AttachedComponent>(attached_component_entity);
-  const auto& component = model.get<Component>(attached_component.definition);
+      registry.get<AttachedComponent>(attached_component_entity);
+  const auto& component = registry.get<Component>(attached_component.definition);
 
   const Scope component_scope {component.name.c_str()};
 

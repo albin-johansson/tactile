@@ -23,13 +23,13 @@
 #include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class DuplicateLayer final : public Command {
  public:
-  DuplicateLayer(Model* model, Entity map_entity, Entity layer_entity);
+  DuplicateLayer(Registry* registry, Entity map_entity, Entity layer_entity);
 
   void undo() override;
 
@@ -38,7 +38,7 @@ class DuplicateLayer final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mMapEntity;
   Entity mSourceLayerEntity;
   Entity mNewLayerEntity {kNullEntity};

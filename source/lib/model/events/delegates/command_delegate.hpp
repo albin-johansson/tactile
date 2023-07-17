@@ -21,14 +21,14 @@
 
 #include "common/type/dispatcher.hpp"
 #include "model/events/command_events.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
-void on_undo(Model& model, const UndoEvent& event);
+void on_undo(Registry& registry, const UndoEvent& event);
 
-void on_redo(Model& model, const RedoEvent& event);
+void on_redo(Registry& registry, const RedoEvent& event);
 
-void on_set_command_capacity(Model& model, const SetCommandCapacityEvent& event);
+void on_set_command_capacity(Registry& registry, const SetCommandCapacityEvent& event);
 
 }  // namespace tactile

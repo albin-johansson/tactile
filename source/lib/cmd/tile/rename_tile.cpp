@@ -28,19 +28,19 @@
 
 namespace tactile::cmd {
 
-RenameTile::RenameTile(Model* model, const Entity tile_entity, String new_name)
-    : mModel {model},
+RenameTile::RenameTile(Registry* registry, const Entity tile_entity, String new_name)
+    : mRegistry {registry},
       mTileEntity {tile_entity},
       mNewName {std::move(new_name)}
 {
-  TACTILE_ASSERT(sys::is_tile_entity(*mModel, mTileEntity));
+  TACTILE_ASSERT(sys::is_tile_entity(*mRegistry, mTileEntity));
 }
 
 void RenameTile::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& tile_context = model.get<Context>(mTileEntity);
+  auto& tile_context = registry.get<Context>(mTileEntity);
   tile_context.name = mOldName.value();
 
   mOldName.reset();
@@ -48,8 +48,8 @@ void RenameTile::undo()
 
 void RenameTile::redo()
 {
-  auto& model = *mModel;
-  auto& tile_context = model.get<Context>(mTileEntity);
+  auto& registry = *mRegistry;
+  auto& tile_context = registry.get<Context>(mTileEntity);
 
   mOldName = tile_context.name;
   tile_context.name = mNewName;
@@ -57,7 +57,7 @@ void RenameTile::redo()
 
 auto RenameTile::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.rename_tile;
 }
 

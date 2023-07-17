@@ -29,32 +29,32 @@
 
 namespace tactile::cmd {
 
-RemoveObject::RemoveObject(Model* model,
+RemoveObject::RemoveObject(Registry* registry,
                            const Entity object_layer_entity,
                            const Entity object_entity)
-    : mModel {model},
+    : mRegistry {registry},
       mObjectLayerEntity {object_layer_entity},
       mObjectEntity {object_entity}
 {
-  TACTILE_ASSERT(sys::is_object_layer_entity(*mModel, mObjectLayerEntity));
-  TACTILE_ASSERT(sys::is_object_entity(*mModel, mObjectEntity));
+  TACTILE_ASSERT(sys::is_object_layer_entity(*mRegistry, mObjectLayerEntity));
+  TACTILE_ASSERT(sys::is_object_entity(*mRegistry, mObjectEntity));
 }
 
 void RemoveObject::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& object_layer = model.get<ObjectLayer>(mObjectLayerEntity);
+  auto& object_layer = registry.get<ObjectLayer>(mObjectLayerEntity);
   object_layer.objects.push_back(mObjectEntity);
 
-  model.set_enabled(mObjectEntity, true);
+  registry.set_enabled(mObjectEntity, true);
   mRemovedObject = false;
 }
 
 void RemoveObject::redo()
 {
-  auto& model = *mModel;
-  auto& object_layer = model.get<ObjectLayer>(mObjectLayerEntity);
+  auto& registry = *mRegistry;
+  auto& object_layer = registry.get<ObjectLayer>(mObjectLayerEntity);
 
   if (object_layer.active_object == mObjectEntity) {
     object_layer.active_object = kNullEntity;
@@ -62,23 +62,23 @@ void RemoveObject::redo()
 
   std::erase(object_layer.objects, mObjectEntity);
 
-  model.set_enabled(mObjectEntity, false);
+  registry.set_enabled(mObjectEntity, false);
   mRemovedObject = true;
 }
 
 void RemoveObject::dispose()
 {
   if (mRemovedObject) {
-    mModel->destroy(mObjectEntity);
+    mRegistry->destroy(mObjectEntity);
   }
 }
 
 auto RemoveObject::get_name() const -> String
 {
-  const auto& model = *mModel;
+  const auto& registry = *mRegistry;
 
-  const auto& strings = sys::get_current_language_strings(model);
-  const auto& object = model.get<Object>(mObjectEntity);
+  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& object = registry.get<Object>(mObjectEntity);
 
   switch (object.type) {
     case ObjectType::Point:

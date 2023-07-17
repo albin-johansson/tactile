@@ -24,10 +24,10 @@
 
 namespace tactile::cmd {
 
-SetTileFormatCompression::SetTileFormatCompression(Model* model,
+SetTileFormatCompression::SetTileFormatCompression(Registry* registry,
                                                    const Entity map_entity,
                                                    const TileCompression compression)
-    : mModel {model},
+    : mRegistry {registry},
       mMapEntity {map_entity},
       mNewCompression {compression}
 {
@@ -35,9 +35,9 @@ SetTileFormatCompression::SetTileFormatCompression(Model* model,
 
 void SetTileFormatCompression::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& format = model.get<TileFormat>(mMapEntity);
+  auto& format = registry.get<TileFormat>(mMapEntity);
   format.compression = mOldCompression.value();
 
   mOldCompression.reset();
@@ -45,8 +45,8 @@ void SetTileFormatCompression::undo()
 
 void SetTileFormatCompression::redo()
 {
-  auto& model = *mModel;
-  auto& format = model.get<TileFormat>(mMapEntity);
+  auto& registry = *mRegistry;
+  auto& format = registry.get<TileFormat>(mMapEntity);
 
   mOldCompression = format.compression;
   format.compression = mNewCompression;
@@ -54,7 +54,7 @@ void SetTileFormatCompression::redo()
 
 auto SetTileFormatCompression::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.set_tile_format_compression;
 }
 

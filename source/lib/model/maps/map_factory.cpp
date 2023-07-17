@@ -26,31 +26,32 @@
 
 namespace tactile::sys {
 
-auto create_map(Model& model, const TileExtent& extent, const Int2& tile_size) -> Entity
+auto create_map(Registry& registry, const TileExtent& extent, const Int2& tile_size)
+    -> Entity
 {
-  const auto map_entity = model.create_entity();
+  const auto map_entity = registry.create_entity();
 
-  auto& map_context = model.add<Context>(map_entity);
+  auto& map_context = registry.add<Context>(map_entity);
   map_context.name = "Map";
 
-  auto& map = model.add<Map>(map_entity);
+  auto& map = registry.add<Map>(map_entity);
   map.extent = extent;
   map.tile_size = tile_size;
-  map.root_layer = create_group_layer(model, -1);
+  map.root_layer = create_group_layer(registry, -1);
   map.active_tileset = kNullEntity;
   map.active_layer = kNullEntity;
 
-  auto& identifiers = model.add<MapIdentifiers>(map_entity);
+  auto& identifiers = registry.add<MapIdentifiers>(map_entity);
   identifiers.next_tile_id = 1;
   identifiers.next_layer_id = 1;
   identifiers.next_object_id = 1;
 
-  auto& layer_suffixes = model.add<MapLayerSuffixes>(map_entity);
+  auto& layer_suffixes = registry.add<MapLayerSuffixes>(map_entity);
   layer_suffixes.tile_layer_suffix = 1;
   layer_suffixes.object_layer_suffix = 1;
   layer_suffixes.group_layer_suffix = 1;
 
-  model.add<TileFormat>(map_entity);
+  registry.add<TileFormat>(map_entity);
 
   return map_entity;
 }

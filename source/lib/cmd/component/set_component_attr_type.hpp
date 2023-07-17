@@ -24,14 +24,14 @@
 #include "common/type/ecs.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/maybe.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 /// A command for changing the type of an attribute in a component definition.
 class SetComponentAttrType final : public Command {
  public:
-  SetComponentAttrType(Model* model,
+  SetComponentAttrType(Registry* registry,
                        Entity component_entity,
                        String attribute_name,
                        AttributeType new_type);
@@ -43,7 +43,7 @@ class SetComponentAttrType final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mComponentEntity;
   String mAttributeName;
   AttributeType mNewType;

@@ -28,10 +28,10 @@
 
 namespace tactile {
 
-void on_center_viewport(Model& model, const CenterViewportEvent& event)
+void on_center_viewport(Registry& registry, const CenterViewportEvent& event)
 {
-  auto& viewport = model.get<Viewport>(event.viewport);
-  const auto& viewport_info = model.get<DynamicViewportInfo>(event.viewport);
+  auto& viewport = registry.get<Viewport>(event.viewport);
+  const auto& viewport_info = registry.get<DynamicViewportInfo>(event.viewport);
 
   if (viewport_info.total_size.has_value() && viewport_info.content_size.has_value()) {
     const auto total_size = *viewport_info.total_size;
@@ -40,67 +40,68 @@ void on_center_viewport(Model& model, const CenterViewportEvent& event)
     const auto raw_offset = ((total_size - content_size) / 2.0f) - viewport.offset;
     const Float2 rounded_offset {std::round(raw_offset.x), std::round(raw_offset.y)};
 
-    on_offset_viewport(model, OffsetViewportEvent {event.viewport, rounded_offset});
+    on_offset_viewport(registry, OffsetViewportEvent {event.viewport, rounded_offset});
   }
 }
 
-void on_reset_viewport_zoom(Model& model, const ResetViewportZoomEvent& event)
+void on_reset_viewport_zoom(Registry& registry, const ResetViewportZoomEvent& event)
 {
-  auto& viewport = model.get<Viewport>(event.viewport);
+  auto& viewport = registry.get<Viewport>(event.viewport);
   sys::reset_viewport_zoom(viewport);
 }
 
-void on_increase_viewport_zoom(Model& model, const IncreaseViewportZoomEvent& event)
+void on_increase_viewport_zoom(Registry& registry, const IncreaseViewportZoomEvent& event)
 {
-  auto& viewport = model.get<Viewport>(event.viewport);
+  auto& viewport = registry.get<Viewport>(event.viewport);
   sys::increase_viewport_zoom(viewport, event.anchor_pos);
 }
 
-void on_decrease_viewport_zoom(Model& model, const DecreaseViewportZoomEvent& event)
+void on_decrease_viewport_zoom(Registry& registry, const DecreaseViewportZoomEvent& event)
 {
-  auto& viewport = model.get<Viewport>(event.viewport);
+  auto& viewport = registry.get<Viewport>(event.viewport);
   sys::decrease_viewport_zoom(viewport, event.anchor_pos);
 }
 
-void on_offset_viewport(Model& model, const OffsetViewportEvent& event)
+void on_offset_viewport(Registry& registry, const OffsetViewportEvent& event)
 {
-  auto& viewport = model.get<Viewport>(event.viewport);
+  auto& viewport = registry.get<Viewport>(event.viewport);
   sys::offset_viewport(viewport, event.delta);
 }
 
-void on_set_viewport_limits(Model& model, const SetViewportLimitsEvent& event)
+void on_set_viewport_limits(Registry& registry, const SetViewportLimitsEvent& event)
 {
-  auto& viewport = model.get<Viewport>(event.viewport);
+  auto& viewport = registry.get<Viewport>(event.viewport);
   viewport.limits = ViewportLimits {event.min_offset, event.max_offset};
 }
 
-void on_set_dynamic_viewport_info(Model& model, const SetDynamicViewportInfoEvent& event)
+void on_set_dynamic_viewport_info(Registry& registry,
+                                  const SetDynamicViewportInfoEvent& event)
 {
-  auto& dynamic_info = model.get<DynamicViewportInfo>(event.viewport);
+  auto& dynamic_info = registry.get<DynamicViewportInfo>(event.viewport);
   dynamic_info = event.info;
 }
 
-void on_pan_viewport_up(Model& model, const PanViewportUpEvent& event)
+void on_pan_viewport_up(Registry& registry, const PanViewportUpEvent& event)
 {
-  auto& viewport = model.get<Viewport>(event.viewport);
+  auto& viewport = registry.get<Viewport>(event.viewport);
   viewport.offset.y += viewport.tile_size.y;
 }
 
-void on_pan_viewport_down(Model& model, const PanViewportDownEvent& event)
+void on_pan_viewport_down(Registry& registry, const PanViewportDownEvent& event)
 {
-  auto& viewport = model.get<Viewport>(event.viewport);
+  auto& viewport = registry.get<Viewport>(event.viewport);
   viewport.offset.y -= viewport.tile_size.y;
 }
 
-void on_pan_viewport_left(Model& model, const PanViewportLeftEvent& event)
+void on_pan_viewport_left(Registry& registry, const PanViewportLeftEvent& event)
 {
-  auto& viewport = model.get<Viewport>(event.viewport);
+  auto& viewport = registry.get<Viewport>(event.viewport);
   viewport.offset.x += viewport.tile_size.x;
 }
 
-void on_pan_viewport_right(Model& model, const PanViewportRightEvent& event)
+void on_pan_viewport_right(Registry& registry, const PanViewportRightEvent& event)
 {
-  auto& viewport = model.get<Viewport>(event.viewport);
+  auto& viewport = registry.get<Viewport>(event.viewport);
   viewport.offset.x -= viewport.tile_size.x;
 }
 

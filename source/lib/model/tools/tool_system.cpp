@@ -31,8 +31,8 @@
 
 namespace tactile {
 
-ToolSystem::ToolSystem(Model& model, Dispatcher& dispatcher)
-    : System {model, dispatcher}
+ToolSystem::ToolSystem(Registry& registry, Dispatcher& dispatcher)
+    : System {registry, dispatcher}
 {
   mTools[ToolType::Stamp] = std::make_unique<StampTool>();
   mTools[ToolType::Bucket] = std::make_unique<BucketTool>();
@@ -78,18 +78,18 @@ void ToolSystem::_on_select_tool(const SelectToolEvent& event)
     return;
   }
 
-  auto& model = get_registry();
+  auto& registry = get_registry();
   auto& dispatcher = get_dispatcher();
 
   if (mActiveTool) {
     TACTILE_ASSERT(mActiveToolType.has_value());
-    mActiveTool->on_deactivated(model, dispatcher);
+    mActiveTool->on_deactivated(registry, dispatcher);
   }
 
   mActiveToolType = event.type;
   mActiveTool = lookup_in(mTools, *mActiveToolType).get();
 
-  mActiveTool->on_activated(model, dispatcher);
+  mActiveTool->on_activated(registry, dispatcher);
 }
 
 void ToolSystem::_on_viewport_mouse_pressed(const ViewportMousePressedEvent& event)

@@ -25,10 +25,10 @@
 
 namespace tactile::cmd {
 
-SetZlibCompressionLevel::SetZlibCompressionLevel(Model* model,
+SetZlibCompressionLevel::SetZlibCompressionLevel(Registry* registry,
                                                  const Entity map_entity,
                                                  const int new_level)
-    : mModel {model},
+    : mRegistry {registry},
       mMapEntity {map_entity},
       mNewLevel {new_level}
 {
@@ -36,8 +36,8 @@ SetZlibCompressionLevel::SetZlibCompressionLevel(Model* model,
 
 void SetZlibCompressionLevel::undo()
 {
-  auto& model = *mModel;
-  auto& format = model.get<TileFormat>(mMapEntity);
+  auto& registry = *mRegistry;
+  auto& format = registry.get<TileFormat>(mMapEntity);
 
   format.zlib_compression_level = mOldLevel.value();
   mOldLevel.reset();
@@ -45,8 +45,8 @@ void SetZlibCompressionLevel::undo()
 
 void SetZlibCompressionLevel::redo()
 {
-  auto& model = *mModel;
-  auto& format = model.get<TileFormat>(mMapEntity);
+  auto& registry = *mRegistry;
+  auto& format = registry.get<TileFormat>(mMapEntity);
 
   mOldLevel = format.zlib_compression_level;
   format.zlib_compression_level = mNewLevel;
@@ -64,7 +64,7 @@ auto SetZlibCompressionLevel::merge_with(const Command* cmd) -> bool
 
 auto SetZlibCompressionLevel::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.set_zlib_compression_level;
 }
 

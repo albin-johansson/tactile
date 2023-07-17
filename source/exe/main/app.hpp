@@ -70,7 +70,7 @@ class App final : public AppDelegate {
   [[nodiscard]] auto should_stop() const -> bool override { return mShouldStop; }
 
  private:
-  Unique<Model> mModel;
+  Unique<Registry> mRegistry;
   Dispatcher mDispatcher;
   Unique<ToolSystem> mToolSystem;
   Vector<System*> mSystems;

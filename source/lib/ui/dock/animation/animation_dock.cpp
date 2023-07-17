@@ -31,7 +31,7 @@
 #include "model/events/setting_events.hpp"
 #include "model/events/tileset_events.hpp"
 #include "model/i18n/language_system.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/textures/texture_system.hpp"
 #include "model/tiles/tile_components.hpp"
@@ -51,13 +51,13 @@ inline constexpr ImVec2 kFrameImageSize {32, 32};
 inline constexpr int64 kMinFrameDurationMs = 1;
 inline constexpr int64 kMaxFrameDurationMs = 100'000;
 
-void _push_animated_tile_cell_image(const Model& model,
+void _push_animated_tile_cell_image(const Registry& registry,
                                     const Tileset& tileset,
                                     const TileIndex tile_index,
                                     const ImVec2& cell_image_size,
                                     const ImVec4& tint = ImVec4 {1, 1, 1, 1})
 {
-  const auto& texture = model.get<Texture>(tileset.texture);
+  const auto& texture = registry.get<Texture>(tileset.texture);
 
   const Float2 tile_size = tileset.tile_size;
   const Float2 texture_size = texture.size;
@@ -96,17 +96,17 @@ void _push_animated_tile_cell_image(const Model& model,
   }
 }
 
-void _push_frame_popup(const Model& model,
+void _push_frame_popup(const Registry& registry,
                        const Strings& strings,
                        const Entity tile_entity,
                        const usize frame_index,
                        const ssize parent_tile_frame_count,
                        Dispatcher& dispatcher)
 {
-  const auto document_entity = sys::get_active_document(model);
+  const auto document_entity = sys::get_active_document(registry);
 
-  const auto& tile = model.get<Tile>(tile_entity);
-  const auto& tile_animation = model.get<TileAnimation>(tile_entity);
+  const auto& tile = registry.get<Tile>(tile_entity);
+  const auto& tile_animation = registry.get<TileAnimation>(tile_entity);
   const auto& frame = tile_animation.frames.at(frame_index);
 
   if (const Popup popup {"##FramePopup"}; popup.is_open()) {
@@ -151,7 +151,7 @@ void _push_frame_popup(const Model& model,
   }
 }
 
-void _push_animation_frame_list(const Model& model,
+void _push_animation_frame_list(const Registry& registry,
                                 const Strings& strings,
                                 const Tileset& tileset,
                                 const Entity tile_entity,
@@ -174,9 +174,9 @@ void _push_animation_frame_list(const Model& model,
                               true,
                               ImGuiWindowFlags_AlwaysHorizontalScrollbar};
       list_child.is_open()) {
-    if (model.has<TileAnimation>(tile_entity)) {
-      const auto& tile = model.get<Tile>(tile_entity);
-      const auto& animation = model.get<TileAnimation>(tile_entity);
+    if (registry.has<TileAnimation>(tile_entity)) {
+      const auto& tile = registry.get<Tile>(tile_entity);
+      const auto& animation = registry.get<TileAnimation>(tile_entity);
 
       // Figure out how many frames in the animation reference the parent (animated) tile.
       const ssize parent_tile_frame_count =
@@ -193,7 +193,7 @@ void _push_animation_frame_list(const Model& model,
                                     : ImVec4 {0.5, 0.5f, 0.5f, 1};
 
         ImGui::SameLine();
-        _push_animated_tile_cell_image(model,
+        _push_animated_tile_cell_image(registry,
                                        tileset,
                                        frame.tile_index,
                                        kFrameImageSize,
@@ -203,7 +203,7 @@ void _push_animation_frame_list(const Model& model,
           ImGui::OpenPopup("##FramePopup");
         }
 
-        _push_frame_popup(model,
+        _push_frame_popup(registry,
                           strings,
                           tile_entity,
                           frame_index,
@@ -219,7 +219,7 @@ void _push_animation_frame_list(const Model& model,
   }
 }
 
-void _push_tile_animation_preview_section(const Model& model,
+void _push_tile_animation_preview_section(const Registry& registry,
                                           const Strings& strings,
                                           AnimationDockState& state,
                                           const Tileset& tileset,
@@ -238,7 +238,7 @@ void _push_tile_animation_preview_section(const Model& model,
   if (const Child child {"##PreviewChild", {0, 0}, true}; child.is_open()) {
     push_centered_label(strings.misc.preview.c_str());
 
-    const auto& texture = model.get<Texture>(tileset.texture);
+    const auto& texture = registry.get<Texture>(tileset.texture);
     const Float2 texture_size = texture.size;
 
     const auto image_width = ImGui::GetWindowSize().x * state.preview_animation_size;
@@ -246,27 +246,27 @@ void _push_tile_animation_preview_section(const Model& model,
     const ImVec2 cell_image_size {image_width, image_height};
 
     center_next_item_horizontally(image_width);
-    _push_animated_tile_cell_image(model, tileset, tile_index, cell_image_size);
+    _push_animated_tile_cell_image(registry, tileset, tile_index, cell_image_size);
   }
 }
 
 }  // namespace
 
-void push_animation_dock_widget(const Model& model,
+void push_animation_dock_widget(const Registry& registry,
                                 AnimationDockState& state,
                                 Dispatcher& dispatcher)
 {
-  const auto& settings = model.get<Settings>();
+  const auto& settings = registry.get<Settings>();
 
   if (!settings.test_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT)) {
     return;
   }
 
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
-  const auto document_entity = sys::get_active_document(model);
-  const auto& tileset_document = model.get<TilesetDocument>(document_entity);
-  const auto& tileset = model.get<Tileset>(tileset_document.tileset);
+  const auto document_entity = sys::get_active_document(registry);
+  const auto& tileset_document = registry.get<TilesetDocument>(document_entity);
+  const auto& tileset = registry.get<Tileset>(tileset_document.tileset);
 
   bool show_animation_dock = true;
   const Window dock {strings.window.animation_dock.c_str(),
@@ -284,16 +284,16 @@ void push_animation_dock_widget(const Model& model,
           lookup_in(tileset.tile_index_map, *tileset.selected_tile_index);
 
       const auto appearance_tile_index =
-          sys::get_tile_appearance(model,
+          sys::get_tile_appearance(registry,
                                    tileset_document.tileset,
                                    *tileset.selected_tile_index);
 
-      _push_animation_frame_list(model,
+      _push_animation_frame_list(registry,
                                  strings,
                                  tileset,
                                  selected_tile_entity,
                                  dispatcher);
-      _push_tile_animation_preview_section(model,
+      _push_tile_animation_preview_section(registry,
                                            strings,
                                            state,
                                            tileset,
@@ -306,9 +306,9 @@ void push_animation_dock_widget(const Model& model,
   }
 }
 
-auto is_animation_dock_enabled(const Model& model) -> bool
+auto is_animation_dock_enabled(const Registry& registry) -> bool
 {
-  return sys::is_tileset_document_active(model);
+  return sys::is_tileset_document_active(registry);
 }
 
 }  // namespace tactile::ui

@@ -19,12 +19,14 @@
 
 #pragma once
 
-#include "model/events/menu_events.hpp"
-#include "model/model.hpp"
 #include "common/type/dispatcher.hpp"
+#include "model/events/menu_events.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
-void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent& event);
+void on_menu_action(Registry& registry,
+                    Dispatcher& dispatcher,
+                    const MenuActionEvent& event);
 
 }  // namespace tactile

@@ -21,47 +21,49 @@
 
 #include "common/type/dispatcher.hpp"
 #include "model/events/map_events.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
-void on_show_new_map_dialog(Model& model, const ShowNewMapDialogEvent& event);
+void on_show_new_map_dialog(Registry& registry, const ShowNewMapDialogEvent& event);
 
-void on_show_open_map_dialog(Model& model, const ShowOpenMapDialogEvent& event);
+void on_show_open_map_dialog(Registry& registry, const ShowOpenMapDialogEvent& event);
 
-void on_show_resize_map_dialog(Model& model, const ShowResizeMapDialogEvent& event);
+void on_show_resize_map_dialog(Registry& registry, const ShowResizeMapDialogEvent& event);
 
-void on_show_godot_export_dialog(Model& model, const ShowGodotExportDialogEvent& event);
+void on_show_godot_export_dialog(Registry& registry,
+                                 const ShowGodotExportDialogEvent& event);
 
-void on_create_map(Model& model, const CreateMapEvent& event);
+void on_create_map(Registry& registry, const CreateMapEvent& event);
 
-void on_open_map(Model& model, const OpenMapEvent& event);
+void on_open_map(Registry& registry, const OpenMapEvent& event);
 
-void on_resize_map(Model& model, const ResizeMapEvent& event);
+void on_resize_map(Registry& registry, const ResizeMapEvent& event);
 
-void on_add_row(Model& model, const AddRowEvent& event);
+void on_add_row(Registry& registry, const AddRowEvent& event);
 
-void on_add_column(Model& model, const AddColumnEvent& event);
+void on_add_column(Registry& registry, const AddColumnEvent& event);
 
-void on_remove_row(Model& model, const RemoveRowEvent& event);
+void on_remove_row(Registry& registry, const RemoveRowEvent& event);
 
-void on_remove_column(Model& model, const RemoveColumnEvent& event);
+void on_remove_column(Registry& registry, const RemoveColumnEvent& event);
 
-void on_fix_tiles_in_map(Model& model, const FixTilesInMapEvent& event);
+void on_fix_tiles_in_map(Registry& registry, const FixTilesInMapEvent& event);
 
-void on_export_as_godot_scene(Model& model, const ExportAsGodotSceneEvent& event);
+void on_export_as_godot_scene(Registry& registry, const ExportAsGodotSceneEvent& event);
 
-void on_inspect_map(Model& model, const InspectMapEvent& event);
+void on_inspect_map(Registry& registry, const InspectMapEvent& event);
 
-void on_set_tile_format_encoding(Model& model, const SetTileFormatEncodingEvent& event);
+void on_set_tile_format_encoding(Registry& registry,
+                                 const SetTileFormatEncodingEvent& event);
 
-void on_set_tile_format_compression(Model& model,
+void on_set_tile_format_compression(Registry& registry,
                                     const SetTileFormatCompressionEvent& event);
 
-void on_set_zlib_compression_level(Model& model,
+void on_set_zlib_compression_level(Registry& registry,
                                    const SetZlibCompressionLevelEvent& event);
 
-void on_set_zstd_compression_level(Model& model,
+void on_set_zstd_compression_level(Registry& registry,
                                    const SetZstdCompressionLevelEvent& event);
 
 }  // namespace tactile

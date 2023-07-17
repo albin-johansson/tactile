@@ -26,14 +26,14 @@
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
 #include "common/type/string_map.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 /// A command for removing a component definition.
 class UndefComponent final : public Command {
  public:
-  UndefComponent(Model* model, Entity component_set_entity, String component_name);
+  UndefComponent(Registry* registry, Entity component_set_entity, String component_name);
 
   void undo() override;
 
@@ -42,7 +42,7 @@ class UndefComponent final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mComponentSetEntity;
   String mComponentName;
   Maybe<StringMap<Attribute>> mPrevComponentValues;

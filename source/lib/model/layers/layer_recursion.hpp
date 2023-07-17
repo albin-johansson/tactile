@@ -22,21 +22,23 @@
 #include "common/type/ecs.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/maps/map_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
-void visit_layers(const Model& model,
+void visit_layers(const Registry& registry,
                   const GroupLayer& root_layer,
                   const EntityCallback& callback);
 
-void visit_layers(const Model& model, const Map& map, const EntityCallback& callback);
+void visit_layers(const Registry& registry,
+                  const Map& map,
+                  const EntityCallback& callback);
 
-void visit_tile_layers(const Model& model,
+void visit_tile_layers(const Registry& registry,
                        const GroupLayer& root_layer,
                        const EntityCallback& callback);
 
-void visit_tile_layers(const Model& model,
+void visit_tile_layers(const Registry& registry,
                        const Map& map,
                        const EntityCallback& callback);
 

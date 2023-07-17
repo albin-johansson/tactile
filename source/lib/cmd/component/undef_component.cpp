@@ -32,33 +32,33 @@
 
 namespace tactile::cmd {
 
-UndefComponent::UndefComponent(Model* model,
+UndefComponent::UndefComponent(Registry* registry,
                                const Entity component_set_entity,
                                String component_name)
-    : mModel {model},
+    : mRegistry {registry},
       mComponentSetEntity {component_set_entity},
       mComponentName {std::move(component_name)}
 {
-  TACTILE_ASSERT(sys::is_component_set_entity(*mModel, mComponentSetEntity));
+  TACTILE_ASSERT(sys::is_component_set_entity(*mRegistry, mComponentSetEntity));
 }
 
 void UndefComponent::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
+  auto& component_set = registry.get<ComponentSet>(mComponentSetEntity);
   const auto component_entity =
-      sys::create_component(model, component_set, mComponentName);
+      sys::create_component(registry, component_set, mComponentName);
 
-  auto& component = model.get<Component>(component_entity);
+  auto& component = registry.get<Component>(component_entity);
   component.attributes = std::move(mPrevComponentValues.value());
 
   for (auto& [context_entity, attributes]: mRemovedComponentValues) {
-    auto& context = model.get<Context>(context_entity);
+    auto& context = registry.get<Context>(context_entity);
     const auto attached_component_entity =
-        sys::attach_component(model, context, component_entity);
+        sys::attach_component(registry, context, component_entity);
 
-    auto& attached_component = model.get<AttachedComponent>(attached_component_entity);
+    auto& attached_component = registry.get<AttachedComponent>(attached_component_entity);
     attached_component.attributes = std::move(attributes);
   }
 
@@ -68,21 +68,22 @@ void UndefComponent::undo()
 
 void UndefComponent::redo()
 {
-  auto& model = *mModel;
-  auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
+  auto& registry = *mRegistry;
+  auto& component_set = registry.get<ComponentSet>(mComponentSetEntity);
 
-  const auto component_entity = sys::find_component(model, component_set, mComponentName);
+  const auto component_entity =
+      sys::find_component(registry, component_set, mComponentName);
 
-  const auto& component = model.get<Component>(component_entity);
+  const auto& component = registry.get<Component>(component_entity);
   mPrevComponentValues = component.attributes;
 
-  mRemovedComponentValues = sys::copy_component_values(model, component_entity);
-  sys::remove_component(model, component_set, mComponentName);
+  mRemovedComponentValues = sys::copy_component_values(registry, component_entity);
+  sys::remove_component(registry, component_set, mComponentName);
 }
 
 auto UndefComponent::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.undef_comp;
 }
 

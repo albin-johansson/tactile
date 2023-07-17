@@ -29,19 +29,19 @@
 
 namespace tactile::cmd {
 
-ResetAttachedComponent::ResetAttachedComponent(Model* model,
+ResetAttachedComponent::ResetAttachedComponent(Registry* registry,
                                                const Entity attached_component_entity)
-    : mModel {model},
+    : mRegistry {registry},
       mAttachedComponentEntity {attached_component_entity}
 {
-  TACTILE_ASSERT(sys::is_attached_component_entity(*mModel, mAttachedComponentEntity));
+  TACTILE_ASSERT(sys::is_attached_component_entity(*mRegistry, mAttachedComponentEntity));
 }
 
 void ResetAttachedComponent::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& attached_component = model.get<AttachedComponent>(mAttachedComponentEntity);
+  auto& attached_component = registry.get<AttachedComponent>(mAttachedComponentEntity);
   attached_component.attributes = std::move(mPreviousValues.value());
 
   mPreviousValues.reset();
@@ -49,15 +49,15 @@ void ResetAttachedComponent::undo()
 
 void ResetAttachedComponent::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& attached_component = model.get<AttachedComponent>(mAttachedComponentEntity);
-  mPreviousValues = sys::reset_component_values(model, attached_component);
+  auto& attached_component = registry.get<AttachedComponent>(mAttachedComponentEntity);
+  mPreviousValues = sys::reset_component_values(registry, attached_component);
 }
 
 auto ResetAttachedComponent::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.reset_comp;
 }
 

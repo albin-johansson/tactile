@@ -66,7 +66,7 @@ void _prepare_window_position(const ImVec2& offset = {})
   ImGui::SetNextWindowViewport(ImGui::GetWindowViewport()->ID);
 }
 
-void _tool_button([[maybe_unused]] const Model& model,
+void _tool_button([[maybe_unused]] const Registry& registry,
                   [[maybe_unused]] const ToolType tool,
                   [[maybe_unused]] const char* icon,
                   [[maybe_unused]] const char* tooltip,
@@ -78,7 +78,7 @@ void _tool_button([[maybe_unused]] const Model& model,
   //    ImGui::PushStyleColor(ImGuiCol_Button, kToolbarHighlightColor);
   //  }
   //
-  //  if (ui_icon_button(icon, tooltip, tools.is_available(model, tool))) {
+  //  if (ui_icon_button(icon, tooltip, tools.is_available(registry, tool))) {
   //    dispatcher.enqueue<SelectToolEvent>(tool);
   //  }
   //
@@ -103,9 +103,9 @@ void _push_extra_toolbar(std::invocable auto callable)
 
 }  // namespace
 
-void push_map_viewport_toolbar(const Model& model, Dispatcher& dispatcher)
+void push_map_viewport_toolbar(const Registry& registry, Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   remove_tab_bar_from_next_window();
 
@@ -114,9 +114,9 @@ void push_map_viewport_toolbar(const Model& model, Dispatcher& dispatcher)
 
   const StyleVar padding {ImGuiStyleVar_WindowPadding, {6, 6}};
 
-  const auto document_entity = sys::get_active_document(model);
-  // const auto& map_document = model.get<MapDocument>(document_entity);
-  const auto& command_stack = model.get<CommandStack>(document_entity);
+  const auto document_entity = sys::get_active_document(registry);
+  // const auto& map_document = registry.get<MapDocument>(document_entity);
+  const auto& command_stack = registry.get<CommandStack>(document_entity);
   // const auto& tools = map_document.get_tools();
 
   if (const Window window {"##ToolbarWindow", kToolbarWindowFlags}; window.is_open()) {
@@ -145,43 +145,43 @@ void push_map_viewport_toolbar(const Model& model, Dispatcher& dispatcher)
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    _tool_button(model,
+    _tool_button(registry,
                  ToolType::Stamp,
                  TAC_ICON_STAMP,
                  strings.misc.stamp_tool.c_str(),
                  dispatcher);
 
-    _tool_button(model,
+    _tool_button(registry,
                  ToolType::Eraser,
                  TAC_ICON_ERASER,
                  strings.misc.eraser_tool.c_str(),
                  dispatcher);
 
-    _tool_button(model,
+    _tool_button(registry,
                  ToolType::Bucket,
                  TAC_ICON_BUCKET,
                  strings.misc.bucket_tool.c_str(),
                  dispatcher);
 
-    _tool_button(model,
+    _tool_button(registry,
                  ToolType::ObjectSelection,
                  TAC_ICON_OBJECT_SELECTION,
                  strings.misc.object_selection_tool.c_str(),
                  dispatcher);
 
-    _tool_button(model,
+    _tool_button(registry,
                  ToolType::Rectangle,
                  TAC_ICON_RECTANGLE,
                  strings.misc.rectangle_tool.c_str(),
                  dispatcher);
 
-    _tool_button(model,
+    _tool_button(registry,
                  ToolType::Ellipse,
                  TAC_ICON_ELLIPSE,
                  strings.misc.ellipse_tool.c_str(),
                  dispatcher);
 
-    _tool_button(model,
+    _tool_button(registry,
                  ToolType::Point,
                  TAC_ICON_POINT,
                  strings.misc.point_tool.c_str(),

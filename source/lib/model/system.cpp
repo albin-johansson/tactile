@@ -21,8 +21,8 @@
 
 namespace tactile {
 
-System::System(Model& model, Dispatcher& dispatcher)
-    : mModel {model},
+System::System(Registry& registry, Dispatcher& dispatcher)
+    : mRegistry {registry},
       mDispatcher {dispatcher}
 {
 }

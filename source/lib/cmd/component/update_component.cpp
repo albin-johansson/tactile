@@ -29,23 +29,23 @@
 
 namespace tactile::cmd {
 
-UpdateComponent::UpdateComponent(Model* model,
+UpdateComponent::UpdateComponent(Registry* registry,
                                  const Entity component_entity,
                                  String attribute_name,
                                  Attribute new_value)
-    : mModel {model},
+    : mRegistry {registry},
       mComponentEntity {component_entity},
       mAttributeName {std::move(attribute_name)},
       mNewValue {std::move(new_value)}
 {
-  TACTILE_ASSERT(sys::is_component_entity(*mModel, mComponentEntity));
+  TACTILE_ASSERT(sys::is_component_entity(*mRegistry, mComponentEntity));
 }
 
 void UpdateComponent::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& component = model.get<Component>(mComponentEntity);
+  auto& component = registry.get<Component>(mComponentEntity);
   component.attributes[mAttributeName] = mOldValue.value();
 
   mOldValue.reset();
@@ -53,8 +53,8 @@ void UpdateComponent::undo()
 
 void UpdateComponent::redo()
 {
-  auto& model = *mModel;
-  auto& component = model.get<Component>(mComponentEntity);
+  auto& registry = *mRegistry;
+  auto& component = registry.get<Component>(mComponentEntity);
 
   mOldValue = lookup_in(component.attributes, mAttributeName);
   component.attributes[mAttributeName] = mNewValue;
@@ -75,7 +75,7 @@ auto UpdateComponent::merge_with(const Command* cmd) -> bool
 
 auto UpdateComponent::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.update_comp_attr_defaults;
 }
 

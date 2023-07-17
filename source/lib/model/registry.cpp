@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "model.hpp"
+#include "registry.hpp"
 
 #include <spdlog/spdlog.h>
 
@@ -25,12 +25,12 @@
 
 namespace tactile {
 
-auto Model::create_entity() -> Entity
+auto Registry::create_entity() -> Entity
 {
   return mRegistry.create();
 }
 
-void Model::destroy(const Entity entity)
+void Registry::destroy(const Entity entity)
 {
   if (entity != kNullEntity) {
     TACTILE_ASSERT(mRegistry.valid(entity));
@@ -40,7 +40,7 @@ void Model::destroy(const Entity entity)
   }
 }
 
-void Model::set_enabled(const Entity entity, const bool enabled)
+void Registry::set_enabled(const Entity entity, const bool enabled)
 {
   TACTILE_ASSERT(mRegistry.valid(entity));
   if (enabled) {
@@ -51,7 +51,7 @@ void Model::set_enabled(const Entity entity, const bool enabled)
   }
 }
 
-auto Model::is_enabled(const Entity entity) const -> bool
+auto Registry::is_enabled(const Entity entity) const -> bool
 {
   TACTILE_ASSERT(entity != kNullEntity);
   TACTILE_ASSERT(mRegistry.valid(entity));

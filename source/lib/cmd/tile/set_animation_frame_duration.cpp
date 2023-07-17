@@ -26,22 +26,22 @@
 
 namespace tactile::cmd {
 
-SetAnimationFrameDuration::SetAnimationFrameDuration(Model* model,
+SetAnimationFrameDuration::SetAnimationFrameDuration(Registry* registry,
                                                      const Entity tile_entity,
                                                      const usize frame_index,
                                                      const ms_t new_frame_duration)
-    : mModel {model},
+    : mRegistry {registry},
       mTileEntity {tile_entity},
       mFrameIndex {frame_index},
       mNewFrameDuration {new_frame_duration}
 {
-  TACTILE_ASSERT(sys::is_tile_entity(*mModel, mTileEntity));
+  TACTILE_ASSERT(sys::is_tile_entity(*mRegistry, mTileEntity));
 }
 
 void SetAnimationFrameDuration::undo()
 {
-  auto& model = *mModel;
-  auto& animation = model.get<TileAnimation>(mTileEntity);
+  auto& registry = *mRegistry;
+  auto& animation = registry.get<TileAnimation>(mTileEntity);
 
   auto& frame = animation.frames.at(mFrameIndex);
   frame.duration = mOldFrameDuration.value();
@@ -51,9 +51,9 @@ void SetAnimationFrameDuration::undo()
 
 void SetAnimationFrameDuration::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& animation = model.get<TileAnimation>(mTileEntity);
+  auto& animation = registry.get<TileAnimation>(mTileEntity);
   auto& frame = animation.frames.at(mFrameIndex);
 
   mOldFrameDuration = frame.duration;
@@ -74,7 +74,7 @@ auto SetAnimationFrameDuration::merge_with(const Command* cmd) -> bool
 
 auto SetAnimationFrameDuration::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.set_animation_frame_duration;
 }
 

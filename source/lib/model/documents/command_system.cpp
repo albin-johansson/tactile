@@ -23,36 +23,36 @@
 
 namespace tactile::sys {
 
-auto is_save_possible(const Model& model) -> bool
+auto is_save_possible(const Registry& registry) -> bool
 {
-  const auto document_entity = model.get<DocumentContext>().active_document;
+  const auto document_entity = registry.get<DocumentContext>().active_document;
 
   if (document_entity != kNullEntity) {
-    const auto& commands = model.get<CommandStack>(document_entity);
+    const auto& commands = registry.get<CommandStack>(document_entity);
     return !commands.is_clean();
   }
 
   return false;
 }
 
-auto is_undo_possible(const Model& model) -> bool
+auto is_undo_possible(const Registry& registry) -> bool
 {
-  const auto document_entity = model.get<DocumentContext>().active_document;
+  const auto document_entity = registry.get<DocumentContext>().active_document;
 
   if (document_entity != kNullEntity) {
-    const auto& commands = model.get<CommandStack>(document_entity);
+    const auto& commands = registry.get<CommandStack>(document_entity);
     return commands.can_undo();
   }
 
   return false;
 }
 
-auto is_redo_possible(const Model& model) -> bool
+auto is_redo_possible(const Registry& registry) -> bool
 {
-  const auto document_entity = model.get<DocumentContext>().active_document;
+  const auto document_entity = registry.get<DocumentContext>().active_document;
 
   if (document_entity != kNullEntity) {
-    const auto& commands = model.get<CommandStack>(document_entity);
+    const auto& commands = registry.get<CommandStack>(document_entity);
     return commands.can_redo();
   }
 

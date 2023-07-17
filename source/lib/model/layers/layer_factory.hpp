@@ -22,7 +22,7 @@
 #include "common/primitives.hpp"
 #include "common/tile_extent.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
@@ -32,13 +32,14 @@ namespace tactile::sys {
  * \details The created entity will feature the following components: `Layer`,
  *          `TileLayer`, and `Context`.
  *
- * \param model  the associated model.
+ * \param model  the associated registry.
  * \param id     the identifier associated with the layer.
  * \param extent the initial size of the layer.
  *
  * \return a tile layer entity.
  */
-[[nodiscard]] auto create_tile_layer(Model& model, int32 id, TileExtent extent) -> Entity;
+[[nodiscard]] auto create_tile_layer(Registry& registry, int32 id, TileExtent extent)
+    -> Entity;
 
 /**
  * Creates a new object layer.
@@ -46,12 +47,12 @@ namespace tactile::sys {
  * \details The created entity will feature the following components: `Layer`,
  *          `ObjectLayer`, and `Context`.
  *
- * \param model  the associated model.
+ * \param model  the associated registry.
  * \param id     the identifier associated with the layer.
  *
  * \return an object layer entity.
  */
-[[nodiscard]] auto create_object_layer(Model& model, int32 id) -> Entity;
+[[nodiscard]] auto create_object_layer(Registry& registry, int32 id) -> Entity;
 
 /**
  * Creates a new group layer.
@@ -59,11 +60,11 @@ namespace tactile::sys {
  * \details The created entity will feature the following components: `Layer`,
  *          `GroupLayer`, and `Context`.
  *
- * \param model  the associated model.
+ * \param model  the associated registry.
  * \param id     the identifier associated with the layer.
  *
  * \return a group layer entity.
  */
-[[nodiscard]] auto create_group_layer(Model& model, int32 id) -> Entity;
+[[nodiscard]] auto create_group_layer(Registry& registry, int32 id) -> Entity;
 
 }  // namespace tactile::sys

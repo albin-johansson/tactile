@@ -41,7 +41,7 @@ TEST_SUITE("TileLayerOps")
         {1, 0, 0, 0, 0},
     };
 
-    auto& tile_layer = model.get<TileLayer>(layer_entity);
+    auto& tile_layer = registry.get<TileLayer>(layer_entity);
     tile_layer.tiles = initial_tiles;
 
     const TileMatrix expected_tiles_after_flood_1 = {
@@ -83,7 +83,7 @@ TEST_SUITE("TileLayerOps")
     auto model = sys::create_model(BackendAPI::Null);
 
     const auto layer_entity = LayerBuilder {model}.as_tile_layer({4, 4}).build();
-    auto& tile_layer = model.get<TileLayer>(layer_entity);
+    auto& tile_layer = registry.get<TileLayer>(layer_entity);
 
     SUBCASE("Initial tiles should be empty")
     {
@@ -137,7 +137,7 @@ TEST_SUITE("TileLayerOps")
     auto model = sys::create_model(BackendAPI::Null);
 
     const auto layer_entity = LayerBuilder {model}.as_tile_layer({4, 4}).build();
-    auto& tile_layer = model.get<TileLayer>(layer_entity);
+    auto& tile_layer = registry.get<TileLayer>(layer_entity);
 
     tile_layer.tiles = TileMatrix {
         {1, 2, 3, 4},
@@ -179,7 +179,7 @@ TEST_SUITE("TileLayerOps")
     auto model = sys::create_model(BackendAPI::Null);
 
     const auto layer_entity = LayerBuilder {model}.as_tile_layer({4, 4}).build();
-    const auto& tile_layer = model.get<TileLayer>(layer_entity);
+    const auto& tile_layer = registry.get<TileLayer>(layer_entity);
 
     CHECK(!sys::is_valid_tile(tile_layer, {-1, 0}));
     CHECK(!sys::is_valid_tile(tile_layer, {0, -1}));

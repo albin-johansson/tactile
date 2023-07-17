@@ -30,18 +30,18 @@
 
 namespace tactile::ui {
 
-void update_dock_space(const Model& model, DockSpaceState& state)
+void update_dock_space(const Registry& registry, DockSpaceState& state)
 {
   state.root_dock_id = ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
   if (!state.did_initialize) {
     const auto size = ImGui::GetMainViewport()->Size;
     if (size.x > 0 && size.y > 0) {
-      const auto& settings = model.get<Settings>();
+      const auto& settings = registry.get<Settings>();
 
       if (!settings.test_flag(SETTINGS_RESTORE_LAYOUT_BIT) ||
           !fs::exists(get_widget_ini_path())) {
-        load_default_layout(model, state.root_dock_id.value());
+        load_default_layout(registry, state.root_dock_id.value());
       }
 
       state.did_initialize = true;
@@ -49,9 +49,9 @@ void update_dock_space(const Model& model, DockSpaceState& state)
   }
 }
 
-void load_default_layout(const Model& model, ImGuiID id)
+void load_default_layout(const Registry& registry, ImGuiID id)
 {
-  const auto& lang = sys::get_current_language_strings(model);
+  const auto& lang = sys::get_current_language_strings(registry);
 
   ImGui::DockBuilderRemoveNodeChildNodes(id);
 
@@ -74,13 +74,13 @@ void load_default_layout(const Model& model, ImGuiID id)
   ImGui::DockBuilderFinish(id);
 }
 
-void reset_layout(const Model& model, const ImGuiID root_id, Dispatcher& dispatcher)
+void reset_layout(const Registry& registry, const ImGuiID root_id, Dispatcher& dispatcher)
 {
-  load_default_layout(model, root_id);
+  load_default_layout(registry, root_id);
   dispatcher.enqueue<ResetDockVisibilitiesEvent>();
 }
 
-void check_for_missing_layout_file(const Model& model,
+void check_for_missing_layout_file(const Registry& registry,
                                    const ImGuiID root_id,
                                    Dispatcher& dispatcher)
 {
@@ -88,7 +88,7 @@ void check_for_missing_layout_file(const Model& model,
 
   if (!fs::exists(ini_path)) {
     spdlog::warn("[UI] Resetting layout because 'imgui.ini' file was missing");
-    ui::reset_layout(model, root_id, dispatcher);
+    ui::reset_layout(registry, root_id, dispatcher);
 
     const auto str = ini_path.string();
     ImGui::SaveIniSettingsToDisk(str.c_str());

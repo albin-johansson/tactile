@@ -29,22 +29,22 @@
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto _get_parent_layer(const Model& model,
+[[nodiscard]] auto _get_parent_layer(const Registry& registry,
                                      const Entity root_layer_entity,
                                      const Entity target_layer_entity) -> Entity
 {
-  TACTILE_ASSERT(is_group_layer_entity(model, root_layer_entity));
-  TACTILE_ASSERT(is_layer_entity(model, target_layer_entity));
+  TACTILE_ASSERT(is_group_layer_entity(registry, root_layer_entity));
+  TACTILE_ASSERT(is_layer_entity(registry, target_layer_entity));
 
-  const auto& root_layer = model.get<GroupLayer>(root_layer_entity);
+  const auto& root_layer = registry.get<GroupLayer>(root_layer_entity);
 
   for (const auto layer_entity: root_layer.children) {
     if (layer_entity == target_layer_entity) {
       return root_layer_entity;
     }
-    else if (model.has<GroupLayer>(layer_entity)) {
+    else if (registry.has<GroupLayer>(layer_entity)) {
       const auto parent_entity =
-          _get_parent_layer(model, layer_entity, target_layer_entity);
+          _get_parent_layer(registry, layer_entity, target_layer_entity);
 
       if (parent_entity != kNullEntity) {
         return parent_entity;
@@ -55,7 +55,7 @@ namespace {
   return kNullEntity;
 }
 
-[[nodiscard]] auto _get_sibling_count(const Model& model,
+[[nodiscard]] auto _get_sibling_count(const Registry& registry,
                                       const GroupLayer& root,
                                       const Entity target_layer_entity) -> Maybe<usize>
 {
@@ -64,9 +64,9 @@ namespace {
       return root.children.size() - 1;
     }
 
-    if (const auto* child_group = model.try_get<GroupLayer>(child_layer_entity)) {
+    if (const auto* child_group = registry.try_get<GroupLayer>(child_layer_entity)) {
       if (const auto count =
-              _get_sibling_count(model, *child_group, target_layer_entity)) {
+              _get_sibling_count(registry, *child_group, target_layer_entity)) {
         return *count;
       }
     }
@@ -75,15 +75,15 @@ namespace {
   return nothing;
 }
 
-void _offset_layer(Model& model,
+void _offset_layer(Registry& registry,
                    const Map& map,
                    const Entity layer_entity,
                    const ssize offset)
 {
-  TACTILE_ASSERT(is_layer_entity(model, layer_entity));
+  TACTILE_ASSERT(is_layer_entity(registry, layer_entity));
 
-  const auto parent_layer_entity = get_parent_layer(model, map, layer_entity);
-  auto& parent_layer = model.get<GroupLayer>(parent_layer_entity);
+  const auto parent_layer_entity = get_parent_layer(registry, map, layer_entity);
+  auto& parent_layer = registry.get<GroupLayer>(parent_layer_entity);
 
   const auto begin = parent_layer.children.begin();
   const auto end = parent_layer.children.end();
@@ -95,65 +95,67 @@ void _offset_layer(Model& model,
 
 }  // namespace
 
-void move_layer_up(Model& model, const Map& map, const Entity layer_entity)
+void move_layer_up(Registry& registry, const Map& map, const Entity layer_entity)
 {
-  TACTILE_ASSERT(is_layer_entity(model, layer_entity));
-  TACTILE_ASSERT(
-      can_move_layer_up(model, model.get<GroupLayer>(map.root_layer), layer_entity));
-  _offset_layer(model, map, layer_entity, -1);
+  TACTILE_ASSERT(is_layer_entity(registry, layer_entity));
+  TACTILE_ASSERT(can_move_layer_up(registry,
+                                   registry.get<GroupLayer>(map.root_layer),
+                                   layer_entity));
+  _offset_layer(registry, map, layer_entity, -1);
 }
 
-void move_layer_down(Model& model, const Map& map, const Entity layer_entity)
+void move_layer_down(Registry& registry, const Map& map, const Entity layer_entity)
 {
-  TACTILE_ASSERT(is_layer_entity(model, layer_entity));
-  TACTILE_ASSERT(
-      can_move_layer_down(model, model.get<GroupLayer>(map.root_layer), layer_entity));
-  _offset_layer(model, map, layer_entity, 1);
+  TACTILE_ASSERT(is_layer_entity(registry, layer_entity));
+  TACTILE_ASSERT(can_move_layer_down(registry,
+                                     registry.get<GroupLayer>(map.root_layer),
+                                     layer_entity));
+  _offset_layer(registry, map, layer_entity, 1);
 }
 
-void set_layer_local_index(Model& model,
+void set_layer_local_index(Registry& registry,
                            const Map& map,
                            const Entity layer_entity,
                            const usize new_index)
 {
-  TACTILE_ASSERT(is_layer_entity(model, layer_entity));
+  TACTILE_ASSERT(is_layer_entity(registry, layer_entity));
 
-  const auto& root = model.get<GroupLayer>(map.root_layer);
+  const auto& root = registry.get<GroupLayer>(map.root_layer);
 
-  const auto current_local_index = get_local_layer_index(model, root, layer_entity);
+  const auto current_local_index = get_local_layer_index(registry, root, layer_entity);
   const auto steps = udiff(current_local_index.value(), new_index);
 
   if (new_index < current_local_index) {
-    invoke_n(steps, [&] { move_layer_up(model, map, layer_entity); });
+    invoke_n(steps, [&] { move_layer_up(registry, map, layer_entity); });
   }
   else {
-    invoke_n(steps, [&] { move_layer_down(model, map, layer_entity); });
+    invoke_n(steps, [&] { move_layer_down(registry, map, layer_entity); });
   }
 }
 
-auto can_move_layer_up(const Model& model,
+auto can_move_layer_up(const Registry& registry,
                        const GroupLayer& root,
                        const Entity layer_entity) -> bool
 {
-  TACTILE_ASSERT(is_layer_entity(model, layer_entity));
-  return get_local_layer_index(model, root, layer_entity) != 0;
+  TACTILE_ASSERT(is_layer_entity(registry, layer_entity));
+  return get_local_layer_index(registry, root, layer_entity) != 0;
 }
 
-auto can_move_layer_down(const Model& model,
+auto can_move_layer_down(const Registry& registry,
                          const GroupLayer& root,
                          const Entity layer_entity) -> bool
 {
-  TACTILE_ASSERT(is_layer_entity(model, layer_entity));
-  const auto local_index = get_local_layer_index(model, root, layer_entity);
-  const auto sibling_count = _get_sibling_count(model, root, layer_entity);
+  TACTILE_ASSERT(is_layer_entity(registry, layer_entity));
+  const auto local_index = get_local_layer_index(registry, root, layer_entity);
+  const auto sibling_count = _get_sibling_count(registry, root, layer_entity);
   return local_index < sibling_count;
 }
 
-auto get_local_layer_index(const Model& model,
+auto get_local_layer_index(const Registry& registry,
                            const GroupLayer& root,
                            const Entity layer_entity) -> Maybe<usize>
 {
-  TACTILE_ASSERT(is_layer_entity(model, layer_entity));
+  TACTILE_ASSERT(is_layer_entity(registry, layer_entity));
 
   usize local_index = 0;
   for (const auto child_layer_entity: root.children) {
@@ -161,9 +163,9 @@ auto get_local_layer_index(const Model& model,
       return local_index;
     }
 
-    if (const auto* child_group = model.try_get<GroupLayer>(child_layer_entity)) {
+    if (const auto* child_group = registry.try_get<GroupLayer>(child_layer_entity)) {
       if (const auto recursive_local_index =
-              get_local_layer_index(model, *child_group, layer_entity)) {
+              get_local_layer_index(registry, *child_group, layer_entity)) {
         return *recursive_local_index;
       }
     }
@@ -174,10 +176,10 @@ auto get_local_layer_index(const Model& model,
   return nothing;
 }
 
-auto get_parent_layer(const Model& model, const Map& map, const Entity layer_entity)
+auto get_parent_layer(const Registry& registry, const Map& map, const Entity layer_entity)
     -> Entity
 {
-  return _get_parent_layer(model, map.root_layer, layer_entity);
+  return _get_parent_layer(registry, map.root_layer, layer_entity);
 }
 
 }  // namespace tactile::sys

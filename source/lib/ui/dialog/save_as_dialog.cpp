@@ -31,7 +31,7 @@
 
 namespace tactile::ui {
 
-void show_save_as_dialog(const Model& model, Dispatcher& dispatcher)
+void show_save_as_dialog(const Registry& registry, Dispatcher& dispatcher)
 {
   auto dialog = FileDialog::save_map();
   if (dialog.is_okay()) {
@@ -41,7 +41,7 @@ void show_save_as_dialog(const Model& model, Dispatcher& dispatcher)
                                      has_supported_tiled_xml_extension(path);
 
     if (!has_valid_extension) {
-      const auto& settings = model.get<Settings>();
+      const auto& settings = registry.get<Settings>();
       const auto& format = settings.get_preferred_format();
 
       spdlog::warn("[UI] Invalid file extension {}, assuming {} format",

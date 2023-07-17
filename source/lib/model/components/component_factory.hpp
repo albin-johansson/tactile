@@ -22,19 +22,20 @@
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
 #include "model/components/component_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
 /**
  * Creates a new empty component definition.
  *
- * \param model         the associated model.
+ * \param model         the associated registry.
  * \param component_set the associated component set.
  * \param name          the name of the component.
  *
  * \return a component entity.
  */
-auto create_component(Model& model, ComponentSet& component_set, String name) -> Entity;
+auto create_component(Registry& registry, ComponentSet& component_set, String name)
+    -> Entity;
 
 }  // namespace tactile::sys

@@ -44,16 +44,16 @@ constexpr int kBaseNodeFlags = ImGuiTreeNodeFlags_OpenOnArrow |
                                ImGuiTreeNodeFlags_OpenOnDoubleClick |
                                ImGuiTreeNodeFlags_SpanAvailWidth;
 
-void _push_layer_popup(const Model& model,
+void _push_layer_popup(const Registry& registry,
                        const Strings& strings,
                        const Entity map_entity,
                        const Entity layer_entity,
                        Dispatcher& dispatcher)
 {
   if (auto popup = Popup::for_item("##LayerPopup"); popup.is_open()) {
-    const auto& layer = model.get<Layer>(layer_entity);
-    const auto& map = model.get<Map>(map_entity);
-    const auto& root_layer = model.get<GroupLayer>(map.root_layer);
+    const auto& layer = registry.get<Layer>(layer_entity);
+    const auto& map = registry.get<Map>(map_entity);
+    const auto& root_layer = registry.get<GroupLayer>(map.root_layer);
 
     if (ImGui::MenuItem(strings.action.inspect_layer.c_str())) {
       dispatcher.enqueue<InspectContextEvent>(layer_entity);
@@ -90,29 +90,29 @@ void _push_layer_popup(const Model& model,
     if (ImGui::MenuItem(strings.action.move_layer_up.c_str(),
                         nullptr,
                         false,
-                        sys::can_move_layer_up(model, root_layer, layer_entity))) {
+                        sys::can_move_layer_up(registry, root_layer, layer_entity))) {
       dispatcher.enqueue<MoveLayerUpEvent>(layer_entity);
     }
 
     if (ImGui::MenuItem(strings.action.move_layer_down.c_str(),
                         nullptr,
                         false,
-                        sys::can_move_layer_down(model, root_layer, layer_entity))) {
+                        sys::can_move_layer_down(registry, root_layer, layer_entity))) {
       dispatcher.enqueue<MoveLayerDownEvent>(layer_entity);
     }
   }
 }
 
-void _push_object_selectable(const Model& model,
+void _push_object_selectable(const Registry& registry,
                              const Strings& strings,
                              const Entity layer_entity,
                              const Entity object_entity,
                              Dispatcher& dispatcher)
 {
-  const auto& object_layer = model.get<ObjectLayer>(layer_entity);
+  const auto& object_layer = registry.get<ObjectLayer>(layer_entity);
 
-  const auto& object = model.get<Object>(object_entity);
-  const auto& object_context = model.get<Context>(object_entity);
+  const auto& object = registry.get<Object>(object_entity);
+  const auto& object_context = registry.get<Context>(object_entity);
 
   const Scope scope {object_entity};
 
@@ -155,14 +155,14 @@ void _push_object_selectable(const Model& model,
   }
 }
 
-void _push_object_layer_selectable(const Model& model,
+void _push_object_layer_selectable(const Registry& registry,
                                    const Strings& strings,
                                    const Entity map_entity,
                                    const Entity layer_entity,
                                    const ImGuiTreeNodeFlags flags,
                                    Dispatcher& dispatcher)
 {
-  const auto& layer_context = model.get<Context>(layer_entity);
+  const auto& layer_context = registry.get<Context>(layer_entity);
 
   const FmtString<256> name {"{} {}", TAC_ICON_OBJECT_LAYER, layer_context.name};
   if (const TreeNode tree_node {"##ObjectLayerTree", flags, name.data()};
@@ -174,11 +174,11 @@ void _push_object_layer_selectable(const Model& model,
       dispatcher.enqueue<SelectLayerEvent>(layer_entity);
     }
 
-    _push_layer_popup(model, strings, map_entity, layer_entity, dispatcher);
+    _push_layer_popup(registry, strings, map_entity, layer_entity, dispatcher);
 
-    const auto& object_layer = model.get<ObjectLayer>(layer_entity);
+    const auto& object_layer = registry.get<ObjectLayer>(layer_entity);
     for (const auto object_entity: object_layer.objects) {
-      _push_object_selectable(model, strings, layer_entity, object_entity, dispatcher);
+      _push_object_selectable(registry, strings, layer_entity, object_entity, dispatcher);
     }
   }
   else {
@@ -187,18 +187,18 @@ void _push_object_layer_selectable(const Model& model,
       dispatcher.enqueue<SelectLayerEvent>(layer_entity);
     }
 
-    _push_layer_popup(model, strings, map_entity, layer_entity, dispatcher);
+    _push_layer_popup(registry, strings, map_entity, layer_entity, dispatcher);
   }
 }
 
-void _push_group_layer_selectable(const Model& model,
+void _push_group_layer_selectable(const Registry& registry,
                                   const Strings& strings,
                                   const Entity map_entity,
                                   const Entity layer_entity,
                                   const ImGuiTreeNodeFlags flags,
                                   entt::dispatcher& dispatcher)
 {
-  const auto& layer_context = model.get<Context>(layer_entity);
+  const auto& layer_context = registry.get<Context>(layer_entity);
 
   const FmtString<256> name {"{} {}", TAC_ICON_GROUP_LAYER, layer_context.name};
   if (const TreeNode tree_node {"##GroupLayerTreeNode", flags, name.data()};
@@ -210,11 +210,11 @@ void _push_group_layer_selectable(const Model& model,
       dispatcher.enqueue<SelectLayerEvent>(layer_entity);
     }
 
-    _push_layer_popup(model, strings, map_entity, layer_entity, dispatcher);
+    _push_layer_popup(registry, strings, map_entity, layer_entity, dispatcher);
 
-    const auto& group_layer = model.get<GroupLayer>(layer_entity);
+    const auto& group_layer = registry.get<GroupLayer>(layer_entity);
     for (const auto& child_layer_entity: group_layer.children) {
-      layer_selectable(model, map_entity, child_layer_entity, dispatcher);
+      layer_selectable(registry, map_entity, child_layer_entity, dispatcher);
     }
   }
   else {
@@ -223,24 +223,24 @@ void _push_group_layer_selectable(const Model& model,
       dispatcher.enqueue<SelectLayerEvent>(layer_entity);
     }
 
-    _push_layer_popup(model, strings, map_entity, layer_entity, dispatcher);
+    _push_layer_popup(registry, strings, map_entity, layer_entity, dispatcher);
   }
 }
 
 }  // namespace
 
-void layer_selectable(const Model& model,
+void layer_selectable(const Registry& registry,
                       const Entity map_entity,
                       const Entity layer_entity,
                       Dispatcher& dispatcher)
 {
   const Scope scope {layer_entity};
 
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
-  const auto& map = model.get<Map>(map_entity);
-  const auto& layer = model.get<Layer>(layer_entity);
-  const auto& layer_context = model.get<Context>(layer_entity);
+  const auto& map = registry.get<Map>(map_entity);
+  const auto& layer = registry.get<Layer>(layer_entity);
+  const auto& layer_context = registry.get<Context>(layer_entity);
 
   const auto is_layer_active = map.active_layer == layer_entity;
   const auto flags = is_layer_active ? (kBaseNodeFlags | ImGuiTreeNodeFlags_Selected)  //
@@ -259,11 +259,11 @@ void layer_selectable(const Model& model,
         dispatcher.enqueue<SelectLayerEvent>(layer_entity);
       }
 
-      _push_layer_popup(model, strings, map_entity, layer_entity, dispatcher);
+      _push_layer_popup(registry, strings, map_entity, layer_entity, dispatcher);
       break;
     }
     case LayerType::ObjectLayer: {
-      _push_object_layer_selectable(model,
+      _push_object_layer_selectable(registry,
                                     strings,
                                     map_entity,
                                     layer_entity,
@@ -272,7 +272,7 @@ void layer_selectable(const Model& model,
       break;
     }
     case LayerType::GroupLayer: {
-      _push_group_layer_selectable(model,
+      _push_group_layer_selectable(registry,
                                    strings,
                                    map_entity,
                                    layer_entity,

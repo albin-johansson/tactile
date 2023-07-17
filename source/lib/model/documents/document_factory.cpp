@@ -30,58 +30,60 @@
 
 namespace tactile::sys {
 
-auto create_map_document(Model& model, const TileExtent& extent, const Int2& tile_size)
-    -> Entity
+auto create_map_document(Registry& registry,
+                         const TileExtent& extent,
+                         const Int2& tile_size) -> Entity
 {
-  const auto& settings = model.get<Settings>();
-  const auto document_entity = model.create_entity();
+  const auto& settings = registry.get<Settings>();
+  const auto document_entity = registry.create_entity();
 
-  auto& command_stack = model.add<CommandStack>(document_entity);
+  auto& command_stack = registry.add<CommandStack>(document_entity);
   command_stack.set_capacity(settings.get_command_capacity());
 
-  auto& map_document = model.add<MapDocument>(document_entity);
-  map_document.map = create_map(model, extent, tile_size);
+  auto& map_document = registry.add<MapDocument>(document_entity);
+  map_document.map = create_map(registry, extent, tile_size);
   map_document.active_tileset = kNullEntity;
 
-  auto& document = model.add<Document>(document_entity);
+  auto& document = registry.add<Document>(document_entity);
   document.type = DocumentType::Map;
   document.default_context = map_document.map;
   document.active_context = document.default_context;
 
-  auto& document_viewport = model.add<Viewport>(document_entity);
+  auto& document_viewport = registry.add<Viewport>(document_entity);
   document_viewport.offset = Float2 {0, 0};
   document_viewport.tile_size = tile_size;
 
-  model.add<DynamicViewportInfo>(document_entity);
+  registry.add<DynamicViewportInfo>(document_entity);
 
-  TACTILE_ASSERT(is_map_document_entity(model, document_entity));
+  TACTILE_ASSERT(is_map_document_entity(registry, document_entity));
   return document_entity;
 }
 
-auto create_tileset_document(Model& model, const Int2& tile_size, const Path& image_path)
-    -> Entity
+auto create_tileset_document(Registry& registry,
+                             const Int2& tile_size,
+                             const Path& image_path) -> Entity
 {
-  const auto& settings = model.get<Settings>();
-  const auto document_entity = model.create_entity();
+  const auto& settings = registry.get<Settings>();
+  const auto document_entity = registry.create_entity();
 
-  auto& command_stack = model.add<CommandStack>(document_entity);
+  auto& command_stack = registry.add<CommandStack>(document_entity);
   command_stack.set_capacity(settings.get_command_capacity());
 
-  auto& tileset_document = model.add<TilesetDocument>(document_entity);
-  tileset_document.tileset = create_tileset(model, tile_size, image_path);
+  auto& tileset_document = registry.add<TilesetDocument>(document_entity);
+  tileset_document.tileset = create_tileset(registry, tile_size, image_path);
 
-  auto& document = model.add<Document>(document_entity);
+  auto& document = registry.add<Document>(document_entity);
   document.type = DocumentType::Tileset;
   document.default_context = tileset_document.tileset;
   document.active_context = document.default_context;
 
-  auto& document_viewport = model.add<Viewport>(document_entity);
+  auto& document_viewport = registry.add<Viewport>(document_entity);
   document_viewport.offset = Float2 {0, 0};
   document_viewport.tile_size = tile_size;
 
-  model.add<DynamicViewportInfo>(document_entity);
+  registry.add<DynamicViewportInfo>(document_entity);
 
-  TACTILE_ASSERT(is_tileset_document_entity(model, document_entity));
+  TACTILE_ASSERT(is_tileset_document_entity(registry, document_entity));
   return document_entity;
 }
 

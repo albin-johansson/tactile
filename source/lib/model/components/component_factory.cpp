@@ -26,15 +26,16 @@
 
 namespace tactile::sys {
 
-auto create_component(Model& model, ComponentSet& component_set, String name) -> Entity
+auto create_component(Registry& registry, ComponentSet& component_set, String name)
+    -> Entity
 {
-  const auto component_entity = model.create_entity();
+  const auto component_entity = registry.create_entity();
   component_set.definitions.push_back(component_entity);
 
-  auto& component = model.add<Component>(component_entity);
+  auto& component = registry.add<Component>(component_entity);
   component.name = std::move(name);
 
-  TACTILE_ASSERT(is_component_entity(model, component_entity));
+  TACTILE_ASSERT(is_component_entity(registry, component_entity));
   return component_entity;
 }
 

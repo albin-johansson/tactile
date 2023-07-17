@@ -25,32 +25,32 @@
 
 namespace tactile::sys {
 
-auto create_component_set(Model& model) -> Entity
+auto create_component_set(Registry& registry) -> Entity
 {
-  const auto component_set_entity = model.create_entity();
+  const auto component_set_entity = registry.create_entity();
 
-  model.add<ComponentSet>(component_set_entity);
+  registry.add<ComponentSet>(component_set_entity);
 
-  TACTILE_ASSERT(is_component_set_entity(model, component_set_entity));
+  TACTILE_ASSERT(is_component_set_entity(registry, component_set_entity));
   return component_set_entity;
 }
 
-void remove_component(Model& model, ComponentSet& component_set, StringView name)
+void remove_component(Registry& registry, ComponentSet& component_set, StringView name)
 {
-  const auto definition_entity = find_component(model, component_set, name);
+  const auto definition_entity = find_component(registry, component_set, name);
   if (definition_entity == kNullEntity) {
     return;
   }
 
   std::erase(component_set.definitions, definition_entity);
 
-  for (auto [entity, context]: model.each<Context>()) {
+  for (auto [entity, context]: registry.each<Context>()) {
     std::erase_if(context.comps, [&](const Entity attached_component_entity) {
       const auto& attached_component =
-          model.get<AttachedComponent>(attached_component_entity);
+          registry.get<AttachedComponent>(attached_component_entity);
 
       if (attached_component.definition == definition_entity) {
-        model.destroy(attached_component_entity);
+        registry.destroy(attached_component_entity);
         return true;
       }
 
@@ -59,12 +59,12 @@ void remove_component(Model& model, ComponentSet& component_set, StringView name
   }
 }
 
-auto find_component(const Model& model,
+auto find_component(const Registry& registry,
                     const ComponentSet& component_set,
                     StringView name) -> Entity
 {
   for (const auto component_entity: component_set.definitions) {
-    const auto& component = model.get<Component>(component_entity);
+    const auto& component = registry.get<Component>(component_entity);
 
     if (component.name == name) {
       return component_entity;

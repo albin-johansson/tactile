@@ -26,7 +26,7 @@
 #include "common/type/maybe.hpp"
 #include "common/type/tile_cache.hpp"
 #include "model/maps/map_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "model/tools/tool.hpp"
 #include "model/viewports/viewport_components.hpp"
 
@@ -38,23 +38,23 @@ class StampTool final : public Tool {
  public:
   void reset() override;
 
-  void on_deactivated(Model& model, Dispatcher& dispatcher) override;
+  void on_deactivated(Registry& registry, Dispatcher& dispatcher) override;
 
-  void on_mouse_exited(Model& model, Dispatcher& dispatcher) override;
+  void on_mouse_exited(Registry& registry, Dispatcher& dispatcher) override;
 
-  void on_mouse_pressed(Model& model,
+  void on_mouse_pressed(Registry& registry,
                         Dispatcher& dispatcher,
                         const ViewportMouseInfo& mouse) override;
 
-  void on_mouse_dragged(Model& model,
+  void on_mouse_dragged(Registry& registry,
                         Dispatcher& dispatcher,
                         const ViewportMouseInfo& mouse) override;
 
-  void on_mouse_released(Model& model,
+  void on_mouse_released(Registry& registry,
                          Dispatcher& dispatcher,
                          const ViewportMouseInfo& mouse) override;
 
-  [[nodiscard]] auto is_available(const Model& model) const -> bool override;
+  [[nodiscard]] auto is_available(const Registry& registry) const -> bool override;
 
  private:
   TileCache mOldState;
@@ -62,12 +62,16 @@ class StampTool final : public Tool {
   Maybe<TilePos> mLastChangedPos;
   bool mIsRandom {false};
 
-  void _update_sequence(Model& model, const TilePos& mouse_pos);
-  void _update_normal_sequence(Model& model, const Map& map, const TilePos& mouse_pos);
-  void _update_random_sequence(Model& model, const Map& map, const TilePos& mouse_pos);
-  void _try_end_sequence(Model& model, Dispatcher& dispatcher);
+  void _update_sequence(Registry& registry, const TilePos& mouse_pos);
+  void _update_normal_sequence(Registry& registry,
+                               const Map& map,
+                               const TilePos& mouse_pos);
+  void _update_random_sequence(Registry& registry,
+                               const Map& map,
+                               const TilePos& mouse_pos);
+  void _try_end_sequence(Registry& registry, Dispatcher& dispatcher);
 
-  [[nodiscard]] auto _behaves_as_if_random(const Model& model, const Map& map) const
+  [[nodiscard]] auto _behaves_as_if_random(const Registry& registry, const Map& map) const
       -> bool;
 };
 
@@ -75,9 +79,9 @@ class StampTool final : public Tool {
 
 namespace tactile::sys {
 
-[[nodiscard, deprecated]] auto is_stamp_tool_available(const Model& model) -> bool;
+[[nodiscard, deprecated]] auto is_stamp_tool_available(const Registry& registry) -> bool;
 
-[[nodiscard]] auto is_stamp_tool_randomizer_possible(const Model& model, const Map& map)
-    -> bool;
+[[nodiscard]] auto is_stamp_tool_randomizer_possible(const Registry& registry,
+                                                     const Map& map) -> bool;
 
 }  // namespace tactile::sys

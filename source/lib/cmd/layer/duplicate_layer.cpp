@@ -30,51 +30,51 @@
 
 namespace tactile::cmd {
 
-DuplicateLayer::DuplicateLayer(Model* model,
+DuplicateLayer::DuplicateLayer(Registry* registry,
                                const Entity map_entity,
                                const Entity layer_entity)
-    : mModel {model},
+    : mRegistry {registry},
       mMapEntity {map_entity},
       mSourceLayerEntity {layer_entity}
 {
-  TACTILE_ASSERT(sys::is_map_entity(*mModel, mMapEntity));
-  TACTILE_ASSERT(sys::is_layer_entity(*mModel, mSourceLayerEntity));
+  TACTILE_ASSERT(sys::is_map_entity(*mRegistry, mMapEntity));
+  TACTILE_ASSERT(sys::is_layer_entity(*mRegistry, mSourceLayerEntity));
 }
 
 void DuplicateLayer::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& map = model.get<Map>(mMapEntity);
-  sys::remove_layer_from_map(model, map, mNewLayerEntity);
+  auto& map = registry.get<Map>(mMapEntity);
+  sys::remove_layer_from_map(registry, map, mNewLayerEntity);
 
-  model.set_enabled(mNewLayerEntity, false);
+  registry.set_enabled(mNewLayerEntity, false);
 }
 
 void DuplicateLayer::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& map = model.get<Map>(mMapEntity);
-  const auto& root_layer = model.get<GroupLayer>(map.root_layer);
+  auto& map = registry.get<Map>(mMapEntity);
+  const auto& root_layer = registry.get<GroupLayer>(map.root_layer);
 
-  mNewLayerParentEntity = sys::get_parent_layer(model, map, mSourceLayerEntity);
+  mNewLayerParentEntity = sys::get_parent_layer(registry, map, mSourceLayerEntity);
 
   if (mNewLayerEntity != kNullEntity) {
-    model.set_enabled(mNewLayerEntity, true);
+    registry.set_enabled(mNewLayerEntity, true);
 
-    sys::attach_layer_to_map(model, map, mNewLayerEntity, mNewLayerParentEntity);
-    sys::set_layer_local_index(model, map, mNewLayerEntity, mNewIndex.value());
+    sys::attach_layer_to_map(registry, map, mNewLayerEntity, mNewLayerParentEntity);
+    sys::set_layer_local_index(registry, map, mNewLayerEntity, mNewIndex.value());
   }
   else {
-    mNewLayerEntity = sys::duplicate_layer(model, mMapEntity, mSourceLayerEntity);
-    mNewIndex = sys::get_local_layer_index(model, root_layer, mNewLayerEntity);
+    mNewLayerEntity = sys::duplicate_layer(registry, mMapEntity, mSourceLayerEntity);
+    mNewIndex = sys::get_local_layer_index(registry, root_layer, mNewLayerEntity);
   }
 }
 
 auto DuplicateLayer::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.duplicate_layer;
 }
 

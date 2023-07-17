@@ -21,7 +21,7 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ref.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
@@ -36,7 +36,7 @@ class System {
    * \param model      the associated registry.
    * \param dispatcher the associated event dispatcher.
    */
-  System(Model& model, Dispatcher& dispatcher);
+  System(Registry& registry, Dispatcher& dispatcher);
 
   virtual ~System() noexcept = default;
 
@@ -59,13 +59,13 @@ class System {
    */
   virtual void update() {}
 
-  [[nodiscard]] auto get_registry() -> Model& { return mModel.get(); }
-  [[nodiscard]] auto get_registry() const -> const Model& { return mModel.get(); }
+  [[nodiscard]] auto get_registry() -> Registry& { return mRegistry.get(); }
+  [[nodiscard]] auto get_registry() const -> const Registry& { return mRegistry.get(); }
 
   [[nodiscard]] auto get_dispatcher() const -> Dispatcher& { return mDispatcher.get(); }
 
  private:
-  Ref<Model> mModel;
+  Ref<Registry> mRegistry;
   Ref<Dispatcher> mDispatcher;
 };
 

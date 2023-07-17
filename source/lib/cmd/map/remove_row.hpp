@@ -23,13 +23,13 @@
 #include "cmd/map/map_command_cache.hpp"
 #include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class RemoveRow final : public Command {
  public:
-  RemoveRow(Model* model, Entity map_entity);
+  RemoveRow(Registry* registry, Entity map_entity);
 
   void undo() override;
 
@@ -40,7 +40,7 @@ class RemoveRow final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mMapEntity;
   MapCommandCache mCache;
   usize mRowCount {1};

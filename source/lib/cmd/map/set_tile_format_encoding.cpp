@@ -24,10 +24,10 @@
 
 namespace tactile::cmd {
 
-SetTileFormatEncoding::SetTileFormatEncoding(Model* model,
+SetTileFormatEncoding::SetTileFormatEncoding(Registry* registry,
                                              const Entity map_entity,
                                              const TileEncoding encoding)
-    : mModel {model},
+    : mRegistry {registry},
       mMapEntity {map_entity},
       mNewEncoding {encoding}
 {
@@ -35,8 +35,8 @@ SetTileFormatEncoding::SetTileFormatEncoding(Model* model,
 
 void SetTileFormatEncoding::undo()
 {
-  auto& model = *mModel;
-  auto& format = model.get<TileFormat>(mMapEntity);
+  auto& registry = *mRegistry;
+  auto& format = registry.get<TileFormat>(mMapEntity);
 
   format.encoding = mOldEncoding.value();
   format.compression = mOldCompression.value();
@@ -47,8 +47,8 @@ void SetTileFormatEncoding::undo()
 
 void SetTileFormatEncoding::redo()
 {
-  auto& model = *mModel;
-  auto& format = model.get<TileFormat>(mMapEntity);
+  auto& registry = *mRegistry;
+  auto& format = registry.get<TileFormat>(mMapEntity);
 
   mOldEncoding = format.encoding;
   mOldCompression = format.compression;
@@ -58,7 +58,7 @@ void SetTileFormatEncoding::redo()
 
 auto SetTileFormatEncoding::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.set_tile_format_encoding;
 }
 

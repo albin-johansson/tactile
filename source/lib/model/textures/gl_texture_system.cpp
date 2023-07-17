@@ -27,20 +27,20 @@
 
 namespace tactile::sys {
 
-void on_init_gl_texture(Model& model,
+void on_init_gl_texture(Registry& registry,
                         const Entity texture_entity,
                         const TextureData& texture_data)
 {
-  auto& gl_texture = model.add<OpenGLTexture>(texture_entity);
+  auto& gl_texture = registry.add<OpenGLTexture>(texture_entity);
   gl_texture.id = gl::create_texture(texture_data);
 
-  auto& texture = model.get<Texture>(texture_entity);
+  auto& texture = registry.get<Texture>(texture_entity);
   texture.handle = std::bit_cast<void*>(static_cast<uintptr>(gl_texture.id));
 }
 
-void on_destroy_gl_texture(Model& model, const Entity texture_entity)
+void on_destroy_gl_texture(Registry& registry, const Entity texture_entity)
 {
-  const auto& gl_texture = model.get<OpenGLTexture>(texture_entity);
+  const auto& gl_texture = registry.get<OpenGLTexture>(texture_entity);
   gl::destroy_texture(gl_texture.id);
 }
 

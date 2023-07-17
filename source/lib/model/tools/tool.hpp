@@ -24,7 +24,7 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(Model)
+TACTILE_FWD_DECLARE_CLASS(Registry)
 TACTILE_FWD_DECLARE_STRUCT(ViewportMouseInfo)
 
 class Tool {
@@ -33,27 +33,27 @@ class Tool {
 
   virtual void reset() = 0;
 
-  virtual void on_activated(Model& model, Dispatcher& dispatcher);
+  virtual void on_activated(Registry& registry, Dispatcher& dispatcher);
 
-  virtual void on_deactivated(Model& model, Dispatcher& dispatcher);
+  virtual void on_deactivated(Registry& registry, Dispatcher& dispatcher);
 
-  virtual void on_mouse_entered(Model& model, Dispatcher& dispatcher);
+  virtual void on_mouse_entered(Registry& registry, Dispatcher& dispatcher);
 
-  virtual void on_mouse_exited(Model& model, Dispatcher& dispatcher);
+  virtual void on_mouse_exited(Registry& registry, Dispatcher& dispatcher);
 
-  virtual void on_mouse_pressed(Model& model,
+  virtual void on_mouse_pressed(Registry& registry,
                                 Dispatcher& dispatcher,
                                 const ViewportMouseInfo& mouse);
 
-  virtual void on_mouse_dragged(Model& model,
+  virtual void on_mouse_dragged(Registry& registry,
                                 Dispatcher& dispatcher,
                                 const ViewportMouseInfo& mouse);
 
-  virtual void on_mouse_released(Model& model,
+  virtual void on_mouse_released(Registry& registry,
                                  Dispatcher& dispatcher,
                                  const ViewportMouseInfo& mouse);
 
-  [[nodiscard]] virtual auto is_available(const Model& model) const -> bool = 0;
+  [[nodiscard]] virtual auto is_available(const Registry& registry) const -> bool = 0;
 };
 
 }  // namespace tactile

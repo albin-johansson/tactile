@@ -27,26 +27,26 @@
 #include "model/documents/document_system.hpp"
 #include "model/events/component_events.hpp"
 #include "model/i18n/language_system.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
 
-void push_rename_comp_attr_dialog(const Model& model,
+void push_rename_comp_attr_dialog(const Registry& registry,
                                   RenameCompAttrDialogState& state,
                                   Dispatcher& dispatcher)
 {
-  const auto document_entity = sys::get_active_document(model);
-  const auto& document = model.get<Document>(document_entity);
+  const auto document_entity = sys::get_active_document(registry);
+  const auto& document = registry.get<Document>(document_entity);
 
-  const auto& component_set = model.get<ComponentSet>(document.component_set);
+  const auto& component_set = registry.get<ComponentSet>(document.component_set);
   if (!contained_in(component_set.definitions, state.definition)) {
     state.definition = kNullEntity;
     state.should_open = false;
     return;
   }
 
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
   DialogOptions dialog_options {
       .title = strings.window.rename_component_attribute.c_str(),
       .close_label = strings.misc.cancel.c_str(),
@@ -59,7 +59,7 @@ void push_rename_comp_attr_dialog(const Model& model,
   }
 
   const auto current_name = state.attribute_name_buffer.as_string_view();
-  const auto& component = model.get<Component>(state.definition);
+  const auto& component = registry.get<Component>(state.definition);
 
   if (!current_name.empty() && !component.attributes.contains(current_name)) {
     dialog_options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;

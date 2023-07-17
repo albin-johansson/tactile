@@ -21,11 +21,11 @@
 
 #include "common/type/ecs.hpp"
 #include "common/type/path.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
 /// Destroys all loaded textures (this should only be called once, just before shutdown).
-void destroy_loaded_texture_resources(Model& model);
+void destroy_loaded_texture_resources(Registry& registry);
 
 }  // namespace tactile::sys

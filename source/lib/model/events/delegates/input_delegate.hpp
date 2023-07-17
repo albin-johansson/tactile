@@ -22,10 +22,12 @@
 #include <centurion/events/event_handler.hpp>
 
 #include "common/type/dispatcher.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
-void on_event(Model& model, Dispatcher& dispatcher, const cen::event_handler& event);
+void on_event(Registry& registry,
+              Dispatcher& dispatcher,
+              const cen::event_handler& event);
 
 }  // namespace tactile

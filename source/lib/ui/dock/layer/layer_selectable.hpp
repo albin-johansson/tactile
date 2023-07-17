@@ -21,12 +21,12 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
 /// Shows a widget for a single layer in a map.
-void layer_selectable(const Model& model,
+void layer_selectable(const Registry& registry,
                       Entity map_entity,
                       Entity layer_entity,
                       Dispatcher& dispatcher);

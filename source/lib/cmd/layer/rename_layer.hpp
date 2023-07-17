@@ -22,13 +22,13 @@
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class RenameLayer final : public Command {
  public:
-  RenameLayer(Model* model, Entity layer_entity, String name);
+  RenameLayer(Registry* registry, Entity layer_entity, String name);
 
   void undo() override;
 
@@ -37,7 +37,7 @@ class RenameLayer final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mLayerEntity;
   String mNewName;
   Maybe<String> mOldName;

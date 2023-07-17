@@ -33,129 +33,129 @@
 
 namespace tactile::sys {
 
-auto is_document_entity(const Model& model, const Entity entity) -> bool
+auto is_document_entity(const Registry& registry, const Entity entity) -> bool
 {
-  return is_map_document_entity(model, entity) ||
-         is_tileset_document_entity(model, entity);
+  return is_map_document_entity(registry, entity) ||
+         is_tileset_document_entity(registry, entity);
 }
 
-auto is_map_document_entity(const Model& model, const Entity entity) -> bool
+auto is_map_document_entity(const Registry& registry, const Entity entity) -> bool
+{
+  return entity != kNullEntity &&                      //
+         registry.has<MapDocument>(entity) &&          //
+         registry.has<Document>(entity) &&             //
+         registry.has<Viewport>(entity) &&             //
+         registry.has<DynamicViewportInfo>(entity) &&  //
+         registry.has<CommandStack>(entity);
+}
+
+auto is_tileset_document_entity(const Registry& registry, const Entity entity) -> bool
+{
+  return entity != kNullEntity &&                      //
+         registry.has<TilesetDocument>(entity) &&      //
+         registry.has<Document>(entity) &&             //
+         registry.has<Viewport>(entity) &&             //
+         registry.has<DynamicViewportInfo>(entity) &&  //
+         registry.has<CommandStack>(entity);
+}
+
+auto is_context_entity(const Registry& registry, const Entity entity) -> bool
+{
+  return entity != kNullEntity && registry.has<Context>(entity);
+}
+
+auto is_map_entity(const Registry& registry, const Entity entity) -> bool
 {
   return entity != kNullEntity &&                   //
-         model.has<MapDocument>(entity) &&          //
-         model.has<Document>(entity) &&             //
-         model.has<Viewport>(entity) &&             //
-         model.has<DynamicViewportInfo>(entity) &&  //
-         model.has<CommandStack>(entity);
+         registry.has<Context>(entity) &&           //
+         registry.has<Map>(entity) &&               //
+         registry.has<MapIdentifiers>(entity) &&    //
+         registry.has<MapLayerSuffixes>(entity) &&  //
+         registry.has<TileFormat>(entity);
 }
 
-auto is_tileset_document_entity(const Model& model, const Entity entity) -> bool
+auto is_component_set_entity(const Registry& registry, const Entity entity) -> bool
 {
-  return entity != kNullEntity &&                   //
-         model.has<TilesetDocument>(entity) &&      //
-         model.has<Document>(entity) &&             //
-         model.has<Viewport>(entity) &&             //
-         model.has<DynamicViewportInfo>(entity) &&  //
-         model.has<CommandStack>(entity);
+  return entity != kNullEntity && registry.has<ComponentSet>(entity);
 }
 
-auto is_context_entity(const Model& model, const Entity entity) -> bool
+auto is_component_entity(const Registry& registry, Entity entity) -> bool
 {
-  return entity != kNullEntity && model.has<Context>(entity);
+  return entity != kNullEntity && registry.has<Component>(entity);
 }
 
-auto is_map_entity(const Model& model, const Entity entity) -> bool
+auto is_attached_component_entity(const Registry& registry, const Entity entity) -> bool
 {
-  return entity != kNullEntity &&                //
-         model.has<Context>(entity) &&           //
-         model.has<Map>(entity) &&               //
-         model.has<MapIdentifiers>(entity) &&    //
-         model.has<MapLayerSuffixes>(entity) &&  //
-         model.has<TileFormat>(entity);
+  return entity != kNullEntity && registry.has<AttachedComponent>(entity);
 }
 
-auto is_component_set_entity(const Model& model, const Entity entity) -> bool
+auto is_layer_entity(const Registry& registry, const Entity entity) -> bool
 {
-  return entity != kNullEntity && model.has<ComponentSet>(entity);
+  return is_tile_layer_entity(registry, entity) ||    //
+         is_object_layer_entity(registry, entity) ||  //
+         is_group_layer_entity(registry, entity);
 }
 
-auto is_component_entity(const Model& model, Entity entity) -> bool
+auto is_tile_layer_entity(const Registry& registry, const Entity entity) -> bool
 {
-  return entity != kNullEntity && model.has<Component>(entity);
+  return entity != kNullEntity &&            //
+         registry.has<TileLayer>(entity) &&  //
+         registry.has<Layer>(entity) &&      //
+         registry.has<Context>(entity);
 }
 
-auto is_attached_component_entity(const Model& model, const Entity entity) -> bool
+auto is_object_layer_entity(const Registry& registry, const Entity entity) -> bool
 {
-  return entity != kNullEntity && model.has<AttachedComponent>(entity);
+  return entity != kNullEntity &&              //
+         registry.has<ObjectLayer>(entity) &&  //
+         registry.has<Layer>(entity) &&        //
+         registry.has<Context>(entity);
 }
 
-auto is_layer_entity(const Model& model, const Entity entity) -> bool
+auto is_group_layer_entity(const Registry& registry, const Entity entity) -> bool
 {
-  return is_tile_layer_entity(model, entity) ||    //
-         is_object_layer_entity(model, entity) ||  //
-         is_group_layer_entity(model, entity);
+  return entity != kNullEntity &&             //
+         registry.has<GroupLayer>(entity) &&  //
+         registry.has<Layer>(entity) &&       //
+         registry.has<Context>(entity);
 }
 
-auto is_tile_layer_entity(const Model& model, const Entity entity) -> bool
+auto is_object_entity(const Registry& registry, const Entity entity) -> bool
 {
   return entity != kNullEntity &&         //
-         model.has<TileLayer>(entity) &&  //
-         model.has<Layer>(entity) &&      //
-         model.has<Context>(entity);
+         registry.has<Object>(entity) &&  //
+         registry.has<Context>(entity);
 }
 
-auto is_object_layer_entity(const Model& model, const Entity entity) -> bool
+auto is_texture_entity(const Registry& registry, const Entity entity) -> bool
 {
-  return entity != kNullEntity &&           //
-         model.has<ObjectLayer>(entity) &&  //
-         model.has<Layer>(entity) &&        //
-         model.has<Context>(entity);
+  return entity != kNullEntity && registry.has<Texture>(entity) &&
+         (registry.has<NullTexture>(entity) ||    //
+          registry.has<OpenGLTexture>(entity) ||  //
+          registry.has<VulkanTexture>(entity));
 }
 
-auto is_group_layer_entity(const Model& model, const Entity entity) -> bool
+auto is_tileset_entity(const Registry& registry, const Entity entity) -> bool
 {
-  return entity != kNullEntity &&          //
-         model.has<GroupLayer>(entity) &&  //
-         model.has<Layer>(entity) &&       //
-         model.has<Context>(entity);
+  return entity != kNullEntity &&                     //
+         registry.has<Tileset>(entity) &&             //
+         registry.has<TilesetRenderCache>(entity) &&  //
+         registry.has<Context>(entity);
 }
 
-auto is_object_entity(const Model& model, const Entity entity) -> bool
-{
-  return entity != kNullEntity &&      //
-         model.has<Object>(entity) &&  //
-         model.has<Context>(entity);
-}
-
-auto is_texture_entity(const Model& model, const Entity entity) -> bool
-{
-  return entity != kNullEntity && model.has<Texture>(entity) &&
-         (model.has<NullTexture>(entity) ||    //
-          model.has<OpenGLTexture>(entity) ||  //
-          model.has<VulkanTexture>(entity));
-}
-
-auto is_tileset_entity(const Model& model, const Entity entity) -> bool
+auto is_attached_tileset_entity(const Registry& registry, const Entity entity) -> bool
 {
   return entity != kNullEntity &&                  //
-         model.has<Tileset>(entity) &&             //
-         model.has<TilesetRenderCache>(entity) &&  //
-         model.has<Context>(entity);
+         registry.has<AttachedTileset>(entity) &&  //
+         registry.has<Viewport>(entity) &&         //
+         registry.has<DynamicViewportInfo>(entity);
 }
 
-auto is_attached_tileset_entity(const Model& model, const Entity entity) -> bool
+auto is_tile_entity(const Registry& registry, const Entity entity) -> bool
 {
-  return entity != kNullEntity &&               //
-         model.has<AttachedTileset>(entity) &&  //
-         model.has<Viewport>(entity) &&         //
-         model.has<DynamicViewportInfo>(entity);
-}
-
-auto is_tile_entity(const Model& model, const Entity entity) -> bool
-{
-  return entity != kNullEntity &&       //
-         model.has<Context>(entity) &&  //
-         model.has<Tile>(entity);
+  return entity != kNullEntity &&          //
+         registry.has<Context>(entity) &&  //
+         registry.has<Tile>(entity);
 }
 
 }  // namespace tactile::sys

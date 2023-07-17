@@ -23,7 +23,7 @@
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
 #include "common/util/string_buffer.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
@@ -34,7 +34,7 @@ struct RenameCompAttrDialogState final {
   bool should_open {};
 };
 
-void push_rename_comp_attr_dialog(const Model& model,
+void push_rename_comp_attr_dialog(const Registry& registry,
                                   RenameCompAttrDialogState& state,
                                   Dispatcher& dispatcher);
 

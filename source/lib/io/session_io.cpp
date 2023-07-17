@@ -28,7 +28,7 @@
 #include "io/protobuf_types.hpp"
 #include "io/stream_utils.hpp"
 #include "model/documents/document_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 namespace {
@@ -43,7 +43,7 @@ constexpr int kSessionFormatVersion [[maybe_unused]] = 1;
 
 }  // namespace
 
-void load_session_from_disk(Model& model)
+void load_session_from_disk(Registry& registry)
 {
   proto::Session session;
 
@@ -57,7 +57,7 @@ void load_session_from_disk(Model& model)
     for (const auto& file_path: session.files()) {
       const auto ir_map = parse_map(file_path);
       if (ir_map.has_value()) {
-        create_map_document_from_ir(*ir_map, file_path, model);
+        create_map_document_from_ir(*ir_map, file_path, registry);
       }
       else {
         spdlog::warn("[Session] Could not restore map from previous session");
@@ -69,13 +69,13 @@ void load_session_from_disk(Model& model)
   }
 }
 
-void save_session_to_disk(const Model& model)
+void save_session_to_disk(const Registry& registry)
 {
   proto::Session session;
 
-  const auto& document_context = model.get<DocumentContext>();
+  const auto& document_context = registry.get<DocumentContext>();
   for (const auto document_entity: document_context.open_documents) {
-    const auto& document = model.get<Document>(document_entity);
+    const auto& document = registry.get<Document>(document_entity);
 
     if (document.type == DocumentType::Map && document.path.has_value()) {
       const auto document_path = fs::absolute(*document.path);

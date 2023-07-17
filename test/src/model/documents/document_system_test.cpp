@@ -46,10 +46,10 @@ TEST_SUITE("DocumentSystem")
 
     sys::destroy_document(model, document_entity);
 
-    CHECK(!model.is_valid(document_entity));
+    CHECK(!registry.is_valid(document_entity));
     CHECK(!sys::has_active_document(model));
 
-    const auto& document_context = model.get<DocumentContext>();
+    const auto& document_context = registry.get<DocumentContext>();
     CHECK(!document_context.open_documents.contains(document_entity));
   }
 

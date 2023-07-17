@@ -23,31 +23,31 @@
 
 namespace tactile::cmd {
 
-FixMapTiles::FixMapTiles(Model* model, const Entity map_entity)
-    : mModel {model},
+FixMapTiles::FixMapTiles(Registry* registry, const Entity map_entity)
+    : mRegistry {registry},
       mMapEntity {map_entity}
 {
 }
 
 void FixMapTiles::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  sys::restore_tiles_in_map(model, mInvalidLayerTiles);
+  sys::restore_tiles_in_map(registry, mInvalidLayerTiles);
   mInvalidLayerTiles.clear();
 }
 
 void FixMapTiles::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& map = model.get<Map>(mMapEntity);
-  mInvalidLayerTiles = sys::fix_tiles_in_map(model, map);
+  auto& map = registry.get<Map>(mMapEntity);
+  mInvalidLayerTiles = sys::fix_tiles_in_map(registry, map);
 }
 
 auto FixMapTiles::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.fix_map_tiles;
 }
 

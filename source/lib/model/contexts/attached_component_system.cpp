@@ -27,7 +27,7 @@
 namespace tactile::sys {
 namespace {
 
-[[nodiscard]] auto _find_component_of_type(const Model& model,
+[[nodiscard]] auto _find_component_of_type(const Registry& registry,
                                            const Vector<Entity>& component_entities,
                                            const Entity definition_entity)
     -> Vector<Entity>::const_iterator
@@ -36,41 +36,44 @@ namespace {
       component_entities,
       [&](const Entity attached_component_entity) {
         const auto& attached_component =
-            model.get<AttachedComponent>(attached_component_entity);
+            registry.get<AttachedComponent>(attached_component_entity);
         return attached_component.definition == definition_entity;
       });
 }
 
-[[nodiscard]] auto _has_component_type(const Model& model,
+[[nodiscard]] auto _has_component_type(const Registry& registry,
                                        const Context& context,
                                        const Entity definition_entity) -> bool
 {
-  const auto iter = _find_component_of_type(model, context.comps, definition_entity);
+  const auto iter = _find_component_of_type(registry, context.comps, definition_entity);
   return iter != context.comps.end();
 }
 
 }  // namespace
 
-auto attach_component(Model& model, Context& context, const Entity definition_entity)
-    -> Entity
+auto attach_component(Registry& registry,
+                      Context& context,
+                      const Entity definition_entity) -> Entity
 {
-  TACTILE_ASSERT(is_component_entity(model, definition_entity));
-  TACTILE_ASSERT(!_has_component_type(model, context, definition_entity));
+  TACTILE_ASSERT(is_component_entity(registry, definition_entity));
+  TACTILE_ASSERT(!_has_component_type(registry, context, definition_entity));
 
-  const auto attached_component_entity = instantiate_component(model, definition_entity);
+  const auto attached_component_entity =
+      instantiate_component(registry, definition_entity);
   context.comps.push_back(attached_component_entity);
 
   return attached_component_entity;
 }
 
-auto detach_component(Model& model, Context& context, const Entity definition_entity)
-    -> Maybe<StringMap<Attribute>>
+auto detach_component(Registry& registry,
+                      Context& context,
+                      const Entity definition_entity) -> Maybe<StringMap<Attribute>>
 {
-  TACTILE_ASSERT(is_component_entity(model, definition_entity));
+  TACTILE_ASSERT(is_component_entity(registry, definition_entity));
 
-  const auto iter = _find_component_of_type(model, context.comps, definition_entity);
+  const auto iter = _find_component_of_type(registry, context.comps, definition_entity);
   if (iter != context.comps.end()) {
-    auto values = model.get<AttachedComponent>(*iter).attributes;
+    auto values = registry.get<AttachedComponent>(*iter).attributes;
     context.comps.erase(iter);
 
     return values;
@@ -79,13 +82,14 @@ auto detach_component(Model& model, Context& context, const Entity definition_en
   return nothing;
 }
 
-auto has_component(const Model& model, const Context& context, StringView component_name)
-    -> bool
+auto has_component(const Registry& registry,
+                   const Context& context,
+                   StringView component_name) -> bool
 {
   return std::ranges::any_of(context.comps, [&](const Entity attached_component_entity) {
     const auto& attached_component =
-        model.get<AttachedComponent>(attached_component_entity);
-    const auto& component = model.get<Component>(attached_component.definition);
+        registry.get<AttachedComponent>(attached_component_entity);
+    const auto& component = registry.get<Component>(attached_component.definition);
     return component.name == component_name;
   });
 }

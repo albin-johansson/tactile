@@ -41,12 +41,12 @@
 
 namespace tactile {
 
-void on_show_new_tileset_dialog(Model& model, const ShowNewTilesetDialogEvent&)
+void on_show_new_tileset_dialog(Registry& registry, const ShowNewTilesetDialogEvent&)
 {
-  const auto& settings = model.get<Settings>();
+  const auto& settings = registry.get<Settings>();
 
-  auto& widgets = model.get<ui::WidgetState>();
-  widgets.new_tileset_dialog.map_entity = sys::get_active_map(model);
+  auto& widgets = registry.get<ui::WidgetState>();
+  widgets.new_tileset_dialog.map_entity = sys::get_active_map(registry);
   widgets.new_tileset_dialog.image_path.clear();
   widgets.new_tileset_dialog.image_path_preview_buffer.clear();
   widgets.new_tileset_dialog.tile_size = settings.get_preferred_tile_size();
@@ -55,121 +55,123 @@ void on_show_new_tileset_dialog(Model& model, const ShowNewTilesetDialogEvent&)
   TACTILE_ASSERT(widgets.new_tileset_dialog.map_entity != kNullEntity);
 }
 
-void on_create_tileset(Model& model, const CreateTilesetEvent& event)
+void on_create_tileset(Registry& registry, const CreateTilesetEvent& event)
 {
-  TACTILE_ASSERT(sys::get_active_map(model) == event.map);
-  sys::try_execute<cmd::CreateTileset>(model,
+  TACTILE_ASSERT(sys::get_active_map(registry) == event.map);
+  sys::try_execute<cmd::CreateTileset>(registry,
                                        event.map,
                                        event.tile_size,
                                        event.image_path);
 }
 
-void on_detach_tileset(Model& model, const DetachTilesetEvent& event)
+void on_detach_tileset(Registry& registry, const DetachTilesetEvent& event)
 {
-  TACTILE_ASSERT(sys::get_active_map(model) == event.map);
-  sys::try_execute<cmd::RemoveTileset>(model, event.map, event.attached_tileset);
+  TACTILE_ASSERT(sys::get_active_map(registry) == event.map);
+  sys::try_execute<cmd::RemoveTileset>(registry, event.map, event.attached_tileset);
 }
 
-void on_select_tileset(Model& model, const SelectTilesetEvent& event)
+void on_select_tileset(Registry& registry, const SelectTilesetEvent& event)
 {
-  const auto map_entity = sys::get_active_map(model);
+  const auto map_entity = sys::get_active_map(registry);
   if (map_entity != kNullEntity) {
-    auto& map = model.get<Map>(map_entity);
-    sys::select_tileset(model, map, event.attached_tileset);
+    auto& map = registry.get<Map>(map_entity);
+    sys::select_tileset(registry, map, event.attached_tileset);
   }
 }
 
-void on_set_tileset_selection(Model& model, const SetTilesetSelectionEvent& event)
+void on_set_tileset_selection(Registry& registry, const SetTilesetSelectionEvent& event)
 {
-  TACTILE_ASSERT(sys::is_attached_tileset_entity(model, event.attached_tileset));
+  TACTILE_ASSERT(sys::is_attached_tileset_entity(registry, event.attached_tileset));
 
-  auto& attached_tileset = model.get<AttachedTileset>(event.attached_tileset);
+  auto& attached_tileset = registry.get<AttachedTileset>(event.attached_tileset);
   attached_tileset.selection = event.selection;
 }
 
-void on_rename_tileset(Model& model, const RenameTilesetEvent& event)
+void on_rename_tileset(Registry& registry, const RenameTilesetEvent& event)
 {
-  TACTILE_ASSERT(sys::is_attached_tileset_entity(model, event.attached_tileset));
-  sys::try_execute<cmd::RenameTileset>(model, event.attached_tileset, event.name);
+  TACTILE_ASSERT(sys::is_attached_tileset_entity(registry, event.attached_tileset));
+  sys::try_execute<cmd::RenameTileset>(registry, event.attached_tileset, event.name);
 }
 
-void on_select_tileset_tile(Model& model, const SelectTilesetTileEvent& event)
+void on_select_tileset_tile(Registry& registry, const SelectTilesetTileEvent& event)
 {
-  TACTILE_ASSERT(sys::is_tileset_document_entity(model, event.tileset_document));
-  const auto& tileset_document = model.get<TilesetDocument>(event.tileset_document);
+  TACTILE_ASSERT(sys::is_tileset_document_entity(registry, event.tileset_document));
+  const auto& tileset_document = registry.get<TilesetDocument>(event.tileset_document);
 
-  auto& tileset = model.get<Tileset>(tileset_document.tileset);
+  auto& tileset = registry.get<Tileset>(tileset_document.tileset);
   tileset.selected_tile_index = event.tile_index;
 }
 
-void on_add_animation_frame(Model& model, const AddAnimationFrameEvent& event)
+void on_add_animation_frame(Registry& registry, const AddAnimationFrameEvent& event)
 {
-  TACTILE_ASSERT(sys::is_tile_entity(model, event.tile));
-  sys::try_execute<cmd::AddAnimationFrame>(model,
+  TACTILE_ASSERT(sys::is_tile_entity(registry, event.tile));
+  sys::try_execute<cmd::AddAnimationFrame>(registry,
                                            event.tile,
                                            event.frame_tile_index,
                                            event.frame_duration);
 }
 
-void on_set_tile_animation_frame_duration(Model& model,
+void on_set_tile_animation_frame_duration(Registry& registry,
                                           const SetAnimationFrameDurationEvent& event)
 {
-  TACTILE_ASSERT(sys::is_tile_entity(model, event.tile));
-  sys::try_execute<cmd::SetAnimationFrameDuration>(model,
+  TACTILE_ASSERT(sys::is_tile_entity(registry, event.tile));
+  sys::try_execute<cmd::SetAnimationFrameDuration>(registry,
                                                    event.tile,
                                                    event.frame_index,
                                                    event.duration);
 }
 
-void on_enable_animation_frame_selection_mode(Model& model,
+void on_enable_animation_frame_selection_mode(Registry& registry,
                                               const EnableAnimationFrameSelectionMode&)
 {
-  auto& tileset_viewport_state = model.get<ui::TilesetViewportState>();
+  auto& tileset_viewport_state = registry.get<ui::TilesetViewportState>();
   tileset_viewport_state.animation_frame_selection_mode = true;
 }
 
-void on_remove_animation_frame(Model& model, const RemoveAnimationFrameEvent& event)
+void on_remove_animation_frame(Registry& registry, const RemoveAnimationFrameEvent& event)
 {
-  TACTILE_ASSERT(sys::is_tile_entity(model, event.tile));
-  sys::try_execute<cmd::RemoveAnimationFrame>(model, event.tile, event.frame_index);
+  TACTILE_ASSERT(sys::is_tile_entity(registry, event.tile));
+  sys::try_execute<cmd::RemoveAnimationFrame>(registry, event.tile, event.frame_index);
 }
 
-void on_set_animation_frame_duration(Model& model,
+void on_set_animation_frame_duration(Registry& registry,
                                      const SetAnimationFrameDurationEvent& event)
 {
-  TACTILE_ASSERT(sys::is_tile_entity(model, event.tile));
-  sys::try_execute<cmd::SetAnimationFrameDuration>(model,
+  TACTILE_ASSERT(sys::is_tile_entity(registry, event.tile));
+  sys::try_execute<cmd::SetAnimationFrameDuration>(registry,
                                                    event.tile,
                                                    event.frame_index,
                                                    event.duration);
 }
 
-void on_move_animation_frame_forwards(Model& model,
+void on_move_animation_frame_forwards(Registry& registry,
                                       const MoveAnimationFrameForwardsEvent& event)
 {
-  TACTILE_ASSERT(sys::is_tile_entity(model, event.tile));
-  sys::try_execute<cmd::MoveAnimationFrameForwards>(model, event.tile, event.frame_index);
+  TACTILE_ASSERT(sys::is_tile_entity(registry, event.tile));
+  sys::try_execute<cmd::MoveAnimationFrameForwards>(registry,
+                                                    event.tile,
+                                                    event.frame_index);
 }
 
-void on_move_animation_frame_backwards(Model& model,
+void on_move_animation_frame_backwards(Registry& registry,
                                        const MoveAnimationFrameBackwardsEvent& event)
 {
-  TACTILE_ASSERT(sys::is_tile_entity(model, event.tile));
-  sys::try_execute<cmd::MoveAnimationFrameBackwards>(model,
+  TACTILE_ASSERT(sys::is_tile_entity(registry, event.tile));
+  sys::try_execute<cmd::MoveAnimationFrameBackwards>(registry,
                                                      event.tile,
                                                      event.frame_index);
 }
 
-void on_rename_tile(Model& model, const RenameTileEvent& event)
+void on_rename_tile(Registry& registry, const RenameTileEvent& event)
 {
-  TACTILE_ASSERT(sys::is_tile_entity(model, event.tile));
-  sys::try_execute<cmd::RenameTile>(model, event.tile, event.name);
+  TACTILE_ASSERT(sys::is_tile_entity(registry, event.tile));
+  sys::try_execute<cmd::RenameTile>(registry, event.tile, event.name);
 }
 
-void on_delete_tile_animation(Model& model, const DeleteTileAnimationEvent& event)
+void on_delete_tile_animation(Registry& registry, const DeleteTileAnimationEvent& event)
 {
-  TACTILE_ASSERT(sys::is_tile_entity(model, event.tile));
-  sys::try_execute<cmd::DeleteAnimation>(model, event.tile);
+  TACTILE_ASSERT(sys::is_tile_entity(registry, event.tile));
+  sys::try_execute<cmd::DeleteAnimation>(registry, event.tile);
 }
 
 }  // namespace tactile

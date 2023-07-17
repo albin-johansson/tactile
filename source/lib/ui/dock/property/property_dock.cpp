@@ -37,8 +37,8 @@
 #include "model/i18n/language_system.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/maps/map_components.hpp"
-#include "model/model.hpp"
 #include "model/objects/object_components.hpp"
+#include "model/registry.hpp"
 #include "model/tiles/tile_components.hpp"
 #include "model/tiles/tile_format_ops.hpp"
 #include "model/tilesets/tileset_components.hpp"
@@ -152,14 +152,14 @@ void _push_native_read_only_row(const char* label, const bool value)
   ImGui::Checkbox("##Bool", &v);
 }
 
-void _push_native_map_properties(const Model& model,
+void _push_native_map_properties(const Registry& registry,
                                  const Strings& strings,
                                  const Entity map_entity,
                                  Dispatcher& dispatcher)
 {
-  const auto& context = model.get<Context>(map_entity);
-  const auto& map = model.get<Map>(map_entity);
-  const auto& tile_format = model.get<TileFormat>(map_entity);
+  const auto& context = registry.get<Context>(map_entity);
+  const auto& map = registry.get<Map>(map_entity);
+  const auto& tile_format = registry.get<TileFormat>(map_entity);
 
   _push_native_read_only_row(strings.misc.type.c_str(), strings.misc.map.c_str());
   _push_native_read_only_row(strings.misc.name.c_str(), context.name.c_str());
@@ -241,13 +241,13 @@ void _push_native_map_properties(const Model& model,
   }
 }
 
-void _push_native_tileset_properties(const Model& model,
+void _push_native_tileset_properties(const Registry& registry,
                                      const Strings& strings,
                                      const Entity tileset_entity,
                                      Dispatcher& dispatcher)
 {
-  const auto& context = model.get<Context>(tileset_entity);
-  const auto& tileset = model.get<Tileset>(tileset_entity);
+  const auto& context = registry.get<Context>(tileset_entity);
+  const auto& tileset = registry.get<Tileset>(tileset_entity);
 
   _push_native_read_only_row(strings.misc.type.c_str(), strings.misc.tileset.c_str());
 
@@ -263,13 +263,13 @@ void _push_native_tileset_properties(const Model& model,
   _push_native_read_only_row(strings.misc.tile_height.c_str(), tileset.tile_size.y);
 }
 
-void _push_native_tile_properties(const Model& model,
+void _push_native_tile_properties(const Registry& registry,
                                   const Strings& strings,
                                   const Entity tile_entity,
                                   Dispatcher& dispatcher)
 {
-  const auto& context = model.get<Context>(tile_entity);
-  const auto& tile = model.get<Tile>(tile_entity);
+  const auto& context = registry.get<Context>(tile_entity);
+  const auto& tile = registry.get<Tile>(tile_entity);
 
   _push_native_read_only_row(strings.misc.type.c_str(), strings.misc.tile.c_str());
 
@@ -280,15 +280,15 @@ void _push_native_tile_properties(const Model& model,
 
   _push_native_read_only_row(strings.misc.index.c_str(), tile.index);
   _push_native_read_only_row(strings.misc.animated.c_str(),
-                             model.has<TileAnimation>(tile_entity));
+                             registry.has<TileAnimation>(tile_entity));
 }
 
-void _push_native_layer_properties(const Model& model,
+void _push_native_layer_properties(const Registry& registry,
                                    const Strings& strings,
                                    const Entity layer_entity,
                                    Dispatcher& dispatcher)
 {
-  const auto& layer = model.get<Layer>(layer_entity);
+  const auto& layer = registry.get<Layer>(layer_entity);
 
   switch (layer.type) {
     case LayerType::TileLayer:
@@ -321,13 +321,13 @@ void _push_native_layer_properties(const Model& model,
   }
 }
 
-void _push_native_object_properties(const Model& model,
+void _push_native_object_properties(const Registry& registry,
                                     const Strings& strings,
                                     const Entity object_entity,
                                     Dispatcher& dispatcher)
 {
-  const auto& context = model.get<Context>(object_entity);
-  const auto& object = model.get<Object>(object_entity);
+  const auto& context = registry.get<Context>(object_entity);
+  const auto& object = registry.get<Object>(object_entity);
 
   switch (object.type) {
     case ObjectType::Rect:
@@ -422,33 +422,33 @@ void _push_custom_properties(const Strings& strings,
   }
 }
 
-void _push_property_table(const Model& model,
+void _push_property_table(const Registry& registry,
                           const Strings& strings,
                           PropertyDockState& state,
                           Dispatcher& dispatcher)
 {
-  const auto context_entity = sys::get_active_context(model);
+  const auto context_entity = sys::get_active_context(registry);
 
   const auto table_flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
                            ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
   if (const Table table {"##PropertyTable", 2, table_flags}; table.is_open()) {
-    if (model.has<Map>(context_entity)) {
-      _push_native_map_properties(model, strings, context_entity, dispatcher);
+    if (registry.has<Map>(context_entity)) {
+      _push_native_map_properties(registry, strings, context_entity, dispatcher);
     }
-    else if (model.has<Layer>(context_entity)) {
-      _push_native_layer_properties(model, strings, context_entity, dispatcher);
+    else if (registry.has<Layer>(context_entity)) {
+      _push_native_layer_properties(registry, strings, context_entity, dispatcher);
     }
-    else if (model.has<Object>(context_entity)) {
-      _push_native_object_properties(model, strings, context_entity, dispatcher);
+    else if (registry.has<Object>(context_entity)) {
+      _push_native_object_properties(registry, strings, context_entity, dispatcher);
     }
-    else if (model.has<Tileset>(context_entity)) {
-      _push_native_tileset_properties(model, strings, context_entity, dispatcher);
+    else if (registry.has<Tileset>(context_entity)) {
+      _push_native_tileset_properties(registry, strings, context_entity, dispatcher);
     }
-    else if (model.has<Tile>(context_entity)) {
-      _push_native_tile_properties(model, strings, context_entity, dispatcher);
+    else if (registry.has<Tile>(context_entity)) {
+      _push_native_tile_properties(registry, strings, context_entity, dispatcher);
     }
 
-    const auto& context = model.get<Context>(context_entity);
+    const auto& context = registry.get<Context>(context_entity);
 
     bool is_item_context_open = false;
     _push_custom_properties(strings,
@@ -489,17 +489,17 @@ void _push_property_table(const Model& model,
 
 }  // namespace
 
-void push_property_dock_widget(const Model& model,
+void push_property_dock_widget(const Registry& registry,
                                PropertyDockState& state,
                                Dispatcher& dispatcher)
 {
-  const auto& settings = model.get<Settings>();
+  const auto& settings = registry.get<Settings>();
 
   if (!settings.test_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT)) {
     return;
   }
 
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   bool show_property_dock = true;
   const Window window {strings.window.property_dock.c_str(),
@@ -514,11 +514,11 @@ void push_property_dock_widget(const Model& model,
   state.has_focus = window.has_focus();
 
   if (window.is_open()) {
-    _push_property_table(model, strings, state, dispatcher);
+    _push_property_table(registry, strings, state, dispatcher);
 
-    push_new_property_dialog(model, state.new_property_dialog, dispatcher);
-    push_rename_property_dialog(model, state.rename_property_dialog, dispatcher);
-    push_set_property_type_dialog(model, state.set_property_type_dialog, dispatcher);
+    push_new_property_dialog(registry, state.new_property_dialog, dispatcher);
+    push_rename_property_dialog(registry, state.rename_property_dialog, dispatcher);
+    push_set_property_type_dialog(registry, state.set_property_type_dialog, dispatcher);
   }
 }
 

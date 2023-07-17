@@ -22,7 +22,7 @@
 #include "common/primitives.hpp"
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
@@ -32,7 +32,7 @@ struct ResizeMapDialogState final {
   bool should_open {};
 };
 
-void push_resize_map_dialog(const Model& model,
+void push_resize_map_dialog(const Registry& registry,
                             ResizeMapDialogState& state,
                             Dispatcher& dispatcher);
 

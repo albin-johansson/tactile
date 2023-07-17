@@ -26,21 +26,21 @@
 
 namespace tactile::cmd {
 
-SetObjectVisible::SetObjectVisible(Model* model,
+SetObjectVisible::SetObjectVisible(Registry* registry,
                                    const Entity object_entity,
                                    const bool new_visibility)
-    : mModel {model},
+    : mRegistry {registry},
       mObjectEntity {object_entity},
       mNewVisibility {new_visibility}
 {
-  TACTILE_ASSERT(sys::is_object_entity(*mModel, mObjectEntity));
+  TACTILE_ASSERT(sys::is_object_entity(*mRegistry, mObjectEntity));
 }
 
 void SetObjectVisible::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& object = model.get<Object>(mObjectEntity);
+  auto& object = registry.get<Object>(mObjectEntity);
   object.visible = mOldVisibility.value();
 
   mOldVisibility.reset();
@@ -48,8 +48,8 @@ void SetObjectVisible::undo()
 
 void SetObjectVisible::redo()
 {
-  auto& model = *mModel;
-  auto& object = model.get<Object>(mObjectEntity);
+  auto& registry = *mRegistry;
+  auto& object = registry.get<Object>(mObjectEntity);
 
   mOldVisibility = static_cast<bool>(object.visible);
   object.visible = mNewVisibility;
@@ -57,7 +57,7 @@ void SetObjectVisible::redo()
 
 auto SetObjectVisible::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return mNewVisibility ? strings.cmd.show_object : strings.cmd.hide_object;
 }
 

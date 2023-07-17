@@ -27,36 +27,36 @@
 
 namespace tactile::cmd {
 
-MoveLayerDown::MoveLayerDown(Model* model,
+MoveLayerDown::MoveLayerDown(Registry* registry,
                              const Entity map_entity,
                              const Entity layer_entity)
-    : mModel {model},
+    : mRegistry {registry},
       mMapEntity {map_entity},
       mLayerEntity {layer_entity}
 {
-  TACTILE_ASSERT(sys::is_map_entity(*mModel, mMapEntity));
-  TACTILE_ASSERT(sys::is_layer_entity(*mModel, mLayerEntity));
+  TACTILE_ASSERT(sys::is_map_entity(*mRegistry, mMapEntity));
+  TACTILE_ASSERT(sys::is_layer_entity(*mRegistry, mLayerEntity));
 }
 
 void MoveLayerDown::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  const auto& map = model.get<Map>(mMapEntity);
-  sys::move_layer_up(model, map, mLayerEntity);
+  const auto& map = registry.get<Map>(mMapEntity);
+  sys::move_layer_up(registry, map, mLayerEntity);
 }
 
 void MoveLayerDown::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  const auto& map = model.get<Map>(mMapEntity);
-  sys::move_layer_down(model, map, mLayerEntity);
+  const auto& map = registry.get<Map>(mMapEntity);
+  sys::move_layer_down(registry, map, mLayerEntity);
 }
 
 auto MoveLayerDown::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.move_layer_down;
 }
 

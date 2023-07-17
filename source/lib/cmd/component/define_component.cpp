@@ -29,31 +29,31 @@
 
 namespace tactile::cmd {
 
-DefineComponent::DefineComponent(Model* model,
+DefineComponent::DefineComponent(Registry* registry,
                                  const Entity component_set_entity,
                                  String name)
-    : mModel {model},
+    : mRegistry {registry},
       mComponentSetEntity {component_set_entity},
       mName {std::move(name)}
 {
-  TACTILE_ASSERT(sys::is_component_set_entity(*mModel, mComponentSetEntity));
+  TACTILE_ASSERT(sys::is_component_set_entity(*mRegistry, mComponentSetEntity));
 }
 
 void DefineComponent::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
-  sys::remove_component(model, component_set, mName);
+  auto& component_set = registry.get<ComponentSet>(mComponentSetEntity);
+  sys::remove_component(registry, component_set, mName);
 }
 
 void DefineComponent::redo()
 {
-  auto& model = *mModel;
-  auto& component_set = model.get<ComponentSet>(mComponentSetEntity);
+  auto& registry = *mRegistry;
+  auto& component_set = registry.get<ComponentSet>(mComponentSetEntity);
 
   if (mComponentEntity == kNullEntity) {
-    mComponentEntity = sys::create_component(model, component_set, mName);
+    mComponentEntity = sys::create_component(registry, component_set, mName);
   }
   else {
     component_set.definitions.push_back(mComponentEntity);
@@ -62,7 +62,7 @@ void DefineComponent::redo()
 
 auto DefineComponent::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.define_comp;
 }
 

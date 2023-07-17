@@ -21,12 +21,12 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
 /// Shows a view of a single component attached to a context.
-void component_view(const Model& model,
+void component_view(const Registry& registry,
                     Entity context_entity,
                     Entity attached_component_entity,
                     Dispatcher& dispatcher);

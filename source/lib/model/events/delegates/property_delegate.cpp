@@ -35,11 +35,12 @@
 
 namespace tactile {
 
-void on_show_new_property_dialog(Model& model, const ShowNewPropertyDialogEvent& event)
+void on_show_new_property_dialog(Registry& registry,
+                                 const ShowNewPropertyDialogEvent& event)
 {
-  TACTILE_ASSERT(sys::is_context_entity(model, event.context));
+  TACTILE_ASSERT(sys::is_context_entity(registry, event.context));
 
-  auto& widgets = model.get<ui::WidgetState>();
+  auto& widgets = registry.get<ui::WidgetState>();
   auto& new_property_dialog = widgets.property_dock.new_property_dialog;
 
   new_property_dialog.context = event.context;
@@ -48,12 +49,12 @@ void on_show_new_property_dialog(Model& model, const ShowNewPropertyDialogEvent&
   new_property_dialog.should_open = true;
 }
 
-void on_show_rename_property_dialog(Model& model,
+void on_show_rename_property_dialog(Registry& registry,
                                     const ShowRenamePropertyDialogEvent& event)
 {
-  TACTILE_ASSERT(sys::is_context_entity(model, event.context));
+  TACTILE_ASSERT(sys::is_context_entity(registry, event.context));
 
-  auto& widgets = model.get<ui::WidgetState>();
+  auto& widgets = registry.get<ui::WidgetState>();
   auto& rename_property_dialog = widgets.property_dock.rename_property_dialog;
 
   rename_property_dialog.context = event.context;
@@ -62,15 +63,15 @@ void on_show_rename_property_dialog(Model& model,
   rename_property_dialog.should_open = true;
 }
 
-void on_show_set_property_type_dialog(Model& model,
+void on_show_set_property_type_dialog(Registry& registry,
                                       const ShowSetPropertyTypeDialogEvent& event)
 {
-  TACTILE_ASSERT(sys::is_context_entity(model, event.context));
+  TACTILE_ASSERT(sys::is_context_entity(registry, event.context));
 
-  auto& widgets = model.get<ui::WidgetState>();
+  auto& widgets = registry.get<ui::WidgetState>();
   auto& set_property_type_dialog = widgets.property_dock.set_property_type_dialog;
 
-  const auto& context = model.get<Context>(event.context);
+  const auto& context = registry.get<Context>(event.context);
   const auto property_type = lookup_in(context.props, event.property_name).get_type();
 
   set_property_type_dialog.context = event.context;
@@ -80,48 +81,48 @@ void on_show_set_property_type_dialog(Model& model,
   set_property_type_dialog.should_open = true;
 }
 
-void on_inspect_context(Model& model, const InspectContextEvent& event)
+void on_inspect_context(Registry& registry, const InspectContextEvent& event)
 {
-  TACTILE_ASSERT(sys::is_context_entity(model, event.context));
+  TACTILE_ASSERT(sys::is_context_entity(registry, event.context));
 
-  const auto document_entity = sys::get_active_document(model);
+  const auto document_entity = sys::get_active_document(registry);
   if (document_entity != kNullEntity) {
-    auto& document = model.get<Document>(document_entity);
+    auto& document = registry.get<Document>(document_entity);
     document.active_context = event.context;
   }
 }
 
-void on_create_property(Model& model, const CreatePropertyEvent& event)
+void on_create_property(Registry& registry, const CreatePropertyEvent& event)
 {
-  TACTILE_ASSERT(sys::is_context_entity(model, event.context));
-  sys::try_execute<cmd::CreateProperty>(model, event.context, event.name, event.type);
+  TACTILE_ASSERT(sys::is_context_entity(registry, event.context));
+  sys::try_execute<cmd::CreateProperty>(registry, event.context, event.name, event.type);
 }
 
-void on_remove_property(Model& model, const RemovePropertyEvent& event)
+void on_remove_property(Registry& registry, const RemovePropertyEvent& event)
 {
-  TACTILE_ASSERT(sys::is_context_entity(model, event.context));
-  sys::try_execute<cmd::RemoveProperty>(model, event.context, event.name);
+  TACTILE_ASSERT(sys::is_context_entity(registry, event.context));
+  sys::try_execute<cmd::RemoveProperty>(registry, event.context, event.name);
 }
 
-void on_rename_property(Model& model, const RenamePropertyEvent& event)
+void on_rename_property(Registry& registry, const RenamePropertyEvent& event)
 {
-  TACTILE_ASSERT(sys::is_context_entity(model, event.context));
-  sys::try_execute<cmd::RenameProperty>(model,
+  TACTILE_ASSERT(sys::is_context_entity(registry, event.context));
+  sys::try_execute<cmd::RenameProperty>(registry,
                                         event.context,
                                         event.old_name,
                                         event.new_name);
 }
 
-void on_update_property(Model& model, const UpdatePropertyEvent& event)
+void on_update_property(Registry& registry, const UpdatePropertyEvent& event)
 {
-  TACTILE_ASSERT(sys::is_context_entity(model, event.context));
-  sys::try_execute<cmd::UpdateProperty>(model, event.context, event.name, event.value);
+  TACTILE_ASSERT(sys::is_context_entity(registry, event.context));
+  sys::try_execute<cmd::UpdateProperty>(registry, event.context, event.name, event.value);
 }
 
-void on_set_property_type(Model& model, const SetPropertyTypeEvent& event)
+void on_set_property_type(Registry& registry, const SetPropertyTypeEvent& event)
 {
-  TACTILE_ASSERT(sys::is_context_entity(model, event.context));
-  sys::try_execute<cmd::SetPropertyType>(model, event.context, event.name, event.type);
+  TACTILE_ASSERT(sys::is_context_entity(registry, event.context));
+  sys::try_execute<cmd::SetPropertyType>(registry, event.context, event.name, event.type);
 }
 
 }  // namespace tactile

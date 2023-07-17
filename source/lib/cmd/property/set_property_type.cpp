@@ -29,22 +29,22 @@
 
 namespace tactile::cmd {
 
-SetPropertyType::SetPropertyType(Model* model,
+SetPropertyType::SetPropertyType(Registry* registry,
                                  const Entity context_entity,
                                  String name,
                                  const AttributeType new_type)
-    : mModel {model},
+    : mRegistry {registry},
       mContextEntity {context_entity},
       mName {std::move(name)},
       mNewPropertyType {new_type}
 {
-  TACTILE_ASSERT(sys::is_context_entity(*mModel, mContextEntity));
+  TACTILE_ASSERT(sys::is_context_entity(*mRegistry, mContextEntity));
 }
 
 void SetPropertyType::undo()
 {
-  auto& model = *mModel;
-  auto& context = model.get<Context>(mContextEntity);
+  auto& registry = *mRegistry;
+  auto& context = registry.get<Context>(mContextEntity);
 
   context.props[mName] = mPreviousValue.value();
   mPreviousValue.reset();
@@ -52,8 +52,8 @@ void SetPropertyType::undo()
 
 void SetPropertyType::redo()
 {
-  auto& model = *mModel;
-  auto& context = model.get<Context>(mContextEntity);
+  auto& registry = *mRegistry;
+  auto& context = registry.get<Context>(mContextEntity);
 
   mPreviousValue = lookup_in(context.props, mName);
   context.props[mName].reset_to_default(mNewPropertyType);
@@ -61,7 +61,7 @@ void SetPropertyType::redo()
 
 auto SetPropertyType::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.change_property_type;
 }
 

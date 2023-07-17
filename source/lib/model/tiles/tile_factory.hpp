@@ -21,12 +21,13 @@
 
 #include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "model/tilesets/tileset_components.hpp"
 
 namespace tactile::sys {
 
-[[nodiscard]] auto create_tile(Model& model, const Tileset& tileset, TileIndex tile_index)
-    -> Entity;
+[[nodiscard]] auto create_tile(Registry& registry,
+                               const Tileset& tileset,
+                               TileIndex tile_index) -> Entity;
 
 }  // namespace tactile::sys

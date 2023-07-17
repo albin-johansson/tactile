@@ -32,10 +32,10 @@ ContextMenu::ContextMenu(const char* name)
   }
 }
 
-void ContextMenu::update(const Model& model, Dispatcher& dispatcher)
+void ContextMenu::update(const Registry& registry, Dispatcher& dispatcher)
 {
   if (const Popup popup {mName}; popup.is_open()) {
-    on_update(model, dispatcher);
+    on_update(registry, dispatcher);
   }
 
   if (mShow) {

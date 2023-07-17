@@ -29,27 +29,27 @@
 
 namespace tactile::cmd {
 
-AddAnimationFrame::AddAnimationFrame(Model* model,
+AddAnimationFrame::AddAnimationFrame(Registry* registry,
                                      const Entity tile_entity,
                                      const TileIndex frame_tile_index,
                                      const ms_t frame_duration)
-    : mModel {model},
+    : mRegistry {registry},
       mTileEntity {tile_entity},
       mFrameTileIndex {frame_tile_index},
       mFrameDuration {frame_duration}
 {
-  TACTILE_ASSERT(sys::is_tile_entity(*mModel, tile_entity));
+  TACTILE_ASSERT(sys::is_tile_entity(*mRegistry, tile_entity));
 }
 
 void AddAnimationFrame::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& animation = model.get<TileAnimation>(mTileEntity);
+  auto& animation = registry.get<TileAnimation>(mTileEntity);
   erase_at(animation.frames, mFrameIndex.value());
 
   if (!mTileWasAnimatedBefore) {
-    model.remove<TileAnimation>(mTileEntity);
+    registry.remove<TileAnimation>(mTileEntity);
   }
 
   mFrameIndex.reset();
@@ -57,14 +57,14 @@ void AddAnimationFrame::undo()
 
 void AddAnimationFrame::redo()
 {
-  auto& model = *mModel;
-  mTileWasAnimatedBefore = model.has<TileAnimation>(mTileEntity);
+  auto& registry = *mRegistry;
+  mTileWasAnimatedBefore = registry.has<TileAnimation>(mTileEntity);
 
   if (!mTileWasAnimatedBefore) {
-    sys::make_tile_animated(model, mTileEntity);
+    sys::make_tile_animated(registry, mTileEntity);
   }
 
-  auto& animation = model.get<TileAnimation>(mTileEntity);
+  auto& animation = registry.get<TileAnimation>(mTileEntity);
 
   auto& frame = animation.frames.emplace_back();
   frame.tile_index = mFrameTileIndex;
@@ -75,7 +75,7 @@ void AddAnimationFrame::redo()
 
 auto AddAnimationFrame::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.add_animation_frame;
 }
 

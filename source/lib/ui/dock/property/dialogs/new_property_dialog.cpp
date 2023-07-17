@@ -26,18 +26,18 @@
 #include "model/documents/document_system.hpp"
 #include "model/events/property_events.hpp"
 #include "model/i18n/language_system.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/attribute_widgets.hpp"
 
 namespace tactile::ui {
 
-void push_new_property_dialog(const Model& model,
+void push_new_property_dialog(const Registry& registry,
                               NewPropertyDialogState& state,
                               Dispatcher& dispatcher)
 {
-  const auto document_entity = sys::get_active_document(model);
-  const auto& document = model.get<Document>(document_entity);
+  const auto document_entity = sys::get_active_document(registry);
+  const auto& document = registry.get<Document>(document_entity);
 
   if (document.active_context != state.context) {
     state.context = kNullEntity;
@@ -45,7 +45,7 @@ void push_new_property_dialog(const Model& model,
     return;
   }
 
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
   DialogOptions dialog_options {
       .title = strings.window.add_property.c_str(),
       .close_label = strings.misc.cancel.c_str(),
@@ -57,7 +57,7 @@ void push_new_property_dialog(const Model& model,
     state.should_open = false;
   }
 
-  const auto& active_context = model.get<Context>(document.active_context);
+  const auto& active_context = registry.get<Context>(document.active_context);
 
   if (const auto current_name = state.name_buffer.as_string_view();
       !current_name.empty() && !active_context.props.contains(current_name)) {

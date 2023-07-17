@@ -22,14 +22,14 @@
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 /// A command for renaming a component definition.
 class RenameComponent final : public Command {
  public:
-  RenameComponent(Model* model, Entity component_entity, String new_name);
+  RenameComponent(Registry* registry, Entity component_entity, String new_name);
 
   void undo() override;
 
@@ -38,7 +38,7 @@ class RenameComponent final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mComponentEntity;
   String mNewName;
   Maybe<String> mOldName;

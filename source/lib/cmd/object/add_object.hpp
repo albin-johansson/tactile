@@ -23,13 +23,13 @@
 #include "common/enum/object_type.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class AddObject final : public Command {
  public:
-  AddObject(Model* model,
+  AddObject(Registry* registry,
             Entity map_entity,
             Entity object_layer_entity,
             ObjectType type,
@@ -45,7 +45,7 @@ class AddObject final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mMapEntity;
   Entity mObjectLayerEntity;
   ObjectType mObjectType;

@@ -26,20 +26,20 @@
 
 namespace tactile::sys {
 
-auto create_object(Model& model, const ObjectType type) -> Entity
+auto create_object(Registry& registry, const ObjectType type) -> Entity
 {
-  const auto object_entity = model.create_entity();
+  const auto object_entity = registry.create_entity();
 
-  auto& object = model.add<Object>(object_entity);
+  auto& object = registry.add<Object>(object_entity);
   object.type = type;
   object.position = Float2 {0, 0};
   object.size = Float2 {0, 0};
   object.visible = true;
 
-  auto& context = model.add<Context>(object_entity);
+  auto& context = registry.add<Context>(object_entity);
   context.name = "Object";
 
-  TACTILE_ASSERT(is_object_entity(model, object_entity));
+  TACTILE_ASSERT(is_object_entity(registry, object_entity));
   return object_entity;
 }
 

@@ -20,10 +20,10 @@
 #pragma once
 
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
-void make_tile_animated(Model& model, Entity tile_entity);
+void make_tile_animated(Registry& registry, Entity tile_entity);
 
 }  // namespace tactile::sys

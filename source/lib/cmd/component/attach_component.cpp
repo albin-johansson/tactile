@@ -27,40 +27,40 @@
 
 namespace tactile::cmd {
 
-AttachComponent::AttachComponent(Model* model,
+AttachComponent::AttachComponent(Registry* registry,
                                  const Entity context_entity,
                                  const Entity component_entity)
-    : mModel {model},
+    : mRegistry {registry},
       mContextEntity {context_entity},
       mComponentEntity {component_entity}
 {
-  TACTILE_ASSERT(sys::is_context_entity(*mModel, mContextEntity));
-  TACTILE_ASSERT(sys::is_component_entity(*mModel, mComponentEntity));
+  TACTILE_ASSERT(sys::is_context_entity(*mRegistry, mContextEntity));
+  TACTILE_ASSERT(sys::is_component_entity(*mRegistry, mComponentEntity));
 }
 
 void AttachComponent::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& context = model.get<Context>(mContextEntity);
+  auto& context = registry.get<Context>(mContextEntity);
   std::erase(context.comps, mAttachedComponentEntity);
 }
 
 void AttachComponent::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
   if (mAttachedComponentEntity == kNullEntity) {
-    mAttachedComponentEntity = sys::instantiate_component(model, mComponentEntity);
+    mAttachedComponentEntity = sys::instantiate_component(registry, mComponentEntity);
   }
 
-  auto& context = model.get<Context>(mContextEntity);
+  auto& context = registry.get<Context>(mContextEntity);
   context.comps.push_back(mAttachedComponentEntity);
 }
 
 auto AttachComponent::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.attach_comp;
 }
 

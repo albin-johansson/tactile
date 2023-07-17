@@ -37,12 +37,12 @@
 
 namespace tactile::ui {
 
-void push_tileset_dock_widget(const Model& model,
+void push_tileset_dock_widget(const Registry& registry,
                               TilesetDockState& state,
                               Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
-  const auto& settings = model.get<Settings>();
+  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& settings = registry.get<Settings>();
 
   if (!settings.test_flag(SETTINGS_SHOW_TILESET_DOCK_BIT)) {
     return;
@@ -63,9 +63,9 @@ void push_tileset_dock_widget(const Model& model,
   state.has_hover = ImGui::IsWindowHovered(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
-    const auto document_entity = sys::get_active_document(model);
-    const auto& map_document = model.get<MapDocument>(document_entity);
-    const auto& map = model.get<Map>(map_document.map);
+    const auto document_entity = sys::get_active_document(registry);
+    const auto& map_document = registry.get<MapDocument>(document_entity);
+    const auto& map = registry.get<Map>(map_document.map);
 
     if (map.attached_tilesets.empty()) {
       prepare_vertical_alignment_center(2);
@@ -78,22 +78,22 @@ void push_tileset_dock_widget(const Model& model,
       }
     }
     else {
-      push_tileset_tabs(model, dispatcher);
+      push_tileset_tabs(registry, dispatcher);
     }
   }
 }
 
-auto is_tileset_dock_enabled(const Model& model) -> bool
+auto is_tileset_dock_enabled(const Registry& registry) -> bool
 {
-  return sys::is_map_document_active(model);
+  return sys::is_map_document_active(registry);
 }
 
-void on_mouse_wheel_event_in_tileset_dock(const Model& model,
+void on_mouse_wheel_event_in_tileset_dock(const Registry& registry,
                                           const Entity attached_tileset_entity,
                                           const cen::mouse_wheel_event& event,
                                           Dispatcher& dispatcher)
 {
-  const auto& viewport = model.get<Viewport>(attached_tileset_entity);
+  const auto& viewport = registry.get<Viewport>(attached_tileset_entity);
 
   const Float2 scaling {4, 4};
   const Float2 precise {event.precise_x(), event.precise_y()};

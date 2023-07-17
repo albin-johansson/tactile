@@ -30,10 +30,10 @@ void MapCommandCache::clear() noexcept
   mCache.clear();
 }
 
-void MapCommandCache::restore_tiles(Model& model)
+void MapCommandCache::restore_tiles(Registry& registry)
 {
   for (const auto& [layer_entity, tile_cache]: mCache) {
-    auto& layer = model.get<TileLayer>(layer_entity);
+    auto& layer = registry.get<TileLayer>(layer_entity);
 
     for (const auto& [position, tile_id]: tile_cache) {
       const auto row = static_cast<usize>(position.row());
@@ -43,13 +43,13 @@ void MapCommandCache::restore_tiles(Model& model)
   }
 }
 
-void MapCommandCache::save_tiles(const Model& model,
+void MapCommandCache::save_tiles(const Registry& registry,
                                  const Entity map_entity,
                                  const TilePos& begin,
                                  const TilePos& end)
 {
   auto callback = [&, this](const Entity layer_entity) {
-    const auto& layer = model.get<TileLayer>(layer_entity);
+    const auto& layer = registry.get<TileLayer>(layer_entity);
     auto& tile_cache = mCache[layer_entity];
 
     const auto end_row = end.row();
@@ -67,9 +67,9 @@ void MapCommandCache::save_tiles(const Model& model,
     }
   };
 
-  const auto& map = model.get<Map>(map_entity);
-  const auto& root = model.get<GroupLayer>(map.root_layer);
-  sys::visit_tile_layers(model, root, callback);
+  const auto& map = registry.get<Map>(map_entity);
+  const auto& root = registry.get<GroupLayer>(map.root_layer);
+  sys::visit_tile_layers(registry, root, callback);
 }
 
 void MapCommandCache::merge_with(const MapCommandCache& other)

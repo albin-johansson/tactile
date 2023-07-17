@@ -22,17 +22,17 @@
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
 #include "model/components/component_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
-[[nodiscard]] auto create_component_set(Model& model) -> Entity;
+[[nodiscard]] auto create_component_set(Registry& registry) -> Entity;
 
 /// Removes a component definition (and destroys it), and removes it from all contexts.
-void remove_component(Model& model, ComponentSet& component_set, StringView name);
+void remove_component(Registry& registry, ComponentSet& component_set, StringView name);
 
 /// Tries to find a component definition entity with a specific name, or returns null.
-[[nodiscard]] auto find_component(const Model& model,
+[[nodiscard]] auto find_component(const Registry& registry,
                                   const ComponentSet& component_set,
                                   StringView name) -> Entity;
 

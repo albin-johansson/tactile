@@ -38,7 +38,7 @@ TACTILE_FWD_DECLARE_STRUCT(ViewportMouseExitedEvent)
 
 class ToolSystem final : public System {
  public:
-  ToolSystem(Model& model, Dispatcher& dispatcher);
+  ToolSystem(Registry& registry, Dispatcher& dispatcher);
 
   ~ToolSystem() noexcept override;
 

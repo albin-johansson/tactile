@@ -26,8 +26,8 @@
 
 namespace tactile {
 
-ComponentBuilder::ComponentBuilder(Model& model, const Entity component_set_entity)
-    : mModel {&model},
+ComponentBuilder::ComponentBuilder(Registry& registry, const Entity component_set_entity)
+    : mRegistry {&registry},
       mComponentSetEntity {component_set_entity}
 {
 }
@@ -46,11 +46,11 @@ auto ComponentBuilder::with_attribute(String name, Attribute value) -> Self&
 
 auto ComponentBuilder::build() -> Entity
 {
-  auto& component_set = mModel->get<ComponentSet>(mComponentSetEntity);
+  auto& component_set = mRegistry->get<ComponentSet>(mComponentSetEntity);
   const auto component_entity =
-      sys::create_component(*mModel, component_set, mComponentName);
+      sys::create_component(*mRegistry, component_set, mComponentName);
 
-  auto& component = mModel->get<Component>(component_entity);
+  auto& component = mRegistry->get<Component>(component_entity);
   component.attributes = std::move(mAttributes);
 
   return component_entity;

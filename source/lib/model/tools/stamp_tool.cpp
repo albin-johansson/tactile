@@ -34,7 +34,7 @@
 #include "model/layers/layer_components.hpp"
 #include "model/layers/tile_layer_ops.hpp"
 #include "model/maps/map_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "model/tilesets/attached_tileset_ops.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_ops.hpp"
@@ -50,67 +50,67 @@ void StampTool::reset()
   mIsRandom = false;
 }
 
-void StampTool::on_deactivated(Model& model, Dispatcher& dispatcher)
+void StampTool::on_deactivated(Registry& registry, Dispatcher& dispatcher)
 {
-  _try_end_sequence(model, dispatcher);
+  _try_end_sequence(registry, dispatcher);
 }
 
-void StampTool::on_mouse_exited(Model& model, Dispatcher& dispatcher)
+void StampTool::on_mouse_exited(Registry& registry, Dispatcher& dispatcher)
 {
-  _try_end_sequence(model, dispatcher);
+  _try_end_sequence(registry, dispatcher);
 }
 
-void StampTool::on_mouse_pressed(Model& model,
+void StampTool::on_mouse_pressed(Registry& registry,
                                  Dispatcher&,
                                  const ViewportMouseInfo& mouse)
 {
-  if (mouse.over_content && mouse.button == MouseButton::Left && is_available(model)) {
-    _update_sequence(model, mouse.tile_pos);
+  if (mouse.over_content && mouse.button == MouseButton::Left && is_available(registry)) {
+    _update_sequence(registry, mouse.tile_pos);
   }
 }
 
-void StampTool::on_mouse_dragged(Model& model,
+void StampTool::on_mouse_dragged(Registry& registry,
                                  Dispatcher&,
                                  const ViewportMouseInfo& mouse)
 {
-  if (mouse.over_content && mouse.button == MouseButton::Left && is_available(model)) {
-    _update_sequence(model, mouse.tile_pos);
+  if (mouse.over_content && mouse.button == MouseButton::Left && is_available(registry)) {
+    _update_sequence(registry, mouse.tile_pos);
   }
 }
 
-void StampTool::on_mouse_released(Model& model,
+void StampTool::on_mouse_released(Registry& registry,
                                   Dispatcher& dispatcher,
                                   const ViewportMouseInfo& mouse)
 {
-  if (mouse.button == MouseButton::Left && is_available(model)) {
-    _try_end_sequence(model, dispatcher);
+  if (mouse.button == MouseButton::Left && is_available(registry)) {
+    _try_end_sequence(registry, dispatcher);
   }
 }
 
-void StampTool::_update_sequence(Model& model, const TilePos& mouse_pos)
+void StampTool::_update_sequence(Registry& registry, const TilePos& mouse_pos)
 {
-  TACTILE_ASSERT(is_available(model));
-  const auto document_entity = sys::get_active_document(model);
+  TACTILE_ASSERT(is_available(registry));
+  const auto document_entity = sys::get_active_document(registry);
 
-  const auto& map_document = model.get<MapDocument>(document_entity);
-  const auto& map = model.get<Map>(map_document.map);
+  const auto& map_document = registry.get<MapDocument>(document_entity);
+  const auto& map = registry.get<Map>(map_document.map);
 
-  if (_behaves_as_if_random(model, map)) {
-    _update_random_sequence(model, map, mouse_pos);
+  if (_behaves_as_if_random(registry, map)) {
+    _update_random_sequence(registry, map, mouse_pos);
   }
   else {
-    _update_normal_sequence(model, map, mouse_pos);
+    _update_normal_sequence(registry, map, mouse_pos);
   }
 }
 
-void StampTool::_update_normal_sequence(Model& model,
+void StampTool::_update_normal_sequence(Registry& registry,
                                         const Map& map,
                                         const TilePos& mouse_pos)
 {
-  auto& tile_layer = model.get<TileLayer>(map.active_layer);
+  auto& tile_layer = registry.get<TileLayer>(map.active_layer);
 
-  const auto& attached_tileset = model.get<AttachedTileset>(map.active_tileset);
-  const auto& tileset = model.get<Tileset>(attached_tileset.tileset);
+  const auto& attached_tileset = registry.get<AttachedTileset>(map.active_tileset);
+  const auto& tileset = registry.get<Tileset>(attached_tileset.tileset);
 
   const auto& selection = attached_tileset.selection.value();
   const auto selection_size = selection.end - selection.begin;
@@ -142,13 +142,13 @@ void StampTool::_update_normal_sequence(Model& model,
   }
 }
 
-void StampTool::_update_random_sequence(Model& model,
+void StampTool::_update_random_sequence(Registry& registry,
                                         const Map& map,
                                         const TilePos& mouse_pos)
 {
-  auto& tile_layer = model.get<TileLayer>(map.active_layer);
+  auto& tile_layer = registry.get<TileLayer>(map.active_layer);
 
-  const auto& attached_tileset = model.get<AttachedTileset>(map.active_tileset);
+  const auto& attached_tileset = registry.get<AttachedTileset>(map.active_tileset);
   const auto& selection = attached_tileset.selection.value();
 
   const auto selection_size = selection.end - selection.begin;
@@ -159,7 +159,7 @@ void StampTool::_update_random_sequence(Model& model,
     const auto selection_pos =
         selection.begin + TilePos::from_index(index, selection_size.col());
 
-    const auto& tileset = model.get<Tileset>(attached_tileset.tileset);
+    const auto& tileset = registry.get<Tileset>(attached_tileset.tileset);
     const auto tile_id =
         attached_tileset.first_tile + sys::tile_index_at(tileset, selection_pos);
 
@@ -174,9 +174,9 @@ void StampTool::_update_random_sequence(Model& model,
   mLastChangedPos = mouse_pos;
 }
 
-void StampTool::_try_end_sequence(Model& model, Dispatcher& dispatcher)
+void StampTool::_try_end_sequence(Registry& registry, Dispatcher& dispatcher)
 {
-  if (const auto* map = sys::try_get_active_map(model)) {
+  if (const auto* map = sys::try_get_active_map(registry)) {
     if (!mOldState.empty() && !mNewState.empty()) {
       dispatcher.enqueue<StampSequenceEvent>(map->active_layer,
                                              std::move(mOldState),
@@ -189,18 +189,19 @@ void StampTool::_try_end_sequence(Model& model, Dispatcher& dispatcher)
   }
 }
 
-auto StampTool::_behaves_as_if_random(const Model& model, const Map& map) const -> bool
+auto StampTool::_behaves_as_if_random(const Registry& registry, const Map& map) const
+    -> bool
 {
-  return mIsRandom && sys::is_stamp_tool_randomizer_possible(model, map);
+  return mIsRandom && sys::is_stamp_tool_randomizer_possible(registry, map);
 }
 
-auto StampTool::is_available(const Model& model) const -> bool
+auto StampTool::is_available(const Registry& registry) const -> bool
 {
-  if (const auto* map = sys::try_get_active_map(model)) {
+  if (const auto* map = sys::try_get_active_map(registry)) {
     if (map->active_layer != kNullEntity && map->active_tileset != kNullEntity) {
-      const auto& attached_tileset = model.get<AttachedTileset>(map->active_tileset);
+      const auto& attached_tileset = registry.get<AttachedTileset>(map->active_tileset);
 
-      return model.has<TileLayer>(map->active_layer) &&
+      return registry.has<TileLayer>(map->active_layer) &&
              attached_tileset.selection.has_value();
     }
   }
@@ -210,13 +211,13 @@ auto StampTool::is_available(const Model& model) const -> bool
 
 namespace sys {
 
-auto is_stamp_tool_available(const Model& model) -> bool
+auto is_stamp_tool_available(const Registry& registry) -> bool
 {
-  if (const auto* map = try_get_active_map(model)) {
+  if (const auto* map = try_get_active_map(registry)) {
     if (map->active_layer != kNullEntity && map->active_tileset != kNullEntity) {
-      const auto& attached_tileset = model.get<AttachedTileset>(map->active_tileset);
+      const auto& attached_tileset = registry.get<AttachedTileset>(map->active_tileset);
 
-      return model.has<TileLayer>(map->active_layer) &&
+      return registry.has<TileLayer>(map->active_layer) &&
              attached_tileset.selection.has_value();
     }
   }
@@ -224,10 +225,10 @@ auto is_stamp_tool_available(const Model& model) -> bool
   return false;
 }
 
-auto is_stamp_tool_randomizer_possible(const Model& model, const Map& map) -> bool
+auto is_stamp_tool_randomizer_possible(const Registry& registry, const Map& map) -> bool
 {
   if (map.active_tileset != kNullEntity) {
-    const auto& attached_tileset = model.get<AttachedTileset>(map.active_tileset);
+    const auto& attached_tileset = registry.get<AttachedTileset>(map.active_tileset);
     return is_single_tile_selected(attached_tileset);
   }
 

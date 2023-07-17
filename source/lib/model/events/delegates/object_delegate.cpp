@@ -30,40 +30,40 @@
 
 namespace tactile {
 
-void on_move_object(Model& model, const MoveObjectEvent& event)
+void on_move_object(Registry& registry, const MoveObjectEvent& event)
 {
-  sys::try_execute<cmd::MoveObject>(model, event.object, event.old_pos, event.new_pos);
+  sys::try_execute<cmd::MoveObject>(registry, event.object, event.old_pos, event.new_pos);
 }
 
-void on_set_object_visible(Model& model, const SetObjectVisibleEvent& event)
+void on_set_object_visible(Registry& registry, const SetObjectVisibleEvent& event)
 {
-  sys::try_execute<cmd::SetObjectVisible>(model, event.object, event.visible);
+  sys::try_execute<cmd::SetObjectVisible>(registry, event.object, event.visible);
 }
 
-void on_set_object_tag(Model& model, const SetObjectTagEvent& event)
+void on_set_object_tag(Registry& registry, const SetObjectTagEvent& event)
 {
-  sys::try_execute<cmd::SetObjectTag>(model, event.object, event.tag);
+  sys::try_execute<cmd::SetObjectTag>(registry, event.object, event.tag);
 }
 
-void on_set_object_name(Model& model, const SetObjectNameEvent& event)
+void on_set_object_name(Registry& registry, const SetObjectNameEvent& event)
 {
-  sys::try_execute<cmd::RenameObject>(model, event.object, event.name);
+  sys::try_execute<cmd::RenameObject>(registry, event.object, event.name);
 }
 
-void on_duplicate_object([[maybe_unused]] Model& model,
+void on_duplicate_object([[maybe_unused]] Registry& registry,
                          [[maybe_unused]] const DuplicateObjectEvent& event)
 {
   // TODO implement command
 }
 
-void on_remove_object(Model& model, const RemoveObjectEvent& event)
+void on_remove_object(Registry& registry, const RemoveObjectEvent& event)
 {
-  sys::try_execute<cmd::RemoveObject>(model, event.object_layer, event.object);
+  sys::try_execute<cmd::RemoveObject>(registry, event.object_layer, event.object);
 }
 
-void on_spawn_object_context_menu(Model& model, const SpawnObjectContextMenuEvent&)
+void on_spawn_object_context_menu(Registry& registry, const SpawnObjectContextMenuEvent&)
 {
-  auto& widgets = model.get<ui::WidgetState>();
+  auto& widgets = registry.get<ui::WidgetState>();
   widgets.editor_dock.central_map_viewport.should_open_object_context_menu = true;
 }
 

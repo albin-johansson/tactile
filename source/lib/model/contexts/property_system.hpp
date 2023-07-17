@@ -22,7 +22,7 @@
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
 #include "model/contexts/context_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 

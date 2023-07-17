@@ -30,11 +30,11 @@
 
 namespace tactile::ui {
 
-void push_new_comp_dialog(const Model& model,
+void push_new_comp_dialog(const Registry& registry,
                           NewCompDialogState& state,
                           Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   DialogOptions dialog_options {
       .title = strings.window.create_component.c_str(),
@@ -47,13 +47,13 @@ void push_new_comp_dialog(const Model& model,
     state.should_open = false;
   }
 
-  const auto document_entity = sys::get_active_document(model);
-  const auto& document = model.get<Document>(document_entity);
-  const auto& component_set = model.get<ComponentSet>(document.component_set);
+  const auto document_entity = sys::get_active_document(registry);
+  const auto& document = registry.get<Document>(document_entity);
+  const auto& component_set = registry.get<ComponentSet>(document.component_set);
 
   const auto current_name = state.name_buffer.as_string_view();
   if (!current_name.empty() &&
-      sys::find_component(model, component_set, current_name) == kNullEntity) {
+      sys::find_component(registry, component_set, current_name) == kNullEntity) {
     dialog_options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 

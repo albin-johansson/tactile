@@ -31,11 +31,11 @@
 
 namespace tactile::sys {
 
-void load_languages(Model& model)
+void load_languages(Registry& registry)
 {
   spdlog::debug("[IO] Loading languages");
 
-  auto& languages = model.get<Languages>();
+  auto& languages = registry.get<Languages>();
 
   auto en = parse_language("assets/lang/en.json");
 
@@ -44,10 +44,10 @@ void load_languages(Model& model)
   languages.strings[Lang::EN] = std::move(en);
 }
 
-auto get_current_language_strings(const Model& model) -> const Strings&
+auto get_current_language_strings(const Registry& registry) -> const Strings&
 {
-  const auto& settings = model.get<Settings>();
-  const auto& languages = model.get<Languages>();
+  const auto& settings = registry.get<Settings>();
+  const auto& languages = registry.get<Languages>();
   return lookup_in(languages.strings, settings.get_language());
 }
 

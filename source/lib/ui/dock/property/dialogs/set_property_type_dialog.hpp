@@ -24,7 +24,7 @@
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
@@ -36,7 +36,7 @@ struct SetPropertyTypeDialogState final {
   bool should_open {};
 };
 
-void push_set_property_type_dialog(const Model& model,
+void push_set_property_type_dialog(const Registry& model,
                                    SetPropertyTypeDialogState& state,
                                    Dispatcher& dispatcher);
 

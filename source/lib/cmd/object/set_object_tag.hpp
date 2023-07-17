@@ -22,13 +22,13 @@
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class SetObjectTag final : public Command {
  public:
-  SetObjectTag(Model* model, Entity object_entity, String tag);
+  SetObjectTag(Registry* registry, Entity object_entity, String tag);
 
   void undo() override;
 
@@ -39,7 +39,7 @@ class SetObjectTag final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mObjectEntity;
   String mNewTag;
   Maybe<String> mOldTag;

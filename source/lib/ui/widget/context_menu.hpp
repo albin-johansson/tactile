@@ -21,7 +21,7 @@
 
 #include "common/macros.hpp"
 #include "common/type/dispatcher.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
@@ -35,12 +35,12 @@ class ContextMenu {
 
   virtual ~ContextMenu() noexcept = default;
 
-  void update(const Model& model, Dispatcher& dispatcher);
+  void update(const Registry& registry, Dispatcher& dispatcher);
 
   void show();
 
  protected:
-  virtual void on_update([[maybe_unused]] const Model& model,
+  virtual void on_update([[maybe_unused]] const Registry& registry,
                          [[maybe_unused]] Dispatcher& dispatcher)
   {
   }

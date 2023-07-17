@@ -22,7 +22,7 @@
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/util/string_buffer.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
@@ -32,7 +32,7 @@ struct NewCompAttrDialogState final {
   bool should_open {};
 };
 
-void push_new_comp_attr_dialog(const Model& model,
+void push_new_comp_attr_dialog(const Registry& registry,
                                NewCompAttrDialogState& state,
                                Dispatcher& dispatcher);
 

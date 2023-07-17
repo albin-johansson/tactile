@@ -28,35 +28,35 @@
 
 namespace tactile::cmd {
 
-DuplicateComponentAttr::DuplicateComponentAttr(Model* model,
+DuplicateComponentAttr::DuplicateComponentAttr(Registry* registry,
                                                const Entity component_entity,
                                                String attribute_name)
-    : mModel {model},
+    : mRegistry {registry},
       mComponentEntity {component_entity},
       mAttributeName {std::move(attribute_name)}
 {
-  TACTILE_ASSERT(sys::is_component_entity(*mModel, mComponentEntity));
+  TACTILE_ASSERT(sys::is_component_entity(*mRegistry, mComponentEntity));
 }
 
 void DuplicateComponentAttr::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  sys::remove_component_attribute(model, mComponentEntity, mDuplicatedName.value());
+  sys::remove_component_attribute(registry, mComponentEntity, mDuplicatedName.value());
   mDuplicatedName.reset();
 }
 
 void DuplicateComponentAttr::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
   mDuplicatedName =
-      sys::duplicate_component_attribute(model, mComponentEntity, mAttributeName);
+      sys::duplicate_component_attribute(registry, mComponentEntity, mAttributeName);
 }
 
 auto DuplicateComponentAttr::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.duplicate_comp_attr;
 }
 

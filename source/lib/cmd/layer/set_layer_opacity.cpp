@@ -26,21 +26,21 @@
 
 namespace tactile::cmd {
 
-SetLayerOpacity::SetLayerOpacity(Model* model,
+SetLayerOpacity::SetLayerOpacity(Registry* registry,
                                  const Entity layer_entity,
                                  const float new_opacity)
-    : mModel {model},
+    : mRegistry {registry},
       mLayerEntity {layer_entity},
       mNewOpacity {new_opacity}
 {
-  TACTILE_ASSERT(sys::is_layer_entity(*mModel, mLayerEntity));
+  TACTILE_ASSERT(sys::is_layer_entity(*mRegistry, mLayerEntity));
 }
 
 void SetLayerOpacity::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& layer = model.get<Layer>(mLayerEntity);
+  auto& layer = registry.get<Layer>(mLayerEntity);
   layer.opacity = mOldOpacity.value();
 
   mOldOpacity.reset();
@@ -48,8 +48,8 @@ void SetLayerOpacity::undo()
 
 void SetLayerOpacity::redo()
 {
-  auto& model = *mModel;
-  auto& layer = model.get<Layer>(mLayerEntity);
+  auto& registry = *mRegistry;
+  auto& layer = registry.get<Layer>(mLayerEntity);
 
   mOldOpacity = layer.opacity;
   layer.opacity = mNewOpacity;
@@ -69,7 +69,7 @@ auto SetLayerOpacity::merge_with(const Command* cmd) -> bool
 
 auto SetLayerOpacity::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.set_layer_opacity;
 }
 

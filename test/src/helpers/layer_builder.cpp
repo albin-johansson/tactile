@@ -32,8 +32,8 @@
 
 namespace tactile {
 
-LayerBuilder::LayerBuilder(Model& model)
-    : mModel {&model}
+LayerBuilder::LayerBuilder(Registry& registry)
+    : mRegistry {&registry}
 {
 }
 
@@ -69,7 +69,7 @@ auto LayerBuilder::with_property(String name, Attribute value) -> Self&
 
 auto LayerBuilder::with_component(const Entity component_entity) -> Self&
 {
-  TACTILE_ASSERT(sys::is_component_entity(*mModel, component_entity));
+  TACTILE_ASSERT(sys::is_component_entity(*mRegistry, component_entity));
   mComponents.push_back(component_entity);
   return *this;
 }
@@ -98,10 +98,10 @@ auto LayerBuilder::with_object(const int32 id,
 {
   TACTILE_ASSERT(mObjects.has_value());
 
-  const auto entity = sys::create_object(*mModel, type);
+  const auto entity = sys::create_object(*mRegistry, type);
   mObjects->push_back(entity);
 
-  auto& object = mModel->get<Object>(entity);
+  auto& object = mRegistry->get<Object>(entity);
   object.meta_id = id;
 
   if (object_entity) {
@@ -120,7 +120,7 @@ auto LayerBuilder::as_group_layer() -> Self&
 auto LayerBuilder::with_layer(const Entity layer_entity) -> Self&
 {
   TACTILE_ASSERT(mLayers.has_value());
-  TACTILE_ASSERT(sys::is_layer_entity(*mModel, layer_entity));
+  TACTILE_ASSERT(sys::is_layer_entity(*mRegistry, layer_entity));
 
   mLayers->push_back(layer_entity);
   return *this;
@@ -128,7 +128,7 @@ auto LayerBuilder::with_layer(const Entity layer_entity) -> Self&
 
 auto LayerBuilder::build() -> Entity
 {
-  auto& model = *mModel;
+  auto& model = *mRegistry;
   Entity layer_entity = kNullEntity;
 
   if (mTiles.has_value()) {

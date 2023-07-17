@@ -24,37 +24,38 @@
 #include "common/type/hash_map.hpp"
 #include "common/type/string.hpp"
 #include "common/type/string_map.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
 /// Creates a new attached component entity based on a component definition template.
-[[nodiscard]] auto instantiate_component(Model& model, Entity component_entity) -> Entity;
+[[nodiscard]] auto instantiate_component(Registry& registry, Entity component_entity)
+    -> Entity;
 
 /// Adds an attribute to a component definition, and updates all components.
-void add_component_attribute(Model& model,
+void add_component_attribute(Registry& registry,
                              Entity component_entity,
                              const String& name,
                              const Attribute& value);
 
 /// Removes an attribute from a component definition, and updates all components.
-void remove_component_attribute(Model& model,
+void remove_component_attribute(Registry& registry,
                                 Entity component_entity,
                                 StringView attribute_name);
 
 /// Renames an attribute in a component definition, and updates all components.
-void rename_component_attribute(Model& model,
+void rename_component_attribute(Registry& registry,
                                 Entity component_entity,
                                 StringView old_attribute_name,
                                 const String& new_attribute_name);
 
 /// Duplicate an attribute in a component definition, and updates all components.
-auto duplicate_component_attribute(Model& model,
+auto duplicate_component_attribute(Registry& registry,
                                    Entity component_entity,
                                    StringView attribute_name) -> String;
 
 /// Updates the default value of a component attribute, and updates all components.
-void force_update_component_attribute(Model& model,
+void force_update_component_attribute(Registry& registry,
                                       Entity component_entity,
                                       const String& attribute_name,
                                       const Attribute& attribute_value);

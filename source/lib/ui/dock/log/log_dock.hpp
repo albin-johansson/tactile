@@ -22,7 +22,7 @@
 #include "common/debug/logging.hpp"
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
@@ -31,7 +31,7 @@ struct LogDockState final {
   bool has_focus {};
 };
 
-void push_log_dock_widget(const Model& model,
+void push_log_dock_widget(const Registry& registry,
                           LogDockState& state,
                           Dispatcher& dispatcher);
 

@@ -31,52 +31,52 @@
 
 namespace tactile::cmd {
 
-AddObject::AddObject(Model* model,
+AddObject::AddObject(Registry* registry,
                      const Entity map_entity,
                      const Entity object_layer_entity,
                      const ObjectType type,
                      const Float2 position,
                      const Float2 size)
-    : mModel {model},
+    : mRegistry {registry},
       mMapEntity {map_entity},
       mObjectLayerEntity {object_layer_entity},
       mObjectType {type},
       mPosition {position},
       mSize {size}
 {
-  TACTILE_ASSERT(sys::is_map_entity(*mModel, mMapEntity));
-  TACTILE_ASSERT(sys::is_object_layer_entity(*mModel, mObjectLayerEntity));
+  TACTILE_ASSERT(sys::is_map_entity(*mRegistry, mMapEntity));
+  TACTILE_ASSERT(sys::is_object_layer_entity(*mRegistry, mObjectLayerEntity));
 }
 
 void AddObject::undo()
 {
-  auto& model = *mModel;
-  auto& object_layer = model.get<ObjectLayer>(mObjectLayerEntity);
+  auto& registry = *mRegistry;
+  auto& object_layer = registry.get<ObjectLayer>(mObjectLayerEntity);
 
   std::erase(object_layer.objects, mObjectEntity);
-  model.set_enabled(mObjectEntity, false);
+  registry.set_enabled(mObjectEntity, false);
 
   mDidAddObject = false;
 }
 
 void AddObject::redo()
 {
-  auto& model = *mModel;
-  auto& object_layer = model.get<ObjectLayer>(mObjectLayerEntity);
+  auto& registry = *mRegistry;
+  auto& object_layer = registry.get<ObjectLayer>(mObjectLayerEntity);
 
   if (mObjectEntity == kNullEntity) {
-    mObjectEntity = sys::create_object(model, mObjectType);
+    mObjectEntity = sys::create_object(registry, mObjectType);
   }
 
-  model.set_enabled(mObjectEntity, true);
+  registry.set_enabled(mObjectEntity, true);
 
-  auto& object = model.get<Object>(mObjectEntity);
+  auto& object = registry.get<Object>(mObjectEntity);
   object.type = mObjectType;
   object.position = mPosition;
   object.size = mSize;
 
   if (!object.meta_id.has_value()) {
-    auto& map_identifiers = model.get<MapIdentifiers>(mMapEntity);
+    auto& map_identifiers = registry.get<MapIdentifiers>(mMapEntity);
     object.meta_id = map_identifiers.next_object_id++;
   }
 
@@ -87,13 +87,13 @@ void AddObject::redo()
 void AddObject::dispose()
 {
   if (mObjectEntity != kNullEntity && !mDidAddObject) {
-    mModel->destroy(mObjectEntity);
+    mRegistry->destroy(mObjectEntity);
   }
 }
 
 auto AddObject::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
 
   switch (mObjectType) {
     case ObjectType::Point:

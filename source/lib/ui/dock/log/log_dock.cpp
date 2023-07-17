@@ -167,10 +167,12 @@ void _push_logged_message_view(const Strings& strings,
 
 }  // namespace
 
-void push_log_dock_widget(const Model& model, LogDockState& state, Dispatcher& dispatcher)
+void push_log_dock_widget(const Registry& registry,
+                          LogDockState& state,
+                          Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
-  const auto& settings = model.get<Settings>();
+  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& settings = registry.get<Settings>();
 
   if (!settings.test_flag(SETTINGS_SHOW_LOG_DOCK_BIT)) {
     return;

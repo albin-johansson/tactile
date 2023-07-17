@@ -23,14 +23,14 @@
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 /// Command for creating a tileset and attaching it to a map document.
 class CreateTileset final : public Command {
  public:
-  CreateTileset(Model* model, Entity map_entity, Int2 tile_size, Path image_path);
+  CreateTileset(Registry* registry, Entity map_entity, Int2 tile_size, Path image_path);
 
   void undo() override;
 
@@ -41,7 +41,7 @@ class CreateTileset final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mMapEntity;
   Int2 mTileSize;
   Path mImagePath;

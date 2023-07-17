@@ -31,21 +31,22 @@
 
 namespace tactile::sys {
 
-auto create_tileset(Model& model, const Int2& tile_size, const Path& image_path) -> Entity
+auto create_tileset(Registry& registry, const Int2& tile_size, const Path& image_path)
+    -> Entity
 {
-  const auto tileset_entity = model.create_entity();
+  const auto tileset_entity = registry.create_entity();
 
-  model.add<TilesetRenderCache>(tileset_entity);
+  registry.add<TilesetRenderCache>(tileset_entity);
 
-  auto& context = model.add<Context>(tileset_entity);
+  auto& context = registry.add<Context>(tileset_entity);
   context.name = "Tileset";
 
-  auto& tileset = model.add<Tileset>(tileset_entity);
+  auto& tileset = registry.add<Tileset>(tileset_entity);
   tileset.tile_size = tile_size;
-  tileset.texture = create_texture(model, image_path);
+  tileset.texture = create_texture(registry, image_path);
 
-  TACTILE_ASSERT(is_texture_entity(model, tileset.texture));
-  const auto& texture = model.get<Texture>(tileset.texture);
+  TACTILE_ASSERT(is_texture_entity(registry, tileset.texture));
+  const auto& texture = registry.get<Texture>(tileset.texture);
 
   tileset.row_count = texture.size.y / tile_size.y;
   tileset.column_count = texture.size.x / tile_size.x;
@@ -55,37 +56,37 @@ auto create_tileset(Model& model, const Int2& tile_size, const Path& image_path)
   tileset.tiles.reserve(static_cast<usize>(tile_count));
 
   for (TileIndex tile_index = 0; tile_index < tile_count; ++tile_index) {
-    const auto tile_entity = create_tile(model, tileset, tile_index);
+    const auto tile_entity = create_tile(registry, tileset, tile_index);
     tileset.tiles.push_back(tile_entity);
     tileset.tile_index_map[tile_index] = tile_entity;
   }
 
-  TACTILE_ASSERT(is_tileset_entity(model, tileset_entity));
+  TACTILE_ASSERT(is_tileset_entity(registry, tileset_entity));
   return tileset_entity;
 }
 
-auto create_attached_tileset(Model& model,
+auto create_attached_tileset(Registry& registry,
                              const Entity tileset_entity,
                              const TileID first_tile) -> Entity
 {
-  TACTILE_ASSERT(is_tileset_entity(model, tileset_entity));
-  const auto& tileset = model.get<Tileset>(tileset_entity);
+  TACTILE_ASSERT(is_tileset_entity(registry, tileset_entity));
+  const auto& tileset = registry.get<Tileset>(tileset_entity);
 
-  const auto attached_tileset_entity = model.create_entity();
-  model.add<DynamicViewportInfo>(attached_tileset_entity);
+  const auto attached_tileset_entity = registry.create_entity();
+  registry.add<DynamicViewportInfo>(attached_tileset_entity);
 
-  auto& attached_tileset = model.add<AttachedTileset>(attached_tileset_entity);
+  auto& attached_tileset = registry.add<AttachedTileset>(attached_tileset_entity);
   attached_tileset.tileset = tileset_entity;
   attached_tileset.first_tile = first_tile;
   attached_tileset.last_tile = first_tile + tile_count(tileset);
   attached_tileset.embedded = false;  // TODO
 
   // TODO set limits
-  auto& viewport = model.add<Viewport>(attached_tileset_entity);
+  auto& viewport = registry.add<Viewport>(attached_tileset_entity);
   viewport.offset = Float2 {0, 0};
   viewport.tile_size = tileset.tile_size;
 
-  TACTILE_ASSERT(is_attached_tileset_entity(model, attached_tileset_entity));
+  TACTILE_ASSERT(is_attached_tileset_entity(registry, attached_tileset_entity));
   return attached_tileset_entity;
 }
 

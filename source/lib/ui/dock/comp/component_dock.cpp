@@ -30,7 +30,7 @@
 #include "model/events/component_events.hpp"
 #include "model/events/setting_events.hpp"
 #include "model/i18n/language_system.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "ui/dock/comp/component_view.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
@@ -42,26 +42,26 @@ namespace {
 
 inline constexpr auto kAddComponentPopupId = "##AddComponentButtonPopup";
 
-void _push_add_component_button_popup_content(const Model& model,
+void _push_add_component_button_popup_content(const Registry& registry,
                                               const Strings& strings,
                                               const Entity document_entity,
                                               Dispatcher& dispatcher)
 {
-  const auto& document = model.get<Document>(document_entity);
-  const auto& component_set = model.get<ComponentSet>(document.component_set);
+  const auto& document = registry.get<Document>(document_entity);
+  const auto& component_set = registry.get<ComponentSet>(document.component_set);
 
   if (component_set.definitions.empty()) {
     const Disable disable;
     ImGui::TextUnformatted(strings.misc.no_available_components.c_str());
   }
   else {
-    const auto& active_context = model.get<Context>(document.active_context);
+    const auto& active_context = registry.get<Context>(document.active_context);
 
     for (const auto component_entity: component_set.definitions) {
-      const auto& component = model.get<Component>(component_entity);
+      const auto& component = registry.get<Component>(component_entity);
 
       const Disable disable_if {
-          sys::has_component(model, active_context, component.name)};
+          sys::has_component(registry, active_context, component.name)};
 
       if (ImGui::MenuItem(component.name.c_str())) {
         dispatcher.enqueue<AttachComponentEvent>(document.active_context,
@@ -76,15 +76,15 @@ void _push_add_component_button_popup_content(const Model& model,
   }
 }
 
-void _push_dock_contents(const Model& model,
+void _push_dock_contents(const Registry& registry,
                          const Strings& strings,
                          const Entity document_entity,
                          Dispatcher& dispatcher)
 {
-  const auto& document = model.get<Document>(document_entity);
+  const auto& document = registry.get<Document>(document_entity);
 
   const auto active_context_entity = document.get_active_context();
-  const auto& active_context = model.get<Context>(active_context_entity);
+  const auto& active_context = registry.get<Context>(active_context_entity);
 
   const FmtString indicator {"{}: {}", strings.misc.context, active_context.name};
   ImGui::TextUnformatted(indicator.data());
@@ -97,7 +97,7 @@ void _push_dock_contents(const Model& model,
     else {
       for (const auto attached_component_entity: active_context.comps) {
         ImGui::Separator();
-        component_view(model,
+        component_view(registry,
                        active_context_entity,
                        attached_component_entity,
                        dispatcher);
@@ -111,7 +111,7 @@ void _push_dock_contents(const Model& model,
     }
 
     if (const Popup popup {kAddComponentPopupId}; popup.is_open()) {
-      _push_add_component_button_popup_content(model,
+      _push_add_component_button_popup_content(registry,
                                                strings,
                                                document_entity,
                                                dispatcher);
@@ -121,10 +121,10 @@ void _push_dock_contents(const Model& model,
 
 }  // namespace
 
-void push_component_dock_widget(const Model& model, Dispatcher& dispatcher)
+void push_component_dock_widget(const Registry& registry, Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
-  const auto& settings = model.get<Settings>();
+  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& settings = registry.get<Settings>();
 
   if (!settings.test_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT)) {
     return;
@@ -141,8 +141,8 @@ void push_component_dock_widget(const Model& model, Dispatcher& dispatcher)
   }
 
   if (dock.is_open()) {
-    const auto document_entity = sys::get_active_document(model);
-    _push_dock_contents(model, strings, document_entity, dispatcher);
+    const auto document_entity = sys::get_active_document(registry);
+    _push_dock_contents(registry, strings, document_entity, dispatcher);
   }
 }
 

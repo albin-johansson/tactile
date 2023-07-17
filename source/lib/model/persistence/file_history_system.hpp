@@ -20,12 +20,12 @@
 #pragma once
 
 #include "common/type/path.hpp"
-#include "model/model.hpp"
 #include "model/persistence/file_history_components.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
-void store_open_documents_in_file_history(Model& model);
+void store_open_documents_in_file_history(Registry& registry);
 
 /// Adds a file path to the recent file history, as long as it doesn't already exist.
 void add_to_file_history(FileHistory& history, const Path& path);

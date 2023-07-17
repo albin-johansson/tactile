@@ -39,7 +39,7 @@
 namespace tactile::ui {
 namespace {
 
-void _push_document_tab(const Model& model,
+void _push_document_tab(const Registry& registry,
                         const Entity document_entity,
                         CentralMapViewportState& central_map_viewport_state,
                         TilesetViewportState& tileset_viewport_state,
@@ -47,17 +47,17 @@ void _push_document_tab(const Model& model,
 {
   const Scope document_scope {document_entity};
 
-  const auto& document = model.get<Document>(document_entity);
-  const auto& command_stack = model.get<CommandStack>(document_entity);
+  const auto& document = registry.get<Document>(document_entity);
+  const auto& command_stack = registry.get<CommandStack>(document_entity);
 
   const char* document_icon =
       (document.type == DocumentType::Map) ? TAC_ICON_MAP : TAC_ICON_TILESET;
-  const auto document_name = sys::get_document_name(model, document_entity);
+  const auto document_name = sys::get_document_name(registry, document_entity);
   const FmtString<256> name_with_icon {"{} {}", document_icon, document_name};
 
   ImGuiTabItemFlags flags = 0;
 
-  const auto is_active = sys::get_active_document(model) == document_entity;
+  const auto is_active = sys::get_active_document(registry) == document_entity;
   if (is_active) {
     flags |= ImGuiTabItemFlags_SetSelected;
 
@@ -69,20 +69,20 @@ void _push_document_tab(const Model& model,
   bool opened = true;
   if (const TabItem item {name_with_icon.data(), &opened, flags}; item.is_open()) {
     if (is_active) {
-      if (model.has<MapDocument>(document_entity)) {
-        push_central_map_viewport(model,
+      if (registry.has<MapDocument>(document_entity)) {
+        push_central_map_viewport(registry,
                                   central_map_viewport_state,
                                   document_entity,
                                   dispatcher);
 
-        if (sys::is_stamp_tool_available(model) &&
+        if (sys::is_stamp_tool_available(registry) &&
             ImGui::Shortcut(ImGuiKey_S,
                             ImGuiKeyOwner_Any,
                             ImGuiInputFlags_RouteFocused)) {
           dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
         }
 
-        if (sys::is_bucket_tool_available(model) &&
+        if (sys::is_bucket_tool_available(registry) &&
             ImGui::Shortcut(ImGuiKey_B,
                             ImGuiKeyOwner_Any,
                             ImGuiInputFlags_RouteFocused)) {
@@ -90,8 +90,11 @@ void _push_document_tab(const Model& model,
         }
       }
 
-      if (model.has<TilesetDocument>(document_entity)) {
-        push_tileset_viewport(model, tileset_viewport_state, document_entity, dispatcher);
+      if (registry.has<TilesetDocument>(document_entity)) {
+        push_tileset_viewport(registry,
+                              tileset_viewport_state,
+                              document_entity,
+                              dispatcher);
       }
     }
   }
@@ -106,15 +109,15 @@ void _push_document_tab(const Model& model,
 
 }  // namespace
 
-void push_document_tab_widget(const Model& model,
+void push_document_tab_widget(const Registry& registry,
                               CentralMapViewportState& central_map_viewport_state,
                               TilesetViewportState& tileset_viewport_state,
                               Dispatcher& dispatcher)
 {
   if (const TabBar bar {"##DocumentTabs", ImGuiTabBarFlags_Reorderable}; bar.is_open()) {
-    const auto& document_context = model.get<DocumentContext>();
+    const auto& document_context = registry.get<DocumentContext>();
     for (const auto document_entity: document_context.open_documents) {
-      _push_document_tab(model,
+      _push_document_tab(registry,
                          document_entity,
                          central_map_viewport_state,
                          tileset_viewport_state,

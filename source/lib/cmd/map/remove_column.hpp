@@ -23,13 +23,13 @@
 #include "cmd/map/map_command_cache.hpp"
 #include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class RemoveColumn final : public Command {
  public:
-  RemoveColumn(Model* model, Entity map_entity);
+  RemoveColumn(Registry* registry, Entity map_entity);
 
   void undo() override;
 
@@ -40,7 +40,7 @@ class RemoveColumn final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mMapEntity;
   MapCommandCache mCache;
   usize mColumnCount {1};

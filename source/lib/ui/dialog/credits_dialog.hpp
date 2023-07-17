@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
@@ -27,6 +27,6 @@ struct CreditsDialogState final {
   bool should_open {};
 };
 
-void push_credits_dialog(const Model& model, CreditsDialogState& state);
+void push_credits_dialog(const Registry& registry, CreditsDialogState& state);
 
 }  // namespace tactile::ui

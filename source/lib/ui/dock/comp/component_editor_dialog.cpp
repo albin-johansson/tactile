@@ -32,7 +32,7 @@
 #include "model/documents/document_system.hpp"
 #include "model/events/component_events.hpp"
 #include "model/i18n/language_system.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/dock/comp/dialogs/new_comp_dialog.hpp"
@@ -67,7 +67,7 @@ void _push_comp_action_popup(const Strings& strings,
   }
 }
 
-void _push_comp_selector_combo(const Model& model,
+void _push_comp_selector_combo(const Registry& registry,
                                const ComponentSet& component_set,
                                ComponentEditorDialogState& state)
 {
@@ -76,12 +76,12 @@ void _push_comp_selector_combo(const Model& model,
     state.active_definition = component_set.definitions.front();
   }
 
-  const auto& active_component_def = model.get<Component>(state.active_definition);
+  const auto& active_component_def = registry.get<Component>(state.active_definition);
 
   if (const Combo combo {"##ComponentCombo", active_component_def.name.c_str()};
       combo.is_open()) {
     for (const auto definition_entity: component_set.definitions) {
-      const auto& component = model.get<Component>(definition_entity);
+      const auto& component = registry.get<Component>(definition_entity);
 
       if (Selectable::property(component.name.c_str())) {
         state.active_definition = definition_entity;
@@ -91,7 +91,7 @@ void _push_comp_selector_combo(const Model& model,
 }
 
 void _push_comp_selector_row(const Strings& strings,
-                             const Model& model,
+                             const Registry& registry,
                              const ComponentSet& component_set,
                              ComponentEditorDialogState& state,
                              Dispatcher& dispatcher)
@@ -100,7 +100,7 @@ void _push_comp_selector_row(const Strings& strings,
   ImGui::TextUnformatted(strings.misc.component.c_str());
   ImGui::SameLine();
 
-  _push_comp_selector_combo(model, component_set, state);
+  _push_comp_selector_combo(registry, component_set, state);
 
   ImGui::SameLine();
   if (push_button(TAC_ICON_ADD, strings.tooltip.create_component.c_str())) {
@@ -213,11 +213,11 @@ void _push_comp_attr_table(const Strings& strings,
 
 }  // namespace
 
-void push_component_editor_dialog(const Model& model,
+void push_component_editor_dialog(const Registry& registry,
                                   ComponentEditorDialogState& state,
                                   Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   DialogOptions dialog_options {
       .title = strings.window.component_editor.c_str(),
@@ -231,9 +231,9 @@ void push_component_editor_dialog(const Model& model,
   }
 
   if (const ScopedDialog dialog {dialog_options}; dialog.was_opened()) {
-    const auto document_entity = sys::get_active_document(model);
-    const auto& document = model.get<Document>(document_entity);
-    const auto& component_set = model.get<ComponentSet>(document.component_set);
+    const auto document_entity = sys::get_active_document(registry);
+    const auto& document = registry.get<Document>(document_entity);
+    const auto& component_set = registry.get<ComponentSet>(document.component_set);
 
     // Ensure that the active component entity hasn't been invalidated
     if (!contained_in(component_set.definitions, state.active_definition)) {
@@ -248,12 +248,13 @@ void push_component_editor_dialog(const Model& model,
       }
     }
     else {
-      _push_comp_selector_row(strings, model, component_set, state, dispatcher);
+      _push_comp_selector_row(strings, registry, component_set, state, dispatcher);
 
       ImGui::Separator();
 
       if (state.active_definition != kNullEntity) {
-        const auto& active_component_def = model.get<Component>(state.active_definition);
+        const auto& active_component_def =
+            registry.get<Component>(state.active_definition);
         _push_comp_attr_table(strings,
                               state.active_definition,
                               active_component_def,
@@ -261,10 +262,10 @@ void push_component_editor_dialog(const Model& model,
       }
     }
 
-    push_new_comp_dialog(model, state.new_comp_dialog, dispatcher);
-    push_rename_comp_dialog(model, state.rename_comp_dialog, dispatcher);
-    push_new_comp_attr_dialog(model, state.new_comp_attr_dialog, dispatcher);
-    push_rename_comp_attr_dialog(model, state.rename_comp_attr_dialog, dispatcher);
+    push_new_comp_dialog(registry, state.new_comp_dialog, dispatcher);
+    push_rename_comp_dialog(registry, state.rename_comp_dialog, dispatcher);
+    push_new_comp_attr_dialog(registry, state.new_comp_attr_dialog, dispatcher);
+    push_rename_comp_attr_dialog(registry, state.rename_comp_attr_dialog, dispatcher);
 
     ImGui::Spacing();
     ImGui::Separator();

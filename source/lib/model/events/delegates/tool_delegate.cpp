@@ -29,24 +29,27 @@
 
 namespace tactile {
 
-void on_stamp_sequence(Model& model, const StampSequenceEvent& event)
+void on_stamp_sequence(Registry& registry, const StampSequenceEvent& event)
 {
   spdlog::trace("[StampSequenceEvent] layer: {}", event.layer);
 
-  sys::try_execute<cmd::StampSequence>(model,
+  sys::try_execute<cmd::StampSequence>(registry,
                                        event.layer,
                                        event.old_state,
                                        event.sequence);
 }
 
-void on_flood(Model& model, const FloodEvent& event)
+void on_flood(Registry& registry, const FloodEvent& event)
 {
   spdlog::trace("[FloodEvent] layer: {} origin: {} replacement: {}",
                 event.layer,
                 event.origin,
                 event.replacement);
 
-  sys::try_execute<cmd::BucketFill>(model, event.layer, event.origin, event.replacement);
+  sys::try_execute<cmd::BucketFill>(registry,
+                                    event.layer,
+                                    event.origin,
+                                    event.replacement);
 }
 
 }  // namespace tactile

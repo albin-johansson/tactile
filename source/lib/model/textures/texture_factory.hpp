@@ -21,10 +21,10 @@
 
 #include "common/type/ecs.hpp"
 #include "common/type/path.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
-[[nodiscard]] auto create_texture(Model& model, const Path& path) -> Entity;
+[[nodiscard]] auto create_texture(Registry& registry, const Path& path) -> Entity;
 
 }  // namespace tactile::sys

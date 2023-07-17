@@ -27,25 +27,25 @@
 
 namespace tactile::cmd {
 
-DetachComponent::DetachComponent(Model* model,
+DetachComponent::DetachComponent(Registry* registry,
                                  const Entity context_entity,
                                  const Entity component_entity)
-    : mModel {model},
+    : mRegistry {registry},
       mContextEntity {context_entity},
       mComponentEntity {component_entity}
 {
-  TACTILE_ASSERT(sys::is_context_entity(*mModel, mContextEntity));
-  TACTILE_ASSERT(sys::is_component_entity(*mModel, mComponentEntity));
+  TACTILE_ASSERT(sys::is_context_entity(*mRegistry, mContextEntity));
+  TACTILE_ASSERT(sys::is_component_entity(*mRegistry, mComponentEntity));
 }
 
 void DetachComponent::undo()
 {
-  auto& model = *mModel;
-  auto& context = model.get<Context>(mContextEntity);
+  auto& registry = *mRegistry;
+  auto& context = registry.get<Context>(mContextEntity);
 
   const auto attached_component_entity =
-      sys::attach_component(model, context, mComponentEntity);
-  auto& attached_component = model.get<AttachedComponent>(attached_component_entity);
+      sys::attach_component(registry, context, mComponentEntity);
+  auto& attached_component = registry.get<AttachedComponent>(attached_component_entity);
   attached_component.attributes = mPrevValues.value();
 
   mPrevValues.reset();
@@ -53,15 +53,15 @@ void DetachComponent::undo()
 
 void DetachComponent::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& context = model.get<Context>(mContextEntity);
-  mPrevValues = sys::detach_component(model, context, mComponentEntity);
+  auto& context = registry.get<Context>(mContextEntity);
+  mPrevValues = sys::detach_component(registry, context, mComponentEntity);
 }
 
 auto DetachComponent::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.detach_comp;
 }
 

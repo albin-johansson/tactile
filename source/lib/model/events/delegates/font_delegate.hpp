@@ -21,19 +21,19 @@
 
 #include "common/type/dispatcher.hpp"
 #include "model/events/font_events.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
-void on_reset_font_size(Model& model,
+void on_reset_font_size(Registry& registry,
                         Dispatcher& dispatcher,
                         const ResetFontSizeEvent& event);
 
-void on_increase_font_size(Model& model,
+void on_increase_font_size(Registry& registry,
                            Dispatcher& dispatcher,
                            const IncreaseFontSizeEvent& event);
 
-void on_decrease_font_size(Model& model,
+void on_decrease_font_size(Registry& registry,
                            Dispatcher& dispatcher,
                            const DecreaseFontSizeEvent& event);
 

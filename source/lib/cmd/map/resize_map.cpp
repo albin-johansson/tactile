@@ -26,8 +26,8 @@
 
 namespace tactile::cmd {
 
-ResizeMap::ResizeMap(Model* model, const Entity map_entity, const TileExtent extent)
-    : mModel {model},
+ResizeMap::ResizeMap(Registry* registry, const Entity map_entity, const TileExtent extent)
+    : mRegistry {registry},
       mMapEntity {map_entity},
       mNewExtent {extent}
 {
@@ -35,20 +35,20 @@ ResizeMap::ResizeMap(Model* model, const Entity map_entity, const TileExtent ext
 
 void ResizeMap::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& map = model.get<Map>(mMapEntity);
-  sys::resize_map(model, map, mOldExtent.value());
+  auto& map = registry.get<Map>(mMapEntity);
+  sys::resize_map(registry, map, mOldExtent.value());
 
   if (_is_lossy_resize()) {
-    mCache.restore_tiles(model);
+    mCache.restore_tiles(registry);
   }
 }
 
 void ResizeMap::redo()
 {
-  auto& model = *mModel;
-  auto& map = model.get<Map>(mMapEntity);
+  auto& registry = *mRegistry;
+  auto& map = registry.get<Map>(mMapEntity);
 
   mOldExtent = map.extent;
 
@@ -58,20 +58,20 @@ void ResizeMap::redo()
     const auto begin_row =
         TilePos::from(map.extent.rows - (mOldExtent->rows - mNewExtent.rows), 0u);
     const auto end_row = TilePos::from(map.extent.rows, map.extent.cols);
-    mCache.save_tiles(model, mMapEntity, begin_row, end_row);
+    mCache.save_tiles(registry, mMapEntity, begin_row, end_row);
 
     const auto begin_col =
         TilePos::from(0u, map.extent.cols - (mOldExtent->cols - mNewExtent.cols));
     const auto end_col = TilePos::from(map.extent.rows, map.extent.cols);
-    mCache.save_tiles(model, mMapEntity, begin_col, end_col);
+    mCache.save_tiles(registry, mMapEntity, begin_col, end_col);
   }
 
-  sys::resize_map(model, map, mNewExtent);
+  sys::resize_map(registry, map, mNewExtent);
 }
 
 auto ResizeMap::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.resize_map;
 }
 

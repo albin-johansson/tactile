@@ -38,9 +38,11 @@
 
 namespace tactile {
 
-void on_menu_action(Model& model, Dispatcher& dispatcher, const MenuActionEvent& event)
+void on_menu_action(Registry& registry,
+                    Dispatcher& dispatcher,
+                    const MenuActionEvent& event)
 {
-  const auto document_entity = sys::get_active_document(model);
+  const auto document_entity = sys::get_active_document(registry);
 
   switch (event.action) {
     case MenuAction::NewMap:

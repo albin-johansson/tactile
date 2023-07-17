@@ -20,10 +20,10 @@
 #pragma once
 
 #include "common/type/dispatcher.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
-void push_tileset_tabs(const Model& model, Dispatcher& dispatcher);
+void push_tileset_tabs(const Registry& registry, Dispatcher& dispatcher);
 
 }  // namespace tactile::ui

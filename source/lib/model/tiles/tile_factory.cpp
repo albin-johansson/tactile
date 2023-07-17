@@ -27,23 +27,23 @@
 
 namespace tactile::sys {
 
-auto create_tile(Model& model, const Tileset& tileset, const TileIndex tile_index)
+auto create_tile(Registry& registry, const Tileset& tileset, const TileIndex tile_index)
     -> Entity
 {
   const auto [row, col] = to_matrix_coords(tile_index, tileset.column_count);
 
-  const auto tile_entity = model.create_entity();
+  const auto tile_entity = registry.create_entity();
 
-  auto& context = model.add<Context>(tile_entity);
+  auto& context = registry.add<Context>(tile_entity);
   context.name = "Tile";
 
   const Int2 tile_position {col * tileset.tile_size.x, row * tileset.tile_size.y};
 
-  auto& tile = model.add<Tile>(tile_entity);
+  auto& tile = registry.add<Tile>(tile_entity);
   tile.index = tile_index;
   tile.source = Int4 {tile_position, tileset.tile_size};
 
-  TACTILE_ASSERT(is_tile_entity(model, tile_entity));
+  TACTILE_ASSERT(is_tile_entity(registry, tile_entity));
   return tile_entity;
 }
 

@@ -28,19 +28,19 @@
 
 namespace tactile::cmd {
 
-RenameLayer::RenameLayer(Model* model, const Entity layer_entity, String name)
-    : mModel {model},
+RenameLayer::RenameLayer(Registry* registry, const Entity layer_entity, String name)
+    : mRegistry {registry},
       mLayerEntity {layer_entity},
       mNewName {std::move(name)}
 {
-  TACTILE_ASSERT(sys::is_layer_entity(*mModel, mLayerEntity));
+  TACTILE_ASSERT(sys::is_layer_entity(*mRegistry, mLayerEntity));
 }
 
 void RenameLayer::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& layer_context = model.get<Context>(mLayerEntity);
+  auto& layer_context = registry.get<Context>(mLayerEntity);
   layer_context.name = mOldName.value();
 
   mOldName.reset();
@@ -48,8 +48,8 @@ void RenameLayer::undo()
 
 void RenameLayer::redo()
 {
-  auto& model = *mModel;
-  auto& layer_context = model.get<Context>(mLayerEntity);
+  auto& registry = *mRegistry;
+  auto& layer_context = registry.get<Context>(mLayerEntity);
 
   mOldName = layer_context.name;
   layer_context.name = mNewName;
@@ -57,7 +57,7 @@ void RenameLayer::redo()
 
 auto RenameLayer::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.rename_layer;
 }
 

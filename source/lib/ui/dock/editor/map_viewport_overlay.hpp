@@ -21,12 +21,12 @@
 
 #include "common/type/dispatcher.hpp"
 #include "model/maps/map_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "ui/render/canvas.hpp"
 
 namespace tactile::ui {
 
-void push_map_viewport_overlay(const Model& model,
+void push_map_viewport_overlay(const Registry& registry,
                                const Map& map,
                                const ViewportMouseInfo& cursor,
                                Dispatcher& dispatcher);

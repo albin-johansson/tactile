@@ -20,22 +20,23 @@
 #pragma once
 
 #include "model/events/object_events.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
-void on_move_object(Model& model, const MoveObjectEvent& event);
+void on_move_object(Registry& registry, const MoveObjectEvent& event);
 
-void on_set_object_visible(Model& model, const SetObjectVisibleEvent& event);
+void on_set_object_visible(Registry& registry, const SetObjectVisibleEvent& event);
 
-void on_set_object_tag(Model& model, const SetObjectTagEvent& event);
+void on_set_object_tag(Registry& registry, const SetObjectTagEvent& event);
 
-void on_set_object_name(Model& model, const SetObjectNameEvent& event);
+void on_set_object_name(Registry& registry, const SetObjectNameEvent& event);
 
-void on_duplicate_object(Model& model, const DuplicateObjectEvent& event);
+void on_duplicate_object(Registry& registry, const DuplicateObjectEvent& event);
 
-void on_remove_object(Model& model, const RemoveObjectEvent& event);
+void on_remove_object(Registry& registry, const RemoveObjectEvent& event);
 
-void on_spawn_object_context_menu(Model& model, const SpawnObjectContextMenuEvent& event);
+void on_spawn_object_context_menu(Registry& registry,
+                                  const SpawnObjectContextMenuEvent& event);
 
 }  // namespace tactile

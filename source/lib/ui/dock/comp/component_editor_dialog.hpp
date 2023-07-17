@@ -21,7 +21,7 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "ui/dock/comp/dialogs/new_comp_dialog.hpp"
 #include "ui/dock/comp/dialogs/new_component_attribute_dialog.hpp"
 #include "ui/dock/comp/dialogs/rename_component_attribute_dialog.hpp"
@@ -38,7 +38,7 @@ struct ComponentEditorDialogState final {
   bool should_open {};
 };
 
-void push_component_editor_dialog(const Model& model,
+void push_component_editor_dialog(const Registry& registry,
                                   ComponentEditorDialogState& state,
                                   Dispatcher& dispatcher);
 

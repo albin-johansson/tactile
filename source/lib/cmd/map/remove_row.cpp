@@ -26,34 +26,34 @@
 
 namespace tactile::cmd {
 
-RemoveRow::RemoveRow(Model* model, const Entity map_entity)
-    : mModel {model},
+RemoveRow::RemoveRow(Registry* registry, const Entity map_entity)
+    : mRegistry {registry},
       mMapEntity {map_entity}
 {
 }
 
 void RemoveRow::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& map = model.get<Map>(mMapEntity);
-  invoke_n(mRowCount, [&] { sys::add_row_to_map(model, map); });
+  auto& map = registry.get<Map>(mMapEntity);
+  invoke_n(mRowCount, [&] { sys::add_row_to_map(registry, map); });
 
-  mCache.restore_tiles(model);
+  mCache.restore_tiles(registry);
 }
 
 void RemoveRow::redo()
 {
-  auto& model = *mModel;
-  auto& map = model.get<Map>(mMapEntity);
+  auto& registry = *mRegistry;
+  auto& map = registry.get<Map>(mMapEntity);
 
   const auto begin = TilePos::from(map.extent.rows - mRowCount - 1u, 0u);
   const auto end = TilePos::from(map.extent.rows, map.extent.cols);
 
   mCache.clear();
-  mCache.save_tiles(model, mMapEntity, begin, end);
+  mCache.save_tiles(registry, mMapEntity, begin, end);
 
-  invoke_n(mRowCount, [&] { sys::remove_row_from_map(model, map); });
+  invoke_n(mRowCount, [&] { sys::remove_row_from_map(registry, map); });
 }
 
 auto RemoveRow::merge_with(const Command* cmd) -> bool
@@ -69,7 +69,7 @@ auto RemoveRow::merge_with(const Command* cmd) -> bool
 
 auto RemoveRow::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return mRowCount == 1 ? strings.cmd.remove_row : strings.cmd.remove_rows;
 }
 

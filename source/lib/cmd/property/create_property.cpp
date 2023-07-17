@@ -28,37 +28,37 @@
 
 namespace tactile::cmd {
 
-CreateProperty::CreateProperty(Model* model,
+CreateProperty::CreateProperty(Registry* registry,
                                const Entity context_entity,
                                String name,
                                const AttributeType type)
-    : mModel {model},
+    : mRegistry {registry},
       mContextEntity {context_entity},
       mName {std::move(name)},
       mType {type}
 {
-  TACTILE_ASSERT(sys::is_context_entity(*mModel, mContextEntity));
+  TACTILE_ASSERT(sys::is_context_entity(*mRegistry, mContextEntity));
 }
 
 void CreateProperty::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& context = model.get<Context>(mContextEntity);
+  auto& context = registry.get<Context>(mContextEntity);
   erase_from(context.props, mName);
 }
 
 void CreateProperty::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& context = model.get<Context>(mContextEntity);
+  auto& context = registry.get<Context>(mContextEntity);
   context.props[mName].reset_to_default(mType);
 }
 
 auto CreateProperty::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.add_property;
 }
 

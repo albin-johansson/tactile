@@ -38,7 +38,7 @@
 namespace tactile::ui {
 namespace {
 
-void _push_context_menu(const Model& model,
+void _push_context_menu(const Registry& registry,
                         const Strings& strings,
                         const Entity tileset_document_entity,
                         const Entity attached_tileset_entity,
@@ -57,7 +57,7 @@ void _push_context_menu(const Model& model,
 
     ImGui::Separator();
 
-    if (Disable disable_if {sys::is_document_open(model, tileset_document_entity)};
+    if (Disable disable_if {sys::is_document_open(registry, tileset_document_entity)};
         ImGui::MenuItem(strings.action.open_tileset.c_str())) {
       dispatcher.enqueue<OpenDocumentEvent>(tileset_document_entity);
       dispatcher.enqueue<SelectDocumentEvent>(tileset_document_entity);
@@ -66,7 +66,7 @@ void _push_context_menu(const Model& model,
     ImGui::Separator();
 
     if (ImGui::MenuItem(strings.action.remove_tileset.c_str())) {
-      dispatcher.enqueue<DetachTilesetEvent>(sys::get_active_map(model),
+      dispatcher.enqueue<DetachTilesetEvent>(sys::get_active_map(registry),
                                              attached_tileset_entity);
     }
   }
@@ -74,9 +74,9 @@ void _push_context_menu(const Model& model,
 
 }  // namespace
 
-void push_tileset_tabs(const Model& model, Dispatcher& dispatcher)
+void push_tileset_tabs(const Registry& registry, Dispatcher& dispatcher)
 {
-  TACTILE_ASSERT(sys::is_map_document_active(model));
+  TACTILE_ASSERT(sys::is_map_document_active(registry));
 
   constexpr ImGuiTabBarFlags tab_bar_flags =
       ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
@@ -87,29 +87,30 @@ void push_tileset_tabs(const Model& model, Dispatcher& dispatcher)
       dispatcher.enqueue<ShowNewTilesetDialogEvent>();
     }
 
-    const auto& strings = sys::get_current_language_strings(model);
-    const auto map_document_entity = sys::get_active_document(model);
+    const auto& strings = sys::get_current_language_strings(registry);
+    const auto map_document_entity = sys::get_active_document(registry);
 
-    const auto& map_document = model.get<MapDocument>(map_document_entity);
-    const auto& map = model.get<Map>(map_document.map);
+    const auto& map_document = registry.get<MapDocument>(map_document_entity);
+    const auto& map = registry.get<Map>(map_document.map);
 
     for (const auto attached_tileset_entity: map.attached_tilesets) {
       const Scope scope {attached_tileset_entity};
-      const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
+      const auto& attached_tileset =
+          registry.get<AttachedTileset>(attached_tileset_entity);
 
       const auto tileset_entity = attached_tileset.tileset;
       const auto tileset_document_entity =
-          sys::get_associated_tileset_document(model, tileset_entity);
+          sys::get_associated_tileset_document(registry, tileset_entity);
       TACTILE_ASSERT(tileset_document_entity != kNullEntity);
 
-      const auto tileset_name = sys::get_document_name(model, tileset_document_entity);
+      const auto tileset_name = sys::get_document_name(registry, tileset_document_entity);
       const auto is_tileset_active = map.active_tileset == attached_tileset_entity;
 
       if (const TabItem item {tileset_name.c_str(),
                               nullptr,
                               is_tileset_active ? ImGuiTabItemFlags_SetSelected : 0};
           item.is_open()) {
-        update_attached_tileset_view(model, attached_tileset_entity, dispatcher);
+        update_attached_tileset_view(registry, attached_tileset_entity, dispatcher);
       }
 
       if (ImGui::IsItemClicked(ImGuiMouseButton_Left) ||
@@ -117,7 +118,7 @@ void push_tileset_tabs(const Model& model, Dispatcher& dispatcher)
         dispatcher.enqueue<SelectTilesetEvent>(attached_tileset_entity);
       }
       else {
-        _push_context_menu(model,
+        _push_context_menu(registry,
                            strings,
                            tileset_document_entity,
                            attached_tileset_entity,

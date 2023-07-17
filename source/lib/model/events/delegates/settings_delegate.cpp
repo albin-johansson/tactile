@@ -29,19 +29,21 @@
 
 namespace tactile {
 
-void on_show_settings(Model& model, const ShowSettingsEvent&)
+void on_show_settings(Registry& registry, const ShowSettingsEvent&)
 {
-  const auto& settings = model.get<Settings>();
+  const auto& settings = registry.get<Settings>();
 
-  auto& widgets = model.get<ui::WidgetState>();
+  auto& widgets = registry.get<ui::WidgetState>();
   widgets.settings_dialog.old_settings.copy_from(settings);
   widgets.settings_dialog.ui_settings.copy_from(settings);
   widgets.settings_dialog.should_open = true;
 }
 
-void on_set_settings(Model& model, Dispatcher& dispatcher, const SetSettingsEvent& event)
+void on_set_settings(Registry& registry,
+                     Dispatcher& dispatcher,
+                     const SetSettingsEvent& event)
 {
-  auto& curr_settings = model.get<Settings>();
+  auto& curr_settings = registry.get<Settings>();
 
   const auto prev_settings = curr_settings.copy();
   curr_settings = event.settings.copy();
@@ -61,35 +63,38 @@ void on_set_settings(Model& model, Dispatcher& dispatcher, const SetSettingsEven
   }
 }
 
-void on_set_flag_setting(Model& model, const SetFlagSettingEvent& event)
+void on_set_flag_setting(Registry& registry, const SetFlagSettingEvent& event)
 {
-  auto& settings = model.get<Settings>();
+  auto& settings = registry.get<Settings>();
   settings.set_flag(event.flag, event.value);
 }
 
-void on_negate_flag_setting(Model& model, const NegateFlagSettingEvent& event)
+void on_negate_flag_setting(Registry& registry, const NegateFlagSettingEvent& event)
 {
-  auto& settings = model.get<Settings>();
+  auto& settings = registry.get<Settings>();
   settings.negate_flag(event.flag);
 }
 
-void on_set_viewport_overlay_pos(Model& model, const SetViewportOverlayPosEvent& event)
+void on_set_viewport_overlay_pos(Registry& registry,
+                                 const SetViewportOverlayPosEvent& event)
 {
-  auto& settings = model.get<Settings>();
+  auto& settings = registry.get<Settings>();
   settings.set_viewport_overlay_pos(event.pos);
 }
 
-void on_set_language(Model& model, Dispatcher& dispatcher, const SetLanguageEvent& event)
+void on_set_language(Registry& registry,
+                     Dispatcher& dispatcher,
+                     const SetLanguageEvent& event)
 {
-  auto& settings = model.get<Settings>();
+  auto& settings = registry.get<Settings>();
   settings.set_language(event.language);
 
   dispatcher.enqueue<ResetLayoutEvent>();
 }
 
-void on_set_theme(Model& model, const SetThemeEvent& event)
+void on_set_theme(Registry& registry, const SetThemeEvent& event)
 {
-  auto& settings = model.get<Settings>();
+  auto& settings = registry.get<Settings>();
   settings.set_theme(event.theme);
 
   ui::apply_theme(ImGui::GetStyle(),
@@ -97,9 +102,9 @@ void on_set_theme(Model& model, const SetThemeEvent& event)
                   settings.get_theme_saturation());
 }
 
-void on_reset_dock_visibilities(Model& model, const ResetDockVisibilitiesEvent&)
+void on_reset_dock_visibilities(Registry& registry, const ResetDockVisibilitiesEvent&)
 {
-  auto& settings = model.get<Settings>();
+  auto& settings = registry.get<Settings>();
   settings.reset_dock_visibilities();
 }
 

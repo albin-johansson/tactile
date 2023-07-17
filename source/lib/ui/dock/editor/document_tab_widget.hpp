@@ -20,12 +20,12 @@
 #pragma once
 
 #include "common/type/dispatcher.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "ui/widget_state.hpp"
 
 namespace tactile::ui {
 
-void push_document_tab_widget(const Model& model,
+void push_document_tab_widget(const Registry& registry,
                               CentralMapViewportState& central_map_viewport_state,
                               TilesetViewportState& tileset_viewport_state,
                               Dispatcher& dispatcher);

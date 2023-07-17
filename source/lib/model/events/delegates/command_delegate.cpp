@@ -30,32 +30,32 @@ namespace tactile {
 namespace {
 
 template <std::invocable<CommandStack&> T>
-void _with_current_command_stack(Model& model, T&& callable)
+void _with_current_command_stack(Registry& registry, T&& callable)
 {
-  const auto document_entity = sys::get_active_document(model);
+  const auto document_entity = sys::get_active_document(registry);
 
   if (document_entity != kNullEntity) {
-    auto& commands = model.get<CommandStack>(document_entity);
+    auto& commands = registry.get<CommandStack>(document_entity);
     callable(commands);
   }
 }
 
 }  // namespace
 
-void on_undo(Model& model, const UndoEvent&)
+void on_undo(Registry& registry, const UndoEvent&)
 {
-  _with_current_command_stack(model, [](CommandStack& commands) { commands.undo(); });
+  _with_current_command_stack(registry, [](CommandStack& commands) { commands.undo(); });
 }
 
-void on_redo(Model& model, const RedoEvent&)
+void on_redo(Registry& registry, const RedoEvent&)
 {
-  _with_current_command_stack(model, [](CommandStack& commands) { commands.redo(); });
+  _with_current_command_stack(registry, [](CommandStack& commands) { commands.redo(); });
 }
 
-void on_set_command_capacity(Model& model, const SetCommandCapacityEvent& event)
+void on_set_command_capacity(Registry& registry, const SetCommandCapacityEvent& event)
 {
-  for (const auto [document_entity, document]: model.each<Document>()) {
-    auto& commands = model.get<CommandStack>(document_entity);
+  for (const auto [document_entity, document]: registry.each<Document>()) {
+    auto& commands = registry.get<CommandStack>(document_entity);
     commands.set_capacity(event.capacity);
   }
 }

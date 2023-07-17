@@ -20,13 +20,13 @@
 #pragma once
 
 #include "common/primitives.hpp"
+#include "common/result.hpp"
 #include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/vector.hpp"
-#include "common/result.hpp"
 #include "model/layers/layer_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 

@@ -21,13 +21,13 @@
 
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class MoveLayerDown final : public Command {
  public:
-  MoveLayerDown(Model* model, Entity map_entity, Entity layer_entity);
+  MoveLayerDown(Registry* registry, Entity map_entity, Entity layer_entity);
 
   void undo() override;
 
@@ -36,7 +36,7 @@ class MoveLayerDown final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mMapEntity;
   Entity mLayerEntity;
 };

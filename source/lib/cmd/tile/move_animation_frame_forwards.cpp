@@ -27,20 +27,20 @@
 
 namespace tactile::cmd {
 
-MoveAnimationFrameForwards::MoveAnimationFrameForwards(Model* model,
+MoveAnimationFrameForwards::MoveAnimationFrameForwards(Registry* registry,
                                                        const Entity tile_entity,
                                                        const usize frame_index)
-    : mModel {model},
+    : mRegistry {registry},
       mTileEntity {tile_entity},
       mFrameIndex {frame_index}
 {
-  TACTILE_ASSERT(sys::is_tile_entity(*mModel, mTileEntity));
+  TACTILE_ASSERT(sys::is_tile_entity(*mRegistry, mTileEntity));
 }
 
 void MoveAnimationFrameForwards::undo()
 {
-  auto& model = *mModel;
-  auto& animation = model.get<TileAnimation>(mTileEntity);
+  auto& registry = *mRegistry;
+  auto& animation = registry.get<TileAnimation>(mTileEntity);
 
   const TileAnimationFrame frame {
       .tile_index = animation.frames.at(mFrameIndex).tile_index,
@@ -53,8 +53,8 @@ void MoveAnimationFrameForwards::undo()
 
 void MoveAnimationFrameForwards::redo()
 {
-  auto& model = *mModel;
-  auto& animation = model.get<TileAnimation>(mTileEntity);
+  auto& registry = *mRegistry;
+  auto& animation = registry.get<TileAnimation>(mTileEntity);
 
   const TileAnimationFrame frame {
       .tile_index = animation.frames.at(mFrameIndex).tile_index,
@@ -67,7 +67,7 @@ void MoveAnimationFrameForwards::redo()
 
 auto MoveAnimationFrameForwards::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.move_animation_frame_forwards;
 }
 

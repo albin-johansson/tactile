@@ -24,7 +24,7 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(Model)
+TACTILE_FWD_DECLARE_CLASS(Registry)
 TACTILE_FWD_DECLARE_STRUCT(MapIR)
 
 /**
@@ -32,10 +32,10 @@ TACTILE_FWD_DECLARE_STRUCT(MapIR)
  *
  * \param ir_map        the intermediate representation of the map data.
  * \param document_path the path to the document.
- * \param model         the target document model.
+ * \param registry      the target document registry.
  */
 void create_map_document_from_ir(const MapIR& ir_map,
                                  const Path& document_path,
-                                 Model& model);
+                                 Registry& registry);
 
 }  // namespace tactile

@@ -323,11 +323,11 @@ void _push_export_tab(const Strings& lang, SettingsDialogState& state)
 
 }  // namespace
 
-void push_settings_dialog(const Model& model,
+void push_settings_dialog(const Registry& registry,
                           SettingsDialogState& state,
                           Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   DialogOptions dialog_options {
       .title = strings.window.settings_dialog.c_str(),

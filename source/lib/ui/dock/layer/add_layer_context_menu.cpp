@@ -31,9 +31,9 @@ AddLayerContextMenu::AddLayerContextMenu()
 {
 }
 
-void AddLayerContextMenu::on_update(const Model& model, Dispatcher& dispatcher)
+void AddLayerContextMenu::on_update(const Registry& registry, Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   if (ImGui::MenuItem(strings.action.tile_layer.c_str())) {
     dispatcher.enqueue<CreateLayerEvent>(LayerType::TileLayer);

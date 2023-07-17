@@ -28,11 +28,11 @@
 
 namespace tactile::ui {
 
-void push_resize_map_dialog(const Model& model,
+void push_resize_map_dialog(const Registry& registry,
                             ResizeMapDialogState& state,
                             Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   DialogOptions options {
       .title = strings.window.resize_map.c_str(),

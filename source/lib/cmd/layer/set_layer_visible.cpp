@@ -26,20 +26,20 @@
 
 namespace tactile::cmd {
 
-SetLayerVisible::SetLayerVisible(Model* model,
+SetLayerVisible::SetLayerVisible(Registry* registry,
                                  const Entity layer_entity,
                                  const bool new_visibility)
-    : mModel {model},
+    : mRegistry {registry},
       mLayerEntity {layer_entity},
       mNewVisibility {new_visibility}
 {
-  TACTILE_ASSERT(sys::is_layer_entity(*mModel, mLayerEntity));
+  TACTILE_ASSERT(sys::is_layer_entity(*mRegistry, mLayerEntity));
 }
 
 void SetLayerVisible::undo()
 {
-  auto& model = *mModel;
-  auto& layer = model.get<Layer>(mLayerEntity);
+  auto& registry = *mRegistry;
+  auto& layer = registry.get<Layer>(mLayerEntity);
 
   layer.visible = mOldVisibility.value();
   mOldVisibility.reset();
@@ -47,8 +47,8 @@ void SetLayerVisible::undo()
 
 void SetLayerVisible::redo()
 {
-  auto& model = *mModel;
-  auto& layer = model.get<Layer>(mLayerEntity);
+  auto& registry = *mRegistry;
+  auto& layer = registry.get<Layer>(mLayerEntity);
 
   mOldVisibility = static_cast<bool>(layer.visible);
   layer.visible = mNewVisibility;
@@ -56,7 +56,7 @@ void SetLayerVisible::redo()
 
 auto SetLayerVisible::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return mNewVisibility ? strings.cmd.show_layer : strings.cmd.hide_layer;
 }
 

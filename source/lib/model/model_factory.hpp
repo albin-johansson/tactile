@@ -20,13 +20,13 @@
 #pragma once
 
 #include "common/enum/backend_api.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
 /// Prepares a model instance by initializing required context components.
-void init_model(Model& model, BackendAPI api);
+void init_model(Registry& registry, BackendAPI api);
 
-[[nodiscard]] auto create_model(BackendAPI api) -> Model;
+[[nodiscard]] auto create_model(BackendAPI api) -> Registry;
 
 }  // namespace tactile::sys

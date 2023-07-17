@@ -19,14 +19,14 @@
 
 #pragma once
 
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
 /// Restores the open documents from the last session.
-void load_session_from_disk(Model& model);
+void load_session_from_disk(Registry& registry);
 
 /// Saves the current session, i.e. the paths of the currently open documents.
-void save_session_to_disk(const Model& model);
+void save_session_to_disk(const Registry& registry);
 
 }  // namespace tactile

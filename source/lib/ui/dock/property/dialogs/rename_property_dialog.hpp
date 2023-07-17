@@ -23,7 +23,7 @@
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
 #include "common/util/string_buffer.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
@@ -34,7 +34,7 @@ struct RenamePropertyDialogState final {
   bool should_open {};
 };
 
-void push_rename_property_dialog(const Model& model,
+void push_rename_property_dialog(const Registry& registry,
                                  RenamePropertyDialogState& state,
                                  Dispatcher& dispatcher);
 

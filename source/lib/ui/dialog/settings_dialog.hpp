@@ -21,8 +21,8 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
 #include "model/persistence/settings.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
@@ -32,7 +32,7 @@ struct SettingsDialogState final {
   bool should_open {};
 };
 
-void push_settings_dialog(const Model& model,
+void push_settings_dialog(const Registry& registry,
                           SettingsDialogState& state,
                           Dispatcher& dispatcher);
 

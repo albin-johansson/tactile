@@ -22,13 +22,16 @@
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class RenameProperty final : public Command {
  public:
-  RenameProperty(Model* model, Entity context_entity, String old_name, String new_name);
+  RenameProperty(Registry* registry,
+                 Entity context_entity,
+                 String old_name,
+                 String new_name);
 
   void undo() override;
 
@@ -37,7 +40,7 @@ class RenameProperty final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mContextEntity;
   String mOldName;
   String mNewName;

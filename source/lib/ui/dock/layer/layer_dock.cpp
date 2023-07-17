@@ -29,7 +29,7 @@
 #include "model/i18n/language_system.hpp"
 #include "model/layers/layer_tree_system.hpp"
 #include "model/maps/map_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "ui/constants.hpp"
 #include "ui/dock/layer/dialogs/rename_layer_dialog.hpp"
 #include "ui/dock/layer/layer_selectable.hpp"
@@ -41,16 +41,16 @@
 namespace tactile::ui {
 namespace {
 
-void _push_side_buttons(const Model& model,
+void _push_side_buttons(const Registry& registry,
                         const Strings& strings,
                         LayerDockState& state,
                         Dispatcher& dispatcher)
 {
-  const auto& document_entity = sys::get_active_document(model);
+  const auto& document_entity = sys::get_active_document(registry);
 
-  const auto& map_document = model.get<MapDocument>(document_entity);
-  const auto& map = model.get<Map>(map_document.map);
-  const auto& root_layer = model.get<GroupLayer>(map.root_layer);
+  const auto& map_document = registry.get<MapDocument>(document_entity);
+  const auto& map = registry.get<Map>(map_document.map);
+  const auto& root_layer = registry.get<GroupLayer>(map.root_layer);
 
   const auto has_active_layer = map.active_layer != kNullEntity;
   const Group group;
@@ -59,7 +59,7 @@ void _push_side_buttons(const Model& model,
     state.add_layer_context_menu.show();
   }
 
-  state.add_layer_context_menu.update(model, dispatcher);
+  state.add_layer_context_menu.update(registry, dispatcher);
 
   if (push_icon_button(TAC_ICON_REMOVE,
                        strings.tooltip.remove_layer.c_str(),
@@ -73,10 +73,11 @@ void _push_side_buttons(const Model& model,
     dispatcher.enqueue<DuplicateLayerEvent>(map.active_layer);
   }
 
-  if (push_icon_button(TAC_ICON_MOVE_UP,
-                       strings.tooltip.move_layer_up.c_str(),
-                       has_active_layer &&
-                           sys::can_move_layer_up(model, root_layer, map.active_layer))) {
+  if (push_icon_button(
+          TAC_ICON_MOVE_UP,
+          strings.tooltip.move_layer_up.c_str(),
+          has_active_layer &&
+              sys::can_move_layer_up(registry, root_layer, map.active_layer))) {
     dispatcher.enqueue<MoveLayerUpEvent>(map.active_layer);
   }
 
@@ -84,26 +85,26 @@ void _push_side_buttons(const Model& model,
           TAC_ICON_MOVE_DOWN,
           strings.tooltip.move_layer_down.c_str(),
           has_active_layer &&
-              sys::can_move_layer_down(model, root_layer, map.active_layer))) {
+              sys::can_move_layer_down(registry, root_layer, map.active_layer))) {
     dispatcher.enqueue<MoveLayerDownEvent>(map.active_layer);
   }
 }
 
-void _push_contents(const Model& model,
+void _push_contents(const Registry& registry,
                     const Strings& strings,
                     LayerDockState& state,
                     Dispatcher& dispatcher)
 {
-  _push_side_buttons(model, strings, state, dispatcher);
+  _push_side_buttons(registry, strings, state, dispatcher);
 
   ImGui::SameLine();
   const Group group;
 
-  const auto document_entity = sys::get_active_document(model);
-  const auto& map_document = model.get<MapDocument>(document_entity);
+  const auto document_entity = sys::get_active_document(registry);
+  const auto& map_document = registry.get<MapDocument>(document_entity);
 
-  const auto& map = model.get<Map>(map_document.map);
-  const auto& root_layer = model.get<GroupLayer>(map.root_layer);
+  const auto& map = registry.get<Map>(map_document.map);
+  const auto& root_layer = registry.get<GroupLayer>(map.root_layer);
 
   if (root_layer.children.empty()) {
     prepare_vertical_alignment_center(1);
@@ -113,28 +114,28 @@ void _push_contents(const Model& model,
     const ImVec2 size {-kMinFloat, -kMinFloat};
     if (const ListBox list {"##LayerTreeNode", size}; list.is_open()) {
       for (const auto layer_entity: root_layer.children) {
-        layer_selectable(model, map_document.map, layer_entity, dispatcher);
+        layer_selectable(registry, map_document.map, layer_entity, dispatcher);
       }
     }
   }
 
-  push_rename_layer_dialog(model, state.rename_layer_dialog, dispatcher);
+  push_rename_layer_dialog(registry, state.rename_layer_dialog, dispatcher);
 }
 
 }  // namespace
 
-void push_layer_dock_widget(const Model& model,
+void push_layer_dock_widget(const Registry& registry,
                             LayerDockState& state,
                             Dispatcher& dispatcher)
 {
-  TACTILE_ASSERT(sys::has_active_document(model));
+  TACTILE_ASSERT(sys::has_active_document(registry));
 
-  const auto& settings = model.get<Settings>();
+  const auto& settings = registry.get<Settings>();
   if (!settings.test_flag(SETTINGS_SHOW_LAYER_DOCK_BIT)) {
     return;
   }
 
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   bool show_layer_dock = true;
   const Window dock {strings.window.layer_dock.c_str(),
@@ -149,13 +150,13 @@ void push_layer_dock_widget(const Model& model,
   state.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
-    _push_contents(model, strings, state, dispatcher);
+    _push_contents(registry, strings, state, dispatcher);
   }
 }
 
-auto is_layer_dock_enabled(const Model& model) -> bool
+auto is_layer_dock_enabled(const Registry& registry) -> bool
 {
-  return sys::is_map_document_active(model);
+  return sys::is_map_document_active(registry);
 }
 
 }  // namespace tactile::ui

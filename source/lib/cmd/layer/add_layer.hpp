@@ -22,13 +22,13 @@
 #include "cmd/command.hpp"
 #include "common/enum/layer_type.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::cmd {
 
 class AddLayer final : public Command {
  public:
-  AddLayer(Model* model, Entity map_document_entity, LayerType type);
+  AddLayer(Registry* registry, Entity map_document_entity, LayerType type);
 
   void undo() override;
 
@@ -39,7 +39,7 @@ class AddLayer final : public Command {
   [[nodiscard]] auto get_name() const -> String override;
 
  private:
-  Model* mModel;
+  Registry* mRegistry;
   Entity mMapDocumentEntity;
   LayerType mLayerType;
   Entity mLayerEntity {kNullEntity};

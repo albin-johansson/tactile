@@ -32,11 +32,11 @@
 
 namespace tactile::sys {
 
-auto get_tile_appearance(const Model& model,
+auto get_tile_appearance(const Registry& registry,
                          const Entity tileset_entity,
                          const TileIndex tile_index) -> TileIndex
 {
-  const auto& cache = model.get<TilesetRenderCache>(tileset_entity);
+  const auto& cache = registry.get<TilesetRenderCache>(tileset_entity);
 
   // Check if the appearance has been computed before
   if (const auto iter = cache.appearance.find(tile_index);
@@ -44,10 +44,10 @@ auto get_tile_appearance(const Model& model,
     return iter->second;
   }
 
-  const auto& tileset = model.get<Tileset>(tileset_entity);
+  const auto& tileset = registry.get<Tileset>(tileset_entity);
   const auto tile_entity = lookup_in(tileset.tile_index_map, tile_index);
 
-  if (const auto* animation = model.try_get<TileAnimation>(tile_entity)) {
+  if (const auto* animation = registry.try_get<TileAnimation>(tile_entity)) {
     // The tile is animated, so update the cache and return the frame tile index
     const auto& current_frame = animation->frames.at(animation->index);
     cache.appearance[tile_index] = current_frame.tile_index;
@@ -58,34 +58,37 @@ auto get_tile_appearance(const Model& model,
   return tile_index;
 }
 
-auto is_valid_tile_identifier(const Model& model, const Map& map, const TileID tile_id)
-    -> bool
+auto is_valid_tile_identifier(const Registry& registry,
+                              const Map& map,
+                              const TileID tile_id) -> bool
 {
   if (tile_id == kEmptyTile) {
     return true;
   }
 
-  return find_tileset_with_tile(model, map, tile_id) != kNullEntity;
+  return find_tileset_with_tile(registry, map, tile_id) != kNullEntity;
 }
 
-auto convert_tile_id_to_index(const Model& model, const Map& map, const TileID tile_id)
-    -> Maybe<TileIndex>
+auto convert_tile_id_to_index(const Registry& registry,
+                              const Map& map,
+                              const TileID tile_id) -> Maybe<TileIndex>
 {
-  const auto attached_tileset_entity = find_tileset_with_tile(model, map, tile_id);
+  const auto attached_tileset_entity = find_tileset_with_tile(registry, map, tile_id);
 
   if (attached_tileset_entity != kNullEntity) {
-    const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
+    const auto& attached_tileset = registry.get<AttachedTileset>(attached_tileset_entity);
     return to_tile_index(attached_tileset, tile_id).value();
   }
 
   return nothing;
 }
 
-auto find_tileset_with_tile(const Model& model, const Map& map, const TileID tile_id)
-    -> Entity
+auto find_tileset_with_tile(const Registry& registry,
+                            const Map& map,
+                            const TileID tile_id) -> Entity
 {
   for (const auto attached_tileset_entity: map.attached_tilesets) {
-    const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
+    const auto& attached_tileset = registry.get<AttachedTileset>(attached_tileset_entity);
 
     if (is_valid_tile(attached_tileset, tile_id)) {
       return attached_tileset_entity;

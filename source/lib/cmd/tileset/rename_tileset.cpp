@@ -28,19 +28,21 @@
 
 namespace tactile::cmd {
 
-RenameTileset::RenameTileset(Model* model, const Entity tileset_entity, String new_name)
-    : mModel {model},
+RenameTileset::RenameTileset(Registry* registry,
+                             const Entity tileset_entity,
+                             String new_name)
+    : mRegistry {registry},
       mTilesetEntity {tileset_entity},
       mNewName {std::move(new_name)}
 {
-  TACTILE_ASSERT(sys::is_tileset_entity(*mModel, mTilesetEntity));
+  TACTILE_ASSERT(sys::is_tileset_entity(*mRegistry, mTilesetEntity));
 }
 
 void RenameTileset::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& tileset_context = model.get<Context>(mTilesetEntity);
+  auto& tileset_context = registry.get<Context>(mTilesetEntity);
   tileset_context.name = mOldName.value();
 
   mOldName.reset();
@@ -48,8 +50,8 @@ void RenameTileset::undo()
 
 void RenameTileset::redo()
 {
-  auto& model = *mModel;
-  auto& tileset_context = model.get<Context>(mTilesetEntity);
+  auto& registry = *mRegistry;
+  auto& tileset_context = registry.get<Context>(mTilesetEntity);
 
   mOldName = tileset_context.name;
   tileset_context.name = mNewName;
@@ -69,7 +71,7 @@ auto RenameTileset::merge_with(const Command* cmd) -> bool
 
 auto RenameTileset::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.rename_tileset;
 }
 

@@ -20,46 +20,51 @@
 #pragma once
 
 #include "model/events/component_events.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile {
 
-void on_show_component_editor(Model& model, const ShowComponentEditorEvent& event);
+void on_show_component_editor(Registry& registry, const ShowComponentEditorEvent& event);
 
-void on_show_new_comp_dialog(Model& model, const ShowNewCompDialogEvent& event);
+void on_show_new_comp_dialog(Registry& registry, const ShowNewCompDialogEvent& event);
 
-void on_show_rename_comp_dialog(Model& model, const ShowRenameCompDialogEvent& event);
+void on_show_rename_comp_dialog(Registry& registry,
+                                const ShowRenameCompDialogEvent& event);
 
-void on_show_new_comp_attr_dialog(Model& model, const ShowNewCompAttrDialogEvent& event);
+void on_show_new_comp_attr_dialog(Registry& registry,
+                                  const ShowNewCompAttrDialogEvent& event);
 
-void on_show_rename_comp_attr_dialog(Model& model,
+void on_show_rename_comp_attr_dialog(Registry& registry,
                                      const ShowRenameCompAttrDialogEvent& event);
 
-void on_define_component(Model& model, const DefineComponentEvent& event);
+void on_define_component(Registry& registry, const DefineComponentEvent& event);
 
-void on_undef_component(Model& model, const UndefComponentEvent& event);
+void on_undef_component(Registry& registry, const UndefComponentEvent& event);
 
-void on_rename_component(Model& model, const RenameComponentEvent& event);
+void on_rename_component(Registry& registry, const RenameComponentEvent& event);
 
-void on_update_component(Model& model, const UpdateComponentEvent& event);
+void on_update_component(Registry& registry, const UpdateComponentEvent& event);
 
-void on_add_component_attr(Model& model, const AddComponentAttrEvent& event);
+void on_add_component_attr(Registry& registry, const AddComponentAttrEvent& event);
 
-void on_remove_component_attr(Model& model, const RemoveComponentAttrEvent& event);
+void on_remove_component_attr(Registry& registry, const RemoveComponentAttrEvent& event);
 
-void on_rename_component_attr(Model& model, const RenameComponentAttrEvent& event);
+void on_rename_component_attr(Registry& registry, const RenameComponentAttrEvent& event);
 
-void on_duplicate_component_attr(Model& model, const DuplicateComponentAttrEvent& event);
+void on_duplicate_component_attr(Registry& registry,
+                                 const DuplicateComponentAttrEvent& event);
 
-void on_set_component_attr_type(Model& model, const SetComponentAttrTypeEvent& event);
+void on_set_component_attr_type(Registry& registry,
+                                const SetComponentAttrTypeEvent& event);
 
-void on_attach_component(Model& model, const AttachComponentEvent& event);
+void on_attach_component(Registry& registry, const AttachComponentEvent& event);
 
-void on_detach_component(Model& model, const DetachComponentEvent& event);
+void on_detach_component(Registry& registry, const DetachComponentEvent& event);
 
-void on_reset_attached_component(Model& model, const ResetAttachedComponentEvent& event);
+void on_reset_attached_component(Registry& registry,
+                                 const ResetAttachedComponentEvent& event);
 
-void on_update_attached_component(Model& model,
+void on_update_attached_component(Registry& registry,
                                   const UpdateAttachedComponentEvent& event);
 
 }  // namespace tactile

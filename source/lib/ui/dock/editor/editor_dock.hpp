@@ -23,7 +23,7 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 #include "model/viewports/viewport_components.hpp"
 #include "ui/dock/editor/central_map_viewport.hpp"
 #include "ui/dock/editor/central_tileset_viewport.hpp"
@@ -37,7 +37,7 @@ struct EditorDockState final {
   bool is_hovered {};
 };
 
-void push_editor_dock_widget(const Model& model,
+void push_editor_dock_widget(const Registry& registry,
                              EditorDockState& state,
                              Dispatcher& dispatcher);
 

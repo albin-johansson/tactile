@@ -85,16 +85,16 @@ void _render_selection(const Region& selection,
 
 }  // namespace
 
-void update_attached_tileset_view(const Model& model,
+void update_attached_tileset_view(const Registry& registry,
                                   const Entity attached_tileset_entity,
                                   Dispatcher& dispatcher)
 {
-  const auto& settings = model.get<Settings>();
+  const auto& settings = registry.get<Settings>();
 
-  const auto& attached_tileset = model.get<AttachedTileset>(attached_tileset_entity);
-  const auto& tileset = model.get<Tileset>(attached_tileset.tileset);
-  const auto& texture = model.get<Texture>(tileset.texture);
-  const auto& viewport = model.get<Viewport>(attached_tileset_entity);
+  const auto& attached_tileset = registry.get<AttachedTileset>(attached_tileset_entity);
+  const auto& tileset = registry.get<Tileset>(attached_tileset.tileset);
+  const auto& texture = registry.get<Texture>(tileset.texture);
+  const auto& viewport = registry.get<Viewport>(attached_tileset_entity);
 
   const TileExtent tileset_extent {static_cast<usize>(tileset.row_count),
                                    static_cast<usize>(tileset.column_count)};

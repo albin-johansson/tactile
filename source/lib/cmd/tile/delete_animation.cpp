@@ -25,18 +25,18 @@
 
 namespace tactile::cmd {
 
-DeleteAnimation::DeleteAnimation(Model* model, const Entity tile_entity)
-    : mModel {model},
+DeleteAnimation::DeleteAnimation(Registry* registry, const Entity tile_entity)
+    : mRegistry {registry},
       mTileEntity {tile_entity}
 {
-  TACTILE_ASSERT(sys::is_tile_entity(*mModel, tile_entity));
+  TACTILE_ASSERT(sys::is_tile_entity(*mRegistry, tile_entity));
 }
 
 void DeleteAnimation::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  auto& animation = model.add<TileAnimation>(mTileEntity);
+  auto& animation = registry.add<TileAnimation>(mTileEntity);
   animation = mOldTileAnimation.value();
 
   mOldTileAnimation.reset();
@@ -44,15 +44,15 @@ void DeleteAnimation::undo()
 
 void DeleteAnimation::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  mOldTileAnimation = model.get<TileAnimation>(mTileEntity);
-  model.remove<TileAnimation>(mTileEntity);
+  mOldTileAnimation = registry.get<TileAnimation>(mTileEntity);
+  registry.remove<TileAnimation>(mTileEntity);
 }
 
 auto DeleteAnimation::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.delete_animation;
 }
 

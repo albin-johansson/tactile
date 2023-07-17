@@ -28,7 +28,7 @@
 #include "common/type/path.hpp"
 #include "model/events/map_events.hpp"
 #include "model/maps/map_components.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::sys {
 
@@ -38,136 +38,139 @@ namespace tactile::sys {
  * \details The document is automatically closed by this function. Additionally, the
  * active document property is reset if the document is active.
  *
- * \param model           the associated model.
+ * \param model           the associated registry.
  * \param document_entity a valid document entity.
  */
-void destroy_document(Model& model, Entity document_entity);
+void destroy_document(Registry& registry, Entity document_entity);
 
 /**
  * Selects an existing document, making it "active".
  *
  * \pre The specified document must be open.
  *
- * \param model           the associated model.
+ * \param model           the associated registry.
  * \param document_entity a valid document entity.
  */
-void select_document(Model& model, Entity document_entity);
+void select_document(Registry& registry, Entity document_entity);
 
 /**
  * Opens an existing document and makes it the active document.
  *
- * \param model           the associated model.
+ * \param model           the associated registry.
  * \param document_entity a document entity.
  */
-void open_document(Model& model, Entity document_entity);
+void open_document(Registry& registry, Entity document_entity);
 
 /**
  * Closes an existing document (and selects another document if there are any open).
  *
  * \pre The specified document must be open.
  *
- * \param model           the associated model.
+ * \param model           the associated registry.
  * \param document_entity a valid document entity.
  */
-void close_document(Model& model, Entity document_entity);
+void close_document(Registry& registry, Entity document_entity);
 
 /**
  * Sets the name of a document.
  *
- * \param model           the associated model.
+ * \param model           the associated registry.
  * \param document_entity a valid document entity.
  * \param name            the new document name.
  */
-void set_document_name(Model& model, Entity document_entity, String name);
+void set_document_name(Registry& registry, Entity document_entity, String name);
 
 /**
  * Returns the name of a document.
  *
- * \param model           the associated model.
+ * \param model           the associated registry.
  * \param document_entity a valid document entity.
  *
  * \return the document name.
  */
-[[nodiscard]] auto get_document_name(const Model& model, Entity document_entity)
+[[nodiscard]] auto get_document_name(const Registry& registry, Entity document_entity)
     -> String;
 
 /**
  * Returns the currently active document (if there is one).
  *
- * \param model the associated model.
+ * \param model the associated registry.
  *
  * \return a document entity or null.
  */
-[[nodiscard]] auto get_active_document(const Model& model) -> Entity;
+[[nodiscard]] auto get_active_document(const Registry& registry) -> Entity;
 
 /**
  * Returns the active context in the currently active document.
  *
- * \param model the associated model.
+ * \param model the associated registry.
  *
  * \return a context entity or null.
  */
-[[nodiscard]] auto get_active_context(const Model& model) -> Entity;
+[[nodiscard]] auto get_active_context(const Registry& registry) -> Entity;
 
 /**
  * Returns the currently active map (if there is one).
  *
- * \param model the associated model.
+ * \param model the associated registry.
  *
  * \return a map entity or null.
  */
-[[nodiscard]] auto get_active_map(const Model& model) -> Entity;
+[[nodiscard]] auto get_active_map(const Registry& registry) -> Entity;
 
-[[nodiscard]] auto try_get_active_map(const Model& model) -> const Map*;
+[[nodiscard]] auto try_get_active_map(const Registry& registry) -> const Map*;
 
 /**
  * Returns the tileset document associated with a tileset.
  *
- * \param model          the associated model.
+ * \param model          the associated registry.
  * \param tileset_entity a valid tileset entity.
  *
  * \return a tileset document entity, or the null entity.
  */
-[[nodiscard]] auto get_associated_tileset_document(const Model& model,
+[[nodiscard]] auto get_associated_tileset_document(const Registry& registry,
                                                    Entity tileset_entity) -> Entity;
 
 /**
  * Indicates whether any loaded document is associated with the specified path.
  *
- * \param model the associated model.
+ * \param model the associated registry.
  * \param path  the file path to look for.
  *
  * \return true if a document was found; false otherwise.
  */
-[[nodiscard]] auto has_document_with_path(const Model& model, const Path& path) -> bool;
+[[nodiscard]] auto has_document_with_path(const Registry& registry, const Path& path)
+    -> bool;
 
-[[nodiscard]] auto get_document_with_path(const Model& model, const Path& path) -> Entity;
+[[nodiscard]] auto get_document_with_path(const Registry& registry, const Path& path)
+    -> Entity;
 
 /// Indicates whether any document is active.
-[[nodiscard]] auto has_active_document(const Model& model) -> bool;
+[[nodiscard]] auto has_active_document(const Registry& registry) -> bool;
 
 /// Indicates whether any map document is active.
-[[nodiscard]] auto is_map_document_active(const Model& model) -> bool;
+[[nodiscard]] auto is_map_document_active(const Registry& registry) -> bool;
 
 /// Indicates whether any tileset document is active.
-[[nodiscard]] auto is_tileset_document_active(const Model& model) -> bool;
+[[nodiscard]] auto is_tileset_document_active(const Registry& registry) -> bool;
 
 /**
  * Indicates whether a specific document is open.
  *
- * \param model           the associated model.
+ * \param model           the associated registry.
  * \param document_entity a valid document entity.
  *
  * \return true if the document is open; false otherwise.
  */
-[[nodiscard]] auto is_document_open(const Model& model, Entity document_entity) -> bool;
+[[nodiscard]] auto is_document_open(const Registry& registry, Entity document_entity)
+    -> bool;
 
 /**
  * Creates a map document, opens it, and makes it the active document.
  *
- * \param model the associated model.
+ * \param model the associated registry.
  * \param event information about the map that will be created.
  */
-void on_create_map(Model& model, const CreateMapEvent& event);
+void on_create_map(Registry& registry, const CreateMapEvent& event);
 
 }  // namespace tactile::sys

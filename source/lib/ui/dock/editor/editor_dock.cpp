@@ -43,14 +43,16 @@
 namespace tactile::ui {
 namespace {
 
-void _push_start_page(const Model& model, const Strings& strings, Dispatcher& dispatcher)
+void _push_start_page(const Registry& registry,
+                      const Strings& strings,
+                      Dispatcher& dispatcher)
 {
   prepare_vertical_alignment_center(4);
 
   ImGui::SetCursorPos(ImGui::GetCursorPos() - ImVec2 {0, 64});
 
-  const auto& icons = model.get<Icons>();
-  const auto& icon_texture = model.get<Texture>(icons.tactile_icon);
+  const auto& icons = registry.get<Icons>();
+  const auto& icon_texture = registry.get<Texture>(icons.tactile_icon);
 
   center_next_item_horizontally(128);
   ImGui::Image(icon_texture.handle, {128, 128});
@@ -70,11 +72,11 @@ void _push_start_page(const Model& model, const Strings& strings, Dispatcher& di
 
 }  // namespace
 
-void push_editor_dock_widget(const Model& model,
+void push_editor_dock_widget(const Registry& registry,
                              EditorDockState& state,
                              Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(model);
+  const auto& strings = sys::get_current_language_strings(registry);
 
   StyleVar padding {ImGuiStyleVar_WindowPadding, {4, 4}};
   remove_tab_bar_from_next_window();
@@ -87,13 +89,13 @@ void push_editor_dock_widget(const Model& model,
   if (window.is_open()) {
     padding.pop();
 
-    if (sys::has_active_document(model)) {
-      push_document_tab_widget(model,
+    if (sys::has_active_document(registry)) {
+      push_document_tab_widget(registry,
                                state.central_map_viewport,
                                state.tileset_viewport,
                                dispatcher);
 
-      if (sys::is_map_document_active(model)) {
+      if (sys::is_map_document_active(registry)) {
         if (window.mouse_entered()) {
           dispatcher.enqueue<ViewportMouseEnteredEvent>();
         }
@@ -104,7 +106,7 @@ void push_editor_dock_widget(const Model& model,
       }
     }
     else {
-      _push_start_page(model, strings, dispatcher);
+      _push_start_page(registry, strings, dispatcher);
     }
   }
 }

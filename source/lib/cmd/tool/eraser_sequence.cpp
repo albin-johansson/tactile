@@ -29,20 +29,20 @@
 
 namespace tactile::cmd {
 
-EraserSequence::EraserSequence(Model* model,
+EraserSequence::EraserSequence(Registry* registry,
                                const Entity tile_layer_entity,
                                TileCache old_state)
-    : mModel {model},
+    : mRegistry {registry},
       mTileLayerEntity {tile_layer_entity},
       mOldState {std::move(old_state)}
 {
-  TACTILE_ASSERT(sys::is_tile_layer_entity(*mModel, mTileLayerEntity));
+  TACTILE_ASSERT(sys::is_tile_layer_entity(*mRegistry, mTileLayerEntity));
 }
 
 void EraserSequence::undo()
 {
-  auto& model = *mModel;
-  auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
+  auto& registry = *mRegistry;
+  auto& tile_layer = registry.get<TileLayer>(mTileLayerEntity);
 
   for (const auto& [position, tile_id]: mOldState) {
     sys::set_tile(tile_layer, position, tile_id);
@@ -51,8 +51,8 @@ void EraserSequence::undo()
 
 void EraserSequence::redo()
 {
-  auto& model = *mModel;
-  auto& tile_layer = model.get<TileLayer>(mTileLayerEntity);
+  auto& registry = *mRegistry;
+  auto& tile_layer = registry.get<TileLayer>(mTileLayerEntity);
 
   for (const auto& [position, tile_id]: mOldState) {
     sys::set_tile(tile_layer, position, kEmptyTile);
@@ -61,7 +61,7 @@ void EraserSequence::redo()
 
 auto EraserSequence::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.eraser_tool;
 }
 

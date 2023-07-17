@@ -29,53 +29,53 @@
 
 namespace tactile::cmd {
 
-RemoveLayer::RemoveLayer(Model* model,
+RemoveLayer::RemoveLayer(Registry* registry,
                          const Entity map_document_entity,
                          const Entity layer_entity)
-    : mModel {model},
+    : mRegistry {registry},
       mMapDocumentEntity {map_document_entity},
       mLayerEntity {layer_entity}
 {
-  TACTILE_ASSERT(sys::is_map_document_entity(*mModel, mMapDocumentEntity));
-  TACTILE_ASSERT(sys::is_layer_entity(*mModel, mLayerEntity));
+  TACTILE_ASSERT(sys::is_map_document_entity(*mRegistry, mMapDocumentEntity));
+  TACTILE_ASSERT(sys::is_layer_entity(*mRegistry, mLayerEntity));
 }
 
 void RemoveLayer::undo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
-  auto& map = model.get<Map>(map_document.map);
+  const auto& map_document = registry.get<MapDocument>(mMapDocumentEntity);
+  auto& map = registry.get<Map>(map_document.map);
 
-  sys::attach_layer_to_map(model, map, mLayerEntity, mParentLayerEntity);
-  // TODO sys::set_layer_index(model, map_document.map, mLayerEntity, mIndex.value());
+  sys::attach_layer_to_map(registry, map, mLayerEntity, mParentLayerEntity);
+  // TODO sys::set_layer_index(registry, map_document.map, mLayerEntity, mIndex.value());
 
   mIndex.reset();
 }
 
 void RemoveLayer::redo()
 {
-  auto& model = *mModel;
+  auto& registry = *mRegistry;
 
-  const auto& map_document = model.get<MapDocument>(mMapDocumentEntity);
-  auto& map = model.get<Map>(map_document.map);
+  const auto& map_document = registry.get<MapDocument>(mMapDocumentEntity);
+  auto& map = registry.get<Map>(map_document.map);
 
-  mParentLayerEntity = sys::get_parent_layer(model, map, mLayerEntity);
-  // TODO mIndex = sys::get_layer_local_index(model, map.root_layer, mLayerEntity);
+  mParentLayerEntity = sys::get_parent_layer(registry, map, mLayerEntity);
+  // TODO mIndex = sys::get_layer_local_index(registry, map.root_layer, mLayerEntity);
 
-  sys::remove_layer_from_map(model, map, mLayerEntity);
+  sys::remove_layer_from_map(registry, map, mLayerEntity);
 }
 
 void RemoveLayer::dispose()
 {
   // TODO
-  //  auto& model = *mModel;
-  //  model.destroy(m)
+  //  auto& registry = *mRegistry;
+  //  registry.destroy(m)
 }
 
 auto RemoveLayer::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mModel);
+  const auto& strings = sys::get_current_language_strings(*mRegistry);
   return strings.cmd.remove_layer;
 }
 

@@ -24,7 +24,7 @@
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "common/util/string_buffer.hpp"
-#include "model/model.hpp"
+#include "model/registry.hpp"
 
 namespace tactile::ui {
 
@@ -36,7 +36,7 @@ struct NewTilesetDialogState final {
   bool should_open {};
 };
 
-void push_new_tileset_dialog(const Model& model,
+void push_new_tileset_dialog(const Registry& registry,
                              NewTilesetDialogState& state,
                              Dispatcher& dispatcher);
 
