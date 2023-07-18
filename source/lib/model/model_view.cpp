@@ -112,7 +112,7 @@ auto ModelView::is_available(const MenuAction action) const -> bool
       return has_active_tileset_document();
 
     case MenuAction::Save:
-      return sys::is_save_possible(get_registry());
+      return Locator<CommandSystem>::get().is_save_possible(get_registry());
 
     case MenuAction::ReopenLastFile:
       return _can_reopen_last_closed_file();
@@ -121,10 +121,10 @@ auto ModelView::is_available(const MenuAction action) const -> bool
       return _can_clear_file_history();
 
     case MenuAction::Undo:
-      return sys::is_undo_possible(get_registry());
+      return Locator<CommandSystem>::get().is_undo_possible(get_registry());
 
     case MenuAction::Redo:
-      return sys::is_redo_possible(get_registry());
+      return Locator<CommandSystem>::get().is_redo_possible(get_registry());
 
     case MenuAction::EnableStamp:
       return _is_tool_available(ToolType::Stamp);

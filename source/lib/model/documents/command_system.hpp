@@ -22,19 +22,39 @@
 #include <utility>  // forward
 
 #include "cmd/command_stack.hpp"
+#include "common/macros.hpp"
+#include "common/primitives.hpp"
+#include "common/type/ecs.hpp"
+#include "common/type/hash_map.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/registry.hpp"
+#include "model/system.hpp"
 
-namespace tactile::sys {
+namespace tactile {
 
-/// Indicates whether the 'save' action is currently available.
-[[nodiscard]] auto is_save_possible(const Registry& registry) -> bool;
+TACTILE_FWD_DECLARE_STRUCT(SetCommandCapacityEvent)
 
-/// Indicates whether the 'undo' action is currently available.
-[[nodiscard]] auto is_undo_possible(const Registry& registry) -> bool;
+class CommandSystem final : public System {
+ public:
+  void undo(Registry& registry);
 
-/// Indicates whether the 'redo' action is currently available.
-[[nodiscard]] auto is_redo_possible(const Registry& registry) -> bool;
+  void redo(Registry& registry);
+
+  void set_command_capacity(Registry& registry, usize capacity);
+
+  void on_set_command_capacity(Registry& registry, const SetCommandCapacityEvent& event);
+
+  [[nodiscard]] auto is_save_possible(const Registry& registry) -> bool;
+
+  [[nodiscard]] auto is_undo_possible(const Registry& registry) -> bool;
+
+  [[nodiscard]] auto is_redo_possible(const Registry& registry) -> bool;
+
+ private:
+  [[nodiscard]] auto _get_active_command_stack(Registry& registry) -> CommandStack*;
+};
+
+namespace sys {
 
 /**
  * Tries to push a command to the currently active document, if there is one.
@@ -57,4 +77,5 @@ void try_execute(Registry& registry, Args&&... args)
   }
 }
 
-}  // namespace tactile::sys
+}  // namespace sys
+}  // namespace tactile

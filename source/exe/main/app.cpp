@@ -43,7 +43,7 @@
 #include "io/file_history_io.hpp"
 #include "io/session_io.hpp"
 #include "io/settings_io.hpp"
-#include "model/command_system.hpp"
+#include "model/documents/command_system.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/events/delegates/component_delegate.hpp"
 #include "model/events/delegates/file_delegate.hpp"

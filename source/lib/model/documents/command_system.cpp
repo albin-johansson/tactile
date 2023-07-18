@@ -19,11 +19,60 @@
 
 #include "command_system.hpp"
 
+#include <spdlog/spdlog.h>
+
 #include "model/documents/document_components.hpp"
+#include "model/documents/document_system.hpp"
+#include "model/events/command_events.hpp"
 
-namespace tactile::sys {
+namespace tactile {
 
-auto is_save_possible(const Registry& registry) -> bool
+void CommandSystem::undo(Registry& registry)
+{
+  spdlog::trace("[CommandSystem] Undoing last command");
+
+  if (auto* command_stack = _get_active_command_stack(registry)) {
+    command_stack->undo();
+  }
+}
+
+void CommandSystem::redo(Registry& registry)
+{
+  spdlog::trace("[CommandSystem] Redoing last undone command");
+
+  if (auto* command_stack = _get_active_command_stack(registry)) {
+    command_stack->redo();
+  }
+}
+
+void CommandSystem::set_command_capacity(Registry& registry, const usize capacity)
+{
+  spdlog::debug("[CommandSystem] Setting command capacity to {}", capacity);
+
+  for (const auto [document_entity, document]: registry.each<Document>()) {
+    auto& command_stack = registry.get<CommandStack>(document_entity);
+    command_stack.set_capacity(capacity);
+  }
+}
+
+void CommandSystem::on_set_command_capacity(Registry& registry,
+                                            const SetCommandCapacityEvent& event)
+{
+  set_command_capacity(registry, event.capacity);
+}
+
+auto CommandSystem::_get_active_command_stack(Registry& registry) -> CommandStack*
+{
+  const auto document_entity = sys::get_active_document(registry);
+
+  if (document_entity != kNullEntity) {
+    return registry.try_get<CommandStack>(document_entity);
+  }
+
+  return nullptr;
+}
+
+auto CommandSystem::is_save_possible(const Registry& registry) -> bool
 {
   const auto document_entity = registry.get<DocumentContext>().active_document;
 
@@ -35,7 +84,7 @@ auto is_save_possible(const Registry& registry) -> bool
   return false;
 }
 
-auto is_undo_possible(const Registry& registry) -> bool
+auto CommandSystem::is_undo_possible(const Registry& registry) -> bool
 {
   const auto document_entity = registry.get<DocumentContext>().active_document;
 
@@ -47,7 +96,7 @@ auto is_undo_possible(const Registry& registry) -> bool
   return false;
 }
 
-auto is_redo_possible(const Registry& registry) -> bool
+auto CommandSystem::is_redo_possible(const Registry& registry) -> bool
 {
   const auto document_entity = registry.get<DocumentContext>().active_document;
 
@@ -59,4 +108,4 @@ auto is_redo_possible(const Registry& registry) -> bool
   return false;
 }
 
-}  // namespace tactile::sys
+}  // namespace tactile
