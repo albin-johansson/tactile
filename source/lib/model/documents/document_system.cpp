@@ -25,6 +25,7 @@
 
 #include "cmd/command_stack.hpp"
 #include "common/debug/panic.hpp"
+#include "common/util/vectors.hpp"
 #include "io/parsers/map_parser.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/documents/document_components.hpp"
@@ -72,7 +73,7 @@ void select_document(Registry& registry, const Entity document_entity)
   TACTILE_ASSERT(is_document_entity(registry, document_entity));
 
   auto& document_context = registry.get<DocumentContext>();
-  TACTILE_ASSERT(document_context.open_documents.contains(document_entity));
+  TACTILE_ASSERT(contained_in(document_context.open_documents, document_entity));
 
   document_context.active_document = document_entity;
 }
@@ -82,7 +83,7 @@ void open_document(Registry& registry, const Entity document_entity)
   TACTILE_ASSERT(is_document_entity(registry, document_entity));
 
   auto& document_context = registry.get<DocumentContext>();
-  document_context.open_documents.insert(document_entity);
+  document_context.open_documents.push_back(document_entity);
   document_context.active_document = document_entity;
 }
 
@@ -94,8 +95,8 @@ void close_document(Registry& registry, const Entity document_entity)
 
   auto& document_context = registry.get<DocumentContext>();
 
-  TACTILE_ASSERT(document_context.open_documents.contains(document_entity));
-  document_context.open_documents.erase(document_entity);
+  TACTILE_ASSERT(contained_in(document_context.open_documents, document_entity));
+  std::erase(document_context.open_documents, document_entity);
 
   if (document_context.active_document == document_entity) {
     document_context.active_document = kNullEntity;
@@ -238,7 +239,7 @@ auto is_document_open(const Registry& registry, const Entity document_entity) ->
   TACTILE_ASSERT(is_document_entity(registry, document_entity));
 
   const auto& document_context = registry.get<DocumentContext>();
-  return document_context.open_documents.contains(document_entity);
+  return contained_in(document_context.open_documents, document_entity);
 }
 
 void on_create_map(Registry& registry, const CreateMapEvent& event)

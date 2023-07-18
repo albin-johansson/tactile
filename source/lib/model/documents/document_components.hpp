@@ -23,14 +23,14 @@
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
-#include "common/type/set.hpp"
+#include "common/type/vector.hpp"
 
 namespace tactile {
 
 /// Context component that tracks the active and open documents.
 struct DocumentContext final {
   Entity active_document {kNullEntity};  ///< The currently active document, if any.
-  Set<Entity> open_documents;            ///< The currently open documents.
+  Vector<Entity> open_documents;         ///< The currently open documents.
 };
 
 /// General component for editor documents.
