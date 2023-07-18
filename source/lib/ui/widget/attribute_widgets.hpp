@@ -26,7 +26,7 @@
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "common/type/string.hpp"
-#include "model/i18n/language_components.hpp"
+#include "model/i18n/strings.hpp"
 
 namespace tactile::ui {
 

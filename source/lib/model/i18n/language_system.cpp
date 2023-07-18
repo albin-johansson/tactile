@@ -26,29 +26,40 @@
 #include "common/debug/panic.hpp"
 #include "common/util/lookup.hpp"
 #include "io/lang/language_parser.hpp"
-#include "model/i18n/language_components.hpp"
+#include "model/locator.hpp"
 #include "model/persistence/settings.hpp"
 
-namespace tactile::sys {
+namespace tactile {
 
-void load_languages(Registry& registry)
+void LanguageSystem::load_languages()
 {
-  spdlog::debug("[IO] Loading languages");
-
-  auto& languages = registry.get<Languages>();
+  spdlog::debug("[LanguageSystem] Loading language files");
 
   auto en = parse_language("assets/lang/en.json");
 
-  languages.strings[Lang::SV] = parse_language("assets/lang/sv.json", en);
-  languages.strings[Lang::EN_GB] = parse_language("assets/lang/en_GB.json", en);
-  languages.strings[Lang::EN] = std::move(en);
+  mStrings[Lang::SV] = parse_language("assets/lang/sv.json", en);
+  mStrings[Lang::EN_GB] = parse_language("assets/lang/en_GB.json", en);
+  mStrings[Lang::EN] = std::move(en);
 }
+
+auto LanguageSystem::get_strings(const Lang language) -> const Strings&
+{
+  return lookup_in(mStrings, language);
+}
+
+auto LanguageSystem::get_current_language_strings(const Registry& registry)
+    -> const Strings&
+{
+  const auto& settings = registry.get<Settings>();
+  return get_strings(settings.get_language());
+}
+
+namespace sys {
 
 auto get_current_language_strings(const Registry& registry) -> const Strings&
 {
-  const auto& settings = registry.get<Settings>();
-  const auto& languages = registry.get<Languages>();
-  return lookup_in(languages.strings, settings.get_language());
+  auto& language_system = Locator<LanguageSystem>::get();
+  return language_system.get_current_language_strings(registry);
 }
 
 auto get_language_name(const Lang lang) -> const char*
@@ -223,4 +234,5 @@ auto get_string(const Strings& strings, const MenuAction action) -> String
   }
 }
 
+}  // namespace sys
 }  // namespace tactile::sys

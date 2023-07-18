@@ -20,27 +20,30 @@
 #pragma once
 
 #include "common/enum/lang.hpp"
-#include "model/i18n/language_components.hpp"
-#include "model/registry.hpp"
+#include "common/type/hash_map.hpp"
+#include "model/i18n/strings.hpp"
+#include "model/system.hpp"
 #include "model/view/menu_components.hpp"
 
-namespace tactile::sys {
+namespace tactile {
 
-/**
- * Loads all translation files and initializes the language mapping context component.
- *
- * \param model the associated registry.
- */
-void load_languages(Registry& registry);
+class LanguageSystem final : public System {
+ public:
+  /// Loads the translation JSON files.
+  void load_languages();
 
-/**
- * Returns the translated strings associated with the currently active language.
- *
- * \param model the associated registry.
- *
- * \return a set of translated strings.
- */
-[[nodiscard]] auto get_current_language_strings(const Registry& registry)
+  [[nodiscard]] auto get_strings(Lang language) -> const Strings&;
+
+  [[nodiscard, deprecated]] auto get_current_language_strings(const Registry& registry)
+      -> const Strings&;
+
+ private:
+  HashMap<Lang, Strings> mStrings;
+};
+
+namespace sys {
+
+[[nodiscard, deprecated]] auto get_current_language_strings(const Registry& registry)
     -> const Strings&;
 
 /**
@@ -62,4 +65,5 @@ void load_languages(Registry& registry);
  */
 [[nodiscard]] auto get_string(const Strings& strings, MenuAction action) -> String;
 
-}  // namespace tactile::sys
+}  // namespace sys
+}  // namespace tactile

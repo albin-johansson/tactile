@@ -20,7 +20,6 @@
 #include "model_factory.hpp"
 
 #include "model/documents/document_components.hpp"
-#include "model/i18n/language_components.hpp"
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/settings.hpp"
 #include "model/textures/texture_components.hpp"
@@ -35,7 +34,6 @@ void init_model(Registry& registry, const BackendAPI api)
   document_context.active_document = kNullEntity;
 
   registry.add<Settings>();
-  registry.add<Languages>();
   registry.add<FileHistory>();
   registry.add<Icons>();
   registry.add<MenuItems>();

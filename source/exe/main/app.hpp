@@ -46,6 +46,7 @@
 namespace tactile {
 
 TACTILE_FWD_DECLARE_CLASS(System)
+TACTILE_FWD_DECLARE_CLASS(LanguageSystem)
 TACTILE_FWD_DECLARE_CLASS(CommandSystem)
 TACTILE_FWD_DECLARE_CLASS(ToolSystem)
 TACTILE_FWD_DECLARE_CLASS(TextureSystem)
@@ -74,6 +75,7 @@ class App final : public AppDelegate {
  private:
   Unique<Registry> mRegistry;
   Dispatcher mDispatcher;
+  Unique<LanguageSystem> mLanguageSystem;
   Unique<CommandSystem> mCommandSystem;
   Unique<ToolSystem> mToolSystem;
   Unique<TextureSystem> mTextureSystem;
