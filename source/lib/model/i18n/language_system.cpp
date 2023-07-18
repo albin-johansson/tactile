@@ -42,12 +42,12 @@ void LanguageSystem::load_languages()
   mStrings[Lang::EN] = std::move(en);
 }
 
-auto LanguageSystem::get_strings(const Lang language) -> const Strings&
+auto LanguageSystem::get_strings(const Lang language) const -> const Strings&
 {
   return lookup_in(mStrings, language);
 }
 
-auto LanguageSystem::get_current_language_strings(const Registry& registry)
+auto LanguageSystem::get_current_language_strings(const Registry& registry) const
     -> const Strings&
 {
   const auto& settings = registry.get<Settings>();
