@@ -168,14 +168,14 @@ void push_view_menu(ModelView& model)
     ImGui::Separator();
 
     if (ImGui::MenuItem(strings.action.increase_zoom.c_str(),
-                        TACTILE_PRIMARY_MOD "+0",
+                        TACTILE_PRIMARY_MOD "+9",
                         nullptr,
                         model.is_available(MenuAction::IncreaseZoom))) {
       model.enqueue<MenuActionEvent>(MenuAction::IncreaseZoom);
     }
 
     if (ImGui::MenuItem(strings.action.decrease_zoom.c_str(),
-                        TACTILE_PRIMARY_MOD "+9",
+                        TACTILE_PRIMARY_MOD "+8",
                         nullptr,
                         model.is_available(MenuAction::DecreaseZoom))) {
       model.enqueue<MenuActionEvent>(MenuAction::DecreaseZoom);
@@ -191,14 +191,14 @@ void push_view_menu(ModelView& model)
     ImGui::Separator();
 
     if (ImGui::MenuItem(strings.action.increase_font_size.c_str(),
-                        TACTILE_PRIMARY_MOD "+Shift+0",
+                        TACTILE_PRIMARY_MOD "+Shift+9",
                         nullptr,
                         model.is_available(MenuAction::IncreaseFontSize))) {
       model.enqueue<MenuActionEvent>(MenuAction::IncreaseFontSize);
     }
 
     if (ImGui::MenuItem(strings.action.decrease_font_size.c_str(),
-                        TACTILE_PRIMARY_MOD "+Shift+9",
+                        TACTILE_PRIMARY_MOD "+Shift+8",
                         nullptr,
                         model.is_available(MenuAction::DecreaseFontSize))) {
       model.enqueue<MenuActionEvent>(MenuAction::DecreaseFontSize);

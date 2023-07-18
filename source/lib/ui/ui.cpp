@@ -74,10 +74,10 @@ void poll_global_shortcuts(ModelView model)
   _poll_shortcut(model, MenuAction::OpenSettings, ImGuiMod_Shortcut | ImGuiKey_Comma);
 
   _poll_shortcut(model, MenuAction::CenterViewport, ImGuiMod_Shift | ImGuiKey_Space);
-  _poll_shortcut(model, MenuAction::IncreaseZoom, ImGuiMod_Shortcut | ImGuiKey_0);
-  _poll_shortcut(model, MenuAction::DecreaseZoom, ImGuiMod_Shortcut | ImGuiKey_9);
-  _poll_shortcut(model, MenuAction::IncreaseFontSize, ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_0);
-  _poll_shortcut(model, MenuAction::DecreaseFontSize, ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_9);
+  _poll_shortcut(model, MenuAction::IncreaseZoom, ImGuiMod_Shortcut | ImGuiKey_9);
+  _poll_shortcut(model, MenuAction::DecreaseZoom, ImGuiMod_Shortcut | ImGuiKey_8);
+  _poll_shortcut(model, MenuAction::IncreaseFontSize, ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_9);
+  _poll_shortcut(model, MenuAction::DecreaseFontSize, ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_8);
   _poll_shortcut(model, MenuAction::PanUp, ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_UpArrow);
   _poll_shortcut(model, MenuAction::PanDown, ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_DownArrow);
   _poll_shortcut(model, MenuAction::PanLeft, ImGuiMod_Shortcut | ImGuiMod_Shift | ImGuiKey_LeftArrow);
