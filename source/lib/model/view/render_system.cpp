@@ -31,8 +31,9 @@
 #include "model/layers/layer_recursion.hpp"
 #include "model/layers/layer_tree_system.hpp"
 #include "model/layers/tile_layer_ops.hpp"
+#include "model/locator.hpp"
 #include "model/objects/object_components.hpp"
-#include "model/persistence/settings.hpp"
+#include "model/persistence/settings_system.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/tilesets/attached_tileset_ops.hpp"
 #include "model/tilesets/tileset_system.hpp"
@@ -169,7 +170,8 @@ void _render_active_object_highlight(const Registry& registry,
 
 void render_map(const Registry& registry, const ui::CanvasInfo& canvas, const Map& map)
 {
-  const auto& settings = registry.get<Settings>();
+  const auto& settings_system = Locator<SettingsSystem>::get();
+  const auto& settings = settings_system.current_settings();
 
   _render_layers(registry, canvas, map);
   _render_active_object_highlight(registry, canvas, map);
@@ -185,7 +187,9 @@ void render_tileset(const Registry& registry,
                     const ui::CanvasInfo& canvas,
                     const Tileset& tileset)
 {
-  const auto& settings = registry.get<Settings>();
+  const auto& settings_system = Locator<SettingsSystem>::get();
+  const auto& settings = settings_system.current_settings();
+
   const auto& texture = registry.get<Texture>(tileset.texture);
 
   const auto rendered_position = ui::translate_pos(canvas, ImVec2 {0, 0});
@@ -216,7 +220,8 @@ void render_layer(const Registry& registry,
     return;
   }
 
-  const auto& settings = registry.get<Settings>();
+  const auto& settings_system = Locator<SettingsSystem>::get();
+  const auto& settings = settings_system.current_settings();
 
   const auto parent_opacity = (parent_layer != nullptr) ? parent_layer->opacity : 1.0f;
   const auto layer_opacity = settings.test_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT)

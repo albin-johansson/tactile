@@ -27,7 +27,7 @@
 #include "common/util/lookup.hpp"
 #include "io/lang/language_parser.hpp"
 #include "model/locator.hpp"
-#include "model/persistence/settings.hpp"
+#include "model/persistence/settings_system.hpp"
 
 namespace tactile {
 
@@ -47,19 +47,19 @@ auto LanguageSystem::get_strings(const Lang language) const -> const Strings&
   return lookup_in(mStrings, language);
 }
 
-auto LanguageSystem::get_current_language_strings(const Registry& registry) const
-    -> const Strings&
+auto LanguageSystem::get_current_language_strings() const -> const Strings&
 {
-  const auto& settings = registry.get<Settings>();
+  const auto& settings_system = Locator<SettingsSystem>::get();
+  const auto& settings = settings_system.current_settings();
   return get_strings(settings.get_language());
 }
 
 namespace sys {
 
-auto get_current_language_strings(const Registry& registry) -> const Strings&
+auto get_current_language_strings(const Registry&) -> const Strings&
 {
   auto& language_system = Locator<LanguageSystem>::get();
-  return language_system.get_current_language_strings(registry);
+  return language_system.get_current_language_strings();
 }
 
 auto get_language_name(const Lang lang) -> const char*

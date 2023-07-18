@@ -283,14 +283,12 @@ void App::_subscribe_to_events()
 
 void App::_init_persistent_settings()
 {
-  auto& registry = *mRegistry;
-
-  auto& settings = registry.get<Settings>();
-  settings.copy_from(load_settings_from_disk());
-  settings.print();
-
+  mSettingsSystem->load_from_disk();
   mLanguageSystem->load_languages();
 
+  const auto& settings = mSettingsSystem->current_settings();
+
+  auto& registry = *mRegistry;
   auto& file_history = registry.get<FileHistory>();
   if (auto history = load_file_history_from_disk()) {
     file_history = std::move(*history);
@@ -311,7 +309,7 @@ void App::on_shutdown()
   auto& registry = *mRegistry;
 
   sys::store_open_documents_in_file_history(registry);
-  save_settings_to_disk(registry.get<Settings>());
+  save_settings_to_disk(mSettingsSystem->current_settings());
   save_session_to_disk(registry);
 
   const auto& file_history = registry.get<FileHistory>();
@@ -330,7 +328,7 @@ void App::on_update()
 
   auto& widgets = registry.get<WidgetState>();
 
-  ModelView model_view {registry, mDispatcher};
+  const ModelView model_view {registry, mDispatcher};
   poll_global_shortcuts(model_view);
   render_ui(model_view, widgets);
   check_for_missing_layout_file(registry,
@@ -353,7 +351,7 @@ void App::on_event(const cen::event_handler& event)
 
 void App::reload_font_files()
 {
-  ui::reload_imgui_fonts(mRegistry->get<Settings>());
+  ui::reload_imgui_fonts(mSettingsSystem->current_settings());
   mWantFontReload = false;
 }
 
@@ -452,7 +450,7 @@ void App::_on_toggle_highlight_layer(const ToggleHighlightLayerEvent&)
 {
   spdlog::trace("[ToggleHighlightLayerEvent]");
 
-  auto& settings = mRegistry->get<Settings>();
+  auto& settings = mSettingsSystem->current_settings();
   settings.negate_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT);
 }
 

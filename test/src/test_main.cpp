@@ -20,13 +20,39 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
 
+#include "common/type/ptr.hpp"
 #include "engine/engine.hpp"
+#include "model/documents/command_system.hpp"
+#include "model/i18n/language_system.hpp"
+#include "model/locator.hpp"
+#include "model/persistence/settings_system.hpp"
+#include "model/textures/null_texture_system.hpp"
+#include "model/textures/texture_system.hpp"
+#include "model/tools/tool_system.hpp"
 
 using namespace tactile;
 
 class NullApp final : public AppDelegate {
  public:
+  NullApp()
+  {
+    Locator<SettingsSystem>::reset(&mSettingsSystem);
+    Locator<LanguageSystem>::reset(&mLanguageSystem);
+    Locator<CommandSystem>::reset(&mCommandSystem);
+    Locator<ToolSystem>::reset(&mToolSystem);
+
+    mTextureSystem = std::make_unique<NullTextureSystem>();
+    Locator<TextureSystem>::reset(mTextureSystem.get());
+  }
+
   [[nodiscard]] auto should_stop() const -> bool override { return false; }
+
+ private:
+  SettingsSystem mSettingsSystem;
+  LanguageSystem mLanguageSystem;
+  CommandSystem mCommandSystem;
+  ToolSystem mToolSystem;
+  Unique<TextureSystem> mTextureSystem;
 };
 
 auto main(int argc, char* argv[]) -> int

@@ -42,9 +42,11 @@
 #include "model/documents/document_system.hpp"
 #include "model/events/map_events.hpp"
 #include "model/i18n/language_system.hpp"
+#include "model/locator.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/persistence/file_history_system.hpp"
 #include "model/persistence/settings.hpp"
+#include "model/persistence/settings_system.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"
 #include "ui/widget_state.hpp"
 
@@ -52,9 +54,10 @@ namespace tactile {
 
 void on_show_new_map_dialog(Registry& registry, const ShowNewMapDialogEvent&)
 {
-  const auto& settings = registry.get<Settings>();
+  const auto& settings_system = Locator<SettingsSystem>::get();
+  const auto& settings = settings_system.current_settings();
 
-  auto& widgets = registry.get<ui::WidgetState>();
+  auto& widgets = registry.get<WidgetState>();
   widgets.new_map_dialog.tile_size = settings.get_preferred_tile_size();
   widgets.new_map_dialog.row_count = 5;
   widgets.new_map_dialog.col_count = 5;
@@ -63,14 +66,14 @@ void on_show_new_map_dialog(Registry& registry, const ShowNewMapDialogEvent&)
 
 void on_show_open_map_dialog(Registry& registry, const ShowOpenMapDialogEvent&)
 {
-  auto& widgets = registry.get<ui::WidgetState>();
+  auto& widgets = registry.get<WidgetState>();
   widgets.should_open_map_file_dialog = true;
 }
 
 void on_show_resize_map_dialog(Registry& registry, const ShowResizeMapDialogEvent&)
 {
   if (const auto* map = sys::try_get_active_map(registry)) {
-    auto& widgets = registry.get<ui::WidgetState>();
+    auto& widgets = registry.get<WidgetState>();
     widgets.resize_map_dialog.row_count = map->extent.rows;
     widgets.resize_map_dialog.col_count = map->extent.cols;
     widgets.resize_map_dialog.should_open = true;
@@ -79,7 +82,7 @@ void on_show_resize_map_dialog(Registry& registry, const ShowResizeMapDialogEven
 
 void on_show_godot_export_dialog(Registry& registry, const ShowGodotExportDialogEvent&)
 {
-  auto& widgets = registry.get<ui::WidgetState>();
+  auto& widgets = registry.get<WidgetState>();
   widgets.godot_export_dialog.root_dir.clear();
   widgets.godot_export_dialog.map_dir.clear();
   widgets.godot_export_dialog.image_dir.clear();
@@ -112,7 +115,7 @@ void on_open_map(Registry& registry, const OpenMapEvent& event)
     }
     else {
       const auto& strings = sys::get_current_language_strings(registry);
-      auto& widget_state = registry.get<ui::WidgetState>();
+      auto& widget_state = registry.get<WidgetState>();
 
       auto& error_dialog = widget_state.map_parse_error_dialog;
       error_dialog.cause =

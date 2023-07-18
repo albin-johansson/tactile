@@ -31,6 +31,8 @@
 #include "io/ir/ir_generation.hpp"
 #include "io/save_formats.hpp"
 #include "model/documents/document_components.hpp"
+#include "model/locator.hpp"
+#include "model/persistence/settings_system.hpp"
 
 namespace tactile {
 
@@ -41,7 +43,7 @@ auto save_map_document_to_disk(const Registry& registry, const Entity map_docume
     TACTILE_DEBUG_PROFILE_START
 
     const auto& document = registry.get<Document>(map_document_entity);
-    const auto& settings = registry.get<Settings>();
+    const auto& settings = Locator<SettingsSystem>::get().current_settings();
 
     if (!document.path.has_value()) {
       spdlog::error("[IO] Tried to save map with no associated file path");

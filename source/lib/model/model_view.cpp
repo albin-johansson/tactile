@@ -31,7 +31,6 @@
 #include "model/persistence/settings_system.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/tools/tool_system.hpp"
-#include "model/view/font_system.hpp"
 #include "model/viewports/viewport_system.hpp"
 
 namespace tactile {
@@ -206,13 +205,13 @@ auto ModelView::is_available(const MenuAction action) const -> bool
       return sys::is_viewport_zoom_out_possible(get_registry());
 
     case MenuAction::IncreaseFontSize:
-      return sys::can_increase_font_size(get_registry());
+      return Locator<SettingsSystem>::get().can_increase_font_size();
 
     case MenuAction::DecreaseFontSize:
-      return sys::can_decrease_font_size(get_registry());
+      return Locator<SettingsSystem>::get().can_decrease_font_size();
 
     case MenuAction::ResetFontSize:
-      return sys::can_reset_font_size(get_registry());
+      return Locator<SettingsSystem>::get().can_reset_font_size();
 
     case MenuAction::RemoveRow:
       return sys::can_tile_row_be_removed(get_registry());

@@ -34,8 +34,9 @@
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/entity_validation.hpp"
+#include "model/locator.hpp"
 #include "model/maps/map_system.hpp"
-#include "model/persistence/settings.hpp"
+#include "model/persistence/settings_system.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "ui/widget_state.hpp"
 
@@ -43,9 +44,10 @@ namespace tactile {
 
 void on_show_new_tileset_dialog(Registry& registry, const ShowNewTilesetDialogEvent&)
 {
-  const auto& settings = registry.get<Settings>();
+  const auto& settings_system = Locator<SettingsSystem>::get();
+  const auto& settings = settings_system.current_settings();
 
-  auto& widgets = registry.get<ui::WidgetState>();
+  auto& widgets = registry.get<WidgetState>();
   widgets.new_tileset_dialog.map_entity = sys::get_active_map(registry);
   widgets.new_tileset_dialog.image_path.clear();
   widgets.new_tileset_dialog.image_path_preview_buffer.clear();

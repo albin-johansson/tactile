@@ -22,7 +22,8 @@
 #include "model/events/command_events.hpp"
 #include "model/events/font_events.hpp"
 #include "model/events/view_events.hpp"
-#include "model/persistence/settings.hpp"
+#include "model/locator.hpp"
+#include "model/persistence/settings_system.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/style/themes.hpp"
 #include "ui/widget_state.hpp"
@@ -31,19 +32,21 @@ namespace tactile {
 
 void on_show_settings(Registry& registry, const ShowSettingsEvent&)
 {
-  const auto& settings = registry.get<Settings>();
+  const auto& settings_system = Locator<SettingsSystem>::get();
+  const auto& settings = settings_system.current_settings();
 
-  auto& widgets = registry.get<ui::WidgetState>();
+  auto& widgets = registry.get<WidgetState>();
   widgets.settings_dialog.old_settings.copy_from(settings);
   widgets.settings_dialog.ui_settings.copy_from(settings);
   widgets.settings_dialog.should_open = true;
 }
 
-void on_set_settings(Registry& registry,
+void on_set_settings([[maybe_unused]] Registry& registry,
                      Dispatcher& dispatcher,
                      const SetSettingsEvent& event)
 {
-  auto& curr_settings = registry.get<Settings>();
+  auto& settings_system = Locator<SettingsSystem>::get();
+  auto& curr_settings = settings_system.current_settings();
 
   const auto prev_settings = curr_settings.copy();
   curr_settings = event.settings.copy();
@@ -63,48 +66,55 @@ void on_set_settings(Registry& registry,
   }
 }
 
-void on_set_flag_setting(Registry& registry, const SetFlagSettingEvent& event)
+void on_set_flag_setting([[maybe_unused]] Registry& registry,
+                         const SetFlagSettingEvent& event)
 {
-  auto& settings = registry.get<Settings>();
+  auto& settings_system = Locator<SettingsSystem>::get();
+  auto& settings = settings_system.current_settings();
   settings.set_flag(event.flag, event.value);
 }
 
-void on_negate_flag_setting(Registry& registry, const NegateFlagSettingEvent& event)
+void on_negate_flag_setting([[maybe_unused]] Registry& registry,
+                            const NegateFlagSettingEvent& event)
 {
-  auto& settings = registry.get<Settings>();
+  auto& settings_system = Locator<SettingsSystem>::get();
+  auto& settings = settings_system.current_settings();
   settings.negate_flag(event.flag);
 }
 
-void on_set_viewport_overlay_pos(Registry& registry,
+void on_set_viewport_overlay_pos([[maybe_unused]] Registry& registry,
                                  const SetViewportOverlayPosEvent& event)
 {
-  auto& settings = registry.get<Settings>();
+  auto& settings_system = Locator<SettingsSystem>::get();
+  auto& settings = settings_system.current_settings();
   settings.set_viewport_overlay_pos(event.pos);
 }
 
-void on_set_language(Registry& registry,
+void on_set_language([[maybe_unused]] Registry& registry,
                      Dispatcher& dispatcher,
                      const SetLanguageEvent& event)
 {
-  auto& settings = registry.get<Settings>();
+  auto& settings_system = Locator<SettingsSystem>::get();
+  auto& settings = settings_system.current_settings();
   settings.set_language(event.language);
 
   dispatcher.enqueue<ResetLayoutEvent>();
 }
 
-void on_set_theme(Registry& registry, const SetThemeEvent& event)
+void on_set_theme([[maybe_unused]] Registry& registry, const SetThemeEvent& event)
 {
-  auto& settings = registry.get<Settings>();
+  auto& settings_system = Locator<SettingsSystem>::get();
+  auto& settings = settings_system.current_settings();
   settings.set_theme(event.theme);
 
-  ui::apply_theme(ImGui::GetStyle(),
-                  settings.get_theme(),
-                  settings.get_theme_saturation());
+  apply_theme(ImGui::GetStyle(), settings.get_theme(), settings.get_theme_saturation());
 }
 
-void on_reset_dock_visibilities(Registry& registry, const ResetDockVisibilitiesEvent&)
+void on_reset_dock_visibilities([[maybe_unused]] Registry& registry,
+                                const ResetDockVisibilitiesEvent&)
 {
-  auto& settings = registry.get<Settings>();
+  auto& settings_system = Locator<SettingsSystem>::get();
+  auto& settings = settings_system.current_settings();
   settings.reset_dock_visibilities();
 }
 

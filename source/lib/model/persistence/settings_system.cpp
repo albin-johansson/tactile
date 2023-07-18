@@ -20,6 +20,7 @@
 #include "settings_system.hpp"
 
 #include "io/settings_io.hpp"
+#include "ui/constants.hpp"
 
 namespace tactile {
 
@@ -27,6 +28,23 @@ void SettingsSystem::load_from_disk()
 {
   mSettings = load_settings_from_disk();
   mSettings.print();
+}
+
+auto SettingsSystem::can_increase_font_size() const -> bool
+{
+  return !mSettings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) &&
+         mSettings.get_font_size() < kMaxFontSize;
+}
+
+auto SettingsSystem::can_decrease_font_size() const -> bool
+{
+  return !mSettings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) &&
+         mSettings.get_font_size() > kMinFontSize;
+}
+
+auto SettingsSystem::can_reset_font_size() const -> bool
+{
+  return !mSettings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT);
 }
 
 auto SettingsSystem::copy_current() -> Settings

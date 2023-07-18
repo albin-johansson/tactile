@@ -21,26 +21,30 @@
 
 #include <algorithm>  // min, max
 
-#include "model/persistence/settings.hpp"
+#include "model/locator.hpp"
+#include "model/persistence/settings_system.hpp"
 #include "ui/constants.hpp"
 
 namespace tactile {
 
-void on_reset_font_size(Registry& registry,
+void on_reset_font_size([[maybe_unused]] Registry& registry,
                         Dispatcher& dispatcher,
                         const ResetFontSizeEvent&)
 {
-  auto& settings = registry.get<Settings>();
+  auto& settings_system = Locator<SettingsSystem>::get();
+
+  auto& settings = settings_system.current_settings();
   settings.set_font_size(kDefFontSize);
 
   dispatcher.trigger(ReloadFontsEvent {});
 }
 
-void on_increase_font_size(Registry& registry,
+void on_increase_font_size([[maybe_unused]] Registry& registry,
                            Dispatcher& dispatcher,
                            const IncreaseFontSizeEvent&)
 {
-  auto& settings = registry.get<Settings>();
+  auto& settings_system = Locator<SettingsSystem>::get();
+  auto& settings = settings_system.current_settings();
 
   const auto new_size = std::min(settings.get_font_size() + 2, kMaxFontSize);
   settings.set_font_size(new_size);
@@ -48,11 +52,12 @@ void on_increase_font_size(Registry& registry,
   dispatcher.trigger(ReloadFontsEvent {});
 }
 
-void on_decrease_font_size(Registry& registry,
+void on_decrease_font_size([[maybe_unused]] Registry& registry,
                            Dispatcher& dispatcher,
                            const DecreaseFontSizeEvent&)
 {
-  auto& settings = registry.get<Settings>();
+  auto& settings_system = Locator<SettingsSystem>::get();
+  auto& settings = settings_system.current_settings();
 
   const auto new_size = std::max(settings.get_font_size() - 2, kMinFontSize);
   settings.set_font_size(new_size);

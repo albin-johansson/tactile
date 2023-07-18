@@ -28,17 +28,16 @@
 
 namespace tactile::sys {
 
-void init_model(Registry& registry, const BackendAPI api)
+void init_model(Registry& registry, [[maybe_unused]] const BackendAPI api)
 {
   auto& document_context = registry.add<DocumentContext>();
   document_context.active_document = kNullEntity;
 
-  registry.add<Settings>();
   registry.add<FileHistory>();
   registry.add<Icons>();
   registry.add<MenuItems>();
 
-  registry.add<ui::WidgetState>();
+  registry.add<WidgetState>();
 }
 
 auto create_model(const BackendAPI api) -> Registry

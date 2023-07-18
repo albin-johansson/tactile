@@ -34,8 +34,7 @@ class LanguageSystem final : public System {
 
   [[nodiscard]] auto get_strings(Lang language) const -> const Strings&;
 
-  [[nodiscard, deprecated]] auto get_current_language_strings(
-      const Registry& registry) const -> const Strings&;
+  [[nodiscard]] auto get_current_language_strings() const -> const Strings&;
 
  private:
   HashMap<Lang, Strings> mStrings;

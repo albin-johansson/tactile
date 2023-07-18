@@ -26,7 +26,8 @@
 #include "io/directories.hpp"
 #include "model/events/setting_events.hpp"
 #include "model/i18n/language_system.hpp"
-#include "model/persistence/settings.hpp"
+#include "model/locator.hpp"
+#include "model/persistence/settings_system.hpp"
 
 namespace tactile {
 
@@ -37,7 +38,8 @@ void update_dock_space(const Registry& registry, DockSpaceState& state)
   if (!state.did_initialize) {
     const auto size = ImGui::GetMainViewport()->Size;
     if (size.x > 0 && size.y > 0) {
-      const auto& settings = registry.get<Settings>();
+      const auto& settings_system = Locator<SettingsSystem>::get();
+      const auto& settings = settings_system.current_settings();
 
       if (!settings.test_flag(SETTINGS_RESTORE_LAYOUT_BIT) ||
           !fs::exists(get_widget_ini_path())) {

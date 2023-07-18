@@ -23,7 +23,6 @@
 
 #include "model/documents/document_components.hpp"
 #include "model/persistence/file_history_components.hpp"
-#include "model/persistence/settings.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/view/menu_components.hpp"
 #include "ui/widget_state.hpp"
@@ -37,7 +36,6 @@ TEST_SUITE("ModelFactory")
     const auto registry = sys::create_model(BackendAPI::Null);
 
     CHECK(registry.has<DocumentContext>());
-    CHECK(registry.has<Settings>());
     CHECK(registry.has<FileHistory>());
     CHECK(registry.has<Icons>());
     CHECK(registry.has<MenuItems>());
