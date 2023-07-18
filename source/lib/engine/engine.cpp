@@ -29,11 +29,13 @@
 #include "backend/gl/gl_backend.hpp"
 #include "backend/null/null_backend.hpp"
 #include "common/debug/assert.hpp"
-#include "common/debug/logging.hpp"
 #include "common/debug/stacktrace.hpp"
 #include "common/fmt/stacktrace_formatter.hpp"
+#include "engine/app_delegate.hpp"
 #include "engine/platform/window.hpp"
 #include "io/directories.hpp"
+#include "model/locator.hpp"
+#include "model/services/logging_service.hpp"
 
 namespace tactile {
 
@@ -54,7 +56,11 @@ Engine::Engine(const BackendAPI api)
     : mAPI {api}
 {
   std::set_terminate(&on_terminate);
-  init_logger();
+
+  mLoggingService = std::make_unique<LoggingService>();
+  mLoggingService->install_logger();
+
+  Locator<LoggingService>::reset(mLoggingService.get());
 
   mProtobuf.emplace();
   auto& sdl = mSDL.emplace(mAPI);
@@ -79,6 +85,8 @@ Engine::Engine(const BackendAPI api)
 
   spdlog::debug("[IO] Persistent file directory: {}", get_persistent_file_dir());
 }
+
+Engine::~Engine() noexcept = default;
 
 void Engine::start()
 {

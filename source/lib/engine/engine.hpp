@@ -21,21 +21,26 @@
 
 #include <centurion/input/keyboard.hpp>
 
-#include "backend/backend.hpp"
 #include "common/enum/backend_api.hpp"
+#include "common/macros.hpp"
 #include "common/predef.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
-#include "engine/app_delegate.hpp"
 #include "engine/platform/imgui_context.hpp"
 #include "engine/platform/protobuf_context.hpp"
 #include "engine/platform/sdl_context.hpp"
 
 namespace tactile {
 
+TACTILE_FWD_DECLARE_CLASS(LoggingService)
+TACTILE_FWD_DECLARE_CLASS(Backend)
+TACTILE_FWD_DECLARE_CLASS(AppDelegate)
+
 class Engine final {
  public:
   explicit Engine(BackendAPI api);
+
+  ~Engine() noexcept;
 
   void start();
 
@@ -45,6 +50,7 @@ class Engine final {
 
  private:
   BackendAPI mAPI;
+  Unique<LoggingService> mLoggingService;
   Maybe<ProtobufContext> mProtobuf;
   Maybe<SDLContext> mSDL;
   Maybe<ImGuiContext> mImGui;

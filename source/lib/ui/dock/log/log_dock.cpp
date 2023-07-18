@@ -21,72 +21,84 @@
 
 #include <imgui.h>
 
-#include "common/debug/logging.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/util/lookup.hpp"
 #include "model/events/setting_events.hpp"
 #include "model/i18n/language_system.hpp"
+#include "model/locator.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
 namespace tactile {
 namespace {
 
-const HashMap<LogLevel, ImVec4> kLogLevelColors = {
-    {LogLevel::trace, ImVec4 {0.93f, 0.51f, 0.93f, 1.00f}},
-    {LogLevel::debug, ImVec4 {0.50f, 1.00f, 0.70f, 1.00f}},
-    {LogLevel::info, ImVec4 {1.00f, 1.00f, 1.00f, 1.00f}},
-    {LogLevel::warn, ImVec4 {1.00f, 1.00f, 0.00f, 1.00f}},
-    {LogLevel::err, ImVec4 {1.00f, 0.40f, 0.40f, 1.00f}},
-    {LogLevel::critical, ImVec4 {1.00f, 0.00f, 0.00f, 1.00f}},
+inline constexpr auto kLogDockContextMenuID = "##LogDockWindowPopup";
+
+const HashMap<LogLevelBits, ImVec4> kLogLevelColors = {
+    {LOG_LEVEL_TRACE, ImVec4 {0.93f, 0.51f, 0.93f, 1.00f}},
+    {LOG_LEVEL_DEBUG, ImVec4 {0.50f, 1.00f, 0.70f, 1.00f}},
+    {LOG_LEVEL_INFO, ImVec4 {1.00f, 1.00f, 1.00f, 1.00f}},
+    {LOG_LEVEL_WARNING, ImVec4 {1.00f, 1.00f, 0.00f, 1.00f}},
+    {LOG_LEVEL_ERROR, ImVec4 {1.00f, 0.40f, 0.40f, 1.00f}},
+    {LOG_LEVEL_CRITICAL, ImVec4 {1.00f, 0.00f, 0.00f, 1.00f}},
 };
 
-void _push_message_filter_checkboxes(const Strings& strings, LogDockState& state)
+void _push_filter_options(const Strings& strings, LogDockState& state)
 {
-  {
-    bool value = state.log_filter.trace;
-    ImGui::Checkbox(strings.misc.log_trace_filter.c_str(), &value);
-    state.log_filter.trace = value;
+  bool include_trace = state.log_filter & LOG_LEVEL_TRACE;
+  bool include_debug = state.log_filter & LOG_LEVEL_DEBUG;
+  bool include_info = state.log_filter & LOG_LEVEL_INFO;
+  bool include_warning = state.log_filter & LOG_LEVEL_WARNING;
+  bool include_error = state.log_filter & LOG_LEVEL_ERROR;
+  bool include_critical = state.log_filter & LOG_LEVEL_CRITICAL;
+
+  if (const ui::Menu filter_menu {strings.misc.filter.c_str()}; filter_menu.is_open()) {
+    ImGui::MenuItem(strings.misc.log_trace_filter.c_str(), nullptr, &include_trace);
+    ImGui::MenuItem(strings.misc.log_debug_filter.c_str(), nullptr, &include_debug);
+    ImGui::MenuItem(strings.misc.log_info_filter.c_str(), nullptr, &include_info);
+    ImGui::MenuItem(strings.misc.log_warn_filter.c_str(), nullptr, &include_warning);
+    ImGui::MenuItem(strings.misc.log_error_filter.c_str(), nullptr, &include_error);
+    ImGui::MenuItem(strings.misc.log_critical_filter.c_str(), nullptr, &include_critical);
   }
 
-  ImGui::SameLine();
+  state.log_filter = 0;
 
-  {
-    bool value = state.log_filter.debug;
-    ImGui::Checkbox(strings.misc.log_debug_filter.c_str(), &value);
-    state.log_filter.debug = value;
+  if (include_trace) {
+    state.log_filter |= LOG_LEVEL_TRACE;
   }
 
-  ImGui::SameLine();
-
-  {
-    bool value = state.log_filter.info;
-    ImGui::Checkbox(strings.misc.log_info_filter.c_str(), &value);
-    state.log_filter.info = value;
+  if (include_debug) {
+    state.log_filter |= LOG_LEVEL_DEBUG;
   }
 
-  ImGui::SameLine();
-
-  {
-    bool value = state.log_filter.warn;
-    ImGui::Checkbox(strings.misc.log_warn_filter.c_str(), &value);
-    state.log_filter.warn = value;
+  if (include_info) {
+    state.log_filter |= LOG_LEVEL_INFO;
   }
 
-  ImGui::SameLine();
-
-  {
-    bool value = state.log_filter.error;
-    ImGui::Checkbox(strings.misc.log_error_filter.c_str(), &value);
-    state.log_filter.error = value;
+  if (include_warning) {
+    state.log_filter |= LOG_LEVEL_WARNING;
   }
 
-  ImGui::SameLine();
+  if (include_error) {
+    state.log_filter |= LOG_LEVEL_ERROR;
+  }
 
-  {
-    bool value = state.log_filter.critical;
-    ImGui::Checkbox(strings.misc.log_critical_filter.c_str(), &value);
-    state.log_filter.critical = value;
+  if (include_critical) {
+    state.log_filter |= LOG_LEVEL_CRITICAL;
+  }
+}
+
+void _push_dock_context_menu(const Strings& strings, LogDockState& state)
+{
+  if (const auto popup = ui::Popup::for_window(kLogDockContextMenuID); popup.is_open()) {
+    _push_filter_options(strings, state);
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(strings.action.clear_log.c_str())) {
+      auto& logging_service = Locator<LoggingService>::get();
+      logging_service.clear_history();  // TODO event
+    }
   }
 }
 
@@ -112,22 +124,22 @@ void _push_logged_message_legend_overlay(const Strings& strings)
 
   if (const ui::Window overlay {"##LegendOverlay", overlay_window_flags};
       overlay.is_open()) {
-    ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::trace),
+    ImGui::TextColored(lookup_in(kLogLevelColors, LOG_LEVEL_TRACE),
                        "%s",
                        strings.misc.log_trace_filter.c_str());
-    ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::debug),
+    ImGui::TextColored(lookup_in(kLogLevelColors, LOG_LEVEL_DEBUG),
                        "%s",
                        strings.misc.log_debug_filter.c_str());
-    ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::info),
+    ImGui::TextColored(lookup_in(kLogLevelColors, LOG_LEVEL_INFO),
                        "%s",
                        strings.misc.log_info_filter.c_str());
-    ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::warn),
+    ImGui::TextColored(lookup_in(kLogLevelColors, LOG_LEVEL_WARNING),
                        "%s",
                        strings.misc.log_warn_filter.c_str());
-    ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::err),
+    ImGui::TextColored(lookup_in(kLogLevelColors, LOG_LEVEL_ERROR),
                        "%s",
                        strings.misc.log_error_filter.c_str());
-    ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::critical),
+    ImGui::TextColored(lookup_in(kLogLevelColors, LOG_LEVEL_CRITICAL),
                        "%s",
                        strings.misc.log_critical_filter.c_str());
   }
@@ -137,8 +149,9 @@ void _push_logged_message_view(const Strings& strings,
                                const usize message_count,
                                LogDockState& state)
 {
-  const ui::StyleColor child_bg {ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
+  const auto& logging_service = Locator<LoggingService>::get();
 
+  const ui::StyleColor child_bg {ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
   const auto child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
                            ImGuiWindowFlags_HorizontalScrollbar |
                            ImGuiWindowFlags_AlwaysAutoResize;
@@ -148,13 +161,15 @@ void _push_logged_message_view(const Strings& strings,
     clipper.Begin(static_cast<int>(message_count));
 
     while (clipper.Step()) {
-      visit_logged_message_range(state.log_filter,
-                                 static_cast<usize>(clipper.DisplayStart),
-                                 static_cast<usize>(clipper.DisplayEnd),
-                                 [](const LogLevel level, const String& msg) {
-                                   const auto& color = lookup_in(kLogLevelColors, level);
-                                   ImGui::TextColored(color, "%s", msg.c_str());
-                                 });
+      auto show_colored_message = [](const LogLevelBits level, StringView msg) {
+        const auto& color = lookup_in(kLogLevelColors, level);
+        ImGui::TextColored(color, "%s", msg.data());
+      };
+
+      logging_service.each_logged_message(static_cast<usize>(clipper.DisplayStart),
+                                          static_cast<usize>(clipper.DisplayEnd),
+                                          state.log_filter,
+                                          show_colored_message);
     }
 
     // Makes the log follow new messages, unless the user explicitly scrolls up
@@ -189,9 +204,9 @@ void push_log_dock_widget(ModelView& model, LogDockState& state)
   state.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
-    _push_message_filter_checkboxes(strings, state);
+    const auto& logging_service = Locator<LoggingService>::get();
+    const auto message_count = logging_service.count_logged_messages(state.log_filter);
 
-    const auto message_count = count_matching_log_entries(state.log_filter);
     if (message_count != 0u) {
       _push_logged_message_view(strings, message_count, state);
     }
@@ -199,11 +214,11 @@ void push_log_dock_widget(ModelView& model, LogDockState& state)
       ui::push_centered_label(strings.misc.log_no_messages_match_filter.c_str());
     }
 
-    if (auto popup = ui::Popup::for_window("##LogDockPopup"); popup.is_open()) {
-      if (ImGui::MenuItem(strings.action.clear_log.c_str())) {
-        clear_log_history();
-      }
+    if (dock.is_hovered() && ImGui::IsMouseReleased(ImGuiMouseButton_Right)) {
+      ImGui::OpenPopup(kLogDockContextMenuID);
     }
+
+    _push_dock_context_menu(strings, state);
   }
 }
 

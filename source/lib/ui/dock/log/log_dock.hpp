@@ -19,14 +19,15 @@
 
 #pragma once
 
-#include "common/debug/logging.hpp"
+#include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
 #include "model/model_view.hpp"
+#include "model/services/logging_service.hpp"
 
 namespace tactile {
 
 struct LogDockState final {
-  LogFilter log_filter;
+  uint32 log_filter {kAllLogLevels};
   bool has_focus {};
 };
 
