@@ -161,10 +161,6 @@ class App final : public AppDelegate {
   void _on_remove_object(const RemoveObjectEvent& event);
   void _on_spawn_object_context_menu(const SpawnObjectContextMenuEvent& event);
 
-  // Tool events
-  void _on_stamp_sequence(const StampSequenceEvent& event);
-  void _on_flood(const FloodEvent& event);
-
   // Font events
   void _on_reload_fonts(const ReloadFontsEvent& event);
   void _on_increase_font_size(const IncreaseFontSizeEvent& event);

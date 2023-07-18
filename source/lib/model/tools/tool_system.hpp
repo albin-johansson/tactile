@@ -35,6 +35,8 @@ TACTILE_FWD_DECLARE_STRUCT(ViewportMouseDraggedEvent)
 TACTILE_FWD_DECLARE_STRUCT(ViewportMouseReleasedEvent)
 TACTILE_FWD_DECLARE_STRUCT(ViewportMouseEnteredEvent)
 TACTILE_FWD_DECLARE_STRUCT(ViewportMouseExitedEvent)
+TACTILE_FWD_DECLARE_STRUCT(StampSequenceEvent)
+TACTILE_FWD_DECLARE_STRUCT(FloodEvent)
 
 class ToolSystem final : public System {
  public:
@@ -44,6 +46,21 @@ class ToolSystem final : public System {
 
   void reset() override;
 
+  /**
+   * Subscribes to associated events.
+   *
+   * \details This system subscribes to the following events.
+   *          <ul>
+   *            <li>SelectToolEvent</li>
+   *            <li>ViewportMousePressedEvent</li>
+   *            <li>ViewportMouseDraggedEvent</li>
+   *            <li>ViewportMouseReleasedEvent</li>
+   *            <li>ViewportMouseEnteredEvent</li>
+   *            <li>ViewportMouseExitedEvent</li>
+   *            <li>StampSequenceEvent</li>
+   *            <li>FloodEvent</li>
+   *          </ul>
+   */
   void install() override;
 
   [[nodiscard]] auto is_tool_available(ToolType type) const -> bool;
@@ -54,11 +71,15 @@ class ToolSystem final : public System {
   Maybe<ToolType> mActiveToolType;
 
   void _on_select_tool(const SelectToolEvent& event);
+
   void _on_viewport_mouse_pressed(const ViewportMousePressedEvent& event);
   void _on_viewport_mouse_dragged(const ViewportMouseDraggedEvent& event);
   void _on_viewport_mouse_released(const ViewportMouseReleasedEvent& event);
   void _on_viewport_mouse_entered(const ViewportMouseEnteredEvent& event);
   void _on_viewport_mouse_exited(const ViewportMouseExitedEvent& event);
+
+  void _on_stamp_sequence(const StampSequenceEvent& event);
+  void _on_flood(const FloodEvent& event);
 };
 
 }  // namespace tactile

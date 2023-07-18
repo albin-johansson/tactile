@@ -21,12 +21,17 @@
 
 #include <spdlog/spdlog.h>
 
+#include "cmd/tool/bucket_fill.hpp"
+#include "cmd/tool/stamp_sequence.hpp"
 #include "common/debug/assert.hpp"
+#include "common/fmt/entity_formatter.hpp"
+#include "common/fmt/tile_pos_formatter.hpp"
 #include "common/util/lookup.hpp"
+#include "model/documents/command_system.hpp"
 #include "model/events/tool_events.hpp"
 #include "model/events/viewport_events.hpp"
-#include "model/tools/stamp_tool.hpp"
 #include "model/tools/bucket_tool.hpp"
+#include "model/tools/stamp_tool.hpp"
 #include "model/tools/tool.hpp"
 
 namespace tactile {
@@ -62,6 +67,8 @@ void ToolSystem::install()
   dispatcher.sink<ViewportMouseReleasedEvent>().connect<&ToolSystem::_on_viewport_mouse_released>(this);
   dispatcher.sink<ViewportMouseEnteredEvent>().connect<&ToolSystem::_on_viewport_mouse_entered>(this);
   dispatcher.sink<ViewportMouseExitedEvent>().connect<&ToolSystem::_on_viewport_mouse_exited>(this);
+  dispatcher.sink<StampSequenceEvent>().connect<&ToolSystem::_on_stamp_sequence>(this);
+  dispatcher.sink<FloodEvent>().connect<&ToolSystem::_on_flood>(this);
   // clang-format on
 }
 
@@ -130,6 +137,29 @@ void ToolSystem::_on_viewport_mouse_exited(const ViewportMouseExitedEvent&)
   if (mActiveTool) {
     mActiveTool->on_mouse_exited(get_registry(), get_dispatcher());
   }
+}
+
+void ToolSystem::_on_stamp_sequence(const StampSequenceEvent& event)
+{
+  spdlog::trace("[ToolSystem] StampSequenceEvent (layer: {})", event.layer);
+
+  sys::try_execute<cmd::StampSequence>(get_registry(),
+                                       event.layer,
+                                       event.old_state,
+                                       event.sequence);
+}
+
+void ToolSystem::_on_flood(const FloodEvent& event)
+{
+  spdlog::trace("[ToolSystem] FloodEvent (layer: {} origin: {} replacement: {})",
+                event.layer,
+                event.origin,
+                event.replacement);
+
+  sys::try_execute<cmd::BucketFill>(get_registry(),
+                                    event.layer,
+                                    event.origin,
+                                    event.replacement);
 }
 
 }  // namespace tactile

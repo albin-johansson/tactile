@@ -56,7 +56,6 @@
 #include "model/events/delegates/property_delegate.hpp"
 #include "model/events/delegates/settings_delegate.hpp"
 #include "model/events/delegates/tileset_delegate.hpp"
-#include "model/events/delegates/tool_delegate.hpp"
 #include "model/events/delegates/viewport_delegate.hpp"
 #include "model/i18n/language_system.hpp"
 #include "model/model_factory.hpp"
@@ -187,10 +186,6 @@ void App::_subscribe_to_events()
   ROUTE(DuplicateObjectEvent, &App::_on_duplicate_object);
   ROUTE(RemoveObjectEvent, &App::_on_remove_object);
   ROUTE(SpawnObjectContextMenuEvent, &App::_on_spawn_object_context_menu);
-
-  // Tool events
-  ROUTE(StampSequenceEvent, &App::_on_stamp_sequence);
-  ROUTE(FloodEvent, &App::_on_flood);
 
   // Font events
   ROUTE(ReloadFontsEvent, &App::_on_reload_fonts);
@@ -748,16 +743,6 @@ void App::_on_spawn_object_context_menu(const SpawnObjectContextMenuEvent& event
 {
   spdlog::trace("[SpawnObjectContextMenuEvent]");
   on_spawn_object_context_menu(*mRegistry, event);
-}
-
-void App::_on_stamp_sequence(const StampSequenceEvent& event)
-{
-  on_stamp_sequence(*mRegistry, event);
-}
-
-void App::_on_flood(const FloodEvent& event)
-{
-  on_flood(*mRegistry, event);
 }
 
 void App::_on_reload_fonts(const ReloadFontsEvent&)
