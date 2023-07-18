@@ -21,16 +21,16 @@
 
 #include "model/textures/texture_components.hpp"
 
-namespace tactile::sys {
+namespace tactile {
 
-void on_init_null_texture(Registry& registry,
-                          const Entity texture_entity,
-                          const TextureData&)
+void NullTextureSystem::prepare_texture(Registry& registry,
+                                        Entity texture_entity,
+                                        const TextureData&)
 {
   registry.add<NullTexture>(texture_entity);
 }
 
-void on_destroy_null_texture(Registry&, Entity)
+void NullTextureSystem::destroy_texture(Registry&, Entity)
 {
   // Do nothing
 }

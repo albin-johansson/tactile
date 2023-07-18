@@ -36,8 +36,7 @@
 
 namespace tactile {
 
-ToolSystem::ToolSystem(Registry& registry, Dispatcher& dispatcher)
-    : System {registry, dispatcher}
+ToolSystem::ToolSystem()
 {
   mTools[ToolType::Stamp] = std::make_unique<StampTool>();
   mTools[ToolType::Bucket] = std::make_unique<BucketTool>();
@@ -57,36 +56,15 @@ void ToolSystem::reset()
   mActiveTool = nullptr;
 }
 
-void ToolSystem::install()
-{
-  // clang-format off
-  auto& dispatcher = get_dispatcher();
-  dispatcher.sink<SelectToolEvent>().connect<&ToolSystem::_on_select_tool>(this);
-  dispatcher.sink<ViewportMousePressedEvent>().connect<&ToolSystem::_on_viewport_mouse_pressed>(this);
-  dispatcher.sink<ViewportMouseDraggedEvent>().connect<&ToolSystem::_on_viewport_mouse_dragged>(this);
-  dispatcher.sink<ViewportMouseReleasedEvent>().connect<&ToolSystem::_on_viewport_mouse_released>(this);
-  dispatcher.sink<ViewportMouseEnteredEvent>().connect<&ToolSystem::_on_viewport_mouse_entered>(this);
-  dispatcher.sink<ViewportMouseExitedEvent>().connect<&ToolSystem::_on_viewport_mouse_exited>(this);
-  dispatcher.sink<StampSequenceEvent>().connect<&ToolSystem::_on_stamp_sequence>(this);
-  dispatcher.sink<FloodEvent>().connect<&ToolSystem::_on_flood>(this);
-  // clang-format on
-}
-
-auto ToolSystem::is_tool_available(const ToolType type) const -> bool
-{
-  return lookup_in(mTools, type)->is_available(get_registry());
-}
-
-void ToolSystem::_on_select_tool(const SelectToolEvent& event)
+void ToolSystem::on_select_tool(Registry& registry,
+                                Dispatcher& dispatcher,
+                                const SelectToolEvent& event)
 {
   spdlog::trace("[ToolSystem] SelectToolEvent");
 
   if (mActiveToolType == event.type) {
     return;
   }
-
-  auto& registry = get_registry();
-  auto& dispatcher = get_dispatcher();
 
   if (mActiveTool) {
     TACTILE_ASSERT(mActiveToolType.has_value());
@@ -99,67 +77,83 @@ void ToolSystem::_on_select_tool(const SelectToolEvent& event)
   mActiveTool->on_activated(registry, dispatcher);
 }
 
-void ToolSystem::_on_viewport_mouse_pressed(const ViewportMousePressedEvent& event)
+void ToolSystem::on_viewport_mouse_pressed(Registry& registry,
+                                           Dispatcher& dispatcher,
+                                           const ViewportMousePressedEvent& event)
 {
   spdlog::trace("[ToolSystem] ViewportMousePressedEvent");
   if (mActiveTool) {
-    mActiveTool->on_mouse_pressed(get_registry(), get_dispatcher(), event.mouse_info);
+    mActiveTool->on_mouse_pressed(registry, dispatcher, event.mouse_info);
   }
 }
 
-void ToolSystem::_on_viewport_mouse_dragged(const ViewportMouseDraggedEvent& event)
+void ToolSystem::on_viewport_mouse_dragged(Registry& registry,
+                                           Dispatcher& dispatcher,
+                                           const ViewportMouseDraggedEvent& event)
 {
   spdlog::trace("[ToolSystem] ViewportMouseDraggedEvent");
   if (mActiveTool) {
-    mActiveTool->on_mouse_dragged(get_registry(), get_dispatcher(), event.mouse_info);
+    mActiveTool->on_mouse_dragged(registry, dispatcher, event.mouse_info);
   }
 }
 
-void ToolSystem::_on_viewport_mouse_released(const ViewportMouseReleasedEvent& event)
+void ToolSystem::on_viewport_mouse_released(Registry& registry,
+                                            Dispatcher& dispatcher,
+                                            const ViewportMouseReleasedEvent& event)
 {
   spdlog::trace("[ToolSystem] ViewportMouseReleasedEvent");
   if (mActiveTool) {
-    mActiveTool->on_mouse_released(get_registry(), get_dispatcher(), event.mouse_info);
+    mActiveTool->on_mouse_released(registry, dispatcher, event.mouse_info);
   }
 }
 
-void ToolSystem::_on_viewport_mouse_entered(const ViewportMouseEnteredEvent&)
+void ToolSystem::on_viewport_mouse_entered(Registry& registry,
+                                           Dispatcher& dispatcher,
+                                           const ViewportMouseEnteredEvent&)
 {
   spdlog::trace("[ToolSystem] ViewportMouseEnteredEvent");
   if (mActiveTool) {
-    mActiveTool->on_mouse_entered(get_registry(), get_dispatcher());
+    mActiveTool->on_mouse_entered(registry, dispatcher);
   }
 }
 
-void ToolSystem::_on_viewport_mouse_exited(const ViewportMouseExitedEvent&)
+void ToolSystem::on_viewport_mouse_exited(Registry& registry,
+                                          Dispatcher& dispatcher,
+                                          const ViewportMouseExitedEvent&)
 {
   spdlog::trace("[ToolSystem] ViewportMouseExitedEvent");
   if (mActiveTool) {
-    mActiveTool->on_mouse_exited(get_registry(), get_dispatcher());
+    mActiveTool->on_mouse_exited(registry, dispatcher);
   }
 }
 
-void ToolSystem::_on_stamp_sequence(const StampSequenceEvent& event)
+void ToolSystem::on_stamp_sequence(Registry& registry, const StampSequenceEvent& event)
 {
   spdlog::trace("[ToolSystem] StampSequenceEvent (layer: {})", event.layer);
 
-  sys::try_execute<cmd::StampSequence>(get_registry(),
+  sys::try_execute<cmd::StampSequence>(registry,
                                        event.layer,
                                        event.old_state,
                                        event.sequence);
 }
 
-void ToolSystem::_on_flood(const FloodEvent& event)
+void ToolSystem::on_flood(Registry& registry, const FloodEvent& event)
 {
   spdlog::trace("[ToolSystem] FloodEvent (layer: {} origin: {} replacement: {})",
                 event.layer,
                 event.origin,
                 event.replacement);
 
-  sys::try_execute<cmd::BucketFill>(get_registry(),
+  sys::try_execute<cmd::BucketFill>(registry,
                                     event.layer,
                                     event.origin,
                                     event.replacement);
+}
+
+auto ToolSystem::is_tool_available(const Registry& registry, const ToolType type) const
+    -> bool
+{
+  return lookup_in(mTools, type)->is_available(registry);
 }
 
 }  // namespace tactile

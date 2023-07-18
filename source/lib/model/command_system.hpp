@@ -32,21 +32,16 @@ TACTILE_FWD_DECLARE_STRUCT(SetCommandCapacityEvent)
 
 class CommandSystem final : public System {
  public:
-  CommandSystem(Registry& registry, Dispatcher& dispatcher);
+  void undo(Registry& registry);
 
-  /// Subscribes to UndoEvent, RedoEvent, and SetCommandCapacityEvent.
-  void install() override;
+  void redo(Registry& registry);
 
-  void undo();
+  void set_command_capacity(Registry& registry, usize capacity);
 
-  void redo();
-
-  void set_command_capacity(usize capacity);
+  void on_set_command_capacity(Registry& registry, const SetCommandCapacityEvent& event);
 
  private:
-  void _on_set_command_capacity(const SetCommandCapacityEvent& event);
-
-  [[nodiscard]] auto _get_active_command_stack() -> CommandStack*;
+  [[nodiscard]] auto _get_active_command_stack(Registry& registry) -> CommandStack*;
 };
 
 }  // namespace tactile

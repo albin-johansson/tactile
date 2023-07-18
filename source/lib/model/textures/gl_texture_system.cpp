@@ -25,11 +25,11 @@
 #include "common/primitives.hpp"
 #include "model/textures/texture_components.hpp"
 
-namespace tactile::sys {
+namespace tactile {
 
-void on_init_gl_texture(Registry& registry,
-                        const Entity texture_entity,
-                        const TextureData& texture_data)
+void OpenGLTextureSystem::prepare_texture(Registry& registry,
+                                          const Entity texture_entity,
+                                          const TextureData& texture_data)
 {
   auto& gl_texture = registry.add<OpenGLTexture>(texture_entity);
   gl_texture.id = gl::create_texture(texture_data);
@@ -38,7 +38,7 @@ void on_init_gl_texture(Registry& registry,
   texture.handle = std::bit_cast<void*>(static_cast<uintptr>(gl_texture.id));
 }
 
-void on_destroy_gl_texture(Registry& registry, const Entity texture_entity)
+void OpenGLTextureSystem::destroy_texture(Registry& registry, const Entity texture_entity)
 {
   const auto& gl_texture = registry.get<OpenGLTexture>(texture_entity);
   gl::destroy_texture(gl_texture.id);

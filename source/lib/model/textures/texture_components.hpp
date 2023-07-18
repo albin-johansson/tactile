@@ -22,7 +22,6 @@
 #include "common/macros.hpp"
 #include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/func.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "common/type/tree_map.hpp"
@@ -32,26 +31,19 @@ namespace tactile {
 
 TACTILE_FWD_DECLARE_STRUCT(TextureData)
 
-using TextureInitFn = Func<void(Registry&, Entity, const TextureData&)>;
-using TextureDestroyFn = Func<void(Registry&, Entity)>;
-
-/// Context component with backend specific texture callbacks.
-struct TextureCallbacks final {
-  TextureInitFn init;        ///< Initializes a texture.
-  TextureDestroyFn destroy;  ///< Destroys a texture.
-};
-
 /// Context component tracking loaded icon textures.
 struct Icons final {
   Entity tactile_icon {kNullEntity};
 };
 
-/// Context component that tracks loaded textures.
-struct TextureCache final {
-  TreeMap<Path, Entity> textures;
-};
-
-/// Component describing a loaded texture.
+/**
+ * Component describing a loaded texture.
+ *
+ * \details The actual type of the handle member depends on the backend API that is being
+ *          used. For OpenGL, the handle should be reinterpreted as a texture identifier.
+ *          For Vulkan, the handle is a VkDescriptorSet. This is dictated by the
+ *          associated Dear ImGui backend implementations.
+ */
 struct Texture final {
   void* handle {};  ///< Opaque handle to the backend texture resource.
   Int2 size {};     ///< The texture dimensions.

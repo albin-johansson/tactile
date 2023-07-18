@@ -19,18 +19,20 @@
 
 #pragma once
 
-#include "common/macros.hpp"
-#include "common/type/ecs.hpp"
-#include "model/registry.hpp"
+#include "model/textures/texture_system.hpp"
 
-TACTILE_FWD_DECLARE_STRUCT_NS(tactile, TextureData)
+namespace tactile {
 
-namespace tactile::sys {
+class OpenGLTextureSystem final : public TextureSystem {
+ public:
+  using TextureSystem::TextureSystem;
 
-void on_init_gl_texture(Registry& registry,
-                        Entity texture_entity,
-                        const TextureData& texture_data);
+ protected:
+  void prepare_texture(Registry& registry,
+                       Entity texture_entity,
+                       const TextureData& texture_data) override;
 
-void on_destroy_gl_texture(Registry& registry, Entity texture_entity);
+  void destroy_texture(Registry& registry, Entity texture_entity) override;
+};
 
 }  // namespace tactile::sys

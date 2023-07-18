@@ -20,7 +20,6 @@
 #pragma once
 
 #include "common/type/dispatcher.hpp"
-#include "common/type/ref.hpp"
 #include "model/registry.hpp"
 
 namespace tactile {
@@ -28,16 +27,6 @@ namespace tactile {
 /// The abstract base class for all system implementations.
 class System {
  public:
-  /**
-   * Creates a system.
-   *
-   * \warning The registry and event dispatcher must both outlive the system.
-   *
-   * \param model      the associated registry.
-   * \param dispatcher the associated event dispatcher.
-   */
-  System(Registry& registry, Dispatcher& dispatcher);
-
   virtual ~System() noexcept = default;
 
   /**
@@ -48,25 +37,19 @@ class System {
    */
   virtual void reset() {}
 
-  /// Installs event listeners to the associated events.
-  virtual void install() {}
-
   /**
    * Updates the system.
    *
    * \details This function is called once for each engine tick. As such, it's important
    *          to be mindful of performance when overriding this function.
+   *
+   * \param registry   the associated registry.
+   * \param dispatcher the associated event dispatcher.
    */
-  virtual void update() {}
-
-  [[nodiscard]] auto get_registry() -> Registry& { return mRegistry.get(); }
-  [[nodiscard]] auto get_registry() const -> const Registry& { return mRegistry.get(); }
-
-  [[nodiscard]] auto get_dispatcher() const -> Dispatcher& { return mDispatcher.get(); }
-
- private:
-  Ref<Registry> mRegistry;
-  Ref<Dispatcher> mDispatcher;
+  virtual void update([[maybe_unused]] Registry& registry,
+                      [[maybe_unused]] Dispatcher& dispatcher)
+  {
+  }
 };
 
 }  // namespace tactile

@@ -48,6 +48,7 @@ namespace tactile {
 TACTILE_FWD_DECLARE_CLASS(System)
 TACTILE_FWD_DECLARE_CLASS(CommandSystem)
 TACTILE_FWD_DECLARE_CLASS(ToolSystem)
+TACTILE_FWD_DECLARE_CLASS(TextureSystem)
 
 /// The heart of the Tactile map editor.
 class App final : public AppDelegate {
@@ -75,6 +76,7 @@ class App final : public AppDelegate {
   Dispatcher mDispatcher;
   Unique<CommandSystem> mCommandSystem;
   Unique<ToolSystem> mToolSystem;
+  Unique<TextureSystem> mTextureSystem;
   Vector<System*> mSystems;
   ImVec2 mFramebufferScale {};
   bool mShouldStop     : 1 {false};
@@ -84,6 +86,11 @@ class App final : public AppDelegate {
   void _init_persistent_settings();
 
   void _on_menu_action(const MenuActionEvent& event);
+
+  // Command events
+  void _on_undo(const UndoEvent& event);
+  void _on_redo(const RedoEvent& event);
+  void _on_set_command_capacity(const SetCommandCapacityEvent& event);
 
   // File events
   void _on_open_document(const OpenDocumentEvent& event);
@@ -161,6 +168,11 @@ class App final : public AppDelegate {
   void _on_remove_object(const RemoveObjectEvent& event);
   void _on_spawn_object_context_menu(const SpawnObjectContextMenuEvent& event);
 
+  // Tool events
+  void _on_select_tool(const SelectToolEvent& event);
+  void _on_stamp_sequence(const StampSequenceEvent& event);
+  void _on_flood(const FloodEvent& event);
+
   // Font events
   void _on_reload_fonts(const ReloadFontsEvent& event);
   void _on_increase_font_size(const IncreaseFontSizeEvent& event);
@@ -178,6 +190,11 @@ class App final : public AppDelegate {
   void _on_reset_dock_visibilities(const ResetDockVisibilitiesEvent& event);
 
   // Viewport events
+  void _on_viewport_mouse_pressed(const ViewportMousePressedEvent& event);
+  void _on_viewport_mouse_dragged(const ViewportMouseDraggedEvent& event);
+  void _on_viewport_mouse_released(const ViewportMouseReleasedEvent& event);
+  void _on_viewport_mouse_entered(const ViewportMouseEnteredEvent& event);
+  void _on_viewport_mouse_exited(const ViewportMouseExitedEvent& event);
   void _on_center_viewport(const CenterViewportEvent& event);
   void _on_reset_viewport_zoom(const ResetViewportZoomEvent& event);
   void _on_increase_viewport_zoom(const IncreaseViewportZoomEvent& event);

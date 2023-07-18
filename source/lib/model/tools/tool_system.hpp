@@ -40,46 +40,47 @@ TACTILE_FWD_DECLARE_STRUCT(FloodEvent)
 
 class ToolSystem final : public System {
  public:
-  ToolSystem(Registry& registry, Dispatcher& dispatcher);
+  ToolSystem();
 
   ~ToolSystem() noexcept override;
 
   void reset() override;
 
-  /**
-   * Subscribes to associated events.
-   *
-   * \details This system subscribes to the following events.
-   *          <ul>
-   *            <li>SelectToolEvent</li>
-   *            <li>ViewportMousePressedEvent</li>
-   *            <li>ViewportMouseDraggedEvent</li>
-   *            <li>ViewportMouseReleasedEvent</li>
-   *            <li>ViewportMouseEnteredEvent</li>
-   *            <li>ViewportMouseExitedEvent</li>
-   *            <li>StampSequenceEvent</li>
-   *            <li>FloodEvent</li>
-   *          </ul>
-   */
-  void install() override;
+  void on_select_tool(Registry& registry,
+                      Dispatcher& dispatcher,
+                      const SelectToolEvent& event);
 
-  [[nodiscard]] auto is_tool_available(ToolType type) const -> bool;
+  void on_viewport_mouse_pressed(Registry& registry,
+                                 Dispatcher& dispatcher,
+                                 const ViewportMousePressedEvent& event);
+
+  void on_viewport_mouse_dragged(Registry& registry,
+                                 Dispatcher& dispatcher,
+                                 const ViewportMouseDraggedEvent& event);
+
+  void on_viewport_mouse_released(Registry& registry,
+                                  Dispatcher& dispatcher,
+                                  const ViewportMouseReleasedEvent& event);
+
+  void on_viewport_mouse_entered(Registry& registry,
+                                 Dispatcher& dispatcher,
+                                 const ViewportMouseEnteredEvent& event);
+
+  void on_viewport_mouse_exited(Registry& registry,
+                                Dispatcher& dispatcher,
+                                const ViewportMouseExitedEvent& event);
+
+  void on_stamp_sequence(Registry& registry, const StampSequenceEvent& event);
+
+  void on_flood(Registry& registry, const FloodEvent& event);
+
+  [[nodiscard]] auto is_tool_available(const Registry& registry, ToolType type) const
+      -> bool;
 
  private:
   HashMap<ToolType, Unique<Tool>> mTools;
   Tool* mActiveTool {};
   Maybe<ToolType> mActiveToolType;
-
-  void _on_select_tool(const SelectToolEvent& event);
-
-  void _on_viewport_mouse_pressed(const ViewportMousePressedEvent& event);
-  void _on_viewport_mouse_dragged(const ViewportMouseDraggedEvent& event);
-  void _on_viewport_mouse_released(const ViewportMouseReleasedEvent& event);
-  void _on_viewport_mouse_entered(const ViewportMouseEnteredEvent& event);
-  void _on_viewport_mouse_exited(const ViewportMouseExitedEvent& event);
-
-  void _on_stamp_sequence(const StampSequenceEvent& event);
-  void _on_flood(const FloodEvent& event);
 };
 
 }  // namespace tactile

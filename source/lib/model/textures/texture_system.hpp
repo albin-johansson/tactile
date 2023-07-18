@@ -19,13 +19,32 @@
 
 #pragma once
 
+#include "common/macros.hpp"
 #include "common/type/ecs.hpp"
+#include "common/type/hash_map.hpp"
 #include "common/type/path.hpp"
 #include "model/registry.hpp"
+#include "model/system.hpp"
 
-namespace tactile::sys {
+namespace tactile {
 
-/// Destroys all loaded textures (this should only be called once, just before shutdown).
-void destroy_loaded_texture_resources(Registry& registry);
+TACTILE_FWD_DECLARE_STRUCT(TextureData)
 
-}  // namespace tactile::sys
+class TextureSystem : public System {
+ public:
+  void destroy_textures(Registry& registry);
+
+  [[nodiscard]] auto load_texture(Registry& registry, const Path& texture_path) -> Entity;
+
+ protected:
+  virtual void prepare_texture(Registry& registry,
+                               Entity texture_entity,
+                               const TextureData& texture_data) = 0;
+
+  virtual void destroy_texture(Registry& registry, Entity texture_entity) = 0;
+
+ private:
+  HashMap<Path, Entity> mTextureCache;
+};
+
+}  // namespace tactile

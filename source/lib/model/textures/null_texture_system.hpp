@@ -19,16 +19,17 @@
 
 #pragma once
 
-#include "common/type/ecs.hpp"
-#include "io/texture_loader.hpp"
-#include "model/registry.hpp"
+#include "model/textures/texture_system.hpp"
 
-namespace tactile::sys {
+namespace tactile {
 
-void on_init_null_texture(Registry& registry,
-                          Entity texture_entity,
-                          const TextureData& texture_data);
+class NullTextureSystem final : public TextureSystem {
+ protected:
+  void prepare_texture(Registry& registry,
+                       Entity texture_entity,
+                       const TextureData& texture_data) override;
 
-void on_destroy_null_texture(Registry& registry, Entity texture_entity);
+  void destroy_texture(Registry& registry, Entity texture_entity) override;
+};
 
 }  // namespace tactile::sys

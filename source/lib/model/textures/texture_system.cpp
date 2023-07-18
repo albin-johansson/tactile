@@ -19,20 +19,47 @@
 
 #include "texture_system.hpp"
 
+#include <fmt/std.h>
+#include <spdlog/spdlog.h>
+
+#include "common/debug/assert.hpp"
 #include "io/texture_loader.hpp"
 #include "model/entity_validation.hpp"
 #include "model/textures/texture_components.hpp"
 
-namespace tactile::sys {
+namespace tactile {
 
-void destroy_loaded_texture_resources(Registry& registry)
+void TextureSystem::destroy_textures(Registry& registry)
 {
-  const auto& texture_callbacks = registry.get<TextureCallbacks>();
-  const auto& texture_cache = registry.get<TextureCache>();
-
-  for (const auto& [texture_path, texture_entity]: texture_cache.textures) {
-    texture_callbacks.destroy(registry, texture_entity);
+  for (const auto& [texture_path, texture_entity]: mTextureCache) {
+    destroy_texture(registry, texture_entity);
   }
+}
+
+auto TextureSystem::load_texture(Registry& registry, const Path& texture_path) -> Entity
+{
+  // Check if the image has already been loaded, if so just return the associated entity.
+  if (const auto iter = mTextureCache.find(texture_path); iter != mTextureCache.end()) {
+    return iter->second;
+  }
+
+  const auto texture_data = load_texture_data(texture_path);
+  if (!texture_data) {
+    spdlog::error("[TextureSystem] Could not load texture {}", texture_path);
+    return kNullEntity;
+  }
+
+  const auto texture_entity = registry.create_entity();
+
+  auto& texture = registry.add<Texture>(texture_entity);
+  texture.path = texture_path;
+  texture.size = texture_data->size;
+
+  prepare_texture(registry, texture_entity, *texture_data);
+  TACTILE_ASSERT(sys::is_texture_entity(registry, texture_entity));
+
+  mTextureCache[texture_path] = texture_entity;
+  return texture_entity;
 }
 
 }  // namespace tactile::sys

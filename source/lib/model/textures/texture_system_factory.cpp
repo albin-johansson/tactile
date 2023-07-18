@@ -17,14 +17,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "system.hpp"
+#include "texture_system_factory.hpp"
+
+#include "common/debug/panic.hpp"
+#include "model/textures/gl_texture_system.hpp"
+#include "model/textures/null_texture_system.hpp"
 
 namespace tactile {
 
-System::System(Registry& registry, Dispatcher& dispatcher)
-    : mRegistry {registry},
-      mDispatcher {dispatcher}
+auto make_texture_system(const BackendAPI api) -> Unique<TextureSystem>
 {
+  switch (api) {
+    case BackendAPI::Null:
+      return std::make_unique<NullTextureSystem>();
+
+    case BackendAPI::OpenGL:
+      return std::make_unique<OpenGLTextureSystem>();
+
+      // TODO case BackendAPI::Vulkan:
+      // TODO   break;
+
+    default:
+      throw TactileError {"No texture system available for the specified backend"};
+  }
 }
 
 }  // namespace tactile

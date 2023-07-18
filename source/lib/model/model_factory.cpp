@@ -23,8 +23,6 @@
 #include "model/i18n/language_components.hpp"
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/settings.hpp"
-#include "model/textures/gl_texture_system.hpp"
-#include "model/textures/null_texture_system.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/view/menu_components.hpp"
 #include "ui/widget_state.hpp"
@@ -39,21 +37,10 @@ void init_model(Registry& registry, const BackendAPI api)
   registry.add<Settings>();
   registry.add<Languages>();
   registry.add<FileHistory>();
-  registry.add<TextureCache>();
   registry.add<Icons>();
   registry.add<MenuItems>();
 
   registry.add<ui::WidgetState>();
-
-  auto& texture_callbacks = registry.add<TextureCallbacks>();
-  if (api == BackendAPI::Null) {
-    texture_callbacks.init = &on_init_null_texture;
-    texture_callbacks.destroy = &on_destroy_null_texture;
-  }
-  else if (api == BackendAPI::OpenGL) {
-    texture_callbacks.init = &on_init_gl_texture;
-    texture_callbacks.destroy = &on_destroy_gl_texture;
-  }
 }
 
 auto create_model(const BackendAPI api) -> Registry

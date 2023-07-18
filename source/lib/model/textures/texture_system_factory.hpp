@@ -19,12 +19,14 @@
 
 #pragma once
 
-#include "common/type/ecs.hpp"
-#include "common/type/path.hpp"
-#include "model/registry.hpp"
+#include "common/enum/backend_api.hpp"
+#include "common/macros.hpp"
+#include "common/type/ptr.hpp"
 
-namespace tactile::sys {
+namespace tactile {
 
-[[nodiscard]] auto create_texture(Registry& registry, const Path& path) -> Entity;
+TACTILE_FWD_DECLARE_CLASS(TextureSystem)
 
-}  // namespace tactile::sys
+[[nodiscard]] auto make_texture_system(BackendAPI api) -> Unique<TextureSystem>;
+
+}  // namespace tactile

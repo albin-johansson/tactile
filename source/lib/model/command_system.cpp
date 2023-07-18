@@ -27,58 +27,42 @@
 
 namespace tactile {
 
-CommandSystem::CommandSystem(Registry& registry, Dispatcher& dispatcher)
-    : System {registry, dispatcher}
-{
-}
-
-void CommandSystem::install()
-{
-  // clang-format off
-  auto& dispatcher = get_dispatcher();
-  dispatcher.sink<UndoEvent>().connect<&CommandSystem::undo>(this);
-  dispatcher.sink<RedoEvent>().connect<&CommandSystem::redo>(this);
-  dispatcher.sink<SetCommandCapacityEvent>().connect<&CommandSystem::_on_set_command_capacity>(this);
-  // clang-format on
-}
-
-void CommandSystem::undo()
+void CommandSystem::undo(Registry& registry)
 {
   spdlog::trace("[CommandSystem] Undoing last command");
 
-  if (auto* command_stack = _get_active_command_stack()) {
+  if (auto* command_stack = _get_active_command_stack(registry)) {
     command_stack->undo();
   }
 }
 
-void CommandSystem::redo()
+void CommandSystem::redo(Registry& registry)
 {
   spdlog::trace("[CommandSystem] Redoing last undone command");
 
-  if (auto* command_stack = _get_active_command_stack()) {
+  if (auto* command_stack = _get_active_command_stack(registry)) {
     command_stack->redo();
   }
 }
 
-void CommandSystem::set_command_capacity(const usize capacity)
+void CommandSystem::set_command_capacity(Registry& registry, const usize capacity)
 {
   spdlog::debug("[CommandSystem] Setting command capacity to {}", capacity);
 
-  auto& registry = get_registry();
   for (const auto [document_entity, document]: registry.each<Document>()) {
     auto& command_stack = registry.get<CommandStack>(document_entity);
     command_stack.set_capacity(capacity);
   }
 }
 
-void CommandSystem::_on_set_command_capacity(const SetCommandCapacityEvent& event)
+void CommandSystem::on_set_command_capacity(Registry& registry,
+                                            const SetCommandCapacityEvent& event)
 {
-  set_command_capacity(event.capacity);
+  set_command_capacity(registry, event.capacity);
 }
 
-auto CommandSystem::_get_active_command_stack() -> CommandStack*
+auto CommandSystem::_get_active_command_stack(Registry& registry) -> CommandStack*
 {
-  auto& registry = get_registry();
   const auto document_entity = sys::get_active_document(registry);
 
   if (document_entity != kNullEntity) {

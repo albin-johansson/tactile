@@ -22,8 +22,9 @@
 #include "common/debug/assert.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/entity_validation.hpp"
+#include "model/locator.hpp"
 #include "model/textures/texture_components.hpp"
-#include "model/textures/texture_factory.hpp"
+#include "model/textures/texture_system.hpp"
 #include "model/tiles/tile_factory.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_ops.hpp"
@@ -34,6 +35,8 @@ namespace tactile::sys {
 auto create_tileset(Registry& registry, const Int2& tile_size, const Path& image_path)
     -> Entity
 {
+  auto& texture_system = Locator<TextureSystem>::get();
+
   const auto tileset_entity = registry.create_entity();
 
   registry.add<TilesetRenderCache>(tileset_entity);
@@ -43,7 +46,7 @@ auto create_tileset(Registry& registry, const Int2& tile_size, const Path& image
 
   auto& tileset = registry.add<Tileset>(tileset_entity);
   tileset.tile_size = tile_size;
-  tileset.texture = create_texture(registry, image_path);
+  tileset.texture = texture_system.load_texture(registry, image_path);
 
   TACTILE_ASSERT(is_texture_entity(registry, tileset.texture));
   const auto& texture = registry.get<Texture>(tileset.texture);

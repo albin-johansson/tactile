@@ -58,15 +58,17 @@
 #include "model/events/delegates/tileset_delegate.hpp"
 #include "model/events/delegates/viewport_delegate.hpp"
 #include "model/i18n/language_system.hpp"
+#include "model/locator.hpp"
 #include "model/model_factory.hpp"
 #include "model/model_view.hpp"
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/file_history_system.hpp"
 #include "model/persistence/settings.hpp"
 #include "model/system.hpp"
+#include "model/textures/gl_texture_system.hpp"
 #include "model/textures/texture_components.hpp"
-#include "model/textures/texture_factory.hpp"
 #include "model/textures/texture_system.hpp"
+#include "model/textures/texture_system_factory.hpp"
 #include "model/tools/tool_system.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/style/fonts.hpp"
@@ -90,27 +92,35 @@ void App::on_startup(const BackendAPI api)
 
   sys::init_model(registry, api);
 
-  mCommandSystem = std::make_unique<CommandSystem>(*mRegistry, mDispatcher);
-  mToolSystem = std::make_unique<ToolSystem>(*mRegistry, mDispatcher);
+  mCommandSystem = std::make_unique<CommandSystem>();
+  mToolSystem = std::make_unique<ToolSystem>();
+  mTextureSystem = make_texture_system(api);
 
-  mSystems.reserve(2);
+  Locator<CommandSystem>::reset(mCommandSystem.get());
+  Locator<ToolSystem>::reset(mToolSystem.get());
+  Locator<TextureSystem>::reset(mTextureSystem.get());
+
+  mSystems.reserve(3);
   mSystems.push_back(mCommandSystem.get());
   mSystems.push_back(mToolSystem.get());
-
-  for (auto& system: mSystems) {
-    system->install();
-  }
+  mSystems.push_back(mTextureSystem.get());
 
   _subscribe_to_events();
 
   auto& icons = registry.get<Icons>();
-  icons.tactile_icon = sys::create_texture(registry, find_resource("assets/icon.png"));
+  icons.tactile_icon =
+      mTextureSystem->load_texture(registry, find_resource("assets/icon.png"));
 
   _init_persistent_settings();
 }
 
 void App::_subscribe_to_events()
 {
+  // Command events
+  ROUTE(UndoEvent, &App::_on_undo);
+  ROUTE(RedoEvent, &App::_on_redo);
+  ROUTE(SetCommandCapacityEvent, &App::_on_set_command_capacity);
+
   // File events
   ROUTE(OpenDocumentEvent, &App::_on_open_document);
   ROUTE(CloseDocumentEvent, &App::_on_close_document);
@@ -187,6 +197,11 @@ void App::_subscribe_to_events()
   ROUTE(RemoveObjectEvent, &App::_on_remove_object);
   ROUTE(SpawnObjectContextMenuEvent, &App::_on_spawn_object_context_menu);
 
+  // Tool events
+  ROUTE(SelectToolEvent, &App::_on_select_tool);
+  ROUTE(StampSequenceEvent, &App::_on_stamp_sequence);
+  ROUTE(FloodEvent, &App::_on_flood);
+
   // Font events
   ROUTE(ReloadFontsEvent, &App::_on_reload_fonts);
   ROUTE(IncreaseFontSizeEvent, &App::_on_increase_font_size);
@@ -205,6 +220,11 @@ void App::_subscribe_to_events()
   ROUTE(MenuActionEvent, &App::_on_menu_action);
 
   // Viewport events
+  ROUTE(ViewportMousePressedEvent, &App::_on_viewport_mouse_pressed);
+  ROUTE(ViewportMouseDraggedEvent, &App::_on_viewport_mouse_dragged);
+  ROUTE(ViewportMouseReleasedEvent, &App::_on_viewport_mouse_released);
+  ROUTE(ViewportMouseEnteredEvent, &App::_on_viewport_mouse_entered);
+  ROUTE(ViewportMouseExitedEvent, &App::_on_viewport_mouse_exited);
   ROUTE(CenterViewportEvent, &App::_on_center_viewport);
   ROUTE(ResetViewportZoomEvent, &App::_on_reset_viewport_zoom);
   ROUTE(IncreaseViewportZoomEvent, &App::_on_increase_viewport_zoom);
@@ -295,12 +315,12 @@ void App::on_shutdown()
 void App::on_update()
 {
   auto& registry = *mRegistry;
-  ModelView model_view {registry, *mToolSystem, mDispatcher};
+  ModelView model_view {registry, mDispatcher};
 
   // TODO update animated tiles
 
   for (auto& system: mSystems) {
-    system->update();
+    system->update(*mRegistry, mDispatcher);
   }
 
   auto& widgets = registry.get<ui::WidgetState>();
@@ -334,6 +354,21 @@ void App::_on_menu_action(const MenuActionEvent& event)
 {
   spdlog::trace("[MenuActionEvent] action: {}", event.action);
   on_menu_action(*mRegistry, mDispatcher, event);
+}
+
+void App::_on_undo(const UndoEvent&)
+{
+  mCommandSystem->undo(*mRegistry);
+}
+
+void App::_on_redo(const RedoEvent&)
+{
+  mCommandSystem->redo(*mRegistry);
+}
+
+void App::_on_set_command_capacity(const SetCommandCapacityEvent& event)
+{
+  mCommandSystem->on_set_command_capacity(*mRegistry, event);
 }
 
 void App::_on_open_document(const OpenDocumentEvent& event)
@@ -745,6 +780,21 @@ void App::_on_spawn_object_context_menu(const SpawnObjectContextMenuEvent& event
   on_spawn_object_context_menu(*mRegistry, event);
 }
 
+void App::_on_select_tool(const SelectToolEvent& event)
+{
+  mToolSystem->on_select_tool(*mRegistry, mDispatcher, event);
+}
+
+void App::_on_stamp_sequence(const StampSequenceEvent& event)
+{
+  mToolSystem->on_stamp_sequence(*mRegistry, event);
+}
+
+void App::_on_flood(const FloodEvent& event)
+{
+  mToolSystem->on_flood(*mRegistry, event);
+}
+
 void App::_on_reload_fonts(const ReloadFontsEvent&)
 {
   spdlog::trace("[ReloadFontsEvent]");
@@ -815,6 +865,31 @@ void App::_on_reset_dock_visibilities(const ResetDockVisibilitiesEvent& event)
 {
   spdlog::trace("[ResetDockVisibilitiesEvent]");
   on_reset_dock_visibilities(*mRegistry, event);
+}
+
+void App::_on_viewport_mouse_pressed(const ViewportMousePressedEvent& event)
+{
+  mToolSystem->on_viewport_mouse_pressed(*mRegistry, mDispatcher, event);
+}
+
+void App::_on_viewport_mouse_dragged(const ViewportMouseDraggedEvent& event)
+{
+  mToolSystem->on_viewport_mouse_dragged(*mRegistry, mDispatcher, event);
+}
+
+void App::_on_viewport_mouse_released(const ViewportMouseReleasedEvent& event)
+{
+  mToolSystem->on_viewport_mouse_released(*mRegistry, mDispatcher, event);
+}
+
+void App::_on_viewport_mouse_entered(const ViewportMouseEnteredEvent& event)
+{
+  mToolSystem->on_viewport_mouse_entered(*mRegistry, mDispatcher, event);
+}
+
+void App::_on_viewport_mouse_exited(const ViewportMouseExitedEvent& event)
+{
+  mToolSystem->on_viewport_mouse_exited(*mRegistry, mDispatcher, event);
 }
 
 void App::_on_center_viewport(const CenterViewportEvent& event)

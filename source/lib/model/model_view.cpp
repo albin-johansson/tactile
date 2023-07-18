@@ -22,6 +22,7 @@
 #include "model/documents/command_system.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/i18n/language_system.hpp"
+#include "model/locator.hpp"
 #include "model/maps/map_system.hpp"
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/file_history_system.hpp"
@@ -31,11 +32,8 @@
 
 namespace tactile {
 
-ModelView::ModelView(const Registry& registry,
-                     const ToolSystem& tool_system,
-                     Dispatcher& dispatcher)
+ModelView::ModelView(const Registry& registry, Dispatcher& dispatcher)
     : mRegistry {registry},
-      mToolSystem {tool_system},
       mDispatcher {dispatcher}
 {
 }
@@ -185,7 +183,8 @@ auto ModelView::_can_reopen_last_closed_file() const -> bool
 
 auto ModelView::_is_tool_available(const ToolType type) const -> bool
 {
-  return mToolSystem.get().is_tool_available(type);
+  const auto& tool_system = Locator<ToolSystem>::get();
+  return tool_system.is_tool_available(get_registry(), type);
 }
 
 }  // namespace tactile
