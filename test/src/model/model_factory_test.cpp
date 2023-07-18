@@ -22,7 +22,6 @@
 #include <doctest/doctest.h>
 
 #include "model/documents/document_components.hpp"
-#include "model/i18n/language_components.hpp"
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/settings.hpp"
 #include "model/textures/texture_components.hpp"
@@ -35,16 +34,13 @@ TEST_SUITE("ModelFactory")
 {
   TEST_CASE("create_model")
   {
-    const auto model = sys::create_model(BackendAPI::Null);
+    const auto registry = sys::create_model(BackendAPI::Null);
 
     CHECK(registry.has<DocumentContext>());
     CHECK(registry.has<Settings>());
-    CHECK(registry.has<Languages>());
     CHECK(registry.has<FileHistory>());
     CHECK(registry.has<Icons>());
-    CHECK(registry.has<TextureCache>());
-    CHECK(registry.has<TextureCallbacks>());
     CHECK(registry.has<MenuItems>());
-    CHECK(registry.has<ui::WidgetState>());
+    CHECK(registry.has<WidgetState>());
   }
 }

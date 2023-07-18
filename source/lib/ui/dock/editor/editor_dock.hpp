@@ -23,27 +23,25 @@
 
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 #include "model/viewports/viewport_components.hpp"
-#include "ui/dock/editor/central_map_viewport.hpp"
-#include "ui/dock/editor/central_tileset_viewport.hpp"
+#include "ui/dock/editor/map_editor_viewport.hpp"
+#include "ui/dock/editor/tileset_editor_viewport.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct EditorDockState final {
-  CentralMapViewportState central_map_viewport;
-  TilesetViewportState tileset_viewport;
+  MapEditorViewportState central_map_viewport;
+  TilesetEditorViewportState tileset_viewport;
   bool is_focused {};
   bool is_hovered {};
 };
 
-void push_editor_dock_widget(const Registry& registry,
-                             EditorDockState& state,
-                             Dispatcher& dispatcher);
+void push_editor_dock_widget(ModelView& model, EditorDockState& state);
 
 void on_mouse_wheel_event_in_central_viewport(Entity viewport_entity,
                                               const Viewport& viewport,
                                               Dispatcher& dispatcher,
                                               const cen::mouse_wheel_event& event);
 
-}  // namespace tactile::ui
+}  // namespace tactile

@@ -124,7 +124,7 @@ void on_set_tile_animation_frame_duration(Registry& registry,
 void on_enable_animation_frame_selection_mode(Registry& registry,
                                               const EnableAnimationFrameSelectionMode&)
 {
-  auto& tileset_viewport_state = registry.get<ui::TilesetViewportState>();
+  auto& tileset_viewport_state = registry.get<TilesetEditorViewportState>();
   tileset_viewport_state.animation_frame_selection_mode = true;
 }
 

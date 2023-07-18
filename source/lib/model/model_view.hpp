@@ -66,6 +66,8 @@ class ModelView final {
 
   [[nodiscard]] auto is_document_active(Entity document_entity) const -> bool;
 
+  [[nodiscard]] auto is_document_open(Entity document_entity) const -> bool;
+
   [[nodiscard]] auto is_map_document(Entity document_entity) const -> bool;
 
   [[nodiscard]] auto is_tileset_document(Entity document_entity) const -> bool;

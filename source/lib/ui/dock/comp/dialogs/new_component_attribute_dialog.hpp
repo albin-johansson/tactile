@@ -22,9 +22,9 @@
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/util/string_buffer.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct NewCompAttrDialogState final {
   Entity definition_entity {kNullEntity};
@@ -32,8 +32,6 @@ struct NewCompAttrDialogState final {
   bool should_open {};
 };
 
-void push_new_comp_attr_dialog(const Registry& registry,
-                               NewCompAttrDialogState& state,
-                               Dispatcher& dispatcher);
+void push_new_comp_attr_dialog(ModelView model, NewCompAttrDialogState& state);
 
-}  // namespace tactile::ui
+}  // namespace tactile

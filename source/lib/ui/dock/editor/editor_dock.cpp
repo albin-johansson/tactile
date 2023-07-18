@@ -24,15 +24,23 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "cmd/command_stack.hpp"
+#include "common/fmt/fmt_string.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
+#include "model/events/file_events.hpp"
 #include "model/events/map_events.hpp"
+#include "model/events/tool_events.hpp"
 #include "model/events/viewport_events.hpp"
 #include "model/i18n/language_system.hpp"
 #include "model/textures/texture_components.hpp"
+#include "model/tools/bucket_tool.hpp"
+#include "model/tools/stamp_tool.hpp"
 #include "model/viewports/viewport_components.hpp"
 #include "model/viewports/viewport_ops.hpp"
 #include "ui/conversions.hpp"
-#include "ui/dock/editor/document_tab_widget.hpp"
+#include "ui/dock/editor/map_editor_viewport.hpp"
+#include "ui/dock/editor/tileset_editor_viewport.hpp"
 #include "ui/shortcut/mappings.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
@@ -40,73 +48,121 @@
 #include "ui/widget/widgets.hpp"
 #include "ui/widget/windows.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
-void _push_start_page(const Registry& registry,
-                      const Strings& strings,
-                      Dispatcher& dispatcher)
+void _push_document_tab(ModelView& model,
+                        const Entity document_entity,
+                        MapEditorViewportState& map_viewport_state,
+                        TilesetEditorViewportState& tileset_viewport_state)
 {
-  prepare_vertical_alignment_center(4);
+  const ui::Scope document_scope {document_entity};
+
+  const auto is_document_active = model.is_document_active(document_entity);
+  const char* document_icon = model.is_map_document(document_entity) ? TAC_ICON_MAP  //
+                                                                     : TAC_ICON_TILESET;
+
+  const auto document_name = model.get_document_name(document_entity);
+  const FmtString<256> name_with_icon {"{} {}", document_icon, document_name};
+
+  ImGuiTabItemFlags flags = 0;
+  if (is_document_active) {
+    flags |= ImGuiTabItemFlags_SetSelected;
+
+    if (model.is_available(MenuAction::Save)) {
+      flags |= ImGuiTabItemFlags_UnsavedDocument;
+    }
+  }
+
+  bool opened = true;
+  if (const ui::TabItem item {name_with_icon.data(), &opened, flags}; item.is_open()) {
+    if (is_document_active) {
+      if (model.is_map_document(document_entity)) {
+        push_map_editor_viewport(model, map_viewport_state, document_entity);
+      }
+      else if (model.is_tileset_document(document_entity)) {
+        push_tileset_editor_viewport(model, tileset_viewport_state, document_entity);
+      }
+    }
+  }
+
+  if (!opened) {
+    model.enqueue<CloseDocumentEvent>(document_entity);
+  }
+  else if (ImGui::IsItemActivated()) {
+    model.enqueue<SelectDocumentEvent>(document_entity);
+  }
+}
+
+void _push_document_tab_bar(ModelView& model,
+                            MapEditorViewportState& map_viewport_state,
+                            TilesetEditorViewportState& tileset_viewport_state)
+{
+  if (const ui::TabBar bar {"##DocumentTabs", ImGuiTabBarFlags_Reorderable};
+      bar.is_open()) {
+    for (const auto document_entity: model.get_open_documents()) {
+      _push_document_tab(model,
+                         document_entity,
+                         map_viewport_state,
+                         tileset_viewport_state);
+    }
+  }
+}
+
+void _push_start_page(ModelView& model, const Strings& strings)
+{
+  ui::prepare_vertical_alignment_center(4);
 
   ImGui::SetCursorPos(ImGui::GetCursorPos() - ImVec2 {0, 64});
 
-  const auto& icons = registry.get<Icons>();
-  const auto& icon_texture = registry.get<Texture>(icons.tactile_icon);
-
-  center_next_item_horizontally(128);
-  ImGui::Image(icon_texture.handle, {128, 128});
+  ui::center_next_item_horizontally(128);
+  ImGui::Image(model.get_tactile_icon_texture(), {128, 128});
 
   ImGui::Spacing();
   ImGui::Spacing();
 
-  if (push_centered_button(strings.action.create_map.c_str())) {
-    dispatcher.enqueue<ShowNewMapDialogEvent>();
+  if (ui::push_centered_button(strings.action.create_map.c_str())) {
+    model.enqueue<ShowNewMapDialogEvent>();
   }
 
   ImGui::Spacing();
-  if (push_centered_button(strings.action.open_map.c_str())) {
-    dispatcher.enqueue<ShowOpenMapDialogEvent>();
+  if (ui::push_centered_button(strings.action.open_map.c_str())) {
+    model.enqueue<ShowOpenMapDialogEvent>();
   }
 }
 
 }  // namespace
 
-void push_editor_dock_widget(const Registry& registry,
-                             EditorDockState& state,
-                             Dispatcher& dispatcher)
+void push_editor_dock_widget(ModelView& model, EditorDockState& state)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& strings = model.get_language_strings();
 
-  StyleVar padding {ImGuiStyleVar_WindowPadding, {4, 4}};
-  remove_tab_bar_from_next_window();
+  ui::StyleVar padding {ImGuiStyleVar_WindowPadding, {4, 4}};
+  ui::remove_tab_bar_from_next_window();
 
-  const Window window {"Viewport",
-                       ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse};
+  const ui::Window window {"Viewport",
+                           ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse};
   state.is_focused = window.has_focus();
   state.is_hovered = window.is_hovered();
 
   if (window.is_open()) {
     padding.pop();
 
-    if (sys::has_active_document(registry)) {
-      push_document_tab_widget(registry,
-                               state.central_map_viewport,
-                               state.tileset_viewport,
-                               dispatcher);
+    if (model.has_active_document()) {
+      _push_document_tab_bar(model, state.central_map_viewport, state.tileset_viewport);
 
-      if (sys::is_map_document_active(registry)) {
+      if (model.has_active_map_document()) {
         if (window.mouse_entered()) {
-          dispatcher.enqueue<ViewportMouseEnteredEvent>();
+          model.enqueue<ViewportMouseEnteredEvent>();
         }
 
         if (window.mouse_exited()) {
-          dispatcher.enqueue<ViewportMouseExitedEvent>();
+          model.enqueue<ViewportMouseExitedEvent>();
         }
       }
     }
     else {
-      _push_start_page(registry, strings, dispatcher);
+      _push_start_page(model, strings);
     }
   }
 }
@@ -138,4 +194,4 @@ void on_mouse_wheel_event_in_central_viewport(const Entity viewport_entity,
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

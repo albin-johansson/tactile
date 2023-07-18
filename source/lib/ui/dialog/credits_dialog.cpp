@@ -22,14 +22,13 @@
 #include <centurion/system.hpp>
 #include <imgui.h>
 
-#include "model/i18n/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/scoped.hpp"
 
 #define GITHUB_URL "https://github.com/"
 #define SOURCEFORGE_URL "https://sourceforge.net/"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
 void _push_row(const char* lib, const char* license, const char* license_url)
@@ -53,22 +52,22 @@ void _push_row(const char* lib, const char* license, const char* license_url)
 
 }  // namespace
 
-void push_credits_dialog(const Registry& registry, CreditsDialogState& state)
+void push_credits_dialog(ModelView model, CreditsDialogState& state)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& strings = model.get_language_strings();
 
-  DialogOptions dialog_options {
+  ui::DialogOptions dialog_options {
       .title = strings.window.credits.c_str(),
       .close_label = strings.misc.close.c_str(),
-      .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
+      .flags = ui::UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
   if (state.should_open) {
-    dialog_options.flags |= UI_DIALOG_FLAG_OPEN;
+    dialog_options.flags |= ui::UI_DIALOG_FLAG_OPEN;
     state.should_open = false;
   }
 
-  if (const ScopedDialog dialog {dialog_options}; dialog.was_opened()) {
+  if (const ui::ScopedDialog dialog {dialog_options}; dialog.was_opened()) {
     ImGui::TextUnformatted(strings.misc.credits_info.c_str());
     ImGui::Spacing();
 
@@ -77,7 +76,7 @@ void push_credits_dialog(const Registry& registry, CreditsDialogState& state)
                              ImGuiTableFlags_Resizable |  //
                              ImGuiTableFlags_SizingStretchProp;
 
-    if (const Table table {"##CreditsTable", 2, table_flags}; table.is_open()) {
+    if (const ui::Table table {"##CreditsTable", 2, table_flags}; table.is_open()) {
       ImGui::TableSetupColumn(strings.misc.library.c_str());
       ImGui::TableSetupColumn(strings.misc.license.c_str());
       ImGui::TableHeadersRow();
@@ -135,4 +134,4 @@ void push_credits_dialog(const Registry& registry, CreditsDialogState& state)
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

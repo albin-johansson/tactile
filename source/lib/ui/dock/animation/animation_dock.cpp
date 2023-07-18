@@ -44,7 +44,7 @@
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
 inline constexpr ImVec2 kFrameImageSize {32, 32};
@@ -96,83 +96,84 @@ void _push_animated_tile_cell_image(const Registry& registry,
   }
 }
 
-void _push_frame_popup(const Registry& registry,
-                       const Strings& strings,
+void _push_frame_popup(ModelView& model,
                        const Entity tile_entity,
                        const usize frame_index,
-                       const ssize parent_tile_frame_count,
-                       Dispatcher& dispatcher)
+                       const ssize parent_tile_frame_count)
 {
+  const auto& registry = model.get_registry();
+  const auto& strings = model.get_language_strings();
   const auto document_entity = sys::get_active_document(registry);
 
   const auto& tile = registry.get<Tile>(tile_entity);
   const auto& tile_animation = registry.get<TileAnimation>(tile_entity);
   const auto& frame = tile_animation.frames.at(frame_index);
 
-  if (const Popup popup {"##FramePopup"}; popup.is_open()) {
+  if (const ui::Popup popup {"##FramePopup"}; popup.is_open()) {
     if (auto new_frame_duration = _push_frame_duration_slider(strings, frame.duration)) {
-      dispatcher.enqueue<SetAnimationFrameDurationEvent>(tile_entity,
-                                                         frame_index,
-                                                         *new_frame_duration);
+      model.enqueue<SetAnimationFrameDurationEvent>(tile_entity,
+                                                    frame_index,
+                                                    *new_frame_duration);
     }
 
     ImGui::Separator();
 
-    if (const Disable disable_if {frame_index == 0};
+    if (const ui::Disable disable_if {frame_index == 0};
         ImGui::MenuItem(strings.animation_dock.move_frame_forwards.c_str())) {
-      dispatcher.enqueue<MoveAnimationFrameForwardsEvent>(tile_entity, frame_index);
+      model.enqueue<MoveAnimationFrameForwardsEvent>(tile_entity, frame_index);
     }
 
-    if (const Disable disable_if {frame_index == tile_animation.frames.size() - 1};
+    if (const ui::Disable disable_if {frame_index == tile_animation.frames.size() - 1};
         ImGui::MenuItem(strings.animation_dock.move_frame_backwards.c_str())) {
-      dispatcher.enqueue<MoveAnimationFrameBackwardsEvent>(tile_entity, frame_index);
+      model.enqueue<MoveAnimationFrameBackwardsEvent>(tile_entity, frame_index);
     }
 
     ImGui::Separator();
 
-    if (const Disable disable_if {tile.index == frame.tile_index};
+    if (const ui::Disable disable_if {tile.index == frame.tile_index};
         ImGui::MenuItem(strings.animation_dock.select_referenced_tile.c_str())) {
-      dispatcher.enqueue<SelectTilesetTileEvent>(document_entity, frame.tile_index);
+      model.enqueue<SelectTilesetTileEvent>(document_entity, frame.tile_index);
     }
 
     ImGui::Separator();
 
-    if (const Disable disable_if {tile.index == frame.tile_index &&
-                                  parent_tile_frame_count < 2};
+    if (const ui::Disable disable_if {tile.index == frame.tile_index &&
+                                      parent_tile_frame_count < 2};
         ImGui::MenuItem(strings.animation_dock.remove_frame.c_str())) {
-      dispatcher.enqueue<RemoveAnimationFrameEvent>(tile_entity, frame_index);
+      model.enqueue<RemoveAnimationFrameEvent>(tile_entity, frame_index);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(strings.animation_dock.delete_animation.c_str())) {
-      dispatcher.enqueue<DeleteTileAnimationEvent>(tile_entity);
+      model.enqueue<DeleteTileAnimationEvent>(tile_entity);
     }
   }
 }
 
-void _push_animation_frame_list(const Registry& registry,
-                                const Strings& strings,
+void _push_animation_frame_list(ModelView& model,
                                 const Tileset& tileset,
-                                const Entity tile_entity,
-                                Dispatcher& dispatcher)
+                                const Entity tile_entity)
 {
+  const auto& registry = model.get_registry();
+  const auto& strings = model.get_language_strings();
+
   const auto& style = ImGui::GetStyle();
 
   const ImVec2 child_size {-kMinFloat,
                            kFrameImageSize.y + style.FramePadding.y * 2 +
                                style.ItemInnerSpacing.y + style.ScrollbarSize};
 
-  if (push_button(TAC_ICON_ADD, nullptr, true, 32, child_size.y)) {
-    dispatcher.enqueue<EnableAnimationFrameSelectionMode>();
+  if (ui::push_button(TAC_ICON_ADD, nullptr, true, 32, child_size.y)) {
+    model.enqueue<EnableAnimationFrameSelectionMode>();
   }
 
   ImGui::SameLine();
 
-  if (const Child list_child {"##ListChild",
-                              child_size,
-                              true,
-                              ImGuiWindowFlags_AlwaysHorizontalScrollbar};
+  if (const ui::Child list_child {"##ListChild",
+                                  child_size,
+                                  true,
+                                  ImGuiWindowFlags_AlwaysHorizontalScrollbar};
       list_child.is_open()) {
     if (registry.has<TileAnimation>(tile_entity)) {
       const auto& tile = registry.get<Tile>(tile_entity);
@@ -186,7 +187,7 @@ void _push_animation_frame_list(const Registry& registry,
 
       usize frame_index = 0;
       for (const auto& frame: animation.frames) {
-        const Scope frame_scope {&frame};
+        const ui::Scope frame_scope {&frame};
 
         const auto frame_tint = (frame_index == animation.index)
                                     ? ImVec4 {1, 1, 1, 1}
@@ -203,40 +204,37 @@ void _push_animation_frame_list(const Registry& registry,
           ImGui::OpenPopup("##FramePopup");
         }
 
-        _push_frame_popup(registry,
-                          strings,
-                          tile_entity,
-                          frame_index,
-                          parent_tile_frame_count,
-                          dispatcher);
+        _push_frame_popup(model, tile_entity, frame_index, parent_tile_frame_count);
 
         ++frame_index;
       }
     }
     else {
-      push_centered_label(strings.animation_dock.tile_has_no_animation.c_str());
+      ui::push_centered_label(strings.animation_dock.tile_has_no_animation.c_str());
     }
   }
 }
 
-void _push_tile_animation_preview_section(const Registry& registry,
-                                          const Strings& strings,
+void _push_tile_animation_preview_section(ModelView& model,
                                           AnimationDockState& state,
                                           const Tileset& tileset,
                                           const TileIndex tile_index)
 {
+  const auto& registry = model.get_registry();
+  const auto& strings = model.get_language_strings();
+
   ImGui::VSliderFloat("##Size",
                       {32, ImGui::GetContentRegionAvail().y},
                       &state.preview_animation_size,
                       0.1f,
                       1.0f,
                       "");
-  push_lazy_tooltip("##SizeTooltip", strings.misc.size.c_str());
+  ui::push_lazy_tooltip("##SizeTooltip", strings.misc.size.c_str());
 
   ImGui::SameLine();
 
-  if (const Child child {"##PreviewChild", {0, 0}, true}; child.is_open()) {
-    push_centered_label(strings.misc.preview.c_str());
+  if (const ui::Child child {"##PreviewChild", {0, 0}, true}; child.is_open()) {
+    ui::push_centered_label(strings.misc.preview.c_str());
 
     const auto& texture = registry.get<Texture>(tileset.texture);
     const Float2 texture_size = texture.size;
@@ -245,37 +243,35 @@ void _push_tile_animation_preview_section(const Registry& registry,
     const auto image_height = image_width * (texture_size.y / texture_size.x);
     const ImVec2 cell_image_size {image_width, image_height};
 
-    center_next_item_horizontally(image_width);
+    ui::center_next_item_horizontally(image_width);
     _push_animated_tile_cell_image(registry, tileset, tile_index, cell_image_size);
   }
 }
 
 }  // namespace
 
-void push_animation_dock_widget(const Registry& registry,
-                                AnimationDockState& state,
-                                Dispatcher& dispatcher)
+void push_animation_dock_widget(ModelView& model, AnimationDockState& state)
 {
-  const auto& settings = registry.get<Settings>();
+  const auto& registry = model.get_registry();
+  const auto& strings = model.get_language_strings();
+  const auto& settings = model.get_settings();
 
   if (!settings.test_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT)) {
     return;
   }
-
-  const auto& strings = sys::get_current_language_strings(registry);
 
   const auto document_entity = sys::get_active_document(registry);
   const auto& tileset_document = registry.get<TilesetDocument>(document_entity);
   const auto& tileset = registry.get<Tileset>(tileset_document.tileset);
 
   bool show_animation_dock = true;
-  const Window dock {strings.window.animation_dock.c_str(),
-                     ImGuiWindowFlags_NoCollapse,
-                     &show_animation_dock};
+  const ui::Window dock {strings.window.animation_dock.c_str(),
+                         ImGuiWindowFlags_NoCollapse,
+                         &show_animation_dock};
 
   if (show_animation_dock != settings.test_flag(SETTINGS_SHOW_ANIMATION_DOCK_BIT)) {
-    dispatcher.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_ANIMATION_DOCK_BIT,
-                                            show_animation_dock);
+    model.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_ANIMATION_DOCK_BIT,
+                                       show_animation_dock);
   }
 
   if (dock.is_open()) {
@@ -288,20 +284,12 @@ void push_animation_dock_widget(const Registry& registry,
                                    tileset_document.tileset,
                                    *tileset.selected_tile_index);
 
-      _push_animation_frame_list(registry,
-                                 strings,
-                                 tileset,
-                                 selected_tile_entity,
-                                 dispatcher);
-      _push_tile_animation_preview_section(registry,
-                                           strings,
-                                           state,
-                                           tileset,
-                                           appearance_tile_index);
+      _push_animation_frame_list(model, tileset, selected_tile_entity);
+      _push_tile_animation_preview_section(model, state, tileset, appearance_tile_index);
     }
     else {
-      prepare_vertical_alignment_center();
-      push_centered_label(strings.animation_dock.no_selected_tile_hint.c_str());
+      ui::prepare_vertical_alignment_center();
+      ui::push_centered_label(strings.animation_dock.no_selected_tile_hint.c_str());
     }
   }
 }
@@ -311,4 +299,4 @@ auto is_animation_dock_enabled(const Registry& registry) -> bool
   return sys::is_tileset_document_active(registry);
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

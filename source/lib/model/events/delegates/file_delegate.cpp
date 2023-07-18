@@ -90,7 +90,7 @@ void on_show_save_as_dialog(Registry& registry,
                             const ShowSaveAsDialogEvent&)
 {
   if (sys::is_map_document_active(registry)) {
-    ui::show_save_as_dialog(registry, dispatcher);
+    show_save_as_dialog(ModelView {registry, dispatcher});
   }
 }
 

@@ -37,7 +37,7 @@
 #include "ui/dock/tileset/tileset_dock.hpp"
 #include "ui/menu/menu_bar.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct WidgetState final {
   DockSpaceState dock_space;
@@ -61,4 +61,4 @@ struct WidgetState final {
   bool should_open_about_imgui_dialog {};
 };
 
-}  // namespace tactile::ui
+}  // namespace tactile

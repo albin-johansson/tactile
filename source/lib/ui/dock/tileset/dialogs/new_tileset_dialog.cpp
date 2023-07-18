@@ -27,7 +27,7 @@
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/widgets.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
 void _select_image_file(NewTilesetDialogState& state)
@@ -50,33 +50,31 @@ void _select_image_file(NewTilesetDialogState& state)
 
 }  // namespace
 
-void push_new_tileset_dialog(const Registry& registry,
-                             NewTilesetDialogState& state,
-                             Dispatcher& dispatcher)
+void push_new_tileset_dialog(ModelView model, NewTilesetDialogState& state)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& strings = model.get_language_strings();
 
-  DialogOptions options {
+  ui::DialogOptions options {
       .title = strings.window.create_tileset.c_str(),
       .close_label = strings.misc.cancel.c_str(),
       .accept_label = strings.misc.create.c_str(),
   };
 
   if (state.should_open) {
-    options.flags |= UI_DIALOG_FLAG_OPEN;
+    options.flags |= ui::UI_DIALOG_FLAG_OPEN;
     state.should_open = false;
   }
 
   if (!state.image_path.empty() && state.tile_size.x > 0 && state.tile_size.y > 0) {
-    options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
+    options.flags |= ui::UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
-  DialogAction action {DialogAction::None};
-  if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
+  ui::DialogAction action {ui::DialogAction::None};
+  if (const ui::ScopedDialog dialog {options, &action}; dialog.was_opened()) {
     ImGui::TextUnformatted(strings.misc.create_tileset_instruction.c_str());
     ImGui::Spacing();
 
-    if (push_button(strings.misc.select_image.c_str())) {
+    if (ui::push_button(strings.misc.select_image.c_str())) {
       _select_image_file(state);
     }
 
@@ -91,10 +89,10 @@ void push_new_tileset_dialog(const Registry& registry,
     ImGui::DragInt(strings.misc.tile_height.c_str(), &state.tile_size.y, 1.0f, 1, 10'000);
   }
 
-  if (action == DialogAction::Accept) {
-    dispatcher.enqueue<CreateTilesetEvent>(state.map_entity,
-                                           state.image_path,
-                                           state.tile_size);
+  if (action == ui::DialogAction::Accept) {
+    model.enqueue<CreateTilesetEvent>(state.map_entity,
+                                      state.image_path,
+                                      state.tile_size);
   }
 }
 

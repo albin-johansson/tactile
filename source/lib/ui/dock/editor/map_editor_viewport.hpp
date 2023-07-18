@@ -19,11 +19,17 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
-#include "model/registry.hpp"
+#include "common/type/ecs.hpp"
+#include "model/model_view.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void push_tileset_tabs(const Registry& registry, Dispatcher& dispatcher);
+struct MapEditorViewportState final {
+  bool should_open_object_context_menu {};
+};
 
-}  // namespace tactile::ui
+void push_map_editor_viewport(ModelView& model,
+                              MapEditorViewportState& state,
+                              Entity map_document_entity);
+
+}  // namespace tactile

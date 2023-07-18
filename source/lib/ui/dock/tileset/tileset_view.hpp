@@ -19,14 +19,12 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void update_attached_tileset_view(const Registry& registry,
-                                  Entity attached_tileset_entity,
-                                  Dispatcher& dispatcher);
+void render_attached_tileset_tab_contents(ModelView& model,
+                                          Entity attached_tileset_entity);
 
-}  // namespace tactile::ui
+}  // namespace tactile

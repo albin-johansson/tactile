@@ -41,7 +41,7 @@ ImGuiContext::ImGuiContext()
   io.IniFilename = layout_file_path.c_str();
 
   ImGui::StyleColorsDark();
-  ui::apply_style(ImGui::GetStyle());
+  apply_style(ImGui::GetStyle());
 }
 
 ImGuiContext::~ImGuiContext() noexcept

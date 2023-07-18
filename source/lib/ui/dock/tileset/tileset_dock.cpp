@@ -22,40 +22,137 @@
 #include <centurion/events/mouse_events.hpp>
 #include <imgui.h>
 
+#include "common/debug/assert.hpp"
+#include "model/contexts/context_components.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
+#include "model/events/file_events.hpp"
+#include "model/events/property_events.hpp"
 #include "model/events/setting_events.hpp"
 #include "model/events/tileset_events.hpp"
 #include "model/events/viewport_events.hpp"
 #include "model/i18n/language_system.hpp"
 #include "model/maps/map_components.hpp"
+#include "model/tilesets/tileset_components.hpp"
 #include "model/viewports/viewport_components.hpp"
-#include "ui/dock/tileset/tileset_tabs.hpp"
+#include "ui/dock/tileset/tileset_view.hpp"
 #include "ui/style/alignment.hpp"
+#include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
-namespace tactile::ui {
+namespace tactile {
+namespace {
 
-void push_tileset_dock_widget(const Registry& registry,
-                              TilesetDockState& state,
-                              Dispatcher& dispatcher)
+void _push_tab_context_menu(ModelView& model,
+                            const Strings& strings,
+                            const Entity tileset_document_entity,
+                            const Entity attached_tileset_entity)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
-  const auto& settings = registry.get<Settings>();
+  const auto& registry = model.get_registry();
+
+  if (auto popup = ui::Popup::for_item("##TilesetTabContext"); popup.is_open()) {
+    if (ImGui::MenuItem(strings.action.create_tileset.c_str())) {
+      model.enqueue<ShowNewTilesetDialogEvent>();
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(strings.action.inspect_tileset.c_str())) {
+      model.enqueue<InspectContextEvent>(attached_tileset_entity);
+    }
+
+    ImGui::Separator();
+
+    if (const ui::Disable disable_if {model.is_document_open(tileset_document_entity)};
+        ImGui::MenuItem(strings.action.open_tileset.c_str())) {
+      model.enqueue<OpenDocumentEvent>(tileset_document_entity);
+      model.enqueue<SelectDocumentEvent>(tileset_document_entity);
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(strings.action.remove_tileset.c_str())) {
+      model.enqueue<DetachTilesetEvent>(sys::get_active_map(registry),
+                                        attached_tileset_entity);
+    }
+  }
+}
+
+void _push_tileset_tab_bar(ModelView& model)
+{
+  TACTILE_ASSERT(model.has_active_map_document());
+
+  const auto& registry = model.get_registry();
+  const auto& strings = model.get_language_strings();
+
+  const ImGuiTabBarFlags tab_bar_flags =
+      ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
+
+  if (const ui::TabBar bar {"##TilesetTabBar", tab_bar_flags}; bar.is_open()) {
+    if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
+                             ImGuiTabItemFlags_Trailing)) {
+      model.enqueue<ShowNewTilesetDialogEvent>();
+    }
+
+    const auto map_document_entity = sys::get_active_document(registry);
+
+    const auto& map_document = registry.get<MapDocument>(map_document_entity);
+    const auto& map = registry.get<Map>(map_document.map);
+
+    for (const auto attached_tileset_entity: map.attached_tilesets) {
+      const ui::Scope scope {attached_tileset_entity};
+      const auto& attached_tileset =
+          registry.get<AttachedTileset>(attached_tileset_entity);
+
+      const auto tileset_entity = attached_tileset.tileset;
+      const auto tileset_document_entity =
+          sys::get_associated_tileset_document(registry, tileset_entity);
+      TACTILE_ASSERT(tileset_document_entity != kNullEntity);
+
+      const auto tileset_name = sys::get_document_name(registry, tileset_document_entity);
+      const auto is_tileset_active = map.active_tileset == attached_tileset_entity;
+
+      if (const ui::TabItem item {tileset_name.c_str(),
+                                  nullptr,
+                                  is_tileset_active ? ImGuiTabItemFlags_SetSelected : 0};
+          item.is_open()) {
+        render_attached_tileset_tab_contents(model, attached_tileset_entity);
+      }
+
+      if (ImGui::IsItemClicked(ImGuiMouseButton_Left) ||
+          ImGui::IsItemClicked(ImGuiMouseButton_Right) || ImGui::IsItemActivated()) {
+        model.enqueue<SelectTilesetEvent>(attached_tileset_entity);
+      }
+      else {
+        _push_tab_context_menu(model,
+                               strings,
+                               tileset_document_entity,
+                               attached_tileset_entity);
+      }
+    }
+  }
+}
+
+}  // namespace
+
+void push_tileset_dock_widget(ModelView& model, TilesetDockState& state)
+{
+  const auto& registry = model.get_registry();
+  const auto& strings = model.get_language_strings();
+  const auto& settings = model.get_settings();
 
   if (!settings.test_flag(SETTINGS_SHOW_TILESET_DOCK_BIT)) {
     return;
   }
 
   bool show_tileset_dock = true;
-  const Window dock {strings.window.tileset_dock.c_str(),
-                     ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
-                     &show_tileset_dock};
+  const ui::Window dock {strings.window.tileset_dock.c_str(),
+                         ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
+                         &show_tileset_dock};
 
   if (show_tileset_dock != settings.test_flag(SETTINGS_SHOW_TILESET_DOCK_BIT)) {
-    dispatcher.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_TILESET_DOCK_BIT,
-                                            show_tileset_dock);
+    model.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_TILESET_DOCK_BIT, show_tileset_dock);
   }
 
   // We intentionally do not use the window is_hovered function here
@@ -68,17 +165,17 @@ void push_tileset_dock_widget(const Registry& registry,
     const auto& map = registry.get<Map>(map_document.map);
 
     if (map.attached_tilesets.empty()) {
-      prepare_vertical_alignment_center(2);
-      push_centered_label(strings.misc.map_has_no_tilesets.c_str());
+      ui::prepare_vertical_alignment_center(2);
+      ui::push_centered_label(strings.misc.map_has_no_tilesets.c_str());
 
       ImGui::Spacing();
 
-      if (push_centered_button(strings.action.add_tileset.c_str())) {
-        dispatcher.enqueue<ShowNewTilesetDialogEvent>();
+      if (ui::push_centered_button(strings.action.add_tileset.c_str())) {
+        model.enqueue<ShowNewTilesetDialogEvent>();
       }
     }
     else {
-      push_tileset_tabs(registry, dispatcher);
+      _push_tileset_tab_bar(model);
     }
   }
 }
@@ -104,4 +201,4 @@ void on_mouse_wheel_event_in_tileset_dock(const Registry& registry,
   dispatcher.enqueue<OffsetViewportEvent>(attached_tileset_entity, delta);
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

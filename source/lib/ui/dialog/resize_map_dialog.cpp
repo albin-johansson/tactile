@@ -26,28 +26,26 @@
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void push_resize_map_dialog(const Registry& registry,
-                            ResizeMapDialogState& state,
-                            Dispatcher& dispatcher)
+void push_resize_map_dialog(ModelView model, ResizeMapDialogState& state)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& strings = model.get_language_strings();
 
-  DialogOptions options {
+  ui::DialogOptions options {
       .title = strings.window.resize_map.c_str(),
       .close_label = strings.misc.close.c_str(),
       .accept_label = strings.misc.ok.c_str(),
-      .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
+      .flags = ui::UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
   if (state.should_open) {
-    options.flags |= UI_DIALOG_FLAG_OPEN;
+    options.flags |= ui::UI_DIALOG_FLAG_OPEN;
     state.should_open = false;
   }
 
-  DialogAction action {DialogAction::None};
-  if (const ScopedDialog dialog {options, &action}; dialog.was_opened()) {
+  ui::DialogAction action {ui::DialogAction::None};
+  if (const ui::ScopedDialog dialog {options, &action}; dialog.was_opened()) {
     const uint64 min_value = 1;
     const uint64 max_value = 10'000;
 
@@ -73,9 +71,9 @@ void push_resize_map_dialog(const Registry& registry,
                       &max_value);
   }
 
-  if (action == DialogAction::Accept) {
-    dispatcher.enqueue<ResizeMapEvent>(state.row_count, state.col_count);
+  if (action == ui::DialogAction::Accept) {
+    model.enqueue<ResizeMapEvent>(state.row_count, state.col_count);
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

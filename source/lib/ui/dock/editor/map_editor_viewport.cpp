@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "central_map_viewport.hpp"
+#include "map_editor_viewport.hpp"
 
 #include <concepts>  // predicate
 
@@ -45,7 +45,7 @@
 #include "ui/render/primitives.hpp"
 #include "ui/widget/scoped.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
 constexpr auto kViewportObjectContextMenuId = "##MapViewObjectContextMenu";
@@ -74,19 +74,15 @@ void _check_for(ViewportMouseInfo mouse_info, Dispatcher& dispatcher, T&& predic
   }
 }
 
-void _draw_cursor_gizmos(const Registry& registry,
-                         const CanvasInfo& canvas,
-                         const Map& map,
+void _draw_cursor_gizmos(ModelView& model,
+                         const ui::CanvasInfo& canvas,
                          const ViewportMouseInfo& mouse)
 {
-  const auto is_tile_layer_active =
-      map.active_layer != kNullEntity && registry.has<TileLayer>(map.active_layer);
-
-  if (mouse.over_content && is_tile_layer_active) {
-    draw_shadowed_rect(as_imvec2(mouse.clamped_pos),
-                       canvas.graphical_tile_size,
-                       Color {0, 0xFF, 0, 0xC8},
-                       2.0f);
+  if (mouse.over_content && model.is_tile_layer_active()) {
+    ui::draw_shadowed_rect(as_imvec2(mouse.clamped_pos),
+                           canvas.graphical_tile_size,
+                           Color {0, 0xFF, 0, 0xC8},
+                           2.0f);
   }
 
   // ToolPreviewRenderer preview_renderer {registry, renderer, make_mouse_info(cursor)};
@@ -106,7 +102,7 @@ void _poll_mouse(const ViewportMouseInfo& mouse_info, Dispatcher& dispatcher)
 
   // FIXME crash: we need to track origin dock for these mouse events, otherwise we
   // might end up emitting dragged events without an initial pressed event, etc.
-  if (Window::contains_mouse()) {
+  if (ui::Window::contains_mouse()) {
     using PressedEvent = ViewportMousePressedEvent;
     using DraggedEvent = ViewportMouseDraggedEvent;
     using ReleasedEvent = ViewportMouseReleasedEvent;
@@ -126,68 +122,68 @@ void _poll_mouse(const ViewportMouseInfo& mouse_info, Dispatcher& dispatcher)
   }
 }
 
-void _push_viewport_context_menu(const Strings& strings,
+void _push_viewport_context_menu(ModelView& model,
+                                 const Strings& strings,
                                  const Entity map_document_entity,
-                                 const MapDocument& map_document,
-                                 Dispatcher& dispatcher)
+                                 const MapDocument& map_document)
 {
   constexpr auto flags =
       ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverExistingPopup;
 
-  if (const auto popup = Popup::for_item("##MapViewContextMenu", flags);
+  if (const auto popup = ui::Popup::for_item("##MapViewContextMenu", flags);
       popup.is_open()) {
     if (ImGui::MenuItem(strings.action.inspect_map.c_str())) {
-      dispatcher.enqueue<InspectContextEvent>(map_document.map);
+      model.enqueue<InspectContextEvent>(map_document.map);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(strings.action.center_viewport.c_str())) {
-      dispatcher.enqueue<CenterViewportEvent>(map_document_entity);
+      model.enqueue<CenterViewportEvent>(map_document_entity);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(strings.action.reset_zoom.c_str())) {
-      dispatcher.enqueue<ResetViewportZoomEvent>(map_document_entity);
+      model.enqueue<ResetViewportZoomEvent>(map_document_entity);
     }
   }
 }
 
-void _push_object_context_menu(const Registry& registry,
+void _push_object_context_menu(ModelView& model,
                                const Strings& strings,
                                const Map& map,
-                               CentralMapViewportState& state,
-                               Dispatcher& dispatcher)
+                               MapEditorViewportState& state)
 {
-  if (const Popup popup {kViewportObjectContextMenuId}; popup.is_open()) {
+  if (const ui::Popup popup {kViewportObjectContextMenuId}; popup.is_open()) {
+    const auto& registry = model.get_registry();
     const auto& object_layer = registry.get<ObjectLayer>(map.active_layer);
     const auto& object = registry.get<Object>(object_layer.active_object);
 
     if (ImGui::MenuItem(strings.action.inspect_object.c_str())) {
-      dispatcher.enqueue<InspectContextEvent>(object_layer.active_object);
+      model.enqueue<InspectContextEvent>(object_layer.active_object);
     }
 
     ImGui::Separator();
     if (ImGui::MenuItem(strings.action.toggle_object_visibility.c_str(),
                         nullptr,
                         object.visible)) {
-      dispatcher.enqueue<SetObjectVisibleEvent>(object_layer.active_object,
-                                                !object.visible);
+      model.enqueue<SetObjectVisibleEvent>(object_layer.active_object, !object.visible);
     }
 
     // TODO implement the object actions
 
     ImGui::Separator();
 
-    if (const Disable disable; ImGui::MenuItem(strings.action.duplicate_object.c_str())) {
-      dispatcher.enqueue<DuplicateObjectEvent>(object_layer.active_object);
+    if (const ui::Disable disable;
+        ImGui::MenuItem(strings.action.duplicate_object.c_str())) {
+      model.enqueue<DuplicateObjectEvent>(object_layer.active_object);
     }
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(strings.action.remove_object.c_str())) {
-      dispatcher.enqueue<RemoveObjectEvent>(object_layer.active_object);
+      model.enqueue<RemoveObjectEvent>(object_layer.active_object);
     }
   }
 
@@ -200,22 +196,23 @@ void _push_object_context_menu(const Registry& registry,
 
 }  // namespace
 
-void push_central_map_viewport(const Registry& registry,
-                               CentralMapViewportState& state,
-                               const Entity map_document_entity,
-                               Dispatcher& dispatcher)
+void push_map_editor_viewport(ModelView& model,
+                              MapEditorViewportState& state,
+                              const Entity map_document_entity)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
-  const auto& settings = registry.get<Settings>();
+  auto& dispatcher = model.get_dispatcher();
+  const auto& registry = model.get_registry();
+  const auto& strings = model.get_language_strings();
+  const auto& settings = model.get_settings();
 
   const auto& map_document = registry.get<MapDocument>(map_document_entity);
   const auto& viewport = registry.get<Viewport>(map_document_entity);
   const auto& map = registry.get<Map>(map_document.map);
 
-  const auto canvas = create_canvas_info(viewport, map.tile_size, map.extent);
+  const auto canvas = ui::create_canvas_info(viewport, map.tile_size, map.extent);
 
   update_dynamic_viewport_info(map_document_entity, canvas, dispatcher);
-  update_document_viewport_offset(map_document_entity, canvas.size, dispatcher);
+  ui::update_document_viewport_offset(map_document_entity, canvas.size, dispatcher);
 
   clear_canvas(canvas, settings.get_viewport_bg_color());
   push_scissor(canvas);
@@ -225,17 +222,29 @@ void push_central_map_viewport(const Registry& registry,
   const auto mouse_info = get_viewport_mouse_info(canvas);
   _poll_mouse(mouse_info, dispatcher);
 
-  if (Window::contains_mouse()) {
-    _draw_cursor_gizmos(registry, canvas, map, mouse_info);
+  if (ui::Window::contains_mouse()) {
+    _draw_cursor_gizmos(model, canvas, mouse_info);
   }
 
-  pop_scissor();
+  ui::pop_scissor();
 
-  push_map_viewport_toolbar(registry, dispatcher);
-  push_map_viewport_overlay(registry, map, mouse_info, dispatcher);
+  push_map_viewport_toolbar(model);
+  push_map_viewport_overlay(model, map, mouse_info);
 
-  _push_viewport_context_menu(strings, map_document_entity, map_document, dispatcher);
-  _push_object_context_menu(registry, strings, map, state, dispatcher);
+  _push_viewport_context_menu(model, strings, map_document_entity, map_document);
+  _push_object_context_menu(model, strings, map, state);
+
+  if (model.is_available(MenuAction::EnableStamp) &&
+      ImGui::Shortcut(ImGuiKey_S, ImGuiKeyOwner_Any, ImGuiInputFlags_RouteFocused)) {
+    model.enqueue<SelectToolEvent>(ToolType::Stamp);
+  }
+
+  if (model.is_available(MenuAction::EnableBucket) &&
+      ImGui::Shortcut(ImGuiKey_B, ImGuiKeyOwner_Any, ImGuiInputFlags_RouteFocused)) {
+    model.enqueue<SelectToolEvent>(ToolType::Bucket);
+  }
+
+  // TODO more tool shortcuts
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

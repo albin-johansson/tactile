@@ -35,7 +35,7 @@
 #include "ui/widget/widgets.hpp"
 #include "ui/widget/windows.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
 inline constexpr auto kToolbarWindowFlags =
@@ -66,11 +66,11 @@ void _prepare_window_position(const ImVec2& offset = {})
   ImGui::SetNextWindowViewport(ImGui::GetWindowViewport()->ID);
 }
 
-void _tool_button([[maybe_unused]] const Registry& registry,
+// TODO
+void _tool_button([[maybe_unused]] ModelView model,
                   [[maybe_unused]] const ToolType tool,
                   [[maybe_unused]] const char* icon,
-                  [[maybe_unused]] const char* tooltip,
-                  [[maybe_unused]] Dispatcher& dispatcher)
+                  [[maybe_unused]] const char* tooltip)
 {
   //  const auto selected = tools.is_enabled(tool);
   //
@@ -92,7 +92,8 @@ void _push_extra_toolbar(std::invocable auto callable)
   const auto& style = ImGui::GetStyle();
   _prepare_window_position({gToolbarState.width + style.ItemInnerSpacing.x, 0});
 
-  if (const Window extra {"##ToolbarWindowExtra", kToolbarWindowFlags}; extra.is_open()) {
+  if (const ui::Window extra {"##ToolbarWindowExtra", kToolbarWindowFlags};
+      extra.is_open()) {
     // Prevent other mouse events in the viewport by treating both toolbars as one
     if (!gToolbarState.has_hover) {
       gToolbarState.has_hover = ImGui::IsWindowHovered();
@@ -103,89 +104,78 @@ void _push_extra_toolbar(std::invocable auto callable)
 
 }  // namespace
 
-void push_map_viewport_toolbar(const Registry& registry, Dispatcher& dispatcher)
+void push_map_viewport_toolbar(ModelView model)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& registry = model.get_registry();
+  const auto& strings = model.get_language_strings();
 
-  remove_tab_bar_from_next_window();
+  ui::remove_tab_bar_from_next_window();
 
   _prepare_window_position();
   ImGui::SetNextWindowBgAlpha(0.75f);
 
-  const StyleVar padding {ImGuiStyleVar_WindowPadding, {6, 6}};
+  const ui::StyleVar padding {ImGuiStyleVar_WindowPadding, {6, 6}};
 
   const auto document_entity = sys::get_active_document(registry);
   // const auto& map_document = registry.get<MapDocument>(document_entity);
   const auto& command_stack = registry.get<CommandStack>(document_entity);
   // const auto& tools = map_document.get_tools();
 
-  if (const Window window {"##ToolbarWindow", kToolbarWindowFlags}; window.is_open()) {
+  if (const ui::Window window {"##ToolbarWindow", kToolbarWindowFlags};
+      window.is_open()) {
     gToolbarState.visible = true;
     gToolbarState.has_hover = ImGui::IsWindowHovered();
     gToolbarState.has_focus = window.has_focus();
     gToolbarState.width = ImGui::GetWindowSize().x;
 
-    if (push_icon_button(TAC_ICON_UNDO,
-                         strings.misc.undo.c_str(),
-                         command_stack.can_undo())) {
-      dispatcher.enqueue<UndoEvent>();
+    if (ui::push_icon_button(TAC_ICON_UNDO,
+                             strings.misc.undo.c_str(),
+                             command_stack.can_undo())) {
+      model.enqueue<UndoEvent>();
     }
 
-    if (push_icon_button(TAC_ICON_REDO,
-                         strings.misc.redo.c_str(),
-                         command_stack.can_redo())) {
-      dispatcher.enqueue<RedoEvent>();
-    }
-
-    ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
-
-    if (push_icon_button(TAC_ICON_TILESET, strings.tooltip.create_tileset.c_str())) {
-      dispatcher.enqueue<ShowNewTilesetDialogEvent>();
+    if (ui::push_icon_button(TAC_ICON_REDO,
+                             strings.misc.redo.c_str(),
+                             command_stack.can_redo())) {
+      model.enqueue<RedoEvent>();
     }
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    _tool_button(registry,
-                 ToolType::Stamp,
-                 TAC_ICON_STAMP,
-                 strings.misc.stamp_tool.c_str(),
-                 dispatcher);
+    if (ui::push_icon_button(TAC_ICON_TILESET, strings.tooltip.create_tileset.c_str())) {
+      model.enqueue<ShowNewTilesetDialogEvent>();
+    }
 
-    _tool_button(registry,
+    ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
+
+    _tool_button(model, ToolType::Stamp, TAC_ICON_STAMP, strings.misc.stamp_tool.c_str());
+
+    _tool_button(model,
                  ToolType::Eraser,
                  TAC_ICON_ERASER,
-                 strings.misc.eraser_tool.c_str(),
-                 dispatcher);
+                 strings.misc.eraser_tool.c_str());
 
-    _tool_button(registry,
+    _tool_button(model,
                  ToolType::Bucket,
                  TAC_ICON_BUCKET,
-                 strings.misc.bucket_tool.c_str(),
-                 dispatcher);
+                 strings.misc.bucket_tool.c_str());
 
-    _tool_button(registry,
+    _tool_button(model,
                  ToolType::ObjectSelection,
                  TAC_ICON_OBJECT_SELECTION,
-                 strings.misc.object_selection_tool.c_str(),
-                 dispatcher);
+                 strings.misc.object_selection_tool.c_str());
 
-    _tool_button(registry,
+    _tool_button(model,
                  ToolType::Rectangle,
                  TAC_ICON_RECTANGLE,
-                 strings.misc.rectangle_tool.c_str(),
-                 dispatcher);
+                 strings.misc.rectangle_tool.c_str());
 
-    _tool_button(registry,
+    _tool_button(model,
                  ToolType::Ellipse,
                  TAC_ICON_ELLIPSE,
-                 strings.misc.ellipse_tool.c_str(),
-                 dispatcher);
+                 strings.misc.ellipse_tool.c_str());
 
-    _tool_button(registry,
-                 ToolType::Point,
-                 TAC_ICON_POINT,
-                 strings.misc.point_tool.c_str(),
-                 dispatcher);
+    _tool_button(model, ToolType::Point, TAC_ICON_POINT, strings.misc.point_tool.c_str());
   }
   else {
     gToolbarState.visible = false;
@@ -231,4 +221,4 @@ auto is_map_toolbar_focused() -> bool
   return gToolbarState.has_focus;
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

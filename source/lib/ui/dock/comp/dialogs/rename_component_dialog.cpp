@@ -28,15 +28,15 @@
 #include "model/documents/document_system.hpp"
 #include "model/events/component_events.hpp"
 #include "model/i18n/language_system.hpp"
-#include "model/registry.hpp"
 #include "ui/dialog/dialog.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void push_rename_comp_dialog(const Registry& registry,
-                             RenameCompDialogState& state,
-                             Dispatcher& dispatcher)
+void push_rename_comp_dialog(ModelView model, RenameCompDialogState& state)
 {
+  const auto& registry = model.get_registry();
+  const auto& strings = model.get_language_strings();
+
   const auto document_entity = sys::get_active_document(registry);
   const auto& document = registry.get<Document>(document_entity);
 
@@ -47,8 +47,7 @@ void push_rename_comp_dialog(const Registry& registry,
     return;
   }
 
-  const auto& strings = sys::get_current_language_strings(registry);
-  DialogOptions dialog_options {
+  ui::DialogOptions dialog_options {
       .title = strings.window.rename_component.c_str(),
       .close_label = strings.misc.cancel.c_str(),
       .accept_label = strings.misc.rename.c_str(),
@@ -57,18 +56,18 @@ void push_rename_comp_dialog(const Registry& registry,
   const bool should_acquire_focus = state.should_open;
 
   if (state.should_open) {
-    dialog_options.flags |= UI_DIALOG_FLAG_OPEN;
+    dialog_options.flags |= ui::UI_DIALOG_FLAG_OPEN;
     state.should_open = false;
   }
 
   const auto current_name = state.component_name_buffer.as_string_view();
   if (!current_name.empty() &&
       sys::find_component(registry, component_set, current_name) == kNullEntity) {
-    dialog_options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
+    dialog_options.flags |= ui::UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
-  DialogAction action {DialogAction::None};
-  if (const ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
+  ui::DialogAction action {ui::DialogAction::None};
+  if (const ui::ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
     if (should_acquire_focus) {
       ImGui::SetKeyboardFocusHere();
     }
@@ -77,10 +76,10 @@ void push_rename_comp_dialog(const Registry& registry,
                      state.component_name_buffer.size_bytes());
   }
 
-  if (action == DialogAction::Accept) {
-    dispatcher.enqueue<RenameComponentEvent>(state.definition,
-                                             state.component_name_buffer.as_string());
+  if (action == ui::DialogAction::Accept) {
+    model.enqueue<RenameComponentEvent>(state.definition,
+                                        state.component_name_buffer.as_string());
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

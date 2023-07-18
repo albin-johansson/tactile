@@ -21,6 +21,7 @@
 
 #include <doctest/doctest.h>
 
+#include "common/util/vectors.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_factory.hpp"
 #include "model/entity_validation.hpp"
@@ -33,43 +34,43 @@ TEST_SUITE("DocumentSystem")
 {
   TEST_CASE("destroy_document")
   {
-    auto model = sys::create_model(BackendAPI::Null);
+    auto registry = sys::create_model(BackendAPI::Null);
 
     const auto document_entity =
-        sys::create_map_document(model, TileExtent {5, 5}, Float2 {32, 32});
-    REQUIRE(sys::is_document_entity(model, document_entity));
+        sys::create_map_document(registry, TileExtent {5, 5}, Float2 {32, 32});
+    REQUIRE(sys::is_document_entity(registry, document_entity));
 
-    sys::open_document(model, document_entity);
+    sys::open_document(registry, document_entity);
 
-    CHECK(sys::is_document_open(model, document_entity));
-    CHECK(document_entity == sys::get_active_document(model));
+    CHECK(sys::is_document_open(registry, document_entity));
+    CHECK(document_entity == sys::get_active_document(registry));
 
-    sys::destroy_document(model, document_entity);
+    sys::destroy_document(registry, document_entity);
 
     CHECK(!registry.is_valid(document_entity));
-    CHECK(!sys::has_active_document(model));
+    CHECK(!sys::has_active_document(registry));
 
     const auto& document_context = registry.get<DocumentContext>();
-    CHECK(!document_context.open_documents.contains(document_entity));
+    CHECK(!contained_in(document_context.open_documents, document_entity));
   }
 
   TEST_CASE("select_document")
   {
-    auto model = sys::create_model(BackendAPI::Null);
+    auto registry = sys::create_model(BackendAPI::Null);
 
     const auto document_entity1 =
-        sys::create_map_document(model, TileExtent {5, 5}, Float2 {32, 32});
+        sys::create_map_document(registry, TileExtent {5, 5}, Float2 {32, 32});
     const auto document_entity2 =
-        sys::create_map_document(model, TileExtent {5, 5}, Float2 {32, 32});
+        sys::create_map_document(registry, TileExtent {5, 5}, Float2 {32, 32});
 
-    REQUIRE(sys::is_document_entity(model, document_entity1));
-    REQUIRE(sys::is_document_entity(model, document_entity2));
+    REQUIRE(sys::is_document_entity(registry, document_entity1));
+    REQUIRE(sys::is_document_entity(registry, document_entity2));
 
-    sys::open_document(model, document_entity1);
-    sys::open_document(model, document_entity2);
-    CHECK(sys::get_active_document(model) == document_entity2);
+    sys::open_document(registry, document_entity1);
+    sys::open_document(registry, document_entity2);
+    CHECK(sys::get_active_document(registry) == document_entity2);
 
-    sys::select_document(model, document_entity1);
-    CHECK(sys::get_active_document(model) == document_entity1);
+    sys::select_document(registry, document_entity1);
+    CHECK(sys::get_active_document(registry) == document_entity1);
   }
 }

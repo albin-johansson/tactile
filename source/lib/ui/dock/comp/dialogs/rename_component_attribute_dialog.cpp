@@ -27,15 +27,15 @@
 #include "model/documents/document_system.hpp"
 #include "model/events/component_events.hpp"
 #include "model/i18n/language_system.hpp"
-#include "model/registry.hpp"
 #include "ui/dialog/dialog.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void push_rename_comp_attr_dialog(const Registry& registry,
-                                  RenameCompAttrDialogState& state,
-                                  Dispatcher& dispatcher)
+void push_rename_comp_attr_dialog(ModelView model, RenameCompAttrDialogState& state)
 {
+  const auto& registry = model.get_registry();
+  const auto& strings = model.get_language_strings();
+
   const auto document_entity = sys::get_active_document(registry);
   const auto& document = registry.get<Document>(document_entity);
 
@@ -46,15 +46,14 @@ void push_rename_comp_attr_dialog(const Registry& registry,
     return;
   }
 
-  const auto& strings = sys::get_current_language_strings(registry);
-  DialogOptions dialog_options {
+  ui::DialogOptions dialog_options {
       .title = strings.window.rename_component_attribute.c_str(),
       .close_label = strings.misc.cancel.c_str(),
       .accept_label = strings.misc.rename.c_str(),
   };
 
   if (state.should_open) {
-    dialog_options.flags |= UI_DIALOG_FLAG_OPEN;
+    dialog_options.flags |= ui::UI_DIALOG_FLAG_OPEN;
     state.should_open = false;
   }
 
@@ -62,22 +61,22 @@ void push_rename_comp_attr_dialog(const Registry& registry,
   const auto& component = registry.get<Component>(state.definition);
 
   if (!current_name.empty() && !component.attributes.contains(current_name)) {
-    dialog_options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
+    dialog_options.flags |= ui::UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
-  DialogAction action {DialogAction::None};
-  if (const ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
+  ui::DialogAction action {ui::DialogAction::None};
+  if (const ui::ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
     ImGui::InputTextWithHint("##Name",
                              strings.misc.attribute_name_hint.c_str(),
                              state.attribute_name_buffer.data(),
                              state.attribute_name_buffer.size_bytes());
   }
 
-  if (action == DialogAction::Accept) {
-    dispatcher.enqueue<RenameComponentAttrEvent>(state.definition,
-                                                 state.attribute_name,
-                                                 state.attribute_name_buffer.as_string());
+  if (action == ui::DialogAction::Accept) {
+    model.enqueue<RenameComponentAttrEvent>(state.definition,
+                                            state.attribute_name,
+                                            state.attribute_name_buffer.as_string());
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

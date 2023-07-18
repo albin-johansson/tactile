@@ -28,7 +28,7 @@
 #include "common/predef.hpp"
 #include "ui/style/colors.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
 struct ThemeCfg final {
@@ -368,4 +368,4 @@ void apply_theme(ImGuiStyle& style, const Theme theme, int32 saturation)
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

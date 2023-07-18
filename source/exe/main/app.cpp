@@ -302,7 +302,8 @@ void App::_init_persistent_settings()
 
   auto& style = ImGui::GetStyle();
   style.WindowBorderSize = settings.test_flag(SETTINGS_WINDOW_BORDER_BIT) ? 1.0f : 0.0f;
-  ui::apply_theme(style, settings.get_theme(), settings.get_theme_saturation());
+
+  apply_theme(style, settings.get_theme(), settings.get_theme_saturation());
 }
 
 void App::on_shutdown()
@@ -320,7 +321,6 @@ void App::on_shutdown()
 void App::on_update()
 {
   auto& registry = *mRegistry;
-  ModelView model_view {registry, mDispatcher};
 
   // TODO update animated tiles
 
@@ -328,12 +328,14 @@ void App::on_update()
     system->update(*mRegistry, mDispatcher);
   }
 
-  auto& widgets = registry.get<ui::WidgetState>();
-  ui::poll_global_shortcuts(model_view);
-  ui::render_ui(model_view, widgets);
-  ui::check_for_missing_layout_file(registry,
-                                    widgets.dock_space.root_dock_id.value(),
-                                    mDispatcher);
+  auto& widgets = registry.get<WidgetState>();
+
+  ModelView model_view {registry, mDispatcher};
+  poll_global_shortcuts(model_view);
+  render_ui(model_view, widgets);
+  check_for_missing_layout_file(registry,
+                                widgets.dock_space.root_dock_id.value(),
+                                mDispatcher);
 
   const auto& io = ImGui::GetIO();
   if (mFramebufferScale.x != io.DisplayFramebufferScale.x) {
@@ -442,8 +444,8 @@ void App::_on_reset_layout(const ResetLayoutEvent&)
 {
   spdlog::trace("[ResetLayoutEvent]");
 
-  const auto& widgets = mRegistry->get<ui::WidgetState>();
-  ui::reset_layout(*mRegistry, widgets.dock_space.root_dock_id.value(), mDispatcher);
+  const auto& widgets = mRegistry->get<WidgetState>();
+  reset_layout(*mRegistry, widgets.dock_space.root_dock_id.value(), mDispatcher);
 }
 
 void App::_on_toggle_highlight_layer(const ToggleHighlightLayerEvent&)
@@ -1178,7 +1180,7 @@ void App::_on_show_about_dialog(const ShowAboutDialogEvent&)
 {
   spdlog::trace("[ShowAboutDialogEvent]");
 
-  auto& widget_state = mRegistry->get<ui::WidgetState>();
+  auto& widget_state = mRegistry->get<WidgetState>();
   widget_state.about_dialog.should_open = true;
 }
 
@@ -1186,7 +1188,7 @@ void App::_on_show_credits_dialog(const ShowCreditsDialogEvent&)
 {
   spdlog::trace("[ShowCreditsDialog]");
 
-  auto& widget_state = mRegistry->get<ui::WidgetState>();
+  auto& widget_state = mRegistry->get<WidgetState>();
   widget_state.credits_dialog.should_open = true;
 }
 
@@ -1194,7 +1196,7 @@ void App::_on_show_about_imgui_dialog(const ShowAboutImGuiDialogEvent&)
 {
   spdlog::trace("[ShowAboutImGuiDialogEvent]");
 
-  auto& widget_state = mRegistry->get<ui::WidgetState>();
+  auto& widget_state = mRegistry->get<WidgetState>();
   widget_state.should_open_about_imgui_dialog = true;
 }
 

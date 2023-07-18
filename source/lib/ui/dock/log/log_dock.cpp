@@ -29,7 +29,7 @@
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
 const HashMap<LogLevel, ImVec4> kLogLevelColors = {
@@ -92,8 +92,8 @@ void _push_message_filter_checkboxes(const Strings& strings, LogDockState& state
 
 void _push_logged_message_legend_overlay(const Strings& strings)
 {
-  constexpr float overlay_opacity = 0.35f;
-  constexpr ImGuiWindowFlags overlay_window_flags =
+  const float overlay_opacity = 0.35f;
+  const ImGuiWindowFlags overlay_window_flags =
       ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking |
       ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings |
       ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav |
@@ -110,7 +110,8 @@ void _push_logged_message_legend_overlay(const Strings& strings)
   ImGui::SetNextWindowPos(overlay_pos, ImGuiCond_Always, overlay_pivot);
   ImGui::SetNextWindowBgAlpha(overlay_opacity);
 
-  if (const Window overlay {"##LegendOverlay", overlay_window_flags}; overlay.is_open()) {
+  if (const ui::Window overlay {"##LegendOverlay", overlay_window_flags};
+      overlay.is_open()) {
     ImGui::TextColored(lookup_in(kLogLevelColors, LogLevel::trace),
                        "%s",
                        strings.misc.log_trace_filter.c_str());
@@ -136,13 +137,13 @@ void _push_logged_message_view(const Strings& strings,
                                const usize message_count,
                                LogDockState& state)
 {
-  const StyleColor child_bg {ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
+  const ui::StyleColor child_bg {ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
 
   const auto child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
                            ImGuiWindowFlags_HorizontalScrollbar |
                            ImGuiWindowFlags_AlwaysAutoResize;
 
-  if (const Child pane {"##LogPane", {}, true, child_flags}; pane.is_open()) {
+  if (const ui::Child pane {"##LogPane", {}, true, child_flags}; pane.is_open()) {
     ImGuiListClipper clipper;
     clipper.Begin(static_cast<int>(message_count));
 
@@ -167,24 +168,22 @@ void _push_logged_message_view(const Strings& strings,
 
 }  // namespace
 
-void push_log_dock_widget(const Registry& registry,
-                          LogDockState& state,
-                          Dispatcher& dispatcher)
+void push_log_dock_widget(ModelView& model, LogDockState& state)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
-  const auto& settings = registry.get<Settings>();
+  const auto& strings = model.get_language_strings();
+  const auto& settings = model.get_settings();
 
   if (!settings.test_flag(SETTINGS_SHOW_LOG_DOCK_BIT)) {
     return;
   }
 
   bool show_log_dock = true;
-  const Window dock {strings.window.log_dock.c_str(),
-                     ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
-                     &show_log_dock};
+  const ui::Window dock {strings.window.log_dock.c_str(),
+                         ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
+                         &show_log_dock};
 
   if (show_log_dock != settings.test_flag(SETTINGS_SHOW_LOG_DOCK_BIT)) {
-    dispatcher.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_LOG_DOCK_BIT, show_log_dock);
+    model.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_LOG_DOCK_BIT, show_log_dock);
   }
 
   state.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
@@ -197,10 +196,10 @@ void push_log_dock_widget(const Registry& registry,
       _push_logged_message_view(strings, message_count, state);
     }
     else {
-      push_centered_label(strings.misc.log_no_messages_match_filter.c_str());
+      ui::push_centered_label(strings.misc.log_no_messages_match_filter.c_str());
     }
 
-    if (auto popup = Popup::for_window("##LogDockPopup"); popup.is_open()) {
+    if (auto popup = ui::Popup::for_window("##LogDockPopup"); popup.is_open()) {
       if (ImGui::MenuItem(strings.action.clear_log.c_str())) {
         clear_log_history();
       }
@@ -208,4 +207,4 @@ void push_log_dock_widget(const Registry& registry,
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

@@ -49,7 +49,7 @@ void on_show_component_editor(Registry& registry, const ShowComponentEditorEvent
     const auto& document = registry.get<Document>(document_entity);
     const auto& component_set = registry.get<ComponentSet>(document.component_set);
 
-    auto& widgets = registry.get<ui::WidgetState>();
+    auto& widgets = registry.get<WidgetState>();
     widgets.component_editor_dialog.active_definition = kNullEntity;
 
     if (!component_set.definitions.empty()) {
@@ -63,7 +63,7 @@ void on_show_component_editor(Registry& registry, const ShowComponentEditorEvent
 
 void on_show_new_comp_dialog(Registry& registry, const ShowNewCompDialogEvent&)
 {
-  auto& widgets = registry.get<ui::WidgetState>();
+  auto& widgets = registry.get<WidgetState>();
   auto& dialog_state = widgets.component_editor_dialog.new_comp_dialog;
 
   dialog_state.name_buffer.clear();
@@ -76,7 +76,7 @@ void on_show_rename_comp_dialog(Registry& registry,
   TACTILE_ASSERT(sys::is_component_entity(registry, event.definition));
   const auto& component = registry.get<Component>(event.definition);
 
-  auto& widgets = registry.get<ui::WidgetState>();
+  auto& widgets = registry.get<WidgetState>();
   auto& dialog_state = widgets.component_editor_dialog.rename_comp_dialog;
 
   dialog_state.definition = event.definition;
@@ -90,7 +90,7 @@ void on_show_new_comp_attr_dialog(Registry& registry,
 {
   TACTILE_ASSERT(sys::is_component_entity(registry, event.definition));
 
-  auto& widgets = registry.get<ui::WidgetState>();
+  auto& widgets = registry.get<WidgetState>();
   auto& dialog_state = widgets.component_editor_dialog.new_comp_attr_dialog;
 
   dialog_state.definition_entity = event.definition;
@@ -101,7 +101,7 @@ void on_show_new_comp_attr_dialog(Registry& registry,
 void on_show_rename_comp_attr_dialog(Registry& registry,
                                      const ShowRenameCompAttrDialogEvent& event)
 {
-  auto& widgets = registry.get<ui::WidgetState>();
+  auto& widgets = registry.get<WidgetState>();
   auto& dialog_state = widgets.component_editor_dialog.rename_comp_attr_dialog;
 
   dialog_state.definition = event.definition;

@@ -19,23 +19,19 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
-#include "common/type/maybe.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 #include "ui/dock/layer/add_layer_context_menu.hpp"
 #include "ui/dock/layer/dialogs/rename_layer_dialog.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct LayerDockState final {
-  AddLayerContextMenu add_layer_context_menu;
-  RenameLayerDialogState rename_layer_dialog;
+  ui::AddLayerContextMenu add_layer_context_menu;
+  ui::RenameLayerDialogState rename_layer_dialog;
   bool has_focus {};
 };
 
-void push_layer_dock_widget(const Registry& registry,
-                            LayerDockState& state,
-                            Dispatcher& dispatcher);
+void push_layer_dock_widget(ModelView& model, LayerDockState& state);
 
 [[nodiscard]] auto is_layer_dock_enabled(const Registry& registry) -> bool;
 

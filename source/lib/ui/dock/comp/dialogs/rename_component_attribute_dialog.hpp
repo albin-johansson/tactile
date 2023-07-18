@@ -19,13 +19,12 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
 #include "common/util/string_buffer.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct RenameCompAttrDialogState final {
   Entity definition {kNullEntity};
@@ -34,8 +33,6 @@ struct RenameCompAttrDialogState final {
   bool should_open {};
 };
 
-void push_rename_comp_attr_dialog(const Registry& registry,
-                                  RenameCompAttrDialogState& state,
-                                  Dispatcher& dispatcher);
+void push_rename_comp_attr_dialog(ModelView model, RenameCompAttrDialogState& state);
 
-}  // namespace tactile::ui
+}  // namespace tactile

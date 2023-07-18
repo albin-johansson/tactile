@@ -19,13 +19,12 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
 #include "common/util/string_buffer.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct RenamePropertyDialogState final {
   Entity context {kNullEntity};
@@ -34,8 +33,6 @@ struct RenamePropertyDialogState final {
   bool should_open {};
 };
 
-void push_rename_property_dialog(const Registry& registry,
-                                 RenamePropertyDialogState& state,
-                                 Dispatcher& dispatcher);
+void push_rename_property_dialog(ModelView& model, RenamePropertyDialogState& state);
 
-}  // namespace tactile::ui
+}  // namespace tactile

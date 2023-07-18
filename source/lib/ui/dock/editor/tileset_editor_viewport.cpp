@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "central_tileset_viewport.hpp"
+#include "tileset_editor_viewport.hpp"
 
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -40,26 +40,26 @@
 #include "ui/render/primitives.hpp"
 #include "ui/widget/scoped.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
 inline constexpr Color kTileHoverColor {0x00, 0xFF, 0x00, 0xC8};
 inline constexpr Color kSelectedTileColor {0x00, 0xEE, 0xEE, 0xFF};
 inline constexpr Color kAnimationFrameSelectionColor {0xFF, 0x45, 0x00, 0xC8};
 
-void _draw_cursor_gizmos(const TilesetViewportState& state,
+void _draw_cursor_gizmos(const TilesetEditorViewportState& state,
                          const ViewportMouseInfo& cursor,
-                         const CanvasInfo& canvas_info)
+                         const ui::CanvasInfo& canvas_info)
 {
   const auto color = state.animation_frame_selection_mode ? kAnimationFrameSelectionColor
                                                           : kTileHoverColor;
-  draw_shadowed_rect(as_imvec2(cursor.clamped_pos),
-                     canvas_info.graphical_tile_size,
-                     color,
-                     2.0f);
+  ui::draw_shadowed_rect(as_imvec2(cursor.clamped_pos),
+                         canvas_info.graphical_tile_size,
+                         color,
+                         2.0f);
 }
 
-void _highlight_selected_tile(const CanvasInfo& canvas, const Tileset& tileset)
+void _highlight_selected_tile(const ui::CanvasInfo& canvas, const Tileset& tileset)
 {
   if (tileset.selected_tile_index.has_value()) {
     const auto tile_pos =
@@ -67,19 +67,19 @@ void _highlight_selected_tile(const CanvasInfo& canvas, const Tileset& tileset)
     const auto translated_tile_pos =
         canvas.origin_pos + as_imvec2(tile_pos.as_vec2f()) * canvas.graphical_tile_size;
 
-    draw_shadowed_rect(translated_tile_pos,
-                       canvas.graphical_tile_size,
-                       kSelectedTileColor,
-                       2.0f);
+    ui::draw_shadowed_rect(translated_tile_pos,
+                           canvas.graphical_tile_size,
+                           kSelectedTileColor,
+                           2.0f);
   }
 }
 
-void _highlight_animation_frame_selection_mode(const TilesetViewportState& state,
+void _highlight_animation_frame_selection_mode(const TilesetEditorViewportState& state,
                                                const Strings& strings,
-                                               const CanvasInfo& canvas)
+                                               const ui::CanvasInfo& canvas)
 {
   if (state.animation_frame_selection_mode) {
-    draw_rect(canvas.top_left, canvas.size, kAnimationFrameSelectionColor, 6.0f);
+    ui::draw_rect(canvas.top_left, canvas.size, kAnimationFrameSelectionColor, 6.0f);
 
     const char* label = strings.animation_dock.new_animation_frame_selection_hint.c_str();
     const auto label_size = ImGui::CalcTextSize(label);
@@ -88,14 +88,14 @@ void _highlight_animation_frame_selection_mode(const TilesetViewportState& state
     label_pos.x = (canvas.size.x - label_size.x) * 0.5f;
     label_pos.y = 100;
 
-    render_shadowed_text(label, label_pos, kWhite, 2.0f);
+    ui::render_shadowed_text(label, label_pos, kWhite, 2.0f);
   }
 }
 
-void _poll_mouse(TilesetViewportState& state,
+void _poll_mouse(TilesetEditorViewportState& state,
                  const Entity tileset_document_entity,
                  const Tileset& tileset,
-                 const CanvasInfo& canvas_info,
+                 const ui::CanvasInfo& canvas_info,
                  Dispatcher& dispatcher)
 {
   using namespace std::chrono_literals;
@@ -123,13 +123,14 @@ void _poll_mouse(TilesetViewportState& state,
 
 }  // namespace
 
-void push_tileset_viewport(const Registry& registry,
-                           TilesetViewportState& state,
-                           const Entity tileset_document_entity,
-                           Dispatcher& dispatcher)
+void push_tileset_editor_viewport(ModelView& model,
+                                  TilesetEditorViewportState& state,
+                                  const Entity tileset_document_entity)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
-  const auto& settings = registry.get<Settings>();
+  auto& dispatcher = model.get_dispatcher();
+  const auto& registry = model.get_registry();
+  const auto& strings = model.get_language_strings();
+  const auto& settings = model.get_settings();
 
   const auto& tileset_document = registry.get<TilesetDocument>(tileset_document_entity);
   const auto& viewport = registry.get<Viewport>(tileset_document_entity);
@@ -144,24 +145,24 @@ void push_tileset_viewport(const Registry& registry,
   // TODO store TileExtent in Tileset component
   const TileExtent tileset_extent {static_cast<usize>(tileset.row_count),
                                    static_cast<usize>(tileset.column_count)};
-  const auto canvas = create_canvas_info(viewport, tileset.tile_size, tileset_extent);
+  const auto canvas = ui::create_canvas_info(viewport, tileset.tile_size, tileset_extent);
 
-  update_dynamic_viewport_info(tileset_document_entity, canvas, dispatcher);
-  update_document_viewport_offset(tileset_document_entity, canvas.size, dispatcher);
+  ui::update_dynamic_viewport_info(tileset_document_entity, canvas, dispatcher);
+  ui::update_document_viewport_offset(tileset_document_entity, canvas.size, dispatcher);
 
-  clear_canvas(canvas, settings.get_viewport_bg_color());
-  push_scissor(canvas);
+  ui::clear_canvas(canvas, settings.get_viewport_bg_color());
+  ui::push_scissor(canvas);
 
   sys::render_tileset(registry, canvas, tileset);
 
-  if (Window::contains_mouse()) {
+  if (ui::Window::contains_mouse()) {
     _poll_mouse(state, tileset_document_entity, tileset, canvas, dispatcher);
   }
 
   _highlight_selected_tile(canvas, tileset);
   _highlight_animation_frame_selection_mode(state, strings, canvas);
 
-  pop_scissor();
+  ui::pop_scissor();
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

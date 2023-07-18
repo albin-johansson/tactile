@@ -63,7 +63,7 @@ void on_remove_object(Registry& registry, const RemoveObjectEvent& event)
 
 void on_spawn_object_context_menu(Registry& registry, const SpawnObjectContextMenuEvent&)
 {
-  auto& widgets = registry.get<ui::WidgetState>();
+  auto& widgets = registry.get<WidgetState>();
   widgets.editor_dock.central_map_viewport.should_open_object_context_menu = true;
 }
 

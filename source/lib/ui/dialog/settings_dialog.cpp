@@ -37,7 +37,7 @@
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
 void _push_flag_checkbox(SettingsDialogState& state,
@@ -46,14 +46,14 @@ void _push_flag_checkbox(SettingsDialogState& state,
                          const char* tooltip = nullptr)
 {
   bool value = state.ui_settings.test_flag(flag);
-  push_checkbox(label, &value, tooltip);
+  ui::push_checkbox(label, &value, tooltip);
   state.ui_settings.set_flag(flag, value);
 }
 
 void _push_lang_combo(SettingsDialogState& state)
 {
-  if (const Combo combo {"##Lang",
-                         sys::get_language_name(state.ui_settings.get_language())};
+  if (const ui::Combo combo {"##Lang",
+                             sys::get_language_name(state.ui_settings.get_language())};
       combo.is_open()) {
     if (ImGui::MenuItem(sys::get_language_name(Lang::EN))) {
       state.ui_settings.set_language(Lang::EN);
@@ -73,7 +73,7 @@ void _push_theme_combo(SettingsDialogState& state)
 {
   auto show_themes = [&](const auto& themes) {
     for (const auto theme: themes) {
-      if (Selectable::property(human_readable_name(theme).data())) {
+      if (ui::Selectable::property(human_readable_name(theme).data())) {
         state.ui_settings.set_theme(theme);
         apply_theme(ImGui::GetStyle(), theme, state.ui_settings.get_theme_saturation());
       }
@@ -81,7 +81,7 @@ void _push_theme_combo(SettingsDialogState& state)
   };
 
   const auto current_theme = human_readable_name(state.ui_settings.get_theme());
-  if (const Combo combo {"##Theme", current_theme.data()}; combo.is_open()) {
+  if (const ui::Combo combo {"##Theme", current_theme.data()}; combo.is_open()) {
     show_themes(kLightThemes);
     ImGui::Separator();
     show_themes(kDarkThemes);
@@ -91,8 +91,8 @@ void _push_theme_combo(SettingsDialogState& state)
 void _push_map_format_combo(SettingsDialogState& state)
 {
   const auto preferred_format = state.ui_settings.get_preferred_format();
-  if (const Combo format("##PreferredFormat",
-                         get_human_readable_name(preferred_format).data());
+  if (const ui::Combo format("##PreferredFormat",
+                             get_human_readable_name(preferred_format).data());
       format.is_open()) {
     if (ImGui::MenuItem(get_human_readable_name(SaveFormat::TactileYaml).data())) {
       state.ui_settings.set_preferred_format(SaveFormat::TactileYaml);
@@ -123,10 +123,10 @@ void _apply_current_settings(SettingsDialogState& state, Dispatcher& dispatcher)
 
 void _push_behavior_tab(const Strings& lang, SettingsDialogState& state)
 {
-  if (const TabItem tab {lang.setting.behavior_tab.c_str()}; tab.is_open()) {
+  if (const ui::TabItem tab {lang.setting.behavior_tab.c_str()}; tab.is_open()) {
     ImGui::Spacing();
 
-    if (push_button(lang.setting.restore_defaults.c_str())) {
+    if (ui::push_button(lang.setting.restore_defaults.c_str())) {
       state.ui_settings.reset_behavior_values();
       _apply_settings_preview(state.ui_settings);
     }
@@ -143,15 +143,15 @@ void _push_behavior_tab(const Strings& lang, SettingsDialogState& state)
     ImGui::TextUnformatted(lang.setting.pref_tile_width.c_str());
     ImGui::SameLine();
     ImGui::DragInt("##PreferredTileWidth", &preferred_tile_size.x, 1.0f, 1, 10'000);
-    push_lazy_tooltip("##PreferredTileWidthToolTip",
-                      lang.tooltip.pref_tile_width.c_str());
+    ui::push_lazy_tooltip("##PreferredTileWidthToolTip",
+                          lang.tooltip.pref_tile_width.c_str());
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.setting.pref_tile_height.c_str());
     ImGui::SameLine();
     ImGui::DragInt("##PreferredTileHeight", &preferred_tile_size.y, 1.0f, 1, 10'000);
-    push_lazy_tooltip("##PreferredTileHeightToolTip",
-                      lang.tooltip.pref_tile_height.c_str());
+    ui::push_lazy_tooltip("##PreferredTileHeightToolTip",
+                          lang.tooltip.pref_tile_height.c_str());
 
     state.ui_settings.set_preferred_tile_size(preferred_tile_size);
 
@@ -170,7 +170,8 @@ void _push_behavior_tab(const Strings& lang, SettingsDialogState& state)
                       1.0f,
                       &min_cmd_capacity,
                       &max_cmd_capacity);
-    push_lazy_tooltip("##CommandCapacityTooltip", lang.tooltip.command_capacity.c_str());
+    ui::push_lazy_tooltip("##CommandCapacityTooltip",
+                          lang.tooltip.command_capacity.c_str());
 
     state.ui_settings.set_command_capacity(command_capacity);
   }
@@ -178,10 +179,10 @@ void _push_behavior_tab(const Strings& lang, SettingsDialogState& state)
 
 void _push_appearance_tab(const Strings& lang, SettingsDialogState& state)
 {
-  if (const TabItem tab {lang.setting.appearance_tab.c_str()}; tab.is_open()) {
+  if (const ui::TabItem tab {lang.setting.appearance_tab.c_str()}; tab.is_open()) {
     ImGui::Spacing();
 
-    if (push_button(lang.setting.restore_defaults.c_str())) {
+    if (ui::push_button(lang.setting.restore_defaults.c_str())) {
       state.ui_settings.reset_appearance_values();
       _apply_settings_preview(state.ui_settings);
     }
@@ -191,7 +192,7 @@ void _push_appearance_tab(const Strings& lang, SettingsDialogState& state)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.setting.language.c_str());
     ImGui::SameLine();
-    right_align_next_item();
+    ui::right_align_next_item();
     _push_lang_combo(state);
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
@@ -199,11 +200,11 @@ void _push_appearance_tab(const Strings& lang, SettingsDialogState& state)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.setting.theme.c_str());
     ImGui::SameLine();
-    right_align_next_item();
+    ui::right_align_next_item();
     _push_theme_combo(state);
 
     {
-      const Disable no_saturation_for_default_themes {
+      const ui::Disable no_saturation_for_default_themes {
           state.ui_settings.get_theme() == Theme::DearDark ||
           state.ui_settings.get_theme() == Theme::DearLight};
 
@@ -263,7 +264,7 @@ void _push_appearance_tab(const Strings& lang, SettingsDialogState& state)
                         lang.tooltip.use_default_font.c_str());
 
     {
-      const Disable when_using_default_font {
+      const ui::Disable when_using_default_font {
           state.ui_settings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT)};
 
       int32 font_size = state.ui_settings.get_font_size();
@@ -287,10 +288,10 @@ void _push_appearance_tab(const Strings& lang, SettingsDialogState& state)
 
 void _push_export_tab(const Strings& lang, SettingsDialogState& state)
 {
-  if (const TabItem tab {lang.setting.export_tab.c_str()}; tab.is_open()) {
+  if (const ui::TabItem tab {lang.setting.export_tab.c_str()}; tab.is_open()) {
     ImGui::Spacing();
 
-    if (push_button(lang.setting.restore_defaults.c_str())) {
+    if (ui::push_button(lang.setting.restore_defaults.c_str())) {
       state.ui_settings.reset_export_values();
       _apply_settings_preview(state.ui_settings);
     }
@@ -300,9 +301,9 @@ void _push_export_tab(const Strings& lang, SettingsDialogState& state)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(lang.setting.pref_format.c_str());
     ImGui::SameLine();
-    right_align_next_item();
+    ui::right_align_next_item();
     _push_map_format_combo(state);
-    push_lazy_tooltip("##PreferredFormatTooltip", lang.tooltip.pref_format.c_str());
+    ui::push_lazy_tooltip("##PreferredFormatTooltip", lang.tooltip.pref_format.c_str());
 
     _push_flag_checkbox(state,
                         SETTINGS_EMBED_TILESETS_BIT,
@@ -323,42 +324,40 @@ void _push_export_tab(const Strings& lang, SettingsDialogState& state)
 
 }  // namespace
 
-void push_settings_dialog(const Registry& registry,
-                          SettingsDialogState& state,
-                          Dispatcher& dispatcher)
+void push_settings_dialog(ModelView model, SettingsDialogState& state)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& strings = model.get_language_strings();
 
-  DialogOptions dialog_options {
+  ui::DialogOptions dialog_options {
       .title = strings.window.settings_dialog.c_str(),
       .close_label = strings.misc.cancel.c_str(),
       .accept_label = strings.misc.ok.c_str(),
       .apply_label = strings.misc.apply.c_str(),
-      .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
+      .flags = ui::UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
   if (state.should_open) {
-    dialog_options.flags |= UI_DIALOG_FLAG_OPEN;
+    dialog_options.flags |= ui::UI_DIALOG_FLAG_OPEN;
     state.should_open = false;
   }
 
-  DialogAction action {DialogAction::None};
-  if (const ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
-    if (const TabBar bar {"##SettingsTabs"}; bar.is_open()) {
+  ui::DialogAction action {ui::DialogAction::None};
+  if (const ui::ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
+    if (const ui::TabBar bar {"##SettingsTabs"}; bar.is_open()) {
       _push_behavior_tab(strings, state);
       _push_appearance_tab(strings, state);
       _push_export_tab(strings, state);
     }
   }
 
-  if (action == DialogAction::Apply || action == DialogAction::Accept) {
+  if (action == ui::DialogAction::Apply || action == ui::DialogAction::Accept) {
     _apply_settings_preview(state.ui_settings);
-    _apply_current_settings(state, dispatcher);
+    _apply_current_settings(state, model.get_dispatcher());
   }
-  else if (action == DialogAction::Cancel) {
+  else if (action == ui::DialogAction::Cancel) {
     // Reset any changes we made for preview purposes
     _apply_settings_preview(state.old_settings);
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

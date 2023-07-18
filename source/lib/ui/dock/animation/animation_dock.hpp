@@ -19,19 +19,16 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct AnimationDockState final {
   float preview_animation_size {0.4f};
 };
 
-void push_animation_dock_widget(const Registry& registry,
-                                AnimationDockState& state,
-                                Dispatcher& dispatcher);
+void push_animation_dock_widget(ModelView& model, AnimationDockState& state);
 
 [[nodiscard]] auto is_animation_dock_enabled(const Registry& registry) -> bool;
 
-}  // namespace tactile::ui
+}  // namespace tactile

@@ -30,8 +30,8 @@ TEST_SUITE("TileLayerOps")
 {
   TEST_CASE("flood_tiles")
   {
-    auto model = sys::create_model(BackendAPI::Null);
-    const auto layer_entity = LayerBuilder {model}.as_tile_layer({5, 5}).build();
+    auto registry = sys::create_model(BackendAPI::Null);
+    const auto layer_entity = LayerBuilder {registry}.as_tile_layer({5, 5}).build();
 
     const TileMatrix initial_tiles = {
         {0, 0, 0, 0, 0},
@@ -80,9 +80,9 @@ TEST_SUITE("TileLayerOps")
 
   TEST_CASE("set_tile")
   {
-    auto model = sys::create_model(BackendAPI::Null);
+    auto registry = sys::create_model(BackendAPI::Null);
 
-    const auto layer_entity = LayerBuilder {model}.as_tile_layer({4, 4}).build();
+    const auto layer_entity = LayerBuilder {registry}.as_tile_layer({4, 4}).build();
     auto& tile_layer = registry.get<TileLayer>(layer_entity);
 
     SUBCASE("Initial tiles should be empty")
@@ -134,9 +134,9 @@ TEST_SUITE("TileLayerOps")
 
   TEST_CASE("tile_at")
   {
-    auto model = sys::create_model(BackendAPI::Null);
+    auto registry = sys::create_model(BackendAPI::Null);
 
-    const auto layer_entity = LayerBuilder {model}.as_tile_layer({4, 4}).build();
+    const auto layer_entity = LayerBuilder {registry}.as_tile_layer({4, 4}).build();
     auto& tile_layer = registry.get<TileLayer>(layer_entity);
 
     tile_layer.tiles = TileMatrix {
@@ -176,9 +176,9 @@ TEST_SUITE("TileLayerOps")
 
   TEST_CASE("is_valid_tile")
   {
-    auto model = sys::create_model(BackendAPI::Null);
+    auto registry = sys::create_model(BackendAPI::Null);
 
-    const auto layer_entity = LayerBuilder {model}.as_tile_layer({4, 4}).build();
+    const auto layer_entity = LayerBuilder {registry}.as_tile_layer({4, 4}).build();
     const auto& tile_layer = registry.get<TileLayer>(layer_entity);
 
     CHECK(!sys::is_valid_tile(tile_layer, {-1, 0}));

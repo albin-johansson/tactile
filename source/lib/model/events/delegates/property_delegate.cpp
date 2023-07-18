@@ -40,7 +40,7 @@ void on_show_new_property_dialog(Registry& registry,
 {
   TACTILE_ASSERT(sys::is_context_entity(registry, event.context));
 
-  auto& widgets = registry.get<ui::WidgetState>();
+  auto& widgets = registry.get<WidgetState>();
   auto& new_property_dialog = widgets.property_dock.new_property_dialog;
 
   new_property_dialog.context = event.context;
@@ -54,7 +54,7 @@ void on_show_rename_property_dialog(Registry& registry,
 {
   TACTILE_ASSERT(sys::is_context_entity(registry, event.context));
 
-  auto& widgets = registry.get<ui::WidgetState>();
+  auto& widgets = registry.get<WidgetState>();
   auto& rename_property_dialog = widgets.property_dock.rename_property_dialog;
 
   rename_property_dialog.context = event.context;
@@ -68,7 +68,7 @@ void on_show_set_property_type_dialog(Registry& registry,
 {
   TACTILE_ASSERT(sys::is_context_entity(registry, event.context));
 
-  auto& widgets = registry.get<ui::WidgetState>();
+  auto& widgets = registry.get<WidgetState>();
   auto& set_property_type_dialog = widgets.property_dock.set_property_type_dialog;
 
   const auto& context = registry.get<Context>(event.context);

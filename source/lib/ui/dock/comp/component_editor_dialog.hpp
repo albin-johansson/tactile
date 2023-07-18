@@ -19,15 +19,14 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 #include "ui/dock/comp/dialogs/new_comp_dialog.hpp"
 #include "ui/dock/comp/dialogs/new_component_attribute_dialog.hpp"
 #include "ui/dock/comp/dialogs/rename_component_attribute_dialog.hpp"
 #include "ui/dock/comp/dialogs/rename_component_dialog.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct ComponentEditorDialogState final {
   Entity active_definition {kNullEntity};
@@ -38,8 +37,6 @@ struct ComponentEditorDialogState final {
   bool should_open {};
 };
 
-void push_component_editor_dialog(const Registry& registry,
-                                  ComponentEditorDialogState& state,
-                                  Dispatcher& dispatcher);
+void push_component_editor_dialog(ModelView model, ComponentEditorDialogState& state);
 
-}  // namespace tactile::ui
+}  // namespace tactile

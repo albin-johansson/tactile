@@ -19,12 +19,11 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
+#include "model/model_view.hpp"
 #include "model/persistence/settings.hpp"
-#include "model/registry.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct SettingsDialogState final {
   Settings old_settings;
@@ -32,8 +31,6 @@ struct SettingsDialogState final {
   bool should_open {};
 };
 
-void push_settings_dialog(const Registry& registry,
-                          SettingsDialogState& state,
-                          Dispatcher& dispatcher);
+void push_settings_dialog(ModelView model, SettingsDialogState& state);
 
-}  // namespace tactile::ui
+}  // namespace tactile

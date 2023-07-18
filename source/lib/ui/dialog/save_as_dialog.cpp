@@ -29,9 +29,9 @@
 #include "model/events/file_events.hpp"
 #include "model/persistence/settings.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void show_save_as_dialog(const Registry& registry, Dispatcher& dispatcher)
+void show_save_as_dialog(ModelView model)
 {
   auto dialog = FileDialog::save_map();
   if (dialog.is_okay()) {
@@ -41,7 +41,7 @@ void show_save_as_dialog(const Registry& registry, Dispatcher& dispatcher)
                                      has_supported_tiled_xml_extension(path);
 
     if (!has_valid_extension) {
-      const auto& settings = registry.get<Settings>();
+      const auto& settings = model.get_settings();
       const auto& format = settings.get_preferred_format();
 
       spdlog::warn("[UI] Invalid file extension {}, assuming {} format",
@@ -51,8 +51,8 @@ void show_save_as_dialog(const Registry& registry, Dispatcher& dispatcher)
       path += get_file_extension(format);
     }
 
-    dispatcher.enqueue<SaveAsEvent>(std::move(path));
+    model.enqueue<SaveAsEvent>(std::move(path));
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

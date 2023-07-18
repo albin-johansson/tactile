@@ -19,12 +19,11 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/path.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct GodotExportDialogState final {
   Path root_dir;
@@ -35,8 +34,6 @@ struct GodotExportDialogState final {
   bool should_open {};
 };
 
-void push_godot_export_dialog(const Registry& registry,
-                              GodotExportDialogState& state,
-                              Dispatcher& dispatcher);
+void push_godot_export_dialog(ModelView model, GodotExportDialogState& state);
 
-}  // namespace tactile::ui
+}  // namespace tactile

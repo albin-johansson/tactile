@@ -21,31 +21,29 @@
 
 #include <imgui.h>
 
-#include "model/i18n/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void push_map_parse_error_dialog(const Registry& registry,
-                                 MapParseErrorDialogState& state)
+void push_map_parse_error_dialog(ModelView model, MapParseErrorDialogState& state)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& strings = model.get_language_strings();
 
-  DialogOptions dialog_options {
+  ui::DialogOptions dialog_options {
       .title = strings.window.map_parse_error.c_str(),
       .close_label = strings.misc.close.c_str(),
-      .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
+      .flags = ui::UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
   if (state.should_open) {
-    dialog_options.flags |= UI_DIALOG_FLAG_OPEN;
+    dialog_options.flags |= ui::UI_DIALOG_FLAG_OPEN;
     state.should_open = false;
   }
 
-  if (const ScopedDialog dialog {dialog_options}; dialog.was_opened()) {
+  if (const ui::ScopedDialog dialog {dialog_options}; dialog.was_opened()) {
     ImGui::TextUnformatted(strings.misc.map_parse_error.c_str());
     ImGui::TextUnformatted(state.cause.c_str());
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

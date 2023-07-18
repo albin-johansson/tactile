@@ -20,22 +20,19 @@
 #pragma once
 
 #include "common/enum/attribute_type.hpp"
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/util/string_buffer.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct NewPropertyDialogState final {
-  Entity context{kNullEntity};
+  Entity context {kNullEntity};
   StringBuffer name_buffer {};
   AttributeType property_type {AttributeType::String};
   bool should_open {};
 };
 
-void push_new_property_dialog(const Registry& model,
-                              NewPropertyDialogState& state,
-                              Dispatcher& dispatcher);
+void push_new_property_dialog(ModelView& model, NewPropertyDialogState& state);
 
 }  // namespace tactile::ui

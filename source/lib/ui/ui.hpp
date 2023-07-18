@@ -20,13 +20,13 @@
 #pragma once
 
 #include "common/macros.hpp"
+#include "model/model_view.hpp"
 
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, ModelView)
-TACTILE_FWD_DECLARE_STRUCT_NS(tactile::ui, WidgetState)
+namespace tactile {
 
-namespace tactile::ui {
+TACTILE_FWD_DECLARE_STRUCT(WidgetState)
 
-void poll_global_shortcuts(ModelView& model);
+void poll_global_shortcuts(ModelView model);
 
 /**
  * Renders the user interface and enqueues user events as needed.
@@ -39,6 +39,6 @@ void poll_global_shortcuts(ModelView& model);
  * \param model   a view into the associated model.
  * \param widgets dynamic state used by miscellaneous widgets.
  */
-void render_ui(ModelView& model, WidgetState& widgets);
+void render_ui(ModelView model, WidgetState& widgets);
 
-}  // namespace tactile::ui
+}  // namespace tactile

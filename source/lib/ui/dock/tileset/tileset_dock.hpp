@@ -21,21 +21,18 @@
 
 #include <centurion/fwd.hpp>
 
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 #include "model/tilesets/tileset_components.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct TilesetDockState final {
   bool has_focus {};
   bool has_hover {};
 };
 
-void push_tileset_dock_widget(const Registry& registry,
-                              TilesetDockState& state,
-                              Dispatcher& dispatcher);
+void push_tileset_dock_widget(ModelView& model, TilesetDockState& state);
 
 [[nodiscard]] auto is_tileset_dock_enabled(const Registry& registry) -> bool;
 
@@ -44,4 +41,4 @@ void on_mouse_wheel_event_in_tileset_dock(const Registry& registry,
                                           const cen::mouse_wheel_event& event,
                                           Dispatcher& dispatcher);
 
-}  // namespace tactile::ui
+}  // namespace tactile

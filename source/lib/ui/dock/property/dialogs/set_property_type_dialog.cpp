@@ -25,17 +25,15 @@
 #include "model/documents/document_system.hpp"
 #include "model/events/property_events.hpp"
 #include "model/i18n/language_system.hpp"
-#include "model/registry.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/attribute_widgets.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void push_set_property_type_dialog(const Registry& registry,
-                                   SetPropertyTypeDialogState& state,
-                                   Dispatcher& dispatcher)
+void push_set_property_type_dialog(ModelView& model, SetPropertyTypeDialogState& state)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& registry = model.get_registry();
+  const auto& strings = model.get_language_strings();
 
   const auto document_entity = sys::get_active_document(registry);
   const auto& document = registry.get<Document>(document_entity);
@@ -46,40 +44,40 @@ void push_set_property_type_dialog(const Registry& registry,
     return;
   }
 
-  DialogOptions dialog_options {
+  ui::DialogOptions dialog_options {
       .title = strings.window.change_property_type.c_str(),
       .close_label = strings.misc.cancel.c_str(),
       .accept_label = strings.misc.change.c_str(),
   };
 
   if (state.should_open) {
-    dialog_options.flags |= UI_DIALOG_FLAG_OPEN;
+    dialog_options.flags |= ui::UI_DIALOG_FLAG_OPEN;
     state.should_open = false;
   }
 
   if (state.current_type != state.old_type.value()) {
-    dialog_options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
+    dialog_options.flags |= ui::UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
-  DialogAction action {DialogAction::None};
-  if (const ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
+  ui::DialogAction action {ui::DialogAction::None};
+  if (const ui::ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(strings.misc.type.c_str());
 
     ImGui::SameLine();
-    if (const auto new_type = push_attribute_type_combo(strings,
-                                                        state.current_type,
-                                                        state.old_type.value())) {
+    if (const auto new_type = ui::push_attribute_type_combo(strings,
+                                                            state.current_type,
+                                                            state.old_type.value())) {
       state.current_type = *new_type;
     }
   }
 
-  if (action == DialogAction::Accept) {
-    dispatcher.enqueue<SetPropertyTypeEvent>(state.context,
-                                             state.property_name.value(),
-                                             state.current_type);
+  if (action == ui::DialogAction::Accept) {
+    model.enqueue<SetPropertyTypeEvent>(state.context,
+                                        state.property_name.value(),
+                                        state.current_type);
     state.context = kNullEntity;
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

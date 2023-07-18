@@ -28,22 +28,21 @@
 #include "model/i18n/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void push_new_comp_dialog(const Registry& registry,
-                          NewCompDialogState& state,
-                          Dispatcher& dispatcher)
+void push_new_comp_dialog(ModelView model, NewCompDialogState& state)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& registry = model.get_registry();
+  const auto& strings = model.get_language_strings();
 
-  DialogOptions dialog_options {
+  ui::DialogOptions dialog_options {
       .title = strings.window.create_component.c_str(),
       .close_label = strings.misc.cancel.c_str(),
       .accept_label = strings.misc.create.c_str(),
   };
 
   if (state.should_open) {
-    dialog_options.flags |= UI_DIALOG_FLAG_OPEN;
+    dialog_options.flags |= ui::UI_DIALOG_FLAG_OPEN;
     state.should_open = false;
   }
 
@@ -54,20 +53,20 @@ void push_new_comp_dialog(const Registry& registry,
   const auto current_name = state.name_buffer.as_string_view();
   if (!current_name.empty() &&
       sys::find_component(registry, component_set, current_name) == kNullEntity) {
-    dialog_options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
+    dialog_options.flags |= ui::UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
-  DialogAction action {DialogAction::None};
-  if (const ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
+  ui::DialogAction action {ui::DialogAction::None};
+  if (const ui::ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
     ImGui::InputTextWithHint("##Name",
                              strings.misc.component_name_hint.c_str(),
                              state.name_buffer.data(),
                              state.name_buffer.size_bytes());
   }
 
-  if (action == DialogAction::Accept) {
-    dispatcher.enqueue<DefineComponentEvent>(state.name_buffer.as_string());
+  if (action == ui::DialogAction::Accept) {
+    model.enqueue<DefineComponentEvent>(state.name_buffer.as_string());
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

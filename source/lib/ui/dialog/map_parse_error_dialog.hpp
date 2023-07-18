@@ -20,16 +20,15 @@
 #pragma once
 
 #include "common/type/string.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct MapParseErrorDialogState final {
   String cause;
   bool should_open {};
 };
 
-void push_map_parse_error_dialog(const Registry& registry,
-                                 MapParseErrorDialogState& state);
+void push_map_parse_error_dialog(ModelView model, MapParseErrorDialogState& state);
 
 }  // namespace tactile::ui

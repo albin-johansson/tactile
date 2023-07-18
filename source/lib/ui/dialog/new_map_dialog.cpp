@@ -27,7 +27,7 @@
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/alignment.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
 void _push_dialog_contents(const Strings& strings, NewMapDialogState& state)
@@ -36,7 +36,7 @@ void _push_dialog_contents(const Strings& strings, NewMapDialogState& state)
     const auto& rows_label = strings.misc.rows;
     const auto& columns_label = strings.misc.columns;
     const auto offset =
-        minimum_offset_to_align(rows_label.c_str(), columns_label.c_str());
+        ui::minimum_offset_to_align(rows_label.c_str(), columns_label.c_str());
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(rows_label.c_str());
@@ -55,7 +55,7 @@ void _push_dialog_contents(const Strings& strings, NewMapDialogState& state)
     const auto& tile_width_label = strings.misc.tile_width;
     const auto& tile_height_label = strings.misc.tile_height;
     const auto offset =
-        minimum_offset_to_align(tile_width_label.c_str(), tile_height_label.c_str());
+        ui::minimum_offset_to_align(tile_width_label.c_str(), tile_height_label.c_str());
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(tile_width_label.c_str());
@@ -78,36 +78,34 @@ void _on_dialog_accept(const NewMapDialogState& state, Dispatcher& dispatcher)
 
 }  // namespace
 
-void push_new_map_dialog(const Registry& registry,
-                         NewMapDialogState& state,
-                         Dispatcher& dispatcher)
+void push_new_map_dialog(ModelView model, NewMapDialogState& state)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& strings = model.get_language_strings();
 
-  DialogOptions dialog_options {
+  ui::DialogOptions dialog_options {
       .title = strings.window.create_new_map.c_str(),
       .close_label = strings.misc.close.c_str(),
       .accept_label = strings.misc.create.c_str(),
   };
 
   if (state.should_open) {
-    dialog_options.flags |= UI_DIALOG_FLAG_OPEN;
+    dialog_options.flags |= ui::UI_DIALOG_FLAG_OPEN;
     state.should_open = false;
   }
 
   const bool is_input_valid = (state.tile_size.x > 0) && (state.tile_size.y > 0);
   if (is_input_valid) {
-    dialog_options.flags |= UI_DIALOG_FLAG_INPUT_IS_VALID;
+    dialog_options.flags |= ui::UI_DIALOG_FLAG_INPUT_IS_VALID;
   }
 
-  auto action = DialogAction::None;
-  if (const ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
+  auto action = ui::DialogAction::None;
+  if (const ui::ScopedDialog dialog {dialog_options, &action}; dialog.was_opened()) {
     _push_dialog_contents(strings, state);
   }
 
-  if (action == DialogAction::Accept) {
-    _on_dialog_accept(state, dispatcher);
+  if (action == ui::DialogAction::Accept) {
+    _on_dialog_accept(state, model.get_dispatcher());
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

@@ -20,12 +20,11 @@
 #pragma once
 
 #include "common/primitives.hpp"
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct NewMapDialogState final {
   Int2 tile_size {};
@@ -34,8 +33,6 @@ struct NewMapDialogState final {
   bool should_open {};
 };
 
-void push_new_map_dialog(const Registry& registry,
-                         NewMapDialogState& state,
-                         Dispatcher& dispatcher);
+void push_new_map_dialog(ModelView model, NewMapDialogState& state);
 
-}  // namespace tactile::ui
+}  // namespace tactile

@@ -25,7 +25,7 @@
 #include "common/type/maybe.hpp"
 #include "model/registry.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct DockSpaceState final {
   Maybe<ImGuiID> root_dock_id;
@@ -46,4 +46,4 @@ void check_for_missing_layout_file(const Registry& registry,
                                    ImGuiID root_id,
                                    Dispatcher& dispatcher);
 
-}  // namespace tactile::ui
+}  // namespace tactile

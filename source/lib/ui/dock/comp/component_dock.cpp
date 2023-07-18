@@ -29,29 +29,28 @@
 #include "model/documents/document_system.hpp"
 #include "model/events/component_events.hpp"
 #include "model/events/setting_events.hpp"
-#include "model/i18n/language_system.hpp"
-#include "model/registry.hpp"
-#include "ui/dock/comp/component_view.hpp"
+#include "ui/dock/comp/component_tree_node.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
 inline constexpr auto kAddComponentPopupId = "##AddComponentButtonPopup";
 
-void _push_add_component_button_popup_content(const Registry& registry,
-                                              const Strings& strings,
-                                              const Entity document_entity,
-                                              Dispatcher& dispatcher)
+void _push_add_component_button_popup_content(ModelView model,
+                                              const Entity document_entity)
 {
+  const auto& strings = model.get_language_strings();
+  const auto& registry = model.get_registry();
+
   const auto& document = registry.get<Document>(document_entity);
   const auto& component_set = registry.get<ComponentSet>(document.component_set);
 
   if (component_set.definitions.empty()) {
-    const Disable disable;
+    const ui::Disable disable;
     ImGui::TextUnformatted(strings.misc.no_available_components.c_str());
   }
   else {
@@ -60,90 +59,83 @@ void _push_add_component_button_popup_content(const Registry& registry,
     for (const auto component_entity: component_set.definitions) {
       const auto& component = registry.get<Component>(component_entity);
 
-      const Disable disable_if {
+      const ui::Disable disable_if {
           sys::has_component(registry, active_context, component.name)};
 
       if (ImGui::MenuItem(component.name.c_str())) {
-        dispatcher.enqueue<AttachComponentEvent>(document.active_context,
-                                                 component_entity);
+        model.enqueue<AttachComponentEvent>(document.active_context, component_entity);
       }
     }
   }
 
   ImGui::Separator();
   if (ImGui::MenuItem(strings.action.component_editor.c_str())) {
-    dispatcher.enqueue<ShowComponentEditorEvent>();
+    model.enqueue<ShowComponentEditorEvent>();
   }
 }
 
-void _push_dock_contents(const Registry& registry,
-                         const Strings& strings,
-                         const Entity document_entity,
-                         Dispatcher& dispatcher)
+void _push_dock_contents(ModelView model, const Entity document_entity)
 {
-  const auto& document = registry.get<Document>(document_entity);
+  const auto& registry = model.get_registry();
+  const auto& strings = model.get_language_strings();
 
+  const auto& document = registry.get<Document>(document_entity);
   const auto active_context_entity = document.get_active_context();
   const auto& active_context = registry.get<Context>(active_context_entity);
 
   const FmtString indicator {"{}: {}", strings.misc.context, active_context.name};
   ImGui::TextUnformatted(indicator.data());
 
-  if (const Child pane {"##ComponentsChild"}; pane.is_open()) {
+  if (const ui::Child pane {"##ComponentsChild"}; pane.is_open()) {
     if (active_context.comps.empty()) {
-      prepare_vertical_alignment_center(2);
-      push_centered_label(strings.misc.context_has_no_components.c_str());
+      ui::prepare_vertical_alignment_center(2);
+      ui::push_centered_label(strings.misc.context_has_no_components.c_str());
     }
     else {
       for (const auto attached_component_entity: active_context.comps) {
         ImGui::Separator();
-        component_view(registry,
-                       active_context_entity,
-                       attached_component_entity,
-                       dispatcher);
+        push_component_tree_node(model, active_context_entity, attached_component_entity);
       }
 
       ImGui::Separator();
     }
 
-    if (push_centered_button(TAC_ICON_ADD, strings.tooltip.add_component.c_str())) {
+    if (ui::push_centered_button(TAC_ICON_ADD, strings.tooltip.add_component.c_str())) {
       ImGui::OpenPopup(kAddComponentPopupId);
     }
 
-    if (const Popup popup {kAddComponentPopupId}; popup.is_open()) {
-      _push_add_component_button_popup_content(registry,
-                                               strings,
-                                               document_entity,
-                                               dispatcher);
+    if (const ui::Popup popup {kAddComponentPopupId}; popup.is_open()) {
+      _push_add_component_button_popup_content(model, document_entity);
     }
   }
 }
 
 }  // namespace
 
-void push_component_dock_widget(const Registry& registry, Dispatcher& dispatcher)
+void push_component_dock_widget(ModelView model)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
-  const auto& settings = registry.get<Settings>();
+  const auto& strings = model.get_language_strings();
+  const auto& settings = model.get_settings();
 
   if (!settings.test_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT)) {
     return;
   }
 
   bool show_component_dock = true;
-  const Window dock {strings.window.component_dock.c_str(),
-                     ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
-                     &show_component_dock};
+  const ui::Window dock {strings.window.component_dock.c_str(),
+                         ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
+                         &show_component_dock};
 
   if (show_component_dock != settings.test_flag(SETTINGS_SHOW_COMPONENT_DOCK_BIT)) {
-    dispatcher.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_COMPONENT_DOCK_BIT,
-                                            show_component_dock);
+    model.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_COMPONENT_DOCK_BIT,
+                                       show_component_dock);
   }
 
   if (dock.is_open()) {
+    const auto& registry = model.get_registry();
     const auto document_entity = sys::get_active_document(registry);
-    _push_dock_contents(registry, strings, document_entity, dispatcher);
+    _push_dock_contents(model, document_entity);
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

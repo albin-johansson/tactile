@@ -23,29 +23,28 @@
 #include <imgui.h>
 
 #include "common/predef.hpp"
-#include "model/i18n/language_system.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/widgets.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void push_about_dialog(const Registry& registry, AboutDialogState& state)
+void push_about_dialog(ModelView model, AboutDialogState& state)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& strings = model.get_language_strings();
 
-  DialogOptions dialog_options {
+  ui::DialogOptions dialog_options {
       .title = strings.window.about_tactile.c_str(),
       .accept_label = strings.misc.close.c_str(),
-      .flags = UI_DIALOG_FLAG_INPUT_IS_VALID,
+      .flags = ui::UI_DIALOG_FLAG_INPUT_IS_VALID,
   };
 
   if (state.should_open) {
-    dialog_options.flags |= UI_DIALOG_FLAG_OPEN;
+    dialog_options.flags |= ui::UI_DIALOG_FLAG_OPEN;
     state.should_open = false;
   }
 
-  if (const ScopedDialog dialog {dialog_options}; dialog.was_opened()) {
+  if (const ui::ScopedDialog dialog {dialog_options}; dialog.was_opened()) {
     ImGui::TextUnformatted("Tactile " TACTILE_VERSION_STRING
                            " (C) Albin Johansson 2020-2022");
 
@@ -57,7 +56,7 @@ void push_about_dialog(const Registry& registry, AboutDialogState& state)
     ImGui::TextUnformatted(strings.misc.repository_link.c_str());
 
     ImGui::SameLine();
-    if (push_button(TAC_ICON_LINK, strings.tooltip.repository_link.c_str())) {
+    if (ui::push_button(TAC_ICON_LINK, strings.tooltip.repository_link.c_str())) {
       cen::open_url("https://www.github.com/albin-johansson/tactile");
     }
 
@@ -66,4 +65,4 @@ void push_about_dialog(const Registry& registry, AboutDialogState& state)
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

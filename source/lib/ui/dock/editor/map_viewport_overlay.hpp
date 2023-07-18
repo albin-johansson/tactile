@@ -19,16 +19,14 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
 #include "model/maps/map_components.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 #include "ui/render/canvas.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-void push_map_viewport_overlay(const Registry& registry,
+void push_map_viewport_overlay(ModelView model,
                                const Map& map,
-                               const ViewportMouseInfo& cursor,
-                               Dispatcher& dispatcher);
+                               const ViewportMouseInfo& cursor);
 
 }  // namespace tactile::ui

@@ -19,14 +19,13 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "common/util/string_buffer.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct NewTilesetDialogState final {
   Entity map_entity {kNullEntity};
@@ -36,8 +35,6 @@ struct NewTilesetDialogState final {
   bool should_open {};
 };
 
-void push_new_tileset_dialog(const Registry& registry,
-                             NewTilesetDialogState& state,
-                             Dispatcher& dispatcher);
+void push_new_tileset_dialog(ModelView model, NewTilesetDialogState& state);
 
-}  // namespace tactile::ui
+}  // namespace tactile

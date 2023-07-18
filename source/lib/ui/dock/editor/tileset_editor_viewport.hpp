@@ -19,16 +19,18 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
-/// Shows a view of a single component attached to a context.
-void component_view(const Registry& registry,
-                    Entity context_entity,
-                    Entity attached_component_entity,
-                    Dispatcher& dispatcher);
+struct TilesetEditorViewportState final {
+  Entity tileset_entity {kNullEntity};
+  bool animation_frame_selection_mode : 1 {false};
+};
 
-}  // namespace tactile::ui
+void push_tileset_editor_viewport(ModelView& model,
+                                  TilesetEditorViewportState& state,
+                                  Entity tileset_document_entity);
+
+}  // namespace tactile

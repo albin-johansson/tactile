@@ -19,14 +19,14 @@
 
 #pragma once
 
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct CreditsDialogState final {
   bool should_open {};
 };
 
-void push_credits_dialog(const Registry& registry, CreditsDialogState& state);
+void push_credits_dialog(ModelView model, CreditsDialogState& state);
 
-}  // namespace tactile::ui
+}  // namespace tactile

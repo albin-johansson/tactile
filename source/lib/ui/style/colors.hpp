@@ -24,7 +24,7 @@
 #include "common/color.hpp"
 #include "common/type/array.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 /// Updates the cache of color data associated with the current theme.
 /// This is used to limit relatively expensive color luminance computations.
@@ -48,4 +48,4 @@ void update_dynamic_color_cache();
 /// with the update_dynamic_color_cache function.
 [[nodiscard]] auto is_dark(ImGuiCol color) -> bool;
 
-}  // namespace tactile::ui
+}  // namespace tactile

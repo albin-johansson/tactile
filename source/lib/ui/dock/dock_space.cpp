@@ -28,7 +28,7 @@
 #include "model/i18n/language_system.hpp"
 #include "model/persistence/settings.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 void update_dock_space(const Registry& registry, DockSpaceState& state)
 {
@@ -88,11 +88,11 @@ void check_for_missing_layout_file(const Registry& registry,
 
   if (!fs::exists(ini_path)) {
     spdlog::warn("[UI] Resetting layout because 'imgui.ini' file was missing");
-    ui::reset_layout(registry, root_id, dispatcher);
+    reset_layout(registry, root_id, dispatcher);
 
     const auto str = ini_path.string();
     ImGui::SaveIniSettingsToDisk(str.c_str());
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

@@ -41,25 +41,25 @@ void _on_mouse_wheel(Registry& registry,
   // widgets.
 
   const auto document_entity = sys::get_active_document(registry);
-  const auto& widgets = registry.get<ui::WidgetState>();
+  const auto& widgets = registry.get<WidgetState>();
 
   if (document_entity != kNullEntity && !ImGui::GetTopMostPopupModal()) {
     const auto& document = registry.get<Document>(document_entity);
     const auto& document_viewport = registry.get<Viewport>(document_entity);
 
     if (widgets.editor_dock.is_hovered) {
-      ui::on_mouse_wheel_event_in_central_viewport(document_entity,
-                                                   document_viewport,
-                                                   dispatcher,
-                                                   event);
+      on_mouse_wheel_event_in_central_viewport(document_entity,
+                                               document_viewport,
+                                               dispatcher,
+                                               event);
     }
     else if (document.type == DocumentType::Map && widgets.tileset_dock.has_hover) {
       const auto& map_document = registry.get<MapDocument>(document_entity);
       if (map_document.active_tileset != kNullEntity) {
-        ui::on_mouse_wheel_event_in_tileset_dock(registry,
-                                                 map_document.active_tileset,
-                                                 event,
-                                                 dispatcher);
+        on_mouse_wheel_event_in_tileset_dock(registry,
+                                             map_document.active_tileset,
+                                             event,
+                                             dispatcher);
       }
     }
   }

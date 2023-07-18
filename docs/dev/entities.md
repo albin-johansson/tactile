@@ -15,7 +15,7 @@ These components are globally accessible in the model.
 * `TextureCache`
 * `TextureCallbacks`
 * `MenuItems`
-* `ui::WidgetState`
+* `WidgetState`
 
 ## Documents
 

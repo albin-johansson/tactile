@@ -32,9 +32,9 @@ TEST_SUITE("ObjectSystem")
 {
   TEST_CASE("duplicate_object")
   {
-    auto model = sys::create_model(BackendAPI::Null);
+    auto registry = sys::create_model(BackendAPI::Null);
 
-    const auto old_object_entity = sys::create_object(model, ObjectType::Rect);
+    const auto old_object_entity = sys::create_object(registry, ObjectType::Rect);
     auto& old_object = registry.get<Object>(old_object_entity);
     auto& old_object_context = registry.get<Context>(old_object_entity);
 
@@ -48,7 +48,7 @@ TEST_SUITE("ObjectSystem")
     old_object_context.props["answer"] = 42;
     old_object_context.props["tint"] = Color {0xFF, 0, 0};
 
-    const auto new_object_entity = sys::duplicate_object(model, old_object_entity);
+    const auto new_object_entity = sys::duplicate_object(registry, old_object_entity);
     const auto& new_object = registry.get<Object>(new_object_entity);
     const auto& new_object_context = registry.get<Context>(new_object_entity);
 

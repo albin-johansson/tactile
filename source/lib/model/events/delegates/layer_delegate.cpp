@@ -44,7 +44,7 @@ void on_show_rename_layer_dialog(Registry& registry,
   TACTILE_ASSERT(sys::is_layer_entity(registry, event.layer));
   const auto& layer_context = registry.get<Context>(event.layer);
 
-  auto& widgets = registry.get<ui::WidgetState>();
+  auto& widgets = registry.get<WidgetState>();
   auto& rename_dialog = widgets.layer_dock.rename_layer_dialog;
 
   rename_dialog.layer = event.layer;

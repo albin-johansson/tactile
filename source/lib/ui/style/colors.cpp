@@ -27,7 +27,7 @@
 #include "themes.hpp"
 #include "ui/conversions.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
 inline Array<bool, ImGuiCol_COUNT> gCurrentColors;
@@ -68,4 +68,4 @@ auto is_dark(const ImGuiCol color) -> bool
   return gCurrentColors.at(static_cast<usize>(color));
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

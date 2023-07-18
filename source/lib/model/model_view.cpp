@@ -104,6 +104,11 @@ auto ModelView::is_document_active(const Entity document_entity) const -> bool
   return sys::get_active_document(get_registry()) == document_entity;
 }
 
+auto ModelView::is_document_open(const Entity document_entity) const -> bool
+{
+  return sys::is_document_open(get_registry(), document_entity);
+}
+
 auto ModelView::is_map_document(const Entity document_entity) const -> bool
 {
   return get_registry().has<MapDocument>(document_entity);

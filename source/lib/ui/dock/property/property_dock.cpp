@@ -50,7 +50,7 @@
 #include "ui/widget/attribute_widgets.hpp"
 #include "ui/widget/scoped.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto _push_property_item_context_menu(const Strings& strings,
@@ -59,7 +59,7 @@ namespace {
                                                     PropertyItemContextMenuState& state,
                                                     Dispatcher& dispatcher) -> bool
 {
-  if (auto popup = Popup::for_item("##PropertyItemPopup"); popup.is_open()) {
+  if (auto popup = ui::Popup::for_item("##PropertyItemPopup"); popup.is_open()) {
     state.show_rename_dialog = ImGui::MenuItem(strings.action.rename_property.c_str());
     state.show_change_type_dialog =
         ImGui::MenuItem(strings.action.change_property_type.c_str());
@@ -97,15 +97,15 @@ void _prepare_table_row(const char* label)
   auto flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
   if (validate_as_file_name) {
     flags |= ImGuiInputTextFlags_CallbackCharFilter;
-    return push_string_input(strings,
-                             "##NativeNameRowInput",
-                             name,
-                             nullptr,
-                             flags,
-                             filename_filter);
+    return ui::push_string_input(strings,
+                                 "##NativeNameRowInput",
+                                 name,
+                                 nullptr,
+                                 flags,
+                                 &ui::filename_filter);
   }
   else {
-    return push_string_input(strings, "##NativeNameRowInput", name, nullptr, flags);
+    return ui::push_string_input(strings, "##NativeNameRowInput", name, nullptr, flags);
   }
 }
 
@@ -147,16 +147,16 @@ void _push_native_read_only_row(const char* label, const bool value)
 
   ImGui::TableNextColumn();
 
-  const Disable disable;
+  const ui::Disable disable;
   bool v = value;
   ImGui::Checkbox("##Bool", &v);
 }
 
-void _push_native_map_properties(const Registry& registry,
+void _push_native_map_properties(ModelView& model,
                                  const Strings& strings,
-                                 const Entity map_entity,
-                                 Dispatcher& dispatcher)
+                                 const Entity map_entity)
 {
+  const auto& registry = model.get_registry();
   const auto& context = registry.get<Context>(map_entity);
   const auto& map = registry.get<Map>(map_entity);
   const auto& tile_format = registry.get<TileFormat>(map_entity);
@@ -176,13 +176,13 @@ void _push_native_map_properties(const Registry& registry,
   const char* encoding = (tile_format.encoding == TileEncoding::Plain)
                              ? strings.misc.plain_encoding.c_str()
                              : "Base64";
-  if (const Combo combo {"##TileEncoding", encoding}; combo.is_open()) {
-    if (Selectable::property(strings.misc.plain_encoding.c_str())) {
-      dispatcher.enqueue<SetTileFormatEncodingEvent>(TileEncoding::Plain);
+  if (const ui::Combo combo {"##TileEncoding", encoding}; combo.is_open()) {
+    if (ui::Selectable::property(strings.misc.plain_encoding.c_str())) {
+      model.enqueue<SetTileFormatEncodingEvent>(TileEncoding::Plain);
     }
 
-    if (Selectable::property("Base64")) {
-      dispatcher.enqueue<SetTileFormatEncodingEvent>(TileEncoding::Base64);
+    if (ui::Selectable::property("Base64")) {
+      model.enqueue<SetTileFormatEncodingEvent>(TileEncoding::Base64);
     }
   }
 
@@ -190,7 +190,7 @@ void _push_native_map_properties(const Registry& registry,
   ImGui::TableNextColumn();
 
   {
-    const Disable disable_if {!supports_compression(tile_format)};
+    const ui::Disable disable_if {!supports_compression(tile_format)};
 
     auto compression = strings.misc.none;
     if (tile_format.compression == TileCompression::Zlib) {
@@ -200,17 +200,18 @@ void _push_native_map_properties(const Registry& registry,
       compression = "Zstd";
     }
 
-    if (const Combo combo {"##TileCompression", compression.c_str()}; combo.is_open()) {
-      if (Selectable::property(strings.misc.none.c_str())) {
-        dispatcher.enqueue<SetTileFormatCompressionEvent>(TileCompression::None);
+    if (const ui::Combo combo {"##TileCompression", compression.c_str()};
+        combo.is_open()) {
+      if (ui::Selectable::property(strings.misc.none.c_str())) {
+        model.enqueue<SetTileFormatCompressionEvent>(TileCompression::None);
       }
 
-      if (Selectable::property("Zlib")) {
-        dispatcher.enqueue<SetTileFormatCompressionEvent>(TileCompression::Zlib);
+      if (ui::Selectable::property("Zlib")) {
+        model.enqueue<SetTileFormatCompressionEvent>(TileCompression::Zlib);
       }
 
-      if (Selectable::property("Zstd")) {
-        dispatcher.enqueue<SetTileFormatCompressionEvent>(TileCompression::Zstd);
+      if (ui::Selectable::property("Zstd")) {
+        model.enqueue<SetTileFormatCompressionEvent>(TileCompression::Zstd);
       }
     }
 
@@ -223,7 +224,7 @@ void _push_native_map_properties(const Registry& registry,
                            &level,
                            min_zlib_compression_level(),
                            max_zlib_compression_level())) {
-        dispatcher.enqueue<SetZlibCompressionLevelEvent>(level);
+        model.enqueue<SetZlibCompressionLevelEvent>(level);
       }
     }
     else if (tile_format.compression == TileCompression::Zstd) {
@@ -235,17 +236,17 @@ void _push_native_map_properties(const Registry& registry,
                            &level,
                            min_zstd_compression_level(),
                            max_zstd_compression_level())) {
-        dispatcher.enqueue<SetZstdCompressionLevelEvent>(level);
+        model.enqueue<SetZstdCompressionLevelEvent>(level);
       }
     }
   }
 }
 
-void _push_native_tileset_properties(const Registry& registry,
+void _push_native_tileset_properties(ModelView& model,
                                      const Strings& strings,
-                                     const Entity tileset_entity,
-                                     Dispatcher& dispatcher)
+                                     const Entity tileset_entity)
 {
+  const auto& registry = model.get_registry();
   const auto& context = registry.get<Context>(tileset_entity);
   const auto& tileset = registry.get<Tileset>(tileset_entity);
 
@@ -253,7 +254,7 @@ void _push_native_tileset_properties(const Registry& registry,
 
   if (const auto updated_name = _push_native_name_row(strings, context.name, true);
       updated_name && !updated_name->empty()) {
-    dispatcher.enqueue<RenameTilesetEvent>(tileset_entity, *updated_name);
+    model.enqueue<RenameTilesetEvent>(tileset_entity, *updated_name);
   }
 
   _push_native_read_only_row(strings.misc.tile_count.c_str(), sys::tile_count(tileset));
@@ -263,11 +264,11 @@ void _push_native_tileset_properties(const Registry& registry,
   _push_native_read_only_row(strings.misc.tile_height.c_str(), tileset.tile_size.y);
 }
 
-void _push_native_tile_properties(const Registry& registry,
+void _push_native_tile_properties(ModelView& model,
                                   const Strings& strings,
-                                  const Entity tile_entity,
-                                  Dispatcher& dispatcher)
+                                  const Entity tile_entity)
 {
+  const auto& registry = model.get_registry();
   const auto& context = registry.get<Context>(tile_entity);
   const auto& tile = registry.get<Tile>(tile_entity);
 
@@ -275,7 +276,7 @@ void _push_native_tile_properties(const Registry& registry,
 
   if (const auto updated_name = _push_native_name_row(strings, context.name);
       updated_name && !updated_name->empty()) {
-    dispatcher.enqueue<RenameTileEvent>(tile_entity, *updated_name);
+    model.enqueue<RenameTileEvent>(tile_entity, *updated_name);
   }
 
   _push_native_read_only_row(strings.misc.index.c_str(), tile.index);
@@ -283,11 +284,11 @@ void _push_native_tile_properties(const Registry& registry,
                              registry.has<TileAnimation>(tile_entity));
 }
 
-void _push_native_layer_properties(const Registry& registry,
+void _push_native_layer_properties(ModelView& model,
                                    const Strings& strings,
-                                   const Entity layer_entity,
-                                   Dispatcher& dispatcher)
+                                   const Entity layer_entity)
 {
+  const auto& registry = model.get_registry();
   const auto& layer = registry.get<Layer>(layer_entity);
 
   switch (layer.type) {
@@ -310,22 +311,22 @@ void _push_native_layer_properties(const Registry& registry,
   _prepare_table_row(strings.misc.opacity.c_str());
   ImGui::TableNextColumn();
   if (const auto value =
-          push_float_input(strings, "##Opacity", layer.opacity, 0.0f, 1.0f)) {
-    dispatcher.enqueue<SetLayerOpacityEvent>(layer_entity, *value);
+          ui::push_float_input(strings, "##Opacity", layer.opacity, 0.0f, 1.0f)) {
+    model.enqueue<SetLayerOpacityEvent>(layer_entity, *value);
   }
 
   _prepare_table_row(strings.misc.visible.c_str());
   ImGui::TableNextColumn();
-  if (const auto value = push_bool_input(strings, "##Visible", layer.visible)) {
-    dispatcher.enqueue<SetLayerVisibleEvent>(layer_entity, *value);
+  if (const auto value = ui::push_bool_input(strings, "##Visible", layer.visible)) {
+    model.enqueue<SetLayerVisibleEvent>(layer_entity, *value);
   }
 }
 
-void _push_native_object_properties(const Registry& registry,
+void _push_native_object_properties(ModelView& model,
                                     const Strings& strings,
-                                    const Entity object_entity,
-                                    Dispatcher& dispatcher)
+                                    const Entity object_entity)
 {
+  const auto& registry = model.get_registry();
   const auto& context = registry.get<Context>(object_entity);
   const auto& object = registry.get<Object>(object_entity);
 
@@ -345,7 +346,7 @@ void _push_native_object_properties(const Registry& registry,
   }
 
   if (const auto name = _push_native_name_row(strings, context.name)) {
-    dispatcher.enqueue<SetObjectNameEvent>(object_entity, *name);
+    model.enqueue<SetObjectNameEvent>(object_entity, *name);
   }
 
   _push_native_read_only_row("X", object.position.x);
@@ -358,15 +359,15 @@ void _push_native_object_properties(const Registry& registry,
 
   _prepare_table_row(strings.misc.visible.c_str());
   ImGui::TableNextColumn();
-  if (const auto visible = push_bool_input(strings, "##Visible", object.visible)) {
-    dispatcher.enqueue<SetObjectVisibleEvent>(object_entity, *visible);
+  if (const auto visible = ui::push_bool_input(strings, "##Visible", object.visible)) {
+    model.enqueue<SetObjectVisibleEvent>(object_entity, *visible);
   }
 
   _prepare_table_row(strings.misc.tag.c_str());
 
   ImGui::TableNextColumn();
-  if (const auto tag = push_string_input(strings, "##Tag", object.tag)) {
-    dispatcher.enqueue<SetObjectTagEvent>(object_entity, *tag);
+  if (const auto tag = ui::push_string_input(strings, "##Tag", object.tag)) {
+    model.enqueue<SetObjectTagEvent>(object_entity, *tag);
   }
 }
 
@@ -380,7 +381,7 @@ void _push_custom_properties(const Strings& strings,
   bool first = true;
 
   for (const auto& [name, value]: context.props) {
-    const Scope scope {name.c_str()};
+    const ui::Scope scope {name.c_str()};
 
     ImGui::TableNextRow();
     ImGui::TableNextColumn();
@@ -390,7 +391,7 @@ void _push_custom_properties(const Strings& strings,
     }
 
     ImGui::AlignTextToFramePadding();
-    Selectable::property(name.c_str());
+    ui::Selectable::property(name.c_str());
 
     if (!is_item_context_open) {
       is_item_context_open = _push_property_item_context_menu(strings,
@@ -414,7 +415,8 @@ void _push_custom_properties(const Strings& strings,
       ImGui::Separator();
     }
 
-    if (auto updated = push_attribute_input(strings, "##CustomPropertyInput", value)) {
+    if (auto updated =
+            ui::push_attribute_input(strings, "##CustomPropertyInput", value)) {
       dispatcher.enqueue<UpdatePropertyEvent>(context_entity, name, std::move(*updated));
     }
 
@@ -422,30 +424,30 @@ void _push_custom_properties(const Strings& strings,
   }
 }
 
-void _push_property_table(const Registry& registry,
+void _push_property_table(ModelView& model,
                           const Strings& strings,
-                          PropertyDockState& state,
-                          Dispatcher& dispatcher)
+                          PropertyDockState& state)
 {
+  const auto& registry = model.get_registry();
   const auto context_entity = sys::get_active_context(registry);
 
   const auto table_flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
                            ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
-  if (const Table table {"##PropertyTable", 2, table_flags}; table.is_open()) {
+  if (const ui::Table table {"##PropertyTable", 2, table_flags}; table.is_open()) {
     if (registry.has<Map>(context_entity)) {
-      _push_native_map_properties(registry, strings, context_entity, dispatcher);
+      _push_native_map_properties(model, strings, context_entity);
     }
     else if (registry.has<Layer>(context_entity)) {
-      _push_native_layer_properties(registry, strings, context_entity, dispatcher);
+      _push_native_layer_properties(model, strings, context_entity);
     }
     else if (registry.has<Object>(context_entity)) {
-      _push_native_object_properties(registry, strings, context_entity, dispatcher);
+      _push_native_object_properties(model, strings, context_entity);
     }
     else if (registry.has<Tileset>(context_entity)) {
-      _push_native_tileset_properties(registry, strings, context_entity, dispatcher);
+      _push_native_tileset_properties(model, strings, context_entity);
     }
     else if (registry.has<Tile>(context_entity)) {
-      _push_native_tile_properties(registry, strings, context_entity, dispatcher);
+      _push_native_tile_properties(model, strings, context_entity);
     }
 
     const auto& context = registry.get<Context>(context_entity);
@@ -455,11 +457,11 @@ void _push_property_table(const Registry& registry,
                             context_entity,
                             context,
                             state,
-                            dispatcher,
+                            model.get_dispatcher(),
                             is_item_context_open);
 
     if (!is_item_context_open) {
-      if (auto popup = Popup::for_window("##PropertyTablePopup"); popup.is_open()) {
+      if (auto popup = ui::Popup::for_window("##PropertyTablePopup"); popup.is_open()) {
         state.context_state.show_add_dialog =
             ImGui::MenuItem(strings.action.create_property.c_str());
       }
@@ -467,20 +469,20 @@ void _push_property_table(const Registry& registry,
   }
 
   if (state.context_state.show_add_dialog) {
-    dispatcher.enqueue<ShowNewPropertyDialogEvent>(context_entity);
+    model.enqueue<ShowNewPropertyDialogEvent>(context_entity);
     state.context_state.show_add_dialog = false;
   }
 
   if (state.context_state.show_rename_dialog) {
-    dispatcher.enqueue<ShowRenamePropertyDialogEvent>(context_entity,
-                                                      state.rename_target.value());
+    model.enqueue<ShowRenamePropertyDialogEvent>(context_entity,
+                                                 state.rename_target.value());
     state.rename_target.reset();
     state.context_state.show_rename_dialog = false;
   }
 
   if (state.context_state.show_change_type_dialog) {
     const auto& property_name = state.change_type_target.value();
-    dispatcher.enqueue<ShowSetPropertyTypeDialogEvent>(context_entity, property_name);
+    model.enqueue<ShowSetPropertyTypeDialogEvent>(context_entity, property_name);
 
     state.change_type_target.reset();
     state.context_state.show_change_type_dialog = false;
@@ -489,37 +491,34 @@ void _push_property_table(const Registry& registry,
 
 }  // namespace
 
-void push_property_dock_widget(const Registry& registry,
-                               PropertyDockState& state,
-                               Dispatcher& dispatcher)
+void push_property_dock_widget(ModelView& model, PropertyDockState& state)
 {
-  const auto& settings = registry.get<Settings>();
+  const auto& strings = model.get_language_strings();
+  const auto& settings = model.get_settings();
 
   if (!settings.test_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT)) {
     return;
   }
 
-  const auto& strings = sys::get_current_language_strings(registry);
-
   bool show_property_dock = true;
-  const Window window {strings.window.property_dock.c_str(),
-                       ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
-                       &show_property_dock};
+  const ui::Window window {strings.window.property_dock.c_str(),
+                           ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar,
+                           &show_property_dock};
 
   if (show_property_dock != settings.test_flag(SETTINGS_SHOW_PROPERTY_DOCK_BIT)) {
-    dispatcher.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_PROPERTY_DOCK_BIT,
-                                            show_property_dock);
+    model.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_PROPERTY_DOCK_BIT,
+                                       show_property_dock);
   }
 
   state.has_focus = window.has_focus();
 
   if (window.is_open()) {
-    _push_property_table(registry, strings, state, dispatcher);
+    _push_property_table(model, strings, state);
 
-    push_new_property_dialog(registry, state.new_property_dialog, dispatcher);
-    push_rename_property_dialog(registry, state.rename_property_dialog, dispatcher);
-    push_set_property_type_dialog(registry, state.set_property_type_dialog, dispatcher);
+    push_new_property_dialog(model, state.new_property_dialog);
+    push_rename_property_dialog(model, state.rename_property_dialog);
+    push_set_property_type_dialog(model, state.set_property_type_dialog);
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

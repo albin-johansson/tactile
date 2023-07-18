@@ -23,7 +23,6 @@
 #include <imgui_internal.h>
 
 #include "model/events/setting_events.hpp"
-#include "model/i18n/language_system.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/layers/tile_layer_ops.hpp"
 #include "model/maps/map_components.hpp"
@@ -31,7 +30,7 @@
 #include "ui/render/canvas.hpp"
 #include "ui/widget/scoped.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
 constexpr auto kOverlayWindowFlags =
@@ -68,14 +67,16 @@ void _prepare_position_and_pivot(const Settings& settings)
   ImGui::SetNextWindowViewport(ImGui::GetWindowViewport()->ID);
 }
 
-void _push_mouse_tile_labels(const Registry& registry,
-                             const Strings& strings,
+void _push_mouse_tile_labels(ModelView model,
                              const Map& map,
                              const ViewportMouseInfo& mouse)
 {
   if (map.active_layer == kNullEntity) {
     return;
   }
+
+  const auto& registry = model.get_registry();
+  const auto& strings = model.get_language_strings();
 
   if (const auto* tile_layer = registry.try_get<TileLayer>(map.active_layer)) {
     const auto tile_id = sys::tile_at(*tile_layer, mouse.tile_pos);
@@ -97,35 +98,36 @@ void _push_mouse_tile_labels(const Registry& registry,
   }
 }
 
-void _push_overlay_context_menu(const Strings& strings,
-                                const Settings& settings,
-                                Dispatcher& dispatcher)
+void _push_overlay_context_menu(ModelView model)
 {
-  if (auto popup = Popup::for_window("##ViewportOverlayPopup"); popup.is_open()) {
+  const auto& strings = model.get_language_strings();
+  const auto& settings = model.get_settings();
+
+  if (auto popup = ui::Popup::for_window("##ViewportOverlayPopup"); popup.is_open()) {
     const auto corner = settings.get_viewport_overlay_pos();
 
     if (ImGui::MenuItem(strings.action.top_left.c_str(),
                         nullptr,
                         corner == OverlayPos::TopLeft)) {
-      dispatcher.enqueue<SetViewportOverlayPosEvent>(OverlayPos::TopLeft);
+      model.enqueue<SetViewportOverlayPosEvent>(OverlayPos::TopLeft);
     }
 
     if (ImGui::MenuItem(strings.action.top_right.c_str(),
                         nullptr,
                         corner == OverlayPos::TopRight)) {
-      dispatcher.enqueue<SetViewportOverlayPosEvent>(OverlayPos::TopRight);
+      model.enqueue<SetViewportOverlayPosEvent>(OverlayPos::TopRight);
     }
 
     if (ImGui::MenuItem(strings.action.bottom_left.c_str(),
                         nullptr,
                         corner == OverlayPos::BottomLeft)) {
-      dispatcher.enqueue<SetViewportOverlayPosEvent>(OverlayPos::BottomLeft);
+      model.enqueue<SetViewportOverlayPosEvent>(OverlayPos::BottomLeft);
     }
 
     if (ImGui::MenuItem(strings.action.bottom_right.c_str(),
                         nullptr,
                         corner == OverlayPos::BottomRight)) {
-      dispatcher.enqueue<SetViewportOverlayPosEvent>(OverlayPos::BottomRight);
+      model.enqueue<SetViewportOverlayPosEvent>(OverlayPos::BottomRight);
     }
 
     ImGui::Separator();
@@ -134,26 +136,25 @@ void _push_overlay_context_menu(const Strings& strings,
     if (ImGui::MenuItem(strings.action.show_frame_rate.c_str(),
                         nullptr,
                         &show_overlay_fps)) {
-      dispatcher.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT,
-                                              show_overlay_fps);
+      model.enqueue<SetFlagSettingEvent>(SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT,
+                                         show_overlay_fps);
     }
   }
 }
 
 }  // namespace
 
-void push_map_viewport_overlay(const Registry& registry,
+void push_map_viewport_overlay(ModelView model,
                                const Map& map,
-                               const ViewportMouseInfo& mouse,
-                               Dispatcher& dispatcher)
+                               const ViewportMouseInfo& mouse)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
-  const auto& settings = registry.get<Settings>();
+  const auto& strings = model.get_language_strings();
+  const auto& settings = model.get_settings();
 
   _prepare_position_and_pivot(settings);
 
   ImGui::SetNextWindowBgAlpha(kOverlayOpacity);
-  const Window window {"##ViewportOverlay", kOverlayWindowFlags};
+  const ui::Window window {"##ViewportOverlay", kOverlayWindowFlags};
 
   if (window.is_open()) {
     if (settings.test_flag(SETTINGS_SHOW_VIEWPORT_OVERLAY_FPS_BIT)) {
@@ -181,9 +182,9 @@ void push_map_viewport_overlay(const Registry& registry,
     }
 
     ImGui::Separator();
-    _push_mouse_tile_labels(registry, strings, map, mouse);
-    _push_overlay_context_menu(strings, settings, dispatcher);
+    _push_mouse_tile_labels(model, map, mouse);
+    _push_overlay_context_menu(model);
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

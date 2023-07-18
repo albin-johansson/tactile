@@ -23,8 +23,6 @@
 #include <imgui_internal.h>
 
 #include "common/color.hpp"
-#include "io/settings_io.hpp"
-#include "model/documents/document_system.hpp"
 #include "model/events/tileset_events.hpp"
 #include "model/events/viewport_events.hpp"
 #include "model/maps/map_components.hpp"
@@ -36,7 +34,7 @@
 #include "ui/render/primitives.hpp"
 #include "ui/widget/rubber_band.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 namespace {
 
 inline constexpr Color kRubberBandColor {0, 0x44, 0xCC, 100};
@@ -80,16 +78,16 @@ void _render_selection(const Region& selection,
   const auto origin = as_imvec2(selection.begin.as_vec2f()) * tile_size;
   const auto size = as_imvec2(diff.as_vec2f()) * tile_size;
 
-  fill_rect(min + origin, size, kRubberBandColor);
+  ui::fill_rect(min + origin, size, kRubberBandColor);
 }
 
 }  // namespace
 
-void update_attached_tileset_view(const Registry& registry,
-                                  const Entity attached_tileset_entity,
-                                  Dispatcher& dispatcher)
+void render_attached_tileset_tab_contents(ModelView& model,
+                                          const Entity attached_tileset_entity)
 {
-  const auto& settings = registry.get<Settings>();
+  const auto& registry = model.get_registry();
+  const auto& settings = model.get_settings();
 
   const auto& attached_tileset = registry.get<AttachedTileset>(attached_tileset_entity);
   const auto& tileset = registry.get<Tileset>(attached_tileset.tileset);
@@ -98,34 +96,34 @@ void update_attached_tileset_view(const Registry& registry,
 
   const TileExtent tileset_extent {static_cast<usize>(tileset.row_count),
                                    static_cast<usize>(tileset.column_count)};
-  const auto canvas = create_canvas_info(viewport, tileset.tile_size, tileset_extent);
+  const auto canvas = ui::create_canvas_info(viewport, tileset.tile_size, tileset_extent);
 
   _update_viewport_offset(attached_tileset_entity,
                           viewport,
                           texture,
                           as_float2(canvas.size),
-                          dispatcher);
+                          model.get_dispatcher());
 
-  clear_canvas(canvas, settings.get_viewport_bg_color());
+  ui::clear_canvas(canvas, settings.get_viewport_bg_color());
 
   const auto offset = as_imvec2(viewport.offset);
   const auto tile_size = as_imvec2(tileset.tile_size);
 
-  if (const auto selection = ui_rubber_band(offset, tile_size)) {
-    dispatcher.enqueue<SetTilesetSelectionEvent>(attached_tileset_entity, *selection);
+  if (const auto selection = ui::ui_rubber_band(offset, tile_size)) {
+    model.enqueue<SetTilesetSelectionEvent>(attached_tileset_entity, *selection);
   }
 
-  push_scissor(canvas);
+  ui::push_scissor(canvas);
 
   const auto position = ImGui::GetWindowDrawList()->GetClipRectMin() + offset;
-  render_image(texture.handle, position, as_imvec2(texture.size));
+  ui::render_image(texture.handle, position, as_imvec2(texture.size));
 
   if (attached_tileset.selection.has_value()) {
     _render_selection(*attached_tileset.selection, position, tile_size);
   }
 
-  render_translated_grid(canvas, settings.get_grid_color());
-  pop_scissor();
+  ui::render_translated_grid(canvas, settings.get_grid_color());
+  ui::pop_scissor();
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

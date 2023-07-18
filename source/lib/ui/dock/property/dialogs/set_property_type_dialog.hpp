@@ -20,13 +20,12 @@
 #pragma once
 
 #include "common/enum/attribute_type.hpp"
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct SetPropertyTypeDialogState final {
   Entity context {kNullEntity};
@@ -36,8 +35,6 @@ struct SetPropertyTypeDialogState final {
   bool should_open {};
 };
 
-void push_set_property_type_dialog(const Registry& model,
-                                   SetPropertyTypeDialogState& state,
-                                   Dispatcher& dispatcher);
+void push_set_property_type_dialog(ModelView& model, SetPropertyTypeDialogState& state);
 
-}  // namespace tactile::ui
+}  // namespace tactile

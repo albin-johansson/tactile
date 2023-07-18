@@ -19,16 +19,15 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
-#include "model/registry.hpp"
+#include "model/model_view.hpp"
 #include "ui/dock/property/dialogs/new_property_dialog.hpp"
 #include "ui/dock/property/dialogs/rename_property_dialog.hpp"
 #include "ui/dock/property/dialogs/set_property_type_dialog.hpp"
 
-namespace tactile::ui {
+namespace tactile {
 
 struct PropertyItemContextMenuState final {
   bool show_add_dialog         : 1 {};
@@ -46,9 +45,7 @@ struct PropertyDockState final {
   bool has_focus : 1 {};
 };
 
-void push_property_dock_widget(const Registry& registry,
-                               PropertyDockState& state,
-                               Dispatcher& dispatcher);
+void push_property_dock_widget(ModelView& model, PropertyDockState& state);
 
 [[nodiscard]] auto is_property_dock_focused() -> bool;
 

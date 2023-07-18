@@ -92,20 +92,20 @@ void _push_quick_theme_menu(ModelView& model,
 {
   auto push_theme_item = [&](const Theme theme) {
     const auto is_current = settings.get_theme() == theme;
-    if (ImGui::MenuItem(ui::human_readable_name(theme).data(), nullptr, is_current)) {
+    if (ImGui::MenuItem(human_readable_name(theme).data(), nullptr, is_current)) {
       model.enqueue<SetThemeEvent>(theme);
     }
   };
 
   if (const ui::Menu theme_menu {strings.action.quick_theme.c_str()};
       theme_menu.is_open()) {
-    for (const auto theme: ui::kLightThemes) {
+    for (const auto theme: kLightThemes) {
       push_theme_item(theme);
     }
 
     ImGui::Separator();
 
-    for (const auto theme: ui::kDarkThemes) {
+    for (const auto theme: kDarkThemes) {
       push_theme_item(theme);
     }
   }
