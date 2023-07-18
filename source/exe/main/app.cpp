@@ -64,6 +64,7 @@
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/file_history_system.hpp"
 #include "model/persistence/settings.hpp"
+#include "model/persistence/settings_system.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/textures/texture_system.hpp"
 #include "model/textures/texture_system_factory.hpp"
@@ -90,17 +91,20 @@ void App::on_startup(const BackendAPI api)
 
   sys::init_model(registry, api);
 
+  mSettingsSystem = std::make_unique<SettingsSystem>();
   mLanguageSystem = std::make_unique<LanguageSystem>();
   mCommandSystem = std::make_unique<CommandSystem>();
   mToolSystem = std::make_unique<ToolSystem>();
   mTextureSystem = make_texture_system(api);
 
+  Locator<SettingsSystem>::reset(mSettingsSystem.get());
   Locator<LanguageSystem>::reset(mLanguageSystem.get());
   Locator<CommandSystem>::reset(mCommandSystem.get());
   Locator<ToolSystem>::reset(mToolSystem.get());
   Locator<TextureSystem>::reset(mTextureSystem.get());
 
-  mSystems.reserve(4);
+  mSystems.reserve(5);
+  mSystems.push_back(mSettingsSystem.get());
   mSystems.push_back(mLanguageSystem.get());
   mSystems.push_back(mCommandSystem.get());
   mSystems.push_back(mToolSystem.get());
