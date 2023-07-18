@@ -28,13 +28,19 @@ class SettingsSystem final : public System {
  public:
   void load_from_disk();
 
+  void reset_font_size();
+
+  void increase_font_size();
+
+  void decrease_font_size();
+
+  [[nodiscard]] auto can_reset_font_size() const -> bool;
+
   [[nodiscard]] auto can_increase_font_size() const -> bool;
 
   [[nodiscard]] auto can_decrease_font_size() const -> bool;
 
-  [[nodiscard]] auto can_reset_font_size() const -> bool;
-
-  [[nodiscard]] auto copy_current() -> Settings;
+  [[nodiscard]] auto copy_current() const -> Settings;
 
   [[nodiscard]] auto current_settings() -> Settings&;
   [[nodiscard]] auto current_settings() const -> const Settings&;

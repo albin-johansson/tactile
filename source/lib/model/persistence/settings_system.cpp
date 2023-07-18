@@ -19,6 +19,10 @@
 
 #include "settings_system.hpp"
 
+#include <algorithm>  // min, max
+
+#include <spdlog/spdlog.h>
+
 #include "io/settings_io.hpp"
 #include "ui/constants.hpp"
 
@@ -28,6 +32,34 @@ void SettingsSystem::load_from_disk()
 {
   mSettings = load_settings_from_disk();
   mSettings.print();
+}
+
+void SettingsSystem::reset_font_size()
+{
+  spdlog::trace("[SettingsSystem] Resetting the font size");
+
+  mSettings.set_font_size(kDefFontSize);
+}
+
+void SettingsSystem::increase_font_size()
+{
+  spdlog::trace("[SettingsSystem] Increasing the font size");
+
+  const auto new_size = std::min(mSettings.get_font_size() + 2, kMaxFontSize);
+  mSettings.set_font_size(new_size);
+}
+
+void SettingsSystem::decrease_font_size()
+{
+  spdlog::trace("[SettingsSystem] Decreasing the font size");
+
+  const auto new_size = std::max(mSettings.get_font_size() - 2, kMinFontSize);
+  mSettings.set_font_size(new_size);
+}
+
+auto SettingsSystem::can_reset_font_size() const -> bool
+{
+  return !mSettings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT);
 }
 
 auto SettingsSystem::can_increase_font_size() const -> bool
@@ -42,12 +74,7 @@ auto SettingsSystem::can_decrease_font_size() const -> bool
          mSettings.get_font_size() > kMinFontSize;
 }
 
-auto SettingsSystem::can_reset_font_size() const -> bool
-{
-  return !mSettings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT);
-}
-
-auto SettingsSystem::copy_current() -> Settings
+auto SettingsSystem::copy_current() const -> Settings
 {
   return mSettings.copy();
 }

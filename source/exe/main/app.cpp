@@ -47,7 +47,6 @@
 #include "model/documents/document_system.hpp"
 #include "model/events/delegates/component_delegate.hpp"
 #include "model/events/delegates/file_delegate.hpp"
-#include "model/events/delegates/font_delegate.hpp"
 #include "model/events/delegates/input_delegate.hpp"
 #include "model/events/delegates/layer_delegate.hpp"
 #include "model/events/delegates/map_delegate.hpp"
@@ -808,20 +807,20 @@ void App::_on_reload_fonts(const ReloadFontsEvent&)
 
 void App::_on_increase_font_size(const IncreaseFontSizeEvent& event)
 {
-  spdlog::trace("[IncreaseFontSizeEvent]");
-  on_increase_font_size(*mRegistry, mDispatcher, event);
+  mSettingsSystem->increase_font_size();
+  mDispatcher.trigger(ReloadFontsEvent {});
 }
 
 void App::_on_decrease_font_size(const DecreaseFontSizeEvent& event)
 {
-  spdlog::trace("[DecreaseFontSizeEvent]");
-  on_decrease_font_size(*mRegistry, mDispatcher, event);
+  mSettingsSystem->decrease_font_size();
+  mDispatcher.trigger(ReloadFontsEvent {});
 }
 
 void App::_on_reset_font_size(const ResetFontSizeEvent& event)
 {
-  spdlog::trace("[ResetFontSizeEvent]");
-  on_reset_font_size(*mRegistry, mDispatcher, event);
+  mSettingsSystem->reset_font_size();
+  mDispatcher.trigger(ReloadFontsEvent {});
 }
 
 void App::_on_show_settings(const ShowSettingsEvent& event)
