@@ -21,8 +21,9 @@
 
 #include "common/macros.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/hash_map.hpp"
 #include "common/type/path.hpp"
+#include "common/type/string.hpp"
+#include "common/type/string_map.hpp"
 #include "model/registry.hpp"
 #include "model/system.hpp"
 
@@ -44,7 +45,7 @@ class TextureSystem : public System {
   virtual void destroy_texture(Registry& registry, Entity texture_entity) = 0;
 
  private:
-  HashMap<Path, Entity> mTextureCache;
+  StringMap<Entity> mTextureCache;
 };
 
 }  // namespace tactile

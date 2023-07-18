@@ -23,6 +23,7 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/assert.hpp"
+#include "common/util/lookup.hpp"
 #include "io/texture_loader.hpp"
 #include "model/entity_validation.hpp"
 #include "model/textures/texture_components.hpp"
@@ -39,8 +40,8 @@ void TextureSystem::destroy_textures(Registry& registry)
 auto TextureSystem::load_texture(Registry& registry, const Path& texture_path) -> Entity
 {
   // Check if the image has already been loaded, if so just return the associated entity.
-  if (const auto iter = mTextureCache.find(texture_path); iter != mTextureCache.end()) {
-    return iter->second;
+  if (const auto* texture_entity = find_in(mTextureCache, texture_path)) {
+    return *texture_entity;
   }
 
   const auto texture_data = load_texture_data(texture_path);
@@ -58,8 +59,8 @@ auto TextureSystem::load_texture(Registry& registry, const Path& texture_path) -
   prepare_texture(registry, texture_entity, *texture_data);
   TACTILE_ASSERT(sys::is_texture_entity(registry, texture_entity));
 
-  mTextureCache[texture_path] = texture_entity;
+  mTextureCache[texture_path.string()] = texture_entity;
   return texture_entity;
 }
 
-}  // namespace tactile::sys
+}  // namespace tactile

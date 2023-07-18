@@ -50,6 +50,28 @@ template <typename M, std::equality_comparable_with<typename M::key_type> K>
   }
 }
 
+template <typename M, typename K>
+[[nodiscard]] auto find_in(M& map, K&& key) -> typename M::mapped_type*
+{
+  const auto iter = map.find(std::forward<K>(key));
+  if (iter != map.end()) {
+    return &iter->second;
+  }
+
+  return nullptr;
+}
+
+template <typename M, typename K>
+[[nodiscard]] auto find_in(const M& map, K&& key) -> const typename M::mapped_type*
+{
+  const auto iter = map.find(std::forward<K>(key));
+  if (iter != map.end()) {
+    return &iter->second;
+  }
+
+  return nullptr;
+}
+
 template <typename M, std::equality_comparable_with<typename M::key_type> K>
 [[nodiscard]] auto has_key(const M& map, K&& key) -> bool
 {
