@@ -20,12 +20,16 @@
 #include "model_view.hpp"
 
 #include "model/documents/command_system.hpp"
+#include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/i18n/language_system.hpp"
+#include "model/layers/layer_components.hpp"
 #include "model/locator.hpp"
 #include "model/maps/map_system.hpp"
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/file_history_system.hpp"
+#include "model/persistence/settings_system.hpp"
+#include "model/textures/texture_components.hpp"
 #include "model/tools/tool_system.hpp"
 #include "model/view/font_system.hpp"
 #include "model/viewports/viewport_system.hpp"
@@ -44,14 +48,29 @@ auto ModelView::get_file_history() const -> const Deque<String>&
   return file_history.entries;
 }
 
+auto ModelView::get_open_documents() const -> const Vector<Entity>&
+{
+  const auto& document_context = get_registry().get<DocumentContext>();
+  return document_context.open_documents;
+}
+
+auto ModelView::get_tactile_icon_texture() const -> void*
+{
+  const auto& registry = get_registry();
+  const auto& icons = registry.get<Icons>();
+  const auto& icon_texture = registry.get<Texture>(icons.tactile_icon);
+  return icon_texture.handle;
+}
+
 auto ModelView::get_settings() const -> const Settings&
 {
-  return get_registry().get<Settings>();
+  return Locator<SettingsSystem>::get().current_settings();
 }
 
 auto ModelView::get_language_strings() const -> const Strings&
 {
-  return sys::get_current_language_strings(get_registry());
+  const auto& language_system = Locator<LanguageSystem>::get();
+  return language_system.get_strings(get_settings().get_language());
 }
 
 auto ModelView::has_active_document() const -> bool
@@ -67,6 +86,37 @@ auto ModelView::has_active_map_document() const -> bool
 auto ModelView::has_active_tileset_document() const -> bool
 {
   return sys::is_tileset_document_active(get_registry());
+}
+
+auto ModelView::is_tile_layer_active() const -> bool
+{
+  const auto& registry = get_registry();
+
+  if (const auto* map = sys::try_get_active_map(registry)) {
+    return map->active_layer != kNullEntity && registry.has<TileLayer>(map->active_layer);
+  }
+
+  return false;
+}
+
+auto ModelView::is_document_active(const Entity document_entity) const -> bool
+{
+  return sys::get_active_document(get_registry()) == document_entity;
+}
+
+auto ModelView::is_map_document(const Entity document_entity) const -> bool
+{
+  return get_registry().has<MapDocument>(document_entity);
+}
+
+auto ModelView::is_tileset_document(const Entity document_entity) const -> bool
+{
+  return get_registry().has<TilesetDocument>(document_entity);
+}
+
+auto ModelView::get_document_name(const Entity document_entity) const -> String
+{
+  return sys::get_document_name(get_registry(), document_entity);
 }
 
 auto ModelView::is_available(const MenuAction action) const -> bool

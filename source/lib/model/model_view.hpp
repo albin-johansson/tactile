@@ -26,8 +26,10 @@
 #include "common/macros.hpp"
 #include "common/type/deque.hpp"
 #include "common/type/dispatcher.hpp"
+#include "common/type/ecs.hpp"
 #include "common/type/ref.hpp"
 #include "common/type/string.hpp"
+#include "common/type/vector.hpp"
 #include "model/i18n/strings.hpp"
 #include "model/persistence/settings.hpp"
 #include "model/registry.hpp"
@@ -50,9 +52,25 @@ class ModelView final {
 
   [[nodiscard]] auto get_file_history() const -> const Deque<String>&;
 
+  [[nodiscard]] auto get_open_documents() const -> const Vector<Entity>&;
+
+  [[nodiscard]] auto get_tactile_icon_texture() const -> void*;
+
   [[nodiscard]] auto has_active_document() const -> bool;
+
   [[nodiscard]] auto has_active_map_document() const -> bool;
+
   [[nodiscard]] auto has_active_tileset_document() const -> bool;
+
+  [[nodiscard]] auto is_tile_layer_active() const -> bool;
+
+  [[nodiscard]] auto is_document_active(Entity document_entity) const -> bool;
+
+  [[nodiscard]] auto is_map_document(Entity document_entity) const -> bool;
+
+  [[nodiscard]] auto is_tileset_document(Entity document_entity) const -> bool;
+
+  [[nodiscard]] auto get_document_name(Entity document_entity) const -> String;
 
   [[nodiscard]] auto is_available(MenuAction action) const -> bool;
 
