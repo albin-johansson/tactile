@@ -46,6 +46,7 @@
 namespace tactile {
 
 TACTILE_FWD_DECLARE_CLASS(System)
+TACTILE_FWD_DECLARE_CLASS(CommandSystem)
 TACTILE_FWD_DECLARE_CLASS(ToolSystem)
 
 /// The heart of the Tactile map editor.
@@ -72,6 +73,7 @@ class App final : public AppDelegate {
  private:
   Unique<Registry> mRegistry;
   Dispatcher mDispatcher;
+  Unique<CommandSystem> mCommandSystem;
   Unique<ToolSystem> mToolSystem;
   Vector<System*> mSystems;
   ImVec2 mFramebufferScale {};
@@ -82,11 +84,6 @@ class App final : public AppDelegate {
   void _init_persistent_settings();
 
   void _on_menu_action(const MenuActionEvent& event);
-
-  // Command events
-  void _on_undo(const UndoEvent& event);
-  void _on_redo(const RedoEvent& event);
-  void _on_set_command_capacity(const SetCommandCapacityEvent& event);
 
   // File events
   void _on_open_document(const OpenDocumentEvent& event);

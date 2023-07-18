@@ -43,8 +43,8 @@
 #include "io/file_history_io.hpp"
 #include "io/session_io.hpp"
 #include "io/settings_io.hpp"
+#include "model/command_system.hpp"
 #include "model/documents/document_system.hpp"
-#include "model/events/delegates/command_delegate.hpp"
 #include "model/events/delegates/component_delegate.hpp"
 #include "model/events/delegates/file_delegate.hpp"
 #include "model/events/delegates/font_delegate.hpp"
@@ -91,8 +91,11 @@ void App::on_startup(const BackendAPI api)
 
   sys::init_model(registry, api);
 
+  mCommandSystem = std::make_unique<CommandSystem>(*mRegistry, mDispatcher);
   mToolSystem = std::make_unique<ToolSystem>(*mRegistry, mDispatcher);
 
+  mSystems.reserve(2);
+  mSystems.push_back(mCommandSystem.get());
   mSystems.push_back(mToolSystem.get());
 
   for (auto& system: mSystems) {
@@ -109,11 +112,6 @@ void App::on_startup(const BackendAPI api)
 
 void App::_subscribe_to_events()
 {
-  // Command events
-  ROUTE(UndoEvent, &App::_on_undo);
-  ROUTE(RedoEvent, &App::_on_redo);
-  ROUTE(SetCommandCapacityEvent, &App::_on_set_command_capacity);
-
   // File events
   ROUTE(OpenDocumentEvent, &App::_on_open_document);
   ROUTE(CloseDocumentEvent, &App::_on_close_document);
@@ -341,24 +339,6 @@ void App::_on_menu_action(const MenuActionEvent& event)
 {
   spdlog::trace("[MenuActionEvent] action: {}", event.action);
   on_menu_action(*mRegistry, mDispatcher, event);
-}
-
-void App::_on_undo(const UndoEvent& event)
-{
-  spdlog::trace("[UndoEvent]");
-  on_undo(*mRegistry, event);
-}
-
-void App::_on_redo(const RedoEvent& event)
-{
-  spdlog::trace("[RedoEvent]");
-  on_redo(*mRegistry, event);
-}
-
-void App::_on_set_command_capacity(const SetCommandCapacityEvent& event)
-{
-  spdlog::trace("[SetCommandCapacityEvent] capacity: {}", event.capacity);
-  on_set_command_capacity(*mRegistry, event);
 }
 
 void App::_on_open_document(const OpenDocumentEvent& event)

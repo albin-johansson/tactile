@@ -19,16 +19,34 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
-#include "model/events/command_events.hpp"
-#include "model/registry.hpp"
+#include "cmd/command_stack.hpp"
+#include "common/macros.hpp"
+#include "common/primitives.hpp"
+#include "common/type/ecs.hpp"
+#include "common/type/hash_map.hpp"
+#include "model/system.hpp"
 
 namespace tactile {
 
-void on_undo(Registry& registry, const UndoEvent& event);
+TACTILE_FWD_DECLARE_STRUCT(SetCommandCapacityEvent)
 
-void on_redo(Registry& registry, const RedoEvent& event);
+class CommandSystem final : public System {
+ public:
+  CommandSystem(Registry& registry, Dispatcher& dispatcher);
 
-void on_set_command_capacity(Registry& registry, const SetCommandCapacityEvent& event);
+  /// Subscribes to UndoEvent, RedoEvent, and SetCommandCapacityEvent.
+  void install() override;
+
+  void undo();
+
+  void redo();
+
+  void set_command_capacity(usize capacity);
+
+ private:
+  void _on_set_command_capacity(const SetCommandCapacityEvent& event);
+
+  [[nodiscard]] auto _get_active_command_stack() -> CommandStack*;
+};
 
 }  // namespace tactile
