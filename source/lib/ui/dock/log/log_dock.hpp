@@ -27,7 +27,7 @@
 namespace tactile {
 
 struct LogDockState final {
-  uint32 log_filter {kAllLogLevels};
+  uint32 log_filter {kDefaultLogLevels};
   bool has_focus {};
 };
 

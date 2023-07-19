@@ -46,6 +46,15 @@ inline constexpr LogLevelFlags kAllLogLevels = LOG_LEVEL_TRACE | LOG_LEVEL_DEBUG
                                                LOG_LEVEL_INFO | LOG_LEVEL_WARNING |
                                                LOG_LEVEL_ERROR | LOG_LEVEL_CRITICAL;
 
+#if TACTILE_DEBUG
+inline constexpr LogLevelFlags kDefaultLogLevels = kAllLogLevels;
+#else
+inline constexpr LogLevelFlags kDefaultLogLevels = LOG_LEVEL_INFO |     //
+                                                   LOG_LEVEL_WARNING |  //
+                                                   LOG_LEVEL_ERROR |    //
+                                                   LOG_LEVEL_CRITICAL;
+#endif  // TACTILE_DEBUG
+
 struct LogEntry final {
   LogLevelBits level;
   String msg;
