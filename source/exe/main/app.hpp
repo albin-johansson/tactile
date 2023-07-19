@@ -42,15 +42,9 @@
 #include "model/events/tool_events.hpp"
 #include "model/events/view_events.hpp"
 #include "model/events/viewport_events.hpp"
+#include "model/system_manager.hpp"
 
 namespace tactile {
-
-TACTILE_FWD_DECLARE_CLASS(System)
-TACTILE_FWD_DECLARE_CLASS(SettingsSystem)
-TACTILE_FWD_DECLARE_CLASS(LanguageSystem)
-TACTILE_FWD_DECLARE_CLASS(CommandSystem)
-TACTILE_FWD_DECLARE_CLASS(ToolSystem)
-TACTILE_FWD_DECLARE_CLASS(TextureSystem)
 
 /// The heart of the Tactile map editor.
 class App final : public AppDelegate {
@@ -76,12 +70,7 @@ class App final : public AppDelegate {
  private:
   Unique<Registry> mRegistry;
   Dispatcher mDispatcher;
-  Unique<SettingsSystem> mSettingsSystem;
-  Unique<LanguageSystem> mLanguageSystem;
-  Unique<CommandSystem> mCommandSystem;
-  Unique<ToolSystem> mToolSystem;
-  Unique<TextureSystem> mTextureSystem;
-  Vector<System*> mSystems;
+  Unique<SystemManager> mSystemManager;
   ImVec2 mFramebufferScale {};
   bool mShouldStop     : 1 {false};
   bool mWantFontReload : 1 {false};

@@ -57,12 +57,10 @@
 #include "model/events/delegates/tileset_delegate.hpp"
 #include "model/events/delegates/viewport_delegate.hpp"
 #include "model/i18n/language_system.hpp"
-#include "model/locator.hpp"
 #include "model/model_factory.hpp"
 #include "model/model_view.hpp"
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/file_history_system.hpp"
-#include "model/persistence/settings.hpp"
 #include "model/persistence/settings_system.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/textures/texture_system.hpp"
@@ -90,30 +88,15 @@ void App::on_startup(const BackendAPI api)
 
   sys::init_model(registry, api);
 
-  mSettingsSystem = std::make_unique<SettingsSystem>();
-  mLanguageSystem = std::make_unique<LanguageSystem>();
-  mCommandSystem = std::make_unique<CommandSystem>();
-  mToolSystem = std::make_unique<ToolSystem>();
-  mTextureSystem = make_texture_system(api);
-
-  Locator<SettingsSystem>::reset(mSettingsSystem.get());
-  Locator<LanguageSystem>::reset(mLanguageSystem.get());
-  Locator<CommandSystem>::reset(mCommandSystem.get());
-  Locator<ToolSystem>::reset(mToolSystem.get());
-  Locator<TextureSystem>::reset(mTextureSystem.get());
-
-  mSystems.reserve(5);
-  mSystems.push_back(mSettingsSystem.get());
-  mSystems.push_back(mLanguageSystem.get());
-  mSystems.push_back(mCommandSystem.get());
-  mSystems.push_back(mToolSystem.get());
-  mSystems.push_back(mTextureSystem.get());
+  mSystemManager = std::make_unique<SystemManager>(api);
 
   _subscribe_to_events();
 
+  auto& texture_system = mSystemManager->get_texture_system();
+
   auto& icons = registry.get<Icons>();
   icons.tactile_icon =
-      mTextureSystem->load_texture(registry, find_resource("assets/icon.png"));
+      texture_system.load_texture(registry, find_resource("assets/icon.png"));
 
   _init_persistent_settings();
 }
@@ -282,10 +265,13 @@ void App::_subscribe_to_events()
 
 void App::_init_persistent_settings()
 {
-  mSettingsSystem->load_from_disk();
-  mLanguageSystem->load_languages();
+  auto& settings_system = mSystemManager->get_settings_system();
+  auto& language_system = mSystemManager->get_language_system();
 
-  const auto& settings = mSettingsSystem->current_settings();
+  settings_system.load_from_disk();
+  language_system.load_languages();
+
+  const auto& settings = settings_system.current_settings();
 
   auto& registry = *mRegistry;
   auto& file_history = registry.get<FileHistory>();
@@ -305,10 +291,11 @@ void App::_init_persistent_settings()
 
 void App::on_shutdown()
 {
+  const auto& settings_system = mSystemManager->get_settings_system();
   auto& registry = *mRegistry;
 
   sys::store_open_documents_in_file_history(registry);
-  save_settings_to_disk(mSettingsSystem->current_settings());
+  save_settings_to_disk(settings_system.current_settings());
   save_session_to_disk(registry);
 
   const auto& file_history = registry.get<FileHistory>();
@@ -319,11 +306,7 @@ void App::on_update()
 {
   auto& registry = *mRegistry;
 
-  // TODO update animated tiles
-
-  for (auto& system: mSystems) {
-    system->update(*mRegistry, mDispatcher);
-  }
+  mSystemManager->update(registry, mDispatcher);
 
   auto& widgets = registry.get<WidgetState>();
 
@@ -350,7 +333,8 @@ void App::on_event(const cen::event_handler& event)
 
 void App::reload_font_files()
 {
-  ui::reload_imgui_fonts(mSettingsSystem->current_settings());
+  const auto& settings_system = mSystemManager->get_settings_system();
+  ui::reload_imgui_fonts(settings_system.current_settings());
   mWantFontReload = false;
 }
 
@@ -362,17 +346,20 @@ void App::_on_menu_action(const MenuActionEvent& event)
 
 void App::_on_undo(const UndoEvent&)
 {
-  mCommandSystem->undo(*mRegistry);
+  auto& command_system = mSystemManager->get_command_system();
+  command_system.undo(*mRegistry);
 }
 
 void App::_on_redo(const RedoEvent&)
 {
-  mCommandSystem->redo(*mRegistry);
+  auto& command_system = mSystemManager->get_command_system();
+  command_system.redo(*mRegistry);
 }
 
 void App::_on_set_command_capacity(const SetCommandCapacityEvent& event)
 {
-  mCommandSystem->on_set_command_capacity(*mRegistry, event);
+  auto& command_system = mSystemManager->get_command_system();
+  command_system.on_set_command_capacity(*mRegistry, event);
 }
 
 void App::_on_open_document(const OpenDocumentEvent& event)
@@ -393,9 +380,7 @@ void App::_on_select_document(const SelectDocumentEvent& event)
 
   // FIXME documents are selected for every mouse press, so we need this check.
   if (event.document != sys::get_active_document(*mRegistry)) {
-    for (auto& system: mSystems) {
-      system->reset();
-    }
+    mSystemManager->reset();
   }
 
   on_select_document(*mRegistry, event);
@@ -449,7 +434,8 @@ void App::_on_toggle_highlight_layer(const ToggleHighlightLayerEvent&)
 {
   spdlog::trace("[ToggleHighlightLayerEvent]");
 
-  auto& settings = mSettingsSystem->current_settings();
+  auto& settings_system = mSystemManager->get_settings_system();
+  auto& settings = settings_system.current_settings();
   settings.negate_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT);
 }
 
@@ -786,17 +772,17 @@ void App::_on_spawn_object_context_menu(const SpawnObjectContextMenuEvent& event
 
 void App::_on_select_tool(const SelectToolEvent& event)
 {
-  mToolSystem->on_select_tool(*mRegistry, mDispatcher, event);
+  mSystemManager->get_tool_system().on_select_tool(*mRegistry, mDispatcher, event);
 }
 
 void App::_on_stamp_sequence(const StampSequenceEvent& event)
 {
-  mToolSystem->on_stamp_sequence(*mRegistry, event);
+  mSystemManager->get_tool_system().on_stamp_sequence(*mRegistry, event);
 }
 
 void App::_on_flood(const FloodEvent& event)
 {
-  mToolSystem->on_flood(*mRegistry, event);
+  mSystemManager->get_tool_system().on_flood(*mRegistry, event);
 }
 
 void App::_on_reload_fonts(const ReloadFontsEvent&)
@@ -807,19 +793,19 @@ void App::_on_reload_fonts(const ReloadFontsEvent&)
 
 void App::_on_increase_font_size(const IncreaseFontSizeEvent& event)
 {
-  mSettingsSystem->increase_font_size();
+  mSystemManager->get_settings_system().increase_font_size();
   mDispatcher.trigger(ReloadFontsEvent {});
 }
 
 void App::_on_decrease_font_size(const DecreaseFontSizeEvent& event)
 {
-  mSettingsSystem->decrease_font_size();
+  mSystemManager->get_settings_system().decrease_font_size();
   mDispatcher.trigger(ReloadFontsEvent {});
 }
 
 void App::_on_reset_font_size(const ResetFontSizeEvent& event)
 {
-  mSettingsSystem->reset_font_size();
+  mSystemManager->get_settings_system().reset_font_size();
   mDispatcher.trigger(ReloadFontsEvent {});
 }
 
@@ -873,27 +859,37 @@ void App::_on_reset_dock_visibilities(const ResetDockVisibilitiesEvent& event)
 
 void App::_on_viewport_mouse_pressed(const ViewportMousePressedEvent& event)
 {
-  mToolSystem->on_viewport_mouse_pressed(*mRegistry, mDispatcher, event);
+  mSystemManager->get_tool_system().on_viewport_mouse_pressed(*mRegistry,
+                                                              mDispatcher,
+                                                              event);
 }
 
 void App::_on_viewport_mouse_dragged(const ViewportMouseDraggedEvent& event)
 {
-  mToolSystem->on_viewport_mouse_dragged(*mRegistry, mDispatcher, event);
+  mSystemManager->get_tool_system().on_viewport_mouse_dragged(*mRegistry,
+                                                              mDispatcher,
+                                                              event);
 }
 
 void App::_on_viewport_mouse_released(const ViewportMouseReleasedEvent& event)
 {
-  mToolSystem->on_viewport_mouse_released(*mRegistry, mDispatcher, event);
+  mSystemManager->get_tool_system().on_viewport_mouse_released(*mRegistry,
+                                                               mDispatcher,
+                                                               event);
 }
 
 void App::_on_viewport_mouse_entered(const ViewportMouseEnteredEvent& event)
 {
-  mToolSystem->on_viewport_mouse_entered(*mRegistry, mDispatcher, event);
+  mSystemManager->get_tool_system().on_viewport_mouse_entered(*mRegistry,
+                                                              mDispatcher,
+                                                              event);
 }
 
 void App::_on_viewport_mouse_exited(const ViewportMouseExitedEvent& event)
 {
-  mToolSystem->on_viewport_mouse_exited(*mRegistry, mDispatcher, event);
+  mSystemManager->get_tool_system().on_viewport_mouse_exited(*mRegistry,
+                                                             mDispatcher,
+                                                             event);
 }
 
 void App::_on_center_viewport(const CenterViewportEvent& event)
