@@ -25,27 +25,32 @@
 
 #include "common/primitives.hpp"
 #include "common/result.hpp"
+#include "common/type/path.hpp"
 #include "common/type/string.hpp"
 
 namespace tactile {
 
 struct StringHash final {
-  using hash_type = std::hash<StringView>;
   using is_transparent = std::true_type;
 
   [[nodiscard]] auto operator()(const char* str) const -> usize
   {
-    return hash_type {}(str);
+    return std::hash<const char*> {}(str);
   }
 
   [[nodiscard]] auto operator()(StringView str) const -> usize
   {
-    return hash_type {}(str);
+    return std::hash<StringView> {}(str);
   }
 
   [[nodiscard]] auto operator()(const String& str) const -> usize
   {
-    return hash_type {}(str);
+    return std::hash<String> {}(str);
+  }
+
+  [[nodiscard]] auto operator()(const Path& path) const -> usize
+  {
+    return std::hash<const Path::value_type*> {}(path.c_str());
   }
 };
 
