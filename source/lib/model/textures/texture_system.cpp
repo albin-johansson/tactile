@@ -19,6 +19,8 @@
 
 #include "texture_system.hpp"
 
+#include <utility>  // move
+
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
@@ -39,8 +41,10 @@ void TextureSystem::destroy_textures(Registry& registry)
 
 auto TextureSystem::load_texture(Registry& registry, const Path& texture_path) -> Entity
 {
+  auto texture_path_string = texture_path.string();
+
   // Check if the image has already been loaded, if so just return the associated entity.
-  if (const auto* texture_entity = find_in(mTextureCache, texture_path)) {
+  if (const auto* texture_entity = find_in(mTextureCache, texture_path_string)) {
     return *texture_entity;
   }
 
@@ -59,7 +63,7 @@ auto TextureSystem::load_texture(Registry& registry, const Path& texture_path) -
   prepare_texture(registry, texture_entity, *texture_data);
   TACTILE_ASSERT(sys::is_texture_entity(registry, texture_entity));
 
-  mTextureCache[texture_path.string()] = texture_entity;
+  mTextureCache[std::move(texture_path_string)] = texture_entity;
   return texture_entity;
 }
 

@@ -35,7 +35,7 @@ struct StringHash final {
 
   [[nodiscard]] auto operator()(const char* str) const -> usize
   {
-    return std::hash<const char*> {}(str);
+    return std::hash<StringView> {}(str);
   }
 
   [[nodiscard]] auto operator()(StringView str) const -> usize
@@ -45,12 +45,7 @@ struct StringHash final {
 
   [[nodiscard]] auto operator()(const String& str) const -> usize
   {
-    return std::hash<String> {}(str);
-  }
-
-  [[nodiscard]] auto operator()(const Path& path) const -> usize
-  {
-    return std::hash<const Path::value_type*> {}(path.c_str());
+    return std::hash<StringView> {}(str);
   }
 };
 
