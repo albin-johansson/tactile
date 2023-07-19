@@ -26,15 +26,16 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "backend/gl/gl_backend.hpp"
-#include "backend/null/null_backend.hpp"
 #include "common/debug/assert.hpp"
 #include "common/debug/stacktrace.hpp"
 #include "common/fmt/stacktrace_formatter.hpp"
 #include "engine/app_delegate.hpp"
 #include "engine/platform/window.hpp"
 #include "io/directories.hpp"
-#include "model/locator.hpp"
+#include "model/services/backend_service.hpp"
+#include "model/services/backends/gl_backend_service.hpp"
+#include "model/services/backends/null_backend_service.hpp"
+#include "model/services/locator.hpp"
 #include "model/services/logging_service.hpp"
 
 namespace tactile {
@@ -73,15 +74,16 @@ Engine::Engine(const BackendAPI api)
 
   if (mAPI == BackendAPI::Null) {
     spdlog::debug("[Engine] Using null backend");
-
-    mBackend = std::make_unique<NullBackend>();
+    mBackendService = std::make_unique<NullBackendService>();
   }
   else if (mAPI == BackendAPI::OpenGL) {
     spdlog::debug("[Engine] Initializing OpenGL backend");
 
     auto& gl_context = mSDL->get_gl_context();
-    mBackend = std::make_unique<OpenGLBackend>(window.get(), gl_context.get());
+    mBackendService = std::make_unique<GLBackendService>(window.get(), gl_context.get());
   }
+
+  Locator<BackendService>::reset(mBackendService.get());
 
   spdlog::debug("[IO] Persistent file directory: {}", get_persistent_file_dir());
 }
@@ -90,7 +92,7 @@ Engine::~Engine() noexcept = default;
 
 void Engine::start()
 {
-  TACTILE_ASSERT(mBackend != nullptr);
+  TACTILE_ASSERT(mBackendService != nullptr);
   TACTILE_ASSERT(mApp != nullptr);
 
   spdlog::debug("[Engine] Starting core event loop");
@@ -104,16 +106,7 @@ void Engine::start()
   while (mRunning) {
     mRunning = !mApp->should_stop();
     _poll_events();
-
-    if (mApp->want_font_reload() && mBackend->can_reload_fonts()) {
-      mApp->reload_font_files();
-      mBackend->reload_font_resources();
-    }
-
-    if (mBackend->new_frame().succeeded()) {
-      mApp->on_update();
-      mBackend->end_frame();
-    }
+    mApp->on_update();
   }
 
   mApp->on_shutdown();
@@ -126,7 +119,7 @@ void Engine::_poll_events()
 
   cen::event_handler event;
   while (event.poll()) {
-    mBackend->process_event(event.data());
+    mBackendService->process_event(*event.data());
 
     switch (event.type().value()) {
       case cen::event_type::quit:

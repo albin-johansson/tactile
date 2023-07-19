@@ -34,9 +34,9 @@
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/entity_validation.hpp"
-#include "model/locator.hpp"
 #include "model/maps/map_system.hpp"
 #include "model/persistence/settings_system.hpp"
+#include "model/services/locator.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "ui/widget_state.hpp"
 

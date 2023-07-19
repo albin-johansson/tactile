@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/enum/backend_api.hpp"
 #include "common/macros.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/vector.hpp"
@@ -31,11 +30,10 @@ TACTILE_FWD_DECLARE_CLASS(SettingsSystem)
 TACTILE_FWD_DECLARE_CLASS(LanguageSystem)
 TACTILE_FWD_DECLARE_CLASS(CommandSystem)
 TACTILE_FWD_DECLARE_CLASS(ToolSystem)
-TACTILE_FWD_DECLARE_CLASS(TextureSystem)
 
 class SystemManager final : private System {
  public:
-  explicit SystemManager(BackendAPI api);
+  SystemManager();
 
   ~SystemManager() noexcept override;
 
@@ -55,15 +53,11 @@ class SystemManager final : private System {
   [[nodiscard]] auto get_tool_system() -> ToolSystem&;
   [[nodiscard]] auto get_tool_system() const -> const ToolSystem&;
 
-  [[nodiscard]] auto get_texture_system() -> TextureSystem&;
-  [[nodiscard]] auto get_texture_system() const -> const TextureSystem&;
-
  private:
   Unique<SettingsSystem> mSettingsSystem;
   Unique<LanguageSystem> mLanguageSystem;
   Unique<CommandSystem> mCommandSystem;
   Unique<ToolSystem> mToolSystem;
-  Unique<TextureSystem> mTextureSystem;
   Vector<System*> mSystems;
 };
 

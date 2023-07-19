@@ -61,10 +61,6 @@ class App final : public AppDelegate {
 
   void on_event(const cen::event_handler& event) override;
 
-  void reload_font_files() override;
-
-  [[nodiscard]] auto want_font_reload() const -> bool override { return mWantFontReload; }
-
   [[nodiscard]] auto should_stop() const -> bool override { return mShouldStop; }
 
  private:

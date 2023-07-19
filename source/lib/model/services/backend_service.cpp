@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "texture_system.hpp"
+#include "backend_service.hpp"
 
 #include <utility>  // move
 
@@ -32,14 +32,7 @@
 
 namespace tactile {
 
-void TextureSystem::destroy_textures(Registry& registry)
-{
-  for (const auto& [texture_path, texture_entity]: mTextureCache) {
-    destroy_texture(registry, texture_entity);
-  }
-}
-
-auto TextureSystem::load_texture(Registry& registry, const Path& texture_path) -> Entity
+auto BackendService::load_texture(Registry& registry, const Path& texture_path) -> Entity
 {
   auto texture_path_string = texture_path.string();
 
@@ -50,7 +43,7 @@ auto TextureSystem::load_texture(Registry& registry, const Path& texture_path) -
 
   const auto texture_data = load_texture_data(texture_path);
   if (!texture_data) {
-    spdlog::error("[TextureSystem] Could not load texture {}", texture_path);
+    spdlog::error("[BackendService] Could not load texture {}", texture_path);
     return kNullEntity;
   }
 
@@ -65,6 +58,23 @@ auto TextureSystem::load_texture(Registry& registry, const Path& texture_path) -
 
   mTextureCache[std::move(texture_path_string)] = texture_entity;
   return texture_entity;
+}
+
+void BackendService::destroy_texture(Registry& registry, const Entity texture_entity)
+{
+  TACTILE_ASSERT(sys::is_texture_entity(registry, texture_entity));
+
+  auto& texture = registry.get<Texture>(texture_entity);
+  destroy_texture(texture.handle);
+
+  registry.destroy(texture_entity);
+}
+
+void BackendService::destroy_all_textures(Registry& registry)
+{
+  for (const auto& [texture_path, texture_entity]: mTextureCache) {
+    destroy_texture(registry, texture_entity);
+  }
 }
 
 }  // namespace tactile

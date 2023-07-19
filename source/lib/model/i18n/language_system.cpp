@@ -26,8 +26,8 @@
 #include "common/debug/panic.hpp"
 #include "common/util/lookup.hpp"
 #include "io/lang/language_parser.hpp"
-#include "model/locator.hpp"
 #include "model/persistence/settings_system.hpp"
+#include "model/services/locator.hpp"
 
 namespace tactile {
 

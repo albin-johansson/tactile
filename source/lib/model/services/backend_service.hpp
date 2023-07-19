@@ -19,30 +19,53 @@
 
 #pragma once
 
+#include <SDL2/SDL.h>
+
 #include "common/macros.hpp"
+#include "common/result.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/path.hpp"
-#include "common/type/string.hpp"
 #include "common/type/string_map.hpp"
 #include "model/registry.hpp"
-#include "model/system.hpp"
 
 namespace tactile {
 
 TACTILE_FWD_DECLARE_STRUCT(TextureData)
 
-class TextureSystem : public System {
+class BackendService {
  public:
-  void destroy_textures(Registry& registry);
+  virtual ~BackendService() noexcept = default;
+
+  virtual void process_event(const SDL_Event& event) = 0;
+
+  /**
+   * Attempts to begin a new frame.
+   *
+   * \return `success` if rendering can proceed; `failure` otherwise.
+   */
+  [[nodiscard]] virtual auto new_frame() -> Result = 0;
+
+  /**
+   * Ends the current frame.
+   *
+   * \note This function can only be called after a successful call to `new_frame`.
+   */
+  virtual void end_frame() = 0;
+
+  virtual void reload_font_texture() {}
 
   [[nodiscard]] auto load_texture(Registry& registry, const Path& texture_path) -> Entity;
+
+  void destroy_texture(Registry& registry, Entity texture_entity);
+
+  void destroy_all_textures(Registry& registry);
 
  protected:
   virtual void prepare_texture(Registry& registry,
                                Entity texture_entity,
                                const TextureData& texture_data) = 0;
 
-  virtual void destroy_texture(Registry& registry, Entity texture_entity) = 0;
+  virtual void destroy_texture(void* handle) = 0;
 
  private:
   StringMap<Entity> mTextureCache;

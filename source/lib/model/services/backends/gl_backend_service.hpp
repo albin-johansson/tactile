@@ -21,30 +21,33 @@
 
 #include <SDL2/SDL.h>
 
-#include "common/result.hpp"
+#include "model/services/backend_service.hpp"
 
 namespace tactile {
 
-/// Interface for ImGui rendering backends.
-class Backend {
+class GLBackendService final : public BackendService {
  public:
-  virtual ~Backend() noexcept = default;
+  GLBackendService(SDL_Window* window, SDL_GLContext context);
 
-  virtual void process_event(const SDL_Event* event) = 0;
+  ~GLBackendService() noexcept override;
 
-  /// Attempts to begin a new frame.
-  /// \return `success` if rendering can proceed; `failure` otherwise.
-  virtual auto new_frame() -> Result = 0;
+  void process_event(const SDL_Event& event) override;
 
-  /// Ends the current frame.
-  /// \note This function can only be called after a successful call to `new_frame`.
-  virtual void end_frame() = 0;
+  [[nodiscard]] auto new_frame() -> Result override;
 
-  /// Attempts to reload all font resources.
-  virtual void reload_font_resources() {}
+  void end_frame() override;
 
-  /// Indicates whether the backend supports reloading font resources.
-  [[nodiscard]] virtual auto can_reload_fonts() const -> bool = 0;
+  void reload_font_texture() override;
+
+ protected:
+  void prepare_texture(Registry& registry,
+                       Entity texture_entity,
+                       const TextureData& texture_data) override;
+
+  void destroy_texture(void* handle) override;
+
+ private:
+  SDL_Window* mWindow {};
 };
 
 }  // namespace tactile

@@ -33,7 +33,7 @@
 namespace tactile {
 
 TACTILE_FWD_DECLARE_CLASS(LoggingService)
-TACTILE_FWD_DECLARE_CLASS(Backend)
+TACTILE_FWD_DECLARE_CLASS(BackendService)
 TACTILE_FWD_DECLARE_CLASS(AppDelegate)
 
 class Engine final {
@@ -54,7 +54,7 @@ class Engine final {
   Maybe<ProtobufContext> mProtobuf;
   Maybe<SDLContext> mSDL;
   Maybe<ImGuiContext> mImGui;
-  Unique<Backend> mBackend;
+  Unique<BackendService> mBackendService;
   Unique<AppDelegate> mApp;
   cen::keyboard mKeyboard;
   bool mRunning : 1 {};

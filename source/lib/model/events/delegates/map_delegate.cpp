@@ -42,11 +42,11 @@
 #include "model/documents/document_system.hpp"
 #include "model/events/map_events.hpp"
 #include "model/i18n/language_system.hpp"
-#include "model/locator.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/persistence/file_history_system.hpp"
 #include "model/persistence/settings.hpp"
 #include "model/persistence/settings_system.hpp"
+#include "model/services/locator.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"
 #include "ui/widget_state.hpp"
 

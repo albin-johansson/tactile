@@ -31,8 +31,8 @@
 #include "io/ir/ir_generation.hpp"
 #include "io/save_formats.hpp"
 #include "model/documents/document_components.hpp"
-#include "model/locator.hpp"
 #include "model/persistence/settings_system.hpp"
+#include "model/services/locator.hpp"
 
 namespace tactile {
 

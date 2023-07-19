@@ -26,8 +26,8 @@
 #include "io/directories.hpp"
 #include "model/events/setting_events.hpp"
 #include "model/i18n/language_system.hpp"
-#include "model/locator.hpp"
 #include "model/persistence/settings_system.hpp"
+#include "model/services/locator.hpp"
 
 namespace tactile {
 

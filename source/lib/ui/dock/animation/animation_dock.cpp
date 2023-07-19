@@ -33,7 +33,6 @@
 #include "model/i18n/language_system.hpp"
 #include "model/registry.hpp"
 #include "model/textures/texture_components.hpp"
-#include "model/textures/texture_system.hpp"
 #include "model/tiles/tile_components.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_system.hpp"

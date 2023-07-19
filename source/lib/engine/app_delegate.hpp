@@ -41,12 +41,6 @@ class AppDelegate {
   /// Called for each polled event.
   virtual void on_event([[maybe_unused]] const cen::event_handler& handler) {}
 
-  /// Called when the engine wants the app to reload all font files.
-  virtual void reload_font_files() {}
-
-  /// Indicates whether the application wants font resources to be reloaded.
-  [[nodiscard]] virtual auto want_font_reload() const -> bool { return false; }
-
   /// Indicates whether the application wants to exit.
   [[nodiscard]] virtual auto should_stop() const -> bool = 0;
 };

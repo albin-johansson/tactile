@@ -17,22 +17,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "null_texture_system.hpp"
-
-#include "model/textures/texture_components.hpp"
+#include "null_backend_service.hpp"
 
 namespace tactile {
 
-void NullTextureSystem::prepare_texture(Registry& registry,
-                                        Entity texture_entity,
-                                        const TextureData&)
+void NullBackendService::process_event(const SDL_Event&) {}
+
+auto NullBackendService::new_frame() -> Result
 {
-  registry.add<NullTexture>(texture_entity);
+  return failure;
 }
 
-void NullTextureSystem::destroy_texture(Registry&, Entity)
-{
-  // Do nothing
-}
+void NullBackendService::end_frame() {}
 
-}  // namespace tactile::sys
+void NullBackendService::prepare_texture(Registry&, Entity, const TextureData&) {}
+
+void NullBackendService::destroy_texture(void*) {}
+
+}  // namespace tactile

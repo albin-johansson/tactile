@@ -62,9 +62,9 @@
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/file_history_system.hpp"
 #include "model/persistence/settings_system.hpp"
+#include "model/services/backend_service.hpp"
+#include "model/services/locator.hpp"
 #include "model/textures/texture_components.hpp"
-#include "model/textures/texture_system.hpp"
-#include "model/textures/texture_system_factory.hpp"
 #include "model/tools/tool_system.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/style/fonts.hpp"
@@ -83,20 +83,18 @@ App::~App() noexcept = default;
 
 void App::on_startup(const BackendAPI api)
 {
+  auto& backend_service = Locator<BackendService>::get();
+
   mRegistry = std::make_unique<Registry>();
-  auto& registry = *mRegistry;
+  sys::init_model(*mRegistry, api);
 
-  sys::init_model(registry, api);
-
-  mSystemManager = std::make_unique<SystemManager>(api);
+  mSystemManager = std::make_unique<SystemManager>();
 
   _subscribe_to_events();
 
-  auto& texture_system = mSystemManager->get_texture_system();
-
-  auto& icons = registry.get<Icons>();
+  auto& icons = mRegistry->get<Icons>();
   icons.tactile_icon =
-      texture_system.load_texture(registry, find_resource("assets/icon.png"));
+      backend_service.load_texture(*mRegistry, find_resource("assets/icon.png"));
 
   _init_persistent_settings();
 }
@@ -291,51 +289,60 @@ void App::_init_persistent_settings()
 
 void App::on_shutdown()
 {
+  auto& backend_service = Locator<BackendService>::get();
   const auto& settings_system = mSystemManager->get_settings_system();
-  auto& registry = *mRegistry;
 
+  auto& registry = *mRegistry;
   sys::store_open_documents_in_file_history(registry);
   save_settings_to_disk(settings_system.current_settings());
   save_session_to_disk(registry);
 
   const auto& file_history = registry.get<FileHistory>();
   save_file_history_to_disk(file_history);
+
+  backend_service.destroy_all_textures(registry);
 }
 
 void App::on_update()
 {
-  auto& registry = *mRegistry;
+  auto& backend_service = Locator<BackendService>::get();
+  const auto& settings_system = mSystemManager->get_settings_system();
 
-  mSystemManager->update(registry, mDispatcher);
-
-  auto& widgets = registry.get<WidgetState>();
-
-  const ModelView model_view {registry, mDispatcher};
-  poll_global_shortcuts(model_view);
-  render_ui(model_view, widgets);
-  check_for_missing_layout_file(registry,
-                                widgets.dock_space.root_dock_id.value(),
-                                mDispatcher);
-
-  const auto& io = ImGui::GetIO();
-  if (mFramebufferScale.x != io.DisplayFramebufferScale.x) {
-    mFramebufferScale = io.DisplayFramebufferScale;
-    mWantFontReload = true;
+  if (mWantFontReload) {
+    ui::reload_imgui_fonts(settings_system.current_settings());
+    backend_service.reload_font_texture();
+    mWantFontReload = false;
   }
 
-  mDispatcher.update();
+  if (backend_service.new_frame().succeeded()) {
+    auto& registry = *mRegistry;
+
+    mSystemManager->update(registry, mDispatcher);
+
+    auto& widgets = registry.get<WidgetState>();
+
+    const ModelView model_view {registry, mDispatcher};
+    poll_global_shortcuts(model_view);
+    render_ui(model_view, widgets);
+    check_for_missing_layout_file(registry,
+                                  widgets.dock_space.root_dock_id.value(),
+                                  mDispatcher);
+
+    const auto& io = ImGui::GetIO();
+    if (mFramebufferScale.x != io.DisplayFramebufferScale.x) {
+      mFramebufferScale = io.DisplayFramebufferScale;
+      mWantFontReload = true;
+    }
+
+    mDispatcher.update();
+
+    backend_service.end_frame();
+  }
 }
 
 void App::on_event(const cen::event_handler& event)
 {
   tactile::on_event(*mRegistry, mDispatcher, event);
-}
-
-void App::reload_font_files()
-{
-  const auto& settings_system = mSystemManager->get_settings_system();
-  ui::reload_imgui_fonts(settings_system.current_settings());
-  mWantFontReload = false;
 }
 
 void App::_on_menu_action(const MenuActionEvent& event)
@@ -791,19 +798,19 @@ void App::_on_reload_fonts(const ReloadFontsEvent&)
   mWantFontReload = true;
 }
 
-void App::_on_increase_font_size(const IncreaseFontSizeEvent& event)
+void App::_on_increase_font_size(const IncreaseFontSizeEvent&)
 {
   mSystemManager->get_settings_system().increase_font_size();
   mDispatcher.trigger(ReloadFontsEvent {});
 }
 
-void App::_on_decrease_font_size(const DecreaseFontSizeEvent& event)
+void App::_on_decrease_font_size(const DecreaseFontSizeEvent&)
 {
   mSystemManager->get_settings_system().decrease_font_size();
   mDispatcher.trigger(ReloadFontsEvent {});
 }
 
-void App::_on_reset_font_size(const ResetFontSizeEvent& event)
+void App::_on_reset_font_size(const ResetFontSizeEvent&)
 {
   mSystemManager->get_settings_system().reset_font_size();
   mDispatcher.trigger(ReloadFontsEvent {});

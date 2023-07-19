@@ -17,22 +17,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "null_backend.hpp"
+#pragma once
+
+#include "model/services/backend_service.hpp"
 
 namespace tactile {
 
-void NullBackend::process_event(const SDL_Event*) {}
+class NullBackendService final : public BackendService {
+ public:
+  void process_event(const SDL_Event& event) override;
 
-Result NullBackend::new_frame()
-{
-  return failure;
-}
+  auto new_frame() -> Result override;
 
-void NullBackend::end_frame() {}
+  void end_frame() override;
 
-auto NullBackend::can_reload_fonts() const -> bool
-{
-  return false;
-}
+ protected:
+  void prepare_texture(Registry& registry,
+                       Entity texture_entity,
+                       const TextureData& texture_data) override;
+
+  void destroy_texture(void* handle) override;
+};
 
 }  // namespace tactile
