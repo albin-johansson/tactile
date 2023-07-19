@@ -66,6 +66,7 @@
 #include "model/services/locator.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/tools/tool_system.hpp"
+#include "ui/dialog/save_as_dialog.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/style/fonts.hpp"
 #include "ui/style/themes.hpp"
@@ -321,7 +322,7 @@ void App::on_update()
 
     auto& widgets = registry.get<WidgetState>();
 
-    const ModelView model_view {registry, mDispatcher};
+    const ModelView model_view {registry, *mSystemManager, mDispatcher};
     poll_global_shortcuts(model_view);
     render_ui(model_view, widgets);
     check_for_missing_layout_file(registry,
@@ -408,7 +409,11 @@ void App::_on_save_as(const SaveAsEvent& event)
 void App::_on_show_save_as_dialog(const ShowSaveAsDialogEvent& event)
 {
   spdlog::trace("[ShowSaveAsDialogEvent]");
-  on_show_save_as_dialog(*mRegistry, mDispatcher, event);
+
+  const ModelView model_view {*mRegistry, *mSystemManager, mDispatcher};
+  if (model_view.has_active_map_document()) {
+    show_save_as_dialog(model_view);
+  }
 }
 
 void App::_on_reopen_last_closed_file(const ReopenLastClosedFileEvent& event)

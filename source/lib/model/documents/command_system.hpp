@@ -44,11 +44,11 @@ class CommandSystem final : public System {
 
   void on_set_command_capacity(Registry& registry, const SetCommandCapacityEvent& event);
 
-  [[nodiscard]] auto is_save_possible(const Registry& registry) -> bool;
+  [[nodiscard]] auto is_save_possible(const Registry& registry) const -> bool;
 
-  [[nodiscard]] auto is_undo_possible(const Registry& registry) -> bool;
+  [[nodiscard]] auto is_undo_possible(const Registry& registry) const -> bool;
 
-  [[nodiscard]] auto is_redo_possible(const Registry& registry) -> bool;
+  [[nodiscard]] auto is_redo_possible(const Registry& registry) const -> bool;
 
  private:
   [[nodiscard]] auto _get_active_command_stack(Registry& registry) -> CommandStack*;

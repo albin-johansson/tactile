@@ -85,15 +85,6 @@ void on_save_as(Registry& registry, Dispatcher& dispatcher, const SaveAsEvent& e
   }
 }
 
-void on_show_save_as_dialog(Registry& registry,
-                            Dispatcher& dispatcher,
-                            const ShowSaveAsDialogEvent&)
-{
-  if (sys::is_map_document_active(registry)) {
-    show_save_as_dialog(ModelView {registry, dispatcher});
-  }
-}
-
 void on_reopen_last_closed_file(Registry& registry,
                                 Dispatcher& dispatcher,
                                 const ReopenLastClosedFileEvent&)

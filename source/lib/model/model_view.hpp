@@ -36,9 +36,13 @@
 
 namespace tactile {
 
+TACTILE_FWD_DECLARE_CLASS(SystemManager)
+
 class ModelView final {
  public:
-  ModelView(const Registry& registry, Dispatcher& dispatcher);
+  ModelView(const Registry& registry,
+            const SystemManager& systems,
+            Dispatcher& dispatcher);
 
   template <typename Event, typename... Args>
   void enqueue(Args&&... args)
@@ -82,6 +86,7 @@ class ModelView final {
 
  private:
   Ref<const Registry> mRegistry;
+  Ref<const SystemManager> mSystems;
   Ref<Dispatcher> mDispatcher;
 
   [[nodiscard]] auto _can_clear_file_history() const -> bool;

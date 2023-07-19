@@ -42,8 +42,6 @@ SystemManager::SystemManager()
 
   Locator<SettingsSystem>::reset(mSettingsSystem.get());
   Locator<LanguageSystem>::reset(mLanguageSystem.get());
-  Locator<CommandSystem>::reset(mCommandSystem.get());
-  Locator<ToolSystem>::reset(mToolSystem.get());
 }
 
 SystemManager::~SystemManager() noexcept = default;

@@ -35,10 +35,6 @@ void on_save(Registry& registry, Dispatcher& dispatcher, const SaveEvent& event)
 
 void on_save_as(Registry& registry, Dispatcher& dispatcher, const SaveAsEvent& event);
 
-void on_show_save_as_dialog(Registry& registry,
-                            Dispatcher& dispatcher,
-                            const ShowSaveAsDialogEvent& event);
-
 void on_reopen_last_closed_file(Registry& registry,
                                 Dispatcher& dispatcher,
                                 const ReopenLastClosedFileEvent& event);

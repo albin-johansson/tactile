@@ -29,14 +29,18 @@
 #include "model/persistence/file_history_system.hpp"
 #include "model/persistence/settings_system.hpp"
 #include "model/services/locator.hpp"
+#include "model/system_manager.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/tools/tool_system.hpp"
 #include "model/viewports/viewport_system.hpp"
 
 namespace tactile {
 
-ModelView::ModelView(const Registry& registry, Dispatcher& dispatcher)
+ModelView::ModelView(const Registry& registry,
+                     const SystemManager& systems,
+                     Dispatcher& dispatcher)
     : mRegistry {registry},
+      mSystems {systems},
       mDispatcher {dispatcher}
 {
 }
@@ -166,7 +170,7 @@ auto ModelView::is_available(const MenuAction action) const -> bool
       return has_active_tileset_document();
 
     case MenuAction::Save:
-      return Locator<CommandSystem>::get().is_save_possible(get_registry());
+      return mSystems.get().get_command_system().is_save_possible(get_registry());
 
     case MenuAction::ReopenLastFile:
       return _can_reopen_last_closed_file();
@@ -175,10 +179,10 @@ auto ModelView::is_available(const MenuAction action) const -> bool
       return _can_clear_file_history();
 
     case MenuAction::Undo:
-      return Locator<CommandSystem>::get().is_undo_possible(get_registry());
+      return mSystems.get().get_command_system().is_undo_possible(get_registry());
 
     case MenuAction::Redo:
-      return Locator<CommandSystem>::get().is_redo_possible(get_registry());
+      return mSystems.get().get_command_system().is_redo_possible(get_registry());
 
     case MenuAction::EnableStamp:
       return _is_tool_available(ToolType::Stamp);
@@ -205,13 +209,13 @@ auto ModelView::is_available(const MenuAction action) const -> bool
       return sys::is_viewport_zoom_out_possible(get_registry());
 
     case MenuAction::IncreaseFontSize:
-      return Locator<SettingsSystem>::get().can_increase_font_size();
+      return mSystems.get().get_settings_system().can_increase_font_size();
 
     case MenuAction::DecreaseFontSize:
-      return Locator<SettingsSystem>::get().can_decrease_font_size();
+      return mSystems.get().get_settings_system().can_decrease_font_size();
 
     case MenuAction::ResetFontSize:
-      return Locator<SettingsSystem>::get().can_reset_font_size();
+      return mSystems.get().get_settings_system().can_reset_font_size();
 
     case MenuAction::RemoveRow:
       return sys::can_tile_row_be_removed(get_registry());
@@ -237,7 +241,7 @@ auto ModelView::_can_reopen_last_closed_file() const -> bool
 
 auto ModelView::_is_tool_available(const ToolType type) const -> bool
 {
-  const auto& tool_system = Locator<ToolSystem>::get();
+  const auto& tool_system = mSystems.get().get_tool_system();
   return tool_system.is_tool_available(get_registry(), type);
 }
 

@@ -72,7 +72,7 @@ auto CommandSystem::_get_active_command_stack(Registry& registry) -> CommandStac
   return nullptr;
 }
 
-auto CommandSystem::is_save_possible(const Registry& registry) -> bool
+auto CommandSystem::is_save_possible(const Registry& registry) const -> bool
 {
   const auto document_entity = registry.get<DocumentContext>().active_document;
 
@@ -84,7 +84,7 @@ auto CommandSystem::is_save_possible(const Registry& registry) -> bool
   return false;
 }
 
-auto CommandSystem::is_undo_possible(const Registry& registry) -> bool
+auto CommandSystem::is_undo_possible(const Registry& registry) const -> bool
 {
   const auto document_entity = registry.get<DocumentContext>().active_document;
 
@@ -96,7 +96,7 @@ auto CommandSystem::is_undo_possible(const Registry& registry) -> bool
   return false;
 }
 
-auto CommandSystem::is_redo_possible(const Registry& registry) -> bool
+auto CommandSystem::is_redo_possible(const Registry& registry) const -> bool
 {
   const auto document_entity = registry.get<DocumentContext>().active_document;
 
