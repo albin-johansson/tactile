@@ -20,7 +20,6 @@
 #include "system_manager.hpp"
 
 #include "model/documents/command_system.hpp"
-#include "model/persistence/settings_system.hpp"
 #include "model/services/service_locator.hpp"
 #include "model/tools/tool_system.hpp"
 
@@ -28,16 +27,12 @@ namespace tactile {
 
 SystemManager::SystemManager()
 {
-  mSettingsSystem = std::make_unique<SettingsSystem>();
   mCommandSystem = std::make_unique<CommandSystem>();
   mToolSystem = std::make_unique<ToolSystem>();
 
-  mSystems.reserve(3);
-  mSystems.push_back(mSettingsSystem.get());
+  mSystems.reserve(2);
   mSystems.push_back(mCommandSystem.get());
   mSystems.push_back(mToolSystem.get());
-
-  ServiceLocator<SettingsSystem>::reset(mSettingsSystem.get());
 }
 
 SystemManager::~SystemManager() noexcept = default;
@@ -54,16 +49,6 @@ void SystemManager::update(Registry& registry, Dispatcher& dispatcher)
   for (auto& system: mSystems) {
     system->update(registry, dispatcher);
   }
-}
-
-auto SystemManager::get_settings_system() -> SettingsSystem&
-{
-  return *mSettingsSystem;
-}
-
-auto SystemManager::get_settings_system() const -> const SettingsSystem&
-{
-  return *mSettingsSystem;
 }
 
 auto SystemManager::get_command_system() -> CommandSystem&

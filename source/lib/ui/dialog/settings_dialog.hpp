@@ -21,7 +21,7 @@
 
 #include "common/type/ecs.hpp"
 #include "model/model_view.hpp"
-#include "model/persistence/settings.hpp"
+#include "model/services/settings/settings.hpp"
 
 namespace tactile {
 

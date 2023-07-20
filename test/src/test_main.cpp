@@ -23,16 +23,23 @@
 #include "common/type/ptr.hpp"
 #include "engine/app_delegate.hpp"
 #include "engine/engine.hpp"
-#include "model/system_manager.hpp"
+#include "model/services/service_locator.hpp"
+#include "model/services/settings_service.hpp"
 
 using namespace tactile;
 
 class NullApp final : public AppDelegate {
  public:
+  NullApp()
+  {
+    mSettingsService = std::make_unique<SettingsService>();
+    ServiceLocator<SettingsService>::reset(mSettingsService.get());
+  }
+
   [[nodiscard]] auto should_stop() const -> bool override { return false; }
 
  private:
-  SystemManager mSystemManager;
+  Unique<SettingsService> mSettingsService;
 };
 
 auto main(int argc, char* argv[]) -> int

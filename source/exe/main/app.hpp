@@ -46,6 +46,7 @@
 
 namespace tactile {
 
+TACTILE_FWD_DECLARE_CLASS(SettingsService)
 TACTILE_FWD_DECLARE_CLASS(LanguageService)
 
 /// The heart of the Tactile map editor.
@@ -68,6 +69,7 @@ class App final : public AppDelegate {
  private:
   Unique<Registry> mRegistry;
   Dispatcher mDispatcher;
+  Unique<SettingsService> mSettingsService;
   Unique<LanguageService> mLanguageService;
   Unique<SystemManager> mSystemManager;
   ImVec2 mFramebufferScale {};

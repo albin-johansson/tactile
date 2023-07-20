@@ -28,7 +28,7 @@
 #include "model/events/tileset_events.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
-#include "model/persistence/settings.hpp"
+#include "model/services/settings/settings.hpp"
 #include "model/tiles/tile_components.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_ops.hpp"

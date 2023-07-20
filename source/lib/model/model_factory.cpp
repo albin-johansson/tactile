@@ -21,7 +21,7 @@
 
 #include "model/documents/document_components.hpp"
 #include "model/persistence/file_history_components.hpp"
-#include "model/persistence/settings.hpp"
+#include "model/services/settings/settings.hpp"
 #include "model/textures/texture_components.hpp"
 #include "ui/widget_state.hpp"
 

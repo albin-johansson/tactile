@@ -26,8 +26,8 @@
 #include "common/debug/panic.hpp"
 #include "common/util/lookup.hpp"
 #include "io/lang/language_parser.hpp"
-#include "model/persistence/settings_system.hpp"
 #include "model/services/service_locator.hpp"
+#include "model/services/settings_service.hpp"
 
 namespace tactile {
 
@@ -49,8 +49,8 @@ auto LanguageService::get_strings(Lang language) const -> const Strings&
 
 auto LanguageService::get_current_language_strings() const -> const Strings&
 {
-  const auto& settings_system = ServiceLocator<SettingsSystem>::get();
-  const auto& settings = settings_system.current_settings();
+  const auto& settings_service = ServiceLocator<SettingsService>::get();
+  const auto& settings = settings_service.current_settings();
   return get_strings(settings.get_language());
 }
 

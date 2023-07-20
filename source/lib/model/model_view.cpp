@@ -26,9 +26,9 @@
 #include "model/maps/map_system.hpp"
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/file_history_system.hpp"
-#include "model/persistence/settings_system.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
+#include "model/services/settings_service.hpp"
 #include "model/system_manager.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/tools/tool_system.hpp"
@@ -67,7 +67,7 @@ auto ModelView::get_tactile_icon_texture() const -> void*
 
 auto ModelView::get_settings() const -> const Settings&
 {
-  return ServiceLocator<SettingsSystem>::get().current_settings();
+  return ServiceLocator<SettingsService>::get().current_settings();
 }
 
 auto ModelView::get_language_strings() const -> const Strings&
@@ -209,13 +209,13 @@ auto ModelView::is_available(const MenuAction action) const -> bool
       return sys::is_viewport_zoom_out_possible(get_registry());
 
     case MenuAction::IncreaseFontSize:
-      return mSystems.get().get_settings_system().can_increase_font_size();
+      return ServiceLocator<SettingsService>::get().can_increase_font_size();
 
     case MenuAction::DecreaseFontSize:
-      return mSystems.get().get_settings_system().can_decrease_font_size();
+      return ServiceLocator<SettingsService>::get().can_decrease_font_size();
 
     case MenuAction::ResetFontSize:
-      return mSystems.get().get_settings_system().can_reset_font_size();
+      return ServiceLocator<SettingsService>::get().can_reset_font_size();
 
     case MenuAction::RemoveRow:
       return sys::can_tile_row_be_removed(get_registry());

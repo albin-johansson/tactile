@@ -43,11 +43,11 @@
 #include "model/events/map_events.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/persistence/file_history_system.hpp"
-#include "model/persistence/settings.hpp"
-#include "model/persistence/settings_system.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/logging_service.hpp"
 #include "model/services/service_locator.hpp"
+#include "model/services/settings/settings.hpp"
+#include "model/services/settings_service.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"
 #include "ui/widget_state.hpp"
 
@@ -55,8 +55,8 @@ namespace tactile {
 
 void on_show_new_map_dialog(Registry& registry, const ShowNewMapDialogEvent&)
 {
-  const auto& settings_system = ServiceLocator<SettingsSystem>::get();
-  const auto& settings = settings_system.current_settings();
+  const auto& settings_service = ServiceLocator<SettingsService>::get();
+  const auto& settings = settings_service.current_settings();
 
   auto& widgets = registry.get<WidgetState>();
   widgets.new_map_dialog.tile_size = settings.get_preferred_tile_size();

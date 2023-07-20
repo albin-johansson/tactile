@@ -25,9 +25,9 @@
 #include "common/type/path.hpp"
 #include "io/directories.hpp"
 #include "model/events/setting_events.hpp"
-#include "model/persistence/settings_system.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
+#include "model/services/settings_service.hpp"
 
 namespace tactile {
 
@@ -38,8 +38,8 @@ void update_dock_space(const Registry& registry, DockSpaceState& state)
   if (!state.did_initialize) {
     const auto size = ImGui::GetMainViewport()->Size;
     if (size.x > 0 && size.y > 0) {
-      const auto& settings_system = ServiceLocator<SettingsSystem>::get();
-      const auto& settings = settings_system.current_settings();
+      const auto& settings_service = ServiceLocator<SettingsService>::get();
+      const auto& settings = settings_service.current_settings();
 
       if (!settings.test_flag(SETTINGS_RESTORE_LAYOUT_BIT) ||
           !fs::exists(get_widget_ini_path())) {

@@ -60,10 +60,10 @@
 #include "model/model_view.hpp"
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/file_history_system.hpp"
-#include "model/persistence/settings_system.hpp"
 #include "model/services/backend_service.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
+#include "model/services/settings_service.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/tools/tool_system.hpp"
 #include "ui/dialog/save_as_dialog.hpp"
@@ -88,6 +88,9 @@ void App::on_startup(const BackendAPI api)
 
   mRegistry = std::make_unique<Registry>();
   sys::init_model(*mRegistry, api);
+
+  mSettingsService = std::make_unique<SettingsService>();
+  ServiceLocator<SettingsService>::reset(mSettingsService.get());
 
   mLanguageService = std::make_unique<LanguageService>();
   ServiceLocator<LanguageService>::reset(mLanguageService.get());
@@ -267,13 +270,13 @@ void App::_subscribe_to_events()
 
 void App::_init_persistent_settings()
 {
-  auto& settings_system = mSystemManager->get_settings_system();
+  auto& settings_service = ServiceLocator<SettingsService>::get();
   auto& language_service = ServiceLocator<LanguageService>::get();
 
-  settings_system.load_from_disk();
+  settings_service.load_from_disk();
   language_service.load_languages();
 
-  const auto& settings = settings_system.current_settings();
+  const auto& settings = settings_service.current_settings();
 
   auto& registry = *mRegistry;
   auto& file_history = registry.get<FileHistory>();
@@ -294,11 +297,11 @@ void App::_init_persistent_settings()
 void App::on_shutdown()
 {
   auto& backend_service = ServiceLocator<BackendService>::get();
-  const auto& settings_system = mSystemManager->get_settings_system();
+  const auto& settings_service = ServiceLocator<SettingsService>::get();
 
   auto& registry = *mRegistry;
   sys::store_open_documents_in_file_history(registry);
-  save_settings_to_disk(settings_system.current_settings());
+  save_settings_to_disk(settings_service.current_settings());
   save_session_to_disk(registry);
 
   const auto& file_history = registry.get<FileHistory>();
@@ -310,10 +313,10 @@ void App::on_shutdown()
 void App::on_update()
 {
   auto& backend_service = ServiceLocator<BackendService>::get();
-  const auto& settings_system = mSystemManager->get_settings_system();
+  const auto& settings_service = ServiceLocator<SettingsService>::get();
 
   if (mWantFontReload) {
-    ui::reload_imgui_fonts(settings_system.current_settings());
+    ui::reload_imgui_fonts(settings_service.current_settings());
     backend_service.reload_font_texture();
     mWantFontReload = false;
   }
@@ -449,8 +452,8 @@ void App::_on_toggle_highlight_layer(const ToggleHighlightLayerEvent&)
 {
   spdlog::trace("[ToggleHighlightLayerEvent]");
 
-  auto& settings_system = mSystemManager->get_settings_system();
-  auto& settings = settings_system.current_settings();
+  auto& settings_service = ServiceLocator<SettingsService>::get();
+  auto& settings = settings_service.current_settings();
   settings.negate_flag(SETTINGS_HIGHLIGHT_ACTIVE_LAYER_BIT);
 }
 
@@ -808,19 +811,19 @@ void App::_on_reload_fonts(const ReloadFontsEvent&)
 
 void App::_on_increase_font_size(const IncreaseFontSizeEvent&)
 {
-  mSystemManager->get_settings_system().increase_font_size();
+  ServiceLocator<SettingsService>::get().increase_font_size();
   mDispatcher.trigger(ReloadFontsEvent {});
 }
 
 void App::_on_decrease_font_size(const DecreaseFontSizeEvent&)
 {
-  mSystemManager->get_settings_system().decrease_font_size();
+  ServiceLocator<SettingsService>::get().decrease_font_size();
   mDispatcher.trigger(ReloadFontsEvent {});
 }
 
 void App::_on_reset_font_size(const ResetFontSizeEvent&)
 {
-  mSystemManager->get_settings_system().reset_font_size();
+  ServiceLocator<SettingsService>::get().reset_font_size();
   mDispatcher.trigger(ReloadFontsEvent {});
 }
 

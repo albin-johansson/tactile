@@ -22,8 +22,8 @@
 #include "model/events/command_events.hpp"
 #include "model/events/font_events.hpp"
 #include "model/events/view_events.hpp"
-#include "model/persistence/settings_system.hpp"
 #include "model/services/service_locator.hpp"
+#include "model/services/settings_service.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/style/themes.hpp"
 #include "ui/widget_state.hpp"
@@ -32,8 +32,8 @@ namespace tactile {
 
 void on_show_settings(Registry& registry, const ShowSettingsEvent&)
 {
-  const auto& settings_system = ServiceLocator<SettingsSystem>::get();
-  const auto& settings = settings_system.current_settings();
+  const auto& settings_service = ServiceLocator<SettingsService>::get();
+  const auto& settings = settings_service.current_settings();
 
   auto& widgets = registry.get<WidgetState>();
   widgets.settings_dialog.old_settings.copy_from(settings);
@@ -45,8 +45,8 @@ void on_set_settings([[maybe_unused]] Registry& registry,
                      Dispatcher& dispatcher,
                      const SetSettingsEvent& event)
 {
-  auto& settings_system = ServiceLocator<SettingsSystem>::get();
-  auto& curr_settings = settings_system.current_settings();
+  auto& settings_service = ServiceLocator<SettingsService>::get();
+  auto& curr_settings = settings_service.current_settings();
 
   const auto prev_settings = curr_settings.copy();
   curr_settings = event.settings.copy();
@@ -69,24 +69,24 @@ void on_set_settings([[maybe_unused]] Registry& registry,
 void on_set_flag_setting([[maybe_unused]] Registry& registry,
                          const SetFlagSettingEvent& event)
 {
-  auto& settings_system = ServiceLocator<SettingsSystem>::get();
-  auto& settings = settings_system.current_settings();
+  auto& settings_service = ServiceLocator<SettingsService>::get();
+  auto& settings = settings_service.current_settings();
   settings.set_flag(event.flag, event.value);
 }
 
 void on_negate_flag_setting([[maybe_unused]] Registry& registry,
                             const NegateFlagSettingEvent& event)
 {
-  auto& settings_system = ServiceLocator<SettingsSystem>::get();
-  auto& settings = settings_system.current_settings();
+  auto& settings_service = ServiceLocator<SettingsService>::get();
+  auto& settings = settings_service.current_settings();
   settings.negate_flag(event.flag);
 }
 
 void on_set_viewport_overlay_pos([[maybe_unused]] Registry& registry,
                                  const SetViewportOverlayPosEvent& event)
 {
-  auto& settings_system = ServiceLocator<SettingsSystem>::get();
-  auto& settings = settings_system.current_settings();
+  auto& settings_service = ServiceLocator<SettingsService>::get();
+  auto& settings = settings_service.current_settings();
   settings.set_viewport_overlay_pos(event.pos);
 }
 
@@ -94,8 +94,8 @@ void on_set_language([[maybe_unused]] Registry& registry,
                      Dispatcher& dispatcher,
                      const SetLanguageEvent& event)
 {
-  auto& settings_system = ServiceLocator<SettingsSystem>::get();
-  auto& settings = settings_system.current_settings();
+  auto& settings_service = ServiceLocator<SettingsService>::get();
+  auto& settings = settings_service.current_settings();
   settings.set_language(event.language);
 
   dispatcher.enqueue<ResetLayoutEvent>();
@@ -103,8 +103,8 @@ void on_set_language([[maybe_unused]] Registry& registry,
 
 void on_set_theme([[maybe_unused]] Registry& registry, const SetThemeEvent& event)
 {
-  auto& settings_system = ServiceLocator<SettingsSystem>::get();
-  auto& settings = settings_system.current_settings();
+  auto& settings_service = ServiceLocator<SettingsService>::get();
+  auto& settings = settings_service.current_settings();
   settings.set_theme(event.theme);
 
   apply_theme(ImGui::GetStyle(), settings.get_theme(), settings.get_theme_saturation());
@@ -113,8 +113,8 @@ void on_set_theme([[maybe_unused]] Registry& registry, const SetThemeEvent& even
 void on_reset_dock_visibilities([[maybe_unused]] Registry& registry,
                                 const ResetDockVisibilitiesEvent&)
 {
-  auto& settings_system = ServiceLocator<SettingsSystem>::get();
-  auto& settings = settings_system.current_settings();
+  auto& settings_service = ServiceLocator<SettingsService>::get();
+  auto& settings = settings_service.current_settings();
   settings.reset_dock_visibilities();
 }
 

@@ -32,7 +32,7 @@
 #include "model/documents/document_factory.hpp"
 #include "model/entity_validation.hpp"
 #include "model/maps/map_system.hpp"
-#include "model/persistence/settings.hpp"
+#include "model/services/settings/settings.hpp"
 #include "model/tilesets/tileset_system.hpp"
 #include "model/viewports/viewport_components.hpp"
 

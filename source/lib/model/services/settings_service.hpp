@@ -19,12 +19,11 @@
 
 #pragma once
 
-#include "model/persistence/settings.hpp"
-#include "model/system.hpp"
+#include "model/services/settings/settings.hpp"
 
 namespace tactile {
 
-class SettingsSystem final : public System {
+class SettingsService final {
  public:
   void load_from_disk();
 

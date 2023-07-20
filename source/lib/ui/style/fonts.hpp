@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "model/persistence/settings.hpp"
+#include "model/services/settings/settings.hpp"
 
 namespace tactile::ui {
 

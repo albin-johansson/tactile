@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "settings_system.hpp"
+#include "settings_service.hpp"
 
 #include <algorithm>  // min, max
 
@@ -28,63 +28,63 @@
 
 namespace tactile {
 
-void SettingsSystem::load_from_disk()
+void SettingsService::load_from_disk()
 {
   mSettings = load_settings_from_disk();
   mSettings.print();
 }
 
-void SettingsSystem::reset_font_size()
+void SettingsService::reset_font_size()
 {
-  spdlog::trace("[SettingsSystem] Resetting the font size");
+  spdlog::trace("[SettingsService] Resetting the font size");
 
   mSettings.set_font_size(kDefFontSize);
 }
 
-void SettingsSystem::increase_font_size()
+void SettingsService::increase_font_size()
 {
-  spdlog::trace("[SettingsSystem] Increasing the font size");
+  spdlog::trace("[SettingsService] Increasing the font size");
 
   const auto new_size = std::min(mSettings.get_font_size() + 2, kMaxFontSize);
   mSettings.set_font_size(new_size);
 }
 
-void SettingsSystem::decrease_font_size()
+void SettingsService::decrease_font_size()
 {
-  spdlog::trace("[SettingsSystem] Decreasing the font size");
+  spdlog::trace("[SettingsService] Decreasing the font size");
 
   const auto new_size = std::max(mSettings.get_font_size() - 2, kMinFontSize);
   mSettings.set_font_size(new_size);
 }
 
-auto SettingsSystem::can_reset_font_size() const -> bool
+auto SettingsService::can_reset_font_size() const -> bool
 {
   return !mSettings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT);
 }
 
-auto SettingsSystem::can_increase_font_size() const -> bool
+auto SettingsService::can_increase_font_size() const -> bool
 {
   return !mSettings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) &&
          mSettings.get_font_size() < kMaxFontSize;
 }
 
-auto SettingsSystem::can_decrease_font_size() const -> bool
+auto SettingsService::can_decrease_font_size() const -> bool
 {
   return !mSettings.test_flag(SETTINGS_USE_DEFAULT_FONT_BIT) &&
          mSettings.get_font_size() > kMinFontSize;
 }
 
-auto SettingsSystem::copy_current() const -> Settings
+auto SettingsService::copy_current() const -> Settings
 {
   return mSettings.copy();
 }
 
-auto SettingsSystem::current_settings() -> Settings&
+auto SettingsService::current_settings() -> Settings&
 {
   return mSettings;
 }
 
-auto SettingsSystem::current_settings() const -> const Settings&
+auto SettingsService::current_settings() const -> const Settings&
 {
   return mSettings;
 }
