@@ -28,7 +28,7 @@
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/file_history_system.hpp"
 #include "model/persistence/settings_system.hpp"
-#include "model/services/locator.hpp"
+#include "model/services/service_locator.hpp"
 #include "model/system_manager.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/tools/tool_system.hpp"
@@ -67,12 +67,12 @@ auto ModelView::get_tactile_icon_texture() const -> void*
 
 auto ModelView::get_settings() const -> const Settings&
 {
-  return Locator<SettingsSystem>::get().current_settings();
+  return ServiceLocator<SettingsSystem>::get().current_settings();
 }
 
 auto ModelView::get_language_strings() const -> const Strings&
 {
-  const auto& language_system = Locator<LanguageSystem>::get();
+  const auto& language_system = ServiceLocator<LanguageSystem>::get();
   return language_system.get_strings(get_settings().get_language());
 }
 

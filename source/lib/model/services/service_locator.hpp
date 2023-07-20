@@ -31,7 +31,7 @@ namespace tactile {
  * \tparam Service the type of the service.
  */
 template <typename Service>
-class Locator final {
+class ServiceLocator final {
  public:
   /// Resets the associated service.
   static void reset(Service* service = nullptr) noexcept { mService = service; }

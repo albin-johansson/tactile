@@ -25,7 +25,7 @@
 #include "common/util/lookup.hpp"
 #include "model/events/setting_events.hpp"
 #include "model/i18n/language_system.hpp"
-#include "model/services/locator.hpp"
+#include "model/services/service_locator.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
@@ -96,7 +96,7 @@ void _push_dock_context_menu(const Strings& strings, LogDockState& state)
     ImGui::Separator();
 
     if (ImGui::MenuItem(strings.action.clear_log.c_str())) {
-      auto& logging_service = Locator<LoggingService>::get();
+      auto& logging_service = ServiceLocator<LoggingService>::get();
       logging_service.clear_history();  // TODO event
     }
   }
@@ -149,7 +149,7 @@ void _push_logged_message_view(const Strings& strings,
                                const usize message_count,
                                LogDockState& state)
 {
-  const auto& logging_service = Locator<LoggingService>::get();
+  const auto& logging_service = ServiceLocator<LoggingService>::get();
 
   const ui::StyleColor child_bg {ImGuiCol_ChildBg, {0.1f, 0.1f, 0.1f, 0.75f}};
   const auto child_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar |
@@ -204,7 +204,7 @@ void push_log_dock_widget(ModelView& model, LogDockState& state)
   state.has_focus = dock.has_focus(ImGuiFocusedFlags_RootAndChildWindows);
 
   if (dock.is_open()) {
-    const auto& logging_service = Locator<LoggingService>::get();
+    const auto& logging_service = ServiceLocator<LoggingService>::get();
     const auto message_count = logging_service.count_logged_messages(state.log_filter);
 
     if (message_count != 0u) {

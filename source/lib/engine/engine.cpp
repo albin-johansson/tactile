@@ -35,8 +35,8 @@
 #include "model/services/backend_service.hpp"
 #include "model/services/backends/gl_backend_service.hpp"
 #include "model/services/backends/null_backend_service.hpp"
-#include "model/services/locator.hpp"
 #include "model/services/logging_service.hpp"
+#include "model/services/service_locator.hpp"
 
 namespace tactile {
 
@@ -61,7 +61,7 @@ Engine::Engine(const BackendAPI api)
   mLoggingService = std::make_unique<LoggingService>();
   mLoggingService->install_logger();
 
-  Locator<LoggingService>::reset(mLoggingService.get());
+  ServiceLocator<LoggingService>::reset(mLoggingService.get());
 
   mProtobuf.emplace();
   auto& sdl = mSDL.emplace(mAPI);
@@ -83,7 +83,7 @@ Engine::Engine(const BackendAPI api)
     mBackendService = std::make_unique<GLBackendService>(window.get(), gl_context.get());
   }
 
-  Locator<BackendService>::reset(mBackendService.get());
+  ServiceLocator<BackendService>::reset(mBackendService.get());
 
   spdlog::debug("[IO] Persistent file directory: {}", get_persistent_file_dir());
 }

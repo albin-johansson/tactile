@@ -23,7 +23,7 @@
 #include "model/events/font_events.hpp"
 #include "model/events/view_events.hpp"
 #include "model/persistence/settings_system.hpp"
-#include "model/services/locator.hpp"
+#include "model/services/service_locator.hpp"
 #include "ui/dock/dock_space.hpp"
 #include "ui/style/themes.hpp"
 #include "ui/widget_state.hpp"
@@ -32,7 +32,7 @@ namespace tactile {
 
 void on_show_settings(Registry& registry, const ShowSettingsEvent&)
 {
-  const auto& settings_system = Locator<SettingsSystem>::get();
+  const auto& settings_system = ServiceLocator<SettingsSystem>::get();
   const auto& settings = settings_system.current_settings();
 
   auto& widgets = registry.get<WidgetState>();
@@ -45,7 +45,7 @@ void on_set_settings([[maybe_unused]] Registry& registry,
                      Dispatcher& dispatcher,
                      const SetSettingsEvent& event)
 {
-  auto& settings_system = Locator<SettingsSystem>::get();
+  auto& settings_system = ServiceLocator<SettingsSystem>::get();
   auto& curr_settings = settings_system.current_settings();
 
   const auto prev_settings = curr_settings.copy();
@@ -69,7 +69,7 @@ void on_set_settings([[maybe_unused]] Registry& registry,
 void on_set_flag_setting([[maybe_unused]] Registry& registry,
                          const SetFlagSettingEvent& event)
 {
-  auto& settings_system = Locator<SettingsSystem>::get();
+  auto& settings_system = ServiceLocator<SettingsSystem>::get();
   auto& settings = settings_system.current_settings();
   settings.set_flag(event.flag, event.value);
 }
@@ -77,7 +77,7 @@ void on_set_flag_setting([[maybe_unused]] Registry& registry,
 void on_negate_flag_setting([[maybe_unused]] Registry& registry,
                             const NegateFlagSettingEvent& event)
 {
-  auto& settings_system = Locator<SettingsSystem>::get();
+  auto& settings_system = ServiceLocator<SettingsSystem>::get();
   auto& settings = settings_system.current_settings();
   settings.negate_flag(event.flag);
 }
@@ -85,7 +85,7 @@ void on_negate_flag_setting([[maybe_unused]] Registry& registry,
 void on_set_viewport_overlay_pos([[maybe_unused]] Registry& registry,
                                  const SetViewportOverlayPosEvent& event)
 {
-  auto& settings_system = Locator<SettingsSystem>::get();
+  auto& settings_system = ServiceLocator<SettingsSystem>::get();
   auto& settings = settings_system.current_settings();
   settings.set_viewport_overlay_pos(event.pos);
 }
@@ -94,7 +94,7 @@ void on_set_language([[maybe_unused]] Registry& registry,
                      Dispatcher& dispatcher,
                      const SetLanguageEvent& event)
 {
-  auto& settings_system = Locator<SettingsSystem>::get();
+  auto& settings_system = ServiceLocator<SettingsSystem>::get();
   auto& settings = settings_system.current_settings();
   settings.set_language(event.language);
 
@@ -103,7 +103,7 @@ void on_set_language([[maybe_unused]] Registry& registry,
 
 void on_set_theme([[maybe_unused]] Registry& registry, const SetThemeEvent& event)
 {
-  auto& settings_system = Locator<SettingsSystem>::get();
+  auto& settings_system = ServiceLocator<SettingsSystem>::get();
   auto& settings = settings_system.current_settings();
   settings.set_theme(event.theme);
 
@@ -113,7 +113,7 @@ void on_set_theme([[maybe_unused]] Registry& registry, const SetThemeEvent& even
 void on_reset_dock_visibilities([[maybe_unused]] Registry& registry,
                                 const ResetDockVisibilitiesEvent&)
 {
-  auto& settings_system = Locator<SettingsSystem>::get();
+  auto& settings_system = ServiceLocator<SettingsSystem>::get();
   auto& settings = settings_system.current_settings();
   settings.reset_dock_visibilities();
 }

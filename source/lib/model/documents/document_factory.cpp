@@ -25,7 +25,7 @@
 #include "model/entity_validation.hpp"
 #include "model/maps/map_factory.hpp"
 #include "model/persistence/settings_system.hpp"
-#include "model/services/locator.hpp"
+#include "model/services/service_locator.hpp"
 #include "model/tilesets/tileset_factory.hpp"
 #include "model/viewports/viewport_components.hpp"
 
@@ -35,7 +35,7 @@ auto create_map_document(Registry& registry,
                          const TileExtent& extent,
                          const Int2& tile_size) -> Entity
 {
-  const auto& settings_system = Locator<SettingsSystem>::get();
+  const auto& settings_system = ServiceLocator<SettingsSystem>::get();
   const auto& settings = settings_system.current_settings();
 
   const auto document_entity = registry.create_entity();
@@ -66,7 +66,7 @@ auto create_tileset_document(Registry& registry,
                              const Int2& tile_size,
                              const Path& image_path) -> Entity
 {
-  const auto& settings_system = Locator<SettingsSystem>::get();
+  const auto& settings_system = ServiceLocator<SettingsSystem>::get();
   const auto& settings = settings_system.current_settings();
 
   const auto document_entity = registry.create_entity();

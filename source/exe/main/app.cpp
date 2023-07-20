@@ -63,7 +63,7 @@
 #include "model/persistence/file_history_system.hpp"
 #include "model/persistence/settings_system.hpp"
 #include "model/services/backend_service.hpp"
-#include "model/services/locator.hpp"
+#include "model/services/service_locator.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/tools/tool_system.hpp"
 #include "ui/dialog/save_as_dialog.hpp"
@@ -84,7 +84,7 @@ App::~App() noexcept = default;
 
 void App::on_startup(const BackendAPI api)
 {
-  auto& backend_service = Locator<BackendService>::get();
+  auto& backend_service = ServiceLocator<BackendService>::get();
 
   mRegistry = std::make_unique<Registry>();
   sys::init_model(*mRegistry, api);
@@ -290,7 +290,7 @@ void App::_init_persistent_settings()
 
 void App::on_shutdown()
 {
-  auto& backend_service = Locator<BackendService>::get();
+  auto& backend_service = ServiceLocator<BackendService>::get();
   const auto& settings_system = mSystemManager->get_settings_system();
 
   auto& registry = *mRegistry;
@@ -306,7 +306,7 @@ void App::on_shutdown()
 
 void App::on_update()
 {
-  auto& backend_service = Locator<BackendService>::get();
+  auto& backend_service = ServiceLocator<BackendService>::get();
   const auto& settings_system = mSystemManager->get_settings_system();
 
   if (mWantFontReload) {

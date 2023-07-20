@@ -22,7 +22,7 @@
 #include "model/documents/command_system.hpp"
 #include "model/i18n/language_system.hpp"
 #include "model/persistence/settings_system.hpp"
-#include "model/services/locator.hpp"
+#include "model/services/service_locator.hpp"
 #include "model/tools/tool_system.hpp"
 
 namespace tactile {
@@ -40,8 +40,8 @@ SystemManager::SystemManager()
   mSystems.push_back(mCommandSystem.get());
   mSystems.push_back(mToolSystem.get());
 
-  Locator<SettingsSystem>::reset(mSettingsSystem.get());
-  Locator<LanguageSystem>::reset(mLanguageSystem.get());
+  ServiceLocator<SettingsSystem>::reset(mSettingsSystem.get());
+  ServiceLocator<LanguageSystem>::reset(mLanguageSystem.get());
 }
 
 SystemManager::~SystemManager() noexcept = default;
