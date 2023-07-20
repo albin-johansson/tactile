@@ -22,12 +22,12 @@
 #include "model/documents/command_system.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
-#include "model/i18n/language_system.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/maps/map_system.hpp"
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/file_history_system.hpp"
 #include "model/persistence/settings_system.hpp"
+#include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
 #include "model/system_manager.hpp"
 #include "model/textures/texture_components.hpp"
@@ -72,8 +72,8 @@ auto ModelView::get_settings() const -> const Settings&
 
 auto ModelView::get_language_strings() const -> const Strings&
 {
-  const auto& language_system = ServiceLocator<LanguageSystem>::get();
-  return language_system.get_strings(get_settings().get_language());
+  const auto& language_service = ServiceLocator<LanguageService>::get();
+  return language_service.get_strings(get_settings().get_language());
 }
 
 auto ModelView::has_active_document() const -> bool

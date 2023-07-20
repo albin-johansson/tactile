@@ -22,12 +22,12 @@
 #include "common/enum/lang.hpp"
 #include "common/enum/menu_action.hpp"
 #include "common/type/hash_map.hpp"
-#include "model/i18n/strings.hpp"
-#include "model/system.hpp"
+#include "common/type/string.hpp"
+#include "model/services/i18n/strings.hpp"
 
 namespace tactile {
 
-class LanguageSystem final : public System {
+class LanguageService final {
  public:
   /// Loads the translation JSON files.
   void load_languages();
@@ -36,33 +36,10 @@ class LanguageSystem final : public System {
 
   [[nodiscard]] auto get_current_language_strings() const -> const Strings&;
 
+  [[nodiscard]] static auto get_name(Lang language) -> const char*;
+
  private:
-  HashMap<Lang, Strings> mStrings;
+  HashMap<Lang, Strings> mLanguages;
 };
 
-namespace sys {
-
-[[nodiscard, deprecated]] auto get_current_language_strings(const Registry& registry)
-    -> const Strings&;
-
-/**
- * Returns the native name of a language.
- *
- * \param lang the language to query.
- *
- * \return a language name, e.g. "Svenska" for Swedish.
- */
-[[nodiscard]] auto get_language_name(Lang lang) -> const char*;
-
-/**
- * Returns the translated string for a menu action label.
- *
- * \param strings the associated set of translated strings.
- * \param action  the menu action to translate.
- *
- * \return a string suitable for use as a menu action label.
- */
-[[nodiscard]] auto get_string(const Strings& strings, MenuAction action) -> String;
-
-}  // namespace sys
 }  // namespace tactile

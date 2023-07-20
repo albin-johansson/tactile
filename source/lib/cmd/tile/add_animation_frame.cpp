@@ -22,7 +22,8 @@
 #include "common/debug/assert.hpp"
 #include "common/util/vectors.hpp"
 #include "model/entity_validation.hpp"
-#include "model/i18n/language_system.hpp"
+#include "model/services/language_service.hpp"
+#include "model/services/service_locator.hpp"
 #include "model/tiles/tile_animation_system.hpp"
 #include "model/tiles/tile_components.hpp"
 #include "model/tilesets/tileset_system.hpp"
@@ -75,7 +76,8 @@ void AddAnimationFrame::redo()
 
 auto AddAnimationFrame::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mRegistry);
+  const auto& strings =
+      ServiceLocator<LanguageService>::get().get_current_language_strings();
   return strings.cmd.add_animation_frame;
 }
 

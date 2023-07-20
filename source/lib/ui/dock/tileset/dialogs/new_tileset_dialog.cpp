@@ -23,7 +23,8 @@
 
 #include "io/file_dialog.hpp"
 #include "model/events/tileset_events.hpp"
-#include "model/i18n/language_system.hpp"
+#include "model/services/language_service.hpp"
+#include "model/services/service_locator.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/widgets.hpp"
 

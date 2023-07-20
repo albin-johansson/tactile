@@ -22,7 +22,8 @@
 #include "common/debug/assert.hpp"
 #include "common/util/vectors.hpp"
 #include "model/entity_validation.hpp"
-#include "model/i18n/language_system.hpp"
+#include "model/services/language_service.hpp"
+#include "model/services/service_locator.hpp"
 #include "model/tiles/tile_components.hpp"
 
 namespace tactile::cmd {
@@ -67,7 +68,8 @@ void MoveAnimationFrameForwards::redo()
 
 auto MoveAnimationFrameForwards::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mRegistry);
+  const auto& strings =
+      ServiceLocator<LanguageService>::get().get_current_language_strings();
   return strings.cmd.move_animation_frame_forwards;
 }
 

@@ -22,7 +22,8 @@
 #include <imgui.h>
 
 #include "model/events/layer_events.hpp"
-#include "model/i18n/language_system.hpp"
+#include "model/services/language_service.hpp"
+#include "model/services/service_locator.hpp"
 
 namespace tactile::ui {
 
@@ -31,9 +32,11 @@ AddLayerContextMenu::AddLayerContextMenu()
 {
 }
 
-void AddLayerContextMenu::on_update(const Registry& registry, Dispatcher& dispatcher)
+void AddLayerContextMenu::on_update([[maybe_unused]] const Registry& registry,
+                                    Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& language_service = ServiceLocator<LanguageService>::get();
+  const auto& strings = language_service.get_current_language_strings();
 
   if (ImGui::MenuItem(strings.action.tile_layer.c_str())) {
     dispatcher.enqueue<CreateLayerEvent>(LayerType::TileLayer);

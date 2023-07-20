@@ -27,7 +27,6 @@
 namespace tactile {
 
 TACTILE_FWD_DECLARE_CLASS(SettingsSystem)
-TACTILE_FWD_DECLARE_CLASS(LanguageSystem)
 TACTILE_FWD_DECLARE_CLASS(CommandSystem)
 TACTILE_FWD_DECLARE_CLASS(ToolSystem)
 
@@ -44,9 +43,6 @@ class SystemManager final : private System {
   [[nodiscard]] auto get_settings_system() -> SettingsSystem&;
   [[nodiscard]] auto get_settings_system() const -> const SettingsSystem&;
 
-  [[nodiscard]] auto get_language_system() -> LanguageSystem&;
-  [[nodiscard]] auto get_language_system() const -> const LanguageSystem&;
-
   [[nodiscard]] auto get_command_system() -> CommandSystem&;
   [[nodiscard]] auto get_command_system() const -> const CommandSystem&;
 
@@ -55,7 +51,6 @@ class SystemManager final : private System {
 
  private:
   Unique<SettingsSystem> mSettingsSystem;
-  Unique<LanguageSystem> mLanguageSystem;
   Unique<CommandSystem> mCommandSystem;
   Unique<ToolSystem> mToolSystem;
   Vector<System*> mSystems;

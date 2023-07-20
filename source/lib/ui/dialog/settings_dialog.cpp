@@ -27,7 +27,8 @@
 #include "model/events/command_events.hpp"
 #include "model/events/setting_events.hpp"
 #include "model/events/view_events.hpp"
-#include "model/i18n/language_system.hpp"
+#include "model/services/language_service.hpp"
+#include "model/services/service_locator.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/dock/dock_space.hpp"
@@ -53,17 +54,17 @@ void _push_flag_checkbox(SettingsDialogState& state,
 void _push_lang_combo(SettingsDialogState& state)
 {
   if (const ui::Combo combo {"##Lang",
-                             sys::get_language_name(state.ui_settings.get_language())};
+                             LanguageService::get_name(state.ui_settings.get_language())};
       combo.is_open()) {
-    if (ImGui::MenuItem(sys::get_language_name(Lang::EN))) {
+    if (ImGui::MenuItem(LanguageService::get_name(Lang::EN))) {
       state.ui_settings.set_language(Lang::EN);
     }
 
-    if (ImGui::MenuItem(sys::get_language_name(Lang::EN_GB))) {
+    if (ImGui::MenuItem(LanguageService::get_name(Lang::EN_GB))) {
       state.ui_settings.set_language(Lang::EN_GB);
     }
 
-    if (ImGui::MenuItem(sys::get_language_name(Lang::SV))) {
+    if (ImGui::MenuItem(LanguageService::get_name(Lang::SV))) {
       state.ui_settings.set_language(Lang::SV);
     }
   }

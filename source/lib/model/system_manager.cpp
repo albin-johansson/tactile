@@ -20,7 +20,6 @@
 #include "system_manager.hpp"
 
 #include "model/documents/command_system.hpp"
-#include "model/i18n/language_system.hpp"
 #include "model/persistence/settings_system.hpp"
 #include "model/services/service_locator.hpp"
 #include "model/tools/tool_system.hpp"
@@ -30,18 +29,15 @@ namespace tactile {
 SystemManager::SystemManager()
 {
   mSettingsSystem = std::make_unique<SettingsSystem>();
-  mLanguageSystem = std::make_unique<LanguageSystem>();
   mCommandSystem = std::make_unique<CommandSystem>();
   mToolSystem = std::make_unique<ToolSystem>();
 
-  mSystems.reserve(4);
+  mSystems.reserve(3);
   mSystems.push_back(mSettingsSystem.get());
-  mSystems.push_back(mLanguageSystem.get());
   mSystems.push_back(mCommandSystem.get());
   mSystems.push_back(mToolSystem.get());
 
   ServiceLocator<SettingsSystem>::reset(mSettingsSystem.get());
-  ServiceLocator<LanguageSystem>::reset(mLanguageSystem.get());
 }
 
 SystemManager::~SystemManager() noexcept = default;
@@ -68,16 +64,6 @@ auto SystemManager::get_settings_system() -> SettingsSystem&
 auto SystemManager::get_settings_system() const -> const SettingsSystem&
 {
   return *mSettingsSystem;
-}
-
-auto SystemManager::get_language_system() -> LanguageSystem&
-{
-  return *mLanguageSystem;
-}
-
-auto SystemManager::get_language_system() const -> const LanguageSystem&
-{
-  return *mLanguageSystem;
 }
 
 auto SystemManager::get_command_system() -> CommandSystem&

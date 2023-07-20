@@ -41,11 +41,12 @@
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/events/map_events.hpp"
-#include "model/i18n/language_system.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/persistence/file_history_system.hpp"
 #include "model/persistence/settings.hpp"
 #include "model/persistence/settings_system.hpp"
+#include "model/services/language_service.hpp"
+#include "model/services/logging_service.hpp"
 #include "model/services/service_locator.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"
 #include "ui/widget_state.hpp"
@@ -99,6 +100,7 @@ void on_create_map(Registry& registry, const CreateMapEvent& event)
 // TODO consider renaming event (if standalone tileset documents can be parsed)
 void on_open_map(Registry& registry, const OpenMapEvent& event)
 {
+  const auto& language_service = ServiceLocator<LanguageService>::get();
   const auto document_entity = sys::get_document_with_path(registry, event.path);
 
   if (document_entity != kNullEntity) {
@@ -114,7 +116,7 @@ void on_open_map(Registry& registry, const OpenMapEvent& event)
       sys::add_to_file_history(file_history, absolute_document_path);
     }
     else {
-      const auto& strings = sys::get_current_language_strings(registry);
+      const auto& strings = language_service.get_current_language_strings();
       auto& widget_state = registry.get<WidgetState>();
 
       auto& error_dialog = widget_state.map_parse_error_dialog;

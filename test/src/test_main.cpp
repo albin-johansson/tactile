@@ -32,7 +32,7 @@ class NullApp final : public AppDelegate {
   [[nodiscard]] auto should_stop() const -> bool override { return false; }
 
  private:
-  SystemManager mSystemManager {BackendAPI::Null};
+  SystemManager mSystemManager;
 };
 
 auto main(int argc, char* argv[]) -> int

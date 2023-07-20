@@ -19,6 +19,8 @@
 
 #include "null_backend_service.hpp"
 
+#include "model/textures/texture_components.hpp"
+
 namespace tactile {
 
 void NullBackendService::process_event(const SDL_Event&) {}
@@ -30,7 +32,12 @@ auto NullBackendService::new_frame() -> Result
 
 void NullBackendService::end_frame() {}
 
-void NullBackendService::prepare_texture(Registry&, Entity, const TextureData&) {}
+void NullBackendService::prepare_texture(Registry& registry,
+                                         const Entity texture_entity,
+                                         const TextureData&)
+{
+  registry.add<NullTexture>(texture_entity);
+}
 
 void NullBackendService::destroy_texture(void*) {}
 

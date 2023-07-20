@@ -22,7 +22,8 @@
 #include <imgui.h>
 
 #include "model/events/layer_events.hpp"
-#include "model/i18n/language_system.hpp"
+#include "model/services/language_service.hpp"
+#include "model/services/service_locator.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {
@@ -31,7 +32,8 @@ void push_rename_layer_dialog(const Registry& registry,
                               RenameLayerDialogState& state,
                               Dispatcher& dispatcher)
 {
-  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& language_service = ServiceLocator<LanguageService>::get();
+  const auto& strings = language_service.get_current_language_strings();
 
   DialogOptions dialog_options {
       .title = strings.window.rename_layer.c_str(),

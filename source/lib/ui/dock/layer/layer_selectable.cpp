@@ -29,7 +29,8 @@
 #include "model/events/layer_events.hpp"
 #include "model/events/object_events.hpp"
 #include "model/events/property_events.hpp"
-#include "model/i18n/language_system.hpp"
+#include "model/services/language_service.hpp"
+#include "model/services/service_locator.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/layers/layer_tree_system.hpp"
 #include "model/maps/map_components.hpp"
@@ -236,7 +237,8 @@ void layer_selectable(const Registry& registry,
 {
   const Scope scope {layer_entity};
 
-  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& language_service = ServiceLocator<LanguageService>::get();
+  const auto& strings = language_service.get_current_language_strings();
 
   const auto& map = registry.get<Map>(map_entity);
   const auto& layer = registry.get<Layer>(layer_entity);

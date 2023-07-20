@@ -56,13 +56,13 @@
 #include "model/events/delegates/settings_delegate.hpp"
 #include "model/events/delegates/tileset_delegate.hpp"
 #include "model/events/delegates/viewport_delegate.hpp"
-#include "model/i18n/language_system.hpp"
 #include "model/model_factory.hpp"
 #include "model/model_view.hpp"
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/file_history_system.hpp"
 #include "model/persistence/settings_system.hpp"
 #include "model/services/backend_service.hpp"
+#include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
 #include "model/textures/texture_components.hpp"
 #include "model/tools/tool_system.hpp"
@@ -88,6 +88,9 @@ void App::on_startup(const BackendAPI api)
 
   mRegistry = std::make_unique<Registry>();
   sys::init_model(*mRegistry, api);
+
+  mLanguageService = std::make_unique<LanguageService>();
+  ServiceLocator<LanguageService>::reset(mLanguageService.get());
 
   mSystemManager = std::make_unique<SystemManager>();
 
@@ -265,10 +268,10 @@ void App::_subscribe_to_events()
 void App::_init_persistent_settings()
 {
   auto& settings_system = mSystemManager->get_settings_system();
-  auto& language_system = mSystemManager->get_language_system();
+  auto& language_service = ServiceLocator<LanguageService>::get();
 
   settings_system.load_from_disk();
-  language_system.load_languages();
+  language_service.load_languages();
 
   const auto& settings = settings_system.current_settings();
 

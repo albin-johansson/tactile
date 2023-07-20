@@ -28,7 +28,8 @@
 #include "model/contexts/attached_component_system.hpp"
 #include "model/contexts/context_system.hpp"
 #include "model/entity_validation.hpp"
-#include "model/i18n/language_system.hpp"
+#include "model/services/language_service.hpp"
+#include "model/services/service_locator.hpp"
 
 namespace tactile::cmd {
 
@@ -83,7 +84,8 @@ void UndefComponent::redo()
 
 auto UndefComponent::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mRegistry);
+  const auto& strings =
+      ServiceLocator<LanguageService>::get().get_current_language_strings();
   return strings.cmd.undef_comp;
 }
 

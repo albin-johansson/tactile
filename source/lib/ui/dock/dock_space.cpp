@@ -25,8 +25,8 @@
 #include "common/type/path.hpp"
 #include "io/directories.hpp"
 #include "model/events/setting_events.hpp"
-#include "model/i18n/language_system.hpp"
 #include "model/persistence/settings_system.hpp"
+#include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
 
 namespace tactile {
@@ -51,9 +51,10 @@ void update_dock_space(const Registry& registry, DockSpaceState& state)
   }
 }
 
-void load_default_layout(const Registry& registry, ImGuiID id)
+void load_default_layout([[maybe_unused]] const Registry& registry, ImGuiID id)
 {
-  const auto& lang = sys::get_current_language_strings(registry);
+  const auto& language_service = ServiceLocator<LanguageService>::get();
+  const auto& strings = language_service.get_current_language_strings();
 
   ImGui::DockBuilderRemoveNodeChildNodes(id);
 
@@ -66,12 +67,12 @@ void load_default_layout(const Registry& registry, ImGuiID id)
   const auto bottom = ImGui::DockBuilderSplitNode(id, ImGuiDir_Down, 0.25f, nullptr, &id);
 
   ImGui::DockBuilderDockWindow("Viewport", root);
-  ImGui::DockBuilderDockWindow(lang.window.tileset_dock.c_str(), right);
-  ImGui::DockBuilderDockWindow(lang.window.property_dock.c_str(), right);
-  ImGui::DockBuilderDockWindow(lang.window.component_dock.c_str(), right);
-  ImGui::DockBuilderDockWindow(lang.window.animation_dock.c_str(), right_bottom);
-  ImGui::DockBuilderDockWindow(lang.window.layer_dock.c_str(), right_bottom);
-  ImGui::DockBuilderDockWindow(lang.window.log_dock.c_str(), bottom);
+  ImGui::DockBuilderDockWindow(strings.window.tileset_dock.c_str(), right);
+  ImGui::DockBuilderDockWindow(strings.window.property_dock.c_str(), right);
+  ImGui::DockBuilderDockWindow(strings.window.component_dock.c_str(), right);
+  ImGui::DockBuilderDockWindow(strings.window.animation_dock.c_str(), right_bottom);
+  ImGui::DockBuilderDockWindow(strings.window.layer_dock.c_str(), right_bottom);
+  ImGui::DockBuilderDockWindow(strings.window.log_dock.c_str(), bottom);
 
   ImGui::DockBuilderFinish(id);
 }

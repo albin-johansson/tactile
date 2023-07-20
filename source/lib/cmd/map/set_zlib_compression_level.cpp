@@ -19,8 +19,9 @@
 
 #include "set_zlib_compression_level.hpp"
 
-#include "model/i18n/language_system.hpp"
 #include "model/maps/map_components.hpp"
+#include "model/services/language_service.hpp"
+#include "model/services/service_locator.hpp"
 #include "model/tiles/tile_components.hpp"
 
 namespace tactile::cmd {
@@ -64,7 +65,8 @@ auto SetZlibCompressionLevel::merge_with(const Command* cmd) -> bool
 
 auto SetZlibCompressionLevel::get_name() const -> String
 {
-  const auto& strings = sys::get_current_language_strings(*mRegistry);
+  const auto& strings =
+      ServiceLocator<LanguageService>::get().get_current_language_strings();
   return strings.cmd.set_zlib_compression_level;
 }
 

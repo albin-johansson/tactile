@@ -22,10 +22,11 @@
 #include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
 #include "model/entity_validation.hpp"
-#include "model/i18n/language_system.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/objects/object_components.hpp"
+#include "model/services/language_service.hpp"
+#include "model/services/service_locator.hpp"
 
 namespace tactile::cmd {
 
@@ -75,9 +76,10 @@ void RemoveObject::dispose()
 
 auto RemoveObject::get_name() const -> String
 {
-  const auto& registry = *mRegistry;
+  const auto& language_service = ServiceLocator<LanguageService>::get();
+  const auto& strings = language_service.get_current_language_strings();
 
-  const auto& strings = sys::get_current_language_strings(registry);
+  const auto& registry = *mRegistry;
   const auto& object = registry.get<Object>(mObjectEntity);
 
   switch (object.type) {

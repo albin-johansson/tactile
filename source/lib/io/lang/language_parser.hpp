@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "model/i18n/strings.hpp"
+#include "model/services/i18n/strings.hpp"
 
 namespace tactile {
 

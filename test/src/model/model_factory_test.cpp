@@ -24,7 +24,6 @@
 #include "model/documents/document_components.hpp"
 #include "model/persistence/file_history_components.hpp"
 #include "model/textures/texture_components.hpp"
-#include "model/view/menu_components.hpp"
 #include "ui/widget_state.hpp"
 
 using namespace tactile;
@@ -38,7 +37,6 @@ TEST_SUITE("ModelFactory")
     CHECK(registry.has<DocumentContext>());
     CHECK(registry.has<FileHistory>());
     CHECK(registry.has<Icons>());
-    CHECK(registry.has<MenuItems>());
     CHECK(registry.has<WidgetState>());
   }
 }
