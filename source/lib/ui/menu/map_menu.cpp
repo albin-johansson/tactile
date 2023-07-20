@@ -23,7 +23,6 @@
 
 #include "model/events/menu_events.hpp"
 #include "model/model_view.hpp"
-#include "model/view/menu_components.hpp"
 #include "ui/shortcut/mappings.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"

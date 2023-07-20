@@ -20,10 +20,10 @@
 #pragma once
 
 #include "common/enum/lang.hpp"
+#include "common/enum/menu_action.hpp"
 #include "common/type/hash_map.hpp"
 #include "model/i18n/strings.hpp"
 #include "model/system.hpp"
-#include "model/view/menu_components.hpp"
 
 namespace tactile {
 

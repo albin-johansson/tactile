@@ -23,7 +23,6 @@
 #include "model/persistence/file_history_components.hpp"
 #include "model/persistence/settings.hpp"
 #include "model/textures/texture_components.hpp"
-#include "model/view/menu_components.hpp"
 #include "ui/widget_state.hpp"
 
 namespace tactile::sys {
@@ -35,7 +34,6 @@ void init_model(Registry& registry, [[maybe_unused]] const BackendAPI api)
 
   registry.add<FileHistory>();
   registry.add<Icons>();
-  registry.add<MenuItems>();
 
   registry.add<WidgetState>();
 }

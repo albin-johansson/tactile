@@ -23,7 +23,6 @@
 
 #include "model/events/menu_events.hpp"
 #include "model/i18n/language_system.hpp"
-#include "model/view/menu_components.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 
