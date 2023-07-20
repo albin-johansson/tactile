@@ -25,7 +25,7 @@
 #include "common/util/lookup.hpp"
 #include "model/events/setting_events.hpp"
 #include "model/services/language_service.hpp"
-#include "model/services/service_locator.hpp"
+#include "model/services/logging_service.hpp"
 #include "model/services/service_locator.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"

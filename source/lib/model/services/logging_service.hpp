@@ -19,61 +19,17 @@
 
 #pragma once
 
-#include <spdlog/sinks/base_sink.h>
-#include <spdlog/spdlog.h>
-
-#include "common/predef.hpp"
+#include "common/macros.hpp"
 #include "common/primitives.hpp"
 #include "common/type/deque.hpp"
 #include "common/type/func.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
+#include "model/services/logging/log_level.hpp"
 
 namespace tactile {
 
-enum LogLevelBits : uint32 {
-  LOG_LEVEL_TRACE = 1u << 0u,
-  LOG_LEVEL_DEBUG = 1u << 1u,
-  LOG_LEVEL_INFO = 1u << 2u,
-  LOG_LEVEL_WARNING = 1u << 3u,
-  LOG_LEVEL_ERROR = 1u << 4u,
-  LOG_LEVEL_CRITICAL = 1u << 5u,
-};
-
-using LogLevelFlags = uint32;
-
-inline constexpr LogLevelFlags kAllLogLevels = LOG_LEVEL_TRACE | LOG_LEVEL_DEBUG |
-                                               LOG_LEVEL_INFO | LOG_LEVEL_WARNING |
-                                               LOG_LEVEL_ERROR | LOG_LEVEL_CRITICAL;
-
-#if TACTILE_DEBUG
-inline constexpr LogLevelFlags kDefaultLogLevels = kAllLogLevels;
-#else
-inline constexpr LogLevelFlags kDefaultLogLevels = LOG_LEVEL_INFO |     //
-                                                   LOG_LEVEL_WARNING |  //
-                                                   LOG_LEVEL_ERROR |    //
-                                                   LOG_LEVEL_CRITICAL;
-#endif  // TACTILE_DEBUG
-
-struct LogEntry final {
-  LogLevelBits level;
-  String msg;
-};
-
-class LogHistorySink final :
-    public spdlog::sinks::base_sink<spdlog::details::null_mutex> {
- public:
-  void sink_it_(const spdlog::details::log_msg& msg) override;
-
-  void flush_() override;
-
-  void clear();
-
-  [[nodiscard]] auto get_messages() const -> const Deque<LogEntry>& { return mMessages; }
-
- private:
-  Deque<LogEntry> mMessages;
-};
+TACTILE_FWD_DECLARE_CLASS(LogHistorySink)
 
 class LoggingService final {
  public:

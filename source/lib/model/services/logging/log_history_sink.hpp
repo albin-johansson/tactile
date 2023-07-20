@@ -19,18 +19,33 @@
 
 #pragma once
 
-#include "common/primitives.hpp"
-#include "common/type/ecs.hpp"
-#include "model/model_view.hpp"
+#include <spdlog/sinks/base_sink.h>
+#include <spdlog/spdlog.h>
+
+#include "common/type/deque.hpp"
+#include "common/type/string.hpp"
 #include "model/services/logging/log_level.hpp"
 
 namespace tactile {
 
-struct LogDockState final {
-  uint32 log_filter {kDefaultLogLevels};
-  bool has_focus {};
+struct LogEntry final {
+  LogLevelBits level;
+  String msg;
 };
 
-void push_log_dock_widget(ModelView& model, LogDockState& state);
+class LogHistorySink final :
+    public spdlog::sinks::base_sink<spdlog::details::null_mutex> {
+ public:
+  void sink_it_(const spdlog::details::log_msg& msg) override;
+
+  void flush_() override;
+
+  void clear();
+
+  [[nodiscard]] auto get_messages() const -> const Deque<LogEntry>& { return mMessages; }
+
+ private:
+  Deque<LogEntry> mMessages;
+};
 
 }  // namespace tactile

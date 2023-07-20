@@ -29,60 +29,11 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
-#include "common/type/chrono.hpp"
+#include "common/predef.hpp"
 #include "io/directories.hpp"
+#include "model/services/logging/log_history_sink.hpp"
 
 namespace tactile {
-namespace {
-
-[[nodiscard]] auto _convert_log_level(const spdlog::level::level_enum level)
-    -> LogLevelBits
-{
-  switch (level) {
-    case spdlog::level::trace:
-      return LOG_LEVEL_TRACE;
-
-    case spdlog::level::debug:
-      return LOG_LEVEL_DEBUG;
-
-    case spdlog::level::info:
-      return LOG_LEVEL_INFO;
-
-    case spdlog::level::warn:
-      return LOG_LEVEL_WARNING;
-
-    case spdlog::level::err:
-      return LOG_LEVEL_ERROR;
-
-    case spdlog::level::critical:
-      return LOG_LEVEL_CRITICAL;
-
-    default:
-      throw TactileError {"Unsupported log level"};
-  }
-}
-
-}  // namespace
-
-void LogHistorySink::sink_it_(const spdlog::details::log_msg& msg)
-{
-  const auto time = fmt::localtime(Clock::to_time_t(msg.time));
-
-  const auto level = _convert_log_level(msg.level);
-  auto formatted_msg = fmt::format("[{:%H:%M:%S}] {}", time, msg.payload);
-
-  mMessages.push_back(LogEntry {level, std::move(formatted_msg)});
-}
-
-void LogHistorySink::flush_()
-{
-  // Do nothing
-}
-
-void LogHistorySink::clear()
-{
-  mMessages.clear();
-}
 
 void LoggingService::install_logger()
 {
