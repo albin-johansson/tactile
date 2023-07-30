@@ -95,7 +95,7 @@ void StampTool::_update_sequence(Registry& registry, const TilePos& mouse_pos)
   const auto& map_document = registry.get<MapDocument>(document_entity);
   const auto& map = registry.get<Map>(map_document.map);
 
-  if (_behaves_as_if_random(registry, map)) {
+  if (_behaves_as_if_random(registry)) {
     _update_random_sequence(registry, map, mouse_pos);
   }
   else {
@@ -189,10 +189,21 @@ void StampTool::_try_end_sequence(Registry& registry, Dispatcher& dispatcher)
   }
 }
 
-auto StampTool::_behaves_as_if_random(const Registry& registry, const Map& map) const
-    -> bool
+auto StampTool::_behaves_as_if_random(const Registry& registry) const -> bool
 {
-  return mIsRandom && sys::is_stamp_tool_randomizer_possible(registry, map);
+  return mIsRandom && is_randomizer_available(registry);
+}
+
+auto StampTool::is_randomizer_available(const Registry& registry) const -> bool
+{
+  if (const auto* map = sys::try_get_active_map(registry)) {
+    if (map->active_tileset != kNullEntity) {
+      const auto& attached_tileset = registry.get<AttachedTileset>(map->active_tileset);
+      return sys::is_single_tile_selected(attached_tileset);
+    }
+  }
+
+  return false;
 }
 
 auto StampTool::is_available(const Registry& registry) const -> bool
@@ -209,31 +220,4 @@ auto StampTool::is_available(const Registry& registry) const -> bool
   return false;
 }
 
-namespace sys {
-
-auto is_stamp_tool_available(const Registry& registry) -> bool
-{
-  if (const auto* map = try_get_active_map(registry)) {
-    if (map->active_layer != kNullEntity && map->active_tileset != kNullEntity) {
-      const auto& attached_tileset = registry.get<AttachedTileset>(map->active_tileset);
-
-      return registry.has<TileLayer>(map->active_layer) &&
-             attached_tileset.selection.has_value();
-    }
-  }
-
-  return false;
-}
-
-auto is_stamp_tool_randomizer_possible(const Registry& registry, const Map& map) -> bool
-{
-  if (map.active_tileset != kNullEntity) {
-    const auto& attached_tileset = registry.get<AttachedTileset>(map.active_tileset);
-    return is_single_tile_selected(attached_tileset);
-  }
-
-  return false;
-}
-
-}  // namespace sys
 }  // namespace tactile

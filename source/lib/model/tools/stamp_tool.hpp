@@ -54,6 +54,8 @@ class StampTool final : public Tool {
                          Dispatcher& dispatcher,
                          const ViewportMouseInfo& mouse) override;
 
+  [[nodiscard]] auto is_randomizer_available(const Registry& registry) const -> bool;
+
   [[nodiscard]] auto is_available(const Registry& registry) const -> bool override;
 
  private:
@@ -71,17 +73,7 @@ class StampTool final : public Tool {
                                const TilePos& mouse_pos);
   void _try_end_sequence(Registry& registry, Dispatcher& dispatcher);
 
-  [[nodiscard]] auto _behaves_as_if_random(const Registry& registry, const Map& map) const
-      -> bool;
+  [[nodiscard]] auto _behaves_as_if_random(const Registry& registry) const -> bool;
 };
 
 }  // namespace tactile
-
-namespace tactile::sys {
-
-[[nodiscard, deprecated]] auto is_stamp_tool_available(const Registry& registry) -> bool;
-
-[[nodiscard]] auto is_stamp_tool_randomizer_possible(const Registry& registry,
-                                                     const Map& map) -> bool;
-
-}  // namespace tactile::sys
