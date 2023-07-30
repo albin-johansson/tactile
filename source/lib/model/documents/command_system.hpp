@@ -77,5 +77,15 @@ void try_execute(Registry& registry, Args&&... args)
   }
 }
 
+template <typename T, typename... Args>
+void try_store(Registry& registry, Args&&... args)
+{
+  const auto document_entity = get_active_document(registry);
+  if (document_entity != kNullEntity) {
+    auto& command_stack = registry.get<CommandStack>(document_entity);
+    command_stack.store<T>(&registry, std::forward<Args>(args)...);
+  }
+}
+
 }  // namespace sys
 }  // namespace tactile
