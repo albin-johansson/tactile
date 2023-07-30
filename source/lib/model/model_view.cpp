@@ -275,8 +275,7 @@ auto ModelView::_can_reopen_last_closed_file() const -> bool
 
 auto ModelView::_is_tool_available(const ToolType type) const -> bool
 {
-  const auto& tool_system = mSystems.get().get_tool_system();
-  return tool_system.is_tool_available(get_registry(), type);
+  return _get_tool_system().is_tool_available(get_registry(), type);
 }
 
 }  // namespace tactile

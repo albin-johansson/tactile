@@ -37,6 +37,7 @@
 namespace tactile {
 
 TACTILE_FWD_DECLARE_CLASS(SystemManager)
+TACTILE_FWD_DECLARE_CLASS(ToolSystem)
 
 class ModelView final {
  public:
@@ -90,6 +91,8 @@ class ModelView final {
   Ref<const Registry> mRegistry;
   Ref<const SystemManager> mSystems;
   Ref<Dispatcher> mDispatcher;
+
+  [[nodiscard]] auto _get_tool_system() const -> const ToolSystem&;
 
   [[nodiscard]] auto _can_clear_file_history() const -> bool;
   [[nodiscard]] auto _can_reopen_last_closed_file() const -> bool;

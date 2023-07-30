@@ -31,6 +31,7 @@
 #include "model/events/tool_events.hpp"
 #include "model/events/viewport_events.hpp"
 #include "model/tools/bucket_tool.hpp"
+#include "model/tools/eraser_tool.hpp"
 #include "model/tools/stamp_tool.hpp"
 #include "model/tools/tool.hpp"
 
@@ -40,6 +41,7 @@ ToolSystem::ToolSystem()
 {
   mTools[ToolType::Stamp] = std::make_unique<StampTool>();
   mTools[ToolType::Bucket] = std::make_unique<BucketTool>();
+  mTools[ToolType::Eraser] = std::make_unique<EraserTool>();
 }
 
 ToolSystem::~ToolSystem() noexcept = default;
