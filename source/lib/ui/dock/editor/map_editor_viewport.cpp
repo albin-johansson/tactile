@@ -245,7 +245,30 @@ void push_map_editor_viewport(ModelView& model,
     model.enqueue<SelectToolEvent>(ToolType::Bucket);
   }
 
-  // TODO more tool shortcuts
+  if (model.is_available(MenuAction::EnableEraser) &&
+      ImGui::Shortcut(ImGuiKey_E, ImGuiKeyOwner_Any, ImGuiInputFlags_RouteFocused)) {
+    model.enqueue<SelectToolEvent>(ToolType::Eraser);
+  }
+
+  if (model.is_available(MenuAction::EnableObjectSelector) &&
+      ImGui::Shortcut(ImGuiKey_Q, ImGuiKeyOwner_Any, ImGuiInputFlags_RouteFocused)) {
+    model.enqueue<SelectToolEvent>(ToolType::ObjectSelection);
+  }
+
+  if (model.is_available(MenuAction::EnableRectangle) &&
+      ImGui::Shortcut(ImGuiKey_R, ImGuiKeyOwner_Any, ImGuiInputFlags_RouteFocused)) {
+    model.enqueue<SelectToolEvent>(ToolType::Rectangle);
+  }
+
+  if (model.is_available(MenuAction::EnableEllipse) &&
+      ImGui::Shortcut(ImGuiKey_T, ImGuiKeyOwner_Any, ImGuiInputFlags_RouteFocused)) {
+    model.enqueue<SelectToolEvent>(ToolType::Ellipse);
+  }
+
+  if (model.is_available(MenuAction::EnablePoint) &&
+      ImGui::Shortcut(ImGuiKey_Y, ImGuiKeyOwner_Any, ImGuiInputFlags_RouteFocused)) {
+    model.enqueue<SelectToolEvent>(ToolType::Point);
+  }
 }
 
 }  // namespace tactile

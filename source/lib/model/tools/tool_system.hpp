@@ -77,6 +77,8 @@ class ToolSystem final : public System {
   [[nodiscard]] auto is_tool_available(const Registry& registry, ToolType type) const
       -> bool;
 
+  [[nodiscard]] auto is_tool_selected(ToolType type) const -> bool;
+
  private:
   HashMap<ToolType, Unique<Tool>> mTools;
   Tool* mActiveTool {};

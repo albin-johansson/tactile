@@ -80,6 +80,8 @@ class ModelView final {
 
   [[nodiscard]] auto is_available(MenuAction action) const -> bool;
 
+  [[nodiscard]] auto is_selected(MenuAction action) const -> bool;
+
   [[nodiscard]] auto get_registry() const -> const Registry& { return mRegistry.get(); }
 
   [[nodiscard]] auto get_dispatcher() -> Dispatcher& { return mDispatcher.get(); }

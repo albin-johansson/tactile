@@ -51,49 +51,49 @@ void push_edit_menu(ModelView& model)
 
     if (ImGui::MenuItem(strings.action.stamp_tool.c_str(),
                         "S",
-                        nullptr,
+                        model.is_selected(MenuAction::EnableStamp),
                         model.is_available(MenuAction::EnableStamp))) {
       model.enqueue<MenuActionEvent>(MenuAction::EnableStamp);
     }
 
     if (ImGui::MenuItem(strings.action.bucket_tool.c_str(),
                         "B",
-                        nullptr,
+                        model.is_selected(MenuAction::EnableBucket),
                         model.is_available(MenuAction::EnableBucket))) {
       model.enqueue<MenuActionEvent>(MenuAction::EnableBucket);
     }
 
     if (ImGui::MenuItem(strings.action.eraser_tool.c_str(),
                         "E",
-                        nullptr,
+                        model.is_selected(MenuAction::EnableEraser),
                         model.is_available(MenuAction::EnableEraser))) {
       model.enqueue<MenuActionEvent>(MenuAction::EnableEraser);
     }
 
     if (ImGui::MenuItem(strings.action.object_selection_tool.c_str(),
                         "Q",
-                        nullptr,
+                        model.is_selected(MenuAction::EnableObjectSelector),
                         model.is_available(MenuAction::EnableObjectSelector))) {
       model.enqueue<MenuActionEvent>(MenuAction::EnableObjectSelector);
     }
 
     if (ImGui::MenuItem(strings.action.rectangle_tool.c_str(),
                         "R",
-                        nullptr,
+                        model.is_selected(MenuAction::EnableRectangle),
                         model.is_available(MenuAction::EnableRectangle))) {
       model.enqueue<MenuActionEvent>(MenuAction::EnableRectangle);
     }
 
     if (ImGui::MenuItem(strings.action.ellipse_tool.c_str(),
                         "T",
-                        nullptr,
+                        model.is_selected(MenuAction::EnableEllipse),
                         model.is_available(MenuAction::EnableEllipse))) {
       model.enqueue<MenuActionEvent>(MenuAction::EnableEllipse);
     }
 
     if (ImGui::MenuItem(strings.action.point_tool.c_str(),
                         "Y",
-                        nullptr,
+                        model.is_selected(MenuAction::EnablePoint),
                         model.is_available(MenuAction::EnablePoint))) {
       model.enqueue<MenuActionEvent>(MenuAction::EnablePoint);
     }

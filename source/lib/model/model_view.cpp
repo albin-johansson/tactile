@@ -227,6 +227,40 @@ auto ModelView::is_available(const MenuAction action) const -> bool
   return false;
 }
 
+auto ModelView::is_selected(const MenuAction action) const -> bool
+{
+  switch (action) {
+    case MenuAction::EnableStamp:
+      return _get_tool_system().is_tool_selected(ToolType::Stamp);
+
+    case MenuAction::EnableEraser:
+      return _get_tool_system().is_tool_selected(ToolType::Eraser);
+
+    case MenuAction::EnableBucket:
+      return _get_tool_system().is_tool_selected(ToolType::Bucket);
+
+    case MenuAction::EnableObjectSelector:
+      return _get_tool_system().is_tool_selected(ToolType::ObjectSelection);
+
+    case MenuAction::EnableRectangle:
+      return _get_tool_system().is_tool_selected(ToolType::Rectangle);
+
+    case MenuAction::EnableEllipse:
+      return _get_tool_system().is_tool_selected(ToolType::Ellipse);
+
+    case MenuAction::EnablePoint:
+      return _get_tool_system().is_tool_selected(ToolType::Point);
+
+    default:
+      return false;
+  }
+}
+
+auto ModelView::_get_tool_system() const -> const ToolSystem&
+{
+  return mSystems.get().get_tool_system();
+}
+
 auto ModelView::_can_clear_file_history() const -> bool
 {
   const auto& file_history = get_registry().get<FileHistory>();

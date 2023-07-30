@@ -131,6 +131,7 @@ void ToolSystem::on_stamp_sequence(Registry& registry, const StampSequenceEvent&
 {
   spdlog::trace("[ToolSystem] StampSequenceEvent (layer: {})", event.layer);
 
+  // TODO no need to execute it, only store it.
   sys::try_execute<cmd::StampSequence>(registry,
                                        event.layer,
                                        event.old_state,
@@ -154,6 +155,11 @@ auto ToolSystem::is_tool_available(const Registry& registry, const ToolType type
     -> bool
 {
   return lookup_in(mTools, type)->is_available(registry);
+}
+
+auto ToolSystem::is_tool_selected(const ToolType type) const -> bool
+{
+  return mActiveToolType == type;
 }
 
 }  // namespace tactile
