@@ -12,6 +12,7 @@
     "boost-assert",
     "boost-config",
     "boost-container",
+    "boost-dll",
     "boost-predef",
     "boost-stacktrace",
     "boost-uuid",
