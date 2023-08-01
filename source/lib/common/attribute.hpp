@@ -20,11 +20,11 @@
 #pragma once
 
 #include <concepts>  // same_as
+#include <ostream>   // ostream
 #include <utility>   // move
 
 #include "common/color.hpp"
 #include "common/type/math.hpp"
-#include "common/type/ostream.hpp"
 #include "common/type/path.hpp"
 #include "core/containers/string.hpp"
 #include "core/containers/variant.hpp"
@@ -317,6 +317,6 @@ class Attribute final {
     -> Maybe<usize>;
 
 /// Outputs an attribute to a stream for debugging purposes.
-auto operator<<(OStream& stream, const Attribute& value) -> OStream&;
+auto operator<<(std::ostream& stream, const Attribute& value) -> std::ostream&;
 
 }  // namespace tactile

@@ -440,7 +440,7 @@ auto get_first_different_vector_dimension(const Attribute& a, const Attribute& b
   return nothing;
 }
 
-auto operator<<(OStream& stream, const Attribute& value) -> OStream&
+auto operator<<(std::ostream& stream, const Attribute& value) -> std::ostream&
 {
   switch (value.get_type()) {
     case AttributeType::String:

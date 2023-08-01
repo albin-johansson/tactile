@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include "common/type/ostream.hpp"
+#include <ostream>  // ostream
+
 #include "core/containers/string.hpp"
 #include "core/functional/expected.hpp"
 #include "model/services/i18n/strings.hpp"
@@ -104,6 +105,6 @@ using Parsed = Expected<T, ParseError>;
 /// Returns a (translated) human-readable message with an explanation of an error.
 [[nodiscard]] auto to_cause(const Strings& strings, ParseError error) -> StringView;
 
-auto operator<<(OStream& stream, ParseError error) -> OStream&;
+auto operator<<(std::ostream& stream, ParseError error) -> std::ostream&;
 
 }  // namespace tactile
