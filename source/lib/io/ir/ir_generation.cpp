@@ -297,7 +297,7 @@ void convert_tile_format_to_ir(const TileFormat& format, TileFormatIR& ir_format
 auto convert_map_document_to_ir(const Registry& registry,
                                 const Entity map_document_entity) -> MapIR
 {
-  TACTILE_DEBUG_PROFILE_START
+  TACTILE_DEBUG_PROFILE_START();
 
   const auto& document = registry.get<Document>(map_document_entity);
   const auto& map_document = registry.get<MapDocument>(map_document_entity);
@@ -324,7 +324,7 @@ auto convert_map_document_to_ir(const Registry& registry,
 
   convert_context_to_ir(registry, document.component_set, map_context, ir_map.context);
 
-  TACTILE_DEBUG_PROFILE_END("Converted document to IR")
+  TACTILE_DEBUG_PROFILE_END("Converted document to IR");
   return ir_map;
 }
 

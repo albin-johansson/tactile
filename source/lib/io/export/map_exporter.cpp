@@ -40,7 +40,7 @@ auto save_map_document_to_disk(const Registry& registry, const Entity map_docume
     -> Result
 {
   try {
-    TACTILE_DEBUG_PROFILE_START
+    TACTILE_DEBUG_PROFILE_START();
 
     const auto& document = registry.get<Document>(map_document_entity);
     const auto& settings = ServiceLocator<SettingsService>::get().current_settings();
@@ -73,7 +73,7 @@ auto save_map_document_to_disk(const Registry& registry, const Entity map_docume
       return failure;
     }
 
-    TACTILE_DEBUG_PROFILE_END("Saved map")
+    TACTILE_DEBUG_PROFILE_END("Saved map");
     return success;
   }
   catch (const std::exception& e) {

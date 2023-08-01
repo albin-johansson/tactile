@@ -19,10 +19,11 @@
 
 #pragma once
 
-#include "common/type/chrono.hpp"
-#include "core/ecs/entity.hpp"
+#include <chrono>  // milliseconds
+
 #include "common/type/math.hpp"
 #include "core/containers/vector.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/enums/tile_compression.hpp"
 #include "core/enums/tile_encoding.hpp"
 #include "core/prelude.hpp"
@@ -38,15 +39,15 @@ struct Tile final {
 
 /// Represents a single frame in a tile animation.
 struct TileAnimationFrame final {
-  TileIndex tile_index {};  ///< Index of the shown tile during the frame.
-  ms_t duration {};         ///< The duration that the frame is shown.
+  TileIndex tile_index {};                ///< Index of the shown tile during the frame.
+  std::chrono::milliseconds duration {};  ///< The duration that the frame is shown.
 };
 
 /// Component that describes an animation associated with a tile.
 struct TileAnimation final {
   Vector<TileAnimationFrame> frames;  ///< The associated animation frames.
   usize index {};                     ///< Current frame index.
-  TimePoint last_update {};           ///< Time of the last frame change.
+  std::chrono::system_clock::time_point last_update {};  ///< The last frame update.
 };
 
 /// Component describing the tile layer data format utilized by a map.

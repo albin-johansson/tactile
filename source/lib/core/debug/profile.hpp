@@ -19,25 +19,25 @@
 
 #pragma once
 
-#include <chrono>  // duration_cast
+#include <chrono>  // system_clock, duration_cast, milliseconds
 
 #include <fmt/chrono.h>
 #include <spdlog/spdlog.h>
 
-#include "common/type/chrono.hpp"
 #include "core/prelude.hpp"
 
-#define TACTILE_PROFILE_START const auto tactile_profile_start = tactile::Clock::now();
+#define TACTILE_PROFILE_START() \
+  const auto tactile_profile_start = std::chrono::system_clock::now()
 
-#define TACTILE_PROFILE_END(Msg)                                                 \
-  const auto tactile_profile_end = tactile::Clock::now();                        \
-  const auto tactile_profile_diff = tactile_profile_end - tactile_profile_start; \
-  const auto tactile_profile_ms =                                                \
-      std::chrono::duration_cast<tactile::ms_t>(tactile_profile_diff);           \
-  spdlog::debug(Msg " in {}", tactile_profile_ms);
+#define TACTILE_PROFILE_END(Msg)                                                   \
+  const auto tactile_profile_end = std::chrono::system_clock::now();               \
+  const auto tactile_profile_diff = tactile_profile_end - tactile_profile_start;   \
+  const auto tactile_profile_ms =                                                  \
+      std::chrono::duration_cast<std::chrono::milliseconds>(tactile_profile_diff); \
+  spdlog::debug(Msg " in {}", tactile_profile_ms)
 
 #if TACTILE_DEBUG
-#define TACTILE_DEBUG_PROFILE_START TACTILE_PROFILE_START
+#define TACTILE_DEBUG_PROFILE_START() TACTILE_PROFILE_START()
 #define TACTILE_DEBUG_PROFILE_END(Msg) TACTILE_PROFILE_END(Msg)
 #else
 #define TACTILE_DEBUG_PROFILE_START

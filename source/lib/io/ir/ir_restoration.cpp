@@ -20,6 +20,7 @@
 #include "ir_restoration.hpp"
 
 #include <algorithm>  // max
+#include <chrono>     // milliseconds
 #include <utility>    // move
 
 #include "cmd/command_stack.hpp"
@@ -204,7 +205,7 @@ void _restore_tile_animation(Registry& registry,
   for (const auto& ir_frame: ir_tile.frames) {
     auto& frame = animation.frames.emplace_back();
     frame.tile_index = ir_frame.tile_index;
-    frame.duration = ms_t {ir_frame.duration_ms};
+    frame.duration = std::chrono::milliseconds {ir_frame.duration_ms};
   }
 }
 

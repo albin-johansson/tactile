@@ -19,12 +19,12 @@
 
 #include "log_history_sink.hpp"
 
+#include <chrono>   // milliseconds
 #include <utility>  // move
 
 #include <fmt/chrono.h>
 #include <fmt/format.h>
 
-#include "common/type/chrono.hpp"
 #include "core/debug/panic.hpp"
 
 namespace tactile {
@@ -61,7 +61,7 @@ namespace {
 
 void LogHistorySink::sink_it_(const spdlog::details::log_msg& msg)
 {
-  const auto time = fmt::localtime(Clock::to_time_t(msg.time));
+  const auto time = fmt::localtime(std::chrono::system_clock::to_time_t(msg.time));
 
   const auto level = _convert_log_level(msg.level);
   auto formatted_msg = fmt::format("[{:%H:%M:%S}] {}", time, msg.payload);

@@ -30,7 +30,7 @@ namespace tactile::cmd {
 SetAnimationFrameDuration::SetAnimationFrameDuration(Registry* registry,
                                                      const Entity tile_entity,
                                                      const usize frame_index,
-                                                     const ms_t new_frame_duration)
+                                                     const ms_type new_frame_duration)
     : mRegistry {registry},
       mTileEntity {tile_entity},
       mFrameIndex {frame_index},

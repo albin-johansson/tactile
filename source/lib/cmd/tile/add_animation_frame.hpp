@@ -19,8 +19,9 @@
 
 #pragma once
 
+#include <chrono>  // milliseconds
+
 #include "cmd/command.hpp"
-#include "common/type/chrono.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"
@@ -30,10 +31,12 @@ namespace tactile::cmd {
 
 class AddAnimationFrame final : public Command {
  public:
+  using ms_type = std::chrono::milliseconds;
+
   AddAnimationFrame(Registry* registry,
                     Entity tile_entity,
                     TileIndex frame_tile_index,
-                    ms_t frame_duration);
+                    ms_type frame_duration);
 
   void undo() override;
 
@@ -45,7 +48,7 @@ class AddAnimationFrame final : public Command {
   Registry* mRegistry;
   Entity mTileEntity;
   TileIndex mFrameTileIndex;
-  ms_t mFrameDuration;
+  ms_type mFrameDuration;
   Maybe<usize> mFrameIndex;
   bool mTileWasAnimatedBefore : 1 {};
 };

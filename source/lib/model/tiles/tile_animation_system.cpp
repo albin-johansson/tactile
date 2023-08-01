@@ -19,7 +19,8 @@
 
 #include "tile_animation_system.hpp"
 
-#include "common/type/chrono.hpp"
+#include <chrono>  // system_clock
+
 #include "core/debug/assert.hpp"
 #include "model/entity_validation.hpp"
 #include "model/tiles/tile_components.hpp"
@@ -35,8 +36,9 @@ void make_tile_animated(Registry& registry, const Entity tile_entity)
 
   auto& animation = registry.add<TileAnimation>(tile_entity);
   animation.index = 0;
-  animation.frames.push_back(TileAnimationFrame {tile.index, ms_t {1'000}});
-  animation.last_update = Clock::now();
+  animation.frames.push_back(
+      TileAnimationFrame {tile.index, std::chrono::milliseconds {1'000}});
+  animation.last_update = std::chrono::system_clock::now();
 }
 
 }  // namespace tactile::sys

@@ -19,12 +19,13 @@
 
 #pragma once
 
+#include <chrono>  // milliseconds
+
 #include "common/region.hpp"
-#include "common/type/chrono.hpp"
-#include "core/ecs/entity.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "core/containers/string.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {
@@ -69,16 +70,16 @@ struct SelectTilesetTileEvent final {
 
 /// Event for adding an animation frame to a tileset tile.
 struct AddAnimationFrameEvent final {
-  Entity tile {kNullEntity};      ///< The target tile.
-  TileIndex frame_tile_index {};  ///< Tile index of shown during the frame.
-  ms_t frame_duration {};         ///< Duration of the new frame.
+  Entity tile {kNullEntity};                    ///< The target tile.
+  TileIndex frame_tile_index {};                ///< Tile index of shown during the frame.
+  std::chrono::milliseconds frame_duration {};  ///< Duration of the new frame.
 };
 
 /// Event for changing the duration of a frame in a tile animation.
 struct SetAnimationFrameDurationEvent final {
-  Entity tile {kNullEntity};  ///< Target tile.
-  usize frame_index {};       ///< Index of frame that will be modified.
-  ms_t duration {};           ///< New duration of the frame.
+  Entity tile {kNullEntity};              ///< Target tile.
+  usize frame_index {};                   ///< Index of frame that will be modified.
+  std::chrono::milliseconds duration {};  ///< New duration of the frame.
 };
 
 /// Event for enabling animation frame selection mode, where the next selected tile in the

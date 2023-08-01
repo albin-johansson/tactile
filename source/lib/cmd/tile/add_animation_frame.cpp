@@ -33,7 +33,7 @@ namespace tactile::cmd {
 AddAnimationFrame::AddAnimationFrame(Registry* registry,
                                      const Entity tile_entity,
                                      const TileIndex frame_tile_index,
-                                     const ms_t frame_duration)
+                                     const ms_type frame_duration)
     : mRegistry {registry},
       mTileEntity {tile_entity},
       mFrameTileIndex {frame_tile_index},

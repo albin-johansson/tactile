@@ -19,9 +19,10 @@
 
 #include "widgets.hpp"
 
+#include <chrono>  // system_clock
+
 #include <imgui.h>
 
-#include "common/type/chrono.hpp"
 #include "core/containers/hash_map.hpp"
 #include "core/debug/assert.hpp"
 #include "core/functional/maybe.hpp"
@@ -89,18 +90,19 @@ void push_lazy_tooltip(const char* id, const char* tooltip)
   TACTILE_ASSERT(id);
   TACTILE_ASSERT(tooltip);
 
-  static HashMap<ImGuiID, Maybe<TimePoint>> state;
+  using std::chrono::system_clock;
+  static HashMap<ImGuiID, Maybe<system_clock::time_point>> state;
 
   const auto hashed_id = ImGui::GetID(id);
   auto& last_hover = state[hashed_id];
 
   if (ImGui::IsItemActive() || ImGui::IsItemHovered()) {
     if (!last_hover.has_value()) {
-      last_hover = Clock::now();
+      last_hover = system_clock::now();
     }
 
     using namespace std::chrono_literals;
-    if (Clock::now() - last_hover.value() > 1s) {
+    if (system_clock::now() - last_hover.value() > 1s) {
       ImGui::SetTooltip("%s", tooltip);
     }
   }

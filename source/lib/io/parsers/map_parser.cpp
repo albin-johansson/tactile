@@ -25,8 +25,8 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/type/chrono.hpp"
 #include "core/debug/panic.hpp"
+#include "core/debug/profile.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
@@ -51,7 +51,7 @@ auto parse_map_with_tiled_tmx_format(const Path&) -> Parsed<MapIR>
 auto parse_map(const Path& path) -> Parsed<MapIR>
 {
   try {
-    const auto parse_start = Clock::now();
+    TACTILE_PROFILE_START();
     spdlog::debug("[IO] Parsing map {}", path);
 
     if (!fs::exists(path)) {
@@ -75,11 +75,7 @@ auto parse_map(const Path& path) -> Parsed<MapIR>
       return unexpected(ParseError::UnsupportedMapExtension);
     }
 
-    const auto parse_end = Clock::now();
-    const auto parse_duration = chrono::duration_cast<ms_t>(parse_end - parse_start);
-
-    spdlog::info("[IO] Parsed {} in {}", path.filename(), parse_duration);
-
+    TACTILE_PROFILE_END("[IO] Parsed map");
     return result;
   }
   catch (const TactileError& e) {

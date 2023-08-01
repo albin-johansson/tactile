@@ -20,6 +20,7 @@
 #include "animation_dock.hpp"
 
 #include <algorithm>  // count_if
+#include <chrono>     // milliseconds
 
 #include <imgui.h>
 
@@ -75,7 +76,8 @@ void _push_animated_tile_cell_image(const Registry& registry,
 }
 
 [[nodiscard]] auto _push_frame_duration_slider(const Strings& strings,
-                                               const ms_t duration) -> Maybe<ms_t>
+                                               const std::chrono::milliseconds duration)
+    -> Maybe<std::chrono::milliseconds>
 {
   ImGui::AlignTextToFramePadding();
   ImGui::TextUnformatted(strings.animation_dock.duration.c_str());
@@ -89,7 +91,7 @@ void _push_animated_tile_cell_image(const Registry& registry,
                           &kMaxFrameDurationMs,
                           "%lli ms",
                           ImGuiSliderFlags_Logarithmic | ImGuiSliderFlags_AlwaysClamp)) {
-    return ms_t {duration_raw};
+    return std::chrono::milliseconds {duration_raw};
   }
   else {
     return nothing;

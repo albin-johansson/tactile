@@ -19,8 +19,9 @@
 
 #pragma once
 
+#include <chrono>  // milliseconds
+
 #include "cmd/command.hpp"
-#include "common/type/chrono.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"
@@ -31,6 +32,8 @@ namespace tactile::cmd {
 
 class RemoveAnimationFrame final : public Command {
  public:
+  using ms_type = std::chrono::milliseconds;
+
   RemoveAnimationFrame(Registry* registry, Entity tile_entity, usize frame_index);
 
   void undo() override;
@@ -44,7 +47,7 @@ class RemoveAnimationFrame final : public Command {
   Entity mTileEntity;
   usize mFrameIndex;
   Maybe<TileIndex> mFrameTileIndex;
-  Maybe<ms_t> mFrameDuration;
+  Maybe<ms_type> mFrameDuration;
   Maybe<TileAnimation> mRemovedAnimation;  // Only set when removing the last frame
 };
 
