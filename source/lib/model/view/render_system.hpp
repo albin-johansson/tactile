@@ -20,9 +20,9 @@
 #pragma once
 
 #include "common/color.hpp"
-#include "common/primitives.hpp"
 #include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
+#include "core/prelude.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/registry.hpp"
 #include "model/tilesets/tileset_components.hpp"

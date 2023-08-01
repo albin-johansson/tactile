@@ -21,9 +21,9 @@
 
 #include "common/enum/tile_compression.hpp"
 #include "common/enum/tile_encoding.hpp"
-#include "common/primitives.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
+#include "core/prelude.hpp"
 
 namespace tactile {
 

@@ -21,7 +21,7 @@
 
 #include <boost/assert.hpp>
 
-#include "common/predef.hpp"
+#include "core/prelude.hpp"
 
 #if TACTILE_DEBUG
 

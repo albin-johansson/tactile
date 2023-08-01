@@ -27,7 +27,7 @@
 #include <imgui_impl_sdl2.h>
 
 #include "common/debug/panic.hpp"
-#include "common/primitives.hpp"
+#include "core/prelude.hpp"
 #include "io/texture_loader.hpp"
 #include "model/textures/texture_components.hpp"
 

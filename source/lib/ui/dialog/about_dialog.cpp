@@ -22,7 +22,7 @@
 #include <centurion/system.hpp>
 #include <imgui.h>
 
-#include "common/predef.hpp"
+#include "core/prelude.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/widgets.hpp"

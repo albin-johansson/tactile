@@ -22,10 +22,9 @@
 #include <utility>  // forward
 
 #include "cmd/command_stack.hpp"
-#include "common/macros.hpp"
-#include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/hash_map.hpp"
+#include "core/prelude.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/registry.hpp"
 #include "model/system.hpp"

@@ -20,10 +20,9 @@
 #pragma once
 
 #include "common/enum/theme.hpp"
-#include "common/macros.hpp"
-#include "common/primitives.hpp"
 #include "common/type/array.hpp"
 #include "common/type/string.hpp"
+#include "core/prelude.hpp"
 
 TACTILE_FWD_DECLARE_STRUCT(ImGuiStyle)
 

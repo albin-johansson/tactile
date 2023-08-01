@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
+#include "core/prelude.hpp"
 #include "model/model_view.hpp"
 #include "model/services/logging/log_level.hpp"
 

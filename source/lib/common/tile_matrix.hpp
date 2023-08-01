@@ -21,9 +21,9 @@
 
 #include <concepts>  // integral
 
-#include "common/primitives.hpp"
 #include "common/tile_extent.hpp"
 #include "common/type/vector.hpp"
+#include "core/prelude.hpp"
 
 namespace tactile {
 

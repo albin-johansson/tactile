@@ -22,10 +22,9 @@
 #include <centurion/input/keyboard.hpp>
 
 #include "common/enum/backend_api.hpp"
-#include "common/macros.hpp"
-#include "common/predef.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
+#include "core/prelude.hpp"
 #include "engine/platform/imgui_context.hpp"
 #include "engine/platform/protobuf_context.hpp"
 #include "engine/platform/sdl_context.hpp"

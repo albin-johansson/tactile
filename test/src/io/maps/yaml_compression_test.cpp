@@ -21,8 +21,8 @@
 
 #include <doctest/doctest.h>
 
-#include "common/primitives.hpp"
 #include "common/tile_matrix.hpp"
+#include "core/prelude.hpp"
 #include "io/export/tactile_yaml_exporter.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/parsers/map_parser.hpp"

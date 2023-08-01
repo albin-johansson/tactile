@@ -26,9 +26,9 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/assert.hpp"
-#include "common/predef.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
+#include "core/prelude.hpp"
 
 namespace tactile {
 namespace {

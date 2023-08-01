@@ -20,13 +20,13 @@
 #pragma once
 
 #include "common/attribute.hpp"
-#include "common/primitives.hpp"
 #include "common/tile_extent.hpp"
 #include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
 #include "common/type/vector.hpp"
+#include "core/prelude.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "model/registry.hpp"
 

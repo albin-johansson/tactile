@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include "common/macros.hpp"
 #include "common/tile_pos.hpp"
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/tile_cache.hpp"
+#include "core/prelude.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/registry.hpp"
 #include "model/tools/tool.hpp"

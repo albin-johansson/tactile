@@ -25,8 +25,8 @@
 #include <cstddef>      // byte
 #include <type_traits>  // has_unique_object_representations_v
 
-#include "common/primitives.hpp"
 #include "common/type/array.hpp"
+#include "core/prelude.hpp"
 
 namespace tactile {
 

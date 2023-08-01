@@ -29,7 +29,7 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
-#include "common/predef.hpp"
+#include "core/prelude.hpp"
 #include "io/directories.hpp"
 #include "model/services/logging/log_history_sink.hpp"
 

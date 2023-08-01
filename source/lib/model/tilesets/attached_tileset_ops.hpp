@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/primitives.hpp"
 #include "common/type/maybe.hpp"
+#include "core/prelude.hpp"
 #include "model/tilesets/tileset_components.hpp"
 
 namespace tactile::sys {

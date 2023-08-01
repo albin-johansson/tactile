@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/macros.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/vector.hpp"
+#include "core/prelude.hpp"
 #include "model/system.hpp"
 
 namespace tactile {

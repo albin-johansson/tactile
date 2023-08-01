@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
+#include "core/prelude.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "model/components/component_components.hpp"
 #include "model/contexts/context_components.hpp"

@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include "common/primitives.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "common/type/string.hpp"
 #include "common/type/variant.hpp"
 #include "common/type/vector.hpp"
+#include "core/prelude.hpp"
 #include "io/ir/godot/godot_file.hpp"
 #include "io/ir/godot/godot_tileset.hpp"
 

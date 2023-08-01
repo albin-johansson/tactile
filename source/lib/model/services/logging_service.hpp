@@ -19,12 +19,11 @@
 
 #pragma once
 
-#include "common/macros.hpp"
-#include "common/primitives.hpp"
 #include "common/type/deque.hpp"
 #include "common/type/func.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
+#include "core/prelude.hpp"
 #include "model/services/logging/log_level.hpp"
 
 namespace tactile {

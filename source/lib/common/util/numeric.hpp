@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/primitives.hpp"
 #include "common/type/math.hpp"
+#include "core/prelude.hpp"
 
 namespace tactile {
 

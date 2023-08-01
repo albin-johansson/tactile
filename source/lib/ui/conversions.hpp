@@ -25,8 +25,8 @@
 
 #include "common/color.hpp"
 #include "common/debug/assert.hpp"
-#include "common/primitives.hpp"
 #include "common/type/math.hpp"
+#include "core/prelude.hpp"
 
 namespace tactile {
 

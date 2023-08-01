@@ -24,11 +24,10 @@
 #include "common/enum/overlay_pos.hpp"
 #include "common/enum/save_format.hpp"
 #include "common/enum/theme.hpp"
-#include "common/macros.hpp"
-#include "common/primitives.hpp"
 #include "common/type/math.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
+#include "core/prelude.hpp"
 
 namespace tactile {
 

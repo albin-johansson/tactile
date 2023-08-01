@@ -20,10 +20,10 @@
 #pragma once
 
 #include "common/enum/layer_type.hpp"
-#include "common/primitives.hpp"
 #include "common/tile_matrix.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/vector.hpp"
+#include "core/prelude.hpp"
 
 namespace tactile {
 

@@ -22,9 +22,9 @@
 #include <algorithm>  // find
 #include <utility>    // move
 
-#include "common/primitives.hpp"
 #include "common/result.hpp"
 #include "common/type/vector.hpp"
+#include "core/prelude.hpp"
 
 namespace tactile {
 

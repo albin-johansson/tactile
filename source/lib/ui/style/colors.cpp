@@ -22,8 +22,8 @@
 #include <algorithm>  // min, max
 #include <cmath>      // pow
 
-#include "common/predef.hpp"
 #include "common/type/array.hpp"
+#include "core/prelude.hpp"
 #include "themes.hpp"
 #include "ui/conversions.hpp"
 

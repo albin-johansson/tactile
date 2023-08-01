@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/macros.hpp"
 #include "common/type/dispatcher.hpp"
+#include "core/prelude.hpp"
 
 namespace tactile {
 

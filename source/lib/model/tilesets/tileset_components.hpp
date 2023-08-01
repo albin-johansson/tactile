@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/primitives.hpp"
 #include "common/region.hpp"
 #include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
@@ -27,6 +26,7 @@
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/vector.hpp"
+#include "core/prelude.hpp"
 #include "model/viewports/viewport_components.hpp"
 
 namespace tactile {

@@ -23,7 +23,7 @@
 
 #include <doctest/doctest.h>
 
-#include "common/primitives.hpp"
+#include "core/prelude.hpp"
 
 using namespace tactile;
 

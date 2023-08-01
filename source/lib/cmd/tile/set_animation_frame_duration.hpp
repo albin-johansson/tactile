@@ -20,10 +20,10 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "common/primitives.hpp"
 #include "common/type/chrono.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
+#include "core/prelude.hpp"
 #include "model/registry.hpp"
 
 namespace tactile::cmd {

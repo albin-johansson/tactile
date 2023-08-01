@@ -23,11 +23,10 @@
 
 #include <imgui.h>
 
-#include "common/macros.hpp"
-#include "common/primitives.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/uuid.hpp"
+#include "core/prelude.hpp"
 
 namespace tactile::ui {
 
