@@ -22,7 +22,7 @@
 #include "common/type/ptr.hpp"
 #include "core/containers/deque.hpp"
 #include "core/containers/string.hpp"
-#include "core/functional/func.hpp"
+#include "core/functional/function.hpp"
 #include "core/prelude.hpp"
 #include "model/services/logging/log_level.hpp"
 
@@ -32,7 +32,7 @@ TACTILE_FWD_DECLARE_CLASS(LogHistorySink)
 
 class LoggingService final {
  public:
-  using LogMessageCallback = Func<void(LogLevelBits, StringView)>;
+  using LogMessageCallback = Function<void(LogLevelBits, StringView)>;
 
   /// Installs the global logger.
   void install_logger();

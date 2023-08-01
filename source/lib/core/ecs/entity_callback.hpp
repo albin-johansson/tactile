@@ -20,10 +20,10 @@
 #pragma once
 
 #include "core/ecs/entity.hpp"
-#include "core/functional/func.hpp"
+#include "core/functional/function.hpp"
 
 namespace tactile {
 
-using EntityCallback = Func<void(Entity)>;
+using EntityCallback = Function<void(Entity)>;
 
 }  // namespace tactile
