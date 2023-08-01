@@ -21,10 +21,10 @@
 
 #include <SDL2/SDL.h>
 
-#include "common/result.hpp"
-#include "core/ecs/entity.hpp"
 #include "common/type/path.hpp"
 #include "core/containers/string_map.hpp"
+#include "core/ecs/entity.hpp"
+#include "core/functional/result.hpp"
 #include "core/prelude.hpp"
 #include "model/registry.hpp"
 

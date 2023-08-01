@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/result.hpp"
 #include "core/ecs/entity.hpp"
+#include "core/functional/result.hpp"
 #include "model/registry.hpp"
 
 namespace tactile {

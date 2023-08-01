@@ -23,10 +23,10 @@
 
 #include "cmd/tool/bucket_fill.hpp"
 #include "cmd/tool/stamp_sequence.hpp"
-#include "common/debug/assert.hpp"
-#include "common/fmt/entity_formatter.hpp"
-#include "common/fmt/tile_pos_formatter.hpp"
 #include "common/util/lookup.hpp"
+#include "core/debug/assert.hpp"
+#include "core/formatters/entity_formatter.hpp"
+#include "core/formatters/tile_pos_formatter.hpp"
 #include "model/documents/command_system.hpp"
 #include "model/events/tool_events.hpp"
 #include "model/events/viewport_events.hpp"

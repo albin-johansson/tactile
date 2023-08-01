@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "common/result.hpp"
-#include "core/ecs/entity.hpp"
 #include "core/containers/vector.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/functional/maybe.hpp"
+#include "core/functional/result.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "model/layers/layer_components.hpp"

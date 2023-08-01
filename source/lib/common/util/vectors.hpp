@@ -22,8 +22,8 @@
 #include <algorithm>  // find
 #include <utility>    // move
 
-#include "common/result.hpp"
 #include "core/containers/vector.hpp"
+#include "core/functional/result.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {
