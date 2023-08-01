@@ -23,8 +23,8 @@
 #include <centurion/video/opengl.hpp>
 #include <centurion/video/window.hpp>
 
-#include "common/enum/backend_api.hpp"
 #include "common/type/maybe.hpp"
+#include "core/enums/backend_api.hpp"
 
 namespace tactile {
 

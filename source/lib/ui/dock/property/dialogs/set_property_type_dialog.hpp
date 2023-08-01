@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "common/enum/attribute_type.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
+#include "core/enums/attribute_type.hpp"
 #include "model/model_view.hpp"
 
 namespace tactile {

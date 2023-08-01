@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/enum/object_type.hpp"
 #include "common/type/ecs.hpp"
+#include "core/enums/object_type.hpp"
 #include "model/registry.hpp"
 
 namespace tactile::sys {

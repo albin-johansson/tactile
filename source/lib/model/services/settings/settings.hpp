@@ -20,13 +20,13 @@
 #pragma once
 
 #include "common/color.hpp"
-#include "common/enum/lang.hpp"
-#include "common/enum/overlay_pos.hpp"
-#include "common/enum/save_format.hpp"
-#include "common/enum/theme.hpp"
 #include "common/type/math.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
+#include "core/enums/lang.hpp"
+#include "core/enums/overlay_pos.hpp"
+#include "core/enums/save_format.hpp"
+#include "core/enums/theme.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {

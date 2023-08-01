@@ -20,9 +20,9 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "common/enum/attribute_type.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
+#include "core/enums/attribute_type.hpp"
 #include "model/registry.hpp"
 
 namespace tactile::cmd {

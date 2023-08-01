@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "common/enum/tool_type.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
+#include "core/enums/tool_type.hpp"
 #include "core/prelude.hpp"
 #include "model/system.hpp"
 

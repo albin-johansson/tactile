@@ -24,10 +24,6 @@
 #include <variant>   // get
 
 #include "common/attribute.hpp"
-#include "common/enum/layer_type.hpp"
-#include "common/enum/object_type.hpp"
-#include "common/enum/tile_compression.hpp"
-#include "common/enum/tile_encoding.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
@@ -39,6 +35,10 @@
 #include "common/type/variant.hpp"
 #include "common/type/vector.hpp"
 #include "common/util/algorithms.hpp"
+#include "core/enums/layer_type.hpp"
+#include "core/enums/object_type.hpp"
+#include "core/enums/tile_compression.hpp"
+#include "core/enums/tile_encoding.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_extent.hpp"
 #include "core/tiles/tile_matrix.hpp"

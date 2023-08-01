@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/enum/layer_type.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/string.hpp"
+#include "core/enums/layer_type.hpp"
 
 namespace tactile {
 

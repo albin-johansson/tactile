@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/enum/layer_type.hpp"
 #include "common/fmt/magic_enum_formatter.hpp"
+#include "core/enums/layer_type.hpp"
 
 TACTILE_MAGIC_ENUM_FORMATTER(tactile::LayerType);

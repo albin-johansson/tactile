@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "common/enum/object_type.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
+#include "core/enums/object_type.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {

@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "common/enum/tile_compression.hpp"
-#include "common/enum/tile_encoding.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
+#include "core/enums/tile_compression.hpp"
+#include "core/enums/tile_encoding.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {

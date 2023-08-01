@@ -23,7 +23,7 @@
 
 #include <fmt/core.h>
 
-#include "common/enum/lang.hpp"
+#include "core/enums/lang.hpp"
 
 template <>
 struct fmt::formatter<tactile::Lang> final : fmt::formatter<std::string_view> {

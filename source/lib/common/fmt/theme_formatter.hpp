@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/enum/theme.hpp"
 #include "common/fmt/magic_enum_formatter.hpp"
+#include "core/enums/theme.hpp"
 
 TACTILE_MAGIC_ENUM_FORMATTER(tactile::Theme);

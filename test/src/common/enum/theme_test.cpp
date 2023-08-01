@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "common/enum/theme.hpp"
+#include "core/enums/theme.hpp"
 
 #include <utility>  // to_underlying
 

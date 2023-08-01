@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include "common/enum/attribute_type.hpp"
-#include "common/enum/save_format.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "common/type/string.hpp"
+#include "core/enums/attribute_type.hpp"
+#include "core/enums/save_format.hpp"
 
 namespace tactile {
 

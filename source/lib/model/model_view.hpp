@@ -21,14 +21,14 @@
 
 #include <utility>  // forward
 
-#include "common/enum/menu_action.hpp"
-#include "common/enum/tool_type.hpp"
 #include "common/type/deque.hpp"
 #include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/ref.hpp"
 #include "common/type/string.hpp"
 #include "common/type/vector.hpp"
+#include "core/enums/menu_action.hpp"
+#include "core/enums/tool_type.hpp"
 #include "core/prelude.hpp"
 #include "model/registry.hpp"
 #include "model/services/i18n/strings.hpp"

@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/enum/tool_type.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
+#include "core/enums/tool_type.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_cache.hpp"
 #include "core/tiles/tile_pos.hpp"

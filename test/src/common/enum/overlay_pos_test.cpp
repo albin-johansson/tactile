@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "common/enum/overlay_pos.hpp"
+#include "core/enums/overlay_pos.hpp"
 
 #include <utility>  // to_underlying
 

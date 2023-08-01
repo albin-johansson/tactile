@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "common/enum/document_type.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "common/type/vector.hpp"
+#include "core/enums/document_type.hpp"
 
 namespace tactile {
 

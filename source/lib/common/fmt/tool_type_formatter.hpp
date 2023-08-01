@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/enum/tool_type.hpp"
 #include "common/fmt/magic_enum_formatter.hpp"
+#include "core/enums/tool_type.hpp"
 
 TACTILE_MAGIC_ENUM_FORMATTER(tactile::ToolType);

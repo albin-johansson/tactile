@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/enum/backend_api.hpp"
+#include "core/enums/backend_api.hpp"
 #include "model/registry.hpp"
 
 namespace tactile::sys {

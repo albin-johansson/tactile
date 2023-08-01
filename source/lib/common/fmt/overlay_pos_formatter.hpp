@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/enum/overlay_pos.hpp"
 #include "common/fmt/magic_enum_formatter.hpp"
+#include "core/enums/overlay_pos.hpp"
 
 TACTILE_MAGIC_ENUM_FORMATTER(tactile::OverlayPos);
