@@ -24,8 +24,8 @@
 #include <imgui.h>
 
 #include "common/attribute.hpp"
-#include "common/type/string.hpp"
 #include "common/util/vectors.hpp"
+#include "core/containers/string.hpp"
 #include "core/debug/assert.hpp"
 #include "model/components/component_components.hpp"
 #include "model/documents/document_components.hpp"

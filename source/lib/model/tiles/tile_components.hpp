@@ -22,7 +22,7 @@
 #include "common/type/chrono.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "common/type/vector.hpp"
+#include "core/containers/vector.hpp"
 #include "core/enums/tile_compression.hpp"
 #include "core/enums/tile_encoding.hpp"
 #include "core/prelude.hpp"

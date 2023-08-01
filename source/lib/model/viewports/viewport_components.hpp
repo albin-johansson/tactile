@@ -20,8 +20,8 @@
 #pragma once
 
 #include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
 #include "core/enums/mouse_button.hpp"
+#include "core/functional/maybe.hpp"
 #include "core/tiles/tile_pos.hpp"
 
 namespace tactile {

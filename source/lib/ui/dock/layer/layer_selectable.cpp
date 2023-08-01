@@ -23,7 +23,7 @@
 #include <imgui.h>
 
 #include "common/fmt/fmt_string.hpp"
-#include "common/type/string.hpp"
+#include "core/containers/string.hpp"
 #include "core/debug/assert.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/events/layer_events.hpp"

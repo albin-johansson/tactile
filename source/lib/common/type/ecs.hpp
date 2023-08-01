@@ -21,7 +21,7 @@
 
 #include <entt/entity/entity.hpp>
 
-#include "common/type/func.hpp"
+#include "core/functional/func.hpp"
 
 namespace tactile {
 

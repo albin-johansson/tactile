@@ -19,7 +19,7 @@
 
 #include <utility>  // move
 
-#include "common/type/string.hpp"
+#include "core/containers/string.hpp"
 #include "core/prelude.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"

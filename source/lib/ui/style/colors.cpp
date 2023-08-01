@@ -22,7 +22,7 @@
 #include <algorithm>  // min, max
 #include <cmath>      // pow
 
-#include "common/type/array.hpp"
+#include "core/containers/array.hpp"
 #include "core/prelude.hpp"
 #include "themes.hpp"
 #include "ui/conversions.hpp"

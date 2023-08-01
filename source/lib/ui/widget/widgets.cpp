@@ -22,9 +22,9 @@
 #include <imgui.h>
 
 #include "common/type/chrono.hpp"
-#include "common/type/hash_map.hpp"
-#include "common/type/maybe.hpp"
+#include "core/containers/hash_map.hpp"
 #include "core/debug/assert.hpp"
+#include "core/functional/maybe.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"
 
@@ -115,7 +115,7 @@ void push_centered_label(const char* text)
   const auto text_size = ImGui::CalcTextSize(text);
 
   const auto region = ImGui::GetContentRegionAvail();
-  const auto half_region = region* ImVec2 {0.5f, 0.5f};
+  const auto half_region = region * ImVec2 {0.5f, 0.5f};
 
   const auto cursor_pos = ImGui::GetCursorPos();
   ImGui::SetCursorPos(cursor_pos + ImVec2 {half_region.x - (text_size.x * 0.5f), 0});

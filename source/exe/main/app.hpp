@@ -22,10 +22,10 @@
 #include <centurion/events.hpp>
 #include <imgui.h>
 
-#include "core/prelude.hpp"
-#include "common/type/dispatcher.hpp"
 #include "common/type/ptr.hpp"
-#include "common/type/vector.hpp"
+#include "core/containers/vector.hpp"
+#include "core/events/dispatcher.hpp"
+#include "core/prelude.hpp"
 #include "engine/app_delegate.hpp"
 #include "model/events/command_events.hpp"
 #include "model/events/component_events.hpp"

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/string.hpp"
+#include "core/containers/string.hpp"
 #include "model/model_view.hpp"
 
 namespace tactile {
@@ -31,4 +31,4 @@ struct MapParseErrorDialogState final {
 
 void push_map_parse_error_dialog(ModelView model, MapParseErrorDialogState& state);
 
-}  // namespace tactile::ui
+}  // namespace tactile

@@ -21,9 +21,9 @@
 
 #include "common/attribute.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/hash_map.hpp"
-#include "common/type/string.hpp"
-#include "common/type/string_map.hpp"
+#include "core/containers/hash_map.hpp"
+#include "core/containers/string.hpp"
+#include "core/containers/string_map.hpp"
 #include "model/registry.hpp"
 
 namespace tactile::sys {

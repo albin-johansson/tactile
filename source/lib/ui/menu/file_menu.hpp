@@ -27,4 +27,4 @@ TACTILE_FWD_DECLARE_CLASS(ModelView)
 
 void push_file_menu(ModelView& model);
 
-}  // namespace tactile::ui
+}  // namespace tactile

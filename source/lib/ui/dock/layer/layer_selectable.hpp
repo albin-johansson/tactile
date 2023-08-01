@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
+#include "core/events/dispatcher.hpp"
 #include "model/registry.hpp"
 
 namespace tactile::ui {

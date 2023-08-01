@@ -24,7 +24,7 @@
 #include <doctest/doctest.h>
 #include <spdlog/spdlog.h>
 
-#include "common/type/array.hpp"
+#include "core/containers/array.hpp"
 
 using namespace tactile;
 

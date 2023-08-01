@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/maybe.hpp"
+#include "core/functional/maybe.hpp"
 #include "model/persistence/file_history_components.hpp"
 
 namespace tactile {

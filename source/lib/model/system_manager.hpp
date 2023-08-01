@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/ptr.hpp"
-#include "common/type/vector.hpp"
+#include "core/containers/vector.hpp"
 #include "core/prelude.hpp"
 #include "model/system.hpp"
 

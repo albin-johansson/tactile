@@ -27,8 +27,8 @@
 #include <yaml-cpp/yaml.h>
 
 #include "common/attribute.hpp"
-#include "common/type/string.hpp"
 #include "common/util/filesystem.hpp"
+#include "core/containers/string.hpp"
 #include "core/prelude.hpp"
 #include "io/base64_tiles.hpp"
 #include "io/compression.hpp"

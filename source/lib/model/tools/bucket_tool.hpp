@@ -40,4 +40,4 @@ namespace sys {
 [[nodiscard]] auto is_bucket_tool_available(const Registry& registry) -> bool;
 
 }  // namespace sys
-}  // namespace tactile::sys
+}  // namespace tactile

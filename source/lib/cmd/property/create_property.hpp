@@ -21,7 +21,7 @@
 
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/string.hpp"
+#include "core/containers/string.hpp"
 #include "core/enums/attribute_type.hpp"
 #include "model/registry.hpp"
 

@@ -21,7 +21,7 @@
 
 #include "common/attribute.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/string.hpp"
+#include "core/containers/string.hpp"
 
 namespace tactile {
 

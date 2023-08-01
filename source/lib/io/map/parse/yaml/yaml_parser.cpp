@@ -24,7 +24,7 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "common/type/expected.hpp"
+#include "core/functional/expected.hpp"
 #include "io/compression.hpp"
 #include "io/yaml_utils.hpp"
 

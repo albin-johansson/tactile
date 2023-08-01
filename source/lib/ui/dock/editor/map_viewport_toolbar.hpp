@@ -31,4 +31,4 @@ void push_map_viewport_toolbar(ModelView model);
 
 [[nodiscard]] auto is_map_toolbar_focused() -> bool;
 
-}  // namespace tactile::ui
+}  // namespace tactile

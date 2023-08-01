@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/type/expected.hpp"
 #include "common/type/ostream.hpp"
-#include "common/type/string.hpp"
+#include "core/containers/string.hpp"
+#include "core/functional/expected.hpp"
 #include "model/services/i18n/strings.hpp"
 
 namespace tactile {
@@ -46,7 +46,7 @@ enum class ParseError {
 
   UnsupportedLayerType,  // YAML/JSON only
   NoLayerId,
-  NoLayerType,           // YAML/JSON only
+  NoLayerType,  // YAML/JSON only
   NoTileLayerData,
   CorruptTileLayerData,
   UnsupportedTileLayerEncoding,
@@ -62,8 +62,8 @@ enum class ParseError {
   NoTilesetImageHeight,
   NoTilesetTileCount,
   NoTilesetColumnCount,
-  NoTilesetVersion,           // Tactile YAML only
-  NoExternalTilesetPath,      // Tactile YAML only
+  NoTilesetVersion,       // Tactile YAML only
+  NoExternalTilesetPath,  // Tactile YAML only
   TilesetImageDoesNotExist,
   UnsupportedTilesetVersion,  // Tactile YAML only
 
@@ -78,10 +78,10 @@ enum class ParseError {
   UnsupportedComponentDefAttributeType,  // Tactile YAML only
   CorruptComponentDefAttributeValue,     // Tactile YAML only
 
-  NoComponentType,                       // Tactile YAML only
-  NoComponentAttributeName,              // Tactile YAML only
-  NoComponentAttributeValue,             // Tactile YAML only
-  CorruptComponentAttributeValue,        // Tactile YAML only
+  NoComponentType,                 // Tactile YAML only
+  NoComponentAttributeName,        // Tactile YAML only
+  NoComponentAttributeValue,       // Tactile YAML only
+  CorruptComponentAttributeValue,  // Tactile YAML only
 
   NoObjectId,
   NoObjectType,           // Tactile YAML only

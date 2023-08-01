@@ -24,10 +24,10 @@
 
 #include "cmd/command_stack.hpp"
 #include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/uuid.hpp"
 #include "common/util/functional.hpp"
 #include "core/debug/assert.hpp"
+#include "core/functional/maybe.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/texture_loader.hpp"
 #include "model/components/component_components.hpp"

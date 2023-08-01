@@ -21,8 +21,8 @@
 
 #include <imgui.h>
 
-#include "common/type/hash_map.hpp"
 #include "common/util/lookup.hpp"
+#include "core/containers/hash_map.hpp"
 #include "model/events/setting_events.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/logging_service.hpp"

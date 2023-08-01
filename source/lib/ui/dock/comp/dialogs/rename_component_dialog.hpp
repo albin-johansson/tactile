@@ -20,8 +20,8 @@
 #pragma once
 
 #include "common/type/ecs.hpp"
-#include "common/type/string.hpp"
 #include "common/util/string_buffer.hpp"
+#include "core/containers/string.hpp"
 #include "model/model_view.hpp"
 
 namespace tactile {

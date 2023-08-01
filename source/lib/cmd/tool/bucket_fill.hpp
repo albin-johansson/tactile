@@ -21,8 +21,8 @@
 
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/vector.hpp"
+#include "core/containers/vector.hpp"
+#include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "model/registry.hpp"

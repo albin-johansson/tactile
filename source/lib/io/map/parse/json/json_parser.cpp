@@ -21,7 +21,7 @@
 
 #include <string>  // string
 
-#include "common/type/string.hpp"
+#include "core/containers/string.hpp"
 #include "io/json_utils.hpp"
 
 namespace tactile {

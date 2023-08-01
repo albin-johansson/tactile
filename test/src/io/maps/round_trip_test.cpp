@@ -29,7 +29,7 @@
 #include <doctest/doctest.h>
 
 #include "core/tiles/tile_matrix.hpp"
-#include "common/type/string.hpp"
+#include "core/containers/string.hpp"
 #include "common/util/lookup.hpp"
 #include "io/export/tactile_yaml_exporter.hpp"
 #include "io/export/tiled_json_exporter.hpp"

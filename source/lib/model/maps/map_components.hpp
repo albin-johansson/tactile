@@ -21,7 +21,7 @@
 
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "common/type/vector.hpp"
+#include "core/containers/vector.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_extent.hpp"
 

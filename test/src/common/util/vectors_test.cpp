@@ -21,7 +21,7 @@
 
 #include <doctest/doctest.h>
 
-#include "common/type/string.hpp"
+#include "core/containers/string.hpp"
 
 using namespace tactile;
 

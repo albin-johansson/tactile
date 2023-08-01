@@ -29,4 +29,4 @@ struct AboutDialogState final {
 
 void push_about_dialog(ModelView model, AboutDialogState& state);
 
-}  // namespace tactile::ui
+}  // namespace tactile

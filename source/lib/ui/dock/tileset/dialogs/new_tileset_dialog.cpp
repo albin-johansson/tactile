@@ -97,4 +97,4 @@ void push_new_tileset_dialog(ModelView model, NewTilesetDialogState& state)
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

@@ -29,4 +29,4 @@ void push_map_viewport_overlay(ModelView model,
                                const Map& map,
                                const ViewportMouseInfo& cursor);
 
-}  // namespace tactile::ui
+}  // namespace tactile

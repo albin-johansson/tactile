@@ -35,4 +35,4 @@ void push_layer_dock_widget(ModelView& model, LayerDockState& state);
 
 [[nodiscard]] auto is_layer_dock_enabled(const Registry& registry) -> bool;
 
-}  // namespace tactile::ui
+}  // namespace tactile

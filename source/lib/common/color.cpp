@@ -33,7 +33,8 @@ namespace {
 inline constexpr float kIsDarkThreshold = 0.3f;
 
 // https://en.wikipedia.org/wiki/SRGB#From_sRGB_to_CIE_XYZ
-[[nodiscard]] auto _to_linear(const float channel) noexcept(TACTILE_COMPILER_MSVC) -> float
+[[nodiscard]] auto _to_linear(const float channel) noexcept(TACTILE_COMPILER_MSVC)
+    -> float
 {
   if (channel <= 0.04045f) {
     return channel / 12.92f;

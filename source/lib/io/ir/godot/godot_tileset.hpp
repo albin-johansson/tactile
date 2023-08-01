@@ -20,12 +20,12 @@
 #pragma once
 
 #include "common/type/math.hpp"
-#include "common/type/pair.hpp"
 #include "common/type/path.hpp"
-#include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
-#include "common/type/vector.hpp"
 #include "common/util/lookup.hpp"
+#include "core/containers/pair.hpp"
+#include "core/containers/string.hpp"
+#include "core/containers/vector.hpp"
 #include "core/prelude.hpp"
 #include "io/ir/godot/godot_file.hpp"
 

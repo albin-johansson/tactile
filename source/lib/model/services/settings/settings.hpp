@@ -22,7 +22,7 @@
 #include "common/color.hpp"
 #include "common/type/math.hpp"
 #include "common/type/ptr.hpp"
-#include "common/type/string.hpp"
+#include "core/containers/string.hpp"
 #include "core/enums/lang.hpp"
 #include "core/enums/overlay_pos.hpp"
 #include "core/enums/save_format.hpp"

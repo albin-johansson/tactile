@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/maybe.hpp"
+#include "core/events/dispatcher.hpp"
+#include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_cache.hpp"
 #include "core/tiles/tile_pos.hpp"

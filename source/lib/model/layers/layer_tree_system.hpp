@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/ecs.hpp"
-#include "common/type/maybe.hpp"
+#include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/maps/map_components.hpp"

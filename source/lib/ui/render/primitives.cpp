@@ -81,4 +81,4 @@ void draw_ellipse(const ImVec2& center,
               thickness);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

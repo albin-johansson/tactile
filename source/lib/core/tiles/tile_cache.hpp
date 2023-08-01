@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/vector_map.hpp"
+#include "core/containers/vector_map.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_pos.hpp"
 

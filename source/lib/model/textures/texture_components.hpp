@@ -22,7 +22,7 @@
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
-#include "common/type/tree_map.hpp"
+#include "core/containers/tree_map.hpp"
 #include "core/prelude.hpp"
 #include "model/registry.hpp"
 

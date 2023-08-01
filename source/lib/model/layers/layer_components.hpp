@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/ecs.hpp"
-#include "common/type/vector.hpp"
+#include "core/containers/vector.hpp"
 #include "core/enums/layer_type.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_matrix.hpp"

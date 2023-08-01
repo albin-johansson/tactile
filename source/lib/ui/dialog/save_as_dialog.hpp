@@ -26,4 +26,4 @@ namespace tactile {
 /// Opens the blocking "Save As..." file dialog.
 void show_save_as_dialog(ModelView model);
 
-}  // namespace tactile::ui
+}  // namespace tactile

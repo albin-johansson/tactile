@@ -19,7 +19,7 @@
 
 #include "tile_layer_ops.hpp"
 
-#include "common/type/queue.hpp"
+#include "core/containers/queue.hpp"
 
 namespace tactile::sys {
 

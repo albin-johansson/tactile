@@ -22,8 +22,8 @@
 #include <spdlog/sinks/base_sink.h>
 #include <spdlog/spdlog.h>
 
-#include "common/type/deque.hpp"
-#include "common/type/string.hpp"
+#include "core/containers/deque.hpp"
+#include "core/containers/string.hpp"
 #include "model/services/logging/log_level.hpp"
 
 namespace tactile {

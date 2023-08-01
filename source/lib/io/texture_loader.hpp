@@ -20,9 +20,9 @@
 #pragma once
 
 #include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "common/type/ptr.hpp"
+#include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {

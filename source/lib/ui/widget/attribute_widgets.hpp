@@ -23,9 +23,9 @@
 
 #include "common/attribute.hpp"
 #include "common/color.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
-#include "common/type/string.hpp"
+#include "core/containers/string.hpp"
+#include "core/functional/maybe.hpp"
 #include "model/services/i18n/strings.hpp"
 
 namespace tactile::ui {

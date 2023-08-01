@@ -21,8 +21,8 @@
 
 #include "common/result.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
+#include "core/containers/hash_map.hpp"
 #include "core/enums/layer_type.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_extent.hpp"

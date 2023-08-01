@@ -215,4 +215,4 @@ inline void render_image(ImTextureID texture,
                opacity);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

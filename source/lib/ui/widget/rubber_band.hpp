@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/region.hpp"
-#include "common/type/maybe.hpp"
+#include "core/functional/maybe.hpp"
 
 struct ImVec2;
 

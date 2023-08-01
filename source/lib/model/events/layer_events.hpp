@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/ecs.hpp"
-#include "common/type/string.hpp"
+#include "core/containers/string.hpp"
 #include "core/enums/layer_type.hpp"
 
 namespace tactile {

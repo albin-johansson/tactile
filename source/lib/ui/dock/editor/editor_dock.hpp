@@ -21,8 +21,8 @@
 
 #include <centurion/fwd.hpp>
 
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
+#include "core/events/dispatcher.hpp"
 #include "model/model_view.hpp"
 #include "model/viewports/viewport_components.hpp"
 #include "ui/dock/editor/map_editor_viewport.hpp"

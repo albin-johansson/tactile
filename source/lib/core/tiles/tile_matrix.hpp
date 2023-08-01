@@ -21,7 +21,7 @@
 
 #include <concepts>  // integral
 
-#include "common/type/vector.hpp"
+#include "core/containers/vector.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_extent.hpp"
 

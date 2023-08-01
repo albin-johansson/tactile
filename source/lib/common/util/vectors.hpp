@@ -23,7 +23,7 @@
 #include <utility>    // move
 
 #include "common/result.hpp"
-#include "common/type/vector.hpp"
+#include "core/containers/vector.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {

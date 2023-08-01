@@ -20,9 +20,9 @@
 #include <concepts>  // same_as
 #include <utility>   // move
 
-#include "common/type/maybe.hpp"
-#include "common/type/string.hpp"
 #include "common/util/strings.hpp"
+#include "core/containers/string.hpp"
+#include "core/functional/maybe.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/save_formats.hpp"

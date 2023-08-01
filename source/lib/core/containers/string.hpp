@@ -22,7 +22,7 @@
 #include <string>       // basic_string, string
 #include <string_view>  // basic_string_view, string_view, wstring_view
 
-#include "path.hpp"
+#include "common/type/path.hpp"
 
 namespace tactile {
 

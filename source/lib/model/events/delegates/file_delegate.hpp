@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
+#include "core/events/dispatcher.hpp"
 #include "model/events/file_events.hpp"
 #include "model/registry.hpp"
 

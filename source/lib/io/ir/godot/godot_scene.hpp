@@ -21,9 +21,9 @@
 
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
-#include "common/type/string.hpp"
-#include "common/type/variant.hpp"
-#include "common/type/vector.hpp"
+#include "core/containers/string.hpp"
+#include "core/containers/variant.hpp"
+#include "core/containers/vector.hpp"
 #include "core/prelude.hpp"
 #include "io/ir/godot/godot_file.hpp"
 #include "io/ir/godot/godot_tileset.hpp"

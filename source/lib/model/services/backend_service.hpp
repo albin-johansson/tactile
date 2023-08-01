@@ -24,7 +24,7 @@
 #include "common/result.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/path.hpp"
-#include "common/type/string_map.hpp"
+#include "core/containers/string_map.hpp"
 #include "core/prelude.hpp"
 #include "model/registry.hpp"
 

@@ -21,10 +21,10 @@
 
 #include "common/region.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/vector.hpp"
+#include "core/containers/hash_map.hpp"
+#include "core/containers/vector.hpp"
+#include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "model/viewports/viewport_components.hpp"

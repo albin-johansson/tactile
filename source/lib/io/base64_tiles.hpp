@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/type/string.hpp"
-#include "common/type/vector.hpp"
+#include "core/containers/string.hpp"
+#include "core/containers/vector.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_extent.hpp"
 #include "core/tiles/tile_matrix.hpp"

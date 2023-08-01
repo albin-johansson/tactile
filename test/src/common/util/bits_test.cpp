@@ -23,7 +23,7 @@
 
 #include <doctest/doctest.h>
 
-#include "common/type/array.hpp"
+#include "core/containers/array.hpp"
 
 using namespace tactile;
 

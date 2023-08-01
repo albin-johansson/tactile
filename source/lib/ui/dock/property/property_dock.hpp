@@ -20,8 +20,8 @@
 #pragma once
 
 #include "common/type/ecs.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/string.hpp"
+#include "core/containers/string.hpp"
+#include "core/functional/maybe.hpp"
 #include "model/model_view.hpp"
 #include "ui/dock/property/dialogs/new_property_dialog.hpp"
 #include "ui/dock/property/dialogs/rename_property_dialog.hpp"
@@ -49,4 +49,4 @@ void push_property_dock_widget(ModelView& model, PropertyDockState& state);
 
 [[nodiscard]] auto is_property_dock_focused() -> bool;
 
-}  // namespace tactile::ui
+}  // namespace tactile

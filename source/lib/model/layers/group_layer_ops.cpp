@@ -21,11 +21,11 @@
 
 #include <algorithm>  // find, iter_swap
 
-#include "common/type/maybe.hpp"
 #include "common/util/algorithms.hpp"
 #include "common/util/functional.hpp"
 #include "common/util/vectors.hpp"
 #include "core/debug/assert.hpp"
+#include "core/functional/maybe.hpp"
 #include "model/entity_validation.hpp"
 #include "model/layers/layer_tree_system.hpp"
 #include "model/maps/map_components.hpp"

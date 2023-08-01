@@ -26,8 +26,8 @@
 #include "common/type/math.hpp"
 #include "common/type/ostream.hpp"
 #include "common/type/path.hpp"
-#include "common/type/string.hpp"
-#include "common/type/variant.hpp"
+#include "core/containers/string.hpp"
+#include "core/containers/variant.hpp"
 #include "core/enums/attribute_type.hpp"
 #include "core/prelude.hpp"
 

@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/ecs.hpp"
-#include "common/type/string.hpp"
+#include "core/containers/string.hpp"
 #include "model/components/component_components.hpp"
 #include "model/registry.hpp"
 

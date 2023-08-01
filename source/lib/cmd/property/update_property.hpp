@@ -22,7 +22,7 @@
 #include "cmd/command.hpp"
 #include "common/attribute.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/maybe.hpp"
+#include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"
 #include "model/registry.hpp"
 

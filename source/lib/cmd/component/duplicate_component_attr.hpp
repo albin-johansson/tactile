@@ -21,8 +21,8 @@
 
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/string.hpp"
+#include "core/containers/string.hpp"
+#include "core/functional/maybe.hpp"
 #include "model/registry.hpp"
 
 namespace tactile::cmd {

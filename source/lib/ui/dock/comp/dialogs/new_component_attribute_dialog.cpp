@@ -80,4 +80,4 @@ void push_new_comp_attr_dialog(ModelView model, NewCompAttrDialogState& state)
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile

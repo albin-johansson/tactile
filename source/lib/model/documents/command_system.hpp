@@ -23,7 +23,7 @@
 
 #include "cmd/command_stack.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/hash_map.hpp"
+#include "core/containers/hash_map.hpp"
 #include "core/prelude.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/registry.hpp"

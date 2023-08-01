@@ -22,9 +22,9 @@
 #include <imgui.h>
 
 #include "common/region.hpp"
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
+#include "core/events/dispatcher.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_extent.hpp"
 #include "model/viewports/viewport_components.hpp"

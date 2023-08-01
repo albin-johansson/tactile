@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/type/maybe.hpp"
-#include "common/type/span.hpp"
-#include "common/type/vector.hpp"
+#include "core/containers/span.hpp"
+#include "core/containers/vector.hpp"
+#include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {

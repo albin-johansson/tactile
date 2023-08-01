@@ -20,9 +20,9 @@
 #include <algorithm>  // replace
 #include <utility>    // move
 
-#include "common/type/expected.hpp"
-#include "common/type/string.hpp"
 #include "common/util/strings.hpp"
+#include "core/containers/string.hpp"
+#include "core/functional/expected.hpp"
 #include "core/tiles/tile_matrix.hpp"
 #include "io/base64_tiles.hpp"
 #include "io/ir/map/map_ir.hpp"

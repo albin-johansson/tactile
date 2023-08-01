@@ -23,10 +23,10 @@
 #include <utility>   // move, forward
 
 #include "cmd/command.hpp"
-#include "common/type/deque.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
-#include "common/type/string.hpp"
+#include "core/containers/deque.hpp"
+#include "core/containers/string.hpp"
+#include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {

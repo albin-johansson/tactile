@@ -22,10 +22,10 @@
 #include <doctest/doctest.h>
 
 #include "common/attribute.hpp"
-#include "common/type/hash_map.hpp"
-#include "common/type/string.hpp"
-#include "common/type/string_map.hpp"
-#include "common/type/tree_map.hpp"
+#include "core/containers/hash_map.hpp"
+#include "core/containers/string.hpp"
+#include "core/containers/string_map.hpp"
+#include "core/containers/tree_map.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;

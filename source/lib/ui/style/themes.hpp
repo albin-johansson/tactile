@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/type/array.hpp"
-#include "common/type/string.hpp"
+#include "core/containers/array.hpp"
+#include "core/containers/string.hpp"
 #include "core/enums/theme.hpp"
 #include "core/prelude.hpp"
 
@@ -71,4 +71,4 @@ void apply_style(ImGuiStyle& style);
  */
 void apply_theme(ImGuiStyle& style, Theme theme, int32 saturation);
 
-}  // namespace tactile::ui
+}  // namespace tactile

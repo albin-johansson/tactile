@@ -35,4 +35,4 @@ struct NewPropertyDialogState final {
 
 void push_new_property_dialog(ModelView& model, NewPropertyDialogState& state);
 
-}  // namespace tactile::ui
+}  // namespace tactile

@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/type/dispatcher.hpp"
 #include "common/type/ecs.hpp"
 #include "common/util/string_buffer.hpp"
+#include "core/events/dispatcher.hpp"
 #include "model/model_view.hpp"
 
 namespace tactile {
