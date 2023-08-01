@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/containers/vector.hpp"
 #include "core/enums/layer_type.hpp"
 #include "core/prelude.hpp"

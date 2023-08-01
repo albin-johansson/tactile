@@ -22,7 +22,7 @@
 #include <imgui.h>
 
 #include "common/region.hpp"
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "common/type/math.hpp"
 #include "core/events/dispatcher.hpp"
 #include "core/prelude.hpp"

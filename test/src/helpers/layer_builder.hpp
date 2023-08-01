@@ -22,7 +22,7 @@
 #include "common/attribute.hpp"
 #include "core/tiles/tile_extent.hpp"
 #include "core/tiles/tile_pos.hpp"
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/functional/maybe.hpp"
 #include "core/containers/string.hpp"
 #include "core/containers/vector.hpp"

@@ -21,7 +21,7 @@
 
 #include "common/region.hpp"
 #include "common/type/chrono.hpp"
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "core/containers/string.hpp"

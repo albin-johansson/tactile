@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/events/dispatcher.hpp"
 #include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/containers/string.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/registry.hpp"

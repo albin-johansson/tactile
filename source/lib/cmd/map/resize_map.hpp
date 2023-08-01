@@ -21,7 +21,7 @@
 
 #include "cmd/command.hpp"
 #include "cmd/map/map_command_cache.hpp"
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_extent.hpp"

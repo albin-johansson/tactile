@@ -21,8 +21,6 @@
 
 #include <entt/entity/entity.hpp>
 
-#include "core/functional/func.hpp"
-
 namespace tactile {
 
 using Entity = entt::entity;
@@ -35,7 +33,5 @@ inline constexpr Entity kNullEntity = entt::null;
 /// layer that is removed from a map will be marked as disabled using this tag type by an
 /// associated command.
 struct DisabledTag final {};
-
-using EntityCallback = Func<void(Entity)>;
 
 }  // namespace tactile

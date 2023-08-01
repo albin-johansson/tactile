@@ -21,7 +21,7 @@
 
 #include <utility>  // forward
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/containers/deque.hpp"
 #include "core/containers/string.hpp"
 #include "core/containers/vector.hpp"

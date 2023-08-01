@@ -22,7 +22,7 @@
 #include <utility>  // forward
 
 #include "cmd/command_stack.hpp"
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "core/tiles/tile_extent.hpp"

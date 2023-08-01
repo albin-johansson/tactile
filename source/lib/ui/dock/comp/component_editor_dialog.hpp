@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "model/model_view.hpp"
 #include "ui/dock/comp/dialogs/new_comp_dialog.hpp"
 #include "ui/dock/comp/dialogs/new_component_attribute_dialog.hpp"

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "common/type/math.hpp"
 #include "core/tiles/tile_extent.hpp"
 #include "model/registry.hpp"

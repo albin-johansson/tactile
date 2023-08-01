@@ -20,7 +20,7 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "common/type/math.hpp"
 #include "model/registry.hpp"
 

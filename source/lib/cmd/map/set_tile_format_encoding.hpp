@@ -20,7 +20,7 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/enums/tile_compression.hpp"
 #include "core/enums/tile_encoding.hpp"
 #include "core/functional/maybe.hpp"

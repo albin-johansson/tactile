@@ -21,7 +21,7 @@
 
 #include <centurion/fwd.hpp>
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/events/dispatcher.hpp"
 #include "model/model_view.hpp"
 #include "model/viewports/viewport_components.hpp"

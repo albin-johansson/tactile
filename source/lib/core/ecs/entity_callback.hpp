@@ -20,19 +20,10 @@
 #pragma once
 
 #include "core/ecs/entity.hpp"
-#include "common/util/string_buffer.hpp"
-#include "core/containers/string.hpp"
-#include "model/model_view.hpp"
+#include "core/functional/func.hpp"
 
 namespace tactile {
 
-struct RenameCompAttrDialogState final {
-  Entity definition {kNullEntity};
-  String attribute_name;
-  StringBuffer attribute_name_buffer {};
-  bool should_open {};
-};
-
-void push_rename_comp_attr_dialog(ModelView model, RenameCompAttrDialogState& state);
+using EntityCallback = Func<void(Entity)>;
 
 }  // namespace tactile

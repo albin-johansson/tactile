@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/result.hpp"
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "common/type/math.hpp"
 #include "core/containers/hash_map.hpp"
 #include "core/enums/layer_type.hpp"

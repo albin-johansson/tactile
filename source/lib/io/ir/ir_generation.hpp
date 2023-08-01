@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/prelude.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "model/components/component_components.hpp"

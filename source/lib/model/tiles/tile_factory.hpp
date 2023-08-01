@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/prelude.hpp"
 #include "model/registry.hpp"
 #include "model/tilesets/tileset_components.hpp"

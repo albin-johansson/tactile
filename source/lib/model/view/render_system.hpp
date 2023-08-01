@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/color.hpp"
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "model/maps/map_components.hpp"

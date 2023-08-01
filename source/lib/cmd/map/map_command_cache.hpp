@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/containers/tree_map.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_pos.hpp"

@@ -21,7 +21,7 @@
 
 #include <centurion/fwd.hpp>
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "model/model_view.hpp"
 #include "model/tilesets/tileset_components.hpp"
 

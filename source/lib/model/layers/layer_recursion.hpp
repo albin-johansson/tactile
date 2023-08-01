@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity_callback.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/registry.hpp"

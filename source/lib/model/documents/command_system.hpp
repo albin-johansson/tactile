@@ -22,7 +22,7 @@
 #include <utility>  // forward
 
 #include "cmd/command_stack.hpp"
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/containers/hash_map.hpp"
 #include "core/prelude.hpp"
 #include "model/documents/document_system.hpp"

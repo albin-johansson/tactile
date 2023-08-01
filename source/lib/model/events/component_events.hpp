@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/attribute.hpp"
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "common/type/uuid.hpp"
 #include "core/containers/string.hpp"
 

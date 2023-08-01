@@ -24,7 +24,7 @@
 
 #include <fmt/core.h>
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 
 template <>
 struct fmt::formatter<tactile::Entity> final : fmt::formatter<std::string_view> {

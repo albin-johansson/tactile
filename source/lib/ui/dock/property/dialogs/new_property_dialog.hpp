@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "common/util/string_buffer.hpp"
 #include "core/enums/attribute_type.hpp"
 #include "model/model_view.hpp"

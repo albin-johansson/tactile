@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "core/events/dispatcher.hpp"
 
 namespace tactile::ui {

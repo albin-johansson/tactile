@@ -23,7 +23,7 @@
 
 #include <imgui.h>
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "common/type/uuid.hpp"
 #include "core/containers/hash_map.hpp"
 #include "core/prelude.hpp"

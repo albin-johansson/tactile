@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/chrono.hpp"
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "common/type/math.hpp"
 #include "core/containers/vector.hpp"
 #include "core/enums/tile_compression.hpp"

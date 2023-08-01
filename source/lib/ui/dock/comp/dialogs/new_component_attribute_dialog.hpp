@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/ecs.hpp"
+#include "core/ecs/entity.hpp"
 #include "common/util/string_buffer.hpp"
 #include "core/events/dispatcher.hpp"
 #include "model/model_view.hpp"
