@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/color.hpp"
+#include "core/attributes/color.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_pos.hpp"

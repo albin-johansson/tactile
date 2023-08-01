@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/attribute.hpp"
+#include "core/attributes/attribute.hpp"
 #include "core/tiles/tile_extent.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "core/ecs/entity.hpp"

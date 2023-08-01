@@ -23,7 +23,7 @@
 
 #include <imgui.h>
 
-#include "common/color.hpp"
+#include "core/attributes/color.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/events/object_events.hpp"
 #include "model/events/property_events.hpp"

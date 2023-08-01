@@ -21,9 +21,9 @@
 
 #include <imgui.h>
 
-#include "common/attribute.hpp"
-#include "common/color.hpp"
 #include "common/type/path.hpp"
+#include "core/attributes/attribute.hpp"
+#include "core/attributes/color.hpp"
 #include "core/containers/string.hpp"
 #include "core/functional/maybe.hpp"
 #include "model/services/i18n/strings.hpp"

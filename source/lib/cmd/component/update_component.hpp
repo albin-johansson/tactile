@@ -20,7 +20,7 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "common/attribute.hpp"
+#include "core/attributes/attribute.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/functional/maybe.hpp"
 #include "model/registry.hpp"

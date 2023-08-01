@@ -24,7 +24,7 @@
 #include <fmt/core.h>
 #include <fmt/ostream.h>
 
-#include "common/attribute.hpp"
+#include "core/attributes/attribute.hpp"
 
 template <>
 struct fmt::formatter<tactile::Attribute> : fmt::formatter<std::string_view> {

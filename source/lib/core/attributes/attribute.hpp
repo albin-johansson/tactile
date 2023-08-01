@@ -23,9 +23,9 @@
 #include <ostream>   // ostream
 #include <utility>   // move
 
-#include "common/color.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
+#include "core/attributes/color.hpp"
 #include "core/containers/string.hpp"
 #include "core/containers/variant.hpp"
 #include "core/enums/attribute_type.hpp"

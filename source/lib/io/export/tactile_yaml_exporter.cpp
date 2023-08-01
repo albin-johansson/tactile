@@ -26,8 +26,8 @@
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
-#include "common/attribute.hpp"
 #include "common/util/filesystem.hpp"
+#include "core/attributes/attribute.hpp"
 #include "core/containers/string.hpp"
 #include "core/prelude.hpp"
 #include "io/base64_tiles.hpp"

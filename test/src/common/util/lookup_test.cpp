@@ -21,7 +21,7 @@
 
 #include <doctest/doctest.h>
 
-#include "common/attribute.hpp"
+#include "core/attributes/attribute.hpp"
 #include "core/containers/hash_map.hpp"
 #include "core/containers/string.hpp"
 #include "core/containers/string_map.hpp"

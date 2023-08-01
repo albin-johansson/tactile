@@ -23,12 +23,12 @@
 #include <memory>    // addressof
 #include <variant>   // get
 
-#include "common/attribute.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "common/util/algorithms.hpp"
+#include "core/attributes/attribute.hpp"
 #include "core/containers/hash_map.hpp"
 #include "core/containers/string.hpp"
 #include "core/containers/string_map.hpp"

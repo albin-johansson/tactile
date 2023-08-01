@@ -22,8 +22,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "common/color.hpp"
 #include "common/util/lookup.hpp"
+#include "core/attributes/color.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/events/tileset_events.hpp"
 #include "model/services/language_service.hpp"

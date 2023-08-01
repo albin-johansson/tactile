@@ -22,7 +22,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "common/color.hpp"
+#include "core/attributes/color.hpp"
 #include "model/events/tileset_events.hpp"
 #include "model/events/viewport_events.hpp"
 #include "model/maps/map_components.hpp"

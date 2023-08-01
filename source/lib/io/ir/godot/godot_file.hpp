@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/attribute.hpp"
 #include "common/type/math.hpp"
+#include "core/attributes/attribute.hpp"
 #include "core/containers/string.hpp"
 #include "core/containers/string_map.hpp"
 #include "core/containers/tree_map.hpp"

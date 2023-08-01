@@ -21,8 +21,8 @@
 
 #include <nlohmann/json.hpp>
 
-#include "common/attribute.hpp"
 #include "common/type/path.hpp"
+#include "core/attributes/attribute.hpp"
 #include "core/containers/string.hpp"
 #include "core/functional/maybe.hpp"
 #include "core/functional/result.hpp"

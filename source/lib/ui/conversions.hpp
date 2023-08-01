@@ -23,8 +23,8 @@
 
 #include <imgui.h>
 
-#include "common/color.hpp"
 #include "common/type/math.hpp"
+#include "core/attributes/color.hpp"
 #include "core/debug/assert.hpp"
 #include "core/prelude.hpp"
 

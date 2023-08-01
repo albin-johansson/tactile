@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "common/color.hpp"
+#include "core/attributes/color.hpp"
 #include "core/containers/array.hpp"
 
 namespace tactile {

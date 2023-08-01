@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/attribute.hpp"
-#include "core/ecs/entity.hpp"
+#include "core/attributes/attribute.hpp"
 #include "core/containers/string.hpp"
+#include "core/ecs/entity.hpp"
 
 namespace tactile {
 
