@@ -21,7 +21,6 @@
 
 #include <fmt/format.h>
 
-#include "common/util/numeric.hpp"
 #include "core/debug/panic.hpp"
 
 namespace tactile {

@@ -22,7 +22,7 @@
 #include <utility>  // move
 
 #include "common/util/functional.hpp"
-#include "common/util/random.hpp"
+#include "core/math/rng.hpp"
 #include "core/debug/assert.hpp"
 #include "core/functional/maybe.hpp"
 #include "core/tiles/tile_cache.hpp"

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "random.hpp"
+#include "rng.hpp"
 
 #include <algorithm>   // generate
 #include <concepts>    // same_as, floating_point

@@ -4,7 +4,7 @@
 #include <zlib.h>
 #include <zstd.h>
 
-#include "common/util/random.hpp"
+#include "core/math/rng.hpp"
 
 using namespace tactile;
 

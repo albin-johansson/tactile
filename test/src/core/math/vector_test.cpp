@@ -17,13 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "common/util/numeric.hpp"
+#include "core/math/vector.hpp"
 
 #include <doctest/doctest.h>
 
 using namespace tactile;
 
-TEST_SUITE("NumericUtils")
+TEST_SUITE("Vector")
 {
   TEST_CASE("compare_vector_components")
   {

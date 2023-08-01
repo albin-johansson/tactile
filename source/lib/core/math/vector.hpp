@@ -36,4 +36,36 @@ using Float2 = glm::vec2;
 using Float3 = glm::vec3;
 using Float4 = glm::vec4;
 
+inline constexpr uint32 kVectorXBit = 1u << 0u;
+inline constexpr uint32 kVectorYBit = 1u << 1u;
+inline constexpr uint32 kVectorZBit = 1u << 2u;
+inline constexpr uint32 kVectorWBit = 1u << 3u;
+
+/// Returns a bitmask of components that are equal in both vectors.
+template <typename Vec>
+[[nodiscard]] auto compare_vector_components(const Vec& a, const Vec& b) -> uint32
+{
+  uint32 mask = 0;
+
+  if (a.x == b.x) {
+    mask |= kVectorXBit;
+  }
+
+  if (a.y == b.y) {
+    mask |= kVectorYBit;
+  }
+
+  const int dimensions = a.length();
+
+  if (dimensions >= 3 && a[2] == b[2]) {
+    mask |= kVectorZBit;
+  }
+
+  if (dimensions >= 4 && a[3] == b[3]) {
+    mask |= kVectorWBit;
+  }
+
+  return mask;
+}
+
 }  // namespace tactile
