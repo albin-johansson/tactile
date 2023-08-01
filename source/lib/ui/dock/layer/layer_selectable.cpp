@@ -22,19 +22,19 @@
 #include <fmt/format.h>
 #include <imgui.h>
 
-#include "common/debug/assert.hpp"
 #include "common/fmt/fmt_string.hpp"
 #include "common/type/string.hpp"
+#include "core/debug/assert.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/events/layer_events.hpp"
 #include "model/events/object_events.hpp"
 #include "model/events/property_events.hpp"
-#include "model/services/language_service.hpp"
-#include "model/services/service_locator.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/layers/layer_tree_system.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/objects/object_components.hpp"
+#include "model/services/language_service.hpp"
+#include "model/services/service_locator.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"
 

@@ -26,9 +26,9 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/assert.hpp"
-#include "common/debug/stacktrace.hpp"
 #include "common/fmt/stacktrace_formatter.hpp"
+#include "core/debug/assert.hpp"
+#include "core/debug/stacktrace.hpp"
 #include "engine/app_delegate.hpp"
 #include "engine/platform/window.hpp"
 #include "io/directories.hpp"

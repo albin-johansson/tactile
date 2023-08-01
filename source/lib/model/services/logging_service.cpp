@@ -28,7 +28,7 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
+#include "core/debug/panic.hpp"
 #include "core/prelude.hpp"
 #include "io/directories.hpp"
 #include "model/services/logging/log_history_sink.hpp"

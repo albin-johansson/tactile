@@ -22,10 +22,10 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
 #include "common/type/string.hpp"
 #include "common/type/vector.hpp"
 #include "common/util/strings.hpp"
+#include "core/debug/panic.hpp"
 #include "core/tiles/tile_matrix.hpp"
 #include "io/base64_tiles.hpp"
 #include "io/ir/map/map_ir.hpp"

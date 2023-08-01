@@ -25,8 +25,8 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
 #include "common/fmt/stacktrace_formatter.hpp"
+#include "core/debug/panic.hpp"
 #include "engine/engine.hpp"
 #include "main/app.hpp"
 

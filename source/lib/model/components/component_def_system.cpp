@@ -21,8 +21,8 @@
 
 #include <fmt/format.h>
 
-#include "common/debug/assert.hpp"
 #include "common/util/lookup.hpp"
+#include "core/debug/assert.hpp"
 #include "model/components/component_components.hpp"
 #include "model/entity_validation.hpp"
 

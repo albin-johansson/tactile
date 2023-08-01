@@ -21,10 +21,10 @@
 
 #include <utility>  // move
 
-#include "common/debug/assert.hpp"
 #include "common/type/maybe.hpp"
 #include "common/util/functional.hpp"
 #include "common/util/random.hpp"
+#include "core/debug/assert.hpp"
 #include "core/tiles/tile_cache.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "model/documents/document_components.hpp"

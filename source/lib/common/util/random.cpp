@@ -24,8 +24,8 @@
 #include <functional>  // ref
 #include <random>  // mt19937, random_device, seed_seq, uniform_real_distribution, uniform_int_distribution
 
-#include "common/debug/assert.hpp"
 #include "common/type/array.hpp"
+#include "core/debug/assert.hpp"
 
 namespace tactile {
 namespace {

@@ -21,8 +21,8 @@
 
 #include <tinyfiledialogs.h>
 
-#include "common/debug/assert.hpp"
 #include "common/type/array.hpp"
+#include "core/debug/assert.hpp"
 
 namespace tactile {
 namespace {

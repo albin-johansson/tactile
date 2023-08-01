@@ -19,8 +19,8 @@
 
 #include "ir_generation.hpp"
 
-#include "common/debug/assert.hpp"
-#include "common/debug/profile.hpp"
+#include "core/debug/assert.hpp"
+#include "core/debug/profile.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/entity_validation.hpp"
 #include "model/layers/layer_components.hpp"

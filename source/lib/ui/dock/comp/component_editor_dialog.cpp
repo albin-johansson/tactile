@@ -24,16 +24,16 @@
 #include <imgui.h>
 
 #include "common/attribute.hpp"
-#include "common/debug/assert.hpp"
 #include "common/type/string.hpp"
 #include "common/util/vectors.hpp"
+#include "core/debug/assert.hpp"
 #include "model/components/component_components.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/events/component_events.hpp"
+#include "model/registry.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
-#include "model/registry.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/dock/comp/dialogs/new_comp_dialog.hpp"

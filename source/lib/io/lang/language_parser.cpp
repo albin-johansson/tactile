@@ -22,8 +22,8 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
 #include "common/type/string.hpp"
+#include "core/debug/panic.hpp"
 #include "core/prelude.hpp"
 #include "io/directories.hpp"
 #include "io/json_utils.hpp"

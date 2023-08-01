@@ -24,7 +24,7 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/profile.hpp"
+#include "core/debug/profile.hpp"
 #include "io/export/tactile_yaml_exporter.hpp"
 #include "io/export/tiled_json_exporter.hpp"
 #include "io/export/tiled_xml_exporter.hpp"

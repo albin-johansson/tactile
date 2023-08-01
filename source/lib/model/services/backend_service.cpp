@@ -24,8 +24,8 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/assert.hpp"
 #include "common/util/lookup.hpp"
+#include "core/debug/assert.hpp"
 #include "io/texture_loader.hpp"
 #include "model/entity_validation.hpp"
 #include "model/textures/texture_components.hpp"

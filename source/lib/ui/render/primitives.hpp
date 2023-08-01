@@ -25,7 +25,7 @@
 #include <imgui_internal.h>
 
 #include "common/color.hpp"
-#include "common/debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "core/prelude.hpp"
 #include "model/textures/texture_components.hpp"
 #include "ui/conversions.hpp"

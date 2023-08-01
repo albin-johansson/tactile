@@ -22,11 +22,11 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/debug/assert.hpp"
 #include "common/type/string.hpp"
+#include "core/debug/assert.hpp"
 #include "io/ir/map/map_ir.hpp"
-#include "io/map/parse/json/json_parser.hpp"
 #include "io/json_utils.hpp"
+#include "io/map/parse/json/json_parser.hpp"
 
 namespace tactile {
 namespace {

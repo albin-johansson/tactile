@@ -19,7 +19,7 @@
 
 #include "detach_component.hpp"
 
-#include "common/debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "model/components/component_components.hpp"
 #include "model/contexts/attached_component_system.hpp"
 #include "model/entity_validation.hpp"

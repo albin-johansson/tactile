@@ -21,11 +21,11 @@
 
 #include <utility>  // move
 
-#include "common/debug/assert.hpp"
-#include "common/debug/panic.hpp"
 #include "common/util/algorithms.hpp"
 #include "common/util/functional.hpp"
 #include "common/util/vectors.hpp"
+#include "core/debug/assert.hpp"
+#include "core/debug/panic.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/contexts/context_system.hpp"
 #include "model/documents/document_components.hpp"

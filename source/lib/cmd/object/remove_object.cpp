@@ -19,8 +19,8 @@
 
 #include "remove_object.hpp"
 
-#include "common/debug/assert.hpp"
-#include "common/debug/panic.hpp"
+#include "core/debug/assert.hpp"
+#include "core/debug/panic.hpp"
 #include "model/entity_validation.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/maps/map_components.hpp"

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/debug/assert.hpp"
+#include "core/debug/assert.hpp"
 
 namespace tactile {
 

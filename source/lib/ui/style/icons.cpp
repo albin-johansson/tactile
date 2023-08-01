@@ -19,7 +19,7 @@
 
 #include "icons.hpp"
 
-#include "common/debug/panic.hpp"
+#include "core/debug/panic.hpp"
 
 namespace tactile::ui {
 

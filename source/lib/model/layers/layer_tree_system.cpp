@@ -21,9 +21,9 @@
 
 #include <algorithm>  // find, iter_swap
 
-#include "common/debug/assert.hpp"
 #include "common/util/algorithms.hpp"
 #include "common/util/functional.hpp"
+#include "core/debug/assert.hpp"
 #include "model/entity_validation.hpp"
 
 namespace tactile::sys {

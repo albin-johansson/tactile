@@ -19,7 +19,7 @@
 
 #include "resize_map.hpp"
 
-#include "common/debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/maps/map_system.hpp"
 #include "model/services/language_service.hpp"

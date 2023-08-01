@@ -26,7 +26,7 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl2.h>
 
-#include "common/debug/panic.hpp"
+#include "core/debug/panic.hpp"
 #include "core/prelude.hpp"
 #include "io/texture_loader.hpp"
 #include "model/textures/texture_components.hpp"

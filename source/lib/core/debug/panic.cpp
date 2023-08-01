@@ -22,7 +22,7 @@
 #include <sstream>  // stringstream
 #include <utility>  // move
 
-#include "common/debug/stacktrace.hpp"
+#include "core/debug/stacktrace.hpp"
 
 namespace tactile {
 

@@ -23,8 +23,8 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
 #include "common/util/lookup.hpp"
+#include "core/debug/panic.hpp"
 #include "io/lang/language_parser.hpp"
 #include "model/services/service_locator.hpp"
 #include "model/services/settings_service.hpp"

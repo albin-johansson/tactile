@@ -19,7 +19,7 @@
 
 #include "move_layer_up.hpp"
 
-#include "common/debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "model/entity_validation.hpp"
 #include "model/layers/layer_tree_system.hpp"
 #include "model/maps/map_components.hpp"

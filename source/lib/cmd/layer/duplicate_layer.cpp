@@ -19,7 +19,7 @@
 
 #include "duplicate_layer.hpp"
 
-#include "common/debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/entity_validation.hpp"
 #include "model/layers/group_layer_ops.hpp"

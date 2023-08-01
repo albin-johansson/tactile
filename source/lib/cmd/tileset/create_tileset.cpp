@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "common/debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_factory.hpp"

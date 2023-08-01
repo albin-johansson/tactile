@@ -19,7 +19,7 @@
 
 #include "move_object.hpp"
 
-#include "common/debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "model/entity_validation.hpp"
 #include "model/objects/object_components.hpp"
 #include "model/services/language_service.hpp"

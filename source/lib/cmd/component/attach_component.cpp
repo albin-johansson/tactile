@@ -19,7 +19,7 @@
 
 #include "attach_component.hpp"
 
-#include "common/debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "model/components/component_def_system.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/entity_validation.hpp"

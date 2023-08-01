@@ -29,7 +29,7 @@
 #include "cmd/tileset/create_tileset.hpp"
 #include "cmd/tileset/remove_tileset.hpp"
 #include "cmd/tileset/rename_tileset.hpp"
-#include "common/debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "model/documents/command_system.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"

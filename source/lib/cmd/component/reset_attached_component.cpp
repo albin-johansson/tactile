@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "common/debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "model/components/attached_component_system.hpp"
 #include "model/components/component_components.hpp"
 #include "model/entity_validation.hpp"

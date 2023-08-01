@@ -21,8 +21,8 @@
 
 #include <utility>  // move
 
-#include "common/debug/assert.hpp"
 #include "common/util/lookup.hpp"
+#include "core/debug/assert.hpp"
 #include "model/components/component_components.hpp"
 #include "model/components/component_def_system.hpp"
 #include "model/contexts/context_system.hpp"

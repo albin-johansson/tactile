@@ -21,8 +21,8 @@
 
 #include <utility>  // move
 
-#include "common/debug/assert.hpp"
 #include "common/type/string.hpp"
+#include "core/debug/assert.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/entity_validation.hpp"
 #include "model/layers/layer_components.hpp"

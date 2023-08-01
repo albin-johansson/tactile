@@ -25,7 +25,7 @@
 #include <glad/glad.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
+#include "core/debug/panic.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {

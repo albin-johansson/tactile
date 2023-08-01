@@ -24,8 +24,8 @@
 #include <fmt/chrono.h>
 #include <fmt/format.h>
 
-#include "common/debug/panic.hpp"
 #include "common/type/chrono.hpp"
+#include "core/debug/panic.hpp"
 
 namespace tactile {
 namespace {

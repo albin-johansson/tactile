@@ -19,8 +19,8 @@
 
 #include "tileset_ops.hpp"
 
-#include "common/debug/panic.hpp"
 #include "common/util/lookup.hpp"
+#include "core/debug/panic.hpp"
 
 namespace tactile::sys {
 

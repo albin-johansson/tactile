@@ -19,7 +19,7 @@
 
 #include "remove_tileset.hpp"
 
-#include "common/debug/assert.hpp"
+#include "core/debug/assert.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/entity_validation.hpp"
 #include "model/maps/map_components.hpp"

@@ -19,8 +19,8 @@
 
 #include "tile_animation_system.hpp"
 
-#include "common/debug/assert.hpp"
 #include "common/type/chrono.hpp"
+#include "core/debug/assert.hpp"
 #include "model/entity_validation.hpp"
 #include "model/tiles/tile_components.hpp"
 

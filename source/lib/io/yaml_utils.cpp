@@ -22,8 +22,8 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
 #include "common/util/filesystem.hpp"
+#include "core/debug/panic.hpp"
 #include "io/save_formats.hpp"
 #include "io/stream_utils.hpp"
 

@@ -24,7 +24,7 @@
 #include <fmt/core.h>
 #include <fmt/ostream.h>
 
-#include "common/debug/stacktrace.hpp"
+#include "core/debug/stacktrace.hpp"
 
 template <>
 struct fmt::formatter<boost::stacktrace::stacktrace> : fmt::formatter<std::string_view> {

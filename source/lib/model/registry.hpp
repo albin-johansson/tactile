@@ -24,8 +24,8 @@
 
 #include <entt/entity/registry.hpp>
 
-#include "common/debug/assert.hpp"
 #include "common/type/ecs.hpp"
+#include "core/debug/assert.hpp"
 
 namespace tactile {
 
