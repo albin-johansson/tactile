@@ -19,6 +19,9 @@
 
 #include "viewport_ops.hpp"
 
+#include <algorithm>  // max
+#include <cmath>      // round
+
 #include <glm/common.hpp>
 
 namespace tactile::sys {
@@ -31,7 +34,7 @@ inline constexpr float kMinViewportTileWidth = 4;
 {
   const auto y_ratio = viewport.tile_size.y / viewport.tile_size.x;
 
-  const auto dx = glm::round(glm::max(2.0f, viewport.tile_size.x * 0.05f));
+  const auto dx = std::round(std::max(2.0f, viewport.tile_size.x * 0.05f));
   const auto dy = dx * y_ratio;
 
   return {dx, dy};
