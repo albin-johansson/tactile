@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "core/containers/string.hpp"
 #include "core/containers/variant.hpp"
 #include "core/containers/vector.hpp"
+#include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 #include "io/ir/godot/godot_file.hpp"
 #include "io/ir/godot/godot_tileset.hpp"

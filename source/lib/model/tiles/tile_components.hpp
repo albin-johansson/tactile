@@ -21,11 +21,11 @@
 
 #include <chrono>  // milliseconds
 
-#include "common/type/math.hpp"
 #include "core/containers/vector.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/enums/tile_compression.hpp"
 #include "core/enums/tile_encoding.hpp"
+#include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {

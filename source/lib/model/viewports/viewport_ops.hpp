@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/math.hpp"
+#include "core/math/vector.hpp"
 #include "model/viewports/viewport_components.hpp"
 
 namespace tactile::sys {

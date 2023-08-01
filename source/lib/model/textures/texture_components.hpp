@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "core/ecs/entity.hpp"
-#include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "core/containers/tree_map.hpp"
+#include "core/ecs/entity.hpp"
+#include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 #include "model/registry.hpp"
 

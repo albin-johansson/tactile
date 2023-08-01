@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/type/math.hpp"
 #include "common/type/ptr.hpp"
 #include "core/attributes/color.hpp"
 #include "core/containers/string.hpp"
@@ -27,6 +26,7 @@
 #include "core/enums/overlay_pos.hpp"
 #include "core/enums/save_format.hpp"
 #include "core/enums/theme.hpp"
+#include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {

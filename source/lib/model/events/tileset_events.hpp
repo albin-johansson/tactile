@@ -22,10 +22,10 @@
 #include <chrono>  // milliseconds
 
 #include "common/region.hpp"
-#include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "core/containers/string.hpp"
 #include "core/ecs/entity.hpp"
+#include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {

@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/ecs/entity.hpp"
-#include "common/type/math.hpp"
+#include "core/math/vector.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/registry.hpp"

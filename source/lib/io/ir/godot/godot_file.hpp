@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "common/type/math.hpp"
 #include "core/attributes/attribute.hpp"
 #include "core/containers/string.hpp"
 #include "core/containers/string_map.hpp"
 #include "core/containers/tree_map.hpp"
 #include "core/containers/vector.hpp"
 #include "core/functional/maybe.hpp"
+#include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {

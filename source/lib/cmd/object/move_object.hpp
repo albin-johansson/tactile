@@ -21,7 +21,7 @@
 
 #include "cmd/command.hpp"
 #include "core/ecs/entity.hpp"
-#include "common/type/math.hpp"
+#include "core/math/vector.hpp"
 #include "model/registry.hpp"
 
 namespace tactile::cmd {

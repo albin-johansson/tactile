@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "common/type/math.hpp"
 #include "core/containers/hash_map.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/enums/layer_type.hpp"
 #include "core/functional/result.hpp"
+#include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_extent.hpp"
 #include "core/tiles/tile_pos.hpp"

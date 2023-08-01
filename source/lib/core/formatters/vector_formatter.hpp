@@ -24,7 +24,7 @@
 #include <fmt/core.h>
 #include <fmt/ostream.h>
 
-#include "common/type/math.hpp"
+#include "core/math/vector.hpp"
 
 template <>
 struct fmt::formatter<tactile::Float2> : fmt::formatter<std::string_view> {

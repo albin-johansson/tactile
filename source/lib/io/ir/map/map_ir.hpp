@@ -23,7 +23,6 @@
 #include <memory>    // addressof
 #include <variant>   // get
 
-#include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
@@ -39,6 +38,7 @@
 #include "core/enums/tile_compression.hpp"
 #include "core/enums/tile_encoding.hpp"
 #include "core/functional/maybe.hpp"
+#include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_extent.hpp"
 #include "core/tiles/tile_matrix.hpp"
