@@ -22,9 +22,9 @@
 #include <fmt/format.h>
 #include <imgui.h>
 
-#include "common/fmt/fmt_string.hpp"
 #include "core/containers/string.hpp"
 #include "core/debug/assert.hpp"
+#include "core/formatters/fmt_string.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/events/layer_events.hpp"
 #include "model/events/object_events.hpp"

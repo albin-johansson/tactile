@@ -24,10 +24,10 @@
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
-#include "common/fmt/lang_formatter.hpp"
-#include "common/fmt/overlay_pos_formatter.hpp"
-#include "common/fmt/save_format_formatter.hpp"
-#include "common/fmt/theme_formatter.hpp"
+#include "core/formatters/lang_formatter.hpp"
+#include "core/formatters/overlay_pos_formatter.hpp"
+#include "core/formatters/save_format_formatter.hpp"
+#include "core/formatters/theme_formatter.hpp"
 #include "ui/constants.hpp"
 
 namespace tactile {

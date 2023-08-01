@@ -25,7 +25,7 @@
 #include <imgui_internal.h>
 
 #include "cmd/command_stack.hpp"
-#include "common/fmt/fmt_string.hpp"
+#include "core/formatters/fmt_string.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/events/file_events.hpp"

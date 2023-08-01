@@ -21,7 +21,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/fmt/entity_formatter.hpp"
+#include "core/formatters/entity_formatter.hpp"
 
 namespace tactile {
 

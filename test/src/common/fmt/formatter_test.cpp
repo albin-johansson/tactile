@@ -21,13 +21,13 @@
 #include <fmt/format.h>
 #include <magic_enum.hpp>
 
-#include "common/fmt/entity_formatter.hpp"
-#include "common/fmt/lang_formatter.hpp"
-#include "common/fmt/menu_action_formatter.hpp"
-#include "common/fmt/save_format_formatter.hpp"
-#include "common/fmt/theme_formatter.hpp"
-#include "common/fmt/tile_compression_formatter.hpp"
-#include "common/fmt/tile_encoding_formatter.hpp"
+#include "core/formatters/entity_formatter.hpp"
+#include "core/formatters/lang_formatter.hpp"
+#include "core/formatters/menu_action_formatter.hpp"
+#include "core/formatters/save_format_formatter.hpp"
+#include "core/formatters/theme_formatter.hpp"
+#include "core/formatters/tile_compression_formatter.hpp"
+#include "core/formatters/tile_encoding_formatter.hpp"
 
 using namespace tactile;
 

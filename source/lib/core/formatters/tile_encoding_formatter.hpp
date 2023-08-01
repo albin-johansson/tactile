@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/fmt/magic_enum_formatter.hpp"
-#include "core/enums/tile_compression.hpp"
+#include "core/enums/tile_encoding.hpp"
+#include "core/formatters/magic_enum_formatter.hpp"
 
-TACTILE_MAGIC_ENUM_FORMATTER(tactile::TileCompression);
+TACTILE_MAGIC_ENUM_FORMATTER(tactile::TileEncoding);

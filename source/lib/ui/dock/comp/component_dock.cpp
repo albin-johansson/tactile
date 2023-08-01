@@ -21,7 +21,7 @@
 
 #include <imgui.h>
 
-#include "common/fmt/fmt_string.hpp"
+#include "core/formatters/fmt_string.hpp"
 #include "model/components/component_components.hpp"
 #include "model/contexts/attached_component_system.hpp"
 #include "model/contexts/context_components.hpp"

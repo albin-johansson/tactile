@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "common/fmt/fmt_string.hpp"
+#include "core/formatters/fmt_string.hpp"
 
 #include <filesystem>  // path
 
