@@ -20,11 +20,11 @@
 #pragma once
 
 #include "common/result.hpp"
-#include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/vector.hpp"
 #include "core/prelude.hpp"
+#include "core/tiles/tile_pos.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/registry.hpp"
 

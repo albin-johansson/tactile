@@ -22,11 +22,11 @@
 #include <utility>  // move
 
 #include "common/debug/assert.hpp"
-#include "common/tile_pos.hpp"
 #include "common/type/maybe.hpp"
-#include "common/type/tile_cache.hpp"
 #include "common/util/functional.hpp"
 #include "common/util/random.hpp"
+#include "core/tiles/tile_cache.hpp"
+#include "core/tiles/tile_pos.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/entity_validation.hpp"

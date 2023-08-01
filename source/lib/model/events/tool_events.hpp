@@ -20,11 +20,11 @@
 #pragma once
 
 #include "common/enum/tool_type.hpp"
-#include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
-#include "common/type/tile_cache.hpp"
 #include "core/prelude.hpp"
+#include "core/tiles/tile_cache.hpp"
+#include "core/tiles/tile_pos.hpp"
 #include "model/viewports/viewport_components.hpp"
 
 namespace tactile {

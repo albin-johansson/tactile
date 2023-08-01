@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/math.hpp"
+#include "core/tiles/tile_pos.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/registry.hpp"
 

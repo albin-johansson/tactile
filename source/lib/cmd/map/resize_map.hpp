@@ -21,10 +21,10 @@
 
 #include "cmd/command.hpp"
 #include "cmd/map/map_command_cache.hpp"
-#include "common/tile_extent.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "core/prelude.hpp"
+#include "core/tiles/tile_extent.hpp"
 #include "model/registry.hpp"
 
 namespace tactile::cmd {

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "common/tile_matrix.hpp"
+#include "core/tiles/tile_matrix.hpp"
 
 #include <doctest/doctest.h>
 

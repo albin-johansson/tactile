@@ -28,7 +28,7 @@
 
 #include <doctest/doctest.h>
 
-#include "common/tile_matrix.hpp"
+#include "core/tiles/tile_matrix.hpp"
 #include "common/type/string.hpp"
 #include "common/util/lookup.hpp"
 #include "io/export/tactile_yaml_exporter.hpp"

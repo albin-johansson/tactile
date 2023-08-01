@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/tile_pos.hpp"
 #include "common/type/vector_map.hpp"
 #include "core/prelude.hpp"
+#include "core/tiles/tile_pos.hpp"
 
 namespace tactile {
 

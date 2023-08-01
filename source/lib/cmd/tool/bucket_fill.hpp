@@ -20,11 +20,11 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "common/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/vector.hpp"
 #include "core/prelude.hpp"
+#include "core/tiles/tile_pos.hpp"
 #include "model/registry.hpp"
 
 namespace tactile::cmd {

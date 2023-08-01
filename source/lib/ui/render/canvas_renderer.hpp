@@ -20,8 +20,8 @@
 #pragma once
 
 #include "common/color.hpp"
-#include "common/tile_pos.hpp"
 #include "common/type/math.hpp"
+#include "core/tiles/tile_pos.hpp"
 #include "ui/render/canvas.hpp"
 
 namespace tactile::ui {

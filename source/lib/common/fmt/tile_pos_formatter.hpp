@@ -23,7 +23,7 @@
 
 #include <fmt/core.h>
 
-#include "common/tile_pos.hpp"
+#include "core/tiles/tile_pos.hpp"
 
 template <>
 struct fmt::formatter<tactile::TilePos> : fmt::formatter<std::string_view> {

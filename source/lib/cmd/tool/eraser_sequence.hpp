@@ -21,7 +21,7 @@
 
 #include "cmd/command.hpp"
 #include "common/type/ecs.hpp"
-#include "common/type/tile_cache.hpp"
+#include "core/tiles/tile_cache.hpp"
 #include "model/registry.hpp"
 
 namespace tactile::cmd {

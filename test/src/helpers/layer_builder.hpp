@@ -20,8 +20,8 @@
 #pragma once
 
 #include "common/attribute.hpp"
-#include "common/tile_extent.hpp"
-#include "common/tile_pos.hpp"
+#include "core/tiles/tile_extent.hpp"
+#include "core/tiles/tile_pos.hpp"
 #include "common/type/ecs.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"

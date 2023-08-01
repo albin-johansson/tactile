@@ -27,11 +27,11 @@
 #include <fmt/format.h>
 
 #include "common/debug/assert.hpp"
-#include "common/tile_pos.hpp"
 #include "common/type/string.hpp"
 #include "common/type/vector.hpp"
 #include "common/util/functional.hpp"
 #include "common/util/lookup.hpp"
+#include "core/tiles/tile_pos.hpp"
 #include "io/ir/godot/godot_options.hpp"
 
 namespace tactile {

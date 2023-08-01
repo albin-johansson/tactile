@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/tile_extent.hpp"
 #include "common/type/ecs.hpp"
 #include "core/prelude.hpp"
+#include "core/tiles/tile_extent.hpp"
 #include "model/registry.hpp"
 
 namespace tactile::sys {

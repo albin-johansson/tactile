@@ -19,7 +19,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/tile_matrix.hpp"
+#include "core/tiles/tile_matrix.hpp"
 #include "io/base64_tiles.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/json/json_parser.hpp"

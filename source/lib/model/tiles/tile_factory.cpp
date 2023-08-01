@@ -20,7 +20,7 @@
 #include "tile_factory.hpp"
 
 #include "common/debug/assert.hpp"
-#include "common/tile_matrix.hpp"
+#include "core/tiles/tile_matrix.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/entity_validation.hpp"
 #include "model/tiles/tile_components.hpp"
