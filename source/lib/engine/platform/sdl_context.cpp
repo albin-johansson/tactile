@@ -71,10 +71,6 @@ void _init_sdl_opengl_attributes()
   spdlog::debug("[OpenGL] Renderer: {}",
                 reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
 
-  int num_binary_formats {};
-  glGetIntegerv(GL_NUM_SHADER_BINARY_FORMATS, &num_binary_formats);
-  spdlog::debug("[OpenGL] Number of binary shader formats: {}", num_binary_formats);
-
   return gl;
 }
 
