@@ -24,7 +24,7 @@
 #include "core/containers/string.hpp"
 #include "core/containers/string_map.hpp"
 #include "core/ecs/entity.hpp"
-#include "model/registry.hpp"
+#include "core/ecs/registry.hpp"
 
 namespace tactile::sys {
 

@@ -21,16 +21,16 @@
 
 #include <utility>  // forward
 
-#include "core/ecs/entity.hpp"
 #include "core/containers/deque.hpp"
 #include "core/containers/string.hpp"
 #include "core/containers/vector.hpp"
+#include "core/ecs/entity.hpp"
+#include "core/ecs/registry.hpp"
 #include "core/enums/menu_action.hpp"
 #include "core/enums/tool_type.hpp"
 #include "core/events/dispatcher.hpp"
 #include "core/functional/ref.hpp"
 #include "core/prelude.hpp"
-#include "model/registry.hpp"
 #include "model/services/i18n/strings.hpp"
 #include "model/services/settings/settings.hpp"
 

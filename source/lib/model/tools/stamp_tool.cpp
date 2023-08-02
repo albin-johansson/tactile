@@ -22,6 +22,7 @@
 #include <utility>  // move
 
 #include "core/debug/assert.hpp"
+#include "core/ecs/registry.hpp"
 #include "core/functional/invoke.hpp"
 #include "core/functional/maybe.hpp"
 #include "core/math/rng.hpp"
@@ -34,7 +35,6 @@
 #include "model/layers/layer_components.hpp"
 #include "model/layers/tile_layer_ops.hpp"
 #include "model/maps/map_components.hpp"
-#include "model/registry.hpp"
 #include "model/tilesets/attached_tileset_ops.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_ops.hpp"

@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "core/ecs/entity.hpp"
 #include "core/containers/tree_map.hpp"
+#include "core/ecs/entity.hpp"
+#include "core/ecs/registry.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_pos.hpp"
-#include "model/registry.hpp"
 
 namespace tactile {
 

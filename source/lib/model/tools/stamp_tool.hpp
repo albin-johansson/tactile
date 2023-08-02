@@ -20,13 +20,13 @@
 #pragma once
 
 #include "core/ecs/entity.hpp"
+#include "core/ecs/registry.hpp"
 #include "core/events/dispatcher.hpp"
 #include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_cache.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "model/maps/map_components.hpp"
-#include "model/registry.hpp"
 #include "model/tools/tool.hpp"
 #include "model/viewports/viewport_components.hpp"
 

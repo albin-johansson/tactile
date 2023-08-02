@@ -28,7 +28,7 @@
 #include "core/containers/vector.hpp"
 #include "core/prelude.hpp"
 #include "io/ir/map/map_ir.hpp"
-#include "model/registry.hpp"
+#include "core/ecs/registry.hpp"
 
 namespace tactile {
 

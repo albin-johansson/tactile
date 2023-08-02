@@ -19,8 +19,8 @@
 
 #pragma once
 
+#include "core/ecs/registry.hpp"
 #include "model/events/tileset_events.hpp"
-#include "model/registry.hpp"
 
 namespace tactile {
 

@@ -20,9 +20,9 @@
 #pragma once
 
 #include "core/ecs/entity_callback.hpp"
+#include "core/ecs/registry.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/maps/map_components.hpp"
-#include "model/registry.hpp"
 
 namespace tactile::sys {
 

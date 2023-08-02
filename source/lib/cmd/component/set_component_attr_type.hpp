@@ -23,8 +23,8 @@
 #include "core/attributes/attribute.hpp"
 #include "core/containers/hash_map.hpp"
 #include "core/ecs/entity.hpp"
+#include "core/ecs/registry.hpp"
 #include "core/functional/maybe.hpp"
-#include "model/registry.hpp"
 
 namespace tactile::cmd {
 

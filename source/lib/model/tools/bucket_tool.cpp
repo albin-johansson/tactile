@@ -19,11 +19,11 @@
 
 #include "bucket_tool.hpp"
 
+#include "core/ecs/registry.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/events/tool_events.hpp"
 #include "model/layers/layer_components.hpp"
-#include "model/registry.hpp"
 #include "model/tilesets/attached_tileset_ops.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_ops.hpp"

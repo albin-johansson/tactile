@@ -22,13 +22,13 @@
 #include <spdlog/spdlog.h>
 
 #include "common/util/filesystem.hpp"
+#include "core/ecs/registry.hpp"
 #include "io/directories.hpp"
 #include "io/ir/ir_restoration.hpp"
 #include "io/parsers/map_parser.hpp"
 #include "io/protobuf_types.hpp"
 #include "io/stream_utils.hpp"
 #include "model/documents/document_components.hpp"
-#include "model/registry.hpp"
 
 namespace tactile {
 namespace {

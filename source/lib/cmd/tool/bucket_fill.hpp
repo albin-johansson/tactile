@@ -20,12 +20,12 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "core/ecs/entity.hpp"
 #include "core/containers/vector.hpp"
+#include "core/ecs/entity.hpp"
+#include "core/ecs/registry.hpp"
 #include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_pos.hpp"
-#include "model/registry.hpp"
 
 namespace tactile::cmd {
 

@@ -21,11 +21,11 @@
 
 #include "common/type/path.hpp"
 #include "core/ecs/entity.hpp"
+#include "core/ecs/registry.hpp"
 #include "core/functional/maybe.hpp"
 #include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 #include "model/maps/map_components.hpp"
-#include "model/registry.hpp"
 
 namespace tactile::sys {
 

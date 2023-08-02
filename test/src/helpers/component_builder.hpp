@@ -23,7 +23,7 @@
 #include "core/ecs/entity.hpp"
 #include "core/containers/string.hpp"
 #include "io/ir/map/map_ir.hpp"
-#include "model/registry.hpp"
+#include "core/ecs/registry.hpp"
 
 namespace tactile {
 

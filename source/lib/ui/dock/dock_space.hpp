@@ -21,9 +21,9 @@
 
 #include <imgui.h>
 
+#include "core/ecs/registry.hpp"
 #include "core/events/dispatcher.hpp"
 #include "core/functional/maybe.hpp"
-#include "model/registry.hpp"
 
 namespace tactile {
 

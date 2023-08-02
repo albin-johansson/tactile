@@ -24,11 +24,11 @@
 #include "cmd/command_stack.hpp"
 #include "common/type/path.hpp"
 #include "core/ecs/entity.hpp"
+#include "core/ecs/registry.hpp"
 #include "core/math/vector.hpp"
 #include "core/tiles/tile_extent.hpp"
 #include "model/events/map_events.hpp"
 #include "model/maps/map_components.hpp"
-#include "model/registry.hpp"
 
 namespace tactile::sys {
 

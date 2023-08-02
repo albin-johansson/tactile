@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "model/registry.hpp"
+#include "core/ecs/registry.hpp"
 #include "model/tools/tool.hpp"
 
 namespace tactile {

@@ -21,8 +21,8 @@
 
 #include "cmd/command.hpp"
 #include "core/ecs/entity.hpp"
+#include "core/ecs/registry.hpp"
 #include "core/enums/layer_type.hpp"
-#include "model/registry.hpp"
 
 namespace tactile::cmd {
 

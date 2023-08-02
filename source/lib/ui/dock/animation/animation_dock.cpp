@@ -25,13 +25,13 @@
 #include <imgui.h>
 
 #include "common/util/lookup.hpp"
+#include "core/ecs/registry.hpp"
 #include "core/functional/maybe.hpp"
 #include "io/settings_io.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/events/setting_events.hpp"
 #include "model/events/tileset_events.hpp"
-#include "model/registry.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
 #include "model/textures/texture_components.hpp"

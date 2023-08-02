@@ -23,6 +23,7 @@
 
 #include <imgui.h>
 
+#include "core/ecs/registry.hpp"
 #include "io/compression.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/documents/document_components.hpp"
@@ -37,7 +38,6 @@
 #include "model/layers/layer_components.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/objects/object_components.hpp"
-#include "model/registry.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
 #include "model/tiles/tile_components.hpp"

@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/ecs/entity.hpp"
+#include "core/ecs/registry.hpp"
 #include "core/events/dispatcher.hpp"
-#include "model/registry.hpp"
 
 namespace tactile::ui {
 

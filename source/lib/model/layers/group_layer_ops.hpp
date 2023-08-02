@@ -20,12 +20,12 @@
 #pragma once
 
 #include "core/ecs/entity.hpp"
+#include "core/ecs/registry.hpp"
 #include "core/functional/maybe.hpp"
 #include "core/functional/result.hpp"
 #include "core/prelude.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/maps/map_components.hpp"
-#include "model/registry.hpp"
 
 namespace tactile::sys {
 

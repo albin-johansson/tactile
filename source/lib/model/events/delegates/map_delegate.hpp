@@ -19,9 +19,9 @@
 
 #pragma once
 
+#include "core/ecs/registry.hpp"
 #include "core/events/dispatcher.hpp"
 #include "model/events/map_events.hpp"
-#include "model/registry.hpp"
 
 namespace tactile {
 

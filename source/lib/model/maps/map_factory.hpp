@@ -20,9 +20,9 @@
 #pragma once
 
 #include "core/ecs/entity.hpp"
+#include "core/ecs/registry.hpp"
 #include "core/math/vector.hpp"
 #include "core/tiles/tile_extent.hpp"
-#include "model/registry.hpp"
 
 namespace tactile::sys {
 

@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include "core/ecs/entity.hpp"
 #include "core/containers/hash_map.hpp"
 #include "core/containers/string.hpp"
 #include "core/containers/string_map.hpp"
+#include "core/ecs/entity.hpp"
+#include "core/ecs/registry.hpp"
 #include "model/contexts/context_components.hpp"
-#include "model/registry.hpp"
 
 namespace tactile::sys {
 

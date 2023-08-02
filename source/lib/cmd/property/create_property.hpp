@@ -20,10 +20,10 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "core/ecs/entity.hpp"
 #include "core/containers/string.hpp"
+#include "core/ecs/entity.hpp"
+#include "core/ecs/registry.hpp"
 #include "core/enums/attribute_type.hpp"
-#include "model/registry.hpp"
 
 namespace tactile::cmd {
 

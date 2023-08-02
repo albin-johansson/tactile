@@ -248,6 +248,4 @@ class Registry final {
   entt::registry mRegistry;
 };
 
-using Registry = Registry;
-
 }  // namespace tactile
