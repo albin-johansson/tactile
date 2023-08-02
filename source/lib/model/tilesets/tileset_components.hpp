@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "common/region.hpp"
 #include "core/containers/hash_map.hpp"
 #include "core/containers/vector.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/functional/maybe.hpp"
 #include "core/math/vector.hpp"
 #include "core/prelude.hpp"
+#include "core/tiles/region.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "model/viewports/viewport_components.hpp"
 
