@@ -21,7 +21,6 @@
 
 #include <imgui.h>
 
-#include "common/util/vectors.hpp"
 #include "model/components/component_components.hpp"
 #include "model/components/component_set_system.hpp"
 #include "model/documents/document_components.hpp"

@@ -22,7 +22,6 @@
 #include <utility>  // move
 
 #include "common/util/algorithms.hpp"
-#include "common/util/vectors.hpp"
 #include "core/debug/assert.hpp"
 #include "core/debug/panic.hpp"
 #include "core/functional/invoke.hpp"

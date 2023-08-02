@@ -21,7 +21,6 @@
 
 #include <doctest/doctest.h>
 
-#include "common/util/vectors.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_factory.hpp"
 #include "model/entity_validation.hpp"

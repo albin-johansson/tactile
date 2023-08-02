@@ -23,7 +23,6 @@
 
 #include <imgui.h>
 
-#include "common/util/vectors.hpp"
 #include "core/attributes/attribute.hpp"
 #include "core/containers/string.hpp"
 #include "core/debug/assert.hpp"

@@ -24,7 +24,6 @@
 #include <spdlog/spdlog.h>
 
 #include "cmd/command_stack.hpp"
-#include "common/util/vectors.hpp"
 #include "core/debug/panic.hpp"
 #include "io/parsers/map_parser.hpp"
 #include "model/contexts/context_components.hpp"

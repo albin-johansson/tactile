@@ -22,7 +22,6 @@
 #include <algorithm>  // find, iter_swap
 
 #include "common/util/algorithms.hpp"
-#include "common/util/vectors.hpp"
 #include "core/debug/assert.hpp"
 #include "core/functional/invoke.hpp"
 #include "core/functional/maybe.hpp"

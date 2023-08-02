@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "common/util/vectors.hpp"
+#include "core/containers/vector.hpp"
 
 #include <doctest/doctest.h>
 

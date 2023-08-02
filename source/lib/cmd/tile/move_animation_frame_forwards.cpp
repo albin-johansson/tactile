@@ -19,7 +19,6 @@
 
 #include "move_animation_frame_forwards.hpp"
 
-#include "common/util/vectors.hpp"
 #include "core/debug/assert.hpp"
 #include "model/entity_validation.hpp"
 #include "model/services/language_service.hpp"

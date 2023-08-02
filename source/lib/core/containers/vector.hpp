@@ -19,11 +19,49 @@
 
 #pragma once
 
-#include <vector>  // vector
+#include <algorithm>  // find
+#include <utility>    // move
+#include <vector>     // vector
+
+#include "core/functional/result.hpp"
+#include "core/prelude.hpp"
 
 namespace tactile {
 
 template <typename T>
 using Vector = std::vector<T>;
+
+/// Inserts or appends an element to a vector.
+template <typename T>
+auto insert_at(Vector<T>& vec, const usize index, T value) -> Result
+{
+  if (index < vec.size()) {
+    vec.insert(vec.begin() + static_cast<ssize>(index), std::move(value));
+    return success;
+  }
+  else if (index == vec.size()) {
+    vec.push_back(std::move(value));
+    return success;
+  }
+
+  return failure;
+}
+
+template <typename T>
+auto erase_at(Vector<T>& vec, const usize index) -> Result
+{
+  if (index < vec.size()) {
+    vec.erase(vec.begin() + static_cast<ssize>(index));
+    return success;
+  }
+
+  return failure;
+}
+
+template <typename T, typename U>
+[[nodiscard]] auto contained_in(const Vector<T>& vec, const U& value) -> bool
+{
+  return std::ranges::find(vec, value) != vec.end();
+}
 
 }  // namespace tactile
