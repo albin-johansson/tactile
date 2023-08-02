@@ -19,19 +19,11 @@
 
 #pragma once
 
-#include <concepts>     // integral, invocable, predicate
-#include <type_traits>  // is_invocable_r_v
-
-#include "core/debug/panic.hpp"
+#include <concepts>  // integral, invocable
 
 namespace tactile {
 
-/**
- * Invokes a function object N times.
- *
- * \param n        the amount of times the callable should be invoked.
- * \param callable a function object.
- */
+/** Invokes a function object N times. */
 template <std::integral T, std::invocable U>
 constexpr void invoke_n(const T n, U&& callable) noexcept(noexcept(callable()))
 {
@@ -40,15 +32,7 @@ constexpr void invoke_n(const T n, U&& callable) noexcept(noexcept(callable()))
   }
 }
 
-/**
- * Invokes a function object M*N times.
- *
- * \details This function is a more functional approach to nested for-loops.
- *
- * \param m        the amount of times the outer loop is run.
- * \param n        the amount of times the inner loop is run (for each outer iteration).
- * \param callable a function object.
- */
+/** Invokes a function object M x N times. */
 template <std::integral T, std::invocable<T, T> U>
 constexpr void invoke_mn(const T m,
                          const T n,
@@ -59,14 +43,6 @@ constexpr void invoke_mn(const T m,
       callable(i, j);
     }
   }
-}
-
-/// Ensures that a value matches a predicate and returns it, throws otherwise.
-template <typename T, std::predicate<const T&> U>
-constexpr auto require_that(T value, U&& predicate) -> T
-{
-  return predicate(value) ? value
-                          : throw TactileError {"Value did not match requirements"};
 }
 
 }  // namespace tactile

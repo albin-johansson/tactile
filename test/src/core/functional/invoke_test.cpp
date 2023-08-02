@@ -17,13 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "common/util/functional.hpp"
+#include "core/functional/invoke.hpp"
 
 #include <doctest/doctest.h>
 
 using namespace tactile;
 
-TEST_SUITE("FunctionalUtils")
+TEST_SUITE("Invoke")
 {
   TEST_CASE("invoke_n")
   {

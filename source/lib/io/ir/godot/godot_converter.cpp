@@ -26,11 +26,11 @@
 
 #include <fmt/format.h>
 
-#include "common/util/functional.hpp"
 #include "common/util/lookup.hpp"
 #include "core/containers/string.hpp"
 #include "core/containers/vector.hpp"
 #include "core/debug/assert.hpp"
+#include "core/functional/invoke.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "io/ir/godot/godot_options.hpp"
 

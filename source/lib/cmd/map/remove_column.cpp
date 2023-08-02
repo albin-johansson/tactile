@@ -19,7 +19,7 @@
 
 #include "remove_column.hpp"
 
-#include "common/util/functional.hpp"
+#include "core/functional/invoke.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/maps/map_system.hpp"
 #include "model/services/language_service.hpp"

@@ -26,9 +26,9 @@
 #include <spdlog/spdlog.h>
 
 #include "common/util/filesystem.hpp"
-#include "common/util/functional.hpp"
 #include "core/debug/panic.hpp"
 #include "core/formatters/attribute_type_formatter.hpp"
+#include "core/functional/invoke.hpp"
 #include "io/base64_tiles.hpp"
 #include "io/export/tiled_info.hpp"
 #include "io/ir/map/map_ir.hpp"

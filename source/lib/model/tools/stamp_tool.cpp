@@ -21,10 +21,10 @@
 
 #include <utility>  // move
 
-#include "common/util/functional.hpp"
-#include "core/math/rng.hpp"
 #include "core/debug/assert.hpp"
+#include "core/functional/invoke.hpp"
 #include "core/functional/maybe.hpp"
+#include "core/math/rng.hpp"
 #include "core/tiles/tile_cache.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "model/documents/document_components.hpp"
