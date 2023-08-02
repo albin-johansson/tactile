@@ -25,13 +25,15 @@
 
 namespace tactile {
 
+/** Hashes a value and combines it with the provided seed. */
 template <typename T>
-void hash_combine(usize& seed, const T& val)
+void hash_combine(usize& seed, const T& value)
 {
-  // https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0814r0.pdf
-  seed ^= std::hash<T> {}(val) + 0x9E3779B9 + (seed << 6) + (seed >> 2);
+  // See https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0814r0.pdf
+  seed ^= std::hash<T> {}(value) + 0x9E3779B9 + (seed << 6) + (seed >> 2);
 }
 
+/** Computes a combined hash of the provided arguments. */
 [[nodiscard]] auto hash_combine(const auto&... args) -> usize
 {
   usize seed = 0;
@@ -41,6 +43,7 @@ void hash_combine(usize& seed, const T& val)
 
 }  // namespace tactile
 
+/** Convenience macro for implementing a hash specialization. */
 #define TACTILE_IMPLEMENT_HASH(Type, ...)                                \
   template <>                                                            \
   struct std::hash<Type> final {                                         \
