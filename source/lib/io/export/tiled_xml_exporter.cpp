@@ -198,24 +198,25 @@ void _append_csv_tile_layer_data(XmlNode data_node,
   const auto tile_count = map.extent.rows * map.extent.cols;
   const bool fold_tile_data = settings.test_flag(SETTINGS_FOLD_TILE_DATA_BIT);
 
-  invoke_mn(map.extent.rows,
-            map.extent.cols,
-            [&, index = 0ull](const usize row, const usize col) mutable {
-              if (fold_tile_data && index == 0) {
-                stream << '\n';
-              }
+  usize index = 0;
+  for (usize row = 0; row < map.extent.rows; ++row) {
+    for (usize col = 0; col < map.extent.cols; ++col) {
+      if (fold_tile_data && index == 0) {
+        stream << '\n';
+      }
 
-              stream << tile_layer.tiles[row][col];
-              if (index < tile_count - 1u) {
-                stream << ',';
-              }
+      stream << tile_layer.tiles[row][col];
+      if (index < tile_count - 1u) {
+        stream << ',';
+      }
 
-              if (fold_tile_data && (index + 1) % tile_layer.extent.cols == 0) {
-                stream << '\n';
-              }
+      if (fold_tile_data && (index + 1) % tile_layer.extent.cols == 0) {
+        stream << '\n';
+      }
 
-              ++index;
-            });
+      ++index;
+    }
+  }
 
   data_node.text().set(stream.str().c_str());
 }
