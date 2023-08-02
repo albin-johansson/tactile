@@ -28,6 +28,7 @@
 
 #define TACTILE_FWD_DECLARE_CLASS(Name) class Name;
 #define TACTILE_FWD_DECLARE_STRUCT(Name) struct Name;
+#define TACTILE_FWD_DECLARE_UNION(Name) union Name;
 
 #define TACTILE_FWD_DECLARE_CLASS_NS(Ns, Name) \
   namespace Ns {                               \
