@@ -20,7 +20,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
 
-#include "common/type/ptr.hpp"
+#include "core/containers/smart_ptr.hpp"
 #include "engine/app_delegate.hpp"
 #include "engine/engine.hpp"
 #include "model/services/service_locator.hpp"

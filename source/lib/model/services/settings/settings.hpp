@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/type/ptr.hpp"
 #include "core/attributes/color.hpp"
+#include "core/containers/smart_ptr.hpp"
 #include "core/containers/string.hpp"
 #include "core/enums/lang.hpp"
 #include "core/enums/overlay_pos.hpp"

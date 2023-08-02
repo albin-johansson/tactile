@@ -22,7 +22,7 @@
 #include <centurion/events.hpp>
 #include <imgui.h>
 
-#include "common/type/ptr.hpp"
+#include "core/containers/smart_ptr.hpp"
 #include "core/containers/vector.hpp"
 #include "core/events/dispatcher.hpp"
 #include "core/prelude.hpp"

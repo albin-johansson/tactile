@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/type/ptr.hpp"
 #include "core/containers/deque.hpp"
+#include "core/containers/smart_ptr.hpp"
 #include "core/containers/string.hpp"
 #include "core/functional/function.hpp"
 #include "core/prelude.hpp"

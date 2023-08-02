@@ -21,7 +21,7 @@
 
 #include <centurion/input/keyboard.hpp>
 
-#include "common/type/ptr.hpp"
+#include "core/containers/smart_ptr.hpp"
 #include "core/enums/backend_api.hpp"
 #include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"

@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/type/ptr.hpp"
 #include "core/containers/hash_map.hpp"
+#include "core/containers/smart_ptr.hpp"
 #include "core/enums/tool_type.hpp"
 #include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"

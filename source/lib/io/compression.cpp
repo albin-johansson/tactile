@@ -26,7 +26,7 @@
 #include <zlib.h>
 #include <zstd.h>
 
-#include "common/type/ptr.hpp"
+#include "core/containers/smart_ptr.hpp"
 #include "core/debug/assert.hpp"
 #include "core/prelude.hpp"
 

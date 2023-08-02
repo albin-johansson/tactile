@@ -24,11 +24,11 @@
 #include <variant>   // get
 
 #include "common/type/path.hpp"
-#include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "common/util/algorithms.hpp"
 #include "core/attributes/attribute.hpp"
 #include "core/containers/hash_map.hpp"
+#include "core/containers/smart_ptr.hpp"
 #include "core/containers/string.hpp"
 #include "core/containers/string_map.hpp"
 #include "core/containers/variant.hpp"

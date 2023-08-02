@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/ptr.hpp"
+#include "core/containers/smart_ptr.hpp"
 #include "core/containers/vector.hpp"
 #include "core/prelude.hpp"
 #include "model/system.hpp"

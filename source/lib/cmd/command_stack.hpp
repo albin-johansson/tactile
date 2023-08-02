@@ -23,8 +23,8 @@
 #include <utility>   // move, forward
 
 #include "cmd/command.hpp"
-#include "common/type/ptr.hpp"
 #include "core/containers/deque.hpp"
+#include "core/containers/smart_ptr.hpp"
 #include "core/containers/string.hpp"
 #include "core/functional/maybe.hpp"
 #include "core/prelude.hpp"
