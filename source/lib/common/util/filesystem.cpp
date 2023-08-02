@@ -22,8 +22,8 @@
 #include <algorithm>  // replace
 #include <concepts>   // same_as
 
-#include "common/util/env.hpp"
 #include "core/debug/assert.hpp"
+#include "core/platform/environment.hpp"
 #include "core/prelude.hpp"
 
 #if TACTILE_OS_WINDOWS
@@ -39,7 +39,7 @@ namespace {
 {
   // On Unix platforms, HOME is something like '/Users/username'
   // On Windows, USERPROFILE is something like 'C:\Users\username'
-  static const auto home_env = env_var(kOnWindows ? "USERPROFILE" : "HOME").value();
+  static const auto home_env = read_env_var(kOnWindows ? "USERPROFILE" : "HOME").value();
   static const auto home_str = make_native_string(home_env.c_str()).value();
   return home_str;
 }

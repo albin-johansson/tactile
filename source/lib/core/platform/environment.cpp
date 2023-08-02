@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "env.hpp"
+#include "environment.hpp"
 
 #include <cstdlib>  // getenv, _dupenv_s, free
 
@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-auto env_var(const char* var) -> Maybe<String>
+auto read_env_var(const char* var) -> Maybe<String>
 {
   if (var) {
 #if TACTILE_OS_WINDOWS

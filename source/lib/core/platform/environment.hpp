@@ -24,7 +24,7 @@
 
 namespace tactile {
 
-/// Returns the value of an environment variable.
-[[nodiscard]] auto env_var(const char* var) -> Maybe<String>;
+/** Returns the value of an environment variable. */
+[[nodiscard]] auto read_env_var(const char* var) -> Maybe<String>;
 
 }  // namespace tactile

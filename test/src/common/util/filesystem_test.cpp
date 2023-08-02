@@ -21,7 +21,7 @@
 
 #include <doctest/doctest.h>
 
-#include "common/util/env.hpp"
+#include "core/platform/environment.hpp"
 #include "core/prelude.hpp"
 
 using namespace tactile;
@@ -36,7 +36,7 @@ TEST_SUITE("FilesystemUtils")
 
   TEST_CASE("has_home_prefix")
   {
-    const auto home = env_var(kOnWindows ? "USERPROFILE" : "HOME").value();
+    const auto home = read_env_var(kOnWindows ? "USERPROFILE" : "HOME").value();
 
     CHECK(!has_home_prefix(""));
     CHECK(!has_home_prefix("foo.cpp"));
@@ -52,7 +52,7 @@ TEST_SUITE("FilesystemUtils")
 
   TEST_CASE("use_short_home_prefix")
   {
-    const auto home = env_var(kOnWindows ? "USERPROFILE" : "HOME").value();
+    const auto home = read_env_var(kOnWindows ? "USERPROFILE" : "HOME").value();
 
     CHECK(use_short_home_prefix(Path {home}) == "~");
     CHECK(use_short_home_prefix(Path {home + '/'}) == "~/");

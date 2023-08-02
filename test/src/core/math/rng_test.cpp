@@ -28,7 +28,7 @@
 
 using namespace tactile;
 
-TEST_SUITE("RandomUtils")
+TEST_SUITE("RNG")
 {
   TEST_CASE("next_random_i32")
   {

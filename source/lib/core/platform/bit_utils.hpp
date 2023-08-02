@@ -30,22 +30,25 @@
 
 namespace tactile {
 
+/** Iterates each byte of an integer value. */
 template <std::integral Int, std::invocable<uint8> T>
 void each_byte(const Int value, T&& callable)
 {
-  const auto* bytes = static_cast<const uint8*>(static_cast<const void*>(&value));
-  for (usize idx = 0; idx < sizeof(Int); ++idx) {
-    callable(bytes[idx]);
+  const auto* bytes = reinterpret_cast<const uint8*>(&value);
+  for (usize i = 0; i < sizeof(Int); ++i) {
+    const uint8 byte = bytes[i];
+    callable(byte);
   }
 }
 
+/** Returns a byte-reversed version of an integer value. */
 template <std::integral T>
-[[nodiscard]] constexpr auto reverse_bytes(const T value) noexcept -> T
+[[nodiscard]] constexpr auto reverse_bytes(const T value) -> T
 {
-  using ByteArray = Array<std::byte, sizeof(T)>;
-
   static_assert(std::has_unique_object_representations_v<T>,
                 "Must not have padding bits");
+
+  using ByteArray = Array<std::byte, sizeof(T)>;
 
   auto bytes = std::bit_cast<ByteArray>(value);
   std::ranges::reverse(bytes);
@@ -53,12 +56,9 @@ template <std::integral T>
   return std::bit_cast<T>(bytes);
 }
 
-[[nodiscard]] constexpr auto to_little_endian(const uint32 value) noexcept -> uint32
-{
-  return (std::endian::native == std::endian::little) ? value : reverse_bytes(value);
-}
-
-[[nodiscard]] constexpr auto to_little_endian(const int32 value) noexcept -> int32
+/** Converts a native integer to a little-endian integer. */
+template <std::integral T>
+[[nodiscard]] constexpr auto to_little_endian(const T value) -> T
 {
   return (std::endian::native == std::endian::little) ? value : reverse_bytes(value);
 }

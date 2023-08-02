@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "common/util/bits.hpp"
+#include "core/platform/bit_utils.hpp"
 
 #include <bit>  // bit_cast
 

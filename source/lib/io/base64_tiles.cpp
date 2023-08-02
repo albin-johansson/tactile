@@ -25,7 +25,7 @@
 
 #include <cppcodec/base64_rfc4648.hpp>
 
-#include "common/util/bits.hpp"
+#include "core/platform/bit_utils.hpp"
 #include "core/debug/panic.hpp"
 #include "core/functional/invoke.hpp"
 #include "core/tiles/tile_matrix.hpp"
