@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "common/util/strings.hpp"
+#include "core/containers/string.hpp"
 
 #include <doctest/doctest.h>
 

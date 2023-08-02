@@ -23,6 +23,9 @@
 #include <string_view>  // basic_string_view, string_view, wstring_view
 
 #include "common/type/path.hpp"
+#include "core/containers/vector.hpp"
+#include "core/functional/maybe.hpp"
+#include "core/prelude.hpp"
 
 namespace tactile {
 
@@ -35,5 +38,17 @@ using WStringView = std::wstring_view;
 using OsStrChar = Path::value_type;
 using OsString = std::basic_string<OsStrChar>;
 using OsStringView = std::basic_string_view<OsStrChar>;
+
+/** Splits a string into a collection of tokens, separated by a specific character. */
+[[nodiscard]] auto split(StringView str, char sep) -> Vector<String>;
+
+/** Converts a string into a 32-bit signed integer. */
+[[nodiscard]] auto parse_i32(StringView str, int base = 10) -> Maybe<int32>;
+
+/** Converts a string into a 32-bit unsigned integer. */
+[[nodiscard]] auto parse_u32(StringView str, int base = 10) -> Maybe<uint32>;
+
+/** Converts a string into a 32-bit float. */
+[[nodiscard]] auto parse_f32(StringView str) -> Maybe<float32>;
 
 }  // namespace tactile

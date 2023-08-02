@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "strings.hpp"
+#include "string.hpp"
 
 #include <charconv>      // from_chars
 #include <concepts>      // integral

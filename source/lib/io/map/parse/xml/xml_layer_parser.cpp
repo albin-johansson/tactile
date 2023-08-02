@@ -22,7 +22,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/util/strings.hpp"
 #include "core/containers/string.hpp"
 #include "core/containers/vector.hpp"
 #include "core/debug/panic.hpp"
