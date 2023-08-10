@@ -34,6 +34,7 @@ struct TextureDataDeleter final {
 using TexturePixelData = Unique<uchar, TextureDataDeleter>;
 
 /// Represents a loaded image file.
+// TODO add ImageChannels enum
 struct TextureData final {
   TexturePixelData pixels;  ///< The image pixel data.
   Int2 size {};             ///< The image dimensions.
