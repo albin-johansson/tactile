@@ -14,9 +14,12 @@ AlignTrailingComments: true
 AlignConsecutiveDeclarations: None
 AlignConsecutiveBitFields: Consecutive
 
+AccessModifierOffset: -1
+
 IndentCaseLabels: true
 IndentAccessModifiers: false
-AccessModifierOffset: -1
+IndentRequiresClause: true
+IndentPPDirectives: BeforeHash
 
 NamespaceIndentation: None
 FixNamespaceComments: true
@@ -40,6 +43,7 @@ AllowShortEnumsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
 
 SpaceAfterCStyleCast: true
+
 SpaceBeforeCpp11BracedList: true
 SpaceBeforeCtorInitializerColon: false
 SpaceBeforeRangeBasedForLoopColon: false
@@ -49,12 +53,11 @@ BreakBeforeBinaryOperators: None
 BreakBeforeTernaryOperators: true
 BreakBeforeConceptDeclarations: true
 
-RequiresClausePosition: OwnLine
-IndentRequiresClause: true
-
 BreakStringLiterals: true
 BreakInheritanceList: AfterColon
 BreakConstructorInitializers: BeforeColon
+
+RequiresClausePosition: OwnLine
 
 SortIncludes: CaseSensitive
 IncludeBlocks: Regroup
