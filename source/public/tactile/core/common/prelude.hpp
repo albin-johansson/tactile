@@ -145,6 +145,10 @@ using float64 = double;
 static_assert(sizeof(float32) == 4);
 static_assert(sizeof(float64) == 8);
 
+/** Strong type for object references. */
+enum ObjectRef : int32 {
+};
+
 using LayerID = int32;
 using ObjectID = int32;
 using TileIndex = int32;  ///< For local tile identifiers.
