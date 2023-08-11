@@ -30,21 +30,22 @@
 namespace tactile {
 
 struct TACTILE_CORE_API StringHash final {
+  using hash_type = std::hash<std::string_view>;
   using is_transparent [[maybe_unused]] = void;
 
   [[nodiscard]] auto operator()(const char* str) const -> usize
   {
-    return std::hash<const char*> {}(str);
+    return hash_type {}(str);
   }
 
   [[nodiscard]] auto operator()(std::string_view str) const -> usize
   {
-    return std::hash<std::string_view> {}(str);
+    return hash_type {}(str);
   }
 
   [[nodiscard]] auto operator()(const std::string& str) const -> usize
   {
-    return std::hash<std::string> {}(str);
+    return hash_type {}(str);
   }
 };
 
