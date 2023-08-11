@@ -149,6 +149,7 @@ static_assert(sizeof(float64) == 8);
 enum ObjectRef : int32 {
 };
 
+using ComponentID = uint32;
 using LayerID = int32;
 using ObjectID = int32;
 using TileIndex = int32;  ///< For local tile identifiers.
