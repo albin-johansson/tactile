@@ -51,7 +51,7 @@ template <typename T>
     return *value;
   }
 
-  throw Error {"Did not find element"};
+  throw Error {"Did not find element in map"};
 }
 
 template <typename T>
@@ -62,7 +62,19 @@ template <typename T>
     return *value;
   }
 
-  throw Error {"Did not find element"};
+  throw Error {"Did not find element in map"};
+}
+
+template <typename T>
+auto erase_in(T& map, const auto& key) -> typename T::mapped_type
+{
+  if (const auto iter = map.find(key); iter != map.end()) {
+    auto value = iter->second;
+    map.erase(iter);
+    return value;
+  }
+
+  throw Error {"Did not find element to remove"};
 }
 
 template <typename T>
