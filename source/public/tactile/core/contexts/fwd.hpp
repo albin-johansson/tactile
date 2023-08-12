@@ -21,21 +21,18 @@
 
 namespace tactile {
 
-/** The supported property value types. */
-enum class PropertyType : int {
-  Str,
-  Int,
-  Int2,
-  Int3,
-  Int4,
-  Float,
-  Float2,
-  Float3,
-  Float4,
-  Bool,
-  Path,
-  Color,
-  Object,
-};
+enum class PropertyType : int;
+
+struct UColor;
+struct NColor;
+struct ComponentInstance;
+
+class Property;
+class Component;
+class PropertyBundle;
+class ComponentBundle;
+class Metadata;
+
+class IContext;
 
 }  // namespace tactile

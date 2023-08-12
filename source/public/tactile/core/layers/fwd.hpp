@@ -21,21 +21,13 @@
 
 namespace tactile {
 
-/** The supported property value types. */
-enum class PropertyType : int {
-  Str,
-  Int,
-  Int2,
-  Int3,
-  Int4,
-  Float,
-  Float2,
-  Float3,
-  Float4,
-  Bool,
-  Path,
-  Color,
-  Object,
-};
+enum class LayerType : int;
+enum class ObjectType : int;
+
+class ILayer;
+class TileLayer;
+class ObjectLayer;
+class GroupLayer;
+class Object;
 
 }  // namespace tactile

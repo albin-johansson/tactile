@@ -21,21 +21,22 @@
 
 namespace tactile {
 
-/** The supported property value types. */
-enum class PropertyType : int {
-  Str,
-  Int,
-  Int2,
-  Int3,
-  Int4,
-  Float,
-  Float2,
-  Float3,
-  Float4,
-  Bool,
-  Path,
-  Color,
-  Object,
-};
+class IFileFormat;
 
+namespace ir {
+
+struct Color;
+struct Attribute;
+struct AttachedComponent;
+struct Metadata;
+struct Object;
+struct Layer;
+struct AnimationFrame;
+struct Tile;
+struct Tileset;
+struct TileFormat;
+struct Component;
+struct Map;
+
+}  // namespace ir
 }  // namespace tactile

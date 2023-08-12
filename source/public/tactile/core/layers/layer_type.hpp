@@ -22,7 +22,7 @@
 namespace tactile {
 
 /** The supported layer types. */
-enum class LayerType {
+enum class LayerType : int {
   TileLayer,
   ObjectLayer,
   GroupLayer,
