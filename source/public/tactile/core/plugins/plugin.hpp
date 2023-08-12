@@ -19,11 +19,22 @@
 
 #pragma once
 
+#include <memory>  // unique_ptr
+
+#include "tactile/core/common/prelude.hpp"
+#include "tactile/core/core.hpp"
+#include "tactile/core/platform/dynamic_library.hpp"
+#include "tactile/core/plugins/fwd.hpp"
+
 namespace tactile {
 
-struct Plugin;
+using PluginInitFn = void (*)(IPluginContext* context);
+using PluginDropFn = void (*)();
 
-class IPluginContext;
-class PluginManager;
+struct TACTILE_CORE_API Plugin final {
+  std::unique_ptr<IDynamicLibrary> library;
+  PluginInitFn init {};
+  PluginDropFn drop {};
+};
 
 }  // namespace tactile
