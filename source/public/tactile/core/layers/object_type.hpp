@@ -22,7 +22,7 @@
 namespace tactile {
 
 /** The supported map object types. */
-enum class ObjectType {
+enum class ObjectType : int {
   Point,
   Rect,
   Ellipse
