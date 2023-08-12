@@ -20,6 +20,7 @@
     "doctest",
     "entt",
     "fmt",
+    "gtest",
     {
       "name": "glad",
       "features": [
