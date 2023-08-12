@@ -58,12 +58,15 @@ TACTILE_FWD_DECLARE_STRUCT(SettingsState)
 class Settings final {
  public:
   TACTILE_DELETE_COPY(Settings);
-  TACTILE_DECLARE_MOVE(Settings);
 
   /// Creates an instance initialized with the default setting values.
   Settings();
 
   ~Settings();
+
+  Settings(Settings&& other) noexcept;
+
+  auto operator=(Settings&& other) noexcept -> Settings&;
 
   void print() const;
 
