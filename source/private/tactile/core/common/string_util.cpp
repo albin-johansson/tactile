@@ -17,18 +17,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "tactile/core/common/string_conv.hpp"
+#include "tactile/core/common/string_util.hpp"
 
 #include <charconv>      // from_chars
 #include <concepts>      // integral
 #include <sstream>       // stringstream
+#include <string>        // getline, erase
 #include <system_error>  // errc
+#include <utility>       // move
 
 namespace tactile {
 namespace {
 
 template <std::integral T>
-[[nodiscard]] auto _str_to_int(std::string_view str, const int base) -> std::optional<T>
+[[nodiscard]] auto _str_to_int(StringView str, const int base) -> Maybe<T>
 {
   T value {};
   const auto [ptr, err] =
@@ -43,17 +45,34 @@ template <std::integral T>
 
 }  // namespace
 
-auto str_to_i32(std::string_view str, const int base) -> std::optional<int32>
+auto str_split(StringView str, const char separator) -> Vector<String>
+{
+  std::stringstream stream;
+  stream << str;
+
+  Vector<String> tokens;
+
+  String token;
+  while (std::getline(stream, token, separator)) {
+    std::erase(token, '\n');
+    tokens.push_back(std::move(token));
+    token.clear();
+  }
+
+  return tokens;
+}
+
+auto str_to_i32(StringView str, const int base) -> Maybe<int32>
 {
   return _str_to_int<int32>(str, base);
 }
 
-auto str_to_u32(std::string_view str, const int base) -> std::optional<uint32>
+auto str_to_u32(StringView str, const int base) -> Maybe<uint32>
 {
   return _str_to_int<uint32>(str, base);
 }
 
-auto str_to_f32(std::string_view str) -> std::optional<float32>
+auto str_to_f32(StringView str) -> Maybe<float32>
 {
   std::stringstream stream;
   stream << str;

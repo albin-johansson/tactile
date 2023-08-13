@@ -19,24 +19,27 @@
 
 #pragma once
 
-#include <optional>     // optional
-#include <string_view>  // string_view
-
 #include "tactile/core/common/prelude.hpp"
+#include "tactile/core/containers/string.hpp"
+#include "tactile/core/containers/vector.hpp"
 #include "tactile/core/core.hpp"
+#include "tactile/core/functional/maybe.hpp"
 
 namespace tactile {
 
+/** Splits a string into a sequence of tokens, partitioned by the specified separator. */
+[[nodiscard]] TACTILE_CORE_API auto str_split(StringView str, char separator)
+    -> Vector<String>;
+
 /** Converts a string into a 32-bit signed integer. */
-[[nodiscard]] TACTILE_CORE_API auto str_to_i32(std::string_view str, int base = 10)
-    -> std::optional<int32>;
+[[nodiscard]] TACTILE_CORE_API auto str_to_i32(StringView str, int base = 10)
+    -> Maybe<int32>;
 
 /** Converts a string into a 32-bit unsigned integer. */
-[[nodiscard]] TACTILE_CORE_API auto str_to_u32(std::string_view str, int base = 10)
-    -> std::optional<uint32>;
+[[nodiscard]] TACTILE_CORE_API auto str_to_u32(StringView str, int base = 10)
+    -> Maybe<uint32>;
 
 /** Converts a string into a 32-bit float. */
-[[nodiscard]] TACTILE_CORE_API auto str_to_f32(std::string_view str)
-    -> std::optional<float32>;
+[[nodiscard]] TACTILE_CORE_API auto str_to_f32(StringView str) -> Maybe<float32>;
 
 }  // namespace tactile
