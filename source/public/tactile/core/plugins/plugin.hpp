@@ -19,9 +19,8 @@
 
 #pragma once
 
-#include <memory>  // unique_ptr
-
 #include "tactile/core/common/prelude.hpp"
+#include "tactile/core/containers/smart_ptr.hpp"
 #include "tactile/core/core.hpp"
 #include "tactile/core/platform/dynamic_library.hpp"
 #include "tactile/core/plugins/fwd.hpp"
@@ -32,7 +31,7 @@ using PluginInitFn = void (*)(IPluginContext* context);
 using PluginDropFn = void (*)();
 
 struct TACTILE_CORE_API Plugin final {
-  std::unique_ptr<IDynamicLibrary> library;
+  UniquePtr<IDynamicLibrary> library;
   PluginInitFn init {};
   PluginDropFn drop {};
 };

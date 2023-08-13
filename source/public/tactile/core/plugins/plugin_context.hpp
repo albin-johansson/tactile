@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <memory>  // unique_ptr
-
+#include "tactile/core/containers/smart_ptr.hpp"
 #include "tactile/core/core.hpp"
 #include "tactile/core/io/fwd.hpp"
 
@@ -30,7 +29,7 @@ class TACTILE_CORE_API IPluginContext {
  public:
   virtual ~IPluginContext() noexcept = default;
 
-  virtual void add_file_format(std::unique_ptr<IFileFormat> format) = 0;
+  virtual void add_file_format(UniquePtr<IFileFormat> format) = 0;
 };
 
 }  // namespace tactile

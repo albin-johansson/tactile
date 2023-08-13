@@ -98,15 +98,15 @@ class WindowsLib final : public IDynamicLibrary {
 
 }  // namespace
 
-auto load_dynamic_library(const char* path) -> std::unique_ptr<IDynamicLibrary>
+auto load_dynamic_library(const char* path) -> UniquePtr<IDynamicLibrary>
 {
 #if TACTILE_OS_LINUX || TACTILE_OS_MACOS
-  auto library = std::make_unique<UnixLib>(path);
+  auto library = make_unique<UnixLib>(path);
   if (library->is_valid()) {
     return library;
   }
 #elif TACTILE_OS_WINDOWS
-  auto library = std::make_unique<WindowsLib>(path);
+  auto library = make_unique<WindowsLib>(path);
   if (library->is_valid()) {
     return library;
   }

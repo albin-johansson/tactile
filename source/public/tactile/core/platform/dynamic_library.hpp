@@ -19,9 +19,8 @@
 
 #pragma once
 
-#include <memory>  // unique_ptr
-
 #include "tactile/core/common/prelude.hpp"
+#include "tactile/core/containers/smart_ptr.hpp"
 #include "tactile/core/core.hpp"
 
 namespace tactile {
@@ -37,6 +36,6 @@ class TACTILE_CORE_API IDynamicLibrary {
 
 /** Attempts to load a dynamic library, returning null on failure. */
 [[nodiscard]] TACTILE_CORE_API auto load_dynamic_library(const char* path)
-    -> std::unique_ptr<IDynamicLibrary>;
+    -> UniquePtr<IDynamicLibrary>;
 
 }  // namespace tactile
