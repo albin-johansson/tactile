@@ -11,6 +11,7 @@ project(tactile
 
 option(TACTILE_BUILD_APP_BUNDLE "Build as a macOS application bundle (.app)" OFF)
 option(TACTILE_USE_SANITIZERS "Enable runtime sanitizers" OFF)
+option(TACTILE_USE_LTO "Enable link-time optimization" OFF)
 option(TACTILE_TREAT_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -25,6 +26,7 @@ endif ()
 set(TACTILE_ROOT_DIR "${PROJECT_SOURCE_DIR}")
 set(TACTILE_VENDOR_DIR "${TACTILE_ROOT_DIR}/vendor")
 set(TACTILE_ASSETS_DIR "${TACTILE_ROOT_DIR}/assets")
+set(TACTILE_INCLUDE_DIR "${TACTILE_ROOT_DIR}/source/public")
 
 # Target names
 set(TACTILE_PROTO TactileProto)
@@ -32,6 +34,7 @@ set(TACTILE_LIB TactileLib)
 set(TACTILE_EXE Tactile)
 set(TACTILE_TEST TactileTests)
 
+set(TACTILE_CORE tactile-core)
 include(cmake/tactile.cmake)
 
 # System dependencies
@@ -44,6 +47,7 @@ set(VULKAN_INCLUDE_DIR "$ENV{VULKAN_SDK}/include")
 find_package(argparse CONFIG REQUIRED)
 find_package(Boost REQUIRED)
 find_package(doctest CONFIG REQUIRED)
+find_package(GTest CONFIG REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
@@ -65,11 +69,13 @@ find_package(zstd CONFIG REQUIRED)
 
 find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
 
-if (TACTILE_BUILD_WITH_ASAN MATCHES ON)
-  tactile_enable_address_sanitizer()
-endif ()
+message(DEBUG "TACTILE_INCLUDE_DIR: ${TACTILE_INCLUDE_DIR}")
+message(DEBUG "TACTILE_USE_SANITIZERS: ${TACTILE_USE_SANITIZERS}")
+message(DEBUG "TACTILE_USE_LTO: ${TACTILE_USE_LTO}")
+message(DEBUG "TACTILE_TREAT_WARNINGS_AS_ERRORS: ${TACTILE_TREAT_WARNINGS_AS_ERRORS}")
 
 add_subdirectory(source/proto)
+add_subdirectory(source/private)
 add_subdirectory(source/lib)
 add_subdirectory(source/exe)
 add_subdirectory(test)
