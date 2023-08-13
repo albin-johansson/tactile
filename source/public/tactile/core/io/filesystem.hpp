@@ -19,7 +19,9 @@
 
 #pragma once
 
-#include <filesystem>  // path, directory_iterator, recursive_directory_iterator
+#include <filesystem>   // path, directory_iterator, recursive_directory_iterator
+#include <string>       // basic_string
+#include <string_view>  // basic_string_view
 
 namespace tactile {
 
@@ -28,5 +30,9 @@ namespace fs = std::filesystem;
 using Path = fs::path;
 using DirectoryIterator = fs::directory_iterator;
 using RecursiveDirectoryIterator = fs::recursive_directory_iterator;
+
+using NativeChar = Path::value_type;
+using NativeString = std::basic_string<NativeChar>;
+using NativeStringView = std::basic_string_view<NativeChar>;
 
 }  // namespace tactile
