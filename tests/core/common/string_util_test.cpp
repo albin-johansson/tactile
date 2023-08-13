@@ -17,13 +17,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "tactile/core/common/string_conv.hpp"
+#include "tactile/core/common/string_util.hpp"
 
 #include <gtest/gtest.h>
 
 using namespace tactile;
 
-TEST(StringConv, StrToI32)
+TEST(StringUtil, StrSplit)
+{
+  EXPECT_TRUE(str_split("", ' ').empty());
+  EXPECT_EQ(str_split("foo bar", '.'), Vector<String> {"foo bar"});
+  EXPECT_EQ(str_split("foo bar", ' '), (Vector<String> {"foo", "bar"}));
+
+  const Vector<String> tokens = {"10", "foo", "-35", "bar"};
+  EXPECT_EQ(str_split("10.foo.-35.bar", '.'), tokens);
+  EXPECT_EQ(str_split("10;foo;-35;bar", ';'), tokens);
+  EXPECT_EQ(str_split("10!foo!-35!bar", '!'), tokens);
+}
+
+TEST(StringUtil, StrToI32)
 {
   EXPECT_FALSE(str_to_i32("").has_value());
   EXPECT_FALSE(str_to_i32("-").has_value());
@@ -38,7 +50,7 @@ TEST(StringConv, StrToI32)
   EXPECT_EQ(str_to_i32("E9C", 16), 0xE9C);
 }
 
-TEST(StringConv, StrToU32)
+TEST(StringUtil, StrToU32)
 {
   EXPECT_FALSE(str_to_u32("").has_value());
   EXPECT_FALSE(str_to_u32("+").has_value());
@@ -52,7 +64,7 @@ TEST(StringConv, StrToU32)
   EXPECT_EQ(str_to_u32("B5", 16), 0xB5u);
 }
 
-TEST(StringConv, StrToF32)
+TEST(StringUtil, StrToF32)
 {
   EXPECT_FALSE(str_to_f32("").has_value());
   EXPECT_FALSE(str_to_f32("*").has_value());
