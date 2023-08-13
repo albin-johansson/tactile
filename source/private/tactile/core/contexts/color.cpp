@@ -24,7 +24,7 @@
 
 #include <fmt/format.h>
 
-#include "tactile/core/common/string_conv.hpp"
+#include "tactile/core/common/string_util.hpp"
 
 namespace tactile {
 namespace {
