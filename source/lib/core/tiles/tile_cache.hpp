@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "core/containers/vector_map.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_pos.hpp"
+#include "tactile/core/containers/vector_map.hpp"
 
 namespace tactile {
 

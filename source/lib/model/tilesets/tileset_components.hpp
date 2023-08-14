@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/containers/hash_map.hpp"
+#include "tactile/core/containers/hash_map.hpp"
 #include "tactile/core/containers/vector.hpp"
 #include "core/ecs/entity.hpp"
 #include "tactile/core/functional/maybe.hpp"

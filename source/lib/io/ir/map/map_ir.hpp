@@ -27,7 +27,7 @@
 #include "common/type/uuid.hpp"
 #include "common/util/algorithms.hpp"
 #include "core/attributes/attribute.hpp"
-#include "core/containers/hash_map.hpp"
+#include "tactile/core/containers/hash_map.hpp"
 #include "tactile/core/containers/smart_ptr.hpp"
 #include "core/containers/variant.hpp"
 #include "tactile/core/containers/vector.hpp"

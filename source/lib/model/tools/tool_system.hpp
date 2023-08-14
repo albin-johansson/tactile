@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/containers/hash_map.hpp"
+#include "tactile/core/containers/hash_map.hpp"
 #include "tactile/core/containers/smart_ptr.hpp"
 #include "core/enums/tool_type.hpp"
 #include "tactile/core/functional/maybe.hpp"
