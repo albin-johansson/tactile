@@ -26,7 +26,7 @@
 #include "common/type/path.hpp"
 #include "core/attributes/color.hpp"
 #include "tactile/core/containers/string.hpp"
-#include "core/containers/variant.hpp"
+#include "tactile/core/containers/variant.hpp"
 #include "core/enums/attribute_type.hpp"
 #include "core/math/vector.hpp"
 #include "core/prelude.hpp"
