@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/containers/span.hpp"
+#include "tactile/core/containers/span.hpp"
 #include "tactile/core/containers/string.hpp"
 
 namespace tactile {
