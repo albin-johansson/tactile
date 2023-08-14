@@ -26,4 +26,6 @@ namespace tactile {
 template <typename X, typename Y>
 using Pair = std::pair<X, Y>;
 
+using std::make_pair;
+
 }  // namespace tactile
