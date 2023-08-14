@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "rng.hpp"
+#include "tactile/core/math/rng.hpp"
 
 #include <algorithm>   // generate
 #include <concepts>    // same_as, floating_point
@@ -64,10 +64,10 @@ template <typename T>
   auto& engine = _get_random_engine();
 
   if constexpr (std::floating_point<T>) {
-    return std::uniform_real_distribution<T> {min, max}(engine);
+    return std::uniform_real_distribution {min, max}(engine);
   }
   else {
-    return std::uniform_int_distribution<T> {min, max}(engine);
+    return std::uniform_int_distribution {min, max}(engine);
   }
 }
 

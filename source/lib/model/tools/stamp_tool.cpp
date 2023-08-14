@@ -23,7 +23,6 @@
 
 #include "core/ecs/registry.hpp"
 #include "core/functional/invoke.hpp"
-#include "core/math/rng.hpp"
 #include "core/tiles/tile_cache.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "model/documents/document_components.hpp"
@@ -39,6 +38,7 @@
 #include "model/viewports/viewport_components.hpp"
 #include "tactile/core/common/assert.hpp"
 #include "tactile/core/functional/maybe.hpp"
+#include "tactile/core/math/rng.hpp"
 
 namespace tactile {
 
