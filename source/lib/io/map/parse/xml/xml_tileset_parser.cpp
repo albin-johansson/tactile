@@ -19,10 +19,10 @@
 
 #include <utility>  // move
 
-#include "core/debug/assert.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/xml_utils.hpp"
+#include "tactile/core/common/assert.hpp"
 
 namespace tactile {
 namespace {

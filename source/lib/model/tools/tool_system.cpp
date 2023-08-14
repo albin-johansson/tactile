@@ -24,7 +24,6 @@
 #include "cmd/tool/bucket_fill.hpp"
 #include "cmd/tool/stamp_sequence.hpp"
 #include "common/util/lookup.hpp"
-#include "core/debug/assert.hpp"
 #include "core/formatters/entity_formatter.hpp"
 #include "core/formatters/tile_pos_formatter.hpp"
 #include "model/documents/command_system.hpp"
@@ -34,6 +33,7 @@
 #include "model/tools/eraser_tool.hpp"
 #include "model/tools/stamp_tool.hpp"
 #include "model/tools/tool.hpp"
+#include "tactile/core/common/assert.hpp"
 
 namespace tactile {
 

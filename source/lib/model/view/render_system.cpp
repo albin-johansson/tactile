@@ -24,7 +24,6 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/debug/assert.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/layers/group_layer_ops.hpp"
 #include "model/layers/layer_components.hpp"
@@ -37,6 +36,7 @@
 #include "model/textures/texture_components.hpp"
 #include "model/tilesets/attached_tileset_ops.hpp"
 #include "model/tilesets/tileset_system.hpp"
+#include "tactile/core/common/assert.hpp"
 #include "ui/conversions.hpp"
 #include "ui/render/canvas_renderer.hpp"
 #include "ui/render/primitives.hpp"

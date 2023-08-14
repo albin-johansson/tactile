@@ -22,12 +22,12 @@
 #include <algorithm>  // find, iter_swap
 
 #include "common/util/algorithms.hpp"
-#include "core/debug/assert.hpp"
 #include "core/functional/invoke.hpp"
-#include "tactile/core/functional/maybe.hpp"
 #include "model/entity_validation.hpp"
 #include "model/layers/layer_tree_system.hpp"
 #include "model/maps/map_components.hpp"
+#include "tactile/core/common/assert.hpp"
+#include "tactile/core/functional/maybe.hpp"
 
 namespace tactile::sys {
 

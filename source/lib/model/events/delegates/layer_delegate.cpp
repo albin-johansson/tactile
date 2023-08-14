@@ -27,13 +27,13 @@
 #include "cmd/layer/rename_layer.hpp"
 #include "cmd/layer/set_layer_opacity.hpp"
 #include "cmd/layer/set_layer_visible.hpp"
-#include "core/debug/assert.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/documents/command_system.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/entity_validation.hpp"
 #include "model/maps/map_system.hpp"
+#include "tactile/core/common/assert.hpp"
 #include "ui/widget_state.hpp"
 
 namespace tactile {

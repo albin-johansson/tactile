@@ -19,7 +19,6 @@
 
 #include "tileset_factory.hpp"
 
-#include "core/debug/assert.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/entity_validation.hpp"
 #include "model/services/backend_service.hpp"
@@ -29,6 +28,7 @@
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_ops.hpp"
 #include "model/viewports/viewport_components.hpp"
+#include "tactile/core/common/assert.hpp"
 
 namespace tactile::sys {
 

@@ -21,7 +21,6 @@
 
 #include <imgui.h>
 
-#include "core/debug/assert.hpp"
 #include "core/ecs/registry.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
@@ -31,6 +30,7 @@
 #include "model/maps/map_components.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
+#include "tactile/core/common/assert.hpp"
 #include "ui/constants.hpp"
 #include "ui/dock/layer/dialogs/rename_layer_dialog.hpp"
 #include "ui/dock/layer/layer_selectable.hpp"

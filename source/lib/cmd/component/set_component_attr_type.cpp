@@ -22,13 +22,13 @@
 #include <utility>  // move
 
 #include "common/util/lookup.hpp"
-#include "core/debug/assert.hpp"
 #include "model/components/component_components.hpp"
 #include "model/components/component_def_system.hpp"
 #include "model/contexts/context_system.hpp"
 #include "model/entity_validation.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
+#include "tactile/core/common/assert.hpp"
 
 namespace tactile::cmd {
 

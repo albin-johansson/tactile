@@ -21,9 +21,9 @@
 
 #include <fmt/format.h>
 
-#include "core/debug/assert.hpp"
 #include "model/components/component_components.hpp"
 #include "model/entity_validation.hpp"
+#include "tactile/core/common/assert.hpp"
 #include "tactile/core/containers/lookup.hpp"
 
 namespace tactile::sys {

@@ -23,9 +23,6 @@
 
 #include <imgui.h>
 
-#include "tactile/core/contexts/property.hpp"
-#include "tactile/core/containers/string.hpp"
-#include "core/debug/assert.hpp"
 #include "core/ecs/registry.hpp"
 #include "model/components/component_components.hpp"
 #include "model/documents/document_components.hpp"
@@ -33,6 +30,9 @@
 #include "model/events/component_events.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
+#include "tactile/core/common/assert.hpp"
+#include "tactile/core/containers/string.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/dock/comp/dialogs/new_comp_dialog.hpp"

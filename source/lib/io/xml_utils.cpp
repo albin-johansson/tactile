@@ -25,8 +25,8 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "core/debug/assert.hpp"
 #include "io/stream_utils.hpp"
+#include "tactile/core/common/assert.hpp"
 #include "ui/constants.hpp"
 
 namespace tactile {

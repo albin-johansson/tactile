@@ -22,9 +22,9 @@
 #include <algorithm>  // replace
 #include <concepts>   // same_as
 
-#include "core/debug/assert.hpp"
 #include "core/platform/environment.hpp"
 #include "core/prelude.hpp"
+#include "tactile/core/common/assert.hpp"
 
 #if TACTILE_OS_WINDOWS
 

@@ -19,13 +19,13 @@
 
 #include "ir_generation.hpp"
 
-#include "core/debug/assert.hpp"
 #include "core/debug/profile.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/entity_validation.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/objects/object_components.hpp"
 #include "model/textures/texture_components.hpp"
+#include "tactile/core/common/assert.hpp"
 
 namespace tactile {
 

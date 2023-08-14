@@ -19,11 +19,11 @@
 
 #include "tile_factory.hpp"
 
-#include "core/debug/assert.hpp"
 #include "core/tiles/tile_matrix.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/entity_validation.hpp"
 #include "model/tiles/tile_components.hpp"
+#include "tactile/core/common/assert.hpp"
 
 namespace tactile::sys {
 

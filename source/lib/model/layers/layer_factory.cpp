@@ -21,11 +21,11 @@
 
 #include <utility>  // move
 
-#include "tactile/core/containers/string.hpp"
-#include "core/debug/assert.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/entity_validation.hpp"
 #include "model/layers/layer_components.hpp"
+#include "tactile/core/common/assert.hpp"
+#include "tactile/core/containers/string.hpp"
 
 namespace tactile::sys {
 namespace {

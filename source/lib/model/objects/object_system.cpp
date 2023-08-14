@@ -19,11 +19,11 @@
 
 #include "object_system.hpp"
 
-#include "core/debug/assert.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/contexts/context_system.hpp"
 #include "model/entity_validation.hpp"
 #include "model/objects/object_components.hpp"
+#include "tactile/core/common/assert.hpp"
 
 namespace tactile::sys {
 

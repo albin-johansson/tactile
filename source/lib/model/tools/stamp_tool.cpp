@@ -21,10 +21,8 @@
 
 #include <utility>  // move
 
-#include "core/debug/assert.hpp"
 #include "core/ecs/registry.hpp"
 #include "core/functional/invoke.hpp"
-#include "tactile/core/functional/maybe.hpp"
 #include "core/math/rng.hpp"
 #include "core/tiles/tile_cache.hpp"
 #include "core/tiles/tile_pos.hpp"
@@ -39,6 +37,8 @@
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_ops.hpp"
 #include "model/viewports/viewport_components.hpp"
+#include "tactile/core/common/assert.hpp"
+#include "tactile/core/functional/maybe.hpp"
 
 namespace tactile {
 

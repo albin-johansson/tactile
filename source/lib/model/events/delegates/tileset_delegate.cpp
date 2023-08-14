@@ -29,7 +29,6 @@
 #include "cmd/tileset/create_tileset.hpp"
 #include "cmd/tileset/remove_tileset.hpp"
 #include "cmd/tileset/rename_tileset.hpp"
-#include "core/debug/assert.hpp"
 #include "model/documents/command_system.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
@@ -38,6 +37,7 @@
 #include "model/services/service_locator.hpp"
 #include "model/services/settings_service.hpp"
 #include "model/tilesets/tileset_components.hpp"
+#include "tactile/core/common/assert.hpp"
 #include "ui/widget_state.hpp"
 
 namespace tactile {

@@ -21,10 +21,10 @@
 
 #include <utility>  // move
 
-#include "core/debug/assert.hpp"
 #include "model/components/component_components.hpp"
 #include "model/entity_validation.hpp"
 #include "model/events/component_events.hpp"
+#include "tactile/core/common/assert.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/attribute_widgets.hpp"

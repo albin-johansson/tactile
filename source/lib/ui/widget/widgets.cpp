@@ -23,8 +23,8 @@
 
 #include <imgui.h>
 
+#include "tactile/core/common/assert.hpp"
 #include "tactile/core/containers/hash_map.hpp"
-#include "core/debug/assert.hpp"
 #include "tactile/core/functional/maybe.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"

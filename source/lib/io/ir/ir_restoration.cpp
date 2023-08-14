@@ -25,10 +25,8 @@
 
 #include "cmd/command_stack.hpp"
 #include "common/type/uuid.hpp"
-#include "core/debug/assert.hpp"
 #include "core/ecs/registry.hpp"
 #include "core/functional/invoke.hpp"
-#include "tactile/core/functional/maybe.hpp"
 #include "core/math/vector.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/texture_loader.hpp"
@@ -46,6 +44,8 @@
 #include "model/objects/object_components.hpp"
 #include "model/tiles/tile_components.hpp"
 #include "model/tilesets/tileset_components.hpp"
+#include "tactile/core/common/assert.hpp"
+#include "tactile/core/functional/maybe.hpp"
 
 // TODO move internal functions into headers to simplify testing
 

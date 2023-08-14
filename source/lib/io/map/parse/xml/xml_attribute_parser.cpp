@@ -20,11 +20,11 @@
 #include <cstring>  // strcmp
 #include <utility>  // move
 
-#include "core/debug/assert.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/save_formats.hpp"
 #include "io/xml_utils.hpp"
+#include "tactile/core/common/assert.hpp"
 #include "tactile/core/containers/string.hpp"
 
 namespace tactile {

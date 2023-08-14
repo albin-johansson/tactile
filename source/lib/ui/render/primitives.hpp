@@ -24,9 +24,9 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/debug/assert.hpp"
 #include "core/prelude.hpp"
 #include "model/textures/texture_components.hpp"
+#include "tactile/core/common/assert.hpp"
 #include "tactile/core/contexts/color.hpp"
 #include "ui/conversions.hpp"
 

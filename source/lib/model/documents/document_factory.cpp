@@ -20,7 +20,6 @@
 #include "document_factory.hpp"
 
 #include "cmd/command_stack.hpp"
-#include "core/debug/assert.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/entity_validation.hpp"
 #include "model/maps/map_factory.hpp"
@@ -28,6 +27,7 @@
 #include "model/services/settings_service.hpp"
 #include "model/tilesets/tileset_factory.hpp"
 #include "model/viewports/viewport_components.hpp"
+#include "tactile/core/common/assert.hpp"
 
 namespace tactile::sys {
 

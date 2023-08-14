@@ -19,8 +19,8 @@
 
 #include "scoped.hpp"
 
-#include "core/debug/assert.hpp"
 #include "core/debug/panic.hpp"
+#include "tactile/core/common/assert.hpp"
 #include "ui/conversions.hpp"
 #include "ui/style/colors.hpp"
 

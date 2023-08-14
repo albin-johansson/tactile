@@ -20,7 +20,6 @@
 #include "tileset_system.hpp"
 
 #include "common/util/lookup.hpp"
-#include "core/debug/assert.hpp"
 #include "core/tiles/tile_matrix.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/entity_validation.hpp"
@@ -29,6 +28,7 @@
 #include "model/tilesets/attached_tileset_ops.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/viewports/viewport_components.hpp"
+#include "tactile/core/common/assert.hpp"
 
 namespace tactile::sys {
 

@@ -19,8 +19,8 @@
 
 #include "command_stack.hpp"
 
-#include "core/debug/assert.hpp"
 #include "core/functional/invoke.hpp"
+#include "tactile/core/common/assert.hpp"
 
 namespace tactile {
 

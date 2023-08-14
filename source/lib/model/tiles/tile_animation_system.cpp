@@ -21,9 +21,9 @@
 
 #include <chrono>  // system_clock
 
-#include "core/debug/assert.hpp"
 #include "model/entity_validation.hpp"
 #include "model/tiles/tile_components.hpp"
+#include "tactile/core/common/assert.hpp"
 
 namespace tactile::sys {
 

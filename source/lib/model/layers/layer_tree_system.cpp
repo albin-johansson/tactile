@@ -22,9 +22,9 @@
 #include <algorithm>  // find, iter_swap
 
 #include "common/util/algorithms.hpp"
-#include "core/debug/assert.hpp"
 #include "core/functional/invoke.hpp"
 #include "model/entity_validation.hpp"
+#include "tactile/core/common/assert.hpp"
 
 namespace tactile::sys {
 namespace {

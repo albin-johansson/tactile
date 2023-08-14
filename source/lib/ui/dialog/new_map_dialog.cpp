@@ -21,10 +21,10 @@
 
 #include <imgui.h>
 
-#include "core/debug/assert.hpp"
 #include "model/events/map_events.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
+#include "tactile/core/common/assert.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/alignment.hpp"
 

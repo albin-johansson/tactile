@@ -22,7 +22,6 @@
 #include <centurion/events/mouse_events.hpp>
 #include <imgui.h>
 
-#include "core/debug/assert.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
@@ -36,6 +35,7 @@
 #include "model/services/service_locator.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/viewports/viewport_components.hpp"
+#include "tactile/core/common/assert.hpp"
 #include "ui/dock/tileset/tileset_view.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"

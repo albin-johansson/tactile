@@ -19,10 +19,10 @@
 
 #include "delete_animation.hpp"
 
-#include "core/debug/assert.hpp"
 #include "model/entity_validation.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
+#include "tactile/core/common/assert.hpp"
 
 namespace tactile::cmd {
 

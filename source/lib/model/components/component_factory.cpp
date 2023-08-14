@@ -21,8 +21,8 @@
 
 #include <utility>  // move
 
-#include "core/debug/assert.hpp"
 #include "model/entity_validation.hpp"
+#include "tactile/core/common/assert.hpp"
 
 namespace tactile::sys {
 

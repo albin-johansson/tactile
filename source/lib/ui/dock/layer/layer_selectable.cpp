@@ -22,8 +22,6 @@
 #include <fmt/format.h>
 #include <imgui.h>
 
-#include "tactile/core/containers/string.hpp"
-#include "core/debug/assert.hpp"
 #include "core/formatters/fmt_string.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/events/layer_events.hpp"
@@ -35,6 +33,8 @@
 #include "model/objects/object_components.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
+#include "tactile/core/common/assert.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"
 

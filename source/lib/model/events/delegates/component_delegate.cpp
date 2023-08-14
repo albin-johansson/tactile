@@ -32,12 +32,12 @@
 #include "cmd/component/undef_component.hpp"
 #include "cmd/component/update_attached_component.hpp"
 #include "cmd/component/update_component.hpp"
-#include "core/debug/assert.hpp"
 #include "model/components/component_components.hpp"
 #include "model/documents/command_system.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/entity_validation.hpp"
+#include "tactile/core/common/assert.hpp"
 #include "ui/widget_state.hpp"
 
 namespace tactile {
