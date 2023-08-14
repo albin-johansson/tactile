@@ -20,7 +20,7 @@
 #pragma once
 
 #include "tactile/core/containers/deque.hpp"
-#include "core/containers/smart_ptr.hpp"
+#include "tactile/core/containers/smart_ptr.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "core/functional/function.hpp"
 #include "core/prelude.hpp"
@@ -67,7 +67,7 @@ class LoggingService final {
   [[nodiscard]] auto count_logged_messages(LogLevelFlags log_level_flags) const -> usize;
 
  private:
-  Shared<LogHistorySink> mHistorySink;
+  SharedPtr<LogHistorySink> mHistorySink;
 };
 
 }  // namespace tactile

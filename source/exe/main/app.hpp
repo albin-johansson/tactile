@@ -22,7 +22,7 @@
 #include <centurion/events.hpp>
 #include <imgui.h>
 
-#include "core/containers/smart_ptr.hpp"
+#include "tactile/core/containers/smart_ptr.hpp"
 #include "tactile/core/containers/vector.hpp"
 #include "core/events/dispatcher.hpp"
 #include "core/prelude.hpp"
@@ -67,11 +67,11 @@ class App final : public AppDelegate {
   [[nodiscard]] auto should_stop() const -> bool override { return mShouldStop; }
 
  private:
-  Unique<Registry> mRegistry;
+  UniquePtr<Registry> mRegistry;
   Dispatcher mDispatcher;
-  Unique<SettingsService> mSettingsService;
-  Unique<LanguageService> mLanguageService;
-  Unique<SystemManager> mSystemManager;
+  UniquePtr<SettingsService> mSettingsService;
+  UniquePtr<LanguageService> mLanguageService;
+  UniquePtr<SystemManager> mSystemManager;
   ImVec2 mFramebufferScale {};
   bool mShouldStop     : 1 {false};
   bool mWantFontReload : 1 {false};

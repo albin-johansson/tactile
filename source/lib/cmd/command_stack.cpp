@@ -108,7 +108,7 @@ auto CommandStack::get_redo_text() const -> String
   return mStack.at(_get_next_index())->get_name();
 }
 
-void CommandStack::_store(Unique<Command> cmd)
+void CommandStack::_store(UniquePtr<Command> cmd)
 {
   if (size() == capacity()) {
     _remove_oldest_command();

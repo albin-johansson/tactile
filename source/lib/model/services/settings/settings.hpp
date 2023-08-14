@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/attributes/color.hpp"
-#include "core/containers/smart_ptr.hpp"
+#include "tactile/core/containers/smart_ptr.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "core/enums/lang.hpp"
 #include "core/enums/overlay_pos.hpp"
@@ -111,7 +111,7 @@ class Settings final {
   [[nodiscard]] auto test_flag(SettingsFlagBits flag) const -> bool;
 
  private:
-  Unique<SettingsState> mState;
+  UniquePtr<SettingsState> mState;
 
   void _reset_flag(SettingsFlagBits flag);
 };

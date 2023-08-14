@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/containers/smart_ptr.hpp"
+#include "tactile/core/containers/smart_ptr.hpp"
 #include "tactile/core/containers/vector.hpp"
 #include "core/prelude.hpp"
 #include "model/system.hpp"
@@ -46,8 +46,8 @@ class SystemManager final : private System {
   [[nodiscard]] auto get_tool_system() const -> const ToolSystem&;
 
  private:
-  Unique<CommandSystem> mCommandSystem;
-  Unique<ToolSystem> mToolSystem;
+  UniquePtr<CommandSystem> mCommandSystem;
+  UniquePtr<ToolSystem> mToolSystem;
   Vector<System*> mSystems;
 };
 

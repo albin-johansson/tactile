@@ -28,7 +28,7 @@
 #include "common/util/algorithms.hpp"
 #include "core/attributes/attribute.hpp"
 #include "core/containers/hash_map.hpp"
-#include "core/containers/smart_ptr.hpp"
+#include "tactile/core/containers/smart_ptr.hpp"
 #include "core/containers/variant.hpp"
 #include "tactile/core/containers/vector.hpp"
 #include "core/enums/layer_type.hpp"
@@ -83,7 +83,7 @@ struct GroupLayerIR final {
   TACTILE_DELETE_COPY(GroupLayerIR);
   TACTILE_DEFAULT_MOVE(GroupLayerIR);
 
-  Vector<Unique<LayerIR>> children;
+  Vector<UniquePtr<LayerIR>> children;
 };
 
 struct LayerIR final {

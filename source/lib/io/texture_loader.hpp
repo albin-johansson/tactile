@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/path.hpp"
-#include "core/containers/smart_ptr.hpp"
+#include "tactile/core/containers/smart_ptr.hpp"
 #include "tactile/core/functional/maybe.hpp"
 #include "core/math/vector.hpp"
 #include "core/prelude.hpp"
@@ -31,7 +31,7 @@ struct TextureDataDeleter final {
   void operator()(uchar* data) noexcept;
 };
 
-using TexturePixelData = Unique<uchar, TextureDataDeleter>;
+using TexturePixelData = UniquePtr<uchar, TextureDataDeleter>;
 
 /// Represents a loaded image file.
 // TODO add ImageChannels enum

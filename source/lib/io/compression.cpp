@@ -26,7 +26,7 @@
 #include <zlib.h>
 #include <zstd.h>
 
-#include "core/containers/smart_ptr.hpp"
+#include "tactile/core/containers/smart_ptr.hpp"
 #include "core/debug/assert.hpp"
 #include "core/prelude.hpp"
 
@@ -207,7 +207,7 @@ auto zstd_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
 {
   const auto stream_deleter = [](ZSTD_DStream* ptr) noexcept { ZSTD_freeDStream(ptr); };
 
-  using DStream = Unique<ZSTD_DStream, decltype(stream_deleter)>;
+  using DStream = UniquePtr<ZSTD_DStream, decltype(stream_deleter)>;
   const DStream stream {ZSTD_createDStream()};
 
   if (!stream) {

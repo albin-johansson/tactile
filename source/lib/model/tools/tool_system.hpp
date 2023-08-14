@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/containers/hash_map.hpp"
-#include "core/containers/smart_ptr.hpp"
+#include "tactile/core/containers/smart_ptr.hpp"
 #include "core/enums/tool_type.hpp"
 #include "tactile/core/functional/maybe.hpp"
 #include "core/prelude.hpp"
@@ -80,7 +80,7 @@ class ToolSystem final : public System {
   [[nodiscard]] auto is_tool_selected(ToolType type) const -> bool;
 
  private:
-  HashMap<ToolType, Unique<Tool>> mTools;
+  HashMap<ToolType, UniquePtr<Tool>> mTools;
   Tool* mActiveTool {};
   Maybe<ToolType> mActiveToolType;
 };

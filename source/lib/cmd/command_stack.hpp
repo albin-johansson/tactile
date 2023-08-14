@@ -24,7 +24,7 @@
 
 #include "cmd/command.hpp"
 #include "tactile/core/containers/deque.hpp"
-#include "core/containers/smart_ptr.hpp"
+#include "tactile/core/containers/smart_ptr.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/functional/maybe.hpp"
 #include "core/prelude.hpp"
@@ -170,12 +170,12 @@ class CommandStack final {
   [[nodiscard]] auto capacity() const noexcept -> usize { return mCapacity; }
 
  private:
-  Deque<Unique<Command>> mStack;
+  Deque<UniquePtr<Command>> mStack;
   Maybe<usize> mCurrentIndex;
   Maybe<usize> mCleanIndex;
   usize mCapacity;
 
-  void _store(Unique<Command> cmd);
+  void _store(UniquePtr<Command> cmd);
 
   void _remove_oldest_command();
   void _remove_commands_after_current_index();
