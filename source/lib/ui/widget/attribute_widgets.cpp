@@ -26,7 +26,7 @@
 
 #include "common/util/filesystem.hpp"
 #include "common/util/string_buffer.hpp"
-#include "core/containers/array.hpp"
+#include "tactile/core/containers/array.hpp"
 #include "io/file_dialog.hpp"
 #include "ui/constants.hpp"
 #include "ui/style/colors.hpp"

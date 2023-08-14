@@ -24,7 +24,7 @@
 #include <fmt/core.h>
 #include <fmt/format.h>
 
-#include "core/containers/array.hpp"
+#include "tactile/core/containers/array.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "core/prelude.hpp"
 

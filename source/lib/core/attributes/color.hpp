@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/containers/array.hpp"
+#include "tactile/core/containers/array.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/functional/maybe.hpp"
 #include "core/prelude.hpp"
