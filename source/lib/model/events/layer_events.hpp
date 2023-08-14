@@ -21,7 +21,7 @@
 
 #include "core/ecs/entity.hpp"
 #include "tactile/core/containers/string.hpp"
-#include "core/enums/layer_type.hpp"
+#include "tactile/core/layers/layer_type.hpp"
 
 namespace tactile {
 

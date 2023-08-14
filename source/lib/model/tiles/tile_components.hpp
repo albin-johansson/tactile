@@ -23,8 +23,8 @@
 
 #include "tactile/core/containers/vector.hpp"
 #include "core/ecs/entity.hpp"
-#include "core/enums/tile_compression.hpp"
-#include "core/enums/tile_encoding.hpp"
+#include "tactile/core/maps/tile_compression.hpp"
+#include "tactile/core/maps/tile_encoding.hpp"
 #include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 

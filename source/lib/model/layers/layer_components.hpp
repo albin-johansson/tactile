@@ -21,7 +21,7 @@
 
 #include "core/ecs/entity.hpp"
 #include "tactile/core/containers/vector.hpp"
-#include "core/enums/layer_type.hpp"
+#include "tactile/core/layers/layer_type.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_matrix.hpp"
 

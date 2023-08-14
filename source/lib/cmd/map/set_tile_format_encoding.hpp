@@ -22,8 +22,8 @@
 #include "cmd/command.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
-#include "core/enums/tile_compression.hpp"
-#include "core/enums/tile_encoding.hpp"
+#include "tactile/core/maps/tile_compression.hpp"
+#include "tactile/core/maps/tile_encoding.hpp"
 #include "tactile/core/functional/maybe.hpp"
 
 namespace tactile::cmd {

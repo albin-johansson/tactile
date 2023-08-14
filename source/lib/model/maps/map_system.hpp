@@ -22,7 +22,7 @@
 #include "tactile/core/containers/hash_map.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
-#include "core/enums/layer_type.hpp"
+#include "tactile/core/layers/layer_type.hpp"
 #include "core/functional/result.hpp"
 #include "core/math/vector.hpp"
 #include "core/prelude.hpp"

@@ -21,8 +21,8 @@
 
 #include <IconsFontAwesome6.h>
 
-#include "core/enums/layer_type.hpp"
-#include "core/enums/object_type.hpp"
+#include "tactile/core/layers/layer_type.hpp"
+#include "tactile/core/layers/object_type.hpp"
 
 #define TAC_ICON_UNDO ICON_FA_ROTATE_LEFT
 #define TAC_ICON_REDO ICON_FA_ROTATE_RIGHT

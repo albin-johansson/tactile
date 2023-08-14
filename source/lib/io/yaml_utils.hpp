@@ -26,8 +26,8 @@
 #include "common/type/path.hpp"
 #include "core/attributes/attribute.hpp"
 #include "tactile/core/containers/string.hpp"
-#include "core/enums/tile_compression.hpp"
-#include "core/enums/tile_encoding.hpp"
+#include "tactile/core/maps/tile_compression.hpp"
+#include "tactile/core/maps/tile_encoding.hpp"
 #include "tactile/core/functional/maybe.hpp"
 #include "core/functional/result.hpp"
 
