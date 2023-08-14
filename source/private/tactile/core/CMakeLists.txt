@@ -20,6 +20,8 @@ target_include_directories(${TACTILE_CORE} PUBLIC ${TACTILE_INCLUDE_DIR})
 target_compile_definitions(${TACTILE_CORE}
                            PRIVATE
                            TACTILE_BUILDING_CORE
+                           WIN32_LEAN_AND_MEAN
+                           NOMINMAX
                            BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
                            )
 
