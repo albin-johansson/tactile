@@ -21,7 +21,6 @@
 
 #include <utility>  // move
 
-#include "common/util/lookup.hpp"
 #include "model/components/component_components.hpp"
 #include "model/components/component_def_system.hpp"
 #include "model/contexts/context_system.hpp"
@@ -29,6 +28,7 @@
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
 #include "tactile/core/common/assert.hpp"
+#include "tactile/core/containers/lookup.hpp"
 
 namespace tactile::cmd {
 

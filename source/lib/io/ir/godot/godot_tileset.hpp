@@ -20,10 +20,10 @@
 #pragma once
 
 #include "common/type/uuid.hpp"
-#include "common/util/lookup.hpp"
 #include "core/containers/pair.hpp"
 #include "io/ir/godot/godot_file.hpp"
 #include "tactile/core/common/prelude.hpp"
+#include "tactile/core/containers/lookup.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/containers/vector.hpp"
 #include "tactile/core/io/filesystem.hpp"

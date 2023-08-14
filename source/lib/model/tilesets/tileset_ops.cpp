@@ -19,8 +19,8 @@
 
 #include "tileset_ops.hpp"
 
-#include "common/util/lookup.hpp"
 #include "tactile/core/common/error.hpp"
+#include "tactile/core/containers/lookup.hpp"
 
 namespace tactile::sys {
 

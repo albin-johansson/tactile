@@ -24,11 +24,11 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/util/lookup.hpp"
 #include "io/texture_loader.hpp"
 #include "model/entity_validation.hpp"
 #include "model/textures/texture_components.hpp"
 #include "tactile/core/common/assert.hpp"
+#include "tactile/core/containers/lookup.hpp"
 
 namespace tactile {
 

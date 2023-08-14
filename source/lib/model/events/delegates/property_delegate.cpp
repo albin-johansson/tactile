@@ -24,13 +24,13 @@
 #include "cmd/property/rename_property.hpp"
 #include "cmd/property/set_property_type.hpp"
 #include "cmd/property/update_property.hpp"
-#include "common/util/lookup.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/documents/command_system.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/entity_validation.hpp"
 #include "tactile/core/common/assert.hpp"
+#include "tactile/core/containers/lookup.hpp"
 #include "ui/widget_state.hpp"
 
 namespace tactile {

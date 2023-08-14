@@ -24,9 +24,7 @@
 
 #include <imgui.h>
 
-#include "common/util/lookup.hpp"
 #include "core/ecs/registry.hpp"
-#include "tactile/core/functional/maybe.hpp"
 #include "io/settings_io.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"
@@ -38,6 +36,8 @@
 #include "model/tiles/tile_components.hpp"
 #include "model/tilesets/tileset_components.hpp"
 #include "model/tilesets/tileset_system.hpp"
+#include "tactile/core/containers/lookup.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "ui/constants.hpp"
 #include "ui/conversions.hpp"
 #include "ui/style/alignment.hpp"

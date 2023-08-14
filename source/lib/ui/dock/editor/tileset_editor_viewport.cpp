@@ -22,8 +22,6 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "common/util/lookup.hpp"
-#include "tactile/core/contexts/color.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/events/tileset_events.hpp"
 #include "model/services/language_service.hpp"
@@ -34,6 +32,8 @@
 #include "model/tilesets/tileset_ops.hpp"
 #include "model/view/render_system.hpp"
 #include "model/viewports/viewport_components.hpp"
+#include "tactile/core/containers/lookup.hpp"
+#include "tactile/core/contexts/color.hpp"
 #include "ui/conversions.hpp"
 #include "ui/dock/editor/document_viewport_offset_handler.hpp"
 #include "ui/render/canvas.hpp"
