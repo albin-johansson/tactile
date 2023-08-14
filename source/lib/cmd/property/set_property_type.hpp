@@ -20,7 +20,7 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
@@ -33,7 +33,7 @@ class SetPropertyType final : public Command {
   SetPropertyType(Registry* registry,
                   Entity context_entity,
                   String name,
-                  AttributeType new_type);
+                  PropertyType new_type);
 
   void undo() override;
 
@@ -45,8 +45,8 @@ class SetPropertyType final : public Command {
   Registry* mRegistry;
   Entity mContextEntity;
   String mName;
-  AttributeType mNewPropertyType;
-  Maybe<Attribute> mPreviousValue;
+  PropertyType mNewPropertyType;
+  Maybe<Property> mPreviousValue;
 };
 
 }  // namespace tactile::cmd

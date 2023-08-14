@@ -84,4 +84,7 @@ struct TACTILE_CORE_API NColor final {
 
 [[nodiscard]] TACTILE_CORE_API auto to_string_argb(const UColor& color) -> std::string;
 
+inline constexpr UColor kWhiteColor = UColor {0xFF, 0xFF, 0xFF, 0xFF};
+inline constexpr UColor kBlackColor = UColor {0x00, 0x00, 0x00, 0xFF};
+
 }  // namespace tactile

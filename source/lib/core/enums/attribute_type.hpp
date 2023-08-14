@@ -22,7 +22,7 @@
 namespace tactile {
 
 /// Represents different attribute value types.
-enum class AttributeType {
+enum class PropertyType {
   String,  ///< An arbitrary string.
   Int,     ///< A signed integer.
   Int2,    ///< A two-dimensional vector of integers.

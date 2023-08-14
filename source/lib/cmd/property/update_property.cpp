@@ -33,7 +33,7 @@ namespace tactile::cmd {
 UpdateProperty::UpdateProperty(Registry* registry,
                                const Entity context_entity,
                                String name,
-                               Attribute new_value)
+                               Property new_value)
     : mRegistry {registry},
       mContextEntity {context_entity},
       mName {std::move(name)},

@@ -35,7 +35,7 @@ namespace tactile::cmd {
 SetComponentAttrType::SetComponentAttrType(Registry* registry,
                                            const Entity component_entity,
                                            String attribute_name,
-                                           const AttributeType new_type)
+                                           const PropertyType new_type)
     : mRegistry {registry},
       mComponentEntity {component_entity},
       mAttributeName {std::move(attribute_name)},
@@ -72,7 +72,7 @@ void SetComponentAttrType::redo()
   sys::force_update_component_attribute(registry,
                                         mComponentEntity,
                                         mAttributeName,
-                                        Attribute {mNewType});
+                                        Property {mNewType});
 }
 
 auto SetComponentAttrType::get_name() const -> String

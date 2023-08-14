@@ -302,16 +302,16 @@ auto push_object_input(const Strings& strings, const char* id, ObjectRef value)
   return {};
 }
 
-auto push_color_input(const char* id, const Color value) -> Maybe<Color>
+auto push_color_input(const char* id, const UColor value) -> Maybe<UColor>
 {
   constexpr auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
                          ImGuiColorEditFlags_AlphaBar;
 
   const Scope scope {id};
 
-  auto rgba = value.as_float_array();
-  if (ImGui::ColorEdit4("##Color", rgba.data(), flags)) {
-    return Color::from_norm(rgba.at(0), rgba.at(1), rgba.at(2), rgba.at(3));
+  auto rgba = normalize(value);
+  if (ImGui::ColorEdit4("##Color", &rgba.red, flags)) {
+    return unnormalize(rgba);
   }
 
   return {};
@@ -338,11 +338,11 @@ auto push_directory_path_input(const Strings& strings, const char* id, const Pat
                           });
 }
 
-auto push_attribute_input(const Strings& strings, const char* id, const Attribute& value)
-    -> Maybe<Attribute>
+auto push_attribute_input(const Strings& strings, const char* id, const Property& value)
+    -> Maybe<Property>
 {
   switch (value.get_type()) {
-    case AttributeType::String: {
+    case PropertyType::Str: {
       if (auto updated = push_string_input_with_hint(strings,
                                                      id,
                                                      strings.misc.empty.c_str(),
@@ -351,73 +351,73 @@ auto push_attribute_input(const Strings& strings, const char* id, const Attribut
       }
       break;
     }
-    case AttributeType::Int: {
+    case PropertyType::Int: {
       if (const auto updated = push_int_input(strings, id, value.as_int())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Int2: {
+    case PropertyType::Int2: {
       if (const auto updated = push_int2_input(strings, id, value.as_int2())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Int3: {
+    case PropertyType::Int3: {
       if (const auto updated = push_int3_input(strings, id, value.as_int3())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Int4: {
+    case PropertyType::Int4: {
       if (const auto updated = push_int4_input(strings, id, value.as_int4())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Float: {
+    case PropertyType::Float: {
       if (const auto updated = push_float_input(strings, id, value.as_float())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Float2: {
+    case PropertyType::Float2: {
       if (const auto updated = push_float2_input(strings, id, value.as_float2())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Float3: {
+    case PropertyType::Float3: {
       if (const auto updated = push_float3_input(strings, id, value.as_float3())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Float4: {
+    case PropertyType::Float4: {
       if (const auto updated = push_float4_input(strings, id, value.as_float4())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Bool: {
+    case PropertyType::Bool: {
       if (const auto updated = push_bool_input(strings, id, value.as_bool())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Path: {
+    case PropertyType::Path: {
       if (auto updated = push_file_path_input(strings, id, value.as_path())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Color: {
+    case PropertyType::Color: {
       if (const auto updated = push_color_input(id, value.as_color())) {
         return updated;
       }
       break;
     }
-    case AttributeType::Object: {
+    case PropertyType::Object: {
       if (const auto updated = push_object_input(strings, id, value.as_object())) {
         return updated;
       }
@@ -425,52 +425,51 @@ auto push_attribute_input(const Strings& strings, const char* id, const Attribut
     }
   }
 
-  return {};
+  return std::nullopt;
 }
 
 auto push_attribute_type_combo(const Strings& strings,
-                               const AttributeType current_type,
-                               const Maybe<AttributeType> excluded_type)
-    -> Maybe<AttributeType>
+                               const PropertyType current_type,
+                               const Maybe<PropertyType> excluded_type)
+    -> Maybe<PropertyType>
 {
   Array<StringView, 13> type_names;
-  type_names[std::to_underlying(AttributeType::String)] =
-      strings.misc.type_string.c_str();
-  type_names[std::to_underlying(AttributeType::Int)] = strings.misc.type_int.c_str();
-  type_names[std::to_underlying(AttributeType::Int2)] = strings.misc.type_int2.c_str();
-  type_names[std::to_underlying(AttributeType::Int3)] = strings.misc.type_int3.c_str();
-  type_names[std::to_underlying(AttributeType::Int4)] = strings.misc.type_int4.c_str();
-  type_names[std::to_underlying(AttributeType::Float)] = strings.misc.type_float.c_str();
-  type_names[std::to_underlying(AttributeType::Float2)] =
+  type_names[std::to_underlying(PropertyType::Str)] = strings.misc.type_string.c_str();
+  type_names[std::to_underlying(PropertyType::Int)] = strings.misc.type_int.c_str();
+  type_names[std::to_underlying(PropertyType::Int2)] = strings.misc.type_int2.c_str();
+  type_names[std::to_underlying(PropertyType::Int3)] = strings.misc.type_int3.c_str();
+  type_names[std::to_underlying(PropertyType::Int4)] = strings.misc.type_int4.c_str();
+  type_names[std::to_underlying(PropertyType::Float)] = strings.misc.type_float.c_str();
+  type_names[std::to_underlying(PropertyType::Float2)] =
       strings.misc.type_float2.c_str();
-  type_names[std::to_underlying(AttributeType::Float3)] =
+  type_names[std::to_underlying(PropertyType::Float3)] =
       strings.misc.type_float3.c_str();
-  type_names[std::to_underlying(AttributeType::Float4)] =
+  type_names[std::to_underlying(PropertyType::Float4)] =
       strings.misc.type_float4.c_str();
-  type_names[std::to_underlying(AttributeType::Bool)] = strings.misc.type_bool.c_str();
-  type_names[std::to_underlying(AttributeType::Color)] = strings.misc.type_color.c_str();
-  type_names[std::to_underlying(AttributeType::Object)] =
+  type_names[std::to_underlying(PropertyType::Bool)] = strings.misc.type_bool.c_str();
+  type_names[std::to_underlying(PropertyType::Color)] = strings.misc.type_color.c_str();
+  type_names[std::to_underlying(PropertyType::Object)] =
       strings.misc.type_object.c_str();
-  type_names[std::to_underlying(AttributeType::Path)] = strings.misc.type_path.c_str();
+  type_names[std::to_underlying(PropertyType::Path)] = strings.misc.type_path.c_str();
 
-  const auto all_types = {AttributeType::String,
-                          AttributeType::Int,
-                          AttributeType::Int2,
-                          AttributeType::Int3,
-                          AttributeType::Int4,
-                          AttributeType::Float,
-                          AttributeType::Float2,
-                          AttributeType::Float3,
-                          AttributeType::Float4,
-                          AttributeType::Bool,
-                          AttributeType::Color,
-                          AttributeType::Object,
-                          AttributeType::Path};
+  const auto all_types = {PropertyType::Str,
+                          PropertyType::Int,
+                          PropertyType::Int2,
+                          PropertyType::Int3,
+                          PropertyType::Int4,
+                          PropertyType::Float,
+                          PropertyType::Float2,
+                          PropertyType::Float3,
+                          PropertyType::Float4,
+                          PropertyType::Bool,
+                          PropertyType::Color,
+                          PropertyType::Object,
+                          PropertyType::Path};
 
   const auto current_type_index = static_cast<usize>(std::to_underlying(current_type));
   const auto& current_type_name = type_names.at(current_type_index);
 
-  Maybe<AttributeType> result;
+  Maybe<PropertyType> result;
 
   if (const Combo combo {"##AttributeTypeCombo", current_type_name.data()};
       combo.is_open()) {

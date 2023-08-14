@@ -45,7 +45,7 @@ void on_show_new_property_dialog(Registry& registry,
 
   new_property_dialog.context = event.context;
   new_property_dialog.name_buffer.clear();
-  new_property_dialog.property_type = AttributeType::String;
+  new_property_dialog.property_type = PropertyType::Str;
   new_property_dialog.should_open = true;
 }
 

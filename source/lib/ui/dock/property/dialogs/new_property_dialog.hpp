@@ -21,7 +21,7 @@
 
 #include "core/ecs/entity.hpp"
 #include "common/util/string_buffer.hpp"
-#include "core/enums/attribute_type.hpp"
+#include "tactile/core/contexts/property_type.hpp"
 #include "model/model_view.hpp"
 
 namespace tactile {
@@ -29,7 +29,7 @@ namespace tactile {
 struct NewPropertyDialogState final {
   Entity context {kNullEntity};
   StringBuffer name_buffer {};
-  AttributeType property_type {AttributeType::String};
+  PropertyType property_type {PropertyType::Str};
   bool should_open {};
 };
 

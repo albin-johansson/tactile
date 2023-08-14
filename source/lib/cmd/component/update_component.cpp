@@ -33,7 +33,7 @@ namespace tactile::cmd {
 UpdateComponent::UpdateComponent(Registry* registry,
                                  const Entity component_entity,
                                  String attribute_name,
-                                 Attribute new_value)
+                                 Property new_value)
     : mRegistry {registry},
       mComponentEntity {component_entity},
       mAttributeName {std::move(attribute_name)},

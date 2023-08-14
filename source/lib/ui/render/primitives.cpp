@@ -70,7 +70,7 @@ void add_ellipse(ImDrawList* self,
 
 void draw_ellipse(const ImVec2& center,
                   const ImVec2& radius,
-                  const Color& color,
+                  const UColor& color,
                   const float thickness)
 {
   add_ellipse(ImGui::GetWindowDrawList(),

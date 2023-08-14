@@ -37,39 +37,39 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto _write_attribute(StringView name, const Attribute& value) -> String
+[[nodiscard]] auto _write_attribute(StringView name, const Property& value) -> String
 {
   switch (value.get_type()) {
-    case AttributeType::String:
+    case PropertyType::Str:
       return fmt::format(R"("{}": "{}")", name, value.as_string());
 
-    case AttributeType::Int:
+    case PropertyType::Int:
       return fmt::format(R"("{}": {})", name, value.as_int());
 
-    case AttributeType::Int2: {
+    case PropertyType::Int2: {
       const auto& vec = value.as_int2();
       return fmt::format(R"("{}": Vector2( {}, {} ))", name, vec.x, vec.y);
     }
-    case AttributeType::Int3: {
+    case PropertyType::Int3: {
       const auto& vec = value.as_int3();
       return fmt::format(R"("{}": Vector3( {}, {}, {} ))", name, vec.x, vec.y, vec.z);
     }
-    case AttributeType::Int4: {
+    case PropertyType::Int4: {
       const auto& vec = value.as_int4();
       return fmt::format(R"("{}": [ {}, {}, {}, {} ])", name, vec.x, vec.y, vec.z, vec.w);
     }
-    case AttributeType::Float:
+    case PropertyType::Float:
       return fmt::format(R"("{}": {})", name, value.as_float());
 
-    case AttributeType::Float2: {
+    case PropertyType::Float2: {
       const auto& vec = value.as_float2();
       return fmt::format(R"("{}": Vector2( {}, {} ))", name, vec.x, vec.y);
     }
-    case AttributeType::Float3: {
+    case PropertyType::Float3: {
       const auto& vec = value.as_float3();
       return fmt::format(R"("{}": Vector3( {}, {}, {} ))", name, vec.x, vec.y, vec.z);
     }
-    case AttributeType::Float4: {
+    case PropertyType::Float4: {
       const auto& vec = value.as_float4();
       return fmt::format(R"("{}": [ {}, {}, {}, {} ]))",
                          name,
@@ -78,22 +78,22 @@ namespace {
                          vec.z,
                          vec.w);
     }
-    case AttributeType::Bool:
+    case PropertyType::Bool:
       return fmt::format(R"("{}": {})", name, value.as_bool() ? "true" : "false");
 
-    case AttributeType::Path:
+    case PropertyType::Path:
       return fmt::format(R"("{}": "{}")", name, to_forward_slashes_path(value.as_path()));
 
-    case AttributeType::Color: {
-      const auto& color = value.as_color();
+    case PropertyType::Color: {
+      const auto color = normalize(value.as_color());
       return fmt::format(R"("{}": Color( {}, {}, {}, {} ))",
                          name,
-                         color.norm_red(),
-                         color.norm_green(),
-                         color.norm_blue(),
-                         color.norm_alpha());
+                         color.red,
+                         color.green,
+                         color.blue,
+                         color.alpha);
     }
-    case AttributeType::Object:
+    case PropertyType::Object:
       return fmt::format(R"("{}": {})", name, static_cast<int32>(value.as_object()));
 
     default:

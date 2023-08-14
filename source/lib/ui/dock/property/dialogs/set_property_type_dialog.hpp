@@ -21,7 +21,7 @@
 
 #include "core/ecs/entity.hpp"
 #include "tactile/core/containers/string.hpp"
-#include "core/enums/attribute_type.hpp"
+#include "tactile/core/contexts/property_type.hpp"
 #include "tactile/core/functional/maybe.hpp"
 #include "model/model_view.hpp"
 
@@ -29,9 +29,9 @@ namespace tactile {
 
 struct SetPropertyTypeDialogState final {
   Entity context {kNullEntity};
-  AttributeType current_type {AttributeType::String};
+  PropertyType current_type {PropertyType::Str};
   Maybe<String> property_name;
-  Maybe<AttributeType> old_type;
+  Maybe<PropertyType> old_type;
   bool should_open {};
 };
 

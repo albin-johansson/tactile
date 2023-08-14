@@ -27,7 +27,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "common/util/filesystem.hpp"
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "core/prelude.hpp"
 #include "io/base64_tiles.hpp"
@@ -369,13 +369,13 @@ void _emit_tilesets(YAML::Emitter& emitter, const Path& dir, const MapIR& ir_map
 
 void _emit_component_definition_attribute(YAML::Emitter& emitter,
                                           const String& name,
-                                          const Attribute& value)
+                                          const Property& value)
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "name" << YAML::Value << name;
   emitter << YAML::Key << "type" << YAML::Value << value.get_type();
 
-  if (!value.has_default_value()) {
+  if (!value.has_initial_value()) {
     emitter << YAML::Key << "default" << YAML::Value << value;
   }
 

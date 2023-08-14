@@ -24,7 +24,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "common/type/path.hpp"
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/maps/tile_compression.hpp"
 #include "tactile/core/maps/tile_encoding.hpp"
@@ -112,7 +112,7 @@ inline void read_attr_or(const YAML::Node& node,
 
 auto operator<<(YAML::Emitter& emitter, TileEncoding encoding) -> YAML::Emitter&;
 auto operator<<(YAML::Emitter& emitter, TileCompression compression) -> YAML::Emitter&;
-auto operator<<(YAML::Emitter& emitter, AttributeType type) -> YAML::Emitter&;
-auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter&;
+auto operator<<(YAML::Emitter& emitter, PropertyType type) -> YAML::Emitter&;
+auto operator<<(YAML::Emitter& emitter, const Property& value) -> YAML::Emitter&;
 
 }  // namespace tactile

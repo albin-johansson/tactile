@@ -26,28 +26,28 @@
 #include "common/type/path.hpp"
 #include "common/type/uuid.hpp"
 #include "common/util/algorithms.hpp"
-#include "core/attributes/attribute.hpp"
-#include "tactile/core/containers/hash_map.hpp"
-#include "tactile/core/containers/smart_ptr.hpp"
-#include "tactile/core/containers/variant.hpp"
-#include "tactile/core/containers/vector.hpp"
-#include "tactile/core/layers/layer_type.hpp"
-#include "tactile/core/layers/object_type.hpp"
-#include "tactile/core/maps/tile_compression.hpp"
-#include "tactile/core/maps/tile_encoding.hpp"
-#include "tactile/core/functional/maybe.hpp"
 #include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_extent.hpp"
 #include "core/tiles/tile_matrix.hpp"
+#include "tactile/core/containers/hash_map.hpp"
+#include "tactile/core/containers/smart_ptr.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/containers/string_map.hpp"
+#include "tactile/core/containers/variant.hpp"
+#include "tactile/core/containers/vector.hpp"
+#include "tactile/core/contexts/property.hpp"
+#include "tactile/core/functional/maybe.hpp"
+#include "tactile/core/layers/layer_type.hpp"
+#include "tactile/core/layers/object_type.hpp"
+#include "tactile/core/maps/tile_compression.hpp"
+#include "tactile/core/maps/tile_encoding.hpp"
 
 namespace tactile {
 
 TACTILE_FWD_DECLARE_STRUCT(LayerIR)
 
-using AttributeMap = StringMap<Attribute>;
+using AttributeMap = StringMap<Property>;
 using ComponentMap = StringMap<AttributeMap>;
 
 struct ContextIR final {

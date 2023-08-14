@@ -20,7 +20,7 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "tactile/core/containers/string_map.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
@@ -43,7 +43,7 @@ class DetachComponent final : public Command {
   Registry* mRegistry;
   Entity mContextEntity;
   Entity mComponentEntity;
-  Maybe<StringMap<Attribute>> mPrevValues;
+  Maybe<StringMap<Property>> mPrevValues;
 };
 
 }  // namespace tactile::cmd

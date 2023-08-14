@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "tactile/core/containers/hash_map.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/containers/string_map.hpp"
@@ -36,7 +36,7 @@ namespace tactile::sys {
 void add_component_attribute(Registry& registry,
                              Entity component_entity,
                              const String& name,
-                             const Attribute& value);
+                             const Property& value);
 
 /// Removes an attribute from a component definition, and updates all components.
 void remove_component_attribute(Registry& registry,
@@ -58,6 +58,6 @@ auto duplicate_component_attribute(Registry& registry,
 void force_update_component_attribute(Registry& registry,
                                       Entity component_entity,
                                       const String& attribute_name,
-                                      const Attribute& attribute_value);
+                                      const Property& attribute_value);
 
 }  // namespace tactile::sys

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/containers/string_map.hpp"
 #include "tactile/core/containers/vector.hpp"
@@ -30,7 +30,7 @@ namespace tactile {
 /// Component featured by all entities that can store properties and components.
 struct Context final {
   String name;                 ///< User provided name associated with the context.
-  StringMap<Attribute> props;  ///< Attached attribute values, i.e. "properties".
+  StringMap<Property> props;  ///< Attached attribute values, i.e. "properties".
   Vector<Entity> comps;        ///< Attached components.
 };
 

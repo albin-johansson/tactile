@@ -67,7 +67,7 @@ auto attach_component(Registry& registry,
 
 auto detach_component(Registry& registry,
                       Context& context,
-                      const Entity definition_entity) -> Maybe<StringMap<Attribute>>
+                      const Entity definition_entity) -> Maybe<StringMap<Property>>
 {
   TACTILE_ASSERT(is_component_entity(registry, definition_entity));
 

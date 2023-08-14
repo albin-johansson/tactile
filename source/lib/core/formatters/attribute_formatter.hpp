@@ -24,14 +24,14 @@
 #include <fmt/core.h>
 #include <fmt/ostream.h>
 
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 
 template <>
-struct fmt::formatter<tactile::Attribute> : fmt::formatter<std::string_view> {
-  auto format(const tactile::Attribute& attr, auto& ctx) const
+struct fmt::formatter<tactile::Property> : fmt::formatter<std::string_view> {
+  auto format(const tactile::Property& attr, auto& ctx) const
   {
     return fmt::format_to(ctx.out(), "{}", fmt::streamed(attr));
   }
 };
 
-static_assert(fmt::is_formattable<tactile::Attribute>::value);
+static_assert(fmt::is_formattable<tactile::Property>::value);

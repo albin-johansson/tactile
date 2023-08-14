@@ -37,16 +37,16 @@ namespace {
   return path;
 }
 
-[[nodiscard]] auto _from_proto(const proto::Color& color) -> Color
+[[nodiscard]] auto _from_proto(const proto::Color& color) -> UColor
 {
   const auto r = static_cast<uint8>(color.red());
   const auto g = static_cast<uint8>(color.green());
   const auto b = static_cast<uint8>(color.blue());
   const auto a = static_cast<uint8>(color.alpha());
-  return Color {r, g, b, a};
+  return UColor {r, g, b, a};
 }
 
-void _to_proto(const Color& color, proto::Color* out)
+void _to_proto(const UColor& color, proto::Color* out)
 {
   out->set_red(color.red);
   out->set_green(color.green);

@@ -22,7 +22,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/attributes/color.hpp"
+#include "tactile/core/contexts/color.hpp"
 #include "model/events/tileset_events.hpp"
 #include "model/events/viewport_events.hpp"
 #include "model/maps/map_components.hpp"
@@ -37,7 +37,7 @@
 namespace tactile {
 namespace {
 
-inline constexpr Color kRubberBandColor {0, 0x44, 0xCC, 100};
+inline constexpr UColor kRubberBandColor {0, 0x44, 0xCC, 100};
 
 void _update_viewport_offset(const Entity attached_tileset_entity,
                              const Viewport& viewport,

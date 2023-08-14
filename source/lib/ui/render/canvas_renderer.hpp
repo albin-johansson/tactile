@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/attributes/color.hpp"
+#include "tactile/core/contexts/color.hpp"
 #include "core/math/vector.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "ui/render/canvas.hpp"
@@ -29,13 +29,13 @@ namespace tactile::ui {
 void push_scissor(const CanvasInfo& canvas);
 void pop_scissor();
 
-void clear_canvas(const CanvasInfo& canvas, const Color& color);
+void clear_canvas(const CanvasInfo& canvas, const UColor& color);
 
-void render_infinite_grid(const CanvasInfo& canvas, const Color& line_color);
+void render_infinite_grid(const CanvasInfo& canvas, const UColor& line_color);
 
-void render_translated_grid(const CanvasInfo& canvas, const Color& line_color);
+void render_translated_grid(const CanvasInfo& canvas, const UColor& line_color);
 
-void render_outline(const CanvasInfo& canvas, const Color& outline_color);
+void render_outline(const CanvasInfo& canvas, const UColor& outline_color);
 
 /**
  * Renders a single tile from a tileset.

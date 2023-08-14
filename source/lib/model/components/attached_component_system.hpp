@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "tactile/core/containers/string_map.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
@@ -34,7 +34,6 @@ namespace tactile::sys {
 
 /// Resets the attribute values in a component to the component definition defaults.
 auto reset_component_values(const Registry& registry,
-                            AttachedComponent& attached_component)
-    -> StringMap<Attribute>;
+                            AttachedComponent& attached_component) -> StringMap<Property>;
 
 }  // namespace tactile::sys

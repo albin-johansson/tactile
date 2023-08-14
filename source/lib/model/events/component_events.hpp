@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/uuid.hpp"
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "core/ecs/entity.hpp"
 
@@ -63,7 +63,7 @@ struct RenameComponentEvent final {
 struct UpdateComponentEvent final {
   Entity definition {kNullEntity};  ///< Target component definition.
   String attr_name;                 ///< Name of target attribute.
-  Attribute value;                  ///< New default attribute value.
+  Property value;                   ///< New default attribute value.
 };
 
 /// Event for adding an attribute to a component definition.
@@ -95,7 +95,7 @@ struct DuplicateComponentAttrEvent final {
 struct SetComponentAttrTypeEvent final {
   Entity definition {};   ///< Target component definition.
   String attr_name;       ///< Name of target attribute.
-  AttributeType type {};  ///< New attribute type.
+  PropertyType type {};  ///< New attribute type.
 };
 
 /// Event for adding a component to a context.
@@ -119,7 +119,7 @@ struct ResetAttachedComponentEvent final {
 struct UpdateAttachedComponentEvent final {
   Entity attached_component {kNullEntity};  ///< The target attached component.
   String attr_name;                         ///< Name of target attribute.
-  Attribute value;                          ///< New attribute value.
+  Property value;                           ///< New attribute value.
 };
 
 }  // namespace tactile

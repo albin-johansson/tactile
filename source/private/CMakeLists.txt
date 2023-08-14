@@ -5,7 +5,7 @@ project(tactile-private CXX)
 function(tactile_set_properties target)
   set_target_properties(${target}
                         PROPERTIES
-                        CXX_STANDARD 20
+                        CXX_STANDARD 23
                         CXX_EXTENSIONS OFF
                         CXX_STANDARD_REQUIRED ON
                         INTERPROCEDURAL_OPTIMIZATION ${TACTILE_USE_LTO}

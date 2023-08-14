@@ -51,7 +51,7 @@ void AddComponentAttr::redo()
   sys::add_component_attribute(registry,
                                mComponentEntity,
                                mAttributeName,
-                               Attribute {AttributeType::String});
+                               Property {PropertyType::Str});
 }
 
 auto AddComponentAttr::get_name() const -> String

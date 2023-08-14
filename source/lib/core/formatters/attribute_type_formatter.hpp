@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/enums/attribute_type.hpp"
+#include "tactile/core/contexts/property_type.hpp"
 #include "core/formatters/magic_enum_formatter.hpp"
 
-TACTILE_MAGIC_ENUM_FORMATTER(tactile::AttributeType);
+TACTILE_MAGIC_ENUM_FORMATTER(tactile::PropertyType);

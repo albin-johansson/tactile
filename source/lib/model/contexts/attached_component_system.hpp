@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/containers/string_map.hpp"
 #include "core/ecs/entity.hpp"
@@ -36,7 +36,7 @@ auto attach_component(Registry& registry, Context& context, Entity definition_en
 
 /// Detaches a component from a context (this destroys the attached component entity).
 auto detach_component(Registry& registry, Context& context, Entity definition_entity)
-    -> Maybe<StringMap<Attribute>>;
+    -> Maybe<StringMap<Property>>;
 
 [[nodiscard]] auto has_component(const Registry& registry,
                                  const Context& context,

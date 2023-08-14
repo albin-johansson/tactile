@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/attributes/color.hpp"
+#include "tactile/core/contexts/color.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
 #include "core/prelude.hpp"
@@ -63,6 +63,6 @@ void render_object_layer(const Registry& registry,
 void render_object(const Registry& registry,
                    const ui::CanvasInfo& canvas,
                    Entity object_entity,
-                   const Color& color);
+                   const UColor& color);
 
 }  // namespace tactile::sys

@@ -22,8 +22,8 @@
 #include <imgui.h>
 
 #include "common/type/path.hpp"
-#include "core/attributes/attribute.hpp"
-#include "core/attributes/color.hpp"
+#include "tactile/core/contexts/property.hpp"
+#include "tactile/core/contexts/color.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/functional/maybe.hpp"
 #include "model/services/i18n/strings.hpp"
@@ -87,7 +87,7 @@ namespace tactile::ui {
                                      const char* id,
                                      ObjectRef value) -> Maybe<ObjectRef>;
 
-[[nodiscard]] auto push_color_input(const char* id, Color value) -> Maybe<Color>;
+[[nodiscard]] auto push_color_input(const char* id, UColor value) -> Maybe<UColor>;
 
 [[nodiscard]] auto push_file_path_input(const Strings& strings,
                                         const char* id,
@@ -99,11 +99,11 @@ namespace tactile::ui {
 
 [[nodiscard]] auto push_attribute_input(const Strings& strings,
                                         const char* id,
-                                        const Attribute& value) -> Maybe<Attribute>;
+                                        const Property& value) -> Maybe<Property>;
 
 [[nodiscard]] auto push_attribute_type_combo(const Strings& strings,
-                                             AttributeType current_type,
-                                             Maybe<AttributeType> excluded_type = {})
-    -> Maybe<AttributeType>;
+                                             PropertyType current_type,
+                                             Maybe<PropertyType> excluded_type = {})
+    -> Maybe<PropertyType>;
 
 }  // namespace tactile::ui

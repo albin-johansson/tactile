@@ -40,7 +40,7 @@ void update_dynamic_color_cache()
 
   usize index = 0;
   for (const auto& color: style.Colors) {
-    gCurrentColors.at(index) = to_color(color).is_dark();
+    gCurrentColors.at(index) = is_dark_color(normalize(to_color(color)));
     ++index;
   }
 }

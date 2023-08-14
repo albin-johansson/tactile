@@ -107,46 +107,46 @@ auto serialize_to_save_format(const Float4& vec) -> String
   return fmt::format("{};{};{};{}", vec.x, vec.y, vec.z, vec.w);
 }
 
-auto serialize_to_save_format(const AttributeType type) -> StringView
+auto serialize_to_save_format(const PropertyType type) -> StringView
 {
   switch (type) {
-    case AttributeType::String:
+    case PropertyType::Str:
       return "string";
 
-    case AttributeType::Int:
+    case PropertyType::Int:
       return "int";
 
-    case AttributeType::Int2:
+    case PropertyType::Int2:
       return "int2";
 
-    case AttributeType::Int3:
+    case PropertyType::Int3:
       return "int3";
 
-    case AttributeType::Int4:
+    case PropertyType::Int4:
       return "int4";
 
-    case AttributeType::Float:
+    case PropertyType::Float:
       return "float";
 
-    case AttributeType::Float2:
+    case PropertyType::Float2:
       return "float2";
 
-    case AttributeType::Float3:
+    case PropertyType::Float3:
       return "float3";
 
-    case AttributeType::Float4:
+    case PropertyType::Float4:
       return "float4";
 
-    case AttributeType::Bool:
+    case PropertyType::Bool:
       return "bool";
 
-    case AttributeType::Path:
+    case PropertyType::Path:
       return "file";
 
-    case AttributeType::Color:
+    case PropertyType::Color:
       return "color";
 
-    case AttributeType::Object:
+    case PropertyType::Object:
       return "object";
 
     default:
@@ -154,46 +154,46 @@ auto serialize_to_save_format(const AttributeType type) -> StringView
   }
 }
 
-auto parse_attr_type(StringView name) -> Maybe<AttributeType>
+auto parse_attr_type(StringView name) -> Maybe<PropertyType>
 {
   if (name == "string") {
-    return AttributeType::String;
+    return PropertyType::Str;
   }
   else if (name == "int") {
-    return AttributeType::Int;
+    return PropertyType::Int;
   }
   else if (name == "int2") {
-    return AttributeType::Int2;
+    return PropertyType::Int2;
   }
   else if (name == "int3") {
-    return AttributeType::Int3;
+    return PropertyType::Int3;
   }
   else if (name == "int4") {
-    return AttributeType::Int4;
+    return PropertyType::Int4;
   }
   else if (name == "float") {
-    return AttributeType::Float;
+    return PropertyType::Float;
   }
   else if (name == "float2") {
-    return AttributeType::Float2;
+    return PropertyType::Float2;
   }
   else if (name == "float3") {
-    return AttributeType::Float3;
+    return PropertyType::Float3;
   }
   else if (name == "float4") {
-    return AttributeType::Float4;
+    return PropertyType::Float4;
   }
   else if (name == "bool") {
-    return AttributeType::Bool;
+    return PropertyType::Bool;
   }
   else if (name == "file" || name == "path") {
-    return AttributeType::Path;
+    return PropertyType::Path;
   }
   else if (name == "color") {
-    return AttributeType::Color;
+    return PropertyType::Color;
   }
   else if (name == "object") {
-    return AttributeType::Object;
+    return PropertyType::Object;
   }
   else {
     return {};

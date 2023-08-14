@@ -20,22 +20,23 @@
 #pragma once
 
 #include "common/type/uuid.hpp"
-#include "core/attributes/attribute.hpp"
+#include "core/ecs/entity.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "tactile/core/containers/string_map.hpp"
 #include "tactile/core/containers/vector.hpp"
-#include "core/ecs/entity.hpp"
+#include "tactile/core/contexts/property.hpp"
 
 namespace tactile {
 
 struct AttachedComponent final {
   Entity definition {kNullEntity};  ///< The associated component definition.
-  StringMap<Attribute> attributes;
+  StringMap<Property> attributes;
 };
 
 struct Component final {
   UUID uuid {make_uuid()};
   String name;
-  StringMap<Attribute> attributes;
+  StringMap<Property> attributes;
 };
 
 struct ComponentSet final {

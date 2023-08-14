@@ -67,98 +67,98 @@ template <>
 
 }  // namespace
 
-void to_json(JSON& json, const AttributeType type)
+void to_json(JSON& json, const PropertyType type)
 {
   switch (type) {
-    case AttributeType::String:
-    case AttributeType::Int2:
-    case AttributeType::Int3:
-    case AttributeType::Int4:
-    case AttributeType::Float2:
-    case AttributeType::Float3:
-    case AttributeType::Float4:
+    case PropertyType::Str:
+    case PropertyType::Int2:
+    case PropertyType::Int3:
+    case PropertyType::Int4:
+    case PropertyType::Float2:
+    case PropertyType::Float3:
+    case PropertyType::Float4:
       // We store vector properties as strings, instead of just ignoring them.
       json = kStringAttrName;
       break;
 
-    case AttributeType::Int:
+    case PropertyType::Int:
       json = kIntAttrName;
       break;
 
-    case AttributeType::Float:
+    case PropertyType::Float:
       json = kFloatAttrName;
       break;
 
-    case AttributeType::Bool:
+    case PropertyType::Bool:
       json = kBoolAttrName;
       break;
 
-    case AttributeType::Path:
+    case PropertyType::Path:
       json = kFileAttrName;
       break;
 
-    case AttributeType::Color:
+    case PropertyType::Color:
       json = kColorAttrName;
       break;
 
-    case AttributeType::Object:
+    case PropertyType::Object:
       json = kObjectAttrName;
       break;
   }
 }
 
-void to_json(JSON& json, const Attribute& value)
+void to_json(JSON& json, const Property& value)
 {
   switch (value.get_type()) {
-    case AttributeType::String:
+    case PropertyType::Str:
       json = value.as_string();
       break;
 
-    case AttributeType::Int:
+    case PropertyType::Int:
       json = value.as_int();
       break;
 
-    case AttributeType::Int2:
+    case PropertyType::Int2:
       json = serialize_to_save_format(value.as_int2());
       break;
 
-    case AttributeType::Int3:
+    case PropertyType::Int3:
       json = serialize_to_save_format(value.as_int3());
       break;
 
-    case AttributeType::Int4:
+    case PropertyType::Int4:
       json = serialize_to_save_format(value.as_int4());
       break;
 
-    case AttributeType::Float:
+    case PropertyType::Float:
       json = value.as_float();
       break;
 
-    case AttributeType::Float2:
+    case PropertyType::Float2:
       json = serialize_to_save_format(value.as_float2());
       break;
 
-    case AttributeType::Float3:
+    case PropertyType::Float3:
       json = serialize_to_save_format(value.as_float3());
       break;
 
-    case AttributeType::Float4:
+    case PropertyType::Float4:
       json = serialize_to_save_format(value.as_float4());
       break;
 
-    case AttributeType::Bool:
+    case PropertyType::Bool:
       json = value.as_bool();
       break;
 
-    case AttributeType::Path:
+    case PropertyType::Path:
       json = to_forward_slashes_path(value.as_path());
       break;
 
-    case AttributeType::Color:
-      json = value.as_color().as_argb();
+    case PropertyType::Color:
+      json = to_string_argb(value.as_color());
       break;
 
-    case AttributeType::Object:
+    case PropertyType::Object:
       json = value.as_object();
       break;
 
@@ -167,28 +167,28 @@ void to_json(JSON& json, const Attribute& value)
   }
 }
 
-void from_json(const JSON& json, AttributeType& type)
+void from_json(const JSON& json, PropertyType& type)
 {
   if (json == kStringAttrName.data()) {
-    type = AttributeType::String;
+    type = PropertyType::Str;
   }
   else if (json == kIntAttrName.data()) {
-    type = AttributeType::Int;
+    type = PropertyType::Int;
   }
   else if (json == kFloatAttrName.data()) {
-    type = AttributeType::Float;
+    type = PropertyType::Float;
   }
   else if (json == kBoolAttrName.data()) {
-    type = AttributeType::Bool;
+    type = PropertyType::Bool;
   }
   else if (json == kColorAttrName.data()) {
-    type = AttributeType::Color;
+    type = PropertyType::Color;
   }
   else if (json == kFileAttrName.data()) {
-    type = AttributeType::Path;
+    type = PropertyType::Path;
   }
   else if (json == kObjectAttrName.data()) {
-    type = AttributeType::Object;
+    type = PropertyType::Object;
   }
   else {
     throw TactileError {"Not a valid JSON property type"};

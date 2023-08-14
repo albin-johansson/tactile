@@ -41,7 +41,7 @@ auto copy_component(Registry& registry, const AttachedComponent& src_attached_co
 }
 
 auto reset_component_values(const Registry& registry,
-                            AttachedComponent& attached_component) -> StringMap<Attribute>
+                            AttachedComponent& attached_component) -> StringMap<Property>
 {
   const auto& component = registry.get<Component>(attached_component.definition);
 

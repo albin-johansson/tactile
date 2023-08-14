@@ -20,7 +20,7 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
 #include "tactile/core/functional/maybe.hpp"
@@ -33,7 +33,7 @@ class UpdateProperty final : public Command {
   UpdateProperty(Registry* registry,
                  Entity context_entity,
                  String name,
-                 Attribute new_value);
+                 Property new_value);
 
   void undo() override;
 
@@ -47,8 +47,8 @@ class UpdateProperty final : public Command {
   Registry* mRegistry;
   Entity mContextEntity;
   String mName;
-  Attribute mNewValue;
-  Maybe<Attribute> mOldValue;
+  Property mNewValue;
+  Maybe<Property> mOldValue;
   Maybe<usize> mUpdatedVectorComponentIndex;
 };
 

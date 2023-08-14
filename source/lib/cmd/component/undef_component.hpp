@@ -20,7 +20,7 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "tactile/core/containers/hash_map.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/containers/string_map.hpp"
@@ -45,8 +45,8 @@ class UndefComponent final : public Command {
   Registry* mRegistry;
   Entity mComponentSetEntity;
   String mComponentName;
-  Maybe<StringMap<Attribute>> mPrevComponentValues;
-  HashMap<Entity, StringMap<Attribute>> mRemovedComponentValues;
+  Maybe<StringMap<Property>> mPrevComponentValues;
+  HashMap<Entity, StringMap<Property>> mRemovedComponentValues;
 };
 
 }  // namespace tactile::cmd

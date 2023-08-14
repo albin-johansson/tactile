@@ -42,8 +42,8 @@ struct SettingsState final {
   int32 font_size {kDefFontSize};
   int32 theme_saturation {60};
 
-  Color viewport_bg {0x3C, 0x3C, 0x3C};
-  Color grid_color {0xFF, 0xFF, 0xFF, 0x05};
+  UColor viewport_bg {0x3C, 0x3C, 0x3C, 0xFF};
+  UColor grid_color {0xFF, 0xFF, 0xFF, 0x05};
 
   SaveFormat preferred_format {SaveFormat::TactileYaml};
 
@@ -74,8 +74,9 @@ void Settings::print() const
   spdlog::debug("[Settings] Language: {}", get_language());
   spdlog::debug("[Settings] Theme: {}", get_theme());
   spdlog::debug("[Settings] Theme saturation: {}", get_theme_saturation());
-  spdlog::debug("[Settings] Viewport background: {}", get_viewport_bg_color().as_rgb());
-  spdlog::debug("[Settings] Grid color: {}", get_grid_color().as_rgba());
+  spdlog::debug("[Settings] Viewport background: {}",
+                to_string_rgb(get_viewport_bg_color()));
+  spdlog::debug("[Settings] Grid color: {}", to_string_rgba(get_grid_color()));
 
   spdlog::debug("[Settings] Command capacity: {}", get_command_capacity());
   spdlog::debug("[Settings] Preferred tile width: {}", get_preferred_tile_size().x);
@@ -209,12 +210,12 @@ void Settings::set_font_size(const int32 size)
   mState->font_size = size;
 }
 
-void Settings::set_viewport_bg_color(const Color color)
+void Settings::set_viewport_bg_color(const UColor color)
 {
   mState->viewport_bg = color;
 }
 
-void Settings::set_grid_color(const Color color)
+void Settings::set_grid_color(const UColor color)
 {
   mState->grid_color = color;
 }
@@ -264,12 +265,12 @@ auto Settings::get_font_size() const -> int32
   return mState->font_size;
 }
 
-auto Settings::get_viewport_bg_color() const -> const Color&
+auto Settings::get_viewport_bg_color() const -> const UColor&
 {
   return mState->viewport_bg;
 }
 
-auto Settings::get_grid_color() const -> const Color&
+auto Settings::get_grid_color() const -> const UColor&
 {
   return mState->grid_color;
 }

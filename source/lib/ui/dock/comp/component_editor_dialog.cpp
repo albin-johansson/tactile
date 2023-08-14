@@ -23,7 +23,7 @@
 
 #include <imgui.h>
 
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "core/debug/assert.hpp"
 #include "core/ecs/registry.hpp"
@@ -147,7 +147,7 @@ void _push_component_attribute_row_name_popup(ModelView model,
 void _push_component_attribute_row(ModelView model,
                                    const Entity definition_entity,
                                    const String& attribute_name,
-                                   const Attribute& attribute)
+                                   const Property& attribute)
 {
   const auto& strings = model.get_language_strings();
 

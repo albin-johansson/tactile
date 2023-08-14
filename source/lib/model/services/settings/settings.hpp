@@ -19,15 +19,15 @@
 
 #pragma once
 
-#include "core/attributes/color.hpp"
-#include "tactile/core/containers/smart_ptr.hpp"
-#include "tactile/core/containers/string.hpp"
 #include "core/enums/lang.hpp"
 #include "core/enums/overlay_pos.hpp"
 #include "core/enums/save_format.hpp"
 #include "core/enums/theme.hpp"
 #include "core/math/vector.hpp"
 #include "core/prelude.hpp"
+#include "tactile/core/containers/smart_ptr.hpp"
+#include "tactile/core/containers/string.hpp"
+#include "tactile/core/contexts/color.hpp"
 
 namespace tactile {
 
@@ -88,8 +88,8 @@ class Settings final {
   void set_command_capacity(usize capacity);
   void set_preferred_tile_size(Int2 tile_size);
   void set_font_size(int32 size);
-  void set_viewport_bg_color(Color color);
-  void set_grid_color(Color color);
+  void set_viewport_bg_color(UColor color);
+  void set_grid_color(UColor color);
   void set_preferred_format(SaveFormat format);
 
   void set_flags(SettingsFlagBits flags);
@@ -103,8 +103,8 @@ class Settings final {
   [[nodiscard]] auto get_command_capacity() const -> usize;
   [[nodiscard]] auto get_preferred_tile_size() const -> Int2;
   [[nodiscard]] auto get_font_size() const -> int32;
-  [[nodiscard]] auto get_viewport_bg_color() const -> const Color&;
-  [[nodiscard]] auto get_grid_color() const -> const Color&;
+  [[nodiscard]] auto get_viewport_bg_color() const -> const UColor&;
+  [[nodiscard]] auto get_grid_color() const -> const UColor&;
   [[nodiscard]] auto get_preferred_format() const -> const SaveFormat&;
 
   [[nodiscard]] auto get_flags() const -> SettingsFlagBits;

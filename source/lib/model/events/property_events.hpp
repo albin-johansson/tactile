@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "core/ecs/entity.hpp"
 
@@ -46,7 +46,7 @@ struct InspectContextEvent final {
 struct CreatePropertyEvent final {
   Entity context {kNullEntity};  ///< Target context.
   String name;                   ///< The property name.
-  AttributeType type {};         ///< The property type.
+  PropertyType type {};         ///< The property type.
 };
 
 struct RemovePropertyEvent final {
@@ -63,13 +63,13 @@ struct RenamePropertyEvent final {
 struct UpdatePropertyEvent final {
   Entity context {kNullEntity};  ///< Target context.
   String name;                   ///< Name of property to modify.
-  Attribute value;               ///< Updated value of the property.
+  Property value;                ///< Updated value of the property.
 };
 
 struct SetPropertyTypeEvent final {
   Entity context {kNullEntity};  ///< Target context.
   String name;                   ///< Name of property to modify.
-  AttributeType type {};         ///< Requested new property type.
+  PropertyType type {};         ///< Requested new property type.
 };
 
 }  // namespace tactile

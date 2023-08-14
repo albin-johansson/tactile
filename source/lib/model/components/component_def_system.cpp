@@ -46,7 +46,7 @@ auto instantiate_component(Registry& registry, const Entity component_entity) ->
 void add_component_attribute(Registry& registry,
                              const Entity component_entity,
                              const String& name,
-                             const Attribute& value)
+                             const Property& value)
 {
   TACTILE_ASSERT(is_component_entity(registry, component_entity));
 
@@ -127,7 +127,7 @@ auto duplicate_component_attribute(Registry& registry,
 void force_update_component_attribute(Registry& registry,
                                       const Entity component_entity,
                                       const String& attribute_name,
-                                      const Attribute& attribute_value)
+                                      const Property& attribute_value)
 {
   TACTILE_ASSERT(is_component_entity(registry, component_entity));
 

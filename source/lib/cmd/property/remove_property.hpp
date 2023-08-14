@@ -20,7 +20,7 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
@@ -42,7 +42,7 @@ class RemoveProperty final : public Command {
   Registry* mRegistry;
   Entity mContextEntity;
   String mName;
-  Maybe<Attribute> mPreviousValue;
+  Maybe<Property> mPreviousValue;
 };
 
 }  // namespace tactile::cmd

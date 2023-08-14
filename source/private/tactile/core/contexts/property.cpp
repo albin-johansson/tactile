@@ -20,6 +20,7 @@
 #include "tactile/core/contexts/property.hpp"
 
 #include <type_traits>  // decay_t
+#include <utility>      // to_underlying
 #include <variant>      // visit
 
 #include "tactile/core/common/error.hpp"
@@ -292,6 +293,110 @@ auto Property::has_initial_value() const -> bool
   };
 
   return std::visit(visitor, mValue);
+}
+
+auto operator<<(std::ostream& stream, const Property& property) -> std::ostream&
+{
+  switch (property.get_type()) {
+    case PropertyType::Str:
+      return stream << property.as_string();
+
+    case PropertyType::Int:
+      return stream << property.as_int();
+
+    case PropertyType::Int2: {
+      const auto& vec = property.as_int2();
+      return stream << '{' << vec.x << ", " << vec.y << '}';
+    }
+    case PropertyType::Int3: {
+      const auto& vec = property.as_int3();
+      return stream << '{' << vec.x << ", " << vec.y << ", " << vec.z << '}';
+    }
+    case PropertyType::Int4: {
+      const auto& vec = property.as_int4();
+      return stream << '{' << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.w
+                    << '}';
+    }
+    case PropertyType::Float:
+      return stream << property.as_float();
+
+    case PropertyType::Float2: {
+      const auto& vec = property.as_float2();
+      return stream << '{' << vec.x << ", " << vec.y << '}';
+    }
+    case PropertyType::Float3: {
+      const auto& vec = property.as_float3();
+      return stream << '{' << vec.x << ", " << vec.y << ", " << vec.z << '}';
+    }
+    case PropertyType::Float4: {
+      const auto& vec = property.as_float4();
+      return stream << '{' << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.w
+                    << '}';
+    }
+    case PropertyType::Bool:
+      return stream << (property.as_bool() ? "true" : "false");
+
+    case PropertyType::Path:
+      return stream << property.as_path();
+
+    case PropertyType::Color:
+      return stream << to_string_rgba(property.as_color());
+
+    case PropertyType::Object:
+      return stream << std::to_underlying(property.as_object());
+  }
+
+  return stream;
+}
+
+auto index_of_varying_vector_dimension(const Property& a, const Property& b)
+    -> Maybe<usize>
+{
+  auto compare = [](const auto& v1, const auto& v2) -> Maybe<usize> {
+    const auto mask = compare_vector_components(v1, v2);
+
+    if (!(mask & kVectorXBit)) {
+      return 0;
+    }
+    else if (!(mask & kVectorYBit)) {
+      return 1;
+    }
+    else if (!(mask & kVectorZBit)) {
+      return 2;
+    }
+    else if (!(mask & kVectorWBit)) {
+      return 3;
+    }
+
+    return kNone;
+  };
+
+  if (a.is_vector() && a.get_type() == b.get_type()) {
+    switch (a.get_type()) {
+      case PropertyType::Int2:
+        return compare(a.as_int2(), b.as_int2());
+
+      case PropertyType::Int3:
+        return compare(a.as_int3(), b.as_int3());
+
+      case PropertyType::Int4:
+        return compare(a.as_int4(), b.as_int4());
+
+      case PropertyType::Float2:
+        return compare(a.as_float2(), b.as_float2());
+
+      case PropertyType::Float3:
+        return compare(a.as_float3(), b.as_float3());
+
+      case PropertyType::Float4:
+        return compare(a.as_float4(), b.as_float4());
+
+      default:
+        break;
+    }
+  }
+
+  return kNone;
 }
 
 }  // namespace tactile

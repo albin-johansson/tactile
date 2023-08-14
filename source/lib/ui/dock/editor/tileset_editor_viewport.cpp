@@ -23,7 +23,7 @@
 #include <imgui_internal.h>
 
 #include "common/util/lookup.hpp"
-#include "core/attributes/color.hpp"
+#include "tactile/core/contexts/color.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/events/tileset_events.hpp"
 #include "model/services/language_service.hpp"
@@ -44,9 +44,9 @@
 namespace tactile {
 namespace {
 
-inline constexpr Color kTileHoverColor {0x00, 0xFF, 0x00, 0xC8};
-inline constexpr Color kSelectedTileColor {0x00, 0xEE, 0xEE, 0xFF};
-inline constexpr Color kAnimationFrameSelectionColor {0xFF, 0x45, 0x00, 0xC8};
+inline constexpr UColor kTileHoverColor {0x00, 0xFF, 0x00, 0xC8};
+inline constexpr UColor kSelectedTileColor {0x00, 0xEE, 0xEE, 0xFF};
+inline constexpr UColor kAnimationFrameSelectionColor {0xFF, 0x45, 0x00, 0xC8};
 
 void _draw_cursor_gizmos(const TilesetEditorViewportState& state,
                          const ViewportMouseInfo& cursor,
@@ -89,7 +89,7 @@ void _highlight_animation_frame_selection_mode(const TilesetEditorViewportState&
     label_pos.x = (canvas.size.x - label_size.x) * 0.5f;
     label_pos.y = 100;
 
-    ui::render_shadowed_text(label, label_pos, kWhite, 2.0f);
+    ui::render_shadowed_text(label, label_pos, kWhiteColor, 2.0f);
   }
 }
 

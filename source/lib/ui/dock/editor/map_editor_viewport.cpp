@@ -23,7 +23,7 @@
 
 #include <imgui.h>
 
-#include "core/attributes/color.hpp"
+#include "tactile/core/contexts/color.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/events/object_events.hpp"
 #include "model/events/property_events.hpp"
@@ -82,7 +82,7 @@ void _draw_cursor_gizmos(ModelView& model,
   if (mouse.over_content && model.is_tile_layer_active()) {
     ui::draw_shadowed_rect(as_imvec2(mouse.clamped_pos),
                            canvas.graphical_tile_size,
-                           Color {0, 0xFF, 0, 0xC8},
+                           UColor {0, 0xFF, 0, 0xC8},
                            2.0f);
   }
 

@@ -22,7 +22,7 @@
 #include <nlohmann/json.hpp>
 
 #include "common/type/path.hpp"
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/functional/maybe.hpp"
 #include "core/functional/result.hpp"
@@ -33,9 +33,9 @@ namespace tactile {
 using JSON = nlohmann::json;
 
 /// ADL functions for converting attribute types to/from JSON.
-void to_json(JSON& json, AttributeType type);
-void to_json(JSON& json, const Attribute& value);
-void from_json(const JSON& json, AttributeType& type);
+void to_json(JSON& json, PropertyType type);
+void to_json(JSON& json, const Property& value);
+void from_json(const JSON& json, PropertyType& type);
 
 /// Parses the JSON file at the specified path, returning nothing if something goes wrong.
 [[nodiscard]] auto parse_json_file(const Path& path) -> Maybe<JSON>;
@@ -46,7 +46,7 @@ auto save_json_to_file(const JSON& json, const Path& path, int indentation = 0) 
 /// Attempts to retrieve an attribute from a JSON object.
 [[nodiscard]] auto try_get(const JSON& json, const char* key) -> const JSON*;
 
-/// Attribute retrieval functions.
+/// Property retrieval functions.
 [[nodiscard]] auto as_string(const JSON& json, StringView name) -> Maybe<String>;
 [[nodiscard]] auto as_int(const JSON& json, StringView name) -> Maybe<int32>;
 [[nodiscard]] auto as_uint(const JSON& json, StringView name) -> Maybe<uint32>;

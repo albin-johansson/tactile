@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/containers/string_map.hpp"
 #include "tactile/core/containers/tree_map.hpp"
@@ -33,7 +33,7 @@ namespace tactile {
 using GdExtRes = int32;  ///< External resource identifier.
 using GdSubRes = int32;  ///< Subresource identifier.
 
-using GdAttributes = StringMap<Attribute>;
+using GdAttributes = StringMap<Property>;
 
 struct GdMetaData final {
   GdAttributes props;

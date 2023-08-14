@@ -33,7 +33,7 @@ namespace tactile::cmd {
 CreateProperty::CreateProperty(Registry* registry,
                                const Entity context_entity,
                                String name,
-                               const AttributeType type)
+                               const PropertyType type)
     : mRegistry {registry},
       mContextEntity {context_entity},
       mName {std::move(name)},
@@ -55,7 +55,7 @@ void CreateProperty::redo()
   auto& registry = *mRegistry;
 
   auto& context = registry.get<Context>(mContextEntity);
-  context.props[mName].reset_to_default(mType);
+  context.props[mName].reset(mType);
 }
 
 auto CreateProperty::get_name() const -> String

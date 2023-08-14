@@ -20,7 +20,7 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "core/attributes/attribute.hpp"
+#include "tactile/core/contexts/property.hpp"
 #include "tactile/core/containers/hash_map.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
@@ -34,7 +34,7 @@ class SetComponentAttrType final : public Command {
   SetComponentAttrType(Registry* registry,
                        Entity component_entity,
                        String attribute_name,
-                       AttributeType new_type);
+                       PropertyType new_type);
 
   void undo() override;
 
@@ -46,9 +46,9 @@ class SetComponentAttrType final : public Command {
   Registry* mRegistry;
   Entity mComponentEntity;
   String mAttributeName;
-  AttributeType mNewType;
-  Maybe<Attribute> mOldValue;
-  HashMap<Entity, Attribute> mPrevAttributes;  // Component entity -> attribute.
+  PropertyType mNewType;
+  Maybe<Property> mOldValue;
+  HashMap<Entity, Property> mPrevAttributes;  // Component entity -> attribute.
 };
 
 }  // namespace tactile::cmd

@@ -44,10 +44,10 @@ auto copy_context(Registry& registry, const Context& src_context) -> Context
 }
 
 auto copy_component_values(const Registry& registry, const Entity definition_entity)
-    -> HashMap<Entity, StringMap<Attribute>>
+    -> HashMap<Entity, StringMap<Property>>
 {
   TACTILE_ASSERT(is_component_entity(registry, definition_entity));
-  HashMap<Entity, StringMap<Attribute>> component_values;
+  HashMap<Entity, StringMap<Property>> component_values;
 
   for (auto [context_entity, context]: registry.each<Context>()) {
     for (const auto attached_component_entity: context.comps) {
@@ -66,10 +66,10 @@ auto copy_component_values(const Registry& registry, const Entity definition_ent
 auto copy_single_attribute_in_components(const Registry& registry,
                                          const Entity definition_entity,
                                          StringView attribute_name)
-    -> HashMap<Entity, Attribute>
+    -> HashMap<Entity, Property>
 {
   TACTILE_ASSERT(is_component_entity(registry, definition_entity));
-  HashMap<Entity, Attribute> attributes;
+  HashMap<Entity, Property> attributes;
 
   for (auto [attached_component_entity, attached_component]:
        registry.each<AttachedComponent>()) {

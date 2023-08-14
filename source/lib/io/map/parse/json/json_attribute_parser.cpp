@@ -19,15 +19,15 @@
 
 #include <utility>  // move
 
-#include "tactile/core/containers/string.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 #include "io/save_formats.hpp"
+#include "tactile/core/containers/string.hpp"
 
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto _parse_value(const JSON& json, StringView type, Attribute& value)
+[[nodiscard]] auto _parse_value(const JSON& json, StringView type, Property& value)
     -> ParseError
 {
   const auto attr_type = parse_attr_type(type);
@@ -36,37 +36,37 @@ namespace {
   }
 
   switch (*attr_type) {
-    case AttributeType::String: {
+    case PropertyType::Str: {
       value = as_string(json, "value").value();
       break;
     }
-    case AttributeType::Int: {
+    case PropertyType::Int: {
       value = as_int(json, "value").value();
       break;
     }
-    case AttributeType::Float: {
+    case PropertyType::Float: {
       value = as_float(json, "value").value();
       break;
     }
-    case AttributeType::Bool: {
+    case PropertyType::Bool: {
       value = as_bool(json, "value").value();
       break;
     }
-    case AttributeType::Path: {
+    case PropertyType::Path: {
       Path path = as_string(json, "value").value();
       value = std::move(path);
       break;
     }
-    case AttributeType::Color: {
+    case PropertyType::Color: {
       const auto hex = as_string(json, "value").value();
 
       // Empty color properties are not supported, so just assume the default color value
       if (hex.empty()) {
-        value.reset_to_default(AttributeType::Color);
+        value.reset(PropertyType::Color);
       }
       else {
         if (const auto color =
-                (hex.size() == 9) ? Color::from_argb(hex) : Color::from_rgb(hex)) {
+                (hex.size() == 9) ? to_color_argb(hex) : to_color_rgb(hex)) {
           value = *color;
         }
         else {
@@ -76,17 +76,17 @@ namespace {
 
       break;
     }
-    case AttributeType::Object: {
+    case PropertyType::Object: {
       value = ObjectRef {as_int(json, "value").value()};
       break;
     }
-    case AttributeType::Float2:
-    case AttributeType::Float3:
-    case AttributeType::Float4:
-    case AttributeType::Int2:
-    case AttributeType::Int3:
+    case PropertyType::Float2:
+    case PropertyType::Float3:
+    case PropertyType::Float4:
+    case PropertyType::Int2:
+    case PropertyType::Int3:
       [[fallthrough]];
-    case AttributeType::Int4:
+    case PropertyType::Int4:
       return ParseError::UnsupportedPropertyType;
   }
 

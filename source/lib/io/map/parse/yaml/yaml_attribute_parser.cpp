@@ -59,7 +59,7 @@ template <typename T>
       vec[index] = *component_value;
     }
     else {
-      return {};
+      return std::nullopt;
     }
 
     ++index;
@@ -69,61 +69,61 @@ template <typename T>
 }
 
 [[nodiscard]] auto _parse_attribute_value(const YAML::Node& value,
-                                          const AttributeType type) -> Maybe<Attribute>
+                                          const PropertyType type) -> Maybe<Property>
 {
   switch (type) {
-    case AttributeType::String:
+    case PropertyType::Str:
       return value.as<String>();
 
-    case AttributeType::Int:
+    case PropertyType::Int:
       return value.as<int32>();
 
-    case AttributeType::Int2:
+    case PropertyType::Int2:
       return _parse_vector<Int2>(value);
 
-    case AttributeType::Int3:
+    case PropertyType::Int3:
       return _parse_vector<Int3>(value);
 
-    case AttributeType::Int4:
+    case PropertyType::Int4:
       return _parse_vector<Int4>(value);
 
-    case AttributeType::Float:
+    case PropertyType::Float:
       return value.as<float>();
 
-    case AttributeType::Float2:
+    case PropertyType::Float2:
       return _parse_vector<Float2>(value);
 
-    case AttributeType::Float3:
+    case PropertyType::Float3:
       return _parse_vector<Float3>(value);
 
-    case AttributeType::Float4:
+    case PropertyType::Float4:
       return _parse_vector<Float4>(value);
 
-    case AttributeType::Bool:
+    case PropertyType::Bool:
       return value.as<bool>();
 
-    case AttributeType::Path:
+    case PropertyType::Path:
       return Path {value.as<String>()};
 
-    case AttributeType::Color: {
+    case PropertyType::Color: {
       const auto hex = value.as<String>();
-      if (const auto color = Color::from_rgba(hex)) {
+      if (const auto color = to_color_rgba(hex)) {
         return *color;
       }
       else {
-        return {};
+        return std::nullopt;
       }
     }
-    case AttributeType::Object:
+    case PropertyType::Object:
       return ObjectRef {value.as<int32>()};
 
     default:
-      return {};
+      return std::nullopt;
   }
 }
 
 [[nodiscard]] auto _parse_component_definition_attribute(const YAML::Node& node)
-    -> Parsed<Attribute>
+    -> Parsed<Property>
 {
   String name;
   if (!read_attr(node, "name", name)) {
@@ -135,7 +135,7 @@ template <typename T>
     return unexpected(ParseError::NoComponentDefAttributeType);
   }
 
-  AttributeType type {};
+  PropertyType type {};
   if (const auto parsed_type = parse_attr_type(type_name)) {
     type = *parsed_type;
   }
@@ -143,20 +143,20 @@ template <typename T>
     return unexpected(ParseError::UnsupportedComponentDefAttributeType);
   }
 
-  Attribute value;
-  value.reset_to_default(type);
+  Property value;
+  value.reset(type);
 
   if (auto default_value = node["default"]) {
     switch (type) {
-      case AttributeType::String:
+      case PropertyType::Str:
         value = default_value.as<String>();
         break;
 
-      case AttributeType::Int:
+      case PropertyType::Int:
         value = default_value.as<int32>();
         break;
 
-      case AttributeType::Int2:
+      case PropertyType::Int2:
         if (const auto vec = _parse_vector<Int2>(default_value)) {
           value = *vec;
         }
@@ -165,7 +165,7 @@ template <typename T>
         }
         break;
 
-      case AttributeType::Int3:
+      case PropertyType::Int3:
         if (const auto vec = _parse_vector<Int3>(default_value)) {
           value = *vec;
         }
@@ -174,7 +174,7 @@ template <typename T>
         }
         break;
 
-      case AttributeType::Int4:
+      case PropertyType::Int4:
         if (const auto vec = _parse_vector<Int4>(default_value)) {
           value = *vec;
         }
@@ -183,11 +183,11 @@ template <typename T>
         }
         break;
 
-      case AttributeType::Float:
+      case PropertyType::Float:
         value = default_value.as<float>();
         break;
 
-      case AttributeType::Float2:
+      case PropertyType::Float2:
         if (const auto vec = _parse_vector<Float2>(default_value)) {
           value = *vec;
         }
@@ -196,7 +196,7 @@ template <typename T>
         }
         break;
 
-      case AttributeType::Float3:
+      case PropertyType::Float3:
         if (const auto vec = _parse_vector<Float3>(default_value)) {
           value = *vec;
         }
@@ -205,7 +205,7 @@ template <typename T>
         }
         break;
 
-      case AttributeType::Float4:
+      case PropertyType::Float4:
         if (const auto vec = _parse_vector<Float4>(default_value)) {
           value = *vec;
         }
@@ -214,17 +214,17 @@ template <typename T>
         }
         break;
 
-      case AttributeType::Bool:
+      case PropertyType::Bool:
         value = default_value.as<bool>();
         break;
 
-      case AttributeType::Path: {
+      case PropertyType::Path: {
         Path path = default_value.as<String>();
         value = std::move(path);
         break;
       }
-      case AttributeType::Color: {
-        if (const auto color = Color::from_rgba(default_value.as<String>())) {
+      case PropertyType::Color: {
+        if (const auto color = to_color_rgba(default_value.as<String>())) {
           value = *color;
         }
         else {
@@ -232,7 +232,7 @@ template <typename T>
         }
         break;
       }
-      case AttributeType::Object:
+      case PropertyType::Object:
         value = ObjectRef {default_value.as<int32>()};
         break;
     }
@@ -362,7 +362,7 @@ auto parse_properties(const YAML::Node& node) -> Parsed<AttributeMap>
         return unexpected(ParseError::NoPropertyType);
       }
 
-      AttributeType property_type {};
+      PropertyType property_type {};
       if (auto parsed_type = parse_attr_type(type)) {
         property_type = *parsed_type;
       }

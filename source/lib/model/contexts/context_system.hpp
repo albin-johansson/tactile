@@ -42,7 +42,7 @@ namespace tactile::sys {
  */
 [[nodiscard]] auto copy_component_values(const Registry& registry,
                                          Entity definition_entity)
-    -> HashMap<Entity, StringMap<Attribute>>;
+    -> HashMap<Entity, StringMap<Property>>;
 
 /**
  * Copies a specific attribute in all components of a specific component type.
@@ -56,6 +56,6 @@ namespace tactile::sys {
 [[nodiscard]] auto copy_single_attribute_in_components(const Registry& registry,
                                                        Entity definition_entity,
                                                        StringView attribute_name)
-    -> HashMap<Entity, Attribute>;
+    -> HashMap<Entity, Property>;
 
 }  // namespace tactile::sys

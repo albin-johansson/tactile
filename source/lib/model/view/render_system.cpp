@@ -44,13 +44,13 @@
 namespace tactile::sys {
 namespace {
 
-inline constexpr Color kActiveObjectColor {0xFF, 0xFF, 0x00, 0xFF};
+inline constexpr UColor kActiveObjectColor {0xFF, 0xFF, 0x00, 0xFF};
 
 void _render_point_object(const Registry& registry,
                           const ui::CanvasInfo& canvas,
                           const Entity object_entity,
                           const ImVec2& rendered_position,
-                          const Color& color)
+                          const UColor& color)
 {
   const auto& object_context = registry.get<Context>(object_entity);
 
@@ -69,7 +69,7 @@ void _render_point_object(const Registry& registry,
         text_offset.y = point_radius + 4.0f;
 
         const auto text_pos = ui::translate_pos(canvas, rendered_position + text_offset);
-        ui::render_text(object_context.name.c_str(), text_pos, kWhite);
+        ui::render_text(object_context.name.c_str(), text_pos, kWhiteColor);
       }
     }
   }
@@ -79,7 +79,7 @@ void _render_rectangle_object(const Registry& registry,
                               const ui::CanvasInfo& canvas,
                               const Entity object_entity,
                               const ImVec2& rendered_position,
-                              const Color& color)
+                              const UColor& color)
 {
   const auto& object = registry.get<Object>(object_entity);
   const auto& object_context = registry.get<Context>(object_entity);
@@ -103,7 +103,7 @@ void _render_rectangle_object(const Registry& registry,
         text_offset.y = rendered_size.y + 4.0f;
 
         const auto text_pos = ui::translate_pos(canvas, rendered_position + text_offset);
-        ui::render_text(object_context.name.c_str(), text_pos, kWhite);
+        ui::render_text(object_context.name.c_str(), text_pos, kWhiteColor);
       }
     }
   }
@@ -113,7 +113,7 @@ void _render_ellipse_object(const Registry& registry,
                             const ui::CanvasInfo& canvas,
                             const Entity object_entity,
                             const ImVec2& rendered_position,
-                            const Color& color)
+                            const UColor& color)
 {
   const auto& object = registry.get<Object>(object_entity);
   const auto& object_context = registry.get<Context>(object_entity);
@@ -138,7 +138,7 @@ void _render_ellipse_object(const Registry& registry,
 
       ui::render_text(object_context.name.c_str(),
                       ui::translate_pos(canvas, text_pos),
-                      kWhite);
+                      kWhiteColor);
     }
   }
 }
@@ -300,7 +300,7 @@ void render_object_layer(const Registry& registry,
 {
   const auto& object_layer = registry.get<ObjectLayer>(object_layer_entity);
 
-  const Color object_color {0xFF, 0, 0, opacity_cast(opacity)};
+  const UColor object_color {0xFF, 0, 0, opacity_cast(opacity)};
 
   for (const auto object_entity: object_layer.objects) {
     render_object(registry, canvas, object_entity, object_color);
@@ -310,7 +310,7 @@ void render_object_layer(const Registry& registry,
 void render_object(const Registry& registry,
                    const ui::CanvasInfo& canvas,
                    const Entity object_entity,
-                   const Color& color)
+                   const UColor& color)
 {
   const auto& object = registry.get<Object>(object_entity);
   const auto rendered_position = as_imvec2(object.position) * canvas.tile_ratio;

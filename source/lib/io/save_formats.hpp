@@ -21,7 +21,7 @@
 
 #include "common/type/path.hpp"
 #include "tactile/core/containers/string.hpp"
-#include "core/enums/attribute_type.hpp"
+#include "tactile/core/contexts/property_type.hpp"
 #include "core/enums/save_format.hpp"
 #include "tactile/core/functional/maybe.hpp"
 #include "core/math/vector.hpp"
@@ -52,9 +52,9 @@ namespace tactile {
 [[nodiscard]] auto serialize_to_save_format(const Float4& vec) -> String;
 
 /// Returns the name of an attribute type for use in save files.
-[[nodiscard]] auto serialize_to_save_format(AttributeType type) -> StringView;
+[[nodiscard]] auto serialize_to_save_format(PropertyType type) -> StringView;
 
 /// Parses an attribute type from a type name used in save files.
-[[nodiscard]] auto parse_attr_type(StringView name) -> Maybe<AttributeType>;
+[[nodiscard]] auto parse_attr_type(StringView name) -> Maybe<PropertyType>;
 
 }  // namespace tactile

@@ -228,21 +228,19 @@ void _push_appearance_tab(const Strings& lang, SettingsDialogState& state)
 
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
 
-    if (auto rgba = state.ui_settings.get_viewport_bg_color().as_float_array();
+    if (auto rgba = normalize(state.ui_settings.get_viewport_bg_color());
         ImGui::ColorEdit3(lang.setting.viewport_bg_color.c_str(),
-                          rgba.data(),
+                          &rgba.red,
                           ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoAlpha)) {
-      const auto color = Color::from_norm(rgba.at(0), rgba.at(1), rgba.at(2));
-      state.ui_settings.set_viewport_bg_color(color);
+      state.ui_settings.set_viewport_bg_color(unnormalize(rgba));
     }
 
-    if (auto rgba = state.ui_settings.get_grid_color().as_float_array();
+    if (auto rgba = normalize(state.ui_settings.get_grid_color());
         ImGui::ColorEdit4(lang.setting.grid_color.c_str(),
-                          rgba.data(),
+                          &rgba.red,
                           ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar |
                               ImGuiColorEditFlags_AlphaPreviewHalf)) {
-      const auto color = Color::from_norm(rgba.at(0), rgba.at(1), rgba.at(2), rgba.at(3));
-      state.ui_settings.set_grid_color(color);
+      state.ui_settings.set_grid_color(unnormalize(rgba));
     }
 
     bool use_window_border = state.ui_settings.test_flag(SETTINGS_WINDOW_BORDER_BIT);

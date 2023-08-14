@@ -54,7 +54,7 @@ void _append_properties(XmlNode node, const ContextIR& context)
     const auto type = property_value.get_type();
 
     // Properties with no type attribute are assumed to be string properties
-    if (type != AttributeType::String && !property_value.is_any_vector()) {
+    if (type != PropertyType::Str && !property_value.is_vector()) {
       property_node.append_attribute("type").set_value(
           serialize_to_save_format(type).data());
     }
@@ -62,62 +62,62 @@ void _append_properties(XmlNode node, const ContextIR& context)
     auto value_attr = property_node.append_attribute("value");
 
     switch (type) {
-      case AttributeType::String:
+      case PropertyType::Str:
         value_attr.set_value(property_value.as_string().c_str());
         break;
 
-      case AttributeType::Int:
+      case PropertyType::Int:
         value_attr.set_value(property_value.as_int());
         break;
 
-      case AttributeType::Int2: {
+      case PropertyType::Int2: {
         const auto str = serialize_to_save_format(property_value.as_int2());
         value_attr.set_value(str.c_str());
         break;
       }
-      case AttributeType::Int3: {
+      case PropertyType::Int3: {
         const auto str = serialize_to_save_format(property_value.as_int3());
         value_attr.set_value(str.c_str());
         break;
       }
-      case AttributeType::Int4: {
+      case PropertyType::Int4: {
         const auto str = serialize_to_save_format(property_value.as_int4());
         value_attr.set_value(str.c_str());
         break;
       }
-      case AttributeType::Float:
+      case PropertyType::Float:
         value_attr.set_value(property_value.as_float());
         break;
 
-      case AttributeType::Float2: {
+      case PropertyType::Float2: {
         const auto str = serialize_to_save_format(property_value.as_float2());
         value_attr.set_value(str.c_str());
         break;
       }
-      case AttributeType::Float3: {
+      case PropertyType::Float3: {
         const auto str = serialize_to_save_format(property_value.as_float3());
         value_attr.set_value(str.c_str());
         break;
       }
-      case AttributeType::Float4: {
+      case PropertyType::Float4: {
         const auto str = serialize_to_save_format(property_value.as_float4());
         value_attr.set_value(str.c_str());
         break;
       }
-      case AttributeType::Bool:
+      case PropertyType::Bool:
         value_attr.set_value(property_value.as_bool());
         break;
 
-      case AttributeType::Path: {
+      case PropertyType::Path: {
         const auto str = to_forward_slashes_path(property_value.as_path());
         value_attr.set_value(str.c_str());
         break;
       }
-      case AttributeType::Color:
-        value_attr.set_value(property_value.as_color().as_argb().c_str());
+      case PropertyType::Color:
+        value_attr.set_value(to_string_argb(property_value.as_color()).c_str());
         break;
 
-      case AttributeType::Object:
+      case PropertyType::Object:
         value_attr.set_value(property_value.as_object());
         break;
 

@@ -42,57 +42,57 @@ auto save_yaml_to_file(const YAML::Emitter& emitter, const Path& path) -> Result
   }
 }
 
-auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter&
+auto operator<<(YAML::Emitter& emitter, const Property& value) -> YAML::Emitter&
 {
   switch (value.get_type()) {
-    case AttributeType::String:
+    case PropertyType::Str:
       return emitter << value.as_string();
 
-    case AttributeType::Int:
+    case PropertyType::Int:
       emitter << value.as_int();
       break;
 
-    case AttributeType::Int2:
+    case PropertyType::Int2:
       emitter << serialize_to_save_format(value.as_int2());
       break;
 
-    case AttributeType::Int3:
+    case PropertyType::Int3:
       emitter << serialize_to_save_format(value.as_int3());
       break;
 
-    case AttributeType::Int4:
+    case PropertyType::Int4:
       emitter << serialize_to_save_format(value.as_int4());
       break;
 
-    case AttributeType::Float:
+    case PropertyType::Float:
       emitter << value.as_float();
       break;
 
-    case AttributeType::Float2:
+    case PropertyType::Float2:
       emitter << serialize_to_save_format(value.as_float2());
       break;
 
-    case AttributeType::Float3:
+    case PropertyType::Float3:
       emitter << serialize_to_save_format(value.as_float3());
       break;
 
-    case AttributeType::Float4:
+    case PropertyType::Float4:
       emitter << serialize_to_save_format(value.as_float4());
       break;
 
-    case AttributeType::Bool:
+    case PropertyType::Bool:
       emitter << value.as_bool();
       break;
 
-    case AttributeType::Path:
+    case PropertyType::Path:
       emitter << to_forward_slashes_path(value.as_path());
       break;
 
-    case AttributeType::Color:
-      emitter << value.as_color().as_rgba();
+    case PropertyType::Color:
+      emitter << to_string_rgba(value.as_color());
       break;
 
-    case AttributeType::Object:
+    case PropertyType::Object:
       emitter << value.as_object();
       break;
 
@@ -103,7 +103,7 @@ auto operator<<(YAML::Emitter& emitter, const Attribute& value) -> YAML::Emitter
   return emitter;
 }
 
-auto operator<<(YAML::Emitter& emitter, const AttributeType type) -> YAML::Emitter&
+auto operator<<(YAML::Emitter& emitter, const PropertyType type) -> YAML::Emitter&
 {
   return emitter << serialize_to_save_format(type).data();
 }

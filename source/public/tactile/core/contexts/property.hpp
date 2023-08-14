@@ -19,18 +19,36 @@
 
 #pragma once
 
-#include <filesystem>  // path
-#include <string>      // string
-#include <utility>     // move
-#include <variant>     // variant, holds_alternative, get_if
+#include <concepts>  // same_as, convertible_to
+#include <ostream>   // ostream
+#include <utility>   // move
+#include <variant>   // variant, holds_alternative, get_if
 
 #include "tactile/core/common/prelude.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "tactile/core/contexts/color.hpp"
 #include "tactile/core/contexts/property_type.hpp"
 #include "tactile/core/core.hpp"
+#include "tactile/core/functional/maybe.hpp"
+#include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/math/vector.hpp"
 
 namespace tactile {
+
+template <typename T>
+concept CPropertyValue = std::same_as<T, bool> ||              //
+                         std::convertible_to<T, int32> ||      //
+                         std::convertible_to<T, float32> ||    //
+                         std::convertible_to<T, String> ||     //
+                         std::convertible_to<T, Path> ||       //
+                         std::convertible_to<T, ObjectRef> ||  //
+                         std::convertible_to<T, UColor> ||     //
+                         std::convertible_to<T, Int2> ||       //
+                         std::convertible_to<T, Int3> ||       //
+                         std::convertible_to<T, Int4> ||       //
+                         std::convertible_to<T, Float2> ||     //
+                         std::convertible_to<T, Float3> ||     //
+                         std::convertible_to<T, Float4>;
 
 /** Represents a value of one of several possible types. */
 class TACTILE_CORE_API Property final {
@@ -50,7 +68,7 @@ class TACTILE_CORE_API Property final {
   inline constexpr static usize kObjRefTypeIndex = 12;
 
  public:
-  using string_type = std::string;
+  using string_type = String;
   using int_type = int32;
   using int2_type = Int2;
   using int3_type = Int3;
@@ -60,7 +78,7 @@ class TACTILE_CORE_API Property final {
   using float3_type = Float3;
   using float4_type = Float4;
   using color_type = UColor;
-  using path_type = std::filesystem::path;
+  using path_type = Path;
   using objref_type = ObjectRef;
 
   // Remember to update the type indices if the order of the type arguments change here.
@@ -86,7 +104,7 @@ class TACTILE_CORE_API Property final {
 
   Property(const char* value) { mValue.emplace<string_type>(value); }
 
-  template <typename T>
+  template <CPropertyValue T>
   Property(T value)
   {
     mValue.emplace<T>(std::move(value));
@@ -94,7 +112,7 @@ class TACTILE_CORE_API Property final {
 
   void set(const char* value) { set(string_type {value}); }
 
-  template <typename T>
+  template <CPropertyValue T>
   void set(T value)
   {
     mValue.emplace<T>(std::move(value));
@@ -152,5 +170,13 @@ class TACTILE_CORE_API Property final {
     return std::get_if<T>(&mValue);
   }
 };
+
+TACTILE_CORE_API auto operator<<(std::ostream& stream, const Property& property)
+    -> std::ostream&;
+
+/** Returns the index of the first varying vector dimension, if any. */
+[[nodiscard]] TACTILE_CORE_API auto index_of_varying_vector_dimension(const Property& a,
+                                                                      const Property& b)
+    -> Maybe<usize>;
 
 }  // namespace tactile

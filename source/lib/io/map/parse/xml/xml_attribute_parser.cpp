@@ -20,17 +20,17 @@
 #include <cstring>  // strcmp
 #include <utility>  // move
 
-#include "tactile/core/containers/string.hpp"
 #include "core/debug/assert.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/save_formats.hpp"
 #include "io/xml_utils.hpp"
+#include "tactile/core/containers/string.hpp"
 
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto _parse_value(XmlNode node, const char* type) -> Parsed<Attribute>
+[[nodiscard]] auto _parse_value(XmlNode node, const char* type) -> Parsed<Property>
 {
   TACTILE_ASSERT(type);
 
@@ -39,39 +39,39 @@ namespace {
     return unexpected(ParseError::UnsupportedPropertyType);
   }
 
-  Attribute value;
+  Property value;
   switch (*attr_type) {
-    case AttributeType::String: {
+    case PropertyType::Str: {
       value = get_string_attr(node, "value").value();
       break;
     }
-    case AttributeType::Int: {
+    case PropertyType::Int: {
       value = get_int_attr(node, "value").value();
       break;
     }
-    case AttributeType::Float: {
+    case PropertyType::Float: {
       value = get_float_attr(node, "value").value();
       break;
     }
-    case AttributeType::Bool: {
+    case PropertyType::Bool: {
       value = get_bool_attr(node, "value").value();
       break;
     }
-    case AttributeType::Path: {
+    case PropertyType::Path: {
       Path path = get_string_attr(node, "value").value();
       value = std::move(path);
       break;
     }
-    case AttributeType::Color: {
+    case PropertyType::Color: {
       const auto hex = get_string_attr(node, "value").value();
 
       // Empty color properties are not supported, so just assume the default color value
       if (hex.empty()) {
-        value.reset_to_default(AttributeType::Color);
+        value.reset(PropertyType::Color);
       }
       else {
         if (const auto color =
-                (hex.size() == 9) ? Color::from_argb(hex) : Color::from_rgb(hex)) {
+                (hex.size() == 9) ? to_color_argb(hex) : to_color_rgb(hex)) {
           value = *color;
         }
         else {
@@ -81,24 +81,24 @@ namespace {
 
       break;
     }
-    case AttributeType::Object: {
+    case PropertyType::Object: {
       value = ObjectRef {get_int_attr(node, "value").value()};
       break;
     }
-    case AttributeType::Float2:
-    case AttributeType::Float3:
-    case AttributeType::Float4:
-    case AttributeType::Int2:
-    case AttributeType::Int3:
+    case PropertyType::Float2:
+    case PropertyType::Float3:
+    case PropertyType::Float4:
+    case PropertyType::Int2:
+    case PropertyType::Int3:
       [[fallthrough]];
-    case AttributeType::Int4:
+    case PropertyType::Int4:
       return unexpected(ParseError::UnsupportedPropertyType);
   }
 
   return value;
 }
 
-[[nodiscard]] auto _parse_property(XmlNode node) -> Parsed<Attribute>
+[[nodiscard]] auto _parse_property(XmlNode node) -> Parsed<Property>
 {
   // String properties may exclude the type attribute
   const char* type = node.attribute("type").as_string("string");

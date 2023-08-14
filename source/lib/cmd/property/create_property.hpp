@@ -23,7 +23,7 @@
 #include "tactile/core/containers/string.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
-#include "core/enums/attribute_type.hpp"
+#include "tactile/core/contexts/property_type.hpp"
 
 namespace tactile::cmd {
 
@@ -32,7 +32,7 @@ class CreateProperty final : public Command {
   CreateProperty(Registry* registry,
                  Entity context_entity,
                  String name,
-                 AttributeType type);
+                 PropertyType type);
 
   void undo() override;
 
@@ -44,7 +44,7 @@ class CreateProperty final : public Command {
   Registry* mRegistry;
   Entity mContextEntity;
   String mName;
-  AttributeType mType;
+  PropertyType mType;
 };
 
 }  // namespace tactile::cmd

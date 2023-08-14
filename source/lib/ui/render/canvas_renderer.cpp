@@ -51,12 +51,12 @@ void pop_scissor()
   commands->PopClipRect();
 }
 
-void clear_canvas(const CanvasInfo& canvas, const Color& color)
+void clear_canvas(const CanvasInfo& canvas, const UColor& color)
 {
   fill_rect(canvas.top_left, canvas.size, color);
 }
 
-void render_infinite_grid(const CanvasInfo& canvas, const Color& line_color)
+void render_infinite_grid(const CanvasInfo& canvas, const UColor& line_color)
 {
   const auto cell_size = canvas.graphical_tile_size;
   const auto origin_tile_pos = ImFloor(canvas.top_left / cell_size);
@@ -90,7 +90,7 @@ void render_infinite_grid(const CanvasInfo& canvas, const Color& line_color)
   }
 }
 
-void render_translated_grid(const CanvasInfo& canvas, const Color& line_color)
+void render_translated_grid(const CanvasInfo& canvas, const UColor& line_color)
 {
   const auto begin_row = canvas.bounds.begin.row();
   const auto begin_col = canvas.bounds.begin.col();
@@ -108,7 +108,7 @@ void render_translated_grid(const CanvasInfo& canvas, const Color& line_color)
   }
 }
 
-void render_outline(const CanvasInfo& canvas, const Color& outline_color)
+void render_outline(const CanvasInfo& canvas, const UColor& outline_color)
 {
   draw_rect(canvas.origin_pos, canvas.contents_size, outline_color);
 }

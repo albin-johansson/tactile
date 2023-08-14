@@ -23,21 +23,21 @@
 
 #include <imgui.h>
 
-#include "core/attributes/color.hpp"
 #include "core/debug/assert.hpp"
 #include "core/math/vector.hpp"
 #include "core/prelude.hpp"
+#include "tactile/core/contexts/color.hpp"
 
 namespace tactile {
 
-[[nodiscard]] constexpr auto to_u32(const Color& color) noexcept -> uint32
+[[nodiscard]] constexpr auto to_u32(const UColor& color) noexcept -> uint32
 {
   return IM_COL32(color.red, color.green, color.blue, color.alpha);
 }
 
-[[nodiscard]] inline auto to_color(const ImVec4& vec) -> Color
+[[nodiscard]] inline auto to_color(const ImVec4& vec) -> UColor
 {
-  return Color::from_norm(vec.x, vec.y, vec.z, vec.w);
+  return unnormalize(NColor {vec.x, vec.y, vec.z, vec.w});
 }
 
 [[nodiscard]] constexpr auto as_imvec2(const Float2 vec) noexcept -> ImVec2
