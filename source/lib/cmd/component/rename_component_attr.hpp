@@ -20,7 +20,7 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
 

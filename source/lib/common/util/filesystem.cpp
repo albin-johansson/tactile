@@ -28,14 +28,14 @@
 
 #if TACTILE_OS_WINDOWS
 
-#include <windows.h>
+  #include <windows.h>
 
 #endif  // TACTILE_OS_WINDOWS
 
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto _get_home_prefix() -> const OsString&
+[[nodiscard]] auto _get_home_prefix() -> const NativeString&
 {
   // On Unix platforms, HOME is something like '/Users/username'
   // On Windows, USERPROFILE is something like 'C:\Users\username'
@@ -56,7 +56,7 @@ auto to_forward_slashes_path(const Path& path) -> String
 auto has_home_prefix(const Path& path) -> bool
 {
   const auto& prefix = _get_home_prefix();
-  const OsStringView view {path.c_str()};
+  const NativeStringView view {path.c_str()};
   return view.starts_with(prefix);
 }
 
@@ -71,7 +71,7 @@ auto use_short_home_prefix(const Path& path) -> Maybe<String>
   }
 }
 
-auto make_native_string(const char* str) -> Maybe<OsString>
+auto make_native_string(const char* str) -> Maybe<NativeString>
 {
   if (!str) {
     return {};
@@ -79,13 +79,13 @@ auto make_native_string(const char* str) -> Maybe<OsString>
 
 #if TACTILE_OS_WINDOWS
   // Windows is the only platform that we support that uses wchar_t filesystem paths
-  static_assert(std::same_as<OsStrChar, wchar_t>);
+  static_assert(std::same_as<NativeChar, wchar_t>);
 
   // Figure out the required size of the converted string
   const auto wide_char_count = MultiByteToWideChar(CP_UTF8, 0, str, -1, nullptr, 0);
 
   // Create string of appropriate size
-  OsString wide_str;
+  NativeString wide_str;
   wide_str.resize(wide_char_count);
 
   // Finally convert the input string
@@ -101,7 +101,7 @@ auto make_native_string(const char* str) -> Maybe<OsString>
     return {};
   }
 #else
-  return OsString {str};
+  return NativeString {str};
 #endif  // TACTILE_OS_WINDOWS
 }
 

@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/containers/array.hpp"
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {

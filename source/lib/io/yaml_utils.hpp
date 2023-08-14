@@ -25,10 +25,10 @@
 
 #include "common/type/path.hpp"
 #include "core/attributes/attribute.hpp"
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/enums/tile_compression.hpp"
 #include "core/enums/tile_encoding.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "core/functional/result.hpp"
 
 namespace tactile {

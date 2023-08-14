@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/debug/assert.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/entity_validation.hpp"

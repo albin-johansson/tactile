@@ -22,7 +22,7 @@
 #include <fmt/format.h>
 #include <imgui.h>
 
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/debug/assert.hpp"
 #include "core/formatters/fmt_string.hpp"
 #include "model/contexts/context_components.hpp"

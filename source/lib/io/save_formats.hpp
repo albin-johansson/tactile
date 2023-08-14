@@ -20,10 +20,10 @@
 #pragma once
 
 #include "common/type/path.hpp"
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/enums/attribute_type.hpp"
 #include "core/enums/save_format.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "core/math/vector.hpp"
 
 namespace tactile {

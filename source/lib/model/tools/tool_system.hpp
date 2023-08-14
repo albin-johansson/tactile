@@ -22,7 +22,7 @@
 #include "core/containers/hash_map.hpp"
 #include "core/containers/smart_ptr.hpp"
 #include "core/enums/tool_type.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "core/prelude.hpp"
 #include "model/system.hpp"
 

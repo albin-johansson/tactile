@@ -21,7 +21,7 @@
 
 #include "common/type/path.hpp"
 #include "core/containers/smart_ptr.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 

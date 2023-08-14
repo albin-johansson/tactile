@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/ecs/entity.hpp"
-#include "core/containers/string.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/containers/string.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "model/model_view.hpp"
 #include "ui/dock/property/dialogs/new_property_dialog.hpp"
 #include "ui/dock/property/dialogs/rename_property_dialog.hpp"

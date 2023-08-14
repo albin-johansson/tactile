@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/path.hpp"
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/containers/variant.hpp"
 #include "core/containers/vector.hpp"
 #include "core/math/vector.hpp"

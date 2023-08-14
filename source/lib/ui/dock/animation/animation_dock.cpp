@@ -26,7 +26,7 @@
 
 #include "common/util/lookup.hpp"
 #include "core/ecs/registry.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "io/settings_io.hpp"
 #include "model/documents/document_components.hpp"
 #include "model/documents/document_system.hpp"

@@ -21,8 +21,8 @@
 
 #include "core/attributes/attribute.hpp"
 #include "core/containers/hash_map.hpp"
-#include "core/containers/string.hpp"
-#include "core/containers/string_map.hpp"
+#include "tactile/core/containers/string.hpp"
+#include "tactile/core/containers/string_map.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
 

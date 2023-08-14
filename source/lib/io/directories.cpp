@@ -25,9 +25,9 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/debug/assert.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {

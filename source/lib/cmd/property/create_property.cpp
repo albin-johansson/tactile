@@ -26,6 +26,7 @@
 #include "model/entity_validation.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
+#include "tactile/core/containers/lookup.hpp"
 
 namespace tactile::cmd {
 
@@ -46,7 +47,7 @@ void CreateProperty::undo()
   auto& registry = *mRegistry;
 
   auto& context = registry.get<Context>(mContextEntity);
-  erase_from(context.props, mName);
+  erase_in(context.props, mName);
 }
 
 void CreateProperty::redo()

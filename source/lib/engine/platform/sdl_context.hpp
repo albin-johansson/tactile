@@ -24,7 +24,7 @@
 #include <centurion/video/window.hpp>
 
 #include "core/enums/backend_api.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/functional/maybe.hpp"
 
 namespace tactile {
 

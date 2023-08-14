@@ -21,10 +21,10 @@
 
 #include "cmd/command.hpp"
 #include "core/attributes/attribute.hpp"
-#include "core/containers/string_map.hpp"
+#include "tactile/core/containers/string_map.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/functional/maybe.hpp"
 
 namespace tactile::cmd {
 

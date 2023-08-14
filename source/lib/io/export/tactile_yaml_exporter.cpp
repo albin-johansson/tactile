@@ -28,7 +28,7 @@
 
 #include "common/util/filesystem.hpp"
 #include "core/attributes/attribute.hpp"
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/prelude.hpp"
 #include "io/base64_tiles.hpp"
 #include "io/compression.hpp"

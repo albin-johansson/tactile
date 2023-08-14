@@ -21,7 +21,7 @@
 
 #include <ostream>  // ostream
 
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/functional/expected.hpp"
 #include "model/services/i18n/strings.hpp"
 

@@ -29,19 +29,19 @@
 #include "core/attributes/attribute.hpp"
 #include "core/containers/hash_map.hpp"
 #include "core/containers/smart_ptr.hpp"
-#include "core/containers/string.hpp"
-#include "core/containers/string_map.hpp"
 #include "core/containers/variant.hpp"
 #include "core/containers/vector.hpp"
 #include "core/enums/layer_type.hpp"
 #include "core/enums/object_type.hpp"
 #include "core/enums/tile_compression.hpp"
 #include "core/enums/tile_encoding.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_extent.hpp"
 #include "core/tiles/tile_matrix.hpp"
+#include "tactile/core/containers/string.hpp"
+#include "tactile/core/containers/string_map.hpp"
 
 namespace tactile {
 

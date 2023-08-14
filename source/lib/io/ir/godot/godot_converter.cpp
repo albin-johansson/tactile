@@ -27,7 +27,7 @@
 #include <fmt/format.h>
 
 #include "common/util/lookup.hpp"
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/containers/vector.hpp"
 #include "core/debug/assert.hpp"
 #include "core/functional/invoke.hpp"

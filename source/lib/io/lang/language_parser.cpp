@@ -22,7 +22,7 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/debug/panic.hpp"
 #include "core/prelude.hpp"
 #include "io/directories.hpp"

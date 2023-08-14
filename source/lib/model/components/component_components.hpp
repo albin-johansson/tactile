@@ -21,7 +21,7 @@
 
 #include "common/type/uuid.hpp"
 #include "core/attributes/attribute.hpp"
-#include "core/containers/string_map.hpp"
+#include "tactile/core/containers/string_map.hpp"
 #include "core/containers/vector.hpp"
 #include "core/ecs/entity.hpp"
 

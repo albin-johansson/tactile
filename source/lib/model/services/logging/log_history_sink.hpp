@@ -23,7 +23,7 @@
 #include <spdlog/spdlog.h>
 
 #include "core/containers/deque.hpp"
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "model/services/logging/log_level.hpp"
 
 namespace tactile {

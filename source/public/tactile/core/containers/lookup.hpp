@@ -20,6 +20,7 @@
 #pragma once
 
 #include "tactile/core/common/error.hpp"
+#include "tactile/core/functional/maybe.hpp"
 
 namespace tactile {
 
@@ -66,7 +67,7 @@ template <typename T>
 }
 
 template <typename T>
-auto erase_in(T& map, const auto& key) -> typename T::mapped_type
+auto erase_in(T& map, const auto& key) -> Maybe<typename T::mapped_type>
 {
   if (const auto iter = map.find(key); iter != map.end()) {
     auto value = iter->second;
@@ -74,7 +75,7 @@ auto erase_in(T& map, const auto& key) -> typename T::mapped_type
     return value;
   }
 
-  throw Error {"Did not find element to remove"};
+  return {};
 }
 
 template <typename T>

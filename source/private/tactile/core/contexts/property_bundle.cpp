@@ -39,7 +39,7 @@ auto PropertyBundle::add(std::string name) -> Property&
 
 auto PropertyBundle::remove(std::string_view name) -> Property
 {
-  return erase_in(mProperties, name);
+  return erase_in(mProperties, name).value();
 }
 
 void PropertyBundle::update(std::string_view name, Property value)

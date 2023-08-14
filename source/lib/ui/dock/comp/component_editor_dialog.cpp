@@ -24,7 +24,7 @@
 #include <imgui.h>
 
 #include "core/attributes/attribute.hpp"
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/debug/assert.hpp"
 #include "core/ecs/registry.hpp"
 #include "model/components/component_components.hpp"

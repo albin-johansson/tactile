@@ -21,7 +21,7 @@
 
 #include "core/containers/deque.hpp"
 #include "core/containers/smart_ptr.hpp"
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/functional/function.hpp"
 #include "core/prelude.hpp"
 #include "model/services/logging/log_level.hpp"

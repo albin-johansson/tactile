@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/attributes/attribute.hpp"
-#include "core/containers/string.hpp"
-#include "core/containers/string_map.hpp"
+#include "tactile/core/containers/string.hpp"
+#include "tactile/core/containers/string_map.hpp"
 #include "core/containers/vector.hpp"
 #include "core/ecs/entity.hpp"
 

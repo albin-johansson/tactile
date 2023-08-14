@@ -38,7 +38,7 @@ void ComponentBundle::attach(ComponentInstance component)
 
 auto ComponentBundle::detach(const ComponentID id) -> ComponentInstance
 {
-  return erase_in(mComponents, id);
+  return erase_in(mComponents, id).value();
 }
 
 auto ComponentBundle::get(const ComponentID id) -> ComponentInstance&

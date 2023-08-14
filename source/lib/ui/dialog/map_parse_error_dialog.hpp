@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "model/model_view.hpp"
 
 namespace tactile {

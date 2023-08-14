@@ -22,7 +22,7 @@
 #include <fstream>  // ifstream, ofstream
 
 #include "common/type/path.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/functional/maybe.hpp"
 
 namespace tactile {
 

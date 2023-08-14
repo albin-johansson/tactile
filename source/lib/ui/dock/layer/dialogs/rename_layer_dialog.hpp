@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/util/string_buffer.hpp"
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
 #include "core/events/dispatcher.hpp"

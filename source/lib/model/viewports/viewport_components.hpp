@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/enums/mouse_button.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "core/math/vector.hpp"
 #include "core/tiles/tile_pos.hpp"
 

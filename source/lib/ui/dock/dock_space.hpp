@@ -23,7 +23,7 @@
 
 #include "core/ecs/registry.hpp"
 #include "core/events/dispatcher.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/functional/maybe.hpp"
 
 namespace tactile {
 

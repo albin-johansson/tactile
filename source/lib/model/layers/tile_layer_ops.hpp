@@ -22,7 +22,7 @@
 #include "core/containers/vector.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "core/functional/result.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_pos.hpp"

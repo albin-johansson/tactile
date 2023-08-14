@@ -21,7 +21,7 @@
 
 #include "core/attributes/color.hpp"
 #include "core/containers/smart_ptr.hpp"
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/enums/lang.hpp"
 #include "core/enums/overlay_pos.hpp"
 #include "core/enums/save_format.hpp"

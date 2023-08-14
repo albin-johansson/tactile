@@ -21,7 +21,7 @@
 
 #include "core/containers/span.hpp"
 #include "core/containers/vector.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {

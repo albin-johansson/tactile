@@ -22,7 +22,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/containers/string.hpp"
 #include "core/containers/vector.hpp"
 #include "core/debug/panic.hpp"
 #include "core/tiles/tile_matrix.hpp"
@@ -30,6 +29,8 @@
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/xml_utils.hpp"
+#include "tactile/core/common/string_util.hpp"
+#include "tactile/core/containers/string.hpp"
 
 namespace tactile {
 namespace {
@@ -55,8 +56,8 @@ namespace {
   auto tiles = make_tile_matrix(extent);
 
   usize index {};
-  for (const auto& token: split(csv, ',')) {
-    if (const auto id = parse_i32(token)) {
+  for (const auto& token: str_split(csv, ',')) {
+    if (const auto id = str_to_i32(token)) {
       const auto [row, col] = to_matrix_coords(index, extent.cols);
       tiles[row][col] = *id;
 

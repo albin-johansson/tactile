@@ -21,10 +21,10 @@
 
 #include <fmt/format.h>
 
-#include "common/util/lookup.hpp"
 #include "core/debug/assert.hpp"
 #include "model/components/component_components.hpp"
 #include "model/entity_validation.hpp"
+#include "tactile/core/containers/lookup.hpp"
 
 namespace tactile::sys {
 
@@ -69,11 +69,11 @@ void remove_component_attribute(Registry& registry,
   auto& component = registry.get<Component>(component_entity);
 
   // Removes the attribute from all component instances of the affected type
-  if (erase_from(component.attributes, attribute_name).succeeded()) {
+  if (erase_in(component.attributes, attribute_name).has_value()) {
     for (auto [attached_component_entity, attached_component]:
          registry.each<AttachedComponent>()) {
       if (attached_component.definition == component_entity) {
-        erase_from(attached_component.attributes, attribute_name);
+        erase_in(attached_component.attributes, attribute_name);
       }
     }
   }
@@ -89,13 +89,13 @@ void rename_component_attribute(Registry& registry,
   auto& component = registry.get<Component>(component_entity);
   const auto attribute_value = lookup_in(component.attributes, old_attribute_name);
 
-  erase_from(component.attributes, old_attribute_name);
+  erase_in(component.attributes, old_attribute_name);
   component.attributes[new_attribute_name] = attribute_value;
 
   for (auto [attached_component_entity, attached_component]:
        registry.each<AttachedComponent>()) {
     if (attached_component.definition == component_entity) {
-      erase_from(attached_component.attributes, old_attribute_name);
+      erase_in(attached_component.attributes, old_attribute_name);
       attached_component.attributes[new_attribute_name] = attribute_value;
     }
   }
@@ -115,7 +115,7 @@ auto duplicate_component_attribute(Registry& registry,
   do {
     new_attribute_name = fmt::format("{} ({})", attribute_name, suffix);
     ++suffix;
-  } while (has_key(component.attributes, new_attribute_name));
+  } while (exists_in(component.attributes, new_attribute_name));
 
   add_component_attribute(registry,
                           component_entity,

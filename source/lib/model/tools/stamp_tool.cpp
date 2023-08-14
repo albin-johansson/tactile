@@ -24,7 +24,7 @@
 #include "core/debug/assert.hpp"
 #include "core/ecs/registry.hpp"
 #include "core/functional/invoke.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "core/math/rng.hpp"
 #include "core/tiles/tile_cache.hpp"
 #include "core/tiles/tile_pos.hpp"

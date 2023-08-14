@@ -20,12 +20,13 @@
 #include <concepts>  // same_as
 #include <utility>   // move
 
-#include "core/containers/string.hpp"
-#include "core/functional/maybe.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/save_formats.hpp"
 #include "io/yaml_utils.hpp"
+#include "tactile/core/common/string_util.hpp"
+#include "tactile/core/containers/string.hpp"
+#include "tactile/core/functional/maybe.hpp"
 
 namespace tactile {
 namespace {
@@ -36,7 +37,7 @@ template <typename T>
   using ScalarType = typename T::value_type;
 
   const auto raw_value = value.as<String>();
-  const auto components = split(raw_value, ';');
+  const auto components = str_split(raw_value, ';');
 
   T vec {};
   if (components.size() != static_cast<usize>(vec.length())) {
@@ -48,10 +49,10 @@ template <typename T>
     Maybe<ScalarType> component_value;
 
     if constexpr (std::same_as<ScalarType, float>) {
-      component_value = parse_f32(component_str);
+      component_value = str_to_f32(component_str);
     }
     else {
-      component_value = parse_i32(component_str);
+      component_value = str_to_i32(component_str);
     }
 
     if (component_value.has_value()) {

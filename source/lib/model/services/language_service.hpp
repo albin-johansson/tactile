@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/containers/hash_map.hpp"
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/enums/lang.hpp"
 #include "core/enums/menu_action.hpp"
 #include "model/services/i18n/strings.hpp"

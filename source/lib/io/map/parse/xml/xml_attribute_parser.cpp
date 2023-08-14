@@ -20,7 +20,7 @@
 #include <cstring>  // strcmp
 #include <utility>  // move
 
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/debug/assert.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"

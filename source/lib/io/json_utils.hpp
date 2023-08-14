@@ -23,8 +23,8 @@
 
 #include "common/type/path.hpp"
 #include "core/attributes/attribute.hpp"
-#include "core/containers/string.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/containers/string.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "core/functional/result.hpp"
 #include "core/prelude.hpp"
 

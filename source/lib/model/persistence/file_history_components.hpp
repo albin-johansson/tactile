@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/containers/deque.hpp"
-#include "core/containers/string.hpp"
-#include "core/functional/maybe.hpp"
+#include "tactile/core/containers/string.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "core/prelude.hpp"
 
 namespace tactile {

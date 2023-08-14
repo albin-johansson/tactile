@@ -21,7 +21,7 @@
 
 #include "core/ecs/entity.hpp"
 #include "common/util/string_buffer.hpp"
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "model/model_view.hpp"
 
 namespace tactile {

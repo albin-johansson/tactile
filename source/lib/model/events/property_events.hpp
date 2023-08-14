@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/attributes/attribute.hpp"
-#include "core/containers/string.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "core/ecs/entity.hpp"
 
 namespace tactile {

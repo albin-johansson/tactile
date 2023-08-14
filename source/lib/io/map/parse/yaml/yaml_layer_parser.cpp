@@ -20,13 +20,14 @@
 #include <algorithm>  // replace
 #include <utility>    // move
 
-#include "core/containers/string.hpp"
 #include "core/functional/expected.hpp"
 #include "core/tiles/tile_matrix.hpp"
 #include "io/base64_tiles.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/yaml_utils.hpp"
+#include "tactile/core/common/string_util.hpp"
+#include "tactile/core/containers/string.hpp"
 
 using namespace std::string_literals;
 
@@ -43,8 +44,8 @@ namespace {
   auto tiles = make_tile_matrix(extent);
 
   usize index = 0;
-  for (const auto& token: split(tile_data, ' ')) {
-    if (const auto id = parse_i32(token)) {
+  for (const auto& token: str_split(tile_data, ' ')) {
+    if (const auto id = str_to_i32(token)) {
       const auto [row, col] = to_matrix_coords(index, extent.cols);
       tiles[row][col] = *id;
       ++index;
