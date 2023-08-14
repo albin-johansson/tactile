@@ -25,7 +25,6 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "core/formatters/stacktrace_formatter.hpp"
 #include "engine/engine.hpp"
 #include "main/app.hpp"
 #include "tactile/core/common/crash.hpp"
