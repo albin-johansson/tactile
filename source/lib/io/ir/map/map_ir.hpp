@@ -23,7 +23,6 @@
 #include <memory>    // addressof
 #include <variant>   // get
 
-#include "common/type/path.hpp"
 #include "common/type/uuid.hpp"
 #include "common/util/algorithms.hpp"
 #include "core/prelude.hpp"
@@ -37,6 +36,7 @@
 #include "tactile/core/containers/vector.hpp"
 #include "tactile/core/contexts/property.hpp"
 #include "tactile/core/functional/maybe.hpp"
+#include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/layers/layer_type.hpp"
 #include "tactile/core/layers/object_type.hpp"
 #include "tactile/core/maps/tile_compression.hpp"

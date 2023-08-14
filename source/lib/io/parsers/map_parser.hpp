@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/type/path.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/parsers/parse_error.hpp"
+#include "tactile/core/io/filesystem.hpp"
 
 namespace tactile {
 

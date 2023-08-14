@@ -20,8 +20,8 @@
 #pragma once
 
 #include "core/ecs/entity.hpp"
-#include "common/type/path.hpp"
 #include "model/model_view.hpp"
+#include "tactile/core/io/filesystem.hpp"
 
 namespace tactile {
 

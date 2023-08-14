@@ -22,12 +22,12 @@
 #include <imgui_internal.h>
 #include <spdlog/spdlog.h>
 
-#include "common/type/path.hpp"
 #include "io/directories.hpp"
 #include "model/events/setting_events.hpp"
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
 #include "model/services/settings_service.hpp"
+#include "tactile/core/io/filesystem.hpp"
 
 namespace tactile {
 

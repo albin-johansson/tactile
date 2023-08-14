@@ -21,10 +21,10 @@
 
 #include <imgui.h>
 
-#include "common/type/path.hpp"
 #include "model/events/map_events.hpp"
 #include "model/events/menu_events.hpp"
 #include "model/model_view.hpp"
+#include "tactile/core/io/filesystem.hpp"
 #include "ui/shortcut/mappings.hpp"
 #include "ui/widget/scoped.hpp"
 

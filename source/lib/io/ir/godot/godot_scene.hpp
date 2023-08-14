@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "common/type/path.hpp"
 #include "core/prelude.hpp"
 #include "io/ir/godot/godot_file.hpp"
 #include "io/ir/godot/godot_tileset.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/containers/variant.hpp"
 #include "tactile/core/containers/vector.hpp"
+#include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/math/vector.hpp"
 
 namespace tactile {

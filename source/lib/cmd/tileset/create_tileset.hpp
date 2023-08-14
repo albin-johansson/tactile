@@ -20,9 +20,9 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "common/type/path.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
+#include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/math/vector.hpp"
 
 namespace tactile::cmd {

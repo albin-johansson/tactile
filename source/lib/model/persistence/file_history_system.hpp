@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/type/path.hpp"
 #include "core/ecs/registry.hpp"
 #include "model/persistence/file_history_components.hpp"
+#include "tactile/core/io/filesystem.hpp"
 
 namespace tactile::sys {
 

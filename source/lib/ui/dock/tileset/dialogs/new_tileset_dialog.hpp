@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "common/type/path.hpp"
 #include "common/util/string_buffer.hpp"
 #include "core/ecs/entity.hpp"
 #include "model/model_view.hpp"
+#include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/math/vector.hpp"
 
 namespace tactile {
