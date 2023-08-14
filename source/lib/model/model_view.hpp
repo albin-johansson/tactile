@@ -21,7 +21,7 @@
 
 #include <utility>  // forward
 
-#include "core/containers/deque.hpp"
+#include "tactile/core/containers/deque.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/containers/vector.hpp"
 #include "core/ecs/entity.hpp"

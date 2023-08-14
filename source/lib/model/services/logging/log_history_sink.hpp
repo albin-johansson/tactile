@@ -22,7 +22,7 @@
 #include <spdlog/sinks/base_sink.h>
 #include <spdlog/spdlog.h>
 
-#include "core/containers/deque.hpp"
+#include "tactile/core/containers/deque.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "model/services/logging/log_level.hpp"
 

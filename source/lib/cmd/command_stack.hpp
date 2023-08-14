@@ -23,7 +23,7 @@
 #include <utility>   // move, forward
 
 #include "cmd/command.hpp"
-#include "core/containers/deque.hpp"
+#include "tactile/core/containers/deque.hpp"
 #include "core/containers/smart_ptr.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/functional/maybe.hpp"

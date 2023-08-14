@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/containers/deque.hpp"
+#include "tactile/core/containers/deque.hpp"
 #include "core/containers/smart_ptr.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "core/functional/function.hpp"
