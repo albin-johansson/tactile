@@ -24,7 +24,7 @@
 #include "common/util/lookup.hpp"
 #include "core/containers/pair.hpp"
 #include "tactile/core/containers/string.hpp"
-#include "core/containers/vector.hpp"
+#include "tactile/core/containers/vector.hpp"
 #include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 #include "io/ir/godot/godot_file.hpp"

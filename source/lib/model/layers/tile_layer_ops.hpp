@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/containers/vector.hpp"
+#include "tactile/core/containers/vector.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
 #include "tactile/core/functional/maybe.hpp"

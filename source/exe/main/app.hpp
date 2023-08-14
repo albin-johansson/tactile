@@ -23,7 +23,7 @@
 #include <imgui.h>
 
 #include "core/containers/smart_ptr.hpp"
-#include "core/containers/vector.hpp"
+#include "tactile/core/containers/vector.hpp"
 #include "core/events/dispatcher.hpp"
 #include "core/prelude.hpp"
 #include "engine/app_delegate.hpp"

@@ -23,7 +23,7 @@
 #include <concepts>   // unsigned_integral, predicate
 #include <utility>    // forward
 
-#include "core/containers/vector.hpp"
+#include "tactile/core/containers/vector.hpp"
 #include "core/debug/panic.hpp"
 
 namespace tactile {

@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/containers/smart_ptr.hpp"
-#include "core/containers/vector.hpp"
+#include "tactile/core/containers/vector.hpp"
 #include "core/prelude.hpp"
 #include "model/system.hpp"
 

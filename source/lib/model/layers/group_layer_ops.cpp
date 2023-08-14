@@ -33,7 +33,7 @@ namespace tactile::sys {
 
 auto attach_layer_to(GroupLayer& group_layer, const Entity layer_entity) -> Result
 {
-  if (!contained_in(group_layer.children, layer_entity)) {
+  if (!exists_in(group_layer.children, layer_entity)) {
     group_layer.children.push_back(layer_entity);
     return success;
   }

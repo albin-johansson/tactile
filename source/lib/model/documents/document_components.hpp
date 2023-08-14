@@ -21,7 +21,7 @@
 
 #include "core/ecs/entity.hpp"
 #include "common/type/path.hpp"
-#include "core/containers/vector.hpp"
+#include "tactile/core/containers/vector.hpp"
 #include "core/enums/document_type.hpp"
 #include "tactile/core/functional/maybe.hpp"
 

@@ -237,7 +237,7 @@ void push_component_editor_dialog(ModelView model, ComponentEditorDialogState& s
     const auto& component_set = registry.get<ComponentSet>(document.component_set);
 
     // Ensure that the active component entity hasn't been invalidated
-    if (!contained_in(component_set.definitions, state.active_definition)) {
+    if (!exists_in(component_set.definitions, state.active_definition)) {
       state.active_definition = kNullEntity;
     }
 

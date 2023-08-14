@@ -20,7 +20,7 @@
 #pragma once
 
 #include "tactile/core/containers/string.hpp"
-#include "core/containers/vector.hpp"
+#include "tactile/core/containers/vector.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_extent.hpp"
 #include "core/tiles/tile_matrix.hpp"

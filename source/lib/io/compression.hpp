@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/containers/span.hpp"
-#include "core/containers/vector.hpp"
+#include "tactile/core/containers/vector.hpp"
 #include "tactile/core/functional/maybe.hpp"
 #include "core/prelude.hpp"
 

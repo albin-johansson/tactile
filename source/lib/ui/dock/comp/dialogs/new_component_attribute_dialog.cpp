@@ -41,7 +41,7 @@ void push_new_comp_attr_dialog(ModelView model, NewCompAttrDialogState& state)
   const auto& document = registry.get<Document>(document_entity);
 
   const auto& component_set = registry.get<ComponentSet>(document.component_set);
-  if (!contained_in(component_set.definitions, state.definition_entity)) {
+  if (!exists_in(component_set.definitions, state.definition_entity)) {
     state.definition_entity = kNullEntity;
     state.should_open = false;
     return;

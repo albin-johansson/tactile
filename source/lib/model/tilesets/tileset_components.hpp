@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/containers/hash_map.hpp"
-#include "core/containers/vector.hpp"
+#include "tactile/core/containers/vector.hpp"
 #include "core/ecs/entity.hpp"
 #include "tactile/core/functional/maybe.hpp"
 #include "core/math/vector.hpp"

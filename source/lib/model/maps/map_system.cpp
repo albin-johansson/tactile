@@ -341,7 +341,7 @@ auto select_tileset(Registry& registry, Map& map, const Entity attached_tileset_
 {
   TACTILE_ASSERT(is_attached_tileset_entity(registry, attached_tileset_entity));
 
-  if (contained_in(map.attached_tilesets, attached_tileset_entity)) {
+  if (exists_in(map.attached_tilesets, attached_tileset_entity)) {
     map.active_tileset = attached_tileset_entity;
     return success;
   }

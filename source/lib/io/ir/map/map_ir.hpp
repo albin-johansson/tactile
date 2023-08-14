@@ -30,7 +30,7 @@
 #include "core/containers/hash_map.hpp"
 #include "core/containers/smart_ptr.hpp"
 #include "core/containers/variant.hpp"
-#include "core/containers/vector.hpp"
+#include "tactile/core/containers/vector.hpp"
 #include "core/enums/layer_type.hpp"
 #include "core/enums/object_type.hpp"
 #include "core/enums/tile_compression.hpp"

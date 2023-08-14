@@ -72,7 +72,7 @@ void select_document(Registry& registry, const Entity document_entity)
   TACTILE_ASSERT(is_document_entity(registry, document_entity));
 
   auto& document_context = registry.get<DocumentContext>();
-  TACTILE_ASSERT(contained_in(document_context.open_documents, document_entity));
+  TACTILE_ASSERT(exists_in(document_context.open_documents, document_entity));
 
   document_context.active_document = document_entity;
 }
@@ -94,7 +94,7 @@ void close_document(Registry& registry, const Entity document_entity)
 
   auto& document_context = registry.get<DocumentContext>();
 
-  TACTILE_ASSERT(contained_in(document_context.open_documents, document_entity));
+  TACTILE_ASSERT(exists_in(document_context.open_documents, document_entity));
   std::erase(document_context.open_documents, document_entity);
 
   if (document_context.active_document == document_entity) {
@@ -238,7 +238,7 @@ auto is_document_open(const Registry& registry, const Entity document_entity) ->
   TACTILE_ASSERT(is_document_entity(registry, document_entity));
 
   const auto& document_context = registry.get<DocumentContext>();
-  return contained_in(document_context.open_documents, document_entity);
+  return exists_in(document_context.open_documents, document_entity);
 }
 
 void on_create_map(Registry& registry, const CreateMapEvent& event)

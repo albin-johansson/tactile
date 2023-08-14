@@ -41,7 +41,7 @@ void push_rename_comp_dialog(ModelView model, RenameCompDialogState& state)
   const auto& document = registry.get<Document>(document_entity);
 
   const auto& component_set = registry.get<ComponentSet>(document.component_set);
-  if (!contained_in(component_set.definitions, state.definition)) {
+  if (!exists_in(component_set.definitions, state.definition)) {
     state.definition = kNullEntity;
     state.should_open = false;
     return;
