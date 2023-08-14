@@ -196,7 +196,7 @@ auto parse_attr_type(StringView name) -> Maybe<PropertyType>
     return PropertyType::Object;
   }
   else {
-    return {};
+    return kNone;
   }
 }
 

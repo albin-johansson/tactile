@@ -77,7 +77,7 @@ auto zlib_compress(const void* source, const usize source_bytes, int level)
     -> Maybe<ByteStream>
 {
   if (!source || source_bytes == 0) {
-    return {};
+    return kNone;
   }
 
   if (level != Z_DEFAULT_COMPRESSION) {
@@ -94,7 +94,7 @@ auto zlib_compress(const void* source, const usize source_bytes, int level)
 
   if (const auto res = deflateInit(&stream, level); res != Z_OK) {
     spdlog::error("[Zlib] Could not initialize compression stream: {}", zError(res));
-    return {};
+    return kNone;
   }
 
   ByteStream dest;
@@ -103,7 +103,7 @@ auto zlib_compress(const void* source, const usize source_bytes, int level)
   if (const auto status = _process_zlib_chunks(stream, deflate, out_buffer, dest);
       status != Z_STREAM_END) {
     spdlog::error("[Zlib] Compression error: {}", zError(status));
-    return {};
+    return kNone;
   }
 
 #if TACTILE_DEBUG
@@ -117,7 +117,7 @@ auto zlib_compress(const void* source, const usize source_bytes, int level)
 
   if (const auto res = deflateEnd(&stream); res != Z_OK) {
     spdlog::error("[Zlib] Could not destroy compression stream: {}", zError(res));
-    return {};
+    return kNone;
   }
 
   return dest;
@@ -126,7 +126,7 @@ auto zlib_compress(const void* source, const usize source_bytes, int level)
 auto zlib_decompress(const void* source, const usize source_bytes) -> Maybe<ByteStream>
 {
   if (!source || source_bytes == 0) {
-    return {};
+    return kNone;
   }
 
   Bytef out_buffer[kBufferSize];
@@ -139,7 +139,7 @@ auto zlib_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
 
   if (const auto res = inflateInit(&stream); res != Z_OK) {
     spdlog::error("[Zlib] Could not initialize decompression stream: {}", zError(res));
-    return {};
+    return kNone;
   }
 
   ByteStream dest;
@@ -148,12 +148,12 @@ auto zlib_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
   if (const auto status = _process_zlib_chunks(stream, inflate, out_buffer, dest);
       status != Z_STREAM_END) {
     spdlog::error("[Zlib] Decompression error: {}", zError(status));
-    return {};
+    return kNone;
   }
 
   if (const auto res = inflateEnd(&stream); res != Z_OK) {
     spdlog::error("[Zlib] Could not tear down decompression stream: {}", zError(res));
-    return {};
+    return kNone;
   }
 
   return dest;
@@ -178,7 +178,7 @@ auto max_zlib_compression_level() -> int
 auto zstd_compress(const void* source, const usize source_bytes) -> Maybe<ByteStream>
 {
   if (!source || source_bytes == 0) {
-    return {};
+    return kNone;
   }
 
   const auto dest_capacity = ZSTD_compressBound(source_bytes);
@@ -194,7 +194,7 @@ auto zstd_compress(const void* source, const usize source_bytes) -> Maybe<ByteSt
 
   if (ZSTD_isError(written_bytes)) {
     spdlog::error("[Zstd] Could not compress data: {}", ZSTD_getErrorName(written_bytes));
-    return {};
+    return kNone;
   }
 
   dest.resize(written_bytes);
@@ -212,7 +212,7 @@ auto zstd_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
 
   if (!stream) {
     spdlog::error("[Zstd] Could not initialize decompression stream");
-    return {};
+    return kNone;
   }
 
   ZSTD_initDStream(stream.get());
@@ -251,7 +251,7 @@ auto zstd_decompress(const void* source, const usize source_bytes) -> Maybe<Byte
     const auto err = ZSTD_decompressStream(stream.get(), &out_buffer, &in_buffer);
     if (ZSTD_isError(err)) {
       spdlog::error("[Zstd] Could not decompress: {}", ZSTD_getErrorName(err));
-      return {};
+      return kNone;
     }
 
     written_bytes += out_buffer.pos;

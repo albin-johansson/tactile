@@ -75,7 +75,7 @@ auto erase_in(T& map, const auto& key) -> Maybe<typename T::mapped_type>
     return value;
   }
 
-  return {};
+  return kNone;
 }
 
 template <typename T>

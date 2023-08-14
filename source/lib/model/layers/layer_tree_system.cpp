@@ -72,7 +72,7 @@ namespace {
     }
   }
 
-  return {};
+  return kNone;
 }
 
 void _offset_layer(Registry& registry,
@@ -173,7 +173,7 @@ auto get_local_layer_index(const Registry& registry,
     ++local_index;
   }
 
-  return {};
+  return kNone;
 }
 
 auto get_parent_layer(const Registry& registry, const Map& map, const Entity layer_entity)

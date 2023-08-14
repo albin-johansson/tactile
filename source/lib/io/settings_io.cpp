@@ -59,7 +59,7 @@ void _to_proto(const UColor& color, proto::Color* out)
   auto stream = open_input_stream(path, FileType::Binary);
   if (!stream) {
     spdlog::error("[Settings] Could not open settings file");
-    return {};
+    return kNone;
   }
 
   proto::Settings cfg;
@@ -184,7 +184,7 @@ void _to_proto(const UColor& color, proto::Color* out)
     return settings;
   }
 
-  return {};
+  return kNone;
 }
 
 }  // namespace

@@ -86,7 +86,7 @@ auto tile_at(const TileLayer& tile_layer, const TilePos pos) -> Maybe<TileID>
     return tile_layer.tiles[row][col];
   }
   else {
-    return {};
+    return kNone;
   }
 }
 

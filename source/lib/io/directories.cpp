@@ -45,7 +45,7 @@ namespace {
     return "xdg-open";
   }
   else {
-    return {};
+    return kNone;
   }
 }
 

@@ -44,7 +44,7 @@ auto read_env_var(const char* var) -> Maybe<String>
 #endif  // TACTILE_OS_WINDOWS
   }
 
-  return {};
+  return kNone;
 }
 
 }  // namespace tactile

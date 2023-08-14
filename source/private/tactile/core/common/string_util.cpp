@@ -40,7 +40,7 @@ template <std::integral T>
     return value;
   }
 
-  return {};
+  return kNone;
 }
 
 }  // namespace
@@ -84,7 +84,7 @@ auto str_to_f32(StringView str) -> Maybe<float32>
     return f;
   }
 
-  return {};
+  return kNone;
 }
 
 }  // namespace tactile

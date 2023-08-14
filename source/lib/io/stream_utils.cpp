@@ -35,7 +35,7 @@ namespace {
     return stream;
   }
   else {
-    return {};
+    return kNone;
   }
 }
 
@@ -51,7 +51,7 @@ namespace {
     return stream;
   }
   else {
-    return {};
+    return kNone;
   }
 }
 

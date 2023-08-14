@@ -45,7 +45,7 @@ namespace {
 auto to_color_rgb(std::string_view rgb) -> std::optional<UColor>
 {
   if (rgb.length() != 7 || rgb.at(0) != '#') {
-    return {};
+    return kNone;
   }
 
   const auto no_hash = rgb.substr(1);
@@ -61,13 +61,13 @@ auto to_color_rgb(std::string_view rgb) -> std::optional<UColor>
                    0xFF};
   }
 
-  return {};
+  return kNone;
 }
 
 auto to_color_rgba(std::string_view rgba) -> std::optional<UColor>
 {
   if (rgba.length() != 9 || rgba.at(0) != '#') {
-    return {};
+    return kNone;
   }
 
   const auto no_hash = rgba.substr(1);
@@ -84,13 +84,13 @@ auto to_color_rgba(std::string_view rgba) -> std::optional<UColor>
                    static_cast<uint8>(*alpha)};
   }
 
-  return {};
+  return kNone;
 }
 
 auto to_color_argb(std::string_view argb) -> std::optional<UColor>
 {
   if (argb.length() != 9 || argb.at(0) != '#') {
-    return {};
+    return kNone;
   }
 
   const auto no_hash = argb.substr(1);
@@ -107,7 +107,7 @@ auto to_color_argb(std::string_view argb) -> std::optional<UColor>
                    static_cast<uint8>(*alpha)};
   }
 
-  return {};
+  return kNone;
 }
 
 auto normalize(const UColor& color) -> NColor
