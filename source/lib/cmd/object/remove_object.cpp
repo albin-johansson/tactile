@@ -19,7 +19,6 @@
 
 #include "remove_object.hpp"
 
-#include "core/debug/panic.hpp"
 #include "model/entity_validation.hpp"
 #include "model/layers/layer_components.hpp"
 #include "model/maps/map_components.hpp"
@@ -27,6 +26,7 @@
 #include "model/services/language_service.hpp"
 #include "model/services/service_locator.hpp"
 #include "tactile/core/common/assert.hpp"
+#include "tactile/core/common/error.hpp"
 
 namespace tactile::cmd {
 
@@ -93,7 +93,7 @@ auto RemoveObject::get_name() const -> String
       return strings.cmd.remove_ellipse_object;
 
     default:
-      throw TactileError {"Invalid object type"};
+      throw Error {"Invalid object type"};
   }
 }
 

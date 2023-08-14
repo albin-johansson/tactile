@@ -25,8 +25,8 @@
 #include <glad/glad.h>
 #include <spdlog/spdlog.h>
 
-#include "core/debug/panic.hpp"
 #include "core/prelude.hpp"
+#include "tactile/core/common/error.hpp"
 
 namespace tactile {
 namespace {
@@ -62,7 +62,7 @@ void _init_sdl_opengl_attributes()
   cen::gl::set_swap_interval(cen::gl_swap_interval::synchronized);
 
   if (!gladLoadGLLoader(&SDL_GL_GetProcAddress)) {
-    throw TactileError {"Could not initialize OpenGL"};
+    throw Error {"Could not initialize OpenGL"};
   }
 
   spdlog::debug("[OpenGL] Version: {}",

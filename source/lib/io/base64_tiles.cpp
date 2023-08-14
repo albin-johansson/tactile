@@ -25,11 +25,11 @@
 
 #include <cppcodec/base64_rfc4648.hpp>
 
-#include "core/platform/bit_utils.hpp"
-#include "core/debug/panic.hpp"
 #include "core/functional/invoke.hpp"
+#include "core/platform/bit_utils.hpp"
 #include "core/tiles/tile_matrix.hpp"
 #include "io/compression.hpp"
+#include "tactile/core/common/error.hpp"
 
 using Base64 = cppcodec::base64_rfc4648;
 
@@ -102,7 +102,7 @@ auto base64_encode_tiles(const TileMatrix& tiles,
       return _encode_bytes(compressed_bytes);
     }
     default:
-      throw TactileError {"Invalid compression strategy"};
+      throw Error {"Invalid compression strategy"};
   }
 }
 
@@ -125,7 +125,7 @@ auto base64_decode_tiles(StringView tiles,
       return _restore_tiles(decompressed_bytes, extent);
     }
     default:
-      throw TactileError {"Invalid compression strategy"};
+      throw Error {"Invalid compression strategy"};
   }
 }
 

@@ -26,7 +26,6 @@
 #include <spdlog/spdlog.h>
 
 #include "common/util/filesystem.hpp"
-#include "core/debug/panic.hpp"
 #include "core/formatters/attribute_type_formatter.hpp"
 #include "core/functional/invoke.hpp"
 #include "io/base64_tiles.hpp"
@@ -35,6 +34,7 @@
 #include "io/save_formats.hpp"
 #include "io/stream_utils.hpp"
 #include "io/xml_utils.hpp"
+#include "tactile/core/common/error.hpp"
 
 namespace tactile {
 namespace {
@@ -241,7 +241,7 @@ void _append_base64_tile_layer_data(XmlNode data_node,
       break;
 
     default:
-      throw TactileError {"Invalid compression strategy"};
+      throw Error {"Invalid compression strategy"};
   }
 
   const auto tile_data = base64_encode_tiles(tile_layer.tiles,
@@ -276,7 +276,7 @@ void _append_tile_layer(XmlNode root,
       break;
 
     default:
-      throw TactileError {"Invalid tile encoding"};
+      throw Error {"Invalid tile encoding"};
   }
 }
 
@@ -321,7 +321,7 @@ void _append_layer(XmlNode root,
       break;
     }
     default:
-      throw TactileError {"Invalid layer type"};
+      throw Error {"Invalid layer type"};
   }
 }
 

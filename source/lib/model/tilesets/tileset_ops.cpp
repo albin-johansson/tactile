@@ -20,7 +20,7 @@
 #include "tileset_ops.hpp"
 
 #include "common/util/lookup.hpp"
-#include "core/debug/panic.hpp"
+#include "tactile/core/common/error.hpp"
 
 namespace tactile::sys {
 
@@ -35,7 +35,7 @@ auto tile_index_at(const Tileset& tileset, const TilePos pos) -> TileIndex
     return pos.row() * tileset.column_count + pos.col();
   }
   else {
-    throw TactileError {"Invalid tile position"};
+    throw Error {"Invalid tile position"};
   }
 }
 

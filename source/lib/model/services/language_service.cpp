@@ -24,10 +24,10 @@
 #include <spdlog/spdlog.h>
 
 #include "common/util/lookup.hpp"
-#include "core/debug/panic.hpp"
 #include "io/lang/language_parser.hpp"
 #include "model/services/service_locator.hpp"
 #include "model/services/settings_service.hpp"
+#include "tactile/core/common/error.hpp"
 
 namespace tactile {
 
@@ -67,7 +67,7 @@ auto LanguageService::get_name(const Lang language) -> const char*
       return "Svenska";
 
     default:
-      throw TactileError {"Unknown language"};
+      throw Error {"Unknown language"};
   }
 }
 

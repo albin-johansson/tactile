@@ -24,7 +24,7 @@
 #include <fmt/format.h>
 
 #include "common/util/filesystem.hpp"
-#include "core/debug/panic.hpp"
+#include "tactile/core/common/error.hpp"
 
 namespace tactile {
 
@@ -53,7 +53,7 @@ auto GodotTileset::index_of(const UUID& tileset_id) const -> int32
     ++index;
   }
 
-  throw TactileError {"Invalid tileset identifier"};
+  throw Error {"Invalid tileset identifier"};
 }
 
 auto GodotTileset::texture_paths() const -> const Vector<TextureNamePair>&

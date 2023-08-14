@@ -22,7 +22,6 @@
 #include <utility>  // move
 
 #include "common/util/algorithms.hpp"
-#include "core/debug/panic.hpp"
 #include "core/functional/invoke.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/contexts/context_system.hpp"
@@ -40,6 +39,7 @@
 #include "model/tilesets/tileset_factory.hpp"
 #include "model/tilesets/tileset_system.hpp"
 #include "tactile/core/common/assert.hpp"
+#include "tactile/core/common/error.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -61,7 +61,7 @@ namespace {
       return create_group_layer(registry, layer_id);
 
     default:
-      throw TactileError {"Unexpected layer type"};
+      throw Error {"Unexpected layer type"};
   }
 }
 

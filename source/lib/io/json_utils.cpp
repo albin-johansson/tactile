@@ -26,9 +26,9 @@
 #include <spdlog/spdlog.h>
 
 #include "common/util/filesystem.hpp"
-#include "core/debug/panic.hpp"
 #include "io/save_formats.hpp"
 #include "io/stream_utils.hpp"
+#include "tactile/core/common/error.hpp"
 
 namespace tactile {
 namespace {
@@ -163,7 +163,7 @@ void to_json(JSON& json, const Property& value)
       break;
 
     default:
-      throw TactileError {"Invalid attribute type"};
+      throw Error {"Invalid attribute type"};
   }
 }
 
@@ -191,7 +191,7 @@ void from_json(const JSON& json, PropertyType& type)
     type = PropertyType::Object;
   }
   else {
-    throw TactileError {"Not a valid JSON property type"};
+    throw Error {"Not a valid JSON property type"};
   }
 }
 

@@ -23,9 +23,9 @@
 
 #include <imgui.h>
 
-#include "core/debug/panic.hpp"
 #include "core/prelude.hpp"
 #include "tactile/core/common/assert.hpp"
+#include "tactile/core/common/error.hpp"
 #include "ui/style/colors.hpp"
 
 namespace tactile {
@@ -231,7 +231,7 @@ auto human_readable_name(const Theme theme) -> StringView
       return "Rose";
 
     default:
-      throw TactileError {"Invalid theme enumerator"};
+      throw Error {"Invalid theme enumerator"};
   }
 }
 

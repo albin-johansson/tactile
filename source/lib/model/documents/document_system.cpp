@@ -24,7 +24,6 @@
 #include <spdlog/spdlog.h>
 
 #include "cmd/command_stack.hpp"
-#include "core/debug/panic.hpp"
 #include "io/parsers/map_parser.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/documents/document_components.hpp"
@@ -34,6 +33,7 @@
 #include "model/services/settings/settings.hpp"
 #include "model/tilesets/tileset_system.hpp"
 #include "model/viewports/viewport_components.hpp"
+#include "tactile/core/common/error.hpp"
 
 namespace tactile::sys {
 namespace {
@@ -121,7 +121,7 @@ void set_document_name(Registry& registry, const Entity document_entity, String 
     tileset_context.name = std::move(name);
   }
   else {
-    throw TactileError {"Invalid document type"};
+    throw Error {"Invalid document type"};
   }
 }
 
@@ -139,7 +139,7 @@ auto get_document_name(const Registry& registry, const Entity document_entity) -
     return tileset_context.name;
   }
   else {
-    throw TactileError {"Invalid document type"};
+    throw Error {"Invalid document type"};
   }
 }
 

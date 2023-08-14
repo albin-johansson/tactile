@@ -21,7 +21,7 @@
 
 #include <magic_enum.hpp>
 
-#include "core/debug/panic.hpp"
+#include "tactile/core/common/error.hpp"
 
 namespace tactile {
 
@@ -203,7 +203,7 @@ auto to_cause(const Strings& strings, const ParseError error) -> StringView
       return strings.parse_error.plain_encoding_with_compression;
 
     default:
-      throw TactileError {"Invalid parse error"};
+      throw Error {"Invalid parse error"};
   }
 }
 

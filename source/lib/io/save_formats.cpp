@@ -21,7 +21,7 @@
 
 #include <fmt/format.h>
 
-#include "core/debug/panic.hpp"
+#include "tactile/core/common/error.hpp"
 
 namespace tactile {
 
@@ -38,7 +38,7 @@ auto get_human_readable_name(const SaveFormat format) -> StringView
       return "TMX (XML)";
 
     default:
-      throw TactileError {"Invalid save format identifier"};
+      throw Error {"Invalid save format identifier"};
   }
 }
 
@@ -55,7 +55,7 @@ auto get_file_extension(const SaveFormat format) -> String
       return ".tmx";
 
     default:
-      throw TactileError {"Invalid save format identifier"};
+      throw Error {"Invalid save format identifier"};
   }
 }
 
@@ -150,7 +150,7 @@ auto serialize_to_save_format(const PropertyType type) -> StringView
       return "object";
 
     default:
-      throw TactileError {"Invalid attribute type"};
+      throw Error {"Invalid attribute type"};
   }
 }
 

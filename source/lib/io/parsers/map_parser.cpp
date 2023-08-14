@@ -25,11 +25,11 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "core/debug/panic.hpp"
 #include "core/debug/profile.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
+#include "tactile/core/common/error.hpp"
 
 namespace tactile {
 
@@ -78,7 +78,7 @@ auto parse_map(const Path& path) -> Parsed<MapIR>
     TACTILE_PROFILE_END("[IO] Parsed map");
     return result;
   }
-  catch (const TactileError& e) {
+  catch (const Error& e) {
     spdlog::error("[IO] Parser crashed with message: '{}'\n{}", e.what(), e.get_trace());
     return unexpected(ParseError::Unknown);
   }

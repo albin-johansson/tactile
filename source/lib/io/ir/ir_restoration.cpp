@@ -161,7 +161,7 @@ auto _restore_layer(Registry& registry,
       break;
     }
     default:
-      throw TactileError {"Invalid layer type"};
+      throw Error {"Invalid layer type"};
   }
 
   if (parent_layer_entity != kNullEntity) {

@@ -19,7 +19,7 @@
 
 #include "context_menu.hpp"
 
-#include "core/debug/panic.hpp"
+#include "tactile/core/common/error.hpp"
 #include "ui/widget/scoped.hpp"
 
 namespace tactile::ui {
@@ -28,7 +28,7 @@ ContextMenu::ContextMenu(const char* name)
     : mName {name}
 {
   if (!mName) {
-    throw TactileError {"Invalid null context menu name"};
+    throw Error {"Invalid null context menu name"};
   }
 }
 

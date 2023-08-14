@@ -26,10 +26,10 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl2.h>
 
-#include "core/debug/panic.hpp"
 #include "core/prelude.hpp"
 #include "io/texture_loader.hpp"
 #include "model/textures/texture_components.hpp"
+#include "tactile/core/common/error.hpp"
 
 namespace tactile {
 
@@ -37,12 +37,12 @@ GLBackendService::GLBackendService(SDL_Window* window, SDL_GLContext context)
     : mWindow {window}
 {
   if (!ImGui_ImplSDL2_InitForOpenGL(mWindow, context)) {
-    throw TactileError {"Could not initialize ImGui SDL2 backend"};
+    throw Error {"Could not initialize ImGui SDL2 backend"};
   }
 
   if (!ImGui_ImplOpenGL3_Init()) {
     ImGui_ImplSDL2_Shutdown();
-    throw TactileError {"Could not initialize ImGui OpenGL backend"};
+    throw Error {"Could not initialize ImGui OpenGL backend"};
   }
 }
 

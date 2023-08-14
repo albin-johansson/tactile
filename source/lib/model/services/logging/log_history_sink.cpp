@@ -25,7 +25,7 @@
 #include <fmt/chrono.h>
 #include <fmt/format.h>
 
-#include "core/debug/panic.hpp"
+#include "tactile/core/common/error.hpp"
 
 namespace tactile {
 namespace {
@@ -53,7 +53,7 @@ namespace {
       return LOG_LEVEL_CRITICAL;
 
     default:
-      throw TactileError {"Unsupported log level"};
+      throw Error {"Unsupported log level"};
   }
 }
 
