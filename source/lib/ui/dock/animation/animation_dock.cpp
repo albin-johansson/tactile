@@ -94,7 +94,7 @@ void _push_animated_tile_cell_image(const Registry& registry,
     return std::chrono::milliseconds {duration_raw};
   }
   else {
-    return nothing;
+    return {};
   }
 }
 

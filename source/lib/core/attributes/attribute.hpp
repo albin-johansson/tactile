@@ -30,12 +30,9 @@
 #include "core/enums/attribute_type.hpp"
 #include "core/math/vector.hpp"
 #include "core/prelude.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 namespace tactile {
-
-/// Strong type that represents object references.
-enum ObjectRef : int32 {
-};
 
 template <typename T>
 concept SomeAttributeType = std::same_as<T, String> ||   //

@@ -93,7 +93,7 @@ auto ui_rubber_band(const ImVec2& scroll_offset, const ImVec2& tile_size) -> May
     }
   }
 
-  return nothing;
+  return {};
 }
 
 }  // namespace tactile::ui

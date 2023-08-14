@@ -49,7 +49,7 @@ template <typename T>
     return iter->get<T>();
   }
   else {
-    return nothing;
+    return {};
   }
 }
 
@@ -61,7 +61,7 @@ template <>
     return iter->get<String>();
   }
   else {
-    return nothing;
+    return {};
   }
 }
 
@@ -201,7 +201,7 @@ auto parse_json_file(const Path& path) -> Maybe<JSON>
     auto stream = open_input_stream(path, FileType::Text);
     if (!stream) {
       spdlog::error("[JSON] Could not parse JSON file at {}", path);
-      return nothing;
+      return {};
     }
 
     JSON json;
@@ -211,10 +211,10 @@ auto parse_json_file(const Path& path) -> Maybe<JSON>
   }
   catch (const std::exception& e) {
     spdlog::error("[JSON] Parse error: {}", e.what());
-    return nothing;
+    return {};
   }
   catch (...) {
-    return nothing;
+    return {};
   }
 }
 

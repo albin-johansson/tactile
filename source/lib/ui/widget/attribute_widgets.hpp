@@ -103,7 +103,7 @@ namespace tactile::ui {
 
 [[nodiscard]] auto push_attribute_type_combo(const Strings& strings,
                                              AttributeType current_type,
-                                             Maybe<AttributeType> excluded_type = nothing)
+                                             Maybe<AttributeType> excluded_type = {})
     -> Maybe<AttributeType>;
 
 }  // namespace tactile::ui

@@ -64,7 +64,7 @@ template <std::invocable T>
 
   push_lazy_tooltip("##PathTooltip", strings.misc.type_path.c_str());
 
-  return nothing;
+  return {};
 }
 
 }  // namespace
@@ -80,7 +80,7 @@ auto push_int_input(const Strings& strings, const char* id, int value) -> Maybe<
 
   push_lazy_tooltip("##IntTooltip", strings.misc.type_int.c_str());
 
-  return nothing;
+  return {};
 }
 
 auto push_int2_input(const Strings& strings, const char* id, Int2 value) -> Maybe<Int2>
@@ -94,7 +94,7 @@ auto push_int2_input(const Strings& strings, const char* id, Int2 value) -> Mayb
 
   push_lazy_tooltip("##Int2Tooltip", strings.misc.type_int2.c_str());
 
-  return nothing;
+  return {};
 }
 
 auto push_int3_input(const Strings& strings, const char* id, Int3 value) -> Maybe<Int3>
@@ -108,7 +108,7 @@ auto push_int3_input(const Strings& strings, const char* id, Int3 value) -> Mayb
 
   push_lazy_tooltip("##Int3Tooltip", strings.misc.type_int3.c_str());
 
-  return nothing;
+  return {};
 }
 
 auto push_int4_input(const Strings& strings, const char* id, Int4 value) -> Maybe<Int4>
@@ -122,7 +122,7 @@ auto push_int4_input(const Strings& strings, const char* id, Int4 value) -> Mayb
 
   push_lazy_tooltip("##Int4Tooltip", strings.misc.type_int4.c_str());
 
-  return nothing;
+  return {};
 }
 
 auto push_float_input(const Strings& strings,
@@ -148,7 +148,7 @@ auto push_float_input(const Strings& strings,
 
   push_lazy_tooltip("##FloatTooltip", strings.misc.type_float.c_str());
 
-  return nothing;
+  return {};
 }
 
 auto push_float2_input(const Strings& strings,
@@ -174,7 +174,7 @@ auto push_float2_input(const Strings& strings,
 
   push_lazy_tooltip("##Float2Tooltip", strings.misc.type_float2.c_str());
 
-  return nothing;
+  return {};
 }
 
 auto push_float3_input(const Strings& strings,
@@ -200,7 +200,7 @@ auto push_float3_input(const Strings& strings,
 
   push_lazy_tooltip("##Float3Tooltip", strings.misc.type_float3.c_str());
 
-  return nothing;
+  return {};
 }
 
 auto push_float4_input(const Strings& strings,
@@ -226,7 +226,7 @@ auto push_float4_input(const Strings& strings,
 
   push_lazy_tooltip("##Float4Tooltip", strings.misc.type_float4.c_str());
 
-  return nothing;
+  return {};
 }
 
 auto push_string_input_with_hint(const Strings& strings,
@@ -263,7 +263,7 @@ auto push_string_input_with_hint(const Strings& strings,
 
   push_lazy_tooltip("##StringTooltip", strings.misc.type_string.c_str());
 
-  return nothing;
+  return {};
 }
 
 auto push_string_input(const Strings& strings,
@@ -286,7 +286,7 @@ auto push_bool_input(const Strings& strings, const char* id, bool value) -> Mayb
 
   push_lazy_tooltip("##BoolTooltip", strings.misc.type_bool.c_str());
 
-  return nothing;
+  return {};
 }
 
 auto push_object_input(const Strings& strings, const char* id, ObjectRef value)
@@ -299,7 +299,7 @@ auto push_object_input(const Strings& strings, const char* id, ObjectRef value)
 
   push_lazy_tooltip("##ObjectTooltip", strings.misc.type_object.c_str());
 
-  return nothing;
+  return {};
 }
 
 auto push_color_input(const char* id, const Color value) -> Maybe<Color>
@@ -314,7 +314,7 @@ auto push_color_input(const char* id, const Color value) -> Maybe<Color>
     return Color::from_norm(rgba.at(0), rgba.at(1), rgba.at(2), rgba.at(3));
   }
 
-  return nothing;
+  return {};
 }
 
 auto push_file_path_input(const Strings& strings, const char* id, const Path& value)
@@ -425,7 +425,7 @@ auto push_attribute_input(const Strings& strings, const char* id, const Attribut
     }
   }
 
-  return nothing;
+  return {};
 }
 
 auto push_attribute_type_combo(const Strings& strings,

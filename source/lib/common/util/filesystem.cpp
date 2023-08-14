@@ -67,14 +67,14 @@ auto use_short_home_prefix(const Path& path) -> Maybe<String>
     return '~' + path.string().substr(prefix.size());
   }
   else {
-    return nothing;
+    return {};
   }
 }
 
 auto make_native_string(const char* str) -> Maybe<OsString>
 {
   if (!str) {
-    return nothing;
+    return {};
   }
 
 #if TACTILE_OS_WINDOWS
@@ -98,7 +98,7 @@ auto make_native_string(const char* str) -> Maybe<OsString>
     return wide_str;
   }
   else {
-    return nothing;
+    return {};
   }
 #else
   return OsString {str};

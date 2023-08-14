@@ -40,7 +40,7 @@ template <typename T>
 
   T vec {};
   if (components.size() != static_cast<usize>(vec.length())) {
-    return nothing;
+    return {};
   }
 
   int index = 0;
@@ -58,7 +58,7 @@ template <typename T>
       vec[index] = *component_value;
     }
     else {
-      return nothing;
+      return {};
     }
 
     ++index;
@@ -110,14 +110,14 @@ template <typename T>
         return *color;
       }
       else {
-        return nothing;
+        return {};
       }
     }
     case AttributeType::Object:
       return ObjectRef {value.as<int32>()};
 
     default:
-      return nothing;
+      return {};
   }
 }
 

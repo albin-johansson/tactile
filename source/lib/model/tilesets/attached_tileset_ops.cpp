@@ -33,7 +33,7 @@ auto to_tile_index(const AttachedTileset& attached_tileset, const TileID tile_id
     return tile_id - attached_tileset.first_tile;
   }
 
-  return nothing;
+  return {};
 }
 
 auto is_single_tile_selected(const AttachedTileset& attached_tileset) -> bool

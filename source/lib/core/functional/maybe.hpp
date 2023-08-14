@@ -19,13 +19,4 @@
 
 #pragma once
 
-#include <optional>  // optional, nullopt_t, nullopt
-
-namespace tactile {
-
-template <typename T>
-using Maybe = std::optional<T>;
-
-inline constexpr std::nullopt_t nothing = std::nullopt;  // NOLINT
-
-}  // namespace tactile
+#include "tactile/core/functional/maybe.hpp"

@@ -408,7 +408,7 @@ auto get_first_different_vector_dimension(const Attribute& a, const Attribute& b
       return 3;
     }
 
-    return nothing;
+    return {};
   };
 
   if (a.is_any_vector() && a.get_type() == b.get_type()) {
@@ -436,7 +436,7 @@ auto get_first_different_vector_dimension(const Attribute& a, const Attribute& b
     }
   }
 
-  return nothing;
+  return {};
 }
 
 auto operator<<(std::ostream& stream, const Attribute& value) -> std::ostream&

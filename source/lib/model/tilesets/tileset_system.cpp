@@ -80,7 +80,7 @@ auto convert_tile_id_to_index(const Registry& registry,
     return to_tile_index(attached_tileset, tile_id).value();
   }
 
-  return nothing;
+  return {};
 }
 
 auto find_tileset_with_tile(const Registry& registry,

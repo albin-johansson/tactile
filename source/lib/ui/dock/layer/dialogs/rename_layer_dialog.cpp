@@ -28,7 +28,7 @@
 
 namespace tactile::ui {
 
-void push_rename_layer_dialog(const Registry& registry,
+void push_rename_layer_dialog([[maybe_unused]] const Registry& registry,
                               RenameLayerDialogState& state,
                               Dispatcher& dispatcher)
 {

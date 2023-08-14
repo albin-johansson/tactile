@@ -43,7 +43,7 @@ auto load_texture_data(const Path& path) -> Maybe<TextureData>
 
   if (!texture_data.pixels) {
     spdlog::error("[IO] Could not load texture at {}", path);
-    return nothing;
+    return {};
   }
 
   return texture_data;

@@ -35,7 +35,7 @@ namespace {
     return stream;
   }
   else {
-    return nothing;
+    return {};
   }
 }
 
@@ -51,7 +51,7 @@ namespace {
     return stream;
   }
   else {
-    return nothing;
+    return {};
   }
 }
 

@@ -79,7 +79,7 @@ auto detach_component(Registry& registry,
     return values;
   }
 
-  return nothing;
+  return {};
 }
 
 auto has_component(const Registry& registry,
