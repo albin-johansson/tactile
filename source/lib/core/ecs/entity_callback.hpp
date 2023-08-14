@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/ecs/entity.hpp"
-#include "core/functional/function.hpp"
+#include "tactile/core/functional/function.hpp"
 
 namespace tactile {
 

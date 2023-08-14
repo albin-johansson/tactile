@@ -19,12 +19,12 @@
 
 #pragma once
 
+#include "core/prelude.hpp"
+#include "model/services/logging/log_level.hpp"
 #include "tactile/core/containers/deque.hpp"
 #include "tactile/core/containers/smart_ptr.hpp"
 #include "tactile/core/containers/string.hpp"
-#include "core/functional/function.hpp"
-#include "core/prelude.hpp"
-#include "model/services/logging/log_level.hpp"
+#include "tactile/core/functional/function.hpp"
 
 namespace tactile {
 

@@ -20,10 +20,10 @@
 #pragma once
 
 #include "common/type/path.hpp"
-#include "core/functional/expected.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/parsers/parse_error.hpp"
 #include "io/xml_utils.hpp"
+#include "tactile/core/functional/expected.hpp"
 
 namespace tactile {
 

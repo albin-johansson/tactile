@@ -22,9 +22,9 @@
 #include <compare>  // <=>
 
 #include "core/debug/assert.hpp"
-#include "core/functional/hash.hpp"
 #include "core/math/vector.hpp"
 #include "core/prelude.hpp"
+#include "tactile/core/functional/hash.hpp"
 
 namespace tactile {
 
