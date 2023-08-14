@@ -23,7 +23,7 @@
 #include "core/enums/overlay_pos.hpp"
 #include "core/enums/save_format.hpp"
 #include "core/enums/theme.hpp"
-#include "core/prelude.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/smart_ptr.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/contexts/color.hpp"

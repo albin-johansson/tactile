@@ -25,8 +25,8 @@
 #include <glad/glad.h>
 #include <spdlog/spdlog.h>
 
-#include "core/prelude.hpp"
 #include "tactile/core/common/error.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 namespace tactile {
 namespace {

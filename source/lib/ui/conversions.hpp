@@ -23,8 +23,8 @@
 
 #include <imgui.h>
 
-#include "core/prelude.hpp"
 #include "tactile/core/common/assert.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/contexts/color.hpp"
 #include "tactile/core/math/vector.hpp"
 

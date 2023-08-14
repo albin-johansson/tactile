@@ -25,9 +25,9 @@
 
 #include "common/type/uuid.hpp"
 #include "common/util/algorithms.hpp"
-#include "core/prelude.hpp"
 #include "core/tiles/tile_extent.hpp"
 #include "core/tiles/tile_matrix.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/hash_map.hpp"
 #include "tactile/core/containers/smart_ptr.hpp"
 #include "tactile/core/containers/string.hpp"

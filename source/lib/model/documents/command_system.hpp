@@ -22,12 +22,12 @@
 #include <utility>  // forward
 
 #include "cmd/command_stack.hpp"
-#include "tactile/core/containers/hash_map.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
-#include "core/prelude.hpp"
 #include "model/documents/document_system.hpp"
 #include "model/system.hpp"
+#include "tactile/core/common/prelude.hpp"
+#include "tactile/core/containers/hash_map.hpp"
 
 namespace tactile {
 

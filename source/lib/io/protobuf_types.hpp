@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/prelude.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 #if TACTILE_COMPILER_MSVC
 

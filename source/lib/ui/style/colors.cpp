@@ -22,8 +22,8 @@
 #include <algorithm>  // min, max
 #include <cmath>      // pow
 
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/array.hpp"
-#include "core/prelude.hpp"
 #include "themes.hpp"
 #include "ui/conversions.hpp"
 

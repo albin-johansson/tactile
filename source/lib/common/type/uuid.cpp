@@ -19,7 +19,7 @@
 
 #include "uuid.hpp"
 
-#include "core/prelude.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 #if TACTILE_COMPILER_CLANG
 #pragma clang diagnostic push

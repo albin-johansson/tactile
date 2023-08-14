@@ -21,8 +21,8 @@
 
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
-#include "core/prelude.hpp"
 #include "model/tilesets/tileset_components.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 namespace tactile::sys {
 

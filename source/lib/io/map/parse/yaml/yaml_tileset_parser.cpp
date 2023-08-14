@@ -19,11 +19,11 @@
 
 #include <utility>  // move
 
-#include "tactile/core/containers/string.hpp"
-#include "core/prelude.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/yaml_utils.hpp"
+#include "tactile/core/common/prelude.hpp"
+#include "tactile/core/containers/string.hpp"
 
 namespace tactile {
 namespace {

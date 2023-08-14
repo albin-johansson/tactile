@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/prelude.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/maps/tile_compression.hpp"
 #include "tactile/core/maps/tile_encoding.hpp"

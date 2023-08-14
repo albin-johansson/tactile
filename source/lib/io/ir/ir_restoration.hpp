@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/prelude.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/io/filesystem.hpp"
 
 namespace tactile {

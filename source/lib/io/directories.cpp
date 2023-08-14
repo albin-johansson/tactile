@@ -25,8 +25,8 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "core/prelude.hpp"
 #include "tactile/core/common/assert.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/functional/maybe.hpp"
 

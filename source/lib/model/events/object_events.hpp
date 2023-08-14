@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/ecs/entity.hpp"
-#include "core/prelude.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/math/vector.hpp"
 

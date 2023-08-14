@@ -23,11 +23,11 @@
 #include <utility>   // move, forward
 
 #include "cmd/command.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/deque.hpp"
 #include "tactile/core/containers/smart_ptr.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/functional/maybe.hpp"
-#include "core/prelude.hpp"
 
 namespace tactile {
 

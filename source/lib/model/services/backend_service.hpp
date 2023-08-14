@@ -24,7 +24,7 @@
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
 #include "core/functional/result.hpp"
-#include "core/prelude.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/string_map.hpp"
 #include "tactile/core/io/filesystem.hpp"
 

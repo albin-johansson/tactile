@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/prelude.hpp"
 #include "model/model_view.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 namespace tactile {
 

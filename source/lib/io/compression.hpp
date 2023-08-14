@@ -20,9 +20,9 @@
 #pragma once
 
 #include "core/containers/span.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/vector.hpp"
 #include "tactile/core/functional/maybe.hpp"
-#include "core/prelude.hpp"
 
 namespace tactile {
 

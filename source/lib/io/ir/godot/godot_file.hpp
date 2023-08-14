@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "core/prelude.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/containers/string_map.hpp"
 #include "tactile/core/containers/tree_map.hpp"

@@ -19,10 +19,10 @@
 
 #pragma once
 
+#include "core/enums/theme.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/array.hpp"
 #include "tactile/core/containers/string.hpp"
-#include "core/enums/theme.hpp"
-#include "core/prelude.hpp"
 
 TACTILE_FWD_DECLARE_STRUCT(ImGuiStyle)
 

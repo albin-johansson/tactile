@@ -21,18 +21,18 @@
 
 #include <utility>  // forward
 
-#include "tactile/core/containers/deque.hpp"
-#include "tactile/core/containers/string.hpp"
-#include "tactile/core/containers/vector.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
 #include "core/enums/menu_action.hpp"
 #include "core/enums/tool_type.hpp"
 #include "core/events/dispatcher.hpp"
 #include "core/functional/ref.hpp"
-#include "core/prelude.hpp"
 #include "model/services/i18n/strings.hpp"
 #include "model/services/settings/settings.hpp"
+#include "tactile/core/common/prelude.hpp"
+#include "tactile/core/containers/deque.hpp"
+#include "tactile/core/containers/string.hpp"
+#include "tactile/core/containers/vector.hpp"
 
 namespace tactile {
 

@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "core/prelude.hpp"
 #include "io/ir/godot/godot_scene.hpp"
 #include "io/ir/map/map_ir.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 namespace tactile {
 

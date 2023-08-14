@@ -21,13 +21,13 @@
 
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
-#include "core/prelude.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "model/components/component_components.hpp"
 #include "model/contexts/context_components.hpp"
 #include "model/maps/map_components.hpp"
 #include "model/tiles/tile_components.hpp"
 #include "model/tilesets/tileset_components.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 namespace tactile {
 

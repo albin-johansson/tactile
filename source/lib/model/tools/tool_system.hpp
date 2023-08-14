@@ -19,12 +19,12 @@
 
 #pragma once
 
+#include "core/enums/tool_type.hpp"
+#include "model/system.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/hash_map.hpp"
 #include "tactile/core/containers/smart_ptr.hpp"
-#include "core/enums/tool_type.hpp"
 #include "tactile/core/functional/maybe.hpp"
-#include "core/prelude.hpp"
-#include "model/system.hpp"
 
 namespace tactile {
 

@@ -20,9 +20,9 @@
 #pragma once
 
 #include "core/ecs/entity.hpp"
-#include "core/prelude.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "model/tilesets/tileset_components.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 namespace tactile::sys {
 

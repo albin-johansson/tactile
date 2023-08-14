@@ -22,10 +22,7 @@
 #include <centurion/events.hpp>
 #include <imgui.h>
 
-#include "tactile/core/containers/smart_ptr.hpp"
-#include "tactile/core/containers/vector.hpp"
 #include "core/events/dispatcher.hpp"
-#include "core/prelude.hpp"
 #include "engine/app_delegate.hpp"
 #include "model/events/command_events.hpp"
 #include "model/events/component_events.hpp"
@@ -43,6 +40,9 @@
 #include "model/events/view_events.hpp"
 #include "model/events/viewport_events.hpp"
 #include "model/system_manager.hpp"
+#include "tactile/core/common/prelude.hpp"
+#include "tactile/core/containers/smart_ptr.hpp"
+#include "tactile/core/containers/vector.hpp"
 
 namespace tactile {
 

@@ -20,11 +20,11 @@
 #pragma once
 
 #include "cmd/command.hpp"
-#include "tactile/core/containers/string.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
+#include "tactile/core/common/prelude.hpp"
+#include "tactile/core/containers/string.hpp"
 #include "tactile/core/functional/maybe.hpp"
-#include "core/prelude.hpp"
 
 namespace tactile::cmd {
 

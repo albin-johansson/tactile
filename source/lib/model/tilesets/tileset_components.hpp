@@ -20,10 +20,10 @@
 #pragma once
 
 #include "core/ecs/entity.hpp"
-#include "core/prelude.hpp"
 #include "core/tiles/region.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "model/viewports/viewport_components.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/hash_map.hpp"
 #include "tactile/core/containers/vector.hpp"
 #include "tactile/core/functional/maybe.hpp"

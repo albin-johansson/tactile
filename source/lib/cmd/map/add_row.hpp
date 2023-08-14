@@ -22,7 +22,7 @@
 #include "cmd/command.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
-#include "core/prelude.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 namespace tactile::cmd {
 

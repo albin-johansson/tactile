@@ -19,10 +19,10 @@
 
 #pragma once
 
+#include "model/system.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/smart_ptr.hpp"
 #include "tactile/core/containers/vector.hpp"
-#include "core/prelude.hpp"
-#include "model/system.hpp"
 
 namespace tactile {
 

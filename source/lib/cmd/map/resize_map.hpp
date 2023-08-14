@@ -23,9 +23,9 @@
 #include "cmd/map/map_command_cache.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
-#include "tactile/core/functional/maybe.hpp"
-#include "core/prelude.hpp"
 #include "core/tiles/tile_extent.hpp"
+#include "tactile/core/common/prelude.hpp"
+#include "tactile/core/functional/maybe.hpp"
 
 namespace tactile::cmd {
 

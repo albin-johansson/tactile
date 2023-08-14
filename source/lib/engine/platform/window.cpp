@@ -23,8 +23,8 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/prelude.hpp"
 #include "io/directories.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 #if TACTILE_OS_WINDOWS
 

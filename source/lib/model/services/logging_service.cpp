@@ -28,10 +28,10 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
-#include "core/prelude.hpp"
 #include "io/directories.hpp"
 #include "model/services/logging/log_history_sink.hpp"
 #include "tactile/core/common/error.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 namespace tactile {
 

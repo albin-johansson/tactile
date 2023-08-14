@@ -22,7 +22,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "core/prelude.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 namespace tactile {
 

@@ -23,8 +23,8 @@
 #include <concepts>   // same_as
 
 #include "core/platform/environment.hpp"
-#include "core/prelude.hpp"
 #include "tactile/core/common/assert.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 #if TACTILE_OS_WINDOWS
 

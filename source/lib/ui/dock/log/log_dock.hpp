@@ -20,9 +20,9 @@
 #pragma once
 
 #include "core/ecs/entity.hpp"
-#include "core/prelude.hpp"
 #include "model/model_view.hpp"
 #include "model/services/logging/log_level.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 namespace tactile {
 

@@ -20,10 +20,10 @@
 #pragma once
 
 #include "core/ecs/entity.hpp"
+#include "core/tiles/tile_matrix.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/vector.hpp"
 #include "tactile/core/layers/layer_type.hpp"
-#include "core/prelude.hpp"
-#include "core/tiles/tile_matrix.hpp"
 
 namespace tactile {
 

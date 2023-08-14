@@ -22,7 +22,7 @@
 #include <pugixml.hpp>
 
 #include "core/functional/result.hpp"
-#include "core/prelude.hpp"
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/functional/maybe.hpp"
 #include "tactile/core/io/filesystem.hpp"

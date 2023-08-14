@@ -20,7 +20,7 @@
 #pragma once
 
 #include "core/events/dispatcher.hpp"
-#include "core/prelude.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 namespace tactile {
 

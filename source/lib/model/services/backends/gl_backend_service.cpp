@@ -26,10 +26,10 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl2.h>
 
-#include "core/prelude.hpp"
 #include "io/texture_loader.hpp"
 #include "model/textures/texture_components.hpp"
 #include "tactile/core/common/error.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 namespace tactile {
 

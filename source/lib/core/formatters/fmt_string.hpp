@@ -24,9 +24,9 @@
 #include <fmt/core.h>
 #include <fmt/format.h>
 
+#include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/array.hpp"
 #include "tactile/core/containers/string.hpp"
-#include "core/prelude.hpp"
 
 namespace tactile {
 

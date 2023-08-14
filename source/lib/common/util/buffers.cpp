@@ -23,8 +23,8 @@
 #include <cstring>    // memset
 #include <iterator>   // distance
 
-#include "core/prelude.hpp"
 #include "tactile/core/common/error.hpp"
+#include "tactile/core/common/prelude.hpp"
 
 namespace tactile {
 

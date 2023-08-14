@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "tactile/core/functional/maybe.hpp"
-#include "core/prelude.hpp"
 #include "model/tilesets/tileset_components.hpp"
+#include "tactile/core/common/prelude.hpp"
+#include "tactile/core/functional/maybe.hpp"
 
 namespace tactile::sys {
 
