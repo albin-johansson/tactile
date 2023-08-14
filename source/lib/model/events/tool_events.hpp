@@ -21,11 +21,11 @@
 
 #include "core/ecs/entity.hpp"
 #include "core/enums/tool_type.hpp"
-#include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_cache.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "model/viewports/viewport_components.hpp"
+#include "tactile/core/math/vector.hpp"
 
 namespace tactile {
 

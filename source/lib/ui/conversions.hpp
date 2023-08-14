@@ -23,10 +23,10 @@
 
 #include <imgui.h>
 
-#include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 #include "tactile/core/common/assert.hpp"
 #include "tactile/core/contexts/color.hpp"
+#include "tactile/core/math/vector.hpp"
 
 namespace tactile {
 

@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "core/math/vector.hpp"
 #include "model/viewports/viewport_components.hpp"
+#include "tactile/core/math/vector.hpp"
 
 namespace tactile::sys {
 

@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "tactile/core/containers/string.hpp"
-#include "tactile/core/layers/object_type.hpp"
-#include "tactile/core/functional/maybe.hpp"
-#include "core/math/vector.hpp"
 #include "core/prelude.hpp"
+#include "tactile/core/containers/string.hpp"
+#include "tactile/core/functional/maybe.hpp"
+#include "tactile/core/layers/object_type.hpp"
+#include "tactile/core/math/vector.hpp"
 
 namespace tactile {
 

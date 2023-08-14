@@ -21,10 +21,10 @@
 
 #include <compare>  // <=>
 
-#include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 #include "tactile/core/common/assert.hpp"
 #include "tactile/core/functional/hash.hpp"
+#include "tactile/core/math/vector.hpp"
 
 namespace tactile {
 

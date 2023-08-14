@@ -27,7 +27,6 @@
 #include "common/type/uuid.hpp"
 #include "core/ecs/registry.hpp"
 #include "core/functional/invoke.hpp"
-#include "core/math/vector.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/texture_loader.hpp"
 #include "model/components/component_components.hpp"
@@ -46,6 +45,7 @@
 #include "model/tilesets/tileset_components.hpp"
 #include "tactile/core/common/assert.hpp"
 #include "tactile/core/functional/maybe.hpp"
+#include "tactile/core/math/vector.hpp"
 
 // TODO move internal functions into headers to simplify testing
 

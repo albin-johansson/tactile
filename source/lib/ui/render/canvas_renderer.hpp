@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "tactile/core/contexts/color.hpp"
-#include "core/math/vector.hpp"
 #include "core/tiles/tile_pos.hpp"
+#include "tactile/core/contexts/color.hpp"
+#include "tactile/core/math/vector.hpp"
 #include "ui/render/canvas.hpp"
 
 namespace tactile::ui {

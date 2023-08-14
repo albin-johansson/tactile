@@ -20,10 +20,10 @@
 #pragma once
 
 #include "common/type/path.hpp"
+#include "core/prelude.hpp"
 #include "tactile/core/maps/tile_compression.hpp"
 #include "tactile/core/maps/tile_encoding.hpp"
-#include "core/math/vector.hpp"
-#include "core/prelude.hpp"
+#include "tactile/core/math/vector.hpp"
 
 namespace tactile {
 

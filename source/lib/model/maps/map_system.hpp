@@ -19,16 +19,16 @@
 
 #pragma once
 
-#include "tactile/core/containers/hash_map.hpp"
 #include "core/ecs/entity.hpp"
 #include "core/ecs/registry.hpp"
-#include "tactile/core/layers/layer_type.hpp"
 #include "core/functional/result.hpp"
-#include "core/math/vector.hpp"
 #include "core/prelude.hpp"
 #include "core/tiles/tile_extent.hpp"
 #include "core/tiles/tile_pos.hpp"
 #include "model/maps/map_components.hpp"
+#include "tactile/core/containers/hash_map.hpp"
+#include "tactile/core/layers/layer_type.hpp"
+#include "tactile/core/math/vector.hpp"
 
 namespace tactile::sys {
 
