@@ -40,18 +40,6 @@
 
 namespace tactile {
 
-void on_terminate()
-{
-  try {
-    spdlog::critical("Into exile I must go. Failed I have.\n{}",
-                     boost::stacktrace::stacktrace {});
-  }
-  catch (...) {
-    // Not much we can do in this case.
-  }
-
-  std::abort();
-}
 
 Engine::Engine(const BackendAPI api)
     : mAPI {api}

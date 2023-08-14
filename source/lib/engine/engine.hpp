@@ -61,6 +61,4 @@ class Engine final {
   void _poll_events();
 };
 
-[[noreturn]] TACTILE_NOINLINE void on_terminate();
-
 }  // namespace tactile

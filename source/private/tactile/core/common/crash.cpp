@@ -17,23 +17,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "panic.hpp"
+#include "tactile/core/common/crash.hpp"
 
-#include <sstream>  // stringstream
-#include <utility>  // move
+#include <cstdlib>  // abort
 
-#include "core/debug/stacktrace.hpp"
+#include <boost/stacktrace.hpp>
+#include <fmt/ostream.h>
+#include <spdlog/spdlog.h>
 
 namespace tactile {
 
-TactileError::TactileError(String what)
-    : mWhat {std::move(what)}
+void on_terminate()
 {
-  // To avoid odd behavior whilst passing around stacktrace objects, we simply convert
-  // the trace into a string, and log it later.
-  std::stringstream stream;
-  stream << boost::stacktrace::stacktrace {};
-  mTrace = stream.str();
+  try {
+    spdlog::critical("Into exile I must go. Failed I have.\n{}",
+                     fmt::streamed(boost::stacktrace::stacktrace {}));
+  }
+  catch (...) {
+    // Not much we can do in this case.
+  }
+
+  std::abort();
 }
 
 }  // namespace tactile

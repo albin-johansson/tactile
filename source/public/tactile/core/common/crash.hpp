@@ -19,4 +19,10 @@
 
 #pragma once
 
-#include "tactile/core/common/assert.hpp"
+#include "tactile/core/core.hpp"
+
+namespace tactile {
+
+[[noreturn]] TACTILE_NOINLINE TACTILE_CORE_API void on_terminate();
+
+}  // namespace tactile

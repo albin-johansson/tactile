@@ -18,7 +18,7 @@
  */
 
 #include <cstdlib>    // EXIT_SUCCESS, EXIT_FAILURE
-#include <exception>  // exception
+#include <exception>  // exception, set_terminate
 
 #include <centurion/video/message_box.hpp>
 #include <fmt/format.h>
@@ -29,6 +29,7 @@
 #include "core/formatters/stacktrace_formatter.hpp"
 #include "engine/engine.hpp"
 #include "main/app.hpp"
+#include "tactile/core/common/crash.hpp"
 
 using namespace tactile;
 
@@ -50,6 +51,8 @@ void _show_crash_message_box(const char* error_msg)
 auto main(int, char*[]) -> int
 {
   try {
+    std::set_terminate(&on_terminate);
+
     Engine engine {BackendAPI::OpenGL};
 
     engine.set_app_delegate(std::make_unique<App>());

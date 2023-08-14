@@ -17,27 +17,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "assert.hpp"
+#include "tactile/core/common/assert.hpp"
 
 #include <exception>  // terminate
 
+#include <boost/stacktrace.hpp>
 #include <spdlog/spdlog.h>
 
-namespace boost {
+namespace tactile {
 
-void assertion_failed_msg(const char* expr,
-                          const char* msg,
-                          const char* /* function */,
-                          const char* file,
-                          const long line)
-
+void on_assertion_failed(const char* expr,
+                         const char* msg,
+                         const char* file,
+                         const int64 line)
 {
   spdlog::critical("{}:{} expression '{}' evaluated to false: {}",
                    file,
                    line,
                    expr,
-                   msg ? msg : "N/A");
+                   msg ? msg : "?");
   std::terminate();
 }
 
-}  // namespace boost
+}  // namespace tactile
