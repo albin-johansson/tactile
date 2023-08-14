@@ -17,19 +17,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "filesystem.hpp"
+#include "tactile/core/io/filesystem.hpp"
 
 #include <algorithm>  // replace
 #include <concepts>   // same_as
 
-#include "core/platform/environment.hpp"
 #include "tactile/core/common/assert.hpp"
 #include "tactile/core/common/prelude.hpp"
+#include "tactile/core/platform/environment.hpp"
 
 #if TACTILE_OS_WINDOWS
-
   #include <windows.h>
-
 #endif  // TACTILE_OS_WINDOWS
 
 namespace tactile {

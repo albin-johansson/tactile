@@ -26,7 +26,6 @@
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
-#include "common/util/filesystem.hpp"
 #include "io/base64_tiles.hpp"
 #include "io/compression.hpp"
 #include "io/ir/map/map_ir.hpp"
@@ -35,6 +34,7 @@
 #include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/string.hpp"
 #include "tactile/core/contexts/property.hpp"
+#include "tactile/core/io/filesystem.hpp"
 
 namespace tactile {
 namespace {

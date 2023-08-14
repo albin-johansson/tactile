@@ -24,12 +24,12 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "common/util/filesystem.hpp"
 #include "core/functional/invoke.hpp"
 #include "io/base64_tiles.hpp"
 #include "io/export/tiled_info.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/json_utils.hpp"
+#include "tactile/core/io/filesystem.hpp"
 
 namespace tactile {
 namespace {

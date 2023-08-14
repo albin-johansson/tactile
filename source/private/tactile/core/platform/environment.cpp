@@ -17,14 +17,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "tactile/core/platform/environment.hpp"
 
-#include "tactile/core/containers/string.hpp"
-#include "tactile/core/functional/maybe.hpp"
+#include <cstdlib>  // getenv, _dupenv_s, free
+
+#include "tactile/core/common/prelude.hpp"
 
 namespace tactile {
 
-/** Returns the value of an environment variable. */
-[[nodiscard]] auto read_env_var(const char* var) -> Maybe<String>;
+auto read_env_var(const char* var) -> Maybe<String>
+{
+  if (var) {
+#if TACTILE_OS_WINDOWS
+    char* temp {};
+    _dupenv_s(&temp, nullptr, var);
+
+    if (temp) {
+      String result {temp};
+      std::free(temp);
+      return result;
+    }
+#else
+    if (const auto* value = std::getenv(var)) {
+      return String {value};
+    }
+#endif  // TACTILE_OS_WINDOWS
+  }
+
+  return kNone;
+}
 
 }  // namespace tactile

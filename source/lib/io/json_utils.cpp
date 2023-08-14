@@ -25,10 +25,10 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/util/filesystem.hpp"
 #include "io/save_formats.hpp"
 #include "io/stream_utils.hpp"
 #include "tactile/core/common/error.hpp"
+#include "tactile/core/io/filesystem.hpp"
 
 namespace tactile {
 namespace {

@@ -23,6 +23,11 @@
 #include <string>       // basic_string
 #include <string_view>  // basic_string_view
 
+#include "tactile/core/common/prelude.hpp"
+#include "tactile/core/containers/string.hpp"
+#include "tactile/core/core.hpp"
+#include "tactile/core/functional/maybe.hpp"
+
 namespace tactile {
 
 namespace fs = std::filesystem;
@@ -34,5 +39,29 @@ using RecursiveDirectoryIterator = fs::recursive_directory_iterator;
 using NativeChar = Path::value_type;
 using NativeString = std::basic_string<NativeChar>;
 using NativeStringView = std::basic_string_view<NativeChar>;
+
+/**
+ * Converts a path to a string that is guaranteed to use forward slashes.
+ *
+ * \details This function is useful when saving paths to files in a portable way. Since
+ *          all relevant operating systems understand forward slashes, even if some
+ *          operating systems prefer backslashes (e.g., Windows).
+ *
+ * \param path the file path that will be converted.
+ *
+ * \return a version of the path using forward slashes instead of backslashes.
+ */
+[[nodiscard]] TACTILE_CORE_API auto to_forward_slashes_path(const Path& path) -> String;
+
+/** Indicates whether a file path starts with the home directory. */
+[[nodiscard]] TACTILE_CORE_API auto has_home_prefix(const Path& path) -> bool;
+
+/** Converts file paths to use a '~' prefix (if possible). */
+[[nodiscard]] TACTILE_CORE_API auto use_short_home_prefix(const Path& path)
+    -> Maybe<String>;
+
+/** Creates a string using the native filesystem character type. */
+[[nodiscard]] TACTILE_CORE_API auto make_native_string(const char* str)
+    -> Maybe<NativeString>;
 
 }  // namespace tactile
