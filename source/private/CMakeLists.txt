@@ -10,6 +10,22 @@ function(tactile_set_properties target)
                         CXX_STANDARD_REQUIRED ON
                         INTERPROCEDURAL_OPTIMIZATION ${TACTILE_USE_LTO}
                         )
+
+  if (TACTILE_USE_SANITIZERS MATCHES ON)
+    if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+      target_compile_options(${target}
+                             PRIVATE
+                             -fno-omit-frame-pointer
+                             -fsanitize=address,undefined
+                             )
+
+      target_link_options(${target}
+                          PRIVATE
+                          -fno-omit-frame-pointer
+                          -fsanitize=address,undefined
+                          )
+    endif ()
+  endif ()
 endfunction()
 
 function(tactile_set_compiler_warnings target)
