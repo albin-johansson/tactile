@@ -29,7 +29,7 @@ class TACTILE_CORE_API Protobuf final {
   TACTILE_DELETE_COPY(Protobuf);
   TACTILE_DELETE_MOVE(Protobuf);
 
-  Protobuf();
+  [[nodiscard]] Protobuf();
 
   ~Protobuf() noexcept;
 };

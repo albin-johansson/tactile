@@ -29,7 +29,7 @@ class TACTILE_CORE_API SDL final {
   TACTILE_DELETE_COPY(SDL);
   TACTILE_DELETE_MOVE(SDL);
 
-  SDL();
+  [[nodiscard]] SDL();
 
   ~SDL() noexcept;
 };
