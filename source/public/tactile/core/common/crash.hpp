@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "tactile/core/core.hpp"
+#include "tactile/core/api.hpp"
 
 namespace tactile {
 

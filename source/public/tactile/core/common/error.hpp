@@ -22,8 +22,8 @@
 #include <exception>  // exception
 #include <string>     // string
 
+#include "tactile/core/api.hpp"
 #include "tactile/core/common/prelude.hpp"
-#include "tactile/core/core.hpp"
 
 namespace tactile {
 

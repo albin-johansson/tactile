@@ -21,9 +21,9 @@
 
 #include <unordered_map>  // unordered_map
 
+#include "tactile/core/api.hpp"
 #include "tactile/core/common/prelude.hpp"
 #include "tactile/core/contexts/component.hpp"
-#include "tactile/core/core.hpp"
 
 namespace tactile {
 

@@ -22,9 +22,9 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
+#include "tactile/core/api.hpp"
 #include "tactile/core/common/prelude.hpp"
 #include "tactile/core/contexts/property_map.hpp"
-#include "tactile/core/core.hpp"
 
 namespace tactile {
 

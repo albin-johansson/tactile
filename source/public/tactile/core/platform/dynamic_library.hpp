@@ -19,9 +19,9 @@
 
 #pragma once
 
+#include "tactile/core/api.hpp"
 #include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/smart_ptr.hpp"
-#include "tactile/core/core.hpp"
 
 namespace tactile {
 

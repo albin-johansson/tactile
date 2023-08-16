@@ -23,9 +23,9 @@
 #include <string>       // basic_string
 #include <string_view>  // basic_string_view
 
+#include "tactile/core/api.hpp"
 #include "tactile/core/common/prelude.hpp"
 #include "tactile/core/containers/string.hpp"
-#include "tactile/core/core.hpp"
 #include "tactile/core/functional/maybe.hpp"
 
 namespace tactile {
