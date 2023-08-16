@@ -29,7 +29,9 @@ target_precompile_headers(${TACTILE_CORE} PRIVATE ${TACTILE_STANDARD_HEADERS})
 
 target_link_libraries(${TACTILE_CORE}
                       PRIVATE
+                      protobuf::libprotobuf
+                      fmt::fmt
                       Boost::boost
                       glm::glm
-                      fmt::fmt
+                      SDL2::SDL2
                       )
