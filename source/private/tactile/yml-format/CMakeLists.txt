@@ -15,6 +15,7 @@ add_library(${TACTILE_YML_FORMAT} SHARED ${TACTILE_YML_FORMAT_SOURCE_FILES})
 
 tactile_set_properties(${TACTILE_YML_FORMAT})
 tactile_set_compiler_warnings(${TACTILE_YML_FORMAT})
+tactile_mark_as_plugin(${TACTILE_YML_FORMAT})
 
 target_include_directories(${TACTILE_YML_FORMAT} PUBLIC ${TACTILE_INCLUDE_DIR})
 

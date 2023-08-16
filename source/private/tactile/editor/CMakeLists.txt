@@ -27,4 +27,6 @@ target_precompile_headers(${TACTILE_EDITOR} PRIVATE ${TACTILE_STANDARD_HEADERS})
 target_link_libraries(${TACTILE_EDITOR}
                       PRIVATE
                       ${TACTILE_CORE}
+                      SDL2::SDL2
+                      imgui::imgui
                       )

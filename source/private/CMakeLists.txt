@@ -9,6 +9,12 @@ function(tactile_set_properties target)
                         CXX_EXTENSIONS OFF
                         CXX_STANDARD_REQUIRED ON
                         INTERPROCEDURAL_OPTIMIZATION ${TACTILE_USE_LTO}
+                        RUNTIME_OUTPUT_DIRECTORY_DEBUG ${TACTILE_DEBUG_BUILD_DIR}
+                        ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${TACTILE_DEBUG_BUILD_DIR}
+                        LIBRARY_OUTPUT_DIRECTORY_DEBUG ${TACTILE_DEBUG_BUILD_DIR}
+                        RUNTIME_OUTPUT_DIRECTORY_RELEASE ${TACTILE_RELEASE_BUILD_DIR}
+                        ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${TACTILE_RELEASE_BUILD_DIR}
+                        LIBRARY_OUTPUT_DIRECTORY_RELEASE ${TACTILE_RELEASE_BUILD_DIR}
                         )
 
   if (TACTILE_USE_SANITIZERS MATCHES ON)
@@ -26,6 +32,20 @@ function(tactile_set_properties target)
                           )
     endif ()
   endif ()
+endfunction()
+
+function(tactile_mark_as_plugin target)
+  set(TACTILE_DEBUG_PLUGIN_DIR "${TACTILE_DEBUG_BUILD_DIR}/plugins")
+  set(TACTILE_RELEASE_PLUGIN_DIR "${TACTILE_RELEASE_BUILD_DIR}/plugins")
+  set_target_properties(${target}
+                        PROPERTIES
+                        RUNTIME_OUTPUT_DIRECTORY_DEBUG ${TACTILE_DEBUG_PLUGIN_DIR}
+                        ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${TACTILE_DEBUG_PLUGIN_DIR}
+                        LIBRARY_OUTPUT_DIRECTORY_DEBUG ${TACTILE_DEBUG_PLUGIN_DIR}
+                        RUNTIME_OUTPUT_DIRECTORY_RELEASE ${TACTILE_RELEASE_PLUGIN_DIR}
+                        ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${TACTILE_RELEASE_PLUGIN_DIR}
+                        LIBRARY_OUTPUT_DIRECTORY_RELEASE ${TACTILE_RELEASE_PLUGIN_DIR}
+                        )
 endfunction()
 
 function(tactile_set_compiler_warnings target)

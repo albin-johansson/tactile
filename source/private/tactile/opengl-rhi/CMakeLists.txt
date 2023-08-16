@@ -14,6 +14,7 @@ file(GLOB_RECURSE TACTILE_OPENGL_RHI_SOURCE_FILES
 add_library(${TACTILE_OPENGL_RHI} SHARED ${TACTILE_OPENGL_RHI_SOURCE_FILES})
 
 tactile_set_properties(${TACTILE_OPENGL_RHI})
+tactile_mark_as_plugin(${TACTILE_OPENGL_RHI})
 tactile_set_compiler_warnings(${TACTILE_OPENGL_RHI})
 
 target_include_directories(${TACTILE_OPENGL_RHI} PUBLIC ${TACTILE_INCLUDE_DIR})
@@ -30,4 +31,6 @@ target_link_libraries(${TACTILE_OPENGL_RHI}
                       ${TACTILE_CORE}
                       OpenGL::GL
                       glad::glad
+                      SDL2::SDL2
+                      imgui::imgui
                       )
