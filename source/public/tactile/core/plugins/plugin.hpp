@@ -23,17 +23,28 @@
 #include "tactile/core/containers/smart_ptr.hpp"
 #include "tactile/core/core.hpp"
 #include "tactile/core/platform/dynamic_library.hpp"
-#include "tactile/core/plugins/fwd.hpp"
+#include "tactile/core/rhi/graphics_api.hpp"
+#include "tactile/core/rhi/render_device.hpp"
 
 namespace tactile {
 
-using PluginInitFn = void (*)(IPluginContext* context);
-using PluginDropFn = void (*)();
+using PluginIDFn = const char* (*) ();
+using RHIGetAPIFn = GraphicsAPI (*)();
+using RHICreateDeviceFn = IRenderDevice* (*) ();
+using RHIDeleteDeviceFn = void (*)(IRenderDevice*);
 
+using UniqueRenderDevice = UniquePtr<IRenderDevice, RHIDeleteDeviceFn>;
+
+/** Represents a plugin that has been dynamically loaded. */
 struct TACTILE_CORE_API Plugin final {
-  UniquePtr<IDynamicLibrary> library;
-  PluginInitFn init {};
-  PluginDropFn drop {};
+  UniquePtr<IDynamicLibrary> library;      ///< The dynamic library handle.
+  PluginIDFn id {};                        ///< Guaranteed to be available.
+  RHIGetAPIFn rhi_get_api {};              ///< Only available for RHI plugins.
+  RHICreateDeviceFn rhi_create_device {};  ///< Only available for RHI plugins.
+  RHIDeleteDeviceFn rhi_delete_device {};  ///< Only available for RHI plugins.
+
+  /** Indicates whether the plugin is an RHI implementation. */
+  [[nodiscard]] auto is_rhi() const -> bool;
 };
 
 }  // namespace tactile
