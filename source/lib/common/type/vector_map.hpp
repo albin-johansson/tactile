@@ -20,12 +20,11 @@
 #pragma once
 
 #include <functional>  // less
-
-#include <boost/container/flat_map.hpp>
+#include <map>         // map
 
 namespace tactile {
 
 template <typename K, typename V>
-using VectorMap = boost::container::flat_map<K, V, std::less<>>;
+using VectorMap [[deprecated]] = std::map<K, V, std::less<>>;
 
 }  // namespace tactile
