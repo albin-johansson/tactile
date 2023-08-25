@@ -47,7 +47,7 @@
 .fleet
 
 # Generated Doxygen output
-doxygen-out
+doxy*
 
 # Build output
 build
@@ -55,3 +55,6 @@ cmake-build-*
 
 # Installer data
 installer/packages/com.albinjohansson.tactile/data/*
+
+# Miscellaneous
+.cache
