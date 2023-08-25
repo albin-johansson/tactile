@@ -1,10 +1,6 @@
-cmake_minimum_required(VERSION 3.16)
-
 project(tactile-test CXX)
 
 find_package(doctest CONFIG REQUIRED)
-
-enable_testing()
 
 file(GLOB_RECURSE TEST_FILES
      CONFIGURE_DEPENDS
@@ -15,25 +11,28 @@ file(GLOB_RECURSE TEST_FILES
 
 add_executable(${TACTILE_TEST} ${TEST_FILES})
 
-add_dependencies(${TACTILE_TEST} ${TACTILE_LIB})
+tactile_prepare_target(${TACTILE_TEST})
 
-tactile_set_compile_options(${TACTILE_TEST})
+set(TACTILE_TEST_EXTRA_COMPILE_OPTIONS)
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  target_compile_options(${TACTILE_TEST}
-                         PRIVATE
-                         /wd4834  # disable [[nodiscard]] warnings
-                         )
+if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+  list(APPEND
+       ${TACTILE_TEST_EXTRA_COMPILE_OPTIONS}
+       /wd4834  # disable [[nodiscard]] warnings
+       )
 
-elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang|GNU")
-  target_compile_options(${TACTILE_TEST}
-                         PRIVATE
-                         -Wno-unused-result
-                         )
+else ()
+  list(APPEND
+       ${TACTILE_TEST_EXTRA_COMPILE_OPTIONS}
+       -Wno-unused-result
+       )
 endif ()
 
-target_include_directories(${TACTILE_TEST} PRIVATE
-                           src
+message(DEBUG "TACTILE_TEST_EXTRA_COMPILE_OPTIONS: ${TACTILE_TEST_EXTRA_COMPILE_OPTIONS}")
+
+target_include_directories(${TACTILE_TEST}
+                           PRIVATE
+                           ${PROJECT_SOURCE_DIR}/src
                            ${TACTILE_APP_DIR}
                            )
 
@@ -51,14 +50,10 @@ target_compile_definitions(${TACTILE_TEST}
                            DOCTEST_CONFIG_NO_COMPARISON_WARNING_SUPPRESSION
                            )
 
-target_precompile_headers(${TACTILE_TEST} REUSE_FROM ${TACTILE_LIB})
+tactile_copy_directory_post_build(${TACTILE_TEST}
+                                  "${CMAKE_CURRENT_SOURCE_DIR}/resources"
+                                  "${CMAKE_CURRENT_BINARY_DIR}/resources")
 
-add_test(NAME ${TACTILE_TEST} COMMAND ${TACTILE_TEST})
-
-copy_directory_post_build(${TACTILE_TEST}
-                          "${CMAKE_CURRENT_SOURCE_DIR}/resources"
-                          "${CMAKE_CURRENT_BINARY_DIR}/resources")
-
-copy_directory_post_build(${TACTILE_TEST}
-                          ${RESOURCE_DIR}
-                          "${CMAKE_CURRENT_BINARY_DIR}/assets")
+tactile_copy_directory_post_build(${TACTILE_TEST}
+                                  "${TACTILE_RESOURCE_DIR}"
+                                  "${CMAKE_CURRENT_BINARY_DIR}/assets")

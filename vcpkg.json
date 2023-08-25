@@ -6,9 +6,11 @@
   "maintainers": [
     "albin-johansson"
   ],
-  "builtin-baseline": "31a159c1cae2bf905299085d9ef01bdfea0ca7b8",
+  "builtin-baseline": "a54b77790d1632394bc16621ef83613dd4480320",
   "dependencies": [
     "argparse",
+    "boost-stacktrace",
+    "boost-uuid",
     "entt",
     "cppcodec",
     "doctest",

@@ -1,52 +1,14 @@
-cmake_minimum_required(VERSION 3.16)
-
 project(tactile-app CXX)
 
 file(GLOB_RECURSE SOURCE_FILES
      CONFIGURE_DEPENDS
-     **/*.cpp
-     **/*.hpp
+     ${PROJECT_SOURCE_DIR}/**/*.cpp
+     ${PROJECT_SOURCE_DIR}/**/*.hpp
      )
 
-if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
-  message("[Tactile]: Building executable as WIN32 (non-console) executable...")
-  add_executable(${TACTILE_EXE} WIN32 ${SOURCE_FILES} runtime/main.cpp)
-elseif (CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin" AND TACTILE_BUILD_APP_BUNDLE MATCHES ON)
-  message("[Tactile]: Building executable as application bundle...")
+add_executable(${TACTILE_EXE} ${SOURCE_FILES} runtime/main.cpp)
 
-  file(GLOB_RECURSE TACTILE_BUNDLE_RESOURCES "${RESOURCE_DIR}/*")
-
-  foreach (FILE ${TACTILE_BUNDLE_RESOURCES})
-    file(RELATIVE_PATH NEW_FILE "${RESOURCE_DIR}/" ${FILE})
-    get_filename_component(NEW_FILE_PATH ${NEW_FILE} DIRECTORY)
-    set_property(SOURCE ${FILE}
-                 PROPERTY MACOSX_PACKAGE_LOCATION "Resources/assets/${NEW_FILE_PATH}")
-  endforeach ()
-
-  # The app icon needs to be in the root Resources folder
-  set_property(SOURCE "${RESOURCE_DIR}/Tactile.icns" PROPERTY MACOSX_PACKAGE_LOCATION "Resources/")
-
-  add_executable(${TACTILE_EXE} MACOSX_BUNDLE ${SOURCE_FILES} runtime/main.cpp ${TACTILE_BUNDLE_RESOURCES})
-
-  set_target_properties(${TACTILE_EXE} PROPERTIES
-                        MACOSX_BUNDLE TRUE
-                        MACOSX_BUNDLE_GUI_IDENTIFIER "com.albinjohansson.tactile"
-                        MACOSX_BUNDLE_BUNDLE_NAME "Tactile"
-                        MACOSX_BUNDLE_BUNDLE_VERSION "${CMAKE_PROJECT_VERSION}"
-                        MACOSX_BUNDLE_SHORT_VERSION_STRING "${CMAKE_PROJECT_VERSION}"
-                        MACOSX_BUNDLE_LONG_VERSION_STRING "${CMAKE_PROJECT_VERSION}"
-                        MACOSX_BUNDLE_COPYRIGHT "GPL-3.0"
-                        MACOSX_BUNDLE_ICON_FILE "Tactile"
-                        )
-else ()
-  add_executable(${TACTILE_EXE} ${SOURCE_FILES} runtime/main.cpp)
-endif ()
-
-add_dependencies(${TACTILE_EXE} ${TACTILE_LIB})
-
-tactile_set_compile_options(${TACTILE_EXE})
-
-target_precompile_headers(${TACTILE_EXE} REUSE_FROM ${TACTILE_LIB})
+tactile_prepare_target(${TACTILE_EXE})
 
 target_include_directories(${TACTILE_EXE}
                            PUBLIC
@@ -61,7 +23,7 @@ target_link_libraries(${TACTILE_EXE}
 
 # Do not copy the resources when building as macOS app bundle
 if (TACTILE_BUILD_APP_BUNDLE MATCHES OFF)
-  copy_directory_post_build(${TACTILE_EXE}
-                            ${RESOURCE_DIR}
-                            "${CMAKE_CURRENT_BINARY_DIR}/assets")
+  tactile_copy_directory_post_build(${TACTILE_EXE}
+                                    "${TACTILE_RESOURCE_DIR}"
+                                    "${CMAKE_CURRENT_BINARY_DIR}/assets")
 endif ()

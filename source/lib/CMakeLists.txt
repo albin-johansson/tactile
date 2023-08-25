@@ -1,31 +1,23 @@
-cmake_minimum_required(VERSION 3.16)
-
 project(tactile-lib CXX)
 
 file(GLOB_RECURSE SOURCE_FILES
      CONFIGURE_DEPENDS
-     **/*.cpp
-     **/*.hpp
+     ${PROJECT_SOURCE_DIR}/**/*.cpp
+     ${PROJECT_SOURCE_DIR}/**/*.hpp
      )
 
 add_library(${TACTILE_LIB} ${SOURCE_FILES})
 add_dependencies(${TACTILE_LIB} ${TACTILE_PROTO})
 
-if (NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  # Can't do this on MSVC for some reason, it causes issues with the precompiled headers
-  set_target_properties(${TACTILE_LIB} PROPERTIES
-                        PREFIX "lib"
-                        OUTPUT_NAME "tactile"
-                        )
-endif ()
+tactile_prepare_target(${TACTILE_LIB})
 
 target_include_directories(${TACTILE_LIB}
                            PUBLIC
                            ${PROJECT_SOURCE_DIR}
 
                            SYSTEM PUBLIC
-                           ${LIBRARY_DIR}/centurion
-                           ${LIBRARY_DIR}/fontawesome
+                           ${TACTILE_VENDOR_DIR}/centurion
+                           ${TACTILE_VENDOR_DIR}/fontawesome
                            ${STB_INCLUDE_DIRS}
                            ${TACTILE_PROTO_GENERATED_DIR}
                            ${Boost_INCLUDE_DIRS}
@@ -35,10 +27,10 @@ target_include_directories(${TACTILE_LIB}
 target_link_libraries(${TACTILE_LIB}
                       PUBLIC
                       ${TACTILE_PROTO}
-                      ${Boost_LIBRARIES}
+                      Boost::boost
                       argparse::argparse
-                      $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
-                      $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
+                      SDL2::SDL2
+                      SDL2_image::SDL2_image
                       imgui::imgui
                       EnTT::EnTT
                       magic_enum::magic_enum
@@ -47,14 +39,14 @@ target_link_libraries(${TACTILE_LIB}
                       protobuf::libprotobuf
                       yaml-cpp
                       nlohmann_json::nlohmann_json
-                      pugixml::static
+                      pugixml::pugixml
                       tinyfiledialogs::tinyfiledialogs
                       tl::expected
                       ZLIB::ZLIB
                       GLEW::GLEW
                       OpenGL::GL
                       spdlog::spdlog
-                      $<IF:$<TARGET_EXISTS:zstd::libzstd_shared>,zstd::libzstd_shared,zstd::libzstd_static>
+                      zstd::libzstd_shared
                       )
 
 target_compile_definitions(${TACTILE_LIB}
@@ -83,7 +75,3 @@ endif ()
 if (TACTILE_BUILD_APP_BUNDLE MATCHES ON)
   target_compile_definitions(${TACTILE_LIB} PUBLIC TACTILE_BUILD_APP_BUNDLE)
 endif ()
-
-tactile_set_compile_options(${TACTILE_LIB})
-
-target_precompile_headers(${TACTILE_LIB} PRIVATE ${TACTILE_PRECOMPILED_HEADERS})
