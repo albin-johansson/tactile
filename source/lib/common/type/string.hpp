@@ -20,11 +20,3 @@
 #pragma once
 
 #include "tactile/core/type/string.hpp"
-
-namespace tactile {
-
-using OsStrChar [[deprecated]] = NativeChar;
-using OsString [[deprecated]] = NativeString;
-using OsStringView [[deprecated]] = NativeStringView;
-
-}  // namespace tactile

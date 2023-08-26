@@ -42,6 +42,6 @@ namespace tactile {
 [[nodiscard]] auto use_short_home_prefix(const Path& path) -> Maybe<String>;
 
 /// Creates a string using the native filesystem character type.
-[[nodiscard]] auto make_native_string(const char* str) -> Maybe<OsString>;
+[[nodiscard]] auto make_native_string(const char* str) -> Maybe<NativeString>;
 
 }  // namespace tactile
