@@ -2,8 +2,9 @@
 
 #pragma once
 
-#include <string>       // string
-#include <string_view>  // string_view
+#include <string>       // string, basic_string
+#include <string_view>  // string_view, basic_string_view
+#include <type_traits>  // conditional_t
 
 #include "tactile/core/api.hpp"
 #include "tactile/core/prelude.hpp"
@@ -14,6 +15,10 @@ namespace tactile {
 
 using String = std::string;
 using StringView = std::string_view;
+
+using NativeChar = std::conditional_t<kIsWindows, wchar_t, char>;
+using NativeString = std::basic_string<NativeChar>;
+using NativeStringView = std::basic_string_view<NativeChar>;
 
 /** Splits a string into a collection of tokens, delimited by a specific character. */
 [[nodiscard]] TACTILE_CORE_API auto str_split(StringView str, char separator)

@@ -106,6 +106,16 @@
 
 namespace tactile {
 
+inline constexpr bool kIsDebugBuild = TACTILE_DEBUG;
+
+inline constexpr bool kIsWindows = TACTILE_OS_WINDOWS;
+inline constexpr bool kIsApple = TACTILE_OS_APPLE;
+inline constexpr bool kIsLinux = TACTILE_OS_LINUX;
+
+inline constexpr bool kIsMSVC = TACTILE_COMPILER_MSVC;
+inline constexpr bool kIsClang = TACTILE_COMPILER_CLANG;
+inline constexpr bool kIsGCC = TACTILE_COMPILER_GCC;
+
 using usize = std::size_t;
 using ssize = std::ptrdiff_t;
 

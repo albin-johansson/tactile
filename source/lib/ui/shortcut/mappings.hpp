@@ -33,7 +33,7 @@ namespace tactile {
 #define TACTILE_SECONDARY_MOD "Alt"
 #endif  // TACTILE_OS_MACOS
 
-inline constexpr cen::key_mod kPrimaryModifier = kOnMacos ? cen::key_mod::lgui  //
+inline constexpr cen::key_mod kPrimaryModifier = kIsApple ? cen::key_mod::lgui  //
                                                           : cen::key_mod::lctrl;
 inline constexpr cen::key_mod kPrimaryModifierAndShift =
     kPrimaryModifier | cen::key_mod::lshift;

@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include <vector>  // vector
+#include "tactile/core/type/vector.hpp"
 
 namespace tactile {
 
 template <typename T>
-using Vec = std::vector<T>;
+using Vec = Vector<T>;
 
 }  // namespace tactile

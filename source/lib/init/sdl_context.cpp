@@ -46,7 +46,7 @@ void init_sdl_attributes()
   // Make sure we use OpenGL
   SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 
-  if constexpr (kOnMacos) {
+  if constexpr (kIsApple) {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
   }
 
