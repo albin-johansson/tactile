@@ -19,7 +19,6 @@
 
 #include "tool_manager.hpp"
 
-#include "common/debug/panic.hpp"
 #include "model/tool/bucket_tool.hpp"
 #include "model/tool/ellipse_tool.hpp"
 #include "model/tool/eraser_tool.hpp"
@@ -27,6 +26,7 @@
 #include "model/tool/point_tool.hpp"
 #include "model/tool/rectangle_tool.hpp"
 #include "model/tool/stamp_tool.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile {
 
@@ -160,7 +160,7 @@ auto ToolManager::is_available(const DocumentModel& model, const ToolType type) 
       return mData->point.is_available(model);
 
     default:
-      throw TactileError {"Invalid tool type!"};
+      throw Error {"Invalid tool type!"};
   }
 }
 
@@ -221,12 +221,12 @@ void ToolManager::on_released(DocumentModel& model,
 
 auto ToolManager::get_type() const -> ToolType
 {
-  throw TactileError {"Invalid call!"};
+  throw Error {"Invalid call!"};
 }
 
 auto ToolManager::is_available(const DocumentModel&) const -> bool
 {
-  throw TactileError {"Invalid call!"};
+  throw Error {"Invalid call!"};
 }
 
 }  // namespace tactile

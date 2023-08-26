@@ -25,11 +25,11 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
 #include "common/type/chrono.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile {
 
@@ -67,7 +67,7 @@ auto parse_map(const Path& path) -> ParseResult
 
     return result;
   }
-  catch (const TactileError& e) {
+  catch (const Error& e) {
     spdlog::error("Parser threw unhandled exception with message: '{}'\n{}",
                   e.what(),
                   e.get_trace());

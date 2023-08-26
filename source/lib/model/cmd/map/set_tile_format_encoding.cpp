@@ -21,9 +21,9 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile {
 
@@ -32,7 +32,7 @@ SetTileFormatEncoding::SetTileFormatEncoding(Shared<Map> map, const TileEncoding
       mNewEncoding {encoding}
 {
   if (!mMap) {
-    throw TactileError {"Invalid null map!"};
+    throw Error {"Invalid null map!"};
   }
 }
 

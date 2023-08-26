@@ -21,11 +21,11 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile::cmd {
 
@@ -39,7 +39,7 @@ StampSequence::StampSequence(Shared<Map> map,
       mNewState {std::move(new_state)}
 {
   if (!mMap) {
-    throw TactileError {"Invalid null map!"};
+    throw Error {"Invalid null map!"};
   }
 }
 

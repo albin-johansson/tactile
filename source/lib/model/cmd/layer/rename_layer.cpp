@@ -21,10 +21,10 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/layer/group_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile::cmd {
 
@@ -34,7 +34,7 @@ RenameLayer::RenameLayer(Shared<Map> map, const UUID& layer_id, String name)
       mNewName {std::move(name)}
 {
   if (!mMap) {
-    throw TactileError {"Invalid null map!"};
+    throw Error {"Invalid null map!"};
   }
 }
 

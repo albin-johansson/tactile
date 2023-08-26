@@ -25,10 +25,10 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
 #include "common/util/fmt.hpp"
 #include "init/app_initializer.hpp"
 #include "runtime/app.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace {
 
@@ -55,7 +55,7 @@ auto main(int, char*[]) -> int
 
     return EXIT_SUCCESS;
   }
-  catch (const tactile::TactileError& e) {
+  catch (const tactile::Error& e) {
     show_crash_message_box(e.what());
     spdlog::critical("Unhandled exception message: '{}'\n{}", e.what(), e.get_trace());
     return EXIT_FAILURE;

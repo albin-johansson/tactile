@@ -26,8 +26,8 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/assert.hpp"
-#include "common/debug/panic.hpp"
 #include "common/predef.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile {
 
@@ -52,7 +52,7 @@ void open_directory(const Path& dir)
     }
   }
   else {
-    throw TactileError {"Not a directory!"};
+    throw Error {"Not a directory!"};
   }
 }
 

@@ -21,9 +21,9 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile {
 
@@ -33,7 +33,7 @@ SetTileFormatCompression::SetTileFormatCompression(Shared<Map> map,
       mNewCompression {compression}
 {
   if (!mMap) {
-    throw TactileError {"Invalid null map!"};
+    throw Error {"Invalid null map!"};
   }
 }
 

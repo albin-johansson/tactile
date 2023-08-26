@@ -23,12 +23,12 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/util/assoc.hpp"
 #include "io/lang/language_parser.hpp"
 #include "lang/strings.hpp"
 #include "model/settings.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile {
 namespace {
@@ -72,7 +72,7 @@ auto get_language_name(const Lang lang) -> const char*
       return "Svenska";
 
     default:
-      throw TactileError {"Invalid language!"};
+      throw Error {"Invalid language!"};
   }
 }
 

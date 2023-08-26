@@ -19,11 +19,11 @@
 
 #include "duplicate_layer.hpp"
 
-#include "common/debug/panic.hpp"
 #include "core/layer/group_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile::cmd {
 
@@ -32,7 +32,7 @@ DuplicateLayer::DuplicateLayer(MapDocument* document, const UUID& layer_id)
       mLayerId {layer_id}
 {
   if (!mDocument) {
-    throw TactileError {"Invalid null map document"};
+    throw Error {"Invalid null map document"};
   }
 }
 

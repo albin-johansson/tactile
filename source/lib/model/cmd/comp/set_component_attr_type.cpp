@@ -21,13 +21,13 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/component/component_index.hpp"
 #include "core/context/context_info.hpp"
 #include "core/context/context_manager.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/document.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile::cmd {
 
@@ -41,7 +41,7 @@ SetComponentAttrType::SetComponentAttrType(Document* document,
       mNewType {type}
 {
   if (!mDocument) {
-    throw TactileError {"Invalid null document!"};
+    throw Error {"Invalid null document!"};
   }
 }
 

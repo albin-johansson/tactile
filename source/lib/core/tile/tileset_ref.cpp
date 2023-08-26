@@ -22,7 +22,7 @@
 #include <utility>  // move
 
 #include "common/debug/assert.hpp"
-#include "common/debug/panic.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile {
 
@@ -32,7 +32,7 @@ TilesetRef::TilesetRef(Shared<Tileset> tileset, const TileID first, const TileID
       mLastTile {last}
 {
   if (!mTileset) {
-    throw TactileError {"Invalid null tileset!"};
+    throw Error {"Invalid null tileset!"};
   }
 }
 

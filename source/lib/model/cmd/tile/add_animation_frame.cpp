@@ -19,11 +19,11 @@
 
 #include "add_animation_frame.hpp"
 
-#include "common/debug/panic.hpp"
 #include "core/tile/tile.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/tileset_document.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile::cmd {
 
@@ -37,7 +37,7 @@ AddAnimationFrame::AddAnimationFrame(TilesetDocument* document,
       mFrameDuration {frame_duration}
 {
   if (!mDocument) {
-    throw TactileError {"Invalid null tileset document"};
+    throw Error {"Invalid null tileset document"};
   }
 }
 

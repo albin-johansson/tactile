@@ -20,11 +20,11 @@
 #include "move_animation_frame_backwards.hpp"
 
 #include "common/debug/assert.hpp"
-#include "common/debug/panic.hpp"
 #include "core/tile/tile.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/tileset_document.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile::cmd {
 
@@ -36,7 +36,7 @@ MoveAnimationFrameBackwards::MoveAnimationFrameBackwards(TilesetDocument* docume
       mFrameIndex {frame_index}
 {
   if (!mDocument) {
-    throw TactileError {"Invalid null tileset document"};
+    throw Error {"Invalid null tileset document"};
   }
 }
 

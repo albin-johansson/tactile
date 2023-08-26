@@ -19,9 +19,9 @@
 
 #include "set_layer_opacity.hpp"
 
-#include "common/debug/panic.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile::cmd {
 
@@ -30,7 +30,7 @@ SetLayerOpacity::SetLayerOpacity(Shared<Layer> layer, const float opacity)
       mNewOpacity {opacity}
 {
   if (!mLayer) {
-    throw TactileError {"Invalid null layer"};
+    throw Error {"Invalid null layer"};
   }
 }
 

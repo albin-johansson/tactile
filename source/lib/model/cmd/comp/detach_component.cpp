@@ -21,11 +21,11 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile::cmd {
 
@@ -34,7 +34,7 @@ DetachComponent::DetachComponent(Shared<Context> context, const UUID& component_
       mComponentId {component_id}
 {
   if (!mContext) {
-    throw TactileError {"Invalid null context!"};
+    throw Error {"Invalid null context!"};
   }
 }
 

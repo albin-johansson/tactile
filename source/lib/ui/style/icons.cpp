@@ -20,10 +20,10 @@
 #include "icons.hpp"
 
 #include "common/debug/assert.hpp"
-#include "common/debug/panic.hpp"
 #include "common/type/ptr.hpp"
 #include "core/texture.hpp"
 #include "io/directories.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile::ui {
 namespace {
@@ -55,7 +55,7 @@ auto get_icon(const LayerType type) -> const char*
       return TAC_ICON_GROUP_LAYER;
 
     default:
-      throw TactileError {"Invalid layer type!"};
+      throw Error {"Invalid layer type!"};
   }
 }
 
@@ -72,7 +72,7 @@ auto get_icon(const ObjectType type) -> const char*
       return TAC_ICON_POINT;
 
     default:
-      throw TactileError {"Invalid object type!"};
+      throw Error {"Invalid object type!"};
   }
 }
 

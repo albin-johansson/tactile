@@ -22,10 +22,10 @@
 #include <utility>  // move
 
 #include "common/debug/assert.hpp"
-#include "common/debug/panic.hpp"
 #include "common/util/assoc.hpp"
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset_info.hpp"
+#include "tactile/core/debug/error.hpp"
 #include "tile_matrix.hpp"
 
 namespace tactile {
@@ -124,7 +124,7 @@ void Tileset::select_tile(const TileIndex index)
     mData->selected_tile = index;
   }
   else {
-    throw TactileError {"Tried to select tileset tile with invalid index"};
+    throw Error {"Tried to select tileset tile with invalid index"};
   }
 }
 
@@ -146,7 +146,7 @@ auto Tileset::index_of(const TilePos& pos) const -> TileIndex
     return pos.row() * column_count() + pos.col();
   }
   else {
-    throw TactileError {"Invalid tile position!"};
+    throw Error {"Invalid tile position!"};
   }
 }
 

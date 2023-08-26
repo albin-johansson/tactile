@@ -21,10 +21,10 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "common/util/functional.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile::cmd {
 
@@ -32,7 +32,7 @@ RemoveRow::RemoveRow(Shared<Map> map)
     : mMap {std::move(map)}
 {
   if (!mMap) {
-    throw TactileError {"Invalid null map"};
+    throw Error {"Invalid null map"};
   }
 }
 

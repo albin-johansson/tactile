@@ -23,11 +23,11 @@
 #include <utility>    // move
 
 #include "common/debug/assert.hpp"
-#include "common/debug/panic.hpp"
 #include "common/util/assoc.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile {
 
@@ -48,7 +48,7 @@ void DocumentManager::each_open(const IdVisitorFn& op) const
 void DocumentManager::add_map_document(Shared<MapDocument> document)
 {
   if (!document) {
-    throw TactileError {"Cannot store null map document!"};
+    throw Error {"Cannot store null map document!"};
   }
 
   const auto id = document->get_map().get_uuid();
@@ -63,7 +63,7 @@ void DocumentManager::add_map_document(Shared<MapDocument> document)
 void DocumentManager::add_tileset_document(Shared<TilesetDocument> document)
 {
   if (!document) {
-    throw TactileError {"Cannot store null tileset document!"};
+    throw Error {"Cannot store null tileset document!"};
   }
 
   const auto id = document->get_tileset_ptr()->get_uuid();
@@ -128,14 +128,14 @@ void DocumentManager::select_document(const UUID& id)
     mActiveDocument = id;
   }
   else {
-    throw TactileError {"Tried to select invalid document!"};
+    throw Error {"Tried to select invalid document!"};
   }
 }
 
 void DocumentManager::open_document(const UUID& id)
 {
   if (!has_key(mDocuments, id)) [[unlikely]] {
-    throw TactileError {"Tried to open invalid document!"};
+    throw Error {"Tried to open invalid document!"};
   }
 
   mOpenDocuments.insert(id);

@@ -23,8 +23,8 @@
 #include <concepts>   // unsigned_integral, predicate
 #include <utility>    // forward
 
-#include "common/debug/panic.hpp"
 #include "common/type/vec.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile {
 
@@ -44,7 +44,7 @@ template <typename T, std::predicate<const T&> P>
     return *iter;
   }
   else {
-    throw TactileError {"No element matched predicate!"};
+    throw Error {"No element matched predicate!"};
   }
 }
 
@@ -57,7 +57,7 @@ template <typename T, std::predicate<const T&> P>
     return *iter;
   }
   else {
-    throw TactileError {"No element matched predicate!"};
+    throw Error {"No element matched predicate!"};
   }
 }
 

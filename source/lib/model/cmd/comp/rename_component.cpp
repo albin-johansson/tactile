@@ -21,10 +21,10 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/component/component_index.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile::cmd {
 
@@ -36,7 +36,7 @@ RenameComponent::RenameComponent(Shared<ComponentIndex> index,
       mNewName {std::move(name)}
 {
   if (!mComponentIndex) {
-    throw TactileError {"Invalid null component index!"};
+    throw Error {"Invalid null component index!"};
   }
 }
 

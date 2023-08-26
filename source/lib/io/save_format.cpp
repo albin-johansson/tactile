@@ -19,7 +19,7 @@
 
 #include "save_format.hpp"
 
-#include "common/debug/panic.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile {
 
@@ -36,7 +36,7 @@ auto get_human_readable_name(const SaveFormat format) -> const char*
       return "TMX (XML)";
 
     default:
-      throw TactileError {"Invalid save format identifier"};
+      throw Error {"Invalid save format identifier"};
   }
 }
 
@@ -53,7 +53,7 @@ auto get_file_extension(const SaveFormat format) -> String
       return ".tmx";
 
     default:
-      throw TactileError {"Invalid save format identifier"};
+      throw Error {"Invalid save format identifier"};
   }
 }
 

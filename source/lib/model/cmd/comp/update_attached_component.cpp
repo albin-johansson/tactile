@@ -21,12 +21,12 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "core/component/component.hpp"
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile::cmd {
 
@@ -40,7 +40,7 @@ UpdateAttachedComponent::UpdateAttachedComponent(Shared<Context> context,
       mUpdatedValue {std::move(value)}
 {
   if (!mContext) {
-    throw TactileError {"Invalid null context!"};
+    throw Error {"Invalid null context!"};
   }
 }
 

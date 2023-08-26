@@ -21,8 +21,8 @@
 
 #include <utility>  // move
 
-#include "common/debug/panic.hpp"
 #include "common/util/assoc.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile {
 namespace {
@@ -78,7 +78,7 @@ void ObjectLayer::select_object(const Maybe<UUID>& id)
 {
   mActiveObject = id;
   if (mActiveObject && !has_object(*mActiveObject)) {
-    throw TactileError {"Invalid object identifier!"};
+    throw Error {"Invalid object identifier!"};
   }
 }
 

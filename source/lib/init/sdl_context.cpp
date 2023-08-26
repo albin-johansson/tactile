@@ -25,9 +25,9 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/panic.hpp"
 #include "common/numeric.hpp"
 #include "common/predef.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile {
 namespace {
@@ -74,7 +74,7 @@ SDLContext::SDLContext()
   if (const auto result = glewInit(); result != GLEW_OK) {
     auto message = fmt::format("Failed to initialize GLEW: {}",
                                reinterpret_cast<const char*>(glewGetString(result)));
-    throw TactileError {std::move(message)};
+    throw Error {std::move(message)};
   }
 
   spdlog::debug("OpenGL version: {}",

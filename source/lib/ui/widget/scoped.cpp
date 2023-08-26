@@ -20,7 +20,7 @@
 #include "scoped.hpp"
 
 #include "common/debug/assert.hpp"
-#include "common/debug/panic.hpp"
+#include "tactile/core/debug/error.hpp"
 #include "ui/conversions.hpp"
 #include "ui/style/colors.hpp"
 
@@ -343,7 +343,7 @@ Window::Window(const char* label, const ImGuiWindowFlags flags, bool* open)
       mOpen {ImGui::Begin(label, open, flags)}
 {
   if (!label) {
-    throw TactileError {"Invalid null window label!"};
+    throw Error {"Invalid null window label!"};
   }
 
   mTextColor.pop();

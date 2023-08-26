@@ -23,7 +23,7 @@
 
 #include <fmt/format.h>
 
-#include "common/debug/panic.hpp"
+#include "tactile/core/debug/error.hpp"
 
 namespace tactile {
 
@@ -92,7 +92,7 @@ auto Tile::get_animation() -> TileAnimation&
     return *mAnimation;
   }
   else {
-    throw TactileError {"No animation associated with tile"};
+    throw Error {"No animation associated with tile"};
   }
 }
 
@@ -102,7 +102,7 @@ auto Tile::get_animation() const -> const TileAnimation&
     return *mAnimation;
   }
   else {
-    throw TactileError {"No animation associated with tile"};
+    throw Error {"No animation associated with tile"};
   }
 }
 
