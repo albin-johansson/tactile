@@ -25,7 +25,6 @@
 #include "common/debug/panic.hpp"
 #include "common/type/string.hpp"
 #include "common/type/vec.hpp"
-#include "common/util/str.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
@@ -56,8 +55,8 @@ namespace {
   auto tiles = make_tile_matrix(extent);
 
   usize index {};
-  for (const auto& token: split(csv, ',')) {
-    if (const auto id = parse_i32(token)) {
+  for (const auto& token: str_split(csv, ',')) {
+    if (const auto id = str_to_i32(token)) {
       const auto [row, col] = to_matrix_coords(index, extent.cols);
       tiles[row][col] = *id;
 

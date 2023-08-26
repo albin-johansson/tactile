@@ -22,7 +22,6 @@
 
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
-#include "common/util/str.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"
@@ -36,7 +35,7 @@ template <typename T>
   using ScalarType = typename T::value_type;
 
   const auto raw_value = value.as<String>();
-  const auto components = split(raw_value, ';');
+  const auto components = str_split(raw_value, ';');
 
   T vec {};
   if (components.size() != vec.length()) {
@@ -48,10 +47,10 @@ template <typename T>
     Maybe<ScalarType> component_value;
 
     if constexpr (std::same_as<ScalarType, float>) {
-      component_value = parse_f32(component_str);
+      component_value = str_to_f32(component_str);
     }
     else {
-      component_value = parse_i32(component_str);
+      component_value = str_to_i32(component_str);
     }
 
     if (component_value.has_value()) {
