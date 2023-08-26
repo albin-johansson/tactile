@@ -1,10 +1,11 @@
-BasedOnStyle: Google
-
 Language: Cpp
 Standard: Latest
 
+BasedOnStyle: Google
+
 ColumnLimit: 90
 IndentWidth: 2
+UseTab: Never
 
 DerivePointerAlignment: false
 PointerAlignment: Left
@@ -14,8 +15,10 @@ AlignTrailingComments: true
 AlignConsecutiveDeclarations: None
 AlignConsecutiveBitFields: Consecutive
 
+IndentPPDirectives: BeforeHash
 IndentCaseLabels: true
 IndentAccessModifiers: false
+
 AccessModifierOffset: -1
 
 NamespaceIndentation: None
