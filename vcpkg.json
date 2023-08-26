@@ -17,6 +17,7 @@
     "fmt",
     "glew",
     "glm",
+    "gtest",
     {
       "name": "imgui",
       "features": [
