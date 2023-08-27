@@ -22,9 +22,9 @@
 #include "common/type/result.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
+#include "tactile/core/container/string_map.hpp"
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/string.hpp"
-#include "tactile/core/type/string_map.hpp"
 
 namespace tactile {
 

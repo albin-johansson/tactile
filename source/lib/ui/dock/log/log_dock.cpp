@@ -22,10 +22,10 @@
 #include <imgui.h>
 
 #include "common/debug/logging.hpp"
-#include "common/util/assoc.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/settings.hpp"
+#include "tactile/core/container/lookup.hpp"
 #include "tactile/core/debug/error.hpp"
 #include "tactile/core/type/hash_map.hpp"
 #include "ui/widget/scoped.hpp"

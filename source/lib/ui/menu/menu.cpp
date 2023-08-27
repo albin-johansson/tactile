@@ -24,7 +24,6 @@
 #include <fmt/format.h>
 
 #include "common/debug/profile.hpp"
-#include "common/util/assoc.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
@@ -33,6 +32,7 @@
 #include "model/file_history.hpp"
 #include "model/model.hpp"
 #include "model/settings.hpp"
+#include "tactile/core/container/lookup.hpp"
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/chrono.hpp"
 #include "tactile/core/type/hash_map.hpp"

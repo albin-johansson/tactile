@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "common/util/assoc.hpp"
+#include "tactile/core/container/lookup.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/error.hpp"
 

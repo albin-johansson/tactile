@@ -26,10 +26,10 @@
 
 #include <fmt/format.h>
 
-#include "common/util/assoc.hpp"
 #include "common/util/functional.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "io/ir/godot/godot_options.hpp"
+#include "tactile/core/container/lookup.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/type/string.hpp"
 #include "tactile/core/type/vector.hpp"

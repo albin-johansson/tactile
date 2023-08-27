@@ -20,8 +20,8 @@
 #pragma once
 
 #include "common/type/uuid.hpp"
-#include "common/util/assoc.hpp"
 #include "io/ir/godot/godot_file.hpp"
+#include "tactile/core/container/lookup.hpp"
 #include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/math/vector.hpp"
 #include "tactile/core/prelude.hpp"

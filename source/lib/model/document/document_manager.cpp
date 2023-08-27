@@ -22,10 +22,10 @@
 #include <algorithm>  // any_of
 #include <utility>    // move
 
-#include "common/util/assoc.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
+#include "tactile/core/container/lookup.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/error.hpp"
 
@@ -134,7 +134,7 @@ void DocumentManager::select_document(const UUID& id)
 
 void DocumentManager::open_document(const UUID& id)
 {
-  if (!has_key(mDocuments, id)) [[unlikely]] {
+  if (!exists_in(mDocuments, id)) [[unlikely]] {
     throw Error {"Tried to open invalid document!"};
   }
 
@@ -150,7 +150,7 @@ void DocumentManager::close_document(const UUID& id)
   mOpenDocuments.erase(id);
 
   // Maps are removed when closed, unlike tilesets
-  if (has_key(mMaps, id)) {
+  if (exists_in(mMaps, id)) {
     remove_map_document(id);
   }
 
@@ -244,17 +244,17 @@ auto DocumentManager::is_tileset_active() const -> bool
 
 auto DocumentManager::is_document(const UUID& id) const -> bool
 {
-  return has_key(mDocuments, id);
+  return exists_in(mDocuments, id);
 }
 
 auto DocumentManager::is_map(const UUID& id) const -> bool
 {
-  return has_key(mMaps, id);
+  return exists_in(mMaps, id);
 }
 
 auto DocumentManager::is_tileset(const UUID& id) const -> bool
 {
-  return has_key(mTilesets, id);
+  return exists_in(mTilesets, id);
 }
 
 auto DocumentManager::is_tileset_used(const UUID& id) const -> bool

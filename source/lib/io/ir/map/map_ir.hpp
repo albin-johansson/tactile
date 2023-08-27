@@ -31,6 +31,7 @@
 #include "core/layer/tile_format.hpp"
 #include "core/tile/tile_extent.hpp"
 #include "core/tile/tile_matrix.hpp"
+#include "tactile/core/container/string_map.hpp"
 #include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/math/vector.hpp"
 #include "tactile/core/prelude.hpp"
@@ -38,7 +39,6 @@
 #include "tactile/core/type/maybe.hpp"
 #include "tactile/core/type/smart_ptr.hpp"
 #include "tactile/core/type/string.hpp"
-#include "tactile/core/type/string_map.hpp"
 #include "tactile/core/type/variant.hpp"
 #include "tactile/core/type/vector.hpp"
 

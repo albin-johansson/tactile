@@ -21,8 +21,8 @@
 
 #include <utility>  // move
 
-#include "common/util/assoc.hpp"
 #include "core/context/context_info.hpp"
+#include "tactile/core/container/lookup.hpp"
 #include "tactile/core/debug/error.hpp"
 
 namespace tactile {

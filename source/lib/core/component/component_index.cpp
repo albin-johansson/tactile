@@ -22,7 +22,7 @@
 #include <algorithm>  // any_of
 #include <utility>    // move
 
-#include "common/util/assoc.hpp"
+#include "tactile/core/container/lookup.hpp"
 #include "tactile/core/debug/error.hpp"
 
 namespace tactile {
@@ -65,7 +65,7 @@ auto ComponentIndex::remove_comp(const UUID& component_id) -> Result
 
 auto ComponentIndex::rename_comp(const UUID& component_id, String name) -> Result
 {
-  if (!has_key(mDefs, component_id) || has_comp(name)) {
+  if (!exists_in(mDefs, component_id) || has_comp(name)) {
     return failure;
   }
 

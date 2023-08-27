@@ -20,11 +20,11 @@
 #pragma once
 
 #include "core/attribute.hpp"
+#include "tactile/core/container/string_map.hpp"
 #include "tactile/core/math/vector.hpp"
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/maybe.hpp"
 #include "tactile/core/type/string.hpp"
-#include "tactile/core/type/string_map.hpp"
 #include "tactile/core/type/tree_map.hpp"
 #include "tactile/core/type/vector.hpp"
 
