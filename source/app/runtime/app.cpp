@@ -41,6 +41,7 @@
 #include "model/model.hpp"
 #include "model/settings.hpp"
 #include "runtime/app_context.hpp"
+#include "tactile/core/math/rng.hpp"
 #include "ui/dialog/settings_dialog.hpp"
 #include "ui/dock/layer/layer_dock.hpp"
 #include "ui/dock/tileset/tileset_dock.hpp"
@@ -71,6 +72,8 @@ App::~App() noexcept
 
 void App::on_startup()
 {
+  rng_init();
+
   if (auto history = load_file_history_from_disk()) {
     set_file_history(std::move(*history));
   }
