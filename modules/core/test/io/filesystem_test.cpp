@@ -28,8 +28,8 @@ TEST(Filesystem, UseShortHomePrefix)
   const Path home = get_env(kIsWindows ? "USERPROFILE" : "HOME").value();
 
   EXPECT_EQ(use_short_home_prefix(home), "~");
-  EXPECT_EQ(use_short_home_prefix(home / "foo/"), "~/foo/");
-  EXPECT_EQ(use_short_home_prefix(home / "foo" / "bar.txt"), "~/foo/bar.txt");
+  EXPECT_EQ(use_short_home_prefix(home.string() + "/foo/"), "~/foo/");
+  EXPECT_EQ(use_short_home_prefix(home.string() + "/foo/bar.txt"), "~/foo/bar.txt");
   EXPECT_EQ(use_short_home_prefix(home.string() + '/'), "~/");
 
   EXPECT_FALSE(use_short_home_prefix("/a/b").has_value());

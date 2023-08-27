@@ -7,10 +7,6 @@
 #include "tactile/core/platform/environment.hpp"
 #include "tactile/core/prelude.hpp"
 
-#if TACTILE_OS_WINDOWS
-  #include <windows.h>
-#endif  // TACTILE_OS_WINDOWS
-
 namespace tactile {
 namespace {
 

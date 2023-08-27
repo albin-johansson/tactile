@@ -12,7 +12,7 @@
 
 namespace tactile {
 
-struct TACTILE_CORE_API StringHash final {
+struct StringHash final {
   using hash_type = std::hash<StringView>;
   using is_transparent = std::true_type;
 
