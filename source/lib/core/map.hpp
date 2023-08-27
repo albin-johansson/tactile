@@ -33,10 +33,10 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(Layer)
-TACTILE_FWD_DECLARE_CLASS(GroupLayer)
-TACTILE_FWD_DECLARE_CLASS(TilesetBundle)
-TACTILE_FWD_DECLARE_CLASS(TileFormat)
+TACTILE_FWD(class Layer)
+TACTILE_FWD(class GroupLayer)
+TACTILE_FWD(class TilesetBundle)
+TACTILE_FWD(class TileFormat)
 
 /// Represents a tile map.
 ///

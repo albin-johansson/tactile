@@ -26,14 +26,14 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(Map)
-TACTILE_FWD_DECLARE_CLASS(Tileset)
-TACTILE_FWD_DECLARE_CLASS(Layer)
-TACTILE_FWD_DECLARE_CLASS(TileLayer)
-TACTILE_FWD_DECLARE_CLASS(ObjectLayer)
-TACTILE_FWD_DECLARE_CLASS(Object)
-TACTILE_FWD_DECLARE_CLASS(Color)
-TACTILE_FWD_DECLARE_CLASS(Viewport)
+TACTILE_FWD(class Map)
+TACTILE_FWD(class Tileset)
+TACTILE_FWD(class Layer)
+TACTILE_FWD(class TileLayer)
+TACTILE_FWD(class ObjectLayer)
+TACTILE_FWD(class Object)
+TACTILE_FWD(class Color)
+TACTILE_FWD(class Viewport)
 
 /// Provides useful information about a canvas for use by renderer instances.
 struct CanvasInfo final {

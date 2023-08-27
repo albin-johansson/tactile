@@ -24,7 +24,7 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_STRUCT(MapIR)
+TACTILE_FWD(struct MapIR)
 
 void save_map_as_tactile_yaml(const Path& destination, const MapIR& ir_map);
 

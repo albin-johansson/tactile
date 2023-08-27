@@ -26,8 +26,8 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_STRUCT(Strings)
-TACTILE_FWD_DECLARE_CLASS(DocumentModel)
+TACTILE_FWD(struct Strings)
+TACTILE_FWD(class DocumentModel)
 
 /// Encodes all possible menu actions, corresponding to various menu items.
 enum class MenuAction {

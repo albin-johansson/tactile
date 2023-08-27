@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(AppCfg)
+TACTILE_FWD(class AppCfg)
 
 /// Handles the core event loop logic.
 class EventLoop {

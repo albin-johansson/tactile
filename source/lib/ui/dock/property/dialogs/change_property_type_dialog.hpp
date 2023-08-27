@@ -26,7 +26,7 @@
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/string.hpp"
 
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
+TACTILE_FWD_NS(tactile, class DocumentModel)
 
 namespace tactile::ui {
 

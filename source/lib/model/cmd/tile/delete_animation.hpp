@@ -24,7 +24,7 @@
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/maybe.hpp"
 
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetDocument)
+TACTILE_FWD_NS(tactile, class TilesetDocument)
 
 namespace tactile::cmd {
 

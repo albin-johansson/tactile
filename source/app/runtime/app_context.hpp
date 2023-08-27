@@ -26,8 +26,8 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(DocumentModel)
-TACTILE_FWD_DECLARE_STRUCT(WidgetShowState)
+TACTILE_FWD(class DocumentModel)
+TACTILE_FWD(struct WidgetShowState)
 
 void init_app_context(cen::window& window);
 

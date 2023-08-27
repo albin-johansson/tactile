@@ -27,8 +27,8 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_STRUCT(MouseInfo)
-TACTILE_FWD_DECLARE_CLASS(DocumentModel)
+TACTILE_FWD(struct MouseInfo)
+TACTILE_FWD(class DocumentModel)
 
 class Tool {
  public:

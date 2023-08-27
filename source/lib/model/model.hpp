@@ -32,12 +32,12 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_STRUCT(TilesetInfo)
-TACTILE_FWD_DECLARE_CLASS(MapDocument)
-TACTILE_FWD_DECLARE_CLASS(TilesetDocument)
+TACTILE_FWD(struct TilesetInfo)
+TACTILE_FWD(class MapDocument)
+TACTILE_FWD(class TilesetDocument)
 
-TACTILE_FWD_DECLARE_CLASS_NS(cmd, CreateTileset)
-TACTILE_FWD_DECLARE_CLASS_NS(cmd, RemoveTileset)
+TACTILE_FWD_NS(cmd, class CreateTileset)
+TACTILE_FWD_NS(cmd, class RemoveTileset)
 
 /// The primary facade between the editor and the underlying core documents.
 class DocumentModel final {

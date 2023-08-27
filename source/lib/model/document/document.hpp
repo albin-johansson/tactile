@@ -29,10 +29,10 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(CommandStack)
-TACTILE_FWD_DECLARE_CLASS(ContextManager)
-TACTILE_FWD_DECLARE_CLASS(ComponentIndex)
-TACTILE_FWD_DECLARE_CLASS(Viewport)
+TACTILE_FWD(class CommandStack)
+TACTILE_FWD(class ContextManager)
+TACTILE_FWD(class ComponentIndex)
+TACTILE_FWD(class Viewport)
 
 /// Abstract base class for document representations.
 /// This is almost an interface, with some command functions implemented for convenience.

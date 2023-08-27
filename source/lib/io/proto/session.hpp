@@ -23,7 +23,7 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(DocumentModel)
+TACTILE_FWD(class DocumentModel)
 
 /// Restores the open documents from the last session.
 void load_session_from_disk(DocumentModel& model);

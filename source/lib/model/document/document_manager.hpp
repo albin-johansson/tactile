@@ -30,10 +30,10 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(Document)
-TACTILE_FWD_DECLARE_CLASS(MapDocument)
-TACTILE_FWD_DECLARE_CLASS(TilesetDocument)
-TACTILE_FWD_DECLARE_CLASS(TilesetBundle)
+TACTILE_FWD(class Document)
+TACTILE_FWD(class MapDocument)
+TACTILE_FWD(class TilesetDocument)
+TACTILE_FWD(class TilesetBundle)
 
 /// Responsible for the storage of documents.
 class DocumentManager final {

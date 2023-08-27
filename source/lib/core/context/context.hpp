@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(ContextInfo)
+TACTILE_FWD(class ContextInfo)
 
 /// Interface for all objects that may feature properties and components.
 /// Remember to update the context visitor when adding a new context implementation.

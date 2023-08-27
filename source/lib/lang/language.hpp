@@ -24,7 +24,7 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_STRUCT(Strings)
+TACTILE_FWD(struct Strings)
 
 /// All of the supported languages.
 enum class Lang {

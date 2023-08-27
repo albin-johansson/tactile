@@ -24,7 +24,7 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(MapDocument)
+TACTILE_FWD(class MapDocument)
 
 /// Saves a map document to disk, inferring the destination from the document path.
 /// The file format is also deduced from the document path.

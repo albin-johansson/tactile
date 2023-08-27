@@ -23,8 +23,8 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(GodotScene)
-TACTILE_FWD_DECLARE_STRUCT(GodotEmitOptions)
+TACTILE_FWD(class GodotScene)
+TACTILE_FWD(struct GodotEmitOptions)
 
 void write_godot_scene(const GodotScene& scene, const GodotEmitOptions& options);
 

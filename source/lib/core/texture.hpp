@@ -26,7 +26,7 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_STRUCT(TextureHandle)
+TACTILE_FWD(struct TextureHandle)
 
 /// Represents an OpenGL texture.
 class Texture final {

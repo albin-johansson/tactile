@@ -24,7 +24,7 @@
 #include "io/map/parse/parse_error.hpp"
 #include "tactile/core/prelude.hpp"
 
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
+TACTILE_FWD_NS(tactile, class DocumentModel)
 
 namespace tactile::ui {
 

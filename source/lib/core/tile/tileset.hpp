@@ -32,7 +32,7 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(Tile);
+TACTILE_FWD(class Tile);
 
 /// Represents a collection of tiles encoded in a texture.
 class Tileset final : public Context {

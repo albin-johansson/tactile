@@ -44,7 +44,7 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_STRUCT(LayerIR)
+TACTILE_FWD(struct LayerIR)
 
 using AttributeMap = StringMap<Attribute>;
 using ComponentMap = StringMap<AttributeMap>;

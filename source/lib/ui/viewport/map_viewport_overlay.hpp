@@ -21,11 +21,11 @@
 
 #include "tactile/core/prelude.hpp"
 
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, Map)
+TACTILE_FWD_NS(tactile, class Map)
 
 namespace tactile::ui {
 
-TACTILE_FWD_DECLARE_STRUCT(ViewportCursorInfo)
+TACTILE_FWD(struct ViewportCursorInfo)
 
 void update_map_viewport_overlay(const Map& map, const ViewportCursorInfo& cursor);
 

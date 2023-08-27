@@ -60,7 +60,7 @@ enum SettingsFlags : SettingsFlagBits {
   SETTINGS_USE_DEFAULT_FONT_BIT = 1u << 15u,
 };
 
-TACTILE_FWD_DECLARE_STRUCT(SettingsState)
+TACTILE_FWD(struct SettingsState)
 
 /// Collection of all persistent settings.
 class Settings final {

@@ -24,8 +24,8 @@
 
 #include "tactile/core/prelude.hpp"
 
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetRef)
+TACTILE_FWD_NS(tactile, class DocumentModel)
+TACTILE_FWD_NS(tactile, class TilesetRef)
 
 namespace tactile::ui {
 

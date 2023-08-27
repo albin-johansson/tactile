@@ -24,10 +24,10 @@
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/ref.hpp"
 
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, Map)
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetRef)
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, Renderer)
+TACTILE_FWD_NS(tactile, class DocumentModel)
+TACTILE_FWD_NS(tactile, class Map)
+TACTILE_FWD_NS(tactile, class TilesetRef)
+TACTILE_FWD_NS(tactile, class Renderer)
 
 namespace tactile::ui {
 

@@ -24,7 +24,7 @@
 #include "tactile/core/type/maybe.hpp"
 #include "tactile/core/type/smart_ptr.hpp"
 
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, Tileset)
+TACTILE_FWD_NS(tactile, class Tileset)
 
 namespace tactile::cmd {
 

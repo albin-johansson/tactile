@@ -24,8 +24,8 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(DocumentModel)
-TACTILE_FWD_DECLARE_STRUCT(MapIR)
+TACTILE_FWD(class DocumentModel)
+TACTILE_FWD(struct MapIR)
 
 /// Restores a map document from an intermediate map representation.
 ///

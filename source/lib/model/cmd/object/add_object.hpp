@@ -27,8 +27,8 @@
 #include "tactile/core/type/maybe.hpp"
 #include "tactile/core/type/smart_ptr.hpp"
 
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, MapDocument)
-TACTILE_FWD_DECLARE_CLASS_NS(tactile, Object)
+TACTILE_FWD_NS(tactile, class MapDocument)
+TACTILE_FWD_NS(tactile, class Object)
 
 namespace tactile::cmd {
 

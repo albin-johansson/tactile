@@ -23,9 +23,9 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(TileLayer)
-TACTILE_FWD_DECLARE_CLASS(ObjectLayer)
-TACTILE_FWD_DECLARE_CLASS(GroupLayer)
+TACTILE_FWD(class TileLayer)
+TACTILE_FWD(class ObjectLayer)
+TACTILE_FWD(class GroupLayer)
 
 /// Visitor for all layer types.
 class LayerVisitor {

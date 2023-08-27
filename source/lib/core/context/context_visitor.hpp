@@ -23,13 +23,13 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(Map)
-TACTILE_FWD_DECLARE_CLASS(TileLayer)
-TACTILE_FWD_DECLARE_CLASS(ObjectLayer)
-TACTILE_FWD_DECLARE_CLASS(GroupLayer)
-TACTILE_FWD_DECLARE_CLASS(Object)
-TACTILE_FWD_DECLARE_CLASS(Tileset)
-TACTILE_FWD_DECLARE_CLASS(Tile)
+TACTILE_FWD(class Map)
+TACTILE_FWD(class TileLayer)
+TACTILE_FWD(class ObjectLayer)
+TACTILE_FWD(class GroupLayer)
+TACTILE_FWD(class Object)
+TACTILE_FWD(class Tileset)
+TACTILE_FWD(class Tile)
 
 /// An interface for visiting specific context implementations.
 class ContextVisitor {

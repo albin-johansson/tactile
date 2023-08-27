@@ -25,7 +25,7 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_STRUCT(GodotEmitOptions)
+TACTILE_FWD(struct GodotEmitOptions)
 
 [[nodiscard]] auto convert_to_godot(const MapIR& map, const GodotEmitOptions& options)
     -> GodotScene;

@@ -104,18 +104,11 @@
   TACTILE_DEFAULT_MOVE(Name);         \
   virtual ~Name() noexcept = default
 
-#define TACTILE_FWD_DECLARE_CLASS(Name) class Name;
-#define TACTILE_FWD_DECLARE_STRUCT(Name) struct Name;
-
-#define TACTILE_FWD_DECLARE_CLASS_NS(Ns, Name) \
-  namespace Ns {                               \
-  class Name;                                  \
+#define TACTILE_FWD_NS(Namespace, Declaration) \
+  namespace Namespace {                        \
+  Declaration;                                 \
   }
-
-#define TACTILE_FWD_DECLARE_STRUCT_NS(Ns, Name) \
-  namespace Ns {                                \
-  struct Name;                                  \
-  }
+#define TACTILE_FWD(Declaration) Declaration;
 
 namespace tactile {
 

@@ -28,8 +28,8 @@
 
 namespace tactile {
 
-TACTILE_FWD_DECLARE_CLASS(MapDocument)
-TACTILE_FWD_DECLARE_CLASS(Layer)
+TACTILE_FWD(class MapDocument)
+TACTILE_FWD(class Layer)
 
 namespace cmd {
 

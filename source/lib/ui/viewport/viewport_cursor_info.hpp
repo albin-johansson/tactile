@@ -24,7 +24,7 @@
 #include "core/tile/tile_pos.hpp"
 #include "tactile/core/prelude.hpp"
 
-TACTILE_FWD_DECLARE_STRUCT_NS(tactile, CanvasInfo)
+TACTILE_FWD_NS(tactile, struct CanvasInfo)
 
 namespace tactile::ui {
 
