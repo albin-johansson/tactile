@@ -6,12 +6,13 @@
 #include <type_traits>    // true_type
 #include <unordered_map>  // unordered_map
 
+#include "tactile/core/api.hpp"
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/string.hpp"
 
 namespace tactile {
 
-struct StringHash final {
+struct TACTILE_CORE_API StringHash final {
   using hash_type = std::hash<StringView>;
   using is_transparent = std::true_type;
 
