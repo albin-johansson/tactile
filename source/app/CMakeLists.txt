@@ -25,5 +25,5 @@ target_link_libraries(${TACTILE_EXE}
 if (TACTILE_BUILD_APP_BUNDLE MATCHES OFF)
   tactile_copy_directory_post_build(${TACTILE_EXE}
                                     "${TACTILE_RESOURCE_DIR}"
-                                    "${CMAKE_CURRENT_BINARY_DIR}/assets")
+                                    "${TACTILE_BUILD_DIR}/assets")
 endif ()
