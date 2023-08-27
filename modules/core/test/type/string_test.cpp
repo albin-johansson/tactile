@@ -4,8 +4,29 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/core/prelude.hpp"
+
 using namespace tactile;
 using namespace tactile::int_literals;
+
+#if TACTILE_OS_WINDOWS
+  #define NATIVE_STR(Str) "L" Str
+#else
+  #define NATIVE_STR(Str) Str
+#endif
+
+TEST(String, make_native_string)
+{
+  EXPECT_FALSE(make_native_string(nullptr).has_value());
+
+  EXPECT_EQ(make_native_string(""), NATIVE_STR(""));
+  EXPECT_EQ(make_native_string("1"), NATIVE_STR("1"));
+  EXPECT_EQ(make_native_string("foo"), NATIVE_STR("foo"));
+  EXPECT_EQ(make_native_string("bar.txt"), NATIVE_STR("bar.txt"));
+  EXPECT_EQ(make_native_string("foo/bar"), NATIVE_STR("foo/bar"));
+  EXPECT_EQ(make_native_string("foo/bar.txt"), NATIVE_STR("foo/bar.txt"));
+  EXPECT_EQ(make_native_string("\0"), NATIVE_STR("\0"));
+}
 
 TEST(String, StrSplit)
 {

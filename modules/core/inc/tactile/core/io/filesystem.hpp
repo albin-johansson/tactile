@@ -36,4 +36,12 @@ using RecursiveDirectoryIterator = fs::recursive_directory_iterator;
 /** Indicates whether a file path starts with the home directory. */
 [[nodiscard]] TACTILE_CORE_API auto has_home_prefix(const Path& path) -> bool;
 
+namespace fs_literals {
+
+[[nodiscard]] inline auto operator"" _path(const char* str, const usize /* len */) -> Path
+{
+  return Path {str};
+}
+
+}  // namespace fs_literals
 }  // namespace tactile
