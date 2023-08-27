@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
-#include "common/type/chrono.hpp"
 #include "common/type/result.hpp"
-#include "common/type/vec.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/chrono.hpp"
+#include "tactile/core/type/vector.hpp"
 
 namespace tactile {
 
@@ -77,9 +77,9 @@ class TileAnimation final {
   [[nodiscard]] auto end() const noexcept { return mFrames.end(); }
 
  private:
-  Vec<Frame> mFrames;
+  Vector<Frame> mFrames;
   usize mIndex {};
-  TimePoint mLastUpdate {};
+  SystemClockInstant mLastUpdate {};
 };
 
 }  // namespace tactile

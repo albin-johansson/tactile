@@ -81,7 +81,7 @@ auto LayerDelegate::clone() const -> LayerDelegate
   result.mParentId = mParentId;
   result.mOpacity = mOpacity;
   result.mVisible = mVisible;
-  result.mMetaId = nothing;  // This has to be set separately
+  result.mMetaId = kNone;  // This has to be set separately
 
   return result;
 }

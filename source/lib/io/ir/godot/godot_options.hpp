@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
-#include "common/type/path.hpp"
+#include "tactile/core/io/filesystem.hpp"
+#include "tactile/core/prelude.hpp"
 
 namespace tactile {
 

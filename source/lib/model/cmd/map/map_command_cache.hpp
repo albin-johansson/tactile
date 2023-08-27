@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include "common/macros.hpp"
-#include "common/numeric.hpp"
-#include "common/type/tree_map.hpp"
 #include "common/type/uuid.hpp"
 #include "core/tile/tile_pos.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/tree_map.hpp"
 
 namespace tactile {
 

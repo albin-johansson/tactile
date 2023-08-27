@@ -25,10 +25,10 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/util/filesystem.hpp"
 #include "io/stream.hpp"
 #include "model/settings.hpp"
 #include "tactile/core/debug/error.hpp"
+#include "tactile/core/io/filesystem.hpp"
 
 namespace tactile {
 namespace {
@@ -49,7 +49,7 @@ template <typename T>
     return iter->get<T>();
   }
   else {
-    return nothing;
+    return kNone;
   }
 }
 
@@ -61,7 +61,7 @@ template <>
     return iter->get<String>();
   }
   else {
-    return nothing;
+    return kNone;
   }
 }
 
@@ -201,7 +201,7 @@ auto parse_json_file(const Path& path) -> Maybe<JSON>
     auto stream = open_input_stream(path, FileType::Text);
     if (!stream) {
       spdlog::error("Failed to open JSON file: {}", path);
-      return nothing;
+      return kNone;
     }
 
     JSON json;
@@ -211,10 +211,10 @@ auto parse_json_file(const Path& path) -> Maybe<JSON>
   }
   catch (const std::exception& e) {
     spdlog::error("JSON parse error: {}", e.what());
-    return nothing;
+    return kNone;
   }
   catch (...) {
-    return nothing;
+    return kNone;
   }
 }
 

@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "common/type/hash_map.hpp"
 #include "common/type/result.hpp"
-#include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
 #include "core/component/component_definition.hpp"
+#include "tactile/core/type/hash_map.hpp"
+#include "tactile/core/type/string.hpp"
 
 namespace tactile {
 

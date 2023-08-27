@@ -20,16 +20,16 @@
 #pragma once
 
 #include <concepts>  // same_as
+#include <ostream>   // ostream
 #include <utility>   // move
 
-#include "common/numeric.hpp"
-#include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/ostream.hpp"
-#include "common/type/path.hpp"
-#include "common/type/string.hpp"
-#include "common/type/variant.hpp"
 #include "core/color.hpp"
+#include "tactile/core/io/filesystem.hpp"
+#include "tactile/core/math/vector.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/string.hpp"
+#include "tactile/core/type/variant.hpp"
 
 namespace tactile {
 
@@ -336,9 +336,9 @@ class Attribute final {
 [[nodiscard]] auto serialize_to_save_format(const Float4& vec) -> String;
 
 /// Outputs the result of calling `serialize_to_save_format` with the type to a stream.
-auto operator<<(OStream& stream, AttributeType type) -> OStream&;
+auto operator<<(std::ostream& stream, AttributeType type) -> std::ostream&;
 
 /// Outputs an attribute to a stream for debugging purposes.
-auto operator<<(OStream& stream, const Attribute& value) -> OStream&;
+auto operator<<(std::ostream& stream, const Attribute& value) -> std::ostream&;
 
 }  // namespace tactile

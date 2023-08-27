@@ -19,7 +19,7 @@
 
 #include "scoped.hpp"
 
-#include "common/debug/assert.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/error.hpp"
 #include "ui/conversions.hpp"
 #include "ui/style/colors.hpp"

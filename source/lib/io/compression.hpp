@@ -19,14 +19,14 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/span.hpp"
-#include "common/type/vec.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/span.hpp"
+#include "tactile/core/type/vector.hpp"
 
 namespace tactile {
 
-using ByteStream = Vec<uint8>;
+using ByteStream = Vector<uint8>;
 using ByteSpan = Span<const uint8>;
 
 [[nodiscard]] auto zlib_compress(const void* source, usize source_bytes, int level = -1)

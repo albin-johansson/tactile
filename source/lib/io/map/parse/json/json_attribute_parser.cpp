@@ -19,9 +19,9 @@
 
 #include <utility>  // move
 
-#include "common/type/string.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/json/json_parser.hpp"
+#include "tactile/core/type/string.hpp"
 
 namespace tactile {
 namespace {

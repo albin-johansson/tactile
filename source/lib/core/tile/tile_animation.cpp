@@ -19,14 +19,14 @@
 
 #include "tile_animation.hpp"
 
-#include "common/debug/assert.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/error.hpp"
 
 namespace tactile {
 
 void TileAnimation::update()
 {
-  const auto now = Clock::now();
+  const auto now = SystemClock::now();
   const auto& current = current_frame();
 
   if (now - mLastUpdate >= current.duration) {
@@ -71,7 +71,7 @@ auto TileAnimation::remove_frame(const usize frame_index) -> Result
 
     if (frame_index <= mIndex) {
       mIndex = 0;
-      mLastUpdate = Clock::now();
+      mLastUpdate = SystemClock::now();
     }
 
     return success;

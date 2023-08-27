@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include "common/macros.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "core/layer/layer_type.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
 
 namespace tactile {
 

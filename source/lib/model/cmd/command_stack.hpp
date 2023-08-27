@@ -22,13 +22,12 @@
 #include <concepts>  // derived_from
 #include <utility>   // move
 
-#include "common/macros.hpp"
-#include "common/numeric.hpp"
-#include "common/type/deque.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/ptr.hpp"
-#include "common/type/string.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/deque.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
+#include "tactile/core/type/string.hpp"
 
 namespace tactile {
 

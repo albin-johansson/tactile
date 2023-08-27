@@ -19,14 +19,13 @@
 
 #pragma once
 
-#include "common/macros.hpp"
-#include "common/numeric.hpp"
-#include "common/type/math.hpp"
-#include "common/type/ptr.hpp"
-#include "common/type/string.hpp"
 #include "core/color.hpp"
 #include "io/save_format.hpp"
 #include "lang/language.hpp"
+#include "tactile/core/math/vector.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
+#include "tactile/core/type/string.hpp"
 #include "ui/style/themes.hpp"
 
 namespace tactile {
@@ -67,12 +66,15 @@ TACTILE_FWD_DECLARE_STRUCT(SettingsState)
 class Settings final {
  public:
   TACTILE_DELETE_COPY(Settings);
-  TACTILE_DECLARE_MOVE(Settings);
 
   /// Creates an instance initialized with the default setting values.
   Settings();
 
   ~Settings();
+
+  Settings(Settings&& other) noexcept;
+
+  auto operator=(Settings&& other) noexcept -> Settings&;
 
   void print() const;
 

@@ -19,11 +19,11 @@
 
 #include <utility>  // move
 
-#include "common/numeric.hpp"
-#include "common/type/string.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/string.hpp"
 
 namespace tactile {
 namespace {
@@ -206,9 +206,9 @@ constexpr int32 kTilesetFormatVersion = 1;
 }  // namespace
 
 auto parse_tilesets(const YAML::Node& sequence, const MapIR& map, const Path& dir)
-    -> Expected<Vec<TilesetIR>, ParseError>
+    -> Expected<Vector<TilesetIR>, ParseError>
 {
-  Vec<TilesetIR> tilesets;
+  Vector<TilesetIR> tilesets;
   tilesets.reserve(sequence.size());
 
   for (const auto& node: sequence) {

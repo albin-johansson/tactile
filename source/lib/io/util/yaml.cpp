@@ -22,9 +22,9 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/util/filesystem.hpp"
 #include "io/stream.hpp"
 #include "tactile/core/debug/error.hpp"
+#include "tactile/core/io/filesystem.hpp"
 
 namespace tactile {
 

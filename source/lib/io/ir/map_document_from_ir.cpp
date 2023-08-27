@@ -24,9 +24,6 @@
 
 #include <entt/entity/registry.hpp>
 
-#include "common/debug/assert.hpp"
-#include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/uuid.hpp"
 #include "common/util/functional.hpp"
 #include "core/component/component_index.hpp"
@@ -44,6 +41,9 @@
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
 #include "model/model.hpp"
+#include "tactile/core/debug/assert.hpp"
+#include "tactile/core/math/vector.hpp"
+#include "tactile/core/type/maybe.hpp"
 
 namespace tactile {
 namespace {
@@ -115,7 +115,7 @@ void restore_object_layer(MapDocument& document,
 
 auto restore_layer(MapDocument& document,
                    const LayerIR& ir_layer,
-                   const Maybe<UUID>& parent = nothing) -> UUID
+                   const Maybe<UUID>& parent = kNone) -> UUID
 {
   auto& map = document.get_map();
   auto& root_layer = map.get_invisible_root();

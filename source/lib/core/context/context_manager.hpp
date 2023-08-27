@@ -19,16 +19,16 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
-#include "common/type/func.hpp"
-#include "common/type/hash_map.hpp"
-#include "common/type/ptr.hpp"
 #include "common/type/result.hpp"
-#include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "core/component/component.hpp"
 #include "core/context/context.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/function.hpp"
+#include "tactile/core/type/hash_map.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
+#include "tactile/core/type/string.hpp"
 
 namespace tactile {
 
@@ -36,7 +36,7 @@ namespace tactile {
 /// FIXME bad method names
 class ContextManager final {
   using ContextMap = HashMap<UUID, Shared<Context>>;
-  using ComponentFunc = Func<void(Component&)>;
+  using ComponentFunc = Function<void(Component&)>;
 
  public:
   explicit ContextManager(const UUID& root_ctx_id);
@@ -81,7 +81,7 @@ class ContextManager final {
   ContextMap mContexts;
   UUID mRootContextId;
   UUID mActiveContextId {};
-  // TODO PERFORMANCE: maybe use HashMap<UUID, Vec<Shared<IContext>>>?
+  // TODO PERFORMANCE: maybe use HashMap<UUID, Vector<Shared<IContext>>>?
 
   void on_component_update(const UUID& component_id, const ComponentFunc& func);
 };

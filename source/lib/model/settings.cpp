@@ -63,7 +63,9 @@ Settings::Settings()
 
 Settings::~Settings() = default;
 
-TACTILE_DEFINE_MOVE(Settings);
+Settings::Settings(Settings&& other) noexcept = default;
+
+auto Settings::operator=(Settings&& other) noexcept -> Settings& = default;
 
 void Settings::print() const
 {

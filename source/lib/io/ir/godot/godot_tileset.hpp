@@ -19,15 +19,14 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
-#include "common/type/math.hpp"
-#include "common/type/pair.hpp"
-#include "common/type/path.hpp"
-#include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
-#include "common/type/vec.hpp"
 #include "common/util/assoc.hpp"
 #include "io/ir/godot/godot_file.hpp"
+#include "tactile/core/io/filesystem.hpp"
+#include "tactile/core/math/vector.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/string.hpp"
+#include "tactile/core/type/vector.hpp"
 
 namespace tactile {
 
@@ -42,24 +41,27 @@ struct GdTilesetInfo final {
   Int2 image_size {};
 };
 
+struct GodotTexturePath final {
+  Path path;
+  String name;
+};
+
 /// Intermediate representation of an amalgamated Godot tileset, stored in its own file.
 class GodotTileset final : public GodotFile {
  public:
-  using TextureNamePair = Pair<Path, String>;
-
   auto add_texture(const Path& dest, Path source) -> GdExtRes;
 
   void add_tileset(GdTilesetInfo info);
 
   [[nodiscard]] auto index_of(const UUID& tileset_id) const -> int32;
 
-  [[nodiscard]] auto texture_paths() const -> const Vec<TextureNamePair>&;
+  [[nodiscard]] auto texture_paths() const -> const Vector<GodotTexturePath>&;
 
-  [[nodiscard]] auto tilesets() const -> const Vec<GdTilesetInfo>&;
+  [[nodiscard]] auto tilesets() const -> const Vector<GdTilesetInfo>&;
 
  private:
-  Vec<TextureNamePair> mSourceTexturePaths;
-  Vec<GdTilesetInfo> mTilesetInfos;
+  Vector<GodotTexturePath> mSourceTexturePaths;
+  Vector<GdTilesetInfo> mTilesetInfos;
 };
 
 }  // namespace tactile

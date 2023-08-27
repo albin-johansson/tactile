@@ -432,7 +432,7 @@ auto parse_attr_type(StringView name) -> Maybe<AttributeType>
     return AttributeType::Object;
   }
   else {
-    return nothing;
+    return kNone;
   }
 }
 
@@ -513,12 +513,12 @@ auto serialize_to_save_format(const Float4& vec) -> String
   return fmt::format("{};{};{};{}", vec.x, vec.y, vec.z, vec.w);
 }
 
-auto operator<<(OStream& stream, const AttributeType type) -> OStream&
+auto operator<<(std::ostream& stream, const AttributeType type) -> std::ostream&
 {
   return stream << serialize_to_save_format(type);
 }
 
-auto operator<<(OStream& stream, const Attribute& value) -> OStream&
+auto operator<<(std::ostream& stream, const Attribute& value) -> std::ostream&
 {
   switch (value.get_type()) {
     case AttributeType::String:

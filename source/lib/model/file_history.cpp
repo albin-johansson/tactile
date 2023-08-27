@@ -21,10 +21,10 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/numeric.hpp"
-#include "common/type/maybe.hpp"
-#include "common/util/filesystem.hpp"
 #include "tactile/core/debug/error.hpp"
+#include "tactile/core/io/filesystem.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/maybe.hpp"
 
 namespace tactile {
 namespace {

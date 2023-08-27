@@ -19,9 +19,10 @@
 
 #pragma once
 
-#include "common/type/fstream.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/path.hpp"
+#include <fstream>  // ifstream, ofstream
+
+#include "tactile/core/io/filesystem.hpp"
+#include "tactile/core/type/maybe.hpp"
 
 namespace tactile {
 
@@ -30,10 +31,10 @@ enum class FileType {
   Binary
 };
 
-[[nodiscard]] auto open_input_stream(const char* path, FileType type) -> Maybe<IfStream>;
-[[nodiscard]] auto open_input_stream(const Path& path, FileType type) -> Maybe<IfStream>;
+[[nodiscard]] auto open_input_stream(const Path& path, FileType type)
+    -> Maybe<std::ifstream>;
 
-[[nodiscard]] auto open_output_stream(const char* path, FileType type) -> Maybe<OfStream>;
-[[nodiscard]] auto open_output_stream(const Path& path, FileType type) -> Maybe<OfStream>;
+[[nodiscard]] auto open_output_stream(const Path& path, FileType type)
+    -> Maybe<std::ofstream>;
 
 }  // namespace tactile

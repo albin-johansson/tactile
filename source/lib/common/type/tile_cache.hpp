@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
-#include "common/type/vector_map.hpp"
 #include "core/tile/tile_pos.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/hash_map.hpp"
 
 namespace tactile {
 
-using TileCache = VectorMap<TilePos, TileID>;
+using TileCache [[deprecated]] = HashMap<TilePos, TileID>;
 
 }  // namespace tactile

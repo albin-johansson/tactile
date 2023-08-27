@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include "common/macros.hpp"
-#include "common/numeric.hpp"
-#include "common/type/math.hpp"
 #include "core/region.hpp"
 #include "core/tile/tile_pos.hpp"
+#include "tactile/core/math/vector.hpp"
+#include "tactile/core/prelude.hpp"
 
 namespace tactile {
 

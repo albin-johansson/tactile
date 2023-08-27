@@ -19,20 +19,20 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
-#include "common/type/func.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
-#include "common/type/vec.hpp"
 #include "core/layer/layer.hpp"
 #include "core/layer/layer_visitor.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/function.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
+#include "tactile/core/type/vector.hpp"
 
 namespace tactile {
 
-using LayerVector = Vec<Shared<Layer>>;
-using LayerMutatorFn = Func<void(LayerVector&, LayerVector::iterator)>;
-using LayerQueryFn = Func<void(const LayerVector&, LayerVector::const_iterator)>;
+using LayerVector = Vector<Shared<Layer>>;
+using LayerMutatorFn = Function<void(LayerVector&, LayerVector::iterator)>;
+using LayerQueryFn = Function<void(const LayerVector&, LayerVector::const_iterator)>;
 
 /// A generic visitor for operations that may modify layers and their associated storage.
 class LayerMutatorVisitor : public LayerVisitor {

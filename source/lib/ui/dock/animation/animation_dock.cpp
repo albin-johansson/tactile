@@ -24,7 +24,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "common/type/maybe.hpp"
 #include "common/util/fmt.hpp"
 #include "core/tile/tile.hpp"
 #include "io/proto/settings.hpp"
@@ -33,6 +32,7 @@
 #include "model/document/tileset_document.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
+#include "tactile/core/type/maybe.hpp"
 #include "ui/constants.hpp"
 #include "ui/conversions.hpp"
 #include "ui/style/alignment.hpp"
@@ -93,7 +93,7 @@ void ui_tileset_tile_image(const Tileset& tileset,
     return ms_t {duration_raw};
   }
   else {
-    return nothing;
+    return kNone;
   }
 }
 

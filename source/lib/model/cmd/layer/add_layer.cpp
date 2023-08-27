@@ -52,7 +52,7 @@ void AddLayer::redo()
   if (!mLayer) {
     const auto active_layer_id = map.is_active_layer(LayerType::GroupLayer)
                                      ? map.get_active_layer_id()  //
-                                     : nothing;
+                                     : kNone;
     const auto layer_id = map.add_layer(mLayerType, active_layer_id);
     mLayer = map.get_invisible_root().find_shared_layer(layer_id);
   }

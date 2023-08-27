@@ -80,7 +80,7 @@ auto ContextInfo::remove_property(StringView name) -> Maybe<Attribute>
     return removed_property;
   }
   else {
-    return nothing;
+    return kNone;
   }
 }
 
@@ -117,7 +117,7 @@ auto ContextInfo::detach_component(const UUID& component_id) -> Maybe<Component>
     return removed_component;
   }
 
-  return nothing;
+  return kNone;
 }
 
 auto ContextInfo::get_property(StringView name) -> Attribute&

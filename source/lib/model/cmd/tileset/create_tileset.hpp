@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include "common/macros.hpp"
-#include "common/type/math.hpp"
-#include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/core/math/vector.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetDocument)

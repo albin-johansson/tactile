@@ -22,9 +22,9 @@
 #include <fmt/format.h>
 #include <imgui.h>
 
-#include "common/type/string.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/type/string.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {

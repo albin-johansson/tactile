@@ -23,11 +23,11 @@
 #include <spdlog/spdlog.h>
 #include <ui/style/alignment.hpp>
 
-#include "common/type/path.hpp"
 #include "io/directories.hpp"
 #include "io/file_dialog.hpp"
 #include "model/event/map_events.hpp"
 #include "model/model.hpp"
+#include "tactile/core/io/filesystem.hpp"
 #include "ui/dialog/about_dialog.hpp"
 #include "ui/dialog/create_map_dialog.hpp"
 #include "ui/dialog/credits_dialog.hpp"

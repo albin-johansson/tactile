@@ -25,18 +25,18 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/type/chrono.hpp"
 #include "io/map/parse/json/json_parser.hpp"
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "tactile/core/debug/error.hpp"
+#include "tactile/core/type/chrono.hpp"
 
 namespace tactile {
 
 auto parse_map(const Path& path) -> ParseResult
 {
   try {
-    const auto parse_start = Clock::now();
+    const auto parse_start = SystemClock::now();
     spdlog::debug("Parsing map {}", path);
 
     if (!fs::exists(path)) {
@@ -60,7 +60,7 @@ auto parse_map(const Path& path) -> ParseResult
       return unexpected(ParseError::UnsupportedMapExtension);
     }
 
-    const auto parse_end = Clock::now();
+    const auto parse_end = SystemClock::now();
     const auto parse_duration = chrono::duration_cast<ms_t>(parse_end - parse_start);
 
     spdlog::info("Parsed {} in {}", path.filename(), parse_duration);

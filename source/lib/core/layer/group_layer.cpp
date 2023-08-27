@@ -23,12 +23,12 @@
 #include <iterator>   // distance
 #include <utility>    // move
 
-#include "common/type/maybe.hpp"
 #include "common/util/algorithm.hpp"
 #include "common/util/functional.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
 #include "tactile/core/debug/error.hpp"
+#include "tactile/core/type/maybe.hpp"
 
 namespace tactile {
 
@@ -81,7 +81,7 @@ void GroupLayer::each(const UnaryLayerFunc& func) const
 auto GroupLayer::add_layer(Shared<Layer> layer) -> Result
 {
   if (layer) {
-    layer->set_parent(nothing);
+    layer->set_parent(kNone);
     mLayers.push_back(std::move(layer));
     return success;
   }

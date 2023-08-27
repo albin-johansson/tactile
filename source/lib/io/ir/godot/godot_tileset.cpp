@@ -23,8 +23,8 @@
 
 #include <fmt/format.h>
 
-#include "common/util/filesystem.hpp"
 #include "tactile/core/debug/error.hpp"
+#include "tactile/core/io/filesystem.hpp"
 
 namespace tactile {
 
@@ -32,7 +32,11 @@ auto GodotTileset::add_texture(const Path& dest, Path source) -> GdExtRes
 {
   const auto id =
       add_ext_resource(fmt::format("res://{}", use_forward_slashes(dest)), "Texture");
-  mSourceTexturePaths.emplace_back(std::move(source), dest.filename().string());
+
+  auto& texture_path = mSourceTexturePaths.emplace_back();
+  texture_path.path = std::move(source);
+  texture_path.name = dest.filename().string();
+
   return id;
 }
 
@@ -56,12 +60,12 @@ auto GodotTileset::index_of(const UUID& tileset_id) const -> int32
   throw Error {"Invalid tileset identifier!"};
 }
 
-auto GodotTileset::texture_paths() const -> const Vec<TextureNamePair>&
+auto GodotTileset::texture_paths() const -> const Vector<GodotTexturePath>&
 {
   return mSourceTexturePaths;
 }
 
-auto GodotTileset::tilesets() const -> const Vec<GdTilesetInfo>&
+auto GodotTileset::tilesets() const -> const Vector<GdTilesetInfo>&
 {
   return mTilesetInfos;
 }

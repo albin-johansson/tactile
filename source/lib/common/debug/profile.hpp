@@ -24,13 +24,14 @@
 #include <fmt/chrono.h>
 #include <spdlog/spdlog.h>
 
-#include "common/predef.hpp"
-#include "common/type/chrono.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/chrono.hpp"
 
-#define TACTILE_PROFILE_START const auto tactile_profile_start = tactile::Clock::now();
+#define TACTILE_PROFILE_START \
+  const auto tactile_profile_start = tactile::SystemClock::now();
 
 #define TACTILE_PROFILE_END(Msg)                                                 \
-  const auto tactile_profile_end = tactile::Clock::now();                        \
+  const auto tactile_profile_end = tactile::SystemClock::now();                  \
   const auto tactile_profile_diff = tactile_profile_end - tactile_profile_start; \
   const auto tactile_profile_ms =                                                \
       std::chrono::duration_cast<tactile::ms_t>(tactile_profile_diff);           \

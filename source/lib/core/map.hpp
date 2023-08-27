@@ -19,18 +19,17 @@
 
 #pragma once
 
-#include "common/macros.hpp"
-#include "common/numeric.hpp"
-#include "common/type/func.hpp"
-#include "common/type/hash_map.hpp"
-#include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "core/context/context.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/tile/tile_extent.hpp"
 #include "core/tile/tile_pos.hpp"
+#include "tactile/core/math/vector.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/function.hpp"
+#include "tactile/core/type/hash_map.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
 
 namespace tactile {
 
@@ -55,7 +54,7 @@ TACTILE_FWD_DECLARE_CLASS(TileFormat)
 /// compression along with plain text encoding.
 class Map final : public Context {
  public:
-  using TileLayerVisitorFunc = Func<void(TileLayer&)>;
+  using TileLayerVisitorFunc = Function<void(TileLayer&)>;
 
   /// Maps previous invalid tile identifiers in a collection of layers.
   using FixTilesResult = HashMap<UUID, HashMap<TilePos, TileID>>;
@@ -93,19 +92,19 @@ class Map final : public Context {
 
   /// Adds a layer to the map.
   /// The parent parameter can be used to attach a layer to a group layer.
-  void add_layer(Shared<Layer> layer, const Maybe<UUID>& parent_id = nothing);
+  void add_layer(Shared<Layer> layer, const Maybe<UUID>& parent_id = kNone);
 
   /// Adds a new layer to the map of a specific type.
-  auto add_layer(LayerType type, const Maybe<UUID>& parent_id = nothing) -> UUID;
+  auto add_layer(LayerType type, const Maybe<UUID>& parent_id = kNone) -> UUID;
 
   /// Adds a new tile layer to the map, returning the layer ID.
-  auto add_tile_layer(const Maybe<UUID>& parent_id = nothing) -> UUID;
+  auto add_tile_layer(const Maybe<UUID>& parent_id = kNone) -> UUID;
 
   /// Adds a new object layer to the map, returning the layer ID.
-  auto add_object_layer(const Maybe<UUID>& parent_id = nothing) -> UUID;
+  auto add_object_layer(const Maybe<UUID>& parent_id = kNone) -> UUID;
 
   /// Adds a new group layer to the map, returning the layer ID.
-  auto add_group_layer(const Maybe<UUID>& parent_id = nothing) -> UUID;
+  auto add_group_layer(const Maybe<UUID>& parent_id = kNone) -> UUID;
 
   /// Inserts a layer into the map, attaching it to its reported parent layer.
   /// This function is particularly useful for re-inserting previously removed layers.

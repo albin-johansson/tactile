@@ -25,9 +25,9 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/assert.hpp"
-#include "common/predef.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/error.hpp"
+#include "tactile/core/prelude.hpp"
 
 namespace tactile {
 

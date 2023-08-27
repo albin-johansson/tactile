@@ -15,12 +15,15 @@ target_compile_definitions(${TACTILE_CORE_TARGET}
                            PRIVATE
                            TACTILE_BUILDING_CORE
                            BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
+                           SPDLOG_FMT_EXTERNAL
                            )
 
 target_include_directories(${TACTILE_CORE_TARGET} PUBLIC "${TACTILE_CORE_DIR}/inc")
 
 target_link_libraries(${TACTILE_CORE_TARGET}
                       PRIVATE
-                      FastFloat::fast_float
                       Boost::boost
+                      FastFloat::fast_float
+                      fmt::fmt
+                      spdlog::spdlog
                       )

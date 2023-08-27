@@ -21,7 +21,7 @@
 
 #include <limits>  // numeric_limits
 
-#include "common/numeric.hpp"
+#include "tactile/core/prelude.hpp"
 
 namespace tactile {
 

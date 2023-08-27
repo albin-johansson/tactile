@@ -24,9 +24,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "common/debug/assert.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "core/component/component_index.hpp"
@@ -34,6 +31,9 @@
 #include "lang/strings.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
+#include "tactile/core/debug/assert.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/string.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/dock/comp/dialogs/add_component_attr_dialog.hpp"
@@ -221,7 +221,7 @@ void open_component_editor_dialog(const DocumentModel& model)
   TACTILE_ASSERT(component_index != nullptr);
 
   gEditorState.active_component_id =
-      !component_index->empty() ? Maybe<UUID> {component_index->begin()->first} : nothing;
+      !component_index->empty() ? Maybe<UUID> {component_index->begin()->first} : kNone;
   gEditorState.open_dialog = true;
 }
 

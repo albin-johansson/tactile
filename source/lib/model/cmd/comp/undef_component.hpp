@@ -21,14 +21,14 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "common/macros.hpp"
-#include "common/type/hash_map.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "core/component/component.hpp"
 #include "core/component/component_definition.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/hash_map.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, Document)
 

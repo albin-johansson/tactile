@@ -126,7 +126,7 @@ auto ObjectLayer::object_at(const Float2& pos, const Float2& tile_size) const
     }
   }
 
-  return nothing;
+  return kNone;
 }
 
 auto ObjectLayer::clone() const -> Shared<Layer>

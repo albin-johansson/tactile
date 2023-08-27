@@ -19,16 +19,15 @@
 
 #pragma once
 
-#include "common/macros.hpp"
-#include "common/numeric.hpp"
-#include "common/type/hash_map.hpp"
-#include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "core/tile/tileset_info.hpp"
+#include "tactile/core/math/vector.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/hash_map.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
 #include "tile_pos.hpp"
 
 namespace tactile {

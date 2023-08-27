@@ -19,14 +19,14 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
-#include "common/type/func.hpp"
-#include "common/type/ptr.hpp"
 #include "common/type/result.hpp"
 #include "common/type/uuid.hpp"
-#include "common/type/vec.hpp"
 #include "core/layer/abstract_layer.hpp"
 #include "core/layer/visitors.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/function.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
+#include "tactile/core/type/vector.hpp"
 
 namespace tactile {
 
@@ -34,8 +34,8 @@ namespace tactile {
 /// Group layers are recursive, and can store an unlimited amount of child layers.
 class GroupLayer final : public AbstractLayer {
  public:
-  using LayerStorage = Vec<Shared<Layer>>;
-  using UnaryLayerFunc = Func<void(const Layer&)>;
+  using LayerStorage = Vector<Shared<Layer>>;
+  using UnaryLayerFunc = Function<void(const Layer&)>;
 
   void accept(ContextVisitor& visitor) const override;
   void accept(LayerVisitor& visitor) override;

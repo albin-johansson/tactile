@@ -21,8 +21,8 @@
 
 #include <utility>  // move
 
-#include "common/debug/assert.hpp"
 #include "common/util/assoc.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/error.hpp"
 
 namespace tactile {
@@ -105,7 +105,7 @@ auto TilesetBundle::find_tileset(const TileID tile) const -> Maybe<UUID>
     return iter->second;
   }
   else {
-    return nothing;
+    return kNone;
   }
 }
 

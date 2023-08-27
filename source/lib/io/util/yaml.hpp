@@ -23,12 +23,12 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "common/type/maybe.hpp"
-#include "common/type/path.hpp"
 #include "common/type/result.hpp"
-#include "common/type/string.hpp"
 #include "core/attribute.hpp"
 #include "core/layer/tile_format.hpp"
+#include "tactile/core/io/filesystem.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/string.hpp"
 
 namespace tactile {
 

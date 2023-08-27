@@ -19,17 +19,16 @@
 
 #pragma once
 
-#include "common/macros.hpp"
-#include "common/numeric.hpp"
-#include "common/type/func.hpp"
-#include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/path.hpp"
-#include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "core/tile/tile_extent.hpp"
 #include "model/document/document.hpp"
 #include "model/tool/tool_type.hpp"
+#include "tactile/core/io/filesystem.hpp"
+#include "tactile/core/math/vector.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/function.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
 
 namespace tactile {
 
@@ -46,7 +45,7 @@ class DocumentModel final {
   friend class cmd::RemoveTileset;
 
  public:
-  using VisitorFunc = Func<void(const UUID&)>;
+  using VisitorFunc = Function<void(const UUID&)>;
 
   DocumentModel();
   ~DocumentModel() noexcept;

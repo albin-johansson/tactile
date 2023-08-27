@@ -22,7 +22,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "common/debug/assert.hpp"
 #include "common/util/fmt.hpp"
 #include "component_view.hpp"
 #include "core/component/component_index.hpp"
@@ -34,6 +33,7 @@
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
 #include "model/settings.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"

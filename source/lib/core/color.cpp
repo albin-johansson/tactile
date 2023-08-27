@@ -24,7 +24,7 @@
 
 #include <fmt/format.h>
 
-#include "common/predef.hpp"
+#include "tactile/core/prelude.hpp"
 
 namespace tactile {
 namespace {
@@ -62,7 +62,7 @@ auto Color::from_norm(float r, float g, float b, float a) -> Color
 auto Color::from_rgb(StringView rgb) -> Maybe<Color>
 {
   if (rgb.length() != 7 || rgb.at(0) != '#') {
-    return nothing;
+    return kNone;
   }
 
   const auto no_hash = rgb.substr(1);
@@ -82,14 +82,14 @@ auto Color::from_rgb(StringView rgb) -> Maybe<Color>
                   0xFF};
   }
   else {
-    return nothing;
+    return kNone;
   }
 }
 
 auto Color::from_rgba(StringView rgba) -> Maybe<Color>
 {
   if (rgba.length() != 9 || rgba.at(0) != '#') {
-    return nothing;
+    return kNone;
   }
 
   const auto no_hash = rgba.substr(1);
@@ -111,14 +111,14 @@ auto Color::from_rgba(StringView rgba) -> Maybe<Color>
                   static_cast<uint8>(*alpha)};
   }
   else {
-    return nothing;
+    return kNone;
   }
 }
 
 auto Color::from_argb(StringView argb) -> Maybe<Color>
 {
   if (argb.length() != 9 || argb.at(0) != '#') {
-    return nothing;
+    return kNone;
   }
 
   const auto no_hash = argb.substr(1);
@@ -140,7 +140,7 @@ auto Color::from_argb(StringView argb) -> Maybe<Color>
                   static_cast<uint8>(*alpha)};
   }
   else {
-    return nothing;
+    return kNone;
   }
 }
 

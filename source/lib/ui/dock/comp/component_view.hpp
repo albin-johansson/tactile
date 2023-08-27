@@ -21,9 +21,9 @@
 
 #include <entt/signal/fwd.hpp>
 
-#include "common/macros.hpp"
-#include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/string.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, Component)
 

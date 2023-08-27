@@ -104,6 +104,19 @@
   TACTILE_DEFAULT_MOVE(Name);         \
   virtual ~Name() noexcept = default
 
+#define TACTILE_FWD_DECLARE_CLASS(Name) class Name;
+#define TACTILE_FWD_DECLARE_STRUCT(Name) struct Name;
+
+#define TACTILE_FWD_DECLARE_CLASS_NS(Ns, Name) \
+  namespace Ns {                               \
+  class Name;                                  \
+  }
+
+#define TACTILE_FWD_DECLARE_STRUCT_NS(Ns, Name) \
+  namespace Ns {                                \
+  struct Name;                                  \
+  }
+
 namespace tactile {
 
 inline constexpr bool kIsDebugBuild = TACTILE_DEBUG;

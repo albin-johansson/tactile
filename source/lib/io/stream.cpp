@@ -19,63 +19,39 @@
 
 #include "stream.hpp"
 
-#include <ios>      // ios
-#include <utility>  // move
+#include <ios>  // ios
 
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto open_input_stream_impl(const auto& path, const FileType type)
-    -> Maybe<IfStream>
+template <typename Stream>
+[[nodiscard]] auto _open_stream(const Path& path, const std::ios::openmode mode)
+    -> Maybe<Stream>
 {
-  const auto flags = (type == FileType::Binary) ? std::ios::in | std::ios::binary  //
-                                                : std::ios::in;
-  IfStream stream {path, flags};
-
+  Stream stream {path, mode};
   if (stream.is_open() && stream.good()) {
-    return std::move(stream);
+    return stream;
   }
   else {
-    return nothing;
-  }
-}
-
-[[nodiscard]] auto open_output_stream_impl(const auto& path, const FileType type)
-    -> Maybe<OfStream>
-{
-  const auto flags = (type == FileType::Binary)
-                         ? std::ios::out | std::ios::trunc | std::ios::binary
-                         : std::ios::out | std::ios::trunc;
-  OfStream stream {path, flags};
-
-  if (stream.is_open() && stream.good()) {
-    return std::move(stream);
-  }
-  else {
-    return nothing;
+    return kNone;
   }
 }
 
 }  // namespace
 
-auto open_input_stream(const char* path, FileType type) -> Maybe<IfStream>
+auto open_input_stream(const Path& path, FileType type) -> Maybe<std::ifstream>
 {
-  return open_input_stream_impl(path, type);
+  const auto mode = (type == FileType::Binary) ? std::ios::in | std::ios::binary  //
+                                               : std::ios::in;
+  return _open_stream<std::ifstream>(path, mode);
 }
 
-auto open_input_stream(const Path& path, FileType type) -> Maybe<IfStream>
+auto open_output_stream(const Path& path, FileType type) -> Maybe<std::ofstream>
 {
-  return open_input_stream_impl(path, type);
-}
-
-auto open_output_stream(const char* path, FileType type) -> Maybe<OfStream>
-{
-  return open_output_stream_impl(path, type);
-}
-
-auto open_output_stream(const Path& path, FileType type) -> Maybe<OfStream>
-{
-  return open_output_stream_impl(path, type);
+  const auto mode = (type == FileType::Binary)
+                        ? std::ios::out | std::ios::trunc | std::ios::binary
+                        : std::ios::out | std::ios::trunc;
+  return _open_stream<std::ofstream>(path, mode);
 }
 
 }  // namespace tactile

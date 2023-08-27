@@ -22,7 +22,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "common/debug/assert.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
@@ -32,6 +31,7 @@
 #include "model/event/property_events.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/model.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "tileset_view.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"

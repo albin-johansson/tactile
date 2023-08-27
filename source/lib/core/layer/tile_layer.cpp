@@ -21,14 +21,14 @@
 
 #include <utility>  // cmp_less
 
-#include "common/debug/assert.hpp"
-#include "common/type/math.hpp"
-#include "common/type/queue.hpp"
 #include "common/util/algorithm.hpp"
 #include "common/util/functional.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "core/tile/tile_pos.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/error.hpp"
+#include "tactile/core/math/vector.hpp"
+#include "tactile/core/type/queue.hpp"
 
 namespace tactile {
 
@@ -65,7 +65,7 @@ void TileLayer::accept(ConstLayerVisitor& visitor) const
 
 void TileLayer::flood(const TilePos& origin,
                       const TileID replacement,
-                      Vec<TilePos>* affected)
+                      Vector<TilePos>* affected)
 {
   const auto target = tile_at(origin);
 
@@ -189,7 +189,7 @@ auto TileLayer::tile_at(const TilePos& pos) const -> Maybe<TileID>
     return mTiles[static_cast<usize>(pos.row())][static_cast<usize>(pos.col())];
   }
   else {
-    return nothing;
+    return kNone;
   }
 }
 

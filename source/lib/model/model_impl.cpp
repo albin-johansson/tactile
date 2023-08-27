@@ -21,12 +21,12 @@
 
 #include <utility>  // move
 
-#include "common/debug/assert.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "model/cmd/command_stack.hpp"
 #include "model/cmd/tileset/all.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/error.hpp"
 
 namespace tactile {

@@ -19,23 +19,23 @@
 
 #pragma once
 
-#include "common/macros.hpp"
-#include "common/type/func.hpp"
-#include "common/type/hash_map.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/result.hpp"
-#include "common/type/string.hpp"
-#include "common/type/string_map.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "core/component/component.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/function.hpp"
+#include "tactile/core/type/hash_map.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/string.hpp"
+#include "tactile/core/type/string_map.hpp"
 
 namespace tactile {
 
 class ContextInfo final {
  public:
-  using ComponentVisitor = Func<void(const UUID&, const Component&)>;
-  using PropertyVisitor = Func<void(const String&, const Attribute&)>;
+  using ComponentVisitor = Function<void(const UUID&, const Component&)>;
+  using PropertyVisitor = Function<void(const String&, const Attribute&)>;
 
   TACTILE_DEFAULT_COPY(ContextInfo);
   TACTILE_DEFAULT_MOVE(ContextInfo);

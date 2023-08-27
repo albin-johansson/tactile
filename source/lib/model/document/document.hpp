@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "common/macros.hpp"
-#include "common/type/path.hpp"
-#include "common/type/ptr.hpp"
-#include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "model/document/document_type.hpp"
+#include "tactile/core/io/filesystem.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
+#include "tactile/core/type/string.hpp"
 
 namespace tactile {
 

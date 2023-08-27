@@ -19,7 +19,6 @@
 
 #include "tool_preview_renderer.hpp"
 
-#include "common/debug/assert.hpp"
 #include "common/util/functional.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/tile_layer.hpp"
@@ -29,6 +28,7 @@
 #include "model/tool/ellipse_tool.hpp"
 #include "model/tool/rectangle_tool.hpp"
 #include "model/tool/stamp_tool.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "ui/conversions.hpp"
 #include "ui/render/primitives.hpp"
 #include "ui/render/renderer.hpp"

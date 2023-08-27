@@ -46,7 +46,7 @@ auto load_file_history_from_disk() -> Maybe<FileHistory>
   auto stream = open_input_stream(get_file_path(), FileType::Binary);
   if (!stream) {
     spdlog::error("Could not open file history file");
-    return nothing;
+    return kNone;
   }
 
   FileHistory file_history;

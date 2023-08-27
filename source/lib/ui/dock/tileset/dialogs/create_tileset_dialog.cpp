@@ -22,14 +22,14 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "common/type/math.hpp"
-#include "common/type/path.hpp"
 #include "common/util/string_buffer.hpp"
 #include "io/file_dialog.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/tileset_events.hpp"
 #include "model/settings.hpp"
+#include "tactile/core/io/filesystem.hpp"
+#include "tactile/core/math/vector.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/widget/widgets.hpp"
 

@@ -21,7 +21,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/util/filesystem.hpp"
 #include "io/directories.hpp"
 #include "io/ir/map_document_from_ir.hpp"
 #include "io/map/parse/parse_map.hpp"
@@ -29,6 +28,7 @@
 #include "io/stream.hpp"
 #include "model/document/map_document.hpp"
 #include "model/model.hpp"
+#include "tactile/core/io/filesystem.hpp"
 
 namespace tactile {
 namespace {

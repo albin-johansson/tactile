@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
-#include "common/type/array.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/string.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/array.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/string.hpp"
 
 namespace tactile {
 

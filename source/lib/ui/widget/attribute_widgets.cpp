@@ -24,12 +24,12 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-#include "common/type/array.hpp"
-#include "common/util/filesystem.hpp"
 #include "common/util/string_buffer.hpp"
 #include "io/file_dialog.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/core/io/filesystem.hpp"
+#include "tactile/core/type/array.hpp"
 #include "ui/constants.hpp"
 #include "ui/style/colors.hpp"
 #include "ui/style/icons.hpp"
@@ -66,7 +66,7 @@ template <std::invocable T>
 
   ui_lazy_tooltip("##PathTooltip", lang.misc.type_path.c_str());
 
-  return nothing;
+  return kNone;
 }
 
 }  // namespace
@@ -83,7 +83,7 @@ auto ui_int_input(const char* id, int value) -> Maybe<int>
   const auto& lang = get_current_language();
   ui_lazy_tooltip("##IntTooltip", lang.misc.type_int.c_str());
 
-  return nothing;
+  return kNone;
 }
 
 auto ui_int2_input(const char* id, Int2 value) -> Maybe<Int2>
@@ -98,7 +98,7 @@ auto ui_int2_input(const char* id, Int2 value) -> Maybe<Int2>
   const auto& lang = get_current_language();
   ui_lazy_tooltip("##Int2Tooltip", lang.misc.type_int2.c_str());
 
-  return nothing;
+  return kNone;
 }
 
 auto ui_int3_input(const char* id, Int3 value) -> Maybe<Int3>
@@ -113,7 +113,7 @@ auto ui_int3_input(const char* id, Int3 value) -> Maybe<Int3>
   const auto& lang = get_current_language();
   ui_lazy_tooltip("##Int3Tooltip", lang.misc.type_int3.c_str());
 
-  return nothing;
+  return kNone;
 }
 
 auto ui_int4_input(const char* id, Int4 value) -> Maybe<Int4>
@@ -128,7 +128,7 @@ auto ui_int4_input(const char* id, Int4 value) -> Maybe<Int4>
   const auto& lang = get_current_language();
   ui_lazy_tooltip("##Int4Tooltip", lang.misc.type_int4.c_str());
 
-  return nothing;
+  return kNone;
 }
 
 auto ui_float_input(const char* id, float value, const float min, const float max)
@@ -152,7 +152,7 @@ auto ui_float_input(const char* id, float value, const float min, const float ma
   const auto& lang = get_current_language();
   ui_lazy_tooltip("##FloatTooltip", lang.misc.type_float.c_str());
 
-  return nothing;
+  return kNone;
 }
 
 auto ui_float2_input(const char* id, Float2 value, const float min, const float max)
@@ -176,7 +176,7 @@ auto ui_float2_input(const char* id, Float2 value, const float min, const float 
   const auto& lang = get_current_language();
   ui_lazy_tooltip("##Float2Tooltip", lang.misc.type_float2.c_str());
 
-  return nothing;
+  return kNone;
 }
 
 auto ui_float3_input(const char* id, Float3 value, const float min, const float max)
@@ -200,7 +200,7 @@ auto ui_float3_input(const char* id, Float3 value, const float min, const float 
   const auto& lang = get_current_language();
   ui_lazy_tooltip("##Float3Tooltip", lang.misc.type_float3.c_str());
 
-  return nothing;
+  return kNone;
 }
 
 auto ui_float4_input(const char* id, Float4 value, const float min, const float max)
@@ -224,7 +224,7 @@ auto ui_float4_input(const char* id, Float4 value, const float min, const float 
   const auto& lang = get_current_language();
   ui_lazy_tooltip("##Float4Tooltip", lang.misc.type_float4.c_str());
 
-  return nothing;
+  return kNone;
 }
 
 auto ui_string_input_with_hint(const char* id,
@@ -261,7 +261,7 @@ auto ui_string_input_with_hint(const char* id,
   const auto& lang = get_current_language();
   ui_lazy_tooltip("##StringTooltip", lang.misc.type_string.c_str());
 
-  return nothing;
+  return kNone;
 }
 
 auto ui_string_input(const char* id,
@@ -284,7 +284,7 @@ auto ui_bool_input(const char* id, bool value) -> Maybe<bool>
   const auto& lang = get_current_language();
   ui_lazy_tooltip("##BoolTooltip", lang.misc.type_bool.c_str());
 
-  return nothing;
+  return kNone;
 }
 
 auto ui_object_input(const char* id, ObjectRef value) -> Maybe<ObjectRef>
@@ -297,7 +297,7 @@ auto ui_object_input(const char* id, ObjectRef value) -> Maybe<ObjectRef>
   const auto& lang = get_current_language();
   ui_lazy_tooltip("##ObjectTooltip", lang.misc.type_object.c_str());
 
-  return nothing;
+  return kNone;
 }
 
 auto ui_color_input(const char* id, const Color value) -> Maybe<Color>
@@ -312,7 +312,7 @@ auto ui_color_input(const char* id, const Color value) -> Maybe<Color>
     return Color::from_norm(rgba.at(0), rgba.at(1), rgba.at(2), rgba.at(3));
   }
 
-  return nothing;
+  return kNone;
 }
 
 auto ui_file_path_input(const char* id, const Path& value) -> Maybe<Path>
@@ -418,7 +418,7 @@ auto ui_attribute_input(const char* id, const Attribute& value) -> Maybe<Attribu
     }
   }
 
-  return nothing;
+  return kNone;
 }
 
 auto ui_attribute_type_combo(const AttributeType current_type,

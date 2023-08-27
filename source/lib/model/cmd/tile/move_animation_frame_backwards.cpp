@@ -19,11 +19,11 @@
 
 #include "move_animation_frame_backwards.hpp"
 
-#include "common/debug/assert.hpp"
 #include "core/tile/tile.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/tileset_document.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/error.hpp"
 
 namespace tactile::cmd {

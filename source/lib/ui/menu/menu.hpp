@@ -21,8 +21,8 @@
 
 #include <SDL.h>
 
-#include "common/macros.hpp"
-#include "common/type/string.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/string.hpp"
 
 namespace tactile {
 

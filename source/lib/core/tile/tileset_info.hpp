@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
-#include "common/type/math.hpp"
-#include "common/type/path.hpp"
-#include "common/type/ptr.hpp"
 #include "core/texture.hpp"
+#include "tactile/core/io/filesystem.hpp"
+#include "tactile/core/math/vector.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
 
 namespace tactile {
 

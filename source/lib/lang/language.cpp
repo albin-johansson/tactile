@@ -23,12 +23,12 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/type/hash_map.hpp"
 #include "common/util/assoc.hpp"
 #include "io/lang/language_parser.hpp"
 #include "lang/strings.hpp"
 #include "model/settings.hpp"
 #include "tactile/core/debug/error.hpp"
+#include "tactile/core/type/hash_map.hpp"
 
 namespace tactile {
 namespace {

@@ -23,11 +23,11 @@
 
 #include <imgui.h>
 
-#include "common/debug/assert.hpp"
-#include "common/numeric.hpp"
-#include "common/type/math.hpp"
 #include "common/util/bit.hpp"
 #include "core/color.hpp"
+#include "tactile/core/debug/assert.hpp"
+#include "tactile/core/math/vector.hpp"
+#include "tactile/core/prelude.hpp"
 
 namespace tactile {
 

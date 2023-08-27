@@ -22,15 +22,15 @@
 #include <centurion/event.hpp>
 #include <entt/signal/dispatcher.hpp>
 
-#include "common/type/vec.hpp"
 #include "model/event/all.hpp"
+#include "tactile/core/type/vector.hpp"
 #include "ui/shortcut/mappings.hpp"
 #include "ui/shortcut/shortcut.hpp"
 
 namespace tactile {
 namespace {
 
-inline Vec<Shortcut> gShortcuts;
+inline Vector<Shortcut> gShortcuts;
 
 template <typename Event>
 void init_shortcut(const MenuAction action,

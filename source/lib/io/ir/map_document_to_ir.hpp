@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/macros.hpp"
 #include "io/ir/map/map_ir.hpp"
+#include "tactile/core/prelude.hpp"
 
 namespace tactile {
 

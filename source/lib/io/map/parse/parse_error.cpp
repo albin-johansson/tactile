@@ -210,7 +210,7 @@ auto to_cause(const ParseError error) -> StringView
   }
 }
 
-auto operator<<(OStream& stream, const ParseError error) -> OStream&
+auto operator<<(std::ostream& stream, const ParseError error) -> std::ostream&
 {
   return stream << magic_enum::enum_name(error);
 }

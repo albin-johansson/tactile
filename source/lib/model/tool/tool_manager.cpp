@@ -42,14 +42,16 @@ struct ToolManager::Data final {
   Tool* active_tool {};
 };
 
-TACTILE_DEFINE_MOVE(ToolManager);
-
 ToolManager::ToolManager()
     : mData {std::make_unique<Data>()}
 {
 }
 
 ToolManager::~ToolManager() noexcept = default;
+
+ToolManager::ToolManager(ToolManager&& other) noexcept = default;
+
+auto ToolManager::operator=(ToolManager&& other) noexcept -> ToolManager& = default;
 
 void ToolManager::accept(ToolVisitor& visitor) const
 {

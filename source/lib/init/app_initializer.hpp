@@ -21,10 +21,10 @@
 
 #include <centurion/window.hpp>
 
-#include "common/macros.hpp"
-#include "common/type/maybe.hpp"
 #include "init/protobuf_context.hpp"
 #include "init/sdl_context.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/maybe.hpp"
 #include "ui/imgui_context.hpp"
 
 namespace tactile {

@@ -21,14 +21,14 @@
 
 #include <concepts>  // integral
 
-#include "common/numeric.hpp"
-#include "common/type/vec.hpp"
 #include "core/tile/tile_extent.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/vector.hpp"
 
 namespace tactile {
 
-using TileRow = Vec<TileID>;
-using TileMatrix = Vec<TileRow>;
+using TileRow = Vector<TileID>;
+using TileMatrix = Vector<TileRow>;
 
 template <typename T>
 struct MatrixCoords final {

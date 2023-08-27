@@ -21,11 +21,11 @@
 
 #include <imgui.h>
 
-#include "common/type/maybe.hpp"
-#include "common/type/path.hpp"
-#include "common/type/string.hpp"
 #include "core/attribute.hpp"
 #include "core/color.hpp"
+#include "tactile/core/io/filesystem.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/string.hpp"
 
 namespace tactile::ui {
 
@@ -84,7 +84,7 @@ namespace tactile::ui {
     -> Maybe<Attribute>;
 
 [[nodiscard]] auto ui_attribute_type_combo(AttributeType current_type,
-                                           Maybe<AttributeType> excluded_type = nothing)
+                                           Maybe<AttributeType> excluded_type = kNone)
     -> Maybe<AttributeType>;
 
 }  // namespace tactile::ui

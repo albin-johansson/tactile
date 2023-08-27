@@ -22,8 +22,8 @@
 #include <algorithm>  // find, min, max
 #include <cmath>      // pow
 
-#include "common/predef.hpp"
-#include "common/type/array.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/array.hpp"
 #include "themes.hpp"
 #include "ui/conversions.hpp"
 

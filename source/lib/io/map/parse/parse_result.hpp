@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/type/expected.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/parse_error.hpp"
+#include "tactile/core/type/expected.hpp"
 
 namespace tactile {
 

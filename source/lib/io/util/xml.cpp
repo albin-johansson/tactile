@@ -25,8 +25,8 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/assert.hpp"
 #include "io/stream.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "ui/constants.hpp"
 
 namespace tactile {
@@ -40,7 +40,7 @@ auto parse_xml_file(const Path& path) -> Maybe<XmlDocument>
     return document;
   }
   else {
-    return nothing;
+    return kNone;
   }
 }
 
@@ -75,7 +75,7 @@ auto get_string_attr(XmlNode node, const char* attr_name) -> Maybe<String>
     return str;
   }
   else {
-    return nothing;
+    return kNone;
   }
 }
 
@@ -90,7 +90,7 @@ auto get_int_attr(XmlNode node, const char* attr_name) -> Maybe<int32>
     return value;
   }
   else {
-    return nothing;
+    return kNone;
   }
 }
 
@@ -105,7 +105,7 @@ auto get_uint_attr(XmlNode node, const char* attr_name) -> Maybe<uint32>
     return value;
   }
   else {
-    return nothing;
+    return kNone;
   }
 }
 
@@ -120,7 +120,7 @@ auto get_float_attr(XmlNode node, const char* attr_name) -> Maybe<float>
     return value;
   }
   else {
-    return nothing;
+    return kNone;
   }
 }
 
@@ -133,7 +133,7 @@ auto get_bool_attr(XmlNode node, const char* attr_name) -> Maybe<bool>
     return attribute.as_bool();
   }
   else {
-    return nothing;
+    return kNone;
   }
 }
 

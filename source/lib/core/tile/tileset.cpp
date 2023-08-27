@@ -21,10 +21,10 @@
 
 #include <utility>  // move
 
-#include "common/debug/assert.hpp"
 #include "common/util/assoc.hpp"
 #include "core/tile/tile.hpp"
 #include "core/tile/tileset_info.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/error.hpp"
 #include "tile_matrix.hpp"
 
@@ -42,7 +42,7 @@ struct Tileset::Data final {
   Maybe<TileIndex> selected_tile;
 
   /// Optimization to avoid iterating all tiles in the update function.
-  // TODO Vec<UUID> mAnimatedTiles;
+  // TODO Vector<UUID> mAnimatedTiles;
 
   /// A cache of the tiles that should be rendered when a tile is encountered
   mutable HashMap<TileIndex, TileIndex> appearance_cache;

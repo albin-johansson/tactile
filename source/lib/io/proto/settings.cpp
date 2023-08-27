@@ -23,10 +23,10 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/type/path.hpp"
 #include "io/directories.hpp"
 #include "io/proto/proto.hpp"
 #include "io/stream.hpp"
+#include "tactile/core/io/filesystem.hpp"
 
 namespace tactile {
 namespace {
@@ -59,7 +59,7 @@ void to_proto(const Color& color, proto::Color* out)
   auto stream = open_input_stream(path, FileType::Binary);
   if (!stream) {
     spdlog::error("Failed to open settings file");
-    return nothing;
+    return kNone;
   }
 
   proto::Settings cfg;
@@ -184,7 +184,7 @@ void to_proto(const Color& color, proto::Color* out)
     return std::move(settings);
   }
 
-  return nothing;
+  return kNone;
 }
 
 }  // namespace

@@ -21,15 +21,8 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "common/numeric.hpp"
-#include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/path.hpp"
-#include "common/type/ptr.hpp"
-#include "common/type/string.hpp"
 #include "common/type/tile_cache.hpp"
 #include "common/type/uuid.hpp"
-#include "common/type/vec.hpp"
 #include "core/context/context_manager.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/tile_format.hpp"
@@ -40,6 +33,13 @@
 #include "model/document/document_delegate.hpp"
 #include "model/tool/tool_manager.hpp"
 #include "model/tool/tool_type.hpp"
+#include "tactile/core/io/filesystem.hpp"
+#include "tactile/core/math/vector.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
+#include "tactile/core/type/string.hpp"
+#include "tactile/core/type/vector.hpp"
 
 namespace tactile {
 

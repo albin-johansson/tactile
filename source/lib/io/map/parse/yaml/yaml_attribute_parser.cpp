@@ -20,11 +20,11 @@
 #include <concepts>  // same_as
 #include <utility>   // move
 
-#include "common/type/maybe.hpp"
-#include "common/type/string.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/string.hpp"
 
 namespace tactile {
 namespace {
@@ -39,7 +39,7 @@ template <typename T>
 
   T vec {};
   if (components.size() != vec.length()) {
-    return nothing;
+    return kNone;
   }
 
   int index = 0;
@@ -57,7 +57,7 @@ template <typename T>
       vec[index] = *component_value;
     }
     else {
-      return nothing;
+      return kNone;
     }
 
     ++index;
@@ -109,14 +109,14 @@ template <typename T>
         return *color;
       }
       else {
-        return nothing;
+        return kNone;
       }
     }
     case AttributeType::Object:
       return ObjectRef {value.as<int32>()};
 
     default:
-      return nothing;
+      return kNone;
   }
 }
 

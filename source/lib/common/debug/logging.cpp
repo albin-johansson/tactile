@@ -28,12 +28,12 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
-#include "common/predef.hpp"
-#include "common/type/deque.hpp"
-#include "common/type/ptr.hpp"
-#include "common/type/set.hpp"
 #include "io/directories.hpp"
 #include "tactile/core/debug/error.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/deque.hpp"
+#include "tactile/core/type/set.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
 
 namespace tactile {
 namespace {

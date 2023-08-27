@@ -19,13 +19,11 @@
 
 #pragma once
 
-#include <array>  // array
-
-#include "common/numeric.hpp"
+#include <functional>  // function
 
 namespace tactile {
 
-template <typename T, usize N>
-using Array = std::array<T, N>;
+template <typename T>
+using Function = std::function<T>;
 
 }  // namespace tactile

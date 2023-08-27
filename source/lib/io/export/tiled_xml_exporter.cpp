@@ -25,7 +25,6 @@
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
-#include "common/util/filesystem.hpp"
 #include "common/util/functional.hpp"
 #include "io/export/tiled_info.hpp"
 #include "io/ir/map/map_ir.hpp"
@@ -34,6 +33,7 @@
 #include "io/util/xml.hpp"
 #include "model/settings.hpp"
 #include "tactile/core/debug/error.hpp"
+#include "tactile/core/io/filesystem.hpp"
 
 namespace tactile {
 namespace {

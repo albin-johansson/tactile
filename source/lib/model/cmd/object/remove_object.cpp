@@ -19,13 +19,13 @@
 
 #include "remove_object.hpp"
 
-#include "common/debug/assert.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object.hpp"
 #include "core/layer/object_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/error.hpp"
 
 namespace tactile::cmd {
@@ -67,7 +67,7 @@ void RemoveObject::redo()
   const auto& id = mObject->get_uuid();
 
   if (layer.active_object_id() == id) {
-    layer.select_object(nothing);
+    layer.select_object(kNone);
   }
 
   layer.remove_object(id);

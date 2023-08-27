@@ -22,13 +22,13 @@
 #include <memory>   // make_shared
 #include <utility>  // move
 
-#include "common/debug/assert.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
 #include "model/model.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/error.hpp"
 
 namespace tactile::cmd {

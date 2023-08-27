@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "common/macros.hpp"
-#include "common/type/ptr.hpp"
 #include "model/tool/tool.hpp"
 #include "model/tool/tool_type.hpp"
 #include "model/tool/tool_visitor.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
 
 namespace tactile {
 
@@ -31,11 +31,14 @@ namespace tactile {
 class ToolManager final : private Tool {
  public:
   TACTILE_DELETE_COPY(ToolManager);
-  TACTILE_DECLARE_MOVE(ToolManager);
 
   ToolManager();
 
   ~ToolManager() noexcept override;
+
+  ToolManager(ToolManager&& other) noexcept;
+
+  auto operator=(ToolManager&& other) noexcept -> ToolManager&;
 
   void accept(ToolVisitor& visitor) const override;
 

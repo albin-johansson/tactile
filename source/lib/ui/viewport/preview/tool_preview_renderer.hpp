@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "common/macros.hpp"
-#include "common/type/ref.hpp"
 #include "model/mouse_info.hpp"
 #include "model/tool/tool_visitor.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/ref.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, Map)

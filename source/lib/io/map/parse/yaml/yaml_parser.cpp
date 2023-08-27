@@ -24,8 +24,8 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "common/type/expected.hpp"
 #include "io/util/yaml.hpp"
+#include "tactile/core/type/expected.hpp"
 
 namespace tactile {
 namespace {

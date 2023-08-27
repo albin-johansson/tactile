@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
 
 namespace tactile {
 class MapDocument;

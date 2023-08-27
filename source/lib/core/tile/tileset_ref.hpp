@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "core/region.hpp"
 #include "core/tile/tileset.hpp"
 #include "core/viewport.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/smart_ptr.hpp"
 
 namespace tactile {
 

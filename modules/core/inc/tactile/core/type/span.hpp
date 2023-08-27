@@ -19,4 +19,13 @@
 
 #pragma once
 
+#include <span>  // span, dynamic_extent
+
 #include "tactile/core/prelude.hpp"
+
+namespace tactile {
+
+template <typename T, usize Extent = std::dynamic_extent>
+using Span = std::span<T, Extent>;
+
+}  // namespace tactile

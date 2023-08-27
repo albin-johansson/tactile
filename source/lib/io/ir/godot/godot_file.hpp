@@ -19,14 +19,14 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
-#include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
-#include "common/type/string.hpp"
-#include "common/type/string_map.hpp"
-#include "common/type/tree_map.hpp"
-#include "common/type/vec.hpp"
 #include "core/attribute.hpp"
+#include "tactile/core/math/vector.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/string.hpp"
+#include "tactile/core/type/string_map.hpp"
+#include "tactile/core/type/tree_map.hpp"
+#include "tactile/core/type/vector.hpp"
 
 namespace tactile {
 
@@ -52,13 +52,13 @@ struct GdAtlasTexture final {
 
 struct GdAnimation final {
   String name;
-  Vec<GdSubRes> frames;  /// Atlas textures
+  Vector<GdSubRes> frames;  /// Atlas textures
   float speed {};
 };
 
 struct GdSpriteFrames final {
   GdSubRes id {};
-  Vec<GdAnimation> animations;
+  Vector<GdAnimation> animations;
 };
 
 struct GdRectShape final {

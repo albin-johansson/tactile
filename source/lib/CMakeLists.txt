@@ -57,7 +57,6 @@ target_compile_definitions(${TACTILE_LIB}
                            IMGUI_DISABLE_OBSOLETE_FUNCTIONS
                            IMGUI_DEFINE_MATH_OPERATORS
                            GLEW_NO_GLU
-                           BOOST_ENABLE_ASSERT_DEBUG_HANDLER
                            BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
                            BOOST_UUID_RANDOM_PROVIDER_FORCE_WINCRYPT
                            BOOST_NO_CXX98_FUNCTION_BASE
