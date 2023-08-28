@@ -22,7 +22,7 @@
 #include "common/type/uuid.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "tactile/core/prelude.hpp"
-#include "tactile/core/type/tree_map.hpp"
+#include "tactile/core/type/hash_map.hpp"
 
 namespace tactile {
 
@@ -31,8 +31,8 @@ TACTILE_FWD(class Map)
 class MapCommandCache final {
   friend struct SaveTilesVisitor;
 
-  using TileCache = TreeMap<TilePos, TileID>;
-  using LayerCache = TreeMap<UUID, TileCache>;
+  using TileCache = HashMap<TilePos, TileID>;
+  using LayerCache = HashMap<UUID, TileCache>;
 
  public:
   void clear() noexcept;

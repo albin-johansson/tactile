@@ -19,8 +19,10 @@
 
 #pragma once
 
-#include "common/type/tile_cache.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "model/tool/tool.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/hash_map.hpp"
 
 namespace tactile {
 
@@ -49,7 +51,7 @@ class EraserTool final : public Tool {
   [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Eraser; }
 
  private:
-  TileCache mPrevState;
+  HashMap<TilePos, TileID> mPrevState;
 
   void update_sequence(DocumentModel& model, const TilePos& cursor);
 

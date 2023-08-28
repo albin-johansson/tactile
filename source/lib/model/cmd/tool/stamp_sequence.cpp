@@ -31,8 +31,8 @@ namespace tactile::cmd {
 
 StampSequence::StampSequence(Shared<Map> map,
                              const UUID& layer_id,
-                             TileCache old_state,
-                             TileCache new_state)
+                             HashMap<TilePos, TileID> old_state,
+                             HashMap<TilePos, TileID> new_state)
     : mMap {std::move(map)},
       mLayerId {layer_id},
       mOldState {std::move(old_state)},
@@ -59,7 +59,7 @@ auto StampSequence::get_name() const -> String
   return lang.cmd.stamp_tool;
 }
 
-void StampSequence::apply_sequence(const TileCache& cache)
+void StampSequence::apply_sequence(const HashMap<TilePos, TileID>& cache)
 {
   auto& layer = mMap->get_invisible_root().get_tile_layer(mLayerId);
   for (const auto& [pos, tile]: cache) {

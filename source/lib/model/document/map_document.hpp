@@ -21,13 +21,13 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "common/type/tile_cache.hpp"
 #include "common/type/uuid.hpp"
 #include "core/context/context_manager.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/tile_format.hpp"
 #include "core/map.hpp"
 #include "core/tile/tile_extent.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "core/viewport.hpp"
 #include "model/document/document.hpp"
 #include "model/document/document_delegate.hpp"
@@ -36,6 +36,7 @@
 #include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/math/vector.hpp"
 #include "tactile/core/prelude.hpp"
+#include "tactile/core/type/hash_map.hpp"
 #include "tactile/core/type/maybe.hpp"
 #include "tactile/core/type/smart_ptr.hpp"
 #include "tactile/core/type/string.hpp"
@@ -94,11 +95,11 @@ class MapDocument final : public Document {
 
   /// Registers a command for a stamp sequence.
   void register_stamp_sequence(const UUID& layer_id,
-                               TileCache previous,
-                               TileCache sequence);
+                               HashMap<TilePos, TileID> previous,
+                               HashMap<TilePos, TileID> sequence);
 
   /// Registers a command for an eraser sequence.
-  void register_eraser_sequence(const UUID& layer_id, TileCache previous);
+  void register_eraser_sequence(const UUID& layer_id, HashMap<TilePos, TileID> previous);
 
   /// Executes a command that performs a flood fill in a layer in the associated map.
   void flood(const UUID& layer_id, const TilePos& origin, TileID replacement);

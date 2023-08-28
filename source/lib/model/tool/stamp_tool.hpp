@@ -19,8 +19,10 @@
 
 #pragma once
 
-#include "common/type/tile_cache.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "model/tool/tool.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/hash_map.hpp"
 #include "tactile/core/type/maybe.hpp"
 
 namespace tactile {
@@ -70,8 +72,8 @@ class StampTool final : public Tool {
   [[nodiscard]] auto get_type() const -> ToolType override { return ToolType::Stamp; }
 
  private:
-  TileCache mPrevious;  ///< Previous tile state.
-  TileCache mCurrent;   ///< The current stamp sequence.
+  HashMap<TilePos, TileID> mPrevious;  ///< Previous tile state.
+  HashMap<TilePos, TileID> mCurrent;   ///< The current stamp sequence.
   Maybe<TilePos> mLastChangedPos;
   bool mRandomMode {};
 

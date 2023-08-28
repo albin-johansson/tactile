@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "common/type/tile_cache.hpp"
 #include "common/type/uuid.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "model/mouse_info.hpp"
 #include "model/tool/tool_type.hpp"
 #include "tactile/core/math/vector.hpp"
 #include "tactile/core/prelude.hpp"
+#include "tactile/core/type/hash_map.hpp"
 
 namespace tactile {
 
@@ -35,8 +35,8 @@ struct SelectToolEvent final {
 
 struct StampSequenceEvent final {
   UUID layer_id {};
-  TileCache old_state;
-  TileCache sequence;
+  HashMap<TilePos, TileID> old_state;
+  HashMap<TilePos, TileID> sequence;
 };
 
 struct SetStampRandomizerEvent final {
@@ -45,7 +45,7 @@ struct SetStampRandomizerEvent final {
 
 struct EraserSequenceEvent final {
   UUID layer_id {};
-  TileCache old_state;
+  HashMap<TilePos, TileID> old_state;
 };
 
 struct FloodEvent final {

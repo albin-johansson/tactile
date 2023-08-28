@@ -29,7 +29,9 @@
 
 namespace tactile::cmd {
 
-EraserSequence::EraserSequence(Shared<Map> map, const UUID& layer_id, TileCache old_state)
+EraserSequence::EraserSequence(Shared<Map> map,
+                               const UUID& layer_id,
+                               HashMap<TilePos, TileID> old_state)
     : mMap {std::move(map)},
       mLayerId {layer_id},
       mOldState {std::move(old_state)}

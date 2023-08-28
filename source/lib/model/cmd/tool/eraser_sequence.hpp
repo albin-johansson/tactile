@@ -19,17 +19,21 @@
 
 #pragma once
 
-#include "common/type/tile_cache.hpp"
 #include "common/type/uuid.hpp"
 #include "core/map.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/hash_map.hpp"
 #include "tactile/core/type/smart_ptr.hpp"
 
 namespace tactile::cmd {
 
 class EraserSequence final : public Command {
  public:
-  EraserSequence(Shared<Map> map, const UUID& layer_id, TileCache old_state);
+  EraserSequence(Shared<Map> map,
+                 const UUID& layer_id,
+                 HashMap<TilePos, TileID> old_state);
 
   void undo() override;
 
@@ -40,7 +44,7 @@ class EraserSequence final : public Command {
  private:
   Shared<Map> mMap;
   UUID mLayerId {};
-  TileCache mOldState;
+  HashMap<TilePos, TileID> mOldState;
 };
 
 }  // namespace tactile::cmd

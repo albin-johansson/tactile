@@ -19,10 +19,12 @@
 
 #pragma once
 
-#include "common/type/tile_cache.hpp"
 #include "common/type/uuid.hpp"
 #include "core/map.hpp"
+#include "core/tile/tile_pos.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/hash_map.hpp"
 #include "tactile/core/type/smart_ptr.hpp"
 
 namespace tactile::cmd {
@@ -31,8 +33,8 @@ class StampSequence final : public Command {
  public:
   StampSequence(Shared<Map> map,
                 const UUID& layer_id,
-                TileCache old_state,
-                TileCache new_state);
+                HashMap<TilePos, TileID> old_state,
+                HashMap<TilePos, TileID> new_state);
 
   void undo() override;
 
@@ -43,10 +45,10 @@ class StampSequence final : public Command {
  private:
   Shared<Map> mMap;
   UUID mLayerId {};
-  TileCache mOldState;
-  TileCache mNewState;
+  HashMap<TilePos, TileID> mOldState;
+  HashMap<TilePos, TileID> mNewState;
 
-  void apply_sequence(const TileCache& cache);
+  void apply_sequence(const HashMap<TilePos, TileID>& cache);
 };
 
 }  // namespace tactile::cmd

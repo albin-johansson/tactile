@@ -123,8 +123,8 @@ void MapDocument::set_layer_visible(const UUID& layer_id, const bool visible)
 }
 
 void MapDocument::register_stamp_sequence(const UUID& layer_id,
-                                          TileCache previous,
-                                          TileCache sequence)
+                                          HashMap<TilePos, TileID> previous,
+                                          HashMap<TilePos, TileID> sequence)
 {
   get_history().store<cmd::StampSequence>(mMap,
                                           layer_id,
@@ -132,7 +132,8 @@ void MapDocument::register_stamp_sequence(const UUID& layer_id,
                                           std::move(sequence));
 }
 
-void MapDocument::register_eraser_sequence(const UUID& layer_id, TileCache previous)
+void MapDocument::register_eraser_sequence(const UUID& layer_id,
+                                           HashMap<TilePos, TileID> previous)
 {
   get_history().store<cmd::EraserSequence>(mMap, layer_id, std::move(previous));
 }
