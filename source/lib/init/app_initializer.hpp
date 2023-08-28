@@ -44,6 +44,4 @@ class AppInitializer final {
   Maybe<ImGuiContext> mImGui;
 };
 
-void on_terminate();
-
 }  // namespace tactile

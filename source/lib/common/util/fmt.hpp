@@ -22,11 +22,11 @@
 #include <algorithm>    // min
 #include <string_view>  // string_view
 
+#include <boost/stacktrace.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
-#include "common/debug/stacktrace.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "core/tile/tile_pos.hpp"

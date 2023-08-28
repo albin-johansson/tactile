@@ -22,16 +22,17 @@
 #include <cstdlib>    // abort
 #include <exception>  // exception, set_terminate
 
+#include <boost/stacktrace.hpp>
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
 #include "common/debug/logging.hpp"
-#include "common/debug/stacktrace.hpp"
 #include "common/util/fmt.hpp"
 #include "io/directories.hpp"
 #include "io/proto/settings.hpp"
 #include "lang/language.hpp"
 #include "system/win32.hpp"
+#include "tactile/core/debug/crash_handler.hpp"
 #include "tactile/core/io/filesystem.hpp"
 #include "ui/menu/menu.hpp"
 
@@ -83,19 +84,6 @@ AppInitializer::AppInitializer()
 auto AppInitializer::get_window() -> cen::window&
 {
   return mSDL.value().get_window();
-}
-
-void on_terminate()
-{
-  try {
-    spdlog::critical("Into exile I must go. Failed I have.\n{}",
-                     boost::stacktrace::stacktrace {});
-  }
-  catch (...) {
-    // Not much we can do.
-  }
-
-  std::abort();
 }
 
 }  // namespace tactile
