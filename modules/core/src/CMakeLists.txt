@@ -21,9 +21,11 @@ target_compile_definitions(${TACTILE_CORE_TARGET}
 target_include_directories(${TACTILE_CORE_TARGET} PUBLIC "${TACTILE_CORE_DIR}/inc")
 
 target_link_libraries(${TACTILE_CORE_TARGET}
+                      PUBLIC
+                      spdlog::spdlog  # Public due to profiling macros
+
                       PRIVATE
                       Boost::boost
                       FastFloat::fast_float
                       fmt::fmt
-                      spdlog::spdlog
                       )
