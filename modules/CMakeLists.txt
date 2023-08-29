@@ -111,4 +111,5 @@ add_subdirectory(editor/src)
 
 if (TACTILE_BUILD_TESTS MATCHES ON)
   add_subdirectory(core/test)
+  add_subdirectory(editor/test)
 endif ()
