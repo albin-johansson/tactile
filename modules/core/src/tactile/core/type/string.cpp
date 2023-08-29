@@ -11,6 +11,10 @@
 
 #include <fast_float/fast_float.h>
 
+#if TACTILE_OS_WINDOWS
+  #include <windows.h>
+#endif
+
 #include "tactile/core/debug/assert.hpp"
 
 namespace tactile {
@@ -19,11 +23,14 @@ namespace {
 template <std::integral T>
 [[nodiscard]] auto _parse_integral(StringView str, const int base) -> Maybe<T>
 {
+  const char* begin = str.data();
+  const char* end = str.data() + str.size();
+
   T value {};
-  const auto [ptr, err] = std::from_chars(str.begin(), str.end(), value, base);
+  const auto [ptr, err] = std::from_chars(begin, end, value, base);
 
   // Require no error and fully valid string, e.g., "42 " is not accepted.
-  if (err == std::errc {} && ptr == str.end()) {
+  if (err == std::errc {} && ptr == end) {
     return value;
   }
   else {
@@ -34,11 +41,14 @@ template <std::integral T>
 template <std::floating_point T>
 [[nodiscard]] auto _parse_float(StringView str) -> Maybe<T>
 {
+  const char* begin = str.data();
+  const char* end = str.data() + str.size();
+
   T value {};
-  const auto [ptr, err] = fast_float::from_chars(str.begin(), str.end(), value);
+  const auto [ptr, err] = fast_float::from_chars(begin, end, value);
 
   // Require no error and fully valid string, e.g., "4.2 " is not accepted.
-  if (err == std::errc {} && ptr == str.end()) {
+  if (err == std::errc {} && ptr == end) {
     return value;
   }
   else {

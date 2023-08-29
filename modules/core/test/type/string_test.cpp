@@ -10,7 +10,7 @@ using namespace tactile;
 using namespace tactile::int_literals;
 
 #if TACTILE_OS_WINDOWS
-  #define NATIVE_STR(Str) "L" Str
+  #define NATIVE_STR(Str) L##Str
 #else
   #define NATIVE_STR(Str) Str
 #endif

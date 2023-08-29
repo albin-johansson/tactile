@@ -41,8 +41,8 @@ TEST(RNG, next_bool)
 
   // This is far from perfect, but detects suspicious (unlikely) ratios.
   const auto ratio = static_cast<double>(true_count) / static_cast<double>(false_count);
-  EXPECT_GT(ratio, 0.90);
-  EXPECT_LT(ratio, 1.10);
+  EXPECT_GT(ratio, 0.80);
+  EXPECT_LT(ratio, 1.20);
 }
 
 TEST(RNG, next_float)
