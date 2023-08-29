@@ -1,4 +1,4 @@
-project(tactile-core-test)
+project(tactile-core-test CXX)
 
 set(TACTILE_CORE_TEST_TARGET tactile-core-test)
 
