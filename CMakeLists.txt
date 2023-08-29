@@ -60,6 +60,7 @@ set(TACTILE_EXE Tactile)
 set(TACTILE_TEST TactileTests)
 
 set(TACTILE_CORE_TARGET tactile-core)
+set(TACTILE_EDITOR_TARGET tactile-editor)
 
 find_package(OpenGL REQUIRED)
 find_package(Boost REQUIRED)

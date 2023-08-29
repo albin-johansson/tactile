@@ -103,4 +103,12 @@ function(tactile_copy_directory_post_build target from to)
                      ${to})
 endfunction()
 
-add_subdirectory(core)
+set(TACTILE_CORE_DIR "${TACTILE_ROOT_DIR}/modules/core")
+set(TACTILE_EDITOR_DIR "${TACTILE_ROOT_DIR}/modules/editor")
+
+add_subdirectory(core/src)
+add_subdirectory(editor/src)
+
+if (TACTILE_BUILD_TESTS MATCHES ON)
+  add_subdirectory(core/test)
+endif ()

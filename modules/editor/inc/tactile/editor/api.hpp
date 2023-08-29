@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "tactile/core/api.hpp"
+#include "tactile/core/prelude.hpp"
 
 #ifdef TACTILE_BUILDING_EDITOR
   #define TACTILE_EDITOR_API TACTILE_DLL_EXPORT
