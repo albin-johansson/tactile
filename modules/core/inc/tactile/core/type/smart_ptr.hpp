@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include <memory>  // unique_ptr, shared_ptr, weak_ptr, default_delete
+#include <memory>  // unique_ptr, shared_ptr, weak_ptr, default_delete, make_unique, make_shared
 
 namespace tactile {
 
@@ -14,5 +14,8 @@ using Shared = std::shared_ptr<T>;
 
 template <typename T>
 using Weak = std::weak_ptr<T>;
+
+using std::make_shared;
+using std::make_unique;
 
 }  // namespace tactile
