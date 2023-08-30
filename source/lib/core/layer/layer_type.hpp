@@ -19,13 +19,4 @@
 
 #pragma once
 
-namespace tactile {
-
-/// Represents all of the supported layer types.
-enum class LayerType {
-  TileLayer,
-  ObjectLayer,
-  GroupLayer
-};
-
-}  // namespace tactile
+#include "tactile/core/map/layer/layer_type.hpp"
