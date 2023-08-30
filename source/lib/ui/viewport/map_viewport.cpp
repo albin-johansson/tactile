@@ -60,7 +60,7 @@ struct MapViewportState final {
 inline constinit MapViewportState gViewportState;
 
 /// Creates a mouse info struct, but does not set the button member.
-[[nodiscard]] auto make_mouse_info(const ViewportCursorInfo& cursor) -> MouseInfo
+[[nodiscard]] auto _make_mouse_info(const ViewportCursorInfo& cursor) -> MouseInfo
 {
   MouseInfo info;
 
@@ -73,13 +73,13 @@ inline constinit MapViewportState gViewportState;
 }
 
 template <typename Event, typename T>
-void check_for(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T&& query)
+void _check_for(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T&& query)
 {
   const auto left = query(ImGuiMouseButton_Left);
   const auto mid = query(ImGuiMouseButton_Middle);
   const auto right = query(ImGuiMouseButton_Right);
   if (left || mid || right) {
-    auto info = make_mouse_info(cursor);
+    auto info = _make_mouse_info(cursor);
 
     if (left) {
       info.button = cen::mouse_button::left;
@@ -95,9 +95,9 @@ void check_for(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T
   }
 }
 
-void center_viewport(const Viewport& viewport,
-                     const CanvasInfo& canvas_info,
-                     entt::dispatcher& dispatcher)
+void _center_viewport(const Viewport& viewport,
+                      const CanvasInfo& canvas_info,
+                      entt::dispatcher& dispatcher)
 {
   const auto& cell = viewport.tile_size();
   const auto& offset = viewport.get_offset();
@@ -112,10 +112,10 @@ void center_viewport(const Viewport& viewport,
   dispatcher.enqueue<OffsetDocumentViewportEvent>(delta);
 }
 
-void draw_cursor_gizmos(const Renderer& renderer,
-                        const DocumentModel& model,
-                        const MapDocument& document,
-                        const ViewportCursorInfo& cursor)
+void _draw_cursor_gizmos(const Renderer& renderer,
+                         const DocumentModel& model,
+                         const MapDocument& document,
+                         const ViewportCursorInfo& cursor)
 {
   const auto& map = document.get_map();
 
@@ -126,13 +126,13 @@ void draw_cursor_gizmos(const Renderer& renderer,
                        2.0f);
   }
 
-  ToolPreviewRenderer preview_renderer {model, renderer, make_mouse_info(cursor)};
+  ToolPreviewRenderer preview_renderer {model, renderer, _make_mouse_info(cursor)};
 
   const auto& tools = document.get_tools();
   tools.accept(preview_renderer);
 }
 
-void poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
+void _poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
 {
   if (ImGui::IsPopupOpen(kViewportObjectContextMenuId, ImGuiPopupFlags_AnyPopup)) {
     return;
@@ -145,23 +145,25 @@ void poll_mouse(entt::dispatcher& dispatcher, const ViewportCursorInfo& cursor)
   // FIXME crash: we need to track origin dock for these mouse events, otherwise we might
   // end up emitting dragged events without an initial pressed event, etc.
   if (Window::contains_mouse()) {
-    check_for<ViewportMousePressedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
-      return ImGui::IsMouseClicked(button);
-    });
+    _check_for<ViewportMousePressedEvent>(
+        cursor,
+        dispatcher,
+        [](ImGuiMouseButton button) { return ImGui::IsMouseClicked(button); });
 
-    check_for<ViewportMouseDraggedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
+    _check_for<
+        ViewportMouseDraggedEvent>(cursor, dispatcher, [](ImGuiMouseButton button) {
       const auto& io = ImGui::GetIO();
       return ImGui::IsMouseDragging(button) && as_float2(io.MouseDelta) != Float2 {0, 0};
     });
 
-    check_for<ViewportMouseReleasedEvent>(
+    _check_for<ViewportMouseReleasedEvent>(
         cursor,
         dispatcher,
         [](ImGuiMouseButton button) { return ImGui::IsMouseReleased(button); });
   }
 }
 
-void update_viewport_context_menu(const Map& map, entt::dispatcher& dispatcher)
+void _update_viewport_context_menu(const Map& map, entt::dispatcher& dispatcher)
 {
   constexpr auto flags =
       ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverExistingPopup;
@@ -188,7 +190,7 @@ void update_viewport_context_menu(const Map& map, entt::dispatcher& dispatcher)
   }
 }
 
-void update_object_context_menu(const Map& map, entt::dispatcher& dispatcher)
+void _update_object_context_menu(const Map& map, entt::dispatcher& dispatcher)
 {
   if (const Popup popup {kViewportObjectContextMenuId}; popup.is_open()) {
     const auto& lang = get_current_language();
@@ -248,17 +250,17 @@ void show_map_viewport(const DocumentModel& model,
 
   // TODO viewport should be centered by default
   if (gViewportState.will_be_centered) {
-    center_viewport(viewport, renderer.get_canvas_info(), dispatcher);
+    _center_viewport(viewport, renderer.get_canvas_info(), dispatcher);
     gViewportState.will_be_centered = false;
   }
 
   renderer.render_map(document.get_map());
 
   const auto cursor = get_viewport_cursor_info(renderer.get_canvas_info());
-  poll_mouse(dispatcher, cursor);
+  _poll_mouse(dispatcher, cursor);
 
   if (Window::contains_mouse()) {
-    draw_cursor_gizmos(renderer, model, document, cursor);
+    _draw_cursor_gizmos(renderer, model, document, cursor);
   }
 
   renderer.pop_clip();
@@ -266,8 +268,8 @@ void show_map_viewport(const DocumentModel& model,
   update_map_viewport_toolbar(model, dispatcher);
   update_map_viewport_overlay(map, cursor);
 
-  update_viewport_context_menu(map, dispatcher);
-  update_object_context_menu(map, dispatcher);
+  _update_viewport_context_menu(map, dispatcher);
+  _update_object_context_menu(map, dispatcher);
 }
 
 void center_map_viewport()
