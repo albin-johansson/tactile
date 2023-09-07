@@ -151,11 +151,24 @@ using ObjectID = int32;
 using TileIndex = int32;  ///< For local tile identifiers.
 using TileID = int32;     ///< For global tile identifiers.
 
+/** Strong type for object references. */
+enum ObjectRef : int32 {
+};
+
 inline constexpr TileID kEmptyTile = 0;
 
 namespace int_literals {
 
-[[nodiscard]] constexpr auto operator"" _uz(const ulonglong value) noexcept -> usize
+/** Literal operator for ssize, equivalent to 'z' from C++23. */
+[[nodiscard]] constexpr auto operator"" _z(const ulonglong value) noexcept
+    -> ssize
+{
+  return static_cast<ssize>(value);
+}
+
+/** Literal operator for usize, equivalent to 'uz' from C++23. */
+[[nodiscard]] constexpr auto operator"" _uz(const ulonglong value) noexcept
+    -> usize
 {
   return static_cast<usize>(value);
 }
