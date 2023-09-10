@@ -1,0 +1,78 @@
+// Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
+
+#pragma once
+
+#include "tactile/core/api.hpp"
+#include "tactile/core/prelude.hpp"
+#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/type/string.hpp"
+
+namespace tactile {
+
+struct TACTILE_CORE_API UColor final {
+  uint8 red {};
+  uint8 green {};
+  uint8 blue {};
+  uint8 alpha {};
+
+  [[nodiscard]] constexpr auto operator==(const UColor&) const noexcept
+      -> bool = default;
+};
+
+struct TACTILE_CORE_API NColor final {
+  float red {};
+  float green {};
+  float blue {};
+  float alpha {};
+
+  [[nodiscard]] constexpr auto operator==(const NColor&) const noexcept
+      -> bool = default;
+};
+
+inline constexpr UColor kColorWhite = {0xFF, 0xFF, 0xFF, 0xFF};
+inline constexpr UColor kColorBlack = {0x00, 0x00, 0x00, 0xFF};
+
+[[nodiscard]]
+TACTILE_CORE_API auto to_color_rgb(StringView rgb) -> Maybe<UColor>;
+
+[[nodiscard]]
+TACTILE_CORE_API auto to_color_rgba(StringView rgba) -> Maybe<UColor>;
+
+[[nodiscard]]
+TACTILE_CORE_API auto to_color_argb(StringView argb) -> Maybe<UColor>;
+
+[[nodiscard]]
+TACTILE_CORE_API auto normalize(const UColor& color) -> NColor;
+
+[[nodiscard]]
+TACTILE_CORE_API auto unnormalize(const NColor& color) -> UColor;
+
+/**
+ * Computes the relative luminance of a color.
+ *
+ * \details This function is particularly useful for determining the appropriate
+ *          foreground text color given a background of a specific color.
+ *
+ * \param color a normalized color.
+ *
+ * \return a luminance value in the interval [0, 1].
+ *
+ * \see https://en.wikipedia.org/wiki/Relative_luminance
+ */
+[[nodiscard]]
+TACTILE_CORE_API auto get_luminance(const NColor& color) -> float;
+
+/** Indicates whether a color is considered to be dark. */
+[[nodiscard]]
+TACTILE_CORE_API auto is_dark(const NColor& color) -> bool;
+
+[[nodiscard]]
+TACTILE_CORE_API auto to_string_rgb(const UColor& color) -> String;
+
+[[nodiscard]]
+TACTILE_CORE_API auto to_string_rgba(const UColor& color) -> String;
+
+[[nodiscard]]
+TACTILE_CORE_API auto to_string_argb(const UColor& color) -> String;
+
+}  // namespace tactile
