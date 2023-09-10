@@ -145,4 +145,14 @@ auto to_string_argb(const UColor& color) -> String
                      color.blue);
 }
 
+auto operator<<(std::ostream& stream, const UColor& color) -> std::ostream&
+{
+  return stream << to_string_rgba(color);
+}
+
+auto operator<<(std::ostream& stream, const NColor& color) -> std::ostream&
+{
+  return stream << to_string_rgba(unnormalize(color));
+}
+
 }  // namespace tactile

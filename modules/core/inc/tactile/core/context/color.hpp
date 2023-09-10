@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <ostream>  // ostream
+
 #include "tactile/core/api.hpp"
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/maybe.hpp"
@@ -74,5 +76,11 @@ TACTILE_CORE_API auto to_string_rgba(const UColor& color) -> String;
 
 [[nodiscard]]
 TACTILE_CORE_API auto to_string_argb(const UColor& color) -> String;
+
+TACTILE_CORE_API
+auto operator<<(std::ostream& stream, const UColor& color) -> std::ostream&;
+
+TACTILE_CORE_API
+auto operator<<(std::ostream& stream, const NColor& color) -> std::ostream&;
 
 }  // namespace tactile
