@@ -88,6 +88,7 @@ message(DEBUG "TACTILE_PRECOMPILED_HEADERS: ${TACTILE_PRECOMPILED_HEADERS}")
 function(tactile_prepare_target target)
   set_target_properties(${target}
                         PROPERTIES
+                        CXX_STANDARD 23
                         CXX_EXTENSIONS OFF
                         CXX_STANDARD_REQUIRED ON
                         INTERPROCEDURAL_OPTIMIZATION ${TACTILE_USE_LTO}
