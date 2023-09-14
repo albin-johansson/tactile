@@ -2,7 +2,6 @@ FormatStyle: google
 Checks: "-*,
          bugprone-*,
          clang-analyzer-*,
-         cppcoreguidelines-*,
          performance-*,
          portability-*,
          readability-*,
@@ -11,6 +10,9 @@ Checks: "-*,
 
          -bugprone-easily-swappable-parameters,
          -bugprone-narrowing-conversions,
+         
+         cppcoreguidelines-*,
+         -cppcoreguidelines-avoid-do-while
 
          -readability-identifier-length,
          -readability-uppercase-literal-suffix,
