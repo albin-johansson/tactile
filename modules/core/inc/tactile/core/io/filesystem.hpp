@@ -10,11 +10,12 @@
 
 namespace tactile {
 
-namespace fs = std::filesystem;
+namespace fs {
 
-using Path = fs::path;
-using DirectoryIterator = fs::directory_iterator;
-using RecursiveDirectoryIterator = fs::recursive_directory_iterator;
+using Path = std::filesystem::path;
+using DirectoryIterator = std::filesystem::directory_iterator;
+using RecursiveDirectoryIterator =
+    std::filesystem::recursive_directory_iterator;
 
 /**
  * Converts a path to a string that is guaranteed to use forward slash characters.
@@ -36,11 +37,14 @@ using RecursiveDirectoryIterator = fs::recursive_directory_iterator;
 /** Indicates whether a file path starts with the home directory. */
 [[nodiscard]] TACTILE_CORE_API auto has_home_prefix(const Path& path) -> bool;
 
+}  // namespace fs
+
 namespace fs_literals {
 
-[[nodiscard]] inline auto operator"" _path(const char* str, const usize /* len */) -> Path
+[[nodiscard]] inline auto operator"" _path(const char* str,
+                                           const usize /* len */) -> fs::Path
 {
-  return Path {str};
+  return fs::Path {str};
 }
 
 }  // namespace fs_literals

@@ -7,7 +7,7 @@
 #include "tactile/core/platform/environment.hpp"
 #include "tactile/core/prelude.hpp"
 
-namespace tactile {
+namespace tactile::fs {
 namespace {
 
 [[nodiscard]] auto _get_home_prefix() -> const NativeString&

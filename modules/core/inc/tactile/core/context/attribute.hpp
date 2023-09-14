@@ -32,7 +32,7 @@ concept AttributeValueType = std::same_as<T, bool> ||            //
                              std::convertible_to<T, Float3> ||   //
                              std::convertible_to<T, Float4> ||   //
                              std::convertible_to<T, UColor> ||   //
-                             std::convertible_to<T, Path> ||     //
+                             std::convertible_to<T, fs::Path> ||  //
                              std::convertible_to<T, ObjectRef>;
 
 /** Represents a generic value of one of several possible types. */
@@ -63,7 +63,7 @@ class TACTILE_CORE_API Attribute final {
   using float3_type = Float3;
   using float4_type = Float4;
   using color_type = UColor;
-  using path_type = Path;
+  using path_type = fs::Path;
   using objref_type = ObjectRef;
 
   // Remember to update the type indices if the type order changes.
