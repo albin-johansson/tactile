@@ -6,15 +6,16 @@
 
 #include <boost/stacktrace.hpp>
 #include <fmt/ostream.h>
-#include <spdlog/spdlog.h>
+
+#include "tactile/core/debug/log/logger.hpp"
 
 namespace tactile {
 
 void on_terminate()
 {
   try {
-    spdlog::critical("Into exile I must go. Failed I have.\n{}",
-                     fmt::streamed(boost::stacktrace::stacktrace {}));
+    TACTILE_LOG_FATAL("Into exile I must go. Failed I have.\n{}",
+                      fmt::streamed(boost::stacktrace::stacktrace {}));
   }
   catch (...) {
     // Not much we can do.

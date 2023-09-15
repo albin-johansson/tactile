@@ -7,9 +7,9 @@
 #include <thread>  // this_thread
 
 #include <fmt/ostream.h>
-#include <spdlog/spdlog.h>
 
 #include "tactile/core/debug/assert.hpp"
+#include "tactile/core/debug/log/logger.hpp"
 
 namespace tactile {
 namespace {
@@ -22,9 +22,9 @@ using RandomEngine = std::mt19937;
   std::random_device entropy_source;
   const auto seed = entropy_source();
 
-  spdlog::debug("Thread {} uses RNG seed {}",
-                fmt::streamed(std::this_thread::get_id()),
-                seed);
+  TACTILE_LOG_DEBUG("Thread {} uses RNG seed {}",
+                    fmt::streamed(std::this_thread::get_id()),
+                    seed);
 
   return RandomEngine {seed};
 }

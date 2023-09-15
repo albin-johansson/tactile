@@ -4,7 +4,7 @@
 
 #include <exception>  // terminate
 
-#include <spdlog/spdlog.h>
+#include "tactile/core/debug/log/logger.hpp"
 
 namespace tactile {
 
@@ -13,11 +13,11 @@ void on_assertion_failed(const char* expr,
                          const char* file,
                          const int64 line)
 {
-  spdlog::critical("{}:{} expression '{}' is false: {}",
-                   file,
-                   line,
-                   expr,
-                   msg ? msg : "?");
+  TACTILE_LOG_FATAL("{}:{} expression '{}' is false: {}",
+                    file,
+                    line,
+                    expr,
+                    msg ? msg : "?");
   std::terminate();
 }
 
