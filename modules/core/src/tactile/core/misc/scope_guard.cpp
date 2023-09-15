@@ -2,7 +2,10 @@
 
 #include "tactile/core/misc/scope_guard.hpp"
 
-#include <utility>  // move
+#include <exception>  // exception
+#include <utility>    // move
+
+#include "tactile/core/debug/log/logger.hpp"
 
 namespace tactile {
 
@@ -16,7 +19,11 @@ ScopeGuard::~ScopeGuard() noexcept
       mCallback();
     }
   }
+  catch (const std::exception& ex) {
+    TACTILE_LOG_ERROR("Scope guard callback threw exception: {}", ex.what());
+  }
   catch (...) {
+    TACTILE_LOG_ERROR("Scope guard callback threw exception");
   }
 }
 
