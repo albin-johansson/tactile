@@ -18,10 +18,7 @@ FileLoggerSink::FileLoggerSink(const fs::Path& log_file)
 
 void FileLoggerSink::log(const LogMessage& msg)
 {
-  mStream.write(msg.prefix.data(), std::ssize(msg.prefix))
-      .put(' ')
-      .write(msg.text.data(), std::ssize(msg.text))
-      .put('\n');
+  mStream << msg.prefix << ' ' << msg.text << '\n';
 }
 
 void FileLoggerSink::flush()
