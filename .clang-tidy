@@ -10,9 +10,10 @@ Checks: "-*,
 
          -bugprone-easily-swappable-parameters,
          -bugprone-narrowing-conversions,
-         
+
          cppcoreguidelines-*,
-         -cppcoreguidelines-avoid-do-while
+         -cppcoreguidelines-avoid-do-while,
+         -cppcoreguidelines-avoid-non-const-global-variables,
 
          -readability-identifier-length,
          -readability-uppercase-literal-suffix,
