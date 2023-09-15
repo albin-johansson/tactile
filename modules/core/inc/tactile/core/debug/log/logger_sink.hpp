@@ -13,12 +13,19 @@ namespace tactile {
 /**
  * Represents a single logged message.
  *
- * \property   level the severity of the message.
- * \property    text the formatted log message.
- * \property instant the instant that the message was logged.
+ * \note The included string views must not be stored beyond the scope of
+ *       log function calls. If a sink wants to keep a history of log messages,
+ *       it has to copy the string views into ordinary strings.
+ *
+ * \var   level the severity of the message.
+ * \var  prefix a string that encodes the severity and timestamp. Each sink is
+ *              free to decide whether to include this in their output.
+ * \var    text the formatted log message.
+ * \var instant the instant that the message was logged.
  */
 struct TACTILE_CORE_API LogMessage final {
   LogLevel level;
+  StringView prefix;
   StringView text;
   SteadyClockInstant instant;
 };
