@@ -7,12 +7,12 @@
 namespace tactile {
 
 /**
- * \brief Represents the supported layer types.
+ * \brief Represents the supported layer object types.
  */
-enum class LayerType : uint32 {
-  kTileLayer,
-  kObjectLayer,
-  kGroupLayer
+enum class ObjectType : uint8 {
+  kPoint,
+  kRect,
+  kEllipse,
 };
 
 }  // namespace tactile
