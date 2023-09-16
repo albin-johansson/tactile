@@ -42,31 +42,31 @@ namespace tactile {
 
 TACTILE_FWD(class ILoggerSink)
 
-/** A simple logger implementation. */
+/** \brief A simple logger implementation. */
 class TACTILE_CORE_API Logger final {
  public:
-  /** Logs an arbitrary message. */
+  /** \brief Logs an arbitrary message. */
   void log(LogLevel level, StringView fmt_string, fmt::format_args args) noexcept;
 
-  /** Sets the minimum severity of messages that get logged. */
+  /** \brief Sets the minimum severity of messages that get logged. */
   void set_min_level(LogLevel level) noexcept;
 
-  /** Sets the minimum severity of messages that will initiate flushes. */
+  /** \brief Sets the minimum severity of messages that will initiate flushes. */
   void flush_on(LogLevel level) noexcept;
 
-  /** Associates a sink implementation with the logger. */
+  /** \brief Associates a sink implementation with the logger. */
   void add_sink(ILoggerSink* sink);
 
-  /** Sets a reference time point to use as a relative baseline for timestamps. */
+  /** \brief Sets a reference time point to use as a relative baseline for timestamps. */
   void set_reference_instant(Maybe<SteadyClockInstant> instant);
 
-  /** Indicates whether a message with the specified severity would be logged. */
+  /** \brief Indicates whether a message with a specific severity will be logged. */
   [[nodiscard]] auto would_log(LogLevel level) const noexcept -> bool;
 
-  /** Indicates whether a message with the specified severity would trigger a flush. */
+  /** \brief Indicates whether a message with a specific severity will trigger a flush. */
   [[nodiscard]] auto would_flush(LogLevel level) const noexcept -> bool;
 
-  /** Returns a three-letter acronym for the specified log level. */
+  /** \brief Returns a three-letter acronym for the specified log level. */
   [[nodiscard]] static auto get_acronym(LogLevel level) noexcept -> StringView;
 
  private:
@@ -78,10 +78,10 @@ class TACTILE_CORE_API Logger final {
   [[nodiscard]] auto _to_elapsed_time(SteadyClockInstant instant) const -> Microseconds;
 };
 
-/** Sets the logger instance that is used by the logging macros. */
+/** \brief Sets the logger instance that is used by the logging macros. */
 TACTILE_CORE_API void set_default_logger(Logger* logger) noexcept;
 
-/** Returns the logger instance used by the logging macros. */
+/** \brief Returns the logger instance used by the logging macros. */
 [[nodiscard]] TACTILE_CORE_API auto get_default_logger() noexcept -> Logger*;
 
 }  // namespace tactile

@@ -11,27 +11,23 @@
 namespace tactile {
 
 /**
- * Represents a single logged message.
+ * \brief Represents a single logged message.
  *
- * \note The included string views must not be stored beyond the scope of
- *       log function calls. If a sink wants to keep a history of log messages,
- *       it has to copy the string views into ordinary strings.
- *
- * \var   level the severity of the message.
- * \var  prefix a string that encodes the severity and timestamp. Each sink is
- *              free to decide whether to include this in their output.
- * \var    text the formatted log message.
- * \var instant the instant that the message was logged.
+ * \note The included string views must not be stored beyond the scope of log function
+ *       calls. If a sink wants to keep a history of log messages, it has to copy the
+ *       string views to ordinary strings.
  */
-struct TACTILE_CORE_API LogMessage final {
-  LogLevel level;
-  StringView prefix;
-  StringView text;
-  SteadyClockInstant instant;
+struct LogMessage final {
+  LogLevel level;              ///< The severity of the message.
+  StringView prefix;           ///< A string that encodes the severity and timestamp.
+  StringView text;             ///< The formatted log message.
+  SteadyClockInstant instant;  ///< The instant that the message was logged.
 };
 
 /**
- * Interface for logger "sink" implementations.
+ * \interface ILoggerSink
+ *
+ * \brief Interface for logger "sink" implementations.
  *
  * \details A logger may feature several associated sinks which are called
  *          whenever a message is logged. This allows for the application to
