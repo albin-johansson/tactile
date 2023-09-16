@@ -75,8 +75,7 @@ class TACTILE_CORE_API Logger final {
   Vector<ILoggerSink*> mSinks;
   Maybe<SteadyClockInstant> mReferenceInstant;
 
-  [[nodiscard]] auto _to_elapsed_time(SteadyClockInstant instant) const
-      -> chrono::microseconds;
+  [[nodiscard]] auto _to_elapsed_time(SteadyClockInstant instant) const -> Microseconds;
 };
 
 /** Sets the logger instance that is used by the logging macros. */

@@ -128,14 +128,13 @@ auto Logger::get_acronym(const LogLevel level) noexcept -> StringView
   return "";
 }
 
-auto Logger::_to_elapsed_time(const SteadyClockInstant instant) const
-    -> chrono::microseconds
+auto Logger::_to_elapsed_time(const SteadyClockInstant instant) const -> Microseconds
 {
   if (mReferenceInstant.has_value()) {
-    return chrono::duration_cast<chrono::microseconds>(instant - *mReferenceInstant);
+    return duration_cast<Microseconds>(instant - *mReferenceInstant);
   }
 
-  return chrono::duration_cast<chrono::microseconds>(instant.time_since_epoch());
+  return duration_cast<Microseconds>(instant.time_since_epoch());
 }
 
 }  // namespace tactile
