@@ -93,16 +93,6 @@ auto Logger::would_flush(const LogLevel level) const noexcept -> bool
   return level >= mFlushLevel;
 }
 
-void set_logger(Logger* logger) noexcept
-{
-  gLogger = logger;
-}
-
-auto get_logger() noexcept -> Logger*
-{
-  return gLogger;
-}
-
 auto Logger::get_acronym(const LogLevel level) noexcept -> StringView
 {
   switch (level) {
@@ -135,6 +125,16 @@ auto Logger::_to_elapsed_time(const SteadyClockInstant instant) const -> Microse
   }
 
   return duration_cast<Microseconds>(instant.time_since_epoch());
+}
+
+void set_default_logger(Logger* logger) noexcept
+{
+  gLogger = logger;
+}
+
+auto get_default_logger() noexcept -> Logger*
+{
+  return gLogger;
 }
 
 }  // namespace tactile

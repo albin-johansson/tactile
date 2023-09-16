@@ -12,12 +12,12 @@
 #include "tactile/core/type/string.hpp"
 #include "tactile/core/type/vector.hpp"
 
-#define TACTILE_LOG(Level, FmtString, ...)                                           \
-  do {                                                                               \
-    auto* tactile_logger = tactile::get_logger();                                    \
-    if (tactile_logger && tactile_logger->would_log((Level))) {                      \
-      tactile_logger->log((Level), (FmtString), fmt::make_format_args(__VA_ARGS__)); \
-    }                                                                                \
+#define TACTILE_LOG(Level, FmtString, ...)                                   \
+  do {                                                                       \
+    auto* logger = tactile::get_default_logger();                            \
+    if (logger && logger->would_log((Level))) {                              \
+      logger->log((Level), (FmtString), fmt::make_format_args(__VA_ARGS__)); \
+    }                                                                        \
   } while (false)
 
 #define TACTILE_LOG_TRACE(FmtString, ...) \
@@ -79,9 +79,9 @@ class TACTILE_CORE_API Logger final {
 };
 
 /** Sets the logger instance that is used by the logging macros. */
-TACTILE_CORE_API void set_logger(Logger* logger) noexcept;
+TACTILE_CORE_API void set_default_logger(Logger* logger) noexcept;
 
-/** Returns the logger instance used by logging macros. */
-[[nodiscard]] TACTILE_CORE_API auto get_logger() noexcept -> Logger*;
+/** Returns the logger instance used by the logging macros. */
+[[nodiscard]] TACTILE_CORE_API auto get_default_logger() noexcept -> Logger*;
 
 }  // namespace tactile
