@@ -1,33 +1,15 @@
-FormatStyle: google
 Checks: "-*,
-         bugprone-*,
          clang-analyzer-*,
          performance-*,
          portability-*,
-         readability-*,
-         modernize-*,
-         misc-*,
 
+         bugprone-*,
          -bugprone-easily-swappable-parameters,
          -bugprone-narrowing-conversions,
 
          cppcoreguidelines-*,
          -cppcoreguidelines-avoid-do-while,
          -cppcoreguidelines-avoid-non-const-global-variables,
-
-         -readability-identifier-length,
-         -readability-uppercase-literal-suffix,
-         -readability-magic-numbers,
-         -readability-implicit-bool-conversion,
-         -readability-else-after-return,
-         -readability-named-parameter,
-         -readability-function-cognitive-complexity,
-
-         -modernize-avoid-c-arrays,
-
-         -misc-no-recursion,
-         -misc-non-private-member-variables-in-classes,
-
          -cppcoreguidelines-avoid-magic-numbers,
          -cppcoreguidelines-pro-bounds-pointer-arithmetic,
          -cppcoreguidelines-pro-type-vararg,
@@ -36,6 +18,22 @@ Checks: "-*,
          -cppcoreguidelines-avoid-goto,
          -cppcoreguidelines-narrowing-conversions,
          -cppcoreguidelines-non-private-member-variables-in-classes,
+
+         readability-*,
+         -readability-identifier-length,
+         -readability-uppercase-literal-suffix,
+         -readability-magic-numbers,
+         -readability-implicit-bool-conversion,
+         -readability-else-after-return,
+         -readability-named-parameter,
+         -readability-function-cognitive-complexity,
+
+         modernize-*,
+         -modernize-avoid-c-arrays,
+
+         misc-*,
+         -misc-no-recursion,
+         -misc-non-private-member-variables-in-classes,
          "
 CheckOptions:
   - { key: readability-identifier-naming.ClassCase, value: CamelCase }
@@ -46,7 +44,7 @@ CheckOptions:
   - { key: readability-identifier-naming.TypeAliasIgnoredRegexp, value: "^[a-z].*" } # Allow aliases such as 'uint8'
 
   - { key: readability-identifier-naming.EnumConstantCase, value: CamelCase }
-  - { key: readability-identifier-naming.EnumConstantIgnoredRegexp, value: "^[A-Za-z](_|.)*" }
+  - { key: readability-identifier-naming.EnumConstantPrefix, value: k }
 
   - { key: readability-identifier-naming.GlobalFunctionCase, value: lower_case }
   - { key: readability-identifier-naming.FunctionCase, value: lower_case }

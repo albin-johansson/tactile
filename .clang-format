@@ -3,7 +3,7 @@ Standard: Latest
 
 BasedOnStyle: Google
 
-# Miscellaneous
+ColumnLimit: 90
 UseTab: Never
 QualifierAlignment: Left
 PointerAlignment: Left
@@ -11,10 +11,12 @@ DerivePointerAlignment: false
 MaxEmptyLinesToKeep: 1
 InsertBraces: true
 RemoveSemicolon: true
+PackConstructorInitializers: Never
+RequiresClausePosition: WithPreceding
 # QualifierOrder: [ 'friend', 'inline', 'static', 'const', 'volatile', 'constexpr', 'restrict', 'type' ]
 
-# Indentation
 IndentWidth: 2
+TabWidth: 2
 PPIndentWidth: 2
 ContinuationIndentWidth: 4
 ConstructorInitializerIndentWidth: 2
@@ -59,12 +61,11 @@ BreakAfterAttributes: Leave
 
 BreakStringLiterals: false
 BreakInheritanceList: BeforeColon
-BreakConstructorInitializers: AfterColon
+BreakConstructorInitializers: BeforeColon
 BreakArrays: false
 
 AlwaysBreakTemplateDeclarations: Yes
 
-# Spaces
 SpacesBeforeTrailingComments: 2
 SpaceBeforeCpp11BracedList: true
 SpaceBeforeRangeBasedForLoopColon: true
@@ -95,25 +96,26 @@ AllowShortLoopsOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: false
 AllowShortBlocksOnASingleLine: Never
 
-# Comments
 ReflowComments: false
 FixNamespaceComments: true
 AlignTrailingComments:
   Kind: Always
   OverEmptyLines: 0
 
-# Access modifiers
 AccessModifierOffset: -1
 EmptyLineBeforeAccessModifier: Always
 EmptyLineAfterAccessModifier: Never
 
-# Parameters
 BinPackParameters: false
 BinPackArguments: false
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowAllArgumentsOnNextLine: false
 
-# Includes
+IntegerLiteralSeparator:
+  Binary: -1
+  Decimal: 3
+  Hex: -1
+
 SortIncludes: CaseSensitive
 IncludeBlocks: Regroup
 IncludeCategories:
