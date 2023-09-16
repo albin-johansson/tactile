@@ -1,6 +1,6 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/debug/crash_handler.hpp"
+#include "tactile/core/debug/terminate_handler.hpp"
 
 #include <cstdlib>  // abort
 
