@@ -11,7 +11,7 @@
 namespace tactile {
 
 ScopeProfiler::ScopeProfiler(const char* description) noexcept
-  : mDescription {description},
+  : mDescription {description ? description : "?"},
     mStartInstant {SteadyClock::now()}
 {}
 

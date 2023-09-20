@@ -9,10 +9,10 @@
 namespace tactile {
 
 /**
- * This class is used to invoke a callback at the end of a scope.
+ * \brief RAII type used to invoke a callback at the end of a scope.
  *
  * \details The intended use-case is creating "inline" destructors without
- *          having to define a new type. See the below example.
+ *          having to define a new type. Such as in the following example.
  *
  *          \code{cpp}
  *          int i = 0;
@@ -29,10 +29,10 @@ class TACTILE_CORE_API ScopeGuard final {
  public:
   using Callback = Function<void()>;
 
-  /** Creates a scope guard from the provided function object. */
+  /** \brief Creates a scope guard from the provided function object. */
   [[nodiscard]] explicit ScopeGuard(Callback callback);
 
-  /** Invokes the associated function object, as long as it's valid. */
+  /** \brief Invokes the associated function object, as long as it's valid. */
   ~ScopeGuard() noexcept;
 
   TACTILE_DELETE_COPY(ScopeGuard);
