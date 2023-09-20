@@ -26,7 +26,7 @@ TEST(Attribute, ExplicitTypeConstructor)
   EXPECT_EQ(Attribute {AttributeType::Float4}, Float4 {});
   EXPECT_EQ(Attribute {AttributeType::Bool}, bool {});
   EXPECT_EQ(Attribute {AttributeType::Color}, UColor {});
-  EXPECT_EQ(Attribute {AttributeType::Path}, Path {});
+  EXPECT_EQ(Attribute {AttributeType::Path}, fs::Path {});
   EXPECT_EQ(Attribute {AttributeType::Object}, ObjectRef {});
 }
 
@@ -144,7 +144,7 @@ TEST(Attribute, Reset)
 
   attribute.reset(AttributeType::Path);
   EXPECT_TRUE(attribute.has_default_value());
-  EXPECT_EQ(attribute, Path {});
+  EXPECT_EQ(attribute, fs::Path {});
 
   attribute.reset(AttributeType::Object);
   EXPECT_TRUE(attribute.has_default_value());
@@ -240,7 +240,7 @@ TEST(Attribute, AsColor)
 
 TEST(Attribute, AsPath)
 {
-  EXPECT_EQ(Attribute {AttributeType::Path}.as_path(), Path {});
+  EXPECT_EQ(Attribute {AttributeType::Path}.as_path(), fs::Path {});
   EXPECT_THROW((void) Attribute {AttributeType::Str}.as_path(), Error);
 }
 
