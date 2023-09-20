@@ -3,9 +3,9 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
+#include "tactile/core/container/string.hpp"
 #include "tactile/core/debug/log/logger_sink.hpp"
 #include "tactile/core/prelude.hpp"
-#include "tactile/core/container/string.hpp"
 
 namespace tactile {
 
@@ -26,32 +26,34 @@ inline constexpr StringView kAnsiColorBgRed = "\x1B[41m";
 /**
  * \brief A logger sink that outputs log messages to the terminal.
  */
-class TACTILE_CORE_API TerminalLoggerSink final : public ILoggerSink {
+class TerminalLoggerSink final : public ILoggerSink {
  public:
-  void log(const LogMessage& msg) override;
+  TACTILE_CORE_API void log(const LogMessage& msg) override;
 
-  void flush() override;
+  TACTILE_CORE_API void flush() override;
 
   /**
    * \brief Controls whether messages are color-coded using ANSI colors.
    *
    * \param enabled true if ANSI colors should be used; false otherwise.
    */
-  void use_ansi_colors(bool enabled);
+  TACTILE_CORE_API void use_ansi_colors(bool enabled);
 
   /**
    * \brief Returns the foreground ANSI color for a given log level.
    *
    * \param level the log level to query.
    */
-  [[nodiscard]] static auto get_fg_ansi_color(LogLevel level) -> StringView;
+  [[nodiscard]]
+  TACTILE_CORE_API static auto get_fg_ansi_color(LogLevel level) -> StringView;
 
   /**
    * \brief Returns the background ANSI color for a given log level.
    *
    * \param level the log level to query.
    */
-  [[nodiscard]] static auto get_bg_ansi_color(LogLevel level) -> StringView;
+  [[nodiscard]]
+  TACTILE_CORE_API static auto get_bg_ansi_color(LogLevel level) -> StringView;
 
  private:
   bool mUseAnsiColors {};

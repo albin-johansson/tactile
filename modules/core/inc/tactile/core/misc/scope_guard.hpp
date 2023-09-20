@@ -25,15 +25,15 @@ namespace tactile {
  *          assert(i == 10);
  *          \endcode
  */
-class TACTILE_CORE_API ScopeGuard final {
+class ScopeGuard final {
  public:
   using Callback = Function<void()>;
 
   /** \brief Creates a scope guard from the provided function object. */
-  [[nodiscard]] explicit ScopeGuard(Callback callback);
+  [[nodiscard]] TACTILE_CORE_API explicit ScopeGuard(Callback callback);
 
   /** \brief Invokes the associated function object, as long as it's valid. */
-  ~ScopeGuard() noexcept;
+  TACTILE_CORE_API ~ScopeGuard() noexcept;
 
   TACTILE_DELETE_COPY(ScopeGuard);
   TACTILE_DELETE_MOVE(ScopeGuard);

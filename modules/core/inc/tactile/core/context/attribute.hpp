@@ -35,8 +35,10 @@ concept AttributeValueType = std::same_as<T, bool> ||             //
                              std::convertible_to<T, fs::Path> ||  //
                              std::convertible_to<T, ObjectRef>;
 
-/** Represents a generic value of one of several possible types. */
-class TACTILE_CORE_API Attribute final {
+/**
+ * \brief Represents a generic value of one of several possible types.
+ */
+class Attribute final {
   // These are indices into the value type variant
   inline static constexpr usize kStringTypeIndex = 0;
   inline static constexpr usize kIntTypeIndex = 1;
@@ -81,66 +83,266 @@ class TACTILE_CORE_API Attribute final {
                                path_type,
                                objref_type>;
 
-  /** Creates an empty string attribute. */
+  /** \brief Creates an empty string attribute. */
   Attribute() = default;
 
-  /** Creates an attribute with the default value of the specified type. */
-  explicit Attribute(AttributeType type);
+  /**
+   * \brief Creates an attribute with the default value of the specified type.
+   *
+   * \param type the underlying value type.
+   */
+  explicit Attribute(const AttributeType type)
+  {
+    reset(type);
+  }
 
+  /**
+   * \brief Creates an attribute with a specific value.
+   *
+   * \param value the initial value.
+   */
   template <AttributeValueType T>
   Attribute(T value)
   {
     mValue.emplace<T>(std::move(value));
   }
 
+  /**
+   * \brief Creates a string attribute.
+   *
+   * \pre The provided string cannot be null.
+   *
+   * \param str a C-style string.
+   */
   Attribute(const char* str)
   {
     TACTILE_ASSERT(str);
     mValue.emplace<string_type>(str);
   }
 
-  /** Resets the attribute the default value for the specified type. */
-  void reset(AttributeType type);
+  /**
+   * \brief Resets the attribute the default value for the specified type.
+   *
+   * \param type the underlying value type.
+   */
+  TACTILE_CORE_API void reset(AttributeType type);
 
+  /**
+   * \brief Updates the value of the attribute.
+   *
+   * \param value the new value.
+   */
   template <AttributeValueType T>
   void set(T value)
   {
     mValue.emplace<T>(std::move(value));
   }
 
-  void set(const char* str) { mValue.emplace<string_type>(str); }
+  /**
+   * \brief Updates the value of the attribute.
+   *
+   * \pre The provided string cannot be null.
+   *
+   * \param value the new string value.
+   */
+  void set(const char* str)
+  {
+    TACTILE_ASSERT(str);
+    mValue.emplace<string_type>(str);
+  }
 
-  [[nodiscard]] auto as_string() const -> const string_type&;
+  /**
+   * \brief Returns the underlying string value.
+   *
+   * \return the underlying value.
+   *
+   * \throws Error if the attribute is of a different type.
+   */
+  [[nodiscard]]
+  auto as_string() const -> const string_type&
+  {
+    return _get<string_type>();
+  }
 
-  [[nodiscard]] auto as_int() const -> int_type;
+  /**
+   * \brief Returns the underlying int value.
+   *
+   * \return the underlying value.
+   *
+   * \throws Error if the attribute is of a different type.
+   */
+  [[nodiscard]]
+  auto as_int() const -> int_type
+  {
+    return _get<int_type>();
+  }
 
-  [[nodiscard]] auto as_int2() const -> const int2_type&;
+  /**
+   * \brief Returns the underlying 2D int vector value.
+   *
+   * \return the underlying value.
+   *
+   * \throws Error if the attribute is of a different type.
+   */
+  [[nodiscard]]
+  auto as_int2() const -> const int2_type&
+  {
+    return _get<int2_type>();
+  }
 
-  [[nodiscard]] auto as_int3() const -> const int3_type&;
+  /**
+   * \brief Returns the underlying 3D int vector value.
+   *
+   * \return the underlying value.
+   *
+   * \throws Error if the attribute is of a different type.
+   */
+  [[nodiscard]]
+  auto as_int3() const -> const int3_type&
+  {
+    return _get<int3_type>();
+  }
 
-  [[nodiscard]] auto as_int4() const -> const int4_type&;
+  /**
+   * \brief Returns the underlying 4D int vector value.
+   *
+   * \return the underlying value.
+   *
+   * \throws Error if the attribute is of a different type.
+   */
+  [[nodiscard]]
+  auto as_int4() const -> const int4_type&
+  {
+    return _get<int4_type>();
+  }
 
-  [[nodiscard]] auto as_float() const -> float_type;
+  /**
+   * \brief Returns the underlying float value.
+   *
+   * \return the underlying value.
+   *
+   * \throws Error if the attribute is of a different type.
+   */
+  [[nodiscard]]
+  auto as_float() const -> float_type
+  {
+    return _get<float_type>();
+  }
 
-  [[nodiscard]] auto as_float2() const -> const float2_type&;
+  /**
+   * \brief Returns the underlying 2D float vector value.
+   *
+   * \return the underlying value.
+   *
+   * \throws Error if the attribute is of a different type.
+   */
+  [[nodiscard]]
+  auto as_float2() const -> const float2_type&
+  {
+    return _get<float2_type>();
+  }
 
-  [[nodiscard]] auto as_float3() const -> const float3_type&;
+  /**
+   * \brief Returns the underlying 3D float vector value.
+   *
+   * \return the underlying value.
+   *
+   * \throws Error if the attribute is of a different type.
+   */
+  [[nodiscard]]
+  auto as_float3() const -> const float3_type&
+  {
+    return _get<float3_type>();
+  }
 
-  [[nodiscard]] auto as_float4() const -> const float4_type&;
+  /**
+   * \brief Returns the underlying 4D float vector value.
+   *
+   * \return the underlying value.
+   *
+   * \throws Error if the attribute is of a different type.
+   */
+  [[nodiscard]]
+  auto as_float4() const -> const float4_type&
+  {
+    return _get<float4_type>();
+  }
 
-  [[nodiscard]] auto as_bool() const -> bool;
+  /**
+   * \brief Returns the underlying boolean value.
+   *
+   * \return the underlying value.
+   *
+   * \throws Error if the attribute is of a different type.
+   */
+  [[nodiscard]]
+  auto as_bool() const -> bool
+  {
+    return _get<bool>();
+  }
 
-  [[nodiscard]] auto as_color() const -> const color_type&;
+  /**
+   * \brief Returns the underlying color value.
+   *
+   * \return the underlying value.
+   *
+   * \throws Error if the attribute is of a different type.
+   */
+  [[nodiscard]]
+  auto as_color() const -> const color_type&
+  {
+    return _get<color_type>();
+  }
 
-  [[nodiscard]] auto as_path() const -> const path_type&;
+  /**
+   * \brief Returns the underlying file path value.
+   *
+   * \return the underlying value.
+   *
+   * \throws Error if the attribute is of a different type.
+   */
+  [[nodiscard]]
+  auto as_path() const -> const path_type&
+  {
+    return _get<path_type>();
+  }
 
-  [[nodiscard]] auto as_object() const -> objref_type;
+  /**
+   * \brief Returns the underlying object reference value.
+   *
+   * \return the underlying value.
+   *
+   * \throws Error if the attribute is of a different type.
+   */
+  [[nodiscard]]
+  auto as_object() const -> objref_type
+  {
+    return _get<objref_type>();
+  }
 
-  [[nodiscard]] auto is_vector() const -> bool;
+  /**
+   * \brief Indicates whether the attribute is a vector attribute.
+   *
+   * \return true if the attribute has a vector value; false otherwise.
+   */
+  [[nodiscard]]
+  TACTILE_CORE_API auto is_vector() const -> bool;
 
-  [[nodiscard]] auto has_default_value() const -> bool;
+  /**
+   * \brief Indicates whether the attribute has the default value for its type.
+   *
+   * \return true if the value is the default one; false otherwise.
+   */
+  [[nodiscard]]
+  TACTILE_CORE_API auto has_default_value() const -> bool;
 
-  [[nodiscard]] auto get_type() const -> AttributeType;
+  /**
+   * \brief Returns the type of the current value.
+   *
+   * \return the current type.
+   */
+  [[nodiscard]]
+  TACTILE_CORE_API auto get_type() const -> AttributeType;
 
   [[nodiscard]] auto operator==(const Attribute&) const -> bool = default;
 
@@ -148,18 +350,18 @@ class TACTILE_CORE_API Attribute final {
   variant_type mValue;
 
   template <AttributeValueType T>
-  [[nodiscard]] auto _get() const -> const T&
+  [[nodiscard]]
+  auto _get() const -> const T&
   {
     if (const auto* value = get_if<T>(&mValue)) {
       return *value;
     }
-    else {
-      throw Error {"Attribute type mismatch"};
-    }
+
+    throw Error {"Attribute type mismatch"};
   }
 };
 
-TACTILE_CORE_API
-auto operator<<(std::ostream& stream, const Attribute& attribute) -> std::ostream&;
+TACTILE_CORE_API auto operator<<(std::ostream& stream, const Attribute& attribute)
+    -> std::ostream&;
 
 }  // namespace tactile

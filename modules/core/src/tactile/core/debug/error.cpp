@@ -3,31 +3,19 @@
 #include "tactile/core/debug/error.hpp"
 
 #include <sstream>  // stringstream
-#include <utility>  // move
 
 #include <boost/stacktrace.hpp>
 
 namespace tactile {
 
-Error::Error(tactile::String message)
-    : mMessage {std::move(message)}
+auto get_stacktrace() -> String
 {
   const boost::stacktrace::stacktrace trace;
 
   std::stringstream stream;
   stream << trace;
 
-  mTrace = stream.str();
-}
-
-auto Error::what() const noexcept -> const char*
-{
-  return mMessage.c_str();
-}
-
-auto Error::get_trace() const -> const String&
-{
-  return mTrace;
+  return stream.str();
 }
 
 }  // namespace tactile

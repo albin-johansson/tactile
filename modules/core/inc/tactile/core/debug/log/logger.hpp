@@ -43,31 +43,36 @@ namespace tactile {
 TACTILE_FWD(class ILoggerSink)
 
 /** \brief A simple logger implementation. */
-class TACTILE_CORE_API Logger final {
+class Logger final {
  public:
   /** \brief Logs an arbitrary message. */
-  void log(LogLevel level, StringView fmt_string, fmt::format_args args) noexcept;
+  TACTILE_CORE_API void log(LogLevel level,
+                            StringView fmt_string,
+                            fmt::format_args args) noexcept;
 
   /** \brief Sets the minimum severity of messages that get logged. */
-  void set_min_level(LogLevel level) noexcept;
+  TACTILE_CORE_API void set_min_level(LogLevel level) noexcept;
 
   /** \brief Sets the minimum severity of messages that will initiate flushes. */
-  void flush_on(LogLevel level) noexcept;
+  TACTILE_CORE_API void flush_on(LogLevel level) noexcept;
 
   /** \brief Associates a sink implementation with the logger. */
-  void add_sink(ILoggerSink* sink);
+  TACTILE_CORE_API void add_sink(ILoggerSink* sink);
 
   /** \brief Sets a reference time point to use as a relative baseline for timestamps. */
-  void set_reference_instant(Maybe<SteadyClockInstant> instant);
+  TACTILE_CORE_API void set_reference_instant(Maybe<SteadyClockInstant> instant);
 
   /** \brief Indicates whether a message with a specific severity will be logged. */
-  [[nodiscard]] auto would_log(LogLevel level) const noexcept -> bool;
+  [[nodiscard]]
+  TACTILE_CORE_API auto would_log(LogLevel level) const noexcept -> bool;
 
   /** \brief Indicates whether a message with a specific severity will trigger a flush. */
-  [[nodiscard]] auto would_flush(LogLevel level) const noexcept -> bool;
+  [[nodiscard]]
+  TACTILE_CORE_API auto would_flush(LogLevel level) const noexcept -> bool;
 
   /** \brief Returns a three-letter acronym for the specified log level. */
-  [[nodiscard]] static auto get_acronym(LogLevel level) noexcept -> StringView;
+  [[nodiscard]]
+  TACTILE_CORE_API static auto get_acronym(LogLevel level) noexcept -> StringView;
 
  private:
   LogLevel mMinLevel {LogLevel::kInfo};
@@ -75,13 +80,15 @@ class TACTILE_CORE_API Logger final {
   Vector<ILoggerSink*> mSinks;
   Maybe<SteadyClockInstant> mReferenceInstant;
 
-  [[nodiscard]] auto _to_elapsed_time(SteadyClockInstant instant) const -> Microseconds;
+  [[nodiscard]]
+  auto _to_elapsed_time(SteadyClockInstant instant) const -> Microseconds;
 };
 
 /** \brief Sets the logger instance that is used by the logging macros. */
 TACTILE_CORE_API void set_default_logger(Logger* logger) noexcept;
 
 /** \brief Returns the logger instance used by the logging macros. */
-[[nodiscard]] TACTILE_CORE_API auto get_default_logger() noexcept -> Logger*;
+[[nodiscard]]
+TACTILE_CORE_API auto get_default_logger() noexcept -> Logger*;
 
 }  // namespace tactile

@@ -3,12 +3,12 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
+#include "tactile/core/container/string.hpp"
 #include "tactile/core/format/file_format_error.hpp"
 #include "tactile/core/functional/expected.hpp"
 #include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/io/ir.hpp"
 #include "tactile/core/prelude.hpp"
-#include "tactile/core/container/string.hpp"
 
 namespace tactile {
 
@@ -21,7 +21,7 @@ namespace tactile {
  *          operations, and may simply report an error instead. However, any useful
  *          implementation would of course provide at least one of these operations.
  */
-class TACTILE_CORE_API IFileFormat {
+class IFileFormat {
  public:
   TACTILE_INTERFACE_CLASS(IFileFormat);
 
@@ -32,7 +32,8 @@ class TACTILE_CORE_API IFileFormat {
    *
    * \return the loaded map; or an error code if something went wrong.
    */
-  [[nodiscard]] virtual auto load_map(const fs::Path& map_file) const
+  [[nodiscard]]
+  virtual auto load_map(const fs::Path& map_file) const
       -> Expected<ir::Map, FileFormatError> = 0;
 
   /**
@@ -42,7 +43,8 @@ class TACTILE_CORE_API IFileFormat {
    *
    * \return the loaded tileset; or an error code if something went wrong.
    */
-  [[nodiscard]] virtual auto load_tileset(const fs::Path& tileset_file) const
+  [[nodiscard]]
+  virtual auto load_tileset(const fs::Path& tileset_file) const
       -> Expected<ir::Tileset, FileFormatError> = 0;
 
   virtual void save_map(const fs::Path& map_file, const ir::Map& map) = 0;

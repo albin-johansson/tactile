@@ -17,10 +17,11 @@ TACTILE_FWD(class IFileFormat)
 /**
  * \brief Manages map/tileset file format parser/emitter implementations.
  */
-class TACTILE_CORE_API FileFormatManager final {
+class FileFormatManager final {
  public:
   /** \brief Returns the global file format manager. */
-  [[nodiscard]] static auto get() -> FileFormatManager&;
+  [[nodiscard]]
+  TACTILE_CORE_API static auto get() -> FileFormatManager&;
 
   /**
    * \brief Loads a map file using one of the available file format handlers.
@@ -29,7 +30,8 @@ class TACTILE_CORE_API FileFormatManager final {
    *
    * \return the map data, or an error code if something went wrong.
    */
-  [[nodiscard]] auto load_map(const fs::Path& map_file) const
+  [[nodiscard]]
+  TACTILE_CORE_API auto load_map(const fs::Path& map_file) const
       -> Expected<ir::Map, FileFormatError>;
 
   /**
@@ -39,14 +41,15 @@ class TACTILE_CORE_API FileFormatManager final {
    *
    * \return the tileset data, or an error code if something went wrong.
    */
-  [[nodiscard]] auto load_tileset(const fs::Path& tileset_file) const
+  [[nodiscard]]
+  TACTILE_CORE_API auto load_tileset(const fs::Path& tileset_file) const
       -> Expected<ir::Tileset, FileFormatError>;
 
   /** \brief Registers a file format handler. */
-  void add_format(IFileFormat* format);
+  TACTILE_CORE_API void add_format(IFileFormat* format);
 
   /** \brief Removes a file format handler. */
-  void remove_format(IFileFormat* format);
+  TACTILE_CORE_API void remove_format(IFileFormat* format);
 
  private:
   Vector<IFileFormat*> mFormats;

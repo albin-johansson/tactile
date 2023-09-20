@@ -10,11 +10,6 @@
 
 namespace tactile {
 
-Attribute::Attribute(const AttributeType type)
-{
-  reset(type);
-}
-
 void Attribute::reset(const AttributeType type)
 {
   switch (type) {
@@ -73,71 +68,6 @@ void Attribute::reset(const AttributeType type)
     default:
       throw Error {"Invalid attribute type"};
   }
-}
-
-auto Attribute::as_string() const -> const string_type&
-{
-  return _get<string_type>();
-}
-
-auto Attribute::as_int() const -> int_type
-{
-  return _get<int_type>();
-}
-
-auto Attribute::as_int2() const -> const int2_type&
-{
-  return _get<int2_type>();
-}
-
-auto Attribute::as_int3() const -> const int3_type&
-{
-  return _get<int3_type>();
-}
-
-auto Attribute::as_int4() const -> const int4_type&
-{
-  return _get<int4_type>();
-}
-
-auto Attribute::as_float() const -> float_type
-{
-  return _get<float_type>();
-}
-
-auto Attribute::as_float2() const -> const float2_type&
-{
-  return _get<float2_type>();
-}
-
-auto Attribute::as_float3() const -> const float3_type&
-{
-  return _get<float3_type>();
-}
-
-auto Attribute::as_float4() const -> const float4_type&
-{
-  return _get<float4_type>();
-}
-
-auto Attribute::as_bool() const -> bool
-{
-  return _get<bool>();
-}
-
-auto Attribute::as_color() const -> const color_type&
-{
-  return _get<color_type>();
-}
-
-auto Attribute::as_path() const -> const path_type&
-{
-  return _get<path_type>();
-}
-
-auto Attribute::as_object() const -> objref_type
-{
-  return _get<objref_type>();
 }
 
 auto Attribute::is_vector() const -> bool
@@ -220,8 +150,7 @@ auto Attribute::get_type() const -> AttributeType
   }
 }
 
-auto operator<<(std::ostream& stream, const Attribute& attribute)
-    -> std::ostream&
+auto operator<<(std::ostream& stream, const Attribute& attribute) -> std::ostream&
 {
   switch (attribute.get_type()) {
     case AttributeType::Str:

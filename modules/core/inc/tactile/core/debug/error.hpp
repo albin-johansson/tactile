@@ -3,20 +3,40 @@
 #pragma once
 
 #include <exception>  // exception
+#include <utility>    // move
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/prelude.hpp"
 #include "tactile/core/container/string.hpp"
+#include "tactile/core/prelude.hpp"
 
 namespace tactile {
 
-class TACTILE_CORE_API Error final : public std::exception {
+/**
+ * \brief Captures and returns the current call stack.
+ *
+ * \return the call stack encoded in a string.
+ */
+[[nodiscard]]
+TACTILE_CORE_API TACTILE_NOINLINE auto get_stacktrace() -> String;
+
+class Error final : public std::exception {
  public:
-  TACTILE_NOINLINE explicit Error(String message);
+  explicit Error(String message)
+    : mMessage {std::move(message)},
+      mTrace {get_stacktrace()}
+  {}
 
-  [[nodiscard]] auto what() const noexcept -> const char* override;
+  [[nodiscard]]
+  auto what() const noexcept -> const char* override
+  {
+    return mMessage.c_str();
+  }
 
-  [[nodiscard]] auto get_trace() const -> const String&;
+  [[nodiscard]]
+  auto get_trace() const -> const String&
+  {
+    return mTrace;
+  }
 
  private:
   String mMessage;

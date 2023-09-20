@@ -9,13 +9,19 @@ namespace tactile {
 
 TACTILE_FWD(class Metadata)
 
-/** Base interface for all objects that may feature properties and components. */
-class TACTILE_CORE_API IMetaContext {
+/**
+ * \interface IMetaContext
+ * \brief Base interface for all objects that feature attached properties and components.
+ */
+class IMetaContext {
  public:
   TACTILE_INTERFACE_CLASS(IMetaContext);
 
-  [[nodiscard]] virtual auto get_meta() -> Metadata& = 0;
-  [[nodiscard]] virtual auto get_meta() const -> const Metadata& = 0;
+  [[nodiscard]]
+  virtual auto get_meta() -> Metadata& = 0;
+
+  [[nodiscard]]
+  virtual auto get_meta() const -> const Metadata& = 0;
 };
 
 }  // namespace tactile

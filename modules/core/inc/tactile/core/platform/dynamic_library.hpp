@@ -20,7 +20,7 @@ namespace tactile {
  *
  * \see load_library(const char*)
  */
-class TACTILE_CORE_API IDynamicLibrary {
+class IDynamicLibrary {
  public:
   TACTILE_INTERFACE_CLASS(IDynamicLibrary);
 
@@ -35,11 +35,13 @@ class TACTILE_CORE_API IDynamicLibrary {
    *
    * \return a pointer to the found symbol; a null pointer otherwise.
    */
-  [[nodiscard]] virtual auto get_symbol(const char* name) const -> void* = 0;
+  [[nodiscard]]
+  virtual auto get_symbol(const char* name) const -> void* = 0;
 };
 
 template <typename FnType>
-[[nodiscard]] auto get_symbol(const IDynamicLibrary& library, const char* name) -> FnType
+[[nodiscard]]
+auto get_symbol(const IDynamicLibrary& library, const char* name) -> FnType
 {
   return reinterpret_cast<FnType>(library.get_symbol(name));
 }
@@ -55,7 +57,8 @@ template <typename FnType>
  *
  * \return the loaded library, or a null pointer on failure.
  */
-[[nodiscard]] TACTILE_CORE_API auto load_library(const fs::Path& library_path)
+[[nodiscard]]
+TACTILE_CORE_API auto load_library(const fs::Path& library_path)
     -> Unique<IDynamicLibrary>;
 
 }  // namespace tactile

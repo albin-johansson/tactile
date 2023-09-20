@@ -5,30 +5,30 @@
 #include <ostream>  // ostream
 
 #include "tactile/core/api.hpp"
+#include "tactile/core/container/string.hpp"
 #include "tactile/core/functional/maybe.hpp"
 #include "tactile/core/prelude.hpp"
-#include "tactile/core/container/string.hpp"
 
 namespace tactile {
 
-struct TACTILE_CORE_API UColor final {
+struct UColor final {
   uint8 red {};
   uint8 green {};
   uint8 blue {};
   uint8 alpha {};
 
-  [[nodiscard]] constexpr auto operator==(const UColor&) const noexcept
-      -> bool = default;
+  [[nodiscard]]
+  constexpr auto operator==(const UColor&) const noexcept -> bool = default;
 };
 
-struct TACTILE_CORE_API NColor final {
+struct NColor final {
   float red {};
   float green {};
   float blue {};
   float alpha {};
 
-  [[nodiscard]] constexpr auto operator==(const NColor&) const noexcept
-      -> bool = default;
+  [[nodiscard]]
+  constexpr auto operator==(const NColor&) const noexcept -> bool = default;
 };
 
 inline constexpr UColor kColorWhite = {0xFF, 0xFF, 0xFF, 0xFF};

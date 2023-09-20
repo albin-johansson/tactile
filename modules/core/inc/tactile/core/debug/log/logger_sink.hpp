@@ -3,10 +3,10 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
+#include "tactile/core/container/string.hpp"
 #include "tactile/core/debug/log/log_level.hpp"
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/chrono.hpp"
-#include "tactile/core/container/string.hpp"
 
 namespace tactile {
 
@@ -34,14 +34,14 @@ struct LogMessage final {
  *          control exactly what happens with logged messages, e.g., whether to
  *          print them to a console or store them in a file.
  */
-class TACTILE_CORE_API ILoggerSink {
+class ILoggerSink {
  public:
   TACTILE_INTERFACE_CLASS(ILoggerSink);
 
-  /** Logs an incoming message. */
+  /** \brief Logs an incoming message. */
   virtual void log(const LogMessage& msg) = 0;
 
-  /** Flushes any pending state, most likely an associated I/O stream. */
+  /** \brief Flushes any pending state, most likely an associated I/O stream. */
   virtual void flush() = 0;
 };
 
