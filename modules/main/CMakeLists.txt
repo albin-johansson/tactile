@@ -9,7 +9,7 @@ file(GLOB_RECURSE TACTILE_MAIN_SOURCE_FILES
      "${TACTILE_MAIN_DIR}/src/**/*.cpp"
      )
 
-add_executable(${TACTILE_MAIN_TARGET} WIN32 ${TACTILE_MAIN_SOURCE_FILES})
+add_executable(${TACTILE_MAIN_TARGET} ${TACTILE_MAIN_SOURCE_FILES})
 
 tactile_prepare_target(${TACTILE_MAIN_TARGET})
 
