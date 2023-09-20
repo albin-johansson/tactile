@@ -23,9 +23,7 @@ inline constexpr StringView kAnsiColorFgCyan = "\x1B[36m";
 inline constexpr StringView kAnsiColorFgWhite = "\x1B[37m";
 inline constexpr StringView kAnsiColorBgRed = "\x1B[41m";
 
-/**
- * \brief A logger sink that outputs log messages to the terminal.
- */
+/** \brief A logger sink that outputs log messages to the terminal. */
 class TerminalLoggerSink final : public ILoggerSink {
  public:
   TACTILE_CORE_API void log(const LogMessage& msg) override;

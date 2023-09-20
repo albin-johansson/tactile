@@ -9,7 +9,13 @@
 
 namespace tactile {
 
-/** Returns the value of an environment variable. */
+/**
+ * \brief Reads the value of an environment variable.
+ *
+ * \param var the environment variable name, may be null.
+ *
+ * \return the variable value; or nothing if variable wasn't found.
+ */
 [[nodiscard]]
 TACTILE_CORE_API auto get_env(const char* var) -> Maybe<String>;
 

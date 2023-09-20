@@ -29,7 +29,11 @@ class ScopeGuard final {
  public:
   using Callback = Function<void()>;
 
-  /** \brief Creates a scope guard from the provided function object. */
+  /**
+   * \brief Creates a scope guard from the provided function object.
+   *
+   * \param callback the function object that will be called.
+   */
   [[nodiscard]] TACTILE_CORE_API explicit ScopeGuard(Callback callback);
 
   /** \brief Invokes the associated function object, as long as it's valid. */

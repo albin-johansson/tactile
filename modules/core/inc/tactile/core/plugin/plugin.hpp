@@ -7,15 +7,18 @@
 
 namespace tactile {
 
-/** Interface for dynamically loaded modules, aka plugins. */
-class TACTILE_CORE_API IPlugin {
+/**
+ * \interface IPlugin
+ * \brief Interface for dynamically loaded modules, aka plugins.
+ */
+class IPlugin {
  public:
   TACTILE_INTERFACE_CLASS(IPlugin);
 
-  /** Called when the plugin is loaded. */
+  /** \brief Called when the plugin is loaded. */
   virtual void on_load() = 0;
 
-  /** Called just before the plugin is unloaded. */
+  /** \brief Called just before the plugin is unloaded. */
   virtual void on_unload() = 0;
 };
 

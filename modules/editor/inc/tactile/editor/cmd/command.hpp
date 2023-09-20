@@ -20,7 +20,7 @@ class TACTILE_EDITOR_API ICommand {
   [[nodiscard]] virtual auto get_id() const -> uint32 = 0;
 
   /**
-   * Tries to merge with another command.
+   * \brief Tries to merge with another command.
    *
    * \details This function allows commands of the same type that target the same objects
    *          to be combined in order to drastically reduce the amount of near identical

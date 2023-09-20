@@ -38,7 +38,11 @@ class ILoggerSink {
  public:
   TACTILE_INTERFACE_CLASS(ILoggerSink);
 
-  /** \brief Logs an incoming message. */
+  /**
+   * \brief Logs an incoming message.
+   *
+   * \param msg the message information.
+   */
   virtual void log(const LogMessage& msg) = 0;
 
   /** \brief Flushes any pending state, most likely an associated I/O stream. */

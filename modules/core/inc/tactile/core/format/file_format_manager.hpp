@@ -45,10 +45,18 @@ class FileFormatManager final {
   TACTILE_CORE_API auto load_tileset(const fs::Path& tileset_file) const
       -> Expected<ir::Tileset, FileFormatError>;
 
-  /** \brief Registers a file format handler. */
+  /**
+   * \brief Registers a file format handler.
+   *
+   * \param format the file format handler.
+   */
   TACTILE_CORE_API void add_format(IFileFormat* format);
 
-  /** \brief Removes a file format handler. */
+  /**
+   * \brief Removes a file format handler.
+   *
+   * \param format the file format handler.
+   */
   TACTILE_CORE_API void remove_format(IFileFormat* format);
 
  private:

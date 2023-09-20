@@ -11,7 +11,7 @@
 
 using namespace tactile;
 
-TEST(RNG, next_random_i32)
+TEST(RNG, NextRandomI32)
 {
   EXPECT_EQ(next_random_i32(0, 0), 0);
   EXPECT_EQ(next_random_i32(1, 1), 1);
@@ -22,14 +22,14 @@ TEST(RNG, next_random_i32)
   EXPECT_LE(value, 10u);
 }
 
-TEST(RNG, next_random_f32)
+TEST(RNG, NextRandomF32)
 {
   const auto value = next_random_f32(0.0f, 1.0f);
   EXPECT_GE(value, 0.0f);
   EXPECT_LE(value, 1.0f);
 }
 
-TEST(RNG, next_bool)
+TEST(RNG, NextBool)
 {
   Array<bool, 2'000> values;
   std::ranges::generate(values, &next_bool);
@@ -45,9 +45,9 @@ TEST(RNG, next_bool)
   EXPECT_LT(ratio, 1.20);
 }
 
-TEST(RNG, next_float)
+TEST(RNG, NextNormalizedFloat)
 {
-  const auto value = next_float();
+  const auto value = next_normalized_float();
   EXPECT_GT(value, 0.0f);
   EXPECT_LT(value, 1.0f);
 }

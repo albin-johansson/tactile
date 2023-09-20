@@ -16,7 +16,7 @@ namespace {
 
 using RandomEngine = std::mt19937;
 
-/// Creates a seeded pseudo-random number generation engine.
+// Creates a seeded pseudo-random number generation engine.
 [[nodiscard]] auto _make_random_engine() -> RandomEngine
 {
   std::random_device entropy_source;
@@ -35,7 +35,7 @@ using RandomEngine = std::mt19937;
   return engine;
 }
 
-/// Returns a random value in the range [min, max].
+// Returns a random value in the range [min, max].
 template <typename T>
 [[nodiscard]] auto _next_random(const T min, const T max) -> T
 {
@@ -91,7 +91,7 @@ auto next_bool() -> bool
   return _next_random(0, 99) < 50;
 }
 
-auto next_float() -> float
+auto next_normalized_float() -> float
 {
   return next_random_f32(0.0f, 1.0f);
 }

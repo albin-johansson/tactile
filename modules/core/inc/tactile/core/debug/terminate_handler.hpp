@@ -12,6 +12,7 @@ namespace tactile {
  * \details This function is intended to be used an alternative terminate handler, which
  *          can be configured using `std::set_terminate`.
  */
-[[noreturn]] TACTILE_CORE_API void on_terminate();
+[[noreturn]]
+TACTILE_CORE_API void on_terminate();
 
 }  // namespace tactile

@@ -32,13 +32,14 @@ namespace tactile {
  *          TACTILE_ENABLE_ASSERTIONS is defined as 0.
  *
  * \param expr the assertion expression.
- * \param  msg the assertion description message.
+ * \param msg  the assertion description message.
  * \param file the file that contains the assertion.
  * \param line the file line number of the assertion.
  */
-[[noreturn]] TACTILE_CORE_API void on_assertion_failed(const char* expr,
-                                                       const char* msg,
-                                                       const char* file,
-                                                       int64 line);
+[[noreturn]]
+TACTILE_CORE_API void on_assertion_failed(const char* expr,
+                                          const char* msg,
+                                          const char* file,
+                                          int64 line);
 
 }  // namespace tactile

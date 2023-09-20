@@ -11,9 +11,7 @@
 
 namespace tactile {
 
-/**
- * \brief A logger sink that forwards log messages to a text file.
- */
+/** \brief A logger sink that forwards log messages to a text file. */
 class FileLoggerSink final : public ILoggerSink {
  public:
   /**
