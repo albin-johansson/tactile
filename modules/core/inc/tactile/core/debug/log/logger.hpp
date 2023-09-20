@@ -12,12 +12,12 @@
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/chrono.hpp"
 
-#define TACTILE_LOG(Level, FmtString, ...)                                   \
-  do {                                                                       \
-    auto* logger = tactile::get_default_logger();                            \
-    if (logger && logger->would_log((Level))) {                              \
-      logger->log((Level), (FmtString), fmt::make_format_args(__VA_ARGS__)); \
-    }                                                                        \
+#define TACTILE_LOG(Level, FmtString, ...)                                           \
+  do {                                                                               \
+    auto* tactile_logger = tactile::get_default_logger();                            \
+    if (tactile_logger && tactile_logger->would_log((Level))) {                      \
+      tactile_logger->log((Level), (FmtString), fmt::make_format_args(__VA_ARGS__)); \
+    }                                                                                \
   } while (false)
 
 #define TACTILE_LOG_TRACE(FmtString, ...) \

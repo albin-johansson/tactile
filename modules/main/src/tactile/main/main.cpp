@@ -9,14 +9,10 @@
 #include "tactile/core/debug/log/terminal_logger_sink.hpp"
 #include "tactile/core/debug/terminate_handler.hpp"
 #include "tactile/core/format/file_format_manager.hpp"
+#include "tactile/core/misc/scope_guard.hpp"
+#include "tactile/core/platform/environment.hpp"
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/chrono.hpp"
-
-namespace {
-
-inline constinit tactile::Logger gAppLogger;
-
-}  // namespace
 
 auto main(const int argc, char* argv[]) -> int
 {
@@ -29,6 +25,8 @@ auto main(const int argc, char* argv[]) -> int
   try {
     const auto app_dir = std::filesystem::current_path();
 
+    tactile::win32_enable_virtual_terminal_processing();
+
     const auto log_dir = app_dir / "logs";  // FIXME
     std::filesystem::create_directories(log_dir);
     tactile::FileLoggerSink file_sink {log_dir / "log.txt"};
@@ -36,12 +34,15 @@ auto main(const int argc, char* argv[]) -> int
     tactile::TerminalLoggerSink console_sink;
     console_sink.use_ansi_colors(true);
 
-    gAppLogger.set_reference_instant(startup_instant);
-    gAppLogger.set_min_level(tactile::LogLevel::kTrace);
-    gAppLogger.add_sink(&file_sink);
-    gAppLogger.add_sink(&console_sink);
+    tactile::Logger logger;
+    const tactile::ScopeGuard logger_guard {[] { tactile::set_default_logger(nullptr); }};
 
-    tactile::set_default_logger(&gAppLogger);
+    logger.set_reference_instant(startup_instant);
+    logger.set_min_level(tactile::LogLevel::kTrace);
+    logger.add_sink(&file_sink);
+    logger.add_sink(&console_sink);
+
+    tactile::set_default_logger(&logger);
 
     TACTILE_LOG_DEBUG("Initialized logger");
 

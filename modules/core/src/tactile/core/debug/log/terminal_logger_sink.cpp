@@ -2,7 +2,7 @@
 
 #include "tactile/core/debug/log/terminal_logger_sink.hpp"
 
-#include <iostream>  // clog
+#include <iostream>  // cout
 
 namespace tactile {
 
@@ -12,21 +12,21 @@ void TerminalLoggerSink::log(const LogMessage& msg)
     const auto bg_color = get_bg_ansi_color(msg.level);
     const auto fg_color = get_fg_ansi_color(msg.level);
 
-    std::clog << bg_color << fg_color;
+    std::cout << bg_color << fg_color;
   }
 
-  std::clog << msg.prefix << ' ' << msg.text;
+  std::cout << msg.prefix << ' ' << msg.text;
 
   if (mUseAnsiColors) {
-    std::clog << kAnsiColorReset;
+    std::cout << kAnsiColorReset;
   }
 
-  std::clog << '\n';
+  std::cout << '\n';
 }
 
 void TerminalLoggerSink::flush()
 {
-  std::clog.flush();
+  std::cout.flush();
 }
 
 void TerminalLoggerSink::use_ansi_colors(const bool enabled)
