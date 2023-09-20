@@ -1,10 +1,5 @@
 project(tactile-modules CXX)
 
-set(TACTILE_CORE_TARGET tactile-core)
-set(TACTILE_TMJ_FORMAT_TARGET tactile-tmj-format)
-set(TACTILE_EDITOR_TARGET tactile-editor)
-set(TACTILE_MAIN_TARGET tactile)
-
 set(TACTILE_COMPILE_OPTIONS)
 set(TACTILE_LINK_OPTIONS)
 
@@ -109,16 +104,12 @@ function(tactile_copy_directory_post_build target from to)
                      ${to})
 endfunction()
 
-set(TACTILE_CORE_DIR "${TACTILE_ROOT_DIR}/modules/core")
-set(TACTILE_EDITOR_DIR "${TACTILE_ROOT_DIR}/modules/editor")
-set(TACTILE_TMJ_FORMAT_DIR "${TACTILE_ROOT_DIR}/modules/tmj-format")
+set(TACTILE_CORE_TARGET tactile-core)
+set(TACTILE_EDITOR_TARGET tactile-editor)
+set(TACTILE_TMJ_FORMAT_TARGET tactile-tmj-format)
+set(TACTILE_MAIN_TARGET tactile)
 
-add_subdirectory(core/src)
-add_subdirectory(tmj-format/src)
-add_subdirectory(editor/src)
-add_subdirectory(main/src)
-
-if (TACTILE_BUILD_TESTS MATCHES ON)
-  add_subdirectory(core/test)
-  add_subdirectory(editor/test)
-endif ()
+add_subdirectory(core)
+add_subdirectory(editor)
+add_subdirectory(tmj-format)
+add_subdirectory(main)
