@@ -14,6 +14,7 @@ project(tactile
         LANGUAGES CXX)
 
 message(DEBUG "CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}")
+message(DEBUG "CMAKE_CXX_COMPILER_VERSION: ${CMAKE_CXX_COMPILER_VERSION}")
 message(DEBUG "CMAKE_PROJECT_VERSION: ${CMAKE_PROJECT_VERSION}")
 
 option(TACTILE_BUILD_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)
