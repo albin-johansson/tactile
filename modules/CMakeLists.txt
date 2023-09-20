@@ -97,6 +97,15 @@ function(tactile_prepare_target target)
   target_precompile_headers(${target} PRIVATE ${TACTILE_PRECOMPILED_HEADERS})
 endfunction()
 
+function(tactile_use_plugin_output_dir target)
+  set_target_properties(${target}
+                        PROPERTIES
+                        RUNTIME_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}/plugins"
+                        ARCHIVE_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}/plugins"
+                        LIBRARY_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}/plugins"
+                        )
+endfunction()
+
 function(tactile_copy_directory_post_build target from to)
   add_custom_command(TARGET ${target} POST_BUILD
                      COMMAND ${CMAKE_COMMAND} -E copy_directory
@@ -107,6 +116,9 @@ endfunction()
 set(TACTILE_CORE_TARGET tactile-core)
 set(TACTILE_EDITOR_TARGET tactile-editor)
 set(TACTILE_TMJ_FORMAT_TARGET tactile-tmj-format)
+set(TACTILE_TMX_FORMAT_TARGET tactile-tmx-format)
+set(TACTILE_OPENGL_TARGET tactile-opengl)
+set(TACTILE_VULKAN_TARGET tactile-vulkan)
 set(TACTILE_MAIN_TARGET tactile)
 
 add_subdirectory(core)

@@ -13,6 +13,8 @@ add_library(${TACTILE_TMJ_FORMAT_TARGET} SHARED ${TACTILE_TMJ_FORMAT_SOURCE_FILE
 
 tactile_prepare_target(${TACTILE_TMJ_FORMAT_TARGET})
 
+tactile_use_plugin_output_dir(${TACTILE_TMJ_FORMAT_TARGET})
+
 target_compile_definitions(${TACTILE_TMJ_FORMAT_TARGET}
                            PRIVATE
                            TACTILE_BUILDING_TMJ_FORMAT
