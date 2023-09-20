@@ -4,11 +4,11 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/core/container/hash_map.hpp"
+#include "tactile/core/container/string.hpp"
 #include "tactile/core/container/string_map.hpp"
+#include "tactile/core/container/tree_map.hpp"
 #include "tactile/core/debug/error.hpp"
-#include "tactile/core/type/hash_map.hpp"
-#include "tactile/core/type/string.hpp"
-#include "tactile/core/type/tree_map.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;

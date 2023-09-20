@@ -3,7 +3,7 @@
 #pragma once
 
 #include "tactile/core/debug/error.hpp"
-#include "tactile/core/type/maybe.hpp"
+#include "tactile/core/functional/maybe.hpp"
 
 namespace tactile {
 

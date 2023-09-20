@@ -3,12 +3,12 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
+#include "tactile/core/container/vector.hpp"
 #include "tactile/core/format/file_format_error.hpp"
+#include "tactile/core/functional/expected.hpp"
 #include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/io/ir.hpp"
 #include "tactile/core/prelude.hpp"
-#include "tactile/core/type/expected.hpp"
-#include "tactile/core/type/vector.hpp"
 
 namespace tactile {
 

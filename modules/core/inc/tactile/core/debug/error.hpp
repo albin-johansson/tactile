@@ -6,7 +6,7 @@
 
 #include "tactile/core/api.hpp"
 #include "tactile/core/prelude.hpp"
-#include "tactile/core/type/string.hpp"
+#include "tactile/core/container/string.hpp"
 
 namespace tactile {
 

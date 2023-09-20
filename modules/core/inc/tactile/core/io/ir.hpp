@@ -2,6 +2,9 @@
 
 #pragma once
 
+#include "tactile/core/container/string.hpp"
+#include "tactile/core/container/variant.hpp"
+#include "tactile/core/container/vector.hpp"
 #include "tactile/core/context/attribute.hpp"
 #include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/map/layer/layer_type.hpp"
@@ -9,9 +12,6 @@
 #include "tactile/core/map/tile_compression.hpp"
 #include "tactile/core/map/tile_encoding.hpp"
 #include "tactile/core/prelude.hpp"
-#include "tactile/core/type/string.hpp"
-#include "tactile/core/type/variant.hpp"
-#include "tactile/core/type/vector.hpp"
 
 namespace tactile::ir {
 

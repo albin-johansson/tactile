@@ -1,6 +1,6 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/type/string.hpp"
+#include "tactile/core/container/string.hpp"
 
 #include <gtest/gtest.h>
 

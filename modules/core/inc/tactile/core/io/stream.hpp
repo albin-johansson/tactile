@@ -7,8 +7,8 @@
 #include <ios>        // ios
 
 #include "tactile/core/debug/log/logger.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "tactile/core/io/filesystem.hpp"
-#include "tactile/core/type/maybe.hpp"
 
 namespace tactile {
 

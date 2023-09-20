@@ -5,12 +5,12 @@
 #include <fmt/core.h>
 
 #include "tactile/core/api.hpp"
+#include "tactile/core/container/string.hpp"
+#include "tactile/core/container/vector.hpp"
 #include "tactile/core/debug/log/log_level.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/chrono.hpp"
-#include "tactile/core/type/maybe.hpp"
-#include "tactile/core/type/string.hpp"
-#include "tactile/core/type/vector.hpp"
 
 #define TACTILE_LOG(Level, FmtString, ...)                                   \
   do {                                                                       \

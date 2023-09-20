@@ -7,31 +7,31 @@
 #include <utility>   // move
 
 #include "tactile/core/api.hpp"
+#include "tactile/core/container/string.hpp"
+#include "tactile/core/container/variant.hpp"
 #include "tactile/core/context/attribute_type.hpp"
 #include "tactile/core/context/color.hpp"
 #include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/error.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/math/vector.hpp"
 #include "tactile/core/prelude.hpp"
-#include "tactile/core/type/maybe.hpp"
-#include "tactile/core/type/string.hpp"
-#include "tactile/core/type/variant.hpp"
 
 namespace tactile {
 
 template <typename T>
-concept AttributeValueType = std::same_as<T, bool> ||            //
-                             std::convertible_to<T, String> ||   //
-                             std::convertible_to<T, int32> ||    //
-                             std::convertible_to<T, Int2> ||     //
-                             std::convertible_to<T, Int3> ||     //
-                             std::convertible_to<T, Int4> ||     //
-                             std::convertible_to<T, float32> ||  //
-                             std::convertible_to<T, Float2> ||   //
-                             std::convertible_to<T, Float3> ||   //
-                             std::convertible_to<T, Float4> ||   //
-                             std::convertible_to<T, UColor> ||   //
+concept AttributeValueType = std::same_as<T, bool> ||             //
+                             std::convertible_to<T, String> ||    //
+                             std::convertible_to<T, int32> ||     //
+                             std::convertible_to<T, Int2> ||      //
+                             std::convertible_to<T, Int3> ||      //
+                             std::convertible_to<T, Int4> ||      //
+                             std::convertible_to<T, float32> ||   //
+                             std::convertible_to<T, Float2> ||    //
+                             std::convertible_to<T, Float3> ||    //
+                             std::convertible_to<T, Float4> ||    //
+                             std::convertible_to<T, UColor> ||    //
                              std::convertible_to<T, fs::Path> ||  //
                              std::convertible_to<T, ObjectRef>;
 
@@ -160,7 +160,6 @@ class TACTILE_CORE_API Attribute final {
 };
 
 TACTILE_CORE_API
-auto operator<<(std::ostream& stream, const Attribute& attribute)
-    -> std::ostream&;
+auto operator<<(std::ostream& stream, const Attribute& attribute) -> std::ostream&;
 
 }  // namespace tactile

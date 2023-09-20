@@ -7,7 +7,7 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/core/type/array.hpp"
+#include "tactile/core/container/array.hpp"
 
 using namespace tactile;
 

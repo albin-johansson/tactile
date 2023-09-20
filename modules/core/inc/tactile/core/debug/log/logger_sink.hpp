@@ -6,7 +6,7 @@
 #include "tactile/core/debug/log/log_level.hpp"
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/chrono.hpp"
-#include "tactile/core/type/string.hpp"
+#include "tactile/core/container/string.hpp"
 
 namespace tactile {
 

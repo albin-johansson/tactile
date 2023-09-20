@@ -7,9 +7,9 @@
 #include <type_traits>  // conditional_t
 
 #include "tactile/core/api.hpp"
+#include "tactile/core/container/vector.hpp"
+#include "tactile/core/functional/maybe.hpp"
 #include "tactile/core/prelude.hpp"
-#include "tactile/core/type/maybe.hpp"
-#include "tactile/core/type/vector.hpp"
 
 namespace tactile {
 

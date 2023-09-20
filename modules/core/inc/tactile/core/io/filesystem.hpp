@@ -5,8 +5,8 @@
 #include <filesystem>  // path, directory_iterator, recursive_directory_iterator
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/type/maybe.hpp"
-#include "tactile/core/type/string.hpp"
+#include "tactile/core/functional/maybe.hpp"
+#include "tactile/core/container/string.hpp"
 
 namespace tactile {
 
