@@ -33,7 +33,6 @@ NamespaceIndentation: None
 RequiresExpressionIndentation: OuterScope
 LambdaBodyIndentation: Signature
 
-# Breaks
 BreakBeforeConceptDeclarations: Always
 BreakBeforeTernaryOperators: true
 BreakBeforeBinaryOperators: None
@@ -56,6 +55,8 @@ BraceWrapping:
   SplitEmptyNamespace: false
   SplitEmptyFunction: false
   SplitEmptyRecord: false
+
+Cpp11BracedListStyle: true
 
 BreakAfterAttributes: Leave
 
