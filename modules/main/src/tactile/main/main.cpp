@@ -11,6 +11,7 @@
 #include "tactile/core/format/file_format_manager.hpp"
 #include "tactile/core/misc/scope_guard.hpp"
 #include "tactile/core/platform/environment.hpp"
+#include "tactile/core/plugin/plugin_manager.hpp"
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/chrono.hpp"
 
@@ -47,6 +48,13 @@ auto main(const int argc, char* argv[]) -> int
     TACTILE_LOG_DEBUG("Initialized logger");
 
     TACTILE_LOG_INFO("Tactile " TACTILE_VERSION_STRING);
+
+    TACTILE_LOG_DEBUG("Loading plugins...");
+    tactile::PluginManager plugin_manager;
+
+    const auto plugin_dir = app_dir / "plugins";
+    plugin_manager.scan(plugin_dir);
+
   }
   catch (const tactile::Error& err) {
     TACTILE_LOG_FATAL("Unhandled exception: {}\n{}", err.what(), err.get_trace());
