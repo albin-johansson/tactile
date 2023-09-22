@@ -16,14 +16,14 @@ auto Metadata::add_property(String name) -> Attribute&
 
 auto Metadata::remove_property(const StringView name) -> Maybe<Attribute>
 {
-  return erase_from(mProperties, name).value();
+  return erase_from(mProperties, name);
 }
 
-auto Metadata::rename_property(StringView current_name, String new_name) -> bool
+auto Metadata::rename_property(const StringView current_name, String new_name) -> bool
 {
   if (auto old_value = remove_property(current_name)) {
     auto& new_value = add_property(std::move(new_name));
-    new_value = *old_value;
+    new_value = std::move(*old_value);
 
     return true;
   }

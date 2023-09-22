@@ -55,9 +55,11 @@ class Metadata final {
    *
    * \throws Error if there is no matching property.
    */
+  [[nodiscard]]
   TACTILE_CORE_API auto get_property(StringView name) -> Attribute&;
 
   /** \copydoc Metadata::get_property */
+  [[nodiscard]]
   TACTILE_CORE_API auto get_property(StringView name) const -> const Attribute&;
 
   /**
