@@ -24,7 +24,7 @@ namespace {
 auto use_forward_slashes(const Path& path) -> String
 {
   auto str = path.string();
-  std::replace(str.begin(), str.end(), '\\', '/');
+  std::ranges::replace(str, '\\', '/');
   return str;
 }
 
@@ -46,4 +46,4 @@ auto has_home_prefix(const Path& path) -> bool
   return view.starts_with(prefix);
 }
 
-}  // namespace tactile
+}  // namespace tactile::fs
