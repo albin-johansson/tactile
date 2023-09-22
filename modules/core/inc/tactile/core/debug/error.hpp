@@ -17,7 +17,7 @@ namespace tactile {
  * \return the call stack encoded in a string.
  */
 [[nodiscard]]
-TACTILE_CORE_API TACTILE_NOINLINE auto get_stacktrace() -> String;
+TACTILE_NOINLINE TACTILE_CORE_API auto get_stacktrace() -> String;
 
 class Error final : public std::exception {
  public:
