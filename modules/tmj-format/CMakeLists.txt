@@ -23,6 +23,9 @@ target_compile_definitions(${TACTILE_TMJ_FORMAT_TARGET}
 target_include_directories(${TACTILE_TMJ_FORMAT_TARGET}
                            PUBLIC
                            "${TACTILE_TMJ_FORMAT_DIR}/inc"
+
+                           PRIVATE
+                           "${TACTILE_TMJ_FORMAT_DIR}/src"
                            )
 
 target_link_libraries(${TACTILE_TMJ_FORMAT_TARGET}
