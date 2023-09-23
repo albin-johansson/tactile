@@ -17,7 +17,7 @@ tactile_use_plugin_output_dir(${TACTILE_TMJ_FORMAT_TARGET})
 
 target_compile_definitions(${TACTILE_TMJ_FORMAT_TARGET}
                            PRIVATE
-                           TACTILE_BUILDING_TMJ_FORMAT
+                           TACTILE_BUILDING_TMJ_PLUGIN
                            )
 
 target_include_directories(${TACTILE_TMJ_FORMAT_TARGET}
