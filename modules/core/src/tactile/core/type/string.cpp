@@ -2,6 +2,7 @@
 
 #include "tactile/core/container/string.hpp"
 
+#include <algorithm>     // count
 #include <charconv>      // from_chars
 #include <concepts>      // integral, floating_point, same_as
 #include <sstream>       // stringstream
@@ -21,7 +22,7 @@ namespace tactile {
 namespace {
 
 template <std::integral T>
-[[nodiscard]] auto _parse_integral(StringView str, const int base) -> Maybe<T>
+[[nodiscard]] auto _parse_integral(const StringView str, const int base) -> Maybe<T>
 {
   const char* begin = str.data();
   const char* end = str.data() + str.size();
@@ -39,7 +40,7 @@ template <std::integral T>
 }
 
 template <std::floating_point T>
-[[nodiscard]] auto _parse_float(StringView str) -> Maybe<T>
+[[nodiscard]] auto _parse_float(const StringView str) -> Maybe<T>
 {
   const char* begin = str.data();
   const char* end = str.data() + str.size();
@@ -54,6 +55,56 @@ template <std::floating_point T>
   else {
     return kNone;
   }
+}
+
+template <typename T>
+[[nodiscard]] auto _str_to_multiple_generic(const StringView str,
+                                            const char separator,
+                                            const int base) -> Vector<T>
+{
+  const char* const str_begin = str.data();
+  const char* const str_end = str.data() + str.size();
+
+  // Estimate the amount of numbers in the string to avoid unnecessary allocations.
+  const auto expected_count = std::ranges::count(str_begin, str_end, separator) + 1;
+
+  Vector<T> numbers;
+  numbers.reserve(expected_count);
+
+  const char* current_begin = str_begin;
+  const char* result_ptr = nullptr;
+  std::errc result_err {};
+
+  // Continue until we hit the end of the string or an error occurs.
+  while (result_ptr != str_end && result_err == std::errc {}) {
+    T value {};
+
+    if constexpr (std::integral<T>) {
+      const auto result = std::from_chars(current_begin, str_end, value, base);
+      result_ptr = result.ptr;
+      result_err = result.ec;
+    }
+    else {
+      const auto result = fast_float::from_chars(current_begin, str_end, value);
+      result_ptr = result.ptr;
+      result_err = result.ec;
+    }
+
+    // Store the value if the conversion was successful.
+    if (result_err == std::errc {}) {
+      numbers.push_back(value);
+    }
+
+    // Advance the current starting point one past the encountered separator.
+    current_begin = result_ptr + 1;
+  }
+
+  // Return an empty vector if something went wrong.
+  if (result_err != std::errc {}) {
+    return {};
+  }
+
+  return numbers;
 }
 
 }  // namespace
@@ -92,7 +143,7 @@ auto make_native_string(const char* str) -> Maybe<NativeString>
 #endif  // TACTILE_OS_WINDOWS
 }
 
-auto str_split(StringView str, const char separator) -> Vector<String>
+auto str_split(const StringView str, const char separator) -> Vector<String>
 {
   std::stringstream stream;
   stream << str;
@@ -110,17 +161,35 @@ auto str_split(StringView str, const char separator) -> Vector<String>
   return tokens;
 }
 
-auto str_to_u32(StringView str, const int base) -> Maybe<uint32>
+auto str_to_multiple_i32(const StringView str, const char separator, const int base)
+    -> Vector<int32>
+{
+  return _str_to_multiple_generic<int32>(str, separator, base);
+}
+
+auto str_to_multiple_u32(const StringView str, const char separator, const int base)
+    -> Vector<uint32>
+{
+  return _str_to_multiple_generic<uint32>(str, separator, base);
+}
+
+auto str_to_multiple_f32(const StringView str, const char separator) -> Vector<float32>
+{
+  // Note, the base parameter is ignored for floating point types
+  return _str_to_multiple_generic<float32>(str, separator, 10);
+}
+
+auto str_to_u32(const StringView str, const int base) -> Maybe<uint32>
 {
   return _parse_integral<uint32>(str, base);
 }
 
-auto str_to_i32(StringView str, const int base) -> Maybe<int32>
+auto str_to_i32(const StringView str, const int base) -> Maybe<int32>
 {
   return _parse_integral<int32>(str, base);
 }
 
-auto str_to_f32(StringView str) -> Maybe<float32>
+auto str_to_f32(const StringView str) -> Maybe<float32>
 {
   return _parse_float<float32>(str);
 }

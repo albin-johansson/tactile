@@ -39,6 +39,124 @@ TEST(String, StrSplit)
   EXPECT_EQ(tokens[3], "x");
 }
 
+TEST(String, StrToMultipleI32)
+{
+  EXPECT_TRUE(str_to_multiple_i32("", ' ').empty());
+  EXPECT_TRUE(str_to_multiple_i32("/", '/').empty());
+  EXPECT_TRUE(str_to_multiple_i32("!!", '!').empty());
+  EXPECT_TRUE(str_to_multiple_i32("^0", '^').empty());
+  EXPECT_TRUE(str_to_multiple_i32("1||", '|').empty());
+
+  {
+    const auto one = str_to_multiple_i32("42", '^');
+    ASSERT_EQ(one.size(), 1_uz);
+    EXPECT_EQ(one[0], 42);
+  }
+
+  {
+    const auto two = str_to_multiple_i32("-3.7", '.');
+    ASSERT_EQ(two.size(), 2_uz);
+    EXPECT_EQ(two[0], -3);
+    EXPECT_EQ(two[1], 7);
+  }
+
+  {
+    const auto three = str_to_multiple_i32("1 2 3", ' ');
+    ASSERT_EQ(three.size(), 3_uz);
+    EXPECT_EQ(three[0], 1);
+    EXPECT_EQ(three[1], 2);
+    EXPECT_EQ(three[2], 3);
+  }
+
+  {
+    const auto four = str_to_multiple_i32("10:20:30:40", ':');
+    ASSERT_EQ(four.size(), 4_uz);
+    EXPECT_EQ(four[0], 10);
+    EXPECT_EQ(four[1], 20);
+    EXPECT_EQ(four[2], 30);
+    EXPECT_EQ(four[3], 40);
+  }
+}
+
+TEST(String, StrToMultipleU32)
+{
+  EXPECT_TRUE(str_to_multiple_u32("", ' ').empty());
+  EXPECT_TRUE(str_to_multiple_u32("/", '/').empty());
+  EXPECT_TRUE(str_to_multiple_u32("!!", '!').empty());
+  EXPECT_TRUE(str_to_multiple_u32("^0", '^').empty());
+  EXPECT_TRUE(str_to_multiple_u32("1||", '|').empty());
+  EXPECT_TRUE(str_to_multiple_u32("-1", ' ').empty());
+
+  {
+    const auto one = str_to_multiple_u32("42", '^');
+    ASSERT_EQ(one.size(), 1_uz);
+    EXPECT_EQ(one[0], 42u);
+  }
+
+  {
+    const auto two = str_to_multiple_u32("3-7", '-');
+    ASSERT_EQ(two.size(), 2_uz);
+    EXPECT_EQ(two[0], 3u);
+    EXPECT_EQ(two[1], 7u);
+  }
+
+  {
+    const auto three = str_to_multiple_u32("1 2 3", ' ');
+    ASSERT_EQ(three.size(), 3_uz);
+    EXPECT_EQ(three[0], 1u);
+    EXPECT_EQ(three[1], 2u);
+    EXPECT_EQ(three[2], 3u);
+  }
+
+  {
+    const auto four = str_to_multiple_u32("10:20:30:40", ':');
+    ASSERT_EQ(four.size(), 4_uz);
+    EXPECT_EQ(four[0], 10u);
+    EXPECT_EQ(four[1], 20u);
+    EXPECT_EQ(four[2], 30u);
+    EXPECT_EQ(four[3], 40u);
+  }
+}
+
+TEST(String, StrToMultipleF32)
+{
+  EXPECT_TRUE(str_to_multiple_f32("", ' ').empty());
+  EXPECT_TRUE(str_to_multiple_f32("/", '/').empty());
+  EXPECT_TRUE(str_to_multiple_f32("!!", '!').empty());
+  EXPECT_TRUE(str_to_multiple_f32("^0.0", '^').empty());
+  EXPECT_TRUE(str_to_multiple_f32("1.0||", '|').empty());
+
+  {
+    const auto one = str_to_multiple_f32("42", '^');
+    ASSERT_EQ(one.size(), 1_uz);
+    EXPECT_EQ(one[0], 42.0f);
+  }
+
+  {
+    const auto two = str_to_multiple_f32("3.7@-100", '@');
+    ASSERT_EQ(two.size(), 2_uz);
+    EXPECT_EQ(two[0], 3.7f);
+    EXPECT_EQ(two[1], -100.0f);
+  }
+
+  {
+    const auto three = str_to_multiple_f32("1 2 3", ' ');
+    ASSERT_EQ(three.size(), 3_uz);
+    EXPECT_EQ(three[0], 1.0f);
+    EXPECT_EQ(three[1], 2.0f);
+    EXPECT_EQ(three[2], 3.0f);
+  }
+
+  {
+    const auto four = str_to_multiple_f32("10:20:30:40", ':');
+    ASSERT_EQ(four.size(), 4_uz);
+    EXPECT_EQ(four[0], 10.0f);
+    EXPECT_EQ(four[1], 20.0f);
+    EXPECT_EQ(four[2], 30.0f);
+    EXPECT_EQ(four[3], 40.0f);
+  }
+}
+
 TEST(String, StrToU32)
 {
   // Invalid inputs

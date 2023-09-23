@@ -39,6 +39,9 @@ TACTILE_CORE_API auto make_native_string(const char* str) -> Maybe<NativeString>
 /**
  * \brief Splits a string into a collection of tokens, delimited by a specific character.
  *
+ * \note Consider the `str_to_multiple_i32` family of functions over this one if the aim
+ *       is to convert the tokens into integers.
+ *
  * \param str       the source string.
  * \param separator the character used as a delimiter.
  *
@@ -48,10 +51,48 @@ TACTILE_CORE_API auto make_native_string(const char* str) -> Maybe<NativeString>
 TACTILE_CORE_API auto str_split(StringView str, char separator) -> Vector<String>;
 
 /**
+ * \brief Converts a string into multiple integers.
+ *
+ * \details This function can be used to efficiently extract integers stored in a string
+ *          that are delimited by a given character separator. For example, the string
+ *          `"1:2:3:4"` can be converted to the vector `{1, 2, 3, 4}` using a single call
+ *          to this function.
+ *
+ * \param str       the source string.
+ * \param separator the character used to delimit each integer.
+ * \param base      the numerical base.
+ *
+ * \return the parsed integers. An empty vector is return if an error occurred.
+ */
+[[nodiscard]]
+TACTILE_CORE_API auto str_to_multiple_i32(StringView str, char separator, int base = 10)
+    -> Vector<int32>;
+
+/** \copydoc str_to_multiple_i32 */
+[[nodiscard]]
+TACTILE_CORE_API auto str_to_multiple_u32(StringView str, char separator, int base = 10)
+    -> Vector<uint32>;
+
+/**
+ * \brief Converts a string into multiple floats.
+ *
+ * \param str       the source string.
+ * \param separator the character used to delimit each float.
+ *
+ * \return the parsed numbers. An empty vector is return if an error occurred.
+ *
+ * \see `str_to_multiple_i32`
+ * \see `str_to_multiple_u32`
+ */
+[[nodiscard]]
+TACTILE_CORE_API auto str_to_multiple_f32(StringView str, char separator)
+    -> Vector<float32>;
+
+/**
  * \brief Converts a string into an unsigned 32-bit integer.
  *
  * \param str  the source string.
- * \param base the numerical base, defaults to base 10.
+ * \param base the numerical base.
  *
  * \return the converted value, or nothing if an error occurred.
  */
@@ -62,7 +103,7 @@ TACTILE_CORE_API auto str_to_u32(StringView str, int base = 10) -> Maybe<uint32>
  * \brief Converts a string into a signed 32-bit integer.
  *
  * \param str  the source string.
- * \param base the numerical base, defaults to base 10.
+ * \param base the numerical base.
  *
  * \return the converted value, or nothing if an error occurred.
  */
