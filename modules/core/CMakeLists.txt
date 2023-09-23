@@ -17,6 +17,7 @@ target_compile_definitions(${TACTILE_CORE_TARGET}
                            PRIVATE
                            TACTILE_BUILDING_CORE
                            BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
+                           BOOST_UUID_RANDOM_PROVIDER_FORCE_WINCRYPT
                            GLM_CONFIG_XYZW_ONLY=1
                            )
 
