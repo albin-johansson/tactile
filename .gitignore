@@ -47,7 +47,7 @@
 .fleet
 
 # Generated Doxygen output
-doxy*
+docs/doxygen/html
 
 # Build output
 build
