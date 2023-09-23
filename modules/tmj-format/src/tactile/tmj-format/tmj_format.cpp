@@ -2,6 +2,8 @@
 
 #include "tactile/tmj-format/tmj_format.hpp"
 
+#include "tactile/core/debug/log/logger.hpp"
+
 namespace tactile {
 
 auto TmjFormat::load_map(const fs::Path& map_file) const
@@ -36,7 +38,8 @@ void TmjFormat::save_tileset(const fs::Path& tileset_file, const ir::Tileset& ti
 
 auto TmjFormat::is_valid_extension(const NativeStringView extension) const -> bool
 {
-  return extension == ".tmj" || extension == ".json";
+  return extension == TACTILE_NATIVE_STR(".tmj") ||
+         extension == TACTILE_NATIVE_STR(".json");
 }
 
 }  // namespace tactile
