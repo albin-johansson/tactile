@@ -21,22 +21,22 @@
   } while (false)
 
 #define TACTILE_LOG_TRACE(FmtString, ...) \
-  TACTILE_LOG(tactile::LogLevel::kTrace, FmtString __VA_OPT__(, ) __VA_ARGS__)
+  TACTILE_LOG(tactile::LogLevel::kTrace, FmtString, __VA_ARGS__)
 
 #define TACTILE_LOG_DEBUG(FmtString, ...) \
-  TACTILE_LOG(tactile::LogLevel::kDebug, FmtString __VA_OPT__(, ) __VA_ARGS__)
+  TACTILE_LOG(tactile::LogLevel::kDebug, FmtString, __VA_ARGS__)
 
 #define TACTILE_LOG_INFO(FmtString, ...) \
-  TACTILE_LOG(tactile::LogLevel::kInfo, FmtString __VA_OPT__(, ) __VA_ARGS__)
+  TACTILE_LOG(tactile::LogLevel::kInfo, FmtString, __VA_ARGS__)
 
 #define TACTILE_LOG_WARN(FmtString, ...) \
-  TACTILE_LOG(tactile::LogLevel::kWarn, FmtString __VA_OPT__(, ) __VA_ARGS__)
+  TACTILE_LOG(tactile::LogLevel::kWarn, FmtString, __VA_ARGS__)
 
 #define TACTILE_LOG_ERROR(FmtString, ...) \
-  TACTILE_LOG(tactile::LogLevel::kError, FmtString __VA_OPT__(, ) __VA_ARGS__)
+  TACTILE_LOG(tactile::LogLevel::kError, FmtString, __VA_ARGS__)
 
 #define TACTILE_LOG_FATAL(FmtString, ...) \
-  TACTILE_LOG(tactile::LogLevel::kFatal, FmtString __VA_OPT__(, ) __VA_ARGS__)
+  TACTILE_LOG(tactile::LogLevel::kFatal, FmtString, __VA_ARGS__)
 
 namespace tactile {
 
