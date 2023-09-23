@@ -9,19 +9,20 @@
   #include <windows.h>
 #endif
 
+#include "tactile/core/misc/scope_guard.hpp"
+
 namespace tactile {
 
 auto get_env(const char* var) -> Maybe<String>
 {
   if (var) {
 #if TACTILE_OS_WINDOWS
-    char* temp {};
-    _dupenv_s(&temp, nullptr, var);
+    char* value {};
+    _dupenv_s(&value, nullptr, var);
 
-    if (temp) {
-      String result {temp};
-      std::free(temp);
-      return result;
+    if (value) {
+      const ScopeGuard value_deleter {[=] { std::free(value); }};
+      return String {value};
     }
 #else
     if (const auto* value = std::getenv(var)) {
