@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "tactile/core/format/file_format.hpp"
+#include "tactile/core/format/save_format.hpp"
 #include "tactile/core/prelude.hpp"
 #include "tactile/tmj-format/api.hpp"
 
@@ -15,15 +15,15 @@ namespace tactile {
  *
  * \see https://doc.mapeditor.org/en/stable/reference/json-map-format
  */
-class TmjFormat final : public IFileFormat {
+class TmjFormat final : public ISaveFormat {
  public:
   [[nodiscard]]
   TACTILE_TMJ_API auto load_map(const fs::Path& map_file) const
-      -> Expected<ir::Map, FileFormatError> override;
+      -> Result<ir::Map> override;
 
   [[nodiscard]]
   TACTILE_TMJ_API auto load_tileset(const fs::Path& tileset_file) const
-      -> Expected<ir::Tileset, FileFormatError> override;
+      -> Result<ir::Tileset> override;
 
   TACTILE_TMJ_API void save_map(const fs::Path& map_file, const ir::Map& map) override;
 

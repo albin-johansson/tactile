@@ -2,10 +2,8 @@
 
 #pragma once
 
-#include "tactile/core/api.hpp"
 #include "tactile/core/container/string.hpp"
-#include "tactile/core/format/file_format_error.hpp"
-#include "tactile/core/functional/expected.hpp"
+#include "tactile/core/functional/result.hpp"
 #include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/io/ir.hpp"
 #include "tactile/core/prelude.hpp"
@@ -13,17 +11,17 @@
 namespace tactile {
 
 /**
- * \interface IFileFormat
+ * \interface ISaveFormat
  *
- * \brief Interface for file format reader/parser implementations.
+ * \brief Interface for save file format reader/parser implementations.
  *
- * \details File format implementations aren't required to support both save and load
+ * \details Save format implementations aren't required to support both save and load
  *          operations, and may simply report an error instead. However, any useful
  *          implementation would of course provide at least one of these operations.
  */
-class IFileFormat {
+class ISaveFormat {
  public:
-  TACTILE_INTERFACE_CLASS(IFileFormat);
+  TACTILE_INTERFACE_CLASS(ISaveFormat);
 
   /**
    * \brief Attempts to load a map file.
@@ -33,8 +31,7 @@ class IFileFormat {
    * \return the loaded map; or an error code if something went wrong.
    */
   [[nodiscard]]
-  virtual auto load_map(const fs::Path& map_file) const
-      -> Expected<ir::Map, FileFormatError> = 0;
+  virtual auto load_map(const fs::Path& map_file) const -> Result<ir::Map> = 0;
 
   /**
    * \brief Attempts to load a standalone tileset file.
@@ -45,14 +42,14 @@ class IFileFormat {
    */
   [[nodiscard]]
   virtual auto load_tileset(const fs::Path& tileset_file) const
-      -> Expected<ir::Tileset, FileFormatError> = 0;
+      -> Result<ir::Tileset> = 0;
 
   virtual void save_map(const fs::Path& map_file, const ir::Map& map) = 0;
 
   virtual void save_tileset(const fs::Path& tileset_file, const ir::Tileset& tileset) = 0;
 
   /**
-   * \brief Indicates whether a file extension is usable with the file format.
+   * \brief Indicates whether a file extension is usable with the save format.
    *
    * \param extension a file extension, such as ".txt".
    *

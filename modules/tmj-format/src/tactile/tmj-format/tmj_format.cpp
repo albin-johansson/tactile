@@ -3,27 +3,26 @@
 #include "tactile/tmj-format/tmj_format.hpp"
 
 #include "tactile/core/debug/log/logger.hpp"
+#include "tactile/core/format/save_format_error.hpp"
 
 namespace tactile {
 
-auto TmjFormat::load_map(const fs::Path& map_file) const
-    -> Expected<ir::Map, FileFormatError>
+auto TmjFormat::load_map(const fs::Path& map_file) const -> Result<ir::Map>
 {
   try {
   }
   catch (const std::exception& ex) {
     TACTILE_LOG_ERROR("Error reading TMJ map: {}", ex.what());
-    return unexpected(FileFormatError::kUnknown);
+    return unexpected(save_format_error(SaveFormatError::kUnknown));
   }
 
   TACTILE_LOG_ERROR("An unknown error occurred during TMJ parsing");
-  return unexpected(FileFormatError::kUnknown);
+  return unexpected(save_format_error(SaveFormatError::kUnknown));
 }
 
-auto TmjFormat::load_tileset(const fs::Path& tileset_file) const
-    -> Expected<ir::Tileset, FileFormatError>
+auto TmjFormat::load_tileset(const fs::Path& tileset_file) const -> Result<ir::Tileset>
 {
-  return unexpected(FileFormatError::kUnknown);
+  return unexpected(save_format_error(SaveFormatError::kUnknown));
 }
 
 void TmjFormat::save_map(const fs::Path& map_file, const ir::Map& map)

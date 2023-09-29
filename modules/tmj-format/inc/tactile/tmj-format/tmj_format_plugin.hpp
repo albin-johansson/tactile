@@ -3,7 +3,7 @@
 #pragma once
 
 #include "tactile/core/container/smart_ptr.hpp"
-#include "tactile/core/format/file_format.hpp"
+#include "tactile/core/format/save_format.hpp"
 #include "tactile/core/plugin/plugin.hpp"
 #include "tactile/core/prelude.hpp"
 #include "tactile/tmj-format/api.hpp"
@@ -20,7 +20,7 @@ class TmjFormatPlugin final : public IPlugin {
   TACTILE_TMJ_API void on_unload() override;
 
  private:
-  Unique<IFileFormat> mTmjFormat;
+  Unique<ISaveFormat> mTmjFormat;
 };
 
 extern "C"

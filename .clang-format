@@ -114,7 +114,7 @@ AllowAllArgumentsOnNextLine: false
 
 IntegerLiteralSeparator:
   Binary: -1
-  Decimal: 3
+  Decimal: 0
   Hex: -1
 
 SortIncludes: CaseSensitive
