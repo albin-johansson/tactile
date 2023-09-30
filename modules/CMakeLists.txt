@@ -20,6 +20,7 @@ else ()
       -Wpedantic
       -Wconversion
       -Wsign-conversion
+      -Wswitch-enum
       )
 
   if (TACTILE_BUILD_WITH_ASAN MATCHES ON)
