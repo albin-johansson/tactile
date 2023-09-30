@@ -16,6 +16,9 @@ using namespace std::string_view_literals;
 using namespace tactile;
 using tactile::int_literals::operator""_uz;
 
+/// \tests tactile::exists_in
+/// \tests tactile::find_in
+/// \tests tactile::lookup_in
 TEST(Lookup, EmptyMap)
 {
   const StringMap<int> hash_map;
@@ -31,6 +34,7 @@ TEST(Lookup, EmptyMap)
   EXPECT_THROW((void) lookup_in(tree_map, "foo"), Error);
 }
 
+/// \tests tactile::find_in
 TEST(Lookup, FindIn)
 {
   TreeMap<int, String> map;
@@ -42,6 +46,7 @@ TEST(Lookup, FindIn)
   EXPECT_EQ(find_in(map, 2), nullptr);
 }
 
+/// \tests tactile::lookup_in
 TEST(Lookup, LookupIn)
 {
   StringMap<String> map;
@@ -55,6 +60,7 @@ TEST(Lookup, LookupIn)
   EXPECT_THROW((void) lookup_in(map, "a"), Error);
 }
 
+/// \tests tactile::exists_in
 TEST(Lookup, ExistsIn)
 {
   StringMap<int> map;

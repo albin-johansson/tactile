@@ -15,7 +15,8 @@ using namespace tactile::int_literals;
   #define NATIVE_STR(Str) Str
 #endif
 
-TEST(String, make_native_string)
+/// \tests tactile::make_native_string
+TEST(String, MakeNativeString)
 {
   EXPECT_FALSE(make_native_string(nullptr).has_value());
 
@@ -28,6 +29,7 @@ TEST(String, make_native_string)
   EXPECT_EQ(make_native_string("\0"), NATIVE_STR("\0"));
 }
 
+/// \tests tactile::str_split
 TEST(String, StrSplit)
 {
   const auto tokens = str_split("foo,bar,,x", ',');
@@ -39,6 +41,7 @@ TEST(String, StrSplit)
   EXPECT_EQ(tokens[3], "x");
 }
 
+/// \tests tactile::str_to_multiple_i32
 TEST(String, StrToMultipleI32)
 {
   EXPECT_TRUE(str_to_multiple_i32("", ' ').empty());
@@ -78,6 +81,7 @@ TEST(String, StrToMultipleI32)
   }
 }
 
+/// \tests tactile::str_to_multiple_u32
 TEST(String, StrToMultipleU32)
 {
   EXPECT_TRUE(str_to_multiple_u32("", ' ').empty());
@@ -118,6 +122,7 @@ TEST(String, StrToMultipleU32)
   }
 }
 
+/// \tests tactile::str_to_multiple_f32
 TEST(String, StrToMultipleF32)
 {
   EXPECT_TRUE(str_to_multiple_f32("", ' ').empty());
@@ -157,6 +162,7 @@ TEST(String, StrToMultipleF32)
   }
 }
 
+/// \tests tactile::str_to_u32
 TEST(String, StrToU32)
 {
   // Invalid inputs
@@ -184,6 +190,7 @@ TEST(String, StrToU32)
   EXPECT_EQ(str_to_u32(StringView {"1234"}.substr(2, 2)), uint32 {34});
 }
 
+/// \tests tactile::str_to_i32
 TEST(String, StrToI32)
 {
   // Invalid inputs
@@ -212,6 +219,7 @@ TEST(String, StrToI32)
   EXPECT_EQ(str_to_i32(StringView {"1234"}.substr(2, 2)), int32 {34});
 }
 
+/// \tests tactile::str_to_f32
 TEST(String, StrToF32)
 {
   // Invalid inputs

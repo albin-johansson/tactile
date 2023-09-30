@@ -14,6 +14,7 @@ inline constexpr UColor kHotPink = {0xFF, 0x69, 0xB4, 0xFF};
 
 }  // namespace
 
+/// \tests tactile::to_color_rgb
 TEST(Color, ToColorRGB)
 {
   EXPECT_FALSE(to_color_rgb("").has_value());
@@ -34,6 +35,7 @@ TEST(Color, ToColorRGB)
   EXPECT_EQ(to_color_rgb("#FF69B4"), kHotPink);
 }
 
+/// \tests tactile::to_color_rgba
 TEST(Color, ToColorRGBA)
 {
   EXPECT_FALSE(to_color_rgba("").has_value());
@@ -55,6 +57,7 @@ TEST(Color, ToColorRGBA)
   EXPECT_EQ(to_color_rgba("#FF69B4FF"), kHotPink);
 }
 
+/// \tests tactile::to_color_argb
 TEST(Color, ToColorARGB)
 {
   EXPECT_FALSE(to_color_argb("").has_value());
@@ -76,6 +79,7 @@ TEST(Color, ToColorARGB)
   EXPECT_EQ(to_color_argb("#FFFF69B4"), kHotPink);
 }
 
+/// \tests tactile::normalize
 TEST(Color, Normalize)
 {
   const UColor color {0xFF, 0x00, 0x33, 0x66};
@@ -87,6 +91,7 @@ TEST(Color, Normalize)
   EXPECT_FLOAT_EQ(normalized_color.alpha, 0.4f);
 }
 
+/// \tests tactile::unnormalize
 TEST(Color, Unnormalize)
 {
   const NColor color {1.0f, 0.0f, 0.2f, 0.4f};
@@ -98,6 +103,7 @@ TEST(Color, Unnormalize)
   EXPECT_EQ(unnormalized_color.alpha, 0x66);
 }
 
+/// \tests tactile::get_luminance
 TEST(Color, GetLuminance)
 {
   // Based on https://planetcalc.com/7778/
@@ -108,6 +114,7 @@ TEST(Color, GetLuminance)
   EXPECT_FLOAT_EQ(get_luminance(normalize(kHotPink)), 0.3465843f);
 }
 
+/// \tests tactile::is_dark
 TEST(Color, IsDark)
 {
   EXPECT_TRUE(is_dark(normalize(kColorBlack)));
@@ -118,6 +125,7 @@ TEST(Color, IsDark)
   EXPECT_FALSE(is_dark(normalize(kHotPink)));
 }
 
+/// \tests tactile::to_string_rgb
 TEST(Color, ToStringRGB)
 {
   EXPECT_EQ(to_string_rgb(kColorBlack), "#000000");
@@ -130,6 +138,7 @@ TEST(Color, ToStringRGB)
   EXPECT_EQ(to_string_rgb(UColor {0xAB, 0xCD, 0xEF, 0x42}), "#ABCDEF");
 }
 
+/// \tests tactile::to_string_rgba
 TEST(Color, ToStringRGBA)
 {
   EXPECT_EQ(to_string_rgba(kColorBlack), "#000000FF");
@@ -142,6 +151,7 @@ TEST(Color, ToStringRGBA)
   EXPECT_EQ(to_string_rgba(UColor {0xAB, 0xCD, 0xEF, 0x42}), "#ABCDEF42");
 }
 
+/// \tests tactile::to_string_argb
 TEST(Color, ToStringARGB)
 {
   EXPECT_EQ(to_string_argb(kColorBlack), "#FF000000");
@@ -154,16 +164,22 @@ TEST(Color, ToStringARGB)
   EXPECT_EQ(to_string_argb(UColor {0xAB, 0xCD, 0xEF, 0x42}), "#42ABCDEF");
 }
 
+/// \tests tactile::to_string_rgb
+/// \tests tactile::to_color_rgb
 TEST(Color, RoundTripConversionRGB)
 {
   EXPECT_EQ(to_color_rgb(to_string_rgb(kHotPink)), kHotPink);
 }
 
+/// \tests tactile::to_string_rgba
+/// \tests tactile::to_color_rgba
 TEST(Color, RoundTripConversionRGBA)
 {
   EXPECT_EQ(to_color_rgba(to_string_rgba(kDarkBlue)), kDarkBlue);
 }
 
+/// \tests tactile::to_string_argb
+/// \tests tactile::to_color_argb
 TEST(Color, RoundTripConversionARGB)
 {
   EXPECT_EQ(to_color_argb(to_string_argb(kLimeGreen)), kLimeGreen);

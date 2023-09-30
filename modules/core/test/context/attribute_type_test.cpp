@@ -6,6 +6,7 @@
 
 using namespace tactile;
 
+/// \tests tactile::parse_attribute_type
 TEST(AttributeType, ParseAttributeType)
 {
   EXPECT_EQ(parse_attribute_type("string"), AttributeType::kStr);

@@ -10,6 +10,7 @@
 using namespace tactile;
 using tactile::fs_literals::operator""_path;
 
+/// \tests tactile::fs_literals::operator""_path
 TEST(Filesystem, PathLiteralOperator)
 {
   EXPECT_EQ("x"_path, fs::Path {"x"});
@@ -17,12 +18,14 @@ TEST(Filesystem, PathLiteralOperator)
   EXPECT_EQ("x/y/z"_path, fs::Path {"x/y/z"});
 }
 
+/// \tests tactile::fs::use_forward_slashes
 TEST(Filesystem, UseForwardSlashes)
 {
   EXPECT_EQ(fs::use_forward_slashes(R"(~/a/b)"), "~/a/b");
   EXPECT_EQ(fs::use_forward_slashes(R"(C:\a\b\c.txt)"), "C:/a/b/c.txt");
 }
 
+/// \tests tactile::fs::use_short_home_prefix
 TEST(Filesystem, UseShortHomePrefix)
 {
   const fs::Path home = get_env(kIsWindows ? "USERPROFILE" : "HOME").value();
@@ -37,6 +40,7 @@ TEST(Filesystem, UseShortHomePrefix)
   EXPECT_FALSE(fs::use_short_home_prefix("file.txt").has_value());
 }
 
+/// \tests tactile::fs::has_home_prefix
 TEST(Filesystem, HasHomePrefix)
 {
   const fs::Path home = get_env(kIsWindows ? "USERPROFILE" : "HOME").value();

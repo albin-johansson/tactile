@@ -11,6 +11,7 @@
 
 using namespace tactile;
 
+/// \tests tactile::next_random_i32
 TEST(RNG, NextRandomI32)
 {
   EXPECT_EQ(next_random_i32(0, 0), 0);
@@ -22,6 +23,7 @@ TEST(RNG, NextRandomI32)
   EXPECT_LE(value, 10u);
 }
 
+/// \tests tactile::next_random_f32
 TEST(RNG, NextRandomF32)
 {
   const auto value = next_random_f32(0.0f, 1.0f);
@@ -29,6 +31,7 @@ TEST(RNG, NextRandomF32)
   EXPECT_LE(value, 1.0f);
 }
 
+/// \tests tactile::next_bool
 TEST(RNG, NextBool)
 {
   Array<bool, 2'000> values;
@@ -45,6 +48,7 @@ TEST(RNG, NextBool)
   EXPECT_LT(ratio, 1.20);
 }
 
+/// \tests tactile::next_normalized_float
 TEST(RNG, NextNormalizedFloat)
 {
   const auto value = next_normalized_float();

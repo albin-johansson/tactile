@@ -11,6 +11,9 @@
 using namespace tactile;
 using namespace tactile::int_literals;
 
+/// \tests tactile::UUID::UUID
+/// \tests tactile::UUID::is_null
+/// \tests tactile::UUID::hash_code
 TEST(UUID, Defaults)
 {
   const UUID id;
@@ -25,6 +28,7 @@ TEST(UUID, Defaults)
   EXPECT_TRUE(std::is_move_assignable_v<UUID>);
 }
 
+/// \tests tactile::UUID::generate
 TEST(UUID, Generate)
 {
   const auto a = UUID::generate();
@@ -44,6 +48,8 @@ TEST(UUID, Generate)
   EXPECT_FALSE(c.is_null());
 }
 
+/// \tests tactile::UUID::generate
+/// \tests tactile::UUID::hash_code
 TEST(UUID, HashCode)
 {
   const auto a = UUID::generate();
@@ -53,6 +59,7 @@ TEST(UUID, HashCode)
   EXPECT_NE(a.hash_code(), b.hash_code());
 }
 
+/// \tests tactile::to_string(const UUID&)
 TEST(UUID, ToString)
 {
   auto is_hex_digit = [](const char digit) -> bool {

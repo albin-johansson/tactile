@@ -6,6 +6,7 @@
 
 using namespace tactile;
 
+/// \tests tactile::compare_vectors
 TEST(MathVector, CompareVectors)
 {
   {
