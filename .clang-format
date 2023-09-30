@@ -25,7 +25,7 @@ IndentAccessModifiers: false
 IndentWrappedFunctionNames: false
 IndentRequiresClause: true
 IndentCaseLabels: true
-IndentCaseBlocks: true
+IndentCaseBlocks: false
 IndentGotoLabels: false
 IndentExternBlock: Indent
 IndentPPDirectives: BeforeHash
@@ -94,7 +94,7 @@ AllowShortLambdasOnASingleLine: All
 AllowShortIfStatementsOnASingleLine: Never
 AllowShortEnumsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
-AllowShortCaseLabelsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: true
 AllowShortBlocksOnASingleLine: Never
 
 ReflowComments: false

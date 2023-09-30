@@ -13,84 +13,44 @@ namespace tactile {
 void Attribute::reset(const AttributeType type)
 {
   switch (type) {
-    case AttributeType::Str:
-      set(string_type {});
-      break;
-
-    case AttributeType::Int:
-      set(int_type {});
-      break;
-
-    case AttributeType::Int2:
-      set(int2_type {});
-      break;
-
-    case AttributeType::Int3:
-      set(int3_type {});
-      break;
-
-    case AttributeType::Int4:
-      set(int4_type {});
-      break;
-
-    case AttributeType::Float:
-      set(float_type {});
-      break;
-
-    case AttributeType::Float2:
-      set(float2_type {});
-      break;
-
-    case AttributeType::Float3:
-      set(float3_type {});
-      break;
-
-    case AttributeType::Float4:
-      set(float4_type {});
-      break;
-
-    case AttributeType::Bool:
-      set(bool {});
-      break;
-
-    case AttributeType::Path:
-      set(path_type {});
-      break;
-
-    case AttributeType::Color:
-      set(color_type {});
-      break;
-
-    case AttributeType::Object:
-      set(objref_type {});
-      break;
-
-    default:
-      throw Error {"Invalid attribute type"};
+    case AttributeType::kStr: set(string_type {}); return;
+    case AttributeType::kInt: set(int_type {}); return;
+    case AttributeType::kInt2: set(int2_type {}); return;
+    case AttributeType::kInt3: set(int3_type {}); return;
+    case AttributeType::kInt4: set(int4_type {}); return;
+    case AttributeType::kFloat: set(float_type {}); return;
+    case AttributeType::kFloat2: set(float2_type {}); return;
+    case AttributeType::kFloat3: set(float3_type {}); return;
+    case AttributeType::kFloat4: set(float4_type {}); return;
+    case AttributeType::kBool: set(bool {}); return;
+    case AttributeType::kPath: set(path_type {}); return;
+    case AttributeType::kColor: set(color_type {}); return;
+    case AttributeType::kObject: set(objref_type {}); return;
   }
+
+  throw Error {"Invalid attribute type"};
 }
 
 auto Attribute::is_vector() const -> bool
 {
   switch (get_type()) {
-    case AttributeType::Int2:
-    case AttributeType::Int3:
-    case AttributeType::Int4:
-    case AttributeType::Float2:
-    case AttributeType::Float3:
-    case AttributeType::Float4:
-      return true;
+    case AttributeType::kInt2:
+    case AttributeType::kInt3:
+    case AttributeType::kInt4:
+    case AttributeType::kFloat2:
+    case AttributeType::kFloat3:
+    case AttributeType::kFloat4: return true;
 
-    case AttributeType::Str:
-    case AttributeType::Int:
-    case AttributeType::Float:
-    case AttributeType::Bool:
-    case AttributeType::Path:
-    case AttributeType::Color:
-    case AttributeType::Object:
-    default:
-      return false;
+    case AttributeType::kStr:
+    case AttributeType::kInt:
+    case AttributeType::kFloat:
+    case AttributeType::kBool:
+    case AttributeType::kPath:
+    case AttributeType::kColor:
+    case AttributeType::kObject: return false;
   }
+
+  return false;
 }
 
 auto Attribute::has_default_value() const -> bool
@@ -106,90 +66,40 @@ auto Attribute::has_default_value() const -> bool
 auto Attribute::get_type() const -> AttributeType
 {
   switch (mValue.index()) {
-    case kStringTypeIndex:
-      return AttributeType::Str;
-
-    case kIntTypeIndex:
-      return AttributeType::Int;
-
-    case kInt2TypeIndex:
-      return AttributeType::Int2;
-
-    case kInt3TypeIndex:
-      return AttributeType::Int3;
-
-    case kInt4TypeIndex:
-      return AttributeType::Int4;
-
-    case kFloatTypeIndex:
-      return AttributeType::Float;
-
-    case kFloat2TypeIndex:
-      return AttributeType::Float2;
-
-    case kFloat3TypeIndex:
-      return AttributeType::Float3;
-
-    case kFloat4TypeIndex:
-      return AttributeType::Float4;
-
-    case kBoolTypeIndex:
-      return AttributeType::Bool;
-
-    case kColorTypeIndex:
-      return AttributeType::Color;
-
-    case kPathTypeIndex:
-      return AttributeType::Path;
-
-    case kObjRefTypeIndex:
-      return AttributeType::Object;
-
-    default:
-      throw Error {"Invalid property type"};
+    case kStringTypeIndex: return AttributeType::kStr;
+    case kIntTypeIndex: return AttributeType::kInt;
+    case kInt2TypeIndex: return AttributeType::kInt2;
+    case kInt3TypeIndex: return AttributeType::kInt3;
+    case kInt4TypeIndex: return AttributeType::kInt4;
+    case kFloatTypeIndex: return AttributeType::kFloat;
+    case kFloat2TypeIndex: return AttributeType::kFloat2;
+    case kFloat3TypeIndex: return AttributeType::kFloat3;
+    case kFloat4TypeIndex: return AttributeType::kFloat4;
+    case kBoolTypeIndex: return AttributeType::kBool;
+    case kColorTypeIndex: return AttributeType::kColor;
+    case kPathTypeIndex: return AttributeType::kPath;
+    case kObjRefTypeIndex: return AttributeType::kObject;
   }
+
+  throw Error {"Invalid property type"};
 }
 
 auto operator<<(std::ostream& stream, const Attribute& attribute) -> std::ostream&
 {
   switch (attribute.get_type()) {
-    case AttributeType::Str:
-      return stream << attribute.as_string();
-
-    case AttributeType::Int:
-      return stream << attribute.as_int();
-
-    case AttributeType::Int2:
-      return stream << attribute.as_int2();
-
-    case AttributeType::Int3:
-      return stream << attribute.as_int3();
-
-    case AttributeType::Int4:
-      return stream << attribute.as_int4();
-
-    case AttributeType::Float:
-      return stream << attribute.as_float();
-
-    case AttributeType::Float2:
-      return stream << attribute.as_float2();
-
-    case AttributeType::Float3:
-      return stream << attribute.as_float3();
-
-    case AttributeType::Float4:
-      return stream << attribute.as_float4();
-
-    case AttributeType::Bool:
-      return stream << attribute.as_bool();
-
-    case AttributeType::Path:
-      return stream << attribute.as_path();
-
-    case AttributeType::Color:
-      return stream << attribute.as_color();
-
-    case AttributeType::Object:
+    case AttributeType::kStr: return stream << attribute.as_string();
+    case AttributeType::kInt: return stream << attribute.as_int();
+    case AttributeType::kInt2: return stream << attribute.as_int2();
+    case AttributeType::kInt3: return stream << attribute.as_int3();
+    case AttributeType::kInt4: return stream << attribute.as_int4();
+    case AttributeType::kFloat: return stream << attribute.as_float();
+    case AttributeType::kFloat2: return stream << attribute.as_float2();
+    case AttributeType::kFloat3: return stream << attribute.as_float3();
+    case AttributeType::kFloat4: return stream << attribute.as_float4();
+    case AttributeType::kBool: return stream << attribute.as_bool();
+    case AttributeType::kPath: return stream << attribute.as_path();
+    case AttributeType::kColor: return stream << attribute.as_color();
+    case AttributeType::kObject:
       return stream << std::to_underlying(attribute.as_object());
   }
 
