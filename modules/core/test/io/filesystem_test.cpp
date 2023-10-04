@@ -13,9 +13,9 @@ using tactile::fs_literals::operator""_path;
 /// \tests tactile::fs_literals::operator""_path
 TEST(Filesystem, PathLiteralOperator)
 {
-  EXPECT_EQ("x"_path, fs::Path {"x"});
-  EXPECT_EQ("x.y"_path, fs::Path {"x.y"});
-  EXPECT_EQ("x/y/z"_path, fs::Path {"x/y/z"});
+  EXPECT_EQ("x"_path, FilePath {"x"});
+  EXPECT_EQ("x.y"_path, FilePath {"x.y"});
+  EXPECT_EQ("x/y/z"_path, FilePath {"x/y/z"});
 }
 
 /// \tests tactile::fs::use_forward_slashes
@@ -28,7 +28,7 @@ TEST(Filesystem, UseForwardSlashes)
 /// \tests tactile::fs::use_short_home_prefix
 TEST(Filesystem, UseShortHomePrefix)
 {
-  const fs::Path home = get_env(kIsWindows ? "USERPROFILE" : "HOME").value();
+  const FilePath home = get_env(kIsWindows ? "USERPROFILE" : "HOME").value();
 
   EXPECT_EQ(fs::use_short_home_prefix(home), "~");
   EXPECT_EQ(fs::use_short_home_prefix(home.string() + "/foo/"), "~/foo/");
@@ -43,7 +43,7 @@ TEST(Filesystem, UseShortHomePrefix)
 /// \tests tactile::fs::has_home_prefix
 TEST(Filesystem, HasHomePrefix)
 {
-  const fs::Path home = get_env(kIsWindows ? "USERPROFILE" : "HOME").value();
+  const FilePath home = get_env(kIsWindows ? "USERPROFILE" : "HOME").value();
 
   EXPECT_FALSE(fs::has_home_prefix(""));
   EXPECT_FALSE(fs::has_home_prefix("abc.xyz"));

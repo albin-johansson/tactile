@@ -31,7 +31,7 @@ class ISaveFormat {
    * \return the loaded map; or an error code if something went wrong.
    */
   [[nodiscard]]
-  virtual auto load_map(const fs::Path& map_file) const -> Result<ir::Map> = 0;
+  virtual auto load_map(const FilePath& map_file) const -> Result<ir::Map> = 0;
 
   /**
    * \brief Attempts to load a standalone tileset file.
@@ -41,12 +41,12 @@ class ISaveFormat {
    * \return the loaded tileset; or an error code if something went wrong.
    */
   [[nodiscard]]
-  virtual auto load_tileset(const fs::Path& tileset_file) const
+  virtual auto load_tileset(const FilePath& tileset_file) const
       -> Result<ir::Tileset> = 0;
 
-  virtual void save_map(const fs::Path& map_file, const ir::Map& map) = 0;
+  virtual void save_map(const FilePath& map_file, const ir::Map& map) = 0;
 
-  virtual void save_tileset(const fs::Path& tileset_file, const ir::Tileset& tileset) = 0;
+  virtual void save_tileset(const FilePath& tileset_file, const ir::Tileset& tileset) = 0;
 
   /**
    * \brief Indicates whether a file extension is usable with the save format.

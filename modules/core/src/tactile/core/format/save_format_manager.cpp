@@ -14,7 +14,7 @@ auto SaveFormatManager::get() -> SaveFormatManager&
   return file_format_manager;
 }
 
-auto SaveFormatManager::load_map(const fs::Path& map_file) const -> Result<ir::Map>
+auto SaveFormatManager::load_map(const FilePath& map_file) const -> Result<ir::Map>
 {
   const NativeStringView extension = map_file.extension().c_str();
 
@@ -28,7 +28,7 @@ auto SaveFormatManager::load_map(const fs::Path& map_file) const -> Result<ir::M
   return unexpected(save_format_error(SaveFormatError::kUnsupportedFormat));
 }
 
-auto SaveFormatManager::load_tileset(const fs::Path& tileset_file) const
+auto SaveFormatManager::load_tileset(const FilePath& tileset_file) const
     -> Result<ir::Tileset>
 {
   const NativeStringView extension {tileset_file.extension().c_str()};

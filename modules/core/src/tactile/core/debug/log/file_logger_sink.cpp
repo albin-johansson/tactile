@@ -8,7 +8,7 @@
 
 namespace tactile {
 
-FileLoggerSink::FileLoggerSink(const fs::Path& log_file)
+FileLoggerSink::FileLoggerSink(const FilePath& log_file)
   : mStream {log_file, std::ios::out | std::ios::trunc}
 {
   if (!mStream.good()) {

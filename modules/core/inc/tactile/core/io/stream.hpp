@@ -22,7 +22,7 @@ namespace tactile {
  * \return the parsed content, or nothing if an error occurred.
  */
 template <typename T>
-[[nodiscard]] auto stream_file_into(const fs::Path& file) -> Maybe<T>
+[[nodiscard]] auto stream_file_into(const FilePath& file) -> Maybe<T>
 {
   std::ifstream stream {file, std::ios::in};  // NOLINT: shall not be const.
   if (!stream.good()) {

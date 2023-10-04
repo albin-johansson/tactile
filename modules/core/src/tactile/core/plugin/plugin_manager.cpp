@@ -16,14 +16,14 @@ auto PluginManager::get() -> PluginManager&
   return plugin_manager;
 }
 
-void PluginManager::scan(const fs::Path& dir)
+void PluginManager::scan(const FilePath& dir)
 {
   if (!std::filesystem::is_directory(dir)) {
     TACTILE_LOG_ERROR("Plugin path was not a directory");
     return;
   }
 
-  for (const auto& dir_entry : fs::DirectoryIterator {dir}) {
+  for (const auto& dir_entry : DirectoryIterator {dir}) {
     const auto& dir_entry_path = dir_entry.path();
     if (auto plugin_info = load_library_info(dir_entry_path)) {
       TACTILE_LOG_DEBUG("Found plugin {}", plugin_info->name);
@@ -42,7 +42,7 @@ auto PluginManager::get_plugins() const -> const Vector<PluginInfo>&
   return mPlugins;
 }
 
-auto PluginManager::is_dll(const fs::Path& file) -> bool
+auto PluginManager::is_dll(const FilePath& file) -> bool
 {
   const auto extension = file.extension();
 
@@ -60,7 +60,7 @@ auto PluginManager::is_dll(const fs::Path& file) -> bool
   return false;
 }
 
-auto PluginManager::load_library_info(const fs::Path& path) -> Maybe<PluginInfo>
+auto PluginManager::load_library_info(const FilePath& path) -> Maybe<PluginInfo>
 {
   if (!is_dll(path)) {
     return kNone;

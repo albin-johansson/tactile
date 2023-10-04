@@ -34,7 +34,7 @@ class SaveFormatManager final {
    * \return the map data, or an error code if something went wrong.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto load_map(const fs::Path& map_file) const -> Result<ir::Map>;
+  TACTILE_CORE_API auto load_map(const FilePath& map_file) const -> Result<ir::Map>;
 
   /**
    * \brief Loads a tileset file using one of the available save format handlers.
@@ -44,7 +44,7 @@ class SaveFormatManager final {
    * \return the tileset data, or an error code if something went wrong.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto load_tileset(const fs::Path& tileset_file) const
+  TACTILE_CORE_API auto load_tileset(const FilePath& tileset_file) const
       -> Result<ir::Tileset>;
 
   /**
