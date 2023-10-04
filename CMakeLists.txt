@@ -76,6 +76,7 @@ find_package(tinyfiledialogs CONFIG REQUIRED)
 find_package(tl-expected CONFIG REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
 find_package(zstd CONFIG REQUIRED)
+find_package(ZLIB REQUIRED)
 
 find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
 find_path(STB_INCLUDE_DIRS "stb_c_lexer.h")

@@ -34,6 +34,7 @@ target_link_libraries(${TACTILE_CORE_TARGET}
                       PRIVATE
                       Boost::boost
                       FastFloat::fast_float
+                      ZLIB::ZLIB
                       )
 
 if (TACTILE_BUILD_TESTS MATCHES ON)
