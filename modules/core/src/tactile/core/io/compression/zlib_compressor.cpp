@@ -67,7 +67,7 @@ auto _process_chunks(const ZlibCallbacks& callbacks,
 }
 
 [[nodiscard]]
-auto _process_data(const ZlibCallbacks& callbacks, Span<const uchar> input_data)
+auto _process_data(const ZlibCallbacks& callbacks, const ByteSpan input_data)
     -> Result<ByteStream>
 {
   StackBuffer out_buffer;
@@ -96,7 +96,7 @@ auto _process_data(const ZlibCallbacks& callbacks, Span<const uchar> input_data)
 
 }  // namespace
 
-auto ZlibCompressor::compress(const Span<const uchar> data) const -> Result<ByteStream>
+auto ZlibCompressor::compress(const ByteSpan data) const -> Result<ByteStream>
 {
   TACTILE_DEBUG_PROFILE_SCOPE("ZlibCompressor::compress");
 
@@ -123,7 +123,7 @@ auto ZlibCompressor::compress(const Span<const uchar> data) const -> Result<Byte
   return _process_data(callbacks, data);
 }
 
-auto ZlibCompressor::decompress(const Span<const uchar> data) const -> Result<ByteStream>
+auto ZlibCompressor::decompress(const ByteSpan data) const -> Result<ByteStream>
 {
   TACTILE_DEBUG_PROFILE_SCOPE("ZlibCompressor::decompress");
 

@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "tactile/core/io/compression/zlib_compressor.hpp"
+#include "tactile/core/io/compression/zstd_compressor.hpp"
 #include "tactile/core/math/rng.hpp"
 
 using namespace tactile;
@@ -28,7 +29,7 @@ auto _make_random_byte_stream(const usize byte_count) -> ByteStream
 template <typename T>
 class ICompressionProviderTest : public testing::Test {};
 
-using CompressorProviderTypes = testing::Types<ZlibCompressor>;
+using CompressorProviderTypes = testing::Types<ZlibCompressor, ZstdCompressor>;
 
 TYPED_TEST_SUITE(ICompressionProviderTest, CompressorProviderTypes);
 

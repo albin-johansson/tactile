@@ -11,25 +11,50 @@ namespace tactile {
 
 /**
  * \brief Provides compression and decompression using the Zlib library.
+ *
+ * \see https://github.com/madler/zlib
  */
 class ZlibCompressor final : public ICompressionProvider {
  public:
   [[nodiscard]]
-  TACTILE_CORE_API auto compress(Span<const uchar> data) const
-      -> Result<ByteStream> override;
+  TACTILE_CORE_API auto compress(ByteSpan data) const -> Result<ByteStream> override;
 
   [[nodiscard]]
-  TACTILE_CORE_API auto decompress(Span<const uchar> data) const
-      -> Result<ByteStream> override;
+  TACTILE_CORE_API auto decompress(ByteSpan data) const -> Result<ByteStream> override;
 
+  /**
+   * \brief Sets the compression level.
+   *
+   * \details Larger compression level values lead to higher quality compression, at the
+   *          expense of worse execution speed. An empty value indicates that the default
+   *          level should be used instead.
+   *
+   * \param level the new compression level. If set, clamped to
+   *              [`min_compression_level()`, `max_compression_level()`].
+   */
   TACTILE_CORE_API void set_compression_level(Maybe<int> level);
 
+  /**
+   * \brief Returns the current compression level.
+   *
+   * \return the compression level; or nothing if the default level is being used.
+   */
   [[nodiscard]]
   TACTILE_CORE_API auto get_compression_level() const -> Maybe<int>;
 
+  /**
+   * \brief Returns the minimum (best speed) compression level.
+   *
+   * \return the minimum compression level.
+   */
   [[nodiscard]]
   TACTILE_CORE_API static auto min_compression_level() -> int;
 
+  /**
+   * \brief Returns the maximum (best quality) compression level.
+   *
+   * \return the maximum compression level.
+   */
   [[nodiscard]]
   TACTILE_CORE_API static auto max_compression_level() -> int;
 
