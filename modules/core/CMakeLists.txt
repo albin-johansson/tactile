@@ -24,6 +24,9 @@ target_compile_definitions(${TACTILE_CORE_TARGET}
 target_include_directories(${TACTILE_CORE_TARGET}
                            PUBLIC
                            "${TACTILE_CORE_DIR}/inc"
+
+                           PRIVATE
+                           "${CPPCODEC_INCLUDE_DIRS}"
                            )
 
 target_link_libraries(${TACTILE_CORE_TARGET}
