@@ -24,6 +24,9 @@ target_compile_definitions(${TACTILE_CORE_TARGET}
 target_include_directories(${TACTILE_CORE_TARGET}
                            PUBLIC
                            "${TACTILE_CORE_DIR}/inc"
+
+                           PRIVATE
+                           "${CPPCODEC_INCLUDE_DIRS}"
                            )
 
 target_link_libraries(${TACTILE_CORE_TARGET}
@@ -34,6 +37,8 @@ target_link_libraries(${TACTILE_CORE_TARGET}
                       PRIVATE
                       Boost::boost
                       FastFloat::fast_float
+                      ZLIB::ZLIB
+                      $<IF:$<TARGET_EXISTS:zstd::libzstd_shared>,zstd::libzstd_shared,zstd::libzstd_static>
                       )
 
 if (TACTILE_BUILD_TESTS MATCHES ON)

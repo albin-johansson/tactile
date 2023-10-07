@@ -22,7 +22,7 @@ using PluginDestroyFn = void (*)(IPlugin*);  ///< Signature of a plugin "destruc
  */
 struct PluginInfo final {
   String name;                                       ///< The plugin name.
-  fs::Path library_path;                             ///< The file path of the binary.
+  FilePath library_path;                             ///< The file path of the binary.
   Unique<IDynamicLibrary> dll;                       ///< The dynamic library handle.
   UniqueForeign<IPlugin> plugin {nullptr, nullptr};  ///< The plugin instance.
 };
@@ -49,7 +49,7 @@ class PluginManager final {
    *
    * \param dir the plugin directory path.
    */
-  TACTILE_CORE_API void scan(const fs::Path& dir);
+  TACTILE_CORE_API void scan(const FilePath& dir);
 
   /**
    * \brief Returns the loaded plugin information.
@@ -76,7 +76,7 @@ class PluginManager final {
    * \return true if the file could be a dynamic library; false otherwise.
    */
   [[nodiscard]]
-  TACTILE_CORE_API static auto is_dll(const fs::Path& file) -> bool;
+  TACTILE_CORE_API static auto is_dll(const FilePath& file) -> bool;
 
   /**
    * \brief Obtains information about a plugin.
@@ -91,7 +91,7 @@ class PluginManager final {
    * \return the plugin information, or nothing on failure.
    */
   [[nodiscard]]
-  TACTILE_CORE_API static auto load_library_info(const fs::Path& path)
+  TACTILE_CORE_API static auto load_library_info(const FilePath& path)
       -> Maybe<PluginInfo>;
 
  private:

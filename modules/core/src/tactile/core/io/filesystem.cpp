@@ -21,14 +21,14 @@ namespace {
 
 }  // namespace
 
-auto use_forward_slashes(const Path& path) -> String
+auto use_forward_slashes(const FilePath& path) -> String
 {
   auto str = path.string();
   std::ranges::replace(str, '\\', '/');
   return str;
 }
 
-auto use_short_home_prefix(const Path& path) -> Maybe<String>
+auto use_short_home_prefix(const FilePath& path) -> Maybe<String>
 {
   if (has_home_prefix(path)) {
     const auto& prefix = _get_home_prefix();
@@ -39,7 +39,7 @@ auto use_short_home_prefix(const Path& path) -> Maybe<String>
   }
 }
 
-auto has_home_prefix(const Path& path) -> bool
+auto has_home_prefix(const FilePath& path) -> bool
 {
   const auto& prefix = _get_home_prefix();
   const NativeStringView view {path.c_str()};

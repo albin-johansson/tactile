@@ -19,7 +19,7 @@ class FileLoggerSink final : public ILoggerSink {
    *
    * \param log_file the log file destination.
    */
-  TACTILE_CORE_API explicit FileLoggerSink(const fs::Path& log_file);
+  TACTILE_CORE_API explicit FileLoggerSink(const FilePath& log_file);
 
   TACTILE_CORE_API void log(const LogMessage& msg) override;
 

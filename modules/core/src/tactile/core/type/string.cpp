@@ -69,7 +69,7 @@ template <typename T>
   const auto expected_count = std::ranges::count(str_begin, str_end, separator) + 1;
 
   Vector<T> numbers;
-  numbers.reserve(expected_count);
+  numbers.reserve(static_cast<usize>(expected_count));
 
   const char* current_begin = str_begin;
   const char* result_ptr = nullptr;

@@ -91,7 +91,7 @@ class Win32DynamicLibrary final : public IDynamicLibrary {
 
 #endif  // TACTILE_OS_WINDOWS
 
-auto load_library(const fs::Path& library_path) -> Unique<IDynamicLibrary>
+auto load_library(const FilePath& library_path) -> Unique<IDynamicLibrary>
 {
   Unique<IDynamicLibrary> library;
 

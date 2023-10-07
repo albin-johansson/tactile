@@ -1,0 +1,35 @@
+@startuml
+
+[core]         #lightgreen
+[editor]       #lightgreen
+[main]         #lightgreen
+
+[yml-format]   #lightblue
+[tmj-format]   #lightblue
+[tmx-format]   #lightblue
+[godot-format] #lightblue
+[opengl-rhi]   #lightblue
+[vulkan-rhi]   #lightblue
+
+database "proto" {
+}
+
+[editor] .up.> "proto"
+[editor] .up.> [core]
+
+[yml-format]   .up.> [core]
+[tmj-format]   .up.> [core]
+[tmx-format]   .up.> [core]
+[godot-format] .up.> [core]
+[opengl-rhi]   .up.> [core]
+[vulkan-rhi]   .up.> [core]
+
+[main]  .up.> [editor]
+[main] ..up.> [core]
+
+note right of [core]: The core module is always used by all other modules.
+note right of [main]: Provides the main function.\nLocates and loads plugin modules dynamically at runtime.
+
+note "Mandatory modules are shown in green.\nPlugin modules are shown in light blue." as N1
+
+@enduml

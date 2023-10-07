@@ -10,11 +10,11 @@
 
 namespace tactile {
 
-namespace fs {
-
-using Path = std::filesystem::path;
+using FilePath = std::filesystem::path;
 using DirectoryIterator = std::filesystem::directory_iterator;
 using RecursiveDirectoryIterator = std::filesystem::recursive_directory_iterator;
+
+namespace fs {
 
 /**
  * \brief Converts a path to a string that is guaranteed to use forward slash characters.
@@ -28,7 +28,7 @@ using RecursiveDirectoryIterator = std::filesystem::recursive_directory_iterator
  * \return a file path string with forward slashes.
  */
 [[nodiscard]]
-TACTILE_CORE_API auto use_forward_slashes(const Path& path) -> String;
+TACTILE_CORE_API auto use_forward_slashes(const FilePath& path) -> String;
 
 /**
  * \brief Converts file paths to use a '~' prefix (if possible).
@@ -38,7 +38,7 @@ TACTILE_CORE_API auto use_forward_slashes(const Path& path) -> String;
  * \return a string with a shortened user directory prefix; or nothing if not applicable.
  */
 [[nodiscard]]
-TACTILE_CORE_API auto use_short_home_prefix(const Path& path) -> Maybe<String>;
+TACTILE_CORE_API auto use_short_home_prefix(const FilePath& path) -> Maybe<String>;
 
 /**
  * \brief Indicates whether a file path starts with the home directory.
@@ -48,16 +48,16 @@ TACTILE_CORE_API auto use_short_home_prefix(const Path& path) -> Maybe<String>;
  * \return true if the path features the home directory prefix; false otherwise.
  */
 [[nodiscard]]
-TACTILE_CORE_API auto has_home_prefix(const Path& path) -> bool;
+TACTILE_CORE_API auto has_home_prefix(const FilePath& path) -> bool;
 
 }  // namespace fs
 
 namespace fs_literals {
 
-[[nodiscard]] inline auto operator"" _path(const char* str, const usize /* len */)
-    -> fs::Path
+[[nodiscard]] inline auto operator"" _path(const char* str, const usize /* length */)
+    -> FilePath
 {
-  return fs::Path {str};
+  return FilePath {str};
 }
 
 }  // namespace fs_literals

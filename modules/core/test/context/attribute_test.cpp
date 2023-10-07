@@ -28,7 +28,7 @@ TEST(Attribute, ExplicitTypeConstructor)
   EXPECT_EQ(Attribute {AttributeType::kFloat4}, Float4 {});
   EXPECT_EQ(Attribute {AttributeType::kBool}, bool {});
   EXPECT_EQ(Attribute {AttributeType::kColor}, UColor {});
-  EXPECT_EQ(Attribute {AttributeType::kPath}, fs::Path {});
+  EXPECT_EQ(Attribute {AttributeType::kPath}, FilePath {});
   EXPECT_EQ(Attribute {AttributeType::kObject}, ObjectRef {});
 }
 
@@ -149,7 +149,7 @@ TEST(Attribute, Reset)
 
   attribute.reset(AttributeType::kPath);
   EXPECT_TRUE(attribute.has_default_value());
-  EXPECT_EQ(attribute, fs::Path {});
+  EXPECT_EQ(attribute, FilePath {});
 
   attribute.reset(AttributeType::kObject);
   EXPECT_TRUE(attribute.has_default_value());
@@ -258,7 +258,7 @@ TEST(Attribute, AsColor)
 /// \tests tactile::Attribute::as_path
 TEST(Attribute, AsPath)
 {
-  EXPECT_EQ(Attribute {AttributeType::kPath}.as_path(), fs::Path {});
+  EXPECT_EQ(Attribute {AttributeType::kPath}.as_path(), FilePath {});
   EXPECT_THROW((void) Attribute {AttributeType::kStr}.as_path(), Error);
 }
 

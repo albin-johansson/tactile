@@ -7,7 +7,7 @@
 
 namespace tactile {
 
-auto TmjFormat::load_map(const fs::Path& map_file) const -> Result<ir::Map>
+auto TmjFormat::load_map(const FilePath& map_file) const -> Result<ir::Map>
 {
   try {
   }

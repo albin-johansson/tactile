@@ -58,7 +58,7 @@ auto get_symbol(const IDynamicLibrary& library, const char* name) -> FnType
  * \return the loaded library, or a null pointer on failure.
  */
 [[nodiscard]]
-TACTILE_CORE_API auto load_library(const fs::Path& library_path)
+TACTILE_CORE_API auto load_library(const FilePath& library_path)
     -> Unique<IDynamicLibrary>;
 
 }  // namespace tactile

@@ -100,9 +100,15 @@
 
 #define TACTILE_INTERFACE_CLASS(Name) \
   Name() = default;                   \
+  virtual ~Name() noexcept = default; \
   TACTILE_DEFAULT_COPY(Name);         \
-  TACTILE_DEFAULT_MOVE(Name);         \
-  virtual ~Name() noexcept = default
+  TACTILE_DEFAULT_MOVE(Name);
+
+#define TACTILE_STATIC_CLASS(Name) \
+  Name() = delete;                 \
+  ~Name() noexcept = delete;       \
+  TACTILE_DELETE_COPY(Name);       \
+  TACTILE_DELETE_MOVE(Name)
 
 #define TACTILE_FWD_NS(Namespace, Declaration) \
   namespace Namespace {                        \
