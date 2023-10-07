@@ -10,6 +10,7 @@ auto CompressionErrorDomain::get_message(const uint32 error_id) const noexcept
   switch (Error {error_id}) {
     case Error::kNoData: return "No data to compress/decompress";
     case Error::kInternalError: return "An internal error occurred";
+    case Error::kInvalidMode: return "An invalid compression mode was detected";
   }
 
   return "";
