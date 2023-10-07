@@ -14,7 +14,7 @@ namespace tactile {
  *
  * \see https://github.com/madler/zlib
  */
-class ZlibCompressor final : public ICompressionProvider {
+class ZlibCompressionProvider final : public ICompressionProvider {
  public:
   [[nodiscard]]
   TACTILE_CORE_API auto compress(ByteSpan data) const -> Result<ByteStream> override;

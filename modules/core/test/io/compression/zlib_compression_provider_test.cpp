@@ -1,6 +1,6 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/io/compression/zlib_compressor.hpp"
+#include "tactile/core/io/compression/zlib_compression_provider.hpp"
 
 #include <gtest/gtest.h>
 
@@ -26,11 +26,11 @@ auto _make_random_byte_stream(const usize byte_count) -> ByteStream
 
 }  // namespace
 
-/// \tests tactile::ZlibCompressor::compress
-/// \tests tactile::ZlibCompressor::decompress
-TEST(ZlibCompressor, CompressAndDecompress)
+/// \tests tactile::ZlibCompressionProvider::compress
+/// \tests tactile::ZlibCompressionProvider::decompress
+TEST(ZlibCompressionProvider, CompressAndDecompress)
 {
-  const ZlibCompressor compressor;
+  const ZlibCompressionProvider compressor;
   const auto original_bytes = _make_random_byte_stream(50'000);
 
   const auto compressed_bytes = compressor.compress(original_bytes);
@@ -44,17 +44,17 @@ TEST(ZlibCompressor, CompressAndDecompress)
   EXPECT_EQ(decompressed_bytes, original_bytes);
 }
 
-/// \tests tactile::ZlibCompressor::set_compression_level
-/// \tests tactile::ZlibCompressor::get_compression_level
-/// \tests tactile::ZlibCompressor::min_compression_level
-/// \tests tactile::ZlibCompressor::max_compression_level
-TEST(ZlibCompressor, CompressionLevel)
+/// \tests tactile::ZlibCompressionProvider::set_compression_level
+/// \tests tactile::ZlibCompressionProvider::get_compression_level
+/// \tests tactile::ZlibCompressionProvider::min_compression_level
+/// \tests tactile::ZlibCompressionProvider::max_compression_level
+TEST(ZlibCompressionProvider, CompressionLevel)
 {
-  const auto min_level = ZlibCompressor::min_compression_level();
-  const auto max_level = ZlibCompressor::max_compression_level();
+  const auto min_level = ZlibCompressionProvider::min_compression_level();
+  const auto max_level = ZlibCompressionProvider::max_compression_level();
   ASSERT_LT(min_level, max_level);
 
-  ZlibCompressor compressor;
+  ZlibCompressionProvider compressor;
   EXPECT_FALSE(compressor.get_compression_level().has_value());
 
   compressor.set_compression_level(max_level + 1);

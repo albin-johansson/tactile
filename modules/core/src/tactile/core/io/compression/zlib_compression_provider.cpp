@@ -1,6 +1,6 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/io/compression/zlib_compressor.hpp"
+#include "tactile/core/io/compression/zlib_compression_provider.hpp"
 
 #include <algorithm>  // clamp
 #include <utility>    // move
@@ -96,7 +96,7 @@ auto _process_data(const ZlibCallbacks& callbacks, const ByteSpan input_data)
 
 }  // namespace
 
-auto ZlibCompressor::compress(const ByteSpan data) const -> Result<ByteStream>
+auto ZlibCompressionProvider::compress(const ByteSpan data) const -> Result<ByteStream>
 {
   TACTILE_DEBUG_PROFILE_SCOPE("ZlibCompressor::compress");
 
@@ -123,7 +123,7 @@ auto ZlibCompressor::compress(const ByteSpan data) const -> Result<ByteStream>
   return _process_data(callbacks, data);
 }
 
-auto ZlibCompressor::decompress(const ByteSpan data) const -> Result<ByteStream>
+auto ZlibCompressionProvider::decompress(const ByteSpan data) const -> Result<ByteStream>
 {
   TACTILE_DEBUG_PROFILE_SCOPE("ZlibCompressor::decompress");
 
@@ -145,7 +145,7 @@ auto ZlibCompressor::decompress(const ByteSpan data) const -> Result<ByteStream>
   return _process_data(callbacks, data);
 }
 
-void ZlibCompressor::set_compression_level(const Maybe<int> level)
+void ZlibCompressionProvider::set_compression_level(const Maybe<int> level)
 {
   if (level.has_value()) {
     mLevel = std::clamp(*level, min_compression_level(), max_compression_level());
@@ -155,17 +155,17 @@ void ZlibCompressor::set_compression_level(const Maybe<int> level)
   }
 }
 
-auto ZlibCompressor::get_compression_level() const -> Maybe<int>
+auto ZlibCompressionProvider::get_compression_level() const -> Maybe<int>
 {
   return mLevel;
 }
 
-auto ZlibCompressor::min_compression_level() -> int
+auto ZlibCompressionProvider::min_compression_level() -> int
 {
   return Z_BEST_SPEED;
 }
 
-auto ZlibCompressor::max_compression_level() -> int
+auto ZlibCompressionProvider::max_compression_level() -> int
 {
   return Z_BEST_COMPRESSION;
 }

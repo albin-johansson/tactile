@@ -1,6 +1,8 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/io/compression/zstd_compressor.hpp"
+#include "tactile/core/io/compression/zstd_compression_provider.hpp"
+
+#include <algorithm>  // copy_n
 
 #include <zstd.h>
 
@@ -22,7 +24,7 @@ using UniqueDStream = Unique<ZSTD_DStream, DStreamDeleter>;
 
 }  // namespace
 
-auto ZstdCompressor::compress(const ByteSpan data) const -> Result<ByteStream>
+auto ZstdCompressionProvider::compress(const ByteSpan data) const -> Result<ByteStream>
 {
   if (data.empty()) {
     return unexpected(compression_error(CompressionError::kNoData));
@@ -51,7 +53,7 @@ auto ZstdCompressor::compress(const ByteSpan data) const -> Result<ByteStream>
   return byte_stream;
 }
 
-auto ZstdCompressor::decompress(const ByteSpan data) const -> Result<ByteStream>
+auto ZstdCompressionProvider::decompress(const ByteSpan data) const -> Result<ByteStream>
 {
   if (data.empty()) {
     return unexpected(compression_error(CompressionError::kNoData));
