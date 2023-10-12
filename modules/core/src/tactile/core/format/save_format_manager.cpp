@@ -25,7 +25,7 @@ auto SaveFormatManager::load_map(const FilePath& map_file) const -> Result<ir::M
     }
   }
 
-  return unexpected(save_format_error(SaveFormatError::kUnsupportedFormat));
+  return error(SaveFormatError::kUnsupportedFormat);
 }
 
 auto SaveFormatManager::load_tileset(const FilePath& tileset_file) const
@@ -40,7 +40,7 @@ auto SaveFormatManager::load_tileset(const FilePath& tileset_file) const
     }
   }
 
-  return unexpected(save_format_error(SaveFormatError::kUnsupportedFormat));
+  return error(SaveFormatError::kUnsupportedFormat);
 }
 
 void SaveFormatManager::add_format(ISaveFormat* format)

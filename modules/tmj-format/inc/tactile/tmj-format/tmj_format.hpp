@@ -14,6 +14,8 @@ namespace tactile {
  * \details This format uses ".tmj" or ".json" file extensions.
  *
  * \see https://doc.mapeditor.org/en/stable/reference/json-map-format
+ *
+ * \ingroup TMJ
  */
 class TmjFormat final : public ISaveFormat {
  public:

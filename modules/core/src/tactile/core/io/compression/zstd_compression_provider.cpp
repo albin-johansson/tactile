@@ -27,7 +27,7 @@ using UniqueDStream = Unique<ZSTD_DStream, DStreamDeleter>;
 auto ZstdCompressionProvider::compress(const ByteSpan data) const -> Result<ByteStream>
 {
   if (data.empty()) {
-    return unexpected(compression_error(CompressionError::kNoData));
+    return error(CompressionError::kNoData);
   }
 
   const auto compression_bound = ZSTD_compressBound(data.size_bytes());
@@ -44,7 +44,7 @@ auto ZstdCompressionProvider::compress(const ByteSpan data) const -> Result<Byte
   if (ZSTD_isError(written_byte_count)) {
     TACTILE_LOG_ERROR("Zstd compression error: {}",
                       ZSTD_getErrorName(written_byte_count));
-    return unexpected(compression_error(CompressionError::kInternalError));
+    return error(CompressionError::kInternalError);
   }
 
   byte_stream.resize(written_byte_count);
@@ -56,20 +56,20 @@ auto ZstdCompressionProvider::compress(const ByteSpan data) const -> Result<Byte
 auto ZstdCompressionProvider::decompress(const ByteSpan data) const -> Result<ByteStream>
 {
   if (data.empty()) {
-    return unexpected(compression_error(CompressionError::kNoData));
+    return error(CompressionError::kNoData);
   }
 
   const UniqueDStream stream {ZSTD_createDStream()};
 
   if (!stream) {
     TACTILE_LOG_ERROR("Could not create Zstd decompression stream");
-    return unexpected(compression_error(CompressionError::kInternalError));
+    return error(CompressionError::kInternalError);
   }
 
   const auto init_result = ZSTD_initDStream(stream.get());
   if (ZSTD_isError(init_result)) {
     TACTILE_LOG_ERROR("Could not initialize Zstd decompression stream");
-    return unexpected(compression_error(CompressionError::kInternalError));
+    return error(CompressionError::kInternalError);
   }
 
   const auto staging_buffer_size = ZSTD_DStreamOutSize();
@@ -106,7 +106,7 @@ auto ZstdCompressionProvider::decompress(const ByteSpan data) const -> Result<By
     if (ZSTD_isError(decompress_result)) {
       TACTILE_LOG_ERROR("Zstd decompression failed: {}",
                         ZSTD_getErrorName(decompress_result));
-      return unexpected(compression_error(CompressionError::kInternalError));
+      return error(CompressionError::kInternalError);
     }
 
     byte_write_count += output_view.pos;

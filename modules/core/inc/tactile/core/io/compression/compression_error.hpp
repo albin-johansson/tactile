@@ -6,6 +6,7 @@
 
 #include "tactile/core/api.hpp"
 #include "tactile/core/debug/error_code.hpp"
+#include "tactile/core/functional/expected.hpp"
 #include "tactile/core/prelude.hpp"
 
 namespace tactile {
@@ -40,10 +41,10 @@ inline constexpr CompressionErrorDomain kCompressionErrorDomain;
  *
  * \return an error code.
  */
-[[nodiscard]] inline auto compression_error(const CompressionError error) noexcept
-    -> ErrorCode
+[[nodiscard]]
+inline auto error(const CompressionError error) noexcept -> Unexpected<ErrorCode>
 {
-  return ErrorCode {&kCompressionErrorDomain, std::to_underlying(error)};
+  return unexpected(ErrorCode {&kCompressionErrorDomain, std::to_underlying(error)});
 }
 
 }  // namespace tactile

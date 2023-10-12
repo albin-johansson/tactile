@@ -12,6 +12,8 @@ namespace tactile {
 
 /**
  * \brief Manages the Tiled TMJ format plugin.
+ *
+ * \ingroup TMJ
  */
 class TmjFormatPlugin final : public IPlugin {
  public:

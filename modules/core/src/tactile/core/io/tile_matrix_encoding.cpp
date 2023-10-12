@@ -86,7 +86,7 @@ auto base64_encode_tile_matrix(const TileMatrix& tiles,
           });
   }
 
-  return unexpected(compression_error(CompressionError::kInvalidMode));
+  return error(CompressionError::kInvalidMode);
 }
 
 auto base64_decode_tile_matrix(const StringView tile_data,
@@ -111,7 +111,7 @@ auto base64_decode_tile_matrix(const StringView tile_data,
           });
   }
 
-  return unexpected(compression_error(CompressionError::kInvalidMode));
+  return error(CompressionError::kInvalidMode);
 }
 
 }  // namespace tactile

@@ -28,7 +28,7 @@ using ByteStream = Vector<uint8>;
  * \return a byte span.
  */
 template <std::ranges::contiguous_range T>
-[[nodiscard]] auto make_byte_span(const T& container) -> ByteSpan
+[[nodiscard]] constexpr auto make_byte_span(const T& container) -> ByteSpan
 {
   return ByteSpan {static_cast<const uint8*>(static_cast<const void*>(container.data())),
                    container.size() * sizeof(typename T::value_type)};

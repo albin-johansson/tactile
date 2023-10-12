@@ -21,14 +21,15 @@
 namespace tactile {
 namespace {
 
-template <std::integral T>
-[[nodiscard]] auto _parse_integral(const StringView str, const int base) -> Maybe<T>
+template <typename T, std::invocable<const char*, const char*, T&> ParserType>
+[[nodiscard]] auto _parse_generic(const StringView str, const ParserType& parse_fn)
+    -> Maybe<T>
 {
   const char* begin = str.data();
   const char* end = str.data() + str.size();
 
   T value {};
-  const auto [ptr, err] = std::from_chars(begin, end, value, base);
+  const auto [ptr, err] = parse_fn(begin, end, value);
 
   // Require no error and fully valid string, e.g., "42 " is not accepted.
   if (err == std::errc {} && ptr == end) {
@@ -39,22 +40,20 @@ template <std::integral T>
   }
 }
 
+template <std::integral T>
+[[nodiscard]] auto _parse_int(const StringView str, const int base) -> Maybe<T>
+{
+  return _parse_generic<T>(str, [base](const char* begin, const char* end, T& value) {
+    return std::from_chars(begin, end, value, base);
+  });
+}
+
 template <std::floating_point T>
 [[nodiscard]] auto _parse_float(const StringView str) -> Maybe<T>
 {
-  const char* begin = str.data();
-  const char* end = str.data() + str.size();
-
-  T value {};
-  const auto [ptr, err] = fast_float::from_chars(begin, end, value);
-
-  // Require no error and fully valid string, e.g., "4.2 " is not accepted.
-  if (err == std::errc {} && ptr == end) {
-    return value;
-  }
-  else {
-    return kNone;
-  }
+  return _parse_generic<T>(str, [](const char* begin, const char* end, T& value) {
+    return fast_float::from_chars(begin, end, value);
+  });
 }
 
 template <typename T>
@@ -175,18 +174,18 @@ auto str_to_multiple_u32(const StringView str, const char separator, const int b
 
 auto str_to_multiple_f32(const StringView str, const char separator) -> Vector<float32>
 {
-  // Note, the base parameter is ignored for floating point types
+  // Note, the base parameter is ignored for floating point types.
   return _str_to_multiple_generic<float32>(str, separator, 10);
 }
 
 auto str_to_u32(const StringView str, const int base) -> Maybe<uint32>
 {
-  return _parse_integral<uint32>(str, base);
+  return _parse_int<uint32>(str, base);
 }
 
 auto str_to_i32(const StringView str, const int base) -> Maybe<int32>
 {
-  return _parse_integral<int32>(str, base);
+  return _parse_int<int32>(str, base);
 }
 
 auto str_to_f32(const StringView str) -> Maybe<float32>

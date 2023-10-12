@@ -44,10 +44,10 @@ using SaveFormatError = SaveFormatErrorDomain::Error;
  *
  * \return an error code.
  */
-[[nodiscard]] inline auto save_format_error(const SaveFormatError error) noexcept
-    -> ErrorCode
+[[nodiscard]]
+inline auto error(const SaveFormatError error) noexcept -> Unexpected<ErrorCode>
 {
-  return ErrorCode {&kSaveFormatErrorDomain, std::to_underlying(error)};
+  return unexpected(ErrorCode {&kSaveFormatErrorDomain, std::to_underlying(error)});
 }
 
 }  // namespace tactile

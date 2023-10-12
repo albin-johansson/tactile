@@ -59,7 +59,7 @@ auto _process_chunks(const ZlibCallbacks& callbacks,
     }
     else {
       TACTILE_LOG_ERROR("Could not process Zlib chunk: {}", zError(process_result));
-      return unexpected(compression_error(CompressionError::kInternalError));
+      return error(CompressionError::kInternalError);
     }
   }
 
@@ -80,14 +80,14 @@ auto _process_data(const ZlibCallbacks& callbacks, const ByteSpan input_data)
 
   if (const auto init_result = callbacks.init_stream(&stream); init_result != Z_OK) {
     TACTILE_LOG_ERROR("Could not initialize z_stream: {}", zError(init_result));
-    return unexpected(compression_error(CompressionError::kInternalError));
+    return error(CompressionError::kInternalError);
   }
 
   return _process_chunks(callbacks, stream, out_buffer)
       .and_then([&](ByteStream byte_stream) -> Result<ByteStream> {
         if (const auto end_result = callbacks.end_stream(&stream); end_result != Z_OK) {
           TACTILE_LOG_ERROR("Could not finalize z_stream: {}", zError(end_result));
-          return unexpected(compression_error(CompressionError::kInternalError));
+          return error(CompressionError::kInternalError);
         }
 
         return std::move(byte_stream);
@@ -101,7 +101,7 @@ auto ZlibCompressionProvider::compress(const ByteSpan data) const -> Result<Byte
   TACTILE_DEBUG_PROFILE_SCOPE("ZlibCompressor::compress");
 
   if (data.empty()) {
-    return unexpected(compression_error(CompressionError::kNoData));
+    return error(CompressionError::kNoData);
   }
 
   const auto level = mLevel.value_or(Z_DEFAULT_COMPRESSION);
@@ -128,7 +128,7 @@ auto ZlibCompressionProvider::decompress(const ByteSpan data) const -> Result<By
   TACTILE_DEBUG_PROFILE_SCOPE("ZlibCompressor::decompress");
 
   if (data.empty()) {
-    return unexpected(compression_error(CompressionError::kNoData));
+    return error(CompressionError::kNoData);
   }
 
   ZlibCallbacks callbacks;
