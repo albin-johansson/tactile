@@ -4,7 +4,7 @@ on: [ push ]
 
 env:
   VCPKG_ROOT: ${{github.workspace}}\vcpkg
-  VCPKG_TARGET_TRIPLET: x64-windows-static-md
+  VCPKG_TARGET_TRIPLET: x64-windows
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}\vcpkg\bincache
   VCPKG_CACHE_EDITION: 1
 
@@ -13,16 +13,9 @@ jobs:
     runs-on: windows-latest
     if: contains(github.event.head_commit.message, '[skip-ci]') == false
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ilammy/msvc-dev-cmd@v1.11.0
       - uses: lukka/get-cmake@latest
-
-      - name: Install Boost
-        id: install-boost
-        uses: MarkusJx/install-boost@v2.4.3
-        with:
-          boost_version: 1.81.0
-          toolset: msvc
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
@@ -55,12 +48,15 @@ jobs:
           cd build
           cmake .. -GNinja `
                    -DCMAKE_BUILD_TYPE=Debug `
-                   -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}}
+                   -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} `
+                   -DTACTILE_USE_SANITIZERS=OFF `
+                   -DTACTILE_BUILD_TESTS=ON `
+                   --log-level=DEBUG
 
       - name: Build
         run: ninja -C build
 
-      - name: Run tests
-        working-directory: ./build/test
+      - name: Run core tests
+        working-directory: ./build/debug/test
         shell: cmd
-        run: TactileTests.exe
+        run: tactile-core-test.exe
