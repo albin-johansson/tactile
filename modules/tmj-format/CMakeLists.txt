@@ -5,7 +5,6 @@ set(TACTILE_TMJ_FORMAT_DIR "${TACTILE_ROOT_DIR}/modules/tmj-format")
 file(GLOB_RECURSE TACTILE_TMJ_FORMAT_SOURCE_FILES
      CONFIGURE_DEPENDS
      "${TACTILE_TMJ_FORMAT_DIR}/inc/**/*.hpp"
-     "${TACTILE_TMJ_FORMAT_DIR}/src/**/*.hpp"
      "${TACTILE_TMJ_FORMAT_DIR}/src/**/*.cpp"
      )
 
@@ -20,17 +19,12 @@ target_compile_definitions(${TACTILE_TMJ_FORMAT_TARGET}
                            TACTILE_BUILDING_TMJ_PLUGIN
                            )
 
-target_include_directories(${TACTILE_TMJ_FORMAT_TARGET}
-                           PUBLIC
-                           "${TACTILE_TMJ_FORMAT_DIR}/inc"
-
-                           PRIVATE
-                           "${TACTILE_TMJ_FORMAT_DIR}/src"
-                           )
+target_include_directories(${TACTILE_TMJ_FORMAT_TARGET} PUBLIC "${TACTILE_TMJ_FORMAT_DIR}/inc")
 
 target_link_libraries(${TACTILE_TMJ_FORMAT_TARGET}
                       PUBLIC
                       ${TACTILE_CORE_TARGET}
+                      nlohmann_json::nlohmann_json
                       )
 
 if (TACTILE_BUILD_TESTS MATCHES ON)
