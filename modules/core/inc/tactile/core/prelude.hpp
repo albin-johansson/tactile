@@ -77,8 +77,8 @@
   #define TACTILE_DLL_EXPORT __attribute__((__visibility__("default")))
   #define TACTILE_DLL_IMPORT
 #elif TACTILE_COMPILER_GCC
-  #define TACTILE_DLL_EXPORT __attribute__((dllexport))
-  #define TACTILE_DLL_IMPORT __attribute__((dllimport))
+  #define TACTILE_DLL_EXPORT __attribute__((visibility("default")))
+  #define TACTILE_DLL_IMPORT
 #else
   #define TACTILE_DLL_EXPORT
   #define TACTILE_DLL_IMPORT

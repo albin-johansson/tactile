@@ -170,10 +170,10 @@ class CommandStack final {
   void _store(Unique<ICommand> cmd);
 
   /** \brief Removes the oldest command from the stack, i.e., the one at the bottom. */
-  void _remove_oldest_command();
+  TACTILE_EDITOR_API void _remove_oldest_command();
 
   /** \brief Removes all commands to the right of the current index (newer ones). */
-  void _remove_commands_after_current_index();
+  TACTILE_EDITOR_API void _remove_commands_after_current_index();
 
   void _reset_or_decrease_clean_index();
 
@@ -181,7 +181,7 @@ class CommandStack final {
   void _reset_or_decrease_current_index();
 
   /** \brief Shifts the current index to the right (to a newer command). */
-  void _increase_current_index();
+  TACTILE_EDITOR_API void _increase_current_index();
 
   [[nodiscard]] auto _get_next_command_index() const -> usize;
 };

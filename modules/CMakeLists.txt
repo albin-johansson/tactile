@@ -15,6 +15,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
       )
 else ()
   set(TACTILE_COMPILE_OPTIONS
+      -fvisibility=hidden
       -Wall
       -Wextra
       -Wpedantic
