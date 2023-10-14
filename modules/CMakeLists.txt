@@ -98,13 +98,17 @@ function(tactile_prepare_target target)
   target_precompile_headers(${target} PRIVATE ${TACTILE_PRECOMPILED_HEADERS})
 endfunction()
 
-function(tactile_use_plugin_output_dir target)
+function(tactile_set_output_dir target directory)
   set_target_properties(${target}
                         PROPERTIES
-                        RUNTIME_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}/plugins"
-                        ARCHIVE_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}/plugins"
-                        LIBRARY_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}/plugins"
+                        RUNTIME_OUTPUT_DIRECTORY "${directory}"
+                        ARCHIVE_OUTPUT_DIRECTORY "${directory}"
+                        LIBRARY_OUTPUT_DIRECTORY "${directory}"
                         )
+endfunction()
+
+function(tactile_use_plugin_output_dir target)
+  tactile_set_output_dir(${target} "${TACTILE_BUILD_DIR}/plugins")
 endfunction()
 
 function(tactile_copy_directory_post_build target from to)
