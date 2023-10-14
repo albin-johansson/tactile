@@ -6,11 +6,13 @@
 #include "tactile/core/container/variant.hpp"
 #include "tactile/core/container/vector.hpp"
 #include "tactile/core/context/attribute.hpp"
+#include "tactile/core/functional/maybe.hpp"
+#include "tactile/core/io/compression/compression.hpp"
 #include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/map/layer/layer_type.hpp"
 #include "tactile/core/map/layer/object_type.hpp"
-#include "tactile/core/map/tile_compression.hpp"
 #include "tactile/core/map/tile_encoding.hpp"
+#include "tactile/core/misc/tile_matrix.hpp"
 #include "tactile/core/prelude.hpp"
 
 namespace tactile::ir {
@@ -35,7 +37,7 @@ struct Component final {
  * \brief Intermediate representation of a component instance, attached to a meta context.
  */
 struct AttachedComponent final {
-  String name;                        ///< The component type name.
+  String type;                        ///< The component type name.
   Vector<NamedAttribute> attributes;  ///< The component attributes.
 };
 
@@ -67,14 +69,16 @@ struct Object final {
  * \brief Intermediate representation of a layer.
  */
 struct Layer final {
-  Metadata meta;                ///< Metadata for the layer.
-  int32 id;                     ///< The associated identifier.
-  LayerType type;               ///< The type of the layer.
-  float32 opacity;              ///< The opacity of the layer content.
-  Vector<Vector<int32>> tiles;  ///< The contained tiles (if tile layer).
-  Vector<Object> objects;       ///< The contained objects (if object layer).
-  Vector<Layer> layers;         ///< The contained layers (if group layer).
-  bool visible;                 ///< Whether the layer is rendered.
+  Metadata meta;           ///< Metadata for the layer.
+  int32 id;                ///< The associated identifier.
+  LayerType type;          ///< The type of the layer.
+  float32 opacity;         ///< The opacity of the layer content.
+  usize width;             ///< The number of tile columns (if tile layer).
+  usize height;            ///< The number of tile rows (if tile layer).
+  TileMatrix tiles;        ///< The contained tiles (if tile layer).
+  Vector<Object> objects;  ///< The contained objects (if object layer).
+  Vector<Layer> layers;    ///< The contained layers (if group layer).
+  bool visible {};         ///< Whether the layer is rendered.
 };
 
 /**
@@ -85,13 +89,15 @@ struct AnimationFrame final {
   uint64 duration_ms;  ///< The duration that the frame is shown in milliseconds.
 };
 
+using TileAnimation = Vector<AnimationFrame>;
+
 /**
  * \brief Intermediate representation of a tile definition.
  */
 struct Tile final {
-  Metadata meta;                     ///< Metadata for the tile.
-  Vector<Object> objects;            ///< The contained objects, if any.
-  Vector<AnimationFrame> animation;  ///< The associated animation frames, if any.
+  Metadata meta;            ///< Metadata for the tile.
+  Vector<Object> objects;   ///< The contained objects, if any.
+  TileAnimation animation;  ///< The associated animation frames, if any.
 };
 
 /**
@@ -101,11 +107,11 @@ struct Tileset final {
   Metadata meta;        ///< Metadata for the tileset.
   int32 tile_width;     ///< The width of tiles in the tileset.
   int32 tile_height;    ///< The height of tiles in the tileset.
-  usize row_count;      ///< The number of tile rows in the tileset.
-  usize col_count;      ///< The number of tile columns in the tileset.
+  usize tile_count;     ///< The total number of tiles in the tileset.
+  usize column_count;   ///< The number of tile columns in the tileset.
   int32 image_width;    ///< The width of the associated image.
   int32 image_height;   ///< The height of the associated image.
-  fs::Path image_path;  ///< The file path to the associated image.
+  FilePath image_path;  ///< The file path to the associated image.
   Vector<Tile> tiles;   ///< The associated tile descriptors.
 };
 
@@ -114,7 +120,7 @@ struct Tileset final {
  */
 struct TilesetRef final {
   Tileset tileset;      ///< The tileset definition.
-  int32 first_tile_id;  ///< The first global tile identifier associated with the tileset.
+  int32 first_tile_id;  ///< The first tile identifier associated with the tileset.
 };
 
 /**
@@ -122,9 +128,9 @@ struct TilesetRef final {
  */
 struct TileFormat final {
   TileEncoding encoding;        ///< The tile encoding strategy.
-  TileCompression compression;  ///< The tile compression strategy.
-  int32 zlib_level;             ///< The compression level (if using Zlib).
-  int32 zstd_level;             ///< The compression level (if using Zstd).
+  CompressionMode compression;  ///< The tile compression strategy.
+  Maybe<int32> zlib_level;      ///< The compression level (if using Zlib).
+  Maybe<int32> zstd_level;      ///< The compression level (if using Zstd).
 };
 
 /**
@@ -138,8 +144,9 @@ struct Map final {
   int32 tile_height;             ///< The logical height of all tiles.
   int32 next_layer_id;           ///< The next available layer identifier.
   int32 next_object_id;          ///< The next available object identifier.
+  TileFormat tile_format;        ///< The tile format used by the map.
   Vector<Component> components;  ///< The associated component definitions.
-  Vector<Tileset> tilesets;      ///< The associated tilesets.
+  Vector<TilesetRef> tilesets;   ///< The associated tilesets.
   Vector<Layer> layers;          ///< The associated layers.
 };
 
