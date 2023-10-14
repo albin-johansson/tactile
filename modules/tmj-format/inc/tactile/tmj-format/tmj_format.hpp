@@ -3,10 +3,11 @@
 #pragma once
 
 #include "tactile/core/format/save_format.hpp"
+#include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/prelude.hpp"
 #include "tactile/tmj-format/api.hpp"
 
-namespace tactile {
+namespace tactile::tmj {
 
 /**
  * \brief Provides import and export support for the Tiled JSON format.
@@ -20,21 +21,30 @@ namespace tactile {
 class TmjFormat final : public ISaveFormat {
  public:
   [[nodiscard]]
-  TACTILE_TMJ_API auto load_map(const fs::Path& map_file) const
+  TACTILE_TMJ_API auto load_map(const FilePath& map_path,
+                                const SaveFormatReadOptions& options) const
       -> Result<ir::Map> override;
 
   [[nodiscard]]
-  TACTILE_TMJ_API auto load_tileset(const fs::Path& tileset_file) const
+  TACTILE_TMJ_API auto load_tileset(const FilePath& tileset_path,
+                                    const SaveFormatReadOptions& options) const
       -> Result<ir::Tileset> override;
 
-  TACTILE_TMJ_API void save_map(const fs::Path& map_file, const ir::Map& map) override;
+  [[nodiscard]]
+  TACTILE_TMJ_API auto save_map(const FilePath& map_path,
+                                const ir::Map& map,
+                                const SaveFormatWriteOptions& options) const
+      -> Result<void> override;
 
-  TACTILE_TMJ_API void save_tileset(const fs::Path& tileset_file,
-                                    const ir::Tileset& tileset) override;
+  [[nodiscard]]
+  TACTILE_TMJ_API auto save_tileset(const FilePath& tileset_path,
+                                    const ir::Tileset& tileset,
+                                    const SaveFormatWriteOptions& options) const
+      -> Result<void> override;
 
   [[nodiscard]]
   TACTILE_TMJ_API auto is_valid_extension(NativeStringView extension) const
       -> bool override;
 };
 
-}  // namespace tactile
+}  // namespace tactile::tmj

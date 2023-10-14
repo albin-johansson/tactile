@@ -6,6 +6,7 @@
 
 #include "tactile/core/api.hpp"
 #include "tactile/core/debug/error_code.hpp"
+#include "tactile/core/functional/expected.hpp"
 #include "tactile/core/prelude.hpp"
 
 namespace tactile {
@@ -16,13 +17,18 @@ namespace tactile {
 class SaveFormatErrorDomain final : public IErrorDomain {
  public:
   enum class Error : uint32 {
-    kInvalidOperation,        ///< The format doesn't support the requested operation.
-    kUnknown,                 ///< An unknown error occurred.
-    kBadFile,                 ///< Something went wrong when loading or saving a file.
-    kUnsupportedFormat,       ///< Tried to load/save file with unknown format.
-    kMissingKey,              ///< A required attribute was not found in a save file.
-    kUnsupportedOrientation,  ///< An unsupported map orientation was detected.
-    kUnsupportedLayerType,    ///< An unsupported layer type was detected.
+    kInvalidOperation,         ///< The format doesn't support the requested operation.
+    kUnknown,                  ///< An unknown error occurred.
+    kBadFile,                  ///< Something went wrong when loading or saving a file.
+    kUnsupportedFormat,        ///< Tried to load/save file with unknown format.
+    kMissingKey,               ///< A required attribute was not found in a save file.
+    kUnsupportedOrientation,   ///< An unsupported map orientation was detected.
+    kUnsupportedLayerType,     ///< An unsupported layer type was detected.
+    kUnsupportedPropertyType,  ///< An unsupported property type was detected.
+    kUnsupportedTileEncoding,  ///< An unsupported tile data encoding was detected.
+    kBadColorProperty,         ///< An invalid color property value was detected.
+    kBadTileLayerData,         ///< Corrupt tile layer data was detected.
+    kBadCompressionMode,       ///< An invalid compression mode was detected.
   };
 
   [[nodiscard]]

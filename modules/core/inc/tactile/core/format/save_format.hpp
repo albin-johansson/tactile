@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tactile/core/container/string.hpp"
+#include "tactile/core/format/save_format_options.hpp"
 #include "tactile/core/functional/result.hpp"
 #include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/io/ir.hpp"
@@ -26,27 +27,57 @@ class ISaveFormat {
   /**
    * \brief Attempts to load a map file.
    *
-   * \param map_file the path to the map file.
+   * \param map_path the path to the map file.
+   * \param options  the read options.
    *
-   * \return the loaded map; or an error code if something went wrong.
+   * \return the loaded map, or an error code on failure.
    */
   [[nodiscard]]
-  virtual auto load_map(const FilePath& map_file) const -> Result<ir::Map> = 0;
+  virtual auto load_map(const FilePath& map_path,
+                        const SaveFormatReadOptions& options) const
+      -> Result<ir::Map> = 0;
 
   /**
    * \brief Attempts to load a standalone tileset file.
    *
-   * \param tileset_file the path to the tileset file.
+   * \param tileset_path the path to the tileset file.
+   * \param options      the read options.
    *
-   * \return the loaded tileset; or an error code if something went wrong.
+   * \return the loaded tileset, or an error code on failure.
    */
   [[nodiscard]]
-  virtual auto load_tileset(const FilePath& tileset_file) const
+  virtual auto load_tileset(const FilePath& tileset_path,
+                            const SaveFormatReadOptions& options) const
       -> Result<ir::Tileset> = 0;
 
-  virtual void save_map(const FilePath& map_file, const ir::Map& map) = 0;
+  /**
+   * \brief Attempts to save a map.
+   *
+   * \param map_path the map file path.
+   * \param map      the map that will be saved.
+   * \param options  the write options.
+   *
+   * \return nothing on success, or an error code on failure.
+   */
+  [[nodiscard]]
+  virtual auto save_map(const FilePath& map_path,
+                        const ir::Map& map,
+                        const SaveFormatWriteOptions& options) const -> Result<void> = 0;
 
-  virtual void save_tileset(const FilePath& tileset_file, const ir::Tileset& tileset) = 0;
+  /**
+   * \brief Attempts to save a tileset.
+   *
+   * \param tileset_path the tileset file path.
+   * \param tileset      the tileset that will be saved.
+   * \param options      the write options.
+   *
+   * \return nothing on success, or an error code on failure.
+   */
+  [[nodiscard]]
+  virtual auto save_tileset(const FilePath& tileset_path,
+                            const ir::Tileset& tileset,
+                            const SaveFormatWriteOptions& options) const
+      -> Result<void> = 0;
 
   /**
    * \brief Indicates whether a file extension is usable with the save format.

@@ -9,7 +9,7 @@
 #include "tactile/core/plugin/plugin_manager.hpp"
 #include "tactile/tmj-format/tmj_format.hpp"
 
-namespace tactile {
+namespace tactile::tmj {
 
 void TmjFormatPlugin::on_load()
 {
@@ -37,4 +37,4 @@ void tactile_destroy_plugin(IPlugin* plugin)
   delete plugin;
 }
 
-}  // namespace tactile
+}  // namespace tactile::tmj

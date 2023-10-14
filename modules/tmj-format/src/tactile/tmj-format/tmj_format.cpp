@@ -5,9 +5,10 @@
 #include "tactile/core/debug/log/logger.hpp"
 #include "tactile/core/format/save_format_error.hpp"
 
-namespace tactile {
+namespace tactile::tmj {
 
-auto TmjFormat::load_map(const FilePath& map_file) const -> Result<ir::Map>
+auto TmjFormat::load_map(const FilePath& map_path,
+                         const SaveFormatReadOptions& options) const -> Result<ir::Map>
 {
   try {
   }
@@ -20,17 +21,23 @@ auto TmjFormat::load_map(const FilePath& map_file) const -> Result<ir::Map>
   return unexpected(save_format_error(SaveFormatError::kUnknown));
 }
 
-auto TmjFormat::load_tileset(const fs::Path& tileset_file) const -> Result<ir::Tileset>
+auto TmjFormat::load_tileset(const FilePath& tileset_path,
+                             const SaveFormatReadOptions& options) const
+    -> Result<ir::Tileset>
 {
   return unexpected(save_format_error(SaveFormatError::kUnknown));
 }
 
-void TmjFormat::save_map(const fs::Path& map_file, const ir::Map& map)
+auto TmjFormat::save_map(const FilePath& map_path,
+                         const ir::Map& map,
+                         const SaveFormatWriteOptions& options) const -> Result<void>
 {
   // TODO
 }
 
-void TmjFormat::save_tileset(const fs::Path& tileset_file, const ir::Tileset& tileset)
+auto TmjFormat::save_tileset(const FilePath& tileset_path,
+                             const ir::Tileset& tileset,
+                             const SaveFormatWriteOptions& options) const -> Result<void>
 {
   // TODO
 }
@@ -41,4 +48,4 @@ auto TmjFormat::is_valid_extension(const NativeStringView extension) const -> bo
          extension == TACTILE_NATIVE_STR(".json");
 }
 
-}  // namespace tactile
+}  // namespace tactile::tmj

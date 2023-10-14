@@ -4,14 +4,14 @@
 
 #include "tactile/core/api.hpp"
 #include "tactile/core/container/vector.hpp"
+#include "tactile/core/format/save_format.hpp"
+#include "tactile/core/format/save_format_options.hpp"
 #include "tactile/core/functional/result.hpp"
 #include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/io/ir.hpp"
 #include "tactile/core/prelude.hpp"
 
 namespace tactile {
-
-TACTILE_FWD(class ISaveFormat)
 
 /**
  * \brief Manages map/tileset save format parser/emitter implementations.
@@ -29,23 +29,58 @@ class SaveFormatManager final {
   /**
    * \brief Loads a map file using one of the available save format handlers.
    *
-   * \param map_file the map file path.
+   * \param map_path the map file path.
+   * \param options  the read options.
    *
-   * \return the map data, or an error code if something went wrong.
+   * \return the map data, or an error code if an error occurred.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto load_map(const FilePath& map_file) const -> Result<ir::Map>;
+  TACTILE_CORE_API auto load_map(const FilePath& map_path,
+                                 const SaveFormatReadOptions& options) const
+      -> Result<ir::Map>;
 
   /**
    * \brief Loads a tileset file using one of the available save format handlers.
    *
-   * \param tileset_file the tileset file path.
+   * \param tileset_path the tileset file path.
+   * \param options      the read options.
    *
-   * \return the tileset data, or an error code if something went wrong.
+   * \return the tileset data, or an error code if an error occurred.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto load_tileset(const FilePath& tileset_file) const
+  TACTILE_CORE_API auto load_tileset(const FilePath& tileset_path,
+                                     const SaveFormatReadOptions& options) const
       -> Result<ir::Tileset>;
+
+  /**
+   * \brief Saves a map using one of the available save format handlers.
+   *
+   * \param map_path the map file path.
+   * \param map      the map that will be saved.
+   * \param options  the write options.
+   *
+   * \return nothing on success, or an error code if an error occurred.
+   */
+  [[nodiscard]]
+  TACTILE_CORE_API auto save_map(const FilePath& map_path,
+                                 const ir::Map& map,
+                                 const SaveFormatWriteOptions& options) const
+      -> Result<void>;
+
+  /**
+   * \brief Saves a tileset using one of the available save format handlers.
+   *
+   * \param map_path the tileset file path.
+   * \param map      the tileset that will be saved.
+   * \param options  the write options.
+   *
+   * \return nothing on success, or an error code if an error occurred.
+   */
+  [[nodiscard]]
+  TACTILE_CORE_API auto save_tileset(const FilePath& tileset_path,
+                                     const ir::Tileset& tileset,
+                                     const SaveFormatWriteOptions& options) const
+      -> Result<void>;
 
   /**
    * \brief Registers a save format handler.

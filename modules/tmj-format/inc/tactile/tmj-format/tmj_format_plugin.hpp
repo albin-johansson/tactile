@@ -8,7 +8,7 @@
 #include "tactile/core/prelude.hpp"
 #include "tactile/tmj-format/api.hpp"
 
-namespace tactile {
+namespace tactile::tmj {
 
 /**
  * \brief Manages the Tiled TMJ format plugin.
@@ -33,4 +33,4 @@ extern "C"
   TACTILE_TMJ_API void tactile_destroy_plugin(IPlugin* plugin);
 }
 
-}  // namespace tactile
+}  // namespace tactile::tmj
