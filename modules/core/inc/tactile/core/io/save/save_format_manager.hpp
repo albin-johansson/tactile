@@ -2,10 +2,10 @@
 
 #pragma once
 
+#include "save_format.hpp"
+#include "save_format_options.hpp"
 #include "tactile/core/api.hpp"
 #include "tactile/core/container/vector.hpp"
-#include "tactile/core/format/save_format.hpp"
-#include "tactile/core/format/save_format_options.hpp"
 #include "tactile/core/functional/result.hpp"
 #include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/io/ir.hpp"

@@ -2,8 +2,8 @@
 
 #pragma once
 
+#include "save_format_options.hpp"
 #include "tactile/core/container/string.hpp"
-#include "tactile/core/format/save_format_options.hpp"
 #include "tactile/core/functional/result.hpp"
 #include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/io/ir.hpp"
