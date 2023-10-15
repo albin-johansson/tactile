@@ -102,7 +102,7 @@
   Name() = default;                   \
   virtual ~Name() noexcept = default; \
   TACTILE_DEFAULT_COPY(Name);         \
-  TACTILE_DEFAULT_MOVE(Name);
+  TACTILE_DEFAULT_MOVE(Name)
 
 #define TACTILE_STATIC_CLASS(Name) \
   Name() = delete;                 \
