@@ -13,19 +13,19 @@ auto TmjFormat::load_map(const FilePath& map_path,
   try {
   }
   catch (const std::exception& ex) {
-    TACTILE_LOG_ERROR("Error reading TMJ map: {}", ex.what());
-    return unexpected(save_format_error(SaveFormatError::kUnknown));
+    TACTILE_LOG_ERROR("[TMJ] Error reading map: {}", ex.what());
+    return error(SaveFormatError::kUnknown);
   }
-
-  TACTILE_LOG_ERROR("An unknown error occurred during TMJ parsing");
-  return unexpected(save_format_error(SaveFormatError::kUnknown));
+  catch (...) {
+    return error(SaveFormatError::kUnknown);
+  }
 }
 
 auto TmjFormat::load_tileset(const FilePath& tileset_path,
                              const SaveFormatReadOptions& options) const
     -> Result<ir::Tileset>
 {
-  return unexpected(save_format_error(SaveFormatError::kUnknown));
+  return error(SaveFormatError::kUnknown);
 }
 
 auto TmjFormat::save_map(const FilePath& map_path,
@@ -33,6 +33,7 @@ auto TmjFormat::save_map(const FilePath& map_path,
                          const SaveFormatWriteOptions& options) const -> Result<void>
 {
   // TODO
+    return kSuccess;
 }
 
 auto TmjFormat::save_tileset(const FilePath& tileset_path,
@@ -40,6 +41,7 @@ auto TmjFormat::save_tileset(const FilePath& tileset_path,
                              const SaveFormatWriteOptions& options) const -> Result<void>
 {
   // TODO
+  return kSuccess;
 }
 
 auto TmjFormat::is_valid_extension(const NativeStringView extension) const -> bool
