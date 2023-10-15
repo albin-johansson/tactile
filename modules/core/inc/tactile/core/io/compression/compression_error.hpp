@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include <utility>  // to_underlying
-
 #include "tactile/core/api.hpp"
 #include "tactile/core/debug/error_code.hpp"
 #include "tactile/core/functional/expected.hpp"
@@ -22,17 +20,19 @@ class CompressionErrorDomain final : public IErrorDomain {
     kInvalidMode,    ///< An invalid compression mode was used.
   };
 
+  constexpr CompressionErrorDomain() noexcept = default;
+
+  constexpr ~CompressionErrorDomain() noexcept override = default;
+
+  TACTILE_DEFAULT_COPY(CompressionErrorDomain);
+  TACTILE_DEFAULT_MOVE(CompressionErrorDomain);
+
   [[nodiscard]]
   TACTILE_CORE_API auto get_message(uint32 error_id) const noexcept
       -> StringView override;
 };
 
 using CompressionError = CompressionErrorDomain::Error;
-
-/**
- * \brief The global compression error domain.
- */
-inline constexpr CompressionErrorDomain kCompressionErrorDomain;
 
 /**
  * \brief Convenience function for creating a compression error code.
@@ -42,9 +42,6 @@ inline constexpr CompressionErrorDomain kCompressionErrorDomain;
  * \return an error code.
  */
 [[nodiscard]]
-inline auto error(const CompressionError error) noexcept -> Unexpected<ErrorCode>
-{
-  return unexpected(ErrorCode {&kCompressionErrorDomain, std::to_underlying(error)});
-}
+TACTILE_CORE_API auto error(CompressionError error) noexcept -> Unexpected<ErrorCode>;
 
 }  // namespace tactile

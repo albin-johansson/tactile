@@ -2,7 +2,14 @@
 
 #include "tactile/core/io/save/save_format_error.hpp"
 
+#include <utility>  // to_underlying
+
 namespace tactile {
+namespace {
+
+inline constexpr SaveFormatErrorDomain kSaveFormatErrorDomain;
+
+}  // namespace
 
 auto SaveFormatErrorDomain::get_message(const uint32 error_id) const noexcept
     -> StringView
@@ -38,6 +45,11 @@ auto SaveFormatErrorDomain::get_message(const uint32 error_id) const noexcept
   }
 
   return "";
+}
+
+auto error(const SaveFormatError error) noexcept -> Unexpected<ErrorCode>
+{
+  return unexpected(ErrorCode {&kSaveFormatErrorDomain, std::to_underlying(error)});
 }
 
 }  // namespace tactile

@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include <utility>  // to_underlying
-
 #include "tactile/core/api.hpp"
 #include "tactile/core/debug/error_code.hpp"
 #include "tactile/core/functional/expected.hpp"
@@ -31,15 +29,17 @@ class SaveFormatErrorDomain final : public IErrorDomain {
     kBadCompressionMode,       ///< An invalid compression mode was detected.
   };
 
+  constexpr SaveFormatErrorDomain() noexcept = default;
+
+  constexpr ~SaveFormatErrorDomain() noexcept override = default;
+
+  TACTILE_DEFAULT_COPY(SaveFormatErrorDomain);
+  TACTILE_DEFAULT_MOVE(SaveFormatErrorDomain);
+
   [[nodiscard]]
   TACTILE_CORE_API auto get_message(uint32 error_id) const noexcept
       -> StringView override;
 };
-
-/**
- * \brief The global save format error domain.
- */
-inline constexpr SaveFormatErrorDomain kSaveFormatErrorDomain;
 
 using SaveFormatError = SaveFormatErrorDomain::Error;
 
@@ -51,9 +51,6 @@ using SaveFormatError = SaveFormatErrorDomain::Error;
  * \return an error code.
  */
 [[nodiscard]]
-inline auto error(const SaveFormatError error) noexcept -> Unexpected<ErrorCode>
-{
-  return unexpected(ErrorCode {&kSaveFormatErrorDomain, std::to_underlying(error)});
-}
+TACTILE_CORE_API auto error(SaveFormatError error) noexcept -> Unexpected<ErrorCode>;
 
 }  // namespace tactile

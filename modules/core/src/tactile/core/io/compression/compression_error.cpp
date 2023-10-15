@@ -2,7 +2,14 @@
 
 #include "tactile/core/io/compression/compression_error.hpp"
 
+#include <utility>  // to_underlying
+
 namespace tactile {
+namespace {
+
+inline constexpr CompressionErrorDomain kCompressionErrorDomain;
+
+}  // namespace
 
 auto CompressionErrorDomain::get_message(const uint32 error_id) const noexcept
     -> StringView
@@ -14,6 +21,11 @@ auto CompressionErrorDomain::get_message(const uint32 error_id) const noexcept
   }
 
   return "";
+}
+
+auto error(const CompressionError error) noexcept -> Unexpected<ErrorCode>
+{
+  return unexpected(ErrorCode {&kCompressionErrorDomain, std::to_underlying(error)});
 }
 
 }  // namespace tactile
