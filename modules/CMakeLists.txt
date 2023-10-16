@@ -88,6 +88,7 @@ function(tactile_prepare_target target)
                         CXX_STANDARD 23
                         CXX_EXTENSIONS OFF
                         CXX_STANDARD_REQUIRED ON
+                        POSITION_INDEPENDENT_CODE ON
                         INTERPROCEDURAL_OPTIMIZATION ${TACTILE_USE_LTO}
                         RUNTIME_OUTPUT_DIRECTORY ${TACTILE_BUILD_DIR}
                         ARCHIVE_OUTPUT_DIRECTORY ${TACTILE_BUILD_DIR}
