@@ -42,7 +42,6 @@ if (TACTILE_BUILD_TESTS MATCHES ON)
   add_executable(${TACTILE_EDITOR_TEST_TARGET} ${TACTILE_EDITOR_TEST_FILES})
 
   tactile_prepare_target(${TACTILE_EDITOR_TEST_TARGET})
-  tactile_set_output_dir(${TACTILE_EDITOR_TEST_TARGET} "${TACTILE_BUILD_DIR}/test")
 
   target_link_libraries(${TACTILE_EDITOR_TEST_TARGET}
                         PRIVATE
