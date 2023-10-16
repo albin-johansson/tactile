@@ -4,7 +4,6 @@ This document provides a guide for how to build the project.
 
 - [Compiling](#compiling)
   - [Install a C++ compiler](#install-a-c-compiler)
-  - [Install Boost libraries](#install-boost-libraries)
   - [Install Vcpkg](#install-vcpkg)
   - [Building the project](#building-the-project)
   - [Configuring profiles in JetBrains CLion](#configuring-profiles-in-jetbrains-clion)
@@ -14,18 +13,9 @@ This makes building the Tactile editor really quite straightforward.
 
 ## Install a C++ compiler
 
-Tactile is written in C++20, which has good support by the major compilers by now.
+Tactile is written in a subset of C++23, which has good support by the major compilers by now.
 On both Windows and macOS, you can install a C++ compiler by installing their primary IDEs, i.e. Visual Studio and Xcode.
 For Linux, you should use your distributions package manager, e.g. `sudo apt install g++`.
-
-## Install Boost libraries
-
-Installation of the [Boost](https://www.boost.org/) libraries vary depending on your platform.
-Using Homebrew on macOS, Boost can be installed using the following command.
-
-```bash
-> brew install boost
-```
 
 ## Install Vcpkg
 
