@@ -2,7 +2,7 @@
 
 #include "tactile/core/io/tile_matrix_encoding.hpp"
 
-#include <bit>       // endian, byteswap
+#include <bit>       // endian
 #include <concepts>  // same_as
 #include <cstring>   // memcpy
 
@@ -55,7 +55,7 @@ auto tile_matrix_from_byte_stream(const ByteStream& byte_stream,
 
     // Correct the byte ordering if we're on a big endian system.
     if constexpr (std::endian::native == std::endian::big) {
-      tile_id = std::byteswap(tile_id);
+      tile_id = reverse_bytes(tile_id);
     }
 
     // Clear any flipping bits used by Tiled.
