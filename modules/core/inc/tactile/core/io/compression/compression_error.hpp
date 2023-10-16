@@ -22,7 +22,8 @@ class CompressionErrorDomain final : public IErrorDomain {
 
   constexpr CompressionErrorDomain() noexcept = default;
 
-  constexpr ~CompressionErrorDomain() noexcept override = default;
+  constexpr ~CompressionErrorDomain() noexcept override  // NOLINT: GCC workaround
+  {}
 
   TACTILE_DEFAULT_COPY(CompressionErrorDomain);
   TACTILE_DEFAULT_MOVE(CompressionErrorDomain);

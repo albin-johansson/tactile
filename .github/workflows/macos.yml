@@ -4,7 +4,7 @@ on: [ push ]
 
 env:
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
-  VCPKG_TARGET_TRIPLET: arm64-osx-dynamic
+  VCPKG_TARGET_TRIPLET: x64-osx-dynamic
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
   VCPKG_CACHE_EDITION: 1
 
@@ -61,5 +61,5 @@ jobs:
         run: ninja -C build
 
       - name: Run core tests
-        working-directory: ./build/debug/test
+        working-directory: ./build/debug
         run: ./tactile-core-test

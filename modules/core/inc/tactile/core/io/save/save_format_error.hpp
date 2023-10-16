@@ -31,7 +31,8 @@ class SaveFormatErrorDomain final : public IErrorDomain {
 
   constexpr SaveFormatErrorDomain() noexcept = default;
 
-  constexpr ~SaveFormatErrorDomain() noexcept override = default;
+  constexpr ~SaveFormatErrorDomain() noexcept override  // NOLINT: GCC workaround
+  {}
 
   TACTILE_DEFAULT_COPY(SaveFormatErrorDomain);
   TACTILE_DEFAULT_MOVE(SaveFormatErrorDomain);

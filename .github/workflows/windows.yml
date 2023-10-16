@@ -57,6 +57,5 @@ jobs:
         run: ninja -C build
 
       - name: Run core tests
-        working-directory: ./build/debug/test
-        shell: cmd
+        working-directory: ./build/debug
         run: tactile-core-test.exe
