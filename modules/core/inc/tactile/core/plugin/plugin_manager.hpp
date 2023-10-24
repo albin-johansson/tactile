@@ -20,11 +20,9 @@ using PluginDestroyFn = void (*)(IPlugin*);  ///< Signature of a plugin "destruc
 /**
  * \brief Provides information about a dynamic library plugin.
  */
-struct PluginInfo final {
-  String name;                                       ///< The plugin name.
-  FilePath library_path;                             ///< The file path of the binary.
-  Unique<IDynamicLibrary> dll;                       ///< The dynamic library handle.
-  UniqueForeign<IPlugin> plugin {nullptr, nullptr};  ///< The plugin instance.
+struct PluginData final {
+  Unique<IDynamicLibrary> dll;                 ///< The dynamic library handle.
+  Managed<IPlugin> plugin {nullptr, nullptr};  ///< The plugin instance.
 };
 
 /**
@@ -51,50 +49,29 @@ class TACTILE_CORE_API PluginManager final {
    */
   void scan(const FilePath& dir);
 
-  /**
-   * \brief Returns the loaded plugin information.
-   *
-   * \return the plugin information data.
-   */
   [[nodiscard]]
-  auto get_plugins() -> Vector<PluginInfo>&;
+  auto get_plugins() -> Vector<PluginData>&;
 
-  /** \copydoc PluginManager::get_plugins */
   [[nodiscard]]
-  auto get_plugins() const -> const Vector<PluginInfo>&;
+  auto get_plugins() const -> const Vector<PluginData>&;
 
   /**
-   * \brief Indicates whether a file is likely to be a dynamic library.
+   * \brief Tries to load a plugin from a dynamic library.
    *
-   * \note This function merely provides a course heuristic useful for excluding files
-   *       that are unlikely to be dynamic libraries. It works by simply checking the file
-   *       extension of the specified file and compares the extension to established
-   *       dynamic library file extensions for the current platform.
+   * \details Plugin libraries must provide two C-linkage functions:
+   *          `tactile_create_plugin` and `tactile_destroy_plugin`. The signatures of
+   *          these functions must be equivalent to `IPlugin*()` and `void(IPlugin*)`,
+   *          respectively.
    *
-   * \param file the file to check.
+   * \param lib the source dynamic library handle.
    *
-   * \return true if the file could be a dynamic library; false otherwise.
+   * \return a potentially null managed plugin pointer.
    */
   [[nodiscard]]
-  static auto is_dll(const FilePath& file) -> bool;
-
-  /**
-   * \brief Obtains information about a plugin.
-   *
-   * \details This function will, on success, initialize all members of the `PluginInfo`
-   *          struct. However, the plugin will not be explicitly initialized, i.e., you'll
-   *          still need to call `IPlugin::on_load` (and `IPlugin::on_unload`) yourself.
-   *          This makes it possible to selectively load plugins based on user input.
-   *
-   * \param path the file path to the dynamic library.
-   *
-   * \return the plugin information, or nothing on failure.
-   */
-  [[nodiscard]]
-  static auto load_library_info(const FilePath& path) -> Maybe<PluginInfo>;
+  static auto load_plugin(const IDynamicLibrary& lib) -> Managed<IPlugin>;
 
  private:
-  Vector<PluginInfo> mPlugins;
+  Vector<PluginData> mPlugins;
 };
 
 }  // namespace tactile

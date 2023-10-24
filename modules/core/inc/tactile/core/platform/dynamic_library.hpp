@@ -37,6 +37,14 @@ class TACTILE_CORE_API IDynamicLibrary {
    */
   [[nodiscard]]
   virtual auto get_symbol(const char* name) const -> void* = 0;
+
+  /**
+   * \brief Returns the file path to the dynamic library binary.
+   *
+   * \return a file path.
+   */
+  [[nodiscard]]
+  virtual auto get_path() const -> const FilePath& = 0;
 };
 
 template <typename FnType>
@@ -47,18 +55,32 @@ auto get_symbol(const IDynamicLibrary& library, const char* name) -> FnType
 }
 
 /**
+ * \brief Indicates whether a file is likely to be a dynamic library.
+ *
+ * \note This function merely provides a course heuristic useful for excluding files
+ *       that are unlikely to be dynamic libraries. It works by simply checking the file
+ *       extension of the specified file and compares the extension to established
+ *       dynamic library file extensions for the current platform.
+ *
+ * \param path the path to the file to check.
+ *
+ * \return true if the file could be a dynamic library; false otherwise.
+ */
+[[nodiscard]]
+TACTILE_CORE_API auto is_dll(const FilePath& path) -> bool;
+
+/**
  * \brief Attempts to load a dynamic library.
  *
  * \details This function makes use of the `dlopen` and `LoadModuleA` APIs on Linux/macOS
  *          and Windows, respectively. For other platforms, this function simply returns a
  *          null pointer.
  *
- * \param library_path the file path to the dynamic library.
+ * \param path the file path to the dynamic library.
  *
  * \return the loaded library, or a null pointer on failure.
  */
 [[nodiscard]]
-TACTILE_CORE_API auto load_library(const FilePath& library_path)
-    -> Unique<IDynamicLibrary>;
+TACTILE_CORE_API auto load_library(const FilePath& path) -> Unique<IDynamicLibrary>;
 
 }  // namespace tactile

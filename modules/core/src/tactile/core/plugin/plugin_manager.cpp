@@ -5,7 +5,6 @@
 #include <filesystem>  // is_directory
 #include <utility>     // move
 
-#include "tactile/core/debug/error.hpp"
 #include "tactile/core/debug/log/logger.hpp"
 
 namespace tactile {
@@ -25,67 +24,44 @@ void PluginManager::scan(const FilePath& dir)
 
   for (const auto& dir_entry : DirectoryIterator {dir}) {
     const auto& dir_entry_path = dir_entry.path();
-    if (auto plugin_info = load_library_info(dir_entry_path)) {
-      TACTILE_LOG_DEBUG("Found plugin {}", plugin_info->name);
-      mPlugins.push_back(std::move(*plugin_info));
-    }
-  }
-}
 
-auto PluginManager::get_plugins() -> Vector<PluginInfo>&
-{
-  return mPlugins;
-}
+    PluginData plugin_data {};
+    plugin_data.dll = load_library(dir_entry_path);
 
-auto PluginManager::get_plugins() const -> const Vector<PluginInfo>&
-{
-  return mPlugins;
-}
+    if (plugin_data.dll != nullptr) {
+      plugin_data.plugin = load_plugin(*plugin_data.dll);
 
-auto PluginManager::is_dll(const FilePath& file) -> bool
-{
-  const auto extension = file.extension();
-
-  if constexpr (kIsLinux) {
-    return extension == ".so";
-  }
-  else if constexpr (kIsApple) {
-    return extension == ".so" || extension == ".dylib";
-  }
-  else if constexpr (kIsWindows) {
-    return extension == ".dll";
-  }
-
-  TACTILE_LOG_WARN("Unknown platform: cannot determine valid DLL extensions");
-  return false;
-}
-
-auto PluginManager::load_library_info(const FilePath& path) -> Maybe<PluginInfo>
-{
-  if (!is_dll(path)) {
-    return kNone;
-  }
-
-  PluginInfo plugin_info;
-  plugin_info.dll = load_library(path);
-
-  if (plugin_info.dll) {
-    plugin_info.name = path.filename().string();
-    plugin_info.library_path = path;
-
-    const auto& dll = *plugin_info.dll;
-    auto* plugin_factory = get_symbol<PluginCreateFn>(dll, "tactile_create_plugin");
-    auto* plugin_deleter = get_symbol<PluginDestroyFn>(dll, "tactile_destroy_plugin");
-
-    if (plugin_factory && plugin_deleter) {
-      if (auto* plugin = plugin_factory()) {
-        plugin_info.plugin = make_unique_foreign(plugin, plugin_deleter);
-        return plugin_info;
+      if (plugin_data.plugin != nullptr) {
+        TACTILE_LOG_DEBUG("Found plugin {}",
+                          plugin_data.dll->get_path().filename().string());
+        mPlugins.push_back(std::move(plugin_data));
       }
     }
   }
+}
 
-  return kNone;
+auto PluginManager::get_plugins() -> Vector<PluginData>&
+{
+  return mPlugins;
+}
+
+auto PluginManager::get_plugins() const -> const Vector<PluginData>&
+{
+  return mPlugins;
+}
+
+auto PluginManager::load_plugin(const IDynamicLibrary& lib) -> Managed<IPlugin>
+{
+  auto* create_plugin = get_symbol<PluginCreateFn>(lib, "tactile_create_plugin");
+  auto* destroy_plugin = get_symbol<PluginDestroyFn>(lib, "tactile_destroy_plugin");
+
+  if (create_plugin && destroy_plugin) {
+    if (auto* plugin = create_plugin()) {
+      return Managed<IPlugin> {plugin, destroy_plugin};
+    }
+  }
+
+  return Managed<IPlugin> {nullptr, nullptr};
 }
 
 }  // namespace tactile
