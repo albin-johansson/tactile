@@ -30,7 +30,7 @@ struct PluginInfo final {
 /**
  * \brief Manages a collection of runtime plugins.
  */
-class PluginManager final {
+class TACTILE_CORE_API PluginManager final {
  public:
   /**
    * \brief Returns the global plugin manager.
@@ -38,7 +38,7 @@ class PluginManager final {
    * \return the plugin manager.
    */
   [[nodiscard]]
-  TACTILE_CORE_API static auto get() -> PluginManager&;
+  static auto get() -> PluginManager&;
 
   /**
    * \brief Iterates the specified directory for potential plugins and loads their info.
@@ -49,7 +49,7 @@ class PluginManager final {
    *
    * \param dir the plugin directory path.
    */
-  TACTILE_CORE_API void scan(const FilePath& dir);
+  void scan(const FilePath& dir);
 
   /**
    * \brief Returns the loaded plugin information.
@@ -57,11 +57,11 @@ class PluginManager final {
    * \return the plugin information data.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto get_plugins() -> Vector<PluginInfo>&;
+  auto get_plugins() -> Vector<PluginInfo>&;
 
   /** \copydoc PluginManager::get_plugins */
   [[nodiscard]]
-  TACTILE_CORE_API auto get_plugins() const -> const Vector<PluginInfo>&;
+  auto get_plugins() const -> const Vector<PluginInfo>&;
 
   /**
    * \brief Indicates whether a file is likely to be a dynamic library.
@@ -76,7 +76,7 @@ class PluginManager final {
    * \return true if the file could be a dynamic library; false otherwise.
    */
   [[nodiscard]]
-  TACTILE_CORE_API static auto is_dll(const FilePath& file) -> bool;
+  static auto is_dll(const FilePath& file) -> bool;
 
   /**
    * \brief Obtains information about a plugin.
@@ -91,8 +91,7 @@ class PluginManager final {
    * \return the plugin information, or nothing on failure.
    */
   [[nodiscard]]
-  TACTILE_CORE_API static auto load_library_info(const FilePath& path)
-      -> Maybe<PluginInfo>;
+  static auto load_library_info(const FilePath& path) -> Maybe<PluginInfo>;
 
  private:
   Vector<PluginInfo> mPlugins;

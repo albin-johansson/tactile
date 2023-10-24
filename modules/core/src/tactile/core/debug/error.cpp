@@ -18,4 +18,19 @@ auto get_stacktrace() -> String
   return stream.str();
 }
 
+Error::Error(String message)
+  : mMessage {std::move(message)},
+    mTrace {get_stacktrace()}
+{}
+
+auto Error::what() const noexcept -> const char*
+{
+  return mMessage.c_str();
+}
+
+auto Error::get_trace() const -> const String&
+{
+  return mTrace;
+}
+
 }  // namespace tactile

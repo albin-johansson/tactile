@@ -19,24 +19,15 @@ namespace tactile {
 [[nodiscard]]
 TACTILE_NOINLINE TACTILE_CORE_API auto get_stacktrace() -> String;
 
-class Error final : public std::exception {
+class TACTILE_CORE_API Error final : public std::exception {
  public:
-  explicit Error(String message)
-    : mMessage {std::move(message)},
-      mTrace {get_stacktrace()}
-  {}
+  explicit Error(String message);
 
   [[nodiscard]]
-  auto what() const noexcept -> const char* override
-  {
-    return mMessage.c_str();
-  }
+  auto what() const noexcept -> const char* override;
 
   [[nodiscard]]
-  auto get_trace() const -> const String&
-  {
-    return mTrace;
-  }
+  auto get_trace() const -> const String&;
 
  private:
   String mMessage;

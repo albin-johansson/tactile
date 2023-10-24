@@ -13,7 +13,7 @@ TACTILE_FWD(class Metadata)
  * \interface IMetaContext
  * \brief Base interface for all objects that feature attached properties and components.
  */
-class IMetaContext {
+class TACTILE_CORE_API IMetaContext {
  public:
   TACTILE_INTERFACE_CLASS(IMetaContext);
 

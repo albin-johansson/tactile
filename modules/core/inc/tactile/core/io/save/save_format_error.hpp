@@ -12,7 +12,7 @@ namespace tactile {
 /**
  * \brief Provides error codes used when loading and emitting save files.
  */
-class SaveFormatErrorDomain final : public IErrorDomain {
+class TACTILE_CORE_API SaveFormatErrorDomain final : public IErrorDomain {
  public:
   enum class Error : uint32 {
     kInvalidOperation,         ///< The format doesn't support the requested operation.
@@ -38,8 +38,7 @@ class SaveFormatErrorDomain final : public IErrorDomain {
   TACTILE_DEFAULT_MOVE(SaveFormatErrorDomain);
 
   [[nodiscard]]
-  TACTILE_CORE_API auto get_message(uint32 error_id) const noexcept
-      -> StringView override;
+  auto get_message(uint32 error_id) const noexcept -> StringView override;
 };
 
 using SaveFormatError = SaveFormatErrorDomain::Error;

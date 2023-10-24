@@ -20,7 +20,7 @@ namespace tactile {
  *
  * \see load_library(const char*)
  */
-class IDynamicLibrary {
+class TACTILE_CORE_API IDynamicLibrary {
  public:
   TACTILE_INTERFACE_CLASS(IDynamicLibrary);
 

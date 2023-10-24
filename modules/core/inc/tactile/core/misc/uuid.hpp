@@ -24,7 +24,7 @@ namespace tactile {
  *          assert(uuid_a != uuid_b);
  *          \endcode
  */
-class UUID final {
+class TACTILE_CORE_API UUID final {
  public:
   /**
    * \brief Generates a new UUID.
@@ -32,7 +32,7 @@ class UUID final {
    * \return a new UUID.
    */
   [[nodiscard]]
-  TACTILE_CORE_API static auto generate() -> UUID;
+  static auto generate() -> UUID;
 
   /**
    * \brief Produces a hash of the UUID.
@@ -40,7 +40,7 @@ class UUID final {
    * \return a hash value.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto hash_code() const noexcept -> usize;
+  auto hash_code() const noexcept -> usize;
 
   /**
    * \brief Indicates whether the UUID is null.
@@ -48,7 +48,7 @@ class UUID final {
    * \return true if the underlying array is all zeroes; false otherwise.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto is_null() const -> bool;
+  auto is_null() const -> bool;
 
   [[nodiscard]] auto operator==(const UUID&) const noexcept -> bool = default;
 

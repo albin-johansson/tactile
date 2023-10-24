@@ -23,19 +23,21 @@ inline constexpr StringView kAnsiColorFgCyan = "\x1B[36m";
 inline constexpr StringView kAnsiColorFgWhite = "\x1B[37m";
 inline constexpr StringView kAnsiColorBgRed = "\x1B[41m";
 
-/** \brief A logger sink that outputs log messages to the terminal. */
-class TerminalLoggerSink final : public ILoggerSink {
+/**
+ * \brief A logger sink that outputs log messages to the terminal.
+ */
+class TACTILE_CORE_API TerminalLoggerSink final : public ILoggerSink {
  public:
-  TACTILE_CORE_API void log(const LogMessage& msg) override;
+  void log(const LogMessage& msg) override;
 
-  TACTILE_CORE_API void flush() override;
+  void flush() override;
 
   /**
    * \brief Controls whether messages are color-coded using ANSI colors.
    *
    * \param enabled true if ANSI colors should be used; false otherwise.
    */
-  TACTILE_CORE_API void use_ansi_colors(bool enabled);
+  void use_ansi_colors(bool enabled);
 
   /**
    * \brief Returns the foreground ANSI color for a given log level.
@@ -43,7 +45,7 @@ class TerminalLoggerSink final : public ILoggerSink {
    * \param level the log level to query.
    */
   [[nodiscard]]
-  TACTILE_CORE_API static auto get_fg_ansi_color(LogLevel level) -> StringView;
+  static auto get_fg_ansi_color(LogLevel level) -> StringView;
 
   /**
    * \brief Returns the background ANSI color for a given log level.
@@ -51,7 +53,7 @@ class TerminalLoggerSink final : public ILoggerSink {
    * \param level the log level to query.
    */
   [[nodiscard]]
-  TACTILE_CORE_API static auto get_bg_ansi_color(LogLevel level) -> StringView;
+  static auto get_bg_ansi_color(LogLevel level) -> StringView;
 
  private:
   bool mUseAnsiColors {};

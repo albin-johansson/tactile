@@ -16,7 +16,7 @@ namespace tactile {
  *
  * \see `IMetaContext`
  */
-class Metadata final {
+class TACTILE_CORE_API Metadata final {
  public:
   /**
    * \brief Adds (or replaces) a property to the context.
@@ -25,7 +25,7 @@ class Metadata final {
    *
    * \return the newly created attribute.
    */
-  TACTILE_CORE_API auto add_property(String name) -> Attribute&;
+  auto add_property(String name) -> Attribute&;
 
   /**
    * \brief Removes a property from the context.
@@ -34,7 +34,7 @@ class Metadata final {
    *
    * \return the remove property value; or nothing if it didn't exist.
    */
-  TACTILE_CORE_API auto remove_property(StringView name) -> Maybe<Attribute>;
+  auto remove_property(StringView name) -> Maybe<Attribute>;
 
   /**
    * \brief Renames an existing property.
@@ -44,7 +44,7 @@ class Metadata final {
    *
    * \return true if a property was successfully renamed; false otherwise.
    */
-  TACTILE_CORE_API auto rename_property(StringView current_name, String new_name) -> bool;
+  auto rename_property(StringView current_name, String new_name) -> bool;
 
   /**
    * \brief Returns the property with a given name.
@@ -56,18 +56,18 @@ class Metadata final {
    * \throws Error if there is no matching property.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto get_property(StringView name) -> Attribute&;
+  auto get_property(StringView name) -> Attribute&;
 
   /** \copydoc Metadata::get_property */
   [[nodiscard]]
-  TACTILE_CORE_API auto get_property(StringView name) const -> const Attribute&;
+  auto get_property(StringView name) const -> const Attribute&;
 
   /**
    * \brief Sets the name associated with the object.
    *
    * \param name the new object name.
    */
-  TACTILE_CORE_API void set_name(String name);
+  void set_name(String name);
 
   /**
    * \brief Returns the current object name.
@@ -75,7 +75,7 @@ class Metadata final {
    * \return the object name.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto get_name() const -> const String&;
+  auto get_name() const -> const String&;
 
   /**
    * \brief Returns the number of attached properties.
@@ -83,7 +83,7 @@ class Metadata final {
    * \return the property count.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto property_count() const -> usize;
+  auto property_count() const -> usize;
 
  private:
   String mName;

@@ -34,7 +34,7 @@ struct LogMessage final {
  *          control exactly what happens with logged messages, e.g., whether to
  *          print them to a console or store them in a file.
  */
-class ILoggerSink {
+class TACTILE_CORE_API ILoggerSink {
  public:
   TACTILE_INTERFACE_CLASS(ILoggerSink);
 

@@ -11,19 +11,21 @@
 
 namespace tactile {
 
-/** \brief A logger sink that forwards log messages to a text file. */
-class FileLoggerSink final : public ILoggerSink {
+/**
+ * \brief A logger sink that forwards log messages to a text file.
+ */
+class TACTILE_CORE_API FileLoggerSink final : public ILoggerSink {
  public:
   /**
    * \brief Creates a file sink that writes to the specified log file.
    *
    * \param log_file the log file destination.
    */
-  TACTILE_CORE_API explicit FileLoggerSink(const FilePath& log_file);
+  explicit FileLoggerSink(const FilePath& log_file);
 
-  TACTILE_CORE_API void log(const LogMessage& msg) override;
+  void log(const LogMessage& msg) override;
 
-  TACTILE_CORE_API void flush() override;
+  void flush() override;
 
  private:
   std::ofstream mStream;

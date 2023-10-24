@@ -12,7 +12,7 @@ namespace tactile {
  * \interface ICompressionProvider
  * \brief Interface for data compression (and decompression) providers.
  */
-class ICompressionProvider {
+class TACTILE_CORE_API ICompressionProvider {
  public:
   TACTILE_INTERFACE_CLASS(ICompressionProvider);
 

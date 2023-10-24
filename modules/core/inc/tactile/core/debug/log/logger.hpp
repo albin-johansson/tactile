@@ -43,7 +43,7 @@ namespace tactile {
 TACTILE_FWD(class ILoggerSink)
 
 /** \brief A simple logger implementation. */
-class Logger final {
+class TACTILE_CORE_API Logger final {
  public:
   /**
    * \brief Logs an arbitrary message.
@@ -52,37 +52,35 @@ class Logger final {
    * \param fmt_string the format string.
    * \param args       the format arguments.
    */
-  TACTILE_CORE_API void log(LogLevel level,
-                            StringView fmt_string,
-                            fmt::format_args args) noexcept;
+  void log(LogLevel level, StringView fmt_string, fmt::format_args args) noexcept;
 
   /**
    * \brief Sets the minimum severity of messages that get logged.
    *
    * \param level the minimum log level.
    */
-  TACTILE_CORE_API void set_min_level(LogLevel level) noexcept;
+  void set_min_level(LogLevel level) noexcept;
 
   /**
    * \brief Sets the minimum severity of messages that will initiate flushes.
    *
    * \param level the flush log level.
    */
-  TACTILE_CORE_API void flush_on(LogLevel level) noexcept;
+  void flush_on(LogLevel level) noexcept;
 
   /**
    * \brief Associates a sink implementation with the logger.
    *
    * \param sink a logger sink implementation.
    */
-  TACTILE_CORE_API void add_sink(ILoggerSink* sink);
+  void add_sink(Managed<ILoggerSink> sink);
 
   /**
    * \brief Sets a reference time point to use as a relative baseline for timestamps.
    *
    * \param instant the new reference instant; or nothing to use the default.
    */
-  TACTILE_CORE_API void set_reference_instant(Maybe<SteadyClockInstant> instant);
+  void set_reference_instant(Maybe<SteadyClockInstant> instant);
 
   /**
    * \brief Indicates whether a message with a specific severity will be logged.
@@ -92,7 +90,7 @@ class Logger final {
    * \return true if the message would be logged; false otherwise.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto would_log(LogLevel level) const noexcept -> bool;
+  auto would_log(LogLevel level) const noexcept -> bool;
 
   /**
    * \brief Indicates whether a message with a specific severity will trigger a flush.
@@ -102,7 +100,7 @@ class Logger final {
    * \return true if the message would cause a flush; false otherwise.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto would_flush(LogLevel level) const noexcept -> bool;
+  auto would_flush(LogLevel level) const noexcept -> bool;
 
   /**
    * \brief Returns a three-letter acronym for the specified log level.
@@ -112,7 +110,7 @@ class Logger final {
    * \return a log level acronym.
    */
   [[nodiscard]]
-  TACTILE_CORE_API static auto get_acronym(LogLevel level) noexcept -> StringView;
+  static auto get_acronym(LogLevel level) noexcept -> StringView;
 
  private:
   LogLevel mMinLevel {LogLevel::kInfo};

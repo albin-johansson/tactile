@@ -16,7 +16,7 @@ namespace tactile {
 /**
  * \brief Manages map/tileset save format parser/emitter implementations.
  */
-class SaveFormatManager final {
+class TACTILE_CORE_API SaveFormatManager final {
  public:
   /**
    * \brief Returns the global save format manager.
@@ -24,7 +24,7 @@ class SaveFormatManager final {
    * \return a save format manager.
    */
   [[nodiscard]]
-  TACTILE_CORE_API static auto get() -> SaveFormatManager&;
+  static auto get() -> SaveFormatManager&;
 
   /**
    * \brief Loads a map file using one of the available save format handlers.
@@ -35,8 +35,7 @@ class SaveFormatManager final {
    * \return the map data, or an error code if an error occurred.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto load_map(const FilePath& map_path,
-                                 const SaveFormatReadOptions& options) const
+  auto load_map(const FilePath& map_path, const SaveFormatReadOptions& options) const
       -> Result<ir::Map>;
 
   /**
@@ -48,9 +47,8 @@ class SaveFormatManager final {
    * \return the tileset data, or an error code if an error occurred.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto load_tileset(const FilePath& tileset_path,
-                                     const SaveFormatReadOptions& options) const
-      -> Result<ir::Tileset>;
+  auto load_tileset(const FilePath& tileset_path,
+                    const SaveFormatReadOptions& options) const -> Result<ir::Tileset>;
 
   /**
    * \brief Saves a map using one of the available save format handlers.
@@ -62,10 +60,9 @@ class SaveFormatManager final {
    * \return nothing on success, or an error code if an error occurred.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto save_map(const FilePath& map_path,
-                                 const ir::Map& map,
-                                 const SaveFormatWriteOptions& options) const
-      -> Result<void>;
+  auto save_map(const FilePath& map_path,
+                const ir::Map& map,
+                const SaveFormatWriteOptions& options) const -> Result<void>;
 
   /**
    * \brief Saves a tileset using one of the available save format handlers.
@@ -77,24 +74,23 @@ class SaveFormatManager final {
    * \return nothing on success, or an error code if an error occurred.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto save_tileset(const FilePath& tileset_path,
-                                     const ir::Tileset& tileset,
-                                     const SaveFormatWriteOptions& options) const
-      -> Result<void>;
+  auto save_tileset(const FilePath& tileset_path,
+                    const ir::Tileset& tileset,
+                    const SaveFormatWriteOptions& options) const -> Result<void>;
 
   /**
    * \brief Registers a save format handler.
    *
    * \param format the save format handler.
    */
-  TACTILE_CORE_API void add_format(ISaveFormat* format);
+  void add_format(ISaveFormat* format);
 
   /**
    * \brief Removes a save format handler.
    *
    * \param format the save format handler.
    */
-  TACTILE_CORE_API void remove_format(ISaveFormat* format);
+  void remove_format(ISaveFormat* format);
 
  private:
   Vector<ISaveFormat*> mFormats;

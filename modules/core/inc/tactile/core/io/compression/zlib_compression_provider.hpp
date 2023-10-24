@@ -14,13 +14,13 @@ namespace tactile {
  *
  * \see https://github.com/madler/zlib
  */
-class ZlibCompressionProvider final : public ICompressionProvider {
+class TACTILE_CORE_API ZlibCompressionProvider final : public ICompressionProvider {
  public:
   [[nodiscard]]
-  TACTILE_CORE_API auto compress(ByteSpan data) const -> Result<ByteStream> override;
+  auto compress(ByteSpan data) const -> Result<ByteStream> override;
 
   [[nodiscard]]
-  TACTILE_CORE_API auto decompress(ByteSpan data) const -> Result<ByteStream> override;
+  auto decompress(ByteSpan data) const -> Result<ByteStream> override;
 
   /**
    * \brief Sets the compression level.
@@ -32,7 +32,7 @@ class ZlibCompressionProvider final : public ICompressionProvider {
    * \param level the new compression level. If set, clamped to
    *              [`min_compression_level()`, `max_compression_level()`].
    */
-  TACTILE_CORE_API void set_compression_level(Maybe<int> level);
+  void set_compression_level(Maybe<int> level);
 
   /**
    * \brief Returns the current compression level.
@@ -40,7 +40,7 @@ class ZlibCompressionProvider final : public ICompressionProvider {
    * \return the compression level; or nothing if the default level is being used.
    */
   [[nodiscard]]
-  TACTILE_CORE_API auto get_compression_level() const -> Maybe<int>;
+  auto get_compression_level() const -> Maybe<int>;
 
   /**
    * \brief Returns the minimum (best speed) compression level.
@@ -48,7 +48,7 @@ class ZlibCompressionProvider final : public ICompressionProvider {
    * \return the minimum compression level.
    */
   [[nodiscard]]
-  TACTILE_CORE_API static auto min_compression_level() -> int;
+  static auto min_compression_level() -> int;
 
   /**
    * \brief Returns the maximum (best quality) compression level.
@@ -56,7 +56,7 @@ class ZlibCompressionProvider final : public ICompressionProvider {
    * \return the maximum compression level.
    */
   [[nodiscard]]
-  TACTILE_CORE_API static auto max_compression_level() -> int;
+  static auto max_compression_level() -> int;
 
  private:
   Maybe<int> mLevel;

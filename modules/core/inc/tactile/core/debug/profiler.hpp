@@ -37,7 +37,7 @@ namespace tactile {
  *          } // Logs the duration of the scope
  *          \endcode
  */
-class ScopeProfiler final {
+class TACTILE_CORE_API ScopeProfiler final {
  public:
   TACTILE_DELETE_COPY(ScopeProfiler);
   TACTILE_DELETE_MOVE(ScopeProfiler);
@@ -47,11 +47,10 @@ class ScopeProfiler final {
    *
    * \param description an arbitrary description of the scope, included in the log output.
    */
-  [[nodiscard]]  //
-  TACTILE_CORE_API explicit ScopeProfiler(const char* description) noexcept;
+  [[nodiscard]] explicit ScopeProfiler(const char* description) noexcept;
 
   /** \brief Ends the measurement and logs the result. */
-  TACTILE_CORE_API ~ScopeProfiler() noexcept;
+  ~ScopeProfiler() noexcept;
 
  private:
   const char* mDescription;

@@ -13,13 +13,13 @@ namespace tactile {
  *
  * \see https://github.com/facebook/zstd
  */
-class ZstdCompressionProvider final : public ICompressionProvider {
+class TACTILE_CORE_API ZstdCompressionProvider final : public ICompressionProvider {
  public:
   [[nodiscard]]
-  TACTILE_CORE_API auto compress(ByteSpan data) const -> Result<ByteStream> override;
+  auto compress(ByteSpan data) const -> Result<ByteStream> override;
 
   [[nodiscard]]
-  TACTILE_CORE_API auto decompress(ByteSpan data) const -> Result<ByteStream> override;
+  auto decompress(ByteSpan data) const -> Result<ByteStream> override;
 };
 
 }  // namespace tactile
