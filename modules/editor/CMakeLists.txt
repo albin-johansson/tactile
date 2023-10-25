@@ -42,9 +42,18 @@ if (TACTILE_BUILD_TESTS MATCHES ON)
 
   tactile_prepare_target(${TACTILE_EDITOR_TEST_TARGET})
 
+  tactile_set_output_dir(${TACTILE_EDITOR_TEST_TARGET} "${TACTILE_BUILD_DIR}/test")
+
   target_link_libraries(${TACTILE_EDITOR_TEST_TARGET}
                         PRIVATE
                         ${TACTILE_EDITOR_TARGET}
                         GTest::gtest
                         )
+
+  if (WIN32)
+    add_custom_command(TARGET ${TACTILE_EDITOR_TEST_TARGET} POST_BUILD
+                       COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:${TACTILE_EDITOR_TEST_TARGET}> $<TARGET_FILE_DIR:${TACTILE_EDITOR_TEST_TARGET}>
+                       COMMAND_EXPAND_LISTS
+                       )
+  endif ()
 endif ()
