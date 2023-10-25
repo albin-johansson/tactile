@@ -30,6 +30,12 @@ struct PluginData final {
  */
 class TACTILE_CORE_API PluginManager final {
  public:
+  PluginManager() = default;
+  ~PluginManager() noexcept = default;
+
+  TACTILE_DELETE_COPY(PluginManager);
+  TACTILE_DEFAULT_MOVE(PluginManager);
+
   /**
    * \brief Returns the global plugin manager.
    *

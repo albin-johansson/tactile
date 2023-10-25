@@ -74,7 +74,7 @@ class Win32DynamicLibrary final : public IDynamicLibrary {
 
   [[nodiscard]] static auto load(FilePath path) -> Unique<Win32DynamicLibrary>
   {
-    if (const auto handle = LoadLibraryA(path.c_str())) {
+    if (const auto handle = LoadLibraryA(path.string().c_str())) {
       // We can't use make_unique here because of the private constructor.
       return Unique<Win32DynamicLibrary> {
         new Win32DynamicLibrary {std::move(path), handle}};

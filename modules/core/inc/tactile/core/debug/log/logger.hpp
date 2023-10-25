@@ -46,6 +46,12 @@ TACTILE_FWD(class ILoggerSink)
 /** \brief A simple logger implementation. */
 class TACTILE_CORE_API Logger final {
  public:
+  Logger() = default;
+  ~Logger() noexcept = default;
+
+  TACTILE_DELETE_COPY(Logger);
+  TACTILE_DEFAULT_MOVE(Logger);
+
   /**
    * \brief Logs an arbitrary message.
    *
