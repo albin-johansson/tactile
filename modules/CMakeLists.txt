@@ -12,6 +12,8 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
       /permissive-
       /Zc:preprocessor
       /Zc:__cplusplus
+      /wd4251
+      /wd4275
       )
 else ()
   set(TACTILE_COMPILE_OPTIONS
