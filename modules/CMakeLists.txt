@@ -111,10 +111,6 @@ function(tactile_set_output_dir target directory)
                         )
 endfunction()
 
-function(tactile_use_plugin_output_dir target)
-  tactile_set_output_dir(${target} "${TACTILE_BUILD_DIR}/plugins")
-endfunction()
-
 function(tactile_copy_directory_post_build target from to)
   add_custom_command(TARGET ${target} POST_BUILD
                      COMMAND ${CMAKE_COMMAND} -E copy_directory

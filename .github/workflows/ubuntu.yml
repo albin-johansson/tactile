@@ -6,6 +6,7 @@ env:
   DISPLAY: :99.0
   SDL_VIDEODRIVER: x11
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
+  VCPKG_TARGET_TRIPLET: x64-linux-tactile
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
   VCPKG_CACHE_EDITION: 1
 
@@ -53,6 +54,9 @@ jobs:
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
+      - name: Register custom Vcpkg triplet file
+        run: cp "cmake/x64-linux-tactile.cmake" "$VCPKG_ROOT/triplets/x64-linux-tactile.cmake"
+
       - name: Emulate video device
         run: |
           /sbin/start-stop-daemon --start \
@@ -69,6 +73,7 @@ jobs:
           mkdir build && cd build
           cmake .. -GNinja \
                    -DCMAKE_BUILD_TYPE=Debug \
+                   -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
                    -DTACTILE_USE_SANITIZERS=OFF \
                    -DTACTILE_BUILD_TESTS=ON \
                    --log-level=DEBUG

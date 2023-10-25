@@ -5,7 +5,6 @@ set(TACTILE_EDITOR_DIR "${TACTILE_ROOT_DIR}/modules/editor")
 file(GLOB_RECURSE TACTILE_EDITOR_SOURCE_FILES
      CONFIGURE_DEPENDS
      "${TACTILE_EDITOR_DIR}/inc/**/*.hpp"
-     "${TACTILE_EDITOR_DIR}/src/**/*.hpp"
      "${TACTILE_EDITOR_DIR}/src/**/*.cpp"
      )
 

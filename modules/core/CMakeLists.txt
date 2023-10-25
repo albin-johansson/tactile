@@ -38,7 +38,8 @@ target_link_libraries(${TACTILE_CORE_TARGET}
                       Boost::boost
                       FastFloat::fast_float
                       ZLIB::ZLIB
-                      $<IF:$<TARGET_EXISTS:zstd::libzstd_shared>,zstd::libzstd_shared,zstd::libzstd_static>
+                      zstd::libzstd_static
+                      SDL2::SDL2
                       )
 
 if (TACTILE_BUILD_TESTS MATCHES ON)

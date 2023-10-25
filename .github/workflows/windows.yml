@@ -4,7 +4,7 @@ on: [ push ]
 
 env:
   VCPKG_ROOT: ${{github.workspace}}\vcpkg
-  VCPKG_TARGET_TRIPLET: x64-windows
+  VCPKG_TARGET_TRIPLET: x64-windows-tactile
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}\vcpkg\bincache
   VCPKG_CACHE_EDITION: 1
 
@@ -39,6 +39,10 @@ jobs:
       - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
         if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
+
+      - name: Register custom Vcpkg triplet file
+        run: Copy-Item -Path "cmake\x64-windows-tactile.cmake" `
+                       -Destination "$ENV:VCPKG_ROOT\triplets\x64-windows-tactile.cmake"
 
       - name: Generate build files
         env:
