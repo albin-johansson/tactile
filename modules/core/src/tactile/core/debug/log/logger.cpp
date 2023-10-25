@@ -13,7 +13,7 @@
 namespace tactile {
 namespace {
 
-constinit Logger* gLogger = nullptr;
+constinit Logger* gDefaultLogger = nullptr;
 
 }  // namespace
 
@@ -44,7 +44,7 @@ void Logger::log(const LogLevel level,
 
       const auto will_flush = would_flush(level);
 
-      for (auto* sink : mSinks) {
+      for (const Managed<ILoggerSink>& sink : mSinks) {
         sink->log(msg);
 
         if (will_flush) {
@@ -71,10 +71,10 @@ void Logger::flush_on(const LogLevel level) noexcept
   mFlushLevel = level;
 }
 
-void Logger::add_sink(ILoggerSink* sink)
+void Logger::add_sink(Managed<ILoggerSink> sink)
 {
   if (sink) {
-    mSinks.push_back(sink);
+    mSinks.push_back(std::move(sink));
   }
 }
 
@@ -129,12 +129,12 @@ auto Logger::_to_elapsed_time(const SteadyClockInstant instant) const -> Microse
 
 void set_default_logger(Logger* logger) noexcept
 {
-  gLogger = logger;
+  gDefaultLogger = logger;
 }
 
 auto get_default_logger() noexcept -> Logger*
 {
-  return gLogger;
+  return gDefaultLogger;
 }
 
 }  // namespace tactile

@@ -4,9 +4,7 @@
 #include <exception>   // exception, set_terminate
 #include <filesystem>  // current_path, create_directories
 
-#include "tactile/core/debug/log/file_logger_sink.hpp"
-#include "tactile/core/debug/log/logger.hpp"
-#include "tactile/core/debug/log/terminal_logger_sink.hpp"
+#include "tactile/core/debug/log/logger_builder.hpp"
 #include "tactile/core/debug/terminate_handler.hpp"
 #include "tactile/core/io/save/save_format_manager.hpp"
 #include "tactile/core/misc/scope_guard.hpp"
@@ -30,18 +28,17 @@ auto main(const int argc, char* argv[]) -> int
 
     const auto log_dir = app_dir / "logs";  // FIXME
     std::filesystem::create_directories(log_dir);
-    tactile::FileLoggerSink file_sink {log_dir / "log.txt"};
 
-    tactile::TerminalLoggerSink console_sink;
-    console_sink.use_ansi_colors(true);
+    auto logger = tactile::LoggerBuilder {}
+                      .use_initialization_time_as_reference_instant()
+                      .min_level(tactile::LogLevel::kTrace)
+                      .flush_on(tactile::LogLevel::kError)
+                      .with_file_sink(log_dir / "log.txt")
+                      .with_terminal_sink()
+                      .use_colored_terminal_output()
+                      .build();
 
-    tactile::Logger logger;
     const tactile::ScopeGuard logger_guard {[] { tactile::set_default_logger(nullptr); }};
-
-    logger.set_reference_instant(startup_instant);
-    logger.set_min_level(tactile::LogLevel::kTrace);
-    logger.add_sink(&file_sink);
-    logger.add_sink(&console_sink);
 
     tactile::set_default_logger(&logger);
 
@@ -58,16 +55,13 @@ auto main(const int argc, char* argv[]) -> int
   }
   catch (const tactile::Error& err) {
     TACTILE_LOG_FATAL("Unhandled exception: {}\n{}", err.what(), err.get_trace());
-    return EXIT_FAILURE;
   }
   catch (const std::exception& ex) {
     TACTILE_LOG_FATAL("Unhandled exception: {}", ex.what());
-    return EXIT_FAILURE;
   }
   catch (...) {
     TACTILE_LOG_FATAL("Unhandled exception");
-    return EXIT_FAILURE;
   }
 
-  return EXIT_SUCCESS;
+  return EXIT_FAILURE;
 }

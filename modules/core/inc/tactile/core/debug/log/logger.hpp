@@ -5,6 +5,7 @@
 #include <fmt/core.h>
 
 #include "tactile/core/api.hpp"
+#include "tactile/core/container/smart_ptr.hpp"
 #include "tactile/core/container/string.hpp"
 #include "tactile/core/container/vector.hpp"
 #include "tactile/core/debug/log/log_level.hpp"
@@ -115,7 +116,7 @@ class TACTILE_CORE_API Logger final {
  private:
   LogLevel mMinLevel {LogLevel::kInfo};
   LogLevel mFlushLevel {LogLevel::kError};
-  Vector<ILoggerSink*> mSinks;
+  Vector<Managed<ILoggerSink>> mSinks;
   Maybe<SteadyClockInstant> mReferenceInstant;
 
   [[nodiscard]]
