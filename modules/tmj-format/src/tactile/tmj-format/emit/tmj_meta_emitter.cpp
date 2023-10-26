@@ -30,7 +30,7 @@ auto to_tmj_name(const AttributeType attribute_type) -> StringView
   throw Error {"Invalid attribute type"};
 }
 
-auto to_tmj_json(const Attribute& attribute) -> JSON
+auto to_tmj_value(const Attribute& attribute) -> JSON
 {
   JSON json;
   json = 42;
@@ -64,7 +64,7 @@ auto emit_property_array(const ir::Metadata& meta) -> JSON
 
     property_json["name"] = name;
     property_json["type"] = to_tmj_name(attribute.get_type());
-    property_json["value"] = to_tmj_json(attribute);
+    property_json["value"] = to_tmj_value(attribute);
 
     property_json_array += property_json;
   }

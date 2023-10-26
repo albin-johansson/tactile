@@ -31,16 +31,16 @@ TEST(TmjMetaEmitter, ToTmjName)
   EXPECT_THROW((void) tmj::to_tmj_name(AttributeType {100}), Error);
 }
 
-/// \tests tactile::tmj::to_tmj_json
-TEST(TmjMetaEmitter, ToTmjJson)
+/// \tests tactile::tmj::to_tmj_value
+TEST(TmjMetaEmitter, ToTmjValue)
 {
-  EXPECT_EQ(tmj::to_tmj_json(42), 42);
-  EXPECT_EQ(tmj::to_tmj_json(1.5f), 1.5f);
-  EXPECT_EQ(tmj::to_tmj_json(true), true);
-  EXPECT_EQ(tmj::to_tmj_json("foobar"), "foobar");
-  EXPECT_EQ(tmj::to_tmj_json("foo/bar"_path), "foo/bar");
-  EXPECT_EQ(tmj::to_tmj_json(UColor {0xDE, 0xAD, 0xBE, 0xEF}), "#EFDEADBE");
-  EXPECT_EQ(tmj::to_tmj_json(ObjectRef {123}), 123);
+  EXPECT_EQ(tmj::to_tmj_value(42), 42);
+  EXPECT_EQ(tmj::to_tmj_value(1.5f), 1.5f);
+  EXPECT_EQ(tmj::to_tmj_value(true), true);
+  EXPECT_EQ(tmj::to_tmj_value("foobar"), "foobar");
+  EXPECT_EQ(tmj::to_tmj_value("foo/bar"_path), "foo/bar");
+  EXPECT_EQ(tmj::to_tmj_value(UColor {0xDE, 0xAD, 0xBE, 0xEF}), "#EFDEADBE");
+  EXPECT_EQ(tmj::to_tmj_value(ObjectRef {123}), 123);
 }
 
 /// \tests tactile::tmj::emit_property_array

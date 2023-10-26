@@ -34,7 +34,7 @@ TACTILE_TMJ_API auto to_tmj_name(AttributeType attribute_type) -> StringView;
  * \return a JSON value.
  */
 [[nodiscard]]
-TACTILE_TMJ_API auto to_tmj_json(const Attribute& attribute) -> JSON;
+TACTILE_TMJ_API auto to_tmj_value(const Attribute& attribute) -> JSON;
 
 /**
  * \brief Emits a JSON array of TMJ properties.
