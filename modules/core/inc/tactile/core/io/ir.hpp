@@ -23,6 +23,8 @@ namespace tactile::ir {
 struct NamedAttribute final {
   String name;      ///< The attribute name.
   Attribute value;  ///< The attribute value.
+
+  [[nodiscard]] auto operator==(const NamedAttribute&) const -> bool = default;
 };
 
 /**
@@ -31,6 +33,8 @@ struct NamedAttribute final {
 struct Component final {
   String name;                        ///< The component name.
   Vector<NamedAttribute> attributes;  ///< The component attribute defaults.
+
+  [[nodiscard]] auto operator==(const Component&) const -> bool = default;
 };
 
 /**
@@ -39,6 +43,8 @@ struct Component final {
 struct AttachedComponent final {
   String type;                        ///< The component type name.
   Vector<NamedAttribute> attributes;  ///< The component attributes.
+
+  [[nodiscard]] auto operator==(const AttachedComponent&) const -> bool = default;
 };
 
 /**
@@ -48,6 +54,8 @@ struct Metadata final {
   String name;                           ///< The context name.
   Vector<NamedAttribute> properties;     ///< The attached properties.
   Vector<AttachedComponent> components;  ///< The attached components.
+
+  [[nodiscard]] auto operator==(const Metadata&) const -> bool = default;
 };
 
 /**
@@ -63,10 +71,13 @@ struct Object final {
   float32 height;   ///< The height of the object.
   String tag;       ///< A user-provided label.
   bool visible;     ///< Whether the object is rendered.
+
+  [[nodiscard]] auto operator==(const Object&) const -> bool = default;
 };
 
 /**
  * \brief Intermediate representation of a layer.
+ * \todo Make width/height type usize
  */
 struct Layer final {
   Metadata meta;           ///< Metadata for the layer.
@@ -79,6 +90,8 @@ struct Layer final {
   Vector<Object> objects;  ///< The contained objects (if object layer).
   Vector<Layer> layers;    ///< The contained layers (if group layer).
   bool visible {};         ///< Whether the layer is rendered.
+
+  [[nodiscard]] auto operator==(const Layer&) const -> bool = default;
 };
 
 /**
@@ -87,6 +100,8 @@ struct Layer final {
 struct AnimationFrame final {
   int32 tile_index;    ///< The index of the rendered tile in the associated tileset.
   uint64 duration_ms;  ///< The duration that the frame is shown in milliseconds.
+
+  [[nodiscard]] auto operator==(const AnimationFrame&) const -> bool = default;
 };
 
 using TileAnimation = Vector<AnimationFrame>;
@@ -98,6 +113,8 @@ struct Tile final {
   Metadata meta;            ///< Metadata for the tile.
   Vector<Object> objects;   ///< The contained objects, if any.
   TileAnimation animation;  ///< The associated animation frames, if any.
+
+  [[nodiscard]] auto operator==(const Tile&) const -> bool = default;
 };
 
 /**
@@ -113,6 +130,8 @@ struct Tileset final {
   int32 image_height;   ///< The height of the associated image.
   FilePath image_path;  ///< The file path to the associated image.
   Vector<Tile> tiles;   ///< The associated tile descriptors.
+
+  [[nodiscard]] auto operator==(const Tileset&) const -> bool = default;
 };
 
 /**
@@ -121,6 +140,8 @@ struct Tileset final {
 struct TilesetRef final {
   Tileset tileset;      ///< The tileset definition.
   int32 first_tile_id;  ///< The first tile identifier associated with the tileset.
+
+  [[nodiscard]] auto operator==(const TilesetRef&) const -> bool = default;
 };
 
 /**
@@ -131,6 +152,8 @@ struct TileFormat final {
   CompressionMode compression;  ///< The tile compression strategy.
   Maybe<int32> zlib_level;      ///< The compression level (if using Zlib).
   Maybe<int32> zstd_level;      ///< The compression level (if using Zstd).
+
+  [[nodiscard]] auto operator==(const TileFormat&) const -> bool = default;
 };
 
 /**
@@ -148,6 +171,8 @@ struct Map final {
   Vector<Component> components;  ///< The associated component definitions.
   Vector<TilesetRef> tilesets;   ///< The associated tilesets.
   Vector<Layer> layers;          ///< The associated layers.
+
+  [[nodiscard]] auto operator==(const Map&) const -> bool = default;
 };
 
 }  // namespace tactile::ir
