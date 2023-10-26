@@ -26,16 +26,15 @@ else ()
       -Wswitch-enum
       )
 
-  if (TACTILE_BUILD_WITH_ASAN MATCHES ON)
-    list(APPEND
-         ${TACTILE_COMPILE_OPTIONS}
+  if (TACTILE_USE_SANITIZERS MATCHES ON)
+    list(APPEND TACTILE_COMPILE_OPTIONS
          -fno-omit-frame-pointer
          -fsanitize=address
          )
-    list(APPEND
-         ${TACTILE_LINK_OPTIONS}
+    list(APPEND TACTILE_COMPILE_OPTIONS
          -fno-omit-frame-pointer
-         -fsanitize=address)
+         -fsanitize=address
+         )
   endif ()
 endif ()
 
