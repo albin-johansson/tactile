@@ -15,36 +15,30 @@ namespace tactile::tmj {
  * \details This format uses ".tmj" or ".json" file extensions.
  *
  * \see https://doc.mapeditor.org/en/stable/reference/json-map-format
- *
- * \ingroup TMJ
  */
-class TmjFormat final : public ISaveFormat {
+class TACTILE_TMJ_API TmjFormat final : public ISaveFormat {
  public:
   [[nodiscard]]
-  TACTILE_TMJ_API auto load_map(const FilePath& map_path,
-                                const SaveFormatReadOptions& options) const
+  auto load_map(const FilePath& map_path, const SaveFormatReadOptions& options) const
       -> Result<ir::Map> override;
 
   [[nodiscard]]
-  TACTILE_TMJ_API auto load_tileset(const FilePath& tileset_path,
-                                    const SaveFormatReadOptions& options) const
+  auto load_tileset(const FilePath& tileset_path,
+                    const SaveFormatReadOptions& options) const
       -> Result<ir::Tileset> override;
 
   [[nodiscard]]
-  TACTILE_TMJ_API auto save_map(const FilePath& map_path,
-                                const ir::Map& map,
-                                const SaveFormatWriteOptions& options) const
-      -> Result<void> override;
+  auto save_map(const FilePath& map_path,
+                const ir::Map& map,
+                const SaveFormatWriteOptions& options) const -> Result<void> override;
 
   [[nodiscard]]
-  TACTILE_TMJ_API auto save_tileset(const FilePath& tileset_path,
-                                    const ir::Tileset& tileset,
-                                    const SaveFormatWriteOptions& options) const
-      -> Result<void> override;
+  auto save_tileset(const FilePath& tileset_path,
+                    const ir::Tileset& tileset,
+                    const SaveFormatWriteOptions& options) const -> Result<void> override;
 
   [[nodiscard]]
-  TACTILE_TMJ_API auto is_valid_extension(NativeStringView extension) const
-      -> bool override;
+  auto is_valid_extension(NativeStringView extension) const -> bool override;
 };
 
 }  // namespace tactile::tmj
