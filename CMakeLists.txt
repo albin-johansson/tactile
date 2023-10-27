@@ -83,11 +83,12 @@ find_package(ZLIB REQUIRED)
 find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
 find_path(STB_INCLUDE_DIRS "stb_c_lexer.h")
 
+install(DIRECTORY DESTINATION "${TACTILE_BUILD_DIR}/plugins")
+
 add_subdirectory(modules)
 
-add_subdirectory(source/proto)
-
 if (TACTILE_BUILD_LEGACY MATCHES ON)
+  add_subdirectory(source/proto)
   add_subdirectory(source/lib)
   add_subdirectory(source/app)
 
