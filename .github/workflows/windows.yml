@@ -42,7 +42,7 @@ jobs:
 
       - name: Register custom Vcpkg triplet file
         run: Copy-Item -Path "cmake\x64-windows-tactile.cmake" `
-                       -Destination "$ENV:VCPKG_ROOT\triplets\x64-windows-tactile.cmake"
+                       -Destination "$ENV:VCPKG_ROOT\triplets\community\x64-windows-tactile.cmake"
 
       - name: Generate build files
         env:
@@ -60,6 +60,10 @@ jobs:
       - name: Build
         run: ninja -C build
 
-      - name: Run core tests
-        working-directory: ./build/debug
-        run: tactile-core-test.exe
+      - name: Run core unit tests
+        working-directory: ./build/debug/test
+        run: .\tactile-core-test.exe
+
+      - name: Run TMJ format unit tests
+        working-directory: ./build/debug/test
+        run: .\tactile-tmj-format-test.exe

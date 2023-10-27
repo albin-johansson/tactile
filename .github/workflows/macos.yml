@@ -45,7 +45,7 @@ jobs:
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
       - name: Register custom Vcpkg triplet file
-        run: cp "cmake/x64-osx-tactile.cmake" "$VCPKG_ROOT/triplets/x64-osx-tactile.cmake"
+        run: cp "cmake/x64-osx-tactile.cmake" "$VCPKG_ROOT/triplets/community/x64-osx-tactile.cmake"
 
       - name: Generate build files
         run: |
@@ -62,6 +62,10 @@ jobs:
       - name: Build
         run: ninja -C build
 
-      - name: Run core tests
-        working-directory: ./build/debug
+      - name: Run core unit tests
+        working-directory: ./build/debug/test
         run: ./tactile-core-test
+
+      - name: Run TMJ format unit tests
+        working-directory: ./build/debug/test
+        run: ./tactile-tmj-format-test
