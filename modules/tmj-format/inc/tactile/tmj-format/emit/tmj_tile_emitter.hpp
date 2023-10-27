@@ -12,14 +12,12 @@ namespace tactile::tmj {
 /**
  * \brief Converts a tile definition to a TMJ JSON object.
  *
- * \param tile       the tile definition.
- * \param tile_index the index of the tile in the associated tileset.
+ * \param tile the tile definition.
  *
  * \return a JSON object.
  */
 [[nodiscard]]
-TACTILE_TMJ_API auto emit_tile_definition(const ir::Tile& tile, TileIndex tile_index)
-    -> JSON;
+TACTILE_TMJ_API auto emit_tile_definition(const ir::Tile& tile) -> JSON;
 
 /**
  * \brief Converts a collection of tile definitions to a TMJ JSON array.

@@ -46,10 +46,10 @@ auto _emit_tile_animation_array(const ir::Tile& tile) -> JSON
 
 }  // namespace
 
-auto emit_tile_definition(const ir::Tile& tile, const TileIndex tile_index) -> JSON
+auto emit_tile_definition(const ir::Tile& tile) -> JSON
 {
   auto tile_json = JSON::object();
-  tile_json["id"] = tile_index;
+  tile_json["id"] = tile.index;
 
   if (!tile.meta.properties.empty()) {
     tile_json["properties"] = emit_property_array(tile.meta);
@@ -70,10 +70,8 @@ auto emit_tile_definition_array(const Vector<ir::Tile>& tiles) -> JSON
 {
   auto tile_json_array = JSON::array();
 
-  TileIndex tile_index = 0;
   for (const auto& tile : tiles) {
-    tile_json_array += emit_tile_definition(tile, tile_index);
-    ++tile_index;
+    tile_json_array += emit_tile_definition(tile);
   }
 
   return tile_json_array;

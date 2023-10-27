@@ -34,6 +34,9 @@ auto SaveFormatErrorDomain::get_message(const uint32 error_id) const noexcept
     case Error::kUnsupportedPropertyType:
       return "An unsupported property type was detected";
 
+    case Error::kUnsupportedCompressionMode:
+      return "An unsupported compression mode was detected";
+
     case Error::kUnsupportedTileEncoding:
       return "An unsupported tile encoding was detected";
 

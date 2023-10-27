@@ -42,8 +42,6 @@ if (TACTILE_BUILD_TESTS MATCHES ON)
 
   tactile_prepare_target(${TACTILE_EDITOR_TEST_TARGET})
 
-  tactile_set_output_dir(${TACTILE_EDITOR_TEST_TARGET} "${TACTILE_BUILD_DIR}/test")
-
   target_link_libraries(${TACTILE_EDITOR_TEST_TARGET}
                         PRIVATE
                         ${TACTILE_EDITOR_TARGET}

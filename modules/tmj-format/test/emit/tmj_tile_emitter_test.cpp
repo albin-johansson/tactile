@@ -8,12 +8,16 @@ using namespace tactile;
 
 TEST(TmjTileEmitter, EmitEmptyTileDefinition)
 {
-  const TileIndex tile_index = 182;
-  const ir::Tile tile {};
+  const ir::Tile tile {
+    .meta = {},
+    .index = 182,
+    .objects = {},
+    .animation = {},
+  };
 
-  const auto tile_json = tmj::emit_tile_definition(tile, tile_index);
+  const auto tile_json = tmj::emit_tile_definition(tile);
 
-  EXPECT_EQ(tile_json["id"], tile_index);
+  EXPECT_EQ(tile_json["id"], tile.index);
   EXPECT_FALSE(tile_json.contains("properties"));
   EXPECT_FALSE(tile_json.contains("animation"));
   EXPECT_FALSE(tile_json.contains("objectgroup"));
@@ -21,8 +25,6 @@ TEST(TmjTileEmitter, EmitEmptyTileDefinition)
 
 TEST(TmjTileEmitter, EmitComplexTileDefinition)
 {
-  const TileIndex tile_index = 42;
-
   const ir::Tile tile {
     .meta =
         {
@@ -33,6 +35,7 @@ TEST(TmjTileEmitter, EmitComplexTileDefinition)
               },
           .components = {},
         },
+    .index = 49,
     .objects =
         {
           ir::Object {},
@@ -48,9 +51,9 @@ TEST(TmjTileEmitter, EmitComplexTileDefinition)
         },
   };
 
-  const auto tile_json = tmj::emit_tile_definition(tile, tile_index);
+  const auto tile_json = tmj::emit_tile_definition(tile);
 
-  EXPECT_EQ(tile_json["id"], tile_index);
+  EXPECT_EQ(tile_json["id"], tile.index);
   ASSERT_TRUE(tile_json.contains("properties"));
   ASSERT_TRUE(tile_json.contains("animation"));
   ASSERT_TRUE(tile_json.contains("objectgroup"));

@@ -62,6 +62,11 @@ TACTILE_CORE_API auto make_tile_row(usize col_count) -> TileRow;
 [[nodiscard]]
 TACTILE_CORE_API auto make_tile_matrix(const MatrixExtent& extent) -> TileMatrix;
 
+inline auto make_tile_matrix(const usize row_count, const usize col_count) -> TileMatrix
+{
+  return make_tile_matrix(MatrixExtent {row_count, col_count});
+}
+
 /**
  * \brief Converts a one-dimensional tile index to a corresponding two-dimensional index.
  *

@@ -111,6 +111,7 @@ using TileAnimation = Vector<AnimationFrame>;
  */
 struct Tile final {
   Metadata meta;            ///< Metadata for the tile.
+  TileIndex index;          ///< The index in the associated tileset.
   Vector<Object> objects;   ///< The contained objects, if any.
   TileAnimation animation;  ///< The associated animation frames, if any.
 

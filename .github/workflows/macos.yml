@@ -60,9 +60,9 @@ jobs:
         run: ninja -C build
 
       - name: Run core unit tests
-        working-directory: ./build/debug/test
+        working-directory: ./build/debug
         run: ./tactile-core-test
 
       - name: Run TMJ format unit tests
-        working-directory: ./build/debug/test
+        working-directory: ./build/debug
         run: ./tactile-tmj-format-test
