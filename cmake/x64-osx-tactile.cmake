@@ -8,3 +8,5 @@ set(VCPKG_OSX_ARCHITECTURES x86_64)
 if (PORT MATCHES "sdl2|sdl2-image")
   set(VCPKG_LIBRARY_LINKAGE dynamic)
 endif ()
+
+set(nlohmann-json_IMPLICIT_CONVERSIONS OFF)

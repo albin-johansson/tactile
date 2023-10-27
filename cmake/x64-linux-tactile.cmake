@@ -7,3 +7,5 @@ set(VCPKG_CMAKE_SYSTEM_NAME Linux)
 if (PORT MATCHES "sdl2|sdl2-image")
   set(VCPKG_LIBRARY_LINKAGE dynamic)
 endif ()
+
+set(nlohmann-json_IMPLICIT_CONVERSIONS OFF)

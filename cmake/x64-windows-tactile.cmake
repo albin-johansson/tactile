@@ -5,3 +5,5 @@ set(VCPKG_LIBRARY_LINKAGE static)
 if (PORT MATCHES "sdl2|sdl2-image")
   set(VCPKG_LIBRARY_LINKAGE dynamic)
 endif ()
+
+set(nlohmann-json_IMPLICIT_CONVERSIONS OFF)

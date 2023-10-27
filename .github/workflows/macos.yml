@@ -20,7 +20,6 @@ jobs:
           brew update
           brew install cmake
           brew install ninja
-          brew install llvm
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
@@ -52,8 +51,6 @@ jobs:
           mkdir build && cd build
           cmake .. -GNinja \
                    -DCMAKE_BUILD_TYPE=Debug \
-                   -DCMAKE_CXX_COMPILER=$(brew --prefix llvm)/bin/clang++ \
-                   -DCMAKE_C_COMPILER=$(brew --prefix llvm)/bin/clang \
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
                    -DTACTILE_USE_SANITIZERS=OFF \
                    -DTACTILE_BUILD_TESTS=ON \
