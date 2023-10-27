@@ -5,7 +5,7 @@
 #include "tactile/core/prelude.hpp"
 #include "tactile/editor/api.hpp"
 
-namespace tactile {
+namespace tactile::editor {
 
 class TACTILE_EDITOR_API ICommand {
  public:
@@ -38,4 +38,4 @@ class TACTILE_EDITOR_API ICommand {
   }
 };
 
-}  // namespace tactile
+}  // namespace tactile::editor

@@ -13,7 +13,7 @@
 #include "tactile/editor/api.hpp"
 #include "tactile/editor/cmd/command.hpp"
 
-namespace tactile {
+namespace tactile::editor {
 
 /**
  * \brief Manages a history of commands.
@@ -186,4 +186,4 @@ class CommandStack final {
   [[nodiscard]] auto _get_next_command_index() const -> usize;
 };
 
-}  // namespace tactile
+}  // namespace tactile::editor
