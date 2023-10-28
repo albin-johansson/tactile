@@ -2,6 +2,9 @@
 
 #pragma once
 
+#include <cstddef>     // size_t
+#include <functional>  // hash
+
 #include "tactile/core/api.hpp"
 #include "tactile/core/container/array.hpp"
 #include "tactile/core/container/string.hpp"
@@ -69,3 +72,11 @@ class TACTILE_CORE_API UUID final {
 TACTILE_CORE_API auto to_string(const UUID& uuid) -> String;
 
 }  // namespace tactile
+
+template <>
+struct std::hash<tactile::UUID> final {
+  [[nodiscard]] auto operator()(const tactile::UUID& uuid) const noexcept -> std::size_t
+  {
+    return uuid.hash_code();
+  }
+};
