@@ -66,3 +66,7 @@ jobs:
       - name: Run TMJ format unit tests
         working-directory: ./build/debug
         run: .\tactile-tmj-format-test.exe
+
+      - name: Run integration tests
+        working-directory: ./build/debug
+        run: .\tactile-integration-test.exe
