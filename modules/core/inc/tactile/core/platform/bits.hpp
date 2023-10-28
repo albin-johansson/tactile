@@ -47,7 +47,7 @@ template <std::integral IntType>
   using ByteArray = Array<std::byte, sizeof(IntType)>;
 
   const auto bytes = std::bit_cast<ByteArray>(value);
-  std::ranges::reverse(bytes);
+  std::reverse(bytes.begin(), bytes.end());
 
   return std::bit_cast<IntType>(bytes);
 #endif

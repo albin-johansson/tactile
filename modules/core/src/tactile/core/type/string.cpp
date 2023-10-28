@@ -65,7 +65,7 @@ template <typename T>
   const char* const str_end = str.data() + str.size();
 
   // Estimate the amount of numbers in the string to avoid unnecessary allocations.
-  const auto expected_count = std::ranges::count(str_begin, str_end, separator) + 1;
+  const auto expected_count = std::count(str_begin, str_end, separator) + 1;
 
   Vector<T> numbers;
   numbers.reserve(static_cast<usize>(expected_count));

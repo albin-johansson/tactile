@@ -24,7 +24,7 @@ namespace {
 auto use_forward_slashes(const FilePath& path) -> String
 {
   auto str = path.string();
-  std::ranges::replace(str, '\\', '/');
+  std::replace(str.begin(), str.end(), '\\', '/');
   return str;
 }
 

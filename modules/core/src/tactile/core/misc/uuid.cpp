@@ -18,7 +18,7 @@ auto UUID::generate() -> UUID
   const auto value = uuid_generator();
 
   UUID uuid;
-  std::ranges::copy(value, uuid.mData.begin());
+  std::copy(value.begin(), value.end(), uuid.mData.begin());
 
   return uuid;
 }
@@ -37,7 +37,7 @@ auto UUID::hash_code() const noexcept -> usize
 auto UUID::is_null() const -> bool
 {
   auto is_zero = [](const uint8 byte) { return byte == 0; };
-  return std::ranges::all_of(mData, is_zero);
+  return std::all_of(mData.begin(), mData.end(), is_zero);
 }
 
 auto to_string(const UUID& uuid) -> String

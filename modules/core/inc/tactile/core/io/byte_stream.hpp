@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include <ranges>  // continuous_range
-
 #include "tactile/core/container/span.hpp"
 #include "tactile/core/container/vector.hpp"
 #include "tactile/core/prelude.hpp"
@@ -23,11 +21,13 @@ using ByteStream = Vector<uint8>;
 /**
  * \brief Creates a byte span from a container.
  *
+ * \todo C++20: Use `std::ranges::contiguous_range`.
+ *
  * \param container a contiguous container, such as an array.
  *
  * \return a byte span.
  */
-template <std::ranges::contiguous_range T>
+template <typename T>
 [[nodiscard]] constexpr auto make_byte_span(const T& container) -> ByteSpan
 {
   return ByteSpan {static_cast<const uint8*>(static_cast<const void*>(container.data())),

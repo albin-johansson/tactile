@@ -35,9 +35,9 @@ TEST(RNG, NextRandomF32)
 TEST(RNG, NextBool)
 {
   Array<bool, 2'000> values;
-  std::ranges::generate(values, &next_bool);
+  std::generate(values.begin(), values.end(), &next_bool);
 
-  const auto true_count = std::ranges::count(values, true);
+  const auto true_count = std::count(values.begin(), values.end(), true);
   const auto false_count = std::ssize(values) - true_count;
   std::cout << "[RNG] " << values.size() << " next_bool invocations: "  //
             << true_count << " true, " << false_count << " false\n";

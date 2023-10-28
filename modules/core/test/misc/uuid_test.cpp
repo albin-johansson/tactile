@@ -75,8 +75,8 @@ TEST(UUID, ToString)
   {
     const auto id = UUID::generate();
     const auto str = to_string(id);
-    EXPECT_EQ(std::ranges::count(str, '-'), 4_uz);
-    EXPECT_EQ(std::ranges::count_if(str, is_hex_digit), 32_uz);
+    EXPECT_EQ(std::count(str.begin(), str.end(), '-'), 4_uz);
+    EXPECT_EQ(std::count_if(str.begin(), str.end(), is_hex_digit), 32_uz);
     ASSERT_EQ(str.size(), 36_uz);
     EXPECT_EQ(str[8], '-');
     EXPECT_EQ(str[13], '-');
