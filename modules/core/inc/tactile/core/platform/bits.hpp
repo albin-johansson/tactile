@@ -5,7 +5,6 @@
 #include <algorithm>    // reverse
 #include <bit>          // bit_cast, endian, byteswap
 #include <concepts>     // integral, invocable
-#include <cstddef>      // byte
 #include <cstring>      // memcpy
 #include <type_traits>  // has_unique_object_representations_v
 #include <type_traits>  // is_trivially_copyable_v, is_trivially_constructible_v
@@ -62,7 +61,7 @@ template <std::integral IntType>
 #if __cpp_lib_byteswap >= 202110L
   return std::byteswap(value);
 #else
-  using ByteArray = Array<std::byte, sizeof(IntType)>;
+  using ByteArray = Array<uint8, sizeof(IntType)>;
 
   const auto bytes = interpret_as<ByteArray>(value);
   std::reverse(bytes.begin(), bytes.end());
