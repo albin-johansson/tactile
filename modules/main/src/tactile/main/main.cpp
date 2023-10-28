@@ -4,14 +4,16 @@
 #include <exception>   // exception, set_terminate
 #include <filesystem>  // current_path, create_directories
 
+#include <SDL2/SDL.h>
+
 #include "tactile/core/debug/log/logger_builder.hpp"
 #include "tactile/core/debug/terminate_handler.hpp"
 #include "tactile/core/io/save/save_format_manager.hpp"
+#include "tactile/core/math/rng.hpp"
 #include "tactile/core/misc/scope_guard.hpp"
 #include "tactile/core/platform/environment.hpp"
 #include "tactile/core/plugin/plugin_manager.hpp"
 #include "tactile/core/prelude.hpp"
-#include "tactile/core/type/chrono.hpp"
 #include "tactile/core/render/render_context.hpp"
 
 using namespace tactile;
@@ -21,40 +23,59 @@ auto main(const int argc, char* argv[]) -> int
   (void) argc;
   (void) argv;
 
-  const auto startup_instant = tactile::SteadyClock::now();
-  std::set_terminate(&tactile::on_terminate);
+  std::set_terminate(&on_terminate);
 
   try {
     const auto app_dir = std::filesystem::current_path();
-
-    tactile::win32_enable_virtual_terminal_processing();
-
     const auto log_dir = app_dir / "logs";  // FIXME
+    const auto plugin_dir = app_dir / "plugins";
+
     std::filesystem::create_directories(log_dir);
 
-    auto logger = tactile::LoggerBuilder {}
+    auto logger = LoggerBuilder {}
                       .use_initialization_time_as_reference_instant()
-                      .min_level(tactile::LogLevel::kTrace)
-                      .flush_on(tactile::LogLevel::kError)
+                      .min_level(LogLevel::kTrace)
+                      .flush_on(LogLevel::kError)
                       .with_file_sink(log_dir / "log.txt")
                       .with_terminal_sink()
                       .use_colored_terminal_output()
                       .build();
 
-    const tactile::ScopeGuard logger_guard {[] { tactile::set_default_logger(nullptr); }};
+    const ScopeGuard logger_guard {[] { set_default_logger(nullptr); }};
 
-    tactile::set_default_logger(&logger);
+    set_default_logger(&logger);
+    win32_enable_virtual_terminal_processing();
 
     TACTILE_LOG_DEBUG("Initialized logger");
 
     TACTILE_LOG_INFO("Tactile " TACTILE_VERSION_STRING);
 
-    TACTILE_LOG_DEBUG("Loading plugins...");
-    tactile::PluginManager plugin_manager;
+    rng_init();
 
-    const auto plugin_dir = app_dir / "plugins";
+    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+      TACTILE_LOG_FATAL("Could not initialize SDL: {}", SDL_GetError());
+      return EXIT_FAILURE;
+    }
+
+    SDL_SetHint(SDL_HINT_APP_NAME, "Tactile");
+    SDL_SetHint(SDL_HINT_MOUSE_TOUCH_EVENTS, "1");
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
+
+    TACTILE_LOG_DEBUG("Loading plugins...");
+
+    PluginManager plugin_manager;
     plugin_manager.scan(plugin_dir);
 
+    for (const auto& plugin_data : plugin_manager.get_plugins()) {
+      plugin_data.plugin->on_load();  // TODO don't load all plugins automatically
+    }
+
+    const ScopeGuard plugin_guard {[&] {
+      TACTILE_LOG_DEBUG("Unloading plugins...");
+      for (const auto& plugin_data : plugin_manager.get_plugins()) {
+        plugin_data.plugin->on_unload();
+      }
+    }};
 
     auto& render_context = RenderContext::get();
 
@@ -70,7 +91,7 @@ auto main(const int argc, char* argv[]) -> int
 
     return EXIT_SUCCESS;
   }
-  catch (const tactile::Error& err) {
+  catch (const Error& err) {
     TACTILE_LOG_FATAL("Unhandled exception: {}\n{}", err.what(), err.get_trace());
   }
   catch (const std::exception& ex) {

@@ -25,6 +25,10 @@ target_include_directories(${TACTILE_EDITOR_TARGET}
 target_link_libraries(${TACTILE_EDITOR_TARGET}
                       PUBLIC
                       ${TACTILE_CORE_TARGET}
+
+                      PRIVATE
+                      SDL2::SDL2
+                      imgui::imgui
                       )
 
 if (TACTILE_BUILD_TESTS MATCHES ON)

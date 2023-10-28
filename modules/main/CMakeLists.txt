@@ -13,10 +13,16 @@ add_executable(${TACTILE_MAIN_TARGET} ${TACTILE_MAIN_SOURCE_FILES})
 
 tactile_prepare_target(${TACTILE_MAIN_TARGET})
 
+target_include_directories(${TACTILE_MAIN_TARGET} PUBLIC "${TACTILE_MAIN_DIR}/inc")
+
 target_link_libraries(${TACTILE_MAIN_TARGET}
                       PUBLIC
                       ${TACTILE_CORE_TARGET}
                       ${TACTILE_EDITOR_TARGET}
+
+                      PRIVATE
+                      SDL2::SDL2
+                      SDL2::SDL2main
                       )
 
 if (TACTILE_BUILD_TESTS MATCHES ON)
