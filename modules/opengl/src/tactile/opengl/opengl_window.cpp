@@ -62,6 +62,11 @@ void OpenGLWindow::hide()
   SDL_HideWindow(mWindow.get());
 }
 
+void OpenGLWindow::maximize()
+{
+  SDL_MaximizeWindow(mWindow.get());
+}
+
 auto OpenGLWindow::get_handle() -> SDL_Window*
 {
   return mWindow.get();

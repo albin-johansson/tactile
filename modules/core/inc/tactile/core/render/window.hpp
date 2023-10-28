@@ -27,6 +27,11 @@ class TACTILE_CORE_API IWindow {
    * \brief Makes the window invisible.
    */
   virtual void hide() = 0;
+
+  /**
+   * \brief Maximizes the window size within the available region.
+   */
+  virtual void maximize() = 0;
 };
 
 }  // namespace tactile

@@ -44,6 +44,8 @@ class TACTILE_OPENGL_API OpenGLWindow final : public IWindow {
 
   void hide() override;
 
+  void maximize() override;
+
   /**
    * \brief Returns the underlying window.
    *
