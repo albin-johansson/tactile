@@ -34,6 +34,11 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer {
 
   void end_frame() override;
 
+  void reload_fonts_texture() override;
+
+  [[nodiscard]]
+  auto can_reload_fonts_texture() const -> bool override;
+
   [[nodiscard]]
   auto get_window() -> OpenGLWindow* override;
 

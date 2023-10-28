@@ -49,6 +49,19 @@ class TACTILE_CORE_API IRenderer {
   virtual void end_frame() = 0;
 
   /**
+   * \brief Reloads the fonts texture, if possible.
+   */
+  virtual void reload_fonts_texture() = 0;
+
+  /**
+   * \brief Indicates whether the renderer supports reloading the fonts texture.
+   *
+   * \return true if the fonts texture can be reloaded; false otherwise.
+   */
+  [[nodiscard]]
+  virtual auto can_reload_fonts_texture() const -> bool = 0;
+
+  /**
    * \brief Returns the associated window.
    *
    * \return a window.

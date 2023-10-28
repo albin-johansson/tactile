@@ -63,6 +63,17 @@ void OpenGLRenderer::end_frame()
   mWindow->swap_framebuffer();
 }
 
+void OpenGLRenderer::reload_fonts_texture()
+{
+  ImGui_ImplOpenGL3_DestroyFontsTexture();
+  ImGui_ImplOpenGL3_CreateFontsTexture();
+}
+
+auto OpenGLRenderer::can_reload_fonts_texture() const -> bool
+{
+  return true;
+}
+
 auto OpenGLRenderer::get_window() -> OpenGLWindow*
 {
   return mWindow;
