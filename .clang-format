@@ -12,7 +12,7 @@ MaxEmptyLinesToKeep: 1
 InsertBraces: true
 RemoveSemicolon: true
 PackConstructorInitializers: Never
-RequiresClausePosition: WithPreceding
+RequiresClausePosition: OwnLine
 # QualifierOrder: [ 'friend', 'inline', 'static', 'const', 'volatile', 'constexpr', 'restrict', 'type' ]
 
 IndentWidth: 2
