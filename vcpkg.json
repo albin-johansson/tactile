@@ -16,7 +16,12 @@
     "doctest",
     "fast-float",
     "fmt",
-    "glew",
+    {
+      "name": "glad",
+      "features": [
+        "extensions"
+      ]
+    },
     "glm",
     "gtest",
     {

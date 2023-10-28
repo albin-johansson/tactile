@@ -1,0 +1,91 @@
+// Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
+
+#include "tactile/opengl/opengl_renderer.hpp"
+
+#include <SDL2/SDL.h>
+#include <glad/glad.h>
+#include <imgui.h>
+#include <imgui_impl_opengl3.h>
+#include <imgui_impl_sdl2.h>
+
+#include "tactile/core/debug/error.hpp"
+#include "tactile/core/debug/log/logger.hpp"
+
+namespace tactile::gl {
+
+OpenGLRenderer::OpenGLRenderer(OpenGLWindow* window)
+  : mWindow {window ? window : throw Error {"Null window"}},
+    mImGuiContext {ImGui::CreateContext()}
+{
+  if (!ImGui_ImplSDL2_InitForOpenGL(mWindow->get_handle(), mImGuiContext)) {
+    TACTILE_LOG_FATAL("Could not initialize SDL2 ImGui backend");
+    throw Error {"Could not initialize SDL2 ImGui backend"};
+  }
+
+  if (!ImGui_ImplOpenGL3_Init("#version 410 core")) {
+    ImGui_ImplSDL2_Shutdown();
+    ImGui::DestroyContext(mImGuiContext);
+
+    TACTILE_LOG_FATAL("Could not initialize OpenGL ImGui backend");
+    throw Error {"Could not initialize OpenGL ImGui backend"};
+  }
+}
+
+OpenGLRenderer::~OpenGLRenderer() noexcept
+{
+  ImGui_ImplOpenGL3_Shutdown();
+  ImGui_ImplSDL2_Shutdown();
+  ImGui::DestroyContext(mImGuiContext);
+}
+
+auto OpenGLRenderer::begin_frame() -> Result<void>
+{
+  ImGui_ImplSDL2_NewFrame();
+  ImGui_ImplOpenGL3_NewFrame();
+  ImGui::NewFrame();
+
+  const auto& io = ImGui::GetIO();
+  glViewport(0,
+             0,
+             static_cast<int>(io.DisplaySize.x),
+             static_cast<int>(io.DisplaySize.y));
+
+  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  return kSuccess;
+}
+
+void OpenGLRenderer::end_frame()
+{
+  ImGui::Render();
+  ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+  mWindow->swap_framebuffer();
+}
+
+auto OpenGLRenderer::get_window() -> OpenGLWindow*
+{
+  return mWindow;
+}
+
+auto OpenGLRenderer::get_window() const -> const OpenGLWindow*
+{
+  return mWindow;
+}
+
+auto OpenGLRenderer::get_imgui_context() -> ImGuiContext*
+{
+  return mImGuiContext;
+}
+
+auto OpenGLRenderer::get_imgui_allocator_functions() const -> ImGuiAllocatorFunctions
+{
+  ImGuiAllocatorFunctions functions {};
+
+  void* user_data = nullptr;
+  ImGui::GetAllocatorFunctions(&functions.alloc_fn, &functions.free_fn, &user_data);
+
+  return functions;
+}
+
+}  // namespace tactile::gl
