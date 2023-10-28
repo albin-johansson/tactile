@@ -39,6 +39,9 @@ OpenGLWindow::OpenGLWindow()
     TACTILE_LOG_FATAL("Could not create OpenGL context: {}", SDL_GetError());
     throw Error {"Could not create OpenGL context"};
   }
+
+  // Enable VSync.
+  SDL_GL_SetSwapInterval(1);
 }
 
 void OpenGLWindow::swap_framebuffer()
