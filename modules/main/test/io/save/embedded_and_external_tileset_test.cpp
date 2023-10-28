@@ -66,7 +66,7 @@ TEST_P(EmbeddedAndExternalTilesetTest, SaveAndLoadMap)
             .column_count = 48,
             .image_width = 768,
             .image_height = 80,
-            .image_path = std::filesystem::absolute(map_directory / "image.png"),
+            .image_path = "image.png",
             .tiles = {},
           },
       .first_tile_id = 1,
