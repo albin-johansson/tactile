@@ -12,6 +12,9 @@
 #include "tactile/core/plugin/plugin_manager.hpp"
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/chrono.hpp"
+#include "tactile/core/render/render_context.hpp"
+
+using namespace tactile;
 
 auto main(const int argc, char* argv[]) -> int
 {
@@ -52,6 +55,20 @@ auto main(const int argc, char* argv[]) -> int
     const auto plugin_dir = app_dir / "plugins";
     plugin_manager.scan(plugin_dir);
 
+
+    auto& render_context = RenderContext::get();
+
+    if (!render_context.get_window()) {
+      TACTILE_LOG_FATAL("No window was installed");
+      return EXIT_FAILURE;
+    }
+
+    if (!render_context.get_renderer()) {
+      TACTILE_LOG_FATAL("No renderer was installed");
+      return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
   }
   catch (const tactile::Error& err) {
     TACTILE_LOG_FATAL("Unhandled exception: {}\n{}", err.what(), err.get_trace());
