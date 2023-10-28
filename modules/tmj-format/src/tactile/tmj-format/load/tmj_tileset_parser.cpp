@@ -113,7 +113,7 @@ auto parse_tileset(const JSON& json, const SaveFormatReadOptions& options)
       .and_then([&] { return parse(json, "imagewidth", tileset.image_width); })
       .and_then([&] { return parse(json, "imageheight", tileset.image_height); })
       .and_then([&] { return parse(json, "image", relative_image_path); })
-      .and_then([&] -> Result<void> {
+      .and_then([&]() -> Result<void> {
         // TODO make it possible to recover from missing tileset images
         if (options.strict_mode &&
             !std::filesystem::exists(options.base_dir / relative_image_path)) {

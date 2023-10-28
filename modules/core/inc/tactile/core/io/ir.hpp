@@ -98,8 +98,8 @@ struct Layer final {
  * \brief Intermediate representation of a frame in a tile animation.
  */
 struct AnimationFrame final {
-  int32 tile_index;    ///< The index of the rendered tile in the associated tileset.
-  uint64 duration_ms;  ///< The duration that the frame is shown in milliseconds.
+  TileIndex tile_index;  ///< The index of the rendered tile in the associated tileset.
+  uint64 duration_ms;    ///< The duration that the frame is shown in milliseconds.
 
   [[nodiscard]] auto operator==(const AnimationFrame&) const -> bool = default;
 };

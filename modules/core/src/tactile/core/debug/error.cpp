@@ -3,6 +3,7 @@
 #include "tactile/core/debug/error.hpp"
 
 #include <sstream>  // stringstream
+#include <utility>  // move
 
 #include <boost/stacktrace.hpp>
 

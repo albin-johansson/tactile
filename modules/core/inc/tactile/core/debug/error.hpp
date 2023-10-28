@@ -3,7 +3,6 @@
 #pragma once
 
 #include <exception>  // exception
-#include <utility>    // move
 
 #include "tactile/core/api.hpp"
 #include "tactile/core/container/string.hpp"

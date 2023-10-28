@@ -26,7 +26,7 @@ inline const HashMap<StringView, LayerType> kLayerTypeNames = {
 auto _parse_layer_type(const JSON& layer_json, LayerType& layer_type) -> Result<void>
 {
   String type_name {};
-  return parse(layer_json, "type", type_name).and_then([&] -> Result<void> {
+  return parse(layer_json, "type", type_name).and_then([&]() -> Result<void> {
     if (const auto* found_type = find_in(kLayerTypeNames, type_name)) {
       layer_type = *found_type;
       return kSuccess;
@@ -42,7 +42,7 @@ auto _parse_tile_encoding(const JSON& layer_json, ir::TileFormat& tile_format)
 {
   String encoding_name {};
   return parse(layer_json, "encoding", encoding_name, "csv")
-      .and_then([&] -> Result<void> {
+      .and_then([&]() -> Result<void> {
         if (encoding_name == "csv") {
           tile_format.encoding = TileEncoding::kPlainText;
         }
@@ -65,7 +65,7 @@ auto _parse_compression_mode(const JSON& layer_json, ir::TileFormat& tile_format
 {
   String compression_name {};
   return parse(layer_json, "compression", compression_name)  //
-      .and_then([&] -> Result<void> {
+      .and_then([&]() -> Result<void> {
         if (compression_name.empty()) {
           tile_format.compression = CompressionMode::kNone;
         }
@@ -130,7 +130,7 @@ auto _parse_tile_layer_data(const JSON& layer_json,
       .and_then([&] { return parse(layer_json, "width", layer.width); })
       .and_then([&] { return parse(layer_json, "height", layer.height); })
       .and_then([&] { return parse(layer_json, "data", tile_data_json); })
-      .and_then([&] -> Result<TileMatrix> {
+      .and_then([&]() -> Result<TileMatrix> {
         const MatrixExtent layer_extent {static_cast<usize>(layer.height),
                                          static_cast<usize>(layer.width)};
 

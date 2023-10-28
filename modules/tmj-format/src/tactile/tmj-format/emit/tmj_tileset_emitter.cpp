@@ -69,7 +69,7 @@ auto emit_embedded_tileset(const ir::Tileset& tileset,
   embedded_tileset_json["firstgid"] = first_tile_id;
 
   return _add_common_tileset_attributes(tileset, options, embedded_tileset_json)
-      .and_then([&] -> Result<JSON> { return std::move(embedded_tileset_json); });
+      .and_then([&]() -> Result<JSON> { return std::move(embedded_tileset_json); });
 }
 
 auto emit_external_tileset(const ir::TilesetRef& tileset_ref,
@@ -95,7 +95,7 @@ auto emit_tileset_ref(const ir::TilesetRef& tileset_ref,
     return _add_common_tileset_attributes(tileset_ref.tileset,
                                           options,
                                           external_tileset_json)
-        .and_then([&] -> Result<void> {
+        .and_then([&]  {
           const StreamToFileOptions stream_options {
             .indentation = options.use_indentation ? 2 : 0,
             .binary_mode = false,

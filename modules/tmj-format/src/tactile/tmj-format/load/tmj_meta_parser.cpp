@@ -17,7 +17,7 @@ namespace {
 auto _parse_string_value(const JSON& json, Attribute& value) -> Result<void>
 {
   Attribute::string_type str {};
-  return parse(json, "value", str).and_then([&] -> Result<void> {
+  return parse(json, "value", str).and_then([&] {
     value = std::move(str);
     return kSuccess;
   });
@@ -27,7 +27,7 @@ auto _parse_string_value(const JSON& json, Attribute& value) -> Result<void>
 auto _parse_int_value(const JSON& json, Attribute& value) -> Result<void>
 {
   Attribute::int_type integer {};
-  return parse(json, "value", integer).and_then([&] -> Result<void> {
+  return parse(json, "value", integer).and_then([&] {
     value = integer;
     return kSuccess;
   });
@@ -37,7 +37,7 @@ auto _parse_int_value(const JSON& json, Attribute& value) -> Result<void>
 auto _parse_float_value(const JSON& json, Attribute& value) -> Result<void>
 {
   Attribute::float_type real {};
-  return parse(json, "value", real).and_then([&] -> Result<void> {
+  return parse(json, "value", real).and_then([&] {
     value = real;
     return kSuccess;
   });
@@ -47,7 +47,7 @@ auto _parse_float_value(const JSON& json, Attribute& value) -> Result<void>
 auto _parse_bool_value(const JSON& json, Attribute& value) -> Result<void>
 {
   bool boolean {};
-  return parse(json, "value", boolean).and_then([&] -> Result<void> {
+  return parse(json, "value", boolean).and_then([&] {
     value = boolean;
     return kSuccess;
   });
@@ -57,7 +57,7 @@ auto _parse_bool_value(const JSON& json, Attribute& value) -> Result<void>
 auto _parse_path_value(const JSON& json, Attribute& value) -> Result<void>
 {
   Attribute::string_type path {};
-  return parse(json, "value", path).and_then([&] -> Result<void> {
+  return parse(json, "value", path).and_then([&] {
     value = Attribute::path_type {std::move(path)};
     return kSuccess;
   });
@@ -67,7 +67,7 @@ auto _parse_path_value(const JSON& json, Attribute& value) -> Result<void>
 auto _parse_color_value(const JSON& json, Attribute& value) -> Result<void>
 {
   String color_code {};
-  return parse(json, "value", color_code).and_then([&] -> Result<void> {
+  return parse(json, "value", color_code).and_then([&]() -> Result<void> {
     // Empty color properties are not supported, so just assume the default color value.
     if (color_code.empty()) {
       TACTILE_LOG_WARN(
@@ -92,7 +92,7 @@ auto _parse_color_value(const JSON& json, Attribute& value) -> Result<void>
 auto _parse_object_ref_value(const JSON& json, Attribute& value) -> Result<void>
 {
   int32 object_ref {};
-  return parse(json, "value", object_ref).and_then([&] -> Result<void> {
+  return parse(json, "value", object_ref).and_then([&] {
     value = ObjectRef {object_ref};
     return kSuccess;
   });
@@ -125,7 +125,7 @@ auto _parse_property_value(const JSON& json, const AttributeType type, Attribute
 auto _parse_property_type(const JSON& json, AttributeType& out_type) -> Result<void>
 {
   String type_name {};
-  return parse(json, "type", type_name).and_then([&] -> Result<void> {
+  return parse(json, "type", type_name).and_then([&]() -> Result<void> {
     if (const auto attribute_type = parse_attribute_type(type_name)) {
       out_type = *attribute_type;
       return kSuccess;
@@ -174,4 +174,4 @@ auto parse_metadata(const JSON& json, ir::Metadata& meta) -> Result<void>
   return kSuccess;
 }
 
-}  // namespace tactile
+}  // namespace tactile::tmj
