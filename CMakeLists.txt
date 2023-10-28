@@ -84,6 +84,7 @@ find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
 find_path(STB_INCLUDE_DIRS "stb_c_lexer.h")
 
 install(DIRECTORY DESTINATION "${TACTILE_BUILD_DIR}/plugins")
+install(DIRECTORY "${TACTILE_RESOURCE_DIR}" DESTINATION "${TACTILE_BUILD_DIR}")
 
 add_subdirectory(modules)
 
