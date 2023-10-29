@@ -63,7 +63,7 @@ template <std::integral IntType>
 #else
   using ByteArray = Array<uint8, sizeof(IntType)>;
 
-  const auto bytes = interpret_as<ByteArray>(value);
+  auto bytes = interpret_as<ByteArray>(value);
   std::reverse(bytes.begin(), bytes.end());
 
   return interpret_as<IntType>(bytes);
