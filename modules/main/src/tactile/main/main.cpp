@@ -57,6 +57,8 @@ auto main(const int argc, char* argv[]) -> int
       return EXIT_FAILURE;
     }
 
+    const ScopeGuard sdl_guard {[] { SDL_Quit(); }};
+
     SDL_SetHint(SDL_HINT_APP_NAME, "Tactile");
     SDL_SetHint(SDL_HINT_MOUSE_TOUCH_EVENTS, "1");
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
