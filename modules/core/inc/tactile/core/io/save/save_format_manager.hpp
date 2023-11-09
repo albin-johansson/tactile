@@ -67,9 +67,9 @@ class TACTILE_CORE_API SaveFormatManager final {
   /**
    * \brief Saves a tileset using one of the available save format handlers.
    *
-   * \param map_path the tileset file path.
-   * \param map      the tileset that will be saved.
-   * \param options  the write options.
+   * \param tileset_path the tileset file path.
+   * \param tileset      the tileset that will be saved.
+   * \param options      the write options.
    *
    * \return nothing on success, or an error code if an error occurred.
    */

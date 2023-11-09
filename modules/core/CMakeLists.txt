@@ -60,7 +60,7 @@ if (TACTILE_BUILD_TESTS MATCHES ON)
   target_link_libraries(${TACTILE_CORE_TEST_TARGET}
                         PRIVATE
                         ${TACTILE_CORE_TARGET}
-                        GTest::gtest
+                        GTest::gmock
                         )
 
   if (WIN32)
