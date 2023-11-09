@@ -67,8 +67,8 @@ TACTILE_CORE_API auto tile_matrix_from_byte_stream(const ByteStream& byte_stream
  *          then compressed if compression is requested. The resulting byte stream is then
  *          encoded using Base64.
  *
- * \param tiles       the source tile data.
- * \param compression the compression mode to use.
+ * \param tiles            the source tile data.
+ * \param compression_mode the compression mode to use.
  *
  * \return the encoded tile data; or an error code if something failed.
  */

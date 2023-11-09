@@ -143,7 +143,7 @@ class Attribute final {
    *
    * \pre The provided string cannot be null.
    *
-   * \param value the new string value.
+   * \param str the new string value.
    */
   void set(const char* str)
   {
