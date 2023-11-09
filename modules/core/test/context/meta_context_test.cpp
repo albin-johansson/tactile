@@ -13,12 +13,28 @@ class IMetaContextTest : public testing::Test {};
 
 using MetaContextTypes = testing::Types<TileLayer, ObjectLayer, GroupLayer>;
 
+namespace {
+
+template <typename T>
+[[nodiscard]] auto _make_context() -> T
+{
+  return T {};
+}
+
+template <>
+[[nodiscard]] auto _make_context<TileLayer>() -> TileLayer
+{
+  return TileLayer {5, 5};
+}
+
+}  // namespace
+
 TYPED_TEST_SUITE(IMetaContextTest, MetaContextTypes);
 
 /// \tests tactile::IMetaContext::get_meta
 TYPED_TEST(IMetaContextTest, GetMeta)
 {
-  TypeParam context {};
+  auto context = _make_context<TypeParam>();
   const auto& const_context = context;
 
   context.get_meta().set_name("foo");

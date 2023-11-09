@@ -13,13 +13,29 @@ using LayerTypes = testing::Types<TileLayer, ObjectLayer, GroupLayer>;
 template <typename T>
 class ILayerTest : public testing::Test {};
 
+namespace {
+
+template <typename T>
+[[nodiscard]] auto _make_layer() -> T
+{
+  return T {};
+}
+
+template <>
+[[nodiscard]] auto _make_layer<TileLayer>() -> TileLayer
+{
+  return TileLayer {5, 5};
+}
+
+}  // namespace
+
 TYPED_TEST_SUITE(ILayerTest, LayerTypes);
 
 /// \tests tactile::ILayer::set_persistent_id
 /// \tests tactile::ILayer::get_persistent_id
 TYPED_TEST(ILayerTest, PersistentId)
 {
-  TypeParam layer {};
+  auto layer = _make_layer<TypeParam>();
   EXPECT_FALSE(layer.get_persistent_id().has_value());
 
   layer.set_persistent_id(42);
@@ -33,7 +49,7 @@ TYPED_TEST(ILayerTest, PersistentId)
 /// \tests tactile::ILayer::get_opacity
 TYPED_TEST(ILayerTest, Opacity)
 {
-  TypeParam layer {};
+  auto layer = _make_layer<TypeParam>();
   EXPECT_EQ(layer.get_opacity(), 1.0f);
 
   layer.set_opacity(0.5f);
@@ -50,7 +66,7 @@ TYPED_TEST(ILayerTest, Opacity)
 /// \tests tactile::ILayer::is_visible
 TYPED_TEST(ILayerTest, Visibility)
 {
-  TypeParam layer {};
+  auto layer = _make_layer<TypeParam>();
   EXPECT_TRUE(layer.is_visible());
 
   layer.set_visible(false);
@@ -67,7 +83,7 @@ TYPED_TEST(ILayerTest, Clone)
   const float opacity {0.8f};
   const bool visible {false};
 
-  TypeParam source_layer {};
+  auto source_layer = _make_layer<TypeParam>();
   source_layer.set_persistent_id(id);
   source_layer.set_opacity(opacity);
   source_layer.set_visible(visible);
