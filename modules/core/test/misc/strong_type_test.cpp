@@ -9,7 +9,7 @@
 namespace {
 
 TACTILE_STRONG_TYPE(StrongInt, int);
-TACTILE_STRONG_TYPE(StrongStr, tactile::String);
+TACTILE_STRONG_TYPE(StrongStr, tactile::StringView);
 
 }  // namespace
 
