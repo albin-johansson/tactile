@@ -29,4 +29,4 @@ target_link_libraries(${TACTILE_OPENGL_TARGET}
                       imgui::imgui
                       )
 
-install(TARGETS ${TACTILE_OPENGL_TARGET} DESTINATION "${TACTILE_BUILD_DIR}/plugins")
+install(TARGETS ${TACTILE_OPENGL_TARGET} DESTINATION "${TACTILE_BUILD_DIR}/plugins/renderers")

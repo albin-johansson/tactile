@@ -25,7 +25,7 @@ target_link_libraries(${TACTILE_TMJ_FORMAT_TARGET}
                       nlohmann_json::nlohmann_json
                       )
 
-install(TARGETS ${TACTILE_TMJ_FORMAT_TARGET} DESTINATION "${TACTILE_BUILD_DIR}/plugins")
+install(TARGETS ${TACTILE_TMJ_FORMAT_TARGET} DESTINATION "${TACTILE_BUILD_DIR}/plugins/formats")
 
 if (TACTILE_BUILD_TESTS MATCHES ON)
   set(TACTILE_TMJ_FORMAT_TEST_TARGET tactile-tmj-format-test)
