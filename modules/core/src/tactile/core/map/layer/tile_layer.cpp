@@ -18,6 +18,16 @@ TileLayer::TileLayer(const usize row_count, const usize col_count)
     mTileMatrix {make_tile_matrix(row_count, col_count)}
 {}
 
+void TileLayer::accept(IMetaContextVisitor& visitor)
+{
+  visitor.visit(*this);
+}
+
+void TileLayer::accept(ILayerVisitor& visitor)
+{
+  visitor.visit(*this);
+}
+
 void TileLayer::resize(const usize row_count, const usize col_count)
 {
   if (row_count < 1) {
@@ -157,11 +167,6 @@ auto TileLayer::row_count() const -> usize
 auto TileLayer::column_count() const -> usize
 {
   return mColCount;
-}
-
-void TileLayer::accept(ILayerVisitor& visitor)
-{
-  visitor.visit(*this);
 }
 
 void TileLayer::set_persistent_id(const Maybe<int32> id)

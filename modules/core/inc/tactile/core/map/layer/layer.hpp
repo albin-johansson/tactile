@@ -20,6 +20,8 @@ class TACTILE_CORE_API ILayer : public IMetaContext {
  public:
   TACTILE_INTERFACE_CLASS(ILayer);
 
+  using IMetaContext::accept;
+
   /**
    * \brief Inspects the layer using the given visitor.
    *

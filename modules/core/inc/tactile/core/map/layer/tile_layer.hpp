@@ -25,6 +25,10 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
    */
   TileLayer(usize row_count, usize col_count);
 
+  void accept(IMetaContextVisitor& visitor) override;
+
+  void accept(ILayerVisitor& visitor) override;
+
   /**
    * \brief Changes the size of the layer.
    *
@@ -91,8 +95,6 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
    */
   [[nodiscard]]
   auto column_count() const -> usize;
-
-  void accept(ILayerVisitor& visitor) override;
 
   void set_persistent_id(Maybe<int32> id) override;
 

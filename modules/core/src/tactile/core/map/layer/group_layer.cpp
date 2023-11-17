@@ -6,6 +6,11 @@
 
 namespace tactile {
 
+void GroupLayer::accept(IMetaContextVisitor& visitor)
+{
+  visitor.visit(*this);
+}
+
 void GroupLayer::accept(ILayerVisitor& visitor)
 {
   visitor.visit(*this);

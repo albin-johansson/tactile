@@ -14,6 +14,8 @@ namespace tactile {
  */
 class TACTILE_CORE_API ObjectLayer final : public ILayer {
  public:
+  void accept(IMetaContextVisitor& visitor) override;
+
   void accept(ILayerVisitor& visitor) override;
 
   void set_persistent_id(Maybe<int32> id) override;

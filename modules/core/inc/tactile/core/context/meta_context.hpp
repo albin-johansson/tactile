@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
+#include "tactile/core/context/meta_context_visitor.hpp"
 #include "tactile/core/prelude.hpp"
 
 namespace tactile {
@@ -17,9 +18,24 @@ class TACTILE_CORE_API IMetaContext {
  public:
   TACTILE_INTERFACE_CLASS(IMetaContext);
 
+  /**
+   * \brief Inspects the meta context using the provided visitor.
+   *
+   * \param visitor the visitor to use.
+   */
+  virtual void accept(IMetaContextVisitor& visitor) = 0;
+
+  /**
+   * \brief Returns the associated metadata.
+   *
+   * \return the metadata.
+   */
   [[nodiscard]]
   virtual auto get_meta() -> Metadata& = 0;
 
+  /**
+   * \copydoc get_meta()
+   */
   [[nodiscard]]
   virtual auto get_meta() const -> const Metadata& = 0;
 };
