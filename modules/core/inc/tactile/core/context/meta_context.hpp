@@ -7,7 +7,7 @@
 
 namespace tactile {
 
-TACTILE_FWD(class Metadata)
+class Metadata;
 
 /**
  * \interface IMetaContext

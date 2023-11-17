@@ -110,12 +110,6 @@
   TACTILE_DELETE_COPY(Name);       \
   TACTILE_DELETE_MOVE(Name)
 
-#define TACTILE_FWD_NS(Namespace, Declaration) \
-  namespace Namespace {                        \
-  Declaration;                                 \
-  }
-#define TACTILE_FWD(Declaration) Declaration;
-
 namespace tactile {
 
 inline constexpr bool kIsDebugBuild = TACTILE_DEBUG;

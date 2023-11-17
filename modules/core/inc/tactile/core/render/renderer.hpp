@@ -7,7 +7,7 @@
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/render/window.hpp"
 
-TACTILE_FWD(struct ImGuiContext)
+struct ImGuiContext;
 
 namespace tactile {
 

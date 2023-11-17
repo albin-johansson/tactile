@@ -7,9 +7,9 @@
 
 namespace tactile {
 
-TACTILE_FWD(class TileLayer)
-TACTILE_FWD(class ObjectLayer)
-TACTILE_FWD(class GroupLayer)
+class TileLayer;
+class ObjectLayer;
+class GroupLayer;
 
 /**
  * \brief Visitor type used to inspect non-const layers.

@@ -41,7 +41,7 @@
 
 namespace tactile {
 
-TACTILE_FWD(class ILoggerSink)
+class ILoggerSink;
 
 /** \brief A simple logger implementation. */
 class TACTILE_CORE_API Logger final {

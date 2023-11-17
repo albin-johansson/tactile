@@ -8,8 +8,8 @@
 
 namespace tactile {
 
-TACTILE_FWD(class GroupLayer)
-TACTILE_FWD(class TileFormat)
+class GroupLayer;
+class TileFormat;
 
 /**
  * \interface IMap

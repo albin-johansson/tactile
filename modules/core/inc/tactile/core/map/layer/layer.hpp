@@ -10,7 +10,7 @@
 
 namespace tactile {
 
-TACTILE_FWD(class ILayerVisitor)
+class ILayerVisitor;
 
 /**
  * \interface ILayer
