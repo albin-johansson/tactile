@@ -7,7 +7,7 @@
 #include "tactile/core/render/window.hpp"
 #include "tactile/opengl/api.hpp"
 
-TACTILE_FWD(struct SDL_Window)
+struct SDL_Window;
 
 namespace tactile::gl {
 
