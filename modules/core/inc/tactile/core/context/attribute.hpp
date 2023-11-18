@@ -16,6 +16,7 @@
 #include "tactile/core/functional/maybe.hpp"
 #include "tactile/core/io/filesystem.hpp"
 #include "tactile/core/math/vector.hpp"
+#include "tactile/core/misc/id_types.hpp"
 #include "tactile/core/prelude.hpp"
 
 namespace tactile {

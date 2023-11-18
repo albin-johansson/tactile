@@ -151,10 +151,6 @@ using ObjectID = int32;
 using TileIndex = int32;  ///< For local tile identifiers.
 using TileID = int32;     ///< For global tile identifiers.
 
-/** \brief Strong type for object references. */
-enum ObjectRef : int32 {
-};
-
 inline constexpr TileID kEmptyTile = 0;
 
 namespace int_literals {

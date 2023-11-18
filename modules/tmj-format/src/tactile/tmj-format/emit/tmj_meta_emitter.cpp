@@ -2,8 +2,6 @@
 
 #include "tactile/tmj-format/emit/tmj_meta_emitter.hpp"
 
-#include <utility>  // to_underlying
-
 #include "tactile/core/debug/error.hpp"
 #include "tactile/core/io/save/vector_serialization.hpp"
 
@@ -49,7 +47,7 @@ auto to_tmj_value(const Attribute& attribute) -> JSON
     case AttributeType::kBool: return JSON(attribute.as_bool());
     case AttributeType::kPath: return JSON(attribute.as_path().string());
     case AttributeType::kColor: return JSON(to_string_argb(attribute.as_color()));
-    case AttributeType::kObject: return JSON(std::to_underlying(attribute.as_object()));
+    case AttributeType::kObject: return JSON(attribute.as_object().value);
   }
 
   throw Error {"Invalid attribute type"};

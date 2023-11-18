@@ -3,7 +3,6 @@
 #include "tactile/core/context/attribute.hpp"
 
 #include <type_traits>  // decay_t
-#include <utility>      // to_underlying
 #include <variant>      // visit
 
 #include "tactile/core/debug/error.hpp"
@@ -99,8 +98,7 @@ auto operator<<(std::ostream& stream, const Attribute& attribute) -> std::ostrea
     case AttributeType::kBool: return stream << attribute.as_bool();
     case AttributeType::kPath: return stream << attribute.as_path();
     case AttributeType::kColor: return stream << attribute.as_color();
-    case AttributeType::kObject:
-      return stream << std::to_underlying(attribute.as_object());
+    case AttributeType::kObject: return stream << attribute.as_object().value;
   }
 
   return stream;
