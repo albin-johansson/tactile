@@ -6,6 +6,7 @@
 #include "tactile/core/container/vector.hpp"
 #include "tactile/core/map/layer/layer.hpp"
 #include "tactile/core/map/layer/layer_behavior_delegate.hpp"
+#include "tactile/core/misc/id_types.hpp"
 #include "tactile/core/misc/tile_matrix.hpp"
 #include "tactile/core/misc/tile_pos.hpp"
 #include "tactile/core/prelude.hpp"

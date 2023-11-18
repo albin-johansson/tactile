@@ -22,10 +22,10 @@ TEST(TmjLayerEmitter, EmitTileLayer)
     .height = 4,
     .tiles =
         TileMatrix {
-          {1, 2},
-          {3, 4},
-          {5, 6},
-          {7, 8},
+          {TileID {1}, TileID {2}},
+          {TileID {3}, TileID {4}},
+          {TileID {5}, TileID {6}},
+          {TileID {7}, TileID {8}},
         },
     .objects = {},
     .layers = {},
@@ -61,7 +61,7 @@ TEST(TmjLayerEmitter, EmitTileLayer)
   for (usize row = 0; row < layer.height; ++row) {
     for (usize col = 0; col < layer.width; ++col) {
       const usize tile_index = (row * layer.width) + col;
-      EXPECT_EQ(tile_data_json_array.at(tile_index), layer.tiles[row][col]);
+      EXPECT_EQ(tile_data_json_array.at(tile_index), layer.tiles[row][col].value);
     }
   }
 }

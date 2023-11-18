@@ -52,7 +52,7 @@ auto _emit_tile_layer(JSON& layer_json,
 
     for (usize row = 0; row < layer.height; ++row) {
       for (usize col = 0; col < layer.width; ++col) {
-        tile_data_json += JSON(layer.tiles[row][col]);
+        tile_data_json += JSON(layer.tiles[row][col].value);
       }
     }
 

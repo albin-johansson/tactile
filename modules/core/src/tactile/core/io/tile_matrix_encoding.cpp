@@ -16,7 +16,7 @@ namespace tactile {
 using namespace int_literals;
 
 // Update the documentation if the representation of TileID changes.
-static_assert(std::same_as<TileID, int32>);
+static_assert(std::same_as<TileID::value_type, int32>);
 
 auto tile_matrix_to_byte_stream(const TileMatrix& matrix) -> ByteStream
 {
@@ -32,7 +32,7 @@ auto tile_matrix_to_byte_stream(const TileMatrix& matrix) -> ByteStream
   for (usize row = 0; row < row_count; ++row) {
     for (usize col = 0; col < col_count; ++col) {
       // Tile identifiers are always stored as little endian values.
-      const auto tile_id = to_little_endian(matrix[row][col]);
+      const auto tile_id = to_little_endian(matrix[row][col].value);
       each_byte(tile_id, [&](const uint8 byte) { byte_stream.push_back(byte); });
     }
   }
@@ -48,7 +48,7 @@ auto tile_matrix_from_byte_stream(const ByteStream& byte_stream,
   const auto tile_count = byte_stream.size() / sizeof(TileID);
 
   for (usize tile_index = 0; tile_index < tile_count; ++tile_index) {
-    TileID tile_id {};
+    TileID::value_type tile_id {};
 
     const auto byte_index = tile_index * sizeof tile_id;
     std::memcpy(&tile_id, &byte_stream[byte_index], sizeof tile_id);
@@ -64,7 +64,7 @@ auto tile_matrix_from_byte_stream(const ByteStream& byte_stream,
     }
 
     const auto [row, col] = to_matrix_index(tile_index, matrix_extent.col_count);
-    tile_matrix[row][col] = tile_id;
+    tile_matrix[row][col] = TileID {tile_id};
   }
 
   return tile_matrix;

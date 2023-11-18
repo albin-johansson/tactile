@@ -18,7 +18,7 @@ namespace tactile::tmj {
 auto parse_tile_animation_frame(const JSON& frame_json) -> Result<ir::AnimationFrame>
 {
   ir::AnimationFrame frame {};
-  return parse(frame_json, "tileid", frame.tile_index)  //
+  return parse(frame_json, "tileid", frame.tile_index.value)  //
       .and_then([&] { return parse(frame_json, "duration", frame.duration_ms); })
       .transform([&] { return frame; });
 }
@@ -73,7 +73,7 @@ auto parse_tileset_tile(const JSON& json, const ir::Tileset& tileset) -> Result<
 {
   ir::Tile tile {};
 
-  return parse(json, "id", tile.index)
+  return parse(json, "id", tile.index.value)
       .and_then([&] { return parse_tile_animation(json, tile.animation); })
       .and_then([&] { return parse_tile_objects(json, tile.objects); })
       .and_then([&] { return parse_metadata(json, tile.meta); })
@@ -149,7 +149,7 @@ auto parse_tileset_ref(const JSON& json, const SaveFormatReadOptions& options)
       return propagate_unexpected(parsed_tileset_json);
     }
 
-    return parse(json, "firstgid", tileset_ref.first_tile_id)
+    return parse(json, "firstgid", tileset_ref.first_tile_id.value)
         .and_then([&] { return parse_tileset(*parsed_tileset_json, options); })
         .transform([&](ir::Tileset tileset) {
           tileset_ref.tileset = std::move(tileset);
@@ -157,7 +157,7 @@ auto parse_tileset_ref(const JSON& json, const SaveFormatReadOptions& options)
         });
   }
   else {
-    return parse(json, "firstgid", tileset_ref.first_tile_id)
+    return parse(json, "firstgid", tileset_ref.first_tile_id.value)
         .and_then([&] { return parse_tileset(json, options); })
         .transform([&](ir::Tileset tileset) {
           tileset_ref.tileset = std::move(tileset);

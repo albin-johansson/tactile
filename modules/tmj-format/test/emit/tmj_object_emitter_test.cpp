@@ -44,7 +44,7 @@ TEST_P(ParameterizedTmjObjectEmitterTest, EmitObject)
   ASSERT_TRUE(object_json.is_object());
 
   EXPECT_EQ(object_json.at("name"), object.meta.name);
-  EXPECT_EQ(object_json.at("id"), object.id);
+  EXPECT_EQ(object_json.at("id"), object.id.value);
   EXPECT_EQ(object_json.at("x"), object.x);
   EXPECT_EQ(object_json.at("y"), object.y);
   EXPECT_EQ(object_json.at("width"), object.width);

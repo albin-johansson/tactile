@@ -95,7 +95,7 @@ auto _parse_tile_layer_csv_data(const JSON& tile_data_json, const MatrixExtent& 
   for (const auto& [_, value_json] : tile_data_json.items()) {
     if (value_json.is_number_integer()) {
       const auto [row, col] = to_matrix_index(tile_index, extent.col_count);
-      tile_matrix[row][col] = value_json.get<TileID>();
+      tile_matrix[row][col] = TileID {value_json.get<TileID::value_type>()};
 
       ++tile_index;
     }

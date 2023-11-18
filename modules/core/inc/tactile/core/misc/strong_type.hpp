@@ -7,11 +7,15 @@
 /**
  * \brief Simple macro useful for defining simple (but effective) strong types.
  */
-#define TACTILE_STRONG_TYPE(Name, UnderlyingType)                            \
-  struct Name final {                                                        \
-    UnderlyingType value;                                                    \
-                                                                             \
-    constexpr auto operator==(const Name&) const noexcept -> bool = default; \
-    constexpr auto operator<=>(const Name&) const noexcept                   \
-        -> std::strong_ordering = default;                                   \
+#define TACTILE_STRONG_TYPE(Name, ValueType)                             \
+  struct Name final {                                                    \
+    using value_type = ValueType;                                        \
+                                                                         \
+    ValueType value;                                                     \
+                                                                         \
+    [[nodiscard]] constexpr auto operator==(const Name&) const noexcept  \
+        -> bool = default;                                               \
+                                                                         \
+    [[nodiscard]] constexpr auto operator<=>(const Name&) const noexcept \
+        -> std::strong_ordering = default;                               \
   }

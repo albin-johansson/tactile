@@ -4,6 +4,7 @@
 
 #include "tactile/core/api.hpp"
 #include "tactile/core/container/vector.hpp"
+#include "tactile/core/misc/id_types.hpp"
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/chrono.hpp"
 

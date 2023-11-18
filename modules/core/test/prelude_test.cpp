@@ -98,12 +98,6 @@ TEST(Prelude, CompilerDetection)
   EXPECT_EQ(compiler_sum, 1);
 }
 
-/// \tests tactile::kEmptyTile
-TEST(Prelude, EmptyTileConstant)
-{
-  EXPECT_EQ(kEmptyTile, 0);
-}
-
 TEST(Prelude, InterfaceClassMacro)
 {
   class IDummy final {

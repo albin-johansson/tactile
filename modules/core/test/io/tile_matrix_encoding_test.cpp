@@ -15,12 +15,12 @@ TEST(TileMatrixEncoding, TileMatrixToByteStream)
   // [ 10, 20, 30 ]
   // [ 40, 50, 60 ]
   auto tile_matrix = make_tile_matrix(extent);
-  tile_matrix[0][0] = 0xFACE;
-  tile_matrix[0][1] = 0xDEAD;
-  tile_matrix[0][2] = 0x1234BEEF;
-  tile_matrix[1][0] = 0x0012FEED;
-  tile_matrix[1][1] = 0xFADE;
-  tile_matrix[1][2] = 0xABCD;
+  tile_matrix[0][0] = TileID {0xFACE};
+  tile_matrix[0][1] = TileID {0xDEAD};
+  tile_matrix[0][2] = TileID {0x1234BEEF};
+  tile_matrix[1][0] = TileID {0x0012FEED};
+  tile_matrix[1][1] = TileID {0xFADE};
+  tile_matrix[1][2] = TileID {0xABCD};
 
   const auto byte_stream = tile_matrix_to_byte_stream(tile_matrix);
   ASSERT_EQ(byte_stream.size(), extent.row_count * extent.col_count * sizeof(TileID));
@@ -68,9 +68,9 @@ TEST(TileMatrixEncoding, TileMatrixFromByteStream)
 {
   const MatrixExtent extent {3, 4};
   const TileMatrix initial_tile_matrix = {
-    {1, 2, 3, 4},
-    {5, 6, 7, 8},
-    {9, 10, 11, 12},
+    {TileID {1}, TileID {2}, TileID {3}, TileID {4}},
+    {TileID {5}, TileID {6}, TileID {7}, TileID {8}},
+    {TileID {9}, TileID {10}, TileID {11}, TileID {12}},
   };
 
   const auto byte_stream = tile_matrix_to_byte_stream(initial_tile_matrix);
@@ -97,9 +97,9 @@ TEST_P(TileMatrixEncodingCompressionModes, Base64EncodeAndDecodeTileMatrix)
 
   const MatrixExtent extent {3, 4};
   const TileMatrix initial_tile_matrix = {
-    {0x100, 0x200, 0x300, 0x400},
-    {0x500, 0x600, 0x700, 0x800},
-    {0x900, 0xA00, 0xB00, 0xC00},
+    {TileID {0x100}, TileID {0x200}, TileID {0x300}, TileID {0x400}},
+    {TileID {0x500}, TileID {0x600}, TileID {0x700}, TileID {0x800}},
+    {TileID {0x900}, TileID {0xA00}, TileID {0xB00}, TileID {0xC00}},
   };
 
   const auto encoded_tiles =
@@ -123,22 +123,24 @@ TEST_P(TileMatrixEncodingCompressionModes,
 
   const MatrixExtent extent {3, 4};
 
-  const auto tile00 = static_cast<TileID>(0x100u | kTiledFlippedVerticallyBit);
-  const auto tile03 = static_cast<TileID>(0x400u | kTiledFlippedDiagonallyBit);
-  const auto tile12 = static_cast<TileID>(0x700u | kTiledTileFlippingMask);
-  const auto tile21 = static_cast<TileID>(0xA00u | kTiledRotatedHexagonal120Bit);
-  const auto tile23 = static_cast<TileID>(0xC00u | kTiledFlippedHorizontallyBit);
+  // clang-format off
+  const auto tile00 = static_cast<TileID::value_type>(0x100u | kTiledFlippedVerticallyBit);
+  const auto tile03 = static_cast<TileID::value_type>(0x400u | kTiledFlippedDiagonallyBit);
+  const auto tile12 = static_cast<TileID::value_type>(0x700u | kTiledTileFlippingMask);
+  const auto tile21 = static_cast<TileID::value_type>(0xA00u | kTiledRotatedHexagonal120Bit);
+  const auto tile23 = static_cast<TileID::value_type>(0xC00u | kTiledFlippedHorizontallyBit);
+  // clang-format on
 
   const TileMatrix initial_tile_matrix = {
-    {tile00, 0x200, 0x300, tile03},
-    {0x500, 0x600, tile12, 0x800},
-    {0x900, tile21, 0xB00, tile23},
+    {TileID {tile00}, TileID {0x200}, TileID {0x300}, TileID {tile03}},
+    {TileID {0x500}, TileID {0x600}, TileID {tile12}, TileID {0x800}},
+    {TileID {0x900}, TileID {tile21}, TileID {0xB00}, TileID {tile23}},
   };
 
   const TileMatrix expected_tile_matrix = {
-    {0x100, 0x200, 0x300, 0x400},
-    {0x500, 0x600, 0x700, 0x800},
-    {0x900, 0xA00, 0xB00, 0xC00},
+    {TileID {0x100}, TileID {0x200}, TileID {0x300}, TileID {0x400}},
+    {TileID {0x500}, TileID {0x600}, TileID {0x700}, TileID {0x800}},
+    {TileID {0x900}, TileID {0xA00}, TileID {0xB00}, TileID {0xC00}},
   };
 
   const auto encoded_tiles =

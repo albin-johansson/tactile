@@ -17,7 +17,7 @@ TEST(TmjTileEmitter, EmitEmptyTileDefinition)
 
   const auto tile_json = tmj::emit_tile_definition(tile);
 
-  EXPECT_EQ(tile_json["id"], tile.index);
+  EXPECT_EQ(tile_json["id"], tile.index.value);
   EXPECT_FALSE(tile_json.contains("properties"));
   EXPECT_FALSE(tile_json.contains("animation"));
   EXPECT_FALSE(tile_json.contains("objectgroup"));
@@ -53,7 +53,7 @@ TEST(TmjTileEmitter, EmitComplexTileDefinition)
 
   const auto tile_json = tmj::emit_tile_definition(tile);
 
-  EXPECT_EQ(tile_json["id"], tile.index);
+  EXPECT_EQ(tile_json["id"], tile.index.value);
   ASSERT_TRUE(tile_json.contains("properties"));
   ASSERT_TRUE(tile_json.contains("animation"));
   ASSERT_TRUE(tile_json.contains("objectgroup"));
@@ -65,13 +65,13 @@ TEST(TmjTileEmitter, EmitComplexTileDefinition)
 
   const auto& animation_json = tile_json.at("animation");
   EXPECT_EQ(animation_json.size(), tile.animation.size());
-  EXPECT_EQ(animation_json.at(0).at("tileid"), tile.animation.at(0).tile_index);
+  EXPECT_EQ(animation_json.at(0).at("tileid"), tile.animation.at(0).tile_index.value);
   EXPECT_EQ(animation_json.at(0).at("duration"), tile.animation.at(0).duration_ms);
-  EXPECT_EQ(animation_json.at(1).at("tileid"), tile.animation.at(1).tile_index);
+  EXPECT_EQ(animation_json.at(1).at("tileid"), tile.animation.at(1).tile_index.value);
   EXPECT_EQ(animation_json.at(1).at("duration"), tile.animation.at(1).duration_ms);
-  EXPECT_EQ(animation_json.at(2).at("tileid"), tile.animation.at(2).tile_index);
+  EXPECT_EQ(animation_json.at(2).at("tileid"), tile.animation.at(2).tile_index.value);
   EXPECT_EQ(animation_json.at(2).at("duration"), tile.animation.at(2).duration_ms);
-  EXPECT_EQ(animation_json.at(3).at("tileid"), tile.animation.at(3).tile_index);
+  EXPECT_EQ(animation_json.at(3).at("tileid"), tile.animation.at(3).tile_index.value);
   EXPECT_EQ(animation_json.at(3).at("duration"), tile.animation.at(3).duration_ms);
 
   EXPECT_EQ(tile_json.at("objectgroup").at("objects").size(), tile.objects.size());

@@ -12,6 +12,7 @@
 #include "tactile/core/map/layer/layer_type.hpp"
 #include "tactile/core/map/layer/object_type.hpp"
 #include "tactile/core/map/tile_encoding.hpp"
+#include "tactile/core/misc/id_types.hpp"
 #include "tactile/core/misc/tile_matrix.hpp"
 #include "tactile/core/prelude.hpp"
 
@@ -139,8 +140,8 @@ struct Tileset final {
  * \brief Intermediate representation of a tileset reference.
  */
 struct TilesetRef final {
-  Tileset tileset;      ///< The tileset definition.
-  int32 first_tile_id;  ///< The first tile identifier associated with the tileset.
+  Tileset tileset;       ///< The tileset definition.
+  TileID first_tile_id;  ///< The first tile identifier associated with the tileset.
 
   [[nodiscard]] auto operator==(const TilesetRef&) const -> bool = default;
 };

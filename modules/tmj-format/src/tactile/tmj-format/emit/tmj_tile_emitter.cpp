@@ -35,7 +35,7 @@ auto _emit_tile_animation_array(const ir::Tile& tile) -> JSON
   for (const auto& animation_frame : tile.animation) {
     auto animation_frame_json = JSON::object();
 
-    animation_frame_json["tileid"] = animation_frame.tile_index;
+    animation_frame_json["tileid"] = animation_frame.tile_index.value;
     animation_frame_json["duration"] = animation_frame.duration_ms;
 
     animation_json_array += std::move(animation_frame_json);
@@ -49,7 +49,7 @@ auto _emit_tile_animation_array(const ir::Tile& tile) -> JSON
 auto emit_tile_definition(const ir::Tile& tile) -> JSON
 {
   auto tile_json = JSON::object();
-  tile_json["id"] = tile.index;
+  tile_json["id"] = tile.index.value;
 
   if (!tile.meta.properties.empty()) {
     tile_json["properties"] = emit_property_array(tile.meta);

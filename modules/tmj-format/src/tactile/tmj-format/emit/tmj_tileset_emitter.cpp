@@ -56,7 +56,7 @@ auto _determine_external_tileset_filename(const ir::TilesetRef& tileset_ref) -> 
 {
   return !tileset_ref.tileset.meta.name.empty()
              ? tileset_ref.tileset.meta.name
-             : fmt::format("tileset_{}.tmj", tileset_ref.first_tile_id);
+             : fmt::format("tileset_{}.tmj", tileset_ref.first_tile_id.value);
 }
 
 }  // namespace
@@ -66,7 +66,7 @@ auto emit_embedded_tileset(const ir::Tileset& tileset,
                            const SaveFormatWriteOptions& options) -> Result<JSON>
 {
   auto embedded_tileset_json = JSON::object();
-  embedded_tileset_json["firstgid"] = first_tile_id;
+  embedded_tileset_json["firstgid"] = first_tile_id.value;
 
   return _add_common_tileset_attributes(tileset, options, embedded_tileset_json)
       .and_then([&]() -> Result<JSON> { return std::move(embedded_tileset_json); });
@@ -77,7 +77,7 @@ auto emit_external_tileset(const ir::TilesetRef& tileset_ref,
 {
   auto external_tileset_json = JSON::object();
 
-  external_tileset_json["firstgid"] = tileset_ref.first_tile_id;
+  external_tileset_json["firstgid"] = tileset_ref.first_tile_id.value;
   external_tileset_json["source"] = _determine_external_tileset_filename(tileset_ref);
 
   return external_tileset_json;
@@ -95,7 +95,7 @@ auto emit_tileset_ref(const ir::TilesetRef& tileset_ref,
     return _add_common_tileset_attributes(tileset_ref.tileset,
                                           options,
                                           external_tileset_json)
-        .and_then([&]  {
+        .and_then([&] {
           const StreamToFileOptions stream_options {
             .indentation = options.use_indentation ? 2 : 0,
             .binary_mode = false,
