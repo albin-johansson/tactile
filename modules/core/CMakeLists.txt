@@ -57,6 +57,11 @@ if (TACTILE_BUILD_TESTS MATCHES ON)
 
   tactile_prepare_target(${TACTILE_CORE_TEST_TARGET})
 
+  target_include_directories(${TACTILE_CORE_TEST_TARGET}
+                             PRIVATE
+                             "${TACTILE_CORE_DIR}/test"
+                             )
+
   target_link_libraries(${TACTILE_CORE_TEST_TARGET}
                         PRIVATE
                         ${TACTILE_CORE_TARGET}
