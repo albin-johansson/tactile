@@ -2,6 +2,9 @@
 
 #include "tactile/core/map/layer/object_layer.hpp"
 
+#include <utility>  // move
+
+#include "tactile/core/container/lookup.hpp"
 #include "tactile/core/map/layer/layer_visitor.hpp"
 
 namespace tactile {
@@ -14,6 +17,20 @@ void ObjectLayer::accept(IMetaContextVisitor& visitor)
 void ObjectLayer::accept(ILayerVisitor& visitor)
 {
   visitor.visit(*this);
+}
+
+void ObjectLayer::add_object(const ObjectID id, Shared<Object> object)
+{
+  mObjects[id] = std::move(object);
+}
+
+auto ObjectLayer::remove_object(const ObjectID id) -> Shared<Object>
+{
+  if (auto object = erase_from(mObjects, id)) {
+    return std::move(object).value();
+  }
+
+  return nullptr;
 }
 
 void ObjectLayer::set_persistent_id(const Maybe<int32> id)
@@ -29,6 +46,33 @@ void ObjectLayer::set_opacity(const float opacity)
 void ObjectLayer::set_visible(const bool visible)
 {
   mDelegate.set_visible(visible);
+}
+
+auto ObjectLayer::get_object(const ObjectID id) -> Shared<Object>
+{
+  return lookup_in(mObjects, id);
+}
+
+auto ObjectLayer::find_object(const ObjectID id) -> Object*
+{
+  const auto iter = mObjects.find(id);
+  return (iter != mObjects.end()) ? iter->second.get() : nullptr;
+}
+
+auto ObjectLayer::find_object(const ObjectID id) const -> const Object*
+{
+  const auto iter = mObjects.find(id);
+  return (iter != mObjects.end()) ? iter->second.get() : nullptr;
+}
+
+auto ObjectLayer::has_object(const ObjectID id) const -> bool
+{
+  return mObjects.contains(id);
+}
+
+auto ObjectLayer::object_count() const -> usize
+{
+  return mObjects.size();
 }
 
 auto ObjectLayer::get_persistent_id() const -> Maybe<int32>
