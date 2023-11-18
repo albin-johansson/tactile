@@ -212,7 +212,7 @@ auto parse_object(const JSON& object_json) -> Result<ir::Object>
     object.type = ObjectType::kRect;
   }
 
-  return parse(object_json, "id", object.id)
+  return parse(object_json, "id", object.id.value)
       .and_then([&] { return parse(object_json, "name", object.meta.name, ""); })
       .and_then([&] { return parse(object_json, "type", object.tag, ""); })
       .and_then([&] { return parse(object_json, "x", object.x, 0.0f); })

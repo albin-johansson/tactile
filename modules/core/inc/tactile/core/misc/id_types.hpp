@@ -7,6 +7,12 @@
 
 namespace tactile {
 
+/** \brief Strong type of layer identifiers. */
+TACTILE_STRONG_TYPE(LayerID, int32);
+
+/** \brief Strong type of object identifiers. */
+TACTILE_STRONG_TYPE(ObjectID, int32);
+
 /** \brief Strong type for object references. */
 TACTILE_STRONG_TYPE(ObjectRef, int32);
 

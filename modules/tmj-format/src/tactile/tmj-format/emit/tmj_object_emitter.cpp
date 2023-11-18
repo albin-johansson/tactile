@@ -10,7 +10,7 @@ auto emit_object(const ir::Object& object) -> JSON
 {
   auto object_json = JSON::object();
 
-  object_json["id"] = object.id;
+  object_json["id"] = object.id.value;
   object_json["name"] = object.meta.name;
   object_json["x"] = object.x;
   object_json["y"] = object.y;
