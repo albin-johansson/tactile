@@ -40,7 +40,7 @@ inline const ir::Object kPointObject {
             },
         .components = {},
       },
-  .id = 100,
+  .id = ObjectID {100},
   .type = ObjectType::kPoint,
   .x = 8'231,
   .y = 5'000,
@@ -57,7 +57,7 @@ inline const ir::Object kRectObject {
         .properties = {},
         .components = {},
       },
-  .id = 84,
+  .id = ObjectID {84},
   .type = ObjectType::kRect,
   .x = 532,
   .y = 834,
@@ -74,7 +74,7 @@ inline const ir::Object kEllipseObject {
         .properties = {},
         .components = {},
       },
-  .id = 999,
+  .id = ObjectID {999},
   .type = ObjectType::kEllipse,
   .x = -1'283,
   .y = 634,
@@ -111,13 +111,13 @@ inline const ir::Tile kTileset2Tile1 {
         .properties = {},
         .components = {},
       },
-  .index = 0,
+  .index = TileIndex {0},
   .objects = {},
   .animation =
       {
-        ir::AnimationFrame {.tile_index = 100, .duration_ms = 743},
-        ir::AnimationFrame {.tile_index = 101, .duration_ms = 859},
-        ir::AnimationFrame {.tile_index = 941, .duration_ms = 457},
+        ir::AnimationFrame {.tile_index = TileIndex {100}, .duration_ms = 743},
+        ir::AnimationFrame {.tile_index = TileIndex {101}, .duration_ms = 859},
+        ir::AnimationFrame {.tile_index = TileIndex {941}, .duration_ms = 457},
       },
 };
 
@@ -128,7 +128,7 @@ inline const ir::Tile kTileset2Tile2 {
         .properties = {},
         .components = {},
       },
-  .index = 1,
+  .index = TileIndex {1},
   .objects = {kRectObject, kEllipseObject},
   .animation = {},
 };
@@ -247,8 +247,8 @@ TEST_P(SaveFormatManagerTest, SaveAndLoadMap)
     .components = {},
     .tilesets =
         {
-          ir::TilesetRef {.tileset = kTileset1, .first_tile_id = 1},
-          ir::TilesetRef {.tileset = kTileset2, .first_tile_id = 129},
+          ir::TilesetRef {.tileset = kTileset1, .first_tile_id = TileID {1}},
+          ir::TilesetRef {.tileset = kTileset2, .first_tile_id = TileID {129}},
         },
     .layers = {kLayer1, kGroupLayer},
   };
