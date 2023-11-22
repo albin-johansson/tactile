@@ -11,6 +11,9 @@ namespace tactile {
 /** \brief Strong type for local tile identifiers. */
 TACTILE_STRONG_TYPE(TileIndex, int32);
 
+TACTILE_STRONG_TYPE_ADD_BINARY_OP(TileIndex, +);
+TACTILE_STRONG_TYPE_ADD_BINARY_OP(TileIndex, -);
+
 /** \brief Strong type for global tile identifiers. */
 TACTILE_STRONG_TYPE(TileID, int32);
 
@@ -22,6 +25,9 @@ TACTILE_STRONG_TYPE(ObjectID, int32);
 
 /** \brief Strong type for object references. */
 TACTILE_STRONG_TYPE(ObjectRef, int32);
+
+/** \brief Strong type for textures. */
+TACTILE_STRONG_TYPE(TextureID, int32);
 
 inline constexpr TileID kEmptyTile {0};
 

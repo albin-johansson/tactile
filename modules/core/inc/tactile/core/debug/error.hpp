@@ -33,4 +33,6 @@ class TACTILE_CORE_API Error final : public std::exception {
   String mTrace;
 };
 
+using RuntimeError = Error;
+
 }  // namespace tactile

@@ -19,3 +19,10 @@
     [[nodiscard]] constexpr auto operator<=>(const Name&) const noexcept \
         -> std::strong_ordering = default;                               \
   }
+
+#define TACTILE_STRONG_TYPE_ADD_BINARY_OP(Type, Op)                              \
+  [[nodiscard]] constexpr auto operator Op(const Type t1, const Type t2) -> Type \
+  {                                                                              \
+    return Type {t1.value Op t2.value};                                          \
+  }                                                                              \
+  static_assert(true, "Don't forget the semicolon")
