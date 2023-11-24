@@ -13,12 +13,12 @@
 #include "tactile/core/prelude.hpp"
 #include "tactile/core/type/chrono.hpp"
 
-#define TACTILE_LOG(Level, FmtString, ...)                                           \
-  do {                                                                               \
-    auto* tactile_logger = tactile::get_default_logger();                            \
-    if (tactile_logger && tactile_logger->would_log((Level))) {                      \
-      tactile_logger->log((Level), (FmtString), fmt::make_format_args(__VA_ARGS__)); \
-    }                                                                                \
+#define TACTILE_LOG(Level, FmtString, ...)                                  \
+  do {                                                                      \
+    auto* tactile_logger = tactile::get_default_logger();                   \
+    if (tactile_logger && tactile_logger->would_log((Level))) {             \
+      tactile_logger->log((Level), (FmtString) __VA_OPT__(, ) __VA_ARGS__); \
+    }                                                                       \
   } while (false)
 
 #define TACTILE_LOG_TRACE(FmtString, ...) \
@@ -59,7 +59,11 @@ class TACTILE_CORE_API Logger final {
    * \param fmt_string the format string.
    * \param args       the format arguments.
    */
-  void log(LogLevel level, StringView fmt_string, fmt::format_args args) noexcept;
+  template <typename... Args>
+  void log(const LogLevel level, const StringView fmt_string, Args&&... args) noexcept
+  {
+    _log(level, fmt_string, fmt::make_format_args(args...));
+  }
 
   /**
    * \brief Sets the minimum severity of messages that get logged.
@@ -124,6 +128,8 @@ class TACTILE_CORE_API Logger final {
   LogLevel mFlushLevel {LogLevel::kError};
   Vector<Managed<ILoggerSink>> mSinks;
   Maybe<SteadyClockInstant> mReferenceInstant;
+
+  void _log(LogLevel level, StringView fmt_string, fmt::format_args args) noexcept;
 
   [[nodiscard]]
   auto _to_elapsed_time(SteadyClockInstant instant) const -> Microseconds;
