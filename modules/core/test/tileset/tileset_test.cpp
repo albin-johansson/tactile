@@ -7,34 +7,18 @@
 #include <gtest/gtest.h>
 
 #include "tactile/core/debug/error.hpp"
+#include "testutil/tileset_helpers.hpp"
 
 using namespace tactile;
 
-namespace {
-
-[[nodiscard]]
-auto _make_tileset_create_info() -> TilesetCreateInfo
-{
-  return {
-    .tile_count = 90,
-    .column_count = 10,
-    .tile_size = {32, 32},
-    .texture_size = {320, 320},
-    .texture_id = TextureID {7},
-  };
-}
-
-}  // namespace
-
 /// \tests tactile::Tileset::Tileset
 /// \tests tactile::Tileset::tile_count
-/// \tests tactile::Tileset::column_count
 /// \tests tactile::Tileset::get_tile_size
 /// \tests tactile::Tileset::get_texture_size
 /// \tests tactile::Tileset::get_texture_id
 TEST(Tileset, Constructor)
 {
-  const auto tileset_info = _make_tileset_create_info();
+  const auto tileset_info = test::make_dummy_tileset_info();
   const Tileset tileset {tileset_info};
 
   EXPECT_EQ(tileset.tile_count(), tileset_info.tile_count);
@@ -53,24 +37,24 @@ TEST(Tileset, Constructor)
   EXPECT_EQ(std::distance(tileset.begin(), tileset.end()), tileset_info.tile_count);
 }
 
-/// \tests tactile::Tileset::to_index
-TEST(Tileset, ToIndex)
+/// \tests tactile::Tileset::index_of
+TEST(Tileset, IndexOf)
 {
-  const auto tileset_info = _make_tileset_create_info();
+  const auto tileset_info = test::make_dummy_tileset_info();
   const Tileset tileset {tileset_info};
 
-  const auto row_count = tileset_info.tile_count / tileset_info.column_count;
-  const auto col_count = tileset_info.column_count;
+  const auto row_count = tileset.row_count();
+  const auto col_count = tileset.column_count();
 
-  EXPECT_FALSE(tileset.to_index(TilePos {-1, 0}).has_value());
-  EXPECT_FALSE(tileset.to_index(TilePos {0, -1}).has_value());
-  EXPECT_FALSE(tileset.to_index(TilePos {0, col_count}).has_value());
-  EXPECT_FALSE(tileset.to_index(TilePos {row_count, 0}).has_value());
+  EXPECT_FALSE(tileset.index_of(TilePos {-1, 0}).has_value());
+  EXPECT_FALSE(tileset.index_of(TilePos {0, -1}).has_value());
+  EXPECT_FALSE(tileset.index_of(TilePos {0, col_count}).has_value());
+  EXPECT_FALSE(tileset.index_of(TilePos {row_count, 0}).has_value());
 
   int32 current_index = 0;
   for (int32 row = 0; row < row_count; ++row) {
     for (int32 col = 0; col < col_count; ++col) {
-      EXPECT_EQ(tileset.to_index(TilePos {row, col}), TileIndex {current_index});
+      EXPECT_EQ(tileset.index_of(TilePos {row, col}), TileIndex {current_index});
       ++current_index;
     }
   }
@@ -79,7 +63,7 @@ TEST(Tileset, ToIndex)
 /// \tests tactile::Tileset::get_appearance
 TEST(Tileset, GetAppearance)
 {
-  const auto tileset_info = _make_tileset_create_info();
+  const auto tileset_info = test::make_dummy_tileset_info();
   Tileset tileset {tileset_info};
 
   const TileIndex tile_index {40};
@@ -122,7 +106,7 @@ TEST(Tileset, GetAppearance)
 /// \tests tactile::Tileset::find_tile
 TEST(Tileset, FindTile)
 {
-  const auto tileset_info = _make_tileset_create_info();
+  const auto tileset_info = test::make_dummy_tileset_info();
 
   Tileset tileset {tileset_info};
   const auto& const_tileset = tileset;
@@ -142,7 +126,7 @@ TEST(Tileset, FindTile)
 /// \tests tactile::Tileset::get_tile
 TEST(Tileset, GetTile)
 {
-  const auto tileset_info = _make_tileset_create_info();
+  const auto tileset_info = test::make_dummy_tileset_info();
   Tileset tileset {tileset_info};
 
   EXPECT_NE(tileset.get_tile(TileIndex {0}), nullptr);
@@ -155,7 +139,7 @@ TEST(Tileset, GetTile)
 /// \tests tactile::Tileset::is_valid_index
 TEST(Tileset, IsValidIndex)
 {
-  const auto tileset_info = _make_tileset_create_info();
+  const auto tileset_info = test::make_dummy_tileset_info();
   const Tileset tileset {tileset_info};
 
   EXPECT_TRUE(tileset.is_valid_index(TileIndex {0}));
@@ -164,4 +148,15 @@ TEST(Tileset, IsValidIndex)
 
   EXPECT_FALSE(tileset.is_valid_index(TileIndex {-1}));
   EXPECT_FALSE(tileset.is_valid_index(TileIndex {tileset_info.tile_count}));
+}
+
+/// \tests tactile::Tileset::row_count
+/// \tests tactile::Tileset::column_count
+TEST(Tileset, Dimensions)
+{
+  const auto tileset_info = test::make_dummy_tileset_info();
+  const Tileset tileset {tileset_info};
+
+  EXPECT_EQ(tileset.row_count(), tileset_info.tile_count / tileset_info.column_count);
+  EXPECT_EQ(tileset.column_count(), tileset_info.column_count);
 }

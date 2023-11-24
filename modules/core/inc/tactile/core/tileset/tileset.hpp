@@ -57,7 +57,7 @@ class TACTILE_CORE_API Tileset final : public IMetaContext {
    * \return a tile index.
    */
   [[nodiscard]]
-  auto to_index(const TilePos& pos) const -> Maybe<TileIndex>;
+  auto index_of(const TilePos& pos) const -> Maybe<TileIndex>;
 
   /**
    * \brief Returns the displayed appearance of a tile.
@@ -115,6 +115,14 @@ class TACTILE_CORE_API Tileset final : public IMetaContext {
    */
   [[nodiscard]]
   auto tile_count() const -> int32;
+
+  /**
+   * \brief Returns the number of tile rows in the tileset.
+   *
+   * \return a row count.
+   */
+  [[nodiscard]]
+  auto row_count() const -> int32;
 
   /**
    * \brief Returns the number of tile columns in the tileset.

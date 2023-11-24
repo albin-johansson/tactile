@@ -2,6 +2,7 @@
 
 #include "tactile/core/tileset/tileset.hpp"
 
+#include "tactile/core/debug/assert.hpp"
 #include "tactile/core/debug/error.hpp"
 #include "tactile/core/debug/log/logger.hpp"
 
@@ -53,11 +54,10 @@ void Tileset::update()
   }
 }
 
-auto Tileset::to_index(const TilePos& pos) const -> Maybe<TileIndex>
+auto Tileset::index_of(const TilePos& pos) const -> Maybe<TileIndex>
 {
   if (pos.row >= 0 && pos.col >= 0 && pos.col < mColumnCount) {
-    const auto row_count = mTileCount / mColumnCount;
-    if (pos.row < row_count) {
+    if (pos.row < row_count()) {
       return TileIndex {static_cast<int32>(pos.row) * mColumnCount +
                         static_cast<int32>(pos.col)};
     }
@@ -131,6 +131,12 @@ auto Tileset::is_valid_index(const TileIndex tile_index) const -> bool
 auto Tileset::tile_count() const -> int32
 {
   return mTileCount;
+}
+
+auto Tileset::row_count() const -> int32
+{
+  TACTILE_ASSERT(mColumnCount != 0);
+  return mTileCount / mColumnCount;
 }
 
 auto Tileset::column_count() const -> int32
