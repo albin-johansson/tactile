@@ -69,7 +69,7 @@ TEST_P(EmbeddedAndExternalTilesetTest, SaveAndLoadMap)
             .image_path = "image.png",
             .tiles = {},
           },
-      .first_tile_id = 1,
+      .first_tile_id = TileID {1},
     },
   };
 
