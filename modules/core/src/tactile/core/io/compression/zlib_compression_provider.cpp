@@ -37,7 +37,7 @@ auto _process_chunks(const ZlibCallbacks& callbacks,
   auto byte_stream = callbacks.make_byte_stream(&stream);
 
   const auto copy_processed_batch_to_byte_stream = [&] {
-    const auto written_bytes = kBufferSize - stream.avail_out;
+    const auto written_bytes = sizeof out_buffer - stream.avail_out;
     byte_stream.insert(byte_stream.end(),
                        out_buffer.data(),
                        out_buffer.data() + written_bytes);
@@ -50,7 +50,7 @@ auto _process_chunks(const ZlibCallbacks& callbacks,
       break;
     }
     else if (process_result == Z_OK || process_result == Z_BUF_ERROR) {
-      TACTILE_LOG_TRACE("[ZlibCompressor] Flushing and resetting output buffer");
+      TACTILE_LOG_TRACE("[ZlibCompressionProvider] Flushing and resetting output buffer");
 
       // We ran out of space in the output buffer, so reuse it!
       copy_processed_batch_to_byte_stream();
@@ -98,7 +98,7 @@ auto _process_data(const ZlibCallbacks& callbacks, const ByteSpan input_data)
 
 auto ZlibCompressionProvider::compress(const ByteSpan data) const -> Result<ByteStream>
 {
-  TACTILE_DEBUG_PROFILE_SCOPE("ZlibCompressor::compress");
+  TACTILE_DEBUG_PROFILE_SCOPE("ZlibCompressionProvider::compress");
 
   if (data.empty()) {
     return error(CompressionError::kNoData);
@@ -125,7 +125,7 @@ auto ZlibCompressionProvider::compress(const ByteSpan data) const -> Result<Byte
 
 auto ZlibCompressionProvider::decompress(const ByteSpan data) const -> Result<ByteStream>
 {
-  TACTILE_DEBUG_PROFILE_SCOPE("ZlibCompressor::decompress");
+  TACTILE_DEBUG_PROFILE_SCOPE("ZlibCompressionProvider::decompress");
 
   if (data.empty()) {
     return error(CompressionError::kNoData);

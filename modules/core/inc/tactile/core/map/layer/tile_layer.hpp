@@ -41,9 +41,9 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
   /**
    * \brief Applies a flood fill algorithm to the layer.
    *
-   * \param      start_pos          x
-   * \param      new_id             x
-   * \param[out] affected_positions x
+   * \param      start_pos          the flood start position.
+   * \param      new_id             the replacement tile identifier.
+   * \param[out] affected_positions a vector to which all modified positions are recorded.
    *
    * \see https://en.wikipedia.org/wiki/Flood_fill
    */

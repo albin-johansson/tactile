@@ -36,14 +36,16 @@ class TACTILE_CORE_API ScopeGuard final {
    */
   [[nodiscard]] explicit ScopeGuard(Callback callback);
 
-  /** \brief Invokes the associated function object, as long as it's valid. */
+  /**
+   * \brief Invokes the associated function object, as long as it's valid.
+   */
   ~ScopeGuard() noexcept;
 
   TACTILE_DELETE_COPY(ScopeGuard);
   TACTILE_DELETE_MOVE(ScopeGuard);
 
  private:
-  Function<void()> mCallback;
+  Callback mCallback;
 };
 
 }  // namespace tactile
