@@ -29,6 +29,9 @@ TACTILE_STRONG_TYPE(ObjectRef, int32);
 /** \brief Strong type for textures. */
 TACTILE_STRONG_TYPE(TextureID, int32);
 
+/** \brief Strong type for component type identifiers. */
+TACTILE_STRONG_TYPE(ComponentID, int32);
+
 inline constexpr TileID kEmptyTile {0};
 
 }  // namespace tactile
