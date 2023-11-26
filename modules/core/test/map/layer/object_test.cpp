@@ -19,6 +19,24 @@ TEST(Object, Defaults)
   EXPECT_TRUE(object.is_visible());
 }
 
+TEST(Object, AcceptMetaContextVisitor)
+{
+  testutil::MetaContextVisitorTester visitor {};
+
+  Object object {ObjectType::kEllipse};
+  object.accept(visitor);
+
+  EXPECT_EQ(visitor.orthogonal_map_count, 0);
+  EXPECT_EQ(visitor.isometric_map_count, 0);
+  EXPECT_EQ(visitor.hexagonal_map_count, 0);
+  EXPECT_EQ(visitor.group_layer_count, 0);
+  EXPECT_EQ(visitor.tile_layer_count, 0);
+  EXPECT_EQ(visitor.object_layer_count, 0);
+  EXPECT_EQ(visitor.object_count, 1);
+  EXPECT_EQ(visitor.tileset_count, 0);
+  EXPECT_EQ(visitor.tile_count, 0);
+}
+
 /// \tests tactile::Object::set_type
 /// \tests tactile::Object::get_type
 TEST(Object, SetType)
