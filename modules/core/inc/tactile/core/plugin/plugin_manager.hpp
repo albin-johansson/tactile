@@ -14,8 +14,9 @@
 
 namespace tactile {
 
-using PluginCreateFn = IPlugin* (*) ();      ///< Signature of a plugin "constructor".
-using PluginDestroyFn = void (*)(IPlugin*);  ///< Signature of a plugin "destructor".
+using PluginCreateFn = IPlugin*();       ///< Signature of a plugin constructor.
+using PluginDestroyFn = void(IPlugin*);  ///< Signature of a plugin destructor.
+using PluginIdFn = const char*();        ///< Signature of a plugin ID getter.
 
 /**
  * \brief Provides information about a dynamic library plugin.

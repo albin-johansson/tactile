@@ -47,11 +47,22 @@ class TACTILE_CORE_API IDynamicLibrary {
   virtual auto get_path() const -> const FilePath& = 0;
 };
 
-template <typename FnType>
-[[nodiscard]]
-auto get_symbol(const IDynamicLibrary& library, const char* name) -> FnType
+/**
+ * \brief Convenience function for loading symbols from a dynamic library.
+ *
+ * \pre The symbol must have the specified type.
+ *
+ * \tparam T the type of the symbol.
+ *
+ * \param library the source dynamic library.
+ * \param name    the name of the symbol to load.
+ *
+ * \return a pointer to the symbol.
+ */
+template <typename T>
+[[nodiscard]] auto get_symbol(const IDynamicLibrary& library, const char* name) -> T*
 {
-  return reinterpret_cast<FnType>(library.get_symbol(name));
+  return reinterpret_cast<T*>(library.get_symbol(name));
 }
 
 /**
