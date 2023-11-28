@@ -63,7 +63,7 @@
 #if TACTILE_COMPILER_MSVC
   #define TACTILE_NOINLINE __declspec(noinline)
 #elif TACTILE_COMPILER_CLANG
-  #define TACTILE_NOINLINE [[clang::noinline]]
+  #define TACTILE_NOINLINE __attribute__((noinline))
 #elif TACTILE_COMPILER_GCC
   #define TACTILE_NOINLINE __attribute__((noinline))
 #else
