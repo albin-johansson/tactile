@@ -24,8 +24,8 @@ TEST(Tile, SetAnimation)
   Tile tile {region};
 
   TileAnimation animation;
-  animation.append_frame({.tile_index = 10, .duration = Milliseconds {123}});
-  animation.append_frame({.tile_index = 20, .duration = Milliseconds {456}});
+  animation.append_frame(TileAnimationFrame {TileIndex {10}, Milliseconds {123}});
+  animation.append_frame(TileAnimationFrame {TileIndex {20}, Milliseconds {456}});
 
   tile.set_animation(animation);
   ASSERT_TRUE(tile.is_animated());
