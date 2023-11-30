@@ -4,7 +4,7 @@
 
 namespace tactile {
 
-auto RenderContext::get() -> RenderContext&
+auto RenderContext::get() noexcept -> RenderContext&
 {
   static RenderContext render_context {};
   return render_context;

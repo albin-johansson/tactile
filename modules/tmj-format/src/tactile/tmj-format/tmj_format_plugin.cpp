@@ -19,7 +19,7 @@ void TmjFormatPlugin::on_load()
   SaveFormatManager::get().add_format(mTmjFormat.get());
 }
 
-void TmjFormatPlugin::on_unload()
+void TmjFormatPlugin::on_unload() noexcept
 {
   TACTILE_LOG_DEBUG("Unloading TMJ format plugin...");
 
@@ -35,6 +35,11 @@ auto tactile_create_plugin() -> IPlugin*
 void tactile_destroy_plugin(IPlugin* plugin)
 {
   delete plugin;
+}
+
+auto tactile_plugin_id() -> const char*
+{
+  return "tactile.tmj-format";
 }
 
 }  // namespace tactile::tmj

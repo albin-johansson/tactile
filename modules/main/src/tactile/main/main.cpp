@@ -65,19 +65,12 @@ auto main(const int argc, char* argv[]) -> int
 
     TACTILE_LOG_DEBUG("Loading plugins...");
 
-    PluginManager plugin_manager;
-    plugin_manager.scan(plugin_dir);
-
-    for (const auto& plugin_data : plugin_manager.get_plugins()) {
-      plugin_data.plugin->on_load();  // TODO don't load all plugins automatically
+    const String requested_renderer_id {"tactile.opengl-renderer"};  // FIXME
+    const auto plugin_manager = PluginManager::load(plugin_dir, requested_renderer_id);
+    if (!plugin_manager.has_value()) {
+      TACTILE_LOG_FATAL("Could not load plugins");
+      return EXIT_FAILURE;
     }
-
-    const ScopeGuard plugin_guard {[&] {
-      TACTILE_LOG_DEBUG("Unloading plugins...");
-      for (const auto& plugin_data : plugin_manager.get_plugins()) {
-        plugin_data.plugin->on_unload();
-      }
-    }};
 
     auto& render_context = RenderContext::get();
 

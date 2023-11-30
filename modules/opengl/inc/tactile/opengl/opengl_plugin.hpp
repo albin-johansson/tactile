@@ -18,7 +18,7 @@ class TACTILE_OPENGL_API OpenGLPlugin final : public IPlugin {
  public:
   void on_load() override;
 
-  void on_unload() override;
+  void on_unload() noexcept override;
 
  private:
   Unique<OpenGLWindow> mWindow;
@@ -31,6 +31,9 @@ extern "C"
   TACTILE_OPENGL_API auto tactile_create_plugin() -> IPlugin*;
 
   TACTILE_OPENGL_API void tactile_destroy_plugin(IPlugin* plugin);
+
+  [[nodiscard]]
+  TACTILE_OPENGL_API auto tactile_plugin_id() -> const char*;
 }
 
 }  // namespace tactile::gl

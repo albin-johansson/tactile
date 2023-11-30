@@ -12,7 +12,7 @@
 
 namespace tactile {
 
-auto SaveFormatManager::get() -> SaveFormatManager&
+auto SaveFormatManager::get() noexcept -> SaveFormatManager&
 {
   static SaveFormatManager save_format_manager;
   return save_format_manager;
@@ -115,7 +115,7 @@ void SaveFormatManager::add_format(ISaveFormat* format)
   }
 }
 
-void SaveFormatManager::remove_format(ISaveFormat* format)
+void SaveFormatManager::remove_format(ISaveFormat* format) noexcept
 {
   std::erase(mFormats, format);
 }

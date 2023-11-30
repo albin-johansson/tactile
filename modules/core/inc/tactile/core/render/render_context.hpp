@@ -23,7 +23,7 @@ class TACTILE_CORE_API RenderContext final {
    * \return a render context.
    */
   [[nodiscard]]
-  static auto get() -> RenderContext&;
+  static auto get() noexcept -> RenderContext&;
 
   /**
    * \brief Sets the associated window.

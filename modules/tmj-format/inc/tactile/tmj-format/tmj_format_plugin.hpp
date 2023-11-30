@@ -17,7 +17,7 @@ class TmjFormatPlugin final : public IPlugin {
  public:
   TACTILE_TMJ_API void on_load() override;
 
-  TACTILE_TMJ_API void on_unload() override;
+  TACTILE_TMJ_API void on_unload() noexcept override;
 
  private:
   Unique<ISaveFormat> mTmjFormat;
@@ -29,6 +29,9 @@ extern "C"
   TACTILE_TMJ_API auto tactile_create_plugin() -> IPlugin*;
 
   TACTILE_TMJ_API void tactile_destroy_plugin(IPlugin* plugin);
+
+  [[nodiscard]]
+  TACTILE_TMJ_API auto tactile_plugin_id() -> const char*;
 }
 
 }  // namespace tactile::tmj

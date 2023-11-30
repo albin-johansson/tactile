@@ -23,7 +23,7 @@ class TACTILE_CORE_API IPlugin {
   /**
    * \brief Called just before the plugin is unloaded.
    */
-  virtual void on_unload() = 0;
+  virtual void on_unload() noexcept = 0;
 };
 
 }  // namespace tactile

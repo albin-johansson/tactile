@@ -19,66 +19,46 @@ using PluginDestroyFn = void(IPlugin*);  ///< Signature of a plugin destructor.
 using PluginIdFn = const char*();        ///< Signature of a plugin ID getter.
 
 /**
- * \brief Provides information about a dynamic library plugin.
+ * \brief Represents a loaded plugin instance.
  */
-struct PluginData final {
-  Unique<IDynamicLibrary> dll;                 ///< The dynamic library handle.
-  Managed<IPlugin> plugin {nullptr, nullptr};  ///< The plugin instance.
+struct PluginInstance final {
+  Unique<IDynamicLibrary> dll;  ///< The associated dynamic library.
+  Managed<IPlugin> plugin;      ///< The loaded plugin.
+  String id;                    ///< The plugin identifier.
 };
 
 /**
- * \brief Manages a collection of runtime plugins.
+ * \brief Loads and manages a collection of runtime plugins.
  */
 class TACTILE_CORE_API PluginManager final {
  public:
-  PluginManager() = default;
-  ~PluginManager() noexcept = default;
-
   TACTILE_DELETE_COPY(PluginManager);
   TACTILE_DEFAULT_MOVE(PluginManager);
 
   /**
-   * \brief Returns the global plugin manager.
+   * \brief Locates and loads plugins, and puts them in a plugin manager.
    *
-   * \return the plugin manager.
+   * \param plugin_dir         the root plugin directory.
+   * \param renderer_plugin_id the ID of the requested renderer plugin.
+   *
+   * \return a plugin manager.
    */
   [[nodiscard]]
-  static auto get() -> PluginManager&;
+  static auto load(const FilePath& plugin_dir, StringView renderer_plugin_id)
+      -> Maybe<PluginManager>;
 
   /**
-   * \brief Iterates the specified directory for potential plugins and loads their info.
-   *
-   * \details This function only iterates the given directory, and loads information about
-   *          found plugins using `load_library_info`. The information is subsequently
-   *          stored in the plugin manager itself.
-   *
-   * \param dir the plugin directory path.
+   * \brief Unloads all plugins.
    */
-  void scan(const FilePath& dir);
-
-  [[nodiscard]]
-  auto get_plugins() -> Vector<PluginData>&;
-
-  [[nodiscard]]
-  auto get_plugins() const -> const Vector<PluginData>&;
-
-  /**
-   * \brief Tries to load a plugin from a dynamic library.
-   *
-   * \details Plugin libraries must provide two C-linkage functions:
-   *          `tactile_create_plugin` and `tactile_destroy_plugin`. The signatures of
-   *          these functions must be equivalent to `IPlugin*()` and `void(IPlugin*)`,
-   *          respectively.
-   *
-   * \param lib the source dynamic library handle.
-   *
-   * \return a potentially null managed plugin pointer.
-   */
-  [[nodiscard]]
-  static auto load_plugin(const IDynamicLibrary& lib) -> Managed<IPlugin>;
+  ~PluginManager() noexcept;
 
  private:
-  Vector<PluginData> mPlugins;
+  Vector<PluginInstance> mPlugins;
+
+  explicit PluginManager(Vector<PluginInstance> plugins);
+
+  [[nodiscard]]
+  static auto _collect_plugins(const FilePath& dir) -> Vector<PluginInstance>;
 };
 
 }  // namespace tactile

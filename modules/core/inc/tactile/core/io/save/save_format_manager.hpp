@@ -24,7 +24,7 @@ class TACTILE_CORE_API SaveFormatManager final {
    * \return a save format manager.
    */
   [[nodiscard]]
-  static auto get() -> SaveFormatManager&;
+  static auto get() noexcept -> SaveFormatManager&;
 
   /**
    * \brief Loads a map file using one of the available save format handlers.
@@ -90,7 +90,7 @@ class TACTILE_CORE_API SaveFormatManager final {
    *
    * \param format the save format handler.
    */
-  void remove_format(ISaveFormat* format);
+  void remove_format(ISaveFormat* format) noexcept;
 
  private:
   Vector<ISaveFormat*> mFormats;

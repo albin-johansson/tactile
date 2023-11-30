@@ -63,7 +63,7 @@ void OpenGLPlugin::on_load()
   RenderContext::get().set_renderer(mRenderer.get());
 }
 
-void OpenGLPlugin::on_unload()
+void OpenGLPlugin::on_unload() noexcept
 {
   TACTILE_LOG_DEBUG("Unloading OpenGL renderer plugin...");
 
@@ -82,6 +82,11 @@ auto tactile_create_plugin() -> IPlugin*
 void tactile_destroy_plugin(IPlugin* plugin)
 {
   delete plugin;
+}
+
+auto tactile_plugin_id() -> const char*
+{
+  return "tactile.opengl-renderer";
 }
 
 }  // namespace tactile::gl
