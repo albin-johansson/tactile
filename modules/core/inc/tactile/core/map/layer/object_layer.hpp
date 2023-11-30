@@ -23,12 +23,14 @@ class TACTILE_CORE_API ObjectLayer final : public ILayer {
 
   void accept(ILayerVisitor& visitor) override;
 
+  void accept(IConstLayerVisitor& visitor) const override;
+
   /**
    * \brief Adds an object to the layer.
    *
    * \note An existing object in the layer with the specified ID will be overwritten.
    *
-   * \param id     the ID to associate with the object.
+   * \param id     the ID of the object.
    * \param object the object to add.
    */
   void add_object(ObjectID id, Shared<Object> object);

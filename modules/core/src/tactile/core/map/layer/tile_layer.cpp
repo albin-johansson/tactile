@@ -28,6 +28,11 @@ void TileLayer::accept(ILayerVisitor& visitor)
   visitor.visit(*this);
 }
 
+void TileLayer::accept(IConstLayerVisitor& visitor) const
+{
+  visitor.visit(*this);
+}
+
 void TileLayer::resize(const usize row_count, const usize col_count)
 {
   if (row_count < 1) {

@@ -18,6 +18,8 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
 
   void accept(ILayerVisitor& visitor) override;
 
+  void accept(IConstLayerVisitor& visitor) const override;
+
   void set_persistent_id(Maybe<int32> id) override;
 
   void set_opacity(float opacity) override;

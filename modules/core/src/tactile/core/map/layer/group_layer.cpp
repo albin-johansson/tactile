@@ -16,6 +16,11 @@ void GroupLayer::accept(ILayerVisitor& visitor)
   visitor.visit(*this);
 }
 
+void GroupLayer::accept(IConstLayerVisitor& visitor) const
+{
+  visitor.visit(*this);
+}
+
 void GroupLayer::set_persistent_id(const Maybe<int32> id)
 {
   mDelegate.set_persistent_id(id);

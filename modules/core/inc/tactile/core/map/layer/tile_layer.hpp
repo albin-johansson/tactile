@@ -30,6 +30,8 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
 
   void accept(ILayerVisitor& visitor) override;
 
+  void accept(IConstLayerVisitor& visitor) const override;
+
   /**
    * \brief Changes the size of the layer.
    *

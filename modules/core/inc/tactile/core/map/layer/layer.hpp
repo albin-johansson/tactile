@@ -11,6 +11,7 @@
 namespace tactile {
 
 class ILayerVisitor;
+class IConstLayerVisitor;
 
 /**
  * \interface ILayer
@@ -28,6 +29,11 @@ class TACTILE_CORE_API ILayer : public IMetaContext {
    * \param visitor the visitor to use.
    */
   virtual void accept(ILayerVisitor& visitor) = 0;
+
+  /**
+   * \copydoc accept(ILayerVisitor&)
+   */
+  virtual void accept(IConstLayerVisitor& visitor) const = 0;
 
   /**
    * \brief Sets the associated identifier used in save files.
@@ -78,7 +84,8 @@ class TACTILE_CORE_API ILayer : public IMetaContext {
    * \brief Creates a clone of the layer.
    *
    * \note The layer clone may not be identical to the source layer, the only guarantee
-   *       is that the layer clone is logically equivalent.
+   *       is that the layer clone is logically equivalent. For example, associated
+   *       identifiers are not cloned.
    *
    * \return the new layer.
    */

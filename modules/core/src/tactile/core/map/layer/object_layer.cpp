@@ -19,6 +19,11 @@ void ObjectLayer::accept(ILayerVisitor& visitor)
   visitor.visit(*this);
 }
 
+void ObjectLayer::accept(IConstLayerVisitor& visitor) const
+{
+  visitor.visit(*this);
+}
+
 void ObjectLayer::add_object(const ObjectID id, Shared<Object> object)
 {
   mObjects[id] = std::move(object);

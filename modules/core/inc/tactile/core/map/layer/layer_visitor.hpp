@@ -43,4 +43,33 @@ class TACTILE_CORE_API ILayerVisitor {
   {}
 };
 
+/**
+ * \brief Visitor type used to inspect const layers.
+ */
+class TACTILE_CORE_API IConstLayerVisitor {
+ public:
+  TACTILE_INTERFACE_CLASS(IConstLayerVisitor);
+
+  /**
+   * \brief Visits a tile layer.
+   *
+   * \param layer the visited layer.
+   */
+  virtual void visit([[maybe_unused]] const TileLayer& layer) {}
+
+  /**
+   * \brief Visits an object layer.
+   *
+   * \param layer the visited layer.
+   */
+  virtual void visit([[maybe_unused]] const ObjectLayer& layer) {}
+
+  /**
+   * \brief Visits a group layer.
+   *
+   * \param layer the visited layer.
+   */
+  virtual void visit([[maybe_unused]] const GroupLayer& layer) {}
+};
+
 }  // namespace tactile
