@@ -100,15 +100,24 @@ TEST(Prelude, CompilerDetection)
 
 TEST(Prelude, InterfaceClassMacro)
 {
-  class IDummy final {
+  class Interface {
    public:
-    TACTILE_INTERFACE_CLASS(IDummy);
+    TACTILE_INTERFACE_CLASS(Interface);
   };
 
-  EXPECT_TRUE(std::is_default_constructible_v<IDummy>);
-  EXPECT_TRUE(std::is_copy_constructible_v<IDummy>);
-  EXPECT_TRUE(std::is_copy_assignable_v<IDummy>);
-  EXPECT_TRUE(std::is_nothrow_move_constructible_v<IDummy>);
-  EXPECT_TRUE(std::is_nothrow_move_assignable_v<IDummy>);
-  EXPECT_TRUE(std::has_virtual_destructor_v<IDummy>);
+  EXPECT_TRUE(std::has_virtual_destructor_v<Interface>);
+  EXPECT_FALSE(std::is_default_constructible_v<Interface>);
+  EXPECT_FALSE(std::is_copy_constructible_v<Interface>);
+  EXPECT_FALSE(std::is_copy_assignable_v<Interface>);
+  EXPECT_FALSE(std::is_nothrow_move_constructible_v<Interface>);
+  EXPECT_FALSE(std::is_nothrow_move_assignable_v<Interface>);
+
+  class Implementation final : public Interface {};
+
+  EXPECT_TRUE(std::has_virtual_destructor_v<Implementation>);
+  EXPECT_TRUE(std::is_default_constructible_v<Implementation>);
+  EXPECT_TRUE(std::is_copy_constructible_v<Implementation>);
+  EXPECT_TRUE(std::is_copy_assignable_v<Implementation>);
+  EXPECT_TRUE(std::is_nothrow_move_constructible_v<Implementation>);
+  EXPECT_TRUE(std::is_nothrow_move_assignable_v<Implementation>);
 }

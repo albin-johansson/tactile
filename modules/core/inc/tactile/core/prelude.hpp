@@ -99,10 +99,15 @@
 #define TACTILE_DELETE_MOVE(Name) TACTILE_INIT_MOVE(Name, delete)
 
 #define TACTILE_INTERFACE_CLASS(Name) \
-  Name() = default;                   \
-  virtual ~Name() noexcept = default; \
+                                      \
+ protected:                           \
   TACTILE_DEFAULT_COPY(Name);         \
-  TACTILE_DEFAULT_MOVE(Name)
+  TACTILE_DEFAULT_MOVE(Name);         \
+                                      \
+  Name() = default;                   \
+                                      \
+ public:                              \
+  virtual ~Name() noexcept = default
 
 #define TACTILE_STATIC_CLASS(Name) \
   Name() = delete;                 \
