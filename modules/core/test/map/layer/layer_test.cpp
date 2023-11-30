@@ -97,4 +97,6 @@ TYPED_TEST(ILayerTest, Clone)
   EXPECT_FALSE(layer_clone->get_persistent_id().has_value());
   EXPECT_EQ(layer_clone->get_opacity(), source_layer.get_opacity());
   EXPECT_EQ(layer_clone->is_visible(), source_layer.is_visible());
+
+  EXPECT_NE(layer_clone->get_meta().get_uuid(), source_layer.get_meta().get_uuid());
 }

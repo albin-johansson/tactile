@@ -35,6 +35,9 @@ class TACTILE_CORE_API LayerBehaviorDelegate final {
   [[nodiscard]]
   auto get_meta() const -> const Metadata&;
 
+  [[nodiscard]]
+  auto clone() const -> LayerBehaviorDelegate;
+
  private:
   Metadata mMeta;
   Maybe<int32> mPersistentId;

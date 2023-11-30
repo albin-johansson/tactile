@@ -85,4 +85,18 @@ auto Object::get_meta() const -> const Metadata&
   return mMeta;
 }
 
+auto Object::clone() const -> Shared<Object>
+{
+  auto other = make_shared<Object>(mType);
+
+  // The persistent ID attribute is intentionally ignored.
+  other->mMeta = mMeta.clone();
+  other->mPosition = mPosition;
+  other->mSize = mSize;
+  other->mType = mType;
+  other->mVisible = mVisible;
+
+  return other;
+}
+
 }  // namespace tactile

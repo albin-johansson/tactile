@@ -92,11 +92,16 @@ auto ObjectLayer::is_visible() const -> bool
 
 auto ObjectLayer::clone() const -> Shared<ILayer>
 {
-  auto clone = make_shared<ObjectLayer>(*this);
+  auto other = make_shared<ObjectLayer>();
 
-  clone->set_persistent_id(kNone);
+  // The persistent ID attribute is intentionally ignored.
+  other->mDelegate = mDelegate.clone();
 
-  return clone;
+  for (const auto& [object_id, object] : mObjects) {
+    other->mObjects[object_id] = object->clone();
+  }
+
+  return other;
 }
 
 auto ObjectLayer::get_meta() -> Metadata&

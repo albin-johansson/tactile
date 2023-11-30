@@ -46,4 +46,16 @@ auto LayerBehaviorDelegate::get_meta() const -> const Metadata&
   return mMeta;
 }
 
+auto LayerBehaviorDelegate::clone() const -> LayerBehaviorDelegate
+{
+  auto other = LayerBehaviorDelegate {};
+
+  // The UUID and persistent ID attributes are intentionally ignored.
+  other.mMeta = mMeta.clone();
+  other.mOpacity = mOpacity;
+  other.mVisible = mVisible;
+
+  return other;
+}
+
 }  // namespace tactile

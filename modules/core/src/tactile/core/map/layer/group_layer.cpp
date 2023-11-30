@@ -48,9 +48,14 @@ auto GroupLayer::is_visible() const -> bool
 
 auto GroupLayer::clone() const -> Shared<ILayer>
 {
-  auto clone = make_shared<GroupLayer>(*this);
+  auto clone = make_shared<GroupLayer>();
 
-  clone->set_persistent_id(kNone);
+  clone->mDelegate = mDelegate.clone();
+  clone->mSublayers.reserve(mSublayers.size());
+
+  for (const auto& sublayer : mSublayers) {
+    clone->mSublayers.push_back(sublayer->clone());
+  }
 
   return clone;
 }

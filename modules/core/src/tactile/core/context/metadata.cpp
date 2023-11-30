@@ -46,6 +46,11 @@ void Metadata::set_name(String name)
   mName = std::move(name);
 }
 
+auto Metadata::get_uuid() const -> const UUID&
+{
+  return mUUID;
+}
+
 auto Metadata::get_name() const -> const String&
 {
   return mName;
@@ -54,6 +59,16 @@ auto Metadata::get_name() const -> const String&
 auto Metadata::property_count() const -> usize
 {
   return mProperties.size();
+}
+
+auto Metadata::clone() const -> Metadata
+{
+  auto other = Metadata {};
+
+  other.mName = mName;
+  other.mProperties = mProperties;
+
+  return other;
 }
 
 }  // namespace tactile

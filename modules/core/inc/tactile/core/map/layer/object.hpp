@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
+#include "tactile/core/container/smart_ptr.hpp"
 #include "tactile/core/container/string.hpp"
 #include "tactile/core/context/meta_context.hpp"
 #include "tactile/core/context/metadata.hpp"
@@ -126,6 +127,9 @@ class TACTILE_CORE_API Object final : public IMetaContext {
 
   [[nodiscard]]
   auto get_meta() const -> const Metadata& override;
+
+  [[nodiscard]]
+  auto clone() const -> Shared<Object>;
 
  private:
   ObjectType mType;

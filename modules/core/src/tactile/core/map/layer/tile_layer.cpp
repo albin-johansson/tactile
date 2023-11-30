@@ -201,11 +201,13 @@ auto TileLayer::is_visible() const -> bool
 
 auto TileLayer::clone() const -> Shared<ILayer>
 {
-  auto clone = make_shared<TileLayer>(*this);
+  auto other = make_shared<TileLayer>(mRowCount, mColCount);
 
-  clone->set_persistent_id(kNone);
+  // The persistent ID attribute is intentionally ignored.
+  other->mDelegate = mDelegate.clone();
+  other->mTileMatrix = mTileMatrix;
 
-  return clone;
+  return other;
 }
 
 auto TileLayer::get_meta() -> Metadata&

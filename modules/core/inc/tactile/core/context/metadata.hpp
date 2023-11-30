@@ -7,6 +7,7 @@
 #include "tactile/core/container/string_map.hpp"
 #include "tactile/core/context/attribute.hpp"
 #include "tactile/core/functional/maybe.hpp"
+#include "tactile/core/misc/uuid.hpp"
 #include "tactile/core/prelude.hpp"
 
 namespace tactile {
@@ -18,6 +19,13 @@ namespace tactile {
  */
 class TACTILE_CORE_API Metadata final {
  public:
+  TACTILE_DELETE_COPY(Metadata);
+  TACTILE_DEFAULT_MOVE(Metadata);
+
+  Metadata() = default;
+
+  ~Metadata() noexcept = default;
+
   /**
    * \brief Adds (or replaces) a property to the context.
    *
@@ -58,7 +66,9 @@ class TACTILE_CORE_API Metadata final {
   [[nodiscard]]
   auto get_property(StringView name) -> Attribute&;
 
-  /** \copydoc Metadata::get_property */
+  /**
+   * \copydoc Metadata::get_property()
+   */
   [[nodiscard]]
   auto get_property(StringView name) const -> const Attribute&;
 
@@ -68,6 +78,14 @@ class TACTILE_CORE_API Metadata final {
    * \param name the new object name.
    */
   void set_name(String name);
+
+  /**
+   * \brief Returns the associated UUID.
+   *
+   * \return a UUID.
+   */
+  [[nodiscard]]
+  auto get_uuid() const -> const UUID&;
 
   /**
    * \brief Returns the current object name.
@@ -85,7 +103,16 @@ class TACTILE_CORE_API Metadata final {
   [[nodiscard]]
   auto property_count() const -> usize;
 
+  /**
+   * \brief Returns a clone of the metadata instance with another UUID.
+   *
+   * \return a metadata instance.
+   */
+  [[nodiscard]]
+  auto clone() const -> Metadata;
+
  private:
+  UUID mUUID {UUID::generate()};
   String mName;
   StringMap<Attribute> mProperties;
 };
