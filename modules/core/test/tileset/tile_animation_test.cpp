@@ -20,9 +20,9 @@ TEST(TileAnimation, Defaults)
 /// \tests tactile::TileAnimation::get_current_frame_index
 TEST(TileAnimation, Update)
 {
-  const TileAnimationFrame frame1 {.tile_index = 10, .duration = Milliseconds {1}};
-  const TileAnimationFrame frame2 {.tile_index = 20, .duration = Milliseconds {1}};
-  const TileAnimationFrame frame3 {.tile_index = 30, .duration = Milliseconds {1}};
+  const TileAnimationFrame frame1 {TileIndex {10}, Milliseconds {1}};
+  const TileAnimationFrame frame2 {TileIndex {20}, Milliseconds {1}};
+  const TileAnimationFrame frame3 {TileIndex {30}, Milliseconds {1}};
 
   TileAnimation animation;
   animation.append_frame(frame1);
@@ -48,8 +48,8 @@ TEST(TileAnimation, Update)
 /// \tests tactile::TileAnimation::frame_count
 TEST(TileAnimation, AppendFrame)
 {
-  const TileAnimationFrame frame1 {.tile_index = 194, .duration = Milliseconds {1'000}};
-  const TileAnimationFrame frame2 {.tile_index = 943, .duration = Milliseconds {1'000}};
+  const TileAnimationFrame frame1 {TileIndex {194}, Milliseconds {1'000}};
+  const TileAnimationFrame frame2 {TileIndex {943}, Milliseconds {1'000}};
 
   TileAnimation animation;
 
@@ -67,10 +67,10 @@ TEST(TileAnimation, AppendFrame)
 /// \tests tactile::TileAnimation::frame_count
 TEST(TileAnimation, InsertFrame)
 {
-  const TileAnimationFrame frame1 {.tile_index = 123, .duration = Milliseconds {792}};
-  const TileAnimationFrame frame2 {.tile_index = 456, .duration = Milliseconds {214}};
-  const TileAnimationFrame frame3 {.tile_index = 789, .duration = Milliseconds {468}};
-  const TileAnimationFrame frame4 {.tile_index = 382, .duration = Milliseconds {159}};
+  const TileAnimationFrame frame1 {TileIndex {123}, Milliseconds {792}};
+  const TileAnimationFrame frame2 {TileIndex {456}, Milliseconds {214}};
+  const TileAnimationFrame frame3 {TileIndex {789}, Milliseconds {468}};
+  const TileAnimationFrame frame4 {TileIndex {382}, Milliseconds {159}};
 
   TileAnimation animation;
   ASSERT_EQ(animation.frame_count(), 0_uz);
@@ -113,10 +113,10 @@ TEST(TileAnimation, InsertFrame)
 /// \tests tactile::TileAnimation::frame_count
 TEST(TileAnimation, RemoveFrame)
 {
-  const TileAnimationFrame frame1 {.tile_index = 1, .duration = Milliseconds {10}};
-  const TileAnimationFrame frame2 {.tile_index = 2, .duration = Milliseconds {20}};
-  const TileAnimationFrame frame3 {.tile_index = 3, .duration = Milliseconds {30}};
-  const TileAnimationFrame frame4 {.tile_index = 4, .duration = Milliseconds {40}};
+  const TileAnimationFrame frame1 {TileIndex {1}, Milliseconds {10}};
+  const TileAnimationFrame frame2 {TileIndex {2}, Milliseconds {20}};
+  const TileAnimationFrame frame3 {TileIndex {3}, Milliseconds {30}};
+  const TileAnimationFrame frame4 {TileIndex {4}, Milliseconds {40}};
 
   TileAnimation animation;
   animation.append_frame(frame1);
@@ -149,8 +149,8 @@ TEST(TileAnimation, RemoveFrame)
 /// \tests tactile::TileAnimation::get_frame
 TEST(TileAnimation, GetFrame)
 {
-  const TileAnimationFrame frame1 {.tile_index = 100, .duration = Milliseconds::zero()};
-  const TileAnimationFrame frame2 {.tile_index = 200, .duration = Milliseconds::zero()};
+  const TileAnimationFrame frame1 {TileIndex {100}, Milliseconds::zero()};
+  const TileAnimationFrame frame2 {TileIndex {200}, Milliseconds::zero()};
 
   TileAnimation animation;
   animation.append_frame(frame1);
