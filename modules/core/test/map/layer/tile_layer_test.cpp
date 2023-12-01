@@ -5,6 +5,7 @@
 #include <gtest/gtest.h>
 
 #include "tactile/core/debug/error.hpp"
+#include "tactile/core/misc/conversion.hpp"
 
 using namespace tactile;
 using namespace tactile::int_literals;
@@ -75,8 +76,8 @@ TEST(TileLayer, GetTile)
 {
   const TileLayer layer {10_uz, 8_uz};
 
-  const auto s_row_count = static_cast<ssize>(layer.row_count());
-  const auto s_col_count = static_cast<ssize>(layer.column_count());
+  const auto s_row_count = as_signed(layer.row_count());
+  const auto s_col_count = as_signed(layer.column_count());
 
   EXPECT_EQ(layer.get_tile(TilePos {0_z, 0_z}), kEmptyTile);
   EXPECT_FALSE(layer.get_tile(TilePos {s_row_count, s_col_count}).has_value());
@@ -86,8 +87,8 @@ TEST(TileLayer, IsValidPos)
 {
   const TileLayer layer {10_uz, 8_uz};
 
-  const auto s_row_count = static_cast<ssize>(layer.row_count());
-  const auto s_col_count = static_cast<ssize>(layer.column_count());
+  const auto s_row_count = as_signed(layer.row_count());
+  const auto s_col_count = as_signed(layer.column_count());
 
   EXPECT_TRUE(layer.is_valid_pos(TilePos {0_z, 0_z}));
   EXPECT_TRUE(layer.is_valid_pos(TilePos {s_row_count - 1_z, s_col_count - 1_z}));

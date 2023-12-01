@@ -2,6 +2,8 @@
 
 #include "tactile/core/tileset/tile_animation.hpp"
 
+#include "tactile/core/misc/conversion.hpp"
+
 namespace tactile {
 
 using int_literals::operator""_uz;
@@ -29,14 +31,14 @@ void TileAnimation::insert_frame(const usize index, const TileAnimationFrame& fr
     append_frame(frame);
   }
   else if (index < mFrames.size()) {
-    mFrames.insert(mFrames.begin() + static_cast<ssize>(index), frame);
+    mFrames.insert(mFrames.begin() + as_signed(index), frame);
   }
 }
 
 void TileAnimation::remove_frame(const usize index)
 {
   if (index < mFrames.size()) {
-    mFrames.erase(mFrames.begin() + static_cast<ssize>(index));
+    mFrames.erase(mFrames.begin() + as_signed(index));
 
     // Reset the animation if we removed a frame positioned before the current frame.
     if (index <= mCurrentFrameIndex) {
