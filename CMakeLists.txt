@@ -51,12 +51,6 @@ message(DEBUG "TACTILE_RESOURCE_DIR: ${TACTILE_RESOURCE_DIR}")
 message(DEBUG "TACTILE_APP_DIR: ${TACTILE_APP_DIR}")
 message(DEBUG "TACTILE_LIB_DIR: ${TACTILE_LIB_DIR}")
 
-# Target names
-set(TACTILE_PROTO TactileProto)
-set(TACTILE_LIB TactileLib)
-set(TACTILE_EXE Tactile)
-set(TACTILE_TEST TactileTests)
-
 find_package(OpenGL REQUIRED)
 find_package(Boost REQUIRED)
 find_package(argparse CONFIG REQUIRED)
@@ -89,6 +83,12 @@ install(DIRECTORY "${TACTILE_RESOURCE_DIR}" DESTINATION "${TACTILE_BUILD_DIR}")
 add_subdirectory(modules)
 
 if (TACTILE_BUILD_LEGACY MATCHES ON)
+  # Target names
+  set(TACTILE_PROTO TactileProto)
+  set(TACTILE_LIB TactileLib)
+  set(TACTILE_EXE Tactile)
+  set(TACTILE_TEST TactileTests)
+
   add_subdirectory(source/proto)
   add_subdirectory(source/lib)
   add_subdirectory(source/app)
