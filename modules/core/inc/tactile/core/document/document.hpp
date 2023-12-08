@@ -40,7 +40,7 @@ class TACTILE_CORE_API IDocument {
    * \return a file path.
    */
   [[nodiscard]]
-  virtual auto get_path() const -> Maybe<FilePath> = 0;
+  virtual auto get_path() const -> const Maybe<FilePath>& = 0;
 };
 
 }  // namespace tactile
