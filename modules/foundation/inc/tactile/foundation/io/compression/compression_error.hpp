@@ -2,48 +2,29 @@
 
 #pragma once
 
+#include <system_error>  // error_category, error_code
+#include <utility>       // to_underlying
+
 #include "tactile/foundation/api.hpp"
-#include "tactile/foundation/debug/error_code.hpp"
-#include "tactile/foundation/functional/expected.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
 
-/**
- * \brief Provides error codes related to data compression/decompression.
- */
-class TACTILE_FOUNDATION_API CompressionErrorDomain final : public IErrorDomain {
- public:
-  enum class Error : uint32 {
-    kNoData,         ///< No data to process.
-    kInternalError,  ///< An error occurred in an internal stage (such as a library call).
-    kInvalidMode,    ///< An invalid compression mode was used.
-  };
-
-  constexpr CompressionErrorDomain() noexcept = default;
-
-  constexpr ~CompressionErrorDomain() noexcept override  // NOLINT: GCC workaround
-  {}
-
-  TACTILE_DEFAULT_COPY(CompressionErrorDomain);
-  TACTILE_DEFAULT_MOVE(CompressionErrorDomain);
-
-  [[nodiscard]]
-  TACTILE_FOUNDATION_API auto get_message(uint32 error_id) const noexcept
-      -> StringView override;
+enum class CompressionError : int {
+  kNoData,         ///< No data to process.
+  kInternalError,  ///< An error occurred in an internal stage (such as a library call).
+  kInvalidMode,    ///< An invalid compression mode was used.
 };
 
-using CompressionError = CompressionErrorDomain::Error;
-
-/**
- * \brief Convenience function for creating a compression error code.
- *
- * \param error a compression error identifier.
- *
- * \return an error code.
- */
 [[nodiscard]]
-TACTILE_FOUNDATION_API auto error(CompressionError error) noexcept
-    -> Unexpected<ErrorCode>;
+TACTILE_FOUNDATION_API auto get_compression_error_category() noexcept
+    -> const std::error_category&;
+
+[[nodiscard]]
+inline auto make_compression_error(const CompressionError error) noexcept
+    -> std::error_code
+{
+  return std::error_code {std::to_underlying(error), get_compression_error_category()};
+}
 
 }  // namespace tactile

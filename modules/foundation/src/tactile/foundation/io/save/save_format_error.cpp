@@ -2,57 +2,47 @@
 
 #include "tactile/foundation/io/save/save_format_error.hpp"
 
-#include <utility>  // to_underlying
-
 namespace tactile {
 namespace {
 
-inline constexpr SaveFormatErrorDomain kSaveFormatErrorDomain;
+class SaveFormatErrorCategory final : public std::error_category {
+ public:
+  [[nodiscard]]
+  auto name() const noexcept -> const char* override
+  {
+    return "save format";
+  }
+
+  [[nodiscard]]
+  auto message(const int value) const -> std::string override
+  {
+    switch (SaveFormatError {value}) {
+      using enum SaveFormatError;
+      case kInvalidOperation: return "an invalid operation was attempted";
+      case kUnknown: return "an unknown error occurred";
+      case kBadFile: return "could not read or save a file";
+      case kUnsupportedFormat: return "a file uses an unsupported file format";
+      case kMissingKey: return "an expected attribute was not found in a save file";
+      case kUnsupportedOrientation: return "detected an unsupported map orientation";
+      case kUnsupportedLayerType: return "detected an unsupported layer type";
+      case kUnsupportedPropertyType: return "detected an unsupported property type";
+      case kUnsupportedCompressionMode: return "detected an unsupported compression mode";
+      case kUnsupportedTileEncoding: return "detected an unsupported tile encoding";
+      case kBadColorProperty: return "detected an invalid color property";
+      case kBadTileLayerData: return "detected an invalid tile layer data";
+      case kBadCompressionMode: return "detected an invalid compression mode";
+    }
+
+    return "unknown";
+  }
+};
 
 }  // namespace
 
-auto SaveFormatErrorDomain::get_message(const uint32 error_id) const noexcept
-    -> StringView
+auto get_save_format_error_category() noexcept -> const std::error_category&
 {
-  switch (Error {error_id}) {
-    case Error::kInvalidOperation: return "An invalid operation was attempted.";
-
-    case Error::kUnknown: return "An unknown error occurred.";
-
-    case Error::kBadFile: return "Could not read/save a file.";
-
-    case Error::kUnsupportedFormat:
-      return "Tried to load a file using an unsupported file format.";
-
-    case Error::kMissingKey: return "An expected attribute was not found in a save file.";
-
-    case Error::kUnsupportedOrientation:
-      return "An unsupported map orientation was detected.";
-
-    case Error::kUnsupportedLayerType: return "An unsupported layer type was detected";
-
-    case Error::kUnsupportedPropertyType:
-      return "An unsupported property type was detected";
-
-    case Error::kUnsupportedCompressionMode:
-      return "An unsupported compression mode was detected";
-
-    case Error::kUnsupportedTileEncoding:
-      return "An unsupported tile encoding was detected";
-
-    case Error::kBadColorProperty: return "An invalid color property was detected";
-
-    case Error::kBadTileLayerData: return "Invalid tile layer data was detected";
-
-    case Error::kBadCompressionMode: return "An invalid compression mode was detected";
-  }
-
-  return "";
-}
-
-auto error(const SaveFormatError error) noexcept -> Unexpected<ErrorCode>
-{
-  return unexpected(ErrorCode {&kSaveFormatErrorDomain, std::to_underlying(error)});
+  static SaveFormatErrorCategory save_format_error_category {};
+  return save_format_error_category;
 }
 
 }  // namespace tactile

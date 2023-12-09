@@ -32,7 +32,7 @@ auto _parse_layer_type(const JSON& layer_json, LayerType& layer_type) -> Result<
       return kSuccess;
     }
 
-    return error(SaveFormatError::kUnsupportedLayerType);
+    return unexpected(make_save_format_error(SaveFormatError::kUnsupportedLayerType));
   });
 }
 
@@ -52,7 +52,8 @@ auto _parse_tile_encoding(const JSON& layer_json, ir::TileFormat& tile_format)
         else {
           TACTILE_LOG_ERROR("[TMJ] Parsed unsupported tile format encoding '{}'",
                             encoding_name);
-          return error(SaveFormatError::kUnsupportedTileEncoding);
+          return unexpected(
+              make_save_format_error(SaveFormatError::kUnsupportedTileEncoding));
         }
 
         return kSuccess;
@@ -76,7 +77,7 @@ auto _parse_compression_mode(const JSON& layer_json, ir::TileFormat& tile_format
           tile_format.compression = CompressionMode::kZstd;
         }
         else {
-          return error(SaveFormatError::kBadCompressionMode);
+          return unexpected(make_save_format_error(SaveFormatError::kBadCompressionMode));
         }
 
         return kSuccess;
@@ -100,7 +101,7 @@ auto _parse_tile_layer_csv_data(const JSON& tile_data_json, const MatrixExtent& 
       ++tile_index;
     }
     else {
-      return error(SaveFormatError::kBadTileLayerData);
+      return unexpected(make_save_format_error(SaveFormatError::kBadTileLayerData));
     }
   }
 
@@ -144,7 +145,8 @@ auto _parse_tile_layer_data(const JSON& layer_json,
                                                  layer_extent);
         }
 
-        return error(SaveFormatError::kUnsupportedTileEncoding);
+        return unexpected(
+            make_save_format_error(SaveFormatError::kUnsupportedTileEncoding));
       })
       .and_then([&](TileMatrix tile_matrix) {
         layer.tiles = std::move(tile_matrix);

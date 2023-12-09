@@ -14,10 +14,7 @@ namespace tactile {
 namespace {
 
 struct DStreamDeleter final {
-  void operator()(ZSTD_DStream* stream) noexcept
-  {
-    ZSTD_freeDStream(stream);
-  }
+  void operator()(ZSTD_DStream* stream) noexcept { ZSTD_freeDStream(stream); }
 };
 
 using UniqueDStream = Unique<ZSTD_DStream, DStreamDeleter>;
@@ -27,7 +24,7 @@ using UniqueDStream = Unique<ZSTD_DStream, DStreamDeleter>;
 auto ZstdCompressionProvider::compress(const ByteSpan data) const -> Result<ByteStream>
 {
   if (data.empty()) {
-    return error(CompressionError::kNoData);
+    return unexpected(make_compression_error(CompressionError::kNoData));
   }
 
   const auto compression_bound = ZSTD_compressBound(data.size_bytes());
@@ -44,7 +41,7 @@ auto ZstdCompressionProvider::compress(const ByteSpan data) const -> Result<Byte
   if (ZSTD_isError(written_byte_count)) {
     TACTILE_LOG_ERROR("[ZstdCompressionProvider] Compression failed: {}",
                       ZSTD_getErrorName(written_byte_count));
-    return error(CompressionError::kInternalError);
+    return unexpected(make_compression_error(CompressionError::kInternalError));
   }
 
   byte_stream.resize(written_byte_count);
@@ -56,20 +53,20 @@ auto ZstdCompressionProvider::compress(const ByteSpan data) const -> Result<Byte
 auto ZstdCompressionProvider::decompress(const ByteSpan data) const -> Result<ByteStream>
 {
   if (data.empty()) {
-    return error(CompressionError::kNoData);
+    return unexpected(make_compression_error(CompressionError::kNoData));
   }
 
   const UniqueDStream stream {ZSTD_createDStream()};
 
   if (!stream) {
     TACTILE_LOG_ERROR("Could not create Zstd decompression stream");
-    return error(CompressionError::kInternalError);
+    return unexpected(make_compression_error(CompressionError::kInternalError));
   }
 
   const auto init_result = ZSTD_initDStream(stream.get());
   if (ZSTD_isError(init_result)) {
     TACTILE_LOG_ERROR("Could not initialize Zstd decompression stream");
-    return error(CompressionError::kInternalError);
+    return unexpected(make_compression_error(CompressionError::kInternalError));
   }
 
   const auto staging_buffer_size = ZSTD_DStreamOutSize();
@@ -106,7 +103,7 @@ auto ZstdCompressionProvider::decompress(const ByteSpan data) const -> Result<By
     if (ZSTD_isError(decompress_result)) {
       TACTILE_LOG_ERROR("[ZstdCompressionProvider] Decompression failed: {}",
                         ZSTD_getErrorName(decompress_result));
-      return error(CompressionError::kInternalError);
+      return unexpected(make_compression_error(CompressionError::kInternalError));
     }
 
     byte_write_count += output_view.pos;

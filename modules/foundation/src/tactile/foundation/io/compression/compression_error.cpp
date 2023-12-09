@@ -2,30 +2,36 @@
 
 #include "tactile/foundation/io/compression/compression_error.hpp"
 
-#include <utility>  // to_underlying
-
 namespace tactile {
 namespace {
 
-inline constexpr CompressionErrorDomain kCompressionErrorDomain;
+class CompressionErrorCategory final : public std::error_category {
+ public:
+  [[nodiscard]]
+  auto name() const noexcept -> const char* override
+  {
+    return "compression";
+  }
+
+  [[nodiscard]]
+  auto message(const int value) const -> std::string override
+  {
+    switch (CompressionError {value}) {
+      case CompressionError::kNoData: return "no data to compress or decompress";
+      case CompressionError::kInternalError: return "an internal error occurred";
+      case CompressionError::kInvalidMode: return "detected an invalid compression mode";
+    }
+
+    return "unknown";
+  }
+};
 
 }  // namespace
 
-auto CompressionErrorDomain::get_message(const uint32 error_id) const noexcept
-    -> StringView
+auto get_compression_error_category() noexcept -> const std::error_category&
 {
-  switch (Error {error_id}) {
-    case Error::kNoData: return "No data to compress/decompress";
-    case Error::kInternalError: return "An internal error occurred";
-    case Error::kInvalidMode: return "An invalid compression mode was detected";
-  }
-
-  return "";
-}
-
-auto error(const CompressionError error) noexcept -> Unexpected<ErrorCode>
-{
-  return unexpected(ErrorCode {&kCompressionErrorDomain, std::to_underlying(error)});
+  static CompressionErrorCategory compression_error_category {};
+  return compression_error_category;
 }
 
 }  // namespace tactile

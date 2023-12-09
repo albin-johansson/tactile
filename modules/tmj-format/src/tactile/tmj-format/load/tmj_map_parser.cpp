@@ -21,7 +21,8 @@ auto parse_map(const JSON& json, String filename, const SaveFormatReadOptions& o
   return parse(json, "orientation", orientation)
       .and_then([&]() -> Result<void> {
         if (orientation != "orthogonal") {
-          return error(SaveFormatError::kUnsupportedOrientation);
+          return unexpected(
+              make_save_format_error(SaveFormatError::kUnsupportedOrientation));
         }
         return kSuccess;
       })

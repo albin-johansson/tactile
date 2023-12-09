@@ -84,7 +84,7 @@ auto _parse_color_value(const JSON& json, Attribute& value) -> Result<void>
     }
 
     TACTILE_LOG_ERROR("[TMJ] Invalid color property '{}'", color_code);
-    return error(SaveFormatError::kBadColorProperty);
+    return unexpected(make_save_format_error(SaveFormatError::kBadColorProperty));
   });
 }
 
@@ -131,7 +131,8 @@ auto _parse_property_type(const JSON& json, AttributeType& out_type) -> Result<v
       return kSuccess;
     }
     else {
-      return error(SaveFormatError::kUnsupportedPropertyType);
+      return unexpected(
+          make_save_format_error(SaveFormatError::kUnsupportedPropertyType));
     }
   });
 }

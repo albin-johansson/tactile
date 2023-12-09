@@ -46,7 +46,7 @@ template <typename T>
   }
 
   TACTILE_LOG_ERROR("[TMJ] Missing required JSON key '{}'", attribute_name);
-  return error(SaveFormatError::kMissingKey);
+  return unexpected(make_save_format_error(SaveFormatError::kMissingKey));
 }
 
 /**

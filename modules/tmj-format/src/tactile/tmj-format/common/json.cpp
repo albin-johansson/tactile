@@ -12,7 +12,7 @@ auto parse_json(const FilePath& path) -> Result<JSON>
     return std::move(*parsed_json);
   }
   else {
-    return error(SaveFormatError::kBadFile);
+    return unexpected(make_save_format_error(SaveFormatError::kBadFile));
   }
 }
 

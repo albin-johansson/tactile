@@ -32,14 +32,14 @@ auto SaveFormatContext::load_map(const FilePath& map_path,
         return map;
       }
       else {
-        TACTILE_LOG_ERROR("Could not load map: {}", map.error().get_message());
+        TACTILE_LOG_ERROR("Could not load map: {}", map.error().message());
         return propagate_unexpected(map);
       }
     }
   }
 
   TACTILE_LOG_ERROR("Tried to load map with unsupported format");
-  return error(SaveFormatError::kUnsupportedFormat);
+  return unexpected(make_save_format_error(SaveFormatError::kUnsupportedFormat));
 }
 
 auto SaveFormatContext::load_tileset(const FilePath& tileset_path,
@@ -56,14 +56,14 @@ auto SaveFormatContext::load_tileset(const FilePath& tileset_path,
         return tileset;
       }
       else {
-        TACTILE_LOG_ERROR("Could not load tileset: {}", tileset.error().get_message());
+        TACTILE_LOG_ERROR("Could not load tileset: {}", tileset.error().message());
         return propagate_unexpected(tileset);
       }
     }
   }
 
   TACTILE_LOG_ERROR("Tried to load tileset with unsupported format");
-  return error(SaveFormatError::kUnsupportedFormat);
+  return unexpected(make_save_format_error(SaveFormatError::kUnsupportedFormat));
 }
 
 auto SaveFormatContext::save_map(const FilePath& map_path,
@@ -84,7 +84,7 @@ auto SaveFormatContext::save_map(const FilePath& map_path,
   }
 
   TACTILE_LOG_ERROR("Tried to save map with unsupported format");
-  return error(SaveFormatError::kUnsupportedFormat);
+  return unexpected(make_save_format_error(SaveFormatError::kUnsupportedFormat));
 }
 
 auto SaveFormatContext::save_tileset(const FilePath& tileset_path,
@@ -105,7 +105,7 @@ auto SaveFormatContext::save_tileset(const FilePath& tileset_path,
   }
 
   TACTILE_LOG_ERROR("Tried to save tileset with unsupported format");
-  return error(SaveFormatError::kUnsupportedFormat);
+  return unexpected(make_save_format_error(SaveFormatError::kUnsupportedFormat));
 }
 
 void SaveFormatContext::add_format(ISaveFormat* format)

@@ -16,7 +16,7 @@ auto compress_with(const CompressionMode mode, const ByteSpan data) -> Result<By
     case CompressionMode::kZstd: return ZstdCompressionProvider {}.compress(data);
   }
 
-  return error(CompressionError::kInvalidMode);
+  return unexpected(make_compression_error(CompressionError::kInvalidMode));
 }
 
 auto decompress_with(const CompressionMode mode, const ByteSpan data)
@@ -28,7 +28,7 @@ auto decompress_with(const CompressionMode mode, const ByteSpan data)
     case CompressionMode::kZstd: return ZstdCompressionProvider {}.decompress(data);
   }
 
-  return error(CompressionError::kInvalidMode);
+  return unexpected(make_compression_error(CompressionError::kInvalidMode));
 }
 
 }  // namespace tactile

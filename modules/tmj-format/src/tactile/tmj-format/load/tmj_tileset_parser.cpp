@@ -128,7 +128,7 @@ auto parse_tileset(const JSON& json, const SaveFormatReadOptions& options)
             !std::filesystem::exists(options.base_dir / relative_image_path)) {
           TACTILE_LOG_ERROR("[TMJ] Tileset references non-existent image file: {}",
                             relative_image_path);
-          return error(SaveFormatError::kBadFile);
+          return unexpected(make_save_format_error(SaveFormatError::kBadFile));
         }
 
         tileset.image_path = std::move(relative_image_path);

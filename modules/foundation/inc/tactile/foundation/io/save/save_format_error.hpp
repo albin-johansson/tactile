@@ -2,57 +2,42 @@
 
 #pragma once
 
+#include <utility>  // to_underlying
+
 #include "tactile/foundation/api.hpp"
-#include "tactile/foundation/debug/error_code.hpp"
 #include "tactile/foundation/functional/expected.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
 
 /**
- * \brief Provides error codes used when loading and emitting save files.
+ * \brief Represents error codes used when loading and emitting save files.
  */
-class TACTILE_FOUNDATION_API SaveFormatErrorDomain final : public IErrorDomain {
- public:
-  enum class Error : uint32 {
-    kInvalidOperation,            ///< The format doesn't support the requested operation.
-    kUnknown,                     ///< An unknown error occurred.
-    kBadFile,                     ///< Something went wrong when loading or saving a file.
-    kUnsupportedFormat,           ///< Tried to load/save file with unknown format.
-    kMissingKey,                  ///< A required attribute was not found in a save file.
-    kUnsupportedOrientation,      ///< An unsupported map orientation was detected.
-    kUnsupportedLayerType,        ///< An unsupported layer type was detected.
-    kUnsupportedPropertyType,     ///< An unsupported property type was detected.
-    kUnsupportedTileEncoding,     ///< An unsupported tile data encoding was detected.
-    kUnsupportedCompressionMode,  ///< An unsupported compression mode was detected.
-    kBadColorProperty,            ///< An invalid color property value was detected.
-    kBadTileLayerData,            ///< Corrupt tile layer data was detected.
-    kBadCompressionMode,          ///< An invalid compression mode was detected.
-  };
-
-  constexpr SaveFormatErrorDomain() noexcept = default;
-
-  constexpr ~SaveFormatErrorDomain() noexcept override  // NOLINT: GCC workaround
-  {}
-
-  TACTILE_DEFAULT_COPY(SaveFormatErrorDomain);
-  TACTILE_DEFAULT_MOVE(SaveFormatErrorDomain);
-
-  [[nodiscard]]
-  auto get_message(uint32 error_id) const noexcept -> StringView override;
+enum class SaveFormatError : int {
+  kInvalidOperation,            ///< The format doesn't support the requested operation.
+  kUnknown,                     ///< An unknown error occurred.
+  kBadFile,                     ///< Something went wrong when loading or saving a file.
+  kUnsupportedFormat,           ///< Tried to load/save file with unknown format.
+  kMissingKey,                  ///< A required attribute was not found in a save file.
+  kUnsupportedOrientation,      ///< An unsupported map orientation was detected.
+  kUnsupportedLayerType,        ///< An unsupported layer type was detected.
+  kUnsupportedPropertyType,     ///< An unsupported property type was detected.
+  kUnsupportedTileEncoding,     ///< An unsupported tile data encoding was detected.
+  kUnsupportedCompressionMode,  ///< An unsupported compression mode was detected.
+  kBadColorProperty,            ///< An invalid color property value was detected.
+  kBadTileLayerData,            ///< Corrupt tile layer data was detected.
+  kBadCompressionMode,          ///< An invalid compression mode was detected.
 };
 
-using SaveFormatError = SaveFormatErrorDomain::Error;
-
-/**
- * \brief Convenience function for creating a save format error code.
- *
- * \param error a save format error identifier.
- *
- * \return an error code.
- */
 [[nodiscard]]
-TACTILE_FOUNDATION_API auto error(SaveFormatError error) noexcept
-    -> Unexpected<ErrorCode>;
+TACTILE_FOUNDATION_API auto get_save_format_error_category() noexcept
+    -> const std::error_category&;
+
+[[nodiscard]]
+inline auto make_save_format_error(const SaveFormatError error) noexcept
+    -> std::error_code
+{
+  return std::error_code {std::to_underlying(error), get_save_format_error_category()};
+}
 
 }  // namespace tactile

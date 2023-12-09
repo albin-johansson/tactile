@@ -4,6 +4,7 @@
 
 #include <exception>  // exception
 
+#include "tactile/foundation/debug/generic_error.hpp"
 #include "tactile/foundation/io/save/save_format_error.hpp"
 #include "tactile/foundation/io/stream.hpp"
 #include "tactile/foundation/log/logger.hpp"
@@ -27,11 +28,11 @@ auto TmjFormat::load_map(const FilePath& map_path,
   }
   catch (const std::exception& ex) {
     TACTILE_LOG_ERROR("[TMJ] Error reading map: {}", ex.what());
-    return error(SaveFormatError::kUnknown);
+    return unexpected(make_save_format_error(SaveFormatError::kUnknown));
   }
   catch (...) {
     TACTILE_LOG_ERROR("[TMJ] An unknown error occurred during parsing");
-    return error(SaveFormatError::kUnknown);
+    return unexpected(make_save_format_error(SaveFormatError::kUnknown));
   }
 }
 
@@ -39,7 +40,8 @@ auto TmjFormat::load_tileset(const FilePath& tileset_path,
                              const SaveFormatReadOptions& options) const
     -> Result<ir::Tileset>
 {
-  return error(SaveFormatError::kUnknown);
+  // TODO
+  return unexpected(make_generic_error(GenericError::kUnsupported));
 }
 
 auto TmjFormat::save_map(const FilePath& map_path,
@@ -65,7 +67,7 @@ auto TmjFormat::save_tileset(const FilePath& tileset_path,
                              const SaveFormatWriteOptions& options) const -> Result<void>
 {
   // TODO
-  return kSuccess;
+  return unexpected(make_generic_error(GenericError::kUnsupported));
 }
 
 auto TmjFormat::is_valid_extension(const NativeStringView extension) const -> bool
