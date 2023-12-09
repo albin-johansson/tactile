@@ -1,9 +1,9 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/foundation/io/save/save_format_manager.hpp"
-
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+
+#include "tactile/foundation/io/save/save_format_context.hpp"
 
 using namespace tactile;
 using testing::Return;
@@ -41,7 +41,7 @@ class MockSaveFormat final : public ISaveFormat {
 
 }  // namespace
 
-TEST(SaveFormatManager, LoadMap)
+TEST(SaveFormatContext, LoadMap)
 {
   MockSaveFormat save_format_x {};
   MockSaveFormat save_format_y {};
@@ -56,9 +56,9 @@ TEST(SaveFormatManager, LoadMap)
         return extension == TACTILE_NATIVE_STR(".y");
       });
 
-  SaveFormatManager save_format_manager {};
-  save_format_manager.add_format(&save_format_x);
-  save_format_manager.add_format(&save_format_y);
+  SaveFormatContext save_format_context {};
+  save_format_context.add_format(&save_format_x);
+  save_format_context.add_format(&save_format_y);
 
   EXPECT_CALL(save_format_x, is_valid_extension).WillRepeatedly(Return(false));
   EXPECT_CALL(save_format_y, is_valid_extension)
@@ -67,6 +67,6 @@ TEST(SaveFormatManager, LoadMap)
   EXPECT_CALL(save_format_x, load_map).Times(0);
   EXPECT_CALL(save_format_y, load_map).Times(1);
 
-  (void) save_format_manager.load_map("foo.w", SaveFormatReadOptions {});
-  (void) save_format_manager.load_map("foo.y", SaveFormatReadOptions {});
+  (void) save_format_context.load_map("foo.w", SaveFormatReadOptions {});
+  (void) save_format_context.load_map("foo.y", SaveFormatReadOptions {});
 }

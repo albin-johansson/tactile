@@ -16,7 +16,7 @@ namespace tactile {
 /**
  * \brief Manages map/tileset save format parser/emitter implementations.
  */
-class TACTILE_FOUNDATION_API SaveFormatManager final {
+class TACTILE_FOUNDATION_API SaveFormatContext final {
  public:
   /**
    * \brief Returns the global save format manager.
@@ -24,7 +24,7 @@ class TACTILE_FOUNDATION_API SaveFormatManager final {
    * \return a save format manager.
    */
   [[nodiscard]]
-  static auto get() noexcept -> SaveFormatManager&;
+  static auto get() noexcept -> SaveFormatContext&;
 
   /**
    * \brief Loads a map file using one of the available save format handlers.

@@ -8,7 +8,7 @@
 
 #include "tactile/foundation/container/string.hpp"
 #include "tactile/foundation/io/filesystem.hpp"
-#include "tactile/foundation/io/save/save_format_manager.hpp"
+#include "tactile/foundation/io/save/save_format_context.hpp"
 #include "test/ir_comparison.hpp"
 
 using namespace tactile;
@@ -85,7 +85,7 @@ TEST_P(EmbeddedAndExternalTilesetTest, SaveAndLoadMap)
     .strict_mode = false,
   };
 
-  const auto& save_format_manager = SaveFormatManager::get();
+  const auto& save_format_manager = SaveFormatContext::get();
   ASSERT_TRUE(save_format_manager.save_map(map_path, map, write_options).has_value());
 
   const auto parsed_map = save_format_manager.load_map(map_path, read_options);

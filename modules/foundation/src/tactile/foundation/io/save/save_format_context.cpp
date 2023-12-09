@@ -1,6 +1,6 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/foundation/io/save/save_format_manager.hpp"
+#include "tactile/foundation/io/save/save_format_context.hpp"
 
 #include <filesystem>  // create_directories
 
@@ -12,13 +12,13 @@
 
 namespace tactile {
 
-auto SaveFormatManager::get() noexcept -> SaveFormatManager&
+auto SaveFormatContext::get() noexcept -> SaveFormatContext&
 {
-  static SaveFormatManager save_format_manager;
+  static SaveFormatContext save_format_manager;
   return save_format_manager;
 }
 
-auto SaveFormatManager::load_map(const FilePath& map_path,
+auto SaveFormatContext::load_map(const FilePath& map_path,
                                  const SaveFormatReadOptions& options) const
     -> Result<ir::Map>
 {
@@ -42,7 +42,7 @@ auto SaveFormatManager::load_map(const FilePath& map_path,
   return error(SaveFormatError::kUnsupportedFormat);
 }
 
-auto SaveFormatManager::load_tileset(const FilePath& tileset_path,
+auto SaveFormatContext::load_tileset(const FilePath& tileset_path,
                                      const SaveFormatReadOptions& options) const
     -> Result<ir::Tileset>
 {
@@ -66,7 +66,7 @@ auto SaveFormatManager::load_tileset(const FilePath& tileset_path,
   return error(SaveFormatError::kUnsupportedFormat);
 }
 
-auto SaveFormatManager::save_map(const FilePath& map_path,
+auto SaveFormatContext::save_map(const FilePath& map_path,
                                  const ir::Map& map,
                                  const SaveFormatWriteOptions& options) const
     -> Result<void>
@@ -87,7 +87,7 @@ auto SaveFormatManager::save_map(const FilePath& map_path,
   return error(SaveFormatError::kUnsupportedFormat);
 }
 
-auto SaveFormatManager::save_tileset(const FilePath& tileset_path,
+auto SaveFormatContext::save_tileset(const FilePath& tileset_path,
                                      const ir::Tileset& tileset,
                                      const SaveFormatWriteOptions& options) const
     -> Result<void>
@@ -108,14 +108,14 @@ auto SaveFormatManager::save_tileset(const FilePath& tileset_path,
   return error(SaveFormatError::kUnsupportedFormat);
 }
 
-void SaveFormatManager::add_format(ISaveFormat* format)
+void SaveFormatContext::add_format(ISaveFormat* format)
 {
   if (format) {
     mFormats.push_back(format);
   }
 }
 
-void SaveFormatManager::remove_format(ISaveFormat* format) noexcept
+void SaveFormatContext::remove_format(ISaveFormat* format) noexcept
 {
   std::erase(mFormats, format);
 }

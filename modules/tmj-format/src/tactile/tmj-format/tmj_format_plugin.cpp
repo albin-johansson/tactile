@@ -4,7 +4,7 @@
 
 #include "tactile/tmj-format/tmj_format_plugin.hpp"
 
-#include "tactile/foundation/io/save/save_format_manager.hpp"
+#include "tactile/foundation/io/save/save_format_context.hpp"
 #include "tactile/foundation/log/logger.hpp"
 #include "tactile/tmj-format/tmj_format.hpp"
 
@@ -15,14 +15,14 @@ void TmjFormatPlugin::on_load()
   TACTILE_LOG_DEBUG("Loading TMJ format plugin...");
 
   mTmjFormat = make_unique<TmjFormat>();
-  SaveFormatManager::get().add_format(mTmjFormat.get());
+  SaveFormatContext::get().add_format(mTmjFormat.get());
 }
 
 void TmjFormatPlugin::on_unload() noexcept
 {
   TACTILE_LOG_DEBUG("Unloading TMJ format plugin...");
 
-  SaveFormatManager::get().remove_format(mTmjFormat.get());
+  SaveFormatContext::get().remove_format(mTmjFormat.get());
   mTmjFormat.reset();
 }
 

@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/foundation/io/save/save_format_manager.hpp"
+#include "tactile/foundation/io/save/save_format_context.hpp"
 #include "tactile/foundation/log/logger_builder.hpp"
 #include "tactile/foundation/math/rng.hpp"
 #include "tactile/foundation/misc/scope_guard.hpp"
@@ -28,7 +28,7 @@ auto main(int argc, char* argv[]) -> int
 
   tmj::TmjFormat tmj_format {};
 
-  auto& save_format_manager = SaveFormatManager::get();
+  auto& save_format_manager = SaveFormatContext::get();
   save_format_manager.add_format(&tmj_format);
 
   testing::InitGoogleTest(&argc, argv);
