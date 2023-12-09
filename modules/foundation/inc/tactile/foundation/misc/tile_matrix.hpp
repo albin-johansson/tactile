@@ -24,7 +24,7 @@ using TileMatrix = Vector<TileRow>;
 /**
  * \brief Represents the dimensions of a tile matrix.
  */
-struct TACTILE_FOUNDATION_API MatrixExtent final {
+struct MatrixExtent final {
   usize row_count {};  ///< The number of tile rows.
   usize col_count {};  ///< The number of tile columns.
 
@@ -35,7 +35,7 @@ struct TACTILE_FOUNDATION_API MatrixExtent final {
 /**
  * \brief Represents a position in a tile matrix.
  */
-struct TACTILE_FOUNDATION_API MatrixIndex final {
+struct MatrixIndex final {
   usize row {};  ///< The tile row (Y-axis) index.
   usize col {};  ///< The tile column (X-axis) index.
 

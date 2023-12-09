@@ -11,7 +11,7 @@ namespace tactile {
  * \interface IPlugin
  * \brief Interface for dynamically loaded modules, aka plugins.
  */
-class TACTILE_FOUNDATION_API IPlugin {
+class IPlugin {
  public:
   TACTILE_INTERFACE_CLASS(IPlugin);
 

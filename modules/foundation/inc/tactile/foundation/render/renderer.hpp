@@ -19,7 +19,7 @@ using ImGuiFreeFn = void(void* ptr, void* user_data);
 /**
  * \brief Contains memory allocation functions pointers used by Dear ImGui contexts.
  */
-struct TACTILE_FOUNDATION_API ImGuiAllocatorFunctions final {
+struct ImGuiAllocatorFunctions final {
   ImGuiAllocFn* alloc_fn;
   ImGuiFreeFn* free_fn;
 };
@@ -31,7 +31,7 @@ struct TACTILE_FOUNDATION_API ImGuiAllocatorFunctions final {
  * \details Every renderer backend plugin needs to provide an implementation of this
  *          interface, and register an instance of it using the `RenderContext` class.
  */
-class TACTILE_FOUNDATION_API IRenderer {
+class IRenderer {
  public:
   TACTILE_INTERFACE_CLASS(IRenderer);
 

@@ -14,7 +14,7 @@ namespace tactile {
  * \details Every renderer backend plugin needs to provide an implementation of this
  *          interface, and register an instance of it using the `RenderContext` class.
  */
-class TACTILE_FOUNDATION_API IWindow {
+class IWindow {
  public:
   TACTILE_INTERFACE_CLASS(IWindow);
 

@@ -14,7 +14,7 @@ class GroupLayer;
 /**
  * \brief Visitor type used to inspect non-const layers.
  */
-class TACTILE_CORE_API ILayerVisitor {
+class ILayerVisitor {
  public:
   TACTILE_INTERFACE_CLASS(ILayerVisitor);
 
@@ -46,7 +46,7 @@ class TACTILE_CORE_API ILayerVisitor {
 /**
  * \brief Visitor type used to inspect const layers.
  */
-class TACTILE_CORE_API IConstLayerVisitor {
+class IConstLayerVisitor {
  public:
   TACTILE_INTERFACE_CLASS(IConstLayerVisitor);
 

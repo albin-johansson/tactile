@@ -17,7 +17,7 @@ namespace tactile {
  *       calls. If a sink wants to keep a history of log messages, it has to copy the
  *       string views to ordinary strings.
  */
-struct TACTILE_FOUNDATION_API LogMessage final {
+struct LogMessage final {
   LogLevel level;              ///< The severity of the message.
   StringView prefix;           ///< A string that encodes the severity and timestamp.
   StringView text;             ///< The formatted log message.
@@ -34,7 +34,7 @@ struct TACTILE_FOUNDATION_API LogMessage final {
  *          control exactly what happens with logged messages, e.g., whether to
  *          print them to a console or store them in a file.
  */
-class TACTILE_FOUNDATION_API ILoggerSink {
+class ILoggerSink {
  public:
   TACTILE_INTERFACE_CLASS(ILoggerSink);
 

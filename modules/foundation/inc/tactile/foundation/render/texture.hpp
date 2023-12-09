@@ -12,7 +12,7 @@ namespace tactile {
 /**
  * \brief Interface for texture resources.
  */
-class TACTILE_FOUNDATION_API ITexture {
+class ITexture {
  public:
   TACTILE_INTERFACE_CLASS(ITexture);
 

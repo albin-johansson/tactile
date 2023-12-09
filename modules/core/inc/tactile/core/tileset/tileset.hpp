@@ -20,7 +20,7 @@ namespace tactile {
 /**
  * \brief Provides information needed to construct a tileset.
  */
-struct TACTILE_CORE_API TilesetCreateInfo final {
+struct TilesetCreateInfo final {
   int32 tile_count;      ///< The total number of tiles.
   int32 column_count;    ///< The number of tile columns.
   Int2 tile_size;        ///< The dimensions of each tile.

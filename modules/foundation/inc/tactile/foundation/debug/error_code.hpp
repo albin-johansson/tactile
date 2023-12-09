@@ -15,7 +15,7 @@ namespace tactile {
  *          constants, which can then safely be referenced when creating associated
  *          `ErrorCode` instances.
  */
-class TACTILE_FOUNDATION_API IErrorDomain {
+class IErrorDomain {
  public:
   TACTILE_INTERFACE_CLASS(IErrorDomain);
 

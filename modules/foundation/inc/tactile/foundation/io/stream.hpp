@@ -17,7 +17,7 @@ namespace tactile {
 /**
  * \brief Provides input stream options.
  */
-struct TACTILE_FOUNDATION_API StreamFromFileOptions final {
+struct StreamFromFileOptions final {
   bool binary_mode : 1 {false};  ///< Set to true to read binary files.
 };
 
@@ -61,7 +61,7 @@ template <typename T>
 /**
  * \brief Provides output stream options.
  */
-struct TACTILE_FOUNDATION_API StreamToFileOptions final {
+struct StreamToFileOptions final {
   int indentation {0};       ///< The amount of indentation to use (only for text files).
   bool binary_mode {false};  ///< Set to true to write binary files.
 };

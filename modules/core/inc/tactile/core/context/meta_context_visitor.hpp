@@ -21,7 +21,7 @@ class Tile;
  * \interface IMetaContextVisitor
  * \brief Interface for meta context visitors.
  */
-class TACTILE_CORE_API IMetaContextVisitor {
+class IMetaContextVisitor {
  public:
   TACTILE_INTERFACE_CLASS(IMetaContextVisitor);
 

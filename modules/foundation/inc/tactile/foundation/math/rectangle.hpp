@@ -11,7 +11,7 @@ namespace tactile {
 /**
  * \brief Represents a rectangle with integer accuracy.
  */
-struct TACTILE_FOUNDATION_API Rectangle final {
+struct Rectangle final {
   Int2 position {};
   Int2 size {};
 
@@ -21,7 +21,7 @@ struct TACTILE_FOUNDATION_API Rectangle final {
 /**
  * \brief Represents a rectangle with floating-point accuracy.
  */
-struct TACTILE_FOUNDATION_API FRectangle final {
+struct FRectangle final {
   Float2 position {};
   Float2 size {};
 

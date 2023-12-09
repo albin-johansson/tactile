@@ -21,7 +21,7 @@ namespace tactile::ir {
 /**
  * \brief Intermediate representation of an attribute with a given name.
  */
-struct TACTILE_FOUNDATION_API NamedAttribute final {
+struct NamedAttribute final {
   String name;      ///< The attribute name.
   Attribute value;  ///< The attribute value.
 
@@ -31,7 +31,7 @@ struct TACTILE_FOUNDATION_API NamedAttribute final {
 /**
  * \brief Intermediate representation of a component definition.
  */
-struct TACTILE_FOUNDATION_API Component final {
+struct Component final {
   String name;                        ///< The component name.
   Vector<NamedAttribute> attributes;  ///< The component attribute defaults.
 
@@ -41,7 +41,7 @@ struct TACTILE_FOUNDATION_API Component final {
 /**
  * \brief Intermediate representation of a component instance, attached to a meta context.
  */
-struct TACTILE_FOUNDATION_API AttachedComponent final {
+struct AttachedComponent final {
   String type;                        ///< The component type name.
   Vector<NamedAttribute> attributes;  ///< The component attributes.
 
@@ -51,7 +51,7 @@ struct TACTILE_FOUNDATION_API AttachedComponent final {
 /**
  * \brief Provides the data featured by all meta contexts.
  */
-struct TACTILE_FOUNDATION_API Metadata final {
+struct Metadata final {
   String name;                           ///< The context name.
   Vector<NamedAttribute> properties;     ///< The attached properties.
   Vector<AttachedComponent> components;  ///< The attached components.
@@ -62,7 +62,7 @@ struct TACTILE_FOUNDATION_API Metadata final {
 /**
  * \brief Intermediate representation of a layer object.
  */
-struct TACTILE_FOUNDATION_API Object final {
+struct Object final {
   Metadata meta;    ///< Metadata for the object.
   ObjectID id;      ///< The associated identifier.
   ObjectType type;  ///< The type of the object.
@@ -80,7 +80,7 @@ struct TACTILE_FOUNDATION_API Object final {
  * \brief Intermediate representation of a layer.
  * \todo Make width/height type usize
  */
-struct TACTILE_FOUNDATION_API Layer final {
+struct Layer final {
   Metadata meta;           ///< Metadata for the layer.
   int32 id;                ///< The associated identifier.
   LayerType type;          ///< The type of the layer.
@@ -98,7 +98,7 @@ struct TACTILE_FOUNDATION_API Layer final {
 /**
  * \brief Intermediate representation of a frame in a tile animation.
  */
-struct TACTILE_FOUNDATION_API AnimationFrame final {
+struct AnimationFrame final {
   TileIndex tile_index;  ///< The index of the rendered tile in the associated tileset.
   uint64 duration_ms;    ///< The duration that the frame is shown in milliseconds.
 
@@ -110,7 +110,7 @@ using TileAnimation = Vector<AnimationFrame>;
 /**
  * \brief Intermediate representation of a tile definition.
  */
-struct TACTILE_FOUNDATION_API Tile final {
+struct Tile final {
   Metadata meta;            ///< Metadata for the tile.
   TileIndex index;          ///< The index in the associated tileset.
   Vector<Object> objects;   ///< The contained objects, if any.
@@ -122,7 +122,7 @@ struct TACTILE_FOUNDATION_API Tile final {
 /**
  * \brief Intermediate representation of a tileset definition.
  */
-struct TACTILE_FOUNDATION_API Tileset final {
+struct Tileset final {
   Metadata meta;        ///< Metadata for the tileset.
   int32 tile_width;     ///< The width of tiles in the tileset.
   int32 tile_height;    ///< The height of tiles in the tileset.
@@ -139,7 +139,7 @@ struct TACTILE_FOUNDATION_API Tileset final {
 /**
  * \brief Intermediate representation of a tileset reference.
  */
-struct TACTILE_FOUNDATION_API TilesetRef final {
+struct TilesetRef final {
   Tileset tileset;       ///< The tileset definition.
   TileID first_tile_id;  ///< The first tile identifier associated with the tileset.
 
@@ -149,7 +149,7 @@ struct TACTILE_FOUNDATION_API TilesetRef final {
 /**
  * \brief Intermediate representation of a map tile format.
  */
-struct TACTILE_FOUNDATION_API TileFormat final {
+struct TileFormat final {
   TileEncoding encoding;        ///< The tile encoding strategy.
   CompressionMode compression;  ///< The tile compression strategy.
   Maybe<int32> zlib_level;      ///< The compression level (if using Zlib).
@@ -161,7 +161,7 @@ struct TACTILE_FOUNDATION_API TileFormat final {
 /**
  * \brief Intermediate representation of a map.
  */
-struct TACTILE_FOUNDATION_API Map final {
+struct Map final {
   Metadata meta;                 ///< Metadata for the map.
   usize row_count;               ///< The number of rows in each tile layer.
   usize col_count;               ///< The number of columns in each tile layer.

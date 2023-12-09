@@ -12,7 +12,7 @@ namespace tactile {
  * \interface ITool
  * \brief Interface for editor tool implementations.
  */
-class TACTILE_CORE_API ITool {
+class ITool {
  public:
   TACTILE_INTERFACE_CLASS(ITool);
 

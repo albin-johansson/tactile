@@ -14,7 +14,7 @@ class Metadata;
  * \interface IMetaContext
  * \brief Base interface for all objects that feature attached properties and components.
  */
-class TACTILE_CORE_API IMetaContext {
+class IMetaContext {
  public:
   TACTILE_INTERFACE_CLASS(IMetaContext);
 

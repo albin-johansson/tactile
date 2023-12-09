@@ -20,7 +20,7 @@ enum class MouseButton : int8 {
 /**
  * \brief Provides information about a mouse event, used by tool implementations.
  */
-struct TACTILE_CORE_API MouseEvent final {
+struct MouseEvent final {
   MouseButton button;  ///< The active mouse button.
   Float2 position;     ///< The current mouse position.
 };

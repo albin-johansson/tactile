@@ -12,7 +12,7 @@ namespace tactile {
  *
  * \brief Represents an editor action that can be repeatedly executed and reverted.
  */
-class TACTILE_CORE_API ICommand {
+class ICommand {
  public:
   TACTILE_INTERFACE_CLASS(ICommand);
 

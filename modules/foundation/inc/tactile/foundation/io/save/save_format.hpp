@@ -21,7 +21,7 @@ namespace tactile {
  *          operations, and may simply report an error instead. However, any useful
  *          implementation would of course provide at least one of these operations.
  */
-class TACTILE_FOUNDATION_API ISaveFormat {
+class ISaveFormat {
  public:
   TACTILE_INTERFACE_CLASS(ISaveFormat);
 

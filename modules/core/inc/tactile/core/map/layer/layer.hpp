@@ -17,7 +17,7 @@ class IConstLayerVisitor;
  * \interface ILayer
  * \brief The common interface for all layer variants.
  */
-class TACTILE_CORE_API ILayer : public IMetaContext {
+class ILayer : public IMetaContext {
  public:
   TACTILE_INTERFACE_CLASS(ILayer);
 

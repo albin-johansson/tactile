@@ -15,7 +15,7 @@ class TileFormat;
  * \interface IMap
  * \brief Basic interface implemented by all tilemap variations.
  */
-class TACTILE_CORE_API IMap : public IMetaContext {
+class IMap : public IMetaContext {
  public:
   TACTILE_INTERFACE_CLASS(IMap);
 

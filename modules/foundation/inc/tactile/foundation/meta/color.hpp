@@ -11,7 +11,7 @@
 
 namespace tactile {
 
-struct TACTILE_FOUNDATION_API UColor final {
+struct UColor final {
   uint8 red {};
   uint8 green {};
   uint8 blue {};
@@ -20,7 +20,7 @@ struct TACTILE_FOUNDATION_API UColor final {
   [[nodiscard]] constexpr auto operator==(const UColor&) const noexcept -> bool = default;
 };
 
-struct TACTILE_FOUNDATION_API NColor final {
+struct NColor final {
   float red {};
   float green {};
   float blue {};

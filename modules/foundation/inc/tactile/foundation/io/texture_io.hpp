@@ -14,7 +14,7 @@ namespace tactile {
 /**
  * \brief Represents a loaded image resource.
  */
-struct TACTILE_FOUNDATION_API TextureData final {
+struct TextureData final {
   Managed<uchar> pixels;
   Int2 size;
 };

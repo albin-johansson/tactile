@@ -14,7 +14,7 @@ namespace tactile {
  *
  * \note Negative indices are allowed to be able to represent offsets.
  */
-struct TACTILE_FOUNDATION_API TilePos final {
+struct TilePos final {
   ssize row {};  ///< The row index.
   ssize col {};  ///< The column index.
 

@@ -13,7 +13,7 @@ namespace tactile {
  * \interface IDocument
  * \brief Provides the common document API.
  */
-class TACTILE_CORE_API IDocument {
+class IDocument {
  public:
   TACTILE_INTERFACE_CLASS(IDocument);
 

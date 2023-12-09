@@ -13,7 +13,7 @@ namespace tactile {
 /**
  * \brief Represents a single frame in a tile animation.
  */
-struct TACTILE_CORE_API TileAnimationFrame final {
+struct TileAnimationFrame final {
   TileIndex tile_index {};   ///< The index of the shown tile.
   Milliseconds duration {};  ///< The duration that the tile is shown.
 
