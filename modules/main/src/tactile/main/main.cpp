@@ -6,6 +6,8 @@
 
 #include <SDL2/SDL.h>
 
+#include "tactile/core/editor_app.hpp"
+#include "tactile/core/engine/engine.hpp"
 #include "tactile/core/plugin/plugin_manager.hpp"
 #include "tactile/foundation/debug/terminate_handler.hpp"
 #include "tactile/foundation/io/save/save_format_context.hpp"
@@ -72,17 +74,21 @@ auto main(const int argc, char* argv[]) -> int
       return EXIT_FAILURE;
     }
 
-    auto& render_context = RenderContext::get();
-
-    if (!render_context.get_window()) {
+    auto* window = RenderContext::get().get_window();
+    if (!window) {
       TACTILE_LOG_FATAL("No window was installed");
       return EXIT_FAILURE;
     }
 
-    if (!render_context.get_renderer()) {
+    auto* renderer = RenderContext::get().get_renderer();
+    if (!renderer) {
       TACTILE_LOG_FATAL("No renderer was installed");
       return EXIT_FAILURE;
     }
+
+    EditorApp app {window, renderer};
+    Engine engine {&app, renderer};
+    engine.run();
 
     return EXIT_SUCCESS;
   }
