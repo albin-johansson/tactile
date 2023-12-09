@@ -5,6 +5,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "tactile/core/ui/fonts.hpp"
 #include "tactile/foundation/debug/validation.hpp"
 
 namespace tactile {
@@ -48,6 +49,7 @@ void EditorApp::on_update()
 
 void EditorApp::on_framebuffer_scale_changed(const float framebuffer_scale)
 {
+  try_reload_imgui_fonts(*mRenderer, 13.0f, framebuffer_scale);
 }
 
 }  // namespace tactile
