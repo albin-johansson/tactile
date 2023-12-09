@@ -1,10 +1,10 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/editor/cmd/command_stack.hpp"
+#include "tactile/core/command/command_stack.hpp"
 
-#include "tactile/core/debug/assert.hpp"
+#include "tactile/foundation/debug/assert.hpp"
 
-namespace tactile::editor {
+namespace tactile {
 
 CommandStack::CommandStack(const usize capacity)
   : mCapacity {capacity}
@@ -164,4 +164,4 @@ auto CommandStack::_get_next_command_index() const -> usize
   return mCurrentIndex.has_value() ? (*mCurrentIndex + 1) : 0;
 }
 
-}  // namespace tactile::editor
+}  // namespace tactile

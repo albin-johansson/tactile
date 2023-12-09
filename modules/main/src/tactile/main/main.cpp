@@ -7,8 +7,6 @@
 #include <SDL2/SDL.h>
 
 #include "tactile/core/plugin/plugin_manager.hpp"
-#include "tactile/editor/editor_app.hpp"
-#include "tactile/editor/engine/main_loop.hpp"
 #include "tactile/foundation/debug/terminate_handler.hpp"
 #include "tactile/foundation/io/save/save_format_context.hpp"
 #include "tactile/foundation/log/logger_builder.hpp"

@@ -19,7 +19,6 @@ target_link_libraries(${TACTILE_MAIN_TARGET}
                       PUBLIC
                       tactile::foundation
                       tactile::core
-                      tactile::editor
 
                       PRIVATE
                       SDL2::SDL2
@@ -48,7 +47,6 @@ if (TACTILE_BUILD_TESTS MATCHES ON)
                         PRIVATE
                         tactile::foundation
                         tactile::core
-                        tactile::editor
                         tactile::tiled-json-format
                         GTest::gtest
                         )

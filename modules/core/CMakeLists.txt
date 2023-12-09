@@ -16,7 +16,13 @@ tactile_prepare_target(${TACTILE_CORE_TARGET})
 
 target_compile_definitions(${TACTILE_CORE_TARGET} PRIVATE TACTILE_BUILDING_CORE)
 
-target_include_directories(${TACTILE_CORE_TARGET} PUBLIC "${TACTILE_CORE_DIR}/inc")
+target_include_directories(${TACTILE_CORE_TARGET}
+                           PUBLIC
+                           "${TACTILE_CORE_DIR}/inc"
+
+                           PRIVATE
+                           "${TACTILE_VENDOR_DIR}/fontawesome"
+                           )
 
 target_link_libraries(${TACTILE_CORE_TARGET}
                       PUBLIC

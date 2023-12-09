@@ -1,30 +1,24 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/editor/cmd/command_stack.hpp"
+#include "tactile/core/command/command_stack.hpp"
 
 #include <gtest/gtest.h>
 
 using namespace tactile;
-using namespace tactile::editor;
 using namespace tactile::int_literals;
 
 namespace {
-
-inline constexpr uint32 kCmd1 = 1;
-inline constexpr uint32 kCmd2 = 2;
 
 class C1 final : public ICommand {
  public:
   void undo() override {}
   void redo() override {}
-  [[nodiscard]] auto get_id() const -> uint32 override { return kCmd1; }
 };
 
 class C2 final : public ICommand {
  public:
   void undo() override {}
   void redo() override {}
-  [[nodiscard]] auto get_id() const -> uint32 override { return kCmd2; }
 };
 
 }  // namespace

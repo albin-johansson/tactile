@@ -5,15 +5,15 @@
 #include <concepts>  // derived_from
 #include <utility>   // move, forward
 
-#include "tactile/core/container/deque.hpp"
-#include "tactile/core/container/smart_ptr.hpp"
-#include "tactile/core/container/string.hpp"
-#include "tactile/core/functional/maybe.hpp"
-#include "tactile/core/prelude.hpp"
-#include "tactile/editor/api.hpp"
-#include "tactile/editor/cmd/command.hpp"
+#include "tactile/core/api.hpp"
+#include "tactile/core/command/command.hpp"
+#include "tactile/foundation/container/deque.hpp"
+#include "tactile/foundation/container/smart_ptr.hpp"
+#include "tactile/foundation/container/string.hpp"
+#include "tactile/foundation/functional/maybe.hpp"
+#include "tactile/foundation/prelude.hpp"
 
-namespace tactile::editor {
+namespace tactile {
 
 /**
  * \brief Manages a history of commands.
@@ -38,7 +38,7 @@ namespace tactile::editor {
  *   command stack is otherwise untouched. Similarly, if a command is repeated after being
  *   reverted, this index is incremented and shifted to the right.
  */
-class CommandStack final {
+class TACTILE_CORE_API CommandStack final {
  public:
   TACTILE_DELETE_COPY(CommandStack);
   TACTILE_DEFAULT_MOVE(CommandStack);
@@ -48,10 +48,12 @@ class CommandStack final {
    *
    * \param capacity the maximum amount of stored commands.
    */
-  TACTILE_EDITOR_API explicit CommandStack(usize capacity);
+  explicit CommandStack(usize capacity);
 
-  /** \brief Clears the command stack of all commands. */
-  TACTILE_EDITOR_API void clear();
+  /**
+   * \brief Clears the command stack of all commands.
+   */
+  void clear();
 
   /**
    * \brief Marks the current command stack state as "clean".
@@ -59,16 +61,22 @@ class CommandStack final {
    * \details The notion of a clean command stack is used to prevent unnecessary saving of
    *          files. This function should be called whenever a document is saved.
    */
-  TACTILE_EDITOR_API void mark_as_clean();
+  void mark_as_clean();
 
-  /** \brief Resets the current clean state index. */
-  TACTILE_EDITOR_API void reset_clean_index();
+  /**
+   * \brief Resets the current clean state index.
+   */
+  void reset_clean_index();
 
-  /** \brief Reverts the most recent command. */
-  TACTILE_EDITOR_API void undo();
+  /**
+   * \brief Reverts the most recent command.
+   */
+  void undo();
 
-  /** \brief Executes the most recently reverted command. */
-  TACTILE_EDITOR_API void redo();
+  /**
+   * \brief Executes the most recently reverted command.
+   */
+  void redo();
 
   /**
    * \brief Constructs a command and places it on the stack.
@@ -130,35 +138,49 @@ class CommandStack final {
    *
    * \param capacity the maximum amount of stored commands.
    */
-  TACTILE_EDITOR_API void set_capacity(usize capacity);
+  void set_capacity(usize capacity);
 
-  /** \brief Indicates whether or not the current command stack state is clean. */
+  /**
+   * \brief Indicates whether or not the current command stack state is clean.
+   */
   [[nodiscard]]
-  TACTILE_EDITOR_API auto is_clean() const -> bool;
+  auto is_clean() const -> bool;
 
-  /** \brief Indicates whether there is an undoable command. */
+  /**
+   * \brief Indicates whether there is an undoable command.
+   */
   [[nodiscard]]
-  TACTILE_EDITOR_API auto can_undo() const -> bool;
+  auto can_undo() const -> bool;
 
-  /** \brief Indicates whether there is a redoable command. */
+  /**
+   * \brief Indicates whether there is a redoable command.
+   */
   [[nodiscard]]
-  TACTILE_EDITOR_API auto can_redo() const -> bool;
+  auto can_redo() const -> bool;
 
-  /** \brief Returns the number of commands on the stack. */
+  /**
+   * \brief Returns the number of commands on the stack.
+   */
   [[nodiscard]]
-  TACTILE_EDITOR_API auto get_size() const -> usize;
+  auto get_size() const -> usize;
 
-  /** \brief Returns the current command index, if there is one. */
+  /**
+   * \brief Returns the current command index, if there is one.
+   */
   [[nodiscard]]
-  TACTILE_EDITOR_API auto get_index() const -> Maybe<usize>;
+  auto get_index() const -> Maybe<usize>;
 
-  /** \brief Returns the clean index, if there is one. */
+  /**
+   * \brief Returns the clean index, if there is one.
+   */
   [[nodiscard]]
-  TACTILE_EDITOR_API auto get_clean_index() const -> Maybe<usize>;
+  auto get_clean_index() const -> Maybe<usize>;
 
-  /** \brief Returns the maximum amount of commands that the stack can hold. */
+  /**
+   * \brief Returns the maximum amount of commands that the stack can hold.
+   */
   [[nodiscard]]
-  TACTILE_EDITOR_API auto get_capacity() const -> usize;
+  auto get_capacity() const -> usize;
 
  private:
   Deque<Unique<ICommand>> mCommands;
@@ -170,10 +192,10 @@ class CommandStack final {
   void _store(Unique<ICommand> cmd);
 
   /** \brief Removes the oldest command from the stack, i.e., the one at the bottom. */
-  TACTILE_EDITOR_API void _remove_oldest_command();
+  void _remove_oldest_command();
 
   /** \brief Removes all commands to the right of the current index (newer ones). */
-  TACTILE_EDITOR_API void _remove_commands_after_current_index();
+  void _remove_commands_after_current_index();
 
   void _reset_or_decrease_clean_index();
 
@@ -181,9 +203,9 @@ class CommandStack final {
   void _reset_or_decrease_current_index();
 
   /** \brief Shifts the current index to the right (to a newer command). */
-  TACTILE_EDITOR_API void _increase_current_index();
+  void _increase_current_index();
 
   [[nodiscard]] auto _get_next_command_index() const -> usize;
 };
 
-}  // namespace tactile::editor
+}  // namespace tactile

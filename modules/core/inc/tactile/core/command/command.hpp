@@ -2,22 +2,24 @@
 
 #pragma once
 
-#include "tactile/core/prelude.hpp"
-#include "tactile/editor/api.hpp"
+#include "tactile/core/api.hpp"
+#include "tactile/foundation/prelude.hpp"
 
-namespace tactile::editor {
+namespace tactile {
 
-class TACTILE_EDITOR_API ICommand {
+class TACTILE_CORE_API ICommand {
  public:
   TACTILE_INTERFACE_CLASS(ICommand);
 
-  /** Reverts the effects of the command. */
+  /**
+   * \brief Reverts the effects of the command.
+   */
   virtual void undo() = 0;
 
-  /** Applies the effects of the command. */
+  /**
+   * \brief Applies the effects of the command.
+   */
   virtual void redo() = 0;
-
-  [[nodiscard]] virtual auto get_id() const -> uint32 = 0;
 
   /**
    * \brief Tries to merge with another command.
@@ -30,7 +32,7 @@ class TACTILE_EDITOR_API ICommand {
    *
    * \param cmd a command to try to merge into this command, never null.
    *
-   * \return true if the command was merged; false otherwise.
+   * \return true if the command was successfully merged; false otherwise.
    */
   [[nodiscard]] virtual auto merge_with([[maybe_unused]] const ICommand* cmd) -> bool
   {
@@ -38,4 +40,4 @@ class TACTILE_EDITOR_API ICommand {
   }
 };
 
-}  // namespace tactile::editor
+}  // namespace tactile
