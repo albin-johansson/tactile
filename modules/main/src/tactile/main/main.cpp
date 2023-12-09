@@ -6,15 +6,18 @@
 
 #include <SDL2/SDL.h>
 
-#include "tactile/core/debug/log/logger_builder.hpp"
-#include "tactile/core/debug/terminate_handler.hpp"
-#include "tactile/core/io/save/save_format_manager.hpp"
-#include "tactile/core/math/rng.hpp"
-#include "tactile/core/misc/scope_guard.hpp"
-#include "tactile/core/platform/environment.hpp"
 #include "tactile/core/plugin/plugin_manager.hpp"
-#include "tactile/core/prelude.hpp"
-#include "tactile/core/render/render_context.hpp"
+#include "tactile/editor/editor_app.hpp"
+#include "tactile/editor/engine/main_loop.hpp"
+#include "tactile/foundation/debug/terminate_handler.hpp"
+#include "tactile/foundation/io/save/save_format_manager.hpp"
+#include "tactile/foundation/io/texture_io.hpp"
+#include "tactile/foundation/log/logger_builder.hpp"
+#include "tactile/foundation/math/rng.hpp"
+#include "tactile/foundation/misc/scope_guard.hpp"
+#include "tactile/foundation/platform/environment.hpp"
+#include "tactile/foundation/prelude.hpp"
+#include "tactile/foundation/render/render_context.hpp"
 
 using namespace tactile;
 
@@ -86,7 +89,7 @@ auto main(const int argc, char* argv[]) -> int
 
     return EXIT_SUCCESS;
   }
-  catch (const Error& err) {
+  catch (const RuntimeError& err) {
     TACTILE_LOG_FATAL("Unhandled exception: {}\n{}", err.what(), err.get_trace());
   }
   catch (const std::exception& ex) {

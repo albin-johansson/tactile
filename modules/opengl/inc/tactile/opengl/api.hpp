@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "tactile/core/prelude.hpp"
+#include "tactile/foundation/prelude.hpp"
 
 #ifdef TACTILE_BUILDING_OPENGL_PLUGIN
   #define TACTILE_OPENGL_API TACTILE_DLL_EXPORT

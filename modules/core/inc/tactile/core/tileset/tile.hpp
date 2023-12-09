@@ -3,16 +3,16 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/container/hash_map.hpp"
-#include "tactile/core/container/smart_ptr.hpp"
 #include "tactile/core/context/meta_context.hpp"
 #include "tactile/core/context/metadata.hpp"
-#include "tactile/core/functional/maybe.hpp"
 #include "tactile/core/map/layer/object.hpp"
-#include "tactile/core/math/rectangle.hpp"
-#include "tactile/core/misc/uuid.hpp"
-#include "tactile/core/prelude.hpp"
 #include "tactile/core/tileset/tile_animation.hpp"
+#include "tactile/foundation/container/hash_map.hpp"
+#include "tactile/foundation/container/smart_ptr.hpp"
+#include "tactile/foundation/functional/maybe.hpp"
+#include "tactile/foundation/math/rectangle.hpp"
+#include "tactile/foundation/misc/uuid.hpp"
+#include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
 

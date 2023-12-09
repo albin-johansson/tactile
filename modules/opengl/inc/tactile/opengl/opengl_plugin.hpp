@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include "tactile/core/container/smart_ptr.hpp"
-#include "tactile/core/plugin/plugin.hpp"
-#include "tactile/core/prelude.hpp"
+#include "tactile/foundation/container/smart_ptr.hpp"
+#include "tactile/foundation/plugin/plugin.hpp"
+#include "tactile/foundation/prelude.hpp"
 #include "tactile/opengl/api.hpp"
 #include "tactile/opengl/opengl_renderer.hpp"
 #include "tactile/opengl/opengl_window.hpp"

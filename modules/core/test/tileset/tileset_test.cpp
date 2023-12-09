@@ -6,7 +6,7 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/core/debug/error.hpp"
+#include "tactile/foundation/debug/error.hpp"
 #include "testutil/tileset_helpers.hpp"
 
 using namespace tactile;
@@ -100,7 +100,7 @@ TEST(Tileset, GetAppearance)
   const auto other_tile_index = tile_index + TileIndex {10};
   EXPECT_EQ(tileset.get_appearance(other_tile_index), other_tile_index);
 
-  EXPECT_THROW((void) tileset.get_appearance(TileIndex {-1}), Error);
+  EXPECT_THROW((void) tileset.get_appearance(TileIndex {-1}), RuntimeError);
 }
 
 /// \tests tactile::Tileset::find_tile
@@ -132,8 +132,8 @@ TEST(Tileset, GetTile)
   EXPECT_NE(tileset.get_tile(TileIndex {0}), nullptr);
   EXPECT_NE(tileset.get_tile(TileIndex {tileset_info.tile_count - 1}), nullptr);
 
-  EXPECT_THROW((void) tileset.get_tile(TileIndex {-1}), Error);
-  EXPECT_THROW((void) tileset.get_tile(TileIndex {tileset_info.tile_count}), Error);
+  EXPECT_THROW((void) tileset.get_tile(TileIndex {-1}), RuntimeError);
+  EXPECT_THROW((void) tileset.get_tile(TileIndex {tileset_info.tile_count}), RuntimeError);
 }
 
 /// \tests tactile::Tileset::is_valid_index

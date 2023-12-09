@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "tactile/core/io/ir.hpp"
+#include "tactile/foundation/io/ir.hpp"
 
 namespace tactile::test {
 

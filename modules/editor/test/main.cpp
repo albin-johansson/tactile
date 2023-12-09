@@ -2,8 +2,8 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/core/debug/log/logger_builder.hpp"
-#include "tactile/core/misc/scope_guard.hpp"
+#include "tactile/foundation/log/logger_builder.hpp"
+#include "tactile/foundation/misc/scope_guard.hpp"
 
 using namespace tactile;
 

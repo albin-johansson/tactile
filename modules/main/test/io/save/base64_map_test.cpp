@@ -5,10 +5,10 @@
 #include <fmt/format.h>
 #include <gtest/gtest.h>
 
-#include "tactile/core/container/string.hpp"
-#include "tactile/core/debug/error.hpp"
-#include "tactile/core/io/filesystem.hpp"
-#include "tactile/core/io/save/save_format_manager.hpp"
+#include "tactile/foundation/container/string.hpp"
+#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/io/filesystem.hpp"
+#include "tactile/foundation/io/save/save_format_manager.hpp"
 #include "test/ir_comparison.hpp"
 
 using namespace tactile;
@@ -30,7 +30,7 @@ auto _get_test_name(const CompressionMode compression_mode) -> String
     case CompressionMode::kZstd: return "zstd";
   }
 
-  throw Error {"Invalid compression mode"};
+  throw RuntimeError {"Invalid compression mode"};
 }
 
 auto operator<<(std::ostream& stream, const Base64MapTestData& data) -> std::ostream&

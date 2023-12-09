@@ -2,10 +2,11 @@
 
 #pragma once
 
-#include "tactile/core/container/string.hpp"
-#include "tactile/core/context/attribute_type.hpp"
-#include "tactile/core/io/ir.hpp"
-#include "tactile/core/prelude.hpp"
+#include "tactile/foundation/container/string.hpp"
+#include "tactile/foundation/io/ir.hpp"
+#include "tactile/foundation/meta/attribute.hpp"
+#include "tactile/foundation/meta/attribute_type.hpp"
+#include "tactile/foundation/prelude.hpp"
 #include "tactile/tmj-format/api.hpp"
 #include "tactile/tmj-format/common/json.hpp"
 

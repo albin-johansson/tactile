@@ -21,7 +21,7 @@ target_include_directories(${TACTILE_OPENGL_TARGET} PUBLIC "${TACTILE_OPENGL_DIR
 
 target_link_libraries(${TACTILE_OPENGL_TARGET}
                       PUBLIC
-                      ${TACTILE_CORE_TARGET}
+                      tactile::foundation
 
                       PRIVATE
                       SDL2::SDL2

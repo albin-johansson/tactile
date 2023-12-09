@@ -9,6 +9,7 @@ file(GLOB_RECURSE TACTILE_TMJ_FORMAT_SOURCE_FILES
      )
 
 add_library(${TACTILE_TMJ_FORMAT_TARGET} SHARED ${TACTILE_TMJ_FORMAT_SOURCE_FILES})
+add_library(tactile::tiled-json-format ALIAS ${TACTILE_TMJ_FORMAT_TARGET})
 
 tactile_prepare_target(${TACTILE_TMJ_FORMAT_TARGET})
 
@@ -21,7 +22,7 @@ target_include_directories(${TACTILE_TMJ_FORMAT_TARGET} PUBLIC "${TACTILE_TMJ_FO
 
 target_link_libraries(${TACTILE_TMJ_FORMAT_TARGET}
                       PUBLIC
-                      ${TACTILE_CORE_TARGET}
+                      tactile::foundation
                       nlohmann_json::nlohmann_json
                       )
 
@@ -44,7 +45,7 @@ if (TACTILE_BUILD_TESTS MATCHES ON)
 
   target_link_libraries(${TACTILE_TMJ_FORMAT_TEST_TARGET}
                         PRIVATE
-                        ${TACTILE_TMJ_FORMAT_TARGET}
+                        tactile::tiled-json-format
                         GTest::gtest
                         )
 

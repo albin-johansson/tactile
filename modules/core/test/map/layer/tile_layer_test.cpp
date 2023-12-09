@@ -4,8 +4,8 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/core/debug/error.hpp"
-#include "tactile/core/misc/conversion.hpp"
+#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/misc/conversion.hpp"
 
 using namespace tactile;
 using namespace tactile::int_literals;
@@ -52,8 +52,8 @@ TEST(TileLayer, Resize)
   EXPECT_EQ(layer.row_count(), 1_uz);
   EXPECT_EQ(layer.column_count(), 1_uz);
 
-  EXPECT_THROW(layer.resize(0_uz, 1_uz), Error);
-  EXPECT_THROW(layer.resize(1_uz, 0_uz), Error);
+  EXPECT_THROW(layer.resize(0_uz, 1_uz), RuntimeError);
+  EXPECT_THROW(layer.resize(1_uz, 0_uz), RuntimeError);
 }
 
 TEST(TileLayer, Flood)

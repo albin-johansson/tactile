@@ -7,8 +7,8 @@
 
 #include <fmt/std.h>
 
-#include "tactile/core/debug/log/logger.hpp"
-#include "tactile/core/io/save/save_format_error.hpp"
+#include "tactile/foundation/log/logger.hpp"
+#include "tactile/foundation/io/save/save_format_error.hpp"
 #include "tactile/tmj-format/common/json.hpp"
 #include "tactile/tmj-format/load/tmj_layer_parser.hpp"
 #include "tactile/tmj-format/load/tmj_meta_parser.hpp"

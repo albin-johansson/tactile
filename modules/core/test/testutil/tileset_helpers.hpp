@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "tactile/core/prelude.hpp"
 #include "tactile/core/tileset/tileset.hpp"
+#include "tactile/foundation/prelude.hpp"
 
 namespace tactile::test {
 

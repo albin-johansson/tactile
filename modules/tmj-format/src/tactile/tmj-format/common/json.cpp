@@ -2,7 +2,7 @@
 
 #include "tactile/tmj-format/common/json.hpp"
 
-#include "tactile/core/io/stream.hpp"
+#include "tactile/foundation/io/stream.hpp"
 
 namespace tactile::tmj {
 

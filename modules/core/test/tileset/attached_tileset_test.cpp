@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/core/debug/error.hpp"
+#include "tactile/foundation/debug/error.hpp"
 #include "testutil/tileset_helpers.hpp"
 
 using namespace tactile;

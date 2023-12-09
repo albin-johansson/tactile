@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/core/debug/error.hpp"
+#include "tactile/foundation/debug/error.hpp"
 
 using namespace tactile;
 using namespace tactile::int_literals;
@@ -28,7 +28,7 @@ TEST(TmjMetaEmitter, ToTmjName)
   EXPECT_EQ(tmj::to_tmj_name(AttributeType::kFloat3), "string");
   EXPECT_EQ(tmj::to_tmj_name(AttributeType::kFloat4), "string");
 
-  EXPECT_THROW((void) tmj::to_tmj_name(AttributeType {100}), Error);
+  EXPECT_THROW((void) tmj::to_tmj_name(AttributeType {100}), RuntimeError);
 }
 
 /// \tests tactile::tmj::to_tmj_value

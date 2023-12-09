@@ -2,12 +2,12 @@
 
 #pragma once
 
-#include "tactile/core/container/string.hpp"
-#include "tactile/core/functional/result.hpp"
-#include "tactile/core/io/filesystem.hpp"
-#include "tactile/core/io/ir.hpp"
-#include "tactile/core/io/save/save_format_options.hpp"
-#include "tactile/core/prelude.hpp"
+#include "tactile/foundation/container/string.hpp"
+#include "tactile/foundation/functional/result.hpp"
+#include "tactile/foundation/io/filesystem.hpp"
+#include "tactile/foundation/io/ir.hpp"
+#include "tactile/foundation/io/save/save_format_options.hpp"
+#include "tactile/foundation/prelude.hpp"
 #include "tactile/tmj-format/api.hpp"
 #include "tactile/tmj-format/common/json.hpp"
 

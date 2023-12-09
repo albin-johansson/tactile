@@ -3,10 +3,10 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/container/vector.hpp"
-#include "tactile/core/misc/id_types.hpp"
-#include "tactile/core/prelude.hpp"
-#include "tactile/core/type/chrono.hpp"
+#include "tactile/foundation/container/vector.hpp"
+#include "tactile/foundation/misc/chrono.hpp"
+#include "tactile/foundation/misc/id_types.hpp"
+#include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
 

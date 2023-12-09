@@ -3,9 +3,9 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/functional/maybe.hpp"
-#include "tactile/core/io/filesystem.hpp"
-#include "tactile/core/prelude.hpp"
+#include "tactile/foundation/container/file_path.hpp"
+#include "tactile/foundation/functional/maybe.hpp"
+#include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
 

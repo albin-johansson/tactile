@@ -4,13 +4,13 @@
 
 #include <utility>  // move
 
-#include "tactile/core/container/hash_map.hpp"
-#include "tactile/core/container/lookup.hpp"
-#include "tactile/core/container/string.hpp"
-#include "tactile/core/debug/assert.hpp"
-#include "tactile/core/debug/log/logger.hpp"
-#include "tactile/core/io/save/save_format_error.hpp"
-#include "tactile/core/io/tile_matrix_encoding.hpp"
+#include "tactile/foundation/container/hash_map.hpp"
+#include "tactile/foundation/container/lookup.hpp"
+#include "tactile/foundation/container/string.hpp"
+#include "tactile/foundation/debug/assert.hpp"
+#include "tactile/foundation/io/save/save_format_error.hpp"
+#include "tactile/foundation/io/tile_matrix_encoding.hpp"
+#include "tactile/foundation/log/logger.hpp"
 #include "tactile/tmj-format/load/tmj_meta_parser.hpp"
 
 namespace tactile::tmj {

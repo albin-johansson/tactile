@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include "tactile/core/functional/result.hpp"
-#include "tactile/core/io/ir.hpp"
-#include "tactile/core/prelude.hpp"
+#include "tactile/foundation/functional/result.hpp"
+#include "tactile/foundation/io/ir.hpp"
+#include "tactile/foundation/prelude.hpp"
 #include "tactile/tmj-format/api.hpp"
 #include "tactile/tmj-format/common/json.hpp"
 

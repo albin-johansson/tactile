@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include "tactile/core/container/smart_ptr.hpp"
-#include "tactile/core/io/save/save_format.hpp"
-#include "tactile/core/plugin/plugin.hpp"
-#include "tactile/core/prelude.hpp"
+#include "tactile/foundation/container/smart_ptr.hpp"
+#include "tactile/foundation/io/save/save_format.hpp"
+#include "tactile/foundation/plugin/plugin.hpp"
+#include "tactile/foundation/prelude.hpp"
 #include "tactile/tmj-format/api.hpp"
 
 namespace tactile::tmj {

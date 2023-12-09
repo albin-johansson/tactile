@@ -4,9 +4,9 @@
 
 #include <exception>  // exception
 
-#include "tactile/core/debug/log/logger.hpp"
-#include "tactile/core/io/save/save_format_error.hpp"
-#include "tactile/core/io/stream.hpp"
+#include "tactile/foundation/io/save/save_format_error.hpp"
+#include "tactile/foundation/io/stream.hpp"
+#include "tactile/foundation/log/logger.hpp"
 #include "tactile/tmj-format/common/json.hpp"
 #include "tactile/tmj-format/emit/tmj_map_emitter.hpp"
 #include "tactile/tmj-format/emit/tmj_tileset_emitter.hpp"

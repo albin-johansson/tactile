@@ -4,8 +4,8 @@
 
 #include <utility>  // move
 
-#include "tactile/core/debug/assert.hpp"
-#include "tactile/core/debug/error.hpp"
+#include "tactile/foundation/debug/assert.hpp"
+#include "tactile/foundation/debug/error.hpp"
 
 namespace tactile {
 

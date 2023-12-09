@@ -2,8 +2,11 @@
 
 #pragma once
 
-#include "tactile/core/prelude.hpp"
-#include "tactile/core/render/renderer.hpp"
+#include "tactile/foundation/container/tree_map.hpp"
+#include "tactile/foundation/container/smart_ptr.hpp"
+#include "tactile/foundation/misc/id_types.hpp"
+#include "tactile/foundation/prelude.hpp"
+#include "tactile/foundation/render/renderer.hpp"
 #include "tactile/opengl/api.hpp"
 #include "tactile/opengl/opengl_window.hpp"
 

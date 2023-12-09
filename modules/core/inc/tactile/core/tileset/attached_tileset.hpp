@@ -3,11 +3,11 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/container/smart_ptr.hpp"
-#include "tactile/core/functional/maybe.hpp"
-#include "tactile/core/misc/id_types.hpp"
-#include "tactile/core/prelude.hpp"
 #include "tactile/core/tileset/tileset.hpp"
+#include "tactile/foundation/container/smart_ptr.hpp"
+#include "tactile/foundation/functional/maybe.hpp"
+#include "tactile/foundation/misc/id_types.hpp"
+#include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
 

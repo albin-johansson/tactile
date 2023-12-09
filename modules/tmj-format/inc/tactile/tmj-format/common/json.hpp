@@ -6,11 +6,11 @@
 
 #include <nlohmann/json.hpp>
 
-#include "tactile/core/container/string.hpp"
-#include "tactile/core/debug/log/logger.hpp"
-#include "tactile/core/functional/result.hpp"
-#include "tactile/core/io/filesystem.hpp"
-#include "tactile/core/io/save/save_format_error.hpp"
+#include "tactile/foundation/container/string.hpp"
+#include "tactile/foundation/functional/result.hpp"
+#include "tactile/foundation/io/filesystem.hpp"
+#include "tactile/foundation/io/save/save_format_error.hpp"
+#include "tactile/foundation/log/logger.hpp"
 #include "tactile/tmj-format/api.hpp"
 
 namespace tactile::tmj {

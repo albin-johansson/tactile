@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include "tactile/core/container/smart_ptr.hpp"
-#include "tactile/core/prelude.hpp"
-#include "tactile/core/render/window.hpp"
+#include "tactile/foundation/container/smart_ptr.hpp"
+#include "tactile/foundation/prelude.hpp"
+#include "tactile/foundation/render/window.hpp"
 #include "tactile/opengl/api.hpp"
 
 struct SDL_Window;

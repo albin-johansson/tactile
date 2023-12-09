@@ -2,19 +2,19 @@
 
 #include "tactile/core/map/layer/tile_layer.hpp"
 
-#include "tactile/core/container/queue.hpp"
-#include "tactile/core/debug/assert.hpp"
-#include "tactile/core/debug/error.hpp"
-#include "tactile/core/functional/utility.hpp"
 #include "tactile/core/map/layer/layer_visitor.hpp"
+#include "tactile/foundation/container/queue.hpp"
+#include "tactile/foundation/debug/assert.hpp"
+#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/functional/utility.hpp"
 
 using namespace tactile::int_literals;
 
 namespace tactile {
 
 TileLayer::TileLayer(const usize row_count, const usize col_count)
-  : mRowCount {(row_count > 0) ? row_count : throw Error {"Invalid row count"}},
-    mColCount {(col_count > 0) ? col_count : throw Error {"Invalid column count"}},
+  : mRowCount {(row_count > 0) ? row_count : throw RuntimeError {"Invalid row count"}},
+    mColCount {(col_count > 0) ? col_count : throw RuntimeError {"Invalid column count"}},
     mTileMatrix {make_tile_matrix(row_count, col_count)}
 {}
 
@@ -36,11 +36,11 @@ void TileLayer::accept(IConstLayerVisitor& visitor) const
 void TileLayer::resize(const usize row_count, const usize col_count)
 {
   if (row_count < 1) {
-    throw Error {"Invalid row count"};
+    throw RuntimeError {"Invalid row count"};
   }
 
   if (col_count < 1) {
-    throw Error {"Invalid column count"};
+    throw RuntimeError {"Invalid column count"};
   }
 
   if (row_count < mRowCount) {

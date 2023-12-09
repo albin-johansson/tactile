@@ -21,7 +21,7 @@ target_include_directories(${TACTILE_CORE_TEST_TARGET}
 
 target_link_libraries(${TACTILE_CORE_TEST_TARGET}
                       PRIVATE
-                      ${TACTILE_CORE_TARGET}
+                      tactile::core
                       GTest::gmock
                       )
 

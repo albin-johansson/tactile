@@ -4,9 +4,8 @@
 
 #include "tactile/tmj-format/tmj_format_plugin.hpp"
 
-#include "tactile/core/debug/log/logger.hpp"
-#include "tactile/core/io/save/save_format_manager.hpp"
-#include "tactile/core/plugin/plugin_manager.hpp"
+#include "tactile/foundation/io/save/save_format_manager.hpp"
+#include "tactile/foundation/log/logger.hpp"
 #include "tactile/tmj-format/tmj_format.hpp"
 
 namespace tactile::tmj {

@@ -5,9 +5,10 @@
 #include <fmt/format.h>
 #include <gtest/gtest.h>
 
-#include "tactile/core/functional/maybe.hpp"
-#include "tactile/core/io/ir.hpp"
-#include "tactile/core/io/save/save_format_manager.hpp"
+#include "tactile/foundation/functional/maybe.hpp"
+#include "tactile/foundation/io/filesystem.hpp"
+#include "tactile/foundation/io/ir.hpp"
+#include "tactile/foundation/io/save/save_format_manager.hpp"
 #include "test/ir_comparison.hpp"
 
 using namespace tactile;

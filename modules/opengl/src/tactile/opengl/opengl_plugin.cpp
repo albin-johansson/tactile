@@ -5,8 +5,8 @@
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
 
-#include "tactile/core/debug/log/logger.hpp"
-#include "tactile/core/render/render_context.hpp"
+#include "tactile/foundation/log/logger.hpp"
+#include "tactile/foundation/render/render_context.hpp"
 
 namespace tactile::gl {
 namespace {

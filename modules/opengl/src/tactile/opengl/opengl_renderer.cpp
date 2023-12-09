@@ -8,18 +8,19 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl2.h>
 
-#include "tactile/core/debug/error.hpp"
-#include "tactile/core/debug/log/logger.hpp"
+#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/debug/validation.hpp"
+#include "tactile/foundation/log/logger.hpp"
 
 namespace tactile::gl {
 
 OpenGLRenderer::OpenGLRenderer(OpenGLWindow* window)
-  : mWindow {window ? window : throw Error {"Null window"}},
+  : mWindow {require_not_null(window, "invalid null window")},
     mImGuiContext {ImGui::CreateContext()}
 {
   if (!ImGui_ImplSDL2_InitForOpenGL(mWindow->get_handle(), mImGuiContext)) {
     TACTILE_LOG_FATAL("Could not initialize SDL2 ImGui backend");
-    throw Error {"Could not initialize SDL2 ImGui backend"};
+    throw RuntimeError {"Could not initialize SDL2 ImGui backend"};
   }
 
   if (!ImGui_ImplOpenGL3_Init("#version 410 core")) {
@@ -27,7 +28,7 @@ OpenGLRenderer::OpenGLRenderer(OpenGLWindow* window)
     ImGui::DestroyContext(mImGuiContext);
 
     TACTILE_LOG_FATAL("Could not initialize OpenGL ImGui backend");
-    throw Error {"Could not initialize OpenGL ImGui backend"};
+    throw RuntimeError {"Could not initialize OpenGL ImGui backend"};
   }
 }
 
@@ -72,6 +73,20 @@ void OpenGLRenderer::reload_fonts_texture()
 auto OpenGLRenderer::can_reload_fonts_texture() const -> bool
 {
   return true;
+}
+
+auto OpenGLRenderer::load_texture(const FilePath& image_path) -> OpenGLTexture*
+{
+  if (auto texture = OpenGLTexture::load(image_path)) {
+    auto [iter, _] =
+        mTextures.try_emplace(mNextTextureId,
+                              make_unique<OpenGLTexture>(std::move(*texture)));
+    mNextTextureId = TextureID {mNextTextureId.value + 1};
+
+    return iter->second.get();
+  }
+
+  return nullptr;
 }
 
 auto OpenGLRenderer::get_window() -> OpenGLWindow*

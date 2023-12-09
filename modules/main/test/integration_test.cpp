@@ -2,10 +2,10 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/core/debug/log/logger_builder.hpp"
-#include "tactile/core/io/save/save_format_manager.hpp"
-#include "tactile/core/math/rng.hpp"
-#include "tactile/core/misc/scope_guard.hpp"
+#include "tactile/foundation/io/save/save_format_manager.hpp"
+#include "tactile/foundation/log/logger_builder.hpp"
+#include "tactile/foundation/math/rng.hpp"
+#include "tactile/foundation/misc/scope_guard.hpp"
 #include "tactile/tmj-format/tmj_format.hpp"
 
 using namespace tactile;

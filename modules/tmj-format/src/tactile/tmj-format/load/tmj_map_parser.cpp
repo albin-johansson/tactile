@@ -4,7 +4,7 @@
 
 #include <utility>  // move
 
-#include "tactile/core/debug/log/logger.hpp"
+#include "tactile/foundation/log/logger.hpp"
 #include "tactile/tmj-format/load/tmj_layer_parser.hpp"
 #include "tactile/tmj-format/load/tmj_meta_parser.hpp"
 #include "tactile/tmj-format/load/tmj_tileset_parser.hpp"

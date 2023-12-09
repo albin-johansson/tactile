@@ -5,8 +5,8 @@
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
 
-#include "tactile/core/debug/error.hpp"
-#include "tactile/core/debug/log/logger.hpp"
+#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/log/logger.hpp"
 
 namespace tactile::gl {
 
@@ -31,13 +31,13 @@ OpenGLWindow::OpenGLWindow()
 {
   if (!mWindow) {
     TACTILE_LOG_FATAL("Could not create OpenGL window: {}", SDL_GetError());
-    throw Error {"Could not create OpenGL window"};
+    throw RuntimeError {"Could not create OpenGL window"};
   }
 
   mContext.reset(SDL_GL_CreateContext(mWindow.get()));
   if (!mContext) {
     TACTILE_LOG_FATAL("Could not create OpenGL context: {}", SDL_GetError());
-    throw Error {"Could not create OpenGL context"};
+    throw RuntimeError {"Could not create OpenGL context"};
   }
 
   // Enable VSync.

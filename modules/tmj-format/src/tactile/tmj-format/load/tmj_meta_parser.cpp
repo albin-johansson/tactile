@@ -4,11 +4,11 @@
 
 #include <utility>  // move
 
-#include "tactile/core/container/string.hpp"
-#include "tactile/core/context/attribute_type.hpp"
-#include "tactile/core/context/color.hpp"
-#include "tactile/core/debug/log/logger.hpp"
-#include "tactile/core/io/save/save_format_error.hpp"
+#include "tactile/foundation/container/string.hpp"
+#include "tactile/foundation/io/save/save_format_error.hpp"
+#include "tactile/foundation/log/logger.hpp"
+#include "tactile/foundation/meta/attribute_type.hpp"
+#include "tactile/foundation/meta/color.hpp"
 
 namespace tactile::tmj {
 namespace {

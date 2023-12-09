@@ -1,12 +1,12 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/container/string.hpp"
-#include "tactile/core/container/string_map.hpp"
-#include "tactile/core/context/attribute.hpp"
-#include "tactile/core/functional/maybe.hpp"
-#include "tactile/core/misc/id_types.hpp"
-#include "tactile/core/prelude.hpp"
+#include "tactile/foundation/container/string.hpp"
+#include "tactile/foundation/container/string_map.hpp"
+#include "tactile/foundation/functional/maybe.hpp"
+#include "tactile/foundation/meta/attribute.hpp"
+#include "tactile/foundation/misc/id_types.hpp"
+#include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
 

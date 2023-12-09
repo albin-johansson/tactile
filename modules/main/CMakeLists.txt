@@ -17,8 +17,9 @@ target_include_directories(${TACTILE_MAIN_TARGET} PUBLIC "${TACTILE_MAIN_DIR}/in
 
 target_link_libraries(${TACTILE_MAIN_TARGET}
                       PUBLIC
-                      ${TACTILE_CORE_TARGET}
-                      ${TACTILE_EDITOR_TARGET}
+                      tactile::foundation
+                      tactile::core
+                      tactile::editor
 
                       PRIVATE
                       SDL2::SDL2
@@ -45,9 +46,10 @@ if (TACTILE_BUILD_TESTS MATCHES ON)
   # Note, here we explicitly link plugin modules to facilitate debugging.
   target_link_libraries(${TACTILE_INTEGRATION_TEST_TARGET}
                         PRIVATE
-                        ${TACTILE_CORE_TARGET}
-                        ${TACTILE_EDITOR_TARGET}
-                        ${TACTILE_TMJ_FORMAT_TARGET}
+                        tactile::foundation
+                        tactile::core
+                        tactile::editor
+                        tactile::tiled-json-format
                         GTest::gtest
                         )
 endif ()

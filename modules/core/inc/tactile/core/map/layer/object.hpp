@@ -3,14 +3,14 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/container/smart_ptr.hpp"
-#include "tactile/core/container/string.hpp"
 #include "tactile/core/context/meta_context.hpp"
 #include "tactile/core/context/metadata.hpp"
-#include "tactile/core/functional/maybe.hpp"
-#include "tactile/core/map/layer/object_type.hpp"
-#include "tactile/core/math/vector.hpp"
-#include "tactile/core/prelude.hpp"
+#include "tactile/foundation/container/smart_ptr.hpp"
+#include "tactile/foundation/container/string.hpp"
+#include "tactile/foundation/functional/maybe.hpp"
+#include "tactile/foundation/math/vector.hpp"
+#include "tactile/foundation/misc/object_type.hpp"
+#include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
 

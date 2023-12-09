@@ -4,8 +4,8 @@
 
 #include <utility>  // move
 
-#include "tactile/core/container/lookup.hpp"
 #include "tactile/core/map/layer/layer_visitor.hpp"
+#include "tactile/foundation/container/lookup.hpp"
 
 namespace tactile {
 

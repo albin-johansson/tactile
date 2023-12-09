@@ -3,13 +3,13 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/container/vector.hpp"
 #include "tactile/core/map/layer/layer.hpp"
 #include "tactile/core/map/layer/layer_behavior_delegate.hpp"
-#include "tactile/core/misc/id_types.hpp"
-#include "tactile/core/misc/tile_matrix.hpp"
-#include "tactile/core/misc/tile_pos.hpp"
-#include "tactile/core/prelude.hpp"
+#include "tactile/foundation/container/vector.hpp"
+#include "tactile/foundation/misc/id_types.hpp"
+#include "tactile/foundation/misc/tile_matrix.hpp"
+#include "tactile/foundation/misc/tile_pos.hpp"
+#include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
 

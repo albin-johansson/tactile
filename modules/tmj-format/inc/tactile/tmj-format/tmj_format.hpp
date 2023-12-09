@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include "tactile/core/io/filesystem.hpp"
-#include "tactile/core/io/save/save_format.hpp"
-#include "tactile/core/prelude.hpp"
+#include "tactile/foundation/io/filesystem.hpp"
+#include "tactile/foundation/io/save/save_format.hpp"
+#include "tactile/foundation/prelude.hpp"
 #include "tactile/tmj-format/api.hpp"
 
 namespace tactile::tmj {

@@ -9,6 +9,7 @@ file(GLOB_RECURSE TACTILE_EDITOR_SOURCE_FILES
      )
 
 add_library(${TACTILE_EDITOR_TARGET} SHARED ${TACTILE_EDITOR_SOURCE_FILES})
+add_library(tactile::editor ALIAS ${TACTILE_EDITOR_TARGET})
 
 tactile_prepare_target(${TACTILE_EDITOR_TARGET})
 
@@ -20,11 +21,13 @@ target_compile_definitions(${TACTILE_EDITOR_TARGET}
 target_include_directories(${TACTILE_EDITOR_TARGET}
                            PUBLIC
                            "${TACTILE_EDITOR_DIR}/inc"
+                           "${TACTILE_VENDOR_DIR}/fontawesome"
                            )
 
 target_link_libraries(${TACTILE_EDITOR_TARGET}
                       PUBLIC
-                      ${TACTILE_CORE_TARGET}
+                      tactile::foundation
+                      tactile::core
 
                       PRIVATE
                       SDL2::SDL2
@@ -48,7 +51,7 @@ if (TACTILE_BUILD_TESTS MATCHES ON)
 
   target_link_libraries(${TACTILE_EDITOR_TEST_TARGET}
                         PRIVATE
-                        ${TACTILE_EDITOR_TARGET}
+                        tactile::editor
                         GTest::gtest
                         )
 

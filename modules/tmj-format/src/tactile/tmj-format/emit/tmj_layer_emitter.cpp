@@ -4,7 +4,7 @@
 
 #include <utility>  // move
 
-#include "tactile/core/io/tile_matrix_encoding.hpp"
+#include "tactile/foundation/io/tile_matrix_encoding.hpp"
 #include "tactile/tmj-format/emit/tmj_meta_emitter.hpp"
 #include "tactile/tmj-format/emit/tmj_object_emitter.hpp"
 

@@ -7,7 +7,7 @@
 
 #include <fmt/format.h>
 
-#include "tactile/core/io/stream.hpp"
+#include "tactile/foundation/io/stream.hpp"
 #include "tactile/tmj-format/emit/tmj_meta_emitter.hpp"
 #include "tactile/tmj-format/emit/tmj_tile_emitter.hpp"
 

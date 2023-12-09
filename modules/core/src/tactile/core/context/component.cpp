@@ -2,7 +2,7 @@
 
 #include <utility>  // move
 
-#include "tactile/core/container/lookup.hpp"
+#include "tactile/foundation/container/lookup.hpp"
 
 namespace tactile {
 
