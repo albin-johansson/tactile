@@ -44,7 +44,13 @@ void OpenGLPlugin::on_load()
   _set_opengl_hints();
 
   TACTILE_LOG_TRACE("Creating OpenGL window...");
-  mWindow = make_unique<OpenGLWindow>();
+
+  if (auto window = OpenGLWindow::create()) {
+    mWindow = make_unique<OpenGLWindow>(std::move(*window));
+  }
+  else {
+    return;
+  }
 
   if (!gladLoadGLLoader(&SDL_GL_GetProcAddress)) {
     TACTILE_LOG_ERROR("Could not load OpenGL functions");
@@ -52,7 +58,9 @@ void OpenGLPlugin::on_load()
   }
 
   TACTILE_LOG_TRACE("Creating OpenGL renderer...");
-  mRenderer = make_unique<OpenGLRenderer>(mWindow.get());
+  if (auto renderer = OpenGLRenderer::create(mWindow.get())) {
+    mRenderer = make_unique<OpenGLRenderer>(std::move(*renderer));
+  }
 
   TACTILE_LOG_DEBUG("GL_VERSION: {}",
                     reinterpret_cast<const char*>(glGetString(GL_VERSION)));

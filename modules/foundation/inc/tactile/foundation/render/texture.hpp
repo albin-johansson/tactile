@@ -10,6 +10,7 @@
 namespace tactile {
 
 /**
+ * \interface ITexture
  * \brief Interface for texture resources.
  */
 class ITexture {

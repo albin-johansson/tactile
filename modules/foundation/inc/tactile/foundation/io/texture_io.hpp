@@ -5,7 +5,7 @@
 #include "tactile/foundation/api.hpp"
 #include "tactile/foundation/container/file_path.hpp"
 #include "tactile/foundation/container/smart_ptr.hpp"
-#include "tactile/foundation/functional/maybe.hpp"
+#include "tactile/foundation/functional/result.hpp"
 #include "tactile/foundation/math/vector.hpp"
 #include "tactile/foundation/prelude.hpp"
 
@@ -27,6 +27,6 @@ struct TextureData final {
  * \return the loaded texture.
  */
 [[nodiscard]]
-TACTILE_FOUNDATION_API auto load_texture(const FilePath& path) -> Maybe<TextureData>;
+TACTILE_FOUNDATION_API auto load_texture(const FilePath& path) -> Result<TextureData>;
 
 }  // namespace tactile

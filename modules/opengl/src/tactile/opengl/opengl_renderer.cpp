@@ -2,6 +2,8 @@
 
 #include "tactile/opengl/opengl_renderer.hpp"
 
+#include <utility>  // exchange
+
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
 #include <imgui.h>
@@ -9,34 +11,73 @@
 #include <imgui_impl_sdl2.h>
 
 #include "tactile/foundation/debug/exception.hpp"
+#include "tactile/foundation/debug/generic_error.hpp"
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
 namespace tactile::gl {
 
-OpenGLRenderer::OpenGLRenderer(OpenGLWindow* window)
-  : mWindow {require_not_null(window, "invalid null window")},
-    mImGuiContext {ImGui::CreateContext()}
+OpenGLRenderer::OpenGLRenderer(OpenGLWindow* window, ImGuiContext* imgui_context)
+  : mWindow {window},
+    mImGuiContext {imgui_context},
+    mNextTextureId {1},
+    mPrimed {true}
+{}
+
+auto OpenGLRenderer::create(OpenGLWindow* window) -> Result<OpenGLRenderer>
 {
-  if (!ImGui_ImplSDL2_InitForOpenGL(mWindow->get_handle(), mImGuiContext)) {
-    TACTILE_LOG_FATAL("Could not initialize SDL2 ImGui backend");
-    throw Exception {"Could not initialize SDL2 ImGui backend"};
+  (void) require_not_null(window, "invalid null window");
+
+  auto* imgui_context = ImGui::CreateContext();
+  if (!imgui_context) {
+    TACTILE_LOG_ERROR("Could not create ImGui context");
+    return unexpected(make_generic_error(GenericError::kInitFailure));
+  }
+
+  if (!ImGui_ImplSDL2_InitForOpenGL(window->get_handle(), imgui_context)) {
+    TACTILE_LOG_ERROR("Could not initialize SDL2 ImGui backend");
+    return unexpected(make_generic_error(GenericError::kInitFailure));
   }
 
   if (!ImGui_ImplOpenGL3_Init("#version 410 core")) {
     ImGui_ImplSDL2_Shutdown();
-    ImGui::DestroyContext(mImGuiContext);
+    ImGui::DestroyContext(imgui_context);
 
-    TACTILE_LOG_FATAL("Could not initialize OpenGL ImGui backend");
-    throw Exception {"Could not initialize OpenGL ImGui backend"};
+    TACTILE_LOG_ERROR("Could not initialize OpenGL ImGui backend");
+    return unexpected(make_generic_error(GenericError::kInitFailure));
   }
+
+  return OpenGLRenderer {window, imgui_context};
+}
+
+OpenGLRenderer::OpenGLRenderer(OpenGLRenderer&& other) noexcept
+  : mWindow {std::exchange(other.mWindow, nullptr)},
+    mImGuiContext {std::exchange(other.mImGuiContext, nullptr)},
+    mTextures {std::exchange(other.mTextures, TextureMap {})},
+    mNextTextureId {std::exchange(other.mNextTextureId, TextureID {})},
+    mPrimed {std::exchange(other.mPrimed, false)}
+{}
+
+auto OpenGLRenderer::operator=(OpenGLRenderer&& other) noexcept -> OpenGLRenderer&
+{
+  if (this != &other) {
+    mWindow = std::exchange(other.mWindow, nullptr);
+    mImGuiContext = std::exchange(other.mImGuiContext, nullptr);
+    mTextures = std::exchange(other.mTextures, TextureMap {});
+    mNextTextureId = std::exchange(other.mNextTextureId, TextureID {});
+    mPrimed = std::exchange(other.mPrimed, false);
+  }
+
+  return *this;
 }
 
 OpenGLRenderer::~OpenGLRenderer() noexcept
 {
-  ImGui_ImplOpenGL3_Shutdown();
-  ImGui_ImplSDL2_Shutdown();
-  ImGui::DestroyContext(mImGuiContext);
+  if (mPrimed) {
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplSDL2_Shutdown();
+    ImGui::DestroyContext(mImGuiContext);
+  }
 }
 
 auto OpenGLRenderer::begin_frame() -> Result<void>

@@ -9,6 +9,7 @@ file(GLOB_RECURSE TACTILE_OPENGL_SOURCE_FILES
      )
 
 add_library(${TACTILE_OPENGL_TARGET} SHARED ${TACTILE_OPENGL_SOURCE_FILES})
+add_library(tactile::opengl ALIAS ${TACTILE_OPENGL_TARGET})
 
 tactile_prepare_target(${TACTILE_OPENGL_TARGET})
 

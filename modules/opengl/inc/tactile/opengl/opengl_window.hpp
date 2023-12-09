@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tactile/foundation/container/smart_ptr.hpp"
+#include "tactile/foundation/functional/result.hpp"
 #include "tactile/foundation/prelude.hpp"
 #include "tactile/foundation/render/window.hpp"
 #include "tactile/opengl/api.hpp"
@@ -30,10 +31,16 @@ struct TACTILE_OPENGL_API OpenGLContextDeleter final {
  */
 class TACTILE_OPENGL_API OpenGLWindow final : public IWindow {
  public:
+  using ManagedWindow = Unique<SDL_Window, SDLWindowDeleter>;
+  using ManagedContext = Unique<void, OpenGLContextDeleter>;
+
   /**
    * \brief Creates an OpenGL window and an associated OpenGL context.
+   *
+   * \return the created window.
    */
-  OpenGLWindow();
+  [[nodiscard]]
+  static auto create() -> Result<OpenGLWindow>;
 
   /**
    * \brief Swaps the active framebuffer.
@@ -55,8 +62,10 @@ class TACTILE_OPENGL_API OpenGLWindow final : public IWindow {
   auto get_handle() -> SDL_Window*;
 
  private:
-  Unique<SDL_Window, SDLWindowDeleter> mWindow;
-  Unique<void, OpenGLContextDeleter> mContext;
+  ManagedWindow mWindow;
+  ManagedContext mContext;
+
+  OpenGLWindow(ManagedWindow window, ManagedContext context);
 };
 
 }  // namespace tactile::gl

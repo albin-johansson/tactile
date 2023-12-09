@@ -7,9 +7,12 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
+#include "tactile/foundation/debug/generic_error.hpp"
+#include "tactile/foundation/log/logger.hpp"
+
 namespace tactile {
 
-auto load_texture(const FilePath& path) -> Maybe<TextureData>
+auto load_texture(const FilePath& path) -> Result<TextureData>
 {
   Managed<uchar> pixels {nullptr, [](uchar* ptr) noexcept { stbi_image_free(ptr); }};
   Int2 size {};
@@ -18,7 +21,8 @@ auto load_texture(const FilePath& path) -> Maybe<TextureData>
   pixels.reset(stbi_load(path_str.c_str(), &size.x, &size.y, nullptr, STBI_rgb_alpha));
 
   if (pixels == nullptr) {
-    return kNothing;
+    TACTILE_LOG_ERROR("Could not load texture '{}'", path.string());
+    return unexpected(make_generic_error(GenericError::kIOError));
   }
 
   return TextureData {.pixels = std::move(pixels), .size = size};
