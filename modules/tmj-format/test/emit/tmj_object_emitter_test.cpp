@@ -30,7 +30,7 @@ TEST_P(ParameterizedTmjObjectEmitterTest, EmitObject)
               },
           .components = {},
         },
-    .id = 72,
+    .id = ObjectID {72},
     .type = object_type,
     .x = 83,
     .y = -21,

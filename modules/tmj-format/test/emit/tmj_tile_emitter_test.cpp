@@ -10,7 +10,7 @@ TEST(TmjTileEmitter, EmitEmptyTileDefinition)
 {
   const ir::Tile tile {
     .meta = {},
-    .index = 182,
+    .index = TileIndex {182},
     .objects = {},
     .animation = {},
   };
@@ -35,7 +35,7 @@ TEST(TmjTileEmitter, EmitComplexTileDefinition)
               },
           .components = {},
         },
-    .index = 49,
+    .index = TileIndex {49},
     .objects =
         {
           ir::Object {},
@@ -44,10 +44,10 @@ TEST(TmjTileEmitter, EmitComplexTileDefinition)
         },
     .animation =
         {
-          ir::AnimationFrame {.tile_index = 42, .duration_ms = 500},
-          ir::AnimationFrame {.tile_index = 50, .duration_ms = 600},
-          ir::AnimationFrame {.tile_index = 93, .duration_ms = 300},
-          ir::AnimationFrame {.tile_index = 6, .duration_ms = 123},
+          ir::AnimationFrame {TileIndex {42}, 500},
+          ir::AnimationFrame {TileIndex {50}, 600},
+          ir::AnimationFrame {TileIndex {93}, 300},
+          ir::AnimationFrame {TileIndex {6}, 123},
         },
   };
 
