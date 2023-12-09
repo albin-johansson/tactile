@@ -2,6 +2,8 @@
 
 #include "tactile/core/editor_app.hpp"
 
+#include <cstdlib>  // malloc, free
+
 #include <imgui.h>
 #include <imgui_internal.h>
 
@@ -13,23 +15,23 @@ namespace tactile {
 EditorApp::EditorApp(IWindow* window, IRenderer* renderer)
   : mWindow {require_not_null(window, "null window")},
     mRenderer {require_not_null(renderer, "null renderer")}
-{}
-
-void EditorApp::on_startup()
 {
-  TACTILE_LOG_TRACE("Starting up editor...");
-
   // Install Dear ImGui context.
-  const auto imgui_allocator_functions = mRenderer->get_imgui_allocator_functions();
   ImGui::SetCurrentContext(mRenderer->get_imgui_context());
-  ImGui::SetAllocatorFunctions(imgui_allocator_functions.alloc_fn,
-                               imgui_allocator_functions.free_fn);
+  ImGui::SetAllocatorFunctions([](const usize size, void*) { return std::malloc(size); },
+                               [](void* ptr, void*) { std::free(ptr); });
 
   auto& io = ImGui::GetIO();
   io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
   auto& style = ImGui::GetStyle();
   ImGui::StyleColorsDark(&style);
+
+}
+
+void EditorApp::on_startup()
+{
+  TACTILE_LOG_TRACE("Starting up editor...");
 
   mWindow->show();
   mWindow->maximize();

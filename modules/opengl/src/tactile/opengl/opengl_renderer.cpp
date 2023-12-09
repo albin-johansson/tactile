@@ -2,6 +2,7 @@
 
 #include "tactile/opengl/opengl_renderer.hpp"
 
+#include <cstdlib>  // malloc, free
 #include <utility>  // exchange
 
 #include <SDL2/SDL.h>
@@ -10,7 +11,6 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl2.h>
 
-#include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/debug/generic_error.hpp"
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
@@ -33,6 +33,9 @@ auto OpenGLRenderer::create(OpenGLWindow* window) -> Result<OpenGLRenderer>
     TACTILE_LOG_ERROR("Could not create ImGui context");
     return unexpected(make_generic_error(GenericError::kInitFailure));
   }
+
+  ImGui::SetAllocatorFunctions([](const usize size, void*) { return std::malloc(size); },
+                               [](void* ptr, void*) { std::free(ptr); });
 
   if (!ImGui_ImplSDL2_InitForOpenGL(window->get_handle(), imgui_context)) {
     TACTILE_LOG_ERROR("Could not initialize SDL2 ImGui backend");
@@ -143,16 +146,6 @@ auto OpenGLRenderer::get_window() const -> const OpenGLWindow*
 auto OpenGLRenderer::get_imgui_context() -> ImGuiContext*
 {
   return mImGuiContext;
-}
-
-auto OpenGLRenderer::get_imgui_allocator_functions() const -> ImGuiAllocatorFunctions
-{
-  ImGuiAllocatorFunctions functions {};
-
-  void* user_data = nullptr;
-  ImGui::GetAllocatorFunctions(&functions.alloc_fn, &functions.free_fn, &user_data);
-
-  return functions;
 }
 
 }  // namespace tactile::gl

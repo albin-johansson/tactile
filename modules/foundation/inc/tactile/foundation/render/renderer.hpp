@@ -13,17 +13,6 @@ struct ImGuiContext;
 
 namespace tactile {
 
-using ImGuiAllocFn = void*(usize size, void* user_data);
-using ImGuiFreeFn = void(void* ptr, void* user_data);
-
-/**
- * \brief Contains memory allocation functions pointers used by Dear ImGui contexts.
- */
-struct ImGuiAllocatorFunctions final {
-  ImGuiAllocFn* alloc_fn;
-  ImGuiFreeFn* free_fn;
-};
-
 /**
  * \interface IRenderer
  * \brief Provides the high level renderer backend API.
@@ -99,14 +88,6 @@ class IRenderer {
    */
   [[nodiscard]]
   virtual auto get_imgui_context() -> ImGuiContext* = 0;
-
-  /**
-   * \brief Returns the memory management functions used by the associated ImGui context.
-   *
-   * \return the Dear ImGui memory management function pointers.
-   */
-  [[nodiscard]]
-  virtual auto get_imgui_allocator_functions() const -> ImGuiAllocatorFunctions = 0;
 };
 
 }  // namespace tactile

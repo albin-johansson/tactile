@@ -59,9 +59,6 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer {
   [[nodiscard]]
   auto get_imgui_context() -> ImGuiContext* override;
 
-  [[nodiscard]]
-  auto get_imgui_allocator_functions() const -> ImGuiAllocatorFunctions override;
-
  private:
   using TextureMap = TreeMap<TextureID, Unique<OpenGLTexture>>;
 
