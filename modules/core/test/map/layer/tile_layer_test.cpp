@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/misc/conversion.hpp"
 
 using namespace tactile;
@@ -52,8 +52,8 @@ TEST(TileLayer, Resize)
   EXPECT_EQ(layer.row_count(), 1_uz);
   EXPECT_EQ(layer.column_count(), 1_uz);
 
-  EXPECT_THROW(layer.resize(0_uz, 1_uz), RuntimeError);
-  EXPECT_THROW(layer.resize(1_uz, 0_uz), RuntimeError);
+  EXPECT_THROW(layer.resize(0_uz, 1_uz), Exception);
+  EXPECT_THROW(layer.resize(1_uz, 0_uz), Exception);
 }
 
 TEST(TileLayer, Flood)

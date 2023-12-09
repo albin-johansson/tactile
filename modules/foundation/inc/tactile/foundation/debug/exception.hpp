@@ -18,9 +18,9 @@ namespace tactile {
 [[nodiscard]]
 TACTILE_NOINLINE TACTILE_FOUNDATION_API auto get_stacktrace() -> String;
 
-class TACTILE_FOUNDATION_API RuntimeError final : public std::exception {
+class TACTILE_FOUNDATION_API Exception final : public std::exception {
  public:
-  explicit RuntimeError(String message);
+  explicit Exception(String message);
 
   [[nodiscard]]
   auto what() const noexcept -> const char* override;

@@ -86,7 +86,7 @@ auto main(const int argc, char* argv[]) -> int
 
     return EXIT_SUCCESS;
   }
-  catch (const RuntimeError& err) {
+  catch (const Exception& err) {
     TACTILE_LOG_FATAL("Unhandled exception: {}\n{}", err.what(), err.get_trace());
   }
   catch (const std::exception& ex) {

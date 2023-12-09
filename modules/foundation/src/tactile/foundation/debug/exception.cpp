@@ -1,6 +1,6 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/debug/exception.hpp"
 
 #include <sstream>  // stringstream
 #include <utility>  // move
@@ -19,17 +19,17 @@ auto get_stacktrace() -> String
   return stream.str();
 }
 
-RuntimeError::RuntimeError(String message)
+Exception::Exception(String message)
   : mMessage {std::move(message)},
     mTrace {get_stacktrace()}
 {}
 
-auto RuntimeError::what() const noexcept -> const char*
+auto Exception::what() const noexcept -> const char*
 {
   return mMessage.c_str();
 }
 
-auto RuntimeError::get_trace() const -> const String&
+auto Exception::get_trace() const -> const String&
 {
   return mTrace;
 }

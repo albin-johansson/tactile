@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/debug/exception.hpp"
 #include "testutil/tileset_helpers.hpp"
 
 using namespace tactile;
@@ -12,7 +12,7 @@ using namespace tactile;
 /// \tests tactile::AttachedTileset::AttachedTileset
 TEST(AttachedTileset, ConstructorWithNullTileset)
 {
-  EXPECT_THROW(AttachedTileset(nullptr, TileID {1}), RuntimeError);
+  EXPECT_THROW(AttachedTileset(nullptr, TileID {1}), Exception);
 }
 
 /// \tests tactile::AttachedTileset::to_index

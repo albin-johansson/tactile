@@ -5,12 +5,12 @@
 #include <utility>  // move
 
 #include "tactile/foundation/debug/assert.hpp"
-#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/debug/exception.hpp"
 
 namespace tactile {
 
 AttachedTileset::AttachedTileset(Shared<Tileset> tileset, const TileID first_tile_id)
-  : mTileset {tileset ? std::move(tileset) : throw RuntimeError {"Null tileset"}},
+  : mTileset {tileset ? std::move(tileset) : throw Exception {"Null tileset"}},
     mFirstTileId {first_tile_id},
     mLastTileId {first_tile_id.value + (mTileset->tile_count() - 1)}
 {}

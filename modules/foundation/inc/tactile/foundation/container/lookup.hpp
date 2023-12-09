@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
 
 namespace tactile {
@@ -61,7 +61,7 @@ template <MapLikeType T>
     return *elem;
   }
   else {
-    throw RuntimeError {"Did not find key in map"};
+    throw Exception {"Did not find key in map"};
   }
 }
 
@@ -74,7 +74,7 @@ template <MapLikeType T>
     return *elem;
   }
   else {
-    throw RuntimeError {"Did not find key in map"};
+    throw Exception {"Did not find key in map"};
   }
 }
 

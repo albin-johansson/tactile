@@ -3,7 +3,7 @@
 #include "tactile/core/tileset/tileset.hpp"
 
 #include "tactile/foundation/debug/assert.hpp"
-#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
 namespace tactile {
@@ -69,7 +69,7 @@ auto Tileset::index_of(const TilePos& pos) const -> Maybe<TileIndex>
 auto Tileset::get_appearance(const TileIndex tile_index) const -> TileIndex
 {
   if (!is_valid_index(tile_index)) {
-    throw RuntimeError {"Invalid tile index"};
+    throw Exception {"Invalid tile index"};
   }
 
   const auto raw_tile_index = static_cast<usize>(tile_index.value);
@@ -120,7 +120,7 @@ auto Tileset::get_tile(const TileIndex tile_index) -> Shared<Tile>
     return mTiles[static_cast<usize>(tile_index.value)];
   }
 
-  throw RuntimeError {"Invalid tile index"};
+  throw Exception {"Invalid tile index"};
 }
 
 auto Tileset::is_valid_index(const TileIndex tile_index) const -> bool

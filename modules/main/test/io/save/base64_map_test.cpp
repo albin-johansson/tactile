@@ -6,7 +6,7 @@
 #include <gtest/gtest.h>
 
 #include "tactile/foundation/container/string.hpp"
-#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/io/filesystem.hpp"
 #include "tactile/foundation/io/save/save_format_context.hpp"
 #include "test/ir_comparison.hpp"
@@ -30,7 +30,7 @@ auto _get_test_name(const CompressionMode compression_mode) -> String
     case CompressionMode::kZstd: return "zstd";
   }
 
-  throw RuntimeError {"Invalid compression mode"};
+  throw Exception {"Invalid compression mode"};
 }
 
 auto operator<<(std::ostream& stream, const Base64MapTestData& data) -> std::ostream&

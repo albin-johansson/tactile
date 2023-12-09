@@ -8,7 +8,7 @@
 #include "tactile/foundation/container/string.hpp"
 #include "tactile/foundation/container/string_map.hpp"
 #include "tactile/foundation/container/tree_map.hpp"
-#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/debug/exception.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -30,8 +30,8 @@ TEST(Lookup, EmptyMap)
   EXPECT_EQ(find_in(hash_map, "foo"), nullptr);
   EXPECT_EQ(find_in(tree_map, "foo"), nullptr);
 
-  EXPECT_THROW((void) lookup_in(hash_map, "foo"), RuntimeError);
-  EXPECT_THROW((void) lookup_in(tree_map, "foo"), RuntimeError);
+  EXPECT_THROW((void) lookup_in(hash_map, "foo"), Exception);
+  EXPECT_THROW((void) lookup_in(tree_map, "foo"), Exception);
 }
 
 /// \tests tactile::find_in
@@ -56,8 +56,8 @@ TEST(Lookup, LookupIn)
   EXPECT_EQ(lookup_in(map, "A"), "1");
   EXPECT_EQ(lookup_in(map, "B"), "2");
 
-  EXPECT_THROW((void) lookup_in(map, ""), RuntimeError);
-  EXPECT_THROW((void) lookup_in(map, "a"), RuntimeError);
+  EXPECT_THROW((void) lookup_in(map, ""), Exception);
+  EXPECT_THROW((void) lookup_in(map, "a"), Exception);
 }
 
 /// \tests tactile::exists_in

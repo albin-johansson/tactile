@@ -8,7 +8,7 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl2.h>
 
-#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
@@ -20,7 +20,7 @@ OpenGLRenderer::OpenGLRenderer(OpenGLWindow* window)
 {
   if (!ImGui_ImplSDL2_InitForOpenGL(mWindow->get_handle(), mImGuiContext)) {
     TACTILE_LOG_FATAL("Could not initialize SDL2 ImGui backend");
-    throw RuntimeError {"Could not initialize SDL2 ImGui backend"};
+    throw Exception {"Could not initialize SDL2 ImGui backend"};
   }
 
   if (!ImGui_ImplOpenGL3_Init("#version 410 core")) {
@@ -28,7 +28,7 @@ OpenGLRenderer::OpenGLRenderer(OpenGLWindow* window)
     ImGui::DestroyContext(mImGuiContext);
 
     TACTILE_LOG_FATAL("Could not initialize OpenGL ImGui backend");
-    throw RuntimeError {"Could not initialize OpenGL ImGui backend"};
+    throw Exception {"Could not initialize OpenGL ImGui backend"};
   }
 }
 

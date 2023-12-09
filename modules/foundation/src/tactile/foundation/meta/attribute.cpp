@@ -5,7 +5,7 @@
 #include <type_traits>  // decay_t
 #include <variant>      // visit
 
-#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/debug/exception.hpp"
 
 namespace tactile {
 
@@ -27,7 +27,7 @@ void Attribute::reset(const AttributeType type)
     case AttributeType::kObject: set(objref_type {}); return;
   }
 
-  throw RuntimeError {"Invalid attribute type"};
+  throw Exception {"Invalid attribute type"};
 }
 
 auto Attribute::is_vector() const -> bool
@@ -80,7 +80,7 @@ auto Attribute::get_type() const -> AttributeType
     case kObjRefTypeIndex: return AttributeType::kObject;
   }
 
-  throw RuntimeError {"Invalid property type"};
+  throw Exception {"Invalid property type"};
 }
 
 auto operator<<(std::ostream& stream, const Attribute& attribute) -> std::ostream&

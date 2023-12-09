@@ -2,7 +2,7 @@
 
 #include "tactile/tmj-format/emit/tmj_meta_emitter.hpp"
 
-#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/io/save/vector_serialization.hpp"
 
 namespace tactile::tmj {
@@ -25,7 +25,7 @@ auto to_tmj_name(const AttributeType attribute_type) -> StringView
     case AttributeType::kObject: return "object";
   }
 
-  throw RuntimeError {"Invalid attribute type"};
+  throw Exception {"Invalid attribute type"};
 }
 
 auto to_tmj_value(const Attribute& attribute) -> JSON
@@ -50,7 +50,7 @@ auto to_tmj_value(const Attribute& attribute) -> JSON
     case AttributeType::kObject: return JSON(attribute.as_object().value);
   }
 
-  throw RuntimeError {"Invalid attribute type"};
+  throw Exception {"Invalid attribute type"};
 }
 
 auto emit_property_array(const ir::Metadata& meta) -> JSON

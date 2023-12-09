@@ -182,91 +182,91 @@ TEST(Attribute, Set)
 TEST(Attribute, AsString)
 {
   EXPECT_EQ(Attribute {AttributeType::kStr}.as_string(), "");
-  EXPECT_THROW((void) Attribute {AttributeType::kInt}.as_string(), RuntimeError);
+  EXPECT_THROW((void) Attribute {AttributeType::kInt}.as_string(), Exception);
 }
 
 /// \tests tactile::Attribute::as_int
 TEST(Attribute, AsInt)
 {
   EXPECT_EQ(Attribute {AttributeType::kInt}.as_int(), 0);
-  EXPECT_THROW((void) Attribute {AttributeType::kColor}.as_int(), RuntimeError);
+  EXPECT_THROW((void) Attribute {AttributeType::kColor}.as_int(), Exception);
 }
 
 /// \tests tactile::Attribute::as_int2
 TEST(Attribute, AsInt2)
 {
   EXPECT_EQ(Attribute {AttributeType::kInt2}.as_int2(), Int2 {});
-  EXPECT_THROW((void) Attribute {AttributeType::kPath}.as_int2(), RuntimeError);
+  EXPECT_THROW((void) Attribute {AttributeType::kPath}.as_int2(), Exception);
 }
 
 /// \tests tactile::Attribute::as_int3
 TEST(Attribute, AsInt3)
 {
   EXPECT_EQ(Attribute {AttributeType::kInt3}.as_int3(), Int3 {});
-  EXPECT_THROW((void) Attribute {AttributeType::kInt}.as_int3(), RuntimeError);
+  EXPECT_THROW((void) Attribute {AttributeType::kInt}.as_int3(), Exception);
 }
 
 /// \tests tactile::Attribute::as_int4
 TEST(Attribute, AsInt4)
 {
   EXPECT_EQ(Attribute {AttributeType::kInt4}.as_int4(), Int4 {});
-  EXPECT_THROW((void) Attribute {AttributeType::kFloat4}.as_int4(), RuntimeError);
+  EXPECT_THROW((void) Attribute {AttributeType::kFloat4}.as_int4(), Exception);
 }
 
 /// \tests tactile::Attribute::as_float
 TEST(Attribute, AsFloat)
 {
   EXPECT_EQ(Attribute {AttributeType::kFloat}.as_float(), 0.0f);
-  EXPECT_THROW((void) Attribute {AttributeType::kStr}.as_float(), RuntimeError);
+  EXPECT_THROW((void) Attribute {AttributeType::kStr}.as_float(), Exception);
 }
 
 /// \tests tactile::Attribute::as_float2
 TEST(Attribute, AsFloat2)
 {
   EXPECT_EQ(Attribute {AttributeType::kFloat2}.as_float2(), Float2 {});
-  EXPECT_THROW((void) Attribute {AttributeType::kBool}.as_float2(), RuntimeError);
+  EXPECT_THROW((void) Attribute {AttributeType::kBool}.as_float2(), Exception);
 }
 
 /// \tests tactile::Attribute::as_float3
 TEST(Attribute, AsFloat3)
 {
   EXPECT_EQ(Attribute {AttributeType::kFloat3}.as_float3(), Float3 {});
-  EXPECT_THROW((void) Attribute {AttributeType::kObject}.as_float3(), RuntimeError);
+  EXPECT_THROW((void) Attribute {AttributeType::kObject}.as_float3(), Exception);
 }
 
 /// \tests tactile::Attribute::as_float4
 TEST(Attribute, AsFloat4)
 {
   EXPECT_EQ(Attribute {AttributeType::kFloat4}.as_float4(), Float4 {});
-  EXPECT_THROW((void) Attribute {AttributeType::kFloat3}.as_float4(), RuntimeError);
+  EXPECT_THROW((void) Attribute {AttributeType::kFloat3}.as_float4(), Exception);
 }
 
 /// \tests tactile::Attribute::as_bool
 TEST(Attribute, AsBool)
 {
   EXPECT_EQ(Attribute {AttributeType::kBool}.as_bool(), false);
-  EXPECT_THROW((void) Attribute {AttributeType::kInt}.as_bool(), RuntimeError);
+  EXPECT_THROW((void) Attribute {AttributeType::kInt}.as_bool(), Exception);
 }
 
 /// \tests tactile::Attribute::as_color
 TEST(Attribute, AsColor)
 {
   EXPECT_EQ(Attribute {AttributeType::kColor}.as_color(), UColor {});
-  EXPECT_THROW((void) Attribute {AttributeType::kStr}.as_color(), RuntimeError);
+  EXPECT_THROW((void) Attribute {AttributeType::kStr}.as_color(), Exception);
 }
 
 /// \tests tactile::Attribute::as_path
 TEST(Attribute, AsPath)
 {
   EXPECT_EQ(Attribute {AttributeType::kPath}.as_path(), FilePath {});
-  EXPECT_THROW((void) Attribute {AttributeType::kStr}.as_path(), RuntimeError);
+  EXPECT_THROW((void) Attribute {AttributeType::kStr}.as_path(), Exception);
 }
 
 /// \tests tactile::Attribute::as_object
 TEST(Attribute, AsObject)
 {
   EXPECT_EQ(Attribute {AttributeType::kObject}.as_object(), ObjectRef {});
-  EXPECT_THROW((void) Attribute {AttributeType::kInt}.as_object(), RuntimeError);
+  EXPECT_THROW((void) Attribute {AttributeType::kInt}.as_object(), Exception);
 }
 
 /// \tests tactile::Attribute::is_vector

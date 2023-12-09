@@ -11,7 +11,7 @@
 #include "tactile/foundation/container/string.hpp"
 #include "tactile/foundation/container/variant.hpp"
 #include "tactile/foundation/debug/assert.hpp"
-#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/math/vector.hpp"
 #include "tactile/foundation/meta/attribute_type.hpp"
@@ -355,7 +355,7 @@ class TACTILE_FOUNDATION_API Attribute final {
       return *value;
     }
 
-    throw RuntimeError {"Attribute type mismatch"};
+    throw Exception {"Attribute type mismatch"};
   }
 };
 

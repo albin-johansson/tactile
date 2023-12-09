@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/debug/exception.hpp"
 
 namespace tactile {
 
@@ -32,7 +32,7 @@ template <typename Ptr>
     -> Ptr
 {
   if (ptr == nullptr) {
-    throw RuntimeError {error_message};
+    throw Exception {error_message};
   }
 
   return ptr;

@@ -4,7 +4,7 @@
 
 #include <ios>  // ios
 
-#include "tactile/foundation/debug/error.hpp"
+#include "tactile/foundation/debug/exception.hpp"
 
 namespace tactile {
 
@@ -12,7 +12,7 @@ FileLoggerSink::FileLoggerSink(const FilePath& log_file)
   : mStream {log_file, std::ios::out | std::ios::trunc}
 {
   if (!mStream.good()) {
-    throw RuntimeError {"Could not open file sink output stream"};
+    throw Exception {"Could not open file sink output stream"};
   }
 }
 
