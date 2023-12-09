@@ -86,7 +86,7 @@ void expect_eq(const ir::TileFormat& format1, const ir::TileFormat& format2)
 void expect_eq(const ir::AnimationFrame& frame1, const ir::AnimationFrame& frame2)
 {
   EXPECT_EQ(frame1.tile_index, frame2.tile_index);
-  EXPECT_EQ(frame1.duration_ms, frame2.duration_ms);
+  EXPECT_EQ(frame1.duration, frame2.duration);
 }
 
 void expect_eq(const ir::Tile& tile1, const ir::Tile& tile2)

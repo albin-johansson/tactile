@@ -44,10 +44,10 @@ TEST(TmjTileEmitter, EmitComplexTileDefinition)
         },
     .animation =
         {
-          ir::AnimationFrame {TileIndex {42}, 500},
-          ir::AnimationFrame {TileIndex {50}, 600},
-          ir::AnimationFrame {TileIndex {93}, 300},
-          ir::AnimationFrame {TileIndex {6}, 123},
+          ir::AnimationFrame {TileIndex {42}, Milliseconds {500}},
+          ir::AnimationFrame {TileIndex {50}, Milliseconds {600}},
+          ir::AnimationFrame {TileIndex {93}, Milliseconds {300}},
+          ir::AnimationFrame {TileIndex {6}, Milliseconds {123}},
         },
   };
 
@@ -66,13 +66,13 @@ TEST(TmjTileEmitter, EmitComplexTileDefinition)
   const auto& animation_json = tile_json.at("animation");
   EXPECT_EQ(animation_json.size(), tile.animation.size());
   EXPECT_EQ(animation_json.at(0).at("tileid"), tile.animation.at(0).tile_index.value);
-  EXPECT_EQ(animation_json.at(0).at("duration"), tile.animation.at(0).duration_ms);
+  EXPECT_EQ(animation_json.at(0).at("duration"), tile.animation.at(0).duration.count());
   EXPECT_EQ(animation_json.at(1).at("tileid"), tile.animation.at(1).tile_index.value);
-  EXPECT_EQ(animation_json.at(1).at("duration"), tile.animation.at(1).duration_ms);
+  EXPECT_EQ(animation_json.at(1).at("duration"), tile.animation.at(1).duration.count());
   EXPECT_EQ(animation_json.at(2).at("tileid"), tile.animation.at(2).tile_index.value);
-  EXPECT_EQ(animation_json.at(2).at("duration"), tile.animation.at(2).duration_ms);
+  EXPECT_EQ(animation_json.at(2).at("duration"), tile.animation.at(2).duration.count());
   EXPECT_EQ(animation_json.at(3).at("tileid"), tile.animation.at(3).tile_index.value);
-  EXPECT_EQ(animation_json.at(3).at("duration"), tile.animation.at(3).duration_ms);
+  EXPECT_EQ(animation_json.at(3).at("duration"), tile.animation.at(3).duration.count());
 
   EXPECT_EQ(tile_json.at("objectgroup").at("objects").size(), tile.objects.size());
 }

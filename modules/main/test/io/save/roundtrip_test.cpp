@@ -116,9 +116,9 @@ inline const ir::Tile kTileset2Tile1 {
   .objects = {},
   .animation =
       {
-        ir::AnimationFrame {.tile_index = TileIndex {100}, .duration_ms = 743},
-        ir::AnimationFrame {.tile_index = TileIndex {101}, .duration_ms = 859},
-        ir::AnimationFrame {.tile_index = TileIndex {941}, .duration_ms = 457},
+        ir::AnimationFrame {TileIndex {100}, Milliseconds {743}},
+        ir::AnimationFrame {TileIndex {101}, Milliseconds {859}},
+        ir::AnimationFrame {TileIndex {941}, Milliseconds {457}},
       },
 };
 

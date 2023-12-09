@@ -36,7 +36,7 @@ auto _emit_tile_animation_array(const ir::Tile& tile) -> JSON
     auto animation_frame_json = JSON::object();
 
     animation_frame_json["tileid"] = animation_frame.tile_index.value;
-    animation_frame_json["duration"] = animation_frame.duration_ms;
+    animation_frame_json["duration"] = animation_frame.duration.count();
 
     animation_json_array += std::move(animation_frame_json);
   }

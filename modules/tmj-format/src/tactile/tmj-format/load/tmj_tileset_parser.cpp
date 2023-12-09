@@ -19,7 +19,16 @@ auto parse_tile_animation_frame(const JSON& frame_json) -> Result<ir::AnimationF
 {
   ir::AnimationFrame frame {};
   return parse(frame_json, "tileid", frame.tile_index.value)  //
-      .and_then([&] { return parse(frame_json, "duration", frame.duration_ms); })
+      .and_then([&] {
+        Milliseconds::rep duration {};
+        auto result = parse(frame_json, "duration", duration);
+
+        if (result.has_value()) {
+          frame.duration = Milliseconds {duration};
+        }
+
+        return result;
+      })
       .transform([&] { return frame; });
 }
 

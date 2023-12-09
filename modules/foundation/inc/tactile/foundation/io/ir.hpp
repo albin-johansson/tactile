@@ -9,6 +9,7 @@
 #include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/io/compression/compression_kind.hpp"
 #include "tactile/foundation/meta/attribute.hpp"
+#include "tactile/foundation/misc/chrono.hpp"
 #include "tactile/foundation/misc/id_types.hpp"
 #include "tactile/foundation/misc/layer_type.hpp"
 #include "tactile/foundation/misc/object_type.hpp"
@@ -99,8 +100,8 @@ struct Layer final {
  * \brief Intermediate representation of a frame in a tile animation.
  */
 struct AnimationFrame final {
-  TileIndex tile_index;  ///< The index of the rendered tile in the associated tileset.
-  uint64 duration_ms;    ///< The duration that the frame is shown in milliseconds.
+  TileIndex tile_index;   ///< The index of the rendered tile in the associated tileset.
+  Milliseconds duration;  ///< The duration that the frame is shown.
 
   [[nodiscard]] auto operator==(const AnimationFrame&) const -> bool = default;
 };
