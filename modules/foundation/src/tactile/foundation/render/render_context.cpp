@@ -2,6 +2,8 @@
 
 #include "tactile/foundation/render/render_context.hpp"
 
+#include "tactile/foundation/log/logger.hpp"
+
 namespace tactile {
 
 auto RenderContext::get() noexcept -> RenderContext&
@@ -12,11 +14,15 @@ auto RenderContext::get() noexcept -> RenderContext&
 
 void RenderContext::set_window(IWindow* window) noexcept
 {
+  TACTILE_LOG_DEBUG("Setting render context window to {}",
+                    static_cast<const void*>(window));
   mWindow = window;
 }
 
 void RenderContext::set_renderer(IRenderer* renderer) noexcept
 {
+  TACTILE_LOG_DEBUG("Setting render context renderer to {}",
+                    static_cast<const void*>(renderer));
   mRenderer = renderer;
 }
 
