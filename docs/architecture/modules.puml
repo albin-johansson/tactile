@@ -1,34 +1,37 @@
 @startuml
 
-[core]         #lightgreen
-[editor]       #lightgreen
-[main]         #lightgreen
+[foundation] #lightgreen
+[core]       #lightgreen
+[main]       #lightgreen
 
-[yml-format]   #lightblue
-[tmj-format]   #lightblue
-[tmx-format]   #lightblue
-[godot-format] #lightblue
-[opengl-rhi]   #lightblue
-[vulkan-rhi]   #lightblue
+package "Plugins" {
+  [tactile-yml-format]  #lightblue
+  [tiled-json-format]   #lightblue
+  [tiled-xml-format]    #lightblue
+  [godot3-scene-format] #lightblue
 
-database "proto" {
+  [opengl-renderer] #lightblue
+  [vulkan-renderer] #lightblue
 }
 
-[editor] .up.> "proto"
-[editor] .up.> [core]
+database "proto"
 
-[yml-format]   .up.> [core]
-[tmj-format]   .up.> [core]
-[tmx-format]   .up.> [core]
-[godot-format] .up.> [core]
-[opengl-rhi]   .up.> [core]
-[vulkan-rhi]   .up.> [core]
+"tactile-yml-format" -[hidden]- "tiled-json-format"
+"tiled-json-format"  -[hidden]- "tiled-xml-format"
+"tiled-xml-format"   -[hidden]- "godot3-scene-format"
+"opengl-renderer"    -[hidden]- "vulkan-renderer"
 
-[main]  .up.> [editor]
-[main] ..up.> [core]
+"foundation" <.. "core"
+"foundation" <.. "main"
+"foundation" <.. "Plugins"
 
-note right of [core]: The core module is always used by all other modules.
-note right of [main]: Provides the main function.\nLocates and loads plugin modules dynamically at runtime.
+"proto" <.. "core"
+
+"core"    <..  "main"
+"Plugins" <... "main"
+
+note left of "foundation": This module is used by all other modules.
+note right of "main": Provides the main function.\nLocates and loads plugins at runtime.
 
 note "Mandatory modules are shown in green.\nPlugin modules are shown in light blue." as N1
 
