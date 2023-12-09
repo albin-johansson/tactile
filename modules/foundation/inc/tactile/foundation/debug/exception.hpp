@@ -10,14 +10,6 @@
 
 namespace tactile {
 
-/**
- * \brief Captures and returns the current call stack.
- *
- * \return the call stack encoded in a string.
- */
-[[nodiscard]]
-TACTILE_NOINLINE TACTILE_FOUNDATION_API auto get_stacktrace() -> String;
-
 class TACTILE_FOUNDATION_API Exception final : public std::exception {
  public:
   explicit Exception(String message);

@@ -2,22 +2,11 @@
 
 #include "tactile/foundation/debug/exception.hpp"
 
-#include <sstream>  // stringstream
 #include <utility>  // move
 
-#include <boost/stacktrace.hpp>
+#include "tactile/foundation/debug/stacktrace.hpp"
 
 namespace tactile {
-
-auto get_stacktrace() -> String
-{
-  const boost::stacktrace::stacktrace trace;
-
-  std::stringstream stream;
-  stream << trace;
-
-  return stream.str();
-}
 
 Exception::Exception(String message)
   : mMessage {std::move(message)},
