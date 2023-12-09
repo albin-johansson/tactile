@@ -1,40 +1,41 @@
 project(tactile-modules CXX)
 
-set(TACTILE_COMPILE_OPTIONS)
-set(TACTILE_LINK_OPTIONS)
-
 if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-  set(TACTILE_COMPILE_OPTIONS
-      /EHsc
-      /MP
-      /W4
-      /bigobj
-      /permissive-
-      /Zc:preprocessor
-      /Zc:__cplusplus
-      /wd4251
-      /wd4275
-      )
+  list(APPEND TACTILE_COMPILE_OPTIONS
+       /EHsc
+       /MP
+       /W4
+       /bigobj
+       /permissive-
+       /Zc:preprocessor
+       /Zc:__cplusplus
+       /wd4251
+       /wd4275
+       )
 else ()
-  set(TACTILE_COMPILE_OPTIONS
-      -fvisibility=hidden
-      -Wall
-      -Wextra
-      -Wpedantic
-      -Wconversion
-      -Wsign-conversion
-      -Wswitch-enum
-      )
+  list(APPEND TACTILE_COMPILE_OPTIONS
+       -fvisibility=hidden
+       -Wall
+       -Wextra
+       -Wpedantic
+       -Wconversion
+       -Wsign-conversion
+       -Wswitch-enum
+       )
 
-  if (TACTILE_USE_SANITIZERS MATCHES ON)
-    list(APPEND TACTILE_COMPILE_OPTIONS
-         -fno-omit-frame-pointer
-         -fsanitize=address
-         )
-    list(APPEND TACTILE_COMPILE_OPTIONS
-         -fno-omit-frame-pointer
-         -fsanitize=address
-         )
+  if (TACTILE_USE_ADDRESS_SANITIZER MATCHES ON)
+    if (NOT MSVC)
+      list(APPEND TACTILE_COMPILE_OPTIONS
+           -fsanitize=address
+           -fno-sanitize-recover
+           -fno-omit-frame-pointer
+           )
+      list(APPEND TACTILE_LINK_OPTIONS
+           -fsanitize=address
+           -fno-sanitize-recover
+           -fno-omit-frame-pointer
+           )
+    endif ()
   endif ()
 endif ()
 
@@ -90,15 +91,22 @@ function(tactile_prepare_target target)
                         CXX_EXTENSIONS OFF
                         CXX_STANDARD_REQUIRED ON
                         POSITION_INDEPENDENT_CODE ON
-                        INTERPROCEDURAL_OPTIMIZATION ${TACTILE_USE_LTO}
-                        RUNTIME_OUTPUT_DIRECTORY ${TACTILE_BUILD_DIR}
-                        ARCHIVE_OUTPUT_DIRECTORY ${TACTILE_BUILD_DIR}
-                        LIBRARY_OUTPUT_DIRECTORY ${TACTILE_BUILD_DIR}
+                        INTERPROCEDURAL_OPTIMIZATION "${TACTILE_USE_LTO}"
+                        RUNTIME_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
+                        ARCHIVE_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
+                        LIBRARY_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
                         )
 
-  target_compile_options(${target} PRIVATE ${TACTILE_COMPILE_OPTIONS})
-  target_link_options(${target} PRIVATE ${TACTILE_LINK_OPTIONS})
-  target_precompile_headers(${target} PRIVATE ${TACTILE_PRECOMPILED_HEADERS})
+  target_compile_options(${target} PRIVATE "${TACTILE_COMPILE_OPTIONS}")
+  target_link_options(${target} PRIVATE "${TACTILE_LINK_OPTIONS}")
+
+  target_precompile_headers(${target} PRIVATE "${TACTILE_PRECOMPILED_HEADERS}")
+
+  if (TACTILE_USE_ADDRESS_SANITIZER MATCHES ON)
+    if (NOT MSVC)
+      target_link_libraries(${target} PRIVATE -fsanitize=address)
+    endif ()
+  endif ()
 endfunction()
 
 function(tactile_set_output_dir target directory)
