@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-#include "testutil/meta_context_visitor_tester.hpp"
+#include "testutil/meta_context_helpers.hpp"
 
 using namespace tactile;
 
