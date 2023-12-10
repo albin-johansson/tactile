@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package tactile.proto;
+
+enum OverlayPos {
+  OVERLAY_POS_TOP_LEFT = 0;
+  OVERLAY_POS_TOP_RIGHT = 1;
+  OVERLAY_POS_BOTTOM_LEFT = 2;
+  OVERLAY_POS_BOTTOM_RIGHT = 3;
+}
+
+enum Lang {
+  LANG_EN = 0;
+  LANG_EN_GB = 1;
+  LANG_SV = 2;
+}
+
+enum Theme {
+  reserved 9;  // THEME_DIAMOND
+  reserved 13; // THEME_VANILLA
+
+  THEME_DEAR_DARK = 0;
+  THEME_DEAR_LIGHT = 1;
+  THEME_RUBY = 2;
+  THEME_SAPPHIRE = 3;
+  THEME_EMERALD = 4;
+  THEME_AMETHYST = 5;
+  THEME_AMBER = 6;
+  THEME_NOCTURNAL = 7;
+  THEME_ASH = 8;
+  THEME_JOKER = 10;
+  THEME_RASPBERRY = 11;
+  THEME_STEALTH = 12;
+  THEME_GASOLINE = 14;
+  THEME_BUMBLEBEE = 15;
+  THEME_LAVENDER = 16;
+  THEME_FROST = 17;
+  THEME_ROSE = 18;
+}
+
+// Remember to keep these values synced with tactile::SaveFormat!
+enum SaveFormat {
+  SAVE_FORMAT_TACTILE_YAML = 0;
+  SAVE_FORMAT_TILED_JSON = 1;
+  SAVE_FORMAT_TILED_XML = 2;
+}
+
+message Color {
+  optional uint32 red = 1;
+  optional uint32 green = 2;
+  optional uint32 blue = 3;
+  optional uint32 alpha = 4;
+}
+
+message Settings {
+  reserved 16; // string preferred_format
+
+  optional Theme theme = 1;
+  optional int32 theme_saturation = 10;
+
+  optional Lang language = 8;
+
+  optional int32 preferred_tile_width = 2;
+  optional int32 preferred_tile_height = 3;
+
+  optional Color viewport_background = 4;
+  optional Color grid_color = 9;
+
+  optional SaveFormat preferred_format = 33;
+  optional uint64 command_capacity = 17;
+
+  optional bool show_grid = 18;
+  optional bool highlight_active_layer = 5;
+  optional bool window_border = 19;
+
+  optional bool restore_last_session = 20;
+  optional bool restore_layout = 21;
+  optional bool show_layer_dock = 22;
+  optional bool show_property_dock = 23;
+  optional bool show_tileset_dock = 24;
+  optional bool show_log_dock = 30;
+  optional bool show_component_dock = 31;
+  optional bool show_animation_dock = 32;
+
+  optional bool embed_tilesets = 25;
+  optional bool indent_output = 26;
+  optional bool fold_tile_data = 28;
+
+  optional OverlayPos viewport_overlay_pos = 27;
+  optional bool viewport_overlay_show_fps = 29;
+
+  optional bool use_default_font = 6;
+  optional int32 font_size = 7;
+}

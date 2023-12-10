@@ -27,6 +27,7 @@ target_include_directories(${TACTILE_CORE_TARGET}
 target_link_libraries(${TACTILE_CORE_TARGET}
                       PUBLIC
                       tactile::foundation
+                      tactile::proto
 
                       PRIVATE
                       imgui::imgui
