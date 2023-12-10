@@ -23,7 +23,7 @@ else ()
        -Wswitch-enum
        )
 
-  if (TACTILE_USE_ADDRESS_SANITIZER MATCHES ON)
+  if (TACTILE_BUILD_TYPE STREQUAL "asan")
     if (NOT MSVC)
       list(APPEND TACTILE_COMPILE_OPTIONS
            -fsanitize=address
@@ -87,7 +87,7 @@ message(DEBUG "TACTILE_PRECOMPILED_HEADERS: ${TACTILE_PRECOMPILED_HEADERS}")
 function(tactile_prepare_target target)
   set_target_properties(${target}
                         PROPERTIES
-                        CXX_STANDARD 23
+                        CXX_STANDARD "${TACTILE_CXX_STANDARD}"
                         CXX_EXTENSIONS OFF
                         CXX_STANDARD_REQUIRED ON
                         POSITION_INDEPENDENT_CODE ON
@@ -102,10 +102,8 @@ function(tactile_prepare_target target)
 
   target_precompile_headers(${target} PRIVATE "${TACTILE_PRECOMPILED_HEADERS}")
 
-  if (TACTILE_USE_ADDRESS_SANITIZER MATCHES ON)
-    if (NOT MSVC)
-      target_link_libraries(${target} PRIVATE -fsanitize=address)
-    endif ()
+  if (TACTILE_BUILD_TYPE STREQUAL "asan" AND NOT MSVC)
+    target_link_libraries(${target} PRIVATE -fsanitize=address)
   endif ()
 endfunction()
 

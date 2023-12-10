@@ -20,22 +20,22 @@ message(DEBUG "CMAKE_PROJECT_VERSION: ${CMAKE_PROJECT_VERSION}")
 option(TACTILE_BUILD_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)
 option(TACTILE_BUILD_TESTS "Build the test suite" OFF)
 option(TACTILE_BUILD_LEGACY "Build the legacy targets" OFF)
-option(TACTILE_USE_ADDRESS_SANITIZER "Build with AddressSanitizer enabled" OFF)
 option(TACTILE_USE_LTO "Enable link-time optimizations" OFF)
 
 message(DEBUG "TACTILE_BUILD_APP_BUNDLE: ${TACTILE_BUILD_APP_BUNDLE}")
 message(DEBUG "TACTILE_BUILD_TESTS: ${TACTILE_BUILD_TESTS}")
 message(DEBUG "TACTILE_BUILD_LEGACY: ${TACTILE_BUILD_LEGACY}")
-message(DEBUG "TACTILE_USE_ADDRESS_SANITIZER: ${TACTILE_USE_ADDRESS_SANITIZER}")
 message(DEBUG "TACTILE_USE_LTO: ${TACTILE_USE_LTO}")
 
 # Determine build type, e.g. "debug" or "release".
 string(TOLOWER ${CMAKE_BUILD_TYPE} TACTILE_BUILD_TYPE)
-if (TACTILE_BUILD_TYPE STREQUAL "")
+if (NOT (TACTILE_BUILD_TYPE MATCHES "debug|release|asan"))
   message(FATAL_ERROR "Unsupported build type")
 endif ()
 
 message(DEBUG "TACTILE_BUILD_TYPE: ${TACTILE_BUILD_TYPE}")
+
+set(TACTILE_CXX_STANDARD 23)
 
 set(TACTILE_BUILD_DIR "${PROJECT_SOURCE_DIR}/build/${TACTILE_BUILD_TYPE}")
 set(TACTILE_ROOT_DIR "${PROJECT_SOURCE_DIR}")
