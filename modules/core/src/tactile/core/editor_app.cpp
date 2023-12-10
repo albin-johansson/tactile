@@ -9,6 +9,7 @@
 
 #include "tactile/core/ui/fonts.hpp"
 #include "tactile/foundation/debug/validation.hpp"
+#include "tactile/foundation/log/logger.hpp"
 
 namespace tactile {
 
