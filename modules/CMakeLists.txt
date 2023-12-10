@@ -133,8 +133,12 @@ set(TACTILE_VULKAN_TARGET tactile-vulkan)
 set(TACTILE_MAIN_TARGET tactile)
 
 add_subdirectory(proto)
+
 add_subdirectory(foundation)
 add_subdirectory(core)
+
+add_subdirectory(tactile-yml-format)
 add_subdirectory(tmj-format)
+
 add_subdirectory(opengl)
 add_subdirectory(main)

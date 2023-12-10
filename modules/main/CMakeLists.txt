@@ -48,6 +48,7 @@ if (TACTILE_BUILD_TESTS MATCHES ON)
                         tactile::foundation
                         tactile::core
                         tactile::tiled-json-format
+                        tactile::tactile-yml-format
                         GTest::gtest
                         )
 endif ()
