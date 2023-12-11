@@ -11,6 +11,8 @@ namespace tactile {
 
 /**
  * \brief Provides the main event loop implementation.
+ *
+ * \see `IEngineApp`
  */
 class TACTILE_CORE_API Engine final {
  public:
