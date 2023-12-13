@@ -4,13 +4,17 @@
 
 #include <algorithm>  // replace
 
+#include <SDL2/SDL.h>
+
+#include "tactile/foundation/debug/exception.hpp"
+#include "tactile/foundation/log/logger.hpp"
 #include "tactile/foundation/platform/environment.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile::fs {
+namespace tactile {
 namespace {
 
-[[nodiscard]] auto _get_home_prefix() -> const NativeString&
+[[nodiscard]] auto _get_user_home_directory() -> const NativeString&
 {
   // On Unix platforms, HOME is something like '/Users/username'
   // On Windows, USERPROFILE is something like 'C:\Users\username'
@@ -21,29 +25,40 @@ namespace {
 
 }  // namespace
 
-auto use_forward_slashes(const FilePath& path) -> String
+auto get_persistent_storage_directory() -> FilePath
+{
+  if (const auto* path = SDL_GetPrefPath("albin-johansson", "tactile")) {
+    return FilePath {path};
+  }
+
+  TACTILE_LOG_ERROR("Could not determine persistent storage directory: {}",
+                    SDL_GetError());
+  throw Exception {"Could not determine persistent storage directory"};
+}
+
+auto normalize_path(const FilePath& path) -> String
 {
   auto str = path.string();
   std::replace(str.begin(), str.end(), '\\', '/');
   return str;
 }
 
-auto use_short_home_prefix(const FilePath& path) -> Maybe<String>
+auto shorten_home_directory_prefix(const FilePath& path) -> Maybe<String>
 {
-  if (has_home_prefix(path)) {
-    const auto& prefix = _get_home_prefix();
-    return '~' + path.string().substr(prefix.size());
+  if (has_home_directory_prefix(path)) {
+    const auto& home_dir = _get_user_home_directory();
+    return '~' + path.string().substr(home_dir.size());
   }
   else {
-    return kNone;
+    return kNothing;
   }
 }
 
-auto has_home_prefix(const FilePath& path) -> bool
+auto has_home_directory_prefix(const FilePath& path) -> bool
 {
-  const auto& prefix = _get_home_prefix();
+  const auto& home_dir = _get_user_home_directory();
   const NativeStringView view {path.c_str()};
-  return view.starts_with(prefix);
+  return view.starts_with(home_dir);
 }
 
-}  // namespace tactile::fs
+}  // namespace tactile

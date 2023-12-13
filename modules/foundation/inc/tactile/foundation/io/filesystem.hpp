@@ -14,7 +14,13 @@ using FilePath = std::filesystem::path;
 using DirectoryIterator = std::filesystem::directory_iterator;
 using RecursiveDirectoryIterator = std::filesystem::recursive_directory_iterator;
 
-namespace fs {
+/**
+ * \brief Returns the file path to the persistent storage directory associated with the app.
+ * 
+ * \return a directory path.
+ */
+[[nodiscard]]
+TACTILE_FOUNDATION_API auto get_persistent_storage_directory() -> FilePath;
 
 /**
  * \brief Converts a path to a string that is guaranteed to use forward slash characters.
@@ -28,7 +34,7 @@ namespace fs {
  * \return a file path string with forward slashes.
  */
 [[nodiscard]]
-TACTILE_FOUNDATION_API auto use_forward_slashes(const FilePath& path) -> String;
+TACTILE_FOUNDATION_API auto normalize_path(const FilePath& path) -> String;
 
 /**
  * \brief Converts file paths to use a '~' prefix (if possible).
@@ -38,7 +44,8 @@ TACTILE_FOUNDATION_API auto use_forward_slashes(const FilePath& path) -> String;
  * \return a string with a shortened user directory prefix; or nothing if not applicable.
  */
 [[nodiscard]]
-TACTILE_FOUNDATION_API auto use_short_home_prefix(const FilePath& path) -> Maybe<String>;
+TACTILE_FOUNDATION_API auto shorten_home_directory_prefix(const FilePath& path)
+    -> Maybe<String>;
 
 /**
  * \brief Indicates whether a file path starts with the home directory.
@@ -48,9 +55,7 @@ TACTILE_FOUNDATION_API auto use_short_home_prefix(const FilePath& path) -> Maybe
  * \return true if the path features the home directory prefix; false otherwise.
  */
 [[nodiscard]]
-TACTILE_FOUNDATION_API auto has_home_prefix(const FilePath& path) -> bool;
-
-}  // namespace fs
+TACTILE_FOUNDATION_API auto has_home_directory_prefix(const FilePath& path) -> bool;
 
 namespace fs_literals {
 
