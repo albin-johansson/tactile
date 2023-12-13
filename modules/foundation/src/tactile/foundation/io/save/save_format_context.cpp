@@ -27,7 +27,7 @@ auto SaveFormatContext::load_map(const FilePath& map_path,
 
   for (const auto* format : mFormats) {
     if (format->is_valid_extension(extension.c_str())) {
-      TACTILE_DEBUG_PROFILE_SCOPE("ISaveFormat::load_map");
+      TACTILE_DEBUG_PROFILE_SCOPE("SaveFormatContext::load_map");
       if (auto map = format->load_map(map_path, options)) {
         return map;
       }
@@ -51,7 +51,7 @@ auto SaveFormatContext::load_tileset(const FilePath& tileset_path,
 
   for (const auto* format : mFormats) {
     if (format->is_valid_extension(extension.c_str())) {
-      TACTILE_DEBUG_PROFILE_SCOPE("ISaveFormat::load_tileset");
+      TACTILE_DEBUG_PROFILE_SCOPE("SaveFormatContext::load_tileset");
       if (auto tileset = format->load_tileset(tileset_path, options)) {
         return tileset;
       }
@@ -78,8 +78,14 @@ auto SaveFormatContext::save_map(const FilePath& map_path,
 
   for (const auto* format : mFormats) {
     if (format->is_valid_extension(extension.c_str())) {
-      TACTILE_DEBUG_PROFILE_SCOPE("ISaveFormat::save_map");
-      return format->save_map(map_path, map, options);
+      TACTILE_DEBUG_PROFILE_SCOPE("SaveFormatContext::save_map");
+      if (auto result = format->save_map(map_path, map, options)) {
+        return result;
+      }
+      else {
+        TACTILE_LOG_ERROR("Could not save map: {}", result.error().message());
+        return propagate_unexpected(result);
+      }
     }
   }
 
@@ -99,8 +105,14 @@ auto SaveFormatContext::save_tileset(const FilePath& tileset_path,
 
   for (const auto* format : mFormats) {
     if (format->is_valid_extension(extension.c_str())) {
-      TACTILE_DEBUG_PROFILE_SCOPE("ISaveFormat::save_tileset");
-      return format->save_tileset(tileset_path, tileset, options);
+      TACTILE_DEBUG_PROFILE_SCOPE("SaveFormatContext::save_tileset");
+      if (auto result = format->save_tileset(tileset_path, tileset, options)) {
+        return result;
+      }
+      else {
+        TACTILE_LOG_ERROR("Could not save tileset: {}", result.error().message());
+        return propagate_unexpected(result);
+      }
     }
   }
 
