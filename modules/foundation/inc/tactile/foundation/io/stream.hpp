@@ -9,7 +9,9 @@
 
 #include "tactile/foundation/api.hpp"
 #include "tactile/foundation/container/file_path.hpp"
+#include "tactile/foundation/debug/generic_error.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
+#include "tactile/foundation/functional/result.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
 namespace tactile {
@@ -74,11 +76,13 @@ struct StreamToFileOptions final {
  * \param content the content that will be written to the file.
  * \param path    the path to the destination file.
  * \param options the write options.
+ *
+ * \return an error code if something goes wrong.
  */
 template <typename T>
-void stream_to_file(const T& content,
+auto stream_to_file(const T& content,
                     const FilePath& path,
-                    const StreamToFileOptions& options = {})
+                    const StreamToFileOptions& options = {}) -> Result<void>
 {
   std::ios::openmode stream_flags = std::ios::out | std::ios::trunc;
   if (options.binary_mode) {
@@ -88,7 +92,7 @@ void stream_to_file(const T& content,
   std::ofstream stream {path, stream_flags};
   if (!stream.good()) {
     TACTILE_LOG_ERROR("Could not open file {}", path.string());
-    return;
+    return unexpected(make_generic_error(GenericError::kInvalidFile));
   }
 
   try {
@@ -97,9 +101,11 @@ void stream_to_file(const T& content,
     }
 
     stream << content;
+    return kOK;
   }
   catch (const std::exception& ex) {
     TACTILE_LOG_ERROR("Could not write to file {}: {}", path.string(), ex.what());
+    return unexpected(make_generic_error(GenericError::kIOError));
   }
 }
 

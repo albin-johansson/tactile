@@ -78,6 +78,7 @@ TEST_P(EmbeddedAndExternalTilesetTest, SaveAndLoadMap)
     .base_dir = map_directory,
     .use_external_tilesets = !test_data.embed_tilesets,
     .use_indentation = true,
+    .fold_tile_layer_data = false,
   };
 
   const SaveFormatReadOptions read_options = {

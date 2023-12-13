@@ -89,6 +89,7 @@ TEST_P(Base64MapTest, SaveAndLoadBase64TileLayer)
     .base_dir = map_directory,
     .use_external_tilesets = false,
     .use_indentation = true,
+    .fold_tile_layer_data = true,
   };
 
   const SaveFormatReadOptions read_options = {
@@ -96,10 +97,10 @@ TEST_P(Base64MapTest, SaveAndLoadBase64TileLayer)
     .strict_mode = false,
   };
 
-  const auto& save_format_manager = SaveFormatContext::get();
-  ASSERT_TRUE(save_format_manager.save_map(map_path, map, write_options).has_value());
+  const auto& save_format_context = SaveFormatContext::get();
+  ASSERT_TRUE(save_format_context.save_map(map_path, map, write_options).has_value());
 
-  const auto parsed_map = save_format_manager.load_map(map_path, read_options);
+  const auto parsed_map = save_format_context.load_map(map_path, read_options);
   ASSERT_TRUE(parsed_map.has_value());
 
   test::expect_eq(*parsed_map, map);

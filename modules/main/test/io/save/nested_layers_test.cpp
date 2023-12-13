@@ -110,6 +110,7 @@ TEST_P(NestedLayersTest, SaveAndLoadMapWithNestedLayers)
     .base_dir = map_directory,
     .use_external_tilesets = false,
     .use_indentation = true,
+    .fold_tile_layer_data = false,
   };
 
   const SaveFormatReadOptions read_options = {

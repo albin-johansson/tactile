@@ -258,6 +258,7 @@ TEST_P(SaveFormatManagerTest, SaveAndLoadMap)
     .base_dir = map_path.parent_path(),
     .use_external_tilesets = false,
     .use_indentation = true,
+    .fold_tile_layer_data = false,
   };
 
   const SaveFormatReadOptions read_options = {

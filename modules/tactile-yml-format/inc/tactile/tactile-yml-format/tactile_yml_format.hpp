@@ -8,6 +8,13 @@
 
 namespace tactile {
 
+/**
+ * \brief Provides import and export support for the Tactile YAML format.
+ *
+ * \details This format uses ".yml" or ".yaml" file extensions.
+ *
+ * \see `docs/yaml-format.md` for more details.
+ */
 class TACTILE_YML_FORMAT_API TactileYmlFormat final : public ISaveFormat {
  public:
   [[nodiscard]]

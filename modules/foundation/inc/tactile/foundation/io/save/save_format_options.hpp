@@ -23,6 +23,7 @@ struct SaveFormatWriteOptions final {
   FilePath base_dir;               ///< The parent directory of the map or tileset file.
   bool use_external_tilesets : 1;  ///< Whether tilesets are saved in separate files.
   bool use_indentation : 1;        ///< Whether the output is indented.
+  bool fold_tile_layer_data : 1;   ///< Whether tile rows are aligned by row.
 };
 
 }  // namespace tactile
