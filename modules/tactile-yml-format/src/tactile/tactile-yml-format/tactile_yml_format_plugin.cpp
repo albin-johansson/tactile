@@ -2,6 +2,7 @@
 
 #include "tactile/tactile-yml-format/tactile_yml_format_plugin.hpp"
 
+#include "tactile/foundation/io/save/save_format_context.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
 namespace tactile {
@@ -11,12 +12,14 @@ void TactileYmlFormatPlugin::on_load()
   TACTILE_LOG_DEBUG("Loading Tactile YML format plugin...");
 
   mFormat = make_unique<TactileYmlFormat>();
+  SaveFormatContext::get().add_format(mFormat.get());
 }
 
 void TactileYmlFormatPlugin::on_unload() noexcept
 {
   TACTILE_LOG_DEBUG("Unloading Tactile YML format plugin...");
 
+  SaveFormatContext::get().remove_format(mFormat.get());
   mFormat.reset();
 }
 
