@@ -55,7 +55,7 @@ auto _add_common_tileset_attributes(const ir::Tileset& tileset,
 auto _determine_external_tileset_filename(const ir::TilesetRef& tileset_ref) -> String
 {
   return !tileset_ref.tileset.meta.name.empty()
-             ? tileset_ref.tileset.meta.name
+             ? fmt::format("{}.tmj", tileset_ref.tileset.meta.name)
              : fmt::format("tileset_{}.tmj", tileset_ref.first_tile_id.value);
 }
 
