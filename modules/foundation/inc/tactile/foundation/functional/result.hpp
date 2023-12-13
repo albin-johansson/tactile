@@ -17,6 +17,7 @@ namespace tactile {
 template <typename T>
 using Result = Expected<T, std::error_code>;
 
+inline const Result<void> kOK {};
 inline const Result<void> kSuccess {};
 
 }  // namespace tactile
