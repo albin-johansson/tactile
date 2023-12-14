@@ -27,7 +27,6 @@ auto _add_common_tileset_attributes(const ir::Tileset& tileset,
   tileset_json["tileheight"] = tileset.tile_height;
   tileset_json["tilecount"] = tileset.tile_count;
 
-  const auto image_path = std::filesystem::relative(tileset.image_path, options.base_dir);
   tileset_json["image"] = normalize_path(tileset.image_path);
   tileset_json["imagewidth"] = tileset.image_width;
   tileset_json["imageheight"] = tileset.image_height;
