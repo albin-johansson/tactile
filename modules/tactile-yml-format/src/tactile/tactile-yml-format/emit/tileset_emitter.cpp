@@ -122,6 +122,7 @@ void emit_tileset_ref(YAML::Emitter& emitter,
                  StreamToFileOptions {.indentation = 0, .binary_mode = false})
       .or_else([](const std::error_code& error_code) {
         TACTILE_LOG_ERROR("Could not emit external tileset: {}", error_code.message());
+        return kOK;
       });
 }
 
