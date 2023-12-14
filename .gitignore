@@ -58,3 +58,10 @@ installer/packages/com.albinjohansson.tactile/data/*
 
 # Miscellaneous
 .cache
+
+# Asset files
+assets/images
+assets/test
+
+# Cached script files
+scripts/cache
