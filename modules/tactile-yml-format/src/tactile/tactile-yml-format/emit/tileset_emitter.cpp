@@ -3,6 +3,7 @@
 #include "tactile/tactile-yml-format/emit/tileset_emitter.hpp"
 
 #include <fmt/format.h>
+#include <fmt/ostream.h>
 
 #include "tactile/foundation/container/string.hpp"
 #include "tactile/foundation/io/filesystem.hpp"
@@ -85,8 +86,8 @@ void emit_tileset(YAML::Emitter& emitter,
   emitter << YAML::Key << "tile-count" << YAML::Value << tileset.tile_count;
   emitter << YAML::Key << "column-count" << YAML::Value << tileset.column_count;
 
-  const auto image_path = std::filesystem::relative(tileset.image_path, options.base_dir);
-  emitter << YAML::Key << "image-path" << YAML::Value << normalize_path(image_path);
+  emitter << YAML::Key << "image-path" << YAML::Value
+          << normalize_path(tileset.image_path);
   emitter << YAML::Key << "image-width" << YAML::Value << tileset.image_width;
   emitter << YAML::Key << "image-height" << YAML::Value << tileset.image_height;
 
@@ -104,7 +105,8 @@ void emit_tileset_ref(YAML::Emitter& emitter,
       _determine_external_tileset_filename(tileset_ref);
   const auto external_tileset_path = options.base_dir / external_tileset_filename;
 
-  TACTILE_LOG_DEBUG("Saving external tileset to {}", external_tileset_filename);
+  TACTILE_LOG_DEBUG("Saving external tileset to {}",
+                    fmt::streamed(external_tileset_path));
 
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "first-global-id" << YAML::Value
