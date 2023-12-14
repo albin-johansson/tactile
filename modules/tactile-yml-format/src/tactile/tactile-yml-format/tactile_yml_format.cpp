@@ -6,19 +6,32 @@
 #include "tactile/foundation/io/stream.hpp"
 #include "tactile/tactile-yml-format/emit/map_emitter.hpp"
 #include "tactile/tactile-yml-format/emit/tileset_emitter.hpp"
+#include "tactile/tactile-yml-format/parse/common.hpp"
+#include "tactile/tactile-yml-format/parse/map_parser.hpp"
+#include "tactile/tactile-yml-format/parse/tileset_parser.hpp"
 
 namespace tactile {
 
-auto TactileYmlFormat::load_map(const FilePath&, const SaveFormatReadOptions&) const
+auto TactileYmlFormat::load_map(const FilePath& map_path,
+                                const SaveFormatReadOptions& options) const
     -> Result<ir::Map>
 {
-  return unexpected(make_generic_error(GenericError::kUnsupported));
+  return yml_format::parse_yaml_file(map_path).and_then([&](const YAML::Node& root_node) {
+    return yml_format::parse_map(map_path.filename().string(), root_node, options);
+  });
 }
 
-auto TactileYmlFormat::load_tileset(const FilePath&, const SaveFormatReadOptions&) const
+auto TactileYmlFormat::load_tileset(const FilePath& tileset_path,
+                                    const SaveFormatReadOptions& options) const
     -> Result<ir::Tileset>
 {
-  return unexpected(make_generic_error(GenericError::kUnsupported));
+  // FIXME need to figure out how to handle components in standalone tilesets
+  const ir::Map dummy_map {};
+
+  return yml_format::parse_yaml_file(tileset_path)
+      .and_then([&](const YAML::Node& root_node) {
+        return yml_format::parse_tileset(root_node, dummy_map, options);
+      });
 }
 
 auto TactileYmlFormat::save_map(const FilePath& map_path,

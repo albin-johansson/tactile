@@ -33,14 +33,16 @@ class EmbeddedAndExternalTilesetTest
 INSTANTIATE_TEST_SUITE_P(
     EmbeddedAndExternalTileset,
     EmbeddedAndExternalTilesetTest,
-    testing::Values(EmbeddedAndExternalTilesetTestData {".tmj", true},
+    testing::Values(EmbeddedAndExternalTilesetTestData {".yml", true},
+                    EmbeddedAndExternalTilesetTestData {".yml", false},
+                    EmbeddedAndExternalTilesetTestData {".tmj", true},
                     EmbeddedAndExternalTilesetTestData {".tmj", false}));
 
 TEST_P(EmbeddedAndExternalTilesetTest, SaveAndLoadMap)
 {
   const auto& test_data = GetParam();
 
-  const auto map_directory = "test/resource/integration/tilesets"_path;
+  const auto map_directory = "assets/test/integration/tilesets"_path;
   const auto map_filename =
       fmt::format("map_with_{}_tilesets{}",
                   test_data.embed_tilesets ? "embedded" : "external",
@@ -62,12 +64,12 @@ TEST_P(EmbeddedAndExternalTilesetTest, SaveAndLoadMap)
           ir::Tileset {
             .meta = {},
             .tile_width = 16,
-            .tile_height = 16,
-            .tile_count = 240,
-            .column_count = 48,
-            .image_width = 768,
-            .image_height = 80,
-            .image_path = "image.png",
+            .tile_height = 8,
+            .tile_count = 48,
+            .column_count = 6,
+            .image_width = 96,
+            .image_height = 64,
+            .image_path = "../../../images/dummy.png",
             .tiles = {},
           },
       .first_tile_id = TileID {1},
@@ -83,7 +85,7 @@ TEST_P(EmbeddedAndExternalTilesetTest, SaveAndLoadMap)
 
   const SaveFormatReadOptions read_options = {
     .base_dir = map_directory,
-    .strict_mode = false,
+    .strict_mode = true,
   };
 
   const auto& save_format_manager = SaveFormatContext::get();

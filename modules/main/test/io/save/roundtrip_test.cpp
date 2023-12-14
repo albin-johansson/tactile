@@ -15,11 +15,13 @@ using namespace tactile::fs_literals;
 
 class SaveFormatManagerTest : public testing::TestWithParam<String> {};
 
-INSTANTIATE_TEST_SUITE_P(Roundtrip, SaveFormatManagerTest, testing::Values(".tmj"));
+INSTANTIATE_TEST_SUITE_P(Roundtrip,
+                         SaveFormatManagerTest,
+                         testing::Values(".yml", ".tmj"));
 
 namespace {
 
-inline const auto kMapDirectory = "test/resource/integration/roundtrip"_path;
+inline const auto kMapDirectory = "assets/test/integration/roundtrip"_path;
 
 inline constexpr usize kRowCount = 4;
 inline constexpr usize kColCount = 5;

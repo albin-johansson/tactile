@@ -55,5 +55,5 @@ tactile_copy_directory_post_build(${TACTILE_TEST}
                                   "${CMAKE_CURRENT_BINARY_DIR}/resources")
 
 tactile_copy_directory_post_build(${TACTILE_TEST}
-                                  "${TACTILE_RESOURCE_DIR}"
+                                  "${TACTILE_ASSET_DIR}"
                                   "${CMAKE_CURRENT_BINARY_DIR}/assets")

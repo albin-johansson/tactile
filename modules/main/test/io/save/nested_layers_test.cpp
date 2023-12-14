@@ -68,13 +68,13 @@ auto _make_group_layer(String name, const int32 id, Vector<ir::Layer> layers = {
 
 class NestedLayersTest : public testing::TestWithParam<String> {};
 
-INSTANTIATE_TEST_SUITE_P(NestedLayers, NestedLayersTest, testing::Values(".tmj"));
+INSTANTIATE_TEST_SUITE_P(NestedLayers, NestedLayersTest, testing::Values(".yml", ".tmj"));
 
 TEST_P(NestedLayersTest, SaveAndLoadMapWithNestedLayers)
 {
   const String& file_extension = GetParam();
 
-  const auto map_directory = "test/resource/integration"_path;
+  const auto map_directory = "assets/test/integration"_path;
   const auto map_filename = fmt::format("nested_layers{}", file_extension);
   const auto map_path = map_directory / map_filename;
 

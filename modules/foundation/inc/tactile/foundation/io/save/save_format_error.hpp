@@ -14,19 +14,33 @@ namespace tactile {
  * \brief Represents error codes used when loading and emitting save files.
  */
 enum class SaveFormatError : int {
-  kInvalidOperation,            ///< The format doesn't support the requested operation.
-  kUnknown,                     ///< An unknown error occurred.
-  kBadFile,                     ///< Something went wrong when loading or saving a file.
-  kUnsupportedFormat,           ///< Tried to load/save file with unknown format.
-  kMissingKey,                  ///< A required attribute was not found in a save file.
-  kUnsupportedOrientation,      ///< An unsupported map orientation was detected.
-  kUnsupportedLayerType,        ///< An unsupported layer type was detected.
-  kUnsupportedPropertyType,     ///< An unsupported property type was detected.
+  kInvalidOperation,   ///< The format doesn't support the requested operation.
+  kUnknown,            ///< An unknown error occurred.
+  kBadFile,            ///< Something went wrong when loading or saving a file.
+  kUnsupportedFormat,  ///< Tried to load/save file with unknown format.
+
+  kMissingKey,  ///< A required attribute was not found in a save file.
+
+  kUnsupportedOrientation,   ///< An unsupported map orientation was detected.
+  kUnsupportedLayerType,     ///< An unsupported layer type was detected.
+  kUnsupportedPropertyType,  ///< An unsupported property type was detected.
+  kUnsupportedObjectType,
   kUnsupportedTileEncoding,     ///< An unsupported tile data encoding was detected.
   kUnsupportedCompressionMode,  ///< An unsupported compression mode was detected.
-  kBadColorProperty,            ///< An invalid color property value was detected.
-  kBadTileLayerData,            ///< Corrupt tile layer data was detected.
-  kBadCompressionMode,          ///< An invalid compression mode was detected.
+
+  kBadColorProperty,    ///< An invalid color property value was detected.
+  kBadTileLayerData,    ///< Corrupt tile layer data was detected.
+  kBadCompressionMode,  ///< An invalid compression mode was detected.
+
+  kCorruptPropertyValue,
+  kPropertyWithoutValue,
+
+  kInvalidTileFormat,
+
+  kMapMissingWidth,
+  kMapMissingHeight,
+  kMapMissingTileWidth,
+  kMapMissingTileHeight,
 };
 
 [[nodiscard]]

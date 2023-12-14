@@ -24,6 +24,6 @@ target_link_libraries(${TACTILE_EXE}
 # Do not copy the resources when building as macOS app bundle
 if (TACTILE_BUILD_APP_BUNDLE MATCHES OFF)
   tactile_copy_directory_post_build(${TACTILE_EXE}
-                                    "${TACTILE_RESOURCE_DIR}"
+                                    "${TACTILE_ASSET_DIR}"
                                     "${TACTILE_BUILD_DIR}/assets")
 endif ()

@@ -46,7 +46,10 @@ class Base64MapTest : public testing::TestWithParam<Base64MapTestData> {};
 INSTANTIATE_TEST_SUITE_P(
     Base64,
     Base64MapTest,
-    testing::Values(Base64MapTestData {".tmj", CompressionMode::kNone},
+    testing::Values(Base64MapTestData {".yml", CompressionMode::kNone},
+                    Base64MapTestData {".yml", CompressionMode::kZlib},
+                    Base64MapTestData {".yml", CompressionMode::kZstd},
+                    Base64MapTestData {".tmj", CompressionMode::kNone},
                     Base64MapTestData {".tmj", CompressionMode::kZlib},
                     Base64MapTestData {".tmj", CompressionMode::kZstd}));
 
@@ -54,7 +57,7 @@ TEST_P(Base64MapTest, SaveAndLoadBase64TileLayer)
 {
   const auto& test_data = GetParam();
 
-  const auto map_directory = "test/resource/integration"_path;
+  const auto map_directory = "assets/test/integration"_path;
   const auto map_filename = fmt::format("base64_map_{}{}",
                                         _get_test_name(test_data.compression_mode),
                                         test_data.file_extension);

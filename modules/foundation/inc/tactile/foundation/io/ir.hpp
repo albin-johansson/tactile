@@ -39,6 +39,11 @@ struct Component final {
   [[nodiscard]] auto operator==(const Component&) const -> bool = default;
 };
 
+[[nodiscard]]
+TACTILE_FOUNDATION_API auto get_attribute_type(const Component& component,
+                                               StringView attr_name)
+    -> Maybe<AttributeType>;
+
 /**
  * \brief Intermediate representation of a component instance, attached to a meta context.
  */
@@ -79,7 +84,8 @@ struct Object final {
 
 /**
  * \brief Intermediate representation of a layer.
- * \todo Make width/height type usize
+ * \todo Make width/height type usize?
+ * \todo Rename width/height to row_count/column_count
  */
 struct Layer final {
   Metadata meta;           ///< Metadata for the layer.
