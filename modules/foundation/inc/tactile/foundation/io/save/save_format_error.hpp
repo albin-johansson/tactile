@@ -14,7 +14,7 @@ namespace tactile {
 /**
  * \brief Represents error codes used when loading and emitting save files.
  */
-enum class SaveFormatError : int {
+enum class SaveFormatError : int {  // NOLINT(performance-enum-size)
   kInvalidOperation,   ///< The format doesn't support the requested operation.
   kUnknown,            ///< An unknown error occurred.
   kBadFile,            ///< Something went wrong when loading or saving a file.

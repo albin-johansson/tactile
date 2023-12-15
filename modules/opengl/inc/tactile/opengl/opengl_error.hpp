@@ -10,7 +10,7 @@
 
 namespace tactile {
 
-enum class OpenGLError : int {
+enum class OpenGLError : int {  // NOLINT(performance-enum-size)
   kUnknown,
   kInvalidEnum,
   kInvalidValue,

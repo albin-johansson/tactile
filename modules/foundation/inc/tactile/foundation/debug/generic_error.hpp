@@ -16,7 +16,7 @@ namespace tactile {
  * \see `get_generic_error_category`
  * \see `make_generic_error`
  */
-enum class GenericError : int {
+enum class GenericError : int {  // NOLINT(performance-enum-size)
   kUnknown,
   kUnsupported,
   kInvalidArgument,

@@ -10,7 +10,8 @@
 
 namespace tactile {
 
-enum class CompressionError : int {
+enum class CompressionError : int  // NOLINT(performance-enum-size)
+{
   kNoData,         ///< No data to process.
   kInternalError,  ///< An error occurred in an internal stage (such as a library call).
   kInvalidMode,    ///< An invalid compression mode was used.
