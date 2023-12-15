@@ -47,8 +47,9 @@ if (TACTILE_BUILD_TESTS MATCHES ON)
                         PRIVATE
                         tactile::foundation
                         tactile::core
-                        tactile::tiled-json-format
                         tactile::tactile-yml-format
+                        tactile::tiled-json-format
+                        tactile::tiled-xml-format
                         GTest::gtest
                         )
 endif ()

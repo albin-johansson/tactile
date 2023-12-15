@@ -138,6 +138,7 @@ add_subdirectory(foundation)
 add_subdirectory(core)
 
 add_subdirectory(tactile-yml-format)
+add_subdirectory(tiled-xml-format)
 add_subdirectory(tmj-format)
 
 add_subdirectory(opengl)
