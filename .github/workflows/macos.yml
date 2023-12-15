@@ -46,7 +46,9 @@ jobs:
         run: cp "cmake/x64-osx-tactile.cmake" "$VCPKG_ROOT/triplets/community/x64-osx-tactile.cmake"
 
       - name: Download assets
-        run: wget --output-document "assets/images/dummy.png" "https://dummyimage.com/96x64.png"
+        run: |
+          mkdir -p "assets/images"
+          wget --output-document "assets/images/dummy.png" "https://dummyimage.com/96x64.png"
 
       - name: Generate build files
         run: |
