@@ -25,10 +25,14 @@ auto main(const int argc, char* argv[]) -> int
   (void) argc;
   (void) argv;
 
-  std::set_terminate(&on_terminate);
+  const auto startup_instant = tactile::SteadyClock::now();
+  std::set_terminate(&tactile::on_terminate);
 
   try {
     const auto app_dir = std::filesystem::current_path();
+
+    tactile::win32_enable_virtual_terminal_processing();
+
     const auto log_dir = app_dir / "logs";  // FIXME
     const auto plugin_dir = app_dir / "plugins";
 
