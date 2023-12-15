@@ -83,6 +83,9 @@ jobs:
       - name: Build
         run: ninja -C build
 
+      - name: Install
+        run: ninja -C build install
+
       - name: Run foundation unit tests
         working-directory: ./build/debug
         run: ./tactile-foundation-test
