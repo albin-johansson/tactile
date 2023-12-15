@@ -23,24 +23,21 @@ class ILayerVisitor {
    *
    * \param layer the visited layer.
    */
-  virtual void visit([[maybe_unused]] TileLayer& layer)
-  {}
+  virtual void visit([[maybe_unused]] TileLayer& layer) {}
 
   /**
    * \brief Visits an object layer.
    *
    * \param layer the visited layer.
    */
-  virtual void visit([[maybe_unused]] ObjectLayer& layer)
-  {}
+  virtual void visit([[maybe_unused]] ObjectLayer& layer) {}
 
   /**
    * \brief Visits a group layer.
    *
    * \param layer the visited layer.
    */
-  virtual void visit([[maybe_unused]] GroupLayer& layer)
-  {}
+  virtual void visit([[maybe_unused]] GroupLayer& layer) {}
 };
 
 /**

@@ -48,10 +48,7 @@ class UnixDynamicLibrary final : public IDynamicLibrary {
     return dlsym(mHandle, name);
   }
 
-  [[nodiscard]] auto get_path() const -> const FilePath& override
-  {
-    return mPath;
-  }
+  [[nodiscard]] auto get_path() const -> const FilePath& override { return mPath; }
 
  private:
   FilePath mPath;
@@ -96,10 +93,7 @@ class Win32DynamicLibrary final : public IDynamicLibrary {
     return static_cast<void*>(GetProcAddress(mHandle, name));
   }
 
-  [[nodiscard]] auto get_path() const -> const FilePath& override
-  {
-    return mPath;
-  }
+  [[nodiscard]] auto get_path() const -> const FilePath& override { return mPath; }
 
  private:
   FilePath mPath;

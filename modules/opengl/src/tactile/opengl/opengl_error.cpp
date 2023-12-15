@@ -19,18 +19,18 @@ class OpenGLErrorCategory final : public std::error_category {
   auto message(const int value) const -> std::string override
   {
     switch (OpenGLError {value}) {
-      case OpenGLError::kUnknown: return "unknown";
-      case OpenGLError::kInvalidEnum: return "invalid enum";
-      case OpenGLError::kInvalidValue: return "invalid value";
-      case OpenGLError::kInvalidOperation: return "invalid operation";
-      case OpenGLError::kStackOverflow: return "stack overflow";
-      case OpenGLError::kStackUnderflow: return "stack underflow";
-      case OpenGLError::kOutOfMemory: return "out of memory";
-      case OpenGLError::kInvalidFramebufferOperation:
-        return "invalid framebuffer operation";
+      using enum OpenGLError;
+      case kUnknown: return "unknown";
+      case kInvalidEnum: return "invalid enum";
+      case kInvalidValue: return "invalid value";
+      case kInvalidOperation: return "invalid operation";
+      case kStackOverflow: return "stack overflow";
+      case kStackUnderflow: return "stack underflow";
+      case kOutOfMemory: return "out of memory";
+      case kInvalidFramebufferOperation: return "invalid framebuffer operation";
     }
 
-    return "unknown";
+    return "?";
   }
 };
 

@@ -24,7 +24,6 @@ TEST(Filesystem, GetPersistentStorageDirectory)
   EXPECT_NO_THROW((void) get_persistent_storage_directory());
 }
 
-
 /// \tests tactile::normalize_path
 TEST(Filesystem, NormalizePath)
 {
@@ -39,7 +38,8 @@ TEST(Filesystem, ShortenHomeDirectoryPrefix)
 
   EXPECT_EQ(shorten_home_directory_prefix(home), "~");
   EXPECT_EQ(shorten_home_directory_prefix(home.string() + "/foo/"), "~/foo/");
-  EXPECT_EQ(shorten_home_directory_prefix(home.string() + "/foo/bar.txt"), "~/foo/bar.txt");
+  EXPECT_EQ(shorten_home_directory_prefix(home.string() + "/foo/bar.txt"),
+            "~/foo/bar.txt");
   EXPECT_EQ(shorten_home_directory_prefix(home.string() + '/'), "~/");
 
   EXPECT_FALSE(shorten_home_directory_prefix("/a/b").has_value());

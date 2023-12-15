@@ -22,7 +22,7 @@ class CompressionErrorCategory final : public std::error_category {
       case CompressionError::kInvalidMode: return "detected an invalid compression mode";
     }
 
-    return "unknown";
+    return "?";
   }
 };
 

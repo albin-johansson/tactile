@@ -27,12 +27,11 @@ void hash_combine(usize& seed, const T& value) noexcept
 
 }  // namespace tactile
 
-#define TACTILE_IMPLEMENT_HASH(Type, ...)                           \
-  template <>                                                       \
-  struct std::hash<Type> final {                                    \
-    [[nodiscard]] auto operator()(const Type& value) const noexcept \
-        -> tactile::usize                                           \
-    {                                                               \
-      return tactile::hash_combine(__VA_ARGS__);                    \
-    }                                                               \
+#define TACTILE_IMPLEMENT_HASH(Type, ...)                                             \
+  template <>                                                                         \
+  struct std::hash<Type> final {                                                      \
+    [[nodiscard]] auto operator()(const Type& value) const noexcept -> tactile::usize \
+    {                                                                                 \
+      return tactile::hash_combine(__VA_ARGS__);                                      \
+    }                                                                                 \
   }

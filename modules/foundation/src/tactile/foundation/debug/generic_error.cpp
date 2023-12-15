@@ -27,7 +27,7 @@ class GenericErrorCategory final : public std::error_category {
       case GenericError::kIOError: return "unknown I/O error";
     }
 
-    return "unknown";
+    return "?";
   }
 };
 

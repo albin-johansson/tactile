@@ -17,4 +17,4 @@ TACTILE_YML_FORMAT_API void emit(YAML::Emitter& emitter, const Attribute& value)
 TACTILE_YML_FORMAT_API void emit_metadata(YAML::Emitter& emitter,
                                           const ir::Metadata& metadata);
 
-}  // namespace tactile
+}  // namespace tactile::yml_format

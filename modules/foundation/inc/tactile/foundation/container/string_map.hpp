@@ -7,8 +7,8 @@
 #include <unordered_map>  // unordered_map
 
 #include "tactile/foundation/api.hpp"
-#include "tactile/foundation/prelude.hpp"
 #include "tactile/foundation/container/string.hpp"
+#include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
 

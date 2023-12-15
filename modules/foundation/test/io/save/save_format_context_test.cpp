@@ -1,9 +1,9 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
+#include "tactile/foundation/io/save/save_format_context.hpp"
+
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-
-#include "tactile/foundation/io/save/save_format_context.hpp"
 
 using namespace tactile;
 using testing::Return;

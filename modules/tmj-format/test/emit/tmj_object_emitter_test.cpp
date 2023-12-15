@@ -76,4 +76,3 @@ TEST_P(ParameterizedTmjObjectEmitterTest, EmitObject)
   EXPECT_EQ(object_json.at("properties").at(1).at("type"), "string");
   EXPECT_EQ(object_json.at("properties").at(1).at("value"), "XYZ");
 }
-

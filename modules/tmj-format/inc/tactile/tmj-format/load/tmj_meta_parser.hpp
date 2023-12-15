@@ -16,4 +16,4 @@ TACTILE_TMJ_API auto parse_property(const JSON& json) -> Result<ir::NamedAttribu
 [[nodiscard]]
 TACTILE_TMJ_API auto parse_metadata(const JSON& json, ir::Metadata& meta) -> Result<void>;
 
-}  // namespace tactile
+}  // namespace tactile::tmj
