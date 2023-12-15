@@ -29,14 +29,15 @@ auto OpenGLRenderer::create(OpenGLWindow* window) -> Result<OpenGLRenderer>
 {
   (void) require_not_null(window, "invalid null window");
 
+  ImGui::SetAllocatorFunctions(
+      [](const usize size, void*) { return std::malloc(size); },  // NOLINT(*-no-malloc)
+      [](void* ptr, void*) { std::free(ptr); });                  // NOLINT(*-no-malloc)
+
   auto* imgui_context = ImGui::CreateContext();
   if (!imgui_context) {
     TACTILE_LOG_ERROR("Could not create ImGui context");
     return unexpected(make_generic_error(GenericError::kInitFailure));
   }
-
-  ImGui::SetAllocatorFunctions([](const usize size, void*) { return std::malloc(size); },
-                               [](void* ptr, void*) { std::free(ptr); });
 
   if (!ImGui_ImplSDL2_InitForOpenGL(window->get_handle(), imgui_context)) {
     TACTILE_LOG_ERROR("Could not initialize SDL2 ImGui backend");

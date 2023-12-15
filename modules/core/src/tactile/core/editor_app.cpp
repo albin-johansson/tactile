@@ -18,16 +18,16 @@ EditorApp::EditorApp(IWindow* window, IRenderer* renderer)
     mRenderer {require_not_null(renderer, "null renderer")}
 {
   // Install Dear ImGui context.
+  ImGui::SetAllocatorFunctions(
+      [](const usize size, void*) { return std::malloc(size); },  // NOLINT(*-no-malloc)
+      [](void* ptr, void*) { std::free(ptr); });                  // NOLINT(*-no-malloc)
   ImGui::SetCurrentContext(mRenderer->get_imgui_context());
-  ImGui::SetAllocatorFunctions([](const usize size, void*) { return std::malloc(size); },
-                               [](void* ptr, void*) { std::free(ptr); });
 
   auto& io = ImGui::GetIO();
   io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
   auto& style = ImGui::GetStyle();
   ImGui::StyleColorsDark(&style);
-
 }
 
 void EditorApp::on_startup()
@@ -43,6 +43,8 @@ void EditorApp::on_shutdown()
   TACTILE_LOG_TRACE("Shutting down editor...");
 
   mWindow->hide();
+
+  ImGui::SetCurrentContext(nullptr);
 }
 
 void EditorApp::on_update()
