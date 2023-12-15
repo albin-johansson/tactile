@@ -44,7 +44,9 @@ jobs:
                        -Destination "$ENV:VCPKG_ROOT\triplets\community\x64-windows-tactile.cmake"
 
       - name: Download assets
-        run: Invoke-WebRequest "https://dummyimage.com/96x64.png" -OutFile "assets\images\dummy.png"
+        run: |
+          mkdir -p "assets\images"
+          Invoke-WebRequest "https://dummyimage.com/96x64.png" -OutFile "assets\images\dummy.png"
 
       - name: Generate build files
         env:

@@ -17,7 +17,7 @@ auto parse_attached_component_attribute(const YAML::Node& attached_component_nod
 {
   ir::NamedAttribute attribute {};
   return parse_to(attached_component_node, "name", attribute.name)
-      .and_then([&] -> Result<Attribute> {
+      .and_then([&]() -> Result<Attribute> {
         if (const auto attr_type = get_attribute_type(prototype, attribute.name)) {
           return parse_property_value(attached_component_node, *attr_type);
         }
