@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include <utility>  // to_underlying
+#include <system_error>  // error_category, error_code
+#include <utility>       // to_underlying
 
 #include "tactile/foundation/api.hpp"
 #include "tactile/foundation/functional/expected.hpp"
@@ -18,29 +19,19 @@ enum class SaveFormatError : int {
   kUnknown,            ///< An unknown error occurred.
   kBadFile,            ///< Something went wrong when loading or saving a file.
   kUnsupportedFormat,  ///< Tried to load/save file with unknown format.
-
-  kMissingKey,  ///< A required attribute was not found in a save file.
-
-  kUnsupportedOrientation,   ///< An unsupported map orientation was detected.
-  kUnsupportedLayerType,     ///< An unsupported layer type was detected.
-  kUnsupportedPropertyType,  ///< An unsupported property type was detected.
+  kMissingKey,         ///< A required attribute was not found in a save file.
+  kUnsupportedVersion,
+  kUnsupportedOrientation,
+  kUnsupportedLayerType,
   kUnsupportedObjectType,
-  kUnsupportedTileEncoding,     ///< An unsupported tile data encoding was detected.
-  kUnsupportedCompressionMode,  ///< An unsupported compression mode was detected.
-
-  kBadColorProperty,    ///< An invalid color property value was detected.
-  kBadTileLayerData,    ///< Corrupt tile layer data was detected.
-  kBadCompressionMode,  ///< An invalid compression mode was detected.
-
-  kCorruptPropertyValue,
+  kUnsupportedPropertyType,
+  kUnsupportedTileEncoding,
+  kUnsupportedCompression,
+  kBadTileLayerData,
+  kBadPropertyValue,
   kPropertyWithoutValue,
-
-  kInvalidTileFormat,
-
-  kMapMissingWidth,
-  kMapMissingHeight,
-  kMapMissingTileWidth,
-  kMapMissingTileHeight,
+  kInvalidComponentType,
+  kInvalidTileFormat
 };
 
 [[nodiscard]]

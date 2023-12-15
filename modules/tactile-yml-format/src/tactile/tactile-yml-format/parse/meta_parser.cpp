@@ -15,7 +15,7 @@ auto parse_metadata(const YAML::Node& context_node,
                     const ir::Map& map,
                     ir::Metadata& metadata) -> Result<void>
 {
-  TACTILE_LOG_TRACE("Parsing metadata from node at {}:{}...",
+  TACTILE_LOG_TRACE("Parsing metadata from node at {}:{}",
                     context_node.Mark().line,
                     context_node.Mark().column);
 

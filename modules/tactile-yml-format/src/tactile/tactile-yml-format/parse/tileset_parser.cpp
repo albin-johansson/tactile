@@ -16,7 +16,7 @@ namespace tactile::yml_format {
 auto parse_tileset_tile_animation_frame(const YAML::Node& frame_node)
     -> Result<ir::AnimationFrame>
 {
-  TACTILE_LOG_TRACE("Parsing tile animation frame node at {}:{}...",
+  TACTILE_LOG_TRACE("Parsing tile animation frame node at {}:{}",
                     frame_node.Mark().line,
                     frame_node.Mark().column);
 
@@ -55,7 +55,7 @@ auto parse_tileset_tile_animation(const YAML::Node& tile_node)
 auto parse_tileset_tile(const YAML::Node& tile_node, const ir::Map& map)
     -> Result<ir::Tile>
 {
-  TACTILE_LOG_TRACE("Parsing tile node at {}:{}...",
+  TACTILE_LOG_TRACE("Parsing tile node at {}:{}",
                     tile_node.Mark().line,
                     tile_node.Mark().column);
 
@@ -103,24 +103,22 @@ auto parse_tileset(const YAML::Node& tileset_node,
 {
   ir::Tileset tileset {};
 
-  // TODO
-  //  int version {};
-  //  parse_to(tileset_node, "version", version);
-  //  if (version != kTilesetFormatVersion) {
-  //    return unexpected(ParseError::UnsupportedTilesetVersion);
-  //  }
-
-  return parse_to(tileset_node, "name", tileset.meta.name)
+  return parse<int>(tileset_node, "version")
+      .and_then([&](const int version) -> Result<void> {
+        if (version != 1) {
+          return unexpected(make_save_format_error(SaveFormatError::kUnsupportedVersion));
+        }
+        return kOK;
+      })
+      // clang-format off
+      .and_then([&] { return parse_to(tileset_node, "name", tileset.meta.name); })
       .and_then([&] { return parse_to(tileset_node, "tile-count", tileset.tile_count); })
       .and_then([&] { return parse_to(tileset_node, "tile-width", tileset.tile_width); })
-      .and_then(
-          [&] { return parse_to(tileset_node, "tile-height", tileset.tile_height); })
-      .and_then(
-          [&] { return parse_to(tileset_node, "column-count", tileset.column_count); })
-      .and_then(
-          [&] { return parse_to(tileset_node, "image-width", tileset.image_width); })
-      .and_then(
-          [&] { return parse_to(tileset_node, "image-height", tileset.image_height); })
+      .and_then([&] { return parse_to(tileset_node, "tile-height", tileset.tile_height); })
+      .and_then([&] { return parse_to(tileset_node, "column-count", tileset.column_count); })
+      .and_then([&] { return parse_to(tileset_node, "image-width", tileset.image_width); })
+      .and_then([&] { return parse_to(tileset_node, "image-height", tileset.image_height); })
+      // clang-format on
       .and_then([&] { return parse<String>(tileset_node, "image-path"); })
       .and_then([&](const String& image_filename) -> Result<void> {
         tileset.image_path = image_filename;
@@ -147,7 +145,7 @@ auto parse_tileset_ref(const YAML::Node& tileset_ref_node,
                        const ir::Map& map,
                        const SaveFormatReadOptions& options) -> Result<ir::TilesetRef>
 {
-  TACTILE_LOG_TRACE("Parsing tileset reference node at {}:{}...",
+  TACTILE_LOG_TRACE("Parsing tileset reference node at {}:{}",
                     tileset_ref_node.Mark().line,
                     tileset_ref_node.Mark().column);
 

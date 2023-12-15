@@ -27,7 +27,7 @@ auto parse_object_type(const StringView name) -> Result<ObjectType>
 
 auto parse_object(const YAML::Node& object_node, const ir::Map& map) -> Result<ir::Object>
 {
-  TACTILE_LOG_TRACE("Parsing object node at {}:{}...",
+  TACTILE_LOG_TRACE("Parsing object node at {}:{}",
                     object_node.Mark().line,
                     object_node.Mark().column);
 

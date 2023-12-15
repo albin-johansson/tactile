@@ -77,7 +77,8 @@ auto _parse_compression_mode(const JSON& layer_json, ir::TileFormat& tile_format
           tile_format.compression = CompressionMode::kZstd;
         }
         else {
-          return unexpected(make_save_format_error(SaveFormatError::kBadCompressionMode));
+          return unexpected(
+              make_save_format_error(SaveFormatError::kUnsupportedCompression));
         }
 
         return kSuccess;

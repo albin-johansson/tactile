@@ -4,6 +4,7 @@
 
 #include <utility>  // move
 
+#include "tactile/foundation/io/save/save_format_error.hpp"
 #include "tactile/foundation/log/logger.hpp"
 #include "tactile/tactile-yml-format/parse/common.hpp"
 #include "tactile/tactile-yml-format/parse/property_parser.hpp"
@@ -11,49 +12,38 @@
 namespace tactile::yml_format {
 
 auto parse_attached_component_attribute(const YAML::Node& attached_component_node,
-                                        const ir::Component& prototype_component)
+                                        const ir::Component& prototype)
     -> Result<ir::NamedAttribute>
 {
   ir::NamedAttribute attribute {};
   return parse_to(attached_component_node, "name", attribute.name)
-      .and_then([&] {
-        const auto attr_type = get_attribute_type(prototype_component, attribute.name);
-        return parse_property_value(attached_component_node, attr_type.value());  // FIXME
+      .and_then([&] -> Result<Attribute> {
+        if (const auto attr_type = get_attribute_type(prototype, attribute.name)) {
+          return parse_property_value(attached_component_node, *attr_type);
+        }
+
+        return unexpected(
+            make_save_format_error(SaveFormatError::kUnsupportedPropertyType));
       })
-      .and_then([&](Attribute value) {
+      .and_then([&](Attribute&& value) {
         attribute.value = std::move(value);
         return kOK;
       })
       .transform([&] { return std::move(attribute); });
 }
 
-auto parse_attached_component(const YAML::Node& attached_component_node,
-                              const ir::Map& map) -> Result<ir::AttachedComponent>
+auto parse_attached_component_attributes(const YAML::Node& attached_component_node,
+                                         const ir::Component& prototype)
+    -> Result<Vector<ir::NamedAttribute>>
 {
-  TACTILE_LOG_TRACE("Parsing attached component node at {}:{}...",
-                    attached_component_node.Mark().line,
-                    attached_component_node.Mark().column);
-
-  ir::AttachedComponent attached_component {};
-  parse_to(attached_component_node, "type", attached_component.type);  // FIXME
-
-  const auto prototype_component_iter =
-      std::find_if(map.components.begin(),
-                   map.components.end(),
-                   [&](const ir::Component& component) {
-                     return component.name == attached_component.type;
-                   });
-
-  if (prototype_component_iter == map.components.end()) {
-    // TODO NoSuchComponent
-    return unexpected(make_save_format_error(SaveFormatError::kUnknown));
-  }
+  Vector<ir::NamedAttribute> attributes {};
 
   if (const auto value_seq = attached_component_node["values"]) {
+    attributes.reserve(value_seq.size());
+
     for (const auto& value_node : value_seq) {
-      if (auto attribute =
-              parse_attached_component_attribute(value_node, *prototype_component_iter)) {
-        attached_component.attributes.push_back(std::move(*attribute));
+      if (auto attribute = parse_attached_component_attribute(value_node, prototype)) {
+        attributes.push_back(std::move(*attribute));
       }
       else {
         return propagate_unexpected(attribute);
@@ -61,7 +51,42 @@ auto parse_attached_component(const YAML::Node& attached_component_node,
     }
   }
 
-  return attached_component;
+  return attributes;
+}
+
+auto parse_attached_component(const YAML::Node& attached_component_node,
+                              const ir::Map& map) -> Result<ir::AttachedComponent>
+{
+  TACTILE_LOG_TRACE("Parsing attached component node at {}:{}",
+                    attached_component_node.Mark().line,
+                    attached_component_node.Mark().column);
+
+  ir::AttachedComponent attached_component {};
+
+  return parse_to(attached_component_node, "type", attached_component.type)
+      .and_then([&]() -> Result<const ir::Component*> {
+        const auto prototype_component_iter =
+            std::find_if(map.components.begin(),
+                         map.components.end(),
+                         [&](const ir::Component& component) {
+                           return component.name == attached_component.type;
+                         });
+
+        if (prototype_component_iter == map.components.end()) {
+          return unexpected(
+              make_save_format_error(SaveFormatError::kInvalidComponentType));
+        }
+
+        return &*prototype_component_iter;
+      })
+      .and_then([&](const ir::Component* prototype) {
+        return parse_attached_component_attributes(attached_component_node, *prototype);
+      })
+      .and_then([&](Vector<ir::NamedAttribute>&& attributes) {
+        attached_component.attributes = std::move(attributes);
+        return kOK;
+      })
+      .transform([&] { return std::move(attached_component); });
 }
 
 auto parse_attached_components(const YAML::Node& context_node, const ir::Map& map)
@@ -74,7 +99,7 @@ auto parse_attached_components(const YAML::Node& context_node, const ir::Map& ma
     return attached_components;
   }
 
-  TACTILE_LOG_TRACE("Parsing attached component sequence at {}:{}...",
+  TACTILE_LOG_TRACE("Parsing attached component sequence at {}:{}",
                     attached_component_seq.Mark().line,
                     attached_component_seq.Mark().column);
 
@@ -123,7 +148,7 @@ auto parse_component_attributes(const YAML::Node& component_node)
 {
   Vector<ir::NamedAttribute> attributes {};
 
-  if (auto attribute_seq = component_node["attributes"]) {
+  if (const auto attribute_seq = component_node["attributes"]) {
     attributes.reserve(attribute_seq.size());
 
     for (const auto& attribute_node : attribute_seq) {
@@ -141,7 +166,7 @@ auto parse_component_attributes(const YAML::Node& component_node)
 
 auto parse_component(const YAML::Node& component_node) -> Result<ir::Component>
 {
-  TACTILE_LOG_TRACE("Parsing component node at {}:{}...",
+  TACTILE_LOG_TRACE("Parsing component node at {}:{}",
                     component_node.Mark().line,
                     component_node.Mark().column);
 
@@ -149,7 +174,7 @@ auto parse_component(const YAML::Node& component_node) -> Result<ir::Component>
 
   return parse_to(component_node, "name", component.name)
       .and_then([&] { return parse_component_attributes(component_node); })
-      .and_then([&](Vector<ir::NamedAttribute> attributes) {
+      .and_then([&](Vector<ir::NamedAttribute>&& attributes) {
         component.attributes = std::move(attributes);
         return kOK;
       })
@@ -160,10 +185,11 @@ auto parse_components(const YAML::Node& root_node) -> Result<Vector<ir::Componen
 {
   Vector<ir::Component> components {};
 
-  if (auto component_seq = root_node["component-definitions"]) {
-    TACTILE_LOG_TRACE("Parsing component sequence at {}:{}...",
+  if (const auto component_seq = root_node["component-definitions"]) {
+    TACTILE_LOG_TRACE("Parsing component sequence at {}:{}",
                       component_seq.Mark().line,
                       component_seq.Mark().column);
+    components.reserve(component_seq.size());
 
     for (const auto& component_node : component_seq) {
       if (auto component = parse_component(component_node)) {

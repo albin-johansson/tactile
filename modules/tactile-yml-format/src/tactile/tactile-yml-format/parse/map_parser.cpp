@@ -20,7 +20,7 @@ auto parse_map(String map_name,
                const YAML::Node& root_node,
                const SaveFormatReadOptions& options) -> Result<ir::Map>
 {
-  TACTILE_LOG_TRACE("Parsing map node at {}:{}...",
+  TACTILE_LOG_TRACE("Parsing map node at {}:{}",
                     root_node.Mark().line,
                     root_node.Mark().column);
 

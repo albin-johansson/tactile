@@ -121,7 +121,7 @@ auto parse_group_layer_data(const YAML::Node& layer_node,
 
 auto parse_layer(const YAML::Node& layer_node, const ir::Map& map) -> Result<ir::Layer>
 {
-  TACTILE_LOG_TRACE("Parsing layer node at {}:{}...",
+  TACTILE_LOG_TRACE("Parsing layer node at {}:{}",
                     layer_node.Mark().line,
                     layer_node.Mark().column);
 

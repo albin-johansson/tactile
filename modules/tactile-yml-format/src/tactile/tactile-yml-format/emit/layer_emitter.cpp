@@ -5,6 +5,7 @@
 #include <sstream>  // stringstream
 
 #include "tactile/foundation/io/tile_matrix_encoding.hpp"
+#include "tactile/foundation/log/logger.hpp"
 #include "tactile/tactile-yml-format/emit/meta_emitter.hpp"
 #include "tactile/tactile-yml-format/emit/object_emitter.hpp"
 
@@ -46,10 +47,16 @@ void emit_tile_layer_data(YAML::Emitter& emitter,
     emit_plain_text_tile_layer_data(emitter, layer, options);
   }
   else {
-    emitter << YAML::Key << "data";
-    emitter << YAML::Value
-            << base64_encode_tile_matrix(layer.tiles, map.tile_format.compression)
-                   .value();  // FIXME
+    if (const auto encoded_tiles =
+            base64_encode_tile_matrix(layer.tiles, map.tile_format.compression)) {
+      emitter << YAML::Key << "data";
+      emitter << YAML::Value << *encoded_tiles;
+    }
+    else {
+      // TODO return result as well
+      TACTILE_LOG_ERROR("Could not emit tile layer data: {}",
+                        encoded_tiles.error().message());
+    }
   }
 }
 

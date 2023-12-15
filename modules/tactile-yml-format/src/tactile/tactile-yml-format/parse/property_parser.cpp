@@ -37,7 +37,7 @@ auto parse_property_value(const YAML::Node& node, const AttributeType attr_type)
         return Attribute {*vec};
       }
 
-      return unexpected(make_save_format_error(SaveFormatError::kCorruptPropertyValue));
+      return unexpected(make_save_format_error(SaveFormatError::kBadPropertyValue));
     }
 
     case AttributeType::kInt3: {
@@ -45,7 +45,7 @@ auto parse_property_value(const YAML::Node& node, const AttributeType attr_type)
         return Attribute {*vec};
       }
 
-      return unexpected(make_save_format_error(SaveFormatError::kCorruptPropertyValue));
+      return unexpected(make_save_format_error(SaveFormatError::kBadPropertyValue));
     }
 
     case AttributeType::kInt4: {
@@ -53,7 +53,7 @@ auto parse_property_value(const YAML::Node& node, const AttributeType attr_type)
         return Attribute {*vec};
       }
 
-      return unexpected(make_save_format_error(SaveFormatError::kCorruptPropertyValue));
+      return unexpected(make_save_format_error(SaveFormatError::kBadPropertyValue));
     }
 
     case AttributeType::kFloat2: {
@@ -61,7 +61,7 @@ auto parse_property_value(const YAML::Node& node, const AttributeType attr_type)
         return Attribute {*vec};
       }
 
-      return unexpected(make_save_format_error(SaveFormatError::kCorruptPropertyValue));
+      return unexpected(make_save_format_error(SaveFormatError::kBadPropertyValue));
     }
 
     case AttributeType::kFloat3: {
@@ -69,7 +69,7 @@ auto parse_property_value(const YAML::Node& node, const AttributeType attr_type)
         return Attribute {*vec};
       }
 
-      return unexpected(make_save_format_error(SaveFormatError::kCorruptPropertyValue));
+      return unexpected(make_save_format_error(SaveFormatError::kBadPropertyValue));
     }
 
     case AttributeType::kFloat4: {
@@ -77,7 +77,7 @@ auto parse_property_value(const YAML::Node& node, const AttributeType attr_type)
         return Attribute {*vec};
       }
 
-      return unexpected(make_save_format_error(SaveFormatError::kCorruptPropertyValue));
+      return unexpected(make_save_format_error(SaveFormatError::kBadPropertyValue));
     }
 
     case AttributeType::kColor: {
@@ -86,7 +86,7 @@ auto parse_property_value(const YAML::Node& node, const AttributeType attr_type)
         return Attribute {*color};
       }
 
-      return unexpected(make_save_format_error(SaveFormatError::kCorruptPropertyValue));
+      return unexpected(make_save_format_error(SaveFormatError::kBadPropertyValue));
     }
   }
 
@@ -105,19 +105,16 @@ auto parse_property(const YAML::Node& node) -> Result<ir::NamedAttribute>
           return parse_property_value(value_node, value_type);
         }
 
-        // TODO make it so that values can be omitted if using default value?
-        //  property.value.reset(attr_type);
-
-        // parse_context.warn(SaveFormatParseWarning::kPropertyMissingValue,
-        //                    attr_name,
-        //                    node.Mark().line,
-        //                    node.Mark().column);
+        // TODO
+        //  if (!options.strict_mode) {
+        //    return Attribute {value_type};
+        //  }
 
         return unexpected(make_save_format_error(SaveFormatError::kPropertyWithoutValue));
       })
-      .transform([&](Attribute value) {
+      .transform([&](Attribute&& value) {
         named_attribute.value = std::move(value);
-        return named_attribute;
+        return std::move(named_attribute);
       });
 }
 

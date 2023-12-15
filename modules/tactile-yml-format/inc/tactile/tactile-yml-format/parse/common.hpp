@@ -6,6 +6,7 @@
 
 #include "tactile/foundation/container/file_path.hpp"
 #include "tactile/foundation/container/string.hpp"
+#include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/functional/result.hpp"
 #include "tactile/foundation/io/save/save_format_error.hpp"
 #include "tactile/foundation/log/logger.hpp"
