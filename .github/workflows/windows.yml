@@ -43,6 +43,9 @@ jobs:
         run: Copy-Item -Path "cmake\x64-windows-tactile.cmake" `
                        -Destination "$ENV:VCPKG_ROOT\triplets\community\x64-windows-tactile.cmake"
 
+      - name: Download assets
+        run: Invoke-WebRequest "https://dummyimage.com/96x64.png" -OutFile "assets\images\dummy.png"
+
       - name: Generate build files
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
@@ -58,6 +61,10 @@ jobs:
 
       - name: Build
         run: ninja -C build
+
+      - name: Run foundation unit tests
+        working-directory: ./build/debug
+        run: .\tactile-foundation-test.exe
 
       - name: Run core unit tests
         working-directory: ./build/debug

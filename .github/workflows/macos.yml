@@ -45,6 +45,9 @@ jobs:
       - name: Register custom Vcpkg triplet file
         run: cp "cmake/x64-osx-tactile.cmake" "$VCPKG_ROOT/triplets/community/x64-osx-tactile.cmake"
 
+      - name: Download assets
+        run: wget --output-document "assets/images/dummy.png" "https://dummyimage.com/96x64.png"
+
       - name: Generate build files
         run: |
           mkdir build && cd build
@@ -57,6 +60,10 @@ jobs:
 
       - name: Build
         run: ninja -C build
+
+      - name: Run foundation unit tests
+        working-directory: ./build/debug
+        run: ./tactile-foundation-test
 
       - name: Run core unit tests
         working-directory: ./build/debug
