@@ -99,7 +99,6 @@
 #define TACTILE_DELETE_MOVE(Name) TACTILE_INIT_MOVE(Name, delete)
 
 #define TACTILE_INTERFACE_CLASS(Name) \
-                                      \
  protected:                           \
   TACTILE_DEFAULT_COPY(Name);         \
   TACTILE_DEFAULT_MOVE(Name);         \

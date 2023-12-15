@@ -14,6 +14,7 @@
 #include "tactile/foundation/debug/generic_error.hpp"
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
+#include "tactile/opengl/opengl_error.hpp"
 
 namespace tactile::gl {
 
@@ -97,6 +98,10 @@ auto OpenGLRenderer::begin_frame() -> Result<void>
 
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  if (const auto err = glGetError(); err != GL_NONE) {
+    return unexpected(make_opengl_error(to_opengl_error(err)));
+  }
 
   return kSuccess;
 }

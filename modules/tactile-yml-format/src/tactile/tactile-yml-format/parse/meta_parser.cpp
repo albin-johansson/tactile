@@ -30,6 +30,7 @@ auto parse_metadata(const YAML::Node& context_node,
         return kOK;
       })
       .and_then([&] {
+        // Most but not all contexts feature a name attribute, so it's okay if this fails.
         (void) try_parse_to(context_node, "name", metadata.name);
         return kOK;
       });
