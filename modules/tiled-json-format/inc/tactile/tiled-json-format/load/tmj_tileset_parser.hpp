@@ -13,37 +13,41 @@
 namespace tactile::tiled::tmj {
 
 [[nodiscard]]
-TACTILE_TMJ_API auto parse_tile_animation_frame(const JSON& frame_json)
+TACTILE_TMJ_FORMAT_API auto parse_tile_animation_frame(const JSON& frame_json)
     -> Result<ir::AnimationFrame>;
 
 [[nodiscard]]
-TACTILE_TMJ_API auto parse_tile_animation(const JSON& json, ir::TileAnimation& animation)
+TACTILE_TMJ_FORMAT_API auto parse_tile_animation(const JSON& json,
+                                                 ir::TileAnimation& animation)
     -> Result<void>;
 
 [[nodiscard]]
-TACTILE_TMJ_API auto parse_tile_objects(const JSON& json, Vector<ir::Object>& objects)
+TACTILE_TMJ_FORMAT_API auto parse_tile_objects(const JSON& json,
+                                               Vector<ir::Object>& objects)
     -> Result<void>;
 
 [[nodiscard]]
-TACTILE_TMJ_API auto parse_tileset_tile(const JSON& json, const ir::Tileset& tileset)
+TACTILE_TMJ_FORMAT_API auto parse_tileset_tile(const JSON& json,
+                                               const ir::Tileset& tileset)
     -> Result<ir::Tile>;
 
 [[nodiscard]]
-TACTILE_TMJ_API auto parse_tileset_tiles(const JSON& json, ir::Tileset& tileset)
+TACTILE_TMJ_FORMAT_API auto parse_tileset_tiles(const JSON& json, ir::Tileset& tileset)
     -> Result<void>;
 
 [[nodiscard]]
-TACTILE_TMJ_API auto parse_tileset(const JSON& json, const SaveFormatReadOptions& options)
+TACTILE_TMJ_FORMAT_API auto parse_tileset(const JSON& json,
+                                          const SaveFormatReadOptions& options)
     -> Result<ir::Tileset>;
 
 [[nodiscard]]
-TACTILE_TMJ_API auto parse_tileset_ref(const JSON& json,
-                                       const SaveFormatReadOptions& options)
+TACTILE_TMJ_FORMAT_API auto parse_tileset_ref(const JSON& json,
+                                              const SaveFormatReadOptions& options)
     -> Result<ir::TilesetRef>;
 
 [[nodiscard]]
-TACTILE_TMJ_API auto parse_tilesets(const JSON& map_json,
-                                    const SaveFormatReadOptions& options,
-                                    ir::Map& map) -> Result<void>;
+TACTILE_TMJ_FORMAT_API auto parse_tilesets(const JSON& map_json,
+                                           const SaveFormatReadOptions& options,
+                                           ir::Map& map) -> Result<void>;
 
 }  // namespace tactile::tiled::tmj

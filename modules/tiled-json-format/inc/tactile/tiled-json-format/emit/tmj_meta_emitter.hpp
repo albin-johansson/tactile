@@ -25,7 +25,7 @@ namespace tactile::tiled::tmj {
  * \todo Ability to control vector attribute type behavior?
  */
 [[nodiscard]]
-TACTILE_TMJ_API auto to_tmj_name(AttributeType attribute_type) -> StringView;
+TACTILE_TMJ_FORMAT_API auto to_tmj_name(AttributeType attribute_type) -> StringView;
 
 /**
  * \brief Converts an attribute to a TMJ-compatible JSON object.
@@ -35,7 +35,7 @@ TACTILE_TMJ_API auto to_tmj_name(AttributeType attribute_type) -> StringView;
  * \return a JSON value.
  */
 [[nodiscard]]
-TACTILE_TMJ_API auto to_tmj_value(const Attribute& attribute) -> JSON;
+TACTILE_TMJ_FORMAT_API auto to_tmj_value(const Attribute& attribute) -> JSON;
 
 /**
  * \brief Emits a JSON array of TMJ properties.
@@ -45,6 +45,6 @@ TACTILE_TMJ_API auto to_tmj_value(const Attribute& attribute) -> JSON;
  * \return a JSON array.
  */
 [[nodiscard]]
-TACTILE_TMJ_API auto emit_property_array(const ir::Metadata& meta) -> JSON;
+TACTILE_TMJ_FORMAT_API auto emit_property_array(const ir::Metadata& meta) -> JSON;
 
 }  // namespace tactile::tiled::tmj

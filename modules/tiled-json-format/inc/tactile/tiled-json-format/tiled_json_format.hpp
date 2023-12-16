@@ -16,7 +16,7 @@ namespace tactile {
  *
  * \see https://doc.mapeditor.org/en/stable/reference/json-map-format
  */
-class TACTILE_TMJ_API TiledJsonFormat final : public ISaveFormat {
+class TACTILE_TMJ_FORMAT_API TiledJsonFormat final : public ISaveFormat {
  public:
   [[nodiscard]]
   auto load_map(const FilePath& map_path, const SaveFormatReadOptions& options) const

@@ -17,7 +17,7 @@ namespace tactile::tiled::tmj {
  * \return a JSON object.
  */
 [[nodiscard]]
-TACTILE_TMJ_API auto emit_tile_definition(const ir::Tile& tile) -> JSON;
+TACTILE_TMJ_FORMAT_API auto emit_tile_definition(const ir::Tile& tile) -> JSON;
 
 /**
  * \brief Converts a collection of tile definitions to a TMJ JSON array.
@@ -27,6 +27,7 @@ TACTILE_TMJ_API auto emit_tile_definition(const ir::Tile& tile) -> JSON;
  * \return a JSON array.
  */
 [[nodiscard]]
-TACTILE_TMJ_API auto emit_tile_definition_array(const Vector<ir::Tile>& tiles) -> JSON;
+TACTILE_TMJ_FORMAT_API auto emit_tile_definition_array(const Vector<ir::Tile>& tiles)
+    -> JSON;
 
 }  // namespace tactile::tiled::tmj

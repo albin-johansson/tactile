@@ -19,8 +19,8 @@ namespace tactile::tiled::tmj {
  * \return a JSON object.
  */
 [[nodiscard]]
-TACTILE_TMJ_API auto emit_layer(const ir::Layer& layer, const ir::TileFormat& tile_format)
-    -> Result<JSON>;
+TACTILE_TMJ_FORMAT_API auto emit_layer(const ir::Layer& layer,
+                                       const ir::TileFormat& tile_format) -> Result<JSON>;
 
 /**
  * \brief Emits a JSON array of TMJ layers.
@@ -30,6 +30,6 @@ TACTILE_TMJ_API auto emit_layer(const ir::Layer& layer, const ir::TileFormat& ti
  * \return a JSON array.
  */
 [[nodiscard]]
-TACTILE_TMJ_API auto emit_layer_array(const ir::Map& map) -> Result<JSON>;
+TACTILE_TMJ_FORMAT_API auto emit_layer_array(const ir::Map& map) -> Result<JSON>;
 
 }  // namespace tactile::tiled::tmj

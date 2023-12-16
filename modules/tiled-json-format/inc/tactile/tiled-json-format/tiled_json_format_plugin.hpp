@@ -13,7 +13,7 @@ namespace tactile {
 /**
  * \brief Manages the Tiled TMJ format plugin.
  */
-class TACTILE_TMJ_API TiledJsonFormatPlugin final : public IPlugin {
+class TACTILE_TMJ_FORMAT_API TiledJsonFormatPlugin final : public IPlugin {
  public:
   void on_load() override;
 
@@ -26,12 +26,12 @@ class TACTILE_TMJ_API TiledJsonFormatPlugin final : public IPlugin {
 extern "C"
 {
   [[nodiscard]]
-  TACTILE_TMJ_API auto tactile_create_plugin() -> IPlugin*;
+  TACTILE_TMJ_FORMAT_API auto tactile_create_plugin() -> IPlugin*;
 
-  TACTILE_TMJ_API void tactile_destroy_plugin(IPlugin* plugin);
+  TACTILE_TMJ_FORMAT_API void tactile_destroy_plugin(IPlugin* plugin);
 
   [[nodiscard]]
-  TACTILE_TMJ_API auto tactile_plugin_id() -> const char*;
+  TACTILE_TMJ_FORMAT_API auto tactile_plugin_id() -> const char*;
 }
 
 }  // namespace tactile

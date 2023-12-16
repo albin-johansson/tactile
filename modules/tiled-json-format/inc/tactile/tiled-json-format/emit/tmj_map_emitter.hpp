@@ -12,7 +12,8 @@
 namespace tactile::tiled::tmj {
 
 [[nodiscard]]
-TACTILE_TMJ_API auto emit_map(const ir::Map& map, const SaveFormatWriteOptions& options)
+TACTILE_TMJ_FORMAT_API auto emit_map(const ir::Map& map,
+                                     const SaveFormatWriteOptions& options)
     -> Result<JSON>;
 
 }  // namespace tactile::tiled::tmj

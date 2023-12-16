@@ -25,7 +25,7 @@ using JSON = nlohmann::json;
  * \return a JSON object, or an error code on failure.
  */
 [[nodiscard]]
-TACTILE_TMJ_API auto parse_json(const FilePath& path) -> Result<JSON>;
+TACTILE_TMJ_FORMAT_API auto parse_json(const FilePath& path) -> Result<JSON>;
 
 /**
  * \brief Attempts to extract an attribute in a JSON object.

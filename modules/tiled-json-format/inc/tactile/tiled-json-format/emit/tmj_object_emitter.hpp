@@ -18,7 +18,7 @@ namespace tactile::tiled::tmj {
  * \return a JSON object.
  */
 [[nodiscard]]
-TACTILE_TMJ_API auto emit_object(const ir::Object& object) -> JSON;
+TACTILE_TMJ_FORMAT_API auto emit_object(const ir::Object& object) -> JSON;
 
 /**
  * \brief Converts a group of map objects to an array of TMJ JSON objects.
@@ -28,6 +28,6 @@ TACTILE_TMJ_API auto emit_object(const ir::Object& object) -> JSON;
  * \return a JSON array.
  */
 [[nodiscard]]
-TACTILE_TMJ_API auto emit_object_array(const Vector<ir::Object>& objects) -> JSON;
+TACTILE_TMJ_FORMAT_API auto emit_object_array(const Vector<ir::Object>& objects) -> JSON;
 
 }  // namespace tactile::tiled::tmj

@@ -14,8 +14,9 @@
 namespace tactile::tiled::tmj {
 
 [[nodiscard]]
-TACTILE_TMJ_API auto parse_map(const JSON& json,
-                               String filename,
-                               const SaveFormatReadOptions& options) -> Result<ir::Map>;
+TACTILE_TMJ_FORMAT_API auto parse_map(const JSON& json,
+                                      String filename,
+                                      const SaveFormatReadOptions& options)
+    -> Result<ir::Map>;
 
 }  // namespace tactile::tiled::tmj

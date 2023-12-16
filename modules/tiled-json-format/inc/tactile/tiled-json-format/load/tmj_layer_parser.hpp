@@ -33,7 +33,7 @@ namespace tactile::tiled::tmj {
  * \return the parsed map object; or an error code if something went wrong.
  */
 [[nodiscard]]
-TACTILE_TMJ_API auto parse_object(const JSON& object_json) -> Result<ir::Object>;
+TACTILE_TMJ_FORMAT_API auto parse_object(const JSON& object_json) -> Result<ir::Object>;
 
 /**
  * \brief Parses a single map layer.
@@ -60,7 +60,7 @@ TACTILE_TMJ_API auto parse_object(const JSON& object_json) -> Result<ir::Object>
  * \return the parsed layer; or an error code if something went wrong.
  */
 [[nodiscard]]
-TACTILE_TMJ_API auto parse_layer(const JSON& layer_json, ir::Map& map)
+TACTILE_TMJ_FORMAT_API auto parse_layer(const JSON& layer_json, ir::Map& map)
     -> Result<ir::Layer>;
 
 /**
@@ -72,6 +72,7 @@ TACTILE_TMJ_API auto parse_layer(const JSON& layer_json, ir::Map& map)
  * \return nothing; or an error code if something went wrong.
  */
 [[nodiscard]]
-TACTILE_TMJ_API auto parse_layers(const JSON& map_json, ir::Map& map) -> Result<void>;
+TACTILE_TMJ_FORMAT_API auto parse_layers(const JSON& map_json, ir::Map& map)
+    -> Result<void>;
 
 }  // namespace tactile::tiled::tmj
