@@ -9,255 +9,107 @@
 #include "tactile/foundation/io/filesystem.hpp"
 #include "tactile/foundation/io/save/save_format_context.hpp"
 #include "tactile/testutil/ir/ir_comparison.hpp"
+#include "tactile/testutil/ir/layers.hpp"
+#include "tactile/testutil/ir/maps.hpp"
+#include "tactile/testutil/ir/objects.hpp"
+#include "tactile/testutil/ir/properties.hpp"
+#include "tactile/testutil/ir/tilesets.hpp"
 
 using namespace tactile;
 using namespace tactile::fs_literals;
 
-class SaveFormatManagerTest : public testing::TestWithParam<String> {};
+class RoundtripTest : public testing::TestWithParam<String> {};
 
+// NOLINTBEGIN(*-trailing-return-type)
+
+// NOLINTBEGIN(*-use-anonymous-namespace)
 INSTANTIATE_TEST_SUITE_P(Roundtrip,
-                         SaveFormatManagerTest,
+                         RoundtripTest,
                          testing::Values(".yml", ".tmj", ".tmx"));
-
-namespace {
-
-inline const auto kMapDirectory = "assets/test/integration/roundtrip"_path;
-
-inline constexpr usize kRowCount = 4;
-inline constexpr usize kColCount = 5;
-
-inline constexpr ir::TileFormat kTileFormat {
-  .encoding = TileEncoding::kPlainText,
-  .compression = CompressionMode::kNone,
-  .zlib_level = kNone,
-  .zstd_level = kNone,
-};
-
-inline const ir::Object kPointObject {
-  .meta =
-      {
-        .properties =
-            {
-              ir::NamedAttribute {.name = "kPointObject::int", .value = -48'921},
-            },
-        .components = {},
-      },
-  .name = "kPointObject",
-  .id = ObjectID {100},
-  .type = ObjectType::kPoint,
-  .x = 8'231,
-  .y = 5'000,
-  .width = 0,
-  .height = 0,
-  .tag = "tag::point",
-  .visible = false,
-};
-
-inline const ir::Object kRectObject {
-  .meta =
-      {
-        .properties = {},
-        .components = {},
-      },
-  .name = "kRectObject",
-  .id = ObjectID {84},
-  .type = ObjectType::kRect,
-  .x = 532,
-  .y = 834,
-  .width = 100,
-  .height = 80,
-  .tag = "tag::rect",
-  .visible = true,
-};
-
-inline const ir::Object kEllipseObject {
-  .meta =
-      {
-        .properties =
-            {
-              ir::NamedAttribute {"object-property", 42},
-            },
-        .components = {},
-      },
-  .name = "kEllipseObject",
-  .id = ObjectID {999},
-  .type = ObjectType::kEllipse,
-  .x = -1'283,
-  .y = 634,
-  .width = 183,
-  .height = 155,
-  .tag = "tag::ellipse",
-  .visible = true,
-};
-
-inline const ir::Tileset kTileset1 {
-  .meta =
-      {
-        .properties =
-            {
-              {.name = "TS1::bool", .value = false},
-            },
-        .components = {},
-      },
-  .tile_width = 16,
-  .tile_height = 24,
-  .tile_count = 128,
-  .column_count = 64,
-  .image_width = 1024,
-  .image_height = 768,
-  .image_path = "foo.png",
-  .tiles = {},
-};
-
-inline const ir::Tile kTileset2Tile1 {
-  .meta =
-      {
-        .properties =
-            {
-              ir::NamedAttribute {"foo", "bar"},
-            },
-        .components = {},
-      },
-  .index = TileIndex {0},
-  .objects = {},
-  .animation =
-      {
-        ir::AnimationFrame {TileIndex {100}, Milliseconds {743}},
-        ir::AnimationFrame {TileIndex {101}, Milliseconds {859}},
-        ir::AnimationFrame {TileIndex {941}, Milliseconds {457}},
-      },
-};
-
-inline const ir::Tile kTileset2Tile2 {
-  .meta =
-      {
-        .properties = {},
-        .components = {},
-      },
-  .index = TileIndex {1},
-  .objects = {kRectObject, kEllipseObject},
-  .animation = {},
-};
-
-inline const ir::Tileset kTileset2 {
-  .meta =
-      {
-        .properties = {},
-        .components = {},
-      },
-  .name = "TS2",
-  .tile_width = 28,
-  .tile_height = 32,
-  .tile_count = 64,
-  .column_count = 19,
-  .image_width = 500,
-  .image_height = 1000,
-  .image_path = "../images/bar.png",
-  .tiles = {kTileset2Tile1, kTileset2Tile2},
-};
-
-inline const ir::Layer kLayer1 {
-  .meta =
-      {
-        .properties = {},
-        .components = {},
-      },
-  .name = "T1",
-  .id = 10,
-  .type = LayerType::kTileLayer,
-  .opacity = 1.0f,
-  .width = kColCount,
-  .height = kRowCount,
-  .tiles = make_tile_matrix(kRowCount, kColCount),
-  .objects = {},
-  .layers = {},
-  .visible = true,
-};
-
-inline const ir::Layer kObjectLayer {
-  .meta =
-      {
-        .properties =
-            {
-              {.name = "O1::int", .value = 999},
-            },
-        .components = {},
-      },
-  .name = "O1",
-  .id = 30,
-  .type = LayerType::kObjectLayer,
-  .opacity = 0.8f,
-  .width = 0,
-  .height = 0,
-  .tiles = {},
-  .objects = {kPointObject, kRectObject, kEllipseObject},
-  .layers = {},
-  .visible = true,
-};
-
-inline const ir::Layer kGroupLayer {
-  .meta =
-      {
-        .properties =
-            {
-              {.name = "G1::float", .value = 15.9f},
-              {.name = "G1::string", .value = "foobar"},
-            },
-        .components = {},
-      },
-  .name = "G1",
-  .id = 20,
-  .type = LayerType::kGroupLayer,
-  .opacity = 1.0f,
-  .width = 0,
-  .height = 0,
-  .tiles = {},
-  .objects = {},
-  .layers = {kObjectLayer},
-  .visible = true,
-};
-
-}  // namespace
+// NOLINTEND(*-use-anonymous-namespace)
 
 // Tries to save and restore a map that uses a common subset of the save format features.
-TEST_P(SaveFormatManagerTest, SaveAndLoadMap)
+TEST_P(RoundtripTest, SaveAndLoadMap)
 {
   const String& file_extension = GetParam();
 
+  const auto map_directory = "assets/test/integration/roundtrip"_path;
   const auto map_filename = fmt::format("map{}", file_extension);
-  const auto map_path = kMapDirectory / map_filename;
+  const auto map_path = map_directory / map_filename;
 
-  const ir::Map map {
-    .meta =
-        {
-          .properties =
-              {
-                {.name = "Map::str", .value = "foo"},
-                {.name = "Map::int", .value = 42},
-                {.name = "Map::float", .value = 1.0f},
-                {.name = "Map::bool", .value = true},
-                {.name = "Map::path", .value = "foo/bar.test"_path},
-                {.name = "Map::object", .value = ObjectRef {7}},
-                {.name = "Map::color", .value = UColor {0xDE, 0xAD, 0xBE, 0xEF}},
-              },
-          .components = {},
-        },
-    .name = map_filename,
-    .row_count = kRowCount,
-    .col_count = kColCount,
-    .tile_width = 30,
-    .tile_height = 32,
-    .next_layer_id = 10,
-    .next_object_id = 20,
-    .tile_format = kTileFormat,
-    .components = {},
-    .tilesets =
-        {
-          ir::TilesetRef {.tileset = kTileset1, .first_tile_id = TileID {1}},
-          ir::TilesetRef {.tileset = kTileset2, .first_tile_id = TileID {129}},
-        },
-    .layers = {kLayer1, kGroupLayer},
+  const MatrixExtent map_extent {4, 5};
+
+  auto map = testutil::make_ir_map(map_filename, map_extent);
+  map.meta.properties = testutil::make_basic_properties();
+
+  auto tileset1 = testutil::make_dummy_ir_tileset("tileset-1");
+  tileset1.meta.properties = testutil::make_basic_properties();
+
+  auto tileset1_tile3 = testutil::make_ir_tile(TileIndex {3});
+  tileset1_tile3.animation = {
+    ir::AnimationFrame {TileIndex {3}, Milliseconds {50}},
+    ir::AnimationFrame {TileIndex {4}, Milliseconds {423}},
+    ir::AnimationFrame {TileIndex {10}, Milliseconds {65}},
   };
+
+  auto tileset1_tile17 = testutil::make_ir_tile(TileIndex {17});
+  tileset1_tile17.meta.properties = testutil::make_basic_properties();
+
+  auto tileset1_tile42 = testutil::make_ir_tile(TileIndex {42});
+  tileset1_tile42.objects = {
+    testutil::make_ir_object(tactile::ObjectType::kPoint, map.next_object_id++),
+    testutil::make_ir_object(tactile::ObjectType::kRect, map.next_object_id++),
+    testutil::make_ir_object(tactile::ObjectType::kEllipse, map.next_object_id++)};
+
+  tileset1.tiles = {std::move(tileset1_tile3),
+                    std::move(tileset1_tile17),
+                    std::move(tileset1_tile42)};
+
+  auto tileset2 = testutil::make_dummy_ir_tileset("tileset-2");
+  tileset2.meta.properties = testutil::make_basic_properties();
+
+  auto tile_layer = testutil::make_ir_tile_layer(map.next_layer_id++, map_extent);
+  tile_layer.meta.properties = testutil::make_basic_properties();
+  tile_layer.tiles = testutil::make_tile_matrix_with_increasing_tiles(map_extent);
+  tile_layer.opacity = 0.5f;
+
+  auto point_object = testutil::make_ir_object(ObjectType::kPoint, map.next_object_id++);
+  point_object.meta.properties = testutil::make_basic_properties();
+  point_object.x = 832;
+  point_object.y = -32;
+
+  auto rect_object = testutil::make_ir_object(ObjectType::kRect, map.next_object_id++);
+  rect_object.meta.properties = testutil::make_basic_properties();
+  rect_object.x = 1963;
+  rect_object.y = 0;
+  rect_object.width = 34;
+  rect_object.height = 93;
+
+  auto ellipse_object =
+      testutil::make_ir_object(ObjectType::kEllipse, map.next_object_id++);
+  ellipse_object.meta.properties = testutil::make_basic_properties();
+  ellipse_object.width = 50;
+  ellipse_object.height = 10;
+  ellipse_object.visible = false;
+
+  auto object_layer = testutil::make_ir_object_layer(map.next_layer_id++);
+  object_layer.meta.properties = testutil::make_basic_properties();
+  object_layer.visible = false;
+  object_layer.objects = {std::move(point_object),
+                          std::move(rect_object),
+                          std::move(ellipse_object)};
+
+  auto group_layer = testutil::make_ir_group_layer(map.next_layer_id++);
+  group_layer.meta.properties = testutil::make_basic_properties();
+  group_layer.layers.push_back(std::move(object_layer));
+
+  map.tilesets = {
+    ir::TilesetRef {std::move(tileset1), TileID {1}},
+    ir::TilesetRef {std::move(tileset2), TileID {1'000}},
+  };
+
+  map.layers.push_back(std::move(group_layer));
+  map.layers.push_back(std::move(tile_layer));
 
   const SaveFormatWriteOptions write_options = {
     .base_dir = map_path.parent_path(),
@@ -271,11 +123,13 @@ TEST_P(SaveFormatManagerTest, SaveAndLoadMap)
     .strict_mode = false,
   };
 
-  const auto& save_format_manager = SaveFormatContext::get();
-  ASSERT_TRUE(save_format_manager.save_map(map_path, map, write_options).has_value());
+  const auto& save_format_context = SaveFormatContext::get();
+  ASSERT_TRUE(save_format_context.save_map(map_path, map, write_options).has_value());
 
-  const auto parsed_map = save_format_manager.load_map(map_path, read_options);
+  const auto parsed_map = save_format_context.load_map(map_path, read_options);
   ASSERT_TRUE(parsed_map.has_value());
 
   testutil::expect_eq(*parsed_map, map);
 }
+
+// NOLINTEND(*-trailing-return-type)

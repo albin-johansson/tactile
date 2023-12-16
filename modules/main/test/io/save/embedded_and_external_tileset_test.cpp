@@ -10,9 +10,12 @@
 #include "tactile/foundation/io/filesystem.hpp"
 #include "tactile/foundation/io/save/save_format_context.hpp"
 #include "tactile/testutil/ir/ir_comparison.hpp"
+#include "tactile/testutil/ir/maps.hpp"
+#include "tactile/testutil/ir/tilesets.hpp"
 
 using namespace tactile;
-using namespace tactile::fs_literals;
+
+using fs_literals::operator""_path;
 
 struct EmbeddedAndExternalTilesetTestData final {
   String file_extension;
@@ -51,30 +54,15 @@ TEST_P(EmbeddedAndExternalTilesetTest, SaveAndLoadMap)
                   test_data.file_extension);
   const auto map_path = map_directory / map_filename;
 
-  ir::Map map {};
-  map.name = map_filename;
-
-  map.tile_width = 100;
-  map.tile_height = 100;
-
-  map.row_count = 1;
-  map.col_count = 1;
-
+  auto map = testutil::make_ir_map(map_filename, MatrixExtent {1, 1});
   map.tilesets = {
     ir::TilesetRef {
-      .tileset =
-          ir::Tileset {
-            .meta = {},
-            .tile_width = 16,
-            .tile_height = 8,
-            .tile_count = 48,
-            .column_count = 6,
-            .image_width = 96,
-            .image_height = 64,
-            .image_path = "../../../images/dummy.png",
-            .tiles = {},
-          },
+      .tileset = testutil::make_dummy_ir_tileset("TS1"),
       .first_tile_id = TileID {1},
+    },
+    ir::TilesetRef {
+      .tileset = testutil::make_dummy_ir_tileset("TS2"),
+      .first_tile_id = TileID {10'000},
     },
   };
 
@@ -90,10 +78,10 @@ TEST_P(EmbeddedAndExternalTilesetTest, SaveAndLoadMap)
     .strict_mode = true,
   };
 
-  const auto& save_format_manager = SaveFormatContext::get();
-  ASSERT_TRUE(save_format_manager.save_map(map_path, map, write_options).has_value());
+  const auto& save_format_context = SaveFormatContext::get();
+  ASSERT_TRUE(save_format_context.save_map(map_path, map, write_options).has_value());
 
-  const auto parsed_map = save_format_manager.load_map(map_path, read_options);
+  const auto parsed_map = save_format_context.load_map(map_path, read_options);
   ASSERT_TRUE(parsed_map.has_value());
 
   testutil::expect_eq(*parsed_map, map);
