@@ -96,9 +96,13 @@ jobs:
         working-directory: ./build/debug
         run: ./tactile-core-test
 
-      - name: Run TMJ format unit tests
+      - name: Run Tiled XML format unit tests
         working-directory: ./build/debug
-        run: ./tactile-tmj-format-test
+        run: ./tactile-tiled-xml-format-test
+
+      - name: Run Tiled JSON format unit tests
+        working-directory: ./build/debug
+        run: ./tactile-tiled-json-format-test
 
       - name: Run integration tests
         working-directory: ./build/debug
