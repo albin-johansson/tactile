@@ -6,6 +6,8 @@
 #include "tactile/tiled-xml-format/common.hpp"
 #include "tactile/tiled-xml-format/emit/map_emitter.hpp"
 #include "tactile/tiled-xml-format/emit/tileset_emitter.hpp"
+#include "tactile/tiled-xml-format/parse/map_parser.hpp"
+#include "tactile/tiled-xml-format/parse/tileset_parser.hpp"
 
 namespace tactile {
 
@@ -13,18 +15,24 @@ auto TiledXmlFormat::load_map(const FilePath& map_path,
                               const SaveFormatReadOptions& options) const
     -> Result<ir::Map>
 {
-  (void) map_path;
-  (void) options;
-  return unexpected(make_generic_error(GenericError::kUnsupported));
+  return tiled::tmx::load_xml_file(map_path).and_then(
+      [&](const pugi::xml_document& document) {
+        const auto map_node = document.root().child("map");
+        return tiled::tmx::parse_map_node(map_node,
+                                          map_path.filename().string(),
+                                          options);
+      });
 }
 
 auto TiledXmlFormat::load_tileset(const FilePath& tileset_path,
                                   const SaveFormatReadOptions& options) const
     -> Result<ir::Tileset>
 {
-  (void) tileset_path;
-  (void) options;
-  return unexpected(make_generic_error(GenericError::kUnsupported));
+  return tiled::tmx::load_xml_file(tileset_path)
+      .and_then([&](const pugi::xml_document& document) {
+        const auto tileset_node = document.root().child("tileset");
+        return tiled::tmx::parse_embedded_tileset_node(tileset_node, options);
+      });
 }
 
 auto TiledXmlFormat::save_map(const FilePath& map_path,

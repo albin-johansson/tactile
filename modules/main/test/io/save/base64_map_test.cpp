@@ -51,7 +51,10 @@ INSTANTIATE_TEST_SUITE_P(
                     Base64MapTestData {".yml", CompressionMode::kZstd},
                     Base64MapTestData {".tmj", CompressionMode::kNone},
                     Base64MapTestData {".tmj", CompressionMode::kZlib},
-                    Base64MapTestData {".tmj", CompressionMode::kZstd}));
+                    Base64MapTestData {".tmj", CompressionMode::kZstd},
+                    Base64MapTestData {".tmx", CompressionMode::kNone},
+                    Base64MapTestData {".tmx", CompressionMode::kZlib},
+                    Base64MapTestData {".tmx", CompressionMode::kZstd}));
 
 TEST_P(Base64MapTest, SaveAndLoadBase64TileLayer)
 {

@@ -36,7 +36,9 @@ INSTANTIATE_TEST_SUITE_P(
     testing::Values(EmbeddedAndExternalTilesetTestData {".yml", true},
                     EmbeddedAndExternalTilesetTestData {".yml", false},
                     EmbeddedAndExternalTilesetTestData {".tmj", true},
-                    EmbeddedAndExternalTilesetTestData {".tmj", false}));
+                    EmbeddedAndExternalTilesetTestData {".tmj", false},
+                    EmbeddedAndExternalTilesetTestData {".tmx", true},
+                    EmbeddedAndExternalTilesetTestData {".tmx", false}));
 
 TEST_P(EmbeddedAndExternalTilesetTest, SaveAndLoadMap)
 {

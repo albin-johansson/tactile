@@ -68,7 +68,9 @@ auto _make_group_layer(String name, const int32 id, Vector<ir::Layer> layers = {
 
 class NestedLayersTest : public testing::TestWithParam<String> {};
 
-INSTANTIATE_TEST_SUITE_P(NestedLayers, NestedLayersTest, testing::Values(".yml", ".tmj"));
+INSTANTIATE_TEST_SUITE_P(NestedLayers,
+                         NestedLayersTest,
+                         testing::Values(".yml", ".tmj", ".tmx"));
 
 TEST_P(NestedLayersTest, SaveAndLoadMapWithNestedLayers)
 {

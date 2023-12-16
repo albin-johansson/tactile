@@ -17,7 +17,7 @@ class SaveFormatManagerTest : public testing::TestWithParam<String> {};
 
 INSTANTIATE_TEST_SUITE_P(Roundtrip,
                          SaveFormatManagerTest,
-                         testing::Values(".yml", ".tmj"));
+                         testing::Values(".yml", ".tmj", ".tmx"));
 
 namespace {
 
