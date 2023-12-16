@@ -13,7 +13,7 @@ auto main(int argc, char* argv[]) -> int
                     .use_initialization_time_as_reference_instant()
                     .min_level(LogLevel::kDebug)
                     .flush_on(LogLevel::kError)
-                    .with_file_sink("logs/tiled_xml_format_test.txt")
+                    .with_file_sink("tiled_xml_format_test.txt")
                     .with_terminal_sink()
                     .use_colored_terminal_output()
                     .build();
