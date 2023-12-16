@@ -14,8 +14,11 @@ add_executable(${TACTILE_CORE_TEST_TARGET} "${TACTILE_CORE_TEST_FILES}")
 
 tactile_prepare_target(${TACTILE_CORE_TEST_TARGET})
 
+target_include_directories(${TACTILE_CORE_TEST_TARGET} PUBLIC "${PROJECT_SOURCE_DIR}")
+
 target_link_libraries(${TACTILE_CORE_TEST_TARGET}
                       PRIVATE
+                      tactile::testutil
                       tactile::core
                       GTest::gmock
                       )
