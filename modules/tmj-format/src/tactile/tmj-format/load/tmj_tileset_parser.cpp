@@ -5,7 +5,8 @@
 #include <filesystem>  // exists
 #include <utility>     // move
 
-#include <fmt/std.h>
+#include <fmt/format.h>
+#include <fmt/ostream.h>
 
 #include "tactile/foundation/io/save/save_format_error.hpp"
 #include "tactile/foundation/log/logger.hpp"
@@ -127,7 +128,7 @@ auto parse_tileset(const JSON& json, const SaveFormatReadOptions& options)
         if (options.strict_mode &&
             !std::filesystem::exists(options.base_dir / relative_image_path)) {
           TACTILE_LOG_ERROR("[TMJ] Tileset references non-existent image file: {}",
-                            relative_image_path);
+                            fmt::streamed(relative_image_path));
           return unexpected(make_save_format_error(SaveFormatError::kBadFile));
         }
 
@@ -150,11 +151,13 @@ auto parse_tileset_ref(const JSON& json, const SaveFormatReadOptions& options)
   if (is_external_tileset) {
     const auto& source = source_iter->get<String>();
     const auto tileset_path = options.base_dir / source;
-    TACTILE_LOG_TRACE("[TMJ] Loading external tileset file {}...", tileset_path);
+    TACTILE_LOG_TRACE("[TMJ] Loading external tileset file {}",
+                      fmt::streamed(tileset_path));
 
     const auto parsed_tileset_json = parse_json(tileset_path);
     if (!parsed_tileset_json) {
-      TACTILE_LOG_ERROR("[TMJ] Could not read external tileset file {}", tileset_path);
+      TACTILE_LOG_ERROR("[TMJ] Could not read external tileset file {}",
+                        fmt::streamed(tileset_path));
       return propagate_unexpected(parsed_tileset_json);
     }
 
