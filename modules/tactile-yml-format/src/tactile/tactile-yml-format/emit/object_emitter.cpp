@@ -38,11 +38,11 @@ void emit_object(YAML::Emitter& emitter, const ir::Object& object)
     emitter << YAML::Key << "y" << YAML::Value << object.y;
   }
 
-  if (object.x != 0.0f) {
+  if (object.width != 0.0f) {
     emitter << YAML::Key << "width" << YAML::Value << object.width;
   }
 
-  if (object.y != 0.0f) {
+  if (object.height != 0.0f) {
     emitter << YAML::Key << "height" << YAML::Value << object.height;
   }
 
