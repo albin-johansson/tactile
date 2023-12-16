@@ -9,7 +9,7 @@
 #include "tactile/tiled-json-format/load/tmj_meta_parser.hpp"
 #include "tactile/tiled-json-format/load/tmj_tileset_parser.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 
 auto parse_map(const JSON& json, String filename, const SaveFormatReadOptions& options)
     -> Result<ir::Map>
@@ -38,4 +38,4 @@ auto parse_map(const JSON& json, String filename, const SaveFormatReadOptions& o
       .transform([&] { return std::move(map); });
 }
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

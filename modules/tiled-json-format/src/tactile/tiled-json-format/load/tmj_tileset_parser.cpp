@@ -14,7 +14,7 @@
 #include "tactile/tiled-json-format/load/tmj_layer_parser.hpp"
 #include "tactile/tiled-json-format/load/tmj_meta_parser.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 
 auto parse_tile_animation_frame(const JSON& frame_json) -> Result<ir::AnimationFrame>
 {
@@ -202,4 +202,4 @@ auto parse_tilesets(const JSON& map_json,
   return kSuccess;
 }
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

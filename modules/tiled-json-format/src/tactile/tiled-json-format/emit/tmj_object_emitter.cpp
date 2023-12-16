@@ -4,7 +4,7 @@
 
 #include "tactile/tiled-json-format/emit/tmj_meta_emitter.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 
 auto emit_object(const ir::Object& object) -> JSON
 {
@@ -43,4 +43,4 @@ auto emit_object_array(const Vector<ir::Object>& objects) -> JSON
   return object_json_array;
 }
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

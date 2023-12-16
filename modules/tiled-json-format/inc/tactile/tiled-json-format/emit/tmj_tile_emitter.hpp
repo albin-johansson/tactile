@@ -7,7 +7,7 @@
 #include "tactile/tiled-json-format/api.hpp"
 #include "tactile/tiled-json-format/common/json.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 
 /**
  * \brief Converts a tile definition to a TMJ JSON object.
@@ -29,4 +29,4 @@ TACTILE_TMJ_API auto emit_tile_definition(const ir::Tile& tile) -> JSON;
 [[nodiscard]]
 TACTILE_TMJ_API auto emit_tile_definition_array(const Vector<ir::Tile>& tiles) -> JSON;
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

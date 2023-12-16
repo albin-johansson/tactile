@@ -8,7 +8,7 @@
 #include "tactile/tiled-json-format/api.hpp"
 #include "tactile/tiled-json-format/common/json.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 
 /**
  * \brief Parses a single map object.
@@ -74,4 +74,4 @@ TACTILE_TMJ_API auto parse_layer(const JSON& layer_json, ir::Map& map)
 [[nodiscard]]
 TACTILE_TMJ_API auto parse_layers(const JSON& map_json, ir::Map& map) -> Result<void>;
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

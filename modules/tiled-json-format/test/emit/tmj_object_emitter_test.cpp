@@ -40,7 +40,7 @@ TEST_P(ParameterizedTmjObjectEmitterTest, EmitObject)
     .visible = true,
   };
 
-  const auto object_json = tmj::emit_object(object);
+  const auto object_json = tiled::tmj::emit_object(object);
   ASSERT_TRUE(object_json.is_object());
 
   EXPECT_EQ(object_json.at("name"), object.name);

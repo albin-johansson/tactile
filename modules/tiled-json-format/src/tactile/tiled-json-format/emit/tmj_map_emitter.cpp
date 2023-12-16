@@ -9,7 +9,7 @@
 #include "tactile/tiled-json-format/emit/tmj_meta_emitter.hpp"
 #include "tactile/tiled-json-format/emit/tmj_tileset_emitter.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 
 auto emit_map(const ir::Map& map, const SaveFormatWriteOptions& options) -> Result<JSON>
 {
@@ -59,4 +59,4 @@ auto emit_map(const ir::Map& map, const SaveFormatWriteOptions& options) -> Resu
   return map_json;
 }
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

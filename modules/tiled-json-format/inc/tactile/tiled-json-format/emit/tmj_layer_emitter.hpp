@@ -8,7 +8,7 @@
 #include "tactile/tiled-json-format/api.hpp"
 #include "tactile/tiled-json-format/common/json.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 
 /**
  * \brief Emits a single TMJ layer JSON object.
@@ -32,4 +32,4 @@ TACTILE_TMJ_API auto emit_layer(const ir::Layer& layer, const ir::TileFormat& ti
 [[nodiscard]]
 TACTILE_TMJ_API auto emit_layer_array(const ir::Map& map) -> Result<JSON>;
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

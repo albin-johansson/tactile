@@ -8,12 +8,12 @@
 #include "tactile/foundation/prelude.hpp"
 #include "tactile/tiled-json-format/api.hpp"
 
-namespace tactile::tmj {
+namespace tactile {
 
 /**
  * \brief Manages the Tiled TMJ format plugin.
  */
-class TACTILE_TMJ_API TmjFormatPlugin final : public IPlugin {
+class TACTILE_TMJ_API TiledJsonFormatPlugin final : public IPlugin {
  public:
   void on_load() override;
 
@@ -34,4 +34,4 @@ extern "C"
   TACTILE_TMJ_API auto tactile_plugin_id() -> const char*;
 }
 
-}  // namespace tactile::tmj
+}  // namespace tactile

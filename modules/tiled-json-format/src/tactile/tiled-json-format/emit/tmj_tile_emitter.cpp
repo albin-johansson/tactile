@@ -7,7 +7,7 @@
 #include "tactile/tiled-json-format/emit/tmj_meta_emitter.hpp"
 #include "tactile/tiled-json-format/emit/tmj_object_emitter.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 namespace {
 
 [[nodiscard]]
@@ -77,4 +77,4 @@ auto emit_tile_definition_array(const Vector<ir::Tile>& tiles) -> JSON
   return tile_json_array;
 }
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

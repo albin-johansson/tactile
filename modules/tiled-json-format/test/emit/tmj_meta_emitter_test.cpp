@@ -7,43 +7,44 @@
 #include "tactile/foundation/debug/exception.hpp"
 
 using namespace tactile;
+using namespace tactile::tiled::tmj;
 using namespace tactile::int_literals;
 using namespace tactile::fs_literals;
 
-/// \tests tactile::tmj::to_tmj_name
+/// \tests tactile::tiled::tmj::to_tmj_name
 TEST(TmjMetaEmitter, ToTmjName)
 {
-  EXPECT_EQ(tmj::to_tmj_name(AttributeType::kInt), "int");
-  EXPECT_EQ(tmj::to_tmj_name(AttributeType::kFloat), "float");
-  EXPECT_EQ(tmj::to_tmj_name(AttributeType::kBool), "bool");
-  EXPECT_EQ(tmj::to_tmj_name(AttributeType::kStr), "string");
-  EXPECT_EQ(tmj::to_tmj_name(AttributeType::kPath), "file");
-  EXPECT_EQ(tmj::to_tmj_name(AttributeType::kColor), "color");
-  EXPECT_EQ(tmj::to_tmj_name(AttributeType::kObject), "object");
+  EXPECT_EQ(to_tmj_name(AttributeType::kInt), "int");
+  EXPECT_EQ(to_tmj_name(AttributeType::kFloat), "float");
+  EXPECT_EQ(to_tmj_name(AttributeType::kBool), "bool");
+  EXPECT_EQ(to_tmj_name(AttributeType::kStr), "string");
+  EXPECT_EQ(to_tmj_name(AttributeType::kPath), "file");
+  EXPECT_EQ(to_tmj_name(AttributeType::kColor), "color");
+  EXPECT_EQ(to_tmj_name(AttributeType::kObject), "object");
 
-  EXPECT_EQ(tmj::to_tmj_name(AttributeType::kInt2), "string");
-  EXPECT_EQ(tmj::to_tmj_name(AttributeType::kInt3), "string");
-  EXPECT_EQ(tmj::to_tmj_name(AttributeType::kInt4), "string");
-  EXPECT_EQ(tmj::to_tmj_name(AttributeType::kFloat2), "string");
-  EXPECT_EQ(tmj::to_tmj_name(AttributeType::kFloat3), "string");
-  EXPECT_EQ(tmj::to_tmj_name(AttributeType::kFloat4), "string");
+  EXPECT_EQ(to_tmj_name(AttributeType::kInt2), "string");
+  EXPECT_EQ(to_tmj_name(AttributeType::kInt3), "string");
+  EXPECT_EQ(to_tmj_name(AttributeType::kInt4), "string");
+  EXPECT_EQ(to_tmj_name(AttributeType::kFloat2), "string");
+  EXPECT_EQ(to_tmj_name(AttributeType::kFloat3), "string");
+  EXPECT_EQ(to_tmj_name(AttributeType::kFloat4), "string");
 
-  EXPECT_THROW((void) tmj::to_tmj_name(AttributeType {100}), Exception);
+  EXPECT_THROW((void) to_tmj_name(AttributeType {100}), Exception);
 }
 
-/// \tests tactile::tmj::to_tmj_value
+/// \tests tactile::tiled::tmj::to_tmj_value
 TEST(TmjMetaEmitter, ToTmjValue)
 {
-  EXPECT_EQ(tmj::to_tmj_value(42), 42);
-  EXPECT_EQ(tmj::to_tmj_value(1.5f), 1.5f);
-  EXPECT_EQ(tmj::to_tmj_value(true), true);
-  EXPECT_EQ(tmj::to_tmj_value("foobar"), "foobar");
-  EXPECT_EQ(tmj::to_tmj_value("foo/bar"_path), "foo/bar");
-  EXPECT_EQ(tmj::to_tmj_value(UColor {0xDE, 0xAD, 0xBE, 0xEF}), "#EFDEADBE");
-  EXPECT_EQ(tmj::to_tmj_value(ObjectRef {123}), 123);
+  EXPECT_EQ(to_tmj_value(42), 42);
+  EXPECT_EQ(to_tmj_value(1.5f), 1.5f);
+  EXPECT_EQ(to_tmj_value(true), true);
+  EXPECT_EQ(to_tmj_value("foobar"), "foobar");
+  EXPECT_EQ(to_tmj_value("foo/bar"_path), "foo/bar");
+  EXPECT_EQ(to_tmj_value(UColor {0xDE, 0xAD, 0xBE, 0xEF}), "#EFDEADBE");
+  EXPECT_EQ(to_tmj_value(ObjectRef {123}), 123);
 }
 
-/// \tests tactile::tmj::emit_property_array
+/// \tests tactile::tiled::tmj::emit_property_array
 TEST(TmjMetaEmitter, EmitPropertyArray)
 {
   ir::Metadata meta {};
@@ -57,7 +58,7 @@ TEST(TmjMetaEmitter, EmitPropertyArray)
     {.name = "G", .value = ObjectRef {99}},
   };
 
-  const auto json_array = tmj::emit_property_array(meta);
+  const auto json_array = emit_property_array(meta);
   ASSERT_TRUE(json_array.is_array());
   ASSERT_EQ(json_array.size(), 7_uz);
 

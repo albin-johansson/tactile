@@ -10,7 +10,7 @@
 #include "tactile/tiled-json-format/api.hpp"
 #include "tactile/tiled-json-format/common/json.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 
 [[nodiscard]]
 TACTILE_TMJ_API auto parse_tile_animation_frame(const JSON& frame_json)
@@ -46,4 +46,4 @@ TACTILE_TMJ_API auto parse_tilesets(const JSON& map_json,
                                     const SaveFormatReadOptions& options,
                                     ir::Map& map) -> Result<void>;
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

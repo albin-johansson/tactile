@@ -7,7 +7,7 @@
 #include "tactile/foundation/math/rng.hpp"
 #include "tactile/foundation/misc/scope_guard.hpp"
 #include "tactile/tactile-yml-format/tactile_yml_format.hpp"
-#include "tactile/tiled-json-format/tmj_format.hpp"
+#include "tactile/tiled-json-format/tiled_json_format.hpp"
 #include "tactile/tiled-xml-format/tiled_xml_format.hpp"
 
 using namespace tactile;
@@ -30,12 +30,12 @@ auto main(int argc, char* argv[]) -> int
 
   TactileYmlFormat tactile_yml_format {};
   TiledXmlFormat tiled_xml_format {};
-  tmj::TmjFormat tmj_format {};
+  TiledJsonFormat tiled_json_format {};
 
   auto& save_format_context = SaveFormatContext::get();
   save_format_context.add_format(&tactile_yml_format);
   save_format_context.add_format(&tiled_xml_format);
-  save_format_context.add_format(&tmj_format);
+  save_format_context.add_format(&tiled_json_format);
 
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

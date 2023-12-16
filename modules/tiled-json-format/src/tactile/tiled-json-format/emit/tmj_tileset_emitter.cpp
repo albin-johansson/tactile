@@ -11,7 +11,7 @@
 #include "tactile/tiled-json-format/emit/tmj_meta_emitter.hpp"
 #include "tactile/tiled-json-format/emit/tmj_tile_emitter.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 namespace {
 
 [[nodiscard]]
@@ -127,4 +127,4 @@ auto emit_tileset_array(const ir::Map& map, const SaveFormatWriteOptions& option
   return tileset_json_array;
 }
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

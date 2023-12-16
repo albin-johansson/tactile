@@ -13,7 +13,7 @@
 #include "tactile/foundation/log/logger.hpp"
 #include "tactile/tiled-json-format/api.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 
 using JSON = nlohmann::json;
 
@@ -74,4 +74,4 @@ template <typename T, typename U>
   return {};
 }
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

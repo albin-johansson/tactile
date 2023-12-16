@@ -15,7 +15,7 @@ TEST(TmjTileEmitter, EmitEmptyTileDefinition)
     .animation = {},
   };
 
-  const auto tile_json = tmj::emit_tile_definition(tile);
+  const auto tile_json = tiled::tmj::emit_tile_definition(tile);
 
   EXPECT_EQ(tile_json["id"], tile.index.value);
   EXPECT_FALSE(tile_json.contains("properties"));
@@ -50,7 +50,7 @@ TEST(TmjTileEmitter, EmitComplexTileDefinition)
         },
   };
 
-  const auto tile_json = tmj::emit_tile_definition(tile);
+  const auto tile_json = tiled::tmj::emit_tile_definition(tile);
 
   EXPECT_EQ(tile_json["id"], tile.index.value);
   ASSERT_TRUE(tile_json.contains("properties"));

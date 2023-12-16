@@ -10,7 +10,7 @@
 #include "tactile/foundation/meta/attribute_type.hpp"
 #include "tactile/foundation/meta/color.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 namespace {
 
 [[nodiscard]]
@@ -173,4 +173,4 @@ auto parse_metadata(const JSON& json, ir::Metadata& meta) -> Result<void>
   return kSuccess;
 }
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

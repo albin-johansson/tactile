@@ -8,7 +8,7 @@
 #include "tactile/tiled-json-format/emit/tmj_meta_emitter.hpp"
 #include "tactile/tiled-json-format/emit/tmj_object_emitter.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 namespace {
 
 void _emit_object_layer(JSON& layer_json, const ir::Layer& layer)
@@ -143,4 +143,4 @@ auto emit_layer_array(const ir::Map& map) -> Result<JSON>
   return layer_json_array;
 }
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

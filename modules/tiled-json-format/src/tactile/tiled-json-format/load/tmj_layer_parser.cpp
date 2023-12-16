@@ -13,7 +13,7 @@
 #include "tactile/foundation/log/logger.hpp"
 #include "tactile/tiled-json-format/load/tmj_meta_parser.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 namespace {
 
 inline const HashMap<StringView, LayerType> kLayerTypeNames = {
@@ -278,4 +278,4 @@ auto parse_layers(const JSON& map_json, ir::Map& map) -> Result<void>
   return kSuccess;
 }
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

@@ -10,7 +10,7 @@
 #include "tactile/tiled-json-format/api.hpp"
 #include "tactile/tiled-json-format/common/json.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 
 /**
  * \brief Returns the name for a given attribute type used in TMJ save files.
@@ -47,4 +47,4 @@ TACTILE_TMJ_API auto to_tmj_value(const Attribute& attribute) -> JSON;
 [[nodiscard]]
 TACTILE_TMJ_API auto emit_property_array(const ir::Metadata& meta) -> JSON;
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

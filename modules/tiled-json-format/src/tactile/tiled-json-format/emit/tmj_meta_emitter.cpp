@@ -5,7 +5,7 @@
 #include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/io/save/vector_serialization.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 
 auto to_tmj_name(const AttributeType attribute_type) -> StringView
 {
@@ -71,4 +71,4 @@ auto emit_property_array(const ir::Metadata& meta) -> JSON
   return property_json_array;
 }
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

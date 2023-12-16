@@ -7,7 +7,7 @@
 #include "tactile/foundation/prelude.hpp"
 #include "tactile/tiled-json-format/api.hpp"
 
-namespace tactile::tmj {
+namespace tactile {
 
 /**
  * \brief Provides import and export support for the Tiled JSON format.
@@ -16,7 +16,7 @@ namespace tactile::tmj {
  *
  * \see https://doc.mapeditor.org/en/stable/reference/json-map-format
  */
-class TACTILE_TMJ_API TmjFormat final : public ISaveFormat {
+class TACTILE_TMJ_API TiledJsonFormat final : public ISaveFormat {
  public:
   [[nodiscard]]
   auto load_map(const FilePath& map_path, const SaveFormatReadOptions& options) const
@@ -41,4 +41,4 @@ class TACTILE_TMJ_API TmjFormat final : public ISaveFormat {
   auto is_valid_extension(NativeStringView extension) const -> bool override;
 };
 
-}  // namespace tactile::tmj
+}  // namespace tactile

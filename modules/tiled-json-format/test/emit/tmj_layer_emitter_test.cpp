@@ -39,7 +39,7 @@ TEST(TmjLayerEmitter, EmitTileLayer)
     .zstd_level = kNone,
   };
 
-  const auto layer_json = tmj::emit_layer(layer, tile_format);
+  const auto layer_json = tiled::tmj::emit_layer(layer, tile_format);
   ASSERT_TRUE(layer_json.has_value());
 
   EXPECT_EQ(layer_json->at("name"), layer.name);
@@ -98,7 +98,7 @@ TEST(TmjLayerEmitter, EmitObjectLayer)
     .zstd_level = kNone,
   };
 
-  const auto layer_json = tmj::emit_layer(layer, tile_format);
+  const auto layer_json = tiled::tmj::emit_layer(layer, tile_format);
   ASSERT_TRUE(layer_json.has_value());
 
   EXPECT_EQ(layer_json->at("name"), layer.name);

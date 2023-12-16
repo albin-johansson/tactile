@@ -11,11 +11,11 @@
 #include "tactile/tiled-json-format/api.hpp"
 #include "tactile/tiled-json-format/common/json.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 
 [[nodiscard]]
 TACTILE_TMJ_API auto parse_map(const JSON& json,
                                String filename,
                                const SaveFormatReadOptions& options) -> Result<ir::Map>;
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

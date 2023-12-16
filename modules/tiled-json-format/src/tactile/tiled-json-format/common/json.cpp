@@ -4,7 +4,7 @@
 
 #include "tactile/foundation/io/stream.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 
 auto parse_json(const FilePath& path) -> Result<JSON>
 {
@@ -16,4 +16,4 @@ auto parse_json(const FilePath& path) -> Result<JSON>
   }
 }
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj

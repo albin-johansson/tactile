@@ -9,7 +9,7 @@
 #include "tactile/tiled-json-format/api.hpp"
 #include "tactile/tiled-json-format/common/json.hpp"
 
-namespace tactile::tmj {
+namespace tactile::tiled::tmj {
 
 [[nodiscard]]
 TACTILE_TMJ_API auto emit_embedded_tileset(const ir::Tileset& tileset,
@@ -32,4 +32,4 @@ TACTILE_TMJ_API auto emit_tileset_array(const ir::Map& map,
                                         const SaveFormatWriteOptions& options)
     -> Result<JSON>;
 
-}  // namespace tactile::tmj
+}  // namespace tactile::tiled::tmj
