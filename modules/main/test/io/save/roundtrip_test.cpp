@@ -1,5 +1,6 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
+#include <ostream>  // ostream
 #include <utility>  // move
 
 #include <fmt/format.h>
@@ -18,23 +19,44 @@
 using namespace tactile;
 using namespace tactile::fs_literals;
 
-class RoundtripTest : public testing::TestWithParam<String> {};
+struct RoundtripTestConfig final {
+  String extension;
+  bool fold_tile_data;
+};
+
+auto operator<<(std::ostream& stream, const RoundtripTestConfig& test_config)
+    -> std::ostream&
+{
+  stream << fmt::format("{} (fold_tiles: {})",
+                        test_config.extension,
+                        test_config.fold_tile_data);
+  return stream;
+}
+
+class RoundtripTest : public testing::TestWithParam<RoundtripTestConfig> {};
 
 // NOLINTBEGIN(*-trailing-return-type)
 
 // NOLINTBEGIN(*-use-anonymous-namespace)
 INSTANTIATE_TEST_SUITE_P(Roundtrip,
                          RoundtripTest,
-                         testing::Values(".yml", ".tmj", ".tmx"));
+                         testing::Values(RoundtripTestConfig {".yml", false},
+                                         RoundtripTestConfig {".yml", true},
+                                         RoundtripTestConfig {".tmj", false},
+                                         RoundtripTestConfig {".tmj", true},
+                                         RoundtripTestConfig {".tmx", false},
+                                         RoundtripTestConfig {".tmx", true}));
 // NOLINTEND(*-use-anonymous-namespace)
 
 // Tries to save and restore a map that uses a common subset of the save format features.
 TEST_P(RoundtripTest, SaveAndLoadMap)
 {
-  const String& file_extension = GetParam();
+  const auto& test_config = GetParam();
 
   const auto map_directory = "assets/test/integration/roundtrip"_path;
-  const auto map_filename = fmt::format("map{}", file_extension);
+  const auto map_filename = fmt::format("map{}{}",
+                                        test_config.fold_tile_data ? "_folded" : "",
+                                        test_config.extension);
   const auto map_path = map_directory / map_filename;
 
   const MatrixExtent map_extent {4, 5};
@@ -115,7 +137,7 @@ TEST_P(RoundtripTest, SaveAndLoadMap)
     .base_dir = map_path.parent_path(),
     .use_external_tilesets = false,
     .use_indentation = true,
-    .fold_tile_layer_data = false,
+    .fold_tile_layer_data = test_config.fold_tile_data,
   };
 
   const SaveFormatReadOptions read_options = {

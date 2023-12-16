@@ -15,27 +15,24 @@ void emit_plain_text_tile_layer_data(YAML::Emitter& emitter,
                                      const ir::Layer& layer,
                                      const SaveFormatWriteOptions& options)
 {
-  const auto should_fold = options.fold_tile_layer_data;
-
   emitter << YAML::Key << "data";
 
   std::stringstream stream;
   for (usize row = 0; row < layer.height; ++row) {
     for (usize col = 0; col < layer.width; ++col) {
-      // TODO integration test that tests round trips with different options
-      if ((should_fold && col != 0) || (!should_fold && (row != 0 || col != 0))) {
+      if (col != 0) {
         stream << ' ';
       }
 
       stream << layer.tiles[row][col].value;
     }
 
-    if (should_fold && row < (layer.height - 1)) {
-      stream << '\n';
+    if (row < (layer.height - 1)) {
+      stream << (options.fold_tile_layer_data ? '\n' : ' ');
     }
   }
 
-  emitter << (should_fold ? YAML::Literal : YAML::Value) << stream.str();
+  emitter << (options.fold_tile_layer_data ? YAML::Literal : YAML::Value) << stream.str();
 }
 
 void emit_tile_layer_data(YAML::Emitter& emitter,
