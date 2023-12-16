@@ -18,8 +18,7 @@ TACTILE_TMJ_FORMAT_API auto emit_embedded_tileset(const ir::Tileset& tileset,
     -> Result<JSON>;
 
 [[nodiscard]]
-TACTILE_TMJ_FORMAT_API auto emit_external_tileset(const ir::TilesetRef& tileset_ref,
-                                                  const SaveFormatWriteOptions& options)
+TACTILE_TMJ_FORMAT_API auto emit_external_tileset(const ir::TilesetRef& tileset_ref)
     -> Result<JSON>;
 
 [[nodiscard]]

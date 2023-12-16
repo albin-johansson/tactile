@@ -71,8 +71,7 @@ auto emit_embedded_tileset(const ir::Tileset& tileset,
       .and_then([&]() -> Result<JSON> { return std::move(embedded_tileset_json); });
 }
 
-auto emit_external_tileset(const ir::TilesetRef& tileset_ref,
-                           const SaveFormatWriteOptions& options) -> Result<JSON>
+auto emit_external_tileset(const ir::TilesetRef& tileset_ref) -> Result<JSON>
 {
   auto external_tileset_json = JSON::object();
 
@@ -103,7 +102,7 @@ auto emit_tileset_ref(const ir::TilesetRef& tileset_ref,
           stream_to_file(external_tileset_json, external_tileset_path, stream_options);
           return kSuccess;
         })
-        .and_then([&] { return emit_external_tileset(tileset_ref, options); });
+        .and_then([&] { return emit_external_tileset(tileset_ref); });
   }
   else {
     return emit_embedded_tileset(tileset_ref.tileset, tileset_ref.first_tile_id, options);

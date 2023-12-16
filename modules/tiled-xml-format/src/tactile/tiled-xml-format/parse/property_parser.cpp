@@ -6,6 +6,7 @@
 #include <utility>   // move
 
 #include "tactile/foundation/io/save/save_format_error.hpp"
+#include "tactile/foundation/misc/conversion.hpp"
 #include "tactile/tiled-xml-format/common.hpp"
 
 namespace tactile::tiled::tmx {
@@ -123,7 +124,8 @@ auto parse_properties_node(pugi::xml_node context_node)
     return properties;
   }
 
-  properties.reserve(std::distance(property_range.begin(), property_range.end()));
+  properties.reserve(
+      as_unsigned(std::distance(property_range.begin(), property_range.end())));
 
   for (const auto property_node : property_range) {
     if (auto property = parse_property_node(property_node)) {

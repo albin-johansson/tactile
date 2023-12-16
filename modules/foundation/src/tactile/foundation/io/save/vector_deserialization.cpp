@@ -19,7 +19,7 @@ template <typename T>
     return kNone;
   }
 
-  int index = 0;
+  usize index = 0;
   for (const auto& value : values) {
     Maybe<scalar_type> parsed_value;
 

@@ -71,9 +71,7 @@ void emit_tileset_tile_seq(YAML::Emitter& emitter, const ir::Tileset& tileset)
   emitter << YAML::EndSeq;
 }
 
-void emit_tileset(YAML::Emitter& emitter,
-                  const ir::Tileset& tileset,
-                  const SaveFormatWriteOptions& options)
+void emit_tileset(YAML::Emitter& emitter, const ir::Tileset& tileset)
 {
   emitter << YAML::BeginMap;
 
@@ -117,7 +115,7 @@ void emit_tileset_ref(YAML::Emitter& emitter,
   YAML::Emitter tileset_emitter {};
   tileset_emitter.SetIndent(2);
 
-  emit_tileset(tileset_emitter, tileset_ref.tileset, options);
+  emit_tileset(tileset_emitter, tileset_ref.tileset);
 
   stream_to_file(tileset_emitter.c_str(),
                  external_tileset_path,

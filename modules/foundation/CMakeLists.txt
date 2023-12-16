@@ -22,6 +22,7 @@ target_compile_definitions(${TACTILE_FOUNDATION_TARGET}
 
                            PUBLIC
                            GLM_CONFIG_XYZW_ONLY=1
+                           GLM_FORCE_SIZE_T_LENGTH
                            )
 
 target_include_directories(${TACTILE_FOUNDATION_TARGET}

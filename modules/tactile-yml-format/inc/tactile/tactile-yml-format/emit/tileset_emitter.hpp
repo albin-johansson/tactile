@@ -21,8 +21,7 @@ TACTILE_YML_FORMAT_API void emit_tileset_tile_seq(YAML::Emitter& emitter,
                                                   const ir::Tileset& tileset);
 
 TACTILE_YML_FORMAT_API void emit_tileset(YAML::Emitter& emitter,
-                                         const ir::Tileset& tileset,
-                                         const SaveFormatWriteOptions& options);
+                                         const ir::Tileset& tileset);
 
 TACTILE_YML_FORMAT_API void emit_tileset_ref(YAML::Emitter& emitter,
                                              const ir::TilesetRef& tileset_ref,

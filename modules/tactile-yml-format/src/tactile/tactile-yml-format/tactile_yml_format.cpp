@@ -51,13 +51,12 @@ auto TactileYmlFormat::save_map(const FilePath& map_path,
 
 auto TactileYmlFormat::save_tileset(const FilePath& tileset_path,
                                     const ir::Tileset& tileset,
-                                    const SaveFormatWriteOptions& options) const
-    -> Result<void>
+                                    const SaveFormatWriteOptions&) const -> Result<void>
 {
   YAML::Emitter emitter;
   emitter.SetIndent(2);
 
-  yml_format::emit_tileset(emitter, tileset, options);
+  yml_format::emit_tileset(emitter, tileset);
 
   return stream_to_file(emitter.c_str(),
                         tileset_path,

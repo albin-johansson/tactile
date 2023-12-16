@@ -5,6 +5,7 @@
 #include <iterator>  // distance
 #include <utility>   // move
 
+#include "tactile/foundation/misc/conversion.hpp"
 #include "tactile/tiled-xml-format/common.hpp"
 #include "tactile/tiled-xml-format/parse/meta_parser.hpp"
 
@@ -57,7 +58,8 @@ auto parse_objects(const pugi::xml_node parent_node) -> Result<Vector<ir::Object
     return objects;
   }
 
-  objects.reserve(std::distance(object_node_range.begin(), object_node_range.end()));
+  objects.reserve(
+      as_unsigned(std::distance(object_node_range.begin(), object_node_range.end())));
 
   for (const auto object_node : object_node_range) {
     if (auto object = parse_object_node(object_node)) {

@@ -10,6 +10,7 @@
 
 #include "tactile/foundation/debug/generic_error.hpp"
 #include "tactile/foundation/log/logger.hpp"
+#include "tactile/foundation/misc/conversion.hpp"
 #include "tactile/tiled-xml-format/common.hpp"
 #include "tactile/tiled-xml-format/parse/meta_parser.hpp"
 #include "tactile/tiled-xml-format/parse/object_parser.hpp"
@@ -39,8 +40,8 @@ auto parse_tileset_tile_animation_node(const pugi::xml_node tile_node)
     return animation;
   }
 
-  animation.reserve(std::distance(animation_frame_node_range.begin(),
-                                  animation_frame_node_range.end()));
+  animation.reserve(as_unsigned(std::distance(animation_frame_node_range.begin(),
+                                              animation_frame_node_range.end())));
 
   for (const auto animation_frame_node : animation_frame_node_range) {
     if (const auto animation_frame =
@@ -83,7 +84,8 @@ auto parse_tileset_tiles(const pugi::xml_node tileset_node) -> Result<Vector<ir:
     return tiles;
   }
 
-  tiles.reserve(std::distance(tile_node_range.begin(), tile_node_range.end()));
+  tiles.reserve(
+      as_unsigned(std::distance(tile_node_range.begin(), tile_node_range.end())));
 
   for (const auto tile_node : tile_node_range) {
     if (auto tile = parse_tileset_tile_node(tile_node)) {
@@ -187,7 +189,8 @@ auto parse_tilesets(const pugi::xml_node map_node, const SaveFormatReadOptions& 
     return tilesets;
   }
 
-  tilesets.reserve(std::distance(tileset_node_range.begin(), tileset_node_range.end()));
+  tilesets.reserve(
+      as_unsigned(std::distance(tileset_node_range.begin(), tileset_node_range.end())));
 
   for (const auto tileset_node : tileset_node_range) {
     if (auto tileset = parse_tileset_node(tileset_node, options)) {
