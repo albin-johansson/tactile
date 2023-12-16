@@ -22,8 +22,8 @@ namespace {
 auto _determine_external_tileset_filename(const ir::TilesetRef& tileset_ref) -> String
 {
   return !tileset_ref.tileset.name.empty()
-             ? fmt::format("{}.tmx", tileset_ref.tileset.name)
-             : fmt::format("tileset_{}.tmx", tileset_ref.first_tile_id.value);
+             ? fmt::format("{}.tsx", tileset_ref.tileset.name)
+             : fmt::format("tileset_{}.tsx", tileset_ref.first_tile_id.value);
 }
 
 void _append_tileset_image_node(pugi::xml_node tileset_node, const ir::Tileset& tileset)

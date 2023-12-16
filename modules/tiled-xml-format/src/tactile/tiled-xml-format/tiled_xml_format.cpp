@@ -58,7 +58,8 @@ auto TiledXmlFormat::save_tileset(const FilePath& tileset_path,
 auto TiledXmlFormat::is_valid_extension(const NativeStringView extension) const -> bool
 {
   return extension == TACTILE_NATIVE_STR(".xml") ||
-         extension == TACTILE_NATIVE_STR(".tmx");
+         extension == TACTILE_NATIVE_STR(".tmx") ||
+         extension == TACTILE_NATIVE_STR(".tsx");
 }
 
 }  // namespace tactile
