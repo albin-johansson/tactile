@@ -2354,7 +2354,13 @@ PREDEFINED             = TACTILE_OS_WINDOWS \
                          TACTILE_NOINLINE \
                          TACTILE_DLL_EXPORT \
                          TACTILE_DLL_IMPORT \
-                         TACTILE_FWD
+                         TACTILE_FWD \
+                         TACTILE_FOUNDATION_API \
+                         TACTILE_CORE_API \
+                         TACTILE_OPENGL_API \
+                         TACTILE_YML_FORMAT_API \
+                         TACTILE_TMJ_FORMAT_API \
+                         TACTILE_TMX_FORMAT_API
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this
 # tag can be used to specify a list of macro names that should be expanded. The
