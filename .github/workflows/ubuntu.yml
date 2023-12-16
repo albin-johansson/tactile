@@ -29,7 +29,15 @@ jobs:
                            libx11-dev \
                            libxmu-dev \
                            libxi-dev \
-                           xvfb
+                           libtool \
+                           xvfb \
+                           pkg-config \
+                           automake \
+                           autoconf \
+                           autoconf-archive \
+                           autopoint \
+                           gperf \
+                           python3-jinja2
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
