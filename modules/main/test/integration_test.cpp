@@ -7,8 +7,8 @@
 #include "tactile/foundation/math/rng.hpp"
 #include "tactile/foundation/misc/scope_guard.hpp"
 #include "tactile/tactile-yml-format/tactile_yml_format.hpp"
+#include "tactile/tiled-json-format/tmj_format.hpp"
 #include "tactile/tiled-xml-format/tiled_xml_format.hpp"
-#include "tactile/tmj-format/tmj_format.hpp"
 
 using namespace tactile;
 
