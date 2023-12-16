@@ -126,6 +126,11 @@ endfunction()
 # Base
 add_subdirectory(foundation)
 
+# Test utilities
+if (TACTILE_BUILD_TESTS MATCHES ON)
+  add_subdirectory(testutil)
+endif ()
+
 # Editor
 add_subdirectory(proto)
 add_subdirectory(core)
