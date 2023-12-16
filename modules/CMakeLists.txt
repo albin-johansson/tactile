@@ -123,21 +123,20 @@ function(tactile_copy_directory_post_build target from to)
                      ${to})
 endfunction()
 
-set(TACTILE_PROTO_TARGET tactile-proto)
-set(TACTILE_FOUNDATION_TARGET tactile-foundation)
-set(TACTILE_CORE_TARGET tactile-core)
-set(TACTILE_OPENGL_TARGET tactile-opengl)
-set(TACTILE_VULKAN_TARGET tactile-vulkan)
-set(TACTILE_MAIN_TARGET tactile)
-
-add_subdirectory(proto)
-
+# Base
 add_subdirectory(foundation)
+
+# Editor
+add_subdirectory(proto)
 add_subdirectory(core)
 
+# Save formats
 add_subdirectory(tactile-yml-format)
 add_subdirectory(tiled-xml-format)
 add_subdirectory(tiled-json-format)
 
+# Renderers
 add_subdirectory(opengl)
+
+# Main executable
 add_subdirectory(main)

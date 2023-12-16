@@ -1,5 +1,7 @@
 project(tactile-proto CXX)
 
+set(TACTILE_PROTO_TARGET tactile-proto)
+
 file(GLOB_RECURSE TACTILE_PROTO_FILES
      CONFIGURE_DEPENDS
      "${PROJECT_SOURCE_DIR}/*.proto"
@@ -8,6 +10,7 @@ file(GLOB_RECURSE TACTILE_PROTO_FILES
 protobuf_generate_cpp(TACTILE_PROTO_GEN_SOURCE_FILES TACTILE_PROTO_GEN_HEADER_FILES "${TACTILE_PROTO_FILES}")
 
 add_library(${TACTILE_PROTO_TARGET} STATIC "${TACTILE_PROTO_GEN_HEADER_FILES}" "${TACTILE_PROTO_GEN_SOURCE_FILES}")
+add_library(tactile::proto ALIAS ${TACTILE_PROTO_TARGET})
 
 set_target_properties(${TACTILE_PROTO_TARGET}
                       PROPERTIES
@@ -23,5 +26,3 @@ set_target_properties(${TACTILE_PROTO_TARGET}
 target_include_directories(${TACTILE_PROTO_TARGET} SYSTEM PUBLIC "${PROJECT_BINARY_DIR}")
 
 target_link_libraries(${TACTILE_PROTO_TARGET} PRIVATE protobuf::libprotobuf)
-
-add_library(tactile::proto ALIAS ${TACTILE_PROTO_TARGET})

@@ -1,15 +1,15 @@
 project(tactile-foundation CXX)
 
-set(TACTILE_FOUNDATION_DIR "${TACTILE_ROOT_DIR}/modules/foundation")
+set(TACTILE_FOUNDATION_TARGET tactile-foundation)
 
 file(GLOB_RECURSE TACTILE_FOUNDATION_SOURCE_FILES
      CONFIGURE_DEPENDS
-     "${TACTILE_FOUNDATION_DIR}/inc/**/*.hpp"
-     "${TACTILE_FOUNDATION_DIR}/src/**/*.hpp"
-     "${TACTILE_FOUNDATION_DIR}/src/**/*.cpp"
+     "${PROJECT_SOURCE_DIR}/inc/**/*.hpp"
+     "${PROJECT_SOURCE_DIR}/src/**/*.hpp"
+     "${PROJECT_SOURCE_DIR}/src/**/*.cpp"
      )
 
-add_library(${TACTILE_FOUNDATION_TARGET} SHARED ${TACTILE_FOUNDATION_SOURCE_FILES})
+add_library(${TACTILE_FOUNDATION_TARGET} SHARED "${TACTILE_FOUNDATION_SOURCE_FILES}")
 add_library(tactile::foundation ALIAS ${TACTILE_FOUNDATION_TARGET})
 
 tactile_prepare_target(${TACTILE_FOUNDATION_TARGET})
@@ -26,7 +26,7 @@ target_compile_definitions(${TACTILE_FOUNDATION_TARGET}
 
 target_include_directories(${TACTILE_FOUNDATION_TARGET}
                            PUBLIC
-                           "${TACTILE_FOUNDATION_DIR}/inc"
+                           "${PROJECT_SOURCE_DIR}/inc"
 
                            PRIVATE
                            "${CPPCODEC_INCLUDE_DIRS}"
