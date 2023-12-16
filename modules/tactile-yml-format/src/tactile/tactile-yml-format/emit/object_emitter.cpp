@@ -18,8 +18,8 @@ void emit_object(YAML::Emitter& emitter, const ir::Object& object)
     case ObjectType::kEllipse: emitter << YAML::Value << "ellipse"; break;
   }
 
-  if (!object.meta.name.empty()) {
-    emitter << YAML::Key << "name" << YAML::Value << object.meta.name;
+  if (!object.name.empty()) {
+    emitter << YAML::Key << "name" << YAML::Value << object.name;
   }
 
   if (!object.tag.empty()) {

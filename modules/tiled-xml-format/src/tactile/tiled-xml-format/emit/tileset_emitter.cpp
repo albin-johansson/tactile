@@ -21,8 +21,8 @@ namespace {
 [[nodiscard]]
 auto _determine_external_tileset_filename(const ir::TilesetRef& tileset_ref) -> String
 {
-  return !tileset_ref.tileset.meta.name.empty()
-             ? fmt::format("{}.tmx", tileset_ref.tileset.meta.name)
+  return !tileset_ref.tileset.name.empty()
+             ? fmt::format("{}.tmx", tileset_ref.tileset.name)
              : fmt::format("tileset_{}.tmx", tileset_ref.first_tile_id.value);
 }
 
@@ -67,7 +67,7 @@ void _append_tile_node(pugi::xml_node tileset_node, const ir::Tile& tile)
 void _append_common_tileset_attributes(pugi::xml_node tileset_node,
                                        const ir::Tileset& tileset)
 {
-  tileset_node.append_attribute("name").set_value(tileset.meta.name.c_str());
+  tileset_node.append_attribute("name").set_value(tileset.name.c_str());
   tileset_node.append_attribute("tilewidth").set_value(tileset.tile_width);
   tileset_node.append_attribute("tileheight").set_value(tileset.tile_height);
   tileset_node.append_attribute("tilecount").set_value(tileset.tile_count);

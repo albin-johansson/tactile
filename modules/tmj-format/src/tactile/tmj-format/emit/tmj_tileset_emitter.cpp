@@ -20,7 +20,7 @@ auto _add_common_tileset_attributes(const ir::Tileset& tileset,
                                     JSON& tileset_json) -> Result<void>
 {
   tileset_json["type"] = "tileset";
-  tileset_json["name"] = tileset.meta.name;
+  tileset_json["name"] = tileset.name;
 
   tileset_json["columns"] = tileset.column_count;
   tileset_json["tilewidth"] = tileset.tile_width;
@@ -53,8 +53,8 @@ auto _add_common_tileset_attributes(const ir::Tileset& tileset,
 [[nodiscard]]
 auto _determine_external_tileset_filename(const ir::TilesetRef& tileset_ref) -> String
 {
-  return !tileset_ref.tileset.meta.name.empty()
-             ? fmt::format("{}.tmj", tileset_ref.tileset.meta.name)
+  return !tileset_ref.tileset.name.empty()
+             ? fmt::format("{}.tmj", tileset_ref.tileset.name)
              : fmt::format("tileset_{}.tmj", tileset_ref.first_tile_id.value);
 }
 

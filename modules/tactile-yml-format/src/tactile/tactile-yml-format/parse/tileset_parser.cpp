@@ -111,7 +111,7 @@ auto parse_tileset(const YAML::Node& tileset_node,
         return kOK;
       })
       // clang-format off
-      .and_then([&] { return parse_to(tileset_node, "name", tileset.meta.name); })
+      .and_then([&] { return parse_to(tileset_node, "name", tileset.name); })
       .and_then([&] { return parse_to(tileset_node, "tile-count", tileset.tile_count); })
       .and_then([&] { return parse_to(tileset_node, "tile-width", tileset.tile_width); })
       .and_then([&] { return parse_to(tileset_node, "tile-height", tileset.tile_height); })

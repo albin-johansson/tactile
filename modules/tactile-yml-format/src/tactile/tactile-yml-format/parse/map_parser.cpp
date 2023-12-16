@@ -25,7 +25,7 @@ auto parse_map(String map_name,
                     root_node.Mark().column);
 
   ir::Map map {};
-  map.meta.name = std::move(map_name);
+  map.name = std::move(map_name);
 
   return parse_to(root_node, "row-count", map.row_count)
       .and_then([&] { return parse_to(root_node, "column-count", map.col_count); })

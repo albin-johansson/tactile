@@ -152,8 +152,6 @@ auto parse_property(const JSON& json) -> Result<ir::NamedAttribute>
 
 auto parse_metadata(const JSON& json, ir::Metadata& meta) -> Result<void>
 {
-  // TODO parse name here?
-
   const auto properties_iter = json.find("properties");
 
   if (properties_iter != json.end()) {

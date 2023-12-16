@@ -11,8 +11,8 @@ void append_object_node(pugi::xml_node parent_node, const ir::Object& object)
   auto object_node = parent_node.append_child("object");
   object_node.append_attribute("id").set_value(object.id.value);
 
-  if (!object.meta.name.empty()) {
-    object_node.append_attribute("name").set_value(object.meta.name.c_str());
+  if (!object.name.empty()) {
+    object_node.append_attribute("name").set_value(object.name.c_str());
   }
 
   if (!object.tag.empty()) {

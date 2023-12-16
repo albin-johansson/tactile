@@ -16,7 +16,7 @@ auto parse_map_node(const pugi::xml_node map_node,
                     const SaveFormatReadOptions& options) -> Result<ir::Map>
 {
   ir::Map map {};
-  map.meta.name = std::move(filename);
+  map.name = std::move(filename);
 
   return parse_to(map_node, "width", map.col_count)
       .and_then([&] { return parse_to(map_node, "height", map.row_count); })
@@ -24,6 +24,7 @@ auto parse_map_node(const pugi::xml_node map_node,
       .and_then([&] { return parse_to(map_node, "tileheight", map.tile_height); })
       .and_then([&] { return parse_to(map_node, "nextlayerid", map.next_layer_id); })
       .and_then([&] { return parse_to(map_node, "nextobjectid", map.next_object_id); })
+      .and_then([&] { return parse_metadata(map_node, map.meta); })
       .and_then([&] { return parse_tilesets(map_node, options); })
       .and_then([&](Vector<ir::TilesetRef>&& tilesets) {
         map.tilesets = std::move(tilesets);
@@ -34,7 +35,6 @@ auto parse_map_node(const pugi::xml_node map_node,
         map.layers = std::move(layers);
         return kOK;
       })
-      .and_then([&] { return parse_metadata(map_node, map.meta); })
       .transform([&] { return std::move(map); });
 }
 

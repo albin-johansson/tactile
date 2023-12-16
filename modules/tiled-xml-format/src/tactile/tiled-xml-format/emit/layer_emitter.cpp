@@ -18,7 +18,7 @@ using int_literals::operator""_uz;
 void _append_common_layer_attributes(pugi::xml_node layer_node, const ir::Layer& layer)
 {
   layer_node.append_attribute("id").set_value(layer.id);
-  layer_node.append_attribute("name").set_value(layer.meta.name.c_str());
+  layer_node.append_attribute("name").set_value(layer.name.c_str());
 
   if (layer.opacity != 1.0f) {
     layer_node.append_attribute("opacity").set_value(layer.opacity);

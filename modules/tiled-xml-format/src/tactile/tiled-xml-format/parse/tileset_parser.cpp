@@ -126,7 +126,7 @@ auto parse_embedded_tileset_node(const pugi::xml_node tileset_node,
 {
   ir::Tileset tileset {};
 
-  return parse_to(tileset_node, "name", tileset.meta.name)
+  return parse_to(tileset_node, "name", tileset.name)
       .and_then([&] { return parse_to(tileset_node, "tilewidth", tileset.tile_width); })
       .and_then([&] { return parse_to(tileset_node, "tileheight", tileset.tile_height); })
       .and_then([&] { return parse_to(tileset_node, "tilecount", tileset.tile_count); })

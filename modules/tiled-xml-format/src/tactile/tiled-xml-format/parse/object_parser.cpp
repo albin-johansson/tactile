@@ -31,7 +31,7 @@ auto parse_object_node(const pugi::xml_node object_node) -> Result<ir::Object>
   ir::Object object {};
 
   return parse_to(object_node, "id", object.id.value)
-      .and_then([&] { return try_parse_to(object_node, "name", object.meta.name); })
+      .and_then([&] { return try_parse_to(object_node, "name", object.name); })
       .and_then([&] { return try_parse_to(object_node, "type", object.tag); })
       .and_then([&] { return try_parse_to(object_node, "x", object.x); })
       .and_then([&] { return try_parse_to(object_node, "y", object.y); })

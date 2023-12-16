@@ -129,7 +129,7 @@ auto parse_layer(const YAML::Node& layer_node, const ir::Map& map) -> Result<ir:
 
   return parse_to(layer_node, "id", layer.id)
       .and_then([&] {
-        layer.meta.name = try_parse<String>(layer_node, "name").value_or("Layer");
+        layer.name = try_parse<String>(layer_node, "name").value_or("Layer");
         return kOK;
       })
       .and_then([&] {
@@ -160,8 +160,6 @@ auto parse_layer(const YAML::Node& layer_node, const ir::Map& map) -> Result<ir:
       })
       .and_then([&] { return parse_metadata(layer_node, map, layer.meta); })
       .transform([&] { return std::move(layer); });
-
-  return layer;
 }
 
 auto parse_layers(const YAML::Node& root_node, const ir::Map& map)

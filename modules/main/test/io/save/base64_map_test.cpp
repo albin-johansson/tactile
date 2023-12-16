@@ -67,7 +67,7 @@ TEST_P(Base64MapTest, SaveAndLoadBase64TileLayer)
   const auto map_path = map_directory / map_filename;
 
   ir::Map map {};
-  map.meta.name = map_filename;
+  map.name = map_filename;
 
   map.row_count = 8;
   map.col_count = 10;

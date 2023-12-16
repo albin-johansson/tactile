@@ -58,7 +58,6 @@ struct AttachedComponent final {
  * \brief Provides the data featured by all meta contexts.
  */
 struct Metadata final {
-  String name;                           ///< The context name.
   Vector<NamedAttribute> properties;     ///< The attached properties.
   Vector<AttachedComponent> components;  ///< The attached components.
 
@@ -70,6 +69,7 @@ struct Metadata final {
  */
 struct Object final {
   Metadata meta;    ///< Metadata for the object.
+  String name;      ///< The object name.
   ObjectID id;      ///< The associated identifier.
   ObjectType type;  ///< The type of the object.
   float32 x;        ///< The x-coordinate of the object.
@@ -89,6 +89,7 @@ struct Object final {
  */
 struct Layer final {
   Metadata meta;           ///< Metadata for the layer.
+  String name;             ///< The layer name.
   int32 id;                ///< The associated identifier.
   LayerType type;          ///< The type of the layer.
   float32 opacity;         ///< The opacity of the layer content.
@@ -131,6 +132,7 @@ struct Tile final {
  */
 struct Tileset final {
   Metadata meta;        ///< Metadata for the tileset.
+  String name;          ///< The tileset name.
   int32 tile_width;     ///< The width of tiles in the tileset.
   int32 tile_height;    ///< The height of tiles in the tileset.
   usize tile_count;     ///< The total number of tiles in the tileset.
@@ -170,6 +172,7 @@ struct TileFormat final {
  */
 struct Map final {
   Metadata meta;                 ///< Metadata for the map.
+  String name;                   ///< The map name.
   usize row_count;               ///< The number of rows in each tile layer.
   usize col_count;               ///< The number of columns in each tile layer.
   int32 tile_width;              ///< The logical width of all tiles.

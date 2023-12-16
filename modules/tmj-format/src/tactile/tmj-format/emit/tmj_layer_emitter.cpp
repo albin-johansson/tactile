@@ -92,7 +92,7 @@ auto emit_layer(const ir::Layer& layer, const ir::TileFormat& tile_format) -> Re
   auto layer_json = JSON::object();
 
   layer_json["id"] = layer.id;
-  layer_json["name"] = layer.meta.name;
+  layer_json["name"] = layer.name;
   layer_json["opacity"] = layer.opacity;
   layer_json["visible"] = layer.visible;
   layer_json["x"] = 0;

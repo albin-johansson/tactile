@@ -19,8 +19,8 @@ namespace {
 [[nodiscard]]
 auto _determine_external_tileset_filename(const ir::TilesetRef& tileset_ref) -> String
 {
-  return !tileset_ref.tileset.meta.name.empty()
-             ? fmt::format("{}.yml", tileset_ref.tileset.meta.name)
+  return !tileset_ref.tileset.name.empty()
+             ? fmt::format("{}.yml", tileset_ref.tileset.name)
              : fmt::format("tileset_{}.yml", tileset_ref.first_tile_id.value);
 }
 
@@ -78,7 +78,7 @@ void emit_tileset(YAML::Emitter& emitter,
   emitter << YAML::BeginMap;
 
   emitter << YAML::Key << "version" << YAML::Value << 1;
-  emitter << YAML::Key << "name" << YAML::Value << tileset.meta.name;
+  emitter << YAML::Key << "name" << YAML::Value << tileset.name;
 
   emitter << YAML::Key << "tile-width" << YAML::Value << tileset.tile_width;
   emitter << YAML::Key << "tile-height" << YAML::Value << tileset.tile_height;

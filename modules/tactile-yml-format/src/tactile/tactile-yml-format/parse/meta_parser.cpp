@@ -5,7 +5,6 @@
 #include <utility>  // move
 
 #include "tactile/foundation/log/logger.hpp"
-#include "tactile/tactile-yml-format/parse/common.hpp"
 #include "tactile/tactile-yml-format/parse/component_parser.hpp"
 #include "tactile/tactile-yml-format/parse/property_parser.hpp"
 
@@ -27,11 +26,6 @@ auto parse_metadata(const YAML::Node& context_node,
       .and_then([&] { return parse_properties(context_node); })
       .and_then([&](Vector<ir::NamedAttribute>&& properties) {
         metadata.properties = std::move(properties);
-        return kOK;
-      })
-      .and_then([&] {
-        // Most but not all contexts feature a name attribute, so it's okay if this fails.
-        (void) try_parse_to(context_node, "name", metadata.name);
         return kOK;
       });
 }

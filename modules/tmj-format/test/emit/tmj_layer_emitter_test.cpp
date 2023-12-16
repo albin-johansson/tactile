@@ -11,10 +11,10 @@ TEST(TmjLayerEmitter, EmitTileLayer)
   const ir::Layer layer {
     .meta =
         ir::Metadata {
-          .name = "Tile layer",
           .properties = {},
           .components = {},
         },
+    .name = "Tile layer",
     .id = 123,
     .type = LayerType::kTileLayer,
     .opacity = 0.5f,
@@ -42,7 +42,7 @@ TEST(TmjLayerEmitter, EmitTileLayer)
   const auto layer_json = tmj::emit_layer(layer, tile_format);
   ASSERT_TRUE(layer_json.has_value());
 
-  EXPECT_EQ(layer_json->at("name"), layer.meta.name);
+  EXPECT_EQ(layer_json->at("name"), layer.name);
   EXPECT_EQ(layer_json->at("id"), layer.id);
   EXPECT_EQ(layer_json->at("opacity"), layer.opacity);
   EXPECT_EQ(layer_json->at("visible"), layer.visible);
@@ -71,10 +71,10 @@ TEST(TmjLayerEmitter, EmitObjectLayer)
   const ir::Layer layer {
     .meta =
         ir::Metadata {
-          .name = "Object layer",
           .properties = {},
           .components = {},
         },
+    .name = "Object layer",
     .id = 77,
     .type = LayerType::kObjectLayer,
     .opacity = 1.0f,
@@ -101,7 +101,7 @@ TEST(TmjLayerEmitter, EmitObjectLayer)
   const auto layer_json = tmj::emit_layer(layer, tile_format);
   ASSERT_TRUE(layer_json.has_value());
 
-  EXPECT_EQ(layer_json->at("name"), layer.meta.name);
+  EXPECT_EQ(layer_json->at("name"), layer.name);
   EXPECT_EQ(layer_json->at("id"), layer.id);
   EXPECT_EQ(layer_json->at("opacity"), layer.opacity);
   EXPECT_EQ(layer_json->at("visible"), layer.visible);

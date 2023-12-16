@@ -96,7 +96,7 @@ void emit_layer(YAML::Emitter& emitter,
 {
   emitter << YAML::BeginMap;
 
-  emitter << YAML::Key << "name" << YAML::Value << layer.meta.name;
+  emitter << YAML::Key << "name" << YAML::Value << layer.name;
   emitter << YAML::Key << "id" << YAML::Value << layer.id;
 
   if (layer.opacity != 1.0f) {

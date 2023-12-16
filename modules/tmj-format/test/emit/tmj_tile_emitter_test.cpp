@@ -28,7 +28,6 @@ TEST(TmjTileEmitter, EmitComplexTileDefinition)
   const ir::Tile tile {
     .meta =
         {
-          .name = "T42",
           .properties =
               {
                 ir::NamedAttribute {.name = "P1", .value = 100},

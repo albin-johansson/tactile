@@ -216,7 +216,7 @@ auto parse_object(const JSON& object_json) -> Result<ir::Object>
   }
 
   return parse(object_json, "id", object.id.value)
-      .and_then([&] { return parse(object_json, "name", object.meta.name, ""); })
+      .and_then([&] { return parse(object_json, "name", object.name, ""); })
       .and_then([&] { return parse(object_json, "type", object.tag, ""); })
       .and_then([&] { return parse(object_json, "x", object.x, 0.0f); })
       .and_then([&] { return parse(object_json, "y", object.y, 0.0f); })
@@ -232,7 +232,7 @@ auto parse_layer(const JSON& layer_json, ir::Map& map) -> Result<ir::Layer>
   ir::Layer layer {};
 
   return parse(layer_json, "id", layer.id)
-      .and_then([&] { return parse(layer_json, "name", layer.meta.name, "Layer"); })
+      .and_then([&] { return parse(layer_json, "name", layer.name, "Layer"); })
       .and_then([&] { return parse(layer_json, "opacity", layer.opacity, 1.0f); })
       .and_then([&] { return parse(layer_json, "visible", layer.visible, true); })
       .and_then([&] { return _parse_layer_type(layer_json, layer.type); })

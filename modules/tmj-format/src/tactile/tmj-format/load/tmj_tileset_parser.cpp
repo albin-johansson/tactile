@@ -114,7 +114,7 @@ auto parse_tileset(const JSON& json, const SaveFormatReadOptions& options)
 
   String relative_image_path {};
 
-  return parse(json, "name", tileset.meta.name)
+  return parse(json, "name", tileset.name)
       .and_then([&] { return parse(json, "tilewidth", tileset.tile_width); })
       .and_then([&] { return parse(json, "tileheight", tileset.tile_height); })
       .and_then([&] { return parse(json, "tilecount", tileset.tile_count); })

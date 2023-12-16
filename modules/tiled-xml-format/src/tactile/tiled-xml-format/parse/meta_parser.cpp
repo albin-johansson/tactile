@@ -8,7 +8,6 @@ namespace tactile::tiled::tmx {
 
 auto parse_metadata(pugi::xml_node context_node, ir::Metadata& metadata) -> Result<void>
 {
-  // TODO name?
   return parse_properties_node(context_node)
       .and_then([&](Vector<ir::NamedAttribute>&& properties) {
         metadata.properties = std::move(properties);

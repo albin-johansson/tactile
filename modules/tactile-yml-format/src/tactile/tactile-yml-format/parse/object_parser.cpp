@@ -44,7 +44,7 @@ auto parse_object(const YAML::Node& object_node, const ir::Map& map) -> Result<i
         object.type = type;
         return kOK;
       })
-      .and_then([&] { return parse_to(object_node, "name", object.meta.name); })
+      .and_then([&] { return parse_to(object_node, "name", object.name); })
       .and_then([&] { return parse_to(object_node, "tag", object.tag); })
       .and_then([&] {
         object.x = try_parse<float>(object_node, "x").value_or(0.0f);

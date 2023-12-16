@@ -25,10 +25,10 @@ auto _make_tile_layer(String name, const int32 id) -> ir::Layer
   return {
     .meta =
         {
-          .name = std::move(name),
           .properties = {},
           .components = {},
         },
+    .name = std::move(name),
     .id = id,
     .type = LayerType::kTileLayer,
     .opacity = 1.0f,
@@ -48,10 +48,10 @@ auto _make_group_layer(String name, const int32 id, Vector<ir::Layer> layers = {
   return {
     .meta =
         {
-          .name = std::move(name),
           .properties = {},
           .components = {},
         },
+    .name = std::move(name),
     .id = id,
     .type = LayerType::kGroupLayer,
     .opacity = 1.0f,
@@ -81,7 +81,7 @@ TEST_P(NestedLayersTest, SaveAndLoadMapWithNestedLayers)
   const auto map_path = map_directory / map_filename;
 
   ir::Map map {};
-  map.meta.name = map_filename;
+  map.name = map_filename;
 
   map.row_count = kMapHeight;
   map.col_count = kMapWidth;

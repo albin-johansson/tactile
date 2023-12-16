@@ -22,7 +22,6 @@ TEST_P(ParameterizedTmjObjectEmitterTest, EmitObject)
   const ir::Object object {
     .meta =
         {
-          .name = "ObjectName",
           .properties =
               {
                 ir::NamedAttribute {.name = "P1", .value = 42},
@@ -30,6 +29,7 @@ TEST_P(ParameterizedTmjObjectEmitterTest, EmitObject)
               },
           .components = {},
         },
+    .name = "ObjectName",
     .id = ObjectID {72},
     .type = object_type,
     .x = 83,
@@ -43,7 +43,7 @@ TEST_P(ParameterizedTmjObjectEmitterTest, EmitObject)
   const auto object_json = tmj::emit_object(object);
   ASSERT_TRUE(object_json.is_object());
 
-  EXPECT_EQ(object_json.at("name"), object.meta.name);
+  EXPECT_EQ(object_json.at("name"), object.name);
   EXPECT_EQ(object_json.at("id"), object.id.value);
   EXPECT_EQ(object_json.at("x"), object.x);
   EXPECT_EQ(object_json.at("y"), object.y);

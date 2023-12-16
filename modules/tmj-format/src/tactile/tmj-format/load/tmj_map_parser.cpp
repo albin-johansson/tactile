@@ -15,7 +15,7 @@ auto parse_map(const JSON& json, String filename, const SaveFormatReadOptions& o
     -> Result<ir::Map>
 {
   ir::Map map {};
-  map.meta.name = std::move(filename);
+  map.name = std::move(filename);
 
   String orientation {};
   return parse(json, "orientation", orientation)

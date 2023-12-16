@@ -36,13 +36,13 @@ inline constexpr ir::TileFormat kTileFormat {
 inline const ir::Object kPointObject {
   .meta =
       {
-        .name = "kPointObject",
         .properties =
             {
               ir::NamedAttribute {.name = "kPointObject::int", .value = -48'921},
             },
         .components = {},
       },
+  .name = "kPointObject",
   .id = ObjectID {100},
   .type = ObjectType::kPoint,
   .x = 8'231,
@@ -56,10 +56,10 @@ inline const ir::Object kPointObject {
 inline const ir::Object kRectObject {
   .meta =
       {
-        .name = "kRectObject",
         .properties = {},
         .components = {},
       },
+  .name = "kRectObject",
   .id = ObjectID {84},
   .type = ObjectType::kRect,
   .x = 532,
@@ -73,10 +73,13 @@ inline const ir::Object kRectObject {
 inline const ir::Object kEllipseObject {
   .meta =
       {
-        .name = "kEllipseObject",
-        .properties = {},
+        .properties =
+            {
+              ir::NamedAttribute {"object-property", 42},
+            },
         .components = {},
       },
+  .name = "kEllipseObject",
   .id = ObjectID {999},
   .type = ObjectType::kEllipse,
   .x = -1'283,
@@ -90,7 +93,6 @@ inline const ir::Object kEllipseObject {
 inline const ir::Tileset kTileset1 {
   .meta =
       {
-        .name = "TS1",
         .properties =
             {
               {.name = "TS1::bool", .value = false},
@@ -110,8 +112,10 @@ inline const ir::Tileset kTileset1 {
 inline const ir::Tile kTileset2Tile1 {
   .meta =
       {
-        .name = "",
-        .properties = {},
+        .properties =
+            {
+              ir::NamedAttribute {"foo", "bar"},
+            },
         .components = {},
       },
   .index = TileIndex {0},
@@ -127,7 +131,6 @@ inline const ir::Tile kTileset2Tile1 {
 inline const ir::Tile kTileset2Tile2 {
   .meta =
       {
-        .name = "",
         .properties = {},
         .components = {},
       },
@@ -139,10 +142,10 @@ inline const ir::Tile kTileset2Tile2 {
 inline const ir::Tileset kTileset2 {
   .meta =
       {
-        .name = "TS2",
         .properties = {},
         .components = {},
       },
+  .name = "TS2",
   .tile_width = 28,
   .tile_height = 32,
   .tile_count = 64,
@@ -156,10 +159,10 @@ inline const ir::Tileset kTileset2 {
 inline const ir::Layer kLayer1 {
   .meta =
       {
-        .name = "T1",
         .properties = {},
         .components = {},
       },
+  .name = "T1",
   .id = 10,
   .type = LayerType::kTileLayer,
   .opacity = 1.0f,
@@ -174,13 +177,13 @@ inline const ir::Layer kLayer1 {
 inline const ir::Layer kObjectLayer {
   .meta =
       {
-        .name = "O1",
         .properties =
             {
               {.name = "O1::int", .value = 999},
             },
         .components = {},
       },
+  .name = "O1",
   .id = 30,
   .type = LayerType::kObjectLayer,
   .opacity = 0.8f,
@@ -195,7 +198,6 @@ inline const ir::Layer kObjectLayer {
 inline const ir::Layer kGroupLayer {
   .meta =
       {
-        .name = "G1",
         .properties =
             {
               {.name = "G1::float", .value = 15.9f},
@@ -203,6 +205,7 @@ inline const ir::Layer kGroupLayer {
             },
         .components = {},
       },
+  .name = "G1",
   .id = 20,
   .type = LayerType::kGroupLayer,
   .opacity = 1.0f,
@@ -227,7 +230,6 @@ TEST_P(SaveFormatManagerTest, SaveAndLoadMap)
   const ir::Map map {
     .meta =
         {
-          .name = map_filename,
           .properties =
               {
                 {.name = "Map::str", .value = "foo"},
@@ -240,6 +242,7 @@ TEST_P(SaveFormatManagerTest, SaveAndLoadMap)
               },
           .components = {},
         },
+    .name = map_filename,
     .row_count = kRowCount,
     .col_count = kColCount,
     .tile_width = 30,

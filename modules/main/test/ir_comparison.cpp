@@ -21,8 +21,6 @@ void expect_eq(const ir::Component& component1, const ir::Component& component2)
 
 void expect_eq(const ir::Metadata& metadata1, const ir::Metadata& metadata2)
 {
-  EXPECT_EQ(metadata1.name, metadata2.name);
-
   ASSERT_EQ(metadata1.properties.size(), metadata2.properties.size());
   EXPECT_EQ(metadata1.properties, metadata2.properties);
 
@@ -38,6 +36,7 @@ void expect_eq(const ir::Object& object1, const ir::Object& object2)
 {
   expect_eq(object1.meta, object2.meta);
 
+  EXPECT_EQ(object1.name, object2.name);
   EXPECT_EQ(object1.type, object2.type);
   EXPECT_EQ(object1.tag, object2.tag);
   EXPECT_EQ(object1.x, object2.x);
@@ -51,6 +50,7 @@ void expect_eq(const ir::Layer& layer1, const ir::Layer& layer2)
 {
   expect_eq(layer1.meta, layer2.meta);
 
+  EXPECT_EQ(layer1.name, layer2.name);
   EXPECT_EQ(layer1.id, layer2.id);
   EXPECT_EQ(layer1.type, layer2.type);
   EXPECT_EQ(layer1.opacity, layer2.opacity);
@@ -114,6 +114,7 @@ void expect_eq(const ir::Tileset& tileset1, const ir::Tileset& tileset2)
 {
   expect_eq(tileset1.meta, tileset2.meta);
 
+  EXPECT_EQ(tileset1.name, tileset2.name);
   EXPECT_EQ(tileset1.tile_width, tileset2.tile_width);
   EXPECT_EQ(tileset1.tile_height, tileset2.tile_height);
   EXPECT_EQ(tileset1.tile_count, tileset2.tile_count);
@@ -141,6 +142,7 @@ void expect_eq(const ir::Map& map1, const ir::Map& map2)
   expect_eq(map1.meta, map2.meta);
   expect_eq(map1.tile_format, map2.tile_format);
 
+  EXPECT_EQ(map1.name, map2.name);
   EXPECT_EQ(map1.row_count, map2.row_count);
   EXPECT_EQ(map1.col_count, map2.col_count);
   EXPECT_EQ(map1.tile_width, map2.tile_width);

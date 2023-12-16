@@ -52,7 +52,7 @@ TEST_P(EmbeddedAndExternalTilesetTest, SaveAndLoadMap)
   const auto map_path = map_directory / map_filename;
 
   ir::Map map {};
-  map.meta.name = map_filename;
+  map.name = map_filename;
 
   map.tile_width = 100;
   map.tile_height = 100;

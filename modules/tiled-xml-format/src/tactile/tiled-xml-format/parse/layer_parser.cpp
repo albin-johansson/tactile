@@ -213,7 +213,7 @@ auto parse_layer_node(const pugi::xml_node layer_node,
 
   return parse_to(layer_node, "id", layer.id)
       // clang-format off
-      .and_then([&] { return try_parse_to(layer_node, "name", layer.meta.name, "Layer"s); })
+      .and_then([&] { return try_parse_to(layer_node, "name", layer.name, "Layer"s); })
       .and_then([&] { return try_parse_to(layer_node, "opacity", layer.opacity, 1.0f); })
       .and_then([&] { return try_parse_to(layer_node, "visible", layer.visible, true); })
       .and_then([&] { return parse_layer_type(layer_node); })
