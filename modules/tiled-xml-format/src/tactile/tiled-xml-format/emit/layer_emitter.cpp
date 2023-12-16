@@ -69,27 +69,26 @@ void _append_tile_layer_csv_data_node(pugi::xml_node layer_node,
   auto data_node = layer_node.append_child("data");
   data_node.append_attribute("encoding").set_value("csv");
 
-  const auto tile_count = layer.width * layer.height;
-
   std::stringstream stream;
 
-  auto index = 0_uz;
+  if (options.fold_tile_layer_data) {
+    stream << '\n';
+  }
+
   for (auto row = 0_uz; row < layer.height; ++row) {
     for (auto col = 0_uz; col < layer.width; ++col) {
-      if (options.fold_tile_layer_data && index == 0_uz) {
-        stream << '\n';
-      }
-
-      stream << layer.tiles[row][col].value;
-      if (index < tile_count - 1_uz) {
+      if (col != 0_uz) {
         stream << ',';
       }
 
-      if (options.fold_tile_layer_data && (index + 1_uz) % layer.width == 0_uz) {
+      stream << layer.tiles[row][col].value;
+    }
+
+    if (row < (layer.height - 1_uz)) {
+      stream << ',';
+      if (options.fold_tile_layer_data) {
         stream << '\n';
       }
-
-      ++index;
     }
   }
 
