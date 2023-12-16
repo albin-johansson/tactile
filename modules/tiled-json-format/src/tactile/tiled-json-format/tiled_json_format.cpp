@@ -8,10 +8,10 @@
 #include "tactile/foundation/io/save/save_format_error.hpp"
 #include "tactile/foundation/io/stream.hpp"
 #include "tactile/foundation/log/logger.hpp"
-#include "tactile/tiled-json-format/common/json.hpp"
-#include "tactile/tiled-json-format/emit/tmj_map_emitter.hpp"
-#include "tactile/tiled-json-format/emit/tmj_tileset_emitter.hpp"
-#include "tactile/tiled-json-format/load/tmj_map_parser.hpp"
+#include "tactile/tiled-json-format/common.hpp"
+#include "tactile/tiled-json-format/emit/map_emitter.hpp"
+#include "tactile/tiled-json-format/emit/tileset_emitter.hpp"
+#include "tactile/tiled-json-format/parse/map_parser.hpp"
 
 namespace tactile {
 

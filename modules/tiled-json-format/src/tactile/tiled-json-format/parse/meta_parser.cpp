@@ -1,6 +1,6 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/tiled-json-format/load/tmj_meta_parser.hpp"
+#include "tactile/tiled-json-format/parse/meta_parser.hpp"
 
 #include <utility>  // move
 

@@ -1,6 +1,6 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/tiled-json-format/emit/tmj_tileset_emitter.hpp"
+#include "tactile/tiled-json-format/emit/tileset_emitter.hpp"
 
 #include <filesystem>  // relative
 #include <utility>     // move
@@ -8,8 +8,8 @@
 #include <fmt/format.h>
 
 #include "tactile/foundation/io/stream.hpp"
-#include "tactile/tiled-json-format/emit/tmj_meta_emitter.hpp"
-#include "tactile/tiled-json-format/emit/tmj_tile_emitter.hpp"
+#include "tactile/tiled-json-format/emit/meta_emitter.hpp"
+#include "tactile/tiled-json-format/emit/tile_emitter.hpp"
 
 namespace tactile::tiled::tmj {
 namespace {

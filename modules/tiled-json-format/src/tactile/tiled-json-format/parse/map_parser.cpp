@@ -1,13 +1,13 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/tiled-json-format/load/tmj_map_parser.hpp"
+#include "tactile/tiled-json-format/parse/map_parser.hpp"
 
 #include <utility>  // move
 
 #include "tactile/foundation/log/logger.hpp"
-#include "tactile/tiled-json-format/load/tmj_layer_parser.hpp"
-#include "tactile/tiled-json-format/load/tmj_meta_parser.hpp"
-#include "tactile/tiled-json-format/load/tmj_tileset_parser.hpp"
+#include "tactile/tiled-json-format/parse/layer_parser.hpp"
+#include "tactile/tiled-json-format/parse/meta_parser.hpp"
+#include "tactile/tiled-json-format/parse/tileset_parser.hpp"
 
 namespace tactile::tiled::tmj {
 

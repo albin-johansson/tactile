@@ -4,16 +4,18 @@
 
 #include "tactile/foundation/functional/result.hpp"
 #include "tactile/foundation/io/ir.hpp"
-#include "tactile/foundation/io/save/save_format_options.hpp"
 #include "tactile/foundation/prelude.hpp"
 #include "tactile/tiled-json-format/api.hpp"
-#include "tactile/tiled-json-format/common/json.hpp"
+#include "tactile/tiled-json-format/common.hpp"
 
 namespace tactile::tiled::tmj {
 
 [[nodiscard]]
-TACTILE_TMJ_FORMAT_API auto emit_map(const ir::Map& map,
-                                     const SaveFormatWriteOptions& options)
-    -> Result<JSON>;
+TACTILE_TMJ_FORMAT_API auto parse_property(const JSON& json)
+    -> Result<ir::NamedAttribute>;
+
+[[nodiscard]]
+TACTILE_TMJ_FORMAT_API auto parse_metadata(const JSON& json, ir::Metadata& meta)
+    -> Result<void>;
 
 }  // namespace tactile::tiled::tmj

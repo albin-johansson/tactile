@@ -1,13 +1,13 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/tiled-json-format/emit/tmj_map_emitter.hpp"
+#include "tactile/tiled-json-format/emit/map_emitter.hpp"
 
 #include <utility>  // move
 
-#include "tactile/tiled-json-format/common/json.hpp"
-#include "tactile/tiled-json-format/emit/tmj_layer_emitter.hpp"
-#include "tactile/tiled-json-format/emit/tmj_meta_emitter.hpp"
-#include "tactile/tiled-json-format/emit/tmj_tileset_emitter.hpp"
+#include "tactile/tiled-json-format/common.hpp"
+#include "tactile/tiled-json-format/emit/layer_emitter.hpp"
+#include "tactile/tiled-json-format/emit/meta_emitter.hpp"
+#include "tactile/tiled-json-format/emit/tileset_emitter.hpp"
 
 namespace tactile::tiled::tmj {
 

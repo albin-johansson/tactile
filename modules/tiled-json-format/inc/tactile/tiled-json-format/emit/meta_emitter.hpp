@@ -8,7 +8,7 @@
 #include "tactile/foundation/meta/attribute_type.hpp"
 #include "tactile/foundation/prelude.hpp"
 #include "tactile/tiled-json-format/api.hpp"
-#include "tactile/tiled-json-format/common/json.hpp"
+#include "tactile/tiled-json-format/common.hpp"
 
 namespace tactile::tiled::tmj {
 
