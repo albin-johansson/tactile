@@ -69,8 +69,6 @@ auto main(const int argc, char* argv[]) -> int
     SDL_SetHint(SDL_HINT_MOUSE_TOUCH_EVENTS, "1");
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
 
-    TACTILE_LOG_DEBUG("Loading plugins...");
-
     const String requested_renderer_id {"tactile.opengl-renderer"};  // FIXME
     const auto plugin_manager = PluginManager::load(plugin_dir, requested_renderer_id);
     if (!plugin_manager.has_value()) {
