@@ -30,8 +30,7 @@ auto to_tmj_name(const AttributeType attribute_type) -> StringView
 
 auto to_tmj_value(const Attribute& attribute) -> JSON
 {
-  JSON json;
-  json = 42;
+  // NOLINTBEGIN(*-return-braced-init-list)
 
   // Note, the use of parentheses when creating JSON values here is intentional.
   switch (attribute.get_type()) {
@@ -51,6 +50,8 @@ auto to_tmj_value(const Attribute& attribute) -> JSON
   }
 
   throw Exception {"Invalid attribute type"};
+
+  // NOLINTEND(*-return-braced-init-list)
 }
 
 auto emit_property_array(const ir::Metadata& meta) -> JSON

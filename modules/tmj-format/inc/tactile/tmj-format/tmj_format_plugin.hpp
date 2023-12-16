@@ -13,11 +13,11 @@ namespace tactile::tmj {
 /**
  * \brief Manages the Tiled TMJ format plugin.
  */
-class TmjFormatPlugin final : public IPlugin {
+class TACTILE_TMJ_API TmjFormatPlugin final : public IPlugin {
  public:
-  TACTILE_TMJ_API void on_load() override;
+  void on_load() override;
 
-  TACTILE_TMJ_API void on_unload() noexcept override;
+  void on_unload() noexcept override;
 
  private:
   Unique<ISaveFormat> mTmjFormat;
