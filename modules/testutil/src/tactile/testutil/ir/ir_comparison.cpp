@@ -1,10 +1,10 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "ir_comparison.hpp"
+#include "tactile/testutil/ir/ir_comparison.hpp"
 
 #include <gtest/gtest.h>
 
-namespace tactile::test {
+namespace tactile::testutil {
 
 void expect_eq(const ir::AttachedComponent& component1,
                const ir::AttachedComponent& component2)
@@ -172,4 +172,4 @@ void expect_eq(const ir::Map& map1, const ir::Map& map2)
   }
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::testutil

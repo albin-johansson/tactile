@@ -14,7 +14,7 @@ add_executable(${TACTILE_INTEGRATION_TEST_TARGET} "${TACTILE_INTEGRATION_TEST_FI
 
 tactile_prepare_target(${TACTILE_INTEGRATION_TEST_TARGET})
 
-target_include_directories(${TACTILE_INTEGRATION_TEST_TARGET} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${TACTILE_INTEGRATION_TEST_TARGET} PRIVATE "${PROJECT_SOURCE_DIR}")
 
 # Note, here we explicitly link plugin targets to facilitate debugging.
 target_link_libraries(${TACTILE_INTEGRATION_TEST_TARGET}
@@ -24,5 +24,5 @@ target_link_libraries(${TACTILE_INTEGRATION_TEST_TARGET}
                       tactile::tactile-yml-format
                       tactile::tiled-json-format
                       tactile::tiled-xml-format
-                      GTest::gtest
+                      tactile::testutil
                       )

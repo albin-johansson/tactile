@@ -3,8 +3,9 @@
 #pragma once
 
 #include "tactile/foundation/io/ir.hpp"
+#include "tactile/foundation/prelude.hpp"
 
-namespace tactile::test {
+namespace tactile::testutil {
 
 void expect_eq(const ir::AttachedComponent& component1,
                const ir::AttachedComponent& component2);
@@ -29,4 +30,4 @@ void expect_eq(const ir::TilesetRef& tileset_ref1, const ir::TilesetRef& tileset
 
 void expect_eq(const ir::Map& map1, const ir::Map& map2);
 
-}  // namespace tactile::test
+}  // namespace tactile::testutil

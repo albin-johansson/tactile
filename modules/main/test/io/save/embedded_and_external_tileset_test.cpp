@@ -9,7 +9,7 @@
 #include "tactile/foundation/container/string.hpp"
 #include "tactile/foundation/io/filesystem.hpp"
 #include "tactile/foundation/io/save/save_format_context.hpp"
-#include "test/ir_comparison.hpp"
+#include "tactile/testutil/ir/ir_comparison.hpp"
 
 using namespace tactile;
 using namespace tactile::fs_literals;
@@ -96,5 +96,5 @@ TEST_P(EmbeddedAndExternalTilesetTest, SaveAndLoadMap)
   const auto parsed_map = save_format_manager.load_map(map_path, read_options);
   ASSERT_TRUE(parsed_map.has_value());
 
-  test::expect_eq(*parsed_map, map);
+  testutil::expect_eq(*parsed_map, map);
 }
