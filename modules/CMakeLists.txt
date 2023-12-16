@@ -139,6 +139,7 @@ add_subdirectory(core)
 add_subdirectory(tactile-yml-format)
 add_subdirectory(tiled-xml-format)
 add_subdirectory(tiled-json-format)
+add_subdirectory(godot-scene-format)
 
 # Renderers
 add_subdirectory(opengl)
