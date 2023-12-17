@@ -14,7 +14,7 @@ namespace tactile::yml_format {
 
 [[nodiscard]]
 TACTILE_YML_FORMAT_API auto parse_attached_component_attribute(
-    const YAML::Node& attached_component_node,
+    const YAML::Node& value_node,
     const ir::Component& prototype) -> Result<ir::NamedAttribute>;
 
 [[nodiscard]]

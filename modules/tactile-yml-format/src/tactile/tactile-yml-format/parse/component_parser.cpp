@@ -11,19 +11,23 @@
 
 namespace tactile::yml_format {
 
-auto parse_attached_component_attribute(const YAML::Node& attached_component_node,
+auto parse_attached_component_attribute(const YAML::Node& value_node,
                                         const ir::Component& prototype)
     -> Result<ir::NamedAttribute>
 {
   ir::NamedAttribute attribute {};
-  return parse_to(attached_component_node, "name", attribute.name)
+  return parse_to(value_node, "name", attribute.name)
       .and_then([&]() -> Result<Attribute> {
-        if (const auto attr_type = get_attribute_type(prototype, attribute.name)) {
-          return parse_property_value(attached_component_node, *attr_type);
+        if (const auto value_attribute = value_node["value"]) {
+          if (const auto attr_type = get_attribute_type(prototype, attribute.name)) {
+            return parse_property_value(value_attribute, *attr_type);
+          }
+
+          return unexpected(
+              make_save_format_error(SaveFormatError::kUnsupportedPropertyType));
         }
 
-        return unexpected(
-            make_save_format_error(SaveFormatError::kUnsupportedPropertyType));
+        return unexpected(make_save_format_error(SaveFormatError::kPropertyWithoutValue));
       })
       .and_then([&](Attribute&& value) {
         attribute.value = std::move(value);
