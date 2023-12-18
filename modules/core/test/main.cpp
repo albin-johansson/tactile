@@ -12,7 +12,7 @@ auto main(int argc, char* argv[]) -> int
 {
   auto logger = LoggerBuilder {}
                     .use_initialization_time_as_reference_instant()
-                    .min_level(LogLevel::kDebug)
+                    .min_level(LogLevel::kTrace)
                     .flush_on(LogLevel::kError)
                     .with_file_sink("core_test_log.txt")
                     .with_terminal_sink()
