@@ -19,7 +19,7 @@ class IRenderer;
  * \param framebuffer_scale the current display framebuffer scale.
  */
 TACTILE_CORE_API void try_reload_imgui_fonts(IRenderer& renderer,
-                                             float font_size,
+                                             int font_size,
                                              float framebuffer_scale);
 
 }  // namespace tactile

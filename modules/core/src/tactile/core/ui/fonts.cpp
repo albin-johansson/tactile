@@ -17,7 +17,7 @@ inline constexpr Array<ImWchar, 3> kFontIconRange {ICON_MIN_FA, ICON_MAX_FA, 0};
 }  // namespace
 
 void try_reload_imgui_fonts(IRenderer& renderer,
-                            const float font_size,
+                            const int font_size,
                             const float framebuffer_scale)
 {
   if (renderer.can_reload_fonts_texture()) {
@@ -26,8 +26,10 @@ void try_reload_imgui_fonts(IRenderer& renderer,
     auto& io = ImGui::GetIO();
     io.Fonts->Clear();
 
+    const auto scaled_font_size = static_cast<float>(font_size) * framebuffer_scale;
+
     ImFontConfig roboto_config {};
-    roboto_config.SizePixels = font_size * framebuffer_scale;
+    roboto_config.SizePixels = scaled_font_size;
     io.Fonts->AddFontFromFileTTF("assets/fonts/roboto/Roboto-Regular.ttf",
                                  roboto_config.SizePixels,
                                  &roboto_config);
@@ -37,7 +39,7 @@ void try_reload_imgui_fonts(IRenderer& renderer,
 
     ImFontConfig icon_config {};
     icon_config.MergeMode = true;
-    icon_config.SizePixels = font_size * framebuffer_scale;
+    icon_config.SizePixels = scaled_font_size;
     icon_config.GlyphMinAdvanceX = icon_config.SizePixels;
     icon_config.GlyphMaxAdvanceX = icon_config.GlyphMinAdvanceX;
     icon_config.GlyphOffset = {0, 2};
