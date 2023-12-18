@@ -11,9 +11,18 @@ namespace tactile {
 /**
  * \brief Provides import and export support for the Tactile YAML format.
  *
- * \details This format uses ".yml" or ".yaml" file extensions.
+ * \details Disabling "strict mode" when parsing with this format has the following effects.
+ *          1. Properties may omit the otherwise required `value` attribute, and will assume the default
+ *             values based on the `type` attribute instead in such cases.
+ *          2. Images referenced by tilesets do not have to exist.
+ *
+ * \note This format uses ".yml" or ".yaml" file extensions.
  *
  * \see `docs/yaml-format.md` for more details.
+ *
+ * \todo Consistent strict mode.
+ * \todo Embedded tilesets.
+ * \todo Version handling.
  */
 class TACTILE_YML_FORMAT_API TactileYmlFormat final : public ISaveFormat {
  public:
