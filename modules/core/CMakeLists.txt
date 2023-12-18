@@ -35,6 +35,7 @@ target_link_libraries(${TACTILE_CORE_TARGET}
                       tactile::proto
 
                       PRIVATE
+                      EnTT::EnTT
                       imgui::imgui
                       )
 
