@@ -4,6 +4,7 @@
 
 #include <cstddef>     // size_t
 #include <functional>  // hash
+#include <ostream>     // ostream
 
 #include "tactile/foundation/api.hpp"
 #include "tactile/foundation/container/array.hpp"
@@ -70,6 +71,17 @@ class TACTILE_FOUNDATION_API UUID final {
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto to_string(const UUID& uuid) -> String;
+
+/**
+ * \brief Outputs a UUID value to a stream.
+ *
+ * \param stream the output stream.
+ * \param uuid   the UUID value.
+ *
+ * \return the output stream.
+ */
+TACTILE_FOUNDATION_API auto operator<<(std::ostream& stream, const UUID& uuid)
+    -> std::ostream&;
 
 }  // namespace tactile
 

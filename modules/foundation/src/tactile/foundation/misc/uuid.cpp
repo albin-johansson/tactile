@@ -62,4 +62,9 @@ auto to_string(const UUID& uuid) -> String
       uuid.mData[15]);
 }
 
+auto operator<<(std::ostream& stream, const UUID& uuid) -> std::ostream&
+{
+  return stream << to_string(uuid);
+}
+
 }  // namespace tactile
