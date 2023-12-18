@@ -40,6 +40,10 @@ void Tileset::_create_tiles()
 void Tileset::accept(IMetaContextVisitor& visitor)
 {
   visitor.visit(*this);
+
+  for (const auto& tile : mTiles) {
+    tile->accept(visitor);
+  }
 }
 
 void Tileset::update()
