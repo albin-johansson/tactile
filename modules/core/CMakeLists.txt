@@ -14,7 +14,12 @@ add_library(tactile::core ALIAS ${TACTILE_CORE_TARGET})
 
 tactile_prepare_target(${TACTILE_CORE_TARGET})
 
-target_compile_definitions(${TACTILE_CORE_TARGET} PRIVATE TACTILE_BUILDING_CORE)
+target_compile_definitions(${TACTILE_CORE_TARGET}
+                           PRIVATE
+                           TACTILE_BUILDING_CORE
+                           IMGUI_DISABLE_OBSOLETE_FUNCTIONS
+                           IMGUI_DEFINE_MATH_OPERATORS
+                           )
 
 target_include_directories(${TACTILE_CORE_TARGET}
                            PUBLIC
