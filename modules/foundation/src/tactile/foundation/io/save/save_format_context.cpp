@@ -66,26 +66,24 @@ auto SaveFormatContext::load_tileset(const FilePath& tileset_path,
   return unexpected(make_save_format_error(SaveFormatError::kUnsupportedFormat));
 }
 
-auto SaveFormatContext::save_map(const FilePath& map_path,
+auto SaveFormatContext::save_map(const SaveFormatId save_format_id,
+                                 const FilePath& map_path,
                                  const ir::Map& map,
                                  const SaveFormatWriteOptions& options) const
     -> Result<void>
 {
+  TACTILE_DEBUG_PROFILE_SCOPE("SaveFormatContext::save_map");
   TACTILE_LOG_INFO("Saving map to {}", fmt::streamed(map_path));
 
   std::filesystem::create_directories(map_path.parent_path());
   const auto extension = map_path.extension();
 
-  for (const auto* format : mFormats) {
+  if (const auto* format = _find_format(save_format_id)) {
     if (format->is_valid_extension(extension.c_str())) {
-      TACTILE_DEBUG_PROFILE_SCOPE("SaveFormatContext::save_map");
-      if (auto result = format->save_map(map_path, map, options)) {
-        return result;
-      }
-      else {
-        TACTILE_LOG_ERROR("Could not save map: {}", result.error().message());
-        return propagate_unexpected(result);
-      }
+      return format->save_map(map_path, map, options)
+          .or_else([](const ErrorCode& error_code) {
+            TACTILE_LOG_ERROR("Could not save map: {}", error_code.message());
+          });
     }
   }
 
@@ -93,26 +91,24 @@ auto SaveFormatContext::save_map(const FilePath& map_path,
   return unexpected(make_save_format_error(SaveFormatError::kUnsupportedFormat));
 }
 
-auto SaveFormatContext::save_tileset(const FilePath& tileset_path,
+auto SaveFormatContext::save_tileset(const SaveFormatId save_format_id,
+                                     const FilePath& tileset_path,
                                      const ir::Tileset& tileset,
                                      const SaveFormatWriteOptions& options) const
     -> Result<void>
 {
+  TACTILE_DEBUG_PROFILE_SCOPE("SaveFormatContext::save_tileset");
   TACTILE_LOG_INFO("Saving tileset to {}", fmt::streamed(tileset_path));
 
   std::filesystem::create_directories(tileset_path.parent_path());
   const auto extension = tileset_path.extension();
 
-  for (const auto* format : mFormats) {
+  if (const auto* format = _find_format(save_format_id)) {
     if (format->is_valid_extension(extension.c_str())) {
-      TACTILE_DEBUG_PROFILE_SCOPE("SaveFormatContext::save_tileset");
-      if (auto result = format->save_tileset(tileset_path, tileset, options)) {
-        return result;
-      }
-      else {
-        TACTILE_LOG_ERROR("Could not save tileset: {}", result.error().message());
-        return propagate_unexpected(result);
-      }
+      return format->save_tileset(tileset_path, tileset, options)
+          .or_else([](const ErrorCode& error_code) {
+            TACTILE_LOG_ERROR("Could not save tileset: {}", error_code.message());
+          });
     }
   }
 
@@ -130,6 +126,17 @@ void SaveFormatContext::add_format(ISaveFormat* format)
 void SaveFormatContext::remove_format(ISaveFormat* format) noexcept
 {
   std::erase(mFormats, format);
+}
+
+auto SaveFormatContext::_find_format(const SaveFormatId id) const -> const ISaveFormat*
+{
+  for (const auto* format : mFormats) {
+    if (format->id() == id) {
+      return format;
+    }
+  }
+
+  return nullptr;
 }
 
 }  // namespace tactile

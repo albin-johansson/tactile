@@ -21,6 +21,7 @@ using fs_literals::operator""_path;
 namespace {
 
 struct Base64MapTestData final {
+  SaveFormatId save_format_id;
   String file_extension;
   CompressionMode compression_mode;
 };
@@ -29,7 +30,7 @@ struct Base64MapTestData final {
 auto _get_test_name(const CompressionMode compression_mode) -> String
 {
   switch (compression_mode) {
-    case CompressionMode::kNone: return "plain";
+    case CompressionMode::kNone: return "none";
     case CompressionMode::kZlib: return "zlib";
     case CompressionMode::kZstd: return "zstd";
   }
@@ -39,7 +40,8 @@ auto _get_test_name(const CompressionMode compression_mode) -> String
 
 auto operator<<(std::ostream& stream, const Base64MapTestData& data) -> std::ostream&
 {
-  stream << '\'' << data.file_extension << "', " << _get_test_name(data.compression_mode);
+  stream << to_string(data.save_format_id)
+         << " (compression: " << _get_test_name(data.compression_mode) << ")";
   return stream;
 }
 
@@ -53,15 +55,16 @@ class Base64MapTest : public testing::TestWithParam<Base64MapTestData> {};
 INSTANTIATE_TEST_SUITE_P(
     Base64,
     Base64MapTest,
-    testing::Values(Base64MapTestData {".yml", CompressionMode::kNone},
-                    Base64MapTestData {".yml", CompressionMode::kZlib},
-                    Base64MapTestData {".yml", CompressionMode::kZstd},
-                    Base64MapTestData {".tmj", CompressionMode::kNone},
-                    Base64MapTestData {".tmj", CompressionMode::kZlib},
-                    Base64MapTestData {".tmj", CompressionMode::kZstd},
-                    Base64MapTestData {".tmx", CompressionMode::kNone},
-                    Base64MapTestData {".tmx", CompressionMode::kZlib},
-                    Base64MapTestData {".tmx", CompressionMode::kZstd}));
+    testing::Values(
+        Base64MapTestData {SaveFormatId::kTactileYaml, ".yml", CompressionMode::kNone},
+        Base64MapTestData {SaveFormatId::kTactileYaml, ".yml", CompressionMode::kZlib},
+        Base64MapTestData {SaveFormatId::kTactileYaml, ".yml", CompressionMode::kZstd},
+        Base64MapTestData {SaveFormatId::kTiledJson, ".tmj", CompressionMode::kNone},
+        Base64MapTestData {SaveFormatId::kTiledJson, ".tmj", CompressionMode::kZlib},
+        Base64MapTestData {SaveFormatId::kTiledJson, ".tmj", CompressionMode::kZstd},
+        Base64MapTestData {SaveFormatId::kTiledXml, ".tmx", CompressionMode::kNone},
+        Base64MapTestData {SaveFormatId::kTiledXml, ".tmx", CompressionMode::kZlib},
+        Base64MapTestData {SaveFormatId::kTiledXml, ".tmx", CompressionMode::kZstd}));
 // NOLINTEND(*-use-anonymous-namespace)
 
 TEST_P(Base64MapTest, SaveAndLoadBase64TileLayer)
@@ -98,7 +101,9 @@ TEST_P(Base64MapTest, SaveAndLoadBase64TileLayer)
   };
 
   const auto& save_format_context = SaveFormatContext::get();
-  ASSERT_TRUE(save_format_context.save_map(map_path, map, write_options).has_value());
+  ASSERT_TRUE(
+      save_format_context.save_map(test_data.save_format_id, map_path, map, write_options)
+          .has_value());
 
   const auto parsed_map = save_format_context.load_map(map_path, read_options);
   ASSERT_TRUE(parsed_map.has_value());

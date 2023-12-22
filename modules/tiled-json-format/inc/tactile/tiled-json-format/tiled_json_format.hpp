@@ -39,6 +39,9 @@ class TACTILE_TMJ_FORMAT_API TiledJsonFormat final : public ISaveFormat {
 
   [[nodiscard]]
   auto is_valid_extension(NativeStringView extension) const -> bool override;
+
+  [[nodiscard]]
+  auto id() const -> SaveFormatId override;
 };
 
 }  // namespace tactile

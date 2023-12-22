@@ -46,4 +46,9 @@ auto GodotSceneFormat::is_valid_extension(const NativeStringView extension) cons
          extension == TACTILE_NATIVE_STR(".escn");
 }
 
+auto GodotSceneFormat::id() const -> SaveFormatId
+{
+  return SaveFormatId::kGodotScene;
+}
+
 }  // namespace tactile

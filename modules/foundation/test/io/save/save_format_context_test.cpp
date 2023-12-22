@@ -17,24 +17,26 @@ class MockSaveFormat final : public ISaveFormat {
   MOCK_METHOD(Result<ir::Map>,
               load_map,
               (const FilePath&, const SaveFormatReadOptions&),
-              (const));
+              (const, override));
 
   MOCK_METHOD(Result<ir::Tileset>,
               load_tileset,
               (const FilePath&, const SaveFormatReadOptions&),
-              (const));
+              (const, override));
 
   MOCK_METHOD(Result<void>,
               save_map,
               (const FilePath&, const ir::Map&, const SaveFormatWriteOptions&),
-              (const));
+              (const, override));
 
   MOCK_METHOD(Result<void>,
               save_tileset,
               (const FilePath&, const ir::Tileset&, const SaveFormatWriteOptions&),
-              (const));
+              (const, override));
 
-  MOCK_METHOD(bool, is_valid_extension, (NativeStringView), (const));
+  MOCK_METHOD(bool, is_valid_extension, (NativeStringView), (const, override));
+
+  MOCK_METHOD(SaveFormatId, id, (), (const, override));
 };
 
 // NOLINTEND(modernize-use-trailing-return-type)

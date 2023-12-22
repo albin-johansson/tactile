@@ -62,4 +62,9 @@ auto TiledXmlFormat::is_valid_extension(const NativeStringView extension) const 
          extension == TACTILE_NATIVE_STR(".tsx");
 }
 
+auto TiledXmlFormat::id() const -> SaveFormatId
+{
+  return SaveFormatId::kTiledXml;
+}
+
 }  // namespace tactile

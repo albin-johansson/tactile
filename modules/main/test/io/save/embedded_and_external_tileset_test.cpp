@@ -18,6 +18,7 @@ using namespace tactile;
 using fs_literals::operator""_path;
 
 struct EmbeddedAndExternalTilesetTestData final {
+  SaveFormatId save_format_id;
   String file_extension;
   bool embed_tilesets;
 };
@@ -25,9 +26,8 @@ struct EmbeddedAndExternalTilesetTestData final {
 auto operator<<(std::ostream& stream, const EmbeddedAndExternalTilesetTestData& test_data)
     -> std::ostream&
 {
-  stream << test_data.file_extension << " with "
-         << (test_data.embed_tilesets ? "embedded" : "external") << " tilesets";
-  return stream;
+  return stream << to_string(test_data.save_format_id) << " with "
+                << (test_data.embed_tilesets ? "embedded" : "external") << " tilesets";
 }
 
 class EmbeddedAndExternalTilesetTest
@@ -36,12 +36,13 @@ class EmbeddedAndExternalTilesetTest
 INSTANTIATE_TEST_SUITE_P(
     EmbeddedAndExternalTileset,
     EmbeddedAndExternalTilesetTest,
-    testing::Values(EmbeddedAndExternalTilesetTestData {".yml", true},
-                    EmbeddedAndExternalTilesetTestData {".yml", false},
-                    EmbeddedAndExternalTilesetTestData {".tmj", true},
-                    EmbeddedAndExternalTilesetTestData {".tmj", false},
-                    EmbeddedAndExternalTilesetTestData {".tmx", true},
-                    EmbeddedAndExternalTilesetTestData {".tmx", false}));
+    testing::Values(
+        EmbeddedAndExternalTilesetTestData {SaveFormatId::kTactileYaml, ".yml", true},
+        EmbeddedAndExternalTilesetTestData {SaveFormatId::kTactileYaml, ".yml", false},
+        EmbeddedAndExternalTilesetTestData {SaveFormatId::kTiledJson, ".tmj", true},
+        EmbeddedAndExternalTilesetTestData {SaveFormatId::kTiledJson, ".tmj", false},
+        EmbeddedAndExternalTilesetTestData {SaveFormatId::kTiledXml, ".tmx", true},
+        EmbeddedAndExternalTilesetTestData {SaveFormatId::kTiledXml, ".tmx", false}));
 
 TEST_P(EmbeddedAndExternalTilesetTest, SaveAndLoadMap)
 {
@@ -79,7 +80,9 @@ TEST_P(EmbeddedAndExternalTilesetTest, SaveAndLoadMap)
   };
 
   const auto& save_format_context = SaveFormatContext::get();
-  ASSERT_TRUE(save_format_context.save_map(map_path, map, write_options).has_value());
+  ASSERT_TRUE(
+      save_format_context.save_map(test_data.save_format_id, map_path, map, write_options)
+          .has_value());
 
   const auto parsed_map = save_format_context.load_map(map_path, read_options);
   ASSERT_TRUE(parsed_map.has_value());

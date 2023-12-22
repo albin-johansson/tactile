@@ -47,6 +47,9 @@ class TACTILE_YML_FORMAT_API TactileYmlFormat final : public ISaveFormat {
 
   [[nodiscard]]
   auto is_valid_extension(NativeStringView extension) const -> bool override;
+
+  [[nodiscard]]
+  auto id() const -> SaveFormatId override;
 };
 
 }  // namespace tactile

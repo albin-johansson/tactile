@@ -53,28 +53,32 @@ class TACTILE_FOUNDATION_API SaveFormatContext final {
   /**
    * \brief Saves a map using one of the available save format handlers.
    *
-   * \param map_path the map file path.
-   * \param map      the map that will be saved.
-   * \param options  the write options.
+   * \param save_format_id the save format to use.
+   * \param map_path       the map file path.
+   * \param map            the map that will be saved.
+   * \param options        the write options.
    *
    * \return nothing on success, or an error code if an error occurred.
    */
   [[nodiscard]]
-  auto save_map(const FilePath& map_path,
+  auto save_map(SaveFormatId save_format_id,
+                const FilePath& map_path,
                 const ir::Map& map,
                 const SaveFormatWriteOptions& options) const -> Result<void>;
 
   /**
    * \brief Saves a tileset using one of the available save format handlers.
    *
-   * \param tileset_path the tileset file path.
-   * \param tileset      the tileset that will be saved.
-   * \param options      the write options.
+   * \param save_format_id the save format to use.
+   * \param tileset_path   the tileset file path.
+   * \param tileset        the tileset that will be saved.
+   * \param options        the write options.
    *
    * \return nothing on success, or an error code if an error occurred.
    */
   [[nodiscard]]
-  auto save_tileset(const FilePath& tileset_path,
+  auto save_tileset(SaveFormatId save_format_id,
+                    const FilePath& tileset_path,
                     const ir::Tileset& tileset,
                     const SaveFormatWriteOptions& options) const -> Result<void>;
 
@@ -94,6 +98,9 @@ class TACTILE_FOUNDATION_API SaveFormatContext final {
 
  private:
   Vector<ISaveFormat*> mFormats;
+
+  [[nodiscard]]
+  auto _find_format(SaveFormatId id) const -> const ISaveFormat*;
 };
 
 }  // namespace tactile

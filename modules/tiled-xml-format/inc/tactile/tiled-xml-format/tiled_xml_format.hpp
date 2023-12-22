@@ -31,6 +31,9 @@ class TACTILE_TMX_FORMAT_API TiledXmlFormat final : public ISaveFormat {
 
   [[nodiscard]]
   auto is_valid_extension(NativeStringView extension) const -> bool override;
+
+  [[nodiscard]]
+  auto id() const -> SaveFormatId override;
 };
 
 }  // namespace tactile

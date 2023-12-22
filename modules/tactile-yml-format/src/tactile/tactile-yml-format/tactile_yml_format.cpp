@@ -69,4 +69,9 @@ auto TactileYmlFormat::is_valid_extension(const NativeStringView extension) cons
          extension == TACTILE_NATIVE_STR(".yaml");
 }
 
+auto TactileYmlFormat::id() const -> SaveFormatId
+{
+  return SaveFormatId::kTactileYaml;
+}
+
 }  // namespace tactile

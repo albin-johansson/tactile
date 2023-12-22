@@ -18,20 +18,28 @@ using namespace tactile;
 
 using fs_literals::operator""_path;
 
-class NestedLayersTest : public testing::TestWithParam<String> {};
+struct NestedLayersTestData final {
+  SaveFormatId save_format_id;
+  String file_extension;
+};
+
+class NestedLayersTest : public testing::TestWithParam<NestedLayersTestData> {};
 
 // NOLINTBEGIN(*-use-anonymous-namespace)
-INSTANTIATE_TEST_SUITE_P(NestedLayers,
-                         NestedLayersTest,
-                         testing::Values(".yml", ".tmj", ".tmx"));
+INSTANTIATE_TEST_SUITE_P(
+    NestedLayers,
+    NestedLayersTest,
+    testing::Values(NestedLayersTestData {SaveFormatId::kTactileYaml, ".yml"},
+                    NestedLayersTestData {SaveFormatId::kTiledJson, ".tmj"},
+                    NestedLayersTestData {SaveFormatId::kTiledXml, ".tmx"}));
 // NOLINTEND(*-use-anonymous-namespace)
 
 TEST_P(NestedLayersTest, SaveAndLoadMapWithNestedLayers)
 {
-  const String& file_extension = GetParam();
+  const auto& test_data = GetParam();
 
   const auto map_directory = "assets/test/integration/nested"_path;
-  const auto map_filename = fmt::format("nested_layers{}", file_extension);
+  const auto map_filename = fmt::format("nested_layers{}", test_data.file_extension);
   const auto map_path = map_directory / map_filename;
 
   const MatrixExtent map_extent {6, 8};
@@ -56,7 +64,9 @@ TEST_P(NestedLayersTest, SaveAndLoadMapWithNestedLayers)
   };
 
   const auto& save_format_context = SaveFormatContext::get();
-  ASSERT_TRUE(save_format_context.save_map(map_path, map, write_options).has_value());
+  ASSERT_TRUE(
+      save_format_context.save_map(test_data.save_format_id, map_path, map, write_options)
+          .has_value());
 
   const auto parsed_map = save_format_context.load_map(map_path, read_options);
   ASSERT_TRUE(parsed_map.has_value());

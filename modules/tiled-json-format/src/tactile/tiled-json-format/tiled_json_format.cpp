@@ -10,7 +10,6 @@
 #include "tactile/foundation/log/logger.hpp"
 #include "tactile/tiled-json-format/common.hpp"
 #include "tactile/tiled-json-format/emit/map_emitter.hpp"
-#include "tactile/tiled-json-format/emit/tileset_emitter.hpp"
 #include "tactile/tiled-json-format/parse/map_parser.hpp"
 
 namespace tactile {
@@ -71,6 +70,11 @@ auto TiledJsonFormat::is_valid_extension(const NativeStringView extension) const
 {
   return extension == TACTILE_NATIVE_STR(".tmj") ||
          extension == TACTILE_NATIVE_STR(".json");
+}
+
+auto TiledJsonFormat::id() const -> SaveFormatId
+{
+  return SaveFormatId::kTiledJson;
 }
 
 }  // namespace tactile

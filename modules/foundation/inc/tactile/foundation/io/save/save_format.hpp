@@ -7,6 +7,7 @@
 #include "tactile/foundation/container/string.hpp"
 #include "tactile/foundation/functional/result.hpp"
 #include "tactile/foundation/io/ir.hpp"
+#include "tactile/foundation/io/save/save_format_id.hpp"
 #include "tactile/foundation/io/save/save_format_options.hpp"
 #include "tactile/foundation/prelude.hpp"
 
@@ -89,6 +90,14 @@ class ISaveFormat {
    */
   [[nodiscard]]
   virtual auto is_valid_extension(NativeStringView extension) const -> bool = 0;
+
+  /**
+   * \brief Returns the identifier associated with the save format.
+   *
+   * \return a save format identifier.
+   */
+  [[nodiscard]]
+  virtual auto id() const -> SaveFormatId = 0;
 };
 
 }  // namespace tactile

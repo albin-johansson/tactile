@@ -9,13 +9,15 @@
 
 namespace tactile {
 
+using ErrorCode = std::error_code;
+
 /**
  * \brief Alias for a value of expected type `T`, or an error code in unexpected cases.
  *
  * \see `Expected`
  */
 template <typename T>
-using Result = Expected<T, std::error_code>;
+using Result = Expected<T, ErrorCode>;
 
 inline const Result<void> kOK {};
 inline const Result<void> kSuccess {};

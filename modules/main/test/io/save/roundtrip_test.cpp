@@ -20,6 +20,7 @@ using namespace tactile;
 using namespace tactile::fs_literals;
 
 struct RoundtripTestConfig final {
+  SaveFormatId save_format_id;
   String extension;
   bool fold_tile_data;
 };
@@ -28,7 +29,7 @@ auto operator<<(std::ostream& stream, const RoundtripTestConfig& test_config)
     -> std::ostream&
 {
   stream << fmt::format("{} (fold_tiles: {})",
-                        test_config.extension,
+                        to_string(test_config.save_format_id),
                         test_config.fold_tile_data);
   return stream;
 }
@@ -38,14 +39,15 @@ class RoundtripTest : public testing::TestWithParam<RoundtripTestConfig> {};
 // NOLINTBEGIN(*-trailing-return-type)
 
 // NOLINTBEGIN(*-use-anonymous-namespace)
-INSTANTIATE_TEST_SUITE_P(Roundtrip,
-                         RoundtripTest,
-                         testing::Values(RoundtripTestConfig {".yml", false},
-                                         RoundtripTestConfig {".yml", true},
-                                         RoundtripTestConfig {".tmj", false},
-                                         RoundtripTestConfig {".tmj", true},
-                                         RoundtripTestConfig {".tmx", false},
-                                         RoundtripTestConfig {".tmx", true}));
+INSTANTIATE_TEST_SUITE_P(
+    Roundtrip,
+    RoundtripTest,
+    testing::Values(RoundtripTestConfig {SaveFormatId::kTactileYaml, ".yml", false},
+                    RoundtripTestConfig {SaveFormatId::kTactileYaml, ".yml", true},
+                    RoundtripTestConfig {SaveFormatId::kTiledJson, ".tmj", false},
+                    RoundtripTestConfig {SaveFormatId::kTiledJson, ".tmj", true},
+                    RoundtripTestConfig {SaveFormatId::kTiledXml, ".tmx", false},
+                    RoundtripTestConfig {SaveFormatId::kTiledXml, ".tmx", true}));
 // NOLINTEND(*-use-anonymous-namespace)
 
 // Tries to save and restore a map that uses a common subset of the save format features.
@@ -146,7 +148,9 @@ TEST_P(RoundtripTest, SaveAndLoadMap)
   };
 
   const auto& save_format_context = SaveFormatContext::get();
-  ASSERT_TRUE(save_format_context.save_map(map_path, map, write_options).has_value());
+  ASSERT_TRUE(save_format_context
+                  .save_map(test_config.save_format_id, map_path, map, write_options)
+                  .has_value());
 
   const auto parsed_map = save_format_context.load_map(map_path, read_options);
   ASSERT_TRUE(parsed_map.has_value());

@@ -68,7 +68,9 @@ TEST_F(ComponentsTest, SaveAndLoadMapWithComponents)
     .use_indentation = true,
     .fold_tile_layer_data = true,
   };
-  ASSERT_TRUE(save_format_context.save_map(map_path, map, write_options).has_value());
+  ASSERT_TRUE(save_format_context
+                  .save_map(SaveFormatId::kTactileYaml, map_path, map, write_options)
+                  .has_value());
 
   const SaveFormatReadOptions read_options = {
     .base_dir = base_directory,
