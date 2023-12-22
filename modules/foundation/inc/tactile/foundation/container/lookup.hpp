@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <utility>  // move
+
 #include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
 
@@ -92,7 +94,7 @@ template <MapLikeType T>
 auto erase_from(T& map, const auto& key) -> Maybe<typename T::mapped_type>
 {
   if (const auto iter = map.find(key); iter != map.end()) {
-    auto elem = iter->second;
+    auto elem = std::move(iter->second);
     map.erase(iter);
     return elem;
   }
