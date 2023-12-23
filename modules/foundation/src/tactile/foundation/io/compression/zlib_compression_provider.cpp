@@ -13,6 +13,7 @@
 #include "tactile/foundation/functional/function.hpp"
 #include "tactile/foundation/io/compression/compression_error.hpp"
 #include "tactile/foundation/log/logger.hpp"
+#include "tactile/foundation/misc/conversion.hpp"
 
 namespace tactile {
 namespace {
@@ -55,7 +56,7 @@ auto _process_chunks(const ZlibCallbacks& callbacks,
       // We ran out of space in the output buffer, so reuse it!
       copy_processed_batch_to_byte_stream();
       stream.next_out = out_buffer.data();
-      stream.avail_out = static_cast<uInt>(out_buffer.size());
+      stream.avail_out = narrow<uInt>(out_buffer.size());
     }
     else {
       TACTILE_LOG_ERROR("Could not process Zlib chunk: {}", zError(process_result));
@@ -74,7 +75,7 @@ auto _process_data(const ZlibCallbacks& callbacks, const ByteSpan input_data)
 
   z_stream stream {};
   stream.next_in = (Bytef*) input_data.data();  // NOLINT: not much we can do here.
-  stream.avail_in = static_cast<uInt>(input_data.size_bytes());
+  stream.avail_in = narrow<uInt>(input_data.size_bytes());
   stream.next_out = out_buffer.data();
   stream.avail_out = sizeof out_buffer;
 
@@ -114,8 +115,8 @@ auto ZlibCompressionProvider::compress(const ByteSpan data) const -> Result<Byte
   callbacks.make_byte_stream = [data](z_stream* stream) {
     ByteStream byte_stream;
 
-    const auto bound = deflateBound(stream, static_cast<uLong>(data.size_bytes()));
-    byte_stream.reserve(static_cast<usize>(bound));
+    const auto bound = deflateBound(stream, narrow<uLong>(data.size_bytes()));
+    byte_stream.reserve(usize {bound});
 
     return byte_stream;
   };

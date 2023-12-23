@@ -17,6 +17,7 @@
 #endif
 
 #include "tactile/foundation/debug/assert.hpp"
+#include "tactile/foundation/misc/conversion.hpp"
 
 namespace tactile {
 namespace {
@@ -68,7 +69,7 @@ template <typename T>
   const auto expected_count = std::count(str_begin, str_end, separator) + 1;
 
   Vector<T> numbers;
-  numbers.reserve(static_cast<usize>(expected_count));
+  numbers.reserve(as_unsigned(expected_count));
 
   const char* current_begin = str_begin;
   const char* result_ptr = nullptr;

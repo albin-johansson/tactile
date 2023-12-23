@@ -26,8 +26,8 @@ Tileset::Tileset(const TilesetCreateInfo& info)
 void Tileset::_create_tiles()
 {
   for (ssize tile_index = 0; tile_index < mTileCount; ++tile_index) {
-    const auto tile_row = static_cast<int32>(tile_index / mColumnCount);
-    const auto tile_col = static_cast<int32>(tile_index % mColumnCount);
+    const auto tile_row = narrow<int32>(tile_index / mColumnCount);
+    const auto tile_col = narrow<int32>(tile_index % mColumnCount);
 
     const Rectangle tile_region {
       .position = {tile_col * mTileSize.x, tile_row * mTileSize.y},
@@ -63,8 +63,7 @@ auto Tileset::index_of(const TilePos& pos) const -> Maybe<TileIndex>
 {
   if (pos.row >= 0 && pos.col >= 0 && pos.col < mColumnCount) {
     if (pos.row < row_count()) {
-      return TileIndex {
-        static_cast<TileIndex::value_type>(pos.row * mColumnCount + pos.col)};
+      return TileIndex {narrow<TileIndex::value_type>(pos.row * mColumnCount + pos.col)};
     }
   }
 
@@ -77,7 +76,7 @@ auto Tileset::get_appearance(const TileIndex tile_index) const -> TileIndex
     throw Exception {"Invalid tile index"};
   }
 
-  const auto raw_tile_index = static_cast<usize>(tile_index.value);
+  const usize raw_tile_index {as_unsigned(tile_index.value)};
 
   // Look for cached appearance.
   if (const auto cached_appearance = mAppearanceCache[raw_tile_index];
@@ -104,7 +103,7 @@ auto Tileset::get_appearance(const TileIndex tile_index) const -> TileIndex
 auto Tileset::find_tile(const TileIndex tile_index) -> Tile*
 {
   if (is_valid_index(tile_index)) {
-    return &mTiles[static_cast<usize>(tile_index.value)];
+    return &mTiles[usize {as_unsigned(tile_index.value)}];
   }
 
   return nullptr;
@@ -113,7 +112,7 @@ auto Tileset::find_tile(const TileIndex tile_index) -> Tile*
 auto Tileset::find_tile(const TileIndex tile_index) const -> const Tile*
 {
   if (is_valid_index(tile_index)) {
-    return &mTiles[static_cast<usize>(tile_index.value)];
+    return &mTiles[usize {as_unsigned(tile_index.value)}];
   }
 
   return nullptr;
@@ -136,7 +135,7 @@ auto Tileset::is_valid_index(const TileIndex tile_index) const -> bool
 
 auto Tileset::last_tile_index() const -> TileIndex
 {
-  return TileIndex {static_cast<TileIndex::value_type>(mTileCount - 1)};
+  return TileIndex {narrow<TileIndex::value_type>(mTileCount - 1)};
 }
 
 auto Tileset::tile_count() const -> ssize

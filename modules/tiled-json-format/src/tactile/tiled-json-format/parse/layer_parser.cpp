@@ -133,8 +133,7 @@ auto _parse_tile_layer_data(const JSON& layer_json,
       .and_then([&] { return parse(layer_json, "height", layer.height); })
       .and_then([&] { return parse(layer_json, "data", tile_data_json); })
       .and_then([&]() -> Result<TileMatrix> {
-        const MatrixExtent layer_extent {static_cast<usize>(layer.height),
-                                         static_cast<usize>(layer.width)};
+        const MatrixExtent layer_extent {layer.height, layer.width};
 
         switch (tile_format.encoding) {
           case TileEncoding::kPlainText:

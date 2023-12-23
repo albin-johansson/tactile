@@ -7,6 +7,7 @@
 #include "tactile/foundation/debug/assert.hpp"
 #include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/functional/utility.hpp"
+#include "tactile/foundation/misc/conversion.hpp"
 
 using namespace tactile::int_literals;
 
@@ -133,8 +134,8 @@ void TileLayer::flood(const TilePos& start_pos,
 void TileLayer::set_tile(const TilePos& pos, const TileID id)
 {
   if (is_valid_pos(pos)) [[likely]] {
-    const auto u_row = static_cast<usize>(pos.row);
-    const auto u_col = static_cast<usize>(pos.col);
+    const auto u_row = as_unsigned(pos.row);
+    const auto u_col = as_unsigned(pos.col);
 
     mTileMatrix[u_row][u_col] = id;
   }
@@ -143,8 +144,8 @@ void TileLayer::set_tile(const TilePos& pos, const TileID id)
 auto TileLayer::get_tile(const TilePos& pos) const -> Maybe<TileID>
 {
   if (is_valid_pos(pos)) [[likely]] {
-    const auto u_row = static_cast<usize>(pos.row);
-    const auto u_col = static_cast<usize>(pos.col);
+    const auto u_row = as_unsigned(pos.row);
+    const auto u_col = as_unsigned(pos.col);
 
     return mTileMatrix[u_row][u_col];
   }
@@ -155,8 +156,8 @@ auto TileLayer::get_tile(const TilePos& pos) const -> Maybe<TileID>
 auto TileLayer::is_valid_pos(const TilePos& pos) const -> bool
 {
   if (pos.row >= 0_z && pos.col >= 0_z) {
-    const auto u_row = static_cast<usize>(pos.row);
-    const auto u_col = static_cast<usize>(pos.col);
+    const auto u_row = as_unsigned(pos.row);
+    const auto u_col = as_unsigned(pos.col);
 
     return u_row < mRowCount && u_col < mColCount;
   }
