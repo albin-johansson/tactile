@@ -8,6 +8,8 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/foundation/container/tree_map.hpp"
+
 using namespace tactile;
 using namespace tactile::int_literals;
 
@@ -84,4 +86,30 @@ TEST(UUID, ToString)
     EXPECT_EQ(str[23], '-');
     EXPECT_NE(str, "00000000-0000-0000-0000-000000000000");
   }
+}
+
+/// \tests tactile::operator<(const UUID&, const UUID&)
+TEST(UUID, LessThanOperator)
+{
+  const auto a = UUID::generate();
+  const auto b = UUID::generate();
+
+  EXPECT_NE(a < b, b < a);
+  EXPECT_NO_THROW((void) (a < b));
+  EXPECT_NO_THROW((void) (b < a));
+
+  TreeMap<UUID, int> map {};
+  EXPECT_EQ(map.size(), 0);
+  EXPECT_FALSE(map.contains(a));
+  EXPECT_FALSE(map.contains(b));
+
+  map[a] = 10;
+  EXPECT_EQ(map.size(), 1);
+  EXPECT_TRUE(map.contains(a));
+  EXPECT_FALSE(map.contains(b));
+
+  map[b] = 20;
+  EXPECT_EQ(map.size(), 2);
+  EXPECT_TRUE(map.contains(a));
+  EXPECT_TRUE(map.contains(b));
 }

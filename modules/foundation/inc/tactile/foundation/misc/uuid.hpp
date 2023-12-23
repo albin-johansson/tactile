@@ -3,6 +3,7 @@
 #pragma once
 
 #include <cstddef>     // size_t
+#include <cstring>     // memcmp
 #include <functional>  // hash
 #include <ostream>     // ostream
 
@@ -53,6 +54,11 @@ class TACTILE_FOUNDATION_API UUID final {
    */
   [[nodiscard]]
   auto is_null() const -> bool;
+
+  [[nodiscard]] friend auto operator<(const UUID& lhs, const UUID& rhs) noexcept -> bool
+  {
+    return std::memcmp(lhs.mData.data(), rhs.mData.data(), sizeof lhs.mData) < 0;
+  }
 
   [[nodiscard]] auto operator==(const UUID&) const noexcept -> bool = default;
 
