@@ -7,7 +7,6 @@
 #include "tactile/core/context/metadata.hpp"
 #include "tactile/core/tileset/tile.hpp"
 #include "tactile/foundation/container/file_path.hpp"
-#include "tactile/foundation/container/smart_ptr.hpp"
 #include "tactile/foundation/container/vector.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/math/vector.hpp"
@@ -21,8 +20,8 @@ namespace tactile {
  * \brief Provides information needed to construct a tileset.
  */
 struct TilesetCreateInfo final {
-  int32 tile_count;      ///< The total number of tiles.
-  int32 column_count;    ///< The number of tile columns.
+  ssize tile_count;      ///< The total number of tiles.
+  ssize column_count;    ///< The number of tile columns.
   Int2 tile_size;        ///< The dimensions of each tile.
   Int2 texture_size;     ///< The dimensions of the tileset image.
   TextureID texture_id;  ///< The ID of the tileset image.
@@ -93,10 +92,16 @@ class TACTILE_CORE_API Tileset final : public IMetaContext {
    *
    * \param tile_index the index of the desired tile.
    *
-   * \return a shared pointer to the found tile.
+   * \return the found tile.
    */
   [[nodiscard]]
-  auto get_tile(TileIndex tile_index) -> Shared<Tile>;
+  auto get_tile(TileIndex tile_index) -> Tile&;
+
+  /**
+   * \copydoc get_tile()
+   */
+  [[nodiscard]]
+  auto get_tile(TileIndex tile_index) const -> const Tile&;
 
   /**
    * \brief Indicates whether a tile index references a valid tile in the tileset.
@@ -114,7 +119,7 @@ class TACTILE_CORE_API Tileset final : public IMetaContext {
    * \return a tile count.
    */
   [[nodiscard]]
-  auto tile_count() const -> int32;
+  auto tile_count() const -> ssize;
 
   /**
    * \brief Returns the number of tile rows in the tileset.
@@ -122,7 +127,7 @@ class TACTILE_CORE_API Tileset final : public IMetaContext {
    * \return a row count.
    */
   [[nodiscard]]
-  auto row_count() const -> int32;
+  auto row_count() const -> ssize;
 
   /**
    * \brief Returns the number of tile columns in the tileset.
@@ -130,7 +135,7 @@ class TACTILE_CORE_API Tileset final : public IMetaContext {
    * \return a column count.
    */
   [[nodiscard]]
-  auto column_count() const -> int32;
+  auto column_count() const -> ssize;
 
   /**
    * \brief Returns the size of each tile in the tileset.
@@ -176,13 +181,13 @@ class TACTILE_CORE_API Tileset final : public IMetaContext {
 
  private:
   Metadata mMeta;
-  int32 mTileCount;
-  int32 mColumnCount;
+  ssize mTileCount;
+  ssize mColumnCount;
   Int2 mTileSize;
   Int2 mTextureSize;
   Float2 mNormalizedTileSize;
   TextureID mTextureId;
-  Vector<Shared<Tile>> mTiles;
+  Vector<Tile> mTiles;
   mutable Vector<Maybe<TileIndex>> mAppearanceCache;
   FilePath mImagePath;
 

@@ -107,6 +107,7 @@ TEST(Tileset, GetAppearance)
 TEST(Tileset, FindTile)
 {
   const auto tileset_info = test::make_dummy_tileset_info();
+  const auto tile_count = static_cast<TileIndex::value_type>(tileset_info.tile_count);
 
   Tileset tileset {tileset_info};
   const auto& const_tileset = tileset;
@@ -115,39 +116,55 @@ TEST(Tileset, FindTile)
   EXPECT_NE(tileset.find_tile(first_index), nullptr);
   EXPECT_NE(const_tileset.find_tile(first_index), nullptr);
 
-  const TileIndex last_index {tileset_info.tile_count - 1};
+  const TileIndex last_index {tile_count - 1};
   EXPECT_NE(tileset.find_tile(last_index), nullptr);
   EXPECT_NE(const_tileset.find_tile(last_index), nullptr);
 
   EXPECT_EQ(tileset.find_tile(TileIndex {-1}), nullptr);
-  EXPECT_EQ(tileset.find_tile(TileIndex {tileset_info.tile_count}), nullptr);
+  EXPECT_EQ(const_tileset.find_tile(TileIndex {-1}), nullptr);
+
+  EXPECT_EQ(tileset.find_tile(TileIndex {tile_count}), nullptr);
+  EXPECT_EQ(const_tileset.find_tile(TileIndex {tile_count}), nullptr);
 }
 
 /// \tests tactile::Tileset::get_tile
 TEST(Tileset, GetTile)
 {
   const auto tileset_info = test::make_dummy_tileset_info();
-  Tileset tileset {tileset_info};
+  const auto tile_count = static_cast<TileIndex::value_type>(tileset_info.tile_count);
 
-  EXPECT_NE(tileset.get_tile(TileIndex {0}), nullptr);
-  EXPECT_NE(tileset.get_tile(TileIndex {tileset_info.tile_count - 1}), nullptr);
+  Tileset tileset {tileset_info};
+  const auto& const_tileset = tileset;
+
+  const TileIndex first_index {0};
+  EXPECT_NO_THROW((void) tileset.get_tile(first_index));
+  EXPECT_NO_THROW((void) const_tileset.get_tile(first_index));
+
+  const TileIndex last_index {tile_count - 1};
+  EXPECT_NO_THROW((void) tileset.get_tile(last_index));
+  EXPECT_NO_THROW((void) const_tileset.get_tile(last_index));
 
   EXPECT_THROW((void) tileset.get_tile(TileIndex {-1}), Exception);
-  EXPECT_THROW((void) tileset.get_tile(TileIndex {tileset_info.tile_count}), Exception);
+  EXPECT_THROW((void) const_tileset.get_tile(TileIndex {-1}), Exception);
+
+  EXPECT_THROW((void) tileset.get_tile(TileIndex {tile_count}), Exception);
+  EXPECT_THROW((void) const_tileset.get_tile(TileIndex {tile_count}), Exception);
 }
 
 /// \tests tactile::Tileset::is_valid_index
 TEST(Tileset, IsValidIndex)
 {
   const auto tileset_info = test::make_dummy_tileset_info();
+  const auto tile_count = static_cast<TileIndex::value_type>(tileset_info.tile_count);
+
   const Tileset tileset {tileset_info};
 
   EXPECT_TRUE(tileset.is_valid_index(TileIndex {0}));
   EXPECT_TRUE(tileset.is_valid_index(TileIndex {24}));
-  EXPECT_TRUE(tileset.is_valid_index(TileIndex {tileset_info.tile_count - 1}));
+  EXPECT_TRUE(tileset.is_valid_index(TileIndex {tile_count - 1}));
 
   EXPECT_FALSE(tileset.is_valid_index(TileIndex {-1}));
-  EXPECT_FALSE(tileset.is_valid_index(TileIndex {tileset_info.tile_count}));
+  EXPECT_FALSE(tileset.is_valid_index(TileIndex {tile_count}));
 }
 
 /// \tests tactile::Tileset::row_count

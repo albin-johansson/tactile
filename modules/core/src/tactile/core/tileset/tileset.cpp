@@ -4,7 +4,8 @@
 
 #include "tactile/foundation/debug/assert.hpp"
 #include "tactile/foundation/debug/exception.hpp"
-#include "tactile/foundation/log/logger.hpp"
+#include "tactile/foundation/debug/validation.hpp"
+#include "tactile/foundation/misc/conversion.hpp"
 
 namespace tactile {
 
@@ -16,24 +17,24 @@ Tileset::Tileset(const TilesetCreateInfo& info)
     mNormalizedTileSize {Float2 {info.tile_size} / Float2 {info.texture_size}},
     mTextureId {info.texture_id}
 {
-  mTiles.reserve(static_cast<usize>(mTileCount));
-  mAppearanceCache.resize(static_cast<usize>(mTileCount));
+  mTiles.reserve(as_unsigned(mTileCount));
+  mAppearanceCache.resize(as_unsigned(mTileCount));
 
   _create_tiles();
 }
 
 void Tileset::_create_tiles()
 {
-  for (int32 tile_index = 0; tile_index < mTileCount; ++tile_index) {
-    const auto tile_row = tile_index / mColumnCount;
-    const auto tile_col = tile_index % mColumnCount;
+  for (ssize tile_index = 0; tile_index < mTileCount; ++tile_index) {
+    const auto tile_row = static_cast<int32>(tile_index / mColumnCount);
+    const auto tile_col = static_cast<int32>(tile_index % mColumnCount);
 
     const Rectangle tile_region {
       .position = {tile_col * mTileSize.x, tile_row * mTileSize.y},
       .size = mTileSize,
     };
 
-    mTiles.push_back(make_shared<Tile>(tile_region));
+    mTiles.emplace_back(tile_region);
   }
 }
 
@@ -41,8 +42,8 @@ void Tileset::accept(IMetaContextVisitor& visitor)
 {
   visitor.visit(*this);
 
-  for (const auto& tile : mTiles) {
-    tile->accept(visitor);
+  for (auto& tile : mTiles) {
+    tile.accept(visitor);
   }
 }
 
@@ -51,8 +52,8 @@ void Tileset::update()
   mAppearanceCache.assign(mAppearanceCache.size(), kNothing);
 
   for (auto& tile : mTiles) {
-    if (tile->is_animated()) {
-      auto& tile_animation = tile->get_animation();
+    if (tile.is_animated()) {
+      auto& tile_animation = tile.get_animation();
       tile_animation.update();
     }
   }
@@ -62,8 +63,8 @@ auto Tileset::index_of(const TilePos& pos) const -> Maybe<TileIndex>
 {
   if (pos.row >= 0 && pos.col >= 0 && pos.col < mColumnCount) {
     if (pos.row < row_count()) {
-      return TileIndex {static_cast<int32>(pos.row) * mColumnCount +
-                        static_cast<int32>(pos.col)};
+      return TileIndex {
+        static_cast<TileIndex::value_type>(pos.row * mColumnCount + pos.col)};
     }
   }
 
@@ -86,8 +87,8 @@ auto Tileset::get_appearance(const TileIndex tile_index) const -> TileIndex
 
   // Check if the tile is animated.
   const auto& tile = mTiles[raw_tile_index];
-  if (tile->is_animated()) {
-    const auto& tile_animation = tile->get_animation();
+  if (tile.is_animated()) {
+    const auto& tile_animation = tile.get_animation();
 
     const auto current_frame_index = tile_animation.get_current_frame_index();
     const auto& current_frame = tile_animation.get_frame(current_frame_index);
@@ -103,7 +104,7 @@ auto Tileset::get_appearance(const TileIndex tile_index) const -> TileIndex
 auto Tileset::find_tile(const TileIndex tile_index) -> Tile*
 {
   if (is_valid_index(tile_index)) {
-    return mTiles[static_cast<usize>(tile_index.value)].get();
+    return &mTiles[static_cast<usize>(tile_index.value)];
   }
 
   return nullptr;
@@ -112,19 +113,20 @@ auto Tileset::find_tile(const TileIndex tile_index) -> Tile*
 auto Tileset::find_tile(const TileIndex tile_index) const -> const Tile*
 {
   if (is_valid_index(tile_index)) {
-    return mTiles[static_cast<usize>(tile_index.value)].get();
+    return &mTiles[static_cast<usize>(tile_index.value)];
   }
 
   return nullptr;
 }
 
-auto Tileset::get_tile(const TileIndex tile_index) -> Shared<Tile>
+auto Tileset::get_tile(const TileIndex tile_index) -> Tile&
 {
-  if (is_valid_index(tile_index)) {
-    return mTiles[static_cast<usize>(tile_index.value)];
-  }
+  return *require_not_null(find_tile(tile_index), "invalid tile index");
+}
 
-  throw Exception {"Invalid tile index"};
+auto Tileset::get_tile(const TileIndex tile_index) const -> const Tile&
+{
+  return *require_not_null(find_tile(tile_index), "invalid tile index");
 }
 
 auto Tileset::is_valid_index(const TileIndex tile_index) const -> bool
@@ -132,18 +134,18 @@ auto Tileset::is_valid_index(const TileIndex tile_index) const -> bool
   return tile_index.value >= 0 && tile_index.value < mTileCount;
 }
 
-auto Tileset::tile_count() const -> int32
+auto Tileset::tile_count() const -> ssize
 {
   return mTileCount;
 }
 
-auto Tileset::row_count() const -> int32
+auto Tileset::row_count() const -> ssize
 {
   TACTILE_ASSERT(mColumnCount != 0);
   return mTileCount / mColumnCount;
 }
 
-auto Tileset::column_count() const -> int32
+auto Tileset::column_count() const -> ssize
 {
   return mColumnCount;
 }
