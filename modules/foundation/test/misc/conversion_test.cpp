@@ -2,52 +2,99 @@
 
 #include "tactile/foundation/misc/conversion.hpp"
 
+#include <limits>  // numeric_limits
+
 #include <gtest/gtest.h>
 
 using namespace tactile;
 
-TEST(Conversion, AsSigned)
+namespace {
+
+inline constexpr auto kMinI32 = std::numeric_limits<int32>::min();
+inline constexpr auto kMaxI32 = std::numeric_limits<int32>::max();
+inline constexpr auto kMaxU32 = std::numeric_limits<uint32>::max();
+
+}  // namespace
+
+/// \tests tactile::narrow
+TEST(Conversion, Narrow)
 {
-  const uint8 u8 {53};
-  const uint16 u16 {8'273};
-  const uint32 u32 {832'123};
-  const uint64 u64 {93'443'392};
+  // Signed -> signed
+  EXPECT_EQ(narrow<int8>(int8 {42}), int8 {42});
+  EXPECT_EQ(narrow<int8>(int16 {100}), int8 {100});
+  EXPECT_EQ(narrow<int8>(int32 {-128}), int8 {-128});
+  EXPECT_EQ(narrow<int16>(int32 {1'234}), int16 {1'234});
+  EXPECT_EQ(narrow<int16>(int32 {0x7FFF}), int16 {0x7FFF});
+  EXPECT_EQ(narrow<int16>(int32 {-10'000}), int16 {-10'000});
+  EXPECT_EQ(narrow<int32>(int64 {kMinI32}), kMinI32);
+  EXPECT_EQ(narrow<int32>(int64 {kMaxI32}), kMaxI32);
 
-  const auto s8 = as_signed(u8);
-  const auto s16 = as_signed(u16);
-  const auto s32 = as_signed(u32);
-  const auto s64 = as_signed(u64);
+  // Signed -> unsigned
+  EXPECT_EQ(narrow<uint8>(int8 {42}), uint8 {42});
+  EXPECT_EQ(narrow<uint8>(int16 {245}), uint8 {245});
+  EXPECT_EQ(narrow<uint16>(int32 {0x7FFF}), uint16 {0x7FFF});
+  EXPECT_EQ(narrow<uint16>(int32 {0x1234}), uint16 {0x1234});
 
-  EXPECT_EQ(s8, static_cast<int8>(u8));
-  EXPECT_EQ(s16, static_cast<int16>(u16));
-  EXPECT_EQ(s32, static_cast<int32>(u32));
-  EXPECT_EQ(s64, static_cast<int64>(u64));
+  // Unsigned -> unsigned
+  EXPECT_EQ(narrow<uint8>(uint8 {99}), uint8 {99});
+  EXPECT_EQ(narrow<uint8>(uint16 {0xFA}), uint8 {0xFA});
+  EXPECT_EQ(narrow<uint16>(uint16 {0xFFFF}), uint16 {0xFFFF});
+  EXPECT_EQ(narrow<uint32>(uint64 {kMaxU32}), kMaxU32);
 
-  EXPECT_EQ(sizeof u8, sizeof s8);
-  EXPECT_EQ(sizeof u16, sizeof s16);
-  EXPECT_EQ(sizeof u32, sizeof s32);
-  EXPECT_EQ(sizeof u64, sizeof s64);
+  // Unsigned -> signed
+  EXPECT_EQ(narrow<int8>(uint32 {42}), int8 {42});
+  EXPECT_EQ(narrow<int8>(uint32 {127}), int8 {127});
+  EXPECT_EQ(narrow<int16>(uint32 {0x7FFF}), int16 {0x7FFF});
+  EXPECT_EQ(narrow<int32>(uint64 {28}), int32 {28});
 }
 
+/// \tests tactile::narrow
+TEST(Conversion, NarrowWithOverflow)
+{
+  EXPECT_THROW((void) narrow<int8>(int16 {129}), Exception);
+  EXPECT_THROW((void) narrow<int8>(uint16 {129}), Exception);
+
+  EXPECT_THROW((void) narrow<uint8>(int16 {256}), Exception);
+  EXPECT_THROW((void) narrow<uint8>(uint16 {256}), Exception);
+
+  EXPECT_THROW((void) narrow<int16>(int32 {0x8FFF}), Exception);
+  EXPECT_THROW((void) narrow<int16>(uint32 {0x8FFF}), Exception);
+}
+
+/// \tests tactile::narrow
+TEST(Conversion, NarrowWithUnderflow)
+{
+  EXPECT_THROW((void) narrow<uint8>(int8 {-1}), Exception);
+  EXPECT_THROW((void) narrow<uint8>(int16 {-1}), Exception);
+  EXPECT_THROW((void) narrow<uint16>(int32 {-1}), Exception);
+  EXPECT_THROW((void) narrow<uint32>(int64 {-1}), Exception);
+
+  EXPECT_THROW((void) narrow<int8>(int16 {-129}), Exception);
+  EXPECT_THROW((void) narrow<int16>(kMinI32), Exception);
+  EXPECT_THROW((void) narrow<int32>(int64 {kMinI32} - int64 {1}), Exception);
+}
+
+/// \tests tactile::as_signed
+TEST(Conversion, AsSigned)
+{
+  EXPECT_EQ(as_signed(0u), 0);
+  EXPECT_EQ(as_signed(42u), 42);
+  EXPECT_EQ(as_signed(uint8 {53}), int8 {53});
+  EXPECT_EQ(as_signed(uint16 {8'273}), int16 {8'273});
+  EXPECT_EQ(as_signed(static_cast<uint32>(kMaxI32)), kMaxI32);
+
+  EXPECT_THROW((void) as_signed(static_cast<uint32>(kMaxI32) + 1), Exception);
+  EXPECT_THROW((void) as_signed(kMaxU32), Exception);
+}
+
+/// \tests tactile::as_unsigned
 TEST(Conversion, AsUnsigned)
 {
-  const int8 s8 {-1};
-  const int16 s16 {839};
-  const int32 s32 {92'761};
-  const int64 s64 {649'231};
+  EXPECT_EQ(as_unsigned(0), 0u);
+  EXPECT_EQ(as_unsigned(42), 42u);
+  EXPECT_EQ(as_unsigned(int8 {0x7F}), uint8 {0x7F});
+  EXPECT_EQ(as_unsigned(kMaxI32), static_cast<uint32>(kMaxI32));
 
-  const auto u8 = as_unsigned(s8);
-  const auto u16 = as_unsigned(s16);
-  const auto u32 = as_unsigned(s32);
-  const auto u64 = as_unsigned(s64);
-
-  EXPECT_EQ(u8, static_cast<uint8>(s8));
-  EXPECT_EQ(u16, static_cast<uint16>(s16));
-  EXPECT_EQ(u32, static_cast<uint32>(s32));
-  EXPECT_EQ(u64, static_cast<uint64>(s64));
-
-  EXPECT_EQ(sizeof s8, sizeof u8);
-  EXPECT_EQ(sizeof s16, sizeof u16);
-  EXPECT_EQ(sizeof s32, sizeof u32);
-  EXPECT_EQ(sizeof s64, sizeof u64);
+  EXPECT_THROW((void) as_unsigned(-1), Exception);
+  EXPECT_THROW((void) as_unsigned(kMinI32), Exception);
 }
