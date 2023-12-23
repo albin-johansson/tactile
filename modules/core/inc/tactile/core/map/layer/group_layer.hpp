@@ -7,6 +7,7 @@
 #include "tactile/core/map/layer/layer_behavior_delegate.hpp"
 #include "tactile/foundation/container/smart_ptr.hpp"
 #include "tactile/foundation/container/vector.hpp"
+#include "tactile/foundation/functional/function.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/misc/id_types.hpp"
 #include "tactile/foundation/prelude.hpp"
@@ -18,11 +19,46 @@ namespace tactile {
  */
 class TACTILE_CORE_API GroupLayer final : public ILayer {
  public:
+  using LayerStorage = Vector<Shared<ILayer>>;
+  using LayerCallback = Function<void(ILayer&)>;
+  using ConstLayerCallback = Function<void(const ILayer&)>;
+
   void accept(IMetaContextVisitor& visitor) override;
 
   void accept(ILayerVisitor& visitor) override;
 
   void accept(IConstLayerVisitor& visitor) const override;
+
+  /**
+   * \brief Inspects each meta context in the group recursively.
+   *
+   * \note The callback is not called for the invoked group itself.
+   *
+   * \param visitor the visitor that will be called.
+   */
+  void each(IMetaContextVisitor& visitor) const;
+
+  /**
+   * \brief Inspects the layers in the group, but not the root group itself.
+   *
+   * \param visitor the layer visitor.
+   */
+  void each(ILayerVisitor& visitor);
+
+  /** \copydoc each(ILayerVisitor&) */
+  void each(IConstLayerVisitor& visitor) const;
+
+  /**
+   * \brief Invokes a callback for each layer in the group recursively.
+   *
+   * \note The callback is not called for the invoked group itself.
+   *
+   * \param callable a callback invoked for each stored layer.
+   */
+  void each(const LayerCallback& callable);
+
+  /** \copydoc each(const LayerCallback&) */
+  void each(const ConstLayerCallback& callable) const;
 
   /**
    * \brief Adds a layer to the group layer.
@@ -127,6 +163,22 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
   auto get_layer_global_index(const UUID& uuid) const -> Maybe<usize>;
 
   /**
+   * \brief Attempts to find a nested layer.
+   *
+   * \note This function won't find the root group layer itself.
+   *
+   * \param uuid the UUID associated with the target layer.
+   *
+   * \return a pointer to the found layer, or a null pointer.
+   */
+  [[nodiscard]]
+  auto find_layer(const UUID& uuid) -> ILayer*;
+
+  /** \copydoc find_layer() */
+  [[nodiscard]]
+  auto find_layer(const UUID& uuid) const -> const ILayer*;
+
+  /**
    * \brief Attempts to find a nested tile layer.
    *
    * \param uuid the UUID associated with the target layer.
@@ -136,9 +188,7 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
   [[nodiscard]]
   auto find_tile_layer(const UUID& uuid) -> TileLayer*;
 
-  /**
-   * \copydoc find_tile_layer()
-   */
+  /** \copydoc find_tile_layer() */
   [[nodiscard]]
   auto find_tile_layer(const UUID& uuid) const -> const TileLayer*;
 
@@ -152,9 +202,7 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
   [[nodiscard]]
   auto find_object_layer(const UUID& uuid) -> ObjectLayer*;
 
-  /**
-   * \copydoc find_object_layer()
-   */
+  /** \copydoc find_object_layer() */
   [[nodiscard]]
   auto find_object_layer(const UUID& uuid) const -> const ObjectLayer*;
 
@@ -168,9 +216,7 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
   [[nodiscard]]
   auto find_group_layer(const UUID& uuid) -> GroupLayer*;
 
-  /**
-   * \copydoc find_group_layer()
-   */
+  /** \copydoc find_group_layer() */
   [[nodiscard]]
   auto find_group_layer(const UUID& uuid) const -> const GroupLayer*;
 
@@ -211,8 +257,6 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
   auto get_meta() const -> const Metadata& override;
 
  private:
-  using LayerStorage = Vector<Shared<ILayer>>;
-
   LayerBehaviorDelegate mDelegate;
   LayerStorage mLayers;
 
