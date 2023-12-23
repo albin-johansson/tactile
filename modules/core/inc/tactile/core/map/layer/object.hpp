@@ -128,8 +128,15 @@ class TACTILE_CORE_API Object final : public IMetaContext {
   [[nodiscard]]
   auto get_meta() const -> const Metadata& override;
 
+  /**
+   * \brief Creates a clone of the object.
+   *
+   * \note Any associated persistent identifier is not copied.
+   *
+   * \return an object.
+   */
   [[nodiscard]]
-  auto clone() const -> Shared<Object>;
+  auto clone() const -> Object;
 
  private:
   ObjectType mType;

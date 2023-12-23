@@ -6,6 +6,9 @@
 
 #include "tactile/core/map/layer/layer_visitor.hpp"
 #include "tactile/foundation/container/lookup.hpp"
+#include "tactile/foundation/debug/generic_error.hpp"
+#include "tactile/foundation/debug/validation.hpp"
+#include "tactile/foundation/log/logger.hpp"
 
 namespace tactile {
 
@@ -13,8 +16,8 @@ void ObjectLayer::accept(IMetaContextVisitor& visitor)
 {
   visitor.visit(*this);
 
-  for (const auto& [object_id, object] : mObjects) {
-    object->accept(visitor);
+  for (auto& [object_id, object] : mObjects) {
+    object.accept(visitor);
   }
 }
 
@@ -28,18 +31,35 @@ void ObjectLayer::accept(IConstLayerVisitor& visitor) const
   visitor.visit(*this);
 }
 
-void ObjectLayer::add_object(const ObjectID id, Shared<Object> object)
+auto ObjectLayer::add_object(Object object) -> Result<void>
 {
-  mObjects[id] = std::move(object);
-}
-
-auto ObjectLayer::remove_object(const ObjectID id) -> Shared<Object>
-{
-  if (auto object = erase_from(mObjects, id)) {
-    return std::move(object).value();
+  if (const auto object_id = object.get_persistent_id()) {
+    for (const auto& [_, other_object] : mObjects) {
+      if (object_id == other_object.get_persistent_id()) {
+        TACTILE_LOG_WARN("Detected duplicated persistent object identifier '{}'",
+                         *object_id);
+        return unexpected(make_generic_error(GenericError::kInvalidState));
+      }
+    }
   }
 
-  return nullptr;
+  const auto object_uuid = object.get_meta().get_uuid();
+  mObjects.insert_or_assign(object_uuid, std::move(object));
+
+  return kOK;
+}
+
+auto ObjectLayer::emplace_object(const ObjectType type) -> Object&
+{
+  Object object {type};
+  auto [iter, _] =
+      mObjects.insert_or_assign(object.get_meta().get_uuid(), std::move(object));
+  return iter->second;
+}
+
+auto ObjectLayer::remove_object(const UUID& uuid) -> Maybe<Object>
+{
+  return erase_from(mObjects, uuid);
 }
 
 void ObjectLayer::set_persistent_id(const Maybe<int32> id)
@@ -57,31 +77,36 @@ void ObjectLayer::set_visible(const bool visible)
   mDelegate.set_visible(visible);
 }
 
-auto ObjectLayer::get_object(const ObjectID id) -> Shared<Object>
+auto ObjectLayer::find_object(const UUID& uuid) -> Object*
 {
-  return lookup_in(mObjects, id);
+  const auto iter = mObjects.find(uuid);
+  return (iter != mObjects.end()) ? &iter->second : nullptr;
 }
 
-auto ObjectLayer::find_object(const ObjectID id) -> Object*
+auto ObjectLayer::find_object(const UUID& uuid) const -> const Object*
 {
-  const auto iter = mObjects.find(id);
-  return (iter != mObjects.end()) ? iter->second.get() : nullptr;
+  const auto iter = mObjects.find(uuid);
+  return (iter != mObjects.end()) ? &iter->second : nullptr;
 }
 
-auto ObjectLayer::find_object(const ObjectID id) const -> const Object*
+auto ObjectLayer::get_object(const UUID& uuid) -> Object&
 {
-  const auto iter = mObjects.find(id);
-  return (iter != mObjects.end()) ? iter->second.get() : nullptr;
+  return *require_not_null(find_object(uuid), "invalid object UUID");
 }
 
-auto ObjectLayer::has_object(const ObjectID id) const -> bool
+auto ObjectLayer::get_object(const UUID& uuid) const -> const Object&
 {
-  return mObjects.contains(id);
+  return *require_not_null(find_object(uuid), "invalid object UUID");
 }
 
-auto ObjectLayer::object_count() const -> usize
+auto ObjectLayer::has_object(const UUID& uuid) const -> bool
 {
-  return mObjects.size();
+  return mObjects.contains(uuid);
+}
+
+auto ObjectLayer::object_count() const -> ssize
+{
+  return std::ssize(mObjects);
 }
 
 auto ObjectLayer::get_persistent_id() const -> Maybe<int32>
@@ -107,7 +132,7 @@ auto ObjectLayer::clone() const -> Shared<ILayer>
   other->mDelegate = mDelegate.clone();
 
   for (const auto& [object_id, object] : mObjects) {
-    other->mObjects[object_id] = object->clone();
+    other->mObjects.insert_or_assign(object_id, object.clone());
   }
 
   return other;

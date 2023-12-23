@@ -9,6 +9,8 @@
 #include "tactile/foundation/container/smart_ptr.hpp"
 #include "tactile/foundation/container/tree_map.hpp"
 #include "tactile/foundation/container/vector.hpp"
+#include "tactile/foundation/functional/maybe.hpp"
+#include "tactile/foundation/functional/result.hpp"
 #include "tactile/foundation/misc/id_types.hpp"
 #include "tactile/foundation/prelude.hpp"
 
@@ -28,21 +30,29 @@ class TACTILE_CORE_API ObjectLayer final : public ILayer {
   /**
    * \brief Adds an object to the layer.
    *
-   * \note An existing object in the layer with the specified ID will be overwritten.
-   *
-   * \param id     the ID of the object.
    * \param object the object to add.
+   *
+   * \return nothing on success; an error code otherwise.
    */
-  void add_object(ObjectID id, Shared<Object> object);
+  auto add_object(Object object) -> Result<void>;
+
+  /**
+   * \brief Creates a object and adds it to the layer.
+   *
+   * \param type the type of the new object.
+   *
+   * \return the created object.
+   */
+  auto emplace_object(ObjectType type) -> Object&;
 
   /**
    * \brief Removes an object from the layer.
    *
-   * \param id the ID associated with the object.
+   * \param uuid the target object UUID.
    *
    * \return the removed object.
    */
-  auto remove_object(ObjectID id) -> Shared<Object>;
+  auto remove_object(const UUID& uuid) -> Maybe<Object>;
 
   void set_persistent_id(Maybe<int32> id) override;
 
@@ -53,42 +63,40 @@ class TACTILE_CORE_API ObjectLayer final : public ILayer {
   /**
    * \brief Returns an object in the layer.
    *
-   * \note Avoid calling this function if you only need to "look" at the returned object,
-   *       prefer calling `find_object` in such cases. This avoids expensive copies of
-   *       shared pointers.
+   * \param uuid the UUID of the desired object.
    *
-   * \param id the ID of the desired object.
-   *
-   * \return a shared pointer to the found object.
+   * \return the requested object.
    */
   [[nodiscard]]
-  auto get_object(ObjectID id) -> Shared<Object>;
+  auto get_object(const UUID& uuid) -> Object&;
+
+  /** \copydoc get_object() */
+  [[nodiscard]]
+  auto get_object(const UUID& uuid) const -> const Object&;
 
   /**
    * \brief Attempts to find and return an object in the layer.
    *
-   * \param id the ID of the desired object.
+   * \param uuid the UUID of the desired object.
    *
    * \return a pointer to the found object, or a null pointer.
    */
   [[nodiscard]]
-  auto find_object(ObjectID id) -> Object*;
+  auto find_object(const UUID& uuid) -> Object*;
 
-  /**
-   * \copydoc find_object()
-   */
+  /** \copydoc find_object() */
   [[nodiscard]]
-  auto find_object(ObjectID id) const -> const Object*;
+  auto find_object(const UUID& uuid) const -> const Object*;
 
   /**
-   * \brief Indicates whether the layer contains an object with the specified ID.
+   * \brief Indicates whether the layer contains an object with the specified UUID.
    *
-   * \param id the object ID to check.
+   * \param uuid the object UUID to look for.
    *
    * \return true if an object was found; false otherwise.
    */
   [[nodiscard]]
-  auto has_object(ObjectID id) const -> bool;
+  auto has_object(const UUID& uuid) const -> bool;
 
   /**
    * \brief Returns the number of objects in the layer.
@@ -96,7 +104,7 @@ class TACTILE_CORE_API ObjectLayer final : public ILayer {
    * \return an object count.
    */
   [[nodiscard]]
-  auto object_count() const -> usize;
+  auto object_count() const -> ssize;
 
   [[nodiscard]]
   auto get_persistent_id() const -> Maybe<int32> override;
@@ -118,7 +126,7 @@ class TACTILE_CORE_API ObjectLayer final : public ILayer {
 
  private:
   LayerBehaviorDelegate mDelegate;
-  TreeMap<ObjectID, Shared<Object>> mObjects;
+  TreeMap<UUID, Object> mObjects;  // TODO HashMap? Vector with UUIDs for ordering?
 };
 
 }  // namespace tactile
