@@ -5,6 +5,7 @@ Checks: "-*,
 
          bugprone-*,
          -bugprone-easily-swappable-parameters,
+         -bugprone-unchecked-optional-access,
 
          cppcoreguidelines-*,
          -cppcoreguidelines-avoid-do-while,
