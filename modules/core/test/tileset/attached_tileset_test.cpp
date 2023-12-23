@@ -26,7 +26,7 @@ TEST(AttachedTileset, ToIndex)
   const auto last_id = attached_tileset.get_last_tile_id();
 
   EXPECT_EQ(attached_tileset.to_index(first_id), TileIndex {0});
-  EXPECT_EQ(attached_tileset.to_index(last_id), TileIndex {tileset->tile_count() - 1});
+  EXPECT_EQ(attached_tileset.to_index(last_id), tileset->last_tile_index());
 }
 
 /// \tests tactile::AttachedTileset::has_tile
@@ -52,8 +52,12 @@ TEST(AttachedTileset, TileIdentifiers)
 {
   const auto tileset_info = test::make_dummy_tileset_info();
   const auto tileset = make_shared<Tileset>(tileset_info);
-  const AttachedTileset attached_tileset {tileset, TileID {27}};
 
-  EXPECT_EQ(attached_tileset.get_first_tile_id(), TileID {27});
-  EXPECT_EQ(attached_tileset.get_last_tile_id(), TileID {27 + tileset->tile_count() - 1});
+  const TileID first_id {27};
+  const TileID last_id {first_id.value + tileset->last_tile_index().value};
+
+  const AttachedTileset attached_tileset {tileset, first_id};
+
+  EXPECT_EQ(attached_tileset.get_first_tile_id(), first_id);
+  EXPECT_EQ(attached_tileset.get_last_tile_id(), last_id);
 }

@@ -167,6 +167,16 @@ TEST(Tileset, IsValidIndex)
   EXPECT_FALSE(tileset.is_valid_index(TileIndex {tile_count}));
 }
 
+/// \tests tactile::Tileset::last_tile_index
+TEST(Tileset, LastTileIndex)
+{
+  const auto tileset_info = test::make_dummy_tileset_info();
+  const auto tile_count = static_cast<TileIndex::value_type>(tileset_info.tile_count);
+
+  const Tileset tileset {tileset_info};
+  EXPECT_EQ(tileset.last_tile_index(), TileIndex {tile_count - 1});
+}
+
 /// \tests tactile::Tileset::row_count
 /// \tests tactile::Tileset::column_count
 TEST(Tileset, Dimensions)

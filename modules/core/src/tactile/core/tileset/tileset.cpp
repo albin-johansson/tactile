@@ -134,6 +134,11 @@ auto Tileset::is_valid_index(const TileIndex tile_index) const -> bool
   return tile_index.value >= 0 && tile_index.value < mTileCount;
 }
 
+auto Tileset::last_tile_index() const -> TileIndex
+{
+  return TileIndex {static_cast<TileIndex::value_type>(mTileCount - 1)};
+}
+
 auto Tileset::tile_count() const -> ssize
 {
   return mTileCount;

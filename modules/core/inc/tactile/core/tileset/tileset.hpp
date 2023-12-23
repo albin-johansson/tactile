@@ -114,6 +114,14 @@ class TACTILE_CORE_API Tileset final : public IMetaContext {
   auto is_valid_index(TileIndex tile_index) const -> bool;
 
   /**
+   * \brief Returns the last valid tile index in the tileset.
+   *
+   * \return a tile index.
+   */
+  [[nodiscard]]
+  auto last_tile_index() const -> TileIndex;
+
+  /**
    * \brief Returns the number of tiles in the tileset.
    *
    * \return a tile count.
