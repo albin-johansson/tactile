@@ -22,9 +22,10 @@ auto parse_tileset_tile_animation_frame_node(const pugi::xml_node animation_fram
 {
   ir::AnimationFrame frame {};
   return parse_to(animation_frame_node, "tileid", frame.tile_index.value)
-      .and_then([&] { return parse_uint(animation_frame_node, "duration"); })
-      .and_then([&](const uint duration) {
-        frame.duration = Milliseconds {static_cast<Milliseconds::rep>(duration)};
+      .and_then(
+          [&] { return parse<Milliseconds::rep>(animation_frame_node, "duration"); })
+      .and_then([&](const Milliseconds::rep duration) {
+        frame.duration = Milliseconds {duration};
         return kOK;
       })
       .transform([&] { return frame; });

@@ -26,11 +26,36 @@ namespace tactile::tiled::tmx {
 namespace {
 
 // Used to detect invalid attribute values.
-inline constexpr int kMaxInt = std::numeric_limits<int>::max();
-inline constexpr uint kMaxUInt = std::numeric_limits<uint>::max();
-inline constexpr float kMaxFloat = std::numeric_limits<float>::max();
+inline constexpr auto kMaxI64 = std::numeric_limits<int64>::max();
+inline constexpr auto kMaxU64 = std::numeric_limits<uint64>::max();
+inline constexpr auto kMaxF64 = std::numeric_limits<float64>::max();
 
 }  // namespace
+
+auto load_xml_file(const FilePath& path) -> Result<pugi::xml_document>
+{
+  pugi::xml_document document {};
+  const auto parse_result =
+      document.load_file(path.c_str(), pugi::parse_default | pugi::parse_trim_pcdata);
+
+  if (parse_result.status == pugi::status_ok) {
+    return document;
+  }
+
+  return unexpected(make_generic_error(GenericError::kIOError));
+}
+
+auto save_xml_file(const pugi::xml_document& document,
+                   const FilePath& path,
+                   const int indentation) -> Result<void>
+{
+  const StreamToFileOptions stream_options {
+    .indentation = indentation,
+    .binary_mode = false,
+  };
+
+  return stream_to_file(document, path, stream_options);
+}
 
 auto parse_string(const pugi::xml_node node, const char* key) -> Result<String>
 {
@@ -42,13 +67,13 @@ auto parse_string(const pugi::xml_node node, const char* key) -> Result<String>
   return unexpected(make_save_format_error(SaveFormatError::kMissingKey));
 }
 
-auto parse_int(const pugi::xml_node node, const char* key) -> Result<int>
+auto parse_int64(const pugi::xml_node node, const char* key) -> Result<int64>
 {
   const auto attribute = node.attribute(key);
 
   if (!attribute.empty()) {
-    const auto value = attribute.as_int(kMaxInt);
-    if (value != kMaxInt) {
+    const auto value = static_cast<int64>(attribute.as_llong(kMaxI64));
+    if (value != kMaxI64) {
       return value;
     }
   }
@@ -57,13 +82,13 @@ auto parse_int(const pugi::xml_node node, const char* key) -> Result<int>
   return unexpected(make_save_format_error(SaveFormatError::kMissingKey));
 }
 
-auto parse_uint(const pugi::xml_node node, const char* key) -> Result<uint>
+auto parse_uint64(const pugi::xml_node node, const char* key) -> Result<uint64>
 {
   const auto attribute = node.attribute(key);
 
   if (!attribute.empty()) {
-    const auto value = attribute.as_uint(kMaxUInt);
-    if (value != kMaxUInt) {
+    const auto value = static_cast<uint64>(attribute.as_ullong(kMaxU64));
+    if (value != kMaxU64) {
       return value;
     }
   }
@@ -72,13 +97,13 @@ auto parse_uint(const pugi::xml_node node, const char* key) -> Result<uint>
   return unexpected(make_save_format_error(SaveFormatError::kMissingKey));
 }
 
-auto parse_float(pugi::xml_node node, const char* key) -> Result<float>
+auto parse_float64(pugi::xml_node node, const char* key) -> Result<float64>
 {
   const auto attribute = node.attribute(key);
 
   if (!attribute.empty()) {
-    const auto value = attribute.as_float(kMaxFloat);
-    if (value != kMaxFloat) {
+    const auto value = static_cast<float64>(attribute.as_double(kMaxF64));
+    if (value != kMaxF64) {
       return value;
     }
   }
@@ -109,69 +134,12 @@ auto parse_to(pugi::xml_node node, const char* key, String& value) -> Result<voi
   });
 }
 
-auto parse_to(pugi::xml_node node, const char* key, int& value) -> Result<void>
-{
-  return parse_int(node, key).and_then([&](const int i) {
-    value = i;
-    return kOK;
-  });
-}
-
-auto parse_to(pugi::xml_node node, const char* key, uint& value) -> Result<void>
-{
-  return parse_uint(node, key).and_then([&](const uint i) {
-    value = i;
-    return kOK;
-  });
-}
-
-auto parse_to(pugi::xml_node node, const char* key, usize& value) -> Result<void>
-{
-  return parse_uint(node, key).and_then([&](const uint i) {
-    value = static_cast<usize>(i);
-    return kOK;
-  });
-}
-
-auto parse_to(pugi::xml_node node, const char* key, float& value) -> Result<void>
-{
-  return parse_float(node, key).and_then([&](const float f) {
-    value = f;
-    return kOK;
-  });
-}
-
 auto parse_to(pugi::xml_node node, const char* key, bool& value) -> Result<void>
 {
   return parse_bool(node, key).and_then([&](const bool b) {
     value = b;
     return kOK;
   });
-}
-
-auto load_xml_file(const FilePath& path) -> Result<pugi::xml_document>
-{
-  pugi::xml_document document {};
-  const auto parse_result =
-      document.load_file(path.c_str(), pugi::parse_default | pugi::parse_trim_pcdata);
-
-  if (parse_result.status == pugi::status_ok) {
-    return document;
-  }
-
-  return unexpected(make_generic_error(GenericError::kIOError));
-}
-
-auto save_xml_file(const pugi::xml_document& document,
-                   const FilePath& path,
-                   const int indentation) -> Result<void>
-{
-  const StreamToFileOptions stream_options {
-    .indentation = indentation,
-    .binary_mode = false,
-  };
-
-  return stream_to_file(document, path, stream_options);
 }
 
 }  // namespace tactile::tiled::tmx

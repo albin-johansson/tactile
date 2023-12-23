@@ -32,13 +32,13 @@ auto parse_property_value(pugi::xml_node property_node, const AttributeType type
       break;
     }
     case AttributeType::kInt: {
-      if (const auto value = parse_int(property_node, "value")) {
+      if (const auto value = parse<Attribute::int_type>(property_node, "value")) {
         return Attribute {*value};
       }
       break;
     }
     case AttributeType::kFloat: {
-      if (const auto value = parse_float(property_node, "value")) {
+      if (const auto value = parse<Attribute::float_type>(property_node, "value")) {
         return Attribute {*value};
       }
       break;
@@ -73,7 +73,8 @@ auto parse_property_value(pugi::xml_node property_node, const AttributeType type
       break;
     }
     case AttributeType::kObject: {
-      if (const auto value = parse_int(property_node, "value")) {
+      if (const auto value =
+              parse<Attribute::objref_type::value_type>(property_node, "value")) {
         return Attribute {Attribute::objref_type {*value}};
       }
       break;
