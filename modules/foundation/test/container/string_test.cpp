@@ -2,6 +2,8 @@
 
 #include "tactile/foundation/container/string.hpp"
 
+#include <limits>  // numeric_limits
+
 #include <gtest/gtest.h>
 
 #include "tactile/foundation/prelude.hpp"
@@ -162,84 +164,86 @@ TEST(String, StrToMultipleF32)
   }
 }
 
-/// \tests tactile::str_to_u32
-TEST(String, StrToU32)
+/// \tests tactile::str_to_u64
+TEST(String, StrToU64)
 {
   // Invalid inputs
-  EXPECT_EQ(str_to_u32(""), kNone);
-  EXPECT_EQ(str_to_u32(" "), kNone);
-  EXPECT_EQ(str_to_u32("42 "), kNone);
-  EXPECT_EQ(str_to_u32("foo42"), kNone);
-  EXPECT_EQ(str_to_u32("42foo"), kNone);
-  EXPECT_EQ(str_to_u32("-92"), kNone);
-  EXPECT_EQ(str_to_u32("+42"), kNone);
-  EXPECT_EQ(str_to_u32("A"), kNone);
-  EXPECT_EQ(str_to_u32("2", 2), kNone);
-  EXPECT_EQ(str_to_u32("9", 8), kNone);
-  EXPECT_EQ(str_to_u32("G", 16), kNone);
-  EXPECT_EQ(str_to_u32("0xFF", 16), kNone);
+  EXPECT_FALSE(str_to_u64("").has_value());
+  EXPECT_FALSE(str_to_u64(" ").has_value());
+  EXPECT_FALSE(str_to_u64("42 ").has_value());
+  EXPECT_FALSE(str_to_u64("foo42").has_value());
+  EXPECT_FALSE(str_to_u64("42foo").has_value());
+  EXPECT_FALSE(str_to_u64("-92").has_value());
+  EXPECT_FALSE(str_to_u64("+42").has_value());
+  EXPECT_FALSE(str_to_u64("A").has_value());
+  EXPECT_FALSE(str_to_u64("2", 2).has_value());
+  EXPECT_FALSE(str_to_u64("9", 8).has_value());
+  EXPECT_FALSE(str_to_u64("G", 16).has_value());
+  EXPECT_FALSE(str_to_u64("0xFF", 16).has_value());
 
   // Valid inputs
-  EXPECT_EQ(str_to_u32("42"), uint32 {42});
-  EXPECT_EQ(str_to_u32("042"), uint32 {42});
-  EXPECT_EQ(str_to_u32("111", 2), uint32 {0b111});
-  EXPECT_EQ(str_to_u32("A", 16), uint32 {0xA});
-  EXPECT_EQ(str_to_u32("F", 16), uint32 {0xF});
-  EXPECT_EQ(str_to_u32("10", 8), uint32 {010});
-  EXPECT_EQ(str_to_u32(StringView {"1234"}.substr(0, 2)), uint32 {12});
-  EXPECT_EQ(str_to_u32(StringView {"1234"}.substr(2, 2)), uint32 {34});
+  EXPECT_EQ(str_to_u64("42"), uint64 {42});
+  EXPECT_EQ(str_to_u64("042"), uint64 {42});
+  EXPECT_EQ(str_to_u64("111", 2), uint64 {0b111});
+  EXPECT_EQ(str_to_u64("A", 16), uint64 {0xA});
+  EXPECT_EQ(str_to_u64("F", 16), uint64 {0xF});
+  EXPECT_EQ(str_to_u64("10", 8), uint64 {010});
+  EXPECT_EQ(str_to_u64("FFFFFFFFFFFFFFFF", 16), std::numeric_limits<uint64>::max());
+  EXPECT_EQ(str_to_u64(StringView {"1234"}.substr(0, 2)), uint64 {12});
+  EXPECT_EQ(str_to_u64(StringView {"1234"}.substr(2, 2)), uint64 {34});
 }
 
-/// \tests tactile::str_to_i32
-TEST(String, StrToI32)
+/// \tests tactile::str_to_i64
+TEST(String, StrToI64)
 {
   // Invalid inputs
-  EXPECT_EQ(str_to_i32(""), kNone);
-  EXPECT_EQ(str_to_i32(" "), kNone);
-  EXPECT_EQ(str_to_i32("42 "), kNone);
-  EXPECT_EQ(str_to_i32("foo42"), kNone);
-  EXPECT_EQ(str_to_i32("42foo"), kNone);
-  EXPECT_EQ(str_to_i32("+42"), kNone);
-  EXPECT_EQ(str_to_i32("A"), kNone);
-  EXPECT_EQ(str_to_i32("2", 2), kNone);
-  EXPECT_EQ(str_to_i32("9", 8), kNone);
-  EXPECT_EQ(str_to_i32("G", 16), kNone);
-  EXPECT_EQ(str_to_i32("0xFF", 16), kNone);
+  EXPECT_FALSE(str_to_i64("").has_value());
+  EXPECT_FALSE(str_to_i64(" ").has_value());
+  EXPECT_FALSE(str_to_i64("42 ").has_value());
+  EXPECT_FALSE(str_to_i64("foo42").has_value());
+  EXPECT_FALSE(str_to_i64("42foo").has_value());
+  EXPECT_FALSE(str_to_i64("+42").has_value());
+  EXPECT_FALSE(str_to_i64("A").has_value());
+  EXPECT_FALSE(str_to_i64("2", 2).has_value());
+  EXPECT_FALSE(str_to_i64("9", 8).has_value());
+  EXPECT_FALSE(str_to_i64("G", 16).has_value());
+  EXPECT_FALSE(str_to_i64("0xFF", 16).has_value());
 
   // Valid inputs
-  EXPECT_EQ(str_to_i32("0"), int32 {0});
-  EXPECT_EQ(str_to_i32("-182"), int32 {-182});
-  EXPECT_EQ(str_to_i32("99"), int32 {99});
-  EXPECT_EQ(str_to_i32("027"), int32 {27});
-  EXPECT_EQ(str_to_i32("1000", 2), int32 {0b1000});
-  EXPECT_EQ(str_to_i32("A", 16), int32 {0xA});
-  EXPECT_EQ(str_to_i32("F", 16), int32 {0xF});
-  EXPECT_EQ(str_to_i32("10", 8), int32 {010});
-  EXPECT_EQ(str_to_i32(StringView {"1234"}.substr(0, 2)), int32 {12});
-  EXPECT_EQ(str_to_i32(StringView {"1234"}.substr(2, 2)), int32 {34});
+  EXPECT_EQ(str_to_i64("0"), int64 {0});
+  EXPECT_EQ(str_to_i64("-182"), int64 {-182});
+  EXPECT_EQ(str_to_i64("99"), int64 {99});
+  EXPECT_EQ(str_to_i64("027"), int64 {27});
+  EXPECT_EQ(str_to_i64("1000", 2), int64 {0b1000});
+  EXPECT_EQ(str_to_i64("A", 16), int64 {0xA});
+  EXPECT_EQ(str_to_i64("F", 16), int64 {0xF});
+  EXPECT_EQ(str_to_i64("10", 8), int64 {010});
+  EXPECT_EQ(str_to_i64("7FFFFFFFFFFFFFFF", 16), std::numeric_limits<int64>::max());
+  EXPECT_EQ(str_to_i64(StringView {"1234"}.substr(0, 2)), int64 {12});
+  EXPECT_EQ(str_to_i64(StringView {"1234"}.substr(2, 2)), int64 {34});
 }
 
-/// \tests tactile::str_to_f32
-TEST(String, StrToF32)
+/// \tests tactile::str_to_f64
+TEST(String, StrToF64)
 {
   // Invalid inputs
-  EXPECT_EQ(str_to_f32(""), kNone);
-  EXPECT_EQ(str_to_f32(" "), kNone);
-  EXPECT_EQ(str_to_f32("."), kNone);
-  EXPECT_EQ(str_to_f32("4.2 "), kNone);
-  EXPECT_EQ(str_to_f32("foo9.0"), kNone);
-  EXPECT_EQ(str_to_f32("40.92foo"), kNone);
-  EXPECT_EQ(str_to_f32("+4.5"), kNone);
+  EXPECT_FALSE(str_to_f64("").has_value());
+  EXPECT_FALSE(str_to_f64(" ").has_value());
+  EXPECT_FALSE(str_to_f64(".").has_value());
+  EXPECT_FALSE(str_to_f64("4.2 ").has_value());
+  EXPECT_FALSE(str_to_f64("foo9.0").has_value());
+  EXPECT_FALSE(str_to_f64("40.92foo").has_value());
+  EXPECT_FALSE(str_to_f64("+4.5").has_value());
 
   // Valid inputs
-  EXPECT_EQ(str_to_f32("0"), 0.0f);
-  EXPECT_EQ(str_to_f32("42"), 42.0f);
-  EXPECT_EQ(str_to_f32("5."), 5.0f);
-  EXPECT_EQ(str_to_f32(".1"), 0.1f);
-  EXPECT_EQ(str_to_f32("0.1"), 0.1f);
-  EXPECT_EQ(str_to_f32("1.0"), 1.0f);
-  EXPECT_EQ(str_to_f32("3.2"), 3.2f);
-  EXPECT_EQ(str_to_f32("-1.0"), -1.0f);
-  EXPECT_EQ(str_to_f32(StringView {"1234"}.substr(0, 2)), 12.0f);
-  EXPECT_EQ(str_to_f32(StringView {"1234"}.substr(2, 2)), 34.0f);
+  EXPECT_EQ(str_to_f64("0"), 0.0);
+  EXPECT_EQ(str_to_f64("42"), 42.0);
+  EXPECT_EQ(str_to_f64("5."), 5.0);
+  EXPECT_EQ(str_to_f64(".1"), 0.1);
+  EXPECT_EQ(str_to_f64("0.1"), 0.1);
+  EXPECT_EQ(str_to_f64("1.0"), 1.0);
+  EXPECT_EQ(str_to_f64("3.2"), 3.2);
+  EXPECT_EQ(str_to_f64("-1.0"), -1.0);
+  EXPECT_EQ(str_to_f64(StringView {"1234"}.substr(0, 2)), 12.0);
+  EXPECT_EQ(str_to_f64(StringView {"1234"}.substr(2, 2)), 34.0);
 }

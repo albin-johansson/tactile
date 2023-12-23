@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <concepts>     // signed_integral, unsigned_integral, floating_point
 #include <string>       // string, basic_string
 #include <string_view>  // string_view, basic_string_view
 #include <type_traits>  // conditional_t
@@ -51,6 +52,38 @@ TACTILE_FOUNDATION_API auto make_native_string(const char* str) -> Maybe<NativeS
 TACTILE_FOUNDATION_API auto str_split(StringView str, char separator) -> Vector<String>;
 
 /**
+ * \brief Converts a string into an unsigned 64-bit integer.
+ *
+ * \param str  the source string.
+ * \param base the numerical base.
+ *
+ * \return the converted value, or nothing if an error occurred.
+ */
+[[nodiscard]]
+TACTILE_FOUNDATION_API auto str_to_u64(StringView str, int base = 10) -> Maybe<uint64>;
+
+/**
+ * \brief Converts a string into a signed 64-bit integer.
+ *
+ * \param str  the source string.
+ * \param base the numerical base.
+ *
+ * \return the converted value, or nothing if an error occurred.
+ */
+[[nodiscard]]
+TACTILE_FOUNDATION_API auto str_to_i64(StringView str, int base = 10) -> Maybe<int64>;
+
+/**
+ * \brief Converts a string into a 64-bit float.
+ *
+ * \param str the source string.
+ *
+ * \return the converted value, or nothing if an error occurred.
+ */
+[[nodiscard]]
+TACTILE_FOUNDATION_API auto str_to_f64(StringView str) -> Maybe<float64>;
+
+/**
  * \brief Converts a string into multiple integers.
  *
  * \details This function can be used to efficiently extract integers stored in a string
@@ -91,35 +124,54 @@ TACTILE_FOUNDATION_API auto str_to_multiple_f32(StringView str, char separator)
     -> Vector<float32>;
 
 /**
- * \brief Converts a string into an unsigned 32-bit integer.
- *
- * \param str  the source string.
- * \param base the numerical base.
- *
- * \return the converted value, or nothing if an error occurred.
- */
-[[nodiscard]]
-TACTILE_FOUNDATION_API auto str_to_u32(StringView str, int base = 10) -> Maybe<uint32>;
-
-/**
- * \brief Converts a string into a signed 32-bit integer.
- *
- * \param str  the source string.
- * \param base the numerical base.
- *
- * \return the converted value, or nothing if an error occurred.
- */
-[[nodiscard]]
-TACTILE_FOUNDATION_API auto str_to_i32(StringView str, int base = 10) -> Maybe<int32>;
-
-/**
- * \brief Converts a string into a 32-bit float.
+ * \brief Converts a string into an unsigned integer value.
  *
  * \param str the source string.
  *
- * \return the converted value, or nothing if an error occurred.
+ * \return an unsigned integer.
  */
-[[nodiscard]]
-TACTILE_FOUNDATION_API auto str_to_f32(StringView str) -> Maybe<float32>;
+template <std::unsigned_integral T>
+[[nodiscard]] auto str_to(const StringView str, const int base = 10) -> Maybe<T>
+{
+  if (const auto value = str_to_u64(str, base)) {
+    return static_cast<T>(*value);
+  }
+
+  return kNothing;
+}
+
+/**
+ * \brief Converts a string into a signed integer value.
+ *
+ * \param str the source string.
+ *
+ * \return a signed integer.
+ */
+template <std::signed_integral T>
+[[nodiscard]] auto str_to(const StringView str, const int base = 10) -> Maybe<T>
+{
+  if (const auto value = str_to_i64(str, base)) {
+    return static_cast<T>(*value);
+  }
+
+  return kNothing;
+}
+
+/**
+ * \brief Converts a string into a floating-point value.
+ *
+ * \param str the source string.
+ *
+ * \return a float.
+ */
+template <std::floating_point T>
+[[nodiscard]] auto str_to(const StringView str) -> Maybe<T>
+{
+  if (const auto value = str_to_f64(str)) {
+    return static_cast<T>(*value);
+  }
+
+  return kNothing;
+}
 
 }  // namespace tactile

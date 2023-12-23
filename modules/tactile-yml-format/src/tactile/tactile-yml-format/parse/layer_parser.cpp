@@ -39,7 +39,7 @@ auto parse_plain_text_tile_matrix(String tile_data, const MatrixExtent matrix_ex
 
   usize index = 0;
   for (const auto& tile_token : tile_tokens) {
-    if (const auto tile_id = str_to_i32(tile_token)) {
+    if (const auto tile_id = str_to<TileID::value_type>(tile_token)) {
       const auto [row, col] = to_matrix_index(index, matrix_extent.col_count);
       tile_matrix[row][col] = TileID {*tile_id};
     }

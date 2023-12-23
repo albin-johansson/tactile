@@ -66,7 +66,7 @@ auto parse_tile_layer_csv_data_node(const pugi::xml_node data_node,
 
   usize index = 0;
   for (const auto& tile_token : tile_tokens) {
-    if (const auto tile_id = str_to_i32(tile_token)) {
+    if (const auto tile_id = str_to<TileID::value_type>(tile_token)) {
       const auto [row, col] = to_matrix_index(index, layer.width);
       tile_matrix[row][col] = TileID {*tile_id};
 

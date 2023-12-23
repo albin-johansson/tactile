@@ -2,8 +2,6 @@
 
 #include "tactile/foundation/io/save/vector_deserialization.hpp"
 
-#include <type_traits>  // is_same_v
-
 namespace tactile {
 namespace {
 
@@ -21,20 +19,13 @@ template <typename T>
 
   usize index = 0;
   for (const auto& value : values) {
-    Maybe<scalar_type> parsed_value;
-
-    if constexpr (std::is_same_v<scalar_type, float>) {
-      parsed_value = str_to_f32(value);
-    }
-    else {
-      parsed_value = str_to_i32(value);
-    }
+    const auto parsed_value = str_to<scalar_type>(value);
 
     if (parsed_value.has_value()) {
       vec[index] = *parsed_value;
     }
     else {
-      return kNone;
+      return kNothing;
     }
 
     ++index;

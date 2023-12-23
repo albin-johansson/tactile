@@ -178,19 +178,19 @@ auto str_to_multiple_f32(const StringView str, const char separator) -> Vector<f
   return _str_to_multiple_generic<float32>(str, separator, 10);
 }
 
-auto str_to_u32(const StringView str, const int base) -> Maybe<uint32>
+auto str_to_u64(const StringView str, const int base) -> Maybe<uint64>
 {
-  return _parse_int<uint32>(str, base);
+  return _parse_int<uint64>(str, base);
 }
 
-auto str_to_i32(const StringView str, const int base) -> Maybe<int32>
+auto str_to_i64(const StringView str, const int base) -> Maybe<int64>
 {
-  return _parse_int<int32>(str, base);
+  return _parse_int<int64>(str, base);
 }
 
-auto str_to_f32(const StringView str) -> Maybe<float32>
+auto str_to_f64(const StringView str) -> Maybe<float64>
 {
-  return _parse_float<float32>(str);
+  return _parse_float<float64>(str);
 }
 
 }  // namespace tactile

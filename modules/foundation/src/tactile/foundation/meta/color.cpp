@@ -17,15 +17,12 @@ auto to_color_rgb(const StringView rgb) -> Maybe<UColor>
     return kNone;
   }
 
-  const auto red = str_to_u32(rgb.substr(1, 2), 16);
-  const auto green = str_to_u32(rgb.substr(3, 2), 16);
-  const auto blue = str_to_u32(rgb.substr(5, 2), 16);
+  const auto red = str_to<uint8>(rgb.substr(1, 2), 16);
+  const auto green = str_to<uint8>(rgb.substr(3, 2), 16);
+  const auto blue = str_to<uint8>(rgb.substr(5, 2), 16);
 
   if (red && green && blue) {
-    return UColor {static_cast<uint8>(*red),
-                   static_cast<uint8>(*green),
-                   static_cast<uint8>(*blue),
-                   0xFF};
+    return UColor {*red, *green, *blue, 0xFF};
   }
 
   return kNone;
@@ -37,16 +34,13 @@ auto to_color_rgba(const StringView rgba) -> Maybe<UColor>
     return kNone;
   }
 
-  const auto red = str_to_u32(rgba.substr(1, 2), 16);
-  const auto green = str_to_u32(rgba.substr(3, 2), 16);
-  const auto blue = str_to_u32(rgba.substr(5, 2), 16);
-  const auto alpha = str_to_u32(rgba.substr(7, 2), 16);
+  const auto red = str_to<uint8>(rgba.substr(1, 2), 16);
+  const auto green = str_to<uint8>(rgba.substr(3, 2), 16);
+  const auto blue = str_to<uint8>(rgba.substr(5, 2), 16);
+  const auto alpha = str_to<uint8>(rgba.substr(7, 2), 16);
 
   if (red && green && blue && alpha) {
-    return UColor {static_cast<uint8>(*red),
-                   static_cast<uint8>(*green),
-                   static_cast<uint8>(*blue),
-                   static_cast<uint8>(*alpha)};
+    return UColor {*red, *green, *blue, *alpha};
   }
 
   return kNone;
@@ -58,16 +52,13 @@ auto to_color_argb(const StringView argb) -> Maybe<UColor>
     return kNone;
   }
 
-  const auto alpha = str_to_u32(argb.substr(1, 2), 16);
-  const auto red = str_to_u32(argb.substr(3, 2), 16);
-  const auto green = str_to_u32(argb.substr(5, 2), 16);
-  const auto blue = str_to_u32(argb.substr(7, 2), 16);
+  const auto alpha = str_to<uint8>(argb.substr(1, 2), 16);
+  const auto red = str_to<uint8>(argb.substr(3, 2), 16);
+  const auto green = str_to<uint8>(argb.substr(5, 2), 16);
+  const auto blue = str_to<uint8>(argb.substr(7, 2), 16);
 
   if (red && green && blue && alpha) {
-    return UColor {static_cast<uint8>(*red),
-                   static_cast<uint8>(*green),
-                   static_cast<uint8>(*blue),
-                   static_cast<uint8>(*alpha)};
+    return UColor {*red, *green, *blue, *alpha};
   }
 
   return kNone;
