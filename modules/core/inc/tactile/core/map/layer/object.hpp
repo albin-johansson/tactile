@@ -123,10 +123,10 @@ class TACTILE_CORE_API Object final : public IMetaContext {
   auto is_visible() const -> bool;
 
   [[nodiscard]]
-  auto get_meta() -> Metadata& override;
+  auto meta() -> Metadata& override;
 
   [[nodiscard]]
-  auto get_meta() const -> const Metadata& override;
+  auto meta() const -> const Metadata& override;
 
   /**
    * \brief Creates a clone of the object.

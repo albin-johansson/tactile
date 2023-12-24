@@ -43,7 +43,7 @@ auto ObjectLayer::add_object(Object object) -> Result<void>
     }
   }
 
-  const auto object_uuid = object.get_meta().get_uuid();
+  const auto object_uuid = object.meta().get_uuid();
   mObjects.insert_or_assign(object_uuid, std::move(object));
 
   return kOK;
@@ -52,8 +52,7 @@ auto ObjectLayer::add_object(Object object) -> Result<void>
 auto ObjectLayer::emplace_object(const ObjectType type) -> Object&
 {
   Object object {type};
-  auto [iter, _] =
-      mObjects.insert_or_assign(object.get_meta().get_uuid(), std::move(object));
+  auto [iter, _] = mObjects.insert_or_assign(object.meta().get_uuid(), std::move(object));
   return iter->second;
 }
 
@@ -138,14 +137,14 @@ auto ObjectLayer::clone() const -> Shared<ILayer>
   return other;
 }
 
-auto ObjectLayer::get_meta() -> Metadata&
+auto ObjectLayer::meta() -> Metadata&
 {
-  return mDelegate.get_meta();
+  return mDelegate.meta();
 }
 
-auto ObjectLayer::get_meta() const -> const Metadata&
+auto ObjectLayer::meta() const -> const Metadata&
 {
-  return mDelegate.get_meta();
+  return mDelegate.meta();
 }
 
 }  // namespace tactile

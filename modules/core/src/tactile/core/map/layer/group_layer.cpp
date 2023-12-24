@@ -24,7 +24,7 @@ class GenericLayerFinder final : public ILayerVisitor {
 
   void visit(T& layer) override
   {
-    if (layer.get_meta().get_uuid() == mTargetUUID) {
+    if (layer.meta().get_uuid() == mTargetUUID) {
       mFoundLayer = &layer;
     }
   }
@@ -45,7 +45,7 @@ class GenericConstLayerFinder final : public IConstLayerVisitor {
 
   void visit(const T& layer) override
   {
-    if (layer.get_meta().get_uuid() == mTargetUUID) {
+    if (layer.meta().get_uuid() == mTargetUUID) {
       mFoundLayer = &layer;
     }
   }
@@ -69,12 +69,11 @@ class ParentLayerFinder final : public ILayerVisitor {
       return;
     }
 
-    const auto layer_iter =
-        std::find_if(group.mLayers.begin(),
-                     group.mLayers.end(),
-                     [this](const Shared<ILayer>& layer) {
-                       return layer->get_meta().get_uuid() == mTargetUUID;
-                     });
+    const auto layer_iter = std::find_if(group.mLayers.begin(),
+                                         group.mLayers.end(),
+                                         [this](const Shared<ILayer>& layer) {
+                                           return layer->meta().get_uuid() == mTargetUUID;
+                                         });
 
     if (layer_iter != group.mLayers.end()) {
       mParentLayer = &group;
@@ -112,12 +111,11 @@ class ConstParentLayerFinder final : public IConstLayerVisitor {
       return;
     }
 
-    const auto layer_iter =
-        std::find_if(group.mLayers.begin(),
-                     group.mLayers.end(),
-                     [this](const Shared<ILayer>& layer) {
-                       return layer->get_meta().get_uuid() == mTargetUUID;
-                     });
+    const auto layer_iter = std::find_if(group.mLayers.begin(),
+                                         group.mLayers.end(),
+                                         [this](const Shared<ILayer>& layer) {
+                                           return layer->meta().get_uuid() == mTargetUUID;
+                                         });
 
     if (layer_iter != group.mLayers.end()) {
       mParentLayer = &group;
@@ -228,7 +226,7 @@ class LayerGlobalIndexCalculator final : public IConstLayerVisitor {
 
   void _consider(const ILayer& layer)
   {
-    if (!mGlobalIndex.has_value() && layer.get_meta().get_uuid() == mTargetUUID) {
+    if (!mGlobalIndex.has_value() && layer.meta().get_uuid() == mTargetUUID) {
       mGlobalIndex = mCurrentIndex;
     }
 
@@ -291,7 +289,7 @@ void GroupLayer::each(IConstLayerVisitor& visitor) const
 
 void GroupLayer::append_layer(Shared<ILayer> layer)
 {
-  const auto layer_uuid = layer->get_meta().get_uuid();
+  const auto layer_uuid = layer->meta().get_uuid();
   mLayers.push_back(std::move(layer));
 }
 
@@ -539,14 +537,14 @@ auto GroupLayer::clone() const -> Shared<ILayer>
   return other;
 }
 
-auto GroupLayer::get_meta() -> Metadata&
+auto GroupLayer::meta() -> Metadata&
 {
-  return mDelegate.get_meta();
+  return mDelegate.meta();
 }
 
-auto GroupLayer::get_meta() const -> const Metadata&
+auto GroupLayer::meta() const -> const Metadata&
 {
-  return mDelegate.get_meta();
+  return mDelegate.meta();
 }
 
 auto GroupLayer::begin() -> iterator

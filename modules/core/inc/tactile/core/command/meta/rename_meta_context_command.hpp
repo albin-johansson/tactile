@@ -34,6 +34,7 @@ class TACTILE_CORE_API RenameMetaContextCommand final : public ICommand {
 
  private:
   IMetaContext* mContext;
+  IDocument* mDocument;
   String mNewName;
   Maybe<String> mOldName;
 };

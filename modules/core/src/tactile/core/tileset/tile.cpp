@@ -20,12 +20,12 @@ void Tile::set_animation(Maybe<TileAnimation> animation)
   mAnimation = std::move(animation);
 }
 
-auto Tile::get_meta() -> Metadata&
+auto Tile::meta() -> Metadata&
 {
   return mMeta;
 }
 
-auto Tile::get_meta() const -> const Metadata&
+auto Tile::meta() const -> const Metadata&
 {
   return mMeta;
 }

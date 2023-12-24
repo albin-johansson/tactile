@@ -174,12 +174,12 @@ auto Tileset::get_texture_id() const -> TextureID
   return mTextureId;
 }
 
-auto Tileset::get_meta() -> Metadata&
+auto Tileset::meta() -> Metadata&
 {
   return mMeta;
 }
 
-auto Tileset::get_meta() const -> const Metadata&
+auto Tileset::meta() const -> const Metadata&
 {
   return mMeta;
 }

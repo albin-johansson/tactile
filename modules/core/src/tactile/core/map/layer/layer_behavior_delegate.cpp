@@ -36,12 +36,12 @@ auto LayerBehaviorDelegate::is_visible() const -> bool
   return mVisible;
 }
 
-auto LayerBehaviorDelegate::get_meta() -> Metadata&
+auto LayerBehaviorDelegate::meta() -> Metadata&
 {
   return mMeta;
 }
 
-auto LayerBehaviorDelegate::get_meta() const -> const Metadata&
+auto LayerBehaviorDelegate::meta() const -> const Metadata&
 {
   return mMeta;
 }

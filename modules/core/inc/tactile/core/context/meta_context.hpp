@@ -11,8 +11,7 @@ namespace tactile {
 class Metadata;
 
 /**
- * \interface IMetaContext
- * \brief Base interface for all objects that feature attached properties and components.
+ * \brief Interface for all objects that feature attached properties and components.
  */
 class IMetaContext {
  public:
@@ -31,13 +30,11 @@ class IMetaContext {
    * \return the metadata.
    */
   [[nodiscard]]
-  virtual auto get_meta() -> Metadata& = 0;
+  virtual auto meta() -> Metadata& = 0;
 
-  /**
-   * \copydoc get_meta()
-   */
+  /** \copydoc meta() */
   [[nodiscard]]
-  virtual auto get_meta() const -> const Metadata& = 0;
+  virtual auto meta() const -> const Metadata& = 0;
 };
 
 }  // namespace tactile

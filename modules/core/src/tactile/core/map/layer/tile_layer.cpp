@@ -216,14 +216,14 @@ auto TileLayer::clone() const -> Shared<ILayer>
   return other;
 }
 
-auto TileLayer::get_meta() -> Metadata&
+auto TileLayer::meta() -> Metadata&
 {
-  return mDelegate.get_meta();
+  return mDelegate.meta();
 }
 
-auto TileLayer::get_meta() const -> const Metadata&
+auto TileLayer::meta() const -> const Metadata&
 {
-  return mDelegate.get_meta();
+  return mDelegate.meta();
 }
 
 }  // namespace tactile

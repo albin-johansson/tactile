@@ -61,12 +61,12 @@ TEST(ObjectLayer, RemoveObject)
   auto& point = layer.emplace_object(ObjectType::kPoint);
   auto& rect = layer.emplace_object(ObjectType::kRect);
 
-  const auto point_uuid = point.get_meta().get_uuid();
-  const auto rect_uuid = rect.get_meta().get_uuid();
+  const auto point_uuid = point.meta().get_uuid();
+  const auto rect_uuid = rect.meta().get_uuid();
 
   ASSERT_EQ(layer.object_count(), 2);
   EXPECT_TRUE(layer.has_object(point_uuid));
-  EXPECT_TRUE(layer.has_object(rect.get_meta().get_uuid()));
+  EXPECT_TRUE(layer.has_object(rect.meta().get_uuid()));
 
   EXPECT_TRUE(layer.remove_object(point_uuid).has_value());
   EXPECT_EQ(layer.object_count(), 1);
@@ -94,6 +94,6 @@ TEST(ObjectLayer, FindObject)
   EXPECT_EQ(const_layer.find_object(dummy_uuid), nullptr);
 
   auto& ellipse = layer.emplace_object(ObjectType::kEllipse);
-  EXPECT_EQ(layer.find_object(ellipse.get_meta().get_uuid()), &ellipse);
-  EXPECT_EQ(const_layer.find_object(ellipse.get_meta().get_uuid()), &ellipse);
+  EXPECT_EQ(layer.find_object(ellipse.meta().get_uuid()), &ellipse);
+  EXPECT_EQ(const_layer.find_object(ellipse.meta().get_uuid()), &ellipse);
 }

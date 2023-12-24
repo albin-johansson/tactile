@@ -75,12 +75,12 @@ auto Object::is_visible() const -> bool
   return mVisible;
 }
 
-auto Object::get_meta() -> Metadata&
+auto Object::meta() -> Metadata&
 {
   return mMeta;
 }
 
-auto Object::get_meta() const -> const Metadata&
+auto Object::meta() const -> const Metadata&
 {
   return mMeta;
 }

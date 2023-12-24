@@ -17,22 +17,17 @@ RenameMetaContextCommand::RenameMetaContextCommand(IMetaContext* context, String
 
 void RenameMetaContextCommand::undo()
 {
-  auto& metadata = mContext->get_meta();
-  metadata.set_name(mOldName.value());
 }
 
 void RenameMetaContextCommand::redo()
 {
-  auto& metadata = mContext->get_meta();
 
-  mOldName = metadata.get_name();
-  metadata.set_name(mNewName);
 }
 
 auto RenameMetaContextCommand::merge_with(const ICommand* other) -> bool
 {
   if (const auto* that = dynamic_cast<const RenameMetaContextCommand*>(other)) {
-    if (this->mContext->get_meta().get_uuid() == that->mContext->get_meta().get_uuid()) {
+    if (this->mDocument == that->mDocument && this->mContextUuid == that->mContextUuid) {
       this->mNewName = that->mNewName;
       return true;
     }

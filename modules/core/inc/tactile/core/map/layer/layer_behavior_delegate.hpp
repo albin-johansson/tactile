@@ -30,10 +30,10 @@ class TACTILE_CORE_API LayerBehaviorDelegate final {
   auto is_visible() const -> bool;
 
   [[nodiscard]]
-  auto get_meta() -> Metadata&;
+  auto meta() -> Metadata&;
 
   [[nodiscard]]
-  auto get_meta() const -> const Metadata&;
+  auto meta() const -> const Metadata&;
 
   [[nodiscard]]
   auto clone() const -> LayerBehaviorDelegate;
