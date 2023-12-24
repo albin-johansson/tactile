@@ -5,6 +5,7 @@
 #include <utility>  // move
 
 #include "tactile/foundation/io/tile_matrix_encoding.hpp"
+#include "tactile/foundation/misc/conversion.hpp"
 #include "tactile/tiled-json-format/emit/meta_emitter.hpp"
 #include "tactile/tiled-json-format/emit/object_emitter.hpp"
 
@@ -23,8 +24,8 @@ auto _emit_tile_layer(JSON& layer_json,
                       const ir::TileFormat& tile_format) -> Result<void>
 {
   layer_json["type"] = "tilelayer";
-  layer_json["width"] = layer.width;
-  layer_json["height"] = layer.height;
+  layer_json["width"] = layer.col_count;
+  layer_json["height"] = layer.row_count;
 
   if (tile_format.compression == CompressionMode::kZlib) {
     layer_json["compression"] = "zlib";
@@ -50,8 +51,10 @@ auto _emit_tile_layer(JSON& layer_json,
   else {
     auto tile_data_json = JSON::array();
 
-    for (usize row = 0; row < layer.height; ++row) {
-      for (usize col = 0; col < layer.width; ++col) {
+    const auto row_count = as_unsigned(layer.row_count);
+    const auto col_count = as_unsigned(layer.col_count);
+    for (usize row = 0; row < row_count; ++row) {
+      for (usize col = 0; col < col_count; ++col) {
         tile_data_json += JSON(layer.tiles[row][col].value);
       }
     }

@@ -6,6 +6,7 @@
 
 #include "tactile/foundation/io/tile_matrix_encoding.hpp"
 #include "tactile/foundation/log/logger.hpp"
+#include "tactile/foundation/misc/conversion.hpp"
 #include "tactile/tactile-yml-format/emit/meta_emitter.hpp"
 #include "tactile/tactile-yml-format/emit/object_emitter.hpp"
 
@@ -18,8 +19,11 @@ void emit_plain_text_tile_layer_data(YAML::Emitter& emitter,
   emitter << YAML::Key << "data";
 
   std::stringstream stream;
-  for (usize row = 0; row < layer.height; ++row) {
-    for (usize col = 0; col < layer.width; ++col) {
+
+  const auto row_count = as_unsigned(layer.row_count);
+  const auto col_count = as_unsigned(layer.col_count);
+  for (usize row = 0; row < row_count; ++row) {
+    for (usize col = 0; col < col_count; ++col) {
       if (col != 0) {
         stream << ' ';
       }
@@ -27,7 +31,7 @@ void emit_plain_text_tile_layer_data(YAML::Emitter& emitter,
       stream << layer.tiles[row][col].value;
     }
 
-    if (row < (layer.height - 1)) {
+    if (row < (row_count - 1)) {
       stream << (options.fold_tile_layer_data ? '\n' : ' ');
     }
   }

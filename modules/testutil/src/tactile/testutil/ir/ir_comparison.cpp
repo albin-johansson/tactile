@@ -56,8 +56,8 @@ void expect_eq(const ir::Layer& layer1, const ir::Layer& layer2)
   EXPECT_EQ(layer1.opacity, layer2.opacity);
   EXPECT_EQ(layer1.visible, layer2.visible);
 
-  EXPECT_EQ(layer1.width, layer2.width);
-  EXPECT_EQ(layer1.height, layer2.height);
+  EXPECT_EQ(layer1.row_count, layer2.row_count);
+  EXPECT_EQ(layer1.col_count, layer2.col_count);
   EXPECT_EQ(layer1.tiles, layer2.tiles);
 
   ASSERT_EQ(layer1.objects.size(), layer2.objects.size());
@@ -79,8 +79,7 @@ void expect_eq(const ir::TileFormat& format1, const ir::TileFormat& format2)
 {
   EXPECT_EQ(format1.encoding, format2.encoding);
   EXPECT_EQ(format1.compression, format2.compression);
-  EXPECT_EQ(format1.zlib_level, format2.zlib_level);
-  EXPECT_EQ(format1.zstd_level, format2.zstd_level);
+  EXPECT_EQ(format1.compression_level, format2.compression_level);
 }
 
 void expect_eq(const ir::AnimationFrame& frame1, const ir::AnimationFrame& frame2)

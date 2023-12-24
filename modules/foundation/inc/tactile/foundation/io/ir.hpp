@@ -84,8 +84,6 @@ struct Object final {
 
 /**
  * \brief Intermediate representation of a layer.
- * \todo Make width/height type usize?
- * \todo Rename width/height to row_count/column_count
  */
 struct Layer final {
   Metadata meta;           ///< Metadata for the layer.
@@ -93,8 +91,8 @@ struct Layer final {
   int32 id;                ///< The associated identifier.
   LayerType type;          ///< The type of the layer.
   float32 opacity;         ///< The opacity of the layer content.
-  usize width;             ///< The number of tile columns (if tile layer).
-  usize height;            ///< The number of tile rows (if tile layer).
+  ssize row_count;         ///< The number of tile rows (if tile layer).
+  ssize col_count;         ///< The number of tile columns (if tile layer).
   TileMatrix tiles;        ///< The contained tiles (if tile layer).
   Vector<Object> objects;  ///< The contained objects (if object layer).
   Vector<Layer> layers;    ///< The contained layers (if group layer).
@@ -135,12 +133,13 @@ struct Tileset final {
   String name;          ///< The tileset name.
   int32 tile_width;     ///< The width of tiles in the tileset.
   int32 tile_height;    ///< The height of tiles in the tileset.
-  usize tile_count;     ///< The total number of tiles in the tileset.
-  usize column_count;   ///< The number of tile columns in the tileset.
+  ssize tile_count;     ///< The total number of tiles in the tileset.
+  ssize column_count;   ///< The number of tile columns in the tileset.
   int32 image_width;    ///< The width of the associated image.
   int32 image_height;   ///< The height of the associated image.
   FilePath image_path;  ///< The file path to the associated image.
   Vector<Tile> tiles;   ///< The associated tile descriptors.
+  bool is_embedded;     ///< Indicates whether the tileset is embedded.
 
   [[nodiscard]] auto operator==(const Tileset&) const -> bool = default;
 };
@@ -159,10 +158,9 @@ struct TilesetRef final {
  * \brief Intermediate representation of a map tile format.
  */
 struct TileFormat final {
-  TileEncoding encoding;        ///< The tile encoding strategy.
-  CompressionMode compression;  ///< The tile compression strategy.
-  Maybe<int32> zlib_level;      ///< The compression level (if using Zlib).
-  Maybe<int32> zstd_level;      ///< The compression level (if using Zstd).
+  TileEncoding encoding;           ///< The tile encoding strategy.
+  CompressionMode compression;     ///< The tile compression strategy.
+  Maybe<int32> compression_level;  ///< The compression level.
 
   [[nodiscard]] auto operator==(const TileFormat&) const -> bool = default;
 };
@@ -173,8 +171,8 @@ struct TileFormat final {
 struct Map final {
   Metadata meta;                 ///< Metadata for the map.
   String name;                   ///< The map name.
-  usize row_count;               ///< The number of rows in each tile layer.
-  usize col_count;               ///< The number of columns in each tile layer.
+  ssize row_count;               ///< The number of rows in each tile layer.
+  ssize col_count;               ///< The number of columns in each tile layer.
   int32 tile_width;              ///< The logical width of all tiles.
   int32 tile_height;             ///< The logical height of all tiles.
   int32 next_layer_id;           ///< The next available layer identifier.

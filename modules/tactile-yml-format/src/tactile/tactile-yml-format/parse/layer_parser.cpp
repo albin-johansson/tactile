@@ -57,7 +57,7 @@ auto parse_tile_matrix(const ir::TileFormat& tile_format,
                        String&& tile_data,
                        ir::Layer& layer) -> Result<TileMatrix>
 {
-  const MatrixExtent matrix_extent {layer.height, layer.width};
+  const MatrixExtent matrix_extent {layer.row_count, layer.col_count};
 
   if (tile_format.encoding == TileEncoding::kPlainText) {
     return parse_plain_text_tile_matrix(std::move(tile_data), matrix_extent);
@@ -76,8 +76,8 @@ auto parse_tile_layer_data(const YAML::Node& layer_node,
                            const ir::Map& map,
                            ir::Layer& layer) -> Result<void>
 {
-  layer.width = map.col_count;
-  layer.height = map.row_count;
+  layer.row_count = map.row_count;
+  layer.col_count = map.col_count;
 
   return parse<String>(layer_node, "data")
       .and_then([&](String&& tile_data) {

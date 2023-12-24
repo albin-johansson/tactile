@@ -7,6 +7,7 @@
 #include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/io/tile_matrix_encoding.hpp"
 #include "tactile/foundation/log/logger.hpp"
+#include "tactile/foundation/misc/conversion.hpp"
 #include "tactile/tiled-xml-format/emit/object_emitter.hpp"
 #include "tactile/tiled-xml-format/emit/property_emitter.hpp"
 
@@ -75,8 +76,10 @@ void _append_tile_layer_csv_data_node(pugi::xml_node layer_node,
     stream << '\n';
   }
 
-  for (auto row = 0_uz; row < layer.height; ++row) {
-    for (auto col = 0_uz; col < layer.width; ++col) {
+  const auto row_count = as_unsigned(layer.row_count);
+  const auto col_count = as_unsigned(layer.col_count);
+  for (auto row = 0_uz; row < row_count; ++row) {
+    for (auto col = 0_uz; col < col_count; ++col) {
       if (col != 0_uz) {
         stream << ',';
       }
@@ -84,7 +87,7 @@ void _append_tile_layer_csv_data_node(pugi::xml_node layer_node,
       stream << layer.tiles[row][col].value;
     }
 
-    if (row < (layer.height - 1_uz)) {
+    if (row < (row_count - 1_uz)) {
       stream << ',';
       if (options.fold_tile_layer_data) {
         stream << '\n';
@@ -105,8 +108,8 @@ void append_tile_layer_node(pugi::xml_node map_node,
   auto layer_node = map_node.append_child("layer");
   _append_common_layer_attributes(layer_node, layer);
 
-  layer_node.append_attribute("width").set_value(layer.width);
-  layer_node.append_attribute("height").set_value(layer.height);
+  layer_node.append_attribute("width").set_value(layer.col_count);
+  layer_node.append_attribute("height").set_value(layer.row_count);
 
   append_properties_node(layer_node, layer.meta.properties);
 

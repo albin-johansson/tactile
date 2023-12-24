@@ -4,6 +4,8 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/foundation/misc/conversion.hpp"
+
 using namespace tactile;
 
 TEST(TmjLayerEmitter, EmitTileLayer)
@@ -18,8 +20,8 @@ TEST(TmjLayerEmitter, EmitTileLayer)
     .id = 123,
     .type = LayerType::kTileLayer,
     .opacity = 0.5f,
-    .width = 2,
-    .height = 4,
+    .row_count = 4,
+    .col_count = 2,
     .tiles =
         TileMatrix {
           {TileID {1}, TileID {2}},
@@ -35,8 +37,7 @@ TEST(TmjLayerEmitter, EmitTileLayer)
   const ir::TileFormat tile_format {
     .encoding = TileEncoding::kPlainText,
     .compression = CompressionMode::kNone,
-    .zlib_level = kNone,
-    .zstd_level = kNone,
+    .compression_level = kNone,
   };
 
   const auto layer_json = tiled::tmj::emit_layer(layer, tile_format);
@@ -51,16 +52,18 @@ TEST(TmjLayerEmitter, EmitTileLayer)
   EXPECT_FALSE(layer_json->contains("layers"));
 
   EXPECT_EQ(layer_json->at("type"), "tilelayer");
-  EXPECT_EQ(layer_json->at("width"), layer.width);
-  EXPECT_EQ(layer_json->at("height"), layer.height);
+  EXPECT_EQ(layer_json->at("width"), layer.col_count);
+  EXPECT_EQ(layer_json->at("height"), layer.row_count);
 
   const auto& tile_data_json_array = layer_json->at("data");
   ASSERT_TRUE(tile_data_json_array.is_array());
-  ASSERT_EQ(tile_data_json_array.size(), layer.width * layer.height);
+  ASSERT_EQ(tile_data_json_array.size(), layer.row_count * layer.col_count);
 
-  for (usize row = 0; row < layer.height; ++row) {
-    for (usize col = 0; col < layer.width; ++col) {
-      const usize tile_index = (row * layer.width) + col;
+  const auto row_count = as_unsigned(layer.row_count);
+  const auto col_count = as_unsigned(layer.col_count);
+  for (usize row = 0; row < row_count; ++row) {
+    for (usize col = 0; col < col_count; ++col) {
+      const usize tile_index = (row * col_count) + col;
       EXPECT_EQ(tile_data_json_array.at(tile_index), layer.tiles[row][col].value);
     }
   }
@@ -78,8 +81,8 @@ TEST(TmjLayerEmitter, EmitObjectLayer)
     .id = 77,
     .type = LayerType::kObjectLayer,
     .opacity = 1.0f,
-    .width = 0,
-    .height = 0,
+    .row_count = 0,
+    .col_count = 0,
     .tiles = {},
     .objects =
         {
@@ -94,8 +97,7 @@ TEST(TmjLayerEmitter, EmitObjectLayer)
   const ir::TileFormat tile_format {
     .encoding = TileEncoding::kPlainText,
     .compression = CompressionMode::kNone,
-    .zlib_level = kNone,
-    .zstd_level = kNone,
+    .compression_level = kNone,
   };
 
   const auto layer_json = tiled::tmj::emit_layer(layer, tile_format);

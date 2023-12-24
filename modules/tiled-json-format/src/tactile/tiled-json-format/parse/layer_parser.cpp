@@ -129,11 +129,11 @@ auto _parse_tile_layer_data(const JSON& layer_json,
 
   return _parse_tile_encoding(layer_json, tile_format)
       .and_then([&] { return _parse_compression_mode(layer_json, tile_format); })
-      .and_then([&] { return parse(layer_json, "width", layer.width); })
-      .and_then([&] { return parse(layer_json, "height", layer.height); })
+      .and_then([&] { return parse(layer_json, "width", layer.col_count); })
+      .and_then([&] { return parse(layer_json, "height", layer.row_count); })
       .and_then([&] { return parse(layer_json, "data", tile_data_json); })
       .and_then([&]() -> Result<TileMatrix> {
-        const MatrixExtent layer_extent {layer.height, layer.width};
+        const MatrixExtent layer_extent {layer.row_count, layer.col_count};
 
         switch (tile_format.encoding) {
           case TileEncoding::kPlainText:

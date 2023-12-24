@@ -59,7 +59,7 @@ auto parse_tile_layer_csv_data_node(const pugi::xml_node data_node,
   tile_format.encoding = TileEncoding::kPlainText;
   tile_format.compression = CompressionMode::kNone;
 
-  auto tile_matrix = make_tile_matrix(layer.height, layer.width);
+  auto tile_matrix = make_tile_matrix(layer.row_count, layer.col_count);
 
   const auto* tile_data_text = data_node.text().get();
   const auto tile_tokens = str_split(tile_data_text, ',');
@@ -67,7 +67,7 @@ auto parse_tile_layer_csv_data_node(const pugi::xml_node data_node,
   usize index = 0;
   for (const auto& tile_token : tile_tokens) {
     if (const auto tile_id = str_to<TileID::value_type>(tile_token)) {
-      const auto [row, col] = to_matrix_index(index, layer.width);
+      const auto [row, col] = to_matrix_index(index, layer.col_count);
       tile_matrix[row][col] = TileID {*tile_id};
 
       ++index;
@@ -104,7 +104,7 @@ auto parse_tile_layer_base64_data_node(const pugi::xml_node data_node,
 
   const auto* tile_data_text = data_node.text().get();
   return base64_decode_tile_matrix(tile_data_text,
-                                   MatrixExtent {layer.height, layer.width},
+                                   MatrixExtent {layer.row_count, layer.col_count},
                                    tile_format.compression,
                                    TileEncodingFormat::kTiled)
       .and_then([&](TileMatrix&& tile_matrix) {
@@ -121,13 +121,13 @@ auto parse_tile_layer_verbose_data_node(const pugi::xml_node data_node,
   tile_format.compression = CompressionMode::kNone;
 
   usize tile_index = 0;
-  auto tile_matrix = make_tile_matrix(MatrixExtent {layer.height, layer.width});
+  auto tile_matrix = make_tile_matrix(MatrixExtent {layer.row_count, layer.col_count});
 
   const auto tile_node_range = data_node.children("tile");
   for (const auto tile_node : tile_node_range) {
     const auto tile_id = tile_node.attribute("gid").as_int(kEmptyTile.value);
 
-    const auto [row, col] = to_matrix_index(tile_index, layer.width);
+    const auto [row, col] = to_matrix_index(tile_index, layer.col_count);
     tile_matrix[row][col] = TileID {tile_id};
 
     ++tile_index;
@@ -167,8 +167,8 @@ auto parse_tile_layer_node(const pugi::xml_node layer_node,
                            ir::Layer& layer,
                            ir::TileFormat& tile_format) -> Result<void>
 {
-  return parse_to(layer_node, "width", layer.width)
-      .and_then([&] { return parse_to(layer_node, "height", layer.height); })
+  return parse_to(layer_node, "width", layer.col_count)
+      .and_then([&] { return parse_to(layer_node, "height", layer.row_count); })
       .and_then(
           [&] { return parse_tile_layer_data_node(layer_node, layer, tile_format); });
 }

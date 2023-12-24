@@ -4,6 +4,7 @@
 
 #include "tactile/core/api.hpp"
 #include "tactile/core/context/meta_context.hpp"
+#include "tactile/foundation/math/vector.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {

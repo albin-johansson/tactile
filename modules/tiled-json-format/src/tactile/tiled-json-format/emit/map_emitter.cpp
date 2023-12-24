@@ -19,12 +19,12 @@ auto emit_map(const ir::Map& map, const SaveFormatWriteOptions& options) -> Resu
   map_json["version"] = "1.7";
 
   if (map.tile_format.compression == CompressionMode::kZlib &&
-      map.tile_format.zlib_level.has_value()) {
-    map_json["compressionlevel"] = *map.tile_format.zlib_level;
+      map.tile_format.compression_level.has_value()) {
+    map_json["compressionlevel"] = *map.tile_format.compression_level;
   }
   else if (map.tile_format.compression == CompressionMode::kZstd &&
-           map.tile_format.zstd_level.has_value()) {
-    map_json["compressionlevel"] = *map.tile_format.zstd_level;
+           map.tile_format.compression_level.has_value()) {
+    map_json["compressionlevel"] = *map.tile_format.compression_level;
   }
   else {
     map_json["compressionlevel"] = -1;

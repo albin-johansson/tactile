@@ -69,12 +69,12 @@ auto parse_tile_format(const YAML::Node& root_node) -> Result<ir::TileFormat>
 
   if (const auto zlib_level =
           try_parse<int>(tile_format_node, "zlib-compression-level")) {
-    tile_format.zlib_level = zlib_level;
+    tile_format.compression_level = zlib_level;
   }
 
   if (const auto zstd_level =
           try_parse<int>(tile_format_node, "zstd-compression-level")) {
-    tile_format.zstd_level = zstd_level;
+    tile_format.compression_level = zstd_level;
   }
 
   if (tile_format.encoding == TileEncoding::kPlainText &&

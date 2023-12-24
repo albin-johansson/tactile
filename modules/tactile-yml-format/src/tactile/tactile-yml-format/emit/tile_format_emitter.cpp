@@ -39,13 +39,16 @@ void emit_tile_format(YAML::Emitter& emitter, const ir::TileFormat& format)
     emitter << YAML::Key << "compression" << YAML::Value << format.compression;
   }
 
-  if (format.compression == CompressionMode::kZlib && format.zlib_level.has_value() &&
-      format.zlib_level != -1) {
-    emitter << YAML::Key << "zlib-compression-level" << YAML::Value << *format.zlib_level;
+  if (format.compression == CompressionMode::kZlib &&
+      format.compression_level.has_value() && format.compression_level != -1) {
+    emitter << YAML::Key << "zlib-compression-level" << YAML::Value
+            << *format.compression_level;
   }
 
-  if (format.compression == CompressionMode::kZstd && format.zstd_level.has_value()) {
-    emitter << YAML::Key << "zstd-compression-level" << YAML::Value << *format.zstd_level;
+  if (format.compression == CompressionMode::kZstd &&
+      format.compression_level.has_value()) {
+    emitter << YAML::Key << "zstd-compression-level" << YAML::Value
+            << *format.compression_level;
   }
 
   emitter << YAML::EndMap;

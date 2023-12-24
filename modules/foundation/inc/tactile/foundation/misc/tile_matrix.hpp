@@ -25,8 +25,8 @@ using TileMatrix = Vector<TileRow>;
  * \brief Represents the dimensions of a tile matrix.
  */
 struct MatrixExtent final {
-  usize row_count {};  ///< The number of tile rows.
-  usize col_count {};  ///< The number of tile columns.
+  ssize row_count {};  ///< The number of tile rows.
+  ssize col_count {};  ///< The number of tile columns.
 
   [[nodiscard]] constexpr auto operator<=>(const MatrixExtent&) const noexcept
       -> std::strong_ordering = default;
@@ -36,8 +36,8 @@ struct MatrixExtent final {
  * \brief Represents a position in a tile matrix.
  */
 struct MatrixIndex final {
-  usize row {};  ///< The tile row (Y-axis) index.
-  usize col {};  ///< The tile column (X-axis) index.
+  ssize row {};  ///< The tile row (Y-axis) index.
+  ssize col {};  ///< The tile column (X-axis) index.
 
   [[nodiscard]] constexpr auto operator<=>(const MatrixIndex&) const noexcept
       -> std::strong_ordering = default;
@@ -63,7 +63,7 @@ TACTILE_FOUNDATION_API auto make_tile_row(usize col_count) -> TileRow;
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto make_tile_matrix(const MatrixExtent& extent) -> TileMatrix;
 
-inline auto make_tile_matrix(const usize row_count, const usize col_count) -> TileMatrix
+inline auto make_tile_matrix(const ssize row_count, const ssize col_count) -> TileMatrix
 {
   return make_tile_matrix(MatrixExtent {row_count, col_count});
 }
@@ -81,7 +81,7 @@ inline auto make_tile_matrix(const usize row_count, const usize col_count) -> Ti
  * \return a matrix index.
  */
 [[nodiscard]]
-constexpr auto to_matrix_index(const usize index, const usize col_count) noexcept
+constexpr auto to_matrix_index(const ssize index, const ssize col_count) noexcept
     -> MatrixIndex
 {
   return MatrixIndex {.row = index / col_count, .col = index % col_count};

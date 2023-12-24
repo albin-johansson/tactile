@@ -8,18 +8,19 @@ namespace tactile::testutil {
 
 auto make_dummy_ir_tileset(String name) -> ir::Tileset
 {
-  ir::Tileset tileset {};
-
-  tileset.name = std::move(name);
-  tileset.tile_width = 16;
-  tileset.tile_height = 8;
-  tileset.tile_count = 48;
-  tileset.column_count = 6;
-  tileset.image_width = 96;
-  tileset.image_height = 64;
-  tileset.image_path = "../../../images/dummy.png";
-
-  return tileset;
+  return ir::Tileset {
+    .meta = ir::Metadata {},
+    .name = std::move(name),
+    .tile_width = 16,
+    .tile_height = 8,
+    .tile_count = 48,
+    .column_count = 6,
+    .image_width = 96,
+    .image_height = 64,
+    .image_path = "../../../images/dummy.png",
+    .tiles = {},
+    .is_embedded = false,
+  };
 }
 
 auto make_ir_tile(const TileIndex index) -> ir::Tile

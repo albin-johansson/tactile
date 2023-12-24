@@ -6,6 +6,7 @@
 
 #include <fmt/format.h>
 
+#include "tactile/foundation/misc/conversion.hpp"
 #include "tactile/testutil/ir/properties.hpp"
 
 namespace tactile::testutil {
@@ -18,8 +19,8 @@ auto make_ir_tile_layer(const int id, const MatrixExtent extent) -> ir::Layer
     .id = id,
     .type = LayerType::kTileLayer,
     .opacity = 1.0f,
-    .width = extent.col_count,
-    .height = extent.row_count,
+    .row_count = extent.row_count,
+    .col_count = extent.col_count,
     .tiles = make_tile_matrix(extent),
     .objects = Vector<ir::Object> {},
     .layers = Vector<ir::Layer> {},
@@ -35,8 +36,8 @@ auto make_ir_object_layer(const int id) -> ir::Layer
     .id = id,
     .type = LayerType::kObjectLayer,
     .opacity = 1.0f,
-    .width = 0,
-    .height = 0,
+    .row_count = 0,
+    .col_count = 0,
     .tiles = TileMatrix {},
     .objects = Vector<ir::Object> {},
     .layers = Vector<ir::Layer> {},
@@ -52,8 +53,8 @@ auto make_ir_group_layer(const int id, Vector<ir::Layer> layers) -> ir::Layer
     .id = id,
     .type = LayerType::kGroupLayer,
     .opacity = 1.0f,
-    .width = 0,
-    .height = 0,
+    .row_count = 0,
+    .col_count = 0,
     .tiles = TileMatrix {},
     .objects = Vector<ir::Object> {},
     .layers = std::move(layers),
@@ -66,9 +67,12 @@ auto make_tile_matrix_with_increasing_tiles(const MatrixExtent extent,
 {
   auto tile_matrix = make_tile_matrix(extent);
 
+  const auto row_count = as_unsigned(extent.row_count);
+  const auto col_count = as_unsigned(extent.col_count);
+
   int32 tile_id = first_id;
-  for (usize row = 0; row < extent.row_count; ++row) {
-    for (usize col = 0; col < extent.col_count; ++col) {
+  for (usize row = 0; row < row_count; ++row) {
+    for (usize col = 0; col < col_count; ++col) {
       tile_matrix[row][col].value = tile_id;
       ++tile_id;
     }
