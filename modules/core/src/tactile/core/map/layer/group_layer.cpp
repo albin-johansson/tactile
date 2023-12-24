@@ -9,7 +9,6 @@
 #include "tactile/core/map/layer/layer_visitor.hpp"
 #include "tactile/core/map/layer/object_layer.hpp"
 #include "tactile/core/map/layer/tile_layer.hpp"
-#include "tactile/foundation/functional/ref.hpp"
 #include "tactile/foundation/misc/conversion.hpp"
 
 namespace tactile {
@@ -144,6 +143,70 @@ class ConstParentLayerFinder final : public IConstLayerVisitor {
   GroupLayer::LayerStorage::const_iterator mTargetLayerIter {};
 };
 
+class IndexBasedLayerFinder final : public ILayerVisitor {
+ public:
+  explicit IndexBasedLayerFinder(const ssize target_index)
+    : mTargetIndex {target_index}
+  {}
+
+  void visit(TileLayer& layer) override { _check(layer); }
+
+  void visit(ObjectLayer& layer) override { _check(layer); }
+
+  void visit(GroupLayer& layer) override { _check(layer); }
+
+  [[nodiscard]]
+  auto found_layer() -> ILayer*
+  {
+    return mFoundLayer;
+  }
+
+ private:
+  ssize mTargetIndex;
+  ssize mCurrentIndex {0};
+  ILayer* mFoundLayer {nullptr};
+
+  void _check(ILayer& layer)
+  {
+    if (mTargetIndex == mCurrentIndex) {
+      mFoundLayer = &layer;
+    }
+    ++mCurrentIndex;
+  }
+};
+
+class IndexBasedConstLayerFinder final : public IConstLayerVisitor {
+ public:
+  explicit IndexBasedConstLayerFinder(const ssize target_index)
+    : mTargetIndex {target_index}
+  {}
+
+  void visit(const TileLayer& layer) override { _check(layer); }
+
+  void visit(const ObjectLayer& layer) override { _check(layer); }
+
+  void visit(const GroupLayer& layer) override { _check(layer); }
+
+  [[nodiscard]]
+  auto found_layer() const -> const ILayer*
+  {
+    return mFoundLayer;
+  }
+
+ private:
+  ssize mTargetIndex;
+  ssize mCurrentIndex {0};
+  const ILayer* mFoundLayer {nullptr};
+
+  void _check(const ILayer& layer)
+  {
+    if (mTargetIndex == mCurrentIndex) {
+      mFoundLayer = &layer;
+    }
+    ++mCurrentIndex;
+  }
+};
+
 class LayerGlobalIndexCalculator final : public IConstLayerVisitor {
  public:
   explicit LayerGlobalIndexCalculator(const UUID& target_uuid)
@@ -156,12 +219,12 @@ class LayerGlobalIndexCalculator final : public IConstLayerVisitor {
 
   void visit(const GroupLayer& layer) override { _consider(layer); }
 
-  [[nodiscard]] auto get_global_index() const -> Maybe<usize> { return mGlobalIndex; }
+  [[nodiscard]] auto get_global_index() const -> Maybe<ssize> { return mGlobalIndex; }
 
  private:
   UUID mTargetUUID;
-  usize mCurrentIndex {0};
-  Maybe<usize> mGlobalIndex;
+  ssize mCurrentIndex {0};
+  Maybe<ssize> mGlobalIndex;
 
   void _consider(const ILayer& layer)
   {
@@ -181,38 +244,10 @@ class LayerCounter final : public IConstLayerVisitor {
 
   void visit(const GroupLayer&) override { ++mCount; }
 
-  [[nodiscard]] auto count() const -> usize { return mCount; }
+  [[nodiscard]] auto count() const -> ssize { return mCount; }
 
  private:
-  usize mCount {0};
-};
-
-class LayerCallbackVisitor final : public ILayerVisitor {
- public:
-  explicit LayerCallbackVisitor(const GroupLayer::LayerCallback& callable)
-    : mCallable {callable}
-  {}
-
-  void visit(TileLayer& layer) override { mCallable(layer); }
-  void visit(ObjectLayer& layer) override { mCallable(layer); }
-  void visit(GroupLayer& layer) override { mCallable(layer); }
-
- private:
-  Ref<const GroupLayer::LayerCallback> mCallable;
-};
-
-class ConstLayerCallbackVisitor final : public IConstLayerVisitor {
- public:
-  explicit ConstLayerCallbackVisitor(const GroupLayer::ConstLayerCallback& callable)
-    : mCallable {callable}
-  {}
-
-  void visit(const TileLayer& layer) override { mCallable(layer); }
-  void visit(const ObjectLayer& layer) override { mCallable(layer); }
-  void visit(const GroupLayer& layer) override { mCallable(layer); }
-
- private:
-  Ref<const GroupLayer::ConstLayerCallback> mCallable;
+  ssize mCount {0};
 };
 
 void GroupLayer::accept(IMetaContextVisitor& visitor)
@@ -254,24 +289,9 @@ void GroupLayer::each(IConstLayerVisitor& visitor) const
   }
 }
 
-void GroupLayer::each(const LayerCallback& callable)
-{
-  LayerCallbackVisitor visitor {callable};
-  for (const auto& layer : mLayers) {
-    layer->accept(visitor);
-  }
-}
-
-void GroupLayer::each(const ConstLayerCallback& callable) const
-{
-  ConstLayerCallbackVisitor visitor {callable};
-  for (const auto& layer : mLayers) {
-    layer->accept(visitor);
-  }
-}
-
 void GroupLayer::append_layer(Shared<ILayer> layer)
 {
+  const auto layer_uuid = layer->get_meta().get_uuid();
   mLayers.push_back(std::move(layer));
 }
 
@@ -378,33 +398,42 @@ auto GroupLayer::can_move_layer_down(const UUID& uuid) const -> bool
   return false;
 }
 
-auto GroupLayer::get_layer_local_index(const UUID& uuid) const -> Maybe<usize>
+auto GroupLayer::get_layer_local_index(const UUID& uuid) const -> Maybe<ssize>
 {
   const auto find_result = _recursive_find(uuid);
 
   if (find_result.has_value()) {
-    return as_unsigned(std::distance(find_result->storage->begin(), find_result->iter));
+    return std::distance(find_result->storage->begin(), find_result->iter);
   }
 
   return false;
 }
 
-auto GroupLayer::get_layer_global_index(const UUID& uuid) const -> Maybe<usize>
+auto GroupLayer::get_layer_global_index(const UUID& uuid) const -> Maybe<ssize>
 {
   LayerGlobalIndexCalculator calculator {uuid};
-
-  // We cannot include the root group layer here.
-  for (const auto& sublayer : mLayers) {
-    sublayer->accept(calculator);
-  }
-
+  each(calculator);
   return calculator.get_global_index();
+}
+
+auto GroupLayer::layer_at_index(const ssize index) -> ILayer*
+{
+  IndexBasedLayerFinder finder {index};
+  each(finder);
+  return finder.found_layer();
+}
+
+auto GroupLayer::layer_at_index(const ssize index) const -> const ILayer*
+{
+  IndexBasedConstLayerFinder finder {index};
+  each(finder);
+  return finder.found_layer();
 }
 
 auto GroupLayer::find_layer(const UUID& uuid) -> ILayer*
 {
   ParentLayerFinder finder {uuid};
-  each(finder);
+  accept(finder);
 
   if (finder.get_found_parent_layer() != nullptr) {
     return finder.get_found_target_layer_iter()->get();
@@ -416,7 +445,7 @@ auto GroupLayer::find_layer(const UUID& uuid) -> ILayer*
 auto GroupLayer::find_layer(const UUID& uuid) const -> const ILayer*
 {
   ConstParentLayerFinder finder {uuid};
-  each(finder);
+  accept(finder);
 
   if (finder.get_found_parent_layer() != nullptr) {
     return finder.get_found_target_layer_iter()->get();
@@ -428,61 +457,56 @@ auto GroupLayer::find_layer(const UUID& uuid) const -> const ILayer*
 auto GroupLayer::find_tile_layer(const UUID& uuid) -> TileLayer*
 {
   GenericLayerFinder<TileLayer> finder {uuid};
-  each(finder);
+  accept(finder);
   return finder.get_found_layer();
 }
 
 auto GroupLayer::find_tile_layer(const UUID& uuid) const -> const TileLayer*
 {
   GenericConstLayerFinder<TileLayer> finder {uuid};
-  each(finder);
+  accept(finder);
   return finder.get_found_layer();
 }
 
 auto GroupLayer::find_object_layer(const UUID& uuid) -> ObjectLayer*
 {
   GenericLayerFinder<ObjectLayer> finder {uuid};
-  each(finder);
+  accept(finder);
   return finder.get_found_layer();
 }
 
 auto GroupLayer::find_object_layer(const UUID& uuid) const -> const ObjectLayer*
 {
   GenericConstLayerFinder<ObjectLayer> finder {uuid};
-  each(finder);
+  accept(finder);
   return finder.get_found_layer();
 }
 
 auto GroupLayer::find_group_layer(const UUID& uuid) -> GroupLayer*
 {
   GenericLayerFinder<GroupLayer> finder {uuid};
-  each(finder);
+  accept(finder);
   return finder.get_found_layer();
 }
 
 auto GroupLayer::find_group_layer(const UUID& uuid) const -> const GroupLayer*
 {
   GenericConstLayerFinder<GroupLayer> finder {uuid};
-  each(finder);
+  accept(finder);
   return finder.get_found_layer();
 }
 
 auto GroupLayer::find_parent_layer(const UUID& uuid) -> GroupLayer*
 {
   ParentLayerFinder finder {uuid};
-  each(finder);
+  accept(finder);
   return finder.get_found_parent_layer();
 }
 
-auto GroupLayer::layer_count() const -> usize
+auto GroupLayer::layer_count() const -> ssize
 {
   LayerCounter counter {};
-
-  // We cannot include the root group layer here.
-  for (const auto& sublayer : mLayers) {
-    sublayer->accept(counter);
-  }
-
+  each(counter);
   return counter.count();
 }
 
@@ -525,6 +549,26 @@ auto GroupLayer::get_meta() const -> const Metadata&
   return mDelegate.get_meta();
 }
 
+auto GroupLayer::begin() -> iterator
+{
+  return iterator {this, 0};
+}
+
+auto GroupLayer::begin() const -> const_iterator
+{
+  return const_iterator {this, 0};
+}
+
+auto GroupLayer::end() -> iterator
+{
+  return iterator {this, layer_count()};
+}
+
+auto GroupLayer::end() const -> const_iterator
+{
+  return const_iterator {this, layer_count()};
+}
+
 auto GroupLayer::_recursive_find(const UUID& uuid) -> Maybe<FindResult>
 {
   ParentLayerFinder finder {uuid};
@@ -561,6 +605,74 @@ auto GroupLayer::_can_move_layer_down(const LayerStorage& storage,
 {
   const auto current_index = std::distance(storage.begin(), iter);
   return current_index < std::ssize(storage) - 1_z;
+}
+
+GroupLayer::Iterator::Iterator(GroupLayer* root, const ssize index)
+  : mRoot {root},
+    mIndex {index}
+{
+  if (mIndex >= 0 && mIndex < mRoot->layer_count()) {
+    mCurrent = mRoot->layer_at_index(mIndex);
+  }
+}
+
+GroupLayer::ConstIterator::ConstIterator(const GroupLayer* root, const ssize index)
+  : mRoot {root},
+    mIndex {index}
+{
+  if (mIndex >= 0 && mIndex < mRoot->layer_count()) {
+    mCurrent = mRoot->layer_at_index(mIndex);
+  }
+}
+
+auto GroupLayer::Iterator::operator*() -> reference
+{
+  TACTILE_ASSERT(mCurrent != nullptr);
+  return *mCurrent;
+}
+
+auto GroupLayer::ConstIterator::operator*() -> reference
+{
+  TACTILE_ASSERT(mCurrent != nullptr);
+  return *mCurrent;
+}
+
+auto GroupLayer::Iterator::operator->() -> pointer
+{
+  return mCurrent;
+}
+
+auto GroupLayer::ConstIterator::operator->() -> pointer
+{
+  return mCurrent;
+}
+
+auto GroupLayer::Iterator::operator++() -> Iterator&
+{
+  ++mIndex;
+  mCurrent = mRoot->layer_at_index(mIndex);
+  return *this;
+}
+
+auto GroupLayer::ConstIterator::operator++() -> ConstIterator&
+{
+  ++mIndex;
+  mCurrent = mRoot->layer_at_index(mIndex);
+  return *this;
+}
+
+auto GroupLayer::Iterator::operator++(int) -> Iterator
+{
+  auto self = *this;
+  ++(*this);
+  return self;
+}
+
+auto GroupLayer::ConstIterator::operator++(int) -> ConstIterator
+{
+  auto self = *this;
+  ++(*this);
+  return self;
 }
 
 }  // namespace tactile

@@ -436,3 +436,36 @@ TEST(GroupLayer, GetGlobalLayerIndex)
   EXPECT_EQ(root->get_layer_global_index(hierarchy.t4->get_meta().get_uuid()), 11_uz);
   // clang-format on
 }
+
+/// \tests tactile::GroupLayer::begin
+/// \tests tactile::GroupLayer::end
+TEST(GroupLayer, NonConstIteration)
+{
+  auto hierarchy = make_test_layer_hierarchy();
+  auto& root = *hierarchy.root;
+
+  int count = 0;
+  for (auto& layer : root) {
+    EXPECT_NE(root.find_layer(layer.get_meta().get_uuid()), nullptr);
+    ++count;
+  }
+
+  EXPECT_EQ(count, 12);
+}
+
+/// \tests tactile::GroupLayer::begin
+/// \tests tactile::GroupLayer::end
+TEST(GroupLayer, ConstIteration)
+{
+  const auto hierarchy = make_test_layer_hierarchy();
+  const auto& root = *hierarchy.root;
+
+  int count = 0;
+  for (const auto& layer : root) {
+    EXPECT_NE(root.find_layer(layer.get_meta().get_uuid()), nullptr);
+    ++count;
+  }
+
+  EXPECT_EQ(count, 12);
+}
+

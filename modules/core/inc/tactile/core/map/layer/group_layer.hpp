@@ -2,12 +2,13 @@
 
 #pragma once
 
+#include <iterator>  // forward_iterator_tag
+
 #include "tactile/core/api.hpp"
 #include "tactile/core/map/layer/layer.hpp"
 #include "tactile/core/map/layer/layer_behavior_delegate.hpp"
 #include "tactile/foundation/container/smart_ptr.hpp"
 #include "tactile/foundation/container/vector.hpp"
-#include "tactile/foundation/functional/function.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/misc/id_types.hpp"
 #include "tactile/foundation/prelude.hpp"
@@ -19,9 +20,15 @@ namespace tactile {
  */
 class TACTILE_CORE_API GroupLayer final : public ILayer {
  public:
+  class Iterator;
+  class ConstIterator;
+
+  friend class ParentLayerFinder;
+  friend class ConstParentLayerFinder;
+
   using LayerStorage = Vector<Shared<ILayer>>;
-  using LayerCallback = Function<void(ILayer&)>;
-  using ConstLayerCallback = Function<void(const ILayer&)>;
+  using iterator = Iterator;
+  using const_iterator = ConstIterator;
 
   void accept(IMetaContextVisitor& visitor) override;
 
@@ -47,18 +54,6 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
 
   /** \copydoc each(ILayerVisitor&) */
   void each(IConstLayerVisitor& visitor) const;
-
-  /**
-   * \brief Invokes a callback for each layer in the group recursively.
-   *
-   * \note The callback is not called for the invoked group itself.
-   *
-   * \param callable a callback invoked for each stored layer.
-   */
-  void each(const LayerCallback& callable);
-
-  /** \copydoc each(const LayerCallback&) */
-  void each(const ConstLayerCallback& callable) const;
 
   /**
    * \brief Adds a layer to the group layer.
@@ -150,7 +145,7 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
    * \return a local index.
    */
   [[nodiscard]]
-  auto get_layer_local_index(const UUID& uuid) const -> Maybe<usize>;
+  auto get_layer_local_index(const UUID& uuid) const -> Maybe<ssize>;
 
   /**
    * \brief Returns the global (logical) index of a layer in the group.
@@ -160,7 +155,13 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
    * \return a global index.
    */
   [[nodiscard]]
-  auto get_layer_global_index(const UUID& uuid) const -> Maybe<usize>;
+  auto get_layer_global_index(const UUID& uuid) const -> Maybe<ssize>;
+
+  [[nodiscard]]
+  auto layer_at_index(ssize index) -> ILayer*;
+
+  [[nodiscard]]
+  auto layer_at_index(ssize index) const -> const ILayer*;
 
   /**
    * \brief Attempts to find a nested layer.
@@ -236,7 +237,7 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
    * \return a layer count.
    */
   [[nodiscard]]
-  auto layer_count() const -> usize;
+  auto layer_count() const -> ssize;
 
   [[nodiscard]]
   auto get_persistent_id() const -> Maybe<int32> override;
@@ -256,12 +257,21 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
   [[nodiscard]]
   auto get_meta() const -> const Metadata& override;
 
+  [[nodiscard]]
+  auto begin() -> iterator;
+
+  [[nodiscard]]
+  auto begin() const -> const_iterator;
+
+  [[nodiscard]]
+  auto end() -> iterator;
+
+  [[nodiscard]]
+  auto end() const -> const_iterator;
+
  private:
   LayerBehaviorDelegate mDelegate;
   LayerStorage mLayers;
-
-  friend class ParentLayerFinder;
-  friend class ConstParentLayerFinder;
 
   struct FindResult final {
     LayerStorage* storage;
@@ -286,6 +296,74 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
   [[nodiscard]]
   static auto _can_move_layer_down(const LayerStorage& storage,
                                    LayerStorage::const_iterator iter) -> bool;
+};
+
+class TACTILE_CORE_API GroupLayer::Iterator final {
+ public:
+  using iterator_category = std::forward_iterator_tag;
+  using difference_type = ssize;
+  using value_type = ILayer;
+  using pointer = value_type*;
+  using reference = value_type&;
+
+  explicit Iterator(GroupLayer* root, ssize index);
+
+  [[nodiscard]] auto operator*() -> reference;
+
+  auto operator->() -> pointer;
+
+  auto operator++() -> Iterator&;
+
+  auto operator++(int) -> Iterator;
+
+  friend auto operator==(const Iterator& lhs, const Iterator& rhs) -> bool
+  {
+    return lhs.mRoot == rhs.mRoot && lhs.mIndex == rhs.mIndex;
+  }
+
+  friend auto operator!=(const Iterator& lhs, const Iterator& rhs) -> bool
+  {
+    return !(lhs == rhs);
+  }
+
+ private:
+  GroupLayer* mRoot {};
+  ILayer* mCurrent {};
+  ssize mIndex {0};
+};
+
+class TACTILE_CORE_API GroupLayer::ConstIterator final {
+ public:
+  using iterator_category = std::forward_iterator_tag;
+  using difference_type = ssize;
+  using value_type = ILayer;
+  using pointer = const value_type*;
+  using reference = const value_type&;
+
+  ConstIterator(const GroupLayer* root, ssize index);
+
+  [[nodiscard]] auto operator*() -> reference;
+
+  auto operator->() -> pointer;
+
+  auto operator++() -> ConstIterator&;
+
+  auto operator++(int) -> ConstIterator;
+
+  friend bool operator==(const ConstIterator& lhs, const ConstIterator& rhs)
+  {
+    return lhs.mRoot == rhs.mRoot && lhs.mIndex == rhs.mIndex;
+  }
+
+  friend bool operator!=(const ConstIterator& lhs, const ConstIterator& rhs)
+  {
+    return !(lhs == rhs);
+  }
+
+ private:
+  const GroupLayer* mRoot {};
+  const ILayer* mCurrent {};
+  ssize mIndex {0};
 };
 
 }  // namespace tactile
