@@ -7,9 +7,9 @@
 namespace tactile {
 
 /**
- * \brief Represents the possible graphics APIs.
+ * \brief Provides identifiers for renderer backends.
  */
-enum class GraphicsAPI : int8 {
+enum class RendererID : int8 {
   kUnknown,
   kOpenGL,
   kVulkan

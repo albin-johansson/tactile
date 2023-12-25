@@ -17,19 +17,22 @@
 #include "tactile/foundation/platform/environment.hpp"
 #include "tactile/foundation/prelude.hpp"
 #include "tactile/foundation/render/render_context.hpp"
+#include "tactile/core/cli/command_line_parser.hpp"
 
 using namespace tactile;
 
 auto main(const int argc, char* argv[]) -> int
 {
-  (void) argc;
-  (void) argv;
-
   const auto startup_instant = tactile::SteadyClock::now();
   std::set_terminate(&tactile::on_terminate);
 
   try {
     const auto app_dir = std::filesystem::current_path();
+
+    const auto cli_args = tactile::CommandLineParser::parse(argc, argv);
+    if (cli_args.should_exit) {
+      return EXIT_SUCCESS;
+    }
 
     tactile::win32_enable_virtual_terminal_processing();
 
