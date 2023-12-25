@@ -14,7 +14,7 @@ TEST(Object, Defaults)
   EXPECT_EQ(object.get_position(), Float2(0.0f, 0.0f));
   EXPECT_EQ(object.get_size(), Float2(0.0f, 0.0f));
   EXPECT_FALSE(object.get_persistent_id().has_value());
-  EXPECT_TRUE(object.meta().get_name().empty());
+  EXPECT_TRUE(object.meta().name().empty());
   EXPECT_TRUE(object.get_tag().empty());
   EXPECT_TRUE(object.is_visible());
 }

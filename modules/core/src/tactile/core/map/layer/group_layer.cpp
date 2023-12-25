@@ -24,7 +24,7 @@ class GenericLayerFinder final : public ILayerVisitor {
 
   void visit(T& layer) override
   {
-    if (layer.meta().get_uuid() == mTargetUUID) {
+    if (layer.meta().uuid() == mTargetUUID) {
       mFoundLayer = &layer;
     }
   }
@@ -45,7 +45,7 @@ class GenericConstLayerFinder final : public IConstLayerVisitor {
 
   void visit(const T& layer) override
   {
-    if (layer.meta().get_uuid() == mTargetUUID) {
+    if (layer.meta().uuid() == mTargetUUID) {
       mFoundLayer = &layer;
     }
   }
@@ -72,7 +72,7 @@ class ParentLayerFinder final : public ILayerVisitor {
     const auto layer_iter = std::find_if(group.mLayers.begin(),
                                          group.mLayers.end(),
                                          [this](const Shared<ILayer>& layer) {
-                                           return layer->meta().get_uuid() == mTargetUUID;
+                                           return layer->meta().uuid() == mTargetUUID;
                                          });
 
     if (layer_iter != group.mLayers.end()) {
@@ -114,7 +114,7 @@ class ConstParentLayerFinder final : public IConstLayerVisitor {
     const auto layer_iter = std::find_if(group.mLayers.begin(),
                                          group.mLayers.end(),
                                          [this](const Shared<ILayer>& layer) {
-                                           return layer->meta().get_uuid() == mTargetUUID;
+                                           return layer->meta().uuid() == mTargetUUID;
                                          });
 
     if (layer_iter != group.mLayers.end()) {
@@ -226,7 +226,7 @@ class LayerGlobalIndexCalculator final : public IConstLayerVisitor {
 
   void _consider(const ILayer& layer)
   {
-    if (!mGlobalIndex.has_value() && layer.meta().get_uuid() == mTargetUUID) {
+    if (!mGlobalIndex.has_value() && layer.meta().uuid() == mTargetUUID) {
       mGlobalIndex = mCurrentIndex;
     }
 
@@ -289,7 +289,7 @@ void GroupLayer::each(IConstLayerVisitor& visitor) const
 
 void GroupLayer::append_layer(Shared<ILayer> layer)
 {
-  const auto layer_uuid = layer->meta().get_uuid();
+  const auto layer_uuid = layer->meta().uuid();
   mLayers.push_back(std::move(layer));
 }
 

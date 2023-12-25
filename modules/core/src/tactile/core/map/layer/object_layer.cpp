@@ -43,7 +43,7 @@ auto ObjectLayer::add_object(Object object) -> Result<void>
     }
   }
 
-  const auto object_uuid = object.meta().get_uuid();
+  const auto object_uuid = object.meta().uuid();
   mObjects.insert_or_assign(object_uuid, std::move(object));
 
   return kOK;
@@ -52,7 +52,7 @@ auto ObjectLayer::add_object(Object object) -> Result<void>
 auto ObjectLayer::emplace_object(const ObjectType type) -> Object&
 {
   Object object {type};
-  auto [iter, _] = mObjects.insert_or_assign(object.meta().get_uuid(), std::move(object));
+  auto [iter, _] = mObjects.insert_or_assign(object.meta().uuid(), std::move(object));
   return iter->second;
 }
 

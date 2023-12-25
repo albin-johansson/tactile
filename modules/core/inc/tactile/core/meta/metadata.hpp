@@ -29,46 +29,40 @@ class TACTILE_CORE_API Metadata final {
   /**
    * \brief Adds (or replaces) a property to the context.
    *
-   * \param name the property name.
-   *
-   * \return the newly created attribute.
+   * \param  name the property name.
+   * \return      the newly created attribute.
    */
   auto add_property(String name) -> Attribute&;
 
   /**
    * \brief Removes a property from the context.
    *
-   * \param name the property name.
-   *
-   * \return the remove property value; or nothing if it didn't exist.
+   * \param  name the property name.
+   * \return      the remove property value; or nothing if it didn't exist.
    */
   auto remove_property(StringView name) -> Maybe<Attribute>;
 
   /**
    * \brief Renames an existing property.
    *
-   * \param current_name the current name of the property.
-   * \param new_name     the new name of the property.
-   *
-   * \return true if a property was successfully renamed; false otherwise.
+   * \param  current_name the current name of the property.
+   * \param  new_name     the new name of the property.
+   * \return              true if a property was successfully renamed; false otherwise.
    */
   auto rename_property(StringView current_name, String new_name) -> bool;
 
   /**
    * \brief Returns the property with a given name.
    *
-   * \param name the property name.
-   *
+   * \param  name the property name.
    * \return the property value.
    *
-   * \throws Error if there is no matching property.
+   * \throws Exception if there is no matching property.
    */
   [[nodiscard]]
   auto get_property(StringView name) -> Attribute&;
 
-  /**
-   * \copydoc Metadata::get_property()
-   */
+  /** \copydoc get_property() */
   [[nodiscard]]
   auto get_property(StringView name) const -> const Attribute&;
 
@@ -85,7 +79,7 @@ class TACTILE_CORE_API Metadata final {
    * \return a UUID.
    */
   [[nodiscard]]
-  auto get_uuid() const -> const UUID&;
+  auto uuid() const -> const UUID&;
 
   /**
    * \brief Returns the current object name.
@@ -93,7 +87,7 @@ class TACTILE_CORE_API Metadata final {
    * \return the object name.
    */
   [[nodiscard]]
-  auto get_name() const -> const String&;
+  auto name() const -> const String&;
 
   /**
    * \brief Returns the number of attached properties.

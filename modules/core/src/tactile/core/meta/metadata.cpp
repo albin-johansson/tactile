@@ -46,12 +46,12 @@ void Metadata::set_name(String name)
   mName = std::move(name);
 }
 
-auto Metadata::get_uuid() const -> const UUID&
+auto Metadata::uuid() const -> const UUID&
 {
   return mUUID;
 }
 
-auto Metadata::get_name() const -> const String&
+auto Metadata::name() const -> const String&
 {
   return mName;
 }

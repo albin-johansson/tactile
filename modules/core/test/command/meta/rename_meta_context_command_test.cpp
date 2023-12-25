@@ -14,13 +14,13 @@ TEST(RenameMetaContextCommand, RedoUndo)
   object.meta().set_name("ABC");
 
   RenameMetaContextCommand command {&object, "DEF"};
-  EXPECT_EQ(object.meta().get_name(), "ABC");
+  EXPECT_EQ(object.meta().name(), "ABC");
 
   command.redo();
-  EXPECT_EQ(object.meta().get_name(), "DEF");
+  EXPECT_EQ(object.meta().name(), "DEF");
 
   command.undo();
-  EXPECT_EQ(object.meta().get_name(), "ABC");
+  EXPECT_EQ(object.meta().name(), "ABC");
 }
 
 TEST(RenameMetaContextCommand, MergeWith)
@@ -38,8 +38,8 @@ TEST(RenameMetaContextCommand, MergeWith)
   EXPECT_TRUE(ellipse_foo_command.merge_with(&ellipse_bar_command));
 
   ellipse_foo_command.redo();
-  EXPECT_EQ(ellipse.meta().get_name(), "bar");
+  EXPECT_EQ(ellipse.meta().name(), "bar");
 
   ellipse_foo_command.undo();
-  EXPECT_EQ(ellipse.meta().get_name(), "start");
+  EXPECT_EQ(ellipse.meta().name(), "start");
 }
