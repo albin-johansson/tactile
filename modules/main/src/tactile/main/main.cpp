@@ -6,8 +6,10 @@
 
 #include <SDL2/SDL.h>
 
+#include "tactile/core/cli/command_line_parser.hpp"
 #include "tactile/core/editor_app.hpp"
 #include "tactile/core/engine/engine.hpp"
+#include "tactile/core/persist/protobuf.hpp"
 #include "tactile/core/plugin/plugin_manager.hpp"
 #include "tactile/foundation/debug/terminate_handler.hpp"
 #include "tactile/foundation/io/save/save_format_context.hpp"
@@ -17,7 +19,6 @@
 #include "tactile/foundation/platform/environment.hpp"
 #include "tactile/foundation/prelude.hpp"
 #include "tactile/foundation/render/render_context.hpp"
-#include "tactile/core/cli/command_line_parser.hpp"
 
 using namespace tactile;
 
@@ -60,6 +61,8 @@ auto main(const int argc, char* argv[]) -> int
     TACTILE_LOG_INFO("Tactile " TACTILE_VERSION_STRING);
 
     rng_init();
+
+    const Protobuf protobuf {};
 
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
       TACTILE_LOG_FATAL("Could not initialize SDL: {}", SDL_GetError());
