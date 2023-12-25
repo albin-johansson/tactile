@@ -81,8 +81,9 @@ auto SaveFormatContext::save_map(const SaveFormatId save_format_id,
   if (const auto* format = _find_format(save_format_id)) {
     if (format->is_valid_extension(extension.c_str())) {
       return format->save_map(map_path, map, options)
-          .or_else([](const ErrorCode& error_code) {
+          .or_else([](const ErrorCode& error_code) -> Result<void> {
             TACTILE_LOG_ERROR("Could not save map: {}", error_code.message());
+            return unexpected(error_code);
           });
     }
   }
@@ -106,8 +107,9 @@ auto SaveFormatContext::save_tileset(const SaveFormatId save_format_id,
   if (const auto* format = _find_format(save_format_id)) {
     if (format->is_valid_extension(extension.c_str())) {
       return format->save_tileset(tileset_path, tileset, options)
-          .or_else([](const ErrorCode& error_code) {
+          .or_else([](const ErrorCode& error_code) -> Result<void> {
             TACTILE_LOG_ERROR("Could not save tileset: {}", error_code.message());
+            return unexpected(error_code);
           });
     }
   }
