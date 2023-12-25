@@ -3,7 +3,7 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/context/meta_context.hpp"
+#include "tactile/core/meta/meta_context.hpp"
 #include "tactile/foundation/container/smart_ptr.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/prelude.hpp"

@@ -3,9 +3,9 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/context/meta_context.hpp"
-#include "tactile/core/context/metadata.hpp"
 #include "tactile/core/map/layer/object.hpp"
+#include "tactile/core/meta/meta_context.hpp"
+#include "tactile/core/meta/metadata.hpp"
 #include "tactile/core/tileset/tile_animation.hpp"
 #include "tactile/foundation/container/hash_map.hpp"
 #include "tactile/foundation/container/smart_ptr.hpp"

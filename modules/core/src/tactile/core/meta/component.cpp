@@ -1,4 +1,4 @@
-#include "tactile/core/context/component.hpp"
+#include "tactile/core/meta/component.hpp"
 
 #include <utility>  // move
 

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/context/meta_context_visitor.hpp"
+#include "tactile/core/meta/meta_context_visitor.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {

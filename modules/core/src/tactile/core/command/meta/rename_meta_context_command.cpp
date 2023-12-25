@@ -4,8 +4,8 @@
 
 #include <utility>  // move
 
-#include "tactile/core/context/meta_context.hpp"
-#include "tactile/core/context/metadata.hpp"
+#include "tactile/core/meta/meta_context.hpp"
+#include "tactile/core/meta/metadata.hpp"
 #include "tactile/foundation/debug/validation.hpp"
 
 namespace tactile {

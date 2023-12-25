@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "tactile/core/context/meta_context_visitor.hpp"
+#include "tactile/core/meta/meta_context_visitor.hpp"
 
 namespace tactile::testutil {
 
