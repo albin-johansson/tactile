@@ -13,9 +13,9 @@ using namespace tactile::int_literals;
 
 namespace tactile {
 
-TileLayer::TileLayer(const usize row_count, const usize col_count)
-  : mRowCount {(row_count > 0) ? row_count : throw Exception {"Invalid row count"}},
-    mColCount {(col_count > 0) ? col_count : throw Exception {"Invalid column count"}},
+TileLayer::TileLayer(const ssize row_count, const ssize col_count)
+  : mRowCount {(row_count > 0) ? row_count : throw Exception {"invalid row count"}},
+    mColCount {(col_count > 0) ? col_count : throw Exception {"invalid column count"}},
     mTileMatrix {make_tile_matrix(row_count, col_count)}
 {}
 
@@ -34,7 +34,7 @@ void TileLayer::accept(IConstLayerVisitor& visitor) const
   visitor.visit(*this);
 }
 
-void TileLayer::resize(const usize row_count, const usize col_count)
+void TileLayer::resize(const ssize row_count, const ssize col_count)
 {
   if (row_count < 1) {
     throw Exception {"Invalid row count"};
@@ -155,22 +155,15 @@ auto TileLayer::get_tile(const TilePos& pos) const -> Maybe<TileID>
 
 auto TileLayer::is_valid_pos(const TilePos& pos) const -> bool
 {
-  if (pos.row >= 0_z && pos.col >= 0_z) {
-    const auto u_row = as_unsigned(pos.row);
-    const auto u_col = as_unsigned(pos.col);
-
-    return u_row < mRowCount && u_col < mColCount;
-  }
-
-  return false;
+  return pos.row >= 0_z && pos.col >= 0_z && pos.row < mRowCount && pos.col < mColCount;
 }
 
-auto TileLayer::row_count() const -> usize
+auto TileLayer::row_count() const -> ssize
 {
   return mRowCount;
 }
 
-auto TileLayer::column_count() const -> usize
+auto TileLayer::column_count() const -> ssize
 {
   return mColCount;
 }

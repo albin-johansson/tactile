@@ -33,17 +33,6 @@ struct MatrixExtent final {
 };
 
 /**
- * \brief Represents a position in a tile matrix.
- */
-struct MatrixIndex final {
-  ssize row {};  ///< The tile row (Y-axis) index.
-  ssize col {};  ///< The tile column (X-axis) index.
-
-  [[nodiscard]] constexpr auto operator<=>(const MatrixIndex&) const noexcept
-      -> std::strong_ordering = default;
-};
-
-/**
  * \brief Creates an empty tile row.
  *
  * \param col_count the number of tile columns.
@@ -51,7 +40,7 @@ struct MatrixIndex final {
  * \return a tile row.
  */
 [[nodiscard]]
-TACTILE_FOUNDATION_API auto make_tile_row(usize col_count) -> TileRow;
+TACTILE_FOUNDATION_API auto make_tile_row(ssize col_count) -> TileRow;
 
 /**
  * \brief Creates an empty tile matrix.
@@ -69,6 +58,17 @@ inline auto make_tile_matrix(const ssize row_count, const ssize col_count) -> Ti
 }
 
 /**
+ * \brief Represents a position in a tile matrix.
+ */
+struct MatrixIndex final {
+  usize row {};  ///< The tile row (Y-axis) index.
+  usize col {};  ///< The tile column (X-axis) index.
+
+  [[nodiscard]] constexpr auto operator<=>(const MatrixIndex&) const noexcept
+      -> std::strong_ordering = default;
+};
+
+/**
  * \brief Converts a one-dimensional tile index to a corresponding two-dimensional index.
  *
  * \details This function is particularly useful when dealing with tile identifier
@@ -81,7 +81,7 @@ inline auto make_tile_matrix(const ssize row_count, const ssize col_count) -> Ti
  * \return a matrix index.
  */
 [[nodiscard]]
-constexpr auto to_matrix_index(const ssize index, const ssize col_count) noexcept
+constexpr auto to_matrix_index(const usize index, const usize col_count) noexcept
     -> MatrixIndex
 {
   return MatrixIndex {.row = index / col_count, .col = index % col_count};

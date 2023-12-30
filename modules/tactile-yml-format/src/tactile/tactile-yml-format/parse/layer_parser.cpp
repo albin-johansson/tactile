@@ -7,6 +7,7 @@
 
 #include "tactile/foundation/io/tile_matrix_encoding.hpp"
 #include "tactile/foundation/log/logger.hpp"
+#include "tactile/foundation/misc/conversion.hpp"
 #include "tactile/tactile-yml-format/parse/common.hpp"
 #include "tactile/tactile-yml-format/parse/meta_parser.hpp"
 #include "tactile/tactile-yml-format/parse/object_parser.hpp"
@@ -31,23 +32,25 @@ auto parse_layer_type(const StringView type_name) -> Result<LayerType>
 auto parse_plain_text_tile_matrix(String tile_data, const MatrixExtent matrix_extent)
     -> Result<TileMatrix>
 {
+  auto tile_matrix = make_tile_matrix(matrix_extent.row_count, matrix_extent.col_count);
+
   // TODO performance: version of str_split that returns string views?
   std::replace(tile_data.begin(), tile_data.end(), '\n', ' ');
   const auto tile_tokens = str_split(tile_data, ' ');
 
-  auto tile_matrix = make_tile_matrix(matrix_extent.row_count, matrix_extent.col_count);
+  const auto column_count = as_unsigned(matrix_extent.col_count);
+  usize tile_index = 0;
 
-  usize index = 0;
   for (const auto& tile_token : tile_tokens) {
     if (const auto tile_id = str_to<TileID::value_type>(tile_token)) {
-      const auto [row, col] = to_matrix_index(index, matrix_extent.col_count);
+      const auto [row, col] = to_matrix_index(tile_index, column_count);
       tile_matrix[row][col] = TileID {*tile_id};
     }
     else {
       return unexpected(make_save_format_error(SaveFormatError::kBadTileLayerData));
     }
 
-    ++index;
+    ++tile_index;
   }
 
   return tile_matrix;

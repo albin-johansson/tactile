@@ -24,7 +24,7 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
    * \param row_count the number of tile rows, must be greater than zero.
    * \param col_count the number of tile columns, must be greater than zero.
    */
-  TileLayer(usize row_count, usize col_count);
+  TileLayer(ssize row_count, ssize col_count);
 
   void accept(IMetaContextVisitor& visitor) override;
 
@@ -38,7 +38,7 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
    * \param row_count the number of tile rows, must be greater than zero.
    * \param col_count the number of tile columns, must be greater than zero.
    */
-  void resize(usize row_count, usize col_count);
+  void resize(ssize row_count, ssize col_count);
 
   /**
    * \brief Applies a flood fill algorithm to the layer.
@@ -89,7 +89,7 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
    * \return the tile row count.
    */
   [[nodiscard]]
-  auto row_count() const -> usize;
+  auto row_count() const -> ssize;
 
   /**
    * \brief Returns the number of tile columns stored in the layer.
@@ -97,7 +97,7 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
    * \return the tile column count.
    */
   [[nodiscard]]
-  auto column_count() const -> usize;
+  auto column_count() const -> ssize;
 
   void set_persistent_id(Maybe<int32> id) override;
 
@@ -125,8 +125,8 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
 
  private:
   LayerBehaviorDelegate mDelegate;
-  usize mRowCount;
-  usize mColCount;
+  ssize mRowCount;
+  ssize mColCount;
   TileMatrix mTileMatrix;
 
   void _add_row();

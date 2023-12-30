@@ -76,27 +76,25 @@ TEST(TileLayer, GetTile)
 {
   const TileLayer layer {10_uz, 8_uz};
 
-  const auto s_row_count = as_signed(layer.row_count());
-  const auto s_col_count = as_signed(layer.column_count());
-
   EXPECT_EQ(layer.get_tile(TilePos {0_z, 0_z}), kEmptyTile);
-  EXPECT_FALSE(layer.get_tile(TilePos {s_row_count, s_col_count}).has_value());
+  EXPECT_FALSE(
+      layer.get_tile(TilePos {layer.row_count(), layer.column_count()}).has_value());
 }
 
 TEST(TileLayer, IsValidPos)
 {
   const TileLayer layer {10_uz, 8_uz};
 
-  const auto s_row_count = as_signed(layer.row_count());
-  const auto s_col_count = as_signed(layer.column_count());
+  const auto row_count = layer.row_count();
+  const auto col_count = layer.column_count();
 
   EXPECT_TRUE(layer.is_valid_pos(TilePos {0_z, 0_z}));
-  EXPECT_TRUE(layer.is_valid_pos(TilePos {s_row_count - 1_z, s_col_count - 1_z}));
+  EXPECT_TRUE(layer.is_valid_pos(TilePos {row_count - 1_z, col_count - 1_z}));
 
-  EXPECT_FALSE(layer.is_valid_pos(TilePos {s_row_count, 0_z}));
-  EXPECT_FALSE(layer.is_valid_pos(TilePos {0_z, s_col_count}));
-  EXPECT_FALSE(layer.is_valid_pos(TilePos {s_row_count, s_col_count}));
+  EXPECT_FALSE(layer.is_valid_pos(TilePos {row_count, 0_z}));
+  EXPECT_FALSE(layer.is_valid_pos(TilePos {0_z, col_count}));
+  EXPECT_FALSE(layer.is_valid_pos(TilePos {row_count, col_count}));
 
   EXPECT_FALSE(layer.is_valid_pos(TilePos {-1_z, -1_z}));
-  EXPECT_FALSE(layer.is_valid_pos(TilePos {3_z, s_col_count + 832_z}));
+  EXPECT_FALSE(layer.is_valid_pos(TilePos {3_z, col_count + 832_z}));
 }

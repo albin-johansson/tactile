@@ -10,11 +10,13 @@
 #include "tactile/foundation/io/base64.hpp"
 #include "tactile/foundation/io/compression/compression.hpp"
 #include "tactile/foundation/io/compression/compression_error.hpp"
+#include "tactile/foundation/misc/conversion.hpp"
 #include "tactile/foundation/platform/bits.hpp"
 
 namespace tactile {
 
-using namespace int_literals;
+using int_literals::operator""_uz;
+using int_literals::operator""_z;
 
 // Update the documentation if the representation of TileID changes.
 static_assert(std::same_as<TileID::value_type, int32>);
@@ -46,9 +48,11 @@ auto tile_matrix_from_byte_stream(const ByteStream& byte_stream,
                                   const TileEncodingFormat encoding_format) -> TileMatrix
 {
   auto tile_matrix = make_tile_matrix(matrix_extent);
-  const auto tile_count = byte_stream.size() / sizeof(TileID);
 
-  for (usize tile_index = 0; tile_index < tile_count; ++tile_index) {
+  const auto tile_count = byte_stream.size() / sizeof(TileID);
+  const auto column_count = as_unsigned(matrix_extent.col_count);
+
+  for (auto tile_index = 0_uz; tile_index < tile_count; ++tile_index) {
     TileID::value_type tile_id {};
 
     const auto byte_index = tile_index * sizeof tile_id;
@@ -64,7 +68,7 @@ auto tile_matrix_from_byte_stream(const ByteStream& byte_stream,
       tile_id &= ~kTiledTileFlippingMask;
     }
 
-    const auto [row, col] = to_matrix_index(tile_index, matrix_extent.col_count);
+    const auto [row, col] = to_matrix_index(tile_index, column_count);
     tile_matrix[row][col] = TileID {tile_id};
   }
 
