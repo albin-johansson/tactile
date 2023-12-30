@@ -9,6 +9,8 @@
 
 namespace tactile {
 
+class DocumentViewport;
+
 /**
  * \interface IDocument
  * \brief Provides the common document API.
@@ -41,6 +43,19 @@ class IDocument {
    */
   [[nodiscard]]
   virtual auto get_path() const -> const Maybe<FilePath>& = 0;
+
+
+  /**
+   * \brief Returns the viewport associated with the document.
+   *
+   * \return a viewport.
+   */
+  [[nodiscard]]
+  virtual auto viewport() -> DocumentViewport& = 0;
+
+  /** \copydoc viewport() */
+  [[nodiscard]]
+  virtual auto viewport() const -> const DocumentViewport& = 0;
 };
 
 }  // namespace tactile
