@@ -15,7 +15,8 @@ namespace tactile {
 
 EditorApp::EditorApp(IWindow* window, IRenderer* renderer)
   : mWindow {require_not_null(window, "null window")},
-    mRenderer {require_not_null(renderer, "null renderer")}
+    mRenderer {require_not_null(renderer, "null renderer")},
+    mModel {make_unique<Model>()}
 {
   // Install Dear ImGui context.
   ImGui::SetAllocatorFunctions(

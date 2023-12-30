@@ -4,6 +4,8 @@
 
 #include "tactile/core/api.hpp"
 #include "tactile/core/engine/engine_app.hpp"
+#include "tactile/core/model/model.hpp"
+#include "tactile/foundation/container/smart_ptr.hpp"
 #include "tactile/foundation/prelude.hpp"
 #include "tactile/foundation/render/renderer.hpp"
 #include "tactile/foundation/render/window.hpp"
@@ -28,6 +30,7 @@ class TACTILE_CORE_API EditorApp final : public IEngineApp {
  private:
   IWindow* mWindow {};
   IRenderer* mRenderer {};
+  Unique<Model> mModel;
 };
 
 }  // namespace tactile
