@@ -4,7 +4,6 @@
 
 #include "tactile/core/api.hpp"
 #include "tactile/foundation/container/file_path.hpp"
-#include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
@@ -37,12 +36,12 @@ class IDocument {
   virtual void set_path(FilePath path) = 0;
 
   /**
-   * \brief Returns the associated save file path, if any.
+   * \brief Returns the associated save file path.
    *
-   * \return a file path.
+   * \return the associated file path, if any.
    */
   [[nodiscard]]
-  virtual auto get_path() const -> const Maybe<FilePath>& = 0;
+  virtual auto path() const -> const FilePath* = 0;
 
 
   /**
