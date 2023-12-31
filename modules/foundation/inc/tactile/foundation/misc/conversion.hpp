@@ -30,20 +30,20 @@ template <std::integral To, std::integral From>
     return value;
   }
   else {
-    constexpr auto to_min = std::numeric_limits<To>::min();
-    constexpr auto to_max = std::numeric_limits<To>::max();
+    constexpr auto kToMin = std::numeric_limits<To>::min();
+    constexpr auto kToMax = std::numeric_limits<To>::max();
 
     // We only check the lower limit when narrowing signed integers.
     // This is because any unsigned "From" integer will be greater
     // than the "To" integer type minimum value, regardless of the
     // signedness of "To".
     if constexpr (std::signed_integral<From>) {
-      if (std::cmp_greater_equal(value, to_min) && std::cmp_less_equal(value, to_max)) {
+      if (std::cmp_greater_equal(value, kToMin) && std::cmp_less_equal(value, kToMax)) {
         return static_cast<To>(value);
       }
     }
     else {
-      if (std::cmp_less_equal(value, to_max)) {
+      if (std::cmp_less_equal(value, kToMax)) {
         return static_cast<To>(value);
       }
     }
