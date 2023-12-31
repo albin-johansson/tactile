@@ -11,7 +11,7 @@ using tactile::int_literals::operator""_uz;
 
 TEST(TileAnimation, Defaults)
 {
-  const TileAnimation animation;
+  const TileAnimation animation {};
   EXPECT_EQ(animation.get_current_frame_index(), 0_uz);
   EXPECT_EQ(animation.frame_count(), 0_uz);
 }
@@ -24,7 +24,7 @@ TEST(TileAnimation, Update)
   const TileAnimationFrame frame2 {TileIndex {20}, Milliseconds {1}};
   const TileAnimationFrame frame3 {TileIndex {30}, Milliseconds {1}};
 
-  TileAnimation animation;
+  TileAnimation animation {};
   animation.append_frame(frame1);
   animation.append_frame(frame2);
   animation.append_frame(frame3);
@@ -51,7 +51,7 @@ TEST(TileAnimation, AppendFrame)
   const TileAnimationFrame frame1 {TileIndex {194}, Milliseconds {1'000}};
   const TileAnimationFrame frame2 {TileIndex {943}, Milliseconds {1'000}};
 
-  TileAnimation animation;
+  TileAnimation animation {};
 
   animation.append_frame(frame1);
   ASSERT_EQ(animation.frame_count(), 1_uz);
@@ -72,7 +72,7 @@ TEST(TileAnimation, InsertFrame)
   const TileAnimationFrame frame3 {TileIndex {789}, Milliseconds {468}};
   const TileAnimationFrame frame4 {TileIndex {382}, Milliseconds {159}};
 
-  TileAnimation animation;
+  TileAnimation animation {};
   ASSERT_EQ(animation.frame_count(), 0_uz);
 
   animation.insert_frame(0_uz, frame1);
@@ -118,7 +118,7 @@ TEST(TileAnimation, RemoveFrame)
   const TileAnimationFrame frame3 {TileIndex {3}, Milliseconds {30}};
   const TileAnimationFrame frame4 {TileIndex {4}, Milliseconds {40}};
 
-  TileAnimation animation;
+  TileAnimation animation {};
   animation.append_frame(frame1);
   animation.append_frame(frame2);
   animation.append_frame(frame3);
@@ -152,7 +152,7 @@ TEST(TileAnimation, GetFrame)
   const TileAnimationFrame frame1 {TileIndex {100}, Milliseconds::zero()};
   const TileAnimationFrame frame2 {TileIndex {200}, Milliseconds::zero()};
 
-  TileAnimation animation;
+  TileAnimation animation {};
   animation.append_frame(frame1);
   animation.append_frame(frame2);
 

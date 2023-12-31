@@ -19,7 +19,7 @@ using RandomEngine = std::mt19937;
 // Creates a seeded pseudo-random number generation engine.
 [[nodiscard]] auto _make_random_engine() -> RandomEngine
 {
-  std::random_device entropy_source;
+  std::random_device entropy_source {};
   const auto seed = entropy_source();
 
   TACTILE_LOG_DEBUG("Thread {} uses RNG seed {}",

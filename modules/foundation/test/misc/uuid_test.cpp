@@ -18,7 +18,7 @@ using namespace tactile::int_literals;
 /// \tests tactile::UUID::hash_code
 TEST(UUID, Defaults)
 {
-  const UUID id;
+  const UUID id {};
 
   EXPECT_TRUE(id.is_null());
   EXPECT_EQ(id, id);
@@ -69,7 +69,7 @@ TEST(UUID, ToString)
   };
 
   {
-    const UUID null;
+    const UUID null {};
     const auto str = to_string(null);
     EXPECT_EQ(to_string(null), "00000000-0000-0000-0000-000000000000");
   }

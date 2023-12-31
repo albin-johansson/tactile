@@ -101,7 +101,7 @@ TEST(Attribute, ImplicitCStringConstructor)
 /// \tests tactile::Attribute::reset
 TEST(Attribute, Reset)
 {
-  Attribute attribute;
+  Attribute attribute {};
 
   attribute.reset(AttributeType::kStr);
   EXPECT_TRUE(attribute.has_default_value());
@@ -159,7 +159,7 @@ TEST(Attribute, Reset)
 /// \tests tactile::Attribute::set
 TEST(Attribute, Set)
 {
-  Attribute attribute;
+  Attribute attribute {};
   EXPECT_TRUE(attribute.has_default_value());
 
   attribute.set("foo");

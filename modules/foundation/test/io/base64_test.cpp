@@ -34,7 +34,7 @@ TEST(Base64, EncodeAndDecodeKnownExample)
 /// \tests tactile::Base64::decode
 TEST(Base64, EncodeAndDecodeRandomData)
 {
-  ByteStream initial_data;
+  ByteStream initial_data {};
   initial_data.reserve(512);
 
   for (usize i = 0; i < 512; ++i) {

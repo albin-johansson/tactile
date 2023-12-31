@@ -103,7 +103,7 @@ auto make_test_layer_hierarchy() -> GroupLayerTestConfig
 /// \tests tactile::GroupLayer::append_layer
 TEST(GroupLayer, AppendLayer)
 {
-  GroupLayer layer;
+  GroupLayer layer {};
   EXPECT_EQ(layer.layer_count(), 0_uz);
 
   layer.append_layer(make_shared<TileLayer>(5, 5));
@@ -130,7 +130,7 @@ TEST(GroupLayer, AppendLayerTo)
    |  |- T
    |- T
    */
-  GroupLayer root;
+  GroupLayer root {};
 
   auto group1 = make_shared<GroupLayer>();
   auto group2 = make_shared<GroupLayer>();
@@ -243,7 +243,7 @@ TEST(GroupLayer, MoveLayerUp)
   EXPECT_EQ(root->get_layer_global_index(hierarchy.t1->meta().uuid()), 9_uz);
   EXPECT_EQ(root->get_layer_global_index(hierarchy.o4->meta().uuid()), 10_uz);
   EXPECT_EQ(root->get_layer_global_index(hierarchy.t4->meta().uuid()), 11_uz);
-      // clang-format on
+  // clang-format on
 
   EXPECT_TRUE(root->move_layer_up(hierarchy.g4->meta().uuid()));
 
@@ -299,7 +299,7 @@ TEST(GroupLayer, MoveLayerDown)
 
   EXPECT_EQ(root->get_layer_global_index(hierarchy.o4->meta().uuid()), 10_uz);
   EXPECT_EQ(root->get_layer_global_index(hierarchy.t4->meta().uuid()), 11_uz);
-      // clang-format on
+  // clang-format on
 
   EXPECT_TRUE(root->move_layer_down(hierarchy.g3->meta().uuid()));
 
@@ -322,7 +322,7 @@ TEST(GroupLayer, MoveLayerDown)
 
   EXPECT_EQ(root->get_layer_global_index(hierarchy.o4->meta().uuid()), 10_uz);
   EXPECT_EQ(root->get_layer_global_index(hierarchy.t4->meta().uuid()), 11_uz);
-      // clang-format on
+  // clang-format on
 }
 
 /// \tests tactile::GroupLayer::can_move_layer_up
@@ -468,4 +468,3 @@ TEST(GroupLayer, ConstIteration)
 
   EXPECT_EQ(count, 12);
 }
-

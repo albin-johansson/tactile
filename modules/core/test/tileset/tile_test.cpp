@@ -23,7 +23,7 @@ TEST(Tile, SetAnimation)
   const Rectangle region {.position = {0, 0}, .size = {10, 10}};
   Tile tile {region};
 
-  TileAnimation animation;
+  TileAnimation animation {};
   animation.append_frame(TileAnimationFrame {TileIndex {10}, Milliseconds {123}});
   animation.append_frame(TileAnimationFrame {TileIndex {20}, Milliseconds {456}});
 

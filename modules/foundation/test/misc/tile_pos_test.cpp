@@ -10,7 +10,7 @@ using namespace tactile::int_literals;
 /// \tests tactile::TilePos::TilePos
 TEST(TilePos, DefaultConstructor)
 {
-  const TilePos pos;
+  const TilePos pos {};
   EXPECT_EQ(pos.row, 0_z);
   EXPECT_EQ(pos.col, 0_z);
 }
