@@ -55,7 +55,7 @@ auto main(const int argc, char* argv[]) -> int
   TACTILE_LOG_INFO("Tactile " TACTILE_VERSION_STRING);
 
   try {
-    tactile::rng_init();
+    tactile::initialize_rng();
 
     const tactile::Protobuf protobuf {};
 

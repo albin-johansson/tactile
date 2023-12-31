@@ -56,7 +56,7 @@ template <typename T>
 
 }  // namespace
 
-void rng_init()
+void initialize_rng()
 {
   (void) _get_random_engine();
 }
@@ -86,12 +86,12 @@ auto next_random_f32(const float32 min, const float32 max) -> float32
   return _next_random(min, max);
 }
 
-auto next_bool() -> bool
+auto next_random_bool() -> bool
 {
   return _next_random(0, 99) < 50;
 }
 
-auto next_normalized_float() -> float
+auto next_random_normalized_float() -> float
 {
   return next_random_f32(0.0f, 1.0f);
 }

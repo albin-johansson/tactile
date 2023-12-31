@@ -22,7 +22,7 @@ auto main(int argc, char* argv[]) -> int
   set_default_logger(&logger);
   const ScopeGuard logger_guard {[] { set_default_logger(nullptr); }};
 
-  rng_init();
+  initialize_rng();
 
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

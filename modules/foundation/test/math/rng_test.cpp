@@ -31,11 +31,11 @@ TEST(RNG, NextRandomF32)
   EXPECT_LE(value, 1.0f);
 }
 
-/// \tests tactile::next_bool
-TEST(RNG, NextBool)
+/// \tests tactile::next_random_bool
+TEST(RNG, NextRandomBool)
 {
   Array<bool, 2'000> values;
-  std::generate(values.begin(), values.end(), &next_bool);
+  std::generate(values.begin(), values.end(), &next_random_bool);
 
   const auto true_count = std::count(values.begin(), values.end(), true);
   const auto false_count = std::ssize(values) - true_count;
@@ -48,10 +48,10 @@ TEST(RNG, NextBool)
   EXPECT_LT(ratio, 1.20);
 }
 
-/// \tests tactile::next_normalized_float
-TEST(RNG, NextNormalizedFloat)
+/// \tests tactile::next_random_normalized_float
+TEST(RNG, NextRandomNormalizedFloat)
 {
-  const auto value = next_normalized_float();
+  const auto value = next_random_normalized_float();
   EXPECT_GT(value, 0.0f);
   EXPECT_LT(value, 1.0f);
 }

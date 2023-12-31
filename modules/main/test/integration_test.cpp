@@ -26,7 +26,7 @@ auto main(int argc, char* argv[]) -> int
   set_default_logger(&logger);
   const ScopeGuard logger_guard {[] { set_default_logger(nullptr); }};
 
-  rng_init();
+  initialize_rng();
 
   TactileYmlFormat tactile_yml_format {};
   TiledXmlFormat tiled_xml_format {};
