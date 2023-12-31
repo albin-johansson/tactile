@@ -26,7 +26,10 @@ TEST(AttachedTileset, ToIndex)
   const auto last_id = attached_tileset.get_last_tile_id();
 
   EXPECT_EQ(attached_tileset.to_index(first_id), TileIndex {0});
+  EXPECT_EQ(attached_tileset.to_index(first_id - TileID {1}), kNothing);
+
   EXPECT_EQ(attached_tileset.to_index(last_id), tileset->last_tile_index());
+  EXPECT_EQ(attached_tileset.to_index(last_id + TileID {1}), kNothing);
 }
 
 /// \tests tactile::AttachedTileset::has_tile
@@ -42,8 +45,8 @@ TEST(AttachedTileset, HasTile)
   EXPECT_TRUE(attached_tileset.has_tile(first_id));
   EXPECT_TRUE(attached_tileset.has_tile(last_id));
 
-  EXPECT_FALSE(attached_tileset.has_tile(TileID {first_id.value - 1}));
-  EXPECT_FALSE(attached_tileset.has_tile(TileID {last_id.value + 1}));
+  EXPECT_FALSE(attached_tileset.has_tile(first_id - TileID {1}));
+  EXPECT_FALSE(attached_tileset.has_tile(last_id + TileID {1}));
 }
 
 /// \tests tactile::AttachedTileset::get_first_tile_id

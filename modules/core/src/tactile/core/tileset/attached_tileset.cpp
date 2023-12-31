@@ -16,10 +16,13 @@ AttachedTileset::AttachedTileset(Shared<Tileset> tileset, const TileID first_til
                                                  mTileset->last_tile_index().value)}
 {}
 
-auto AttachedTileset::to_index(const TileID tile_id) const -> TileIndex
+auto AttachedTileset::to_index(const TileID tile_id) const -> Maybe<TileIndex>
 {
-  TACTILE_ASSERT(has_tile(tile_id));
-  return TileIndex {tile_id.value - mFirstTileId.value};
+  if (has_tile(tile_id)) {
+    return TileIndex {tile_id.value - mFirstTileId.value};
+  }
+
+  return kNothing;
 }
 
 auto AttachedTileset::has_tile(const TileID tile_id) const -> bool
@@ -37,14 +40,26 @@ auto AttachedTileset::get_last_tile_id() const -> TileID
   return mLastTileId;
 }
 
-auto AttachedTileset::get_tileset() -> Tileset&
+auto AttachedTileset::tileset() -> Tileset&
 {
+  TACTILE_ASSERT(mTileset != nullptr);
   return *mTileset;
 }
 
-auto AttachedTileset::get_tileset() const -> const Tileset&
+auto AttachedTileset::tileset() const -> const Tileset&
 {
+  TACTILE_ASSERT(mTileset != nullptr);
   return *mTileset;
+}
+
+auto AttachedTileset::viewport() -> DocumentViewport&
+{
+  return mViewport;
+}
+
+auto AttachedTileset::viewport() const -> const DocumentViewport&
+{
+  return mViewport;
 }
 
 }  // namespace tactile

@@ -17,6 +17,9 @@ TACTILE_STRONG_TYPE_ADD_BINARY_OP(TileIndex, -);
 /** \brief Strong type for global tile identifiers. */
 TACTILE_STRONG_TYPE(TileID, int32);
 
+TACTILE_STRONG_TYPE_ADD_BINARY_OP(TileID, +);
+TACTILE_STRONG_TYPE_ADD_BINARY_OP(TileID, -);
+
 /** \brief Strong type for layer identifiers. */
 TACTILE_STRONG_TYPE(LayerID, int32);
 

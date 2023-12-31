@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
+#include "tactile/core/document/document_viewport.hpp"
 #include "tactile/core/tileset/tileset.hpp"
 #include "tactile/foundation/container/smart_ptr.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
@@ -29,22 +30,16 @@ class TACTILE_CORE_API AttachedTileset final {
   /**
    * \brief Converts a tile identifier to a tile index.
    *
-   * \pre The tile identifier must be associated with the attached tileset.
-   *
-   * \param tile_id the tile identifier.
-   *
+   * \param  tile_id the tile identifier.
    * \return a tile index.
-   *
-   * \see `has_tile()`
    */
   [[nodiscard]]
-  auto to_index(TileID tile_id) const -> TileIndex;
+  auto to_index(TileID tile_id) const -> Maybe<TileIndex>;
 
   /**
    * \brief Indicates whether a tile identifier is contained in the tileset.
    *
-   * \param tile_id the tile identifier.
-   *
+   * \param  tile_id the tile identifier.
    * \return true if the identifier is valid; false otherwise.
    */
   [[nodiscard]]
@@ -72,18 +67,29 @@ class TACTILE_CORE_API AttachedTileset final {
    * \return a tileset reference.
    */
   [[nodiscard]]
-  auto get_tileset() -> Tileset&;
+  auto tileset() -> Tileset&;
+
+  /** \copydoc tileset() */
+  [[nodiscard]]
+  auto tileset() const -> const Tileset&;
 
   /**
-   * \copydoc get_tileset()
+   * \brief Returns the viewport used when displaying the tileset in the tileset dock.
+   *
+   * \return the associated viewport (not the document viewport).
    */
   [[nodiscard]]
-  auto get_tileset() const -> const Tileset&;
+  auto viewport() -> DocumentViewport&;
+
+  /** \copydoc viewport() */
+  [[nodiscard]]
+  auto viewport() const -> const DocumentViewport&;
 
  private:
   Shared<Tileset> mTileset;
   TileID mFirstTileId;
   TileID mLastTileId;
+  DocumentViewport mViewport {};
 };
 
 }  // namespace tactile
