@@ -7,7 +7,7 @@
 #include <gtest/gtest.h>
 
 #include "tactile/foundation/debug/exception.hpp"
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 #include "testutil/tileset_helpers.hpp"
 
 using namespace tactile;

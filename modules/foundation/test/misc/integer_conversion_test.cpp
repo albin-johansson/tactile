@@ -1,6 +1,6 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 
 #include <limits>  // numeric_limits
 
@@ -17,7 +17,7 @@ inline constexpr auto kMaxU32 = std::numeric_limits<uint32>::max();
 }  // namespace
 
 /// \tests tactile::narrow
-TEST(Conversion, Narrow)
+TEST(IntegerConversion, Narrow)
 {
   // Signed -> signed
   EXPECT_EQ(narrow<int8>(int8 {42}), int8 {42});
@@ -49,7 +49,7 @@ TEST(Conversion, Narrow)
 }
 
 /// \tests tactile::narrow
-TEST(Conversion, NarrowWithOverflow)
+TEST(IntegerConversion, NarrowWithOverflow)
 {
   EXPECT_THROW((void) narrow<int8>(int16 {129}), Exception);
   EXPECT_THROW((void) narrow<int8>(uint16 {129}), Exception);
@@ -62,7 +62,7 @@ TEST(Conversion, NarrowWithOverflow)
 }
 
 /// \tests tactile::narrow
-TEST(Conversion, NarrowWithUnderflow)
+TEST(IntegerConversion, NarrowWithUnderflow)
 {
   EXPECT_THROW((void) narrow<uint8>(int8 {-1}), Exception);
   EXPECT_THROW((void) narrow<uint8>(int16 {-1}), Exception);
@@ -75,7 +75,7 @@ TEST(Conversion, NarrowWithUnderflow)
 }
 
 /// \tests tactile::as_signed
-TEST(Conversion, AsSigned)
+TEST(IntegerConversion, AsSigned)
 {
   EXPECT_EQ(as_signed(0u), 0);
   EXPECT_EQ(as_signed(42u), 42);
@@ -88,7 +88,7 @@ TEST(Conversion, AsSigned)
 }
 
 /// \tests tactile::as_unsigned
-TEST(Conversion, AsUnsigned)
+TEST(IntegerConversion, AsUnsigned)
 {
   EXPECT_EQ(as_unsigned(0), 0u);
   EXPECT_EQ(as_unsigned(42), 42u);

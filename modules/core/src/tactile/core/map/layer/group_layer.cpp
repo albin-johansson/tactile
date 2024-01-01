@@ -9,7 +9,7 @@
 #include "tactile/core/map/layer/layer_visitor.hpp"
 #include "tactile/core/map/layer/object_layer.hpp"
 #include "tactile/core/map/layer/tile_layer.hpp"
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 
 namespace tactile {
 

@@ -10,7 +10,7 @@
 
 #include "tactile/foundation/debug/generic_error.hpp"
 #include "tactile/foundation/log/logger.hpp"
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 #include "tactile/tiled-xml-format/common.hpp"
 #include "tactile/tiled-xml-format/parse/meta_parser.hpp"
 #include "tactile/tiled-xml-format/parse/object_parser.hpp"

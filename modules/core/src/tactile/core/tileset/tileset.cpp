@@ -5,7 +5,7 @@
 #include "tactile/foundation/debug/assert.hpp"
 #include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/debug/validation.hpp"
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 
 namespace tactile {
 

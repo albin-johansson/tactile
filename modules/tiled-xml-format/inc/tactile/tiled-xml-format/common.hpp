@@ -10,7 +10,7 @@
 #include "tactile/foundation/container/file_path.hpp"
 #include "tactile/foundation/container/string.hpp"
 #include "tactile/foundation/functional/result.hpp"
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 #include "tactile/foundation/prelude.hpp"
 #include "tactile/tiled-xml-format/api.hpp"
 

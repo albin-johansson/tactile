@@ -6,7 +6,7 @@
 
 #include "tactile/foundation/io/tile_matrix_encoding.hpp"
 #include "tactile/foundation/log/logger.hpp"
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 #include "tactile/tactile-yml-format/emit/meta_emitter.hpp"
 #include "tactile/tactile-yml-format/emit/object_emitter.hpp"
 

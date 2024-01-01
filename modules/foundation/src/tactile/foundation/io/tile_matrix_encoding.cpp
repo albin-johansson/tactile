@@ -10,7 +10,7 @@
 #include "tactile/foundation/io/base64.hpp"
 #include "tactile/foundation/io/compression/compression.hpp"
 #include "tactile/foundation/io/compression/compression_error.hpp"
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 #include "tactile/foundation/platform/bits.hpp"
 
 namespace tactile {

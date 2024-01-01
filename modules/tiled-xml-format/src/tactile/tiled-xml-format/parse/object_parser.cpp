@@ -5,7 +5,7 @@
 #include <iterator>  // distance
 #include <utility>   // move
 
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 #include "tactile/tiled-xml-format/common.hpp"
 #include "tactile/tiled-xml-format/parse/meta_parser.hpp"
 

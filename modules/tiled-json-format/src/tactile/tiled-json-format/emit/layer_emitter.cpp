@@ -5,7 +5,7 @@
 #include <utility>  // move
 
 #include "tactile/foundation/io/tile_matrix_encoding.hpp"
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 #include "tactile/tiled-json-format/emit/meta_emitter.hpp"
 #include "tactile/tiled-json-format/emit/object_emitter.hpp"
 

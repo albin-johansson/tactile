@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 
 using namespace tactile;
 

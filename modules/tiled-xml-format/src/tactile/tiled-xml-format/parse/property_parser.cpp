@@ -6,7 +6,7 @@
 #include <utility>   // move
 
 #include "tactile/foundation/io/save/save_format_error.hpp"
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 #include "tactile/tiled-xml-format/common.hpp"
 
 namespace tactile::tiled::tmx {

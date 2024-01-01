@@ -2,7 +2,7 @@
 
 #include "tactile/core/tileset/tile_animation.hpp"
 
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 
 namespace tactile {
 

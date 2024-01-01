@@ -13,7 +13,7 @@
 #include "tactile/foundation/functional/function.hpp"
 #include "tactile/foundation/io/compression/compression_error.hpp"
 #include "tactile/foundation/log/logger.hpp"
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 
 namespace tactile {
 namespace {

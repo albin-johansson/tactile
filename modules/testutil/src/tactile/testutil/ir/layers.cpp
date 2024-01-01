@@ -6,7 +6,7 @@
 
 #include <fmt/format.h>
 
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 #include "tactile/testutil/ir/properties.hpp"
 
 namespace tactile::testutil {

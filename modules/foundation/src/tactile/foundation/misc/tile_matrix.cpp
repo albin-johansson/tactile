@@ -3,7 +3,7 @@
 #include "tactile/foundation/misc/tile_matrix.hpp"
 
 #include "tactile/foundation/debug/assert.hpp"
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 
 namespace tactile {
 

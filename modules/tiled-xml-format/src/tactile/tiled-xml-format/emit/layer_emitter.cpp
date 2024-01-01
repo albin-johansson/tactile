@@ -7,7 +7,7 @@
 #include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/io/tile_matrix_encoding.hpp"
 #include "tactile/foundation/log/logger.hpp"
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 #include "tactile/tiled-xml-format/emit/object_emitter.hpp"
 #include "tactile/tiled-xml-format/emit/property_emitter.hpp"
 

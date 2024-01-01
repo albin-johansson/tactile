@@ -8,7 +8,7 @@
 #include "tactile/foundation/container/string.hpp"
 #include "tactile/foundation/container/vector.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {

@@ -9,7 +9,7 @@
 
 #include <fast_float/fast_float.h>
 
-#include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 
 namespace tactile {
 namespace {
