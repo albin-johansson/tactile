@@ -8,6 +8,7 @@
 #include "tactile/foundation/io/tile_matrix_encoding.hpp"
 #include "tactile/foundation/log/logger.hpp"
 #include "tactile/foundation/misc/conversion.hpp"
+#include "tactile/foundation/misc/string_conversion.hpp"
 #include "tactile/tactile-yml-format/parse/common.hpp"
 #include "tactile/tactile-yml-format/parse/meta_parser.hpp"
 #include "tactile/tactile-yml-format/parse/object_parser.hpp"

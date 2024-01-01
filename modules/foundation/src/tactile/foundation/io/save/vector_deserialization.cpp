@@ -2,6 +2,8 @@
 
 #include "tactile/foundation/io/save/vector_deserialization.hpp"
 
+#include "tactile/foundation/misc/string_conversion.hpp"
+
 namespace tactile {
 namespace {
 

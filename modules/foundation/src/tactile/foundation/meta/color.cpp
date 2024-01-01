@@ -7,6 +7,8 @@
 
 #include <fmt/format.h>
 
+#include "tactile/foundation/misc/string_conversion.hpp"
+
 namespace tactile {
 
 using namespace int_literals;
