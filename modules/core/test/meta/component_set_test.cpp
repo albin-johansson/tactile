@@ -111,9 +111,9 @@ TEST(ComponentSet, Each)
 {
   ComponentSet component_set {};
 
-  const auto a = component_set.define_component("A").value();
-  const auto b = component_set.define_component("B").value();
-  const auto c = component_set.define_component("C").value();
+  const auto a [[maybe_unused]] = component_set.define_component("A").value();
+  const auto b [[maybe_unused]] = component_set.define_component("B").value();
+  const auto c [[maybe_unused]] = component_set.define_component("C").value();
 
   Set<String> visited_component_names {};
   component_set.each([&](const ComponentDefinition& definition) {

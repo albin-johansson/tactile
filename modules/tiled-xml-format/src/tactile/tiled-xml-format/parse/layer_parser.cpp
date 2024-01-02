@@ -65,13 +65,15 @@ auto parse_tile_layer_csv_data_node(const pugi::xml_node data_node,
   const auto* tile_data_text = data_node.text().get();
   const auto tile_tokens = str_split(tile_data_text, ',');
 
-  usize index = 0;
+  usize tile_index = 0;
+  const auto column_count = as_unsigned(layer.col_count);
+
   for (const auto& tile_token : tile_tokens) {
     if (const auto tile_id = str_to<TileID::value_type>(tile_token)) {
-      const auto [row, col] = to_matrix_index(index, layer.col_count);
+      const auto [row, col] = to_matrix_index(tile_index, column_count);
       tile_matrix[row][col] = TileID {*tile_id};
 
-      ++index;
+      ++tile_index;
     }
     else {
       return unexpected(make_save_format_error(SaveFormatError::kBadTileLayerData));
@@ -121,14 +123,16 @@ auto parse_tile_layer_verbose_data_node(const pugi::xml_node data_node,
   tile_format.encoding = TileEncoding::kPlainText;
   tile_format.compression = CompressionMode::kNone;
 
-  usize tile_index = 0;
   auto tile_matrix = make_tile_matrix(MatrixExtent {layer.row_count, layer.col_count});
+
+  usize tile_index = 0;
+  const auto column_count = as_unsigned(layer.col_count);
 
   const auto tile_node_range = data_node.children("tile");
   for (const auto tile_node : tile_node_range) {
     const auto tile_id = tile_node.attribute("gid").as_int(kEmptyTile.value);
 
-    const auto [row, col] = to_matrix_index(tile_index, layer.col_count);
+    const auto [row, col] = to_matrix_index(tile_index, column_count);
     tile_matrix[row][col] = TileID {tile_id};
 
     ++tile_index;

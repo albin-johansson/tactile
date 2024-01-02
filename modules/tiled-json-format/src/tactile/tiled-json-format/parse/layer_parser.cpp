@@ -11,6 +11,7 @@
 #include "tactile/foundation/io/save/save_format_error.hpp"
 #include "tactile/foundation/io/tile_matrix_encoding.hpp"
 #include "tactile/foundation/log/logger.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 #include "tactile/tiled-json-format/parse/meta_parser.hpp"
 
 namespace tactile::tiled::tmj {
@@ -94,9 +95,11 @@ auto _parse_tile_layer_csv_data(const JSON& tile_data_json, const MatrixExtent& 
   auto tile_matrix = make_tile_matrix(extent);
 
   usize tile_index = 0;
+  const auto column_count = as_unsigned(extent.col_count);
+
   for (const auto& [_, value_json] : tile_data_json.items()) {
     if (value_json.is_number_integer()) {
-      const auto [row, col] = to_matrix_index(tile_index, extent.col_count);
+      const auto [row, col] = to_matrix_index(tile_index, column_count);
       tile_matrix[row][col] = TileID {value_json.get<TileID::value_type>()};
 
       ++tile_index;
