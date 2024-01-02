@@ -7,7 +7,7 @@
 namespace tactile {
 
 /**
- * \brief Represents the supported layer types.
+ * Represents the supported layer types.
  */
 enum class LayerType : uint8 {
   kTileLayer,

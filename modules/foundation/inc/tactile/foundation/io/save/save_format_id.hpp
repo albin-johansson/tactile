@@ -9,7 +9,7 @@
 namespace tactile {
 
 /**
- * \brief Provides identifiers for different save format implementations.
+ * Provides identifiers for different save format implementations.
  */
 enum class SaveFormatId : int8 {
   kUnknown,      ///< An unknown save format.
@@ -20,11 +20,12 @@ enum class SaveFormatId : int8 {
 };
 
 /**
- * \brief Returns a human-readable identifier for a given save format.
+ * Returns a human-readable identifier for a given save format.
  *
- * \param save_format_id a save format identifier.
+ * \param save_format_id A save format identifier.
  *
- * \return a save format name.
+ * \return
+ *    A save format name.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto to_string(SaveFormatId save_format_id) -> StringView;

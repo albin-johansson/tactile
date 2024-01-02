@@ -19,7 +19,7 @@ using PluginDestroyFn = void(IPlugin*);  ///< Signature of a plugin destructor.
 using PluginIdFn = const char*();        ///< Signature of a plugin ID getter.
 
 /**
- * \brief Represents a loaded plugin instance.
+ * Represents a loaded plugin instance.
  */
 struct PluginInstance final {
   Unique<IDynamicLibrary> dll;  ///< The associated dynamic library.
@@ -28,7 +28,7 @@ struct PluginInstance final {
 };
 
 /**
- * \brief Loads and manages a collection of runtime plugins.
+ * Loads and manages a collection of runtime plugins.
  */
 class TACTILE_CORE_API PluginManager final {
  public:
@@ -36,19 +36,20 @@ class TACTILE_CORE_API PluginManager final {
   TACTILE_DEFAULT_MOVE(PluginManager);
 
   /**
-   * \brief Locates and loads plugins, and puts them in a plugin manager.
+   * Locates and loads plugins, and puts them in a plugin manager.
    *
-   * \param plugin_dir         the root plugin directory.
-   * \param renderer_plugin_id the ID of the requested renderer plugin.
+   * \param plugin_dir         The root plugin directory.
+   * \param renderer_plugin_id The ID of the requested renderer plugin.
    *
-   * \return a plugin manager.
+   * \return
+   *    A plugin manager.
    */
   [[nodiscard]]
   static auto load(const FilePath& plugin_dir, StringView renderer_plugin_id)
       -> Maybe<PluginManager>;
 
   /**
-   * \brief Unloads all plugins.
+   * Unloads all plugins.
    */
   ~PluginManager() noexcept;
 

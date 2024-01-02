@@ -11,23 +11,25 @@
 namespace tactile::tiled::tmj {
 
 /**
- * \brief Emits a single TMJ layer JSON object.
+ * Emits a single TMJ layer JSON object.
  *
- * \param layer       the source layer.
- * \param tile_format the tile format used by tile layers.
+ * \param layer       The source layer.
+ * \param tile_format The tile format used by tile layers.
  *
- * \return a JSON object.
+ * \return
+ *    A JSON object.
  */
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto emit_layer(const ir::Layer& layer,
                                        const ir::TileFormat& tile_format) -> Result<JSON>;
 
 /**
- * \brief Emits a JSON array of TMJ layers.
+ * Emits a JSON array of TMJ layers.
  *
- * \param map the source map.
+ * \param map The source map.
  *
- * \return a JSON array.
+ * \return
+ *    A JSON array.
  */
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto emit_layer_array(const ir::Map& map) -> Result<JSON>;

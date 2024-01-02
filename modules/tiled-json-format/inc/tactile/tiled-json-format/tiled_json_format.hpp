@@ -10,9 +10,10 @@
 namespace tactile {
 
 /**
- * \brief Provides import and export support for the Tiled JSON format.
+ * Provides import and export support for the Tiled JSON format.
  *
- * \details This format uses ".tmj" or ".json" file extensions.
+ * \details
+ *    This format uses ".tmj" or ".json" file extensions.
  *
  * \see https://doc.mapeditor.org/en/stable/reference/json-map-format
  */

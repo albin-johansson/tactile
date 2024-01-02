@@ -17,7 +17,7 @@
 namespace tactile {
 
 /**
- * \brief A layer variant consisting of an arbitrary collection of objects.
+ * A layer variant consisting of an arbitrary collection of objects.
  */
 class TACTILE_CORE_API ObjectLayer final : public ILayer {
  public:
@@ -28,29 +28,32 @@ class TACTILE_CORE_API ObjectLayer final : public ILayer {
   void accept(IConstLayerVisitor& visitor) const override;
 
   /**
-   * \brief Adds an object to the layer.
+   * Adds an object to the layer.
    *
-   * \param object the object to add.
+   * \param object The object to add.
    *
-   * \return nothing on success; an error code otherwise.
+   * \return
+   *    Nothing on success; an error code otherwise.
    */
   auto add_object(Object object) -> Result<void>;
 
   /**
-   * \brief Creates a object and adds it to the layer.
+   * Creates a object and adds it to the layer.
    *
-   * \param type the type of the new object.
+   * \param type The type of the new object.
    *
-   * \return the created object.
+   * \return
+   *    The created object.
    */
   auto emplace_object(ObjectType type) -> Object&;
 
   /**
-   * \brief Removes an object from the layer.
+   * Removes an object from the layer.
    *
-   * \param uuid the target object UUID.
+   * \param uuid The target object UUID.
    *
-   * \return the removed object.
+   * \return
+   *    The removed object.
    */
   auto remove_object(const UUID& uuid) -> Maybe<Object>;
 
@@ -61,11 +64,12 @@ class TACTILE_CORE_API ObjectLayer final : public ILayer {
   void set_visible(bool visible) override;
 
   /**
-   * \brief Returns an object in the layer.
+   * Returns an object in the layer.
    *
-   * \param uuid the UUID of the desired object.
+   * \param uuid The UUID of the desired object.
    *
-   * \return the requested object.
+   * \return
+   *    The requested object.
    */
   [[nodiscard]]
   auto get_object(const UUID& uuid) -> Object&;
@@ -75,11 +79,12 @@ class TACTILE_CORE_API ObjectLayer final : public ILayer {
   auto get_object(const UUID& uuid) const -> const Object&;
 
   /**
-   * \brief Attempts to find and return an object in the layer.
+   * Attempts to find and return an object in the layer.
    *
-   * \param uuid the UUID of the desired object.
+   * \param uuid The UUID of the desired object.
    *
-   * \return a pointer to the found object, or a null pointer.
+   * \return
+   *    The found object, or a null pointer.
    */
   [[nodiscard]]
   auto find_object(const UUID& uuid) -> Object*;
@@ -89,19 +94,21 @@ class TACTILE_CORE_API ObjectLayer final : public ILayer {
   auto find_object(const UUID& uuid) const -> const Object*;
 
   /**
-   * \brief Indicates whether the layer contains an object with the specified UUID.
+   * Indicates whether the layer contains an object with the specified UUID.
    *
-   * \param uuid the object UUID to look for.
+   * \param uuid The object UUID to look for.
    *
-   * \return true if an object was found; false otherwise.
+   * \return
+   *    True if an object was found; false otherwise.
    */
   [[nodiscard]]
   auto has_object(const UUID& uuid) const -> bool;
 
   /**
-   * \brief Returns the number of objects in the layer.
+   * Returns the number of objects in the layer.
    *
-   * \return an object count.
+   * \return
+   *    An object count.
    */
   [[nodiscard]]
   auto object_count() const -> ssize;
@@ -126,7 +133,7 @@ class TACTILE_CORE_API ObjectLayer final : public ILayer {
 
  private:
   LayerBehaviorDelegate mDelegate;
-  TreeMap<UUID, Object> mObjects;  // TODO HashMap? Vector with UUIDs for ordering?
+  TreeMap<UUID, Object> mObjects {};  // TODO HashMap? Vector with UUIDs for ordering?
 };
 
 }  // namespace tactile

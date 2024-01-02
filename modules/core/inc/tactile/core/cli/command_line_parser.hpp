@@ -11,7 +11,7 @@
 namespace tactile {
 
 /**
- * \brief Represents the command-line options.
+ * Represents the command-line options.
  */
 struct CommandLineOptions final {
   LogLevel log_level;       ///< The logger verbosity level.
@@ -21,19 +21,20 @@ struct CommandLineOptions final {
 };
 
 /**
- * \brief Used to parse command-line options.
+ * Used to parse command-line options.
  */
 class TACTILE_CORE_API CommandLineParser final {
  public:
   TACTILE_STATIC_CLASS(CommandLineParser);
 
   /**
-   * \brief Parses command-line arguments.
+   * Parses command-line arguments.
    *
-   * \param argc the number of arguments.
-   * \param argv the command-line arguments from `main`.
+   * \param argc The number of arguments.
+   * \param argv The command-line arguments from `main`.
    *
-   * \return the parsed command-line options.
+   * \return
+   *    The parsed command-line options.
    */
   [[nodiscard]]
   static auto parse(int argc, char** argv) -> CommandLineOptions;

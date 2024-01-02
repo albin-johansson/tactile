@@ -26,15 +26,16 @@
 namespace tactile {
 
 /**
- * \brief Logs an error message and terminates the program.
+ * Logs an error message and terminates the program.
  *
- * \details This function is called by the assert macros if an assertion fails, unless
- *          TACTILE_ENABLE_ASSERTIONS is defined as 0.
+ * \details
+ *    This function is called by the assert macros if an assertion fails, unless
+ *    TACTILE_ENABLE_ASSERTIONS is defined as 0.
  *
- * \param expr the assertion expression.
- * \param msg  the assertion description message.
- * \param file the file that contains the assertion.
- * \param line the file line number of the assertion.
+ * \param expr The assertion expression.
+ * \param msg  The assertion description message.
+ * \param file The file that contains the assertion.
+ * \param line The file line number of the assertion.
  */
 [[noreturn]]
 TACTILE_FOUNDATION_API void on_assertion_failed(const char* expr,

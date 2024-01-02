@@ -33,24 +33,25 @@ struct GroupLayerTestConfig final {
 };
 
 /**
- * \brief Creates a layer hierarchy for testing.
+ * Creates a layer hierarchy for testing.
  *
- * \details The hierarchy is illustrated in the following diagram.
- *          \code
- *          G (root)
- *          |--> T (t1)
- *          |--> G (g1)
- *          |    |--> G (g2)
- *          |    |    |--> O (o1)
- *          |    |    |--> G (g3)
- *          |    |    |--> O (o2)
- *          |    |--> T (t2)
- *          |    |--> G (g4)
- *          |    |    |--> O (o3)
- *          |    |--> T (t3)
- *          |--> O (o4)
- *          |--> T (t4)
- *          \endcode
+ * \details
+ *    The hierarchy is illustrated in the following diagram.
+ *    \code
+ *    G (root)
+ *    |--> T (t1)
+ *    |--> G (g1)
+ *    |    |--> G (g2)
+ *    |    |    |--> O (o1)
+ *    |    |    |--> G (g3)
+ *    |    |    |--> O (o2)
+ *    |    |--> T (t2)
+ *    |    |--> G (g4)
+ *    |    |    |--> O (o3)
+ *    |    |--> T (t3)
+ *    |--> O (o4)
+ *    |--> T (t4)
+ *    \endcode
  */
 [[nodiscard]]
 auto make_test_layer_hierarchy() -> GroupLayerTestConfig

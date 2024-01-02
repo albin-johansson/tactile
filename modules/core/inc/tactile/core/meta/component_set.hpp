@@ -15,8 +15,7 @@
 namespace tactile {
 
 /**
- * \brief
- *    Represents a component definition.
+ * Represents a component definition.
  */
 struct ComponentDefinition final {
   String name;          ///< The component name.
@@ -24,8 +23,7 @@ struct ComponentDefinition final {
 };
 
 /**
- * \brief
- *    Represents a collection of component definitions associated with a document.
+ * Represents a collection of component definitions associated with a document.
  *
  * \details
  *    Each component in a component set features a unique user-provided name that serves as the
@@ -36,8 +34,7 @@ struct ComponentDefinition final {
 class TACTILE_CORE_API ComponentSet final {
  public:
   /**
-   * \brief
-   *    Defines a new empty component.
+   * Defines a new empty component.
    *
    * \note
    *    This function has no effect if the specified name is already in use by another component.
@@ -50,8 +47,7 @@ class TACTILE_CORE_API ComponentSet final {
   auto define_component(String name) -> Maybe<UUID>;
 
   /**
-   * \brief
-   *    Removes a component from the set.
+   * Removes a component from the set.
    *
    * \param uuid The UUID of the desired component.
    *
@@ -61,8 +57,7 @@ class TACTILE_CORE_API ComponentSet final {
   auto remove_component(const UUID& uuid) -> Maybe<ComponentDefinition>;
 
   /**
-   * \brief
-   *    Attempts to find a component with a given name.
+   * Attempts to find a component with a given name.
    *
    * \param name The name of the desired component.
    *
@@ -73,8 +68,7 @@ class TACTILE_CORE_API ComponentSet final {
   auto get_component_with_name(StringView name) const -> Maybe<UUID>;
 
   /**
-   * \brief
-   *    Returns a component stored in the set.
+   * Returns a component stored in the set.
    *
    * \param uuid The UUID of the desired component.
    *
@@ -89,8 +83,7 @@ class TACTILE_CORE_API ComponentSet final {
   auto get_component(const UUID& uuid) const -> const Component&;
 
   /**
-   * \brief
-   *    Indicates whether the set has a component with a given UUID.
+   * Indicates whether the set has a component with a given UUID.
    *
    * \param uuid The component UUID to look for.
    *
@@ -101,8 +94,7 @@ class TACTILE_CORE_API ComponentSet final {
   auto has_component(const UUID& uuid) const -> bool;
 
   /**
-   * \brief
-   *    Returns the number of components in the set.
+   * Returns the number of components in the set.
    *
    * \return
    *    A component count.
@@ -111,8 +103,7 @@ class TACTILE_CORE_API ComponentSet final {
   auto component_count() const -> ssize;
 
   /**
-   * \brief
-   *    Invokes a callback for each component in the set.
+   * Invokes a callback for each component in the set.
    *
    * \param callable The function object.
    */

@@ -9,7 +9,7 @@
 namespace tactile {
 
 /**
- * \brief Provides compression and decompression using the Zstandard algorithm.
+ * Provides compression and decompression using the Zstandard algorithm.
  *
  * \see https://github.com/facebook/zstd
  */

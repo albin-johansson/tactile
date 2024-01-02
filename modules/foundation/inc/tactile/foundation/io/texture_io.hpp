@@ -12,7 +12,7 @@
 namespace tactile {
 
 /**
- * \brief Represents a loaded image resource.
+ * Represents a loaded image resource.
  */
 struct TextureData final {
   Managed<uchar> pixels;
@@ -20,11 +20,12 @@ struct TextureData final {
 };
 
 /**
- * \brief Attempts to load a texture from disk.
+ * Attempts to load a texture from disk.
  *
- * \param path the file path to the image.
+ * \param path The file path to the image.
  *
- * \return the loaded texture.
+ * \return
+ *    The loaded texture.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto load_texture(const FilePath& path) -> Result<TextureData>;

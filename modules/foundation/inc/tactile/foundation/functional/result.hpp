@@ -12,7 +12,7 @@ namespace tactile {
 using ErrorCode = std::error_code;
 
 /**
- * \brief Alias for a value of expected type `T`, or an error code in unexpected cases.
+ * Alias for a value of expected type `T`, or an error code in unexpected cases.
  *
  * \see `Expected`
  */

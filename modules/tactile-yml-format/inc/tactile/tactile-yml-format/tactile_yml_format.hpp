@@ -9,14 +9,16 @@
 namespace tactile {
 
 /**
- * \brief Provides import and export support for the Tactile YAML format.
+ * Provides import and export support for the Tactile YAML format.
  *
- * \details Disabling "strict mode" when parsing with this format has the following effects.
- *          1. Properties may omit the otherwise required `value` attribute, and will assume the default
- *             values based on the `type` attribute instead in such cases.
- *          2. Images referenced by tilesets do not have to exist.
+ * \details
+ *    Disabling "strict mode" when parsing with this format has the following effects.
+ *    1. Properties may omit the otherwise required `value` attribute, and will assume
+ *       the default values based on the `type` attribute instead in such cases.
+ *    2. Images referenced by tilesets do not have to exist.
  *
- * \note This format uses ".yml" or ".yaml" file extensions.
+ * \note
+ *    This format uses ".yml" or ".yaml" file extensions.
  *
  * \see `docs/yaml-format.md` for more details.
  *

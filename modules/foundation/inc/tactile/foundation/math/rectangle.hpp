@@ -9,7 +9,7 @@
 namespace tactile {
 
 /**
- * \brief Represents a rectangle with integer accuracy.
+ * Represents a rectangle with integer accuracy.
  */
 struct Rectangle final {
   Int2 position {};
@@ -19,7 +19,7 @@ struct Rectangle final {
 };
 
 /**
- * \brief Represents a rectangle with floating-point accuracy.
+ * Represents a rectangle with floating-point accuracy.
  */
 struct FRectangle final {
   Float2 position {};

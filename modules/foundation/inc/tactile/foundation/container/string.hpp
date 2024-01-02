@@ -27,25 +27,28 @@ using NativeString = std::basic_string<NativeChar>;
 using NativeStringView = std::basic_string_view<NativeChar>;
 
 /**
- * \brief Creates a string using the native filesystem character type.
+ * Creates a string using the native filesystem character type.
  *
  * \param str the source string, may be null
  *
- * \return the corresponding native string, or nothing if something went wrong.
+ * \return
+ *    The corresponding native string, or nothing if something went wrong.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto make_native_string(const char* str) -> Maybe<NativeString>;
 
 /**
- * \brief Splits a string into a collection of tokens, delimited by a specific character.
+ * Splits a string into a collection of tokens, delimited by a specific character.
  *
- * \note Consider the `str_to_multiple_i32` family of functions over this one if the aim
- *       is to convert the tokens into integers.
+ * \note
+ *    Consider the `str_to_multiple_i32` family of functions over this one if the aim
+ *    is to convert the tokens into integers.
  *
- * \param str       the source string.
- * \param separator the character used as a delimiter.
+ * \param str       The source string.
+ * \param separator The character used as a delimiter.
  *
- * \return the separated tokens.
+ * \return
+ *    The separated tokens.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto str_split(StringView str, char separator) -> Vector<String>;

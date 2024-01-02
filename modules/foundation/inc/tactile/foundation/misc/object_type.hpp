@@ -7,7 +7,7 @@
 namespace tactile {
 
 /**
- * \brief Represents the supported layer object types.
+ * Represents the supported layer object types.
  */
 enum class ObjectType : uint8 {
   kPoint,

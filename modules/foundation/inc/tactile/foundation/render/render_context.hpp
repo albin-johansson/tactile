@@ -10,47 +10,51 @@
 namespace tactile {
 
 /**
- * \brief Provides the primary API to access the configured render context resources.
+ * Provides the primary API to access the configured render context resources.
  *
- * \details This class is used by renderer backends to make their resources available to
- *          the rest of the application.
+ * \details
+ *    This class is used by renderer backends to make their resources available to
+ *    the rest of the application.
  */
 class TACTILE_FOUNDATION_API RenderContext final {
  public:
   /**
-   * \brief Returns the core render context instance.
+   * Returns the core render context instance.
    *
-   * \return a render context.
+   * \return
+   *    A render context.
    */
   [[nodiscard]]
   static auto get() noexcept -> RenderContext&;
 
   /**
-   * \brief Sets the associated window.
+   * Sets the associated window.
    *
-   * \param window the window that will be installed.
+   * \param window The window that will be installed.
    */
   void set_window(IWindow* window) noexcept;
 
   /**
-   * \brief Sets the associated renderer.
+   * Sets the associated renderer.
    *
-   * \param renderer the renderer that will be installed.
+   * \param renderer The renderer that will be installed.
    */
   void set_renderer(IRenderer* renderer) noexcept;
 
   /**
-   * \brief Returns the installed window, if any.
+   * Returns the installed window, if any.
    *
-   * \return a window.
+   * \return
+   *    A window.
    */
   [[nodiscard]]
   auto get_window() noexcept -> IWindow*;
 
   /**
-   * \brief Returns the installed renderer, if any.
+   * Returns the installed renderer, if any.
    *
-   * \return a renderer.
+   * \return
+   *    A renderer.
    */
   [[nodiscard]]
   auto get_renderer() noexcept -> IRenderer*;

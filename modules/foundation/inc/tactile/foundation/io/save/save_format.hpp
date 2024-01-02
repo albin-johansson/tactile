@@ -14,25 +14,25 @@
 namespace tactile {
 
 /**
- * \interface ISaveFormat
+ * Interface for save file format reader/parser implementations.
  *
- * \brief Interface for save file format reader/parser implementations.
- *
- * \details Save format implementations aren't required to support both save and load
- *          operations, and may simply report an error instead. However, any useful
- *          implementation would of course provide at least one of these operations.
+ * \details 
+ *    Save format implementations aren't required to support both save and load
+ *    operations, and may simply report an error instead. However, any useful
+ *    implementation would of course provide at least one of these operations.
  */
 class ISaveFormat {
  public:
   TACTILE_INTERFACE_CLASS(ISaveFormat);
 
   /**
-   * \brief Attempts to load a map file.
+   * Attempts to load a map file.
    *
-   * \param map_path the path to the map file.
-   * \param options  the read options.
+   * \param map_path The path to the map file.
+   * \param options  The read options.
    *
-   * \return the loaded map, or an error code on failure.
+   * \return
+   *    The loaded map, or an error code on failure.
    */
   [[nodiscard]]
   virtual auto load_map(const FilePath& map_path,
@@ -40,12 +40,13 @@ class ISaveFormat {
       -> Result<ir::Map> = 0;
 
   /**
-   * \brief Attempts to load a standalone tileset file.
+   * Attempts to load a standalone tileset file.
    *
-   * \param tileset_path the path to the tileset file.
-   * \param options      the read options.
+   * \param tileset_path The path to the tileset file.
+   * \param options      The read options.
    *
-   * \return the loaded tileset, or an error code on failure.
+   * \return
+   *    The loaded tileset, or an error code on failure.
    */
   [[nodiscard]]
   virtual auto load_tileset(const FilePath& tileset_path,
@@ -53,13 +54,14 @@ class ISaveFormat {
       -> Result<ir::Tileset> = 0;
 
   /**
-   * \brief Attempts to save a map.
+   * Attempts to save a map.
    *
-   * \param map_path the map file path.
-   * \param map      the map that will be saved.
-   * \param options  the write options.
+   * \param map_path The map file path.
+   * \param map      The map that will be saved.
+   * \param options  The write options.
    *
-   * \return nothing on success, or an error code on failure.
+   * \return
+   *    Nothing on success, or an error code on failure.
    */
   [[nodiscard]]
   virtual auto save_map(const FilePath& map_path,
@@ -67,13 +69,14 @@ class ISaveFormat {
                         const SaveFormatWriteOptions& options) const -> Result<void> = 0;
 
   /**
-   * \brief Attempts to save a tileset.
+   * Attempts to save a tileset.
    *
-   * \param tileset_path the tileset file path.
-   * \param tileset      the tileset that will be saved.
-   * \param options      the write options.
+   * \param tileset_path The tileset file path.
+   * \param tileset      The tileset that will be saved.
+   * \param options      The write options.
    *
-   * \return nothing on success, or an error code on failure.
+   * \return
+   *    Nothing on success, or an error code on failure.
    */
   [[nodiscard]]
   virtual auto save_tileset(const FilePath& tileset_path,
@@ -82,19 +85,21 @@ class ISaveFormat {
       -> Result<void> = 0;
 
   /**
-   * \brief Indicates whether a file extension is usable with the save format.
+   * Indicates whether a file extension is usable with the save format.
    *
-   * \param extension a file extension, such as ".txt".
+   * \param extension A file extension, such as ".txt".
    *
-   * \return true if the extension is valid; false otherwise.
+   * \return
+   *    True if the extension is valid; false otherwise.
    */
   [[nodiscard]]
   virtual auto is_valid_extension(NativeStringView extension) const -> bool = 0;
 
   /**
-   * \brief Returns the identifier associated with the save format.
+   * Returns the identifier associated with the save format.
    *
-   * \return a save format identifier.
+   * \return
+   *    A save format identifier.
    */
   [[nodiscard]]
   virtual auto id() const -> SaveFormatId = 0;

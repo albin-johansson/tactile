@@ -18,23 +18,25 @@ namespace tactile::tiled::tmj {
 using JSON = nlohmann::json;
 
 /**
- * \brief Attempts to parse a JSON document from disk.
+ * Attempts to parse a JSON document from disk.
  *
- * \param path the JSON file path.
+ * \param path The JSON file path.
  *
- * \return a JSON object, or an error code on failure.
+ * \return
+ *    A JSON object, or an error code on failure.
  */
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto parse_json(const FilePath& path) -> Result<JSON>;
 
 /**
- * \brief Attempts to extract an attribute in a JSON object.
+ * Attempts to extract an attribute in a JSON object.
  *
- * \param      json           the JSON object.
- * \param      attribute_name the name of the JSON attribute.
- * \param[out] value          the output variable.
+ * \param      json           The JSON object.
+ * \param      attribute_name The name of the JSON attribute.
+ * \param[out] value          The output variable.
  *
- * \return nothing on success, or an error code on failure.
+ * \return
+ *    Nothing on success, or an error code on failure.
  */
 template <typename T>
 [[nodiscard]] auto parse(const JSON& json, const StringView attribute_name, T& value)
@@ -50,14 +52,15 @@ template <typename T>
 }
 
 /**
- * \brief Attempts to extract an attribute in a JSON object.
+ * Attempts to extract an attribute in a JSON object.
  *
- * \param      json           the JSON object.
- * \param      attribute_name the name of the JSON attribute.
- * \param[out] value          the output variable.
- * \param      fallback       the fallback value used if the attribute isn't found.
+ * \param      json           The JSON object.
+ * \param      attribute_name The name of the JSON attribute.
+ * \param[out] value          The output variable.
+ * \param      fallback       The fallback value used if the attribute isn't found.
  *
- * \return nothing on success, or an error code on failure.
+ * \return
+ *    Nothing on success, or an error code on failure.
  */
 template <typename T, typename U>
 [[nodiscard]] auto parse(const JSON& json,

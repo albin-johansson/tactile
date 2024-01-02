@@ -12,7 +12,7 @@
 namespace tactile {
 
 /**
- * \brief Represents error codes used when loading and emitting save files.
+ * Represents error codes used when loading and emitting save files.
  */
 enum class SaveFormatError : int {  // NOLINT(performance-enum-size)
   kInvalidOperation,   ///< The format doesn't support the requested operation.

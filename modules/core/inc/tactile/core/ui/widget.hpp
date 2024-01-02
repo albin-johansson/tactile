@@ -10,18 +10,17 @@
 namespace tactile::ui {
 
 /**
- * \interface IWidget
- * \brief Represents user interface widgets.
+ * Represents user interface widgets.
  */
 class IWidget {
  public:
   TACTILE_INTERFACE_CLASS(IWidget);
 
   /**
-   * \brief Updates the widget state.
+   * Updates the widget state.
    *
-   * \param      model the associated model.
-   * \param dispatcher the associated event dispatcher.
+   * \param model      The associated model.
+   * \param dispatcher The associated event dispatcher.
    */
   virtual void update(const Model& model, EventDispatcher& dispatcher) = 0;
 };

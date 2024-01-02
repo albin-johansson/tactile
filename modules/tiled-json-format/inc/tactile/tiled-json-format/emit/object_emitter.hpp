@@ -11,21 +11,23 @@
 namespace tactile::tiled::tmj {
 
 /**
- * \brief Converts a map object to a TMJ JSON object.
+ * Converts a map object to a TMJ JSON object.
  *
- * \param object the object to convert.
+ * \param object The object to convert.
  *
- * \return a JSON object.
+ * \return
+ *    A JSON object.
  */
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto emit_object(const ir::Object& object) -> JSON;
 
 /**
- * \brief Converts a group of map objects to an array of TMJ JSON objects.
+ * Converts a group of map objects to an array of TMJ JSON objects.
  *
- * \param objects the objects to convert.
+ * \param objects The objects to convert.
  *
- * \return a JSON array.
+ * \return
+ *    A JSON array.
  */
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto emit_object_array(const Vector<ir::Object>& objects) -> JSON;

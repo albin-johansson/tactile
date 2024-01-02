@@ -13,58 +13,65 @@
 namespace tactile {
 
 /**
- * \brief Represents a tileset that is attached to a map.
+ * Represents a tileset that is attached to a map.
  *
  * \see `Tileset`
  */
 class TACTILE_CORE_API AttachedTileset final {
  public:
   /**
-   * \brief Creates an attached tileset.
+   * Creates an attached tileset.
    *
-   * \param tileset       the associated tileset.
-   * \param first_tile_id the global tile identifier to associate with the first tile.
+   * \param tileset       The associated tileset.
+   * \param first_tile_id The global tile identifier to associate with the first tile.
    */
   AttachedTileset(Shared<Tileset> tileset, TileID first_tile_id);
 
   /**
-   * \brief Converts a tile identifier to a tile index.
+   * Converts a tile identifier to a tile index.
    *
-   * \param  tile_id the tile identifier.
-   * \return a tile index.
+   * \param tile_id The tile identifier.
+   *
+   * \return
+   *    A tile index.
    */
   [[nodiscard]]
   auto to_index(TileID tile_id) const -> Maybe<TileIndex>;
 
   /**
-   * \brief Indicates whether a tile identifier is contained in the tileset.
+   * Indicates whether a tile identifier is contained in the tileset.
    *
-   * \param  tile_id the tile identifier.
-   * \return true if the identifier is valid; false otherwise.
+   * \param tile_id The tile identifier.
+   *
+   * \return
+   *    True if the identifier is valid; false otherwise.
    */
   [[nodiscard]]
   auto has_tile(TileID tile_id) const -> bool;
 
   /**
-   * \brief Returns the first (lowest) associated tile identifier.
+   * Returns the first (lowest) associated tile identifier.
    *
-   * \return a tile identifier.
+   * \return
+   *    A tile identifier.
    */
   [[nodiscard]]
   auto get_first_tile_id() const -> TileID;
 
   /**
-   * \brief Returns the last (greatest) associated tile identifier.
+   * Returns the last (greatest) associated tile identifier.
    *
-   * \return a tile identifier.
+   * \return
+   *    A tile identifier.
    */
   [[nodiscard]]
   auto get_last_tile_id() const -> TileID;
 
   /**
-   * \brief Returns the associated tileset.
+   * Returns the associated tileset.
    *
-   * \return a tileset reference.
+   * \return
+   *    A tileset reference.
    */
   [[nodiscard]]
   auto tileset() -> Tileset&;
@@ -74,9 +81,10 @@ class TACTILE_CORE_API AttachedTileset final {
   auto tileset() const -> const Tileset&;
 
   /**
-   * \brief Returns the viewport used when displaying the tileset in the tileset dock.
+   * Returns the viewport used when displaying the tileset in the tileset dock.
    *
-   * \return the associated viewport (not the document viewport).
+   * \return
+   *    The associated viewport (not the document viewport).
    */
   [[nodiscard]]
   auto viewport() -> DocumentViewport&;

@@ -14,15 +14,15 @@
 namespace tactile {
 
 /**
- * \brief A layer variant consisting of a two-dimensional grid of tile identifiers.
+ * A layer variant consisting of a two-dimensional grid of tile identifiers.
  */
 class TACTILE_CORE_API TileLayer final : public ILayer {
  public:
   /**
-   * \brief Creates an empty tile layer.
+   * Creates an empty tile layer.
    *
-   * \param row_count the number of tile rows, must be greater than zero.
-   * \param col_count the number of tile columns, must be greater than zero.
+   * \param row_count The number of tile rows, must be greater than zero.
+   * \param col_count The number of tile columns, must be greater than zero.
    */
   TileLayer(ssize row_count, ssize col_count);
 
@@ -33,19 +33,19 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
   void accept(IConstLayerVisitor& visitor) const override;
 
   /**
-   * \brief Changes the size of the layer.
+   * Changes the size of the layer.
    *
-   * \param row_count the number of tile rows, must be greater than zero.
-   * \param col_count the number of tile columns, must be greater than zero.
+   * \param row_count The number of tile rows, must be greater than zero.
+   * \param col_count The number of tile columns, must be greater than zero.
    */
   void resize(ssize row_count, ssize col_count);
 
   /**
-   * \brief Applies a flood fill algorithm to the layer.
+   * Applies a flood fill algorithm to the layer.
    *
-   * \param      start_pos          the flood start position.
-   * \param      new_id             the replacement tile identifier.
-   * \param[out] affected_positions a vector to which all modified positions are recorded.
+   * \param      start_pos          The flood start position.
+   * \param      new_id             The replacement tile identifier.
+   * \param[out] affected_positions A vector to which all modified positions are recorded.
    *
    * \see https://en.wikipedia.org/wiki/Flood_fill
    */
@@ -54,47 +54,52 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
              Vector<TilePos>* affected_positions = nullptr);
 
   /**
-   * \brief Updates the tile ID stored at the specified position.
+   * Updates the tile ID stored at the specified position.
    *
-   * \note This function does nothing if the tile position is invalid.
+   * \note
+   *    This function does nothing if the tile position is invalid.
    *
-   * \param pos the tile position.
-   * \param id  the new tile ID.
+   * \param pos The tile position.
+   * \param id  The new tile ID.
    */
   void set_tile(const TilePos& pos, TileID id);
 
   /**
-   * \brief Returns the tile ID at the specified position.
+   * Returns the tile ID at the specified position.
    *
-   * \param pos the tile position.
+   * \param pos The tile position.
    *
-   * \return the tile ID, or nothing if the position is invalid.
+   * \return
+   *    The tile ID, or nothing if the position is invalid.
    */
   [[nodiscard]]
   auto get_tile(const TilePos& pos) const -> Maybe<TileID>;
 
   /**
-   * \brief Indicates whether the specified position refers to a tile in the layer.
+   * Indicates whether the specified position refers to a tile in the layer.
    *
-   * \param pos the tile position.
+   * \param pos The tile position.
    *
-   * \return true if the position is valid for use with the layer; false otherwise.
+   * \return
+   *    True if the position is valid for use with the layer; false otherwise.
    */
   [[nodiscard]]
   auto is_valid_pos(const TilePos& pos) const -> bool;
 
   /**
-   * \brief Returns the number of tile rows stored in the layer.
+   * Returns the number of tile rows stored in the layer.
    *
-   * \return the tile row count.
+   * \return
+   *    The tile row count.
    */
   [[nodiscard]]
   auto row_count() const -> ssize;
 
   /**
-   * \brief Returns the number of tile columns stored in the layer.
+   * Returns the number of tile columns stored in the layer.
    *
-   * \return the tile column count.
+   * \return
+   *    The tile column count.
    */
   [[nodiscard]]
   auto column_count() const -> ssize;

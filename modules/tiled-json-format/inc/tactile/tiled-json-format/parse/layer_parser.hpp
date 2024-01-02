@@ -11,65 +11,70 @@
 namespace tactile::tiled::tmj {
 
 /**
- * \brief Parses a single map object.
+ * Parses a single map object.
  *
- * \details The JSON could look something like the following.
- *          \code
- *          {
- *            "id": 42,
- *            "name": "foo",
- *            "type": "tag",
- *            "x": 0,
- *            "y": 0,
- *            "width": 100,
- *            "height": 100,
- *            "visible": true,
- *            "properties": [],
- *          }
- *          \endcode
+ * \details
+ *    The JSON could look something like the following.
+ *    \code
+ *    {
+ *      "id": 42,
+ *      "name": "foo",
+ *      "type": "tag",
+ *      "x": 0,
+ *      "y": 0,
+ *      "width": 100,
+ *      "height": 100,
+ *      "visible": true,
+ *      "properties": [],
+ *    }
+ *    \endcode
  *
- * \param object_json the map object JSON.
+ * \param object_json The map object JSON.
  *
- * \return the parsed map object; or an error code if something went wrong.
+ * \return
+ *    The parsed map object; or an error code if something went wrong.
  */
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto parse_object(const JSON& object_json) -> Result<ir::Object>;
 
 /**
- * \brief Parses a single map layer.
+ * Parses a single map layer.
  *
- * \details The JSON could look something like the following.
- *          \code
- *          {
- *            "name": "foo",
- *            "type": "tilelayer",
- *            "data": [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3],
- *            "width": 4,
- *            "height": 3,
- *            "opacity": 1,
- *            "visible": true,
- *            "x": 0,
- *            "y": 0,
- *            "properties": []
- *          }
- *          \endcode
+ * \details
+ *    The JSON could look something like the following.
+ *    \code
+ *    {
+ *      "name": "foo",
+ *      "type": "tilelayer",
+ *      "data": [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3],
+ *      "width": 4,
+ *      "height": 3,
+ *      "opacity": 1,
+ *      "visible": true,
+ *      "x": 0,
+ *      "y": 0,
+ *      "properties": []
+ *    }
+ *    \endcode
  *
- * \param layer_json the layer JSON.
- * \param map        the associated map.
+ * \param layer_json The layer JSON.
+ * \param map        The associated map.
  *
- * \return the parsed layer; or an error code if something went wrong.
+ * \return
+ *    The parsed layer; or an error code if something went wrong.
  */
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto parse_layer(const JSON& layer_json, ir::Map& map)
     -> Result<ir::Layer>;
 
 /**
- * \brief Parses all layers in a TMJ map.
+ * Parses all layers in a TMJ map.
  *
- * \param map_json the map JSON object.
- * \param map      the associated map.
+ * \param map_json The map JSON object.
+ * \param map      The associated map.
  *
- * \return nothing; or an error code if something went wrong.
+ * \return
+ *    Nothing on success; or an error code if something went wrong.
  */
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto parse_layers(const JSON& map_json, ir::Map& map)

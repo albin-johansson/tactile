@@ -9,7 +9,7 @@
 
 namespace tactile {
 
-/** \brief The supported property value types. */
+/** The supported property value types. */
 enum class AttributeType : int8 {
   kStr,
   kInt,
@@ -27,14 +27,19 @@ enum class AttributeType : int8 {
 };
 
 /**
- * \brief Attempts to convert a type name into the corresponding attribute type.
+ * Attempts to convert a type name into the corresponding attribute type.
  *
- * \details The supported type names are `string`, `int`, `int2`, `int3`, `int4`, `float`,
- *          `float2`, `float3`, `float4`, `bool`, `file`, `path`, `color`, and `object`.
- *          Note that `file` and `path` are synonyms for the path attribute type.
+ * \details
+ *    The supported type names are `string`, `int`, `int2`, `int3`, `int4`, `float`,
+ *    `float2`, `float3`, `float4`, `bool`, `file`, `path`, `color`, and `object`.
  *
- * \param name the type name.
- * \return the parsed attribute type.
+ * \note
+ *    Both `file` and `path` denote the path attribute type.
+ *
+ * \param name The type name.
+ *
+ * \return
+ *    The parsed attribute type.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto parse_attribute_type(StringView name) -> Maybe<AttributeType>;

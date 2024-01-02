@@ -12,7 +12,7 @@
 namespace tactile::gl {
 
 /**
- * \brief A renderer plugin based on OpenGL 4.1.0.
+ * A renderer plugin based on OpenGL 4.1.0.
  */
 class TACTILE_OPENGL_API OpenGLPlugin final : public IPlugin {
  public:

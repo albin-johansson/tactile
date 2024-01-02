@@ -15,44 +15,49 @@ using DirectoryIterator = std::filesystem::directory_iterator;
 using RecursiveDirectoryIterator = std::filesystem::recursive_directory_iterator;
 
 /**
- * \brief Returns the file path to the persistent storage directory associated with the app.
+ * Returns the file path to the persistent storage directory associated with the app.
  * 
- * \return a directory path.
+ * \return
+ *    A directory path.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto get_persistent_storage_directory() -> FilePath;
 
 /**
- * \brief Converts a path to a string that is guaranteed to use forward slash characters.
+ * Converts a path to a string that is guaranteed to use forward slash characters.
  *
- * \details This function is useful when saving paths to files in a portable way. Since
- *          all relevant operating systems understand forward slashes, even if some
- *          operating systems prefer backslashes (most notably Windows).
+ * \details
+ *    This function is useful when saving paths to files in a portable way. Since all
+ *    relevant operating systems understand forward slashes, even if some operating
+ *    systems prefer backslashes (most notably Windows).
  *
- * \param path a file path to convert.
+ * \param path A file path to convert.
  *
- * \return a file path string with forward slashes.
+ * \return
+ *    A file path string with forward slashes.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto normalize_path(const FilePath& path) -> String;
 
 /**
- * \brief Converts file paths to use a '~' prefix (if possible).
+ * Converts file paths to use a '~' prefix (if possible).
  *
- * \param path the file path to convert.
+ * \param path The file path to convert.
  *
- * \return a string with a shortened user directory prefix; or nothing if not applicable.
+ * \return
+ *    A string with a shortened user directory prefix; or nothing if not applicable.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto shorten_home_directory_prefix(const FilePath& path)
     -> Maybe<String>;
 
 /**
- * \brief Indicates whether a file path starts with the home directory.
+ * Indicates whether a file path starts with the home directory.
  *
- * \param path the file path to check.
+ * \param path The file path to check.
  *
- * \return true if the path features the home directory prefix; false otherwise.
+ * \return
+ *    True if the path features the home directory prefix; false otherwise.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto has_home_directory_prefix(const FilePath& path) -> bool;

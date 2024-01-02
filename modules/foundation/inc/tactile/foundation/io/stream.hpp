@@ -7,31 +7,32 @@
 #include <iomanip>    // setw
 #include <ios>        // ios
 
-#include "tactile/foundation/api.hpp"
 #include "tactile/foundation/container/file_path.hpp"
 #include "tactile/foundation/debug/generic_error.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/functional/result.hpp"
 #include "tactile/foundation/log/logger.hpp"
+#include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
 
 /**
- * \brief Provides input stream options.
+ * Provides input stream options.
  */
 struct StreamFromFileOptions final {
   bool binary_mode : 1 {false};  ///< Set to true to read binary files.
 };
 
 /**
- * \brief Attempts to stream a file from disk into a container object.
+ * Attempts to stream a file from disk into a container object.
  *
- * \tparam T a type that provides an overloaded operator>> that accepts an istream.
+ * \tparam T A type that provides an overloaded operator>> that accepts an istream.
  *
- * \param path    the path to the source file.
- * \param options the read options.
+ * \param path    The path to the source file.
+ * \param options The read options.
  *
- * \return the parsed content, or nothing if an error occurred.
+ * \return
+ *    The parsed content, or nothing if an error occurred.
  */
 template <typename T>
 [[nodiscard]] auto stream_from_file(const FilePath& path,
@@ -49,7 +50,7 @@ template <typename T>
   }
 
   try {
-    T object;
+    T object {};
     stream >> object;
     return object;
   }
@@ -61,7 +62,7 @@ template <typename T>
 }
 
 /**
- * \brief Provides output stream options.
+ * Provides output stream options.
  */
 struct StreamToFileOptions final {
   int indentation {0};       ///< The amount of indentation to use (only for text files).
@@ -69,15 +70,16 @@ struct StreamToFileOptions final {
 };
 
 /**
- * \brief Attempts to stream an object into a file on disk.
+ * Attempts to stream an object into a file on disk.
  *
- * \tparam T a type that provides an overloaded operator<< that accepts an ostream.
+ * \tparam T A type that provides an overloaded operator<< that accepts an ostream.
  *
- * \param content the content that will be written to the file.
- * \param path    the path to the destination file.
- * \param options the write options.
+ * \param content The content that will be written to the file.
+ * \param path    The path to the destination file.
+ * \param options The write options.
  *
- * \return an error code if something goes wrong.
+ * \return
+ *    An error code if something goes wrong.
  */
 template <typename T>
 auto stream_to_file(const T& content,

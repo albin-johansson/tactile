@@ -17,23 +17,23 @@
 namespace tactile {
 
 /**
- * \brief Describes a tile in a tileset.
+ * Describes a tile in a tileset.
  */
 class TACTILE_CORE_API Tile final : public IMetaContext {
  public:
   /**
-   * \brief Creates a tile definition.
+   * Creates a tile definition.
    *
-   * \param region a region that encapsulates the tile in the associated tileset.
+   * \param region A region that encapsulates the tile in the associated tileset.
    */
   explicit Tile(const Rectangle& region);
 
   void accept(IMetaContextVisitor& visitor) override;
 
   /**
-   * \brief Sets the associated animation.
+   * Sets the associated animation.
    *
-   * \param animation an animation, or nothing to remove the animation.
+   * \param animation An animation, or nothing to remove the animation.
    */
   void set_animation(Maybe<TileAnimation> animation);
 
@@ -44,33 +44,34 @@ class TACTILE_CORE_API Tile final : public IMetaContext {
   auto meta() const -> const Metadata& override;
 
   /**
-   * \brief Returns the tile region in the associated tileset.
+   * Returns the tile region in the associated tileset.
    *
-   * \return the tile region.
+   * \return
+   *    The tile region.
    */
   [[nodiscard]]
   auto get_region() const -> const Rectangle&;
 
   /**
-   * \brief Returns the associated animation.
+   * Returns the associated animation.
    *
    * \pre The tile must be animated.
    *
-   * \return a tile animation.
+   * \return
+   *    A tile animation.
    */
   [[nodiscard]]
   auto get_animation() -> TileAnimation&;
 
-  /**
-   * \copydoc get_animation()
-   */
+  /** \copydoc get_animation() */
   [[nodiscard]]
   auto get_animation() const -> const TileAnimation&;
 
   /**
-   * \brief Indicates whether the tile is animated.
+   * Indicates whether the tile is animated.
    *
-   * \return true if there's an associated animation; false otherwise.
+   * \return
+   *    True if there's an associated animation; false otherwise.
    */
   [[nodiscard]]
   auto is_animated() const -> bool;

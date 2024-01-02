@@ -50,12 +50,14 @@ TACTILE_FOUNDATION_API auto unnormalize(const NColor& color) -> UColor;
 /**
  * Computes the relative luminance of a color.
  *
- * \details This function is particularly useful for determining the appropriate
- *          foreground text color given a background of a specific color.
+ * \details
+ *    This function is particularly useful for determining the appropriate
+ *    foreground text color given a background of a specific color.
  *
- * \param color a normalized color.
+ * \param color A normalized color.
  *
- * \return a luminance value in the interval [0, 1].
+ * \return
+ *    A luminance value in the interval [0, 1].
  *
  * \see https://en.wikipedia.org/wiki/Relative_luminance
  */

@@ -10,7 +10,7 @@
 namespace tactile {
 
 /**
- * \brief Provides limitations for document viewports.
+ * Provides limitations for document viewports.
  */
 struct DocumentViewportLimits final {
   Float2 min_offset {};  ///< The smallest possible offset (for both axes).
@@ -18,51 +18,54 @@ struct DocumentViewportLimits final {
 };
 
 /**
- * \brief Represents the viewport associated with a document.
+ * Represents the viewport associated with a document.
  */
 class TACTILE_CORE_API DocumentViewport final {
  public:
   /**
-   * \brief Updates the viewport limits.
+   * Updates the viewport limits.
    *
-   * \param limits the new limits, if any.
+   * \param limits The new limits, if any.
    */
   void reset_limits(const Maybe<DocumentViewportLimits>& limits = kNothing);
 
   /**
-   * \brief Nudges the viewport translation.
+   * Nudges the viewport translation.
    *
-   * \param delta the offset delta.
+   * \param delta The offset delta.
    */
   void translate(Float2 delta);
 
   /**
-   * \brief Updates the associated tile size used during calculations.
+   * Updates the associated tile size used during calculations.
    *
-   * \param tile_size the new tile size.
+   * \param tile_size The new tile size.
    */
   void set_tile_size(Float2 tile_size);
 
   /**
-   * \brief Returns the associated viewport origin offset.
+   * Returns the associated viewport origin offset.
    *
-   * \return an offset.
+   * \return
+   *    An offset.
    */
   [[nodiscard]]
   auto translation() const -> const Float2&;
 
   /**
-   * \brief Returns the associated viewport tile size.
+   * Returns the associated viewport tile size.
    *
-   * \return a tile size.
+   * \return
+   *    A tile size.
    */
   [[nodiscard]]
   auto tile_size() const -> const Float2&;
 
   /**
-   * \brief Returns the associated limits, if any.
+   * Returns the associated limits, if any.
    *
-   * \return a possibly null pointer to the associated limits.
+   * \return
+   *    A possibly null pointer to the associated limits.
    */
   [[nodiscard]]
   auto limits() const -> const DocumentViewportLimits*;

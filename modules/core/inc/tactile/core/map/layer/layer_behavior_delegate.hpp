@@ -10,7 +10,7 @@
 namespace tactile {
 
 /**
- * \brief Used by layer types to implement the common subset of the `ILayer` interface.
+ * Used by layer types to implement the common subset of the `ILayer` interface.
  */
 class TACTILE_CORE_API LayerBehaviorDelegate final {
  public:

@@ -7,7 +7,7 @@
 namespace tactile {
 
 /**
- * \brief Represents different compression modes.
+ * Represents different compression modes.
  */
 enum class CompressionMode : uint8 {
   kNone,  ///< Use no compression.

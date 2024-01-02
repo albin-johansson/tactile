@@ -13,21 +13,21 @@ struct SDL_Window;
 namespace tactile::gl {
 
 /**
- * \brief Deleter type for SDL windows.
+ * Deleter type for SDL windows.
  */
 struct TACTILE_OPENGL_API SDLWindowDeleter final {
   void operator()(SDL_Window* window) noexcept;
 };
 
 /**
- * \brief Deleter type for OpenGL contexts.
+ * Deleter type for OpenGL contexts.
  */
 struct TACTILE_OPENGL_API OpenGLContextDeleter final {
   void operator()(void* context) noexcept;
 };
 
 /**
- * \brief An OpenGL 4 window implementation.
+ * An OpenGL 4 window implementation.
  */
 class TACTILE_OPENGL_API OpenGLWindow final : public IWindow {
  public:
@@ -35,15 +35,16 @@ class TACTILE_OPENGL_API OpenGLWindow final : public IWindow {
   using ManagedContext = Unique<void, OpenGLContextDeleter>;
 
   /**
-   * \brief Creates an OpenGL window and an associated OpenGL context.
+   * Creates an OpenGL window and an associated OpenGL context.
    *
-   * \return the created window.
+   * \return
+   *    The created window.
    */
   [[nodiscard]]
   static auto create() -> Result<OpenGLWindow>;
 
   /**
-   * \brief Swaps the active framebuffer.
+   * Swaps the active framebuffer.
    */
   void swap_framebuffer();
 
@@ -54,9 +55,10 @@ class TACTILE_OPENGL_API OpenGLWindow final : public IWindow {
   void maximize() override;
 
   /**
-   * \brief Returns the underlying window.
+   * Returns the underlying window.
    *
-   * \return a window handle.
+   * \return
+   *    A window handle.
    */
   [[nodiscard]]
   auto get_handle() -> SDL_Window*;

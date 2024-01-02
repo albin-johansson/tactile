@@ -10,21 +10,23 @@
 namespace tactile::tiled::tmj {
 
 /**
- * \brief Converts a tile definition to a TMJ JSON object.
+ * Converts a tile definition to a TMJ JSON object.
  *
- * \param tile the tile definition.
+ * \param tile The tile definition.
  *
- * \return a JSON object.
+ * \return
+ *    A JSON object.
  */
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto emit_tile_definition(const ir::Tile& tile) -> JSON;
 
 /**
- * \brief Converts a collection of tile definitions to a TMJ JSON array.
+ * Converts a collection of tile definitions to a TMJ JSON array.
  *
- * \param tiles the tile definitions.
+ * \param tiles The tile definitions.
  *
- * \return a JSON array.
+ * \return
+ *    A JSON array.
  */
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto emit_tile_definition_array(const Vector<ir::Tile>& tiles)

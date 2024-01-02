@@ -37,7 +37,7 @@ concept AttributeValueType = std::same_as<T, bool> ||             //
                              std::convertible_to<T, ObjectRef>;
 
 /**
- * \brief Represents a generic value of one of several possible types.
+ * Represents a generic value of one of several possible types.
  */
 class TACTILE_FOUNDATION_API Attribute final {
   // These are indices into the value type variant
@@ -84,20 +84,20 @@ class TACTILE_FOUNDATION_API Attribute final {
                                path_type,
                                objref_type>;
 
-  /** \brief Creates an empty string attribute. */
+  /** Creates an empty string attribute. */
   Attribute() = default;
 
   /**
-   * \brief Creates an attribute with the default value of the specified type.
+   * Creates an attribute with the default value of the specified type.
    *
-   * \param type the underlying value type.
+   * \param type The underlying value type.
    */
   explicit Attribute(const AttributeType type) { reset(type); }
 
   /**
-   * \brief Creates an attribute with a specific value.
+   * Creates an attribute with a specific value.
    *
-   * \param value the initial value.
+   * \param value The initial value.
    */
   template <AttributeValueType T>
   Attribute(T value)
@@ -106,11 +106,11 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Creates a string attribute.
+   * Creates a string attribute.
    *
    * \pre The provided string cannot be null.
    *
-   * \param str a C-style string.
+   * \param str A C-style string.
    */
   Attribute(const char* str)
   {
@@ -119,16 +119,16 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Resets the attribute the default value for the specified type.
+   * Resets the attribute the default value for the specified type.
    *
-   * \param type the underlying value type.
+   * \param type The underlying value type.
    */
   void reset(AttributeType type);
 
   /**
-   * \brief Updates the value of the attribute.
+   * Updates the value of the attribute.
    *
-   * \param value the new value.
+   * \param value The new value.
    */
   template <AttributeValueType T>
   void set(T value)
@@ -137,11 +137,11 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Updates the value of the attribute.
+   * Updates the value of the attribute.
    *
    * \pre The provided string cannot be null.
    *
-   * \param str the new string value.
+   * \param str The new string value.
    */
   void set(const char* str)
   {
@@ -150,11 +150,12 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Returns the underlying string value.
+   * Returns the underlying string value.
    *
-   * \return the underlying value.
+   * \return 
+   *    The underlying value.
    *
-   * \throws Error if the attribute is of a different type.
+   * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
   auto as_string() const -> const string_type&
@@ -163,11 +164,12 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Returns the underlying int value.
+   * Returns the underlying int value.
    *
-   * \return the underlying value.
+   * \return 
+   *    The underlying value.
    *
-   * \throws Error if the attribute is of a different type.
+   * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
   auto as_int() const -> int_type
@@ -176,11 +178,12 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Returns the underlying 2D int vector value.
+   * Returns the underlying 2D int vector value.
    *
-   * \return the underlying value.
+   * \return 
+   *    The underlying value.
    *
-   * \throws Error if the attribute is of a different type.
+   * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
   auto as_int2() const -> const int2_type&
@@ -189,11 +192,12 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Returns the underlying 3D int vector value.
+   * Returns the underlying 3D int vector value.
    *
-   * \return the underlying value.
+   * \return
+   *    The underlying value.
    *
-   * \throws Error if the attribute is of a different type.
+   * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
   auto as_int3() const -> const int3_type&
@@ -202,11 +206,12 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Returns the underlying 4D int vector value.
+   * Returns the underlying 4D int vector value.
    *
-   * \return the underlying value.
+   * \return
+   *    The underlying value.
    *
-   * \throws Error if the attribute is of a different type.
+   * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
   auto as_int4() const -> const int4_type&
@@ -215,11 +220,12 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Returns the underlying float value.
+   * Returns the underlying float value.
    *
-   * \return the underlying value.
+   * \return
+   *    The underlying value.
    *
-   * \throws Error if the attribute is of a different type.
+   * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
   auto as_float() const -> float_type
@@ -228,11 +234,12 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Returns the underlying 2D float vector value.
+   * Returns the underlying 2D float vector value.
    *
-   * \return the underlying value.
+   * \return
+   *    The underlying value.
    *
-   * \throws Error if the attribute is of a different type.
+   * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
   auto as_float2() const -> const float2_type&
@@ -241,11 +248,12 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Returns the underlying 3D float vector value.
+   * Returns the underlying 3D float vector value.
    *
-   * \return the underlying value.
+   * \return
+   *    The underlying value.
    *
-   * \throws Error if the attribute is of a different type.
+   * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
   auto as_float3() const -> const float3_type&
@@ -254,11 +262,12 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Returns the underlying 4D float vector value.
+   * Returns the underlying 4D float vector value.
    *
-   * \return the underlying value.
+   * \return
+   *    The underlying value.
    *
-   * \throws Error if the attribute is of a different type.
+   * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
   auto as_float4() const -> const float4_type&
@@ -267,11 +276,12 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Returns the underlying boolean value.
+   * Returns the underlying boolean value.
    *
-   * \return the underlying value.
+   * \return
+   *    The underlying value.
    *
-   * \throws Error if the attribute is of a different type.
+   * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
   auto as_bool() const -> bool
@@ -280,11 +290,12 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Returns the underlying color value.
+   * Returns the underlying color value.
    *
-   * \return the underlying value.
+   * \return
+   *    The underlying value.
    *
-   * \throws Error if the attribute is of a different type.
+   * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
   auto as_color() const -> const color_type&
@@ -293,11 +304,12 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Returns the underlying file path value.
+   * Returns the underlying file path value.
    *
-   * \return the underlying value.
+   * \return
+   *    The underlying value.
    *
-   * \throws Error if the attribute is of a different type.
+   * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
   auto as_path() const -> const path_type&
@@ -306,11 +318,12 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Returns the underlying object reference value.
+   * Returns the underlying object reference value.
    *
-   * \return the underlying value.
+   * \return
+   *    The underlying value.
    *
-   * \throws Error if the attribute is of a different type.
+   * \throws Exception if the attribute is of a different type.
    */
   [[nodiscard]]
   auto as_object() const -> objref_type
@@ -319,25 +332,28 @@ class TACTILE_FOUNDATION_API Attribute final {
   }
 
   /**
-   * \brief Indicates whether the attribute is a vector attribute.
+   * Indicates whether the attribute is a vector attribute.
    *
-   * \return true if the attribute has a vector value; false otherwise.
+   * \return
+   *    True if the attribute has a vector value; false otherwise.
    */
   [[nodiscard]]
   auto is_vector() const -> bool;
 
   /**
-   * \brief Indicates whether the attribute has the default value for its type.
+   * Indicates whether the attribute has the default value for its type.
    *
-   * \return true if the value is the default one; false otherwise.
+   * \return
+   *    True if the value is the default one; false otherwise.
    */
   [[nodiscard]]
   auto has_default_value() const -> bool;
 
   /**
-   * \brief Returns the type of the current value.
+   * Returns the type of the current value.
    *
-   * \return the current type.
+   * \return
+   *    The current type.
    */
   [[nodiscard]]
   auto get_type() const -> AttributeType;

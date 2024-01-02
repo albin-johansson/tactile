@@ -10,29 +10,30 @@
 namespace tactile {
 
 /**
- * \interface ICompressionProvider
- * \brief Interface for data compression (and decompression) providers.
+ * Interface for data compression (and decompression) providers.
  */
 class ICompressionProvider {
  public:
   TACTILE_INTERFACE_CLASS(ICompressionProvider);
 
   /**
-   * \brief Attempts to compress a byte stream.
+   * Attempts to compress a byte stream.
    *
-   * \param data the data that will be compressed.
+   * \param data The data that will be compressed.
    *
-   * \return a compressed byte stream; or an error code if an error occurred.
+   * \return
+   *    A compressed byte stream; or an error code if an error occurred.
    */
   [[nodiscard]]
   virtual auto compress(ByteSpan data) const -> Result<ByteStream> = 0;
 
   /**
-   * \brief Attempts to decompress a compressed byte stream.
+   * Attempts to decompress a compressed byte stream.
    *
-   * \param data the data that will be decompressed.
+   * \param data The data that will be decompressed.
    *
-   * \return an uncompressed byte stream; or an error code if an error occurred.
+   * \return
+   *    An uncompressed byte stream; or an error code if an error occurred.
    */
   [[nodiscard]]
   virtual auto decompress(ByteSpan data) const -> Result<ByteStream> = 0;

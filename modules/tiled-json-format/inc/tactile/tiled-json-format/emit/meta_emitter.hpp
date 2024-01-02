@@ -13,14 +13,16 @@
 namespace tactile::tiled::tmj {
 
 /**
- * \brief Returns the name for a given attribute type used in TMJ save files.
+ * Returns the name for a given attribute type used in TMJ save files.
  *
- * \note The TMJ format doesn't support vector attribute types, so this function treats
- *       such types as strings.
+ * \note
+ *    The TMJ format doesn't support vector attribute types, so this
+ *    function treats such types as strings.
  *
- * \param attribute_type the attribute type to query.
+ * \param attribute_type The attribute type to query.
  *
- * \return a TMJ attribute type name.
+ * \return
+ *    A TMJ attribute type name.
  *
  * \todo Ability to control vector attribute type behavior?
  */
@@ -28,21 +30,23 @@ namespace tactile::tiled::tmj {
 TACTILE_TMJ_FORMAT_API auto to_tmj_name(AttributeType attribute_type) -> StringView;
 
 /**
- * \brief Converts an attribute to a TMJ-compatible JSON object.
+ * Converts an attribute to a TMJ-compatible JSON object.
  *
- * \param attribute the attribute to convert.
+ * \param attribute The attribute to convert.
  *
- * \return a JSON value.
+ * \return
+ *    A JSON value.
  */
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto to_tmj_value(const Attribute& attribute) -> JSON;
 
 /**
- * \brief Emits a JSON array of TMJ properties.
+ * Emits a JSON array of TMJ properties.
  *
- * \param meta the source metadata.
+ * \param meta The source metadata.
  *
- * \return a JSON array.
+ * \return
+ *    A JSON array.
  */
 [[nodiscard]]
 TACTILE_TMJ_FORMAT_API auto emit_property_array(const ir::Metadata& meta) -> JSON;

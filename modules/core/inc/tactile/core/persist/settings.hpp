@@ -13,7 +13,7 @@
 namespace tactile {
 
 /**
- * \brief Represents the persistent editor settings.
+ * Represents the persistent editor settings.
  */
 struct Settings final {
   ui::LanguageID language {ui::LanguageID::kAmericanEnglish};

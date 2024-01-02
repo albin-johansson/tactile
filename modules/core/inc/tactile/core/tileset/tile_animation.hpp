@@ -11,7 +11,7 @@
 namespace tactile {
 
 /**
- * \brief Represents a single frame in a tile animation.
+ * Represents a single frame in a tile animation.
  */
 struct TileAnimationFrame final {
   TileIndex tile_index {};   ///< The index of the shown tile.
@@ -21,76 +21,81 @@ struct TileAnimationFrame final {
 };
 
 /**
- * \brief Represents an animation for a single tile.
+ * Represents an animation for a single tile.
  */
 class TACTILE_CORE_API TileAnimation final {
  public:
   /**
-   * \brief Updates the state of the animation.
+   * Updates the state of the animation.
    *
-   * \details This function should be called every frame, to advance the animation.
+   * \details
+   *    This function should be called every frame, to advance the animation.
    */
   void update();
 
   /**
-   * \brief Adds a frame to the end of the animation.
+   * Adds a frame to the end of the animation.
    *
-   * \param frame the frame to add.
+   * \param frame The frame to add.
    */
   void append_frame(const TileAnimationFrame& frame);
 
   /**
-   * \brief Adds a frame to the animation at the specified position.
+   * Adds a frame to the animation at the specified position.
    *
-   * \note This function does nothing if the index exceeds the number of frames.
+   * \note
+   *    This function does nothing if the index exceeds the number of frames.
    *
-   * \param index the desired frame index.
-   * \param frame the frame to add.
+   * \param index The desired frame index.
+   * \param frame The frame to add.
    */
   void insert_frame(usize index, const TileAnimationFrame& frame);
 
   /**
-   * \brief Removes the frame at the specified index from the animation.
+   * Removes the frame at the specified index from the animation.
    *
-   * \note This function does nothing if the index does not reference a valid frame.
+   * \note
+   *    This function does nothing if the index does not reference a valid frame.
    *
-   * \param index the frame index.
+   * \param index The frame index.
    */
   void remove_frame(usize index);
 
   /**
-   * \brief Returns the index of the currently shown frame.
+   * Returns the index of the currently shown frame.
    *
-   * \return a frame index.
+   * \return
+   *    A frame index.
    */
   [[nodiscard]]
   auto get_current_frame_index() const -> usize;
 
   /**
-   * \brief Returns the animation frame at the specified index.
+   * Returns the animation frame at the specified index.
    *
-   * \param index the frame index.
+   * \param index The frame index.
    *
-   * \return an animation frame.
+   * \return
+   *    An animation frame.
    */
   [[nodiscard]]
   auto get_frame(usize index) -> TileAnimationFrame&;
 
-  /**
-   * \copydoc get_frame()
-   */
+  /** \copydoc get_frame() */
   [[nodiscard]]
   auto get_frame(usize index) const -> const TileAnimationFrame&;
 
   /**
-   * \brief Returns the number of frames in the animation.
+   * Returns the number of frames in the animation.
    *
-   * \return the animation frame amount.
+   * \return
+   *    The animation frame amount.
    */
   [[nodiscard]]
   auto frame_count() const -> usize;
 
   [[nodiscard]] auto begin() const { return mFrames.begin(); }
+
   [[nodiscard]] auto end() const { return mFrames.end(); }
 
  private:

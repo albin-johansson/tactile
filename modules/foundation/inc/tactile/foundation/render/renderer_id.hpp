@@ -7,7 +7,7 @@
 namespace tactile {
 
 /**
- * \brief Provides identifiers for renderer backends.
+ * Provides identifiers for renderer backends.
  */
 enum class RendererID : int8 {
   kUnknown,

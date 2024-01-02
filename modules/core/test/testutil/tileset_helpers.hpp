@@ -8,9 +8,10 @@
 namespace tactile::test {
 
 /**
- * \brief Returns a dummy tileset configuration useful for creating tilesets in tests.
+ * Returns a dummy tileset configuration useful for creating tilesets in tests.
  *
- * \return a tileset configuration.
+ * \return
+ *    A tileset configuration.
  */
 [[nodiscard]]
 auto make_dummy_tileset_info() -> TilesetCreateInfo;

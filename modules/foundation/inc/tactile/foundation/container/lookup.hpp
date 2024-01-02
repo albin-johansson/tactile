@@ -10,7 +10,7 @@
 namespace tactile {
 
 /**
- * \brief Heuristic concept that indicates whether a type is "map-like".
+ * Heuristic concept that indicates whether a type is "map-like".
  */
 template <typename T>
 concept MapLikeType = requires {
@@ -19,14 +19,15 @@ concept MapLikeType = requires {
 };
 
 /**
- * \brief Attempts to find an element in a map.
+ * Attempts to find an element in a map.
  *
- * \tparam T a map-like type.
+ * \tparam T A map-like type.
  *
- * \param map the source map container.
- * \param key the key associated with the desired element.
+ * \param map The source map container.
+ * \param key The key associated with the desired element.
  *
- * \return the found element; or a null pointer if none was found.
+ * \return
+ *    The found element; or a null pointer if none was found.
  */
 template <MapLikeType T>
 [[nodiscard]] auto find_in(T& map, const auto& key) -> typename T::mapped_type*
@@ -35,7 +36,7 @@ template <MapLikeType T>
   return (iter != map.end()) ? &iter->second : nullptr;
 }
 
-/// \copydoc tactile::find_in
+/** \copydoc find_in() */
 template <MapLikeType T>
 [[nodiscard]] auto find_in(const T& map, const auto& key) -> const
     typename T::mapped_type*
@@ -45,16 +46,17 @@ template <MapLikeType T>
 }
 
 /**
- * \brief Looks up an element in a map.
+ * Looks up an element in a map.
  *
- * \tparam T a map-like type.
+ * \tparam T A map-like type.
  *
- * \param map the source map container.
- * \param key the key associated with the desired element.
+ * \param map The source map container.
+ * \param key The key associated with the desired element.
  *
- * \return the found element.
+ * \return
+ *    The found element.
  *
- * \throw Error if no element is found.
+ * \throw Exception if no element is found.
  */
 template <MapLikeType T>
 [[nodiscard]] auto lookup_in(T& map, const auto& key) -> typename T::mapped_type&
@@ -67,7 +69,7 @@ template <MapLikeType T>
   }
 }
 
-/// \copydoc tactile::lookup_in
+/** \copydoc lookup_in() */
 template <MapLikeType T>
 [[nodiscard]] auto lookup_in(const T& map, const auto& key) -> const
     typename T::mapped_type&
@@ -81,14 +83,15 @@ template <MapLikeType T>
 }
 
 /**
- * \brief Removes an element from a map.
+ * Removes an element from a map.
  *
- * \tparam T a map-like type.
+ * \tparam T A map-like type.
  *
- * \param map the source map container.
- * \param key the key associated with the element to remove.
+ * \param map The source map container.
+ * \param key The key associated with the element to remove.
  *
- * \return the removed element, or nothing if the element wasn't found.
+ * \return
+ *    The removed element, or nothing if the element wasn't found.
  */
 template <MapLikeType T>
 auto erase_from(T& map, const auto& key) -> Maybe<typename T::mapped_type>
@@ -103,14 +106,15 @@ auto erase_from(T& map, const auto& key) -> Maybe<typename T::mapped_type>
 }
 
 /**
- * \brief Indicates whether an element exists in a map.
+ * Indicates whether an element exists in a map.
  *
- * \tparam T a map-like type.
+ * \tparam T A map-like type.
  *
- * \param map the source map container.
- * \param key the key associated with the element to look for.
+ * \param map The source map container.
+ * \param key The key associated with the element to look for.
  *
- * \return true if the element was found; false otherwise.
+ * \return
+ *    True if the element was found; false otherwise.
  */
 template <MapLikeType T>
 [[nodiscard]] auto exists_in(const T& map, const auto& key) -> bool

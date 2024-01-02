@@ -13,12 +13,15 @@
 namespace tactile {
 
 /**
- * \brief Performs a checked narrowing conversion of an integer.
+ * Performs a checked narrowing conversion of an integer.
  *
- * \tparam To    the conversion target type.
- * \tparam From  any integral type.
- * \param  value the original value.
- * \return       the narrowed input value.
+ * \tparam To   The conversion target type.
+ * \tparam From Any integral type.
+ *
+ * \param value The original value.
+ *
+ * \return
+ *    The narrowed input value.
  *
  * \throws Exception if the conversion would lose information.
  */
@@ -53,11 +56,14 @@ template <std::integral To, std::integral From>
 }
 
 /**
- * \brief Converts an unsigned integer to a signed integer of the same width.
+ * Converts an unsigned integer to a signed integer of the same width.
  *
- * \tparam T     any unsigned integer type.
- * \param  value the value to convert.
- * \return       a signed integer.
+ * \tparam T Any unsigned integer type.
+ *
+ * \param value The value to convert.
+ *
+ * \return
+ *    A signed integer.
  *
  * \throws Exception if the conversion would overflow.
  */
@@ -74,11 +80,14 @@ template <std::unsigned_integral T>
 }
 
 /**
- * \brief  Converts a signed integer to an unsigned integer of the same width.
+ * Converts a signed integer to an unsigned integer of the same width.
  *
- * \tparam T     any signed integer type.
- * \param  value the value to convert.
- * \return       an unsigned integer.
+ * \tparam T Any signed integer type.
+ *
+ * \param value The value to convert.
+ *
+ * \return
+ *    An unsigned integer.
  *
  * \throws Exception if the conversion would underflow.
  */

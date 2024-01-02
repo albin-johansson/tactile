@@ -14,50 +14,55 @@
 namespace tactile {
 
 /**
- * \brief Converts a string into an unsigned 64-bit integer.
+ * Converts a string into an unsigned 64-bit integer.
  *
- * \param str  the source string.
- * \param base the numerical base.
+ * \param str  The source string.
+ * \param base The numerical base.
  *
- * \return the converted value, or nothing if an error occurred.
+ * \return
+ *    The converted value, or nothing if an error occurred.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto str_to_u64(StringView str, int base = 10) -> Maybe<uint64>;
 
 /**
- * \brief Converts a string into a signed 64-bit integer.
+ * Converts a string into a signed 64-bit integer.
  *
- * \param str  the source string.
- * \param base the numerical base.
+ * \param str  The source string.
+ * \param base The numerical base.
  *
- * \return the converted value, or nothing if an error occurred.
+ * \return
+ *    The converted value, or nothing if an error occurred.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto str_to_i64(StringView str, int base = 10) -> Maybe<int64>;
 
 /**
- * \brief Converts a string into a 64-bit float.
+ * Converts a string into a 64-bit float.
  *
- * \param str the source string.
+ * \param str The source string.
  *
- * \return the converted value, or nothing if an error occurred.
+ * \return
+ *    The converted value, or nothing if an error occurred.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto str_to_f64(StringView str) -> Maybe<float64>;
 
 /**
- * \brief Converts a string into multiple integers.
+ * Converts a string into multiple integers.
  *
- * \details This function can be used to efficiently extract integers stored in a string
- *          that are delimited by a given character separator. For example, the string
- *          `"1:2:3:4"` can be converted to the vector `{1, 2, 3, 4}` using a single call
- *          to this function.
+ * \details
+ *    This function can be used to efficiently extract integers stored in a string
+ *    that are delimited by a given character separator. For example, the string
+ *    `"1:2:3:4"` can be converted to the vector `{1, 2, 3, 4}` using a single call
+ *    to this function.
  *
- * \param str       the source string.
- * \param separator the character used to delimit each integer.
- * \param base      the numerical base.
+ * \param str       The source string.
+ * \param separator The character used to delimit each integer.
+ * \param base      The numerical base.
  *
- * \return the parsed integers. An empty vector is return if an error occurred.
+ * \return
+ *    The parsed integers. An empty vector is return if an error occurred.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto str_to_multiple_i32(StringView str,
@@ -71,12 +76,13 @@ TACTILE_FOUNDATION_API auto str_to_multiple_u32(StringView str,
                                                 int base = 10) -> Vector<uint32>;
 
 /**
- * \brief Converts a string into multiple floats.
+ * Converts a string into multiple floats.
  *
- * \param str       the source string.
- * \param separator the character used to delimit each float.
+ * \param str       The source string.
+ * \param separator The character used to delimit each float.
  *
- * \return the parsed numbers. An empty vector is return if an error occurred.
+ * \return
+ *    The parsed numbers. An empty vector is return if an error occurred.
  *
  * \see `str_to_multiple_i32`
  * \see `str_to_multiple_u32`
@@ -86,11 +92,12 @@ TACTILE_FOUNDATION_API auto str_to_multiple_f32(StringView str, char separator)
     -> Vector<float32>;
 
 /**
- * \brief Converts a string into an unsigned integer value.
+ * Converts a string into an unsigned integer value.
  *
- * \param str the source string.
+ * \param str The source string.
  *
- * \return an unsigned integer.
+ * \return
+ *    An unsigned integer.
  */
 template <std::unsigned_integral T>
 [[nodiscard]] auto str_to(const StringView str, const int base = 10) -> Maybe<T>
@@ -103,11 +110,12 @@ template <std::unsigned_integral T>
 }
 
 /**
- * \brief Converts a string into a signed integer value.
+ * Converts a string into a signed integer value.
  *
- * \param str the source string.
+ * \param str The source string.
  *
- * \return a signed integer.
+ * \return
+ *    A signed integer.
  */
 template <std::signed_integral T>
 [[nodiscard]] auto str_to(const StringView str, const int base = 10) -> Maybe<T>
@@ -120,11 +128,12 @@ template <std::signed_integral T>
 }
 
 /**
- * \brief Converts a string into a floating-point value.
+ * Converts a string into a floating-point value.
  *
- * \param str the source string.
+ * \param str The source string.
  *
- * \return a float.
+ * \return
+ *    A float.
  */
 template <std::floating_point T>
 [[nodiscard]] auto str_to(const StringView str) -> Maybe<T>

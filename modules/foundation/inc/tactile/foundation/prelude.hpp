@@ -152,13 +152,13 @@ static_assert(sizeof(float64) == 8);
 
 namespace int_literals {
 
-/** \brief Literal operator for ssize, equivalent to 'z' from C++23. */
+/** Literal operator for ssize, equivalent to 'z' from C++23. */
 [[nodiscard]] constexpr auto operator"" _z(const ulonglong value) noexcept -> ssize
 {
   return static_cast<ssize>(value);
 }
 
-/** \brief Literal operator for usize, equivalent to 'uz' from C++23. */
+/** Literal operator for usize, equivalent to 'uz' from C++23. */
 [[nodiscard]] constexpr auto operator"" _uz(const ulonglong value) noexcept -> usize
 {
   return static_cast<usize>(value);

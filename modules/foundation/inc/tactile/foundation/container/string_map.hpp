@@ -13,7 +13,7 @@
 namespace tactile {
 
 /**
- * \brief Custom hash object capable of hashing different string types.
+ * Custom hash object capable of hashing different string types.
  */
 struct StringHash final {
   using hash_type = std::hash<StringView>;
@@ -36,7 +36,7 @@ struct StringHash final {
 };
 
 /**
- * \brief Variant of hash map optimized for string keys, using heterogeneous lookups.
+ * Variant of hash map optimized for string keys, using heterogeneous lookups.
  */
 template <typename T>
 using StringMap = std::unordered_map<String, T, StringHash, std::equal_to<>>;

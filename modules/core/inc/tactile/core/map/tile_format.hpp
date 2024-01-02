@@ -10,7 +10,7 @@
 namespace tactile {
 
 /**
- * \brief Describes the data format used by tile layers in a tilemap.
+ * Describes the data format used by tile layers in a tilemap.
  */
 struct TileFormat final {
   TileEncoding encoding {TileEncoding::kPlainText};

@@ -6,8 +6,7 @@
 #include <bit>          // bit_cast, endian, byteswap
 #include <concepts>     // integral, invocable
 #include <cstring>      // memcpy
-#include <type_traits>  // has_unique_object_representations_v
-#include <type_traits>  // is_trivially_copyable_v, is_trivially_constructible_v
+#include <type_traits>  // is_trivially_copyable_v, is_trivially_constructible_v, has_unique_object_representations_v
 #include <version>      // __cpp_lib_byteswap
 
 #include "tactile/foundation/container/array.hpp"
@@ -16,10 +15,10 @@
 namespace tactile {
 
 /**
- * \brief Invokes a callback for each byte in an integer.
+ * Invokes a callback for each byte in an integer.
  *
- * \param value    the integer value to inspect.
- * \param callable the function object.
+ * \param value    The integer value to inspect.
+ * \param callable The function object.
  */
 template <std::integral IntType, std::invocable<uint8> CallableType>
 void each_byte(const IntType value, const CallableType& callable)
@@ -47,13 +46,14 @@ template <typename To, typename From>
 }
 
 /**
- * \brief Reverses the bytes in an integer value.
+ * Reverses the bytes in an integer value.
  *
- * \tparam IntType an integral type.
+ * \tparam IntType An integral type.
  *
- * \param value an integer value.
+ * \param value An integer value.
  *
- * \return a byteswapped integer.
+ * \return
+ *    A byteswapped integer.
  */
 template <std::integral IntType>
 [[nodiscard]] constexpr auto reverse_bytes(const IntType value) noexcept -> IntType
@@ -71,11 +71,12 @@ template <std::integral IntType>
 }
 
 /**
- * \brief Converts a native integer to a little endian integer.
+ * Converts a native integer to a little endian integer.
  *
- * \param value the native integer value.
+ * \param value The native integer value.
  *
- * \return a little endian integer value.
+ * \return
+ *    A little endian integer value.
  */
 template <std::integral IntType>
 [[nodiscard]] constexpr auto to_little_endian(const IntType value) noexcept -> IntType

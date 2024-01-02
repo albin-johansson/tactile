@@ -7,9 +7,10 @@
 namespace tactile {
 
 /**
- * \brief The supported log level categories.
+ * The supported log level categories.
  *
- * \details The underlying value increases with severity.
+ * \details
+ *    The underlying value increases with severity.
  */
 enum class LogLevel : int8 {
   kTrace,  ///< For verbose messages only useful for detailed debugging.

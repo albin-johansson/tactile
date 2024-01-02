@@ -10,22 +10,22 @@
 namespace tactile {
 
 /**
- * \brief Provides the main event loop implementation.
+ * Provides the main event loop implementation.
  *
  * \see `IEngineApp`
  */
 class TACTILE_CORE_API Engine final {
  public:
   /**
-   * \brief Creates an engine, but doesn't start it.
+   * Creates an engine, but doesn't start it.
    *
-   * \param app      the app delegate, must not be null.
-   * \param renderer the associated renderer, must not be null.
+   * \param app      The app delegate, must not be null.
+   * \param renderer The associated renderer, must not be null.
    */
   explicit Engine(IEngineApp* app, IRenderer* renderer);
 
   /**
-   * \brief Starts the engine loop.
+   * Starts the engine loop.
    */
   void run();
 

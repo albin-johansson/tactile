@@ -7,7 +7,7 @@
 namespace tactile {
 
 /**
- * \brief The supported tile layer data encoding strategies.
+ * The supported tile layer data encoding strategies.
  */
 enum class TileEncoding : uint8 {
   kPlainText,  ///< Encode tile layer data in ordinary plain text.

@@ -11,23 +11,24 @@ namespace tactile {
 class Metadata;
 
 /**
- * \brief Interface for all objects that feature attached properties and components.
+ * Interface for all objects that feature attached properties and components.
  */
 class IMetaContext {
  public:
   TACTILE_INTERFACE_CLASS(IMetaContext);
 
   /**
-   * \brief Inspects the meta context using the provided visitor.
+   * Inspects the meta context using the provided visitor.
    *
    * \param visitor the visitor to use.
    */
   virtual void accept(IMetaContextVisitor& visitor) = 0;
 
   /**
-   * \brief Returns the associated metadata.
+   * Returns the associated metadata.
    *
-   * \return the metadata.
+   * \return
+   *    The metadata.
    */
   [[nodiscard]]
   virtual auto meta() -> Metadata& = 0;

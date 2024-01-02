@@ -15,109 +15,116 @@
 namespace tactile {
 
 /**
- * \brief Represents a single object in an object layer.
+ * Represents a single object in an object layer.
  *
  * \see `ObjectLayer`
  */
 class TACTILE_CORE_API Object final : public IMetaContext {
  public:
   /**
-   * \brief Creates a map object with position (0, 0) and size (0, 0).
+   * Creates a map object with position (0, 0) and size (0, 0).
    *
-   * \param type the initial object type.
+   * \param type The initial object type.
    */
   explicit Object(ObjectType type);
 
   void accept(IMetaContextVisitor& visitor) override;
 
   /**
-   * \brief Sets the type of the object.
+   * Sets the type of the object.
    *
-   * \param type an object type.
+   * \param type An object type.
    */
   void set_type(ObjectType type);
 
   /**
-   * \brief Sets the position of the object.
+   * Sets the position of the object.
    *
-   * \param position the new position.
+   * \param position The new position.
    */
   void set_position(Float2 position);
 
   /**
-   * \brief Sets the size of the object.
+   * Sets the size of the object.
    *
-   * \param size the new size.
+   * \param size The new size.
    */
   void set_size(Float2 size);
 
   /**
-   * \brief Sets the associated type tag.
+   * Sets the associated type tag.
    *
-   * \param tag an arbitrary string.
+   * \param tag An arbitrary string.
    */
   void set_tag(String tag);
 
   /**
-   * \brief Sets the associated persistent ID.
+   * Sets the associated persistent ID.
    *
-   * \details This is used to track objects in save files.
+   * \details
+   *    This is used to track objects in save files.
    *
-   * \param id a save file identifier.
+   * \param id A save file identifier.
    */
   void set_persistent_id(Maybe<int32> id);
 
   /**
-   * \brief Sets whether the object is visible.
+   * Sets whether the object is visible.
    *
-   * \param visible true to make the object visible; false otherwise.
+   * \param visible True to make the object visible; false otherwise.
    */
   void set_visible(bool visible);
 
   /**
-   * \brief Returns the type of the object.
+   * Returns the type of the object.
    *
-   * \return an object type.
+   * \return
+   *    An object type.
    */
   [[nodiscard]]
   auto get_type() const -> ObjectType;
 
   /**
-   * \brief Returns the position of the object.
+   * Returns the position of the object.
    *
-   * \return a position.
+   * \return
+   *    A position.
    */
   [[nodiscard]]
   auto get_position() const -> Float2;
 
   /**
-   * \brief Returns the size of the object.
+   * Returns the size of the object.
    *
-   * \return a size.
+   * \return
+   *    A size.
    */
   [[nodiscard]]
   auto get_size() const -> Float2;
 
   /**
-   * \brief Returns the associated tag, if any.
+   * Returns the associated tag, if any.
    *
-   * \return a potentially empty string.
+   * \return
+   *    A potentially empty string.
    */
   [[nodiscard]]
   auto get_tag() const -> const String&;
 
   /**
-   * \brief Returns the associated persistent ID.
+   * Returns the associated persistent ID.
    *
-   * \return a save file identifier.
+   * \return
+   *    A save file identifier.
    */
   [[nodiscard]]
   auto get_persistent_id() const -> Maybe<int32>;
 
   /**
-   * \brief Indicates whether the object is visible.
+   * Indicates whether the object is visible.
    *
-   * \return true if the object is visible; false otherwise.
+   * \return
+   *    True if the object is visible; false otherwise.
    */
   [[nodiscard]]
   auto is_visible() const -> bool;
@@ -129,11 +136,13 @@ class TACTILE_CORE_API Object final : public IMetaContext {
   auto meta() const -> const Metadata& override;
 
   /**
-   * \brief Creates a clone of the object.
+   * Creates a clone of the object.
    *
-   * \note Any associated persistent identifier is not copied.
+   * \note
+   *    Any associated persistent identifier is not copied.
    *
-   * \return an object.
+   * \return
+   *    An object.
    */
   [[nodiscard]]
   auto clone() const -> Object;
@@ -142,9 +151,9 @@ class TACTILE_CORE_API Object final : public IMetaContext {
   ObjectType mType;
   Float2 mPosition {};
   Float2 mSize {};
-  Metadata mMeta;
-  String mTag;
-  Maybe<int32> mPersistentId;
+  Metadata mMeta {};
+  String mTag {};
+  Maybe<int32> mPersistentId {};
   bool mVisible {true};
 };
 

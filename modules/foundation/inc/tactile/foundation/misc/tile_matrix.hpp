@@ -12,17 +12,17 @@
 namespace tactile {
 
 /**
- * \brief Represents a single row of tile identifiers.
+ * Represents a single row of tile identifiers.
  */
 using TileRow = Vector<TileID>;
 
 /**
- * \brief Represents a two-dimensional grid of tile identifiers.
+ * Represents a two-dimensional grid of tile identifiers.
  */
 using TileMatrix = Vector<TileRow>;
 
 /**
- * \brief Represents the dimensions of a tile matrix.
+ * Represents the dimensions of a tile matrix.
  */
 struct MatrixExtent final {
   ssize row_count {};  ///< The number of tile rows.
@@ -33,21 +33,23 @@ struct MatrixExtent final {
 };
 
 /**
- * \brief Creates an empty tile row.
+ * Creates an empty tile row.
  *
- * \param col_count the number of tile columns.
+ * \param col_count The number of tile columns.
  *
- * \return a tile row.
+ * \return
+ *    A tile row.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto make_tile_row(ssize col_count) -> TileRow;
 
 /**
- * \brief Creates an empty tile matrix.
+ * Creates an empty tile matrix.
  *
- * \param extent the size of the matrix.
+ * \param extent The size of the matrix.
  *
- * \return a tile matrix.
+ * \return
+ *    A tile matrix.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto make_tile_matrix(const MatrixExtent& extent) -> TileMatrix;
@@ -58,7 +60,7 @@ inline auto make_tile_matrix(const ssize row_count, const ssize col_count) -> Ti
 }
 
 /**
- * \brief Represents a position in a tile matrix.
+ * Represents a position in a tile matrix.
  */
 struct MatrixIndex final {
   usize row {};  ///< The tile row (Y-axis) index.
@@ -69,16 +71,18 @@ struct MatrixIndex final {
 };
 
 /**
- * \brief Converts a one-dimensional tile index to a corresponding two-dimensional index.
+ * Converts a one-dimensional tile index to a corresponding two-dimensional index.
  *
- * \details This function is particularly useful when dealing with tile identifier
- *          streams, usually from save files, where it's necessary to convert linear tile
- *          indices to more intuitive matrix coordinates.
+ * \details
+ *    This function is particularly useful when dealing with tile identifier streams,
+ *    usually from save files, where it's necessary to convert linear tile indices
+ *    to more intuitive matrix coordinates.
  *
- * \param index     the linear tile index.
- * \param col_count the number of tile columns.
+ * \param index     The linear tile index.
+ * \param col_count The number of tile columns.
  *
- * \return a matrix index.
+ * \return
+ *    A matrix index.
  */
 [[nodiscard]]
 constexpr auto to_matrix_index(const usize index, const usize col_count) noexcept

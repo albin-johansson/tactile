@@ -12,14 +12,14 @@
 namespace tactile {
 
 /**
- * \brief A logger sink that forwards log messages to a text file.
+ * A logger sink that forwards log messages to a text file.
  */
 class TACTILE_FOUNDATION_API FileLoggerSink final : public ILoggerSink {
  public:
   /**
-   * \brief Creates a file sink that writes to the specified log file.
+   * Creates a file sink that writes to the specified log file.
    *
-   * \param log_file the log file destination.
+   * \param log_file The log file destination.
    */
   explicit FileLoggerSink(const FilePath& log_file);
 

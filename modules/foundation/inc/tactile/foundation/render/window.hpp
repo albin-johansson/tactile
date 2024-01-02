@@ -8,28 +8,28 @@
 namespace tactile {
 
 /**
- * \interface IWindow
- * \brief Provides the high level window API.
+ * Provides the high level window API.
  *
- * \details Every renderer backend plugin needs to provide an implementation of this
- *          interface, and register an instance of it using the `RenderContext` class.
+ * \details
+ *    Every renderer backend plugin needs to provide an implementation of this
+ *    interface, and register an instance of it using the `RenderContext` class.
  */
 class IWindow {
  public:
   TACTILE_INTERFACE_CLASS(IWindow);
 
   /**
-   * \brief Makes the window visible.
+   * Makes the window visible.
    */
   virtual void show() = 0;
 
   /**
-   * \brief Makes the window invisible.
+   * Makes the window invisible.
    */
   virtual void hide() = 0;
 
   /**
-   * \brief Maximizes the window size within the available region.
+   * Maximizes the window size within the available region.
    */
   virtual void maximize() = 0;
 };

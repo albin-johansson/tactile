@@ -14,19 +14,19 @@
 namespace tactile::gl {
 
 /**
- * \brief An OpenGL 4 renderer implementation.
+ * An OpenGL 4 renderer implementation.
  */
 class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer {
  public:
   TACTILE_DELETE_COPY(OpenGLRenderer);
 
   /**
-   * \brief Creates a renderer and an associated Dear ImGui context.
+   * Creates a renderer and an associated Dear ImGui context.
    *
-   * \param window the associated window.
+   * \param window The associated window.
    *
-   * \throw Error if the provided window is null.
-   * \throw Error if the Dear ImGui resources cannot be initialized.
+   * \throw Exception if the provided window is null.
+   * \throw Exception if the Dear ImGui resources cannot be initialized.
    */
   [[nodiscard]]
   static auto create(OpenGLWindow* window) -> Result<OpenGLRenderer>;

@@ -14,77 +14,81 @@ struct ImGuiContext;
 namespace tactile {
 
 /**
- * \interface IRenderer
- * \brief Provides the high level renderer backend API.
+ * Provides the high level renderer backend API.
  *
- * \details Every renderer backend plugin needs to provide an implementation of this
- *          interface, and register an instance of it using the `RenderContext` class.
+ * \details
+ *    Every renderer backend plugin needs to provide an implementation of this
+ *    interface, and register an instance of it using the `RenderContext` class.
  */
 class IRenderer {
  public:
   TACTILE_INTERFACE_CLASS(IRenderer);
 
   /**
-   * \brief Attempts to begin a new render frame.
+   * Attempts to begin a new render frame.
    *
-   * \return nothing if successful, or an error code if something went wrong.
+   * \return
+   *    Nothing if successful, or an error code if something went wrong.
    */
   [[nodiscard]]
   virtual auto begin_frame() -> Result<void> = 0;
 
   /**
-   * \brief Ends the current render frame.
+   * Ends the current render frame.
    *
    * \pre The `begin_frame` function must be successfully called before this function.
    */
   virtual void end_frame() = 0;
 
   /**
-   * \brief Reloads the fonts texture, if possible.
+   * Reloads the fonts texture, if possible.
    */
   virtual void reload_fonts_texture() = 0;
 
   /**
-   * \brief Indicates whether the renderer supports reloading the fonts texture.
+   * Indicates whether the renderer supports reloading the fonts texture.
    *
-   * \return true if the fonts texture can be reloaded; false otherwise.
+   * \return
+   *    True if the fonts texture can be reloaded; false otherwise.
    */
   [[nodiscard]]
   virtual auto can_reload_fonts_texture() const -> bool = 0;
 
   /**
-   * \brief Tries to load a texture from disk.
+   * Tries to load a texture from disk.
    *
-   * \param image_path the path to the image.
+   * \param image_path The path to the image.
    *
-   * \return a non-owning pointer to the loaded texture (may be null).
+   * \return
+   *    A non-owning pointer to the loaded texture (may be null).
    */
   [[nodiscard]]
   virtual auto load_texture(const FilePath& image_path) -> ITexture* = 0;
 
   /**
-   * \brief Returns the associated window.
+   * Returns the associated window.
    *
-   * \return a window.
+   * \return
+   *    A window.
    */
   [[nodiscard]]
   virtual auto get_window() -> IWindow* = 0;
 
-  /**
-   * \copydoc get_window
-   */
+  /** \copydoc get_window() */
   [[nodiscard]]
   virtual auto get_window() const -> const IWindow* = 0;
 
   /**
-   * \brief Returns the associated Dear ImGui context.
+   * Returns the associated Dear ImGui context.
    *
-   * \details Users of the renderer must explicitly install the associated Dear ImGui
-   *          context and memory management functions before issuing other Dear ImGui
-   *          commands. Use `ImGui::SetCurrentContext` and `ImGui::SetAllocatorFunctions`
-   *          to accomplish this.
+   * \details
+   *    Users of the renderer must explicitly install the associated Dear ImGui
+   *    context and memory management functions before issuing other Dear ImGui
+   *    commands. Use `ImGui::SetCurrentContext` and `ImGui::SetAllocatorFunctions`
+   *    to accomplish this.
    *
-   * \return a Dear ImGui context.
+   * \return
+   *    A Dear ImGui context.
    */
   [[nodiscard]]
   virtual auto get_imgui_context() -> ImGuiContext* = 0;

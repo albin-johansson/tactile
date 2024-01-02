@@ -9,23 +9,24 @@
 namespace tactile {
 
 /**
- * \brief Represents a read-only view into a byte stream.
+ * Represents a read-only view into a byte stream.
  */
 using ByteSpan = Span<const uint8>;
 
 /**
- * \brief Represents an arbitrary stream of bytes.
+ * Represents an arbitrary stream of bytes.
  */
 using ByteStream = Vector<uint8>;
 
 /**
- * \brief Creates a byte span from a container.
+ * Creates a byte span from a container.
  *
  * \todo C++20: Use `std::ranges::contiguous_range`.
  *
- * \param container a contiguous container, such as an array.
+ * \param container A contiguous container, such as an array.
  *
- * \return a byte span.
+ * \return
+ *    A byte span.
  */
 template <typename T>
 [[nodiscard]] constexpr auto make_byte_span(const T& container) -> ByteSpan

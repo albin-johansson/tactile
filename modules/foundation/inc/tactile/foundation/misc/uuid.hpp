@@ -15,42 +15,46 @@
 namespace tactile {
 
 /**
- * \brief Represents a universally unique identifier, or UUID.
+ * Represents a universally unique identifier, or UUID.
  *
- * \details UUID instances are default initialized to zero. Create new UUID values
- *          via the `generate` function.
+ * \details
+ *    UUID instances are default initialized to zero. Create new UUID values
+ *    via the `generate` function.
  *
- *          \code{cpp}
- *          const UUID uuid_a;
- *          assert(uuid_a.is_null());
+ *    \code{cpp}
+ *    const UUID uuid_a {};
+ *    assert(uuid_a.is_null());
  *
- *          const auto uuid_b = UUID::generate();
- *          assert(!uuid_b.is_null());
- *          assert(uuid_a != uuid_b);
- *          \endcode
+ *    const auto uuid_b = UUID::generate();
+ *    assert(!uuid_b.is_null());
+ *    assert(uuid_a != uuid_b);
+ *    \endcode
  */
 class TACTILE_FOUNDATION_API UUID final {
  public:
   /**
-   * \brief Generates a new UUID.
+   * Generates a new UUID.
    *
-   * \return a new UUID.
+   * \return
+   *    A new UUID.
    */
   [[nodiscard]]
   static auto generate() -> UUID;
 
   /**
-   * \brief Produces a hash of the UUID.
+   * Produces a hash of the UUID.
    *
-   * \return a hash value.
+   * \return
+   *    A hash value.
    */
   [[nodiscard]]
   auto hash_code() const noexcept -> usize;
 
   /**
-   * \brief Indicates whether the UUID is null.
+   * Indicates whether the UUID is null.
    *
-   * \return true if the underlying array is all zeroes; false otherwise.
+   * \return
+   *    True if the underlying array is all zeroes; false otherwise.
    */
   [[nodiscard]]
   auto is_null() const -> bool;
@@ -69,22 +73,24 @@ class TACTILE_FOUNDATION_API UUID final {
 };
 
 /**
- * \brief Returns a textual representation of a UUID.
+ * Returns a textual representation of a UUID.
  *
- * \param uuid the UUID value.
+ * \param uuid The UUID value.
  *
- * \return a string with the format `HHHH-HH-HH-HH-HHHHHH`, using hexadecimal digits.
+ * \return
+ *    A string with the format `HHHH-HH-HH-HH-HHHHHH`, using hexadecimal digits.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto to_string(const UUID& uuid) -> String;
 
 /**
- * \brief Outputs a UUID value to a stream.
+ * Outputs a UUID value to a stream.
  *
- * \param stream the output stream.
- * \param uuid   the UUID value.
+ * \param stream The output stream.
+ * \param uuid   The UUID value.
  *
- * \return the output stream.
+ * \return
+ *    The output stream.
  */
 TACTILE_FOUNDATION_API auto operator<<(std::ostream& stream, const UUID& uuid)
     -> std::ostream&;

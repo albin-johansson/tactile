@@ -17,24 +17,26 @@
 namespace tactile::tiled::tmx {
 
 /**
- * \brief Attempts to parse an XML document from disk.
+ * Attempts to parse an XML document from disk.
  *
- * \param path the path to the XML document.
+ * \param path The path to the XML document.
  *
- * \return the parsed document.
+ * \return
+ *    The parsed document.
  */
 [[nodiscard]]
 TACTILE_TMX_FORMAT_API auto load_xml_file(const FilePath& path)
     -> Result<pugi::xml_document>;
 
 /**
- * \brief Attempts to save an XML document to disk.
+ * Attempts to save an XML document to disk.
  *
- * \param document    the XML document to save.
- * \param path        the destination file path.
- * \param indentation the number of spaces used for indentation.
+ * \param document    The XML document to save.
+ * \param path        The destination file path.
+ * \param indentation The number of spaces used for indentation.
  *
- * \return nothing on success; an error code otherwise.
+ * \return
+ *    Nothing on success; an error code otherwise.
  */
 [[nodiscard]]
 TACTILE_TMX_FORMAT_API auto save_xml_file(const pugi::xml_document& document,
@@ -42,74 +44,80 @@ TACTILE_TMX_FORMAT_API auto save_xml_file(const pugi::xml_document& document,
                                           int indentation) -> Result<void>;
 
 /**
- * \brief Attempts to parse an XML node attribute as a string.
+ * Attempts to parse an XML node attribute as a string.
  *
- * \param node the XML node that features the attribute.
- * \param key  the attribute name.
+ * \param node The XML node that features the attribute.
+ * \param key  The attribute name.
  *
- * \return the read attribute.
+ * \return
+ *    The read attribute.
  */
 [[nodiscard]]
 TACTILE_TMX_FORMAT_API auto parse_string(pugi::xml_node node, const char* key)
     -> Result<String>;
 
 /**
- * \brief Attempts to parse an XML node attribute as a signed integer.
+ * Attempts to parse an XML node attribute as a signed integer.
  *
- * \param node the XML node that features the attribute.
- * \param key  the attribute name.
+ * \param node The XML node that features the attribute.
+ * \param key  The attribute name.
  *
- * \return the read attribute.
+ * \return
+ *    The read attribute.
  */
 [[nodiscard]]
 TACTILE_TMX_FORMAT_API auto parse_int64(pugi::xml_node node, const char* key)
     -> Result<int64>;
 
 /**
- * \brief Attempts to parse an XML node attribute as an unsigned integer.
+ * Attempts to parse an XML node attribute as an unsigned integer.
  *
- * \param node the XML node that features the attribute.
- * \param key  the attribute name.
+ * \param node The XML node that features the attribute.
+ * \param key  The attribute name.
  *
- * \return the read attribute.
+ * \return
+ *    The read attribute.
  */
 [[nodiscard]]
 TACTILE_TMX_FORMAT_API auto parse_uint64(pugi::xml_node node, const char* key)
     -> Result<uint64>;
 
 /**
- * \brief Attempts to parse an XML node attribute as a floating-point value.
+ * Attempts to parse an XML node attribute as a floating-point value.
  *
- * \param node the XML node that features the attribute.
- * \param key  the attribute name.
+ * \param node The XML node that features the attribute.
+ * \param key  The attribute name.
  *
- * \return the read attribute.
+ * \return
+ *    The read attribute.
  */
 [[nodiscard]]
 TACTILE_TMX_FORMAT_API auto parse_float64(pugi::xml_node node, const char* key)
     -> Result<float64>;
 
 /**
- * \brief Attempts to parse an XML node attribute as a Boolean value.
+ * Attempts to parse an XML node attribute as a Boolean value.
  *
- * \param node the XML node that features the attribute.
- * \param key  the attribute name.
+ * \param node The XML node that features the attribute.
+ * \param key  The attribute name.
  *
- * \return the read attribute.
+ * \return
+ *    The read attribute.
  */
 [[nodiscard]]
 TACTILE_TMX_FORMAT_API auto parse_bool(pugi::xml_node node, const char* key)
     -> Result<bool>;
 
 /**
- * \brief Attempts to parse an XML node attribute as a signed integer.
+ * Attempts to parse an XML node attribute as a signed integer.
  *
- * \tparam T any signed integer type.
+ * \tparam T Any signed integer type.
  *
- * \param node the XML node that features the attribute.
- * \param key  the attribute name.
+ * \param node The XML node that features the attribute.
+ * \param key  The attribute name.
  *
- * \return the read attribute.
+ * \return
+ *    The read attribute.
  */
 template <std::signed_integral T>
 [[nodiscard]] auto parse(pugi::xml_node node, const char* key) -> Result<T>
@@ -119,14 +127,15 @@ template <std::signed_integral T>
 }
 
 /**
- * \brief Attempts to parse an XML node attribute as an unsigned integer.
+ * Attempts to parse an XML node attribute as an unsigned integer.
  *
- * \tparam T any unsigned integer type.
+ * \tparam T Any unsigned integer type.
  *
- * \param node the XML node that features the attribute.
- * \param key  the attribute name.
+ * \param node The XML node that features the attribute.
+ * \param key  The attribute name.
  *
- * \return the read attribute.
+ * \return
+ *    The read attribute.
  */
 template <std::unsigned_integral T>
 [[nodiscard]] auto parse(pugi::xml_node node, const char* key) -> Result<T>
@@ -136,14 +145,15 @@ template <std::unsigned_integral T>
 }
 
 /**
- * \brief Attempts to parse an XML node attribute as a floating-point value.
+ * Attempts to parse an XML node attribute as a floating-point value.
  *
- * \tparam T any floating-point type.
+ * \tparam T Any floating-point type.
  *
- * \param node the XML node that features the attribute.
- * \param key  the attribute name.
+ * \param node The XML node that features the attribute.
+ * \param key  The attribute name.
  *
- * \return the read attribute.
+ * \return
+ *    The read attribute.
  */
 template <std::floating_point T>
 [[nodiscard]] auto parse(pugi::xml_node node, const char* key) -> Result<T>
@@ -153,39 +163,42 @@ template <std::floating_point T>
 }
 
 /**
- * \brief Attempts to parse an XML node attribute as a string and write it to an output parameter.
+ * Attempts to parse an XML node attribute as a string and write it to an output parameter.
  *
- * \param      node  the XML node that features the attribute.
- * \param      key   the attribute name.
- * \param[out] value the value to write the result to.
+ * \param      node  The XML node that features the attribute.
+ * \param      key   The attribute name.
+ * \param[out] value The value to write the result to.
  *
- * \return nothing on success; an error code otherwise.
+ * \return
+ *    Nothing on success; an error code otherwise.
  */
 [[nodiscard]]
 TACTILE_TMX_FORMAT_API auto parse_to(pugi::xml_node node, const char* key, String& value)
     -> Result<void>;
 
 /**
- * \brief Attempts to parse an XML node attribute as a Boolean and write it to an output parameter.
+ * Attempts to parse an XML node attribute as a Boolean and write it to an output parameter.
  *
- * \param      node  the XML node that features the attribute.
- * \param      key   the attribute name.
- * \param[out] value the value to write the result to.
+ * \param      node  The XML node that features the attribute.
+ * \param      key   The attribute name.
+ * \param[out] value The value to write the result to.
  *
- * \return nothing on success; an error code otherwise.
+ * \return
+ *    Nothing on success; an error code otherwise.
  */
 [[nodiscard]]
 TACTILE_TMX_FORMAT_API auto parse_to(pugi::xml_node node, const char* key, bool& value)
     -> Result<void>;
 
 /**
- * \brief Attempts to parse an XML node attribute as a signed integer and write it to an output parameter.
+ * Attempts to parse an XML node attribute as a signed integer and write it to an output parameter.
  *
- * \param      node  the XML node that features the attribute.
- * \param      key   the attribute name.
- * \param[out] value the value to write the result to.
+ * \param      node  The XML node that features the attribute.
+ * \param      key   The attribute name.
+ * \param[out] value The value to write the result to.
  *
- * \return nothing on success; an error code otherwise.
+ * \return
+ *    Nothing on success; an error code otherwise.
  */
 template <std::signed_integral T>
 [[nodiscard]] auto parse_to(pugi::xml_node node, const char* key, T& value)
@@ -198,13 +211,14 @@ template <std::signed_integral T>
 }
 
 /**
- * \brief Attempts to parse an XML node attribute as an unsigned integer and write it to an output parameter.
+ * Attempts to parse an XML node attribute as an unsigned integer and write it to an output parameter.
  *
- * \param      node  the XML node that features the attribute.
- * \param      key   the attribute name.
- * \param[out] value the value to write the result to.
+ * \param      node  The XML node that features the attribute.
+ * \param      key   The attribute name.
+ * \param[out] value The value to write the result to.
  *
- * \return nothing on success; an error code otherwise.
+ * \return
+ *    Nothing on success; an error code otherwise.
  */
 template <std::unsigned_integral T>
 [[nodiscard]] auto parse_to(pugi::xml_node node, const char* key, T& value)
@@ -217,13 +231,14 @@ template <std::unsigned_integral T>
 }
 
 /**
- * \brief Attempts to parse an XML node attribute as a floating-point value and write it to an output parameter.
+ * Attempts to parse an XML node attribute as a floating-point value and write it to an output parameter.
  *
- * \param      node  the XML node that features the attribute.
- * \param      key   the attribute name.
- * \param[out] value the value to write the result to.
+ * \param      node  The XML node that features the attribute.
+ * \param      key   The attribute name.
+ * \param[out] value The value to write the result to.
  *
- * \return nothing on success; an error code otherwise.
+ * \return
+ *    Nothing on success; an error code otherwise.
  */
 template <std::floating_point T>
 [[nodiscard]] auto parse_to(pugi::xml_node node, const char* key, T& value)
@@ -236,14 +251,15 @@ template <std::floating_point T>
 }
 
 /**
- * \brief Attempts to parse an XML node attribute and write it to a value, using a default value on failure.
+ * Attempts to parse an XML node attribute and write it to a value, using a default value on failure.
  *
- * \param      node          the XML node that features the attribute.
- * \param      key           the attribute name.
- * \param[out] value         the value to write the result to.
- * \param      default_value the fallback value used if the attribute didn't exist.
+ * \param      node          The XML node that features the attribute.
+ * \param      key           The attribute name.
+ * \param[out] value         The value to write the result to.
+ * \param      default_value The fallback value used if the attribute didn't exist.
  *
- * \return nothing on success; an error code otherwise.
+ * \return
+ *    Nothing on success; an error code otherwise.
  */
 template <typename T>
 [[nodiscard]] auto try_parse_to(const pugi::xml_node node,

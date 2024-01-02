@@ -26,7 +26,7 @@ struct VectorComparisonResult final {
   bool same_w : 1 {};
 };
 
-/** \brief Performs a component-wise comparison of two vectors. */
+/** Performs a component-wise comparison of two vectors. */
 template <typename VectorType>
 [[nodiscard]] constexpr auto compare_vectors(const VectorType& a,
                                              const VectorType& b) noexcept

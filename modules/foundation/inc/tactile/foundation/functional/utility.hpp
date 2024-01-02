@@ -7,13 +7,13 @@
 namespace tactile {
 
 /**
- * \brief Invokes a function object the specified number of times.
+ * Invokes a function object the specified number of times.
  *
- * \tparam T an integral type.
- * \tparam U a callable type.
+ * \tparam T An integral type.
+ * \tparam U A callable type.
  *
- * \param times    the number of times the function object will be called.
- * \param callable the function object.
+ * \param times    The number of times the function object will be called.
+ * \param callable The function object.
  */
 template <std::integral T, std::invocable U>
 constexpr void repeat(const T times, const U& callable) noexcept(noexcept(callable()))

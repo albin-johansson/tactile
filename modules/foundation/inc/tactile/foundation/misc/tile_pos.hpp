@@ -4,15 +4,15 @@
 
 #include <compare>  // strong_ordering
 
-#include "tactile/foundation/api.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
 
 /**
- * \brief Represents a position in a tile grid as a row/column pair.
+ * Represents a position in a tile grid as a row/column pair.
  *
- * \note Negative indices are allowed to be able to represent offsets.
+ * \note
+ *    Negative indices are allowed to be able to represent offsets.
  */
 struct TilePos final {
   ssize row {};  ///< The row index.
@@ -23,12 +23,13 @@ struct TilePos final {
 };
 
 /**
- * \brief Adds two tile positions by performing a component-wise addition.
+ * Adds two tile positions by performing a component-wise addition.
  *
- * \param p1 the left-hand side position.
- * \param p2 the right-hand side position.
+ * \param p1 The left-hand side position.
+ * \param p2 The right-hand side position.
  *
- * \return a new position.
+ * \return
+ *    A new position.
  */
 [[nodiscard]] constexpr auto operator+(const TilePos& p1, const TilePos& p2) noexcept
     -> TilePos
@@ -37,12 +38,13 @@ struct TilePos final {
 }
 
 /**
- * \brief Subtracts two tile positions by performing a component-wise subtraction.
+ * Subtracts two tile positions by performing a component-wise subtraction.
  *
- * \param p1 the left-hand side position.
- * \param p2 the right-hand side position.
+ * \param p1 The left-hand side position.
+ * \param p2 The right-hand side position.
  *
- * \return a new position.
+ * \return
+ *    A new position.
  */
 [[nodiscard]] constexpr auto operator-(const TilePos& p1, const TilePos& p2) noexcept
     -> TilePos
@@ -51,12 +53,13 @@ struct TilePos final {
 }
 
 /**
- * \brief Updates a tile position by adding another tile position to it.
+ * Updates a tile position by adding another tile position to it.
  *
- * \param p1 the left-hand side position.
- * \param p2 the right-hand side position.
+ * \param p1 The left-hand side position.
+ * \param p2 The right-hand side position.
  *
- * \return the updated position.
+ * \return
+ *    The updated position.
  */
 constexpr auto operator+=(TilePos& p1, const TilePos& p2) noexcept -> TilePos&
 {
@@ -65,12 +68,13 @@ constexpr auto operator+=(TilePos& p1, const TilePos& p2) noexcept -> TilePos&
 }
 
 /**
- * \brief Updates a tile position by subtracting another tile position from it.
+ * Updates a tile position by subtracting another tile position from it.
  *
- * \param p1 the left-hand side position.
- * \param p2 the right-hand side position.
+ * \param p1 The left-hand side position.
+ * \param p2 The right-hand side position.
  *
- * \return the updated position.
+ * \return
+ *    The updated position.
  */
 constexpr auto operator-=(TilePos& p1, const TilePos& p2) noexcept -> TilePos&
 {

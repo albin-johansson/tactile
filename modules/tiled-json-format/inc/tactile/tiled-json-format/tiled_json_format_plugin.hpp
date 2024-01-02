@@ -11,7 +11,7 @@
 namespace tactile {
 
 /**
- * \brief Manages the Tiled TMJ format plugin.
+ * Manages the Tiled TMJ format plugin.
  */
 class TACTILE_TMJ_FORMAT_API TiledJsonFormatPlugin final : public IPlugin {
  public:

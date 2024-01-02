@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "tactile/core/api.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
@@ -12,59 +11,59 @@ class ObjectLayer;
 class GroupLayer;
 
 /**
- * \brief Visitor type used to inspect non-const layers.
+ * Visitor type used to inspect non-const layers.
  */
 class ILayerVisitor {
  public:
   TACTILE_INTERFACE_CLASS(ILayerVisitor);
 
   /**
-   * \brief Visits a tile layer.
+   * Visits a tile layer.
    *
-   * \param layer the visited layer.
+   * \param layer The visited layer.
    */
   virtual void visit([[maybe_unused]] TileLayer& layer) {}
 
   /**
-   * \brief Visits an object layer.
+   * Visits an object layer.
    *
-   * \param layer the visited layer.
+   * \param layer The visited layer.
    */
   virtual void visit([[maybe_unused]] ObjectLayer& layer) {}
 
   /**
-   * \brief Visits a group layer.
+   * Visits a group layer.
    *
-   * \param layer the visited layer.
+   * \param layer The visited layer.
    */
   virtual void visit([[maybe_unused]] GroupLayer& layer) {}
 };
 
 /**
- * \brief Visitor type used to inspect const layers.
+ * Visitor type used to inspect const layers.
  */
 class IConstLayerVisitor {
  public:
   TACTILE_INTERFACE_CLASS(IConstLayerVisitor);
 
   /**
-   * \brief Visits a tile layer.
+   * Visits a tile layer.
    *
-   * \param layer the visited layer.
+   * \param layer The visited layer.
    */
   virtual void visit([[maybe_unused]] const TileLayer& layer) {}
 
   /**
-   * \brief Visits an object layer.
+   * Visits an object layer.
    *
-   * \param layer the visited layer.
+   * \param layer The visited layer.
    */
   virtual void visit([[maybe_unused]] const ObjectLayer& layer) {}
 
   /**
-   * \brief Visits a group layer.
+   * Visits a group layer.
    *
-   * \param layer the visited layer.
+   * \param layer The visited layer.
    */
   virtual void visit([[maybe_unused]] const GroupLayer& layer) {}
 };

@@ -44,7 +44,7 @@ namespace tactile {
 class ILoggerSink;
 
 /**
- * \brief A simple sink-based logger implementation.
+ * A simple sink-based logger implementation.
  */
 class TACTILE_FOUNDATION_API Logger final {
  public:
@@ -55,11 +55,11 @@ class TACTILE_FOUNDATION_API Logger final {
   TACTILE_DEFAULT_MOVE(Logger);
 
   /**
-   * \brief Logs an arbitrary message.
+   * Logs an arbitrary message.
    *
-   * \param level      the severity of the message.
-   * \param fmt_string the format string.
-   * \param args       the format arguments.
+   * \param level      The severity of the message.
+   * \param fmt_string The format string.
+   * \param args       The format arguments.
    */
   template <typename... Args>
   void log(const LogLevel level, const StringView fmt_string, Args&&... args) noexcept
@@ -68,59 +68,62 @@ class TACTILE_FOUNDATION_API Logger final {
   }
 
   /**
-   * \brief Sets the minimum severity of messages that get logged.
+   * Sets the minimum severity of messages that get logged.
    *
-   * \param level the minimum log level.
+   * \param level The minimum log level.
    */
   void set_min_level(LogLevel level) noexcept;
 
   /**
-   * \brief Sets the minimum severity of messages that will initiate flushes.
+   * Sets the minimum severity of messages that will initiate flushes.
    *
-   * \param level the flush log level.
+   * \param level The flush log level.
    */
   void flush_on(LogLevel level) noexcept;
 
   /**
-   * \brief Associates a sink implementation with the logger.
+   * Associates a sink implementation with the logger.
    *
-   * \param sink a logger sink implementation.
+   * \param sink A logger sink implementation.
    */
   void add_sink(Managed<ILoggerSink> sink);
 
   /**
-   * \brief Sets a reference time point to use as a relative baseline for timestamps.
+   * Sets a reference time point to use as a relative baseline for timestamps.
    *
-   * \param instant the new reference instant; or nothing to use the default.
+   * \param instant The new reference instant; or nothing to use the default.
    */
   void set_reference_instant(Maybe<SteadyClockInstant> instant);
 
   /**
-   * \brief Indicates whether a message with a specific severity will be logged.
+   * Indicates whether a message with a specific severity will be logged.
    *
-   * \param level the log level to consider.
+   * \param level The log level to consider.
    *
-   * \return true if the message would be logged; false otherwise.
+   * \return
+   *    True if the message would be logged; false otherwise.
    */
   [[nodiscard]]
   auto would_log(LogLevel level) const noexcept -> bool;
 
   /**
-   * \brief Indicates whether a message with a specific severity will trigger a flush.
+   * Indicates whether a message with a specific severity will trigger a flush.
    *
-   * \param level the log level to consider.
+   * \param level The log level to consider.
    *
-   * \return true if the message would cause a flush; false otherwise.
+   * \return
+   *    True if the message would cause a flush; false otherwise.
    */
   [[nodiscard]]
   auto would_flush(LogLevel level) const noexcept -> bool;
 
   /**
-   * \brief Returns a three-letter acronym for the specified log level.
+   * Returns a three-letter acronym for the specified log level.
    *
-   * \param level the log level to consider.
+   * \param level The log level to consider.
    *
-   * \return a log level acronym.
+   * \return
+   *    A log level acronym.
    */
   [[nodiscard]]
   static auto get_acronym(LogLevel level) noexcept -> StringView;
@@ -138,9 +141,9 @@ class TACTILE_FOUNDATION_API Logger final {
 };
 
 /**
- * \brief Sets the logger instance that is used by the logging macros.
+ * Sets the logger instance that is used by the logging macros.
  *
- * \param logger the new default logger.
+ * \param logger The new default logger.
  *
  * \see `TACTILE_LOG_TRACE`
  * \see `TACTILE_LOG_DEBUG`
@@ -152,9 +155,10 @@ class TACTILE_FOUNDATION_API Logger final {
 TACTILE_FOUNDATION_API void set_default_logger(Logger* logger) noexcept;
 
 /**
- * \brief Returns the logger instance used by the logging macros.
+ * Returns the logger instance used by the logging macros.
  *
- * \return the current default logger.
+ * \return
+ *    The current default logger.
  */
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto get_default_logger() noexcept -> Logger*;

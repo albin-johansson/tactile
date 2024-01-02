@@ -11,7 +11,7 @@
 namespace tactile {
 
 /**
- * \brief Provides error codes for generic high-level errors.
+ * Provides error codes for generic high-level errors.
  *
  * \see `get_generic_error_category`
  * \see `make_generic_error`

@@ -18,73 +18,72 @@ class Tileset;
 class Tile;
 
 /**
- * \interface IMetaContextVisitor
- * \brief Interface for meta context visitors.
+ * Interface for meta context visitors.
  */
 class IMetaContextVisitor {
  public:
   TACTILE_INTERFACE_CLASS(IMetaContextVisitor);
 
   /**
-   * \brief Visits an orthogonal map.
+   * Visits an orthogonal map.
    *
-   * \param map the map to visit.
+   * \param map The map to visit.
    */
   virtual void visit([[maybe_unused]] OrthogonalMap& map) {};
 
   /**
-   * \brief Visits an isometric map.
+   * Visits an isometric map.
    *
-   * \param map the map to visit.
+   * \param map The map to visit.
    */
   virtual void visit([[maybe_unused]] IsometricMap& map) {};
 
   /**
-   * \brief Visits a hexagonal map.
+   * Visits a hexagonal map.
    *
-   * \param map the map to visit.
+   * \param map The map to visit.
    */
   virtual void visit([[maybe_unused]] HexagonalMap& map) {};
 
   /**
-   * \brief Visits a group layer.
+   * Visits a group layer.
    *
-   * \param layer the layer to visit.
+   * \param layer The layer to visit.
    */
   virtual void visit([[maybe_unused]] GroupLayer& layer) {};
 
   /**
-   * \brief Visits a tile layer.
+   * Visits a tile layer.
    *
-   * \param layer the layer to visit.
+   * \param layer The layer to visit.
    */
   virtual void visit([[maybe_unused]] TileLayer& layer) {};
 
   /**
-   * \brief Visits an object layer.
+   * Visits an object layer.
    *
-   * \param layer the layer to visit.
+   * \param layer The layer to visit.
    */
   virtual void visit([[maybe_unused]] ObjectLayer& layer) {};
 
   /**
-   * \brief Visits an object.
+   * Visits an object.
    *
-   * \param object the object to visit.
+   * \param object The object to visit.
    */
   virtual void visit([[maybe_unused]] Object& object) {};
 
   /**
-   * \brief Visits a tileset.
+   * Visits a tileset.
    *
-   * \param tileset the tileset to visit.
+   * \param tileset The tileset to visit.
    */
   virtual void visit([[maybe_unused]] Tileset& tileset) {};
 
   /**
-   * \brief Visits a tile.
+   * Visits a tile.
    *
-   * \param tile the tile to visit.
+   * \param tile The tile to visit.
    */
   virtual void visit([[maybe_unused]] Tile& tile) {};
 };

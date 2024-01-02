@@ -19,7 +19,7 @@ using Weak = std::weak_ptr<T>;
 template <typename T>
 using DeleterFptr = void (*)(T*);
 
-/** \brief Unique pointer with a function pointer deleter, useful for externally managed pointers. */
+/** Unique pointer with a function pointer deleter, useful for externally managed pointers. */
 template <typename T>
 using Managed = Unique<T, DeleterFptr<T>>;
 
@@ -27,14 +27,15 @@ using std::make_shared;
 using std::make_unique;
 
 /**
- * \brief Creates a managed object.
+ * Creates a managed object.
  *
- * \tparam T    the type of the object to allocate.
- * \tparam Args the types of the forwarded arguments.
+ * \tparam T    The type of the object to allocate.
+ * \tparam Args The types of the forwarded arguments.
  *
- * \param args the arguments that will be forwarded to an appropriate constructor.
+ * \param args The arguments that will be forwarded to an appropriate constructor.
  *
- * \return a managed pointer.
+ * \return 
+ *    A managed pointer.
  */
 template <typename T, typename... Args>
 [[nodiscard]] auto make_managed(Args&&... args) -> Managed<T>
@@ -44,16 +45,17 @@ template <typename T, typename... Args>
 }
 
 /**
- * \brief Converts a managed pointer to a derived type to one to a base type.
+ * Converts a managed pointer to a derived type to one to a base type.
  *
  * \pre The deleter used by the provided managed pointer must call `operator delete`.
  *
- * \tparam Base    the base type.
- * \tparam Derived the derived type.
+ * \tparam Base    The base type.
+ * \tparam Derived The derived type.
  *
- * \param managed the managed pointer that will be converted.
+ * \param managed The managed pointer that will be converted.
  *
- * \return a managed pointer.
+ * \return
+ *    A managed pointer.
  */
 template <typename Base, std::derived_from<Base> Derived>
 [[nodiscard]] auto managed_cast(Managed<Derived> managed) noexcept -> Managed<Base>

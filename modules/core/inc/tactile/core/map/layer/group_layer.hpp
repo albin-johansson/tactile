@@ -16,7 +16,7 @@
 namespace tactile {
 
 /**
- * \brief A layer variant consisting of a collection of other layers.
+ * A layer variant consisting of a collection of other layers.
  */
 class TACTILE_CORE_API GroupLayer final : public ILayer {
  public:
@@ -37,18 +37,19 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
   void accept(IConstLayerVisitor& visitor) const override;
 
   /**
-   * \brief Inspects each meta context in the group recursively.
+   * Inspects each meta context in the group recursively.
    *
-   * \note The callback is not called for the invoked group itself.
+   * \note
+   *    The callback is not called for the invoked group itself.
    *
-   * \param visitor the visitor that will be called.
+   * \param visitor The visitor that will be called.
    */
   void each(IMetaContextVisitor& visitor) const;
 
   /**
-   * \brief Inspects the layers in the group, but not the root group itself.
+   * Inspects the layers in the group, but not the root group itself.
    *
-   * \param visitor the layer visitor.
+   * \param visitor The layer visitor.
    */
   void each(ILayerVisitor& visitor);
 
@@ -56,58 +57,64 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
   void each(IConstLayerVisitor& visitor) const;
 
   /**
-   * \brief Adds a layer to the group layer.
+   * Adds a layer to the group layer.
    *
-   * \param layer the layer to add.
+   * \param layer The layer to add.
    */
   void append_layer(Shared<ILayer> layer);
 
   /**
-   * \brief Adds a layer to a nested group layer.
+   * Adds a layer to a nested group layer.
    *
-   * \param parent_uuid the UUID of the parent group layer.
-   * \param layer       the layer to add.
+   * \param parent_uuid The UUID of the parent group layer.
+   * \param layer       The layer to add.
    *
-   * \return true if the layer was successfully added; false otherwise.
+   * \return
+   *    True if the layer was successfully added; false otherwise.
    */
   auto append_layer_to(const UUID& parent_uuid, Shared<ILayer> layer) -> bool;
 
   /**
-   * \brief Removes a layer from the group layer.
+   * Removes a layer from the group layer.
    *
-   * \param uuid the UUID associated with the layer to remove.
+   * \param uuid The UUID associated with the layer to remove.
    *
-   * \return the removed layer.
+   * \return
+   *    The removed layer.
    */
   auto remove_layer(const UUID& uuid) -> Shared<ILayer>;
 
   /**
-   * \brief Duplicates a layer in the hierarchy.
+   * Duplicates a layer in the hierarchy.
    *
-   * \details The new layer is placed immediately after the source layer in the hierarchy,
-   *          so that it would be visited after the source layer.
+   * \details
+   *    The new layer is placed immediately after the source layer in the hierarchy, so that it would be visited after
+   *    the source layer.
    *
-   * \param uuid the UUID associated with the target layer.
+   * \param uuid The UUID associated with the target layer.
    *
-   * \return the new layer.
+   * \return
+   *    The new layer.
    */
   auto duplicate_layer(const UUID& uuid) -> Shared<ILayer>;
 
   /**
-   * \brief Shifts a layer one step up (earlier) relative to its siblings.
+   * Shifts a layer one step up (earlier) relative to its siblings.
    *
-   * \param uuid the UUID associated with the target layer.
+   * \param uuid The UUID associated with the target layer.
    *
-   * \return true if a layer was moved; false otherwise.
+   * \return
+   *    True if a layer was moved; false otherwise.
    */
   auto move_layer_up(const UUID& uuid) -> bool;
 
   /**
-   * \brief Shifts a layer one step down (later) relative to its siblings.
+   * Shifts a layer one step down (later) relative to its siblings.
    *
-   * \param uuid the UUID associated with the target layer.
+   * \param uuid The UUID associated with the target layer.
    *
-   * \return true if a layer was moved; false otherwise.
+   * \return
+   *    True if a layer was moved; false otherwise.
    */
   auto move_layer_down(const UUID& uuid) -> bool;
 
@@ -118,41 +125,45 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
   void set_visible(bool visible) override;
 
   /**
-   * \brief Indicates whether a layer can be moved up.
+   * Indicates whether a layer can be moved up.
    *
-   * \param uuid the UUID associated with the target layer.
+   * \param uuid The UUID associated with the target layer.
    *
-   * \return true if the layer can be shifted up; false otherwise.
+   * \return
+   *    True if the layer can be shifted up; false otherwise.
    */
   [[nodiscard]]
   auto can_move_layer_up(const UUID& uuid) const -> bool;
 
   /**
-   * \brief Indicates whether a layer can be moved down.
+   * Indicates whether a layer can be moved down.
    *
-   * \param uuid the UUID associated with the target layer.
+   * \param uuid The UUID associated with the target layer.
    *
-   * \return true if the layer can be shifted down; false otherwise.
+   * \return
+   *    True if the layer can be shifted down; false otherwise.
    */
   [[nodiscard]]
   auto can_move_layer_down(const UUID& uuid) const -> bool;
 
   /**
-   * \brief Returns the index of a layer in the group relative to its siblings.
+   * Returns the index of a layer in the group relative to its siblings.
    *
-   * \param uuid the UUID associated with the target layer.
+   * \param uuid The UUID associated with the target layer.
    *
-   * \return a local index.
+   * \return
+   *    A local index.
    */
   [[nodiscard]]
   auto get_layer_local_index(const UUID& uuid) const -> Maybe<ssize>;
 
   /**
-   * \brief Returns the global (logical) index of a layer in the group.
+   * Returns the global (logical) index of a layer in the group.
    *
-   * \param uuid the UUID associated with the target layer.
+   * \param uuid The UUID associated with the target layer.
    *
-   * \return a global index.
+   * \return
+   *    A global index.
    */
   [[nodiscard]]
   auto get_layer_global_index(const UUID& uuid) const -> Maybe<ssize>;
@@ -164,13 +175,15 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
   auto layer_at_index(ssize index) const -> const ILayer*;
 
   /**
-   * \brief Attempts to find a nested layer.
+   * Attempts to find a nested layer.
    *
-   * \note This function won't find the root group layer itself.
+   * \note
+   *    This function won't find the root group layer itself.
    *
-   * \param uuid the UUID associated with the target layer.
+   * \param uuid The UUID associated with the target layer.
    *
-   * \return a pointer to the found layer, or a null pointer.
+   * \return
+   *    A pointer to the found layer, or a null pointer.
    */
   [[nodiscard]]
   auto find_layer(const UUID& uuid) -> ILayer*;
@@ -180,11 +193,12 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
   auto find_layer(const UUID& uuid) const -> const ILayer*;
 
   /**
-   * \brief Attempts to find a nested tile layer.
+   * Attempts to find a nested tile layer.
    *
-   * \param uuid the UUID associated with the target layer.
+   * \param uuid The UUID associated with the target layer.
    *
-   * \return a pointer to the found layer, or a null pointer.
+   * \return
+   *    A pointer to the found layer, or a null pointer.
    */
   [[nodiscard]]
   auto find_tile_layer(const UUID& uuid) -> TileLayer*;
@@ -194,11 +208,12 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
   auto find_tile_layer(const UUID& uuid) const -> const TileLayer*;
 
   /**
-   * \brief Attempts to find a nested object layer.
+   * Attempts to find a nested object layer.
    *
-   * \param uuid the UUID associated with the target layer.
+   * \param uuid The UUID associated with the target layer.
    *
-   * \return a pointer to the found layer, or a null pointer.
+   * \return
+   *    A pointer to the found layer, or a null pointer.
    */
   [[nodiscard]]
   auto find_object_layer(const UUID& uuid) -> ObjectLayer*;
@@ -208,11 +223,12 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
   auto find_object_layer(const UUID& uuid) const -> const ObjectLayer*;
 
   /**
-   * \brief Attempts to find a nested group layer.
+   * Attempts to find a nested group layer.
    *
-   * \param uuid the UUID associated with the target layer.
+   * \param uuid The UUID associated with the target layer.
    *
-   * \return a pointer to the found layer, or a null pointer.
+   * \return
+   *    A pointer to the found layer, or a null pointer.
    */
   [[nodiscard]]
   auto find_group_layer(const UUID& uuid) -> GroupLayer*;
@@ -222,19 +238,21 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
   auto find_group_layer(const UUID& uuid) const -> const GroupLayer*;
 
   /**
-   * \brief Attempts to find the group layer that hosts the specified layer.
+   * Attempts to find the group layer that hosts the specified layer.
    *
-   * \param uuid the UUID associated with the target layer.
+   * \param uuid The UUID associated with the target layer.
    *
-   * \return a pointer to the found layer, or a null pointer.
+   * \return
+   *    A pointer to the found layer, or a null pointer.
    */
   [[nodiscard]]
   auto find_parent_layer(const UUID& uuid) -> GroupLayer*;
 
   /**
-   * \brief Returns the total (recursive) number of sublayers stored in the group.
+   * Returns the total (recursive) number of sublayers stored in the group.
    *
-   * \return a layer count.
+   * \return
+   *    A layer count.
    */
   [[nodiscard]]
   auto layer_count() const -> ssize;

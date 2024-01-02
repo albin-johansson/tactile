@@ -9,9 +9,10 @@
 namespace tactile {
 
 /**
- * \brief Captures and returns the current call stack.
+ * Captures and returns the current call stack.
  *
- * \return the call stack encoded in a string.
+ * \return
+ *    The call stack encoded in a string.
  */
 [[nodiscard]]
 TACTILE_NOINLINE TACTILE_FOUNDATION_API auto get_stacktrace() -> String;

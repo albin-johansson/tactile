@@ -8,7 +8,7 @@
 namespace tactile {
 
 /**
- * \brief Handles the loading and unloading of the Google Protobuf context.
+ * Handles the loading and unloading of the Google Protobuf context.
  */
 class TACTILE_CORE_API Protobuf final {
  public:

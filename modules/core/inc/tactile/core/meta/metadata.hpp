@@ -13,7 +13,7 @@
 namespace tactile {
 
 /**
- * \brief Provides metadata associated with all meta context implementations.
+ * Provides metadata associated with all meta context implementations.
  *
  * \see `IMetaContext`
  */
@@ -27,35 +27,43 @@ class TACTILE_CORE_API Metadata final {
   ~Metadata() noexcept = default;
 
   /**
-   * \brief Adds (or replaces) a property to the context.
+   * Adds (or replaces) a property to the context.
    *
-   * \param  name the property name.
-   * \return      the newly created attribute.
+   * \param name The property name.
+   *
+   * \return
+   *    The newly created attribute.
    */
   auto add_property(String name) -> Attribute&;
 
   /**
-   * \brief Removes a property from the context.
+   * Removes a property from the context.
    *
-   * \param  name the property name.
-   * \return      the remove property value; or nothing if it didn't exist.
+   * \param name The property name.
+   *
+   * \return
+   *    The remove property value; or nothing if it didn't exist.
    */
   auto remove_property(StringView name) -> Maybe<Attribute>;
 
   /**
-   * \brief Renames an existing property.
+   * Renames an existing property.
    *
-   * \param  current_name the current name of the property.
-   * \param  new_name     the new name of the property.
-   * \return              true if a property was successfully renamed; false otherwise.
+   * \param current_name The current name of the property.
+   * \param new_name     The new name of the property.
+   *
+   * \return
+   *    True if a property was successfully renamed; false otherwise.
    */
   auto rename_property(StringView current_name, String new_name) -> bool;
 
   /**
-   * \brief Returns the property with a given name.
+   * Returns the property with a given name.
    *
-   * \param  name the property name.
-   * \return the property value.
+   * \param name The property name.
+   *
+   * \return
+   *    The property value.
    *
    * \throws Exception if there is no matching property.
    */
@@ -67,48 +75,52 @@ class TACTILE_CORE_API Metadata final {
   auto get_property(StringView name) const -> const Attribute&;
 
   /**
-   * \brief Sets the name associated with the object.
+   * Sets the name associated with the object.
    *
-   * \param name the new object name.
+   * \param name The new object name.
    */
   void set_name(String name);
 
   /**
-   * \brief Returns the associated UUID.
+   * Returns the associated UUID.
    *
-   * \return a UUID.
+   * \return
+   *    A UUID.
    */
   [[nodiscard]]
   auto uuid() const -> const UUID&;
 
   /**
-   * \brief Returns the current object name.
+   * Returns the current object name.
    *
-   * \return the object name.
+   * \return
+   *    An object name.
    */
   [[nodiscard]]
   auto name() const -> const String&;
 
   /**
-   * \brief Returns the number of attached properties.
+   * Returns the number of attached properties.
    *
-   * \return the property count.
+   * \return
+   *    A property count.
    */
   [[nodiscard]]
   auto property_count() const -> usize;
 
   /**
-   * \brief Returns a clone of the metadata instance with another UUID.
+   * Returns a clone of the metadata instance with another UUID.
    *
-   * \return a metadata instance.
+   * \return
+   *    A metadata instance.
    */
   [[nodiscard]]
   auto clone() const -> Metadata;
 
  private:
   UUID mUUID {UUID::generate()};
-  String mName;
-  StringMap<Attribute> mProperties;
+  String mName {};
+  StringMap<Attribute> mProperties {};
 };
 
 }  // namespace tactile

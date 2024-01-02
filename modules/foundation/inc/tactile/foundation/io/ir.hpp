@@ -20,7 +20,7 @@
 namespace tactile::ir {
 
 /**
- * \brief Intermediate representation of an attribute with a given name.
+ * Intermediate representation of an attribute with a given name.
  */
 struct NamedAttribute final {
   String name;      ///< The attribute name.
@@ -30,7 +30,7 @@ struct NamedAttribute final {
 };
 
 /**
- * \brief Intermediate representation of a component definition.
+ * Intermediate representation of a component definition.
  */
 struct Component final {
   String name;                        ///< The component name.
@@ -45,7 +45,7 @@ TACTILE_FOUNDATION_API auto get_attribute_type(const Component& component,
     -> Maybe<AttributeType>;
 
 /**
- * \brief Intermediate representation of a component instance, attached to a meta context.
+ * Intermediate representation of a component instance, attached to a meta context.
  */
 struct AttachedComponent final {
   String type;                        ///< The component type name.
@@ -55,7 +55,7 @@ struct AttachedComponent final {
 };
 
 /**
- * \brief Provides the data featured by all meta contexts.
+ * Provides the data featured by all meta contexts.
  */
 struct Metadata final {
   Vector<NamedAttribute> properties;     ///< The attached properties.
@@ -65,7 +65,7 @@ struct Metadata final {
 };
 
 /**
- * \brief Intermediate representation of a layer object.
+ * Intermediate representation of a layer object.
  */
 struct Object final {
   Metadata meta;    ///< Metadata for the object.
@@ -83,7 +83,7 @@ struct Object final {
 };
 
 /**
- * \brief Intermediate representation of a layer.
+ * Intermediate representation of a layer.
  */
 struct Layer final {
   Metadata meta;           ///< Metadata for the layer.
@@ -102,7 +102,7 @@ struct Layer final {
 };
 
 /**
- * \brief Intermediate representation of a frame in a tile animation.
+ * Intermediate representation of a frame in a tile animation.
  */
 struct AnimationFrame final {
   TileIndex tile_index;   ///< The index of the rendered tile in the associated tileset.
@@ -114,7 +114,7 @@ struct AnimationFrame final {
 using TileAnimation = Vector<AnimationFrame>;
 
 /**
- * \brief Intermediate representation of a tile definition.
+ * Intermediate representation of a tile definition.
  */
 struct Tile final {
   Metadata meta;            ///< Metadata for the tile.
@@ -126,7 +126,7 @@ struct Tile final {
 };
 
 /**
- * \brief Intermediate representation of a tileset definition.
+ * Intermediate representation of a tileset definition.
  */
 struct Tileset final {
   Metadata meta;        ///< Metadata for the tileset.
@@ -145,7 +145,7 @@ struct Tileset final {
 };
 
 /**
- * \brief Intermediate representation of a tileset reference.
+ * Intermediate representation of a tileset reference.
  */
 struct TilesetRef final {
   Tileset tileset;       ///< The tileset definition.
@@ -155,7 +155,7 @@ struct TilesetRef final {
 };
 
 /**
- * \brief Intermediate representation of a map tile format.
+ * Intermediate representation of a map tile format.
  */
 struct TileFormat final {
   TileEncoding encoding;           ///< The tile encoding strategy.
@@ -166,7 +166,7 @@ struct TileFormat final {
 };
 
 /**
- * \brief Intermediate representation of a map.
+ * Intermediate representation of a map.
  */
 struct Map final {
   Metadata meta;                 ///< Metadata for the map.

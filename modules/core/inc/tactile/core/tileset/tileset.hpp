@@ -17,7 +17,7 @@
 namespace tactile {
 
 /**
- * \brief Provides information needed to construct a tileset.
+ * Provides information needed to construct a tileset.
  */
 struct TilesetCreateInfo final {
   ssize tile_count;      ///< The total number of tiles.
@@ -28,151 +28,162 @@ struct TilesetCreateInfo final {
 };
 
 /**
- * \brief Represents a collection of tiles contained in a single image.
+ * Represents a collection of tiles contained in a single image.
  */
 class TACTILE_CORE_API Tileset final : public IMetaContext {
  public:
   /**
-   * \brief Creates a tileset.
+   * Creates a tileset.
    *
-   * \param info the tileset configuration.
+   * \param info The tileset configuration.
    */
   explicit Tileset(const TilesetCreateInfo& info);
 
   void accept(IMetaContextVisitor& visitor) override;
 
   /**
-   * \brief Updates tile animations and resets internal caches.
+   * Updates tile animations and resets internal caches.
    *
-   * \details This function should be called once per frame.
+   * \details
+   *    This function should be called once per frame.
    */
   void update();
 
   /**
-   * \brief Returns the tile index corresponding to a given tile position.
+   * Returns the tile index corresponding to a given tile position.
    *
-   * \param pos the tile position.
+   * \param pos The tile position.
    *
-   * \return a tile index.
+   * \return
+   *    A tile index.
    */
   [[nodiscard]]
   auto index_of(const TilePos& pos) const -> Maybe<TileIndex>;
 
   /**
-   * \brief Returns the displayed appearance of a tile.
+   * Returns the displayed appearance of a tile.
    *
-   * \note This function caches the results from each invocation. Make sure to reset the
-   *       cache via `update()` at the start of each frame.
+   * \note
+   *    This function caches the results from each invocation. Make sure to
+   *    reset the cache via `update()` at the start of each frame.
    *
-   * \param tile_index a tile index, must be valid.
+   * \param tile_index A tile index, must be valid.
    *
-   * \return the index of the tile that should be rendered.
+   * \return
+   *    The index of the tile that should be rendered.
    */
   [[nodiscard]]
   auto get_appearance(TileIndex tile_index) const -> TileIndex;
 
   /**
-   * \brief Returns the tile at the specified index, if any.
+   * Returns the tile at the specified index, if any.
    *
-   * \param tile_index the index of the desired tile.
+   * \param tile_index The index of the desired tile.
    *
-   * \return a pointer to the found tile.
+   * \return
+   *    A pointer to the found tile.
    */
   [[nodiscard]]
   auto find_tile(TileIndex tile_index) -> Tile*;
 
-  /**
-   * \copydoc find_tile()
-   */
+  /** \copydoc find_tile() */
   [[nodiscard]]
   auto find_tile(TileIndex tile_index) const -> const Tile*;
 
   /**
-   * \brief Returns the tile at the specified index.
+   * Returns the tile at the specified index.
    *
-   * \param tile_index the index of the desired tile.
+   * \param tile_index The index of the desired tile.
    *
-   * \return the found tile.
+   * \return
+   *    The found tile.
    */
   [[nodiscard]]
   auto get_tile(TileIndex tile_index) -> Tile&;
 
-  /**
-   * \copydoc get_tile()
-   */
+  /** \copydoc get_tile() */
   [[nodiscard]]
   auto get_tile(TileIndex tile_index) const -> const Tile&;
 
   /**
-   * \brief Indicates whether a tile index references a valid tile in the tileset.
+   * Indicates whether a tile index references a valid tile in the tileset.
    *
-   * \param tile_index the tile index.
+   * \param tile_index The tile index.
    *
-   * \return true if the index is valid; false otherwise.
+   * \return
+   *    True if the index is valid; false otherwise.
    */
   [[nodiscard]]
   auto is_valid_index(TileIndex tile_index) const -> bool;
 
   /**
-   * \brief Returns the last valid tile index in the tileset.
+   * Returns the last valid tile index in the tileset.
    *
-   * \return a tile index.
+   * \return
+   *    A tile index.
    */
   [[nodiscard]]
   auto last_tile_index() const -> TileIndex;
 
   /**
-   * \brief Returns the number of tiles in the tileset.
+   * Returns the number of tiles in the tileset.
    *
-   * \return a tile count.
+   * \return
+   *    A tile count.
    */
   [[nodiscard]]
   auto tile_count() const -> ssize;
 
   /**
-   * \brief Returns the number of tile rows in the tileset.
+   * Returns the number of tile rows in the tileset.
    *
-   * \return a row count.
+   * \return
+   *    A row count.
    */
   [[nodiscard]]
   auto row_count() const -> ssize;
 
   /**
-   * \brief Returns the number of tile columns in the tileset.
+   * Returns the number of tile columns in the tileset.
    *
-   * \return a column count.
+   * \return
+   *    A column count.
    */
   [[nodiscard]]
   auto column_count() const -> ssize;
 
   /**
-   * \brief Returns the size of each tile in the tileset.
+   * Returns the size of each tile in the tileset.
    *
-   * \return a tile size.
+   * \return
+   *    A tile size.
    */
   [[nodiscard]]
   auto get_tile_size() const -> Int2;
 
   /**
-   * \brief Returns the normalized size of each tile in the tileset.
+   * Returns the normalized size of each tile in the tileset.
    *
-   * \return a normalized tile size.
+   * \return
+   *    A normalized tile size.
    */
   [[nodiscard]]
   auto get_normalized_tile_size() const -> Float2;
 
   /**
-   * \brief Returns the size of the associated texture.
+   * Returns the size of the associated texture.
    *
-   * \return a texture size.
+   * \return
+   *    A texture size.
    */
   [[nodiscard]]
   auto get_texture_size() const -> Int2;
 
   /**
-   * \brief Returns the ID of the associated texture.
+   * Returns the ID of the associated texture.
    *
-   * \return a texture identifier.
+   * \return
+   *    A texture identifier.
    */
   [[nodiscard]]
   auto get_texture_id() const -> TextureID;

@@ -9,7 +9,7 @@
 namespace tactile {
 
 /**
- * \brief Provides save format parse options.
+ * Provides save format parse options.
  */
 struct SaveFormatReadOptions final {
   FilePath base_dir;     ///< The parent directory of the map or tileset file.
@@ -17,7 +17,7 @@ struct SaveFormatReadOptions final {
 };
 
 /**
- * \brief Provides save format save options.
+ * Provides save format save options.
  */
 struct SaveFormatWriteOptions final {
   FilePath base_dir;               ///< The parent directory of the map or tileset file.

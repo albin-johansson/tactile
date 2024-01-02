@@ -8,9 +8,7 @@
 namespace tactile {
 
 /**
- * \interface IEngineApp
- *
- * \brief Interface for applications that can may be hooked up to an engine instance.
+ * Interface for applications that can may be hooked up to an engine instance.
  *
  * \see `Engine`
  */
@@ -19,26 +17,27 @@ class IEngineApp {
   TACTILE_INTERFACE_CLASS(IEngineApp);
 
   /**
-   * \brief Called when the app starts running.
+   * Called when the app starts running.
    */
   virtual void on_startup() = 0;
 
   /**
-   * \brief Called when the app stops running.
+   * Called when the app stops running.
    */
   virtual void on_shutdown() = 0;
 
   /**
-   * \brief Called once per render frame.
+   * Called once per render frame.
    */
   virtual void on_update() = 0;
 
   /**
-   * \brief Called whenever the display framebuffer scale changes.
+   * Called whenever the display framebuffer scale changes.
    *
-   * \note This function is always called outside of an active frame.
+   * \note
+   *    This function is always called outside of an active frame.
    *
-   * \param framebuffer_scale the new framebuffer scale.
+   * \param framebuffer_scale The new framebuffer scale.
    */
   virtual void on_framebuffer_scale_changed(float framebuffer_scale) = 0;
 };

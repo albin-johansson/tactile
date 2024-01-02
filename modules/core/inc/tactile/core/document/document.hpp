@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "tactile/core/api.hpp"
 #include "tactile/foundation/container/file_path.hpp"
 #include "tactile/foundation/prelude.hpp"
 
@@ -11,43 +10,46 @@ namespace tactile {
 class DocumentViewport;
 
 /**
- * \interface IDocument
- * \brief Provides the common document API.
+ * Provides the common document API.
  */
 class IDocument {
  public:
   TACTILE_INTERFACE_CLASS(IDocument);
 
   /**
-   * \brief Updates the state of the document.
+   * Updates the state of the document.
    *
-   * \details This function should be called once per frame, to enable correct handling
-   *          of time-sensitive aspects, such as animations.
+   * \details
+   *    This function should be called once per frame, to enable correct handling
+   *    of time-sensitive aspects, such as animations.
    */
   virtual void update() = 0;
 
   /**
-   * \brief Sets the associated save file path.
+   * Sets the associated save file path.
    *
-   * \note This property is initially not set.
+   * \note
+   *    This property is initially not set.
    *
-   * \param path the save file path.
+   * \param path The save file path.
    */
   virtual void set_path(FilePath path) = 0;
 
   /**
-   * \brief Returns the associated save file path.
+   * Returns the associated save file path.
    *
-   * \return the associated file path, if any.
+   * \return
+   *    The associated file path, if any.
    */
   [[nodiscard]]
   virtual auto path() const -> const FilePath* = 0;
 
 
   /**
-   * \brief Returns the viewport associated with the document.
+   * Returns the viewport associated with the document.
    *
-   * \return a viewport.
+   * \return
+   *    A viewport.
    */
   [[nodiscard]]
   virtual auto viewport() -> DocumentViewport& = 0;
