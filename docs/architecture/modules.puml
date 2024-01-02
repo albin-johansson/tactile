@@ -1,20 +1,22 @@
 @startuml
 
-[foundation] #lightgreen
-[core]       #lightgreen
-[main]       #lightgreen
+!theme blueprint
+
+[foundation] #darkgreen
+[core]       #darkgreen
+[main]       #darkgreen
 
 package "Plugins" {
-  [tactile-yml-format]  #lightblue
-  [tiled-json-format]   #lightblue
-  [tiled-xml-format]    #lightblue
-  [godot3-scene-format] #lightblue
+  [tactile-yml-format]  #darkred
+  [tiled-json-format]   #darkred
+  [tiled-xml-format]    #darkred
+  [godot3-scene-format] #darkred
 
-  [opengl-renderer] #lightblue
-  [vulkan-renderer] #lightblue
+  [opengl-renderer] #darkred
+  [vulkan-renderer] #darkred
 }
 
-database "proto"
+database "proto" #black
 
 "tactile-yml-format" -[hidden]- "tiled-json-format"
 "tiled-json-format"  -[hidden]- "tiled-xml-format"
@@ -30,9 +32,9 @@ database "proto"
 "core"    <..  "main"
 "Plugins" <... "main"
 
-note left of "foundation": This module is used by all other modules.
+note left of "foundation": Used by all other components.
 note right of "main": Provides the main function.\nLocates and loads plugins at runtime.
 
-note "Mandatory modules are shown in green.\nPlugin modules are shown in light blue." as N1
+note "Mandatory components are shown in green.\nPlugin components are shown in red." as N1
 
 @enduml
