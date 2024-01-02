@@ -1,0 +1,46 @@
+@startuml
+
+!theme blueprint
+
+hide empty members
+
+struct Settings
+interface IDocument
+interface ILayer
+interface IMap
+
+Model --> Settings : 1
+Model --> Language : 1..*
+Model --> CommandStack : 0..*
+Model -> DocumentManager : 1
+
+DocumentManager --> IDocument : 0..*
+
+IDocument -> ComponentSet : 1
+IDocument <|.. MapDocument
+IDocument <|.. TilesetDocument
+
+ComponentSet --> Component : 0..*
+
+MapDocument --> IMap : 1
+
+TilesetDocument ---> Tileset : 1
+
+IMap <|.. OrthogonalMap
+
+AttachedTileset <- IMap : 0..*
+AttachedTileset --> Tileset : 1
+
+Tileset --> Tile : 1..*
+
+OrthogonalMap --> ILayer : 0..*
+
+ILayer <|.. TileLayer
+ILayer <|.. ObjectLayer
+ILayer <|.. GroupLayer
+
+GroupLayer --> ILayer : 0..*
+
+ObjectLayer --> Object : 0..*
+
+@enduml
