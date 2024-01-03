@@ -7,7 +7,7 @@
 namespace tactile::ui {
 
 /**
- * \brief Provides identifiers for the supported user interface languages.
+ * Provides identifiers for the supported user interface languages.
  */
 enum class LanguageID : int8 {
   kAmericanEnglish,

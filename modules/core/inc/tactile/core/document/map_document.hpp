@@ -14,7 +14,7 @@
 namespace tactile {
 
 /**
- * \brief Represents a single tilemap document.
+ * Represents a single tilemap document.
  */
 class TACTILE_CORE_API MapDocument final : public IDocument {
  public:
@@ -22,9 +22,9 @@ class TACTILE_CORE_API MapDocument final : public IDocument {
   TACTILE_DEFAULT_MOVE(MapDocument);
 
   /**
-   * \brief Creates a map document.
+   * Creates a map document.
    *
-   * \param map the associated map.
+   * \param map The associated map.
    */
   explicit MapDocument(Unique<IMap> map);
 

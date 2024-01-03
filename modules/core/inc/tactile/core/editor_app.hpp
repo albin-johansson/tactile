@@ -13,7 +13,7 @@
 namespace tactile {
 
 /**
- * \brief Represents the Tactile editor application.
+ * Represents the Tactile editor application.
  */
 class TACTILE_CORE_API EditorApp final : public IEngineApp {
  public:

@@ -13,12 +13,12 @@ namespace tactile {
 class IMetaContext;
 
 /**
- * \brief Command for renaming a meta context.
+ * Command for renaming a meta context.
  */
 class TACTILE_CORE_API RenameMetaContextCommand final : public ICommand {
  public:
   /**
-   * \brief Creates a command.
+   * Creates a new command.
    *
    * \param context  the target meta context.
    * \param new_name the new name of the meta context.
