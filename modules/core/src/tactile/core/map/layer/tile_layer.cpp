@@ -98,7 +98,7 @@ void TileLayer::flood(const TilePos& start_pos,
                       const TileID new_id,
                       Vector<TilePos>* affected_positions)
 {
-  if (!is_valid_pos(start_pos)) {
+  if (!is_valid_pos(start_pos) || get_tile(start_pos) == new_id) {
     return;
   }
 
