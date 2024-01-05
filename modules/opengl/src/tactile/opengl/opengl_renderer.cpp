@@ -21,7 +21,6 @@ namespace tactile::gl {
 OpenGLRenderer::OpenGLRenderer(OpenGLWindow* window, ImGuiContext* imgui_context)
   : mWindow {window},
     mImGuiContext {imgui_context},
-    mNextTextureId {1},
     mPrimed {true}
 {}
 
@@ -59,7 +58,6 @@ OpenGLRenderer::OpenGLRenderer(OpenGLRenderer&& other) noexcept
   : mWindow {std::exchange(other.mWindow, nullptr)},
     mImGuiContext {std::exchange(other.mImGuiContext, nullptr)},
     mTextures {std::exchange(other.mTextures, TextureMap {})},
-    mNextTextureId {std::exchange(other.mNextTextureId, TextureID {})},
     mPrimed {std::exchange(other.mPrimed, false)}
 {}
 
@@ -69,7 +67,6 @@ auto OpenGLRenderer::operator=(OpenGLRenderer&& other) noexcept -> OpenGLRendere
     mWindow = std::exchange(other.mWindow, nullptr);
     mImGuiContext = std::exchange(other.mImGuiContext, nullptr);
     mTextures = std::exchange(other.mTextures, TextureMap {});
-    mNextTextureId = std::exchange(other.mNextTextureId, TextureID {});
     mPrimed = std::exchange(other.mPrimed, false);
   }
 
@@ -129,9 +126,8 @@ auto OpenGLRenderer::load_texture(const FilePath& image_path) -> OpenGLTexture*
 {
   if (auto texture = OpenGLTexture::load(image_path)) {
     auto [iter, _] =
-        mTextures.try_emplace(mNextTextureId,
+        mTextures.try_emplace(UUID::generate(),
                               make_unique<OpenGLTexture>(std::move(*texture)));
-    mNextTextureId = TextureID {mNextTextureId.value + 1};
 
     return iter->second.get();
   }

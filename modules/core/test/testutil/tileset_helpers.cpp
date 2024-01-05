@@ -19,7 +19,7 @@ auto make_dummy_tileset_info() -> TilesetCreateInfo
     .column_count = col_count,
     .tile_size = tile_size,
     .texture_size = texture_size,
-    .texture_id = TextureID {42},
+    .texture_uuid = UUID::generate(),
   };
 }
 

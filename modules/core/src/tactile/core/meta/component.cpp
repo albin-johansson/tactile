@@ -6,8 +6,8 @@
 
 namespace tactile {
 
-Component::Component(const ComponentID id, AttributeMap attributes)
-  : mComponentId {id},
+Component::Component(const UUID& type_uuid, AttributeMap attributes)
+  : mTypeUuid {type_uuid},
     mAttributes {std::move(attributes)}
 {}
 
@@ -57,9 +57,9 @@ auto Component::attribute_count() const -> usize
   return mAttributes.size();
 }
 
-auto Component::get_id() const -> ComponentID
+auto Component::type_uuid() const -> const UUID&
 {
-  return mComponentId;
+  return mTypeUuid;
 }
 
 }  // namespace tactile

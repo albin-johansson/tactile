@@ -19,10 +19,9 @@ auto ComponentSet::define_component(String name) -> Maybe<UUID>
 
   const auto component_uuid = UUID::generate();
 
-  Component component {mNextComponentId};
-  mNextComponentId = mNextComponentId + ComponentID {1};
-
+  Component component {component_uuid};
   ComponentDefinition definition {std::move(name), std::move(component)};
+
   mComponents.insert_or_assign(component_uuid, std::move(definition));
 
   return component_uuid;

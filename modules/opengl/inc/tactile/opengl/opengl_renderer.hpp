@@ -4,7 +4,7 @@
 
 #include "tactile/foundation/container/smart_ptr.hpp"
 #include "tactile/foundation/container/tree_map.hpp"
-#include "tactile/foundation/misc/id_types.hpp"
+#include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 #include "tactile/foundation/render/renderer.hpp"
 #include "tactile/opengl/api.hpp"
@@ -60,13 +60,12 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer {
   auto get_imgui_context() -> ImGuiContext* override;
 
  private:
-  using TextureMap = TreeMap<TextureID, Unique<OpenGLTexture>>;
+  using TextureMap = TreeMap<UUID, Unique<OpenGLTexture>>;
 
-  OpenGLWindow* mWindow;
-  ImGuiContext* mImGuiContext;
-  TextureMap mTextures;
-  TextureID mNextTextureId;
-  bool mPrimed;
+  OpenGLWindow* mWindow {};
+  ImGuiContext* mImGuiContext {};
+  TextureMap mTextures {};
+  bool mPrimed {false};
 
   OpenGLRenderer(OpenGLWindow* window, ImGuiContext* imgui_context);
 };

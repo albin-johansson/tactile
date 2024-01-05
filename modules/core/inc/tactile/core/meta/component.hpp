@@ -5,7 +5,7 @@
 #include "tactile/foundation/container/string_map.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/meta/attribute.hpp"
-#include "tactile/foundation/misc/id_types.hpp"
+#include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
@@ -20,10 +20,10 @@ class TACTILE_CORE_API Component final {
   /**
    * Creates an empty component.
    *
-   * \param id         The associated type identifier.
+   * \param type_uuid  The associated type identifier.
    * \param attributes The initial attributes.
    */
-  explicit Component(ComponentID id, AttributeMap attributes = {});
+  explicit Component(const UUID& type_uuid, AttributeMap attributes = {});
 
   /**
    * Adds an empty string attribute in the component.
@@ -101,10 +101,10 @@ class TACTILE_CORE_API Component final {
    * Returns the associated component type identifier.
    *
    * \return
-   *    A component identifier.
+   *    A component type identifier.
    */
   [[nodiscard]]
-  auto get_id() const -> ComponentID;
+  auto type_uuid() const -> const UUID&;
 
   [[nodiscard]]
   auto begin() const noexcept -> AttributeMap::const_iterator
@@ -119,7 +119,7 @@ class TACTILE_CORE_API Component final {
   }
 
  private:
-  ComponentID mComponentId;
+  UUID mTypeUuid;
   AttributeMap mAttributes;
 };
 

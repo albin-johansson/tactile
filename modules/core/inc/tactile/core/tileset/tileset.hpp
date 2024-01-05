@@ -12,6 +12,7 @@
 #include "tactile/foundation/math/vector.hpp"
 #include "tactile/foundation/misc/id_types.hpp"
 #include "tactile/foundation/misc/tile_pos.hpp"
+#include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
@@ -20,11 +21,11 @@ namespace tactile {
  * Provides information needed to construct a tileset.
  */
 struct TilesetCreateInfo final {
-  ssize tile_count;      ///< The total number of tiles.
-  ssize column_count;    ///< The number of tile columns.
-  Int2 tile_size;        ///< The dimensions of each tile.
-  Int2 texture_size;     ///< The dimensions of the tileset image.
-  TextureID texture_id;  ///< The ID of the tileset image.
+  ssize tile_count;    ///< The total number of tiles.
+  ssize column_count;  ///< The number of tile columns.
+  Int2 tile_size;      ///< The dimensions of each tile.
+  Int2 texture_size;   ///< The dimensions of the tileset image.
+  UUID texture_uuid;   ///< The UUID of the tileset image.
 };
 
 /**
@@ -180,13 +181,13 @@ class TACTILE_CORE_API Tileset final : public IMetaContext {
   auto get_texture_size() const -> Int2;
 
   /**
-   * Returns the ID of the associated texture.
+   * Returns the UUID of the associated texture.
    *
    * \return
    *    A texture identifier.
    */
   [[nodiscard]]
-  auto get_texture_id() const -> TextureID;
+  auto get_texture_uuid() const -> const UUID&;
 
   [[nodiscard]]
   auto meta() -> Metadata& override;
@@ -205,7 +206,7 @@ class TACTILE_CORE_API Tileset final : public IMetaContext {
   Int2 mTileSize;
   Int2 mTextureSize;
   Float2 mNormalizedTileSize;
-  TextureID mTextureId;
+  UUID mTextureUuid;
   Vector<Tile> mTiles;
   mutable Vector<Maybe<TileIndex>> mAppearanceCache;
   FilePath mImagePath;

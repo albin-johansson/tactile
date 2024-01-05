@@ -15,10 +15,12 @@ Tileset::Tileset(const TilesetCreateInfo& info)
     mTileSize {info.tile_size},
     mTextureSize {info.texture_size},
     mNormalizedTileSize {Float2 {info.tile_size} / Float2 {info.texture_size}},
-    mTextureId {info.texture_id}
+    mTextureUuid {info.texture_uuid}
 {
-  mTiles.reserve(as_unsigned(mTileCount));
-  mAppearanceCache.resize(as_unsigned(mTileCount));
+  const auto tile_count = as_unsigned(mTileCount);
+
+  mTiles.reserve(tile_count);
+  mAppearanceCache.resize(tile_count);
 
   _create_tiles();
 }
@@ -169,9 +171,9 @@ auto Tileset::get_texture_size() const -> Int2
   return mTextureSize;
 }
 
-auto Tileset::get_texture_id() const -> TextureID
+auto Tileset::get_texture_uuid() const -> const UUID&
 {
-  return mTextureId;
+  return mTextureUuid;
 }
 
 auto Tileset::meta() -> Metadata&

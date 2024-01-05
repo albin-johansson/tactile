@@ -119,7 +119,6 @@ class TACTILE_CORE_API ComponentSet final {
   using ComponentDefinitionMap = HashMap<UUID, ComponentDefinition>;
 
   ComponentDefinitionMap mComponents {};
-  ComponentID mNextComponentId {1};
 };
 
 }  // namespace tactile

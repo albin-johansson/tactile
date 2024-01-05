@@ -26,7 +26,7 @@ TEST(Tileset, Constructor)
   EXPECT_EQ(tileset.column_count(), tileset_info.column_count);
   EXPECT_EQ(tileset.get_tile_size(), tileset_info.tile_size);
   EXPECT_EQ(tileset.get_texture_size(), tileset_info.texture_size);
-  EXPECT_EQ(tileset.get_texture_id(), tileset_info.texture_id);
+  EXPECT_EQ(tileset.get_texture_uuid(), tileset_info.texture_uuid);
 
   const Float2 f_tile_size {tileset_info.tile_size};
   const Float2 f_texture_size {tileset_info.texture_size};
