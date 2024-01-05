@@ -24,6 +24,16 @@ auto MapDocument::path() const -> const FilePath*
   return mPath.has_value() ? &*mPath : nullptr;
 }
 
+auto MapDocument::component_set() -> ComponentSet&
+{
+  return mComponentSet;
+}
+
+auto MapDocument::component_set() const -> const ComponentSet&
+{
+  return mComponentSet;
+}
+
 auto MapDocument::viewport() -> DocumentViewport&
 {
   return mViewport;

@@ -6,6 +6,7 @@
 #include "tactile/core/document/document.hpp"
 #include "tactile/core/document/document_viewport.hpp"
 #include "tactile/core/map/map.hpp"
+#include "tactile/core/meta/component_set.hpp"
 #include "tactile/foundation/container/file_path.hpp"
 #include "tactile/foundation/container/smart_ptr.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
@@ -38,6 +39,12 @@ class TACTILE_CORE_API MapDocument final : public IDocument {
   auto path() const -> const FilePath* override;
 
   [[nodiscard]]
+  auto component_set() -> ComponentSet& override;
+
+  [[nodiscard]]
+  auto component_set() const -> const ComponentSet& override;
+
+  [[nodiscard]]
   auto viewport() -> DocumentViewport& override;
 
   [[nodiscard]]
@@ -52,6 +59,7 @@ class TACTILE_CORE_API MapDocument final : public IDocument {
  private:
   Unique<IMap> mMap;
   DocumentViewport mViewport {};
+  ComponentSet mComponentSet {};
   Maybe<FilePath> mPath {};
 };
 

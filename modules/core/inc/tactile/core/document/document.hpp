@@ -7,6 +7,7 @@
 
 namespace tactile {
 
+class ComponentSet;
 class DocumentViewport;
 
 /**
@@ -44,6 +45,18 @@ class IDocument {
   [[nodiscard]]
   virtual auto path() const -> const FilePath* = 0;
 
+  /**
+   * Returns the associated component set.
+   *
+   * \return
+   *    A component set.
+   */
+  [[nodiscard]]
+  virtual auto component_set() -> ComponentSet& = 0;
+
+  /** \copydoc component_set() */
+  [[nodiscard]]
+  virtual auto component_set() const -> const ComponentSet& = 0;
 
   /**
    * Returns the viewport associated with the document.
