@@ -5,6 +5,9 @@
 #include <cstddef>  // size_t, ptrdiff_t
 #include <cstdint>  // uint{}_t, int{}_t, uintptr_t
 
+#define TACTILE_MAJOR_VERSION 0
+#define TACTILE_MINOR_VERSION 5
+#define TACTILE_PATCH_VERSION 0
 #define TACTILE_VERSION_STRING "0.5.0 [WIP]"
 
 // Build mode detection
