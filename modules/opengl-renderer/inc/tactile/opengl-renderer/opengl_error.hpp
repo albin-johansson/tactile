@@ -6,9 +6,9 @@
 #include <utility>       // to_underlying
 
 #include "tactile/foundation/prelude.hpp"
-#include "tactile/opengl/api.hpp"
+#include "tactile/opengl-renderer/api.hpp"
 
-namespace tactile {
+namespace tactile::opengl {
 
 enum class OpenGLError : int {  // NOLINT(performance-enum-size)
   kUnknown,
@@ -34,4 +34,4 @@ inline auto make_opengl_error(const OpenGLError error) noexcept -> std::error_co
   return std::error_code {std::to_underlying(error), get_opengl_error_category()};
 }
 
-}  // namespace tactile
+}  // namespace tactile::opengl

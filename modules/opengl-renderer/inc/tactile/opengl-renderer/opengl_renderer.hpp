@@ -7,11 +7,11 @@
 #include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 #include "tactile/foundation/render/renderer.hpp"
-#include "tactile/opengl/api.hpp"
-#include "tactile/opengl/opengl_texture.hpp"
-#include "tactile/opengl/opengl_window.hpp"
+#include "tactile/opengl-renderer/api.hpp"
+#include "tactile/opengl-renderer/opengl_texture.hpp"
+#include "tactile/opengl-renderer/opengl_window.hpp"
 
-namespace tactile::gl {
+namespace tactile::opengl {
 
 /**
  * An OpenGL 4 renderer implementation.
@@ -70,4 +70,4 @@ class TACTILE_OPENGL_API OpenGLRenderer final : public IRenderer {
   OpenGLRenderer(OpenGLWindow* window, ImGuiContext* imgui_context);
 };
 
-}  // namespace tactile::gl
+}  // namespace tactile::opengl

@@ -1,6 +1,6 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/opengl/opengl_plugin.hpp"
+#include "tactile/opengl-renderer/opengl_plugin.hpp"
 
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
@@ -8,7 +8,7 @@
 #include "tactile/foundation/log/logger.hpp"
 #include "tactile/foundation/render/render_context.hpp"
 
-namespace tactile::gl {
+namespace tactile::opengl {
 namespace {
 
 void _set_opengl_hints()
@@ -97,4 +97,4 @@ auto tactile_plugin_id() -> const char*
   return "tactile.opengl-renderer";
 }
 
-}  // namespace tactile::gl
+}  // namespace tactile::opengl

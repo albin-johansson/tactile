@@ -1,6 +1,6 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/opengl/opengl_window.hpp"
+#include "tactile/opengl-renderer/opengl_window.hpp"
 
 #include <utility>  // move
 
@@ -10,7 +10,7 @@
 #include "tactile/foundation/debug/generic_error.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
-namespace tactile::gl {
+namespace tactile::opengl {
 
 void SDLWindowDeleter::operator()(SDL_Window* window) noexcept
 {
@@ -84,4 +84,4 @@ auto OpenGLWindow::get_handle() -> SDL_Window*
   return mWindow.get();
 }
 
-}  // namespace tactile::gl
+}  // namespace tactile::opengl

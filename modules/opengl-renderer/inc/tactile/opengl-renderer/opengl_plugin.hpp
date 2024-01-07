@@ -5,11 +5,11 @@
 #include "tactile/foundation/container/smart_ptr.hpp"
 #include "tactile/foundation/plugin/plugin.hpp"
 #include "tactile/foundation/prelude.hpp"
-#include "tactile/opengl/api.hpp"
-#include "tactile/opengl/opengl_renderer.hpp"
-#include "tactile/opengl/opengl_window.hpp"
+#include "tactile/opengl-renderer/api.hpp"
+#include "tactile/opengl-renderer/opengl_renderer.hpp"
+#include "tactile/opengl-renderer/opengl_window.hpp"
 
-namespace tactile::gl {
+namespace tactile::opengl {
 
 /**
  * A renderer plugin based on OpenGL 4.1.0.
@@ -36,4 +36,4 @@ extern "C"
   TACTILE_OPENGL_API auto tactile_plugin_id() -> const char*;
 }
 
-}  // namespace tactile::gl
+}  // namespace tactile::opengl

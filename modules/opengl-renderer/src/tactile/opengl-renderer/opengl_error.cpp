@@ -1,10 +1,10 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/opengl/opengl_error.hpp"
+#include "tactile/opengl-renderer/opengl_error.hpp"
 
 #include <glad/glad.h>
 
-namespace tactile {
+namespace tactile::opengl {
 namespace {
 
 class OpenGLErrorCategory final : public std::error_category {
@@ -58,4 +58,4 @@ auto get_opengl_error_category() noexcept -> const std::error_category&
   return opengl_error_category;
 }
 
-}  // namespace tactile
+}  // namespace tactile::opengl

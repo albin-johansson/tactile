@@ -1,6 +1,6 @@
-project(tactile-opengl CXX)
+project(tactile-opengl-renderer CXX)
 
-set(TACTILE_OPENGL_TARGET tactile-opengl)
+set(TACTILE_OPENGL_TARGET tactile-opengl-renderer)
 
 file(GLOB_RECURSE TACTILE_OPENGL_SOURCE_FILES
      CONFIGURE_DEPENDS
@@ -9,13 +9,13 @@ file(GLOB_RECURSE TACTILE_OPENGL_SOURCE_FILES
      )
 
 add_library(${TACTILE_OPENGL_TARGET} SHARED "${TACTILE_OPENGL_SOURCE_FILES}")
-add_library(tactile::opengl ALIAS ${TACTILE_OPENGL_TARGET})
+add_library(tactile::opengl-renderer ALIAS ${TACTILE_OPENGL_TARGET})
 
 tactile_prepare_target(${TACTILE_OPENGL_TARGET})
 
 target_compile_definitions(${TACTILE_OPENGL_TARGET}
                            PRIVATE
-                           TACTILE_BUILDING_OPENGL_PLUGIN
+                           TACTILE_BUILDING_OPENGL_RENDERER
                            )
 
 target_include_directories(${TACTILE_OPENGL_TARGET} PUBLIC "${PROJECT_SOURCE_DIR}/inc")

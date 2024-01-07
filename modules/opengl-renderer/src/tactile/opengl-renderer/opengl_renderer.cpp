@@ -1,6 +1,6 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/opengl/opengl_renderer.hpp"
+#include "tactile/opengl-renderer/opengl_renderer.hpp"
 
 #include <cstdlib>  // malloc, free
 #include <utility>  // exchange
@@ -14,9 +14,9 @@
 #include "tactile/foundation/debug/generic_error.hpp"
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
-#include "tactile/opengl/opengl_error.hpp"
+#include "tactile/opengl-renderer/opengl_error.hpp"
 
-namespace tactile::gl {
+namespace tactile::opengl {
 
 OpenGLRenderer::OpenGLRenderer(OpenGLWindow* window, ImGuiContext* imgui_context)
   : mWindow {window},
@@ -150,4 +150,4 @@ auto OpenGLRenderer::get_imgui_context() -> ImGuiContext*
   return mImGuiContext;
 }
 
-}  // namespace tactile::gl
+}  // namespace tactile::opengl

@@ -1,6 +1,6 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/opengl/opengl_texture.hpp"
+#include "tactile/opengl-renderer/opengl_texture.hpp"
 
 #include <utility>  // exchange, move
 
@@ -8,9 +8,9 @@
 
 #include "tactile/foundation/io/texture_io.hpp"
 #include "tactile/foundation/platform/bits.hpp"
-#include "tactile/opengl/opengl_error.hpp"
+#include "tactile/opengl-renderer/opengl_error.hpp"
 
-namespace tactile {
+namespace tactile::opengl {
 
 auto OpenGLTexture::load(const FilePath& image_path) -> Result<OpenGLTexture>
 {
@@ -116,4 +116,4 @@ auto OpenGLTexture::get_path() const -> const FilePath&
   return mPath;
 }
 
-}  // namespace tactile
+}  // namespace tactile::opengl

@@ -6,11 +6,11 @@
 #include "tactile/foundation/functional/result.hpp"
 #include "tactile/foundation/prelude.hpp"
 #include "tactile/foundation/render/window.hpp"
-#include "tactile/opengl/api.hpp"
+#include "tactile/opengl-renderer/api.hpp"
 
 struct SDL_Window;
 
-namespace tactile::gl {
+namespace tactile::opengl {
 
 /**
  * Deleter type for SDL windows.
@@ -70,4 +70,4 @@ class TACTILE_OPENGL_API OpenGLWindow final : public IWindow {
   OpenGLWindow(ManagedWindow window, ManagedContext context);
 };
 
-}  // namespace tactile::gl
+}  // namespace tactile::opengl

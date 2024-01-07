@@ -4,7 +4,7 @@
 
 #include "tactile/foundation/prelude.hpp"
 
-#ifdef TACTILE_BUILDING_OPENGL_PLUGIN
+#ifdef TACTILE_BUILDING_OPENGL_RENDERER
   #define TACTILE_OPENGL_API TACTILE_DLL_EXPORT
 #else
   #define TACTILE_OPENGL_API TACTILE_DLL_IMPORT

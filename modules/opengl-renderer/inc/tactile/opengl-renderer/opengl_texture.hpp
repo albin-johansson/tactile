@@ -7,9 +7,9 @@
 #include "tactile/foundation/math/vector.hpp"
 #include "tactile/foundation/prelude.hpp"
 #include "tactile/foundation/render/texture.hpp"
-#include "tactile/opengl/api.hpp"
+#include "tactile/opengl-renderer/api.hpp"
 
-namespace tactile {
+namespace tactile::opengl {
 
 class TACTILE_OPENGL_API OpenGLTexture final : public ITexture {
  public:
@@ -47,4 +47,4 @@ class TACTILE_OPENGL_API OpenGLTexture final : public ITexture {
   void _dispose() noexcept;
 };
 
-}  // namespace tactile
+}  // namespace tactile::opengl
