@@ -31,6 +31,11 @@ auto Metadata::rename_property(const StringView current_name, String new_name) -
   return false;
 }
 
+auto Metadata::has_property(const StringView name) const -> bool
+{
+  return exists_in(mProperties, name);
+}
+
 auto Metadata::get_property(const StringView name) -> Attribute&
 {
   return lookup_in(mProperties, name);

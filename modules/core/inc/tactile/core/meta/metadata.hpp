@@ -58,6 +58,17 @@ class TACTILE_CORE_API Metadata final {
   auto rename_property(StringView current_name, String new_name) -> bool;
 
   /**
+   * Indicates whether a property with the given name exists.
+   *
+   * \param name The name to look for.
+   *
+   * \return
+   *    True if a property was found; false otherwise.
+   */
+  [[nodiscard]]
+  auto has_property(StringView name) const -> bool;
+
+  /**
    * Returns the property with a given name.
    *
    * \param name The property name.

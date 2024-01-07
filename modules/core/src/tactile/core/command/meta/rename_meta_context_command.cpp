@@ -33,7 +33,7 @@ void RenameMetaContextCommand::undo()
     metadata.set_name(mOldName.value());
   }
   else {
-    TACTILE_LOG_ERROR("[RenameMetaContextCommand::undo] Could not find context {}",
+    TACTILE_LOG_ERROR("[RenameMetaContextCommand] Could not find context {}",
                       fmt::streamed(mContextUuid));
   }
 }
@@ -51,7 +51,7 @@ void RenameMetaContextCommand::redo()
     metadata.set_name(mNewName);
   }
   else {
-    TACTILE_LOG_ERROR("[RenameMetaContextCommand::redo] Could not find context {}",
+    TACTILE_LOG_ERROR("[RenameMetaContextCommand] Could not find context {}",
                       fmt::streamed(mContextUuid));
   }
 }
