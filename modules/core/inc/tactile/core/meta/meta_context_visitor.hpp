@@ -8,8 +8,6 @@
 namespace tactile {
 
 class OrthogonalMap;
-class IsometricMap;
-class HexagonalMap;
 class GroupLayer;
 class TileLayer;
 class ObjectLayer;
@@ -30,20 +28,6 @@ class IMetaContextVisitor {
    * \param map The map to visit.
    */
   virtual void visit([[maybe_unused]] OrthogonalMap& map) {};
-
-  /**
-   * Visits an isometric map.
-   *
-   * \param map The map to visit.
-   */
-  virtual void visit([[maybe_unused]] IsometricMap& map) {};
-
-  /**
-   * Visits a hexagonal map.
-   *
-   * \param map The map to visit.
-   */
-  virtual void visit([[maybe_unused]] HexagonalMap& map) {};
 
   /**
    * Visits a group layer.

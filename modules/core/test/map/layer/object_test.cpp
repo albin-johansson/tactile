@@ -27,8 +27,6 @@ TEST(Object, AcceptMetaContextVisitor)
   object.accept(visitor);
 
   EXPECT_EQ(visitor.orthogonal_map_count, 0);
-  EXPECT_EQ(visitor.isometric_map_count, 0);
-  EXPECT_EQ(visitor.hexagonal_map_count, 0);
   EXPECT_EQ(visitor.group_layer_count, 0);
   EXPECT_EQ(visitor.tile_layer_count, 0);
   EXPECT_EQ(visitor.object_layer_count, 0);
