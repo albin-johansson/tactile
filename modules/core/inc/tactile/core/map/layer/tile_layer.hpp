@@ -26,6 +26,13 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
    */
   TileLayer(ssize row_count, ssize col_count);
 
+  /**
+   * Creates an empty tile layer.
+   *
+   * \param extent The initial extent, must be at least 1x1.
+   */
+  explicit TileLayer(MatrixExtent extent);
+
   void accept(IMetaContextVisitor& visitor) override;
 
   void accept(ILayerVisitor& visitor) override;
@@ -130,8 +137,7 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
 
  private:
   LayerBehaviorDelegate mDelegate;
-  ssize mRowCount;
-  ssize mColCount;
+  MatrixExtent mExtent;
   TileMatrix mTileMatrix;
 
   void _add_row();

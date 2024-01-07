@@ -14,9 +14,13 @@ using namespace tactile::int_literals;
 namespace tactile {
 
 TileLayer::TileLayer(const ssize row_count, const ssize col_count)
-  : mRowCount {(row_count > 0) ? row_count : throw Exception {"invalid row count"}},
-    mColCount {(col_count > 0) ? col_count : throw Exception {"invalid column count"}},
-    mTileMatrix {make_tile_matrix(row_count, col_count)}
+  : mExtent {(row_count > 0) ? row_count : throw Exception {"invalid row count"},
+             (col_count > 0) ? col_count : throw Exception {"invalid column count"}},
+    mTileMatrix {make_tile_matrix(mExtent)}
+{}
+
+TileLayer::TileLayer(const MatrixExtent extent)
+  : TileLayer {extent.row_count, extent.col_count}
 {}
 
 void TileLayer::accept(IMetaContextVisitor& visitor)
@@ -44,33 +48,33 @@ void TileLayer::resize(const ssize row_count, const ssize col_count)
     throw Exception {"Invalid column count"};
   }
 
-  if (row_count < mRowCount) {
-    repeat(mRowCount - row_count, [this] { _remove_row(); });
+  if (row_count < mExtent.row_count) {
+    repeat(mExtent.row_count - row_count, [this] { _remove_row(); });
   }
   else {
-    repeat(row_count - mRowCount, [this] { _add_row(); });
+    repeat(row_count - mExtent.row_count, [this] { _add_row(); });
   }
 
-  if (col_count < mColCount) {
-    repeat(mColCount - col_count, [this] { _remove_column(); });
+  if (col_count < mExtent.col_count) {
+    repeat(mExtent.col_count - col_count, [this] { _remove_column(); });
   }
   else {
-    repeat(col_count - mColCount, [this] { _add_column(); });
+    repeat(col_count - mExtent.col_count, [this] { _add_column(); });
   }
 
-  TACTILE_ASSERT(mRowCount == row_count);
-  TACTILE_ASSERT(mColCount == col_count);
+  TACTILE_ASSERT(mExtent.row_count == row_count);
+  TACTILE_ASSERT(mExtent.col_count == col_count);
 }
 
 void TileLayer::_add_row()
 {
-  ++mRowCount;
-  mTileMatrix.push_back(make_tile_row(mColCount));
+  ++mExtent.row_count;
+  mTileMatrix.push_back(make_tile_row(mExtent.col_count));
 }
 
 void TileLayer::_add_column()
 {
-  ++mColCount;
+  ++mExtent.col_count;
   for (auto& tile_row : mTileMatrix) {
     tile_row.push_back(kEmptyTile);
   }
@@ -78,17 +82,17 @@ void TileLayer::_add_column()
 
 void TileLayer::_remove_row()
 {
-  TACTILE_ASSERT(mRowCount > 1);
+  TACTILE_ASSERT(mExtent.row_count > 1);
 
-  --mRowCount;
+  --mExtent.row_count;
   mTileMatrix.pop_back();
 }
 
 void TileLayer::_remove_column()
 {
-  TACTILE_ASSERT(mColCount > 1);
+  TACTILE_ASSERT(mExtent.col_count > 1);
 
-  --mColCount;
+  --mExtent.col_count;
   for (auto& tile_row : mTileMatrix) {
     tile_row.pop_back();
   }
@@ -155,17 +159,20 @@ auto TileLayer::get_tile(const TilePos& pos) const -> Maybe<TileID>
 
 auto TileLayer::is_valid_pos(const TilePos& pos) const -> bool
 {
-  return pos.row >= 0_z && pos.col >= 0_z && pos.row < mRowCount && pos.col < mColCount;
+  return pos.row >= 0_z &&               //
+         pos.col >= 0_z &&               //
+         pos.row < mExtent.row_count &&  //
+         pos.col < mExtent.col_count;
 }
 
 auto TileLayer::row_count() const -> ssize
 {
-  return mRowCount;
+  return mExtent.row_count;
 }
 
 auto TileLayer::column_count() const -> ssize
 {
-  return mColCount;
+  return mExtent.col_count;
 }
 
 void TileLayer::set_persistent_id(const Maybe<int32> id)
@@ -200,7 +207,7 @@ auto TileLayer::is_visible() const -> bool
 
 auto TileLayer::clone() const -> Shared<ILayer>
 {
-  auto other = make_shared<TileLayer>(mRowCount, mColCount);
+  auto other = make_shared<TileLayer>(mExtent);
 
   // The persistent ID attribute is intentionally ignored.
   other->mDelegate = mDelegate.clone();
