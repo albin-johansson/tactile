@@ -51,6 +51,12 @@ class TACTILE_CORE_API MapDocument final : public IDocument {
   auto viewport() const -> const DocumentViewport& override;
 
   [[nodiscard]]
+  auto find_context(const UUID& uuid) -> IMetaContext* override;
+
+  [[nodiscard]]
+  auto find_context(const UUID& uuid) const -> const IMetaContext* override;
+
+  [[nodiscard]]
   auto map() -> IMap&;
 
   [[nodiscard]]

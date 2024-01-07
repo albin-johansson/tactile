@@ -7,6 +7,8 @@
 
 namespace tactile {
 
+class UUID;
+class IMetaContext;
 class ComponentSet;
 class DocumentViewport;
 
@@ -70,6 +72,21 @@ class IDocument {
   /** \copydoc viewport() */
   [[nodiscard]]
   virtual auto viewport() const -> const DocumentViewport& = 0;
+
+  /**
+   * Attempts to find a context in the document.
+   *
+   * \param uuid The UUID of the target context.
+   *
+   * \return
+   *    The found context, or a null pointer.
+   */
+  [[nodiscard]]
+  virtual auto find_context(const UUID& uuid) -> IMetaContext* = 0;
+
+  /** \copydoc find_context() */
+  [[nodiscard]]
+  virtual auto find_context(const UUID& uuid) const -> const IMetaContext* = 0;
 };
 
 }  // namespace tactile

@@ -4,6 +4,8 @@
 
 #include <utility>  // move
 
+#include "tactile/core/meta/meta_context_finder.hpp"
+
 namespace tactile {
 
 MapDocument::MapDocument(Unique<IMap> map)
@@ -22,6 +24,20 @@ void MapDocument::set_path(FilePath path)
 auto MapDocument::path() const -> const FilePath*
 {
   return mPath.has_value() ? &*mPath : nullptr;
+}
+
+auto MapDocument::find_context(const UUID& uuid) -> IMetaContext*
+{
+  MetaContextFinder finder {uuid};
+  mMap->accept(finder);
+  return finder.found_context();
+}
+
+auto MapDocument::find_context(const UUID& uuid) const -> const IMetaContext*
+{
+  MetaContextFinder finder {uuid};
+  mMap->accept(finder);
+  return finder.found_context();
 }
 
 auto MapDocument::component_set() -> ComponentSet&
