@@ -19,11 +19,13 @@ message(DEBUG "CMAKE_PROJECT_VERSION: ${CMAKE_PROJECT_VERSION}")
 
 option(TACTILE_BUILD_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)
 option(TACTILE_BUILD_TESTS "Build the test suite" OFF)
+option(TACTILE_BUILD_VULKAN_RENDERER "Build the Vulkan renderer component" OFF)
 option(TACTILE_BUILD_LEGACY "Build the legacy targets" OFF)
 option(TACTILE_USE_LTO "Enable link-time optimizations" OFF)
 
 message(DEBUG "TACTILE_BUILD_APP_BUNDLE: ${TACTILE_BUILD_APP_BUNDLE}")
 message(DEBUG "TACTILE_BUILD_TESTS: ${TACTILE_BUILD_TESTS}")
+message(DEBUG "TACTILE_BUILD_VULKAN_RENDERER: ${TACTILE_BUILD_VULKAN_RENDERER}")
 message(DEBUG "TACTILE_BUILD_LEGACY: ${TACTILE_BUILD_LEGACY}")
 message(DEBUG "TACTILE_USE_LTO: ${TACTILE_USE_LTO}")
 

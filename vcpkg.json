@@ -36,7 +36,12 @@
     "nlohmann-json",
     "protobuf",
     "pugixml",
-    "sdl2",
+    {
+      "name": "sdl2",
+      "features": [
+        "vulkan"
+      ]
+    },
     "sdl2-image",
     "spdlog",
     "stb",

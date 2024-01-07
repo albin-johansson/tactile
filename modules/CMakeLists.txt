@@ -144,5 +144,9 @@ add_subdirectory(godot-scene-format)
 # Renderers
 add_subdirectory(opengl)
 
+if (TACTILE_BUILD_VULKAN_RENDERER MATCHES ON)
+  add_subdirectory(vulkan-renderer)
+endif ()
+
 # Main executable
 add_subdirectory(main)
