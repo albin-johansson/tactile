@@ -289,7 +289,6 @@ void GroupLayer::each(IConstLayerVisitor& visitor) const
 
 void GroupLayer::append_layer(Shared<ILayer> layer)
 {
-  const auto layer_uuid = layer->meta().uuid();
   mLayers.push_back(std::move(layer));
 }
 

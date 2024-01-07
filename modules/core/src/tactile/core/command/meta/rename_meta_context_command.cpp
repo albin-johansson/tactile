@@ -7,6 +7,7 @@
 #include <fmt/ostream.h>
 
 #include "tactile/core/document/document.hpp"
+#include "tactile/core/meta/meta_context.hpp"
 #include "tactile/core/meta/metadata.hpp"
 #include "tactile/core/model/model.hpp"
 #include "tactile/foundation/debug/validation.hpp"
