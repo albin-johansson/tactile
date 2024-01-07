@@ -6,11 +6,12 @@
 #include "tactile/core/command/command.hpp"
 #include "tactile/foundation/container/string.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
+#include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
 
-class IMetaContext;
+class IDocument;
 
 /**
  * Command for renaming a meta context.
@@ -20,10 +21,13 @@ class TACTILE_CORE_API RenameMetaContextCommand final : public ICommand {
   /**
    * Creates a new command.
    *
-   * \param context  the target meta context.
-   * \param new_name the new name of the meta context.
+   * \param document     The associated document, must outlive the command.
+   * \param context_uuid The UUID associated with the target meta context.
+   * \param new_name     The new name of the context.
    */
-  RenameMetaContextCommand(IMetaContext* context, String new_name);
+  RenameMetaContextCommand(IDocument* document,
+                           const UUID& context_uuid,
+                           String new_name);
 
   void undo() override;
 
@@ -33,10 +37,10 @@ class TACTILE_CORE_API RenameMetaContextCommand final : public ICommand {
   auto merge_with(const ICommand* other) -> bool override;
 
  private:
-  IMetaContext* mContext;
   IDocument* mDocument;
+  UUID mContextUuid;
   String mNewName;
-  Maybe<String> mOldName;
+  Maybe<String> mOldName {};
 };
 
 }  // namespace tactile
