@@ -9,7 +9,7 @@
 
 using namespace tactile;
 
-using tactile::int_literals::operator""_uz;
+using tactile::int_literals::operator""_z;
 
 namespace {
 
@@ -105,16 +105,16 @@ auto make_test_layer_hierarchy() -> GroupLayerTestConfig
 TEST(GroupLayer, AppendLayer)
 {
   GroupLayer layer {};
-  EXPECT_EQ(layer.layer_count(), 0_uz);
+  EXPECT_EQ(layer.layer_count(), 0_z);
 
   layer.append_layer(make_shared<TileLayer>(5, 5));
-  EXPECT_EQ(layer.layer_count(), 1_uz);
+  EXPECT_EQ(layer.layer_count(), 1_z);
 
   layer.append_layer(make_shared<ObjectLayer>());
-  EXPECT_EQ(layer.layer_count(), 2_uz);
+  EXPECT_EQ(layer.layer_count(), 2_z);
 
   layer.append_layer(make_shared<GroupLayer>());
-  EXPECT_EQ(layer.layer_count(), 3_uz);
+  EXPECT_EQ(layer.layer_count(), 3_z);
 }
 
 /// \tests tactile::GroupLayer::append_layer_to
@@ -140,32 +140,32 @@ TEST(GroupLayer, AppendLayerTo)
   const auto group2_uuid = group2->meta().uuid();
 
   root.append_layer(group1);
-  EXPECT_EQ(root.layer_count(), 1_uz);
-  EXPECT_EQ(group1->layer_count(), 0_uz);
-  EXPECT_EQ(group2->layer_count(), 0_uz);
+  EXPECT_EQ(root.layer_count(), 1_z);
+  EXPECT_EQ(group1->layer_count(), 0_z);
+  EXPECT_EQ(group2->layer_count(), 0_z);
 
   EXPECT_TRUE(root.append_layer_to(group1_uuid, group2));
-  EXPECT_EQ(root.layer_count(), 2_uz);
-  EXPECT_EQ(group1->layer_count(), 1_uz);
-  EXPECT_EQ(group2->layer_count(), 0_uz);
+  EXPECT_EQ(root.layer_count(), 2_z);
+  EXPECT_EQ(group1->layer_count(), 1_z);
+  EXPECT_EQ(group2->layer_count(), 0_z);
 
   EXPECT_TRUE(root.append_layer_to(group2_uuid, make_shared<ObjectLayer>()));
   EXPECT_TRUE(root.append_layer_to(group2_uuid, make_shared<GroupLayer>()));
   EXPECT_TRUE(root.append_layer_to(group2_uuid, make_shared<TileLayer>(5, 5)));
-  EXPECT_EQ(root.layer_count(), 5_uz);
-  EXPECT_EQ(group1->layer_count(), 4_uz);
-  EXPECT_EQ(group2->layer_count(), 3_uz);
+  EXPECT_EQ(root.layer_count(), 5_z);
+  EXPECT_EQ(group1->layer_count(), 4_z);
+  EXPECT_EQ(group2->layer_count(), 3_z);
 
   EXPECT_TRUE(root.append_layer_to(group1_uuid, make_shared<GroupLayer>()));
   EXPECT_TRUE(root.append_layer_to(group1_uuid, make_shared<TileLayer>(5, 5)));
-  EXPECT_EQ(root.layer_count(), 7_uz);
-  EXPECT_EQ(group1->layer_count(), 6_uz);
-  EXPECT_EQ(group2->layer_count(), 3_uz);
+  EXPECT_EQ(root.layer_count(), 7_z);
+  EXPECT_EQ(group1->layer_count(), 6_z);
+  EXPECT_EQ(group2->layer_count(), 3_z);
 
   root.append_layer(make_shared<TileLayer>(5, 5));
-  EXPECT_EQ(root.layer_count(), 8_uz);
-  EXPECT_EQ(group1->layer_count(), 6_uz);
-  EXPECT_EQ(group2->layer_count(), 3_uz);
+  EXPECT_EQ(root.layer_count(), 8_z);
+  EXPECT_EQ(group1->layer_count(), 6_z);
+  EXPECT_EQ(group2->layer_count(), 3_z);
 }
 
 /// \tests tactile::GroupLayer::remove_layer
@@ -174,25 +174,25 @@ TEST(GroupLayer, RemoveLayer)
   auto hierarchy = make_test_layer_hierarchy();
   auto& root = hierarchy.root;
 
-  ASSERT_EQ(root->layer_count(), 12_uz);
+  ASSERT_EQ(root->layer_count(), 12_z);
   ASSERT_EQ(root->remove_layer(root->meta().uuid()), nullptr);
 
   EXPECT_EQ(root->remove_layer(hierarchy.g2->meta().uuid()), hierarchy.g2);
   EXPECT_EQ(root->remove_layer(hierarchy.g2->meta().uuid()), nullptr);
-  EXPECT_EQ(root->layer_count(), 8_uz);
+  EXPECT_EQ(root->layer_count(), 8_z);
 
   EXPECT_EQ(root->remove_layer(hierarchy.t3->meta().uuid()), hierarchy.t3);
   EXPECT_EQ(root->remove_layer(hierarchy.t3->meta().uuid()), nullptr);
-  EXPECT_EQ(root->layer_count(), 7_uz);
+  EXPECT_EQ(root->layer_count(), 7_z);
 
   EXPECT_EQ(root->remove_layer(hierarchy.g1->meta().uuid()), hierarchy.g1);
   EXPECT_EQ(root->remove_layer(hierarchy.g1->meta().uuid()), nullptr);
-  EXPECT_EQ(root->layer_count(), 3_uz);
+  EXPECT_EQ(root->layer_count(), 3_z);
 
   EXPECT_EQ(root->remove_layer(hierarchy.t1->meta().uuid()), hierarchy.t1);
   EXPECT_EQ(root->remove_layer(hierarchy.o4->meta().uuid()), hierarchy.o4);
   EXPECT_EQ(root->remove_layer(hierarchy.t4->meta().uuid()), hierarchy.t4);
-  EXPECT_EQ(root->layer_count(), 0_uz);
+  EXPECT_EQ(root->layer_count(), 0_z);
 }
 
 /// \tests tactile::GroupLayer::duplicate_layer
@@ -201,13 +201,13 @@ TEST(GroupLayer, DuplicateLayer)
   auto hierarchy = make_test_layer_hierarchy();
   auto& root = hierarchy.root;
 
-  EXPECT_EQ(root->layer_count(), 12_uz);
+  EXPECT_EQ(root->layer_count(), 12_z);
   EXPECT_EQ(root->duplicate_layer(hierarchy.root->meta().uuid()), nullptr);
-  EXPECT_EQ(root->layer_count(), 12_uz);
+  EXPECT_EQ(root->layer_count(), 12_z);
 
   const auto duplicated_g2 = std::dynamic_pointer_cast<GroupLayer>(
       root->duplicate_layer(hierarchy.g2->meta().uuid()));
-  EXPECT_EQ(root->layer_count(), 16_uz);
+  EXPECT_EQ(root->layer_count(), 16_z);
   ASSERT_NE(duplicated_g2, nullptr);
 
   EXPECT_NE(duplicated_g2, hierarchy.g2);
@@ -226,47 +226,47 @@ TEST(GroupLayer, MoveLayerUp)
   EXPECT_TRUE(root->move_layer_up(hierarchy.g1->meta().uuid()));
 
   // clang-format off
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.g1->meta().uuid()), 0_uz);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.g1->meta().uuid()), 0_z);
 
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.g2->meta().uuid()), 1_uz);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.g2->meta().uuid()), 1_z);
 
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.o1->meta().uuid()), 2_uz);
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.g3->meta().uuid()), 3_uz);
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.o2->meta().uuid()), 4_uz);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.o1->meta().uuid()), 2_z);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.g3->meta().uuid()), 3_z);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.o2->meta().uuid()), 4_z);
 
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.t2->meta().uuid()), 5_uz);
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.g4->meta().uuid()), 6_uz);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.t2->meta().uuid()), 5_z);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.g4->meta().uuid()), 6_z);
 
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.o3->meta().uuid()), 7_uz);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.o3->meta().uuid()), 7_z);
 
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.t3->meta().uuid()), 8_uz);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.t3->meta().uuid()), 8_z);
 
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.t1->meta().uuid()), 9_uz);
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.o4->meta().uuid()), 10_uz);
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.t4->meta().uuid()), 11_uz);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.t1->meta().uuid()), 9_z);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.o4->meta().uuid()), 10_z);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.t4->meta().uuid()), 11_z);
   // clang-format on
 
   EXPECT_TRUE(root->move_layer_up(hierarchy.g4->meta().uuid()));
 
   // clang-format off
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.g1->meta().uuid()), 0_uz);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.g1->meta().uuid()), 0_z);
 
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.g2->meta().uuid()), 1_uz);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.g2->meta().uuid()), 1_z);
 
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.o1->meta().uuid()), 2_uz);
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.g3->meta().uuid()), 3_uz);
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.o2->meta().uuid()), 4_uz);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.o1->meta().uuid()), 2_z);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.g3->meta().uuid()), 3_z);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.o2->meta().uuid()), 4_z);
 
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.g4->meta().uuid()), 5_uz);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.g4->meta().uuid()), 5_z);
 
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.o3->meta().uuid()), 6_uz);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.o3->meta().uuid()), 6_z);
 
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.t2->meta().uuid()), 7_uz);
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.t3->meta().uuid()), 8_uz);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.t2->meta().uuid()), 7_z);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.t3->meta().uuid()), 8_z);
 
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.t1->meta().uuid()), 9_uz);
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.o4->meta().uuid()), 10_uz);
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.t4->meta().uuid()), 11_uz);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.t1->meta().uuid()), 9_z);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.o4->meta().uuid()), 10_z);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.t4->meta().uuid()), 11_z);
   // clang-format on
 }
 
@@ -282,47 +282,47 @@ TEST(GroupLayer, MoveLayerDown)
   EXPECT_TRUE(root->move_layer_down(hierarchy.g2->meta().uuid()));
 
   // clang-format off
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.t1->meta().uuid()), 0_uz);
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.g1->meta().uuid()), 1_uz);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.t1->meta().uuid()), 0_z);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.g1->meta().uuid()), 1_z);
 
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.t2->meta().uuid()), 2_uz);
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.g2->meta().uuid()), 3_uz);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.t2->meta().uuid()), 2_z);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.g2->meta().uuid()), 3_z);
 
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.o1->meta().uuid()), 4_uz);
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.g3->meta().uuid()), 5_uz);
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.o2->meta().uuid()), 6_uz);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.o1->meta().uuid()), 4_z);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.g3->meta().uuid()), 5_z);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.o2->meta().uuid()), 6_z);
 
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.g4->meta().uuid()), 7_uz);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.g4->meta().uuid()), 7_z);
 
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.o3->meta().uuid()), 8_uz);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.o3->meta().uuid()), 8_z);
 
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.t3->meta().uuid()), 9_uz);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.t3->meta().uuid()), 9_z);
 
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.o4->meta().uuid()), 10_uz);
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.t4->meta().uuid()), 11_uz);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.o4->meta().uuid()), 10_z);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.t4->meta().uuid()), 11_z);
   // clang-format on
 
   EXPECT_TRUE(root->move_layer_down(hierarchy.g3->meta().uuid()));
 
   // clang-format off
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.t1->meta().uuid()), 0_uz);
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.g1->meta().uuid()), 1_uz);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.t1->meta().uuid()), 0_z);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.g1->meta().uuid()), 1_z);
 
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.t2->meta().uuid()), 2_uz);
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.g2->meta().uuid()), 3_uz);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.t2->meta().uuid()), 2_z);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.g2->meta().uuid()), 3_z);
 
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.o1->meta().uuid()), 4_uz);
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.o2->meta().uuid()), 5_uz);
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.g3->meta().uuid()), 6_uz);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.o1->meta().uuid()), 4_z);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.o2->meta().uuid()), 5_z);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.g3->meta().uuid()), 6_z);
 
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.g4->meta().uuid()), 7_uz);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.g4->meta().uuid()), 7_z);
 
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.o3->meta().uuid()), 8_uz);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.o3->meta().uuid()), 8_z);
 
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.t3->meta().uuid()), 9_uz);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.t3->meta().uuid()), 9_z);
 
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.o4->meta().uuid()), 10_uz);
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.t4->meta().uuid()), 11_uz);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.o4->meta().uuid()), 10_z);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.t4->meta().uuid()), 11_z);
   // clang-format on
 }
 
@@ -389,24 +389,24 @@ TEST(GroupLayer, GetLocalLayerIndex)
   auto& root = hierarchy.root;
 
   // clang-format off
-  EXPECT_EQ(root->get_layer_local_index(hierarchy.t1->meta().uuid()), 0_uz);
-  EXPECT_EQ(root->get_layer_local_index(hierarchy.g1->meta().uuid()), 1_uz);
+  EXPECT_EQ(root->get_layer_local_index(hierarchy.t1->meta().uuid()), 0_z);
+  EXPECT_EQ(root->get_layer_local_index(hierarchy.g1->meta().uuid()), 1_z);
 
-    EXPECT_EQ(root->get_layer_local_index(hierarchy.g2->meta().uuid()), 0_uz);
+    EXPECT_EQ(root->get_layer_local_index(hierarchy.g2->meta().uuid()), 0_z);
 
-      EXPECT_EQ(root->get_layer_local_index(hierarchy.o1->meta().uuid()), 0_uz);
-      EXPECT_EQ(root->get_layer_local_index(hierarchy.g3->meta().uuid()), 1_uz);
-      EXPECT_EQ(root->get_layer_local_index(hierarchy.o2->meta().uuid()), 2_uz);
+      EXPECT_EQ(root->get_layer_local_index(hierarchy.o1->meta().uuid()), 0_z);
+      EXPECT_EQ(root->get_layer_local_index(hierarchy.g3->meta().uuid()), 1_z);
+      EXPECT_EQ(root->get_layer_local_index(hierarchy.o2->meta().uuid()), 2_z);
 
-    EXPECT_EQ(root->get_layer_local_index(hierarchy.t2->meta().uuid()), 1_uz);
-    EXPECT_EQ(root->get_layer_local_index(hierarchy.g4->meta().uuid()), 2_uz);
+    EXPECT_EQ(root->get_layer_local_index(hierarchy.t2->meta().uuid()), 1_z);
+    EXPECT_EQ(root->get_layer_local_index(hierarchy.g4->meta().uuid()), 2_z);
 
-      EXPECT_EQ(root->get_layer_local_index(hierarchy.o3->meta().uuid()), 0_uz);
+      EXPECT_EQ(root->get_layer_local_index(hierarchy.o3->meta().uuid()), 0_z);
 
-    EXPECT_EQ(root->get_layer_local_index(hierarchy.t3->meta().uuid()), 3_uz);
+    EXPECT_EQ(root->get_layer_local_index(hierarchy.t3->meta().uuid()), 3_z);
 
-  EXPECT_EQ(root->get_layer_local_index(hierarchy.o4->meta().uuid()), 2_uz);
-  EXPECT_EQ(root->get_layer_local_index(hierarchy.t4->meta().uuid()), 3_uz);
+  EXPECT_EQ(root->get_layer_local_index(hierarchy.o4->meta().uuid()), 2_z);
+  EXPECT_EQ(root->get_layer_local_index(hierarchy.t4->meta().uuid()), 3_z);
   // clang-format on
 }
 
@@ -417,24 +417,24 @@ TEST(GroupLayer, GetGlobalLayerIndex)
   auto& root = hierarchy.root;
 
   // clang-format off
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.t1->meta().uuid()), 0_uz);
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.g1->meta().uuid()), 1_uz);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.t1->meta().uuid()), 0_z);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.g1->meta().uuid()), 1_z);
 
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.g2->meta().uuid()), 2_uz);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.g2->meta().uuid()), 2_z);
 
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.o1->meta().uuid()), 3_uz);
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.g3->meta().uuid()), 4_uz);
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.o2->meta().uuid()), 5_uz);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.o1->meta().uuid()), 3_z);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.g3->meta().uuid()), 4_z);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.o2->meta().uuid()), 5_z);
 
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.t2->meta().uuid()), 6_uz);
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.g4->meta().uuid()), 7_uz);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.t2->meta().uuid()), 6_z);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.g4->meta().uuid()), 7_z);
 
-      EXPECT_EQ(root->get_layer_global_index(hierarchy.o3->meta().uuid()), 8_uz);
+      EXPECT_EQ(root->get_layer_global_index(hierarchy.o3->meta().uuid()), 8_z);
 
-    EXPECT_EQ(root->get_layer_global_index(hierarchy.t3->meta().uuid()), 9_uz);
+    EXPECT_EQ(root->get_layer_global_index(hierarchy.t3->meta().uuid()), 9_z);
 
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.o4->meta().uuid()), 10_uz);
-  EXPECT_EQ(root->get_layer_global_index(hierarchy.t4->meta().uuid()), 11_uz);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.o4->meta().uuid()), 10_z);
+  EXPECT_EQ(root->get_layer_global_index(hierarchy.t4->meta().uuid()), 11_z);
   // clang-format on
 }
 
