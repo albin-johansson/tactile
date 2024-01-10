@@ -2,10 +2,13 @@
 
 #include "tactile/core/layer/tile_layer.hpp"
 
+#include <cmath>  // abs
+
 #include "tactile/core/layer/layer_visitor.hpp"
 #include "tactile/foundation/container/queue.hpp"
 #include "tactile/foundation/debug/assert.hpp"
 #include "tactile/foundation/debug/exception.hpp"
+#include "tactile/foundation/debug/generic_error.hpp"
 #include "tactile/foundation/functional/utility.hpp"
 #include "tactile/foundation/misc/integer_conversion.hpp"
 
@@ -36,66 +39,6 @@ void TileLayer::accept(ILayerVisitor& visitor)
 void TileLayer::accept(IConstLayerVisitor& visitor) const
 {
   visitor.visit(*this);
-}
-
-void TileLayer::resize(const ssize row_count, const ssize col_count)
-{
-  if (row_count < 1) {
-    throw Exception {"Invalid row count"};
-  }
-
-  if (col_count < 1) {
-    throw Exception {"Invalid column count"};
-  }
-
-  if (row_count < mExtent.row_count) {
-    repeat(mExtent.row_count - row_count, [this] { _remove_row(); });
-  }
-  else {
-    repeat(row_count - mExtent.row_count, [this] { _add_row(); });
-  }
-
-  if (col_count < mExtent.col_count) {
-    repeat(mExtent.col_count - col_count, [this] { _remove_column(); });
-  }
-  else {
-    repeat(col_count - mExtent.col_count, [this] { _add_column(); });
-  }
-
-  TACTILE_ASSERT(mExtent.row_count == row_count);
-  TACTILE_ASSERT(mExtent.col_count == col_count);
-}
-
-void TileLayer::_add_row()
-{
-  ++mExtent.row_count;
-  mTileMatrix.push_back(make_tile_row(mExtent.col_count));
-}
-
-void TileLayer::_add_column()
-{
-  ++mExtent.col_count;
-  for (auto& tile_row : mTileMatrix) {
-    tile_row.push_back(kEmptyTile);
-  }
-}
-
-void TileLayer::_remove_row()
-{
-  TACTILE_ASSERT(mExtent.row_count > 1);
-
-  --mExtent.row_count;
-  mTileMatrix.pop_back();
-}
-
-void TileLayer::_remove_column()
-{
-  TACTILE_ASSERT(mExtent.col_count > 1);
-
-  --mExtent.col_count;
-  for (auto& tile_row : mTileMatrix) {
-    tile_row.pop_back();
-  }
 }
 
 // TODO implement more efficient version
@@ -163,6 +106,73 @@ void TileLayer::flood(const TilePos& start_pos,
   }
 }
 
+auto TileLayer::set_extent(const MatrixExtent& extent) -> Result<void>
+{
+  if (mExtent == extent) {
+    return kOK;
+  }
+
+  if (extent.row_count <= 0 || extent.col_count <= 0) {
+    return unexpected(make_generic_error(GenericError::kInvalidArgument));
+  }
+
+  const auto row_delta = extent.row_count - mExtent.row_count;
+  const auto col_delta = extent.col_count - mExtent.col_count;
+
+  if (col_delta != 0) {
+    if (col_delta > 0) {
+      repeat(col_delta, [this] { _add_column(); });
+    }
+    else {
+      repeat(std::abs(col_delta), [this] { _remove_column(); });
+    }
+  }
+
+  if (row_delta != 0) {
+    if (row_delta > 0) {
+      repeat(row_delta, [this] { _add_row(); });
+    }
+    else {
+      repeat(std::abs(row_delta), [this] { _remove_row(); });
+    }
+  }
+
+  mExtent = extent;
+  return kOK;
+}
+
+void TileLayer::_add_row()
+{
+  ++mExtent.row_count;
+  mTileMatrix.push_back(make_tile_row(mExtent.col_count));
+}
+
+void TileLayer::_add_column()
+{
+  ++mExtent.col_count;
+  for (auto& tile_row : mTileMatrix) {
+    tile_row.push_back(kEmptyTile);
+  }
+}
+
+void TileLayer::_remove_row()
+{
+  TACTILE_ASSERT(mExtent.row_count > 1);
+
+  --mExtent.row_count;
+  mTileMatrix.pop_back();
+}
+
+void TileLayer::_remove_column()
+{
+  TACTILE_ASSERT(mExtent.col_count > 1);
+
+  --mExtent.col_count;
+  for (auto& tile_row : mTileMatrix) {
+    tile_row.pop_back();
+  }
+}
+
 void TileLayer::set_tile(const TilePos& pos, const TileID id)
 {
   if (is_valid_pos(pos)) [[likely]] {
@@ -193,14 +203,9 @@ auto TileLayer::is_valid_pos(const TilePos& pos) const -> bool
          pos.col < mExtent.col_count;
 }
 
-auto TileLayer::row_count() const -> ssize
+auto TileLayer::extent() const -> MatrixExtent
 {
-  return mExtent.row_count;
-}
-
-auto TileLayer::column_count() const -> ssize
-{
-  return mExtent.col_count;
+  return mExtent;
 }
 
 void TileLayer::set_persistent_id(const Maybe<int32> id)

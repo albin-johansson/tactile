@@ -14,63 +14,69 @@ using namespace tactile;
 using int_literals::operator""_uz;
 using int_literals::operator""_z;
 
+// NOLINTBEGIN(*-use-trailing-return-type)
+// NOLINTBEGIN(*-function-cognitive-complexity)
+
 /// \tests tactile::TileLayer::TileLayer
 TEST(TileLayer, Constructor)
 {
-  const TileLayer layer {3_z, 4_z};
-  EXPECT_EQ(layer.row_count(), 3_z);
-  EXPECT_EQ(layer.column_count(), 4_z);
+  const MatrixExtent extent {3, 4};
+  const TileLayer layer {extent};
 
-  for (auto row = 0_z; row < 3_z; ++row) {
-    for (auto col = 0_z; col < 4_z; ++col) {
+  EXPECT_EQ(layer.extent(), extent);
+
+  for (auto row = 0_z; row < extent.row_count; ++row) {
+    for (auto col = 0_z; col < extent.col_count; ++col) {
       EXPECT_EQ(layer.get_tile(TilePos {row, col}), kEmptyTile);
     }
   }
 }
 
-/// \tests tactile::TileLayer::resize
-TEST(TileLayer, Resize)
+/// \tests tactile::TileLayer::set_extent
+TEST(TileLayer, SetExtent)
 {
-  TileLayer layer {5_z, 7_z};
+  TileLayer layer {MatrixExtent {5, 7}};
 
-  // Remove row.
-  layer.resize(4_z, 7_z);
-  EXPECT_EQ(layer.row_count(), 4_z);
-  EXPECT_EQ(layer.column_count(), 7_z);
+  // Remove a row.
+  EXPECT_EQ(layer.set_extent(MatrixExtent {4, 7}), kOK);
+  EXPECT_EQ(layer.extent().row_count, 4);
+  EXPECT_EQ(layer.extent().col_count, 7);
 
-  // Remove column.
-  layer.resize(4_z, 6_z);
-  EXPECT_EQ(layer.row_count(), 4_z);
-  EXPECT_EQ(layer.column_count(), 6_z);
+  // Remove a column.
+  EXPECT_EQ(layer.set_extent(MatrixExtent {4, 6}), kOK);
+  EXPECT_EQ(layer.extent().row_count, 4);
+  EXPECT_EQ(layer.extent().col_count, 6);
 
-  // Add rows.
-  layer.resize(10_z, 6_z);
-  EXPECT_EQ(layer.row_count(), 10_z);
-  EXPECT_EQ(layer.column_count(), 6_z);
+  // Add several rows.
+  EXPECT_EQ(layer.set_extent(MatrixExtent {10, 6}), kOK);
+  EXPECT_EQ(layer.extent().row_count, 10);
+  EXPECT_EQ(layer.extent().col_count, 6);
 
-  // Add columns.
-  layer.resize(10_z, 8_z);
-  EXPECT_EQ(layer.row_count(), 10_z);
-  EXPECT_EQ(layer.column_count(), 8_z);
+  // Add several columns.
+  EXPECT_EQ(layer.set_extent(MatrixExtent {10, 8}), kOK);
+  EXPECT_EQ(layer.extent().row_count, 10);
+  EXPECT_EQ(layer.extent().col_count, 8);
 
-  // Minimum size.
-  layer.resize(1_z, 1_z);
-  EXPECT_EQ(layer.row_count(), 1_z);
-  EXPECT_EQ(layer.column_count(), 1_z);
+  // Use minimum extent.
+  EXPECT_EQ(layer.set_extent(MatrixExtent {1, 1}), kOK);
+  EXPECT_EQ(layer.extent().row_count, 1);
+  EXPECT_EQ(layer.extent().col_count, 1);
 
-  EXPECT_THROW(layer.resize(0_z, 1_z), Exception);
-  EXPECT_THROW(layer.resize(1_z, 0_z), Exception);
-  EXPECT_THROW(layer.resize(-1_z, 1_z), Exception);
-  EXPECT_THROW(layer.resize(1_z, -1_z), Exception);
+  // Invalid extents.
+  EXPECT_NE(layer.set_extent(MatrixExtent {0, 1}), kOK);
+  EXPECT_NE(layer.set_extent(MatrixExtent {1, 0}), kOK);
+  EXPECT_NE(layer.set_extent(MatrixExtent {-1, 1}), kOK);
+  EXPECT_NE(layer.set_extent(MatrixExtent {1, -1}), kOK);
 }
 
 /// \tests tactile::TileLayer::flood
 TEST(TileLayer, Flood)
 {
-  TileLayer layer {5_z, 5_z};
+  const MatrixExtent extent {5, 5};
+  TileLayer layer {extent};
 
-  for (auto row = 0_z; row < layer.row_count(); ++row) {
-    for (auto col = 0_z; col < layer.column_count(); ++col) {
+  for (auto row = 0_z; row < extent.row_count; ++row) {
+    for (auto col = 0_z; col < extent.col_count; ++col) {
       EXPECT_EQ(layer.get_tile(TilePos {row, col}), kEmptyTile);
     }
   }
@@ -89,8 +95,8 @@ TEST(TileLayer, Flood)
   //   └───┴───┴───┴───┴───┘        └───┴───┴───┴───┴───┘
   layer.flood(TilePos {0, 0}, TileID {1});
 
-  for (auto row = 0_z; row < layer.row_count(); ++row) {
-    for (auto col = 0_z; col < layer.column_count(); ++col) {
+  for (auto row = 0_z; row < extent.row_count; ++row) {
+    for (auto col = 0_z; col < extent.col_count; ++col) {
       EXPECT_EQ(layer.get_tile(TilePos {row, col}), TileID {1});
     }
   }
@@ -297,7 +303,8 @@ TEST(TileLayer, Flood)
 /// \tests tactile::TileLayer::flood
 TEST(TileLayer, FloodWithAffectedPositions)
 {
-  TileLayer layer {4_z, 4_z};
+  const MatrixExtent extent {4, 4};
+  TileLayer layer {extent};
 
   //     0   1   2   3            0   1   2   3
   //   ┌───┬───┬───┬───┐        ┌───┬───┬───┬───┐
@@ -312,7 +319,7 @@ TEST(TileLayer, FloodWithAffectedPositions)
   Vector<TilePos> affected_positions {};
   layer.flood(TilePos {3, 3}, TileID {5}, &affected_positions);
 
-  EXPECT_EQ(std::ssize(affected_positions), layer.row_count() * layer.column_count());
+  EXPECT_EQ(std::ssize(affected_positions), extent.row_count * extent.col_count);
 
   // clang-format off
   EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {0, 0}), 1_uz);
@@ -340,9 +347,10 @@ TEST(TileLayer, FloodWithAffectedPositions)
 /// \tests tactile::TileLayer::set_tile
 TEST(TileLayer, SetTile)
 {
-  TileLayer layer {5_z, 5_z};
+  const MatrixExtent extent {5, 5};
+  TileLayer layer {extent};
 
-  const TilePos tile_pos {2_z, 2_z};
+  const TilePos tile_pos {2, 2};
   const TileID tile_id {42};
 
   layer.set_tile(tile_pos, tile_id);
@@ -352,28 +360,29 @@ TEST(TileLayer, SetTile)
 /// \tests tactile::TileLayer::get_tile
 TEST(TileLayer, GetTile)
 {
-  const TileLayer layer {10_z, 8_z};
+  const MatrixExtent extent {10, 8};
+  const TileLayer layer {extent};
 
-  EXPECT_EQ(layer.get_tile(TilePos {0_z, 0_z}), kEmptyTile);
-  EXPECT_FALSE(
-      layer.get_tile(TilePos {layer.row_count(), layer.column_count()}).has_value());
+  EXPECT_EQ(layer.get_tile(TilePos {0, 0}), kEmptyTile);
+  EXPECT_FALSE(layer.get_tile(TilePos {extent.row_count, extent.col_count}).has_value());
 }
 
 /// \tests tactile::TileLayer::is_valid_pos
 TEST(TileLayer, IsValidPos)
 {
-  const TileLayer layer {10_z, 8_z};
+  const MatrixExtent extent {10, 8};
+  const TileLayer layer {extent};
 
-  const auto row_count = layer.row_count();
-  const auto col_count = layer.column_count();
+  EXPECT_TRUE(layer.is_valid_pos(TilePos {0, 0}));
+  EXPECT_TRUE(layer.is_valid_pos(TilePos {extent.row_count - 1, extent.col_count - 1}));
 
-  EXPECT_TRUE(layer.is_valid_pos(TilePos {0_z, 0_z}));
-  EXPECT_TRUE(layer.is_valid_pos(TilePos {row_count - 1_z, col_count - 1_z}));
+  EXPECT_FALSE(layer.is_valid_pos(TilePos {extent.row_count, 0}));
+  EXPECT_FALSE(layer.is_valid_pos(TilePos {0, extent.col_count}));
+  EXPECT_FALSE(layer.is_valid_pos(TilePos {extent.row_count, extent.col_count}));
 
-  EXPECT_FALSE(layer.is_valid_pos(TilePos {row_count, 0_z}));
-  EXPECT_FALSE(layer.is_valid_pos(TilePos {0_z, col_count}));
-  EXPECT_FALSE(layer.is_valid_pos(TilePos {row_count, col_count}));
-
-  EXPECT_FALSE(layer.is_valid_pos(TilePos {-1_z, -1_z}));
-  EXPECT_FALSE(layer.is_valid_pos(TilePos {3_z, col_count + 832_z}));
+  EXPECT_FALSE(layer.is_valid_pos(TilePos {-1, -1}));
+  EXPECT_FALSE(layer.is_valid_pos(TilePos {3, extent.col_count + 832}));
 }
+
+// NOLINTEND(*-function-cognitive-complexity)
+// NOLINTEND(*-use-trailing-return-type)

@@ -6,6 +6,7 @@
 #include "tactile/core/layer/layer.hpp"
 #include "tactile/core/layer/layer_behavior_delegate.hpp"
 #include "tactile/foundation/container/vector.hpp"
+#include "tactile/foundation/functional/result.hpp"
 #include "tactile/foundation/misc/id_types.hpp"
 #include "tactile/foundation/misc/integer_conversion.hpp"
 #include "tactile/foundation/misc/tile_matrix.hpp"
@@ -41,14 +42,6 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
   void accept(IConstLayerVisitor& visitor) const override;
 
   /**
-   * Changes the size of the layer.
-   *
-   * \param row_count The number of tile rows, must be greater than zero.
-   * \param col_count The number of tile columns, must be greater than zero.
-   */
-  void resize(ssize row_count, ssize col_count);
-
-  /**
    * Applies a flood fill algorithm to the layer.
    *
    * \param      start_pos          The flood start position.
@@ -60,6 +53,16 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
   void flood(const TilePos& start_pos,
              TileID new_id,
              Vector<TilePos>* affected_positions = nullptr);
+
+  /**
+   * Changes the size of the layer.
+   *
+   * \param extent The new extent, must be at least 1x1.
+   *
+   * \return
+   *    Nothing on success; an error code otherwise.
+   */
+  auto set_extent(const MatrixExtent& extent) -> Result<void>;
 
   /**
    * Updates the tile ID stored at the specified position.
@@ -95,22 +98,13 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
   auto is_valid_pos(const TilePos& pos) const -> bool;
 
   /**
-   * Returns the number of tile rows stored in the layer.
+   * Returns the dimensions of the tile layer.
    *
    * \return
-   *    The tile row count.
+   *    The layer extent.
    */
   [[nodiscard]]
-  auto row_count() const -> ssize;
-
-  /**
-   * Returns the number of tile columns stored in the layer.
-   *
-   * \return
-   *    The tile column count.
-   */
-  [[nodiscard]]
-  auto column_count() const -> ssize;
+  auto extent() const -> MatrixExtent;
 
   void set_persistent_id(Maybe<int32> id) override;
 
