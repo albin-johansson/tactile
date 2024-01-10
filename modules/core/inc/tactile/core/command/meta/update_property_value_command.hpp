@@ -36,6 +36,9 @@ class TACTILE_CORE_API UpdatePropertyValueCommand final : public ICommand {
 
   void redo() override;
 
+  [[nodiscard]]
+  auto merge_with(const ICommand* other) -> bool override;
+
  private:
   IDocument* mDocument;
   UUID mContextUuid;

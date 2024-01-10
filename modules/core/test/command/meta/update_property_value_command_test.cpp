@@ -47,3 +47,31 @@ TEST_F(UpdatePropertyValueCommandTest, RedoUndo)
   command.undo();
   EXPECT_EQ(metadata.get_property(mPropertyName), mOldPropertyValue);
 }
+
+/// \tests tactile::UpdatePropertyValueCommand::merge_with
+TEST_F(UpdatePropertyValueCommandTest, MergeWith)
+{
+  auto& metadata = mMapDocument.map().meta();
+  const auto context_uuid = metadata.uuid();
+
+  ASSERT_TRUE(metadata.has_property(mPropertyName));
+
+  // clang-format off
+  UpdatePropertyValueCommand set_10 {&mMapDocument, context_uuid, mPropertyName, 10.0f};
+  const UpdatePropertyValueCommand set_20 {&mMapDocument, context_uuid, mPropertyName, 20.0f};
+  const UpdatePropertyValueCommand set_30 {&mMapDocument, context_uuid, mPropertyName, 30.0f};
+  const UpdatePropertyValueCommand set_40 {&mMapDocument, context_uuid, mPropertyName + "!", 40.0f};
+  const UpdatePropertyValueCommand set_50 {&mMapDocument, UUID::generate(), mPropertyName, 50.0f};
+  // clang-format on
+
+  EXPECT_TRUE(set_10.merge_with(&set_20));
+  EXPECT_TRUE(set_10.merge_with(&set_30));
+  EXPECT_FALSE(set_10.merge_with(&set_40));
+  EXPECT_FALSE(set_10.merge_with(&set_50));
+
+  set_10.redo();
+  EXPECT_EQ(metadata.get_property(mPropertyName), 30.0f);
+
+  set_10.undo();
+  EXPECT_EQ(metadata.get_property(mPropertyName), mOldPropertyValue);
+}

@@ -58,4 +58,18 @@ void UpdatePropertyValueCommand::redo()
   }
 }
 
+auto UpdatePropertyValueCommand::merge_with(const ICommand* other) -> bool
+{
+  if (const auto* that = dynamic_cast<const UpdatePropertyValueCommand*>(other)) {
+    if (this->mDocument == that->mDocument &&        //
+        this->mContextUuid == that->mContextUuid &&  //
+        this->mPropertyName == that->mPropertyName) {
+      mNewPropertyValue = that->mNewPropertyValue;
+      return true;
+    }
+  }
+
+  return false;
+}
+
 }  // namespace tactile
