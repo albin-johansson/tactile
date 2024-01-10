@@ -3,7 +3,7 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/map/layer/group_layer.hpp"
+#include "tactile/core/layer/group_layer.hpp"
 #include "tactile/core/map/map.hpp"
 #include "tactile/core/map/tile_format.hpp"
 #include "tactile/core/tileset/attached_tileset.hpp"

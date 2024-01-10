@@ -2,9 +2,9 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile/core/map/layer/group_layer.hpp"
-#include "tactile/core/map/layer/object_layer.hpp"
-#include "tactile/core/map/layer/tile_layer.hpp"
+#include "tactile/core/layer/group_layer.hpp"
+#include "tactile/core/layer/object_layer.hpp"
+#include "tactile/core/layer/tile_layer.hpp"
 
 using namespace tactile;
 

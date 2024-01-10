@@ -3,9 +3,9 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/map/layer/layer.hpp"
-#include "tactile/core/map/layer/layer_behavior_delegate.hpp"
-#include "tactile/core/map/layer/object.hpp"
+#include "tactile/core/layer/layer.hpp"
+#include "tactile/core/layer/layer_behavior_delegate.hpp"
+#include "tactile/core/layer/object.hpp"
 #include "tactile/foundation/container/smart_ptr.hpp"
 #include "tactile/foundation/container/tree_map.hpp"
 #include "tactile/foundation/container/vector.hpp"

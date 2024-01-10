@@ -19,4 +19,4 @@
 
 #pragma once
 
-#include "tactile/core/map/layer/layer_type.hpp"
+#include "tactile/core/layer/layer_type.hpp"

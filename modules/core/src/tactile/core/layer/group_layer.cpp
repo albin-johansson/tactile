@@ -1,14 +1,14 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/map/layer/group_layer.hpp"
+#include "tactile/core/layer/group_layer.hpp"
 
 #include <algorithm>  // find_if, iter_swap
 #include <iterator>   // distance
 #include <utility>    // move
 
-#include "tactile/core/map/layer/layer_visitor.hpp"
-#include "tactile/core/map/layer/object_layer.hpp"
-#include "tactile/core/map/layer/tile_layer.hpp"
+#include "tactile/core/layer/layer_visitor.hpp"
+#include "tactile/core/layer/object_layer.hpp"
+#include "tactile/core/layer/tile_layer.hpp"
 #include "tactile/foundation/misc/integer_conversion.hpp"
 
 namespace tactile {

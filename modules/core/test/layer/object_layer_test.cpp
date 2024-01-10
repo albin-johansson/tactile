@@ -1,6 +1,6 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/map/layer/object_layer.hpp"
+#include "tactile/core/layer/object_layer.hpp"
 
 #include <gtest/gtest.h>
 

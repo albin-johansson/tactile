@@ -5,8 +5,8 @@
 #include <iterator>  // forward_iterator_tag
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/map/layer/layer.hpp"
-#include "tactile/core/map/layer/layer_behavior_delegate.hpp"
+#include "tactile/core/layer/layer.hpp"
+#include "tactile/core/layer/layer_behavior_delegate.hpp"
 #include "tactile/foundation/container/smart_ptr.hpp"
 #include "tactile/foundation/container/vector.hpp"
 #include "tactile/foundation/functional/maybe.hpp"

@@ -2,10 +2,10 @@
 
 #include "tactile/core/meta/meta_context_finder.hpp"
 
-#include "tactile/core/map/layer/group_layer.hpp"
-#include "tactile/core/map/layer/object.hpp"
-#include "tactile/core/map/layer/object_layer.hpp"
-#include "tactile/core/map/layer/tile_layer.hpp"
+#include "tactile/core/layer/group_layer.hpp"
+#include "tactile/core/layer/object.hpp"
+#include "tactile/core/layer/object_layer.hpp"
+#include "tactile/core/layer/tile_layer.hpp"
 #include "tactile/core/map/orthogonal_map.hpp"
 #include "tactile/core/tileset/tile.hpp"
 #include "tactile/core/tileset/tileset.hpp"

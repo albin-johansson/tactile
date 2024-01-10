@@ -3,7 +3,7 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/map/layer/object.hpp"
+#include "tactile/core/layer/object.hpp"
 #include "tactile/core/meta/meta_context.hpp"
 #include "tactile/core/meta/metadata.hpp"
 #include "tactile/core/tileset/tile_animation.hpp"

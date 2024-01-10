@@ -1,11 +1,11 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/map/layer/group_layer.hpp"
+#include "tactile/core/layer/group_layer.hpp"
 
 #include <gtest/gtest.h>
 
-#include "tactile/core/map/layer/object_layer.hpp"
-#include "tactile/core/map/layer/tile_layer.hpp"
+#include "tactile/core/layer/object_layer.hpp"
+#include "tactile/core/layer/tile_layer.hpp"
 
 using namespace tactile;
 

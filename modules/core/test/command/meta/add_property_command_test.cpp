@@ -5,7 +5,7 @@
 #include <gtest/gtest.h>
 
 #include "tactile/core/document/map_document.hpp"
-#include "tactile/core/map/layer/tile_layer.hpp"
+#include "tactile/core/layer/tile_layer.hpp"
 #include "tactile/core/map/orthogonal_map.hpp"
 
 using namespace tactile;

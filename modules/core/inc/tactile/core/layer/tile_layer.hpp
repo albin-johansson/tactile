@@ -3,10 +3,11 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
-#include "tactile/core/map/layer/layer.hpp"
-#include "tactile/core/map/layer/layer_behavior_delegate.hpp"
+#include "tactile/core/layer/layer.hpp"
+#include "tactile/core/layer/layer_behavior_delegate.hpp"
 #include "tactile/foundation/container/vector.hpp"
 #include "tactile/foundation/misc/id_types.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 #include "tactile/foundation/misc/tile_matrix.hpp"
 #include "tactile/foundation/misc/tile_pos.hpp"
 #include "tactile/foundation/prelude.hpp"
@@ -134,6 +135,16 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
 
   [[nodiscard]]
   auto meta() const -> const Metadata& override;
+
+  template <std::invocable<const TilePos&, TileID> T>
+  void each(const T& callable) const
+  {
+    for (ssize row = 0; row < mExtent.row_count; ++row) {
+      for (ssize col = 0; col < mExtent.col_count; ++col) {
+        callable(TilePos {row, col}, mTileMatrix[as_unsigned(row)][as_unsigned(col)]);
+      }
+    }
+  }
 
  private:
   LayerBehaviorDelegate mDelegate;

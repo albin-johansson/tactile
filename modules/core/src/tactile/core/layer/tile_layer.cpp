@@ -1,8 +1,8 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/map/layer/tile_layer.hpp"
+#include "tactile/core/layer/tile_layer.hpp"
 
-#include "tactile/core/map/layer/layer_visitor.hpp"
+#include "tactile/core/layer/layer_visitor.hpp"
 #include "tactile/foundation/container/queue.hpp"
 #include "tactile/foundation/debug/assert.hpp"
 #include "tactile/foundation/debug/exception.hpp"
@@ -97,6 +97,34 @@ void TileLayer::_remove_column()
     tile_row.pop_back();
   }
 }
+
+// TODO implement more efficient version
+// fn fill(x, y):
+//     if not Inside(x, y) then return
+//     let s = new empty queue or stack
+//     Add (x, x, y, 1) to s
+//     Add (x, x, y - 1, -1) to s
+//     while s is not empty:
+//         Remove an (x1, x2, y, dy) from s
+//         let x = x1
+//         if Inside(x, y):
+//             while Inside(x - 1, y):
+//                 Set(x - 1, y)
+//                 x = x - 1
+//             if x < x1:
+//                 Add (x, x1 - 1, y - dy, -dy) to s
+//         while x1 <= x2:
+//             while Inside(x1, y):
+//                 Set(x1, y)
+//                 x1 = x1 + 1
+//             if x1 > x:
+//                 Add (x, x1 - 1, y + dy, dy) to s
+//             if x1 - 1 > x2:
+//                 Add (x2 + 1, x1 - 1, y - dy, -dy) to s
+//             x1 = x1 + 1
+//             while x1 < x2 and not Inside(x1, y):
+//                 x1 = x1 + 1
+//             x = x1
 
 void TileLayer::flood(const TilePos& start_pos,
                       const TileID new_id,

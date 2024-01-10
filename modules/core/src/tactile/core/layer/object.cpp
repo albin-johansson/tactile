@@ -1,6 +1,6 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/map/layer/object.hpp"
+#include "tactile/core/layer/object.hpp"
 
 #include <utility>  // move
 

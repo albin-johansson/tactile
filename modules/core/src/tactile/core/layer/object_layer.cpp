@@ -1,10 +1,10 @@
 // Copyright (C) 2023 Albin Johansson (GNU General Public License v3.0)
 
-#include "tactile/core/map/layer/object_layer.hpp"
+#include "tactile/core/layer/object_layer.hpp"
 
 #include <utility>  // move
 
-#include "tactile/core/map/layer/layer_visitor.hpp"
+#include "tactile/core/layer/layer_visitor.hpp"
 #include "tactile/foundation/container/lookup.hpp"
 #include "tactile/foundation/debug/generic_error.hpp"
 #include "tactile/foundation/debug/validation.hpp"
