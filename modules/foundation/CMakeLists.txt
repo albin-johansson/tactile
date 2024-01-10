@@ -23,7 +23,7 @@ target_compile_definitions(${TACTILE_FOUNDATION_TARGET}
                            PUBLIC
                            WIN32_LEAN_AND_MEAN
                            NOMINMAX
-                           GLM_CONFIG_XYZW_ONLY=1
+                           GLM_FORCE_XYZW_ONLY
                            GLM_FORCE_SIZE_T_LENGTH
                            )
 
