@@ -26,7 +26,8 @@ AddPropertyCommand::AddPropertyCommand(IDocument* document,
 
 void AddPropertyCommand::undo()
 {
-  TACTILE_LOG_TRACE("[AddPropertyCommand::undo]");
+  TACTILE_LOG_TRACE("[AddPropertyCommand::undo] context: {}",
+                    fmt::streamed(mContextUuid));
 
   if (auto* context = mDocument->find_context(mContextUuid)) {
     auto& metadata = context->meta();
@@ -40,7 +41,8 @@ void AddPropertyCommand::undo()
 
 void AddPropertyCommand::redo()
 {
-  TACTILE_LOG_TRACE("[AddPropertyCommand::redo]");
+  TACTILE_LOG_TRACE("[AddPropertyCommand::redo] context: {}",
+                    fmt::streamed(mContextUuid));
 
   if (auto* context = mDocument->find_context(mContextUuid)) {
     auto& metadata = context->meta();
