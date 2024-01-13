@@ -36,6 +36,11 @@ class TACTILE_CORE_API OrthogonalMap final : public IMap {
   [[nodiscard]]
   auto tile_size() const -> Int2 override;
 
+  void set_active_layer(Maybe<UUID> layer_uuid) override;
+
+  [[nodiscard]]
+  auto active_layer_uuid() const -> Maybe<UUID> override;
+
   [[nodiscard]]
   auto root_layer() -> GroupLayer& override;
 

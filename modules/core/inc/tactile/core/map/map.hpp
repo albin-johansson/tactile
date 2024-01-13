@@ -2,9 +2,10 @@
 
 #pragma once
 
-#include "tactile/core/api.hpp"
 #include "tactile/core/meta/meta_context.hpp"
+#include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/math/vector.hpp"
+#include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
@@ -51,6 +52,26 @@ class IMap : public IMetaContext {
    */
   [[nodiscard]]
   virtual auto tile_size() const -> Int2 = 0;
+
+  /**
+   * Marks a layer in the map as active.
+   *
+   * \note
+   *    If the provided UUID isn't associated with a layer, then
+   *    the active layer property is reset.
+   *
+   * \param layer_uuid The UUID of the layer to select.
+   */
+  virtual void set_active_layer(Maybe<UUID> layer_uuid) = 0;
+
+  /**
+   * Returns the UUID of the active layer.
+   *
+   * \return
+   *    The UUID of the currently active layer, if any.
+   */
+  [[nodiscard]]
+  virtual auto active_layer_uuid() const -> Maybe<UUID> = 0;
 
   /**
    * Returns the invisible root layer.

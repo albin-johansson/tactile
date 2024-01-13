@@ -40,6 +40,21 @@ auto OrthogonalMap::tile_size() const -> Int2
   return mTileSize;
 }
 
+void OrthogonalMap::set_active_layer(const Maybe<UUID> layer_uuid)
+{
+  if (layer_uuid.has_value() && !root_layer().find_layer(*layer_uuid)) {
+    mActiveLayerUuid = kNothing;
+  }
+  else {
+    mActiveLayerUuid = layer_uuid;
+  }
+}
+
+auto OrthogonalMap::active_layer_uuid() const -> Maybe<UUID>
+{
+  return mActiveLayerUuid;
+}
+
 auto OrthogonalMap::root_layer() -> GroupLayer&
 {
   return mRootLayer;
