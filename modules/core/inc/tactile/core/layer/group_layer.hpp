@@ -10,6 +10,7 @@
 #include "tactile/foundation/container/smart_ptr.hpp"
 #include "tactile/foundation/container/vector.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
+#include "tactile/foundation/functional/result.hpp"
 #include "tactile/foundation/misc/id_types.hpp"
 #include "tactile/foundation/prelude.hpp"
 
@@ -73,6 +74,30 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
    *    True if the layer was successfully added; false otherwise.
    */
   auto append_layer_to(const UUID& parent_uuid, Shared<ILayer> layer) -> bool;
+
+  /**
+   * Adds a layer to the group layer at a specific index.
+   *
+   * \param layer The layer that will be added.
+   * \param index The target local index of the new layer.
+   *
+   * \return
+   *    Nothing if successful, or an error code.
+   */
+  auto insert_layer(Shared<ILayer> layer, ssize index) -> Result<void>;
+
+  /**
+   * Adds a layer to a nested group layer at a specific index.
+   *
+   * \param parent_uuid The UUID of the parent group layer.
+   * \param layer       The layer that will be added.
+   * \param index       The target local index of the new layer.
+   *
+   * \return
+   *    Nothing if successful, or an error code.
+   */
+  auto insert_layer_to(const UUID& parent_uuid, Shared<ILayer> layer, ssize index)
+      -> Result<void>;
 
   /**
    * Removes a layer from the group layer.
@@ -256,6 +281,15 @@ class TACTILE_CORE_API GroupLayer final : public ILayer {
    */
   [[nodiscard]]
   auto layer_count() const -> ssize;
+
+  /**
+   * Returns the number of direct sublayers stored in the group.
+   *
+   * \return
+   *    A layer count.
+   */
+  [[nodiscard]]
+  auto top_level_layer_count() const -> ssize;
 
   [[nodiscard]]
   auto get_persistent_id() const -> Maybe<int32> override;

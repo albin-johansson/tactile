@@ -9,6 +9,7 @@
 #include "tactile/core/layer/layer_visitor.hpp"
 #include "tactile/core/layer/object_layer.hpp"
 #include "tactile/core/layer/tile_layer.hpp"
+#include "tactile/foundation/debug/generic_error.hpp"
 #include "tactile/foundation/misc/integer_conversion.hpp"
 
 namespace tactile {
@@ -302,6 +303,33 @@ auto GroupLayer::append_layer_to(const UUID& parent_uuid, Shared<ILayer> layer) 
   return false;
 }
 
+auto GroupLayer::insert_layer(Shared<ILayer> layer, const ssize index) -> Result<void>
+{
+  const auto top_level_count = top_level_layer_count();
+
+  if (index < top_level_count) {
+    mLayers.insert(mLayers.begin() + index, std::move(layer));
+    return kOK;
+  }
+  else if (index == top_level_count) {
+    append_layer(std::move(layer));
+    return kOK;
+  }
+
+  return unexpected(make_generic_error(GenericError::kInvalidArgument));
+}
+
+auto GroupLayer::insert_layer_to(const UUID& parent_uuid,
+                                 Shared<ILayer> layer,
+                                 const ssize index) -> Result<void>
+{
+  if (auto* parent_layer = find_group_layer(parent_uuid)) {
+    return parent_layer->insert_layer(std::move(layer), index);
+  }
+
+  return unexpected(make_generic_error(GenericError::kInvalidArgument));
+}
+
 auto GroupLayer::remove_layer(const UUID& uuid) -> Shared<ILayer>
 {
   const auto find_result = _recursive_find(uuid);
@@ -505,6 +533,11 @@ auto GroupLayer::layer_count() const -> ssize
   LayerCounter counter {};
   each(counter);
   return counter.count();
+}
+
+auto GroupLayer::top_level_layer_count() const -> ssize
+{
+  return std::ssize(mLayers);
 }
 
 auto GroupLayer::get_persistent_id() const -> Maybe<int32>

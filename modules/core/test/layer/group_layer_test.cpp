@@ -168,6 +168,81 @@ TEST(GroupLayer, AppendLayerTo)
   EXPECT_EQ(group2->layer_count(), 3_z);
 }
 
+/// \tests tactile::GroupLayer::insert_layer
+TEST(GroupLayer, InsertLayer)
+{
+  auto hierarchy = make_test_layer_hierarchy();
+
+  auto& root = hierarchy.root;
+  ASSERT_EQ(root->layer_count(), 12);
+
+  const auto new_layer = make_shared<ObjectLayer>();
+  const auto new_layer_uuid = new_layer->meta().uuid();
+
+  const ssize target_index = 2;
+
+  EXPECT_EQ(root->insert_layer(new_layer, target_index), kOK);
+  EXPECT_EQ(root->layer_count(), 13);
+  EXPECT_EQ(root->get_layer_local_index(new_layer_uuid), target_index);
+  EXPECT_EQ(root->get_layer_global_index(new_layer_uuid), 10);
+}
+
+/// \tests tactile::GroupLayer::insert_layer
+TEST(GroupLayer, InsertLayerAtFront)
+{
+  auto hierarchy = make_test_layer_hierarchy();
+
+  auto& root = hierarchy.root;
+  ASSERT_EQ(root->layer_count(), 12);
+
+  const auto new_layer = make_shared<ObjectLayer>();
+  const auto new_layer_uuid = new_layer->meta().uuid();
+
+  EXPECT_EQ(root->insert_layer(new_layer, 0), kOK);
+  EXPECT_EQ(root->layer_count(), 13);
+  EXPECT_EQ(root->get_layer_local_index(new_layer_uuid), 0);
+  EXPECT_EQ(root->get_layer_global_index(new_layer_uuid), 0);
+}
+
+/// \tests tactile::GroupLayer::insert_layer
+TEST(GroupLayer, InsertLayerAtBack)
+{
+  auto hierarchy = make_test_layer_hierarchy();
+
+  auto& root = hierarchy.root;
+  ASSERT_EQ(root->layer_count(), 12);
+
+  const auto new_layer = make_shared<ObjectLayer>();
+  const auto new_layer_uuid = new_layer->meta().uuid();
+
+  const auto target_index = root->top_level_layer_count();
+
+  EXPECT_EQ(root->insert_layer(new_layer, target_index), kOK);
+  EXPECT_EQ(root->layer_count(), 13);
+  EXPECT_EQ(root->get_layer_local_index(new_layer_uuid), target_index);
+  EXPECT_EQ(root->get_layer_global_index(new_layer_uuid), root->layer_count() - 1);
+}
+
+/// \tests tactile::GroupLayer::insert_layer_to
+TEST(GroupLayer, InsertLayerTo)
+{
+  auto hierarchy = make_test_layer_hierarchy();
+
+  auto& root = hierarchy.root;
+  ASSERT_EQ(root->layer_count(), 12);
+
+  const auto new_layer = make_shared<ObjectLayer>();
+  const auto new_layer_uuid = new_layer->meta().uuid();
+
+  const auto parent_layer_uuid = hierarchy.g2->meta().uuid();
+  const ssize target_index = 1;
+
+  EXPECT_EQ(root->insert_layer_to(parent_layer_uuid, new_layer, target_index), kOK);
+  EXPECT_EQ(root->layer_count(), 13);
+  EXPECT_EQ(root->get_layer_local_index(new_layer_uuid), target_index);
+  EXPECT_EQ(root->get_layer_global_index(new_layer_uuid), 4);
+}
+
 /// \tests tactile::GroupLayer::remove_layer
 TEST(GroupLayer, RemoveLayer)
 {
