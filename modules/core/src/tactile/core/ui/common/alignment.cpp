@@ -54,6 +54,11 @@ void center_next_window_on_appearance()
   ImGui::SetNextWindowPos(next_pos, ImGuiCond_Appearing, next_pivot);
 }
 
+void span_next_item_width_to_end()
+{
+  ImGui::SetNextItemWidth(-kMinFloat);
+}
+
 void prepare_for_vertically_center_aligned_items(const float count)
 {
   const auto available_region = ImGui::GetContentRegionAvail();

@@ -64,6 +64,11 @@ TACTILE_CORE_API void center_next_item_horizontally(float item_width);
 TACTILE_CORE_API void center_next_window_on_appearance();
 
 /**
+ * Makes the width of the next widget span to the end of the widget row.
+ */
+TACTILE_CORE_API void span_next_item_width_to_end();
+
+/**
  * Ensures that the specified number of components will be vertically centered.
  *
  * \param item_count The number of items.
