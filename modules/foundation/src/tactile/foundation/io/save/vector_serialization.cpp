@@ -8,32 +8,32 @@ namespace tactile {
 
 auto serialize(const Int2& vec) -> String
 {
-  return fmt::format("{};{}", vec.x, vec.y);
+  return fmt::format("{};{}", vec.x(), vec.y());
 }
 
 auto serialize(const Int3& vec) -> String
 {
-  return fmt::format("{};{};{}", vec.x, vec.y, vec.z);
+  return fmt::format("{};{};{}", vec.x(), vec.y(), vec.z());
 }
 
 auto serialize(const Int4& vec) -> String
 {
-  return fmt::format("{};{};{};{}", vec.x, vec.y, vec.z, vec.w);
+  return fmt::format("{};{};{};{}", vec.x(), vec.y(), vec.z(), vec.w());
 }
 
 auto serialize(const Float2& vec) -> String
 {
-  return fmt::format("{};{}", vec.x, vec.y);
+  return fmt::format("{};{}", vec.x(), vec.y());
 }
 
 auto serialize(const Float3& vec) -> String
 {
-  return fmt::format("{};{};{}", vec.x, vec.y, vec.z);
+  return fmt::format("{};{};{}", vec.x(), vec.y(), vec.z());
 }
 
 auto serialize(const Float4& vec) -> String
 {
-  return fmt::format("{};{};{};{}", vec.x, vec.y, vec.z, vec.w);
+  return fmt::format("{};{};{};{}", vec.x(), vec.y(), vec.z(), vec.w());
 }
 
 }  // namespace tactile

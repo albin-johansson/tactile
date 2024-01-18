@@ -23,8 +23,6 @@ target_compile_definitions(${TACTILE_FOUNDATION_TARGET}
                            PUBLIC
                            WIN32_LEAN_AND_MEAN
                            NOMINMAX
-                           GLM_FORCE_XYZW_ONLY
-                           GLM_FORCE_SIZE_T_LENGTH
                            )
 
 target_include_directories(${TACTILE_FOUNDATION_TARGET}
@@ -37,7 +35,6 @@ target_include_directories(${TACTILE_FOUNDATION_TARGET}
 
 target_link_libraries(${TACTILE_FOUNDATION_TARGET}
                       PUBLIC
-                      glm::glm
                       fmt::fmt-header-only
 
                       PRIVATE

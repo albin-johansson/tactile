@@ -18,15 +18,15 @@ void DocumentViewport::translate(const Float2 delta)
   mTranslation += delta;
 
   if (mLimits.has_value()) {
-    mTranslation = glm::max(mTranslation, mLimits->min_offset);
-    mTranslation = glm::min(mTranslation, mLimits->max_offset);
+    mTranslation = max(mTranslation, mLimits->min_offset);
+    mTranslation = min(mTranslation, mLimits->max_offset);
   }
 }
 
 void DocumentViewport::set_tile_size(const Float2 tile_size)
 {
-  TACTILE_ASSERT(tile_size.x > 0.0f);
-  TACTILE_ASSERT(tile_size.y > 0.0f);
+  TACTILE_ASSERT(tile_size.x() > 0.0f);
+  TACTILE_ASSERT(tile_size.y() > 0.0f);
   mTileSize = tile_size;
 }
 

@@ -12,7 +12,7 @@ auto make_dummy_tileset_info() -> TilesetCreateInfo
   const int32 row_count = tile_count / col_count;
 
   const Int2 tile_size {12, 34};
-  const Int2 texture_size {col_count * tile_size.x, row_count * tile_size.y};
+  const Int2 texture_size {col_count * tile_size.x(), row_count * tile_size.y()};
 
   return {
     .tile_count = tile_count,

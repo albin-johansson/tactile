@@ -28,12 +28,12 @@ TEST(Tileset, Constructor)
   EXPECT_EQ(tileset.get_texture_size(), tileset_info.texture_size);
   EXPECT_EQ(tileset.get_texture_uuid(), tileset_info.texture_uuid);
 
-  const Float2 f_tile_size {tileset_info.tile_size};
-  const Float2 f_texture_size {tileset_info.texture_size};
+  const auto f_tile_size = vector_cast<Float2::value_type>(tileset_info.tile_size);
+  const auto f_texture_size = vector_cast<Float2::value_type>(tileset_info.texture_size);
   const auto uv_tile_size = tileset.get_normalized_tile_size();
 
-  EXPECT_FLOAT_EQ(uv_tile_size.x, f_tile_size.x / f_texture_size.x);
-  EXPECT_FLOAT_EQ(uv_tile_size.y, f_tile_size.y / f_texture_size.y);
+  EXPECT_FLOAT_EQ(uv_tile_size.x(), f_tile_size.x() / f_texture_size.x());
+  EXPECT_FLOAT_EQ(uv_tile_size.y(), f_tile_size.y() / f_texture_size.y());
 
   EXPECT_EQ(std::distance(tileset.begin(), tileset.end()), tileset_info.tile_count);
 }

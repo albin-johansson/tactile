@@ -14,8 +14,8 @@ TEST(VectorDeserialization, DeserializeInt2)
 
   const auto vec = deserialize_int2("12;34");
   ASSERT_TRUE(vec.has_value());
-  EXPECT_EQ(vec->x, 12);
-  EXPECT_EQ(vec->y, 34);
+  EXPECT_EQ(vec->x(), 12);
+  EXPECT_EQ(vec->y(), 34);
 }
 
 TEST(VectorDeserialization, DeserializeInt3)
@@ -26,9 +26,9 @@ TEST(VectorDeserialization, DeserializeInt3)
 
   const auto vec = deserialize_int3("1;2;3");
   ASSERT_TRUE(vec.has_value());
-  EXPECT_EQ(vec->x, 1);
-  EXPECT_EQ(vec->y, 2);
-  EXPECT_EQ(vec->z, 3);
+  EXPECT_EQ(vec->x(), 1);
+  EXPECT_EQ(vec->y(), 2);
+  EXPECT_EQ(vec->z(), 3);
 }
 
 TEST(VectorDeserialization, DeserializeInt4)
@@ -39,10 +39,10 @@ TEST(VectorDeserialization, DeserializeInt4)
 
   const auto vec = deserialize_int4("1;-2;3;4");
   ASSERT_TRUE(vec.has_value());
-  EXPECT_EQ(vec->x, 1);
-  EXPECT_EQ(vec->y, -2);
-  EXPECT_EQ(vec->z, 3);
-  EXPECT_EQ(vec->w, 4);
+  EXPECT_EQ(vec->x(), 1);
+  EXPECT_EQ(vec->y(), -2);
+  EXPECT_EQ(vec->z(), 3);
+  EXPECT_EQ(vec->w(), 4);
 }
 
 TEST(VectorDeserialization, DeserializeFloat2)
@@ -53,8 +53,8 @@ TEST(VectorDeserialization, DeserializeFloat2)
 
   const auto vec = deserialize_float2("1.9;2.8");
   ASSERT_TRUE(vec.has_value());
-  EXPECT_EQ(vec->x, 1.9f);
-  EXPECT_EQ(vec->y, 2.8f);
+  EXPECT_EQ(vec->x(), 1.9f);
+  EXPECT_EQ(vec->y(), 2.8f);
 }
 
 TEST(VectorDeserialization, DeserializeFloat3)
@@ -65,9 +65,9 @@ TEST(VectorDeserialization, DeserializeFloat3)
 
   const auto vec = deserialize_float3("1.9;-2.3;8.4");
   ASSERT_TRUE(vec.has_value());
-  EXPECT_EQ(vec->x, 1.9f);
-  EXPECT_EQ(vec->y, -2.3f);
-  EXPECT_EQ(vec->z, 8.4f);
+  EXPECT_EQ(vec->x(), 1.9f);
+  EXPECT_EQ(vec->y(), -2.3f);
+  EXPECT_EQ(vec->z(), 8.4f);
 }
 
 TEST(VectorDeserialization, DeserializeFloat4)
@@ -78,8 +78,8 @@ TEST(VectorDeserialization, DeserializeFloat4)
 
   const auto vec = deserialize_float4("1.0;2.0;3.0;4.0");
   ASSERT_TRUE(vec.has_value());
-  EXPECT_EQ(vec->x, 1.0f);
-  EXPECT_EQ(vec->y, 2.0f);
-  EXPECT_EQ(vec->z, 3.0f);
-  EXPECT_EQ(vec->w, 4.0f);
+  EXPECT_EQ(vec->x(), 1.0f);
+  EXPECT_EQ(vec->y(), 2.0f);
+  EXPECT_EQ(vec->z(), 3.0f);
+  EXPECT_EQ(vec->w(), 4.0f);
 }

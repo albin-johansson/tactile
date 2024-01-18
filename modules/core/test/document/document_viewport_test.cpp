@@ -11,10 +11,10 @@ TEST(DocumentViewport, Defaults)
 {
   const DocumentViewport viewport {};
 
-  EXPECT_EQ(viewport.translation().x, 0.0f);
-  EXPECT_EQ(viewport.translation().y, 0.0f);
-  EXPECT_EQ(viewport.tile_size().x, 32.0f);
-  EXPECT_EQ(viewport.tile_size().y, 32.0f);
+  EXPECT_EQ(viewport.translation().x(), 0.0f);
+  EXPECT_EQ(viewport.translation().y(), 0.0f);
+  EXPECT_EQ(viewport.tile_size().x(), 32.0f);
+  EXPECT_EQ(viewport.tile_size().y(), 32.0f);
   EXPECT_EQ(viewport.limits(), nullptr);
 }
 
@@ -45,20 +45,20 @@ TEST(DocumentViewport, TranslateWithoutLimits)
   ASSERT_EQ(viewport.limits(), nullptr);
 
   viewport.translate(Float2 {0.0f, 0.0f});
-  EXPECT_EQ(viewport.translation().x, 0.0f);
-  EXPECT_EQ(viewport.translation().y, 0.0f);
+  EXPECT_EQ(viewport.translation().x(), 0.0f);
+  EXPECT_EQ(viewport.translation().y(), 0.0f);
 
   viewport.translate(Float2 {10.0f, 0.0f});
-  EXPECT_FLOAT_EQ(viewport.translation().x, 10.0f);
-  EXPECT_FLOAT_EQ(viewport.translation().y, 0.0f);
+  EXPECT_FLOAT_EQ(viewport.translation().x(), 10.0f);
+  EXPECT_FLOAT_EQ(viewport.translation().y(), 0.0f);
 
   viewport.translate(Float2 {0.0f, 5.0f});
-  EXPECT_FLOAT_EQ(viewport.translation().x, 10.0f);
-  EXPECT_FLOAT_EQ(viewport.translation().y, 5.0f);
+  EXPECT_FLOAT_EQ(viewport.translation().x(), 10.0f);
+  EXPECT_FLOAT_EQ(viewport.translation().y(), 5.0f);
 
   viewport.translate(Float2 {-8.0f, 20.0f});
-  EXPECT_FLOAT_EQ(viewport.translation().x, 2.0f);
-  EXPECT_FLOAT_EQ(viewport.translation().y, 25.0f);
+  EXPECT_FLOAT_EQ(viewport.translation().x(), 2.0f);
+  EXPECT_FLOAT_EQ(viewport.translation().y(), 25.0f);
 }
 
 /// \tests tactile::DocumentViewport::translate
@@ -73,32 +73,32 @@ TEST(DocumentViewport, TranslateWithLimits)
   viewport.reset_limits(limits);
 
   viewport.translate(min_offset);
-  EXPECT_FLOAT_EQ(viewport.translation().x, min_offset.x);
-  EXPECT_FLOAT_EQ(viewport.translation().y, min_offset.y);
+  EXPECT_FLOAT_EQ(viewport.translation().x(), min_offset.x());
+  EXPECT_FLOAT_EQ(viewport.translation().y(), min_offset.y());
 
   viewport.translate(Float2 {-1.0f, -1.0f});
-  EXPECT_FLOAT_EQ(viewport.translation().x, min_offset.x);
-  EXPECT_FLOAT_EQ(viewport.translation().y, min_offset.y);
+  EXPECT_FLOAT_EQ(viewport.translation().x(), min_offset.x());
+  EXPECT_FLOAT_EQ(viewport.translation().y(), min_offset.y());
 
   viewport.translate(-min_offset);
-  EXPECT_FLOAT_EQ(viewport.translation().x, 0.0f);
-  EXPECT_FLOAT_EQ(viewport.translation().y, 0.0f);
+  EXPECT_FLOAT_EQ(viewport.translation().x(), 0.0f);
+  EXPECT_FLOAT_EQ(viewport.translation().y(), 0.0f);
 
   viewport.translate(max_offset);
-  EXPECT_FLOAT_EQ(viewport.translation().x, max_offset.x);
-  EXPECT_FLOAT_EQ(viewport.translation().y, max_offset.y);
+  EXPECT_FLOAT_EQ(viewport.translation().x(), max_offset.x());
+  EXPECT_FLOAT_EQ(viewport.translation().y(), max_offset.y());
 
   viewport.translate(Float2 {1.0f, 1.0f});
-  EXPECT_FLOAT_EQ(viewport.translation().x, max_offset.x);
-  EXPECT_FLOAT_EQ(viewport.translation().y, max_offset.y);
+  EXPECT_FLOAT_EQ(viewport.translation().x(), max_offset.x());
+  EXPECT_FLOAT_EQ(viewport.translation().y(), max_offset.y());
 
   viewport.translate(-max_offset);
-  EXPECT_FLOAT_EQ(viewport.translation().x, 0.0f);
-  EXPECT_FLOAT_EQ(viewport.translation().y, 0.0f);
+  EXPECT_FLOAT_EQ(viewport.translation().x(), 0.0f);
+  EXPECT_FLOAT_EQ(viewport.translation().y(), 0.0f);
 
-  viewport.translate(Float2 {min_offset.x + 1.0f, max_offset.y - 1.0f});
-  EXPECT_FLOAT_EQ(viewport.translation().x, min_offset.x + 1.0f);
-  EXPECT_FLOAT_EQ(viewport.translation().y, max_offset.y - 1.0f);
+  viewport.translate(Float2 {min_offset.x() + 1.0f, max_offset.y() - 1.0f});
+  EXPECT_FLOAT_EQ(viewport.translation().x(), min_offset.x() + 1.0f);
+  EXPECT_FLOAT_EQ(viewport.translation().y(), max_offset.y() - 1.0f);
 }
 
 /// \tests tactile::DocumentViewport::set_tile_size

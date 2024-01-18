@@ -15,7 +15,7 @@ template <typename T>
   const auto values = str_split(str, ';');
 
   T vec {};
-  if (values.size() != vec.length()) {
+  if (values.size() != vec.size()) {
     return kNone;
   }
 

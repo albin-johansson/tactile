@@ -14,7 +14,8 @@ Tileset::Tileset(const TilesetCreateInfo& info)
     mColumnCount {info.column_count},
     mTileSize {info.tile_size},
     mTextureSize {info.texture_size},
-    mNormalizedTileSize {Float2 {info.tile_size} / Float2 {info.texture_size}},
+    mNormalizedTileSize {vector_cast<Float2::value_type>(info.tile_size) /
+                         vector_cast<Float2::value_type>(info.texture_size)},
     mTextureUuid {info.texture_uuid}
 {
   const auto tile_count = as_unsigned(mTileCount);
@@ -32,7 +33,7 @@ void Tileset::_create_tiles()
     const auto tile_col = narrow<int32>(tile_index % mColumnCount);
 
     const Rectangle tile_region {
-      .position = {tile_col * mTileSize.x, tile_row * mTileSize.y},
+      .position = {tile_col * mTileSize.x(), tile_row * mTileSize.y()},
       .size = mTileSize,
     };
 

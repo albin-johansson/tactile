@@ -22,7 +22,6 @@
         "extensions"
       ]
     },
-    "glm",
     "gtest",
     {
       "name": "imgui",

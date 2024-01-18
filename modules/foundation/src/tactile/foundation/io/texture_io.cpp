@@ -18,7 +18,11 @@ auto load_texture(const FilePath& path) -> Result<TextureData>
   Int2 size {};
 
   const auto path_str = path.string();
-  pixels.reset(stbi_load(path_str.c_str(), &size.x, &size.y, nullptr, STBI_rgb_alpha));
+  pixels.reset(stbi_load(path_str.c_str(),
+                         &size[0],  // NOLINT(*-container-data-pointer)
+                         &size[1],
+                         nullptr,
+                         STBI_rgb_alpha));
 
   if (pixels == nullptr) {
     TACTILE_LOG_ERROR("Could not load texture '{}'", path.string());
