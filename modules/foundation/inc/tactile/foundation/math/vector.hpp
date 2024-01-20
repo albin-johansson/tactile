@@ -507,4 +507,37 @@ TACTILE_IMPLEMENT_VECTOR4_ARITHMETIC_OP(-)
 TACTILE_IMPLEMENT_VECTOR4_ARITHMETIC_OP(*)
 TACTILE_IMPLEMENT_VECTOR4_ARITHMETIC_OP(/)
 
+/**
+ * Multiplies a vector with a scalar value.
+ *
+ * \tparam T The element type used by both vectors.
+ * \tparam N The number of elements in both vectors.
+ *
+ * \param vec    The original vector.
+ * \param scalar The scalar value that will be multiplied with each element.
+ *
+ * \return
+ *    The scaled vector.
+ */
+template <Numeric T, usize N>
+[[nodiscard]] constexpr auto operator*(const Vec<T, N>& vec, const T scalar) noexcept
+    -> Vec<T, N>
+{
+  Vec<T, N> result {};
+
+  for (usize index = 0; index < N; ++index) {
+    result[index] = vec[index] * scalar;
+  }
+
+  return result;
+}
+
+/** \see `tactile::operator*(const Vec&, T)` */
+template <Numeric T, usize N>
+[[nodiscard]] constexpr auto operator*(const T scalar, const Vec<T, N>& vec) noexcept
+    -> Vec<T, N>
+{
+  return vec * scalar;
+}
+
 }  // namespace tactile

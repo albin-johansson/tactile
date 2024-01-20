@@ -354,6 +354,97 @@ TEST(Vec, GreaterThanEqOperator)
   EXPECT_GE(d, c);
 }
 
+/// \trace tactile::operator+ [Vec]
+TEST(Vec, AdditionOperator)
+{
+  const Int4 a {-5, 10, 73, -42};
+  const Int4 b {3, 49, 31, -18};
+
+  const auto ab = a + b;
+  const auto ba = b + a;
+
+  EXPECT_EQ(ab.x(), a.x() + b.x());
+  EXPECT_EQ(ab.y(), a.y() + b.y());
+  EXPECT_EQ(ab.z(), a.z() + b.z());
+  EXPECT_EQ(ab.w(), a.w() + b.w());
+
+  EXPECT_EQ(ab, ba);
+}
+
+/// \trace tactile::operator- [Vec]
+TEST(Vec, SubtractionOperator)
+{
+  const Float3 a {54.3f, -20.1f, 89.6f};
+  const Float3 b {-27.6f, 54.5f, 12.2f};
+
+  const auto ab = a - b;
+  const auto ba = b - a;
+
+  EXPECT_EQ(ab.x(), a.x() - b.x());
+  EXPECT_EQ(ab.y(), a.y() - b.y());
+  EXPECT_EQ(ab.z(), a.z() - b.z());
+
+  EXPECT_EQ(ba.x(), b.x() - a.x());
+  EXPECT_EQ(ba.y(), b.y() - a.y());
+  EXPECT_EQ(ba.z(), b.z() - a.z());
+
+  EXPECT_NE(ab, ba);
+}
+
+/// \trace tactile::operator* [Vec]
+TEST(Vec, MultiplicationOperator)
+{
+  const Float2 a {1.0f, 43.0f};
+  const Float2 b {-7.3f, 7.8f};
+
+  const auto ab = a * b;
+  const auto ba = b * a;
+
+  EXPECT_EQ(ab.x(), a.x() * b.x());
+  EXPECT_EQ(ab.y(), a.y() * b.y());
+
+  EXPECT_EQ(ab, ba);
+}
+
+/// \trace tactile::operator* [Vec]
+TEST(Vec, MultiplicationWithScalarOperator)
+{
+  const Float4 vec {1.0f, 2.0f, 3.0f, 4.0f};
+  const auto scalar = 10.0f;
+
+  const auto scaled_vec1 = vec * scalar;
+  const auto scaled_vec2 = scalar * vec;
+
+  EXPECT_EQ(scaled_vec1.x(), vec.x() * scalar);
+  EXPECT_EQ(scaled_vec1.y(), vec.y() * scalar);
+  EXPECT_EQ(scaled_vec1.z(), vec.z() * scalar);
+  EXPECT_EQ(scaled_vec1.w(), vec.w() * scalar);
+
+  EXPECT_EQ(scaled_vec1, scaled_vec2);
+}
+
+/// \trace tactile::operator/ [Vec]
+TEST(Vec, DivisionOperator)
+{
+  const Float4 a {1.0f, 2.0f, 3.0f, 4.0f};
+  const Float4 b {0.1f, 0.2f, 0.3f, 0.4f};
+
+  const auto ab = a / b;
+  const auto ba = b / a;
+
+  EXPECT_EQ(ab.x(), a.x() / b.x());
+  EXPECT_EQ(ab.y(), a.y() / b.y());
+  EXPECT_EQ(ab.z(), a.z() / b.z());
+  EXPECT_EQ(ab.w(), a.w() / b.w());
+
+  EXPECT_EQ(ba.x(), b.x() / a.x());
+  EXPECT_EQ(ba.y(), b.y() / a.y());
+  EXPECT_EQ(ba.z(), b.z() / a.z());
+  EXPECT_EQ(ba.w(), b.w() / a.w());
+
+  EXPECT_NE(ab, ba);
+}
+
 /// \trace tactile::vector_cast
 TEST(Vec, VectorCast)
 {
