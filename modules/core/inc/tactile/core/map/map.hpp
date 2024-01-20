@@ -12,6 +12,7 @@ namespace tactile {
 
 struct MatrixExtent;
 struct TileFormat;
+struct MapIdentifiers;
 class GroupLayer;
 
 /**
@@ -98,6 +99,19 @@ class IMap : public IMetaContext {
   /** \copydoc tile_format() */
   [[nodiscard]]
   virtual auto tile_format() const -> const TileFormat& = 0;
+
+  /**
+   * Returns the associated identifier state.
+   *
+   * \return
+   *    The map's identifier state.
+   */
+  [[nodiscard]]
+  virtual auto identifiers() -> MapIdentifiers& = 0;
+
+  /** \copydoc identifiers() */
+  [[nodiscard]]
+  virtual auto identifiers() const -> const MapIdentifiers& = 0;
 };
 
 }  // namespace tactile
