@@ -2,8 +2,6 @@
 
 #include "tactile/core/document/document_viewport.hpp"
 
-#include <glm/common.hpp>
-
 #include "tactile/foundation/debug/assert.hpp"
 
 namespace tactile {
