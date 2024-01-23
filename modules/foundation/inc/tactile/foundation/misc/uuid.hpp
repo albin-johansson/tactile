@@ -72,6 +72,8 @@ class TACTILE_FOUNDATION_API UUID final {
   TACTILE_FOUNDATION_API friend auto to_string(const UUID& uuid) -> String;
 };
 
+inline constexpr UUID kNullUuid = UUID {};
+
 /**
  * Returns a textual representation of a UUID.
  *
