@@ -3,11 +3,10 @@
 #pragma once
 
 #include <algorithm>  // min, max
-#include <compare>    // strong_ordering
+#include <compare>    // partial_ordering
 #include <concepts>   // same_as, integral, floating_point
 #include <ostream>    // ostream
 
-#include "tactile/foundation/container/array.hpp"
 #include "tactile/foundation/debug/assert.hpp"
 #include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/prelude.hpp"
@@ -168,7 +167,7 @@ class Vec final {
    */
   [[nodiscard]] constexpr auto operator[](const size_type index) noexcept -> value_type&
   {
-    TACTILE_ASSERT(index < N);
+    TACTILE_ASSERT_MSG(index < N, "bad vector index");
     return mData[index];
   }
 
@@ -176,7 +175,7 @@ class Vec final {
   [[nodiscard]] constexpr auto operator[](const size_type index) const noexcept
       -> const value_type&
   {
-    TACTILE_ASSERT(index < N);
+    TACTILE_ASSERT_MSG(index < N, "bad vector index");
     return mData[index];
   }
 
@@ -239,14 +238,14 @@ class Vec final {
   [[nodiscard]]
   constexpr auto data() noexcept -> value_type*
   {
-    return mData.data();
+    return mData;
   }
 
   /** \copydoc data() */
   [[nodiscard]]
   constexpr auto data() const noexcept -> const value_type*
   {
-    return mData.data();
+    return mData;
   }
 
   /**
@@ -281,10 +280,10 @@ class Vec final {
   [[nodiscard]] constexpr auto operator==(const Vec&) const noexcept -> bool = default;
 
   [[nodiscard]] constexpr auto operator<=>(const Vec&) const noexcept
-      -> std::strong_ordering = default;
+      -> std::partial_ordering = default;
 
  private:
-  Array<T, N> mData {};
+  T mData[N] {};  // NOLINT(*-avoid-c-arrays)
 };
 
 using Int2 = Vec<int, 2>;
