@@ -42,19 +42,6 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
   void accept(IConstLayerVisitor& visitor) const override;
 
   /**
-   * Applies a flood fill algorithm to the layer.
-   *
-   * \param      start_pos          The flood start position.
-   * \param      new_id             The replacement tile identifier.
-   * \param[out] affected_positions A vector to which all modified positions are recorded.
-   *
-   * \see https://en.wikipedia.org/wiki/Flood_fill
-   */
-  void flood(const TilePos& start_pos,
-             TileID new_id,
-             Vector<TilePos>* affected_positions = nullptr);
-
-  /**
    * Changes the size of the layer.
    *
    * \param extent The new extent, must be at least 1x1.

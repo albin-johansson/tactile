@@ -5,7 +5,6 @@
 #include <cmath>  // abs
 
 #include "tactile/core/layer/layer_visitor.hpp"
-#include "tactile/foundation/container/queue.hpp"
 #include "tactile/foundation/debug/assert.hpp"
 #include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/debug/generic_error.hpp"
@@ -39,71 +38,6 @@ void TileLayer::accept(ILayerVisitor& visitor)
 void TileLayer::accept(IConstLayerVisitor& visitor) const
 {
   visitor.visit(*this);
-}
-
-// TODO implement more efficient version
-// fn fill(x, y):
-//     if not Inside(x, y) then return
-//     let s = new empty queue or stack
-//     Add (x, x, y, 1) to s
-//     Add (x, x, y - 1, -1) to s
-//     while s is not empty:
-//         Remove an (x1, x2, y, dy) from s
-//         let x = x1
-//         if Inside(x, y):
-//             while Inside(x - 1, y):
-//                 Set(x - 1, y)
-//                 x = x - 1
-//             if x < x1:
-//                 Add (x, x1 - 1, y - dy, -dy) to s
-//         while x1 <= x2:
-//             while Inside(x1, y):
-//                 Set(x1, y)
-//                 x1 = x1 + 1
-//             if x1 > x:
-//                 Add (x, x1 - 1, y + dy, dy) to s
-//             if x1 - 1 > x2:
-//                 Add (x2 + 1, x1 - 1, y - dy, -dy) to s
-//             x1 = x1 + 1
-//             while x1 < x2 and not Inside(x1, y):
-//                 x1 = x1 + 1
-//             x = x1
-
-void TileLayer::flood(const TilePos& start_pos,
-                      const TileID new_id,
-                      Vector<TilePos>* affected_positions)
-{
-  if (!is_valid_pos(start_pos) || get_tile(start_pos) == new_id) {
-    return;
-  }
-
-  const auto target_id = get_tile(start_pos);
-
-  Queue<TilePos> remaining_positions;
-
-  auto maybe_update_tile_at = [&, this](const TilePos& tile_pos) {
-    if (get_tile(tile_pos) == target_id) {
-      set_tile(tile_pos, new_id);
-
-      if (affected_positions != nullptr) {
-        affected_positions->push_back(tile_pos);
-      }
-
-      remaining_positions.push(tile_pos);
-    }
-  };
-
-  maybe_update_tile_at(start_pos);
-
-  while (!remaining_positions.empty()) {
-    const auto current_position = remaining_positions.front();
-    remaining_positions.pop();
-
-    maybe_update_tile_at(current_position - TilePos {0_z, 1_z});
-    maybe_update_tile_at(current_position + TilePos {0_z, 1_z});
-    maybe_update_tile_at(current_position - TilePos {1_z, 0_z});
-    maybe_update_tile_at(current_position + TilePos {1_z, 0_z});
-  }
 }
 
 auto TileLayer::set_extent(const MatrixExtent& extent) -> Result<void>
