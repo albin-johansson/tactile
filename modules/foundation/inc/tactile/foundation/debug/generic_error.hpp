@@ -32,9 +32,15 @@ TACTILE_FOUNDATION_API auto get_generic_error_category() noexcept
     -> const std::error_category&;
 
 [[nodiscard]]
-inline auto make_generic_error(const GenericError error) noexcept -> std::error_code
+inline auto make_error(const GenericError error) noexcept -> std::error_code
 {
   return std::error_code {std::to_underlying(error), get_generic_error_category()};
+}
+
+[[nodiscard]]
+inline auto make_generic_error(const GenericError error) noexcept -> std::error_code
+{
+  return make_error(error);
 }
 
 }  // namespace tactile

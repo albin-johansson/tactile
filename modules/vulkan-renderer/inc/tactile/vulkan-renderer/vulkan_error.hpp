@@ -58,9 +58,15 @@ TACTILE_VULKAN_API auto get_vulkan_error_category() noexcept
  *    A Vulkan error code.
  */
 [[nodiscard]]
-inline auto make_vulkan_error(const VulkanError error) noexcept -> std::error_code
+inline auto make_error(const VulkanError error) noexcept -> std::error_code
 {
   return std::error_code {std::to_underlying(error), get_vulkan_error_category()};
+}
+
+[[nodiscard]]
+inline auto make_vulkan_error(const VulkanError error) noexcept -> std::error_code
+{
+  return make_error(error);
 }
 
 }  // namespace tactile::vulkan

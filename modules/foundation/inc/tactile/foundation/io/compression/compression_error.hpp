@@ -22,10 +22,16 @@ TACTILE_FOUNDATION_API auto get_compression_error_category() noexcept
     -> const std::error_category&;
 
 [[nodiscard]]
+inline auto make_error(const CompressionError error) noexcept -> std::error_code
+{
+  return std::error_code {std::to_underlying(error), get_compression_error_category()};
+}
+
+[[nodiscard]]
 inline auto make_compression_error(const CompressionError error) noexcept
     -> std::error_code
 {
-  return std::error_code {std::to_underlying(error), get_compression_error_category()};
+  return make_error(error);
 }
 
 }  // namespace tactile

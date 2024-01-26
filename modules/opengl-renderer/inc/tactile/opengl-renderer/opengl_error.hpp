@@ -29,9 +29,15 @@ TACTILE_OPENGL_API auto get_opengl_error_category() noexcept
     -> const std::error_category&;
 
 [[nodiscard]]
-inline auto make_opengl_error(const OpenGLError error) noexcept -> std::error_code
+inline auto make_error(const OpenGLError error) noexcept -> std::error_code
 {
   return std::error_code {std::to_underlying(error), get_opengl_error_category()};
+}
+
+[[nodiscard]]
+inline auto make_opengl_error(const OpenGLError error) noexcept -> std::error_code
+{
+  return make_error(error);
 }
 
 }  // namespace tactile::opengl
