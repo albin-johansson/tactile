@@ -4,6 +4,7 @@
 
 #include <compare>  // strong_ordering
 
+#include "tactile/foundation/functional/hash.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
@@ -83,3 +84,5 @@ constexpr auto operator-=(TilePos& p1, const TilePos& p2) noexcept -> TilePos&
 }
 
 }  // namespace tactile
+
+TACTILE_IMPLEMENT_HASH(tactile::TilePos, value.row, value.col);
