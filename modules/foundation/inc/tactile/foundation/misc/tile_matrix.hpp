@@ -7,6 +7,7 @@
 #include "tactile/foundation/api.hpp"
 #include "tactile/foundation/container/vector.hpp"
 #include "tactile/foundation/misc/id_types.hpp"
+#include "tactile/foundation/misc/matrix_extent.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
@@ -20,17 +21,6 @@ using TileRow = Vector<TileID>;
  * Represents a two-dimensional grid of tile identifiers.
  */
 using TileMatrix = Vector<TileRow>;
-
-/**
- * Represents the dimensions of a tile matrix.
- */
-struct MatrixExtent final {
-  ssize row_count {};  ///< The number of tile rows.
-  ssize col_count {};  ///< The number of tile columns.
-
-  [[nodiscard]] constexpr auto operator<=>(const MatrixExtent&) const noexcept
-      -> std::strong_ordering = default;
-};
 
 /**
  * Creates an empty tile row.
