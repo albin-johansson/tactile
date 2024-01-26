@@ -5,8 +5,8 @@
 #include <gtest/gtest.h>
 
 #include "tactile/core/document/map_document.hpp"
+#include "tactile/core/layer/dense_tile_layer.hpp"
 #include "tactile/core/layer/group_layer.hpp"
-#include "tactile/core/layer/tile_layer.hpp"
 #include "tactile/core/map/orthogonal_map.hpp"
 
 using namespace tactile;
@@ -16,9 +16,9 @@ class MoveLayerDownCommandTest : public testing::Test {
   MoveLayerDownCommandTest()
     : mDocument {make_unique<OrthogonalMap>(MatrixExtent {7, 7}, Int2 {32, 32})},
       mGroupLayer {make_shared<GroupLayer>()},
-      mLayer1 {make_shared<TileLayer>(mDocument.map().extent())},
-      mLayer2 {make_shared<TileLayer>(mDocument.map().extent())},
-      mLayer3 {make_shared<TileLayer>(mDocument.map().extent())}
+      mLayer1 {make_shared<DenseTileLayer>(mDocument.map().extent())},
+      mLayer2 {make_shared<DenseTileLayer>(mDocument.map().extent())},
+      mLayer3 {make_shared<DenseTileLayer>(mDocument.map().extent())}
   {
     auto& root_layer = mDocument.map().root_layer();
     root_layer.append_layer(mGroupLayer);

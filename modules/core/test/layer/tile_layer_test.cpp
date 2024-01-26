@@ -6,36 +6,46 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/core/layer/dense_tile_layer.hpp"
+#include "tactile/core/layer/sparse_tile_layer.hpp"
 #include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/misc/integer_conversion.hpp"
 
+namespace {
+
 using namespace tactile;
 
-using int_literals::operator""_uz;
 using int_literals::operator""_z;
+
+using TileLayerTypes = testing::Types<DenseTileLayer, SparseTileLayer>;
+
+template <typename T>
+class TileLayerTest : public testing::Test {};
+
+TYPED_TEST_SUITE(TileLayerTest, TileLayerTypes);
 
 // NOLINTBEGIN(*-use-trailing-return-type)
 // NOLINTBEGIN(*-function-cognitive-complexity)
 
 /// \tests tactile::TileLayer::TileLayer
-TEST(TileLayer, Constructor)
+TYPED_TEST(TileLayerTest, Constructor)
 {
   const MatrixExtent extent {3, 4};
-  const TileLayer layer {extent};
+  const TypeParam layer {extent};
 
   EXPECT_EQ(layer.extent(), extent);
 
   for (auto row = 0_z; row < extent.row_count; ++row) {
     for (auto col = 0_z; col < extent.col_count; ++col) {
-      EXPECT_EQ(layer.get_tile(TilePos {row, col}), kEmptyTile);
+      EXPECT_EQ(layer.tile_at(TilePos {row, col}), kEmptyTile);
     }
   }
 }
 
 /// \tests tactile::TileLayer::set_extent
-TEST(TileLayer, SetExtent)
+TYPED_TEST(TileLayerTest, SetExtent)
 {
-  TileLayer layer {MatrixExtent {5, 7}};
+  TypeParam layer {MatrixExtent {5, 7}};
 
   // Remove a row.
   EXPECT_EQ(layer.set_extent(MatrixExtent {4, 7}), kOK);
@@ -70,33 +80,33 @@ TEST(TileLayer, SetExtent)
 }
 
 /// \tests tactile::TileLayer::set_tile
-TEST(TileLayer, SetTile)
+TYPED_TEST(TileLayerTest, SetTile)
 {
   const MatrixExtent extent {5, 5};
-  TileLayer layer {extent};
+  TypeParam layer {extent};
 
   const TilePos tile_pos {2, 2};
   const TileID tile_id {42};
 
   layer.set_tile(tile_pos, tile_id);
-  EXPECT_EQ(layer.get_tile(tile_pos), tile_id);
+  EXPECT_EQ(layer.tile_at(tile_pos), tile_id);
 }
 
-/// \tests tactile::TileLayer::get_tile
-TEST(TileLayer, GetTile)
+/// \tests tactile::TileLayer::tile_at
+TYPED_TEST(TileLayerTest, GetTile)
 {
   const MatrixExtent extent {10, 8};
-  const TileLayer layer {extent};
+  const TypeParam layer {extent};
 
-  EXPECT_EQ(layer.get_tile(TilePos {0, 0}), kEmptyTile);
-  EXPECT_FALSE(layer.get_tile(TilePos {extent.row_count, extent.col_count}).has_value());
+  EXPECT_EQ(layer.tile_at(TilePos {0, 0}), kEmptyTile);
+  EXPECT_FALSE(layer.tile_at(TilePos {extent.row_count, extent.col_count}).has_value());
 }
 
 /// \tests tactile::TileLayer::is_valid_pos
-TEST(TileLayer, IsValidPos)
+TYPED_TEST(TileLayerTest, IsValidPos)
 {
   const MatrixExtent extent {10, 8};
-  const TileLayer layer {extent};
+  const TypeParam layer {extent};
 
   EXPECT_TRUE(layer.is_valid_pos(TilePos {0, 0}));
   EXPECT_TRUE(layer.is_valid_pos(TilePos {extent.row_count - 1, extent.col_count - 1}));
@@ -111,3 +121,5 @@ TEST(TileLayer, IsValidPos)
 
 // NOLINTEND(*-function-cognitive-complexity)
 // NOLINTEND(*-use-trailing-return-type)
+
+}  // namespace

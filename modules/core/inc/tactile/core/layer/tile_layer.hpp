@@ -9,47 +9,19 @@
 #include "tactile/foundation/functional/result.hpp"
 #include "tactile/foundation/misc/id_types.hpp"
 #include "tactile/foundation/misc/integer_conversion.hpp"
-#include "tactile/foundation/misc/tile_matrix.hpp"
+#include "tactile/foundation/misc/matrix_extent.hpp"
 #include "tactile/foundation/misc/tile_pos.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
 
-/**
- * A layer variant consisting of a two-dimensional grid of tile identifiers.
- */
-class TACTILE_CORE_API TileLayer final : public ILayer {
+class TACTILE_CORE_API TileLayer : public ILayer {
  public:
-  /**
-   * Creates an empty tile layer.
-   *
-   * \param row_count The number of tile rows, must be greater than zero.
-   * \param col_count The number of tile columns, must be greater than zero.
-   */
-  TileLayer(ssize row_count, ssize col_count);
-
-  /**
-   * Creates an empty tile layer.
-   *
-   * \param extent The initial extent, must be at least 1x1.
-   */
-  explicit TileLayer(MatrixExtent extent);
-
   void accept(IMetaContextVisitor& visitor) override;
 
   void accept(ILayerVisitor& visitor) override;
 
   void accept(IConstLayerVisitor& visitor) const override;
-
-  /**
-   * Changes the size of the layer.
-   *
-   * \param extent The new extent, must be at least 1x1.
-   *
-   * \return
-   *    Nothing on success; an error code otherwise.
-   */
-  auto set_extent(const MatrixExtent& extent) -> Result<void>;
 
   /**
    * Updates the tile ID stored at the specified position.
@@ -59,8 +31,11 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
    *
    * \param pos The tile position.
    * \param id  The new tile ID.
+   *
+   * \return
+   *    Nothing if the tile was updated; an error code otherwise.
    */
-  void set_tile(const TilePos& pos, TileID id);
+  virtual auto set_tile(const TilePos& pos, TileID id) -> Result<void> = 0;
 
   /**
    * Returns the tile ID at the specified position.
@@ -71,18 +46,17 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
    *    The tile ID, or nothing if the position is invalid.
    */
   [[nodiscard]]
-  auto get_tile(const TilePos& pos) const -> Maybe<TileID>;
+  virtual auto tile_at(const TilePos& pos) const -> Maybe<TileID> = 0;
 
   /**
-   * Indicates whether the specified position refers to a tile in the layer.
+   * Changes the size of the layer.
    *
-   * \param pos The tile position.
+   * \param extent The new extent, must be at least 1x1.
    *
    * \return
-   *    True if the position is valid for use with the layer; false otherwise.
+   *    Nothing on success; an error code otherwise.
    */
-  [[nodiscard]]
-  auto is_valid_pos(const TilePos& pos) const -> bool;
+  virtual auto set_extent(const MatrixExtent& extent) -> Result<void> = 0;
 
   /**
    * Returns the dimensions of the tile layer.
@@ -91,7 +65,18 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
    *    The layer extent.
    */
   [[nodiscard]]
-  auto extent() const -> MatrixExtent;
+  virtual auto extent() const -> MatrixExtent = 0;
+
+  /**
+   * Indicates whether the specified position is within the layer.
+   *
+   * \param pos The position to check.
+   *
+   * \return
+   *    True if the position is valid for use with the layer; false otherwise.
+   */
+  [[nodiscard]]
+  auto is_valid_pos(const TilePos& pos) const -> bool;
 
   void set_persistent_id(Maybe<int32> id) override;
 
@@ -109,36 +94,14 @@ class TACTILE_CORE_API TileLayer final : public ILayer {
   auto is_visible() const -> bool override;
 
   [[nodiscard]]
-  auto clone() const -> Shared<ILayer> override;
-
-  [[nodiscard]]
   auto meta() -> Metadata& override;
 
   [[nodiscard]]
   auto meta() const -> const Metadata& override;
 
-  template <std::invocable<const TilePos&, TileID> T>
-  void each(const T& callable) const
-  {
-    for (ssize row = 0; row < mExtent.row_count; ++row) {
-      for (ssize col = 0; col < mExtent.col_count; ++col) {
-        callable(TilePos {row, col}, mTileMatrix[as_unsigned(row)][as_unsigned(col)]);
-      }
-    }
-  }
 
- private:
+ protected:
   LayerBehaviorDelegate mDelegate;
-  MatrixExtent mExtent;
-  TileMatrix mTileMatrix;
-
-  void _add_row();
-
-  void _add_column();
-
-  void _remove_row();
-
-  void _remove_column();
 };
 
 }  // namespace tactile

@@ -7,9 +7,9 @@
 #include <fmt/ostream.h>
 
 #include "tactile/core/document/map_document.hpp"
+#include "tactile/core/layer/dense_tile_layer.hpp"
 #include "tactile/core/layer/group_layer.hpp"
 #include "tactile/core/layer/object_layer.hpp"
-#include "tactile/core/layer/tile_layer.hpp"
 #include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
@@ -72,7 +72,8 @@ void CreateLayerCommand::redo()
 auto CreateLayerCommand::_create_layer() -> Shared<ILayer>
 {
   switch (mLayerType) {
-    case LayerType::kTileLayer: return make_shared<TileLayer>(mDocument->map().extent());
+    case LayerType::kTileLayer:
+      return make_shared<DenseTileLayer>(mDocument->map().extent());
     case LayerType::kObjectLayer: return make_shared<ObjectLayer>();
     case LayerType::kGroupLayer: return make_shared<GroupLayer>();
     default: throw Exception {"invalid layer type"};

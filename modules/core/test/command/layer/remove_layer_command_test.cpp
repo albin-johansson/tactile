@@ -7,7 +7,7 @@
 #include "tactile/core/document/map_document.hpp"
 #include "tactile/core/layer/group_layer.hpp"
 #include "tactile/core/layer/object_layer.hpp"
-#include "tactile/core/layer/tile_layer.hpp"
+#include "tactile/core/layer/sparse_tile_layer.hpp"
 #include "tactile/core/map/orthogonal_map.hpp"
 
 using namespace tactile;
@@ -17,7 +17,7 @@ class RemoveLayerCommandTest : public testing::Test {
   RemoveLayerCommandTest()
     : mDocument {make_unique<OrthogonalMap>(MatrixExtent {5, 5}, Int2 {32, 32})},
       mGroupLayer {make_shared<GroupLayer>()},
-      mNestedTileLayer {make_shared<TileLayer>(mDocument.map().extent())},
+      mNestedTileLayer {make_shared<SparseTileLayer>(mDocument.map().extent())},
       mObjectLayer {make_shared<ObjectLayer>()}
   {
     auto& root_layer = mDocument.map().root_layer();

@@ -4,8 +4,11 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/core/layer/dense_tile_layer.hpp"
 #include "tactile/core/layer/object_layer.hpp"
-#include "tactile/core/layer/tile_layer.hpp"
+#include "tactile/core/layer/sparse_tile_layer.hpp"
+
+namespace {
 
 using namespace tactile;
 
@@ -56,6 +59,8 @@ struct GroupLayerTestConfig final {
 [[nodiscard]]
 auto make_test_layer_hierarchy() -> GroupLayerTestConfig
 {
+  const MatrixExtent map_extent {5, 5};
+
   GroupLayerTestConfig cfg {};
 
   cfg.root = make_shared<GroupLayer>();
@@ -65,10 +70,10 @@ auto make_test_layer_hierarchy() -> GroupLayerTestConfig
   cfg.g3 = make_shared<GroupLayer>();
   cfg.g4 = make_shared<GroupLayer>();
 
-  cfg.t1 = make_shared<TileLayer>(5, 5);
-  cfg.t2 = make_shared<TileLayer>(5, 5);
-  cfg.t3 = make_shared<TileLayer>(5, 5);
-  cfg.t4 = make_shared<TileLayer>(5, 5);
+  cfg.t1 = make_shared<DenseTileLayer>(map_extent);
+  cfg.t2 = make_shared<DenseTileLayer>(map_extent);
+  cfg.t3 = make_shared<SparseTileLayer>(map_extent);
+  cfg.t4 = make_shared<SparseTileLayer>(map_extent);
 
   cfg.o1 = make_shared<ObjectLayer>();
   cfg.o2 = make_shared<ObjectLayer>();
@@ -107,7 +112,7 @@ TEST(GroupLayer, AppendLayer)
   GroupLayer layer {};
   EXPECT_EQ(layer.layer_count(), 0_z);
 
-  layer.append_layer(make_shared<TileLayer>(5, 5));
+  layer.append_layer(make_shared<DenseTileLayer>(5, 5));
   EXPECT_EQ(layer.layer_count(), 1_z);
 
   layer.append_layer(make_shared<ObjectLayer>());
@@ -151,18 +156,18 @@ TEST(GroupLayer, AppendLayerTo)
 
   EXPECT_TRUE(root.append_layer_to(group2_uuid, make_shared<ObjectLayer>()));
   EXPECT_TRUE(root.append_layer_to(group2_uuid, make_shared<GroupLayer>()));
-  EXPECT_TRUE(root.append_layer_to(group2_uuid, make_shared<TileLayer>(5, 5)));
+  EXPECT_TRUE(root.append_layer_to(group2_uuid, make_shared<DenseTileLayer>(5, 5)));
   EXPECT_EQ(root.layer_count(), 5_z);
   EXPECT_EQ(group1->layer_count(), 4_z);
   EXPECT_EQ(group2->layer_count(), 3_z);
 
   EXPECT_TRUE(root.append_layer_to(group1_uuid, make_shared<GroupLayer>()));
-  EXPECT_TRUE(root.append_layer_to(group1_uuid, make_shared<TileLayer>(5, 5)));
+  EXPECT_TRUE(root.append_layer_to(group1_uuid, make_shared<DenseTileLayer>(5, 5)));
   EXPECT_EQ(root.layer_count(), 7_z);
   EXPECT_EQ(group1->layer_count(), 6_z);
   EXPECT_EQ(group2->layer_count(), 3_z);
 
-  root.append_layer(make_shared<TileLayer>(5, 5));
+  root.append_layer(make_shared<DenseTileLayer>(5, 5));
   EXPECT_EQ(root.layer_count(), 8_z);
   EXPECT_EQ(group1->layer_count(), 6_z);
   EXPECT_EQ(group2->layer_count(), 3_z);
@@ -544,3 +549,5 @@ TEST(GroupLayer, ConstIteration)
 
   EXPECT_EQ(count, 12);
 }
+
+}  // namespace

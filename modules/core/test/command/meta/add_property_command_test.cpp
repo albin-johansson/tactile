@@ -5,7 +5,7 @@
 #include <gtest/gtest.h>
 
 #include "tactile/core/document/map_document.hpp"
-#include "tactile/core/layer/tile_layer.hpp"
+#include "tactile/core/layer/sparse_tile_layer.hpp"
 #include "tactile/core/map/orthogonal_map.hpp"
 
 using namespace tactile;
@@ -14,7 +14,7 @@ class AddPropertyCommandTest : public testing::Test {
  protected:
   AddPropertyCommandTest()
     : mMapDocument {make_unique<OrthogonalMap>(MatrixExtent {5, 5}, Int2 {32, 32})},
-      mTileLayer {make_shared<TileLayer>(mMapDocument.map().extent())}
+      mTileLayer {make_shared<SparseTileLayer>(mMapDocument.map().extent())}
   {
     auto& map = mMapDocument.map();
     map.root_layer().append_layer(mTileLayer);

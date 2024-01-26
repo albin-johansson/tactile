@@ -2,13 +2,17 @@
 
 #include <gtest/gtest.h>
 
+#include "tactile/core/layer/dense_tile_layer.hpp"
 #include "tactile/core/layer/group_layer.hpp"
 #include "tactile/core/layer/object_layer.hpp"
-#include "tactile/core/layer/tile_layer.hpp"
+#include "tactile/core/layer/sparse_tile_layer.hpp"
+
+namespace {
 
 using namespace tactile;
 
-using LayerTypes = testing::Types<TileLayer, ObjectLayer, GroupLayer>;
+using LayerTypes =
+    testing::Types<DenseTileLayer, SparseTileLayer, ObjectLayer, GroupLayer>;
 
 template <typename T>
 class ILayerTest : public testing::Test {};
@@ -22,9 +26,15 @@ template <typename T>
 }
 
 template <>
-[[nodiscard]] auto _make_layer<TileLayer>() -> TileLayer
+[[nodiscard]] auto _make_layer<DenseTileLayer>() -> DenseTileLayer
 {
-  return TileLayer {5, 5};
+  return DenseTileLayer {MatrixExtent {5, 5}};
+}
+
+template <>
+[[nodiscard]] auto _make_layer<SparseTileLayer>() -> SparseTileLayer
+{
+  return SparseTileLayer {MatrixExtent {5, 5}};
 }
 
 }  // namespace
@@ -100,3 +110,5 @@ TYPED_TEST(ILayerTest, Clone)
 
   EXPECT_NE(layer_clone->meta().uuid(), source_layer.meta().uuid());
 }
+
+}  // namespace
