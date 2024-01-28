@@ -45,10 +45,9 @@ jobs:
       - name: Register custom Vcpkg triplet file
         run: cp "cmake/x64-osx-tactile.cmake" "$VCPKG_ROOT/triplets/community/x64-osx-tactile.cmake"
 
-      - name: Download assets
-        run: |
-          mkdir -p "assets/images"
-          wget --output-document "assets/images/dummy.png" "https://dummyimage.com/96x64.png"
+      - name: Install assets
+        working-directory: ./scripts
+        run: python install_assets.py --skip-fonts
 
       - name: Generate build files
         run: |

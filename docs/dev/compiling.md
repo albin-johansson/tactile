@@ -57,6 +57,16 @@ Specify the target triplet with the `-DVCPKG_TARGET_TRIPLET=<triplet>` flag, e.g
 
 More information about Vcpkg triplets can be found [here](https://github.com/microsoft/vcpkg/docs/users/triplets.md).
 
+## Install asset files
+
+While asset files such as fonts are not required during compilation, they are required at runtime.
+The required asset files can be installed by simply running the `install_assets.py` script.
+
+```bash
+> cd scripts
+> python install_assets.py
+```
+
 ## Configuring profiles in JetBrains CLion
 
 If you're using an IDE such as JetBrains CLion, it is usually possible to configure CMake profiles to make building and/or running the project as simple as pressing a button.

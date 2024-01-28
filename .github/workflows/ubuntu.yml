@@ -73,10 +73,9 @@ jobs:
                                   --exec /usr/bin/Xvfb -- :99 -screen 0 800x600x24 -ac +extension GLX;
           sleep 3
 
-      - name: Download assets
-        run: |
-          mkdir -p "assets/images"
-          wget --output-document "assets/images/dummy.png" "https://dummyimage.com/96x64.png"
+      - name: Install assets
+        working-directory: ./scripts
+        run: python install_assets.py --skip-fonts
 
       - name: Generate build files
         env:

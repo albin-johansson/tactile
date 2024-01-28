@@ -43,10 +43,9 @@ jobs:
         run: Copy-Item -Path "cmake\x64-windows-tactile.cmake" `
                        -Destination "$ENV:VCPKG_ROOT\triplets\community\x64-windows-tactile.cmake"
 
-      - name: Download assets
-        run: |
-          mkdir -p "assets\images"
-          Invoke-WebRequest "https://dummyimage.com/96x64.png" -OutFile "assets\images\dummy.png"
+      - name: Install assets
+        working-directory: ./scripts
+        run: python install_assets.py --skip-fonts
 
       - name: Generate build files
         env:
