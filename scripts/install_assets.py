@@ -15,24 +15,26 @@ FONTAWESOME_URL = f"https://use.fontawesome.com/releases/v{FONTAWESOME_VERSION}/
 
 FONTAWESOME_CACHE_ARCHIVE = f"{CACHE_DIR}/{FONTAWESOME_DIR_NAME}.zip"
 FONTAWESOME_CACHE_DIR = f"{CACHE_DIR}/{FONTAWESOME_DIR_NAME}"
+FONTAWESOME_OUTPUT_DIR = f"{FONT_OUTPUT_DIR}/fa"
 
 FONTAWESOME_CACHE_FONT_FILE = f"{FONTAWESOME_CACHE_DIR}/otfs/Font Awesome 6 Free-Solid-900.otf"
-FONTAWESOME_OUTPUT_FONT_FILE = f"{FONT_OUTPUT_DIR}/fa/fa-solid-900.ttf"
+FONTAWESOME_OUTPUT_FONT_FILE = f"{FONTAWESOME_OUTPUT_DIR}/fa-solid-900.ttf"
 
 FONTAWESOME_CACHE_LICENSE_FILE = f"{FONTAWESOME_CACHE_DIR}/LICENSE.txt"
-FONTAWESOME_OUTPUT_LICENSE_FILE = f"{FONT_OUTPUT_DIR}/fa/LICENSE.txt"
+FONTAWESOME_OUTPUT_LICENSE_FILE = f"{FONTAWESOME_OUTPUT_DIR}/LICENSE.txt"
 
 ROBOTO_FLAVOR = "roboto-unhinted"
 ROBOTO_URL = f"https://github.com/googlefonts/roboto/releases/download/v2.138/{ROBOTO_FLAVOR}.zip"
 
 ROBOTO_CACHE_ARCHIVE = f"{CACHE_DIR}/{ROBOTO_FLAVOR}.zip"
 ROBOTO_CACHE_DIR = f"{CACHE_DIR}/{ROBOTO_FLAVOR}"
+ROBOTO_OUTPUT_DIR = f"{FONT_OUTPUT_DIR}/roboto"
 
 ROBOTO_CACHE_FONT_FILE = f"{ROBOTO_CACHE_DIR}/Roboto-Regular.ttf"
-ROBOTO_OUTPUT_FONT_FILE = f"{FONT_OUTPUT_DIR}/roboto/Roboto-Regular.ttf"
+ROBOTO_OUTPUT_FONT_FILE = f"{ROBOTO_OUTPUT_DIR}/Roboto-Regular.ttf"
 
 ROBOTO_CACHE_LICENSE_FILE = f"{ROBOTO_CACHE_DIR}/LICENSE"
-ROBOTO_OUTPUT_LICENSE_FILE = f"{FONT_OUTPUT_DIR}/roboto/LICENSE.txt"
+ROBOTO_OUTPUT_LICENSE_FILE = f"{ROBOTO_OUTPUT_DIR}/LICENSE.txt"
 
 DUMMY_IMAGE_URL = "https://dummyimage.com/96x64.png"
 DUMMY_IMAGE_CACHE_FILE = f"{CACHE_DIR}/dummy.png"
@@ -95,6 +97,15 @@ def install_dummy_image():
 def main():
     if not os.path.isdir(CACHE_DIR):
         os.mkdir(CACHE_DIR)
+
+    if not os.path.isdir(FONTAWESOME_OUTPUT_DIR):
+        os.makedirs(FONTAWESOME_OUTPUT_DIR, exist_ok=True)
+
+    if not os.path.isdir(ROBOTO_OUTPUT_DIR):
+        os.makedirs(ROBOTO_OUTPUT_DIR, exist_ok=True)
+
+    if not os.path.isdir(IMAGE_OUTPUT_DIR):
+        os.makedirs(IMAGE_OUTPUT_DIR, exist_ok=True)
 
     if "--skip-fonts" not in sys.argv:
         install_font_awesome_font()
