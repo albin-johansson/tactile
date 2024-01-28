@@ -43,7 +43,8 @@ jobs:
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
       - name: Register custom Vcpkg triplet file
-        run: cp "cmake/x64-osx-tactile.cmake" "$VCPKG_ROOT/triplets/community/x64-osx-tactile.cmake"
+        working-directory: ./scripts
+        run: python add_vcpkg_triplet.py
 
       - name: Install assets
         working-directory: ./scripts

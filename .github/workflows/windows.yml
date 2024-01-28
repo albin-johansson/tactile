@@ -40,8 +40,8 @@ jobs:
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
       - name: Register custom Vcpkg triplet file
-        run: Copy-Item -Path "cmake\x64-windows-tactile.cmake" `
-                       -Destination "$ENV:VCPKG_ROOT\triplets\community\x64-windows-tactile.cmake"
+        working-directory: ./scripts
+        run: python add_vcpkg_triplet.py
 
       - name: Install assets
         working-directory: ./scripts

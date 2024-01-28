@@ -37,6 +37,15 @@ It is recommended to set the environment variable `VCPKG_ROOT` to point to the d
 > echo $VCPKG_ROOT  # Possible output: '/Users/steve/vcpkg'
 ```
 
+Furthermore, Tactile must be built using a custom Vcpkg "triplet", which controls aspects such as whether dependencies are built as static or dynamic libraries.
+The `add_vcpkg_triplet.py` script can be used to automatically register the appropriate triplet file for your system.
+More information about Vcpkg triplets can be found [here](https://github.com/microsoft/vcpkg/docs/users/triplets.md).
+
+```bash
+> cd scripts
+> python add_vcpkg_triplet.py
+```
+
 ## Building the project
 
 Given a successful Vcpkg installation, building the project should be a simple as entering the following commands, starting in the root directory of the repository.
@@ -47,15 +56,11 @@ However, you can specify whatever generator you want (and omit the `-G` argument
 ```bash
 > mkdir build
 > cd build
-> cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
+> cmake .. -DVCPKG_TARGET_TRIPLET=<tactile-triplet> -DCMAKE_BUILD_TYPE=Debug -GNinja
 > ninja
 ```
 
-It is also worth noting that Vcpkg supports a variety of "triplets", which controls aspects such as whether dependencies are built as static or dynamic libraries.
-It is recommended to use a triplet that results in statically linked dependencies.
-Specify the target triplet with the `-DVCPKG_TARGET_TRIPLET=<triplet>` flag, e.g. `arm64-osx` for M1 macs or `x64-windows-static-md` for x86_64 Windows machines.
-
-More information about Vcpkg triplets can be found [here](https://github.com/microsoft/vcpkg/docs/users/triplets.md).
+Remember, `<tactile-triplet>` must correspond to one of the custom Tactile triplets, e.g. `arm64-osx-tactile` for M1 macs or `x64-windows-tactile` for x86_64 Windows machines.
 
 ## Install asset files
 

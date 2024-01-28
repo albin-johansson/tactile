@@ -62,7 +62,8 @@ jobs:
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
       - name: Register custom Vcpkg triplet file
-        run: cp "cmake/x64-linux-tactile.cmake" "$VCPKG_ROOT/triplets/community/x64-linux-tactile.cmake"
+        working-directory: ./scripts
+        run: python add_vcpkg_triplet.py
 
       - name: Emulate video device
         run: |
