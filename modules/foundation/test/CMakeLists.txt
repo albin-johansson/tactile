@@ -17,6 +17,7 @@ tactile_prepare_target(${TACTILE_FOUNDATION_TEST_TARGET})
 target_link_libraries(${TACTILE_FOUNDATION_TEST_TARGET}
                       PRIVATE
                       tactile::foundation
+                      tactile::testutil
                       GTest::gmock
                       )
 

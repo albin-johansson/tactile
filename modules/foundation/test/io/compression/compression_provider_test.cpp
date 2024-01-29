@@ -4,27 +4,12 @@
 
 #include "tactile/foundation/io/compression/zlib_compression_provider.hpp"
 #include "tactile/foundation/io/compression/zstd_compression_provider.hpp"
-#include "tactile/foundation/math/rng.hpp"
+#include "tactile/testutil/random.hpp"
 
 using namespace tactile;
 using namespace tactile::int_literals;
 
 namespace {
-
-[[nodiscard]]
-auto _make_random_byte_stream(const usize byte_count) -> ByteStream
-{
-  ByteStream bytes;
-  bytes.reserve(byte_count);
-
-  for (usize i = 0; i < byte_count; ++i) {
-    bytes.push_back(static_cast<uint8>(next_random_u32(+'a', +'z')));
-  }
-
-  return bytes;
-}
-
-}  // namespace
 
 template <typename T>
 class ICompressionProviderTest : public testing::Test {};
@@ -39,7 +24,7 @@ TYPED_TEST_SUITE(ICompressionProviderTest, CompressionProviderTypes);
 TYPED_TEST(ICompressionProviderTest, CompressAndDecompress)
 {
   const TypeParam compressor;
-  const auto original_bytes = _make_random_byte_stream(50'000);
+  const auto original_bytes = testutil::make_random_byte_stream(50'000);
 
   const auto compressed_bytes = compressor.compress(original_bytes);
   ASSERT_TRUE(compressed_bytes.has_value());
@@ -51,3 +36,5 @@ TYPED_TEST(ICompressionProviderTest, CompressAndDecompress)
 
   EXPECT_EQ(decompressed_bytes, original_bytes);
 }
+
+}  // namespace
