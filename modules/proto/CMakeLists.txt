@@ -18,6 +18,7 @@ set_target_properties(${TACTILE_PROTO_TARGET}
                       CXX_EXTENSIONS "OFF"
                       CXX_STANDARD_REQUIRED "ON"
                       POSITION_INDEPENDENT_CODE "ON"
+                      UNITY_BUILD "OFF"
                       RUNTIME_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
                       ARCHIVE_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
                       LIBRARY_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"

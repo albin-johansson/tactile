@@ -13,9 +13,14 @@ project(tactile
         VERSION 0.5.0
         LANGUAGES CXX)
 
+if (NOT DEFINED CMAKE_UNITY_BUILD)
+  set(CMAKE_UNITY_BUILD ON)
+endif ()
+
 message(DEBUG "CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}")
 message(DEBUG "CMAKE_CXX_COMPILER_VERSION: ${CMAKE_CXX_COMPILER_VERSION}")
 message(DEBUG "CMAKE_PROJECT_VERSION: ${CMAKE_PROJECT_VERSION}")
+message(DEBUG "CMAKE_UNITY_BUILD: ${CMAKE_UNITY_BUILD}")
 
 option(TACTILE_BUILD_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)
 option(TACTILE_BUILD_TESTS "Build the test suite" OFF)
