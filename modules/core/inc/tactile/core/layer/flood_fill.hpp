@@ -15,6 +15,11 @@ class TileLayer;
 /**
  * Applies a flood fill algorithm to a layer.
  *
+ * \details
+ *    This is currently implemented using a "combined-scan-and-fill" algorithm, see
+ *    the section about "span filling" in the Wikipedia article about flood fill
+ *    algorithms for more details.
+ *
  * \param      layer              The layer to flood.
  * \param      start_pos          The starting position.
  * \param      new_id             The replacement tile identifier.
