@@ -23,8 +23,10 @@ class FloodFillTest : public testing::Test {};
 
 TYPED_TEST_SUITE(FloodFillTest, TileLayerTypes);
 
+// NOLINTBEGIN(*-function-size, *-function-cognitive-complexity)
+
 /// \tests tactile::flood_fill
-TYPED_TEST(FloodFillTest, Flood)  // NOLINT(*-function-cognitive-complexity)
+TYPED_TEST(FloodFillTest, FloodFill)
 {
   const MatrixExtent extent {5, 5};
   TypeParam layer {extent};
@@ -68,25 +70,25 @@ TYPED_TEST(FloodFillTest, Flood)  // NOLINT(*-function-cognitive-complexity)
   // 4 │ 1 │ 1 │ 1 │ 1 │ 1 │      4 │ 4 │ 4 │ 1 │ 5 │ 5 │
   //   └───┴───┴───┴───┴───┘        └───┴───┴───┴───┴───┘
 
-  layer.set_tile(TilePos {0, 0}, TileID {2});
-  layer.set_tile(TilePos {0, 1}, TileID {2});
-  layer.set_tile(TilePos {1, 0}, TileID {2});
-  layer.set_tile(TilePos {1, 1}, TileID {2});
+  EXPECT_TRUE(layer.set_tile(TilePos {0, 0}, TileID {2}));
+  EXPECT_TRUE(layer.set_tile(TilePos {0, 1}, TileID {2}));
+  EXPECT_TRUE(layer.set_tile(TilePos {1, 0}, TileID {2}));
+  EXPECT_TRUE(layer.set_tile(TilePos {1, 1}, TileID {2}));
 
-  layer.set_tile(TilePos {0, 3}, TileID {3});
-  layer.set_tile(TilePos {0, 4}, TileID {3});
-  layer.set_tile(TilePos {1, 3}, TileID {3});
-  layer.set_tile(TilePos {1, 4}, TileID {3});
+  EXPECT_TRUE(layer.set_tile(TilePos {0, 3}, TileID {3}));
+  EXPECT_TRUE(layer.set_tile(TilePos {0, 4}, TileID {3}));
+  EXPECT_TRUE(layer.set_tile(TilePos {1, 3}, TileID {3}));
+  EXPECT_TRUE(layer.set_tile(TilePos {1, 4}, TileID {3}));
 
-  layer.set_tile(TilePos {3, 0}, TileID {4});
-  layer.set_tile(TilePos {3, 1}, TileID {4});
-  layer.set_tile(TilePos {4, 0}, TileID {4});
-  layer.set_tile(TilePos {4, 1}, TileID {4});
+  EXPECT_TRUE(layer.set_tile(TilePos {3, 0}, TileID {4}));
+  EXPECT_TRUE(layer.set_tile(TilePos {3, 1}, TileID {4}));
+  EXPECT_TRUE(layer.set_tile(TilePos {4, 0}, TileID {4}));
+  EXPECT_TRUE(layer.set_tile(TilePos {4, 1}, TileID {4}));
 
-  layer.set_tile(TilePos {3, 3}, TileID {5});
-  layer.set_tile(TilePos {3, 4}, TileID {5});
-  layer.set_tile(TilePos {4, 3}, TileID {5});
-  layer.set_tile(TilePos {4, 4}, TileID {5});
+  EXPECT_TRUE(layer.set_tile(TilePos {3, 3}, TileID {5}));
+  EXPECT_TRUE(layer.set_tile(TilePos {3, 4}, TileID {5}));
+  EXPECT_TRUE(layer.set_tile(TilePos {4, 3}, TileID {5}));
+  EXPECT_TRUE(layer.set_tile(TilePos {4, 4}, TileID {5}));
 
   //     0   1   2   3   4            0   1   2   3   4
   //   ┌───┬───┬───┬───┬───┐        ┌───┬───┬───┬───┬───┐
@@ -255,7 +257,7 @@ TYPED_TEST(FloodFillTest, Flood)  // NOLINT(*-function-cognitive-complexity)
 }
 
 /// \tests tactile::flood_fill
-TYPED_TEST(FloodFillTest, FloodWithAffectedPositions)
+TYPED_TEST(FloodFillTest, FloodFillWithAffectedPositions)
 {
   const MatrixExtent extent {4, 4};
   TypeParam layer {extent};
@@ -297,5 +299,7 @@ TYPED_TEST(FloodFillTest, FloodWithAffectedPositions)
   EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {3, 3}), 1_uz);
   // clang-format on
 }
+
+// NOLINTEND(*-function-size, *-function-cognitive-complexity)
 
 }  // namespace
