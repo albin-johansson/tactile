@@ -30,7 +30,7 @@ auto _parse_layer_type(const JSON& layer_json, LayerType& layer_type) -> Result<
   return parse(layer_json, "type", type_name).and_then([&]() -> Result<void> {
     if (const auto* found_type = find_in(kLayerTypeNames, type_name)) {
       layer_type = *found_type;
-      return kSuccess;
+      return kOK;
     }
 
     return unexpected(make_save_format_error(SaveFormatError::kUnsupportedLayerType));
@@ -57,7 +57,7 @@ auto _parse_tile_encoding(const JSON& layer_json, ir::TileFormat& tile_format)
               make_save_format_error(SaveFormatError::kUnsupportedTileEncoding));
         }
 
-        return kSuccess;
+        return kOK;
       });
 }
 
@@ -82,7 +82,7 @@ auto _parse_compression_mode(const JSON& layer_json, ir::TileFormat& tile_format
               make_save_format_error(SaveFormatError::kUnsupportedCompression));
         }
 
-        return kSuccess;
+        return kOK;
       });
 }
 
@@ -153,7 +153,7 @@ auto _parse_tile_layer_data(const JSON& layer_json,
       })
       .and_then([&](TileMatrix tile_matrix) {
         layer.tiles = std::move(tile_matrix);
-        return kSuccess;
+        return kOK;
       });
 }
 
@@ -176,7 +176,7 @@ auto _parse_object_layer_data(const JSON& layer_json, ir::Layer& object_layer)
     }
   }
 
-  return kSuccess;
+  return kOK;
 }
 
 [[nodiscard]]
@@ -186,7 +186,7 @@ auto _parse_group_layer_data(const JSON& layer_json, ir::Map& map, ir::Layer& gr
   const auto layers_iter = layer_json.find("layers");
   if (layers_iter == layer_json.end()) {
     TACTILE_LOG_WARN("[TMJ] Detected group layer with no 'layers' attribute");
-    return kSuccess;
+    return kOK;
   }
 
   for (const auto& [_, sublayer_json] : layers_iter->items()) {
@@ -198,7 +198,7 @@ auto _parse_group_layer_data(const JSON& layer_json, ir::Map& map, ir::Layer& gr
     }
   }
 
-  return kSuccess;
+  return kOK;
 }
 
 }  // namespace
@@ -251,7 +251,7 @@ auto parse_layer(const JSON& layer_json, ir::Map& map) -> Result<ir::Layer>
         }
 
         TACTILE_LOG_WARN("[TMJ] Could not recognize type of layer {}", layer.id);
-        return kSuccess;
+        return kOK;
       })
       .and_then([&] { return parse_metadata(layer_json, layer.meta); })
       .transform([&] { return std::move(layer); });
@@ -263,7 +263,7 @@ auto parse_layers(const JSON& map_json, ir::Map& map) -> Result<void>
   if (layers_iter == map_json.end()) {
     // TODO strict mode?
     TACTILE_LOG_WARN("[TMJ] Map is missing required 'layers' attribute");
-    return kSuccess;
+    return kOK;
   }
 
   map.layers.reserve(layers_iter->size());
@@ -277,7 +277,7 @@ auto parse_layers(const JSON& map_json, ir::Map& map) -> Result<void>
     }
   }
 
-  return kSuccess;
+  return kOK;
 }
 
 }  // namespace tactile::tiled::tmj

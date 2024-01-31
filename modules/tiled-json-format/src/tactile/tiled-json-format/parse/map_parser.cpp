@@ -24,7 +24,7 @@ auto parse_map(const JSON& json, String filename, const SaveFormatReadOptions& o
           return unexpected(
               make_save_format_error(SaveFormatError::kUnsupportedOrientation));
         }
-        return kSuccess;
+        return kOK;
       })
       .and_then([&] { return parse(json, "width", map.col_count); })
       .and_then([&] { return parse(json, "height", map.row_count); })

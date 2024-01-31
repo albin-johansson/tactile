@@ -62,7 +62,7 @@ auto _emit_tile_layer(JSON& layer_json,
     layer_json["data"] = std::move(tile_data_json);
   }
 
-  return kSuccess;
+  return kOK;
 }
 
 [[nodiscard]]
@@ -85,7 +85,7 @@ auto _emit_group_layer(JSON& layer_json,
 
   layer_json["layers"] = std::move(layer_json_array);
 
-  return kSuccess;
+  return kOK;
 }
 
 }  // namespace

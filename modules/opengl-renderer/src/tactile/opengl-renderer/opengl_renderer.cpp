@@ -101,7 +101,7 @@ auto OpenGLRenderer::begin_frame() -> Result<void>
     return unexpected(make_opengl_error(to_opengl_error(err)));
   }
 
-  return kSuccess;
+  return kOK;
 }
 
 void OpenGLRenderer::end_frame()

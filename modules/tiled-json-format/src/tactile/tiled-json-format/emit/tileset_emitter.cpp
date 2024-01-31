@@ -47,7 +47,7 @@ auto _add_common_tileset_attributes(const ir::Tileset& tileset,
     tileset_json["tiles"] = emit_tile_definition_array(tileset.tiles);
   }
 
-  return kSuccess;
+  return kOK;
 }
 
 [[nodiscard]]
@@ -100,7 +100,7 @@ auto emit_tileset_ref(const ir::TilesetRef& tileset_ref,
           };
 
           stream_to_file(external_tileset_json, external_tileset_path, stream_options);
-          return kSuccess;
+          return kOK;
         })
         .and_then([&] { return emit_external_tileset(tileset_ref); });
   }

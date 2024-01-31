@@ -19,7 +19,7 @@ auto _parse_string_value(const JSON& json, Attribute& value) -> Result<void>
   Attribute::string_type str {};
   return parse(json, "value", str).and_then([&] {
     value = std::move(str);
-    return kSuccess;
+    return kOK;
   });
 }
 
@@ -29,7 +29,7 @@ auto _parse_int_value(const JSON& json, Attribute& value) -> Result<void>
   Attribute::int_type integer {};
   return parse(json, "value", integer).and_then([&] {
     value = integer;
-    return kSuccess;
+    return kOK;
   });
 }
 
@@ -39,7 +39,7 @@ auto _parse_float_value(const JSON& json, Attribute& value) -> Result<void>
   Attribute::float_type real {};
   return parse(json, "value", real).and_then([&] {
     value = real;
-    return kSuccess;
+    return kOK;
   });
 }
 
@@ -49,7 +49,7 @@ auto _parse_bool_value(const JSON& json, Attribute& value) -> Result<void>
   bool boolean {};
   return parse(json, "value", boolean).and_then([&] {
     value = boolean;
-    return kSuccess;
+    return kOK;
   });
 }
 
@@ -59,7 +59,7 @@ auto _parse_path_value(const JSON& json, Attribute& value) -> Result<void>
   Attribute::string_type path {};
   return parse(json, "value", path).and_then([&] {
     value = Attribute::path_type {std::move(path)};
-    return kSuccess;
+    return kOK;
   });
 }
 
@@ -73,14 +73,14 @@ auto _parse_color_value(const JSON& json, Attribute& value) -> Result<void>
       TACTILE_LOG_WARN(
           "[TMJ] Encountered empty color property, assuming default color value");
       value.reset(AttributeType::kColor);
-      return kSuccess;
+      return kOK;
     }
 
     const auto color = (color_code.size() == 9) ? to_color_argb(color_code)  //
                                                 : to_color_rgb(color_code);
     if (color.has_value()) {
       value = *color;
-      return kSuccess;
+      return kOK;
     }
 
     TACTILE_LOG_ERROR("[TMJ] Invalid color property '{}'", color_code);
@@ -94,7 +94,7 @@ auto _parse_object_ref_value(const JSON& json, Attribute& value) -> Result<void>
   int32 object_ref {};
   return parse(json, "value", object_ref).and_then([&] {
     value = ObjectRef {object_ref};
-    return kSuccess;
+    return kOK;
   });
 }
 
@@ -115,10 +115,10 @@ auto _parse_property_value(const JSON& json, const AttributeType type, Attribute
     case AttributeType::kFloat4:
     case AttributeType::kInt2:
     case AttributeType::kInt3:
-    case AttributeType::kInt4: return kSuccess;
+    case AttributeType::kInt4: return kOK;
   }
 
-  return kSuccess;
+  return kOK;
 }
 
 [[nodiscard]]
@@ -128,7 +128,7 @@ auto _parse_property_type(const JSON& json, AttributeType& out_type) -> Result<v
   return parse(json, "type", type_name).and_then([&]() -> Result<void> {
     if (const auto attribute_type = parse_attribute_type(type_name)) {
       out_type = *attribute_type;
-      return kSuccess;
+      return kOK;
     }
     else {
       return unexpected(
@@ -170,7 +170,7 @@ auto parse_metadata(const JSON& json, ir::Metadata& meta) -> Result<void>
     meta.properties = std::move(properties);
   }
 
-  return kSuccess;
+  return kOK;
 }
 
 }  // namespace tactile::tiled::tmj

@@ -50,19 +50,19 @@ auto parse_tile_animation(const JSON& json, ir::TileAnimation& animation) -> Res
     }
   }
 
-  return kSuccess;
+  return kOK;
 }
 
 auto parse_tile_objects(const JSON& json, Vector<ir::Object>& objects) -> Result<void>
 {
   const auto object_group_iter = json.find("objectgroup");
   if (object_group_iter == json.end()) {
-    return kSuccess;
+    return kOK;
   }
 
   const auto objects_iter = object_group_iter->find("objects");
   if (objects_iter == object_group_iter->end()) {
-    return kSuccess;
+    return kOK;
   }
 
   objects.reserve(objects_iter->size());
@@ -76,7 +76,7 @@ auto parse_tile_objects(const JSON& json, Vector<ir::Object>& objects) -> Result
     }
   }
 
-  return kSuccess;
+  return kOK;
 }
 
 auto parse_tileset_tile(const JSON& json, const ir::Tileset& tileset) -> Result<ir::Tile>
@@ -105,7 +105,7 @@ auto parse_tileset_tiles(const JSON& json, ir::Tileset& tileset) -> Result<void>
     }
   }
 
-  return kSuccess;
+  return kOK;
 }
 
 auto parse_tileset(const JSON& json, const SaveFormatReadOptions& options)
@@ -133,7 +133,7 @@ auto parse_tileset(const JSON& json, const SaveFormatReadOptions& options)
         }
 
         tileset.image_path = std::move(relative_image_path);
-        return kSuccess;
+        return kOK;
       })
       .and_then([&] { return parse_tileset_tiles(json, tileset); })
       .and_then([&] { return parse_metadata(json, tileset.meta); })
@@ -185,7 +185,7 @@ auto parse_tilesets(const JSON& map_json,
   const auto tilesets_iter = map_json.find("tilesets");
   if (tilesets_iter == map_json.end()) {
     TACTILE_LOG_WARN("[TMJ] Map is missing required 'tilesets' attribute");
-    return kSuccess;
+    return kOK;
   }
 
   map.tilesets.reserve(tilesets_iter->size());
@@ -199,7 +199,7 @@ auto parse_tilesets(const JSON& map_json,
     }
   }
 
-  return kSuccess;
+  return kOK;
 }
 
 }  // namespace tactile::tiled::tmj
