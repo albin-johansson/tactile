@@ -3,6 +3,8 @@
 #pragma once
 
 #include "tactile/foundation/debug/exception.hpp"
+#include "tactile/foundation/functional/result.hpp"
+#include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
 
@@ -33,11 +35,23 @@ template <typename Ptr>
                                     const char* error_message = "unexpected null pointer")
     -> Ptr
 {
-  if (ptr == nullptr) {
+  if (ptr == nullptr) [[unlikely]] {
     throw Exception {error_message};
   }
 
   return ptr;
+}
+
+/**
+ * Throws an exception if the given result represents an error.
+ *
+ * \param result The result to check.
+ */
+inline void require_ok(const Result<void> result)
+{
+  if (!result.has_value()) [[unlikely]] {
+    throw Exception {"unexpected empty result"};
+  }
 }
 
 }  // namespace tactile
