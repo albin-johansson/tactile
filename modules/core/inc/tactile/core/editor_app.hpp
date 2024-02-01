@@ -4,6 +4,7 @@
 
 #include "tactile/core/api.hpp"
 #include "tactile/core/engine/engine_app.hpp"
+#include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/ui/dock_space.hpp"
 #include "tactile/core/ui/menu_bar.hpp"
@@ -41,6 +42,7 @@ class TACTILE_CORE_API EditorApp final : public IEngineApp {
   IWindow* mWindow {};
   IRenderer* mRenderer {};
   Unique<Model> mModel;
+  EventDispatcher mEventDispatcher;
   WidgetManagerType mWidgets {};
 };
 
