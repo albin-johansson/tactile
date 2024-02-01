@@ -58,6 +58,7 @@ jobs:
                    -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
                    -DTACTILE_USE_SANITIZERS=OFF \
                    -DTACTILE_BUILD_TESTS=ON \
+                   -DTACTILE_UNITY_BUILD=OFF \
                    --log-level=DEBUG
 
       - name: Build
