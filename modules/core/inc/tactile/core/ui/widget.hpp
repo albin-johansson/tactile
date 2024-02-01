@@ -2,27 +2,28 @@
 
 #pragma once
 
-#include "tactile/core/api.hpp"
+#include <concepts>  // default_initializable, same_as
+
 #include "tactile/core/event/event_dispatcher.hpp"
-#include "tactile/core/model/model.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile {
+
+class Model;
+
+// clang-format off
 
 /**
- * Represents user interface widgets.
+ * Describes widget types.
+ *
+ * \tparam T An arbitrary type.
  */
-class IWidget {
- public:
-  TACTILE_INTERFACE_CLASS(IWidget);
-
-  /**
-   * Updates the widget state.
-   *
-   * \param model      The associated model.
-   * \param dispatcher The associated event dispatcher.
-   */
-  virtual void update(const Model& model, EventDispatcher& dispatcher) = 0;
+template <typename T>
+concept Widget = std::default_initializable<T> &&
+                 requires(T widget, const Model& model, EventDispatcher& dispatcher) {
+  { widget.update(model, dispatcher) } -> std::same_as<void>;
 };
 
-}  // namespace tactile::ui
+// clang-format on
+
+}  // namespace tactile
