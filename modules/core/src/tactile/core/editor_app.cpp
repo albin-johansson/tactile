@@ -31,6 +31,8 @@ EditorApp::EditorApp(IWindow* window, IRenderer* renderer)
   ImGui::StyleColorsDark(&style);
 }
 
+EditorApp::~EditorApp() noexcept = default;
+
 void EditorApp::on_startup()
 {
   TACTILE_LOG_TRACE("Starting up editor...");
