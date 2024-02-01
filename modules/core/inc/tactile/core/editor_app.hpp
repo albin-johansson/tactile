@@ -7,6 +7,7 @@
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/core/model/model.hpp"
 #include "tactile/core/ui/dock_space.hpp"
+#include "tactile/core/ui/editor_dock_widget.hpp"
 #include "tactile/core/ui/layer_dock_widget.hpp"
 #include "tactile/core/ui/menu_bar.hpp"
 #include "tactile/core/ui/widget_manager.hpp"
@@ -17,7 +18,8 @@
 
 namespace tactile {
 
-using WidgetManagerType = WidgetManager<DockSpace, MenuBar, LayerDockWidget>;
+using WidgetManagerType =
+    WidgetManager<DockSpace, MenuBar, EditorDockWidget, LayerDockWidget>;
 
 /**
  * Represents the Tactile editor application.
