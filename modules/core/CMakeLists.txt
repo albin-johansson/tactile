@@ -17,6 +17,8 @@ tactile_prepare_target(${TACTILE_CORE_TARGET})
 target_compile_definitions(${TACTILE_CORE_TARGET}
                            PRIVATE
                            TACTILE_BUILDING_CORE
+
+                           PUBLIC
                            IMGUI_DISABLE_OBSOLETE_FUNCTIONS
                            IMGUI_DEFINE_MATH_OPERATORS
                            )
@@ -33,8 +35,6 @@ target_link_libraries(${TACTILE_CORE_TARGET}
                       PUBLIC
                       tactile::foundation
                       tactile::proto
-
-                      PRIVATE
                       EnTT::EnTT
                       imgui::imgui
                       )
