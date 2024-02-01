@@ -7,7 +7,7 @@
 #include <gtest/gtest.h>
 
 #include "tactile/foundation/debug/exception.hpp"
-#include "tactile/foundation/misc/integer_conversion.hpp"
+#include "tactile/foundation/misc/narrow.hpp"
 #include "testutil/tileset_helpers.hpp"
 
 using namespace tactile;
@@ -109,7 +109,7 @@ TEST(Tileset, GetAppearance)
 TEST(Tileset, FindTile)
 {
   const auto tileset_info = test::make_dummy_tileset_info();
-  const auto tile_count = narrow<TileIndex::value_type>(tileset_info.tile_count);
+  const auto tile_count = narrow_checked<TileIndex::value_type>(tileset_info.tile_count);
 
   Tileset tileset {tileset_info};
   const auto& const_tileset = tileset;
@@ -133,7 +133,7 @@ TEST(Tileset, FindTile)
 TEST(Tileset, GetTile)
 {
   const auto tileset_info = test::make_dummy_tileset_info();
-  const auto tile_count = narrow<TileIndex::value_type>(tileset_info.tile_count);
+  const auto tile_count = narrow_checked<TileIndex::value_type>(tileset_info.tile_count);
 
   Tileset tileset {tileset_info};
   const auto& const_tileset = tileset;
@@ -157,7 +157,7 @@ TEST(Tileset, GetTile)
 TEST(Tileset, IsValidIndex)
 {
   const auto tileset_info = test::make_dummy_tileset_info();
-  const auto tile_count = narrow<TileIndex::value_type>(tileset_info.tile_count);
+  const auto tile_count = narrow_checked<TileIndex::value_type>(tileset_info.tile_count);
 
   const Tileset tileset {tileset_info};
 
@@ -173,7 +173,7 @@ TEST(Tileset, IsValidIndex)
 TEST(Tileset, LastTileIndex)
 {
   const auto tileset_info = test::make_dummy_tileset_info();
-  const auto tile_count = narrow<TileIndex::value_type>(tileset_info.tile_count);
+  const auto tile_count = narrow_checked<TileIndex::value_type>(tileset_info.tile_count);
 
   const Tileset tileset {tileset_info};
   EXPECT_EQ(tileset.last_tile_index(), TileIndex {tile_count - 1});

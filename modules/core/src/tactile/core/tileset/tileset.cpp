@@ -6,6 +6,7 @@
 #include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/misc/integer_conversion.hpp"
+#include "tactile/foundation/misc/narrow.hpp"
 
 namespace tactile::core {
 
@@ -29,8 +30,8 @@ Tileset::Tileset(const TilesetCreateInfo& info)
 void Tileset::_create_tiles()
 {
   for (ssize tile_index = 0; tile_index < mTileCount; ++tile_index) {
-    const auto tile_row = narrow<int32>(tile_index / mColumnCount);
-    const auto tile_col = narrow<int32>(tile_index % mColumnCount);
+    const auto tile_row = narrow_checked<int32>(tile_index / mColumnCount);
+    const auto tile_col = narrow_checked<int32>(tile_index % mColumnCount);
 
     const Rectangle tile_region {
       .position = {tile_col * mTileSize.x(), tile_row * mTileSize.y()},
@@ -66,7 +67,8 @@ auto Tileset::index_of(const TilePos& pos) const -> Maybe<TileIndex>
 {
   if (pos.row >= 0 && pos.col >= 0 && pos.col < mColumnCount) {
     if (pos.row < row_count()) {
-      return TileIndex {narrow<TileIndex::value_type>(pos.row * mColumnCount + pos.col)};
+      return TileIndex {
+        narrow_checked<TileIndex::value_type>(pos.row * mColumnCount + pos.col)};
     }
   }
 
@@ -138,7 +140,7 @@ auto Tileset::is_valid_index(const TileIndex tile_index) const -> bool
 
 auto Tileset::last_tile_index() const -> TileIndex
 {
-  return TileIndex {narrow<TileIndex::value_type>(mTileCount - 1)};
+  return TileIndex {narrow_checked<TileIndex::value_type>(mTileCount - 1)};
 }
 
 auto Tileset::tile_count() const -> ssize

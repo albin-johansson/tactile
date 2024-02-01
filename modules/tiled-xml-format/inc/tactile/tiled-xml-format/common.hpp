@@ -10,7 +10,7 @@
 #include "tactile/foundation/container/file_path.hpp"
 #include "tactile/foundation/container/string.hpp"
 #include "tactile/foundation/functional/result.hpp"
-#include "tactile/foundation/misc/integer_conversion.hpp"
+#include "tactile/foundation/misc/narrow.hpp"
 #include "tactile/foundation/prelude.hpp"
 #include "tactile/tiled-xml-format/api.hpp"
 
@@ -123,7 +123,7 @@ template <std::signed_integral T>
 [[nodiscard]] auto parse(pugi::xml_node node, const char* key) -> Result<T>
 {
   return parse_int64(node, key).and_then(
-      [](const int64 i64) -> Result<T> { return narrow<T>(i64); });
+      [](const int64 i64) -> Result<T> { return narrow_checked<T>(i64); });
 }
 
 /**
@@ -141,7 +141,7 @@ template <std::unsigned_integral T>
 [[nodiscard]] auto parse(pugi::xml_node node, const char* key) -> Result<T>
 {
   return parse_uint64(node, key).and_then(
-      [](const uint64 u64) -> Result<T> { return narrow<T>(u64); });
+      [](const uint64 u64) -> Result<T> { return narrow_checked<T>(u64); });
 }
 
 /**
@@ -205,7 +205,7 @@ template <std::signed_integral T>
     -> Result<void>
 {
   return parse_int64(node, key).and_then([&](const int64 i64) {
-    value = narrow<T>(i64);
+    value = narrow_checked<T>(i64);
     return kOK;
   });
 }
@@ -225,7 +225,7 @@ template <std::unsigned_integral T>
     -> Result<void>
 {
   return parse_uint64(node, key).and_then([&](const uint64 u64) {
-    value = narrow<T>(u64);
+    value = narrow_checked<T>(u64);
     return kOK;
   });
 }

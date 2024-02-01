@@ -8,7 +8,7 @@
 #include "tactile/foundation/container/string.hpp"
 #include "tactile/foundation/container/vector.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
-#include "tactile/foundation/misc/integer_conversion.hpp"
+#include "tactile/foundation/misc/narrow.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
@@ -103,7 +103,7 @@ template <std::unsigned_integral T>
 [[nodiscard]] auto str_to(const StringView str, const int base = 10) -> Maybe<T>
 {
   if (const auto value = str_to_u64(str, base)) {
-    return narrow<T>(*value);
+    return narrow_checked<T>(*value);
   }
 
   return kNothing;
@@ -121,7 +121,7 @@ template <std::signed_integral T>
 [[nodiscard]] auto str_to(const StringView str, const int base = 10) -> Maybe<T>
 {
   if (const auto value = str_to_i64(str, base)) {
-    return narrow<T>(*value);
+    return narrow_checked<T>(*value);
   }
 
   return kNothing;
