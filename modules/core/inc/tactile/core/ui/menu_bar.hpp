@@ -25,6 +25,6 @@ class TACTILE_CORE_API MenuBar final {
   void update(const Model& model, EventDispatcher& dispatcher);
 };
 
-static_assert(Widget<MenuBar>);
+static_assert(WidgetType<MenuBar>);
 
 }  // namespace tactile::core

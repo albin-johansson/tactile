@@ -25,6 +25,6 @@ class TACTILE_CORE_API EditorDockWidget final {
   void update(const Model& model, EventDispatcher& dispatcher);
 };
 
-static_assert(Widget<EditorDockWidget>);
+static_assert(WidgetType<EditorDockWidget>);
 
 }  // namespace tactile::core

@@ -25,6 +25,6 @@ class TACTILE_CORE_API LayerDockWidget final {
   void update(const Model& model, EventDispatcher& dispatcher);
 };
 
-static_assert(Widget<LayerDockWidget>);
+static_assert(WidgetType<LayerDockWidget>);
 
 }  // namespace tactile::core

@@ -19,8 +19,8 @@ class Model;
  * \tparam T An arbitrary type.
  */
 template <typename T>
-concept Widget = std::default_initializable<T> &&
-                 requires(T widget, const Model& model, EventDispatcher& dispatcher) {
+concept WidgetType = std::default_initializable<T> &&
+                     requires(T widget, const Model& model, EventDispatcher& dispatcher) {
   { widget.update(model, dispatcher) } -> std::same_as<void>;
 };
 

@@ -20,9 +20,9 @@ class Model;
  *    The order of the type parameters is significant, since widgets are updated
  *    in the order that their types are specified in the type parameter list.
  *
- * \tparam Widgets The widget types to store.
+ * \tparam WidgetTypes The widget types to store.
  */
-template <Widget... Widgets>
+template <WidgetType... WidgetTypes>
 class WidgetManager final {
  public:
   /**
@@ -45,14 +45,14 @@ class WidgetManager final {
    * \return
    *    A widget.
    */
-  template <OneOf<Widgets...> T>
+  template <OneOf<WidgetTypes...> T>
   [[nodiscard]] auto get() -> T&
   {
     return std::get<T>(mWidgets);
   }
 
  private:
-  std::tuple<Widgets...> mWidgets {};
+  std::tuple<WidgetTypes...> mWidgets {};
 };
 
 }  // namespace tactile::core

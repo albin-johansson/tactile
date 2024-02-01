@@ -33,6 +33,6 @@ class TACTILE_CORE_API DockSpace final {
   void _load_default_layout();
 };
 
-static_assert(Widget<DockSpace>);
+static_assert(WidgetType<DockSpace>);
 
 }  // namespace tactile::core
