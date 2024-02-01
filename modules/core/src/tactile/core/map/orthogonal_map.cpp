@@ -2,7 +2,7 @@
 
 #include "tactile/core/map/orthogonal_map.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 OrthogonalMap::OrthogonalMap(const MatrixExtent& extent, const Int2& tile_size)
   : AbstractMap {extent, tile_size}
@@ -19,4 +19,4 @@ void OrthogonalMap::accept(IMetaContextVisitor& visitor)
   root_layer().each(visitor);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

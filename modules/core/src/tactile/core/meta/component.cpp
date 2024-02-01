@@ -4,7 +4,7 @@
 
 #include "tactile/foundation/container/lookup.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 Component::Component(const UUID& type_uuid, AttributeMap attributes)
   : mTypeUuid {type_uuid},
@@ -62,4 +62,4 @@ auto Component::type_uuid() const -> const UUID&
   return mTypeUuid;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

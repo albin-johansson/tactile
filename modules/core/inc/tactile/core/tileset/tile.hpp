@@ -14,7 +14,7 @@
 #include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Describes a tile in a tileset.
@@ -83,4 +83,4 @@ class TACTILE_CORE_API Tile final : public IMetaContext {
   HashMap<UUID, Shared<Object>> mObjects;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

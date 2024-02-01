@@ -4,7 +4,7 @@
 
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Represents different map presentation styles.
@@ -15,4 +15,4 @@ enum class MapOrientation : int8 {
   kHexagonal
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

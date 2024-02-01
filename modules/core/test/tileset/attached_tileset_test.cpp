@@ -8,6 +8,7 @@
 #include "testutil/tileset_helpers.hpp"
 
 using namespace tactile;
+using namespace tactile::core;
 
 /// \tests tactile::AttachedTileset::AttachedTileset
 TEST(AttachedTileset, ConstructorWithNullTileset)

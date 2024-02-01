@@ -5,7 +5,7 @@
 #include "tactile/core/api.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core {
 
 /**
  * Shows a simple button.
@@ -37,4 +37,4 @@ TACTILE_CORE_API auto show_button(const char* label,
 TACTILE_CORE_API auto show_centered_button(const char* label,
                                            const char* tooltip = nullptr) -> bool;
 
-}  // namespace tactile::ui
+}  // namespace tactile::core

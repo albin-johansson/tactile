@@ -14,7 +14,7 @@
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 CreateLayerCommand::CreateLayerCommand(MapDocument* document, const LayerType type)
   : mDocument {require_not_null(document, "null document")},
@@ -80,4 +80,4 @@ auto CreateLayerCommand::_create_layer() -> Shared<ILayer>
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

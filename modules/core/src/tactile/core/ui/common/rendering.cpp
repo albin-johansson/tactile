@@ -2,7 +2,7 @@
 
 #include "tactile/core/ui/common/rendering.hpp"
 
-namespace tactile::ui {
+namespace tactile::core {
 namespace {
 
 inline constexpr float kTau = std::numbers::pi_v<float> * 2.0f;
@@ -30,4 +30,4 @@ void draw_ngon(ImDrawList* draw_list,
   draw_list->PathStroke(color, ImDrawFlags_Closed, thickness);
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core

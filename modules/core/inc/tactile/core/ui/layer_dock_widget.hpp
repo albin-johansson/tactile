@@ -7,7 +7,7 @@
 #include "tactile/core/ui/widget.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Model;
 
@@ -27,4 +27,4 @@ class TACTILE_CORE_API LayerDockWidget final {
 
 static_assert(Widget<LayerDockWidget>);
 
-}  // namespace tactile
+}  // namespace tactile::core

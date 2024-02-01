@@ -10,6 +10,7 @@
 #include "tactile/core/map/orthogonal_map.hpp"
 
 using namespace tactile;
+using namespace tactile::core;
 
 class MoveLayerDownCommandTest : public testing::Test {
  protected:

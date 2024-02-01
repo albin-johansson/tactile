@@ -12,7 +12,7 @@
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 UpdatePropertyTypeCommand::UpdatePropertyTypeCommand(IDocument* document,
                                                      const UUID& context_uuid,
@@ -60,4 +60,4 @@ void UpdatePropertyTypeCommand::redo()
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

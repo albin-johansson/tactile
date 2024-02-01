@@ -6,7 +6,7 @@
 #include "tactile/core/command/command.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class MapDocument;
 
@@ -34,4 +34,4 @@ class TACTILE_CORE_API AddMapRowCommand final : public ICommand {
   ssize mRowCount {1};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

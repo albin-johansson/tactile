@@ -10,6 +10,7 @@
 #include "tactile/foundation/meta/attribute.hpp"
 
 using namespace tactile;
+using namespace tactile::core;
 
 class UpdatePropertyValueCommandTest : public testing::Test {
  protected:

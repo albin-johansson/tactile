@@ -9,7 +9,7 @@
 #include "tactile/foundation/misc/concepts.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Model;
 
@@ -55,4 +55,4 @@ class WidgetManager final {
   std::tuple<Widgets...> mWidgets {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

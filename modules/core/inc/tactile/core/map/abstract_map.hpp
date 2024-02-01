@@ -16,7 +16,7 @@
 #include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Abstract base class that implements most of the map interface.
@@ -85,4 +85,4 @@ class TACTILE_CORE_API AbstractMap : public IMap {
   int32 mNextGroupLayerSuffix {1};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

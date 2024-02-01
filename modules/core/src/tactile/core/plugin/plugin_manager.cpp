@@ -9,7 +9,7 @@
 #include "tactile/foundation/io/filesystem.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto PluginManager::load(const FilePath& plugin_dir, const StringView renderer_plugin_id)
     -> Maybe<PluginManager>
@@ -96,4 +96,4 @@ auto PluginManager::_collect_plugins(const FilePath& dir) -> Vector<PluginInstan
   return plugin_instances;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

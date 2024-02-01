@@ -4,7 +4,7 @@
 
 #include <utility>  // move
 
-namespace tactile {
+namespace tactile::core {
 
 Tile::Tile(const Rectangle& region)
   : mRegion {region}
@@ -50,4 +50,4 @@ auto Tile::is_animated() const -> bool
   return mAnimation.has_value();
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

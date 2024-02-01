@@ -6,7 +6,7 @@
 #include "tactile/foundation/math/vector.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Simply represents different mouse buttons.
@@ -25,4 +25,4 @@ struct MouseEvent final {
   Float2 position;     ///< The current mouse position.
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

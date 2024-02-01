@@ -4,8 +4,8 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-namespace tactile {
+namespace tactile::core {
 
 using EventDispatcher = entt::dispatcher;
 
-}  // namespace tactile
+}  // namespace tactile::core

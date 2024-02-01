@@ -7,7 +7,7 @@
 #include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Manages the Dear ImGui dock space for the dock widgets.
@@ -35,4 +35,4 @@ class TACTILE_CORE_API DockSpace final {
 
 static_assert(Widget<DockSpace>);
 
-}  // namespace tactile
+}  // namespace tactile::core

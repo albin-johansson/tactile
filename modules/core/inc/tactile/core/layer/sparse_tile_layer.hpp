@@ -10,7 +10,7 @@
 #include "tactile/foundation/misc/tile_pos.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * A tile layer variant optimized for sparse tile content.
@@ -60,4 +60,4 @@ class TACTILE_CORE_API SparseTileLayer final : public TileLayer {
   HashMap<TilePos, TileID> mTiles {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

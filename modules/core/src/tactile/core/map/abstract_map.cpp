@@ -2,7 +2,7 @@
 
 #include "tactile/core/map/abstract_map.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 AbstractMap::AbstractMap(const MatrixExtent& extent, const Int2& tile_size)
   : mExtent {extent},
@@ -84,4 +84,4 @@ auto AbstractMap::meta() const -> const Metadata&
   return mMeta;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

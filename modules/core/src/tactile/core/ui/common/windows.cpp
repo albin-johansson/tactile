@@ -6,7 +6,7 @@
 
 #include "tactile/foundation/debug/validation.hpp"
 
-namespace tactile::ui {
+namespace tactile::core {
 
 ScopedWindow::ScopedWindow(const char* title, const ScopedWindowOptions& options)
   : mIsOpen {
@@ -23,4 +23,4 @@ auto ScopedWindow::is_open() const -> bool
   return mIsOpen;
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core

@@ -30,7 +30,7 @@ auto main(const int argc, char* argv[]) -> int
 
   std::filesystem::create_directories(log_dir);
 
-  const auto cli_args = tactile::CommandLineParser::parse(argc, argv);
+  const auto cli_args = tactile::core::CommandLineParser::parse(argc, argv);
   if (cli_args.should_exit) {
     return EXIT_SUCCESS;
   }
@@ -57,7 +57,7 @@ auto main(const int argc, char* argv[]) -> int
   try {
     tactile::initialize_rng();
 
-    const tactile::Protobuf protobuf {};
+    const tactile::core::Protobuf protobuf {};
 
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
       TACTILE_LOG_FATAL("Could not initialize SDL: {}", SDL_GetError());
@@ -72,7 +72,7 @@ auto main(const int argc, char* argv[]) -> int
 
     const tactile::String requested_renderer_id {"tactile.opengl-renderer"};  // FIXME
     const auto plugin_manager =
-        tactile::PluginManager::load(plugin_dir, requested_renderer_id);
+        tactile::core::PluginManager::load(plugin_dir, requested_renderer_id);
     if (!plugin_manager.has_value()) {
       TACTILE_LOG_FATAL("Could not load plugins");
       return EXIT_FAILURE;
@@ -90,8 +90,8 @@ auto main(const int argc, char* argv[]) -> int
       return EXIT_FAILURE;
     }
 
-    tactile::EditorApp app {window, renderer};
-    tactile::Engine engine {&app, renderer};
+    tactile::core::EditorApp app {window, renderer};
+    tactile::core::Engine engine {&app, renderer};
     engine.run();
 
     return EXIT_SUCCESS;

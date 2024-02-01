@@ -8,6 +8,7 @@
 #include "tactile/core/map/orthogonal_map.hpp"
 
 using namespace tactile;
+using namespace tactile::core;
 
 class UpdateLayerVisibilityCommandTest : public testing::Test {
  protected:

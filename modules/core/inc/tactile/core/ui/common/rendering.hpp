@@ -9,7 +9,7 @@
 #include "tactile/core/api.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core {
 
 /**
  * Renders a single N-gon.
@@ -54,4 +54,4 @@ inline void draw_hexagon(ImDrawList* draw_list,
             std::numbers::pi_v<float> * 0.5f);
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core

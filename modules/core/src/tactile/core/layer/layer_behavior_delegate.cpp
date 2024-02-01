@@ -4,7 +4,7 @@
 
 #include <algorithm>  // clamp
 
-namespace tactile {
+namespace tactile::core {
 
 void LayerBehaviorDelegate::set_persistent_id(const Maybe<int32> id)
 {
@@ -58,4 +58,4 @@ auto LayerBehaviorDelegate::clone() const -> LayerBehaviorDelegate
   return other;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

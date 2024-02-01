@@ -5,7 +5,7 @@
 #include "tactile/core/api.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core {
 
 using DialogFlagsBits = uint8;
 
@@ -76,4 +76,4 @@ class TACTILE_CORE_API ScopedDialog final {
   bool mIsOpen;
 };
 
-}  // namespace tactile::ui
+}  // namespace tactile::core

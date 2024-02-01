@@ -10,6 +10,7 @@
 namespace {
 
 using namespace tactile;
+using namespace tactile::core;
 
 using LayerTypes =
     testing::Types<DenseTileLayer, SparseTileLayer, ObjectLayer, GroupLayer>;

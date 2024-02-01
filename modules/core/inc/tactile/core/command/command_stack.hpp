@@ -13,7 +13,7 @@
 #include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Manages a history of commands.
@@ -212,4 +212,4 @@ class TACTILE_CORE_API CommandStack final {
   [[nodiscard]] auto _get_next_command_index() const -> usize;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

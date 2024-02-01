@@ -5,7 +5,7 @@
 #include "tactile/foundation/debug/assert.hpp"
 #include "tactile/foundation/debug/validation.hpp"
 
-namespace tactile::ui {
+namespace tactile::core {
 namespace {
 
 inline constexpr float kMinFloat = std::numeric_limits<float>::min();
@@ -74,4 +74,4 @@ void prepare_for_vertically_center_aligned_items(const float count)
   ImGui::SetCursorPos(cursor_pos + cursor_offset);
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core

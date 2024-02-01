@@ -8,7 +8,7 @@
 #include "tactile/foundation/container/lookup.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto ComponentSet::define_component(String name) -> Maybe<UUID>
 {
@@ -69,4 +69,4 @@ auto ComponentSet::component_count() const -> ssize
   return std::ssize(mComponents);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

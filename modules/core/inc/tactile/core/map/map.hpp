@@ -5,12 +5,12 @@
 #include "tactile/core/meta/meta_context.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/math/vector.hpp"
+#include "tactile/foundation/misc/matrix_extent.hpp"
 #include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
-struct MatrixExtent;
 struct TileFormat;
 struct MapIdentifiers;
 class GroupLayer;
@@ -114,4 +114,4 @@ class IMap : public IMetaContext {
   virtual auto identifiers() const -> const MapIdentifiers& = 0;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

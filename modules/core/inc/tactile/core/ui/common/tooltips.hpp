@@ -5,7 +5,7 @@
 #include "tactile/core/api.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core {
 
 /**
  * Displays a tooltip after the last item has been hovered for a while.
@@ -15,4 +15,4 @@ namespace tactile::ui {
  */
 TACTILE_CORE_API void lazy_tooltip(const char* id, const char* text);
 
-}  // namespace tactile::ui
+}  // namespace tactile::core

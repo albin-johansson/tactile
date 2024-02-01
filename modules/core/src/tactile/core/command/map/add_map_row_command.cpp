@@ -8,7 +8,7 @@
 #include "tactile/foundation/log/logger.hpp"
 #include "tactile/foundation/misc/tile_matrix.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 AddMapRowCommand::AddMapRowCommand(MapDocument* document)
   : mDocument {require_not_null(document, "null document")}
@@ -52,4 +52,4 @@ auto AddMapRowCommand::merge_with(const ICommand* cmd) -> bool
   return false;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

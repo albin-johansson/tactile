@@ -5,6 +5,7 @@
 #include <gtest/gtest.h>
 
 using namespace tactile;
+using namespace tactile::core;
 
 /// \tests tactile::DocumentViewport::DocumentViewport
 TEST(DocumentViewport, Defaults)

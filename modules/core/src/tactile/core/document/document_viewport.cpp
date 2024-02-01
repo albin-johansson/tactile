@@ -4,7 +4,7 @@
 
 #include "tactile/foundation/debug/assert.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 void DocumentViewport::reset_limits(const Maybe<DocumentViewportLimits>& limits)
 {
@@ -43,4 +43,4 @@ auto DocumentViewport::limits() const -> const DocumentViewportLimits*
   return mLimits.has_value() ? &*mLimits : nullptr;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

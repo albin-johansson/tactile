@@ -9,7 +9,7 @@
 #include "tactile/foundation/log/logger.hpp"
 #include "tactile/foundation/render/renderer.hpp"
 
-namespace tactile {
+namespace tactile::core {
 namespace {
 
 inline constexpr Array<ImWchar, 3> kFontIconRange {ICON_MIN_FA, ICON_MAX_FA, 0};
@@ -56,4 +56,4 @@ void try_reload_imgui_fonts(IRenderer& renderer,
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -4,7 +4,7 @@
 
 #include "tactile/foundation/misc/integer_conversion.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 using int_literals::operator""_uz;
 
@@ -68,4 +68,4 @@ auto TileAnimation::frame_count() const -> usize
   return mFrames.size();
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

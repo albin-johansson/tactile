@@ -8,7 +8,7 @@
 #include "tactile/core/ui/common/tooltips.hpp"
 #include "tactile/foundation/debug/assert.hpp"
 
-namespace tactile::ui {
+namespace tactile::core {
 
 auto show_button(const char* label,
                  const char* tooltip,
@@ -45,4 +45,4 @@ auto show_centered_button(const char* label, const char* tooltip) -> bool
   return show_button(label, tooltip);
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core

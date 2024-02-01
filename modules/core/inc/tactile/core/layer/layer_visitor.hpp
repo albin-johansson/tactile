@@ -4,7 +4,7 @@
 
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class TileLayer;
 class ObjectLayer;
@@ -68,4 +68,4 @@ class IConstLayerVisitor {
   virtual void visit([[maybe_unused]] const GroupLayer& layer) {}
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

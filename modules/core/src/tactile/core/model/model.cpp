@@ -2,7 +2,7 @@
 
 #include "tactile/core/model/model.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto Model::settings() -> Settings&
 {
@@ -14,4 +14,4 @@ auto Model::settings() const -> const Settings&
   return mSettings;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

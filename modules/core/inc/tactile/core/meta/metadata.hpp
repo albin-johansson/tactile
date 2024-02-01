@@ -10,7 +10,7 @@
 #include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Provides metadata associated with all meta context implementations.
@@ -134,4 +134,4 @@ class TACTILE_CORE_API Metadata final {
   StringMap<Attribute> mProperties {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -7,6 +7,7 @@
 #include "tactile/foundation/misc/scope_guard.hpp"
 
 using namespace tactile;
+using namespace tactile::core;
 
 auto main(int argc, char* argv[]) -> int
 {

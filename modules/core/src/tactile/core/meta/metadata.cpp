@@ -6,7 +6,7 @@
 
 #include "tactile/foundation/container/lookup.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 auto Metadata::add_property(String name) -> Attribute&
 {
@@ -76,4 +76,4 @@ auto Metadata::clone() const -> Metadata
   return other;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -13,7 +13,7 @@
 #include "tactile/foundation/misc/tile_pos.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class TACTILE_CORE_API TileLayer : public ILayer {
  public:
@@ -104,4 +104,4 @@ class TACTILE_CORE_API TileLayer : public ILayer {
   LayerBehaviorDelegate mDelegate;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

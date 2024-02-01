@@ -6,7 +6,7 @@
 
 #include "tactile/foundation/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 Protobuf::Protobuf()
 {
@@ -20,4 +20,4 @@ Protobuf::~Protobuf() noexcept
   google::protobuf::ShutdownProtobufLibrary();
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

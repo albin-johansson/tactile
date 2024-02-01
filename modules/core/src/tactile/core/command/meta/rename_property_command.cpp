@@ -12,7 +12,7 @@
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 RenamePropertyCommand::RenamePropertyCommand(IDocument* document,
                                              const UUID& context_uuid,
@@ -56,4 +56,4 @@ void RenamePropertyCommand::redo()
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

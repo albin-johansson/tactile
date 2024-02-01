@@ -14,7 +14,7 @@
 #include "tactile/foundation/misc/id_types.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * A layer variant consisting of a collection of other layers.
@@ -418,4 +418,4 @@ class TACTILE_CORE_API GroupLayer::ConstIterator final {
   ssize mIndex {0};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

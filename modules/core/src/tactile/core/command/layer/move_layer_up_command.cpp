@@ -9,7 +9,7 @@
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 MoveLayerUpCommand::MoveLayerUpCommand(MapDocument* document, const UUID& layer_uuid)
   : mDocument {require_not_null(document, "null document")},
@@ -36,4 +36,4 @@ void MoveLayerUpCommand::redo()
   root_layer.move_layer_up(mLayerUuid);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

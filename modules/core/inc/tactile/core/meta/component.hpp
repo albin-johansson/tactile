@@ -8,7 +8,7 @@
 #include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Represents a bundle of attributes that can be attached to meta contexts.
@@ -123,4 +123,4 @@ class TACTILE_CORE_API Component final {
   AttributeMap mAttributes;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

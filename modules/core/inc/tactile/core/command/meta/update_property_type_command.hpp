@@ -11,7 +11,7 @@
 #include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class IDocument;
 
@@ -45,4 +45,4 @@ class TACTILE_CORE_API UpdatePropertyTypeCommand final : public ICommand {
   Maybe<Attribute> mOldPropertyValue;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

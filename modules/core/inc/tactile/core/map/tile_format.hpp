@@ -7,7 +7,7 @@
 #include "tactile/foundation/misc/tile_encoding.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Describes the data format used by tile layers in a tilemap.
@@ -18,4 +18,4 @@ struct TileFormat final {
   Maybe<int> compression_level {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

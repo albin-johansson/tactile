@@ -6,7 +6,7 @@
 
 #include "tactile/core/model/model.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 void LayerDockWidget::update(const Model& model, EventDispatcher& dispatcher)
 {
@@ -19,4 +19,4 @@ void LayerDockWidget::update(const Model& model, EventDispatcher& dispatcher)
   // TODO
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -7,7 +7,7 @@
 #include "tactile/foundation/debug/assert.hpp"
 #include "tactile/foundation/debug/validation.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 AttachedTileset::AttachedTileset(Shared<Tileset> tileset, const TileID first_tile_id)
   : mTileset {require_not_null(std::move(tileset), "null tileset")},
@@ -62,4 +62,4 @@ auto AttachedTileset::viewport() const -> const DocumentViewport&
   return mViewport;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

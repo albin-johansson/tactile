@@ -12,7 +12,7 @@
 #include "tactile/foundation/plugin/plugin.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 using PluginCreateFn = IPlugin*();       ///< Signature of a plugin constructor.
 using PluginDestroyFn = void(IPlugin*);  ///< Signature of a plugin destructor.
@@ -62,4 +62,4 @@ class TACTILE_CORE_API PluginManager final {
   static auto _collect_plugins(const FilePath& dir) -> Vector<PluginInstance>;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

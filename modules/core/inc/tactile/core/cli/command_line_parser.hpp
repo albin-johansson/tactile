@@ -8,7 +8,7 @@
 #include "tactile/foundation/prelude.hpp"
 #include "tactile/foundation/render/renderer_id.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Represents the command-line options.
@@ -40,4 +40,4 @@ class TACTILE_CORE_API CommandLineParser final {
   static auto parse(int argc, char** argv) -> CommandLineOptions;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

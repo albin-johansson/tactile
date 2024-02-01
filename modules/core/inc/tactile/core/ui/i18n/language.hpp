@@ -4,7 +4,7 @@
 
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core {
 
 /**
  * Provides identifiers for the supported user interface languages.
@@ -15,4 +15,4 @@ enum class LanguageID : int8 {
   kSwedish,
 };
 
-}  // namespace tactile::ui
+}  // namespace tactile::core

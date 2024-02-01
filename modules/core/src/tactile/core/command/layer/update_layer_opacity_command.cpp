@@ -9,7 +9,7 @@
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 UpdateLayerOpacityCommand::UpdateLayerOpacityCommand(MapDocument* document,
                                                      const UUID& layer_uuid,
@@ -57,4 +57,4 @@ auto UpdateLayerOpacityCommand::merge_with(const ICommand* other) -> bool
   return false;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

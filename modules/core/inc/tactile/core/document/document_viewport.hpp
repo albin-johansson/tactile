@@ -7,7 +7,7 @@
 #include "tactile/foundation/math/vector.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Provides limitations for document viewports.
@@ -76,4 +76,4 @@ class TACTILE_CORE_API DocumentViewport final {
   Maybe<DocumentViewportLimits> mLimits {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

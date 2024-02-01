@@ -7,7 +7,7 @@
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/misc/integer_conversion.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 Tileset::Tileset(const TilesetCreateInfo& info)
   : mTileCount {info.tile_count},
@@ -187,4 +187,4 @@ auto Tileset::meta() const -> const Metadata&
   return mMeta;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

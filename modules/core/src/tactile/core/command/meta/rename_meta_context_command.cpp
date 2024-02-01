@@ -13,7 +13,7 @@
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 RenameMetaContextCommand::RenameMetaContextCommand(IDocument* document,
                                                    const UUID& context_uuid,
@@ -69,4 +69,4 @@ auto RenameMetaContextCommand::merge_with(const ICommand* other) -> bool
   return false;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

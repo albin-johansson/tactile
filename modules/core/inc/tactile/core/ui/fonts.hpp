@@ -4,10 +4,9 @@
 
 #include "tactile/core/api.hpp"
 #include "tactile/foundation/prelude.hpp"
+#include "tactile/foundation/render/renderer.hpp"
 
-namespace tactile {
-
-class IRenderer;
+namespace tactile::core {
 
 /**
  * Attempts to reload the Dear ImGui font texture atlas.
@@ -23,4 +22,4 @@ TACTILE_CORE_API void try_reload_imgui_fonts(IRenderer& renderer,
                                              int font_size,
                                              float framebuffer_scale);
 
-}  // namespace tactile
+}  // namespace tactile::core

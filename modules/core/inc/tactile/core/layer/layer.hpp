@@ -8,7 +8,7 @@
 #include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class ILayerVisitor;
 class IConstLayerVisitor;
@@ -94,4 +94,4 @@ class ILayer : public IMetaContext {
   virtual auto clone() const -> Shared<ILayer> = 0;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

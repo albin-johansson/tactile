@@ -4,7 +4,7 @@
 
 #include "tactile/core/layer/layer_visitor.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 using int_literals::operator""_z;
 
@@ -72,4 +72,4 @@ auto TileLayer::meta() const -> const Metadata&
   return mDelegate.meta();
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

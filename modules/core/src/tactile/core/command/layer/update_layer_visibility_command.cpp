@@ -9,7 +9,7 @@
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 UpdateLayerVisibilityCommand::UpdateLayerVisibilityCommand(MapDocument* document,
                                                            const UUID& layer_uuid,
@@ -45,4 +45,4 @@ void UpdateLayerVisibilityCommand::redo()
   layer->set_visible(mNewVisibility);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

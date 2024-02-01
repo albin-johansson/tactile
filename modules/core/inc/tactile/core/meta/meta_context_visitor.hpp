@@ -5,7 +5,7 @@
 #include "tactile/core/api.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class OrthogonalMap;
 class GroupLayer;
@@ -72,4 +72,4 @@ class IMetaContextVisitor {
   virtual void visit([[maybe_unused]] Tile& tile) {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

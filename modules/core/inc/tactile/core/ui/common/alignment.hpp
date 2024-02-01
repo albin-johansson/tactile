@@ -11,7 +11,7 @@
 #include "tactile/core/api.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core {
 
 /**
  * Returns the width of a "standard" item with a label, e.g., a button.
@@ -91,4 +91,4 @@ template <std::convertible_to<const char*>... Strings>
          std::max(std::initializer_list<float> {ImGui::CalcTextSize(labels).x...});
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core

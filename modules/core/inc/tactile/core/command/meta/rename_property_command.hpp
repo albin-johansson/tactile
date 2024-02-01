@@ -8,7 +8,7 @@
 #include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class IDocument;
 
@@ -41,4 +41,4 @@ class TACTILE_CORE_API RenamePropertyCommand final : public ICommand {
   String mNewPropertyName;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

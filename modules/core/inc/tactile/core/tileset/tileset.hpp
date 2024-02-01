@@ -15,7 +15,7 @@
 #include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Provides information needed to construct a tileset.
@@ -214,4 +214,4 @@ class TACTILE_CORE_API Tileset final : public IMetaContext {
   void _create_tiles();
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

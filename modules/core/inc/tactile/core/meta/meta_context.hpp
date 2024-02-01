@@ -6,7 +6,7 @@
 #include "tactile/core/meta/meta_context_visitor.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Metadata;
 
@@ -38,4 +38,4 @@ class IMetaContext {
   virtual auto meta() const -> const Metadata& = 0;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

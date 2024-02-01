@@ -10,7 +10,7 @@
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 RemoveLayerCommand::RemoveLayerCommand(MapDocument* document, const UUID& layer_uuid)
   : mDocument {require_not_null(document, "null document")},
@@ -51,4 +51,4 @@ void RemoveLayerCommand::redo()
   mRemovedLayer = root_layer.remove_layer(mLayerUuid);
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

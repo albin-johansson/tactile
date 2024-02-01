@@ -8,6 +8,7 @@
 #include "tactile/core/map/orthogonal_map.hpp"
 
 using namespace tactile;
+using namespace tactile::core;
 
 /// \tests tactile::AddMapRowCommand::redo
 /// \tests tactile::AddMapRowCommand::undo

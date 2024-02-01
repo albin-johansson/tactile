@@ -12,7 +12,7 @@
 #include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Represents a component definition.
@@ -121,4 +121,4 @@ class TACTILE_CORE_API ComponentSet final {
   ComponentDefinitionMap mComponents {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

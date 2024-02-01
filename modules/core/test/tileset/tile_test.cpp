@@ -5,6 +5,7 @@
 #include <gtest/gtest.h>
 
 using namespace tactile;
+using namespace tactile::core;
 using int_literals::operator""_uz;
 
 TEST(Tile, Defaults)

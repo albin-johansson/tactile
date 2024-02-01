@@ -4,7 +4,7 @@
 
 #include <imgui.h>
 
-namespace tactile {
+namespace tactile::core {
 
 void MenuBar::update(const Model& model, EventDispatcher& dispatcher)
 {
@@ -13,4 +13,4 @@ void MenuBar::update(const Model& model, EventDispatcher& dispatcher)
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

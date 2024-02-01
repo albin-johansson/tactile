@@ -10,7 +10,7 @@
 #include "tactile/core/tileset/tile.hpp"
 #include "tactile/core/tileset/tileset.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 MetaContextFinder::MetaContextFinder(const UUID& target_uuid)
   : mTargetUuid {target_uuid}
@@ -63,4 +63,4 @@ auto MetaContextFinder::found_context() -> IMetaContext*
   return mFoundContext;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

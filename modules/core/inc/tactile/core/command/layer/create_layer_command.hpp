@@ -10,7 +10,7 @@
 #include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class MapDocument;
 class ILayer;
@@ -42,4 +42,4 @@ class TACTILE_CORE_API CreateLayerCommand final : public ICommand {
   auto _create_layer() -> Shared<ILayer>;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

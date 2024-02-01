@@ -8,7 +8,7 @@
 #include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class MapDocument;
 
@@ -39,4 +39,4 @@ class TACTILE_CORE_API UpdateLayerVisibilityCommand final : public ICommand {
   Maybe<bool> mOldVisibility;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

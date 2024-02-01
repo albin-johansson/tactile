@@ -10,7 +10,7 @@
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 void ObjectLayer::accept(IMetaContextVisitor& visitor)
 {
@@ -147,4 +147,4 @@ auto ObjectLayer::meta() const -> const Metadata&
   return mDelegate.meta();
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

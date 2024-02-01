@@ -6,7 +6,7 @@
 
 #include "tactile/core/meta/meta_context_finder.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 MapDocument::MapDocument(Unique<IMap> map)
   : mMap {std::move(map)}
@@ -70,4 +70,4 @@ auto MapDocument::map() const -> const IMap&
   return *mMap;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -3,11 +3,11 @@
 #pragma once
 
 #include "tactile/foundation/container/file_path.hpp"
+#include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
-class UUID;
 class IMetaContext;
 class ComponentSet;
 class DocumentViewport;
@@ -89,4 +89,4 @@ class IDocument {
   virtual auto find_context(const UUID& uuid) const -> const IMetaContext* = 0;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -12,7 +12,7 @@
 #include "tactile/foundation/misc/object_type.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Represents a single object in an object layer.
@@ -157,4 +157,4 @@ class TACTILE_CORE_API Object final : public IMetaContext {
   bool mVisible {true};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

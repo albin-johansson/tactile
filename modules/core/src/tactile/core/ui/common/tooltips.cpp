@@ -11,7 +11,7 @@
 
 using std::chrono_literals::operator""s;
 
-namespace tactile::ui {
+namespace tactile::core {
 
 void lazy_tooltip(const char* id, const char* text)
 {
@@ -37,4 +37,4 @@ void lazy_tooltip(const char* id, const char* text)
   }
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core

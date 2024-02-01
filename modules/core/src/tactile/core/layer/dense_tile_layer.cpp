@@ -8,7 +8,7 @@
 #include "tactile/foundation/debug/generic_error.hpp"
 #include "tactile/foundation/functional/utility.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 DenseTileLayer::DenseTileLayer(const ssize row_count, const ssize col_count)
   : mExtent {(row_count > 0) ? row_count : throw Exception {"invalid row count"},
@@ -128,4 +128,4 @@ void DenseTileLayer::_remove_column()
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

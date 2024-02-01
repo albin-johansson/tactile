@@ -6,7 +6,7 @@
 #include "tactile/core/map/abstract_map.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * A map variant that uses plain rectangular tiles.
@@ -18,4 +18,4 @@ class TACTILE_CORE_API OrthogonalMap final : public AbstractMap {
   void accept(IMetaContextVisitor& visitor) override;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -2,7 +2,7 @@
 
 #include "tactile/core/ui/common/styling.hpp"
 
-namespace tactile::ui {
+namespace tactile::core {
 
 ScopedStyle::ScopedStyle(const ImGuiStyleVar style_var, const float value)
 {
@@ -19,4 +19,4 @@ ScopedStyle::~ScopedStyle() noexcept
   ImGui::PopStyleVar();
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core

@@ -4,7 +4,7 @@
 
 #include <utility>  // move
 
-namespace tactile {
+namespace tactile::core {
 
 Object::Object(const ObjectType type)
   : mType {type}
@@ -99,4 +99,4 @@ auto Object::clone() const -> Object
   return other;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

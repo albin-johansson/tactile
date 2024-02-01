@@ -8,7 +8,7 @@
 #include "tactile/foundation/misc/id_types.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Represents a single frame in a tile animation.
@@ -104,4 +104,4 @@ class TACTILE_CORE_API TileAnimation final {
   SystemClockInstant mLastUpdate {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

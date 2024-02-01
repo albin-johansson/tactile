@@ -10,7 +10,7 @@
 #include "tactile/foundation/misc/id_types.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Represents a tileset that is attached to a map.
@@ -100,4 +100,4 @@ class TACTILE_CORE_API AttachedTileset final {
   DocumentViewport mViewport {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

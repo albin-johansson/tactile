@@ -14,7 +14,7 @@
 #include "tactile/foundation/misc/id_types.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * A layer variant consisting of an arbitrary collection of objects.
@@ -136,4 +136,4 @@ class TACTILE_CORE_API ObjectLayer final : public ILayer {
   TreeMap<UUID, Object> mObjects {};  // TODO HashMap? Vector with UUIDs for ordering?
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

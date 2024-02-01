@@ -6,7 +6,7 @@
 #include "tactile/core/command/command.hpp"
 #include "tactile/foundation/misc/uuid.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class MapDocument;
 
@@ -32,4 +32,4 @@ class TACTILE_CORE_API MoveLayerUpCommand final : public ICommand {
   UUID mLayerUuid;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

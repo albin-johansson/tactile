@@ -7,7 +7,7 @@
 #include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class IMetaContext;
 
@@ -53,4 +53,4 @@ class TACTILE_CORE_API MetaContextFinder final : public IMetaContextVisitor {
   void _check(IMetaContext& context);
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

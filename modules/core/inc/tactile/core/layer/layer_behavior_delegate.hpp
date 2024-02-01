@@ -7,7 +7,7 @@
 #include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Used by layer types to implement the common subset of the `ILayer` interface.
@@ -45,4 +45,4 @@ class TACTILE_CORE_API LayerBehaviorDelegate final {
   bool mVisible {true};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

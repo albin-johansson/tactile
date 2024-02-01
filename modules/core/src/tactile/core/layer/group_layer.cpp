@@ -12,7 +12,7 @@
 #include "tactile/foundation/debug/generic_error.hpp"
 #include "tactile/foundation/misc/integer_conversion.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 using int_literals::operator""_z;
 
@@ -705,4 +705,4 @@ auto GroupLayer::ConstIterator::operator++(int) -> ConstIterator
   return self;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

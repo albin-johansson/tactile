@@ -9,7 +9,7 @@
 #include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class IDocument;
 
@@ -43,4 +43,4 @@ class TACTILE_CORE_API RenameMetaContextCommand final : public ICommand {
   Maybe<String> mOldName {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

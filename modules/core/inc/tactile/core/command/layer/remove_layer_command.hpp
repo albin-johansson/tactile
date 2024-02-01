@@ -9,7 +9,7 @@
 #include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class MapDocument;
 class ILayer;
@@ -39,4 +39,4 @@ class TACTILE_CORE_API RemoveLayerCommand final : public ICommand {
   Shared<ILayer> mRemovedLayer;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

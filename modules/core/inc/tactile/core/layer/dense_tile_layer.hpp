@@ -7,7 +7,7 @@
 #include "tactile/foundation/misc/tile_matrix.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * A tile layer variant based on conventional two-dimensional arrays.
@@ -63,4 +63,4 @@ class TACTILE_CORE_API DenseTileLayer final : public TileLayer {
   void _remove_column();
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -11,6 +11,7 @@
 #include "testutil/tileset_helpers.hpp"
 
 using namespace tactile;
+using namespace tactile::core;
 
 /// \tests tactile::Tileset::Tileset
 /// \tests tactile::Tileset::tile_count

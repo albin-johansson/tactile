@@ -7,6 +7,7 @@
 #include "testutil/meta_context_helpers.hpp"
 
 using namespace tactile;
+using namespace tactile::core;
 
 TEST(Object, Defaults)
 {

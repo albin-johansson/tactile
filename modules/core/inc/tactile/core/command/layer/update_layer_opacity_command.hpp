@@ -8,7 +8,7 @@
 #include "tactile/foundation/misc/uuid.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class MapDocument;
 
@@ -40,4 +40,4 @@ class TACTILE_CORE_API UpdateLayerOpacityCommand final : public ICommand {
   Maybe<float> mOldOpacity;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

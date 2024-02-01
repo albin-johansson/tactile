@@ -7,7 +7,7 @@
 #include "tactile/core/event/event_dispatcher.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class Model;
 
@@ -26,4 +26,4 @@ concept Widget = std::default_initializable<T> &&
 
 // clang-format on
 
-}  // namespace tactile
+}  // namespace tactile::core

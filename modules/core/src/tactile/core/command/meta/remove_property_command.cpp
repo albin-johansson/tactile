@@ -12,7 +12,7 @@
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 RemovePropertyCommand::RemovePropertyCommand(IDocument* document,
                                              const UUID& context_uuid,
@@ -55,4 +55,4 @@ void RemovePropertyCommand::redo()
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

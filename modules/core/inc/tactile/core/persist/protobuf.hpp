@@ -5,7 +5,7 @@
 #include "tactile/core/api.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Handles the loading and unloading of the Google Protobuf context.
@@ -20,4 +20,4 @@ class TACTILE_CORE_API Protobuf final {
   ~Protobuf() noexcept;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

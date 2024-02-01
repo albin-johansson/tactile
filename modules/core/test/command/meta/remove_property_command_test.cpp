@@ -11,6 +11,7 @@
 #include "tactile/foundation/meta/attribute.hpp"
 
 using namespace tactile;
+using namespace tactile::core;
 
 class RemovePropertyCommandTest : public testing::Test {
  protected:

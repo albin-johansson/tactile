@@ -12,7 +12,7 @@
 #include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Represents a single tilemap document.
@@ -69,4 +69,4 @@ class TACTILE_CORE_API MapDocument final : public IDocument {
   Maybe<FilePath> mPath {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

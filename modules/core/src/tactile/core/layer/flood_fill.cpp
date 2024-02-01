@@ -6,7 +6,7 @@
 #include "tactile/foundation/container/queue.hpp"
 #include "tactile/foundation/debug/profiler.hpp"
 
-namespace tactile {
+namespace tactile::core {
 namespace {
 
 struct FloodFillSpan final {
@@ -98,4 +98,4 @@ void flood_fill(TileLayer& layer,
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -10,13 +10,13 @@
 #include "tactile/foundation/meta/color.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Represents the persistent editor settings.
  */
 struct Settings final {
-  ui::LanguageID language {ui::LanguageID::kAmericanEnglish};
+  LanguageID language {LanguageID::kAmericanEnglish};
   SaveFormatId preferred_save_format {SaveFormatId::kTactileYaml};
   usize command_capacity {100};
   int32 font_size {13};
@@ -42,4 +42,4 @@ struct Settings final {
   bool restore_session_at_startup : 1 {true};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

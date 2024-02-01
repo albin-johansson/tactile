@@ -11,7 +11,7 @@
 #include "tactile/foundation/container/lookup.hpp"
 #include "tactile/foundation/io/filesystem.hpp"
 
-namespace tactile {
+namespace tactile::core {
 namespace {
 
 inline constexpr int kDefaultVerbosityLevel = 4;
@@ -116,4 +116,4 @@ auto CommandLineParser::parse(const int argc, char** argv) -> CommandLineOptions
   return options;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

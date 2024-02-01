@@ -14,6 +14,7 @@
 namespace {
 
 using namespace tactile;
+using namespace tactile::core;
 
 using int_literals::operator""_z;
 

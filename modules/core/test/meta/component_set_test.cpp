@@ -9,6 +9,7 @@
 #include "tactile/foundation/debug/exception.hpp"
 
 using namespace tactile;
+using namespace tactile::core;
 
 /// \tests tactile::ComponentSet::define_component
 TEST(ComponentSet, DefineComponent)

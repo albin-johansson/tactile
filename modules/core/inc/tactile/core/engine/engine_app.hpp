@@ -5,7 +5,7 @@
 #include "tactile/core/api.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Interface for applications that can may be hooked up to an engine instance.
@@ -42,4 +42,4 @@ class IEngineApp {
   virtual void on_framebuffer_scale_changed(float framebuffer_scale) = 0;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

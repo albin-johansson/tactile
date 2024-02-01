@@ -5,7 +5,7 @@
 #include "tactile/core/tool/mouse_event.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Interface for editor tool implementations.
@@ -62,4 +62,4 @@ class ITool {
   virtual auto is_usable() const -> bool = 0;
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

@@ -16,7 +16,7 @@
 #include "tactile/foundation/render/renderer.hpp"
 #include "tactile/foundation/render/window.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 using WidgetManagerType =
     WidgetManager<DockSpace, MenuBar, EditorDockWidget, LayerDockWidget>;
@@ -49,4 +49,4 @@ class TACTILE_CORE_API EditorApp final : public IEngineApp {
   WidgetManagerType mWidgets {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

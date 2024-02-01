@@ -9,7 +9,7 @@
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 void DockSpace::update(const Model& model, EventDispatcher&)
 {
@@ -30,4 +30,4 @@ void DockSpace::_load_default_layout()
   TACTILE_LOG_DEBUG("[DockSpace] Loading default layout");
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

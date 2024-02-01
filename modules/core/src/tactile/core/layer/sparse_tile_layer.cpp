@@ -5,7 +5,7 @@
 #include "tactile/foundation/debug/exception.hpp"
 #include "tactile/foundation/debug/generic_error.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 SparseTileLayer::SparseTileLayer(const ssize row_count, const ssize col_count)
   : mExtent {(row_count > 0) ? row_count : throw Exception {"invalid row count"},
@@ -71,4 +71,4 @@ auto SparseTileLayer::clone() const -> Shared<ILayer>
   return other;
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

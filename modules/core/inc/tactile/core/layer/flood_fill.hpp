@@ -8,7 +8,7 @@
 #include "tactile/foundation/misc/tile_pos.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 class TileLayer;
 
@@ -32,4 +32,4 @@ TACTILE_CORE_API void flood_fill(TileLayer& layer,
                                  TileID new_id,
                                  Vector<TilePos>* affected_positions = nullptr);
 
-}  // namespace tactile
+}  // namespace tactile::core

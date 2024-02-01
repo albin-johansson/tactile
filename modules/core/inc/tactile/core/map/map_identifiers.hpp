@@ -5,7 +5,7 @@
 #include "tactile/foundation/misc/id_types.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Tracks available identifiers in maps.
@@ -15,4 +15,4 @@ struct MapIdentifiers final {
   ObjectID next_object_id {1};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

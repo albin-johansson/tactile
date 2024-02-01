@@ -6,7 +6,7 @@
 #include "tactile/core/persist/settings.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * \brief Provides the high-level API to the core model.
@@ -23,4 +23,4 @@ class TACTILE_CORE_API Model final {
   Settings mSettings {};
 };
 
-}  // namespace tactile
+}  // namespace tactile::core

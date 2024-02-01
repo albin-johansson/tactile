@@ -9,7 +9,7 @@
 #include "tactile/core/ui/common/styling.hpp"
 #include "tactile/core/ui/common/windows.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 void EditorDockWidget::update(const Model& model, EventDispatcher& dispatcher)
 {
@@ -27,4 +27,4 @@ void EditorDockWidget::update(const Model& model, EventDispatcher& dispatcher)
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::core

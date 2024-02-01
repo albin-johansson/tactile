@@ -7,7 +7,7 @@
 #include "tactile/core/api.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile::ui {
+namespace tactile::core {
 
 /**
  * RAII utility for modifying a style variable for the duration of a scope.
@@ -39,4 +39,4 @@ class TACTILE_CORE_API ScopedStyle final {
   ~ScopedStyle() noexcept;
 };
 
-}  // namespace tactile::ui
+}  // namespace tactile::core

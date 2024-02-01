@@ -6,7 +6,7 @@
 #include "tactile/core/ui/common/buttons.hpp"
 #include "tactile/foundation/debug/assert.hpp"
 
-namespace tactile::ui {
+namespace tactile::core {
 namespace {
 
 [[nodiscard]]
@@ -90,4 +90,4 @@ auto ScopedDialog::is_open() const -> bool
   return mIsOpen;
 }
 
-}  // namespace tactile::ui
+}  // namespace tactile::core

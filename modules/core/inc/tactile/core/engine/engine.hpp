@@ -7,7 +7,7 @@
 #include "tactile/foundation/prelude.hpp"
 #include "tactile/foundation/render/renderer.hpp"
 
-namespace tactile {
+namespace tactile::core {
 
 /**
  * Provides the main event loop implementation.
@@ -40,4 +40,4 @@ class TACTILE_CORE_API Engine final {
   void _check_framebuffer_scale();
 };
 
-}  // namespace tactile
+}  // namespace tactile::core
