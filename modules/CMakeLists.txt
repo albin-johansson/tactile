@@ -95,6 +95,7 @@ function(tactile_prepare_target target)
                         RUNTIME_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
                         ARCHIVE_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
                         LIBRARY_OUTPUT_DIRECTORY "${TACTILE_BUILD_DIR}"
+                        UNITY_BUILD "${TACTILE_UNITY_BUILD}"
                         )
 
   target_compile_options(${target} PRIVATE "${TACTILE_COMPILE_OPTIONS}")
