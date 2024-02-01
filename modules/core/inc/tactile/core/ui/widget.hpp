@@ -24,6 +24,16 @@ concept WidgetType = std::default_initializable<T> &&
   { widget.update(model, dispatcher) } -> std::same_as<void>;
 };
 
+/**
+ * Describes dialog types.
+ *
+ * \tparam T An arbitrary type.
+ */
+template <typename T>
+concept DialogType = WidgetType<T> && requires(T dialog) {
+  { dialog.open() };
+};
+
 // clang-format on
 
 }  // namespace tactile::core
