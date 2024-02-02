@@ -4,7 +4,7 @@
 
 #include "tactile/core/meta/meta_context_visitor.hpp"
 
-namespace tactile::testutil {
+namespace tactile::core::test {
 
 class MetaContextVisitorTester final : public IMetaContextVisitor {
  public:
@@ -31,4 +31,4 @@ class MetaContextVisitorTester final : public IMetaContextVisitor {
   void visit([[maybe_unused]] Tile& tile) override { ++tile_count; }
 };
 
-}  // namespace tactile::testutil
+}  // namespace tactile::core::test

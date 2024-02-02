@@ -22,7 +22,7 @@ TEST(Object, Defaults)
 
 TEST(Object, AcceptMetaContextVisitor)
 {
-  testutil::MetaContextVisitorTester visitor {};
+  test::MetaContextVisitorTester visitor {};
 
   Object object {ObjectType::kEllipse};
   object.accept(visitor);

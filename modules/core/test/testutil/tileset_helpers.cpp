@@ -2,7 +2,7 @@
 
 #include "tileset_helpers.hpp"
 
-namespace tactile::test {
+namespace tactile::core::test {
 
 auto make_dummy_tileset_info() -> TilesetCreateInfo
 {
@@ -23,4 +23,4 @@ auto make_dummy_tileset_info() -> TilesetCreateInfo
   };
 }
 
-}  // namespace tactile::test
+}  // namespace tactile::core::test

@@ -5,7 +5,7 @@
 #include "tactile/core/tileset/tileset.hpp"
 #include "tactile/foundation/prelude.hpp"
 
-namespace tactile::test {
+namespace tactile::core::test {
 
 /**
  * Returns a dummy tileset configuration useful for creating tilesets in tests.
@@ -16,4 +16,4 @@ namespace tactile::test {
 [[nodiscard]]
 auto make_dummy_tileset_info() -> TilesetCreateInfo;
 
-}  // namespace tactile::test
+}  // namespace tactile::core::test
