@@ -80,7 +80,7 @@
   #define TACTILE_DLL_EXPORT __attribute__((__visibility__("default")))
   #define TACTILE_DLL_IMPORT
 #elif TACTILE_COMPILER_GCC
-  #define TACTILE_DLL_EXPORT __attribute__((visibility("protected")))
+  #define TACTILE_DLL_EXPORT __attribute__((visibility("default")))
   #define TACTILE_DLL_IMPORT
 #else
   #define TACTILE_DLL_EXPORT
