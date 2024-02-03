@@ -62,7 +62,6 @@ installer/packages/com.albinjohansson.tactile/data/*
 # Asset files
 assets/fonts
 assets/images
-assets/test
 
 # Cached script files
 scripts/cache

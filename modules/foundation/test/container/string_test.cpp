@@ -39,3 +39,22 @@ TEST(String, StrSplit)
   EXPECT_EQ(tokens[2], "");
   EXPECT_EQ(tokens[3], "x");
 }
+
+/// \tests tactile::str_trim
+TEST(String, StrTrim)
+{
+  const auto inline_trim = [](String str) {
+    str_trim(str);
+    return str;
+  };
+
+  EXPECT_EQ(inline_trim(" "), " ");
+  EXPECT_EQ(inline_trim("  "), "  ");
+  EXPECT_EQ(inline_trim(" x "), "x");
+  EXPECT_EQ(inline_trim("foobar"), "foobar");
+  EXPECT_EQ(inline_trim("foobar "), "foobar");
+  EXPECT_EQ(inline_trim(" foobar"), "foobar");
+  EXPECT_EQ(inline_trim(" foobar "), "foobar");
+  EXPECT_EQ(inline_trim(" foo bar "), "foo bar");
+  EXPECT_EQ(inline_trim("   a   b c   d      "), "a   b c   d");
+}

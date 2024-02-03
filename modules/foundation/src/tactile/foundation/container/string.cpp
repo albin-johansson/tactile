@@ -2,10 +2,12 @@
 
 #include "tactile/foundation/container/string.hpp"
 
-#include <concepts>  // same_as
-#include <sstream>   // stringstream
-#include <string>    // getline, erase
-#include <utility>   // move
+#include <algorithm>  // find_if
+#include <cctype>     // isspace
+#include <concepts>   // same_as
+#include <sstream>    // stringstream
+#include <string>     // getline, erase
+#include <utility>    // move
 
 #if TACTILE_OS_WINDOWS
   #include <windows.h>
@@ -65,6 +67,25 @@ auto str_split(const StringView str, const char separator) -> Vector<String>
   }
 
   return tokens;
+}
+
+void str_trim(String& str)
+{
+  const auto find_first_non_space = [](const auto begin, const auto end) {
+    return std::find_if(begin, end, [](const char ch) {
+      return !std::isspace(ch, std::locale::classic());
+    });
+  };
+
+  const auto left_iter = find_first_non_space(str.begin(), str.end());
+  if (left_iter != str.end()) {
+    str.erase(str.begin(), left_iter);
+  }
+
+  const auto right_iter = find_first_non_space(str.rbegin(), str.rend());
+  if (right_iter != str.rend()) {
+    str.erase(right_iter.base(), str.end());
+  }
 }
 
 }  // namespace tactile

@@ -53,4 +53,15 @@ TACTILE_FOUNDATION_API auto make_native_string(const char* str) -> Maybe<NativeS
 [[nodiscard]]
 TACTILE_FOUNDATION_API auto str_split(StringView str, char separator) -> Vector<String>;
 
+/**
+ * Removes leading and trailing spaces from a given string.
+ * 
+ * \note
+ *    This function will only modify strings that have at least
+ *    one non-space character.
+ *
+ * \param str The string to trim.
+ */
+TACTILE_FOUNDATION_API void str_trim(String& str);
+
 }  // namespace tactile
