@@ -27,6 +27,7 @@ EditorApp::EditorApp(IWindow* window, IRenderer* renderer)
   ImGui::SetCurrentContext(mRenderer->get_imgui_context());
 
   auto& io = ImGui::GetIO();
+  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
   io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
   auto& style = ImGui::GetStyle();
