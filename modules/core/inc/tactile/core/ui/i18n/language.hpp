@@ -22,11 +22,6 @@ namespace tactile::core {
  */
 class TACTILE_CORE_API Language final {
  public:
-  TACTILE_DELETE_COPY(Language);
-  TACTILE_DEFAULT_MOVE(Language);
-
-  ~Language() noexcept = default;
-
   /**
    * Attempts to parse a language file.
    *

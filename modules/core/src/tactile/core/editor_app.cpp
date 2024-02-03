@@ -34,6 +34,7 @@ EditorApp::EditorApp(IWindow* window, IRenderer* renderer)
   ImGui::StyleColorsDark(&style);
   apply_custom_style(style);
 
+  // NOLINTNEXTLINE(*-unused-return-value)
   load_languages("assets/lang")
       .transform([this](LanguageMap&& languages) {
         mModel->set_languages(std::move(languages));
@@ -41,6 +42,7 @@ EditorApp::EditorApp(IWindow* window, IRenderer* renderer)
       .transform_error([](const ErrorCode& error_code) {
         TACTILE_LOG_ERROR("Could not load translation files: {}", error_code.message());
         throw Exception {"Could not load translation files"};
+        return error_code;
       });
 }
 

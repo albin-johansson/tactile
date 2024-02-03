@@ -27,7 +27,7 @@ class TACTILE_CORE_API Model final {
 
  private:
   Settings mSettings {};
-  LanguageMap mLanguages;
+  LanguageMap mLanguages {};
 };
 
 }  // namespace tactile::core
