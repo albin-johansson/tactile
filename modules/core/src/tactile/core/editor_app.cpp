@@ -8,6 +8,7 @@
 #include <imgui_internal.h>
 
 #include "tactile/core/ui/fonts.hpp"
+#include "tactile/core/ui/i18n/language.hpp"
 #include "tactile/foundation/debug/validation.hpp"
 #include "tactile/foundation/log/logger.hpp"
 
@@ -29,6 +30,15 @@ EditorApp::EditorApp(IWindow* window, IRenderer* renderer)
 
   auto& style = ImGui::GetStyle();
   ImGui::StyleColorsDark(&style);
+
+  load_languages("assets/lang")
+      .transform([this](LanguageMap&& languages) {
+        mModel->set_languages(std::move(languages));
+      })
+      .transform_error([](const ErrorCode& error_code) {
+        TACTILE_LOG_ERROR("Could not load translation files: {}", error_code.message());
+        throw Exception {"Could not load translation files"};
+      });
 }
 
 EditorApp::~EditorApp() noexcept = default;

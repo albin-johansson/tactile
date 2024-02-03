@@ -4,6 +4,7 @@
 
 #include "tactile/core/api.hpp"
 #include "tactile/core/persist/settings.hpp"
+#include "tactile/core/ui/i18n/language.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile::core {
@@ -13,6 +14,11 @@ namespace tactile::core {
  */
 class TACTILE_CORE_API Model final {
  public:
+  void set_languages(LanguageMap languages);
+
+  [[nodiscard]]
+  auto current_language() const -> const Language&;
+
   [[nodiscard]]
   auto settings() -> Settings&;
 
@@ -21,6 +27,7 @@ class TACTILE_CORE_API Model final {
 
  private:
   Settings mSettings {};
+  LanguageMap mLanguages;
 };
 
 }  // namespace tactile::core
