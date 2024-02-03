@@ -39,4 +39,11 @@ class TACTILE_CORE_API ScopedStyle final {
   ~ScopedStyle() noexcept;
 };
 
+/**
+ * Applies our custom style options to a style object.
+ *
+ * \param style The style object to update.
+ */
+void apply_custom_style(ImGuiStyle& style);
+
 }  // namespace tactile::core

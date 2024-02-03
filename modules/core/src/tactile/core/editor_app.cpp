@@ -7,6 +7,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "tactile/core/ui/common/styling.hpp"
 #include "tactile/core/ui/fonts.hpp"
 #include "tactile/core/ui/i18n/language.hpp"
 #include "tactile/foundation/debug/validation.hpp"
@@ -30,6 +31,7 @@ EditorApp::EditorApp(IWindow* window, IRenderer* renderer)
 
   auto& style = ImGui::GetStyle();
   ImGui::StyleColorsDark(&style);
+  apply_custom_style(style);
 
   load_languages("assets/lang")
       .transform([this](LanguageMap&& languages) {
