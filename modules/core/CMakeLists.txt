@@ -37,6 +37,9 @@ target_link_libraries(${TACTILE_CORE_TARGET}
                       tactile::proto
                       EnTT::EnTT
                       imgui::imgui
+
+                      PRIVATE
+                      magic_enum::magic_enum
                       )
 
 if (TACTILE_BUILD_TESTS MATCHES ON)
