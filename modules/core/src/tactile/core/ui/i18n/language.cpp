@@ -87,6 +87,10 @@ auto load_languages(const FilePath& dir) -> Result<LanguageMap>
 
   return _load_language_to(languages, dir / "en.ini", kAmericanEnglish)
       .transform([&] { us_en = find_in(languages, kAmericanEnglish); })
+      // clang-format off
+      .and_then([&] { return _load_language_to(languages, dir / "en_GB.ini", kBritishEnglish, us_en); })
+      .and_then([&] { return _load_language_to(languages, dir / "sv.ini", kSwedish, us_en); })
+      // clang-format on
       .transform([&] {
         for (auto& [language_id, language] : languages) {
           language.add_icons();
