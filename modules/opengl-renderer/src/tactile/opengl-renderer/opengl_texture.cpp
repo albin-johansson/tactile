@@ -2,12 +2,12 @@
 
 #include "tactile/opengl-renderer/opengl_texture.hpp"
 
+#include <bit>      // bit_cast
 #include <utility>  // exchange, move
 
 #include <glad/glad.h>
 
 #include "tactile/foundation/io/texture_io.hpp"
-#include "tactile/foundation/platform/bits.hpp"
 #include "tactile/opengl-renderer/opengl_error.hpp"
 
 namespace tactile::opengl {
@@ -103,7 +103,7 @@ auto OpenGLTexture::operator=(OpenGLTexture&& other) noexcept -> OpenGLTexture&
 
 auto OpenGLTexture::get_handle() const -> void*
 {
-  return interpret_as<void*>(static_cast<uintptr>(mID));
+  return std::bit_cast<void*>(static_cast<uintptr>(mID));
 }
 
 auto OpenGLTexture::get_size() const -> Int2

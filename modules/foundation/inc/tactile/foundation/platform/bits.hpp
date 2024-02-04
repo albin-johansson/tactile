@@ -2,12 +2,10 @@
 
 #pragma once
 
-#include <algorithm>    // reverse
-#include <bit>          // bit_cast, endian, byteswap
-#include <concepts>     // integral, invocable
-#include <cstring>      // memcpy
-#include <type_traits>  // is_trivially_copyable_v, is_trivially_constructible_v, has_unique_object_representations_v
-#include <version>      // __cpp_lib_byteswap
+#include <algorithm>  // reverse
+#include <bit>        // bit_cast, endian, byteswap
+#include <concepts>   // integral, invocable
+#include <version>    // __cpp_lib_byteswap
 
 #include "tactile/foundation/container/array.hpp"
 #include "tactile/foundation/prelude.hpp"
@@ -29,22 +27,6 @@ void each_byte(const IntType value, const CallableType& callable)
   }
 }
 
-template <typename To, typename From>
-  requires(sizeof(To) == sizeof(From) &&          //
-           std::is_trivially_copyable_v<From> &&  //
-           std::is_trivially_copyable_v<To> &&    //
-           std::is_trivially_constructible_v<To>)
-[[nodiscard]] auto interpret_as(const From& src) noexcept -> To
-{
-#if __cpp_lib_bit_cast >= 201806L
-  return std::bit_cast<To>(src);
-#else
-  To dst;
-  std::memcpy(&dst, &src, sizeof dst);
-  return dst;
-#endif
-}
-
 /**
  * Reverses the bytes in an integer value.
  *
@@ -63,10 +45,10 @@ template <std::integral IntType>
 #else
   using ByteArray = Array<uint8, sizeof(IntType)>;
 
-  auto bytes = interpret_as<ByteArray>(value);
+  auto bytes = std::bit_cast<ByteArray>(value);
   std::reverse(bytes.begin(), bytes.end());
 
-  return interpret_as<IntType>(bytes);
+  return std::bit_cast<IntType>(bytes);
 #endif
 }
 
