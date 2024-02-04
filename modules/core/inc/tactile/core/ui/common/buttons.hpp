@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
+#include "tactile/core/ui/i18n/icons.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile::core {
@@ -36,5 +37,13 @@ TACTILE_CORE_API auto show_button(const char* label,
  */
 TACTILE_CORE_API auto show_centered_button(const char* label,
                                            const char* tooltip = nullptr) -> bool;
+
+TACTILE_CORE_API auto show_icon_button(const char* icon,
+                                       const char* tooltip = nullptr,
+                                       bool enabled = true) -> bool;
+
+TACTILE_CORE_API auto show_icon_button(IconID icon_id,
+                                       const char* tooltip = nullptr,
+                                       bool enabled = true) -> bool;
 
 }  // namespace tactile::core

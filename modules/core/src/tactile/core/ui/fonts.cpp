@@ -41,10 +41,10 @@ void try_reload_imgui_fonts(IRenderer& renderer,
     icon_config.MergeMode = true;
     icon_config.SizePixels = scaled_font_size;
     icon_config.GlyphMinAdvanceX = icon_config.SizePixels;
-    icon_config.GlyphMaxAdvanceX = icon_config.GlyphMinAdvanceX;
+    icon_config.GlyphMaxAdvanceX = icon_config.SizePixels;
     icon_config.GlyphOffset = {0, 2};
     io.Fonts->AddFontFromFileTTF("assets/fonts/fa/" FONT_ICON_FILE_NAME_FAS,
-                                 icon_config.GlyphMinAdvanceX,
+                                 icon_config.SizePixels,
                                  &icon_config,
                                  kFontIconRange.data());
 
