@@ -20,7 +20,8 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt update
-          sudo apt install ninja-build \
+          sudo apt install g++-12 \
+                           ninja-build \
                            libegl1-mesa-dev \
                            libgles2-mesa-dev \
                            libgl-dev \
@@ -38,6 +39,9 @@ jobs:
                            autopoint \
                            gperf \
                            python3-jinja2
+
+      - name: Use GCC 12
+        run: sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 12
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
