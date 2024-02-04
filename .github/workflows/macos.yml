@@ -44,11 +44,11 @@ jobs:
 
       - name: Register custom Vcpkg triplet file
         working-directory: ./scripts
-        run: python add_vcpkg_triplet.py
+        run: python3 add_vcpkg_triplet.py
 
       - name: Install assets
         working-directory: ./scripts
-        run: python install_assets.py --skip-fonts
+        run: python3 install_assets.py --skip-fonts
 
       - name: Generate build files
         run: |
