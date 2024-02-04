@@ -2,12 +2,9 @@
 
 #pragma once
 
-#include <algorithm>  // reverse
-#include <bit>        // bit_cast, endian, byteswap
-#include <concepts>   // integral, invocable
-#include <version>    // __cpp_lib_byteswap
+#include <bit>       // endian, byteswap
+#include <concepts>  // integral, invocable
 
-#include "tactile/foundation/container/array.hpp"
 #include "tactile/foundation/prelude.hpp"
 
 namespace tactile {
@@ -28,31 +25,6 @@ void each_byte(const IntType value, const CallableType& callable)
 }
 
 /**
- * Reverses the bytes in an integer value.
- *
- * \tparam IntType An integral type.
- *
- * \param value An integer value.
- *
- * \return
- *    A byteswapped integer.
- */
-template <std::integral IntType>
-[[nodiscard]] constexpr auto reverse_bytes(const IntType value) noexcept -> IntType
-{
-#if __cpp_lib_byteswap >= 202110L
-  return std::byteswap(value);
-#else
-  using ByteArray = Array<uint8, sizeof(IntType)>;
-
-  auto bytes = std::bit_cast<ByteArray>(value);
-  std::reverse(bytes.begin(), bytes.end());
-
-  return std::bit_cast<IntType>(bytes);
-#endif
-}
-
-/**
  * Converts a native integer to a little endian integer.
  *
  * \param value The native integer value.
@@ -63,7 +35,7 @@ template <std::integral IntType>
 template <std::integral IntType>
 [[nodiscard]] constexpr auto to_little_endian(const IntType value) noexcept -> IntType
 {
-  return (std::endian::native == std::endian::little) ? value : reverse_bytes(value);
+  return (std::endian::native == std::endian::little) ? value : std::byteswap(value);
 }
 
 }  // namespace tactile

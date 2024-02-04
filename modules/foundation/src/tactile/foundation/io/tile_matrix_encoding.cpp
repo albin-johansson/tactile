@@ -2,7 +2,7 @@
 
 #include "tactile/foundation/io/tile_matrix_encoding.hpp"
 
-#include <bit>       // endian
+#include <bit>       // endian, byteswap
 #include <concepts>  // same_as
 #include <cstring>   // memcpy
 
@@ -16,7 +16,6 @@
 namespace tactile {
 
 using int_literals::operator""_uz;
-using int_literals::operator""_z;
 
 // Update the documentation if the representation of TileID changes.
 static_assert(std::same_as<TileID::value_type, int32>);
@@ -60,7 +59,7 @@ auto tile_matrix_from_byte_stream(const ByteStream& byte_stream,
 
     // Correct the byte ordering if we're on a big endian system.
     if constexpr (std::endian::native == std::endian::big) {
-      tile_id = reverse_bytes(tile_id);
+      tile_id = std::byteswap(tile_id);
     }
 
     // Clear any flipping bits used by Tiled.
