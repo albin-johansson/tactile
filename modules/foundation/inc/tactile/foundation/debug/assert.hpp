@@ -18,6 +18,9 @@
     (!!(Expr) ? ((void) 0)              \
               : tactile::on_assertion_failed(#Expr, (Msg), __FILE__, __LINE__))
   #define TACTILE_ASSERT(Expr) TACTILE_ASSERT_MSG(Expr, "?")
+#elif __has_cpp_attribute(assume)
+  #define TACTILE_ASSERT_MSG(Expr, Msg) [[assume(!!(Expr))]]
+  #define TACTILE_ASSERT(Expr) [[assume(!!(Expr))]]
 #else
   #define TACTILE_ASSERT_MSG(Expr, Msg) (void) 0
   #define TACTILE_ASSERT(Expr) (void) 0
