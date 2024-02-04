@@ -23,7 +23,7 @@ void apply_custom_style(ImGuiStyle& style)
 {
   style.FrameRounding = 4.0f;
 
-  style.WindowPadding = ImVec2 {4.0f, 4.0f};
+  style.WindowPadding = ImVec2 {6.0f, 6.0f};
   style.FramePadding = ImVec2 {6.0f, 4.0f};
   style.ItemSpacing = ImVec2 {6.0f, 4.0f};
   style.ItemInnerSpacing = ImVec2 {4.0f, 4.0f};
