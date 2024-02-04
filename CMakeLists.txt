@@ -21,14 +21,12 @@ message(DEBUG "CMAKE_UNITY_BUILD: ${CMAKE_UNITY_BUILD}")
 option(TACTILE_BUILD_APP_BUNDLE "Build the editor as a macOS application bundle (.app)" OFF)
 option(TACTILE_BUILD_TESTS "Build the test suite" OFF)
 option(TACTILE_BUILD_VULKAN_RENDERER "Build the Vulkan renderer component" OFF)
-option(TACTILE_BUILD_LEGACY "Build the legacy targets" OFF)
 option(TACTILE_UNITY_BUILD "Enable unity builds" ON)
 option(TACTILE_USE_LTO "Enable link-time optimizations" OFF)
 
 message(DEBUG "TACTILE_BUILD_APP_BUNDLE: ${TACTILE_BUILD_APP_BUNDLE}")
 message(DEBUG "TACTILE_BUILD_TESTS: ${TACTILE_BUILD_TESTS}")
 message(DEBUG "TACTILE_BUILD_VULKAN_RENDERER: ${TACTILE_BUILD_VULKAN_RENDERER}")
-message(DEBUG "TACTILE_BUILD_LEGACY: ${TACTILE_BUILD_LEGACY}")
 message(DEBUG "TACTILE_UNITY_BUILD: ${TACTILE_UNITY_BUILD}")
 message(DEBUG "TACTILE_USE_LTO: ${TACTILE_USE_LTO}")
 
@@ -84,19 +82,3 @@ install(DIRECTORY DESTINATION "${TACTILE_BUILD_DIR}/plugins")
 install(DIRECTORY "${TACTILE_ASSET_DIR}" DESTINATION "${TACTILE_BUILD_DIR}")
 
 add_subdirectory(modules)
-
-if (TACTILE_BUILD_LEGACY MATCHES ON)
-  # Target names
-  set(TACTILE_PROTO TactileProto)
-  set(TACTILE_LIB TactileLib)
-  set(TACTILE_EXE Tactile)
-  set(TACTILE_TEST TactileTests)
-
-  add_subdirectory(source/proto)
-  add_subdirectory(source/lib)
-  add_subdirectory(source/app)
-
-  if (TACTILE_BUILD_TESTS MATCHES ON)
-    add_subdirectory(test)
-  endif ()
-endif ()
