@@ -38,4 +38,16 @@ void inject_icons(Vector<String>& strings)
   inject_icon(StringID::kOpenStyleEditor, ICON_FA_BRUSH " ");
 }
 
+auto get_icon_string(const IconID icon_id) -> const char*
+{
+  switch (icon_id) {
+    case IconID::kPlus: return ICON_FA_CIRCLE_PLUS;
+    case IconID::kMinus: return ICON_FA_CIRCLE_MINUS;
+    case IconID::kClone: return ICON_FA_CLONE;
+    case IconID::kUpArrow: return ICON_FA_ARROW_UP;
+    case IconID::kDownArrow: return ICON_FA_ARROW_DOWN;
+    default: throw Exception {"invalid icon identifier"};
+  }
+}
+
 }  // namespace tactile::core
