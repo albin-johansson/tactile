@@ -70,11 +70,9 @@ auto parse_attached_component(const YAML::Node& attached_component_node,
   return parse_to(attached_component_node, "type", attached_component.type)
       .and_then([&]() -> Result<const ir::Component*> {
         const auto prototype_component_iter =
-            std::find_if(map.components.begin(),
-                         map.components.end(),
-                         [&](const ir::Component& component) {
-                           return component.name == attached_component.type;
-                         });
+            std::ranges::find_if(map.components, [&](const ir::Component& component) {
+              return component.name == attached_component.type;
+            });
 
         if (prototype_component_iter == map.components.end()) {
           return unexpected(

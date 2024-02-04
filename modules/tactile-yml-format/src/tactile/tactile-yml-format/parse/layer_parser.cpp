@@ -36,7 +36,7 @@ auto parse_plain_text_tile_matrix(String tile_data, const MatrixExtent matrix_ex
   auto tile_matrix = make_tile_matrix(matrix_extent.row_count, matrix_extent.col_count);
 
   // TODO performance: version of str_split that returns string views?
-  std::replace(tile_data.begin(), tile_data.end(), '\n', ' ');
+  std::ranges::replace(tile_data, '\n', ' ');
   const auto tile_tokens = str_split(tile_data, ' ');
 
   const auto column_count = as_unsigned(matrix_extent.col_count);

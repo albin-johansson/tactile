@@ -70,11 +70,10 @@ class ParentLayerFinder final : public ILayerVisitor {
       return;
     }
 
-    const auto layer_iter = std::find_if(group.mLayers.begin(),
-                                         group.mLayers.end(),
-                                         [this](const Shared<ILayer>& layer) {
-                                           return layer->meta().uuid() == mTargetUUID;
-                                         });
+    const auto layer_iter =
+        std::ranges::find_if(group.mLayers, [this](const Shared<ILayer>& layer) {
+          return layer->meta().uuid() == mTargetUUID;
+        });
 
     if (layer_iter != group.mLayers.end()) {
       mParentLayer = &group;
@@ -112,11 +111,10 @@ class ConstParentLayerFinder final : public IConstLayerVisitor {
       return;
     }
 
-    const auto layer_iter = std::find_if(group.mLayers.begin(),
-                                         group.mLayers.end(),
-                                         [this](const Shared<ILayer>& layer) {
-                                           return layer->meta().uuid() == mTargetUUID;
-                                         });
+    const auto layer_iter =
+        std::ranges::find_if(group.mLayers, [this](const Shared<ILayer>& layer) {
+          return layer->meta().uuid() == mTargetUUID;
+        });
 
     if (layer_iter != group.mLayers.end()) {
       mParentLayer = &group;

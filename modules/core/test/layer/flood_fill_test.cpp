@@ -279,25 +279,25 @@ TYPED_TEST(FloodFillTest, FloodFillWithAffectedPositions)
   EXPECT_EQ(std::ssize(affected_positions), extent.row_count * extent.col_count);
 
   // clang-format off
-  EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {0, 0}), 1_uz);
-  EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {0, 1}), 1_uz);
-  EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {0, 2}), 1_uz);
-  EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {0, 3}), 1_uz);
+  EXPECT_EQ(std::ranges::count(affected_positions, TilePos {0, 0}), 1_uz);
+  EXPECT_EQ(std::ranges::count(affected_positions, TilePos {0, 1}), 1_uz);
+  EXPECT_EQ(std::ranges::count(affected_positions, TilePos {0, 2}), 1_uz);
+  EXPECT_EQ(std::ranges::count(affected_positions, TilePos {0, 3}), 1_uz);
 
-  EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {1, 0}), 1_uz);
-  EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {1, 1}), 1_uz);
-  EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {1, 2}), 1_uz);
-  EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {1, 3}), 1_uz);
+  EXPECT_EQ(std::ranges::count(affected_positions, TilePos {1, 0}), 1_uz);
+  EXPECT_EQ(std::ranges::count(affected_positions, TilePos {1, 1}), 1_uz);
+  EXPECT_EQ(std::ranges::count(affected_positions, TilePos {1, 2}), 1_uz);
+  EXPECT_EQ(std::ranges::count(affected_positions, TilePos {1, 3}), 1_uz);
 
-  EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {2, 0}), 1_uz);
-  EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {2, 1}), 1_uz);
-  EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {2, 2}), 1_uz);
-  EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {2, 3}), 1_uz);
+  EXPECT_EQ(std::ranges::count(affected_positions, TilePos {2, 0}), 1_uz);
+  EXPECT_EQ(std::ranges::count(affected_positions, TilePos {2, 1}), 1_uz);
+  EXPECT_EQ(std::ranges::count(affected_positions, TilePos {2, 2}), 1_uz);
+  EXPECT_EQ(std::ranges::count(affected_positions, TilePos {2, 3}), 1_uz);
 
-  EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {3, 0}), 1_uz);
-  EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {3, 1}), 1_uz);
-  EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {3, 2}), 1_uz);
-  EXPECT_EQ(std::count(affected_positions.begin(), affected_positions.end(), TilePos {3, 3}), 1_uz);
+  EXPECT_EQ(std::ranges::count(affected_positions, TilePos {3, 0}), 1_uz);
+  EXPECT_EQ(std::ranges::count(affected_positions, TilePos {3, 1}), 1_uz);
+  EXPECT_EQ(std::ranges::count(affected_positions, TilePos {3, 2}), 1_uz);
+  EXPECT_EQ(std::ranges::count(affected_positions, TilePos {3, 3}), 1_uz);
   // clang-format on
 }
 

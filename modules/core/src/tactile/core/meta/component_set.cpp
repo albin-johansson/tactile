@@ -35,12 +35,11 @@ auto ComponentSet::remove_component(const UUID& uuid) -> Maybe<ComponentDefiniti
 auto ComponentSet::get_component_with_name(const StringView name) const -> Maybe<UUID>
 {
   const auto definition_iter =
-      std::find_if(mComponents.begin(),
-                   mComponents.end(),
-                   [=](const ComponentDefinitionMap::value_type& entry) {
-                     const auto& definition = entry.second;
-                     return definition.name == name;
-                   });
+      std::ranges::find_if(mComponents,
+                           [=](const ComponentDefinitionMap::value_type& entry) {
+                             const auto& definition = entry.second;
+                             return definition.name == name;
+                           });
 
   if (definition_iter != mComponents.end()) {
     return definition_iter->first;

@@ -17,8 +17,8 @@ auto UUID::generate() -> UUID
   static boost::uuids::random_generator uuid_generator;
   const auto value = uuid_generator();
 
-  UUID uuid;
-  std::copy(value.begin(), value.end(), uuid.mData.begin());
+  UUID uuid {};
+  std::ranges::copy(value, uuid.mData.begin());
 
   return uuid;
 }
@@ -36,8 +36,7 @@ auto UUID::hash_code() const noexcept -> usize
 
 auto UUID::is_null() const -> bool
 {
-  auto is_zero = [](const uint8 byte) { return byte == 0; };
-  return std::all_of(mData.begin(), mData.end(), is_zero);
+  return std::ranges::all_of(mData, [](const uint8 byte) { return byte == 0; });
 }
 
 auto to_string(const UUID& uuid) -> String

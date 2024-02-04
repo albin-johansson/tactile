@@ -10,11 +10,10 @@ auto get_attribute_type(const Component& component, StringView attr_name)
     -> Maybe<AttributeType>
 {
   const auto attribute_iter =
-      std::find_if(component.attributes.begin(),
-                   component.attributes.end(),
-                   [attr_name](const ir::NamedAttribute& stored_attribute) {
-                     return stored_attribute.name == attr_name;
-                   });
+      std::ranges::find_if(component.attributes,
+                           [attr_name](const ir::NamedAttribute& stored_attribute) {
+                             return stored_attribute.name == attr_name;
+                           });
 
   if (attribute_iter != component.attributes.end()) {
     return attribute_iter->value.get_type();

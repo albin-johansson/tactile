@@ -39,7 +39,7 @@ auto get_persistent_storage_directory() -> FilePath
 auto normalize_path(const FilePath& path) -> String
 {
   auto str = path.string();
-  std::replace(str.begin(), str.end(), '\\', '/');
+  std::ranges::replace(str, '\\', '/');
   return str;
 }
 
