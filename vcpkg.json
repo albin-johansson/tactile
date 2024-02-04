@@ -41,7 +41,6 @@
       ]
     },
     "sdl2-image",
-    "spdlog",
     "stb",
     "tinyfiledialogs",
     "tl-expected",
