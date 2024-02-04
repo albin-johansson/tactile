@@ -11,7 +11,7 @@
 
 namespace tactile::core {
 
-void EditorDockWidget::update(const Model& model, EventDispatcher& dispatcher)
+void EditorDockWidget::update(const Model&, EventDispatcher&)
 {
   ImGuiWindowClass window_class {};
   window_class.DockNodeFlagsOverrideSet = ImGuiDockNodeFlags_NoTabBar;

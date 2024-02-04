@@ -79,7 +79,8 @@ auto parse_tile_objects(const JSON& json, Vector<ir::Object>& objects) -> Result
   return kOK;
 }
 
-auto parse_tileset_tile(const JSON& json, const ir::Tileset& tileset) -> Result<ir::Tile>
+auto parse_tileset_tile(const JSON& json, [[maybe_unused]] const ir::Tileset& tileset)
+    -> Result<ir::Tile>
 {
   ir::Tile tile {};
 

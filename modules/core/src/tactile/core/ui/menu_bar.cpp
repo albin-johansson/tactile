@@ -6,7 +6,7 @@
 
 namespace tactile::core {
 
-void MenuBar::update(const Model& model, EventDispatcher& dispatcher)
+void MenuBar::update(const Model&, EventDispatcher&)
 {
   if (ImGui::BeginMainMenuBar()) {
     ImGui::EndMainMenuBar();

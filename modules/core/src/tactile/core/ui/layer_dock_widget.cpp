@@ -8,7 +8,7 @@
 
 namespace tactile::core {
 
-void LayerDockWidget::update(const Model& model, EventDispatcher& dispatcher)
+void LayerDockWidget::update(const Model& model, EventDispatcher&)
 {
   const auto& settings = model.settings();
 

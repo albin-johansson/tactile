@@ -4,7 +4,7 @@ on: [ push ]
 
 env:
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
-  VCPKG_TARGET_TRIPLET: x64-osx-tactile
+  VCPKG_TARGET_TRIPLET: arm64-osx-tactile
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
   VCPKG_CACHE_EDITION: 1
 

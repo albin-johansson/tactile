@@ -11,7 +11,7 @@
 
 namespace tactile::core {
 
-void DockSpace::update(const Model& model, EventDispatcher&)
+void DockSpace::update(const Model&, EventDispatcher&)
 {
   const auto* viewport = require_not_null(ImGui::GetMainViewport(), "null main viewport");
   mRootId = ImGui::DockSpaceOverViewport(viewport);

@@ -7,12 +7,13 @@
 
 #include "tactile/foundation/io/save/save_format_error.hpp"
 #include "tactile/foundation/io/tile_matrix_encoding.hpp"
+#include "tactile/foundation/misc/integer_conversion.hpp"
 #include "tactile/foundation/misc/string_conversion.hpp"
 #include "tactile/tiled-xml-format/common.hpp"
 #include "tactile/tiled-xml-format/parse/meta_parser.hpp"
 #include "tactile/tiled-xml-format/parse/object_parser.hpp"
 
-using std::string_literals::operator""s;
+using namespace std::string_literals;
 
 namespace tactile::tiled::tmx {
 namespace {

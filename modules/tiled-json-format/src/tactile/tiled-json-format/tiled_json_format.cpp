@@ -33,9 +33,9 @@ auto TiledJsonFormat::load_map(const FilePath& map_path,
   }
 }
 
-auto TiledJsonFormat::load_tileset(const FilePath& tileset_path,
-                                   const SaveFormatReadOptions& options) const
-    -> Result<ir::Tileset>
+auto TiledJsonFormat::load_tileset(
+    [[maybe_unused]] const FilePath& tileset_path,
+    [[maybe_unused]] const SaveFormatReadOptions& options) const -> Result<ir::Tileset>
 {
   // TODO
   return unexpected(make_generic_error(GenericError::kUnsupported));
@@ -57,10 +57,10 @@ auto TiledJsonFormat::save_map(const FilePath& map_path,
       });
 }
 
-auto TiledJsonFormat::save_tileset(const FilePath& tileset_path,
-                                   const ir::Tileset& tileset,
-                                   const SaveFormatWriteOptions& options) const
-    -> Result<void>
+auto TiledJsonFormat::save_tileset(
+    [[maybe_unused]] const FilePath& tileset_path,
+    [[maybe_unused]] const ir::Tileset& tileset,
+    [[maybe_unused]] const SaveFormatWriteOptions& options) const -> Result<void>
 {
   // TODO
   return unexpected(make_generic_error(GenericError::kUnsupported));

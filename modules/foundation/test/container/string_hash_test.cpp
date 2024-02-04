@@ -6,8 +6,8 @@
 
 using namespace tactile;
 
-using std::string_literals::operator""s;
-using std::string_view_literals::operator""sv;
+using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 TEST(StringHash, HashDifferentStringRepresentations)
 {

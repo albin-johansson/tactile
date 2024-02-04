@@ -9,7 +9,7 @@
 #include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/misc/chrono.hpp"
 
-using std::chrono_literals::operator""s;
+using namespace std::chrono_literals;
 
 namespace tactile::core {
 

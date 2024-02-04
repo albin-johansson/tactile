@@ -17,7 +17,7 @@ inline constexpr Array<ImWchar, 3> kFontIconRange {ICON_MIN_FA, ICON_MAX_FA, 0};
 }  // namespace
 
 void try_reload_imgui_fonts(IRenderer& renderer,
-                            const int font_size,
+                            const float font_size,
                             const float framebuffer_scale)
 {
   if (renderer.can_reload_fonts_texture()) {
@@ -26,7 +26,7 @@ void try_reload_imgui_fonts(IRenderer& renderer,
     auto& io = ImGui::GetIO();
     io.Fonts->Clear();
 
-    const auto scaled_font_size = static_cast<float>(font_size) * framebuffer_scale;
+    const auto scaled_font_size = font_size * framebuffer_scale;
 
     ImFontConfig roboto_config {};
     roboto_config.SizePixels = scaled_font_size;

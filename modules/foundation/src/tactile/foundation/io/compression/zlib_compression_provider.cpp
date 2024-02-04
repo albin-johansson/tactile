@@ -85,7 +85,7 @@ auto _process_data(const ZlibCallbacks& callbacks, const ByteSpan input_data)
   }
 
   return _process_chunks(callbacks, stream, out_buffer)
-      .and_then([&](ByteStream byte_stream) -> Result<ByteStream> {
+      .and_then([&](ByteStream&& byte_stream) -> Result<ByteStream> {
         if (const auto end_result = callbacks.end_stream(&stream); end_result != Z_OK) {
           TACTILE_LOG_ERROR("Could not finalize z_stream: {}", zError(end_result));
           return unexpected(make_compression_error(CompressionError::kInternalError));

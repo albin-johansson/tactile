@@ -19,7 +19,7 @@ namespace tactile::core {
  * \param framebuffer_scale The current display framebuffer scale.
  */
 TACTILE_CORE_API void try_reload_imgui_fonts(IRenderer& renderer,
-                                             int font_size,
+                                             float font_size,
                                              float framebuffer_scale);
 
 }  // namespace tactile::core
