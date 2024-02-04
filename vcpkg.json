@@ -13,7 +13,6 @@
     "boost-uuid",
     "entt",
     "cppcodec",
-    "doctest",
     "fast-float",
     "fmt",
     {
