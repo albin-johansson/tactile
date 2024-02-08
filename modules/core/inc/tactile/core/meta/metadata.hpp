@@ -3,8 +3,10 @@
 #pragma once
 
 #include "tactile/core/api.hpp"
+#include "tactile/core/meta/component.hpp"
 #include "tactile/foundation/container/string.hpp"
 #include "tactile/foundation/container/string_map.hpp"
+#include "tactile/foundation/container/vector.hpp"
 #include "tactile/foundation/functional/maybe.hpp"
 #include "tactile/foundation/meta/attribute.hpp"
 #include "tactile/foundation/misc/uuid.hpp"
@@ -119,6 +121,9 @@ class TACTILE_CORE_API Metadata final {
   [[nodiscard]]
   auto property_count() const -> usize;
 
+  [[nodiscard]]
+  auto component_count() const -> usize;
+
   /**
    * Returns a clone of the metadata instance with another UUID.
    *
@@ -128,10 +133,17 @@ class TACTILE_CORE_API Metadata final {
   [[nodiscard]]
   auto clone() const -> Metadata;
 
+  [[nodiscard]] auto property_begin() const { return mProperties.begin(); }
+  [[nodiscard]] auto property_end() const { return mProperties.end(); }
+
+  [[nodiscard]] auto component_begin() const { return mComponents.begin(); }
+  [[nodiscard]] auto component_end() const { return mComponents.end(); }
+
  private:
   UUID mUUID {UUID::generate()};
   String mName {};
   StringMap<Attribute> mProperties {};
+  Vector<Component> mComponents {};
 };
 
 }  // namespace tactile::core

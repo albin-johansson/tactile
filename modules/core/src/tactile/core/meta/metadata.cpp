@@ -66,6 +66,11 @@ auto Metadata::property_count() const -> usize
   return mProperties.size();
 }
 
+auto Metadata::component_count() const -> usize
+{
+  return mComponents.size();
+}
+
 auto Metadata::clone() const -> Metadata
 {
   auto other = Metadata {};
