@@ -17,6 +17,21 @@ class GroupLayer;
 
 /**
  * Basic interface implemented by all tilemap variations.
+ *
+ * \details
+ *    Maps a built from multiple layers stacked on top of each other. An invisible
+ *    group layer, the "root" layer, manages the layers in every map. This root layer
+ *    is always present, even in empty maps. However, this root layer is never
+ *    included in save files, it is merely an implementation detail to simplify the
+ *    map code.
+ *
+ * \details
+ *    Each map has a collection of associated tilesets, providing the tiles for tile
+ *    layers. Tilesets may be shared with other maps in the case of external tilesets.
+ *
+ * \details
+ *    Every map uses its own tile format specification, which can be used to control
+ *    aspects such as whether tile layer data is compressed.
  */
 class IMap : public IMetaContext {
  public:
