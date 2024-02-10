@@ -1,5 +1,9 @@
 project(tactile-opengl-renderer CXX)
 
+find_package(OpenGL REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+find_package(glad CONFIG REQUIRED)
+
 set(TACTILE_OPENGL_TARGET tactile-opengl-renderer)
 
 file(GLOB_RECURSE TACTILE_OPENGL_SOURCE_FILES
@@ -25,6 +29,7 @@ target_link_libraries(${TACTILE_OPENGL_TARGET}
                       tactile::foundation
 
                       PRIVATE
+                      OpenGL::GL
                       SDL2::SDL2
                       glad::glad
                       imgui::imgui

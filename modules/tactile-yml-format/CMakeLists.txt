@@ -1,5 +1,7 @@
 project(tactile-yml-format CXX)
 
+find_package(yaml-cpp CONFIG REQUIRED)
+
 set(TACTILE_YML_FORMAT_TARGET tactile-yml-format)
 
 file(GLOB_RECURSE TACTILE_YML_FORMAT_SOURCE_FILES

@@ -1,5 +1,7 @@
 project(tactile-tiled-json-format CXX)
 
+find_package(nlohmann_json CONFIG REQUIRED)
+
 set(TACTILE_TILED_JSON_FORMAT_TARGET tactile-tiled-json-format)
 
 file(GLOB_RECURSE TACTILE_TILED_JSON_FORMAT_SOURCE_FILES

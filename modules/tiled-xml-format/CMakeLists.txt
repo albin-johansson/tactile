@@ -1,5 +1,7 @@
 project(tactile-tiled-xml-format CXX)
 
+find_package(pugixml CONFIG REQUIRED)
+
 set(TACTILE_TILED_XML_FORMAT_TARGET tactile-tiled-xml-format)
 
 file(GLOB_RECURSE TACTILE_TILED_XML_FORMAT_SOURCE_FILES

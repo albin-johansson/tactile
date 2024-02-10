@@ -1,5 +1,7 @@
 project(tactile-proto CXX)
 
+find_package(Protobuf CONFIG REQUIRED)
+
 set(TACTILE_PROTO_TARGET tactile-proto)
 
 file(GLOB_RECURSE TACTILE_PROTO_FILES

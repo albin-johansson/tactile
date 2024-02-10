@@ -1,5 +1,11 @@
 project(tactile-core CXX)
 
+find_package(argparse CONFIG REQUIRED)
+find_package(EnTT CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+find_package(magic_enum CONFIG REQUIRED)
+find_package(tinyfiledialogs CONFIG REQUIRED)
+
 set(TACTILE_CORE_TARGET tactile-core)
 
 file(GLOB_RECURSE TACTILE_CORE_SOURCE_FILES

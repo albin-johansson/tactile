@@ -72,6 +72,6 @@ if (MSVC)
                              )
 endif ()
 
-if (TACTILE_BUILD_APP_BUNDLE MATCHES ON)
-  target_compile_definitions(${TACTILE_LIB} PUBLIC TACTILE_BUILD_APP_BUNDLE)
+if (TACTILE_MACOS_APP_BUNDLE MATCHES ON)
+  target_compile_definitions(${TACTILE_LIB} PUBLIC TACTILE_MACOS_APP_BUNDLE)
 endif ()

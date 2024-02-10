@@ -1,5 +1,15 @@
 project(tactile-foundation CXX)
 
+find_package(Boost REQUIRED)
+find_package(FastFloat CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
+find_package(tl-expected CONFIG REQUIRED)
+find_package(zstd CONFIG REQUIRED)
+find_package(ZLIB REQUIRED)
+
+find_path(CPPCODEC_INCLUDE_DIRS "cppcodec/base32_crockford.hpp")
+find_path(STB_INCLUDE_DIRS "stb_c_lexer.h")
+
 set(TACTILE_FOUNDATION_TARGET tactile-foundation)
 
 file(GLOB_RECURSE TACTILE_FOUNDATION_SOURCE_FILES

@@ -1,6 +1,7 @@
 project(tactile-vulkan-renderer CXX)
 
 find_package(Vulkan REQUIRED)
+find_package(imgui CONFIG REQUIRED)
 
 set(TACTILE_VULKAN_TARGET tactile-vulkan-renderer)
 
@@ -11,6 +12,7 @@ file(GLOB_RECURSE TACTILE_VULKAN_SOURCE_FILES
      )
 
 add_library(${TACTILE_VULKAN_TARGET} SHARED "${TACTILE_VULKAN_SOURCE_FILES}")
+add_library(tactile::vulkan-renderer ALIAS ${TACTILE_VULKAN_TARGET})
 
 tactile_prepare_target(${TACTILE_VULKAN_TARGET})
 
