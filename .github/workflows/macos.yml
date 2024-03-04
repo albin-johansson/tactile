@@ -4,29 +4,21 @@ on: [ push ]
 
 env:
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
-  VCPKG_TARGET_TRIPLET: x64-osx
+  VCPKG_TARGET_TRIPLET: arm64-osx-tactile
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
   VCPKG_CACHE_EDITION: 1
 
 jobs:
   macos-latest-test:
-    runs-on: macos-latest
+    runs-on: macos-14
     if: contains(github.event.head_commit.message, '[skip-ci]') == false
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install system dependencies
         run: |
           brew update
-          brew install cmake
           brew install ninja
-          brew install pkg-config
-
-      - name: Install Boost
-        id: install-boost
-        uses: MarkusJx/install-boost@v2.4.3
-        with:
-          boost_version: 1.81.0
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
@@ -47,20 +39,33 @@ jobs:
           ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
 
       - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
-        if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
 
+      - name: Register custom Vcpkg triplet file
+        working-directory: ./scripts
+        run: python3 add_vcpkg_triplet.py
+
+      - name: Install assets
+        working-directory: ./scripts
+        run: python3 install_assets.py --skip-fonts
+
       - name: Generate build files
-        env:
-          BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
         run: |
-          mkdir build && cd build
+          mkdir build
+          cd build
           cmake .. -GNinja \
                    -DCMAKE_BUILD_TYPE=Debug \
-                   -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}}
+                   -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
+                   -DTACTILE_USE_SANITIZERS=OFF \
+                   -DTACTILE_BUILD_TESTS=ON \
+                   -DTACTILE_UNITY_BUILD=OFF \
+                   --log-level=DEBUG
 
       - name: Build
         run: ninja -C build
+
+      - name: Install
+        run: ninja -C build install
 
       - name: Run tests
         working-directory: ./build/test

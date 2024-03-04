@@ -6,6 +6,7 @@ env:
   DISPLAY: :99.0
   SDL_VIDEODRIVER: x11
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
+  VCPKG_TARGET_TRIPLET: x64-linux-tactile
   VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}/vcpkg/bincache
   VCPKG_CACHE_EDITION: 1
 
@@ -14,12 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(github.event.head_commit.message, '[skip-ci]') == false
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: lukka/get-cmake@latest
       - name: Install system dependencies
         run: |
           sudo apt update
-          sudo apt install ninja-build \
+          sudo apt install g++-12 \
+                           ninja-build \
                            libegl1-mesa-dev \
                            libgles2-mesa-dev \
                            libgl-dev \
@@ -28,13 +30,18 @@ jobs:
                            libx11-dev \
                            libxmu-dev \
                            libxi-dev \
-                           xvfb
+                           libtool \
+                           xvfb \
+                           pkg-config \
+                           automake \
+                           autoconf \
+                           autoconf-archive \
+                           autopoint \
+                           gperf \
+                           python3-jinja2
 
-      - name: Install Boost
-        id: install-boost
-        uses: MarkusJx/install-boost@v2.4.3
-        with:
-          boost_version: 1.81.0
+      - name: Use GCC 12
+        run: sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 12
 
       - name: Cache Vcpkg
         id: restore-vcpkg-and-artifacts
@@ -56,8 +63,11 @@ jobs:
           sudo ./vcpkg/vcpkg integrate install
 
       - name: Create directory ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
-        if: steps.restore-vcpkg-and-artifacts.outputs.cache-hit != 'true'
         run: mkdir -p ${{env.VCPKG_DEFAULT_BINARY_CACHE}}
+
+      - name: Register custom Vcpkg triplet file
+        working-directory: ./scripts
+        run: python add_vcpkg_triplet.py
 
       - name: Emulate video device
         run: |
@@ -68,16 +78,28 @@ jobs:
                                   --exec /usr/bin/Xvfb -- :99 -screen 0 800x600x24 -ac +extension GLX;
           sleep 3
 
+      - name: Install assets
+        working-directory: ./scripts
+        run: python install_assets.py --skip-fonts
+
       - name: Generate build files
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
         run: |
           mkdir build && cd build
           cmake .. -GNinja \
-                   -DCMAKE_BUILD_TYPE=Debug
+                   -DCMAKE_BUILD_TYPE=Debug \
+                   -DVCPKG_TARGET_TRIPLET=${{env.VCPKG_TARGET_TRIPLET}} \
+                   -DTACTILE_USE_SANITIZERS=OFF \
+                   -DTACTILE_BUILD_TESTS=ON \
+                   -DTACTILE_UNITY_BUILD=OFF \
+                   --log-level=DEBUG
 
       - name: Build
         run: ninja -C build
+
+      - name: Install
+        run: ninja -C build install
 
       - name: Run tests
         working-directory: ./build/test
