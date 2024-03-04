@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include "tactile/base/prelude.hpp"
+
 #define TACTILE_FWD_DECLARE_CLASS(Name) class Name;
 #define TACTILE_FWD_DECLARE_STRUCT(Name) struct Name;
 
@@ -31,38 +33,6 @@
   namespace Ns {                                \
   struct Name;                                  \
   }
-
-#define TACTILE_DEFAULT_COPY(Class) \
-  Class(const Class&) = default;    \
-  auto operator=(const Class&)->Class& = default
-
-#define TACTILE_DEFAULT_MOVE(Class)  \
-  Class(Class&&) noexcept = default; \
-  auto operator=(Class&&) noexcept -> Class& = default
-
-#define TACTILE_DELETE_COPY(Class) \
-  Class(const Class&) = delete;    \
-  auto operator=(const Class&)->Class& = delete
-
-#define TACTILE_DELETE_MOVE(Class)  \
-  Class(Class&&) noexcept = delete; \
-  auto operator=(Class&&) noexcept -> Class& = delete
-
-#define TACTILE_DECLARE_COPY(Class) \
-  Class(const Class&);              \
-  Class& operator=(const Class&)
-
-#define TACTILE_DECLARE_MOVE(Class) \
-  Class(Class&&) noexcept;          \
-  Class& operator=(Class&&) noexcept
-
-#define TACTILE_DEFINE_COPY(Class)      \
-  Class::Class(const Class&) = default; \
-  Class& Class::operator=(const Class&) = default
-
-#define TACTILE_DEFINE_MOVE(Class)          \
-  Class::Class(Class&&) noexcept = default; \
-  Class& Class::operator=(Class&&) noexcept = default
 
 #define TACTILE_DECLARE_SPECIAL_MEMBERS(Class) \
   TACTILE_DECLARE_COPY(Class);                 \

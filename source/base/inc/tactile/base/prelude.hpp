@@ -98,6 +98,22 @@
 #define TACTILE_DELETE_COPY(Name) TACTILE_INIT_COPY(Name, delete)
 #define TACTILE_DELETE_MOVE(Name) TACTILE_INIT_MOVE(Name, delete)
 
+#define TACTILE_DECLARE_COPY(Name) \
+  Name(const Name&);               \
+  auto operator=(const Name&)->Name&
+
+#define TACTILE_DECLARE_MOVE(Name) \
+  Name(Name&&) noexcept;           \
+  auto operator=(Name&&) noexcept -> Name&
+
+#define TACTILE_DEFINE_COPY(Name)    \
+  Name::Name(const Name&) = default; \
+  auto Name::operator=(const Name&) -> Name& = default
+
+#define TACTILE_DEFINE_MOVE(Name)        \
+  Name::Name(Name&&) noexcept = default; \
+  auto Name::operator=(Name&&) noexcept -> Name& = default
+
 #define TACTILE_INTERFACE_CLASS(Name) \
                                       \
  protected:                           \
