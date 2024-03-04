@@ -47,7 +47,7 @@
 .fleet
 
 # Generated Doxygen output
-doxy*
+docs/doxygen/html
 
 # Build output
 build
@@ -58,3 +58,10 @@ installer/packages/com.albinjohansson.tactile/data/*
 
 # Miscellaneous
 .cache
+
+# Asset files
+assets/fonts
+assets/images
+
+# Cached script files
+scripts/cache
