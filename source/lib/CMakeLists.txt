@@ -37,7 +37,7 @@ target_link_libraries(${TACTILE_LIB}
                       fmt::fmt
                       glm::glm
                       protobuf::libprotobuf
-                      yaml-cpp
+                      yaml-cpp::yaml-cpp
                       nlohmann_json::nlohmann_json
                       pugixml::pugixml
                       tinyfiledialogs::tinyfiledialogs
@@ -46,7 +46,7 @@ target_link_libraries(${TACTILE_LIB}
                       GLEW::GLEW
                       OpenGL::GL
                       spdlog::spdlog
-                      zstd::libzstd_shared
+                      zstd::libzstd_static
                       )
 
 target_compile_definitions(${TACTILE_LIB}
