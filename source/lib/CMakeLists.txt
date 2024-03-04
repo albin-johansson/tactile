@@ -26,6 +26,7 @@ target_include_directories(${TACTILE_LIB}
 target_link_libraries(${TACTILE_LIB}
                       PUBLIC
                       tactile::proto
+                      tactile::base
                       Boost::boost
                       argparse::argparse
                       SDL2::SDL2
