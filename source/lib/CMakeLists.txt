@@ -7,7 +7,6 @@ file(GLOB_RECURSE SOURCE_FILES
      )
 
 add_library(${TACTILE_LIB} ${SOURCE_FILES})
-add_dependencies(${TACTILE_LIB} ${TACTILE_PROTO})
 
 tactile_prepare_target(${TACTILE_LIB})
 
@@ -26,7 +25,7 @@ target_include_directories(${TACTILE_LIB}
 
 target_link_libraries(${TACTILE_LIB}
                       PUBLIC
-                      ${TACTILE_PROTO}
+                      tactile::proto
                       Boost::boost
                       argparse::argparse
                       SDL2::SDL2

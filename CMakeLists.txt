@@ -44,7 +44,6 @@ message(DEBUG "TACTILE_APP_DIR: ${TACTILE_APP_DIR}")
 message(DEBUG "TACTILE_LIB_DIR: ${TACTILE_LIB_DIR}")
 
 # Target names
-set(TACTILE_PROTO TactileProto)
 set(TACTILE_LIB TactileLib)
 set(TACTILE_EXE Tactile)
 set(TACTILE_TEST TactileTests)
