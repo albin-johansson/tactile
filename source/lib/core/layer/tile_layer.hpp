@@ -20,12 +20,12 @@
 #pragma once
 
 #include "common/type/result.hpp"
-#include "common/type/vec.hpp"
 #include "core/layer/abstract_layer.hpp"
 #include "core/tile/tile_extent.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {
@@ -52,7 +52,9 @@ class TileLayer final : public AbstractLayer {
   /// \param origin the initial position of the flood-fill.
   /// \param replacement the tile ID that will be used when
   /// \param[out] affected pointer to which all modified positions are written to.
-  void flood(const TilePos& origin, TileID replacement, Vec<TilePos>* affected = nullptr);
+  void flood(const TilePos& origin,
+             TileID replacement,
+             Vector<TilePos>* affected = nullptr);
 
   /// Appends a single row of empty tiles to the bottom of the layer.
   void add_row();

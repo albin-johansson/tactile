@@ -42,7 +42,7 @@ struct Tileset::Data final {
   Maybe<TileIndex> selected_tile;
 
   /// Optimization to avoid iterating all tiles in the update function.
-  // TODO Vec<UUID> mAnimatedTiles;
+  // TODO Vector<UUID> mAnimatedTiles;
 
   /// A cache of the tiles that should be rendered when a tile is encountered
   mutable HashMap<TileIndex, TileIndex> appearance_cache;

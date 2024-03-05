@@ -19,15 +19,15 @@
 
 #pragma once
 
-#include "common/type/vec.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {
 
 /// Splits a string into a collection of tokens, separated by a specific character.
-[[nodiscard]] auto split(StringView str, char sep) -> Vec<String>;
+[[nodiscard]] auto split(StringView str, char sep) -> Vector<String>;
 
 /// Converts a string into a 32-bit signed integer.
 [[nodiscard]] auto parse_i32(StringView str, int base = 10) -> Maybe<int32>;

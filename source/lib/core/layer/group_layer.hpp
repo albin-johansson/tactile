@@ -21,11 +21,11 @@
 
 #include "common/type/result.hpp"
 #include "common/type/uuid.hpp"
-#include "common/type/vec.hpp"
 #include "core/layer/abstract_layer.hpp"
 #include "core/layer/visitors.hpp"
 #include "tactile/base/container/function.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
+#include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {
@@ -34,7 +34,7 @@ namespace tactile {
 /// Group layers are recursive, and can store an unlimited amount of child layers.
 class GroupLayer final : public AbstractLayer {
  public:
-  using LayerStorage = Vec<Shared<Layer>>;
+  using LayerStorage = Vector<Shared<Layer>>;
   using UnaryLayerFunc = Function<void(const Layer&)>;
 
   void accept(ContextVisitor& visitor) const override;

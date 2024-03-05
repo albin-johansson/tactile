@@ -26,7 +26,6 @@
 #include "common/type/math.hpp"
 #include "common/type/string_map.hpp"
 #include "common/type/uuid.hpp"
-#include "common/type/vec.hpp"
 #include "common/util/algorithm.hpp"
 #include "core/attribute.hpp"
 #include "core/layer/layer_type.hpp"
@@ -40,6 +39,7 @@
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/variant.hpp"
+#include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
@@ -73,7 +73,7 @@ struct TileLayerIR final {
 };
 
 struct ObjectLayerIR final {
-  Vec<ObjectIR> objects;
+  Vector<ObjectIR> objects;
 };
 
 struct GroupLayerIR final {
@@ -83,7 +83,7 @@ struct GroupLayerIR final {
   TACTILE_DELETE_COPY(GroupLayerIR);
   TACTILE_DEFAULT_MOVE(GroupLayerIR);
 
-  Vec<Unique<LayerIR>> children;
+  Vector<Unique<LayerIR>> children;
 };
 
 struct LayerIR final {
@@ -122,8 +122,8 @@ struct AnimationFrameIR final {
 struct TileIR final {
   UUID uuid {make_uuid()};  // This is not persistent! Only here for convenience.
 
-  Vec<ObjectIR> objects;
-  Vec<AnimationFrameIR> frames;
+  Vector<ObjectIR> objects;
+  Vector<AnimationFrameIR> frames;
   ContextIR context;
 };
 
@@ -163,8 +163,8 @@ struct MapIR final {
   int32 next_object_id {};
   TileFormatIR tile_format;
   ComponentMap component_definitions;
-  Vec<TilesetIR> tilesets;
-  Vec<LayerIR> layers;
+  Vector<TilesetIR> tilesets;
+  Vector<LayerIR> layers;
   ContextIR context;
 
   [[nodiscard]] auto find_tileset_with_tile(const TileID id) const -> const TilesetIR&

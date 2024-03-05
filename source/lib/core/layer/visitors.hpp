@@ -20,17 +20,17 @@
 #pragma once
 
 #include "common/type/uuid.hpp"
-#include "common/type/vec.hpp"
 #include "core/layer/layer.hpp"
 #include "core/layer/layer_visitor.hpp"
 #include "tactile/base/container/function.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
+#include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {
 
-using LayerVector = Vec<Shared<Layer>>;
+using LayerVector = Vector<Shared<Layer>>;
 using LayerMutatorFn = Function<void(LayerVector&, LayerVector::iterator)>;
 using LayerQueryFn = Function<void(const LayerVector&, LayerVector::const_iterator)>;
 

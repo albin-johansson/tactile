@@ -81,7 +81,7 @@ class ContextManager final {
   ContextMap mContexts;
   UUID mRootContextId;
   UUID mActiveContextId {};
-  // TODO PERFORMANCE: maybe use HashMap<UUID, Vec<Shared<IContext>>>?
+  // TODO PERFORMANCE: maybe use HashMap<UUID, Vector<Shared<IContext>>>?
 
   void on_component_update(const UUID& component_id, const ComponentFunc& func);
 };

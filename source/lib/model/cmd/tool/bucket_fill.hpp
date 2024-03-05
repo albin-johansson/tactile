@@ -20,12 +20,12 @@
 #pragma once
 
 #include "common/type/uuid.hpp"
-#include "common/type/vec.hpp"
 #include "core/map.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "model/cmd/command.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
+#include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile::cmd {
@@ -49,7 +49,7 @@ class BucketFill final : public Command {
   TilePos mOrigin;
   TileID mReplacement {};
   Maybe<TileID> mTarget;
-  Vec<TilePos> mPositions;
+  Vector<TilePos> mPositions;
 };
 
 }  // namespace tactile::cmd

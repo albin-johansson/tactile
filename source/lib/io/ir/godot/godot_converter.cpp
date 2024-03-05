@@ -27,12 +27,12 @@
 #include <fmt/format.h>
 
 #include "common/debug/assert.hpp"
-#include "common/type/vec.hpp"
 #include "common/util/assoc.hpp"
 #include "common/util/functional.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "io/ir/godot/godot_options.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/base/container/vector.hpp"
 
 namespace tactile {
 namespace {
@@ -155,11 +155,12 @@ void add_animations(const MapIR& map,
 }
 
 [[nodiscard]] auto approximate_ellipse_as_polygon(const ObjectIR& object,
-                                                  const usize point_count) -> Vec<Float2>
+                                                  const usize point_count)
+    -> Vector<Float2>
 {
   TACTILE_ASSERT(object.type == ObjectType::Ellipse);
 
-  Vec<Float2> points;
+  Vector<Float2> points;
   points.reserve(point_count);
 
   const auto n = static_cast<double>(point_count);

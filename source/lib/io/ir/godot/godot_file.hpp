@@ -21,11 +21,11 @@
 
 #include "common/type/math.hpp"
 #include "common/type/string_map.hpp"
-#include "common/type/vec.hpp"
 #include "core/attribute.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/tree_map.hpp"
+#include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {
@@ -52,13 +52,13 @@ struct GdAtlasTexture final {
 
 struct GdAnimation final {
   String name;
-  Vec<GdSubRes> frames;  /// Atlas textures
+  Vector<GdSubRes> frames;  /// Atlas textures
   float speed {};
 };
 
 struct GdSpriteFrames final {
   GdSubRes id {};
-  Vec<GdAnimation> animations;
+  Vector<GdAnimation> animations;
 };
 
 struct GdRectShape final {

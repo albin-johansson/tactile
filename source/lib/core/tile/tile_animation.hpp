@@ -21,7 +21,7 @@
 
 #include "common/type/chrono.hpp"
 #include "common/type/result.hpp"
-#include "common/type/vec.hpp"
+#include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 
@@ -78,7 +78,7 @@ class TileAnimation final {
   [[nodiscard]] auto end() const noexcept { return mFrames.end(); }
 
  private:
-  Vec<Frame> mFrames;
+  Vector<Frame> mFrames;
   usize mIndex {};
   TimePoint mLastUpdate {};
 };

@@ -20,12 +20,12 @@
 #pragma once
 
 #include "common/type/math.hpp"
-#include "common/type/vec.hpp"
 #include "io/ir/godot/godot_file.hpp"
 #include "io/ir/godot/godot_tileset.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/variant.hpp"
+#include "tactile/base/container/vector.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {
@@ -37,7 +37,7 @@ struct GdRect final {
 };
 
 struct GdPolygon final {
-  Vec<Float2> points;
+  Vector<Float2> points;
 };
 
 struct GdObject final {
@@ -52,7 +52,7 @@ struct GdObject final {
 };
 
 struct GdObjectLayer final {
-  Vec<GdObject> objects;
+  Vector<GdObject> objects;
 };
 
 struct GdEncodedTile final {
@@ -70,8 +70,8 @@ struct GdTileAnimation final {
 
 struct GdTileLayer final {
   Int2 cell_size {};
-  Vec<GdEncodedTile> data;
-  Vec<GdTileAnimation> animations;
+  Vector<GdEncodedTile> data;
+  Vector<GdTileAnimation> animations;
 };
 
 struct GdLayer final {
@@ -95,12 +95,12 @@ class GodotScene final : public GodotFile {
   [[nodiscard]] auto tileset_id() const -> GdExtRes;
   [[nodiscard]] auto tileset() const -> const GodotTileset&;
 
-  [[nodiscard]] auto layers() const -> const Vec<GdLayer>&;
+  [[nodiscard]] auto layers() const -> const Vector<GdLayer>&;
 
  private:
   GdExtRes mTilesetId {};
   GodotTileset mTileset;
-  Vec<GdLayer> mLayers;
+  Vector<GdLayer> mLayers;
 };
 
 }  // namespace tactile

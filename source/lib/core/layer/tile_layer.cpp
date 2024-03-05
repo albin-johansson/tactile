@@ -65,7 +65,7 @@ void TileLayer::accept(ConstLayerVisitor& visitor) const
 
 void TileLayer::flood(const TilePos& origin,
                       const TileID replacement,
-                      Vec<TilePos>* affected)
+                      Vector<TilePos>* affected)
 {
   const auto target = tile_at(origin);
 
