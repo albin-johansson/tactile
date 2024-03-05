@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/type/ostream.hpp"
+#include <ostream>
 
 namespace tactile {
 
@@ -31,6 +31,6 @@ enum class ObjectType {
 };
 
 /// Outputs an object type to a stream for debugging purposes.
-auto operator<<(OStream& stream, ObjectType type) -> OStream&;
+auto operator<<(std::ostream& stream, ObjectType type) -> std::ostream&;
 
 }  // namespace tactile

@@ -21,11 +21,11 @@
 
 #include "godot_writer.hpp"
 
+#include <ostream>
 #include <variant>  // get, holds_alternative
 
 #include <fmt/format.h>
 
-#include "common/type/ostream.hpp"
 #include "common/util/filesystem.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "io/ir/godot/godot_options.hpp"
@@ -101,7 +101,7 @@ namespace {
   }
 }
 
-void write_attributes(OStream& stream, const GdAttributes& attrs, StringView prefix)
+void write_attributes(std::ostream& stream, const GdAttributes& attrs, StringView prefix)
 {
   const auto count = attrs.size();
 
@@ -118,7 +118,7 @@ void write_attributes(OStream& stream, const GdAttributes& attrs, StringView pre
   }
 }
 
-void write_components(OStream& stream, const GdMetaData& meta)
+void write_components(std::ostream& stream, const GdMetaData& meta)
 {
   TACTILE_ASSERT(!meta.comps.empty());
   stream << "  \"components\": {\n";
@@ -139,7 +139,7 @@ void write_components(OStream& stream, const GdMetaData& meta)
   stream << "\n  }\n";
 }
 
-void write_properties(OStream& stream, const GdMetaData& meta)
+void write_properties(std::ostream& stream, const GdMetaData& meta)
 {
   TACTILE_ASSERT(!meta.props.empty());
   stream << "  \"properties\": {\n";
@@ -149,7 +149,7 @@ void write_properties(OStream& stream, const GdMetaData& meta)
   stream << "  }";
 }
 
-void write_metadata(OStream& stream, const GdMetaData& meta)
+void write_metadata(std::ostream& stream, const GdMetaData& meta)
 {
   const auto has_props = !meta.props.empty();
   const auto has_comps = !meta.comps.empty();
@@ -175,7 +175,7 @@ void write_metadata(OStream& stream, const GdMetaData& meta)
   stream << "}\n";
 }
 
-void write_ext_resources(OStream& stream, const GodotFile::ExtResources& resources)
+void write_ext_resources(std::ostream& stream, const GodotFile::ExtResources& resources)
 {
   if (!resources.empty()) {
     stream << '\n';
@@ -241,7 +241,7 @@ void write_tileset_file(const GodotTileset& tileset, const GodotEmitOptions& opt
   }
 }
 
-void write_atlas_textures(OStream& stream, const GodotScene& scene)
+void write_atlas_textures(std::ostream& stream, const GodotScene& scene)
 {
   if (!scene.atlas_textures().empty()) {
     for (const auto& [id, texture]: scene.atlas_textures()) {
@@ -257,7 +257,7 @@ void write_atlas_textures(OStream& stream, const GodotScene& scene)
   }
 }
 
-void write_sprite_frames(OStream& stream, const GdSpriteFrames& sprite_frames)
+void write_sprite_frames(std::ostream& stream, const GdSpriteFrames& sprite_frames)
 {
   stream << fmt::format("\n[sub_resource type=\"SpriteFrames\" id={}]\n",
                         sprite_frames.id);
@@ -286,7 +286,7 @@ void write_sprite_frames(OStream& stream, const GdSpriteFrames& sprite_frames)
   stream << "]\n";
 }
 
-void write_shapes(OStream& stream, const GodotScene& scene)
+void write_shapes(std::ostream& stream, const GodotScene& scene)
 {
   for (const auto& [id, shape]: scene.rectangle_shapes()) {
     stream << fmt::format("\n[sub_resource type=\"RectangleShape2D\" id={}]\n", id);
@@ -296,7 +296,7 @@ void write_shapes(OStream& stream, const GodotScene& scene)
   }
 }
 
-void write_tile_layer_animation_nodes(OStream& stream,
+void write_tile_layer_animation_nodes(std::ostream& stream,
                                       const GodotScene& scene,
                                       const GdTileLayer& tile_layer)
 {
@@ -321,7 +321,7 @@ void write_tile_layer_animation_nodes(OStream& stream,
   }
 }
 
-void write_tile_layer(OStream& stream, const GodotScene& scene, const GdLayer& layer)
+void write_tile_layer(std::ostream& stream, const GodotScene& scene, const GdLayer& layer)
 {
   const auto& tile_layer = std::get<GdTileLayer>(layer.value);
 
@@ -360,7 +360,7 @@ void write_tile_layer(OStream& stream, const GodotScene& scene, const GdLayer& l
   write_tile_layer_animation_nodes(stream, scene, tile_layer);
 }
 
-void write_rectangle_object(OStream& stream, const GdObject& object)
+void write_rectangle_object(std::ostream& stream, const GdObject& object)
 {
   const auto& rect = std::get<GdRect>(object.value);
 
@@ -383,7 +383,7 @@ void write_rectangle_object(OStream& stream, const GdObject& object)
   stream << fmt::format("shape = SubResource( {} )\n", rect.shape);
 }
 
-void write_polygon_object(OStream& stream, const GdObject& object)
+void write_polygon_object(std::ostream& stream, const GdObject& object)
 {
   const auto& polygon = std::get<GdPolygon>(object.value);
 
@@ -418,7 +418,7 @@ void write_polygon_object(OStream& stream, const GdObject& object)
   stream << " )\n";
 }
 
-void write_object(OStream& stream, const GdObject& object)
+void write_object(std::ostream& stream, const GdObject& object)
 {
   if (std::holds_alternative<GdRect>(object.value)) {
     write_rectangle_object(stream, object);
@@ -441,7 +441,7 @@ void write_object(OStream& stream, const GdObject& object)
   }
 }
 
-void write_object_layer(OStream& stream, const GdLayer& layer)
+void write_object_layer(std::ostream& stream, const GdLayer& layer)
 {
   const auto& object_layer = std::get<GdObjectLayer>(layer.value);
 
@@ -459,7 +459,7 @@ void write_object_layer(OStream& stream, const GdLayer& layer)
   }
 }
 
-void write_layers(OStream& stream, const GodotScene& scene)
+void write_layers(std::ostream& stream, const GodotScene& scene)
 {
   for (const auto& layer: scene.layers()) {
     if (std::holds_alternative<GdTileLayer>(layer.value)) {
