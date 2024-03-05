@@ -25,7 +25,6 @@
 
 #include "common/debug/profile.hpp"
 #include "common/type/chrono.hpp"
-#include "common/type/hash_map.hpp"
 #include "common/util/assoc.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "lang/language.hpp"
@@ -35,6 +34,7 @@
 #include "model/file_history.hpp"
 #include "model/model.hpp"
 #include "model/settings.hpp"
+#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/prelude.hpp"
 #include "ui/constants.hpp"
 

@@ -25,8 +25,8 @@
 
 #include "common/debug/assert.hpp"
 #include "common/type/chrono.hpp"
-#include "common/type/hash_map.hpp"
 #include "model/event/menu_events.hpp"
+#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"

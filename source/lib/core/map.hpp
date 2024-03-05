@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
 #include "common/type/uuid.hpp"
 #include "core/context/context.hpp"
@@ -27,6 +26,7 @@
 #include "core/tile/tile_extent.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "tactile/base/container/function.hpp"
+#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/id.hpp"

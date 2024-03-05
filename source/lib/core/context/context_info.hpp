@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "common/type/hash_map.hpp"
 #include "common/type/result.hpp"
 #include "common/type/string_map.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "core/component/component.hpp"
 #include "tactile/base/container/function.hpp"
+#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"

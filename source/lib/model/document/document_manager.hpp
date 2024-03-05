@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/type/hash_map.hpp"
 #include "common/type/uuid.hpp"
 #include "tactile/base/container/function.hpp"
+#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/set.hpp"

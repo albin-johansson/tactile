@@ -23,11 +23,11 @@
 
 #include "common/debug/logging.hpp"
 #include "common/debug/panic.hpp"
-#include "common/type/hash_map.hpp"
 #include "common/util/assoc.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/settings.hpp"
+#include "tactile/base/container/hash_map.hpp"
 #include "ui/widget/scoped.hpp"
 #include "ui/widget/widgets.hpp"
 

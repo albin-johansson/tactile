@@ -21,9 +21,9 @@
 
 #include <doctest/doctest.h>
 
-#include "common/type/hash_map.hpp"
 #include "common/type/string_map.hpp"
 #include "core/attribute.hpp"
+#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/container/tree_map.hpp"
 

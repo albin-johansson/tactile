@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
 #include "common/type/uuid.hpp"
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "core/tile/tileset_info.hpp"
+#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/id.hpp"

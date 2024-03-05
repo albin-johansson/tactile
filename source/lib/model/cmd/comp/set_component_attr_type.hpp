@@ -21,10 +21,10 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "common/type/hash_map.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/prelude.hpp"
 

@@ -23,7 +23,6 @@
 #include <memory>    // addressof
 #include <variant>   // get
 
-#include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
 #include "common/type/string_map.hpp"
 #include "common/type/uuid.hpp"
@@ -36,6 +35,7 @@
 #include "core/layer/tile_format.hpp"
 #include "core/tile/tile_extent.hpp"
 #include "core/tile/tile_matrix.hpp"
+#include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
