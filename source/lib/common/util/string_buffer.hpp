@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/type/array.hpp"
 #include "common/type/string.hpp"
+#include "tactile/base/container/array.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {

@@ -21,7 +21,7 @@
 
 #include <doctest/doctest.h>
 
-#include "common/type/array.hpp"
+#include "tactile/base/container/array.hpp"
 
 namespace tactile::test {
 namespace {

@@ -24,12 +24,12 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-#include "common/type/array.hpp"
 #include "common/util/filesystem.hpp"
 #include "common/util/string_buffer.hpp"
 #include "io/file_dialog.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
+#include "tactile/base/container/array.hpp"
 #include "ui/constants.hpp"
 #include "ui/style/colors.hpp"
 #include "ui/style/icons.hpp"
