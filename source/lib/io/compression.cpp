@@ -27,8 +27,8 @@
 #include <zstd.h>
 
 #include "common/debug/assert.hpp"
-#include "common/predef.hpp"
 #include "common/type/ptr.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile {
 namespace {

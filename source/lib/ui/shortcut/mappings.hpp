@@ -21,16 +21,16 @@
 
 #include <centurion/keyboard.hpp>
 
-#include "common/predef.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile {
 
 #if TACTILE_OS_MACOS
-#define TACTILE_PRIMARY_MOD "Cmd"
-#define TACTILE_SECONDARY_MOD "Option"
+  #define TACTILE_PRIMARY_MOD "Cmd"
+  #define TACTILE_SECONDARY_MOD "Option"
 #else
-#define TACTILE_PRIMARY_MOD "Ctrl"
-#define TACTILE_SECONDARY_MOD "Alt"
+  #define TACTILE_PRIMARY_MOD "Ctrl"
+  #define TACTILE_SECONDARY_MOD "Alt"
 #endif  // TACTILE_OS_MACOS
 
 inline constexpr cen::key_mod kPrimaryModifier = kOnMacos ? cen::key_mod::lgui  //

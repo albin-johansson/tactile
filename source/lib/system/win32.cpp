@@ -19,13 +19,13 @@
 
 #include "win32.hpp"
 
-#include "common/predef.hpp"
+#include "tactile/base/prelude.hpp"
 
 #if TACTILE_OS_WINDOWS
 
-#include <SDL_syswm.h>
-#include <centurion/system.hpp>
-#include <dwmapi.h>
+  #include <SDL_syswm.h>
+  #include <centurion/system.hpp>
+  #include <dwmapi.h>
 
 #endif  // TACTILE_OS_WINDOWS
 

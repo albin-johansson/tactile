@@ -27,7 +27,7 @@
 
 #include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
-#include "common/predef.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace tactile {
 

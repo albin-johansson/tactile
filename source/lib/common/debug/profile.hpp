@@ -24,8 +24,8 @@
 #include <fmt/chrono.h>
 #include <spdlog/spdlog.h>
 
-#include "common/predef.hpp"
 #include "common/type/chrono.hpp"
+#include "tactile/base/prelude.hpp"
 
 #define TACTILE_PROFILE_START const auto tactile_profile_start = tactile::Clock::now();
 
@@ -37,9 +37,9 @@
   spdlog::debug(Msg " in {}", tactile_profile_ms);
 
 #if TACTILE_DEBUG
-#define TACTILE_DEBUG_PROFILE_START TACTILE_PROFILE_START
-#define TACTILE_DEBUG_PROFILE_END(Msg) TACTILE_PROFILE_END(Msg)
+  #define TACTILE_DEBUG_PROFILE_START TACTILE_PROFILE_START
+  #define TACTILE_DEBUG_PROFILE_END(Msg) TACTILE_PROFILE_END(Msg)
 #else
-#define TACTILE_DEBUG_PROFILE_START
-#define TACTILE_DEBUG_PROFILE_END(Msg)
+  #define TACTILE_DEBUG_PROFILE_START
+  #define TACTILE_DEBUG_PROFILE_END(Msg)
 #endif  // TACTILE_DEBUG

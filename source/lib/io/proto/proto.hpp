@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "common/predef.hpp"
+#include "tactile/base/prelude.hpp"
 
 #if TACTILE_COMPILER_MSVC
 
-#pragma warning(push)
-#pragma warning(disable : 4127)  // conditional expression is constant
-#pragma warning(disable : 5054)  // operator '*' between enumerations of different types
+  #pragma warning(push)
+  #pragma warning(disable : 4127)  // conditional expression is constant
+  #pragma warning(disable : 5054)  // operator '*' between enumerations of different types
 
 #endif  // TACTILE_COMPILER_MSVC
 
@@ -35,6 +35,6 @@
 
 #if TACTILE_COMPILER_MSVC
 
-#pragma warning(pop)
+  #pragma warning(pop)
 
 #endif  // TACTILE_COMPILER_MSVC

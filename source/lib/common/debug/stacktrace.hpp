@@ -19,16 +19,16 @@
 
 #pragma once
 
-#include "common/predef.hpp"
+#include "tactile/base/prelude.hpp"
 
 #if TACTILE_COMPILER_CLANG
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wundefined-inline"
-#pragma clang diagnostic ignored "-Wsign-conversion"
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wundefined-inline"
+  #pragma clang diagnostic ignored "-Wsign-conversion"
 #endif  // TACTILE_COMPILER_CLANG
 
 #include <boost/stacktrace.hpp>
 
 #if TACTILE_COMPILER_CLANG
-#pragma clang diagnostic pop
+  #pragma clang diagnostic pop
 #endif  // TACTILE_COMPILER_CLANG

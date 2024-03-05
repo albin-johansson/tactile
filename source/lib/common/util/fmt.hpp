@@ -28,13 +28,13 @@
 
 #include "common/debug/stacktrace.hpp"
 #include "common/numeric.hpp"
-#include "common/predef.hpp"
 #include "common/type/array.hpp"
 #include "common/type/math.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "core/tile/tile_pos.hpp"
+#include "tactile/base/prelude.hpp"
 
 namespace fmt {
 

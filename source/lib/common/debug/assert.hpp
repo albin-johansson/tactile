@@ -21,17 +21,17 @@
 
 #include <boost/assert.hpp>
 
-#include "common/predef.hpp"
+#include "tactile/base/prelude.hpp"
 
 #if TACTILE_DEBUG
 
-#define TACTILE_ASSERT(Expr) BOOST_ASSERT(Expr)
-#define TACTILE_ASSERT_MSG(Expr, Msg) BOOST_ASSERT_MSG(Expr, Msg)
+  #define TACTILE_ASSERT(Expr) BOOST_ASSERT(Expr)
+  #define TACTILE_ASSERT_MSG(Expr, Msg) BOOST_ASSERT_MSG(Expr, Msg)
 
 #else
 
-#define TACTILE_ASSERT(Expr)
-#define TACTILE_ASSERT_MSG(Expr, Msg)
+  #define TACTILE_ASSERT(Expr)
+  #define TACTILE_ASSERT_MSG(Expr, Msg)
 
 #endif  // TACTILE_DEBUG
 
