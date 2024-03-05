@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/type/maybe.hpp"
 #include "common/type/uuid.hpp"
 #include "core/context/context_info.hpp"
+#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {

@@ -23,13 +23,13 @@
 
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "core/layer/object.hpp"
 #include "core/tile/tile_animation.hpp"
+#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {

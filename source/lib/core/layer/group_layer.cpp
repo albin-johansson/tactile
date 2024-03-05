@@ -24,11 +24,11 @@
 #include <utility>    // move
 
 #include "common/debug/panic.hpp"
-#include "common/type/maybe.hpp"
 #include "common/util/algorithm.hpp"
 #include "common/util/functional.hpp"
 #include "core/layer/object_layer.hpp"
 #include "core/layer/tile_layer.hpp"
+#include "tactile/base/container/maybe.hpp"
 
 namespace tactile {
 

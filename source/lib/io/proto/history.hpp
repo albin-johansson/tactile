@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/type/maybe.hpp"
 #include "model/file_history.hpp"
+#include "tactile/base/container/maybe.hpp"
 
 namespace tactile {
 

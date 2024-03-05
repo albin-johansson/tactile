@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "common/type/vec.hpp"
 #include "core/layer/layer.hpp"
 #include "core/layer/layer_visitor.hpp"
 #include "tactile/base/container/function.hpp"
+#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {

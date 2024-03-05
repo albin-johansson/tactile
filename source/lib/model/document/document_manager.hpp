@@ -20,12 +20,12 @@
 #pragma once
 
 #include "common/type/hash_map.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/set.hpp"
 #include "common/type/uuid.hpp"
 #include "tactile/base/container/function.hpp"
+#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {

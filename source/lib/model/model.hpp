@@ -20,7 +20,6 @@
 #pragma once
 
 #include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
@@ -28,6 +27,7 @@
 #include "model/document/document.hpp"
 #include "model/tool/tool_type.hpp"
 #include "tactile/base/container/function.hpp"
+#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"

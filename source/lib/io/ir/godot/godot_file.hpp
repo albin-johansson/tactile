@@ -20,12 +20,12 @@
 #pragma once
 
 #include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
 #include "common/type/string_map.hpp"
 #include "common/type/tree_map.hpp"
 #include "common/type/vec.hpp"
 #include "core/attribute.hpp"
+#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {

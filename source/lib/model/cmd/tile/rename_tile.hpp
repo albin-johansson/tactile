@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"

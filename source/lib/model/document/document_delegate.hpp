@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
@@ -27,6 +26,7 @@
 #include "core/context/context_manager.hpp"
 #include "core/viewport.hpp"
 #include "model/cmd/command_stack.hpp"
+#include "tactile/base/container/maybe.hpp"
 
 namespace tactile {
 

@@ -24,11 +24,11 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "common/type/maybe.hpp"
 #include "common/util/string_buffer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/layer_events.hpp"
+#include "tactile/base/container/maybe.hpp"
 #include "ui/dialog/dialog.hpp"
 
 namespace tactile::ui {

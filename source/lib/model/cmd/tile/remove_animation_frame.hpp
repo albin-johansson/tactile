@@ -20,9 +20,9 @@
 #pragma once
 
 #include "common/type/chrono.hpp"
-#include "common/type/maybe.hpp"
 #include "core/tile/tile_animation.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 

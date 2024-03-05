@@ -26,7 +26,6 @@
 
 #include "common/debug/assert.hpp"
 #include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/uuid.hpp"
 #include "common/util/functional.hpp"
 #include "core/component/component_index.hpp"
@@ -44,6 +43,7 @@
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
 #include "model/model.hpp"
+#include "tactile/base/container/maybe.hpp"
 
 namespace tactile {
 namespace {

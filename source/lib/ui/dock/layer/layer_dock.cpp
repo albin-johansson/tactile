@@ -23,7 +23,6 @@
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
-#include "common/type/maybe.hpp"
 #include "core/layer/group_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
@@ -31,6 +30,7 @@
 #include "model/event/layer_events.hpp"
 #include "model/model.hpp"
 #include "model/settings.hpp"
+#include "tactile/base/container/maybe.hpp"
 #include "ui/constants.hpp"
 #include "ui/dock/layer/add_layer_context_menu.hpp"
 #include "ui/dock/layer/dialogs/rename_layer_dialog.hpp"

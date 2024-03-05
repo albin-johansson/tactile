@@ -23,12 +23,12 @@
 #include <utility>   // move
 
 #include "common/type/math.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/ostream.hpp"
 #include "common/type/path.hpp"
 #include "common/type/string.hpp"
 #include "common/type/variant.hpp"
 #include "core/color.hpp"
+#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {

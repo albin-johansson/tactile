@@ -20,7 +20,6 @@
 #pragma once
 
 #include "common/type/hash_map.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/result.hpp"
 #include "common/type/string.hpp"
 #include "common/type/string_map.hpp"
@@ -28,6 +27,7 @@
 #include "core/attribute.hpp"
 #include "core/component/component.hpp"
 #include "tactile/base/container/function.hpp"
+#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {

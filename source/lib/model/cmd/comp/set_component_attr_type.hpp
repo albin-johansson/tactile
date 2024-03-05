@@ -22,10 +22,10 @@
 #include <boost/uuid/uuid_hash.hpp>
 
 #include "common/type/hash_map.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/base/container/maybe.hpp"
 #include "tactile/base/prelude.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, Document)

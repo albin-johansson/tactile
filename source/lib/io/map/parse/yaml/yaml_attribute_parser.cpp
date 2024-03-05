@@ -20,12 +20,12 @@
 #include <concepts>  // same_as
 #include <utility>   // move
 
-#include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
 #include "common/util/str.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"
+#include "tactile/base/container/maybe.hpp"
 
 namespace tactile {
 namespace {

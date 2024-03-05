@@ -25,7 +25,6 @@
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
-#include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
@@ -34,6 +33,7 @@
 #include "lang/strings.hpp"
 #include "model/event/component_events.hpp"
 #include "model/model.hpp"
+#include "tactile/base/container/maybe.hpp"
 #include "ui/constants.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/dock/comp/dialogs/add_component_attr_dialog.hpp"
