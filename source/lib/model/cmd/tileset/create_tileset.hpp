@@ -20,10 +20,10 @@
 #pragma once
 
 #include "common/type/math.hpp"
-#include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/prelude.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)

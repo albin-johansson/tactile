@@ -21,8 +21,8 @@
 
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
-#include "common/type/ptr.hpp"
 #include "core/texture.hpp"
+#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {

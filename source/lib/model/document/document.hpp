@@ -20,11 +20,11 @@
 #pragma once
 
 #include "common/type/path.hpp"
-#include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "model/document/document_type.hpp"
+#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {

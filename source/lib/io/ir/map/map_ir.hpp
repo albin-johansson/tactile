@@ -26,7 +26,6 @@
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
-#include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
 #include "common/type/string_map.hpp"
 #include "common/type/uuid.hpp"
@@ -40,6 +39,7 @@
 #include "core/tile/tile_extent.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 

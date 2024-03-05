@@ -21,11 +21,11 @@
 
 #include "common/numeric.hpp"
 #include "common/type/math.hpp"
-#include "common/type/ptr.hpp"
 #include "core/layer/object.hpp"
 #include "core/map.hpp"
 #include "model/document/map_document.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/base/container/smart_ptr.hpp"
 
 namespace tactile::test {
 

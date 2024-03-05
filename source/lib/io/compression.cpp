@@ -27,7 +27,7 @@
 #include <zstd.h>
 
 #include "common/debug/assert.hpp"
-#include "common/type/ptr.hpp"
+#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {

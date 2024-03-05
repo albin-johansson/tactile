@@ -23,7 +23,6 @@
 
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
-#include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
 #include "common/type/tile_cache.hpp"
 #include "common/type/uuid.hpp"
@@ -39,6 +38,7 @@
 #include "model/tool/tool_manager.hpp"
 #include "model/tool/tool_type.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {

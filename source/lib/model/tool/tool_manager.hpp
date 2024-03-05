@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "common/type/ptr.hpp"
 #include "model/tool/tool.hpp"
 #include "model/tool/tool_type.hpp"
 #include "model/tool/tool_visitor.hpp"
+#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {

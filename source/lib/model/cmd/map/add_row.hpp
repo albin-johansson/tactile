@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/type/ptr.hpp"
 #include "core/map.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile::cmd {

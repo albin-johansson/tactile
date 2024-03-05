@@ -20,8 +20,8 @@
 #pragma once
 
 #include "common/type/path.hpp"
-#include "common/type/ptr.hpp"
 #include "core/texture.hpp"
+#include "tactile/base/container/smart_ptr.hpp"
 
 namespace tactile {
 

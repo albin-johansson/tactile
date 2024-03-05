@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "common/type/ptr.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/prelude.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, Context)
