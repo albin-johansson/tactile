@@ -30,7 +30,7 @@ namespace tactile::cmd {
 AddAnimationFrame::AddAnimationFrame(TilesetDocument* document,
                                      const TileIndex animated_tile_index,
                                      const TileIndex frame_tile_index,
-                                     const ms_t frame_duration)
+                                     const Milliseconds frame_duration)
     : mDocument {document},
       mAnimatedTileIndex {animated_tile_index},
       mFrameTileIndex {frame_tile_index},
@@ -65,7 +65,7 @@ void AddAnimationFrame::redo()
 
   if (!tile.is_animated()) {
     TileAnimation animation;
-    animation.add_frame(mAnimatedTileIndex, ms_t {1'000});
+    animation.add_frame(mAnimatedTileIndex, Milliseconds {1'000});
     tile.set_animation(animation);
   }
 

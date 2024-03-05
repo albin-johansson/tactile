@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include "common/type/chrono.hpp"
 #include "core/tile/tile_animation.hpp"
 #include "model/cmd/command.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/util/chrono.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetDocument)
 
@@ -47,7 +47,7 @@ class RemoveAnimationFrame final : public Command {
   TileIndex mTileIndex {};
   usize mFrameIndex {};
   Maybe<TileIndex> mFrameTileIndex;
-  Maybe<ms_t> mFrameDuration;
+  Maybe<Milliseconds> mFrameDuration;
   Maybe<TileAnimation> mRemovedAnimation;  // Only set when removing the last frame
 };
 

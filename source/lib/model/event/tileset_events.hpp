@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/type/chrono.hpp"
 #include "common/type/math.hpp"
 #include "common/type/uuid.hpp"
 #include "core/region.hpp"
@@ -27,6 +26,7 @@
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/base/util/chrono.hpp"
 
 namespace tactile {
 
@@ -64,9 +64,9 @@ struct SelectTilesetTileEvent final {
 
 /// Event for changing the duration of a frame in a tile animation.
 struct SetTileAnimationFrameDurationEvent final {
-  TileIndex tile_index {};  ///< Tile index of the tile that features the animation.
-  usize frame_index {};     ///< Index of frame that will be modified.
-  ms_t duration {};         ///< New duration of the frame.
+  TileIndex tile_index {};   ///< Tile index of the tile that features the animation.
+  usize frame_index {};      ///< Index of frame that will be modified.
+  Milliseconds duration {};  ///< New duration of the frame.
 };
 
 /// Event for enabling animation frame selection mode, where the next selected tile in the

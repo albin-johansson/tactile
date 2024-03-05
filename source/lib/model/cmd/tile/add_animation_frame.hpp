@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include "common/type/chrono.hpp"
 #include "model/cmd/command.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/util/chrono.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetDocument)
 
@@ -35,7 +35,7 @@ class AddAnimationFrame final : public Command {
   AddAnimationFrame(TilesetDocument* document,
                     TileIndex animated_tile_index,
                     TileIndex frame_tile_index,
-                    ms_t frame_duration);
+                    Milliseconds frame_duration);
 
   void undo() override;
 
@@ -47,7 +47,7 @@ class AddAnimationFrame final : public Command {
   TilesetDocument* mDocument {};
   TileIndex mAnimatedTileIndex {};
   TileIndex mFrameTileIndex {};
-  ms_t mFrameDuration {};
+  Milliseconds mFrameDuration {};
   Maybe<usize> mFrameIndex;
   bool mTileWasAnimatedBefore : 1 {};
 };

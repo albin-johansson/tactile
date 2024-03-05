@@ -59,7 +59,7 @@ void TilesetDocument::delete_animation(const TileIndex tile_index)
 
 void TilesetDocument::add_animation_frame(const TileIndex animated_tile_index,
                                           const TileIndex frame_tile_index,
-                                          const ms_t frame_duration)
+                                          const Milliseconds frame_duration)
 {
   get_history().push<cmd::AddAnimationFrame>(this,
                                              animated_tile_index,
@@ -87,7 +87,7 @@ void TilesetDocument::move_animation_frame_backwards(const TileIndex tile_index,
 
 void TilesetDocument::set_animation_frame_duration(const TileIndex tile_index,
                                                    const usize frame_index,
-                                                   const ms_t frame_duration)
+                                                   const Milliseconds frame_duration)
 {
   get_history().push<cmd::SetAnimationFrameDuration>(this,
                                                      tile_index,

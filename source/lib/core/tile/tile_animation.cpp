@@ -26,7 +26,7 @@ namespace tactile {
 
 void TileAnimation::update()
 {
-  const auto now = Clock::now();
+  const auto now = SystemClock::now();
   const auto& current = current_frame();
 
   if (now - mLastUpdate >= current.duration) {
@@ -40,14 +40,14 @@ void TileAnimation::reserve_frames(const usize n)
   mFrames.reserve(n);
 }
 
-void TileAnimation::add_frame(const TileIndex tile, const ms_t duration)
+void TileAnimation::add_frame(const TileIndex tile, const Milliseconds duration)
 {
   mFrames.push_back({tile, duration});
 }
 
 auto TileAnimation::insert_frame(const usize index,
                                  const TileIndex tile_index,
-                                 const ms_t duration) -> Result
+                                 const Milliseconds duration) -> Result
 {
   if (index == mFrames.size()) {
     add_frame(tile_index, duration);
@@ -71,7 +71,7 @@ auto TileAnimation::remove_frame(const usize frame_index) -> Result
 
     if (frame_index <= mIndex) {
       mIndex = 0;
-      mLastUpdate = Clock::now();
+      mLastUpdate = SystemClock::now();
     }
 
     return success;

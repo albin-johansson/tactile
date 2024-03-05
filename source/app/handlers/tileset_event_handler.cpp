@@ -157,7 +157,7 @@ void on_add_tile_animation_frame(const AddTileAnimationFrameEvent& event)
     if (const auto selected_tile_index = tileset.get_selected_tile()) {
       tileset_document->add_animation_frame(*selected_tile_index,
                                             event.tile_index,
-                                            ms_t {1'000});
+                                            Milliseconds {1'000});
     }
   }
 }

@@ -24,10 +24,10 @@
 #include <imgui_internal.h>
 
 #include "common/debug/assert.hpp"
-#include "common/type/chrono.hpp"
 #include "model/event/menu_events.hpp"
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/base/util/chrono.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"
 
@@ -92,18 +92,18 @@ void ui_lazy_tooltip(const char* id, const char* tooltip)
   TACTILE_ASSERT(id);
   TACTILE_ASSERT(tooltip);
 
-  static HashMap<ImGuiID, Maybe<TimePoint>> state;
+  static HashMap<ImGuiID, Maybe<SystemClockInstant>> state;
 
   const auto hashed_id = ImGui::GetID(id);
   auto& last_hover = state[hashed_id];
 
   if (ImGui::IsItemActive() || ImGui::IsItemHovered()) {
     if (!last_hover) {
-      last_hover = Clock::now();
+      last_hover = SystemClock::now();
     }
 
     using namespace std::chrono_literals;
-    if (Clock::now() - last_hover.value() > 1s) {
+    if (SystemClock::now() - last_hover.value() > 1s) {
       ImGui::SetTooltip("%s", tooltip);
     }
   }

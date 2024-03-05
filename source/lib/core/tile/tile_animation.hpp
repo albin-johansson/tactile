@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "common/type/chrono.hpp"
 #include "common/type/result.hpp"
 #include "tactile/base/container/vector.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/base/util/chrono.hpp"
 
 namespace tactile {
 
@@ -32,7 +32,7 @@ class TileAnimation final {
  public:
   struct Frame final {
     TileIndex tile {};
-    ms_t duration {};
+    Milliseconds duration {};
   };
 
   /// Updates the animation
@@ -42,7 +42,7 @@ class TileAnimation final {
   void reserve_frames(usize n);
 
   /// Adds a new frame to the animation sequence.
-  void add_frame(TileIndex tile, ms_t duration);
+  void add_frame(TileIndex tile, Milliseconds duration);
 
   /// Inserts a new frame at a specific index in the animation sequence.
   ///
@@ -50,7 +50,7 @@ class TileAnimation final {
   /// \param tile_index the index of the tile shown during the frame.
   /// \param duration the duration of the added frame.
   /// \return success if a frame was added; failure otherwise.
-  auto insert_frame(usize index, TileIndex tile_index, ms_t duration) -> Result;
+  auto insert_frame(usize index, TileIndex tile_index, Milliseconds duration) -> Result;
 
   /// Removes the frame at the specified index.
   ///
@@ -80,7 +80,7 @@ class TileAnimation final {
  private:
   Vector<Frame> mFrames;
   usize mIndex {};
-  TimePoint mLastUpdate {};
+  SystemClockInstant mLastUpdate {};
 };
 
 }  // namespace tactile

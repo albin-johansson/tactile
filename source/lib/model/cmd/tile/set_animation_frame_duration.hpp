@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include "common/type/chrono.hpp"
 #include "model/cmd/command.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/id.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/util/chrono.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetDocument)
 
@@ -35,7 +35,7 @@ class SetAnimationFrameDuration final : public Command {
   SetAnimationFrameDuration(TilesetDocument* document,
                             TileIndex tile_index,
                             usize frame_index,
-                            ms_t frame_duration);
+                            Milliseconds frame_duration);
 
   void undo() override;
 
@@ -49,8 +49,8 @@ class SetAnimationFrameDuration final : public Command {
   TilesetDocument* mDocument {};
   TileIndex mTileIndex {};
   usize mFrameIndex {};
-  ms_t mNewFrameDuration {};
-  Maybe<ms_t> mOldFrameDuration {};
+  Milliseconds mNewFrameDuration {};
+  Maybe<Milliseconds> mOldFrameDuration {};
 };
 
 }  // namespace tactile::cmd

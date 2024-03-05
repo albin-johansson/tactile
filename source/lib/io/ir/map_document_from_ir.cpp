@@ -181,7 +181,7 @@ void restore_tile_animation(Tile& tile, const TileIR& ir_tile)
   animation.reserve_frames(ir_tile.frames.size());
 
   for (const auto& ir_frame: ir_tile.frames) {
-    animation.add_frame(ir_frame.tile_index, ms_t {ir_frame.duration_ms});
+    animation.add_frame(ir_frame.tile_index, Milliseconds {ir_frame.duration_ms});
   }
 
   tile.set_animation(std::move(animation));

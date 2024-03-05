@@ -24,7 +24,6 @@
 #include <fmt/format.h>
 
 #include "common/debug/profile.hpp"
-#include "common/type/chrono.hpp"
 #include "common/util/assoc.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "lang/language.hpp"
@@ -36,6 +35,7 @@
 #include "model/settings.hpp"
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/base/util/chrono.hpp"
 #include "ui/constants.hpp"
 
 namespace tactile {

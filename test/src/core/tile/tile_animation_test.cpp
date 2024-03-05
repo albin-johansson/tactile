@@ -22,7 +22,7 @@
 #include <doctest/doctest.h>
 
 #include "common/debug/panic.hpp"
-#include "common/type/chrono.hpp"
+#include "tactile/base/util/chrono.hpp"
 
 using namespace std::chrono_literals;
 

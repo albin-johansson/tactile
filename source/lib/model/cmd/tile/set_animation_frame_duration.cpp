@@ -30,7 +30,7 @@ namespace tactile::cmd {
 SetAnimationFrameDuration::SetAnimationFrameDuration(TilesetDocument* document,
                                                      const TileIndex tile_index,
                                                      const usize frame_index,
-                                                     const ms_t frame_duration)
+                                                     const Milliseconds frame_duration)
     : mDocument {document},
       mTileIndex {tile_index},
       mFrameIndex {frame_index},

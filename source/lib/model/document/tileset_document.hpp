@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/type/chrono.hpp"
 #include "common/type/uuid.hpp"
 #include "core/tile/tileset.hpp"
 #include "core/tile/tileset_info.hpp"
@@ -29,6 +28,7 @@
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
+#include "tactile/base/util/chrono.hpp"
 
 namespace tactile {
 
@@ -52,7 +52,7 @@ class TilesetDocument final : public Document {
   /// Executes a command that adds a frame to an animation in the tileset.
   void add_animation_frame(TileIndex animated_tile_index,
                            TileIndex frame_tile_index,
-                           ms_t frame_duration);
+                           Milliseconds frame_duration);
 
   /// Executes a command that removes an animation frame in the tileset.
   void remove_animation_frame(TileIndex tile_index, usize frame_index);
@@ -66,7 +66,7 @@ class TilesetDocument final : public Document {
   /// Executes a command that sets the duration of an animation frame in the tileset.
   void set_animation_frame_duration(TileIndex tile_index,
                                     usize frame_index,
-                                    ms_t frame_duration);
+                                    Milliseconds frame_duration);
 
   /// Executes a command that renames a tile in the tileset.
   void rename_tile(TileIndex tile_index, String name);

@@ -75,8 +75,9 @@ void ui_tileset_tile_image(const Tileset& tileset,
                tint);
 }
 
-[[nodiscard]] auto ui_frame_duration_slider(const Strings& lang, const ms_t duration)
-    -> Maybe<ms_t>
+[[nodiscard]] auto ui_frame_duration_slider(const Strings& lang,
+                                            const Milliseconds duration)
+    -> Maybe<Milliseconds>
 {
   ImGui::AlignTextToFramePadding();
   ImGui::TextUnformatted(lang.animation_dock.duration.c_str());
@@ -90,7 +91,7 @@ void ui_tileset_tile_image(const Tileset& tileset,
                           &kMaxFrameDurationMs,
                           "%lli ms",
                           ImGuiSliderFlags_Logarithmic | ImGuiSliderFlags_AlwaysClamp)) {
-    return ms_t {duration_raw};
+    return Milliseconds {duration_raw};
   }
   else {
     return nothing;
