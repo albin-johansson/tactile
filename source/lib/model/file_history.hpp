@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "common/type/deque.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "common/type/string.hpp"
+#include "tactile/base/container/deque.hpp"
 
 namespace tactile {
 

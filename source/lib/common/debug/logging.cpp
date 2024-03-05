@@ -29,10 +29,10 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
-#include "common/type/deque.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/set.hpp"
 #include "io/directories.hpp"
+#include "tactile/base/container/deque.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {
