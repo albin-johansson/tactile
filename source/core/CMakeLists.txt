@@ -17,4 +17,5 @@ target_include_directories("${TACTILE_CORE}" PUBLIC "${PROJECT_SOURCE_DIR}/inc")
 target_link_libraries("${TACTILE_CORE}"
                       PUBLIC
                       tactile::base
+                      fmt::fmt
                       )

@@ -21,8 +21,8 @@
 
 #include <entt/signal/dispatcher.hpp>
 
-#include "common/debug/assert.hpp"
 #include "model/model.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "ui/widget_show_state.hpp"
 
 namespace tactile {

@@ -23,11 +23,11 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "common/debug/assert.hpp"
 #include "model/event/menu_events.hpp"
 #include "tactile/base/container/hash_map.hpp"
 #include "tactile/base/container/maybe.hpp"
 #include "tactile/base/util/chrono.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/scoped.hpp"
 

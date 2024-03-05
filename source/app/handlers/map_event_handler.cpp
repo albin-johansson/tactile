@@ -22,7 +22,6 @@
 #include <magic_enum.hpp>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/assert.hpp"
 #include "common/util/fmt.hpp"
 #include "handlers/event_handlers.hpp"
 #include "io/export/map_exporter.hpp"
@@ -37,6 +36,7 @@
 #include "model/file_history.hpp"
 #include "model/model.hpp"
 #include "runtime/app_context.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "ui/dialog/create_map_dialog.hpp"
 #include "ui/dialog/map_parse_error_dialog.hpp"
 #include "ui/dialog/resize_map_dialog.hpp"

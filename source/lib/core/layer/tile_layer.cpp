@@ -21,7 +21,6 @@
 
 #include <utility>  // cmp_less
 
-#include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
 #include "common/type/math.hpp"
 #include "common/util/algorithm.hpp"
@@ -29,6 +28,7 @@
 #include "core/tile/tile_matrix.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "tactile/base/container/queue.hpp"
+#include "tactile/core/debug/assert.hpp"
 
 namespace tactile {
 

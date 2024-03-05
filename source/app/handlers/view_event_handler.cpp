@@ -22,12 +22,12 @@
 #include <imgui_internal.h>
 #include <spdlog/spdlog.h>
 
-#include "common/debug/assert.hpp"
 #include "handlers/event_handlers.hpp"
 #include "model/document/map_document.hpp"
 #include "model/event/view_events.hpp"
 #include "model/settings.hpp"
 #include "runtime/app_context.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "ui/constants.hpp"
 #include "ui/widget_show_state.hpp"
 

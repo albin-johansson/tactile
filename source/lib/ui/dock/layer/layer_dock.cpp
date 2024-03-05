@@ -22,7 +22,6 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "common/debug/assert.hpp"
 #include "core/layer/group_layer.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
@@ -31,6 +30,7 @@
 #include "model/model.hpp"
 #include "model/settings.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "ui/constants.hpp"
 #include "ui/dock/layer/add_layer_context_menu.hpp"
 #include "ui/dock/layer/dialogs/rename_layer_dialog.hpp"

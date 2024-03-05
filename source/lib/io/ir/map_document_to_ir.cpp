@@ -19,7 +19,6 @@
 
 #include "map_document_to_ir.hpp"
 
-#include "common/debug/assert.hpp"
 #include "common/debug/profile.hpp"
 #include "core/component/component_index.hpp"
 #include "core/layer/group_layer.hpp"
@@ -31,6 +30,7 @@
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
 #include "model/model.hpp"
+#include "tactile/core/debug/assert.hpp"
 
 namespace tactile {
 namespace {

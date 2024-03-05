@@ -23,7 +23,6 @@
 #include <fmt/format.h>
 #include <imgui.h>
 
-#include "common/debug/assert.hpp"
 #include "common/util/fmt.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object_layer.hpp"
@@ -34,6 +33,7 @@
 #include "model/event/object_events.hpp"
 #include "model/event/property_events.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "ui/style/icons.hpp"
 #include "ui/widget/scoped.hpp"
 

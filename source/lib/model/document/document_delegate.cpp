@@ -21,7 +21,7 @@
 
 #include <utility>  // move
 
-#include "common/debug/assert.hpp"
+#include "tactile/core/debug/assert.hpp"
 
 namespace tactile {
 

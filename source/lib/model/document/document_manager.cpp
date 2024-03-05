@@ -22,12 +22,12 @@
 #include <algorithm>  // any_of
 #include <utility>    // move
 
-#include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
 #include "common/util/assoc.hpp"
 #include "core/tile/tileset_bundle.hpp"
 #include "model/document/map_document.hpp"
 #include "model/document/tileset_document.hpp"
+#include "tactile/core/debug/assert.hpp"
 
 namespace tactile {
 

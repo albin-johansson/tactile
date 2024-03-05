@@ -19,7 +19,6 @@
 
 #include "remove_object.hpp"
 
-#include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
 #include "core/layer/group_layer.hpp"
 #include "core/layer/object.hpp"
@@ -27,6 +26,7 @@
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/document/map_document.hpp"
+#include "tactile/core/debug/assert.hpp"
 
 namespace tactile::cmd {
 

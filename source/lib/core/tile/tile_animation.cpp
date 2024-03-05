@@ -19,8 +19,8 @@
 
 #include "tile_animation.hpp"
 
-#include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
+#include "tactile/core/debug/assert.hpp"
 
 namespace tactile {
 

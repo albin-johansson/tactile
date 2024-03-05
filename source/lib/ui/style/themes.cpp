@@ -23,9 +23,9 @@
 
 #include <imgui.h>
 
-#include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
 #include "tactile/base/prelude.hpp"
+#include "tactile/core/debug/assert.hpp"
 #include "ui/style/colors.hpp"
 
 namespace tactile::ui {

@@ -19,11 +19,11 @@
 
 #include "icons.hpp"
 
-#include "common/debug/assert.hpp"
 #include "common/debug/panic.hpp"
 #include "core/texture.hpp"
 #include "io/directories.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
+#include "tactile/core/debug/assert.hpp"
 
 namespace tactile::ui {
 namespace {
