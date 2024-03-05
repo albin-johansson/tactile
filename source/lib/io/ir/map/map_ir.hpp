@@ -26,7 +26,6 @@
 #include "common/type/math.hpp"
 #include "common/type/string_map.hpp"
 #include "common/type/uuid.hpp"
-#include "common/type/variant.hpp"
 #include "common/type/vec.hpp"
 #include "common/util/algorithm.hpp"
 #include "core/attribute.hpp"
@@ -40,6 +39,7 @@
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/base/container/variant.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 

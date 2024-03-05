@@ -20,12 +20,12 @@
 #pragma once
 
 #include "common/type/math.hpp"
-#include "common/type/variant.hpp"
 #include "common/type/vec.hpp"
 #include "io/ir/godot/godot_file.hpp"
 #include "io/ir/godot/godot_tileset.hpp"
 #include "tactile/base/container/path.hpp"
 #include "tactile/base/container/string.hpp"
+#include "tactile/base/container/variant.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {
