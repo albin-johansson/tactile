@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/type/ref.hpp"
 #include "model/mouse_info.hpp"
 #include "model/tool/tool_visitor.hpp"
+#include "tactile/base/container/ref.hpp"
 #include "tactile/base/prelude.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, DocumentModel)
