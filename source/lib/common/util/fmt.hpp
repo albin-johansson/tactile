@@ -28,11 +28,11 @@
 
 #include "common/debug/stacktrace.hpp"
 #include "common/type/math.hpp"
-#include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
 #include "core/attribute.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "tactile/base/container/array.hpp"
+#include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 

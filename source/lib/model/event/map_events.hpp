@@ -20,8 +20,8 @@
 #pragma once
 
 #include "common/type/math.hpp"
-#include "common/type/path.hpp"
 #include "core/layer/tile_format.hpp"
+#include "tactile/base/container/path.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {

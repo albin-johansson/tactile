@@ -19,10 +19,10 @@
 
 #include <utility>  // move
 
-#include "common/type/string.hpp"
 #include "io/ir/map/map_ir.hpp"
 #include "io/map/parse/yaml/yaml_parser.hpp"
 #include "io/util/yaml.hpp"
+#include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {

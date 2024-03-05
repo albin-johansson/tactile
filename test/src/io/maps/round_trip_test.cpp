@@ -28,13 +28,13 @@
 
 #include <doctest/doctest.h>
 
-#include "common/type/string.hpp"
 #include "common/util/assoc.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "io/export/tactile_yaml_exporter.hpp"
 #include "io/export/tiled_json_exporter.hpp"
 #include "io/export/tiled_xml_exporter.hpp"
 #include "io/map/parse/parse_map.hpp"
+#include "tactile/base/container/string.hpp"
 
 using namespace std::string_literals;
 

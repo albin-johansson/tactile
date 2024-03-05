@@ -20,8 +20,8 @@
 #pragma once
 
 #include "common/type/math.hpp"
-#include "common/type/path.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/base/container/path.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 

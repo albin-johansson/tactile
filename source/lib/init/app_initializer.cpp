@@ -27,12 +27,12 @@
 
 #include "common/debug/logging.hpp"
 #include "common/debug/stacktrace.hpp"
-#include "common/type/path.hpp"
 #include "common/util/fmt.hpp"
 #include "io/directories.hpp"
 #include "io/proto/settings.hpp"
 #include "lang/language.hpp"
 #include "system/win32.hpp"
+#include "tactile/base/container/path.hpp"
 #include "ui/menu/menu.hpp"
 
 namespace tactile {

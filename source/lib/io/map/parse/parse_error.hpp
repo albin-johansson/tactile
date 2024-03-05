@@ -20,7 +20,7 @@
 #pragma once
 
 #include "common/type/ostream.hpp"
-#include "common/type/string.hpp"
+#include "tactile/base/container/string.hpp"
 
 namespace tactile {
 

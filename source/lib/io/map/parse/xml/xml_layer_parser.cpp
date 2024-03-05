@@ -23,7 +23,6 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
-#include "common/type/string.hpp"
 #include "common/type/vec.hpp"
 #include "common/util/str.hpp"
 #include "core/tile/tile_matrix.hpp"
@@ -31,6 +30,7 @@
 #include "io/map/parse/xml/xml_parser.hpp"
 #include "io/util/base64_tiles.hpp"
 #include "io/util/xml.hpp"
+#include "tactile/base/container/string.hpp"
 
 namespace tactile {
 namespace {

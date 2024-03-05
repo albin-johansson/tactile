@@ -21,11 +21,11 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "common/type/path.hpp"
 #include "common/type/vec.hpp"
 #include "io/map/parse/parse_error.hpp"
 #include "io/map/parse/parse_result.hpp"
 #include "tactile/base/container/expected.hpp"
+#include "tactile/base/container/path.hpp"
 
 namespace tactile {
 

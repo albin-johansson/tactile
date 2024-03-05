@@ -21,11 +21,11 @@
 
 #include <imgui.h>
 
-#include "common/type/path.hpp"
-#include "common/type/string.hpp"
 #include "core/attribute.hpp"
 #include "core/color.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/base/container/path.hpp"
+#include "tactile/base/container/string.hpp"
 
 namespace tactile::ui {
 

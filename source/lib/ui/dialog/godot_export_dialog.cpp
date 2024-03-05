@@ -24,10 +24,10 @@
 #include <entt/signal/dispatcher.hpp>
 #include <imgui.h>
 
-#include "common/type/path.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/map_events.hpp"
+#include "tactile/base/container/path.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/alignment.hpp"
 #include "ui/widget/attribute_widgets.hpp"

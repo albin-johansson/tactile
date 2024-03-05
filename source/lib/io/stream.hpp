@@ -20,8 +20,8 @@
 #pragma once
 
 #include "common/type/fstream.hpp"
-#include "common/type/path.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/base/container/path.hpp"
 
 namespace tactile {
 

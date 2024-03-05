@@ -21,8 +21,8 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/type/string.hpp"
 #include "tactile/base/container/function.hpp"
+#include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 

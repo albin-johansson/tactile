@@ -23,9 +23,9 @@
 #include <spdlog/spdlog.h>
 
 #include "common/debug/panic.hpp"
-#include "common/type/string.hpp"
 #include "io/directories.hpp"
 #include "io/util/json.hpp"
+#include "tactile/base/container/string.hpp"
 #include "tactile/base/prelude.hpp"
 #include "ui/style/icons.hpp"
 

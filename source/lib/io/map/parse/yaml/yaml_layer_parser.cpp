@@ -20,7 +20,6 @@
 #include <algorithm>  // replace
 #include <utility>    // move
 
-#include "common/type/string.hpp"
 #include "common/util/str.hpp"
 #include "core/tile/tile_matrix.hpp"
 #include "io/ir/map/map_ir.hpp"
@@ -28,6 +27,7 @@
 #include "io/util/base64_tiles.hpp"
 #include "io/util/yaml.hpp"
 #include "tactile/base/container/expected.hpp"
+#include "tactile/base/container/string.hpp"
 
 using namespace std::string_literals;
 

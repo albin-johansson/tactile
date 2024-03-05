@@ -22,8 +22,8 @@
 #include <pugixml.hpp>
 
 #include "common/type/result.hpp"
-#include "common/type/string.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {

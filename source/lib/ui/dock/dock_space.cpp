@@ -21,12 +21,12 @@
 
 #include <imgui_internal.h>
 
-#include "common/type/path.hpp"
 #include "io/directories.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/settings.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/base/container/path.hpp"
 
 namespace tactile::ui {
 namespace {

@@ -20,14 +20,14 @@
 #pragma once
 
 #include "common/type/chrono.hpp"
-#include "common/type/path.hpp"
-#include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
 #include "core/tile/tileset.hpp"
 #include "core/tile/tileset_info.hpp"
 #include "model/document/document.hpp"
 #include "model/document/document_delegate.hpp"
+#include "tactile/base/container/path.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
+#include "tactile/base/container/string.hpp"
 #include "tactile/base/int.hpp"
 
 namespace tactile {

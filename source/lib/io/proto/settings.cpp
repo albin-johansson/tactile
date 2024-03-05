@@ -23,10 +23,10 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/type/path.hpp"
 #include "io/directories.hpp"
 #include "io/proto/proto.hpp"
 #include "io/stream.hpp"
+#include "tactile/base/container/path.hpp"
 
 namespace tactile {
 namespace {
