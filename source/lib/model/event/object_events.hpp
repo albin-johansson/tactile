@@ -21,10 +21,10 @@
 
 #include <entt/entity/entity.hpp>
 
-#include "common/numeric.hpp"
 #include "common/type/math.hpp"
 #include "common/type/string.hpp"
 #include "common/type/uuid.hpp"
+#include "tactile/base/int.hpp"
 
 namespace tactile {
 

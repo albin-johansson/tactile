@@ -21,9 +21,10 @@
 
 #include <concepts>  // integral
 
-#include "common/numeric.hpp"
 #include "common/type/vec.hpp"
 #include "core/tile/tile_extent.hpp"
+#include "tactile/base/id.hpp"
+#include "tactile/base/int.hpp"
 
 namespace tactile {
 

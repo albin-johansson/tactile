@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/uuid.hpp"
@@ -27,6 +26,7 @@
 #include "core/map.hpp"
 #include "core/tile/tile_pos.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/base/int.hpp"
 
 namespace tactile::cmd {
 

@@ -21,9 +21,9 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/numeric.hpp"
 #include "common/type/func.hpp"
 #include "common/type/string.hpp"
+#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile {

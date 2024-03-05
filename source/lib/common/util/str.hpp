@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/string.hpp"
 #include "common/type/vec.hpp"
+#include "tactile/base/int.hpp"
 
 namespace tactile {
 
@@ -36,6 +36,6 @@ namespace tactile {
 [[nodiscard]] auto parse_u32(StringView str, int base = 10) -> Maybe<uint32>;
 
 /// Converts a string into a 32-bit float.
-[[nodiscard]] auto parse_f32(StringView str) -> Maybe<float32>;
+[[nodiscard]] auto parse_f32(StringView str) -> Maybe<float>;
 
 }  // namespace tactile

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
+#include "tactile/base/int.hpp"
 
 namespace tactile {
 
@@ -29,7 +29,7 @@ namespace tactile {
 [[nodiscard]] auto next_random_i32(int32 min, int32 max) -> int32;
 [[nodiscard]] auto next_random_i64(int64 min, int64 max) -> int64;
 
-[[nodiscard]] auto next_random_f32(float32 min, float32 max) -> float32;
+[[nodiscard]] auto next_random_f32(float min, float max) -> float;
 
 /// Returns a random boolean value.
 [[nodiscard]] auto next_bool() -> bool;

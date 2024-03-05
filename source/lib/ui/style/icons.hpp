@@ -21,10 +21,10 @@
 
 #include <IconsFontAwesome6.h>
 
-#include "common/numeric.hpp"
 #include "core/layer/layer_type.hpp"
 #include "core/layer/object_type.hpp"
 #include "io/load_texture.hpp"
+#include "tactile/base/int.hpp"
 
 #define TAC_ICON_UNDO ICON_FA_ROTATE_LEFT
 #define TAC_ICON_REDO ICON_FA_ROTATE_RIGHT

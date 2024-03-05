@@ -93,7 +93,7 @@ auto next_random_i64(const int64 min, const int64 max) -> int64
   return next_random(min, max);
 }
 
-auto next_random_f32(const float32 min, const float32 max) -> float32
+auto next_random_f32(const float min, const float max) -> float
 {
   return next_random(min, max);
 }

@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
 #include "common/type/math.hpp"
 #include "common/type/ptr.hpp"
 #include "common/type/string.hpp"
 #include "core/color.hpp"
 #include "io/save_format.hpp"
 #include "lang/language.hpp"
+#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "ui/style/themes.hpp"
 

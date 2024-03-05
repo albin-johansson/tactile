@@ -19,9 +19,10 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
 #include "common/type/maybe.hpp"
 #include "model/cmd/command.hpp"
+#include "tactile/base/id.hpp"
+#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
 TACTILE_FWD_DECLARE_CLASS_NS(tactile, TilesetDocument)

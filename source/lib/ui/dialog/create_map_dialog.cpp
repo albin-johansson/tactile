@@ -23,12 +23,12 @@
 #include <imgui.h>
 
 #include "common/debug/assert.hpp"
-#include "common/numeric.hpp"
 #include "common/type/math.hpp"
 #include "lang/language.hpp"
 #include "lang/strings.hpp"
 #include "model/event/map_events.hpp"
 #include "model/settings.hpp"
+#include "tactile/base/int.hpp"
 #include "ui/dialog/dialog.hpp"
 #include "ui/style/alignment.hpp"
 

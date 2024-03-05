@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
 #include "common/type/math.hpp"
 #include "common/type/path.hpp"
 #include "common/type/string.hpp"
@@ -27,6 +26,7 @@
 #include "common/type/vec.hpp"
 #include "io/ir/godot/godot_file.hpp"
 #include "io/ir/godot/godot_tileset.hpp"
+#include "tactile/base/int.hpp"
 
 namespace tactile {
 

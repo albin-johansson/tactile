@@ -22,9 +22,9 @@
 #include <compare>  // <=>
 
 #include "common/debug/assert.hpp"
-#include "common/numeric.hpp"
 #include "common/type/math.hpp"
 #include "common/util/hash.hpp"
+#include "tactile/base/int.hpp"
 
 namespace tactile {
 

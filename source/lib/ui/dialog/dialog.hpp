@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
+#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 
 namespace tactile::ui {

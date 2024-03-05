@@ -21,12 +21,12 @@
 
 #include <nlohmann/json.hpp>
 
-#include "common/numeric.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
 #include "common/type/result.hpp"
 #include "common/type/string.hpp"
 #include "core/attribute.hpp"
+#include "tactile/base/int.hpp"
 
 namespace tactile {
 

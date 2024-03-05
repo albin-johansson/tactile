@@ -23,8 +23,8 @@
 #include <type_traits>    // true_type
 #include <unordered_map>  // unordered_map
 
-#include "common/numeric.hpp"
 #include "common/type/string.hpp"
+#include "tactile/base/int.hpp"
 
 namespace tactile {
 

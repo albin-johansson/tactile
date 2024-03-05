@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
 #include "common/type/hash_map.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
@@ -28,6 +27,8 @@
 #include "core/context/context.hpp"
 #include "core/context/context_info.hpp"
 #include "core/tile/tileset_info.hpp"
+#include "tactile/base/id.hpp"
+#include "tactile/base/int.hpp"
 #include "tactile/base/prelude.hpp"
 #include "tile_pos.hpp"
 

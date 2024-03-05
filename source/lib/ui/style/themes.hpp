@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "common/numeric.hpp"
 #include "common/type/array.hpp"
 #include "common/type/string.hpp"
+#include "tactile/base/int.hpp"
 
 struct ImGuiStyle;
 

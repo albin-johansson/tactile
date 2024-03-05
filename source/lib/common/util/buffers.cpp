@@ -24,7 +24,7 @@
 #include <iterator>   // distance
 
 #include "common/debug/panic.hpp"
-#include "common/numeric.hpp"
+#include "tactile/base/int.hpp"
 
 namespace tactile {
 

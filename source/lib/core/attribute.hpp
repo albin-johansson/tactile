@@ -22,7 +22,6 @@
 #include <concepts>  // same_as
 #include <utility>   // move
 
-#include "common/numeric.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/ostream.hpp"
@@ -30,6 +29,7 @@
 #include "common/type/string.hpp"
 #include "common/type/variant.hpp"
 #include "core/color.hpp"
+#include "tactile/base/int.hpp"
 
 namespace tactile {
 
@@ -55,18 +55,18 @@ enum class AttributeType {
 };
 
 template <typename T>
-concept SomeAttributeType = std::same_as<T, String> ||   //
-                            std::same_as<T, int32> ||    //
-                            std::same_as<T, Int2> ||     //
-                            std::same_as<T, Int3> ||     //
-                            std::same_as<T, Int4> ||     //
-                            std::same_as<T, float32> ||  //
-                            std::same_as<T, Float2> ||   //
-                            std::same_as<T, Float3> ||   //
-                            std::same_as<T, Float4> ||   //
-                            std::same_as<T, bool> ||     //
-                            std::same_as<T, Color> ||    //
-                            std::same_as<T, Path> ||     //
+concept SomeAttributeType = std::same_as<T, String> ||  //
+                            std::same_as<T, int32> ||   //
+                            std::same_as<T, Int2> ||    //
+                            std::same_as<T, Int3> ||    //
+                            std::same_as<T, Int4> ||    //
+                            std::same_as<T, float> ||   //
+                            std::same_as<T, Float2> ||  //
+                            std::same_as<T, Float3> ||  //
+                            std::same_as<T, Float4> ||  //
+                            std::same_as<T, bool> ||    //
+                            std::same_as<T, Color> ||   //
+                            std::same_as<T, Path> ||    //
                             std::same_as<T, ObjectRef>;
 
 /// Represents an "attribute" value, used by both property and component facilities.
@@ -92,7 +92,7 @@ class Attribute final {
   using int2_type = Int2;
   using int3_type = Int3;
   using int4_type = Int4;
-  using float_type = float32;
+  using float_type = float;
   using float2_type = Float2;
   using float3_type = Float3;
   using float4_type = Float4;

@@ -21,7 +21,6 @@
 
 #include <boost/uuid/uuid_hash.hpp>
 
-#include "common/numeric.hpp"
 #include "common/type/math.hpp"
 #include "common/type/maybe.hpp"
 #include "common/type/path.hpp"
@@ -40,6 +39,7 @@
 #include "model/document/document_delegate.hpp"
 #include "model/tool/tool_manager.hpp"
 #include "model/tool/tool_type.hpp"
+#include "tactile/base/int.hpp"
 
 namespace tactile {
 
