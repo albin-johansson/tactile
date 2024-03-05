@@ -21,10 +21,10 @@
 
 #include "common/type/hash_map.hpp"
 #include "common/type/path.hpp"
-#include "common/type/set.hpp"
 #include "common/type/uuid.hpp"
 #include "tactile/base/container/function.hpp"
 #include "tactile/base/container/maybe.hpp"
+#include "tactile/base/container/set.hpp"
 #include "tactile/base/container/smart_ptr.hpp"
 #include "tactile/base/prelude.hpp"
 
